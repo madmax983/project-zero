@@ -1,3 +1,7 @@
+//! SCALE binary crate.
+//!
+//! Entry point for the application. Sets up the terminal and runs the simulation loop.
+
 use bevy_ecs::prelude::*;
 use ratatui::{
     prelude::*,
