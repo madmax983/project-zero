@@ -94,17 +94,30 @@ fn handle_input(world: &mut World, key: crossterm::event::KeyEvent) {
                 GameState::Quitting => GameState::Quitting,
             };
         }
-        KeyCode::Char('w') | KeyCode::Up => {
-            world.resource_mut::<Viewport>().y -= 1;
-        }
-        KeyCode::Char('s') | KeyCode::Down => {
-            world.resource_mut::<Viewport>().y += 1;
-        }
-        KeyCode::Char('a') | KeyCode::Left => {
-            world.resource_mut::<Viewport>().x -= 1;
-        }
-        KeyCode::Char('d') | KeyCode::Right => {
-            world.resource_mut::<Viewport>().x += 1;
+        KeyCode::Char('w')
+        | KeyCode::Up
+        | KeyCode::Char('s')
+        | KeyCode::Down
+        | KeyCode::Char('a')
+        | KeyCode::Left
+        | KeyCode::Char('d')
+        | KeyCode::Right => {
+            let mut viewport = world.resource_mut::<Viewport>();
+            match key.code {
+                KeyCode::Char('w') | KeyCode::Up => {
+                    viewport.y -= 1;
+                }
+                KeyCode::Char('s') | KeyCode::Down => {
+                    viewport.y += 1;
+                }
+                KeyCode::Char('a') | KeyCode::Left => {
+                    viewport.x -= 1;
+                }
+                KeyCode::Char('d') | KeyCode::Right => {
+                    viewport.x += 1;
+                }
+                _ => {}
+            }
         }
         _ => {}
     }
