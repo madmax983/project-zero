@@ -11,6 +11,9 @@ use crossterm::{
 use std::time::{Duration, Instant};
 use std::io;
 
+mod layer1;
+use layer1::{generate_terrain, TerrainGrid, Viewport, render_terrain};
+
 #[derive(Resource, Default, PartialEq, Eq)]
 pub enum GameState {
     #[default]
@@ -42,6 +45,8 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
     // ECS setup
     let mut world = World::new();
     world.insert_resource(GameState::Running);
+    world.insert_resource(generate_terrain(80, 50));
+    world.insert_resource(Viewport::default());
 
     let mut schedule = Schedule::default();
     // Systems will be added here by other specs
@@ -89,17 +94,48 @@ fn handle_input(world: &mut World, key: crossterm::event::KeyEvent) {
                 GameState::Quitting => GameState::Quitting,
             };
         }
+        KeyCode::Char('w')
+        | KeyCode::Up
+        | KeyCode::Char('s')
+        | KeyCode::Down
+        | KeyCode::Char('a')
+        | KeyCode::Left
+        | KeyCode::Char('d')
+        | KeyCode::Right => {
+            let mut viewport = world.resource_mut::<Viewport>();
+            match key.code {
+                KeyCode::Char('w') | KeyCode::Up => {
+                    viewport.y -= 1;
+                }
+                KeyCode::Char('s') | KeyCode::Down => {
+                    viewport.y += 1;
+                }
+                KeyCode::Char('a') | KeyCode::Left => {
+                    viewport.x -= 1;
+                }
+                KeyCode::Char('d') | KeyCode::Right => {
+                    viewport.x += 1;
+                }
+                _ => {}
+            }
+        }
         _ => {}
     }
 }
 
-fn render(_world: &World, frame: &mut Frame) {
+fn render(world: &World, frame: &mut Frame) {
     let area = frame.area();
 
     let block = Block::default()
         .title(" SCALE ")
         .borders(Borders::ALL)
         .border_type(BorderType::Rounded);
+
+    let inner_area = block.inner(area);
+
+    let terrain = world.resource::<TerrainGrid>();
+    let viewport = world.resource::<Viewport>();
+    render_terrain(frame, inner_area, terrain, viewport);
 
     frame.render_widget(block, area);
 }
