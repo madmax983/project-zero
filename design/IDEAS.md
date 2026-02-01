@@ -103,3 +103,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you micromanage with lag, or delegate autonomy to AI governors who might disobey?
 
 ---
+
+## Archaeological Layers
+
+**Layer:** 1
+
+**Fantasy:** The ground beneath your feet is a graveyard of civilizations. You are digging on a world that has seen empires rise and fall before.
+
+**Mechanic:** Deep terrain layers contain "Ruins" tiles. Excavating them yields Artifacts (lore/resources) but risks "Old World Maladies" (curses/diseases).
+
+**Emergence:** A colony built on top of an ancient necropolis might get rich but go mad. Players might ban mining in certain "cursed" areas.
+
+**Tension:** Dig deep for secrets or stay shallow for safety?
+
+---
+
+## Atmospheric Feedback
+
+**Layer:** Cross-layer
+
+**Fantasy:** The planet reacts to your industry. You are not just building on the map; you are changing the map.
+
+**Mechanic:** Heavy industry generates "Smog". Smog reduces solar power and happiness but increases "Industrial Gloom". Trees absorb Smog. Pollution levels affect Layer 2 planet stats (habitability).
+
+**Emergence:** Players might accidentally create a hellscape where everyone is miserable but production is high. Or a green paradise that produces nothing.
+
+**Tension:** Industry vs Livability. Mold the world to you, or mold yourself to the world?
+
+---
+
+## Cultural Drift
+
+**Layer:** Cross-layer
+
+**Fantasy:** Colonies isolated from the homeworld develop their own culture. Space is big, and maintaining a unified empire is hard.
+
+**Mechanic:** Distance + Time = Divergence. Colonies far away drift in ethics/loyalty. Regular communication (expensive) reduces drift.
+
+**Emergence:** Your distant mining colony declares independence because you ignored them for 50 years. A new dialect or religion forms on the frontier.
+
+**Tension:** Control vs Expansion cost. Do you spend resources to keep them close, or let them drift?
+
+---
