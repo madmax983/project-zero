@@ -420,4 +420,76 @@ Phrases that add gravity.
 
 ---
 
+## Memory Fragments
+
+### [MEMORY_DESCRIPTOR]
+How a pop remembers an event.
+
+- haunting
+- inspiring
+- bitter
+- warm
+- cold
+- sharp
+- fading
+- vivid
+- unspoken
+- shared
+
+### [MEMORY_TOPIC]
+What the memory is about.
+
+- the hunger
+- the darkness
+- the first light
+- the lost
+- the arrival
+- the cold days
+- the silence
+- the feast
+- the building of [BUILDING]
+
+---
+
+## Location Fragments
+
+### [LOCATION_SUFFIX]
+Suffixes for named tiles/areas.
+
+- Field
+- Hill
+- Stand
+- Fall
+- Hope
+- Grave
+- Watch
+- Reach
+- End
+- Rest
+- Crossing
+- Void
+- Luck
+- Lode
+- Well
+
+---
+
+## Void Fragments
+
+### [VOID_ANOMALY]
+Strange phenomena in the void.
+
+- time dilation
+- geometric hallucinations
+- whispers in the hull
+- shadows that move
+- missing hours
+- phantom signals
+- mirror images
+- the feeling of being watched
+- gravity wells without mass
+- impossible stars
+
+---
+
 *Add new fragments by type. Keep entries short. Vary tone. Leave room for combination.*

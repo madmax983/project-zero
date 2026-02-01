@@ -209,6 +209,30 @@ These fire during gameplay and get appended to the chronicle.
 "The [SHIP_NAME] comes home. [ACTUAL_YEAR], not [EXPECTED_YEAR]. [CONDITION]. The crew: [CREW_FATE]."
 ```
 
+### VOID_INCIDENT
+
+**Slots:** `[SHIP_NAME]`, `[YEAR]`, `[ANOMALY]`, `[CONSEQUENCE]`
+
+```
+"Year [YEAR]. [SHIP_NAME] reports [ANOMALY]. Course corrected. Crew shaken."
+
+"[YEAR]: Incident aboard [SHIP_NAME]. [ANOMALY]. [CONSEQUENCE]."
+
+"The void touches [SHIP_NAME] in [YEAR]. [ANOMALY]. They will not speak of it."
+```
+
+### LOCATION_NAMED
+
+**Slots:** `[LOCATION_NAME]`, `[COORDINATES]`, `[REASON]`
+
+```
+"The ground at [COORDINATES] is now called [LOCATION_NAME]. Reason: [REASON]."
+
+"We name this place [LOCATION_NAME]. [REASON]."
+
+"[LOCATION_NAME]. That is what the locals call [COORDINATES] after [REASON]."
+```
+
 ---
 
 ## Chronicle Entry Structure
