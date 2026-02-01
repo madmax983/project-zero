@@ -189,6 +189,24 @@ mod tests {
     use super::*;
 
     #[test]
+    fn test_terrain_type_colors() {
+        // Test color invariants for all terrain types
+        assert_eq!(TerrainType::Grass.color(), Color::Green);
+        assert_eq!(TerrainType::Dirt.color(), Color::Rgb(139, 90, 43));
+        assert_eq!(TerrainType::Rock.color(), Color::DarkGray);
+        assert_eq!(TerrainType::Water.color(), Color::Blue);
+    }
+
+    #[test]
+    fn test_terrain_type_as_str() {
+        // Test string representation invariants
+        assert_eq!(TerrainType::Grass.as_str(), ".");
+        assert_eq!(TerrainType::Dirt.as_str(), ",");
+        assert_eq!(TerrainType::Rock.as_str(), "#");
+        assert_eq!(TerrainType::Water.as_str(), "~");
+    }
+
+    #[test]
     fn test_terrain_generation() {
         let grid = generate_terrain(80, 50);
         assert_eq!(grid.width, 80);
