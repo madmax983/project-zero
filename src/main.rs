@@ -57,7 +57,6 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
 
     loop {
         // Input
-        #[allow(clippy::collapsible_if)]
         if event::poll(Duration::from_millis(10))? {
             if let Event::Key(key) = event::read()? {
                 handle_input(&mut world, key);
