@@ -8,6 +8,8 @@ The world should feel lived-in. Significant locations on the map acquire names b
 
 - `002` — Terrain grid (coordinates)
 - `003` — UI layout (status bar display)
+- `004` — Pop spawning / colony start location
+- `006` — Build mode / cursor focus
 - `010` — Chronicle system (logging naming events)
 
 ## Requirements
