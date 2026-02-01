@@ -336,4 +336,40 @@ Legend:  "Year 412. [COLONY] founded. The first footprints in alien soil.
 
 ---
 
+## Location Naming
+
+### Naming Rules
+When a significant event happens at `(x,y)`, the location may earn a name.
+
+**Structure:**
+- `[EVENT_NOUN] [SUFFIX]`      → Hunger Field, Silence Hill
+- `[PERSON]'s [SUFFIX]`        → Tovar's Stand, Kira's Rest
+- `[ADJECTIVE] [SUFFIX]`       → Bitter Crossing, Lost Watch
+
+**Triggers:**
+- Deaths > 3 in one tile → [SUFFIX: Grave, Fall, End]
+- Survivor of event → [PERSON]'s [SUFFIX: Luck, Hope]
+- Resource discovery → [RESOURCE] [SUFFIX: Lode, Well]
+
+---
+
+## Pop Memory
+
+### Memory Formation
+Events create memories with `(type, strength, expiration)`.
+
+- **Famine:** Strength 10. Type: Trauma. Text: "Remembering the empty stores."
+- **Feast:** Strength 5. Type: Joy. Text: "Remembering the harvest."
+- **Death of Friend:** Strength 8. Type: Grief. Text: "Mourning [NAME]."
+
+### Memory Sharing
+Pops share memories when:
+- Working together
+- Resting in same shelter
+- Socializing
+
+Shared memories become **Culture**.
+
+---
+
 *These grammars are instructions to the generator. Architect will spec the generator; Builder will implement it.*
