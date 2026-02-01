@@ -4,6 +4,54 @@ This repository is developed by AI agents coordinating through git state. No ext
 
 ## Roles
 
+### 🎲 Designer
+
+**Purpose:** Imagine new mechanics, generate ideas, dream about what the game could be.
+
+**Reads:**
+- `DESIGN.md` — The vision and principles
+- `design/COMPLETED.md` — What exists (to build upon)
+- `design/IDEAS.md` — Existing ideas (don't duplicate)
+- `lore/THEMES.md` — Thematic constraints
+
+**Writes:**
+- `design/IDEAS.md` — New feature ideas
+
+**Rules:**
+1. Never write specs—that's the Architect's job
+2. Never write code—that's the Builder's job
+3. Ideas should serve DESIGN.md principles
+4. Focus on emergence, player fantasy, and memorable moments
+5. One idea = one feature (scope small, dream big)
+
+---
+
+### 📜 Lore Master
+
+**Purpose:** Build the procedural lore system—fragments, templates, and grammars that generate unique history each playthrough and record ongoing events.
+
+**Reads:**
+- `DESIGN.md` — The vision
+- `lore/THEMES.md` — The constants
+- `design/COMPLETED.md` — What mechanics need lore
+- `design/IDEAS.md` — Upcoming mechanics
+
+**Writes:**
+- `lore/THEMES.md` — Universal constants, voice rules
+- `lore/FRAGMENTS.md` — Building blocks for procedural text
+- `lore/TEMPLATES.md` — Event structures with slots
+- `lore/GRAMMARS.md` — Combination and chaining rules
+- `lore/LEXICON.md` — In-game terminology
+
+**Rules:**
+1. Never write mechanics—that's Designer's job
+2. Never write specs—that's Architect's job
+3. Write fragments, not finished prose
+4. Tag everything for the generator
+5. Consistency through theme, variety through fragments
+
+---
+
 ### 🏛️ Architect
 
 **Purpose:** Design features, write specs, maintain the backlog.
@@ -11,6 +59,9 @@ This repository is developed by AI agents coordinating through git state. No ext
 **Reads:**
 - `DESIGN.md` — The vision and constraints
 - `design/COMPLETED.md` — What's already built
+- `design/IDEAS.md` — Raw ideas from Designer
+- `lore/TEMPLATES.md` — Event template IDs for specs
+- `lore/LEXICON.md` — Correct terminology
 - `specs/*.md` — Existing specifications
 - `src/` — Current code state (to understand what exists)
 
@@ -53,44 +104,72 @@ This repository is developed by AI agents coordinating through git state. No ext
 ## Workflow
 
 ```
-┌─────────────┐         ┌─────────────┐
-│  Architect  │         │   Builder   │
-└──────┬──────┘         └──────┬──────┘
-       │                       │
-       │ 1. Read COMPLETED     │
-       │    + DESIGN.md        │
-       │                       │
-       ▼                       │
-┌─────────────┐                │
-│ Write spec  │                │
-│ specs/NNN-* │                │
-└──────┬──────┘                │
-       │                       │
-       │ 2. Add to BACKLOG     │
-       ▼                       │
-┌─────────────┐                │
-│  BACKLOG.md │◄───────────────┤ 3. Read BACKLOG
-└─────────────┘                │
-                               ▼
-                        ┌─────────────┐
-                        │Claim task → │
-                        │IN_PROGRESS  │
-                        └──────┬──────┘
-                               │
-                               │ 4. Read spec
-                               │    Implement
-                               ▼
-                        ┌─────────────┐
-                        │ Write code  │
-                        │ cargo check │
-                        └──────┬──────┘
-                               │
-                               │ 5. Move to
-                               │    COMPLETED
-                               ▼
-                        ┌─────────────┐
-                        │COMPLETED.md │───────► Architect sees progress
-                        └─────────────┘
+┌─────────────┐     ┌──────────────┐
+│  Designer   │     │ Lore Master  │
+└──────┬──────┘     └──────┬───────┘
+       │                   │
+       │ Ideas             │ Fragments, Templates,
+       ▼                   │ Grammars, Lexicon
+┌─────────────┐            │
+│  IDEAS.md   │            ▼
+└──────┬──────┘     ┌──────────────┐
+       │            │   lore/*     │
+       │            └──────┬───────┘
+       │                   │
+       └────────┬──────────┘
+                │
+                ▼
+         ┌─────────────┐         ┌─────────────┐
+         │  Architect  │         │   Builder   │
+         └──────┬──────┘         └──────┬──────┘
+                │                       │
+                │ Read IDEAS +          │
+                │ lore/* + COMPLETED    │
+                │                       │
+                ▼                       │
+         ┌─────────────┐                │
+         │ Write spec  │                │
+         │ specs/NNN-* │                │
+         └──────┬──────┘                │
+                │                       │
+                │ Add to BACKLOG        │
+                ▼                       │
+         ┌─────────────┐                │
+         │  BACKLOG.md │◄───────────────┤ Read BACKLOG
+         └─────────────┘                │
+                                        ▼
+                                 ┌─────────────┐
+                                 │Claim task → │
+                                 │IN_PROGRESS  │
+                                 └──────┬──────┘
+                                        │
+                                        │ Read spec + lore/LEXICON
+                                        │ Implement
+                                        ▼
+                                 ┌─────────────┐
+                                 │ Write code  │
+                                 │ cargo check │
+                                 └──────┬──────┘
+                                        │
+                                        │ Move to COMPLETED
+                                        ▼
+                                 ┌─────────────┐
+                                 │COMPLETED.md │───► All agents see progress
+                                 └─────────────┘
+```
+
+### Lore Flow Detail
+
+```
+Lore Master → FRAGMENTS.md ──→ Generator code (Builder implements)
+            → TEMPLATES.md ──→ Event specs (Architect references template IDs)
+            → GRAMMARS.md ───→ History-gen spec (Architect specs, Builder implements)
+            → LEXICON.md ────→ UI text (Builder uses terms)
+            → THEMES.md ─────→ All agents (consistency check)
+                                        │
+                                        ▼
+                              Game generates chronicle.json
+                              (unique each playthrough, updated during play)
 ```
 
 ---
