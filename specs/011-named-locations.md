@@ -8,8 +8,6 @@ The world should feel lived-in. Significant locations on the map acquire names b
 
 - `002` — Terrain grid (coordinates)
 - `003` — UI layout (status bar display)
-- `004` — Pop spawning / colony start location
-- `006` — Build mode / cursor focus
 - `010` — Chronicle system (logging naming events)
 
 ## Requirements
@@ -20,7 +18,7 @@ The world should feel lived-in. Significant locations on the map acquire names b
 - UI Status Bar shows the location name when the focused tile has a name
     - Focus = Build Mode Cursor (if active) OR Viewport Center (if inactive)
 - Naming a location triggers a `LOCATION_NAMED` chronicle event
-- Location names are stored as simple strings; the system does not enforce global name uniqueness (duplicate names are allowed)
+- Support for unique names (prevent duplicates if possible, or just string storage)
 
 ### Must NOT Have
 - Player ability to manually rename locations (for now)
@@ -59,13 +57,16 @@ In a startup system (after terrain/pops), name the center:
 fn initial_naming_system(
     mut locations: ResMut<NamedLocations>,
     mut chronicle: ResMut<Chronicle>,
-    viewport: Res<Viewport>,
+    pop_query: Query<&GridPosition, With<Pop>>,
     time: Res<SimulationTime>,
 ) {
-    // Assuming viewport starts focused on the colony
-    // Adjust x/y to match where pops actually spawned if different
-    let x = viewport.x + 10; // Approx center if viewport is top-left
-    let y = viewport.y + 10;
+    // Find the first pop to define the landing site
+    // This ensures the name is actually where the colony started
+    let (x, y) = if let Some(pos) = pop_query.iter().next() {
+        (pos.x, pos.y)
+    } else {
+        return; // No pops spawned yet? Retry later or skip.
+    };
 
     let name = "Landing Site".to_string();
 
