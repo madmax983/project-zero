@@ -1,5 +1,9 @@
+//! The core library for SCALE.
+//!
+//! This library exposes the simulation layers and UI components of the game.
+
 pub mod layer1;
 pub mod layer2;
 pub mod layer3;
-pub mod ui;
 pub mod shared;
+pub mod ui;
