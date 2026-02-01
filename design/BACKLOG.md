@@ -15,3 +15,4 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `009` Job assignment system — `specs/009-job-system.md`
 - [ ] `010` Chronicle system — `specs/010-chronicle-system.md`
 - [ ] `011` Named locations — `specs/011-named-locations.md`
+- [ ] `012` Help screen and controls reference — `specs/012-help-screen.md`
