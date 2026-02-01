@@ -148,8 +148,13 @@ mod tests {
         assert_eq!(grid.height, 50);
         assert_eq!(grid.tiles.len(), 80 * 50);
 
-        // Check that we have different terrain types
+        // Check that the grid contains grass and only valid terrain types
         let has_grass = grid.tiles.contains(&TerrainType::Grass);
-        assert!(has_grass, "Should have grass");
+        assert!(has_grass, "Generated terrain should include grass");
+
+        let all_valid = grid.tiles.iter().all(|t| {
+            matches!(t, TerrainType::Grass | TerrainType::Dirt | TerrainType::Rock | TerrainType::Water)
+        });
+        assert!(all_valid, "All tiles must be valid terrain types");
     }
 }
