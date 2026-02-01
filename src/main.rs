@@ -57,6 +57,9 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
 
     loop {
         // Input
+        // event::read() must only be called after event::poll() indicates that an event is available.
+        // The nested if structure preserves this ordering and cannot be safely collapsed.
+        #[allow(clippy::collapsible_if)]
         if event::poll(Duration::from_millis(10))? {
             if let Event::Key(key) = event::read()? {
                 handle_input(&mut world, key);

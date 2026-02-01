@@ -5,7 +5,7 @@ use ratatui::{
 };
 use rand::Rng;
 
-#[derive(Clone, Copy, PartialEq, Eq)]
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
 pub enum TerrainType {
     Grass,
     Dirt,
@@ -156,5 +156,89 @@ mod tests {
             matches!(t, TerrainType::Grass | TerrainType::Dirt | TerrainType::Rock | TerrainType::Water)
         });
         assert!(all_valid, "All tiles must be valid terrain types");
+    }
+
+    #[test]
+    fn test_terrain_grid_get_bounds() {
+        let width = 10;
+        let height = 5;
+        let tiles = vec![TerrainType::Grass; width * height];
+        let grid = TerrainGrid { width, height, tiles };
+
+        // Valid access
+        assert_eq!(grid.get(0, 0), Some(TerrainType::Grass));
+        assert_eq!(grid.get(width - 1, height - 1), Some(TerrainType::Grass));
+
+        // Out of bounds
+        assert_eq!(grid.get(width, 0), None);
+        assert_eq!(grid.get(0, height), None);
+        assert_eq!(grid.get(width, height), None);
+        assert_eq!(grid.get(100, 100), None);
+    }
+
+    #[test]
+    fn test_fill_circle_clipping() {
+        let width = 10;
+        let height = 10;
+        let mut tiles = vec![TerrainType::Grass; width * height];
+
+        // Draw a circle of Dirt at (0,0) with radius 2.
+        // Should cover (0,0), (0,1), (0,2), (1,0), (1,1), (2,0) etc.
+        // and safely ignore negative coordinates.
+        fill_circle(&mut tiles, width, height, 0, 0, 2, TerrainType::Dirt);
+
+        let grid = TerrainGrid { width, height, tiles };
+
+        // (0,0) should be Dirt
+        assert_eq!(grid.get(0, 0), Some(TerrainType::Dirt));
+        // (2,0) should be Dirt (distance 2 <= 2)
+        assert_eq!(grid.get(2, 0), Some(TerrainType::Dirt));
+        // (0,2) should be Dirt
+        assert_eq!(grid.get(0, 2), Some(TerrainType::Dirt));
+        // (3,0) should be Grass (distance 3 > 2)
+        assert_eq!(grid.get(3, 0), Some(TerrainType::Grass));
+
+        // Verify no panic or wrapping happened (check last element is still grass if far away)
+        assert_eq!(grid.get(9, 9), Some(TerrainType::Grass));
+    }
+
+    #[test]
+    fn test_viewport_rendering_offsets() {
+        let width = 5;
+        let height = 5;
+        // Fill with Grass
+        let tiles = vec![TerrainType::Grass; width * height];
+        let grid = TerrainGrid { width, height, tiles };
+
+        // Viewport shifted so (0,0) is at screen (1,1)
+        // Viewport x=-1, y=-1.
+        // Screen (0,0) -> World (-1, -1) -> Empty
+        // Screen (1,1) -> World (0, 0) -> Grass
+        let viewport = Viewport { x: -1, y: -1 };
+        let area = Rect::new(0, 0, 3, 3);
+
+        let spans = build_terrain_spans(area, &grid, &viewport);
+
+        assert_eq!(spans.len(), 3);
+
+        // Helper to check a span's content
+        let check_cell = |y: usize, x: usize, expected_char: &str, expected_color: Color| {
+            let span = &spans[y].spans[x];
+            assert_eq!(span.content, expected_char);
+            assert_eq!(span.style.fg, Some(expected_color));
+        };
+
+        // Row 0 (World y = -1): All should be empty
+        for x in 0..3 {
+            check_cell(0, x, " ", Color::Black);
+        }
+
+        // Row 1 (World y = 0):
+        // x=0 (World x=-1) -> Empty
+        check_cell(1, 0, " ", Color::Black);
+        // x=1 (World x=0) -> Grass
+        check_cell(1, 1, ".", Color::Green);
+        // x=2 (World x=1) -> Grass
+        check_cell(1, 2, ".", Color::Green);
     }
 }
