@@ -14,3 +14,9 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `008` Farm building and food — `specs/008-building-farm.md`
 - [ ] `009` Job assignment system — `specs/009-job-system.md`
 - [ ] `010` Chronicle system — `specs/010-chronicle-system.md`
+
+## MVP — Layer 1: Resources & Expansion
+
+- [ ] `011` Trees and basic resources — `specs/011-resource-wood.md`
+- [ ] `012` Designation system (UI) — `specs/012-designation-system.md`
+- [ ] `013` Gathering jobs (chop/mine) — `specs/013-job-gather.md`
