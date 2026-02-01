@@ -118,7 +118,7 @@ pub fn generate_terrain(width: usize, height: usize) -> TerrainGrid {
 }
 
 #[allow(clippy::many_single_char_names)]
-#[allow(clippy::collapsible_if)]
+
 fn fill_circle(
     tiles: &mut [TerrainType],
     w: usize,
@@ -151,11 +151,11 @@ fn fill_circle(
                 let y = center_y + dy;
 
                 if x >= 0 && x < width_i32 && y >= 0 && y < height_i32 {
-                    if let (Ok(xu), Ok(yu)) = (usize::try_from(x), usize::try_from(y)) {
-                        if let Some(idx) = yu.checked_mul(w).and_then(|row| row.checked_add(xu)) {
-                            if idx < tiles.len() {
-                                tiles[idx] = t;
-                            }
+                    let xu = x as usize;
+                    let yu = y as usize;
+                    if let Some(idx) = yu.checked_mul(w).and_then(|row| row.checked_add(xu)) {
+                        if idx < tiles.len() {
+                            tiles[idx] = t;
                         }
                     }
                 }
