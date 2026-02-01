@@ -215,3 +215,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Invest in current survival or future glory? All-in on the Wonder or diversified growth?
 
 ---
+
+## The Black Market
+
+**Layer:** Cross-layer
+
+**Fantasy:** Where the state fails, the underworld provides.
+
+**Mechanic:** Unmet needs (food, luxury) at Layer 1 spawn "Smuggler" entities at Layer 2. They dock and deliver goods but siphon credits and increase "Corruption" (reducing tax/production efficiency).
+
+**Emergence:** You accidentally become a pirate haven because you couldn't feed your miners, and now the pirates defend you better than the navy.
+
+**Tension:** Crack down on crime and risk starvation/revolt, or tolerate it and lose control?
+
+---
+
+## Ancestral Graves
+
+**Layer:** 1
+
+**Fantasy:** The history of the colony is written on the land itself.
+
+**Mechanic:** Dead pops leave "Grave" tiles. Relatives visit graves for mood buffs. Graves cannot be built over without a severe "Sacrilege" penalty.
+
+**Emergence:** Your efficient city plan is ruined by a poorly placed cemetery from the starving first winter. A "City of the Dead" district naturally forms.
+
+**Tension:** Respect the dead (happiness) vs. expand the factory (efficiency).
+
+---
+
+## Invasive Biology
+
+**Layer:** Cross-layer
+
+**Fantasy:** Bringing a pet from home can destroy a new world.
+
+**Mechanic:** Ships arriving from other biomes can carry "Spores". Spores land on Layer 1 and spread, replacing native terrain with alien flora (e.g., "Terran Kudzu" or "Xenofungus").
+
+**Emergence:** A fast-growing alien moss eats your farms. You have to burn down half the forest to save the other half.
+
+**Tension:** Strict quarantine (slow trade, low risk) vs. open borders (high trade, bio-risk).
+
+---
+
+## The Silence
+
+**Layer:** 3
+
+**Fantasy:** The galaxy is quiet for a reason. (The Dark Forest theory).
+
+**Mechanic:** High emission of radio/energy (Tech level + Pop count) increases "Detection Risk". At certain thresholds, unknown hostile entities spawn at the galaxy edge.
+
+**Emergence:** Advanced civilizations try to stay "quiet" or primitive to avoid detection. A loud neighbor endangers the whole sector.
+
+**Tension:** Progress (power/tech) vs. Safety (obscurity).
+
+---
