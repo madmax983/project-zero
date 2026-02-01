@@ -145,3 +145,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Control vs Expansion cost. Do you spend resources to keep them close, or let them drift?
 
 ---
+
+## Seasonal Rhythms
+
+**Layer:** 1
+
+**Fantasy:** The struggle to survive a harsh winter or the joy of a bountiful harvest. The colony breathes with the planet.
+
+**Mechanic:** Global "Seasons" cycle periodically. Seasons affect crop growth rates, temperature needs, and movement speed (snow/mud).
+
+**Emergence:** A colony that forgets to stockpile for Winter faces starvation. A "Long Summer" creates a population boom that crashes when Autumn finally hits.
+
+**Tension:** Do you plant high-yield crops that might freeze, or hardy crops with lower yield? Do you ration food now or hope for a mild winter?
+
+---
+
+## Acoustic Zones
+
+**Layer:** 1
+
+**Fantasy:** The colony is noisy. Living next to a stamping mill is miserable, but living next to a park is peaceful.
+
+**Mechanic:** Machines emit "Noise" that spreads across the grid (attenuating over distance). High noise reduces Sleep quality and increases Stress. Walls block noise.
+
+**Emergence:** Natural "slums" form around industrial districts where housing is efficient but quality of life is low. Players accidentally create echo chambers.
+
+**Tension:** Efficiency (housing near jobs) vs. Happiness (housing in quiet zones).
+
+---
+
+## Planetary Quirks
+
+**Layer:** 2
+
+**Fantasy:** Every world is an alien puzzle. Not just "Desert World," but "Tidally Locked World" or "High Gravity World."
+
+**Mechanic:** Planets generate with specific "Quirks" that apply global modifiers to Layer 1. High G = higher energy cost for movement. Tidally Locked = permanent day/night zones.
+
+**Emergence:** On a High-G world, players build compact vertical colonies to minimize travel. On a Night-Side colony, solar power is useless.
+
+**Tension:** Settle the lush world with the "Carnivorous Flora" quirk, or the barren rock that is safe?
+
+---
+
+## Emotional Contagion
+
+**Layer:** 1
+
+**Fantasy:** Panic spreads like wildfire. Laughter is infectious. The mood of the crowd overpowers the individual.
+
+**Mechanic:** Extreme emotions (Terror, Joy, Rage) have a radius. Pops interacting with or near emotional pops receive a temporary mood modifier.
+
+**Emergence:** A single terrified pop fleeing a disaster can cause a stampede of panic in the canteen. A bard in the town square lifts the spirits of everyone passing by.
+
+**Tension:** Do you quarantine the gloom-ridden philosopher before they depress the whole research team?
+
+---
+
+## Great Works
+
+**Layer:** 1 -> 2
+
+**Fantasy:** Leaving a mark on the universe. Building something so massive it can be seen from orbit.
+
+**Mechanic:** Multi-stage construction projects requiring massive resources and time (e.g., Space Elevator, Planetary Shield, Terraforming Spire). Completion unlocks Layer 2 benefits.
+
+**Emergence:** The entire colony's economy warps around "The Project." Stopping construction causes social unrest (dashed hopes).
+
+**Tension:** Invest in current survival or future glory? All-in on the Wonder or diversified growth?
+
+---
