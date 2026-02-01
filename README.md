@@ -1,4 +1,4 @@
-# Project Zero
+# SCALE
 
 *From pebble to empire. Every world remembers.*
 
@@ -137,22 +137,32 @@ Unlocked when you research interstellar travel and launch to another star.
 
 ## Technical Constraints (for LLM contributors)
 
-### Bevy-specific
+### Stack
 
-- Use Bevy 0.15+ (latest stable)
-- ECS architecture: Components are data, Systems are logic
-- No assets required—all rendering via `bevy::sprite` shapes and colors
-- Camera: orthographic, implement zoom as literal camera zoom between layers
+- **bevy_ecs** — ECS for simulation logic (not full Bevy engine)
+- **ratatui** — Terminal UI rendering
+- **crossterm** — Terminal backend, input handling
+
+Why this combo:
+- Bevy ECS gives us ergonomic queries, schedules, and systems
+- Ratatui gives us simple, fast rendering with no asset pipeline
+- Terminal aesthetic matches DF authenticity
+- LLMs reason better about "char at row,col" than "sprite at pixel"
+- Simulation logic is completely decoupled from rendering
 
 ### Code organization
 
 ```
 src/
-  main.rs           # App setup, state machine
-  layer1/           # Colony simulation
+  main.rs           # App setup, main loop
+  app.rs            # Bevy World + Schedule setup
+  input.rs          # Crossterm event → ECS event translation
+  layer1/           # Colony simulation (pure ECS, no rendering)
     mod.rs
     pop.rs
     building.rs
+    terrain.rs
+    needs.rs
     job.rs
     resource.rs
     event.rs
@@ -166,15 +176,54 @@ src/
     system.rs
     civ.rs
     diplomacy.rs
-  ui/               # All rendering and input
+  ui/               # Ratatui rendering (reads from World)
     mod.rs
     colony_view.rs
     system_view.rs
     galaxy_view.rs
+    widgets/        # Reusable UI components
   shared/           # Cross-layer types
     mod.rs
     resources.rs
     events.rs
+```
+
+### Rendering Philosophy
+
+The simulation runs in Bevy ECS. The UI reads from the World and draws to terminal.
+
+```rust
+// Main loop pseudocode
+loop {
+    // 1. Handle input (crossterm → ECS events)
+    handle_input(&mut world);
+    
+    // 2. Run simulation (bevy_ecs schedules)
+    schedule.run(&mut world);
+    
+    // 3. Render (ratatui reads from world)
+    terminal.draw(|frame| {
+        render_colony(frame, &world);
+    })?;
+}
+```
+
+### Display Characters
+
+```
+Terrain:
+  . grass     , dirt      # rock      ~ water
+
+Pops:
+  ☺ healthy   ☻ working   ⚉ resting  † dead
+
+Buildings:
+  ⌂ housing   ♣ farm      ⛏ mine     ⚙ factory
+
+UI:
+  ─│┌┐└┘├┤┬┴┼  box drawing
+  ▓▒░              shading
+  ►◄▲▼            arrows
 ```
 
 ### PR guidelines
@@ -210,5 +259,9 @@ Layer 1 only. A single colony that can:
 - [ ] One random event type
 - [ ] Win condition: reach 50 population
 - [ ] Lose condition: all pops dead
+
+No Layer 2 or 3. No aliens. No ships. Just survive and grow.
+
+---
 
 *This document is the canonical reference. When in doubt, add emergence.*
