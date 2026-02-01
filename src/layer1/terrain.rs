@@ -163,9 +163,9 @@ pub fn build_terrain_spans(
 
             let (text, color) =
                 if let (Ok(ux), Ok(uy)) = (usize::try_from(world_x), usize::try_from(world_y)) {
-                    terrain.get(ux, uy).map_or((" ", Color::Black), |tile| {
-                        (tile.as_str(), tile.color())
-                    })
+                    terrain
+                        .get(ux, uy)
+                        .map_or((" ", Color::Black), |tile| (tile.as_str(), tile.color()))
                 } else {
                     (" ", Color::Black)
                 };
