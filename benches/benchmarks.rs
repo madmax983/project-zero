@@ -1,10 +1,13 @@
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+#![allow(missing_docs)]
+use criterion::{Criterion, black_box, criterion_group, criterion_main};
 
 fn example_benchmark(c: &mut Criterion) {
     c.bench_function("example", |b| {
         b.iter(|| {
-            // Add your performance-critical code here
-            black_box(1 + 1)
+            // Benchmark logic here
+            let x = black_box(2);
+            let y = black_box(3);
+            let _ = x + y;
         });
     });
 }
