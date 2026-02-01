@@ -20,7 +20,7 @@ The world should feel lived-in. Significant locations on the map acquire names b
 - UI Status Bar shows the location name when the focused tile has a name
     - Focus = Build Mode Cursor (if active) OR Viewport Center (if inactive)
 - Naming a location triggers a `LOCATION_NAMED` chronicle event
-- Support for unique names (prevent duplicates if possible, or just string storage)
+- Location names are stored as simple strings; the system does not enforce global name uniqueness (duplicate names are allowed)
 
 ### Must NOT Have
 - Player ability to manually rename locations (for now)
