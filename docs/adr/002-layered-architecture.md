@@ -1,6 +1,6 @@
 # 2. Layered Simulation Architecture
 
-Date: 2026-02-01
+Date: 2024-05-23
 Status: Accepted
 
 ## Context

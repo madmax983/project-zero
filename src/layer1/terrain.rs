@@ -117,45 +117,50 @@ pub fn generate_terrain(width: usize, height: usize) -> TerrainGrid {
     }
 }
 
-#[allow(clippy::many_single_char_names)]
-
 fn fill_circle(
     tiles: &mut [TerrainType],
-    w: usize,
-    h: usize,
-    cx: usize,
-    cy: usize,
-    r: usize,
-    t: TerrainType,
+    width: usize,
+    height: usize,
+    center_x: usize,
+    center_y: usize,
+    radius: usize,
+    terrain: TerrainType,
 ) {
-    let Ok(r_i32) = i32::try_from(r) else { return };
-    let Ok(center_x) = i32::try_from(cx) else {
+    // Attempt to convert to i64 for signed arithmetic.
+    // If terrain dimensions exceed i64::MAX, we skip drawing to avoid issues.
+    let Ok(radius_i64) = i64::try_from(radius) else {
         return;
     };
-    let Ok(center_y) = i32::try_from(cy) else {
+    let Ok(center_x_i64) = i64::try_from(center_x) else {
         return;
     };
-    let Ok(width_i32) = i32::try_from(w) else {
+    let Ok(center_y_i64) = i64::try_from(center_y) else {
         return;
     };
-    let Ok(height_i32) = i32::try_from(h) else {
+    let Ok(width_i64) = i64::try_from(width) else {
+        return;
+    };
+    let Ok(height_i64) = i64::try_from(height) else {
         return;
     };
 
-    let r2 = r_i32 * r_i32;
+    let r2 = radius_i64 * radius_i64;
 
-    for dy in -r_i32..=r_i32 {
-        for dx in -r_i32..=r_i32 {
+    for dy in -radius_i64..=radius_i64 {
+        for dx in -radius_i64..=radius_i64 {
             if dx * dx + dy * dy <= r2 {
-                let x = center_x + dx;
-                let y = center_y + dy;
+                let x = center_x_i64 + dx;
+                let y = center_y_i64 + dy;
 
-                if x >= 0 && x < width_i32 && y >= 0 && y < height_i32 {
-                    let xu = x as usize;
-                    let yu = y as usize;
-                    if let Some(idx) = yu.checked_mul(w).and_then(|row| row.checked_add(xu)) {
-                        if idx < tiles.len() {
-                            tiles[idx] = t;
+                if x >= 0 && x < width_i64 && y >= 0 && y < height_i64 {
+                    // Safe to cast to usize because we just checked x, y >= 0
+                    if let (Ok(xu), Ok(yu)) = (usize::try_from(x), usize::try_from(y)) {
+                        // Calculate index and check bounds
+                        if let Some(idx) = yu.checked_mul(width).and_then(|row| row.checked_add(xu)) {
+                            // Verify index is within bounds (redundant if width/height correct, but safe)
+                            if idx < tiles.len() {
+                                tiles[idx] = terrain;
+                            }
                         }
                     }
                 }
@@ -174,11 +179,11 @@ pub fn build_terrain_spans(
     let mut spans: Vec<Line> = Vec::with_capacity(usize::from(area.height));
 
     for screen_y in 0..area.height {
-        let world_y = viewport.y.saturating_add(i32::from(screen_y));
+        let world_y = viewport.y.wrapping_add(i32::from(screen_y));
         let mut line_spans = Vec::with_capacity(usize::from(area.width));
 
         for screen_x in 0..area.width {
-            let world_x = viewport.x.saturating_add(i32::from(screen_x));
+            let world_x = viewport.x.wrapping_add(i32::from(screen_x));
 
             let (text, color) =
                 if let (Ok(wx), Ok(wy)) = (usize::try_from(world_x), usize::try_from(world_y)) {
