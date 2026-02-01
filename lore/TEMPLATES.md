@@ -211,14 +211,14 @@ These fire during gameplay and get appended to the chronicle.
 
 ### VOID_INCIDENT
 
-**Slots:** `[SHIP_NAME]`, `[ANOMALY]`, `[CONSEQUENCE]`
+**Slots:** `[SHIP_NAME]`, `[YEAR]`, `[ANOMALY]`, `[CONSEQUENCE]`
 
 ```
-"[SHIP_NAME] reports [ANOMALY]. Course corrected. Crew shaken."
+"Year [YEAR]. [SHIP_NAME] reports [ANOMALY]. Course corrected. Crew shaken."
 
-"Incident aboard [SHIP_NAME]. [ANOMALY]. [CONSEQUENCE]."
+"[YEAR]: Incident aboard [SHIP_NAME]. [ANOMALY]. [CONSEQUENCE]."
 
-"The void touches [SHIP_NAME]. [ANOMALY]. They will not speak of it."
+"The void touches [SHIP_NAME] in [YEAR]. [ANOMALY]. They will not speak of it."
 ```
 
 ### LOCATION_NAMED

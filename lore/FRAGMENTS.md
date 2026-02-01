@@ -468,6 +468,9 @@ Suffixes for named tiles/areas.
 - Rest
 - Crossing
 - Void
+- Luck
+- Lode
+- Well
 
 ---
 

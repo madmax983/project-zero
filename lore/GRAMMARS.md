@@ -342,14 +342,14 @@ Legend:  "Year 412. [COLONY] founded. The first footprints in alien soil.
 When a significant event happens at `(x,y)`, the location may earn a name.
 
 **Structure:**
-- `[EVENT_NOUN] [SUFFIX]`      → Hunger Field, Silence Hill
-- `[PERSON]'s [SUFFIX]`        → Tovar's Stand, Kira's Rest
-- `[ADJECTIVE] [SUFFIX]`       → Bitter Crossing, Lost Watch
+- `[EVENT_NOUN] [LOCATION_SUFFIX]`      → Hunger Field, Silence Hill
+- `[PERSON]'s [LOCATION_SUFFIX]`        → Tovar's Stand, Kira's Rest
+- `[ADJECTIVE] [LOCATION_SUFFIX]`       → Bitter Crossing, Lost Watch
 
 **Triggers:**
-- Deaths > 3 in one tile → [SUFFIX: Grave, Fall, End]
-- Survivor of event → [PERSON]'s [SUFFIX: Luck, Hope]
-- Resource discovery → [RESOURCE] [SUFFIX: Lode, Well]
+- Deaths > 3 in one tile → [LOCATION_SUFFIX: Grave, Fall, End]
+- Survivor of event → [PERSON]'s [LOCATION_SUFFIX: Luck, Hope]
+- Resource discovery → [RESOURCE] [LOCATION_SUFFIX: Lode, Well]
 
 ---
 
