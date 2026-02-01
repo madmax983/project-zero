@@ -13,7 +13,7 @@ use ratatui::{
 use std::io;
 use std::time::{Duration, Instant};
 
-use scale::layer1::{generate_terrain, render_terrain, TerrainGrid, Viewport};
+use scale::layer1::{TerrainGrid, Viewport, generate_terrain, render_terrain};
 use scale::shared::time::{SimSpeed, SimulationTime};
 
 /// Represents the high-level state of the game loop.
@@ -153,8 +153,8 @@ fn render(world: &World, frame: &mut Frame) {
     let main_chunks = Layout::default()
         .direction(Direction::Vertical)
         .constraints([
-            Constraint::Min(10),     // Content area
-            Constraint::Length(1),   // Status bar
+            Constraint::Min(10),   // Content area
+            Constraint::Length(1), // Status bar
         ])
         .split(frame.area());
 
@@ -162,8 +162,8 @@ fn render(world: &World, frame: &mut Frame) {
     let content_chunks = Layout::default()
         .direction(Direction::Horizontal)
         .constraints([
-            Constraint::Min(20),      // Map area
-            Constraint::Length(20),   // Info panel
+            Constraint::Min(20),    // Map area
+            Constraint::Length(20), // Info panel
         ])
         .split(main_chunks[0]);
 
@@ -221,7 +221,6 @@ fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
         sim_time.speed.label(),
     );
 
-    let bar = Paragraph::new(status)
-        .style(Style::default().bg(Color::DarkGray).fg(Color::White));
+    let bar = Paragraph::new(status).style(Style::default().bg(Color::DarkGray).fg(Color::White));
     frame.render_widget(bar, area);
 }

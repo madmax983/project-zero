@@ -55,10 +55,10 @@ mod tests {
 
     #[test]
     fn test_sim_speed_values() {
-        assert_eq!(SimSpeed::Paused.ticks_per_second(), 0.0);
-        assert_eq!(SimSpeed::Normal.ticks_per_second(), 1.0);
-        assert_eq!(SimSpeed::Fast.ticks_per_second(), 3.0);
-        assert_eq!(SimSpeed::Faster.ticks_per_second(), 5.0);
+        assert!((SimSpeed::Paused.ticks_per_second() - 0.0).abs() < f32::EPSILON);
+        assert!((SimSpeed::Normal.ticks_per_second() - 1.0).abs() < f32::EPSILON);
+        assert!((SimSpeed::Fast.ticks_per_second() - 3.0).abs() < f32::EPSILON);
+        assert!((SimSpeed::Faster.ticks_per_second() - 5.0).abs() < f32::EPSILON);
     }
 
     #[test]
@@ -72,6 +72,6 @@ mod tests {
         let sim_time = SimulationTime::default();
         assert_eq!(sim_time.tick, 0);
         assert_eq!(sim_time.speed, SimSpeed::Normal);
-        assert_eq!(sim_time.accumulator, 0.0);
+        assert!((sim_time.accumulator - 0.0).abs() < f32::EPSILON);
     }
 }
