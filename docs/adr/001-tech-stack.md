@@ -1,6 +1,6 @@
 # 1. Use Bevy ECS and Ratatui
 
-Date: 2024-05-23
+Date: 2026-02-01
 Status: Accepted
 
 ## Context
