@@ -20,7 +20,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Named Locations
+## Named Locations [SPECCED]
 
 **Layer:** 1
 
