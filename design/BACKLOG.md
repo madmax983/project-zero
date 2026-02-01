@@ -6,7 +6,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 ## MVP — Layer 1: Colony Simulation
 
-- [ ] `001` Project scaffold and Bevy app shell — `specs/001-project-scaffold.md`
 - [ ] `002` Terrain grid generation — `specs/002-terrain-grid.md`
 - [ ] `003` Camera controls (pan, zoom) — `specs/003-camera-controls.md`
 - [ ] `004` Pop spawning and rendering — `specs/004-pop-entity.md`
