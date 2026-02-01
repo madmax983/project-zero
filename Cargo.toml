@@ -1,10 +1,13 @@
 [package]
-name = "project-zero"
+name = "scale"
 version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-bevy_ecs = "0.15.0"  # Just the ECS, no rendering
-ratatui = "0.29.0"    # TUI framework
-crossterm = "0.28.1"  # Terminal manipulation
-anyhow = "1.0"        # Error handling
+bevy_ecs = "0.15"
+ratatui = "0.29"
+crossterm = "0.28"
+anyhow = "1.0"
+
+[profile.dev]
+opt-level = 1
