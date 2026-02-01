@@ -8,16 +8,16 @@ use crossterm::{
 };
 use ratatui::{
     prelude::*,
-    widgets::{Block, BorderType, Borders},
+    widgets::{Block, BorderType, Borders, Paragraph},
 };
 use std::io;
 use std::time::{Duration, Instant};
 
-mod layer1;
-use layer1::{TerrainGrid, Viewport, generate_terrain, render_terrain};
+use scale::layer1::{generate_terrain, render_terrain, TerrainGrid, Viewport};
+use scale::shared::time::{SimSpeed, SimulationTime};
 
 /// Represents the high-level state of the game loop.
-#[derive(Resource, Default, PartialEq, Eq)]
+#[derive(Resource, Default, PartialEq, Eq, Clone, Copy)]
 pub enum GameState {
     /// The simulation is running normally.
     #[default]
@@ -53,6 +53,7 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
     world.insert_resource(GameState::Running);
     world.insert_resource(generate_terrain(80, 50));
     world.insert_resource(Viewport::default());
+    world.insert_resource(SimulationTime::default());
 
     let mut schedule = Schedule::default();
     // Systems will be added here by other specs
@@ -80,6 +81,15 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
         // Simulation tick
         if last_tick.elapsed() >= tick_rate {
             schedule.run(&mut world);
+
+            // Update tick count
+            if *world.resource::<GameState>() == GameState::Running {
+                let speed = world.resource::<SimulationTime>().speed;
+                if speed != SimSpeed::Paused {
+                    world.resource_mut::<SimulationTime>().tick += 1;
+                }
+            }
+
             last_tick = Instant::now();
         }
 
@@ -102,6 +112,15 @@ fn handle_input(world: &mut World, key: crossterm::event::KeyEvent) {
                 GameState::Paused => GameState::Running,
                 GameState::Quitting => GameState::Quitting,
             };
+        }
+        KeyCode::Char('1') => {
+            world.resource_mut::<SimulationTime>().speed = SimSpeed::Normal;
+        }
+        KeyCode::Char('2') => {
+            world.resource_mut::<SimulationTime>().speed = SimSpeed::Fast;
+        }
+        KeyCode::Char('3') => {
+            world.resource_mut::<SimulationTime>().speed = SimSpeed::Faster;
         }
         KeyCode::Char('w' | 's' | 'a' | 'd')
         | KeyCode::Up
@@ -130,18 +149,79 @@ fn handle_input(world: &mut World, key: crossterm::event::KeyEvent) {
 }
 
 fn render(world: &World, frame: &mut Frame) {
-    let area = frame.area();
+    // Main vertical split: content + status bar
+    let main_chunks = Layout::default()
+        .direction(Direction::Vertical)
+        .constraints([
+            Constraint::Min(10),     // Content area
+            Constraint::Length(1),   // Status bar
+        ])
+        .split(frame.area());
 
+    // Horizontal split: map + info panel
+    let content_chunks = Layout::default()
+        .direction(Direction::Horizontal)
+        .constraints([
+            Constraint::Min(20),      // Map area
+            Constraint::Length(20),   // Info panel
+        ])
+        .split(main_chunks[0]);
+
+    let map_area = content_chunks[0];
+    let info_area = content_chunks[1];
+    let status_area = main_chunks[1];
+
+    // Render map
+    render_map(frame, map_area, world);
+
+    // Render info panel
+    render_info_panel(frame, info_area, world);
+
+    // Render status bar
+    render_status_bar(frame, status_area, world);
+}
+
+fn render_map(frame: &mut Frame, area: Rect, world: &World) {
     let block = Block::default()
-        .title(" SCALE ")
         .borders(Borders::ALL)
-        .border_type(BorderType::Rounded);
+        .border_type(BorderType::Rounded)
+        .title(" Colony ");
+    let inner = block.inner(area);
+    frame.render_widget(block, area);
 
-    let inner_area = block.inner(area);
-
+    // Render terrain inside
     let terrain = world.resource::<TerrainGrid>();
     let viewport = world.resource::<Viewport>();
-    render_terrain(frame, inner_area, terrain, viewport);
+    render_terrain(frame, inner, terrain, viewport);
+}
 
+fn render_info_panel(frame: &mut Frame, area: Rect, _world: &World) {
+    let block = Block::default()
+        .borders(Borders::ALL)
+        .border_type(BorderType::Rounded)
+        .title(" Info ");
+    let inner = block.inner(area);
     frame.render_widget(block, area);
+
+    // Placeholder text
+    let text = Paragraph::new("Select something\nto see info here");
+    frame.render_widget(text, inner);
+}
+
+fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
+    let sim_time = world.resource::<SimulationTime>();
+    let game_state = world.resource::<GameState>();
+
+    let paused = *game_state == GameState::Paused || sim_time.speed == SimSpeed::Paused;
+
+    let status = format!(
+        " {} │ Tick: {} │ {} │ WASD:Move  Space:Pause  1-3:Speed  q:Quit ",
+        if paused { "⏸" } else { "▶" },
+        sim_time.tick,
+        sim_time.speed.label(),
+    );
+
+    let bar = Paragraph::new(status)
+        .style(Style::default().bg(Color::DarkGray).fg(Color::White));
+    frame.render_widget(bar, area);
 }
