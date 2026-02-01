@@ -1,4 +1,5 @@
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+#![allow(missing_docs)]
+use criterion::{Criterion, black_box, criterion_group, criterion_main};
 
 fn example_benchmark(c: &mut Criterion) {
     c.bench_function("example", |b| {

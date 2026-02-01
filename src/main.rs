@@ -1,24 +1,32 @@
+//! Main entry point for the Scale application.
+//!
+//! Handles terminal setup, the main game loop, and integration of Bevy ECS with Ratatui.
+
 use bevy_ecs::prelude::*;
-use ratatui::{
-    prelude::*,
-    widgets::{Block, Borders, BorderType},
-};
 use crossterm::{
     event::{self, Event, KeyCode},
     execute,
-    terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
+    terminal::{EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode, enable_raw_mode},
 };
-use std::time::{Duration, Instant};
+use ratatui::{
+    prelude::*,
+    widgets::{Block, BorderType, Borders},
+};
 use std::io;
+use std::time::{Duration, Instant};
 
 mod layer1;
-use layer1::{generate_terrain, TerrainGrid, Viewport, render_terrain};
+use layer1::{TerrainGrid, Viewport, generate_terrain, render_terrain};
 
+/// Global game state enum.
 #[derive(Resource, Default, PartialEq, Eq)]
 pub enum GameState {
+    /// The simulation is running.
     #[default]
     Running,
+    /// The simulation is paused.
     Paused,
+    /// The game is exiting.
     Quitting,
 }
 
@@ -97,13 +105,10 @@ fn handle_input(world: &mut World, key: crossterm::event::KeyEvent) {
                 GameState::Quitting => GameState::Quitting,
             };
         }
-        KeyCode::Char('w')
+        KeyCode::Char('w' | 's' | 'a' | 'd')
         | KeyCode::Up
-        | KeyCode::Char('s')
         | KeyCode::Down
-        | KeyCode::Char('a')
         | KeyCode::Left
-        | KeyCode::Char('d')
         | KeyCode::Right => {
             let mut viewport = world.resource_mut::<Viewport>();
             match key.code {
