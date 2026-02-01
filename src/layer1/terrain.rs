@@ -1,48 +1,69 @@
 use bevy_ecs::prelude::*;
-use ratatui::{
-    prelude::*,
-    widgets::Paragraph,
-};
 use rand::Rng;
+use ratatui::{prelude::*, widgets::Paragraph};
 
+/// Represents the different types of terrain available in the game.
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 pub enum TerrainType {
+    /// Walkable grass terrain.
     Grass,
+    /// Walkable dirt terrain.
     Dirt,
+    /// Walkable rock terrain.
     Rock,
+    /// Water terrain.
     Water,
 }
 
 impl TerrainType {
     /// Returns a string slice representation of the terrain.
     /// Used for rendering to avoid allocating a new String for every cell every frame.
-    pub fn as_str(&self) -> &'static str {
+    #[must_use]
+    pub const fn as_str(self) -> &'static str {
         match self {
-            TerrainType::Grass => ".",
-            TerrainType::Dirt => ",",
-            TerrainType::Rock => "#",
-            TerrainType::Water => "~",
+            Self::Grass => ".",
+            Self::Dirt => ",",
+            Self::Rock => "#",
+            Self::Water => "~",
         }
     }
 
-    pub fn color(&self) -> Color {
+    /// Returns the color associated with the terrain type.
+    #[must_use]
+    pub const fn color(self) -> Color {
         match self {
-            TerrainType::Grass => Color::Green,
-            TerrainType::Dirt => Color::Rgb(139, 90, 43),
-            TerrainType::Rock => Color::DarkGray,
-            TerrainType::Water => Color::Blue,
+            Self::Grass => Color::Green,
+            Self::Dirt => Color::Rgb(139, 90, 43),
+            Self::Rock => Color::DarkGray,
+            Self::Water => Color::Blue,
         }
     }
 }
 
+/// A grid representing the game map's terrain.
 #[derive(Resource)]
 pub struct TerrainGrid {
+    /// The width of the grid in tiles.
     pub width: usize,
+    /// The height of the grid in tiles.
     pub height: usize,
-    pub tiles: Vec<TerrainType>,  // row-major: index = y * width + x
+    /// The flat vector of tiles, stored in row-major order.
+    pub tiles: Vec<TerrainType>, // row-major: index = y * width + x
 }
 
 impl TerrainGrid {
+    /// Creates a new `TerrainGrid` with the specified dimensions, filled with the default terrain.
+    #[must_use]
+    pub fn new(width: usize, height: usize, default_terrain: TerrainType) -> Self {
+        Self {
+            width,
+            height,
+            tiles: vec![default_terrain; width * height],
+        }
+    }
+
+    /// Retrieves the terrain type at the specified coordinates, if within bounds.
+    #[must_use]
     pub fn get(&self, x: usize, y: usize) -> Option<TerrainType> {
         if x < self.width && y < self.height {
             Some(self.tiles[y * self.width + x])
@@ -50,79 +71,93 @@ impl TerrainGrid {
             None
         }
     }
-}
 
-#[derive(Resource, Default)]
-pub struct Viewport {
-    pub x: i32,  // Top-left corner in grid coords
-    pub y: i32,
-}
+    /// Fills a circle with the specified terrain type.
+    ///
+    /// The circle is defined by its center `(cx, cy)` and radius `r`.
+    /// Tiles within the radius are set to `t`, provided they are within grid bounds.
+    pub fn fill_circle(&mut self, cx: usize, cy: usize, r: usize, t: TerrainType) {
+        let r_sq = r.saturating_mul(r);
+        let min_x = cx.saturating_sub(r);
+        let max_x = (cx + r).min(self.width - 1);
+        let min_y = cy.saturating_sub(r);
+        let max_y = (cy + r).min(self.height - 1);
 
-pub fn generate_terrain(width: usize, height: usize) -> TerrainGrid {
-    let mut rng = rand::thread_rng();
-    let mut tiles = vec![TerrainType::Grass; width * height];
+        for y in min_y..=max_y {
+            for x in min_x..=max_x {
+                // Calculate relative distance squared safely
+                let dx = x.abs_diff(cx);
+                let dy = y.abs_diff(cy);
 
-    // Scatter some dirt patches
-    for _ in 0..50 {
-        let cx = rng.gen_range(0..width);
-        let cy = rng.gen_range(0..height);
-        let radius = rng.gen_range(2..6);
-        fill_circle(&mut tiles, width, height, cx, cy, radius, TerrainType::Dirt);
-    }
-
-    // Scatter some rock
-    for _ in 0..30 {
-        let cx = rng.gen_range(0..width);
-        let cy = rng.gen_range(0..height);
-        let radius = rng.gen_range(1..4);
-        fill_circle(&mut tiles, width, height, cx, cy, radius, TerrainType::Rock);
-    }
-
-    // A river or lake
-    for _ in 0..10 {
-        let cx = rng.gen_range(0..width);
-        let cy = rng.gen_range(0..height);
-        let radius = rng.gen_range(3..8);
-        fill_circle(&mut tiles, width, height, cx, cy, radius, TerrainType::Water);
-    }
-
-    TerrainGrid { width, height, tiles }
-}
-
-fn fill_circle(tiles: &mut [TerrainType], w: usize, h: usize, cx: usize, cy: usize, r: usize, t: TerrainType) {
-    let r2 = (r * r) as i32;
-    for dy in -(r as i32)..=(r as i32) {
-        for dx in -(r as i32)..=(r as i32) {
-            if dx*dx + dy*dy <= r2 {
-                let x = cx as i32 + dx;
-                let y = cy as i32 + dy;
-                if x >= 0 && x < w as i32 && y >= 0 && y < h as i32 {
-                    tiles[y as usize * w + x as usize] = t;
+                if dx * dx + dy * dy <= r_sq {
+                    self.tiles[y * self.width + x] = t;
                 }
             }
         }
     }
 }
 
-pub fn build_terrain_spans(area: Rect, terrain: &TerrainGrid, viewport: &Viewport) -> Vec<Line<'static>> {
+/// Represents the camera viewport into the world.
+#[derive(Resource, Default)]
+pub struct Viewport {
+    /// Top-left corner x-coordinate in grid coords.
+    pub x: i32,
+    /// Top-left corner y-coordinate in grid coords.
+    pub y: i32,
+}
+
+/// Generates a new terrain grid with procedural features.
+#[must_use]
+pub fn generate_terrain(width: usize, height: usize) -> TerrainGrid {
+    let mut rng = rand::thread_rng();
+    let mut grid = TerrainGrid::new(width, height, TerrainType::Grass);
+
+    scatter_terrain(&mut rng, &mut grid, 50, 2..6, TerrainType::Dirt);
+    scatter_terrain(&mut rng, &mut grid, 30, 1..4, TerrainType::Rock);
+    scatter_terrain(&mut rng, &mut grid, 10, 3..8, TerrainType::Water);
+
+    grid
+}
+
+fn scatter_terrain(
+    rng: &mut impl Rng,
+    grid: &mut TerrainGrid,
+    count: usize,
+    radius_range: std::ops::Range<usize>,
+    terrain: TerrainType,
+) {
+    for _ in 0..count {
+        let cx = rng.gen_range(0..grid.width);
+        let cy = rng.gen_range(0..grid.height);
+        let radius = rng.gen_range(radius_range.clone());
+        grid.fill_circle(cx, cy, radius, terrain);
+    }
+}
+
+/// Builds the lines of text to render the terrain within a given area.
+#[must_use]
+pub fn build_terrain_spans(
+    area: Rect,
+    terrain: &TerrainGrid,
+    viewport: &Viewport,
+) -> Vec<Line<'static>> {
     let mut spans: Vec<Line> = Vec::with_capacity(area.height as usize);
 
     for screen_y in 0..area.height {
-        let world_y = viewport.y + screen_y as i32;
+        let world_y = viewport.y + i32::from(screen_y);
         let mut line_spans = Vec::with_capacity(area.width as usize);
 
         for screen_x in 0..area.width {
-            let world_x = viewport.x + screen_x as i32;
+            let world_x = viewport.x + i32::from(screen_x);
 
-            let (text, color) = if world_x >= 0 && world_y >= 0 {
-                if let Some(tile) = terrain.get(world_x as usize, world_y as usize) {
-                    (tile.as_str(), tile.color())
+            let (text, color) =
+                if let (Ok(wx), Ok(wy)) = (usize::try_from(world_x), usize::try_from(world_y)) {
+                    terrain
+                        .get(wx, wy)
+                        .map_or((" ", Color::Black), |tile| (tile.as_str(), tile.color()))
                 } else {
                     (" ", Color::Black)
-                }
-            } else {
-                (" ", Color::Black)
-            };
+                };
 
             line_spans.push(Span::styled(text, Style::default().fg(color)));
         }
@@ -131,6 +166,7 @@ pub fn build_terrain_spans(area: Rect, terrain: &TerrainGrid, viewport: &Viewpor
     spans
 }
 
+/// Renders the terrain to the frame.
 pub fn render_terrain(frame: &mut Frame, area: Rect, terrain: &TerrainGrid, viewport: &Viewport) {
     let spans = build_terrain_spans(area, terrain, viewport);
     let paragraph = Paragraph::new(spans);
@@ -153,7 +189,10 @@ mod tests {
         assert!(has_grass, "Generated terrain should include grass");
 
         let all_valid = grid.tiles.iter().all(|t| {
-            matches!(t, TerrainType::Grass | TerrainType::Dirt | TerrainType::Rock | TerrainType::Water)
+            matches!(
+                t,
+                TerrainType::Grass | TerrainType::Dirt | TerrainType::Rock | TerrainType::Water
+            )
         });
         assert!(all_valid, "All tiles must be valid terrain types");
     }
@@ -162,8 +201,7 @@ mod tests {
     fn test_terrain_grid_get_bounds() {
         let width = 10;
         let height = 5;
-        let tiles = vec![TerrainType::Grass; width * height];
-        let grid = TerrainGrid { width, height, tiles };
+        let grid = TerrainGrid::new(width, height, TerrainType::Grass);
 
         // Valid access
         assert_eq!(grid.get(0, 0), Some(TerrainType::Grass));
@@ -180,14 +218,12 @@ mod tests {
     fn test_fill_circle_clipping() {
         let width = 10;
         let height = 10;
-        let mut tiles = vec![TerrainType::Grass; width * height];
+        let mut grid = TerrainGrid::new(width, height, TerrainType::Grass);
 
         // Draw a circle of Dirt at (0,0) with radius 2.
         // Should cover (0,0), (0,1), (0,2), (1,0), (1,1), (2,0) etc.
         // and safely ignore negative coordinates.
-        fill_circle(&mut tiles, width, height, 0, 0, 2, TerrainType::Dirt);
-
-        let grid = TerrainGrid { width, height, tiles };
+        grid.fill_circle(0, 0, 2, TerrainType::Dirt);
 
         // (0,0) should be Dirt
         assert_eq!(grid.get(0, 0), Some(TerrainType::Dirt));
@@ -207,8 +243,7 @@ mod tests {
         let width = 5;
         let height = 5;
         // Fill with Grass
-        let tiles = vec![TerrainType::Grass; width * height];
-        let grid = TerrainGrid { width, height, tiles };
+        let grid = TerrainGrid::new(width, height, TerrainType::Grass);
 
         // Viewport shifted so (0,0) is at screen (1,1)
         // Viewport x=-1, y=-1.

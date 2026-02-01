@@ -1,24 +1,30 @@
+//! Main entry point for the Scale application.
+
 use bevy_ecs::prelude::*;
-use ratatui::{
-    prelude::*,
-    widgets::{Block, Borders, BorderType},
-};
 use crossterm::{
     event::{self, Event, KeyCode},
     execute,
-    terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
+    terminal::{EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode, enable_raw_mode},
 };
-use std::time::{Duration, Instant};
+use ratatui::{
+    prelude::*,
+    widgets::{Block, BorderType, Borders},
+};
 use std::io;
+use std::time::{Duration, Instant};
 
 mod layer1;
-use layer1::{generate_terrain, TerrainGrid, Viewport, render_terrain};
+use layer1::{TerrainGrid, Viewport, generate_terrain, render_terrain};
 
+/// Represents the current state of the game.
 #[derive(Resource, Default, PartialEq, Eq)]
 pub enum GameState {
+    /// The game is running.
     #[default]
     Running,
+    /// The game is paused.
     Paused,
+    /// The game is quitting.
     Quitting,
 }
 
@@ -97,13 +103,10 @@ fn handle_input(world: &mut World, key: crossterm::event::KeyEvent) {
                 GameState::Quitting => GameState::Quitting,
             };
         }
-        KeyCode::Char('w')
+        KeyCode::Char('w' | 's' | 'a' | 'd')
         | KeyCode::Up
-        | KeyCode::Char('s')
         | KeyCode::Down
-        | KeyCode::Char('a')
         | KeyCode::Left
-        | KeyCode::Char('d')
         | KeyCode::Right => {
             let mut viewport = world.resource_mut::<Viewport>();
             match key.code {
