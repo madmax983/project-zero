@@ -14,12 +14,14 @@ pub enum TerrainType {
 }
 
 impl TerrainType {
-    pub fn char(&self) -> char {
+    /// Returns a string slice representation of the terrain.
+    /// Used for rendering to avoid allocating a new String for every cell every frame.
+    pub fn as_str(&self) -> &'static str {
         match self {
-            TerrainType::Grass => '.',
-            TerrainType::Dirt => ',',
-            TerrainType::Rock => '#',
-            TerrainType::Water => '~',
+            TerrainType::Grass => ".",
+            TerrainType::Dirt => ",",
+            TerrainType::Rock => "#",
+            TerrainType::Water => "~",
         }
     }
 
@@ -50,16 +52,10 @@ impl TerrainGrid {
     }
 }
 
-#[derive(Resource)]
+#[derive(Resource, Default)]
 pub struct Viewport {
     pub x: i32,  // Top-left corner in grid coords
     pub y: i32,
-}
-
-impl Default for Viewport {
-    fn default() -> Self {
-        Self { x: 0, y: 0 }
-    }
 }
 
 pub fn generate_terrain(width: usize, height: usize) -> TerrainGrid {
@@ -108,31 +104,35 @@ fn fill_circle(tiles: &mut [TerrainType], w: usize, h: usize, cx: usize, cy: usi
     }
 }
 
-pub fn render_terrain(frame: &mut Frame, area: Rect, terrain: &TerrainGrid, viewport: &Viewport) {
-    let mut spans: Vec<Line> = Vec::new();
+pub fn build_terrain_spans(area: Rect, terrain: &TerrainGrid, viewport: &Viewport) -> Vec<Line<'static>> {
+    let mut spans: Vec<Line> = Vec::with_capacity(area.height as usize);
 
     for screen_y in 0..area.height {
         let world_y = viewport.y + screen_y as i32;
-        let mut line_spans = Vec::new();
+        let mut line_spans = Vec::with_capacity(area.width as usize);
 
         for screen_x in 0..area.width {
             let world_x = viewport.x + screen_x as i32;
 
-            let (ch, color) = if world_x >= 0 && world_y >= 0 {
+            let (text, color) = if world_x >= 0 && world_y >= 0 {
                 if let Some(tile) = terrain.get(world_x as usize, world_y as usize) {
-                    (tile.char(), tile.color())
+                    (tile.as_str(), tile.color())
                 } else {
-                    (' ', Color::Black)
+                    (" ", Color::Black)
                 }
             } else {
-                (' ', Color::Black)
+                (" ", Color::Black)
             };
 
-            line_spans.push(Span::styled(ch.to_string(), Style::default().fg(color)));
+            line_spans.push(Span::styled(text, Style::default().fg(color)));
         }
         spans.push(Line::from(line_spans));
     }
+    spans
+}
 
+pub fn render_terrain(frame: &mut Frame, area: Rect, terrain: &TerrainGrid, viewport: &Viewport) {
+    let spans = build_terrain_spans(area, terrain, viewport);
     let paragraph = Paragraph::new(spans);
     frame.render_widget(paragraph, area);
 }
