@@ -129,24 +129,28 @@ fn fill_circle(
     t: TerrainType,
 ) {
     let Ok(r_i32) = i32::try_from(r) else { return };
-    let Ok(cx_i32) = i32::try_from(cx) else {
+    let Ok(center_x) = i32::try_from(cx) else {
         return;
     };
-    let Ok(cy_i32) = i32::try_from(cy) else {
+    let Ok(center_y) = i32::try_from(cy) else {
         return;
     };
-    let Ok(w_i32) = i32::try_from(w) else { return };
-    let Ok(h_i32) = i32::try_from(h) else { return };
+    let Ok(width_i32) = i32::try_from(w) else {
+        return;
+    };
+    let Ok(height_i32) = i32::try_from(h) else {
+        return;
+    };
 
     let r2 = r_i32 * r_i32;
 
     for dy in -r_i32..=r_i32 {
         for dx in -r_i32..=r_i32 {
             if dx * dx + dy * dy <= r2 {
-                let x = cx_i32 + dx;
-                let y = cy_i32 + dy;
+                let x = center_x + dx;
+                let y = center_y + dy;
 
-                if x >= 0 && x < w_i32 && y >= 0 && y < h_i32 {
+                if x >= 0 && x < width_i32 && y >= 0 && y < height_i32 {
                     if let (Ok(xu), Ok(yu)) = (usize::try_from(x), usize::try_from(y)) {
                         if let Some(idx) = yu.checked_mul(w).and_then(|row| row.checked_add(xu)) {
                             if idx < tiles.len() {
@@ -215,7 +219,10 @@ mod tests {
         assert!(has_grass, "Generated terrain should include grass");
 
         let all_valid = grid.tiles.iter().all(|t| {
-            matches!(t, TerrainType::Grass | TerrainType::Dirt | TerrainType::Rock | TerrainType::Water)
+            matches!(
+                t,
+                TerrainType::Grass | TerrainType::Dirt | TerrainType::Rock | TerrainType::Water
+            )
         });
         assert!(all_valid, "All tiles must be valid terrain types");
     }
@@ -225,7 +232,11 @@ mod tests {
         let width = 10;
         let height = 5;
         let tiles = vec![TerrainType::Grass; width * height];
-        let grid = TerrainGrid { width, height, tiles };
+        let grid = TerrainGrid {
+            width,
+            height,
+            tiles,
+        };
 
         // Valid access
         assert_eq!(grid.get(0, 0), Some(TerrainType::Grass));
@@ -249,7 +260,11 @@ mod tests {
         // and safely ignore negative coordinates.
         fill_circle(&mut tiles, width, height, 0, 0, 2, TerrainType::Dirt);
 
-        let grid = TerrainGrid { width, height, tiles };
+        let grid = TerrainGrid {
+            width,
+            height,
+            tiles,
+        };
 
         // (0,0) should be Dirt
         assert_eq!(grid.get(0, 0), Some(TerrainType::Dirt));
@@ -270,7 +285,11 @@ mod tests {
         let height = 5;
         // Fill with Grass
         let tiles = vec![TerrainType::Grass; width * height];
-        let grid = TerrainGrid { width, height, tiles };
+        let grid = TerrainGrid {
+            width,
+            height,
+            tiles,
+        };
 
         // Viewport shifted so (0,0) is at screen (1,1)
         // Viewport x=-1, y=-1.
