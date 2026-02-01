@@ -10,5 +10,31 @@ crossterm = "0.28"
 anyhow = "1.0"
 rand = "0.8"
 
+[dev-dependencies]
+criterion = { version = "0.5", features = ["html_reports"] }
+
+[lints.rust]
+unsafe_code = "forbid"
+missing_docs = "warn"
+
+[lints.clippy]
+pedantic = { level = "warn", priority = -1 }
+nursery = { level = "warn", priority = -1 }
+# Allow some pedantic lints that are too noisy
+module_name_repetitions = "allow"
+similar_names = "allow"
+
 [profile.dev]
 opt-level = 1
+
+[profile.release]
+lto = true
+codegen-units = 1
+opt-level = 3
+
+[profile.bench]
+inherits = "release"
+
+[[bench]]
+name = "benchmarks"
+harness = false

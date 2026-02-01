@@ -2,6 +2,15 @@
 /target
 Cargo.lock
 
+# Coverage
+cobertura.xml
+tarpaulin-report.html
+*.profraw
+*.profdata
+
+# Benchmarks
+/target/criterion
+
 # IDE
 .claude
 .vscode/

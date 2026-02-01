@@ -1,0 +1,15 @@
+[target.x86_64-pc-windows-msvc]
+rustflags = ["-C", "link-arg=-fuse-ld=lld"]
+
+[target.x86_64-unknown-linux-gnu]
+rustflags = ["-C", "link-arg=-fuse-ld=lld"]
+
+[alias]
+# Pre-commit checks
+precommit = "run --bin pre-commit-check --"
+fmt-check = "fmt --all -- --check"
+lint = "clippy --all-targets --all-features -- -D warnings -W clippy::pedantic -W clippy::nursery"
+
+[build]
+# Parallel compilation
+jobs = 8
