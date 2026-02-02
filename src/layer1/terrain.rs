@@ -237,9 +237,7 @@ pub fn build_terrain_spans(
 
 /// Builds a vector of text lines to render the map layer (terrain, pops, buildings, cursor).
 #[must_use]
-pub fn build_map_layer_spans<S: BuildHasher>(
-    ctx: MapRenderContext<'_, S>,
-) -> Vec<Line<'static>> {
+pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Vec<Line<'static>> {
     let mut lines: Vec<Line> = Vec::new();
 
     for screen_y in 0..ctx.area.height {
@@ -250,8 +248,9 @@ pub fn build_map_layer_spans<S: BuildHasher>(
             let world_x = ctx.viewport.x + i32::from(screen_x);
 
             // Build mode cursor (highest priority)
-            if let Some((_, selected, can_place)) =
-                ctx.build_mode.filter(|(cursor, _, _)| cursor.x == world_x && cursor.y == world_y)
+            if let Some((_, selected, can_place)) = ctx
+                .build_mode
+                .filter(|(cursor, _, _)| cursor.x == world_x && cursor.y == world_y)
             {
                 let bg = if can_place { Color::Green } else { Color::Red };
                 let ch = selected.char();
@@ -263,7 +262,10 @@ pub fn build_map_layer_spans<S: BuildHasher>(
             }
 
             // Buildings
-            if let Some(building_type) = ctx.buildings_data.get(&GridPosition { x: world_x, y: world_y }) {
+            if let Some(building_type) = ctx.buildings_data.get(&GridPosition {
+                x: world_x,
+                y: world_y,
+            }) {
                 line_spans.push(Span::styled(
                     building_type.char().to_string(),
                     Style::default().fg(building_type.color()),
@@ -272,7 +274,10 @@ pub fn build_map_layer_spans<S: BuildHasher>(
             }
 
             // Check for pop
-            if let Some((ch, color)) = ctx.pops_data.get(&GridPosition { x: world_x, y: world_y }) {
+            if let Some((ch, color)) = ctx.pops_data.get(&GridPosition {
+                x: world_x,
+                y: world_y,
+            }) {
                 line_spans.push(Span::styled(ch.to_string(), Style::default().fg(*color)));
                 continue;
             }
@@ -295,10 +300,7 @@ pub fn build_map_layer_spans<S: BuildHasher>(
 }
 
 /// Render terrain grid, buildings, and pops to the given frame area with viewport offset.
-pub fn render_map_layer<S: BuildHasher>(
-    frame: &mut Frame,
-    ctx: MapRenderContext<'_, S>,
-) {
+pub fn render_map_layer<S: BuildHasher>(frame: &mut Frame, ctx: MapRenderContext<'_, S>) {
     let area = ctx.area;
     let lines = build_map_layer_spans(ctx);
     let paragraph = Paragraph::new(lines);

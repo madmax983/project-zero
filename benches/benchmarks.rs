@@ -1,12 +1,16 @@
 //! Benchmarks.
 #![allow(missing_docs)]
-#![allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap, clippy::unnecessary_cast)]
+#![allow(
+    clippy::cast_possible_truncation,
+    clippy::cast_possible_wrap,
+    clippy::unnecessary_cast
+)]
 
 use criterion::{Criterion, black_box, criterion_group, criterion_main};
+use ratatui::prelude::{Color, Rect};
 use scale::layer1::{
     GridPosition, MapRenderContext, TerrainGrid, TerrainType, Viewport, build_map_layer_spans,
 };
-use ratatui::prelude::{Color, Rect};
 use std::collections::HashMap;
 
 fn benchmark_rendering(c: &mut Criterion) {

@@ -1,8 +1,8 @@
 // src/layer1/building.rs
 
 use super::GridPosition;
-use super::housing::Housing;
 use super::farm::Farm;
+use super::housing::Housing;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use bevy_ecs::prelude::*;
 use ratatui::style::Color;

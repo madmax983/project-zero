@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::pop::Pop;
 use crate::layer1::needs::Needs;
+use crate::layer1::pop::Pop;
+use bevy_ecs::prelude::*;
 
 /// Colony-wide resources.
 #[derive(Resource, Default)]
@@ -28,9 +28,9 @@ impl Default for Farm {
 }
 
 const FOOD_PER_WORKER_PER_TICK: f32 = 0.3;
-const FOOD_HUNGER_THRESHOLD: f32 = 0.7;  // Eat when below this
-const FOOD_PER_MEAL: f32 = 0.1;          // Food consumed per meal
-const HUNGER_PER_MEAL: f32 = 0.3;        // Hunger restored per meal
+const FOOD_HUNGER_THRESHOLD: f32 = 0.7; // Eat when below this
+const FOOD_PER_MEAL: f32 = 0.1; // Food consumed per meal
+const HUNGER_PER_MEAL: f32 = 0.3; // Hunger restored per meal
 
 /// Produces food from all farms with workers.
 pub fn produce_food_system(world: &mut World) {
@@ -42,10 +42,13 @@ pub fn produce_food_system(world: &mut World) {
         // We collect the workers to check validity later to avoid nested borrow issues if any,
         // although shared-shared should be fine. But to be safe and consistent with cleanup pattern:
         // Actually, shared-shared is fine.
-        query.iter(world)
+        query
+            .iter(world)
             .map(|farm| {
                 #[allow(clippy::cast_precision_loss)]
-                let count = farm.workers.iter()
+                let count = farm
+                    .workers
+                    .iter()
                     .filter(|&&e| world.get_entity(e).is_ok())
                     .count() as f32;
                 count * FOOD_PER_WORKER_PER_TICK
@@ -119,7 +122,8 @@ pub fn clean_dead_workers_system(world: &mut World) {
         };
 
         // Identify dead workers
-        let dead_workers: Vec<Entity> = workers.iter()
+        let dead_workers: Vec<Entity> = workers
+            .iter()
             .filter(|&&worker| world.get_entity(worker).is_err())
             .copied()
             .collect();
@@ -138,10 +142,10 @@ pub fn clean_dead_workers_system(world: &mut World) {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::pop::Pop;
-    use crate::layer1::needs::Needs;
-    use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::GridPosition;
+    use crate::layer1::building::{Building, BuildingType};
+    use crate::layer1::needs::Needs;
+    use crate::layer1::pop::Pop;
 
     #[test]
     fn test_farm_default() {
@@ -187,7 +191,10 @@ mod tests {
         produce_food_system(&mut world);
 
         let resources = world.resource::<ColonyResources>();
-        assert!(resources.food >= 0.6, "Two workers should produce more food");
+        assert!(
+            resources.food >= 0.6,
+            "Two workers should produce more food"
+        );
     }
 
     #[test]
@@ -217,7 +224,10 @@ mod tests {
 
         world.spawn((
             Pop,
-            Needs { hunger: 0.5, rest: 0.8 },
+            Needs {
+                hunger: 0.5,
+                rest: 0.8,
+            },
         ));
 
         let food_before = world.resource::<ColonyResources>().food;
@@ -232,10 +242,15 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(ColonyResources { food: 1.0 });
 
-        let pop = world.spawn((
-            Pop,
-            Needs { hunger: 0.5, rest: 0.8 },
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Needs {
+                    hunger: 0.5,
+                    rest: 0.8,
+                },
+            ))
+            .id();
 
         consume_food_system(&mut world);
 
@@ -250,7 +265,10 @@ mod tests {
 
         world.spawn((
             Pop,
-            Needs { hunger: 0.9, rest: 0.8 },
+            Needs {
+                hunger: 0.9,
+                rest: 0.8,
+            },
         ));
 
         let food_before = world.resource::<ColonyResources>().food;
@@ -268,8 +286,20 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(ColonyResources { food: 0.05 }); // Less than meal cost
 
-        world.spawn((Pop, Needs { hunger: 0.5, rest: 0.8 }));
-        world.spawn((Pop, Needs { hunger: 0.4, rest: 0.8 }));
+        world.spawn((
+            Pop,
+            Needs {
+                hunger: 0.5,
+                rest: 0.8,
+            },
+        ));
+        world.spawn((
+            Pop,
+            Needs {
+                hunger: 0.4,
+                rest: 0.8,
+            },
+        ));
 
         consume_food_system(&mut world);
 
@@ -304,7 +334,9 @@ mod tests {
         let mut world = World::new();
 
         world.spawn((
-            Building { building_type: BuildingType::Farm },
+            Building {
+                building_type: BuildingType::Farm,
+            },
             GridPosition { x: 5, y: 5 },
             Farm::default(),
         ));
