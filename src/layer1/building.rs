@@ -20,6 +20,14 @@ pub enum BuildingType {
 
 impl BuildingType {
     /// Returns the character representation of the building.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use scale::layer1::building::BuildingType;
+    ///
+    /// assert_eq!(BuildingType::Housing.char(), '⌂');
+    /// ```
     #[must_use]
     pub const fn char(&self) -> char {
         match self {
@@ -29,6 +37,15 @@ impl BuildingType {
     }
 
     /// Returns the color of the building.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use scale::layer1::building::BuildingType;
+    /// use ratatui::style::Color;
+    ///
+    /// assert_eq!(BuildingType::Housing.color(), Color::Rgb(139, 90, 43));
+    /// ```
     #[must_use]
     pub const fn color(&self) -> Color {
         match self {
@@ -38,6 +55,14 @@ impl BuildingType {
     }
 
     /// Returns the human-readable label of the building.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use scale::layer1::building::BuildingType;
+    ///
+    /// assert_eq!(BuildingType::Housing.label(), "Housing");
+    /// ```
     #[must_use]
     pub const fn label(&self) -> &'static str {
         match self {
@@ -47,6 +72,14 @@ impl BuildingType {
     }
 
     /// Returns the next building type in the cycle.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use scale::layer1::building::BuildingType;
+    ///
+    /// assert_eq!(BuildingType::Housing.next(), BuildingType::Farm);
+    /// ```
     #[must_use]
     pub const fn next(&self) -> Self {
         match self {
@@ -109,6 +142,27 @@ pub fn can_place_building(world: &World, x: i32, y: i32) -> bool {
 
 /// Attempt to place a building at the given position.
 /// Returns true if successful, false if placement blocked.
+///
+/// This will:
+/// 1. Check `can_place_building` (bounds, terrain, occupation).
+/// 2. Spawn a building entity with the correct components (e.g., `Housing` or `Farm`).
+/// 3. Mark the tile as occupied in `OccupiedTiles`.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::building::{try_place_building, BuildingType, OccupiedTiles};
+/// use scale::layer1::terrain::{TerrainGrid, TerrainType};
+/// use bevy_ecs::prelude::*;
+///
+/// let mut world = World::new();
+/// let tiles = vec![TerrainType::Grass; 100]; // 10x10 grass
+/// world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
+/// world.insert_resource(OccupiedTiles::default());
+///
+/// let placed = try_place_building(&mut world, 5, 5, BuildingType::Housing);
+/// assert!(placed);
+/// ```
 pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: BuildingType) -> bool {
     if !can_place_building(world, x, y) {
         return false;

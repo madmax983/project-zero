@@ -1,3 +1,15 @@
+//! Population management and entity definitions.
+//!
+//! This module defines the `Pop` entity (the citizens of the colony) and their
+//! spatial existence via `GridPosition`. It also handles the initial creation
+//! of the colony's population.
+//!
+//! # Key Concepts
+//!
+//! * **Pop**: A marker component representing a simulated person.
+//! * **GridPosition**: A discrete 2D coordinate on the map.
+//! * **Spawning**: The process of placing pops on valid terrain.
+
 use super::needs::Needs;
 use super::terrain::{TerrainGrid, TerrainType};
 use bevy_ecs::prelude::*;
@@ -5,19 +17,51 @@ use rand::Rng;
 use ratatui::style::Color;
 
 /// Marker component for pop entities.
+///
+/// A "Pop" (short for Population) is a simulated agent in the colony.
+/// They have needs, perform jobs, and require housing.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::pop::Pop;
+/// use bevy_ecs::prelude::*;
+///
+/// let mut world = World::new();
+/// let pop_entity = world.spawn(Pop).id();
+/// ```
 #[derive(Component)]
 pub struct Pop;
 
 /// Grid position in world space.
+///
+/// Used for any entity that occupies a specific tile on the `TerrainGrid`.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::pop::GridPosition;
+///
+/// let pos = GridPosition { x: 10, y: 5 };
+/// assert_eq!(pos.x, 10);
+/// ```
 #[derive(Component, Default, Clone, Copy, Debug, PartialEq, Eq, Hash)]
 pub struct GridPosition {
-    /// The X coordinate.
+    /// The X coordinate (horizontal).
     pub x: i32,
-    /// The Y coordinate.
+    /// The Y coordinate (vertical).
     pub y: i32,
 }
 
 /// Spawn 5 initial pops at random walkable positions.
+///
+/// This function attempts to find valid starting locations for the initial colony.
+/// It will retry random coordinates until it finds a tile that is:
+/// * Within bounds
+/// * Not Water
+/// * Not Rock
+///
+/// If it fails to find a spot after `MAX_ATTEMPTS` (1000), it gives up for that pop.
 pub fn spawn_initial_pops(world: &mut World) {
     let mut rng = rand::thread_rng();
     spawn_initial_pops_internal(world, &mut rng);

@@ -22,6 +22,15 @@ pub enum TerrainType {
 impl TerrainType {
     /// Returns a string slice representation of the terrain.
     /// Used for rendering to avoid allocating a new String for every cell every frame.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use scale::layer1::terrain::TerrainType;
+    ///
+    /// assert_eq!(TerrainType::Grass.as_str(), ".");
+    /// assert_eq!(TerrainType::Rock.as_str(), "#");
+    /// ```
     #[must_use]
     pub const fn as_str(self) -> &'static str {
         match self {
@@ -33,6 +42,15 @@ impl TerrainType {
     }
 
     /// Returns the color associated with this terrain type.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use scale::layer1::terrain::TerrainType;
+    /// use ratatui::style::Color;
+    ///
+    /// assert_eq!(TerrainType::Grass.color(), Color::Green);
+    /// ```
     #[must_use]
     pub const fn color(self) -> Color {
         match self {
@@ -57,6 +75,18 @@ pub struct TerrainGrid {
 
 impl TerrainGrid {
     /// Retrieves the terrain type at the specified coordinates, if within bounds.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use scale::layer1::terrain::{TerrainGrid, TerrainType, generate_terrain};
+    ///
+    /// let grid = generate_terrain(10, 10);
+    /// if let Some(tile) = grid.get(0, 0) {
+    ///     println!("Tile at (0,0) is {:?}", tile);
+    /// }
+    /// assert!(grid.get(100, 100).is_none());
+    /// ```
     #[must_use]
     pub fn get(&self, x: usize, y: usize) -> Option<TerrainType> {
         if x < self.width && y < self.height {
