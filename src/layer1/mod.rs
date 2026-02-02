@@ -6,3 +6,7 @@
 /// Terrain generation and grid management.
 pub mod terrain;
 pub use terrain::*;
+
+/// Pop entity management.
+pub mod pop;
+pub use pop::*;

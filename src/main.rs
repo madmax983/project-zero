@@ -20,10 +20,14 @@ use ratatui::{
     prelude::*,
     widgets::{Block, BorderType, Borders, Paragraph},
 };
+use std::collections::HashSet;
 use std::io;
 use std::time::{Duration, Instant};
 
-use scale::layer1::{TerrainGrid, Viewport, generate_terrain, render_terrain};
+use scale::layer1::{
+    generate_terrain, render_terrain_and_pops, spawn_initial_pops, GridPosition, TerrainGrid,
+    Viewport,
+};
 use scale::shared::time::{SimSpeed, SimulationTime};
 
 /// Represents the high-level state of the game loop.
@@ -64,6 +68,8 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
     world.insert_resource(generate_terrain(80, 50));
     world.insert_resource(Viewport::default());
     world.insert_resource(SimulationTime::default());
+
+    spawn_initial_pops(&mut world);
 
     let mut schedule = Schedule::default();
     // Systems will be added here by other specs
@@ -202,7 +208,14 @@ fn render_map(frame: &mut Frame, area: Rect, world: &World) {
     // Render terrain inside
     let terrain = world.resource::<TerrainGrid>();
     let viewport = world.resource::<Viewport>();
-    render_terrain(frame, inner, terrain, viewport);
+
+    let pop_positions: HashSet<(i32, i32)> = world
+        .iter_entities()
+        .filter_map(|entity| entity.get::<GridPosition>())
+        .map(|pos| (pos.x, pos.y))
+        .collect();
+
+    render_terrain_and_pops(frame, inner, terrain, viewport, &pop_positions);
 }
 
 fn render_info_panel(frame: &mut Frame, area: Rect, _world: &World) {

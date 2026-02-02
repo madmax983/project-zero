@@ -1,6 +1,7 @@
 use bevy_ecs::prelude::*;
 use rand::Rng;
 use ratatui::{prelude::*, widgets::Paragraph};
+use std::collections::HashSet;
 
 /// Represents the type of terrain in a cell.
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
@@ -184,6 +185,60 @@ pub fn render_terrain(frame: &mut Frame, area: Rect, terrain: &TerrainGrid, view
     frame.render_widget(paragraph, area);
 }
 
+/// Builds a vector of text lines to render the terrain and pops.
+#[must_use]
+pub fn build_terrain_and_pop_spans<S: std::hash::BuildHasher>(
+    area: Rect,
+    terrain: &TerrainGrid,
+    viewport: &Viewport,
+    pop_positions: &HashSet<(i32, i32), S>,
+) -> Vec<Line<'static>> {
+    let mut lines: Vec<Line> = Vec::with_capacity(area.height as usize);
+
+    for screen_y in 0..area.height {
+        let world_y = viewport.y + i32::from(screen_y);
+        let mut line_spans = Vec::with_capacity(area.width as usize);
+
+        for screen_x in 0..area.width {
+            let world_x = viewport.x + i32::from(screen_x);
+
+            // Check for pop first
+            if pop_positions.contains(&(world_x, world_y)) {
+                let (ch, color) = super::pop::pop_display();
+                line_spans.push(Span::styled(ch.to_string(), Style::default().fg(color)));
+                continue;
+            }
+
+            // Otherwise render terrain
+            let (text, color) =
+                if let (Ok(ux), Ok(uy)) = (usize::try_from(world_x), usize::try_from(world_y)) {
+                    terrain
+                        .get(ux, uy)
+                        .map_or((" ", Color::Black), |tile| (tile.as_str(), tile.color()))
+                } else {
+                    (" ", Color::Black)
+                };
+
+            line_spans.push(Span::styled(text, Style::default().fg(color)));
+        }
+        lines.push(Line::from(line_spans));
+    }
+    lines
+}
+
+/// Render terrain grid and pops to the given frame area with viewport offset.
+pub fn render_terrain_and_pops<S: std::hash::BuildHasher>(
+    frame: &mut Frame,
+    area: Rect,
+    terrain: &TerrainGrid,
+    viewport: &Viewport,
+    pop_positions: &HashSet<(i32, i32), S>,
+) {
+    let lines = build_terrain_and_pop_spans(area, terrain, viewport, pop_positions);
+    let paragraph = Paragraph::new(lines);
+    frame.render_widget(paragraph, area);
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -320,5 +375,34 @@ mod tests {
         check_cell(1, 1, ".", Color::Green);
         // x=2 (World x=1) -> Grass
         check_cell(1, 2, ".", Color::Green);
+    }
+
+    #[test]
+    fn test_render_pops_over_terrain() {
+        let width = 5;
+        let height = 5;
+        let tiles = vec![TerrainType::Grass; width * height];
+        let grid = TerrainGrid {
+            width,
+            height,
+            tiles,
+        };
+        let viewport = Viewport { x: 0, y: 0 };
+        let area = Rect::new(0, 0, 3, 3);
+
+        let mut pops = HashSet::new();
+        pops.insert((1, 1)); // Center of 3x3 view
+
+        let lines = build_terrain_and_pop_spans(area, &grid, &viewport, &pops);
+
+        // (1,1) should be pop
+        let center_span = &lines[1].spans[1];
+        let (pop_char, pop_color) = super::super::pop::pop_display();
+        assert_eq!(center_span.content, pop_char.to_string());
+        assert_eq!(center_span.style.fg, Some(pop_color));
+
+        // (0,0) should be grass
+        let corner_span = &lines[0].spans[0];
+        assert_eq!(corner_span.content, ".");
     }
 }
