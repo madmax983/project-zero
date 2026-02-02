@@ -3,6 +3,8 @@ use super::pop::GridPosition;
 use bevy_ecs::prelude::*;
 use rand::Rng;
 use ratatui::{prelude::*, widgets::Paragraph};
+use std::collections::HashMap;
+use std::hash::BuildHasher;
 
 /// Represents the type of terrain in a cell.
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
@@ -182,12 +184,12 @@ pub fn build_terrain_spans(
 /// Builds a vector of text lines to render the map layer (terrain, pops, buildings, cursor).
 #[must_use]
 #[allow(clippy::too_many_arguments)]
-pub fn build_map_layer_spans(
+pub fn build_map_layer_spans<S: BuildHasher>(
     area: Rect,
     terrain: &TerrainGrid,
     viewport: &Viewport,
-    pops_data: &[(GridPosition, (char, Color))],
-    buildings_data: &[(GridPosition, BuildingType)],
+    pops_data: &HashMap<GridPosition, (char, Color), S>,
+    buildings_data: &HashMap<GridPosition, BuildingType, S>,
     build_mode: Option<(GridPosition, BuildingType, bool)>,
 ) -> Vec<Line<'static>> {
     let mut lines: Vec<Line> = Vec::new();
@@ -213,10 +215,7 @@ pub fn build_map_layer_spans(
             }
 
             // Buildings
-            if let Some((_, building_type)) = buildings_data
-                .iter()
-                .find(|(pos, _)| pos.x == world_x && pos.y == world_y)
-            {
+            if let Some(building_type) = buildings_data.get(&GridPosition { x: world_x, y: world_y }) {
                 line_spans.push(Span::styled(
                     building_type.char().to_string(),
                     Style::default().fg(building_type.color()),
@@ -225,10 +224,7 @@ pub fn build_map_layer_spans(
             }
 
             // Check for pop
-            if let Some((_, (ch, color))) = pops_data
-                .iter()
-                .find(|(pos, _)| pos.x == world_x && pos.y == world_y)
-            {
+            if let Some((ch, color)) = pops_data.get(&GridPosition { x: world_x, y: world_y }) {
                 line_spans.push(Span::styled(ch.to_string(), Style::default().fg(*color)));
                 continue;
             }
@@ -251,13 +247,13 @@ pub fn build_map_layer_spans(
 }
 
 /// Render terrain grid, buildings, and pops to the given frame area with viewport offset.
-pub fn render_map_layer(
+pub fn render_map_layer<S: BuildHasher>(
     frame: &mut Frame,
     area: Rect,
     terrain: &TerrainGrid,
     viewport: &Viewport,
-    pops_data: &[(GridPosition, (char, Color))],
-    buildings_data: &[(GridPosition, BuildingType)],
+    pops_data: &HashMap<GridPosition, (char, Color), S>,
+    buildings_data: &HashMap<GridPosition, BuildingType, S>,
     build_mode: Option<(GridPosition, BuildingType, bool)>,
 ) {
     let lines = build_map_layer_spans(
@@ -433,12 +429,13 @@ mod tests {
         let viewport = Viewport { x: 0, y: 0 };
         let area = Rect::new(0, 0, 3, 3);
 
-        let pop_data = vec![
-            (GridPosition { x: 1, y: 1 }, ('P', Color::Yellow)),
-            (GridPosition { x: 0, y: 0 }, ('P', Color::Yellow)),
-        ];
+        let mut pop_data = HashMap::new();
+        pop_data.insert(GridPosition { x: 1, y: 1 }, ('P', Color::Yellow));
+        pop_data.insert(GridPosition { x: 0, y: 0 }, ('P', Color::Yellow));
 
-        let spans = build_map_layer_spans(area, &grid, &viewport, &pop_data, &[], None);
+        let buildings_data = HashMap::new();
+
+        let spans = build_map_layer_spans(area, &grid, &viewport, &pop_data, &buildings_data, None);
 
         assert_eq!(spans.len(), 3);
 
@@ -471,9 +468,10 @@ mod tests {
 
         let viewport = Viewport { x: 0, y: 0 };
         let area = Rect::new(0, 0, 3, 3);
-        let pop_data = vec![];
+        let pop_data = HashMap::new();
+        let buildings_data = HashMap::new();
 
-        let spans = build_map_layer_spans(area, &grid, &viewport, &pop_data, &[], None);
+        let spans = build_map_layer_spans(area, &grid, &viewport, &pop_data, &buildings_data, None);
 
         assert_eq!(spans.len(), 3);
         // All should be water
@@ -498,9 +496,11 @@ mod tests {
 
         let viewport = Viewport { x: -2, y: -2 };
         let area = Rect::new(0, 0, 4, 4);
-        let pop_data = vec![(GridPosition { x: 0, y: 0 }, ('P', Color::Yellow))];
+        let mut pop_data = HashMap::new();
+        pop_data.insert(GridPosition { x: 0, y: 0 }, ('P', Color::Yellow));
+        let buildings_data = HashMap::new();
 
-        let spans = build_map_layer_spans(area, &grid, &viewport, &pop_data, &[], None);
+        let spans = build_map_layer_spans(area, &grid, &viewport, &pop_data, &buildings_data, None);
 
         assert_eq!(spans.len(), 4);
 
@@ -531,9 +531,10 @@ mod tests {
         // Viewport positioned so most of the view is out of bounds
         let viewport = Viewport { x: 10, y: 10 };
         let area = Rect::new(0, 0, 3, 3);
-        let pop_data = vec![];
+        let pop_data = HashMap::new();
+        let buildings_data = HashMap::new();
 
-        let spans = build_map_layer_spans(area, &grid, &viewport, &pop_data, &[], None);
+        let spans = build_map_layer_spans(area, &grid, &viewport, &pop_data, &buildings_data, None);
 
         assert_eq!(spans.len(), 3);
         // All should be black/empty (out of bounds)
@@ -557,14 +558,16 @@ mod tests {
         };
 
         let viewport = Viewport { x: 0, y: 0 };
-        let pop_data = vec![(GridPosition { x: 1, y: 1 }, ('P', Color::Yellow))];
+        let mut pop_data = HashMap::new();
+        pop_data.insert(GridPosition { x: 1, y: 1 }, ('P', Color::Yellow));
+        let buildings_data = HashMap::new();
 
         let backend = ratatui::backend::TestBackend::new(10, 10);
         let mut terminal = ratatui::Terminal::new(backend).unwrap();
 
         let result = terminal.draw(|frame| {
             let area = Rect::new(0, 0, 5, 5);
-            render_map_layer(frame, area, &grid, &viewport, &pop_data, &[], None);
+            render_map_layer(frame, area, &grid, &viewport, &pop_data, &buildings_data, None);
         });
 
         assert!(result.is_ok());
@@ -614,9 +617,10 @@ mod tests {
 
         let viewport = Viewport { x: 0, y: 0 };
         let area = Rect::new(0, 0, 4, 1);
-        let pop_data = vec![];
+        let pop_data = HashMap::new();
+        let buildings_data = HashMap::new();
 
-        let spans = build_map_layer_spans(area, &grid, &viewport, &pop_data, &[], None);
+        let spans = build_map_layer_spans(area, &grid, &viewport, &pop_data, &buildings_data, None);
 
         assert_eq!(spans.len(), 1);
         assert_eq!(spans[0].spans.len(), 4);
@@ -642,12 +646,12 @@ mod tests {
         let viewport = Viewport { x: 0, y: 0 };
         let area = Rect::new(0, 0, 2, 2);
 
-        let pop_data = vec![
-            (GridPosition { x: 0, y: 0 }, ('P', Color::Yellow)),
-            (GridPosition { x: 1, y: 1 }, ('P', Color::Yellow)),
-        ];
+        let mut pop_data = HashMap::new();
+        pop_data.insert(GridPosition { x: 0, y: 0 }, ('P', Color::Yellow));
+        pop_data.insert(GridPosition { x: 1, y: 1 }, ('P', Color::Yellow));
+        let buildings_data = HashMap::new();
 
-        let spans = build_map_layer_spans(area, &grid, &viewport, &pop_data, &[], None);
+        let spans = build_map_layer_spans(area, &grid, &viewport, &pop_data, &buildings_data, None);
 
         // Pops should override terrain
         assert_eq!(spans[0].spans[0].content, "P");
@@ -674,9 +678,10 @@ mod tests {
         // Viewport positioned so half the view is out of bounds
         let viewport = Viewport { x: 1, y: 1 };
         let area = Rect::new(0, 0, 4, 4);
-        let pop_data = vec![];
+        let pop_data = HashMap::new();
+        let buildings_data = HashMap::new();
 
-        let spans = build_map_layer_spans(area, &grid, &viewport, &pop_data, &[], None);
+        let spans = build_map_layer_spans(area, &grid, &viewport, &pop_data, &buildings_data, None);
 
         assert_eq!(spans.len(), 4);
 
@@ -706,14 +711,15 @@ mod tests {
         };
 
         let viewport = Viewport { x: 0, y: 0 };
-        let pop_data = vec![];
+        let pop_data = HashMap::new();
+        let buildings_data = HashMap::new();
 
         let backend = ratatui::backend::TestBackend::new(5, 5);
         let mut terminal = ratatui::Terminal::new(backend).unwrap();
 
         let result = terminal.draw(|frame| {
             let area = Rect::new(0, 0, 2, 2);
-            render_map_layer(frame, area, &grid, &viewport, &pop_data, &[], None);
+            render_map_layer(frame, area, &grid, &viewport, &pop_data, &buildings_data, None);
         });
 
         assert!(result.is_ok());
@@ -733,9 +739,11 @@ mod tests {
         let viewport = Viewport { x: 0, y: 0 };
         let area = Rect::new(0, 0, 2, 2);
 
-        let pop_data = vec![(GridPosition { x: 0, y: 0 }, ('P', Color::Yellow))];
+        let mut pop_data = HashMap::new();
+        pop_data.insert(GridPosition { x: 0, y: 0 }, ('P', Color::Yellow));
+        let buildings_data = HashMap::new();
 
-        let spans = build_map_layer_spans(area, &grid, &viewport, &pop_data, &[], None);
+        let spans = build_map_layer_spans(area, &grid, &viewport, &pop_data, &buildings_data, None);
 
         assert_eq!(spans.len(), 2);
         assert_eq!(spans[0].spans[0].content, "P");
