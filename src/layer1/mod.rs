@@ -5,6 +5,8 @@
 
 /// Building placement and types.
 pub mod building;
+/// Housing and rest mechanics.
+pub mod housing;
 /// Pop needs (hunger, rest).
 pub mod needs;
 /// Pop entity and management.
@@ -13,6 +15,7 @@ pub mod pop;
 pub mod terrain;
 
 pub use building::*;
+pub use housing::*;
 pub use needs::*;
 pub use pop::*;
 pub use terrain::*;

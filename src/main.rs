@@ -24,9 +24,10 @@ use std::io;
 use std::time::{Duration, Instant};
 
 use scale::layer1::{
-    BuildMode, Building, BuildingType, GridPosition, Needs, OccupiedTiles, Pop, TerrainGrid,
-    Viewport, can_place_building, decay_needs_system, generate_terrain, kill_starving_pops_system,
-    pop_display, render_map_layer, spawn_initial_pops, try_place_building,
+    BuildMode, Building, BuildingType, GridPosition, Housing, Needs, OccupiedTiles, Pop,
+    TerrainGrid, Viewport, can_place_building, clean_dead_residents_system, decay_needs_system,
+    generate_terrain, kill_starving_pops_system, pop_display, render_map_layer,
+    restore_rest_in_housing_system, spawn_initial_pops, try_place_building,
 };
 use scale::shared::time::{SimSpeed, SimulationTime};
 
@@ -104,8 +105,10 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
             if *world.resource::<GameState>() == GameState::Running {
                 let speed = world.resource::<SimulationTime>().speed;
                 if speed != SimSpeed::Paused {
+                    restore_rest_in_housing_system(&mut world);
                     decay_needs_system(&mut world);
                     kill_starving_pops_system(&mut world);
+                    clean_dead_residents_system(&mut world);
                     world.resource_mut::<SimulationTime>().tick += 1;
                 }
             }
@@ -322,10 +325,17 @@ fn render_info_panel(frame: &mut Frame, area: Rect, world: &World) {
         .filter(bevy_ecs::world::EntityRef::contains::<Pop>)
         .count();
 
+    let (housing_count, housing_capacity, housing_used) = world
+        .iter_entities()
+        .filter_map(|e| e.get::<Housing>())
+        .fold((0, 0, 0), |(count, cap, used), h| {
+            (count + 1, cap + h.capacity, used + h.residents.len())
+        });
+
     let text = format!(
         "Population: {pop_count}\n\n\
-         Pops will starve\n\
-         without food!"
+         Housing: {housing_count}\n\
+         Beds: {housing_used}/{housing_capacity}\n"
     );
     let paragraph = Paragraph::new(text);
     frame.render_widget(paragraph, inner);
