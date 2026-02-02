@@ -39,7 +39,10 @@ impl InputContextStack {
     /// Panics if the input stack is empty (which should never happen due to default init).
     #[must_use]
     pub fn current(&self) -> InputContext {
-        *self.stack.last().expect("Input stack should never be empty")
+        *self
+            .stack
+            .last()
+            .expect("Input stack should never be empty")
     }
 
     /// Push a new context.
@@ -61,7 +64,7 @@ pub struct InputRouter;
 impl InputRouter {
     /// Create a new [`InputRouter`].
     #[must_use]
-    pub fn new() -> Self {
+    pub const fn new() -> Self {
         Self
     }
 
@@ -128,7 +131,9 @@ fn handle_normal_mode(world: &mut World, key: KeyEvent) {
         }
         KeyCode::Char('b') => {
             // Enter build mode
-            world.resource_mut::<InputContextStack>().push(InputContext::BuildMode);
+            world
+                .resource_mut::<InputContextStack>()
+                .push(InputContext::BuildMode);
 
             // Sync side effects
             let (vx, vy) = {
@@ -144,7 +149,9 @@ fn handle_normal_mode(world: &mut World, key: KeyEvent) {
         }
         KeyCode::Char('c') => {
             // Open chronicle (Spec 010 placeholder)
-            world.resource_mut::<InputContextStack>().push(InputContext::Overlay);
+            world
+                .resource_mut::<InputContextStack>()
+                .push(InputContext::Overlay);
         }
         _ => {}
     }
@@ -199,10 +206,10 @@ fn handle_overlay_mode(world: &mut World, key: KeyEvent) {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crossterm::event::{KeyCode, KeyEvent, KeyModifiers};
+    use crate::layer1::Viewport;
     use crate::shared::state::GameState;
     use crate::shared::time::{SimSpeed, SimulationTime};
-    use crate::layer1::Viewport;
+    use crossterm::event::{KeyCode, KeyEvent, KeyModifiers};
 
     fn key_event(code: KeyCode) -> KeyEvent {
         // KeyEvent::new creates a Press event by default (in crossterm 0.28)
@@ -262,7 +269,10 @@ mod tests {
         let mut stack = InputContextStack::default();
         stack.push(InputContext::BuildMode);
         world.insert_resource(stack);
-        world.insert_resource(BuildMode { active: true, ..Default::default() });
+        world.insert_resource(BuildMode {
+            active: true,
+            ..Default::default()
+        });
 
         let mut router = InputRouter::new();
         router.route(&mut world, key_event(KeyCode::Char('q')));
@@ -282,7 +292,10 @@ mod tests {
         router.route(&mut world, key_event(KeyCode::Esc));
 
         // Escape in overlay should pop back to normal
-        assert_eq!(world.resource::<InputContextStack>().current(), InputContext::Normal);
+        assert_eq!(
+            world.resource::<InputContextStack>().current(),
+            InputContext::Normal
+        );
     }
 
     #[test]
@@ -319,7 +332,10 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(GameState::Running);
         world.insert_resource(InputContextStack::default());
-        world.insert_resource(Viewport { x: i32::MAX, y: i32::MIN });
+        world.insert_resource(Viewport {
+            x: i32::MAX,
+            y: i32::MIN,
+        });
 
         let mut router = InputRouter::new();
 
@@ -340,9 +356,14 @@ mod tests {
         stack.push(InputContext::BuildMode);
         world.insert_resource(stack);
 
-        let mut build_mode = BuildMode::default();
-        build_mode.active = true;
-        build_mode.cursor = GridPosition { x: i32::MAX, y: i32::MIN };
+        let build_mode = BuildMode {
+            active: true,
+            cursor: GridPosition {
+                x: i32::MAX,
+                y: i32::MIN,
+            },
+            ..Default::default()
+        };
         world.insert_resource(build_mode);
 
         let mut router = InputRouter::new();

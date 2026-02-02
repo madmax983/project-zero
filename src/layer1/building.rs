@@ -4,6 +4,7 @@ use super::GridPosition;
 use super::farm::Farm;
 use super::housing::Housing;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
+use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
 use ratatui::style::Color;
 use std::collections::HashSet;
@@ -165,6 +166,33 @@ pub fn can_place_building(world: &World, x: i32, y: i32) -> bool {
 /// ```
 pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: BuildingType) -> bool {
     if !can_place_building(world, x, y) {
+        // Determine reason for failure (re-running checks for feedback)
+        // We do this here to keep `can_place_building` simple and fast for the UI cursor check.
+        let reason = {
+            let terrain = world.resource::<TerrainGrid>();
+            let occupied = world.resource::<OccupiedTiles>();
+
+            if x < 0 || y < 0 {
+                "Out of bounds"
+            } else if occupied.0.contains(&(x, y)) {
+                "Location occupied"
+            } else if let Some(tile) = {
+                #[allow(clippy::cast_sign_loss)]
+                terrain.get(x as usize, y as usize)
+            } {
+                match tile {
+                    TerrainType::Water => "Cannot build on Water",
+                    TerrainType::Rock => "Cannot build on Rock",
+                    _ => "Cannot build here", // Should not happen if can_place_building returns false but terrain is valid
+                }
+            } else {
+                "Out of bounds"
+            }
+        };
+
+        if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+            log.add_colored(format!("Failed: {reason}"), Color::Red);
+        }
         return false;
     }
 
@@ -182,6 +210,13 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
 
     // Mark tile occupied
     world.resource_mut::<OccupiedTiles>().0.insert((x, y));
+
+    if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+        log.add_colored(
+            format!("Construction started: {}", building_type.label()),
+            Color::Green,
+        );
+    }
 
     true
 }
