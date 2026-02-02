@@ -23,7 +23,7 @@ jobs:
     automerge:
         # Only automerge PRs from Mark
         if: github.event.pull_request.user.login == 'madmax983'
-        runs-on: ubuntu-22.04
+        runs-on: ubuntu-20.04
         permissions:
             contents: write
             pull-requests: write

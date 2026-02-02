@@ -32,6 +32,13 @@ mod tests {
     }
 
     #[test]
+    fn test_designation_type_char() {
+        // Visualization is important for text UI, so we test the mapping exists
+        assert_eq!(DesignationType::Mine.char(), '⛏');
+        assert_eq!(DesignationType::Demolish.char(), 'X');
+    }
+
+    #[test]
     fn test_designation_component() {
         let designation = Designation {
             designation_type: DesignationType::Mine,
@@ -193,7 +200,7 @@ mod tests {
 ```
 
 **Test Coverage Requirements:**
-- DesignationType variants
+- DesignationType variants and `char()`
 - DesignationMode resource
 - can_designate logic (Mine on Rock, Demolish on Building)
 - try_designate (creates entity, handles duplicates)
@@ -210,7 +217,6 @@ Write the SIMPLEST code to make all RED tests pass.
 // src/layer1/designation.rs
 
 use bevy_ecs::prelude::*;
-use ratatui::style::Color;
 use crate::layer1::{GridPosition, TerrainGrid, TerrainType};
 use crate::layer2::OccupiedTiles;
 
@@ -226,13 +232,6 @@ impl DesignationType {
         match self {
             Self::Mine => '⛏',
             Self::Demolish => 'X',
-        }
-    }
-
-    pub const fn color(&self) -> Color {
-        match self {
-            Self::Mine => Color::Red,
-            Self::Demolish => Color::Red,
         }
     }
 
@@ -414,26 +413,22 @@ After tests pass, consider these improvements:
 - [ ] Backspace/Delete removes designation
 - [ ] Cannot mine Grass/Water
 - [ ] Cannot demolish empty tile
-- [ ] Designations render correctly (Red '⛏' or 'X')
+- [ ] Designations render correctly (Red '⛏' or 'X' via rendering layer)
 
 ## Technical Guidance
 
 ### Rendering Layer
 
-Update `render_map_layer` to accept `designations_data`.
+Update `render_map_layer` in `src/layer1/terrain.rs` to accept `designations_data`. Use colors appropriate for the designation type (e.g., Red for Mine).
 
 ```rust
-pub fn render_map_layer(
-    ...,
-    designations_data: &[(GridPosition, DesignationType)],
-    ...
-) {
-    // Render loop
-    // ...
-    // Designations
-    if let Some((_, dtype)) = designations_data.iter().find(|(pos, _)| pos.x == world_x && pos.y == world_y) {
-        // Render char with red background or foreground
-    }
+// Render loop in terrain.rs
+if let Some((_, dtype)) = designations_data.iter().find(|(pos, _)| pos.x == world_x && pos.y == world_y) {
+    let color = match dtype {
+        DesignationType::Mine => Color::Red,
+        DesignationType::Demolish => Color::Red,
+    };
+    line_spans.push(Span::styled(dtype.char().to_string(), Style::default().fg(color)));
 }
 ```
 
