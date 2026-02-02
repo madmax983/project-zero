@@ -12,3 +12,4 @@ Implemented features. Architect: read this to understand current state.
 - [x] `005` Pop needs (hunger, rest) — `specs/005-pop-needs.md` — completed 2025-05-23
 - [x] `007` Housing building — `specs/007-building-housing.md` — completed 2026-02-02
 - [x] `008` Farm building and food — `specs/008-building-farm.md` — completed 2026-02-02
+- [x] `009` Job assignment system — `specs/009-job-system.md` — **superseded by spec 016 (Utility AI)** — 2026-02-02
