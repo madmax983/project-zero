@@ -202,4 +202,38 @@ mod tests {
             assert_eq!(pos.y, 0);
         }
     }
+
+    #[test]
+    fn test_spawn_initial_pops_internal_with_custom_rng() {
+        use rand::SeedableRng;
+        use rand::rngs::StdRng;
+
+        let mut world = World::new();
+        let terrain = generate_terrain(80, 50);
+        world.insert_resource(terrain);
+
+        // Use seeded RNG for determinism
+        let mut rng = StdRng::seed_from_u64(42);
+        spawn_initial_pops_internal(&mut world, &mut rng);
+
+        let count = world.query::<&Pop>().iter(&world).count();
+        assert_eq!(count, 5, "Should spawn exactly 5 pops");
+    }
+
+    #[test]
+    fn test_grid_position_debug() {
+        let pos = GridPosition { x: 10, y: -5 };
+        let debug_str = format!("{pos:?}");
+        assert!(debug_str.contains("GridPosition"));
+        assert!(debug_str.contains("10"));
+    }
+
+    #[test]
+    fn test_grid_position_clone() {
+        let pos1 = GridPosition { x: 7, y: 14 };
+        #[allow(clippy::clone_on_copy)]
+        let pos2 = pos1.clone();
+        assert_eq!(pos1.x, pos2.x);
+        assert_eq!(pos1.y, pos2.y);
+    }
 }
