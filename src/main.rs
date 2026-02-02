@@ -12,7 +12,7 @@
 
 use bevy_ecs::prelude::*;
 use crossterm::{
-    event::{self, Event, KeyCode, KeyEventKind},
+    event::{self, Event},
     execute,
     terminal::{EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode, enable_raw_mode},
 };
@@ -30,21 +30,10 @@ use scale::layer1::{
     clean_dead_residents_system, clean_dead_workers_system, consume_food_system,
     decay_needs_system, generate_terrain, kill_starving_entities_system, pop_display,
     produce_food_system, render_map_layer, restore_rest_in_housing_system, spawn_initial_pops,
-    try_place_building,
 };
 use scale::shared::time::{SimSpeed, SimulationTime};
-
-/// Represents the high-level state of the game loop.
-#[derive(Resource, Default, PartialEq, Eq, Clone, Copy, Debug)]
-pub enum GameState {
-    /// The simulation is running normally.
-    #[default]
-    Running,
-    /// The simulation is paused, but input is still handled.
-    Paused,
-    /// The game is in the process of shutting down.
-    Quitting,
-}
+use scale::shared::state::GameState;
+use scale::shared::input::{InputContextStack, InputRouter};
 
 fn main() -> anyhow::Result<()> {
     // Terminal setup
@@ -75,10 +64,12 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
     world.insert_resource(BuildMode::default());
     world.insert_resource(OccupiedTiles::default());
     world.insert_resource(ColonyResources::default());
+    world.insert_resource(InputContextStack::default());
 
     spawn_initial_pops(&mut world);
 
     let mut schedule = Schedule::default();
+    let mut input_router = InputRouter::new();
     // Systems will be added here by other specs
 
     // Main loop
@@ -92,7 +83,7 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
         #[allow(clippy::collapsible_if)]
         if event::poll(Duration::from_millis(10))? {
             if let Event::Key(key) = event::read()? {
-                handle_input(&mut world, key);
+                input_router.route(&mut world, key);
             }
         }
 
@@ -130,123 +121,6 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
     Ok(())
 }
 
-fn handle_input(world: &mut World, key: crossterm::event::KeyEvent) {
-    // Only process key press events to avoid double-triggering on press+release
-    if key.kind != KeyEventKind::Press {
-        return;
-    }
-
-    let build_active = world.resource::<BuildMode>().active;
-
-    match key.code {
-        // Quit
-        KeyCode::Char('q') | KeyCode::Esc if !build_active => {
-            *world.resource_mut::<GameState>() = GameState::Quitting;
-        }
-
-        // Pause
-        KeyCode::Char(' ') if !build_active => {
-            let mut state = world.resource_mut::<GameState>();
-            *state = match *state {
-                GameState::Running => GameState::Paused,
-                GameState::Paused => GameState::Running,
-                GameState::Quitting => GameState::Quitting,
-            };
-        }
-
-        // Speed controls
-        KeyCode::Char('1') if !build_active => {
-            world.resource_mut::<SimulationTime>().speed = SimSpeed::Normal;
-        }
-        KeyCode::Char('2') if !build_active => {
-            world.resource_mut::<SimulationTime>().speed = SimSpeed::Fast;
-        }
-        KeyCode::Char('3') if !build_active => {
-            world.resource_mut::<SimulationTime>().speed = SimSpeed::Faster;
-        }
-
-        // Build mode toggle
-        KeyCode::Char('b') => {
-            let (vx, vy) = {
-                let viewport = world.resource::<Viewport>();
-                (viewport.x, viewport.y)
-            };
-            let mut build_mode = world.resource_mut::<BuildMode>();
-            build_mode.active = !build_mode.active;
-            if build_mode.active {
-                // Initialize cursor to center of viewport
-                build_mode.cursor = GridPosition {
-                    x: vx + 10,
-                    y: vy + 10,
-                };
-            }
-        }
-
-        // Exit build mode
-        KeyCode::Esc if build_active => {
-            world.resource_mut::<BuildMode>().active = false;
-        }
-
-        // Cycle building type
-        KeyCode::Tab if build_active => {
-            let mut build_mode = world.resource_mut::<BuildMode>();
-            build_mode.selected = build_mode.selected.next();
-        }
-
-        // Place building
-        KeyCode::Enter if build_active => {
-            let build_mode = world.resource::<BuildMode>();
-            let cursor = build_mode.cursor;
-            let building_type = build_mode.selected;
-            try_place_building(world, cursor.x, cursor.y, building_type);
-        }
-
-        // Movement
-        KeyCode::Char('w' | 's' | 'a' | 'd')
-        | KeyCode::Up
-        | KeyCode::Down
-        | KeyCode::Left
-        | KeyCode::Right => {
-            if build_active {
-                let mut build_mode = world.resource_mut::<BuildMode>();
-                match key.code {
-                    KeyCode::Char('w') | KeyCode::Up => {
-                        build_mode.cursor.y = build_mode.cursor.y.saturating_sub(1);
-                    }
-                    KeyCode::Char('s') | KeyCode::Down => {
-                        build_mode.cursor.y = build_mode.cursor.y.saturating_add(1);
-                    }
-                    KeyCode::Char('a') | KeyCode::Left => {
-                        build_mode.cursor.x = build_mode.cursor.x.saturating_sub(1);
-                    }
-                    KeyCode::Char('d') | KeyCode::Right => {
-                        build_mode.cursor.x = build_mode.cursor.x.saturating_add(1);
-                    }
-                    _ => {}
-                }
-            } else {
-                let mut viewport = world.resource_mut::<Viewport>();
-                match key.code {
-                    KeyCode::Char('w') | KeyCode::Up => {
-                        viewport.y = viewport.y.wrapping_sub(1);
-                    }
-                    KeyCode::Char('s') | KeyCode::Down => {
-                        viewport.y = viewport.y.wrapping_add(1);
-                    }
-                    KeyCode::Char('a') | KeyCode::Left => {
-                        viewport.x = viewport.x.wrapping_sub(1);
-                    }
-                    KeyCode::Char('d') | KeyCode::Right => {
-                        viewport.x = viewport.x.wrapping_add(1);
-                    }
-                    _ => {}
-                }
-            }
-        }
-
-        _ => {}
-    }
-}
 
 fn render(world: &World, frame: &mut Frame) {
     // Main vertical split: content + status bar
@@ -422,7 +296,6 @@ fn get_status_string(tick: u64, speed: SimSpeed, paused: bool, build_mode: &Buil
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crossterm::event::{KeyCode, KeyEvent, KeyModifiers};
 
     fn create_test_world() -> World {
         let mut world = World::new();
@@ -432,142 +305,6 @@ mod tests {
         world.insert_resource(BuildMode::default());
         world.insert_resource(OccupiedTiles::default());
         world
-    }
-
-    fn key_event(code: KeyCode) -> KeyEvent {
-        KeyEvent::new(code, KeyModifiers::empty())
-    }
-
-    #[test]
-    fn test_quit_key() {
-        let mut world = create_test_world();
-        handle_input(&mut world, key_event(KeyCode::Char('q')));
-        assert_eq!(*world.resource::<GameState>(), GameState::Quitting);
-    }
-
-    #[test]
-    fn test_escape_key() {
-        let mut world = create_test_world();
-        handle_input(&mut world, key_event(KeyCode::Esc));
-        assert_eq!(*world.resource::<GameState>(), GameState::Quitting);
-    }
-
-    #[test]
-    fn test_pause_toggle() {
-        let mut world = create_test_world();
-        assert_eq!(*world.resource::<GameState>(), GameState::Running);
-
-        // Pause
-        handle_input(&mut world, key_event(KeyCode::Char(' ')));
-        assert_eq!(*world.resource::<GameState>(), GameState::Paused);
-
-        // Unpause
-        handle_input(&mut world, key_event(KeyCode::Char(' ')));
-        assert_eq!(*world.resource::<GameState>(), GameState::Running);
-    }
-
-    #[test]
-    fn test_speed_key_1() {
-        let mut world = create_test_world();
-        world.resource_mut::<SimulationTime>().speed = SimSpeed::Fast;
-
-        handle_input(&mut world, key_event(KeyCode::Char('1')));
-        assert_eq!(world.resource::<SimulationTime>().speed, SimSpeed::Normal);
-    }
-
-    #[test]
-    fn test_speed_key_2() {
-        let mut world = create_test_world();
-        handle_input(&mut world, key_event(KeyCode::Char('2')));
-        assert_eq!(world.resource::<SimulationTime>().speed, SimSpeed::Fast);
-    }
-
-    #[test]
-    fn test_speed_key_3() {
-        let mut world = create_test_world();
-        handle_input(&mut world, key_event(KeyCode::Char('3')));
-        assert_eq!(world.resource::<SimulationTime>().speed, SimSpeed::Faster);
-    }
-
-    #[test]
-    fn test_viewport_movement_wasd() {
-        let mut world = create_test_world();
-        let initial_x = world.resource::<Viewport>().x;
-        let initial_y = world.resource::<Viewport>().y;
-
-        // Move up (w)
-        handle_input(&mut world, key_event(KeyCode::Char('w')));
-        assert_eq!(world.resource::<Viewport>().y, initial_y - 1);
-
-        // Move down (s)
-        handle_input(&mut world, key_event(KeyCode::Char('s')));
-        assert_eq!(world.resource::<Viewport>().y, initial_y);
-
-        // Move left (a)
-        handle_input(&mut world, key_event(KeyCode::Char('a')));
-        assert_eq!(world.resource::<Viewport>().x, initial_x - 1);
-
-        // Move right (d)
-        handle_input(&mut world, key_event(KeyCode::Char('d')));
-        assert_eq!(world.resource::<Viewport>().x, initial_x);
-    }
-
-    #[test]
-    fn test_viewport_movement_arrows() {
-        let mut world = create_test_world();
-        let initial_x = world.resource::<Viewport>().x;
-        let initial_y = world.resource::<Viewport>().y;
-
-        handle_input(&mut world, key_event(KeyCode::Up));
-        assert_eq!(world.resource::<Viewport>().y, initial_y - 1);
-
-        handle_input(&mut world, key_event(KeyCode::Down));
-        assert_eq!(world.resource::<Viewport>().y, initial_y);
-
-        handle_input(&mut world, key_event(KeyCode::Left));
-        assert_eq!(world.resource::<Viewport>().x, initial_x - 1);
-
-        handle_input(&mut world, key_event(KeyCode::Right));
-        assert_eq!(world.resource::<Viewport>().x, initial_x);
-    }
-
-    #[test]
-    fn test_speed_persists_across_pause() {
-        let mut world = create_test_world();
-
-        // Set speed to Fast
-        handle_input(&mut world, key_event(KeyCode::Char('2')));
-        assert_eq!(world.resource::<SimulationTime>().speed, SimSpeed::Fast);
-
-        // Pause
-        handle_input(&mut world, key_event(KeyCode::Char(' ')));
-        assert_eq!(*world.resource::<GameState>(), GameState::Paused);
-        assert_eq!(world.resource::<SimulationTime>().speed, SimSpeed::Fast);
-
-        // Unpause
-        handle_input(&mut world, key_event(KeyCode::Char(' ')));
-        assert_eq!(*world.resource::<GameState>(), GameState::Running);
-        assert_eq!(world.resource::<SimulationTime>().speed, SimSpeed::Fast);
-    }
-
-    #[test]
-    fn test_pause_doesnt_quit() {
-        let mut world = create_test_world();
-        *world.resource_mut::<GameState>() = GameState::Paused;
-
-        // Space when paused should unpause, not stay paused
-        handle_input(&mut world, key_event(KeyCode::Char(' ')));
-        assert_eq!(*world.resource::<GameState>(), GameState::Running);
-    }
-
-    #[test]
-    fn test_quitting_state_stays_quitting() {
-        let mut world = create_test_world();
-        *world.resource_mut::<GameState>() = GameState::Quitting;
-
-        // Space when quitting should stay quitting
-        handle_input(&mut world, key_event(KeyCode::Char(' ')));
-        assert_eq!(*world.resource::<GameState>(), GameState::Quitting);
     }
 
     #[test]
@@ -612,71 +349,5 @@ mod tests {
         assert!(s_paused.contains("Tick: 50"));
         assert!(s_paused.contains("⏸"));
         assert!(s_paused.contains("3x"));
-    }
-
-    #[test]
-    fn test_build_mode_tab_cycling() {
-        use crossterm::event::KeyEventKind;
-
-        let mut world = create_test_world();
-
-        // Enable build mode
-        world.resource_mut::<BuildMode>().active = true;
-        world.resource_mut::<BuildMode>().selected = BuildingType::Housing;
-
-        // Press Tab - should cycle from Housing to Farm
-        let tab_press = KeyEvent {
-            code: KeyCode::Tab,
-            modifiers: KeyModifiers::empty(),
-            kind: KeyEventKind::Press,
-            state: crossterm::event::KeyEventState::empty(),
-        };
-        handle_input(&mut world, tab_press);
-        assert_eq!(world.resource::<BuildMode>().selected, BuildingType::Farm);
-
-        // Release Tab - should NOT cycle again
-        let tab_release = KeyEvent {
-            code: KeyCode::Tab,
-            modifiers: KeyModifiers::empty(),
-            kind: KeyEventKind::Release,
-            state: crossterm::event::KeyEventState::empty(),
-        };
-        handle_input(&mut world, tab_release);
-        assert_eq!(
-            world.resource::<BuildMode>().selected,
-            BuildingType::Farm,
-            "Tab release should not trigger cycling"
-        );
-    }
-
-    #[test]
-    fn test_viewport_overflow_safety() {
-        let mut world = create_test_world();
-        world.resource_mut::<Viewport>().x = i32::MAX;
-        world.resource_mut::<Viewport>().y = i32::MIN;
-
-        // Move right (x += 1) should wrap
-        handle_input(&mut world, key_event(KeyCode::Char('d')));
-        assert_eq!(world.resource::<Viewport>().x, i32::MIN);
-
-        // Move up (y -= 1) should wrap
-        handle_input(&mut world, key_event(KeyCode::Char('w')));
-        assert_eq!(world.resource::<Viewport>().y, i32::MAX);
-    }
-
-    #[test]
-    fn test_cursor_overflow_safety() {
-        let mut world = create_test_world();
-        world.resource_mut::<BuildMode>().active = true;
-        world.resource_mut::<BuildMode>().cursor.x = i32::MAX;
-        world.resource_mut::<BuildMode>().cursor.y = i32::MIN;
-
-        // Move right (x += 1) should saturate
-        handle_input(&mut world, key_event(KeyCode::Char('d')));
-        assert_eq!(world.resource::<BuildMode>().cursor.x, i32::MAX);
-
-        // Move up (y -= 1) should saturate
-        handle_input(&mut world, key_event(KeyCode::Char('w')));
-        assert_eq!(world.resource::<BuildMode>().cursor.y, i32::MIN);
     }
 }

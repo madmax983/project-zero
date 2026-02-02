@@ -7,3 +7,5 @@ pub mod layer2;
 pub mod layer3;
 pub mod shared;
 pub mod ui;
+
+pub use shared::state::GameState;
