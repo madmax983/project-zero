@@ -25,11 +25,12 @@ use std::io;
 use std::time::{Duration, Instant};
 
 use scale::layer1::{
-    BuildMode, Building, BuildingType, ColonyResources, Farm, GridPosition, Housing, Needs,
-    OccupiedTiles, Pop, TerrainGrid, Viewport, can_place_building, clean_dead_residents_system,
-    clean_dead_workers_system, consume_food_system, decay_needs_system, generate_terrain,
-    kill_starving_pops_system, pop_display, produce_food_system, render_map_layer,
-    restore_rest_in_housing_system, spawn_initial_pops, try_place_building,
+    BuildMode, Building, BuildingType, ColonyResources, Farm, GridPosition, Housing,
+    MapRenderContext, Needs, OccupiedTiles, Pop, TerrainGrid, Viewport, can_place_building,
+    clean_dead_residents_system, clean_dead_workers_system, consume_food_system,
+    decay_needs_system, generate_terrain, kill_starving_pops_system, pop_display,
+    produce_food_system, render_map_layer, restore_rest_in_housing_system, spawn_initial_pops,
+    try_place_building,
 };
 use scale::shared::time::{SimSpeed, SimulationTime};
 
@@ -288,15 +289,16 @@ fn render_map(frame: &mut Frame, area: Rect, world: &World) {
         None
     };
 
-    render_map_layer(
-        frame,
-        inner,
+    let ctx = MapRenderContext {
+        area: inner,
         terrain,
         viewport,
-        &pops_data,
-        &buildings_data,
-        build_mode_cursor,
-    );
+        pops_data: &pops_data,
+        buildings_data: &buildings_data,
+        build_mode: build_mode_cursor,
+    };
+
+    render_map_layer(frame, ctx);
 }
 
 fn get_pops_render_data(world: &World) -> HashMap<GridPosition, (char, Color)> {

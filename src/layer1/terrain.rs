@@ -76,6 +76,30 @@ pub struct Viewport {
     pub y: i32,
 }
 
+/// Context for rendering the map layer.
+pub struct MapRenderContext<'a, S: BuildHasher> {
+    /// The area to render into.
+    pub area: Rect,
+    /// The terrain grid.
+    pub terrain: &'a TerrainGrid,
+    /// The viewport.
+    pub viewport: &'a Viewport,
+    /// Map of pop positions to their display char and color.
+    pub pops_data: &'a HashMap<GridPosition, (char, Color), S>,
+    /// Map of building positions.
+    pub buildings_data: &'a HashMap<GridPosition, BuildingType, S>,
+    /// Current build mode state (cursor position, selected building, valid placement).
+    pub build_mode: Option<(GridPosition, BuildingType, bool)>,
+}
+
+impl<S: BuildHasher> Clone for MapRenderContext<'_, S> {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+
+impl<S: BuildHasher> Copy for MapRenderContext<'_, S> {}
+
 /// Generates a new terrain grid with procedural features.
 #[must_use]
 pub fn generate_terrain(width: usize, height: usize) -> TerrainGrid {
@@ -183,27 +207,21 @@ pub fn build_terrain_spans(
 
 /// Builds a vector of text lines to render the map layer (terrain, pops, buildings, cursor).
 #[must_use]
-#[allow(clippy::too_many_arguments)]
 pub fn build_map_layer_spans<S: BuildHasher>(
-    area: Rect,
-    terrain: &TerrainGrid,
-    viewport: &Viewport,
-    pops_data: &HashMap<GridPosition, (char, Color), S>,
-    buildings_data: &HashMap<GridPosition, BuildingType, S>,
-    build_mode: Option<(GridPosition, BuildingType, bool)>,
+    ctx: MapRenderContext<'_, S>,
 ) -> Vec<Line<'static>> {
     let mut lines: Vec<Line> = Vec::new();
 
-    for screen_y in 0..area.height {
-        let world_y = viewport.y + i32::from(screen_y);
+    for screen_y in 0..ctx.area.height {
+        let world_y = ctx.viewport.y + i32::from(screen_y);
         let mut line_spans = Vec::new();
 
-        for screen_x in 0..area.width {
-            let world_x = viewport.x + i32::from(screen_x);
+        for screen_x in 0..ctx.area.width {
+            let world_x = ctx.viewport.x + i32::from(screen_x);
 
             // Build mode cursor (highest priority)
             if let Some((_, selected, can_place)) =
-                build_mode.filter(|(cursor, _, _)| cursor.x == world_x && cursor.y == world_y)
+                ctx.build_mode.filter(|(cursor, _, _)| cursor.x == world_x && cursor.y == world_y)
             {
                 let bg = if can_place { Color::Green } else { Color::Red };
                 let ch = selected.char();
@@ -215,7 +233,7 @@ pub fn build_map_layer_spans<S: BuildHasher>(
             }
 
             // Buildings
-            if let Some(building_type) = buildings_data.get(&GridPosition { x: world_x, y: world_y }) {
+            if let Some(building_type) = ctx.buildings_data.get(&GridPosition { x: world_x, y: world_y }) {
                 line_spans.push(Span::styled(
                     building_type.char().to_string(),
                     Style::default().fg(building_type.color()),
@@ -224,7 +242,7 @@ pub fn build_map_layer_spans<S: BuildHasher>(
             }
 
             // Check for pop
-            if let Some((ch, color)) = pops_data.get(&GridPosition { x: world_x, y: world_y }) {
+            if let Some((ch, color)) = ctx.pops_data.get(&GridPosition { x: world_x, y: world_y }) {
                 line_spans.push(Span::styled(ch.to_string(), Style::default().fg(*color)));
                 continue;
             }
@@ -232,7 +250,7 @@ pub fn build_map_layer_spans<S: BuildHasher>(
             // Otherwise render terrain
             let (text, color) =
                 if let (Ok(ux), Ok(uy)) = (usize::try_from(world_x), usize::try_from(world_y)) {
-                    terrain
+                    ctx.terrain
                         .get(ux, uy)
                         .map_or((" ", Color::Black), |tile| (tile.as_str(), tile.color()))
                 } else {
@@ -249,21 +267,10 @@ pub fn build_map_layer_spans<S: BuildHasher>(
 /// Render terrain grid, buildings, and pops to the given frame area with viewport offset.
 pub fn render_map_layer<S: BuildHasher>(
     frame: &mut Frame,
-    area: Rect,
-    terrain: &TerrainGrid,
-    viewport: &Viewport,
-    pops_data: &HashMap<GridPosition, (char, Color), S>,
-    buildings_data: &HashMap<GridPosition, BuildingType, S>,
-    build_mode: Option<(GridPosition, BuildingType, bool)>,
+    ctx: MapRenderContext<'_, S>,
 ) {
-    let lines = build_map_layer_spans(
-        area,
-        terrain,
-        viewport,
-        pops_data,
-        buildings_data,
-        build_mode,
-    );
+    let area = ctx.area;
+    let lines = build_map_layer_spans(ctx);
     let paragraph = Paragraph::new(lines);
     frame.render_widget(paragraph, area);
 }
@@ -435,7 +442,16 @@ mod tests {
 
         let buildings_data = HashMap::new();
 
-        let spans = build_map_layer_spans(area, &grid, &viewport, &pop_data, &buildings_data, None);
+        let ctx = MapRenderContext {
+            area,
+            terrain: &grid,
+            viewport: &viewport,
+            pops_data: &pop_data,
+            buildings_data: &buildings_data,
+            build_mode: None,
+        };
+
+        let spans = build_map_layer_spans(ctx);
 
         assert_eq!(spans.len(), 3);
 
@@ -471,7 +487,16 @@ mod tests {
         let pop_data = HashMap::new();
         let buildings_data = HashMap::new();
 
-        let spans = build_map_layer_spans(area, &grid, &viewport, &pop_data, &buildings_data, None);
+        let ctx = MapRenderContext {
+            area,
+            terrain: &grid,
+            viewport: &viewport,
+            pops_data: &pop_data,
+            buildings_data: &buildings_data,
+            build_mode: None,
+        };
+
+        let spans = build_map_layer_spans(ctx);
 
         assert_eq!(spans.len(), 3);
         // All should be water
@@ -500,7 +525,16 @@ mod tests {
         pop_data.insert(GridPosition { x: 0, y: 0 }, ('P', Color::Yellow));
         let buildings_data = HashMap::new();
 
-        let spans = build_map_layer_spans(area, &grid, &viewport, &pop_data, &buildings_data, None);
+        let ctx = MapRenderContext {
+            area,
+            terrain: &grid,
+            viewport: &viewport,
+            pops_data: &pop_data,
+            buildings_data: &buildings_data,
+            build_mode: None,
+        };
+
+        let spans = build_map_layer_spans(ctx);
 
         assert_eq!(spans.len(), 4);
 
@@ -534,7 +568,16 @@ mod tests {
         let pop_data = HashMap::new();
         let buildings_data = HashMap::new();
 
-        let spans = build_map_layer_spans(area, &grid, &viewport, &pop_data, &buildings_data, None);
+        let ctx = MapRenderContext {
+            area,
+            terrain: &grid,
+            viewport: &viewport,
+            pops_data: &pop_data,
+            buildings_data: &buildings_data,
+            build_mode: None,
+        };
+
+        let spans = build_map_layer_spans(ctx);
 
         assert_eq!(spans.len(), 3);
         // All should be black/empty (out of bounds)
@@ -567,7 +610,15 @@ mod tests {
 
         let result = terminal.draw(|frame| {
             let area = Rect::new(0, 0, 5, 5);
-            render_map_layer(frame, area, &grid, &viewport, &pop_data, &buildings_data, None);
+            let ctx = MapRenderContext {
+                area,
+                terrain: &grid,
+                viewport: &viewport,
+                pops_data: &pop_data,
+                buildings_data: &buildings_data,
+                build_mode: None,
+            };
+            render_map_layer(frame, ctx);
         });
 
         assert!(result.is_ok());
@@ -620,7 +671,16 @@ mod tests {
         let pop_data = HashMap::new();
         let buildings_data = HashMap::new();
 
-        let spans = build_map_layer_spans(area, &grid, &viewport, &pop_data, &buildings_data, None);
+        let ctx = MapRenderContext {
+            area,
+            terrain: &grid,
+            viewport: &viewport,
+            pops_data: &pop_data,
+            buildings_data: &buildings_data,
+            build_mode: None,
+        };
+
+        let spans = build_map_layer_spans(ctx);
 
         assert_eq!(spans.len(), 1);
         assert_eq!(spans[0].spans.len(), 4);
@@ -651,7 +711,16 @@ mod tests {
         pop_data.insert(GridPosition { x: 1, y: 1 }, ('P', Color::Yellow));
         let buildings_data = HashMap::new();
 
-        let spans = build_map_layer_spans(area, &grid, &viewport, &pop_data, &buildings_data, None);
+        let ctx = MapRenderContext {
+            area,
+            terrain: &grid,
+            viewport: &viewport,
+            pops_data: &pop_data,
+            buildings_data: &buildings_data,
+            build_mode: None,
+        };
+
+        let spans = build_map_layer_spans(ctx);
 
         // Pops should override terrain
         assert_eq!(spans[0].spans[0].content, "P");
@@ -681,7 +750,16 @@ mod tests {
         let pop_data = HashMap::new();
         let buildings_data = HashMap::new();
 
-        let spans = build_map_layer_spans(area, &grid, &viewport, &pop_data, &buildings_data, None);
+        let ctx = MapRenderContext {
+            area,
+            terrain: &grid,
+            viewport: &viewport,
+            pops_data: &pop_data,
+            buildings_data: &buildings_data,
+            build_mode: None,
+        };
+
+        let spans = build_map_layer_spans(ctx);
 
         assert_eq!(spans.len(), 4);
 
@@ -719,7 +797,15 @@ mod tests {
 
         let result = terminal.draw(|frame| {
             let area = Rect::new(0, 0, 2, 2);
-            render_map_layer(frame, area, &grid, &viewport, &pop_data, &buildings_data, None);
+            let ctx = MapRenderContext {
+                area,
+                terrain: &grid,
+                viewport: &viewport,
+                pops_data: &pop_data,
+                buildings_data: &buildings_data,
+                build_mode: None,
+            };
+            render_map_layer(frame, ctx);
         });
 
         assert!(result.is_ok());
@@ -743,7 +829,16 @@ mod tests {
         pop_data.insert(GridPosition { x: 0, y: 0 }, ('P', Color::Yellow));
         let buildings_data = HashMap::new();
 
-        let spans = build_map_layer_spans(area, &grid, &viewport, &pop_data, &buildings_data, None);
+        let ctx = MapRenderContext {
+            area,
+            terrain: &grid,
+            viewport: &viewport,
+            pops_data: &pop_data,
+            buildings_data: &buildings_data,
+            build_mode: None,
+        };
+
+        let spans = build_map_layer_spans(ctx);
 
         assert_eq!(spans.len(), 2);
         assert_eq!(spans[0].spans[0].content, "P");
