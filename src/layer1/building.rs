@@ -8,9 +8,11 @@ use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
 use ratatui::style::Color;
 use std::collections::HashSet;
+use strum::IntoEnumIterator;
+use strum_macros::EnumIter;
 
 /// Building types available for construction.
-#[derive(Clone, Copy, PartialEq, Eq, Default, Debug)]
+#[derive(Clone, Copy, PartialEq, Eq, Default, Debug, EnumIter)]
 pub enum BuildingType {
     /// Basic shelter for pops.
     #[default]
@@ -82,11 +84,14 @@ impl BuildingType {
     /// assert_eq!(BuildingType::Housing.next(), BuildingType::Farm);
     /// ```
     #[must_use]
-    pub const fn next(&self) -> Self {
-        match self {
-            Self::Housing => Self::Farm,
-            Self::Farm => Self::Housing,
+    pub fn next(&self) -> Self {
+        let mut iter = Self::iter();
+        while let Some(current) = iter.next() {
+            if &current == self {
+                return iter.next().unwrap_or(Self::iter().next().unwrap());
+            }
         }
+        Self::default()
     }
 }
 
