@@ -12,7 +12,7 @@
 
 use bevy_ecs::prelude::*;
 use crossterm::{
-    event::{self, Event, KeyCode},
+    event::{self, Event, KeyCode, KeyEventKind},
     execute,
     terminal::{EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode, enable_raw_mode},
 };
@@ -124,6 +124,11 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
 }
 
 fn handle_input(world: &mut World, key: crossterm::event::KeyEvent) {
+    // Only process key press events to avoid double-triggering on press+release
+    if key.kind != KeyEventKind::Press {
+        return;
+    }
+
     let build_active = world.resource::<BuildMode>().active;
 
     match key.code {
@@ -571,5 +576,40 @@ mod tests {
         assert!(s_paused.contains("Tick: 50"));
         assert!(s_paused.contains("⏸"));
         assert!(s_paused.contains("3x"));
+    }
+
+    #[test]
+    fn test_build_mode_tab_cycling() {
+        use crossterm::event::KeyEventKind;
+
+        let mut world = create_test_world();
+
+        // Enable build mode
+        world.resource_mut::<BuildMode>().active = true;
+        world.resource_mut::<BuildMode>().selected = BuildingType::Housing;
+
+        // Press Tab - should cycle from Housing to Farm
+        let tab_press = KeyEvent {
+            code: KeyCode::Tab,
+            modifiers: KeyModifiers::empty(),
+            kind: KeyEventKind::Press,
+            state: crossterm::event::KeyEventState::empty(),
+        };
+        handle_input(&mut world, tab_press);
+        assert_eq!(world.resource::<BuildMode>().selected, BuildingType::Farm);
+
+        // Release Tab - should NOT cycle again
+        let tab_release = KeyEvent {
+            code: KeyCode::Tab,
+            modifiers: KeyModifiers::empty(),
+            kind: KeyEventKind::Release,
+            state: crossterm::event::KeyEventState::empty(),
+        };
+        handle_input(&mut world, tab_release);
+        assert_eq!(
+            world.resource::<BuildMode>().selected,
+            BuildingType::Farm,
+            "Tab release should not trigger cycling"
+        );
     }
 }
