@@ -67,8 +67,8 @@ mod tests {
     #[test]
     fn test_needs_default() {
         let needs = Needs::default();
-        assert_eq!(needs.hunger, 0.8);
-        assert_eq!(needs.rest, 0.8);
+        assert!((needs.hunger - 0.8).abs() < f32::EPSILON);
+        assert!((needs.rest - 0.8).abs() < f32::EPSILON);
     }
 
     #[test]
@@ -77,19 +77,19 @@ mod tests {
             hunger: 0.5,
             rest: 0.7,
         };
-        assert_eq!(needs1.worst(), 0.5);
+        assert!((needs1.worst() - 0.5).abs() < f32::EPSILON);
 
         let needs2 = Needs {
             hunger: 0.9,
             rest: 0.3,
         };
-        assert_eq!(needs2.worst(), 0.3);
+        assert!((needs2.worst() - 0.3).abs() < f32::EPSILON);
 
         let needs3 = Needs {
             hunger: 0.5,
             rest: 0.5,
         };
-        assert_eq!(needs3.worst(), 0.5);
+        assert!((needs3.worst() - 0.5).abs() < f32::EPSILON);
     }
 
     #[test]
@@ -111,7 +111,7 @@ mod tests {
         assert!(needs.hunger >= 0.0);
         assert!(needs.rest >= 0.0);
         // Hunger: 0.01 - 0.02 = -0.01 -> clamped to 0.0
-        assert_eq!(needs.hunger, 0.0);
+        assert!(needs.hunger < f32::EPSILON);
     }
 
     // test_needs_clamped_to_one removed as no system currently increases needs.

@@ -20,6 +20,7 @@ use ratatui::{
     prelude::*,
     widgets::{Block, BorderType, Borders, Paragraph},
 };
+use std::collections::HashMap;
 use std::io;
 use std::time::{Duration, Instant};
 
@@ -293,7 +294,7 @@ fn render_map(frame: &mut Frame, area: Rect, world: &World) {
     );
 }
 
-fn get_pops_render_data(world: &World) -> Vec<(GridPosition, (char, Color))> {
+fn get_pops_render_data(world: &World) -> HashMap<GridPosition, (char, Color)> {
     world
         .iter_entities()
         .filter(|e| e.contains::<GridPosition>() && e.contains::<Needs>())
@@ -305,7 +306,7 @@ fn get_pops_render_data(world: &World) -> Vec<(GridPosition, (char, Color))> {
         .collect()
 }
 
-fn get_buildings_render_data(world: &World) -> Vec<(GridPosition, BuildingType)> {
+fn get_buildings_render_data(world: &World) -> HashMap<GridPosition, BuildingType> {
     world
         .iter_entities()
         .filter(|e| e.contains::<GridPosition>() && e.contains::<Building>())
@@ -559,9 +560,8 @@ mod tests {
         let data = get_pops_render_data(&world);
 
         assert_eq!(data.len(), 2);
-        let positions: Vec<(i32, i32)> = data.iter().map(|(pos, _)| (pos.x, pos.y)).collect();
-        assert!(positions.contains(&(10, 20)));
-        assert!(positions.contains(&(5, 5)));
+        assert!(data.contains_key(&GridPosition { x: 10, y: 20 }));
+        assert!(data.contains_key(&GridPosition { x: 5, y: 5 }));
     }
 
     #[test]

@@ -148,7 +148,7 @@ mod tests {
         restore_rest_in_housing_system(&mut world);
         let rest = world.get::<Needs>(pop).unwrap().rest;
 
-        assert_eq!(rest, 1.0);
+        assert!((rest - 1.0).abs() < f32::EPSILON);
     }
 
     #[test]
