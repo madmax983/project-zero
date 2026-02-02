@@ -4,7 +4,7 @@
 
 use criterion::{Criterion, black_box, criterion_group, criterion_main};
 use scale::layer1::{
-    GridPosition, TerrainGrid, TerrainType, Viewport, build_map_layer_spans,
+    GridPosition, MapRenderContext, TerrainGrid, TerrainType, Viewport, build_map_layer_spans,
 };
 use ratatui::prelude::{Color, Rect};
 use std::collections::HashMap;
@@ -42,14 +42,15 @@ fn benchmark_rendering(c: &mut Criterion) {
 
     c.bench_function("render_map_layer_1000_pops", |b| {
         b.iter(|| {
-            build_map_layer_spans(
-                black_box(area),
-                black_box(&grid),
-                black_box(&viewport),
-                black_box(&pops_data),
-                black_box(&buildings_data),
-                black_box(None),
-            )
+            let ctx = MapRenderContext {
+                area: black_box(area),
+                terrain: black_box(&grid),
+                viewport: black_box(&viewport),
+                pops_data: black_box(&pops_data),
+                buildings_data: black_box(&buildings_data),
+                build_mode: black_box(None),
+            };
+            build_map_layer_spans(ctx)
         });
     });
 }
