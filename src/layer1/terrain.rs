@@ -1,6 +1,8 @@
 use bevy_ecs::prelude::*;
 use rand::Rng;
 use ratatui::{prelude::*, widgets::Paragraph};
+use std::collections::HashSet;
+use std::hash::BuildHasher;
 
 /// Represents the type of terrain in a cell.
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
@@ -175,6 +177,49 @@ pub fn build_terrain_spans(
         spans.push(Line::from(line_spans));
     }
     spans
+}
+
+/// Render terrain grid and pops to the given frame area with viewport offset.
+pub fn render_terrain_and_pops<S: BuildHasher>(
+    frame: &mut Frame,
+    area: Rect,
+    terrain: &TerrainGrid,
+    viewport: &Viewport,
+    pop_positions: &HashSet<(i32, i32), S>,
+) {
+    let mut lines: Vec<Line> = Vec::new();
+
+    for screen_y in 0..area.height {
+        let world_y = viewport.y + i32::from(screen_y);
+        let mut line_spans = Vec::new();
+
+        for screen_x in 0..area.width {
+            let world_x = viewport.x + i32::from(screen_x);
+
+            // Check for pop first
+            if pop_positions.contains(&(world_x, world_y)) {
+                let (ch, color) = super::pop::pop_display();
+                line_spans.push(Span::styled(ch.to_string(), Style::default().fg(color)));
+                continue;
+            }
+
+            // Otherwise render terrain
+            let (text, color) =
+                if let (Ok(ux), Ok(uy)) = (usize::try_from(world_x), usize::try_from(world_y)) {
+                    terrain
+                        .get(ux, uy)
+                        .map_or((" ", Color::Black), |tile| (tile.as_str(), tile.color()))
+                } else {
+                    (" ", Color::Black)
+                };
+
+            line_spans.push(Span::styled(text, Style::default().fg(color)));
+        }
+        lines.push(Line::from(line_spans));
+    }
+
+    let paragraph = Paragraph::new(lines);
+    frame.render_widget(paragraph, area);
 }
 
 /// Renders the terrain grid to the provided frame.
