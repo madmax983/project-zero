@@ -27,7 +27,7 @@ impl Default for Farm {
     }
 }
 
-const FOOD_PER_WORKER_PER_TICK: f32 = 0.3;
+const FOOD_PER_WORKER_PER_TICK: f32 = 0.005;
 const FOOD_HUNGER_THRESHOLD: f32 = 0.7; // Eat when below this
 const FOOD_PER_MEAL: f32 = 0.1; // Food consumed per meal
 const HUNGER_PER_MEAL: f32 = 0.3; // Hunger restored per meal
@@ -192,7 +192,7 @@ mod tests {
 
         let resources = world.resource::<ColonyResources>();
         assert!(
-            resources.food >= 0.6,
+            resources.food >= 0.009,
             "Two workers should produce more food"
         );
     }
@@ -207,14 +207,17 @@ mod tests {
         farm.workers.push(worker);
         world.spawn(farm);
 
-        for _ in 0..10 {
+        for _ in 0..600 {
             produce_food_system(&mut world);
         }
 
         let resources = world.resource::<ColonyResources>();
         println!("Food accumulated: {}", resources.food);
         // Use epsilon for float comparison
-        assert!(resources.food >= 2.99, "10 ticks should accumulate food");
+        assert!(
+            resources.food >= 2.99,
+            "600 ticks should accumulate ~3.0 food"
+        );
     }
 
     #[test]

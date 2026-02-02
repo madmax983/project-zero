@@ -1,4 +1,6 @@
+use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
+use ratatui::style::Color;
 
 /// Pop survival needs.
 #[derive(Component, Clone, Copy, Debug)]
@@ -30,8 +32,8 @@ impl Needs {
     }
 }
 
-const HUNGER_DECAY_PER_TICK: f32 = 0.02; // ~50 ticks to starve from full
-const REST_DECAY_PER_TICK: f32 = 0.01; // ~100 ticks to exhaust
+const HUNGER_DECAY_PER_TICK: f32 = 0.001; // ~800 ticks to starve from full
+const REST_DECAY_PER_TICK: f32 = 0.001; // ~800 ticks to exhaust
 
 /// Decays needs for all pops each tick.
 pub fn decay_needs_system(world: &mut World) {
@@ -54,6 +56,9 @@ pub fn kill_starving_entities_system(world: &mut World) {
 
     for entity in to_despawn {
         world.despawn(entity);
+        if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+            log.add_colored("A colonist has starved to death!", Color::Red);
+        }
     }
 }
 
@@ -99,8 +104,8 @@ mod tests {
         world.spawn((
             Pop,
             Needs {
-                hunger: 0.01,
-                rest: 0.01,
+                hunger: 0.0001,
+                rest: 0.0001,
             },
         ));
 
@@ -109,7 +114,7 @@ mod tests {
         let needs = world.query::<&Needs>().single(&world);
         assert!(needs.hunger >= 0.0);
         assert!(needs.rest >= 0.0);
-        // Hunger: 0.01 - 0.02 = -0.01 -> clamped to 0.0
+        // Hunger: 0.0001 - 0.001 = -0.0009 -> clamped to 0.0
         assert!(needs.hunger < f32::EPSILON);
     }
 
@@ -134,14 +139,14 @@ mod tests {
         let mut world = World::new();
         world.spawn((Pop, Needs::default()));
 
-        for _ in 0..10 {
+        for _ in 0..100 {
             decay_needs_system(&mut world);
         }
 
         let needs = world.query::<&Needs>().single(&world);
-        // After 10 ticks of decay: 0.8 - (10 * 0.02) = 0.6
+        // After 100 ticks of decay: 0.8 - (100 * 0.001) = 0.7
         // Allow for floating point epsilon
-        assert!(needs.hunger < 0.61, "Hunger should decay significantly");
+        assert!(needs.hunger < 0.71, "Hunger should decay significantly");
         assert!(needs.rest < 0.71, "Rest should decay");
     }
 
@@ -248,16 +253,16 @@ mod tests {
 
         // Run until pop dies
         let mut ticks = 0;
-        while world.query::<&Pop>().iter(&world).count() > 0 && ticks < 100 {
+        while world.query::<&Pop>().iter(&world).count() > 0 && ticks < 2000 {
             decay_needs_system(&mut world);
             kill_starving_entities_system(&mut world);
             ticks += 1;
         }
 
         assert!(
-            ticks < 50,
-            "Pop should die within ~50 ticks from full (0.8)"
+            ticks < 850,
+            "Pop should die within ~800 ticks from full (0.8)"
         );
-        assert!(ticks > 30, "Pop should survive at least 30 ticks");
+        assert!(ticks > 750, "Pop should survive at least 750 ticks");
     }
 }

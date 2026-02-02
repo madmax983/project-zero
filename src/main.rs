@@ -18,8 +18,9 @@ use crossterm::{
 };
 use ratatui::{
     prelude::*,
-    widgets::{Block, BorderType, Borders, Paragraph},
+    widgets::{Block, BorderType, Borders, List, ListItem, Paragraph},
 };
+use scale::shared::log::MessageLog;
 use std::collections::HashMap;
 use std::io;
 use std::time::{Duration, Instant};
@@ -31,9 +32,9 @@ use scale::layer1::{
     decay_needs_system, generate_terrain, kill_starving_entities_system, pop_display,
     produce_food_system, render_map_layer, restore_rest_in_housing_system, spawn_initial_pops,
 };
-use scale::shared::time::{SimSpeed, SimulationTime};
-use scale::shared::state::GameState;
 use scale::shared::input::{InputContextStack, InputRouter};
+use scale::shared::state::GameState;
+use scale::shared::time::{SimSpeed, SimulationTime};
 
 fn main() -> anyhow::Result<()> {
     // Terminal setup
@@ -65,6 +66,7 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
     world.insert_resource(OccupiedTiles::default());
     world.insert_resource(ColonyResources::default());
     world.insert_resource(InputContextStack::default());
+    world.insert_resource(MessageLog::default());
 
     spawn_initial_pops(&mut world);
 
@@ -120,7 +122,6 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
 
     Ok(())
 }
-
 
 fn render(world: &World, frame: &mut Frame) {
     // Main vertical split: content + status bar
@@ -216,12 +217,24 @@ fn get_buildings_render_data(world: &World) -> HashMap<GridPosition, BuildingTyp
 }
 
 fn render_info_panel(frame: &mut Frame, area: Rect, world: &World) {
+    let chunks = Layout::default()
+        .direction(Direction::Vertical)
+        .constraints([
+            Constraint::Min(10),    // Stats
+            Constraint::Length(10), // Log
+        ])
+        .split(area);
+
+    let stats_area = chunks[0];
+    let log_area = chunks[1];
+
+    // Stats Panel
     let block = Block::default()
         .borders(Borders::ALL)
         .border_type(BorderType::Rounded)
         .title(" Info ");
-    let inner = block.inner(area);
-    frame.render_widget(block, area);
+    let inner = block.inner(stats_area);
+    frame.render_widget(block, stats_area);
 
     let pop_count = world
         .iter_entities()
@@ -255,6 +268,28 @@ fn render_info_panel(frame: &mut Frame, area: Rect, world: &World) {
     );
     let paragraph = Paragraph::new(text);
     frame.render_widget(paragraph, inner);
+
+    // Message Log Panel
+    let log_block = Block::default()
+        .borders(Borders::ALL)
+        .border_type(BorderType::Rounded)
+        .title(" Log ");
+    let log_inner = log_block.inner(log_area);
+    frame.render_widget(log_block, log_area);
+
+    if let Some(log) = world.get_resource::<MessageLog>() {
+        let height = log_inner.height as usize;
+        let start = log.messages.len().saturating_sub(height);
+        let items: Vec<ListItem> = log
+            .messages
+            .iter()
+            .skip(start)
+            .map(|m| ListItem::new(Line::styled(m.text.clone(), Style::default().fg(m.color))))
+            .collect();
+
+        let list = List::new(items);
+        frame.render_widget(list, log_inner);
+    }
 }
 
 fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
