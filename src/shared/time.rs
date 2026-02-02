@@ -34,6 +34,15 @@ impl SimSpeed {
     /// NOTE: Currently unused in the main game loop. The tick increment logic (main.rs:89)
     /// always adds 1 per tick. This method is reserved for future implementation where
     /// the speed multiplier will be applied via the `accumulator` field.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use scale::shared::time::SimSpeed;
+    ///
+    /// assert_eq!(SimSpeed::Normal.ticks_per_second(), 1.0);
+    /// assert_eq!(SimSpeed::Paused.ticks_per_second(), 0.0);
+    /// ```
     #[must_use]
     pub const fn ticks_per_second(&self) -> f32 {
         match self {
@@ -45,6 +54,15 @@ impl SimSpeed {
     }
 
     /// Returns a user-friendly label for the UI.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use scale::shared::time::SimSpeed;
+    ///
+    /// assert!(SimSpeed::Paused.label().contains("Paused"));
+    /// assert!(SimSpeed::Normal.label().contains("1x"));
+    /// ```
     #[must_use]
     pub const fn label(&self) -> &'static str {
         match self {
