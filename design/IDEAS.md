@@ -397,3 +397,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Demolish the past for efficiency, or preserve it for culture?
 
 ---
+
+## The Old Guard
+
+**Layer:** 1
+
+**Fantasy:** The struggle between the hardened founders and the soft new arrivals.
+
+**Mechanic:** Pops track their "Arrival Date". "Founders" get authority bonuses but are resistant to change. "New Blood" brings new skills but causes friction with Founders.
+
+**Emergence:** Your government is deadlocked because the 3 original survivors hate the 500 new immigrants.
+
+**Tension:** Do you retire the heroes to modernize, or respect their seniority at the cost of progress?
+
+---
+
+## Adaptive Biology
+
+**Layer:** 1
+
+**Fantasy:** The planet changes you as much as you change it. You aren't human anymore.
+
+**Mechanic:** Prolonged exposure to planetary conditions (gravity, atmosphere, radiation) slowly mutates Pop stats/appearance over generations.
+
+**Emergence:** Your heavy-world miners can no longer return to Earth because their bones would shatter the ship. They are trapped.
+
+**Tension:** Use genetic stabilizers (expensive) or embrace the mutation (speciation)?
+
+---
+
+## The Curio Trade
+
+**Layer:** Cross-layer
+
+**Fantasy:** Your colony is a curiosity to the bored elites of the Core Worlds.
+
+**Mechanic:** Unique local items (alien wood carvings, glowing rocks) can be sold for massive credits as "Art", but removing them upsets the local ecosystem or pop culture.
+
+**Emergence:** You strip-mine the sacred singing crystals to pay for a shield generator, causing a spiritual depression in the colony.
+
+**Tension:** Cultural heritage vs. Economic survival.
+
+---
+
+## Orbital Shadow
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The space infrastructure is so massive it blocks the sun.
+
+**Mechanic:** Large orbital stations or fleets cast dynamic shadows on the colony map, reducing solar power and temperature in those zones.
+
+**Emergence:** You park your dreadnought fleet in orbit for repairs, and accidentally freeze your crops.
+
+**Tension:** Defense positioning vs. Planetary agriculture.
+
+---
