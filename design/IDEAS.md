@@ -453,3 +453,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Defense positioning vs. Planetary agriculture.
 
 ---
+
+## Material Provenance
+
+**Layer:** 1
+
+**Fantasy:** Building a house out of alien bone feels different than building it out of prefab plastisteel.
+
+**Mechanic:** Buildings inherit properties from the materials used to construct them (e.g., Flammability, Insulation, Beauty).
+
+**Emergence:** You build the nursery out of "Whispering Stone" because it was cheap. Now all the children are Psions.
+
+**Tension:** Use the abundant, dangerous material or the scarce, safe one?
+
+---
+
+## Graffiti & Signage
+
+**Layer:** 1
+
+**Fantasy:** The colony has a voice. The walls speak.
+
+**Mechanic:** Pops leave "Markings" (graffiti, posters, notes) on walls/buildings based on mood/beliefs. Other pops react to them.
+
+**Emergence:** A disgruntled miner scrawls "Unsafe" on the mine. Others read it and refuse to work. A resistance movement forms entirely through bathroom stall scribbles.
+
+**Tension:** Clean the walls (order) vs Let them vent (information/happiness).
+
+---
+
+## Symbiotic Pests
+
+**Layer:** 1
+
+**Fantasy:** You are not the only things living in your walls.
+
+**Mechanic:** Food storage and waste generate "Vermin". Vermin eat food/spread disease, but specific species can be harvested for resources (meat/silk) or eat other pests.
+
+**Emergence:** You kill the rats, but the rats were eating the "Brain-Borer Beetles". Now you have a beetle plague.
+
+**Tension:** Eradication vs Control vs Symbiosis.
+
+---
