@@ -236,4 +236,71 @@ mod tests {
         assert_eq!(pos1.x, pos2.x);
         assert_eq!(pos1.y, pos2.y);
     }
+
+    #[test]
+    fn test_spawn_with_mixed_terrain() {
+        let mut world = World::new();
+        let width = 10;
+        let height = 10;
+        let mut tiles = vec![TerrainType::Grass; width * height];
+
+        // Add some non-walkable tiles to force retries
+        tiles[5] = TerrainType::Water;
+        tiles[15] = TerrainType::Rock;
+        tiles[25] = TerrainType::Water;
+        tiles[35] = TerrainType::Rock;
+
+        let terrain = TerrainGrid {
+            width,
+            height,
+            tiles,
+        };
+        world.insert_resource(terrain);
+
+        spawn_initial_pops(&mut world);
+
+        let count = world.query::<&Pop>().iter(&world).count();
+        assert_eq!(count, 5);
+
+        // Verify no pops on water or rock
+        let mut query = world.query::<(&Pop, &GridPosition)>();
+        let terrain = world.resource::<TerrainGrid>();
+        for (_, pos) in query.iter(&world) {
+            let x = usize::try_from(pos.x).expect("x should be non-negative");
+            let y = usize::try_from(pos.y).expect("y should be non-negative");
+            if let Some(tile) = terrain.get(x, y) {
+                assert_ne!(tile, TerrainType::Water);
+                assert_ne!(tile, TerrainType::Rock);
+            }
+        }
+    }
+
+    #[test]
+    fn test_spawn_internal_multiple_attempts() {
+        use rand::SeedableRng;
+        use rand::rngs::StdRng;
+
+        let mut world = World::new();
+        let width = 20;
+        let height = 20;
+        let mut tiles = vec![TerrainType::Water; width * height];
+
+        // Create a sparse walkable area (only 20 out of 400 tiles)
+        for i in 0..20 {
+            tiles[i * 20] = TerrainType::Grass;
+        }
+
+        let terrain = TerrainGrid {
+            width,
+            height,
+            tiles,
+        };
+        world.insert_resource(terrain);
+
+        let mut rng = StdRng::seed_from_u64(123);
+        spawn_initial_pops_internal(&mut world, &mut rng);
+
+        let count = world.query::<&Pop>().iter(&world).count();
+        assert_eq!(count, 5);
+    }
 }

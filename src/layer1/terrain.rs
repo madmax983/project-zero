@@ -566,4 +566,138 @@ mod tests {
 
         assert!(result.is_ok());
     }
+
+    #[test]
+    fn test_build_terrain_and_pop_spans_all_terrain_types() {
+        use std::collections::HashSet;
+
+        let width = 4;
+        let height = 4;
+        let mut tiles = vec![TerrainType::Grass; width * height];
+
+        // Set different terrain types
+        tiles[0] = TerrainType::Grass;
+        tiles[1] = TerrainType::Dirt;
+        tiles[2] = TerrainType::Rock;
+        tiles[3] = TerrainType::Water;
+
+        let grid = TerrainGrid {
+            width,
+            height,
+            tiles,
+        };
+
+        let viewport = Viewport { x: 0, y: 0 };
+        let area = Rect::new(0, 0, 4, 1);
+        let pop_positions: HashSet<(i32, i32)> = HashSet::new();
+
+        let spans = build_terrain_and_pop_spans(area, &grid, &viewport, &pop_positions);
+
+        assert_eq!(spans.len(), 1);
+        assert_eq!(spans[0].spans.len(), 4);
+
+        // Check each terrain type is rendered correctly
+        assert_eq!(spans[0].spans[0].content, "."); // Grass
+        assert_eq!(spans[0].spans[1].content, ","); // Dirt
+        assert_eq!(spans[0].spans[2].content, "#"); // Rock
+        assert_eq!(spans[0].spans[3].content, "~"); // Water
+    }
+
+    #[test]
+    fn test_build_terrain_and_pop_spans_pop_priority() {
+        use std::collections::HashSet;
+
+        let width = 3;
+        let height = 3;
+        let tiles = vec![TerrainType::Grass; width * height];
+        let grid = TerrainGrid {
+            width,
+            height,
+            tiles,
+        };
+
+        let viewport = Viewport { x: 0, y: 0 };
+        let area = Rect::new(0, 0, 2, 2);
+
+        let mut pop_positions = HashSet::new();
+        pop_positions.insert((0, 0));
+        pop_positions.insert((1, 1));
+
+        let spans = build_terrain_and_pop_spans(area, &grid, &viewport, &pop_positions);
+
+        let (pop_char, pop_color) = super::super::pop::pop_display();
+
+        // Pops should override terrain
+        assert_eq!(spans[0].spans[0].content, pop_char.to_string());
+        assert_eq!(spans[0].spans[0].style.fg, Some(pop_color));
+        assert_eq!(spans[1].spans[1].content, pop_char.to_string());
+        assert_eq!(spans[1].spans[1].style.fg, Some(pop_color));
+
+        // Non-pop tiles should show terrain
+        assert_eq!(spans[0].spans[1].content, ".");
+        assert_eq!(spans[1].spans[0].content, ".");
+    }
+
+    #[test]
+    fn test_build_terrain_and_pop_spans_partial_out_of_bounds() {
+        use std::collections::HashSet;
+
+        let width = 3;
+        let height = 3;
+        let tiles = vec![TerrainType::Dirt; width * height];
+        let grid = TerrainGrid {
+            width,
+            height,
+            tiles,
+        };
+
+        // Viewport positioned so half the view is out of bounds
+        let viewport = Viewport { x: 1, y: 1 };
+        let area = Rect::new(0, 0, 4, 4);
+        let pop_positions: HashSet<(i32, i32)> = HashSet::new();
+
+        let spans = build_terrain_and_pop_spans(area, &grid, &viewport, &pop_positions);
+
+        assert_eq!(spans.len(), 4);
+
+        // First 2x2 should be Dirt (within bounds)
+        for row in spans.iter().take(2) {
+            for span in row.spans.iter().take(2) {
+                assert_eq!(span.content, ",");
+            }
+        }
+
+        // Rest should be black (out of bounds)
+        for span in spans[0].spans.iter().skip(3) {
+            assert_eq!(span.content, " ");
+            assert_eq!(span.style.fg, Some(Color::Black));
+        }
+    }
+
+    #[test]
+    fn test_viewport_default() {
+        let viewport = Viewport::default();
+        assert_eq!(viewport.x, 0);
+        assert_eq!(viewport.y, 0);
+    }
+
+    #[test]
+    fn test_terrain_grid_row_major_order() {
+        let width = 3;
+        let height = 2;
+        let mut tiles = vec![TerrainType::Grass; width * height];
+
+        // Set a specific tile at (x=2, y=1)
+        // Index = y * width + x = 1 * 3 + 2 = 5
+        tiles[5] = TerrainType::Rock;
+
+        let grid = TerrainGrid {
+            width,
+            height,
+            tiles,
+        };
+
+        assert_eq!(grid.get(2, 1), Some(TerrainType::Rock));
+        assert_eq!(grid.get(0, 0), Some(TerrainType::Grass));
+    }
 }
