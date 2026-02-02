@@ -1,6 +1,7 @@
 // src/layer1/building.rs
 
 use super::GridPosition;
+use super::housing::Housing;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use bevy_ecs::prelude::*;
 use ratatui::style::Color;
@@ -113,7 +114,11 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
     }
 
     // Spawn building
-    world.spawn((Building { building_type }, GridPosition { x, y }));
+    let mut entity = world.spawn((Building { building_type }, GridPosition { x, y }));
+
+    if building_type == BuildingType::Housing {
+        entity.insert(Housing::default());
+    }
 
     // Mark tile occupied
     world.resource_mut::<OccupiedTiles>().0.insert((x, y));
