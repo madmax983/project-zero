@@ -20,10 +20,14 @@ use ratatui::{
     prelude::*,
     widgets::{Block, BorderType, Borders, Paragraph},
 };
+use std::collections::HashSet;
 use std::io;
 use std::time::{Duration, Instant};
 
-use scale::layer1::{TerrainGrid, Viewport, generate_terrain, render_terrain};
+use scale::layer1::{
+    GridPosition, Pop, TerrainGrid, Viewport, generate_terrain, render_terrain_and_pops,
+    spawn_initial_pops,
+};
 use scale::shared::time::{SimSpeed, SimulationTime};
 
 /// Represents the high-level state of the game loop.
@@ -64,6 +68,8 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
     world.insert_resource(generate_terrain(80, 50));
     world.insert_resource(Viewport::default());
     world.insert_resource(SimulationTime::default());
+
+    spawn_initial_pops(&mut world);
 
     let mut schedule = Schedule::default();
     // Systems will be added here by other specs
@@ -202,7 +208,19 @@ fn render_map(frame: &mut Frame, area: Rect, world: &World) {
     // Render terrain inside
     let terrain = world.resource::<TerrainGrid>();
     let viewport = world.resource::<Viewport>();
-    render_terrain(frame, inner, terrain, viewport);
+
+    let pop_positions = get_pop_positions(world);
+
+    render_terrain_and_pops(frame, inner, terrain, viewport, &pop_positions);
+}
+
+fn get_pop_positions(world: &World) -> HashSet<(i32, i32)> {
+    world
+        .iter_entities()
+        .filter(bevy_ecs::world::EntityRef::contains::<Pop>)
+        .filter_map(|e| e.get::<GridPosition>())
+        .map(|pos| (pos.x, pos.y))
+        .collect()
 }
 
 fn render_info_panel(frame: &mut Frame, area: Rect, _world: &World) {
@@ -228,15 +246,19 @@ fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
     // vs "completely frozen". Current behavior: only GameState::Paused matters (main.rs:86).
     let paused = *game_state == GameState::Paused || sim_time.speed == SimSpeed::Paused;
 
-    let status = format!(
-        " {} │ Tick: {} │ {} │ WASD:Move  Space:Pause  1-3:Speed  q:Quit ",
-        if paused { "⏸" } else { "▶" },
-        sim_time.tick,
-        sim_time.speed.label(),
-    );
+    let status = get_status_string(sim_time.tick, sim_time.speed, paused);
 
     let bar = Paragraph::new(status).style(Style::default().bg(Color::DarkGray).fg(Color::White));
     frame.render_widget(bar, area);
+}
+
+fn get_status_string(tick: u64, speed: SimSpeed, paused: bool) -> String {
+    format!(
+        " {} │ Tick: {} │ {} │ WASD:Move  Space:Pause  1-3:Speed  q:Quit ",
+        if paused { "⏸" } else { "▶" },
+        tick,
+        speed.label(),
+    )
 }
 
 #[cfg(test)]
@@ -401,5 +423,34 @@ mod tests {
         // Test Debug formatting
         let debug_str = format!("{state1:?}");
         assert!(debug_str.contains("Running"));
+    }
+
+    #[test]
+    fn test_get_pop_positions() {
+        let mut world = create_test_world();
+        world.spawn((Pop, GridPosition { x: 10, y: 20 }));
+        world.spawn((Pop, GridPosition { x: 5, y: 5 }));
+        // Entity without Pop component
+        world.spawn(GridPosition { x: 99, y: 99 });
+
+        let positions = get_pop_positions(&world);
+
+        assert_eq!(positions.len(), 2);
+        assert!(positions.contains(&(10, 20)));
+        assert!(positions.contains(&(5, 5)));
+        assert!(!positions.contains(&(99, 99)));
+    }
+
+    #[test]
+    fn test_get_status_string() {
+        let s = get_status_string(100, SimSpeed::Normal, false);
+        assert!(s.contains("Tick: 100"));
+        assert!(s.contains("▶"));
+        assert!(s.contains("1x"));
+
+        let s_paused = get_status_string(50, SimSpeed::Fast, true);
+        assert!(s_paused.contains("Tick: 50"));
+        assert!(s_paused.contains("⏸"));
+        assert!(s_paused.contains("3x"));
     }
 }
