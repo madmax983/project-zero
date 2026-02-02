@@ -246,15 +246,19 @@ fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
     // vs "completely frozen". Current behavior: only GameState::Paused matters (main.rs:86).
     let paused = *game_state == GameState::Paused || sim_time.speed == SimSpeed::Paused;
 
-    let status = format!(
-        " {} │ Tick: {} │ {} │ WASD:Move  Space:Pause  1-3:Speed  q:Quit ",
-        if paused { "⏸" } else { "▶" },
-        sim_time.tick,
-        sim_time.speed.label(),
-    );
+    let status = get_status_string(sim_time.tick, sim_time.speed, paused);
 
     let bar = Paragraph::new(status).style(Style::default().bg(Color::DarkGray).fg(Color::White));
     frame.render_widget(bar, area);
+}
+
+fn get_status_string(tick: u64, speed: SimSpeed, paused: bool) -> String {
+    format!(
+        " {} │ Tick: {} │ {} │ WASD:Move  Space:Pause  1-3:Speed  q:Quit ",
+        if paused { "⏸" } else { "▶" },
+        tick,
+        speed.label(),
+    )
 }
 
 #[cfg(test)]
@@ -435,5 +439,18 @@ mod tests {
         assert!(positions.contains(&(10, 20)));
         assert!(positions.contains(&(5, 5)));
         assert!(!positions.contains(&(99, 99)));
+    }
+
+    #[test]
+    fn test_get_status_string() {
+        let s = get_status_string(100, SimSpeed::Normal, false);
+        assert!(s.contains("Tick: 100"));
+        assert!(s.contains("▶"));
+        assert!(s.contains("1x"));
+
+        let s_paused = get_status_string(50, SimSpeed::Fast, true);
+        assert!(s_paused.contains("Tick: 50"));
+        assert!(s_paused.contains("⏸"));
+        assert!(s_paused.contains("3x"));
     }
 }

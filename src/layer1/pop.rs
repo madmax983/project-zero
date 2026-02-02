@@ -174,7 +174,11 @@ mod tests {
         let mut tiles = vec![TerrainType::Water; width * height];
         // Only one walkable tile
         tiles[0] = TerrainType::Grass;
-        let terrain = TerrainGrid { width, height, tiles };
+        let terrain = TerrainGrid {
+            width,
+            height,
+            tiles,
+        };
         world.insert_resource(terrain);
 
         // Mock RNG could be used here, but for simplicity we rely on the fact
