@@ -13,9 +13,12 @@ pub mod needs;
 pub mod pop;
 /// Terrain generation and grid management.
 pub mod terrain;
+/// Farm building and food production.
+pub mod farm;
 
 pub use building::*;
 pub use housing::*;
 pub use needs::*;
 pub use pop::*;
 pub use terrain::*;
+pub use farm::*;
