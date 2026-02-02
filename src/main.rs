@@ -20,13 +20,12 @@ use ratatui::{
     prelude::*,
     widgets::{Block, BorderType, Borders, Paragraph},
 };
-use std::collections::HashSet;
 use std::io;
 use std::time::{Duration, Instant};
 
 use scale::layer1::{
-    GridPosition, Pop, TerrainGrid, Viewport, generate_terrain, render_terrain_and_pops,
-    spawn_initial_pops,
+    GridPosition, Needs, Pop, TerrainGrid, Viewport, decay_needs_system, generate_terrain,
+    kill_starving_pops_system, pop_display, render_terrain_and_pops, spawn_initial_pops,
 };
 use scale::shared::time::{SimSpeed, SimulationTime};
 
@@ -102,6 +101,8 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
             if *world.resource::<GameState>() == GameState::Running {
                 let speed = world.resource::<SimulationTime>().speed;
                 if speed != SimSpeed::Paused {
+                    decay_needs_system(&mut world);
+                    kill_starving_pops_system(&mut world);
                     world.resource_mut::<SimulationTime>().tick += 1;
                 }
             }
@@ -209,21 +210,24 @@ fn render_map(frame: &mut Frame, area: Rect, world: &World) {
     let terrain = world.resource::<TerrainGrid>();
     let viewport = world.resource::<Viewport>();
 
-    let pop_positions = get_pop_positions(world);
+    let pops_data = get_pops_render_data(world);
 
-    render_terrain_and_pops(frame, inner, terrain, viewport, &pop_positions);
+    render_terrain_and_pops(frame, inner, terrain, viewport, &pops_data);
 }
 
-fn get_pop_positions(world: &World) -> HashSet<(i32, i32)> {
+fn get_pops_render_data(world: &World) -> Vec<(GridPosition, (char, Color))> {
     world
         .iter_entities()
-        .filter(bevy_ecs::world::EntityRef::contains::<Pop>)
-        .filter_map(|e| e.get::<GridPosition>())
-        .map(|pos| (pos.x, pos.y))
+        .filter(|e| e.contains::<GridPosition>() && e.contains::<Needs>())
+        .map(|e| {
+            let pos = *e.get::<GridPosition>().unwrap();
+            let needs = e.get::<Needs>().unwrap();
+            (pos, pop_display(needs))
+        })
         .collect()
 }
 
-fn render_info_panel(frame: &mut Frame, area: Rect, _world: &World) {
+fn render_info_panel(frame: &mut Frame, area: Rect, world: &World) {
     let block = Block::default()
         .borders(Borders::ALL)
         .border_type(BorderType::Rounded)
@@ -231,9 +235,18 @@ fn render_info_panel(frame: &mut Frame, area: Rect, _world: &World) {
     let inner = block.inner(area);
     frame.render_widget(block, area);
 
-    // Placeholder text
-    let text = Paragraph::new("Select something\nto see info here");
-    frame.render_widget(text, inner);
+    let pop_count = world
+        .iter_entities()
+        .filter(bevy_ecs::world::EntityRef::contains::<Pop>)
+        .count();
+
+    let text = format!(
+        "Population: {pop_count}\n\n\
+         Pops will starve\n\
+         without food!"
+    );
+    let paragraph = Paragraph::new(text);
+    frame.render_widget(paragraph, inner);
 }
 
 fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
@@ -426,19 +439,19 @@ mod tests {
     }
 
     #[test]
-    fn test_get_pop_positions() {
+    fn test_get_pops_render_data() {
         let mut world = create_test_world();
-        world.spawn((Pop, GridPosition { x: 10, y: 20 }));
-        world.spawn((Pop, GridPosition { x: 5, y: 5 }));
+        world.spawn((Pop, GridPosition { x: 10, y: 20 }, Needs::default()));
+        world.spawn((Pop, GridPosition { x: 5, y: 5 }, Needs::default()));
         // Entity without Pop component
         world.spawn(GridPosition { x: 99, y: 99 });
 
-        let positions = get_pop_positions(&world);
+        let data = get_pops_render_data(&world);
 
-        assert_eq!(positions.len(), 2);
+        assert_eq!(data.len(), 2);
+        let positions: Vec<(i32, i32)> = data.iter().map(|(pos, _)| (pos.x, pos.y)).collect();
         assert!(positions.contains(&(10, 20)));
         assert!(positions.contains(&(5, 5)));
-        assert!(!positions.contains(&(99, 99)));
     }
 
     #[test]

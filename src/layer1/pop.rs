@@ -1,3 +1,4 @@
+use super::needs::Needs;
 use super::terrain::{TerrainGrid, TerrainType};
 use bevy_ecs::prelude::*;
 use rand::Rng;
@@ -49,21 +50,32 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
         };
 
         if is_walkable {
-            world.spawn((Pop, GridPosition { x, y }));
+            world.spawn((Pop, GridPosition { x, y }, Needs::default()));
             spawned += 1;
         }
     }
 }
 
+const HEALTHY_THRESHOLD: f32 = 0.6;
+const WARNING_THRESHOLD: f32 = 0.3;
+
 /// Returns the character and color for rendering a pop.
 #[must_use]
-pub const fn pop_display() -> (char, Color) {
-    ('☺', Color::Yellow)
+pub fn pop_display(needs: &Needs) -> (char, Color) {
+    let health = needs.worst();
+    if health > HEALTHY_THRESHOLD {
+        ('☺', Color::Yellow)
+    } else if health > WARNING_THRESHOLD {
+        ('☻', Color::Rgb(255, 165, 0))
+    } else {
+        ('☹', Color::Red)
+    }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::layer1::needs::Needs;
     use crate::layer1::terrain::{TerrainGrid, TerrainType, generate_terrain};
     use ratatui::style::Color;
 
@@ -161,7 +173,8 @@ mod tests {
     #[test]
     fn test_pop_char_and_color() {
         // Test helper function for rendering pops
-        let (ch, color) = pop_display();
+        let needs = Needs::default();
+        let (ch, color) = pop_display(&needs);
         assert_eq!(ch, '☺');
         assert_eq!(color, Color::Yellow);
     }
