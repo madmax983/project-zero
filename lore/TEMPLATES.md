@@ -149,6 +149,26 @@ These fire during gameplay and get appended to the chronicle.
 "[BUILDER_NAME] finishes [COLONY]'s new [BUILDING_TYPE], year [YEAR]."
 ```
 
+### FIRST_HOUSING
+
+**Slots:** `[COLONY]`, `[YEAR]`, `[SHELTER_DESCRIPTOR]`
+
+```
+"Year [YEAR]. First shelters rise at [COLONY]. A [SHELTER_DESCRIPTOR] beginning."
+"The first roof over our heads. [COLONY], [YEAR]. It is [SHELTER_DESCRIPTOR]."
+"[YEAR]: Housing complete. The void is shut out. We are [SHELTER_DESCRIPTOR]."
+```
+
+### FIRST_FARM
+
+**Slots:** `[COLONY]`, `[YEAR]`, `[FARM_DESCRIPTOR]`
+
+```
+"Year [YEAR]. First fields sown at [COLONY]. The soil is [FARM_DESCRIPTOR]."
+"We shall not starve. [COLONY] farms produce their first yield in [YEAR]. [FARM_DESCRIPTOR]."
+"[YEAR]: Agriculture established. A [FARM_DESCRIPTOR] harvest awaits."
+```
+
 ### LEGEND_BIRTH
 
 **Slots:** `[PERSON_NAME]`, `[COLONY]`, `[YEAR]`, `[DEED]`, `[LEGACY_PHRASE]`
@@ -231,6 +251,16 @@ These fire during gameplay and get appended to the chronicle.
 "We name this place [LOCATION_NAME]. [REASON]."
 
 "[LOCATION_NAME]. That is what the locals call [COORDINATES] after [REASON]."
+```
+
+### LOCATION_NAMED_LANDING
+
+**Slots:** `[LANDING_NAME]`, `[YEAR]`
+
+```
+"We name this place [LANDING_NAME]. Here we begin."
+"Firstfall at [LANDING_NAME]. The journey ends, the work begins."
+"[YEAR]. We plant the flag at [LANDING_NAME]."
 ```
 
 ---
