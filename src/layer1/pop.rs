@@ -303,4 +303,60 @@ mod tests {
         let count = world.query::<&Pop>().iter(&world).count();
         assert_eq!(count, 5);
     }
+
+    #[test]
+    fn test_spawn_on_grass() {
+        let mut world = World::new();
+        let tiles = vec![TerrainType::Grass; 100];
+        let terrain = TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        };
+        world.insert_resource(terrain);
+
+        spawn_initial_pops(&mut world);
+
+        let count = world.query::<&Pop>().iter(&world).count();
+        assert_eq!(count, 5);
+    }
+
+    #[test]
+    fn test_spawn_on_dirt() {
+        let mut world = World::new();
+        let tiles = vec![TerrainType::Dirt; 100];
+        let terrain = TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        };
+        world.insert_resource(terrain);
+
+        spawn_initial_pops(&mut world);
+
+        let count = world.query::<&Pop>().iter(&world).count();
+        assert_eq!(count, 5);
+    }
+
+    #[test]
+    fn test_grid_position_fields() {
+        let pos = GridPosition { x: 42, y: -7 };
+        assert_eq!(pos.x, 42);
+        assert_eq!(pos.y, -7);
+
+        let pos2 = GridPosition { x: 0, y: 0 };
+        assert_eq!(pos2.x, 0);
+        assert_eq!(pos2.y, 0);
+    }
+
+    #[test]
+    fn test_pop_component_on_entity() {
+        let mut world = World::new();
+        let entity = world.spawn((Pop, GridPosition { x: 1, y: 2 })).id();
+
+        assert!(world.get::<Pop>(entity).is_some());
+        let pos = world.get::<GridPosition>(entity).unwrap();
+        assert_eq!(pos.x, 1);
+        assert_eq!(pos.y, 2);
+    }
 }

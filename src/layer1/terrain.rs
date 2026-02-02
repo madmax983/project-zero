@@ -700,4 +700,121 @@ mod tests {
         assert_eq!(grid.get(2, 1), Some(TerrainType::Rock));
         assert_eq!(grid.get(0, 0), Some(TerrainType::Grass));
     }
+
+    #[test]
+    fn test_terrain_type_as_str_all_variants() {
+        let grass_str = TerrainType::Grass.as_str();
+        let dirt_str = TerrainType::Dirt.as_str();
+        let rock_str = TerrainType::Rock.as_str();
+        let water_str = TerrainType::Water.as_str();
+
+        assert_eq!(grass_str, ".");
+        assert_eq!(dirt_str, ",");
+        assert_eq!(rock_str, "#");
+        assert_eq!(water_str, "~");
+    }
+
+    #[test]
+    fn test_terrain_type_color_all_variants() {
+        let grass_color = TerrainType::Grass.color();
+        let dirt_color = TerrainType::Dirt.color();
+        let rock_color = TerrainType::Rock.color();
+        let water_color = TerrainType::Water.color();
+
+        assert_eq!(grass_color, Color::Green);
+        assert_eq!(dirt_color, Color::Rgb(139, 90, 43));
+        assert_eq!(rock_color, Color::DarkGray);
+        assert_eq!(water_color, Color::Blue);
+    }
+
+    #[test]
+    fn test_build_terrain_spans_with_pops() {
+        let width = 3;
+        let height = 3;
+        let tiles = vec![TerrainType::Grass; width * height];
+        let grid = TerrainGrid {
+            width,
+            height,
+            tiles,
+        };
+
+        let viewport = Viewport { x: 0, y: 0 };
+        let area = Rect::new(0, 0, 3, 3);
+
+        // Just test that build_terrain_spans works
+        let spans = build_terrain_spans(area, &grid, &viewport);
+        assert_eq!(spans.len(), 3);
+    }
+
+    #[test]
+    fn test_render_terrain_and_pops_empty_area() {
+        use std::collections::HashSet;
+
+        let width = 2;
+        let height = 2;
+        let tiles = vec![TerrainType::Grass; width * height];
+        let grid = TerrainGrid {
+            width,
+            height,
+            tiles,
+        };
+
+        let viewport = Viewport { x: 0, y: 0 };
+        let pop_positions: HashSet<(i32, i32)> = HashSet::new();
+
+        let backend = ratatui::backend::TestBackend::new(5, 5);
+        let mut terminal = ratatui::Terminal::new(backend).unwrap();
+
+        let result = terminal.draw(|frame| {
+            let area = Rect::new(0, 0, 2, 2);
+            render_terrain_and_pops(frame, area, &grid, &viewport, &pop_positions);
+        });
+
+        assert!(result.is_ok());
+    }
+
+    #[test]
+    fn test_build_terrain_and_pop_spans_single_pop() {
+        use std::collections::HashSet;
+
+        let width = 2;
+        let height = 2;
+        let tiles = vec![TerrainType::Grass; width * height];
+        let grid = TerrainGrid {
+            width,
+            height,
+            tiles,
+        };
+
+        let viewport = Viewport { x: 0, y: 0 };
+        let area = Rect::new(0, 0, 2, 2);
+
+        let mut pop_positions = HashSet::new();
+        pop_positions.insert((0, 0));
+
+        let spans = build_terrain_and_pop_spans(area, &grid, &viewport, &pop_positions);
+
+        assert_eq!(spans.len(), 2);
+        let (pop_char, _) = super::super::pop::pop_display();
+        assert_eq!(spans[0].spans[0].content, pop_char.to_string());
+    }
+
+    #[test]
+    fn test_fill_circle_all_terrain_types() {
+        let width = 10;
+        let height = 10;
+
+        for terrain_type in [
+            TerrainType::Grass,
+            TerrainType::Dirt,
+            TerrainType::Rock,
+            TerrainType::Water,
+        ] {
+            let mut tiles = vec![TerrainType::Grass; width * height];
+            fill_circle(&mut tiles, width, height, 5, 5, 2, terrain_type);
+
+            // Center should be the terrain type
+            assert_eq!(tiles[5 * width + 5], terrain_type);
+        }
+    }
 }
