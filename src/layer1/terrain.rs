@@ -179,14 +179,13 @@ pub fn build_terrain_spans(
     spans
 }
 
-/// Render terrain grid and pops to the given frame area with viewport offset.
-pub fn render_terrain_and_pops<S: BuildHasher>(
-    frame: &mut Frame,
+/// Builds a vector of text lines to render the terrain and pops within the given area.
+pub fn build_terrain_and_pop_spans<S: BuildHasher>(
     area: Rect,
     terrain: &TerrainGrid,
     viewport: &Viewport,
     pop_positions: &HashSet<(i32, i32), S>,
-) {
+) -> Vec<Line<'static>> {
     let mut lines: Vec<Line> = Vec::new();
 
     for screen_y in 0..area.height {
@@ -217,7 +216,18 @@ pub fn render_terrain_and_pops<S: BuildHasher>(
         }
         lines.push(Line::from(line_spans));
     }
+    lines
+}
 
+/// Render terrain grid and pops to the given frame area with viewport offset.
+pub fn render_terrain_and_pops<S: BuildHasher>(
+    frame: &mut Frame,
+    area: Rect,
+    terrain: &TerrainGrid,
+    viewport: &Viewport,
+    pop_positions: &HashSet<(i32, i32), S>,
+) {
+    let lines = build_terrain_and_pop_spans(area, terrain, viewport, pop_positions);
     let paragraph = Paragraph::new(lines);
     frame.render_widget(paragraph, area);
 }
@@ -365,5 +375,48 @@ mod tests {
         check_cell(1, 1, ".", Color::Green);
         // x=2 (World x=1) -> Grass
         check_cell(1, 2, ".", Color::Green);
+    }
+
+    #[test]
+    fn test_render_terrain_and_pops_spans() {
+        let width = 5;
+        let height = 5;
+        let mut tiles = vec![TerrainType::Grass; width * height];
+        // Add some dirt at (1, 1). Index = y * width + x = 1 * 5 + 1 = 6.
+        tiles[width + 1] = TerrainType::Dirt;
+        let grid = TerrainGrid {
+            width,
+            height,
+            tiles,
+        };
+
+        let viewport = Viewport { x: 0, y: 0 };
+        let area = Rect::new(0, 0, 3, 3);
+
+        let mut pop_positions = HashSet::new();
+        pop_positions.insert((1, 1)); // Pop on top of Dirt
+        pop_positions.insert((0, 0)); // Pop on top of Grass
+
+        let spans = build_terrain_and_pop_spans(area, &grid, &viewport, &pop_positions);
+
+        assert_eq!(spans.len(), 3);
+
+        let check_cell = |y: usize, x: usize, expected_char: &str, expected_color: Color| {
+            let span = &spans[y].spans[x];
+            assert_eq!(span.content, expected_char);
+            assert_eq!(span.style.fg, Some(expected_color));
+        };
+
+        let (pop_char, pop_color) = super::super::pop::pop_display();
+        let pop_str = pop_char.to_string();
+
+        // (0,0) should be Pop
+        check_cell(0, 0, &pop_str, pop_color);
+        // (1,0) -> Grass
+        check_cell(1, 0, ".", Color::Green);
+        // (1,1) should be Pop (overriding Dirt)
+        check_cell(1, 1, &pop_str, pop_color);
+        // (0,1) -> Grass
+        check_cell(0, 1, ".", Color::Green);
     }
 }

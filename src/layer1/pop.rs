@@ -131,7 +131,9 @@ mod tests {
         let terrain = world.resource::<TerrainGrid>();
 
         for (_, pos) in query.iter(&world) {
-            if let Some(tile_type) = terrain.get(pos.x as usize, pos.y as usize) {
+            let x = usize::try_from(pos.x).expect("Pop x should be non-negative");
+            let y = usize::try_from(pos.y).expect("Pop y should be non-negative");
+            if let Some(tile_type) = terrain.get(x, y) {
                 assert_ne!(tile_type, TerrainType::Water, "Pop spawned on water");
                 assert_ne!(tile_type, TerrainType::Rock, "Pop spawned on rock");
             }
