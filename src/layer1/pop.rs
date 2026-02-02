@@ -9,7 +9,7 @@ use ratatui::style::Color;
 pub struct Pop;
 
 /// Grid position in world space.
-#[derive(Component, Clone, Copy, Debug)]
+#[derive(Component, Default, Clone, Copy, Debug)]
 pub struct GridPosition {
     /// The X coordinate.
     pub x: i32,
