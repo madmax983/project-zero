@@ -61,8 +61,7 @@ fn main() -> anyhow::Result<()> {
     result
 }
 
-fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Result<()> {
-    // ECS setup
+fn setup_app() -> World {
     let mut world = World::new();
     world.insert_resource(GameState::Running);
     world.insert_resource(generate_terrain(80, 50));
@@ -70,7 +69,11 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
     world.insert_resource(SimulationTime::default());
 
     spawn_initial_pops(&mut world);
+    world
+}
 
+fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Result<()> {
+    let mut world = setup_app();
     let mut schedule = Schedule::default();
     // Systems will be added here by other specs
 
@@ -267,11 +270,10 @@ mod tests {
     use crossterm::event::{KeyCode, KeyEvent, KeyModifiers};
 
     fn create_test_world() -> World {
-        let mut world = World::new();
-        world.insert_resource(GameState::Running);
-        world.insert_resource(SimulationTime::default());
-        world.insert_resource(Viewport::default());
-        world.insert_resource(generate_terrain(80, 50));
+        let world = setup_app();
+        // Override terrain for deterministic tests if needed,
+        // but setup_app's default is fine for general UI testing.
+        // If we need a specific state, we modify 'world' here.
         world
     }
 
@@ -429,6 +431,11 @@ mod tests {
     #[test]
     fn test_get_pop_positions() {
         let mut world = create_test_world();
+        // Since setup_app (called by create_test_world) spawns 5 pops,
+        // we clear them first to have a clean slate, or we just account for them.
+        // Let's clear entities for this test to be precise.
+        world.clear_entities();
+
         world.spawn((Pop, GridPosition { x: 10, y: 20 }));
         world.spawn((Pop, GridPosition { x: 5, y: 5 }));
         // Entity without Pop component
@@ -456,9 +463,25 @@ mod tests {
     }
 
     #[test]
+    fn test_setup_app() {
+        let mut world = setup_app();
+
+        // Verify resources are initialized
+        assert!(world.get_resource::<GameState>().is_some());
+        assert!(world.get_resource::<SimulationTime>().is_some());
+        assert!(world.get_resource::<Viewport>().is_some());
+        assert!(world.get_resource::<TerrainGrid>().is_some());
+
+        // Verify pops are spawned (setup_app calls spawn_initial_pops)
+        let pop_count = world.query::<&Pop>().iter(&world).count();
+        assert_eq!(pop_count, 5);
+    }
+
+    #[test]
     fn test_render_full_ui() {
         use ratatui::backend::TestBackend;
         let mut world = create_test_world();
+        // setup_app spawns pops randomly. Let's ensure one is at a known location for the test.
         world.spawn((Pop, GridPosition { x: 5, y: 5 }));
 
         let backend = TestBackend::new(80, 24);
