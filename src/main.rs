@@ -271,6 +271,7 @@ mod tests {
         world.insert_resource(GameState::Running);
         world.insert_resource(SimulationTime::default());
         world.insert_resource(Viewport::default());
+        world.insert_resource(generate_terrain(80, 50));
         world
     }
 
@@ -452,5 +453,59 @@ mod tests {
         assert!(s_paused.contains("Tick: 50"));
         assert!(s_paused.contains("⏸"));
         assert!(s_paused.contains("3x"));
+    }
+
+    #[test]
+    fn test_render_full_ui() {
+        use ratatui::backend::TestBackend;
+        let mut world = create_test_world();
+        world.spawn((Pop, GridPosition { x: 5, y: 5 }));
+
+        let backend = TestBackend::new(80, 24);
+        let mut terminal = Terminal::new(backend).unwrap();
+
+        terminal
+            .draw(|frame| {
+                render(&world, frame);
+            })
+            .unwrap();
+
+        let buffer = terminal.backend().buffer();
+
+        // Iterate over cells to find status text parts
+        let mut found_status = false;
+        for cell in buffer.content.iter() {
+            if cell.symbol() == "▶" {
+                found_status = true;
+                break;
+            }
+        }
+        assert!(found_status, "Status bar play symbol not found in render output");
+
+        // Check for map title
+        let mut found_title = false;
+        for y in 0..24 {
+            let line_text: String = (0..80).map(|x| buffer.cell((x, y)).unwrap().symbol()).collect();
+            if line_text.contains("Colony") {
+                found_title = true;
+                break;
+            }
+        }
+        assert!(found_title, "Map title 'Colony' not found");
+
+        // Check for Pop rendering
+        // Viewport is default (0,0), pop is at (5,5).
+        // Map area is roughly top-left.
+        // We need to know where the map rect ended up.
+        // But we can just search the whole buffer for the pop symbol.
+        let (pop_char, _) = scale::layer1::pop_display();
+        let mut found_pop = false;
+        for cell in buffer.content.iter() {
+            if cell.symbol() == pop_char.to_string() {
+                found_pop = true;
+                break;
+            }
+        }
+        assert!(found_pop, "Pop symbol not found in render output");
     }
 }
