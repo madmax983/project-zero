@@ -1,3 +1,4 @@
+use super::building::BuildingType;
 use super::pop::GridPosition;
 use bevy_ecs::prelude::*;
 use rand::Rng;
@@ -178,13 +179,16 @@ pub fn build_terrain_spans(
     spans
 }
 
-/// Builds a vector of text lines to render the terrain and pops within the given area.
+/// Builds a vector of text lines to render the map layer (terrain, pops, buildings, cursor).
 #[must_use]
-pub fn build_terrain_and_pop_spans(
+#[allow(clippy::too_many_arguments)]
+pub fn build_map_layer_spans(
     area: Rect,
     terrain: &TerrainGrid,
     viewport: &Viewport,
     pops_data: &[(GridPosition, (char, Color))],
+    buildings_data: &[(GridPosition, BuildingType)],
+    build_mode: Option<(GridPosition, BuildingType, bool)>,
 ) -> Vec<Line<'static>> {
     let mut lines: Vec<Line> = Vec::new();
 
@@ -195,7 +199,32 @@ pub fn build_terrain_and_pop_spans(
         for screen_x in 0..area.width {
             let world_x = viewport.x + i32::from(screen_x);
 
-            // Check for pop first
+            // Build mode cursor (highest priority)
+            if let Some((_, selected, can_place)) =
+                build_mode.filter(|(cursor, _, _)| cursor.x == world_x && cursor.y == world_y)
+            {
+                let bg = if can_place { Color::Green } else { Color::Red };
+                let ch = selected.char();
+                line_spans.push(Span::styled(
+                    ch.to_string(),
+                    Style::default().fg(Color::White).bg(bg),
+                ));
+                continue;
+            }
+
+            // Buildings
+            if let Some((_, building_type)) = buildings_data
+                .iter()
+                .find(|(pos, _)| pos.x == world_x && pos.y == world_y)
+            {
+                line_spans.push(Span::styled(
+                    building_type.char().to_string(),
+                    Style::default().fg(building_type.color()),
+                ));
+                continue;
+            }
+
+            // Check for pop
             if let Some((_, (ch, color))) = pops_data
                 .iter()
                 .find(|(pos, _)| pos.x == world_x && pos.y == world_y)
@@ -221,15 +250,24 @@ pub fn build_terrain_and_pop_spans(
     lines
 }
 
-/// Render terrain grid and pops to the given frame area with viewport offset.
-pub fn render_terrain_and_pops(
+/// Render terrain grid, buildings, and pops to the given frame area with viewport offset.
+pub fn render_map_layer(
     frame: &mut Frame,
     area: Rect,
     terrain: &TerrainGrid,
     viewport: &Viewport,
     pops_data: &[(GridPosition, (char, Color))],
+    buildings_data: &[(GridPosition, BuildingType)],
+    build_mode: Option<(GridPosition, BuildingType, bool)>,
 ) {
-    let lines = build_terrain_and_pop_spans(area, terrain, viewport, pops_data);
+    let lines = build_map_layer_spans(
+        area,
+        terrain,
+        viewport,
+        pops_data,
+        buildings_data,
+        build_mode,
+    );
     let paragraph = Paragraph::new(lines);
     frame.render_widget(paragraph, area);
 }
@@ -380,7 +418,7 @@ mod tests {
     }
 
     #[test]
-    fn test_render_terrain_and_pops_spans() {
+    fn test_render_map_layer_spans() {
         let width = 5;
         let height = 5;
         let mut tiles = vec![TerrainType::Grass; width * height];
@@ -400,7 +438,7 @@ mod tests {
             (GridPosition { x: 0, y: 0 }, ('P', Color::Yellow)),
         ];
 
-        let spans = build_terrain_and_pop_spans(area, &grid, &viewport, &pop_data);
+        let spans = build_map_layer_spans(area, &grid, &viewport, &pop_data, &[], None);
 
         assert_eq!(spans.len(), 3);
 
@@ -421,7 +459,7 @@ mod tests {
     }
 
     #[test]
-    fn test_build_terrain_and_pop_spans_no_pops() {
+    fn test_build_map_layer_spans_no_pops() {
         let width = 3;
         let height = 3;
         let tiles = vec![TerrainType::Water; width * height];
@@ -435,7 +473,7 @@ mod tests {
         let area = Rect::new(0, 0, 3, 3);
         let pop_data = vec![];
 
-        let spans = build_terrain_and_pop_spans(area, &grid, &viewport, &pop_data);
+        let spans = build_map_layer_spans(area, &grid, &viewport, &pop_data, &[], None);
 
         assert_eq!(spans.len(), 3);
         // All should be water
@@ -448,7 +486,7 @@ mod tests {
     }
 
     #[test]
-    fn test_build_terrain_and_pop_spans_negative_viewport() {
+    fn test_build_map_layer_spans_negative_viewport() {
         let width = 5;
         let height = 5;
         let tiles = vec![TerrainType::Rock; width * height];
@@ -462,7 +500,7 @@ mod tests {
         let area = Rect::new(0, 0, 4, 4);
         let pop_data = vec![(GridPosition { x: 0, y: 0 }, ('P', Color::Yellow))];
 
-        let spans = build_terrain_and_pop_spans(area, &grid, &viewport, &pop_data);
+        let spans = build_map_layer_spans(area, &grid, &viewport, &pop_data, &[], None);
 
         assert_eq!(spans.len(), 4);
 
@@ -480,7 +518,7 @@ mod tests {
     }
 
     #[test]
-    fn test_build_terrain_and_pop_spans_out_of_bounds() {
+    fn test_build_map_layer_spans_out_of_bounds() {
         let width = 2;
         let height = 2;
         let tiles = vec![TerrainType::Grass; width * height];
@@ -495,7 +533,7 @@ mod tests {
         let area = Rect::new(0, 0, 3, 3);
         let pop_data = vec![];
 
-        let spans = build_terrain_and_pop_spans(area, &grid, &viewport, &pop_data);
+        let spans = build_map_layer_spans(area, &grid, &viewport, &pop_data, &[], None);
 
         assert_eq!(spans.len(), 3);
         // All should be black/empty (out of bounds)
@@ -508,7 +546,7 @@ mod tests {
     }
 
     #[test]
-    fn test_render_terrain_and_pops() {
+    fn test_render_map_layer() {
         let width = 5;
         let height = 5;
         let tiles = vec![TerrainType::Dirt; width * height];
@@ -526,7 +564,7 @@ mod tests {
 
         let result = terminal.draw(|frame| {
             let area = Rect::new(0, 0, 5, 5);
-            render_terrain_and_pops(frame, area, &grid, &viewport, &pop_data);
+            render_map_layer(frame, area, &grid, &viewport, &pop_data, &[], None);
         });
 
         assert!(result.is_ok());
@@ -557,7 +595,7 @@ mod tests {
     }
 
     #[test]
-    fn test_build_terrain_and_pop_spans_all_terrain_types() {
+    fn test_build_map_layer_spans_all_terrain_types() {
         let width = 4;
         let height = 4;
         let mut tiles = vec![TerrainType::Grass; width * height];
@@ -578,7 +616,7 @@ mod tests {
         let area = Rect::new(0, 0, 4, 1);
         let pop_data = vec![];
 
-        let spans = build_terrain_and_pop_spans(area, &grid, &viewport, &pop_data);
+        let spans = build_map_layer_spans(area, &grid, &viewport, &pop_data, &[], None);
 
         assert_eq!(spans.len(), 1);
         assert_eq!(spans[0].spans.len(), 4);
@@ -591,7 +629,7 @@ mod tests {
     }
 
     #[test]
-    fn test_build_terrain_and_pop_spans_pop_priority() {
+    fn test_build_map_layer_spans_pop_priority() {
         let width = 3;
         let height = 3;
         let tiles = vec![TerrainType::Grass; width * height];
@@ -609,7 +647,7 @@ mod tests {
             (GridPosition { x: 1, y: 1 }, ('P', Color::Yellow)),
         ];
 
-        let spans = build_terrain_and_pop_spans(area, &grid, &viewport, &pop_data);
+        let spans = build_map_layer_spans(area, &grid, &viewport, &pop_data, &[], None);
 
         // Pops should override terrain
         assert_eq!(spans[0].spans[0].content, "P");
@@ -623,7 +661,7 @@ mod tests {
     }
 
     #[test]
-    fn test_build_terrain_and_pop_spans_partial_out_of_bounds() {
+    fn test_build_map_layer_spans_partial_out_of_bounds() {
         let width = 3;
         let height = 3;
         let tiles = vec![TerrainType::Dirt; width * height];
@@ -638,7 +676,7 @@ mod tests {
         let area = Rect::new(0, 0, 4, 4);
         let pop_data = vec![];
 
-        let spans = build_terrain_and_pop_spans(area, &grid, &viewport, &pop_data);
+        let spans = build_map_layer_spans(area, &grid, &viewport, &pop_data, &[], None);
 
         assert_eq!(spans.len(), 4);
 
@@ -657,7 +695,7 @@ mod tests {
     }
 
     #[test]
-    fn test_render_terrain_and_pops_empty_area() {
+    fn test_render_map_layer_empty_area() {
         let width = 2;
         let height = 2;
         let tiles = vec![TerrainType::Grass; width * height];
@@ -675,14 +713,14 @@ mod tests {
 
         let result = terminal.draw(|frame| {
             let area = Rect::new(0, 0, 2, 2);
-            render_terrain_and_pops(frame, area, &grid, &viewport, &pop_data);
+            render_map_layer(frame, area, &grid, &viewport, &pop_data, &[], None);
         });
 
         assert!(result.is_ok());
     }
 
     #[test]
-    fn test_build_terrain_and_pop_spans_single_pop() {
+    fn test_build_map_layer_spans_single_pop() {
         let width = 2;
         let height = 2;
         let tiles = vec![TerrainType::Grass; width * height];
@@ -697,7 +735,7 @@ mod tests {
 
         let pop_data = vec![(GridPosition { x: 0, y: 0 }, ('P', Color::Yellow))];
 
-        let spans = build_terrain_and_pop_spans(area, &grid, &viewport, &pop_data);
+        let spans = build_map_layer_spans(area, &grid, &viewport, &pop_data, &[], None);
 
         assert_eq!(spans.len(), 2);
         assert_eq!(spans[0].spans[0].content, "P");

@@ -24,8 +24,9 @@ use std::io;
 use std::time::{Duration, Instant};
 
 use scale::layer1::{
-    GridPosition, Needs, Pop, TerrainGrid, Viewport, decay_needs_system, generate_terrain,
-    kill_starving_pops_system, pop_display, render_terrain_and_pops, spawn_initial_pops,
+    BuildMode, Building, BuildingType, GridPosition, Needs, OccupiedTiles, Pop, TerrainGrid,
+    Viewport, can_place_building, decay_needs_system, generate_terrain, kill_starving_pops_system,
+    pop_display, render_map_layer, spawn_initial_pops, try_place_building,
 };
 use scale::shared::time::{SimSpeed, SimulationTime};
 
@@ -67,6 +68,8 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
     world.insert_resource(generate_terrain(80, 50));
     world.insert_resource(Viewport::default());
     world.insert_resource(SimulationTime::default());
+    world.insert_resource(BuildMode::default());
+    world.insert_resource(OccupiedTiles::default());
 
     spawn_initial_pops(&mut world);
 
@@ -118,11 +121,16 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
 }
 
 fn handle_input(world: &mut World, key: crossterm::event::KeyEvent) {
+    let build_active = world.resource::<BuildMode>().active;
+
     match key.code {
-        KeyCode::Char('q') | KeyCode::Esc => {
+        // Quit
+        KeyCode::Char('q') | KeyCode::Esc if !build_active => {
             *world.resource_mut::<GameState>() = GameState::Quitting;
         }
-        KeyCode::Char(' ') => {
+
+        // Pause
+        KeyCode::Char(' ') if !build_active => {
             let mut state = world.resource_mut::<GameState>();
             *state = match *state {
                 GameState::Running => GameState::Paused,
@@ -130,37 +138,81 @@ fn handle_input(world: &mut World, key: crossterm::event::KeyEvent) {
                 GameState::Quitting => GameState::Quitting,
             };
         }
-        KeyCode::Char('1') => {
+
+        // Speed controls
+        KeyCode::Char('1') if !build_active => {
             world.resource_mut::<SimulationTime>().speed = SimSpeed::Normal;
         }
-        KeyCode::Char('2') => {
+        KeyCode::Char('2') if !build_active => {
             world.resource_mut::<SimulationTime>().speed = SimSpeed::Fast;
         }
-        KeyCode::Char('3') => {
+        KeyCode::Char('3') if !build_active => {
             world.resource_mut::<SimulationTime>().speed = SimSpeed::Faster;
         }
+
+        // Build mode toggle
+        KeyCode::Char('b') => {
+            let (vx, vy) = {
+                let viewport = world.resource::<Viewport>();
+                (viewport.x, viewport.y)
+            };
+            let mut build_mode = world.resource_mut::<BuildMode>();
+            build_mode.active = !build_mode.active;
+            if build_mode.active {
+                // Initialize cursor to center of viewport
+                build_mode.cursor = GridPosition {
+                    x: vx + 10,
+                    y: vy + 10,
+                };
+            }
+        }
+
+        // Exit build mode
+        KeyCode::Esc if build_active => {
+            world.resource_mut::<BuildMode>().active = false;
+        }
+
+        // Cycle building type
+        KeyCode::Tab if build_active => {
+            let mut build_mode = world.resource_mut::<BuildMode>();
+            build_mode.selected = build_mode.selected.next();
+        }
+
+        // Place building
+        KeyCode::Enter if build_active => {
+            let build_mode = world.resource::<BuildMode>();
+            let cursor = build_mode.cursor;
+            let building_type = build_mode.selected;
+            try_place_building(world, cursor.x, cursor.y, building_type);
+        }
+
+        // Movement
         KeyCode::Char('w' | 's' | 'a' | 'd')
         | KeyCode::Up
         | KeyCode::Down
         | KeyCode::Left
         | KeyCode::Right => {
-            let mut viewport = world.resource_mut::<Viewport>();
-            match key.code {
-                KeyCode::Char('w') | KeyCode::Up => {
-                    viewport.y -= 1;
+            if build_active {
+                let mut build_mode = world.resource_mut::<BuildMode>();
+                match key.code {
+                    KeyCode::Char('w') | KeyCode::Up => build_mode.cursor.y -= 1,
+                    KeyCode::Char('s') | KeyCode::Down => build_mode.cursor.y += 1,
+                    KeyCode::Char('a') | KeyCode::Left => build_mode.cursor.x -= 1,
+                    KeyCode::Char('d') | KeyCode::Right => build_mode.cursor.x += 1,
+                    _ => {}
                 }
-                KeyCode::Char('s') | KeyCode::Down => {
-                    viewport.y += 1;
+            } else {
+                let mut viewport = world.resource_mut::<Viewport>();
+                match key.code {
+                    KeyCode::Char('w') | KeyCode::Up => viewport.y -= 1,
+                    KeyCode::Char('s') | KeyCode::Down => viewport.y += 1,
+                    KeyCode::Char('a') | KeyCode::Left => viewport.x -= 1,
+                    KeyCode::Char('d') | KeyCode::Right => viewport.x += 1,
+                    _ => {}
                 }
-                KeyCode::Char('a') | KeyCode::Left => {
-                    viewport.x -= 1;
-                }
-                KeyCode::Char('d') | KeyCode::Right => {
-                    viewport.x += 1;
-                }
-                _ => {}
             }
         }
+
         _ => {}
     }
 }
@@ -209,10 +261,28 @@ fn render_map(frame: &mut Frame, area: Rect, world: &World) {
     // Render terrain inside
     let terrain = world.resource::<TerrainGrid>();
     let viewport = world.resource::<Viewport>();
+    let build_mode = world.resource::<BuildMode>();
 
     let pops_data = get_pops_render_data(world);
+    let buildings_data = get_buildings_render_data(world);
 
-    render_terrain_and_pops(frame, inner, terrain, viewport, &pops_data);
+    // Build mode cursor info
+    let build_mode_cursor = if build_mode.active {
+        let can_place = can_place_building(world, build_mode.cursor.x, build_mode.cursor.y);
+        Some((build_mode.cursor, build_mode.selected, can_place))
+    } else {
+        None
+    };
+
+    render_map_layer(
+        frame,
+        inner,
+        terrain,
+        viewport,
+        &pops_data,
+        &buildings_data,
+        build_mode_cursor,
+    );
 }
 
 fn get_pops_render_data(world: &World) -> Vec<(GridPosition, (char, Color))> {
@@ -223,6 +293,18 @@ fn get_pops_render_data(world: &World) -> Vec<(GridPosition, (char, Color))> {
             let pos = *e.get::<GridPosition>().unwrap();
             let needs = e.get::<Needs>().unwrap();
             (pos, pop_display(needs))
+        })
+        .collect()
+}
+
+fn get_buildings_render_data(world: &World) -> Vec<(GridPosition, BuildingType)> {
+    world
+        .iter_entities()
+        .filter(|e| e.contains::<GridPosition>() && e.contains::<Building>())
+        .map(|e| {
+            let pos = *e.get::<GridPosition>().unwrap();
+            let building = e.get::<Building>().unwrap();
+            (pos, building.building_type)
         })
         .collect()
 }
@@ -252,6 +334,7 @@ fn render_info_panel(frame: &mut Frame, area: Rect, world: &World) {
 fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
     let sim_time = world.resource::<SimulationTime>();
     let game_state = world.resource::<GameState>();
+    let build_mode = world.resource::<BuildMode>();
 
     // NOTE: Dual pause state check. GameState::Paused is controlled by spacebar,
     // SimSpeed::Paused exists but is currently not used (no key binds to it).
@@ -259,18 +342,28 @@ fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
     // vs "completely frozen". Current behavior: only GameState::Paused matters (main.rs:86).
     let paused = *game_state == GameState::Paused || sim_time.speed == SimSpeed::Paused;
 
-    let status = get_status_string(sim_time.tick, sim_time.speed, paused);
+    let status = get_status_string(sim_time.tick, sim_time.speed, paused, build_mode);
 
     let bar = Paragraph::new(status).style(Style::default().bg(Color::DarkGray).fg(Color::White));
     frame.render_widget(bar, area);
 }
 
-fn get_status_string(tick: u64, speed: SimSpeed, paused: bool) -> String {
+fn get_status_string(tick: u64, speed: SimSpeed, paused: bool, build_mode: &BuildMode) -> String {
+    let mode_str = if build_mode.active {
+        format!(
+            "BUILD: {} (Tab:switch Enter:place Esc:exit)",
+            build_mode.selected.label()
+        )
+    } else {
+        "B:Build  1-3:Speed  q:Quit".to_string()
+    };
+
     format!(
-        " {} │ Tick: {} │ {} │ WASD:Move  Space:Pause  1-3:Speed  q:Quit ",
+        " {} │ Tick: {} │ {} │ {} ",
         if paused { "⏸" } else { "▶" },
         tick,
         speed.label(),
+        mode_str
     )
 }
 
@@ -284,6 +377,8 @@ mod tests {
         world.insert_resource(GameState::Running);
         world.insert_resource(SimulationTime::default());
         world.insert_resource(Viewport::default());
+        world.insert_resource(BuildMode::default());
+        world.insert_resource(OccupiedTiles::default());
         world
     }
 
@@ -456,12 +551,13 @@ mod tests {
 
     #[test]
     fn test_get_status_string() {
-        let s = get_status_string(100, SimSpeed::Normal, false);
+        let build_mode = BuildMode::default();
+        let s = get_status_string(100, SimSpeed::Normal, false, &build_mode);
         assert!(s.contains("Tick: 100"));
         assert!(s.contains("▶"));
         assert!(s.contains("1x"));
 
-        let s_paused = get_status_string(50, SimSpeed::Fast, true);
+        let s_paused = get_status_string(50, SimSpeed::Fast, true, &build_mode);
         assert!(s_paused.contains("Tick: 50"));
         assert!(s_paused.contains("⏸"));
         assert!(s_paused.contains("3x"));
