@@ -2,6 +2,7 @@
 
 use super::GridPosition;
 use super::housing::Housing;
+use super::farm::Farm;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use bevy_ecs::prelude::*;
 use ratatui::style::Color;
@@ -116,8 +117,13 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
     // Spawn building
     let mut entity = world.spawn((Building { building_type }, GridPosition { x, y }));
 
-    if building_type == BuildingType::Housing {
-        entity.insert(Housing::default());
+    match building_type {
+        BuildingType::Housing => {
+            entity.insert(Housing::default());
+        }
+        BuildingType::Farm => {
+            entity.insert(Farm::default());
+        }
     }
 
     // Mark tile occupied
@@ -365,5 +371,21 @@ mod tests {
         let (pos, _) = world.query::<(&GridPosition, &Building)>().single(&world);
         assert_eq!(pos.x, 7);
         assert_eq!(pos.y, 3);
+    }
+
+    #[test]
+    fn test_place_farm_adds_farm_component() {
+        let mut world = World::new();
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        });
+        world.insert_resource(OccupiedTiles::default());
+
+        try_place_building(&mut world, 5, 5, BuildingType::Farm);
+
+        let farm_count = world.query::<&Farm>().iter(&world).count();
+        assert_eq!(farm_count, 1, "Should have added Farm component");
     }
 }

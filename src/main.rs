@@ -24,9 +24,10 @@ use std::io;
 use std::time::{Duration, Instant};
 
 use scale::layer1::{
-    BuildMode, Building, BuildingType, GridPosition, Housing, Needs, OccupiedTiles, Pop,
-    TerrainGrid, Viewport, can_place_building, clean_dead_residents_system, decay_needs_system,
-    generate_terrain, kill_starving_pops_system, pop_display, render_map_layer,
+    BuildMode, Building, BuildingType, ColonyResources, Farm, GridPosition, Housing, Needs,
+    OccupiedTiles, Pop, TerrainGrid, Viewport, can_place_building, clean_dead_residents_system,
+    clean_dead_workers_system, consume_food_system, decay_needs_system, generate_terrain,
+    kill_starving_pops_system, pop_display, produce_food_system, render_map_layer,
     restore_rest_in_housing_system, spawn_initial_pops, try_place_building,
 };
 use scale::shared::time::{SimSpeed, SimulationTime};
@@ -71,6 +72,7 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
     world.insert_resource(SimulationTime::default());
     world.insert_resource(BuildMode::default());
     world.insert_resource(OccupiedTiles::default());
+    world.insert_resource(ColonyResources::default());
 
     spawn_initial_pops(&mut world);
 
@@ -105,10 +107,13 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
             if *world.resource::<GameState>() == GameState::Running {
                 let speed = world.resource::<SimulationTime>().speed;
                 if speed != SimSpeed::Paused {
+                    produce_food_system(&mut world);
                     restore_rest_in_housing_system(&mut world);
+                    consume_food_system(&mut world);
                     decay_needs_system(&mut world);
                     kill_starving_pops_system(&mut world);
                     clean_dead_residents_system(&mut world);
+                    clean_dead_workers_system(&mut world);
                     world.resource_mut::<SimulationTime>().tick += 1;
                 }
             }
@@ -337,10 +342,23 @@ fn render_info_panel(frame: &mut Frame, area: Rect, world: &World) {
             (count + 1, cap + h.capacity, used + h.residents.len())
         });
 
+    let (farm_count, farm_capacity, farm_used) = world
+        .iter_entities()
+        .filter_map(|e| e.get::<Farm>())
+        .fold((0, 0, 0), |(count, cap, used), f| {
+            (count + 1, cap + f.capacity, used + f.workers.len())
+        });
+
+    let resources = world.resource::<ColonyResources>();
+
     let text = format!(
         "Population: {pop_count}\n\n\
+         Food: {:.1}\n\n\
          Housing: {housing_count}\n\
-         Beds: {housing_used}/{housing_capacity}\n"
+         Beds: {housing_used}/{housing_capacity}\n\n\
+         Farms: {farm_count}\n\
+         Workers: {farm_used}/{farm_capacity}\n",
+        resources.food
     );
     let paragraph = Paragraph::new(text);
     frame.render_widget(paragraph, inner);

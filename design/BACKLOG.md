@@ -6,7 +6,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 ## MVP — Layer 1: Colony Simulation
 
-- [ ] `008` Farm building and food — `specs/008-building-farm.md`
 - [ ] `009` Job assignment system — `specs/009-job-system.md`
 - [ ] `010` Chronicle system — `specs/010-chronicle-system.md`
 - [ ] `011` Named locations — `specs/011-named-locations.md`
