@@ -18,7 +18,7 @@ use crossterm::{
 };
 use ratatui::{
     prelude::*,
-    widgets::{Block, BorderType, Borders, List, ListItem, Paragraph},
+    widgets::{Block, BorderType, Borders, Clear, List, ListItem, Paragraph},
 };
 use scale::shared::log::MessageLog;
 use std::collections::HashMap;
@@ -27,10 +27,12 @@ use std::time::{Duration, Instant};
 
 use scale::layer1::{
     BuildMode, Building, BuildingType, ColonyResources, Farm, GridPosition, Housing,
-    MapRenderContext, Needs, OccupiedTiles, Pop, TerrainGrid, Viewport, can_place_building,
+    BuildingTracker, Chronicle, ChronicleUiState, MapRenderContext, Needs, OccupiedTiles, Pop,
+    TerrainGrid, Viewport, can_place_building, check_milestones_system,
     clean_dead_residents_system, clean_dead_workers_system, consume_food_system,
-    decay_needs_system, generate_terrain, kill_starving_entities_system, pop_display,
-    produce_food_system, render_map_layer, restore_rest_in_housing_system, spawn_initial_pops,
+    decay_needs_system, format_event_prefix, generate_terrain, initial_chronicle_event,
+    kill_starving_entities_system, pop_display, produce_food_system, render_map_layer,
+    restore_rest_in_housing_system, spawn_initial_pops,
 };
 use scale::shared::input::{InputContextStack, InputRouter};
 use scale::shared::state::GameState;
@@ -67,8 +69,12 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
     world.insert_resource(ColonyResources::default());
     world.insert_resource(InputContextStack::default());
     world.insert_resource(MessageLog::default());
+    world.insert_resource(Chronicle::default());
+    world.insert_resource(ChronicleUiState::default());
+    world.insert_resource(BuildingTracker::default());
 
     spawn_initial_pops(&mut world);
+    initial_chronicle_event(&mut world);
 
     let mut schedule = Schedule::default();
     let mut input_router = InputRouter::new();
@@ -109,6 +115,7 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
                     kill_starving_entities_system(&mut world);
                     clean_dead_residents_system(&mut world);
                     clean_dead_workers_system(&mut world);
+                    check_milestones_system(&mut world);
                     world.resource_mut::<SimulationTime>().tick += 1;
                 }
             }
@@ -154,6 +161,68 @@ fn render(world: &World, frame: &mut Frame) {
 
     // Render status bar
     render_status_bar(frame, status_area, world);
+
+    // Render chronicle
+    render_chronicle(frame, frame.area(), world);
+}
+
+fn render_chronicle(frame: &mut Frame, area: Rect, world: &World) {
+    let ui_state = world.resource::<ChronicleUiState>();
+    if !ui_state.is_open {
+        return;
+    }
+
+    let chronicle = world.resource::<Chronicle>();
+
+    fn centered_rect(percent_x: u16, percent_y: u16, r: Rect) -> Rect {
+        use ratatui::layout::{Constraint, Direction, Layout};
+
+        let popup_layout = Layout::default()
+            .direction(Direction::Vertical)
+            .constraints([
+                Constraint::Percentage((100 - percent_y) / 2),
+                Constraint::Percentage(percent_y),
+                Constraint::Percentage((100 - percent_y) / 2),
+            ])
+            .split(r);
+
+        Layout::default()
+            .direction(Direction::Horizontal)
+            .constraints([
+                Constraint::Percentage((100 - percent_x) / 2),
+                Constraint::Percentage(percent_x),
+                Constraint::Percentage((100 - percent_x) / 2),
+            ])
+            .split(popup_layout[1])[1]
+    }
+
+    let block = Block::default()
+        .title(" Chronicle (Press L/H to close) ")
+        .borders(Borders::ALL)
+        .border_type(BorderType::Rounded)
+        .style(Style::default().bg(Color::Black));
+
+    let popup_area = centered_rect(60, 60, area);
+    frame.render_widget(Clear, popup_area); // Clear background
+    frame.render_widget(block.clone(), popup_area);
+
+    let inner = block.inner(popup_area);
+
+    let items: Vec<ListItem> = chronicle
+        .events
+        .iter()
+        .rev() // Newest first
+        .map(|evt| {
+            let prefix = format_event_prefix(evt.importance);
+            ListItem::new(format!(
+                "[{}] Y{}: {} {}",
+                evt.tick, evt.year, prefix, evt.text
+            ))
+        })
+        .collect();
+
+    let list = List::new(items);
+    frame.render_widget(list, inner);
 }
 
 fn render_map(frame: &mut Frame, area: Rect, world: &World) {
@@ -316,7 +385,7 @@ fn get_status_string(tick: u64, speed: SimSpeed, paused: bool, build_mode: &Buil
             build_mode.selected.label()
         )
     } else {
-        "B:Build  1-3:Speed  q:Quit".to_string()
+        "B:Build  L:Chronicle  1-3:Speed  q:Quit".to_string()
     };
 
     format!(

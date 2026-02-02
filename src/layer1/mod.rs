@@ -15,8 +15,11 @@ pub mod needs;
 pub mod pop;
 /// Terrain generation and grid management.
 pub mod terrain;
+/// Chronicle system and historical records.
+pub mod chronicle;
 
 pub use building::*;
+pub use chronicle::*;
 pub use farm::*;
 pub use housing::*;
 pub use needs::*;
