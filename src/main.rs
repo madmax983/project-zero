@@ -209,14 +209,18 @@ fn render_map(frame: &mut Frame, area: Rect, world: &World) {
     let terrain = world.resource::<TerrainGrid>();
     let viewport = world.resource::<Viewport>();
 
-    let pop_positions: HashSet<(i32, i32)> = world
+    let pop_positions = get_pop_positions(world);
+
+    render_terrain_and_pops(frame, inner, terrain, viewport, &pop_positions);
+}
+
+fn get_pop_positions(world: &World) -> HashSet<(i32, i32)> {
+    world
         .iter_entities()
         .filter(bevy_ecs::world::EntityRef::contains::<Pop>)
         .filter_map(|e| e.get::<GridPosition>())
         .map(|pos| (pos.x, pos.y))
-        .collect();
-
-    render_terrain_and_pops(frame, inner, terrain, viewport, &pop_positions);
+        .collect()
 }
 
 fn render_info_panel(frame: &mut Frame, area: Rect, _world: &World) {
@@ -415,5 +419,21 @@ mod tests {
         // Test Debug formatting
         let debug_str = format!("{state1:?}");
         assert!(debug_str.contains("Running"));
+    }
+
+    #[test]
+    fn test_get_pop_positions() {
+        let mut world = create_test_world();
+        world.spawn((Pop, GridPosition { x: 10, y: 20 }));
+        world.spawn((Pop, GridPosition { x: 5, y: 5 }));
+        // Entity without Pop component
+        world.spawn(GridPosition { x: 99, y: 99 });
+
+        let positions = get_pop_positions(&world);
+
+        assert_eq!(positions.len(), 2);
+        assert!(positions.contains(&(10, 20)));
+        assert!(positions.contains(&(5, 5)));
+        assert!(!positions.contains(&(99, 99)));
     }
 }

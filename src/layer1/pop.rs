@@ -18,13 +18,17 @@ pub struct GridPosition {
 
 /// Spawn 5 initial pops at random walkable positions.
 pub fn spawn_initial_pops(world: &mut World) {
+    let mut rng = rand::thread_rng();
+    spawn_initial_pops_internal(world, &mut rng);
+}
+
+fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
     // Get dimensions first to release borrow
     let (width, height) = {
         let terrain = world.resource::<TerrainGrid>();
         (terrain.width, terrain.height)
     };
 
-    let mut rng = rand::thread_rng();
     let mut spawned = 0;
 
     // Safety: we assume there is at least one walkable tile to avoid infinite loop.
@@ -160,5 +164,38 @@ mod tests {
         let (ch, color) = pop_display();
         assert_eq!(ch, '☺');
         assert_eq!(color, Color::Yellow);
+    }
+
+    #[test]
+    fn test_spawn_initial_pops_retries() {
+        let mut world = World::new();
+        let width = 10;
+        let height = 10;
+        let mut tiles = vec![TerrainType::Water; width * height];
+        // Only one walkable tile
+        tiles[0] = TerrainType::Grass;
+        let terrain = TerrainGrid { width, height, tiles };
+        world.insert_resource(terrain);
+
+        // Mock RNG could be used here, but for simplicity we rely on the fact
+        // that with only 1/100 walkable tiles, the random generator WILL fail many times
+        // before succeeding 5 times. This ensures the loop and 'if is_walkable' false path
+        // are exercised.
+        // We use a seeded RNG for determinism if possible, but standard RNG is fine for coverage.
+        // To be safer and deterministic, we can use a SeedableRng if we import it,
+        // but `rand::rngs::StdRng` requires a feature. `rand::rngs::mock::StepRng` isn't available.
+        // We'll just run it. The probability of finding 5 spots in 5 tries on 1/100 map is 10^-10.
+        // So retries are guaranteed.
+
+        spawn_initial_pops(&mut world);
+
+        let count = world.query::<&Pop>().iter(&world).count();
+        assert_eq!(count, 5);
+
+        // All pops should be at (0,0)
+        for (_, pos) in world.query::<(&Pop, &GridPosition)>().iter(&world) {
+            assert_eq!(pos.x, 0);
+            assert_eq!(pos.y, 0);
+        }
     }
 }
