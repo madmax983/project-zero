@@ -153,7 +153,7 @@ mod tests {
     #[test]
     fn test_colony_resources_default() {
         let resources = ColonyResources::default();
-        assert_eq!(resources.food, 0.0);
+        assert!(resources.food.abs() < f32::EPSILON);
     }
 
     #[test]
@@ -257,7 +257,10 @@ mod tests {
         consume_food_system(&mut world);
         let food_after = world.resource::<ColonyResources>().food;
 
-        assert_eq!(food_after, food_before, "High hunger pop should not eat");
+        assert!(
+            (food_after - food_before).abs() < f32::EPSILON,
+            "High hunger pop should not eat"
+        );
     }
 
     #[test]

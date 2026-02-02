@@ -24,6 +24,8 @@ pub fn spawn_initial_pops(world: &mut World) {
 }
 
 fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
+    const MAX_ATTEMPTS: usize = 1000;
+
     // Get dimensions first to release borrow
     let (width, height) = {
         let terrain = world.resource::<TerrainGrid>();
@@ -31,10 +33,15 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
     };
 
     let mut spawned = 0;
-
+    let mut attempts = 0;
     // Safety: we assume there is at least one walkable tile to avoid infinite loop.
     // In a real game we might want a timeout or more robust search.
     while spawned < 5 {
+        attempts += 1;
+        if attempts >= MAX_ATTEMPTS {
+            break;
+        }
+
         #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
         let x = rng.gen_range(0..width as i32);
         #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
@@ -371,5 +378,67 @@ mod tests {
         let pos = world.get::<GridPosition>(entity).unwrap();
         assert_eq!(pos.x, 1);
         assert_eq!(pos.y, 2);
+    }
+
+    use rand::RngCore;
+
+    struct LimitedRng {
+        count: usize,
+        limit: usize,
+    }
+
+    impl RngCore for LimitedRng {
+        fn next_u32(&mut self) -> u32 {
+            #[allow(clippy::cast_possible_truncation)]
+            {
+                self.next_u64() as u32
+            }
+        }
+
+        fn next_u64(&mut self) -> u64 {
+            self.count += 1;
+            assert!(
+                self.count <= self.limit,
+                "Too many RNG calls - infinite loop detected"
+            );
+            0
+        }
+
+        fn fill_bytes(&mut self, dest: &mut [u8]) {
+            for b in dest {
+                *b = 0;
+            }
+            self.next_u64();
+        }
+
+        fn try_fill_bytes(&mut self, dest: &mut [u8]) -> Result<(), rand::Error> {
+            self.fill_bytes(dest);
+            Ok(())
+        }
+    }
+
+    #[test]
+    fn test_spawn_initial_pops_terminates_on_full_map_repro() {
+        let mut world = World::new();
+        // 1x1 map
+        let width = 1;
+        let height = 1;
+        let tiles = vec![TerrainType::Water; width * height];
+        let terrain = TerrainGrid {
+            width,
+            height,
+            tiles,
+        };
+        world.insert_resource(terrain);
+
+        let mut rng = LimitedRng {
+            count: 0,
+            limit: 2000,
+        };
+        spawn_initial_pops_internal(&mut world, &mut rng);
+
+        // Verify that we didn't spawn anything (because map is full of water)
+        let count = world.query::<&Pop>().iter(&world).count();
+        assert_eq!(count, 0);
     }
 }
