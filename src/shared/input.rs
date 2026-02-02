@@ -1,7 +1,7 @@
 use bevy_ecs::prelude::*;
 use crossterm::event::{KeyCode, KeyEvent, KeyEventKind};
 
-use crate::layer1::{BuildMode, GridPosition, Viewport, try_place_building};
+use crate::layer1::{BuildMode, ChronicleUiState, GridPosition, Viewport, try_place_building};
 use crate::shared::state::GameState;
 use crate::shared::time::{SimSpeed, SimulationTime};
 
@@ -147,11 +147,13 @@ fn handle_normal_mode(world: &mut World, key: KeyEvent) {
                 y: vy + 10,
             };
         }
-        KeyCode::Char('c') => {
-            // Open chronicle (Spec 010 placeholder)
+        KeyCode::Char('l') | KeyCode::Char('h') | KeyCode::Char('c') => {
+            // Open chronicle
             world
                 .resource_mut::<InputContextStack>()
                 .push(InputContext::Overlay);
+            world.resource_mut::<ChronicleUiState>().is_open = true;
+            *world.resource_mut::<GameState>() = GameState::Paused;
         }
         _ => {}
     }
@@ -196,8 +198,9 @@ fn handle_build_mode(world: &mut World, key: KeyEvent) {
 
 fn handle_overlay_mode(world: &mut World, key: KeyEvent) {
     match key.code {
-        KeyCode::Esc | KeyCode::Char('c') => {
+        KeyCode::Esc | KeyCode::Char('l') | KeyCode::Char('h') | KeyCode::Char('c') => {
             world.resource_mut::<InputContextStack>().pop();
+            world.resource_mut::<ChronicleUiState>().is_open = false;
         }
         _ => {}
     }
@@ -287,6 +290,7 @@ mod tests {
         let mut stack = InputContextStack::default();
         stack.push(InputContext::Overlay);
         world.insert_resource(stack);
+        world.insert_resource(ChronicleUiState { is_open: true });
 
         let mut router = InputRouter::new();
         router.route(&mut world, key_event(KeyCode::Esc));
@@ -296,6 +300,34 @@ mod tests {
             world.resource::<InputContextStack>().current(),
             InputContext::Normal
         );
+        assert!(!world.resource::<ChronicleUiState>().is_open);
+    }
+
+    #[test]
+    fn test_chronicle_toggle() {
+        let mut world = World::new();
+        world.insert_resource(GameState::Running);
+        world.insert_resource(InputContextStack::default());
+        world.insert_resource(ChronicleUiState::default());
+
+        let mut router = InputRouter::new();
+
+        // Open with 'l'
+        router.route(&mut world, key_event(KeyCode::Char('l')));
+        assert_eq!(
+            world.resource::<InputContextStack>().current(),
+            InputContext::Overlay
+        );
+        assert!(world.resource::<ChronicleUiState>().is_open);
+        assert_eq!(*world.resource::<GameState>(), GameState::Paused);
+
+        // Close with 'l'
+        router.route(&mut world, key_event(KeyCode::Char('l')));
+        assert_eq!(
+            world.resource::<InputContextStack>().current(),
+            InputContext::Normal
+        );
+        assert!(!world.resource::<ChronicleUiState>().is_open);
     }
 
     #[test]
