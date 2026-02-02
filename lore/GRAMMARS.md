@@ -350,6 +350,7 @@ When a significant event happens at `(x,y)`, the location may earn a name.
 - Deaths > 3 in one tile → [LOCATION_SUFFIX: Grave, Fall, End]
 - Survivor of event → [PERSON]'s [LOCATION_SUFFIX: Luck, Hope]
 - Resource discovery → [RESOURCE] [LOCATION_SUFFIX: Lode, Well]
+- Initial landing → [LANDING_NAME]
 
 ---
 

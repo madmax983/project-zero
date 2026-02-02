@@ -172,6 +172,24 @@ blessed
 cursed
 ```
 
+### [LANDING_NAME]
+Name given to the initial landing site.
+
+```
+Firstfall
+Anchor
+Threshold
+Root
+Seed
+Origin
+Alpha
+Prime
+Zero
+Dawn
+The Step
+Foundation
+```
+
 ---
 
 ## Time Fragments
@@ -489,6 +507,38 @@ Strange phenomena in the void.
 - the feeling of being watched
 - gravity wells without mass
 - impossible stars
+
+---
+
+## Building Fragments
+
+### [SHELTER_DESCRIPTOR]
+Adjectives for housing.
+
+- humble
+- warm
+- safe
+- sturdy
+- cramped
+- silent
+- defiant
+- crowded
+- quiet
+- solid
+
+### [FARM_DESCRIPTOR]
+Adjectives for fields/farms.
+
+- fertile
+- stubborn
+- green
+- alien
+- native
+- hopeful
+- strange
+- bountiful
+- meager
+- vital
 
 ---
 
