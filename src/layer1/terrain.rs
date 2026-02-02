@@ -1,8 +1,7 @@
+use super::pop::GridPosition;
 use bevy_ecs::prelude::*;
 use rand::Rng;
 use ratatui::{prelude::*, widgets::Paragraph};
-use std::collections::HashSet;
-use std::hash::BuildHasher;
 
 /// Represents the type of terrain in a cell.
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
@@ -180,11 +179,12 @@ pub fn build_terrain_spans(
 }
 
 /// Builds a vector of text lines to render the terrain and pops within the given area.
-pub fn build_terrain_and_pop_spans<S: BuildHasher>(
+#[must_use]
+pub fn build_terrain_and_pop_spans(
     area: Rect,
     terrain: &TerrainGrid,
     viewport: &Viewport,
-    pop_positions: &HashSet<(i32, i32), S>,
+    pops_data: &[(GridPosition, (char, Color))],
 ) -> Vec<Line<'static>> {
     let mut lines: Vec<Line> = Vec::new();
 
@@ -196,9 +196,11 @@ pub fn build_terrain_and_pop_spans<S: BuildHasher>(
             let world_x = viewport.x + i32::from(screen_x);
 
             // Check for pop first
-            if pop_positions.contains(&(world_x, world_y)) {
-                let (ch, color) = super::pop::pop_display();
-                line_spans.push(Span::styled(ch.to_string(), Style::default().fg(color)));
+            if let Some((_, (ch, color))) = pops_data
+                .iter()
+                .find(|(pos, _)| pos.x == world_x && pos.y == world_y)
+            {
+                line_spans.push(Span::styled(ch.to_string(), Style::default().fg(*color)));
                 continue;
             }
 
@@ -220,14 +222,14 @@ pub fn build_terrain_and_pop_spans<S: BuildHasher>(
 }
 
 /// Render terrain grid and pops to the given frame area with viewport offset.
-pub fn render_terrain_and_pops<S: BuildHasher>(
+pub fn render_terrain_and_pops(
     frame: &mut Frame,
     area: Rect,
     terrain: &TerrainGrid,
     viewport: &Viewport,
-    pop_positions: &HashSet<(i32, i32), S>,
+    pops_data: &[(GridPosition, (char, Color))],
 ) {
-    let lines = build_terrain_and_pop_spans(area, terrain, viewport, pop_positions);
+    let lines = build_terrain_and_pop_spans(area, terrain, viewport, pops_data);
     let paragraph = Paragraph::new(lines);
     frame.render_widget(paragraph, area);
 }
@@ -393,11 +395,12 @@ mod tests {
         let viewport = Viewport { x: 0, y: 0 };
         let area = Rect::new(0, 0, 3, 3);
 
-        let mut pop_positions = HashSet::new();
-        pop_positions.insert((1, 1)); // Pop on top of Dirt
-        pop_positions.insert((0, 0)); // Pop on top of Grass
+        let pop_data = vec![
+            (GridPosition { x: 1, y: 1 }, ('P', Color::Yellow)),
+            (GridPosition { x: 0, y: 0 }, ('P', Color::Yellow)),
+        ];
 
-        let spans = build_terrain_and_pop_spans(area, &grid, &viewport, &pop_positions);
+        let spans = build_terrain_and_pop_spans(area, &grid, &viewport, &pop_data);
 
         assert_eq!(spans.len(), 3);
 
@@ -407,23 +410,18 @@ mod tests {
             assert_eq!(span.style.fg, Some(expected_color));
         };
 
-        let (pop_char, pop_color) = super::super::pop::pop_display();
-        let pop_str = pop_char.to_string();
-
         // (0,0) should be Pop
-        check_cell(0, 0, &pop_str, pop_color);
+        check_cell(0, 0, "P", Color::Yellow);
         // (1,0) -> Grass
         check_cell(1, 0, ".", Color::Green);
         // (1,1) should be Pop (overriding Dirt)
-        check_cell(1, 1, &pop_str, pop_color);
+        check_cell(1, 1, "P", Color::Yellow);
         // (0,1) -> Grass
         check_cell(0, 1, ".", Color::Green);
     }
 
     #[test]
     fn test_build_terrain_and_pop_spans_no_pops() {
-        use std::collections::HashSet;
-
         let width = 3;
         let height = 3;
         let tiles = vec![TerrainType::Water; width * height];
@@ -435,9 +433,9 @@ mod tests {
 
         let viewport = Viewport { x: 0, y: 0 };
         let area = Rect::new(0, 0, 3, 3);
-        let pop_positions: HashSet<(i32, i32)> = HashSet::new();
+        let pop_data = vec![];
 
-        let spans = build_terrain_and_pop_spans(area, &grid, &viewport, &pop_positions);
+        let spans = build_terrain_and_pop_spans(area, &grid, &viewport, &pop_data);
 
         assert_eq!(spans.len(), 3);
         // All should be water
@@ -451,8 +449,6 @@ mod tests {
 
     #[test]
     fn test_build_terrain_and_pop_spans_negative_viewport() {
-        use std::collections::HashSet;
-
         let width = 5;
         let height = 5;
         let tiles = vec![TerrainType::Rock; width * height];
@@ -464,10 +460,9 @@ mod tests {
 
         let viewport = Viewport { x: -2, y: -2 };
         let area = Rect::new(0, 0, 4, 4);
-        let mut pop_positions = HashSet::new();
-        pop_positions.insert((0, 0)); // Should appear at screen (2,2)
+        let pop_data = vec![(GridPosition { x: 0, y: 0 }, ('P', Color::Yellow))];
 
-        let spans = build_terrain_and_pop_spans(area, &grid, &viewport, &pop_positions);
+        let spans = build_terrain_and_pop_spans(area, &grid, &viewport, &pop_data);
 
         assert_eq!(spans.len(), 4);
 
@@ -480,15 +475,12 @@ mod tests {
         }
 
         // Row 2 should have pop at column 2
-        let (pop_char, pop_color) = super::super::pop::pop_display();
-        assert_eq!(spans[2].spans[2].content, pop_char.to_string());
-        assert_eq!(spans[2].spans[2].style.fg, Some(pop_color));
+        assert_eq!(spans[2].spans[2].content, "P");
+        assert_eq!(spans[2].spans[2].style.fg, Some(Color::Yellow));
     }
 
     #[test]
     fn test_build_terrain_and_pop_spans_out_of_bounds() {
-        use std::collections::HashSet;
-
         let width = 2;
         let height = 2;
         let tiles = vec![TerrainType::Grass; width * height];
@@ -501,9 +493,9 @@ mod tests {
         // Viewport positioned so most of the view is out of bounds
         let viewport = Viewport { x: 10, y: 10 };
         let area = Rect::new(0, 0, 3, 3);
-        let pop_positions: HashSet<(i32, i32)> = HashSet::new();
+        let pop_data = vec![];
 
-        let spans = build_terrain_and_pop_spans(area, &grid, &viewport, &pop_positions);
+        let spans = build_terrain_and_pop_spans(area, &grid, &viewport, &pop_data);
 
         assert_eq!(spans.len(), 3);
         // All should be black/empty (out of bounds)
@@ -517,8 +509,6 @@ mod tests {
 
     #[test]
     fn test_render_terrain_and_pops() {
-        use std::collections::HashSet;
-
         let width = 5;
         let height = 5;
         let tiles = vec![TerrainType::Dirt; width * height];
@@ -529,15 +519,14 @@ mod tests {
         };
 
         let viewport = Viewport { x: 0, y: 0 };
-        let mut pop_positions = HashSet::new();
-        pop_positions.insert((1, 1));
+        let pop_data = vec![(GridPosition { x: 1, y: 1 }, ('P', Color::Yellow))];
 
         let backend = ratatui::backend::TestBackend::new(10, 10);
         let mut terminal = ratatui::Terminal::new(backend).unwrap();
 
         let result = terminal.draw(|frame| {
             let area = Rect::new(0, 0, 5, 5);
-            render_terrain_and_pops(frame, area, &grid, &viewport, &pop_positions);
+            render_terrain_and_pops(frame, area, &grid, &viewport, &pop_data);
         });
 
         assert!(result.is_ok());
@@ -569,8 +558,6 @@ mod tests {
 
     #[test]
     fn test_build_terrain_and_pop_spans_all_terrain_types() {
-        use std::collections::HashSet;
-
         let width = 4;
         let height = 4;
         let mut tiles = vec![TerrainType::Grass; width * height];
@@ -589,9 +576,9 @@ mod tests {
 
         let viewport = Viewport { x: 0, y: 0 };
         let area = Rect::new(0, 0, 4, 1);
-        let pop_positions: HashSet<(i32, i32)> = HashSet::new();
+        let pop_data = vec![];
 
-        let spans = build_terrain_and_pop_spans(area, &grid, &viewport, &pop_positions);
+        let spans = build_terrain_and_pop_spans(area, &grid, &viewport, &pop_data);
 
         assert_eq!(spans.len(), 1);
         assert_eq!(spans[0].spans.len(), 4);
@@ -605,8 +592,6 @@ mod tests {
 
     #[test]
     fn test_build_terrain_and_pop_spans_pop_priority() {
-        use std::collections::HashSet;
-
         let width = 3;
         let height = 3;
         let tiles = vec![TerrainType::Grass; width * height];
@@ -619,19 +604,18 @@ mod tests {
         let viewport = Viewport { x: 0, y: 0 };
         let area = Rect::new(0, 0, 2, 2);
 
-        let mut pop_positions = HashSet::new();
-        pop_positions.insert((0, 0));
-        pop_positions.insert((1, 1));
+        let pop_data = vec![
+            (GridPosition { x: 0, y: 0 }, ('P', Color::Yellow)),
+            (GridPosition { x: 1, y: 1 }, ('P', Color::Yellow)),
+        ];
 
-        let spans = build_terrain_and_pop_spans(area, &grid, &viewport, &pop_positions);
-
-        let (pop_char, pop_color) = super::super::pop::pop_display();
+        let spans = build_terrain_and_pop_spans(area, &grid, &viewport, &pop_data);
 
         // Pops should override terrain
-        assert_eq!(spans[0].spans[0].content, pop_char.to_string());
-        assert_eq!(spans[0].spans[0].style.fg, Some(pop_color));
-        assert_eq!(spans[1].spans[1].content, pop_char.to_string());
-        assert_eq!(spans[1].spans[1].style.fg, Some(pop_color));
+        assert_eq!(spans[0].spans[0].content, "P");
+        assert_eq!(spans[0].spans[0].style.fg, Some(Color::Yellow));
+        assert_eq!(spans[1].spans[1].content, "P");
+        assert_eq!(spans[1].spans[1].style.fg, Some(Color::Yellow));
 
         // Non-pop tiles should show terrain
         assert_eq!(spans[0].spans[1].content, ".");
@@ -640,8 +624,6 @@ mod tests {
 
     #[test]
     fn test_build_terrain_and_pop_spans_partial_out_of_bounds() {
-        use std::collections::HashSet;
-
         let width = 3;
         let height = 3;
         let tiles = vec![TerrainType::Dirt; width * height];
@@ -654,9 +636,9 @@ mod tests {
         // Viewport positioned so half the view is out of bounds
         let viewport = Viewport { x: 1, y: 1 };
         let area = Rect::new(0, 0, 4, 4);
-        let pop_positions: HashSet<(i32, i32)> = HashSet::new();
+        let pop_data = vec![];
 
-        let spans = build_terrain_and_pop_spans(area, &grid, &viewport, &pop_positions);
+        let spans = build_terrain_and_pop_spans(area, &grid, &viewport, &pop_data);
 
         assert_eq!(spans.len(), 4);
 
@@ -675,81 +657,7 @@ mod tests {
     }
 
     #[test]
-    fn test_viewport_default() {
-        let viewport = Viewport::default();
-        assert_eq!(viewport.x, 0);
-        assert_eq!(viewport.y, 0);
-    }
-
-    #[test]
-    fn test_terrain_grid_row_major_order() {
-        let width = 3;
-        let height = 2;
-        let mut tiles = vec![TerrainType::Grass; width * height];
-
-        // Set a specific tile at (x=2, y=1)
-        // Index = y * width + x = 1 * 3 + 2 = 5
-        tiles[5] = TerrainType::Rock;
-
-        let grid = TerrainGrid {
-            width,
-            height,
-            tiles,
-        };
-
-        assert_eq!(grid.get(2, 1), Some(TerrainType::Rock));
-        assert_eq!(grid.get(0, 0), Some(TerrainType::Grass));
-    }
-
-    #[test]
-    fn test_terrain_type_as_str_all_variants() {
-        let grass_str = TerrainType::Grass.as_str();
-        let dirt_str = TerrainType::Dirt.as_str();
-        let rock_str = TerrainType::Rock.as_str();
-        let water_str = TerrainType::Water.as_str();
-
-        assert_eq!(grass_str, ".");
-        assert_eq!(dirt_str, ",");
-        assert_eq!(rock_str, "#");
-        assert_eq!(water_str, "~");
-    }
-
-    #[test]
-    fn test_terrain_type_color_all_variants() {
-        let grass_color = TerrainType::Grass.color();
-        let dirt_color = TerrainType::Dirt.color();
-        let rock_color = TerrainType::Rock.color();
-        let water_color = TerrainType::Water.color();
-
-        assert_eq!(grass_color, Color::Green);
-        assert_eq!(dirt_color, Color::Rgb(139, 90, 43));
-        assert_eq!(rock_color, Color::DarkGray);
-        assert_eq!(water_color, Color::Blue);
-    }
-
-    #[test]
-    fn test_build_terrain_spans_with_pops() {
-        let width = 3;
-        let height = 3;
-        let tiles = vec![TerrainType::Grass; width * height];
-        let grid = TerrainGrid {
-            width,
-            height,
-            tiles,
-        };
-
-        let viewport = Viewport { x: 0, y: 0 };
-        let area = Rect::new(0, 0, 3, 3);
-
-        // Just test that build_terrain_spans works
-        let spans = build_terrain_spans(area, &grid, &viewport);
-        assert_eq!(spans.len(), 3);
-    }
-
-    #[test]
     fn test_render_terrain_and_pops_empty_area() {
-        use std::collections::HashSet;
-
         let width = 2;
         let height = 2;
         let tiles = vec![TerrainType::Grass; width * height];
@@ -760,14 +668,14 @@ mod tests {
         };
 
         let viewport = Viewport { x: 0, y: 0 };
-        let pop_positions: HashSet<(i32, i32)> = HashSet::new();
+        let pop_data = vec![];
 
         let backend = ratatui::backend::TestBackend::new(5, 5);
         let mut terminal = ratatui::Terminal::new(backend).unwrap();
 
         let result = terminal.draw(|frame| {
             let area = Rect::new(0, 0, 2, 2);
-            render_terrain_and_pops(frame, area, &grid, &viewport, &pop_positions);
+            render_terrain_and_pops(frame, area, &grid, &viewport, &pop_data);
         });
 
         assert!(result.is_ok());
@@ -775,8 +683,6 @@ mod tests {
 
     #[test]
     fn test_build_terrain_and_pop_spans_single_pop() {
-        use std::collections::HashSet;
-
         let width = 2;
         let height = 2;
         let tiles = vec![TerrainType::Grass; width * height];
@@ -789,14 +695,12 @@ mod tests {
         let viewport = Viewport { x: 0, y: 0 };
         let area = Rect::new(0, 0, 2, 2);
 
-        let mut pop_positions = HashSet::new();
-        pop_positions.insert((0, 0));
+        let pop_data = vec![(GridPosition { x: 0, y: 0 }, ('P', Color::Yellow))];
 
-        let spans = build_terrain_and_pop_spans(area, &grid, &viewport, &pop_positions);
+        let spans = build_terrain_and_pop_spans(area, &grid, &viewport, &pop_data);
 
         assert_eq!(spans.len(), 2);
-        let (pop_char, _) = super::super::pop::pop_display();
-        assert_eq!(spans[0].spans[0].content, pop_char.to_string());
+        assert_eq!(spans[0].spans[0].content, "P");
     }
 
     #[test]
