@@ -341,3 +341,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Keep unnecessary jobs active just to maintain knowledge?
 
 ---
+
+## Leader Ascension
+
+**Layer:** Cross-layer
+
+**Fantasy:** The Admiral of your grand fleet was once that little girl who saved the colony from the fire.
+
+**Mechanic:** Individual Pops (Layer 1) gain XP from jobs/events. Exceptional pops can be "promoted" to Agents (Layer 2/3), becoming Governors, Admirals, or Diplomats with traits derived from their L1 life.
+
+**Emergence:** Your best General hates robots because a mining drone broke his leg back on the colony. He refuses to use droid armies.
+
+**Tension:** Promote your best worker to a leader (losing their L1 output) or keep them on the ground?
+
+---
+
+## Biome Aggression
+
+**Layer:** 1
+
+**Fantasy:** Nature isn't passive background; it's a siege engine.
+
+**Mechanic:** Flora/Fauna tiles have a "Growth/Aggression" rate. They actively try to reclaim "Civilized" tiles (buildings/roads). Neglected maintenance leads to rapid overgrowth.
+
+**Emergence:** You ignore the "creeping moss" notification for a month. Waking up, you find the moss has eaten the power lines and the turret defenses are offline.
+
+**Tension:** Spend labor on constant "weeding" maintenance or build expensive sealed habitats?
+
+---
+
+## Xenolinguistics
+
+**Layer:** 3
+
+**Fantasy:** First Contact is confusing, terrifying, and hilarious.
+
+**Mechanic:** You don't start with a universal translator. Alien messages appear as cipher text. Interaction reveals "Concepts". Guessing/Translating wrong leads to diplomatic incidents.
+
+**Emergence:** You accept a gift of "Bio-Sludge" thinking it's fuel. It's actually a grave insult. War starts.
+
+**Tension:** Guess the meaning now (risky) or wait for more data (missed opportunity)?
+
+---
+
+## Architectural Eras
+
+**Layer:** 1
+
+**Fantasy:** Your city tells its age through its skyline.
+
+**Mechanic:** Buildings are stamped with the "Era" they were built in. Old buildings retain old stats (worse efficiency) but gain "Heritage" or "Charm". New buildings are efficient but "Soulless".
+
+**Emergence:** The player refuses to demolish the inefficient "First Hut" because it provides a massive morale aura as a historical site.
+
+**Tension:** Demolish the past for efficiency, or preserve it for culture?
+
+---
