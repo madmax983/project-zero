@@ -210,19 +210,35 @@ fn handle_input(world: &mut World, key: crossterm::event::KeyEvent) {
             if build_active {
                 let mut build_mode = world.resource_mut::<BuildMode>();
                 match key.code {
-                    KeyCode::Char('w') | KeyCode::Up => build_mode.cursor.y -= 1,
-                    KeyCode::Char('s') | KeyCode::Down => build_mode.cursor.y += 1,
-                    KeyCode::Char('a') | KeyCode::Left => build_mode.cursor.x -= 1,
-                    KeyCode::Char('d') | KeyCode::Right => build_mode.cursor.x += 1,
+                    KeyCode::Char('w') | KeyCode::Up => {
+                        build_mode.cursor.y = build_mode.cursor.y.saturating_sub(1);
+                    }
+                    KeyCode::Char('s') | KeyCode::Down => {
+                        build_mode.cursor.y = build_mode.cursor.y.saturating_add(1);
+                    }
+                    KeyCode::Char('a') | KeyCode::Left => {
+                        build_mode.cursor.x = build_mode.cursor.x.saturating_sub(1);
+                    }
+                    KeyCode::Char('d') | KeyCode::Right => {
+                        build_mode.cursor.x = build_mode.cursor.x.saturating_add(1);
+                    }
                     _ => {}
                 }
             } else {
                 let mut viewport = world.resource_mut::<Viewport>();
                 match key.code {
-                    KeyCode::Char('w') | KeyCode::Up => viewport.y -= 1,
-                    KeyCode::Char('s') | KeyCode::Down => viewport.y += 1,
-                    KeyCode::Char('a') | KeyCode::Left => viewport.x -= 1,
-                    KeyCode::Char('d') | KeyCode::Right => viewport.x += 1,
+                    KeyCode::Char('w') | KeyCode::Up => {
+                        viewport.y = viewport.y.wrapping_sub(1);
+                    }
+                    KeyCode::Char('s') | KeyCode::Down => {
+                        viewport.y = viewport.y.wrapping_add(1);
+                    }
+                    KeyCode::Char('a') | KeyCode::Left => {
+                        viewport.x = viewport.x.wrapping_sub(1);
+                    }
+                    KeyCode::Char('d') | KeyCode::Right => {
+                        viewport.x = viewport.x.wrapping_add(1);
+                    }
                     _ => {}
                 }
             }
@@ -631,5 +647,36 @@ mod tests {
             BuildingType::Farm,
             "Tab release should not trigger cycling"
         );
+    }
+
+    #[test]
+    fn test_viewport_overflow_safety() {
+        let mut world = create_test_world();
+        world.resource_mut::<Viewport>().x = i32::MAX;
+        world.resource_mut::<Viewport>().y = i32::MIN;
+
+        // Move right (x += 1) should wrap
+        handle_input(&mut world, key_event(KeyCode::Char('d')));
+        assert_eq!(world.resource::<Viewport>().x, i32::MIN);
+
+        // Move up (y -= 1) should wrap
+        handle_input(&mut world, key_event(KeyCode::Char('w')));
+        assert_eq!(world.resource::<Viewport>().y, i32::MAX);
+    }
+
+    #[test]
+    fn test_cursor_overflow_safety() {
+        let mut world = create_test_world();
+        world.resource_mut::<BuildMode>().active = true;
+        world.resource_mut::<BuildMode>().cursor.x = i32::MAX;
+        world.resource_mut::<BuildMode>().cursor.y = i32::MIN;
+
+        // Move right (x += 1) should saturate
+        handle_input(&mut world, key_event(KeyCode::Char('d')));
+        assert_eq!(world.resource::<BuildMode>().cursor.x, i32::MAX);
+
+        // Move up (y -= 1) should saturate
+        handle_input(&mut world, key_event(KeyCode::Char('w')));
+        assert_eq!(world.resource::<BuildMode>().cursor.y, i32::MIN);
     }
 }
