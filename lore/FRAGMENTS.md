@@ -198,6 +198,22 @@ the [CATASTROPHE] Years
 the Rebuilding
 ```
 
+### [GOLDEN_AGE_DESCRIPTOR]
+Descriptors for periods of prosperity.
+
+```
+of enlightenment
+of abundance
+of open stars
+of high art
+of deep thought
+of no war
+of the Great Building
+of many ships
+of unified purpose
+of forgotten ease
+```
+
 ### [DURATION_PHRASE]
 How long something lasted.
 
@@ -270,6 +286,40 @@ Faith
 Silence (someone stopped responding)
 The Wound
 Artifacts
+```
+
+### [REBELLION_CAUSE]
+Reasons for internal unrest.
+
+```
+food shortages
+tyrannical rule
+ideological drift
+resource scarcity
+prophecy fulfillment
+succession dispute
+religious schism
+external influence
+cultural erasure
+the silence of leadership
+broken promises
+```
+
+### [MIGRATION_REASON]
+Why populations move.
+
+```
+following the herds
+fleeing war
+chasing a signal
+escaping the famine
+seeking the [ARTIFACT]
+exiled by decree
+hope for better soil
+fear of the Wound
+religious pilgrimage
+returning to origin
+wanderlust
 ```
 
 ---

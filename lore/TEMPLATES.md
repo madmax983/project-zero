@@ -86,6 +86,30 @@ These fire during "Generating history..." before game start.
 "[YEAR] marks the transition. [OLD_ERA] gives way to [NEW_ERA] after [CAUSE]."
 ```
 
+### EXPANSION
+
+**Slots:** `[CIV_NAME]`, `[YEAR]`, `[REGION_NAME]`, `[REASON]`
+
+```
+"[YEAR]. The [CIV_NAME] expand into [REGION_NAME]. Driven by [REASON]."
+
+"[CIV_NAME] reach [REGION_NAME] in [YEAR]. The expansion continues."
+
+"Year [YEAR]: [REGION_NAME] claims new settlements. [CIV_NAME] influence grows."
+```
+
+### GOLDEN_AGE
+
+**Slots:** `[CIV_NAME]`, `[YEAR]`, `[DURATION_PHRASE]`, `[GOLDEN_AGE_DESCRIPTOR]`
+
+```
+"The [CIV_NAME] enter a golden age in [YEAR]. It is a time [GOLDEN_AGE_DESCRIPTOR]."
+
+"[YEAR] begins a period of peace for [CIV_NAME]. [DURATION_PHRASE] [GOLDEN_AGE_DESCRIPTOR]."
+
+"For [DURATION_PHRASE], the [CIV_NAME] thrive. A time [GOLDEN_AGE_DESCRIPTOR]. Begins [YEAR]."
+```
+
 ---
 
 ## Play Templates (During Game)
@@ -134,6 +158,30 @@ These fire during gameplay and get appended to the chronicle.
 
 [If SURVIVOR_NAME:]
 "[SURVIVOR_NAME] survives the [COLONY] famine of [YEAR]. [DEATHS] others do not."
+```
+
+### MIGRATION
+
+**Slots:** `[COLONY]`, `[YEAR]`, `[POP_COUNT]`, `[DIRECTION]`, `[MIGRATION_REASON]`
+
+```
+"[YEAR]. [POP_COUNT] souls [DIRECTION] [COLONY]. Reason: [MIGRATION_REASON]."
+
+"Migration at [COLONY], year [YEAR]. [POP_COUNT] move on, [MIGRATION_REASON]."
+
+"[POP_COUNT] souls choose to [DIRECTION] in [YEAR]. [MIGRATION_REASON]."
+```
+
+### REBELLION
+
+**Slots:** `[COLONY]`, `[YEAR]`, `[REBELLION_CAUSE]`, `[OUTCOME]`
+
+```
+"Unrest in [COLONY], year [YEAR]. Cause: [REBELLION_CAUSE]. Outcome: [OUTCOME]."
+
+"[YEAR]: Rebellion at [COLONY]. The people rise against [REBELLION_CAUSE]."
+
+"The peace breaks in [COLONY]. [YEAR]. [REBELLION_CAUSE] drives them. [OUTCOME]."
 ```
 
 ### BUILDING_MILESTONE
