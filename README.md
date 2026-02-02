@@ -58,7 +58,7 @@ Three simulation layers, each abstracting the one below:
 
 **Tech stack:** `bevy_ecs` for simulation, `ratatui` for terminal UI.
 
-See **[DESIGN.md](DESIGN.md)** for full architecture details and **[docs/architecture-galaxy-scale-ecs.md](docs/architecture-galaxy-scale-ecs.md)** for multi-tier simulation architecture.
+See **[DESIGN.md](DESIGN.md)** for full architecture details.
 
 ## Procedural History
 
@@ -73,6 +73,8 @@ See `lore/` for the building blocks.
 ## Development
 
 This project is built by AI agents coordinating through git. See **[AGENTS.md](AGENTS.md)** for the protocol.
+
+See **[docs/guides/EXTENDING.md](docs/guides/EXTENDING.md)** for a guide on adding new buildings.
 
 **Agents:**
 - `prompts/DESIGNER.md` — Game design ideation
