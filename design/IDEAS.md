@@ -271,3 +271,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Progress (power/tech) vs. Safety (obscurity).
 
 ---
+
+## Private Stashes
+
+**Layer:** 1
+
+**Fantasy:** In a shortage, people look out for themselves.
+
+**Mechanic:** Pops with "Greedy" or "Anxious" traits hide resources (food, medicine) in their rooms or remote tiles. Inventory counts become inaccurate.
+
+**Emergence:** The UI says you have 50 Food, but the granary is empty. You find a hoard of rotting bread under a bed during a famine.
+
+**Tension:** Search rooms (tyranny/privacy violation) or trust the inventory (risk)?
+
+---
+
+## Emergent Festivals
+
+**Layer:** 1
+
+**Fantasy:** Culture isn't decreed, it happens.
+
+**Mechanic:** If a major positive event happens (survival of a raid, bumper harvest) on a specific date, pops may spontaneously celebrate it next year. Repeated celebrations create a permanent "Holiday" with mood bonuses but productivity drops.
+
+**Emergence:** Your colony celebrates "Starvation Day" every year with a feast because that's when the relief ship finally arrived.
+
+**Tension:** Enforce work during the holiday (anger) or allow the downtime (production loss)?
+
+---
+
+## The Stowaway
+
+**Layer:** Cross-layer
+
+**Fantasy:** You checked the manifest, but you didn't check the air ducts.
+
+**Mechanic:** Incoming ships have a chance to offload undocumented entities (criminals, refugees, alien fauna). They don't appear on the pop list immediately.
+
+**Emergence:** Food starts missing. Unexplained noises. Eventually, a new pop reveals themselves—or acts as a saboteur.
+
+**Tension:** Strict security (slow docking) vs speed.
+
+---
+
+## Orbital Crossfire
+
+**Layer:** 3 -> 1
+
+**Fantasy:** You are a bug to the giants fighting above.
+
+**Mechanic:** Warring Layer 3 fleets in orbit may miss shots or drop debris. Impact craters destroy tiles/buildings on Layer 1. Debris can be harvested for high-tech scrap.
+
+**Emergence:** A space battle you have no part in destroys your hospital. You scramble to harvest the alien alloy from the crater before it cools.
+
+**Tension:** Build deep underground (safety) or surface (solar/farming)?
+
+---
+
+## Technological Regression
+
+**Layer:** 1
+
+**Fantasy:** Knowledge is lost if not practiced.
+
+**Mechanic:** If no pop works a specific job type (e.g., Medicine) for a long time (generation), the "Tech Level" for that category drops. Advanced buildings become inoperable "Black Boxes" until rediscovered.
+
+**Emergence:** You automate everything, your doctors die of old age, and suddenly nobody knows how to turn on the MRI.
+
+**Tension:** Keep unnecessary jobs active just to maintain knowledge?
+
+---
