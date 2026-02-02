@@ -5,6 +5,8 @@
 
 /// Building placement and types.
 pub mod building;
+/// Farm building and food production.
+pub mod farm;
 /// Housing and rest mechanics.
 pub mod housing;
 /// Pop needs (hunger, rest).
@@ -13,12 +15,10 @@ pub mod needs;
 pub mod pop;
 /// Terrain generation and grid management.
 pub mod terrain;
-/// Farm building and food production.
-pub mod farm;
 
 pub use building::*;
+pub use farm::*;
 pub use housing::*;
 pub use needs::*;
 pub use pop::*;
 pub use terrain::*;
-pub use farm::*;

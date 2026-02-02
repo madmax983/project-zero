@@ -28,7 +28,7 @@ use scale::layer1::{
     BuildMode, Building, BuildingType, ColonyResources, Farm, GridPosition, Housing,
     MapRenderContext, Needs, OccupiedTiles, Pop, TerrainGrid, Viewport, can_place_building,
     clean_dead_residents_system, clean_dead_workers_system, consume_food_system,
-    decay_needs_system, generate_terrain, kill_starving_pops_system, pop_display,
+    decay_needs_system, generate_terrain, kill_starving_entities_system, pop_display,
     produce_food_system, render_map_layer, restore_rest_in_housing_system, spawn_initial_pops,
     try_place_building,
 };
@@ -113,7 +113,7 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
                     restore_rest_in_housing_system(&mut world);
                     consume_food_system(&mut world);
                     decay_needs_system(&mut world);
-                    kill_starving_pops_system(&mut world);
+                    kill_starving_entities_system(&mut world);
                     clean_dead_residents_system(&mut world);
                     clean_dead_workers_system(&mut world);
                     world.resource_mut::<SimulationTime>().tick += 1;

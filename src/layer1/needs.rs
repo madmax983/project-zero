@@ -1,4 +1,3 @@
-use super::pop::Pop;
 use bevy_ecs::prelude::*;
 
 /// Pop survival needs.
@@ -43,11 +42,11 @@ pub fn decay_needs_system(world: &mut World) {
     }
 }
 
-/// Despawns pops whose hunger has reached zero.
-pub fn kill_starving_pops_system(world: &mut World) {
+/// Despawns entities whose hunger has reached zero.
+pub fn kill_starving_entities_system(world: &mut World) {
     // Collect entities to despawn (can't despawn while iterating)
     let to_despawn: Vec<Entity> = world
-        .query_filtered::<(Entity, &Needs), With<Pop>>()
+        .query::<(Entity, &Needs)>()
         .iter(world)
         .filter(|(_, needs)| needs.hunger <= 0.0)
         .map(|(entity, _)| entity)
@@ -147,7 +146,7 @@ mod tests {
     }
 
     #[test]
-    fn test_kill_starving_pops_system() {
+    fn test_kill_starving_entities_system() {
         let mut world = World::new();
 
         // Spawn healthy pop
@@ -168,7 +167,7 @@ mod tests {
             },
         ));
 
-        kill_starving_pops_system(&mut world);
+        kill_starving_entities_system(&mut world);
 
         let count = world.query::<&Pop>().iter(&world).count();
         assert_eq!(count, 1, "Only healthy pop should survive");
@@ -187,7 +186,7 @@ mod tests {
             },
         ));
 
-        kill_starving_pops_system(&mut world);
+        kill_starving_entities_system(&mut world);
 
         let count = world.query::<&Pop>().iter(&world).count();
         assert_eq!(count, 1, "Pop with 0.01 hunger should survive");
@@ -251,7 +250,7 @@ mod tests {
         let mut ticks = 0;
         while world.query::<&Pop>().iter(&world).count() > 0 && ticks < 100 {
             decay_needs_system(&mut world);
-            kill_starving_pops_system(&mut world);
+            kill_starving_entities_system(&mut world);
             ticks += 1;
         }
 
