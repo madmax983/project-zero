@@ -8,6 +8,9 @@ jobs:
     automerge:
         name: Enable automerge on dependabot PRs
         runs-on: ubuntu-latest
+        permissions:
+            contents: write
+            pull-requests: write
         steps:
             - name: Enable automerge on dependabot PRs
               uses: daneden/enable-automerge-action@v1
