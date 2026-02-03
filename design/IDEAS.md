@@ -495,3 +495,168 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Eradication vs Control vs Symbiosis.
 
 ---
+
+## Stress Breakdowns
+
+**Layer:** 1
+
+**Fantasy:** People aren't robots. Everyone breaks differently under pressure.
+
+**Mechanic:** When Stress > Threshold, pops enter a "Breakdown" state determined by traits (e.g., Pyromania, Catatonia, Binge Eating, Vandalism). They stop working and actively cause problems.
+
+**Emergence:** The colony burns down because the Fire Marshal got stressed and became a pyromaniac. The cook eats the winter stockpile.
+
+**Tension:** Punish the stressed pop (lower mood/justice) or fix the root cause (expensive amenities)?
+
+---
+
+## Entropy & Spoilage
+
+**Layer:** 1
+
+**Fantasy:** Nature reclaims what you harvest. The struggle is to preserve, not just produce.
+
+**Mechanic:** Organic items (Food, Wood) have a "Freshness" ticker. Reaching 0 destroys the item or turns it to "Rot" (disease risk). Preservation methods (freezing, drying, canning) halt or slow decay.
+
+**Emergence:** A bumper crop turns into a plague of rot-flies because you didn't build enough freezers. A power outage thaws the food supply.
+
+**Tension:** Expensive storage infrastructure vs. frequent, inefficient harvesting.
+
+---
+
+## Shift Work
+
+**Layer:** 1
+
+**Fantasy:** The factory never sleeps, but people must.
+
+**Mechanic:** Designate "Shifts" (Day/Night) for buildings. Pops assigned to Night Shift gain "Nocturnal" adaptation over time or suffer mood penalties unless they have specific traits.
+
+**Emergence:** A "Night Crew" subculture forms that never sees the "Day Crew". They communicate only through notes left at workstations. You accidentally segregate your colony by time.
+
+**Tension:** 24/7 productivity (efficiency) vs. social cohesion and mood (stability).
+
+---
+
+## Pop Factions
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** Your people organize against you (or for you). You are governing a society, not just units.
+
+**Mechanic:** Pops with similar grievances or traits form "Factions" (e.g., "The Miners' Guild", "Traditionalists"). Factions make demands. Ignoring them causes strikes, sabotage, or lower efficiency. Appeasing them grants bonuses.
+
+**Emergence:** The "Miners' Guild" demands better food. You refuse. They collapse the mine entrance, cutting off your stone supply.
+
+**Tension:** Appease the powerful faction (stability) or support the weak one (justice/long-term balance)?
+
+---
+
+## Resource Capacities
+
+**Layer:** 1
+
+**Fantasy:** A mountain of stone with nowhere to put it becomes an obstacle, not an asset.
+
+**Mechanic:** Storage buildings (Stockpiles, Granaries, Silos) have finite capacity slots per resource type. Excess resources decay rapidly or block production.
+
+**Emergence:** You strike a rich vein of gold but have to stop mining because your warehouses are full of cheap copper. You desperately build "trash heaps".
+
+**Tension:** Stop production (waste labor) or build more storage (waste space/materials)?
+
+---
+
+## Structural Integrity
+
+**Layer:** 1
+
+**Fantasy:** The mountain does not want to be hollowed out. It fights back with gravity.
+
+**Mechanic:** Mined tiles have "Support" values. Digging too wide without leaving pillars or building supports causes "Cave-ins" that damage pops and destroy items.
+
+**Emergence:** A greedy mining designation removes the last supporting pillar, collapsing the main hall on the colony leader.
+
+**Tension:** Efficient strip-mining (fast, risky) vs. careful pillar-and-stall mining (slow, safe).
+
+---
+
+## Mentorship
+
+**Layer:** 1
+
+**Fantasy:** The old teaching the young. Knowledge surviving the death of the master.
+
+**Mechanic:** When a highly skilled "Master" works alongside a "Novice", the Novice gains XP significantly faster. Masters get a mood buff from teaching; Novices get a mood buff from learning.
+
+**Emergence:** You keep the blind, crippled Master Smith employed just so he can sit in the forge and tell stories to the apprentices, boosting their growth.
+
+**Tension:** Efficiency (two masters working separate jobs) vs. Investment (one master slowing down to teach a novice).
+
+---
+
+## Light & Darkness
+
+**Layer:** 1
+
+**Fantasy:** The dark is scary. The light is safety.
+
+**Mechanic:** Tiles have light levels. Working/moving in darkness is slower and increases stress. Some enemies only spawn in total darkness. Torches/Lamps require fuel/power.
+
+**Emergence:** A power failure plunges the lower levels into darkness. Pops refuse to go down there to fix the generator because "it's too dark", creating a death spiral.
+
+**Tension:** Burn fuel for light (resource cost) or brave the dark (mood/speed penalty)?
+## Social Mimicry
+
+**Layer:** 1
+
+**Fantasy:** Pops are sheep. Trends spread like viruses.
+
+**Mechanic:** If a "High Status" pop (high job tier/social skill) adopts a behavior (e.g., eating a specific luxury food, wearing a specific hat), nearby pops have a chance to copy it, changing their preferences.
+
+**Emergence:** The Governor develops a taste for "Rat-on-a-stick". Suddenly, it becomes the fashionable high-cuisine, causing a luxury food market crash and a rat extinction event.
+
+**Tension:** Do you indulge the elite's expensive tastes knowing the masses will demand the same?
+
+---
+
+## Cometary Injection
+
+**Layer:** 2
+
+**Fantasy:** The system is alive and dynamic; opportunities fly by and you have to catch them.
+
+**Mechanic:** Comets spawn on parabolic trajectories through the system. They contain massive, rare resource deposits but move fast. Mining them requires rapid fleet deployment before they exit the system.
+
+**Emergence:** A "Glitter-Ice Comet" passes during a critical water shortage. You risk your only shuttle (and its crew) to catch it, saving the colony but losing the ship in the process.
+
+**Tension:** High risk/reward. The resource comes to you, but only for a moment.
+
+---
+
+## The Long-Haulers
+
+**Layer:** Cross-layer
+
+**Fantasy:** Your colony is just a stopover for some. Not everyone calls this rock "home".
+
+**Mechanic:** Some pops arrive with the "Traveler" trait. They work hard and gain XP but have a "Departure Date". When a ship arrives near that date, they leave, taking their skills with them.
+
+**Emergence:** You rely on a brilliant Traveler engineer to maintain your unstable fusion core. When their ship finally comes, you have to choose: let them leave and risk a meltdown, or detain them and face a riot.
+
+**Tension:** Invest in temporary workers vs. permanent residents. Brain drain vs. fresh blood.
+
+---
+
+## Stellar Drift
+
+**Layer:** 3
+
+**Fantasy:** The galaxy is in motion. Maps are not static.
+
+**Mechanic:** Over long timescales (decades), star systems drift relative to each other. Hyperlane connections break and new ones form. Distances change, altering trade efficiency and strategic neighbors.
+
+**Emergence:** Your safe backwater colony, protected by distance for fifty years, suddenly drifts within jump-range of a Devouring Swarm. The "Frontier" comes to you.
+
+**Tension:** Long-term static infrastructure vs. adaptable, mobile fleets.
+
+---
