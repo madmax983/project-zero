@@ -205,7 +205,7 @@ mod tests {
         };
         let (ch, color) = pop_display(&needs);
 
-        assert_eq!(ch, '☺');
+        assert_eq!(ch, "☺");
         assert_eq!(color, Color::Yellow);
     }
 
@@ -217,7 +217,7 @@ mod tests {
         };
         let (ch, color) = pop_display(&needs);
 
-        assert_eq!(ch, '☻');
+        assert_eq!(ch, "☻");
         assert_eq!(color, Color::Rgb(255, 165, 0)); // Orange
     }
 
@@ -229,7 +229,7 @@ mod tests {
         };
         let (ch, color) = pop_display(&needs);
 
-        assert_eq!(ch, '☹');
+        assert_eq!(ch, "☹");
         assert_eq!(color, Color::Red);
     }
 
@@ -242,7 +242,7 @@ mod tests {
         };
         let (ch, color) = pop_display(&needs);
 
-        assert_eq!(ch, '☻'); // Warning state
+        assert_eq!(ch, "☻"); // Warning state
         assert_eq!(color, Color::Rgb(255, 165, 0));
     }
 

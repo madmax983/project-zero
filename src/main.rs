@@ -287,7 +287,7 @@ fn render_map(frame: &mut Frame, area: Rect, world: &World) {
     render_map_layer(frame, ctx);
 }
 
-fn get_pops_render_data(world: &World) -> HashMap<GridPosition, (char, Color)> {
+fn get_pops_render_data(world: &World) -> HashMap<GridPosition, (&'static str, Color)> {
     world
         .iter_entities()
         .filter(|e| e.contains::<GridPosition>() && e.contains::<Needs>())

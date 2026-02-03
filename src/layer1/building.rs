@@ -39,6 +39,23 @@ impl BuildingType {
         }
     }
 
+    /// Returns a string slice representation of the building.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use scale::layer1::building::BuildingType;
+    ///
+    /// assert_eq!(BuildingType::Housing.as_str(), "⌂");
+    /// ```
+    #[must_use]
+    pub const fn as_str(&self) -> &'static str {
+        match self {
+            Self::Housing => "⌂",
+            Self::Farm => "♣",
+        }
+    }
+
     /// Returns the color of the building.
     ///
     /// # Examples
@@ -246,6 +263,12 @@ mod tests {
     fn test_building_type_chars() {
         assert_eq!(BuildingType::Housing.char(), '⌂');
         assert_eq!(BuildingType::Farm.char(), '♣');
+    }
+
+    #[test]
+    fn test_building_type_as_str() {
+        assert_eq!(BuildingType::Housing.as_str(), "⌂");
+        assert_eq!(BuildingType::Farm.as_str(), "♣");
     }
 
     #[test]

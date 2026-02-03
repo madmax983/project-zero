@@ -29,6 +29,23 @@ impl DesignationType {
         }
     }
 
+    /// Returns a string slice representation of the designation.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use scale::layer1::designation::DesignationType;
+    ///
+    /// assert_eq!(DesignationType::Mine.as_str(), "⛏");
+    /// ```
+    #[must_use]
+    pub const fn as_str(&self) -> &'static str {
+        match self {
+            Self::Mine => "⛏",
+            Self::Demolish => "X",
+        }
+    }
+
     /// Returns the human-readable label of the designation.
     ///
     /// # Examples
@@ -176,6 +193,12 @@ mod tests {
     }
 
     #[test]
+    fn test_designation_type_as_str() {
+        assert_eq!(DesignationType::Mine.as_str(), "⛏");
+        assert_eq!(DesignationType::Demolish.as_str(), "X");
+    }
+
+    #[test]
     fn test_designation_component() {
         let designation = Designation {
             designation_type: DesignationType::Mine,
@@ -194,8 +217,10 @@ mod tests {
 
     #[test]
     fn test_designation_mode_toggle() {
-        let mut mode = DesignationMode::default();
-        mode.active = true;
+        let mut mode = DesignationMode {
+            active: true,
+            ..Default::default()
+        };
         assert!(mode.active);
         mode.active = false;
         assert!(!mode.active);
@@ -220,7 +245,7 @@ mod tests {
     #[test]
     fn test_can_designate_mine_invalid() {
         let mut world = World::new();
-        let mut tiles = vec![TerrainType::Grass; 100];
+        let tiles = vec![TerrainType::Grass; 100];
         world.insert_resource(TerrainGrid {
             width: 10,
             height: 10,
