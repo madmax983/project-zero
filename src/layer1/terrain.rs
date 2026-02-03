@@ -1,4 +1,5 @@
 use super::building::BuildingType;
+use super::designation::DesignationType;
 use super::pop::GridPosition;
 use bevy_ecs::prelude::*;
 use rand::Rng;
@@ -137,8 +138,12 @@ pub struct MapRenderContext<'a, S: BuildHasher> {
     pub pops_data: &'a HashMap<GridPosition, (char, Color), S>,
     /// Map of building positions.
     pub buildings_data: &'a HashMap<GridPosition, BuildingType, S>,
+    /// Map of designations.
+    pub designations_data: &'a HashMap<GridPosition, DesignationType, S>,
     /// Current build mode state (cursor position, selected building, valid placement).
     pub build_mode: Option<(GridPosition, BuildingType, bool)>,
+    /// Current designation mode state (cursor position, selected tool, valid placement).
+    pub designation_mode: Option<(GridPosition, DesignationType, bool)>,
 }
 
 impl<S: BuildHasher> Clone for MapRenderContext<'_, S> {
@@ -276,6 +281,36 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
                 line_spans.push(Span::styled(
                     ch.to_string(),
                     Style::default().fg(Color::White).bg(bg),
+                ));
+                continue;
+            }
+
+            // Designation mode cursor (highest priority shared with build mode)
+            if let Some((_, selected, can_designate)) = ctx
+                .designation_mode
+                .filter(|(cursor, _, _)| cursor.x == world_x && cursor.y == world_y)
+            {
+                let bg = if can_designate {
+                    Color::Green
+                } else {
+                    Color::Red
+                };
+                let ch = selected.char();
+                line_spans.push(Span::styled(
+                    ch.to_string(),
+                    Style::default().fg(Color::White).bg(bg),
+                ));
+                continue;
+            }
+
+            // Designations
+            if let Some(designation_type) = ctx.designations_data.get(&GridPosition {
+                x: world_x,
+                y: world_y,
+            }) {
+                line_spans.push(Span::styled(
+                    designation_type.char().to_string(),
+                    Style::default().fg(Color::Red),
                 ));
                 continue;
             }
@@ -492,6 +527,7 @@ mod tests {
         pop_data.insert(GridPosition { x: 0, y: 0 }, ('P', Color::Yellow));
 
         let buildings_data = HashMap::new();
+        let designations_data = HashMap::new();
 
         let ctx = MapRenderContext {
             area,
@@ -499,7 +535,9 @@ mod tests {
             viewport: &viewport,
             pops_data: &pop_data,
             buildings_data: &buildings_data,
+            designations_data: &designations_data,
             build_mode: None,
+            designation_mode: None,
         };
 
         let spans = build_map_layer_spans(ctx);
@@ -537,6 +575,7 @@ mod tests {
         let area = Rect::new(0, 0, 3, 3);
         let pop_data = HashMap::new();
         let buildings_data = HashMap::new();
+        let designations_data = HashMap::new();
 
         let ctx = MapRenderContext {
             area,
@@ -544,7 +583,9 @@ mod tests {
             viewport: &viewport,
             pops_data: &pop_data,
             buildings_data: &buildings_data,
+            designations_data: &designations_data,
             build_mode: None,
+            designation_mode: None,
         };
 
         let spans = build_map_layer_spans(ctx);
@@ -575,6 +616,7 @@ mod tests {
         let mut pop_data = HashMap::new();
         pop_data.insert(GridPosition { x: 0, y: 0 }, ('P', Color::Yellow));
         let buildings_data = HashMap::new();
+        let designations_data = HashMap::new();
 
         let ctx = MapRenderContext {
             area,
@@ -582,7 +624,9 @@ mod tests {
             viewport: &viewport,
             pops_data: &pop_data,
             buildings_data: &buildings_data,
+            designations_data: &designations_data,
             build_mode: None,
+            designation_mode: None,
         };
 
         let spans = build_map_layer_spans(ctx);
@@ -618,6 +662,7 @@ mod tests {
         let area = Rect::new(0, 0, 3, 3);
         let pop_data = HashMap::new();
         let buildings_data = HashMap::new();
+        let designations_data = HashMap::new();
 
         let ctx = MapRenderContext {
             area,
@@ -625,7 +670,9 @@ mod tests {
             viewport: &viewport,
             pops_data: &pop_data,
             buildings_data: &buildings_data,
+            designations_data: &designations_data,
             build_mode: None,
+            designation_mode: None,
         };
 
         let spans = build_map_layer_spans(ctx);
@@ -655,6 +702,7 @@ mod tests {
         let mut pop_data = HashMap::new();
         pop_data.insert(GridPosition { x: 1, y: 1 }, ('P', Color::Yellow));
         let buildings_data = HashMap::new();
+        let designations_data = HashMap::new();
 
         let backend = ratatui::backend::TestBackend::new(10, 10);
         let mut terminal = ratatui::Terminal::new(backend).unwrap();
@@ -667,7 +715,9 @@ mod tests {
                 viewport: &viewport,
                 pops_data: &pop_data,
                 buildings_data: &buildings_data,
+                designations_data: &designations_data,
                 build_mode: None,
+                designation_mode: None,
             };
             render_map_layer(frame, ctx);
         });
@@ -721,6 +771,7 @@ mod tests {
         let area = Rect::new(0, 0, 4, 1);
         let pop_data = HashMap::new();
         let buildings_data = HashMap::new();
+        let designations_data = HashMap::new();
 
         let ctx = MapRenderContext {
             area,
@@ -728,7 +779,9 @@ mod tests {
             viewport: &viewport,
             pops_data: &pop_data,
             buildings_data: &buildings_data,
+            designations_data: &designations_data,
             build_mode: None,
+            designation_mode: None,
         };
 
         let spans = build_map_layer_spans(ctx);
@@ -761,6 +814,7 @@ mod tests {
         pop_data.insert(GridPosition { x: 0, y: 0 }, ('P', Color::Yellow));
         pop_data.insert(GridPosition { x: 1, y: 1 }, ('P', Color::Yellow));
         let buildings_data = HashMap::new();
+        let designations_data = HashMap::new();
 
         let ctx = MapRenderContext {
             area,
@@ -768,7 +822,9 @@ mod tests {
             viewport: &viewport,
             pops_data: &pop_data,
             buildings_data: &buildings_data,
+            designations_data: &designations_data,
             build_mode: None,
+            designation_mode: None,
         };
 
         let spans = build_map_layer_spans(ctx);
@@ -800,6 +856,7 @@ mod tests {
         let area = Rect::new(0, 0, 4, 4);
         let pop_data = HashMap::new();
         let buildings_data = HashMap::new();
+        let designations_data = HashMap::new();
 
         let ctx = MapRenderContext {
             area,
@@ -807,7 +864,9 @@ mod tests {
             viewport: &viewport,
             pops_data: &pop_data,
             buildings_data: &buildings_data,
+            designations_data: &designations_data,
             build_mode: None,
+            designation_mode: None,
         };
 
         let spans = build_map_layer_spans(ctx);
@@ -842,6 +901,7 @@ mod tests {
         let viewport = Viewport { x: 0, y: 0 };
         let pop_data = HashMap::new();
         let buildings_data = HashMap::new();
+        let designations_data = HashMap::new();
 
         let backend = ratatui::backend::TestBackend::new(5, 5);
         let mut terminal = ratatui::Terminal::new(backend).unwrap();
@@ -854,7 +914,9 @@ mod tests {
                 viewport: &viewport,
                 pops_data: &pop_data,
                 buildings_data: &buildings_data,
+                designations_data: &designations_data,
                 build_mode: None,
+                designation_mode: None,
             };
             render_map_layer(frame, ctx);
         });
@@ -879,6 +941,7 @@ mod tests {
         let mut pop_data = HashMap::new();
         pop_data.insert(GridPosition { x: 0, y: 0 }, ('P', Color::Yellow));
         let buildings_data = HashMap::new();
+        let designations_data = HashMap::new();
 
         let ctx = MapRenderContext {
             area,
@@ -886,7 +949,9 @@ mod tests {
             viewport: &viewport,
             pops_data: &pop_data,
             buildings_data: &buildings_data,
+            designations_data: &designations_data,
             build_mode: None,
+            designation_mode: None,
         };
 
         let spans = build_map_layer_spans(ctx);

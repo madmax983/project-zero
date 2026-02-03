@@ -26,13 +26,13 @@ use std::io;
 use std::time::{Duration, Instant};
 
 use scale::layer1::{
-    BuildMode, Building, BuildingType, ColonyResources, Farm, GridPosition, Housing,
-    BuildingTracker, Chronicle, ChronicleUiState, MapRenderContext, Needs, OccupiedTiles, Pop,
-    TerrainGrid, Viewport, can_place_building, check_milestones_system,
-    clean_dead_residents_system, clean_dead_workers_system, consume_food_system,
-    decay_needs_system, format_event_prefix, generate_terrain, initial_chronicle_event,
-    kill_starving_entities_system, pop_display, produce_food_system, render_map_layer,
-    restore_rest_in_housing_system, spawn_initial_pops,
+    BuildMode, Building, BuildingTracker, BuildingType, Chronicle, ChronicleUiState,
+    ColonyResources, Designation, DesignationMode, DesignationType, Farm, GridPosition, Housing,
+    MapRenderContext, Needs, OccupiedTiles, Pop, TerrainGrid, Viewport, can_designate,
+    can_place_building, check_milestones_system, clean_dead_residents_system,
+    clean_dead_workers_system, consume_food_system, decay_needs_system, format_event_prefix,
+    generate_terrain, initial_chronicle_event, kill_starving_entities_system, pop_display,
+    produce_food_system, render_map_layer, restore_rest_in_housing_system, spawn_initial_pops,
 };
 use scale::shared::input::{InputContextStack, InputRouter};
 use scale::shared::selection::{Selection, SelectionTarget, inspect_entity, inspect_tile};
@@ -70,6 +70,7 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
     world.insert_resource(Viewport::default());
     world.insert_resource(SimulationTime::default());
     world.insert_resource(BuildMode::default());
+    world.insert_resource(DesignationMode::default());
     world.insert_resource(OccupiedTiles::default());
     world.insert_resource(ColonyResources::default());
     world.insert_resource(InputContextStack::default());
@@ -245,14 +246,33 @@ fn render_map(frame: &mut Frame, area: Rect, world: &World) {
     let terrain = world.resource::<TerrainGrid>();
     let viewport = world.resource::<Viewport>();
     let build_mode = world.resource::<BuildMode>();
+    let designation_mode = world.resource::<DesignationMode>();
 
     let pops_data = get_pops_render_data(world);
     let buildings_data = get_buildings_render_data(world);
+    let designations_data = get_designations_render_data(world);
 
     // Build mode cursor info
     let build_mode_cursor = if build_mode.active {
         let can_place = can_place_building(world, build_mode.cursor.x, build_mode.cursor.y);
         Some((build_mode.cursor, build_mode.selected, can_place))
+    } else {
+        None
+    };
+
+    // Designation mode cursor info
+    let designation_mode_cursor = if designation_mode.active {
+        let can_des = can_designate(
+            world,
+            designation_mode.cursor.x,
+            designation_mode.cursor.y,
+            designation_mode.tool,
+        );
+        Some((
+            designation_mode.cursor,
+            designation_mode.tool,
+            can_des,
+        ))
     } else {
         None
     };
@@ -263,7 +283,9 @@ fn render_map(frame: &mut Frame, area: Rect, world: &World) {
         viewport,
         pops_data: &pops_data,
         buildings_data: &buildings_data,
+        designations_data: &designations_data,
         build_mode: build_mode_cursor,
+        designation_mode: designation_mode_cursor,
     };
 
     render_map_layer(frame, ctx);
@@ -289,6 +311,19 @@ fn get_buildings_render_data(world: &World) -> HashMap<GridPosition, BuildingTyp
             let pos = *e.get::<GridPosition>().unwrap();
             let building = e.get::<Building>().unwrap();
             (pos, building.building_type)
+        })
+        .collect()
+}
+
+fn get_designations_render_data(world: &World) -> HashMap<GridPosition, DesignationType> {
+    world
+        .iter_entities()
+        .filter_map(|e| {
+            if let (Some(pos), Some(des)) = (e.get::<GridPosition>(), e.get::<Designation>()) {
+                Some((*pos, des.designation_type))
+            } else {
+                None
+            }
         })
         .collect()
 }
@@ -381,6 +416,7 @@ fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
     let sim_time = world.resource::<SimulationTime>();
     let game_state = world.resource::<GameState>();
     let build_mode = world.resource::<BuildMode>();
+    let designation_mode = world.resource::<DesignationMode>();
 
     // NOTE: Dual pause state check. GameState::Paused is controlled by spacebar,
     // SimSpeed::Paused exists but is currently not used (no key binds to it).
@@ -388,20 +424,37 @@ fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
     // vs "completely frozen". Current behavior: only GameState::Paused matters (main.rs:86).
     let paused = *game_state == GameState::Paused || sim_time.speed == SimSpeed::Paused;
 
-    let status = get_status_string(sim_time.tick, sim_time.speed, paused, build_mode);
+    let status = get_status_string(
+        sim_time.tick,
+        sim_time.speed,
+        paused,
+        build_mode,
+        designation_mode,
+    );
 
     let bar = Paragraph::new(status).style(Style::default().bg(Color::DarkGray).fg(Color::White));
     frame.render_widget(bar, area);
 }
 
-fn get_status_string(tick: u64, speed: SimSpeed, paused: bool, build_mode: &BuildMode) -> String {
+fn get_status_string(
+    tick: u64,
+    speed: SimSpeed,
+    paused: bool,
+    build_mode: &BuildMode,
+    designation_mode: &DesignationMode,
+) -> String {
     let mode_str = if build_mode.active {
         format!(
             "BUILD: {} (Tab:switch Enter:place Esc:exit)",
             build_mode.selected.label()
         )
+    } else if designation_mode.active {
+        format!(
+            "DESIGNATE: {} (Enter:place Esc:exit)",
+            designation_mode.tool.label()
+        )
     } else {
-        "B:Build  L:Chronicle  1-3:Speed  q:Quit".to_string()
+        "B:Build  L:Chronicle  1-3:Speed  q:Quit  M:Mine  X:Demolish".to_string()
     };
 
     format!(
@@ -460,12 +513,25 @@ mod tests {
     #[test]
     fn test_get_status_string() {
         let build_mode = BuildMode::default();
-        let s = get_status_string(100, SimSpeed::Normal, false, &build_mode);
+        let designation_mode = DesignationMode::default();
+        let s = get_status_string(
+            100,
+            SimSpeed::Normal,
+            false,
+            &build_mode,
+            &designation_mode,
+        );
         assert!(s.contains("Tick: 100"));
         assert!(s.contains("▶"));
         assert!(s.contains("1x"));
 
-        let s_paused = get_status_string(50, SimSpeed::Fast, true, &build_mode);
+        let s_paused = get_status_string(
+            50,
+            SimSpeed::Fast,
+            true,
+            &build_mode,
+            &designation_mode,
+        );
         assert!(s_paused.contains("Tick: 50"));
         assert!(s_paused.contains("⏸"));
         assert!(s_paused.contains("3x"));

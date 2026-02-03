@@ -17,9 +17,12 @@ pub mod pop;
 pub mod terrain;
 /// Chronicle system and historical records.
 pub mod chronicle;
+/// Designation system.
+pub mod designation;
 
 pub use building::*;
 pub use chronicle::*;
+pub use designation::*;
 pub use farm::*;
 pub use housing::*;
 pub use needs::*;

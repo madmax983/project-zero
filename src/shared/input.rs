@@ -1,7 +1,10 @@
 use bevy_ecs::prelude::*;
 use crossterm::event::{KeyCode, KeyEvent, KeyEventKind, MouseEvent};
 
-use crate::layer1::{BuildMode, ChronicleUiState, GridPosition, Viewport, try_place_building};
+use crate::layer1::{
+    BuildMode, ChronicleUiState, DesignationMode, DesignationType, GridPosition, Viewport,
+    try_cancel_designation, try_designate, try_place_building,
+};
 use crate::shared::selection::{Selection, handle_selection_click};
 use crate::shared::state::GameState;
 use crate::shared::time::{SimSpeed, SimulationTime};
@@ -14,6 +17,8 @@ pub enum InputContext {
     Normal,
     /// Building placement mode.
     BuildMode,
+    /// Designation placement mode.
+    DesignationMode,
     /// Modal overlay.
     Overlay,
 }
@@ -81,6 +86,7 @@ impl InputRouter {
         match context {
             InputContext::Normal => handle_normal_mode(world, key),
             InputContext::BuildMode => handle_build_mode(world, key),
+            InputContext::DesignationMode => handle_designation_mode(world, key),
             InputContext::Overlay => handle_overlay_mode(world, key),
         }
     }
@@ -148,31 +154,90 @@ fn handle_normal_mode(world: &mut World, key: KeyEvent) {
             let mut viewport = world.resource_mut::<Viewport>();
             viewport.x = viewport.x.wrapping_add(1);
         }
-        KeyCode::Char('b') => {
-            // Enter build mode
-            world
-                .resource_mut::<InputContextStack>()
-                .push(InputContext::BuildMode);
+        KeyCode::Char('b') => enter_build_mode(world),
+        KeyCode::Char('l' | 'h' | 'c') => toggle_chronicle(world),
+        KeyCode::Char('m') => enter_designation_mode(world, DesignationType::Mine),
+        KeyCode::Char('x') => enter_designation_mode(world, DesignationType::Demolish),
+        _ => {}
+    }
+}
 
-            // Sync side effects
-            let (vx, vy) = {
-                let viewport = world.resource::<Viewport>();
-                (viewport.x, viewport.y)
-            };
-            let mut build_mode = world.resource_mut::<BuildMode>();
-            build_mode.active = true;
-            build_mode.cursor = GridPosition {
-                x: vx + 10,
-                y: vy + 10,
-            };
+fn enter_build_mode(world: &mut World) {
+    // Enter build mode
+    world
+        .resource_mut::<InputContextStack>()
+        .push(InputContext::BuildMode);
+
+    // Sync side effects
+    let (vx, vy) = {
+        let viewport = world.resource::<Viewport>();
+        (viewport.x, viewport.y)
+    };
+    let mut build_mode = world.resource_mut::<BuildMode>();
+    build_mode.active = true;
+    build_mode.cursor = GridPosition {
+        x: vx + 10,
+        y: vy + 10,
+    };
+}
+
+fn toggle_chronicle(world: &mut World) {
+    // Open chronicle
+    world
+        .resource_mut::<InputContextStack>()
+        .push(InputContext::Overlay);
+    world.resource_mut::<ChronicleUiState>().is_open = true;
+    *world.resource_mut::<GameState>() = GameState::Paused;
+}
+
+fn enter_designation_mode(world: &mut World, tool: DesignationType) {
+    world
+        .resource_mut::<InputContextStack>()
+        .push(InputContext::DesignationMode);
+
+    let (vx, vy) = {
+        let viewport = world.resource::<Viewport>();
+        (viewport.x, viewport.y)
+    };
+    let mut mode = world.resource_mut::<DesignationMode>();
+    mode.active = true;
+    mode.tool = tool;
+    mode.cursor = GridPosition {
+        x: vx + 10,
+        y: vy + 10,
+    };
+}
+
+fn handle_designation_mode(world: &mut World, key: KeyEvent) {
+    match key.code {
+        KeyCode::Esc | KeyCode::Char('m' | 'x') => {
+            // Exit designation mode
+            world.resource_mut::<InputContextStack>().pop();
+            world.resource_mut::<DesignationMode>().active = false;
         }
-        KeyCode::Char('l' | 'h' | 'c') => {
-            // Open chronicle
-            world
-                .resource_mut::<InputContextStack>()
-                .push(InputContext::Overlay);
-            world.resource_mut::<ChronicleUiState>().is_open = true;
-            *world.resource_mut::<GameState>() = GameState::Paused;
+        KeyCode::Char('w') | KeyCode::Up => {
+            let mut mode = world.resource_mut::<DesignationMode>();
+            mode.cursor.y = mode.cursor.y.saturating_sub(1);
+        }
+        KeyCode::Char('s') | KeyCode::Down => {
+            let mut mode = world.resource_mut::<DesignationMode>();
+            mode.cursor.y = mode.cursor.y.saturating_add(1);
+        }
+        KeyCode::Char('a') | KeyCode::Left => {
+            let mut mode = world.resource_mut::<DesignationMode>();
+            mode.cursor.x = mode.cursor.x.saturating_sub(1);
+        }
+        KeyCode::Char('d') | KeyCode::Right => {
+            let mut mode = world.resource_mut::<DesignationMode>();
+            mode.cursor.x = mode.cursor.x.saturating_add(1);
+        }
+        KeyCode::Char(' ') | KeyCode::Enter => {
+            let mode = world.resource::<DesignationMode>();
+            try_designate(world, mode.cursor.x, mode.cursor.y, mode.tool);
+        }
+        KeyCode::Backspace | KeyCode::Delete => {
+            let mode = world.resource::<DesignationMode>();
+            try_cancel_designation(world, mode.cursor.x, mode.cursor.y);
         }
         _ => {}
     }
@@ -455,5 +520,95 @@ mod tests {
         // Move up (y -= 1) should saturate
         router.route(&mut world, key_event(KeyCode::Char('w')));
         assert_eq!(world.resource::<BuildMode>().cursor.y, i32::MIN);
+    }
+
+    #[test]
+    fn test_enter_designation_mode() {
+        let mut world = World::new();
+        world.insert_resource(GameState::Running);
+        world.insert_resource(InputContextStack::default());
+        world.insert_resource(Viewport::default());
+        world.insert_resource(DesignationMode::default());
+
+        let mut router = InputRouter::new();
+        router.route(&mut world, key_event(KeyCode::Char('m')));
+
+        assert_eq!(
+            world.resource::<InputContextStack>().current(),
+            InputContext::DesignationMode
+        );
+        let mode = world.resource::<DesignationMode>();
+        assert!(mode.active);
+        assert_eq!(mode.tool, DesignationType::Mine);
+    }
+
+    #[test]
+    fn test_enter_designation_mode_demolish() {
+        let mut world = World::new();
+        world.insert_resource(GameState::Running);
+        world.insert_resource(InputContextStack::default());
+        world.insert_resource(Viewport::default());
+        world.insert_resource(DesignationMode::default());
+
+        let mut router = InputRouter::new();
+        router.route(&mut world, key_event(KeyCode::Char('x')));
+
+        assert_eq!(
+            world.resource::<InputContextStack>().current(),
+            InputContext::DesignationMode
+        );
+        let mode = world.resource::<DesignationMode>();
+        assert!(mode.active);
+        assert_eq!(mode.tool, DesignationType::Demolish);
+    }
+
+    #[test]
+    fn test_designation_mode_movement() {
+        let mut world = World::new();
+        world.insert_resource(GameState::Running);
+        let mut stack = InputContextStack::default();
+        stack.push(InputContext::DesignationMode);
+        world.insert_resource(stack);
+        world.insert_resource(DesignationMode {
+            active: true,
+            cursor: GridPosition { x: 10, y: 10 },
+            ..Default::default()
+        });
+
+        let mut router = InputRouter::new();
+
+        router.route(&mut world, key_event(KeyCode::Char('w')));
+        assert_eq!(world.resource::<DesignationMode>().cursor.y, 9);
+
+        router.route(&mut world, key_event(KeyCode::Char('s')));
+        assert_eq!(world.resource::<DesignationMode>().cursor.y, 10);
+
+        router.route(&mut world, key_event(KeyCode::Char('a')));
+        assert_eq!(world.resource::<DesignationMode>().cursor.x, 9);
+
+        router.route(&mut world, key_event(KeyCode::Char('d')));
+        assert_eq!(world.resource::<DesignationMode>().cursor.x, 10);
+    }
+
+    #[test]
+    fn test_designation_mode_exit() {
+        let mut world = World::new();
+        world.insert_resource(GameState::Running);
+        let mut stack = InputContextStack::default();
+        stack.push(InputContext::DesignationMode);
+        world.insert_resource(stack);
+        world.insert_resource(DesignationMode {
+            active: true,
+            ..Default::default()
+        });
+
+        let mut router = InputRouter::new();
+        router.route(&mut world, key_event(KeyCode::Esc));
+
+        assert_eq!(
+            world.resource::<InputContextStack>().current(),
+            InputContext::Normal
+        );
+        assert!(!world.resource::<DesignationMode>().active);
     }
 }
