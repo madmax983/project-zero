@@ -10,6 +10,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `010` Chronicle system — `specs/010-chronicle-system.md`
 - [ ] `011` Named locations — `specs/011-named-locations.md`
 - [ ] `017` Designation System — `specs/017-designation-system.md`
+- [ ] `018` Mining Mechanics and Resource Tracking — `specs/018-mining-and-resources.md`
 
 ## MVP — Architecture Refactoring
 
