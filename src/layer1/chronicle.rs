@@ -2,6 +2,9 @@ use bevy_ecs::prelude::*;
 use crate::layer1::building::{Building, BuildingType};
 use crate::shared::time::SimulationTime;
 
+/// Number of ticks per in-game year.
+pub const TICKS_PER_YEAR: u64 = 1000;
+
 /// Importance level for chronicle events.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum EventImportance {
@@ -40,7 +43,7 @@ impl Chronicle {
     pub fn add_event(&mut self, tick: u64, text: String, importance: EventImportance) {
         self.events.push(ChronicleEvent {
             tick,
-            year: 1 + u32::try_from(tick / 1000).unwrap_or(u32::MAX), // Rough "year" approximation
+            year: 1 + u32::try_from(tick / TICKS_PER_YEAR).unwrap_or(u32::MAX), // Rough "year" approximation
             text,
             importance,
         });
@@ -188,8 +191,8 @@ mod tests {
         let mut chronicle = Chronicle::default();
 
         chronicle.add_event(0, "Year 1".to_string(), EventImportance::Standard);
-        chronicle.add_event(1000, "Year 2".to_string(), EventImportance::Standard);
-        chronicle.add_event(5000, "Year 6".to_string(), EventImportance::Standard);
+        chronicle.add_event(TICKS_PER_YEAR, "Year 2".to_string(), EventImportance::Standard);
+        chronicle.add_event(TICKS_PER_YEAR * 5, "Year 6".to_string(), EventImportance::Standard);
 
         assert_eq!(chronicle.events[0].year, 1);
         assert_eq!(chronicle.events[1].year, 2);
