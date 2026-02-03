@@ -1,6 +1,9 @@
 use bevy_ecs::prelude::*;
+use crate::layer1::pop::Pop;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::GridPosition;
+use crate::shared::log::MessageLog;
+use ratatui::style::Color;
 
 /// Tracks the resources available to the colony.
 #[derive(Resource, Default, Debug)]
@@ -27,6 +30,9 @@ impl Default for MiningProgress {
         Self { current: 0.0, max: 100.0 }
     }
 }
+
+const MINING_SPEED: f32 = 1.0;
+const MINING_RANGE: i32 = 10;
 
 /// Applies work to a mining designation.
 /// If complete, transforms terrain and awards resources.
@@ -77,8 +83,41 @@ pub fn mine_rock(world: &mut World, designation_entity: Entity, work_amount: f32
         let mut resources = world.resource_mut::<ColonyResources>();
         resources.stone += 1.0;
 
+        if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+            log.add_colored("Acquired 1 Stone", Color::Green);
+        }
+
         // Remove designation
         world.despawn(designation_entity);
+    }
+}
+
+/// System that progresses mining designations if workers are nearby.
+pub fn process_mining_system(world: &mut World) {
+    // 1. Collect pop positions
+    let pop_positions: Vec<GridPosition> = world
+        .query_filtered::<&GridPosition, With<Pop>>()
+        .iter(world)
+        .copied()
+        .collect();
+
+    // 2. Collect designations
+    let designations: Vec<(Entity, GridPosition)> = world
+        .query_filtered::<(Entity, &GridPosition), With<MiningProgress>>()
+        .iter(world)
+        .map(|(e, p)| (e, *p))
+        .collect();
+
+    // 3. Process
+    for (entity, pos) in designations {
+        // Check if any pop is within range (Manhattan distance <= 10)
+        let has_worker = pop_positions.iter().any(|pop_pos| {
+            (pop_pos.x - pos.x).abs() + (pop_pos.y - pos.y).abs() <= MINING_RANGE
+        });
+
+        if has_worker {
+            mine_rock(world, entity, MINING_SPEED);
+        }
     }
 }
 
@@ -210,6 +249,60 @@ mod tests {
         mine_rock(&mut world, designation, 1.0);
 
         // Should just return, no panic
+        let progress = world.get::<MiningProgress>(designation).unwrap();
+        assert_eq!(progress.current, 0.0);
+    }
+
+    #[test]
+    fn test_process_mining_system_progresses_when_pop_nearby() {
+        use crate::layer1::pop::Pop;
+        use crate::shared::log::MessageLog;
+
+        let mut world = World::new();
+        // Setup terrain
+        let mut tiles = vec![TerrainType::Grass; 100];
+        tiles[55] = TerrainType::Rock;
+        world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
+        world.insert_resource(ColonyResources::default());
+        world.insert_resource(MessageLog::default());
+
+        // Spawn Designation
+        let designation = world.spawn((
+            Designation { designation_type: DesignationType::Mine },
+            MiningProgress { current: 0.0, max: 100.0 },
+            GridPosition { x: 5, y: 5 },
+        )).id();
+
+        // Spawn Pop nearby (distance 1)
+        world.spawn((Pop, GridPosition { x: 6, y: 5 }));
+
+        process_mining_system(&mut world);
+
+        let progress = world.get::<MiningProgress>(designation).unwrap();
+        assert_eq!(progress.current, 1.0);
+    }
+
+    #[test]
+    fn test_process_mining_system_ignores_when_pop_far() {
+        use crate::layer1::pop::Pop;
+
+        let mut world = World::new();
+        let mut tiles = vec![TerrainType::Grass; 400]; // 20x20
+        tiles[0] = TerrainType::Rock;
+        world.insert_resource(TerrainGrid { width: 20, height: 20, tiles });
+        world.insert_resource(ColonyResources::default());
+
+        let designation = world.spawn((
+            Designation { designation_type: DesignationType::Mine },
+            MiningProgress { current: 0.0, max: 100.0 },
+            GridPosition { x: 0, y: 0 },
+        )).id();
+
+        // Spawn Pop far away (distance 15)
+        world.spawn((Pop, GridPosition { x: 15, y: 0 }));
+
+        process_mining_system(&mut world);
+
         let progress = world.get::<MiningProgress>(designation).unwrap();
         assert_eq!(progress.current, 0.0);
     }

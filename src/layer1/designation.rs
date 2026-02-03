@@ -1,4 +1,4 @@
-use crate::layer1::{GridPosition, OccupiedTiles, TerrainGrid, TerrainType};
+use crate::layer1::{GridPosition, MiningProgress, OccupiedTiles, TerrainGrid, TerrainType};
 use bevy_ecs::prelude::*;
 
 /// Types of designations a player can apply to the map.
@@ -145,7 +145,11 @@ pub fn try_designate(world: &mut World, x: i32, y: i32, designation_type: Design
         return false;
     }
 
-    world.spawn((Designation { designation_type }, GridPosition { x, y }));
+    let mut entity = world.spawn((Designation { designation_type }, GridPosition { x, y }));
+
+    if designation_type == DesignationType::Mine {
+        entity.insert(MiningProgress::default());
+    }
 
     true
 }
@@ -366,5 +370,26 @@ mod tests {
         // Entity should be despawned or component removed
         // Since designation is the main component, entity despawn is cleaner
         assert_eq!(world.entities().len(), 0);
+    }
+
+    #[test]
+    fn test_try_designate_adds_mining_progress() {
+        let mut world = World::new();
+        let mut tiles = vec![TerrainType::Grass; 100];
+        tiles[55] = TerrainType::Rock;
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
+        world.insert_resource(OccupiedTiles::default());
+
+        try_designate(&mut world, 5, 5, DesignationType::Mine);
+
+        let entity = world
+            .query_filtered::<Entity, With<Designation>>()
+            .single(&world);
+
+        assert!(world.get::<MiningProgress>(entity).is_some());
     }
 }
