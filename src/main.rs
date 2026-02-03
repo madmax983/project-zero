@@ -18,7 +18,7 @@ use crossterm::{
 };
 use ratatui::{
     prelude::*,
-    widgets::{Block, BorderType, Borders, Clear, List, ListItem, Paragraph},
+    widgets::{Block, BorderType, Borders, Clear, List, ListItem, Paragraph, Row, Table},
 };
 use scale::shared::log::MessageLog;
 use std::collections::HashMap;
@@ -27,9 +27,9 @@ use std::time::{Duration, Instant};
 
 use scale::layer1::{
     BuildMode, Building, BuildingTracker, BuildingType, Chronicle, ChronicleUiState,
-    ColonyResources, Designation, DesignationMode, DesignationType, Farm, GridPosition, Housing,
-    MapRenderContext, Needs, OccupiedTiles, Pop, TerrainGrid, Viewport, can_designate,
-    can_place_building, check_milestones_system, clean_dead_residents_system,
+    ColonyResources, Designation, DesignationMode, DesignationType, EventImportance, Farm,
+    GridPosition, Housing, MapRenderContext, Needs, OccupiedTiles, Pop, TerrainGrid, Viewport,
+    can_designate, can_place_building, check_milestones_system, clean_dead_residents_system,
     clean_dead_workers_system, consume_food_system, decay_needs_system, format_event_prefix,
     generate_terrain, initial_chronicle_event, kill_starving_entities_system, pop_display,
     produce_food_system, render_map_layer, restore_rest_in_housing_system, spawn_initial_pops,
@@ -213,25 +213,46 @@ fn render_chronicle(frame: &mut Frame, area: Rect, world: &World) {
 
     let popup_area = centered_rect(60, 60, area);
     frame.render_widget(Clear, popup_area); // Clear background
-    frame.render_widget(block.clone(), popup_area);
 
-    let inner = block.inner(popup_area);
+    // Table Header
+    let header = Row::new(vec!["Time", "Imp", "Event"])
+        .style(Style::default().add_modifier(Modifier::BOLD).fg(Color::Cyan))
+        .bottom_margin(1);
 
-    let items: Vec<ListItem> = chronicle
+    // Table Rows
+    let rows: Vec<Row> = chronicle
         .events
         .iter()
         .rev() // Newest first
         .map(|evt| {
+            let color = match evt.importance {
+                EventImportance::Legendary => Color::Yellow,
+                EventImportance::Major => Color::Magenta,
+                EventImportance::Standard => Color::White,
+                EventImportance::Minor => Color::DarkGray,
+            };
+
             let prefix = format_event_prefix(evt.importance);
-            ListItem::new(format!(
-                "[{}] Y{}: {} {}",
-                evt.tick, evt.year, prefix, evt.text
-            ))
+
+            Row::new(vec![
+                format!("Y{} [{}]", evt.year, evt.tick),
+                prefix.to_string(),
+                evt.text.clone(),
+            ])
+            .style(Style::default().fg(color))
         })
         .collect();
 
-    let list = List::new(items);
-    frame.render_widget(list, inner);
+    // Column Widths
+    let widths = [
+        Constraint::Length(12), // Time
+        Constraint::Length(4),  // Type
+        Constraint::Min(20),    // Event
+    ];
+
+    let table = Table::new(rows, widths).header(header).block(block);
+
+    frame.render_widget(table, popup_area);
 }
 
 fn render_map(frame: &mut Frame, area: Rect, world: &World) {
