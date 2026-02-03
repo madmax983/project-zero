@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::GridPosition;
+use crate::layer1::terrain::{TerrainGrid, TerrainType};
+use bevy_ecs::prelude::*;
 
 /// Tracks the resources available to the colony.
 #[derive(Resource, Default, Debug)]
@@ -24,7 +24,10 @@ pub struct MiningProgress {
 
 impl Default for MiningProgress {
     fn default() -> Self {
-        Self { current: 0.0, max: 100.0 }
+        Self {
+            current: 0.0,
+            max: 100.0,
+        }
     }
 }
 
@@ -55,7 +58,8 @@ pub fn mine_rock(world: &mut World, designation_entity: Entity, work_amount: f32
     }
 
     // 2. Update progress
-    let completed = if let Some(mut progress) = world.get_mut::<MiningProgress>(designation_entity) {
+    let completed = if let Some(mut progress) = world.get_mut::<MiningProgress>(designation_entity)
+    {
         progress.current += work_amount;
         progress.current >= progress.max
     } else {
@@ -85,17 +89,17 @@ pub fn mine_rock(world: &mut World, designation_entity: Entity, work_amount: f32
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::terrain::{TerrainGrid, TerrainType};
-    use crate::layer1::designation::{Designation, DesignationType};
     use crate::layer1::GridPosition;
+    use crate::layer1::designation::{Designation, DesignationType};
+    use crate::layer1::terrain::{TerrainGrid, TerrainType};
 
     #[test]
     fn test_colony_resources_fields() {
         let resources = ColonyResources::default();
         // Check for new fields
-        assert_eq!(resources.food, 0.0);
-        assert_eq!(resources.wood, 0.0);
-        assert_eq!(resources.stone, 0.0);
+        assert!((resources.food - 0.0).abs() < f32::EPSILON);
+        assert!((resources.wood - 0.0).abs() < f32::EPSILON);
+        assert!((resources.stone - 0.0).abs() < f32::EPSILON);
     }
 
     #[test]
@@ -104,8 +108,8 @@ mod tests {
             current: 0.0,
             max: 100.0,
         };
-        assert_eq!(progress.current, 0.0);
-        assert_eq!(progress.max, 100.0);
+        assert!((progress.current - 0.0).abs() < f32::EPSILON);
+        assert!((progress.max - 100.0).abs() < f32::EPSILON);
     }
 
     #[test]
@@ -114,23 +118,34 @@ mod tests {
         // Setup Rock tile
         let mut tiles = vec![TerrainType::Grass; 100];
         tiles[55] = TerrainType::Rock; // (5, 5)
-        world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
 
         // Setup Resources
         world.insert_resource(ColonyResources::default());
 
         // Spawn Designation with MiningProgress
-        let designation = world.spawn((
-            Designation { designation_type: DesignationType::Mine },
-            MiningProgress { current: 0.0, max: 10.0 },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let designation = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Mine,
+                },
+                MiningProgress {
+                    current: 0.0,
+                    max: 10.0,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         // Perform work (simulate 1 tick of work)
         mine_rock(&mut world, designation, 1.0);
 
         let progress = world.get::<MiningProgress>(designation).unwrap();
-        assert_eq!(progress.current, 1.0);
+        assert!((progress.current - 1.0).abs() < f32::EPSILON);
     }
 
     #[test]
@@ -139,15 +154,26 @@ mod tests {
         // Setup Rock tile
         let mut tiles = vec![TerrainType::Grass; 100];
         tiles[55] = TerrainType::Rock;
-        world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
         world.insert_resource(ColonyResources::default());
 
         // Spawn Designation
-        let designation = world.spawn((
-            Designation { designation_type: DesignationType::Mine },
-            MiningProgress { current: 9.0, max: 10.0 },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let designation = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Mine,
+                },
+                MiningProgress {
+                    current: 9.0,
+                    max: 10.0,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         // Complete the work
         mine_rock(&mut world, designation, 1.0);
@@ -161,7 +187,7 @@ mod tests {
 
         // 3. Resources should increase
         let resources = world.resource::<ColonyResources>();
-        assert_eq!(resources.stone, 1.0);
+        assert!((resources.stone - 1.0).abs() < f32::EPSILON);
     }
 
     #[test]
@@ -169,20 +195,31 @@ mod tests {
         let mut world = World::new();
         // Setup Grass tile (cannot mine grass for stone)
         let tiles = vec![TerrainType::Grass; 100];
-        world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
         world.insert_resource(ColonyResources::default());
 
-        let designation = world.spawn((
-            Designation { designation_type: DesignationType::Mine },
-            MiningProgress { current: 0.0, max: 10.0 },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let designation = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Mine,
+                },
+                MiningProgress {
+                    current: 0.0,
+                    max: 10.0,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         mine_rock(&mut world, designation, 5.0);
 
         // Should not progress
         let progress = world.get::<MiningProgress>(designation).unwrap();
-        assert_eq!(progress.current, 0.0);
+        assert!((progress.current - 0.0).abs() < f32::EPSILON);
     }
 
     #[test]
@@ -195,22 +232,23 @@ mod tests {
         });
         world.insert_resource(ColonyResources::default());
 
-        let designation = world.spawn((
-            Designation {
-                designation_type: DesignationType::Mine,
-            },
-            MiningProgress {
-                current: 0.0,
-                max: 10.0,
-            },
-            // No GridPosition
-        ))
-        .id();
+        let designation = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Mine,
+                },
+                MiningProgress {
+                    current: 0.0,
+                    max: 10.0,
+                },
+                // No GridPosition
+            ))
+            .id();
 
         mine_rock(&mut world, designation, 1.0);
 
         // Should just return, no panic
         let progress = world.get::<MiningProgress>(designation).unwrap();
-        assert_eq!(progress.current, 0.0);
+        assert!((progress.current - 0.0).abs() < f32::EPSILON);
     }
 }

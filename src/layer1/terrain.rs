@@ -278,10 +278,7 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
             {
                 let bg = if can_place { Color::Green } else { Color::Red };
                 let text = selected.as_str();
-                line_spans.push(Span::styled(
-                    text,
-                    Style::default().fg(Color::White).bg(bg),
-                ));
+                line_spans.push(Span::styled(text, Style::default().fg(Color::White).bg(bg)));
                 continue;
             }
 
@@ -292,10 +289,7 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
             {
                 let bg = if can_place { Color::Green } else { Color::Red };
                 let text = selected.as_str();
-                line_spans.push(Span::styled(
-                    text,
-                    Style::default().fg(Color::White).bg(bg),
-                ));
+                line_spans.push(Span::styled(text, Style::default().fg(Color::White).bg(bg)));
                 continue;
             }
 
