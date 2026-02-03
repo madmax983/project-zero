@@ -552,6 +552,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
+## Resource Capacities
+
+**Layer:** 1
+
+**Fantasy:** A mountain of stone with nowhere to put it becomes an obstacle, not an asset.
+
+**Mechanic:** Storage buildings (Stockpiles, Granaries, Silos) have finite capacity slots per resource type. Excess resources decay rapidly or block production.
+
+**Emergence:** You strike a rich vein of gold but have to stop mining because your warehouses are full of cheap copper. You desperately build "trash heaps".
+
+**Tension:** Stop production (waste labor) or build more storage (waste space/materials)?
+
+---
+
+## Structural Integrity
+
+**Layer:** 1
+
+**Fantasy:** The mountain does not want to be hollowed out. It fights back with gravity.
+
+**Mechanic:** Mined tiles have "Support" values. Digging too wide without leaving pillars or building supports causes "Cave-ins" that damage pops and destroy items.
+
+**Emergence:** A greedy mining designation removes the last supporting pillar, collapsing the main hall on the colony leader.
+
+**Tension:** Efficient strip-mining (fast, risky) vs. careful pillar-and-stall mining (slow, safe).
+
+---
+
+## Mentorship
+
+**Layer:** 1
+
+**Fantasy:** The old teaching the young. Knowledge surviving the death of the master.
+
+**Mechanic:** When a highly skilled "Master" works alongside a "Novice", the Novice gains XP significantly faster. Masters get a mood buff from teaching; Novices get a mood buff from learning.
+
+**Emergence:** You keep the blind, crippled Master Smith employed just so he can sit in the forge and tell stories to the apprentices, boosting their growth.
+
+**Tension:** Efficiency (two masters working separate jobs) vs. Investment (one master slowing down to teach a novice).
+
+---
+
+## Light & Darkness
+
+**Layer:** 1
+
+**Fantasy:** The dark is scary. The light is safety.
+
+**Mechanic:** Tiles have light levels. Working/moving in darkness is slower and increases stress. Some enemies only spawn in total darkness. Torches/Lamps require fuel/power.
+
+**Emergence:** A power failure plunges the lower levels into darkness. Pops refuse to go down there to fix the generator because "it's too dark", creating a death spiral.
+
+**Tension:** Burn fuel for light (resource cost) or brave the dark (mood/speed penalty)?
 ## Social Mimicry
 
 **Layer:** 1
