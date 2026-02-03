@@ -6,6 +6,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 ## MVP — Layer 1: Colony Simulation
 
+- [ ] `019` Forestry System — `specs/019-forestry-system.md`
 - [ ] `016` Emergent Utility AI System — `specs/016-utility-ai-system.md`
 - [ ] `011` Named locations — `specs/011-named-locations.md`
 
