@@ -84,6 +84,7 @@ pub fn mine_rock(world: &mut World, designation_entity: Entity, work_amount: f32
 
 #[cfg(test)]
 mod tests {
+    #![allow(clippy::float_cmp)]
     use super::*;
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
     use crate::layer1::designation::{Designation, DesignationType};
