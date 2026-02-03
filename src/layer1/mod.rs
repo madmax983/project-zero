@@ -5,6 +5,10 @@
 
 /// Building placement and types.
 pub mod building;
+/// Chronicle system and historical records.
+pub mod chronicle;
+/// Designation system for player tools.
+pub mod designation;
 /// Farm building and food production.
 pub mod farm;
 /// Housing and rest mechanics.
@@ -15,11 +19,10 @@ pub mod needs;
 pub mod pop;
 /// Terrain generation and grid management.
 pub mod terrain;
-/// Chronicle system and historical records.
-pub mod chronicle;
 
 pub use building::*;
 pub use chronicle::*;
+pub use designation::*;
 pub use farm::*;
 pub use housing::*;
 pub use needs::*;
