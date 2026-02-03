@@ -15,3 +15,4 @@ Implemented features. Architect: read this to understand current state.
 - [x] `009` Job assignment system — `specs/009-job-system.md` — **superseded by spec 016 (Utility AI)** — 2026-02-02
 - [x] `012` Input Architecture and Context Routing — `specs/012-input-architecture.md` — completed 2026-02-02
 - [x] `017` Designation System — `specs/017-designation-system.md` — completed 2026-02-02
+- [x] `018` Mining and Resources — `specs/018-mining-resources.md` — completed 2026-02-02

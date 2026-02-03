@@ -17,6 +17,8 @@ pub mod housing;
 pub mod needs;
 /// Pop entity and management.
 pub mod pop;
+/// Colony resources and mining.
+pub mod resources;
 /// Terrain generation and grid management.
 pub mod terrain;
 
@@ -27,4 +29,5 @@ pub use farm::*;
 pub use housing::*;
 pub use needs::*;
 pub use pop::*;
+pub use resources::*;
 pub use terrain::*;
