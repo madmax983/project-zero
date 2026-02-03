@@ -1,13 +1,7 @@
 use crate::layer1::needs::Needs;
 use crate::layer1::pop::Pop;
+use crate::layer1::resources::ColonyResources;
 use bevy_ecs::prelude::*;
-
-/// Colony-wide resources.
-#[derive(Resource, Default)]
-pub struct ColonyResources {
-    /// Total food available in the colony.
-    pub food: f32,
-}
 
 /// Farm component - produces food when worked.
 #[derive(Component)]
@@ -223,7 +217,10 @@ mod tests {
     #[test]
     fn test_consume_food_system() {
         let mut world = World::new();
-        world.insert_resource(ColonyResources { food: 1.0 });
+        world.insert_resource(ColonyResources {
+            food: 1.0,
+            ..Default::default()
+        });
 
         world.spawn((
             Pop,
@@ -243,7 +240,10 @@ mod tests {
     #[test]
     fn test_consume_food_restores_hunger() {
         let mut world = World::new();
-        world.insert_resource(ColonyResources { food: 1.0 });
+        world.insert_resource(ColonyResources {
+            food: 1.0,
+            ..Default::default()
+        });
 
         let pop = world
             .spawn((
@@ -264,7 +264,10 @@ mod tests {
     #[test]
     fn test_consume_food_only_when_hungry() {
         let mut world = World::new();
-        world.insert_resource(ColonyResources { food: 1.0 });
+        world.insert_resource(ColonyResources {
+            food: 1.0,
+            ..Default::default()
+        });
 
         world.spawn((
             Pop,
@@ -287,7 +290,10 @@ mod tests {
     #[test]
     fn test_consume_food_stops_when_depleted() {
         let mut world = World::new();
-        world.insert_resource(ColonyResources { food: 0.05 }); // Less than meal cost
+        world.insert_resource(ColonyResources {
+            food: 0.05,
+            ..Default::default()
+        }); // Less than meal cost
 
         world.spawn((
             Pop,
