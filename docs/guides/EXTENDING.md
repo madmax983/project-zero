@@ -41,6 +41,19 @@ pub const fn char(&self) -> char {
 }
 ```
 
+#### String Representation
+Add a case to `as_str()`:
+
+```rust
+pub const fn as_str(&self) -> &'static str {
+    match self {
+        Self::Housing => "⌂",
+        Self::Farm => "♣",
+        Self::Statue => "¥", // <--- Your string
+    }
+}
+```
+
 #### Color
 Add a case to `color()`:
 
@@ -97,5 +110,5 @@ pub fn try_place_building(...) -> bool {
 
 ## Troubleshooting
 
-- **"Variant not covered"**: If you forget to update `char()`, `color()`, or `label()`, the compiler will complain that your match is non-exhaustive. This is good! It reminds you to implement the visuals.
+- **"Variant not covered"**: If you forget to update `char()`, `as_str()`, `color()`, or `label()`, the compiler will complain that your match is non-exhaustive. This is good! It reminds you to implement the visuals.
 - **"Next not updating"**: Ensure `EnumIter` is derived. The `next()` function uses it to automatically find the next variant in the list.
