@@ -605,5 +605,58 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** A power failure plunges the lower levels into darkness. Pops refuse to go down there to fix the generator because "it's too dark", creating a death spiral.
 
 **Tension:** Burn fuel for light (resource cost) or brave the dark (mood/speed penalty)?
+## Social Mimicry
+
+**Layer:** 1
+
+**Fantasy:** Pops are sheep. Trends spread like viruses.
+
+**Mechanic:** If a "High Status" pop (high job tier/social skill) adopts a behavior (e.g., eating a specific luxury food, wearing a specific hat), nearby pops have a chance to copy it, changing their preferences.
+
+**Emergence:** The Governor develops a taste for "Rat-on-a-stick". Suddenly, it becomes the fashionable high-cuisine, causing a luxury food market crash and a rat extinction event.
+
+**Tension:** Do you indulge the elite's expensive tastes knowing the masses will demand the same?
+
+---
+
+## Cometary Injection
+
+**Layer:** 2
+
+**Fantasy:** The system is alive and dynamic; opportunities fly by and you have to catch them.
+
+**Mechanic:** Comets spawn on parabolic trajectories through the system. They contain massive, rare resource deposits but move fast. Mining them requires rapid fleet deployment before they exit the system.
+
+**Emergence:** A "Glitter-Ice Comet" passes during a critical water shortage. You risk your only shuttle (and its crew) to catch it, saving the colony but losing the ship in the process.
+
+**Tension:** High risk/reward. The resource comes to you, but only for a moment.
+
+---
+
+## The Long-Haulers
+
+**Layer:** Cross-layer
+
+**Fantasy:** Your colony is just a stopover for some. Not everyone calls this rock "home".
+
+**Mechanic:** Some pops arrive with the "Traveler" trait. They work hard and gain XP but have a "Departure Date". When a ship arrives near that date, they leave, taking their skills with them.
+
+**Emergence:** You rely on a brilliant Traveler engineer to maintain your unstable fusion core. When their ship finally comes, you have to choose: let them leave and risk a meltdown, or detain them and face a riot.
+
+**Tension:** Invest in temporary workers vs. permanent residents. Brain drain vs. fresh blood.
+
+---
+
+## Stellar Drift
+
+**Layer:** 3
+
+**Fantasy:** The galaxy is in motion. Maps are not static.
+
+**Mechanic:** Over long timescales (decades), star systems drift relative to each other. Hyperlane connections break and new ones form. Distances change, altering trade efficiency and strategic neighbors.
+
+**Emergence:** Your safe backwater colony, protected by distance for fifty years, suddenly drifts within jump-range of a Devouring Swarm. The "Frontier" comes to you.
+
+**Tension:** Long-term static infrastructure vs. adaptable, mobile fleets.
 
 ---
