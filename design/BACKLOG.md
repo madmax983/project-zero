@@ -16,4 +16,3 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 - [ ] `013` Schedule and System Execution Ordering — `specs/013-schedule-system-ordering.md`
 - [ ] `014` Rendering Architecture and Z-Order — `specs/014-rendering-architecture.md`
-- [ ] `015` Selection and Inspection System — `specs/015-selection-system.md`

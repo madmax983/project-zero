@@ -60,6 +60,25 @@ impl TerrainType {
             Self::Water => Color::Blue,
         }
     }
+
+    /// Returns the human-readable name of the terrain type.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use scale::layer1::terrain::TerrainType;
+    ///
+    /// assert_eq!(TerrainType::Grass.name(), "Grass");
+    /// ```
+    #[must_use]
+    pub const fn name(self) -> &'static str {
+        match self {
+            Self::Grass => "Grass",
+            Self::Dirt => "Dirt",
+            Self::Rock => "Rock",
+            Self::Water => "Water",
+        }
+    }
 }
 
 /// A 2D grid representing the game map's terrain layer.
@@ -98,7 +117,7 @@ impl TerrainGrid {
 }
 
 /// Defines the visible area of the map for the player.
-#[derive(Resource, Default)]
+#[derive(Resource, Default, Clone, Copy)]
 pub struct Viewport {
     /// The x-coordinate of the top-left corner of the viewport in grid space.
     pub x: i32,

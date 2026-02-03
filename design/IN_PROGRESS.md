@@ -4,4 +4,4 @@ Tasks currently being implemented. Builders: if a task is here, pick something e
 
 ---
 
-*No tasks currently in progress.*
+- [ ] `015` Selection and Inspection System — `specs/015-selection-system.md` — claimed 2026-02-02

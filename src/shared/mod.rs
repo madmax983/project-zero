@@ -10,3 +10,5 @@ pub mod log;
 pub mod state;
 /// Time-tracking resources.
 pub mod time;
+/// Selection and inspection system.
+pub mod selection;
