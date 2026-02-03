@@ -1,7 +1,8 @@
 use bevy_ecs::prelude::*;
-use crossterm::event::{KeyCode, KeyEvent, KeyEventKind};
+use crossterm::event::{KeyCode, KeyEvent, KeyEventKind, MouseEvent};
 
 use crate::layer1::{BuildMode, ChronicleUiState, GridPosition, Viewport, try_place_building};
+use crate::shared::selection::{Selection, handle_selection_click};
 use crate::shared::state::GameState;
 use crate::shared::time::{SimSpeed, SimulationTime};
 
@@ -83,6 +84,16 @@ impl InputRouter {
             InputContext::Overlay => handle_overlay_mode(world, key),
         }
     }
+
+    /// Route mouse input to the appropriate handler based on current context.
+    pub fn route_mouse(&mut self, world: &mut World, mouse: MouseEvent) {
+        let context = world.resource::<InputContextStack>().current();
+
+        if context == InputContext::Normal {
+            let viewport = *world.resource::<Viewport>();
+            handle_selection_click(world, mouse, &viewport);
+        }
+    }
 }
 
 impl Default for InputRouter {
@@ -93,8 +104,16 @@ impl Default for InputRouter {
 
 fn handle_normal_mode(world: &mut World, key: KeyEvent) {
     match key.code {
-        KeyCode::Char('q') | KeyCode::Esc => {
+        KeyCode::Char('q') => {
             *world.resource_mut::<GameState>() = GameState::Quitting;
+        }
+        KeyCode::Esc => {
+            let mut selection = world.resource_mut::<Selection>();
+            if selection.is_selected() {
+                selection.clear();
+            } else {
+                *world.resource_mut::<GameState>() = GameState::Quitting;
+            }
         }
         KeyCode::Char(' ') => {
             let mut state = world.resource_mut::<GameState>();
@@ -147,7 +166,7 @@ fn handle_normal_mode(world: &mut World, key: KeyEvent) {
                 y: vy + 10,
             };
         }
-        KeyCode::Char('l') | KeyCode::Char('h') | KeyCode::Char('c') => {
+        KeyCode::Char('l' | 'h' | 'c') => {
             // Open chronicle
             world
                 .resource_mut::<InputContextStack>()
@@ -198,7 +217,7 @@ fn handle_build_mode(world: &mut World, key: KeyEvent) {
 
 fn handle_overlay_mode(world: &mut World, key: KeyEvent) {
     match key.code {
-        KeyCode::Esc | KeyCode::Char('l') | KeyCode::Char('h') | KeyCode::Char('c') => {
+        KeyCode::Esc | KeyCode::Char('l' | 'h' | 'c') => {
             world.resource_mut::<InputContextStack>().pop();
             world.resource_mut::<ChronicleUiState>().is_open = false;
         }
@@ -261,6 +280,35 @@ mod tests {
 
         let mut router = InputRouter::new();
         router.route(&mut world, key_event(KeyCode::Char('q')));
+
+        assert_eq!(*world.resource::<GameState>(), GameState::Quitting);
+    }
+
+    #[test]
+    fn test_input_router_normal_mode_esc_clears_selection() {
+        let mut world = World::new();
+        world.insert_resource(GameState::Running);
+        world.insert_resource(InputContextStack::default());
+        let mut selection = Selection::default();
+        selection.select_tile(10, 10);
+        world.insert_resource(selection);
+
+        let mut router = InputRouter::new();
+        router.route(&mut world, key_event(KeyCode::Esc));
+
+        assert!(!world.resource::<Selection>().is_selected());
+        assert_eq!(*world.resource::<GameState>(), GameState::Running);
+    }
+
+    #[test]
+    fn test_input_router_normal_mode_esc_quits_if_no_selection() {
+        let mut world = World::new();
+        world.insert_resource(GameState::Running);
+        world.insert_resource(InputContextStack::default());
+        world.insert_resource(Selection::default()); // No selection
+
+        let mut router = InputRouter::new();
+        router.route(&mut world, key_event(KeyCode::Esc));
 
         assert_eq!(*world.resource::<GameState>(), GameState::Quitting);
     }

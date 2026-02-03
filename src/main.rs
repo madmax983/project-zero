@@ -12,7 +12,7 @@
 
 use bevy_ecs::prelude::*;
 use crossterm::{
-    event::{self, Event},
+    event::{self, Event, EnableMouseCapture, DisableMouseCapture},
     execute,
     terminal::{EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode, enable_raw_mode},
 };
@@ -35,6 +35,7 @@ use scale::layer1::{
     restore_rest_in_housing_system, spawn_initial_pops,
 };
 use scale::shared::input::{InputContextStack, InputRouter};
+use scale::shared::selection::{Selection, SelectionTarget, inspect_entity, inspect_tile};
 use scale::shared::state::GameState;
 use scale::shared::time::{SimSpeed, SimulationTime};
 
@@ -42,7 +43,7 @@ fn main() -> anyhow::Result<()> {
     // Terminal setup
     enable_raw_mode()?;
     let mut stdout = io::stdout();
-    execute!(stdout, EnterAlternateScreen)?;
+    execute!(stdout, EnterAlternateScreen, EnableMouseCapture)?;
     let backend = CrosstermBackend::new(stdout);
     let mut terminal = Terminal::new(backend)?;
 
@@ -51,7 +52,11 @@ fn main() -> anyhow::Result<()> {
 
     // Cleanup
     disable_raw_mode()?;
-    execute!(terminal.backend_mut(), LeaveAlternateScreen)?;
+    execute!(
+        terminal.backend_mut(),
+        LeaveAlternateScreen,
+        DisableMouseCapture
+    )?;
     terminal.show_cursor()?;
 
     result
@@ -72,6 +77,7 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
     world.insert_resource(Chronicle::default());
     world.insert_resource(ChronicleUiState::default());
     world.insert_resource(BuildingTracker::default());
+    world.insert_resource(Selection::default());
 
     spawn_initial_pops(&mut world);
     initial_chronicle_event(&mut world);
@@ -90,8 +96,10 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
         // The nested if structure preserves this ordering and cannot be safely collapsed.
         #[allow(clippy::collapsible_if)]
         if event::poll(Duration::from_millis(10))? {
-            if let Event::Key(key) = event::read()? {
-                input_router.route(&mut world, key);
+            match event::read()? {
+                Event::Key(key) => input_router.route(&mut world, key),
+                Event::Mouse(mouse) => input_router.route_mouse(&mut world, mouse),
+                _ => {}
             }
         }
 
@@ -166,6 +174,28 @@ fn render(world: &World, frame: &mut Frame) {
     render_chronicle(frame, frame.area(), world);
 }
 
+fn centered_rect(percent_x: u16, percent_y: u16, r: Rect) -> Rect {
+    use ratatui::layout::{Constraint, Direction, Layout};
+
+    let popup_layout = Layout::default()
+        .direction(Direction::Vertical)
+        .constraints([
+            Constraint::Percentage((100 - percent_y) / 2),
+            Constraint::Percentage(percent_y),
+            Constraint::Percentage((100 - percent_y) / 2),
+        ])
+        .split(r);
+
+    Layout::default()
+        .direction(Direction::Horizontal)
+        .constraints([
+            Constraint::Percentage((100 - percent_x) / 2),
+            Constraint::Percentage(percent_x),
+            Constraint::Percentage((100 - percent_x) / 2),
+        ])
+        .split(popup_layout[1])[1]
+}
+
 fn render_chronicle(frame: &mut Frame, area: Rect, world: &World) {
     let ui_state = world.resource::<ChronicleUiState>();
     if !ui_state.is_open {
@@ -173,28 +203,6 @@ fn render_chronicle(frame: &mut Frame, area: Rect, world: &World) {
     }
 
     let chronicle = world.resource::<Chronicle>();
-
-    fn centered_rect(percent_x: u16, percent_y: u16, r: Rect) -> Rect {
-        use ratatui::layout::{Constraint, Direction, Layout};
-
-        let popup_layout = Layout::default()
-            .direction(Direction::Vertical)
-            .constraints([
-                Constraint::Percentage((100 - percent_y) / 2),
-                Constraint::Percentage(percent_y),
-                Constraint::Percentage((100 - percent_y) / 2),
-            ])
-            .split(r);
-
-        Layout::default()
-            .direction(Direction::Horizontal)
-            .constraints([
-                Constraint::Percentage((100 - percent_x) / 2),
-                Constraint::Percentage(percent_x),
-                Constraint::Percentage((100 - percent_x) / 2),
-            ])
-            .split(popup_layout[1])[1]
-    }
 
     let block = Block::default()
         .title(" Chronicle (Press L/H to close) ")
@@ -305,36 +313,44 @@ fn render_info_panel(frame: &mut Frame, area: Rect, world: &World) {
     let inner = block.inner(stats_area);
     frame.render_widget(block, stats_area);
 
-    let pop_count = world
-        .iter_entities()
-        .filter(bevy_ecs::world::EntityRef::contains::<Pop>)
-        .count();
+    let selection = world.resource::<Selection>();
+    let text = match selection.target() {
+        SelectionTarget::None => {
+            let pop_count = world
+                .iter_entities()
+                .filter(bevy_ecs::world::EntityRef::contains::<Pop>)
+                .count();
 
-    let (housing_count, housing_capacity, housing_used) = world
-        .iter_entities()
-        .filter_map(|e| e.get::<Housing>())
-        .fold((0, 0, 0), |(count, cap, used), h| {
-            (count + 1, cap + h.capacity, used + h.residents.len())
-        });
+            let (housing_count, housing_capacity, housing_used) = world
+                .iter_entities()
+                .filter_map(|e| e.get::<Housing>())
+                .fold((0, 0, 0), |(count, cap, used), h| {
+                    (count + 1, cap + h.capacity, used + h.residents.len())
+                });
 
-    let (farm_count, farm_capacity, farm_used) = world
-        .iter_entities()
-        .filter_map(|e| e.get::<Farm>())
-        .fold((0, 0, 0), |(count, cap, used), f| {
-            (count + 1, cap + f.capacity, used + f.workers.len())
-        });
+            let (farm_count, farm_capacity, farm_used) = world
+                .iter_entities()
+                .filter_map(|e| e.get::<Farm>())
+                .fold((0, 0, 0), |(count, cap, used), f| {
+                    (count + 1, cap + f.capacity, used + f.workers.len())
+                });
 
-    let resources = world.resource::<ColonyResources>();
+            let resources = world.resource::<ColonyResources>();
 
-    let text = format!(
-        "Population: {pop_count}\n\n\
-         Food: {:.1}\n\n\
-         Housing: {housing_count}\n\
-         Beds: {housing_used}/{housing_capacity}\n\n\
-         Farms: {farm_count}\n\
-         Workers: {farm_used}/{farm_capacity}\n",
-        resources.food
-    );
+            format!(
+                "Population: {pop_count}\n\n\
+                 Food: {:.1}\n\n\
+                 Housing: {housing_count}\n\
+                 Beds: {housing_used}/{housing_capacity}\n\n\
+                 Farms: {farm_count}\n\
+                 Workers: {farm_used}/{farm_capacity}\n",
+                resources.food
+            )
+        }
+        SelectionTarget::Tile(x, y) => inspect_tile(world, x, y),
+        SelectionTarget::Entity(e) => inspect_entity(world, e),
+    };
+
     let paragraph = Paragraph::new(text);
     frame.render_widget(paragraph, inner);
 

@@ -40,7 +40,7 @@ impl Chronicle {
     pub fn add_event(&mut self, tick: u64, text: String, importance: EventImportance) {
         self.events.push(ChronicleEvent {
             tick,
-            year: 1 + (tick / 1000) as u32, // Rough "year" approximation
+            year: 1 + u32::try_from(tick / 1000).unwrap_or(u32::MAX), // Rough "year" approximation
             text,
             importance,
         });
@@ -128,7 +128,7 @@ pub fn check_milestones_system(world: &mut World) {
 
 /// Format the importance prefix for display.
 #[must_use]
-pub fn format_event_prefix(importance: EventImportance) -> &'static str {
+pub const fn format_event_prefix(importance: EventImportance) -> &'static str {
     match importance {
         EventImportance::Legendary => "!!!",
         EventImportance::Major => "!",

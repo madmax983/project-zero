@@ -76,6 +76,10 @@ impl BuildingType {
 
     /// Returns the next building type in the cycle.
     ///
+    /// # Panics
+    ///
+    /// Panics if the `BuildingType` has no variants (which should never happen).
+    ///
     /// # Examples
     ///
     /// ```
@@ -88,7 +92,7 @@ impl BuildingType {
         let mut iter = Self::iter();
         while let Some(current) = iter.next() {
             if &current == self {
-                return iter.next().unwrap_or(Self::iter().next().unwrap());
+                return iter.next().unwrap_or_else(|| Self::iter().next().unwrap());
             }
         }
         Self::default()
