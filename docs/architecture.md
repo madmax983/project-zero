@@ -12,8 +12,6 @@ Container(Main, "Main Entry", "Rust/Crossterm", "Initializes World, runs Game Lo
 
 Container_Boundary(Simulation, "Simulation Core") {
     Component(Layer1, "Layer 1", "Planetary Sim", "Terrain, Pops, Buildings")
-    Component(Layer2, "Layer 2", "System Sim", "Orbits, Logistics")
-    Component(Layer3, "Layer 3", "Interstellar Sim", "Meta-game, Comms")
 }
 
 Container(Shared, "Shared Lib", "Utilities", "GameState, Time, Input, Logs")
@@ -22,12 +20,9 @@ Container(UI, "UI Layer", "Ratatui", "Rendering Logic, Widgets")
 
 Rel(Main, Shared, "Uses")
 Rel(Main, Layer1, "Runs Systems")
-Rel(Main, Layer2, "Runs Systems")
 Rel(Main, UI, "Calls Render")
 
 Rel(Layer1, Shared, "Depends on")
-Rel(Layer2, Shared, "Depends on")
-Rel(Layer3, Shared, "Depends on")
 
 Rel(UI, Shared, "Reads State")
 Rel(UI, Layer1, "Reads Entities")
@@ -66,3 +61,4 @@ sequenceDiagram
 
 - [ADR 001: Layered Architecture](./adr/001-layered-architecture.md)
 - [ADR 002: ECS-TUI Hybrid](./adr/002-ecs-tui-hybrid.md)
+- [ADR 003: YAGNI - Excision of Layers 2 and 3](./adr/003-yagni-excision-of-layers-2-and-3.md)
