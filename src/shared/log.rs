@@ -1,6 +1,21 @@
 use bevy_ecs::prelude::*;
-use ratatui::style::Color;
 use std::collections::VecDeque;
+
+/// abstract color for log messages to decouple from rendering.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum LogColor {
+    /// Default text color.
+    White,
+    /// Alert/Error text color.
+    Red,
+    /// Success/Positive text color.
+    Green,
+    /// Warning text color.
+    Yellow,
+    /// Informational/Blue text color.
+    Blue,
+    // Add others as needed
+}
 
 /// A single message in the log.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -8,7 +23,7 @@ pub struct Message {
     /// The text content of the message.
     pub text: String,
     /// The color of the message.
-    pub color: Color,
+    pub color: LogColor,
 }
 
 /// Resource to store the game message log.
@@ -41,11 +56,11 @@ impl MessageLog {
 
     /// Adds a message to the log with default white color.
     pub fn add(&mut self, text: impl Into<String>) {
-        self.add_colored(text, Color::White);
+        self.add_colored(text, LogColor::White);
     }
 
     /// Adds a colored message to the log.
-    pub fn add_colored(&mut self, text: impl Into<String>, color: Color) {
+    pub fn add_colored(&mut self, text: impl Into<String>, color: LogColor) {
         let message = Message {
             text: text.into(),
             color,
@@ -75,15 +90,15 @@ mod tests {
         log.add("Hello");
         assert_eq!(log.messages.len(), 1);
         assert_eq!(log.messages[0].text, "Hello");
-        assert_eq!(log.messages[0].color, Color::White);
+        assert_eq!(log.messages[0].color, LogColor::White);
     }
 
     #[test]
     fn test_add_colored_message() {
         let mut log = MessageLog::new(5);
-        log.add_colored("Warning", Color::Red);
+        log.add_colored("Warning", LogColor::Red);
         assert_eq!(log.messages[0].text, "Warning");
-        assert_eq!(log.messages[0].color, Color::Red);
+        assert_eq!(log.messages[0].color, LogColor::Red);
     }
 
     #[test]

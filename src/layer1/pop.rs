@@ -14,7 +14,6 @@ use super::needs::Needs;
 use super::terrain::{TerrainGrid, TerrainType};
 use bevy_ecs::prelude::*;
 use rand::Rng;
-use ratatui::style::Color;
 
 /// Marker component for pop entities.
 ///
@@ -107,28 +106,11 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
     }
 }
 
-const HEALTHY_THRESHOLD: f32 = 0.6;
-const WARNING_THRESHOLD: f32 = 0.3;
-
-/// Returns the character and color for rendering a pop.
-#[must_use]
-pub fn pop_display(needs: &Needs) -> (&'static str, Color) {
-    let health = needs.worst();
-    if health > HEALTHY_THRESHOLD {
-        ("☺", Color::Yellow)
-    } else if health > WARNING_THRESHOLD {
-        ("☻", Color::Rgb(255, 165, 0))
-    } else {
-        ("☹", Color::Red)
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
     use crate::layer1::needs::Needs;
     use crate::layer1::terrain::{TerrainGrid, TerrainType, generate_terrain};
-    use ratatui::style::Color;
 
     #[test]
     fn test_pop_component_exists() {
@@ -222,15 +204,6 @@ mod tests {
     }
 
     #[test]
-    fn test_pop_char_and_color() {
-        // Test helper function for rendering pops
-        let needs = Needs::default();
-        let (ch, color) = pop_display(&needs);
-        assert_eq!(ch, "☺");
-        assert_eq!(color, Color::Yellow);
-    }
-
-    #[test]
     fn test_spawn_initial_pops_retries() {
         let mut world = World::new();
         let width = 10;
@@ -244,16 +217,6 @@ mod tests {
             tiles,
         };
         world.insert_resource(terrain);
-
-        // Mock RNG could be used here, but for simplicity we rely on the fact
-        // that with only 1/100 walkable tiles, the random generator WILL fail many times
-        // before succeeding 5 times. This ensures the loop and 'if is_walkable' false path
-        // are exercised.
-        // We use a seeded RNG for determinism if possible, but standard RNG is fine for coverage.
-        // To be safer and deterministic, we can use a SeedableRng if we import it,
-        // but `rand::rngs::StdRng` requires a feature. `rand::rngs::mock::StepRng` isn't available.
-        // We'll just run it. The probability of finding 5 spots in 5 tries on 1/100 map is 10^-10.
-        // So retries are guaranteed.
 
         spawn_initial_pops(&mut world);
 

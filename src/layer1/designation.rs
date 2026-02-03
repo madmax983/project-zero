@@ -12,40 +12,6 @@ pub enum DesignationType {
 }
 
 impl DesignationType {
-    /// Returns the character representation of the designation.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use scale::layer1::designation::DesignationType;
-    ///
-    /// assert_eq!(DesignationType::Mine.char(), '⛏');
-    /// ```
-    #[must_use]
-    pub const fn char(&self) -> char {
-        match self {
-            Self::Mine => '⛏',
-            Self::Demolish => 'X',
-        }
-    }
-
-    /// Returns a string slice representation of the designation.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use scale::layer1::designation::DesignationType;
-    ///
-    /// assert_eq!(DesignationType::Mine.as_str(), "⛏");
-    /// ```
-    #[must_use]
-    pub const fn as_str(&self) -> &'static str {
-        match self {
-            Self::Mine => "⛏",
-            Self::Demolish => "X",
-        }
-    }
-
     /// Returns the human-readable label of the designation.
     ///
     /// # Examples
@@ -183,19 +149,6 @@ mod tests {
         let mine = DesignationType::Mine;
         let demolish = DesignationType::Demolish;
         assert_ne!(mine, demolish);
-    }
-
-    #[test]
-    fn test_designation_type_char() {
-        // Visualization is important for text UI, so we test the mapping exists
-        assert_eq!(DesignationType::Mine.char(), '⛏');
-        assert_eq!(DesignationType::Demolish.char(), 'X');
-    }
-
-    #[test]
-    fn test_designation_type_as_str() {
-        assert_eq!(DesignationType::Mine.as_str(), "⛏");
-        assert_eq!(DesignationType::Demolish.as_str(), "X");
     }
 
     #[test]

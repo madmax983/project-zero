@@ -4,9 +4,8 @@ use super::GridPosition;
 use super::farm::Farm;
 use super::housing::Housing;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
-use crate::shared::log::MessageLog;
+use crate::shared::log::{LogColor, MessageLog};
 use bevy_ecs::prelude::*;
-use ratatui::style::Color;
 use std::collections::HashSet;
 use strum::IntoEnumIterator;
 use strum_macros::EnumIter;
@@ -22,58 +21,6 @@ pub enum BuildingType {
 }
 
 impl BuildingType {
-    /// Returns the character representation of the building.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use scale::layer1::building::BuildingType;
-    ///
-    /// assert_eq!(BuildingType::Housing.char(), '⌂');
-    /// ```
-    #[must_use]
-    pub const fn char(&self) -> char {
-        match self {
-            Self::Housing => '⌂',
-            Self::Farm => '♣',
-        }
-    }
-
-    /// Returns a string slice representation of the building.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use scale::layer1::building::BuildingType;
-    ///
-    /// assert_eq!(BuildingType::Housing.as_str(), "⌂");
-    /// ```
-    #[must_use]
-    pub const fn as_str(&self) -> &'static str {
-        match self {
-            Self::Housing => "⌂",
-            Self::Farm => "♣",
-        }
-    }
-
-    /// Returns the color of the building.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use scale::layer1::building::BuildingType;
-    /// use ratatui::style::Color;
-    ///
-    /// assert_eq!(BuildingType::Housing.color(), Color::Rgb(139, 90, 43));
-    /// ```
-    #[must_use]
-    pub const fn color(&self) -> Color {
-        match self {
-            Self::Housing => Color::Rgb(139, 90, 43), // Brown
-            Self::Farm => Color::Rgb(218, 165, 32),   // Goldenrod
-        }
-    }
-
     /// Returns the human-readable label of the building.
     ///
     /// # Examples
@@ -217,7 +164,7 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
         };
 
         if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
-            log.add_colored(format!("Failed: {reason}"), Color::Red);
+            log.add_colored(format!("Failed: {reason}"), LogColor::Red);
         }
         return false;
     }
@@ -240,7 +187,7 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
     if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
         log.add_colored(
             format!("Construction started: {}", building_type.label()),
-            Color::Green,
+            LogColor::Green,
         );
     }
 
@@ -257,25 +204,6 @@ mod tests {
     fn test_building_type_default() {
         let bt = BuildingType::default();
         assert_eq!(bt, BuildingType::Housing);
-    }
-
-    #[test]
-    fn test_building_type_chars() {
-        assert_eq!(BuildingType::Housing.char(), '⌂');
-        assert_eq!(BuildingType::Farm.char(), '♣');
-    }
-
-    #[test]
-    fn test_building_type_as_str() {
-        assert_eq!(BuildingType::Housing.as_str(), "⌂");
-        assert_eq!(BuildingType::Farm.as_str(), "♣");
-    }
-
-    #[test]
-    fn test_building_type_colors() {
-        use ratatui::style::Color;
-        assert_eq!(BuildingType::Housing.color(), Color::Rgb(139, 90, 43));
-        assert_eq!(BuildingType::Farm.color(), Color::Rgb(218, 165, 32));
     }
 
     #[test]
