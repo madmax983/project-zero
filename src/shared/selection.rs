@@ -290,7 +290,7 @@ mod tests {
         let info = inspect_tile(&world, 5, 5);
 
         assert!(info.contains("Grass"));
-        assert!(info.contains("5"));
+        assert!(info.contains('5'));
     }
 
     #[test]
@@ -332,7 +332,7 @@ mod tests {
     #[test]
     fn test_inspect_entity_nonexistent() {
         let world = World::new();
-        let fake_entity = Entity::from_raw(999999);
+        let fake_entity = Entity::from_raw(999_999);
 
         let info = inspect_entity(&world, fake_entity);
 

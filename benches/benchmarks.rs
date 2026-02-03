@@ -37,12 +37,13 @@ fn benchmark_rendering(c: &mut Criterion) {
                 x: x as i32,
                 y: y as i32,
             },
-            ('P', Color::Yellow),
+            ("P", Color::Yellow),
         );
     }
 
     // Buildings empty for now to isolate pop lookup cost
     let buildings_data = HashMap::new();
+    let designations_data = HashMap::new();
 
     c.bench_function("render_map_layer_1000_pops", |b| {
         b.iter(|| {
@@ -52,7 +53,9 @@ fn benchmark_rendering(c: &mut Criterion) {
                 viewport: black_box(&viewport),
                 pops_data: black_box(&pops_data),
                 buildings_data: black_box(&buildings_data),
+                designations_data: black_box(&designations_data),
                 build_mode: black_box(None),
+                designation_mode: black_box(None),
             };
             build_map_layer_spans(ctx)
         });

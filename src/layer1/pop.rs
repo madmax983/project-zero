@@ -112,14 +112,14 @@ const WARNING_THRESHOLD: f32 = 0.3;
 
 /// Returns the character and color for rendering a pop.
 #[must_use]
-pub fn pop_display(needs: &Needs) -> (char, Color) {
+pub fn pop_display(needs: &Needs) -> (&'static str, Color) {
     let health = needs.worst();
     if health > HEALTHY_THRESHOLD {
-        ('☺', Color::Yellow)
+        ("☺", Color::Yellow)
     } else if health > WARNING_THRESHOLD {
-        ('☻', Color::Rgb(255, 165, 0))
+        ("☻", Color::Rgb(255, 165, 0))
     } else {
-        ('☹', Color::Red)
+        ("☹", Color::Red)
     }
 }
 
@@ -226,7 +226,7 @@ mod tests {
         // Test helper function for rendering pops
         let needs = Needs::default();
         let (ch, color) = pop_display(&needs);
-        assert_eq!(ch, '☺');
+        assert_eq!(ch, "☺");
         assert_eq!(color, Color::Yellow);
     }
 

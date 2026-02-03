@@ -135,7 +135,7 @@ pub struct MapRenderContext<'a, S: BuildHasher> {
     /// The viewport.
     pub viewport: &'a Viewport,
     /// Map of pop positions to their display char and color.
-    pub pops_data: &'a HashMap<GridPosition, (char, Color), S>,
+    pub pops_data: &'a HashMap<GridPosition, (&'static str, Color), S>,
     /// Map of building positions.
     pub buildings_data: &'a HashMap<GridPosition, BuildingType, S>,
     /// Map of designation positions.
@@ -262,11 +262,11 @@ pub fn build_terrain_spans(
 /// Builds a vector of text lines to render the map layer (terrain, pops, buildings, cursor).
 #[must_use]
 pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Vec<Line<'static>> {
-    let mut lines: Vec<Line> = Vec::new();
+    let mut lines: Vec<Line> = Vec::with_capacity(ctx.area.height as usize);
 
     for screen_y in 0..ctx.area.height {
         let world_y = ctx.viewport.y + i32::from(screen_y);
-        let mut line_spans = Vec::new();
+        let mut line_spans = Vec::with_capacity(ctx.area.width as usize);
 
         for screen_x in 0..ctx.area.width {
             let world_x = ctx.viewport.x + i32::from(screen_x);
@@ -277,9 +277,9 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
                 .filter(|(cursor, _, _)| cursor.x == world_x && cursor.y == world_y)
             {
                 let bg = if can_place { Color::Green } else { Color::Red };
-                let ch = selected.char();
+                let text = selected.as_str();
                 line_spans.push(Span::styled(
-                    ch.to_string(),
+                    text,
                     Style::default().fg(Color::White).bg(bg),
                 ));
                 continue;
@@ -291,9 +291,9 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
                 .filter(|(cursor, _, _)| cursor.x == world_x && cursor.y == world_y)
             {
                 let bg = if can_place { Color::Green } else { Color::Red };
-                let ch = selected.char();
+                let text = selected.as_str();
                 line_spans.push(Span::styled(
-                    ch.to_string(),
+                    text,
                     Style::default().fg(Color::White).bg(bg),
                 ));
                 continue;
@@ -306,7 +306,7 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
             }) {
                 let color = Color::Red; // Standardize designation color as red
                 line_spans.push(Span::styled(
-                    designation_type.char().to_string(),
+                    designation_type.as_str(),
                     Style::default().fg(color),
                 ));
                 continue;
@@ -318,18 +318,18 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
                 y: world_y,
             }) {
                 line_spans.push(Span::styled(
-                    building_type.char().to_string(),
+                    building_type.as_str(),
                     Style::default().fg(building_type.color()),
                 ));
                 continue;
             }
 
             // Check for pop
-            if let Some((ch, color)) = ctx.pops_data.get(&GridPosition {
+            if let Some((text, color)) = ctx.pops_data.get(&GridPosition {
                 x: world_x,
                 y: world_y,
             }) {
-                line_spans.push(Span::styled(ch.to_string(), Style::default().fg(*color)));
+                line_spans.push(Span::styled(*text, Style::default().fg(*color)));
                 continue;
             }
 
@@ -555,8 +555,8 @@ mod tests {
         let area = Rect::new(0, 0, 3, 3);
 
         let mut pop_data = HashMap::new();
-        pop_data.insert(GridPosition { x: 1, y: 1 }, ('P', Color::Yellow));
-        pop_data.insert(GridPosition { x: 0, y: 0 }, ('P', Color::Yellow));
+        pop_data.insert(GridPosition { x: 1, y: 1 }, ("P", Color::Yellow));
+        pop_data.insert(GridPosition { x: 0, y: 0 }, ("P", Color::Yellow));
 
         let buildings_data = HashMap::new();
         let designations_data = HashMap::new();
@@ -646,7 +646,7 @@ mod tests {
         let viewport = Viewport { x: -2, y: -2 };
         let area = Rect::new(0, 0, 4, 4);
         let mut pop_data = HashMap::new();
-        pop_data.insert(GridPosition { x: 0, y: 0 }, ('P', Color::Yellow));
+        pop_data.insert(GridPosition { x: 0, y: 0 }, ("P", Color::Yellow));
         let buildings_data = HashMap::new();
         let designations_data = HashMap::new();
 
@@ -732,7 +732,7 @@ mod tests {
 
         let viewport = Viewport { x: 0, y: 0 };
         let mut pop_data = HashMap::new();
-        pop_data.insert(GridPosition { x: 1, y: 1 }, ('P', Color::Yellow));
+        pop_data.insert(GridPosition { x: 1, y: 1 }, ("P", Color::Yellow));
         let buildings_data = HashMap::new();
         let designations_data = HashMap::new();
 
@@ -843,8 +843,8 @@ mod tests {
         let area = Rect::new(0, 0, 2, 2);
 
         let mut pop_data = HashMap::new();
-        pop_data.insert(GridPosition { x: 0, y: 0 }, ('P', Color::Yellow));
-        pop_data.insert(GridPosition { x: 1, y: 1 }, ('P', Color::Yellow));
+        pop_data.insert(GridPosition { x: 0, y: 0 }, ("P", Color::Yellow));
+        pop_data.insert(GridPosition { x: 1, y: 1 }, ("P", Color::Yellow));
         let buildings_data = HashMap::new();
         let designations_data = HashMap::new();
 
@@ -971,7 +971,7 @@ mod tests {
         let area = Rect::new(0, 0, 2, 2);
 
         let mut pop_data = HashMap::new();
-        pop_data.insert(GridPosition { x: 0, y: 0 }, ('P', Color::Yellow));
+        pop_data.insert(GridPosition { x: 0, y: 0 }, ("P", Color::Yellow));
         let buildings_data = HashMap::new();
         let designations_data = HashMap::new();
 
