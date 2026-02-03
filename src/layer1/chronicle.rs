@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::building::{Building, BuildingType};
 use crate::shared::time::SimulationTime;
+use bevy_ecs::prelude::*;
 
 /// Number of ticks per in-game year.
 pub const TICKS_PER_YEAR: u64 = 1000;
@@ -191,8 +191,16 @@ mod tests {
         let mut chronicle = Chronicle::default();
 
         chronicle.add_event(0, "Year 1".to_string(), EventImportance::Standard);
-        chronicle.add_event(TICKS_PER_YEAR, "Year 2".to_string(), EventImportance::Standard);
-        chronicle.add_event(TICKS_PER_YEAR * 5, "Year 6".to_string(), EventImportance::Standard);
+        chronicle.add_event(
+            TICKS_PER_YEAR,
+            "Year 2".to_string(),
+            EventImportance::Standard,
+        );
+        chronicle.add_event(
+            TICKS_PER_YEAR * 5,
+            "Year 6".to_string(),
+            EventImportance::Standard,
+        );
 
         assert_eq!(chronicle.events[0].year, 1);
         assert_eq!(chronicle.events[1].year, 2);
@@ -233,7 +241,9 @@ mod tests {
 
         // Place housing
         world.spawn((
-            Building { building_type: BuildingType::Housing },
+            Building {
+                building_type: BuildingType::Housing,
+            },
             GridPosition { x: 5, y: 5 },
         ));
 
@@ -256,7 +266,9 @@ mod tests {
 
         // Place farm
         world.spawn((
-            Building { building_type: BuildingType::Farm },
+            Building {
+                building_type: BuildingType::Farm,
+            },
             GridPosition { x: 5, y: 5 },
         ));
 
@@ -279,11 +291,15 @@ mod tests {
 
         // Place two farms
         world.spawn((
-            Building { building_type: BuildingType::Farm },
+            Building {
+                building_type: BuildingType::Farm,
+            },
             GridPosition { x: 5, y: 5 },
         ));
         world.spawn((
-            Building { building_type: BuildingType::Farm },
+            Building {
+                building_type: BuildingType::Farm,
+            },
             GridPosition { x: 10, y: 10 },
         ));
 

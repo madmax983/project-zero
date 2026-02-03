@@ -1,6 +1,8 @@
+use crate::layer1::{
+    GridPosition, TerrainGrid, Viewport, building::Building, needs::Needs, pop::Pop,
+};
 use bevy_ecs::prelude::*;
-use crossterm::event::{KeyEvent, KeyCode, MouseEvent, MouseEventKind};
-use crate::layer1::{TerrainGrid, GridPosition, Viewport, needs::Needs, pop::Pop, building::Building};
+use crossterm::event::{KeyCode, KeyEvent, MouseEvent, MouseEventKind};
 use std::fmt::Write;
 
 /// What is currently selected by the player.
@@ -123,10 +125,7 @@ pub const fn screen_to_world(screen_x: u16, screen_y: u16, viewport: &Viewport) 
 }
 
 /// Handle selection input in normal mode.
-pub fn handle_selection_input(
-    world: &mut World,
-    key: KeyEvent,
-) {
+pub fn handle_selection_input(world: &mut World, key: KeyEvent) {
     if key.code == KeyCode::Esc {
         // Clear selection
         world.resource_mut::<Selection>().clear();
@@ -134,11 +133,7 @@ pub fn handle_selection_input(
 }
 
 /// Handle mouse click for selection.
-pub fn handle_selection_click(
-    world: &mut World,
-    mouse: MouseEvent,
-    viewport: &Viewport,
-) {
+pub fn handle_selection_click(world: &mut World, mouse: MouseEvent, viewport: &Viewport) {
     if let MouseEventKind::Down(_button) = mouse.kind {
         let (world_x, world_y) = screen_to_world(mouse.column, mouse.row, viewport);
 
@@ -190,7 +185,7 @@ pub fn handle_selection_click(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::{TerrainGrid, TerrainType, Pop, GridPosition, Needs};
+    use crate::layer1::{GridPosition, Needs, Pop, TerrainGrid, TerrainType};
 
     #[test]
     fn test_selection_default_none() {
@@ -316,11 +311,16 @@ mod tests {
     #[test]
     fn test_inspect_entity_pop() {
         let mut world = World::new();
-        let entity = world.spawn((
-            Pop,
-            GridPosition { x: 10, y: 5 },
-            Needs { hunger: 0.75, rest: 0.50 },
-        )).id();
+        let entity = world
+            .spawn((
+                Pop,
+                GridPosition { x: 10, y: 5 },
+                Needs {
+                    hunger: 0.75,
+                    rest: 0.50,
+                },
+            ))
+            .id();
 
         let info = inspect_entity(&world, entity);
 
@@ -355,6 +355,6 @@ mod tests {
         let (world_x, world_y) = screen_to_world(screen_x, screen_y, &viewport);
 
         assert_eq!(world_x, 13); // 10 + 3
-        assert_eq!(world_y, 7);  // 5 + 2
+        assert_eq!(world_y, 7); // 5 + 2
     }
 }
