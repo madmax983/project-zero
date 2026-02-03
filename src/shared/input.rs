@@ -306,13 +306,23 @@ fn handle_overlay_mode(world: &mut World, key: KeyEvent) {
 mod tests {
     use super::*;
     use crate::layer1::Viewport;
+    use crate::shared::selection::{Selection, SelectionTarget};
     use crate::shared::state::GameState;
     use crate::shared::time::{SimSpeed, SimulationTime};
-    use crossterm::event::{KeyCode, KeyEvent, KeyModifiers};
+    use crossterm::event::{KeyCode, KeyEvent, KeyModifiers, MouseButton, MouseEventKind};
 
     fn key_event(code: KeyCode) -> KeyEvent {
         // KeyEvent::new creates a Press event by default (in crossterm 0.28)
         KeyEvent::new(code, KeyModifiers::empty())
+    }
+
+    fn mouse_event(column: u16, row: u16) -> MouseEvent {
+        MouseEvent {
+            kind: MouseEventKind::Down(MouseButton::Left),
+            column,
+            row,
+            modifiers: KeyModifiers::empty(),
+        }
     }
 
     #[test]
@@ -575,5 +585,53 @@ mod tests {
             world.resource::<DesignationMode>().tool,
             DesignationType::Demolish
         );
+    }
+
+    #[test]
+    fn test_route_mouse_normal_mode_selects() {
+        let mut world = World::new();
+        world.insert_resource(InputContextStack::default()); // Normal
+        world.insert_resource(Viewport::default());
+        world.insert_resource(Selection::default());
+        // Need GridPosition/Entity to select? Or just select tile.
+        // Selecting tile is enough to verify "something happened".
+
+        let mut router = InputRouter::new();
+        router.route_mouse(&mut world, mouse_event(10, 10));
+
+        let selection = world.resource::<Selection>();
+        assert_eq!(selection.target(), SelectionTarget::Tile(10, 10));
+    }
+
+    #[test]
+    fn test_route_mouse_build_mode_ignores_click() {
+        let mut world = World::new();
+        let mut stack = InputContextStack::default();
+        stack.push(InputContext::BuildMode);
+        world.insert_resource(stack);
+        world.insert_resource(Viewport::default());
+        world.insert_resource(Selection::default());
+
+        let mut router = InputRouter::new();
+        router.route_mouse(&mut world, mouse_event(10, 10));
+
+        let selection = world.resource::<Selection>();
+        assert!(!selection.is_selected());
+    }
+
+    #[test]
+    fn test_route_mouse_overlay_ignores_click() {
+        let mut world = World::new();
+        let mut stack = InputContextStack::default();
+        stack.push(InputContext::Overlay);
+        world.insert_resource(stack);
+        world.insert_resource(Viewport::default());
+        world.insert_resource(Selection::default());
+
+        let mut router = InputRouter::new();
+        router.route_mouse(&mut world, mouse_event(10, 10));
+
+        let selection = world.resource::<Selection>();
+        assert!(!selection.is_selected());
     }
 }
