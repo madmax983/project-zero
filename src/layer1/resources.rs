@@ -1,8 +1,39 @@
+//! Resource management and mining mechanics.
+//!
+//! This module defines the colony's economic backbone: `ColonyResources` and the
+//! mechanisms to extract them from the environment (e.g., `mine_rock`).
+//!
+//! # Key Concepts
+//!
+//! * **ColonyResources**: The global stockpile of Food, Wood, and Stone.
+//! * **Mining**: A multi-tick process tracked by `MiningProgress` that converts
+//!   terrain (Rock -> Dirt) and yields resources (Stone).
+//!
+//! # The Mining Loop
+//!
+//! 1. Player designates a tile (see `crate::layer1::designation`).
+//! 2. A pop is assigned the job (see `crate::layer1::pop`).
+//! 3. The pop works on the tile, calling `mine_rock`.
+//! 4. `MiningProgress` accumulates.
+//! 5. Upon completion, the tile changes and resources are awarded.
+
 use bevy_ecs::prelude::*;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::GridPosition;
 
 /// Tracks the resources available to the colony.
+///
+/// This resource serves as the "bank" for the simulation.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::resources::ColonyResources;
+///
+/// let mut resources = ColonyResources::default();
+/// resources.food += 10.0;
+/// assert_eq!(resources.food, 10.0);
+/// ```
 #[derive(Resource, Default, Debug)]
 pub struct ColonyResources {
     /// Total food available in the colony.
@@ -14,12 +45,32 @@ pub struct ColonyResources {
 }
 
 /// Component tracking the progress of a mining designation.
+///
+/// Attached to entities that are being actively mined. The simulation uses this
+/// to persist work across multiple ticks/frames.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::resources::MiningProgress;
+///
+/// let progress = MiningProgress { current: 50.0, max: 100.0 };
+/// assert!(!progress.is_complete());
+/// ```
 #[derive(Component, Debug)]
 pub struct MiningProgress {
     /// Current amount of work done.
     pub current: f32,
     /// Total work required to complete the mining.
     pub max: f32,
+}
+
+impl MiningProgress {
+    /// Returns true if the work is finished.
+    #[must_use]
+    pub fn is_complete(&self) -> bool {
+        self.current >= self.max
+    }
 }
 
 impl Default for MiningProgress {
@@ -29,7 +80,48 @@ impl Default for MiningProgress {
 }
 
 /// Applies work to a mining designation.
-/// If complete, transforms terrain and awards resources.
+///
+/// This function is the core of the mining mechanic. It advances the `MiningProgress`
+/// of a specific designation. If the work completes the task, it:
+/// 1. Despawns the designation.
+/// 2. Changes the terrain from `Rock` to `Dirt`.
+/// 3. Adds `1.0` Stone to `ColonyResources`.
+///
+/// # Parameters
+///
+/// * `world`: Mutable access to the ECS world (needed to modify terrain and resources).
+/// * `designation_entity`: The entity ID of the designation being worked on.
+/// * `work_amount`: How much progress to add (usually based on worker skill/speed).
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::resources::{mine_rock, ColonyResources, MiningProgress};
+/// use scale::layer1::terrain::{TerrainGrid, TerrainType};
+/// use scale::layer1::GridPosition;
+/// use bevy_ecs::prelude::*;
+///
+/// let mut world = World::new();
+///
+/// // 1. Setup World
+/// let mut tiles = vec![TerrainType::Grass; 100];
+/// tiles[0] = TerrainType::Rock; // Target is rock
+/// world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
+/// world.insert_resource(ColonyResources::default());
+///
+/// // 2. Create Designation
+/// let designation = world.spawn((
+///     GridPosition { x: 0, y: 0 },
+///     MiningProgress { current: 0.0, max: 10.0 }
+/// )).id();
+///
+/// // 3. Work until done
+/// mine_rock(&mut world, designation, 10.0);
+///
+/// // 4. Verify Result
+/// let resources = world.resource::<ColonyResources>();
+/// assert_eq!(resources.stone, 1.0);
+/// ```
 #[allow(clippy::cast_sign_loss)]
 pub fn mine_rock(world: &mut World, designation_entity: Entity, work_amount: f32) {
     // 1. Get position and verify terrain
@@ -212,5 +304,14 @@ mod tests {
         // Should just return, no panic
         let progress = world.get::<MiningProgress>(designation).unwrap();
         assert_eq!(progress.current, 0.0);
+    }
+
+    #[test]
+    fn test_mining_progress_is_complete() {
+        let p = MiningProgress { current: 10.0, max: 10.0 };
+        assert!(p.is_complete());
+
+        let p2 = MiningProgress { current: 5.0, max: 10.0 };
+        assert!(!p2.is_complete());
     }
 }

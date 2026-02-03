@@ -1,3 +1,15 @@
+//! User intent and map designations.
+//!
+//! Designations are the primary way the player interacts with the simulation (The Mandate).
+//! Instead of directly manipulating entities, the player "designates" a tile for an action
+//! (e.g., "Mine here"), and the Pop AI (Souls) fulfills that request asynchronously.
+//!
+//! # Key Concepts
+//!
+//! * **Designation**: A persistent request attached to a specific map coordinate.
+//! * **DesignationType**: The kind of request (Mine, Demolish).
+//! * **Validation**: Rules for where designations can be placed (`can_designate`).
+
 use crate::layer1::{GridPosition, OccupiedTiles, TerrainGrid, TerrainType};
 use bevy_ecs::prelude::*;
 
@@ -72,6 +84,8 @@ pub struct Designation {
 }
 
 /// Resource tracking the player's current designation mode state.
+///
+/// This acts as the "Tool Controller" for the UI.
 #[derive(Resource, Default)]
 pub struct DesignationMode {
     /// Whether designation mode is active.
@@ -84,6 +98,8 @@ pub struct DesignationMode {
 
 /// Checks if a designation can be placed at the given coordinates.
 ///
+/// This enforces game rules, such as "You can only mine Rock" or "You can only demolish buildings".
+///
 /// # Examples
 ///
 /// ```
@@ -94,11 +110,14 @@ pub struct DesignationMode {
 ///
 /// let mut world = World::new();
 /// let mut tiles = vec![TerrainType::Grass; 100];
-/// tiles[0] = TerrainType::Rock;
+/// tiles[0] = TerrainType::Rock; // (0,0) is Rock
 /// world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
 /// world.insert_resource(OccupiedTiles::default());
 ///
+/// // Can mine Rock
 /// assert!(can_designate(&world, 0, 0, DesignationType::Mine));
+/// // Cannot mine Grass (implied at 1,1)
+/// assert!(!can_designate(&world, 1, 1, DesignationType::Mine));
 /// ```
 #[must_use]
 #[allow(clippy::cast_sign_loss)]
@@ -139,7 +158,32 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
 }
 
 /// Attempts to apply a designation at the given coordinates.
-/// Returns true if successful.
+///
+/// Wrapper around `can_designate` that spawns the entity if valid.
+///
+/// # Returns
+///
+/// * `true` if the designation was successfully placed.
+/// * `false` if the placement was invalid or a designation already exists.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::designation::{try_designate, DesignationType};
+/// use scale::layer1::terrain::{TerrainGrid, TerrainType};
+/// use scale::layer1::building::OccupiedTiles;
+/// use bevy_ecs::prelude::*;
+///
+/// let mut world = World::new();
+/// // Setup valid condition (Rock)
+/// let mut tiles = vec![TerrainType::Grass; 100];
+/// tiles[55] = TerrainType::Rock; // (5,5)
+/// world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
+/// world.insert_resource(OccupiedTiles::default());
+///
+/// assert!(try_designate(&mut world, 5, 5, DesignationType::Mine));
+/// assert!(!try_designate(&mut world, 5, 5, DesignationType::Mine)); // Duplicate
+/// ```
 pub fn try_designate(world: &mut World, x: i32, y: i32, designation_type: DesignationType) -> bool {
     if !can_designate(world, x, y, designation_type) {
         return false;
@@ -151,7 +195,13 @@ pub fn try_designate(world: &mut World, x: i32, y: i32, designation_type: Design
 }
 
 /// Attempts to remove any designation at the given coordinates.
-/// Returns true if a designation was removed.
+///
+/// Used when the user right-clicks or cancels a designation.
+///
+/// # Returns
+///
+/// * `true` if a designation was found and removed.
+/// * `false` if no designation existed at that location.
 pub fn try_cancel_designation(world: &mut World, x: i32, y: i32) -> bool {
     let mut to_despawn = None;
 

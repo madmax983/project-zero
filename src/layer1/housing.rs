@@ -1,7 +1,32 @@
+//! Housing and population shelter management.
+//!
+//! Housing provides shelter for Pops, allowing them to recover from fatigue (Rest).
+//! Without housing, pops will sleep on the ground (recovering slower and taking penalties).
+//!
+//! # Key Concepts
+//!
+//! * **Housing**: A component on buildings that tracks capacity and residents.
+//! * **Assignment**: Pops are assigned to a specific housing entity.
+//! * **Restoration**: The `restore_rest_in_housing_system` ticks up the rest need of residents.
+
 use crate::layer1::needs::Needs;
 use bevy_ecs::prelude::*;
 
 /// Housing component - provides shelter and rest for pops.
+///
+/// Attached to buildings like Cabins or Dormitories.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::housing::Housing;
+///
+/// let housing = Housing {
+///     capacity: 5,
+///     residents: Vec::new(),
+/// };
+/// assert_eq!(housing.capacity, 5);
+/// ```
 #[derive(Component)]
 pub struct Housing {
     /// Maximum number of residents this housing can hold.
@@ -22,6 +47,36 @@ impl Default for Housing {
 const REST_RESTORE_PER_TICK: f32 = 0.05; // Full rest in ~20 ticks
 
 /// Restores rest for all pops residing in housing.
+///
+/// This system should run every tick. It iterates over all housing entities
+/// and applies rest restoration to their assigned residents.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::housing::{Housing, restore_rest_in_housing_system};
+/// use scale::layer1::needs::Needs;
+/// use scale::layer1::pop::Pop;
+/// use bevy_ecs::prelude::*;
+///
+/// let mut world = World::new();
+///
+/// // Create a tired pop
+/// let pop = world.spawn((Pop, Needs { rest: 0.1, ..Default::default() })).id();
+///
+/// // Assign to housing
+/// world.spawn(Housing {
+///     capacity: 1,
+///     residents: vec![pop],
+/// });
+///
+/// // Run system
+/// restore_rest_in_housing_system(&mut world);
+///
+/// // Check result
+/// let needs = world.get::<Needs>(pop).unwrap();
+/// assert!(needs.rest > 0.1);
+/// ```
 pub fn restore_rest_in_housing_system(world: &mut World) {
     // Collect housing with residents
     let housing_residents: Vec<Vec<Entity>> = world
@@ -41,6 +96,34 @@ pub fn restore_rest_in_housing_system(world: &mut World) {
 }
 
 /// Removes dead residents from housing.
+///
+/// This creates a self-healing relationship between housing and pops.
+/// If a pop dies (despawns), this system ensures the housing slot is freed.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::housing::{Housing, clean_dead_residents_system};
+/// use scale::layer1::pop::Pop;
+/// use bevy_ecs::prelude::*;
+///
+/// let mut world = World::new();
+/// let pop = world.spawn(Pop).id();
+/// let housing = world.spawn(Housing {
+///     capacity: 1,
+///     residents: vec![pop],
+/// }).id();
+///
+/// // Kill pop
+/// world.despawn(pop);
+///
+/// // Cleanup
+/// clean_dead_residents_system(&mut world);
+///
+/// // Verify
+/// let h = world.get::<Housing>(housing).unwrap();
+/// assert!(h.residents.is_empty());
+/// ```
 pub fn clean_dead_residents_system(world: &mut World) {
     // Collect housing entities and their residents first to avoid double borrow
     let housing_data: Vec<(Entity, Vec<Entity>)> = world
