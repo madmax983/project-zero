@@ -542,4 +542,33 @@ Adjectives for fields/farms.
 
 ---
 
+## Mining Fragments
+
+### [MINING_DESCRIPTOR]
+Adjectives for mining/underground work.
+
+- dark
+- deep
+- rich
+- unforgiving
+- hollow
+- echoing
+- dusty
+- broken
+- yielding
+- ancient
+
+### [ROCK_NAME]
+Flavor names for stone/ore.
+
+- bedrock
+- star-metal
+- void-stone
+- bone-earth
+- deep-crust
+- old-iron
+- grey-waste
+
+---
+
 *Add new fragments by type. Keep entries short. Vary tone. Leave room for combination.*
