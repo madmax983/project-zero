@@ -119,8 +119,8 @@ pub fn inspect_entity(world: &World, entity: Entity) -> String {
 /// Convert screen coordinates to world coordinates.
 #[must_use]
 pub const fn screen_to_world(screen_x: u16, screen_y: u16, viewport: &Viewport) -> (i32, i32) {
-    let world_x = viewport.x + screen_x as i32;
-    let world_y = viewport.y + screen_y as i32;
+    let world_x = viewport.x.wrapping_add(screen_x as i32);
+    let world_y = viewport.y.wrapping_add(screen_y as i32);
     (world_x, world_y)
 }
 
@@ -356,5 +356,20 @@ mod tests {
 
         assert_eq!(world_x, 13); // 10 + 3
         assert_eq!(world_y, 7); // 5 + 2
+    }
+
+    #[test]
+    fn test_screen_to_world_overflow() {
+        // Test potential overflow safety
+        let viewport = Viewport { x: i32::MAX, y: i32::MAX };
+        let screen_x = 10;
+        let screen_y = 10;
+
+        // Should not panic
+        let (world_x, world_y) = screen_to_world(screen_x, screen_y, &viewport);
+
+        // Should wrap around
+        assert_eq!(world_x, i32::MAX.wrapping_add(10));
+        assert_eq!(world_y, i32::MAX.wrapping_add(10));
     }
 }

@@ -138,33 +138,45 @@ pub struct BuildMode {
 #[derive(Resource, Default)]
 pub struct OccupiedTiles(pub HashSet<(i32, i32)>);
 
-/// Check if a building can be placed at the given position.
-#[must_use]
-pub fn can_place_building(world: &World, x: i32, y: i32) -> bool {
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum PlacementError {
+    OutOfBounds,
+    Occupied,
+    InvalidTerrain(TerrainType),
+}
+
+fn validate_building_placement(world: &World, x: i32, y: i32) -> Result<(), PlacementError> {
     let terrain = world.resource::<TerrainGrid>();
     let occupied = world.resource::<OccupiedTiles>();
 
     // Check bounds
     if x < 0 || y < 0 {
-        return false;
+        return Err(PlacementError::OutOfBounds);
     }
 
     // Check terrain
     #[allow(clippy::cast_sign_loss)]
-    if let Some(tile) = terrain.get(x as usize, y as usize) {
-        if tile == TerrainType::Water || tile == TerrainType::Rock {
-            return false;
+    let tile = terrain
+        .get(x as usize, y as usize)
+        .ok_or(PlacementError::OutOfBounds)?;
+
+    match tile {
+        TerrainType::Water | TerrainType::Rock => Err(PlacementError::InvalidTerrain(tile)),
+        _ => {
+            // Check occupation
+            if occupied.0.contains(&(x, y)) {
+                Err(PlacementError::Occupied)
+            } else {
+                Ok(())
+            }
         }
-    } else {
-        return false; // Out of bounds
     }
+}
 
-    // Check occupation
-    if occupied.0.contains(&(x, y)) {
-        return false;
-    }
-
-    true
+/// Check if a building can be placed at the given position.
+#[must_use]
+pub fn can_place_building(world: &World, x: i32, y: i32) -> bool {
+    validate_building_placement(world, x, y).is_ok()
 }
 
 /// Attempt to place a building at the given position.
@@ -191,60 +203,47 @@ pub fn can_place_building(world: &World, x: i32, y: i32) -> bool {
 /// assert!(placed);
 /// ```
 pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: BuildingType) -> bool {
-    if !can_place_building(world, x, y) {
-        // Determine reason for failure (re-running checks for feedback)
-        // We do this here to keep `can_place_building` simple and fast for the UI cursor check.
-        let reason = {
-            let terrain = world.resource::<TerrainGrid>();
-            let occupied = world.resource::<OccupiedTiles>();
+    match validate_building_placement(world, x, y) {
+        Ok(()) => {
+            // Spawn building
+            let mut entity = world.spawn((Building { building_type }, GridPosition { x, y }));
 
-            if x < 0 || y < 0 {
-                "Out of bounds"
-            } else if occupied.0.contains(&(x, y)) {
-                "Location occupied"
-            } else if let Some(tile) = {
-                #[allow(clippy::cast_sign_loss)]
-                terrain.get(x as usize, y as usize)
-            } {
-                match tile {
-                    TerrainType::Water => "Cannot build on Water",
-                    TerrainType::Rock => "Cannot build on Rock",
-                    _ => "Cannot build here", // Should not happen if can_place_building returns false but terrain is valid
+            match building_type {
+                BuildingType::Housing => {
+                    entity.insert(Housing::default());
                 }
-            } else {
-                "Out of bounds"
+                BuildingType::Farm => {
+                    entity.insert(Farm::default());
+                }
             }
-        };
 
-        if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
-            log.add_colored(format!("Failed: {reason}"), Color::Red);
+            // Mark tile occupied
+            world.resource_mut::<OccupiedTiles>().0.insert((x, y));
+
+            if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+                log.add_colored(
+                    format!("Construction started: {}", building_type.label()),
+                    Color::Green,
+                );
+            }
+
+            true
         }
-        return false;
-    }
+        Err(e) => {
+            let reason = match e {
+                PlacementError::OutOfBounds => "Out of bounds",
+                PlacementError::Occupied => "Location occupied",
+                PlacementError::InvalidTerrain(TerrainType::Water) => "Cannot build on Water",
+                PlacementError::InvalidTerrain(TerrainType::Rock) => "Cannot build on Rock",
+                PlacementError::InvalidTerrain(_) => "Cannot build here",
+            };
 
-    // Spawn building
-    let mut entity = world.spawn((Building { building_type }, GridPosition { x, y }));
-
-    match building_type {
-        BuildingType::Housing => {
-            entity.insert(Housing::default());
+            if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+                log.add_colored(format!("Failed: {reason}"), Color::Red);
+            }
+            false
         }
-        BuildingType::Farm => {
-            entity.insert(Farm::default());
-        }
     }
-
-    // Mark tile occupied
-    world.resource_mut::<OccupiedTiles>().0.insert((x, y));
-
-    if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
-        log.add_colored(
-            format!("Construction started: {}", building_type.label()),
-            Color::Green,
-        );
-    }
-
-    true
 }
 
 #[cfg(test)]
@@ -508,5 +507,43 @@ mod tests {
 
         let farm_count = world.query::<&Farm>().iter(&world).count();
         assert_eq!(farm_count, 1, "Should have added Farm component");
+    }
+
+    #[test]
+    fn test_place_building_log_messages() {
+        let mut world = World::new();
+        let mut tiles = vec![TerrainType::Grass; 100];
+        tiles[55] = TerrainType::Water; // (5,5)
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
+        world.insert_resource(OccupiedTiles::default());
+        world.insert_resource(MessageLog::default());
+
+        // Test Water failure
+        let success = try_place_building(&mut world, 5, 5, BuildingType::Housing);
+        assert!(!success);
+        let log = world.resource::<MessageLog>();
+        assert_eq!(
+            log.messages.back().unwrap().text,
+            "Failed: Cannot build on Water"
+        );
+
+        // Test OutOfBounds failure
+        let success = try_place_building(&mut world, -1, 5, BuildingType::Housing);
+        assert!(!success);
+        let log = world.resource::<MessageLog>();
+        assert_eq!(log.messages.back().unwrap().text, "Failed: Out of bounds");
+
+        // Test Success
+        let success = try_place_building(&mut world, 0, 0, BuildingType::Housing);
+        assert!(success);
+        let log = world.resource::<MessageLog>();
+        assert_eq!(
+            log.messages.back().unwrap().text,
+            "Construction started: Housing"
+        );
     }
 }

@@ -495,3 +495,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Eradication vs Control vs Symbiosis.
 
 ---
+
+## Stress Breakdowns
+
+**Layer:** 1
+
+**Fantasy:** People aren't robots. Everyone breaks differently under pressure.
+
+**Mechanic:** When Stress > Threshold, pops enter a "Breakdown" state determined by traits (e.g., Pyromania, Catatonia, Binge Eating, Vandalism). They stop working and actively cause problems.
+
+**Emergence:** The colony burns down because the Fire Marshal got stressed and became a pyromaniac. The cook eats the winter stockpile.
+
+**Tension:** Punish the stressed pop (lower mood/justice) or fix the root cause (expensive amenities)?
+
+---
+
+## Entropy & Spoilage
+
+**Layer:** 1
+
+**Fantasy:** Nature reclaims what you harvest. The struggle is to preserve, not just produce.
+
+**Mechanic:** Organic items (Food, Wood) have a "Freshness" ticker. Reaching 0 destroys the item or turns it to "Rot" (disease risk). Preservation methods (freezing, drying, canning) halt or slow decay.
+
+**Emergence:** A bumper crop turns into a plague of rot-flies because you didn't build enough freezers. A power outage thaws the food supply.
+
+**Tension:** Expensive storage infrastructure vs. frequent, inefficient harvesting.
+
+---
+
+## Shift Work
+
+**Layer:** 1
+
+**Fantasy:** The factory never sleeps, but people must.
+
+**Mechanic:** Designate "Shifts" (Day/Night) for buildings. Pops assigned to Night Shift gain "Nocturnal" adaptation over time or suffer mood penalties unless they have specific traits.
+
+**Emergence:** A "Night Crew" subculture forms that never sees the "Day Crew". They communicate only through notes left at workstations. You accidentally segregate your colony by time.
+
+**Tension:** 24/7 productivity (efficiency) vs. social cohesion and mood (stability).
+
+---
+
+## Pop Factions
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** Your people organize against you (or for you). You are governing a society, not just units.
+
+**Mechanic:** Pops with similar grievances or traits form "Factions" (e.g., "The Miners' Guild", "Traditionalists"). Factions make demands. Ignoring them causes strikes, sabotage, or lower efficiency. Appeasing them grants bonuses.
+
+**Emergence:** The "Miners' Guild" demands better food. You refuse. They collapse the mine entrance, cutting off your stone supply.
+
+**Tension:** Appease the powerful faction (stability) or support the weak one (justice/long-term balance)?
+
+---
