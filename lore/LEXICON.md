@@ -134,6 +134,34 @@
 
 ---
 
+## Mining
+
+### the delve / delving
+
+**Replaces:** mining, digging
+**Code reference:** `DesignationType::Mine`
+**Usage:**
+- "The delve goes deep."
+- "12 souls delving in the dark."
+
+### stone / the bones
+
+**Replaces:** rock, stone resource
+**Code reference:** `TerrainType::Rock`
+**Usage:**
+- "We build from the bones of the world."
+- "Stone for the walls."
+
+### ore / vein
+
+**Replaces:** mineral resources
+**Code reference:** Resource items
+**Usage:**
+- "A rich vein found."
+- "Ore for the smelters."
+
+---
+
 ## Time
 
 ### day / days
@@ -201,6 +229,14 @@
 **Usage:** Never directly named in-game. The player IS the Substrate.
 
 **Note:** Ancient computational layer that persists in foldspace. Colonies invoke it for guidance.
+
+### guidance / the mandate
+
+**Replaces:** designations, orders, clicks
+**Code reference:** `Designation` component
+**Usage:**
+- "Awaiting guidance."
+- "The mandate is clear: dig here."
 
 ### relics / remnants
 

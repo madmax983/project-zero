@@ -263,6 +263,26 @@ These fire during gameplay and get appended to the chronicle.
 "[YEAR]. We plant the flag at [LANDING_NAME]."
 ```
 
+### FIRST_MINE
+
+**Slots:** `[COLONY]`, `[YEAR]`, `[MINING_DESCRIPTOR]`
+
+```
+"Year [YEAR]. We break the earth at [COLONY]. The stone is [MINING_DESCRIPTOR]."
+"First quarry established. [YEAR]. We delve [MINING_DESCRIPTOR]."
+"[YEAR]: Mining begins. The [COLONY] foundation deepens."
+```
+
+### RESOURCE_DISCOVERY
+
+**Slots:** `[COLONY]`, `[YEAR]`, `[RESOURCE]`, `[QUANTITY_PHRASE]`
+
+```
+"[COLONY] surveyors find [RESOURCE]. [YEAR]. [QUANTITY_PHRASE]."
+"Year [YEAR]: A vein of [RESOURCE] unearthed. [QUANTITY_PHRASE]."
+"[RESOURCE] discovered at [COLONY]. [YEAR]. [QUANTITY_PHRASE]."
+```
+
 ---
 
 ## Chronicle Entry Structure

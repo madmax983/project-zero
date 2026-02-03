@@ -152,6 +152,14 @@ ARTIFACT_DISCOVERED:
   reveals:
     - [ORIGIN_CIV] history entries (previously hidden)
 
+RESOURCE_DISCOVERY:
+  enables:
+    - INDUSTRIAL_BOOM (high)
+    - GREED (medium)
+    - ACCIDENT (low)
+  increases:
+    - MIGRATION (high, gold rush effect)
+
 FIRST_CONTACT:
   enables:
     - TRADE_ESTABLISHED (if peaceful)
