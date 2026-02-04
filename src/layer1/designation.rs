@@ -21,6 +21,8 @@ pub enum DesignationType {
     Mine,
     /// Designate a building for demolition.
     Demolish,
+    /// Designate a tree for chopping.
+    Chop,
 }
 
 impl DesignationType {
@@ -38,6 +40,7 @@ impl DesignationType {
         match self {
             Self::Mine => '⛏',
             Self::Demolish => 'X',
+            Self::Chop => '🪓',
         }
     }
 
@@ -55,6 +58,7 @@ impl DesignationType {
         match self {
             Self::Mine => "⛏",
             Self::Demolish => "X",
+            Self::Chop => "🪓",
         }
     }
 
@@ -72,6 +76,7 @@ impl DesignationType {
         match self {
             Self::Mine => "Mine",
             Self::Demolish => "Demolish",
+            Self::Chop => "Chop",
         }
     }
 }
@@ -153,6 +158,11 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
             let occupied = world.resource::<OccupiedTiles>();
             // Only occupied tiles can be demolished
             occupied.0.contains(&(x, y))
+        }
+        DesignationType::Chop => {
+            let terrain = world.resource::<TerrainGrid>();
+            // Allow casting because we checked for negative above
+            terrain.get(x as usize, y as usize) == Some(TerrainType::Tree)
         }
     }
 }
@@ -416,5 +426,33 @@ mod tests {
         // Entity should be despawned or component removed
         // Since designation is the main component, entity despawn is cleaner
         assert_eq!(world.entities().len(), 0);
+    }
+
+    #[test]
+    fn test_designation_type_chop() {
+        // Test new variant properties
+        assert_eq!(DesignationType::Chop.char(), '🪓'); // Axe character
+        assert_eq!(DesignationType::Chop.label(), "Chop");
+    }
+
+    #[test]
+    fn test_can_designate_chop_valid() {
+        let mut world = World::new();
+        let mut tiles = vec![TerrainType::Grass; 100];
+        tiles[55] = TerrainType::Tree; // (5, 5)
+        world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
+
+        // Should be able to chop a Tree
+        assert!(can_designate(&world, 5, 5, DesignationType::Chop));
+    }
+
+    #[test]
+    fn test_can_designate_chop_invalid() {
+        let mut world = World::new();
+        let tiles = vec![TerrainType::Grass; 100];
+        world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
+
+        // Cannot chop Grass
+        assert!(!can_designate(&world, 5, 5, DesignationType::Chop));
     }
 }

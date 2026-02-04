@@ -125,6 +125,23 @@ impl Default for MiningProgress {
     }
 }
 
+/// Component tracking the progress of a forestry designation.
+#[derive(Component, Debug, Default)]
+pub struct ForestryProgress {
+    /// Current amount of work done.
+    pub current: f32,
+    /// Total work required to complete the chopping.
+    pub max: f32,
+}
+
+impl ForestryProgress {
+    /// Returns true if the work is finished.
+    #[must_use]
+    pub fn is_complete(&self) -> bool {
+        self.current >= self.max
+    }
+}
+
 /// Applies work to a mining designation.
 ///
 /// This function is the core of the mining mechanic. It advances the `MiningProgress`
@@ -215,6 +232,65 @@ pub fn mine_rock(world: &mut World, designation_entity: Entity, work_amount: f32
         // Add resources
         let mut resources = world.resource_mut::<ColonyResources>();
         resources.add_stone(1.0);
+
+        // Remove designation
+        world.despawn(designation_entity);
+    }
+}
+
+/// Applies work to a forestry designation (chopping a tree).
+///
+/// Similar to `mine_rock`, but for trees.
+///
+/// # Parameters
+///
+/// * `world`: Mutable access to the ECS world.
+/// * `designation_entity`: The entity ID of the designation.
+/// * `work_amount`: How much progress to add.
+#[allow(clippy::cast_sign_loss)]
+pub fn chop_tree(world: &mut World, designation_entity: Entity, work_amount: f32) {
+    // 1. Get position and verify terrain
+    let (pos, is_tree) = {
+        let pos = if let Some(p) = world.get::<GridPosition>(designation_entity) {
+            *p
+        } else {
+            return;
+        };
+
+        if pos.x < 0 || pos.y < 0 {
+            return;
+        }
+
+        let terrain = world.resource::<TerrainGrid>();
+        let is_tree = terrain.get(pos.x as usize, pos.y as usize) == Some(TerrainType::Tree);
+        (pos, is_tree)
+    };
+
+    if !is_tree {
+        return;
+    }
+
+    // 2. Update progress
+    let completed = if let Some(mut progress) = world.get_mut::<ForestryProgress>(designation_entity)
+    {
+        progress.current += work_amount;
+        progress.current >= progress.max
+    } else {
+        false
+    };
+
+    // 3. Handle completion
+    if completed {
+        // Change terrain
+        let mut terrain = world.resource_mut::<TerrainGrid>();
+        let idx = (pos.y as usize) * terrain.width + (pos.x as usize);
+        if idx < terrain.tiles.len() {
+            terrain.tiles[idx] = TerrainType::Dirt;
+        }
+
+        // Add resources
+        let mut resources = world.resource_mut::<ColonyResources>();
+        resources.add_wood(1.0);
 
         // Remove designation
         world.despawn(designation_entity);
@@ -402,5 +478,69 @@ mod tests {
             max: 10.0,
         };
         assert!(!p2.is_complete());
+    }
+
+    #[test]
+    fn test_forestry_progress_component() {
+        let progress = ForestryProgress {
+            current: 0.0,
+            max: 50.0,
+        };
+        assert_eq!(progress.current, 0.0);
+        assert_eq!(progress.max, 50.0);
+    }
+
+    #[test]
+    fn test_chop_tree_increments_progress() {
+        let mut world = World::new();
+        // Setup Tree
+        let mut tiles = vec![TerrainType::Grass; 100];
+        tiles[55] = TerrainType::Tree;
+        world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
+        world.insert_resource(ColonyResources::default());
+
+        // Spawn Designation
+        let designation = world.spawn((
+            Designation { designation_type: DesignationType::Chop },
+            ForestryProgress { current: 0.0, max: 10.0 },
+            GridPosition { x: 5, y: 5 },
+        )).id();
+
+        // Perform work
+        chop_tree(&mut world, designation, 1.0);
+
+        let progress = world.get::<ForestryProgress>(designation).unwrap();
+        assert_eq!(progress.current, 1.0);
+    }
+
+    #[test]
+    fn test_chop_tree_completion() {
+        let mut world = World::new();
+        // Setup Tree
+        let mut tiles = vec![TerrainType::Grass; 100];
+        tiles[55] = TerrainType::Tree;
+        world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
+        world.insert_resource(ColonyResources::default());
+
+        // Spawn Designation
+        let designation = world.spawn((
+            Designation { designation_type: DesignationType::Chop },
+            ForestryProgress { current: 9.0, max: 10.0 },
+            GridPosition { x: 5, y: 5 },
+        )).id();
+
+        // Complete work
+        chop_tree(&mut world, designation, 1.0);
+
+        // 1. Entity should be despawned
+        assert!(world.get_entity(designation).is_err());
+
+        // 2. Terrain should be Dirt (cleared land)
+        let terrain = world.resource::<TerrainGrid>();
+        assert_eq!(terrain.get(5, 5), Some(TerrainType::Dirt));
+
+        // 3. Resources should increase (Wood)
+        let resources = world.resource::<ColonyResources>();
+        assert_eq!(resources.wood, 1.0);
     }
 }
