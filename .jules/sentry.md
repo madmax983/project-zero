@@ -7,3 +7,7 @@
 ## [InputRouter Mouse Scope]
 **Learning:** `InputRouter` had comprehensive keyboard tests but completely lacked mouse interaction tests, leaving the `route_mouse` logic unverified against context switching.
 **Action:** Always verify that routing logic (dispatchers) covers ALL input types (Key, Mouse, etc.) for ALL states (Normal, Build, Overlay).
+
+## [Building on Trees]
+**Learning:** `try_place_building` allows placing buildings on `TerrainType::Tree` without error. The tree terrain type persists underneath the building.
+**Action:** Documented this behavior with `test_build_on_tree`. Future "Clear Land" features must account for this state.

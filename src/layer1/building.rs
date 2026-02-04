@@ -721,4 +721,73 @@ mod tests {
         // Verify no building
         assert!(world.query::<&Building>().iter(&world).count() == 0);
     }
+
+    #[test]
+    fn test_place_housing_adds_housing_component() {
+        let mut world = World::new();
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        });
+        world.insert_resource(OccupiedTiles::default());
+        world.insert_resource(ColonyResources {
+            wood: 100.0,
+            ..Default::default()
+        });
+
+        try_place_building(&mut world, 5, 5, BuildingType::Housing);
+
+        let housing_count = world.query::<&Housing>().iter(&world).count();
+        assert_eq!(housing_count, 1, "Should have added Housing component");
+    }
+
+    #[test]
+    fn test_place_stockpile_adds_stockpile_component() {
+        let mut world = World::new();
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        });
+        world.insert_resource(OccupiedTiles::default());
+        world.insert_resource(ColonyResources {
+            wood: 100.0, // Stockpile needs 50 wood
+            ..Default::default()
+        });
+
+        try_place_building(&mut world, 5, 5, BuildingType::Stockpile);
+
+        let stockpile_count = world.query::<&Stockpile>().iter(&world).count();
+        assert_eq!(stockpile_count, 1, "Should have added Stockpile component");
+    }
+
+    #[test]
+    fn test_build_on_tree() {
+        let mut world = World::new();
+        let mut tiles = vec![TerrainType::Grass; 100];
+        tiles[55] = TerrainType::Tree; // (5, 5)
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
+        world.insert_resource(OccupiedTiles::default());
+        world.insert_resource(ColonyResources {
+            wood: 100.0,
+            ..Default::default()
+        });
+
+        // Building on tree should be allowed
+        let success = try_place_building(&mut world, 5, 5, BuildingType::Housing);
+        assert!(success, "Should be able to build on Tree");
+
+        // Verify terrain is STILL Tree (current behavior)
+        let terrain = world.resource::<TerrainGrid>();
+        assert_eq!(terrain.get(5, 5), Some(TerrainType::Tree));
+
+        // Verify building exists
+        let count = world.query::<&Building>().iter(&world).count();
+        assert_eq!(count, 1);
+    }
 }
