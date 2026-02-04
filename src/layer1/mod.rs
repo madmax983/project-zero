@@ -23,6 +23,8 @@ pub mod resources;
 pub mod stockpile;
 /// Terrain generation and grid management.
 pub mod terrain;
+/// Pop thoughts and personality.
+pub mod thoughts;
 
 pub use building::*;
 pub use chronicle::*;
@@ -34,3 +36,4 @@ pub use pop::*;
 pub use resources::*;
 pub use stockpile::*;
 pub use terrain::*;
+pub use thoughts::*;
