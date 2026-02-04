@@ -731,3 +731,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Build on solid bedrock (far from resources) or soft soil (convenient but risky)?
 
 ---
+
+## Room Zones
+
+**Layer:** 1
+
+**Fantasy:** A bedroom is a sanctuary, not just a bed in a field.
+
+**Mechanic:** Players designate "Zones" (Bedroom, Dining, Hospital) over enclosed areas. Room Value = Size + Furniture Quality + Wall Material. Pops gain mood buffs from high-value rooms.
+
+**Emergence:** Pops get jealous of the Governor's suite. A "Barracks" saves space but causes stress due to lack of privacy.
+
+**Tension:** Build compact, efficient cells (sadness) or sprawling mansions (space/resource cost)?
+
+---
+
+## Dynamic Fire
+
+**Layer:** 1
+
+**Fantasy:** Fire is a primal, uncontrollable force.
+
+**Mechanic:** Flammable materials (Wood, Plants, Coal) have an "Ignition Point." Fire spreads to adjacent flammable tiles based on wind/material. Smoke generates locally, causing suffocation.
+
+**Emergence:** A lightning strike during a dry season turns the forest into a wall of flame moving toward the colony. You frantically demolish your own wooden walls to create a firebreak.
+
+**Tension:** Build quickly with cheap, flammable Wood, or slowly with fireproof Stone?
+
+---
+
+## Eureka Moments
+
+**Layer:** 1 -> 3
+
+**Fantasy:** Invention is a spark of genius, not a progress bar.
+
+**Mechanic:** Working a job has a small chance to trigger a "Breakthrough," unlocking a specific related tech or efficiency bonus (e.g., Mining -> Explosives). Dedicated "Researcher" jobs have higher chances but produce no resources.
+
+**Emergence:** Your colony becomes renowned for Masonry because you started on a rocky world and your miners kept having ideas. The "Tech Tree" reveals itself organically based on what you *do*.
+
+**Tension:** Assign pops to work (production) or think (potential future gain)?
+
+---
+
+## Equipment & Wear
+
+**Layer:** 1
+
+**Fantasy:** You can tell a veteran miner by their battered helmet and worn pickaxe.
+
+**Mechanic:** Pops have equipment slots (Head, Body, Tool). Items (Tunics, Hammers, Spacesuits) provide stats but degrade with use. Broken items apply penalties.
+
+**Emergence:** A shortage of fiber means pops go to work in rags, increasing stress and injury risk. A masterwork pickaxe is passed down through generations.
+
+**Tension:** Spend metal on new tools (efficiency) or building materials (expansion)?
+
+---
