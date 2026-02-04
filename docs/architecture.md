@@ -16,16 +16,24 @@ Container_Boundary(Simulation, "Simulation Core") {
 
 Container(Shared, "Shared Lib", "Utilities", "GameState, Time, Input, Logs")
 
-Container(UI, "UI Layer", "Ratatui", "Rendering Logic, Widgets")
+Container_Boundary(UI, "UI Layer") {
+    Component(MapRender, "Map Module", "map.rs", "Renders Grid & Entities")
+    Component(Inspector, "Inspector Module", "inspector.rs", "Renders Details")
+    Component(Chronicle, "Chronicle Module", "chronicle.rs", "Renders Logs")
+    Component(Status, "Status Module", "status.rs", "Renders Top Bar")
+}
 
 Rel(Main, Shared, "Uses")
 Rel(Main, Layer1, "Runs Systems")
-Rel(Main, UI, "Calls Render")
+Rel(Main, MapRender, "Calls Render")
+Rel(Main, Inspector, "Calls Render")
 
 Rel(Layer1, Shared, "Depends on")
 
-Rel(UI, Shared, "Reads State")
-Rel(UI, Layer1, "Reads Entities")
+Rel(MapRender, Shared, "Reads State")
+Rel(MapRender, Layer1, "Reads Entities")
+Rel(Inspector, Shared, "Reads Selection")
+Rel(Inspector, Layer1, "Reads Components")
 ```
 
 ## The Game Loop
@@ -38,7 +46,7 @@ sequenceDiagram
     participant Main
     participant Input as InputRouter
     participant ECS as Bevy World
-    participant Render as TUI Render
+    participant UI as TUI Layer
 
     loop Every Frame
         User->>Main: Key Press (Event)
@@ -50,10 +58,42 @@ sequenceDiagram
             ECS->>ECS: Systems Update (Produce Food, Move, etc.)
         end
 
-        Main->>Render: render(world, frame)
-        Render->>ECS: Query Entities (Read-Only)
-        ECS-->>Render: Entity Data
-        Render-->>User: Draw to Terminal
+        Main->>UI: render(world, frame)
+
+        rect rgb(30, 30, 30)
+            note right of UI: UI Rendering Phase
+            UI->>ECS: Query Selection
+            UI->>ECS: Query Map/Entities
+            ECS-->>UI: Data
+            UI-->>User: Draw Widgets
+        end
+    end
+```
+
+## UI Inspector Flow
+
+The Inspector pattern allows detailed viewing of entities without coupling the UI to specific entity types.
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Input
+    participant Selection as Selection Resource
+    participant Inspector as UI Inspector
+    participant World as ECS World
+
+    User->>Input: Click / Select Entity
+    Input->>Selection: Update Target (EntityID)
+
+    Note over Inspector, World: Render Phase
+    Inspector->>Selection: Read Target
+    alt Target is Entity
+        Inspector->>World: Get Components (Pop, Needs, Thoughts)
+        World-->>Inspector: Component Data
+        Inspector->>User: Render Detail Panels
+    else Target is Tile
+        Inspector->>World: Get Tile Data
+        Inspector->>User: Render Tile Info
     end
 ```
 
@@ -62,3 +102,4 @@ sequenceDiagram
 - [ADR 001: Layered Architecture](./adr/001-layered-architecture.md)
 - [ADR 002: ECS-TUI Hybrid](./adr/002-ecs-tui-hybrid.md)
 - [ADR 003: YAGNI - Excision of Layers 2 and 3](./adr/003-yagni-excision-of-layers-2-and-3.md)
+- [ADR 004: Modular UI Architecture](./adr/004-modular-ui-architecture.md)
