@@ -10,6 +10,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `021` Utility AI Work Action — `specs/021-utility-ai-work.md`
 - [ ] `011` Named locations — `specs/011-named-locations.md`
 - [ ] `023` Refining Industry — `specs/023-refining-industry.md`
+- [ ] `024` Metal Industry — `specs/024-metal-industry.md`
 
 ## MVP — Architecture Refactoring
 
