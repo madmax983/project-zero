@@ -817,3 +817,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Risk scientists in the field vs. slow passive research.
 
 ---
+
+## Soil Fertility & Depletion
+
+**Layer:** 1
+
+**Fantasy:** Managing the land, not just exploiting it. The fear of a dust bowl.
+
+**Mechanic:** Farm tiles have a `Fertility` float. Harvest reduces it. Low fertility = low yield. Leaving fallow restores it.
+
+**Emergence:** Players are forced to expand farms constantly or rotate crops, creating sprawling agricultural zones rather than one "magic patch".
+
+**Tension:** Intense farming (starvation prevention) vs Sustainable farming.
+
+---
+
+## Colony Edicts
+
+**Layer:** Cross-layer
+
+**Fantasy:** The burden of command. Signing a paper that saves the colony but makes everyone hate you.
+
+**Mechanic:** Menu of global toggles. "Double Rations" (Mood+, Food drain++). "Martial Law" (No unrest, Liberty--). "Night Shifts".
+
+**Emergence:** Players toggling "Emergency Rations" during winter and forgetting to turn it off, leading to a surplus but a revolt.
+
+**Tension:** Efficiency vs Morale.
+
+---
+
+## Hauling Logistics
+
+**Layer:** 1
+
+**Fantasy:** The anthill. Watching items flow through the veins of the city.
+
+**Mechanic:** Resources produced on the ground (Wood logs) are not usable until carried to a Stockpile. Builders take from Stockpile.
+
+**Emergence:** Bottlenecks. A massive harvest rots in the field because you lack haulers.
+
+**Tension:** Assign pops to skilled labor (Mining) or unskilled grunt work (Hauling)?
+
+---
