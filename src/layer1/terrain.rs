@@ -1,6 +1,7 @@
-use super::building::BuildingType;
-use super::designation::DesignationType;
-use super::pop::GridPosition;
+use super::building::{Building, BuildingType};
+use super::designation::{Designation, DesignationType};
+use super::needs::Needs;
+use super::pop::{GridPosition, pop_display};
 use bevy_ecs::prelude::*;
 use rand::Rng;
 use ratatui::{prelude::*, widgets::Paragraph};
@@ -129,6 +130,47 @@ pub struct Viewport {
     pub x: i32,
     /// The y-coordinate of the top-left corner of the viewport in grid space.
     pub y: i32,
+}
+
+/// Cache for renderable entities to avoid repeated allocations and iterations.
+#[derive(Resource, Default)]
+pub struct RenderCache {
+    /// Cached pop display data.
+    pub pops: HashMap<GridPosition, (&'static str, Color)>,
+    /// Cached building data.
+    pub buildings: HashMap<GridPosition, BuildingType>,
+    /// Cached designation data.
+    pub designations: HashMap<GridPosition, DesignationType>,
+}
+
+/// Updates the `RenderCache` by iterating the world once.
+pub fn update_render_cache(world: &mut World) {
+    let mut cache = world.remove_resource::<RenderCache>().unwrap_or_default();
+
+    cache.pops.clear();
+    cache.buildings.clear();
+    cache.designations.clear();
+
+    for e in world.iter_entities() {
+        if let Some(pos) = e.get::<GridPosition>() {
+            // Check for Pop (via Needs)
+            if let Some(needs) = e.get::<Needs>() {
+                cache.pops.insert(*pos, pop_display(needs));
+            }
+
+            // Check for Building
+            if let Some(building) = e.get::<Building>() {
+                cache.buildings.insert(*pos, building.building_type);
+            }
+
+            // Check for Designation
+            if let Some(designation) = e.get::<Designation>() {
+                cache.designations.insert(*pos, designation.designation_type);
+            }
+        }
+    }
+
+    world.insert_resource(cache);
 }
 
 /// Context for rendering the map layer.
@@ -1028,5 +1070,64 @@ mod tests {
         assert_eq!(TerrainType::Tree.as_str(), "↑");
         assert_eq!(TerrainType::Tree.color(), Color::Rgb(0, 100, 0));
         assert_eq!(TerrainType::Tree.name(), "Tree");
+    }
+
+    #[test]
+    fn test_render_cache_updates() {
+        use crate::layer1::pop::Pop;
+
+        let mut world = World::new();
+        world.insert_resource(RenderCache::default());
+
+        // Spawn a pop
+        world.spawn((
+            Pop,
+            GridPosition { x: 1, y: 1 },
+            Needs::default(),
+        ));
+
+        // Spawn a building
+        world.spawn((
+            Building {
+                building_type: BuildingType::Housing,
+            },
+            GridPosition { x: 2, y: 2 },
+        ));
+
+        // Spawn a designation
+        world.spawn((
+            Designation { designation_type: DesignationType::Mine },
+            GridPosition { x: 3, y: 3 },
+        ));
+
+        update_render_cache(&mut world);
+
+        let cache = world.resource::<RenderCache>();
+        assert!(cache.pops.contains_key(&GridPosition { x: 1, y: 1 }));
+        assert!(cache.buildings.contains_key(&GridPosition { x: 2, y: 2 }));
+        assert!(cache.designations.contains_key(&GridPosition { x: 3, y: 3 }));
+        assert_eq!(cache.pops.len(), 1);
+        assert_eq!(cache.buildings.len(), 1);
+        assert_eq!(cache.designations.len(), 1);
+    }
+
+    #[test]
+    fn test_render_cache_clears_old_data() {
+        use crate::layer1::pop::Pop;
+
+        let mut world = World::new();
+        world.insert_resource(RenderCache::default());
+
+        let entity = world
+            .spawn((Pop, GridPosition { x: 1, y: 1 }, Needs::default()))
+            .id();
+
+        update_render_cache(&mut world);
+        assert_eq!(world.resource::<RenderCache>().pops.len(), 1);
+
+        // Despawn and update
+        world.despawn(entity);
+        update_render_cache(&mut world);
+        assert_eq!(world.resource::<RenderCache>().pops.len(), 0);
     }
 }

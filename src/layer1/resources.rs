@@ -300,7 +300,6 @@ pub fn chop_tree(world: &mut World, designation_entity: Entity, work_amount: f32
 #[cfg(test)]
 #[allow(clippy::float_cmp)]
 mod tests {
-    #![allow(clippy::float_cmp)]
     use super::*;
     use crate::layer1::GridPosition;
     use crate::layer1::designation::{Designation, DesignationType};
