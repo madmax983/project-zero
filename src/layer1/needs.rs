@@ -32,6 +32,15 @@ impl Needs {
     }
 }
 
+/// Threshold above which a pop is considered healthy (happy).
+pub const HEALTHY_THRESHOLD: f32 = 0.6;
+/// Threshold below which a pop is considered in warning state.
+pub const WARNING_THRESHOLD: f32 = 0.3;
+
+/// Component marker for entities that have already triggered a starvation warning.
+#[derive(Component)]
+pub struct StarvationWarned;
+
 const HUNGER_DECAY_PER_TICK: f32 = 0.001; // ~800 ticks to starve from full
 const REST_DECAY_PER_TICK: f32 = 0.001; // ~800 ticks to exhaust
 
@@ -59,6 +68,44 @@ pub fn kill_starving_entities_system(world: &mut World) {
         if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
             log.add_colored("A colonist has starved to death!", Color::Red);
         }
+    }
+}
+
+/// Checks for starving pops and logs a warning.
+pub fn check_starvation_warning_system(world: &mut World) {
+    // 1. Warn new starving pops
+    let mut to_warn = Vec::new();
+    for (entity, needs) in world
+        .query_filtered::<(Entity, &Needs), Without<StarvationWarned>>()
+        .iter(world)
+    {
+        if needs.hunger < WARNING_THRESHOLD && needs.hunger > 0.0 {
+            to_warn.push(entity);
+        }
+    }
+
+    if !to_warn.is_empty() {
+        if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+            log.add_colored("Warning: A colonist is starving!", Color::Rgb(255, 165, 0));
+        }
+        for entity in to_warn {
+            world.entity_mut(entity).insert(StarvationWarned);
+        }
+    }
+
+    // 2. Reset warning for recovered pops
+    let mut to_reset = Vec::new();
+    for (entity, needs) in world
+        .query_filtered::<(Entity, &Needs), With<StarvationWarned>>()
+        .iter(world)
+    {
+        if needs.hunger >= WARNING_THRESHOLD {
+            to_reset.push(entity);
+        }
+    }
+
+    for entity in to_reset {
+        world.entity_mut(entity).remove::<StarvationWarned>();
     }
 }
 
@@ -264,5 +311,77 @@ mod tests {
             "Pop should die within ~800 ticks from full (0.8)"
         );
         assert!(ticks > 750, "Pop should survive at least 750 ticks");
+    }
+
+    #[test]
+    fn test_check_starvation_warning_warns() {
+        let mut world = World::new();
+        // Hunger 0.2 < WARNING_THRESHOLD (0.3)
+        let entity = world.spawn((
+            Pop,
+            Needs {
+                hunger: 0.2,
+                rest: 0.8,
+            },
+        )).id();
+        world.insert_resource(MessageLog::default());
+
+        check_starvation_warning_system(&mut world);
+
+        // Should have StarvationWarned
+        assert!(world.get::<StarvationWarned>(entity).is_some());
+
+        // Should have logged
+        let log = world.resource::<MessageLog>();
+        assert_eq!(
+            log.messages.back().unwrap().text,
+            "Warning: A colonist is starving!"
+        );
+    }
+
+    #[test]
+    fn test_check_starvation_warning_no_spam() {
+        let mut world = World::new();
+        let entity = world
+            .spawn((
+                Pop,
+                Needs {
+                    hunger: 0.2,
+                    rest: 0.8,
+                },
+                StarvationWarned, // Already warned
+            ))
+            .id();
+        world.insert_resource(MessageLog::default());
+
+        check_starvation_warning_system(&mut world);
+
+        // Should still have StarvationWarned
+        assert!(world.get::<StarvationWarned>(entity).is_some());
+
+        // Should NOT have logged
+        let log = world.resource::<MessageLog>();
+        assert!(log.messages.is_empty());
+    }
+
+    #[test]
+    fn test_check_starvation_warning_reset() {
+        let mut world = World::new();
+        // Hunger 0.4 > WARNING_THRESHOLD (0.3)
+        let entity = world
+            .spawn((
+                Pop,
+                Needs {
+                    hunger: 0.4,
+                    rest: 0.8,
+                },
+                StarvationWarned, // Was previously starving
+            ))
+            .id();
+
+        check_starvation_warning_system(&mut world);
+
+        // Should remove StarvationWarned
+        assert!(world.get::<StarvationWarned>(entity).is_none());
     }
 }

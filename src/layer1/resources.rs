@@ -30,8 +30,13 @@ use bevy_ecs::prelude::*;
 /// ```
 /// use scale::layer1::resources::ColonyResources;
 ///
-/// let mut resources = ColonyResources::default();
-/// resources.food += 10.0;
+/// let mut resources = ColonyResources {
+///     food: 0.0,
+///     wood: 0.0,
+///     stone: 0.0,
+///     ..Default::default()
+/// };
+/// resources.add_food(10.0);
 /// assert_eq!(resources.food, 10.0);
 /// ```
 #[derive(Resource, Debug)]
@@ -50,12 +55,27 @@ pub struct ColonyResources {
     pub max_stone: f32,
 }
 
-impl Default for ColonyResources {
-    fn default() -> Self {
+impl ColonyResources {
+    /// Returns a resource struct with all values set to zero.
+    /// Useful for defining costs.
+    pub fn zero() -> Self {
         Self {
             food: 0.0,
             wood: 0.0,
             stone: 0.0,
+            max_food: 0.0,
+            max_wood: 0.0,
+            max_stone: 0.0,
+        }
+    }
+}
+
+impl Default for ColonyResources {
+    fn default() -> Self {
+        Self {
+            food: 50.0,
+            wood: 50.0,
+            stone: 20.0,
             max_food: 50.0,
             max_wood: 50.0,
             max_stone: 20.0,
@@ -195,7 +215,12 @@ impl ForestryProgress {
 /// let mut tiles = vec![TerrainType::Grass; 100];
 /// tiles[0] = TerrainType::Rock; // Target is rock
 /// world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
-/// world.insert_resource(ColonyResources::default());
+/// world.insert_resource(ColonyResources {
+///     food: 0.0,
+///     wood: 0.0,
+///     stone: 0.0,
+///     ..Default::default()
+/// });
 ///
 /// // 2. Create Designation
 /// let designation = world.spawn((
@@ -334,9 +359,9 @@ mod tests {
     fn test_colony_resources_fields() {
         let resources = ColonyResources::default();
         // Check for new fields
-        assert!((resources.food - 0.0).abs() < f32::EPSILON);
-        assert!((resources.wood - 0.0).abs() < f32::EPSILON);
-        assert!((resources.stone - 0.0).abs() < f32::EPSILON);
+        assert!((resources.food - 50.0).abs() < f32::EPSILON);
+        assert!((resources.wood - 50.0).abs() < f32::EPSILON);
+        assert!((resources.stone - 20.0).abs() < f32::EPSILON);
     }
 
     #[test]
@@ -396,7 +421,12 @@ mod tests {
             height: 10,
             tiles,
         });
-        world.insert_resource(ColonyResources::default());
+        world.insert_resource(ColonyResources {
+            food: 0.0,
+            wood: 0.0,
+            stone: 0.0,
+            ..Default::default()
+        });
 
         // Spawn Designation
         let designation = world
@@ -525,7 +555,12 @@ mod tests {
             height: 10,
             tiles,
         });
-        world.insert_resource(ColonyResources::default());
+        world.insert_resource(ColonyResources {
+            food: 0.0,
+            wood: 0.0,
+            stone: 0.0,
+            ..Default::default()
+        });
 
         // Spawn Designation
         let designation = world
@@ -559,7 +594,12 @@ mod tests {
             height: 10,
             tiles,
         });
-        world.insert_resource(ColonyResources::default());
+        world.insert_resource(ColonyResources {
+            food: 0.0,
+            wood: 0.0,
+            stone: 0.0,
+            ..Default::default()
+        });
 
         // Spawn Designation
         let designation = world

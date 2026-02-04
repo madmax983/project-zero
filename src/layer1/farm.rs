@@ -151,7 +151,7 @@ mod tests {
     #[test]
     fn test_colony_resources_default() {
         let resources = ColonyResources::default();
-        assert!(resources.food.abs() < f32::EPSILON);
+        assert!((resources.food - 50.0).abs() < f32::EPSILON);
     }
 
     #[test]

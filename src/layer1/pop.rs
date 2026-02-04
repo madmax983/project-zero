@@ -10,7 +10,7 @@
 //! * **GridPosition**: A discrete 2D coordinate on the map.
 //! * **Spawning**: The process of placing pops on valid terrain.
 
-use super::needs::Needs;
+use super::needs::{HEALTHY_THRESHOLD, Needs, WARNING_THRESHOLD};
 use super::terrain::{TerrainGrid, TerrainType};
 use bevy_ecs::prelude::*;
 use rand::Rng;
@@ -106,9 +106,6 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
         }
     }
 }
-
-const HEALTHY_THRESHOLD: f32 = 0.6;
-const WARNING_THRESHOLD: f32 = 0.3;
 
 /// Returns the character and color for rendering a pop.
 #[must_use]
