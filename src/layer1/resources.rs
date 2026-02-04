@@ -17,9 +17,9 @@
 //! 4. `MiningProgress` accumulates.
 //! 5. Upon completion, the tile changes and resources are awarded.
 
-use bevy_ecs::prelude::*;
-use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::GridPosition;
+use crate::layer1::terrain::{TerrainGrid, TerrainType};
+use bevy_ecs::prelude::*;
 
 /// Tracks the resources available to the colony.
 ///
@@ -34,7 +34,7 @@ use crate::layer1::GridPosition;
 /// resources.food += 10.0;
 /// assert_eq!(resources.food, 10.0);
 /// ```
-#[derive(Resource, Default, Debug)]
+#[derive(Resource, Debug)]
 pub struct ColonyResources {
     /// Total food available in the colony.
     pub food: f32,
@@ -42,6 +42,42 @@ pub struct ColonyResources {
     pub wood: f32,
     /// Total stone available in the colony.
     pub stone: f32,
+    /// Maximum food capacity.
+    pub max_food: f32,
+    /// Maximum wood capacity.
+    pub max_wood: f32,
+    /// Maximum stone capacity.
+    pub max_stone: f32,
+}
+
+impl Default for ColonyResources {
+    fn default() -> Self {
+        Self {
+            food: 0.0,
+            wood: 0.0,
+            stone: 0.0,
+            max_food: 50.0,
+            max_wood: 50.0,
+            max_stone: 20.0,
+        }
+    }
+}
+
+impl ColonyResources {
+    /// Adds wood, clamping to the maximum capacity.
+    pub fn add_wood(&mut self, amount: f32) {
+        self.wood = (self.wood + amount).min(self.max_wood);
+    }
+
+    /// Adds stone, clamping to the maximum capacity.
+    pub fn add_stone(&mut self, amount: f32) {
+        self.stone = (self.stone + amount).min(self.max_stone);
+    }
+
+    /// Adds food, clamping to the maximum capacity.
+    pub fn add_food(&mut self, amount: f32) {
+        self.food = (self.food + amount).min(self.max_food);
+    }
 }
 
 /// Component tracking the progress of a mining designation.
@@ -64,6 +100,13 @@ pub struct MiningProgress {
     /// Total work required to complete the mining.
     pub max: f32,
 }
+
+/// Base maximum food capacity.
+pub const BASE_MAX_FOOD: f32 = 50.0;
+/// Base maximum wood capacity.
+pub const BASE_MAX_WOOD: f32 = 50.0;
+/// Base maximum stone capacity.
+pub const BASE_MAX_STONE: f32 = 20.0;
 
 impl MiningProgress {
     /// Returns true if the work is finished.
@@ -171,7 +214,7 @@ pub fn mine_rock(world: &mut World, designation_entity: Entity, work_amount: f32
 
         // Add resources
         let mut resources = world.resource_mut::<ColonyResources>();
-        resources.stone += 1.0;
+        resources.add_stone(1.0);
 
         // Remove designation
         world.despawn(designation_entity);
@@ -348,10 +391,16 @@ mod tests {
 
     #[test]
     fn test_mining_progress_is_complete() {
-        let p = MiningProgress { current: 10.0, max: 10.0 };
+        let p = MiningProgress {
+            current: 10.0,
+            max: 10.0,
+        };
         assert!(p.is_complete());
 
-        let p2 = MiningProgress { current: 5.0, max: 10.0 };
+        let p2 = MiningProgress {
+            current: 5.0,
+            max: 10.0,
+        };
         assert!(!p2.is_complete());
     }
 }

@@ -1,0 +1,143 @@
+use crate::layer1::resources::{BASE_MAX_FOOD, BASE_MAX_STONE, BASE_MAX_WOOD, ColonyResources};
+use bevy_ecs::prelude::*;
+
+/// Component that increases the maximum resource capacity of the colony.
+#[derive(Component)]
+pub struct Stockpile {
+    /// Bonus to max food capacity.
+    pub food_bonus: f32,
+    /// Bonus to max wood capacity.
+    pub wood_bonus: f32,
+    /// Bonus to max stone capacity.
+    pub stone_bonus: f32,
+}
+
+impl Default for Stockpile {
+    fn default() -> Self {
+        Self {
+            food_bonus: 0.0,
+            wood_bonus: 100.0,
+            stone_bonus: 100.0,
+        }
+    }
+}
+
+/// System that calculates and updates the colony's resource caps based on existing stockpiles.
+pub fn update_resource_caps_system(world: &mut World) {
+    let mut total_food_bonus = 0.0;
+    let mut total_wood_bonus = 0.0;
+    let mut total_stone_bonus = 0.0;
+
+    // Query all stockpiles
+    let mut query = world.query::<&Stockpile>();
+    for stockpile in query.iter(world) {
+        total_food_bonus += stockpile.food_bonus;
+        total_wood_bonus += stockpile.wood_bonus;
+        total_stone_bonus += stockpile.stone_bonus;
+    }
+
+    // Update resources
+    let mut resources = world.resource_mut::<ColonyResources>();
+    resources.max_food = BASE_MAX_FOOD + total_food_bonus;
+    resources.max_wood = BASE_MAX_WOOD + total_wood_bonus;
+    resources.max_stone = BASE_MAX_STONE + total_stone_bonus;
+
+    // Clamp current resources to new max (if caps reduced)
+    resources.food = resources.food.min(resources.max_food);
+    resources.wood = resources.wood.min(resources.max_wood);
+    resources.stone = resources.stone.min(resources.max_stone);
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::layer1::building::{Building, BuildingType};
+    use crate::layer1::resources::ColonyResources;
+    use crate::layer1::stockpile::{Stockpile, update_resource_caps_system};
+    use bevy_ecs::prelude::*;
+
+    #[test]
+    fn test_colony_resources_caps_default() {
+        let resources = ColonyResources::default();
+        // Default small capacity for survival
+        assert_eq!(resources.max_food, 50.0);
+        assert_eq!(resources.max_wood, 50.0);
+        assert_eq!(resources.max_stone, 20.0);
+    }
+
+    #[test]
+    fn test_add_resource_clamped_to_max() {
+        let mut resources = ColonyResources {
+            wood: 40.0,
+            max_wood: 50.0,
+            ..Default::default()
+        };
+
+        // Add 20, should cap at 50
+        resources.add_wood(20.0);
+        assert_eq!(resources.wood, 50.0);
+    }
+
+    #[test]
+    fn test_add_resource_no_overflow() {
+        let mut resources = ColonyResources {
+            stone: 20.0,
+            max_stone: 20.0,
+            ..Default::default()
+        };
+
+        resources.add_stone(10.0);
+        assert_eq!(resources.stone, 20.0);
+    }
+
+    #[test]
+    fn test_stockpile_component_defaults() {
+        let stockpile = Stockpile::default();
+        assert_eq!(stockpile.food_bonus, 0.0);
+        assert_eq!(stockpile.wood_bonus, 100.0);
+        assert_eq!(stockpile.stone_bonus, 100.0);
+    }
+
+    #[test]
+    fn test_update_resource_caps_system() {
+        let mut world = World::new();
+        world.insert_resource(ColonyResources::default());
+
+        // Spawn 2 Stockpiles
+        world.spawn((
+            Building {
+                building_type: BuildingType::Stockpile,
+            },
+            Stockpile {
+                food_bonus: 0.0,
+                wood_bonus: 100.0,
+                stone_bonus: 50.0,
+            },
+        ));
+        world.spawn((
+            Building {
+                building_type: BuildingType::Stockpile,
+            },
+            Stockpile {
+                food_bonus: 0.0,
+                wood_bonus: 100.0,
+                stone_bonus: 50.0,
+            },
+        ));
+
+        // Run system
+        update_resource_caps_system(&mut world);
+
+        let resources = world.resource::<ColonyResources>();
+
+        // Base (50) + 2 * 100 = 250
+        assert_eq!(resources.max_wood, 250.0);
+        // Base (20) + 2 * 50 = 120
+        assert_eq!(resources.max_stone, 120.0);
+    }
+
+    #[test]
+    fn test_building_type_stockpile_exists() {
+        let bt = BuildingType::Stockpile;
+        assert_eq!(bt.label(), "Stockpile");
+    }
+}
