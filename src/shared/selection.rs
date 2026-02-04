@@ -361,7 +361,10 @@ mod tests {
     #[test]
     fn test_screen_to_world_overflow() {
         // Test potential overflow safety
-        let viewport = Viewport { x: i32::MAX, y: i32::MAX };
+        let viewport = Viewport {
+            x: i32::MAX,
+            y: i32::MAX,
+        };
         let screen_x = 10;
         let screen_y = 10;
 

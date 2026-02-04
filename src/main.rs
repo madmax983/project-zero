@@ -33,6 +33,7 @@ use scale::layer1::{
     clean_dead_workers_system, consume_food_system, decay_needs_system, format_event_prefix,
     generate_terrain, initial_chronicle_event, kill_starving_entities_system, pop_display,
     produce_food_system, render_map_layer, restore_rest_in_housing_system, spawn_initial_pops,
+    update_resource_caps_system,
 };
 use scale::shared::input::{InputContextStack, InputRouter};
 use scale::shared::selection::{Selection, SelectionTarget, inspect_entity, inspect_tile};
@@ -117,6 +118,7 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
             if *world.resource::<GameState>() == GameState::Running {
                 let speed = world.resource::<SimulationTime>().speed;
                 if speed != SimSpeed::Paused {
+                    update_resource_caps_system(&mut world);
                     produce_food_system(&mut world);
                     restore_rest_in_housing_system(&mut world);
                     consume_food_system(&mut world);
@@ -216,7 +218,11 @@ fn render_chronicle(frame: &mut Frame, area: Rect, world: &World) {
 
     // Table Header
     let header = Row::new(vec!["Time", "Imp", "Event"])
-        .style(Style::default().add_modifier(Modifier::BOLD).fg(Color::Cyan))
+        .style(
+            Style::default()
+                .add_modifier(Modifier::BOLD)
+                .fg(Color::Cyan),
+        )
         .bottom_margin(1);
 
     // Table Rows
@@ -390,12 +396,19 @@ fn render_info_panel(frame: &mut Frame, area: Rect, world: &World) {
 
             format!(
                 "Population: {pop_count}\n\n\
-                 Food: {:.1}\n\n\
+                 Food: {:.1}/{:.0}\n\
+                 Wood: {:.1}/{:.0}\n\
+                 Stone: {:.1}/{:.0}\n\n\
                  Housing: {housing_count}\n\
                  Beds: {housing_used}/{housing_capacity}\n\n\
                  Farms: {farm_count}\n\
                  Workers: {farm_used}/{farm_capacity}\n",
-                resources.food
+                resources.food,
+                resources.max_food,
+                resources.wood,
+                resources.max_wood,
+                resources.stone,
+                resources.max_stone
             )
         }
         SelectionTarget::Tile(x, y) => inspect_tile(world, x, y),

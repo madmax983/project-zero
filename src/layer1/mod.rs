@@ -19,6 +19,8 @@ pub mod needs;
 pub mod pop;
 /// Colony resources and mining.
 pub mod resources;
+/// Resource storage limits and stockpile buildings.
+pub mod stockpile;
 /// Terrain generation and grid management.
 pub mod terrain;
 
@@ -30,4 +32,5 @@ pub use housing::*;
 pub use needs::*;
 pub use pop::*;
 pub use resources::*;
+pub use stockpile::*;
 pub use terrain::*;

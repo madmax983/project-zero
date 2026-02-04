@@ -3,6 +3,7 @@
 use super::GridPosition;
 use super::farm::Farm;
 use super::housing::Housing;
+use super::stockpile::Stockpile;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
@@ -19,6 +20,8 @@ pub enum BuildingType {
     Housing,
     /// Agricultural building for food production.
     Farm,
+    /// Storage for resources.
+    Stockpile,
 }
 
 impl BuildingType {
@@ -36,6 +39,7 @@ impl BuildingType {
         match self {
             Self::Housing => '⌂',
             Self::Farm => '♣',
+            Self::Stockpile => '≡',
         }
     }
 
@@ -53,6 +57,7 @@ impl BuildingType {
         match self {
             Self::Housing => "⌂",
             Self::Farm => "♣",
+            Self::Stockpile => "≡",
         }
     }
 
@@ -69,8 +74,9 @@ impl BuildingType {
     #[must_use]
     pub const fn color(&self) -> Color {
         match self {
-            Self::Housing => Color::Rgb(139, 90, 43), // Brown
-            Self::Farm => Color::Rgb(218, 165, 32),   // Goldenrod
+            Self::Housing => Color::Rgb(139, 90, 43),     // Brown
+            Self::Farm => Color::Rgb(218, 165, 32),       // Goldenrod
+            Self::Stockpile => Color::Rgb(169, 169, 169), // DarkGray (using Rgb for consistency)
         }
     }
 
@@ -88,6 +94,7 @@ impl BuildingType {
         match self {
             Self::Housing => "Housing",
             Self::Farm => "Farm",
+            Self::Stockpile => "Stockpile",
         }
     }
 
@@ -215,6 +222,9 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
                 BuildingType::Farm => {
                     entity.insert(Farm::default());
                 }
+                BuildingType::Stockpile => {
+                    entity.insert(Stockpile::default());
+                }
             }
 
             // Mark tile occupied
@@ -286,7 +296,8 @@ mod tests {
     #[test]
     fn test_building_type_next() {
         assert_eq!(BuildingType::Housing.next(), BuildingType::Farm);
-        assert_eq!(BuildingType::Farm.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::Farm.next(), BuildingType::Stockpile);
+        assert_eq!(BuildingType::Stockpile.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -338,6 +349,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Farm);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Stockpile);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);
