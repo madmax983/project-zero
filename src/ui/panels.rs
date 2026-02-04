@@ -1,12 +1,11 @@
 use bevy_ecs::prelude::*;
 use ratatui::{
     prelude::*,
-    widgets::{Block, BorderType, Borders, List, ListItem, Paragraph},
+    widgets::{Block, BorderType, Borders, List, ListItem},
 };
 
-use crate::layer1::{ColonyResources, Farm, Housing, Pop};
 use crate::shared::log::MessageLog;
-use crate::shared::selection::{Selection, SelectionTarget, inspect_entity, inspect_tile};
+use crate::ui::inspector::render_inspector;
 
 pub fn render_info_panel(frame: &mut Frame, area: Rect, world: &World) {
     let chunks = Layout::default()
@@ -28,53 +27,8 @@ pub fn render_info_panel(frame: &mut Frame, area: Rect, world: &World) {
     let inner = block.inner(stats_area);
     frame.render_widget(block, stats_area);
 
-    let selection = world.resource::<Selection>();
-    let text = match selection.target() {
-        SelectionTarget::None => {
-            let pop_count = world
-                .iter_entities()
-                .filter(bevy_ecs::world::EntityRef::contains::<Pop>)
-                .count();
-
-            let (housing_count, housing_capacity, housing_used) = world
-                .iter_entities()
-                .filter_map(|e| e.get::<Housing>())
-                .fold((0, 0, 0), |(count, cap, used), h| {
-                    (count + 1, cap + h.capacity, used + h.residents.len())
-                });
-
-            let (farm_count, farm_capacity, farm_used) = world
-                .iter_entities()
-                .filter_map(|e| e.get::<Farm>())
-                .fold((0, 0, 0), |(count, cap, used), f| {
-                    (count + 1, cap + f.capacity, used + f.workers.len())
-                });
-
-            let resources = world.resource::<ColonyResources>();
-
-            format!(
-                "Population: {pop_count}\n\n\
-                 Food: {:.1}/{:.0}\n\
-                 Wood: {:.1}/{:.0}\n\
-                 Stone: {:.1}/{:.0}\n\n\
-                 Housing: {housing_count}\n\
-                 Beds: {housing_used}/{housing_capacity}\n\n\
-                 Farms: {farm_count}\n\
-                 Workers: {farm_used}/{farm_capacity}\n",
-                resources.food,
-                resources.max_food,
-                resources.wood,
-                resources.max_wood,
-                resources.stone,
-                resources.max_stone
-            )
-        }
-        SelectionTarget::Tile(x, y) => inspect_tile(world, x, y),
-        SelectionTarget::Entity(e) => inspect_entity(world, e),
-    };
-
-    let paragraph = Paragraph::new(text);
-    frame.render_widget(paragraph, inner);
+    // Delegate internal rendering to inspector
+    render_inspector(frame, inner, world);
 
     // Message Log Panel
     let log_block = Block::default()
