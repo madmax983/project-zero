@@ -605,6 +605,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** A power failure plunges the lower levels into darkness. Pops refuse to go down there to fix the generator because "it's too dark", creating a death spiral.
 
 **Tension:** Burn fuel for light (resource cost) or brave the dark (mood/speed penalty)?
+
 ## Social Mimicry
 
 **Layer:** 1
@@ -658,5 +659,75 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** Your safe backwater colony, protected by distance for fifty years, suddenly drifts within jump-range of a Devouring Swarm. The "Frontier" comes to you.
 
 **Tension:** Long-term static infrastructure vs. adaptable, mobile fleets.
+
+---
+
+## Workplace Hazards
+
+**Layer:** 1
+
+**Fantasy:** The cost of progress is blood. The frontier is dangerous and OSHA is light-years away.
+
+**Mechanic:** Buildings have an "Accident Risk" based on condition and workload. Accidents cause injuries (temporary debuffs) or permanent disabilities. "Safety Protocols" policy reduces risk but slows work.
+
+**Emergence:** Your master engineer loses an arm in a rush job, becoming a slow but wise mentor. A series of mine collapses leads to a strike.
+
+**Tension:** Push for quota (risk injury) or work safely (slow production)?
+
+---
+
+## Alien Domestication
+
+**Layer:** 1
+
+**Fantasy:** This isn't just a mine; it's a ranch. Learning to live with the local biology, not just exploit it.
+
+**Mechanic:** Wild fauna can be trapped and "Tamed". Tamed beasts provide passive bonuses (mood), resources (milk/wool), or labor (hauling).
+
+**Emergence:** A "tamed" predator reverts to instinct during a food shortage and hunts the colonists. A pop bonds with a beast, gaining massive mood buffs, but goes catatonic if it dies.
+
+**Tension:** Resource cost of feeding beasts vs. their utility. Risk of keeping wild animals in the base.
+
+---
+
+## Social Stratification
+
+**Layer:** 1
+
+**Fantasy:** A society naturally divides itself. The "Clean Coats" in the labs vs. the "Dusty Boots" in the mines.
+
+**Mechanic:** Jobs have hidden "Prestige" values. Pops working high-prestige jobs look down on low-prestige pops. Mixing housing/dining areas causes "Class Friction" (stress).
+
+**Emergence:** You unwittingly create a ghetto for miners. When the life support fails, the scientists demand priority, sparking a civil war.
+
+**Tension:** Mixed zoning (social friction) vs. Segregated zoning (efficient but creates factions).
+
+---
+
+## Industrial Byproducts
+
+**Layer:** 1
+
+**Fantasy:** Matter is neither created nor destroyed, only changed into something annoying.
+
+**Mechanic:** Crafting processes generate "Waste" items (Slag, Sawdust, Chemicals) that must be stored or dumped. Dumping reduces tile beauty/health. Some tech can recycle waste.
+
+**Emergence:** Your stockpiles fill with slag, choking production. You dump it in the river, poisoning the downstream farms.
+
+**Tension:** Store waste (space cost) vs. Dump waste (environmental cost).
+
+---
+
+## Geological Instability
+
+**Layer:** 1
+
+**Fantasy:** The ground is not a static canvas. It breathes, shifts, and breaks.
+
+**Mechanic:** Events (Earthquakes, Floods, Sinkholes) alter the terrain map. Buildings on affected tiles are damaged or destroyed. Mining increases instability in local areas.
+
+**Emergence:** A sinkhole swallows the primary power plant. The river changes course, drying up your water mills.
+
+**Tension:** Build on solid bedrock (far from resources) or soft soil (convenient but risky)?
 
 ---
