@@ -249,6 +249,7 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
 ///
 /// ```
 /// use scale::layer1::building::{try_place_building, BuildingType, OccupiedTiles};
+/// use scale::layer1::resources::ColonyResources;
 /// use scale::layer1::terrain::{TerrainGrid, TerrainType};
 /// use bevy_ecs::prelude::*;
 ///
@@ -256,6 +257,8 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
 /// let tiles = vec![TerrainType::Grass; 100]; // 10x10 grass
 /// world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
 /// world.insert_resource(OccupiedTiles::default());
+/// // Initialize resources (enough for housing)
+/// world.insert_resource(ColonyResources { wood: 100.0, ..Default::default() });
 ///
 /// let placed = try_place_building(&mut world, 5, 5, BuildingType::Housing);
 /// assert!(placed);
