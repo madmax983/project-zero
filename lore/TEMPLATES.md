@@ -283,6 +283,76 @@ These fire during gameplay and get appended to the chronicle.
 "[RESOURCE] discovered at [COLONY]. [YEAR]. [QUANTITY_PHRASE]."
 ```
 
+### FIRST_LUMBER
+
+**Slots:** `[COLONY]`, `[YEAR]`, `[FOREST_DESCRIPTOR]`
+
+```
+"Year [YEAR]. We clear the [FOREST_DESCRIPTOR] trees at [COLONY]. First timber."
+"The first felling. [YEAR]. The wood is [FOREST_DESCRIPTOR]."
+"[YEAR]: Forestry begins. We harvest the [FOREST_DESCRIPTOR] wild."
+```
+
+### FOREST_CLEARED
+
+**Slots:** `[COLONY]`, `[YEAR]`, `[FOREST_NAME]`, `[AREA]`
+
+```
+"The last tree of [FOREST_NAME] falls. [YEAR]. The sky is open."
+"[YEAR]: [FOREST_NAME] is gone. Only stumps remain at [AREA]."
+"We have conquered the Green at [AREA]. [FOREST_NAME] is no more."
+```
+
+### STOCKPILE_FULL
+
+**Slots:** `[COLONY]`, `[YEAR]`, `[STORE_NAME]`, `[RESOURCE]`
+
+```
+"The [STORE_NAME] overflows. [YEAR]. [RESOURCE] burdens us."
+"[YEAR]: Capacity reached. We have too much [RESOURCE]."
+"Abundance at [COLONY]. The [STORE_NAME] can hold no more [RESOURCE]."
+```
+
+### RESOURCE_SHORTAGE
+
+**Slots:** `[COLONY]`, `[YEAR]`, `[RESOURCE]`, `[CRISIS]`
+
+```
+"The [RESOURCE] runs low. [YEAR]. [CRISIS] threatens."
+"[YEAR]: Shortage. We lack [RESOURCE]. The [CRISIS] begins."
+"[COLONY] runs dry. No [RESOURCE]. It is a time of [CRISIS]."
+```
+
+### POP_ARRIVAL
+
+**Slots:** `[COLONY]`, `[YEAR]`, `[COUNT]`, `[ARRIVAL_METHOD]`
+
+```
+"[COUNT] new souls arrive at [COLONY]. [YEAR]. Method: [ARRIVAL_METHOD]."
+"[YEAR]: Reinforcements. [COUNT] join us, [ARRIVAL_METHOD]."
+"The population grows. [COUNT] arrived [ARRIVAL_METHOD] today."
+```
+
+### POP_DEATH
+
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[REASON]`
+
+```
+"A soul is lost. [NAME]. [YEAR]. Cause: [REASON]."
+"[YEAR]: We mourn [NAME]. Taken by [REASON]."
+"Death at [COLONY]. [NAME] has passed. [REASON]."
+```
+
+### RUMOR_SPREAD
+
+**Slots:** `[COLONY]`, `[YEAR]`, `[TOPIC]`
+
+```
+"Whispers in the mess hall. [YEAR]. [TOPIC]. It spreads."
+"[YEAR]: A rumor moves through [COLONY]. They speak of [TOPIC]."
+"The talk is of [TOPIC]. Truth or fear? [YEAR]."
+```
+
 ---
 
 ## Chronicle Entry Structure

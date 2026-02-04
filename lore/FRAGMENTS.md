@@ -571,4 +571,96 @@ Flavor names for stone/ore.
 
 ---
 
+## Forestry Fragments
+
+### [WOOD_NAME]
+Flavor names for harvested wood.
+
+- timber
+- heartwood
+- bark
+- green-gold
+- iron-wood
+- star-bough
+- void-oak
+
+### [FOREST_NAME]
+Names for forest areas.
+
+- The Whispering Weald
+- [NAME]'s Grove
+- The Dark Stand
+- The Silent Reach
+- The Green Deep
+- Old Root
+- The Canopy
+
+### [FOREST_DESCRIPTOR]
+Adjectives for forests/harvesting.
+
+- ancient
+- silent
+- encroaching
+- yielding
+- stubborn
+- thick
+- dark
+- endless
+
+---
+
+## Stockpile Fragments
+
+### [STORE_NAME]
+Names for storage areas/buildings.
+
+- The Hoard
+- The Granary
+- The Silo
+- The Deep Stores
+- The Cache
+- The Vault
+- The Keep
+
+---
+
+## Pop Fragments
+
+### [POP_ARRIVAL_METHOD]
+How new pops arrive.
+
+- via pod
+- by shuttle
+- walked from the wastes
+- emerged from stasis
+- found in ruins
+- survivor of a crash
+
+### [POP_DEATH_REASON]
+Causes of death.
+
+- hunger
+- the cold
+- accident
+- despair
+- exposure
+- the silence
+
+---
+
+## Crisis Fragments
+
+### [RESOURCE_CRISIS]
+Types of resource emergencies.
+
+- shortage
+- drought
+- empty stores
+- rot
+- collapse
+- the drying
+- the empty hand
+
+---
+
 *Add new fragments by type. Keep entries short. Vary tone. Leave room for combination.*
