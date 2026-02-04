@@ -49,6 +49,7 @@ pub fn update_resource_caps_system(world: &mut World) {
 }
 
 #[cfg(test)]
+#[allow(clippy::float_cmp)]
 mod tests {
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::resources::ColonyResources;

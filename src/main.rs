@@ -21,19 +21,17 @@ use ratatui::{
     widgets::{Block, BorderType, Borders, Clear, List, ListItem, Paragraph, Row, Table},
 };
 use scale::shared::log::MessageLog;
-use std::collections::HashMap;
 use std::io;
 use std::time::{Duration, Instant};
 
 use scale::layer1::{
-    BuildMode, Building, BuildingTracker, BuildingType, Chronicle, ChronicleUiState,
-    ColonyResources, Designation, DesignationMode, DesignationType, EventImportance, Farm,
-    GridPosition, Housing, MapRenderContext, Needs, OccupiedTiles, Pop, TerrainGrid, Viewport,
-    can_designate, can_place_building, check_milestones_system, clean_dead_residents_system,
-    clean_dead_workers_system, consume_food_system, decay_needs_system, format_event_prefix,
-    generate_terrain, initial_chronicle_event, kill_starving_entities_system, pop_display,
+    BuildMode, BuildingTracker, Chronicle, ChronicleUiState, ColonyResources, DesignationMode,
+    EventImportance, Farm, Housing, MapRenderContext, OccupiedTiles, Pop, RenderCache, TerrainGrid,
+    Viewport, can_designate, can_place_building, check_milestones_system,
+    clean_dead_residents_system, clean_dead_workers_system, consume_food_system, decay_needs_system,
+    format_event_prefix, generate_terrain, initial_chronicle_event, kill_starving_entities_system,
     produce_food_system, render_map_layer, restore_rest_in_housing_system, spawn_initial_pops,
-    update_resource_caps_system,
+    update_render_cache, update_resource_caps_system,
 };
 use scale::shared::input::{InputContextStack, InputRouter};
 use scale::shared::selection::{Selection, SelectionTarget, inspect_entity, inspect_tile};
@@ -80,6 +78,7 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
     world.insert_resource(ChronicleUiState::default());
     world.insert_resource(BuildingTracker::default());
     world.insert_resource(Selection::default());
+    world.insert_resource(RenderCache::default());
 
     spawn_initial_pops(&mut world);
     initial_chronicle_event(&mut world);
@@ -133,6 +132,9 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
 
             last_tick = Instant::now();
         }
+
+        // Prepare render data
+        update_render_cache(&mut world);
 
         // Render
         terminal.draw(|frame| render(&world, frame))?;
@@ -274,10 +276,7 @@ fn render_map(frame: &mut Frame, area: Rect, world: &World) {
     let viewport = world.resource::<Viewport>();
     let build_mode = world.resource::<BuildMode>();
     let designation_mode = world.resource::<DesignationMode>();
-
-    let pops_data = get_pops_render_data(world);
-    let buildings_data = get_buildings_render_data(world);
-    let designations_data = get_designations_render_data(world);
+    let render_cache = world.resource::<RenderCache>();
 
     // Build mode cursor info
     let build_mode_cursor = if build_mode.active {
@@ -304,50 +303,14 @@ fn render_map(frame: &mut Frame, area: Rect, world: &World) {
         area: inner,
         terrain,
         viewport,
-        pops_data: &pops_data,
-        buildings_data: &buildings_data,
-        designations_data: &designations_data,
+        pops_data: &render_cache.pops,
+        buildings_data: &render_cache.buildings,
+        designations_data: &render_cache.designations,
         build_mode: build_mode_cursor,
         designation_mode: designation_mode_cursor,
     };
 
     render_map_layer(frame, ctx);
-}
-
-fn get_pops_render_data(world: &World) -> HashMap<GridPosition, (&'static str, Color)> {
-    world
-        .iter_entities()
-        .filter(|e| e.contains::<GridPosition>() && e.contains::<Needs>())
-        .map(|e| {
-            let pos = *e.get::<GridPosition>().unwrap();
-            let needs = e.get::<Needs>().unwrap();
-            (pos, pop_display(needs))
-        })
-        .collect()
-}
-
-fn get_buildings_render_data(world: &World) -> HashMap<GridPosition, BuildingType> {
-    world
-        .iter_entities()
-        .filter(|e| e.contains::<GridPosition>() && e.contains::<Building>())
-        .map(|e| {
-            let pos = *e.get::<GridPosition>().unwrap();
-            let building = e.get::<Building>().unwrap();
-            (pos, building.building_type)
-        })
-        .collect()
-}
-
-fn get_designations_render_data(world: &World) -> HashMap<GridPosition, DesignationType> {
-    world
-        .iter_entities()
-        .filter(|e| e.contains::<GridPosition>() && e.contains::<Designation>())
-        .map(|e| {
-            let pos = *e.get::<GridPosition>().unwrap();
-            let designation = e.get::<Designation>().unwrap();
-            (pos, designation.designation_type)
-        })
-        .collect()
 }
 
 fn render_info_panel(frame: &mut Frame, area: Rect, world: &World) {
@@ -499,16 +462,6 @@ fn get_status_string(
 mod tests {
     use super::*;
 
-    fn create_test_world() -> World {
-        let mut world = World::new();
-        world.insert_resource(GameState::Running);
-        world.insert_resource(SimulationTime::default());
-        world.insert_resource(Viewport::default());
-        world.insert_resource(BuildMode::default());
-        world.insert_resource(DesignationMode::default());
-        world.insert_resource(OccupiedTiles::default());
-        world
-    }
 
     #[test]
     fn test_gamestate_derives() {
@@ -525,20 +478,6 @@ mod tests {
         assert!(debug_str.contains("Running"));
     }
 
-    #[test]
-    fn test_get_pops_render_data() {
-        let mut world = create_test_world();
-        world.spawn((Pop, GridPosition { x: 10, y: 20 }, Needs::default()));
-        world.spawn((Pop, GridPosition { x: 5, y: 5 }, Needs::default()));
-        // Entity without Pop component
-        world.spawn(GridPosition { x: 99, y: 99 });
-
-        let data = get_pops_render_data(&world);
-
-        assert_eq!(data.len(), 2);
-        assert!(data.contains_key(&GridPosition { x: 10, y: 20 }));
-        assert!(data.contains_key(&GridPosition { x: 5, y: 5 }));
-    }
 
     #[test]
     fn test_get_status_string() {
