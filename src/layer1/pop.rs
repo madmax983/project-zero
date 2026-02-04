@@ -76,6 +76,10 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
         (terrain.width, terrain.height)
     };
 
+    if width == 0 || height == 0 {
+        return;
+    }
+
     let mut spawned = 0;
     let mut attempts = 0;
     // Safety: we assume there is at least one walkable tile to avoid infinite loop.
@@ -86,10 +90,11 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
             break;
         }
 
-        #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
-        let x = rng.gen_range(0..width as i32);
-        #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
-        let y = rng.gen_range(0..height as i32);
+        let max_x = i32::try_from(width).unwrap_or(i32::MAX);
+        let max_y = i32::try_from(height).unwrap_or(i32::MAX);
+
+        let x = rng.gen_range(0..max_x);
+        let y = rng.gen_range(0..max_y);
 
         // Check terrain type in a separate scope to handle borrowing
         let is_walkable = {
@@ -482,6 +487,23 @@ mod tests {
         spawn_initial_pops_internal(&mut world, &mut rng);
 
         // Verify that we didn't spawn anything (because map is full of water)
+        let count = world.query::<&Pop>().iter(&world).count();
+        assert_eq!(count, 0);
+    }
+
+    #[test]
+    fn test_spawn_initial_pops_empty_map() {
+        let mut world = World::new();
+        let terrain = TerrainGrid {
+            width: 0,
+            height: 0,
+            tiles: vec![],
+        };
+        world.insert_resource(terrain);
+
+        spawn_initial_pops(&mut world);
+
+        // Should not panic, and spawn 0
         let count = world.query::<&Pop>().iter(&world).count();
         assert_eq!(count, 0);
     }

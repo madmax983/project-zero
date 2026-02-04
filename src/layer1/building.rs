@@ -233,14 +233,11 @@ pub fn can_place_building(world: &World, x: i32, y: i32) -> bool {
 pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: BuildingType) -> bool {
     match validate_building_placement(world, x, y) {
         Ok(()) => {
-            // Check affordability
+            // Check affordability and deduct
             let cost = building_type.cost();
-            let can_afford = {
-                let resources = world.resource::<ColonyResources>();
-                resources.can_afford(&cost)
-            };
+            let paid = world.resource_mut::<ColonyResources>().try_deduct(&cost);
 
-            if !can_afford {
+            if !paid {
                 if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
                     log.add_colored(
                         format!("Not enough resources for {}", building_type.label()),
@@ -249,9 +246,6 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
                 }
                 return false;
             }
-
-            // Deduct cost
-            world.resource_mut::<ColonyResources>().deduct(&cost);
 
             // Spawn building
             let mut entity = world.spawn((Building { building_type }, GridPosition { x, y }));

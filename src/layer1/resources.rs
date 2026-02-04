@@ -98,10 +98,28 @@ impl ColonyResources {
     /// # Parameters
     ///
     /// * `cost`: The resources to deduct.
+    #[deprecated(since = "0.1.1", note = "Use try_deduct to ensure affordability check.")]
     pub fn deduct(&mut self, cost: &Self) {
         self.food -= cost.food;
         self.wood -= cost.wood;
         self.stone -= cost.stone;
+    }
+
+    /// Attempts to deduct the given cost from the colony's resources.
+    /// Returns true if successful (affordable), false otherwise.
+    ///
+    /// # Parameters
+    ///
+    /// * `cost`: The resources to deduct.
+    pub fn try_deduct(&mut self, cost: &Self) -> bool {
+        if self.can_afford(cost) {
+            self.food -= cost.food;
+            self.wood -= cost.wood;
+            self.stone -= cost.stone;
+            true
+        } else {
+            false
+        }
     }
 }
 
@@ -588,5 +606,26 @@ mod tests {
         // 3. Resources should increase (Wood)
         let resources = world.resource::<ColonyResources>();
         assert_eq!(resources.wood, 1.0);
+    }
+
+    #[test]
+    fn test_try_deduct_safety_check() {
+        let mut resources = ColonyResources {
+            wood: 10.0,
+            ..Default::default()
+        };
+        let cost = ColonyResources {
+            wood: 20.0,
+            ..Default::default()
+        };
+
+        // Attempt deduction with insufficient funds
+        let success = resources.try_deduct(&cost);
+
+        // verify it returned false
+        assert!(!success, "try_deduct should return false if insufficient funds");
+
+        // verify resources were NOT deducted
+        assert!((resources.wood - 10.0).abs() < f32::EPSILON, "Resources should not be deducted if insufficient funds");
     }
 }

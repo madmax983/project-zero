@@ -60,16 +60,8 @@ pub fn produce_food_system(world: &mut World) {
 
 /// Pops eat food when hungry.
 pub fn consume_food_system(world: &mut World) {
-    // We need to access ColonyResources mutably to deduct food.
-    // We need to query Pops to check hunger.
-
-    // To avoid borrow conflicts, we'll collect hungry pops first.
-    // This doesn't need mutable access to pops yet, just read access.
-
-    let mut food = world.resource::<ColonyResources>().food;
-
-    // If no food, no one can eat.
-    if food < f32::EPSILON {
+    // Optimization: Check if we have any food before querying
+    if world.resource::<ColonyResources>().food < f32::EPSILON {
         return;
     }
 
@@ -80,23 +72,28 @@ pub fn consume_food_system(world: &mut World) {
         .map(|(e, _)| e)
         .collect();
 
-    for entity in hungry_pops {
-        // Check food again (it decreases)
-        if food >= FOOD_PER_MEAL {
-            if let Some(mut needs) = world.get_mut::<Needs>(entity) {
-                // Double check they are still hungry? (They should be, we just checked)
-                // But mainly we need to modify them.
+    let meal_cost = ColonyResources {
+        food: FOOD_PER_MEAL,
+        ..Default::default()
+    };
 
-                food -= FOOD_PER_MEAL;
-                needs.hunger = (needs.hunger + HUNGER_PER_MEAL).min(1.0);
+    for entity in hungry_pops {
+        // Verify entity has Needs (read-only check)
+        let has_needs = world.get::<Needs>(entity).is_some();
+
+        if has_needs {
+            if world.resource_mut::<ColonyResources>().try_deduct(&meal_cost) {
+                // Re-acquire mutable access to update Needs
+                // Safe because we have exclusive world access and try_deduct doesn't remove entities
+                if let Some(mut needs) = world.get_mut::<Needs>(entity) {
+                    needs.hunger = (needs.hunger + HUNGER_PER_MEAL).min(1.0);
+                }
+            } else {
+                // Out of food
+                break;
             }
-        } else {
-            // Out of food
-            break;
         }
     }
-
-    world.resource_mut::<ColonyResources>().food = food;
 }
 
 /// Removes dead workers from farms.
