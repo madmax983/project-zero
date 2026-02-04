@@ -18,6 +18,19 @@ pub enum SelectionTarget {
 }
 
 /// Tracks the current player selection.
+///
+/// This resource stores what the player has clicked on, allowing other systems (like UI)
+/// to react and show details.
+///
+/// # Examples
+///
+/// ```
+/// use scale::shared::selection::{Selection, SelectionTarget};
+///
+/// let mut selection = Selection::new();
+/// selection.select_tile(10, 5);
+/// assert!(matches!(selection.target(), SelectionTarget::Tile(10, 5)));
+/// ```
 #[derive(Resource, Default, Debug)]
 pub struct Selection {
     target: SelectionTarget,
@@ -25,6 +38,13 @@ pub struct Selection {
 
 impl Selection {
     /// Create a new selection resource.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use scale::shared::selection::Selection;
+    /// let selection = Selection::new();
+    /// ```
     #[must_use]
     pub const fn new() -> Self {
         Self {
@@ -39,16 +59,50 @@ impl Selection {
     }
 
     /// Select a tile at grid coordinates.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use scale::shared::selection::{Selection, SelectionTarget};
+    /// let mut selection = Selection::new();
+    /// selection.select_tile(5, 5);
+    /// assert_eq!(selection.target(), SelectionTarget::Tile(5, 5));
+    /// ```
     pub const fn select_tile(&mut self, x: i32, y: i32) {
         self.target = SelectionTarget::Tile(x, y);
     }
 
     /// Select an entity.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use scale::shared::selection::{Selection, SelectionTarget};
+    /// use bevy_ecs::prelude::*;
+    ///
+    /// let mut world = World::new();
+    /// let entity = world.spawn_empty().id();
+    /// let mut selection = Selection::new();
+    ///
+    /// selection.select_entity(entity);
+    /// assert_eq!(selection.target(), SelectionTarget::Entity(entity));
+    /// ```
     pub const fn select_entity(&mut self, entity: Entity) {
         self.target = SelectionTarget::Entity(entity);
     }
 
     /// Clear the selection.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use scale::shared::selection::{Selection, SelectionTarget};
+    /// let mut selection = Selection::new();
+    /// selection.select_tile(1, 1);
+    ///
+    /// selection.clear();
+    /// assert_eq!(selection.target(), SelectionTarget::None);
+    /// ```
     pub const fn clear(&mut self) {
         self.target = SelectionTarget::None;
     }

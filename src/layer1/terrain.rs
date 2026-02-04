@@ -165,7 +165,9 @@ pub fn update_render_cache(world: &mut World) {
 
             // Check for Designation
             if let Some(designation) = e.get::<Designation>() {
-                cache.designations.insert(*pos, designation.designation_type);
+                cache
+                    .designations
+                    .insert(*pos, designation.designation_type);
             }
         }
     }
@@ -1080,11 +1082,7 @@ mod tests {
         world.insert_resource(RenderCache::default());
 
         // Spawn a pop
-        world.spawn((
-            Pop,
-            GridPosition { x: 1, y: 1 },
-            Needs::default(),
-        ));
+        world.spawn((Pop, GridPosition { x: 1, y: 1 }, Needs::default()));
 
         // Spawn a building
         world.spawn((
@@ -1096,7 +1094,9 @@ mod tests {
 
         // Spawn a designation
         world.spawn((
-            Designation { designation_type: DesignationType::Mine },
+            Designation {
+                designation_type: DesignationType::Mine,
+            },
             GridPosition { x: 3, y: 3 },
         ));
 
@@ -1105,7 +1105,11 @@ mod tests {
         let cache = world.resource::<RenderCache>();
         assert!(cache.pops.contains_key(&GridPosition { x: 1, y: 1 }));
         assert!(cache.buildings.contains_key(&GridPosition { x: 2, y: 2 }));
-        assert!(cache.designations.contains_key(&GridPosition { x: 3, y: 3 }));
+        assert!(
+            cache
+                .designations
+                .contains_key(&GridPosition { x: 3, y: 3 })
+        );
         assert_eq!(cache.pops.len(), 1);
         assert_eq!(cache.buildings.len(), 1);
         assert_eq!(cache.designations.len(), 1);

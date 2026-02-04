@@ -6,9 +6,20 @@
 //!
 //! # Key Concepts
 //!
-//! * **Pop**: A marker component representing a simulated person.
-//! * **GridPosition**: A discrete 2D coordinate on the map.
+//! * **Pop**: The "Soul" of the colony. These are not just resource consumers;
+//!   they are the primary agents of the simulation. They have needs, desires,
+//!   and agency to perform tasks (mining, farming, building).
+//! * **GridPosition**: A discrete 2D coordinate on the map. Every physical
+//!   entity (Pop, Building, Resource) must have one to exist in the world.
 //! * **Spawning**: The process of placing pops on valid terrain.
+//!
+//! # The Soul Loop
+//!
+//! A Pop's life is a constant cycle of:
+//! 1. **Need Decay**: Hunger and Rest decrease over time.
+//! 2. **Job Selection**: The Utility AI picks the most important action.
+//! 3. **Action Execution**: The Pop moves and interacts with the world.
+//! 4. **State Change**: Resources are consumed/produced, terrain changes.
 
 use super::needs::Needs;
 use super::terrain::{TerrainGrid, TerrainType};
@@ -21,7 +32,25 @@ use ratatui::style::Color;
 /// A "Pop" (short for Population) is a simulated agent in the colony.
 /// They have needs, perform jobs, and require housing.
 ///
-/// # Examples
+/// # The Hero's Journey (System Example)
+///
+/// This example demonstrates how to query for all Pops and check their status.
+///
+/// ```
+/// use scale::layer1::pop::Pop;
+/// use scale::layer1::needs::Needs;
+/// use bevy_ecs::prelude::*;
+///
+/// fn happy_pop_system(query: Query<(&Pop, &Needs)>) {
+///     for (_pop, needs) in &query {
+///         if needs.hunger > 0.9 {
+///             println!("This pop is well fed!");
+///         }
+///     }
+/// }
+/// ```
+///
+/// # Basic Usage
 ///
 /// ```
 /// use scale::layer1::pop::Pop;

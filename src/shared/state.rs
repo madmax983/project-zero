@@ -1,6 +1,15 @@
 use bevy_ecs::prelude::Resource;
 
 /// Represents the high-level state of the game loop.
+///
+/// # Examples
+///
+/// ```
+/// use scale::shared::state::GameState;
+///
+/// let state = GameState::Running;
+/// assert_eq!(state, GameState::Running);
+/// ```
 #[derive(Resource, Default, PartialEq, Eq, Clone, Copy, Debug)]
 pub enum GameState {
     /// The simulation is running normally.

@@ -28,10 +28,11 @@ use scale::layer1::{
     BuildMode, BuildingTracker, Chronicle, ChronicleUiState, ColonyResources, DesignationMode,
     EventImportance, Farm, Housing, MapRenderContext, OccupiedTiles, Pop, RenderCache, TerrainGrid,
     Viewport, can_designate, can_place_building, check_milestones_system,
-    clean_dead_residents_system, clean_dead_workers_system, consume_food_system, decay_needs_system,
-    format_event_prefix, generate_terrain, initial_chronicle_event, kill_starving_entities_system,
-    produce_food_system, render_map_layer, restore_rest_in_housing_system, spawn_initial_pops,
-    update_render_cache, update_resource_caps_system,
+    clean_dead_residents_system, clean_dead_workers_system, consume_food_system,
+    decay_needs_system, format_event_prefix, generate_terrain, initial_chronicle_event,
+    kill_starving_entities_system, produce_food_system, render_map_layer,
+    restore_rest_in_housing_system, spawn_initial_pops, update_render_cache,
+    update_resource_caps_system,
 };
 use scale::shared::input::{InputContextStack, InputRouter};
 use scale::shared::selection::{Selection, SelectionTarget, inspect_entity, inspect_tile};
@@ -462,7 +463,6 @@ fn get_status_string(
 mod tests {
     use super::*;
 
-
     #[test]
     fn test_gamestate_derives() {
         // Test that GameState can be cloned, copied, compared
@@ -477,7 +477,6 @@ mod tests {
         let debug_str = format!("{state1:?}");
         assert!(debug_str.contains("Running"));
     }
-
 
     #[test]
     fn test_get_status_string() {
