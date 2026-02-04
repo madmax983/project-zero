@@ -606,6 +606,8 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Tension:** Burn fuel for light (resource cost) or brave the dark (mood/speed penalty)?
 
+---
+
 ## Social Mimicry
 
 **Layer:** 1
@@ -785,5 +787,128 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** A shortage of fiber means pops go to work in rags, increasing stress and injury risk. A masterwork pickaxe is passed down through generations.
 
 **Tension:** Spend metal on new tools (efficiency) or building materials (expansion)?
+## Pop Relationships
+
+**Layer:** 1
+
+**Fantasy:** Watching a colony develop social fabric—friendships, rivalries, families.
+
+**Mechanic:** Pops track affinity with others they interact with. High affinity = mood buff when near. Low = debuff/fights.
+
+**Emergence:** A "power couple" works better together. Rivals sabotage each other's work.
+
+**Tension:** Assign jobs for skill efficiency or social harmony?
+
+---
+
+## The Tavern
+
+**Layer:** 1
+
+**Fantasy:** A place where "everybody knows your name." The heartbeat of the colony.
+
+**Mechanic:** "Leisure" need. Pops go to designated "Social" zones (Tavern, Mess Hall) to talk. Talking fulfills Leisure and spreads Rumors (see Rumor Web).
+
+**Emergence:** Dissent spreads faster in a comfortable tavern than in a grim work camp.
+
+**Tension:** Build work infrastructure or leisure infrastructure?
+
+---
+
+## Merchant Landings
+
+**Layer:** Cross-layer
+
+**Fantasy:** The connection to the wider universe. The anticipation of new goods.
+
+**Mechanic:** A "Trade Pad" allows merchant ships to land. They buy X and sell Y (randomized). Prices fluctuate.
+
+**Emergence:** You survive a famine by selling your construction tech to a passing freighter for nutrient paste.
+
+**Tension:** Sell strategic assets for immediate survival?
+
+---
+
+## Tool Economy
+
+**Layer:** 1
+
+**Fantasy:** Industry requires upkeep. A pickaxe doesn't last forever.
+
+**Mechanic:** Jobs require specific tools (Pick, Axe, Hoe). Tools have durability. Broken tools = massive work slow. Smithy needed to replenish.
+
+**Emergence:** The iron mine stops working because the miners' picks broke, and you need iron to make picks. The "Death Spiral".
+
+**Tension:** Allocate metal to construction or tool maintenance?
+
+---
+
+## Fire Propagation
+
+**Layer:** 1
+
+**Fantasy:** The fragility of a frontier settlement.
+
+**Mechanic:** Flammable materials (Wood, Crops) catch fire from sparks/lightning. Fire spreads to adjacent flammable tiles. Water/Beating puts it out.
+
+**Emergence:** Clearing a forest by burning it (lazy) gets out of control and burns down the food stockpile.
+
+**Tension:** Build cheap wood housing (fire risk) or expensive stone housing?
+
+---
+
+## Field Science
+
+**Layer:** 1
+
+**Fantasy:** To master the planet, you must study it. Science is an adventure.
+
+**Mechanic:** "Anomalies" (strange plants, ruins, geodes) spawn on the map. Scientists must traverse to them and "Scan" them to unlock tech/resources.
+
+**Emergence:** A scientist gets eaten by the "flora" they were studying.
+
+**Tension:** Risk scientists in the field vs. slow passive research.
+
+---
+
+## Soil Fertility & Depletion
+
+**Layer:** 1
+
+**Fantasy:** Managing the land, not just exploiting it. The fear of a dust bowl.
+
+**Mechanic:** Farm tiles have a `Fertility` float. Harvest reduces it. Low fertility = low yield. Leaving fallow restores it.
+
+**Emergence:** Players are forced to expand farms constantly or rotate crops, creating sprawling agricultural zones rather than one "magic patch".
+
+**Tension:** Intense farming (starvation prevention) vs Sustainable farming.
+
+---
+
+## Colony Edicts
+
+**Layer:** Cross-layer
+
+**Fantasy:** The burden of command. Signing a paper that saves the colony but makes everyone hate you.
+
+**Mechanic:** Menu of global toggles. "Double Rations" (Mood+, Food drain++). "Martial Law" (No unrest, Liberty--). "Night Shifts".
+
+**Emergence:** Players toggling "Emergency Rations" during winter and forgetting to turn it off, leading to a surplus but a revolt.
+
+**Tension:** Efficiency vs Morale.
+
+---
+
+## Hauling Logistics
+
+**Layer:** 1
+
+**Fantasy:** The anthill. Watching items flow through the veins of the city.
+
+**Mechanic:** Resources produced on the ground (Wood logs) are not usable until carried to a Stockpile. Builders take from Stockpile.
+
+**Emergence:** Bottlenecks. A massive harvest rots in the field because you lack haulers.
+
+**Tension:** Assign pops to skilled labor (Mining) or unskilled grunt work (Hauling)?
 
 ---
