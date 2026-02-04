@@ -606,6 +606,8 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Tension:** Burn fuel for light (resource cost) or brave the dark (mood/speed penalty)?
 
+---
+
 ## Social Mimicry
 
 **Layer:** 1
@@ -729,5 +731,89 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** A sinkhole swallows the primary power plant. The river changes course, drying up your water mills.
 
 **Tension:** Build on solid bedrock (far from resources) or soft soil (convenient but risky)?
+
+---
+
+## Pop Relationships
+
+**Layer:** 1
+
+**Fantasy:** Watching a colony develop social fabric—friendships, rivalries, families.
+
+**Mechanic:** Pops track affinity with others they interact with. High affinity = mood buff when near. Low = debuff/fights.
+
+**Emergence:** A "power couple" works better together. Rivals sabotage each other's work.
+
+**Tension:** Assign jobs for skill efficiency or social harmony?
+
+---
+
+## The Tavern
+
+**Layer:** 1
+
+**Fantasy:** A place where "everybody knows your name." The heartbeat of the colony.
+
+**Mechanic:** "Leisure" need. Pops go to designated "Social" zones (Tavern, Mess Hall) to talk. Talking fulfills Leisure and spreads Rumors (see Rumor Web).
+
+**Emergence:** Dissent spreads faster in a comfortable tavern than in a grim work camp.
+
+**Tension:** Build work infrastructure or leisure infrastructure?
+
+---
+
+## Merchant Landings
+
+**Layer:** Cross-layer
+
+**Fantasy:** The connection to the wider universe. The anticipation of new goods.
+
+**Mechanic:** A "Trade Pad" allows merchant ships to land. They buy X and sell Y (randomized). Prices fluctuate.
+
+**Emergence:** You survive a famine by selling your construction tech to a passing freighter for nutrient paste.
+
+**Tension:** Sell strategic assets for immediate survival?
+
+---
+
+## Tool Economy
+
+**Layer:** 1
+
+**Fantasy:** Industry requires upkeep. A pickaxe doesn't last forever.
+
+**Mechanic:** Jobs require specific tools (Pick, Axe, Hoe). Tools have durability. Broken tools = massive work slow. Smithy needed to replenish.
+
+**Emergence:** The iron mine stops working because the miners' picks broke, and you need iron to make picks. The "Death Spiral".
+
+**Tension:** Allocate metal to construction or tool maintenance?
+
+---
+
+## Fire Propagation
+
+**Layer:** 1
+
+**Fantasy:** The fragility of a frontier settlement.
+
+**Mechanic:** Flammable materials (Wood, Crops) catch fire from sparks/lightning. Fire spreads to adjacent flammable tiles. Water/Beating puts it out.
+
+**Emergence:** Clearing a forest by burning it (lazy) gets out of control and burns down the food stockpile.
+
+**Tension:** Build cheap wood housing (fire risk) or expensive stone housing?
+
+---
+
+## Field Science
+
+**Layer:** 1
+
+**Fantasy:** To master the planet, you must study it. Science is an adventure.
+
+**Mechanic:** "Anomalies" (strange plants, ruins, geodes) spawn on the map. Scientists must traverse to them and "Scan" them to unlock tech/resources.
+
+**Emergence:** A scientist gets eaten by the "flora" they were studying.
+
+**Tension:** Risk scientists in the field vs. slow passive research.
 
 ---
