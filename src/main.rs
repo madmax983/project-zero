@@ -16,27 +16,28 @@ use crossterm::{
     execute,
     terminal::{EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode, enable_raw_mode},
 };
-use ratatui::{
-    prelude::*,
-    widgets::{Block, BorderType, Borders, Clear, List, ListItem, Paragraph, Row, Table},
-};
+use ratatui::prelude::*;
 use scale::shared::log::MessageLog;
 use std::io;
 use std::time::{Duration, Instant};
 
 use scale::layer1::{
     BuildMode, BuildingTracker, Chronicle, ChronicleUiState, ColonyResources, DesignationMode,
-    EventImportance, Farm, Housing, MapRenderContext, OccupiedTiles, Pop, RenderCache, TerrainGrid,
-    Viewport, can_designate, can_place_building, check_milestones_system,
+    OccupiedTiles, Viewport, check_milestones_system,
     clean_dead_residents_system, clean_dead_workers_system, consume_food_system, decay_needs_system,
-    format_event_prefix, generate_terrain, initial_chronicle_event, kill_starving_entities_system,
-    produce_food_system, render_map_layer, restore_rest_in_housing_system, spawn_initial_pops,
-    update_render_cache, update_resource_caps_system,
+    generate_terrain, initial_chronicle_event, kill_starving_entities_system,
+    produce_food_system, restore_rest_in_housing_system, spawn_initial_pops,
+    update_resource_caps_system,
 };
 use scale::shared::input::{InputContextStack, InputRouter};
-use scale::shared::selection::{Selection, SelectionTarget, inspect_entity, inspect_tile};
+use scale::shared::selection::Selection;
 use scale::shared::state::GameState;
 use scale::shared::time::{SimSpeed, SimulationTime};
+
+use scale::ui::chronicle::render_chronicle;
+use scale::ui::map::{RenderCache, render_map, update_render_cache};
+use scale::ui::panels::render_info_panel;
+use scale::ui::status::render_status_bar;
 
 fn main() -> anyhow::Result<()> {
     // Terminal setup
@@ -179,285 +180,6 @@ fn render(world: &World, frame: &mut Frame) {
     render_chronicle(frame, frame.area(), world);
 }
 
-fn centered_rect(percent_x: u16, percent_y: u16, r: Rect) -> Rect {
-    use ratatui::layout::{Constraint, Direction, Layout};
-
-    let popup_layout = Layout::default()
-        .direction(Direction::Vertical)
-        .constraints([
-            Constraint::Percentage((100 - percent_y) / 2),
-            Constraint::Percentage(percent_y),
-            Constraint::Percentage((100 - percent_y) / 2),
-        ])
-        .split(r);
-
-    Layout::default()
-        .direction(Direction::Horizontal)
-        .constraints([
-            Constraint::Percentage((100 - percent_x) / 2),
-            Constraint::Percentage(percent_x),
-            Constraint::Percentage((100 - percent_x) / 2),
-        ])
-        .split(popup_layout[1])[1]
-}
-
-fn render_chronicle(frame: &mut Frame, area: Rect, world: &World) {
-    let ui_state = world.resource::<ChronicleUiState>();
-    if !ui_state.is_open {
-        return;
-    }
-
-    let chronicle = world.resource::<Chronicle>();
-
-    let block = Block::default()
-        .title(" Chronicle (Press L/H to close) ")
-        .borders(Borders::ALL)
-        .border_type(BorderType::Rounded)
-        .style(Style::default().bg(Color::Black));
-
-    let popup_area = centered_rect(60, 60, area);
-    frame.render_widget(Clear, popup_area); // Clear background
-
-    // Table Header
-    let header = Row::new(vec!["Time", "Imp", "Event"])
-        .style(
-            Style::default()
-                .add_modifier(Modifier::BOLD)
-                .fg(Color::Cyan),
-        )
-        .bottom_margin(1);
-
-    // Table Rows
-    let rows: Vec<Row> = chronicle
-        .events
-        .iter()
-        .rev() // Newest first
-        .map(|evt| {
-            let color = match evt.importance {
-                EventImportance::Legendary => Color::Yellow,
-                EventImportance::Major => Color::Magenta,
-                EventImportance::Standard => Color::White,
-                EventImportance::Minor => Color::DarkGray,
-            };
-
-            let prefix = format_event_prefix(evt.importance);
-
-            Row::new(vec![
-                format!("Y{} [{}]", evt.year, evt.tick),
-                prefix.to_string(),
-                evt.text.clone(),
-            ])
-            .style(Style::default().fg(color))
-        })
-        .collect();
-
-    // Column Widths
-    let widths = [
-        Constraint::Length(12), // Time
-        Constraint::Length(4),  // Type
-        Constraint::Min(20),    // Event
-    ];
-
-    let table = Table::new(rows, widths).header(header).block(block);
-
-    frame.render_widget(table, popup_area);
-}
-
-fn render_map(frame: &mut Frame, area: Rect, world: &World) {
-    let block = Block::default()
-        .borders(Borders::ALL)
-        .border_type(BorderType::Rounded)
-        .title(" Colony ");
-    let inner = block.inner(area);
-    frame.render_widget(block, area);
-
-    // Render terrain inside
-    let terrain = world.resource::<TerrainGrid>();
-    let viewport = world.resource::<Viewport>();
-    let build_mode = world.resource::<BuildMode>();
-    let designation_mode = world.resource::<DesignationMode>();
-    let render_cache = world.resource::<RenderCache>();
-
-    // Build mode cursor info
-    let build_mode_cursor = if build_mode.active {
-        let can_place = can_place_building(world, build_mode.cursor.x, build_mode.cursor.y);
-        Some((build_mode.cursor, build_mode.selected, can_place))
-    } else {
-        None
-    };
-
-    // Designation mode cursor info
-    let designation_mode_cursor = if designation_mode.active {
-        let can = can_designate(
-            world,
-            designation_mode.cursor.x,
-            designation_mode.cursor.y,
-            designation_mode.tool,
-        );
-        Some((designation_mode.cursor, designation_mode.tool, can))
-    } else {
-        None
-    };
-
-    let ctx = MapRenderContext {
-        area: inner,
-        terrain,
-        viewport,
-        pops_data: &render_cache.pops,
-        buildings_data: &render_cache.buildings,
-        designations_data: &render_cache.designations,
-        build_mode: build_mode_cursor,
-        designation_mode: designation_mode_cursor,
-    };
-
-    render_map_layer(frame, ctx);
-}
-
-fn render_info_panel(frame: &mut Frame, area: Rect, world: &World) {
-    let chunks = Layout::default()
-        .direction(Direction::Vertical)
-        .constraints([
-            Constraint::Min(10),    // Stats
-            Constraint::Length(10), // Log
-        ])
-        .split(area);
-
-    let stats_area = chunks[0];
-    let log_area = chunks[1];
-
-    // Stats Panel
-    let block = Block::default()
-        .borders(Borders::ALL)
-        .border_type(BorderType::Rounded)
-        .title(" Info ");
-    let inner = block.inner(stats_area);
-    frame.render_widget(block, stats_area);
-
-    let selection = world.resource::<Selection>();
-    let text = match selection.target() {
-        SelectionTarget::None => {
-            let pop_count = world
-                .iter_entities()
-                .filter(bevy_ecs::world::EntityRef::contains::<Pop>)
-                .count();
-
-            let (housing_count, housing_capacity, housing_used) = world
-                .iter_entities()
-                .filter_map(|e| e.get::<Housing>())
-                .fold((0, 0, 0), |(count, cap, used), h| {
-                    (count + 1, cap + h.capacity, used + h.residents.len())
-                });
-
-            let (farm_count, farm_capacity, farm_used) = world
-                .iter_entities()
-                .filter_map(|e| e.get::<Farm>())
-                .fold((0, 0, 0), |(count, cap, used), f| {
-                    (count + 1, cap + f.capacity, used + f.workers.len())
-                });
-
-            let resources = world.resource::<ColonyResources>();
-
-            format!(
-                "Population: {pop_count}\n\n\
-                 Food: {:.1}/{:.0}\n\
-                 Wood: {:.1}/{:.0}\n\
-                 Stone: {:.1}/{:.0}\n\n\
-                 Housing: {housing_count}\n\
-                 Beds: {housing_used}/{housing_capacity}\n\n\
-                 Farms: {farm_count}\n\
-                 Workers: {farm_used}/{farm_capacity}\n",
-                resources.food,
-                resources.max_food,
-                resources.wood,
-                resources.max_wood,
-                resources.stone,
-                resources.max_stone
-            )
-        }
-        SelectionTarget::Tile(x, y) => inspect_tile(world, x, y),
-        SelectionTarget::Entity(e) => inspect_entity(world, e),
-    };
-
-    let paragraph = Paragraph::new(text);
-    frame.render_widget(paragraph, inner);
-
-    // Message Log Panel
-    let log_block = Block::default()
-        .borders(Borders::ALL)
-        .border_type(BorderType::Rounded)
-        .title(" Log ");
-    let log_inner = log_block.inner(log_area);
-    frame.render_widget(log_block, log_area);
-
-    if let Some(log) = world.get_resource::<MessageLog>() {
-        let height = log_inner.height as usize;
-        let start = log.messages.len().saturating_sub(height);
-        let items: Vec<ListItem> = log
-            .messages
-            .iter()
-            .skip(start)
-            .map(|m| ListItem::new(Line::styled(m.text.clone(), Style::default().fg(m.color))))
-            .collect();
-
-        let list = List::new(items);
-        frame.render_widget(list, log_inner);
-    }
-}
-
-fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
-    let sim_time = world.resource::<SimulationTime>();
-    let game_state = world.resource::<GameState>();
-    let build_mode = world.resource::<BuildMode>();
-    let designation_mode = world.resource::<DesignationMode>();
-
-    // NOTE: Dual pause state check. GameState::Paused is controlled by spacebar,
-    // SimSpeed::Paused exists but is currently not used (no key binds to it).
-    // This allows for future distinction between "paused but still simulating at 0x"
-    // vs "completely frozen". Current behavior: only GameState::Paused matters (main.rs:86).
-    let paused = *game_state == GameState::Paused || sim_time.speed == SimSpeed::Paused;
-
-    let status = get_status_string(
-        sim_time.tick,
-        sim_time.speed,
-        paused,
-        build_mode,
-        designation_mode,
-    );
-
-    let bar = Paragraph::new(status).style(Style::default().bg(Color::DarkGray).fg(Color::White));
-    frame.render_widget(bar, area);
-}
-
-fn get_status_string(
-    tick: u64,
-    speed: SimSpeed,
-    paused: bool,
-    build_mode: &BuildMode,
-    designation_mode: &DesignationMode,
-) -> String {
-    let mode_str = if build_mode.active {
-        format!(
-            "BUILD: {} (Tab:switch Enter:place Esc:exit)",
-            build_mode.selected.label()
-        )
-    } else if designation_mode.active {
-        format!(
-            "DESIGNATE: {} (Enter:apply Esc:exit)",
-            designation_mode.tool.label()
-        )
-    } else {
-        "B:Build  M:Mine  X:Demolish  L:Chronicle  1-3:Speed  q:Quit".to_string()
-    };
-
-    format!(
-        " {} │ Tick: {} │ {} │ {} ",
-        if paused { "⏸" } else { "▶" },
-        tick,
-        speed.label(),
-        mode_str
-    )
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -476,21 +198,5 @@ mod tests {
         // Test Debug formatting
         let debug_str = format!("{state1:?}");
         assert!(debug_str.contains("Running"));
-    }
-
-
-    #[test]
-    fn test_get_status_string() {
-        let build_mode = BuildMode::default();
-        let designation_mode = DesignationMode::default();
-        let s = get_status_string(100, SimSpeed::Normal, false, &build_mode, &designation_mode);
-        assert!(s.contains("Tick: 100"));
-        assert!(s.contains("▶"));
-        assert!(s.contains("1x"));
-
-        let s_paused = get_status_string(50, SimSpeed::Fast, true, &build_mode, &designation_mode);
-        assert!(s_paused.contains("Tick: 50"));
-        assert!(s_paused.contains("⏸"));
-        assert!(s_paused.contains("3x"));
     }
 }

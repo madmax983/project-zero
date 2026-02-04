@@ -1,6 +1,5 @@
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
-use ratatui::style::Color;
 
 /// Pop survival needs.
 #[derive(Component, Clone, Copy, Debug)]
@@ -57,7 +56,7 @@ pub fn kill_starving_entities_system(world: &mut World) {
     for entity in to_despawn {
         world.despawn(entity);
         if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
-            log.add_colored("A colonist has starved to death!", Color::Red);
+            log.add("DEATH: A colonist has starved to death!");
         }
     }
 }
@@ -65,8 +64,7 @@ pub fn kill_starving_entities_system(world: &mut World) {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::pop::{Pop, pop_display};
-    use ratatui::style::Color;
+    use crate::layer1::pop::Pop;
 
     #[test]
     fn test_needs_default() {
@@ -195,55 +193,6 @@ mod tests {
 
         let count = world.query::<&Pop>().iter(&world).count();
         assert_eq!(count, 1, "Pop with 0.01 hunger should survive");
-    }
-
-    #[test]
-    fn test_pop_display_basic_healthy() {
-        let needs = Needs {
-            hunger: 0.8,
-            rest: 0.8,
-        };
-        let (ch, color) = pop_display(&needs);
-
-        assert_eq!(ch, "☺");
-        assert_eq!(color, Color::Yellow);
-    }
-
-    #[test]
-    fn test_pop_display_basic_warning() {
-        let needs = Needs {
-            hunger: 0.5,
-            rest: 0.8,
-        };
-        let (ch, color) = pop_display(&needs);
-
-        assert_eq!(ch, "☻");
-        assert_eq!(color, Color::Rgb(255, 165, 0)); // Orange
-    }
-
-    #[test]
-    fn test_pop_display_basic_critical() {
-        let needs = Needs {
-            hunger: 0.2,
-            rest: 0.8,
-        };
-        let (ch, color) = pop_display(&needs);
-
-        assert_eq!(ch, "☹");
-        assert_eq!(color, Color::Red);
-    }
-
-    #[test]
-    fn test_pop_display_basic_uses_worst_need() {
-        // Even if hunger is high, low rest should trigger warning
-        let needs = Needs {
-            hunger: 0.9,
-            rest: 0.4,
-        };
-        let (ch, color) = pop_display(&needs);
-
-        assert_eq!(ch, "☻"); // Warning state
-        assert_eq!(color, Color::Rgb(255, 165, 0));
     }
 
     #[test]
