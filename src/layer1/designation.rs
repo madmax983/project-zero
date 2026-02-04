@@ -440,7 +440,11 @@ mod tests {
         let mut world = World::new();
         let mut tiles = vec![TerrainType::Grass; 100];
         tiles[55] = TerrainType::Tree; // (5, 5)
-        world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
 
         // Should be able to chop a Tree
         assert!(can_designate(&world, 5, 5, DesignationType::Chop));
@@ -450,7 +454,11 @@ mod tests {
     fn test_can_designate_chop_invalid() {
         let mut world = World::new();
         let tiles = vec![TerrainType::Grass; 100];
-        world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
 
         // Cannot chop Grass
         assert!(!can_designate(&world, 5, 5, DesignationType::Chop));

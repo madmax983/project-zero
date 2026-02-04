@@ -4,6 +4,7 @@ use super::GridPosition;
 use super::farm::Farm;
 use super::housing::Housing;
 use super::stockpile::Stockpile;
+use crate::layer1::resources::ColonyResources;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
@@ -95,6 +96,26 @@ impl BuildingType {
             Self::Housing => "Housing",
             Self::Farm => "Farm",
             Self::Stockpile => "Stockpile",
+        }
+    }
+
+    /// Returns the resource cost to build this building.
+    #[must_use]
+    pub fn cost(&self) -> ColonyResources {
+        match self {
+            Self::Housing => ColonyResources {
+                wood: 10.0,
+                ..Default::default()
+            },
+            Self::Farm => ColonyResources {
+                wood: 20.0,
+                stone: 5.0,
+                ..Default::default()
+            },
+            Self::Stockpile => ColonyResources {
+                wood: 50.0,
+                ..Default::default()
+            },
         }
     }
 
@@ -212,6 +233,26 @@ pub fn can_place_building(world: &World, x: i32, y: i32) -> bool {
 pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: BuildingType) -> bool {
     match validate_building_placement(world, x, y) {
         Ok(()) => {
+            // Check affordability
+            let cost = building_type.cost();
+            let can_afford = {
+                let resources = world.resource::<ColonyResources>();
+                resources.can_afford(&cost)
+            };
+
+            if !can_afford {
+                if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+                    log.add_colored(
+                        format!("Not enough resources for {}", building_type.label()),
+                        Color::Red,
+                    );
+                }
+                return false;
+            }
+
+            // Deduct cost
+            world.resource_mut::<ColonyResources>().deduct(&cost);
+
             // Spawn building
             let mut entity = world.spawn((Building { building_type }, GridPosition { x, y }));
 
@@ -459,6 +500,11 @@ mod tests {
             tiles: vec![TerrainType::Grass; 100],
         });
         world.insert_resource(OccupiedTiles::default());
+        world.insert_resource(ColonyResources {
+            wood: 100.0,
+            stone: 100.0,
+            ..Default::default()
+        });
 
         try_place_building(&mut world, 5, 5, BuildingType::Farm);
 
@@ -499,6 +545,10 @@ mod tests {
             tiles: vec![TerrainType::Grass; 100],
         });
         world.insert_resource(OccupiedTiles::default());
+        world.insert_resource(ColonyResources {
+            wood: 100.0,
+            ..Default::default()
+        });
 
         try_place_building(&mut world, 7, 3, BuildingType::Housing);
 
@@ -516,6 +566,11 @@ mod tests {
             tiles: vec![TerrainType::Grass; 100],
         });
         world.insert_resource(OccupiedTiles::default());
+        world.insert_resource(ColonyResources {
+            wood: 100.0,
+            stone: 100.0,
+            ..Default::default()
+        });
 
         try_place_building(&mut world, 5, 5, BuildingType::Farm);
 
@@ -535,6 +590,10 @@ mod tests {
         });
         world.insert_resource(OccupiedTiles::default());
         world.insert_resource(MessageLog::default());
+        world.insert_resource(ColonyResources {
+            wood: 100.0,
+            ..Default::default()
+        });
 
         // Test Water failure
         let success = try_place_building(&mut world, 5, 5, BuildingType::Housing);
@@ -559,5 +618,107 @@ mod tests {
             log.messages.back().unwrap().text,
             "Construction started: Housing"
         );
+    }
+
+    #[test]
+    fn test_housing_cost() {
+        let cost = BuildingType::Housing.cost();
+        assert!((cost.wood - 10.0).abs() < f32::EPSILON);
+        assert!((cost.stone - 0.0).abs() < f32::EPSILON);
+    }
+
+    #[test]
+    fn test_farm_cost() {
+        let cost = BuildingType::Farm.cost();
+        assert!((cost.wood - 20.0).abs() < f32::EPSILON);
+        assert!((cost.stone - 5.0).abs() < f32::EPSILON);
+    }
+
+    #[test]
+    fn test_can_afford_success() {
+        let cost = ColonyResources {
+            wood: 10.0,
+            stone: 0.0,
+            ..Default::default()
+        };
+        let available = ColonyResources {
+            wood: 15.0,
+            stone: 5.0,
+            ..Default::default()
+        };
+
+        assert!(available.can_afford(&cost));
+    }
+
+    #[test]
+    fn test_can_afford_failure() {
+        let cost = ColonyResources {
+            wood: 10.0,
+            stone: 0.0,
+            ..Default::default()
+        };
+        let available = ColonyResources {
+            wood: 5.0,
+            stone: 5.0,
+            ..Default::default()
+        };
+
+        assert!(!available.can_afford(&cost));
+    }
+
+    #[test]
+    fn test_try_place_building_deducts_resources() {
+        let mut world = World::new();
+        // Setup terrain
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        });
+        world.insert_resource(OccupiedTiles::default());
+
+        // Setup resources (enough for Housing: 10 wood)
+        world.insert_resource(ColonyResources {
+            wood: 15.0,
+            ..Default::default()
+        });
+
+        // Attempt placement
+        let success = try_place_building(&mut world, 5, 5, BuildingType::Housing);
+
+        assert!(success);
+
+        // Verify deduction
+        let resources = world.resource::<ColonyResources>();
+        assert!((resources.wood - 5.0).abs() < f32::EPSILON);
+    }
+
+    #[test]
+    fn test_try_place_building_fails_insufficient_funds() {
+        let mut world = World::new();
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        });
+        world.insert_resource(OccupiedTiles::default());
+
+        // Setup resources (not enough for Housing)
+        world.insert_resource(ColonyResources {
+            wood: 5.0,
+            ..Default::default()
+        });
+
+        // Attempt placement
+        let success = try_place_building(&mut world, 5, 5, BuildingType::Housing);
+
+        assert!(!success);
+
+        // Verify no deduction
+        let resources = world.resource::<ColonyResources>();
+        assert!((resources.wood - 5.0).abs() < f32::EPSILON);
+
+        // Verify no building
+        assert!(world.query::<&Building>().iter(&world).count() == 0);
     }
 }
