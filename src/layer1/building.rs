@@ -8,7 +8,6 @@ use crate::layer1::resources::ColonyResources;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
-use ratatui::style::Color;
 use std::collections::HashSet;
 use strum::IntoEnumIterator;
 use strum_macros::EnumIter;
@@ -26,61 +25,6 @@ pub enum BuildingType {
 }
 
 impl BuildingType {
-    /// Returns the character representation of the building.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use scale::layer1::building::BuildingType;
-    ///
-    /// assert_eq!(BuildingType::Housing.char(), '⌂');
-    /// ```
-    #[must_use]
-    pub const fn char(&self) -> char {
-        match self {
-            Self::Housing => '⌂',
-            Self::Farm => '♣',
-            Self::Stockpile => '≡',
-        }
-    }
-
-    /// Returns a string slice representation of the building.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use scale::layer1::building::BuildingType;
-    ///
-    /// assert_eq!(BuildingType::Housing.as_str(), "⌂");
-    /// ```
-    #[must_use]
-    pub const fn as_str(&self) -> &'static str {
-        match self {
-            Self::Housing => "⌂",
-            Self::Farm => "♣",
-            Self::Stockpile => "≡",
-        }
-    }
-
-    /// Returns the color of the building.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use scale::layer1::building::BuildingType;
-    /// use ratatui::style::Color;
-    ///
-    /// assert_eq!(BuildingType::Housing.color(), Color::Rgb(139, 90, 43));
-    /// ```
-    #[must_use]
-    pub const fn color(&self) -> Color {
-        match self {
-            Self::Housing => Color::Rgb(139, 90, 43),     // Brown
-            Self::Farm => Color::Rgb(218, 165, 32),       // Goldenrod
-            Self::Stockpile => Color::Rgb(169, 169, 169), // DarkGray (using Rgb for consistency)
-        }
-    }
-
     /// Returns the human-readable label of the building.
     ///
     /// # Examples
@@ -217,7 +161,7 @@ fn handle_placement_error(world: &mut World, error: PlacementError) {
     };
 
     if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
-        log.add_colored(format!("Failed: {reason}"), Color::Red);
+        log.add(format!("Failed: {reason}"));
     }
 }
 
@@ -249,6 +193,7 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
 ///
 /// ```
 /// use scale::layer1::building::{try_place_building, BuildingType, OccupiedTiles};
+/// use scale::layer1::resources::ColonyResources;
 /// use scale::layer1::terrain::{TerrainGrid, TerrainType};
 /// use bevy_ecs::prelude::*;
 ///
@@ -256,6 +201,10 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
 /// let tiles = vec![TerrainType::Grass; 100]; // 10x10 grass
 /// world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
 /// world.insert_resource(OccupiedTiles::default());
+/// world.insert_resource(ColonyResources {
+///     wood: 100.0,
+///     ..Default::default()
+/// });
 ///
 /// let placed = try_place_building(&mut world, 5, 5, BuildingType::Housing);
 /// assert!(placed);
@@ -275,10 +224,10 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
 
     if !can_afford {
         if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
-            log.add_colored(
-                format!("Not enough resources for {}", building_type.label()),
-                Color::Red,
-            );
+            log.add(format!(
+                "Not enough resources for {}",
+                building_type.label()
+            ));
         }
         return false;
     }
@@ -293,10 +242,10 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
     world.resource_mut::<OccupiedTiles>().0.insert((x, y));
 
     if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
-        log.add_colored(
-            format!("Construction started: {}", building_type.label()),
-            Color::Green,
-        );
+        log.add(format!(
+            "Construction started: {}",
+            building_type.label()
+        ));
     }
 
     true
@@ -312,25 +261,6 @@ mod tests {
     fn test_building_type_default() {
         let bt = BuildingType::default();
         assert_eq!(bt, BuildingType::Housing);
-    }
-
-    #[test]
-    fn test_building_type_chars() {
-        assert_eq!(BuildingType::Housing.char(), '⌂');
-        assert_eq!(BuildingType::Farm.char(), '♣');
-    }
-
-    #[test]
-    fn test_building_type_as_str() {
-        assert_eq!(BuildingType::Housing.as_str(), "⌂");
-        assert_eq!(BuildingType::Farm.as_str(), "♣");
-    }
-
-    #[test]
-    fn test_building_type_colors() {
-        use ratatui::style::Color;
-        assert_eq!(BuildingType::Housing.color(), Color::Rgb(139, 90, 43));
-        assert_eq!(BuildingType::Farm.color(), Color::Rgb(218, 165, 32));
     }
 
     #[test]
