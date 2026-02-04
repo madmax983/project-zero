@@ -207,6 +207,36 @@ pub fn can_place_building(world: &World, x: i32, y: i32) -> bool {
     validate_building_placement(world, x, y).is_ok()
 }
 
+fn handle_placement_error(world: &mut World, error: PlacementError) {
+    let reason = match error {
+        PlacementError::OutOfBounds => "Out of bounds",
+        PlacementError::Occupied => "Location occupied",
+        PlacementError::InvalidTerrain(TerrainType::Water) => "Cannot build on Water",
+        PlacementError::InvalidTerrain(TerrainType::Rock) => "Cannot build on Rock",
+        PlacementError::InvalidTerrain(_) => "Cannot build here",
+    };
+
+    if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+        log.add_colored(format!("Failed: {reason}"), Color::Red);
+    }
+}
+
+fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType) {
+    let mut entity = world.spawn((Building { building_type }, GridPosition { x, y }));
+
+    match building_type {
+        BuildingType::Housing => {
+            entity.insert(Housing::default());
+        }
+        BuildingType::Farm => {
+            entity.insert(Farm::default());
+        }
+        BuildingType::Stockpile => {
+            entity.insert(Stockpile::default());
+        }
+    }
+}
+
 /// Attempt to place a building at the given position.
 /// Returns true if successful, false if placement blocked.
 ///
@@ -231,70 +261,45 @@ pub fn can_place_building(world: &World, x: i32, y: i32) -> bool {
 /// assert!(placed);
 /// ```
 pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: BuildingType) -> bool {
-    match validate_building_placement(world, x, y) {
-        Ok(()) => {
-            // Check affordability
-            let cost = building_type.cost();
-            let can_afford = {
-                let resources = world.resource::<ColonyResources>();
-                resources.can_afford(&cost)
-            };
-
-            if !can_afford {
-                if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
-                    log.add_colored(
-                        format!("Not enough resources for {}", building_type.label()),
-                        Color::Red,
-                    );
-                }
-                return false;
-            }
-
-            // Deduct cost
-            world.resource_mut::<ColonyResources>().deduct(&cost);
-
-            // Spawn building
-            let mut entity = world.spawn((Building { building_type }, GridPosition { x, y }));
-
-            match building_type {
-                BuildingType::Housing => {
-                    entity.insert(Housing::default());
-                }
-                BuildingType::Farm => {
-                    entity.insert(Farm::default());
-                }
-                BuildingType::Stockpile => {
-                    entity.insert(Stockpile::default());
-                }
-            }
-
-            // Mark tile occupied
-            world.resource_mut::<OccupiedTiles>().0.insert((x, y));
-
-            if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
-                log.add_colored(
-                    format!("Construction started: {}", building_type.label()),
-                    Color::Green,
-                );
-            }
-
-            true
-        }
-        Err(e) => {
-            let reason = match e {
-                PlacementError::OutOfBounds => "Out of bounds",
-                PlacementError::Occupied => "Location occupied",
-                PlacementError::InvalidTerrain(TerrainType::Water) => "Cannot build on Water",
-                PlacementError::InvalidTerrain(TerrainType::Rock) => "Cannot build on Rock",
-                PlacementError::InvalidTerrain(_) => "Cannot build here",
-            };
-
-            if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
-                log.add_colored(format!("Failed: {reason}"), Color::Red);
-            }
-            false
-        }
+    if let Err(e) = validate_building_placement(world, x, y) {
+        handle_placement_error(world, e);
+        return false;
     }
+
+    // Check affordability
+    let cost = building_type.cost();
+    let can_afford = {
+        let resources = world.resource::<ColonyResources>();
+        resources.can_afford(&cost)
+    };
+
+    if !can_afford {
+        if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+            log.add_colored(
+                format!("Not enough resources for {}", building_type.label()),
+                Color::Red,
+            );
+        }
+        return false;
+    }
+
+    // Deduct cost
+    world.resource_mut::<ColonyResources>().deduct(&cost);
+
+    // Spawn building
+    spawn_building(world, x, y, building_type);
+
+    // Mark tile occupied
+    world.resource_mut::<OccupiedTiles>().0.insert((x, y));
+
+    if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+        log.add_colored(
+            format!("Construction started: {}", building_type.label()),
+            Color::Green,
+        );
+    }
+
+    true
 }
 
 #[cfg(test)]
