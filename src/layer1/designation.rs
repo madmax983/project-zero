@@ -10,6 +10,7 @@
 //! * **DesignationType**: The kind of request (Mine, Demolish).
 //! * **Validation**: Rules for where designations can be placed (`can_designate`).
 
+use crate::layer1::resources::WorkProgress;
 use crate::layer1::{GridPosition, OccupiedTiles, TerrainGrid, TerrainType};
 use bevy_ecs::prelude::*;
 
@@ -21,6 +22,8 @@ pub enum DesignationType {
     Mine,
     /// Designate a building for demolition.
     Demolish,
+    /// Designate a tree for chopping.
+    Chop,
 }
 
 impl DesignationType {
@@ -38,6 +41,7 @@ impl DesignationType {
         match self {
             Self::Mine => '⛏',
             Self::Demolish => 'X',
+            Self::Chop => '🪓',
         }
     }
 
@@ -55,6 +59,7 @@ impl DesignationType {
         match self {
             Self::Mine => "⛏",
             Self::Demolish => "X",
+            Self::Chop => "Chop",
         }
     }
 
@@ -72,6 +77,7 @@ impl DesignationType {
         match self {
             Self::Mine => "Mine",
             Self::Demolish => "Demolish",
+            Self::Chop => "Chop",
         }
     }
 }
@@ -154,6 +160,10 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
             // Only occupied tiles can be demolished
             occupied.0.contains(&(x, y))
         }
+        DesignationType::Chop => {
+            let terrain = world.resource::<TerrainGrid>();
+            terrain.get(x as usize, y as usize) == Some(TerrainType::Tree)
+        }
     }
 }
 
@@ -189,7 +199,18 @@ pub fn try_designate(world: &mut World, x: i32, y: i32, designation_type: Design
         return false;
     }
 
-    world.spawn((Designation { designation_type }, GridPosition { x, y }));
+    match designation_type {
+        DesignationType::Mine | DesignationType::Chop => {
+            world.spawn((
+                Designation { designation_type },
+                GridPosition { x, y },
+                WorkProgress::default(),
+            ));
+        }
+        DesignationType::Demolish => {
+            world.spawn((Designation { designation_type }, GridPosition { x, y }));
+        }
+    }
 
     true
 }

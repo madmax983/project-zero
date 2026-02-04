@@ -18,6 +18,8 @@ pub enum TerrainType {
     Rock,
     /// Blue water, impassable by normal means.
     Water,
+    /// Green tree, harvestable for wood.
+    Tree,
 }
 
 impl TerrainType {
@@ -39,6 +41,7 @@ impl TerrainType {
             Self::Dirt => ",",
             Self::Rock => "#",
             Self::Water => "~",
+            Self::Tree => "↑",
         }
     }
 
@@ -59,6 +62,7 @@ impl TerrainType {
             Self::Dirt => Color::Rgb(139, 90, 43),
             Self::Rock => Color::DarkGray,
             Self::Water => Color::Blue,
+            Self::Tree => Color::Rgb(0, 100, 0),
         }
     }
 
@@ -78,6 +82,7 @@ impl TerrainType {
             Self::Dirt => "Dirt",
             Self::Rock => "Rock",
             Self::Water => "Water",
+            Self::Tree => "Tree",
         }
     }
 }
@@ -174,6 +179,14 @@ pub fn generate_terrain(width: usize, height: usize) -> TerrainGrid {
         let cy = rng.gen_range(0..height);
         let radius = rng.gen_range(1..4);
         fill_circle(&mut tiles, width, height, cx, cy, radius, TerrainType::Rock);
+    }
+
+    // Scatter forests (before water, so water can overwrite trees)
+    for _ in 0..50 {
+        let cx = rng.gen_range(0..width);
+        let cy = rng.gen_range(0..height);
+        let radius = rng.gen_range(2..6);
+        fill_circle(&mut tiles, width, height, cx, cy, radius, TerrainType::Tree);
     }
 
     // A river or lake
@@ -395,7 +408,11 @@ mod tests {
         let all_valid = grid.tiles.iter().all(|t| {
             matches!(
                 t,
-                TerrainType::Grass | TerrainType::Dirt | TerrainType::Rock | TerrainType::Water
+                TerrainType::Grass
+                    | TerrainType::Dirt
+                    | TerrainType::Rock
+                    | TerrainType::Water
+                    | TerrainType::Tree
             )
         });
         assert!(all_valid, "All tiles must be valid terrain types");

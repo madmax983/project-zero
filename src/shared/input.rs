@@ -180,7 +180,11 @@ fn handle_normal_mode(world: &mut World, key: KeyEvent) {
             // Enter Designation mode (Demolish)
             enter_designation_mode(world, DesignationType::Demolish);
         }
-        KeyCode::Char('l' | 'h' | 'c') => {
+        KeyCode::Char('c') => {
+            // Enter Designation mode (Chop)
+            enter_designation_mode(world, DesignationType::Chop);
+        }
+        KeyCode::Char('l' | 'h') => {
             // Open chronicle
             world
                 .resource_mut::<InputContextStack>()
@@ -262,6 +266,10 @@ fn handle_designation_mode(world: &mut World, key: KeyEvent) {
             // Switch to Demolish tool
             world.resource_mut::<DesignationMode>().tool = DesignationType::Demolish;
         }
+        KeyCode::Char('c') => {
+            // Switch to Chop tool
+            world.resource_mut::<DesignationMode>().tool = DesignationType::Chop;
+        }
         KeyCode::Char('w') | KeyCode::Up => {
             let mut mode = world.resource_mut::<DesignationMode>();
             mode.cursor.y = mode.cursor.y.saturating_sub(1);
@@ -294,7 +302,7 @@ fn handle_designation_mode(world: &mut World, key: KeyEvent) {
 
 fn handle_overlay_mode(world: &mut World, key: KeyEvent) {
     match key.code {
-        KeyCode::Esc | KeyCode::Char('l' | 'h' | 'c') => {
+        KeyCode::Esc | KeyCode::Char('l' | 'h') => {
             world.resource_mut::<InputContextStack>().pop();
             world.resource_mut::<ChronicleUiState>().is_open = false;
         }

@@ -32,8 +32,8 @@ use scale::layer1::{
     can_designate, can_place_building, check_milestones_system, clean_dead_residents_system,
     clean_dead_workers_system, consume_food_system, decay_needs_system, format_event_prefix,
     generate_terrain, initial_chronicle_event, kill_starving_entities_system, pop_display,
-    produce_food_system, render_map_layer, restore_rest_in_housing_system, spawn_initial_pops,
-    update_resource_caps_system,
+    process_work_system, produce_food_system, render_map_layer, restore_rest_in_housing_system,
+    spawn_initial_pops, update_resource_caps_system,
 };
 use scale::shared::input::{InputContextStack, InputRouter};
 use scale::shared::selection::{Selection, SelectionTarget, inspect_entity, inspect_tile};
@@ -127,6 +127,7 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
                     clean_dead_residents_system(&mut world);
                     clean_dead_workers_system(&mut world);
                     check_milestones_system(&mut world);
+                    process_work_system(&mut world);
                     world.resource_mut::<SimulationTime>().tick += 1;
                 }
             }

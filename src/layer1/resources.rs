@@ -6,7 +6,7 @@
 //! # Key Concepts
 //!
 //! * **ColonyResources**: The global stockpile of Food, Wood, and Stone.
-//! * **Mining**: A multi-tick process tracked by `MiningProgress` that converts
+//! * **Mining**: A multi-tick process tracked by `WorkProgress` that converts
 //!   terrain (Rock -> Dirt) and yields resources (Stone).
 //!
 //! # The Mining Loop
@@ -14,9 +14,11 @@
 //! 1. Player designates a tile (see `crate::layer1::designation`).
 //! 2. A pop is assigned the job (see `crate::layer1::pop`).
 //! 3. The pop works on the tile, calling `mine_rock`.
-//! 4. `MiningProgress` accumulates.
+//! 4. `WorkProgress` accumulates.
 //! 5. Upon completion, the tile changes and resources are awarded.
 
+use crate::layer1::designation::{Designation, DesignationType};
+use crate::layer1::pop::Pop;
 use crate::layer1::GridPosition;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use bevy_ecs::prelude::*;
@@ -80,24 +82,24 @@ impl ColonyResources {
     }
 }
 
-/// Component tracking the progress of a mining designation.
+/// Component tracking the progress of a generic work designation (mining, chopping, etc.).
 ///
-/// Attached to entities that are being actively mined. The simulation uses this
+/// Attached to entities that are being actively worked on. The simulation uses this
 /// to persist work across multiple ticks/frames.
 ///
 /// # Examples
 ///
 /// ```
-/// use scale::layer1::resources::MiningProgress;
+/// use scale::layer1::resources::WorkProgress;
 ///
-/// let progress = MiningProgress { current: 50.0, max: 100.0 };
+/// let progress = WorkProgress { current: 50.0, max: 100.0 };
 /// assert!(!progress.is_complete());
 /// ```
 #[derive(Component, Debug)]
-pub struct MiningProgress {
+pub struct WorkProgress {
     /// Current amount of work done.
     pub current: f32,
-    /// Total work required to complete the mining.
+    /// Total work required to complete the task.
     pub max: f32,
 }
 
@@ -108,7 +110,7 @@ pub const BASE_MAX_WOOD: f32 = 50.0;
 /// Base maximum stone capacity.
 pub const BASE_MAX_STONE: f32 = 20.0;
 
-impl MiningProgress {
+impl WorkProgress {
     /// Returns true if the work is finished.
     #[must_use]
     pub fn is_complete(&self) -> bool {
@@ -116,7 +118,7 @@ impl MiningProgress {
     }
 }
 
-impl Default for MiningProgress {
+impl Default for WorkProgress {
     fn default() -> Self {
         Self {
             current: 0.0,
@@ -125,9 +127,64 @@ impl Default for MiningProgress {
     }
 }
 
+/// Applies work to a forestry designation.
+///
+/// If work completes:
+/// 1. Despawns designation.
+/// 2. Changes Terrain Tree -> Dirt.
+/// 3. Adds 1.0 Wood.
+#[allow(clippy::cast_sign_loss)]
+pub fn chop_tree(world: &mut World, designation_entity: Entity, work_amount: f32) {
+    // 1. Get position and verify terrain
+    let (pos, is_tree) = {
+        let pos = if let Some(p) = world.get::<GridPosition>(designation_entity) {
+            *p
+        } else {
+            return;
+        };
+
+        if pos.x < 0 || pos.y < 0 {
+            return;
+        }
+
+        let terrain = world.resource::<TerrainGrid>();
+        let is_tree = terrain.get(pos.x as usize, pos.y as usize) == Some(TerrainType::Tree);
+        (pos, is_tree)
+    };
+
+    if !is_tree {
+        return;
+    }
+
+    // 2. Update progress
+    let completed = if let Some(mut progress) = world.get_mut::<WorkProgress>(designation_entity) {
+        progress.current += work_amount;
+        progress.current >= progress.max
+    } else {
+        false
+    };
+
+    // 3. Handle completion
+    if completed {
+        // Change terrain
+        let mut terrain = world.resource_mut::<TerrainGrid>();
+        let idx = (pos.y as usize) * terrain.width + (pos.x as usize);
+        if idx < terrain.tiles.len() {
+            terrain.tiles[idx] = TerrainType::Dirt;
+        }
+
+        // Add resources
+        let mut resources = world.resource_mut::<ColonyResources>();
+        resources.add_wood(1.0);
+
+        // Remove designation
+        world.despawn(designation_entity);
+    }
+}
+
 /// Applies work to a mining designation.
 ///
-/// This function is the core of the mining mechanic. It advances the `MiningProgress`
+/// This function is the core of the mining mechanic. It advances the `WorkProgress`
 /// of a specific designation. If the work completes the task, it:
 /// 1. Despawns the designation.
 /// 2. Changes the terrain from `Rock` to `Dirt`.
@@ -142,7 +199,7 @@ impl Default for MiningProgress {
 /// # Examples
 ///
 /// ```
-/// use scale::layer1::resources::{mine_rock, ColonyResources, MiningProgress};
+/// use scale::layer1::resources::{mine_rock, ColonyResources, WorkProgress};
 /// use scale::layer1::terrain::{TerrainGrid, TerrainType};
 /// use scale::layer1::GridPosition;
 /// use bevy_ecs::prelude::*;
@@ -158,7 +215,7 @@ impl Default for MiningProgress {
 /// // 2. Create Designation
 /// let designation = world.spawn((
 ///     GridPosition { x: 0, y: 0 },
-///     MiningProgress { current: 0.0, max: 10.0 }
+///     WorkProgress { current: 0.0, max: 10.0 }
 /// )).id();
 ///
 /// // 3. Work until done
@@ -193,8 +250,7 @@ pub fn mine_rock(world: &mut World, designation_entity: Entity, work_amount: f32
     }
 
     // 2. Update progress
-    let completed = if let Some(mut progress) = world.get_mut::<MiningProgress>(designation_entity)
-    {
+    let completed = if let Some(mut progress) = world.get_mut::<WorkProgress>(designation_entity) {
         progress.current += work_amount;
         progress.current >= progress.max
     } else {
@@ -221,6 +277,46 @@ pub fn mine_rock(world: &mut World, designation_entity: Entity, work_amount: f32
     }
 }
 
+/// System to process active work designations (Mining, Chopping).
+///
+/// Iterates over all designations with `WorkProgress`. If a `Pop` is within range,
+/// work is performed.
+pub fn process_work_system(world: &mut World) {
+    let mut work_requests = Vec::new();
+
+    // 1. Collect potential work targets
+    // We can't mutate world while querying, so we collect needed data.
+    // Query: (Entity, &Designation, &GridPosition, &WorkProgress)
+    // Note: We only care about designations that HAVE WorkProgress.
+    let mut designation_query = world.query::<(Entity, &Designation, &GridPosition, &WorkProgress)>();
+    let mut pop_query = world.query::<(&Pop, &GridPosition)>();
+
+    // We also need pops positions
+    let pop_positions: Vec<GridPosition> = pop_query.iter(world).map(|(_, pos)| *pos).collect();
+
+    for (entity, designation, pos, _) in designation_query.iter(world) {
+        // Check if any pop is close enough
+        // Range = 10 (Chebyshev or Manhattan? Spec 018 says "within MINING_RANGE (10)". Let's use Chebyshev/Max axis distance).
+        let in_range = pop_positions.iter().any(|pop_pos| {
+            (pop_pos.x - pos.x).abs().max((pop_pos.y - pos.y).abs()) <= 10
+        });
+
+        if in_range {
+            work_requests.push((entity, designation.designation_type));
+        }
+    }
+
+    // 2. Perform work
+    const WORK_AMOUNT: f32 = 1.0;
+    for (entity, work_type) in work_requests {
+        match work_type {
+            DesignationType::Mine => mine_rock(world, entity, WORK_AMOUNT),
+            DesignationType::Chop => chop_tree(world, entity, WORK_AMOUNT),
+            _ => {}
+        }
+    }
+}
+
 #[cfg(test)]
 #[allow(clippy::float_cmp)]
 mod tests {
@@ -240,8 +336,8 @@ mod tests {
     }
 
     #[test]
-    fn test_mining_progress_component() {
-        let progress = MiningProgress {
+    fn test_work_progress_component() {
+        let progress = WorkProgress {
             current: 0.0,
             max: 100.0,
         };
@@ -264,13 +360,13 @@ mod tests {
         // Setup Resources
         world.insert_resource(ColonyResources::default());
 
-        // Spawn Designation with MiningProgress
+        // Spawn Designation with WorkProgress
         let designation = world
             .spawn((
                 Designation {
                     designation_type: DesignationType::Mine,
                 },
-                MiningProgress {
+                WorkProgress {
                     current: 0.0,
                     max: 10.0,
                 },
@@ -281,7 +377,7 @@ mod tests {
         // Perform work (simulate 1 tick of work)
         mine_rock(&mut world, designation, 1.0);
 
-        let progress = world.get::<MiningProgress>(designation).unwrap();
+        let progress = world.get::<WorkProgress>(designation).unwrap();
         assert!((progress.current - 1.0).abs() < f32::EPSILON);
     }
 
@@ -304,7 +400,7 @@ mod tests {
                 Designation {
                     designation_type: DesignationType::Mine,
                 },
-                MiningProgress {
+                WorkProgress {
                     current: 9.0,
                     max: 10.0,
                 },
@@ -344,7 +440,7 @@ mod tests {
                 Designation {
                     designation_type: DesignationType::Mine,
                 },
-                MiningProgress {
+                WorkProgress {
                     current: 0.0,
                     max: 10.0,
                 },
@@ -355,7 +451,7 @@ mod tests {
         mine_rock(&mut world, designation, 5.0);
 
         // Should not progress
-        let progress = world.get::<MiningProgress>(designation).unwrap();
+        let progress = world.get::<WorkProgress>(designation).unwrap();
         assert!((progress.current - 0.0).abs() < f32::EPSILON);
     }
 
@@ -374,7 +470,7 @@ mod tests {
                 Designation {
                     designation_type: DesignationType::Mine,
                 },
-                MiningProgress {
+                WorkProgress {
                     current: 0.0,
                     max: 10.0,
                 },
@@ -385,22 +481,119 @@ mod tests {
         mine_rock(&mut world, designation, 1.0);
 
         // Should just return, no panic
-        let progress = world.get::<MiningProgress>(designation).unwrap();
+        let progress = world.get::<WorkProgress>(designation).unwrap();
         assert!((progress.current - 0.0).abs() < f32::EPSILON);
     }
 
     #[test]
-    fn test_mining_progress_is_complete() {
-        let p = MiningProgress {
+    fn test_work_progress_is_complete() {
+        let p = WorkProgress {
             current: 10.0,
             max: 10.0,
         };
         assert!(p.is_complete());
 
-        let p2 = MiningProgress {
+        let p2 = WorkProgress {
             current: 5.0,
             max: 10.0,
         };
         assert!(!p2.is_complete());
+    }
+
+    // Forestry Tests from Spec 019
+    use crate::layer1::designation::can_designate;
+    use ratatui::style::Color;
+
+    #[test]
+    fn test_terrain_type_tree() {
+        // Test new variant properties
+        assert_eq!(TerrainType::Tree.as_str(), "↑");
+        // Ratatui doesn't have DarkGreen, using RGB
+        assert_eq!(TerrainType::Tree.color(), Color::Rgb(0, 100, 0));
+        assert_eq!(TerrainType::Tree.name(), "Tree");
+    }
+
+    #[test]
+    fn test_designation_type_chop() {
+        // Test new variant properties
+        assert_eq!(DesignationType::Chop.char(), '🪓'); // Axe character
+        assert_eq!(DesignationType::Chop.label(), "Chop");
+    }
+
+    #[test]
+    fn test_can_designate_chop_valid() {
+        let mut world = World::new();
+        let mut tiles = vec![TerrainType::Grass; 100];
+        tiles[55] = TerrainType::Tree; // (5, 5)
+        world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
+        world.insert_resource(crate::layer1::building::OccupiedTiles::default());
+
+        // Should be able to chop a Tree
+        assert!(can_designate(&world, 5, 5, DesignationType::Chop));
+    }
+
+    #[test]
+    fn test_can_designate_chop_invalid() {
+        let mut world = World::new();
+        let tiles = vec![TerrainType::Grass; 100];
+        world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
+        world.insert_resource(crate::layer1::building::OccupiedTiles::default());
+
+        // Cannot chop Grass
+        assert!(!can_designate(&world, 5, 5, DesignationType::Chop));
+    }
+
+    #[test]
+    fn test_chop_tree_increments_progress() {
+        let mut world = World::new();
+        // Setup Tree
+        let mut tiles = vec![TerrainType::Grass; 100];
+        tiles[55] = TerrainType::Tree;
+        world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
+        world.insert_resource(ColonyResources::default());
+
+        // Spawn Designation
+        let designation = world.spawn((
+            Designation { designation_type: DesignationType::Chop },
+            WorkProgress { current: 0.0, max: 10.0 },
+            GridPosition { x: 5, y: 5 },
+        )).id();
+
+        // Perform work
+        chop_tree(&mut world, designation, 1.0);
+
+        let progress = world.get::<WorkProgress>(designation).unwrap();
+        assert!((progress.current - 1.0).abs() < f32::EPSILON);
+    }
+
+    #[test]
+    fn test_chop_tree_completion() {
+        let mut world = World::new();
+        // Setup Tree
+        let mut tiles = vec![TerrainType::Grass; 100];
+        tiles[55] = TerrainType::Tree;
+        world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
+        world.insert_resource(ColonyResources::default());
+
+        // Spawn Designation
+        let designation = world.spawn((
+            Designation { designation_type: DesignationType::Chop },
+            WorkProgress { current: 9.0, max: 10.0 },
+            GridPosition { x: 5, y: 5 },
+        )).id();
+
+        // Complete work
+        chop_tree(&mut world, designation, 1.0);
+
+        // 1. Entity should be despawned
+        assert!(world.get_entity(designation).is_err());
+
+        // 2. Terrain should be Dirt (cleared land)
+        let terrain = world.resource::<TerrainGrid>();
+        assert_eq!(terrain.get(5, 5), Some(TerrainType::Dirt));
+
+        // 3. Resources should increase (Wood)
+        let resources = world.resource::<ColonyResources>();
+        assert!((resources.wood - 1.0).abs() < f32::EPSILON);
     }
 }
