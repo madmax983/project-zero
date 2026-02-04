@@ -310,6 +310,82 @@
 
 ---
 
+## Forestry
+
+### the Green / the Wild
+
+**Replaces:** forests, woods, trees
+**Code reference:** `TerrainType::Tree`
+**Usage:**
+- "The Green encroaches on our walls."
+- "Lost in the Wild."
+
+### timber / wood
+
+**Replaces:** wood resource, logs
+**Code reference:** `ColonyResources.wood`
+**Usage:**
+- "Timber for the pyres."
+- "We need more wood."
+
+### felling / harvesting
+
+**Replaces:** chopping, cutting trees
+**Code reference:** `DesignationType::Chop`
+**Usage:**
+- "The felling begins at dawn."
+- "Harvesting the ancient grove."
+
+### grove / stand
+
+**Replaces:** cluster of trees
+**Code reference:** Adjacent `Tree` tiles
+**Usage:**
+- "A grove of iron-wood."
+- "The northern stand must be cleared."
+
+---
+
+## Stockpiles & Logistics
+
+### the hoard / the cache
+
+**Replaces:** stockpile building, storage
+**Code reference:** `Stockpile` component
+**Usage:**
+- "The hoard is full."
+- "Hidden in a cache deep underground."
+
+### the take
+
+**Replaces:** resource output, production
+**Code reference:** Resource delta
+**Usage:**
+- "The take is poor this season."
+- "A rich yield."
+
+---
+
+## Pop Lifecycle
+
+### arrival
+
+**Replaces:** spawn, immigration
+**Code reference:** `spawn_pop`
+**Usage:**
+- "The arrival of the second wave."
+- "New souls arrive."
+
+### departure / the passing
+
+**Replaces:** death, despawn
+**Code reference:** `despawn_pop`
+**Usage:**
+- "We mourn the passing of [NAME]."
+- "His departure leaves a void."
+
+---
+
 ## UI Text Patterns
 
 ### Status Bar

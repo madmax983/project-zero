@@ -166,6 +166,15 @@ FIRST_CONTACT:
     - WAR (if hostile)
     - ALLIANCE (if very peaceful)
     - CULTURAL_EXCHANGE (medium)
+
+RESOURCE_SHORTAGE:
+  enables:
+    - MIGRATION (medium)
+    - UNREST (high)
+    - INNOVATION (low)
+  increases:
+    - BLACK_MARKET (high)
+    - HOARDING (high)
 ```
 
 ### Chronicle Depth Rules
@@ -359,6 +368,8 @@ When a significant event happens at `(x,y)`, the location may earn a name.
 - Survivor of event → [PERSON]'s [LOCATION_SUFFIX: Luck, Hope]
 - Resource discovery → [RESOURCE] [LOCATION_SUFFIX: Lode, Well]
 - Initial landing → [LANDING_NAME]
+- Harvest > 100 wood → [FOREST_NAME]
+- Mine > 100 stone → [LOCATION_SUFFIX: Delve, Pit, Deep]
 
 ---
 
