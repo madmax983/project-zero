@@ -18,6 +18,8 @@ pub enum TerrainType {
     Rock,
     /// Blue water, impassable by normal means.
     Water,
+    /// A tree, source of wood.
+    Tree,
 }
 
 impl TerrainType {
@@ -39,6 +41,7 @@ impl TerrainType {
             Self::Dirt => ",",
             Self::Rock => "#",
             Self::Water => "~",
+            Self::Tree => "↑",
         }
     }
 
@@ -59,6 +62,7 @@ impl TerrainType {
             Self::Dirt => Color::Rgb(139, 90, 43),
             Self::Rock => Color::DarkGray,
             Self::Water => Color::Blue,
+            Self::Tree => Color::Rgb(0, 100, 0),
         }
     }
 
@@ -78,6 +82,7 @@ impl TerrainType {
             Self::Dirt => "Dirt",
             Self::Rock => "Rock",
             Self::Water => "Water",
+            Self::Tree => "Tree",
         }
     }
 }
@@ -174,6 +179,14 @@ pub fn generate_terrain(width: usize, height: usize) -> TerrainGrid {
         let cy = rng.gen_range(0..height);
         let radius = rng.gen_range(1..4);
         fill_circle(&mut tiles, width, height, cx, cy, radius, TerrainType::Rock);
+    }
+
+    // Scatter some trees
+    for _ in 0..40 {
+        let cx = rng.gen_range(0..width);
+        let cy = rng.gen_range(0..height);
+        let radius = rng.gen_range(2..5);
+        fill_circle(&mut tiles, width, height, cx, cy, radius, TerrainType::Tree);
     }
 
     // A river or lake
@@ -364,6 +377,14 @@ mod tests {
     use super::*;
 
     #[test]
+    fn test_terrain_type_tree() {
+        // Test new variant properties
+        assert_eq!(TerrainType::Tree.as_str(), "↑");
+        assert_eq!(TerrainType::Tree.color(), Color::Rgb(0, 100, 0));
+        assert_eq!(TerrainType::Tree.name(), "Tree");
+    }
+
+    #[test]
     fn test_terrain_type_colors() {
         // Test color invariants for all terrain types
         assert_eq!(TerrainType::Grass.color(), Color::Green);
@@ -395,7 +416,11 @@ mod tests {
         let all_valid = grid.tiles.iter().all(|t| {
             matches!(
                 t,
-                TerrainType::Grass | TerrainType::Dirt | TerrainType::Rock | TerrainType::Water
+                TerrainType::Grass
+                    | TerrainType::Dirt
+                    | TerrainType::Rock
+                    | TerrainType::Water
+                    | TerrainType::Tree
             )
         });
         assert!(all_valid, "All tiles must be valid terrain types");
@@ -777,7 +802,7 @@ mod tests {
 
     #[test]
     fn test_build_map_layer_spans_all_terrain_types() {
-        let width = 4;
+        let width = 5;
         let height = 4;
         let mut tiles = vec![TerrainType::Grass; width * height];
 
@@ -786,6 +811,7 @@ mod tests {
         tiles[1] = TerrainType::Dirt;
         tiles[2] = TerrainType::Rock;
         tiles[3] = TerrainType::Water;
+        tiles[4] = TerrainType::Tree;
 
         let grid = TerrainGrid {
             width,
@@ -794,7 +820,7 @@ mod tests {
         };
 
         let viewport = Viewport { x: 0, y: 0 };
-        let area = Rect::new(0, 0, 4, 1);
+        let area = Rect::new(0, 0, 5, 1);
         let pop_data = HashMap::new();
         let buildings_data = HashMap::new();
         let designations_data = HashMap::new();
@@ -813,13 +839,14 @@ mod tests {
         let spans = build_map_layer_spans(ctx);
 
         assert_eq!(spans.len(), 1);
-        assert_eq!(spans[0].spans.len(), 4);
+        assert_eq!(spans[0].spans.len(), 5);
 
         // Check each terrain type is rendered correctly
         assert_eq!(spans[0].spans[0].content, "."); // Grass
         assert_eq!(spans[0].spans[1].content, ","); // Dirt
         assert_eq!(spans[0].spans[2].content, "#"); // Rock
         assert_eq!(spans[0].spans[3].content, "~"); // Water
+        assert_eq!(spans[0].spans[4].content, "↑"); // Tree
     }
 
     #[test]

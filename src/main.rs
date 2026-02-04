@@ -216,7 +216,11 @@ fn render_chronicle(frame: &mut Frame, area: Rect, world: &World) {
 
     // Table Header
     let header = Row::new(vec!["Time", "Imp", "Event"])
-        .style(Style::default().add_modifier(Modifier::BOLD).fg(Color::Cyan))
+        .style(
+            Style::default()
+                .add_modifier(Modifier::BOLD)
+                .fg(Color::Cyan),
+        )
         .bottom_margin(1);
 
     // Table Rows

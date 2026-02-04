@@ -180,6 +180,10 @@ fn handle_normal_mode(world: &mut World, key: KeyEvent) {
             // Enter Designation mode (Demolish)
             enter_designation_mode(world, DesignationType::Demolish);
         }
+        KeyCode::Char('f') => {
+            // Enter Designation mode (Chop)
+            enter_designation_mode(world, DesignationType::Chop);
+        }
         KeyCode::Char('l' | 'h' | 'c') => {
             // Open chronicle
             world
@@ -261,6 +265,10 @@ fn handle_designation_mode(world: &mut World, key: KeyEvent) {
         KeyCode::Char('x') => {
             // Switch to Demolish tool
             world.resource_mut::<DesignationMode>().tool = DesignationType::Demolish;
+        }
+        KeyCode::Char('f') => {
+            // Switch to Chop tool
+            world.resource_mut::<DesignationMode>().tool = DesignationType::Chop;
         }
         KeyCode::Char('w') | KeyCode::Up => {
             let mut mode = world.resource_mut::<DesignationMode>();
@@ -633,5 +641,78 @@ mod tests {
 
         let selection = world.resource::<Selection>();
         assert!(!selection.is_selected());
+    }
+
+    #[test]
+    fn test_build_mode_exit() {
+        let mut world = World::new();
+        let mut stack = InputContextStack::default();
+        stack.push(InputContext::BuildMode);
+        world.insert_resource(stack);
+        world.insert_resource(BuildMode {
+            active: true,
+            ..Default::default()
+        });
+
+        let mut router = InputRouter::new();
+        router.route(&mut world, key_event(KeyCode::Char('b')));
+
+        assert_eq!(
+            world.resource::<InputContextStack>().current(),
+            InputContext::Normal
+        );
+        assert!(!world.resource::<BuildMode>().active);
+    }
+
+    #[test]
+    fn test_build_mode_cycle_selection() {
+        let mut world = World::new();
+        let mut stack = InputContextStack::default();
+        stack.push(InputContext::BuildMode);
+        world.insert_resource(stack);
+        world.insert_resource(BuildMode::default());
+
+        let initial = world.resource::<BuildMode>().selected;
+        let mut router = InputRouter::new();
+        router.route(&mut world, key_event(KeyCode::Tab));
+
+        let next = world.resource::<BuildMode>().selected;
+        assert_ne!(initial, next);
+    }
+
+    #[test]
+    fn test_overlay_mode_ignores_other_keys() {
+        let mut world = World::new();
+        let mut stack = InputContextStack::default();
+        stack.push(InputContext::Overlay);
+        world.insert_resource(stack);
+        world.insert_resource(ChronicleUiState { is_open: true });
+
+        let mut router = InputRouter::new();
+        router.route(&mut world, key_event(KeyCode::Char('z'))); // Ignored
+
+        assert_eq!(
+            world.resource::<InputContextStack>().current(),
+            InputContext::Overlay
+        );
+        assert!(world.resource::<ChronicleUiState>().is_open);
+    }
+
+    #[test]
+    fn test_designation_mode_movement() {
+        let mut world = World::new();
+        let mut stack = InputContextStack::default();
+        stack.push(InputContext::DesignationMode);
+        world.insert_resource(stack);
+        world.insert_resource(DesignationMode {
+            active: true,
+            cursor: GridPosition { x: 10, y: 10 },
+            ..Default::default()
+        });
+
+        let mut router = InputRouter::new();
+        router.route(&mut world, key_event(KeyCode::Char('d'))); // Right
+
+        assert_eq!(world.resource::<DesignationMode>().cursor.x, 11);
     }
 }
