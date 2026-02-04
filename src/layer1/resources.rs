@@ -20,8 +20,6 @@
 use bevy_ecs::prelude::*;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::GridPosition;
-use crate::layer1::terrain::{TerrainGrid, TerrainType};
-use bevy_ecs::prelude::*;
 
 /// Tracks the resources available to the colony.
 ///
