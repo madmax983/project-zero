@@ -78,6 +78,31 @@ impl ColonyResources {
     pub fn add_food(&mut self, amount: f32) {
         self.food = (self.food + amount).min(self.max_food);
     }
+
+    /// Checks if the colony can afford the given cost.
+    ///
+    /// # Parameters
+    ///
+    /// * `cost`: The resources required.
+    ///
+    /// # Returns
+    ///
+    /// True if all resources are sufficient.
+    #[must_use]
+    pub fn can_afford(&self, cost: &Self) -> bool {
+        self.food >= cost.food && self.wood >= cost.wood && self.stone >= cost.stone
+    }
+
+    /// Deducts the given cost from the colony's resources.
+    ///
+    /// # Parameters
+    ///
+    /// * `cost`: The resources to deduct.
+    pub fn deduct(&mut self, cost: &Self) {
+        self.food -= cost.food;
+        self.wood -= cost.wood;
+        self.stone -= cost.stone;
+    }
 }
 
 /// Component tracking the progress of a mining designation.
@@ -271,13 +296,13 @@ pub fn chop_tree(world: &mut World, designation_entity: Entity, work_amount: f32
     }
 
     // 2. Update progress
-    let completed = if let Some(mut progress) = world.get_mut::<ForestryProgress>(designation_entity)
-    {
-        progress.current += work_amount;
-        progress.current >= progress.max
-    } else {
-        false
-    };
+    let completed =
+        if let Some(mut progress) = world.get_mut::<ForestryProgress>(designation_entity) {
+            progress.current += work_amount;
+            progress.current >= progress.max
+        } else {
+            false
+        };
 
     // 3. Handle completion
     if completed {
@@ -495,15 +520,26 @@ mod tests {
         // Setup Tree
         let mut tiles = vec![TerrainType::Grass; 100];
         tiles[55] = TerrainType::Tree;
-        world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
         world.insert_resource(ColonyResources::default());
 
         // Spawn Designation
-        let designation = world.spawn((
-            Designation { designation_type: DesignationType::Chop },
-            ForestryProgress { current: 0.0, max: 10.0 },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let designation = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Chop,
+                },
+                ForestryProgress {
+                    current: 0.0,
+                    max: 10.0,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         // Perform work
         chop_tree(&mut world, designation, 1.0);
@@ -518,15 +554,26 @@ mod tests {
         // Setup Tree
         let mut tiles = vec![TerrainType::Grass; 100];
         tiles[55] = TerrainType::Tree;
-        world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
         world.insert_resource(ColonyResources::default());
 
         // Spawn Designation
-        let designation = world.spawn((
-            Designation { designation_type: DesignationType::Chop },
-            ForestryProgress { current: 9.0, max: 10.0 },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let designation = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Chop,
+                },
+                ForestryProgress {
+                    current: 9.0,
+                    max: 10.0,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         // Complete work
         chop_tree(&mut world, designation, 1.0);
