@@ -1,7 +1,7 @@
 use crate::layer1::farm::Farm;
 use crate::layer1::housing::Housing;
+use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
-use crate::layer1::pop::GridPosition;
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
@@ -508,7 +508,6 @@ mod tests {
     use super::*;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::pop::Pop;
-    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_update_action_timer() {
@@ -536,16 +535,16 @@ mod tests {
     fn test_pop_action_default() {
         let action = PopAction::default();
         assert_eq!(action.current, ActionType::Idle);
-        assert_eq!(action.current_utility, 0.0);
+        assert!((action.current_utility - 0.0).abs() < f32::EPSILON);
         assert_eq!(action.ticks_committed, 0);
     }
 
     #[test]
     fn test_utility_weights_default() {
         let weights = UtilityWeights::default();
-        assert_eq!(weights.distance_weight, 1.0);
-        assert_eq!(weights.availability_weight, 1.0);
-        assert_eq!(weights.social_weight, 1.0);
+        assert!((weights.distance_weight - 1.0).abs() < f32::EPSILON);
+        assert!((weights.availability_weight - 1.0).abs() < f32::EPSILON);
+        assert!((weights.social_weight - 1.0).abs() < f32::EPSILON);
         assert!(weights.action_success_count.is_empty());
         assert!(weights.action_attempt_count.is_empty());
     }
@@ -676,7 +675,7 @@ mod tests {
         ));
 
         // Far but empty farm
-        let far_farm = world
+        let _far_farm = world
             .spawn((
                 Building {
                     building_type: BuildingType::Farm,
@@ -693,9 +692,6 @@ mod tests {
         let result = evaluate_satisfy_hunger(&pop_pos, &needs, &weights, farms.iter(&world));
 
         assert!(result.is_some());
-        let (_utility, chosen_farm) = result.unwrap();
-        // Should pick based on best utility (distance vs availability trade-off)
-        assert!(chosen_farm == far_farm || chosen_farm != far_farm); // Either is valid depending on weights
     }
 
     #[test]
@@ -969,9 +965,9 @@ mod tests {
     #[test]
     fn test_utility_config_default() {
         let config = UtilityConfig::default();
-        assert_eq!(config.switch_threshold, 0.15);
+        assert!((config.switch_threshold - 0.15).abs() < f32::EPSILON);
         assert_eq!(config.evaluation_interval, 1);
-        assert_eq!(config.learning_rate, 0.05);
+        assert!((config.learning_rate - 0.05).abs() < f32::EPSILON);
         assert_eq!(config.weight_clamp, (0.5, 2.0));
     }
 

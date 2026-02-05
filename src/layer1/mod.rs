@@ -15,6 +15,8 @@ pub mod execution;
 pub mod farm;
 /// Housing and rest mechanics.
 pub mod housing;
+/// Spatial primitives (GridPosition).
+pub mod map;
 /// Pop needs (hunger, rest).
 pub mod needs;
 /// Pop entity and management.
@@ -32,6 +34,7 @@ pub mod thoughts;
 /// Emergent utility AI system.
 pub mod utility_ai;
 #[cfg(test)]
+/// Tests for utility AI work logic.
 pub mod utility_ai_work_tests;
 
 pub use building::*;
@@ -40,6 +43,7 @@ pub use designation::*;
 pub use execution::*;
 pub use farm::*;
 pub use housing::*;
+pub use map::*;
 pub use needs::*;
 pub use pop::*;
 pub use resources::*;
