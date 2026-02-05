@@ -23,6 +23,8 @@ pub mod pop;
 pub mod resources;
 /// Resource storage limits and stockpile buildings.
 pub mod stockpile;
+/// Refining industry (Lumber Mill, Stone Mason).
+pub mod refining;
 /// Terrain generation and grid management.
 pub mod terrain;
 /// Pop thoughts and personality.
@@ -42,6 +44,7 @@ pub use needs::*;
 pub use pop::*;
 pub use resources::*;
 pub use stockpile::*;
+pub use refining::*;
 pub use terrain::*;
 pub use thoughts::*;
 pub use utility_ai::*;
