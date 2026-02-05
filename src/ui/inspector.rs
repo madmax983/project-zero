@@ -9,8 +9,8 @@ use ratatui::{
 
 use crate::experimental::biography::Biography;
 use crate::layer1::{
-    ColonyResources, Farm, GridPosition, Housing, TerrainGrid, building::Building, needs::Needs,
-    pop::Pop, thoughts::Thought,
+    building::Building, needs::Needs, pop::Pop, resources::RefiningProgress, stockpile::Stockpile,
+    thoughts::Thought, ColonyResources, Farm, GridPosition, Housing, TerrainGrid,
 };
 use crate::shared::selection::{Selection, SelectionTarget};
 use crate::ui::map::{get_building_color, get_terrain_char, get_terrain_color};
@@ -172,13 +172,20 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         ("Entity", Color::White)
     };
 
+    // Dynamic height for details section
+    let details_height = if world.get::<Needs>(entity).is_some() {
+        3
+    } else {
+        6
+    };
+
     let layout = Layout::default()
         .direction(Direction::Vertical)
         .constraints([
             Constraint::Length(1), // Name
             Constraint::Length(1), // Pos
             Constraint::Length(1), // Spacer
-            Constraint::Length(3), // Needs (if any)
+            Constraint::Length(details_height), // Needs or Details
             Constraint::Length(1), // Spacer
             Constraint::Min(1),    // Thoughts/Extra
         ])
@@ -202,7 +209,8 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         );
     }
 
-    // 3. Needs (Pops only)
+    // 3. Needs or Building Details
+    let details_area = layout[3];
     if let Some(needs) = world.get::<Needs>(entity) {
         let needs_layout = Layout::default()
             .direction(Direction::Horizontal)
@@ -211,7 +219,7 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
                 Constraint::Length(1),
                 Constraint::Percentage(50),
             ])
-            .split(layout[3]);
+            .split(details_area);
 
         let hunger_percent = (needs.hunger * 100.0) as u16;
         let rest_percent = (needs.rest * 100.0) as u16;
@@ -239,6 +247,14 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
 
         frame.render_widget(hunger_gauge, needs_layout[0]);
         frame.render_widget(rest_gauge, needs_layout[2]);
+    } else if let Some(housing) = world.get::<Housing>(entity) {
+        render_housing_details(frame, details_area, housing);
+    } else if let Some(farm) = world.get::<Farm>(entity) {
+        render_farm_details(frame, details_area, farm);
+    } else if let Some(stockpile) = world.get::<Stockpile>(entity) {
+        render_stockpile_details(frame, details_area, stockpile);
+    } else if let Some(progress) = world.get::<RefiningProgress>(entity) {
+        render_refining_details(frame, details_area, progress);
     }
 
     // 4. Thoughts & Biography
@@ -261,6 +277,111 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
     } else if let Some(bio) = bio_opt {
         render_biography(frame, bottom_area, bio);
     }
+}
+
+fn render_housing_details(frame: &mut Frame, area: Rect, housing: &Housing) {
+    let block = Block::default()
+        .borders(Borders::ALL)
+        .title(" Housing ")
+        .border_type(BorderType::Rounded)
+        .border_style(Style::default().fg(Color::Cyan));
+
+    let residents_count = housing.residents.len();
+    let capacity = housing.capacity;
+
+    let text = format!("Residents: {residents_count} / {capacity}");
+
+    let p = Paragraph::new(text)
+        .block(block)
+        .alignment(Alignment::Center)
+        .style(Style::default().fg(if residents_count >= capacity {
+            Color::Red
+        } else {
+            Color::Green
+        }));
+
+    frame.render_widget(p, area);
+}
+
+fn render_farm_details(frame: &mut Frame, area: Rect, farm: &Farm) {
+    let block = Block::default()
+        .borders(Borders::ALL)
+        .title(" Farm ")
+        .border_type(BorderType::Rounded)
+        .border_style(Style::default().fg(Color::Yellow));
+
+    let workers_count = farm.workers.len();
+    let capacity = farm.capacity;
+
+    let text = format!("Workers: {workers_count} / {capacity}");
+
+    let p = Paragraph::new(text)
+        .block(block)
+        .alignment(Alignment::Center)
+        .style(Style::default().fg(if workers_count >= capacity {
+            Color::Green
+        } else {
+            Color::Yellow
+        }));
+
+    frame.render_widget(p, area);
+}
+
+fn render_stockpile_details(frame: &mut Frame, area: Rect, stockpile: &Stockpile) {
+    let block = Block::default()
+        .borders(Borders::ALL)
+        .title(" Storage Bonus ")
+        .border_type(BorderType::Rounded)
+        .border_style(Style::default().fg(Color::Gray));
+
+    let mut lines = Vec::new();
+    if stockpile.food_bonus > 0.0 {
+        lines.push(Line::from(vec![
+            Span::raw("Food: +"),
+            Span::styled(
+                format!("{:.0}", stockpile.food_bonus),
+                Style::default().fg(Color::Yellow),
+            ),
+        ]));
+    }
+    if stockpile.wood_bonus > 0.0 {
+        lines.push(Line::from(vec![
+            Span::raw("Wood: +"),
+            Span::styled(
+                format!("{:.0}", stockpile.wood_bonus),
+                Style::default().fg(Color::Green),
+            ),
+        ]));
+    }
+    if stockpile.stone_bonus > 0.0 {
+        lines.push(Line::from(vec![
+            Span::raw("Stone: +"),
+            Span::styled(
+                format!("{:.0}", stockpile.stone_bonus),
+                Style::default().fg(Color::DarkGray),
+            ),
+        ]));
+    }
+
+    let p = Paragraph::new(lines)
+        .block(block)
+        .alignment(Alignment::Left);
+
+    frame.render_widget(p, area);
+}
+
+fn render_refining_details(frame: &mut Frame, area: Rect, progress: &RefiningProgress) {
+    let gauge = Gauge::default()
+        .block(
+            Block::default()
+                .title(" Production ")
+                .borders(Borders::ALL)
+                .border_type(BorderType::Rounded),
+        )
+        .gauge_style(Style::default().fg(Color::LightGreen))
+        .percent(((progress.current / progress.max) * 100.0) as u16);
+
+    frame.render_widget(gauge, area);
 }
 
 fn render_thought(frame: &mut Frame, area: Rect, thought: &Thought) {
@@ -368,5 +489,95 @@ mod tests {
 
         // Check Thought
         assert!(full_text.contains("Thinking..."));
+    }
+
+    #[test]
+    fn test_inspector_render_stockpile() {
+        use crate::layer1::building::BuildingType;
+
+        let mut world = World::new();
+        world.insert_resource(Selection::default());
+        let entity = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Stockpile,
+                },
+                Stockpile {
+                    food_bonus: 0.0,
+                    wood_bonus: 100.0,
+                    stone_bonus: 50.0,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
+
+        world.resource_mut::<Selection>().select_entity(entity);
+
+        let backend = TestBackend::new(40, 20);
+        let mut terminal = Terminal::new(backend).unwrap();
+
+        terminal
+            .draw(|f| {
+                render_inspector(f, f.area(), &world);
+            })
+            .unwrap();
+
+        let buffer = terminal.backend().buffer();
+        let cells: Vec<String> = buffer
+            .content
+            .iter()
+            .map(|c| c.symbol().to_string())
+            .collect();
+        let full_text = cells.join("");
+
+        assert!(full_text.contains("Stockpile"));
+        assert!(full_text.contains("Storage Bonus"));
+        assert!(full_text.contains("Wood: +100"));
+        assert!(full_text.contains("Stone: +50"));
+        // Food is 0, so it should NOT be there
+        assert!(!full_text.contains("Food: +0"));
+    }
+
+    #[test]
+    fn test_inspector_render_refining() {
+        use crate::layer1::building::BuildingType;
+
+        let mut world = World::new();
+        world.insert_resource(Selection::default());
+        let entity = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::LumberMill,
+                },
+                RefiningProgress {
+                    current: 50.0,
+                    max: 100.0,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
+
+        world.resource_mut::<Selection>().select_entity(entity);
+
+        let backend = TestBackend::new(40, 20);
+        let mut terminal = Terminal::new(backend).unwrap();
+
+        terminal
+            .draw(|f| {
+                render_inspector(f, f.area(), &world);
+            })
+            .unwrap();
+
+        let buffer = terminal.backend().buffer();
+        let cells: Vec<String> = buffer
+            .content
+            .iter()
+            .map(|c| c.symbol().to_string())
+            .collect();
+        let full_text = cells.join("");
+
+        assert!(full_text.contains("Lumber Mill"));
+        // "Production" is the title of the gauge block
+        assert!(full_text.contains("Production"));
     }
 }
