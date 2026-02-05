@@ -1,8 +1,5 @@
 use bevy_ecs::prelude::*;
-use ratatui::{
-    prelude::*,
-    widgets::Paragraph,
-};
+use ratatui::{prelude::*, widgets::Paragraph};
 
 use crate::layer1::{BuildMode, DesignationMode};
 use crate::shared::state::GameState;

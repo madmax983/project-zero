@@ -242,10 +242,7 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
     world.resource_mut::<OccupiedTiles>().0.insert((x, y));
 
     if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
-        log.add(format!(
-            "Construction started: {}",
-            building_type.label()
-        ));
+        log.add(format!("Construction started: {}", building_type.label()));
     }
 
     true

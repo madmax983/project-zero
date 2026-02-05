@@ -19,3 +19,4 @@ Implemented features. Architect: read this to understand current state.
 - [x] `022` Resource Stockpiles — `specs/022-resource-stockpiles.md` — completed 2026-02-04
 - [x] `019` Forestry System — `specs/019-forestry-system.md` — completed 2026-02-04
 - [x] `020` Construction Costs — `specs/020-construction-costs.md` — completed 2026-02-04
+- [x] `016` Emergent Utility AI System — `specs/016-utility-ai-system.md` — completed 2026-02-03
