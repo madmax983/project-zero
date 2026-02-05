@@ -186,8 +186,8 @@ pub fn movement_system(world: &mut World) {
                     .is_some_and(crate::layer1::terrain::TerrainType::is_walkable)
             };
             if !target_walkable {
-                let distance = (current_pos.x - target_pos.x).abs()
-                    + (current_pos.y - target_pos.y).abs();
+                let distance =
+                    (current_pos.x - target_pos.x).abs() + (current_pos.y - target_pos.y).abs();
                 if distance == 1 {
                     // Adjacent to unwalkable target - can work from here
                     world.entity_mut(pop_entity).insert(AtTarget);
@@ -245,8 +245,7 @@ pub fn movement_system(world: &mut World) {
                     .is_some_and(crate::layer1::terrain::TerrainType::is_walkable)
             };
             if !target_walkable {
-                let distance =
-                    (new_x - target_pos.x).abs() + (new_y - target_pos.y).abs();
+                let distance = (new_x - target_pos.x).abs() + (new_y - target_pos.y).abs();
                 if distance == 1 {
                     world.entity_mut(pop_entity).insert(AtTarget);
                 }
@@ -1138,7 +1137,11 @@ mod tests {
         for tick in 1..=5 {
             movement_system(&mut world);
             let pos = world.get::<GridPosition>(pop).unwrap();
-            assert_eq!(pos.x, tick, "Pop should be at x={} after {} ticks", tick, tick);
+            assert_eq!(
+                pos.x, tick,
+                "Pop should be at x={} after {} ticks",
+                tick, tick
+            );
         }
 
         // Should be at target now
@@ -1218,11 +1221,7 @@ mod tests {
             work_execution_system(&mut world);
 
             let pos = *world.get::<GridPosition>(pop).unwrap();
-            assert_eq!(
-                pos.x, tick,
-                "Tick {}: Pop should be at x={}",
-                tick, tick
-            );
+            assert_eq!(pos.x, tick, "Tick {}: Pop should be at x={}", tick, tick);
         }
 
         // After tick 4, pop should be adjacent to rock (at x=4) and marked AtTarget

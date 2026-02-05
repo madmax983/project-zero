@@ -79,6 +79,34 @@
 
 ---
 
+## Agency & AI
+
+### the urge / the pull
+
+**Replaces:** utility score, AI desire
+**Code reference:** `UtilityAI`
+**Usage:**
+- "The urge to rest grows."
+- "The pull of the fields is strong."
+
+### the weight
+
+**Replaces:** decision making, prioritization
+**Code reference:** Action selection logic
+**Usage:**
+- "The weight of choice."
+- "He feels the weight of the harvest."
+
+### the plan
+
+**Replaces:** action queue, HTN plan
+**Code reference:** `ActionPlan`
+**Usage:**
+- "A plan forms."
+- "The plan is broken."
+
+---
+
 ## Buildings
 
 ### works

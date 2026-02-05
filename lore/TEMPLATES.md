@@ -323,6 +323,26 @@ These fire during gameplay and get appended to the chronicle.
 "[COLONY] runs dry. No [RESOURCE]. It is a time of [CRISIS]."
 ```
 
+### VEIN_DEPLETED
+
+**Slots:** `[COLONY]`, `[YEAR]`, `[RESOURCE]`
+
+```
+"A vein of [RESOURCE] is spent. [YEAR]. [COLONY] digs deeper."
+"Year [YEAR]. The [RESOURCE] runs out. The earth is empty here."
+"[COLONY] reports: [RESOURCE] deposit exhausted. We must search again."
+```
+
+### CONSTRUCTION_HALTED
+
+**Slots:** `[COLONY]`, `[YEAR]`, `[BUILDING_TYPE]`, `[RESOURCE]`
+
+```
+"[BUILDING_TYPE] at [COLONY] halts. [YEAR]. Reason: [RESOURCE] shortage."
+"Work stops on the [BUILDING_TYPE]. We lack [RESOURCE]."
+"[YEAR]: The skeleton of a [BUILDING_TYPE] stands silent. No [RESOURCE] to finish it."
+```
+
 ### POP_ARRIVAL
 
 **Slots:** `[COLONY]`, `[YEAR]`, `[COUNT]`, `[ARRIVAL_METHOD]`
