@@ -472,13 +472,18 @@ pub fn track_plan_outcomes_system(world: &mut World) {
         let duration = sim_time - outcome.started_at;
 
         // Calculate success
-        let need_delta = match outcome.action {
-            ActionType::SatisfyHunger => needs_after.hunger - outcome.needs_before.hunger,
-            ActionType::SatisfyRest => needs_after.rest - outcome.needs_before.rest,
-            _ => 0.0,
+        let success = match outcome.action {
+            ActionType::SatisfyHunger => {
+                (needs_after.hunger - outcome.needs_before.hunger) > 0.05
+            }
+            ActionType::SatisfyRest => {
+                (needs_after.rest - outcome.needs_before.rest) > 0.05
+            }
+            // For now, assume other actions are successful if completed
+            ActionType::Work | ActionType::Socialize | ActionType::Explore | ActionType::Idle => {
+                true
+            }
         };
-
-        let success = need_delta > 0.05;
 
         // Update weights
         if let Some(mut weights) = world.get_mut::<UtilityWeights>(pop_entity) {
@@ -1036,5 +1041,43 @@ mod tests {
             "Pop should have learned from successful experiences"
         );
         assert_eq!(weights.action_success_count[&ActionType::SatisfyHunger], 5);
+    }
+
+    #[test]
+    fn test_track_plan_outcomes_work_action() {
+        let mut world = World::new();
+        world.insert_resource(SimulationTime {
+            tick: 100,
+            ..Default::default()
+        });
+        world.insert_resource(UtilityConfig::default());
+
+        let pop = world
+            .spawn((
+                Pop,
+                Needs::default(),
+                UtilityWeights::default(),
+                PlanOutcome {
+                    action: ActionType::Work,
+                    started_at: 50,
+                    needs_before: Needs::default(),
+                },
+            ))
+            .id();
+
+        // Run system
+        track_plan_outcomes_system(&mut world);
+
+        let weights = world.get::<UtilityWeights>(pop).unwrap();
+        // This should be 1 if Work is considered a success when completed
+        assert_eq!(
+            weights
+                .action_success_count
+                .get(&ActionType::Work)
+                .copied()
+                .unwrap_or(0),
+            1,
+            "Work action should be counted as success if completed"
+        );
     }
 }

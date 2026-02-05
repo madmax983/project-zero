@@ -78,27 +78,27 @@ impl Default for ColonyResources {
 impl ColonyResources {
     /// Adds wood, clamping to the maximum capacity.
     pub fn add_wood(&mut self, amount: f32) {
-        self.wood = (self.wood + amount).min(self.max_wood);
+        self.wood = (self.wood + amount).clamp(0.0, self.max_wood);
     }
 
     /// Adds stone, clamping to the maximum capacity.
     pub fn add_stone(&mut self, amount: f32) {
-        self.stone = (self.stone + amount).min(self.max_stone);
+        self.stone = (self.stone + amount).clamp(0.0, self.max_stone);
     }
 
     /// Adds food, clamping to the maximum capacity.
     pub fn add_food(&mut self, amount: f32) {
-        self.food = (self.food + amount).min(self.max_food);
+        self.food = (self.food + amount).clamp(0.0, self.max_food);
     }
 
     /// Adds planks, clamping to the maximum capacity.
     pub fn add_planks(&mut self, amount: f32) {
-        self.planks = (self.planks + amount).min(self.max_planks);
+        self.planks = (self.planks + amount).clamp(0.0, self.max_planks);
     }
 
     /// Adds blocks, clamping to the maximum capacity.
     pub fn add_blocks(&mut self, amount: f32) {
-        self.blocks = (self.blocks + amount).min(self.max_blocks);
+        self.blocks = (self.blocks + amount).clamp(0.0, self.max_blocks);
     }
 
     /// Checks if the colony can afford the given cost.
@@ -633,5 +633,22 @@ mod tests {
         // 3. Resources should increase (Wood)
         let resources = world.resource::<ColonyResources>();
         assert_eq!(resources.wood, 1.0);
+    }
+
+    #[test]
+    fn test_add_wood_clamps_to_max() {
+        let mut resources = ColonyResources::default();
+        resources.max_wood = 100.0;
+        resources.wood = 90.0;
+        resources.add_wood(20.0);
+        assert!((resources.wood - 100.0).abs() < f32::EPSILON);
+    }
+
+    #[test]
+    fn test_add_wood_clamps_to_zero() {
+        let mut resources = ColonyResources::default();
+        resources.wood = 10.0;
+        resources.add_wood(-20.0);
+        assert!((resources.wood - 0.0).abs() < f32::EPSILON, "Resources should not be negative");
     }
 }

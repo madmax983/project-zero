@@ -11,3 +11,7 @@
 ## [Building on Trees]
 **Learning:** `try_place_building` allows placing buildings on `TerrainType::Tree` without error. The tree terrain type persists underneath the building.
 **Action:** Documented this behavior with `test_build_on_tree`. Future "Clear Land" features must account for this state.
+
+## [AI Logic Blind Spot]
+**Learning:** `track_plan_outcomes_system` was evaluating ALL actions based on need reduction, causing non-need actions (Work, Socialize) to always fail and de-prioritize themselves.
+**Action:** When evaluating generic outcomes, ensure the success metric is applicable to the action type (e.g., task completion vs need satisfaction).
