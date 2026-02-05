@@ -14,3 +14,5 @@ pub mod state;
 pub mod menu;
 /// Time-tracking resources.
 pub mod time;
+/// Narrative generator for procedural lore.
+pub mod narrative;
