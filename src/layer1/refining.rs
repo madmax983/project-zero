@@ -55,33 +55,50 @@ pub fn process_refining_system(world: &mut World) {
     }
 
     // Apply updates
-    // We apply progress first, and track which jobs finished.
-    // Then we update resources. This avoids holding conflicting borrows.
+    // We apply progress first. If a job completes, we check resources AGAIN before finalizing.
+    // This prevents race conditions where multiple buildings compete for the same resource.
 
-    let mut finished_jobs = Vec::new();
+    let mut completing_entities = Vec::new();
 
     for (entity, work, input, output) in &updates {
-         if let Some(mut progress) = world.get_mut::<RefiningProgress>(*entity) {
-             progress.current += work;
-             if progress.is_complete() {
-                 progress.current = 0.0;
-                 finished_jobs.push((input, output));
-             }
-         }
+        if let Some(mut progress) = world.get_mut::<RefiningProgress>(*entity) {
+            progress.current += work;
+            if progress.is_complete() {
+                // Do not reset yet. Queue for resource check.
+                // We clone the input/output resources to process them later.
+                completing_entities.push((*entity, input.clone(), output.clone()));
+            }
+        }
     }
 
-    // Update Resources
-    if !finished_jobs.is_empty() {
-        let mut resources = world.resource_mut::<ColonyResources>();
-        for (input, output) in finished_jobs {
-            // Note: We rely on the start-of-frame snapshot for affordability check.
-            // If multiple buildings drain the same resource below zero in one frame, it is accepted for MVP.
-            // To be strictly safe, we would need to check `resources.can_afford(input)` again here.
-            // If we did check and failed, we would have already reset the progress (wasting work).
-            // A more complex system would separate "Work" from "Complete" steps or reserve resources.
-            resources.deduct(input);
-            resources.add_planks(output.planks);
-            resources.add_blocks(output.blocks);
+    // Process completions
+    // We iterate the queued completions and check resources transactionally.
+
+    if !completing_entities.is_empty() {
+        for (entity, input, output) in completing_entities {
+            let success = {
+                let mut resources = world.resource_mut::<ColonyResources>();
+                if resources.try_deduct(&input) {
+                    resources.add_planks(output.planks);
+                    resources.add_blocks(output.blocks);
+                    true
+                } else {
+                    false
+                }
+            };
+
+            if success {
+                // Reset progress
+                if let Some(mut progress) = world.get_mut::<RefiningProgress>(entity) {
+                    progress.current = 0.0;
+                }
+            } else {
+                // Resource shortage (race condition hit).
+                // Clamp progress to max so it stays "ready" and tries again next tick.
+                if let Some(mut progress) = world.get_mut::<RefiningProgress>(entity) {
+                    progress.current = progress.max;
+                }
+            }
         }
     }
 }
@@ -230,5 +247,36 @@ mod tests {
 
         let progress = world.query::<&RefiningProgress>().single(&world);
         assert_eq!(progress.current, 0.0);
+    }
+
+    #[test]
+    fn test_race_condition_underflow() {
+        let mut world = World::new();
+        let mut resources = ColonyResources::default();
+        resources.wood = 1.0;
+        resources.planks = 0.0;
+        world.insert_resource(resources);
+
+        // Mill 1
+        world.spawn((
+            Building { building_type: BuildingType::LumberMill },
+            GridPosition { x: 0, y: 0 },
+            RefiningProgress { current: 9.9, max: 10.0 },
+        ));
+        world.spawn((Pop, GridPosition { x: 0, y: 1 }));
+
+        // Mill 2
+        world.spawn((
+            Building { building_type: BuildingType::LumberMill },
+            GridPosition { x: 10, y: 10 },
+            RefiningProgress { current: 9.9, max: 10.0 },
+        ));
+        world.spawn((Pop, GridPosition { x: 10, y: 11 }));
+
+        process_refining_system(&mut world);
+
+        let res = world.resource::<ColonyResources>();
+        // With current bug, wood should be -1.0 (1.0 - 1.0 - 1.0)
+        assert!(res.wood >= 0.0, "Wood should not underflow: {}", res.wood);
     }
 }

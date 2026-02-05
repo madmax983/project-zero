@@ -34,7 +34,7 @@ use bevy_ecs::prelude::*;
 /// resources.food += 10.0;
 /// assert_eq!(resources.food, 10.0);
 /// ```
-#[derive(Resource, Debug)]
+#[derive(Resource, Debug, Clone)]
 pub struct ColonyResources {
     /// Total food available in the colony.
     pub food: f32,
@@ -119,17 +119,26 @@ impl ColonyResources {
             && self.blocks >= cost.blocks
     }
 
-    /// Deducts the given cost from the colony's resources.
+    /// Deducts the given cost from the colony's resources if affordable.
     ///
     /// # Parameters
     ///
     /// * `cost`: The resources to deduct.
-    pub fn deduct(&mut self, cost: &Self) {
-        self.food -= cost.food;
-        self.wood -= cost.wood;
-        self.stone -= cost.stone;
-        self.planks -= cost.planks;
-        self.blocks -= cost.blocks;
+    ///
+    /// # Returns
+    ///
+    /// True if the deduction was successful, false if insufficient resources.
+    pub fn try_deduct(&mut self, cost: &Self) -> bool {
+        if self.can_afford(cost) {
+            self.food -= cost.food;
+            self.wood -= cost.wood;
+            self.stone -= cost.stone;
+            self.planks -= cost.planks;
+            self.blocks -= cost.blocks;
+            true
+        } else {
+            false
+        }
     }
 }
 

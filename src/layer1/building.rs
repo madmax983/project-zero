@@ -255,7 +255,15 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
     }
 
     // Deduct cost
-    world.resource_mut::<ColonyResources>().deduct(&cost);
+    if !world.resource_mut::<ColonyResources>().try_deduct(&cost) {
+        // This should theoretically not happen because of `can_afford` check above,
+        // unless there's a race condition in a multithreaded context (Bevy systems are single threaded by default wrt mutable access).
+        // For safety, we return false here.
+        if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+            log.add(format!("Transaction failed for {}", building_type.label()));
+        }
+        return false;
+    }
 
     // Spawn building
     spawn_building(world, x, y, building_type);

@@ -11,3 +11,7 @@
 **2026-02-03 - [Integer Overflow in Coordinate Conversion]**
 **Threat:** Integer overflow in `screen_to_world` conversion allowing potential panics.
 **Defense:** Switched to `wrapping_add` for viewport coordinate calculations.
+
+**2026-02-03 - [Race Condition in Resource Refining]**
+**Threat:** Logic bug (race condition) allowed `ColonyResources` to underflow (become negative) when multiple buildings completed refining in the same tick.
+**Defense:** Replaced `ColonyResources::deduct` with `try_deduct` and refactored `process_refining_system` to use a transactional two-pass check (complete -> verify affordability -> deduct).
