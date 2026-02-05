@@ -12,6 +12,7 @@
 
 use super::needs::Needs;
 use super::terrain::{TerrainGrid, TerrainType};
+use super::utility_ai::{PopAction, UtilityWeights};
 use bevy_ecs::prelude::*;
 use rand::Rng;
 
@@ -100,7 +101,13 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
         };
 
         if is_walkable {
-            world.spawn((Pop, GridPosition { x, y }, Needs::default()));
+            world.spawn((
+                Pop,
+                GridPosition { x, y },
+                Needs::default(),
+                PopAction::default(),
+                UtilityWeights::default(),
+            ));
             spawned += 1;
         }
     }

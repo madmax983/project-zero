@@ -5,13 +5,11 @@ use ratatui::{
 };
 
 use crate::layer1::{
-    building::Building, needs::Needs, pop::Pop, thoughts::Thought, ColonyResources, Farm,
-    GridPosition, Housing, TerrainGrid,
+    ColonyResources, Farm, GridPosition, Housing, TerrainGrid, building::Building, needs::Needs,
+    pop::Pop, thoughts::Thought,
 };
 use crate::shared::selection::{Selection, SelectionTarget};
-use crate::ui::map::{
-    get_building_color, get_terrain_char, get_terrain_color,
-};
+use crate::ui::map::{get_building_color, get_terrain_char, get_terrain_color};
 
 /// Renders the inspector panel content based on current selection.
 pub fn render_inspector(frame: &mut Frame, area: Rect, world: &World) {
@@ -54,7 +52,9 @@ fn render_colony_stats(frame: &mut Frame, area: Rect, world: &World) {
         ]),
         Row::new(vec![
             Cell::from("Housing").style(Style::default().fg(Color::Cyan)),
-            Cell::from(format!("{housing_used}/{housing_capacity} ({housing_count} buildings)")),
+            Cell::from(format!(
+                "{housing_used}/{housing_capacity} ({housing_count} buildings)"
+            )),
         ]),
         Row::new(vec![
             Cell::from("Workers").style(Style::default().fg(Color::Cyan)),
@@ -111,7 +111,10 @@ fn render_tile_inspector(frame: &mut Frame, area: Rect, world: &World, x: i32, y
     frame.render_widget(
         Paragraph::new(Line::from(vec![
             Span::raw("Terrain: "),
-            Span::styled(name, Style::default().fg(color).add_modifier(Modifier::BOLD)),
+            Span::styled(
+                name,
+                Style::default().fg(color).add_modifier(Modifier::BOLD),
+            ),
         ])),
         layout[0],
     );
@@ -132,7 +135,7 @@ fn render_tile_inspector(frame: &mut Frame, area: Rect, world: &World, x: i32, y
     let visual = Paragraph::new(char)
         .style(Style::default().fg(color))
         .alignment(Alignment::Center);
-        // .block(Block::default().borders(Borders::NONE)); // Centered inside block
+    // .block(Block::default().borders(Borders::NONE)); // Centered inside block
 
     // Center the char vertically
     let v_layout = Layout::default()
@@ -149,7 +152,10 @@ fn render_tile_inspector(frame: &mut Frame, area: Rect, world: &World, x: i32, y
 
 fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity: Entity) {
     if !world.entities().contains(entity) {
-        frame.render_widget(Paragraph::new("Entity Despawned").style(Style::default().fg(Color::Red)), area);
+        frame.render_widget(
+            Paragraph::new("Entity Despawned").style(Style::default().fg(Color::Red)),
+            area,
+        );
         return;
     }
 
@@ -176,7 +182,10 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
 
     // 1. Name
     frame.render_widget(
-        Paragraph::new(Span::styled(name, Style::default().fg(color).add_modifier(Modifier::BOLD))),
+        Paragraph::new(Span::styled(
+            name,
+            Style::default().fg(color).add_modifier(Modifier::BOLD),
+        )),
         layout[0],
     );
 
@@ -203,8 +212,16 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         let hunger_percent = (needs.hunger * 100.0) as u16;
         let rest_percent = (needs.rest * 100.0) as u16;
 
-        let hunger_color = if needs.hunger < 0.3 { Color::Red } else { Color::Green };
-        let rest_color = if needs.rest < 0.3 { Color::Red } else { Color::Cyan };
+        let hunger_color = if needs.hunger < 0.3 {
+            Color::Red
+        } else {
+            Color::Green
+        };
+        let rest_color = if needs.rest < 0.3 {
+            Color::Red
+        } else {
+            Color::Cyan
+        };
 
         let hunger_gauge = Gauge::default()
             .block(Block::default().title("Hunger").borders(Borders::NONE))
@@ -229,7 +246,11 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
 
         let thought_text = Paragraph::new(format!("\"{}\"", thought.text))
             .wrap(Wrap { trim: true })
-            .style(Style::default().fg(Color::White).add_modifier(Modifier::ITALIC))
+            .style(
+                Style::default()
+                    .fg(Color::White)
+                    .add_modifier(Modifier::ITALIC),
+            )
             .block(thought_block);
 
         frame.render_widget(thought_text, layout[5]);
@@ -246,12 +267,20 @@ mod tests {
         let mut world = World::new();
         // Setup world
         world.insert_resource(Selection::default());
-        let entity = world.spawn((
-            Pop,
-            GridPosition { x: 1, y: 1 },
-            Needs { hunger: 0.5, rest: 0.8 },
-            Thought { text: "Thinking...".to_string(), tick: 0 }
-        )).id();
+        let entity = world
+            .spawn((
+                Pop,
+                GridPosition { x: 1, y: 1 },
+                Needs {
+                    hunger: 0.5,
+                    rest: 0.8,
+                },
+                Thought {
+                    text: "Thinking...".to_string(),
+                    tick: 0,
+                },
+            ))
+            .id();
 
         world.resource_mut::<Selection>().select_entity(entity);
 
@@ -259,9 +288,11 @@ mod tests {
         let backend = TestBackend::new(40, 20);
         let mut terminal = Terminal::new(backend).unwrap();
 
-        terminal.draw(|f| {
-            render_inspector(f, f.area(), &world);
-        }).unwrap();
+        terminal
+            .draw(|f| {
+                render_inspector(f, f.area(), &world);
+            })
+            .unwrap();
 
         let buffer = terminal.backend().buffer();
 
@@ -271,7 +302,9 @@ mod tests {
 
         // Check for specific strings
         // We can't easily check full content but we can check cells exist with text
-        let cells: Vec<String> = buffer.content.iter()
+        let cells: Vec<String> = buffer
+            .content
+            .iter()
             .map(|c| c.symbol().to_string())
             .collect();
         let full_text = cells.join("");

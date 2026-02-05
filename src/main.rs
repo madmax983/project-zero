@@ -22,11 +22,12 @@ use std::io;
 use std::time::{Duration, Instant};
 
 use scale::layer1::{
-    BuildMode, BuildingTracker, Chronicle, ChronicleUiState, ColonyResources, DesignationMode,
-    OccupiedTiles, Viewport, check_milestones_system,
-    clean_dead_residents_system, clean_dead_workers_system, consume_food_system, decay_needs_system,
-    generate_terrain, initial_chronicle_event, kill_starving_entities_system,
-    produce_food_system, restore_rest_in_housing_system, spawn_initial_pops,
+    BuildMode, BuildingTracker, Chronicle, ChronicleUiState, ColonyMemory, ColonyResources,
+    DesignationMode, OccupiedTiles, UtilityConfig, Viewport, check_milestones_system,
+    clean_dead_residents_system, clean_dead_workers_system, consume_food_system,
+    decay_needs_system, evaluate_actions_system, generate_terrain, initial_chronicle_event,
+    kill_starving_entities_system, produce_food_system, restore_rest_in_housing_system,
+    spawn_initial_pops, track_plan_outcomes_system, update_action_timer_system,
     update_resource_caps_system,
 };
 use scale::shared::input::{InputContextStack, InputRouter};
@@ -80,6 +81,8 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
     world.insert_resource(BuildingTracker::default());
     world.insert_resource(Selection::default());
     world.insert_resource(RenderCache::default());
+    world.insert_resource(UtilityConfig::default());
+    world.insert_resource(ColonyMemory::default());
 
     spawn_initial_pops(&mut world);
     initial_chronicle_event(&mut world);
@@ -118,6 +121,9 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
             if *world.resource::<GameState>() == GameState::Running {
                 let speed = world.resource::<SimulationTime>().speed;
                 if speed != SimSpeed::Paused {
+                    evaluate_actions_system(&mut world);
+                    update_action_timer_system(&mut world);
+
                     update_resource_caps_system(&mut world);
                     produce_food_system(&mut world);
                     restore_rest_in_housing_system(&mut world);
@@ -126,6 +132,9 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
                     kill_starving_entities_system(&mut world);
                     clean_dead_residents_system(&mut world);
                     clean_dead_workers_system(&mut world);
+
+                    track_plan_outcomes_system(&mut world);
+
                     check_milestones_system(&mut world);
                     world.resource_mut::<SimulationTime>().tick += 1;
                 }
@@ -183,7 +192,6 @@ fn render(world: &World, frame: &mut Frame) {
 #[cfg(test)]
 mod tests {
     use super::*;
-
 
     #[test]
     fn test_gamestate_derives() {

@@ -25,6 +25,8 @@ pub mod stockpile;
 pub mod terrain;
 /// Pop thoughts and personality.
 pub mod thoughts;
+/// Emergent utility AI system.
+pub mod utility_ai;
 
 pub use building::*;
 pub use chronicle::*;
@@ -37,3 +39,4 @@ pub use resources::*;
 pub use stockpile::*;
 pub use terrain::*;
 pub use thoughts::*;
+pub use utility_ai::*;

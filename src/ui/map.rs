@@ -44,7 +44,9 @@ pub fn update_render_cache(world: &mut World) {
 
             // Check for Designation
             if let Some(designation) = e.get::<Designation>() {
-                cache.designations.insert(*pos, designation.designation_type);
+                cache
+                    .designations
+                    .insert(*pos, designation.designation_type);
             }
         }
     }
@@ -98,9 +100,9 @@ pub fn build_terrain_spans(
 
             let (text, color) =
                 if let (Ok(ux), Ok(uy)) = (usize::try_from(world_x), usize::try_from(world_y)) {
-                    terrain
-                        .get(ux, uy)
-                        .map_or((" ", Color::Black), |tile| (get_terrain_char(tile), get_terrain_color(tile)))
+                    terrain.get(ux, uy).map_or((" ", Color::Black), |tile| {
+                        (get_terrain_char(tile), get_terrain_color(tile))
+                    })
                 } else {
                     (" ", Color::Black)
                 };
@@ -135,7 +137,10 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
                 // But span accepts Cow/String.
                 // We can just use a 1-char string or format.
                 // Or better, change get_building_char to return &'static str for consistency.
-                line_spans.push(Span::styled(text.to_string(), Style::default().fg(Color::White).bg(bg)));
+                line_spans.push(Span::styled(
+                    text.to_string(),
+                    Style::default().fg(Color::White).bg(bg),
+                ));
                 continue;
             }
 
@@ -187,9 +192,9 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
             // Otherwise render terrain
             let (text, color) =
                 if let (Ok(ux), Ok(uy)) = (usize::try_from(world_x), usize::try_from(world_y)) {
-                    ctx.terrain
-                        .get(ux, uy)
-                        .map_or((" ", Color::Black), |tile| (get_terrain_char(tile), get_terrain_color(tile)))
+                    ctx.terrain.get(ux, uy).map_or((" ", Color::Black), |tile| {
+                        (get_terrain_char(tile), get_terrain_color(tile))
+                    })
                 } else {
                     (" ", Color::Black)
                 };
@@ -304,8 +309,8 @@ pub const fn get_building_char(building: BuildingType) -> char {
 #[must_use]
 pub const fn get_building_color(building: BuildingType) -> Color {
     match building {
-        BuildingType::Housing => Color::Rgb(139, 90, 43),     // Brown
-        BuildingType::Farm => Color::Rgb(218, 165, 32),       // Goldenrod
+        BuildingType::Housing => Color::Rgb(139, 90, 43), // Brown
+        BuildingType::Farm => Color::Rgb(218, 165, 32),   // Goldenrod
         BuildingType::Stockpile => Color::Rgb(169, 169, 169), // DarkGray
     }
 }
