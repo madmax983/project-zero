@@ -148,7 +148,8 @@ pub fn process_start_plan_system(world: &mut World) {
 
 /// Moves pops 1 tile per tick toward their target (Manhattan-style).
 ///
-/// When a pop arrives at its target position, this system marks it with `AtTarget`.
+/// When a pop arrives at its target position (or adjacent for work), this system
+/// marks it with `AtTarget`.
 #[allow(
     clippy::cast_sign_loss,
     clippy::cast_possible_truncation,
@@ -162,17 +163,37 @@ pub fn movement_system(world: &mut World) {
     };
 
     // Collect pops with movement targets (that haven't arrived yet)
-    let pops_to_move: Vec<(Entity, GridPosition, GridPosition)> = world
+    let pops_to_move: Vec<(Entity, GridPosition, GridPosition, ActionType)> = world
         .query_filtered::<(Entity, &GridPosition, &MovementTarget), Without<AtTarget>>()
         .iter(world)
-        .map(|(e, pos, mt)| (e, *pos, mt.target_position))
+        .map(|(e, pos, mt)| (e, *pos, mt.target_position, mt.for_action))
         .collect();
 
-    for (pop_entity, current_pos, target_pos) in pops_to_move {
+    for (pop_entity, current_pos, target_pos, action) in pops_to_move {
         // Check if already at target
         if current_pos == target_pos {
             world.entity_mut(pop_entity).insert(AtTarget);
             continue;
+        }
+
+        // For work actions, check if adjacent to an unwalkable target (rock/tree)
+        // Pops work FROM adjacent tiles, not ON the target
+        if action == ActionType::Work {
+            let target_walkable = {
+                let terrain = world.resource::<TerrainGrid>();
+                terrain
+                    .get(target_pos.x as usize, target_pos.y as usize)
+                    .is_some_and(crate::layer1::terrain::TerrainType::is_walkable)
+            };
+            if !target_walkable {
+                let distance = (current_pos.x - target_pos.x).abs()
+                    + (current_pos.y - target_pos.y).abs();
+                if distance == 1 {
+                    // Adjacent to unwalkable target - can work from here
+                    world.entity_mut(pop_entity).insert(AtTarget);
+                    continue;
+                }
+            }
         }
 
         // Calculate movement direction (Manhattan)
@@ -213,6 +234,23 @@ pub fn movement_system(world: &mut World) {
         // Check if now at target
         if new_x == target_pos.x && new_y == target_pos.y {
             world.entity_mut(pop_entity).insert(AtTarget);
+        }
+
+        // For work actions on unwalkable targets, also check if now adjacent
+        if action == ActionType::Work {
+            let target_walkable = {
+                let terrain = world.resource::<TerrainGrid>();
+                terrain
+                    .get(target_pos.x as usize, target_pos.y as usize)
+                    .is_some_and(crate::layer1::terrain::TerrainType::is_walkable)
+            };
+            if !target_walkable {
+                let distance =
+                    (new_x - target_pos.x).abs() + (new_y - target_pos.y).abs();
+                if distance == 1 {
+                    world.entity_mut(pop_entity).insert(AtTarget);
+                }
+            }
         }
     }
 }
@@ -1068,5 +1106,134 @@ mod tests {
         arrival_handler_system(&mut world);
         let farm_comp = world.get::<Farm>(farm).unwrap();
         assert!(farm_comp.workers.contains(&pop));
+    }
+
+    #[test]
+    fn test_pop_moves_multiple_tiles_to_designation() {
+        let mut world = setup_world();
+
+        // Create a designation 5 tiles away
+        let designation = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Mine,
+                },
+                GridPosition { x: 5, y: 0 },
+            ))
+            .id();
+
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 0, y: 0 },
+                MovementTarget {
+                    target_entity: designation,
+                    target_position: GridPosition { x: 5, y: 0 },
+                    for_action: ActionType::Work,
+                },
+            ))
+            .id();
+
+        // Move 5 times - pop should reach destination
+        for tick in 1..=5 {
+            movement_system(&mut world);
+            let pos = world.get::<GridPosition>(pop).unwrap();
+            assert_eq!(pos.x, tick, "Pop should be at x={} after {} ticks", tick, tick);
+        }
+
+        // Should be at target now
+        assert!(world.get::<AtTarget>(pop).is_some());
+        let pos = world.get::<GridPosition>(pop).unwrap();
+        assert_eq!(pos.x, 5);
+        assert_eq!(pos.y, 0);
+    }
+
+    #[test]
+    fn test_movement_persists_across_evaluation_cycles() {
+        use crate::layer1::utility_ai::{
+            UtilityConfig, evaluate_actions_system, update_action_timer_system,
+        };
+        use crate::shared::time::SimulationTime;
+
+        let mut world = setup_world();
+        world.insert_resource(UtilityConfig::default());
+        world.insert_resource(SimulationTime::default());
+
+        // Put a rock at (5, 0) for mining
+        {
+            let mut terrain = world.resource_mut::<TerrainGrid>();
+            terrain.tiles[5] = TerrainType::Rock;
+        }
+
+        // Create a mining designation
+        let designation = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Mine,
+                },
+                GridPosition { x: 5, y: 0 },
+            ))
+            .id();
+
+        // Create a pop that will want to work
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 0, y: 0 },
+                Needs::default(),
+                PopAction::default(),
+                UtilityWeights::default(),
+            ))
+            .id();
+
+        // Tick 1: Pop should decide to work
+        update_action_timer_system(&mut world);
+        evaluate_actions_system(&mut world);
+
+        // Should have StartPlan for work
+        assert!(
+            world.get::<StartPlan>(pop).is_some(),
+            "Pop should have StartPlan after first evaluation"
+        );
+
+        // Process and start moving
+        cleanup_previous_assignment_system(&mut world);
+        process_start_plan_system(&mut world);
+        movement_system(&mut world);
+        arrival_handler_system(&mut world);
+        work_execution_system(&mut world);
+
+        let pos1 = world.get::<GridPosition>(pop).unwrap();
+        assert_eq!(pos1.x, 1, "Pop should have moved to x=1");
+
+        // Tick 2-4: Continue moving toward rock (stop adjacent at x=4)
+        // Pop can't stand ON the rock, so they work from adjacent tile
+        for tick in 2..=4 {
+            update_action_timer_system(&mut world);
+            evaluate_actions_system(&mut world);
+            cleanup_previous_assignment_system(&mut world);
+            process_start_plan_system(&mut world);
+            movement_system(&mut world);
+            arrival_handler_system(&mut world);
+            work_execution_system(&mut world);
+
+            let pos = *world.get::<GridPosition>(pop).unwrap();
+            assert_eq!(
+                pos.x, tick,
+                "Tick {}: Pop should be at x={}",
+                tick, tick
+            );
+        }
+
+        // After tick 4, pop should be adjacent to rock (at x=4) and marked AtTarget
+        assert!(
+            world.get::<AtTarget>(pop).is_some(),
+            "Pop should be AtTarget when adjacent to work designation"
+        );
+        let final_pos = *world.get::<GridPosition>(pop).unwrap();
+        assert_eq!(final_pos.x, 4, "Pop should stop adjacent to rock at x=4");
+
+        // Pop should now be at the designation
+        assert!(world.get::<AtTarget>(pop).is_some());
     }
 }
