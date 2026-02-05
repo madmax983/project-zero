@@ -33,12 +33,14 @@ use scale::layer1::{
     update_resource_caps_system, work_execution_system,
 };
 use scale::shared::input::{InputContextStack, InputRouter};
+use scale::shared::menu::MenuState;
 use scale::shared::selection::Selection;
 use scale::shared::state::GameState;
 use scale::shared::time::{SimSpeed, SimulationTime};
 
 use scale::ui::chronicle::render_chronicle;
 use scale::ui::map::{RenderCache, render_map, update_render_cache};
+use scale::ui::menu::render_main_menu;
 use scale::ui::panels::render_info_panel;
 use scale::ui::status::render_status_bar;
 
@@ -68,7 +70,8 @@ fn main() -> anyhow::Result<()> {
 fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Result<()> {
     // ECS setup
     let mut world = World::new();
-    world.insert_resource(GameState::Running);
+    world.insert_resource(GameState::default());
+    world.insert_resource(MenuState::default());
     world.insert_resource(generate_terrain(80, 50));
     world.insert_resource(Viewport::default());
     world.insert_resource(SimulationTime::default());
@@ -164,6 +167,12 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
 }
 
 fn render(world: &World, frame: &mut Frame) {
+    if *world.resource::<GameState>() == GameState::MainMenu {
+        let menu_state = world.resource::<MenuState>();
+        render_main_menu(frame, frame.area(), menu_state);
+        return;
+    }
+
     // Main vertical split: content + status bar
     let main_chunks = Layout::default()
         .direction(Direction::Vertical)
@@ -211,7 +220,7 @@ mod tests {
         assert_eq!(state1, state2);
 
         let state3 = GameState::default();
-        assert_eq!(state3, GameState::Running);
+        assert_eq!(state3, GameState::MainMenu);
 
         // Test Debug formatting
         let debug_str = format!("{state1:?}");

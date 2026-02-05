@@ -21,4 +21,5 @@ Implemented features. Architect: read this to understand current state.
 - [x] `020` Construction Costs — `specs/020-construction-costs.md` — completed 2026-02-04
 - [x] `016` Emergent Utility AI System — `specs/016-utility-ai-system.md` — completed 2026-02-03
 - [x] `021` Utility AI Work Action — `specs/021-utility-ai-work.md` — completed 2026-02-05
+- [x] `026` Main Menu — `specs/026-main-menu.md` — completed 2026-02-02
 - [x] `023` Refining Industry — `specs/023-refining-industry.md` — completed 2026-02-05

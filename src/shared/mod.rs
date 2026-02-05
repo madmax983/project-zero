@@ -10,5 +10,7 @@ pub mod log;
 pub mod selection;
 /// Game state definitions.
 pub mod state;
+/// Main menu state.
+pub mod menu;
 /// Time-tracking resources.
 pub mod time;
