@@ -9,6 +9,8 @@ pub mod building;
 pub mod chronicle;
 /// Designation system for player tools.
 pub mod designation;
+/// Execution layer bridging utility AI to actions.
+pub mod execution;
 /// Farm building and food production.
 pub mod farm;
 /// Housing and rest mechanics.
@@ -33,6 +35,7 @@ pub mod utility_ai_work_tests;
 pub use building::*;
 pub use chronicle::*;
 pub use designation::*;
+pub use execution::*;
 pub use farm::*;
 pub use housing::*;
 pub use needs::*;

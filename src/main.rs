@@ -23,12 +23,13 @@ use std::time::{Duration, Instant};
 
 use scale::layer1::{
     BuildMode, BuildingTracker, Chronicle, ChronicleUiState, ColonyMemory, ColonyResources,
-    DesignationMode, OccupiedTiles, UtilityConfig, Viewport, check_milestones_system,
-    clean_dead_residents_system, clean_dead_workers_system, consume_food_system,
-    decay_needs_system, evaluate_actions_system, generate_terrain, initial_chronicle_event,
-    kill_starving_entities_system, produce_food_system, restore_rest_in_housing_system,
-    spawn_initial_pops, track_plan_outcomes_system, update_action_timer_system,
-    update_resource_caps_system,
+    DesignationMode, OccupiedTiles, UtilityConfig, Viewport, arrival_handler_system,
+    check_milestones_system, clean_dead_residents_system, clean_dead_workers_system,
+    cleanup_previous_assignment_system, consume_food_system, decay_needs_system,
+    evaluate_actions_system, generate_terrain, initial_chronicle_event,
+    kill_starving_entities_system, movement_system, process_start_plan_system, produce_food_system,
+    restore_rest_in_housing_system, spawn_initial_pops, track_plan_outcomes_system,
+    update_action_timer_system, update_resource_caps_system, work_execution_system,
 };
 use scale::shared::input::{InputContextStack, InputRouter};
 use scale::shared::selection::Selection;
@@ -123,6 +124,13 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
                 if speed != SimSpeed::Paused {
                     evaluate_actions_system(&mut world);
                     update_action_timer_system(&mut world);
+
+                    // Execution layer: bridge AI decisions to actual actions
+                    cleanup_previous_assignment_system(&mut world);
+                    process_start_plan_system(&mut world);
+                    movement_system(&mut world);
+                    arrival_handler_system(&mut world);
+                    work_execution_system(&mut world);
 
                     update_resource_caps_system(&mut world);
                     produce_food_system(&mut world);

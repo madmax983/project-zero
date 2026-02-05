@@ -36,6 +36,24 @@ impl TerrainType {
             Self::Tree => "Tree",
         }
     }
+
+    /// Returns whether this terrain type is walkable by pops.
+    ///
+    /// Rock and Water are not walkable.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use scale::layer1::terrain::TerrainType;
+    ///
+    /// assert!(TerrainType::Grass.is_walkable());
+    /// assert!(!TerrainType::Rock.is_walkable());
+    /// assert!(!TerrainType::Water.is_walkable());
+    /// ```
+    #[must_use]
+    pub const fn is_walkable(self) -> bool {
+        !matches!(self, Self::Rock | Self::Water)
+    }
 }
 
 /// A 2D grid representing the game map's terrain layer.
@@ -265,5 +283,14 @@ mod tests {
     #[test]
     fn test_terrain_type_tree() {
         assert_eq!(TerrainType::Tree.name(), "Tree");
+    }
+
+    #[test]
+    fn test_terrain_type_is_walkable() {
+        assert!(TerrainType::Grass.is_walkable());
+        assert!(TerrainType::Dirt.is_walkable());
+        assert!(TerrainType::Tree.is_walkable());
+        assert!(!TerrainType::Rock.is_walkable());
+        assert!(!TerrainType::Water.is_walkable());
     }
 }
