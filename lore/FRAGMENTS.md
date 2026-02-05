@@ -466,6 +466,24 @@ What the memory is about.
 - the silence
 - the feast
 - the building of [BUILDING]
+- the deep earth
+- the falling trees
+- the mandate
+- the overflow
+
+---
+
+## Designation Fragments
+
+### [DESIGNATION_PHRASE]
+How pops describe receiving orders.
+
+- the order given
+- the task set
+- the work assigned
+- the burden shared
+- the path shown
+- the call to labor
 
 ---
 
@@ -621,6 +639,18 @@ Names for storage areas/buildings.
 - The Cache
 - The Vault
 - The Keep
+
+### [STOCKPILE_ADJECTIVE]
+Status of storage.
+
+- full
+- bursting
+- empty
+- secure
+- low
+- overflowing
+- guarded
+- waiting
 
 ---
 
