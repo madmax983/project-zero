@@ -252,10 +252,14 @@ pub fn arrival_handler_system(world: &mut World) {
                 };
 
                 if assigned {
-                    world.entity_mut(pop_entity).insert(AssignedTo {
-                        entity: target_entity,
-                        assignment_type: AssignmentType::FarmWorker,
-                    });
+                    world
+                        .entity_mut(pop_entity)
+                        .insert(AssignedTo {
+                            entity: target_entity,
+                            assignment_type: AssignmentType::FarmWorker,
+                        })
+                        .remove::<MovementTarget>()
+                        .remove::<AtTarget>();
                 } else {
                     // Farm full or despawned, clear movement
                     world
@@ -278,10 +282,14 @@ pub fn arrival_handler_system(world: &mut World) {
                 };
 
                 if assigned {
-                    world.entity_mut(pop_entity).insert(AssignedTo {
-                        entity: target_entity,
-                        assignment_type: AssignmentType::HousingResident,
-                    });
+                    world
+                        .entity_mut(pop_entity)
+                        .insert(AssignedTo {
+                            entity: target_entity,
+                            assignment_type: AssignmentType::HousingResident,
+                        })
+                        .remove::<MovementTarget>()
+                        .remove::<AtTarget>();
                 } else {
                     // Housing full or despawned, clear movement
                     world
