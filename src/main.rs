@@ -38,6 +38,8 @@ use scale::shared::selection::Selection;
 use scale::shared::state::GameState;
 use scale::shared::time::{SimSpeed, SimulationTime};
 
+use scale::experimental::biography::biography_monitor_system;
+
 use scale::ui::chronicle::render_chronicle;
 use scale::ui::map::{RenderCache, render_map, update_render_cache};
 use scale::ui::menu::render_main_menu;
@@ -148,6 +150,7 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
 
                     track_plan_outcomes_system(&mut world);
 
+                    biography_monitor_system(&mut world);
                     check_milestones_system(&mut world);
                     world.resource_mut::<SimulationTime>().tick += 1;
                 }
