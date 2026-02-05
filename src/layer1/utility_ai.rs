@@ -98,8 +98,10 @@ pub struct UtilityConfig {
 impl Default for UtilityConfig {
     fn default() -> Self {
         Self {
-            switch_threshold: 0.15,
-            evaluation_interval: 1,
+            // Ludwig: Increased to prevent "neurotic" switching. Pops must commit!
+            switch_threshold: 0.25,
+            // Ludwig: Re-evaluating every tick (0.1s) is too jittery. 1s feels more human.
+            evaluation_interval: 10,
             learning_rate: 0.05,
             weight_clamp: (0.5, 2.0),
         }
@@ -969,8 +971,8 @@ mod tests {
     #[test]
     fn test_utility_config_default() {
         let config = UtilityConfig::default();
-        assert_eq!(config.switch_threshold, 0.15);
-        assert_eq!(config.evaluation_interval, 1);
+        assert_eq!(config.switch_threshold, 0.25);
+        assert_eq!(config.evaluation_interval, 10);
         assert_eq!(config.learning_rate, 0.05);
         assert_eq!(config.weight_clamp, (0.5, 2.0));
     }

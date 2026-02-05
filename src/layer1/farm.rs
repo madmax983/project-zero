@@ -21,7 +21,8 @@ impl Default for Farm {
     }
 }
 
-const FOOD_PER_WORKER_PER_TICK: f32 = 0.005;
+// Ludwig: Balanced: 50 ticks (5s) work = 0.1 food (meal). 1 farmer feeds ~6 people.
+const FOOD_PER_WORKER_PER_TICK: f32 = 0.002;
 const FOOD_HUNGER_THRESHOLD: f32 = 0.7; // Eat when below this
 const FOOD_PER_MEAL: f32 = 0.1; // Food consumed per meal
 const HUNGER_PER_MEAL: f32 = 0.3; // Hunger restored per meal
@@ -185,8 +186,9 @@ mod tests {
         produce_food_system(&mut world);
 
         let resources = world.resource::<ColonyResources>();
+        // 2 workers * 0.002 = 0.004
         assert!(
-            resources.food >= 0.009,
+            resources.food >= 0.0039,
             "Two workers should produce more food"
         );
     }
@@ -207,10 +209,10 @@ mod tests {
 
         let resources = world.resource::<ColonyResources>();
         println!("Food accumulated: {}", resources.food);
-        // Use epsilon for float comparison
+        // 600 * 0.002 = 1.2
         assert!(
-            resources.food >= 2.99,
-            "600 ticks should accumulate ~3.0 food"
+            resources.food >= 1.19,
+            "600 ticks should accumulate ~1.2 food"
         );
     }
 
