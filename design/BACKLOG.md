@@ -17,3 +17,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 - [ ] `013` Schedule and System Execution Ordering — `specs/013-schedule-system-ordering.md`
 - [ ] `014` Rendering Architecture and Z-Order — `specs/014-rendering-architecture.md`
+
+## MVP — User Interface
+
+- [ ] `026` Main Menu — `specs/026-main-menu.md`
