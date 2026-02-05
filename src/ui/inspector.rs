@@ -4,9 +4,10 @@
 use bevy_ecs::prelude::*;
 use ratatui::{
     prelude::*,
-    widgets::{Block, BorderType, Borders, Cell, Gauge, Paragraph, Row, Table, Wrap},
+    widgets::{Block, BorderType, Borders, Cell, Gauge, List, ListItem, Paragraph, Row, Table, Wrap},
 };
 
+use crate::experimental::biography::Biography;
 use crate::layer1::{
     ColonyResources, Farm, GridPosition, Housing, TerrainGrid, building::Building, needs::Needs,
     pop::Pop, thoughts::Thought,
@@ -240,24 +241,69 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         frame.render_widget(rest_gauge, needs_layout[2]);
     }
 
-    // 4. Thoughts
-    if let Some(thought) = world.get::<Thought>(entity) {
-        let thought_block = Block::default()
-            .borders(Borders::TOP)
-            .title(" Thoughts ")
-            .title_style(Style::default().fg(Color::Magenta));
+    // 4. Thoughts & Biography
+    let bottom_area = layout[5];
+    let thought_opt = world.get::<Thought>(entity);
+    let bio_opt = world.get::<Biography>(entity);
 
-        let thought_text = Paragraph::new(format!("\"{}\"", thought.text))
-            .wrap(Wrap { trim: true })
-            .style(
-                Style::default()
-                    .fg(Color::White)
-                    .add_modifier(Modifier::ITALIC),
-            )
-            .block(thought_block);
+    if let Some(thought) = thought_opt {
+        if let Some(bio) = bio_opt {
+            let chunks = Layout::default()
+                .direction(Direction::Vertical)
+                .constraints([Constraint::Length(3), Constraint::Min(1)])
+                .split(bottom_area);
 
-        frame.render_widget(thought_text, layout[5]);
+            render_thought(frame, chunks[0], thought);
+            render_biography(frame, chunks[1], bio);
+        } else {
+            render_thought(frame, bottom_area, thought);
+        }
+    } else if let Some(bio) = bio_opt {
+        render_biography(frame, bottom_area, bio);
     }
+}
+
+fn render_thought(frame: &mut Frame, area: Rect, thought: &Thought) {
+    let thought_block = Block::default()
+        .borders(Borders::TOP)
+        .title(" Thoughts ")
+        .title_style(Style::default().fg(Color::Magenta));
+
+    let thought_text = Paragraph::new(format!("\"{}\"", thought.text))
+        .wrap(Wrap { trim: true })
+        .style(
+            Style::default()
+                .fg(Color::White)
+                .add_modifier(Modifier::ITALIC),
+        )
+        .block(thought_block);
+
+    frame.render_widget(thought_text, area);
+}
+
+fn render_biography(frame: &mut Frame, area: Rect, bio: &Biography) {
+    let bio_block = Block::default()
+        .borders(Borders::TOP)
+        .title(" Biography ")
+        .title_style(Style::default().fg(Color::Blue));
+
+    // Show last 5 events reversed
+    let events: Vec<ListItem> = bio
+        .events
+        .iter()
+        .rev()
+        .take(5)
+        .map(|e| {
+            ListItem::new(Line::from(vec![
+                Span::styled(format!("[{}] ", e.tick), Style::default().fg(Color::DarkGray)),
+                Span::raw(&e.text),
+            ]))
+        })
+        .collect();
+
+    let list = List::new(events).block(bio_block);
+
+    frame.render_widget(list, area);
 }
 
 #[cfg(test)]
