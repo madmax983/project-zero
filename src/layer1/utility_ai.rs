@@ -299,12 +299,11 @@ pub fn evaluate_work<'a>(
 
 /// Evaluates the utility of being idle.
 ///
-/// Idle is only attractive when needs are very low (pops prefer action).
-/// Scaled by 0.3 so work (base 0.5) can compete when needs are satisfied.
+/// Idle is a low-priority fallback action. Pops should prefer productive
+/// activities (work, eating, resting) over standing around.
 #[must_use]
-pub fn evaluate_idle(needs: &Needs) -> f32 {
-    let worst_need = needs.hunger.min(needs.rest);
-    worst_need.powi(2) * 0.3
+pub fn evaluate_idle(_needs: &Needs) -> f32 {
+    0.05
 }
 
 /// System to update commitment timers.
