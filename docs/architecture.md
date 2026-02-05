@@ -10,8 +10,12 @@ title Component Diagram - SCALE System Architecture
 
 Container(Main, "Main Entry", "Rust/Crossterm", "Initializes World, runs Game Loop")
 
-Container_Boundary(Simulation, "Simulation Core") {
-    Component(Layer1, "Layer 1", "Planetary Sim", "Terrain, Pops, Buildings")
+Container_Boundary(Simulation, "Simulation Core (Layer 1)") {
+    Component(UtilityAI, "Utility AI", "utility_ai.rs", "Evaluates Needs & Desires")
+    Component(Pops, "Pops", "pop.rs", "Agents with Needs & Thoughts")
+    Component(World, "World Entities", "farm.rs, housing.rs", "Interactable Buildings")
+    Component(Resources, "Colony Resources", "resources.rs", "Global Inventory")
+    Component(Map, "Map/Terrain", "map.rs", "Spatial Grid")
 }
 
 Container(Shared, "Shared Lib", "Utilities", "GameState, Time, Input, Logs")
@@ -24,16 +28,20 @@ Container_Boundary(UI, "UI Layer") {
 }
 
 Rel(Main, Shared, "Uses")
-Rel(Main, Layer1, "Runs Systems")
+Rel(Main, UtilityAI, "Runs Systems")
 Rel(Main, MapRender, "Calls Render")
-Rel(Main, Inspector, "Calls Render")
 
-Rel(Layer1, Shared, "Depends on")
+Rel(UtilityAI, Pops, "Reads/Writes")
+Rel(UtilityAI, World, "Queries Availability")
+Rel(UtilityAI, Map, "Calculates Distance")
+
+Rel(Pops, World, "Interacts with")
+Rel(Pops, Resources, "Consumes/Produces")
 
 Rel(MapRender, Shared, "Reads State")
-Rel(MapRender, Layer1, "Reads Entities")
+Rel(MapRender, Map, "Reads Entities")
 Rel(Inspector, Shared, "Reads Selection")
-Rel(Inspector, Layer1, "Reads Components")
+Rel(Inspector, Pops, "Reads Components")
 ```
 
 ## The Game Loop
@@ -55,7 +63,7 @@ sequenceDiagram
 
         opt Simulation Tick
             Main->>ECS: run_schedule()
-            ECS->>ECS: Systems Update (Produce Food, Move, etc.)
+            ECS->>ECS: Systems Update (Utility AI, Refining, etc.)
         end
 
         Main->>UI: render(world, frame)
@@ -66,6 +74,38 @@ sequenceDiagram
             UI->>ECS: Query Map/Entities
             ECS-->>UI: Data
             UI-->>User: Draw Widgets
+        end
+    end
+```
+
+## Utility AI Decision Loop
+
+The "Brain" of the simulation. Pops decide what to do based on internal needs and external context.
+
+```mermaid
+sequenceDiagram
+    participant System as evaluate_actions_system
+    participant Pop as Pop Entity
+    participant Needs as Needs Component
+    participant World as World State
+    participant Memory as Utility Weights
+
+    loop Every Tick (Staggered)
+        System->>Pop: Check Commitment Timer
+        alt Timer Expired
+            System->>Needs: Read Hunger/Rest
+            Needs-->>System: Urgency Scores
+
+            rect rgb(40, 40, 50)
+                Note right of System: Evaluation Phase
+                System->>World: Query Farms/Housing
+                System->>Memory: Get Learned Weights
+                System->>System: Calculate Utility (Action = Urgency * Context * Weight)
+            end
+
+            System->>Pop: Update PopAction (Best Score)
+        else Timer Active
+            System->>Pop: Continue Current Action
         end
     end
 ```
@@ -103,3 +143,4 @@ sequenceDiagram
 - [ADR 002: ECS-TUI Hybrid](./adr/002-ecs-tui-hybrid.md)
 - [ADR 003: YAGNI - Excision of Layers 2 and 3](./adr/003-yagni-excision-of-layers-2-and-3.md)
 - [ADR 004: Modular UI Architecture](./adr/004-modular-ui-architecture.md)
+- [ADR 005: Adopt Emergent Utility AI](./adr/005-adopt-emergent-utility-ai.md)
