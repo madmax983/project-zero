@@ -1,3 +1,32 @@
+//! Utility AI System and Action Planning.
+//!
+//! This module implements the decision-making brain of the colony's pops.
+//! It uses a Utility-based approach where agents score potential actions based on:
+//! * **Internal Needs**: Hunger, Rest (Urgency curves).
+//! * **Context**: Distance to targets, crowding/availability.
+//! * **Learned Weights**: Reinforcement learning based on past successes.
+//!
+//! # Key Concepts
+//!
+//! * **Utility Scoring**: Each possible action (Eat, Sleep, Work) is assigned a floating-point score (0.0 - 1.0+).
+//! * **HTN Planning**: Once a high-level goal is chosen (e.g., `SatisfyHunger`), the agent forms a plan (currently simplified).
+//! * **Reinforcement Learning**: Agents maintain `UtilityWeights` that adjust over time. If a farm is far but always has food, the agent learns to value availability over distance.
+//!
+//! # The Decision Loop
+//!
+//! 1. `evaluate_actions_system` runs periodically (defined by `UtilityConfig`).
+//! 2. It queries all available interactables (Farms, Housing, Designations).
+//! 3. It calculates a score: `Utility = Urgency * Context * History`.
+//! 4. If the best new score exceeds the current action's utility by `switch_threshold`, the agent switches.
+//!
+//! # Example
+//!
+//! A hungry pop (Hunger 0.1) considers two farms:
+//! * Farm A: Close (Distance 2) but Crowded (Full).
+//! * Farm B: Far (Distance 20) but Empty.
+//!
+//! Depending on their `UtilityWeights` (do they hate walking? do they hate crowds?), they will pick one.
+
 use crate::layer1::farm::Farm;
 use crate::layer1::housing::Housing;
 use crate::layer1::map::GridPosition;
@@ -6,31 +35,55 @@ use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
 
-/// High-level action types pops can choose
+/// High-level action types pops can choose.
+///
+/// Each variant represents a broad goal the agent is trying to achieve.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::utility_ai::ActionType;
+///
+/// let action = ActionType::SatisfyHunger;
+/// assert_eq!(format!("{:?}", action), "SatisfyHunger");
+/// ```
 #[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
 pub enum ActionType {
-    /// Eat food to reduce hunger
+    /// Eat food to reduce hunger.
     SatisfyHunger,
-    /// Sleep to reduce fatigue
+    /// Sleep to reduce fatigue.
     SatisfyRest,
-    /// Interact with other pops
+    /// Interact with other pops (socialize).
     Socialize,
-    /// Explore the map
+    /// Explore the map.
     Explore,
-    /// Perform designated work (Mine, Build, Chop)
+    /// Perform designated work (Mine, Build, Chop).
     Work,
-    /// Do nothing
+    /// Do nothing.
     Idle,
 }
 
-/// Pop's current action and commitment state
+/// Pop's current action and commitment state.
+///
+/// Tracks what an agent is currently doing and for how long.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::utility_ai::{PopAction, ActionType};
+///
+/// let mut action = PopAction::default();
+/// action.current = ActionType::Work;
+/// assert_eq!(action.ticks_committed, 0);
+/// ```
 #[derive(Component, Debug)]
 pub struct PopAction {
-    /// The current action being performed
+    /// The current action being performed.
     pub current: ActionType,
-    /// The utility score of the current action
+    /// The utility score of the current action.
+    /// Used to prevent "dithering" (rapidly switching between similar actions).
     pub current_utility: f32,
-    /// How many ticks the pop has been doing this action
+    /// How many ticks the pop has been doing this action.
     pub ticks_committed: u32,
 }
 
@@ -44,18 +97,34 @@ impl Default for PopAction {
     }
 }
 
-/// Learned utility weights (reinforcement learning)
+/// Learned utility weights (reinforcement learning).
+///
+/// These weights modify how an agent scores potential actions. They evolve over time
+/// based on the success or failure of previous attempts.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::utility_ai::UtilityWeights;
+///
+/// let weights = UtilityWeights::default();
+/// // Default neutral weights
+/// assert_eq!(weights.distance_weight, 1.0);
+/// ```
 #[derive(Component, Clone, Debug)]
 pub struct UtilityWeights {
-    /// Weight for distance factor (lower distance is better)
+    /// Weight for distance factor (lower distance is better).
+    /// > 1.0 means the agent is "lazy" (hates walking).
+    /// < 1.0 means the agent is "active" (doesn't mind travel).
     pub distance_weight: f32,
-    /// Weight for availability factor (less crowded is better)
+    /// Weight for availability factor (less crowded is better).
+    /// > 1.0 means the agent dislikes crowds.
     pub availability_weight: f32,
-    /// Weight for social factor
+    /// Weight for social factor.
     pub social_weight: f32,
-    /// Count of successful actions per type
+    /// Count of successful actions per type.
     pub action_success_count: HashMap<ActionType, u32>,
-    /// Count of attempted actions per type
+    /// Count of attempted actions per type.
     pub action_attempt_count: HashMap<ActionType, u32>,
 }
 
@@ -71,27 +140,45 @@ impl Default for UtilityWeights {
     }
 }
 
-/// Tracks HTN plan for learning
+/// Tracks HTN plan for learning.
+///
+/// Attached when an action starts, removed when it ends.
+/// Used to calculate the "Delta" (improvement) in needs.
 #[derive(Component, Debug)]
 pub struct PlanOutcome {
-    /// The action type being tracked
+    /// The action type being tracked.
     pub action: ActionType,
-    /// Tick when the action started
+    /// Tick when the action started.
     pub started_at: u64,
-    /// Needs state before the action
+    /// Needs state before the action.
     pub needs_before: Needs,
 }
 
-/// Global configuration for utility system
+/// Global configuration for utility system.
+///
+/// Controls the pacing and sensitivity of the AI.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::utility_ai::UtilityConfig;
+///
+/// let config = UtilityConfig::default();
+/// // Agents stick to decisions until a better one is 15% better
+/// assert_eq!(config.switch_threshold, 0.15);
+/// ```
 #[derive(Resource, Clone)]
 pub struct UtilityConfig {
-    /// Minimum utility difference required to switch actions
+    /// Minimum utility difference required to switch actions.
+    /// Prevents rapid oscillation between similar options.
     pub switch_threshold: f32,
-    /// How often (in ticks) to re-evaluate actions
+    /// How often (in ticks) to re-evaluate actions.
+    /// Higher values improve performance but reduce responsiveness.
     pub evaluation_interval: u32,
-    /// How fast weights adjust (0.0 to 1.0)
+    /// How fast weights adjust (0.0 to 1.0).
+    /// Higher values mean agents learn (and forget) quickly.
     pub learning_rate: f32,
-    /// Min and max values for weights
+    /// Min and max values for weights to prevent extreme behaviors.
     pub weight_clamp: (f32, f32),
 }
 
@@ -106,42 +193,78 @@ impl Default for UtilityConfig {
     }
 }
 
-/// Colony-wide memory (zeitgeist)
+/// Colony-wide memory (zeitgeist).
+///
+/// Stores aggregate statistics about the colony's performance.
 #[derive(Resource, Default, Clone)]
 pub struct ColonyMemory {
-    /// Total successful actions across all pops
+    /// Total successful actions across all pops.
     pub total_successful_actions: HashMap<ActionType, u32>,
-    /// Average duration of actions
+    /// Average duration of actions.
     pub average_action_duration: HashMap<ActionType, u32>,
 }
 
-/// Marker component to trigger HTN plan creation
+/// Marker component to trigger HTN plan creation.
 #[derive(Component)]
 pub struct StartPlan {
-    /// The action to plan for
+    /// The action to plan for.
     pub action: ActionType,
-    /// The target entity (if any)
+    /// The target entity (if any).
     pub target: Option<Entity>,
 }
 
-/// Stub for HTN Plan component (future integration)
+/// Stub for HTN Plan component (future integration).
 #[derive(Component)]
 pub struct Plan;
 
 /// Calculates urgency from a need value (0.0-1.0).
+///
 /// Lower need value = higher urgency.
+///
+/// # Returns
+/// A value between 0.0 (satisfied) and 1.0 (critical).
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::utility_ai::need_response_curve;
+///
+/// // Full need (satisfied) -> low urgency
+/// assert!(need_response_curve(1.0) < 0.1);
+///
+/// // Empty need (starving) -> high urgency
+/// assert!(need_response_curve(0.0) > 0.9);
+/// ```
 #[must_use]
 pub fn need_response_curve(need_value: f32) -> f32 {
     need_value.mul_add(-need_value, 1.0)
 }
 
 /// Calculates Manhattan distance between two positions.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::utility_ai::manhattan_distance;
+/// use scale::layer1::pop::GridPosition;
+///
+/// let a = GridPosition { x: 0, y: 0 };
+/// let b = GridPosition { x: 3, y: 4 };
+/// assert_eq!(manhattan_distance(&a, &b), 7);
+/// ```
 #[must_use]
 pub const fn manhattan_distance(pos1: &GridPosition, pos2: &GridPosition) -> i32 {
     (pos1.x - pos2.x).abs() + (pos1.y - pos2.y).abs()
 }
 
 /// Calculates a score based on context (distance, availability).
+///
+/// Combines spatial and social factors into a multiplier (0.0 - 1.0).
+///
+/// # Parameters
+/// * `pop_pos`: Where the agent is.
+/// * `target_pos`: Where the target (Farm, Bed) is.
+/// * `weights`: The agent's personal preferences.
 #[must_use]
 pub fn calculate_context_score(
     pop_pos: GridPosition,
@@ -301,12 +424,24 @@ pub fn evaluate_work<'a>(
 ///
 /// Idle is a low-priority fallback action. Pops should prefer productive
 /// activities (work, eating, resting) over standing around.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::utility_ai::evaluate_idle;
+/// use scale::layer1::needs::Needs;
+///
+/// let needs = Needs::default();
+/// assert_eq!(evaluate_idle(&needs), 0.05);
+/// ```
 #[must_use]
 pub const fn evaluate_idle(_needs: &Needs) -> f32 {
     0.05
 }
 
 /// System to update commitment timers.
+///
+/// Increments `ticks_committed` for every pop each tick.
 pub fn update_action_timer_system(world: &mut World) {
     let mut query = world.query::<&mut PopAction>();
     for mut action in query.iter_mut(world) {
@@ -315,6 +450,10 @@ pub fn update_action_timer_system(world: &mut World) {
 }
 
 /// System to evaluate and choose actions for pops.
+///
+/// This is the "Brain" of the colony. It iterates over all pops, checks if they
+/// are ready to re-evaluate (based on `evaluation_interval`), and picks the best
+/// action available.
 pub fn evaluate_actions_system(world: &mut World) {
     let config = world.resource::<UtilityConfig>().clone();
 
@@ -446,6 +585,10 @@ pub fn update_weights_from_outcome(
 }
 
 /// System to track completed plans and trigger learning.
+///
+/// This system looks for entities with a `PlanOutcome` but no active `Plan`.
+/// It compares the `needs_before` with current needs to determine if the action
+/// was successful, then updates the pop's `UtilityWeights`.
 pub fn track_plan_outcomes_system(world: &mut World) {
     let config = world.resource::<UtilityConfig>().clone();
     let sim_time = world.resource::<SimulationTime>().tick;
