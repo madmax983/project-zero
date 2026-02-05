@@ -5,6 +5,7 @@ use crate::layer1::{
     BuildMode, ChronicleUiState, DesignationMode, DesignationType, GridPosition, Viewport,
     try_cancel_designation, try_designate, try_place_building,
 };
+use crate::shared::menu::MenuState;
 use crate::shared::selection::{Selection, handle_selection_click};
 use crate::shared::state::GameState;
 use crate::shared::time::{SimSpeed, SimulationTime};
@@ -12,8 +13,10 @@ use crate::shared::time::{SimSpeed, SimulationTime};
 /// Defines the current input handling context.
 #[derive(Clone, Copy, PartialEq, Eq, Debug, Default, Hash)]
 pub enum InputContext {
-    /// Normal game mode.
+    /// Main Menu mode.
     #[default]
+    MainMenu,
+    /// Normal game mode.
     Normal,
     /// Building placement mode.
     BuildMode,
@@ -32,7 +35,7 @@ pub struct InputContextStack {
 impl Default for InputContextStack {
     fn default() -> Self {
         Self {
-            stack: vec![InputContext::Normal],
+            stack: vec![InputContext::MainMenu],
         }
     }
 }
@@ -84,6 +87,7 @@ impl InputRouter {
         let context = world.resource::<InputContextStack>().current();
 
         match context {
+            InputContext::MainMenu => handle_main_menu_mode(world, key),
             InputContext::Normal => handle_normal_mode(world, key),
             InputContext::BuildMode => handle_build_mode(world, key),
             InputContext::DesignationMode => handle_designation_mode(world, key),
@@ -127,6 +131,7 @@ fn handle_normal_mode(world: &mut World, key: KeyEvent) {
                 GameState::Running => GameState::Paused,
                 GameState::Paused => GameState::Running,
                 GameState::Quitting => GameState::Quitting,
+                GameState::MainMenu => GameState::MainMenu,
             };
         }
         KeyCode::Char('1') => {
@@ -191,6 +196,37 @@ fn handle_normal_mode(world: &mut World, key: KeyEvent) {
                 .push(InputContext::Overlay);
             world.resource_mut::<ChronicleUiState>().is_open = true;
             *world.resource_mut::<GameState>() = GameState::Paused;
+        }
+        _ => {}
+    }
+}
+
+fn handle_main_menu_mode(world: &mut World, key: KeyEvent) {
+    match key.code {
+        KeyCode::Up | KeyCode::Char('w') => {
+            world.resource_mut::<MenuState>().prev();
+        }
+        KeyCode::Down | KeyCode::Char('s') => {
+            world.resource_mut::<MenuState>().next();
+        }
+        KeyCode::Enter | KeyCode::Char(' ') => {
+            let selected = world.resource::<MenuState>().selected_index;
+            match selected {
+                0 => {
+                    // Start Game
+                    *world.resource_mut::<GameState>() = GameState::Running;
+                    let mut stack = world.resource_mut::<InputContextStack>();
+                    stack.stack = vec![InputContext::Normal];
+                }
+                1 => {
+                    // Quit
+                    *world.resource_mut::<GameState>() = GameState::Quitting;
+                }
+                _ => {}
+            }
+        }
+        KeyCode::Esc | KeyCode::Char('q') => {
+            *world.resource_mut::<GameState>() = GameState::Quitting;
         }
         _ => {}
     }
@@ -336,13 +372,13 @@ mod tests {
     #[test]
     fn test_input_context_default() {
         let context = InputContext::default();
-        assert_eq!(context, InputContext::Normal);
+        assert_eq!(context, InputContext::MainMenu);
     }
 
     #[test]
     fn test_input_context_stack_push_pop() {
         let mut stack = InputContextStack::default();
-        assert_eq!(stack.current(), InputContext::Normal);
+        assert_eq!(stack.current(), InputContext::MainMenu);
 
         stack.push(InputContext::BuildMode);
         assert_eq!(stack.current(), InputContext::BuildMode);
@@ -354,24 +390,26 @@ mod tests {
         assert_eq!(stack.current(), InputContext::BuildMode);
 
         stack.pop();
-        assert_eq!(stack.current(), InputContext::Normal);
+        assert_eq!(stack.current(), InputContext::MainMenu);
     }
 
     #[test]
-    fn test_cannot_pop_normal_context() {
+    fn test_cannot_pop_main_menu_context() {
         let mut stack = InputContextStack::default();
-        assert_eq!(stack.current(), InputContext::Normal);
+        assert_eq!(stack.current(), InputContext::MainMenu);
 
-        // Popping normal should do nothing (always one context)
+        // Popping base should do nothing (always one context)
         stack.pop();
-        assert_eq!(stack.current(), InputContext::Normal);
+        assert_eq!(stack.current(), InputContext::MainMenu);
     }
 
     #[test]
     fn test_input_router_normal_mode_quit() {
         let mut world = World::new();
         world.insert_resource(GameState::Running);
-        world.insert_resource(InputContextStack::default());
+        let mut stack = InputContextStack::default();
+        stack.push(InputContext::Normal);
+        world.insert_resource(stack);
 
         let mut router = InputRouter::new();
         router.route(&mut world, key_event(KeyCode::Char('q')));
@@ -383,7 +421,9 @@ mod tests {
     fn test_input_router_normal_mode_esc_clears_selection() {
         let mut world = World::new();
         world.insert_resource(GameState::Running);
-        world.insert_resource(InputContextStack::default());
+        let mut stack = InputContextStack::default();
+        stack.push(InputContext::Normal);
+        world.insert_resource(stack);
         let mut selection = Selection::default();
         selection.select_tile(10, 10);
         world.insert_resource(selection);
@@ -399,7 +439,9 @@ mod tests {
     fn test_input_router_normal_mode_esc_quits_if_no_selection() {
         let mut world = World::new();
         world.insert_resource(GameState::Running);
-        world.insert_resource(InputContextStack::default());
+        let mut stack = InputContextStack::default();
+        stack.push(InputContext::Normal);
+        world.insert_resource(stack);
         world.insert_resource(Selection::default()); // No selection
 
         let mut router = InputRouter::new();
@@ -431,17 +473,17 @@ mod tests {
     fn test_input_router_overlay_escape_pops_context() {
         let mut world = World::new();
         let mut stack = InputContextStack::default();
-        stack.push(InputContext::Overlay);
+        stack.push(InputContext::Overlay); // [MainMenu, Overlay]
         world.insert_resource(stack);
         world.insert_resource(ChronicleUiState { is_open: true });
 
         let mut router = InputRouter::new();
         router.route(&mut world, key_event(KeyCode::Esc));
 
-        // Escape in overlay should pop back to normal
+        // Escape in overlay should pop back to base
         assert_eq!(
             world.resource::<InputContextStack>().current(),
-            InputContext::Normal
+            InputContext::MainMenu
         );
         assert!(!world.resource::<ChronicleUiState>().is_open);
     }
@@ -450,7 +492,9 @@ mod tests {
     fn test_chronicle_toggle() {
         let mut world = World::new();
         world.insert_resource(GameState::Running);
-        world.insert_resource(InputContextStack::default());
+        let mut stack = InputContextStack::default();
+        stack.push(InputContext::Normal);
+        world.insert_resource(stack);
         world.insert_resource(ChronicleUiState::default());
 
         let mut router = InputRouter::new();
@@ -486,9 +530,12 @@ mod tests {
         world.insert_resource(GameState::Running);
         world.insert_resource(SimulationTime::default());
         world.insert_resource(Viewport::default());
-        world.insert_resource(InputContextStack::default());
+        let mut stack = InputContextStack::default();
+        stack.push(InputContext::Normal);
+        world.insert_resource(stack);
         world.insert_resource(BuildMode::default());
-        world.insert_resource(DesignationMode::default()); // Needs default resource
+        world.insert_resource(DesignationMode::default());
+        world.insert_resource(MenuState::default()); // Added for GameState toggle check if needed
 
         let mut router = InputRouter::new();
 
@@ -507,7 +554,9 @@ mod tests {
     fn test_viewport_overflow_safety() {
         let mut world = World::new();
         world.insert_resource(GameState::Running);
-        world.insert_resource(InputContextStack::default());
+        let mut stack = InputContextStack::default();
+        stack.push(InputContext::Normal);
+        world.insert_resource(stack);
         world.insert_resource(Viewport {
             x: i32::MAX,
             y: i32::MIN,
@@ -557,7 +606,9 @@ mod tests {
     fn test_designation_mode_entry_and_exit() {
         let mut world = World::new();
         world.insert_resource(GameState::Running);
-        world.insert_resource(InputContextStack::default());
+        let mut stack = InputContextStack::default();
+        stack.push(InputContext::Normal);
+        world.insert_resource(stack);
         world.insert_resource(Viewport::default());
         world.insert_resource(DesignationMode::default());
 
@@ -598,7 +649,9 @@ mod tests {
     #[test]
     fn test_route_mouse_normal_mode_selects() {
         let mut world = World::new();
-        world.insert_resource(InputContextStack::default()); // Normal
+        let mut stack = InputContextStack::default();
+        stack.push(InputContext::Normal);
+        world.insert_resource(stack);
         world.insert_resource(Viewport::default());
         world.insert_resource(Selection::default());
         // Need GridPosition/Entity to select? Or just select tile.
