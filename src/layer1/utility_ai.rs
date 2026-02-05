@@ -6,6 +6,28 @@ use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
 
+const DISTANCE_FACTOR_SCALE: f32 = 0.1;
+const DISTANCE_FACTOR_OFFSET: f32 = 1.0;
+const BASE_WORK_UTILITY: f32 = 0.5;
+const IDLE_UTILITY: f32 = 0.05;
+const SUCCESS_MODIFIER_BASE: f32 = 0.8;
+const SUCCESS_MODIFIER_SCALE: f32 = 0.4;
+const LEARNING_RATE_DISTANCE_SUCCESS: f32 = 0.1;
+const LEARNING_RATE_AVAILABILITY_SUCCESS: f32 = 0.05;
+const LEARNING_RATE_DISTANCE_FAILURE: f32 = 0.05;
+const LEARNING_RATE_AVAILABILITY_FAILURE: f32 = 0.05;
+
+/// Helper struct to hold evaluation results
+#[derive(Debug, Clone)]
+pub struct ScoredAction {
+    /// The action type being evaluated
+    pub action: ActionType,
+    /// The calculated utility score
+    pub utility: f32,
+    /// The target entity for the action (if any)
+    pub target: Option<Entity>,
+}
+
 /// High-level action types pops can choose
 #[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
 pub enum ActionType {
@@ -156,7 +178,8 @@ pub fn calculate_context_score(
     if let Some(target) = target_pos {
         let distance = manhattan_distance(&pop_pos, &target);
         #[allow(clippy::cast_precision_loss)]
-        let distance_factor = 1.0 / (distance as f32).mul_add(0.1, 1.0);
+        let distance_factor =
+            1.0 / (distance as f32).mul_add(DISTANCE_FACTOR_SCALE, DISTANCE_FACTOR_OFFSET);
         score *= distance_factor.powf(weights.distance_weight);
     }
 
@@ -195,7 +218,38 @@ pub fn calculate_success_modifier(action: ActionType, weights: &UtilityWeights) 
     let success_rate = successes as f32 / attempts as f32;
 
     // Convert to modifier: 0.8-1.2 range
-    0.8 + (success_rate * 0.4)
+    SUCCESS_MODIFIER_BASE + (success_rate * SUCCESS_MODIFIER_SCALE)
+}
+
+/// Generic helper to find the best candidate for an action.
+pub fn find_best_candidate<'a, T, F>(
+    pop_pos: GridPosition,
+    weights: &UtilityWeights,
+    urgency: f32,
+    action_type: ActionType,
+    candidates: impl Iterator<Item = (Entity, &'a GridPosition, &'a T)>,
+    get_capacity_info: F,
+) -> Option<(f32, Entity)>
+where
+    T: Component + 'a,
+    F: Fn(&'a T) -> (usize, usize), // returns (capacity, occupied)
+{
+    let mut best: Option<(f32, Entity)> = None;
+    let success_mod = calculate_success_modifier(action_type, weights);
+
+    for (entity, pos, data) in candidates {
+        let (capacity, occupied) = get_capacity_info(data);
+        let context_score =
+            calculate_context_score(pop_pos, Some(*pos), capacity, occupied, weights);
+
+        let utility = urgency * context_score * success_mod;
+
+        if best.is_none_or(|(best_u, _)| utility > best_u) {
+            best = Some((utility, entity));
+        }
+    }
+
+    best
 }
 
 /// Evaluates the utility of satisfying hunger at available farms.
@@ -208,27 +262,14 @@ pub fn evaluate_satisfy_hunger<'a>(
 ) -> Option<(f32, Entity)> {
     let hunger_urgency = need_response_curve(needs.hunger);
 
-    let mut best: Option<(f32, Entity)> = None;
-
-    for (farm_entity, farm_pos, farm) in farms {
-        let context_score = calculate_context_score(
-            *pop_pos,
-            Some(*farm_pos),
-            farm.capacity,
-            farm.workers.len(),
-            weights,
-        );
-
-        let success_mod = calculate_success_modifier(ActionType::SatisfyHunger, weights);
-
-        let utility = hunger_urgency * context_score * success_mod;
-
-        if best.is_none_or(|(best_u, _)| utility > best_u) {
-            best = Some((utility, farm_entity));
-        }
-    }
-
-    best
+    find_best_candidate(
+        *pop_pos,
+        weights,
+        hunger_urgency,
+        ActionType::SatisfyHunger,
+        farms,
+        |farm| (farm.capacity, farm.workers.len()),
+    )
 }
 
 /// Evaluates the utility of satisfying rest at available housing.
@@ -241,27 +282,14 @@ pub fn evaluate_satisfy_rest<'a>(
 ) -> Option<(f32, Entity)> {
     let rest_urgency = need_response_curve(needs.rest);
 
-    let mut best: Option<(f32, Entity)> = None;
-
-    for (housing_entity, housing_pos, house) in housing {
-        let context_score = calculate_context_score(
-            *pop_pos,
-            Some(*housing_pos),
-            house.capacity,
-            house.residents.len(),
-            weights,
-        );
-
-        let success_mod = calculate_success_modifier(ActionType::SatisfyRest, weights);
-
-        let utility = rest_urgency * context_score * success_mod;
-
-        if best.is_none_or(|(best_u, _)| utility > best_u) {
-            best = Some((utility, housing_entity));
-        }
-    }
-
-    best
+    find_best_candidate(
+        *pop_pos,
+        weights,
+        rest_urgency,
+        ActionType::SatisfyRest,
+        housing,
+        |house| (house.capacity, house.residents.len()),
+    )
 }
 
 use crate::layer1::designation::Designation;
@@ -273,28 +301,14 @@ pub fn evaluate_work<'a>(
     weights: &UtilityWeights,
     designations: impl Iterator<Item = (Entity, &'a GridPosition, &'a Designation)>,
 ) -> Option<(f32, Entity)> {
-    let mut best: Option<(f32, Entity)> = None;
-
-    // Base utility for working (could depend on traits later)
-    let base_utility = 0.5;
-
-    for (entity, pos, _) in designations {
-        let context = calculate_context_score(
-            *pop_pos,
-            Some(*pos),
-            1, // Capacity 1 (one worker per tile usually)
-            0, // Occupied 0 (simplified for now)
-            weights,
-        );
-
-        let success = calculate_success_modifier(ActionType::Work, weights);
-        let utility = base_utility * context * success;
-
-        if best.is_none_or(|(best_u, _)| utility > best_u) {
-            best = Some((utility, entity));
-        }
-    }
-    best
+    find_best_candidate(
+        *pop_pos,
+        weights,
+        BASE_WORK_UTILITY,
+        ActionType::Work,
+        designations,
+        |_| (1, 0),
+    )
 }
 
 /// Evaluates the utility of being idle.
@@ -303,7 +317,7 @@ pub fn evaluate_work<'a>(
 /// activities (work, eating, resting) over standing around.
 #[must_use]
 pub const fn evaluate_idle(_needs: &Needs) -> f32 {
-    0.05
+    IDLE_UTILITY
 }
 
 /// System to update commitment timers.
@@ -352,36 +366,56 @@ pub fn evaluate_actions_system(world: &mut World) {
         if let Some((utility, target)) =
             evaluate_satisfy_hunger(&pop_pos, &needs, &weights, farms_state.iter(world))
         {
-            utilities.push((ActionType::SatisfyHunger, utility, Some(target)));
+            utilities.push(ScoredAction {
+                action: ActionType::SatisfyHunger,
+                utility,
+                target: Some(target),
+            });
         }
 
         // Evaluate SatisfyRest
         if let Some((utility, target)) =
             evaluate_satisfy_rest(&pop_pos, &needs, &weights, housing_state.iter(world))
         {
-            utilities.push((ActionType::SatisfyRest, utility, Some(target)));
+            utilities.push(ScoredAction {
+                action: ActionType::SatisfyRest,
+                utility,
+                target: Some(target),
+            });
         }
 
         // Evaluate Work
         if let Some((utility, target)) =
             evaluate_work(&pop_pos, &weights, designations_state.iter(world))
         {
-            utilities.push((ActionType::Work, utility, Some(target)));
+            utilities.push(ScoredAction {
+                action: ActionType::Work,
+                utility,
+                target: Some(target),
+            });
         }
 
         // Evaluate Idle
         let idle_utility = evaluate_idle(&needs);
-        utilities.push((ActionType::Idle, idle_utility, None));
+        utilities.push(ScoredAction {
+            action: ActionType::Idle,
+            utility: idle_utility,
+            target: None,
+        });
 
         // Sort by utility
-        utilities.sort_by(|a, b| b.1.partial_cmp(&a.1).unwrap_or(std::cmp::Ordering::Equal));
+        utilities.sort_by(|a, b| {
+            b.utility
+                .partial_cmp(&a.utility)
+                .unwrap_or(std::cmp::Ordering::Equal)
+        });
 
         // Switch if best exceeds threshold
-        if let Some((best_action, best_utility, target)) = utilities.first() {
-            if *best_utility > action.current_utility + config.switch_threshold {
+        if let Some(best) = utilities.first() {
+            if best.utility > action.current_utility + config.switch_threshold {
                 // Update action
-                action.current = *best_action;
-                action.current_utility = *best_utility;
+                action.current = best.action;
+                action.current_utility = best.utility;
                 action.ticks_committed = 0;
 
                 // Write back to world
@@ -391,18 +425,9 @@ pub fn evaluate_actions_system(world: &mut World) {
 
                 // Insert StartPlan marker (for HTN system)
                 world.entity_mut(pop_entity).insert(StartPlan {
-                    action: *best_action,
-                    target: *target,
+                    action: best.action,
+                    target: best.target,
                 });
-            } else {
-                // Increment ticks committed? No, that happens elsewhere or we assume it increments.
-                // Actually, we should probably update current utility even if we don't switch?
-                // The spec doesn't say. But `evaluate_actions_system` updates `ticks_committed`?
-                // No, usually a separate system increments counters.
-                // But let's assume `ticks_committed` is updated by the loop or another system.
-                // Wait, if we don't switch, we should probably just reset `ticks_committed` if we re-evaluated?
-                // No, `ticks_committed` tracks how long we've been doing the current action.
-                // If we stick with it, we continue.
             }
         }
     }
@@ -424,13 +449,13 @@ pub fn update_weights_from_outcome(
 
         // Successful action: reinforce weights
         if duration < 10 {
-            weights.distance_weight += config.learning_rate * 0.1;
+            weights.distance_weight += config.learning_rate * LEARNING_RATE_DISTANCE_SUCCESS;
         }
-        weights.availability_weight += config.learning_rate * 0.05;
+        weights.availability_weight += config.learning_rate * LEARNING_RATE_AVAILABILITY_SUCCESS;
     } else {
         // Failed action: reduce weights
-        weights.distance_weight -= config.learning_rate * 0.05;
-        weights.availability_weight -= config.learning_rate * 0.05;
+        weights.distance_weight -= config.learning_rate * LEARNING_RATE_DISTANCE_FAILURE;
+        weights.availability_weight -= config.learning_rate * LEARNING_RATE_AVAILABILITY_FAILURE;
     }
 
     // Clamp weights
@@ -536,16 +561,16 @@ mod tests {
     fn test_pop_action_default() {
         let action = PopAction::default();
         assert_eq!(action.current, ActionType::Idle);
-        assert_eq!(action.current_utility, 0.0);
+        assert!(action.current_utility.abs() < f32::EPSILON);
         assert_eq!(action.ticks_committed, 0);
     }
 
     #[test]
     fn test_utility_weights_default() {
         let weights = UtilityWeights::default();
-        assert_eq!(weights.distance_weight, 1.0);
-        assert_eq!(weights.availability_weight, 1.0);
-        assert_eq!(weights.social_weight, 1.0);
+        assert!((weights.distance_weight - 1.0).abs() < f32::EPSILON);
+        assert!((weights.availability_weight - 1.0).abs() < f32::EPSILON);
+        assert!((weights.social_weight - 1.0).abs() < f32::EPSILON);
         assert!(weights.action_success_count.is_empty());
         assert!(weights.action_attempt_count.is_empty());
     }
@@ -664,16 +689,18 @@ mod tests {
         let weights = UtilityWeights::default();
 
         // Close but crowded farm
-        world.spawn((
-            Building {
-                building_type: BuildingType::Farm,
-            },
-            GridPosition { x: 2, y: 0 },
-            Farm {
-                capacity: 2,
-                workers: vec![Entity::from_raw(999)],
-            },
-        ));
+        let crowded_farm = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Farm,
+                },
+                GridPosition { x: 2, y: 0 },
+                Farm {
+                    capacity: 2,
+                    workers: vec![Entity::from_raw(999)],
+                },
+            ))
+            .id();
 
         // Far but empty farm
         let far_farm = world
@@ -695,7 +722,7 @@ mod tests {
         assert!(result.is_some());
         let (_utility, chosen_farm) = result.unwrap();
         // Should pick based on best utility (distance vs availability trade-off)
-        assert!(chosen_farm == far_farm || chosen_farm != far_farm); // Either is valid depending on weights
+        assert!(chosen_farm == far_farm || chosen_farm == crowded_farm);
     }
 
     #[test]
@@ -969,9 +996,9 @@ mod tests {
     #[test]
     fn test_utility_config_default() {
         let config = UtilityConfig::default();
-        assert_eq!(config.switch_threshold, 0.15);
+        assert!((config.switch_threshold - 0.15).abs() < f32::EPSILON);
         assert_eq!(config.evaluation_interval, 1);
-        assert_eq!(config.learning_rate, 0.05);
+        assert!((config.learning_rate - 0.05).abs() < f32::EPSILON);
         assert_eq!(config.weight_clamp, (0.5, 2.0));
     }
 
