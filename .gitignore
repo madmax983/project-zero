@@ -19,3 +19,4 @@ tarpaulin-report.html
 # OS
 .DS_Store
 Thumbs.db.worktrees/
+.worktrees/
