@@ -912,3 +912,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Assign pops to skilled labor (Mining) or unskilled grunt work (Hauling)?
 
 ---
+
+## The Great Filter
+
+**Layer:** 3
+
+**Fantasy:** The galaxy is empty for a terrifying reason. You are walking into a trap set for advanced civilizations.
+
+**Mechanic:** As your Tech Level increases, a hidden "Doom" counter rises. Random disasters (plagues, gamma bursts) become more frequent and severe. Discovering "Dead Civilizations" gives clues on how to avoid their fate.
+
+**Emergence:** You rush tech to get shields, but the high tech itself attracts the "Scourge". A primitive colony might survive longer than an advanced one.
+
+**Tension:** Rapid progress (power) vs. Low profile (safety).
+
+---
+
+## Generational Knowledge
+
+**Layer:** 1
+
+**Fantasy:** The son of the master smith grows up in the forge. Skills are passed down, creating lineages of experts.
+
+**Mechanic:** Children born to parents with high skills (e.g., Mining > 50) start with a "Potential" bonus or partial XP in that skill. Families naturally specialize.
+
+**Emergence:** A "Mining Caste" forms. You try to force a miner's son to be a scientist, but he's terrible at it and unhappy.
+
+**Tension:** Meritocracy (best current stats) vs. Nepotism (investing in lineages).
+
+---
+
+## Diplomatic Marriage
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Space feudalism. Securing peace by sending your best and brightest away forever.
+
+**Mechanic:** You can "Marry Off" a high-status or high-skill Pop to a foreign Layer 3 faction leader to secure an Alliance or Trade Deal. The Pop is removed from Layer 1.
+
+**Emergence:** You have to send your only Level 10 Doctor to the Warlord of sector 7 to stop an invasion. The hospital collapses without them.
+
+**Tension:** Sacrifice a key individual for the good of the state?
+
+---
+
+## Orbital Synch
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The movement of the heavens dictates your industry. You are a clockwork gear in a solar system.
+
+**Mechanic:** Certain advanced buildings (Solar Arrays, Tidal Generators, Telescopes) only function when the planet is in a specific orbital arc or facing a specific body.
+
+**Emergence:** Production happens in "Bursts". You scramble to run the smelters during the 3-day "Solar Window" and then hibernate for the long dark.
+
+**Tension:** Steady, inefficient power (Fuel) vs. Burst, efficient power (Orbital).
+
+---
+
+## Terraforming Backlash
+
+**Layer:** 2
+
+**Fantasy:** The planet has an immune system, and you are the virus.
+
+**Mechanic:** Aggressive terraforming (atmosphere injection, rapid heating) triggers "Planetary Defense" events: Super-storms, seismic destabilization, or awakening dormant mega-fauna.
+
+**Emergence:** You try to melt the ice caps to get water, and the release of ancient bacteria kills half your population.
+
+**Tension:** Fast, violent adaptation (Terraforming) vs. Slow, biological adaptation (Genetics).
+
+---
