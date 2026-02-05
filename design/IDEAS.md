@@ -146,7 +146,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Seasonal Rhythms
+## Seasonal Rhythms [SPECCED]
 
 **Layer:** 1
 
