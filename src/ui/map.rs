@@ -303,6 +303,8 @@ pub const fn get_building_char(building: BuildingType) -> char {
         BuildingType::Housing => '⌂',
         BuildingType::Farm => '♣',
         BuildingType::Stockpile => '≡',
+        BuildingType::LumberMill => 'L',
+        BuildingType::StoneMason => 'M',
     }
 }
 
@@ -312,6 +314,8 @@ pub const fn get_building_color(building: BuildingType) -> Color {
         BuildingType::Housing => Color::Rgb(139, 90, 43), // Brown
         BuildingType::Farm => Color::Rgb(218, 165, 32),   // Goldenrod
         BuildingType::Stockpile => Color::Rgb(169, 169, 169), // DarkGray
+        BuildingType::LumberMill => Color::Rgb(210, 180, 140),
+        BuildingType::StoneMason => Color::Rgb(119, 136, 153),
     }
 }
 

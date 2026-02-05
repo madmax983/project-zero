@@ -1,4 +1,7 @@
-use crate::layer1::resources::{BASE_MAX_FOOD, BASE_MAX_STONE, BASE_MAX_WOOD, ColonyResources};
+use crate::layer1::resources::{
+    BASE_MAX_BLOCKS, BASE_MAX_FOOD, BASE_MAX_PLANKS, BASE_MAX_STONE, BASE_MAX_WOOD,
+    ColonyResources,
+};
 use bevy_ecs::prelude::*;
 
 /// Component that increases the maximum resource capacity of the colony.
@@ -10,6 +13,10 @@ pub struct Stockpile {
     pub wood_bonus: f32,
     /// Bonus to max stone capacity.
     pub stone_bonus: f32,
+    /// Bonus to max planks capacity.
+    pub planks_bonus: f32,
+    /// Bonus to max blocks capacity.
+    pub blocks_bonus: f32,
 }
 
 impl Default for Stockpile {
@@ -18,6 +25,8 @@ impl Default for Stockpile {
             food_bonus: 0.0,
             wood_bonus: 100.0,
             stone_bonus: 100.0,
+            planks_bonus: 100.0,
+            blocks_bonus: 50.0,
         }
     }
 }
@@ -27,6 +36,8 @@ pub fn update_resource_caps_system(world: &mut World) {
     let mut total_food_bonus = 0.0;
     let mut total_wood_bonus = 0.0;
     let mut total_stone_bonus = 0.0;
+    let mut total_planks_bonus = 0.0;
+    let mut total_blocks_bonus = 0.0;
 
     // Query all stockpiles
     let mut query = world.query::<&Stockpile>();
@@ -34,6 +45,8 @@ pub fn update_resource_caps_system(world: &mut World) {
         total_food_bonus += stockpile.food_bonus;
         total_wood_bonus += stockpile.wood_bonus;
         total_stone_bonus += stockpile.stone_bonus;
+        total_planks_bonus += stockpile.planks_bonus;
+        total_blocks_bonus += stockpile.blocks_bonus;
     }
 
     // Update resources
@@ -41,11 +54,15 @@ pub fn update_resource_caps_system(world: &mut World) {
     resources.max_food = BASE_MAX_FOOD + total_food_bonus;
     resources.max_wood = BASE_MAX_WOOD + total_wood_bonus;
     resources.max_stone = BASE_MAX_STONE + total_stone_bonus;
+    resources.max_planks = BASE_MAX_PLANKS + total_planks_bonus;
+    resources.max_blocks = BASE_MAX_BLOCKS + total_blocks_bonus;
 
     // Clamp current resources to new max (if caps reduced)
     resources.food = resources.food.min(resources.max_food);
     resources.wood = resources.wood.min(resources.max_wood);
     resources.stone = resources.stone.min(resources.max_stone);
+    resources.planks = resources.planks.min(resources.max_planks);
+    resources.blocks = resources.blocks.min(resources.max_blocks);
 }
 
 #[cfg(test)]
@@ -96,6 +113,8 @@ mod tests {
         assert_eq!(stockpile.food_bonus, 0.0);
         assert_eq!(stockpile.wood_bonus, 100.0);
         assert_eq!(stockpile.stone_bonus, 100.0);
+        assert_eq!(stockpile.planks_bonus, 100.0);
+        assert_eq!(stockpile.blocks_bonus, 50.0);
     }
 
     #[test]
@@ -112,6 +131,8 @@ mod tests {
                 food_bonus: 0.0,
                 wood_bonus: 100.0,
                 stone_bonus: 50.0,
+                planks_bonus: 50.0,
+                blocks_bonus: 20.0,
             },
         ));
         world.spawn((
@@ -122,6 +143,8 @@ mod tests {
                 food_bonus: 0.0,
                 wood_bonus: 100.0,
                 stone_bonus: 50.0,
+                planks_bonus: 50.0,
+                blocks_bonus: 20.0,
             },
         ));
 
@@ -134,6 +157,10 @@ mod tests {
         assert_eq!(resources.max_wood, 250.0);
         // Base (20) + 2 * 50 = 120
         assert_eq!(resources.max_stone, 120.0);
+        // Base (50) + 2 * 50 = 150
+        assert_eq!(resources.max_planks, 150.0);
+        // Base (20) + 2 * 20 = 60
+        assert_eq!(resources.max_blocks, 60.0);
     }
 
     #[test]

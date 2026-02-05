@@ -19,6 +19,8 @@ pub mod needs;
 pub mod pop;
 /// Colony resources and mining.
 pub mod resources;
+/// Resource refining (Lumber Mill, Stone Mason).
+pub mod refining;
 /// Resource storage limits and stockpile buildings.
 pub mod stockpile;
 /// Terrain generation and grid management.
@@ -28,6 +30,7 @@ pub mod thoughts;
 /// Emergent utility AI system.
 pub mod utility_ai;
 #[cfg(test)]
+/// Tests for utility AI work logic.
 pub mod utility_ai_work_tests;
 
 pub use building::*;
@@ -38,6 +41,7 @@ pub use housing::*;
 pub use needs::*;
 pub use pop::*;
 pub use resources::*;
+pub use refining::*;
 pub use stockpile::*;
 pub use terrain::*;
 pub use thoughts::*;

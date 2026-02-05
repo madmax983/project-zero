@@ -3,6 +3,7 @@
 use super::GridPosition;
 use super::farm::Farm;
 use super::housing::Housing;
+use super::refining::RefiningProgress;
 use super::stockpile::Stockpile;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
@@ -22,6 +23,10 @@ pub enum BuildingType {
     Farm,
     /// Storage for resources.
     Stockpile,
+    /// Refines wood into planks.
+    LumberMill,
+    /// Refines stone into blocks.
+    StoneMason,
 }
 
 impl BuildingType {
@@ -40,6 +45,8 @@ impl BuildingType {
             Self::Housing => "Housing",
             Self::Farm => "Farm",
             Self::Stockpile => "Stockpile",
+            Self::LumberMill => "Lumber Mill",
+            Self::StoneMason => "Stone Mason",
         }
     }
 
@@ -58,6 +65,16 @@ impl BuildingType {
             },
             Self::Stockpile => ColonyResources {
                 wood: 50.0,
+                ..Default::default()
+            },
+            Self::LumberMill => ColonyResources {
+                wood: 30.0,
+                stone: 10.0,
+                ..Default::default()
+            },
+            Self::StoneMason => ColonyResources {
+                wood: 40.0,
+                stone: 20.0,
                 ..Default::default()
             },
         }
@@ -178,6 +195,12 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
         BuildingType::Stockpile => {
             entity.insert(Stockpile::default());
         }
+        BuildingType::LumberMill | BuildingType::StoneMason => {
+            entity.insert(RefiningProgress {
+                current: 0.0,
+                max: 10.0, // Default duration
+            });
+        }
     }
 }
 
@@ -270,7 +293,9 @@ mod tests {
     fn test_building_type_next() {
         assert_eq!(BuildingType::Housing.next(), BuildingType::Farm);
         assert_eq!(BuildingType::Farm.next(), BuildingType::Stockpile);
-        assert_eq!(BuildingType::Stockpile.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::Stockpile.next(), BuildingType::LumberMill);
+        assert_eq!(BuildingType::LumberMill.next(), BuildingType::StoneMason);
+        assert_eq!(BuildingType::StoneMason.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -327,7 +352,7 @@ mod tests {
         assert_eq!(mode.selected, BuildingType::Stockpile);
 
         mode.selected = mode.selected.next();
-        assert_eq!(mode.selected, BuildingType::Housing);
+        assert_eq!(mode.selected, BuildingType::LumberMill);
     }
 
     #[test]
