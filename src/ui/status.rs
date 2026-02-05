@@ -29,6 +29,7 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
     frame.render_widget(bar, area);
 }
 
+#[must_use]
 pub fn get_status_string(
     tick: u64,
     speed: SimSpeed,

@@ -27,6 +27,8 @@ pub mod terrain;
 pub mod thoughts;
 /// Emergent utility AI system.
 pub mod utility_ai;
+#[cfg(test)]
+pub mod utility_ai_work_tests;
 
 pub use building::*;
 pub use chronicle::*;

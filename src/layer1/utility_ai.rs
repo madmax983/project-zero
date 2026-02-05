@@ -17,6 +17,8 @@ pub enum ActionType {
     Socialize,
     /// Explore the map
     Explore,
+    /// Perform designated work (Mine, Build, Chop)
+    Work,
     /// Do nothing
     Idle,
 }
@@ -130,7 +132,7 @@ pub struct Plan;
 /// Lower need value = higher urgency.
 #[must_use]
 pub fn need_response_curve(need_value: f32) -> f32 {
-    1.0 - need_value.powi(2)
+    need_value.mul_add(-need_value, 1.0)
 }
 
 /// Calculates Manhattan distance between two positions.
@@ -262,6 +264,39 @@ pub fn evaluate_satisfy_rest<'a>(
     best
 }
 
+use crate::layer1::designation::Designation;
+
+/// Evaluates the utility of performing work on designations.
+#[must_use]
+pub fn evaluate_work<'a>(
+    pop_pos: &GridPosition,
+    weights: &UtilityWeights,
+    designations: impl Iterator<Item = (Entity, &'a GridPosition, &'a Designation)>,
+) -> Option<(f32, Entity)> {
+    let mut best: Option<(f32, Entity)> = None;
+
+    // Base utility for working (could depend on traits later)
+    let base_utility = 0.5;
+
+    for (entity, pos, _) in designations {
+        let context = calculate_context_score(
+            *pop_pos,
+            Some(*pos),
+            1, // Capacity 1 (one worker per tile usually)
+            0, // Occupied 0 (simplified for now)
+            weights,
+        );
+
+        let success = calculate_success_modifier(ActionType::Work, weights);
+        let utility = base_utility * context * success;
+
+        if best.is_none_or(|(best_u, _)| utility > best_u) {
+            best = Some((utility, entity));
+        }
+    }
+    best
+}
+
 /// Evaluates the utility of being idle.
 #[must_use]
 pub fn evaluate_idle(needs: &Needs) -> f32 {
@@ -305,6 +340,7 @@ pub fn evaluate_actions_system(world: &mut World) {
     // Pre-create query states to avoid allocation in loop
     let mut farms_state = world.query::<(Entity, &GridPosition, &Farm)>();
     let mut housing_state = world.query::<(Entity, &GridPosition, &Housing)>();
+    let mut designations_state = world.query::<(Entity, &GridPosition, &Designation)>();
 
     // Evaluate each pop
     for (pop_entity, pop_pos, needs, weights, mut action) in pop_data {
@@ -322,6 +358,13 @@ pub fn evaluate_actions_system(world: &mut World) {
             evaluate_satisfy_rest(&pop_pos, &needs, &weights, housing_state.iter(world))
         {
             utilities.push((ActionType::SatisfyRest, utility, Some(target)));
+        }
+
+        // Evaluate Work
+        if let Some((utility, target)) =
+            evaluate_work(&pop_pos, &weights, designations_state.iter(world))
+        {
+            utilities.push((ActionType::Work, utility, Some(target)));
         }
 
         // Evaluate Idle
