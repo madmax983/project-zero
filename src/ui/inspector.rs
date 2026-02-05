@@ -1,3 +1,6 @@
+#![allow(clippy::cast_sign_loss)]
+#![allow(clippy::cast_possible_truncation)]
+
 use bevy_ecs::prelude::*;
 use ratatui::{
     prelude::*,

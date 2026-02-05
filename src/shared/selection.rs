@@ -112,7 +112,7 @@ pub fn inspect_entity(world: &World, entity: Entity) -> String {
         }
 
         if let Some(thought) = world.get::<Thought>(entity) {
-            let _ = write!(info, "Thought: \"{}\"\n", thought.text);
+            let _ = writeln!(info, "Thought: \"{}\"", thought.text);
         }
 
         return info;

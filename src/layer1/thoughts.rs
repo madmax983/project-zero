@@ -24,8 +24,8 @@ pub fn generate_thoughts_system(world: &mut World) {
     let mut query = world.query::<(Entity, &Needs, Option<&Thought>)>();
     for (entity, needs, thought) in query.iter(world) {
         // Update thought every 100 ticks or if missing
-        if thought.map_or(true, |t| current_tick > t.tick + 100) {
-            let new_thought_text = generate_thought_text(needs);
+        if thought.is_none_or(|t| current_tick > t.tick + 100) {
+            let new_thought_text = generate_thought_text(*needs);
             to_update.push((entity, new_thought_text));
         }
     }
@@ -38,7 +38,7 @@ pub fn generate_thoughts_system(world: &mut World) {
     }
 }
 
-fn generate_thought_text(needs: &Needs) -> String {
+fn generate_thought_text(needs: Needs) -> String {
     let mut rng = rand::thread_rng();
     let roll = rng.gen_range(0..10);
 
