@@ -23,6 +23,24 @@ pub enum ActionType {
     Idle,
 }
 
+/// The number of action variants.
+pub const ACTION_COUNT: usize = 6;
+
+impl ActionType {
+    /// Returns the array index for this action type.
+    #[must_use]
+    pub const fn as_index(self) -> usize {
+        match self {
+            Self::SatisfyHunger => 0,
+            Self::SatisfyRest => 1,
+            Self::Socialize => 2,
+            Self::Explore => 3,
+            Self::Work => 4,
+            Self::Idle => 5,
+        }
+    }
+}
+
 /// Pop's current action and commitment state
 #[derive(Component, Debug)]
 pub struct PopAction {
@@ -54,9 +72,9 @@ pub struct UtilityWeights {
     /// Weight for social factor
     pub social_weight: f32,
     /// Count of successful actions per type
-    pub action_success_count: HashMap<ActionType, u32>,
+    pub action_success_count: [u32; ACTION_COUNT],
     /// Count of attempted actions per type
-    pub action_attempt_count: HashMap<ActionType, u32>,
+    pub action_attempt_count: [u32; ACTION_COUNT],
 }
 
 impl Default for UtilityWeights {
@@ -65,8 +83,8 @@ impl Default for UtilityWeights {
             distance_weight: 1.0,
             availability_weight: 1.0,
             social_weight: 1.0,
-            action_success_count: HashMap::new(),
-            action_attempt_count: HashMap::new(),
+            action_success_count: [0; ACTION_COUNT],
+            action_attempt_count: [0; ACTION_COUNT],
         }
     }
 }
@@ -176,16 +194,9 @@ pub fn calculate_context_score(
 /// Calculates a modifier based on past success rates.
 #[must_use]
 pub fn calculate_success_modifier(action: ActionType, weights: &UtilityWeights) -> f32 {
-    let attempts = weights
-        .action_attempt_count
-        .get(&action)
-        .copied()
-        .unwrap_or(0);
-    let successes = weights
-        .action_success_count
-        .get(&action)
-        .copied()
-        .unwrap_or(0);
+    let index = action.as_index();
+    let attempts = weights.action_attempt_count[index];
+    let successes = weights.action_success_count[index];
 
     if attempts == 0 {
         return 1.0;
@@ -195,7 +206,7 @@ pub fn calculate_success_modifier(action: ActionType, weights: &UtilityWeights) 
     let success_rate = successes as f32 / attempts as f32;
 
     // Convert to modifier: 0.8-1.2 range
-    0.8 + (success_rate * 0.4)
+    success_rate.mul_add(0.4, 0.8)
 }
 
 /// Evaluates the utility of satisfying hunger at available farms.
@@ -302,7 +313,7 @@ pub fn evaluate_work<'a>(
 /// Idle is a low-priority fallback action. Pops should prefer productive
 /// activities (work, eating, resting) over standing around.
 #[must_use]
-pub fn evaluate_idle(_needs: &Needs) -> f32 {
+pub const fn evaluate_idle(_needs: &Needs) -> f32 {
     0.05
 }
 
@@ -416,11 +427,12 @@ pub fn update_weights_from_outcome(
     duration: u32,
     config: &UtilityConfig,
 ) {
+    let index = action.as_index();
     // Track attempt
-    *weights.action_attempt_count.entry(action).or_insert(0) += 1;
+    weights.action_attempt_count[index] += 1;
 
     if success {
-        *weights.action_success_count.entry(action).or_insert(0) += 1;
+        weights.action_success_count[index] += 1;
 
         // Successful action: reinforce weights
         if duration < 10 {
@@ -499,11 +511,12 @@ pub fn track_plan_outcomes_system(world: &mut World) {
 
 // Re-add tests at the bottom
 #[cfg(test)]
+#[allow(clippy::float_cmp)]
 mod tests {
     use super::*;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::pop::Pop;
-    use bevy_ecs::prelude::*;
+    // use bevy_ecs::prelude::*; // Removed unused import
 
     #[test]
     fn test_update_action_timer() {
@@ -541,8 +554,8 @@ mod tests {
         assert_eq!(weights.distance_weight, 1.0);
         assert_eq!(weights.availability_weight, 1.0);
         assert_eq!(weights.social_weight, 1.0);
-        assert!(weights.action_success_count.is_empty());
-        assert!(weights.action_attempt_count.is_empty());
+        assert!(weights.action_success_count.iter().all(|&x| x == 0));
+        assert!(weights.action_attempt_count.iter().all(|&x| x == 0));
     }
 
     #[test]
@@ -630,19 +643,14 @@ mod tests {
         assert!(neutral > 0.9 && neutral < 1.1);
 
         // High success rate
-        weights
-            .action_attempt_count
-            .insert(ActionType::SatisfyHunger, 10);
-        weights
-            .action_success_count
-            .insert(ActionType::SatisfyHunger, 9);
+        let idx = ActionType::SatisfyHunger.as_index();
+        weights.action_attempt_count[idx] = 10;
+        weights.action_success_count[idx] = 9;
         let high = calculate_success_modifier(ActionType::SatisfyHunger, &weights);
         assert!(high > 1.0, "High success rate should boost modifier");
 
         // Low success rate
-        weights
-            .action_success_count
-            .insert(ActionType::SatisfyHunger, 2);
+        weights.action_success_count[idx] = 2;
         let low = calculate_success_modifier(ActionType::SatisfyHunger, &weights);
         assert!(low < 1.0, "Low success rate should reduce modifier");
     }
@@ -671,7 +679,7 @@ mod tests {
         ));
 
         // Far but empty farm
-        let far_farm = world
+        let _far_farm = world
             .spawn((
                 Building {
                     building_type: BuildingType::Farm,
@@ -688,9 +696,10 @@ mod tests {
         let result = evaluate_satisfy_hunger(&pop_pos, &needs, &weights, farms.iter(&world));
 
         assert!(result.is_some());
-        let (_utility, chosen_farm) = result.unwrap();
+        let (_utility, _chosen_farm) = result.unwrap();
         // Should pick based on best utility (distance vs availability trade-off)
-        assert!(chosen_farm == far_farm || chosen_farm != far_farm); // Either is valid depending on weights
+        // chosen_farm must be one of the two farms, which is guaranteed if result.is_some().
+        // No further assertion needed as it depends on exact weight tuning.
     }
 
     #[test]
@@ -804,8 +813,9 @@ mod tests {
         assert!(weights.availability_weight > initial_availability);
 
         // Success should be tracked
-        assert_eq!(weights.action_attempt_count[&ActionType::SatisfyHunger], 1);
-        assert_eq!(weights.action_success_count[&ActionType::SatisfyHunger], 1);
+        let idx = ActionType::SatisfyHunger.as_index();
+        assert_eq!(weights.action_attempt_count[idx], 1);
+        assert_eq!(weights.action_success_count[idx], 1);
     }
 
     #[test]
@@ -829,15 +839,9 @@ mod tests {
         assert!(weights.availability_weight < initial_availability);
 
         // Failure should be tracked
-        assert_eq!(weights.action_attempt_count[&ActionType::SatisfyHunger], 1);
-        assert_eq!(
-            weights
-                .action_success_count
-                .get(&ActionType::SatisfyHunger)
-                .copied()
-                .unwrap_or(0),
-            0
-        );
+        let idx = ActionType::SatisfyHunger.as_index();
+        assert_eq!(weights.action_attempt_count[idx], 1);
+        assert_eq!(weights.action_success_count[idx], 0);
     }
 
     #[test]
@@ -901,7 +905,10 @@ mod tests {
 
         // Should have updated weights
         let weights = world.get::<UtilityWeights>(pop).unwrap();
-        assert_eq!(weights.action_success_count[&ActionType::SatisfyHunger], 1);
+        assert_eq!(
+            weights.action_success_count[ActionType::SatisfyHunger.as_index()],
+            1
+        );
 
         // Should have removed PlanOutcome
         assert!(world.get::<PlanOutcome>(pop).is_none());
@@ -939,13 +946,12 @@ mod tests {
 
         // Should have tracked failure
         let weights = world.get::<UtilityWeights>(pop).unwrap();
-        assert_eq!(weights.action_attempt_count[&ActionType::SatisfyHunger], 1);
         assert_eq!(
-            weights
-                .action_success_count
-                .get(&ActionType::SatisfyHunger)
-                .copied()
-                .unwrap_or(0),
+            weights.action_attempt_count[ActionType::SatisfyHunger.as_index()],
+            1
+        );
+        assert_eq!(
+            weights.action_success_count[ActionType::SatisfyHunger.as_index()],
             0
         );
     }
@@ -1035,6 +1041,34 @@ mod tests {
             weights.distance_weight > 1.0 || weights.availability_weight > 1.0,
             "Pop should have learned from successful experiences"
         );
-        assert_eq!(weights.action_success_count[&ActionType::SatisfyHunger], 5);
+        assert_eq!(
+            weights.action_success_count[ActionType::SatisfyHunger.as_index()],
+            5
+        );
+    }
+
+    #[test]
+    fn test_action_type_as_index() {
+        // Verify uniqueness
+        let indices = [
+            ActionType::SatisfyHunger.as_index(),
+            ActionType::SatisfyRest.as_index(),
+            ActionType::Socialize.as_index(),
+            ActionType::Explore.as_index(),
+            ActionType::Work.as_index(),
+            ActionType::Idle.as_index(),
+        ];
+
+        // Check for duplicates
+        let mut sorted = indices;
+        sorted.sort_unstable();
+        for i in 0..sorted.len()-1 {
+            assert!(sorted[i] != sorted[i+1], "Duplicate index found");
+        }
+
+        // Check bounds
+        for &idx in &indices {
+            assert!(idx < ACTION_COUNT, "Index out of bounds");
+        }
     }
 }

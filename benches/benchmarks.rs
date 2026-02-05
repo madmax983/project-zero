@@ -6,11 +6,14 @@
     clippy::unnecessary_cast
 )]
 
+use bevy_ecs::prelude::World;
 use criterion::{Criterion, black_box, criterion_group, criterion_main};
 use ratatui::prelude::{Color, Rect};
 use scale::layer1::{
-    GridPosition, MapRenderContext, TerrainGrid, TerrainType, Viewport, build_map_layer_spans,
+    GridPosition, Needs, Pop, PopAction, TerrainGrid, TerrainType, UtilityConfig, UtilityWeights,
+    Viewport, evaluate_actions_system,
 };
+use scale::ui::map::{MapRenderContext, build_map_layer_spans};
 use std::collections::HashMap;
 
 fn benchmark_rendering(c: &mut Criterion) {
@@ -62,5 +65,37 @@ fn benchmark_rendering(c: &mut Criterion) {
     });
 }
 
-criterion_group!(benches, benchmark_rendering);
+fn benchmark_utility_ai(c: &mut Criterion) {
+    c.bench_function("evaluate_actions_1000_pops", |b| {
+        b.iter_batched(
+            || {
+                let mut world = World::new();
+                world.insert_resource(UtilityConfig::default());
+                for i in 0..1000 {
+                    #[allow(clippy::cast_possible_wrap)]
+                    world.spawn((
+                        Pop,
+                        GridPosition {
+                            x: (i % 80) as i32,
+                            y: (i / 80) as i32,
+                        },
+                        Needs::default(),
+                        UtilityWeights::default(),
+                        PopAction {
+                            ticks_committed: 100,
+                            ..Default::default()
+                        },
+                    ));
+                }
+                world
+            },
+            |mut world| {
+                evaluate_actions_system(black_box(&mut world));
+            },
+            criterion::BatchSize::SmallInput,
+        );
+    });
+}
+
+criterion_group!(benches, benchmark_rendering, benchmark_utility_ai);
 criterion_main!(benches);

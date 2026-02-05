@@ -116,7 +116,6 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::needs::Needs;
     use crate::layer1::terrain::{TerrainGrid, TerrainType, generate_terrain};
 
     #[test]

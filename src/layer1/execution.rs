@@ -919,6 +919,19 @@ mod tests {
             ))
             .id();
 
+        let _designation = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Mine,
+                },
+                GridPosition { x: 5, y: 5 },
+                MiningProgress {
+                    current: 95.0,
+                    max: 100.0,
+                },
+            ))
+            .id();
+
         let _pop = world
             .spawn((
                 Pop,
@@ -1138,7 +1151,7 @@ mod tests {
         for tick in 1..=5 {
             movement_system(&mut world);
             let pos = world.get::<GridPosition>(pop).unwrap();
-            assert_eq!(pos.x, tick, "Pop should be at x={} after {} ticks", tick, tick);
+            assert_eq!(pos.x, tick, "Pop should be at x={tick} after {tick} ticks");
         }
 
         // Should be at target now
@@ -1220,8 +1233,7 @@ mod tests {
             let pos = *world.get::<GridPosition>(pop).unwrap();
             assert_eq!(
                 pos.x, tick,
-                "Tick {}: Pop should be at x={}",
-                tick, tick
+                "Tick {tick}: Pop should be at x={tick}"
             );
         }
 

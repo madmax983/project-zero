@@ -301,7 +301,7 @@ mod tests {
 
         // Assert content
         // Convert buffer to string for checking
-        let content = format!("{:?}", buffer); // Debug representation
+        let _content = format!("{buffer:?}"); // Debug representation
 
         // Check for specific strings
         // We can't easily check full content but we can check cells exist with text

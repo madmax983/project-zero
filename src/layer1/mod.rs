@@ -30,6 +30,7 @@ pub mod thoughts;
 /// Emergent utility AI system.
 pub mod utility_ai;
 #[cfg(test)]
+/// Tests for Utility AI work logic.
 pub mod utility_ai_work_tests;
 
 pub use building::*;

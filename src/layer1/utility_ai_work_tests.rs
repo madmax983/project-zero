@@ -1,11 +1,8 @@
 #[cfg(test)]
 mod tests {
     use crate::layer1::designation::{Designation, DesignationType};
-    use crate::layer1::needs::Needs;
-    use crate::layer1::pop::{GridPosition, Pop};
-    use crate::layer1::utility_ai::{
-        ActionType, UtilityWeights, calculate_context_score, evaluate_work,
-    };
+    use crate::layer1::pop::GridPosition;
+    use crate::layer1::utility_ai::{ActionType, UtilityWeights, evaluate_work};
     use bevy_ecs::prelude::*;
 
     #[test]
