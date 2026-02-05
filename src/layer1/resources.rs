@@ -42,12 +42,20 @@ pub struct ColonyResources {
     pub wood: f32,
     /// Total stone available in the colony.
     pub stone: f32,
+    /// Total planks available in the colony.
+    pub planks: f32,
+    /// Total blocks available in the colony.
+    pub blocks: f32,
     /// Maximum food capacity.
     pub max_food: f32,
     /// Maximum wood capacity.
     pub max_wood: f32,
     /// Maximum stone capacity.
     pub max_stone: f32,
+    /// Maximum planks capacity.
+    pub max_planks: f32,
+    /// Maximum blocks capacity.
+    pub max_blocks: f32,
 }
 
 impl Default for ColonyResources {
@@ -56,9 +64,13 @@ impl Default for ColonyResources {
             food: 0.0,
             wood: 0.0,
             stone: 0.0,
+            planks: 0.0,
+            blocks: 0.0,
             max_food: 50.0,
             max_wood: 50.0,
             max_stone: 20.0,
+            max_planks: 50.0,
+            max_blocks: 20.0,
         }
     }
 }
@@ -79,6 +91,16 @@ impl ColonyResources {
         self.food = (self.food + amount).min(self.max_food);
     }
 
+    /// Adds planks, clamping to the maximum capacity.
+    pub fn add_planks(&mut self, amount: f32) {
+        self.planks = (self.planks + amount).min(self.max_planks);
+    }
+
+    /// Adds blocks, clamping to the maximum capacity.
+    pub fn add_blocks(&mut self, amount: f32) {
+        self.blocks = (self.blocks + amount).min(self.max_blocks);
+    }
+
     /// Checks if the colony can afford the given cost.
     ///
     /// # Parameters
@@ -90,7 +112,11 @@ impl ColonyResources {
     /// True if all resources are sufficient.
     #[must_use]
     pub fn can_afford(&self, cost: &Self) -> bool {
-        self.food >= cost.food && self.wood >= cost.wood && self.stone >= cost.stone
+        self.food >= cost.food
+            && self.wood >= cost.wood
+            && self.stone >= cost.stone
+            && self.planks >= cost.planks
+            && self.blocks >= cost.blocks
     }
 
     /// Deducts the given cost from the colony's resources.
@@ -102,6 +128,8 @@ impl ColonyResources {
         self.food -= cost.food;
         self.wood -= cost.wood;
         self.stone -= cost.stone;
+        self.planks -= cost.planks;
+        self.blocks -= cost.blocks;
     }
 }
 
@@ -160,6 +188,23 @@ pub struct ForestryProgress {
 }
 
 impl ForestryProgress {
+    /// Returns true if the work is finished.
+    #[must_use]
+    pub fn is_complete(&self) -> bool {
+        self.current >= self.max
+    }
+}
+
+/// Component tracking the progress of refining (e.g. at a Lumber Mill).
+#[derive(Component, Debug, Default)]
+pub struct RefiningProgress {
+    /// Current work done.
+    pub current: f32,
+    /// Work required to finish one batch.
+    pub max: f32,
+}
+
+impl RefiningProgress {
     /// Returns true if the work is finished.
     #[must_use]
     pub fn is_complete(&self) -> bool {
