@@ -787,6 +787,9 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** A shortage of fiber means pops go to work in rags, increasing stress and injury risk. A masterwork pickaxe is passed down through generations.
 
 **Tension:** Spend metal on new tools (efficiency) or building materials (expansion)?
+
+---
+
 ## Pop Relationships
 
 **Layer:** 1
@@ -910,5 +913,75 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** Bottlenecks. A massive harvest rots in the field because you lack haulers.
 
 **Tension:** Assign pops to skilled labor (Mining) or unskilled grunt work (Hauling)?
+
+---
+
+## Planetary Weather Fronts
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Seeing a massive storm spiral on the planetary map and knowing it will hit your colony in three days.
+
+**Mechanic:** Weather systems (Storms, Droughts, Heatwaves) are entities on the Layer 2 planet surface that move over time. When over the colony site, they apply map-wide effects (Wind damage, crop failure, movement penalties).
+
+**Emergence:** You see the "Great Dust Storm" coming. You rush to harvest early (low yield) and move everyone indoors. The storm lasts for a week, testing your food stores.
+
+**Tension:** Do you settle in the equatorial storm belt for the solar power, or the calm but frozen poles?
+
+---
+
+## Trade Contracts
+
+**Layer:** 3 -> 1
+
+**Fantasy:** You are a cog in the galactic machine. The Empire demands production.
+
+**Mechanic:** External factions offer time-limited contracts (e.g., "Export 1000 Metal Blocks in 2 cycles"). Success grants rare tech/currency. Failure incurs "Debt" and hostility.
+
+**Emergence:** To meet the Emperor's quota, you enforce "Crunch Time" (double shifts), causing a worker revolt just as the trade ship arrives.
+
+**Tension:** Accept the lucrative contract that risks burning out your workforce, or play it safe and stay poor?
+
+---
+
+## The Schism
+
+**Layer:** 1
+
+**Fantasy:** A colony divided cannot stand. The tragic realization that your neighbors are now your enemies.
+
+**Mechanic:** If a Faction's happiness drops too low, they don't just protest—they secede. They claim a cluster of buildings (Housing + Workplaces) as their territory. They lock doors to outsiders and hoard resources.
+
+**Emergence:** The "Miners' Union" seizes the power plant. The "Scientists" seize the hydroponics. You have to negotiate a resource swap between two halves of your own base to prevent everyone from dying.
+
+**Tension:** Use force to retake the buildings (combat/damage) or negotiate (concessions)?
+
+---
+
+## Heirloom Seeds
+
+**Layer:** 1
+
+**Fantasy:** The plants you brought from Earth are the last of their kind.
+
+**Mechanic:** You start with a limited stock of "Earth Seeds" (Wheat, Potatoes). Harvest yields food + chance of seeds. Crop disease or fire can destroy the stock. Native crops are edible but have side effects.
+
+**Emergence:** A fire in the silo destroys your last wheat seeds. No one will ever eat bread again. The colony shifts to a diet of native "Grub-Root", changing the culture.
+
+**Tension:** Plant all your seeds for max harvest (risk of total loss) or keep a "Doomsday Vault" reserve?
+
+---
+
+## Comms Relay
+
+**Layer:** 2
+
+**Fantasy:** Tuning into the static of the void and finding a signal.
+
+**Mechanic:** The System Map (Layer 2) is covered in "Signal Noise" (Fog of War). Building and powering Comms Relays clears the noise radius, revealing approaching ships, comets, or distress signals.
+
+**Emergence:** You neglect your comms to save power. A pirate fleet arrives in orbit without warning, instantly beginning bombardment. You never saw them coming.
+
+**Tension:** Power the radar (energy cost) or trust your luck?
 
 ---
