@@ -20,7 +20,7 @@
 
 use bevy_ecs::prelude::*;
 use scale::layer1::{
-    BuildMode, BuildingTracker, BuildingType, Chronicle, ChronicleUiState, ColonyMemory,
+    BuildMode, BuildingTracker, BuildingType, Chronicle, ChronicleUiState,
     ColonyResources, Designation, DesignationMode, DesignationType, Farm, GridPosition, Housing,
     MovementTarget, Needs, OccupiedTiles, Pop, PopAction, Stockpile, TerrainGrid, TerrainType,
     UtilityConfig, Viewport, arrival_handler_system, check_milestones_system,
@@ -177,7 +177,6 @@ fn setup_world() -> World {
     world.insert_resource(BuildingTracker::default());
     world.insert_resource(Selection::default());
     world.insert_resource(UtilityConfig::default());
-    world.insert_resource(ColonyMemory::default());
 
     spawn_initial_pops(&mut world);
     initial_chronicle_event(&mut world);

@@ -22,7 +22,7 @@ use std::io;
 use std::time::{Duration, Instant};
 
 use scale::layer1::{
-    BuildMode, BuildingTracker, Chronicle, ChronicleUiState, ColonyMemory, ColonyResources,
+    BuildMode, BuildingTracker, Chronicle, ChronicleUiState, ColonyResources,
     DesignationMode, OccupiedTiles, UtilityConfig, Viewport, arrival_handler_system,
     check_milestones_system, clean_dead_residents_system, clean_dead_workers_system,
     cleanup_previous_assignment_system, consume_food_system, decay_needs_system,
@@ -87,7 +87,6 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
     world.insert_resource(Selection::default());
     world.insert_resource(RenderCache::default());
     world.insert_resource(UtilityConfig::default());
-    world.insert_resource(ColonyMemory::default());
 
     spawn_initial_pops(&mut world);
     initial_chronicle_event(&mut world);

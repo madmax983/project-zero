@@ -587,12 +587,6 @@ impl Default for UtilityConfig {
     }
 }
 
-/// Colony-wide memory (zeitgeist) - Future expansion
-#[derive(Resource, Default, Clone)]
-pub struct ColonyMemory {
-    pub total_successful_actions: HashMap<ActionType, u32>,
-    pub average_action_duration: HashMap<ActionType, u32>,
-}
 ```
 
 ### Utility Calculation Functions
@@ -916,7 +910,7 @@ pub use needs::{Needs, decay_needs_system, kill_starving_pops_system};
 pub use building::{Building, BuildingType, BuildMode, OccupiedTiles, can_place_building, try_place_building};
 pub use housing::{Housing, restore_rest_in_housing_system, clean_dead_residents_system};
 pub use utility_ai::{
-    ActionType, PopAction, UtilityWeights, PlanOutcome, UtilityConfig, ColonyMemory,
+    ActionType, PopAction, UtilityWeights, PlanOutcome, UtilityConfig,
     evaluate_actions_system, track_plan_outcomes_system,
 };
 ```

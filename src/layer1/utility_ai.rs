@@ -106,15 +106,6 @@ impl Default for UtilityConfig {
     }
 }
 
-/// Colony-wide memory (zeitgeist)
-#[derive(Resource, Default, Clone)]
-pub struct ColonyMemory {
-    /// Total successful actions across all pops
-    pub total_successful_actions: HashMap<ActionType, u32>,
-    /// Average duration of actions
-    pub average_action_duration: HashMap<ActionType, u32>,
-}
-
 /// Marker component to trigger HTN plan creation
 #[derive(Component)]
 pub struct StartPlan {
@@ -508,7 +499,6 @@ mod tests {
     use super::*;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::pop::Pop;
-    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_update_action_timer() {
@@ -973,13 +963,6 @@ mod tests {
         assert_eq!(config.evaluation_interval, 1);
         assert_eq!(config.learning_rate, 0.05);
         assert_eq!(config.weight_clamp, (0.5, 2.0));
-    }
-
-    #[test]
-    fn test_colony_memory_default() {
-        let memory = ColonyMemory::default();
-        assert!(memory.total_successful_actions.is_empty());
-        assert!(memory.average_action_duration.is_empty());
     }
 
     #[test]
