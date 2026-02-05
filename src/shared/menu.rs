@@ -74,7 +74,7 @@ mod tests {
     #[test]
     fn test_menu_navigation_down() {
         let mut menu = MenuState::default();
-        menu.selected_index = 0;
+        // default is 0
 
         menu.next();
         assert_eq!(menu.selected_index, 1);
@@ -86,8 +86,10 @@ mod tests {
 
     #[test]
     fn test_menu_navigation_up() {
-        let mut menu = MenuState::default();
-        menu.selected_index = 1;
+        let mut menu = MenuState {
+            selected_index: 1,
+            ..Default::default()
+        };
 
         menu.prev();
         assert_eq!(menu.selected_index, 0);

@@ -25,7 +25,7 @@
 use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::farm::Farm;
 use crate::layer1::housing::Housing;
-use crate::layer1::pop::GridPosition;
+use crate::layer1::map::GridPosition;
 use crate::layer1::resources::{ForestryProgress, MiningProgress, chop_tree, mine_rock};
 use crate::layer1::terrain::TerrainGrid;
 use crate::layer1::utility_ai::{ActionType, StartPlan};
@@ -1169,7 +1169,7 @@ mod tests {
         }
 
         // Create a mining designation
-        let designation = world
+        let _designation = world
             .spawn((
                 Designation {
                     designation_type: DesignationType::Mine,

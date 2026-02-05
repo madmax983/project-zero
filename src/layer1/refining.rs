@@ -99,11 +99,11 @@ mod tests {
     fn test_colony_resources_refined_fields() {
         let resources = ColonyResources::default();
         // New fields
-        assert_eq!(resources.planks, 0.0);
-        assert_eq!(resources.blocks, 0.0);
+        assert!((resources.planks - 0.0).abs() < f32::EPSILON);
+        assert!((resources.blocks - 0.0).abs() < f32::EPSILON);
         // Default caps (can be same as raw for now)
-        assert_eq!(resources.max_planks, 50.0);
-        assert_eq!(resources.max_blocks, 20.0);
+        assert!((resources.max_planks - 50.0).abs() < f32::EPSILON);
+        assert!((resources.max_blocks - 20.0).abs() < f32::EPSILON);
     }
 
     #[test]
@@ -128,9 +128,11 @@ mod tests {
         let mut world = World::new();
 
         // Setup Resources: Has Wood, No Planks
-        let mut resources = ColonyResources::default();
-        resources.wood = 10.0;
-        resources.planks = 0.0;
+        let resources = ColonyResources {
+            wood: 10.0,
+            planks: 0.0,
+            ..Default::default()
+        };
         world.insert_resource(resources);
 
         // Spawn Lumber Mill at (5, 5)
@@ -161,9 +163,11 @@ mod tests {
         let mut world = World::new();
 
         // Setup Resources
-        let mut resources = ColonyResources::default();
-        resources.wood = 10.0;
-        resources.planks = 0.0;
+        let resources = ColonyResources {
+            wood: 10.0,
+            planks: 0.0,
+            ..Default::default()
+        };
         world.insert_resource(resources);
 
         // Spawn Lumber Mill almost done
@@ -193,8 +197,10 @@ mod tests {
     #[test]
     fn test_refining_stops_if_no_input() {
         let mut world = World::new();
-        let mut resources = ColonyResources::default();
-        resources.wood = 0.0; // No wood
+        let resources = ColonyResources {
+            wood: 0.0,
+            ..Default::default()
+        };
         world.insert_resource(resources);
 
         world.spawn((
@@ -207,16 +213,18 @@ mod tests {
         process_refining_system(&mut world);
 
         let progress = world.query::<&RefiningProgress>().single(&world);
-        assert_eq!(progress.current, 0.0);
+        assert!((progress.current - 0.0).abs() < f32::EPSILON);
     }
 
     #[test]
     fn test_refining_stops_if_output_full() {
         let mut world = World::new();
-        let mut resources = ColonyResources::default();
-        resources.wood = 10.0;
-        resources.planks = 50.0; // Full
-        resources.max_planks = 50.0;
+        let resources = ColonyResources {
+            wood: 10.0,
+            planks: 50.0,
+            max_planks: 50.0,
+            ..Default::default()
+        };
         world.insert_resource(resources);
 
         world.spawn((
@@ -229,6 +237,6 @@ mod tests {
         process_refining_system(&mut world);
 
         let progress = world.query::<&RefiningProgress>().single(&world);
-        assert_eq!(progress.current, 0.0);
+        assert!((progress.current - 0.0).abs() < f32::EPSILON);
     }
 }
