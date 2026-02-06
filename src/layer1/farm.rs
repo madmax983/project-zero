@@ -376,7 +376,6 @@ mod seasonal_tests {
         world.insert_resource(ColonyResources::default());
         world.insert_resource(SeasonState {
             current_season: Season::Winter,
-            ..Default::default()
         });
 
         let worker = world.spawn(Pop).id();
@@ -402,7 +401,6 @@ mod seasonal_tests {
         world.insert_resource(ColonyResources::default());
         world.insert_resource(SeasonState {
             current_season: Season::Autumn,
-            ..Default::default()
         });
 
         let worker = world.spawn(Pop).id();

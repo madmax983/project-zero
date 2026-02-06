@@ -125,17 +125,12 @@ pub fn process_start_plan_system(world: &mut World) {
         }
 
         // Get the target's position
-        let target_position = if let Some(pos) = world.get::<GridPosition>(target_entity) {
-            *pos
-        } else {
+        let Some(&target_position) = world.get::<GridPosition>(target_entity) else {
             continue;
         };
 
         // Remove any existing MovementTarget and AtTarget
-        world
-            .entity_mut(pop_entity)
-            .remove::<MovementTarget>()
-            .remove::<AtTarget>();
+        clear_movement_components(world, pop_entity);
 
         // Insert new MovementTarget
         world.entity_mut(pop_entity).insert(MovementTarget {
@@ -150,18 +145,7 @@ pub fn process_start_plan_system(world: &mut World) {
 ///
 /// When a pop arrives at its target position (or adjacent for work), this system
 /// marks it with `AtTarget`.
-#[allow(
-    clippy::cast_sign_loss,
-    clippy::cast_possible_truncation,
-    clippy::cast_possible_wrap
-)]
 pub fn movement_system(world: &mut World) {
-    // Get terrain dimensions for bounds checking
-    let (width, height) = {
-        let terrain = world.resource::<TerrainGrid>();
-        (terrain.width as i32, terrain.height as i32)
-    };
-
     // Collect pops with movement targets (that haven't arrived yet)
     let pops_to_move: Vec<(Entity, GridPosition, GridPosition, ActionType)> = world
         .query_filtered::<(Entity, &GridPosition, &MovementTarget), Without<AtTarget>>()
@@ -170,21 +154,10 @@ pub fn movement_system(world: &mut World) {
         .collect();
 
     for (pop_entity, current_pos, target_pos, action) in pops_to_move {
-        // Check if already at target
-        if current_pos == target_pos {
-            world.entity_mut(pop_entity).insert(AtTarget);
-            continue;
-        }
-
         // For work actions, check if adjacent to an unwalkable target (rock/tree)
         // Pops work FROM adjacent tiles, not ON the target
         if action == ActionType::Work {
-            let target_walkable = {
-                let terrain = world.resource::<TerrainGrid>();
-                terrain
-                    .get(target_pos.x as usize, target_pos.y as usize)
-                    .is_some_and(crate::layer1::terrain::TerrainType::is_walkable)
-            };
+            let target_walkable = is_walkable(world, target_pos.x, target_pos.y);
             if !target_walkable {
                 let distance =
                     (current_pos.x - target_pos.x).abs() + (current_pos.y - target_pos.y).abs();
@@ -196,56 +169,32 @@ pub fn movement_system(world: &mut World) {
             }
         }
 
-        // Calculate movement direction (Manhattan)
-        let dx = (target_pos.x - current_pos.x).signum();
-        let dy = (target_pos.y - current_pos.y).signum();
-
-        // Prefer horizontal movement, then vertical
-        let (new_x, new_y) = if dx != 0 {
-            (current_pos.x + dx, current_pos.y)
-        } else {
-            (current_pos.x, current_pos.y + dy)
-        };
-
-        // Check bounds
-        if new_x < 0 || new_x >= width || new_y < 0 || new_y >= height {
+        let Some(new_pos) = calculate_next_position(current_pos, target_pos) else {
             continue;
-        }
-
-        // Check if new position is walkable
-        let is_walkable = {
-            let terrain = world.resource::<TerrainGrid>();
-            terrain
-                .get(new_x as usize, new_y as usize)
-                .is_some_and(crate::layer1::terrain::TerrainType::is_walkable)
         };
 
-        if !is_walkable {
+        // Check if new position is walkable (includes bounds check)
+        if !is_walkable(world, new_pos.x, new_pos.y) {
             // Wait in place (simple approach - no pathfinding)
             continue;
         }
 
         // Update position
         if let Some(mut pos) = world.get_mut::<GridPosition>(pop_entity) {
-            pos.x = new_x;
-            pos.y = new_y;
+            pos.x = new_pos.x;
+            pos.y = new_pos.y;
         }
 
         // Check if now at target
-        if new_x == target_pos.x && new_y == target_pos.y {
+        if new_pos == target_pos {
             world.entity_mut(pop_entity).insert(AtTarget);
         }
 
         // For work actions on unwalkable targets, also check if now adjacent
         if action == ActionType::Work {
-            let target_walkable = {
-                let terrain = world.resource::<TerrainGrid>();
-                terrain
-                    .get(target_pos.x as usize, target_pos.y as usize)
-                    .is_some_and(crate::layer1::terrain::TerrainType::is_walkable)
-            };
+            let target_walkable = is_walkable(world, target_pos.x, target_pos.y);
             if !target_walkable {
-                let distance = (new_x - target_pos.x).abs() + (new_y - target_pos.y).abs();
+                let distance = (new_pos.x - target_pos.x).abs() + (new_pos.y - target_pos.y).abs();
                 if distance == 1 {
                     world.entity_mut(pop_entity).insert(AtTarget);
                 }
@@ -267,73 +216,28 @@ pub fn arrival_handler_system(world: &mut World) {
         // Check if target still exists
         if world.get_entity(target_entity).is_err() {
             // Target despawned, remove movement components
-            world
-                .entity_mut(pop_entity)
-                .remove::<MovementTarget>()
-                .remove::<AtTarget>();
+            clear_movement_components(world, pop_entity);
             continue;
         }
 
         match action {
             ActionType::SatisfyHunger => {
-                // Try to assign to farm
-                let assigned = if let Some(mut farm) = world.get_mut::<Farm>(target_entity) {
-                    if farm.workers.len() < farm.capacity {
-                        farm.workers.push(pop_entity);
-                        true
-                    } else {
-                        false
-                    }
-                } else {
-                    false
-                };
-
-                if assigned {
-                    world
-                        .entity_mut(pop_entity)
-                        .insert(AssignedTo {
-                            entity: target_entity,
-                            assignment_type: AssignmentType::FarmWorker,
-                        })
-                        .remove::<MovementTarget>()
-                        .remove::<AtTarget>();
-                } else {
-                    // Farm full or despawned, clear movement
-                    world
-                        .entity_mut(pop_entity)
-                        .remove::<MovementTarget>()
-                        .remove::<AtTarget>();
+                if assign_to_farm(world, target_entity, pop_entity) {
+                    world.entity_mut(pop_entity).insert(AssignedTo {
+                        entity: target_entity,
+                        assignment_type: AssignmentType::FarmWorker,
+                    });
                 }
+                clear_movement_components(world, pop_entity);
             }
             ActionType::SatisfyRest => {
-                // Try to assign to housing
-                let assigned = if let Some(mut housing) = world.get_mut::<Housing>(target_entity) {
-                    if housing.residents.len() < housing.capacity {
-                        housing.residents.push(pop_entity);
-                        true
-                    } else {
-                        false
-                    }
-                } else {
-                    false
-                };
-
-                if assigned {
-                    world
-                        .entity_mut(pop_entity)
-                        .insert(AssignedTo {
-                            entity: target_entity,
-                            assignment_type: AssignmentType::HousingResident,
-                        })
-                        .remove::<MovementTarget>()
-                        .remove::<AtTarget>();
-                } else {
-                    // Housing full or despawned, clear movement
-                    world
-                        .entity_mut(pop_entity)
-                        .remove::<MovementTarget>()
-                        .remove::<AtTarget>();
+                if assign_to_housing(world, target_entity, pop_entity) {
+                    world.entity_mut(pop_entity).insert(AssignedTo {
+                        entity: target_entity,
+                        assignment_type: AssignmentType::HousingResident,
+                    });
                 }
+                clear_movement_components(world, pop_entity);
             }
             ActionType::Work => {
                 // Work is handled by work_execution_system
@@ -341,12 +245,76 @@ pub fn arrival_handler_system(world: &mut World) {
             }
             _ => {
                 // Other actions (Idle, Explore, Socialize) - just clear movement
-                world
-                    .entity_mut(pop_entity)
-                    .remove::<MovementTarget>()
-                    .remove::<AtTarget>();
+                clear_movement_components(world, pop_entity);
             }
         }
+    }
+}
+
+// =============================================================================
+// Helper Functions
+// =============================================================================
+
+fn assign_to_farm(world: &mut World, farm_entity: Entity, pop_entity: Entity) -> bool {
+    let Some(mut farm) = world.get_mut::<Farm>(farm_entity) else {
+        return false;
+    };
+
+    if farm.workers.len() >= farm.capacity {
+        return false;
+    }
+
+    farm.workers.push(pop_entity);
+    true
+}
+
+fn assign_to_housing(world: &mut World, housing_entity: Entity, pop_entity: Entity) -> bool {
+    let Some(mut housing) = world.get_mut::<Housing>(housing_entity) else {
+        return false;
+    };
+
+    if housing.residents.len() >= housing.capacity {
+        return false;
+    }
+
+    housing.residents.push(pop_entity);
+    true
+}
+
+fn clear_movement_components(world: &mut World, pop_entity: Entity) {
+    world
+        .entity_mut(pop_entity)
+        .remove::<MovementTarget>()
+        .remove::<AtTarget>();
+}
+
+fn is_walkable(world: &World, x: i32, y: i32) -> bool {
+    let terrain = world.resource::<TerrainGrid>();
+    if let (Ok(x_idx), Ok(y_idx)) = (usize::try_from(x), usize::try_from(y)) {
+        terrain
+            .get(x_idx, y_idx)
+            .is_some_and(crate::layer1::terrain::TerrainType::is_walkable)
+    } else {
+        false
+    }
+}
+
+fn calculate_next_position(current: GridPosition, target: GridPosition) -> Option<GridPosition> {
+    // Calculate movement direction (Manhattan)
+    let dx = (target.x - current.x).signum();
+    let dy = (target.y - current.y).signum();
+
+    // Prefer horizontal movement, then vertical
+    if dx != 0 {
+        Some(GridPosition {
+            x: current.x + dx,
+            y: current.y,
+        })
+    } else {
+        Some(GridPosition {
+            x: current.x,
+            y: current.y + dy,
+        })
     }
 }
 
@@ -1137,11 +1105,7 @@ mod tests {
         for tick in 1..=5 {
             movement_system(&mut world);
             let pos = world.get::<GridPosition>(pop).unwrap();
-            assert_eq!(
-                pos.x, tick,
-                "Pop should be at x={} after {} ticks",
-                tick, tick
-            );
+            assert_eq!(pos.x, tick, "Pop should be at x={tick} after {tick} ticks",);
         }
 
         // Should be at target now
@@ -1221,7 +1185,7 @@ mod tests {
             work_execution_system(&mut world);
 
             let pos = *world.get::<GridPosition>(pop).unwrap();
-            assert_eq!(pos.x, tick, "Tick {}: Pop should be at x={}", tick, tick);
+            assert_eq!(pos.x, tick, "Tick {tick}: Pop should be at x={tick}");
         }
 
         // After tick 4, pop should be adjacent to rock (at x=4) and marked AtTarget

@@ -21,20 +21,7 @@ pub fn process_refining_system(world: &mut World) {
     let mut updates = Vec::new();
 
     // Snapshot resources needed for checking conditions to avoid borrowing conflict
-    let (wood, planks, max_planks, stone, blocks, max_blocks, ore, max_metal, metal) = {
-        let res = world.resource::<ColonyResources>();
-        (
-            res.wood,
-            res.planks,
-            res.max_planks,
-            res.stone,
-            res.blocks,
-            res.max_blocks,
-            res.ore,
-            res.max_metal,
-            res.metal,
-        )
-    };
+    let resources = world.resource::<ColonyResources>().clone();
 
     // Iterate buildings (Immutable query)
     let mut query = world.query::<(Entity, &Building, &GridPosition, &RefiningProgress)>();
@@ -49,47 +36,8 @@ pub fn process_refining_system(world: &mut World) {
             continue;
         }
 
-        let (can_refine, input_cost, output_gain) = match building.building_type {
-            BuildingType::LumberMill => (
-                wood >= 1.0 && planks < max_planks,
-                ColonyResources {
-                    wood: 1.0,
-                    ..Default::default()
-                },
-                ColonyResources {
-                    planks: 1.0,
-                    ..Default::default()
-                },
-            ),
-            BuildingType::StoneMason => (
-                stone >= 1.0 && blocks < max_blocks,
-                ColonyResources {
-                    stone: 1.0,
-                    ..Default::default()
-                },
-                ColonyResources {
-                    blocks: 1.0,
-                    ..Default::default()
-                },
-            ),
-            BuildingType::Smelter => (
-                ore >= 1.0 && wood >= 1.0 && metal < max_metal,
-                ColonyResources {
-                    ore: 1.0,
-                    wood: 1.0,
-                    ..Default::default()
-                },
-                ColonyResources {
-                    metal: 1.0,
-                    ..Default::default()
-                },
-            ),
-            _ => (
-                false,
-                ColonyResources::default(),
-                ColonyResources::default(),
-            ),
-        };
+        let (can_refine, input_cost, output_gain) =
+            get_refining_recipe(building.building_type, &resources);
 
         if can_refine {
             updates.push((entity, 1.0, input_cost, output_gain));
@@ -144,6 +92,53 @@ pub fn process_refining_system(world: &mut World) {
                 }
             }
         }
+    }
+}
+
+fn get_refining_recipe(
+    building_type: BuildingType,
+    res: &ColonyResources,
+) -> (bool, ColonyResources, ColonyResources) {
+    match building_type {
+        BuildingType::LumberMill => (
+            res.wood >= 1.0 && res.planks < res.max_planks,
+            ColonyResources {
+                wood: 1.0,
+                ..Default::default()
+            },
+            ColonyResources {
+                planks: 1.0,
+                ..Default::default()
+            },
+        ),
+        BuildingType::StoneMason => (
+            res.stone >= 1.0 && res.blocks < res.max_blocks,
+            ColonyResources {
+                stone: 1.0,
+                ..Default::default()
+            },
+            ColonyResources {
+                blocks: 1.0,
+                ..Default::default()
+            },
+        ),
+        BuildingType::Smelter => (
+            res.ore >= 1.0 && res.wood >= 1.0 && res.metal < res.max_metal,
+            ColonyResources {
+                ore: 1.0,
+                wood: 1.0,
+                ..Default::default()
+            },
+            ColonyResources {
+                metal: 1.0,
+                ..Default::default()
+            },
+        ),
+        _ => (
+            false,
+            ColonyResources::default(),
+            ColonyResources::default(),
+        ),
     }
 }
 

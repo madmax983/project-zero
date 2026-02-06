@@ -1,4 +1,4 @@
-//! Demo of the NarrativeGenerator system.
+//! Demo of the `NarrativeGenerator` system.
 //!
 //! This example shows how to load procedural lore from files and generate
 //! an event string using a template and context.
@@ -38,7 +38,7 @@ fn main() -> anyhow::Result<()> {
     println!("\nGenerating CIVILIZATION_RISE event...");
     let story = generator.generate("CIVILIZATION_RISE", &context)?;
 
-    println!("\n📜 Result:\n\"{}\"", story);
+    println!("\n📜 Result:\n\"{story}\"");
 
     Ok(())
 }

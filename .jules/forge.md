@@ -1,5 +1,3 @@
-# Forge's Journal
-
-**[Manual Copy Implementation]**
-**Learning:** `#[derive(Copy)]` adds a `Copy` bound to generic type parameters even if they are only used in references. This can cause errors if the generic type (like `RandomState` in `HashMap`) is not `Copy`.
-**Action:** When defining structs with references to generic types, implement `Clone` and `Copy` manually instead of deriving them, or pass by reference if appropriate.
+**[Refactoring Execution Layer and Pre-emptive Cleanup]**
+**Learning:** Simplify loops by making the general case handle edge cases. In `movement_system`, handling `current == target` inside the `calculate_next_position` (returning `current`) allowed removing an explicit "already there" check, reducing duplication and potential bugs where logic diverges.
+**Action:** When extracting helpers, consider if the helper can handle the "identity" or "no-op" case naturally to avoid surrounding `if` checks.

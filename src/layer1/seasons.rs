@@ -165,7 +165,6 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(SeasonState {
             current_season: Season::Summer,
-            ..Default::default()
         });
         world.insert_resource(Chronicle::default());
         world.insert_resource(SimulationTime {

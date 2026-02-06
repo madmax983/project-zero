@@ -8,9 +8,8 @@
 
 use criterion::{Criterion, black_box, criterion_group, criterion_main};
 use ratatui::prelude::{Color, Rect};
-use scale::layer1::{
-    GridPosition, MapRenderContext, TerrainGrid, TerrainType, Viewport, build_map_layer_spans,
-};
+use scale::layer1::{GridPosition, TerrainGrid, TerrainType, Viewport};
+use scale::ui::map::{MapRenderContext, build_map_layer_spans};
 use std::collections::HashMap;
 
 fn benchmark_rendering(c: &mut Criterion) {
