@@ -1,9 +1,7 @@
+use crate::layer1::balance::TICKS_PER_YEAR;
 use crate::layer1::building::{Building, BuildingType};
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
-
-/// Number of ticks per in-game year.
-pub const TICKS_PER_YEAR: u64 = 1000;
 
 /// Importance level for chronicle events.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]

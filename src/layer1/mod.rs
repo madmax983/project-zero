@@ -3,6 +3,8 @@
 //! This layer handles individual pops, buildings, and tile-based terrain
 //! similar to Dwarf Fortress or `RimWorld`.
 
+/// Game balance constants.
+pub mod balance;
 /// Building placement and types.
 pub mod building;
 /// Chronicle system and historical records.
@@ -47,6 +49,7 @@ pub mod utility_ai_work_tests;
 /// Named locations on the map.
 pub mod locations;
 
+pub use balance::*;
 pub use building::*;
 pub use chronicle::*;
 pub use designation::*;

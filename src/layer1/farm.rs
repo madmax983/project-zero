@@ -1,3 +1,6 @@
+use crate::layer1::balance::{
+    FOOD_HUNGER_THRESHOLD, FOOD_PER_MEAL, FOOD_PER_WORKER_PER_TICK, HUNGER_PER_MEAL,
+};
 use crate::layer1::needs::Needs;
 use crate::layer1::pop::Pop;
 use crate::layer1::resources::ColonyResources;
@@ -21,11 +24,6 @@ impl Default for Farm {
         }
     }
 }
-
-const FOOD_PER_WORKER_PER_TICK: f32 = 0.005;
-const FOOD_HUNGER_THRESHOLD: f32 = 0.7; // Eat when below this
-const FOOD_PER_MEAL: f32 = 0.1; // Food consumed per meal
-const HUNGER_PER_MEAL: f32 = 0.3; // Hunger restored per meal
 
 /// Produces food from all farms with workers.
 pub fn produce_food_system(world: &mut World) {
