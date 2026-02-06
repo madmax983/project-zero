@@ -299,6 +299,7 @@ fn is_walkable(world: &World, x: i32, y: i32) -> bool {
     }
 }
 
+#[allow(clippy::missing_const_for_fn, clippy::unnecessary_wraps)]
 fn calculate_next_position(current: GridPosition, target: GridPosition) -> Option<GridPosition> {
     // Calculate movement direction (Manhattan)
     let dx = (target.x - current.x).signum();

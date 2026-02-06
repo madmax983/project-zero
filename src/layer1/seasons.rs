@@ -1,4 +1,8 @@
-use crate::layer1::chronicle::{Chronicle, EventImportance, TICKS_PER_YEAR};
+use crate::layer1::balance::{
+    SEASON_MODIFIER_AUTUMN, SEASON_MODIFIER_SPRING, SEASON_MODIFIER_SUMMER, SEASON_MODIFIER_WINTER,
+    TICKS_PER_YEAR,
+};
+use crate::layer1::chronicle::{Chronicle, EventImportance};
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 
@@ -32,10 +36,10 @@ impl Season {
     #[must_use]
     pub const fn food_modifier(&self) -> f32 {
         match self {
-            Self::Spring => 1.0,
-            Self::Summer => 1.2,
-            Self::Autumn => 1.5,
-            Self::Winter => 0.5,
+            Self::Spring => SEASON_MODIFIER_SPRING,
+            Self::Summer => SEASON_MODIFIER_SUMMER,
+            Self::Autumn => SEASON_MODIFIER_AUTUMN,
+            Self::Winter => SEASON_MODIFIER_WINTER,
         }
     }
 
