@@ -354,11 +354,11 @@ mod tests {
 
     #[test]
     fn test_fragment_parsing() {
-        let content = r#"
+        let content = r"
 ### [TEST_FRAGMENT]
 - option1
 - option2
-"#;
+";
         let mut generator = NarrativeGenerator::default();
         generator.parse_fragments(content);
 

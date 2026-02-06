@@ -87,7 +87,7 @@ mod tests {
     fn test_needs_has_leisure() {
         let needs = Needs::default();
         // Leisure starts high like others
-        assert_eq!(needs.leisure, 0.8);
+        assert!((needs.leisure - 0.8).abs() < f32::EPSILON);
     }
 
     #[test]

@@ -35,7 +35,7 @@ use rand::Rng;
 /// resources.food += 10.0;
 /// assert_eq!(resources.food, 10.0);
 /// ```
-#[derive(Resource, Debug)]
+#[derive(Resource, Debug, Clone)]
 pub struct ColonyResources {
     /// Total food available in the colony.
     pub food: f32,
@@ -687,17 +687,21 @@ mod tests {
 
     #[test]
     fn test_add_wood_clamps_to_max() {
-        let mut resources = ColonyResources::default();
-        resources.max_wood = 100.0;
-        resources.wood = 90.0;
+        let mut resources = ColonyResources {
+            max_wood: 100.0,
+            wood: 90.0,
+            ..Default::default()
+        };
         resources.add_wood(20.0);
         assert!((resources.wood - 100.0).abs() < f32::EPSILON);
     }
 
     #[test]
     fn test_add_wood_clamps_to_zero() {
-        let mut resources = ColonyResources::default();
-        resources.wood = 10.0;
+        let mut resources = ColonyResources {
+            wood: 10.0,
+            ..Default::default()
+        };
         resources.add_wood(-20.0);
         assert!(
             (resources.wood - 0.0).abs() < f32::EPSILON,

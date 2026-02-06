@@ -11,10 +11,10 @@ mod tests {
     #[test]
     fn test_resources_metal_fields() {
         let res = ColonyResources::default();
-        assert_eq!(res.ore, 0.0);
-        assert_eq!(res.metal, 0.0);
-        assert_eq!(res.max_ore, 20.0);
-        assert_eq!(res.max_metal, 20.0);
+        assert!(res.ore.abs() < f32::EPSILON);
+        assert!(res.metal.abs() < f32::EPSILON);
+        assert!((res.max_ore - 20.0).abs() < f32::EPSILON);
+        assert!((res.max_metal - 20.0).abs() < f32::EPSILON);
     }
 
     #[test]
@@ -69,10 +69,12 @@ mod tests {
     #[test]
     fn test_smelter_refines_ore_to_metal() {
         let mut world = World::new();
-        let mut res = ColonyResources::default();
-        res.ore = 10.0;
-        res.wood = 10.0;
-        res.metal = 0.0;
+        let res = ColonyResources {
+            ore: 10.0,
+            wood: 10.0,
+            metal: 0.0,
+            ..Default::default()
+        };
         world.insert_resource(res);
 
         // Spawn Smelter

@@ -37,7 +37,7 @@ fn main() -> std::io::Result<()> {
     // Mouse input handler
     terminal.on_mouse_event({
         let world = world.clone();
-        let router = input_router.clone();
+        let router = input_router;
         move |mouse_event| {
             if let Ok(game_mouse) = GameMouseEvent::try_from(mouse_event) {
                 router
@@ -51,7 +51,7 @@ fn main() -> std::io::Result<()> {
     let frame_count = Rc::new(RefCell::new(0u32));
 
     terminal.draw_web({
-        let world = world.clone();
+        let world = world;
         move |frame| {
             let mut world = world.borrow_mut();
 
