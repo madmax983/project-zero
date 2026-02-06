@@ -79,8 +79,8 @@ use scale::layer1::social::Tavern;
 use scale::layer1::utility_ai::types::{ActionType, PopAction, UtilityConfig, UtilityWeights};
 use scale::layer1::utility_ai::evaluate_actions_system;
 
-/// Build a minimal world with `n_pops` pops and a fixed set of buildings.
-fn make_bench_world(n_pops: usize, gpu_ctx: Option<GpuContext>) -> World {
+/// Build a minimal world with `n_pops` pops and `n_buildings` buildings.
+fn make_bench_world(n_pops: usize, n_buildings: usize, gpu_ctx: Option<GpuContext>) -> World {
     scale::setup::init_task_pools();
     let mut world = World::new();
     world.insert_resource(UtilityConfig::default());
@@ -90,42 +90,47 @@ fn make_bench_world(n_pops: usize, gpu_ctx: Option<GpuContext>) -> World {
         world.insert_resource(ctx);
     }
 
-    // Spawn buildings: 3 farms, 2 housing, 1 tavern, 2 designations
-    for i in 0..3 {
-        world.spawn((
-            GridPosition { x: i * 10, y: 5 },
-            Farm {
-                capacity: 4,
-                workers: vec![],
-            },
-        ));
-    }
-    for i in 0..2 {
-        world.spawn((
-            GridPosition { x: i * 15, y: 20 },
-            Housing {
-                capacity: 6,
-                residents: vec![],
-            },
-        ));
-    }
-    world.spawn((
-        GridPosition { x: 25, y: 25 },
-        Tavern {
-            capacity: 8,
-            visitors: vec![],
-        },
-    ));
-    for i in 0..2 {
-        world.spawn((
-            GridPosition {
-                x: 30 + i * 5,
-                y: 30,
-            },
-            Designation {
-                designation_type: DesignationType::Mine,
-            },
-        ));
+    // Spawn buildings spread across the map, cycling through types
+    for i in 0..n_buildings {
+        let x = (i * 11 % 200) as i32;
+        let y = (i * 17 % 200) as i32;
+        match i % 4 {
+            0 => {
+                world.spawn((
+                    GridPosition { x, y },
+                    Farm {
+                        capacity: 4,
+                        workers: vec![],
+                    },
+                ));
+            }
+            1 => {
+                world.spawn((
+                    GridPosition { x, y },
+                    Housing {
+                        capacity: 6,
+                        residents: vec![],
+                    },
+                ));
+            }
+            2 => {
+                world.spawn((
+                    GridPosition { x, y },
+                    Tavern {
+                        capacity: 8,
+                        visitors: vec![],
+                    },
+                ));
+            }
+            _ => {
+                world.spawn((
+                    GridPosition { x, y },
+                    Designation {
+                        designation_type: DesignationType::Mine,
+                    },
+                ));
+            }
+        }
     }
 
     // Spawn pops spread across the map, all eligible for evaluation
@@ -161,11 +166,30 @@ fn benchmark_utility_ai(c: &mut Criterion) {
     let gpu_available = matches!(&gpu_result, Ok(Ok(_)));
 
     let mut group = c.benchmark_group("utility_ai_evaluate");
+    // Reduce sample size for the huge benchmarks
+    group.sample_size(10);
 
-    for &n_pops in &[5, 50, 200, 500] {
+    // (pops, buildings) — scale buildings with pops for realism
+    let scenarios: &[(usize, usize)] = &[
+        (5, 8),
+        (50, 8),
+        (200, 8),
+        (500, 20),
+        (2_000, 50),
+        (10_000, 200),
+        (100_000, 500),
+    ];
+
+    for &(n_pops, n_buildings) in scenarios {
+        let label = if n_pops >= 1000 {
+            format!("{}k", n_pops / 1000)
+        } else {
+            format!("{n_pops}")
+        };
+
         // CPU benchmark
-        group.bench_function(format!("cpu_{n_pops}_pops"), |b| {
-            let mut world = make_bench_world(n_pops, None);
+        group.bench_function(format!("cpu_{label}_pops"), |b| {
+            let mut world = make_bench_world(n_pops, n_buildings, None);
             b.iter(|| {
                 evaluate_actions_system(black_box(&mut world));
             });
@@ -173,10 +197,9 @@ fn benchmark_utility_ai(c: &mut Criterion) {
 
         // GPU benchmark (only if GPU is available)
         if gpu_available {
-            group.bench_function(format!("gpu_{n_pops}_pops"), |b| {
-                // Each iteration needs a fresh GpuContext since it's moved into the world
+            group.bench_function(format!("gpu_{label}_pops"), |b| {
                 let ctx = pollster::block_on(GpuContext::new()).unwrap();
-                let mut world = make_bench_world(n_pops, Some(ctx));
+                let mut world = make_bench_world(n_pops, n_buildings, Some(ctx));
                 b.iter(|| {
                     gpu_evaluate_actions(black_box(&mut world));
                 });
