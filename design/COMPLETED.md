@@ -30,3 +30,6 @@ Implemented features. Architect: read this to understand current state.
 - [x] `INT-001` Integration: Socialize Action -> Tavern Visitor — completed 2026-02-17
 - [x] `029` Knowledge System — `specs/029-knowledge-system.md` — completed 2026-02-18
 - [x] `025` Hauling Logistics — `specs/025-hauling-logistics.md` — completed 2026-02-06
+- [x] `INT-002` Integration: Stats -> Status Bar UI — completed 2026-02-18
+- [x] `030` Tool Economy — `specs/030-tool-economy.md` — completed 2026-02-06
+- [x] `015` Selection and Inspection System — `specs/015-selection-system.md` — completed 2026-02-18

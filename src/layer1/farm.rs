@@ -29,130 +29,82 @@ impl Default for Farm {
 }
 
 /// Produces food from all farms with workers.
-pub fn produce_food_system(world: &mut World) {
-    let modifier = world
-        .get_resource::<SeasonState>()
-        .map_or(1.0, |s| s.current_season.food_modifier());
+pub fn produce_food_system(
+    farm_query: Query<&Farm>,
+    pop_query: Query<&Pop>,
+    season: Option<Res<SeasonState>>,
+    mut resources: ResMut<ColonyResources>,
+) {
+    let modifier = season.map_or(1.0, |s| s.current_season.food_modifier());
 
-    let mut total_production = 0.0;
-
-    // Use a scope to drop the borrow on world from the query
-    let production_from_farms: f32 = {
-        let mut query = world.query::<&Farm>();
-        // We collect the workers to check validity later to avoid nested borrow issues if any,
-        // although shared-shared should be fine. But to be safe and consistent with cleanup pattern:
-        // Actually, shared-shared is fine.
-        query
-            .iter(world)
-            .map(|farm| {
-                #[allow(clippy::cast_precision_loss)]
-                let count = farm
-                    .workers
-                    .iter()
-                    .filter(|&&e| world.get_entity(e).is_ok())
-                    .count() as f32;
-                count * FOOD_PER_WORKER_PER_TICK
-            })
-            .sum()
-    };
-
-    total_production += production_from_farms * modifier;
+    #[allow(clippy::cast_precision_loss)]
+    let total_production: f32 = farm_query
+        .iter()
+        .map(|farm| {
+            let count = farm
+                .workers
+                .iter()
+                .filter(|&&e| pop_query.get(e).is_ok())
+                .count() as f32;
+            count * FOOD_PER_WORKER_PER_TICK
+        })
+        .sum::<f32>()
+        * modifier;
 
     if total_production > 0.0 {
-        let mut resources = world.resource_mut::<ColonyResources>();
         resources.food += total_production;
     }
 }
 
 /// Pops eat food when hungry.
-pub fn consume_food_system(world: &mut World) {
-    // We need to access ColonyResources mutably to deduct food.
-    // We need to query Pops to check hunger.
-
-    // To avoid borrow conflicts, we'll collect hungry pops first.
-    // This doesn't need mutable access to pops yet, just read access.
-
-    let mut food = world.resource::<ColonyResources>().food;
-    let tick = world.resource::<SimulationTime>().tick;
-
-    // If no food, no one can eat.
-    if food < f32::EPSILON {
+pub fn consume_food_system(
+    mut pop_query: Query<(Entity, &mut Needs), With<Pop>>,
+    mut resources: ResMut<ColonyResources>,
+    time: Res<SimulationTime>,
+    mut commands: Commands,
+) {
+    if resources.food < f32::EPSILON {
         return;
     }
 
-    let hungry_pops: Vec<Entity> = world
-        .query_filtered::<(Entity, &Needs), With<Pop>>()
-        .iter(world)
+    let tick = time.tick;
+    let mut food = resources.food;
+
+    // Collect hungry pop entities first to avoid borrow issues with mut iteration
+    let hungry_pops: Vec<Entity> = pop_query
+        .iter()
         .filter(|(_, needs)| needs.hunger < FOOD_HUNGER_THRESHOLD)
         .map(|(e, _)| e)
         .collect();
 
     for entity in hungry_pops {
-        // Check food again (it decreases)
-        if food >= FOOD_PER_MEAL {
-            let ate = if let Some(mut needs) = world.get_mut::<Needs>(entity) {
-                // Double check they are still hungry? (They should be, we just checked)
-                // But mainly we need to modify them.
-
-                food -= FOOD_PER_MEAL;
-                needs.hunger = (needs.hunger + HUNGER_PER_MEAL).min(1.0);
-                true
-            } else {
-                false
-            };
-
-            if ate {
-                let mut rng = rand::thread_rng();
-                let thoughts = [
-                    "That hit the spot.",
-                    "Finally, a good meal.",
-                    "Tastes like victory.",
-                    "Much better.",
-                ];
-                let text = thoughts[rng.gen_range(0..thoughts.len())].to_string();
-
-                world.entity_mut(entity).insert(Thought { text, tick });
-            }
-        } else {
-            // Out of food
+        if food < FOOD_PER_MEAL {
             break;
+        }
+
+        if let Ok((_, mut needs)) = pop_query.get_mut(entity) {
+            food -= FOOD_PER_MEAL;
+            needs.hunger = (needs.hunger + HUNGER_PER_MEAL).min(1.0);
+
+            let mut rng = rand::thread_rng();
+            let thoughts = [
+                "That hit the spot.",
+                "Finally, a good meal.",
+                "Tastes like victory.",
+                "Much better.",
+            ];
+            let text = thoughts[rng.gen_range(0..thoughts.len())].to_string();
+            commands.entity(entity).insert(Thought { text, tick });
         }
     }
 
-    world.resource_mut::<ColonyResources>().food = food;
+    resources.food = food;
 }
 
 /// Removes dead workers from farms.
-pub fn clean_dead_workers_system(world: &mut World) {
-    // Collect all farm entities first to avoid keeping a borrow on the world
-    let farm_entities: Vec<Entity> = world
-        .query_filtered::<Entity, With<Farm>>()
-        .iter(world)
-        .collect();
-
-    for farm_entity in farm_entities {
-        // Read the farm to get workers (clone the vec to release borrow)
-        let workers = if let Some(farm) = world.get::<Farm>(farm_entity) {
-            farm.workers.clone()
-        } else {
-            continue;
-        };
-
-        // Identify dead workers
-        let dead_workers: Vec<Entity> = workers
-            .iter()
-            .filter(|&&worker| world.get_entity(worker).is_err())
-            .copied()
-            .collect();
-
-        // If there are dead workers, remove them
-        if dead_workers.is_empty() {
-            continue;
-        }
-
-        if let Some(mut farm) = world.get_mut::<Farm>(farm_entity) {
-            farm.workers.retain(|w| !dead_workers.contains(w));
-        }
+pub fn clean_dead_workers_system(mut farm_query: Query<&mut Farm>, pop_query: Query<&Pop>) {
+    for mut farm in &mut farm_query {
+        farm.workers.retain(|&worker| pop_query.get(worker).is_ok());
     }
 }
 
@@ -163,6 +115,7 @@ mod tests {
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::needs::Needs;
     use crate::layer1::pop::Pop;
+    use bevy_ecs::system::RunSystemOnce;
 
     #[test]
     fn test_farm_default() {
@@ -187,7 +140,7 @@ mod tests {
         farm.workers.push(worker);
         world.spawn(farm);
 
-        produce_food_system(&mut world);
+        world.run_system_once(produce_food_system).unwrap();
 
         let resources = world.resource::<ColonyResources>();
         assert!(resources.food > 0.0, "Food should be produced");
@@ -205,7 +158,7 @@ mod tests {
         farm.workers.push(worker2);
         world.spawn(farm);
 
-        produce_food_system(&mut world);
+        world.run_system_once(produce_food_system).unwrap();
 
         let resources = world.resource::<ColonyResources>();
         assert!(
@@ -225,7 +178,7 @@ mod tests {
         world.spawn(farm);
 
         for _ in 0..600 {
-            produce_food_system(&mut world);
+            world.run_system_once(produce_food_system).unwrap();
         }
 
         let resources = world.resource::<ColonyResources>();
@@ -256,7 +209,7 @@ mod tests {
         ));
 
         let food_before = world.resource::<ColonyResources>().food;
-        consume_food_system(&mut world);
+        world.run_system_once(consume_food_system).unwrap();
         let food_after = world.resource::<ColonyResources>().food;
 
         assert!(food_after < food_before, "Food should be consumed");
@@ -282,7 +235,7 @@ mod tests {
             ))
             .id();
 
-        consume_food_system(&mut world);
+        world.run_system_once(consume_food_system).unwrap();
 
         let needs = world.get::<Needs>(pop).unwrap();
         assert!(needs.hunger > 0.3, "Hunger should increase");
@@ -307,7 +260,7 @@ mod tests {
         ));
 
         let food_before = world.resource::<ColonyResources>().food;
-        consume_food_system(&mut world);
+        world.run_system_once(consume_food_system).unwrap();
         let food_after = world.resource::<ColonyResources>().food;
 
         assert!(
@@ -342,7 +295,7 @@ mod tests {
             },
         ));
 
-        consume_food_system(&mut world);
+        world.run_system_once(consume_food_system).unwrap();
 
         // At most one pop should eat
         let resources = world.resource::<ColonyResources>();
@@ -363,7 +316,7 @@ mod tests {
 
         world.despawn(worker1);
 
-        clean_dead_workers_system(&mut world);
+        world.run_system_once(clean_dead_workers_system).unwrap();
 
         let farm = world.get::<Farm>(farm_entity).unwrap();
         assert_eq!(farm.workers.len(), 1);
@@ -408,7 +361,7 @@ mod tests {
             ))
             .id();
 
-        consume_food_system(&mut world);
+        world.run_system_once(consume_food_system).unwrap();
 
         let thought = world
             .get::<Thought>(pop)
@@ -421,6 +374,7 @@ mod tests {
 mod seasonal_tests {
     use super::*;
     use crate::layer1::seasons::{Season, SeasonState};
+    use bevy_ecs::system::RunSystemOnce;
 
     #[test]
     fn test_produce_food_system_winter() {
@@ -435,7 +389,7 @@ mod seasonal_tests {
         farm.workers.push(worker);
         world.spawn(farm);
 
-        produce_food_system(&mut world);
+        world.run_system_once(produce_food_system).unwrap();
 
         let resources = world.resource::<ColonyResources>();
         // Base is 0.005. Winter mod is 0.5. Result should be 0.0025.
@@ -460,7 +414,7 @@ mod seasonal_tests {
         farm.workers.push(worker);
         world.spawn(farm);
 
-        produce_food_system(&mut world);
+        world.run_system_once(produce_food_system).unwrap();
 
         let resources = world.resource::<ColonyResources>();
         // Base is 0.005. Autumn mod is 1.5. Result should be 0.0075.

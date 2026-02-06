@@ -9,7 +9,8 @@ native = ["dep:crossterm", "ratatui/crossterm"]
 wasm = ["dep:ratzilla", "dep:getrandom"]
 
 [dependencies]
-bevy_ecs = "0.15"
+bevy_ecs = { version = "0.15", features = ["multi_threaded"] }
+bevy_tasks = "0.15"
 ratatui = { version = "0.30", default-features = false, features = ["std", "all-widgets", "macros", "underline-color"] }
 crossterm = { version = "0.28", optional = true }
 ratzilla = { version = "0.3", optional = true }
@@ -32,6 +33,7 @@ nursery = { level = "warn", priority = -1 }
 # Allow some pedantic lints that are too noisy
 module_name_repetitions = "allow"
 similar_names = "allow"
+needless_pass_by_value = "allow" # Bevy system params must be passed by value
 
 [[bin]]
 name = "scale"

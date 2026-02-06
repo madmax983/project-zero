@@ -1,16 +1,20 @@
 //! Native platform adapter (crossterm → `GameKeyEvent` / `GameMouseEvent`).
 
-use crossterm::event::{KeyCode, KeyEvent, MouseEvent, MouseEventKind};
+use crossterm::event::{KeyCode, KeyEvent, KeyEventKind, MouseEvent, MouseEventKind};
 
 use super::input::{GameKeyCode, GameKeyEvent, GameMouseEvent};
 
 /// Convert a crossterm `KeyEvent` to a platform-agnostic `GameKeyEvent`.
 ///
-/// Returns `None` for keys we don't handle.
+/// Only `KeyEventKind::Press` events are translated. On Windows, crossterm
+/// also sends `Release` and `Repeat` events which would double-fire inputs.
 impl TryFrom<KeyEvent> for GameKeyEvent {
     type Error = ();
 
     fn try_from(key: KeyEvent) -> Result<Self, Self::Error> {
+        if key.kind != KeyEventKind::Press {
+            return Err(());
+        }
         let code = match key.code {
             KeyCode::Char(c) => GameKeyCode::Char(c),
             KeyCode::Enter => GameKeyCode::Enter,
@@ -49,7 +53,7 @@ impl TryFrom<MouseEvent> for GameMouseEvent {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crossterm::event::{KeyModifiers, MouseButton};
+    use crossterm::event::{KeyEventKind, KeyModifiers, MouseButton};
 
     fn crossterm_key(code: KeyCode) -> KeyEvent {
         KeyEvent::new(code, KeyModifiers::empty())
@@ -123,6 +127,85 @@ mod tests {
     fn test_unhandled_key_returns_none() {
         let result = GameKeyEvent::try_from(crossterm_key(KeyCode::F(1)));
         assert!(result.is_err());
+    }
+
+    #[test]
+    fn test_key_release_ignored() {
+        let key = KeyEvent::new_with_kind(
+            KeyCode::Char(' '),
+            KeyModifiers::empty(),
+            KeyEventKind::Release,
+        );
+        assert!(GameKeyEvent::try_from(key).is_err());
+    }
+
+    #[test]
+    fn test_key_repeat_ignored() {
+        let key = KeyEvent::new_with_kind(
+            KeyCode::Char(' '),
+            KeyModifiers::empty(),
+            KeyEventKind::Repeat,
+        );
+        assert!(GameKeyEvent::try_from(key).is_err());
+    }
+
+    /// Regression test for Windows double-fire bug.
+    ///
+    /// On Windows, crossterm sends Press + Release for every keypress.
+    /// Without filtering, Space would toggle pause ON (Press) then
+    /// immediately OFF (Release), making pause appear broken.
+    ///
+    /// This test feeds raw crossterm events through the full pipeline:
+    /// crossterm KeyEvent → TryFrom → InputRouter → GameState
+    #[test]
+    fn test_windows_press_release_does_not_double_toggle_pause() {
+        use crate::layer1::{BuildMode, DesignationMode, Viewport};
+        use crate::shared::input::{InputContext, InputContextStack, InputRouter};
+        use crate::shared::menu::MenuState;
+        use crate::shared::selection::Selection;
+        use crate::shared::state::GameState;
+        use crate::shared::time::SimulationTime;
+
+        let mut world = bevy_ecs::prelude::World::new();
+        world.insert_resource(GameState::Running);
+        world.insert_resource(SimulationTime::default());
+        world.insert_resource(Viewport::default());
+        world.insert_resource(BuildMode::default());
+        world.insert_resource(DesignationMode::default());
+        world.insert_resource(MenuState::default());
+        world.insert_resource(Selection::default());
+        let mut stack = InputContextStack::default();
+        stack.push(InputContext::Normal);
+        world.insert_resource(stack);
+
+        let mut router = InputRouter::new();
+
+        // Simulate Windows keypress: Press then Release
+        let press = KeyEvent::new_with_kind(
+            KeyCode::Char(' '),
+            KeyModifiers::empty(),
+            KeyEventKind::Press,
+        );
+        let release = KeyEvent::new_with_kind(
+            KeyCode::Char(' '),
+            KeyModifiers::empty(),
+            KeyEventKind::Release,
+        );
+
+        // Feed both events through the same path as main.rs
+        if let Ok(game_key) = GameKeyEvent::try_from(press) {
+            router.route(&mut world, game_key);
+        }
+        if let Ok(game_key) = GameKeyEvent::try_from(release) {
+            router.route(&mut world, game_key);
+        }
+
+        // Should be Paused — not toggled back to Running
+        assert_eq!(
+            *world.resource::<GameState>(),
+            GameState::Paused,
+            "Press+Release should only toggle once (Press), not double-toggle"
+        );
     }
 
     #[test]

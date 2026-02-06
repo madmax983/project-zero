@@ -26,14 +26,23 @@ use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::farm::Farm;
 use crate::layer1::housing::Housing;
 use crate::layer1::map::GridPosition;
-use crate::layer1::resources::{ForestryProgress, MiningProgress, chop_tree, mine_rock};
+use crate::layer1::resources::{
+    ColonyResources, ForestryProgress, MiningProgress, chop_tree, mine_rock,
+};
 use crate::layer1::social::Tavern;
 use crate::layer1::terrain::TerrainGrid;
 use crate::layer1::utility_ai::{ActionType, StartPlan};
 use bevy_ecs::prelude::*;
+use rand::Rng;
 
 /// Work amount applied per tick when a pop is working.
 const WORK_PER_TICK: f32 = 10.0;
+
+/// Chance for a tool to break per tick when used.
+const TOOL_BREAK_CHANCE: f64 = 0.01;
+
+/// Efficiency multiplier when working without tools.
+const NO_TOOL_PENALTY: f32 = 0.5;
 
 /// Component indicating a pop is moving toward a target.
 #[derive(Component, Debug)]
@@ -76,38 +85,35 @@ pub enum AssignmentType {
 ///
 /// This system runs before `process_start_plan_system` to ensure pops are
 /// properly removed from their previous assignment before moving to a new one.
-pub fn cleanup_previous_assignment_system(world: &mut World) {
-    // Find pops that have StartPlan (about to switch actions) and have AssignedTo
-    let pops_to_cleanup: Vec<(Entity, Entity, AssignmentType)> = world
-        .query_filtered::<(Entity, &AssignedTo), With<StartPlan>>()
-        .iter(world)
-        .map(|(e, assigned)| (e, assigned.entity, assigned.assignment_type))
-        .collect();
-
-    for (pop_entity, assigned_entity, assignment_type) in pops_to_cleanup {
-        match assignment_type {
+pub fn cleanup_previous_assignment_system(
+    pops_query: Query<(Entity, &AssignedTo), With<StartPlan>>,
+    mut farms: Query<&mut Farm>,
+    mut housing: Query<&mut Housing>,
+    mut taverns: Query<&mut Tavern>,
+    mut commands: Commands,
+) {
+    for (pop_entity, assigned) in &pops_query {
+        let assigned_entity = assigned.entity;
+        match assigned.assignment_type {
             AssignmentType::FarmWorker => {
-                if let Some(mut farm) = world.get_mut::<Farm>(assigned_entity) {
+                if let Ok(mut farm) = farms.get_mut(assigned_entity) {
                     farm.workers.retain(|&w| w != pop_entity);
                 }
             }
             AssignmentType::HousingResident => {
-                if let Some(mut housing) = world.get_mut::<Housing>(assigned_entity) {
-                    housing.residents.retain(|&r| r != pop_entity);
+                if let Ok(mut h) = housing.get_mut(assigned_entity) {
+                    h.residents.retain(|&r| r != pop_entity);
                 }
             }
             AssignmentType::TavernVisitor => {
-                if let Some(mut tavern) = world.get_mut::<Tavern>(assigned_entity) {
+                if let Ok(mut tavern) = taverns.get_mut(assigned_entity) {
                     tavern.visitors.retain(|&v| v != pop_entity);
                 }
             }
-            AssignmentType::LibraryWorker => {
-                // Library component currently doesn't track workers list, so no cleanup needed on building
-            }
+            AssignmentType::LibraryWorker => {}
         }
 
-        // Remove the AssignedTo component
-        world.entity_mut(pop_entity).remove::<AssignedTo>();
+        commands.entity(pop_entity).remove::<AssignedTo>();
     }
 }
 
@@ -115,38 +121,34 @@ pub fn cleanup_previous_assignment_system(world: &mut World) {
 ///
 /// This system bridges the utility AI's decision (`StartPlan`) with the
 /// movement system by creating `MovementTarget` for each pop.
-pub fn process_start_plan_system(world: &mut World) {
-    // Collect StartPlan data
-    let start_plans: Vec<(Entity, ActionType, Option<Entity>)> = world
-        .query::<(Entity, &StartPlan)>()
-        .iter(world)
-        .map(|(e, sp)| (e, sp.action, sp.target))
-        .collect();
+pub fn process_start_plan_system(
+    plans: Query<(Entity, &StartPlan)>,
+    positions: Query<&GridPosition>,
+    mut commands: Commands,
+) {
+    for (pop_entity, start_plan) in &plans {
+        let action = start_plan.action;
+        let target = start_plan.target;
 
-    for (pop_entity, action, target) in start_plans {
-        // Remove the StartPlan marker
-        world.entity_mut(pop_entity).remove::<StartPlan>();
+        // Remove the StartPlan marker and any existing movement components
+        commands
+            .entity(pop_entity)
+            .remove::<StartPlan>()
+            .remove::<MovementTarget>()
+            .remove::<AtTarget>();
 
         // If there's no target, skip (e.g., Idle action)
         let Some(target_entity) = target else {
             continue;
         };
 
-        // Check if target entity still exists
-        if world.get_entity(target_entity).is_err() {
-            continue;
-        }
-
-        // Get the target's position
-        let Some(&target_position) = world.get::<GridPosition>(target_entity) else {
+        // Get the target's position (also validates entity existence)
+        let Ok(&target_position) = positions.get(target_entity) else {
             continue;
         };
 
-        // Remove any existing MovementTarget and AtTarget
-        clear_movement_components(world, pop_entity);
-
         // Insert new MovementTarget
-        world.entity_mut(pop_entity).insert(MovementTarget {
+        commands.entity(pop_entity).insert(MovementTarget {
             target_entity,
             target_position,
             for_action: action,
@@ -158,58 +160,51 @@ pub fn process_start_plan_system(world: &mut World) {
 ///
 /// When a pop arrives at its target position (or adjacent for work), this system
 /// marks it with `AtTarget`.
-pub fn movement_system(world: &mut World) {
-    // Collect pops with movement targets (that haven't arrived yet)
-    let pops_to_move: Vec<(Entity, GridPosition, GridPosition, ActionType)> = world
-        .query_filtered::<(Entity, &GridPosition, &MovementTarget), Without<AtTarget>>()
-        .iter(world)
-        .map(|(e, pos, mt)| (e, *pos, mt.target_position, mt.for_action))
-        .collect();
+pub fn movement_system(
+    mut pops: Query<(Entity, &mut GridPosition, &MovementTarget), Without<AtTarget>>,
+    terrain: Res<TerrainGrid>,
+    mut commands: Commands,
+) {
+    for (pop_entity, mut current_pos, mt) in &mut pops {
+        let target_pos = mt.target_position;
+        let action = mt.for_action;
 
-    for (pop_entity, current_pos, target_pos, action) in pops_to_move {
         // For work actions, check if adjacent to an unwalkable target (rock/tree)
         // Pops work FROM adjacent tiles, not ON the target
         if action == ActionType::Work {
-            let target_walkable = is_walkable(world, target_pos.x, target_pos.y);
+            let target_walkable = is_walkable_terrain(&terrain, target_pos.x, target_pos.y);
             if !target_walkable {
                 let distance =
                     (current_pos.x - target_pos.x).abs() + (current_pos.y - target_pos.y).abs();
                 if distance == 1 {
-                    // Adjacent to unwalkable target - can work from here
-                    world.entity_mut(pop_entity).insert(AtTarget);
+                    commands.entity(pop_entity).insert(AtTarget);
                     continue;
                 }
             }
         }
 
-        let Some(new_pos) = calculate_next_position(current_pos, target_pos) else {
+        let Some(new_pos) = calculate_next_position(*current_pos, target_pos) else {
             continue;
         };
 
-        // Check if new position is walkable (includes bounds check)
-        if !is_walkable(world, new_pos.x, new_pos.y) {
-            // Wait in place (simple approach - no pathfinding)
+        if !is_walkable_terrain(&terrain, new_pos.x, new_pos.y) {
             continue;
         }
 
-        // Update position
-        if let Some(mut pos) = world.get_mut::<GridPosition>(pop_entity) {
-            pos.x = new_pos.x;
-            pos.y = new_pos.y;
-        }
+        current_pos.x = new_pos.x;
+        current_pos.y = new_pos.y;
 
-        // Check if now at target
         if new_pos == target_pos {
-            world.entity_mut(pop_entity).insert(AtTarget);
+            commands.entity(pop_entity).insert(AtTarget);
         }
 
         // For work actions on unwalkable targets, also check if now adjacent
         if action == ActionType::Work {
-            let target_walkable = is_walkable(world, target_pos.x, target_pos.y);
+            let target_walkable = is_walkable_terrain(&terrain, target_pos.x, target_pos.y);
             if !target_walkable {
                 let distance = (new_pos.x - target_pos.x).abs() + (new_pos.y - target_pos.y).abs();
                 if distance == 1 {
-                    world.entity_mut(pop_entity).insert(AtTarget);
+                    commands.entity(pop_entity).insert(AtTarget);
                 }
             }
         }
@@ -217,122 +212,88 @@ pub fn movement_system(world: &mut World) {
 }
 
 /// Handles arrival at targets: assigns pops to farms/housing.
-pub fn arrival_handler_system(world: &mut World) {
-    // Collect pops that just arrived
-    let arrivals: Vec<(Entity, Entity, ActionType)> = world
-        .query_filtered::<(Entity, &MovementTarget), With<AtTarget>>()
-        .iter(world)
-        .map(|(e, mt)| (e, mt.target_entity, mt.for_action))
-        .collect();
-
-    for (pop_entity, target_entity, action) in arrivals {
-        // Check if target still exists
-        if world.get_entity(target_entity).is_err() {
-            // Target despawned, remove movement components
-            clear_movement_components(world, pop_entity);
-            continue;
-        }
+pub fn arrival_handler_system(
+    arrivals: Query<(Entity, &MovementTarget), With<AtTarget>>,
+    mut farms: Query<&mut Farm>,
+    mut housing_q: Query<&mut Housing>,
+    mut taverns: Query<&mut Tavern>,
+    mut commands: Commands,
+) {
+    for (pop_entity, mt) in &arrivals {
+        let target_entity = mt.target_entity;
+        let action = mt.for_action;
 
         match action {
             ActionType::SatisfyHunger => {
-                if assign_to_farm(world, target_entity, pop_entity) {
-                    world.entity_mut(pop_entity).insert(AssignedTo {
+                if let Ok(mut farm) = farms.get_mut(target_entity)
+                    && farm.workers.len() < farm.capacity
+                {
+                    farm.workers.push(pop_entity);
+                    commands.entity(pop_entity).insert(AssignedTo {
                         entity: target_entity,
                         assignment_type: AssignmentType::FarmWorker,
                     });
                 }
-                clear_movement_components(world, pop_entity);
+                commands
+                    .entity(pop_entity)
+                    .remove::<MovementTarget>()
+                    .remove::<AtTarget>();
             }
             ActionType::SatisfyRest => {
-                if assign_to_housing(world, target_entity, pop_entity) {
-                    world.entity_mut(pop_entity).insert(AssignedTo {
+                if let Ok(mut h) = housing_q.get_mut(target_entity)
+                    && h.residents.len() < h.capacity
+                {
+                    h.residents.push(pop_entity);
+                    commands.entity(pop_entity).insert(AssignedTo {
                         entity: target_entity,
                         assignment_type: AssignmentType::HousingResident,
                     });
                 }
-                clear_movement_components(world, pop_entity);
+                commands
+                    .entity(pop_entity)
+                    .remove::<MovementTarget>()
+                    .remove::<AtTarget>();
             }
             ActionType::Socialize => {
-                if assign_to_tavern(world, target_entity, pop_entity) {
-                    world.entity_mut(pop_entity).insert(AssignedTo {
+                if let Ok(mut tavern) = taverns.get_mut(target_entity)
+                    && tavern.visitors.len() < tavern.capacity
+                {
+                    tavern.visitors.push(pop_entity);
+                    commands.entity(pop_entity).insert(AssignedTo {
                         entity: target_entity,
                         assignment_type: AssignmentType::TavernVisitor,
                     });
                 }
-                clear_movement_components(world, pop_entity);
+                commands
+                    .entity(pop_entity)
+                    .remove::<MovementTarget>()
+                    .remove::<AtTarget>();
             }
             ActionType::Research => {
-                // Library has no worker limit logic yet, so always succeed
-                world.entity_mut(pop_entity).insert(AssignedTo {
+                commands.entity(pop_entity).insert(AssignedTo {
                     entity: target_entity,
                     assignment_type: AssignmentType::LibraryWorker,
                 });
-                clear_movement_components(world, pop_entity);
+                commands
+                    .entity(pop_entity)
+                    .remove::<MovementTarget>()
+                    .remove::<AtTarget>();
             }
             ActionType::Work => {
                 // Work is handled by work_execution_system
                 // Just keep the AtTarget marker for that system
             }
             _ => {
-                // Other actions (Idle, Explore) - just clear movement
-                clear_movement_components(world, pop_entity);
+                commands
+                    .entity(pop_entity)
+                    .remove::<MovementTarget>()
+                    .remove::<AtTarget>();
             }
         }
     }
 }
 
-// =============================================================================
-// Helper Functions
-// =============================================================================
-
-fn assign_to_farm(world: &mut World, farm_entity: Entity, pop_entity: Entity) -> bool {
-    let Some(mut farm) = world.get_mut::<Farm>(farm_entity) else {
-        return false;
-    };
-
-    if farm.workers.len() >= farm.capacity {
-        return false;
-    }
-
-    farm.workers.push(pop_entity);
-    true
-}
-
-fn assign_to_housing(world: &mut World, housing_entity: Entity, pop_entity: Entity) -> bool {
-    let Some(mut housing) = world.get_mut::<Housing>(housing_entity) else {
-        return false;
-    };
-
-    if housing.residents.len() >= housing.capacity {
-        return false;
-    }
-
-    housing.residents.push(pop_entity);
-    true
-}
-
-fn assign_to_tavern(world: &mut World, tavern_entity: Entity, pop_entity: Entity) -> bool {
-    let Some(mut tavern) = world.get_mut::<Tavern>(tavern_entity) else {
-        return false;
-    };
-
-    if tavern.visitors.len() >= tavern.capacity {
-        return false;
-    }
-
-    tavern.visitors.push(pop_entity);
-    true
-}
-
-fn clear_movement_components(world: &mut World, pop_entity: Entity) {
-    world
-        .entity_mut(pop_entity)
-        .remove::<MovementTarget>()
-        .remove::<AtTarget>();
-}
-
-fn is_walkable(world: &World, x: i32, y: i32) -> bool {
-    let terrain = world.resource::<TerrainGrid>();
+fn is_walkable_terrain(terrain: &TerrainGrid, x: i32, y: i32) -> bool {
     if let (Ok(x_idx), Ok(y_idx)) = (usize::try_from(x), usize::try_from(y)) {
         terrain
             .get(x_idx, y_idx)
@@ -364,6 +325,15 @@ fn calculate_next_position(current: GridPosition, target: GridPosition) -> Optio
 
 /// Executes work at designations when pop is at target with Work action.
 pub fn work_execution_system(world: &mut World) {
+    // Check tools at the start of the system
+    let (has_tools, mut tool_broken) = {
+        let res = world.resource::<ColonyResources>();
+        (res.tools >= 1.0, false)
+    };
+
+    let efficiency = if has_tools { 1.0 } else { NO_TOOL_PENALTY };
+    let work_amount = WORK_PER_TICK * efficiency;
+
     // Find pops at their work target
     let workers: Vec<(Entity, Entity)> = world
         .query_filtered::<(Entity, &MovementTarget), With<AtTarget>>()
@@ -386,7 +356,7 @@ pub fn work_execution_system(world: &mut World) {
                 continue;
             };
 
-        match designation_type {
+        let worked = match designation_type {
             DesignationType::Mine => {
                 // Ensure MiningProgress exists
                 if world.get::<MiningProgress>(designation_entity).is_none() {
@@ -394,7 +364,8 @@ pub fn work_execution_system(world: &mut World) {
                         .entity_mut(designation_entity)
                         .insert(MiningProgress::default());
                 }
-                mine_rock(world, designation_entity, WORK_PER_TICK);
+                mine_rock(world, designation_entity, work_amount);
+                true
             }
             DesignationType::Chop => {
                 // Ensure ForestryProgress exists
@@ -406,11 +377,27 @@ pub fn work_execution_system(world: &mut World) {
                             max: 50.0,
                         });
                 }
-                chop_tree(world, designation_entity, WORK_PER_TICK);
+                chop_tree(world, designation_entity, work_amount);
+                true
             }
             DesignationType::Demolish => {
                 // TODO: Implement demolish logic
+                false
             }
+        };
+
+        if worked && has_tools && !tool_broken {
+            let mut rng = rand::thread_rng();
+            if rng.gen_bool(TOOL_BREAK_CHANCE) {
+                tool_broken = true;
+            }
+        }
+    }
+
+    if tool_broken {
+        let mut res = world.resource_mut::<ColonyResources>();
+        if res.tools >= 1.0 {
+            res.tools -= 1.0;
         }
     }
 }
@@ -423,8 +410,10 @@ mod tests {
     use crate::layer1::pop::Pop;
     use crate::layer1::terrain::TerrainType;
     use crate::layer1::utility_ai::{PopAction, UtilityWeights};
+    use bevy_ecs::system::RunSystemOnce;
 
     fn setup_world() -> World {
+        crate::setup::init_task_pools();
         let mut world = World::new();
         let tiles = vec![TerrainType::Grass; 100];
         world.insert_resource(TerrainGrid {
@@ -470,7 +459,7 @@ mod tests {
             ))
             .id();
 
-        process_start_plan_system(&mut world);
+        world.run_system_once(process_start_plan_system).unwrap();
 
         // Should have MovementTarget
         let mt = world.get::<MovementTarget>(pop);
@@ -506,7 +495,7 @@ mod tests {
             ))
             .id();
 
-        process_start_plan_system(&mut world);
+        world.run_system_once(process_start_plan_system).unwrap();
 
         // StartPlan should be removed
         assert!(
@@ -532,7 +521,7 @@ mod tests {
             ))
             .id();
 
-        process_start_plan_system(&mut world);
+        world.run_system_once(process_start_plan_system).unwrap();
 
         // Should not have MovementTarget
         assert!(
@@ -561,7 +550,7 @@ mod tests {
             ))
             .id();
 
-        movement_system(&mut world);
+        world.run_system_once(movement_system).unwrap();
 
         let pos = world.get::<GridPosition>(pop).unwrap();
         // Should have moved 1 tile toward target (horizontal first)
@@ -586,7 +575,7 @@ mod tests {
             ))
             .id();
 
-        movement_system(&mut world);
+        world.run_system_once(movement_system).unwrap();
 
         assert!(
             world.get::<AtTarget>(pop).is_some(),
@@ -611,7 +600,7 @@ mod tests {
             ))
             .id();
 
-        movement_system(&mut world);
+        world.run_system_once(movement_system).unwrap();
 
         let pos = world.get::<GridPosition>(pop).unwrap();
         assert_eq!(pos.x, 5);
@@ -645,7 +634,7 @@ mod tests {
             ))
             .id();
 
-        movement_system(&mut world);
+        world.run_system_once(movement_system).unwrap();
 
         // Pop should not have moved (blocked)
         let pos = world.get::<GridPosition>(pop).unwrap();
@@ -676,7 +665,7 @@ mod tests {
             ))
             .id();
 
-        movement_system(&mut world);
+        world.run_system_once(movement_system).unwrap();
 
         let pos = world.get::<GridPosition>(pop).unwrap();
         assert_eq!(pos.x, 0);
@@ -715,7 +704,7 @@ mod tests {
             ))
             .id();
 
-        arrival_handler_system(&mut world);
+        world.run_system_once(arrival_handler_system).unwrap();
 
         // Pop should be in farm workers list
         let farm_comp = world.get::<Farm>(farm).unwrap();
@@ -758,7 +747,7 @@ mod tests {
             ))
             .id();
 
-        arrival_handler_system(&mut world);
+        world.run_system_once(arrival_handler_system).unwrap();
 
         // Pop should be in housing residents list
         let housing_comp = world.get::<Housing>(housing).unwrap();
@@ -804,7 +793,7 @@ mod tests {
             ))
             .id();
 
-        arrival_handler_system(&mut world);
+        world.run_system_once(arrival_handler_system).unwrap();
 
         // Pop should NOT be in farm workers
         let farm_comp = world.get::<Farm>(farm).unwrap();
@@ -1001,7 +990,9 @@ mod tests {
             },
         ));
 
-        cleanup_previous_assignment_system(&mut world);
+        world
+            .run_system_once(cleanup_previous_assignment_system)
+            .unwrap();
 
         // Pop should be removed from farm workers
         let farm_comp = world.get::<Farm>(farm).unwrap();
@@ -1040,7 +1031,9 @@ mod tests {
             },
         ));
 
-        cleanup_previous_assignment_system(&mut world);
+        world
+            .run_system_once(cleanup_previous_assignment_system)
+            .unwrap();
 
         // Pop should be removed from housing residents
         let housing_comp = world.get::<Housing>(housing).unwrap();
@@ -1070,7 +1063,9 @@ mod tests {
             .id();
 
         // Should not panic
-        cleanup_previous_assignment_system(&mut world);
+        world
+            .run_system_once(cleanup_previous_assignment_system)
+            .unwrap();
 
         // AssignedTo should still be removed
         assert!(world.get::<AssignedTo>(pop).is_none());
@@ -1109,19 +1104,19 @@ mod tests {
             .id();
 
         // Process start plan
-        process_start_plan_system(&mut world);
+        world.run_system_once(process_start_plan_system).unwrap();
         assert!(world.get::<MovementTarget>(pop).is_some());
 
         // Move toward farm (2 ticks)
-        movement_system(&mut world);
+        world.run_system_once(movement_system).unwrap();
         let pos = world.get::<GridPosition>(pop).unwrap();
         assert_eq!(pos.x, 1);
 
-        movement_system(&mut world);
+        world.run_system_once(movement_system).unwrap();
         assert!(world.get::<AtTarget>(pop).is_some());
 
         // Handle arrival
-        arrival_handler_system(&mut world);
+        world.run_system_once(arrival_handler_system).unwrap();
         let farm_comp = world.get::<Farm>(farm).unwrap();
         assert!(farm_comp.workers.contains(&pop));
     }
@@ -1154,7 +1149,7 @@ mod tests {
 
         // Move 5 times - pop should reach destination
         for tick in 1..=5 {
-            movement_system(&mut world);
+            world.run_system_once(movement_system).unwrap();
             let pos = world.get::<GridPosition>(pop).unwrap();
             assert_eq!(pos.x, tick, "Pop should be at x={tick} after {tick} ticks",);
         }
@@ -1205,7 +1200,7 @@ mod tests {
             .id();
 
         // Tick 1: Pop should decide to work
-        update_action_timer_system(&mut world);
+        world.run_system_once(update_action_timer_system).unwrap();
         evaluate_actions_system(&mut world);
 
         // Should have StartPlan for work
@@ -1215,10 +1210,12 @@ mod tests {
         );
 
         // Process and start moving
-        cleanup_previous_assignment_system(&mut world);
-        process_start_plan_system(&mut world);
-        movement_system(&mut world);
-        arrival_handler_system(&mut world);
+        world
+            .run_system_once(cleanup_previous_assignment_system)
+            .unwrap();
+        world.run_system_once(process_start_plan_system).unwrap();
+        world.run_system_once(movement_system).unwrap();
+        world.run_system_once(arrival_handler_system).unwrap();
         work_execution_system(&mut world);
 
         let pos1 = world.get::<GridPosition>(pop).unwrap();
@@ -1227,12 +1224,14 @@ mod tests {
         // Tick 2-4: Continue moving toward rock (stop adjacent at x=4)
         // Pop can't stand ON the rock, so they work from adjacent tile
         for tick in 2..=4 {
-            update_action_timer_system(&mut world);
+            world.run_system_once(update_action_timer_system).unwrap();
             evaluate_actions_system(&mut world);
-            cleanup_previous_assignment_system(&mut world);
-            process_start_plan_system(&mut world);
-            movement_system(&mut world);
-            arrival_handler_system(&mut world);
+            world
+                .run_system_once(cleanup_previous_assignment_system)
+                .unwrap();
+            world.run_system_once(process_start_plan_system).unwrap();
+            world.run_system_once(movement_system).unwrap();
+            world.run_system_once(arrival_handler_system).unwrap();
             work_execution_system(&mut world);
 
             let pos = *world.get::<GridPosition>(pop).unwrap();

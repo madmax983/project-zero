@@ -14,9 +14,17 @@ use crate::shared::state::GameState;
 use crate::shared::time::SimulationTime;
 use crate::ui::map::RenderCache;
 
+/// Ensures the Bevy task pools are initialized (required for `par_iter_mut`).
+///
+/// Safe to call multiple times — uses `get_or_init` internally.
+pub fn init_task_pools() {
+    bevy_tasks::ComputeTaskPool::get_or_init(bevy_tasks::TaskPool::default);
+}
+
 /// Create and initialize a new game world with all resources.
 #[must_use]
 pub fn setup_world() -> World {
+    init_task_pools();
     let mut world = World::new();
     world.insert_resource(GameState::default());
     world.insert_resource(MenuState::default());

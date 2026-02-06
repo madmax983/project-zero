@@ -66,16 +66,14 @@ pub struct SeasonState {
 ///
 /// This system calculates the season by dividing the current tick by `TICKS_PER_YEAR / 4`.
 /// It updates `SeasonState` and adds a `Chronicle` event when the season changes.
-pub fn advance_season_system(world: &mut World) {
-    let tick = world.resource::<SimulationTime>().tick;
-    // Assumption: TICKS_PER_YEAR is divisible by 4. If not, seasons will drift slightly relative to years.
+pub fn advance_season_system(
+    time: Res<SimulationTime>,
+    mut state: ResMut<SeasonState>,
+    mut chronicle: ResMut<Chronicle>,
+) {
+    let tick = time.tick;
     let ticks_per_season = TICKS_PER_YEAR / 4;
 
-    // Calculate expected season based on tick
-    // 0-249: Spring (0)
-    // 250-499: Summer (1)
-    // 500-749: Autumn (2)
-    // 750-999: Winter (3)
     let season_index = (tick / ticks_per_season) % 4;
     let new_season = match season_index {
         0 => Season::Spring,
@@ -84,23 +82,12 @@ pub fn advance_season_system(world: &mut World) {
         _ => Season::Winter,
     };
 
-    let mut season_changed = false;
-    let mut _old_season_name = "";
-
-    {
-        let mut state = world.resource_mut::<SeasonState>();
-        if state.current_season != new_season {
-            _old_season_name = state.current_season.name();
-            state.current_season = new_season;
-            season_changed = true;
-        }
-    }
-
-    if season_changed {
-        world.resource_mut::<Chronicle>().add_event(
+    if state.current_season != new_season {
+        state.current_season = new_season;
+        chronicle.add_event(
             tick,
             format!("The season turns. {} has arrived.", new_season.name()),
-            EventImportance::Standard, // Seasonal changes are standard events
+            EventImportance::Standard,
         );
     }
 }
@@ -110,6 +97,7 @@ mod tests {
     use super::*;
     use crate::layer1::chronicle::Chronicle;
     use crate::shared::time::SimulationTime;
+    use bevy_ecs::system::RunSystemOnce;
 
     #[test]
     fn test_season_enum_cycling() {
@@ -135,7 +123,7 @@ mod tests {
         });
         world.insert_resource(Chronicle::default());
 
-        advance_season_system(&mut world);
+        world.run_system_once(advance_season_system).unwrap();
 
         let state = world.resource::<SeasonState>();
         assert_eq!(state.current_season, Season::Spring);
@@ -154,7 +142,7 @@ mod tests {
             ..Default::default()
         });
 
-        advance_season_system(&mut world);
+        world.run_system_once(advance_season_system).unwrap();
 
         let state = world.resource::<SeasonState>();
         assert_eq!(state.current_season, Season::Summer);
@@ -176,7 +164,7 @@ mod tests {
             ..Default::default()
         });
 
-        advance_season_system(&mut world);
+        world.run_system_once(advance_season_system).unwrap();
 
         let chronicle = world.resource::<Chronicle>();
         assert!(

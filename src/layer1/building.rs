@@ -30,6 +30,8 @@ pub enum BuildingType {
     StoneMason,
     /// Refines Ore into Metal.
     Smelter,
+    /// Refines Metal and Wood into Tools.
+    Smithy,
     /// Social gathering place.
     Tavern,
     /// Research center for Knowledge.
@@ -41,7 +43,7 @@ impl BuildingType {
     #[must_use]
     pub const fn required_tech(&self) -> Option<Tech> {
         match self {
-            Self::Smelter => Some(Tech::MetalWorking),
+            Self::Smelter | Self::Smithy => Some(Tech::MetalWorking),
             Self::Tavern => Some(Tech::SocialStructures),
             _ => None,
         }
@@ -65,6 +67,7 @@ impl BuildingType {
             Self::LumberMill => "Lumber Mill",
             Self::StoneMason => "Stone Mason",
             Self::Smelter => "Smelter",
+            Self::Smithy => "Smithy",
             Self::Tavern => "Tavern",
             Self::Library => "Library",
         }
@@ -80,7 +83,7 @@ impl BuildingType {
             Self::LumberMill => 'L',
             Self::StoneMason => 'M',
             Self::Smelter => 'S',
-            Self::Tavern => 'T',
+            Self::Smithy | Self::Tavern => 'T',
             Self::Library => '?', // Placeholder
         }
     }
@@ -102,7 +105,7 @@ impl BuildingType {
                 wood: 50.0,
                 ..Default::default()
             },
-            Self::LumberMill => ColonyResources {
+            Self::LumberMill | Self::Smithy => ColonyResources {
                 wood: 30.0,
                 stone: 10.0,
                 ..Default::default()
@@ -241,7 +244,10 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
         BuildingType::Stockpile => {
             entity.insert(Stockpile::default());
         }
-        BuildingType::LumberMill | BuildingType::StoneMason | BuildingType::Smelter => {
+        BuildingType::LumberMill
+        | BuildingType::StoneMason
+        | BuildingType::Smelter
+        | BuildingType::Smithy => {
             entity.insert(RefiningProgress {
                 current: 0.0,
                 max: 10.0,
@@ -365,7 +371,8 @@ mod tests {
         assert_eq!(BuildingType::Stockpile.next(), BuildingType::LumberMill);
         assert_eq!(BuildingType::LumberMill.next(), BuildingType::StoneMason);
         assert_eq!(BuildingType::StoneMason.next(), BuildingType::Smelter);
-        assert_eq!(BuildingType::Smelter.next(), BuildingType::Tavern);
+        assert_eq!(BuildingType::Smelter.next(), BuildingType::Smithy);
+        assert_eq!(BuildingType::Smithy.next(), BuildingType::Tavern);
         assert_eq!(BuildingType::Tavern.next(), BuildingType::Library);
         assert_eq!(BuildingType::Library.next(), BuildingType::Housing);
     }
@@ -431,6 +438,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Smelter);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Smithy);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Tavern);

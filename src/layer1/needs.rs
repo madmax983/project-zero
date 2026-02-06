@@ -44,29 +44,29 @@ const REST_DECAY_PER_TICK: f32 = 0.001; // ~800 ticks to exhaust
 const LEISURE_DECAY_PER_TICK: f32 = 0.0015; // Slightly faster than hunger/rest
 
 /// Decays needs for all pops each tick.
-pub fn decay_needs_system(world: &mut World) {
-    let mut query = world.query::<&mut Needs>();
-    for mut needs in query.iter_mut(world) {
+///
+/// Uses `par_iter_mut` for parallel processing across entities.
+pub fn decay_needs_system(mut query: Query<&mut Needs>) {
+    query.par_iter_mut().for_each(|mut needs| {
         needs.hunger = (needs.hunger - HUNGER_DECAY_PER_TICK).max(0.0);
         needs.rest = (needs.rest - REST_DECAY_PER_TICK).max(0.0);
         needs.leisure = (needs.leisure - LEISURE_DECAY_PER_TICK).max(0.0);
-    }
+    });
 }
 
 /// Despawns entities whose hunger has reached zero.
-pub fn kill_starving_entities_system(world: &mut World) {
-    // Collect entities to despawn (can't despawn while iterating)
-    let to_despawn: Vec<Entity> = world
-        .query::<(Entity, &Needs)>()
-        .iter(world)
-        .filter(|(_, needs)| needs.hunger <= 0.0)
-        .map(|(entity, _)| entity)
-        .collect();
-
-    for entity in to_despawn {
-        world.despawn(entity);
-        if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
-            log.add("DEATH: A colonist has starved to death!");
+pub fn kill_starving_entities_system(
+    query: Query<(Entity, &Needs)>,
+    mut commands: Commands,
+    log: Option<ResMut<MessageLog>>,
+) {
+    let mut log = log;
+    for (entity, needs) in &query {
+        if needs.hunger <= 0.0 {
+            commands.entity(entity).despawn();
+            if let Some(ref mut log) = log {
+                log.add("DEATH: A colonist has starved to death!");
+            }
         }
     }
 }
@@ -75,6 +75,12 @@ pub fn kill_starving_entities_system(world: &mut World) {
 mod tests {
     use super::*;
     use crate::layer1::pop::Pop;
+    use bevy_ecs::system::RunSystemOnce;
+
+    fn setup() -> World {
+        crate::setup::init_task_pools();
+        World::new()
+    }
 
     #[test]
     fn test_needs_default() {
@@ -109,9 +115,7 @@ mod tests {
 
     #[test]
     fn test_needs_clamped_to_zero() {
-        // Needs logic is handled by decay_needs_system, not struct setters.
-        // We verify that the system clamps values.
-        let mut world = World::new();
+        let mut world = setup();
         world.spawn((
             Pop,
             Needs {
@@ -121,23 +125,20 @@ mod tests {
             },
         ));
 
-        decay_needs_system(&mut world);
+        world.run_system_once(decay_needs_system).unwrap();
 
         let needs = world.query::<&Needs>().single(&world);
         assert!(needs.hunger >= 0.0);
         assert!(needs.rest >= 0.0);
-        // Hunger: 0.0001 - 0.001 = -0.0009 -> clamped to 0.0
         assert!(needs.hunger < f32::EPSILON);
     }
 
-    // test_needs_clamped_to_one removed as no system currently increases needs.
-
     #[test]
     fn test_decay_needs_system() {
-        let mut world = World::new();
+        let mut world = setup();
         world.spawn((Pop, Needs::default()));
 
-        decay_needs_system(&mut world);
+        world.run_system_once(decay_needs_system).unwrap();
 
         let needs = world.query::<&Needs>().single(&world);
         assert!(needs.hunger < 0.8, "Hunger should have decayed");
@@ -148,16 +149,14 @@ mod tests {
 
     #[test]
     fn test_decay_multiple_ticks() {
-        let mut world = World::new();
+        let mut world = setup();
         world.spawn((Pop, Needs::default()));
 
         for _ in 0..100 {
-            decay_needs_system(&mut world);
+            world.run_system_once(decay_needs_system).unwrap();
         }
 
         let needs = world.query::<&Needs>().single(&world);
-        // After 100 ticks of decay: 0.8 - (100 * 0.001) = 0.7
-        // Allow for floating point epsilon
         assert!(needs.hunger < 0.71, "Hunger should decay significantly");
         assert!(needs.rest < 0.71, "Rest should decay");
     }
@@ -166,7 +165,6 @@ mod tests {
     fn test_kill_starving_entities_system() {
         let mut world = World::new();
 
-        // Spawn healthy pop
         world.spawn((
             Pop,
             Needs {
@@ -176,7 +174,6 @@ mod tests {
             },
         ));
 
-        // Spawn starving pop
         world.spawn((
             Pop,
             Needs {
@@ -186,7 +183,9 @@ mod tests {
             },
         ));
 
-        kill_starving_entities_system(&mut world);
+        world
+            .run_system_once(kill_starving_entities_system)
+            .unwrap();
 
         let count = world.query::<&Pop>().iter(&world).count();
         assert_eq!(count, 1, "Only healthy pop should survive");
@@ -196,7 +195,6 @@ mod tests {
     fn test_kill_only_when_hunger_zero() {
         let mut world = World::new();
 
-        // Pop with very low hunger but not zero
         world.spawn((
             Pop,
             Needs {
@@ -206,7 +204,9 @@ mod tests {
             },
         ));
 
-        kill_starving_entities_system(&mut world);
+        world
+            .run_system_once(kill_starving_entities_system)
+            .unwrap();
 
         let count = world.query::<&Pop>().iter(&world).count();
         assert_eq!(count, 1, "Pop with 0.01 hunger should survive");
@@ -214,14 +214,15 @@ mod tests {
 
     #[test]
     fn test_starve_from_full() {
-        let mut world = World::new();
+        let mut world = setup();
         world.spawn((Pop, Needs::default()));
 
-        // Run until pop dies
         let mut ticks = 0;
         while world.query::<&Pop>().iter(&world).count() > 0 && ticks < 2000 {
-            decay_needs_system(&mut world);
-            kill_starving_entities_system(&mut world);
+            world.run_system_once(decay_needs_system).unwrap();
+            world
+                .run_system_once(kill_starving_entities_system)
+                .unwrap();
             ticks += 1;
         }
 

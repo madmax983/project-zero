@@ -1,6 +1,12 @@
 //! Shared simulation tick logic used by all entry points.
+//!
+//! Uses a Bevy `Schedule` to run all simulation systems. This enables:
+//! - Typed system params (Bevy injects `Query`, `Res`, `ResMut` automatically)
+//! - Automatic parallel execution of non-conflicting systems (with `multi_threaded`)
+//! - `par_iter_mut` for intra-system parallelism on queries
 
 use bevy_ecs::prelude::*;
+use bevy_ecs::schedule::{IntoSystemConfigs, Schedule, ScheduleLabel};
 
 use crate::experimental::biography::biography_monitor_system;
 use crate::experimental::dreams::dream_system;
@@ -15,37 +21,94 @@ use crate::layer1::{
 };
 use crate::shared::time::SimulationTime;
 
-/// Run one simulation tick: all game systems in order, then increment tick counter.
+/// Schedule label for the main simulation tick.
+#[derive(ScheduleLabel, Debug, Clone, PartialEq, Eq, Hash)]
+pub struct SimulationSchedule;
+
+/// Build the simulation schedule with all systems and ordering constraints.
+///
+/// Systems are organized into ordered groups matching the original sequential execution:
+///
+/// ```text
+/// 1. AI Decision:     evaluate_actions → update_action_timer
+/// 2. Execution:       cleanup_previous → process_start_plan → movement → arrival → work/haul
+/// 3. Economy:         update_resource_caps, advance_season, produce_food, process_refining,
+///                     process_research, restore_rest, restore_leisure (can run in parallel)
+/// 4. Consumption:     consume_food → decay_needs → kill_starving → clean_dead_*
+/// 5. Observation:     track_plan_outcomes, biography, dreams, milestones (can run in parallel)
+/// 6. Tick increment:  (handled outside schedule)
+/// ```
+#[must_use]
+pub fn build_simulation_schedule() -> Schedule {
+    let mut schedule = Schedule::new(SimulationSchedule);
+
+    // --- AI Decision Chain ---
+    schedule.add_systems((
+        evaluate_actions_system,
+        update_action_timer_system.after(evaluate_actions_system),
+    ));
+
+    // --- Execution Chain (must be sequential) ---
+    schedule.add_systems((
+        cleanup_previous_assignment_system.after(update_action_timer_system),
+        process_start_plan_system.after(cleanup_previous_assignment_system),
+        movement_system.after(process_start_plan_system),
+        arrival_handler_system.after(movement_system),
+        work_execution_system.after(arrival_handler_system),
+        haul_system.after(arrival_handler_system),
+    ));
+
+    // --- Economy (after execution, before consumption) ---
+    // These systems can run in parallel with each other.
+    schedule.add_systems((
+        update_resource_caps_system.after(work_execution_system),
+        advance_season_system.after(work_execution_system),
+        produce_food_system.after(work_execution_system),
+        process_refining_system.after(work_execution_system),
+        process_research_system.after(work_execution_system),
+        restore_rest_in_housing_system.after(work_execution_system),
+        restore_leisure_system.after(work_execution_system),
+    ));
+
+    // --- Consumption Chain (sequential, depends on economy) ---
+    schedule.add_systems((
+        consume_food_system
+            .after(produce_food_system)
+            .after(update_resource_caps_system),
+        decay_needs_system.after(consume_food_system),
+        kill_starving_entities_system.after(decay_needs_system),
+        clean_dead_residents_system.after(kill_starving_entities_system),
+        clean_dead_workers_system.after(kill_starving_entities_system),
+    ));
+
+    // --- Observation (after consumption, can run in parallel) ---
+    schedule.add_systems((
+        track_plan_outcomes_system.after(kill_starving_entities_system),
+        biography_monitor_system.after(kill_starving_entities_system),
+        dream_system.after(kill_starving_entities_system),
+        check_milestones_system.after(kill_starving_entities_system),
+    ));
+
+    schedule
+}
+
+/// Run one simulation tick: all game systems via schedule, then increment tick counter.
 pub fn run_simulation_tick(world: &mut World) {
-    evaluate_actions_system(world);
-    update_action_timer_system(world);
+    // Initialize schedule on first call (stored in World's Schedules resource)
+    if !world.contains_resource::<Schedules>() {
+        world.insert_resource(Schedules::default());
+    }
 
-    // Execution layer: bridge AI decisions to actual actions
-    cleanup_previous_assignment_system(world);
-    process_start_plan_system(world);
-    movement_system(world);
-    arrival_handler_system(world);
-    work_execution_system(world);
-    haul_system(world);
+    // Add our schedule if not yet added
+    {
+        let schedules = world.resource::<Schedules>();
+        if schedules.get(SimulationSchedule).is_none() {
+            let schedule = build_simulation_schedule();
+            world.add_schedule(schedule);
+        }
+    }
 
-    update_resource_caps_system(world);
-    advance_season_system(world);
-    produce_food_system(world);
-    process_refining_system(world);
-    process_research_system(world);
-    restore_rest_in_housing_system(world);
-    restore_leisure_system(world);
-    consume_food_system(world);
-    decay_needs_system(world);
-    kill_starving_entities_system(world);
-    clean_dead_residents_system(world);
-    clean_dead_workers_system(world);
-
-    track_plan_outcomes_system(world);
-    biography_monitor_system(world);
-    dream_system(world);
-    check_milestones_system(world);
-
+    world.run_schedule(SimulationSchedule);
     world.resource_mut::<SimulationTime>().tick += 1;
 }
 
@@ -77,5 +140,22 @@ mod tests {
         }
 
         assert_eq!(world.resource::<SimulationTime>().tick, 10);
+    }
+
+    #[test]
+    fn test_schedule_builds_without_panic() {
+        let _schedule = build_simulation_schedule();
+    }
+
+    #[test]
+    fn test_schedule_runs_on_fresh_world() {
+        let mut world = setup_world();
+        *world.resource_mut::<GameState>() = GameState::Running;
+
+        let schedule = build_simulation_schedule();
+        world.add_schedule(schedule);
+        world.run_schedule(SimulationSchedule);
+
+        // Should not panic — all systems run correctly on a fresh world
     }
 }

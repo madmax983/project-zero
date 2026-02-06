@@ -916,20 +916,6 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Great Filter
-
-**Layer:** 3
-
-**Fantasy:** The galaxy is empty for a terrifying reason. You are walking into a trap set for advanced civilizations.
-
-**Mechanic:** As your Tech Level increases, a hidden "Doom" counter rises. Random disasters (plagues, gamma bursts) become more frequent and severe. Discovering "Dead Civilizations" gives clues on how to avoid their fate.
-
-**Emergence:** You rush tech to get shields, but the high tech itself attracts the "Scourge". A primitive colony might survive longer than an advanced one.
-
-**Tension:** Rapid progress (power) vs. Low profile (safety).
-
----
-
 ## Generational Knowledge
 
 **Layer:** 1
@@ -983,6 +969,9 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** You try to melt the ice caps to get water, and the release of ancient bacteria kills half your population.
 
 **Tension:** Fast, violent adaptation (Terraforming) vs. Slow, biological adaptation (Genetics).
+
+---
+
 ## Planetary Weather Fronts
 
 **Layer:** 2 -> 1
@@ -1050,17 +1039,13 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** You neglect your comms to save power. A pirate fleet arrives in orbit without warning, instantly beginning bombardment. You never saw them coming.
 
 **Tension:** Power the radar (energy cost) or trust your luck?
-## Orbital Synch
+
+---
+
+## Launch Windows
 
 **Layer:** 2
 
-**Fantasy:** The planets align. Space travel is about timing, not just fuel.
-
-**Mechanic:** Transfer windows open based on orbital periods. Launching "off-window" costs massive fuel/time. Synch points allow cheap travel.
-
-**Emergence:** You delay a relief fleet for 2 years because waiting for the window is faster than launching now. A siege breaks because the attacker's supply window closes.
-
-**Tension:** Fast/Expensive deployment vs Slow/Cheap deployment.
 **Fantasy:** The planets align. Space travel isn't just about distance, it's about timing.
 
 **Mechanic:** Transfer windows open based on orbital periods of planets. Fuel cost varies wildly by date. Launching "out of window" costs 10x fuel.
@@ -1075,13 +1060,6 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Layer:** 3
 
-**Fantasy:** The galaxy is a graveyard. You are walking through the valley of the shadow of death.
-
-**Mechanic:** As tech advances, "Filter Events" trigger (AI Awakening, Biological Grey Goo, Dimensional Breach). These are not standard enemies but existential puzzles. Failure = Civ Wipe.
-
-**Emergence:** You find a dead civilization and realize they died trying to solve the exact energy crisis you are currently researching.
-
-**Tension:** Advance tech (power) vs Safety (avoiding the filter).
 **Fantasy:** The answer to the Fermi Paradox. The galaxy is a graveyard.
 
 **Mechanic:** As a civilization advances, it triggers "Filter Events" (AI Uprising, Grey Goo, Mass Ascendancy). Surviving grants transcendent tech/traits. Failing wipes the civilization, leaving ruins for others.
@@ -1096,13 +1074,6 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Layer:** 3
 
-**Fantasy:** Home is where the engine is. Not all empires paint the map.
-
-**Mechanic:** Civs that reside entirely on massive ships. They enter a system, strip-mine it, and move on. They don't hold territory but have massive fleets.
-
-**Emergence:** A "Locust Fleet" enters your sector. You can trade your planet's resources for their ancient tech, or fight them to save your rocks.
-
-**Tension:** Allow them to strip-mine a border world (peace/profit) or defend it (war)?
 **Fantasy:** Not everyone settles down. The Quarians, the Void-born.
 
 **Mechanic:** Civilizations that don't hold planets. They live on massive Ark Ships, strip-mine systems for resources, and move on. They have high tech but low sustainability.
@@ -1117,13 +1088,6 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Layer:** 1
 
-**Fantasy:** Re-education through labor. Dealing with the "bad apples."
-
-**Mechanic:** Designate "Prison Zones". Arrested pops (Criminal/Rebellious) are moved there. They have no "Leisure" or "Luxury" needs but high "Security" requirement. They produce resources but no tech/art.
-
-**Emergence:** You run your dangerous mines entirely with political prisoners. A prison riot collapses the economy because 50% of your workforce stops working.
-
-**Tension:** Rehabilitate (expensive/slow) vs Exploit (profitable/risky).
 **Fantasy:** Re-education through labor. The dark side of order.
 
 **Mechanic:** Arrested pops (due to crime or low mood) can be assigned to "Penal Zones". They work at high efficiency with no happiness needs but have a high "Revolt Risk" and reduced lifespan.
@@ -1131,5 +1095,159 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** You build your economy on the backs of prisoners. When they revolt, they are the ones holding the pickaxes inside your base.
 
 **Tension:** Rehabilitation (slow, expensive) vs. Exploitation (fast, dangerous).
+
+---
+
+## Planetary Migrations
+
+**Layer:** 2
+
+**Fantasy:** Space isn't empty; it's an ecosystem. Watching a pod of void-whales migrate between gas giants is awe-inspiring.
+
+**Mechanic:** Biological fleets (Space Whales, Energy Clouds) move between system nodes based on seasonal cycles. They graze on resources or siphon energy.
+
+**Emergence:** A migration route intersects your main shipping lane. Ships colliding with whales causes diplomatic incidents with "Xeno-Conservationists" or just messes up your logistics.
+
+**Tension:** Reroute traffic (efficiency loss) or cull the herd (military cost/diplomatic penalty)?
+
+---
+
+## Lagrange Point Hubs
+
+**Layer:** 2
+
+**Fantasy:** The lawless "cities in the sky" that exist nowhere. The Tortuga of space.
+
+**Mechanic:** Gravity-neutral zones (L-points) allow stations to exist without planetary orbit upkeep. They become natural trade hubs or pirate dens.
+
+**Emergence:** You ignore the L-points to focus on planets. Pirates set up a base at L4 and strangle your trade. You have to siege a point in empty space.
+
+**Tension:** Police the empty space (costly fleet spread) or focus defense on planets (leaving trade vulnerable)?
+
+---
+
+## Asteroid Redirect
+
+**Layer:** 2
+
+**Fantasy:** Using the celestial bodies themselves as tools. The ultimate "work smarter, not harder."
+
+**Mechanic:** Attach engines to asteroids to move them. Can be moved to orbit for mining (safe, slow) or accelerated as kinetic weapons (devastating, destroys resource).
+
+**Emergence:** You try to park a rich ice asteroid in orbit to solve a water crisis. You miscalculate the thrust vector and it de-orbits, wiping out your capital.
+
+**Tension:** High-risk logistical shortcut vs. Safe conventional mining.
+
+---
+
+## Ideological Pressure
+
+**Layer:** 3 -> 1
+
+**Fantasy:** You can't shoot an idea. Your neighbors' culture bleeds into yours.
+
+**Mechanic:** Nearby Layer 3 Civilizations emit "Pressure" based on their cultural output. Your border colonies start adopting their Ethics (e.g., "Pacifism", "Machine Cult") if your own culture is weak.
+
+**Emergence:** You run a brutal dictatorship, but your neighbor is a glitterworld democracy. Your border worlds revolt, not because they are hungry, but because they want what the neighbors have.
+
+**Tension:** Isolate your people (Info Quarantine) or compete on cultural quality?
+
+---
+
+## Clone Vats
+
+**Layer:** 1
+
+**Fantasy:** Industrialized life. Why wait 18 years for a worker when you can grow one in a month?
+
+**Mechanic:** Buildings that produce Pops at high energy/nutrient cost. Clones grow fast but may have "Genetic Instability" (shorter lifespan, mental breaks) or "Soulless" (cannot perform creative/social jobs).
+
+**Emergence:** You replace your workforce with clones to meet a quota. The clones develop a hive-mind culture and demand rights. The "Clone Wars" begin in your cafeteria.
+
+**Tension:** Quantity of life (Cloning) vs. Quality of life (Natural growth).
+
+---
+
+## Dysonian Swarms
+
+**Layer:** 2
+
+**Fantasy:** We will blot out the sun to power our toasters.
+
+**Mechanic:** Launching thousands of solar collectors into close solar orbit. Increases global energy availability but slightly reduces "Insolation" (sunlight/heat) for all planets in the system.
+
+**Emergence:** In your thirst for infinite energy, you accidentally trigger an Ice Age on your garden world. The solar panels work great, but the farms are frozen.
+
+**Tension:** Energy production vs. Environmental stasis.
+
+---
+
+## Thermal Management
+
+**Layer:** 1
+
+**Fantasy:** Huddling around the reactor for warmth. The mastery of thermodynamics.
+
+**Mechanic:** Tiles track Temperature. Machines emit heat. Walls insulate. Vents move heat.
+
+**Emergence:** A Crypto-Farm overheats the base. You channel the heat to the greenhouse. The server crashes, the heat stops, the plants freeze.
+
+**Tension:** Energy usage (Heaters/Coolers) vs Passive architecture.
+
+---
+
+## Cybernetic Augmentation
+
+**Layer:** 1
+
+**Fantasy:** We can rebuild him. We have the technology.
+
+**Mechanic:** Prosthetics crafted from metal/electronics. Applied to Pops. Boost work speed but add "Maintenance" cost (Energy/Repair) and reduce "Social" stats.
+
+**Emergence:** Your fully augmented workforce is immune to the plague but shuts down during a solar flare.
+
+**Tension:** Peak efficiency vs Biological resilience.
+
+---
+
+## Quarantine Protocols
+
+**Layer:** 1
+
+**Fantasy:** The cold calculus of survival. Locking the door on the infected.
+
+**Mechanic:** Designation tool to "Seal" areas. No pathfinding in/out. Automated turrets target anyone breaking quarantine.
+
+**Emergence:** A "Social Faction" riots. You seal them in the mess hall. They starve. The rest of the colony is safe but horrified.
+
+**Tension:** Ruthless safety vs Humanitarian risk.
+
+---
+
+## Planetary Rings
+
+**Layer:** 2
+
+**Fantasy:** Navigating the diamond dust. High risk, high reward.
+
+**Mechanic:** Ring tiles around planets. High resource density for mining ships. High damage/attrition for passing fleets. Cast shadows on Layer 1.
+
+**Emergence:** You hide your fleet in the rings to ambush an enemy. The ring dust strips their armor before the fight even starts.
+
+**Tension:** Safe routes (slow) vs Ring shortcuts (dangerous).
+
+---
+
+## Galactic Tourism
+
+**Layer:** Cross-layer
+
+**Fantasy:** Building a destination, not just a factory.
+
+**Mechanic:** High "Beauty" or "Wonder" attracts Visitor Ships. Visitors pay Credits but consume Food/Services and occupy space.
+
+**Emergence:** A luxury liner docks during a food shortage. The tourists demand buffet service while your colonists starve. If you deny them, your reputation tanks.
+
+**Tension:** Economic greed vs Local stability.
 
 ---
