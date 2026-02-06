@@ -1293,3 +1293,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Suppress sentience (risk rebellion, keep efficiency) or embrace it (lose cheap labor, gain citizens)?
 
 ---
+
+## Fluid Simulation
+
+**Layer:** 1
+
+**Fantasy:** Harnessing the lifeblood of the planet. Digging canals, building dams, and causing accidental floods.
+
+**Mechanic:** Water (and potentially magma) exists as a dynamic volume, not just static tiles. Fluids flow into lower or adjacent empty tiles. Pumps and floodgates allow control.
+
+**Emergence:** You dig into a "dry" cavern only to puncture an aquifer, flooding your mines. You divert a river to create a defensive moat, but it dries up the forest downstream.
+
+**Tension:** Access to water (farming/industry) vs. Risk of drowning (safety).
+
+---
+
+## Cryo-Shock
+
+**Layer:** 1
+
+**Fantasy:** The human cost of suspension. You don't just "appear" from a pod ready to build a civilization; you are groggy, cold, and weak.
+
+**Mechanic:** Newly spawned pops (from Cryo-ships) start with severe debuffs (slow movement, confusion, nausea). They require "Triage" or time in a "Recovery Bed" before working effectively.
+
+**Emergence:** A raid hits just as a new ship lands. You desperately wake up the marines, but they are vomiting and stumbling, unable to aim, forcing you to use civilians for defense.
+
+**Tension:** Wake them early for bodies (useless/sick) or wait for slow acclimation (efficiency)?
+
+---
+
+## The Black Box
+
+**Layer:** Cross-layer (Meta)
+
+**Fantasy:** "This civilization may fall, but our knowledge will remain."
+
+**Mechanic:** A buildable "Archive" structure that saves Tech/Lore state. If the colony fails (Game Over), a future colony on the same world (next run) can discover and decrypt it to regain lost progress or bonuses.
+
+**Emergence:** Players realizing a run is doomed switch objectives from "Survival" to "Preservation," frantically uploading data while the base burns around them.
+
+**Tension:** Spend resources saving yourself (now) or saving your legacy (future)?
+
+---
