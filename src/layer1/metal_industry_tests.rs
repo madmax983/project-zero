@@ -36,8 +36,6 @@ mod tests {
         });
         world.insert_resource(ColonyResources::default());
 
-        let mut ore_count = 0.0;
-
         // Mine 100 rocks
         for i in 0..100 {
             let entity = world
@@ -54,16 +52,20 @@ mod tests {
                 .id();
 
             mine_rock(&mut world, entity, 0.2); // Complete it
-
-            let res = world.resource::<ColonyResources>();
-            if res.ore > ore_count {
-                ore_count = res.ore;
-            }
         }
 
+        // Check for ResourceItems of type Ore
+        let ore_count = world
+            .query::<&crate::layer1::resources::ResourceItem>()
+            .iter(&world)
+            .filter(|item| {
+                item.resource_type == crate::layer1::resources::ResourceType::Ore
+            })
+            .count();
+
         // Should have found SOME ore (20% chance * 100 trials = ~20)
-        assert!(ore_count > 0.0, "Mining 100 rocks should yield some ore");
-        assert!(ore_count < 100.0, "Every rock shouldn't yield ore");
+        assert!(ore_count > 0, "Mining 100 rocks should yield some ore");
+        assert!(ore_count < 100, "Every rock shouldn't yield ore");
     }
 
     #[test]

@@ -8,7 +8,7 @@ use std::hash::BuildHasher;
 
 use crate::layer1::{
     BuildMode, Building, BuildingType, Designation, DesignationMode, DesignationType, GridPosition,
-    Needs, TerrainGrid, TerrainType, Viewport,
+    Needs, ResourceItem, ResourceType, TerrainGrid, TerrainType, Viewport,
 };
 
 /// Cache for renderable entities to avoid repeated allocations and iterations.
@@ -20,6 +20,8 @@ pub struct RenderCache {
     pub buildings: HashMap<GridPosition, BuildingType>,
     /// Cached designation data.
     pub designations: HashMap<GridPosition, DesignationType>,
+    /// Cached resource item data.
+    pub items: HashMap<GridPosition, ResourceType>,
 }
 
 /// Updates the `RenderCache` by iterating the world once.
@@ -29,6 +31,7 @@ pub fn update_render_cache(world: &mut World) {
     cache.pops.clear();
     cache.buildings.clear();
     cache.designations.clear();
+    cache.items.clear();
 
     for e in world.iter_entities() {
         if let Some(pos) = e.get::<GridPosition>() {
@@ -47,6 +50,11 @@ pub fn update_render_cache(world: &mut World) {
                 cache
                     .designations
                     .insert(*pos, designation.designation_type);
+            }
+
+            // Check for ResourceItem
+            if let Some(item) = e.get::<ResourceItem>() {
+                cache.items.insert(*pos, item.resource_type);
             }
         }
     }
@@ -68,6 +76,8 @@ pub struct MapRenderContext<'a, S: BuildHasher> {
     pub buildings_data: &'a HashMap<GridPosition, BuildingType, S>,
     /// Map of designation positions.
     pub designations_data: &'a HashMap<GridPosition, DesignationType, S>,
+    /// Map of resource item positions.
+    pub items_data: &'a HashMap<GridPosition, ResourceType, S>,
     /// Current build mode state (cursor position, selected building, valid placement).
     pub build_mode: Option<(GridPosition, BuildingType, bool)>,
     /// Current designation mode state (cursor position, selected tool, valid placement).
@@ -189,6 +199,18 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
                 continue;
             }
 
+            // Resource Items
+            if let Some(resource_type) = ctx.items_data.get(&GridPosition {
+                x: world_x,
+                y: world_y,
+            }) {
+                line_spans.push(Span::styled(
+                    get_resource_char(*resource_type),
+                    Style::default().fg(get_resource_color(*resource_type)),
+                ));
+                continue;
+            }
+
             // Otherwise render terrain
             let (text, color) =
                 if let (Ok(ux), Ok(uy)) = (usize::try_from(world_x), usize::try_from(world_y)) {
@@ -259,6 +281,7 @@ pub fn render_map(frame: &mut Frame, area: Rect, world: &World) {
         pops_data: &render_cache.pops,
         buildings_data: &render_cache.buildings,
         designations_data: &render_cache.designations,
+        items_data: &render_cache.items,
         build_mode: build_mode_cursor,
         designation_mode: designation_mode_cursor,
     };
@@ -331,6 +354,32 @@ pub const fn get_designation_char(tool: DesignationType) -> &'static str {
         DesignationType::Mine => "⛏",
         DesignationType::Demolish => "X",
         DesignationType::Chop => "🪓",
+    }
+}
+
+#[must_use]
+pub const fn get_resource_char(resource: ResourceType) -> &'static str {
+    match resource {
+        ResourceType::Food => "%",
+        ResourceType::Wood => "t",
+        ResourceType::Stone => "*",
+        ResourceType::Ore => "o",
+        ResourceType::Metal => "m",
+        ResourceType::Planks => "=",
+        ResourceType::Blocks => "■",
+    }
+}
+
+#[must_use]
+pub const fn get_resource_color(resource: ResourceType) -> Color {
+    match resource {
+        ResourceType::Food => Color::Green,
+        ResourceType::Wood => Color::Rgb(139, 69, 19), // SaddleBrown
+        ResourceType::Stone => Color::Gray,
+        ResourceType::Ore => Color::Rgb(165, 42, 42), // Brown
+        ResourceType::Metal => Color::Cyan,
+        ResourceType::Planks => Color::Yellow,
+        ResourceType::Blocks => Color::White,
     }
 }
 

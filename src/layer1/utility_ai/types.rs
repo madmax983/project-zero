@@ -16,13 +16,15 @@ pub enum ActionType {
     Work,
     /// Research new technologies at Library
     Research,
+    /// Haul resources to stockpiles
+    Haul,
     /// Do nothing
     Idle,
 }
 
 impl ActionType {
     /// Total number of action types
-    pub const COUNT: usize = 7;
+    pub const COUNT: usize = 8;
 
     /// Converts action type to array index
     #[must_use]
@@ -34,7 +36,8 @@ impl ActionType {
             Self::Explore => 3,
             Self::Work => 4,
             Self::Research => 5,
-            Self::Idle => 6,
+            Self::Haul => 6,
+            Self::Idle => 7,
         }
     }
 }

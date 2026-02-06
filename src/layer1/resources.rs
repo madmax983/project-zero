@@ -22,6 +22,43 @@ use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use bevy_ecs::prelude::*;
 use rand::Rng;
 
+/// Types of resources in the game.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub enum ResourceType {
+    /// Consumed by pops to reduce hunger.
+    Food,
+    /// Raw wood from trees.
+    Wood,
+    /// Raw stone from rocks.
+    Stone,
+    /// Raw ore from mining rocks.
+    Ore,
+    /// Refined metal from ore.
+    Metal,
+    /// Refined wood from lumber mill.
+    Planks,
+    /// Refined stone from mason.
+    Blocks,
+}
+
+/// A physical resource item in the world (dropped on the ground).
+#[derive(Component, Debug, Clone, Copy)]
+pub struct ResourceItem {
+    /// The type of resource.
+    pub resource_type: ResourceType,
+    /// The quantity of the resource.
+    pub amount: f32,
+}
+
+/// Component indicating a Pop is carrying a resource.
+#[derive(Component, Debug, Clone, Copy)]
+pub struct Carrying {
+    /// The type of resource being carried.
+    pub resource_type: ResourceType,
+    /// The quantity of the resource.
+    pub amount: f32,
+}
+
 /// Tracks the resources available to the colony.
 ///
 /// This resource serves as the "bank" for the simulation.
@@ -351,14 +388,25 @@ pub fn mine_rock(world: &mut World, designation_entity: Entity, work_amount: f32
             terrain.tiles[idx] = TerrainType::Dirt;
         }
 
-        // Add resources
-        let mut resources = world.resource_mut::<ColonyResources>();
-        resources.add_stone(1.0);
+        // Spawn resources (Stone)
+        world.spawn((
+            ResourceItem {
+                resource_type: ResourceType::Stone,
+                amount: 1.0,
+            },
+            pos,
+        ));
 
         // Probabilistic Ore Yield (20%)
         let mut rng = rand::thread_rng();
         if rng.gen_bool(0.2) {
-            resources.add_ore(1.0);
+            world.spawn((
+                ResourceItem {
+                    resource_type: ResourceType::Ore,
+                    amount: 1.0,
+                },
+                pos,
+            ));
         }
 
         // Remove designation
@@ -416,9 +464,14 @@ pub fn chop_tree(world: &mut World, designation_entity: Entity, work_amount: f32
             terrain.tiles[idx] = TerrainType::Dirt;
         }
 
-        // Add resources
-        let mut resources = world.resource_mut::<ColonyResources>();
-        resources.add_wood(1.0);
+        // Spawn resources (Wood)
+        world.spawn((
+            ResourceItem {
+                resource_type: ResourceType::Wood,
+                amount: 1.0,
+            },
+            pos,
+        ));
 
         // Remove designation
         world.despawn(designation_entity);
@@ -525,9 +578,10 @@ mod tests {
         let terrain = world.resource::<TerrainGrid>();
         assert_eq!(terrain.get(5, 5), Some(TerrainType::Dirt));
 
-        // 3. Resources should increase
-        let resources = world.resource::<ColonyResources>();
-        assert!((resources.stone - 1.0).abs() < f32::EPSILON);
+        // 3. ResourceItem should be spawned
+        let items: Vec<_> = world.query::<&ResourceItem>().iter(&world).collect();
+        assert!(!items.is_empty(), "Should spawn ResourceItem");
+        assert_eq!(items[0].resource_type, ResourceType::Stone);
     }
 
     #[test]
@@ -688,9 +742,10 @@ mod tests {
         let terrain = world.resource::<TerrainGrid>();
         assert_eq!(terrain.get(5, 5), Some(TerrainType::Dirt));
 
-        // 3. Resources should increase (Wood)
-        let resources = world.resource::<ColonyResources>();
-        assert_eq!(resources.wood, 1.0);
+        // 3. ResourceItem should be spawned
+        let items: Vec<_> = world.query::<&ResourceItem>().iter(&world).collect();
+        assert!(!items.is_empty(), "Should spawn ResourceItem");
+        assert_eq!(items[0].resource_type, ResourceType::Wood);
     }
 
     #[test]

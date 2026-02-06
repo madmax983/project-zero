@@ -6,7 +6,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 ## MVP — Layer 1: Colony Simulation
 
-- [ ] `025` Hauling Logistics — `specs/025-hauling-logistics.md`
 - [ ] `030` Tool Economy — `specs/030-tool-economy.md`
 - [ ] `031` Pop Morale — `specs/031-pop-morale.md`
 

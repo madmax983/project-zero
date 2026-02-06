@@ -955,9 +955,16 @@ mod tests {
         let terrain = world.resource::<TerrainGrid>();
         assert_eq!(terrain.get(5, 5), Some(TerrainType::Dirt));
 
-        // Resources should increase
-        let resources = world.resource::<crate::layer1::resources::ColonyResources>();
-        assert!(resources.stone > 0.0);
+        // ResourceItem should be spawned
+        let items: Vec<_> = world
+            .query::<&crate::layer1::resources::ResourceItem>()
+            .iter(&world)
+            .collect();
+        assert!(!items.is_empty(), "ResourceItem should be spawned");
+        assert_eq!(
+            items[0].resource_type,
+            crate::layer1::resources::ResourceType::Stone
+        );
     }
 
     // =========================================================================
