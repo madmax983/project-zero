@@ -36,7 +36,7 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
             .sum()
     });
 
-    let status = get_status_string(
+    let status = get_status_line(
         sim_time.tick,
         sim_time.speed,
         paused,
@@ -54,6 +54,106 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
 
 #[must_use]
 #[allow(clippy::too_many_arguments)]
+pub fn get_status_line<'a>(
+    tick: u64,
+    speed: SimSpeed,
+    paused: bool,
+    build_mode: &BuildMode,
+    designation_mode: &DesignationMode,
+    location_name: Option<&'a str>,
+    pop_count: usize,
+    food_yield: f32,
+    tools: f32,
+) -> Line<'a> {
+    let mut spans = Vec::new();
+
+    // 1. Play/Pause
+    if paused {
+        spans.push(Span::styled(" ⏸ ", Style::default().fg(Color::Red)));
+    } else {
+        spans.push(Span::styled(" ▶ ", Style::default().fg(Color::Green)));
+    }
+
+    // 2. Day
+    spans.push(Span::raw(format!("Day {tick} │ ")));
+
+    // 3. Souls
+    spans.push(Span::styled("Souls: ", Style::default().fg(Color::Cyan)));
+    spans.push(Span::styled(
+        format!("{pop_count} │ "),
+        Style::default().fg(Color::White),
+    ));
+
+    // 4. Yield (Food)
+    let food_color = if food_yield < 10.0 {
+        Color::Red
+    } else {
+        Color::Green
+    };
+    spans.push(Span::styled("Yield: ", Style::default().fg(food_color)));
+    spans.push(Span::styled(
+        format!("{food_yield:.0} │ "),
+        Style::default().fg(Color::White),
+    ));
+
+    // 5. Tools
+    spans.push(Span::styled("Tools: ", Style::default().fg(Color::Yellow)));
+    spans.push(Span::styled(
+        format!("{tools:.0} │ "),
+        Style::default().fg(Color::White),
+    ));
+
+    // 6. Speed
+    spans.push(Span::styled(
+        format!("{} ", speed.label()),
+        Style::default().fg(Color::DarkGray),
+    ));
+
+    // 7. Location
+    if let Some(name) = location_name {
+        spans.push(Span::raw("│ 📍 "));
+        spans.push(Span::styled(
+            format!("{name} "),
+            Style::default().fg(Color::Magenta),
+        ));
+    }
+
+    // 8. Mode
+    // Add some padding before mode
+    spans.push(Span::raw(" "));
+    if build_mode.active {
+        spans.push(Span::styled(
+            format!(
+                "BUILD: {} (Tab:switch Enter:place Esc:exit)",
+                build_mode.selected.label()
+            ),
+            Style::default().fg(Color::Blue).add_modifier(Modifier::BOLD),
+        ));
+    } else if designation_mode.active {
+        spans.push(Span::styled(
+            format!(
+                "DESIGNATE: {} (Enter:apply Esc:exit)",
+                designation_mode.tool.label()
+            ),
+            Style::default()
+                .fg(Color::Yellow)
+                .add_modifier(Modifier::BOLD),
+        ));
+    } else {
+        spans.push(Span::styled(
+            "B:Build  M:Mine  X:Demolish  L:Chronicle  1-3:Speed  q:Quit",
+            Style::default().fg(Color::Gray),
+        ));
+    }
+
+    // Trailing space
+    spans.push(Span::raw(" "));
+
+    Line::from(spans)
+}
+
+#[must_use]
+#[allow(clippy::too_many_arguments)]
 pub fn get_status_string(
     tick: u64,
     speed: SimSpeed,
@@ -65,33 +165,22 @@ pub fn get_status_string(
     food_yield: f32,
     tools: f32,
 ) -> String {
-    let mode_str = if build_mode.active {
-        format!(
-            "BUILD: {} (Tab:switch Enter:place Esc:exit)",
-            build_mode.selected.label()
-        )
-    } else if designation_mode.active {
-        format!(
-            "DESIGNATE: {} (Enter:apply Esc:exit)",
-            designation_mode.tool.label()
-        )
-    } else {
-        "B:Build  M:Mine  X:Demolish  L:Chronicle  1-3:Speed  q:Quit".to_string()
-    };
-
-    let location_str = location_name.map_or_else(String::new, |name| format!("│ 📍 {name} "));
-
-    format!(
-        " {} Day {} │ Souls: {} │ Yield: {:.0} │ Tools: {:.0} │ {} {}{} ",
-        if paused { "⏸" } else { "▶" },
+    let line = get_status_line(
         tick,
+        speed,
+        paused,
+        build_mode,
+        designation_mode,
+        location_name,
         pop_count,
         food_yield,
         tools,
-        speed.label(),
-        location_str,
-        mode_str
-    )
+    );
+
+    line.spans
+        .iter()
+        .map(|s| s.content.as_ref())
+        .collect::<String>()
 }
 
 #[cfg(test)]
