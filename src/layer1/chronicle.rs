@@ -116,56 +116,50 @@ pub fn initial_chronicle_event(world: &mut World) {
 }
 
 /// Checks for building milestones and records them in the chronicle.
-pub fn check_milestones_system(world: &mut World) {
-    let current_tick = world.resource::<SimulationTime>().tick;
+pub fn check_milestones_system(
+    time: Res<SimulationTime>,
+    mut tracker: ResMut<BuildingTracker>,
+    mut chronicle: ResMut<Chronicle>,
+    buildings: Query<&Building>,
+) {
+    if tracker.has_built_housing && tracker.has_built_farm {
+        return;
+    }
 
-    // Optimization: Check if all milestones are already met
-    let (need_housing, need_farm) = {
-        let tracker = world.resource::<BuildingTracker>();
-        if tracker.has_built_housing && tracker.has_built_farm {
-            return;
-        }
-        (!tracker.has_built_housing, !tracker.has_built_farm)
-    };
+    let current_tick = time.tick;
+    let need_housing = !tracker.has_built_housing;
+    let need_farm = !tracker.has_built_farm;
 
     let mut found_housing = false;
     let mut found_farm = false;
 
-    let mut query = world.query::<&Building>();
-    for building in query.iter(world) {
+    for building in &buildings {
         if need_housing && building.building_type == BuildingType::Housing {
             found_housing = true;
         }
         if need_farm && building.building_type == BuildingType::Farm {
             found_farm = true;
         }
-        // Stop early if we found everything we needed
         if (found_housing || !need_housing) && (found_farm || !need_farm) {
             break;
         }
     }
 
-    if found_housing || found_farm {
-        world.resource_scope(|world, mut tracker: Mut<BuildingTracker>| {
-            let mut chronicle = world.resource_mut::<Chronicle>();
-
-            if found_housing && !tracker.has_built_housing {
-                tracker.has_built_housing = true;
-                chronicle.add_event(
-                    current_tick,
-                    "First Housing constructed. A shelter from the void.".to_string(),
-                    EventImportance::Major,
-                );
-            }
-            if found_farm && !tracker.has_built_farm {
-                tracker.has_built_farm = true;
-                chronicle.add_event(
-                    current_tick,
-                    "First Farm operational. We shall not starve.".to_string(),
-                    EventImportance::Major,
-                );
-            }
-        });
+    if found_housing && !tracker.has_built_housing {
+        tracker.has_built_housing = true;
+        chronicle.add_event(
+            current_tick,
+            "First Housing constructed. A shelter from the void.".to_string(),
+            EventImportance::Major,
+        );
+    }
+    if found_farm && !tracker.has_built_farm {
+        tracker.has_built_farm = true;
+        chronicle.add_event(
+            current_tick,
+            "First Farm operational. We shall not starve.".to_string(),
+            EventImportance::Major,
+        );
     }
 }
 
@@ -183,6 +177,7 @@ pub const fn format_event_prefix(importance: EventImportance) -> &'static str {
 mod tests {
     use super::*;
     use crate::layer1::GridPosition;
+    use bevy_ecs::system::RunSystemOnce;
 
     #[test]
     fn test_event_importance_variants() {
@@ -287,7 +282,7 @@ mod tests {
             GridPosition { x: 5, y: 5 },
         ));
 
-        check_milestones_system(&mut world);
+        world.run_system_once(check_milestones_system).unwrap();
 
         let chronicle = world.resource::<Chronicle>();
         assert_eq!(chronicle.events.len(), 1);
@@ -312,7 +307,7 @@ mod tests {
             GridPosition { x: 5, y: 5 },
         ));
 
-        check_milestones_system(&mut world);
+        world.run_system_once(check_milestones_system).unwrap();
 
         let chronicle = world.resource::<Chronicle>();
         assert_eq!(chronicle.events.len(), 1);
@@ -343,8 +338,8 @@ mod tests {
             GridPosition { x: 10, y: 10 },
         ));
 
-        check_milestones_system(&mut world);
-        check_milestones_system(&mut world); // Run twice
+        world.run_system_once(check_milestones_system).unwrap();
+        world.run_system_once(check_milestones_system).unwrap(); // Run twice
 
         let chronicle = world.resource::<Chronicle>();
         assert_eq!(chronicle.events.len(), 1, "Should only record first farm");

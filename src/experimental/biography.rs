@@ -32,17 +32,18 @@ impl Biography {
 }
 
 /// System to monitor and record biography events.
-pub fn biography_monitor_system(world: &mut World) {
-    let current_tick = world.resource::<SimulationTime>().tick;
+pub fn biography_monitor_system(
+    time: Res<SimulationTime>,
+    new_pops: Query<Entity, (With<Pop>, Without<Biography>)>,
+    mut bio_pops: Query<(Entity, &mut Biography, &AssignedTo)>,
+    buildings: Query<&Building>,
+    mut commands: Commands,
+) {
+    let current_tick = time.tick;
 
     // 1. Initialize new Pops
-    let new_pops: Vec<Entity> = world
-        .query_filtered::<Entity, (With<Pop>, Without<Biography>)>()
-        .iter(world)
-        .collect();
-
-    for entity in new_pops {
-        world.entity_mut(entity).insert(Biography {
+    for entity in &new_pops {
+        commands.entity(entity).insert(Biography {
             events: vec![BiographyEvent {
                 tick: current_tick,
                 text: "Joined the colony.".to_string(),
@@ -51,12 +52,9 @@ pub fn biography_monitor_system(world: &mut World) {
     }
 
     // 2. Monitor Assignments
-    let mut events_to_add: Vec<(Entity, String)> = Vec::new();
-
-    let mut query = world.query::<(Entity, &Biography, &AssignedTo)>();
-    for (entity, bio, assigned) in query.iter(world) {
-        let target_name = world
-            .get::<Building>(assigned.entity)
+    for (_, mut bio, assigned) in &mut bio_pops {
+        let target_name = buildings
+            .get(assigned.entity)
             .map_or("Unknown Building", |building| {
                 building.building_type.label()
             });
@@ -75,13 +73,7 @@ pub fn biography_monitor_system(world: &mut World) {
             continue;
         }
 
-        events_to_add.push((entity, event_text));
-    }
-
-    for (entity, text) in events_to_add {
-        if let Some(mut bio) = world.get_mut::<Biography>(entity) {
-            bio.add_event(current_tick, text);
-        }
+        bio.add_event(current_tick, event_text);
     }
 }
 
@@ -89,6 +81,7 @@ pub fn biography_monitor_system(world: &mut World) {
 mod tests {
     use super::*;
     use crate::layer1::building::BuildingType;
+    use bevy_ecs::system::RunSystemOnce;
 
     #[test]
     fn test_biography_initialization() {
@@ -97,7 +90,7 @@ mod tests {
 
         let pop = world.spawn(Pop).id();
 
-        biography_monitor_system(&mut world);
+        world.run_system_once(biography_monitor_system).unwrap();
 
         let bio = world
             .get::<Biography>(pop)
@@ -130,7 +123,7 @@ mod tests {
             ))
             .id();
 
-        biography_monitor_system(&mut world);
+        world.run_system_once(biography_monitor_system).unwrap();
 
         let bio = world.get::<Biography>(pop).unwrap();
         assert!(
@@ -165,7 +158,7 @@ mod tests {
             ))
             .id();
 
-        biography_monitor_system(&mut world);
+        world.run_system_once(biography_monitor_system).unwrap();
 
         let bio_after = world.get::<Biography>(pop).unwrap();
         assert_eq!(bio_after.events.len(), 1, "Should not add duplicate event");

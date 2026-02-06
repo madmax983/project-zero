@@ -23,26 +23,24 @@ impl Default for Stockpile {
 }
 
 /// System that calculates and updates the colony's resource caps based on existing stockpiles.
-pub fn update_resource_caps_system(world: &mut World) {
+pub fn update_resource_caps_system(
+    query: Query<&Stockpile>,
+    mut resources: ResMut<ColonyResources>,
+) {
     let mut total_food_bonus = 0.0;
     let mut total_wood_bonus = 0.0;
     let mut total_stone_bonus = 0.0;
 
-    // Query all stockpiles
-    let mut query = world.query::<&Stockpile>();
-    for stockpile in query.iter(world) {
+    for stockpile in &query {
         total_food_bonus += stockpile.food_bonus;
         total_wood_bonus += stockpile.wood_bonus;
         total_stone_bonus += stockpile.stone_bonus;
     }
 
-    // Update resources
-    let mut resources = world.resource_mut::<ColonyResources>();
     resources.max_food = BASE_MAX_FOOD + total_food_bonus;
     resources.max_wood = BASE_MAX_WOOD + total_wood_bonus;
     resources.max_stone = BASE_MAX_STONE + total_stone_bonus;
 
-    // Clamp current resources to new max (if caps reduced)
     resources.food = resources.food.min(resources.max_food);
     resources.wood = resources.wood.min(resources.max_wood);
     resources.stone = resources.stone.min(resources.max_stone);
@@ -55,6 +53,7 @@ mod tests {
     use crate::layer1::resources::ColonyResources;
     use crate::layer1::stockpile::{Stockpile, update_resource_caps_system};
     use bevy_ecs::prelude::*;
+    use bevy_ecs::system::RunSystemOnce;
 
     #[test]
     fn test_colony_resources_caps_default() {
@@ -126,7 +125,7 @@ mod tests {
         ));
 
         // Run system
-        update_resource_caps_system(&mut world);
+        world.run_system_once(update_resource_caps_system).unwrap();
 
         let resources = world.resource::<ColonyResources>();
 

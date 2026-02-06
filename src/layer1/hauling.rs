@@ -1,15 +1,21 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::GridPosition;
-use crate::layer1::utility_ai::{ActionType, PopAction, manhattan_distance};
-use crate::layer1::resources::{ColonyResources, ResourceItem, Carrying};
+use crate::layer1::execution::{AtTarget, MovementTarget};
+use crate::layer1::resources::{Carrying, ColonyResources, ResourceItem};
 use crate::layer1::stockpile::Stockpile;
-use crate::layer1::execution::{MovementTarget, AtTarget};
+use crate::layer1::utility_ai::{ActionType, PopAction, manhattan_distance};
+use bevy_ecs::prelude::*;
 
 /// Moves resources from the world to stockpiles.
 pub fn haul_system(world: &mut World) {
     // Collect hauling pops
     let mut haulers = Vec::new();
-    let mut query = world.query::<(Entity, &PopAction, &GridPosition, Option<&Carrying>, Option<&AtTarget>)>();
+    let mut query = world.query::<(
+        Entity,
+        &PopAction,
+        &GridPosition,
+        Option<&Carrying>,
+        Option<&AtTarget>,
+    )>();
     for (entity, action, pos, carrying, at_target) in query.iter(world) {
         if action.current == ActionType::Haul {
             haulers.push((entity, *pos, carrying.copied(), at_target.is_some()));
@@ -65,7 +71,10 @@ fn handle_pickup(world: &mut World, pop_entity: Entity, pos: GridPosition) {
     }
 
     // Clear movement state regardless of success (if item gone, we retry next tick)
-    world.entity_mut(pop_entity).remove::<AtTarget>().remove::<MovementTarget>();
+    world
+        .entity_mut(pop_entity)
+        .remove::<AtTarget>()
+        .remove::<MovementTarget>();
 }
 
 fn handle_drop_off(world: &mut World, pop_entity: Entity, carrying: Carrying, pos: GridPosition) {
@@ -93,10 +102,18 @@ fn handle_drop_off(world: &mut World, pop_entity: Entity, carrying: Carrying, po
     }
 
     // Clear movement state
-    world.entity_mut(pop_entity).remove::<AtTarget>().remove::<MovementTarget>();
+    world
+        .entity_mut(pop_entity)
+        .remove::<AtTarget>()
+        .remove::<MovementTarget>();
 }
 
-fn find_and_target_stockpile(world: &mut World, pop_entity: Entity, pos: GridPosition, _carrying: Carrying) {
+fn find_and_target_stockpile(
+    world: &mut World,
+    pop_entity: Entity,
+    pos: GridPosition,
+    _carrying: Carrying,
+) {
     // Find closest stockpile
     let target = {
         let mut query = world.query::<(Entity, &GridPosition, &Stockpile)>();
@@ -135,14 +152,22 @@ fn find_and_target_item(world: &mut World, pop_entity: Entity, pos: GridPosition
         let mut min_dist = i32::MAX;
 
         for (e, p, item) in query.iter(world) {
-             let has_room = match item.resource_type {
+            let has_room = match item.resource_type {
                 crate::layer1::resources::ResourceType::Food => resources.food < resources.max_food,
                 crate::layer1::resources::ResourceType::Wood => resources.wood < resources.max_wood,
-                crate::layer1::resources::ResourceType::Stone => resources.stone < resources.max_stone,
+                crate::layer1::resources::ResourceType::Stone => {
+                    resources.stone < resources.max_stone
+                }
                 crate::layer1::resources::ResourceType::Ore => resources.ore < resources.max_ore,
-                crate::layer1::resources::ResourceType::Metal => resources.metal < resources.max_metal,
-                crate::layer1::resources::ResourceType::Planks => resources.planks < resources.max_planks,
-                crate::layer1::resources::ResourceType::Blocks => resources.blocks < resources.max_blocks,
+                crate::layer1::resources::ResourceType::Metal => {
+                    resources.metal < resources.max_metal
+                }
+                crate::layer1::resources::ResourceType::Planks => {
+                    resources.planks < resources.max_planks
+                }
+                crate::layer1::resources::ResourceType::Blocks => {
+                    resources.blocks < resources.max_blocks
+                }
             };
 
             if has_room {
@@ -167,14 +192,14 @@ fn find_and_target_item(world: &mut World, pop_entity: Entity, pos: GridPosition
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::resources::{ColonyResources, ResourceItem, ResourceType, Carrying};
-    use crate::layer1::utility_ai::{ActionType, UtilityWeights, evaluate_haul, PopAction};
+    use super::haul_system;
     use crate::layer1::building::{Building, BuildingType};
+    use crate::layer1::resources::{Carrying, ColonyResources, ResourceItem, ResourceType};
     use crate::layer1::stockpile::Stockpile;
+    use crate::layer1::utility_ai::{ActionType, PopAction, UtilityWeights, evaluate_haul};
     use crate::layer1::{GridPosition, Pop};
     use crate::shared::time::SimulationTime;
-    use super::haul_system;
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_resource_item_component() {
@@ -194,23 +219,38 @@ mod tests {
         world.insert_resource(ColonyResources::default());
 
         // Spawn ResourceItem
-        let item_entity = world.spawn((
-            ResourceItem { resource_type: ResourceType::Stone, amount: 1.0 },
-            GridPosition { x: 5, y: 0 },
-        )).id();
+        let item_entity = world
+            .spawn((
+                ResourceItem {
+                    resource_type: ResourceType::Stone,
+                    amount: 1.0,
+                },
+                GridPosition { x: 5, y: 0 },
+            ))
+            .id();
 
         // Spawn Stockpile with capacity
-        let _stockpile_entity = world.spawn((
-            Building { building_type: BuildingType::Stockpile },
-            Stockpile::default(), // Assume default has space
-            GridPosition { x: 10, y: 0 },
-        )).id();
+        let _stockpile_entity = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Stockpile,
+                },
+                Stockpile::default(), // Assume default has space
+                GridPosition { x: 10, y: 0 },
+            ))
+            .id();
 
         let mut items = world.query::<(Entity, &GridPosition, &ResourceItem)>();
         let mut stockpiles = world.query::<(Entity, &GridPosition, &Stockpile)>();
 
         let resources = world.resource::<ColonyResources>();
-        let result = evaluate_haul(&pop_pos, &weights, items.iter(&world), stockpiles.iter(&world), resources);
+        let result = evaluate_haul(
+            &pop_pos,
+            &weights,
+            items.iter(&world),
+            stockpiles.iter(&world),
+            resources,
+        );
 
         assert!(result.is_some());
         let (utility, target) = result.unwrap();
@@ -231,13 +271,18 @@ mod tests {
 
         // Spawn Item
         world.spawn((
-            ResourceItem { resource_type: ResourceType::Stone, amount: 1.0 },
+            ResourceItem {
+                resource_type: ResourceType::Stone,
+                amount: 1.0,
+            },
             GridPosition { x: 5, y: 0 },
         ));
 
         // Spawn Stockpile
         world.spawn((
-            Building { building_type: BuildingType::Stockpile },
+            Building {
+                building_type: BuildingType::Stockpile,
+            },
             Stockpile::default(),
             GridPosition { x: 10, y: 0 },
         ));
@@ -247,7 +292,13 @@ mod tests {
 
         // Should return None because global storage is full
         let resources = world.resource::<ColonyResources>();
-        let result = evaluate_haul(&pop_pos, &weights, items.iter(&world), stockpiles.iter(&world), resources);
+        let result = evaluate_haul(
+            &pop_pos,
+            &weights,
+            items.iter(&world),
+            stockpiles.iter(&world),
+            resources,
+        );
 
         // Since we filled global resources, we expect None.
         assert!(result.is_none());
@@ -261,48 +312,83 @@ mod tests {
         world.insert_resource(ColonyResources::default());
 
         // 1. Spawn Pop, Item, Stockpile
-        let pop = world.spawn((
-            Pop,
-            GridPosition { x: 0, y: 0 },
-            PopAction { current: ActionType::Haul, ..Default::default() },
-            // Need a "Carrying" component? No, starts empty.
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 0, y: 0 },
+                PopAction {
+                    current: ActionType::Haul,
+                    ..Default::default()
+                },
+                // Need a "Carrying" component? No, starts empty.
+            ))
+            .id();
 
-        let item = world.spawn((
-            ResourceItem { resource_type: ResourceType::Wood, amount: 10.0 },
-            GridPosition { x: 2, y: 0 },
-        )).id();
+        let item = world
+            .spawn((
+                ResourceItem {
+                    resource_type: ResourceType::Wood,
+                    amount: 10.0,
+                },
+                GridPosition { x: 2, y: 0 },
+            ))
+            .id();
 
-        let _stockpile = world.spawn((
-            Building { building_type: BuildingType::Stockpile },
-            Stockpile::default(),
-            GridPosition { x: 4, y: 0 },
-        )).id();
+        let _stockpile = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Stockpile,
+                },
+                Stockpile::default(),
+                GridPosition { x: 4, y: 0 },
+            ))
+            .id();
 
         // 2. Run haul_system (pickup phase)
         // Assume pop moves to item (simulated here by teleport)
         *world.get_mut::<GridPosition>(pop).unwrap() = GridPosition { x: 2, y: 0 };
         // Manually add AtTarget to simulate arrival
-        world.entity_mut(pop).insert(crate::layer1::execution::AtTarget);
+        world
+            .entity_mut(pop)
+            .insert(crate::layer1::execution::AtTarget);
 
         // System should detect overlap, pick up item (add Carrying, despawn Item)
         haul_system(&mut world);
 
-        assert!(world.get::<Carrying>(pop).is_some(), "Pop should be carrying after pickup");
-        assert!(world.get_entity(item).is_err(), "Item should be despawned after pickup");
-        assert!(world.get::<crate::layer1::execution::AtTarget>(pop).is_none(), "AtTarget should be removed");
+        assert!(
+            world.get::<Carrying>(pop).is_some(),
+            "Pop should be carrying after pickup"
+        );
+        assert!(
+            world.get_entity(item).is_err(),
+            "Item should be despawned after pickup"
+        );
+        assert!(
+            world
+                .get::<crate::layer1::execution::AtTarget>(pop)
+                .is_none(),
+            "AtTarget should be removed"
+        );
 
         // 3. Run haul_system (drop phase)
         // Teleport to stockpile
         *world.get_mut::<GridPosition>(pop).unwrap() = GridPosition { x: 4, y: 0 };
         // Manually add AtTarget
-        world.entity_mut(pop).insert(crate::layer1::execution::AtTarget);
+        world
+            .entity_mut(pop)
+            .insert(crate::layer1::execution::AtTarget);
 
         haul_system(&mut world);
 
         // 4. Verify resources added
         let res = world.resource::<ColonyResources>();
-        assert!((res.wood - 10.0).abs() < f32::EPSILON, "Resources should be credited");
-        assert!(world.get::<Carrying>(pop).is_none(), "Pop should no longer be carrying");
+        assert!(
+            (res.wood - 10.0).abs() < f32::EPSILON,
+            "Resources should be credited"
+        );
+        assert!(
+            world.get::<Carrying>(pop).is_none(),
+            "Pop should no longer be carrying"
+        );
     }
 }

@@ -10,6 +10,7 @@
 //! * **Restoration**: The `restore_rest_in_housing_system` ticks up the rest need of residents.
 
 use crate::layer1::needs::Needs;
+use crate::layer1::pop::Pop;
 use bevy_ecs::prelude::*;
 
 /// Housing component - provides shelter and rest for pops.
@@ -58,6 +59,7 @@ const REST_RESTORE_PER_TICK: f32 = 0.05; // Full rest in ~20 ticks
 /// use scale::layer1::needs::Needs;
 /// use scale::layer1::pop::Pop;
 /// use bevy_ecs::prelude::*;
+/// use bevy_ecs::system::RunSystemOnce;
 ///
 /// let mut world = World::new();
 ///
@@ -71,24 +73,19 @@ const REST_RESTORE_PER_TICK: f32 = 0.05; // Full rest in ~20 ticks
 /// });
 ///
 /// // Run system
-/// restore_rest_in_housing_system(&mut world);
+/// world.run_system_once(restore_rest_in_housing_system).unwrap();
 ///
 /// // Check result
 /// let needs = world.get::<Needs>(pop).unwrap();
 /// assert!(needs.rest > 0.1);
 /// ```
-pub fn restore_rest_in_housing_system(world: &mut World) {
-    // Collect housing with residents
-    let housing_residents: Vec<Vec<Entity>> = world
-        .query::<&Housing>()
-        .iter(world)
-        .map(|h| h.residents.clone())
-        .collect();
-
-    // Restore rest for each resident
-    for residents in housing_residents {
-        for resident in residents {
-            if let Some(mut needs) = world.get_mut::<Needs>(resident) {
+pub fn restore_rest_in_housing_system(
+    housing_query: Query<&Housing>,
+    mut needs_query: Query<&mut Needs>,
+) {
+    for housing in &housing_query {
+        for &resident in &housing.residents {
+            if let Ok(mut needs) = needs_query.get_mut(resident) {
                 needs.rest = (needs.rest + REST_RESTORE_PER_TICK).min(1.0);
             }
         }
@@ -106,6 +103,7 @@ pub fn restore_rest_in_housing_system(world: &mut World) {
 /// use scale::layer1::housing::{Housing, clean_dead_residents_system};
 /// use scale::layer1::pop::Pop;
 /// use bevy_ecs::prelude::*;
+/// use bevy_ecs::system::RunSystemOnce;
 ///
 /// let mut world = World::new();
 /// let pop = world.spawn(Pop).id();
@@ -118,34 +116,17 @@ pub fn restore_rest_in_housing_system(world: &mut World) {
 /// world.despawn(pop);
 ///
 /// // Cleanup
-/// clean_dead_residents_system(&mut world);
+/// world.run_system_once(clean_dead_residents_system).unwrap();
 ///
 /// // Verify
 /// let h = world.get::<Housing>(housing).unwrap();
 /// assert!(h.residents.is_empty());
 /// ```
-pub fn clean_dead_residents_system(world: &mut World) {
-    // Collect housing entities and their residents first to avoid double borrow
-    let housing_data: Vec<(Entity, Vec<Entity>)> = world
-        .query::<(Entity, &Housing)>()
-        .iter(world)
-        .map(|(e, h)| (e, h.residents.clone()))
-        .collect();
-
-    for (housing_entity, residents) in housing_data {
-        // Find residents that no longer exist
-        let dead_residents: Vec<Entity> = residents
-            .into_iter()
-            .filter(|&resident| world.get_entity(resident).is_err())
-            .collect();
-
-        if dead_residents.is_empty() {
-            continue;
-        }
-
-        if let Some(mut housing) = world.get_mut::<Housing>(housing_entity) {
-            housing.residents.retain(|r| !dead_residents.contains(r));
-        }
+pub fn clean_dead_residents_system(mut housing_query: Query<&mut Housing>, pop_query: Query<&Pop>) {
+    for mut housing in &mut housing_query {
+        housing
+            .residents
+            .retain(|&resident| pop_query.get(resident).is_ok());
     }
 }
 
@@ -156,6 +137,7 @@ mod tests {
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::needs::Needs;
     use crate::layer1::pop::Pop;
+    use bevy_ecs::system::RunSystemOnce;
 
     #[test]
     fn test_housing_default() {
@@ -204,7 +186,9 @@ mod tests {
         world.spawn(housing);
 
         let rest_before = world.get::<Needs>(pop).unwrap().rest;
-        restore_rest_in_housing_system(&mut world);
+        world
+            .run_system_once(restore_rest_in_housing_system)
+            .unwrap();
         let rest_after = world.get::<Needs>(pop).unwrap().rest;
 
         assert!(rest_after > rest_before, "Rest should increase");
@@ -230,7 +214,9 @@ mod tests {
         housing.residents.push(pop);
         world.spawn(housing);
 
-        restore_rest_in_housing_system(&mut world);
+        world
+            .run_system_once(restore_rest_in_housing_system)
+            .unwrap();
         let rest = world.get::<Needs>(pop).unwrap().rest;
 
         assert!((rest - 1.0).abs() < f32::EPSILON);
@@ -266,7 +252,9 @@ mod tests {
         housing.residents.push(pop2);
         world.spawn(housing);
 
-        restore_rest_in_housing_system(&mut world);
+        world
+            .run_system_once(restore_rest_in_housing_system)
+            .unwrap();
 
         assert!(world.get::<Needs>(pop1).unwrap().rest > 0.4);
         assert!(world.get::<Needs>(pop2).unwrap().rest > 0.3);
@@ -287,7 +275,7 @@ mod tests {
         // Kill one pop
         world.despawn(pop1);
 
-        clean_dead_residents_system(&mut world);
+        world.run_system_once(clean_dead_residents_system).unwrap();
 
         let housing = world.get::<Housing>(housing_entity).unwrap();
         assert_eq!(housing.residents.len(), 1);
@@ -306,7 +294,7 @@ mod tests {
         // Kill the pop
         world.despawn(pop);
 
-        clean_dead_residents_system(&mut world);
+        world.run_system_once(clean_dead_residents_system).unwrap();
 
         let housing = world.get::<Housing>(housing_entity).unwrap();
         assert!(housing.residents.is_empty());
