@@ -21,12 +21,12 @@ pub mod map;
 pub mod needs;
 /// Pop entity and management.
 pub mod pop;
+/// Refining industry (Lumber Mill, Stone Mason).
+pub mod refining;
 /// Colony resources and mining.
 pub mod resources;
 /// Resource storage limits and stockpile buildings.
 pub mod stockpile;
-/// Refining industry (Lumber Mill, Stone Mason).
-pub mod refining;
 /// Terrain generation and grid management.
 pub mod terrain;
 /// Pop thoughts and personality.
@@ -46,9 +46,11 @@ pub use housing::*;
 pub use map::*;
 pub use needs::*;
 pub use pop::*;
+pub use refining::*;
 pub use resources::*;
 pub use stockpile::*;
-pub use refining::*;
 pub use terrain::*;
 pub use thoughts::*;
 pub use utility_ai::*;
+pub mod locations;
+pub use locations::*;

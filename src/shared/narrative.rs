@@ -1,6 +1,7 @@
 use anyhow::{Context, Result};
 use rand::seq::SliceRandom;
 use std::collections::HashMap;
+use std::fmt::Write;
 use std::fs;
 use std::path::Path;
 
@@ -12,16 +13,18 @@ pub struct NarrativeContext {
 
 impl NarrativeContext {
     /// Create a new context.
+    #[must_use]
     pub fn new() -> Self {
         Self::default()
     }
 
-    /// Insert a value for a slot (e.g., "CIV_NAME" -> "The Empire").
+    /// Insert a value for a slot (e.g., "`CIV_NAME`" -> "The Empire").
     pub fn insert(&mut self, key: &str, value: &str) {
         self.slots.insert(key.to_string(), value.to_string());
     }
 
     /// Get a value for a slot.
+    #[must_use]
     pub fn get(&self, key: &str) -> Option<&String> {
         self.slots.get(key)
     }
@@ -39,7 +42,7 @@ pub struct Template {
 /// A collection of fragments for a specific type.
 #[derive(Debug, Clone)]
 pub struct FragmentType {
-    /// Unique identifier for the fragment type (e.g., "CIV_EPITHET").
+    /// Unique identifier for the fragment type (e.g., "`CIV_EPITHET`").
     pub id: String,
     /// List of possible text values.
     pub options: Vec<String>,
@@ -54,20 +57,23 @@ pub struct NarrativeGenerator {
 
 impl NarrativeGenerator {
     /// Load templates and fragments from the given directory.
+    ///
+    /// # Errors
+    /// Returns error if file reading fails.
     pub fn load_from_files<P: AsRef<Path>>(&mut self, path: P) -> Result<()> {
         let path = path.as_ref();
 
         let templates_path = path.join("TEMPLATES.md");
         if templates_path.exists() {
             let content = fs::read_to_string(&templates_path)
-                .with_context(|| format!("Failed to read {:?}", templates_path))?;
+                .with_context(|| format!("Failed to read {}", templates_path.display()))?;
             self.parse_templates(&content);
         }
 
         let fragments_path = path.join("FRAGMENTS.md");
         if fragments_path.exists() {
             let content = fs::read_to_string(&fragments_path)
-                .with_context(|| format!("Failed to read {:?}", fragments_path))?;
+                .with_context(|| format!("Failed to read {}", fragments_path.display()))?;
             self.parse_fragments(&content);
         }
 
@@ -81,7 +87,8 @@ impl NarrativeGenerator {
 
     /// Add a fragment type programmatically.
     pub fn add_fragment(&mut self, id: String, options: Vec<String>) {
-        self.fragments.insert(id.clone(), FragmentType { id, options });
+        self.fragments
+            .insert(id.clone(), FragmentType { id, options });
     }
 
     /// Parse templates from Markdown content.
@@ -96,20 +103,21 @@ impl NarrativeGenerator {
             // Detect Template Header: "### TEMPLATE_NAME"
             if let Some(id_part) = trimmed.strip_prefix("### ") {
                 // If we were parsing a previous template, save it
-                if let Some(id) = current_id.take() {
-                    if !current_patterns.is_empty() {
-                        self.templates.insert(id.clone(), Template {
+                if let Some(id) = current_id.take().filter(|_| !current_patterns.is_empty()) {
+                    self.templates.insert(
+                        id.clone(),
+                        Template {
                             id,
                             patterns: current_patterns.clone(),
-                        });
-                    }
+                        },
+                    );
                 }
 
                 // Start new template
                 if !id_part.contains("Templates") && !id_part.contains("Fragments") {
-                     current_id = Some(id_part.trim().to_string());
-                     current_patterns = Vec::new();
-                     capturing_code_block = false;
+                    current_id = Some(id_part.trim().to_string());
+                    current_patterns = Vec::new();
+                    capturing_code_block = false;
                 }
                 continue;
             }
@@ -123,27 +131,29 @@ impl NarrativeGenerator {
             // Capture patterns inside code blocks
             if capturing_code_block && !trimmed.is_empty() {
                 // Remove quotes if present
-                let pattern = if trimmed.starts_with('"') && trimmed.ends_with('"') && trimmed.len() >= 2 {
-                    &trimmed[1..trimmed.len()-1]
-                } else {
-                    trimmed
-                };
+                let pattern =
+                    if trimmed.starts_with('"') && trimmed.ends_with('"') && trimmed.len() >= 2 {
+                        &trimmed[1..trimmed.len() - 1]
+                    } else {
+                        trimmed
+                    };
 
                 // Ignore empty lines or comments
                 if !pattern.is_empty() && !pattern.starts_with("//") {
-                     current_patterns.push(pattern.to_string());
+                    current_patterns.push(pattern.to_string());
                 }
             }
         }
 
         // Save the last one
-        if let Some(id) = current_id {
-            if !current_patterns.is_empty() {
-                self.templates.insert(id.clone(), Template {
+        if let Some(id) = current_id.filter(|_| !current_patterns.is_empty()) {
+            self.templates.insert(
+                id.clone(),
+                Template {
                     id,
                     patterns: current_patterns,
-                });
-            }
+                },
+            );
         }
     }
 
@@ -158,22 +168,21 @@ impl NarrativeGenerator {
 
             // Detect Fragment Header: "### [FRAGMENT_NAME]"
             if let Some(header) = trimmed.strip_prefix("### ") {
-                 if let Some(id) = current_id.take() {
-                    if !current_options.is_empty() {
-                        self.fragments.insert(id.clone(), FragmentType {
+                if let Some(id) = current_id.take().filter(|_| !current_options.is_empty()) {
+                    self.fragments.insert(
+                        id.clone(),
+                        FragmentType {
                             id,
                             options: current_options.clone(),
-                        });
-                    }
+                        },
+                    );
                 }
 
                 // Extract name between brackets
-                if let Some(start) = header.find('[') {
-                    if let Some(end) = header.find(']') {
-                        current_id = Some(header[start+1..end].to_string());
-                        current_options = Vec::new();
-                        capturing_code_block = false;
-                    }
+                if let (Some(start), Some(end)) = (header.find('['), header.find(']')) {
+                    current_id = Some(header[start + 1..end].to_string());
+                    current_options = Vec::new();
+                    capturing_code_block = false;
                 }
                 continue;
             }
@@ -193,39 +202,53 @@ impl NarrativeGenerator {
         }
 
         // Save last
-        if let Some(id) = current_id {
-             if !current_options.is_empty() {
-                self.fragments.insert(id.clone(), FragmentType {
+        if let Some(id) = current_id.filter(|_| !current_options.is_empty()) {
+            self.fragments.insert(
+                id.clone(),
+                FragmentType {
                     id,
                     options: current_options,
-                });
-            }
+                },
+            );
         }
     }
 
     /// Return the number of loaded templates.
+    #[must_use]
     pub fn template_count(&self) -> usize {
         self.templates.len()
     }
 
     /// Return the number of loaded fragment types.
+    #[must_use]
     pub fn fragment_count(&self) -> usize {
         self.fragments.len()
     }
 
     /// Get a random option from a fragment type.
+    #[must_use]
     pub fn get_random_fragment(&self, fragment_id: &str) -> Option<&String> {
-        self.fragments.get(fragment_id)?.options.choose(&mut rand::thread_rng())
+        self.fragments
+            .get(fragment_id)?
+            .options
+            .choose(&mut rand::thread_rng())
     }
 
     /// Generate a story string from a template ID and context.
+    ///
+    /// # Errors
+    /// Returns error if template is not found or has no patterns.
     pub fn generate(&self, template_id: &str, context: &NarrativeContext) -> Result<String> {
-        let template = self.templates.get(template_id)
-            .ok_or_else(|| anyhow::anyhow!("Template not found: {}", template_id))?;
+        let template = self
+            .templates
+            .get(template_id)
+            .ok_or_else(|| anyhow::anyhow!("Template not found: {template_id}"))?;
 
         // Pick a random pattern
-        let pattern = template.patterns.choose(&mut rand::thread_rng())
-            .ok_or_else(|| anyhow::anyhow!("Template {} has no patterns", template_id))?;
+        let pattern = template
+            .patterns
+            .choose(&mut rand::thread_rng())
+            .ok_or_else(|| anyhow::anyhow!("Template {template_id} has no patterns"))?;
 
         // We'll iterate through the string and build the output
         let mut output = String::new();
@@ -251,7 +274,7 @@ impl NarrativeGenerator {
                     // Check for optional marker '?' at end of slot name
                     let is_optional = slot_name.ends_with('?');
                     let key = if is_optional {
-                        &slot_name[0..slot_name.len()-1]
+                        &slot_name[0..slot_name.len() - 1]
                     } else {
                         &slot_name
                     };
@@ -262,17 +285,14 @@ impl NarrativeGenerator {
                     } else if let Some(fragment) = self.fragments.get(key) {
                         // Pick random fragment
                         if let Some(option) = fragment.options.choose(&mut rand::thread_rng()) {
-                             output.push_str(option);
+                            output.push_str(option);
                         } else {
-                             output.push_str(&format!("[MISSING_FRAGMENT_OPTIONS:{}]", key));
+                            let _ = write!(output, "[MISSING_FRAGMENT_OPTIONS:{key}]");
                         }
-                    } else {
-                        // Not found in context or fragments
-                        if !is_optional {
-                            output.push('[');
-                            output.push_str(&slot_name);
-                            output.push(']');
-                        }
+                    } else if !is_optional {
+                        output.push('[');
+                        output.push_str(&slot_name);
+                        output.push(']');
                     }
                 } else {
                     // Malformed bracket, just push what we collected
@@ -337,10 +357,13 @@ mod tests {
     #[test]
     fn test_generation_simple() {
         let mut generator = NarrativeGenerator::default();
-        generator.templates.insert("SIMPLE".to_string(), Template {
-            id: "SIMPLE".to_string(),
-            patterns: vec!["Hello [NAME]!".to_string()],
-        });
+        generator.templates.insert(
+            "SIMPLE".to_string(),
+            Template {
+                id: "SIMPLE".to_string(),
+                patterns: vec!["Hello [NAME]!".to_string()],
+            },
+        );
 
         let mut ctx = NarrativeContext::new();
         ctx.insert("NAME", "World");

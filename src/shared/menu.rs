@@ -39,8 +39,8 @@ impl MenuState {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::shared::state::GameState;
     use crate::shared::input::{InputContext, InputContextStack, InputRouter};
+    use crate::shared::state::GameState;
     use crossterm::event::{KeyCode, KeyEvent, KeyModifiers};
 
     fn key_event(code: KeyCode) -> KeyEvent {
@@ -107,7 +107,10 @@ mod tests {
         stack.push(InputContext::MainMenu);
         world.insert_resource(stack);
 
-        world.insert_resource(MenuState { selected_index: 0, ..Default::default() }); // "Start Game" selected
+        world.insert_resource(MenuState {
+            selected_index: 0,
+            ..Default::default()
+        }); // "Start Game" selected
 
         let mut router = InputRouter::new();
         router.route(&mut world, key_event(KeyCode::Enter));
@@ -115,7 +118,10 @@ mod tests {
         // Should transition to Running
         assert_eq!(*world.resource::<GameState>(), GameState::Running);
         // Should switch input context to Normal
-        assert_eq!(world.resource::<InputContextStack>().current(), InputContext::Normal);
+        assert_eq!(
+            world.resource::<InputContextStack>().current(),
+            InputContext::Normal
+        );
     }
 
     #[test]
@@ -123,9 +129,14 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(GameState::MainMenu);
         world.insert_resource(InputContextStack::default());
-        world.resource_mut::<InputContextStack>().push(InputContext::MainMenu);
+        world
+            .resource_mut::<InputContextStack>()
+            .push(InputContext::MainMenu);
 
-        world.insert_resource(MenuState { selected_index: 1, ..Default::default() }); // "Quit" selected
+        world.insert_resource(MenuState {
+            selected_index: 1,
+            ..Default::default()
+        }); // "Quit" selected
 
         let mut router = InputRouter::new();
         router.route(&mut world, key_event(KeyCode::Enter));

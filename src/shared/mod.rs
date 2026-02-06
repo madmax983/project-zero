@@ -6,13 +6,13 @@
 pub mod input;
 /// Message logging system.
 pub mod log;
+/// Main menu state.
+pub mod menu;
+/// Narrative generator for procedural lore.
+pub mod narrative;
 /// Selection and inspection system.
 pub mod selection;
 /// Game state definitions.
 pub mod state;
-/// Main menu state.
-pub mod menu;
 /// Time-tracking resources.
 pub mod time;
-/// Narrative generator for procedural lore.
-pub mod narrative;

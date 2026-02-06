@@ -6,7 +6,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 ## MVP — Layer 1: Colony Simulation
 
-- [ ] `011` Named locations — `specs/011-named-locations.md`
 - [ ] `024` Metal Industry — `specs/024-metal-industry.md`
 - [ ] `025` Hauling Logistics — `specs/025-hauling-logistics.md`
 - [ ] `027` Seasonal Rhythms — `specs/027-seasonal-rhythms.md`
