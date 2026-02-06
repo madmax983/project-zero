@@ -27,6 +27,7 @@ use crate::layer1::farm::Farm;
 use crate::layer1::housing::Housing;
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::{ForestryProgress, MiningProgress, chop_tree, mine_rock};
+use crate::layer1::social::Tavern;
 use crate::layer1::terrain::TerrainGrid;
 use crate::layer1::utility_ai::{ActionType, StartPlan};
 use bevy_ecs::prelude::*;
@@ -65,6 +66,8 @@ pub enum AssignmentType {
     FarmWorker,
     /// Residing in housing.
     HousingResident,
+    /// Socializing at a tavern.
+    TavernVisitor,
 }
 
 /// Removes pops from farms/housing when they switch to a different action.
@@ -89,6 +92,11 @@ pub fn cleanup_previous_assignment_system(world: &mut World) {
             AssignmentType::HousingResident => {
                 if let Some(mut housing) = world.get_mut::<Housing>(assigned_entity) {
                     housing.residents.retain(|&r| r != pop_entity);
+                }
+            }
+            AssignmentType::TavernVisitor => {
+                if let Some(mut tavern) = world.get_mut::<Tavern>(assigned_entity) {
+                    tavern.visitors.retain(|&v| v != pop_entity);
                 }
             }
         }
@@ -239,12 +247,21 @@ pub fn arrival_handler_system(world: &mut World) {
                 }
                 clear_movement_components(world, pop_entity);
             }
+            ActionType::Socialize => {
+                if assign_to_tavern(world, target_entity, pop_entity) {
+                    world.entity_mut(pop_entity).insert(AssignedTo {
+                        entity: target_entity,
+                        assignment_type: AssignmentType::TavernVisitor,
+                    });
+                }
+                clear_movement_components(world, pop_entity);
+            }
             ActionType::Work => {
                 // Work is handled by work_execution_system
                 // Just keep the AtTarget marker for that system
             }
             _ => {
-                // Other actions (Idle, Explore, Socialize) - just clear movement
+                // Other actions (Idle, Explore) - just clear movement
                 clear_movement_components(world, pop_entity);
             }
         }
@@ -278,6 +295,19 @@ fn assign_to_housing(world: &mut World, housing_entity: Entity, pop_entity: Enti
     }
 
     housing.residents.push(pop_entity);
+    true
+}
+
+fn assign_to_tavern(world: &mut World, tavern_entity: Entity, pop_entity: Entity) -> bool {
+    let Some(mut tavern) = world.get_mut::<Tavern>(tavern_entity) else {
+        return false;
+    };
+
+    if tavern.visitors.len() >= tavern.capacity {
+        return false;
+    }
+
+    tavern.visitors.push(pop_entity);
     true
 }
 
