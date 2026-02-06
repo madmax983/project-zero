@@ -158,6 +158,23 @@ impl ColonyResources {
         self.ore -= cost.ore;
         self.metal -= cost.metal;
     }
+
+    /// Attempts to deduct the given cost from the colony's resources.
+    ///
+    /// Checks affordability first. If affordable, deducts and returns `true`.
+    /// Otherwise, returns `false` and makes no changes.
+    ///
+    /// # Parameters
+    ///
+    /// * `cost`: The resources to deduct.
+    pub fn try_deduct(&mut self, cost: &Self) -> bool {
+        if self.can_afford(cost) {
+            self.deduct(cost);
+            true
+        } else {
+            false
+        }
+    }
 }
 
 /// Component tracking the progress of a mining designation.
@@ -686,5 +703,38 @@ mod tests {
             (resources.wood - 0.0).abs() < f32::EPSILON,
             "Resources should not be negative"
         );
+    }
+
+    #[test]
+    fn test_try_deduct_success() {
+        let mut resources = ColonyResources {
+            wood: 10.0,
+            ..Default::default()
+        };
+        let cost = ColonyResources {
+            wood: 5.0,
+            ..Default::default()
+        };
+
+        let result = resources.try_deduct(&cost);
+        assert!(result);
+        assert!((resources.wood - 5.0).abs() < f32::EPSILON);
+    }
+
+    #[test]
+    fn test_try_deduct_failure() {
+        let mut resources = ColonyResources {
+            wood: 3.0,
+            ..Default::default()
+        };
+        let cost = ColonyResources {
+            wood: 5.0,
+            ..Default::default()
+        };
+
+        let result = resources.try_deduct(&cost);
+        assert!(!result);
+        // Should be unchanged
+        assert!((resources.wood - 3.0).abs() < f32::EPSILON);
     }
 }

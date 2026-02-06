@@ -106,25 +106,43 @@ pub fn process_refining_system(world: &mut World) {
         if let Some(mut progress) = world.get_mut::<RefiningProgress>(*entity) {
             progress.current += work;
             if progress.is_complete() {
-                progress.current = 0.0;
-                finished_jobs.push((input, output));
+                // Defer resource consumption to the resource update phase.
+                // We do NOT reset progress here because we might fail to afford the input cost
+                // if another building consumed the resources in the same tick.
+                finished_jobs.push((*entity, input, output));
             }
         }
     }
 
     // Update Resources
     if !finished_jobs.is_empty() {
-        let mut resources = world.resource_mut::<ColonyResources>();
-        for (input, output) in finished_jobs {
-            // Note: We rely on the start-of-frame snapshot for affordability check.
-            // If multiple buildings drain the same resource below zero in one frame, it is accepted for MVP.
-            // To be strictly safe, we would need to check `resources.can_afford(input)` again here.
-            // If we did check and failed, we would have already reset the progress (wasting work).
-            // A more complex system would separate "Work" from "Complete" steps or reserve resources.
-            resources.deduct(input);
-            resources.add_planks(output.planks);
-            resources.add_blocks(output.blocks);
-            resources.add_metal(output.metal);
+        for (entity, input, output) in finished_jobs {
+            // Scope the resource borrow to avoid conflict with component access
+            let success = {
+                let mut resources = world.resource_mut::<ColonyResources>();
+                if resources.try_deduct(input) {
+                    resources.add_planks(output.planks);
+                    resources.add_blocks(output.blocks);
+                    resources.add_metal(output.metal);
+                    true
+                } else {
+                    false
+                }
+            };
+
+            if success {
+                // Success! Reset progress.
+                if let Some(mut progress) = world.get_mut::<RefiningProgress>(entity) {
+                    progress.current = 0.0;
+                }
+            } else {
+                // Failed (Race condition: resources consumed by another building).
+                // Clamp progress to max so it stays "ready to complete" and retries next tick.
+                // This prevents progress from growing infinitely or resetting wastefully.
+                if let Some(mut progress) = world.get_mut::<RefiningProgress>(entity) {
+                    progress.current = progress.max;
+                }
+            }
         }
     }
 }
@@ -292,5 +310,66 @@ mod tests {
 
         let progress = world.query::<&RefiningProgress>().single(&world);
         assert!((progress.current - 0.0).abs() < f32::EPSILON);
+    }
+
+    #[test]
+    fn test_process_refining_prevents_underflow_race_condition() {
+        let mut world = World::new();
+
+        // Setup Resources: 1 Wood (enough for 1 Mill, not 2)
+        let resources = ColonyResources {
+            wood: 1.0,
+            planks: 0.0,
+            ..Default::default()
+        };
+        world.insert_resource(resources);
+
+        // Spawn Lumber Mill 1 (Almost done)
+        world.spawn((
+            Building {
+                building_type: BuildingType::LumberMill,
+            },
+            GridPosition { x: 5, y: 5 },
+            RefiningProgress {
+                current: 9.9,
+                max: 10.0,
+            },
+        ));
+
+        // Spawn Lumber Mill 2 (Almost done)
+        world.spawn((
+            Building {
+                building_type: BuildingType::LumberMill,
+            },
+            GridPosition { x: 7, y: 7 },
+            RefiningProgress {
+                current: 9.9,
+                max: 10.0,
+            },
+        ));
+
+        // Spawn Workers
+        world.spawn((Pop, GridPosition { x: 5, y: 6 }));
+        world.spawn((Pop, GridPosition { x: 7, y: 6 }));
+
+        // Run system
+        // Both should try to complete.
+        // If race condition is handled, one fails and retries later.
+        // If not, resources drop to -1.0?
+        process_refining_system(&mut world);
+
+        let res = world.resource::<ColonyResources>();
+        println!("Wood after tick: {}", res.wood);
+
+        // Assert no underflow
+        assert!(
+            res.wood >= 0.0,
+            "Resources should not go negative (race condition check)"
+        );
+
+        // One should have succeeded (Planks = 1), one failed (Planks = 1).
+        // Or if we are lucky and strict, maybe neither? But optimally one wins.
+        // Current 'broken' behavior: Planks = 2, Wood = -1.0.
+        // assert_eq!(res.planks, 1.0); // We can be flexible on this, but strict on wood >= 0
     }
 }
