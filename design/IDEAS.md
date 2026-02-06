@@ -787,6 +787,9 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** A shortage of fiber means pops go to work in rags, increasing stress and injury risk. A masterwork pickaxe is passed down through generations.
 
 **Tension:** Spend metal on new tools (efficiency) or building materials (expansion)?
+
+---
+
 ## Pop Relationships
 
 **Layer:** 1
@@ -801,7 +804,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Tavern
+## The Tavern [SPECCED]
 
 **Layer:** 1
 
@@ -913,10 +916,151 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
+## The Great Filter
+
+**Layer:** 3
+
+**Fantasy:** The galaxy is empty for a terrifying reason. You are walking into a trap set for advanced civilizations.
+
+**Mechanic:** As your Tech Level increases, a hidden "Doom" counter rises. Random disasters (plagues, gamma bursts) become more frequent and severe. Discovering "Dead Civilizations" gives clues on how to avoid their fate.
+
+**Emergence:** You rush tech to get shields, but the high tech itself attracts the "Scourge". A primitive colony might survive longer than an advanced one.
+
+**Tension:** Rapid progress (power) vs. Low profile (safety).
+
+---
+
+## Generational Knowledge
+
+**Layer:** 1
+
+**Fantasy:** The son of the master smith grows up in the forge. Skills are passed down, creating lineages of experts.
+
+**Mechanic:** Children born to parents with high skills (e.g., Mining > 50) start with a "Potential" bonus or partial XP in that skill. Families naturally specialize.
+
+**Emergence:** A "Mining Caste" forms. You try to force a miner's son to be a scientist, but he's terrible at it and unhappy.
+
+**Tension:** Meritocracy (best current stats) vs. Nepotism (investing in lineages).
+
+---
+
+## Diplomatic Marriage
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Space feudalism. Securing peace by sending your best and brightest away forever.
+
+**Mechanic:** You can "Marry Off" a high-status or high-skill Pop to a foreign Layer 3 faction leader to secure an Alliance or Trade Deal. The Pop is removed from Layer 1.
+
+**Emergence:** You have to send your only Level 10 Doctor to the Warlord of sector 7 to stop an invasion. The hospital collapses without them.
+
+**Tension:** Sacrifice a key individual for the good of the state?
+
+---
+
+## Orbital Synch
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The movement of the heavens dictates your industry. You are a clockwork gear in a solar system.
+
+**Mechanic:** Certain advanced buildings (Solar Arrays, Tidal Generators, Telescopes) only function when the planet is in a specific orbital arc or facing a specific body.
+
+**Emergence:** Production happens in "Bursts". You scramble to run the smelters during the 3-day "Solar Window" and then hibernate for the long dark.
+
+**Tension:** Steady, inefficient power (Fuel) vs. Burst, efficient power (Orbital).
+
+---
+
+## Terraforming Backlash
+
+**Layer:** 2
+
+**Fantasy:** The planet has an immune system, and you are the virus.
+
+**Mechanic:** Aggressive terraforming (atmosphere injection, rapid heating) triggers "Planetary Defense" events: Super-storms, seismic destabilization, or awakening dormant mega-fauna.
+
+**Emergence:** You try to melt the ice caps to get water, and the release of ancient bacteria kills half your population.
+
+**Tension:** Fast, violent adaptation (Terraforming) vs. Slow, biological adaptation (Genetics).
+## Planetary Weather Fronts
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Seeing a massive storm spiral on the planetary map and knowing it will hit your colony in three days.
+
+**Mechanic:** Weather systems (Storms, Droughts, Heatwaves) are entities on the Layer 2 planet surface that move over time. When over the colony site, they apply map-wide effects (Wind damage, crop failure, movement penalties).
+
+**Emergence:** You see the "Great Dust Storm" coming. You rush to harvest early (low yield) and move everyone indoors. The storm lasts for a week, testing your food stores.
+
+**Tension:** Do you settle in the equatorial storm belt for the solar power, or the calm but frozen poles?
+
+---
+
+## Trade Contracts
+
+**Layer:** 3 -> 1
+
+**Fantasy:** You are a cog in the galactic machine. The Empire demands production.
+
+**Mechanic:** External factions offer time-limited contracts (e.g., "Export 1000 Metal Blocks in 2 cycles"). Success grants rare tech/currency. Failure incurs "Debt" and hostility.
+
+**Emergence:** To meet the Emperor's quota, you enforce "Crunch Time" (double shifts), causing a worker revolt just as the trade ship arrives.
+
+**Tension:** Accept the lucrative contract that risks burning out your workforce, or play it safe and stay poor?
+
+---
+
+## The Schism
+
+**Layer:** 1
+
+**Fantasy:** A colony divided cannot stand. The tragic realization that your neighbors are now your enemies.
+
+**Mechanic:** If a Faction's happiness drops too low, they don't just protest—they secede. They claim a cluster of buildings (Housing + Workplaces) as their territory. They lock doors to outsiders and hoard resources.
+
+**Emergence:** The "Miners' Union" seizes the power plant. The "Scientists" seize the hydroponics. You have to negotiate a resource swap between two halves of your own base to prevent everyone from dying.
+
+**Tension:** Use force to retake the buildings (combat/damage) or negotiate (concessions)?
+
+---
+
+## Heirloom Seeds
+
+**Layer:** 1
+
+**Fantasy:** The plants you brought from Earth are the last of their kind.
+
+**Mechanic:** You start with a limited stock of "Earth Seeds" (Wheat, Potatoes). Harvest yields food + chance of seeds. Crop disease or fire can destroy the stock. Native crops are edible but have side effects.
+
+**Emergence:** A fire in the silo destroys your last wheat seeds. No one will ever eat bread again. The colony shifts to a diet of native "Grub-Root", changing the culture.
+
+**Tension:** Plant all your seeds for max harvest (risk of total loss) or keep a "Doomsday Vault" reserve?
+
+---
+
+## Comms Relay
+
+**Layer:** 2
+
+**Fantasy:** Tuning into the static of the void and finding a signal.
+
+**Mechanic:** The System Map (Layer 2) is covered in "Signal Noise" (Fog of War). Building and powering Comms Relays clears the noise radius, revealing approaching ships, comets, or distress signals.
+
+**Emergence:** You neglect your comms to save power. A pirate fleet arrives in orbit without warning, instantly beginning bombardment. You never saw them coming.
+
+**Tension:** Power the radar (energy cost) or trust your luck?
 ## Orbital Synch
 
 **Layer:** 2
 
+**Fantasy:** The planets align. Space travel is about timing, not just fuel.
+
+**Mechanic:** Transfer windows open based on orbital periods. Launching "off-window" costs massive fuel/time. Synch points allow cheap travel.
+
+**Emergence:** You delay a relief fleet for 2 years because waiting for the window is faster than launching now. A siege breaks because the attacker's supply window closes.
+
+**Tension:** Fast/Expensive deployment vs Slow/Cheap deployment.
 **Fantasy:** The planets align. Space travel isn't just about distance, it's about timing.
 
 **Mechanic:** Transfer windows open based on orbital periods of planets. Fuel cost varies wildly by date. Launching "out of window" costs 10x fuel.
@@ -931,6 +1075,13 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Layer:** 3
 
+**Fantasy:** The galaxy is a graveyard. You are walking through the valley of the shadow of death.
+
+**Mechanic:** As tech advances, "Filter Events" trigger (AI Awakening, Biological Grey Goo, Dimensional Breach). These are not standard enemies but existential puzzles. Failure = Civ Wipe.
+
+**Emergence:** You find a dead civilization and realize they died trying to solve the exact energy crisis you are currently researching.
+
+**Tension:** Advance tech (power) vs Safety (avoiding the filter).
 **Fantasy:** The answer to the Fermi Paradox. The galaxy is a graveyard.
 
 **Mechanic:** As a civilization advances, it triggers "Filter Events" (AI Uprising, Grey Goo, Mass Ascendancy). Surviving grants transcendent tech/traits. Failing wipes the civilization, leaving ruins for others.
@@ -945,6 +1096,13 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Layer:** 3
 
+**Fantasy:** Home is where the engine is. Not all empires paint the map.
+
+**Mechanic:** Civs that reside entirely on massive ships. They enter a system, strip-mine it, and move on. They don't hold territory but have massive fleets.
+
+**Emergence:** A "Locust Fleet" enters your sector. You can trade your planet's resources for their ancient tech, or fight them to save your rocks.
+
+**Tension:** Allow them to strip-mine a border world (peace/profit) or defend it (war)?
 **Fantasy:** Not everyone settles down. The Quarians, the Void-born.
 
 **Mechanic:** Civilizations that don't hold planets. They live on massive Ark Ships, strip-mine systems for resources, and move on. They have high tech but low sustainability.
@@ -959,6 +1117,13 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Layer:** 1
 
+**Fantasy:** Re-education through labor. Dealing with the "bad apples."
+
+**Mechanic:** Designate "Prison Zones". Arrested pops (Criminal/Rebellious) are moved there. They have no "Leisure" or "Luxury" needs but high "Security" requirement. They produce resources but no tech/art.
+
+**Emergence:** You run your dangerous mines entirely with political prisoners. A prison riot collapses the economy because 50% of your workforce stops working.
+
+**Tension:** Rehabilitate (expensive/slow) vs Exploit (profitable/risky).
 **Fantasy:** Re-education through labor. The dark side of order.
 
 **Mechanic:** Arrested pops (due to crime or low mood) can be assigned to "Penal Zones". They work at high efficiency with no happiness needs but have a high "Revolt Risk" and reduced lifespan.
