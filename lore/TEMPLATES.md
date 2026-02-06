@@ -373,6 +373,46 @@ These fire during gameplay and get appended to the chronicle.
 "The talk is of [TOPIC]. Truth or fear? [YEAR]."
 ```
 
+### SEASON_START
+
+**Slots:** `[COLONY]`, `[YEAR]`, `[SEASON_NAME]`, `[SEASON_ADJECTIVE]`
+
+```
+"[SEASON_NAME] comes to [COLONY]. [YEAR]. The air is [SEASON_ADJECTIVE]."
+"Year [YEAR]. The turning of the wheel. It is [SEASON_NAME], [SEASON_ADJECTIVE] and real."
+"The [SEASON_NAME] begins. [SEASON_ADJECTIVE] days ahead."
+```
+
+### FIRST_SMELT
+
+**Slots:** `[COLONY]`, `[YEAR]`, `[METAL_NAME]`, `[REFINERY_NAME]`
+
+```
+"The [REFINERY_NAME] roars to life. [YEAR]. First [METAL_NAME] poured."
+"[YEAR]: Industry rises at [COLONY]. We make [METAL_NAME] now."
+"The fires are lit. [METAL_NAME] flows from the [REFINERY_NAME]. [YEAR]."
+```
+
+### TAVERN_OPENED
+
+**Slots:** `[COLONY]`, `[YEAR]`, `[TAVERN_NAME]`
+
+```
+"[TAVERN_NAME] opens its doors. [YEAR]. A place to forget."
+"Year [YEAR]. [COLONY] has a heart now. We call it [TAVERN_NAME]."
+"First drinks served at [TAVERN_NAME]. The silence is broken by song. [YEAR]."
+```
+
+### SOCIAL_GATHERING
+
+**Slots:** `[COLONY]`, `[YEAR]`, `[TAVERN_NAME]`, `[SOCIAL_ACTION]`, `[DRINK_NAME]`
+
+```
+"Crowd at [TAVERN_NAME]. [YEAR]. Someone [SOCIAL_ACTION] over [DRINK_NAME]."
+"Night at [COLONY]. The [TAVERN_NAME] is full. They [SOCIAL_ACTION]."
+"[YEAR]: [DRINK_NAME] flows. The colony [SOCIAL_ACTION] together."
+```
+
 ---
 
 ## Chronicle Entry Structure

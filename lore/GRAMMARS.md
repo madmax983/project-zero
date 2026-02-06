@@ -175,6 +175,31 @@ RESOURCE_SHORTAGE:
   increases:
     - BLACK_MARKET (high)
     - HOARDING (high)
+
+SEASON_START:
+  enables:
+    - FAMINE (high, if Winter)
+    - BUMPER_CROP (high, if Autumn)
+    - MIGRATION (low, if Spring)
+  increases:
+    - CONSUMPTION (high, if Winter)
+    - MOOD (high, if Spring)
+
+TAVERN_OPENED:
+  enables:
+    - SOCIAL_GATHERING (high)
+    - RUMOR_SPREAD (high)
+    - BRAWL (medium)
+  increases:
+    - HAPPINESS (high)
+    - PRODUCTIVITY (low, hangover risk)
+
+SOCIAL_GATHERING:
+  enables:
+    - RUMOR_SPREAD (very high)
+    - LEGEND_BIRTH (low, stories told)
+  increases:
+    - COHESION (high)
 ```
 
 ### Chronicle Depth Rules
