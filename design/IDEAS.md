@@ -983,5 +983,58 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** You neglect your comms to save power. A pirate fleet arrives in orbit without warning, instantly beginning bombardment. You never saw them coming.
 
 **Tension:** Power the radar (energy cost) or trust your luck?
+## Orbital Synch
+
+**Layer:** 2
+
+**Fantasy:** The planets align. Space travel isn't just about distance, it's about timing.
+
+**Mechanic:** Transfer windows open based on orbital periods of planets. Fuel cost varies wildly by date. Launching "out of window" costs 10x fuel.
+
+**Emergence:** A colony is starving, but the transfer window is closed. You launch a rescue ship anyway, burning your entire fuel reserve to save them, leaving the fleet stranded.
+
+**Tension:** Launch now (expensive/fast) or wait for the window (cheap/slow)?
+
+---
+
+## The Great Filter
+
+**Layer:** 3
+
+**Fantasy:** The answer to the Fermi Paradox. The galaxy is a graveyard.
+
+**Mechanic:** As a civilization advances, it triggers "Filter Events" (AI Uprising, Grey Goo, Mass Ascendancy). Surviving grants transcendent tech/traits. Failing wipes the civilization, leaving ruins for others.
+
+**Emergence:** You find a dead neighbor and realize they died trying to solve the exact energy crisis you are currently facing.
+
+**Tension:** Advance tech rapidly (risk the Filter) or stay primitive (safe but weak)?
+
+---
+
+## Nomadic Fleets
+
+**Layer:** 3
+
+**Fantasy:** Not everyone settles down. The Quarians, the Void-born.
+
+**Mechanic:** Civilizations that don't hold planets. They live on massive Ark Ships, strip-mine systems for resources, and move on. They have high tech but low sustainability.
+
+**Emergence:** A massive fleet enters your system. They don't want to conquer you; they just want to eat your asteroid belt and leave. Do you let them?
+
+**Tension:** Trade with them (rare tech/goods) or fear them (they leave ruin behind)?
+
+---
+
+## Prison Labor
+
+**Layer:** 1
+
+**Fantasy:** Re-education through labor. The dark side of order.
+
+**Mechanic:** Arrested pops (due to crime or low mood) can be assigned to "Penal Zones". They work at high efficiency with no happiness needs but have a high "Revolt Risk" and reduced lifespan.
+
+**Emergence:** You build your economy on the backs of prisoners. When they revolt, they are the ones holding the pickaxes inside your base.
+
+**Tension:** Rehabilitation (slow, expensive) vs. Exploitation (fast, dangerous).
 
 ---
