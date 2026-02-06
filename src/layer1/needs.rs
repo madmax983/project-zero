@@ -1,4 +1,3 @@
-use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
 
 /// Pop survival needs.
@@ -52,23 +51,6 @@ pub fn decay_needs_system(mut query: Query<&mut Needs>) {
         needs.rest = (needs.rest - REST_DECAY_PER_TICK).max(0.0);
         needs.leisure = (needs.leisure - LEISURE_DECAY_PER_TICK).max(0.0);
     });
-}
-
-/// Despawns entities whose hunger has reached zero.
-pub fn kill_starving_entities_system(
-    query: Query<(Entity, &Needs)>,
-    mut commands: Commands,
-    log: Option<ResMut<MessageLog>>,
-) {
-    let mut log = log;
-    for (entity, needs) in &query {
-        if needs.hunger <= 0.0 {
-            commands.entity(entity).despawn();
-            if let Some(ref mut log) = log {
-                log.add("DEATH: A colonist has starved to death!");
-            }
-        }
-    }
 }
 
 #[cfg(test)]
@@ -159,77 +141,5 @@ mod tests {
         let needs = world.query::<&Needs>().single(&world);
         assert!(needs.hunger < 0.71, "Hunger should decay significantly");
         assert!(needs.rest < 0.71, "Rest should decay");
-    }
-
-    #[test]
-    fn test_kill_starving_entities_system() {
-        let mut world = World::new();
-
-        world.spawn((
-            Pop,
-            Needs {
-                hunger: 0.5,
-                rest: 0.5,
-                leisure: 0.5,
-            },
-        ));
-
-        world.spawn((
-            Pop,
-            Needs {
-                hunger: 0.0,
-                rest: 0.5,
-                leisure: 0.5,
-            },
-        ));
-
-        world
-            .run_system_once(kill_starving_entities_system)
-            .unwrap();
-
-        let count = world.query::<&Pop>().iter(&world).count();
-        assert_eq!(count, 1, "Only healthy pop should survive");
-    }
-
-    #[test]
-    fn test_kill_only_when_hunger_zero() {
-        let mut world = World::new();
-
-        world.spawn((
-            Pop,
-            Needs {
-                hunger: 0.01,
-                rest: 0.0,
-                leisure: 0.0,
-            },
-        ));
-
-        world
-            .run_system_once(kill_starving_entities_system)
-            .unwrap();
-
-        let count = world.query::<&Pop>().iter(&world).count();
-        assert_eq!(count, 1, "Pop with 0.01 hunger should survive");
-    }
-
-    #[test]
-    fn test_starve_from_full() {
-        let mut world = setup();
-        world.spawn((Pop, Needs::default()));
-
-        let mut ticks = 0;
-        while world.query::<&Pop>().iter(&world).count() > 0 && ticks < 2000 {
-            world.run_system_once(decay_needs_system).unwrap();
-            world
-                .run_system_once(kill_starving_entities_system)
-                .unwrap();
-            ticks += 1;
-        }
-
-        assert!(
-            ticks < 850,
-            "Pop should die within ~800 ticks from full (0.8)"
-        );
-        assert!(ticks > 750, "Pop should survive at least 750 ticks");
     }
 }

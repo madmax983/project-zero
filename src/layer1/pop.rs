@@ -22,6 +22,7 @@
 //! * `PopAction`: Current task state.
 //! * `UtilityWeights`: Personality/learning factors.
 
+use super::health::Health;
 use super::map::GridPosition;
 use super::needs::Needs;
 use super::terrain::{TerrainGrid, TerrainType};
@@ -103,6 +104,7 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
             world.spawn((
                 Pop,
                 GridPosition { x, y },
+                Health::default(),
                 Needs::default(),
                 PopAction::default(),
                 UtilityWeights::default(),

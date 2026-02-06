@@ -14,9 +14,9 @@ use crate::gpu::evaluate::gpu_evaluate_actions;
 use crate::layer1::{
     advance_season_system, arrival_handler_system, check_milestones_system,
     clean_dead_residents_system, clean_dead_workers_system, cleanup_previous_assignment_system,
-    consume_food_system, decay_needs_system, haul_system, kill_starving_entities_system,
-    movement_system, process_refining_system, process_research_system,
-    process_start_plan_system, produce_food_system, restore_leisure_system,
+    consume_food_system, death_system, decay_needs_system, haul_system, movement_system,
+    process_refining_system, process_research_system, process_start_plan_system,
+    produce_food_system, restore_leisure_system, starvation_damage_system,
     restore_rest_in_housing_system, track_plan_outcomes_system, update_action_timer_system,
     update_resource_caps_system, work_execution_system,
 };
@@ -77,17 +77,18 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(produce_food_system)
             .after(update_resource_caps_system),
         decay_needs_system.after(consume_food_system),
-        kill_starving_entities_system.after(decay_needs_system),
-        clean_dead_residents_system.after(kill_starving_entities_system),
-        clean_dead_workers_system.after(kill_starving_entities_system),
+        starvation_damage_system.after(decay_needs_system),
+        death_system.after(starvation_damage_system),
+        clean_dead_residents_system.after(death_system),
+        clean_dead_workers_system.after(death_system),
     ));
 
     // --- Observation (after consumption, can run in parallel) ---
     schedule.add_systems((
-        track_plan_outcomes_system.after(kill_starving_entities_system),
-        biography_monitor_system.after(kill_starving_entities_system),
-        dream_system.after(kill_starving_entities_system),
-        check_milestones_system.after(kill_starving_entities_system),
+        track_plan_outcomes_system.after(death_system),
+        biography_monitor_system.after(death_system),
+        dream_system.after(death_system),
+        check_milestones_system.after(death_system),
     ));
 
     schedule

@@ -1,6 +1,6 @@
 use crate::layer1::{
-    GridPosition, TerrainGrid, Viewport, building::Building, needs::Needs, pop::Pop,
-    thoughts::Thought,
+    GridPosition, TerrainGrid, Viewport, building::Building, health::Health, needs::Needs,
+    pop::Pop, thoughts::Thought,
 };
 use bevy_ecs::prelude::*;
 use std::fmt::Write;
@@ -102,6 +102,10 @@ pub fn inspect_entity(world: &World, entity: Entity) -> String {
     // Try to get Position
     if let Some(pos) = world.get::<GridPosition>(entity) {
         let mut info = format!("{entity_type}\nPosition: ({}, {})\n\n", pos.x, pos.y);
+
+        if let Some(health) = world.get::<Health>(entity) {
+            let _ = writeln!(info, "Health: {:.0}%", health.current);
+        }
 
         if let Some(needs) = world.get::<Needs>(entity) {
             let _ = write!(
