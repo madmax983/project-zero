@@ -19,3 +19,5 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `014` Rendering Architecture and Z-Order — `specs/014-rendering-architecture.md`
 
 ## MVP — User Interface
+
+- [ ] `036` Tech Tree UI — `specs/036-tech-tree-ui.md`
