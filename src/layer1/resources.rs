@@ -353,7 +353,8 @@ impl RefiningProgress {
 /// // 3. Work until done
 /// mine_rock(&mut world, designation, 10.0);
 ///
-/// // 4. Verify a ResourceItem was spawned
+/// // 4. Verify Result
+/// // The resource is spawned as an item on the ground, not added directly to stocks.
 /// let items: Vec<_> = world.query::<&ResourceItem>().iter(&world).collect();
 /// assert!(!items.is_empty());
 /// assert_eq!(items[0].resource_type, ResourceType::Stone);
