@@ -232,6 +232,7 @@ mod tests {
             Needs {
                 hunger: 0.5,
                 rest: 0.8,
+                ..Default::default()
             },
         ));
 
@@ -256,6 +257,7 @@ mod tests {
                 Needs {
                     hunger: 0.5,
                     rest: 0.8,
+                    ..Default::default()
                 },
             ))
             .id();
@@ -279,6 +281,7 @@ mod tests {
             Needs {
                 hunger: 0.9,
                 rest: 0.8,
+                ..Default::default()
             },
         ));
 
@@ -305,6 +308,7 @@ mod tests {
             Needs {
                 hunger: 0.5,
                 rest: 0.8,
+                ..Default::default()
             },
         ));
         world.spawn((
@@ -312,6 +316,7 @@ mod tests {
             Needs {
                 hunger: 0.4,
                 rest: 0.8,
+                ..Default::default()
             },
         ));
 

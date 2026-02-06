@@ -24,3 +24,4 @@ Implemented features. Architect: read this to understand current state.
 - [x] `026` Main Menu — `specs/026-main-menu.md` — completed 2026-02-02
 - [x] `023` Refining Industry — `specs/023-refining-industry.md` — completed 2026-02-05
 - [x] `027` Seasonal Rhythms — `specs/027-seasonal-rhythms.md` — completed 2026-02-06
+- [x] `028` Social Need and Tavern — `specs/028-social-tavern.md` — completed 2026-02-07

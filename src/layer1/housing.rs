@@ -194,6 +194,7 @@ mod tests {
                 Needs {
                     hunger: 0.5,
                     rest: 0.3,
+                    ..Default::default()
                 },
             ))
             .id();
@@ -220,6 +221,7 @@ mod tests {
                 Needs {
                     hunger: 0.5,
                     rest: 0.99,
+                    ..Default::default()
                 },
             ))
             .id();
@@ -244,6 +246,7 @@ mod tests {
                 Needs {
                     hunger: 0.5,
                     rest: 0.4,
+                    ..Default::default()
                 },
             ))
             .id();
@@ -253,6 +256,7 @@ mod tests {
                 Needs {
                     hunger: 0.5,
                     rest: 0.3,
+                    ..Default::default()
                 },
             ))
             .id();
