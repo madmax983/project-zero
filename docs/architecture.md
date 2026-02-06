@@ -137,8 +137,37 @@ sequenceDiagram
     end
 ```
 
+## Platform Abstraction
+
+SCALE supports both native (terminal) and web (browser) execution through a platform abstraction layer.
+
+```mermaid
+C4Component
+title Component Diagram - Platform Abstraction
+
+Container_Boundary(EntryPoints, "Entry Points") {
+    Component(Main, "Native Binary", "src/main.rs", "Uses Crossterm Backend")
+    Component(Wasm, "WASM Binary", "src/bin/wasm_app.rs", "Uses Ratzilla DOM Backend")
+}
+
+Container_Boundary(Platform, "Platform Abstraction") {
+    Component(Events, "Event Types", "src/platform/mod.rs", "GameKeyEvent, GameMouseEvent")
+    Component(NativeImpl, "Native Impl", "src/platform/native.rs", "From<CrosstermEvent>")
+    Component(WasmImpl, "WASM Impl", "src/platform/wasm.rs", "From<WebEvent>")
+}
+
+Container(Shared, "Shared Core", "src/lib.rs", "Game Loop, Simulation, Rendering")
+
+Rel(Main, NativeImpl, "Uses")
+Rel(Wasm, WasmImpl, "Uses")
+Rel(Main, Shared, "Runs")
+Rel(Wasm, Shared, "Runs")
+Rel(Shared, Events, "Consumes")
+```
+
 ## Related Decisions
 
+- [ADR 006: WASM Browser Support](./adr/006-wasm-browser-support.md)
 - [ADR 001: Layered Architecture](./adr/001-layered-architecture.md)
 - [ADR 002: ECS-TUI Hybrid](./adr/002-ecs-tui-hybrid.md)
 - [ADR 003: YAGNI - Excision of Layers 2 and 3](./adr/003-yagni-excision-of-layers-2-and-3.md)
