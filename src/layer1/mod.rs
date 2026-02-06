@@ -24,6 +24,8 @@ pub mod map;
 #[cfg(test)]
 /// Tests for metal industry (Spec 024).
 pub mod metal_industry_tests;
+/// Pop health and damage.
+pub mod health;
 /// Pop needs (hunger, rest).
 pub mod needs;
 /// Pop entity and management.
@@ -61,6 +63,7 @@ pub use execution::*;
 pub use farm::*;
 pub use hauling::*;
 pub use housing::*;
+pub use health::*;
 pub use locations::*;
 pub use map::*;
 pub use needs::*;
