@@ -8,6 +8,8 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 - [ ] `030` Tool Economy — `specs/030-tool-economy.md`
 - [ ] `031` Pop Morale — `specs/031-pop-morale.md`
+- [ ] `032` Entropy and Spoilage — `specs/032-entropy-spoilage.md`
+- [ ] `033` Fire Propagation — `specs/033-fire-propagation.md`
 
 ## MVP — Architecture Refactoring
 

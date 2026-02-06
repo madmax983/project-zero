@@ -510,7 +510,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Entropy & Spoilage
+## Entropy & Spoilage [SPECCED]
 
 **Layer:** 1
 
@@ -748,7 +748,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Dynamic Fire
+## Dynamic Fire [SPECCED]
 
 **Layer:** 1
 
@@ -846,7 +846,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Fire Propagation
+## Fire Propagation [SPECCED]
 
 **Layer:** 1
 
