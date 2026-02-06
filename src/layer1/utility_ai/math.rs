@@ -1,5 +1,5 @@
+use super::types::{ActionType, UtilityWeights};
 use crate::layer1::map::GridPosition;
-use super::types::{UtilityWeights, ActionType};
 
 /// Calculates urgency from a need value (0.0-1.0).
 /// Lower need value = higher urgency.

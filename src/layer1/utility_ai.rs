@@ -1,20 +1,21 @@
-/// Core types for Utility AI.
-pub mod types;
 /// Mathematical functions for utility scoring.
 pub mod math;
+/// Core types for Utility AI.
+pub mod types;
 
-pub use types::*;
 pub use math::*;
+pub use types::*;
 
+use crate::layer1::designation::Designation;
 use crate::layer1::farm::Farm;
 use crate::layer1::housing::Housing;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
+use crate::layer1::resources::ColonyResources;
 use crate::layer1::social::{Tavern, evaluate_socialize};
+use crate::layer1::tech::Library;
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
-
-use crate::layer1::designation::Designation;
 
 /// Evaluates the utility of satisfying hunger at available farms.
 #[must_use]
@@ -113,6 +114,41 @@ pub fn evaluate_work<'a>(
     best
 }
 
+/// Evaluates the utility of researching.
+#[must_use]
+pub fn evaluate_research<'a>(
+    pop_pos: &GridPosition,
+    weights: &UtilityWeights,
+    resources: &ColonyResources,
+    libraries: impl Iterator<Item = (Entity, &'a GridPosition, &'a Library)>,
+) -> Option<(f32, Entity)> {
+    // If knowledge is full, no utility
+    if resources.knowledge >= resources.max_knowledge {
+        return None;
+    }
+
+    let mut best: Option<(f32, Entity)> = None;
+    let base_utility = 0.4;
+
+    for (entity, pos, _) in libraries {
+        let context = calculate_context_score(
+            *pop_pos,
+            Some(*pos),
+            5, // Assumed capacity
+            0, // Assumed occupied (not tracked yet)
+            weights,
+        );
+
+        let success = calculate_success_modifier(ActionType::Research, weights);
+        let utility = base_utility * context * success;
+
+        if best.is_none_or(|(best_u, _)| utility > best_u) {
+            best = Some((utility, entity));
+        }
+    }
+    best
+}
+
 /// Evaluates the utility of being idle.
 ///
 /// Idle is a low-priority fallback action. Pops should prefer productive
@@ -159,7 +195,10 @@ pub fn evaluate_actions_system(world: &mut World) {
     let mut farms_state = world.query::<(Entity, &GridPosition, &Farm)>();
     let mut housing_state = world.query::<(Entity, &GridPosition, &Housing)>();
     let mut taverns_state = world.query::<(Entity, &GridPosition, &Tavern)>();
+    let mut libraries_state = world.query::<(Entity, &GridPosition, &Library)>();
     let mut designations_state = world.query::<(Entity, &GridPosition, &Designation)>();
+
+    let resources = world.resource::<ColonyResources>().clone();
 
     // Evaluate each pop
     for (pop_entity, pop_pos, needs, weights, mut action) in pop_data {
@@ -191,6 +230,16 @@ pub fn evaluate_actions_system(world: &mut World) {
             evaluate_work(&pop_pos, &weights, designations_state.iter(world))
         {
             utilities.push((ActionType::Work, utility, Some(target)));
+        }
+
+        // Evaluate Research
+        if let Some((utility, target)) = evaluate_research(
+            &pop_pos,
+            &weights,
+            &resources,
+            libraries_state.iter(world),
+        ) {
+            utilities.push((ActionType::Research, utility, Some(target)));
         }
 
         // Evaluate Idle
@@ -301,9 +350,11 @@ pub fn track_plan_outcomes_system(world: &mut World) {
             ActionType::SatisfyHunger => (needs_after.hunger - outcome.needs_before.hunger) > 0.05,
             ActionType::SatisfyRest => (needs_after.rest - outcome.needs_before.rest) > 0.05,
             // For now, assume other actions are successful if completed
-            ActionType::Work | ActionType::Socialize | ActionType::Explore | ActionType::Idle => {
-                true
-            }
+            ActionType::Work
+            | ActionType::Socialize
+            | ActionType::Explore
+            | ActionType::Research
+            | ActionType::Idle => true,
         };
 
         // Update weights
@@ -515,6 +566,7 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(UtilityConfig::default());
         world.insert_resource(SimulationTime::default());
+        world.insert_resource(ColonyResources::default());
 
         // Starving pop currently idle
         let pop = world
@@ -564,6 +616,7 @@ mod tests {
             ..Default::default()
         });
         world.insert_resource(SimulationTime::default());
+        world.insert_resource(ColonyResources::default());
 
         let pop = world
             .spawn((
@@ -812,6 +865,7 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(UtilityConfig::default());
         world.insert_resource(SimulationTime::default());
+        world.insert_resource(ColonyResources::default());
 
         let pop = world
             .spawn((

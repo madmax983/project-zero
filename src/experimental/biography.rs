@@ -65,6 +65,7 @@ pub fn biography_monitor_system(world: &mut World) {
             AssignmentType::FarmWorker => format!("Started working at {target_name}."),
             AssignmentType::HousingResident => format!("Moved into {target_name}."),
             AssignmentType::TavernVisitor => format!("Visited {target_name} to socialize."),
+            AssignmentType::LibraryWorker => format!("Started research at {target_name}."),
         };
 
         // Avoid duplicate consecutive events

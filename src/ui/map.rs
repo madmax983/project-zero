@@ -307,6 +307,7 @@ pub const fn get_building_char(building: BuildingType) -> char {
         BuildingType::StoneMason => 'M',
         BuildingType::Smelter => 'S',
         BuildingType::Tavern => 'T',
+        BuildingType::Library => 'K',
     }
 }
 
@@ -320,6 +321,7 @@ pub const fn get_building_color(building: BuildingType) -> Color {
         BuildingType::StoneMason => Color::Rgb(119, 136, 153), // LightSlateGray
         BuildingType::Smelter => Color::Rgb(255, 69, 0),  // Red-Orange
         BuildingType::Tavern => Color::Magenta,
+        BuildingType::Library => Color::Cyan,
     }
 }
 
