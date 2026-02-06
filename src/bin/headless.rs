@@ -26,25 +26,19 @@
 
 use bevy_ecs::prelude::*;
 use scale::layer1::{
-    BuildMode, BuildingTracker, BuildingType, Chronicle, ChronicleUiState, ColonyMemory,
-    ColonyResources, Designation, DesignationMode, DesignationType, Farm, GridPosition, Housing,
+    BuildingType, ColonyResources, Designation, DesignationType, Farm, GridPosition, Housing,
     MovementTarget, Needs, OccupiedTiles, Pop, PopAction, Stockpile, TerrainGrid, TerrainType,
-    UtilityConfig, Viewport, arrival_handler_system, check_milestones_system,
-    clean_dead_residents_system, clean_dead_workers_system, cleanup_previous_assignment_system,
-    consume_food_system, decay_needs_system, evaluate_actions_system, generate_terrain,
-    initial_chronicle_event, kill_starving_entities_system, movement_system,
-    process_start_plan_system, produce_food_system, restore_rest_in_housing_system,
-    spawn_initial_pops, track_plan_outcomes_system, try_designate, try_place_building,
-    update_action_timer_system, update_resource_caps_system, work_execution_system,
+    try_designate, try_place_building,
 };
-use scale::shared::log::MessageLog;
-use scale::shared::selection::Selection;
+use scale::setup::setup_world;
 use scale::shared::state::GameState;
 use scale::shared::time::SimulationTime;
+use scale::simulation::run_simulation_tick;
 use std::io::{self, BufRead, Write};
 
 fn main() {
     let mut world = setup_world();
+    *world.resource_mut::<GameState>() = GameState::Running;
 
     println!("=== SCALE Headless Mode ===");
     println!("Type 'help' for commands, 'quit' to exit.\n");
@@ -167,53 +161,11 @@ fn main() {
     }
 }
 
-fn setup_world() -> World {
-    let mut world = World::new();
-    world.insert_resource(GameState::Running);
-    world.insert_resource(generate_terrain(80, 50));
-    world.insert_resource(Viewport::default());
-    world.insert_resource(SimulationTime::default());
-    world.insert_resource(BuildMode::default());
-    world.insert_resource(DesignationMode::default());
-    world.insert_resource(OccupiedTiles::default());
-    world.insert_resource(ColonyResources::default());
-    world.insert_resource(MessageLog::default());
-    world.insert_resource(Chronicle::default());
-    world.insert_resource(ChronicleUiState::default());
-    world.insert_resource(BuildingTracker::default());
-    world.insert_resource(Selection::default());
-    world.insert_resource(UtilityConfig::default());
-    world.insert_resource(ColonyMemory::default());
-
-    spawn_initial_pops(&mut world);
-    initial_chronicle_event(&mut world);
-
-    world
-}
-
 fn run_ticks(world: &mut World, n: u64) {
     let start_tick = world.resource::<SimulationTime>().tick;
 
     for _ in 0..n {
-        // Run all game systems
-        evaluate_actions_system(world);
-        update_action_timer_system(world);
-        cleanup_previous_assignment_system(world);
-        process_start_plan_system(world);
-        movement_system(world);
-        arrival_handler_system(world);
-        work_execution_system(world);
-        update_resource_caps_system(world);
-        produce_food_system(world);
-        restore_rest_in_housing_system(world);
-        consume_food_system(world);
-        decay_needs_system(world);
-        kill_starving_entities_system(world);
-        clean_dead_residents_system(world);
-        clean_dead_workers_system(world);
-        track_plan_outcomes_system(world);
-        check_milestones_system(world);
-        world.resource_mut::<SimulationTime>().tick += 1;
+        run_simulation_tick(world);
     }
 
     let end_tick = world.resource::<SimulationTime>().tick;

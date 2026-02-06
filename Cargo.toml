@@ -3,10 +3,17 @@ name = "scale"
 version = "0.1.0"
 edition = "2024"
 
+[features]
+default = ["native"]
+native = ["dep:crossterm", "ratatui/crossterm"]
+wasm = ["dep:ratzilla", "dep:getrandom"]
+
 [dependencies]
 bevy_ecs = "0.15"
-ratatui = "0.29"
-crossterm = "0.28"
+ratatui = "0.30"
+crossterm = { version = "0.28", optional = true }
+ratzilla = { version = "0.3", optional = true }
+getrandom = { version = "0.3", features = ["wasm_js"], optional = true }
 anyhow = "1.0"
 rand = "0.8"
 strum = { version = "0.26", features = ["derive"] }
@@ -25,6 +32,21 @@ nursery = { level = "warn", priority = -1 }
 # Allow some pedantic lints that are too noisy
 module_name_repetitions = "allow"
 similar_names = "allow"
+
+[[bin]]
+name = "scale"
+path = "src/main.rs"
+required-features = ["native"]
+
+[[bin]]
+name = "wasm_app"
+path = "src/bin/wasm_app.rs"
+required-features = ["wasm"]
+
+[[bin]]
+name = "headless"
+path = "src/bin/headless.rs"
+required-features = ["native"]
 
 [profile.dev]
 opt-level = 1

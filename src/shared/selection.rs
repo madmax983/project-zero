@@ -3,8 +3,9 @@ use crate::layer1::{
     thoughts::Thought,
 };
 use bevy_ecs::prelude::*;
-use crossterm::event::{KeyCode, KeyEvent, MouseEvent, MouseEventKind};
 use std::fmt::Write;
+
+use crate::platform::input::{GameKeyCode, GameKeyEvent, GameMouseEvent};
 
 /// What is currently selected by the player.
 #[derive(Clone, Copy, PartialEq, Eq, Debug, Default)]
@@ -130,60 +131,58 @@ pub const fn screen_to_world(screen_x: u16, screen_y: u16, viewport: &Viewport) 
 }
 
 /// Handle selection input in normal mode.
-pub fn handle_selection_input(world: &mut World, key: KeyEvent) {
-    if key.code == KeyCode::Esc {
+pub fn handle_selection_input(world: &mut World, key: GameKeyEvent) {
+    if key.code == GameKeyCode::Esc {
         // Clear selection
         world.resource_mut::<Selection>().clear();
     }
 }
 
 /// Handle mouse click for selection.
-pub fn handle_selection_click(world: &mut World, mouse: MouseEvent, viewport: &Viewport) {
-    if let MouseEventKind::Down(_button) = mouse.kind {
-        let (world_x, world_y) = screen_to_world(mouse.column, mouse.row, viewport);
+pub fn handle_selection_click(world: &mut World, mouse: GameMouseEvent, viewport: &Viewport) {
+    let (world_x, world_y) = screen_to_world(mouse.x, mouse.y, viewport);
 
-        // Find all entities at position
-        let mut candidates = Vec::new();
-        let mut query = world.query::<(Entity, &GridPosition)>();
-        for (entity, pos) in query.iter(world) {
-            if pos.x == world_x && pos.y == world_y {
-                candidates.push(entity);
-            }
+    // Find all entities at position
+    let mut candidates = Vec::new();
+    let mut query = world.query::<(Entity, &GridPosition)>();
+    for (entity, pos) in query.iter(world) {
+        if pos.x == world_x && pos.y == world_y {
+            candidates.push(entity);
         }
+    }
 
-        // Prioritize: Pop > Building > Any
-        let mut selected_entity = None;
+    // Prioritize: Pop > Building > Any
+    let mut selected_entity = None;
 
-        // Check for Pop
+    // Check for Pop
+    for &entity in &candidates {
+        if world.get::<Pop>(entity).is_some() {
+            selected_entity = Some(entity);
+            break;
+        }
+    }
+
+    // If no Pop, check for Building
+    if selected_entity.is_none() {
         for &entity in &candidates {
-            if world.get::<Pop>(entity).is_some() {
+            if world.get::<Building>(entity).is_some() {
                 selected_entity = Some(entity);
                 break;
             }
         }
+    }
 
-        // If no Pop, check for Building
-        if selected_entity.is_none() {
-            for &entity in &candidates {
-                if world.get::<Building>(entity).is_some() {
-                    selected_entity = Some(entity);
-                    break;
-                }
-            }
-        }
+    // Fallback to first candidate
+    if selected_entity.is_none() {
+        selected_entity = candidates.first().copied();
+    }
 
-        // Fallback to first candidate
-        if selected_entity.is_none() {
-            selected_entity = candidates.first().copied();
-        }
-
-        // Update selection
-        let mut selection = world.resource_mut::<Selection>();
-        if let Some(entity) = selected_entity {
-            selection.select_entity(entity);
-        } else {
-            selection.select_tile(world_x, world_y);
-        }
+    // Update selection
+    let mut selection = world.resource_mut::<Selection>();
+    if let Some(entity) = selected_entity {
+        selection.select_entity(entity);
+    } else {
+        selection.select_tile(world_x, world_y);
     }
 }
 

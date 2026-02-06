@@ -39,12 +39,12 @@ impl MenuState {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::platform::input::{GameKeyCode, GameKeyEvent};
     use crate::shared::input::{InputContext, InputContextStack, InputRouter};
     use crate::shared::state::GameState;
-    use crossterm::event::{KeyCode, KeyEvent, KeyModifiers};
 
-    fn key_event(code: KeyCode) -> KeyEvent {
-        KeyEvent::new(code, KeyModifiers::empty())
+    fn key_event(code: GameKeyCode) -> GameKeyEvent {
+        GameKeyEvent::new(code)
     }
 
     #[test]
@@ -113,7 +113,7 @@ mod tests {
         }); // "Start Game" selected
 
         let mut router = InputRouter::new();
-        router.route(&mut world, key_event(KeyCode::Enter));
+        router.route(&mut world, key_event(GameKeyCode::Enter));
 
         // Should transition to Running
         assert_eq!(*world.resource::<GameState>(), GameState::Running);
@@ -139,7 +139,7 @@ mod tests {
         }); // "Quit" selected
 
         let mut router = InputRouter::new();
-        router.route(&mut world, key_event(KeyCode::Enter));
+        router.route(&mut world, key_event(GameKeyCode::Enter));
 
         // Should transition to Quitting
         assert_eq!(*world.resource::<GameState>(), GameState::Quitting);

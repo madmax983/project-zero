@@ -1,50 +1,21 @@
-//! SCALE executable entry point.
-//!
-//! # Test Coverage Note
-//!
-//! This module achieves ~57% line coverage. The untested portions are primarily:
-//! - Terminal setup/teardown (requires actual terminal)
-//! - Main event loop (requires Terminal mock)
-//! - All rendering functions (ratatui widgets, hard to unit test)
-//!
-//! All testable business logic (input handling, state transitions) has >95% coverage.
-//! Combined with 100% coverage in `shared/time`, overall project coverage is ~76%.
+//! SCALE native terminal entry point.
 
-use bevy_ecs::prelude::*;
 use crossterm::{
     event::{self, DisableMouseCapture, EnableMouseCapture, Event},
     execute,
     terminal::{EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode, enable_raw_mode},
 };
 use ratatui::prelude::*;
-use scale::shared::log::MessageLog;
-use std::io;
-use std::time::{Duration, Instant};
-
-use scale::layer1::{
-    BuildMode, BuildingTracker, Chronicle, ChronicleUiState, ColonyMemory, ColonyResources,
-    DesignationMode, OccupiedTiles, SeasonState, UtilityConfig, Viewport, advance_season_system,
-    arrival_handler_system, check_milestones_system, clean_dead_residents_system,
-    clean_dead_workers_system, cleanup_previous_assignment_system, consume_food_system,
-    decay_needs_system, evaluate_actions_system, generate_terrain, initial_chronicle_event,
-    kill_starving_entities_system, movement_system, process_refining_system,
-    process_start_plan_system, produce_food_system, restore_leisure_system,
-    restore_rest_in_housing_system, spawn_initial_pops, track_plan_outcomes_system,
-    update_action_timer_system, update_resource_caps_system, work_execution_system,
-};
-use scale::shared::input::{InputContextStack, InputRouter};
-use scale::shared::menu::MenuState;
-use scale::shared::selection::Selection;
+use scale::platform::input::{GameKeyEvent, GameMouseEvent};
+use scale::setup::setup_world;
+use scale::shared::input::InputRouter;
 use scale::shared::state::GameState;
 use scale::shared::time::{SimSpeed, SimulationTime};
-
-use scale::experimental::biography::biography_monitor_system;
-
-use scale::ui::chronicle::render_chronicle;
-use scale::ui::map::{RenderCache, render_map, update_render_cache};
-use scale::ui::menu::render_main_menu;
-use scale::ui::panels::render_info_panel;
-use scale::ui::status::render_status_bar;
+use scale::simulation::run_simulation_tick;
+use scale::ui::map::update_render_cache;
+use scale::ui::render;
+use std::io;
+use std::time::{Duration, Instant};
 
 fn main() -> anyhow::Result<()> {
     // Terminal setup
@@ -70,34 +41,8 @@ fn main() -> anyhow::Result<()> {
 }
 
 fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Result<()> {
-    // ECS setup
-    let mut world = World::new();
-    world.insert_resource(GameState::default());
-    world.insert_resource(MenuState::default());
-    world.insert_resource(generate_terrain(80, 50));
-    world.insert_resource(Viewport::default());
-    world.insert_resource(SimulationTime::default());
-    world.insert_resource(BuildMode::default());
-    world.insert_resource(DesignationMode::default());
-    world.insert_resource(OccupiedTiles::default());
-    world.insert_resource(ColonyResources::default());
-    world.insert_resource(InputContextStack::default());
-    world.insert_resource(MessageLog::default());
-    world.insert_resource(Chronicle::default());
-    world.insert_resource(ChronicleUiState::default());
-    world.insert_resource(BuildingTracker::default());
-    world.insert_resource(Selection::default());
-    world.insert_resource(RenderCache::default());
-    world.insert_resource(UtilityConfig::default());
-    world.insert_resource(ColonyMemory::default());
-    world.insert_resource(SeasonState::default());
-
-    spawn_initial_pops(&mut world);
-    initial_chronicle_event(&mut world);
-
-    let mut schedule = Schedule::default();
+    let mut world = setup_world();
     let mut input_router = InputRouter::new();
-    // Systems will be added here by other specs
 
     // Main loop
     let tick_rate = Duration::from_millis(100); // 10 FPS base
@@ -110,8 +55,16 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
         #[allow(clippy::collapsible_if)]
         if event::poll(Duration::from_millis(10))? {
             match event::read()? {
-                Event::Key(key) => input_router.route(&mut world, key),
-                Event::Mouse(mouse) => input_router.route_mouse(&mut world, mouse),
+                Event::Key(key) => {
+                    if let Ok(game_key) = GameKeyEvent::try_from(key) {
+                        input_router.route(&mut world, game_key);
+                    }
+                }
+                Event::Mouse(mouse) => {
+                    if let Ok(game_mouse) = GameMouseEvent::try_from(mouse) {
+                        input_router.route_mouse(&mut world, game_mouse);
+                    }
+                }
                 _ => {}
             }
         }
@@ -123,39 +76,10 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
 
         // Simulation tick
         if last_tick.elapsed() >= tick_rate {
-            schedule.run(&mut world);
-
-            // Update tick count
             if *world.resource::<GameState>() == GameState::Running {
                 let speed = world.resource::<SimulationTime>().speed;
                 if speed != SimSpeed::Paused {
-                    evaluate_actions_system(&mut world);
-                    update_action_timer_system(&mut world);
-
-                    // Execution layer: bridge AI decisions to actual actions
-                    cleanup_previous_assignment_system(&mut world);
-                    process_start_plan_system(&mut world);
-                    movement_system(&mut world);
-                    arrival_handler_system(&mut world);
-                    work_execution_system(&mut world);
-
-                    update_resource_caps_system(&mut world);
-                    advance_season_system(&mut world);
-                    produce_food_system(&mut world);
-                    process_refining_system(&mut world);
-                    restore_rest_in_housing_system(&mut world);
-                    restore_leisure_system(&mut world);
-                    consume_food_system(&mut world);
-                    decay_needs_system(&mut world);
-                    kill_starving_entities_system(&mut world);
-                    clean_dead_residents_system(&mut world);
-                    clean_dead_workers_system(&mut world);
-
-                    track_plan_outcomes_system(&mut world);
-
-                    biography_monitor_system(&mut world);
-                    check_milestones_system(&mut world);
-                    world.resource_mut::<SimulationTime>().tick += 1;
+                    run_simulation_tick(&mut world);
                 }
             }
 
@@ -172,51 +96,9 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
     Ok(())
 }
 
-fn render(world: &World, frame: &mut Frame) {
-    if *world.resource::<GameState>() == GameState::MainMenu {
-        let menu_state = world.resource::<MenuState>();
-        render_main_menu(frame, frame.area(), menu_state);
-        return;
-    }
-
-    // Main vertical split: content + status bar
-    let main_chunks = Layout::default()
-        .direction(Direction::Vertical)
-        .constraints([
-            Constraint::Min(10),   // Content area
-            Constraint::Length(1), // Status bar
-        ])
-        .split(frame.area());
-
-    // Horizontal split: map + info panel
-    let content_chunks = Layout::default()
-        .direction(Direction::Horizontal)
-        .constraints([
-            Constraint::Min(20),    // Map area
-            Constraint::Length(20), // Info panel
-        ])
-        .split(main_chunks[0]);
-
-    let map_area = content_chunks[0];
-    let info_area = content_chunks[1];
-    let status_area = main_chunks[1];
-
-    // Render map
-    render_map(frame, map_area, world);
-
-    // Render info panel
-    render_info_panel(frame, info_area, world);
-
-    // Render status bar
-    render_status_bar(frame, status_area, world);
-
-    // Render chronicle
-    render_chronicle(frame, frame.area(), world);
-}
-
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use scale::shared::state::GameState;
 
     #[test]
     fn test_gamestate_derives() {

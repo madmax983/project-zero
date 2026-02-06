@@ -1,10 +1,10 @@
 use bevy_ecs::prelude::*;
-use crossterm::event::{KeyCode, KeyEvent, KeyEventKind, MouseEvent};
 
 use crate::layer1::{
     BuildMode, ChronicleUiState, DesignationMode, DesignationType, GridPosition, Viewport,
     try_cancel_designation, try_designate, try_place_building,
 };
+use crate::platform::input::{GameKeyCode, GameKeyEvent, GameMouseEvent};
 use crate::shared::menu::MenuState;
 use crate::shared::selection::{Selection, handle_selection_click};
 use crate::shared::state::GameState;
@@ -78,12 +78,7 @@ impl InputRouter {
     }
 
     /// Route input to the appropriate handler based on current context.
-    pub fn route(&mut self, world: &mut World, key: KeyEvent) {
-        // Only process key press events
-        if key.kind != KeyEventKind::Press {
-            return;
-        }
-
+    pub fn route(&mut self, world: &mut World, key: GameKeyEvent) {
         let context = world.resource::<InputContextStack>().current();
 
         match context {
@@ -96,7 +91,7 @@ impl InputRouter {
     }
 
     /// Route mouse input to the appropriate handler based on current context.
-    pub fn route_mouse(&mut self, world: &mut World, mouse: MouseEvent) {
+    pub fn route_mouse(&mut self, world: &mut World, mouse: GameMouseEvent) {
         let context = world.resource::<InputContextStack>().current();
 
         if context == InputContext::Normal {
@@ -112,12 +107,12 @@ impl Default for InputRouter {
     }
 }
 
-fn handle_normal_mode(world: &mut World, key: KeyEvent) {
+fn handle_normal_mode(world: &mut World, key: GameKeyEvent) {
     match key.code {
-        KeyCode::Char('q') => {
+        GameKeyCode::Char('q') => {
             *world.resource_mut::<GameState>() = GameState::Quitting;
         }
-        KeyCode::Esc => {
+        GameKeyCode::Esc => {
             let mut selection = world.resource_mut::<Selection>();
             if selection.is_selected() {
                 selection.clear();
@@ -125,7 +120,7 @@ fn handle_normal_mode(world: &mut World, key: KeyEvent) {
                 *world.resource_mut::<GameState>() = GameState::Quitting;
             }
         }
-        KeyCode::Char(' ') => {
+        GameKeyCode::Char(' ') => {
             let mut state = world.resource_mut::<GameState>();
             *state = match *state {
                 GameState::Running => GameState::Paused,
@@ -134,32 +129,32 @@ fn handle_normal_mode(world: &mut World, key: KeyEvent) {
                 GameState::MainMenu => GameState::MainMenu,
             };
         }
-        KeyCode::Char('1') => {
+        GameKeyCode::Char('1') => {
             world.resource_mut::<SimulationTime>().speed = SimSpeed::Normal;
         }
-        KeyCode::Char('2') => {
+        GameKeyCode::Char('2') => {
             world.resource_mut::<SimulationTime>().speed = SimSpeed::Fast;
         }
-        KeyCode::Char('3') => {
+        GameKeyCode::Char('3') => {
             world.resource_mut::<SimulationTime>().speed = SimSpeed::Faster;
         }
-        KeyCode::Char('w') | KeyCode::Up => {
+        GameKeyCode::Char('w') | GameKeyCode::Up => {
             let mut viewport = world.resource_mut::<Viewport>();
             viewport.y = viewport.y.wrapping_sub(1);
         }
-        KeyCode::Char('s') | KeyCode::Down => {
+        GameKeyCode::Char('s') | GameKeyCode::Down => {
             let mut viewport = world.resource_mut::<Viewport>();
             viewport.y = viewport.y.wrapping_add(1);
         }
-        KeyCode::Char('a') | KeyCode::Left => {
+        GameKeyCode::Char('a') | GameKeyCode::Left => {
             let mut viewport = world.resource_mut::<Viewport>();
             viewport.x = viewport.x.wrapping_sub(1);
         }
-        KeyCode::Char('d') | KeyCode::Right => {
+        GameKeyCode::Char('d') | GameKeyCode::Right => {
             let mut viewport = world.resource_mut::<Viewport>();
             viewport.x = viewport.x.wrapping_add(1);
         }
-        KeyCode::Char('b') => {
+        GameKeyCode::Char('b') => {
             // Enter build mode
             world
                 .resource_mut::<InputContextStack>()
@@ -177,19 +172,19 @@ fn handle_normal_mode(world: &mut World, key: KeyEvent) {
                 y: vy + 10,
             };
         }
-        KeyCode::Char('m') => {
+        GameKeyCode::Char('m') => {
             // Enter Designation mode (Mine)
             enter_designation_mode(world, DesignationType::Mine);
         }
-        KeyCode::Char('x') => {
+        GameKeyCode::Char('x') => {
             // Enter Designation mode (Demolish)
             enter_designation_mode(world, DesignationType::Demolish);
         }
-        KeyCode::Char('c') => {
+        GameKeyCode::Char('c') => {
             // Enter Designation mode (Chop)
             enter_designation_mode(world, DesignationType::Chop);
         }
-        KeyCode::Char('l' | 'h') => {
+        GameKeyCode::Char('l' | 'h') => {
             // Open chronicle
             world
                 .resource_mut::<InputContextStack>()
@@ -201,15 +196,15 @@ fn handle_normal_mode(world: &mut World, key: KeyEvent) {
     }
 }
 
-fn handle_main_menu_mode(world: &mut World, key: KeyEvent) {
+fn handle_main_menu_mode(world: &mut World, key: GameKeyEvent) {
     match key.code {
-        KeyCode::Up | KeyCode::Char('w') => {
+        GameKeyCode::Up | GameKeyCode::Char('w') => {
             world.resource_mut::<MenuState>().prev();
         }
-        KeyCode::Down | KeyCode::Char('s') => {
+        GameKeyCode::Down | GameKeyCode::Char('s') => {
             world.resource_mut::<MenuState>().next();
         }
-        KeyCode::Enter | KeyCode::Char(' ') => {
+        GameKeyCode::Enter | GameKeyCode::Char(' ') => {
             let selected = world.resource::<MenuState>().selected_index;
             match selected {
                 0 => {
@@ -225,7 +220,7 @@ fn handle_main_menu_mode(world: &mut World, key: KeyEvent) {
                 _ => {}
             }
         }
-        KeyCode::Esc | KeyCode::Char('q') => {
+        GameKeyCode::Esc | GameKeyCode::Char('q') => {
             *world.resource_mut::<GameState>() = GameState::Quitting;
         }
         _ => {}
@@ -250,36 +245,36 @@ fn enter_designation_mode(world: &mut World, tool: DesignationType) {
     };
 }
 
-fn handle_build_mode(world: &mut World, key: KeyEvent) {
+fn handle_build_mode(world: &mut World, key: GameKeyEvent) {
     match key.code {
-        KeyCode::Esc | KeyCode::Char('b') => {
+        GameKeyCode::Esc | GameKeyCode::Char('b') => {
             // Exit build mode
             world.resource_mut::<InputContextStack>().pop();
             world.resource_mut::<BuildMode>().active = false;
         }
-        KeyCode::Char('w') | KeyCode::Up => {
+        GameKeyCode::Char('w') | GameKeyCode::Up => {
             let mut bm = world.resource_mut::<BuildMode>();
             bm.cursor.y = bm.cursor.y.saturating_sub(1);
         }
-        KeyCode::Char('s') | KeyCode::Down => {
+        GameKeyCode::Char('s') | GameKeyCode::Down => {
             let mut bm = world.resource_mut::<BuildMode>();
             bm.cursor.y = bm.cursor.y.saturating_add(1);
         }
-        KeyCode::Char('a') | KeyCode::Left => {
+        GameKeyCode::Char('a') | GameKeyCode::Left => {
             let mut bm = world.resource_mut::<BuildMode>();
             bm.cursor.x = bm.cursor.x.saturating_sub(1);
         }
-        KeyCode::Char('d') | KeyCode::Right => {
+        GameKeyCode::Char('d') | GameKeyCode::Right => {
             let mut bm = world.resource_mut::<BuildMode>();
             bm.cursor.x = bm.cursor.x.saturating_add(1);
         }
-        KeyCode::Char(' ') | KeyCode::Enter => {
+        GameKeyCode::Char(' ') | GameKeyCode::Enter => {
             let build_mode = world.resource::<BuildMode>();
             let cursor = build_mode.cursor;
             let building_type = build_mode.selected;
             try_place_building(world, cursor.x, cursor.y, building_type);
         }
-        KeyCode::Tab => {
+        GameKeyCode::Tab => {
             let mut build_mode = world.resource_mut::<BuildMode>();
             build_mode.selected = build_mode.selected.next();
         }
@@ -287,48 +282,48 @@ fn handle_build_mode(world: &mut World, key: KeyEvent) {
     }
 }
 
-fn handle_designation_mode(world: &mut World, key: KeyEvent) {
+fn handle_designation_mode(world: &mut World, key: GameKeyEvent) {
     match key.code {
-        KeyCode::Esc => {
+        GameKeyCode::Esc => {
             // Exit designation mode
             world.resource_mut::<InputContextStack>().pop();
             world.resource_mut::<DesignationMode>().active = false;
         }
-        KeyCode::Char('m') => {
+        GameKeyCode::Char('m') => {
             // Switch to Mine tool
             world.resource_mut::<DesignationMode>().tool = DesignationType::Mine;
         }
-        KeyCode::Char('x') => {
+        GameKeyCode::Char('x') => {
             // Switch to Demolish tool
             world.resource_mut::<DesignationMode>().tool = DesignationType::Demolish;
         }
-        KeyCode::Char('c') => {
+        GameKeyCode::Char('c') => {
             // Switch to Chop tool
             world.resource_mut::<DesignationMode>().tool = DesignationType::Chop;
         }
-        KeyCode::Char('w') | KeyCode::Up => {
+        GameKeyCode::Char('w') | GameKeyCode::Up => {
             let mut mode = world.resource_mut::<DesignationMode>();
             mode.cursor.y = mode.cursor.y.saturating_sub(1);
         }
-        KeyCode::Char('s') | KeyCode::Down => {
+        GameKeyCode::Char('s') | GameKeyCode::Down => {
             let mut mode = world.resource_mut::<DesignationMode>();
             mode.cursor.y = mode.cursor.y.saturating_add(1);
         }
-        KeyCode::Char('a') | KeyCode::Left => {
+        GameKeyCode::Char('a') | GameKeyCode::Left => {
             let mut mode = world.resource_mut::<DesignationMode>();
             mode.cursor.x = mode.cursor.x.saturating_sub(1);
         }
-        KeyCode::Char('d') | KeyCode::Right => {
+        GameKeyCode::Char('d') | GameKeyCode::Right => {
             let mut mode = world.resource_mut::<DesignationMode>();
             mode.cursor.x = mode.cursor.x.saturating_add(1);
         }
-        KeyCode::Char(' ') | KeyCode::Enter => {
+        GameKeyCode::Char(' ') | GameKeyCode::Enter => {
             let mode = world.resource::<DesignationMode>();
             let cursor = mode.cursor;
             let tool = mode.tool;
             try_designate(world, cursor.x, cursor.y, tool);
         }
-        KeyCode::Backspace | KeyCode::Delete => {
+        GameKeyCode::Backspace | GameKeyCode::Delete => {
             let mode = world.resource::<DesignationMode>();
             try_cancel_designation(world, mode.cursor.x, mode.cursor.y);
         }
@@ -336,9 +331,9 @@ fn handle_designation_mode(world: &mut World, key: KeyEvent) {
     }
 }
 
-fn handle_overlay_mode(world: &mut World, key: KeyEvent) {
+fn handle_overlay_mode(world: &mut World, key: GameKeyEvent) {
     match key.code {
-        KeyCode::Esc | KeyCode::Char('l' | 'h') => {
+        GameKeyCode::Esc | GameKeyCode::Char('l' | 'h') => {
             world.resource_mut::<InputContextStack>().pop();
             world.resource_mut::<ChronicleUiState>().is_open = false;
         }
@@ -350,23 +345,17 @@ fn handle_overlay_mode(world: &mut World, key: KeyEvent) {
 mod tests {
     use super::*;
     use crate::layer1::Viewport;
+    use crate::platform::input::{GameKeyCode, GameKeyEvent, GameMouseEvent};
     use crate::shared::selection::{Selection, SelectionTarget};
     use crate::shared::state::GameState;
     use crate::shared::time::{SimSpeed, SimulationTime};
-    use crossterm::event::{KeyCode, KeyEvent, KeyModifiers, MouseButton, MouseEventKind};
 
-    fn key_event(code: KeyCode) -> KeyEvent {
-        // KeyEvent::new creates a Press event by default (in crossterm 0.28)
-        KeyEvent::new(code, KeyModifiers::empty())
+    fn key_event(code: GameKeyCode) -> GameKeyEvent {
+        GameKeyEvent::new(code)
     }
 
-    fn mouse_event(column: u16, row: u16) -> MouseEvent {
-        MouseEvent {
-            kind: MouseEventKind::Down(MouseButton::Left),
-            column,
-            row,
-            modifiers: KeyModifiers::empty(),
-        }
+    fn mouse_event(column: u16, row: u16) -> GameMouseEvent {
+        GameMouseEvent::new(column, row)
     }
 
     #[test]
@@ -412,7 +401,7 @@ mod tests {
         world.insert_resource(stack);
 
         let mut router = InputRouter::new();
-        router.route(&mut world, key_event(KeyCode::Char('q')));
+        router.route(&mut world, key_event(GameKeyCode::Char('q')));
 
         assert_eq!(*world.resource::<GameState>(), GameState::Quitting);
     }
@@ -429,7 +418,7 @@ mod tests {
         world.insert_resource(selection);
 
         let mut router = InputRouter::new();
-        router.route(&mut world, key_event(KeyCode::Esc));
+        router.route(&mut world, key_event(GameKeyCode::Esc));
 
         assert!(!world.resource::<Selection>().is_selected());
         assert_eq!(*world.resource::<GameState>(), GameState::Running);
@@ -445,7 +434,7 @@ mod tests {
         world.insert_resource(Selection::default()); // No selection
 
         let mut router = InputRouter::new();
-        router.route(&mut world, key_event(KeyCode::Esc));
+        router.route(&mut world, key_event(GameKeyCode::Esc));
 
         assert_eq!(*world.resource::<GameState>(), GameState::Quitting);
     }
@@ -463,7 +452,7 @@ mod tests {
         });
 
         let mut router = InputRouter::new();
-        router.route(&mut world, key_event(KeyCode::Char('q')));
+        router.route(&mut world, key_event(GameKeyCode::Char('q')));
 
         // 'q' in build mode should NOT quit (should exit build mode instead)
         assert_eq!(*world.resource::<GameState>(), GameState::Running);
@@ -478,7 +467,7 @@ mod tests {
         world.insert_resource(ChronicleUiState { is_open: true });
 
         let mut router = InputRouter::new();
-        router.route(&mut world, key_event(KeyCode::Esc));
+        router.route(&mut world, key_event(GameKeyCode::Esc));
 
         // Escape in overlay should pop back to base
         assert_eq!(
@@ -500,7 +489,7 @@ mod tests {
         let mut router = InputRouter::new();
 
         // Open with 'l'
-        router.route(&mut world, key_event(KeyCode::Char('l')));
+        router.route(&mut world, key_event(GameKeyCode::Char('l')));
         assert_eq!(
             world.resource::<InputContextStack>().current(),
             InputContext::Overlay
@@ -509,7 +498,7 @@ mod tests {
         assert_eq!(*world.resource::<GameState>(), GameState::Paused);
 
         // Close with 'l'
-        router.route(&mut world, key_event(KeyCode::Char('l')));
+        router.route(&mut world, key_event(GameKeyCode::Char('l')));
         assert_eq!(
             world.resource::<InputContextStack>().current(),
             InputContext::Normal
@@ -540,13 +529,13 @@ mod tests {
         let mut router = InputRouter::new();
 
         // Test all normal mode bindings work
-        router.route(&mut world, key_event(KeyCode::Char(' ')));
+        router.route(&mut world, key_event(GameKeyCode::Char(' ')));
         assert_eq!(*world.resource::<GameState>(), GameState::Paused);
 
-        router.route(&mut world, key_event(KeyCode::Char('1')));
+        router.route(&mut world, key_event(GameKeyCode::Char('1')));
         assert_eq!(world.resource::<SimulationTime>().speed, SimSpeed::Normal);
 
-        router.route(&mut world, key_event(KeyCode::Char('w')));
+        router.route(&mut world, key_event(GameKeyCode::Char('w')));
         assert_eq!(world.resource::<Viewport>().y, -1);
     }
 
@@ -565,11 +554,11 @@ mod tests {
         let mut router = InputRouter::new();
 
         // Move right (x += 1) should wrap
-        router.route(&mut world, key_event(KeyCode::Char('d')));
+        router.route(&mut world, key_event(GameKeyCode::Char('d')));
         assert_eq!(world.resource::<Viewport>().x, i32::MIN);
 
         // Move up (y -= 1) should wrap
-        router.route(&mut world, key_event(KeyCode::Char('w')));
+        router.route(&mut world, key_event(GameKeyCode::Char('w')));
         assert_eq!(world.resource::<Viewport>().y, i32::MAX);
     }
 
@@ -594,11 +583,11 @@ mod tests {
         let mut router = InputRouter::new();
 
         // Move right (x += 1) should saturate
-        router.route(&mut world, key_event(KeyCode::Char('d')));
+        router.route(&mut world, key_event(GameKeyCode::Char('d')));
         assert_eq!(world.resource::<BuildMode>().cursor.x, i32::MAX);
 
         // Move up (y -= 1) should saturate
-        router.route(&mut world, key_event(KeyCode::Char('w')));
+        router.route(&mut world, key_event(GameKeyCode::Char('w')));
         assert_eq!(world.resource::<BuildMode>().cursor.y, i32::MIN);
     }
 
@@ -615,7 +604,7 @@ mod tests {
         let mut router = InputRouter::new();
 
         // Enter mine mode
-        router.route(&mut world, key_event(KeyCode::Char('m')));
+        router.route(&mut world, key_event(GameKeyCode::Char('m')));
         assert_eq!(
             world.resource::<InputContextStack>().current(),
             InputContext::DesignationMode
@@ -627,7 +616,7 @@ mod tests {
         );
 
         // Exit
-        router.route(&mut world, key_event(KeyCode::Esc));
+        router.route(&mut world, key_event(GameKeyCode::Esc));
         assert_eq!(
             world.resource::<InputContextStack>().current(),
             InputContext::Normal
@@ -635,7 +624,7 @@ mod tests {
         assert!(!world.resource::<DesignationMode>().active);
 
         // Enter demolish mode
-        router.route(&mut world, key_event(KeyCode::Char('x')));
+        router.route(&mut world, key_event(GameKeyCode::Char('x')));
         assert_eq!(
             world.resource::<InputContextStack>().current(),
             InputContext::DesignationMode
