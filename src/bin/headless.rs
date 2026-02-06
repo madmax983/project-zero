@@ -50,7 +50,10 @@ fn main() {
 
     loop {
         print!("> ");
-        stdout.flush().unwrap();
+        if let Err(e) = stdout.flush() {
+            eprintln!("Error flushing stdout: {e}");
+            break;
+        }
 
         let mut input = String::new();
         if stdin.lock().read_line(&mut input).is_err() {
@@ -271,20 +274,23 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
     // Copy terrain data before querying to avoid borrow conflicts
     let (width, height, terrain_tiles) = {
         let terrain = world.resource::<TerrainGrid>();
+        let max_x = i32::try_from(terrain.width).unwrap_or(i32::MAX);
+        let max_y = i32::try_from(terrain.height).unwrap_or(i32::MAX);
+
         let mut tiles = std::collections::HashMap::new();
         for y in (center_y - radius)..=(center_y + radius) {
             for x in (center_x - radius)..=(center_x + radius) {
                 if x >= 0
                     && y >= 0
-                    && x < terrain.width as i32
-                    && y < terrain.height as i32
+                    && x < max_x
+                    && y < max_y
                     && let Some(t) = terrain.get(x as usize, y as usize)
                 {
                     tiles.insert((x, y), t);
                 }
             }
         }
-        (terrain.width, terrain.height, tiles)
+        (max_x, max_y, tiles)
     };
 
     println!("=== Map around ({center_x}, {center_y}) ===");
@@ -306,7 +312,7 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
     for y in (center_y - radius)..=(center_y + radius) {
         print!("{y:3} ");
         for x in (center_x - radius)..=(center_x + radius) {
-            if x < 0 || y < 0 || x >= width as i32 || y >= height as i32 {
+            if x < 0 || y < 0 || x >= width || y >= height {
                 print!(" ");
                 continue;
             }
@@ -472,20 +478,23 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: i32) {
     // Copy terrain data before querying to avoid borrow conflicts
     let (width, height, terrain_tiles) = {
         let terrain = world.resource::<TerrainGrid>();
+        let max_x = i32::try_from(terrain.width).unwrap_or(i32::MAX);
+        let max_y = i32::try_from(terrain.height).unwrap_or(i32::MAX);
+
         let mut tiles = std::collections::HashMap::new();
         for y in (center_y - radius)..=(center_y + radius) {
             for x in (center_x - radius)..=(center_x + radius) {
                 if x >= 0
                     && y >= 0
-                    && x < terrain.width as i32
-                    && y < terrain.height as i32
+                    && x < max_x
+                    && y < max_y
                     && let Some(t) = terrain.get(x as usize, y as usize)
                 {
                     tiles.insert((x, y), t);
                 }
             }
         }
-        (terrain.width, terrain.height, tiles)
+        (max_x, max_y, tiles)
     };
 
     println!("SCAN: center=({center_x},{center_y}) radius={radius}");
@@ -525,7 +534,7 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: i32) {
 
     for y in (center_y - radius)..=(center_y + radius) {
         for x in (center_x - radius)..=(center_x + radius) {
-            if x < 0 || y < 0 || x >= width as i32 || y >= height as i32 {
+            if x < 0 || y < 0 || x >= width || y >= height {
                 continue;
             }
 
@@ -582,8 +591,10 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: i32) {
 /// Get info about a single tile
 fn get_tile_info(world: &mut World, x: i32, y: i32) {
     let terrain = world.resource::<TerrainGrid>();
+    let max_x = i32::try_from(terrain.width).unwrap_or(i32::MAX);
+    let max_y = i32::try_from(terrain.height).unwrap_or(i32::MAX);
 
-    if x < 0 || y < 0 || x >= terrain.width as i32 || y >= terrain.height as i32 {
+    if x < 0 || y < 0 || x >= max_x || y >= max_y {
         println!("TILE_INFO: {x} {y} ERROR=out_of_bounds");
         return;
     }

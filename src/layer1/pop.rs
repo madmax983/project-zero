@@ -57,6 +57,12 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
         (terrain.width, terrain.height)
     };
 
+    // Safe bounds for GridPosition (i32)
+    // If map is larger than i32::MAX, we just spawn within the i32 limit
+    // because GridPosition cannot represent coordinates beyond that anyway.
+    let max_x = i32::try_from(width).unwrap_or(i32::MAX);
+    let max_y = i32::try_from(height).unwrap_or(i32::MAX);
+
     let mut spawned = 0;
     let mut attempts = 0;
     // Safety: we assume there is at least one walkable tile to avoid infinite loop.
@@ -67,10 +73,8 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
             break;
         }
 
-        #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
-        let x = rng.gen_range(0..width as i32);
-        #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
-        let y = rng.gen_range(0..height as i32);
+        let x = rng.gen_range(0..max_x);
+        let y = rng.gen_range(0..max_y);
 
         // Check terrain type in a separate scope to handle borrowing
         let is_walkable = {
