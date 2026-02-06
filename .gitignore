@@ -32,3 +32,5 @@ e2e/playwright-report/
 .DS_Store
 Thumbs.db.worktrees/
 .worktrees/
+
+nul
