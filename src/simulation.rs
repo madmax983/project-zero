@@ -7,7 +7,7 @@ use crate::experimental::dreams::dream_system;
 use crate::layer1::{
     advance_season_system, arrival_handler_system, check_milestones_system,
     clean_dead_residents_system, clean_dead_workers_system, cleanup_previous_assignment_system,
-    consume_food_system, decay_needs_system, evaluate_actions_system,
+    consume_food_system, decay_needs_system, evaluate_actions_system, haul_system,
     kill_starving_entities_system, movement_system, process_refining_system,
     process_research_system, process_start_plan_system, produce_food_system,
     restore_leisure_system, restore_rest_in_housing_system, track_plan_outcomes_system,
@@ -26,6 +26,7 @@ pub fn run_simulation_tick(world: &mut World) {
     movement_system(world);
     arrival_handler_system(world);
     work_execution_system(world);
+    haul_system(world);
 
     update_resource_caps_system(world);
     advance_season_system(world);

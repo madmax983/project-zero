@@ -15,6 +15,8 @@ pub mod designation;
 pub mod execution;
 /// Farm building and food production.
 pub mod farm;
+/// Hauling logic.
+pub mod hauling;
 /// Housing and rest mechanics.
 pub mod housing;
 /// Spatial primitives (GridPosition).
@@ -57,6 +59,7 @@ pub use chronicle::*;
 pub use designation::*;
 pub use execution::*;
 pub use farm::*;
+pub use hauling::*;
 pub use housing::*;
 pub use locations::*;
 pub use map::*;

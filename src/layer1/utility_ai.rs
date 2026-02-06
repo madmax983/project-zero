@@ -11,8 +11,9 @@ use crate::layer1::farm::Farm;
 use crate::layer1::housing::Housing;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
-use crate::layer1::resources::ColonyResources;
+use crate::layer1::resources::{ColonyResources, ResourceItem};
 use crate::layer1::social::{Tavern, evaluate_socialize};
+use crate::layer1::stockpile::Stockpile;
 use crate::layer1::tech::Library;
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
@@ -149,6 +150,63 @@ pub fn evaluate_research<'a>(
     best
 }
 
+/// Evaluates the utility of hauling resources.
+#[must_use]
+pub fn evaluate_haul<'a>(
+    pop_pos: &GridPosition,
+    weights: &UtilityWeights,
+    items: impl Iterator<Item = (Entity, &'a GridPosition, &'a ResourceItem)>,
+    stockpiles: impl Iterator<Item = (Entity, &'a GridPosition, &'a Stockpile)>,
+    resources: &ColonyResources,
+) -> Option<(f32, Entity)> {
+    // 1. Check if any stockpile exists (optimization: no point hauling if nowhere to put it)
+    if stockpiles.count() == 0 {
+        return None;
+    }
+
+    // 2. Find closest item we have room for
+    let mut best: Option<(f32, Entity)> = None;
+    let base_utility = 0.6; // Slightly higher than work (0.5) to keep map clean
+
+    for (entity, pos, item) in items {
+        // Check capacity
+        let has_room = match item.resource_type {
+            crate::layer1::resources::ResourceType::Food => resources.food < resources.max_food,
+            crate::layer1::resources::ResourceType::Wood => resources.wood < resources.max_wood,
+            crate::layer1::resources::ResourceType::Stone => resources.stone < resources.max_stone,
+            crate::layer1::resources::ResourceType::Ore => resources.ore < resources.max_ore,
+            crate::layer1::resources::ResourceType::Metal => resources.metal < resources.max_metal,
+            crate::layer1::resources::ResourceType::Planks => {
+                resources.planks < resources.max_planks
+            }
+            crate::layer1::resources::ResourceType::Blocks => {
+                resources.blocks < resources.max_blocks
+            }
+        };
+
+        if !has_room {
+            continue;
+        }
+
+        let context = calculate_context_score(
+            *pop_pos,
+            Some(*pos),
+            1, // Capacity
+            0, // Occupied
+            weights,
+        );
+
+        let success = calculate_success_modifier(ActionType::Haul, weights);
+        let utility = base_utility * context * success;
+
+        if best.is_none_or(|(best_u, _)| utility > best_u) {
+            best = Some((utility, entity));
+        }
+    }
+
+    best
+}
+
 /// Evaluates the utility of being idle.
 ///
 /// Idle is a low-priority fallback action. Pops should prefer productive
@@ -197,6 +255,8 @@ pub fn evaluate_actions_system(world: &mut World) {
     let mut taverns_state = world.query::<(Entity, &GridPosition, &Tavern)>();
     let mut libraries_state = world.query::<(Entity, &GridPosition, &Library)>();
     let mut designations_state = world.query::<(Entity, &GridPosition, &Designation)>();
+    let mut items_state = world.query::<(Entity, &GridPosition, &ResourceItem)>();
+    let mut stockpiles_state = world.query::<(Entity, &GridPosition, &Stockpile)>();
 
     let resources = world.resource::<ColonyResources>().clone();
 
@@ -240,6 +300,17 @@ pub fn evaluate_actions_system(world: &mut World) {
             libraries_state.iter(world),
         ) {
             utilities.push((ActionType::Research, utility, Some(target)));
+        }
+
+        // Evaluate Haul
+        if let Some((utility, target)) = evaluate_haul(
+            &pop_pos,
+            &weights,
+            items_state.iter(world),
+            stockpiles_state.iter(world),
+            &resources,
+        ) {
+            utilities.push((ActionType::Haul, utility, Some(target)));
         }
 
         // Evaluate Idle
@@ -354,6 +425,7 @@ pub fn track_plan_outcomes_system(world: &mut World) {
             | ActionType::Socialize
             | ActionType::Explore
             | ActionType::Research
+            | ActionType::Haul
             | ActionType::Idle => true,
         };
 
