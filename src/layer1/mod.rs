@@ -17,6 +17,9 @@ pub mod farm;
 pub mod housing;
 /// Spatial primitives (GridPosition).
 pub mod map;
+#[cfg(test)]
+/// Tests for metal industry (Spec 024).
+pub mod metal_industry_tests;
 /// Pop needs (hunger, rest).
 pub mod needs;
 /// Pop entity and management.

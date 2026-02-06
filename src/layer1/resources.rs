@@ -20,6 +20,7 @@
 use crate::layer1::GridPosition;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use bevy_ecs::prelude::*;
+use rand::Rng;
 
 /// Tracks the resources available to the colony.
 ///
@@ -46,6 +47,10 @@ pub struct ColonyResources {
     pub planks: f32,
     /// Total blocks available in the colony.
     pub blocks: f32,
+    /// Total ore available in the colony.
+    pub ore: f32,
+    /// Total metal available in the colony.
+    pub metal: f32,
     /// Maximum food capacity.
     pub max_food: f32,
     /// Maximum wood capacity.
@@ -56,6 +61,10 @@ pub struct ColonyResources {
     pub max_planks: f32,
     /// Maximum blocks capacity.
     pub max_blocks: f32,
+    /// Maximum ore capacity.
+    pub max_ore: f32,
+    /// Maximum metal capacity.
+    pub max_metal: f32,
 }
 
 impl Default for ColonyResources {
@@ -66,11 +75,15 @@ impl Default for ColonyResources {
             stone: 0.0,
             planks: 0.0,
             blocks: 0.0,
+            ore: 0.0,
+            metal: 0.0,
             max_food: 50.0,
             max_wood: 50.0,
             max_stone: 20.0,
             max_planks: 50.0,
             max_blocks: 20.0,
+            max_ore: 20.0,
+            max_metal: 20.0,
         }
     }
 }
@@ -101,6 +114,16 @@ impl ColonyResources {
         self.blocks = (self.blocks + amount).clamp(0.0, self.max_blocks);
     }
 
+    /// Adds ore, clamping to the maximum capacity.
+    pub fn add_ore(&mut self, amount: f32) {
+        self.ore = (self.ore + amount).clamp(0.0, self.max_ore);
+    }
+
+    /// Adds metal, clamping to the maximum capacity.
+    pub fn add_metal(&mut self, amount: f32) {
+        self.metal = (self.metal + amount).clamp(0.0, self.max_metal);
+    }
+
     /// Checks if the colony can afford the given cost.
     ///
     /// # Parameters
@@ -117,6 +140,8 @@ impl ColonyResources {
             && self.stone >= cost.stone
             && self.planks >= cost.planks
             && self.blocks >= cost.blocks
+            && self.ore >= cost.ore
+            && self.metal >= cost.metal
     }
 
     /// Deducts the given cost from the colony's resources.
@@ -130,6 +155,8 @@ impl ColonyResources {
         self.stone -= cost.stone;
         self.planks -= cost.planks;
         self.blocks -= cost.blocks;
+        self.ore -= cost.ore;
+        self.metal -= cost.metal;
     }
 }
 
@@ -302,6 +329,12 @@ pub fn mine_rock(world: &mut World, designation_entity: Entity, work_amount: f32
         // Add resources
         let mut resources = world.resource_mut::<ColonyResources>();
         resources.add_stone(1.0);
+
+        // Probabilistic Ore Yield (20%)
+        let mut rng = rand::thread_rng();
+        if rng.gen_bool(0.2) {
+            resources.add_ore(1.0);
+        }
 
         // Remove designation
         world.despawn(designation_entity);
