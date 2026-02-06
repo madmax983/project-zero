@@ -2,50 +2,67 @@
 
 *From pebble to empire. Every world remembers.*
 
-[![CI](https://github.com/madmax983/project-zero/workflows/CI/badge.svg)](https://github.com/madmax983/project-zero/actions)
+[![CI](https://github.com/madmax983/scale/workflows/CI/badge.svg)](https://github.com/madmax983/scale/actions)
 
 A 4X colony simulation where you begin Dwarf-Fortress-style on a single planet and end commanding a galactic civilization—but every world is still simulating underneath.
 
 ## Status
 
-🚧 **Pre-Alpha** — AI agents are building this game.
+**Pre-Alpha** — AI agents are building this game.
 
 ## Quick Start
 
+### Native (Terminal)
+
 ```bash
-# Run the game
-cargo run
+cargo run --features native
 
-# Run tests
-cargo test
+cargo test --features native
 
-# Run benchmarks
 cargo criterion
+```
 
-# Install pre-commit hooks
+### Browser (WASM)
+
+```bash
+# Install prerequisites
+rustup target add wasm32-unknown-unknown
+cargo install --locked trunk
+
+# Serve locally at http://localhost:8080
+trunk serve
+```
+
+### Pre-commit Hooks
+
+```bash
 .\install-hooks.ps1  # Windows
 ./install-hooks.sh   # Linux/Mac
 ```
 
-## Controls (MVP)
+## Controls
 
 | Key | Action |
 |-----|--------|
 | **WASD / Arrows** | Scroll map (or move cursor in build mode) |
-| **Space** | Pause/unpause (or place building in build mode) |
+| **Space** | Pause/unpause |
 | **1/2/3** | Speed (1x/3x/5x) |
 | **B** | Toggle build mode |
+| **M** | Toggle mine designation mode |
+| **X** | Toggle demolish designation mode |
 | **Tab** | Cycle building type (in build mode) |
-| **Enter** | Place building (in build mode) |
-| **Escape** | Exit build mode |
+| **Enter** | Place building / confirm |
+| **L** | Toggle chronicle overlay |
+| **Escape** | Exit current mode / close overlay |
 | **Q** | Quit |
+| **Mouse click** | Select entity or tile |
 
 ## Display
 
 ```
-Terrain:   . grass   , dirt   # rock   ~ water
-Pops:      ☺ idle    ⚒ working   ☻ resting
-Buildings: ⌂ housing   ♣ farm
+Terrain:   , grass   . dirt   # rock   ~ water   ^ tree
+Pops:      @ idle/moving
+Buildings: H housing   F farm   S stockpile   T tavern
 ```
 
 ## Architecture
@@ -56,9 +73,11 @@ Three simulation layers, each abstracting the one below:
 2. **System** (Planetary) — Planets as nodes, ships, orbital stations
 3. **Galaxy** (Stellaris) — Star systems, civilizations, diplomacy
 
-**Tech stack:** `bevy_ecs` for simulation, `ratatui` for terminal UI.
+**Tech stack:** Rust, `bevy_ecs` for simulation, `ratatui` for UI, `ratzilla` for browser support.
 
-See **[DESIGN.md](DESIGN.md)** for full architecture details.
+Runs natively in a terminal via crossterm, or in any browser via WASM + Ratzilla's DOM backend. Both targets share identical game logic — only the input translation and render backend differ.
+
+See **[DESIGN.md](DESIGN.md)** for full architecture details and **[docs/adr/](docs/adr/)** for architecture decision records.
 
 ## Procedural History
 
@@ -70,50 +89,28 @@ Every playthrough generates unique lore:
 
 See `lore/` for the building blocks.
 
-## Development
-
-This project is built by AI agents coordinating through git. See **[AGENTS.md](AGENTS.md)** for the protocol.
-
-See **[docs/guides/EXTENDING.md](docs/guides/EXTENDING.md)** for a guide on adding new buildings.
-
-**Agents:**
-- `prompts/DESIGNER.md` — Game design ideation
-- `prompts/LOREMASTER.md` — Procedural lore system
-- `prompts/ARCHITECT.md` — Feature specifications
-- `prompts/BUILDER.md` — Implementation
-
-**Workflow:**
-- `design/BACKLOG.md` — Available work
-- `specs/` — Feature specifications
-- `lore/` — Procedural lore fragments, templates, grammars
-
-### CI/CD
-
-This project follows strict quality gates:
-
-- **85%+ test coverage** (enforced in CI)
-- **Clippy pedantic + nursery** lints
-- **Pre-commit hooks** for format + lint + test
-- **Criterion benchmarks** for performance tracking
-
-See **[CI-SETUP.md](CI-SETUP.md)** for full CI/CD documentation.
-
 ## Project Structure
 
 ```
 scale/
 ├── src/
-│   ├── main.rs           # Entry point + game loop
+│   ├── main.rs           # Native entry point (crossterm)
 │   ├── lib.rs            # Library exports
-│   ├── layer1/           # Colony simulation (pops, buildings)
-│   ├── layer2/           # System simulation (planets, ships)
-│   ├── layer3/           # Galaxy simulation (empires, diplomacy)
-│   ├── shared/           # Shared types and utilities
-│   └── ui/               # Terminal UI rendering
+│   ├── bin/
+│   │   ├── wasm_app.rs   # WASM entry point (ratzilla)
+│   │   └── headless.rs   # Headless simulation runner
+│   ├── platform/         # Input abstraction (native ↔ wasm)
+│   ├── setup.rs          # Shared world initialization
+│   ├── simulation.rs     # Shared simulation tick
+│   ├── layer1/           # Colony simulation (pops, buildings, needs, AI)
+│   ├── shared/           # Input routing, selection, time, narrative
+│   └── ui/               # Terminal UI rendering (backend-agnostic)
+├── web/                  # Trunk HTML entry point for WASM
+├── e2e/                  # Playwright E2E browser tests
 ├── specs/                # Feature specifications
 ├── lore/                 # Procedural lore system
 ├── design/               # Design docs and task tracking
-├── docs/                 # Architecture documentation
+├── docs/                 # Architecture documentation + ADRs
 ├── benches/              # Performance benchmarks
 └── prompts/              # AI agent prompts
 ```
@@ -124,22 +121,40 @@ scale/
 
 **Dependencies:**
 - `bevy_ecs` — Entity Component System for simulation
-- `ratatui` — Terminal UI framework
-- `crossterm` — Cross-platform terminal manipulation
+- `ratatui` — Terminal UI framework (backend-agnostic)
+- `crossterm` — Native terminal backend (optional, `native` feature)
+- `ratzilla` — Browser WASM backend (optional, `wasm` feature)
 - `anyhow` — Error handling
 - `rand` — Random generation
 - `criterion` — Benchmarking (dev)
+
+**Feature flags:**
+- `native` (default) — Terminal mode via crossterm
+- `wasm` — Browser mode via ratzilla
 
 **Profiles:**
 - `dev` — Optimized for fast iteration (opt-level = 1)
 - `release` — Fully optimized (LTO, single codegen unit)
 - `bench` — Inherits from release
 
+## CI/CD
+
+- **Format** + **Clippy** (pedantic + nursery) + **Tests** + **Coverage** (native)
+- **WASM Build** via Trunk
+- **E2E Tests** via Playwright against the WASM build
+- **85%+ test coverage** enforced
+
+See **[CI-SETUP.md](CI-SETUP.md)** for full CI/CD documentation.
+
+## Development
+
+This project is built by AI agents coordinating through git. See **[AGENTS.md](AGENTS.md)** for the protocol.
+
+See **[docs/guides/EXTENDING.md](docs/guides/EXTENDING.md)** for a guide on adding new buildings.
+
 ## Contributing
 
-This project is currently developed by coordinated AI agents. If you're interested in the approach, check out [AGENTS.md](AGENTS.md) for the protocol.
-
-For human contributors: Follow the existing spec-driven workflow and ensure all changes pass CI quality gates.
+Follow the existing spec-driven workflow and ensure all changes pass CI quality gates.
 
 ## License
 
