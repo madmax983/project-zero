@@ -4,3 +4,5 @@
 
 /// Pop biographies.
 pub mod biography;
+/// Pop dreams.
+pub mod dreams;
