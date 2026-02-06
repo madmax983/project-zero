@@ -167,14 +167,26 @@ fn fill_circle(
     radius: usize,
     terrain_type: TerrainType,
 ) {
-    let r2 = (radius * radius) as i32;
-    for dy in -(radius as i32)..=(radius as i32) {
-        for dx in -(radius as i32)..=(radius as i32) {
-            if dx * dx + dy * dy <= r2 {
-                let x = cx as i32 + dx;
-                let y = cy as i32 + dy;
-                if x >= 0 && x < width as i32 && y >= 0 && y < height as i32 {
-                    tiles[y as usize * width + x as usize] = terrain_type;
+    // Clamp radius to avoid overflow (sqrt(i32::MAX) ~= 46340)
+    let safe_radius = radius.min(46_000);
+    let r_i32 = i32::try_from(safe_radius).unwrap_or(i32::MAX);
+    let r2 = r_i32.saturating_mul(r_i32);
+
+    let max_x = i32::try_from(width).unwrap_or(i32::MAX);
+    let max_y = i32::try_from(height).unwrap_or(i32::MAX);
+    let cx_i32 = i32::try_from(cx).unwrap_or(i32::MAX);
+    let cy_i32 = i32::try_from(cy).unwrap_or(i32::MAX);
+
+    for dy in -r_i32..=r_i32 {
+        for dx in -r_i32..=r_i32 {
+            if dx.saturating_mul(dx).saturating_add(dy.saturating_mul(dy)) <= r2 {
+                let x = cx_i32.saturating_add(dx);
+                let y = cy_i32.saturating_add(dy);
+                if x >= 0 && x < max_x && y >= 0 && y < max_y {
+                    let idx = (y as usize).saturating_mul(width).saturating_add(x as usize);
+                    if idx < tiles.len() {
+                        tiles[idx] = terrain_type;
+                    }
                 }
             }
         }
