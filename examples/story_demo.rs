@@ -3,7 +3,7 @@
 //! This example shows how to load procedural lore from files and generate
 //! an event string using a template and context.
 
-use scale::shared::narrative::{NarrativeGenerator, NarrativeContext};
+use scale::shared::narrative::{NarrativeContext, NarrativeGenerator};
 
 fn main() -> anyhow::Result<()> {
     println!("🗣️  Echo: Nova Story Feature Demo");
@@ -16,7 +16,8 @@ fn main() -> anyhow::Result<()> {
     // We assume the user is running from repo root
     println!("Loading lore from ./lore/ ...");
     generator.load_from_files("./lore")?;
-    println!("Loaded {} templates and {} fragment types.",
+    println!(
+        "Loaded {} templates and {} fragment types.",
         generator.template_count(),
         generator.fragment_count()
     );

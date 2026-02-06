@@ -23,10 +23,10 @@ use std::time::{Duration, Instant};
 
 use scale::layer1::{
     BuildMode, BuildingTracker, Chronicle, ChronicleUiState, ColonyMemory, ColonyResources,
-    DesignationMode, OccupiedTiles, UtilityConfig, Viewport, arrival_handler_system,
-    check_milestones_system, clean_dead_residents_system, clean_dead_workers_system,
-    cleanup_previous_assignment_system, consume_food_system, decay_needs_system,
-    evaluate_actions_system, generate_terrain, initial_chronicle_event,
+    DesignationMode, OccupiedTiles, SeasonState, UtilityConfig, Viewport, advance_season_system,
+    arrival_handler_system, check_milestones_system, clean_dead_residents_system,
+    clean_dead_workers_system, cleanup_previous_assignment_system, consume_food_system,
+    decay_needs_system, evaluate_actions_system, generate_terrain, initial_chronicle_event,
     kill_starving_entities_system, movement_system, process_refining_system,
     process_start_plan_system, produce_food_system, restore_rest_in_housing_system,
     spawn_initial_pops, track_plan_outcomes_system, update_action_timer_system,
@@ -90,6 +90,7 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
     world.insert_resource(RenderCache::default());
     world.insert_resource(UtilityConfig::default());
     world.insert_resource(ColonyMemory::default());
+    world.insert_resource(SeasonState::default());
 
     spawn_initial_pops(&mut world);
     initial_chronicle_event(&mut world);
@@ -139,6 +140,7 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
                     work_execution_system(&mut world);
 
                     update_resource_caps_system(&mut world);
+                    advance_season_system(&mut world);
                     produce_food_system(&mut world);
                     process_refining_system(&mut world);
                     restore_rest_in_housing_system(&mut world);

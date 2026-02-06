@@ -1,6 +1,7 @@
 use crate::layer1::needs::Needs;
 use crate::layer1::pop::Pop;
 use crate::layer1::resources::ColonyResources;
+use crate::layer1::seasons::SeasonState;
 use bevy_ecs::prelude::*;
 
 /// Farm component - produces food when worked.
@@ -28,6 +29,10 @@ const HUNGER_PER_MEAL: f32 = 0.3; // Hunger restored per meal
 
 /// Produces food from all farms with workers.
 pub fn produce_food_system(world: &mut World) {
+    let modifier = world
+        .get_resource::<SeasonState>()
+        .map_or(1.0, |s| s.current_season.food_modifier());
+
     let mut total_production = 0.0;
 
     // Use a scope to drop the borrow on world from the query
@@ -50,7 +55,7 @@ pub fn produce_food_system(world: &mut World) {
             .sum()
     };
 
-    total_production += production_from_farms;
+    total_production += production_from_farms * modifier;
 
     if total_production > 0.0 {
         let mut resources = world.resource_mut::<ColonyResources>();
@@ -352,5 +357,62 @@ mod tests {
 
         let count = world.query::<(&Building, &Farm)>().iter(&world).count();
         assert_eq!(count, 1);
+    }
+}
+
+#[cfg(test)]
+mod seasonal_tests {
+    use super::*;
+    use crate::layer1::seasons::{Season, SeasonState};
+
+    #[test]
+    fn test_produce_food_system_winter() {
+        let mut world = World::new();
+        world.insert_resource(ColonyResources::default());
+        world.insert_resource(SeasonState {
+            current_season: Season::Winter,
+            ..Default::default()
+        });
+
+        let worker = world.spawn(Pop).id();
+        let mut farm = Farm::default();
+        farm.workers.push(worker);
+        world.spawn(farm);
+
+        produce_food_system(&mut world);
+
+        let resources = world.resource::<ColonyResources>();
+        // Base is 0.005. Winter mod is 0.5. Result should be 0.0025.
+        // Use approximate check
+        let expected = 0.0025;
+        assert!(
+            (resources.food - expected).abs() < 0.0001,
+            "Winter production should be halved"
+        );
+    }
+
+    #[test]
+    fn test_produce_food_system_autumn() {
+        let mut world = World::new();
+        world.insert_resource(ColonyResources::default());
+        world.insert_resource(SeasonState {
+            current_season: Season::Autumn,
+            ..Default::default()
+        });
+
+        let worker = world.spawn(Pop).id();
+        let mut farm = Farm::default();
+        farm.workers.push(worker);
+        world.spawn(farm);
+
+        produce_food_system(&mut world);
+
+        let resources = world.resource::<ColonyResources>();
+        // Base is 0.005. Autumn mod is 1.5. Result should be 0.0075.
+        let expected = 0.0075;
+        assert!(
+            (resources.food - expected).abs() < 0.0001,
+            "Autumn production should be boosted"
+        );
     }
 }

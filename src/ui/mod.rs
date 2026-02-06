@@ -6,6 +6,6 @@
 pub mod chronicle;
 pub mod inspector;
 pub mod map;
+pub mod menu;
 pub mod panels;
 pub mod status;
-pub mod menu;
