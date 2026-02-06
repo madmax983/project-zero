@@ -51,6 +51,8 @@ pub struct ColonyResources {
     pub ore: f32,
     /// Total metal available in the colony.
     pub metal: f32,
+    /// Total knowledge available in the colony.
+    pub knowledge: f32,
     /// Maximum food capacity.
     pub max_food: f32,
     /// Maximum wood capacity.
@@ -65,6 +67,8 @@ pub struct ColonyResources {
     pub max_ore: f32,
     /// Maximum metal capacity.
     pub max_metal: f32,
+    /// Maximum knowledge capacity.
+    pub max_knowledge: f32,
 }
 
 impl Default for ColonyResources {
@@ -77,6 +81,7 @@ impl Default for ColonyResources {
             blocks: 0.0,
             ore: 0.0,
             metal: 0.0,
+            knowledge: 0.0,
             max_food: 50.0,
             max_wood: 50.0,
             max_stone: 20.0,
@@ -84,6 +89,7 @@ impl Default for ColonyResources {
             max_blocks: 20.0,
             max_ore: 20.0,
             max_metal: 20.0,
+            max_knowledge: 100.0, // Default for tests
         }
     }
 }
@@ -142,6 +148,7 @@ impl ColonyResources {
             && self.blocks >= cost.blocks
             && self.ore >= cost.ore
             && self.metal >= cost.metal
+            && self.knowledge >= cost.knowledge
     }
 
     /// Deducts the given cost from the colony's resources.
@@ -157,6 +164,7 @@ impl ColonyResources {
         self.blocks -= cost.blocks;
         self.ore -= cost.ore;
         self.metal -= cost.metal;
+        self.knowledge -= cost.knowledge;
     }
 
     /// Attempts to deduct the given cost from the colony's resources.

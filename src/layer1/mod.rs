@@ -36,6 +36,8 @@ pub mod seasons;
 pub mod social;
 /// Resource storage limits and stockpile buildings.
 pub mod stockpile;
+/// Technology and research system.
+pub mod tech;
 /// Terrain generation and grid management.
 pub mod terrain;
 /// Pop thoughts and personality.
@@ -65,6 +67,7 @@ pub use resources::*;
 pub use seasons::*;
 pub use social::*;
 pub use stockpile::*;
+pub use tech::*;
 pub use terrain::*;
 pub use thoughts::*;
 pub use utility_ai::*;

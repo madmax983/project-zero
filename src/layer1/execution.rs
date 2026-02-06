@@ -68,6 +68,8 @@ pub enum AssignmentType {
     HousingResident,
     /// Socializing at a tavern.
     TavernVisitor,
+    /// Working at a library.
+    LibraryWorker,
 }
 
 /// Removes pops from farms/housing when they switch to a different action.
@@ -98,6 +100,9 @@ pub fn cleanup_previous_assignment_system(world: &mut World) {
                 if let Some(mut tavern) = world.get_mut::<Tavern>(assigned_entity) {
                     tavern.visitors.retain(|&v| v != pop_entity);
                 }
+            }
+            AssignmentType::LibraryWorker => {
+                // Library component currently doesn't track workers list, so no cleanup needed on building
             }
         }
 
@@ -254,6 +259,14 @@ pub fn arrival_handler_system(world: &mut World) {
                         assignment_type: AssignmentType::TavernVisitor,
                     });
                 }
+                clear_movement_components(world, pop_entity);
+            }
+            ActionType::Research => {
+                // Library has no worker limit logic yet, so always succeed
+                world.entity_mut(pop_entity).insert(AssignedTo {
+                    entity: target_entity,
+                    assignment_type: AssignmentType::LibraryWorker,
+                });
                 clear_movement_components(world, pop_entity);
             }
             ActionType::Work => {

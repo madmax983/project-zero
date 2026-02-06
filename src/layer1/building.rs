@@ -6,6 +6,7 @@ use super::housing::Housing;
 use super::social::Tavern;
 use super::stockpile::Stockpile;
 use crate::layer1::resources::{ColonyResources, RefiningProgress};
+use crate::layer1::tech::{Library, Tech, TechState};
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
@@ -31,9 +32,21 @@ pub enum BuildingType {
     Smelter,
     /// Social gathering place.
     Tavern,
+    /// Research center for Knowledge.
+    Library,
 }
 
 impl BuildingType {
+    /// Returns the tech required to build this building, if any.
+    #[must_use]
+    pub const fn required_tech(&self) -> Option<Tech> {
+        match self {
+            Self::Smelter => Some(Tech::MetalWorking),
+            Self::Tavern => Some(Tech::SocialStructures),
+            _ => None,
+        }
+    }
+
     /// Returns the human-readable label of the building.
     ///
     /// # Examples
@@ -53,6 +66,7 @@ impl BuildingType {
             Self::StoneMason => "Stone Mason",
             Self::Smelter => "Smelter",
             Self::Tavern => "Tavern",
+            Self::Library => "Library",
         }
     }
 
@@ -67,6 +81,7 @@ impl BuildingType {
             Self::StoneMason => 'M',
             Self::Smelter => 'S',
             Self::Tavern => 'T',
+            Self::Library => '?', // Placeholder
         }
     }
 
@@ -107,6 +122,7 @@ impl BuildingType {
                 stone: 10.0,
                 ..Default::default()
             },
+            Self::Library => ColonyResources::default(),
         }
     }
 
@@ -234,6 +250,9 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
         BuildingType::Tavern => {
             entity.insert(Tavern::default());
         }
+        BuildingType::Library => {
+            entity.insert(Library);
+        }
     }
 }
 
@@ -269,6 +288,23 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
     if let Err(e) = validate_building_placement(world, x, y) {
         handle_placement_error(world, e);
         return false;
+    }
+
+    // Check Tech requirements
+    if let Some(tech) = building_type.required_tech() {
+        // We use get_resource because TechState might not be initialized in some tests
+        // (though we should initialize it)
+        // If it's missing, we default to "locked" to be safe.
+        let tech_unlocked = world
+            .get_resource::<TechState>()
+            .is_some_and(|state| state.is_unlocked(tech));
+
+        if !tech_unlocked {
+            if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+                log.add(format!("Requires technology: {}", tech.label()));
+            }
+            return false;
+        }
     }
 
     // Check affordability
@@ -330,7 +366,8 @@ mod tests {
         assert_eq!(BuildingType::LumberMill.next(), BuildingType::StoneMason);
         assert_eq!(BuildingType::StoneMason.next(), BuildingType::Smelter);
         assert_eq!(BuildingType::Smelter.next(), BuildingType::Tavern);
-        assert_eq!(BuildingType::Tavern.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::Tavern.next(), BuildingType::Library);
+        assert_eq!(BuildingType::Library.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -397,6 +434,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Tavern);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Library);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

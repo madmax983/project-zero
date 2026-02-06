@@ -1,5 +1,5 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::needs::Needs;
+use bevy_ecs::prelude::*;
 
 /// High-level action types pops can choose
 #[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
@@ -14,13 +14,15 @@ pub enum ActionType {
     Explore,
     /// Perform designated work (Mine, Build, Chop)
     Work,
+    /// Research new technologies at Library
+    Research,
     /// Do nothing
     Idle,
 }
 
 impl ActionType {
     /// Total number of action types
-    pub const COUNT: usize = 6;
+    pub const COUNT: usize = 7;
 
     /// Converts action type to array index
     #[must_use]
@@ -31,7 +33,8 @@ impl ActionType {
             Self::Socialize => 2,
             Self::Explore => 3,
             Self::Work => 4,
-            Self::Idle => 5,
+            Self::Research => 5,
+            Self::Idle => 6,
         }
     }
 }

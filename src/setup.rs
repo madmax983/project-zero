@@ -4,8 +4,8 @@ use bevy_ecs::prelude::*;
 
 use crate::layer1::{
     BuildMode, BuildingTracker, Chronicle, ChronicleUiState, ColonyMemory, ColonyResources,
-    DesignationMode, NamedLocations, OccupiedTiles, SeasonState, UtilityConfig, Viewport,
-    generate_terrain, initial_chronicle_event, initial_naming_system, spawn_initial_pops,
+    DesignationMode, NamedLocations, OccupiedTiles, SeasonState, TechState, UtilityConfig,
+    Viewport, generate_terrain, initial_chronicle_event, initial_naming_system, spawn_initial_pops,
 };
 use crate::shared::input::InputContextStack;
 use crate::shared::log::MessageLog;
@@ -38,6 +38,7 @@ pub fn setup_world() -> World {
     world.insert_resource(ColonyMemory::default());
     world.insert_resource(SeasonState::default());
     world.insert_resource(NamedLocations::default());
+    world.insert_resource(TechState::default());
 
     spawn_initial_pops(&mut world);
     initial_naming_system(&mut world);
@@ -67,6 +68,7 @@ mod tests {
         assert!(world.contains_resource::<UtilityConfig>());
         assert!(world.contains_resource::<SeasonState>());
         assert!(world.contains_resource::<NamedLocations>());
+        assert!(world.contains_resource::<TechState>());
     }
 
     #[test]
