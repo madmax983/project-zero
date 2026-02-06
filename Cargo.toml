@@ -10,7 +10,7 @@ wasm = ["dep:ratzilla", "dep:getrandom"]
 
 [dependencies]
 bevy_ecs = "0.15"
-ratatui = "0.30"
+ratatui = { version = "0.30", default-features = false, features = ["std", "all-widgets", "macros", "underline-color"] }
 crossterm = { version = "0.28", optional = true }
 ratzilla = { version = "0.3", optional = true }
 getrandom = { version = "0.3", features = ["wasm_js"], optional = true }
