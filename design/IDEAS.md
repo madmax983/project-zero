@@ -804,7 +804,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Tavern
+## The Tavern [SPECCED]
 
 **Layer:** 1
 
