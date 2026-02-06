@@ -1,3 +1,11 @@
+/// Core types for Utility AI.
+pub mod types;
+/// Mathematical functions for utility scoring.
+pub mod math;
+
+pub use types::*;
+pub use math::*;
+
 use crate::layer1::farm::Farm;
 use crate::layer1::housing::Housing;
 use crate::layer1::map::GridPosition;
@@ -6,208 +14,7 @@ use crate::layer1::social::{Tavern, evaluate_socialize};
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 
-/// High-level action types pops can choose
-#[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
-pub enum ActionType {
-    /// Eat food to reduce hunger
-    SatisfyHunger,
-    /// Sleep to reduce fatigue
-    SatisfyRest,
-    /// Interact with other pops
-    Socialize,
-    /// Explore the map
-    Explore,
-    /// Perform designated work (Mine, Build, Chop)
-    Work,
-    /// Do nothing
-    Idle,
-}
-
-impl ActionType {
-    /// Total number of action types
-    pub const COUNT: usize = 6;
-
-    /// Converts action type to array index
-    #[must_use]
-    pub const fn as_index(self) -> usize {
-        match self {
-            Self::SatisfyHunger => 0,
-            Self::SatisfyRest => 1,
-            Self::Socialize => 2,
-            Self::Explore => 3,
-            Self::Work => 4,
-            Self::Idle => 5,
-        }
-    }
-}
-
-/// Pop's current action and commitment state
-#[derive(Component, Debug)]
-pub struct PopAction {
-    /// The current action being performed
-    pub current: ActionType,
-    /// The utility score of the current action
-    pub current_utility: f32,
-    /// How many ticks the pop has been doing this action
-    pub ticks_committed: u32,
-}
-
-impl Default for PopAction {
-    fn default() -> Self {
-        Self {
-            current: ActionType::Idle,
-            current_utility: 0.0,
-            ticks_committed: 0,
-        }
-    }
-}
-
-/// Learned utility weights (reinforcement learning)
-#[derive(Component, Clone, Copy, Debug)]
-pub struct UtilityWeights {
-    /// Weight for distance factor (lower distance is better)
-    pub distance_weight: f32,
-    /// Weight for availability factor (less crowded is better)
-    pub availability_weight: f32,
-    /// Weight for social factor
-    pub social_weight: f32,
-    /// Count of successful actions per type
-    pub action_success_count: [u32; ActionType::COUNT],
-    /// Count of attempted actions per type
-    pub action_attempt_count: [u32; ActionType::COUNT],
-}
-
-impl Default for UtilityWeights {
-    fn default() -> Self {
-        Self {
-            distance_weight: 1.0,
-            availability_weight: 1.0,
-            social_weight: 1.0,
-            action_success_count: [0; ActionType::COUNT],
-            action_attempt_count: [0; ActionType::COUNT],
-        }
-    }
-}
-
-/// Tracks HTN plan for learning
-#[derive(Component, Debug)]
-pub struct PlanOutcome {
-    /// The action type being tracked
-    pub action: ActionType,
-    /// Tick when the action started
-    pub started_at: u64,
-    /// Needs state before the action
-    pub needs_before: Needs,
-}
-
-/// Global configuration for utility system
-#[derive(Resource, Clone)]
-pub struct UtilityConfig {
-    /// Minimum utility difference required to switch actions
-    pub switch_threshold: f32,
-    /// How often (in ticks) to re-evaluate actions
-    pub evaluation_interval: u32,
-    /// How fast weights adjust (0.0 to 1.0)
-    pub learning_rate: f32,
-    /// Min and max values for weights
-    pub weight_clamp: (f32, f32),
-}
-
-impl Default for UtilityConfig {
-    fn default() -> Self {
-        Self {
-            switch_threshold: 0.15,
-            evaluation_interval: 1,
-            learning_rate: 0.05,
-            weight_clamp: (0.5, 2.0),
-        }
-    }
-}
-
-/// Colony-wide memory (zeitgeist)
-#[derive(Resource, Default, Clone)]
-pub struct ColonyMemory {
-    /// Total successful actions across all pops
-    pub total_successful_actions: [u32; ActionType::COUNT],
-    /// Average duration of actions
-    pub average_action_duration: [u32; ActionType::COUNT],
-}
-
-/// Marker component to trigger HTN plan creation
-#[derive(Component)]
-pub struct StartPlan {
-    /// The action to plan for
-    pub action: ActionType,
-    /// The target entity (if any)
-    pub target: Option<Entity>,
-}
-
-/// Stub for HTN Plan component (future integration)
-#[derive(Component)]
-pub struct Plan;
-
-/// Calculates urgency from a need value (0.0-1.0).
-/// Lower need value = higher urgency.
-#[must_use]
-pub fn need_response_curve(need_value: f32) -> f32 {
-    need_value.mul_add(-need_value, 1.0)
-}
-
-/// Calculates Manhattan distance between two positions.
-#[must_use]
-pub const fn manhattan_distance(pos1: &GridPosition, pos2: &GridPosition) -> i32 {
-    (pos1.x - pos2.x).abs() + (pos1.y - pos2.y).abs()
-}
-
-/// Calculates a score based on context (distance, availability).
-#[must_use]
-pub fn calculate_context_score(
-    pop_pos: GridPosition,
-    target_pos: Option<GridPosition>,
-    building_capacity: usize,
-    building_occupied: usize,
-    weights: &UtilityWeights,
-) -> f32 {
-    let mut score = 1.0;
-
-    // Distance factor (closer = better)
-    if let Some(target) = target_pos {
-        let distance = manhattan_distance(&pop_pos, &target);
-        #[allow(clippy::cast_precision_loss)]
-        let distance_factor = 1.0 / (distance as f32).mul_add(0.1, 1.0);
-        score *= distance_factor.powf(weights.distance_weight);
-    }
-
-    // Availability factor (less crowded = better)
-    if building_capacity > 0 {
-        #[allow(clippy::cast_precision_loss)]
-        let availability = 1.0 - (building_occupied as f32 / building_capacity as f32);
-        score *= availability.powf(weights.availability_weight);
-    }
-
-    // Social factor (future - for now just identity)
-    score *= 1.0_f32.powf(weights.social_weight);
-
-    score.clamp(0.0, 1.0)
-}
-
-/// Calculates a modifier based on past success rates.
-#[must_use]
-pub fn calculate_success_modifier(action: ActionType, weights: &UtilityWeights) -> f32 {
-    let idx = action.as_index();
-    let attempts = weights.action_attempt_count[idx];
-    let successes = weights.action_success_count[idx];
-
-    if attempts == 0 {
-        return 1.0;
-    }
-
-    #[allow(clippy::cast_precision_loss)]
-    let success_rate = successes as f32 / attempts as f32;
-
-    // Convert to modifier: 0.8-1.2 range
-    success_rate.mul_add(0.4, 0.8)
-}
+use crate::layer1::designation::Designation;
 
 /// Evaluates the utility of satisfying hunger at available farms.
 #[must_use]
@@ -274,8 +81,6 @@ pub fn evaluate_satisfy_rest<'a>(
 
     best
 }
-
-use crate::layer1::designation::Designation;
 
 /// Evaluates the utility of performing work on designations.
 #[must_use]

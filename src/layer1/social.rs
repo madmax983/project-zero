@@ -1,9 +1,9 @@
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
-use crate::layer1::utility_ai::{
-    ActionType, UtilityWeights, calculate_context_score, calculate_success_modifier,
-    need_response_curve,
+use crate::layer1::utility_ai::math::{
+    calculate_context_score, calculate_success_modifier, need_response_curve,
 };
+use crate::layer1::utility_ai::types::{ActionType, UtilityWeights};
 use bevy_ecs::prelude::*;
 
 /// Social gathering place component.
@@ -80,7 +80,7 @@ mod tests {
     use crate::layer1::needs::{Needs, decay_needs_system};
     use crate::layer1::pop::Pop;
     use crate::layer1::social::{Tavern, evaluate_socialize, restore_leisure_system};
-    use crate::layer1::utility_ai::{ActionType, UtilityWeights};
+    use crate::layer1::utility_ai::types::{ActionType, UtilityWeights};
     use bevy_ecs::prelude::*;
 
     #[test]
