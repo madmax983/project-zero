@@ -27,6 +27,8 @@ pub enum BuildingType {
     LumberMill,
     /// Refines Stone into Blocks.
     StoneMason,
+    /// Refines Ore into Metal.
+    Smelter,
     /// Social gathering place.
     Tavern,
 }
@@ -49,7 +51,22 @@ impl BuildingType {
             Self::Stockpile => "Stockpile",
             Self::LumberMill => "Lumber Mill",
             Self::StoneMason => "Stone Mason",
+            Self::Smelter => "Smelter",
             Self::Tavern => "Tavern",
+        }
+    }
+
+    /// Returns the character representation of the building.
+    #[must_use]
+    pub const fn char(&self) -> char {
+        match self {
+            Self::Housing => 'H',
+            Self::Farm => 'F',
+            Self::Stockpile => '=',
+            Self::LumberMill => 'L',
+            Self::StoneMason => 'M',
+            Self::Smelter => 'S',
+            Self::Tavern => 'T',
         }
     }
 
@@ -78,6 +95,11 @@ impl BuildingType {
             Self::StoneMason => ColonyResources {
                 wood: 40.0,
                 stone: 20.0,
+                ..Default::default()
+            },
+            Self::Smelter => ColonyResources {
+                wood: 20.0,
+                stone: 50.0,
                 ..Default::default()
             },
             Self::Tavern => ColonyResources {
@@ -203,7 +225,7 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
         BuildingType::Stockpile => {
             entity.insert(Stockpile::default());
         }
-        BuildingType::LumberMill | BuildingType::StoneMason => {
+        BuildingType::LumberMill | BuildingType::StoneMason | BuildingType::Smelter => {
             entity.insert(RefiningProgress {
                 current: 0.0,
                 max: 10.0,
@@ -306,7 +328,8 @@ mod tests {
         assert_eq!(BuildingType::Farm.next(), BuildingType::Stockpile);
         assert_eq!(BuildingType::Stockpile.next(), BuildingType::LumberMill);
         assert_eq!(BuildingType::LumberMill.next(), BuildingType::StoneMason);
-        assert_eq!(BuildingType::StoneMason.next(), BuildingType::Tavern);
+        assert_eq!(BuildingType::StoneMason.next(), BuildingType::Smelter);
+        assert_eq!(BuildingType::Smelter.next(), BuildingType::Tavern);
         assert_eq!(BuildingType::Tavern.next(), BuildingType::Housing);
     }
 
@@ -368,6 +391,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::StoneMason);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Smelter);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Tavern);

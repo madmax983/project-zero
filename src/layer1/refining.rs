@@ -21,7 +21,7 @@ pub fn process_refining_system(world: &mut World) {
     let mut updates = Vec::new();
 
     // Snapshot resources needed for checking conditions to avoid borrowing conflict
-    let (wood, planks, max_planks, stone, blocks, max_blocks) = {
+    let (wood, planks, max_planks, stone, blocks, max_blocks, ore, max_metal, metal) = {
         let res = world.resource::<ColonyResources>();
         (
             res.wood,
@@ -30,6 +30,9 @@ pub fn process_refining_system(world: &mut World) {
             res.stone,
             res.blocks,
             res.max_blocks,
+            res.ore,
+            res.max_metal,
+            res.metal,
         )
     };
 
@@ -66,6 +69,18 @@ pub fn process_refining_system(world: &mut World) {
                 },
                 ColonyResources {
                     blocks: 1.0,
+                    ..Default::default()
+                },
+            ),
+            BuildingType::Smelter => (
+                ore >= 1.0 && wood >= 1.0 && metal < max_metal,
+                ColonyResources {
+                    ore: 1.0,
+                    wood: 1.0,
+                    ..Default::default()
+                },
+                ColonyResources {
+                    metal: 1.0,
                     ..Default::default()
                 },
             ),
@@ -109,6 +124,7 @@ pub fn process_refining_system(world: &mut World) {
             resources.deduct(input);
             resources.add_planks(output.planks);
             resources.add_blocks(output.blocks);
+            resources.add_metal(output.metal);
         }
     }
 }
