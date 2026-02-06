@@ -4,6 +4,14 @@ Map of connected and disconnected systems.
 
 ### Connected Seams
 
+### INT-002: Stats -> Status Bar UI
+- **Date:** 2026-02-18
+- **Systems connected:** `Pop` / `ColonyResources` -> `ui::status::render_status_bar`
+- **Glue added:**
+    - Updated `render_status_bar` in `src/ui/status.rs` to count pops and read resources.
+    - Updated `get_status_string` to format "Souls" and "Yield".
+- **Tests:** `tests/integration/ui_stats.rs` (Integration test verified)
+
 ### INT-001: Socialize Action -> Tavern Visitor
 - **Date:** 2026-02-17
 - **Systems connected:** `utility_ai::evaluate_actions_system` -> `execution::arrival_handler_system` -> `social::restore_leisure_system`
@@ -20,4 +28,4 @@ Map of connected and disconnected systems.
 - [ ] Utility AI -> Housing Assignment (Checked: Connected via `ActionType::SatisfyRest`)
 - [ ] Food Production -> Needs Satisfaction (Checked: Connected via `consume_food_system`)
 - [ ] Building Costs -> Resource Deduction (Checked: Connected via `try_place_building`)
-- [ ] Pop Death -> UI Counter (Unknown status)
+- [ ] Pop Death -> UI Counter (Resolved by INT-002)
