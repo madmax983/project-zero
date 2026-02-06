@@ -318,7 +318,7 @@ impl RefiningProgress {
 /// # Examples
 ///
 /// ```
-/// use scale::layer1::resources::{mine_rock, ColonyResources, MiningProgress};
+/// use scale::layer1::resources::{mine_rock, ColonyResources, MiningProgress, ResourceItem, ResourceType};
 /// use scale::layer1::terrain::{TerrainGrid, TerrainType};
 /// use scale::layer1::GridPosition;
 /// use bevy_ecs::prelude::*;
@@ -340,9 +340,10 @@ impl RefiningProgress {
 /// // 3. Work until done
 /// mine_rock(&mut world, designation, 10.0);
 ///
-/// // 4. Verify Result
-/// let resources = world.resource::<ColonyResources>();
-/// assert_eq!(resources.stone, 1.0);
+/// // 4. Verify a ResourceItem was spawned
+/// let items: Vec<_> = world.query::<&ResourceItem>().iter(&world).collect();
+/// assert!(!items.is_empty());
+/// assert_eq!(items[0].resource_type, ResourceType::Stone);
 /// ```
 #[allow(clippy::cast_sign_loss)]
 pub fn mine_rock(world: &mut World, designation_entity: Entity, work_amount: f32) {

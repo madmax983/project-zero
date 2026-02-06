@@ -1,16 +1,20 @@
 //! Native platform adapter (crossterm → `GameKeyEvent` / `GameMouseEvent`).
 
-use crossterm::event::{KeyCode, KeyEvent, MouseEvent, MouseEventKind};
+use crossterm::event::{KeyCode, KeyEvent, KeyEventKind, MouseEvent, MouseEventKind};
 
 use super::input::{GameKeyCode, GameKeyEvent, GameMouseEvent};
 
 /// Convert a crossterm `KeyEvent` to a platform-agnostic `GameKeyEvent`.
 ///
-/// Returns `None` for keys we don't handle.
+/// Only `KeyEventKind::Press` events are translated. On Windows, crossterm
+/// also sends `Release` and `Repeat` events which would double-fire inputs.
 impl TryFrom<KeyEvent> for GameKeyEvent {
     type Error = ();
 
     fn try_from(key: KeyEvent) -> Result<Self, Self::Error> {
+        if key.kind != KeyEventKind::Press {
+            return Err(());
+        }
         let code = match key.code {
             KeyCode::Char(c) => GameKeyCode::Char(c),
             KeyCode::Enter => GameKeyCode::Enter,
@@ -49,7 +53,7 @@ impl TryFrom<MouseEvent> for GameMouseEvent {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crossterm::event::{KeyModifiers, MouseButton};
+    use crossterm::event::{KeyEventKind, KeyModifiers, MouseButton};
 
     fn crossterm_key(code: KeyCode) -> KeyEvent {
         KeyEvent::new(code, KeyModifiers::empty())
@@ -123,6 +127,26 @@ mod tests {
     fn test_unhandled_key_returns_none() {
         let result = GameKeyEvent::try_from(crossterm_key(KeyCode::F(1)));
         assert!(result.is_err());
+    }
+
+    #[test]
+    fn test_key_release_ignored() {
+        let key = KeyEvent::new_with_kind(
+            KeyCode::Char(' '),
+            KeyModifiers::empty(),
+            KeyEventKind::Release,
+        );
+        assert!(GameKeyEvent::try_from(key).is_err());
+    }
+
+    #[test]
+    fn test_key_repeat_ignored() {
+        let key = KeyEvent::new_with_kind(
+            KeyCode::Char(' '),
+            KeyModifiers::empty(),
+            KeyEventKind::Repeat,
+        );
+        assert!(GameKeyEvent::try_from(key).is_err());
     }
 
     #[test]
