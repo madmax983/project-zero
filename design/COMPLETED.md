@@ -27,3 +27,4 @@ Implemented features. Architect: read this to understand current state.
 - [x] `028` Social Need and Tavern — `specs/028-social-tavern.md` — completed 2026-02-07
 - [x] `024` Metal Industry — `specs/024-metal-industry.md` — completed 2026-02-08
 - [x] `011` Named locations — `specs/011-named-locations.md` — completed 2026-02-02
+- [x] `INT-001` Integration: Socialize Action -> Tavern Visitor — completed 2026-02-17

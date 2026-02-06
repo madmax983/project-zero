@@ -64,6 +64,7 @@ pub fn biography_monitor_system(world: &mut World) {
         let event_text = match assigned.assignment_type {
             AssignmentType::FarmWorker => format!("Started working at {target_name}."),
             AssignmentType::HousingResident => format!("Moved into {target_name}."),
+            AssignmentType::TavernVisitor => format!("Visited {target_name} to socialize."),
         };
 
         // Avoid duplicate consecutive events

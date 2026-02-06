@@ -188,6 +188,9 @@ mod tests {
 
     #[test]
     fn test_spawn_initial_pops_retries() {
+        use rand::SeedableRng;
+        use rand::rngs::StdRng;
+
         let mut world = World::new();
         let width = 10;
         let height = 10;
@@ -201,17 +204,11 @@ mod tests {
         };
         world.insert_resource(terrain);
 
-        // Mock RNG could be used here, but for simplicity we rely on the fact
-        // that with only 1/100 walkable tiles, the random generator WILL fail many times
-        // before succeeding 5 times. This ensures the loop and 'if is_walkable' false path
-        // are exercised.
-        // We use a seeded RNG for determinism if possible, but standard RNG is fine for coverage.
-        // To be safer and deterministic, we can use a SeedableRng if we import it,
-        // but `rand::rngs::StdRng` requires a feature. `rand::rngs::mock::StepRng` isn't available.
-        // We'll just run it. The probability of finding 5 spots in 5 tries on 1/100 map is 10^-10.
-        // So retries are guaranteed.
-
-        spawn_initial_pops(&mut world);
+        // Use internal spawning with seeded RNG to ensure we hit the 1/100 chance enough times
+        // or effectively test the retry logic deterministically.
+        // With Seed 42, we know it works.
+        let mut rng = StdRng::seed_from_u64(42);
+        spawn_initial_pops_internal(&mut world, &mut rng);
 
         let count = world.query::<&Pop>().iter(&world).count();
         assert_eq!(count, 5);
