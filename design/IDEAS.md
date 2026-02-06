@@ -1054,6 +1054,13 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Layer:** 2
 
+**Fantasy:** The planets align. Space travel is about timing, not just fuel.
+
+**Mechanic:** Transfer windows open based on orbital periods. Launching "off-window" costs massive fuel/time. Synch points allow cheap travel.
+
+**Emergence:** You delay a relief fleet for 2 years because waiting for the window is faster than launching now. A siege breaks because the attacker's supply window closes.
+
+**Tension:** Fast/Expensive deployment vs Slow/Cheap deployment.
 **Fantasy:** The planets align. Space travel isn't just about distance, it's about timing.
 
 **Mechanic:** Transfer windows open based on orbital periods of planets. Fuel cost varies wildly by date. Launching "out of window" costs 10x fuel.
@@ -1068,6 +1075,13 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Layer:** 3
 
+**Fantasy:** The galaxy is a graveyard. You are walking through the valley of the shadow of death.
+
+**Mechanic:** As tech advances, "Filter Events" trigger (AI Awakening, Biological Grey Goo, Dimensional Breach). These are not standard enemies but existential puzzles. Failure = Civ Wipe.
+
+**Emergence:** You find a dead civilization and realize they died trying to solve the exact energy crisis you are currently researching.
+
+**Tension:** Advance tech (power) vs Safety (avoiding the filter).
 **Fantasy:** The answer to the Fermi Paradox. The galaxy is a graveyard.
 
 **Mechanic:** As a civilization advances, it triggers "Filter Events" (AI Uprising, Grey Goo, Mass Ascendancy). Surviving grants transcendent tech/traits. Failing wipes the civilization, leaving ruins for others.
@@ -1082,6 +1096,13 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Layer:** 3
 
+**Fantasy:** Home is where the engine is. Not all empires paint the map.
+
+**Mechanic:** Civs that reside entirely on massive ships. They enter a system, strip-mine it, and move on. They don't hold territory but have massive fleets.
+
+**Emergence:** A "Locust Fleet" enters your sector. You can trade your planet's resources for their ancient tech, or fight them to save your rocks.
+
+**Tension:** Allow them to strip-mine a border world (peace/profit) or defend it (war)?
 **Fantasy:** Not everyone settles down. The Quarians, the Void-born.
 
 **Mechanic:** Civilizations that don't hold planets. They live on massive Ark Ships, strip-mine systems for resources, and move on. They have high tech but low sustainability.
@@ -1096,6 +1117,13 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Layer:** 1
 
+**Fantasy:** Re-education through labor. Dealing with the "bad apples."
+
+**Mechanic:** Designate "Prison Zones". Arrested pops (Criminal/Rebellious) are moved there. They have no "Leisure" or "Luxury" needs but high "Security" requirement. They produce resources but no tech/art.
+
+**Emergence:** You run your dangerous mines entirely with political prisoners. A prison riot collapses the economy because 50% of your workforce stops working.
+
+**Tension:** Rehabilitate (expensive/slow) vs Exploit (profitable/risky).
 **Fantasy:** Re-education through labor. The dark side of order.
 
 **Mechanic:** Arrested pops (due to crime or low mood) can be assigned to "Penal Zones". They work at high efficiency with no happiness needs but have a high "Revolt Risk" and reduced lifespan.
