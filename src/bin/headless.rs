@@ -155,7 +155,7 @@ fn main() {
                 }
             }
             "buildings" => print_buildings(&mut world),
-            _ => println!("Unknown command: '{}'. Type 'help' for commands.", command),
+            _ => println!("Unknown command: '{command}'. Type 'help' for commands."),
         }
         println!();
     }
@@ -211,7 +211,7 @@ fn run_ticks(world: &mut World, n: u64) {
     }
 
     let end_tick = world.resource::<SimulationTime>().tick;
-    println!("Advanced {} ticks ({} -> {})", n, start_tick, end_tick);
+    println!("Advanced {n} ticks ({start_tick} -> {end_tick})");
 
     // Report any interesting events
     report_events(world);
@@ -249,8 +249,7 @@ fn report_events(world: &mut World) {
 
     if moving > 0 || working > 0 || at_farm > 0 || at_housing > 0 {
         println!(
-            "  Activity: {} moving, {} working, {} eating, {} resting",
-            moving, working, at_farm, at_housing
+            "  Activity: {moving} moving, {working} working, {at_farm} eating, {at_housing} resting"
         );
     }
 }
@@ -267,14 +266,13 @@ fn print_status(world: &mut World) {
     let housing_count = world.query::<&Housing>().iter(world).count();
     let designation_count = world.query::<&Designation>().iter(world).count();
 
-    println!("=== Colony Status (Tick {}) ===", tick);
-    println!("Population: {} pops", pop_count);
+    println!("=== Colony Status (Tick {tick}) ===");
+    println!("Population: {pop_count} pops");
     println!(
-        "Resources: {:.1} food, {:.1} wood, {:.1} stone",
-        food, wood, stone
+        "Resources: {food:.1} food, {wood:.1} wood, {stone:.1} stone"
     );
-    println!("Buildings: {} farms, {} housing", farm_count, housing_count);
-    println!("Designations: {} active", designation_count);
+    println!("Buildings: {farm_count} farms, {housing_count} housing");
+    println!("Designations: {designation_count} active");
 }
 
 fn print_pops(world: &mut World) {
@@ -320,17 +318,16 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
         let mut tiles = std::collections::HashMap::new();
         for y in (center_y - radius)..=(center_y + radius) {
             for x in (center_x - radius)..=(center_x + radius) {
-                if x >= 0 && y >= 0 && x < terrain.width as i32 && y < terrain.height as i32 {
-                    if let Some(t) = terrain.get(x as usize, y as usize) {
+                if x >= 0 && y >= 0 && x < terrain.width as i32 && y < terrain.height as i32
+                    && let Some(t) = terrain.get(x as usize, y as usize) {
                         tiles.insert((x, y), t);
                     }
-                }
             }
         }
         (terrain.width, terrain.height, tiles)
     };
 
-    println!("=== Map around ({}, {}) ===", center_x, center_y);
+    println!("=== Map around ({center_x}, {center_y}) ===");
 
     // Collect pop positions
     let pop_positions: Vec<(i32, i32)> = world
@@ -347,7 +344,7 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
         .collect();
 
     for y in (center_y - radius)..=(center_y + radius) {
-        print!("{:3} ", y);
+        print!("{y:3} ");
         for x in (center_x - radius)..=(center_x + radius) {
             if x < 0 || y < 0 || x >= width as i32 || y >= height as i32 {
                 print!(" ");
@@ -370,7 +367,7 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
                     DesignationType::Chop => '⚒',
                     DesignationType::Demolish => 'X',
                 };
-                print!("{}", c);
+                print!("{c}");
                 continue;
             }
 
@@ -386,7 +383,7 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
                 TerrainType::Water => '~',
                 TerrainType::Tree => 'T',
             };
-            print!("{}", c);
+            print!("{c}");
         }
         println!();
     }
@@ -403,7 +400,7 @@ fn build_at(world: &mut World, building_type: BuildingType, x: i32, y: i32) {
 
     let success = try_place_building(world, x, y, building_type);
     if success {
-        println!("Built {:?} at ({}, {})", building_type, x, y);
+        println!("Built {building_type:?} at ({x}, {y})");
     } else {
         // Check why it failed
         let terrain = world.resource::<TerrainGrid>();
@@ -411,11 +408,11 @@ fn build_at(world: &mut World, building_type: BuildingType, x: i32, y: i32) {
         let occupied = world.resource::<OccupiedTiles>();
 
         if tile.is_none() {
-            println!("Failed: ({}, {}) is out of bounds", x, y);
+            println!("Failed: ({x}, {y}) is out of bounds");
         } else if occupied.0.contains(&(x, y)) {
-            println!("Failed: ({}, {}) is already occupied", x, y);
+            println!("Failed: ({x}, {y}) is already occupied");
         } else if let Some(t) = tile {
-            println!("Failed: cannot build on {:?} at ({}, {})", t, x, y);
+            println!("Failed: cannot build on {t:?} at ({x}, {y})");
         }
     }
 }
@@ -423,7 +420,7 @@ fn build_at(world: &mut World, building_type: BuildingType, x: i32, y: i32) {
 fn designate_at(world: &mut World, designation_type: DesignationType, x: i32, y: i32) {
     let success = try_designate(world, x, y, designation_type);
     if success {
-        println!("Designated {:?} at ({}, {})", designation_type, x, y);
+        println!("Designated {designation_type:?} at ({x}, {y})");
     } else {
         // Check why it failed
         let terrain = world.resource::<TerrainGrid>();
@@ -431,24 +428,23 @@ fn designate_at(world: &mut World, designation_type: DesignationType, x: i32, y:
 
         match designation_type {
             DesignationType::Mine => {
-                if tile != Some(TerrainType::Rock) {
-                    println!("Failed: ({}, {}) is {:?}, need Rock for mining", x, y, tile);
+                if tile == Some(TerrainType::Rock) {
+                    println!("Failed: already designated at ({x}, {y})");
                 } else {
-                    println!("Failed: already designated at ({}, {})", x, y);
+                    println!("Failed: ({x}, {y}) is {tile:?}, need Rock for mining");
                 }
             }
             DesignationType::Chop => {
-                if tile != Some(TerrainType::Tree) {
-                    println!(
-                        "Failed: ({}, {}) is {:?}, need Tree for chopping",
-                        x, y, tile
-                    );
+                if tile == Some(TerrainType::Tree) {
+                    println!("Failed: already designated at ({x}, {y})");
                 } else {
-                    println!("Failed: already designated at ({}, {})", x, y);
+                    println!(
+                        "Failed: ({x}, {y}) is {tile:?}, need Tree for chopping"
+                    );
                 }
             }
             DesignationType::Demolish => {
-                println!("Failed: no building at ({}, {})", x, y);
+                println!("Failed: no building at ({x}, {y})");
             }
         }
     }
@@ -480,8 +476,7 @@ fn find_terrain(world: &mut World, terrain_name: &str, max_count: usize) {
         "dirt" | "d" => TerrainType::Dirt,
         _ => {
             println!(
-                "ERROR: Unknown terrain type: {}. Try: rock, tree, grass, water, dirt",
-                terrain_name
+                "ERROR: Unknown terrain type: {terrain_name}. Try: rock, tree, grass, water, dirt"
             );
             return;
         }
@@ -505,11 +500,11 @@ fn find_terrain(world: &mut World, terrain_name: &str, max_count: usize) {
     }
 
     if found.is_empty() {
-        println!("FOUND: {:?} count=0", target);
+        println!("FOUND: {target:?} count=0");
     } else {
         println!("FOUND: {:?} count={}", target, found.len());
         for (x, y) in &found {
-            println!("  COORD: {} {}", x, y);
+            println!("  COORD: {x} {y}");
         }
     }
 }
@@ -522,18 +517,17 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: i32) {
         let mut tiles = std::collections::HashMap::new();
         for y in (center_y - radius)..=(center_y + radius) {
             for x in (center_x - radius)..=(center_x + radius) {
-                if x >= 0 && y >= 0 && x < terrain.width as i32 && y < terrain.height as i32 {
-                    if let Some(t) = terrain.get(x as usize, y as usize) {
+                if x >= 0 && y >= 0 && x < terrain.width as i32 && y < terrain.height as i32
+                    && let Some(t) = terrain.get(x as usize, y as usize) {
                         tiles.insert((x, y), t);
                     }
-                }
             }
         }
         (terrain.width, terrain.height, tiles)
     };
 
-    println!("SCAN: center=({},{}) radius={}", center_x, center_y, radius);
-    println!("BOUNDS: width={} height={}", width, height);
+    println!("SCAN: center=({center_x},{center_y}) radius={radius}");
+    println!("BOUNDS: width={width} height={height}");
 
     // Collect entities at positions
     let pop_positions: Vec<(i32, i32)> = world
@@ -608,7 +602,7 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: i32) {
             }
 
             if entities.is_empty() {
-                println!("TILE: {} {} terrain={}", x, y, terrain_name);
+                println!("TILE: {x} {y} terrain={terrain_name}");
             } else {
                 println!(
                     "TILE: {} {} terrain={} entities={}",
@@ -628,7 +622,7 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
     let terrain = world.resource::<TerrainGrid>();
 
     if x < 0 || y < 0 || x >= terrain.width as i32 || y >= terrain.height as i32 {
-        println!("TILE_INFO: {} {} ERROR=out_of_bounds", x, y);
+        println!("TILE_INFO: {x} {y} ERROR=out_of_bounds");
         return;
     }
 
@@ -665,8 +659,7 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
     let occupied = world.resource::<OccupiedTiles>().0.contains(&(x, y));
 
     println!(
-        "TILE_INFO: {} {} terrain={} walkable={} buildable={} occupied={} pop={} farm={} housing={}",
-        x, y, terrain_name, walkable, buildable, occupied, has_pop, has_farm, has_housing
+        "TILE_INFO: {x} {y} terrain={terrain_name} walkable={walkable} buildable={buildable} occupied={occupied} pop={has_pop} farm={has_farm} housing={has_housing}"
     );
 }
 
@@ -714,7 +707,7 @@ fn print_buildings(world: &mut World) {
         count += 1;
     }
 
-    println!("BUILDINGS_END: count={}", count);
+    println!("BUILDINGS_END: count={count}");
 }
 
 fn print_help() {

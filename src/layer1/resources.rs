@@ -649,6 +649,9 @@ mod tests {
         let mut resources = ColonyResources::default();
         resources.wood = 10.0;
         resources.add_wood(-20.0);
-        assert!((resources.wood - 0.0).abs() < f32::EPSILON, "Resources should not be negative");
+        assert!(
+            (resources.wood - 0.0).abs() < f32::EPSILON,
+            "Resources should not be negative"
+        );
     }
 }

@@ -473,12 +473,8 @@ pub fn track_plan_outcomes_system(world: &mut World) {
 
         // Calculate success
         let success = match outcome.action {
-            ActionType::SatisfyHunger => {
-                (needs_after.hunger - outcome.needs_before.hunger) > 0.05
-            }
-            ActionType::SatisfyRest => {
-                (needs_after.rest - outcome.needs_before.rest) > 0.05
-            }
+            ActionType::SatisfyHunger => (needs_after.hunger - outcome.needs_before.hunger) > 0.05,
+            ActionType::SatisfyRest => (needs_after.rest - outcome.needs_before.rest) > 0.05,
             // For now, assume other actions are successful if completed
             ActionType::Work | ActionType::Socialize | ActionType::Explore | ActionType::Idle => {
                 true

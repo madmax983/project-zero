@@ -4,7 +4,9 @@
 use bevy_ecs::prelude::*;
 use ratatui::{
     prelude::*,
-    widgets::{Block, BorderType, Borders, Cell, Gauge, List, ListItem, Paragraph, Row, Table, Wrap},
+    widgets::{
+        Block, BorderType, Borders, Cell, Gauge, List, ListItem, Paragraph, Row, Table, Wrap,
+    },
 };
 
 use crate::experimental::biography::Biography;
@@ -295,7 +297,10 @@ fn render_biography(frame: &mut Frame, area: Rect, bio: &Biography) {
         .take(5)
         .map(|e| {
             ListItem::new(Line::from(vec![
-                Span::styled(format!("[{}] ", e.tick), Style::default().fg(Color::DarkGray)),
+                Span::styled(
+                    format!("[{}] ", e.tick),
+                    Style::default().fg(Color::DarkGray),
+                ),
                 Span::raw(&e.text),
             ]))
         })

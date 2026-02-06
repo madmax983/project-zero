@@ -1,10 +1,10 @@
 // src/layer1/refining.rs
 
-use bevy_ecs::prelude::*;
-use crate::layer1::resources::{ColonyResources, RefiningProgress};
-use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::GridPosition;
+use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::pop::Pop;
+use crate::layer1::resources::{ColonyResources, RefiningProgress};
+use bevy_ecs::prelude::*;
 
 /// System that processes refining at buildings like Lumber Mills and Stone Masons.
 ///
@@ -23,7 +23,14 @@ pub fn process_refining_system(world: &mut World) {
     // Snapshot resources needed for checking conditions to avoid borrowing conflict
     let (wood, planks, max_planks, stone, blocks, max_blocks) = {
         let res = world.resource::<ColonyResources>();
-        (res.wood, res.planks, res.max_planks, res.stone, res.blocks, res.max_blocks)
+        (
+            res.wood,
+            res.planks,
+            res.max_planks,
+            res.stone,
+            res.blocks,
+            res.max_blocks,
+        )
     };
 
     // Iterate buildings (Immutable query)
@@ -31,22 +38,42 @@ pub fn process_refining_system(world: &mut World) {
 
     for (entity, building, pos, _) in query.iter(world) {
         // Check worker range (manhattan distance <= 10)
-        let has_worker = worker_positions.iter().any(|p| (p.x - pos.x).abs() + (p.y - pos.y).abs() <= 10);
+        let has_worker = worker_positions
+            .iter()
+            .any(|p| (p.x - pos.x).abs() + (p.y - pos.y).abs() <= 10);
 
-        if !has_worker { continue; }
+        if !has_worker {
+            continue;
+        }
 
         let (can_refine, input_cost, output_gain) = match building.building_type {
-            BuildingType::LumberMill => {
-                (wood >= 1.0 && planks < max_planks,
-                 ColonyResources { wood: 1.0, ..Default::default() },
-                 ColonyResources { planks: 1.0, ..Default::default() })
-            },
-            BuildingType::StoneMason => {
-                (stone >= 1.0 && blocks < max_blocks,
-                 ColonyResources { stone: 1.0, ..Default::default() },
-                 ColonyResources { blocks: 1.0, ..Default::default() })
-            },
-            _ => (false, ColonyResources::default(), ColonyResources::default()),
+            BuildingType::LumberMill => (
+                wood >= 1.0 && planks < max_planks,
+                ColonyResources {
+                    wood: 1.0,
+                    ..Default::default()
+                },
+                ColonyResources {
+                    planks: 1.0,
+                    ..Default::default()
+                },
+            ),
+            BuildingType::StoneMason => (
+                stone >= 1.0 && blocks < max_blocks,
+                ColonyResources {
+                    stone: 1.0,
+                    ..Default::default()
+                },
+                ColonyResources {
+                    blocks: 1.0,
+                    ..Default::default()
+                },
+            ),
+            _ => (
+                false,
+                ColonyResources::default(),
+                ColonyResources::default(),
+            ),
         };
 
         if can_refine {
@@ -61,13 +88,13 @@ pub fn process_refining_system(world: &mut World) {
     let mut finished_jobs = Vec::new();
 
     for (entity, work, input, output) in &updates {
-         if let Some(mut progress) = world.get_mut::<RefiningProgress>(*entity) {
-             progress.current += work;
-             if progress.is_complete() {
-                 progress.current = 0.0;
-                 finished_jobs.push((input, output));
-             }
-         }
+        if let Some(mut progress) = world.get_mut::<RefiningProgress>(*entity) {
+            progress.current += work;
+            if progress.is_complete() {
+                progress.current = 0.0;
+                finished_jobs.push((input, output));
+            }
+        }
     }
 
     // Update Resources
@@ -88,12 +115,12 @@ pub fn process_refining_system(world: &mut World) {
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::resources::{ColonyResources, RefiningProgress};
-    use crate::layer1::building::{Building, BuildingType};
-    use crate::layer1::refining::process_refining_system;
-    use crate::layer1::pop::Pop;
     use crate::layer1::GridPosition;
+    use crate::layer1::building::{Building, BuildingType};
+    use crate::layer1::pop::Pop;
+    use crate::layer1::refining::process_refining_system;
+    use crate::layer1::resources::{ColonyResources, RefiningProgress};
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_colony_resources_refined_fields() {
@@ -137,16 +164,18 @@ mod tests {
 
         // Spawn Lumber Mill at (5, 5)
         world.spawn((
-            Building { building_type: BuildingType::LumberMill },
+            Building {
+                building_type: BuildingType::LumberMill,
+            },
             GridPosition { x: 5, y: 5 },
-            RefiningProgress { current: 0.0, max: 10.0 }, // 10 ticks to refine
+            RefiningProgress {
+                current: 0.0,
+                max: 10.0,
+            }, // 10 ticks to refine
         ));
 
         // Spawn Worker nearby at (5, 6)
-        world.spawn((
-            Pop,
-            GridPosition { x: 5, y: 6 },
-        ));
+        world.spawn((Pop, GridPosition { x: 5, y: 6 }));
 
         // Run system
         // 1. Should detect worker
@@ -172,9 +201,14 @@ mod tests {
 
         // Spawn Lumber Mill almost done
         world.spawn((
-            Building { building_type: BuildingType::LumberMill },
+            Building {
+                building_type: BuildingType::LumberMill,
+            },
             GridPosition { x: 5, y: 5 },
-            RefiningProgress { current: 9.9, max: 10.0 },
+            RefiningProgress {
+                current: 9.9,
+                max: 10.0,
+            },
         ));
 
         // Spawn Worker
@@ -204,7 +238,9 @@ mod tests {
         world.insert_resource(resources);
 
         world.spawn((
-            Building { building_type: BuildingType::LumberMill },
+            Building {
+                building_type: BuildingType::LumberMill,
+            },
             GridPosition { x: 5, y: 5 },
             RefiningProgress::default(),
         ));
@@ -228,7 +264,9 @@ mod tests {
         world.insert_resource(resources);
 
         world.spawn((
-            Building { building_type: BuildingType::LumberMill },
+            Building {
+                building_type: BuildingType::LumberMill,
+            },
             GridPosition { x: 5, y: 5 },
             RefiningProgress::default(),
         ));
