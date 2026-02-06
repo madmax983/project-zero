@@ -1,9 +1,9 @@
+use crate::layer1::chronicle::{Chronicle, EventImportance};
+use crate::layer1::map::GridPosition;
+use crate::layer1::pop::Pop;
+use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
-use crate::layer1::pop::Pop;
-use crate::layer1::map::GridPosition;
-use crate::layer1::chronicle::{Chronicle, EventImportance};
-use crate::shared::time::SimulationTime;
 
 /// Stores named locations on the world map.
 #[derive(Resource, Default, Debug)]
@@ -52,11 +52,11 @@ pub fn initial_naming_system(world: &mut World) {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::pop::Pop;
-    use crate::layer1::map::GridPosition;
     use crate::layer1::chronicle::Chronicle;
-    use crate::shared::time::SimulationTime;
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::pop::Pop;
     use crate::layer1::terrain::Viewport;
+    use crate::shared::time::SimulationTime;
 
     #[test]
     fn test_named_locations_resource_default() {
@@ -97,10 +97,7 @@ mod tests {
         world.insert_resource(SimulationTime::default());
 
         // Spawn a pop to define the landing site
-        world.spawn((
-            Pop,
-            GridPosition { x: 40, y: 25 },
-        ));
+        world.spawn((Pop, GridPosition { x: 40, y: 25 }));
 
         // Run system
         initial_naming_system(&mut world);
@@ -116,10 +113,7 @@ mod tests {
         world.insert_resource(Chronicle::default());
         world.insert_resource(SimulationTime::default());
 
-        world.spawn((
-            Pop,
-            GridPosition { x: 40, y: 25 },
-        ));
+        world.spawn((Pop, GridPosition { x: 40, y: 25 }));
 
         initial_naming_system(&mut world);
 

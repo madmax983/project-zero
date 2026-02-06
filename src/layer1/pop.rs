@@ -1,14 +1,26 @@
 //! Population management and entity definitions.
 //!
-//! This module defines the `Pop` entity (the citizens of the colony) and their
-//! spatial existence via `GridPosition`. It also handles the initial creation
-//! of the colony's population.
+//! # The "Pop" (Population Agent)
 //!
-//! # Key Concepts
+//! A "Pop" is the atomic unit of agency in the colony. They are not just resources;
+//! they are semi-autonomous agents driven by a hierarchy of needs (see `needs.rs`)
+//! and decision-making logic (see `utility_ai.rs`).
 //!
-//! * **Pop**: A marker component representing a simulated person.
-//! * **GridPosition**: A discrete 2D coordinate on the map.
-//! * **Spawning**: The process of placing pops on valid terrain.
+//! ## Lifecycle
+//!
+//! 1.  **Spawning**: Pops are created by `spawn_initial_pops` (or potential future immigration events).
+//! 2.  **Simulation**: Every tick, systems in `needs.rs` update their physiological state.
+//! 3.  **Decision**: The Utility AI (`utility_ai.rs`) evaluates options and assigns a `PopAction`.
+//! 4.  **Execution**: The chosen action is carried out, modifying the world or the pop's state.
+//!
+//! ## Components
+//!
+//! A fully initialized Pop entity typically has:
+//! * `Pop`: The marker component.
+//! * `GridPosition`: Physical location.
+//! * `Needs`: Hunger, rest, etc.
+//! * `PopAction`: Current task state.
+//! * `UtilityWeights`: Personality/learning factors.
 
 use super::map::GridPosition;
 use super::needs::Needs;
@@ -19,17 +31,19 @@ use rand::Rng;
 
 /// Marker component for pop entities.
 ///
-/// A "Pop" (short for Population) is a simulated agent in the colony.
-/// They have needs, perform jobs, and require housing.
+/// This component identifies an entity as a "Citizen" of the colony. It is the
+/// primary query filter for most simulation systems (needs, AI, jobs).
 ///
 /// # Examples
 ///
+/// Querying all pops:
 /// ```
 /// use scale::layer1::pop::Pop;
 /// use bevy_ecs::prelude::*;
 ///
-/// let mut world = World::new();
-/// let pop_entity = world.spawn(Pop).id();
+/// fn count_pops(query: Query<&Pop>) -> usize {
+///     query.iter().count()
+/// }
 /// ```
 #[derive(Component)]
 pub struct Pop;

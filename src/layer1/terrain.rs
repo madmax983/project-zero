@@ -183,7 +183,9 @@ fn fill_circle(
                 let x = cx_i32.saturating_add(dx);
                 let y = cy_i32.saturating_add(dy);
                 if x >= 0 && x < max_x && y >= 0 && y < max_y {
-                    let idx = (y as usize).saturating_mul(width).saturating_add(x as usize);
+                    let idx = (y as usize)
+                        .saturating_mul(width)
+                        .saturating_add(x as usize);
                     if idx < tiles.len() {
                         tiles[idx] = terrain_type;
                     }

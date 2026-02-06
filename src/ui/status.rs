@@ -101,14 +101,8 @@ mod tests {
         assert!(status.contains("📍 Test City"));
 
         // Without location
-        let status_none = get_status_string(
-            tick,
-            speed,
-            paused,
-            &build_mode,
-            &designation_mode,
-            None,
-        );
+        let status_none =
+            get_status_string(tick, speed, paused, &build_mode, &designation_mode, None);
 
         assert!(status_none.contains("Tick: 100"));
         assert!(!status_none.contains("📍"));
