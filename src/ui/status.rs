@@ -122,10 +122,30 @@ pub fn get_status_line<'a>(
     // Add some padding before mode
     spans.push(Span::raw(" "));
     if build_mode.active {
+        let cost = build_mode.selected.cost();
+        let mut cost_parts: Vec<String> = Vec::new();
+        if cost.wood > 0.0 {
+            cost_parts.push(format!("{:.0}W", cost.wood));
+        }
+        if cost.stone > 0.0 {
+            cost_parts.push(format!("{:.0}S", cost.stone));
+        }
+        if cost.ore > 0.0 {
+            cost_parts.push(format!("{:.0}O", cost.ore));
+        }
+        if cost.metal > 0.0 {
+            cost_parts.push(format!("{:.0}M", cost.metal));
+        }
+        let cost_str = if cost_parts.is_empty() {
+            "Free".to_string()
+        } else {
+            cost_parts.join(" ")
+        };
         spans.push(Span::styled(
             format!(
-                "BUILD: {} (Tab:switch Enter:place Esc:exit)",
-                build_mode.selected.label()
+                "BUILD: {} [{}] (Tab:switch Enter:place Esc:exit)",
+                build_mode.selected.label(),
+                cost_str,
             ),
             Style::default()
                 .fg(Color::Blue)

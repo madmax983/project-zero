@@ -352,11 +352,11 @@ pub const fn get_terrain_char(terrain: TerrainType) -> &'static str {
 #[must_use]
 pub const fn get_terrain_color(terrain: TerrainType) -> Color {
     match terrain {
-        TerrainType::Grass => Color::Green,
-        TerrainType::Dirt => Color::Rgb(139, 90, 43),
-        TerrainType::Rock => Color::DarkGray,
-        TerrainType::Water => Color::Blue,
-        TerrainType::Tree => Color::Rgb(0, 100, 0),
+        TerrainType::Grass => Color::Rgb(100, 200, 100),
+        TerrainType::Dirt => Color::Rgb(205, 150, 80),
+        TerrainType::Rock => Color::Rgb(160, 160, 170),
+        TerrainType::Water => Color::Rgb(80, 140, 255),
+        TerrainType::Tree => Color::Rgb(50, 180, 50),
     }
 }
 
@@ -429,14 +429,22 @@ const HEALTHY_THRESHOLD: f32 = 0.6;
 const WARNING_THRESHOLD: f32 = 0.3;
 
 /// Returns the character and color for rendering a pop.
+///
+/// Display is driven primarily by hunger (the only lethal need).
+/// Leisure/rest affect mood but not survival, so they only downgrade
+/// from happy to neutral — never to the "dying" indicator.
 #[must_use]
 pub fn get_pop_display(needs: &Needs) -> (&'static str, Color) {
-    let health = needs.worst();
-    if health > HEALTHY_THRESHOLD {
-        ("☺", Color::Yellow)
-    } else if health > WARNING_THRESHOLD {
-        ("☻", Color::Rgb(255, 165, 0))
+    if needs.hunger > HEALTHY_THRESHOLD {
+        // Well-fed: check other needs for mood
+        if needs.worst() > WARNING_THRESHOLD {
+            ("☺", Color::Yellow)
+        } else {
+            ("☻", Color::Rgb(255, 165, 0)) // fed but tired/bored
+        }
+    } else if needs.hunger > WARNING_THRESHOLD {
+        ("☻", Color::Rgb(255, 165, 0)) // getting hungry
     } else {
-        ("☹", Color::Red)
+        ("☹", Color::Red) // starving
     }
 }
