@@ -1,3 +1,5 @@
+//! Integration tests for social tavern mechanics.
+
 #[cfg(test)]
 mod tests {
     use bevy_ecs::prelude::*;
