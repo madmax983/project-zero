@@ -149,6 +149,65 @@ mod tests {
         assert!(GameKeyEvent::try_from(key).is_err());
     }
 
+    /// Regression test for Windows double-fire bug.
+    ///
+    /// On Windows, crossterm sends Press + Release for every keypress.
+    /// Without filtering, Space would toggle pause ON (Press) then
+    /// immediately OFF (Release), making pause appear broken.
+    ///
+    /// This test feeds raw crossterm events through the full pipeline:
+    /// crossterm KeyEvent → TryFrom → InputRouter → GameState
+    #[test]
+    fn test_windows_press_release_does_not_double_toggle_pause() {
+        use crate::shared::input::{InputContextStack, InputContext, InputRouter};
+        use crate::shared::menu::MenuState;
+        use crate::shared::selection::Selection;
+        use crate::shared::state::GameState;
+        use crate::shared::time::SimulationTime;
+        use crate::layer1::{BuildMode, DesignationMode, Viewport};
+
+        let mut world = bevy_ecs::prelude::World::new();
+        world.insert_resource(GameState::Running);
+        world.insert_resource(SimulationTime::default());
+        world.insert_resource(Viewport::default());
+        world.insert_resource(BuildMode::default());
+        world.insert_resource(DesignationMode::default());
+        world.insert_resource(MenuState::default());
+        world.insert_resource(Selection::default());
+        let mut stack = InputContextStack::default();
+        stack.push(InputContext::Normal);
+        world.insert_resource(stack);
+
+        let mut router = InputRouter::new();
+
+        // Simulate Windows keypress: Press then Release
+        let press = KeyEvent::new_with_kind(
+            KeyCode::Char(' '),
+            KeyModifiers::empty(),
+            KeyEventKind::Press,
+        );
+        let release = KeyEvent::new_with_kind(
+            KeyCode::Char(' '),
+            KeyModifiers::empty(),
+            KeyEventKind::Release,
+        );
+
+        // Feed both events through the same path as main.rs
+        if let Ok(game_key) = GameKeyEvent::try_from(press) {
+            router.route(&mut world, game_key);
+        }
+        if let Ok(game_key) = GameKeyEvent::try_from(release) {
+            router.route(&mut world, game_key);
+        }
+
+        // Should be Paused — not toggled back to Running
+        assert_eq!(
+            *world.resource::<GameState>(),
+            GameState::Paused,
+            "Press+Release should only toggle once (Press), not double-toggle"
+        );
+    }
+
     #[test]
     fn test_translate_mouse_down() {
         let mouse = MouseEvent {
