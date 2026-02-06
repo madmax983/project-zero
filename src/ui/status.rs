@@ -45,6 +45,7 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
         location_name,
         pop_count,
         resources.food,
+        resources.tools,
     );
 
     let bar = Paragraph::new(status).style(Style::default().bg(Color::DarkGray).fg(Color::White));
@@ -62,6 +63,7 @@ pub fn get_status_string(
     location_name: Option<&str>,
     pop_count: usize,
     food_yield: f32,
+    tools: f32,
 ) -> String {
     let mode_str = if build_mode.active {
         format!(
@@ -80,11 +82,12 @@ pub fn get_status_string(
     let location_str = location_name.map_or_else(String::new, |name| format!("│ 📍 {name} "));
 
     format!(
-        " {} Day {} │ Souls: {} │ Yield: {:.0} │ {} {}{} ",
+        " {} Day {} │ Souls: {} │ Yield: {:.0} │ Tools: {:.0} │ {} {}{} ",
         if paused { "⏸" } else { "▶" },
         tick,
         pop_count,
         food_yield,
+        tools,
         speed.label(),
         location_str,
         mode_str
@@ -113,13 +116,15 @@ mod tests {
             &build_mode,
             &designation_mode,
             Some("Test City"),
-            42,   // Pops
+            42,    // Pops
             123.0, // Food
+            10.0,  // Tools
         );
 
         assert!(status.contains("Day 100"));
         assert!(status.contains("Souls: 42"));
         assert!(status.contains("Yield: 123"));
+        assert!(status.contains("Tools: 10"));
         assert!(status.contains("1x"));
         assert!(status.contains("📍 Test City"));
 
@@ -132,6 +137,7 @@ mod tests {
             &designation_mode,
             None,
             0,
+            0.0,
             0.0,
         );
 

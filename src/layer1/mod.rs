@@ -74,3 +74,6 @@ pub use tech::*;
 pub use terrain::*;
 pub use thoughts::*;
 pub use utility_ai::*;
+
+#[cfg(test)]
+mod tool_tests;
