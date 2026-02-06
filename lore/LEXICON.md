@@ -414,6 +414,73 @@
 
 ---
 
+## Seasonal Rhythms
+
+### the turning / the wheel
+
+**Replaces:** season change, year cycle
+**Code reference:** `SEASON_START` template
+**Usage:**
+- "The turning brings cold."
+- "Another turn of the wheel."
+
+### the Long Cold
+
+**Replaces:** Winter
+**Code reference:** `Season::Winter`
+**Usage:**
+- "Surviving the Long Cold."
+- "Stores must last through the Cold."
+
+### the Green-Time
+
+**Replaces:** Spring/Summer
+**Code reference:** `Season::Spring`, `Season::Summer`
+**Usage:**
+- "Sowing in the Green-Time."
+
+---
+
+## Refining & Industry
+
+### the smelt
+
+**Replaces:** refining process, smelting
+**Code reference:** `Refining` component
+**Usage:**
+- "The smelt is hot today."
+- "Waiting for the smelt."
+
+### iron-blood / star-metal
+
+**Replaces:** refined metal, ingots
+**Code reference:** `ColonyResources.metal`
+**Usage:**
+- "Pouring iron-blood."
+- "Forged from star-metal."
+
+---
+
+## Social & Leisure
+
+### the watering hole
+
+**Replaces:** tavern, pub
+**Code reference:** `Tavern` building
+**Usage:**
+- "Meet me at the watering hole."
+- "Building a proper watering hole."
+
+### nectar / brew
+
+**Replaces:** alcohol, drink
+**Code reference:** `Commodity::Drink` (future)
+**Usage:**
+- "A sip of nectar."
+- "Strong brew."
+
+---
+
 ## UI Text Patterns
 
 ### Status Bar

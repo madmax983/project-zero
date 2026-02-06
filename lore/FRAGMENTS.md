@@ -693,4 +693,115 @@ Types of resource emergencies.
 
 ---
 
+## Seasonal Fragments
+
+### [SEASON_NAME]
+Names for the turning of the year.
+
+- Spring
+- Summer
+- Autumn
+- Winter
+- The Thaw
+- The Burning
+- The Falling
+- The Long Cold
+- The Green-Time
+- The Sun-Time
+- The Rust-Time
+- The Dark-Time
+
+### [SEASON_ADJECTIVE]
+Describing the weather/mood of the season.
+
+- biting
+- sweltering
+- golden
+- bitter
+- hopeful
+- oppressive
+- dying
+- dormant
+- awakening
+- relentless
+
+---
+
+## Industrial Fragments
+
+### [METAL_NAME]
+Flavor names for refined metals.
+
+- iron-blood
+- star-metal
+- steel
+- void-alloy
+- hull-plate
+- refined-ore
+- grey-bar
+
+### [REFINERY_NAME]
+Names for smelting/refining buildings.
+
+- The Great Furnace
+- The Smelter
+- The Foundry
+- The Forge
+- The Iron Heart
+- The Crucible
+- The Kiln
+
+### [REFINERY_ACTION]
+Verbs for the refining process.
+
+- pours
+- smelts
+- forges
+- burns
+- purifies
+- consumes
+
+---
+
+## Social Fragments
+
+### [TAVERN_NAME]
+Names for drinking establishments.
+
+- The Rusty Bucket
+- The Void's Edge
+- The Last Drop
+- The Airlock
+- The Founder's Rest
+- The Gravity Well
+- The Singularity
+- The Broken Seal
+- The Mess
+
+### [DRINK_NAME]
+Alcoholic or recreational beverages.
+
+- rot-gut
+- star-shine
+- void-brew
+- engine-wash
+- fungus-ale
+- synthetic-wine
+- pure-water (rare)
+- nectar
+
+### [SOCIAL_ACTION]
+What happens in the tavern.
+
+- raises a glass
+- sings old songs
+- fights
+- whispers rumors
+- forgets the cold
+- remembers home
+- toasts the dead
+- gambles rations
+
+---
+
 *Add new fragments by type. Keep entries short. Vary tone. Leave room for combination.*
