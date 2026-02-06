@@ -393,9 +393,9 @@ pub const fn get_building_color(building: BuildingType) -> Color {
 #[must_use]
 pub const fn get_designation_char(tool: DesignationType) -> &'static str {
     match tool {
-        DesignationType::Mine => "⛏",
+        DesignationType::Mine => "%",
         DesignationType::Demolish => "X",
-        DesignationType::Chop => "🪓",
+        DesignationType::Chop => "/",
     }
 }
 

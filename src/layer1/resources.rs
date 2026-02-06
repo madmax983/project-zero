@@ -431,7 +431,10 @@ pub fn mine_rock(world: &mut World, designation_entity: Entity, work_amount: f32
             terrain.tiles[idx] = TerrainType::Dirt;
         }
 
-        // Spawn resources (Stone)
+        // Credit colony resources directly
+        world.resource_mut::<ColonyResources>().add_stone(1.0);
+
+        // Also spawn visual item on the ground
         world.spawn((
             ResourceItem {
                 resource_type: ResourceType::Stone,
@@ -443,6 +446,7 @@ pub fn mine_rock(world: &mut World, designation_entity: Entity, work_amount: f32
         // Probabilistic Ore Yield (20%)
         let mut rng = rand::thread_rng();
         if rng.gen_bool(0.2) {
+            world.resource_mut::<ColonyResources>().add_ore(1.0);
             world.spawn((
                 ResourceItem {
                     resource_type: ResourceType::Ore,
@@ -507,7 +511,10 @@ pub fn chop_tree(world: &mut World, designation_entity: Entity, work_amount: f32
             terrain.tiles[idx] = TerrainType::Dirt;
         }
 
-        // Spawn resources (Wood)
+        // Credit colony resources directly
+        world.resource_mut::<ColonyResources>().add_wood(1.0);
+
+        // Also spawn visual item on the ground
         world.spawn((
             ResourceItem {
                 resource_type: ResourceType::Wood,

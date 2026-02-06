@@ -329,8 +329,8 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
                 .find(|&&(dx, dy, _)| dx == x && dy == y)
             {
                 let c = match dt {
-                    DesignationType::Mine => '⛏',
-                    DesignationType::Chop => '⚒',
+                    DesignationType::Mine => '%',
+                    DesignationType::Chop => '/',
                     DesignationType::Demolish => 'X',
                 };
                 print!("{c}");
@@ -353,7 +353,7 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
         }
         println!();
     }
-    println!("Legend: @=pop .=grass ,=dirt #=rock ~=water T=tree ⛏=mine ⚒=chop");
+    println!("Legend: @=pop .=grass ,=dirt #=rock ~=water T=tree %=mine /=chop");
 }
 
 fn build_at(world: &mut World, building_type: BuildingType, x: i32, y: i32) {

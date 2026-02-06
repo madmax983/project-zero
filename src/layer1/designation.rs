@@ -33,14 +33,14 @@ impl DesignationType {
     /// ```
     /// use scale::layer1::designation::DesignationType;
     ///
-    /// assert_eq!(DesignationType::Mine.char(), '⛏');
+    /// assert_eq!(DesignationType::Mine.char(), '%');
     /// ```
     #[must_use]
     pub const fn char(&self) -> char {
         match self {
-            Self::Mine => '⛏',
+            Self::Mine => '%',
             Self::Demolish => 'X',
-            Self::Chop => '🪓',
+            Self::Chop => '/',
         }
     }
 
@@ -51,14 +51,14 @@ impl DesignationType {
     /// ```
     /// use scale::layer1::designation::DesignationType;
     ///
-    /// assert_eq!(DesignationType::Mine.as_str(), "⛏");
+    /// assert_eq!(DesignationType::Mine.as_str(), "%");
     /// ```
     #[must_use]
     pub const fn as_str(&self) -> &'static str {
         match self {
-            Self::Mine => "⛏",
+            Self::Mine => "%",
             Self::Demolish => "X",
-            Self::Chop => "🪓",
+            Self::Chop => "/",
         }
     }
 
@@ -293,13 +293,13 @@ mod tests {
     #[test]
     fn test_designation_type_char() {
         // Visualization is important for text UI, so we test the mapping exists
-        assert_eq!(DesignationType::Mine.char(), '⛏');
+        assert_eq!(DesignationType::Mine.char(), '%');
         assert_eq!(DesignationType::Demolish.char(), 'X');
     }
 
     #[test]
     fn test_designation_type_as_str() {
-        assert_eq!(DesignationType::Mine.as_str(), "⛏");
+        assert_eq!(DesignationType::Mine.as_str(), "%");
         assert_eq!(DesignationType::Demolish.as_str(), "X");
     }
 
@@ -477,7 +477,7 @@ mod tests {
     #[test]
     fn test_designation_type_chop() {
         // Test new variant properties
-        assert_eq!(DesignationType::Chop.char(), '🪓'); // Axe character
+        assert_eq!(DesignationType::Chop.char(), '/');
         assert_eq!(DesignationType::Chop.label(), "Chop");
     }
 
