@@ -5,7 +5,10 @@ use crate::layer1::needs::Needs;
 use crate::layer1::pop::Pop;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::seasons::SeasonState;
+use crate::layer1::thoughts::Thought;
+use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
+use rand::Rng;
 
 /// Farm component - produces food when worked.
 #[derive(Component)]
@@ -70,6 +73,7 @@ pub fn consume_food_system(world: &mut World) {
     // This doesn't need mutable access to pops yet, just read access.
 
     let mut food = world.resource::<ColonyResources>().food;
+    let tick = world.resource::<SimulationTime>().tick;
 
     // If no food, no one can eat.
     if food < f32::EPSILON {
@@ -86,12 +90,28 @@ pub fn consume_food_system(world: &mut World) {
     for entity in hungry_pops {
         // Check food again (it decreases)
         if food >= FOOD_PER_MEAL {
-            if let Some(mut needs) = world.get_mut::<Needs>(entity) {
+            let ate = if let Some(mut needs) = world.get_mut::<Needs>(entity) {
                 // Double check they are still hungry? (They should be, we just checked)
                 // But mainly we need to modify them.
 
                 food -= FOOD_PER_MEAL;
                 needs.hunger = (needs.hunger + HUNGER_PER_MEAL).min(1.0);
+                true
+            } else {
+                false
+            };
+
+            if ate {
+                let mut rng = rand::thread_rng();
+                let thoughts = [
+                    "That hit the spot.",
+                    "Finally, a good meal.",
+                    "Tastes like victory.",
+                    "Much better.",
+                ];
+                let text = thoughts[rng.gen_range(0..thoughts.len())].to_string();
+
+                world.entity_mut(entity).insert(Thought { text, tick });
             }
         } else {
             // Out of food
@@ -224,11 +244,12 @@ mod tests {
             food: 1.0,
             ..Default::default()
         });
+        world.insert_resource(crate::shared::time::SimulationTime::default());
 
         world.spawn((
             Pop,
             Needs {
-                hunger: 0.5,
+                hunger: 0.3,
                 rest: 0.8,
                 ..Default::default()
             },
@@ -248,12 +269,13 @@ mod tests {
             food: 1.0,
             ..Default::default()
         });
+        world.insert_resource(crate::shared::time::SimulationTime::default());
 
         let pop = world
             .spawn((
                 Pop,
                 Needs {
-                    hunger: 0.5,
+                    hunger: 0.3,
                     rest: 0.8,
                     ..Default::default()
                 },
@@ -263,7 +285,7 @@ mod tests {
         consume_food_system(&mut world);
 
         let needs = world.get::<Needs>(pop).unwrap();
-        assert!(needs.hunger > 0.5, "Hunger should increase");
+        assert!(needs.hunger > 0.3, "Hunger should increase");
     }
 
     #[test]
@@ -273,6 +295,7 @@ mod tests {
             food: 1.0,
             ..Default::default()
         });
+        world.insert_resource(crate::shared::time::SimulationTime::default());
 
         world.spawn((
             Pop,
@@ -300,11 +323,12 @@ mod tests {
             food: 0.05,
             ..Default::default()
         }); // Less than meal cost
+        world.insert_resource(crate::shared::time::SimulationTime::default());
 
         world.spawn((
             Pop,
             Needs {
-                hunger: 0.5,
+                hunger: 0.3,
                 rest: 0.8,
                 ..Default::default()
             },
@@ -312,7 +336,7 @@ mod tests {
         world.spawn((
             Pop,
             Needs {
-                hunger: 0.4,
+                hunger: 0.2,
                 rest: 0.8,
                 ..Default::default()
             },
@@ -360,6 +384,36 @@ mod tests {
 
         let count = world.query::<(&Building, &Farm)>().iter(&world).count();
         assert_eq!(count, 1);
+    }
+
+    #[test]
+    fn test_consume_food_generates_thought() {
+        use crate::layer1::thoughts::Thought;
+
+        let mut world = World::new();
+        world.insert_resource(ColonyResources {
+            food: 1.0,
+            ..Default::default()
+        });
+        world.insert_resource(crate::shared::time::SimulationTime::default());
+
+        let pop = world
+            .spawn((
+                Pop,
+                Needs {
+                    hunger: 0.3,
+                    rest: 0.8,
+                    leisure: 0.8,
+                },
+            ))
+            .id();
+
+        consume_food_system(&mut world);
+
+        let thought = world
+            .get::<Thought>(pop)
+            .expect("Eating should generate a thought");
+        assert!(!thought.text.is_empty());
     }
 }
 

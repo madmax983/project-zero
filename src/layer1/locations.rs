@@ -55,7 +55,6 @@ mod tests {
     use crate::layer1::chronicle::Chronicle;
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
-    use crate::layer1::terrain::Viewport;
     use crate::shared::time::SimulationTime;
 
     #[test]
@@ -127,8 +126,7 @@ mod tests {
         let mut locations = NamedLocations::default();
         locations.add(10, 10, "Center City".to_string());
 
-        let viewport = Viewport { x: 0, y: 0 }; // Viewport (0,0) to (80,50)
-
+        // Viewport (0,0) to (80,50)
         // Center of viewport (assuming 80x50 rendering) is roughly x+40, y+25
         // But for this test, let's just test the helper function logic directly
         // if we define a helper for "get focused name"
@@ -141,8 +139,6 @@ mod tests {
         // It simply asserted: assert_eq!(locations.get(10, 10), Some(&"Center City".to_string()));
         // This just tests `get` again, not the viewport logic.
         // But since I'm implementing the spec test verbatim:
-
-        let _viewport = viewport; // mark used to suppress warning
 
         assert_eq!(locations.get(10, 10), Some(&"Center City".to_string()));
     }
