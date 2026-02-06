@@ -1,7 +1,8 @@
+use bevy_ecs::archetype::Archetype;
 use bevy_ecs::prelude::*;
 use ratatui::{prelude::*, widgets::Paragraph};
 
-use crate::layer1::{BuildMode, DesignationMode, NamedLocations, Viewport};
+use crate::layer1::{BuildMode, ColonyResources, DesignationMode, NamedLocations, Pop, Viewport};
 use crate::shared::state::GameState;
 use crate::shared::time::{SimSpeed, SimulationTime};
 
@@ -12,6 +13,7 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
     let designation_mode = world.resource::<DesignationMode>();
     let viewport = world.resource::<Viewport>();
     let locations = world.resource::<NamedLocations>();
+    let resources = world.resource::<ColonyResources>();
 
     // NOTE: Dual pause state check. GameState::Paused is controlled by spacebar,
     // SimSpeed::Paused exists but is currently not used (no key binds to it).
@@ -24,6 +26,16 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
     let center_y = viewport.y + i32::from(screen_area.height / 2);
     let location_name = locations.get(center_x, center_y).map(String::as_str);
 
+    // Count pops safely with immutable world access
+    let pop_count = world.component_id::<Pop>().map_or(0, |pop_id| {
+        world
+            .archetypes()
+            .iter()
+            .filter(|archetype| archetype.contains(pop_id))
+            .map(Archetype::len)
+            .sum()
+    });
+
     let status = get_status_string(
         sim_time.tick,
         sim_time.speed,
@@ -31,6 +43,8 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
         build_mode,
         designation_mode,
         location_name,
+        pop_count,
+        resources.food,
     );
 
     let bar = Paragraph::new(status).style(Style::default().bg(Color::DarkGray).fg(Color::White));
@@ -38,6 +52,7 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
 }
 
 #[must_use]
+#[allow(clippy::too_many_arguments)]
 pub fn get_status_string(
     tick: u64,
     speed: SimSpeed,
@@ -45,6 +60,8 @@ pub fn get_status_string(
     build_mode: &BuildMode,
     designation_mode: &DesignationMode,
     location_name: Option<&str>,
+    pop_count: usize,
+    food_yield: f32,
 ) -> String {
     let mode_str = if build_mode.active {
         format!(
@@ -63,9 +80,11 @@ pub fn get_status_string(
     let location_str = location_name.map_or_else(String::new, |name| format!("│ 📍 {name} "));
 
     format!(
-        " {} │ Tick: {} │ {} {}{} ",
+        " {} Day {} │ Souls: {} │ Yield: {:.0} │ {} {}{} ",
         if paused { "⏸" } else { "▶" },
         tick,
+        pop_count,
+        food_yield,
         speed.label(),
         location_str,
         mode_str
@@ -94,17 +113,29 @@ mod tests {
             &build_mode,
             &designation_mode,
             Some("Test City"),
+            42,   // Pops
+            123.0, // Food
         );
 
-        assert!(status.contains("Tick: 100"));
+        assert!(status.contains("Day 100"));
+        assert!(status.contains("Souls: 42"));
+        assert!(status.contains("Yield: 123"));
         assert!(status.contains("1x"));
         assert!(status.contains("📍 Test City"));
 
         // Without location
-        let status_none =
-            get_status_string(tick, speed, paused, &build_mode, &designation_mode, None);
+        let status_none = get_status_string(
+            tick,
+            speed,
+            paused,
+            &build_mode,
+            &designation_mode,
+            None,
+            0,
+            0.0,
+        );
 
-        assert!(status_none.contains("Tick: 100"));
+        assert!(status_none.contains("Day 100"));
         assert!(!status_none.contains("📍"));
     }
 }
