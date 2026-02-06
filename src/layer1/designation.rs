@@ -99,6 +99,8 @@ pub struct DesignationMode {
     pub tool: DesignationType,
     /// The cursor position for designation.
     pub cursor: GridPosition,
+    /// The starting corner of a drag rectangle (set on first press, cleared on second).
+    pub drag_start: Option<GridPosition>,
 }
 
 /// Checks if a designation can be placed at the given coordinates.
@@ -204,6 +206,49 @@ pub fn try_designate(world: &mut World, x: i32, y: i32, designation_type: Design
     true
 }
 
+/// Designate all eligible tiles in a rectangle. Returns count of successful designations.
+///
+/// The rectangle is defined by two corners `(x1, y1)` and `(x2, y2)`. Corners can be
+/// given in any order; the function normalizes to min/max internally.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::designation::{try_designate_area, DesignationType};
+/// use scale::layer1::terrain::{TerrainGrid, TerrainType};
+/// use scale::layer1::building::OccupiedTiles;
+/// use bevy_ecs::prelude::*;
+///
+/// let mut world = World::new();
+/// let mut tiles = vec![TerrainType::Grass; 100];
+/// tiles[55] = TerrainType::Rock; // (5,5)
+/// tiles[56] = TerrainType::Rock; // (6,5)
+/// world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
+/// world.insert_resource(OccupiedTiles::default());
+///
+/// assert_eq!(try_designate_area(&mut world, 5, 5, 6, 5, DesignationType::Mine), 2);
+/// ```
+pub fn try_designate_area(
+    world: &mut World,
+    x1: i32,
+    y1: i32,
+    x2: i32,
+    y2: i32,
+    tool: DesignationType,
+) -> u32 {
+    let (min_x, max_x) = (x1.min(x2), x1.max(x2));
+    let (min_y, max_y) = (y1.min(y2), y1.max(y2));
+    let mut count = 0;
+    for y in min_y..=max_y {
+        for x in min_x..=max_x {
+            if try_designate(world, x, y, tool) {
+                count += 1;
+            }
+        }
+    }
+    count
+}
+
 /// Attempts to remove any designation at the given coordinates.
 ///
 /// Used when the user right-clicks or cancels a designation.
@@ -273,6 +318,7 @@ mod tests {
         assert_eq!(mode.tool, DesignationType::Mine);
         assert_eq!(mode.cursor.x, 0);
         assert_eq!(mode.cursor.y, 0);
+        assert!(mode.drag_start.is_none());
     }
 
     #[test]
@@ -462,5 +508,81 @@ mod tests {
 
         // Cannot chop Grass
         assert!(!can_designate(&world, 5, 5, DesignationType::Chop));
+    }
+
+    #[test]
+    fn test_try_designate_area_single_tile() {
+        let mut world = World::new();
+        let mut tiles = vec![TerrainType::Grass; 100];
+        tiles[55] = TerrainType::Rock; // (5,5)
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
+        world.insert_resource(OccupiedTiles::default());
+
+        let count = try_designate_area(&mut world, 5, 5, 5, 5, DesignationType::Mine);
+        assert_eq!(count, 1);
+
+        let designation_count = world.query::<&Designation>().iter(&world).count();
+        assert_eq!(designation_count, 1);
+    }
+
+    #[test]
+    fn test_try_designate_area_multi_tile_rectangle() {
+        let mut world = World::new();
+        let mut tiles = vec![TerrainType::Grass; 100];
+        // Fill a 3x2 rectangle with Rock at (2,3), (3,3), (4,3), (2,4), (3,4), (4,4)
+        tiles[32] = TerrainType::Rock; // (2,3)
+        tiles[33] = TerrainType::Rock; // (3,3)
+        tiles[34] = TerrainType::Rock; // (4,3)
+        tiles[42] = TerrainType::Rock; // (2,4)
+        tiles[43] = TerrainType::Rock; // (3,4)
+        tiles[44] = TerrainType::Rock; // (4,4)
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
+        world.insert_resource(OccupiedTiles::default());
+
+        // Drag from (4,4) to (2,3) — reversed corners
+        let count = try_designate_area(&mut world, 4, 4, 2, 3, DesignationType::Mine);
+        assert_eq!(count, 6);
+    }
+
+    #[test]
+    fn test_try_designate_area_mixed_valid_invalid() {
+        let mut world = World::new();
+        let mut tiles = vec![TerrainType::Grass; 100];
+        // Only (5,5) and (6,5) are Rock in a 3-tile row
+        tiles[55] = TerrainType::Rock; // (5,5)
+        tiles[56] = TerrainType::Rock; // (6,5)
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
+        world.insert_resource(OccupiedTiles::default());
+
+        // Area covers (5,5) to (7,5) — only 2 of 3 are valid
+        let count = try_designate_area(&mut world, 5, 5, 7, 5, DesignationType::Mine);
+        assert_eq!(count, 2);
+    }
+
+    #[test]
+    fn test_try_designate_area_no_valid_tiles() {
+        let mut world = World::new();
+        let tiles = vec![TerrainType::Grass; 100]; // All grass
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
+        world.insert_resource(OccupiedTiles::default());
+
+        let count = try_designate_area(&mut world, 0, 0, 2, 2, DesignationType::Mine);
+        assert_eq!(count, 0);
     }
 }

@@ -2,11 +2,11 @@ use bevy_ecs::prelude::*;
 
 use crate::layer1::{
     BuildMode, ChronicleUiState, DesignationMode, DesignationType, GridPosition, Viewport,
-    try_cancel_designation, try_designate, try_place_building,
+    try_cancel_designation, try_designate_area, try_place_building,
 };
 use crate::platform::input::{GameKeyCode, GameKeyEvent, GameMouseEvent};
 use crate::shared::menu::MenuState;
-use crate::shared::selection::{Selection, handle_selection_click};
+use crate::shared::selection::{Selection, handle_selection_click, screen_to_world};
 use crate::shared::state::GameState;
 use crate::shared::time::{SimSpeed, SimulationTime};
 
@@ -94,9 +94,15 @@ impl InputRouter {
     pub fn route_mouse(&mut self, world: &mut World, mouse: GameMouseEvent) {
         let context = world.resource::<InputContextStack>().current();
 
-        if context == InputContext::Normal {
-            let viewport = *world.resource::<Viewport>();
-            handle_selection_click(world, mouse, &viewport);
+        match context {
+            InputContext::Normal => {
+                let viewport = *world.resource::<Viewport>();
+                handle_selection_click(world, mouse, &viewport);
+            }
+            InputContext::DesignationMode => {
+                handle_designation_mouse(world, mouse);
+            }
+            _ => {}
         }
     }
 }
@@ -243,6 +249,7 @@ fn enter_designation_mode(world: &mut World, tool: DesignationType) {
         x: vx + 10,
         y: vy + 10,
     };
+    mode.drag_start = None;
 }
 
 fn handle_build_mode(world: &mut World, key: GameKeyEvent) {
@@ -287,7 +294,9 @@ fn handle_designation_mode(world: &mut World, key: GameKeyEvent) {
         GameKeyCode::Esc => {
             // Exit designation mode
             world.resource_mut::<InputContextStack>().pop();
-            world.resource_mut::<DesignationMode>().active = false;
+            let mut mode = world.resource_mut::<DesignationMode>();
+            mode.active = false;
+            mode.drag_start = None;
         }
         GameKeyCode::Char('m') => {
             // Switch to Mine tool
@@ -321,13 +330,51 @@ fn handle_designation_mode(world: &mut World, key: GameKeyEvent) {
             let mode = world.resource::<DesignationMode>();
             let cursor = mode.cursor;
             let tool = mode.tool;
-            try_designate(world, cursor.x, cursor.y, tool);
+            let drag_start = mode.drag_start;
+
+            if let Some(start) = drag_start {
+                // Second press: designate the rectangle and clear drag_start
+                try_designate_area(world, start.x, start.y, cursor.x, cursor.y, tool);
+                world.resource_mut::<DesignationMode>().drag_start = None;
+            } else {
+                // First press: set drag_start
+                world.resource_mut::<DesignationMode>().drag_start = Some(cursor);
+            }
         }
         GameKeyCode::Backspace | GameKeyCode::Delete => {
             let mode = world.resource::<DesignationMode>();
             try_cancel_designation(world, mode.cursor.x, mode.cursor.y);
         }
         _ => {}
+    }
+}
+
+fn handle_designation_mouse(world: &mut World, mouse: GameMouseEvent) {
+    let viewport = *world.resource::<Viewport>();
+    let (world_x, world_y) = screen_to_world(mouse.x, mouse.y, &viewport);
+
+    let mode = world.resource::<DesignationMode>();
+    let tool = mode.tool;
+    let drag_start = mode.drag_start;
+
+    if let Some(start) = drag_start {
+        // Second click: designate the rectangle and clear drag_start
+        try_designate_area(world, start.x, start.y, world_x, world_y, tool);
+        let mut mode = world.resource_mut::<DesignationMode>();
+        mode.drag_start = None;
+        mode.cursor = GridPosition {
+            x: world_x,
+            y: world_y,
+        };
+    } else {
+        // First click: set drag_start and move cursor
+        let mut mode = world.resource_mut::<DesignationMode>();
+        let pos = GridPosition {
+            x: world_x,
+            y: world_y,
+        };
+        mode.drag_start = Some(pos);
+        mode.cursor = pos;
     }
 }
 

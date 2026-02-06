@@ -80,8 +80,8 @@ pub struct MapRenderContext<'a, S: BuildHasher> {
     pub items_data: &'a HashMap<GridPosition, ResourceType, S>,
     /// Current build mode state (cursor position, selected building, valid placement).
     pub build_mode: Option<(GridPosition, BuildingType, bool)>,
-    /// Current designation mode state (cursor position, selected tool, valid placement).
-    pub designation_mode: Option<(GridPosition, DesignationType, bool)>,
+    /// Current designation mode state (cursor position, selected tool, valid placement, drag start).
+    pub designation_mode: Option<(GridPosition, DesignationType, bool, Option<GridPosition>)>,
 }
 
 impl<S: BuildHasher> Clone for MapRenderContext<'_, S> {
@@ -126,6 +126,7 @@ pub fn build_terrain_spans(
 
 /// Builds a vector of text lines to render the map layer (terrain, pops, buildings, cursor).
 #[must_use]
+#[allow(clippy::too_many_lines)]
 pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Vec<Line<'static>> {
     let mut lines: Vec<Line> = Vec::with_capacity(ctx.area.height as usize);
 
@@ -155,14 +156,48 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
             }
 
             // Designation mode cursor (highest priority, shared with build mode)
-            if let Some((_, selected, can_place)) = ctx
-                .designation_mode
-                .filter(|(cursor, _, _)| cursor.x == world_x && cursor.y == world_y)
-            {
-                let bg = if can_place { Color::Green } else { Color::Red };
-                let text = get_designation_char(selected);
-                line_spans.push(Span::styled(text, Style::default().fg(Color::White).bg(bg)));
-                continue;
+            if let Some((cursor, selected, can_place, drag_start)) = ctx.designation_mode {
+                if cursor.x == world_x && cursor.y == world_y {
+                    let bg = if can_place { Color::Green } else { Color::Red };
+                    let text = get_designation_char(selected);
+                    line_spans.push(Span::styled(
+                        text,
+                        Style::default().fg(Color::White).bg(bg),
+                    ));
+                    continue;
+                }
+
+                // Rectangle preview: highlight tiles from drag_start to cursor
+                if let Some(start) = drag_start {
+                    let min_x = start.x.min(cursor.x);
+                    let max_x = start.x.max(cursor.x);
+                    let min_y = start.y.min(cursor.y);
+                    let max_y = start.y.max(cursor.y);
+
+                    if world_x >= min_x
+                        && world_x <= max_x
+                        && world_y >= min_y
+                        && world_y <= max_y
+                    {
+                        // Render terrain underneath with a highlight background
+                        let (text, fg) = if let (Ok(ux), Ok(uy)) =
+                            (usize::try_from(world_x), usize::try_from(world_y))
+                        {
+                            ctx.terrain
+                                .get(ux, uy)
+                                .map_or((" ", Color::Black), |tile| {
+                                    (get_terrain_char(tile), get_terrain_color(tile))
+                                })
+                        } else {
+                            (" ", Color::Black)
+                        };
+                        line_spans.push(Span::styled(
+                            text,
+                            Style::default().fg(fg).bg(Color::Rgb(50, 50, 80)),
+                        ));
+                        continue;
+                    }
+                }
             }
 
             // Designations
@@ -269,7 +304,12 @@ pub fn render_map(frame: &mut Frame, area: Rect, world: &World) {
             designation_mode.cursor.y,
             designation_mode.tool,
         );
-        Some((designation_mode.cursor, designation_mode.tool, can))
+        Some((
+            designation_mode.cursor,
+            designation_mode.tool,
+            can,
+            designation_mode.drag_start,
+        ))
     } else {
         None
     };

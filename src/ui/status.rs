@@ -132,11 +132,13 @@ pub fn get_status_line<'a>(
                 .add_modifier(Modifier::BOLD),
         ));
     } else if designation_mode.active {
+        let hint = if designation_mode.drag_start.is_some() {
+            "Enter:confirm area Esc:exit"
+        } else {
+            "Enter:start area Esc:exit"
+        };
         spans.push(Span::styled(
-            format!(
-                "DESIGNATE: {} (Enter:apply Esc:exit)",
-                designation_mode.tool.label()
-            ),
+            format!("DESIGNATE: {} ({hint})", designation_mode.tool.label()),
             Style::default()
                 .fg(Color::Yellow)
                 .add_modifier(Modifier::BOLD),

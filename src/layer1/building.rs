@@ -90,42 +90,42 @@ impl BuildingType {
 
     /// Returns the resource cost to build this building.
     #[must_use]
-    pub fn cost(&self) -> ColonyResources {
+    pub const fn cost(&self) -> ColonyResources {
         match self {
             Self::Housing => ColonyResources {
                 wood: 10.0,
-                ..Default::default()
+                ..ColonyResources::zeroed()
             },
             Self::Farm => ColonyResources {
                 wood: 20.0,
                 stone: 5.0,
-                ..Default::default()
+                ..ColonyResources::zeroed()
             },
             Self::Stockpile => ColonyResources {
                 wood: 50.0,
-                ..Default::default()
+                ..ColonyResources::zeroed()
             },
             Self::LumberMill | Self::Smithy => ColonyResources {
                 wood: 30.0,
                 stone: 10.0,
-                ..Default::default()
+                ..ColonyResources::zeroed()
             },
             Self::StoneMason => ColonyResources {
                 wood: 40.0,
                 stone: 20.0,
-                ..Default::default()
+                ..ColonyResources::zeroed()
             },
             Self::Smelter => ColonyResources {
                 wood: 20.0,
                 stone: 50.0,
-                ..Default::default()
+                ..ColonyResources::zeroed()
             },
             Self::Tavern => ColonyResources {
                 wood: 40.0,
                 stone: 10.0,
-                ..Default::default()
+                ..ColonyResources::zeroed()
             },
-            Self::Library => ColonyResources::default(),
+            Self::Library => ColonyResources::zeroed(),
         }
     }
 

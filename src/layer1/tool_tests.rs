@@ -9,7 +9,7 @@ mod tests {
     #[test]
     fn test_colony_resources_tools_fields() {
         let resources = ColonyResources::default();
-        assert_eq!(resources.tools, 0.0);
+        assert_eq!(resources.tools, 2.0);
         assert_eq!(resources.max_tools, 50.0); // Default cap
     }
 

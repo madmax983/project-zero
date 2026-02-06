@@ -127,7 +127,7 @@ mod tests {
     #[test]
     fn test_colony_resources_default() {
         let resources = ColonyResources::default();
-        assert!(resources.food.abs() < f32::EPSILON);
+        assert!((resources.food - 10.0).abs() < f32::EPSILON);
     }
 
     #[test]
@@ -392,9 +392,8 @@ mod seasonal_tests {
         world.run_system_once(produce_food_system).unwrap();
 
         let resources = world.resource::<ColonyResources>();
-        // Base is 0.005. Winter mod is 0.5. Result should be 0.0025.
-        // Use approximate check
-        let expected = 0.0025;
+        // Starting food is 10.0. Base production is 0.005. Winter mod is 0.5.
+        let expected = 10.0 + 0.0025;
         assert!(
             (resources.food - expected).abs() < 0.0001,
             "Winter production should be halved"
@@ -417,8 +416,8 @@ mod seasonal_tests {
         world.run_system_once(produce_food_system).unwrap();
 
         let resources = world.resource::<ColonyResources>();
-        // Base is 0.005. Autumn mod is 1.5. Result should be 0.0075.
-        let expected = 0.0075;
+        // Starting food is 10.0. Base production is 0.005. Autumn mod is 1.5.
+        let expected = 10.0 + 0.0075;
         assert!(
             (resources.food - expected).abs() < 0.0001,
             "Autumn production should be boosted"

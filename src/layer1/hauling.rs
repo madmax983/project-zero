@@ -380,10 +380,10 @@ mod tests {
 
         haul_system(&mut world);
 
-        // 4. Verify resources added
+        // 4. Verify resources added (starting wood is 15.0, hauled 10.0)
         let res = world.resource::<ColonyResources>();
         assert!(
-            (res.wood - 10.0).abs() < f32::EPSILON,
+            (res.wood - 25.0).abs() < f32::EPSILON,
             "Resources should be credited"
         );
         assert!(

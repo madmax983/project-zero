@@ -70,7 +70,7 @@ pub struct Carrying {
 ///
 /// let mut resources = ColonyResources::default();
 /// resources.food += 10.0;
-/// assert_eq!(resources.food, 10.0);
+/// assert_eq!(resources.food, 20.0); // default starts with 10.0
 /// ```
 #[derive(Resource, Debug, Clone)]
 pub struct ColonyResources {
@@ -115,14 +115,14 @@ pub struct ColonyResources {
 impl Default for ColonyResources {
     fn default() -> Self {
         Self {
-            food: 0.0,
-            wood: 0.0,
-            stone: 0.0,
+            food: 10.0,
+            wood: 15.0,
+            stone: 5.0,
             planks: 0.0,
             blocks: 0.0,
             ore: 0.0,
             metal: 0.0,
-            tools: 0.0,
+            tools: 2.0,
             knowledge: 0.0,
             max_food: 50.0,
             max_wood: 50.0,
@@ -138,6 +138,34 @@ impl Default for ColonyResources {
 }
 
 impl ColonyResources {
+    /// Returns a `ColonyResources` with all values set to zero.
+    ///
+    /// Use this for cost structs and other contexts where you need a blank slate
+    /// rather than the colony's starting resources.
+    #[must_use]
+    pub const fn zeroed() -> Self {
+        Self {
+            food: 0.0,
+            wood: 0.0,
+            stone: 0.0,
+            planks: 0.0,
+            blocks: 0.0,
+            ore: 0.0,
+            metal: 0.0,
+            tools: 0.0,
+            knowledge: 0.0,
+            max_food: 0.0,
+            max_wood: 0.0,
+            max_stone: 0.0,
+            max_planks: 0.0,
+            max_blocks: 0.0,
+            max_ore: 0.0,
+            max_metal: 0.0,
+            max_tools: 0.0,
+            max_knowledge: 0.0,
+        }
+    }
+
     /// Adds wood, clamping to the maximum capacity.
     pub fn add_wood(&mut self, amount: f32) {
         self.wood = (self.wood + amount).clamp(0.0, self.max_wood);
@@ -504,10 +532,11 @@ mod tests {
     #[test]
     fn test_colony_resources_fields() {
         let resources = ColonyResources::default();
-        // Check for new fields
-        assert!((resources.food - 0.0).abs() < f32::EPSILON);
-        assert!((resources.wood - 0.0).abs() < f32::EPSILON);
-        assert!((resources.stone - 0.0).abs() < f32::EPSILON);
+        // Starting resources: enough to bootstrap the colony
+        assert!((resources.food - 10.0).abs() < f32::EPSILON);
+        assert!((resources.wood - 15.0).abs() < f32::EPSILON);
+        assert!((resources.stone - 5.0).abs() < f32::EPSILON);
+        assert!((resources.tools - 2.0).abs() < f32::EPSILON);
     }
 
     #[test]

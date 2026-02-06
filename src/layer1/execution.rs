@@ -31,7 +31,7 @@ use crate::layer1::resources::{
 };
 use crate::layer1::social::Tavern;
 use crate::layer1::terrain::TerrainGrid;
-use crate::layer1::utility_ai::{ActionType, StartPlan};
+use crate::layer1::utility_ai::{ActionType, PopAction, StartPlan};
 use bevy_ecs::prelude::*;
 use rand::Rng;
 
@@ -342,9 +342,19 @@ pub fn work_execution_system(world: &mut World) {
         .map(|(e, mt)| (e, mt.target_entity))
         .collect();
 
-    for (_pop_entity, designation_entity) in workers {
+    for (pop_entity, designation_entity) in workers {
         // Check if designation still exists
         if world.get_entity(designation_entity).is_err() {
+            // Designation already gone — clean up stale pop state
+            world
+                .entity_mut(pop_entity)
+                .remove::<MovementTarget>()
+                .remove::<AtTarget>();
+            if let Some(mut action) = world.get_mut::<PopAction>(pop_entity) {
+                action.current = ActionType::Idle;
+                action.current_utility = 0.0;
+                action.ticks_committed = 1;
+            }
             continue;
         }
 
@@ -385,6 +395,19 @@ pub fn work_execution_system(world: &mut World) {
                 false
             }
         };
+
+        // After work: if designation was despawned (work completed), reset pop state
+        if world.get_entity(designation_entity).is_err() {
+            world
+                .entity_mut(pop_entity)
+                .remove::<MovementTarget>()
+                .remove::<AtTarget>();
+            if let Some(mut action) = world.get_mut::<PopAction>(pop_entity) {
+                action.current = ActionType::Idle;
+                action.current_utility = 0.0;
+                action.ticks_committed = 1;
+            }
+        }
 
         if worked && has_tools && !tool_broken {
             let mut rng = rand::thread_rng();
@@ -954,6 +977,123 @@ mod tests {
             items[0].resource_type,
             crate::layer1::resources::ResourceType::Stone
         );
+    }
+
+    #[test]
+    fn test_work_execution_resets_pop_on_completion() {
+        let mut world = World::new();
+        let mut tiles = vec![TerrainType::Grass; 100];
+        tiles[55] = TerrainType::Rock;
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
+        world.insert_resource(crate::layer1::resources::ColonyResources::default());
+
+        let designation = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Mine,
+                },
+                GridPosition { x: 5, y: 5 },
+                MiningProgress {
+                    current: 95.0,
+                    max: 100.0,
+                },
+            ))
+            .id();
+
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 5, y: 5 },
+                MovementTarget {
+                    target_entity: designation,
+                    target_position: GridPosition { x: 5, y: 5 },
+                    for_action: ActionType::Work,
+                },
+                AtTarget,
+                PopAction {
+                    current: ActionType::Work,
+                    current_utility: 0.8,
+                    ticks_committed: 5,
+                },
+            ))
+            .id();
+
+        work_execution_system(&mut world);
+
+        // Designation should be despawned after mining completes
+        assert!(
+            world.get_entity(designation).is_err(),
+            "Designation should be despawned"
+        );
+
+        // Pop should have MovementTarget and AtTarget removed
+        assert!(
+            world.get::<MovementTarget>(pop).is_none(),
+            "MovementTarget should be removed after work completes"
+        );
+        assert!(
+            world.get::<AtTarget>(pop).is_none(),
+            "AtTarget should be removed after work completes"
+        );
+
+        // PopAction should be reset to Idle with zero utility
+        let action = world.get::<PopAction>(pop).unwrap();
+        assert_eq!(action.current, ActionType::Idle);
+        assert!(
+            (action.current_utility - 0.0).abs() < f32::EPSILON,
+            "Utility should be reset to 0.0"
+        );
+    }
+
+    #[test]
+    fn test_work_execution_cleans_up_stale_target() {
+        let mut world = World::new();
+        let tiles = vec![TerrainType::Grass; 100];
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
+        world.insert_resource(crate::layer1::resources::ColonyResources::default());
+
+        // Pop targeting a non-existent designation entity
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 5, y: 5 },
+                MovementTarget {
+                    target_entity: Entity::from_raw(9999),
+                    target_position: GridPosition { x: 5, y: 5 },
+                    for_action: ActionType::Work,
+                },
+                AtTarget,
+                PopAction {
+                    current: ActionType::Work,
+                    current_utility: 0.8,
+                    ticks_committed: 5,
+                },
+            ))
+            .id();
+
+        work_execution_system(&mut world);
+
+        // Pop should have stale references cleaned up
+        assert!(
+            world.get::<MovementTarget>(pop).is_none(),
+            "MovementTarget should be removed for stale target"
+        );
+        assert!(
+            world.get::<AtTarget>(pop).is_none(),
+            "AtTarget should be removed for stale target"
+        );
+
+        // PopAction should be reset to Idle
+        let action = world.get::<PopAction>(pop).unwrap();
+        assert_eq!(action.current, ActionType::Idle);
     }
 
     // =========================================================================
