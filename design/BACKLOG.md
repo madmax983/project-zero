@@ -11,6 +11,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `033` Fire Propagation — `specs/033-fire-propagation.md`
 - [ ] `035` Workplace Hazards — `specs/035-workplace-hazards.md`
 - [ ] `036` Pop Memory — `specs/036-pop-memory.md`
+- [ ] `038` Medical Care — `specs/038-medical-care.md`
 
 ## MVP — Architecture Refactoring
 
@@ -19,4 +20,4 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 ## MVP — User Interface
 
-- [ ] `036` Tech Tree UI — `specs/036-tech-tree-ui.md`
+- [ ] `037` Tech Tree UI — `specs/037-tech-tree-ui.md`
