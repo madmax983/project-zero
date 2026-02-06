@@ -1181,3 +1181,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Energy production vs. Environmental stasis.
 
 ---
+
+## Thermal Management
+
+**Layer:** 1
+
+**Fantasy:** Huddling around the reactor for warmth. The mastery of thermodynamics.
+
+**Mechanic:** Tiles track Temperature. Machines emit heat. Walls insulate. Vents move heat.
+
+**Emergence:** A Crypto-Farm overheats the base. You channel the heat to the greenhouse. The server crashes, the heat stops, the plants freeze.
+
+**Tension:** Energy usage (Heaters/Coolers) vs Passive architecture.
+
+---
+
+## Cybernetic Augmentation
+
+**Layer:** 1
+
+**Fantasy:** We can rebuild him. We have the technology.
+
+**Mechanic:** Prosthetics crafted from metal/electronics. Applied to Pops. Boost work speed but add "Maintenance" cost (Energy/Repair) and reduce "Social" stats.
+
+**Emergence:** Your fully augmented workforce is immune to the plague but shuts down during a solar flare.
+
+**Tension:** Peak efficiency vs Biological resilience.
+
+---
+
+## Quarantine Protocols
+
+**Layer:** 1
+
+**Fantasy:** The cold calculus of survival. Locking the door on the infected.
+
+**Mechanic:** Designation tool to "Seal" areas. No pathfinding in/out. Automated turrets target anyone breaking quarantine.
+
+**Emergence:** A "Social Faction" riots. You seal them in the mess hall. They starve. The rest of the colony is safe but horrified.
+
+**Tension:** Ruthless safety vs Humanitarian risk.
+
+---
+
+## Planetary Rings
+
+**Layer:** 2
+
+**Fantasy:** Navigating the diamond dust. High risk, high reward.
+
+**Mechanic:** Ring tiles around planets. High resource density for mining ships. High damage/attrition for passing fleets. Cast shadows on Layer 1.
+
+**Emergence:** You hide your fleet in the rings to ambush an enemy. The ring dust strips their armor before the fight even starts.
+
+**Tension:** Safe routes (slow) vs Ring shortcuts (dangerous).
+
+---
+
+## Galactic Tourism
+
+**Layer:** Cross-layer
+
+**Fantasy:** Building a destination, not just a factory.
+
+**Mechanic:** High "Beauty" or "Wonder" attracts Visitor Ships. Visitors pay Credits but consume Food/Services and occupy space.
+
+**Emergence:** A luxury liner docks during a food shortage. The tourists demand buffet service while your colonists starve. If you deny them, your reputation tanks.
+
+**Tension:** Economic greed vs Local stability.
+
+---
