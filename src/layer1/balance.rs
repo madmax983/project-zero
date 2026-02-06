@@ -7,7 +7,7 @@ pub const TICKS_PER_YEAR: u64 = 1000;
 pub const FOOD_PER_WORKER_PER_TICK: f32 = 0.005;
 
 /// Hunger level below which a Pop will seek food.
-pub const FOOD_HUNGER_THRESHOLD: f32 = 0.7;
+pub const FOOD_HUNGER_THRESHOLD: f32 = 0.4;
 
 /// Amount of food consumed per meal.
 pub const FOOD_PER_MEAL: f32 = 0.1;

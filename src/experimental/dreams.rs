@@ -57,13 +57,12 @@ pub fn dream_system(world: &mut World) {
 
                 if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
                     log.add(format!(
-                        "Inspiration: A pop dreamed of '{}' and gained insight!",
-                        dream_content
+                        "Inspiration: A pop dreamed of '{dream_content}' and gained insight!"
                     ));
                 }
             } else if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
                 // Just log the dream for flavor
-                log.add(format!("Dream: {}", dream_content));
+                log.add(format!("Dream: {dream_content}"));
             }
         }
     }

@@ -7,3 +7,7 @@
 ## [Feedback System]
 **Friction:** Building actions felt "hollow" because there was no confirmation or error message. Players didn't know why they couldn't place a building.
 **Flow:** Implemented a `MessageLog` system that provides colored feedback ("Construction started", "Cannot build on Water"). This closes the feedback loop immediately.
+
+## [Consumption Flow]
+**Friction:** Pops were snacking constantly (eating at 70% full), breaking their work rhythm and feeling robotic.
+**Flow:** Lowered hunger threshold to 40% to create distinct "Work" and "Eat" phases. Added "Thought" bubbles when eating to provide immediate positive feedback ("Tastes like victory").

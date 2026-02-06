@@ -134,8 +134,8 @@ mod tests {
     #[test]
     fn test_resources_knowledge_fields() {
         let res = ColonyResources::default();
-        assert_eq!(res.knowledge, 0.0);
-        assert_eq!(res.max_knowledge, 100.0);
+        assert!(res.knowledge.abs() < f32::EPSILON);
+        assert!((res.max_knowledge - 100.0).abs() < f32::EPSILON);
     }
 
     #[test]
@@ -148,8 +148,8 @@ mod tests {
 
     #[test]
     fn test_tech_costs() {
-        assert_eq!(Tech::Masonry.cost(), 10.0);
-        assert_eq!(Tech::MetalWorking.cost(), 20.0);
+        assert!((Tech::Masonry.cost() - 10.0).abs() < f32::EPSILON);
+        assert!((Tech::MetalWorking.cost() - 20.0).abs() < f32::EPSILON);
     }
 
     #[test]
@@ -164,9 +164,10 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(TechState::default());
         world.insert_resource(MessageLog::default());
-        let mut res = ColonyResources::default();
-        res.knowledge = 20.0;
-        world.insert_resource(res);
+        world.insert_resource(ColonyResources {
+            knowledge: 20.0,
+            ..Default::default()
+        });
 
         let success = unlock_tech(&mut world, Tech::Masonry);
 
@@ -181,15 +182,16 @@ mod tests {
     fn test_unlock_tech_insufficient_funds() {
         let mut world = World::new();
         world.insert_resource(TechState::default());
-        let mut res = ColonyResources::default();
-        res.knowledge = 5.0; // Need 10
-        world.insert_resource(res);
+        world.insert_resource(ColonyResources {
+            knowledge: 5.0, // Need 10
+            ..Default::default()
+        });
 
         let success = unlock_tech(&mut world, Tech::Masonry);
 
         assert!(!success);
         assert!(!world.resource::<TechState>().is_unlocked(Tech::Masonry));
-        assert_eq!(world.resource::<ColonyResources>().knowledge, 5.0);
+        assert!((world.resource::<ColonyResources>().knowledge - 5.0).abs() < f32::EPSILON);
     }
 
     #[test]
