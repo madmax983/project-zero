@@ -19,6 +19,8 @@
 
 use crate::layer1::balance::TICKS_PER_YEAR;
 use crate::layer1::building::{Building, BuildingType};
+use crate::shared::colony::ColonyName;
+use crate::shared::narrative::{NarrativeContext, NarrativeGenerator};
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 
@@ -88,6 +90,19 @@ impl Chronicle {
             importance,
         });
     }
+
+    /// Add a pre-history event (year 0, tick 0) to the chronicle.
+    ///
+    /// These represent events that occurred before the colony was founded,
+    /// generated during world history creation.
+    pub fn add_prehistory_event(&mut self, text: String, importance: EventImportance) {
+        self.events.push(ChronicleEvent {
+            tick: 0,
+            year: 0,
+            text,
+            importance,
+        });
+    }
 }
 
 /// UI state for chronicle window.
@@ -108,9 +123,20 @@ pub struct BuildingTracker {
 
 /// Creates the initial "colony founded" event.
 pub fn initial_chronicle_event(world: &mut World) {
+    let text = {
+        let generator = world.resource::<NarrativeGenerator>();
+        let colony = world.resource::<ColonyName>();
+        let mut ctx = NarrativeContext::new();
+        ctx.insert("COLONY_NAME", &colony.name);
+        ctx.insert("YEAR", "1");
+        ctx.insert("FOUNDER_COUNT", "5");
+        generator
+            .generate("COLONY_FOUNDED", &ctx)
+            .unwrap_or_else(|_| "Colony founded. The journey begins.".to_string())
+    };
     world.resource_mut::<Chronicle>().add_event(
         0,
-        "Colony founded. The journey begins.".to_string(),
+        text,
         EventImportance::Legendary,
     );
 }
@@ -121,6 +147,8 @@ pub fn check_milestones_system(
     mut tracker: ResMut<BuildingTracker>,
     mut chronicle: ResMut<Chronicle>,
     buildings: Query<&Building>,
+    generator: Res<NarrativeGenerator>,
+    colony: Res<ColonyName>,
 ) {
     if tracker.has_built_housing && tracker.has_built_farm {
         return;
@@ -147,19 +175,25 @@ pub fn check_milestones_system(
 
     if found_housing && !tracker.has_built_housing {
         tracker.has_built_housing = true;
-        chronicle.add_event(
-            current_tick,
-            "First Housing constructed. A shelter from the void.".to_string(),
-            EventImportance::Major,
-        );
+        let year = (1 + current_tick / crate::layer1::balance::TICKS_PER_YEAR).to_string();
+        let mut ctx = NarrativeContext::new();
+        ctx.insert("COLONY", &colony.name);
+        ctx.insert("YEAR", &year);
+        let text = generator
+            .generate("FIRST_HOUSING", &ctx)
+            .unwrap_or_else(|_| "First Housing constructed. A shelter from the void.".to_string());
+        chronicle.add_event(current_tick, text, EventImportance::Major);
     }
     if found_farm && !tracker.has_built_farm {
         tracker.has_built_farm = true;
-        chronicle.add_event(
-            current_tick,
-            "First Farm operational. We shall not starve.".to_string(),
-            EventImportance::Major,
-        );
+        let year = (1 + current_tick / crate::layer1::balance::TICKS_PER_YEAR).to_string();
+        let mut ctx = NarrativeContext::new();
+        ctx.insert("COLONY", &colony.name);
+        ctx.insert("YEAR", &year);
+        let text = generator
+            .generate("FIRST_FARM", &ctx)
+            .unwrap_or_else(|_| "First Farm operational. We shall not starve.".to_string());
+        chronicle.add_event(current_tick, text, EventImportance::Major);
     }
 }
 
@@ -177,6 +211,8 @@ pub const fn format_event_prefix(importance: EventImportance) -> &'static str {
 mod tests {
     use super::*;
     use crate::layer1::GridPosition;
+    use crate::shared::colony::ColonyName;
+    use crate::shared::narrative::NarrativeGenerator;
     use bevy_ecs::system::RunSystemOnce;
 
     #[test]
@@ -273,6 +309,8 @@ mod tests {
         world.insert_resource(Chronicle::default());
         world.insert_resource(BuildingTracker::default());
         world.insert_resource(SimulationTime::default());
+        world.insert_resource(NarrativeGenerator::from_embedded());
+        world.insert_resource(ColonyName::default());
 
         // Place housing
         world.spawn((
@@ -286,7 +324,7 @@ mod tests {
 
         let chronicle = world.resource::<Chronicle>();
         assert_eq!(chronicle.events.len(), 1);
-        assert!(chronicle.events[0].text.contains("Housing"));
+        assert!(!chronicle.events[0].text.is_empty());
 
         let tracker = world.resource::<BuildingTracker>();
         assert!(tracker.has_built_housing);
@@ -298,6 +336,8 @@ mod tests {
         world.insert_resource(Chronicle::default());
         world.insert_resource(BuildingTracker::default());
         world.insert_resource(SimulationTime::default());
+        world.insert_resource(NarrativeGenerator::from_embedded());
+        world.insert_resource(ColonyName::default());
 
         // Place farm
         world.spawn((
@@ -311,7 +351,7 @@ mod tests {
 
         let chronicle = world.resource::<Chronicle>();
         assert_eq!(chronicle.events.len(), 1);
-        assert!(chronicle.events[0].text.contains("Farm"));
+        assert!(!chronicle.events[0].text.is_empty());
 
         let tracker = world.resource::<BuildingTracker>();
         assert!(tracker.has_built_farm);
@@ -323,6 +363,8 @@ mod tests {
         world.insert_resource(Chronicle::default());
         world.insert_resource(BuildingTracker::default());
         world.insert_resource(SimulationTime::default());
+        world.insert_resource(NarrativeGenerator::from_embedded());
+        world.insert_resource(ColonyName::default());
 
         // Place two farms
         world.spawn((
@@ -349,12 +391,14 @@ mod tests {
     fn test_initial_chronicle_event() {
         let mut world = World::new();
         world.insert_resource(Chronicle::default());
+        world.insert_resource(NarrativeGenerator::from_embedded());
+        world.insert_resource(ColonyName::default());
 
         initial_chronicle_event(&mut world);
 
         let chronicle = world.resource::<Chronicle>();
         assert_eq!(chronicle.events.len(), 1);
-        assert!(chronicle.events[0].text.contains("founded"));
+        assert!(!chronicle.events[0].text.is_empty());
         assert_eq!(chronicle.events[0].importance, EventImportance::Legendary);
     }
 

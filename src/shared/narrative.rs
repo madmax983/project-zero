@@ -1,4 +1,5 @@
 use anyhow::{Context, Result};
+use bevy_ecs::prelude::*;
 use rand::seq::SliceRandom;
 use std::collections::HashMap;
 use std::fs;
@@ -48,7 +49,7 @@ pub struct FragmentType {
 }
 
 /// The main generator system.
-#[derive(Debug, Default)]
+#[derive(Debug, Default, Resource)]
 pub struct NarrativeGenerator {
     templates: HashMap<String, Template>,
     fragments: HashMap<String, FragmentType>,
@@ -77,6 +78,39 @@ impl NarrativeGenerator {
         }
 
         Ok(())
+    }
+
+    /// Create a generator pre-loaded from embedded lore files.
+    ///
+    /// Uses `include_str!` so it works on WASM (no filesystem access).
+    #[must_use]
+    pub fn from_embedded() -> Self {
+        let mut narrator = Self::default();
+        narrator.parse_templates(include_str!("../../lore/TEMPLATES.md"));
+        narrator.parse_fragments(include_str!("../../lore/FRAGMENTS.md"));
+        narrator
+    }
+
+    /// Generate a procedural star name from `STAR_PREFIX` + `STAR_SUFFIX` fragments.
+    #[must_use]
+    pub fn generate_star_name(&self) -> String {
+        let prefix = self
+            .get_random_fragment("STAR_PREFIX")
+            .cloned()
+            .unwrap_or_else(|| "Unknown".to_string());
+        let suffix = self
+            .get_random_fragment("STAR_SUFFIX")
+            .cloned()
+            .unwrap_or_else(|| "Prime".to_string());
+        format!("{prefix} {suffix}")
+    }
+
+    /// Generate a procedural civilization name from `STAR_PREFIX` fragments.
+    #[must_use]
+    pub fn generate_civ_name(&self) -> String {
+        self.get_random_fragment("STAR_PREFIX")
+            .cloned()
+            .unwrap_or_else(|| "Unknown".to_string())
     }
 
     /// Add a template programmatically.
@@ -396,6 +430,28 @@ mod tests {
         // Context empty, should use fragment
         let result = generator.generate("FRAG", &ctx).unwrap();
         assert_eq!(result, "Value: FragmentValue");
+    }
+
+    #[test]
+    fn test_from_embedded_loads_templates_and_fragments() {
+        let narrator = NarrativeGenerator::from_embedded();
+        assert!(narrator.template_count() > 0, "Should load templates");
+        assert!(narrator.fragment_count() > 0, "Should load fragments");
+    }
+
+    #[test]
+    fn test_generate_star_name() {
+        let narrator = NarrativeGenerator::from_embedded();
+        let name = narrator.generate_star_name();
+        assert!(!name.is_empty());
+        assert!(name.contains(' '), "Star name should have prefix + suffix");
+    }
+
+    #[test]
+    fn test_generate_civ_name() {
+        let narrator = NarrativeGenerator::from_embedded();
+        let name = narrator.generate_civ_name();
+        assert!(!name.is_empty());
     }
 
     #[test]

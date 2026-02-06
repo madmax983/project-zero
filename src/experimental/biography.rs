@@ -5,6 +5,7 @@
 use crate::layer1::building::Building;
 use crate::layer1::execution::{AssignedTo, AssignmentType};
 use crate::layer1::pop::Pop;
+use crate::shared::narrative::NarrativeGenerator;
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 
@@ -38,15 +39,22 @@ pub fn biography_monitor_system(
     mut bio_pops: Query<(Entity, &mut Biography, &AssignedTo)>,
     buildings: Query<&Building>,
     mut commands: Commands,
+    generator: Res<NarrativeGenerator>,
 ) {
     let current_tick = time.tick;
 
     // 1. Initialize new Pops
     for entity in &new_pops {
+        let arrival = generator
+            .get_random_fragment("POP_ARRIVAL_METHOD")
+            .map_or_else(
+                || "Joined the colony.".to_string(),
+                |method| format!("Arrived {method}. Joined the colony."),
+            );
         commands.entity(entity).insert(Biography {
             events: vec![BiographyEvent {
                 tick: current_tick,
-                text: "Joined the colony.".to_string(),
+                text: arrival,
             }],
         });
     }
@@ -81,12 +89,14 @@ pub fn biography_monitor_system(
 mod tests {
     use super::*;
     use crate::layer1::building::BuildingType;
+    use crate::shared::narrative::NarrativeGenerator;
     use bevy_ecs::system::RunSystemOnce;
 
     #[test]
     fn test_biography_initialization() {
         let mut world = World::new();
         world.insert_resource(SimulationTime::default());
+        world.insert_resource(NarrativeGenerator::from_embedded());
 
         let pop = world.spawn(Pop).id();
 
@@ -96,13 +106,14 @@ mod tests {
             .get::<Biography>(pop)
             .expect("Biography should be added");
         assert_eq!(bio.events.len(), 1);
-        assert_eq!(bio.events[0].text, "Joined the colony.");
+        assert!(bio.events[0].text.contains("colony"), "Should mention the colony");
     }
 
     #[test]
     fn test_biography_records_assignment() {
         let mut world = World::new();
         world.insert_resource(SimulationTime::default());
+        world.insert_resource(NarrativeGenerator::from_embedded());
 
         // Create a farm
         let farm = world
@@ -137,6 +148,7 @@ mod tests {
     fn test_biography_prevents_duplicate_events() {
         let mut world = World::new();
         world.insert_resource(SimulationTime::default());
+        world.insert_resource(NarrativeGenerator::from_embedded());
 
         let farm = world
             .spawn(Building {

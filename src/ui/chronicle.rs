@@ -42,7 +42,11 @@ pub fn render_chronicle(frame: &mut Frame, area: Rect, world: &World) {
             let prefix = format_event_prefix(evt.importance);
 
             Row::new(vec![
-                format!("Y{} [{}]", evt.year, evt.tick),
+                if evt.year == 0 {
+                    format!("Pre [{}]", evt.tick)
+                } else {
+                    format!("Y{} [{}]", evt.year, evt.tick)
+                },
                 prefix.to_string(),
                 evt.text.clone(),
             ])

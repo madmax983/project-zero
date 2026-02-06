@@ -34,6 +34,8 @@ mod tests {
         world.insert_resource(scale::layer1::utility_ai::ColonyMemory::default());
         world.insert_resource(scale::layer1::chronicle::BuildingTracker::default());
         world.insert_resource(scale::layer1::chronicle::Chronicle::default());
+        world.insert_resource(scale::shared::narrative::NarrativeGenerator::from_embedded());
+        world.insert_resource(scale::shared::colony::ColonyName::default());
 
         world
     }

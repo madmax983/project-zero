@@ -8,6 +8,7 @@ use crate::layer1::execution::{AssignedTo, AssignmentType};
 use crate::layer1::pop::Pop;
 use crate::layer1::resources::ColonyResources;
 use crate::shared::log::MessageLog;
+use crate::shared::narrative::NarrativeGenerator;
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 use rand::Rng;
@@ -29,6 +30,7 @@ pub fn dream_system(
     mut resources: ResMut<ColonyResources>,
     mut log: Option<ResMut<MessageLog>>,
     mut commands: Commands,
+    generator: Res<NarrativeGenerator>,
 ) {
     let current_tick = time.tick;
 
@@ -41,7 +43,7 @@ pub fn dream_system(
 
         // 1% chance per tick to dream while sleeping
         if rng.gen_bool(0.01) {
-            let dream_content = generate_dream(&mut rng, bio);
+            let dream_content = generate_dream(&mut rng, bio, &generator);
 
             commands.entity(entity).insert(Dream {
                 content: dream_content.clone(),
@@ -66,28 +68,28 @@ pub fn dream_system(
     }
 }
 
-fn generate_dream(rng: &mut impl Rng, bio: Option<&Biography>) -> String {
+fn generate_dream(rng: &mut impl Rng, bio: Option<&Biography>, generator: &NarrativeGenerator) -> String {
     if let Some(bio) = bio
         && !bio.events.is_empty()
         && rng.gen_bool(0.7)
     {
         // Dream about past events
-        // Safe unwrap because !is_empty check
         let event = bio.events.choose(rng).unwrap();
         format!("distorted memory of {}", event.text)
     } else {
-        // Generic dreams
-        let themes = [
-            "flying over the colony",
-            "endless fields of wheat",
-            "a dark forest",
-            "building a great monument",
-            "falling forever",
-            "eating a giant feast",
-            "strange lights in the sky",
-            "walking on water",
+        // Fragment-based dreams from varied categories
+        let categories = [
+            "VOID_ANOMALY",
+            "EMOTIONAL_WEIGHT",
+            "MEMORY_TOPIC",
+            "CATASTROPHE_TYPE",
+            "PLACE_DESCRIPTOR",
         ];
-        (*themes.choose(rng).unwrap()).to_string()
+        let category = categories[rng.gen_range(0..categories.len())];
+        generator
+            .get_random_fragment(category)
+            .cloned()
+            .unwrap_or_else(|| "strange lights in the sky".to_string())
     }
 }
 
@@ -95,6 +97,7 @@ fn generate_dream(rng: &mut impl Rng, bio: Option<&Biography>) -> String {
 mod tests {
     use super::*;
     use crate::experimental::biography::BiographyEvent;
+    use crate::shared::narrative::NarrativeGenerator;
     use bevy_ecs::system::RunSystemOnce;
 
     #[test]
@@ -110,22 +113,23 @@ mod tests {
     #[test]
     fn test_generate_dream_generic() {
         let mut rng = rand::thread_rng();
-        let dream = generate_dream(&mut rng, None);
+        let narrator = NarrativeGenerator::from_embedded();
+        let dream = generate_dream(&mut rng, None, &narrator);
         assert!(!dream.is_empty());
     }
 
     #[test]
     fn test_generate_dream_biography() {
         let mut rng = rand::thread_rng();
+        let narrator = NarrativeGenerator::from_embedded();
         let bio = Biography {
             events: vec![BiographyEvent {
                 tick: 0,
                 text: "Event A".to_string(),
             }],
         };
-        // Run multiple times to ensure coverage of random branch
         for _ in 0..20 {
-            let dream = generate_dream(&mut rng, Some(&bio));
+            let dream = generate_dream(&mut rng, Some(&bio), &narrator);
             assert!(!dream.is_empty());
             if dream.contains("distorted memory") {
                 assert!(dream.contains("Event A"));
@@ -139,6 +143,7 @@ mod tests {
         world.insert_resource(SimulationTime::default());
         world.insert_resource(ColonyResources::default());
         world.insert_resource(MessageLog::default());
+        world.insert_resource(NarrativeGenerator::from_embedded());
 
         // Spawn a sleeping pop
         let pop = world
@@ -170,6 +175,7 @@ mod tests {
         world.insert_resource(SimulationTime::default());
         world.insert_resource(ColonyResources::default());
         world.insert_resource(MessageLog::default());
+        world.insert_resource(NarrativeGenerator::from_embedded());
 
         // Spawn an awake pop (working)
         let pop = world

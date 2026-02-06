@@ -7,11 +7,14 @@ use crate::layer1::{
     DesignationMode, NamedLocations, OccupiedTiles, SeasonState, TechState, UtilityConfig,
     Viewport, generate_terrain, initial_chronicle_event, initial_naming_system, spawn_initial_pops,
 };
+use crate::shared::colony::ColonyName;
 use crate::shared::input::InputContextStack;
 use crate::shared::log::MessageLog;
+use crate::shared::narrative::NarrativeGenerator;
 use crate::shared::selection::Selection;
 use crate::shared::state::GameState;
 use crate::shared::time::SimulationTime;
+use crate::shared::world_history::generate_world_history;
 use crate::gpu::context::GpuContext;
 use crate::ui::map::RenderCache;
 
@@ -59,6 +62,12 @@ pub fn setup_world() -> World {
         }
     }
 
+    let generator = NarrativeGenerator::from_embedded();
+    let colony_name = generator.generate_star_name();
+    world.insert_resource(generator);
+    world.insert_resource(ColonyName { name: colony_name });
+    generate_world_history(&mut world);
+
     spawn_initial_pops(&mut world);
     initial_naming_system(&mut world);
     initial_chronicle_event(&mut world);
@@ -72,6 +81,8 @@ use crate::shared::menu::MenuState;
 mod tests {
     use super::*;
     use crate::layer1::{Pop, TerrainGrid};
+    use crate::shared::colony::ColonyName;
+    use crate::shared::narrative::NarrativeGenerator;
 
     #[test]
     fn test_setup_world_creates_resources() {
@@ -88,6 +99,8 @@ mod tests {
         assert!(world.contains_resource::<SeasonState>());
         assert!(world.contains_resource::<NamedLocations>());
         assert!(world.contains_resource::<TechState>());
+        assert!(world.contains_resource::<NarrativeGenerator>());
+        assert!(world.contains_resource::<ColonyName>());
     }
 
     #[test]

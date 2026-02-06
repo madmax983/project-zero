@@ -1,6 +1,7 @@
 use crate::layer1::chronicle::{Chronicle, EventImportance};
 use crate::layer1::map::GridPosition;
 use crate::layer1::pop::Pop;
+use crate::shared::narrative::NarrativeGenerator;
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
@@ -27,18 +28,19 @@ impl NamedLocations {
 
 /// Names the starting location based on the first pop found.
 pub fn initial_naming_system(world: &mut World) {
-    // 1. Find a pop position
     let mut query = world.query_filtered::<&GridPosition, With<Pop>>();
     let start_pos = query.iter(world).next().map(|pos| (pos.x, pos.y));
 
     if let Some((x, y)) = start_pos {
-        let name = "Landing Site".to_string();
+        let name = world
+            .resource::<NarrativeGenerator>()
+            .get_random_fragment("LANDING_NAME")
+            .cloned()
+            .unwrap_or_else(|| "Landing Site".to_string());
 
-        // 2. Add to locations
         let mut locations = world.resource_mut::<NamedLocations>();
         locations.add(x, y, name.clone());
 
-        // 3. Log to chronicle
         let tick = world.resource::<SimulationTime>().tick;
         let mut chronicle = world.resource_mut::<Chronicle>();
         chronicle.add_event(
@@ -55,6 +57,7 @@ mod tests {
     use crate::layer1::chronicle::Chronicle;
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
+    use crate::shared::narrative::NarrativeGenerator;
     use crate::shared::time::SimulationTime;
 
     #[test]
@@ -94,6 +97,7 @@ mod tests {
         world.insert_resource(NamedLocations::default());
         world.insert_resource(Chronicle::default());
         world.insert_resource(SimulationTime::default());
+        world.insert_resource(NarrativeGenerator::from_embedded());
 
         // Spawn a pop to define the landing site
         world.spawn((Pop, GridPosition { x: 40, y: 25 }));
@@ -102,7 +106,9 @@ mod tests {
         initial_naming_system(&mut world);
 
         let locations = world.resource::<NamedLocations>();
-        assert_eq!(locations.get(40, 25), Some(&"Landing Site".to_string()));
+        let name = locations.get(40, 25);
+        assert!(name.is_some(), "Should have a named location");
+        assert!(!name.unwrap().is_empty(), "Location name should not be empty");
     }
 
     #[test]
@@ -111,6 +117,7 @@ mod tests {
         world.insert_resource(NamedLocations::default());
         world.insert_resource(Chronicle::default());
         world.insert_resource(SimulationTime::default());
+        world.insert_resource(NarrativeGenerator::from_embedded());
 
         world.spawn((Pop, GridPosition { x: 40, y: 25 }));
 
@@ -118,7 +125,7 @@ mod tests {
 
         let chronicle = world.resource::<Chronicle>();
         assert!(!chronicle.events.is_empty());
-        assert!(chronicle.events[0].text.contains("Landing Site"));
+        assert!(!chronicle.events[0].text.is_empty());
     }
 
     #[test]
