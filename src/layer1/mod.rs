@@ -15,6 +15,8 @@ pub mod execution;
 pub mod farm;
 /// Housing and rest mechanics.
 pub mod housing;
+/// Named locations on the map.
+pub mod locations;
 /// Spatial primitives (GridPosition).
 pub mod map;
 /// Pop needs (hunger, rest).
@@ -47,6 +49,7 @@ pub use designation::*;
 pub use execution::*;
 pub use farm::*;
 pub use housing::*;
+pub use locations::*;
 pub use map::*;
 pub use needs::*;
 pub use pop::*;
