@@ -2,6 +2,7 @@ use crate::layer1::farm::Farm;
 use crate::layer1::housing::Housing;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
+use crate::layer1::social::{Tavern, evaluate_socialize};
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
@@ -342,6 +343,7 @@ pub fn evaluate_actions_system(world: &mut World) {
     // Pre-create query states to avoid allocation in loop
     let mut farms_state = world.query::<(Entity, &GridPosition, &Farm)>();
     let mut housing_state = world.query::<(Entity, &GridPosition, &Housing)>();
+    let mut taverns_state = world.query::<(Entity, &GridPosition, &Tavern)>();
     let mut designations_state = world.query::<(Entity, &GridPosition, &Designation)>();
 
     // Evaluate each pop
@@ -360,6 +362,13 @@ pub fn evaluate_actions_system(world: &mut World) {
             evaluate_satisfy_rest(&pop_pos, &needs, &weights, housing_state.iter(world))
         {
             utilities.push((ActionType::SatisfyRest, utility, Some(target)));
+        }
+
+        // Evaluate Socialize
+        if let Some((utility, target)) =
+            evaluate_socialize(&pop_pos, &needs, &weights, taverns_state.iter(world))
+        {
+            utilities.push((ActionType::Socialize, utility, Some(target)));
         }
 
         // Evaluate Work
@@ -655,6 +664,7 @@ mod tests {
         let needs = Needs {
             hunger: 0.3,
             rest: 0.8,
+            leisure: 0.8,
         };
         let weights = UtilityWeights::default();
 
@@ -704,6 +714,7 @@ mod tests {
                 Needs {
                     hunger: 0.1,
                     rest: 0.8,
+                    leisure: 0.8,
                 }, // Very hungry!
                 UtilityWeights::default(),
                 PopAction {
@@ -751,6 +762,7 @@ mod tests {
                 Needs {
                     hunger: 0.6,
                     rest: 0.6,
+                    leisure: 0.6,
                 }, // Moderate needs
                 UtilityWeights::default(),
                 PopAction {
@@ -880,6 +892,7 @@ mod tests {
                 Needs {
                     hunger: 0.6,
                     rest: 0.8,
+                    leisure: 0.8,
                 }, // Improved from 0.3
                 UtilityWeights::default(),
                 PlanOutcome {
@@ -888,6 +901,7 @@ mod tests {
                     needs_before: Needs {
                         hunger: 0.3,
                         rest: 0.8,
+                        leisure: 0.8,
                     },
                 },
             ))
@@ -919,6 +933,7 @@ mod tests {
                 Needs {
                     hunger: 0.3,
                     rest: 0.8,
+                    leisure: 0.8,
                 }, // No improvement
                 UtilityWeights::default(),
                 PlanOutcome {
@@ -927,6 +942,7 @@ mod tests {
                     needs_before: Needs {
                         hunger: 0.3,
                         rest: 0.8,
+                        leisure: 0.8,
                     },
                 },
             ))
@@ -987,6 +1003,7 @@ mod tests {
                 Needs {
                     hunger: 0.3,
                     rest: 0.8,
+                    leisure: 0.8,
                 },
                 UtilityWeights::default(),
                 PopAction::default(),
@@ -1017,6 +1034,7 @@ mod tests {
                 needs_before: Needs {
                     hunger: 0.3,
                     rest: 0.8,
+                    leisure: 0.8,
                 },
             });
 

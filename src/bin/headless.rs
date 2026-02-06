@@ -18,6 +18,12 @@
 //!   help           - Show this help
 //!   quit           - Exit
 
+#![allow(clippy::cast_sign_loss)]
+#![allow(clippy::cast_possible_truncation)]
+#![allow(clippy::cast_possible_wrap)]
+#![allow(clippy::needless_pass_by_ref_mut)]
+#![allow(clippy::too_many_lines)]
+
 use bevy_ecs::prelude::*;
 use scale::layer1::{
     BuildMode, BuildingTracker, BuildingType, Chronicle, ChronicleUiState, ColonyMemory,
@@ -268,9 +274,7 @@ fn print_status(world: &mut World) {
 
     println!("=== Colony Status (Tick {tick}) ===");
     println!("Population: {pop_count} pops");
-    println!(
-        "Resources: {food:.1} food, {wood:.1} wood, {stone:.1} stone"
-    );
+    println!("Resources: {food:.1} food, {wood:.1} wood, {stone:.1} stone");
     println!("Buildings: {farm_count} farms, {housing_count} housing");
     println!("Designations: {designation_count} active");
 }
@@ -318,10 +322,14 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
         let mut tiles = std::collections::HashMap::new();
         for y in (center_y - radius)..=(center_y + radius) {
             for x in (center_x - radius)..=(center_x + radius) {
-                if x >= 0 && y >= 0 && x < terrain.width as i32 && y < terrain.height as i32
-                    && let Some(t) = terrain.get(x as usize, y as usize) {
-                        tiles.insert((x, y), t);
-                    }
+                if x >= 0
+                    && y >= 0
+                    && x < terrain.width as i32
+                    && y < terrain.height as i32
+                    && let Some(t) = terrain.get(x as usize, y as usize)
+                {
+                    tiles.insert((x, y), t);
+                }
             }
         }
         (terrain.width, terrain.height, tiles)
@@ -438,9 +446,7 @@ fn designate_at(world: &mut World, designation_type: DesignationType, x: i32, y:
                 if tile == Some(TerrainType::Tree) {
                     println!("Failed: already designated at ({x}, {y})");
                 } else {
-                    println!(
-                        "Failed: ({x}, {y}) is {tile:?}, need Tree for chopping"
-                    );
+                    println!("Failed: ({x}, {y}) is {tile:?}, need Tree for chopping");
                 }
             }
             DesignationType::Demolish => {
@@ -517,10 +523,14 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: i32) {
         let mut tiles = std::collections::HashMap::new();
         for y in (center_y - radius)..=(center_y + radius) {
             for x in (center_x - radius)..=(center_x + radius) {
-                if x >= 0 && y >= 0 && x < terrain.width as i32 && y < terrain.height as i32
-                    && let Some(t) = terrain.get(x as usize, y as usize) {
-                        tiles.insert((x, y), t);
-                    }
+                if x >= 0
+                    && y >= 0
+                    && x < terrain.width as i32
+                    && y < terrain.height as i32
+                    && let Some(t) = terrain.get(x as usize, y as usize)
+                {
+                    tiles.insert((x, y), t);
+                }
             }
         }
         (terrain.width, terrain.height, tiles)

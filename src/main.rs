@@ -28,9 +28,9 @@ use scale::layer1::{
     clean_dead_workers_system, cleanup_previous_assignment_system, consume_food_system,
     decay_needs_system, evaluate_actions_system, generate_terrain, initial_chronicle_event,
     kill_starving_entities_system, movement_system, process_refining_system,
-    process_start_plan_system, produce_food_system, restore_rest_in_housing_system,
-    spawn_initial_pops, track_plan_outcomes_system, update_action_timer_system,
-    update_resource_caps_system, work_execution_system,
+    process_start_plan_system, produce_food_system, restore_leisure_system,
+    restore_rest_in_housing_system, spawn_initial_pops, track_plan_outcomes_system,
+    update_action_timer_system, update_resource_caps_system, work_execution_system,
 };
 use scale::shared::input::{InputContextStack, InputRouter};
 use scale::shared::menu::MenuState;
@@ -144,6 +144,7 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
                     produce_food_system(&mut world);
                     process_refining_system(&mut world);
                     restore_rest_in_housing_system(&mut world);
+                    restore_leisure_system(&mut world);
                     consume_food_system(&mut world);
                     decay_needs_system(&mut world);
                     kill_starving_entities_system(&mut world);

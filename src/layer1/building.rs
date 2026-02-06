@@ -3,6 +3,7 @@
 use super::GridPosition;
 use super::farm::Farm;
 use super::housing::Housing;
+use super::social::Tavern;
 use super::stockpile::Stockpile;
 use crate::layer1::resources::{ColonyResources, RefiningProgress};
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
@@ -26,6 +27,8 @@ pub enum BuildingType {
     LumberMill,
     /// Refines Stone into Blocks.
     StoneMason,
+    /// Social gathering place.
+    Tavern,
 }
 
 impl BuildingType {
@@ -46,6 +49,7 @@ impl BuildingType {
             Self::Stockpile => "Stockpile",
             Self::LumberMill => "Lumber Mill",
             Self::StoneMason => "Stone Mason",
+            Self::Tavern => "Tavern",
         }
     }
 
@@ -74,6 +78,11 @@ impl BuildingType {
             Self::StoneMason => ColonyResources {
                 wood: 40.0,
                 stone: 20.0,
+                ..Default::default()
+            },
+            Self::Tavern => ColonyResources {
+                wood: 40.0,
+                stone: 10.0,
                 ..Default::default()
             },
         }
@@ -200,6 +209,9 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
                 max: 10.0,
             });
         }
+        BuildingType::Tavern => {
+            entity.insert(Tavern::default());
+        }
     }
 }
 
@@ -294,7 +306,8 @@ mod tests {
         assert_eq!(BuildingType::Farm.next(), BuildingType::Stockpile);
         assert_eq!(BuildingType::Stockpile.next(), BuildingType::LumberMill);
         assert_eq!(BuildingType::LumberMill.next(), BuildingType::StoneMason);
-        assert_eq!(BuildingType::StoneMason.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::StoneMason.next(), BuildingType::Tavern);
+        assert_eq!(BuildingType::Tavern.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -355,6 +368,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::StoneMason);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Tavern);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

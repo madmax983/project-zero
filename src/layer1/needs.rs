@@ -8,6 +8,8 @@ pub struct Needs {
     pub hunger: f32,
     /// Rest level: 0.0 = exhausted, 1.0 = rested.
     pub rest: f32,
+    /// Leisure level: 0.0 = bored, 1.0 = entertained.
+    pub leisure: f32,
 }
 
 impl Default for Needs {
@@ -15,6 +17,7 @@ impl Default for Needs {
         Self {
             hunger: 0.8,
             rest: 0.8,
+            leisure: 0.8,
         }
     }
 }
@@ -23,16 +26,22 @@ impl Needs {
     /// Returns the worst (lowest) need value.
     #[must_use]
     pub const fn worst(&self) -> f32 {
-        if self.hunger < self.rest {
+        let min_hr = if self.hunger < self.rest {
             self.hunger
         } else {
             self.rest
+        };
+        if min_hr < self.leisure {
+            min_hr
+        } else {
+            self.leisure
         }
     }
 }
 
 const HUNGER_DECAY_PER_TICK: f32 = 0.001; // ~800 ticks to starve from full
 const REST_DECAY_PER_TICK: f32 = 0.001; // ~800 ticks to exhaust
+const LEISURE_DECAY_PER_TICK: f32 = 0.0015; // Slightly faster than hunger/rest
 
 /// Decays needs for all pops each tick.
 pub fn decay_needs_system(world: &mut World) {
@@ -40,6 +49,7 @@ pub fn decay_needs_system(world: &mut World) {
     for mut needs in query.iter_mut(world) {
         needs.hunger = (needs.hunger - HUNGER_DECAY_PER_TICK).max(0.0);
         needs.rest = (needs.rest - REST_DECAY_PER_TICK).max(0.0);
+        needs.leisure = (needs.leisure - LEISURE_DECAY_PER_TICK).max(0.0);
     }
 }
 
@@ -78,18 +88,21 @@ mod tests {
         let needs1 = Needs {
             hunger: 0.5,
             rest: 0.7,
+            leisure: 0.8,
         };
         assert!((needs1.worst() - 0.5).abs() < f32::EPSILON);
 
         let needs2 = Needs {
             hunger: 0.9,
             rest: 0.3,
+            leisure: 0.8,
         };
         assert!((needs2.worst() - 0.3).abs() < f32::EPSILON);
 
         let needs3 = Needs {
             hunger: 0.5,
             rest: 0.5,
+            leisure: 0.5,
         };
         assert!((needs3.worst() - 0.5).abs() < f32::EPSILON);
     }
@@ -104,6 +117,7 @@ mod tests {
             Needs {
                 hunger: 0.0001,
                 rest: 0.0001,
+                leisure: 0.0001,
             },
         ));
 
@@ -158,6 +172,7 @@ mod tests {
             Needs {
                 hunger: 0.5,
                 rest: 0.5,
+                leisure: 0.5,
             },
         ));
 
@@ -167,6 +182,7 @@ mod tests {
             Needs {
                 hunger: 0.0,
                 rest: 0.5,
+                leisure: 0.5,
             },
         ));
 
@@ -186,6 +202,7 @@ mod tests {
             Needs {
                 hunger: 0.01,
                 rest: 0.0,
+                leisure: 0.0,
             },
         ));
 

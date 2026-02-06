@@ -57,7 +57,9 @@ pub fn biography_monitor_system(world: &mut World) {
     for (entity, bio, assigned) in query.iter(world) {
         let target_name = world
             .get::<Building>(assigned.entity)
-            .map_or("Unknown Building", |building| building.building_type.label());
+            .map_or("Unknown Building", |building| {
+                building.building_type.label()
+            });
 
         let event_text = match assigned.assignment_type {
             AssignmentType::FarmWorker => format!("Started working at {target_name}."),
@@ -66,9 +68,10 @@ pub fn biography_monitor_system(world: &mut World) {
 
         // Avoid duplicate consecutive events
         if let Some(last) = bio.events.last()
-            && last.text == event_text {
-                continue;
-            }
+            && last.text == event_text
+        {
+            continue;
+        }
 
         events_to_add.push((entity, event_text));
     }

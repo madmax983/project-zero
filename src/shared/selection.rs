@@ -323,6 +323,7 @@ mod tests {
                 Needs {
                     hunger: 0.75,
                     rest: 0.50,
+                    ..Default::default()
                 },
             ))
             .id();

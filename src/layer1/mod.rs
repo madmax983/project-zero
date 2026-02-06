@@ -27,6 +27,8 @@ pub mod refining;
 pub mod resources;
 /// Seasonal rhythms (Spring, Summer, Autumn, Winter).
 pub mod seasons;
+/// Social needs and tavern.
+pub mod social;
 /// Resource storage limits and stockpile buildings.
 pub mod stockpile;
 /// Terrain generation and grid management.
@@ -51,6 +53,7 @@ pub use pop::*;
 pub use refining::*;
 pub use resources::*;
 pub use seasons::*;
+pub use social::*;
 pub use stockpile::*;
 pub use terrain::*;
 pub use thoughts::*;

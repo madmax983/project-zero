@@ -11,8 +11,8 @@ use ratatui::{
 
 use crate::experimental::biography::Biography;
 use crate::layer1::{
-    building::Building, needs::Needs, pop::Pop, resources::RefiningProgress, stockpile::Stockpile,
-    thoughts::Thought, ColonyResources, Farm, GridPosition, Housing, TerrainGrid,
+    ColonyResources, Farm, GridPosition, Housing, TerrainGrid, building::Building, needs::Needs,
+    pop::Pop, resources::RefiningProgress, stockpile::Stockpile, thoughts::Thought,
 };
 use crate::shared::selection::{Selection, SelectionTarget};
 use crate::ui::map::{get_building_color, get_terrain_char, get_terrain_color};
@@ -156,6 +156,7 @@ fn render_tile_inspector(frame: &mut Frame, area: Rect, world: &World, x: i32, y
     frame.render_widget(visual, v_layout[1]);
 }
 
+#[allow(clippy::too_many_lines)]
 fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity: Entity) {
     if !world.entities().contains(entity) {
         frame.render_widget(
@@ -184,12 +185,12 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
     let layout = Layout::default()
         .direction(Direction::Vertical)
         .constraints([
-            Constraint::Length(1), // Name
-            Constraint::Length(1), // Pos
-            Constraint::Length(1), // Spacer
+            Constraint::Length(1),              // Name
+            Constraint::Length(1),              // Pos
+            Constraint::Length(1),              // Spacer
             Constraint::Length(details_height), // Needs or Details
-            Constraint::Length(1), // Spacer
-            Constraint::Min(1),    // Thoughts/Extra
+            Constraint::Length(1),              // Spacer
+            Constraint::Min(1),                 // Thoughts/Extra
         ])
         .split(area);
 
@@ -449,6 +450,7 @@ mod tests {
                 Needs {
                     hunger: 0.5,
                     rest: 0.8,
+                    ..Default::default()
                 },
                 Thought {
                     text: "Thinking...".to_string(),
