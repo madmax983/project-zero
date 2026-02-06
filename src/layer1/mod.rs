@@ -44,12 +44,16 @@ pub mod utility_ai;
 /// Tests for utility AI work logic.
 pub mod utility_ai_work_tests;
 
+/// Named locations on the map.
+pub mod locations;
+
 pub use building::*;
 pub use chronicle::*;
 pub use designation::*;
 pub use execution::*;
 pub use farm::*;
 pub use housing::*;
+pub use locations::*;
 pub use map::*;
 pub use needs::*;
 pub use pop::*;

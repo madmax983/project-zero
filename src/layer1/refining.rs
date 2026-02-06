@@ -1,4 +1,5 @@
 // src/layer1/refining.rs
+#![allow(clippy::too_many_lines)]
 
 use crate::layer1::GridPosition;
 use crate::layer1::building::{Building, BuildingType};
