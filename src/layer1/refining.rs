@@ -73,6 +73,7 @@ pub fn process_refining_system(world: &mut World) {
                     resources.add_planks(output.planks);
                     resources.add_blocks(output.blocks);
                     resources.add_metal(output.metal);
+                    resources.add_tools(output.tools);
                     true
                 } else {
                     false
@@ -96,7 +97,12 @@ pub fn process_refining_system(world: &mut World) {
     }
 }
 
-fn get_refining_recipe(
+/// Returns the refining recipe for a building type.
+///
+/// # Returns
+/// (`can_afford`, `input_cost`, `output_gain`)
+#[must_use]
+pub fn get_refining_recipe(
     building_type: BuildingType,
     res: &ColonyResources,
 ) -> (bool, ColonyResources, ColonyResources) {
@@ -132,6 +138,18 @@ fn get_refining_recipe(
             },
             ColonyResources {
                 metal: 1.0,
+                ..Default::default()
+            },
+        ),
+        BuildingType::Smithy => (
+            res.metal >= 1.0 && res.wood >= 1.0 && res.tools < res.max_tools,
+            ColonyResources {
+                metal: 1.0,
+                wood: 1.0,
+                ..Default::default()
+            },
+            ColonyResources {
+                tools: 1.0,
                 ..Default::default()
             },
         ),

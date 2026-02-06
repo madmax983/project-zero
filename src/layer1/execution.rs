@@ -26,14 +26,23 @@ use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::farm::Farm;
 use crate::layer1::housing::Housing;
 use crate::layer1::map::GridPosition;
-use crate::layer1::resources::{ForestryProgress, MiningProgress, chop_tree, mine_rock};
+use crate::layer1::resources::{
+    ColonyResources, ForestryProgress, MiningProgress, chop_tree, mine_rock,
+};
 use crate::layer1::social::Tavern;
 use crate::layer1::terrain::TerrainGrid;
 use crate::layer1::utility_ai::{ActionType, StartPlan};
 use bevy_ecs::prelude::*;
+use rand::Rng;
 
 /// Work amount applied per tick when a pop is working.
 const WORK_PER_TICK: f32 = 10.0;
+
+/// Chance for a tool to break per tick when used.
+const TOOL_BREAK_CHANCE: f64 = 0.01;
+
+/// Efficiency multiplier when working without tools.
+const NO_TOOL_PENALTY: f32 = 0.5;
 
 /// Component indicating a pop is moving toward a target.
 #[derive(Component, Debug)]
@@ -364,6 +373,15 @@ fn calculate_next_position(current: GridPosition, target: GridPosition) -> Optio
 
 /// Executes work at designations when pop is at target with Work action.
 pub fn work_execution_system(world: &mut World) {
+    // Check tools at the start of the system
+    let (has_tools, mut tool_broken) = {
+        let res = world.resource::<ColonyResources>();
+        (res.tools >= 1.0, false)
+    };
+
+    let efficiency = if has_tools { 1.0 } else { NO_TOOL_PENALTY };
+    let work_amount = WORK_PER_TICK * efficiency;
+
     // Find pops at their work target
     let workers: Vec<(Entity, Entity)> = world
         .query_filtered::<(Entity, &MovementTarget), With<AtTarget>>()
@@ -386,7 +404,7 @@ pub fn work_execution_system(world: &mut World) {
                 continue;
             };
 
-        match designation_type {
+        let worked = match designation_type {
             DesignationType::Mine => {
                 // Ensure MiningProgress exists
                 if world.get::<MiningProgress>(designation_entity).is_none() {
@@ -394,7 +412,8 @@ pub fn work_execution_system(world: &mut World) {
                         .entity_mut(designation_entity)
                         .insert(MiningProgress::default());
                 }
-                mine_rock(world, designation_entity, WORK_PER_TICK);
+                mine_rock(world, designation_entity, work_amount);
+                true
             }
             DesignationType::Chop => {
                 // Ensure ForestryProgress exists
@@ -406,11 +425,27 @@ pub fn work_execution_system(world: &mut World) {
                             max: 50.0,
                         });
                 }
-                chop_tree(world, designation_entity, WORK_PER_TICK);
+                chop_tree(world, designation_entity, work_amount);
+                true
             }
             DesignationType::Demolish => {
                 // TODO: Implement demolish logic
+                false
             }
+        };
+
+        if worked && has_tools && !tool_broken {
+            let mut rng = rand::thread_rng();
+            if rng.gen_bool(TOOL_BREAK_CHANCE) {
+                tool_broken = true;
+            }
+        }
+    }
+
+    if tool_broken {
+        let mut res = world.resource_mut::<ColonyResources>();
+        if res.tools >= 1.0 {
+            res.tools -= 1.0;
         }
     }
 }

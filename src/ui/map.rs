@@ -329,6 +329,7 @@ pub const fn get_building_char(building: BuildingType) -> char {
         BuildingType::LumberMill => 'L',
         BuildingType::StoneMason => 'M',
         BuildingType::Smelter => 'S',
+        BuildingType::Smithy => '⚒',
         BuildingType::Tavern => 'T',
         BuildingType::Library => 'K',
     }
@@ -343,6 +344,7 @@ pub const fn get_building_color(building: BuildingType) -> Color {
         BuildingType::LumberMill => Color::Rgb(205, 133, 63), // Peru
         BuildingType::StoneMason => Color::Rgb(119, 136, 153), // LightSlateGray
         BuildingType::Smelter => Color::Rgb(255, 69, 0),  // Red-Orange
+        BuildingType::Smithy => Color::Rgb(192, 192, 192), // Silver
         BuildingType::Tavern => Color::Magenta,
         BuildingType::Library => Color::Cyan,
     }
