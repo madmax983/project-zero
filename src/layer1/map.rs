@@ -1,27 +1,58 @@
 //! Spatial primitives and map utilities.
 //!
-//! This module defines the core spatial components used throughout the simulation,
-//! such as `GridPosition`.
+//! This module defines the foundational spatial component `GridPosition`.
+//!
+//! # The Coordinate System
+//!
+//! The world is represented as a 2D grid. The coordinate system follows these rules:
+//! * **Origin (0,0)**: The top-left corner of the map.
+//! * **X-Axis**: Increases to the right (East).
+//! * **Y-Axis**: Increases downwards (South).
+//!
+//! While `GridPosition` uses `i32` to allow for flexibility (and potentially negative
+//! coordinates for off-map entities or infinite scrolling in the future), the valid
+//! gameplay area is typically bounded by the `TerrainGrid` dimensions (0..width, 0..height).
+//!
+//! # Relationship with `TerrainGrid`
+//!
+//! The `TerrainGrid` resource stores tile data in a flat vector. To access tile data
+//! for a given `GridPosition`, you must convert the (x, y) coordinates to a linear index:
+//! `index = y * width + x`.
+//!
+//! Always check bounds before accessing the grid, as `GridPosition` does not enforce
+//! map limits itself.
 
 use bevy_ecs::prelude::*;
 
 /// Grid position in world space.
 ///
-/// Used for any entity that occupies a specific tile on the `TerrainGrid`.
+/// This component marks an entity's physical location in the colony. It is used by
+/// rendering systems, pathfinding, and spatial queries.
 ///
 /// # Examples
 ///
+/// Basic usage:
 /// ```
 /// use scale::layer1::map::GridPosition;
 ///
 /// let pos = GridPosition { x: 10, y: 5 };
 /// assert_eq!(pos.x, 10);
 /// ```
+///
+/// Calculating Manhattan distance:
+/// ```
+/// use scale::layer1::map::GridPosition;
+///
+/// let a = GridPosition { x: 0, y: 0 };
+/// let b = GridPosition { x: 3, y: 4 };
+/// let distance = (a.x - b.x).abs() + (a.y - b.y).abs();
+/// assert_eq!(distance, 7);
+/// ```
 #[derive(Component, Default, Clone, Copy, Debug, PartialEq, Eq, Hash)]
 pub struct GridPosition {
-    /// The X coordinate (horizontal).
+    /// The X coordinate (horizontal column).
     pub x: i32,
-    /// The Y coordinate (vertical).
+    /// The Y coordinate (vertical row).
     pub y: i32,
 }
 

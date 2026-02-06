@@ -1,18 +1,48 @@
+//! Chronicle system and historical records.
+//!
+//! The Chronicle is the "Memory" of the colony. It does not just log debug messages;
+//! it records significant events that form the narrative of the player's playthrough.
+//! This system bridges the gap between mechanical simulation (ticks, resources) and
+//! player experience (stories, history).
+//!
+//! # Concepts
+//!
+//! * **ChronicleEvent**: An atomic piece of history (e.g., "Colony Founded", "First Winter").
+//! * **EventImportance**: Determines how prominent the event is in the UI.
+//! * **Milestones**: Automatic achievements tracked by the `check_milestones_system`.
+//!
+//! # Integration with Lore
+//!
+//! While the Chronicle stores *what* happened, the descriptions often come from the
+//! narrative generator (see `src/shared/narrative.rs`). This separation allows for
+//! flavor text to vary while the underlying event data remains consistent.
+
 use crate::layer1::balance::TICKS_PER_YEAR;
 use crate::layer1::building::{Building, BuildingType};
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 
 /// Importance level for chronicle events.
+///
+/// This enum dictates visual hierarchy in the UI (colors, prefixes).
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::chronicle::EventImportance;
+///
+/// let level = EventImportance::Legendary;
+/// assert!(matches!(level, EventImportance::Legendary));
+/// ```
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum EventImportance {
-    /// Flavor text or minor notifications.
+    /// Flavor text or minor notifications (e.g., "Bob ate a berry").
     Minor,
-    /// Standard gameplay events.
+    /// Standard gameplay events (e.g., "Housing completed").
     Standard,
-    /// Significant achievements or milestones.
+    /// Significant achievements or milestones (e.g., "Iron Age reached").
     Major,
-    /// World-altering events or game start.
+    /// World-altering events or game start (e.g., "Colony Founded").
     Legendary,
 }
 
@@ -38,6 +68,18 @@ pub struct Chronicle {
 
 impl Chronicle {
     /// Add a new event to the chronicle.
+    ///
+    /// The event is automatically timestamped with the current "Year" based on the tick.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use scale::layer1::chronicle::{Chronicle, EventImportance};
+    ///
+    /// let mut chronicle = Chronicle::default();
+    /// chronicle.add_event(100, "We built a fire.".to_string(), EventImportance::Standard);
+    /// assert_eq!(chronicle.events.len(), 1);
+    /// ```
     pub fn add_event(&mut self, tick: u64, text: String, importance: EventImportance) {
         self.events.push(ChronicleEvent {
             tick,
