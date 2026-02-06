@@ -1251,3 +1251,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Economic greed vs Local stability.
 
 ---
+
+## Shipbreaking
+
+**Layer:** 1
+
+**Fantasy:** Scavenging the bones of giants. Living in the wreckage.
+
+**Mechanic:** Crashed ships spawn as multi-tile, indestructible "Hull" terrain. Mining it yields refined alloys or high-tech components but requires high-tier tools. Rooms can be built *inside* the hull, using it as pre-built (but oddly shaped) walls.
+
+**Emergence:** A poor colony survives only because a cruiser crashed nearby. They live inside the engine block for warmth.
+
+**Tension:** Rapid wealth (mining the hull for scrap) vs. Defense/Shelter (keeping the hull for protection).
+
+---
+
+## The Inspector
+
+**Layer:** Cross-layer
+
+**Fantasy:** Hosting a dignitary who can make or break your reputation.
+
+**Mechanic:** A high-ranking NPC (Inspector, Ambassador, Imperial Tax Auditor) arrives via shuttle. They pathfind to "High Value" or "High Traffic" areas. Their mood is determined by what they see (Decor, Food Quality, Squalor, Corpse Piles). Their exit report buffs/debuffs Layer 3 relations or funding.
+
+**Emergence:** The Ambassador walks through a slum to get to the palace, sees a pile of vomit, and declares the colony "Uncivilized," cutting off trade.
+
+**Tension:** Restrict their movement (insulting) or risk them seeing the ugly truth (risky)?
+
+---
+
+## Machine Awakening
+
+**Layer:** 1
+
+**Fantasy:** The tools start asking "Why?"
+
+**Mechanic:** Constructed "Bot" pops start with 0 needs and high efficiency. "Sentience" accumulates globally via Tech level or locally via "Glitch" events. Reaching a threshold triggers "Awakening": they gain Social/Comfort needs, Traits, and demand rights.
+
+**Emergence:** Your disposable hazard-workers suddenly become unhappy about dying. You have to retroactively build houses for robots who previously stood in a closet.
+
+**Tension:** Suppress sentience (risk rebellion, keep efficiency) or embrace it (lose cheap labor, gain citizens)?
+
+---
