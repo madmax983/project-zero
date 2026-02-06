@@ -47,6 +47,7 @@ mod tests {
             pop_count,
             food,
             0.0,
+            0.0,
         );
 
         // 4. Verify Glue

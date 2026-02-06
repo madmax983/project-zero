@@ -26,6 +26,7 @@ use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::farm::Farm;
 use crate::layer1::housing::Housing;
 use crate::layer1::map::GridPosition;
+use crate::layer1::needs::{Needs, get_morale_efficiency};
 use crate::layer1::resources::{
     ColonyResources, ForestryProgress, MiningProgress, chop_tree, mine_rock,
 };
@@ -331,18 +332,26 @@ pub fn work_execution_system(world: &mut World) {
         (res.tools >= 1.0, false)
     };
 
-    let efficiency = if has_tools { 1.0 } else { NO_TOOL_PENALTY };
-    let work_amount = WORK_PER_TICK * efficiency;
+    let base_efficiency = if has_tools { 1.0 } else { NO_TOOL_PENALTY };
 
     // Find pops at their work target
-    let workers: Vec<(Entity, Entity)> = world
-        .query_filtered::<(Entity, &MovementTarget), With<AtTarget>>()
+    // We collect morale data upfront to avoid borrow conflicts during execution
+    let workers: Vec<(Entity, Entity, f32)> = world
+        .query_filtered::<(Entity, &MovementTarget, Option<&Needs>), With<AtTarget>>()
         .iter(world)
-        .filter(|(_, mt)| mt.for_action == ActionType::Work)
-        .map(|(e, mt)| (e, mt.target_entity))
+        .filter(|(_, mt, _)| mt.for_action == ActionType::Work)
+        .map(|(e, mt, needs)| {
+            let morale_mult = if let Some(n) = needs {
+                get_morale_efficiency(n.morale())
+            } else {
+                1.0
+            };
+            (e, mt.target_entity, morale_mult)
+        })
         .collect();
 
-    for (_pop_entity, designation_entity) in workers {
+    for (_pop_entity, designation_entity, morale_mult) in workers {
+        let work_amount = WORK_PER_TICK * base_efficiency * morale_mult;
         // Check if designation still exists
         if world.get_entity(designation_entity).is_err() {
             continue;

@@ -37,7 +37,30 @@ impl Needs {
             self.leisure
         }
     }
+
+    /// Calculates aggregate morale score (0.0 to 1.0).
+    #[must_use]
+    pub fn morale(&self) -> f32 {
+        (self.hunger + self.rest + self.leisure) / 3.0
+    }
 }
+
+/// Returns work efficiency multiplier based on morale.
+#[must_use]
+pub fn get_morale_efficiency(morale: f32) -> f32 {
+    if morale >= 0.8 {
+        1.2
+    } else if morale <= 0.2 {
+        0.5
+    } else {
+        1.0
+    }
+}
+
+/// Threshold for high morale (bonus efficiency).
+pub const MORALE_HIGH_THRESHOLD: f32 = 0.8;
+/// Threshold for low morale (penalty efficiency).
+pub const MORALE_LOW_THRESHOLD: f32 = 0.2;
 
 const HUNGER_DECAY_PER_TICK: f32 = 0.001; // ~800 ticks to starve from full
 const REST_DECAY_PER_TICK: f32 = 0.001; // ~800 ticks to exhaust
@@ -231,5 +254,60 @@ mod tests {
             "Pop should die within ~800 ticks from full (0.8)"
         );
         assert!(ticks > 750, "Pop should survive at least 750 ticks");
+    }
+
+    // Spec 031: Pop Morale
+    #[test]
+    fn test_calculate_morale() {
+        let needs = Needs {
+            hunger: 1.0,
+            rest: 1.0,
+            leisure: 1.0,
+        };
+        assert!((needs.morale() - 1.0).abs() < f32::EPSILON);
+
+        let needs_mixed = Needs {
+            hunger: 0.5,
+            rest: 0.5,
+            leisure: 0.5,
+        };
+        assert!((needs_mixed.morale() - 0.5).abs() < f32::EPSILON);
+
+        let needs_bad = Needs {
+            hunger: 0.0,
+            rest: 0.0,
+            leisure: 0.0,
+        };
+        assert!((needs_bad.morale() - 0.0).abs() < f32::EPSILON);
+
+        // Uneven
+        let needs_uneven = Needs {
+            hunger: 1.0,
+            rest: 0.0,
+            leisure: 0.5,
+        };
+        assert!((needs_uneven.morale() - 0.5).abs() < f32::EPSILON);
+    }
+
+    #[test]
+    fn test_morale_efficiency_bonus() {
+        // High morale (>= 0.8) -> 1.2x speed
+        assert_eq!(get_morale_efficiency(0.9), 1.2);
+        assert_eq!(get_morale_efficiency(0.8), 1.2);
+    }
+
+    #[test]
+    fn test_morale_efficiency_neutral() {
+        // Normal morale (0.2 < m < 0.8) -> 1.0x speed
+        assert_eq!(get_morale_efficiency(0.5), 1.0);
+        assert_eq!(get_morale_efficiency(0.79), 1.0);
+        assert_eq!(get_morale_efficiency(0.21), 1.0);
+    }
+
+    #[test]
+    fn test_morale_efficiency_penalty() {
+        // Low morale (<= 0.2) -> 0.5x speed
+        assert_eq!(get_morale_efficiency(0.1), 0.5);
+        assert_eq!(get_morale_efficiency(0.2), 0.5);
     }
 }
