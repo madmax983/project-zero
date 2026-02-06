@@ -3,6 +3,7 @@
 use bevy_ecs::prelude::*;
 
 use crate::experimental::biography::biography_monitor_system;
+use crate::experimental::dreams::dream_system;
 use crate::layer1::{
     advance_season_system, arrival_handler_system, check_milestones_system,
     clean_dead_residents_system, clean_dead_workers_system, cleanup_previous_assignment_system,
@@ -41,6 +42,7 @@ pub fn run_simulation_tick(world: &mut World) {
 
     track_plan_outcomes_system(world);
     biography_monitor_system(world);
+    dream_system(world);
     check_milestones_system(world);
 
     world.resource_mut::<SimulationTime>().tick += 1;

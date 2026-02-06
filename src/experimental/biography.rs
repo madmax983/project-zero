@@ -18,7 +18,7 @@ pub struct BiographyEvent {
 }
 
 /// Component storing the history of a Pop.
-#[derive(Component, Default, Debug)]
+#[derive(Component, Default, Debug, Clone)]
 pub struct Biography {
     /// List of life events.
     pub events: Vec<BiographyEvent>,
