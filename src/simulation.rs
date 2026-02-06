@@ -16,8 +16,9 @@ use crate::layer1::{
     consume_food_system, decay_needs_system, evaluate_actions_system, haul_system,
     kill_starving_entities_system, movement_system, process_refining_system,
     process_research_system, process_start_plan_system, produce_food_system,
-    restore_leisure_system, restore_rest_in_housing_system, track_plan_outcomes_system,
-    update_action_timer_system, update_resource_caps_system, work_execution_system,
+    restore_leisure_system, restore_rest_in_housing_system, spoilage_system,
+    track_plan_outcomes_system, update_action_timer_system, update_resource_caps_system,
+    work_execution_system,
 };
 use crate::shared::time::SimulationTime;
 
@@ -75,6 +76,7 @@ pub fn build_simulation_schedule() -> Schedule {
         consume_food_system
             .after(produce_food_system)
             .after(update_resource_caps_system),
+        spoilage_system.after(consume_food_system),
         decay_needs_system.after(consume_food_system),
         kill_starving_entities_system.after(decay_needs_system),
         clean_dead_residents_system.after(kill_starving_entities_system),
