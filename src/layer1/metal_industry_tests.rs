@@ -7,6 +7,7 @@ mod tests {
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
     use crate::layer1::{Designation, DesignationType, GridPosition};
     use bevy_ecs::prelude::*;
+    use bevy_ecs::system::RunSystemOnce;
 
     #[test]
     fn test_resources_metal_fields() {
@@ -58,9 +59,7 @@ mod tests {
         let ore_count = world
             .query::<&crate::layer1::resources::ResourceItem>()
             .iter(&world)
-            .filter(|item| {
-                item.resource_type == crate::layer1::resources::ResourceType::Ore
-            })
+            .filter(|item| item.resource_type == crate::layer1::resources::ResourceType::Ore)
             .count();
 
         // Should have found SOME ore (20% chance * 100 trials = ~20)
@@ -95,7 +94,7 @@ mod tests {
         world.spawn((Pop, GridPosition { x: 5, y: 6 }));
 
         // Run system
-        process_refining_system(&mut world);
+        world.run_system_once(process_refining_system).unwrap();
 
         let res = world.resource::<ColonyResources>();
         // Cost: 1 Ore + 1 Wood

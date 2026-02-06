@@ -1,9 +1,11 @@
 #[cfg(test)]
 mod tests {
     use bevy_ecs::prelude::*;
-    use scale::layer1::{Pop, ColonyResources, BuildMode, DesignationMode, Viewport, NamedLocations};
-    use scale::shared::time::{SimulationTime, SimSpeed};
+    use scale::layer1::{
+        BuildMode, ColonyResources, DesignationMode, NamedLocations, Pop, Viewport,
+    };
     use scale::shared::state::GameState;
+    use scale::shared::time::{SimSpeed, SimulationTime};
     use scale::ui::status::get_status_string;
 
     #[test]
@@ -48,8 +50,14 @@ mod tests {
         );
 
         // 4. Verify Glue
-        assert!(status.contains("Souls: 3"), "Status bar missing population count");
-        assert!(status.contains("Yield: 42"), "Status bar missing food yield");
+        assert!(
+            status.contains("Souls: 3"),
+            "Status bar missing population count"
+        );
+        assert!(
+            status.contains("Yield: 42"),
+            "Status bar missing food yield"
+        );
         assert!(status.contains("Day 1000"), "Status bar missing Day");
     }
 }

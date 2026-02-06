@@ -10,8 +10,8 @@ use crate::layer1::resources::ColonyResources;
 use crate::shared::log::MessageLog;
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
-use rand::seq::SliceRandom;
 use rand::Rng;
+use rand::seq::SliceRandom;
 
 /// A dream experienced by a Pop.
 #[derive(Component, Debug, Clone)]
@@ -23,28 +23,27 @@ pub struct Dream {
 }
 
 /// System to generate dreams for sleeping pops.
-pub fn dream_system(world: &mut World) {
-    let current_tick = world.resource::<SimulationTime>().tick;
+pub fn dream_system(
+    time: Res<SimulationTime>,
+    sleeping_pops: Query<(Entity, Option<&Biography>, &AssignedTo), With<Pop>>,
+    mut resources: ResMut<ColonyResources>,
+    mut log: Option<ResMut<MessageLog>>,
+    mut commands: Commands,
+) {
+    let current_tick = time.tick;
 
-    // Collect sleeping pops (those assigned to housing)
-    // We clone biography data to avoid borrow checker issues when mutating world later
-    let sleeping_pops: Vec<(Entity, Option<Biography>)> = world
-        .query_filtered::<(Entity, Option<&Biography>, &AssignedTo), With<Pop>>()
-        .iter(world)
-        .filter(|(_, _, assigned)| assigned.assignment_type == AssignmentType::HousingResident)
-        .map(|(e, bio, _)| (e, bio.cloned()))
-        .collect();
+    for (entity, bio, assigned) in &sleeping_pops {
+        if assigned.assignment_type != AssignmentType::HousingResident {
+            continue;
+        }
 
-    // Iterate and process dreams
-    for (entity, bio) in sleeping_pops {
         let mut rng = rand::thread_rng();
 
         // 1% chance per tick to dream while sleeping
         if rng.gen_bool(0.01) {
-            let dream_content = generate_dream(&mut rng, bio.as_ref());
+            let dream_content = generate_dream(&mut rng, bio);
 
-            // Apply dream component
-            world.entity_mut(entity).insert(Dream {
+            commands.entity(entity).insert(Dream {
                 content: dream_content.clone(),
                 tick: current_tick,
             });
@@ -52,16 +51,15 @@ pub fn dream_system(world: &mut World) {
             // 10% chance for Inspiration (net 0.1% chance per tick while sleeping)
             if rng.gen_bool(0.10) {
                 let amount = 5.0;
-                let mut res = world.resource_mut::<ColonyResources>();
-                res.knowledge = (res.knowledge + amount).clamp(0.0, res.max_knowledge);
+                resources.knowledge =
+                    (resources.knowledge + amount).clamp(0.0, resources.max_knowledge);
 
-                if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+                if let Some(ref mut log) = log {
                     log.add(format!(
                         "Inspiration: A pop dreamed of '{dream_content}' and gained insight!"
                     ));
                 }
-            } else if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
-                // Just log the dream for flavor
+            } else if let Some(ref mut log) = log {
                 log.add(format!("Dream: {dream_content}"));
             }
         }
@@ -97,6 +95,7 @@ fn generate_dream(rng: &mut impl Rng, bio: Option<&Biography>) -> String {
 mod tests {
     use super::*;
     use crate::experimental::biography::BiographyEvent;
+    use bevy_ecs::system::RunSystemOnce;
 
     #[test]
     fn test_dream_component() {
@@ -155,7 +154,7 @@ mod tests {
         // Run system enough times to trigger probability
         let mut triggered = false;
         for _ in 0..1000 {
-            dream_system(&mut world);
+            world.run_system_once(dream_system).unwrap();
             if world.get::<Dream>(pop).is_some() {
                 triggered = true;
                 break;
@@ -185,7 +184,7 @@ mod tests {
 
         // Run system many times
         for _ in 0..100 {
-            dream_system(&mut world);
+            world.run_system_once(dream_system).unwrap();
         }
 
         assert!(

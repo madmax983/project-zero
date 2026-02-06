@@ -217,11 +217,13 @@ pub const fn evaluate_idle(_needs: &Needs) -> f32 {
 }
 
 /// System to update commitment timers.
-pub fn update_action_timer_system(world: &mut World) {
-    let mut query = world.query::<&mut PopAction>();
-    for mut action in query.iter_mut(world) {
+/// Increments the committed-tick counter for every pop's action.
+///
+/// Uses `par_iter_mut` for parallel processing across entities.
+pub fn update_action_timer_system(mut query: Query<&mut PopAction>) {
+    query.par_iter_mut().for_each(|mut action| {
         action.ticks_committed += 1;
-    }
+    });
 }
 
 /// System to evaluate and choose actions for pops.
@@ -293,12 +295,9 @@ pub fn evaluate_actions_system(world: &mut World) {
         }
 
         // Evaluate Research
-        if let Some((utility, target)) = evaluate_research(
-            &pop_pos,
-            &weights,
-            &resources,
-            libraries_state.iter(world),
-        ) {
+        if let Some((utility, target)) =
+            evaluate_research(&pop_pos, &weights, &resources, libraries_state.iter(world))
+        {
             utilities.push((ActionType::Research, utility, Some(target)));
         }
 
@@ -391,36 +390,20 @@ pub fn update_weights_from_outcome(
 }
 
 /// System to track completed plans and trigger learning.
-pub fn track_plan_outcomes_system(world: &mut World) {
-    let config = world.resource::<UtilityConfig>().clone();
-    let sim_time = world.resource::<SimulationTime>().tick;
+pub fn track_plan_outcomes_system(
+    mut completed: Query<(Entity, &PlanOutcome, &Needs, &mut UtilityWeights), Without<Plan>>,
+    config: Res<UtilityConfig>,
+    time: Res<SimulationTime>,
+    mut commands: Commands,
+) {
+    let sim_time = time.tick;
 
-    // Find completed plans (have PlanOutcome but no Plan component)
-    let completed: Vec<(Entity, PlanOutcome, Needs)> = world
-        .query::<(Entity, &PlanOutcome, &Needs)>()
-        .iter(world)
-        .filter(|(e, _, _)| world.get::<Plan>(*e).is_none())
-        .map(|(e, o, n)| {
-            (
-                e,
-                PlanOutcome {
-                    action: o.action,
-                    started_at: o.started_at,
-                    needs_before: o.needs_before,
-                },
-                *n,
-            )
-        })
-        .collect();
-
-    for (pop_entity, outcome, needs_after) in completed {
+    for (pop_entity, outcome, needs_after, mut weights) in &mut completed {
         let duration = sim_time - outcome.started_at;
 
-        // Calculate success
         let success = match outcome.action {
             ActionType::SatisfyHunger => (needs_after.hunger - outcome.needs_before.hunger) > 0.05,
             ActionType::SatisfyRest => (needs_after.rest - outcome.needs_before.rest) > 0.05,
-            // For now, assume other actions are successful if completed
             ActionType::Work
             | ActionType::Socialize
             | ActionType::Explore
@@ -429,20 +412,16 @@ pub fn track_plan_outcomes_system(world: &mut World) {
             | ActionType::Idle => true,
         };
 
-        // Update weights
-        if let Some(mut weights) = world.get_mut::<UtilityWeights>(pop_entity) {
-            #[allow(clippy::cast_possible_truncation)]
-            update_weights_from_outcome(
-                &mut weights,
-                outcome.action,
-                success,
-                duration as u32,
-                &config,
-            );
-        }
+        #[allow(clippy::cast_possible_truncation)]
+        update_weights_from_outcome(
+            &mut weights,
+            outcome.action,
+            success,
+            duration as u32,
+            &config,
+        );
 
-        // Clean up
-        world.entity_mut(pop_entity).remove::<PlanOutcome>();
+        commands.entity(pop_entity).remove::<PlanOutcome>();
     }
 }
 
@@ -452,14 +431,20 @@ mod tests {
     use super::*;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::pop::Pop;
+    use bevy_ecs::system::RunSystemOnce;
+
+    fn setup() -> World {
+        crate::setup::init_task_pools();
+        World::new()
+    }
 
     #[test]
     fn test_update_action_timer() {
-        let mut world = World::new();
+        let mut world = setup();
         let pop = world.spawn(PopAction::default()).id();
 
         // Run system
-        update_action_timer_system(&mut world);
+        world.run_system_once(update_action_timer_system).unwrap();
 
         assert_eq!(world.get::<PopAction>(pop).unwrap().ticks_committed, 1);
     }
@@ -848,7 +833,7 @@ mod tests {
             .id();
         // Note: No Plan component = plan completed
 
-        track_plan_outcomes_system(&mut world);
+        world.run_system_once(track_plan_outcomes_system).unwrap();
 
         // Should have updated weights
         let weights = world.get::<UtilityWeights>(pop).unwrap();
@@ -891,7 +876,7 @@ mod tests {
             ))
             .id();
 
-        track_plan_outcomes_system(&mut world);
+        world.run_system_once(track_plan_outcomes_system).unwrap();
 
         // Should have tracked failure
         let weights = world.get::<UtilityWeights>(pop).unwrap();
@@ -984,7 +969,7 @@ mod tests {
             world.get_mut::<Needs>(pop).unwrap().hunger = 0.7; // Success!
             world.resource_mut::<SimulationTime>().tick += 10;
 
-            track_plan_outcomes_system(&mut world);
+            world.run_system_once(track_plan_outcomes_system).unwrap();
         }
 
         // Pop should have learned (weights increased)
@@ -1022,7 +1007,7 @@ mod tests {
             .id();
 
         // Run system
-        track_plan_outcomes_system(&mut world);
+        world.run_system_once(track_plan_outcomes_system).unwrap();
 
         let weights = world.get::<UtilityWeights>(pop).unwrap();
         // This should be 1 if Work is considered a success when completed

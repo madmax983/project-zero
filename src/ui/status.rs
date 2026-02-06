@@ -127,7 +127,9 @@ pub fn get_status_line<'a>(
                 "BUILD: {} (Tab:switch Enter:place Esc:exit)",
                 build_mode.selected.label()
             ),
-            Style::default().fg(Color::Blue).add_modifier(Modifier::BOLD),
+            Style::default()
+                .fg(Color::Blue)
+                .add_modifier(Modifier::BOLD),
         ));
     } else if designation_mode.active {
         spans.push(Span::styled(

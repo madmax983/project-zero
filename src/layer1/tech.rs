@@ -91,27 +91,23 @@ pub fn unlock_tech(world: &mut World, tech: Tech) -> bool {
 }
 
 /// Generates knowledge based on pops working at Libraries.
-pub fn process_research_system(world: &mut World) {
-    // 1. Identify active libraries and count workers
+pub fn process_research_system(
+    pops: Query<&AssignedTo>,
+    libraries: Query<Entity, With<Library>>,
+    mut resources: ResMut<ColonyResources>,
+) {
     let mut library_workers = std::collections::HashMap::<Entity, u32>::new();
 
-    let mut pops = world.query::<&AssignedTo>();
-    for assignment in pops.iter(world) {
+    for assignment in &pops {
         if assignment.assignment_type == AssignmentType::LibraryWorker {
             *library_workers.entry(assignment.entity).or_insert(0) += 1;
         }
     }
 
-    // 2. Iterate libraries and produce knowledge
     let mut total_knowledge_gained = 0.0;
 
-    let mut libraries = world.query_filtered::<Entity, With<Library>>();
-    for library_entity in libraries.iter(world) {
+    for library_entity in &libraries {
         if let Some(&workers) = library_workers.get(&library_entity) {
-            // 0.01 knowledge per worker per tick
-            // 100 ticks = 1 knowledge.
-            // With 10 FPS, 10 seconds = 1 knowledge.
-            // Cost 10 = 100 seconds per worker. Reasonable.
             #[allow(clippy::cast_precision_loss)]
             let knowledge_gain = 0.01 * workers as f32;
             total_knowledge_gained += knowledge_gain;
@@ -119,8 +115,8 @@ pub fn process_research_system(world: &mut World) {
     }
 
     if total_knowledge_gained > 0.0 {
-        let mut res = world.resource_mut::<ColonyResources>();
-        res.knowledge = (res.knowledge + total_knowledge_gained).clamp(0.0, res.max_knowledge);
+        resources.knowledge =
+            (resources.knowledge + total_knowledge_gained).clamp(0.0, resources.max_knowledge);
     }
 }
 

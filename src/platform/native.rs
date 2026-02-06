@@ -159,12 +159,12 @@ mod tests {
     /// crossterm KeyEvent → TryFrom → InputRouter → GameState
     #[test]
     fn test_windows_press_release_does_not_double_toggle_pause() {
-        use crate::shared::input::{InputContextStack, InputContext, InputRouter};
+        use crate::layer1::{BuildMode, DesignationMode, Viewport};
+        use crate::shared::input::{InputContext, InputContextStack, InputRouter};
         use crate::shared::menu::MenuState;
         use crate::shared::selection::Selection;
         use crate::shared::state::GameState;
         use crate::shared::time::SimulationTime;
-        use crate::layer1::{BuildMode, DesignationMode, Viewport};
 
         let mut world = bevy_ecs::prelude::World::new();
         world.insert_resource(GameState::Running);

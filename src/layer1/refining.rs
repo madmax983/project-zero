@@ -12,23 +12,19 @@ use bevy_ecs::prelude::*;
 /// It iterates over buildings with `RefiningProgress`. If a worker (`Pop`) is nearby
 /// and input resources are available, it increments progress. Upon completion,
 /// it consumes input resources and produces refined resources.
-pub fn process_refining_system(world: &mut World) {
-    let worker_positions: Vec<GridPosition> = world
-        .query::<(&Pop, &GridPosition)>()
-        .iter(world)
-        .map(|(_, pos)| *pos)
-        .collect();
+pub fn process_refining_system(
+    worker_query: Query<&GridPosition, With<Pop>>,
+    mut building_query: Query<(Entity, &Building, &GridPosition, &mut RefiningProgress)>,
+    mut resources: ResMut<ColonyResources>,
+) {
+    let worker_positions: Vec<GridPosition> = worker_query.iter().copied().collect();
 
-    let mut updates = Vec::new();
+    // Snapshot resources for recipe checks (avoids mutable borrow conflict)
+    let resources_snapshot = resources.clone();
 
-    // Snapshot resources needed for checking conditions to avoid borrowing conflict
-    let resources = world.resource::<ColonyResources>().clone();
+    let mut finished_jobs: Vec<(Entity, ColonyResources, ColonyResources)> = Vec::new();
 
-    // Iterate buildings (Immutable query)
-    let mut query = world.query::<(Entity, &Building, &GridPosition, &RefiningProgress)>();
-
-    for (entity, building, pos, _) in query.iter(world) {
-        // Check worker range (manhattan distance <= 10)
+    for (entity, building, pos, mut progress) in &mut building_query {
         let has_worker = worker_positions
             .iter()
             .any(|p| (p.x - pos.x).abs() + (p.y - pos.y).abs() <= 10);
@@ -38,60 +34,31 @@ pub fn process_refining_system(world: &mut World) {
         }
 
         let (can_refine, input_cost, output_gain) =
-            get_refining_recipe(building.building_type, &resources);
+            get_refining_recipe(building.building_type, &resources_snapshot);
 
         if can_refine {
-            updates.push((entity, 1.0, input_cost, output_gain));
-        }
-    }
-
-    // Apply updates
-    // We apply progress first, and track which jobs finished.
-    // Then we update resources. This avoids holding conflicting borrows.
-
-    let mut finished_jobs = Vec::new();
-
-    for (entity, work, input, output) in &updates {
-        if let Some(mut progress) = world.get_mut::<RefiningProgress>(*entity) {
-            progress.current += work;
+            progress.current += 1.0;
             if progress.is_complete() {
-                // Defer resource consumption to the resource update phase.
-                // We do NOT reset progress here because we might fail to afford the input cost
-                // if another building consumed the resources in the same tick.
-                finished_jobs.push((*entity, input, output));
+                finished_jobs.push((entity, input_cost, output_gain));
             }
         }
     }
 
-    // Update Resources
-    if !finished_jobs.is_empty() {
-        for (entity, input, output) in finished_jobs {
-            // Scope the resource borrow to avoid conflict with component access
-            let success = {
-                let mut resources = world.resource_mut::<ColonyResources>();
-                if resources.try_deduct(input) {
-                    resources.add_planks(output.planks);
-                    resources.add_blocks(output.blocks);
-                    resources.add_metal(output.metal);
-                    resources.add_tools(output.tools);
-                    true
-                } else {
-                    false
-                }
-            };
+    // Apply resource updates for finished jobs
+    for (entity, input, output) in &finished_jobs {
+        if resources.try_deduct(input) {
+            resources.add_planks(output.planks);
+            resources.add_blocks(output.blocks);
+            resources.add_metal(output.metal);
+            resources.add_tools(output.tools);
 
-            if success {
-                // Success! Reset progress.
-                if let Some(mut progress) = world.get_mut::<RefiningProgress>(entity) {
-                    progress.current = 0.0;
-                }
-            } else {
-                // Failed (Race condition: resources consumed by another building).
-                // Clamp progress to max so it stays "ready to complete" and retries next tick.
-                // This prevents progress from growing infinitely or resetting wastefully.
-                if let Some(mut progress) = world.get_mut::<RefiningProgress>(entity) {
-                    progress.current = progress.max;
-                }
+            if let Ok((_, _, _, mut progress)) = building_query.get_mut(*entity) {
+                progress.current = 0.0;
+            }
+        } else {
+            // Failed: clamp progress to max for retry next tick
+            if let Ok((_, _, _, mut progress)) = building_query.get_mut(*entity) {
+                progress.current = progress.max;
             }
         }
     }
@@ -169,6 +136,7 @@ mod tests {
     use crate::layer1::refining::process_refining_system;
     use crate::layer1::resources::{ColonyResources, RefiningProgress};
     use bevy_ecs::prelude::*;
+    use bevy_ecs::system::RunSystemOnce;
 
     #[test]
     fn test_colony_resources_refined_fields() {
@@ -229,7 +197,7 @@ mod tests {
         // 1. Should detect worker
         // 2. Should detect valid input (Wood > 0)
         // 3. Should increment progress
-        process_refining_system(&mut world);
+        world.run_system_once(process_refining_system).unwrap();
 
         let progress = world.query::<&RefiningProgress>().single(&world);
         assert!(progress.current > 0.0);
@@ -263,7 +231,7 @@ mod tests {
         world.spawn((Pop, GridPosition { x: 5, y: 6 }));
 
         // Run system to complete
-        process_refining_system(&mut world);
+        world.run_system_once(process_refining_system).unwrap();
 
         let res = world.resource::<ColonyResources>();
         // Input consumed
@@ -294,7 +262,7 @@ mod tests {
         ));
         world.spawn((Pop, GridPosition { x: 5, y: 5 }));
 
-        process_refining_system(&mut world);
+        world.run_system_once(process_refining_system).unwrap();
 
         let progress = world.query::<&RefiningProgress>().single(&world);
         assert!((progress.current - 0.0).abs() < f32::EPSILON);
@@ -320,7 +288,7 @@ mod tests {
         ));
         world.spawn((Pop, GridPosition { x: 5, y: 5 }));
 
-        process_refining_system(&mut world);
+        world.run_system_once(process_refining_system).unwrap();
 
         let progress = world.query::<&RefiningProgress>().single(&world);
         assert!((progress.current - 0.0).abs() < f32::EPSILON);
@@ -370,7 +338,7 @@ mod tests {
         // Both should try to complete.
         // If race condition is handled, one fails and retries later.
         // If not, resources drop to -1.0?
-        process_refining_system(&mut world);
+        world.run_system_once(process_refining_system).unwrap();
 
         let res = world.resource::<ColonyResources>();
         println!("Wood after tick: {}", res.wood);

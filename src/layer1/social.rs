@@ -54,21 +54,12 @@ pub fn evaluate_socialize<'a>(
 }
 
 /// Restores leisure for pops visiting taverns.
-pub fn restore_leisure_system(world: &mut World) {
-    let mut taverns = world.query::<&mut Tavern>();
-    let mut visitors_to_update = Vec::new();
-
-    // Collect visitors to avoid borrowing conflicts
-    for tavern in taverns.iter(world) {
+pub fn restore_leisure_system(tavern_query: Query<&Tavern>, mut needs_query: Query<&mut Needs>) {
+    for tavern in &tavern_query {
         for &visitor in &tavern.visitors {
-            visitors_to_update.push(visitor);
-        }
-    }
-
-    // Restore leisure
-    for visitor in visitors_to_update {
-        if let Some(mut needs) = world.get_mut::<Needs>(visitor) {
-            needs.leisure = (needs.leisure + 0.05).min(1.0);
+            if let Ok(mut needs) = needs_query.get_mut(visitor) {
+                needs.leisure = (needs.leisure + 0.05).min(1.0);
+            }
         }
     }
 }
@@ -82,6 +73,7 @@ mod tests {
     use crate::layer1::social::{Tavern, evaluate_socialize, restore_leisure_system};
     use crate::layer1::utility_ai::types::{ActionType, UtilityWeights};
     use bevy_ecs::prelude::*;
+    use bevy_ecs::system::RunSystemOnce;
 
     #[test]
     fn test_needs_has_leisure() {
@@ -90,12 +82,17 @@ mod tests {
         assert!((needs.leisure - 0.8).abs() < f32::EPSILON);
     }
 
+    fn setup() -> World {
+        crate::setup::init_task_pools();
+        World::new()
+    }
+
     #[test]
     fn test_leisure_decays() {
-        let mut world = World::new();
+        let mut world = setup();
         world.spawn((Pop, Needs::default()));
 
-        decay_needs_system(&mut world);
+        world.run_system_once(decay_needs_system).unwrap();
 
         let needs = world.query::<&Needs>().single(&world);
         assert!(needs.leisure < 0.8, "Leisure should decay");
@@ -184,7 +181,7 @@ mod tests {
         tavern.visitors.push(pop);
         world.spawn(tavern);
 
-        restore_leisure_system(&mut world);
+        world.run_system_once(restore_leisure_system).unwrap();
 
         let needs = world.get::<Needs>(pop).unwrap();
         assert!(needs.leisure > 0.2, "Leisure should be restored");
