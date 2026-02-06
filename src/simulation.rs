@@ -10,14 +10,15 @@ use bevy_ecs::schedule::{IntoSystemConfigs, Schedule, ScheduleLabel};
 
 use crate::experimental::biography::biography_monitor_system;
 use crate::experimental::dreams::dream_system;
+use crate::gpu::evaluate::gpu_evaluate_actions;
 use crate::layer1::{
     advance_season_system, arrival_handler_system, check_milestones_system,
     clean_dead_residents_system, clean_dead_workers_system, cleanup_previous_assignment_system,
-    consume_food_system, decay_needs_system, evaluate_actions_system, haul_system,
-    kill_starving_entities_system, movement_system, process_refining_system,
-    process_research_system, process_start_plan_system, produce_food_system,
-    restore_leisure_system, restore_rest_in_housing_system, track_plan_outcomes_system,
-    update_action_timer_system, update_resource_caps_system, work_execution_system,
+    consume_food_system, decay_needs_system, haul_system, kill_starving_entities_system,
+    movement_system, process_refining_system, process_research_system,
+    process_start_plan_system, produce_food_system, restore_leisure_system,
+    restore_rest_in_housing_system, track_plan_outcomes_system, update_action_timer_system,
+    update_resource_caps_system, work_execution_system,
 };
 use crate::shared::time::SimulationTime;
 
@@ -30,7 +31,7 @@ pub struct SimulationSchedule;
 /// Systems are organized into ordered groups matching the original sequential execution:
 ///
 /// ```text
-/// 1. AI Decision:     evaluate_actions → update_action_timer
+/// 1. AI Decision:     gpu_evaluate_actions → update_action_timer
 /// 2. Execution:       cleanup_previous → process_start_plan → movement → arrival → work/haul
 /// 3. Economy:         update_resource_caps, advance_season, produce_food, process_refining,
 ///                     process_research, restore_rest, restore_leisure (can run in parallel)
@@ -42,10 +43,10 @@ pub struct SimulationSchedule;
 pub fn build_simulation_schedule() -> Schedule {
     let mut schedule = Schedule::new(SimulationSchedule);
 
-    // --- AI Decision Chain ---
+    // --- AI Decision Chain (GPU compute) ---
     schedule.add_systems((
-        evaluate_actions_system,
-        update_action_timer_system.after(evaluate_actions_system),
+        gpu_evaluate_actions,
+        update_action_timer_system.after(gpu_evaluate_actions),
     ));
 
     // --- Execution Chain (must be sequential) ---

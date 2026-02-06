@@ -4,6 +4,8 @@
 
 /// Experimental features.
 pub mod experimental;
+/// GPU compute for utility AI evaluation.
+pub mod gpu;
 pub mod layer1;
 /// Platform abstraction for native/WASM backends.
 pub mod platform;

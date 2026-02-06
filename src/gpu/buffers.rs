@@ -1,0 +1,533 @@
+#![allow(unsafe_code)]
+//! GPU buffer types and marshalling functions.
+//!
+//! Defines `#[repr(C)]` structs with `bytemuck::Pod` + `Zeroable` derives for GPU buffers,
+//! and marshal functions that extract ECS data into these structs.
+
+use bevy_ecs::prelude::*;
+
+use crate::layer1::designation::Designation;
+use crate::layer1::farm::Farm;
+use crate::layer1::housing::Housing;
+use crate::layer1::map::GridPosition;
+use crate::layer1::needs::Needs;
+use crate::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
+use crate::layer1::social::Tavern;
+use crate::layer1::stockpile::Stockpile;
+use crate::layer1::tech::Library;
+use crate::layer1::utility_ai::types::{PopAction, UtilityConfig, UtilityWeights};
+
+/// GPU-aligned pop input data. One per pop being evaluated.
+#[repr(C)]
+#[derive(Copy, Clone, Debug, bytemuck::Pod, bytemuck::Zeroable)]
+#[allow(clippy::pub_underscore_fields)]
+pub struct GpuPopInput {
+    /// Grid X position.
+    pub pos_x: i32,
+    /// Grid Y position.
+    pub pos_y: i32,
+    /// Current hunger need level.
+    pub hunger: f32,
+    /// Current rest need level.
+    pub rest: f32,
+    /// Current leisure need level.
+    pub leisure: f32,
+    /// Learned distance weight.
+    pub distance_weight: f32,
+    /// Learned availability weight.
+    pub availability_weight: f32,
+    /// Learned social weight.
+    pub social_weight: f32,
+    /// Per-action success counts.
+    pub success_count: [u32; 8],
+    /// Per-action attempt counts.
+    pub attempt_count: [u32; 8],
+    /// Utility score of the current action.
+    pub current_utility: f32,
+    /// Padding to 16-byte alignment.
+    pub _padding: [u32; 3],
+}
+
+/// GPU-aligned building/target input data. One per building.
+#[repr(C)]
+#[derive(Copy, Clone, Debug, bytemuck::Pod, bytemuck::Zeroable)]
+#[allow(clippy::pub_underscore_fields)]
+pub struct GpuBuildingInput {
+    /// Grid X position.
+    pub pos_x: i32,
+    /// Grid Y position.
+    pub pos_y: i32,
+    /// Encoded building type (0=Farm,1=Housing,2=Tavern,3=Library,4=Designation,5=ResourceItem).
+    pub building_type: u32,
+    /// Maximum capacity.
+    pub capacity: u32,
+    /// Current occupancy.
+    pub occupied: u32,
+    /// For Haul targets: 1 if the stockpile has room, 0 otherwise.
+    pub resource_has_room: u32,
+    /// Padding to 32-byte alignment.
+    pub _padding: [u32; 2],
+}
+
+/// GPU-aligned per-tick global parameters.
+#[repr(C)]
+#[derive(Copy, Clone, Debug, bytemuck::Pod, bytemuck::Zeroable)]
+#[allow(clippy::pub_underscore_fields)]
+pub struct GpuGlobalState {
+    /// Minimum utility difference to switch actions.
+    pub switch_threshold: f32,
+    /// 1 if knowledge is at max capacity, 0 otherwise.
+    pub knowledge_full: u32,
+    /// 1 if at least one stockpile exists, 0 otherwise.
+    pub has_stockpile: u32,
+    /// Total number of pops in this dispatch.
+    pub pop_count: u32,
+    /// Total number of buildings in this dispatch.
+    pub building_count: u32,
+    /// Padding to 32-byte alignment.
+    pub _padding: [u32; 3],
+}
+
+/// GPU output: the decision for one pop.
+#[repr(C)]
+#[derive(Copy, Clone, Debug, bytemuck::Pod, bytemuck::Zeroable)]
+pub struct GpuPopDecision {
+    /// Index of the best action (maps to `ActionType`).
+    pub best_action: u32,
+    /// Utility score of the best action.
+    pub best_utility: f32,
+    /// Index into the building array for the chosen target.
+    pub target_index: u32,
+    /// 1 if this pop should switch from its current action, 0 otherwise.
+    pub switched: u32,
+}
+
+// ---------------------------------------------------------------------------
+// Marshal functions
+// ---------------------------------------------------------------------------
+
+/// Extracts pop data for GPU evaluation.
+///
+/// Only includes pops whose `ticks_committed >= config.evaluation_interval`.
+/// Returns `(entity_list, gpu_data)` where `entity_list[i]` corresponds to `gpu_data[i]`.
+#[allow(clippy::cast_possible_truncation)]
+pub fn extract_pop_inputs(world: &mut World) -> (Vec<Entity>, Vec<GpuPopInput>) {
+    let evaluation_interval = world
+        .get_resource::<UtilityConfig>()
+        .map_or(1, |c| c.evaluation_interval);
+
+    let mut entities = Vec::new();
+    let mut inputs = Vec::new();
+
+    let mut query = world.query::<(Entity, &GridPosition, &Needs, &UtilityWeights, &PopAction)>();
+
+    for (entity, pos, needs, weights, action) in query.iter(world) {
+        if action.ticks_committed < evaluation_interval {
+            continue;
+        }
+
+        entities.push(entity);
+        inputs.push(GpuPopInput {
+            pos_x: pos.x,
+            pos_y: pos.y,
+            hunger: needs.hunger,
+            rest: needs.rest,
+            leisure: needs.leisure,
+            distance_weight: weights.distance_weight,
+            availability_weight: weights.availability_weight,
+            social_weight: weights.social_weight,
+            success_count: weights.action_success_count,
+            attempt_count: weights.action_attempt_count,
+            current_utility: action.current_utility,
+            _padding: [0; 3],
+        });
+    }
+
+    (entities, inputs)
+}
+
+/// Extracts building/target data for GPU evaluation.
+///
+/// Combines multiple building types into a single array.
+/// Returns `(entity_list, gpu_data)` where `entity_list[i]` corresponds to `gpu_data[i]`.
+#[allow(clippy::cast_possible_truncation, clippy::too_many_lines)]
+pub fn extract_building_inputs(world: &mut World) -> (Vec<Entity>, Vec<GpuBuildingInput>) {
+    let mut entities = Vec::new();
+    let mut inputs = Vec::new();
+
+    // Farms (building_type = 0)
+    {
+        let mut query = world.query::<(Entity, &GridPosition, &Farm)>();
+        for (entity, pos, farm) in query.iter(world) {
+            entities.push(entity);
+            inputs.push(GpuBuildingInput {
+                pos_x: pos.x,
+                pos_y: pos.y,
+                building_type: 0,
+                capacity: farm.capacity as u32,
+                occupied: farm.workers.len() as u32,
+                resource_has_room: 0,
+                _padding: [0; 2],
+            });
+        }
+    }
+
+    // Housing (building_type = 1)
+    {
+        let mut query = world.query::<(Entity, &GridPosition, &Housing)>();
+        for (entity, pos, housing) in query.iter(world) {
+            entities.push(entity);
+            inputs.push(GpuBuildingInput {
+                pos_x: pos.x,
+                pos_y: pos.y,
+                building_type: 1,
+                capacity: housing.capacity as u32,
+                occupied: housing.residents.len() as u32,
+                resource_has_room: 0,
+                _padding: [0; 2],
+            });
+        }
+    }
+
+    // Taverns (building_type = 2)
+    {
+        let mut query = world.query::<(Entity, &GridPosition, &Tavern)>();
+        for (entity, pos, tavern) in query.iter(world) {
+            entities.push(entity);
+            inputs.push(GpuBuildingInput {
+                pos_x: pos.x,
+                pos_y: pos.y,
+                building_type: 2,
+                capacity: tavern.capacity as u32,
+                occupied: tavern.visitors.len() as u32,
+                resource_has_room: 0,
+                _padding: [0; 2],
+            });
+        }
+    }
+
+    // Libraries (building_type = 3)
+    {
+        let mut query = world.query::<(Entity, &GridPosition, &Library)>();
+        for (entity, pos, _library) in query.iter(world) {
+            entities.push(entity);
+            inputs.push(GpuBuildingInput {
+                pos_x: pos.x,
+                pos_y: pos.y,
+                building_type: 3,
+                capacity: 5,
+                occupied: 0,
+                resource_has_room: 0,
+                _padding: [0; 2],
+            });
+        }
+    }
+
+    // Designations (building_type = 4)
+    {
+        let mut query = world.query::<(Entity, &GridPosition, &Designation)>();
+        for (entity, pos, _designation) in query.iter(world) {
+            entities.push(entity);
+            inputs.push(GpuBuildingInput {
+                pos_x: pos.x,
+                pos_y: pos.y,
+                building_type: 4,
+                capacity: 1,
+                occupied: 0,
+                resource_has_room: 0,
+                _padding: [0; 2],
+            });
+        }
+    }
+
+    // ResourceItems (building_type = 5)
+    {
+        let resources = world
+            .get_resource::<ColonyResources>()
+            .cloned()
+            .unwrap_or_default();
+
+        let mut query = world.query::<(Entity, &GridPosition, &ResourceItem)>();
+        for (entity, pos, item) in query.iter(world) {
+            let has_room = match item.resource_type {
+                ResourceType::Food => resources.food < resources.max_food,
+                ResourceType::Wood => resources.wood < resources.max_wood,
+                ResourceType::Stone => resources.stone < resources.max_stone,
+                ResourceType::Ore => resources.ore < resources.max_ore,
+                ResourceType::Metal => resources.metal < resources.max_metal,
+                ResourceType::Planks => resources.planks < resources.max_planks,
+                ResourceType::Blocks => resources.blocks < resources.max_blocks,
+            };
+
+            entities.push(entity);
+            inputs.push(GpuBuildingInput {
+                pos_x: pos.x,
+                pos_y: pos.y,
+                building_type: 5,
+                capacity: 1,
+                occupied: 0,
+                resource_has_room: u32::from(has_room),
+                _padding: [0; 2],
+            });
+        }
+    }
+
+    (entities, inputs)
+}
+
+/// Extracts global state for GPU evaluation.
+pub fn extract_global_state(
+    world: &mut World,
+    pop_count: u32,
+    building_count: u32,
+) -> GpuGlobalState {
+    let switch_threshold = world
+        .get_resource::<UtilityConfig>()
+        .map_or(0.15, |c| c.switch_threshold);
+
+    let resources = world
+        .get_resource::<ColonyResources>()
+        .cloned()
+        .unwrap_or_default();
+
+    let knowledge_full = u32::from(resources.knowledge >= resources.max_knowledge);
+
+    let mut has_stockpile_query = world.query::<&Stockpile>();
+    let has_stockpile = u32::from(has_stockpile_query.iter(world).next().is_some());
+
+    GpuGlobalState {
+        switch_threshold,
+        knowledge_full,
+        has_stockpile,
+        pop_count,
+        building_count,
+        _padding: [0; 3],
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::layer1::designation::{Designation, DesignationType};
+    use crate::layer1::utility_ai::types::ActionType;
+    use crate::setup::init_task_pools;
+
+    #[test]
+    fn test_gpu_pop_input_size() {
+        // 2*i32 + 6*f32 + 8*u32 + 8*u32 + 1*f32 + 3*u32
+        // = 8 + 24 + 32 + 32 + 4 + 12 = 112 bytes
+        assert_eq!(std::mem::size_of::<GpuPopInput>(), 112);
+    }
+
+    #[test]
+    fn test_gpu_building_input_size() {
+        // 8 fields * 4 bytes = 32
+        assert_eq!(std::mem::size_of::<GpuBuildingInput>(), 32);
+    }
+
+    #[test]
+    fn test_gpu_global_state_size() {
+        // 8 fields * 4 bytes = 32
+        assert_eq!(std::mem::size_of::<GpuGlobalState>(), 32);
+    }
+
+    #[test]
+    fn test_gpu_pop_decision_size() {
+        // 4 fields * 4 bytes = 16
+        assert_eq!(std::mem::size_of::<GpuPopDecision>(), 16);
+    }
+
+    #[test]
+    fn test_extract_pop_inputs() {
+        init_task_pools();
+        let mut world = World::new();
+        world.insert_resource(UtilityConfig::default());
+
+        // Pop that should be extracted (ticks_committed >= evaluation_interval=1)
+        let pop1 = world
+            .spawn((
+                GridPosition { x: 5, y: 10 },
+                Needs {
+                    hunger: 0.7,
+                    rest: 0.5,
+                    leisure: 0.9,
+                },
+                UtilityWeights {
+                    distance_weight: 1.2,
+                    availability_weight: 0.8,
+                    social_weight: 1.0,
+                    action_success_count: [1, 2, 3, 0, 0, 0, 0, 0],
+                    action_attempt_count: [5, 5, 5, 0, 0, 0, 0, 0],
+                },
+                PopAction {
+                    current: ActionType::SatisfyHunger,
+                    current_utility: 0.75,
+                    ticks_committed: 3,
+                },
+            ))
+            .id();
+
+        // Pop that should NOT be extracted (ticks_committed < evaluation_interval)
+        let _pop2 = world
+            .spawn((
+                GridPosition { x: 1, y: 1 },
+                Needs::default(),
+                UtilityWeights::default(),
+                PopAction {
+                    current: ActionType::Idle,
+                    current_utility: 0.0,
+                    ticks_committed: 0,
+                },
+            ))
+            .id();
+
+        let (entities, inputs) = extract_pop_inputs(&mut world);
+
+        assert_eq!(entities.len(), 1);
+        assert_eq!(inputs.len(), 1);
+        assert_eq!(entities[0], pop1);
+
+        let input = &inputs[0];
+        assert_eq!(input.pos_x, 5);
+        assert_eq!(input.pos_y, 10);
+        assert!((input.hunger - 0.7).abs() < f32::EPSILON);
+        assert!((input.rest - 0.5).abs() < f32::EPSILON);
+        assert!((input.leisure - 0.9).abs() < f32::EPSILON);
+        assert!((input.distance_weight - 1.2).abs() < f32::EPSILON);
+        assert!((input.availability_weight - 0.8).abs() < f32::EPSILON);
+        assert_eq!(input.success_count[0], 1);
+        assert_eq!(input.attempt_count[2], 5);
+        assert!((input.current_utility - 0.75).abs() < f32::EPSILON);
+    }
+
+    #[test]
+    fn test_extract_building_inputs() {
+        init_task_pools();
+        let mut world = World::new();
+        world.insert_resource(ColonyResources::default());
+
+        // Farm
+        let farm_entity = world
+            .spawn((
+                GridPosition { x: 1, y: 2 },
+                Farm {
+                    capacity: 3,
+                    workers: vec![],
+                },
+            ))
+            .id();
+
+        // Housing
+        let housing_entity = world
+            .spawn((
+                GridPosition { x: 3, y: 4 },
+                Housing {
+                    capacity: 4,
+                    residents: vec![],
+                },
+            ))
+            .id();
+
+        // Tavern
+        let tavern_entity = world
+            .spawn((
+                GridPosition { x: 5, y: 6 },
+                Tavern {
+                    capacity: 5,
+                    visitors: vec![],
+                },
+            ))
+            .id();
+
+        // Library
+        let library_entity = world.spawn((GridPosition { x: 7, y: 8 }, Library)).id();
+
+        // Designation
+        let designation_entity = world
+            .spawn((
+                GridPosition { x: 9, y: 10 },
+                Designation {
+                    designation_type: DesignationType::Mine,
+                },
+            ))
+            .id();
+
+        // ResourceItem with room
+        let resource_entity = world
+            .spawn((
+                GridPosition { x: 11, y: 12 },
+                ResourceItem {
+                    resource_type: ResourceType::Stone,
+                    amount: 1.0,
+                },
+            ))
+            .id();
+
+        let (entities, inputs) = extract_building_inputs(&mut world);
+
+        assert_eq!(entities.len(), 6);
+        assert_eq!(inputs.len(), 6);
+
+        // Verify farm
+        let farm_idx = entities.iter().position(|&e| e == farm_entity).unwrap();
+        assert_eq!(inputs[farm_idx].building_type, 0);
+        assert_eq!(inputs[farm_idx].capacity, 3);
+        assert_eq!(inputs[farm_idx].occupied, 0);
+
+        // Verify housing
+        let housing_idx = entities.iter().position(|&e| e == housing_entity).unwrap();
+        assert_eq!(inputs[housing_idx].building_type, 1);
+        assert_eq!(inputs[housing_idx].capacity, 4);
+
+        // Verify tavern
+        let tavern_idx = entities.iter().position(|&e| e == tavern_entity).unwrap();
+        assert_eq!(inputs[tavern_idx].building_type, 2);
+        assert_eq!(inputs[tavern_idx].capacity, 5);
+
+        // Verify library
+        let library_idx = entities.iter().position(|&e| e == library_entity).unwrap();
+        assert_eq!(inputs[library_idx].building_type, 3);
+        assert_eq!(inputs[library_idx].capacity, 5);
+
+        // Verify designation
+        let designation_idx = entities
+            .iter()
+            .position(|&e| e == designation_entity)
+            .unwrap();
+        assert_eq!(inputs[designation_idx].building_type, 4);
+        assert_eq!(inputs[designation_idx].capacity, 1);
+
+        // Verify resource item (stone < max_stone, so has_room = 1)
+        let resource_idx = entities.iter().position(|&e| e == resource_entity).unwrap();
+        assert_eq!(inputs[resource_idx].building_type, 5);
+        assert_eq!(inputs[resource_idx].resource_has_room, 1);
+    }
+
+    #[test]
+    fn test_extract_global_state() {
+        init_task_pools();
+        let mut world = World::new();
+
+        world.insert_resource(UtilityConfig {
+            switch_threshold: 0.2,
+            ..Default::default()
+        });
+
+        world.insert_resource(ColonyResources {
+            knowledge: 100.0,
+            max_knowledge: 100.0,
+            ..Default::default()
+        });
+
+        // Spawn a stockpile
+        world.spawn(Stockpile::default());
+
+        let state = extract_global_state(&mut world, 10, 25);
+
+        assert!((state.switch_threshold - 0.2).abs() < f32::EPSILON);
+        assert_eq!(state.knowledge_full, 1);
+        assert_eq!(state.has_stockpile, 1);
+        assert_eq!(state.pop_count, 10);
+        assert_eq!(state.building_count, 25);
+    }
+}

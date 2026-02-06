@@ -12,6 +12,7 @@ use crate::shared::log::MessageLog;
 use crate::shared::selection::Selection;
 use crate::shared::state::GameState;
 use crate::shared::time::SimulationTime;
+use crate::gpu::context::GpuContext;
 use crate::ui::map::RenderCache;
 
 /// Ensures the Bevy task pools are initialized (required for `par_iter_mut`).
@@ -47,6 +48,16 @@ pub fn setup_world() -> World {
     world.insert_resource(SeasonState::default());
     world.insert_resource(NamedLocations::default());
     world.insert_resource(TechState::default());
+
+    // Initialize GPU compute context (non-fatal if no GPU available)
+    match pollster::block_on(GpuContext::new()) {
+        Ok(ctx) => {
+            world.insert_resource(ctx);
+        }
+        Err(e) => {
+            eprintln!("GPU init failed ({e}), falling back to CPU evaluate");
+        }
+    }
 
     spawn_initial_pops(&mut world);
     initial_naming_system(&mut world);
