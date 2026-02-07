@@ -11,6 +11,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `038` Medical Care — `specs/038-medical-care.md`
 - [ ] `039` Trade System — `specs/039-trade-system.md`
 - [ ] `040` Clothing and Temperature — `specs/040-clothing-temperature.md`
+- [ ] `041` Field Science — `specs/041-field-science.md`
 
 ## MVP — Architecture Refactoring
 
