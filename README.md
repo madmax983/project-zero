@@ -40,6 +40,35 @@ trunk serve
 ./install-hooks.sh   # Linux/Mac
 ```
 
+## Usage as a Library
+
+To use SCALE's procedural generation (e.g. `NarrativeGenerator`) in your own Rust code:
+
+```rust
+use scale::shared::narrative::{NarrativeContext, NarrativeGenerator};
+
+fn main() -> anyhow::Result<()> {
+    // 1. Initialize Generator (loads embedded lore by default)
+    let generator = NarrativeGenerator::from_embedded();
+
+    // Or load from a directory (must contain TEMPLATES.md and FRAGMENTS.md)
+    // let mut generator = NarrativeGenerator::default();
+    // generator.load_from_files("./lore")?;
+
+    // 2. Prepare Context
+    let mut context = NarrativeContext::default();
+    context.insert("CIV_NAME", "Terran Dominion");
+
+    // 3. Generate Story
+    let story = generator.generate("CIVILIZATION_RISE", &context)?;
+    println!("{}", story);
+
+    Ok(())
+}
+```
+
+See `examples/story_demo.rs` for a complete example.
+
 ## Controls
 
 | Key | Action |

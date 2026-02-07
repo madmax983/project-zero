@@ -59,15 +59,26 @@ impl NarrativeGenerator {
     /// Load templates and fragments from the given directory.
     ///
     /// # Errors
-    /// Returns an error if reading the template or fragment files fails.
+    /// Returns an error if reading the template or fragment files fails,
+    /// or if the directory does not exist, or if no lore files are found.
     pub fn load_from_files<P: AsRef<Path>>(&mut self, path: P) -> Result<()> {
         let path = path.as_ref();
+
+        if !path.exists() || !path.is_dir() {
+            return Err(anyhow::anyhow!(
+                "Directory not found or not a directory: {}",
+                path.display()
+            ));
+        }
+
+        let mut loaded_any = false;
 
         let templates_path = path.join("TEMPLATES.md");
         if templates_path.exists() {
             let content = fs::read_to_string(&templates_path)
                 .with_context(|| format!("Failed to read {}", templates_path.display()))?;
             self.parse_templates(&content);
+            loaded_any = true;
         }
 
         let fragments_path = path.join("FRAGMENTS.md");
@@ -75,6 +86,14 @@ impl NarrativeGenerator {
             let content = fs::read_to_string(&fragments_path)
                 .with_context(|| format!("Failed to read {}", fragments_path.display()))?;
             self.parse_fragments(&content);
+            loaded_any = true;
+        }
+
+        if !loaded_any {
+            return Err(anyhow::anyhow!(
+                "No lore files found in {}. Expected TEMPLATES.md or FRAGMENTS.md.",
+                path.display()
+            ));
         }
 
         Ok(())
@@ -470,5 +489,14 @@ mod tests {
         assert_eq!(generator.template_count(), 1);
         let tmpl = generator.templates.get("TEST_PANIC").unwrap();
         assert_eq!(tmpl.patterns[0], "\"");
+    }
+
+    #[test]
+    fn test_load_from_files_not_found() {
+        let mut generator = NarrativeGenerator::default();
+        let result = generator.load_from_files("non_existent_path_xyz_123");
+        assert!(result.is_err());
+        let err = result.unwrap_err();
+        assert!(err.to_string().contains("Directory not found"));
     }
 }
