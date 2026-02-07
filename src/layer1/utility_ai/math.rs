@@ -11,7 +11,14 @@ pub fn need_response_curve(need_value: f32) -> f32 {
 /// Calculates Manhattan distance between two positions.
 #[must_use]
 pub const fn manhattan_distance(pos1: &GridPosition, pos2: &GridPosition) -> i32 {
-    (pos1.x - pos2.x).abs() + (pos1.y - pos2.y).abs()
+    let dx = (pos1.x as i64 - pos2.x as i64).abs();
+    let dy = (pos1.y as i64 - pos2.y as i64).abs();
+    let sum = dx + dy;
+    if sum > i32::MAX as i64 {
+        i32::MAX
+    } else {
+        sum as i32
+    }
 }
 
 /// Calculates a score based on context (distance, availability).
@@ -62,4 +69,21 @@ pub fn calculate_success_modifier(action: ActionType, weights: &UtilityWeights) 
 
     // Convert to modifier: 0.8-1.2 range
     success_rate.mul_add(0.4, 0.8)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::layer1::map::GridPosition;
+
+    #[test]
+    fn test_manhattan_distance_overflow() {
+        let pos1 = GridPosition { x: i32::MIN, y: 0 };
+        let pos2 = GridPosition { x: 1, y: 0 };
+        // Original implementation panicked here: (-2147483648 - 1).abs() overflow
+        let d = manhattan_distance(&pos1, &pos2);
+        // Correct distance is |-2147483648 - 1| = |-2147483649| = 2147483649
+        // Clamped to i32::MAX (2147483647)
+        assert_eq!(d, i32::MAX);
+    }
 }

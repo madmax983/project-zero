@@ -1,4 +1,3 @@
-#![allow(unsafe_code)]
 //! GPU buffer types and marshalling functions.
 //!
 //! Defines `#[repr(C)]` structs with `bytemuck::Pod` + `Zeroable` derives for GPU buffers,
