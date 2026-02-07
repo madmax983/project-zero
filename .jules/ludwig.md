@@ -11,3 +11,7 @@
 ## [Consumption Flow]
 **Friction:** Pops were snacking constantly (eating at 70% full), breaking their work rhythm and feeling robotic.
 **Flow:** Lowered hunger threshold to 40% to create distinct "Work" and "Eat" phases. Added "Thought" bubbles when eating to provide immediate positive feedback ("Tastes like victory").
+
+## [Resource Loop]
+**Friction:** Mining instantly credited resources to the global bank, making the physical act of hauling feel redundant and exploitative (double resource gain bug).
+**Flow:** Removed instant resource credit. Resources now spawn as physical items that MUST be hauled to be counted. Added immediate log feedback ("Needs Hauling") to teach the player this new requirement.

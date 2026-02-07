@@ -19,6 +19,7 @@
 
 use crate::layer1::GridPosition;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
+use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
 use rand::Rng;
 
@@ -353,7 +354,7 @@ impl RefiningProgress {
 /// of a specific designation. If the work completes the task, it:
 /// 1. Despawns the designation.
 /// 2. Changes the terrain from `Rock` to `Dirt`.
-/// 3. Adds `1.0` Stone to `ColonyResources`.
+/// 3. Spawns `Stone` as a `ResourceItem` (must be hauled).
 ///
 /// # Parameters
 ///
@@ -436,10 +437,7 @@ pub fn mine_rock(world: &mut World, designation_entity: Entity, work_amount: f32
             terrain.tiles[idx] = TerrainType::Dirt;
         }
 
-        // Credit colony resources directly
-        world.resource_mut::<ColonyResources>().add_stone(1.0);
-
-        // Also spawn visual item on the ground
+        // Spawn visual item on the ground (MUST BE HAULED)
         world.spawn((
             ResourceItem {
                 resource_type: ResourceType::Stone,
@@ -448,10 +446,13 @@ pub fn mine_rock(world: &mut World, designation_entity: Entity, work_amount: f32
             pos,
         ));
 
+        if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+            log.add("Mined Stone (Needs Hauling)");
+        }
+
         // Probabilistic Ore Yield (20%)
         let mut rng = rand::thread_rng();
         if rng.gen_bool(0.2) {
-            world.resource_mut::<ColonyResources>().add_ore(1.0);
             world.spawn((
                 ResourceItem {
                     resource_type: ResourceType::Ore,
@@ -459,6 +460,9 @@ pub fn mine_rock(world: &mut World, designation_entity: Entity, work_amount: f32
                 },
                 pos,
             ));
+            if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+                log.add("Mined Ore (Needs Hauling)");
+            }
         }
 
         // Remove designation
@@ -516,10 +520,7 @@ pub fn chop_tree(world: &mut World, designation_entity: Entity, work_amount: f32
             terrain.tiles[idx] = TerrainType::Dirt;
         }
 
-        // Credit colony resources directly
-        world.resource_mut::<ColonyResources>().add_wood(1.0);
-
-        // Also spawn visual item on the ground
+        // Spawn visual item on the ground (MUST BE HAULED)
         world.spawn((
             ResourceItem {
                 resource_type: ResourceType::Wood,
@@ -527,6 +528,10 @@ pub fn chop_tree(world: &mut World, designation_entity: Entity, work_amount: f32
             },
             pos,
         ));
+
+        if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+            log.add("Chopped Tree (Needs Hauling)");
+        }
 
         // Remove designation
         world.despawn(designation_entity);
@@ -609,6 +614,7 @@ mod tests {
             tiles,
         });
         world.insert_resource(ColonyResources::default());
+        world.insert_resource(MessageLog::default());
 
         // Spawn Designation
         let designation = world
@@ -638,6 +644,16 @@ mod tests {
         let items: Vec<_> = world.query::<&ResourceItem>().iter(&world).collect();
         assert!(!items.is_empty(), "Should spawn ResourceItem");
         assert_eq!(items[0].resource_type, ResourceType::Stone);
+
+        // 4. Resources should NOT be credited immediately
+        let resources = world.resource::<ColonyResources>();
+        // Default stone is 5.0. Should still be 5.0.
+        assert!((resources.stone - 5.0).abs() < f32::EPSILON, "Resources should not increase until hauled");
+
+        // 5. Check log
+        let log = world.resource::<MessageLog>();
+        assert!(!log.messages.is_empty());
+        assert_eq!(log.messages[0].text, "Mined Stone (Needs Hauling)");
     }
 
     #[test]
@@ -773,6 +789,7 @@ mod tests {
             tiles,
         });
         world.insert_resource(ColonyResources::default());
+        world.insert_resource(MessageLog::default());
 
         // Spawn Designation
         let designation = world
@@ -802,6 +819,16 @@ mod tests {
         let items: Vec<_> = world.query::<&ResourceItem>().iter(&world).collect();
         assert!(!items.is_empty(), "Should spawn ResourceItem");
         assert_eq!(items[0].resource_type, ResourceType::Wood);
+
+        // 4. Resources should NOT be credited immediately
+        let resources = world.resource::<ColonyResources>();
+        // Default wood is 15.0. Should still be 15.0.
+        assert!((resources.wood - 15.0).abs() < f32::EPSILON, "Resources should not increase until hauled");
+
+        // 5. Check log
+        let log = world.resource::<MessageLog>();
+        assert!(!log.messages.is_empty());
+        assert_eq!(log.messages[0].text, "Chopped Tree (Needs Hauling)");
     }
 
     #[test]
