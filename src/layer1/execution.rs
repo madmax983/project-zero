@@ -67,7 +67,6 @@ pub struct MovementTarget {
 #[derive(Component, Debug)]
 pub struct AtTarget;
 
-
 /// Removes pops from farms/housing when they switch to a different action.
 ///
 /// This system runs before `process_start_plan_system` to ensure pops are
@@ -250,12 +249,8 @@ pub fn arrival_handler_system(
                     .remove::<MovementTarget>()
                     .remove::<AtTarget>();
             }
-            ActionType::Work => {
-                // Work is handled by work_execution_system
-                // Just keep the AtTarget marker for that system
-            }
-            ActionType::Haul => {
-                // Hauling is handled by haul_system
+            ActionType::Work | ActionType::Haul => {
+                // Work/Haul is handled by their respective systems
                 // Just keep the AtTarget marker for that system
             }
             _ => {

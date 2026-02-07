@@ -45,6 +45,8 @@ pub mod pop;
 pub mod refining;
 /// Colony resources and mining.
 pub mod resources;
+/// Field science and anomalies.
+pub mod science;
 /// Seasonal rhythms (Spring, Summer, Autumn, Winter).
 pub mod seasons;
 /// Social needs and tavern.
@@ -71,6 +73,7 @@ mod execution_demolish_test;
 /// Named locations on the map.
 pub mod locations;
 
+pub use actions::*;
 pub use balance::*;
 pub use building::*;
 pub use chronicle::*;
@@ -82,7 +85,6 @@ pub use hauling::*;
 pub use health::*;
 pub use housing::*;
 pub use integration::*;
-pub use actions::*;
 pub use locations::*;
 pub use map::*;
 pub use memory::*;
@@ -90,6 +92,7 @@ pub use needs::*;
 pub use pop::*;
 pub use refining::*;
 pub use resources::*;
+pub use science::*;
 pub use seasons::*;
 pub use social::*;
 pub use spoilage::*;

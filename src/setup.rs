@@ -6,7 +6,8 @@ use crate::gpu::context::GpuContext;
 use crate::layer1::{
     BuildMode, BuildingTracker, Chronicle, ChronicleUiState, ColonyMemory, ColonyResources,
     DesignationMode, NamedLocations, OccupiedTiles, SeasonState, TechState, UtilityConfig,
-    Viewport, generate_terrain, initial_chronicle_event, initial_naming_system, spawn_initial_pops,
+    Viewport, generate_terrain, initial_chronicle_event, initial_naming_system,
+    spawn_initial_anomalies, spawn_initial_pops,
 };
 use crate::shared::colony::ColonyName;
 use crate::shared::input::InputContextStack;
@@ -69,6 +70,7 @@ pub fn setup_world() -> World {
     generate_world_history(&mut world);
 
     spawn_initial_pops(&mut world);
+    spawn_initial_anomalies(&mut world, 5);
     initial_naming_system(&mut world);
     initial_chronicle_event(&mut world);
 

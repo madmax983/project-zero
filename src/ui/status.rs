@@ -368,7 +368,9 @@ mod tests {
 
     #[test]
     fn test_render_status_bar_calculates_morale() {
-        use crate::layer1::{ColonyResources, Memories, MemoryType, NamedLocations, Needs, Pop, Viewport};
+        use crate::layer1::{
+            ColonyResources, Memories, MemoryType, NamedLocations, Needs, Pop, Viewport,
+        };
         use crate::shared::state::GameState;
         use crate::shared::time::SimulationTime;
         use ratatui::Terminal;

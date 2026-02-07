@@ -206,6 +206,11 @@ impl ColonyResources {
         self.tools = (self.tools + amount).clamp(0.0, self.max_tools);
     }
 
+    /// Adds knowledge, clamping to the maximum capacity.
+    pub fn add_knowledge(&mut self, amount: f32) {
+        self.knowledge = (self.knowledge + amount).clamp(0.0, self.max_knowledge);
+    }
+
     /// Checks if the colony can afford the given cost.
     ///
     /// # Parameters
