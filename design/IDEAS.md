@@ -514,7 +514,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Layer:** 1
 
-**Fantasy:** Nature reclaims what you harvest. The struggle is to preserve, not just produce.
+**Fantasy:** Nature reclaims what you harvest. The struggle to preserve, not just produce.
 
 **Mechanic:** Organic items (Food, Wood) have a "Freshness" ticker. Reaching 0 destroys the item or turns it to "Rot" (disease risk). Preservation methods (freezing, drying, canning) halt or slow decay.
 
@@ -1403,5 +1403,145 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** You build the housing block downwind of the slaughterhouse. Everyone is miserable despite having luxury beds.
 
 **Tension:** Industrial efficiency (grouping dirty buildings) vs. Air quality (spacing them out).
+
+---
+
+## Orbital Drop Logistics
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Catching a package dropped from orbit.
+
+**Mechanic:** Supply drops from Layer 2 ships don't land perfectly. They scatter. You have to send haulers out into the wild to retrieve them before they degrade or are eaten by fauna.
+
+**Emergence:** The relief supplies land on top of a sleeping mega-beast.
+
+**Tension:** Rapid delivery (imperfect aim) vs. Slow shuttle landing (perfect aim).
+
+---
+
+## Grid Instability
+
+**Layer:** 1
+
+**Fantasy:** Power lines are ugly but necessary. The grid is alive and dangerous.
+
+**Mechanic:** Cables have load limits. Drawing too much power through a single line causes "Overload" (heat damage/fire). Batteries can buffer surges but degrade.
+
+**Emergence:** You plug the new particle accelerator into the kitchen circuit and burn down the cafeteria.
+
+**Tension:** Redundant, expensive cabling vs. Cheap, risky daisy-chaining.
+
+---
+
+## The Overview Effect
+
+**Layer:** Cross-layer
+
+**Fantasy:** The moment a pop looks up and realizes how small they are.
+
+**Mechanic:** Building an "Observatory" allows pops to view Layer 2/3. This grants "Knowledge" but also "Existential Dread" (stress) or "Inspiration" (morale) based on traits.
+
+**Emergence:** A scientist becomes depressed after seeing a massive alien fleet approaching on the telescope, while the rest of the colony is blissfully unaware.
+
+**Tension:** Knowledge (Tech) vs. Ignorance (Bliss).
+
+---
+
+## Light Pollution
+
+**Layer:** 1
+
+**Fantasy:** You blinded your own telescope.
+
+**Mechanic:** Outdoor lights reduce the efficiency of Observatories and upset nocturnal fauna.
+
+**Emergence:** You have to build your labs in the spooky dark forest to get clear data, risking scientist safety.
+
+**Tension:** Safety (Lighting) vs. Science (Darkness).
+
+---
+
+## Airlocks & Pressure
+
+**Layer:** 1
+
+**Fantasy:** The air outside is poison. The air inside is life.
+
+**Mechanic:** Buildings must be sealed. Doors release a puff of atmosphere (and heat) when opened. "Airlocks" minimize loss but slow movement. Breaches vent atmosphere, suffocating pops.
+
+**Emergence:** A raid breaches the main hangar door. You have to seal the bulkheads, sacrificing the repair crew to save the habitat.
+
+**Tension:** Fast movement (doors) vs. Atmosphere preservation (airlocks).
+
+---
+
+## Biocompatibility
+
+**Layer:** 1
+
+**Fantasy:** The planet's biology rejects you.
+
+**Mechanic:** Pops have a "Biocompatibility" rating with the local flora/atmosphere. Low rating = sickness/slower work in unsealed areas. Can be improved via gene-modding or drugs.
+
+**Emergence:** Your best miner is violently allergic to the planet and has to work a desk job or live in a suit.
+
+**Tension:** Modify the planet (Terraforming) or modify the people (Adaptation)?
+
+---
+
+## Civic Ideology
+
+**Layer:** 1
+
+**Fantasy:** What holds the colony together?
+
+**Mechanic:** Player selects a "Colony Goal" (e.g., "Survival", "Profit", "Knowledge"). Actions aligned with the goal give bonus morale. Opposed actions give penalties.
+
+**Emergence:** A "Survivalist" colony riots because you built a Statue (waste of resources) instead of a Granary.
+
+**Tension:** Short-term flexibility vs. Long-term unity bonuses.
+
+---
+
+## Psychic Background Radiation
+
+**Layer:** Cross-Layer
+
+**Fantasy:** Space isn't silent, it's screaming.
+
+**Mechanic:** "Psychic Background" level on Layer 2 affects Layer 1. High background noise reduces sleep efficiency and increases mental break chance.
+
+**Emergence:** The planet passes through a nebula. Everyone has nightmares. Production halts because everyone is exhausted.
+
+**Tension:** Wait out the storm (idle) or push through (risk breaks)?
+
+---
+
+## Escape Velocity Economics
+
+**Layer:** 2
+
+**Fantasy:** Physics dictates the economy.
+
+**Mechanic:** Launch costs are proportional to planetary gravity. On High-G worlds, exporting heavy raw materials is unprofitable. You must refine them into high-value, low-mass tech.
+
+**Emergence:** You settle a High-G world for its gold, but realize you can't afford to ship the gold off-world. You have to build a jewelry industry first.
+
+**Tension:** Resource abundance vs. Logistics cost.
+
+---
+
+## Doppelgangers
+
+**Layer:** 1
+
+**Fantasy:** Paranoia. Who is that working next to you?
+
+**Mechanic:** Rare event where a Pop is replaced by a mimic. They look identical but sabotage jobs (consume double resources, work backwards). Revealed by medical scan or strange behavior.
+
+**Emergence:** Players start watching pops closely. "Why is Miner 74 eating raw ore?"
+
+**Tension:** Paranoia (frequent scanning, lost time) vs. Trust (risk of sabotage).
 
 ---
