@@ -1,5 +1,7 @@
 #![allow(clippy::cast_sign_loss)]
 #![allow(clippy::cast_possible_truncation)]
+#![allow(clippy::cast_precision_loss)]
+#![allow(clippy::option_if_let_else)]
 
 //! Inspector panel rendering.
 //!
@@ -256,7 +258,7 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         .constraints([
             Constraint::Length(1),              // Name
             Constraint::Length(1),              // Pos
-            Constraint::Length(if action_line.is_some() { 1 } else { 0 }), // Action
+            Constraint::Length(u16::from(action_line.is_some())), // Action
             Constraint::Length(1),              // Spacer
             Constraint::Length(details_height), // Needs or Details
             Constraint::Length(1),              // Spacer
@@ -316,13 +318,13 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         let hunger_gauge = Gauge::default()
             .block(Block::default().title("Hunger").borders(Borders::NONE))
             .gauge_style(Style::default().fg(hunger_color))
-            .label(format!("🍖 {}%", hunger_percent))
+            .label(format!("🍖 {hunger_percent}%"))
             .percent(hunger_percent);
 
         let rest_gauge = Gauge::default()
             .block(Block::default().title("Rest").borders(Borders::NONE))
             .gauge_style(Style::default().fg(rest_color))
-            .label(format!("💤 {}%", rest_percent))
+            .label(format!("💤 {rest_percent}%"))
             .percent(rest_percent);
 
         frame.render_widget(hunger_gauge, needs_layout[0]);
