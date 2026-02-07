@@ -19,6 +19,9 @@ pub mod farm;
 pub mod fire;
 /// Hauling logic.
 pub mod hauling;
+#[cfg(test)]
+/// Tests for hazards logic.
+pub mod hazards_tests;
 /// Pop health and damage.
 pub mod health;
 /// Housing and rest mechanics.
@@ -57,9 +60,9 @@ pub mod utility_ai;
 #[cfg(test)]
 /// Tests for utility AI work logic.
 pub mod utility_ai_work_tests;
+
 #[cfg(test)]
-/// Tests for hazards logic.
-pub mod hazards_tests;
+mod execution_demolish_test;
 
 /// Named locations on the map.
 pub mod locations;

@@ -1,16 +1,16 @@
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::utility_ai::ActionType;
-    use crate::layer1::health::Health;
-    use crate::layer1::execution::{work_execution_system, MovementTarget, AtTarget};
-    use crate::layer1::pop::Pop;
-    use crate::layer1::map::GridPosition;
     use crate::layer1::designation::{Designation, DesignationType};
-    use crate::layer1::terrain::{TerrainGrid, TerrainType};
-    use crate::layer1::resources::{ColonyResources, MiningProgress};
+    use crate::layer1::execution::{AtTarget, MovementTarget, work_execution_system};
+    use crate::layer1::health::Health;
+    use crate::layer1::map::GridPosition;
     use crate::layer1::needs::Needs;
+    use crate::layer1::pop::Pop;
+    use crate::layer1::resources::{ColonyResources, MiningProgress};
+    use crate::layer1::terrain::{TerrainGrid, TerrainType};
+    use crate::layer1::utility_ai::ActionType;
     use crate::shared::log::MessageLog;
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_action_danger_levels() {
@@ -110,6 +110,9 @@ mod tests {
 
         // Verify log message
         let log = world.resource::<MessageLog>();
-        assert!(log.messages.iter().any(|m| m.text.contains("ACCIDENT")), "Should log accident");
+        assert!(
+            log.messages.iter().any(|m| m.text.contains("ACCIDENT")),
+            "Should log accident"
+        );
     }
 }

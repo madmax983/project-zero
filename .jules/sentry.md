@@ -15,3 +15,7 @@
 ## [AI Logic Blind Spot]
 **Learning:** `track_plan_outcomes_system` was evaluating ALL actions based on need reduction, causing non-need actions (Work, Socialize) to always fail and de-prioritize themselves.
 **Action:** When evaluating generic outcomes, ensure the success metric is applicable to the action type (e.g., task completion vs need satisfaction).
+
+## [Deadlock in Unimplemented Branch]
+**Learning:** `work_execution_system` silently failed for `Demolish` because the match arm returned `false` (unimplemented), causing pops to loop infinitely in `ActionType::Work` without progress or despawning the designation.
+**Action:** When stubbing out logic (TODOs), verify that the "failure" path (e.g. returning false) correctly cancels the action or cleans up state to prevent deadlocks.

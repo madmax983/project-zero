@@ -22,6 +22,7 @@
 //!     ↓ calls mine_rock/chop_tree
 //! ```
 
+use crate::layer1::building::{Building, OccupiedTiles};
 use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::farm::Farm;
 use crate::layer1::health::Health;
@@ -326,7 +327,36 @@ fn calculate_next_position(current: GridPosition, target: GridPosition) -> Optio
     }
 }
 
+fn execute_demolish(world: &mut World, designation_entity: Entity) -> bool {
+    // Find designation position
+    world
+        .get::<GridPosition>(designation_entity)
+        .copied()
+        .is_some_and(|designation_pos| {
+            // Find building at this position
+            // We collect to avoid borrow issues if we need to mutate world later
+            let building_entity = world
+                .query::<(Entity, &GridPosition, &Building)>()
+                .iter(world)
+                .find(|(_, pos, _)| pos.x == designation_pos.x && pos.y == designation_pos.y)
+                .map(|(e, _, _)| e);
+
+            if let Some(entity) = building_entity {
+                world.despawn(entity);
+                // Remove from OccupiedTiles
+                if let Some(mut occupied) = world.get_resource_mut::<OccupiedTiles>() {
+                    occupied.0.remove(&(designation_pos.x, designation_pos.y));
+                }
+            }
+
+            // Despawn the designation itself
+            world.despawn(designation_entity);
+            true
+        })
+}
+
 /// Executes work at designations when pop is at target with Work action.
+#[allow(clippy::too_many_lines)]
 pub fn work_execution_system(world: &mut World) {
     // Check tools at the start of the system
     let (has_tools, mut tool_broken) = {
@@ -400,10 +430,7 @@ pub fn work_execution_system(world: &mut World) {
                 chop_tree(world, designation_entity, work_amount);
                 true
             }
-            DesignationType::Demolish => {
-                // TODO: Implement demolish logic
-                false
-            }
+            DesignationType::Demolish => execute_demolish(world, designation_entity),
         };
 
         // After work: if designation was despawned (work completed), reset pop state
