@@ -1,12 +1,12 @@
-use bevy_ecs::prelude::*;
+use super::{AssignedTo, AssignmentType};
 use crate::layer1::housing::Housing;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
-use crate::layer1::utility_ai::{ActionType, UtilityWeights};
 use crate::layer1::utility_ai::math::{
     calculate_context_score, calculate_success_modifier, need_response_curve,
 };
-use super::{AssignedTo, AssignmentType};
+use crate::layer1::utility_ai::{ActionType, UtilityWeights};
+use bevy_ecs::prelude::*;
 
 /// Evaluates the utility of satisfying rest at available housing.
 #[must_use]
@@ -48,6 +48,7 @@ pub fn handle_arrival(
     housing: &mut Query<&mut Housing>,
     commands: &mut Commands,
 ) {
+    #[allow(clippy::collapsible_if)]
     if let Ok(mut house) = housing.get_mut(target_entity) {
         if house.residents.len() < house.capacity {
             house.residents.push(pop_entity);

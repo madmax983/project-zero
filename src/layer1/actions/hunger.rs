@@ -1,12 +1,12 @@
-use bevy_ecs::prelude::*;
+use super::{AssignedTo, AssignmentType};
 use crate::layer1::farm::Farm;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
-use crate::layer1::utility_ai::{ActionType, UtilityWeights};
 use crate::layer1::utility_ai::math::{
     calculate_context_score, calculate_success_modifier, need_response_curve,
 };
-use super::{AssignedTo, AssignmentType};
+use crate::layer1::utility_ai::{ActionType, UtilityWeights};
+use bevy_ecs::prelude::*;
 
 /// Evaluates the utility of satisfying hunger at available farms.
 #[must_use]
@@ -48,6 +48,7 @@ pub fn handle_arrival(
     farms: &mut Query<&mut Farm>,
     commands: &mut Commands,
 ) {
+    #[allow(clippy::collapsible_if)]
     if let Ok(mut farm) = farms.get_mut(target_entity) {
         if farm.workers.len() < farm.capacity {
             farm.workers.push(pop_entity);

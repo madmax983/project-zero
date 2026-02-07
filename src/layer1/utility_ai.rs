@@ -14,6 +14,7 @@ use crate::layer1::housing::Housing;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
 use crate::layer1::resources::{ColonyResources, ResourceItem};
+use crate::layer1::science::Anomaly;
 use crate::layer1::social::{Tavern, evaluate_socialize};
 use crate::layer1::stockpile::Stockpile;
 use crate::layer1::tech::Library;
@@ -143,6 +144,35 @@ pub fn evaluate_haul<'a>(
     best
 }
 
+/// Evaluates the utility of exploring anomalies.
+#[must_use]
+pub fn evaluate_explore<'a>(
+    pop_pos: &GridPosition,
+    weights: &UtilityWeights,
+    anomalies: impl Iterator<Item = (Entity, &'a GridPosition, &'a Anomaly)>,
+) -> Option<(f32, Entity)> {
+    let mut best: Option<(f32, Entity)> = None;
+    let base_utility = 0.55;
+
+    for (entity, pos, _) in anomalies {
+        let context = calculate_context_score(
+            *pop_pos,
+            Some(*pos),
+            1, // Capacity (simplified)
+            0, // Occupied (simplified)
+            weights,
+        );
+
+        let success = calculate_success_modifier(ActionType::Explore, weights);
+        let utility = base_utility * context * success;
+
+        if best.is_none_or(|(best_u, _)| utility > best_u) {
+            best = Some((utility, entity));
+        }
+    }
+    best
+}
+
 /// Evaluates the utility of being idle.
 ///
 /// Idle is a low-priority fallback action. Pops should prefer productive
@@ -195,6 +225,7 @@ pub fn evaluate_actions_system(world: &mut World) {
     let mut designations_state = world.query::<(Entity, &GridPosition, &Designation)>();
     let mut items_state = world.query::<(Entity, &GridPosition, &ResourceItem)>();
     let mut stockpiles_state = world.query::<(Entity, &GridPosition, &Stockpile)>();
+    let mut anomalies_state = world.query::<(Entity, &GridPosition, &Anomaly)>();
 
     let resources = world.resource::<ColonyResources>().clone();
 
@@ -228,6 +259,13 @@ pub fn evaluate_actions_system(world: &mut World) {
             evaluate_work(&pop_pos, &weights, designations_state.iter(world))
         {
             utilities.push((ActionType::Work, utility, Some(target)));
+        }
+
+        // Evaluate Explore
+        if let Some((utility, target)) =
+            evaluate_explore(&pop_pos, &weights, anomalies_state.iter(world))
+        {
+            utilities.push((ActionType::Explore, utility, Some(target)));
         }
 
         // Evaluate Research

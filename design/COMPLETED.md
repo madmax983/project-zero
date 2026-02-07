@@ -40,3 +40,4 @@ Implemented features. Architect: read this to understand current state.
 - [x] `035` Workplace Hazards — `specs/035-workplace-hazards.md` — completed 2026-02-18
 - [x] `INT-003` Integration: Fire -> Pop Health — completed 2026-02-18
 - [x] `036` Pop Memory — `specs/036-pop-memory.md` — completed 2026-02-19
+- [x] `041` Field Science — `specs/041-field-science.md` — completed 2026-02-23

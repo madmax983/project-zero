@@ -7,8 +7,9 @@ use std::collections::HashMap;
 use std::hash::BuildHasher;
 
 use crate::layer1::{
-    BuildMode, Building, BuildingType, Designation, DesignationMode, DesignationType, GridPosition,
-    Needs, ResourceItem, ResourceType, TerrainGrid, TerrainType, Viewport,
+    Anomaly, AnomalyType, BuildMode, Building, BuildingType, Designation, DesignationMode,
+    DesignationType, GridPosition, Needs, ResourceItem, ResourceType, TerrainGrid, TerrainType,
+    Viewport,
 };
 
 /// Represents a renderable entity on the map.
@@ -23,6 +24,8 @@ pub enum RenderEntity {
     Building(BuildingType),
     /// A colonist ([`crate::layer1::pop::Pop`]), carrying a display character and color based on status.
     Pop(&'static str, Color),
+    /// An anomaly scan target (e.g., Ruins, Flora).
+    Anomaly(AnomalyType),
     /// A loose resource item on the ground (e.g., [`ResourceType::Wood`]).
     Item(ResourceType),
 }
@@ -34,7 +37,8 @@ impl RenderEntity {
     /// 1. **Designations** (Top): Overlays like "Mine" need to be visible over everything.
     /// 2. **Buildings**: Walls and structures cover pops.
     /// 3. **Pops**: Colonists move around on the ground.
-    /// 4. **Items** (Bottom): Resources sit on the floor.
+    /// 4. **Anomalies**: Special sites (under pops).
+    /// 5. **Items** (Bottom): Resources sit on the floor.
     ///
     /// # Examples
     ///
@@ -48,11 +52,13 @@ impl RenderEntity {
     ///
     /// assert!(des.priority() > pop.priority());
     /// ```
+    #[must_use]
     pub const fn priority(&self) -> u8 {
         match self {
-            Self::Designation(_) => 4,
-            Self::Building(_) => 3,
-            Self::Pop(_, _) => 2,
+            Self::Designation(_) => 5,
+            Self::Building(_) => 4,
+            Self::Pop(_, _) => 3,
+            Self::Anomaly(_) => 2,
             Self::Item(_) => 1,
         }
     }
@@ -109,6 +115,15 @@ pub fn update_render_cache(world: &mut World) {
                     &mut cache.entities,
                     *pos,
                     RenderEntity::Pop(text, color),
+                );
+            }
+
+            // Check for Anomaly
+            if let Some(anomaly) = e.get::<Anomaly>() {
+                insert_if_higher_priority(
+                    &mut cache.entities,
+                    *pos,
+                    RenderEntity::Anomaly(anomaly.anomaly_type),
                 );
             }
 
@@ -294,6 +309,13 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
                     }
                     RenderEntity::Pop(text, color) => {
                         line_spans.push(Span::styled(*text, Style::default().fg(*color)));
+                        continue;
+                    }
+                    RenderEntity::Anomaly(a) => {
+                        line_spans.push(Span::styled(
+                            get_anomaly_char(*a),
+                            Style::default().fg(get_anomaly_color(*a)),
+                        ));
                         continue;
                     }
                     RenderEntity::Item(r) => {
@@ -596,5 +618,25 @@ pub fn get_pop_display(needs: &Needs) -> (&'static str, Color) {
         ("☻", Color::Rgb(255, 165, 0)) // getting hungry
     } else {
         ("☹", Color::Red) // starving
+    }
+}
+
+/// Returns the display character for an anomaly.
+#[must_use]
+pub const fn get_anomaly_char(anomaly: AnomalyType) -> &'static str {
+    match anomaly {
+        AnomalyType::Ruins => "R",
+        AnomalyType::StrangeFlora => "F",
+        AnomalyType::Geode => "G",
+    }
+}
+
+/// Returns the display color for an anomaly.
+#[must_use]
+pub const fn get_anomaly_color(anomaly: AnomalyType) -> Color {
+    match anomaly {
+        AnomalyType::Ruins => Color::Cyan,
+        AnomalyType::StrangeFlora => Color::Green,
+        AnomalyType::Geode => Color::Magenta,
     }
 }

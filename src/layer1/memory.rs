@@ -1,5 +1,5 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::needs::Needs;
+use bevy_ecs::prelude::*;
 
 /// Types of memories a pop can acquire.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -31,8 +31,8 @@ impl MemoryType {
     pub const fn decay_rate(&self) -> f32 {
         // Ticks to fade completely
         match self {
-            Self::WitnessedDeath => 0.0005,    // Slow fade (2000 ticks)
-            Self::StarvationTrauma => 0.001,   // Medium
+            Self::WitnessedDeath => 0.0005,              // Slow fade (2000 ticks)
+            Self::StarvationTrauma => 0.001,             // Medium
             Self::AteFineMeal | Self::WonFight => 0.002, // Fast (500 ticks)
         }
     }
@@ -83,7 +83,9 @@ impl Memories {
 #[must_use]
 pub fn calculate_effective_morale(needs: &Needs, memories: &Memories) -> f32 {
     let base = needs.morale();
-    let memory_modifier: f32 = memories.items.iter()
+    let memory_modifier: f32 = memories
+        .items
+        .iter()
         .map(|m| m.memory_type.base_mood_impact() * m.intensity)
         .sum();
 
@@ -91,9 +93,7 @@ pub fn calculate_effective_morale(needs: &Needs, memories: &Memories) -> f32 {
 }
 
 /// System to decay memories every tick.
-pub fn memory_decay_system(
-    mut query: Query<&mut Memories>,
-) {
+pub fn memory_decay_system(mut query: Query<&mut Memories>) {
     // Assuming this runs every tick
     query.par_iter_mut().for_each(|mut memories| {
         memories.decay(1);
@@ -149,7 +149,11 @@ mod tests {
 
     #[test]
     fn test_calculate_effective_morale() {
-        let needs = Needs { hunger: 0.5, rest: 0.5, leisure: 0.5 };
+        let needs = Needs {
+            hunger: 0.5,
+            rest: 0.5,
+            leisure: 0.5,
+        };
         let mut memories = Memories::default();
 
         // Base morale = (0.5+0.5+0.5)/3 = 0.5
@@ -166,11 +170,15 @@ mod tests {
 
     #[test]
     fn test_multiple_memories_stack() {
-        let needs = Needs { hunger: 0.5, rest: 0.5, leisure: 0.5 };
+        let needs = Needs {
+            hunger: 0.5,
+            rest: 0.5,
+            leisure: 0.5,
+        };
         let mut memories = Memories::default();
 
         memories.add(MemoryType::WitnessedDeath, 0); // -0.2
-        memories.add(MemoryType::AteFineMeal, 0);    // +0.1
+        memories.add(MemoryType::AteFineMeal, 0); // +0.1
 
         let effective = calculate_effective_morale(&needs, &memories);
 
@@ -180,7 +188,11 @@ mod tests {
 
     #[test]
     fn test_morale_clamping() {
-        let needs = Needs { hunger: 1.0, rest: 1.0, leisure: 1.0 }; // Base 1.0
+        let needs = Needs {
+            hunger: 1.0,
+            rest: 1.0,
+            leisure: 1.0,
+        }; // Base 1.0
         let mut memories = Memories::default();
         memories.add(MemoryType::AteFineMeal, 0); // +0.1
 

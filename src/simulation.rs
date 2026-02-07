@@ -16,10 +16,11 @@ use crate::layer1::{
     clean_dead_residents_system, clean_dead_workers_system, cleanup_previous_assignment_system,
     consume_food_system, death_system, decay_needs_system, fire_damage_pops_system,
     fire_damage_system, fire_spread_system, haul_system, memory_decay_system, movement_system,
-    process_refining_system, process_research_system, process_start_plan_system,
-    produce_food_system, restore_leisure_system, restore_rest_in_housing_system, spoilage_system,
-    starvation_damage_system, track_plan_outcomes_system, update_action_timer_system,
-    update_resource_caps_system, work_execution_system,
+    process_refining_system, process_research_system, process_scan_system,
+    process_start_plan_system, produce_food_system, restore_leisure_system,
+    restore_rest_in_housing_system, spoilage_system, starvation_damage_system,
+    track_plan_outcomes_system, update_action_timer_system, update_resource_caps_system,
+    work_execution_system,
 };
 use crate::shared::time::SimulationTime;
 
@@ -58,6 +59,7 @@ pub fn build_simulation_schedule() -> Schedule {
         arrival_handler_system.after(movement_system),
         work_execution_system.after(arrival_handler_system),
         haul_system.after(arrival_handler_system),
+        process_scan_system.after(arrival_handler_system),
     ));
 
     // --- Economy (after execution, before consumption) ---

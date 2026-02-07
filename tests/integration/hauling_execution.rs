@@ -1,16 +1,16 @@
 #[cfg(test)]
 mod tests {
-    use scale::layer1::execution::{arrival_handler_system, AtTarget, MovementTarget};
-    use scale::layer1::utility_ai::{ActionType, PopAction};
-    use scale::layer1::pop::Pop;
-    use scale::layer1::GridPosition;
-    use scale::layer1::building::{Building, BuildingType};
-    use scale::layer1::stockpile::Stockpile;
-    use scale::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
-    use scale::simulation::{build_simulation_schedule, SimulationSchedule};
-    use scale::shared::time::SimulationTime;
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
+    use scale::layer1::GridPosition;
+    use scale::layer1::building::{Building, BuildingType};
+    use scale::layer1::execution::{AtTarget, MovementTarget, arrival_handler_system};
+    use scale::layer1::pop::Pop;
+    use scale::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
+    use scale::layer1::stockpile::Stockpile;
+    use scale::layer1::utility_ai::{ActionType, PopAction};
+    use scale::shared::time::SimulationTime;
+    use scale::simulation::{SimulationSchedule, build_simulation_schedule};
 
     fn setup_world() -> World {
         scale::setup::init_task_pools();
@@ -32,7 +32,9 @@ mod tests {
         world.insert_resource(scale::layer1::tech::TechState::default());
 
         let generator = scale::shared::narrative::NarrativeGenerator::from_embedded();
-        world.insert_resource(scale::shared::colony::ColonyName { name: "Test Colony".to_string() });
+        world.insert_resource(scale::shared::colony::ColonyName {
+            name: "Test Colony".to_string(),
+        });
         world.insert_resource(generator);
 
         // Initialize Schedules resource
@@ -139,9 +141,20 @@ mod tests {
         // Verify Pickup Complete
         assert_eq!(world.get::<GridPosition>(pop).unwrap().x, 2);
         assert!(world.get_entity(item).is_err(), "Item should be despawned");
-        assert!(world.get::<scale::layer1::resources::Carrying>(pop).is_some(), "Pop should be carrying");
-        assert!(world.get::<AtTarget>(pop).is_none(), "AtTarget removed after pickup");
-        assert!(world.get::<MovementTarget>(pop).is_none(), "MovementTarget removed after pickup");
+        assert!(
+            world
+                .get::<scale::layer1::resources::Carrying>(pop)
+                .is_some(),
+            "Pop should be carrying"
+        );
+        assert!(
+            world.get::<AtTarget>(pop).is_none(),
+            "AtTarget removed after pickup"
+        );
+        assert!(
+            world.get::<MovementTarget>(pop).is_none(),
+            "MovementTarget removed after pickup"
+        );
 
         // Tick 4: movement (no-op), arrival (no-op), haul (finds stockpile, sets target (4,0))
         world.run_schedule(SimulationSchedule);
@@ -158,9 +171,17 @@ mod tests {
 
         // Verify Drop off Complete
         assert_eq!(world.get::<GridPosition>(pop).unwrap().x, 4);
-        assert!(world.get::<scale::layer1::resources::Carrying>(pop).is_none(), "Pop empty");
+        assert!(
+            world
+                .get::<scale::layer1::resources::Carrying>(pop)
+                .is_none(),
+            "Pop empty"
+        );
         let resources = world.resource::<ColonyResources>();
         // Default wood is 15.0 + 10.0 hauled = 25.0
-        assert!((resources.wood - 25.0).abs() < f32::EPSILON, "Wood added to resources (expected 25.0)");
+        assert!(
+            (resources.wood - 25.0).abs() < f32::EPSILON,
+            "Wood added to resources (expected 25.0)"
+        );
     }
 }
