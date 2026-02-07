@@ -24,6 +24,7 @@
 
 use super::health::Health;
 use super::map::GridPosition;
+use super::memory::Memories;
 use super::needs::Needs;
 use super::terrain::{TerrainGrid, TerrainType};
 use super::utility_ai::{PopAction, UtilityWeights};
@@ -106,6 +107,7 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
                 GridPosition { x, y },
                 Health::default(),
                 Needs::default(),
+                Memories::default(),
                 PopAction::default(),
                 UtilityWeights::default(),
             ));
