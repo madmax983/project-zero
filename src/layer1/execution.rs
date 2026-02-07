@@ -22,6 +22,9 @@
 //!     ↓ calls mine_rock/chop_tree
 //! ```
 
+use crate::layer1::actions::hunger::handle_arrival as handle_hunger_arrival;
+use crate::layer1::actions::rest::handle_arrival as handle_rest_arrival;
+use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::building::{Building, OccupiedTiles};
 use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::farm::Farm;
@@ -64,27 +67,6 @@ pub struct MovementTarget {
 #[derive(Component, Debug)]
 pub struct AtTarget;
 
-/// Component tracking what a pop is assigned to.
-#[derive(Component, Debug)]
-pub struct AssignedTo {
-    /// The entity the pop is assigned to.
-    pub entity: Entity,
-    /// The type of assignment.
-    pub assignment_type: AssignmentType,
-}
-
-/// Types of assignments a pop can have.
-#[derive(Clone, Copy, PartialEq, Eq, Debug)]
-pub enum AssignmentType {
-    /// Working at a farm.
-    FarmWorker,
-    /// Residing in housing.
-    HousingResident,
-    /// Socializing at a tavern.
-    TavernVisitor,
-    /// Working at a library.
-    LibraryWorker,
-}
 
 /// Removes pops from farms/housing when they switch to a different action.
 ///
@@ -230,30 +212,14 @@ pub fn arrival_handler_system(
 
         match action {
             ActionType::SatisfyHunger => {
-                if let Ok(mut farm) = farms.get_mut(target_entity)
-                    && farm.workers.len() < farm.capacity
-                {
-                    farm.workers.push(pop_entity);
-                    commands.entity(pop_entity).insert(AssignedTo {
-                        entity: target_entity,
-                        assignment_type: AssignmentType::FarmWorker,
-                    });
-                }
+                handle_hunger_arrival(pop_entity, target_entity, &mut farms, &mut commands);
                 commands
                     .entity(pop_entity)
                     .remove::<MovementTarget>()
                     .remove::<AtTarget>();
             }
             ActionType::SatisfyRest => {
-                if let Ok(mut h) = housing_q.get_mut(target_entity)
-                    && h.residents.len() < h.capacity
-                {
-                    h.residents.push(pop_entity);
-                    commands.entity(pop_entity).insert(AssignedTo {
-                        entity: target_entity,
-                        assignment_type: AssignmentType::HousingResident,
-                    });
-                }
+                handle_rest_arrival(pop_entity, target_entity, &mut housing_q, &mut commands);
                 commands
                     .entity(pop_entity)
                     .remove::<MovementTarget>()

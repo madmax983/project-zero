@@ -4,7 +4,7 @@
 //! potentially generating knowledge (Inspiration).
 
 use crate::experimental::biography::Biography;
-use crate::layer1::execution::{AssignedTo, AssignmentType};
+use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::pop::Pop;
 use crate::layer1::resources::ColonyResources;
 use crate::shared::log::MessageLog;

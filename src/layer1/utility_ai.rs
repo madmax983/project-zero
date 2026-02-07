@@ -6,6 +6,8 @@ pub mod types;
 pub use math::*;
 pub use types::*;
 
+use crate::layer1::actions::hunger::evaluate_satisfy_hunger;
+use crate::layer1::actions::rest::evaluate_satisfy_rest;
 use crate::layer1::designation::Designation;
 use crate::layer1::farm::Farm;
 use crate::layer1::housing::Housing;
@@ -17,72 +19,6 @@ use crate::layer1::stockpile::Stockpile;
 use crate::layer1::tech::Library;
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
-
-/// Evaluates the utility of satisfying hunger at available farms.
-#[must_use]
-pub fn evaluate_satisfy_hunger<'a>(
-    pop_pos: &GridPosition,
-    needs: &Needs,
-    weights: &UtilityWeights,
-    farms: impl Iterator<Item = (Entity, &'a GridPosition, &'a Farm)>,
-) -> Option<(f32, Entity)> {
-    let hunger_urgency = need_response_curve(needs.hunger);
-
-    let mut best: Option<(f32, Entity)> = None;
-
-    for (farm_entity, farm_pos, farm) in farms {
-        let context_score = calculate_context_score(
-            *pop_pos,
-            Some(*farm_pos),
-            farm.capacity,
-            farm.workers.len(),
-            weights,
-        );
-
-        let success_mod = calculate_success_modifier(ActionType::SatisfyHunger, weights);
-
-        let utility = hunger_urgency * context_score * success_mod;
-
-        if best.is_none_or(|(best_u, _)| utility > best_u) {
-            best = Some((utility, farm_entity));
-        }
-    }
-
-    best
-}
-
-/// Evaluates the utility of satisfying rest at available housing.
-#[must_use]
-pub fn evaluate_satisfy_rest<'a>(
-    pop_pos: &GridPosition,
-    needs: &Needs,
-    weights: &UtilityWeights,
-    housing: impl Iterator<Item = (Entity, &'a GridPosition, &'a Housing)>,
-) -> Option<(f32, Entity)> {
-    let rest_urgency = need_response_curve(needs.rest);
-
-    let mut best: Option<(f32, Entity)> = None;
-
-    for (housing_entity, housing_pos, house) in housing {
-        let context_score = calculate_context_score(
-            *pop_pos,
-            Some(*housing_pos),
-            house.capacity,
-            house.residents.len(),
-            weights,
-        );
-
-        let success_mod = calculate_success_modifier(ActionType::SatisfyRest, weights);
-
-        let utility = rest_urgency * context_score * success_mod;
-
-        if best.is_none_or(|(best_u, _)| utility > best_u) {
-            best = Some((utility, housing_entity));
-        }
-    }
-
-    best
-}
 
 /// Evaluates the utility of performing work on designations.
 #[must_use]
