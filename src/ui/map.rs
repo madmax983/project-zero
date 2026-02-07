@@ -12,17 +12,43 @@ use crate::layer1::{
 };
 
 /// Represents a renderable entity on the map.
+///
+/// This enum abstracts the different types of entities that can appear on the map grid.
+/// It carries just enough data to determine the character and color to render.
 #[derive(Clone, Copy, Debug)]
 pub enum RenderEntity {
+    /// A player designation (e.g., [`DesignationType::Mine`], [`DesignationType::Chop`]).
     Designation(DesignationType),
+    /// A constructed building (e.g., [`BuildingType::Farm`], [`BuildingType::Housing`]).
     Building(BuildingType),
+    /// A colonist ([`crate::layer1::pop::Pop`]), carrying a display character and color based on status.
     Pop(&'static str, Color),
+    /// A loose resource item on the ground (e.g., [`ResourceType::Wood`]).
     Item(ResourceType),
 }
 
 impl RenderEntity {
     /// Returns the rendering priority (higher is drawn on top).
-    const fn priority(&self) -> u8 {
+    ///
+    /// The z-ordering is:
+    /// 1. **Designations** (Top): Overlays like "Mine" need to be visible over everything.
+    /// 2. **Buildings**: Walls and structures cover pops.
+    /// 3. **Pops**: Colonists move around on the ground.
+    /// 4. **Items** (Bottom): Resources sit on the floor.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use scale::ui::map::RenderEntity;
+    /// use scale::layer1::DesignationType;
+    /// use ratatui::style::Color;
+    ///
+    /// let des = RenderEntity::Designation(DesignationType::Mine);
+    /// let pop = RenderEntity::Pop("☺", Color::Yellow);
+    ///
+    /// assert!(des.priority() > pop.priority());
+    /// ```
+    pub const fn priority(&self) -> u8 {
         match self {
             Self::Designation(_) => 4,
             Self::Building(_) => 3,
@@ -34,14 +60,23 @@ impl RenderEntity {
 
 /// Cache for renderable entities to avoid repeated allocations and iterations.
 ///
-/// Stores only the highest priority entity for each grid position to minimize lookups during rendering.
+/// Rendering the map requires determining what is at each (x, y) coordinate.
+/// Iterating the entire ECS world for every tile would be O(N * W * H), which is too slow.
+///
+/// Instead, we iterate the ECS *once* per frame and populate this hash map:
+/// `GridPosition -> RenderEntity`.
+///
+/// This reduces the per-tile lookup to O(1), making rendering O(W * H).
 #[derive(Resource, Default)]
 pub struct RenderCache {
     /// Cached entity data.
     pub entities: HashMap<GridPosition, RenderEntity>,
 }
 
-/// Updates the `RenderCache` by iterating the world once.
+/// Updates the [`RenderCache`] by iterating the world once.
+///
+/// This system must run before rendering to ensure the cache reflects the latest frame state.
+/// It respects the priority defined in [`RenderEntity::priority()`].
 pub fn update_render_cache(world: &mut World) {
     let mut cache = world.remove_resource::<RenderCache>().unwrap_or_default();
 
@@ -106,6 +141,8 @@ fn insert_if_higher_priority(
 }
 
 /// Context for rendering the map layer.
+///
+/// Bundles all the read-only references needed to draw the map, avoiding function signature bloat.
 pub struct MapRenderContext<'a, S: BuildHasher> {
     /// The area to render into.
     pub area: Rect,
@@ -130,6 +167,8 @@ impl<S: BuildHasher> Clone for MapRenderContext<'_, S> {
 impl<S: BuildHasher> Copy for MapRenderContext<'_, S> {}
 
 /// Builds a vector of text lines to render the terrain within the given area.
+///
+/// Ignores entities and only draws the base terrain layer.
 #[must_use]
 pub fn build_terrain_spans(
     area: Rect,
@@ -162,6 +201,13 @@ pub fn build_terrain_spans(
 }
 
 /// Builds a vector of text lines to render the map layer (terrain, pops, buildings, cursor).
+///
+/// This is the core rendering logic for the map view. It iterates screen coordinates
+/// and resolves the character/color for each cell based on:
+/// 1. Active cursors (Build/Designate).
+/// 2. Drag selection rectangles.
+/// 3. Cached entities ([`RenderCache`]).
+/// 4. Base terrain.
 #[must_use]
 #[allow(clippy::too_many_lines)]
 pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Vec<Line<'static>> {
@@ -286,6 +332,11 @@ pub fn render_map_layer<S: BuildHasher>(frame: &mut Frame, ctx: MapRenderContext
 }
 
 /// Renders the full map with borders and simulation state.
+///
+/// This is the top-level function for drawing the map component. It:
+/// 1. Draws the border block.
+/// 2. Assembles the [`MapRenderContext`] from World resources.
+/// 3. Delegates pixel generation to [`render_map_layer`].
 pub fn render_map(frame: &mut Frame, area: Rect, world: &World) {
     let block = Block::default()
         .borders(Borders::ALL)
@@ -349,6 +400,17 @@ pub fn render_terrain(frame: &mut Frame, area: Rect, terrain: &TerrainGrid, view
 
 // --- Visual Helpers ---
 
+/// Returns the ASCII character for the given terrain type.
+///
+/// # Examples
+///
+/// ```
+/// use scale::ui::map::get_terrain_char;
+/// use scale::layer1::TerrainType;
+///
+/// assert_eq!(get_terrain_char(TerrainType::Grass), ".");
+/// assert_eq!(get_terrain_char(TerrainType::Water), "~");
+/// ```
 #[must_use]
 pub const fn get_terrain_char(terrain: TerrainType) -> &'static str {
     match terrain {
@@ -360,6 +422,18 @@ pub const fn get_terrain_char(terrain: TerrainType) -> &'static str {
     }
 }
 
+/// Returns the color for the given terrain type.
+///
+/// # Examples
+///
+/// ```
+/// use scale::ui::map::get_terrain_color;
+/// use scale::layer1::TerrainType;
+/// use ratatui::style::Color;
+///
+/// // Water is blue-ish
+/// assert_eq!(get_terrain_color(TerrainType::Water), Color::Rgb(80, 140, 255));
+/// ```
 #[must_use]
 pub const fn get_terrain_color(terrain: TerrainType) -> Color {
     match terrain {
@@ -371,6 +445,16 @@ pub const fn get_terrain_color(terrain: TerrainType) -> Color {
     }
 }
 
+/// Returns the display character for a building type.
+///
+/// # Examples
+///
+/// ```
+/// use scale::ui::map::get_building_char;
+/// use scale::layer1::BuildingType;
+///
+/// assert_eq!(get_building_char(BuildingType::Housing), '⌂');
+/// ```
 #[must_use]
 pub const fn get_building_char(building: BuildingType) -> char {
     match building {
@@ -386,6 +470,17 @@ pub const fn get_building_char(building: BuildingType) -> char {
     }
 }
 
+/// Returns the display color for a building type.
+///
+/// # Examples
+///
+/// ```
+/// use scale::ui::map::get_building_color;
+/// use scale::layer1::BuildingType;
+/// use ratatui::style::Color;
+///
+/// assert_eq!(get_building_color(BuildingType::Farm), Color::Rgb(218, 165, 32));
+/// ```
 #[must_use]
 pub const fn get_building_color(building: BuildingType) -> Color {
     match building {
@@ -401,6 +496,16 @@ pub const fn get_building_color(building: BuildingType) -> Color {
     }
 }
 
+/// Returns the display string for a designation tool.
+///
+/// # Examples
+///
+/// ```
+/// use scale::ui::map::get_designation_char;
+/// use scale::layer1::DesignationType;
+///
+/// assert_eq!(get_designation_char(DesignationType::Mine), "%");
+/// ```
 #[must_use]
 pub const fn get_designation_char(tool: DesignationType) -> &'static str {
     match tool {
@@ -410,6 +515,16 @@ pub const fn get_designation_char(tool: DesignationType) -> &'static str {
     }
 }
 
+/// Returns the display string for a loose resource type.
+///
+/// # Examples
+///
+/// ```
+/// use scale::ui::map::get_resource_char;
+/// use scale::layer1::ResourceType;
+///
+/// assert_eq!(get_resource_char(ResourceType::Wood), "t");
+/// ```
 #[must_use]
 pub const fn get_resource_char(resource: ResourceType) -> &'static str {
     match resource {
@@ -423,6 +538,17 @@ pub const fn get_resource_char(resource: ResourceType) -> &'static str {
     }
 }
 
+/// Returns the display color for a loose resource type.
+///
+/// # Examples
+///
+/// ```
+/// use scale::ui::map::get_resource_color;
+/// use scale::layer1::ResourceType;
+/// use ratatui::style::Color;
+///
+/// assert_eq!(get_resource_color(ResourceType::Food), Color::Green);
+/// ```
 #[must_use]
 pub const fn get_resource_color(resource: ResourceType) -> Color {
     match resource {
@@ -444,6 +570,19 @@ const WARNING_THRESHOLD: f32 = 0.3;
 /// Display is driven primarily by hunger (the only lethal need).
 /// Leisure/rest affect mood but not survival, so they only downgrade
 /// from happy to neutral — never to the "dying" indicator.
+///
+/// # Examples
+///
+/// ```
+/// use scale::ui::map::get_pop_display;
+/// use scale::layer1::Needs;
+/// use ratatui::style::Color;
+///
+/// let happy = Needs { hunger: 1.0, rest: 1.0, leisure: 1.0 };
+/// let (char, color) = get_pop_display(&happy);
+/// assert_eq!(char, "☺");
+/// assert_eq!(color, Color::Yellow);
+/// ```
 #[must_use]
 pub fn get_pop_display(needs: &Needs) -> (&'static str, Color) {
     if needs.hunger > HEALTHY_THRESHOLD {

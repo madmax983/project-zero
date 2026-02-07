@@ -7,6 +7,11 @@ use ratatui::{
 use crate::shared::log::MessageLog;
 use crate::ui::inspector::render_inspector;
 
+/// Renders the right-hand information panel.
+///
+/// This panel is split into:
+/// 1. **Inspector**: Context-sensitive details about the selected tile/entity.
+/// 2. **Message Log**: Recent game events (bottom).
 pub fn render_info_panel(frame: &mut Frame, area: Rect, world: &World) {
     let chunks = Layout::default()
         .direction(Direction::Vertical)
