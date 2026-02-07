@@ -115,7 +115,14 @@ fn generate_wars(
         let war_name = format!("the {}-{} War", &civ_names[a], &civ_names[b]);
         ctx.insert("WAR_NAME", &war_name);
 
-        let causes = ["Succession", "Resources", "Territory", "Fear", "Pride", "Survival"];
+        let causes = [
+            "Succession",
+            "Resources",
+            "Territory",
+            "Fear",
+            "Pride",
+            "Survival",
+        ];
         let cause = causes[rng.gen_range(0..causes.len())];
         ctx.insert("CAUSE", cause);
 
@@ -130,14 +137,12 @@ fn generate_wars(
         let outcome = outcomes[rng.gen_range(0..outcomes.len())];
         ctx.insert("OUTCOME", outcome);
 
-        let text = generator
-            .generate("WAR_RECORD", &ctx)
-            .unwrap_or_else(|_| {
-                format!(
-                    "{war_name} ({start_year}-{end_year}). {} vs {}. {cause}. {outcome}.",
-                    &civ_names[a], &civ_names[b]
-                )
-            });
+        let text = generator.generate("WAR_RECORD", &ctx).unwrap_or_else(|_| {
+            format!(
+                "{war_name} ({start_year}-{end_year}). {} vs {}. {cause}. {outcome}.",
+                &civ_names[a], &civ_names[b]
+            )
+        });
 
         events.push((text, EventImportance::Major));
     }
@@ -219,9 +224,14 @@ fn generate_era_transitions(
         let cause = causes[rng.gen_range(0..causes.len())];
         ctx.insert("CAUSE", cause);
 
-        let text = generator.generate("ERA_TRANSITION", &ctx).unwrap_or_else(|_| {
-            format!("Year {year}. {} ends. {} begins.", eras[old_idx], eras[new_idx])
-        });
+        let text = generator
+            .generate("ERA_TRANSITION", &ctx)
+            .unwrap_or_else(|_| {
+                format!(
+                    "Year {year}. {} ends. {} begins.",
+                    eras[old_idx], eras[new_idx]
+                )
+            });
 
         events.push((text, EventImportance::Standard));
     }

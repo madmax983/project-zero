@@ -8,7 +8,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 - [ ] `031` Pop Morale — `specs/031-pop-morale.md`
 - [ ] `032` Entropy and Spoilage — `specs/032-entropy-spoilage.md`
-- [ ] `033` Fire Propagation — `specs/033-fire-propagation.md`
 - [ ] `035` Workplace Hazards — `specs/035-workplace-hazards.md`
 - [ ] `036` Pop Memory — `specs/036-pop-memory.md`
 - [ ] `038` Medical Care — `specs/038-medical-care.md`

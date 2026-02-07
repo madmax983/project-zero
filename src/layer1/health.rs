@@ -1,5 +1,5 @@
-use bevy_ecs::prelude::*;
 use crate::shared::log::MessageLog;
+use bevy_ecs::prelude::*;
 
 /// Represents the physical health of an entity (Pop).
 ///
@@ -15,7 +15,10 @@ pub struct Health {
 
 impl Default for Health {
     fn default() -> Self {
-        Self { current: 100.0, max: 100.0 }
+        Self {
+            current: 100.0,
+            max: 100.0,
+        }
     }
 }
 
@@ -37,8 +40,8 @@ pub fn starvation_damage_system(world: &mut World) {
     let mut query = world.query::<(&crate::layer1::needs::Needs, &mut Health)>();
     for (needs, mut health) in query.iter_mut(world) {
         if needs.hunger <= 0.0 {
-             // 1 damage per tick -> 100 ticks to die
-             health.take_damage(1.0);
+            // 1 damage per tick -> 100 ticks to die
+            health.take_damage(1.0);
         }
     }
 }
@@ -56,16 +59,16 @@ pub fn death_system(world: &mut World) {
     for entity in to_despawn {
         world.despawn(entity);
         if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
-             log.add("DEATH: A colonist has died!");
+            log.add("DEATH: A colonist has died!");
         }
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
     use super::*;
     use crate::layer1::needs::Needs;
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_health_defaults() {
@@ -101,10 +104,16 @@ mod tests {
     #[test]
     fn test_starvation_deals_damage_system() {
         let mut world = World::new();
-        let entity = world.spawn((
-            Health::default(),
-            Needs { hunger: 0.0, rest: 0.5, leisure: 0.5 }
-        )).id();
+        let entity = world
+            .spawn((
+                Health::default(),
+                Needs {
+                    hunger: 0.0,
+                    rest: 0.5,
+                    leisure: 0.5,
+                },
+            ))
+            .id();
 
         // Run system
         starvation_damage_system(&mut world);
@@ -116,10 +125,16 @@ mod tests {
     #[test]
     fn test_starvation_no_damage_if_fed() {
         let mut world = World::new();
-        let entity = world.spawn((
-            Health::default(),
-            Needs { hunger: 0.1, rest: 0.5, leisure: 0.5 }
-        )).id();
+        let entity = world
+            .spawn((
+                Health::default(),
+                Needs {
+                    hunger: 0.1,
+                    rest: 0.5,
+                    leisure: 0.5,
+                },
+            ))
+            .id();
 
         starvation_damage_system(&mut world);
 
@@ -134,7 +149,12 @@ mod tests {
         world.insert_resource(MessageLog::default());
 
         // Dead entity
-        let entity = world.spawn(Health { current: -10.0, max: 100.0 }).id();
+        let entity = world
+            .spawn(Health {
+                current: -10.0,
+                max: 100.0,
+            })
+            .id();
         // Alive entity
         let survivor = world.spawn(Health::default()).id();
 

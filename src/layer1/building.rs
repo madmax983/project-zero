@@ -2,6 +2,7 @@
 
 use super::GridPosition;
 use super::farm::Farm;
+use super::fire::Flammable;
 use super::housing::Housing;
 use super::social::Tavern;
 use super::stockpile::Stockpile;
@@ -236,25 +237,31 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
 
     match building_type {
         BuildingType::Housing => {
-            entity.insert(Housing::default());
+            entity.insert((Housing::default(), Flammable::default()));
         }
         BuildingType::Farm => {
-            entity.insert(Farm::default());
+            entity.insert((Farm::default(), Flammable::default()));
         }
         BuildingType::Stockpile => {
-            entity.insert(Stockpile::default());
+            entity.insert((Stockpile::default(), Flammable::default()));
         }
-        BuildingType::LumberMill
-        | BuildingType::StoneMason
-        | BuildingType::Smelter
-        | BuildingType::Smithy => {
+        BuildingType::LumberMill => {
+            entity.insert((
+                RefiningProgress {
+                    current: 0.0,
+                    max: 10.0,
+                },
+                Flammable::default(),
+            ));
+        }
+        BuildingType::Tavern => {
+            entity.insert((Tavern::default(), Flammable::default()));
+        }
+        BuildingType::StoneMason | BuildingType::Smelter | BuildingType::Smithy => {
             entity.insert(RefiningProgress {
                 current: 0.0,
                 max: 10.0,
             });
-        }
-        BuildingType::Tavern => {
-            entity.insert(Tavern::default());
         }
         BuildingType::Library => {
             entity.insert(Library);

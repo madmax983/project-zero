@@ -14,9 +14,9 @@ pub mod menu;
 pub mod narrative;
 /// Selection and inspection system.
 pub mod selection;
-/// World history generation.
-pub mod world_history;
 /// Game state definitions.
 pub mod state;
 /// Time-tracking resources.
 pub mod time;
+/// World history generation.
+pub mod world_history;

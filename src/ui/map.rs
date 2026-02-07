@@ -160,10 +160,7 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
                 if cursor.x == world_x && cursor.y == world_y {
                     let bg = if can_place { Color::Green } else { Color::Red };
                     let text = get_designation_char(selected);
-                    line_spans.push(Span::styled(
-                        text,
-                        Style::default().fg(Color::White).bg(bg),
-                    ));
+                    line_spans.push(Span::styled(text, Style::default().fg(Color::White).bg(bg)));
                     continue;
                 }
 
@@ -174,20 +171,15 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
                     let min_y = start.y.min(cursor.y);
                     let max_y = start.y.max(cursor.y);
 
-                    if world_x >= min_x
-                        && world_x <= max_x
-                        && world_y >= min_y
-                        && world_y <= max_y
+                    if world_x >= min_x && world_x <= max_x && world_y >= min_y && world_y <= max_y
                     {
                         // Render terrain underneath with a highlight background
                         let (text, fg) = if let (Ok(ux), Ok(uy)) =
                             (usize::try_from(world_x), usize::try_from(world_y))
                         {
-                            ctx.terrain
-                                .get(ux, uy)
-                                .map_or((" ", Color::Black), |tile| {
-                                    (get_terrain_char(tile), get_terrain_color(tile))
-                                })
+                            ctx.terrain.get(ux, uy).map_or((" ", Color::Black), |tile| {
+                                (get_terrain_char(tile), get_terrain_color(tile))
+                            })
                         } else {
                             (" ", Color::Black)
                         };

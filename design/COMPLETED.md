@@ -34,3 +34,4 @@ Implemented features. Architect: read this to understand current state.
 - [x] `030` Tool Economy — `specs/030-tool-economy.md` — completed 2026-02-06
 - [x] `015` Selection and Inspection System — `specs/015-selection-system.md` — completed 2026-02-18
 - [x] `034` Pop Health and Damage — `specs/034-pop-health.md` — completed 2026-02-18
+- [x] `033` Fire Propagation — `specs/033-fire-propagation.md` — completed 2026-02-18

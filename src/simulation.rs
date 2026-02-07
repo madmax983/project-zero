@@ -14,11 +14,11 @@ use crate::gpu::evaluate::gpu_evaluate_actions;
 use crate::layer1::{
     advance_season_system, arrival_handler_system, check_milestones_system,
     clean_dead_residents_system, clean_dead_workers_system, cleanup_previous_assignment_system,
-    consume_food_system, death_system, decay_needs_system, haul_system, movement_system,
-    process_refining_system, process_research_system, process_start_plan_system,
-    produce_food_system, restore_leisure_system, starvation_damage_system,
-    restore_rest_in_housing_system, track_plan_outcomes_system, update_action_timer_system,
-    update_resource_caps_system, work_execution_system,
+    consume_food_system, death_system, decay_needs_system, fire_damage_system, fire_spread_system,
+    haul_system, movement_system, process_refining_system, process_research_system,
+    process_start_plan_system, produce_food_system, restore_leisure_system,
+    restore_rest_in_housing_system, starvation_damage_system, track_plan_outcomes_system,
+    update_action_timer_system, update_resource_caps_system, work_execution_system,
 };
 use crate::shared::time::SimulationTime;
 
@@ -69,6 +69,12 @@ pub fn build_simulation_schedule() -> Schedule {
         process_research_system.after(work_execution_system),
         restore_rest_in_housing_system.after(work_execution_system),
         restore_leisure_system.after(work_execution_system),
+    ));
+
+    // --- Environment (Fire) ---
+    schedule.add_systems((
+        fire_spread_system.after(work_execution_system),
+        fire_damage_system.after(fire_spread_system),
     ));
 
     // --- Consumption Chain (sequential, depends on economy) ---

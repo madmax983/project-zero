@@ -106,7 +106,10 @@ mod tests {
             .get::<Biography>(pop)
             .expect("Biography should be added");
         assert_eq!(bio.events.len(), 1);
-        assert!(bio.events[0].text.contains("colony"), "Should mention the colony");
+        assert!(
+            bio.events[0].text.contains("colony"),
+            "Should mention the colony"
+        );
     }
 
     #[test]

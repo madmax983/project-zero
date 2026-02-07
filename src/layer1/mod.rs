@@ -15,8 +15,12 @@ pub mod designation;
 pub mod execution;
 /// Farm building and food production.
 pub mod farm;
+/// Fire propagation and damage.
+pub mod fire;
 /// Hauling logic.
 pub mod hauling;
+/// Pop health and damage.
+pub mod health;
 /// Housing and rest mechanics.
 pub mod housing;
 /// Spatial primitives (GridPosition).
@@ -24,8 +28,6 @@ pub mod map;
 #[cfg(test)]
 /// Tests for metal industry (Spec 024).
 pub mod metal_industry_tests;
-/// Pop health and damage.
-pub mod health;
 /// Pop needs (hunger, rest).
 pub mod needs;
 /// Pop entity and management.
@@ -61,9 +63,10 @@ pub use chronicle::*;
 pub use designation::*;
 pub use execution::*;
 pub use farm::*;
+pub use fire::*;
 pub use hauling::*;
-pub use housing::*;
 pub use health::*;
+pub use housing::*;
 pub use locations::*;
 pub use map::*;
 pub use needs::*;

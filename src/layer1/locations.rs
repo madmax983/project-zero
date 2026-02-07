@@ -108,7 +108,10 @@ mod tests {
         let locations = world.resource::<NamedLocations>();
         let name = locations.get(40, 25);
         assert!(name.is_some(), "Should have a named location");
-        assert!(!name.unwrap().is_empty(), "Location name should not be empty");
+        assert!(
+            !name.unwrap().is_empty(),
+            "Location name should not be empty"
+        );
     }
 
     #[test]
