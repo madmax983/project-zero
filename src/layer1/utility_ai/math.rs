@@ -17,7 +17,10 @@ pub const fn manhattan_distance(pos1: &GridPosition, pos2: &GridPosition) -> i32
     if sum > i32::MAX as i64 {
         i32::MAX
     } else {
-        sum as i32
+        #[allow(clippy::cast_possible_truncation)]
+        {
+            sum as i32
+        }
     }
 }
 

@@ -30,6 +30,8 @@ pub mod housing;
 pub mod integration;
 /// Spatial primitives (GridPosition).
 pub mod map;
+/// Pop memories and psychological effects.
+pub mod memory;
 #[cfg(test)]
 /// Tests for metal industry (Spec 024).
 pub mod metal_industry_tests;
@@ -80,6 +82,7 @@ pub use housing::*;
 pub use integration::*;
 pub use locations::*;
 pub use map::*;
+pub use memory::*;
 pub use needs::*;
 pub use pop::*;
 pub use refining::*;

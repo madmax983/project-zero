@@ -6,7 +6,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 ## MVP — Layer 1: Colony Simulation
 
-- [ ] `036` Pop Memory — `specs/036-pop-memory.md`
 - [ ] `038` Medical Care — `specs/038-medical-care.md`
 - [ ] `039` Trade System — `specs/039-trade-system.md`
 - [ ] `040` Clothing and Temperature — `specs/040-clothing-temperature.md`

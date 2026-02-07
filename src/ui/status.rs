@@ -39,8 +39,16 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
     // Calculate average morale
     let (total_morale, morale_count) = world
         .iter_entities()
-        .filter_map(|e| e.get::<crate::layer1::Needs>())
-        .fold((0.0, 0), |(sum, needs), n| (sum + n.morale(), needs + 1));
+        .filter_map(|e| {
+            let needs = e.get::<crate::layer1::Needs>()?;
+            let memories = e.get::<crate::layer1::Memories>();
+            let morale = memories.map_or_else(
+                || needs.morale(),
+                |m| crate::layer1::memory::calculate_effective_morale(needs, m),
+            );
+            Some(morale)
+        })
+        .fold((0.0, 0), |(sum, count), m| (sum + m, count + 1));
 
     #[allow(clippy::cast_precision_loss)]
     let avg_morale = if morale_count > 0 {
@@ -105,7 +113,7 @@ pub fn get_status_line<'a>(
     ));
 
     // 4. Morale
-    let morale_percent = (morale * 100.0) as u8;
+    let morale_percent = (morale * 100.0).round() as u8;
     let morale_color = if morale < 0.3 {
         Color::Red
     } else if morale < 0.7 {
@@ -300,7 +308,7 @@ mod tests {
 
     #[test]
     fn test_render_status_bar_calculates_morale() {
-        use crate::layer1::{ColonyResources, NamedLocations, Needs, Pop, Viewport};
+        use crate::layer1::{ColonyResources, Memories, MemoryType, NamedLocations, Needs, Pop, Viewport};
         use crate::shared::state::GameState;
         use crate::shared::time::SimulationTime;
         use ratatui::Terminal;
@@ -325,6 +333,7 @@ mod tests {
                 leisure: 1.0,
             },
         )); // Morale 1.0
+
         world.spawn((
             Pop,
             Needs {
@@ -333,7 +342,22 @@ mod tests {
                 leisure: 0.0,
             },
         )); // Morale 0.0
-        // Avg = 0.5
+
+        // Spawn pop with memory
+        // Base 1.0 + (-0.2 witness death) = 0.8
+        let mut memories = Memories::default();
+        memories.add(MemoryType::WitnessedDeath, 0);
+        world.spawn((
+            Pop,
+            Needs {
+                hunger: 1.0,
+                rest: 1.0,
+                leisure: 1.0,
+            },
+            memories,
+        ));
+
+        // Avg = (1.0 + 0.0 + 0.8) / 3 = 1.8 / 3 = 0.6
 
         let backend = TestBackend::new(100, 1);
         let mut terminal = Terminal::new(backend).unwrap();
@@ -353,6 +377,6 @@ mod tests {
             .collect();
         let full_text = cells.join("");
 
-        assert!(full_text.contains("Morale: 50%"));
+        assert!(full_text.contains("Morale: 60%"));
     }
 }
