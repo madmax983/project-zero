@@ -35,3 +35,4 @@ Implemented features. Architect: read this to understand current state.
 - [x] `015` Selection and Inspection System — `specs/015-selection-system.md` — completed 2026-02-18
 - [x] `034` Pop Health and Damage — `specs/034-pop-health.md` — completed 2026-02-18
 - [x] `033` Fire Propagation — `specs/033-fire-propagation.md` — completed 2026-02-18
+- [x] `031` Pop Morale — `specs/031-pop-morale.md` — completed 2026-02-02

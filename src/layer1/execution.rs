@@ -26,6 +26,7 @@ use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::farm::Farm;
 use crate::layer1::housing::Housing;
 use crate::layer1::map::GridPosition;
+use crate::layer1::needs::{Needs, get_morale_efficiency};
 use crate::layer1::resources::{
     ColonyResources, ForestryProgress, MiningProgress, chop_tree, mine_rock,
 };
@@ -331,18 +332,25 @@ pub fn work_execution_system(world: &mut World) {
         (res.tools >= 1.0, false)
     };
 
-    let efficiency = if has_tools { 1.0 } else { NO_TOOL_PENALTY };
-    let work_amount = WORK_PER_TICK * efficiency;
+    let tool_efficiency = if has_tools { 1.0 } else { NO_TOOL_PENALTY };
 
-    // Find pops at their work target
-    let workers: Vec<(Entity, Entity)> = world
-        .query_filtered::<(Entity, &MovementTarget), With<AtTarget>>()
+    // Find pops at their work target and capture their morale
+    // Since we need to access Needs which is a component, and we need &mut World later,
+    // we should collect Needs data first.
+    let workers_data: Vec<(Entity, Entity, f32)> = world
+        .query_filtered::<(Entity, &MovementTarget, Option<&Needs>), With<AtTarget>>()
         .iter(world)
-        .filter(|(_, mt)| mt.for_action == ActionType::Work)
-        .map(|(e, mt)| (e, mt.target_entity))
+        .filter(|(_, mt, _)| mt.for_action == ActionType::Work)
+        .map(|(e, mt, needs)| {
+            let morale = needs.map_or(0.5, Needs::morale); // Default to neutral if no Needs
+            (e, mt.target_entity, morale)
+        })
         .collect();
 
-    for (pop_entity, designation_entity) in workers {
+    for (pop_entity, designation_entity, morale) in workers_data {
+        let morale_efficiency = get_morale_efficiency(morale);
+        let work_amount = WORK_PER_TICK * tool_efficiency * morale_efficiency;
+
         // Check if designation still exists
         if world.get_entity(designation_entity).is_err() {
             // Designation already gone — clean up stale pop state
@@ -1388,5 +1396,115 @@ mod tests {
 
         // Pop should now be at the designation
         assert!(world.get::<AtTarget>(pop).is_some());
+    }
+
+    #[test]
+    fn test_work_execution_efficiency_low_morale() {
+        let mut world = World::new();
+        let mut tiles = vec![TerrainType::Grass; 100];
+        tiles[55] = TerrainType::Rock;
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
+        world.insert_resource(crate::layer1::resources::ColonyResources::default());
+
+        let designation = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Mine,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
+
+        // Spawn a pop with low morale (hunger=0.1, rest=0.1, leisure=0.1 -> morale=0.1)
+        // Expected efficiency: 0.5 (penalty)
+        let _pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 5, y: 5 },
+                Needs {
+                    hunger: 0.1,
+                    rest: 0.1,
+                    leisure: 0.1,
+                },
+                MovementTarget {
+                    target_entity: designation,
+                    target_position: GridPosition { x: 5, y: 5 },
+                    for_action: ActionType::Work,
+                },
+                AtTarget,
+            ))
+            .id();
+
+        work_execution_system(&mut world);
+
+        let progress = world.get::<MiningProgress>(designation).unwrap();
+        // Base work = 10.0
+        // Tool efficiency = 1.0 (default resources has 2 tools)
+        // Morale efficiency = 0.5 (low morale)
+        // Expected = 10.0 * 1.0 * 0.5 = 5.0
+        assert!(
+            (progress.current - 5.0).abs() < f32::EPSILON,
+            "Expected 5.0 progress, got {}",
+            progress.current
+        );
+    }
+
+    #[test]
+    fn test_work_execution_efficiency_high_morale() {
+        let mut world = World::new();
+        let mut tiles = vec![TerrainType::Grass; 100];
+        tiles[55] = TerrainType::Rock;
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
+        world.insert_resource(crate::layer1::resources::ColonyResources::default());
+
+        let designation = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Mine,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
+
+        // Spawn a pop with high morale (all 1.0 -> morale=1.0)
+        // Expected efficiency: 1.2 (bonus)
+        let _pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 5, y: 5 },
+                Needs {
+                    hunger: 1.0,
+                    rest: 1.0,
+                    leisure: 1.0,
+                },
+                MovementTarget {
+                    target_entity: designation,
+                    target_position: GridPosition { x: 5, y: 5 },
+                    for_action: ActionType::Work,
+                },
+                AtTarget,
+            ))
+            .id();
+
+        work_execution_system(&mut world);
+
+        let progress = world.get::<MiningProgress>(designation).unwrap();
+        // Base work = 10.0
+        // Tool efficiency = 1.0 (default resources has 2 tools)
+        // Morale efficiency = 1.2 (high morale)
+        // Expected = 10.0 * 1.0 * 1.2 = 12.0
+        assert!(
+            (progress.current - 12.0).abs() < f32::EPSILON,
+            "Expected 12.0 progress, got {}",
+            progress.current
+        );
     }
 }
