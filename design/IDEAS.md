@@ -1335,3 +1335,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Spend resources saving yourself (now) or saving your legacy (future)?
 
 ---
+
+## Company Scrip
+
+**Layer:** 1
+
+**Fantasy:** You owe your soul to the company store.
+
+**Mechanic:** Pops earn "Credits" for work. Food/Luxuries have prices. Pops buy what they can afford.
+
+**Emergence:** High-skill miners live like kings; haulers starve. A black market emerges for cheap, low-quality goods.
+
+**Tension:** Equitable pay (socialist harmony) vs. Merit-based pay (productivity incentive).
+
+---
+
+## Cognitive Hazards
+
+**Layer:** 1
+
+**Fantasy:** The planet whispers to you, and the darkness stares back.
+
+**Mechanic:** Exposure to "Horror" (corpses, aliens, deep darkness) increases "Insanity". High Insanity causes hallucinations: fake fires, fake enemies, or hearing non-existent orders.
+
+**Emergence:** The player receives a notification "Raid Detected!", mobilizes the militia, and they shoot at empty air, wasting ammo and causing panic.
+
+**Tension:** Trust your sensors (objective) or your pops (subjective)?
+
+---
+
+## Chemical Regulation
+
+**Layer:** 1
+
+**Fantasy:** Better living through chemistry. Keeping the colony running on caffeine and stims.
+
+**Mechanic:** Consumables ("Stims", "Sedatives") modify stats. Stims = +Speed, -Health. Sedatives = +Mood, -Speed. Addiction mechanics.
+
+**Emergence:** You issue mandatory "Wake-Up" pills to meet a deadline. The deadline is met, but the withdrawal crash next week paralyzes the colony.
+
+**Tension:** Health vs. Productivity.
+
+---
+
+## Lifecycle & Retirement
+
+**Layer:** 1
+
+**Fantasy:** What do we do with those who can no longer work?
+
+**Mechanic:** Pops age. "Elders" move slow and cannot do heavy labor, but provide "Wisdom" (XP gain for nearby workers). They consume resources but don't produce.
+
+**Emergence:** A famine forces a terrible choice: cut rations for the non-working elders to save the workers. The colony survives, but morale is permanently scarred.
+
+**Tension:** Ruthless efficiency vs. Humanity.
+
+---
+
+## Olfactory Map
+
+**Layer:** 1
+
+**Fantasy:** A colony that smells of ozone, roasting meat, and unwashed bodies.
+
+**Mechanic:** Tiles emit "Scent" values. Smells diffuse and mix. Bad smells (Rot, Waste) lower mood. Good smells (Baker, Flowerbed) raise it.
+
+**Emergence:** You build the housing block downwind of the slaughterhouse. Everyone is miserable despite having luxury beds.
+
+**Tension:** Industrial efficiency (grouping dirty buildings) vs. Air quality (spacing them out).
+
+---
