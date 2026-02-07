@@ -303,8 +303,8 @@ mod tests {
         use crate::layer1::{ColonyResources, NamedLocations, Needs, Pop, Viewport};
         use crate::shared::state::GameState;
         use crate::shared::time::SimulationTime;
-        use ratatui::backend::TestBackend;
         use ratatui::Terminal;
+        use ratatui::backend::TestBackend;
 
         let mut world = World::new();
         // Setup resources needed by render_status_bar
@@ -333,7 +333,7 @@ mod tests {
                 leisure: 0.0,
             },
         )); // Morale 0.0
-            // Avg = 0.5
+        // Avg = 0.5
 
         let backend = TestBackend::new(100, 1);
         let mut terminal = Terminal::new(backend).unwrap();

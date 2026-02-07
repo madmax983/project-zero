@@ -9,7 +9,7 @@
 use criterion::{Criterion, black_box, criterion_group, criterion_main};
 use ratatui::prelude::{Color, Rect};
 use scale::layer1::{GridPosition, TerrainGrid, TerrainType, Viewport};
-use scale::ui::map::{MapRenderContext, build_map_layer_spans};
+use scale::ui::map::{MapRenderContext, RenderEntity, build_map_layer_spans};
 use std::collections::HashMap;
 
 fn benchmark_rendering(c: &mut Criterion) {
@@ -25,25 +25,20 @@ fn benchmark_rendering(c: &mut Criterion) {
     let area = Rect::new(0, 0, 80, 50);
 
     // Create 1000 random pops scattered across the map
-    let mut pops_data = HashMap::with_capacity(1000);
+    let mut entities_data = HashMap::with_capacity(1000);
     // Use a simple deterministic loop to place pops
     for i in 0..1000 {
         // Place pops in a way that some collide, some don't, covering the grid
         let x = (i * 7) % width;
         let y = (i * 13) % height;
-        pops_data.insert(
+        entities_data.insert(
             GridPosition {
                 x: x as i32,
                 y: y as i32,
             },
-            ("P", Color::Yellow),
+            RenderEntity::Pop("P", Color::Yellow),
         );
     }
-
-    // Buildings empty for now to isolate pop lookup cost
-    let buildings_data = HashMap::new();
-    let designations_data = HashMap::new();
-    let items_data = HashMap::new();
 
     c.bench_function("render_map_layer_1000_pops", |b| {
         b.iter(|| {
@@ -51,10 +46,7 @@ fn benchmark_rendering(c: &mut Criterion) {
                 area: black_box(area),
                 terrain: black_box(&grid),
                 viewport: black_box(&viewport),
-                pops_data: black_box(&pops_data),
-                buildings_data: black_box(&buildings_data),
-                designations_data: black_box(&designations_data),
-                items_data: black_box(&items_data),
+                entities_data: black_box(&entities_data),
                 build_mode: black_box(None),
                 designation_mode: black_box(None),
             };

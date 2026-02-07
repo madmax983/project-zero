@@ -11,55 +11,98 @@ use crate::layer1::{
     Needs, ResourceItem, ResourceType, TerrainGrid, TerrainType, Viewport,
 };
 
+/// Represents a renderable entity on the map.
+#[derive(Clone, Copy, Debug)]
+pub enum RenderEntity {
+    Designation(DesignationType),
+    Building(BuildingType),
+    Pop(&'static str, Color),
+    Item(ResourceType),
+}
+
+impl RenderEntity {
+    /// Returns the rendering priority (higher is drawn on top).
+    const fn priority(&self) -> u8 {
+        match self {
+            Self::Designation(_) => 4,
+            Self::Building(_) => 3,
+            Self::Pop(_, _) => 2,
+            Self::Item(_) => 1,
+        }
+    }
+}
+
 /// Cache for renderable entities to avoid repeated allocations and iterations.
+///
+/// Stores only the highest priority entity for each grid position to minimize lookups during rendering.
 #[derive(Resource, Default)]
 pub struct RenderCache {
-    /// Cached pop display data.
-    pub pops: HashMap<GridPosition, (&'static str, Color)>,
-    /// Cached building data.
-    pub buildings: HashMap<GridPosition, BuildingType>,
-    /// Cached designation data.
-    pub designations: HashMap<GridPosition, DesignationType>,
-    /// Cached resource item data.
-    pub items: HashMap<GridPosition, ResourceType>,
+    /// Cached entity data.
+    pub entities: HashMap<GridPosition, RenderEntity>,
 }
 
 /// Updates the `RenderCache` by iterating the world once.
 pub fn update_render_cache(world: &mut World) {
     let mut cache = world.remove_resource::<RenderCache>().unwrap_or_default();
 
-    cache.pops.clear();
-    cache.buildings.clear();
-    cache.designations.clear();
-    cache.items.clear();
+    cache.entities.clear();
 
     for e in world.iter_entities() {
         if let Some(pos) = e.get::<GridPosition>() {
-            // Check for Pop (via Needs)
-            if let Some(needs) = e.get::<Needs>() {
-                cache.pops.insert(*pos, get_pop_display(needs));
+            // Check for Designation
+            if let Some(designation) = e.get::<Designation>() {
+                insert_if_higher_priority(
+                    &mut cache.entities,
+                    *pos,
+                    RenderEntity::Designation(designation.designation_type),
+                );
             }
 
             // Check for Building
             if let Some(building) = e.get::<Building>() {
-                cache.buildings.insert(*pos, building.building_type);
+                insert_if_higher_priority(
+                    &mut cache.entities,
+                    *pos,
+                    RenderEntity::Building(building.building_type),
+                );
             }
 
-            // Check for Designation
-            if let Some(designation) = e.get::<Designation>() {
-                cache
-                    .designations
-                    .insert(*pos, designation.designation_type);
+            // Check for Pop (via Needs)
+            if let Some(needs) = e.get::<Needs>() {
+                let (text, color) = get_pop_display(needs);
+                insert_if_higher_priority(
+                    &mut cache.entities,
+                    *pos,
+                    RenderEntity::Pop(text, color),
+                );
             }
 
             // Check for ResourceItem
             if let Some(item) = e.get::<ResourceItem>() {
-                cache.items.insert(*pos, item.resource_type);
+                insert_if_higher_priority(
+                    &mut cache.entities,
+                    *pos,
+                    RenderEntity::Item(item.resource_type),
+                );
             }
         }
     }
 
     world.insert_resource(cache);
+}
+
+fn insert_if_higher_priority(
+    map: &mut HashMap<GridPosition, RenderEntity>,
+    pos: GridPosition,
+    entity: RenderEntity,
+) {
+    map.entry(pos)
+        .and_modify(|e| {
+            if entity.priority() > e.priority() {
+                *e = entity;
+            }
+        })
+        .or_insert(entity);
 }
 
 /// Context for rendering the map layer.
@@ -70,14 +113,8 @@ pub struct MapRenderContext<'a, S: BuildHasher> {
     pub terrain: &'a TerrainGrid,
     /// The viewport.
     pub viewport: &'a Viewport,
-    /// Map of pop positions to their display char and color.
-    pub pops_data: &'a HashMap<GridPosition, (&'static str, Color), S>,
-    /// Map of building positions.
-    pub buildings_data: &'a HashMap<GridPosition, BuildingType, S>,
-    /// Map of designation positions.
-    pub designations_data: &'a HashMap<GridPosition, DesignationType, S>,
-    /// Map of resource item positions.
-    pub items_data: &'a HashMap<GridPosition, ResourceType, S>,
+    /// Map of entity positions to their render data.
+    pub entities_data: &'a HashMap<GridPosition, RenderEntity, S>,
     /// Current build mode state (cursor position, selected building, valid placement).
     pub build_mode: Option<(GridPosition, BuildingType, bool)>,
     /// Current designation mode state (cursor position, selected tool, valid placement, drag start).
@@ -144,10 +181,6 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
             {
                 let bg = if can_place { Color::Green } else { Color::Red };
                 let text = get_building_char(selected);
-                // Convert char to string slice is tricky without allocation if we want static str.
-                // But span accepts Cow/String.
-                // We can just use a 1-char string or format.
-                // Or better, change get_building_char to return &'static str for consistency.
                 line_spans.push(Span::styled(
                     text.to_string(),
                     Style::default().fg(Color::White).bg(bg),
@@ -192,50 +225,39 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
                 }
             }
 
-            // Designations
-            if let Some(designation_type) = ctx.designations_data.get(&GridPosition {
+            // Check for entity in cache
+            if let Some(entity) = ctx.entities_data.get(&GridPosition {
                 x: world_x,
                 y: world_y,
             }) {
-                let color = Color::Red; // Standardize designation color as red
-                line_spans.push(Span::styled(
-                    get_designation_char(*designation_type),
-                    Style::default().fg(color),
-                ));
-                continue;
-            }
-
-            // Buildings
-            if let Some(building_type) = ctx.buildings_data.get(&GridPosition {
-                x: world_x,
-                y: world_y,
-            }) {
-                line_spans.push(Span::styled(
-                    get_building_char(*building_type).to_string(),
-                    Style::default().fg(get_building_color(*building_type)),
-                ));
-                continue;
-            }
-
-            // Check for pop
-            if let Some((text, color)) = ctx.pops_data.get(&GridPosition {
-                x: world_x,
-                y: world_y,
-            }) {
-                line_spans.push(Span::styled(*text, Style::default().fg(*color)));
-                continue;
-            }
-
-            // Resource Items
-            if let Some(resource_type) = ctx.items_data.get(&GridPosition {
-                x: world_x,
-                y: world_y,
-            }) {
-                line_spans.push(Span::styled(
-                    get_resource_char(*resource_type),
-                    Style::default().fg(get_resource_color(*resource_type)),
-                ));
-                continue;
+                match entity {
+                    RenderEntity::Designation(tool) => {
+                        let color = Color::Red; // Standardize designation color as red
+                        line_spans.push(Span::styled(
+                            get_designation_char(*tool),
+                            Style::default().fg(color),
+                        ));
+                        continue;
+                    }
+                    RenderEntity::Building(b) => {
+                        line_spans.push(Span::styled(
+                            get_building_char(*b).to_string(),
+                            Style::default().fg(get_building_color(*b)),
+                        ));
+                        continue;
+                    }
+                    RenderEntity::Pop(text, color) => {
+                        line_spans.push(Span::styled(*text, Style::default().fg(*color)));
+                        continue;
+                    }
+                    RenderEntity::Item(r) => {
+                        line_spans.push(Span::styled(
+                            get_resource_char(*r),
+                            Style::default().fg(get_resource_color(*r)),
+                        ));
+                        continue;
+                    }
+                }
             }
 
             // Otherwise render terrain
@@ -310,10 +332,7 @@ pub fn render_map(frame: &mut Frame, area: Rect, world: &World) {
         area: inner,
         terrain,
         viewport,
-        pops_data: &render_cache.pops,
-        buildings_data: &render_cache.buildings,
-        designations_data: &render_cache.designations,
-        items_data: &render_cache.items,
+        entities_data: &render_cache.entities,
         build_mode: build_mode_cursor,
         designation_mode: designation_mode_cursor,
     };
