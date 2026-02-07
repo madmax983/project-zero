@@ -5,10 +5,7 @@ use crate::layer1::needs::Needs;
 use crate::layer1::pop::Pop;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::seasons::SeasonState;
-use crate::layer1::thoughts::Thought;
-use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
-use rand::Rng;
 
 /// Farm component - produces food when worked.
 #[derive(Component)]
@@ -60,14 +57,11 @@ pub fn produce_food_system(
 pub fn consume_food_system(
     mut pop_query: Query<(Entity, &mut Needs), With<Pop>>,
     mut resources: ResMut<ColonyResources>,
-    time: Res<SimulationTime>,
-    mut commands: Commands,
 ) {
     if resources.food < f32::EPSILON {
         return;
     }
 
-    let tick = time.tick;
     let mut food = resources.food;
 
     // Collect hungry pop entities first to avoid borrow issues with mut iteration
@@ -85,16 +79,6 @@ pub fn consume_food_system(
         if let Ok((_, mut needs)) = pop_query.get_mut(entity) {
             food -= FOOD_PER_MEAL;
             needs.hunger = (needs.hunger + HUNGER_PER_MEAL).min(1.0);
-
-            let mut rng = rand::thread_rng();
-            let thoughts = [
-                "That hit the spot.",
-                "Finally, a good meal.",
-                "Tastes like victory.",
-                "Much better.",
-            ];
-            let text = thoughts[rng.gen_range(0..thoughts.len())].to_string();
-            commands.entity(entity).insert(Thought { text, tick });
         }
     }
 
@@ -339,35 +323,6 @@ mod tests {
         assert_eq!(count, 1);
     }
 
-    #[test]
-    fn test_consume_food_generates_thought() {
-        use crate::layer1::thoughts::Thought;
-
-        let mut world = World::new();
-        world.insert_resource(ColonyResources {
-            food: 1.0,
-            ..Default::default()
-        });
-        world.insert_resource(crate::shared::time::SimulationTime::default());
-
-        let pop = world
-            .spawn((
-                Pop,
-                Needs {
-                    hunger: 0.3,
-                    rest: 0.8,
-                    leisure: 0.8,
-                },
-            ))
-            .id();
-
-        world.run_system_once(consume_food_system).unwrap();
-
-        let thought = world
-            .get::<Thought>(pop)
-            .expect("Eating should generate a thought");
-        assert!(!thought.text.is_empty());
-    }
 }
 
 #[cfg(test)]
