@@ -1545,3 +1545,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Paranoia (frequent scanning, lost time) vs. Trust (risk of sabotage).
 
 ---
+
+## Medical Triage Policies
+
+**Layer:** 1
+
+**Fantasy:** Making the hard, cold calculus of survival when resources are scarce.
+
+**Mechanic:** A policy setting for Hospitals: "Save Everyone", "Workers First", "Soldiers First", "Leaders Only". Doctors prioritize patients based on this policy when beds/medicine are limited.
+
+**Emergence:** A beloved but elderly poet is ejected from the medical vat to make room for a rude but essential miner. The colony survives the quota, but morale tanks.
+
+**Tension:** Utilitarian efficiency vs. Moral equality.
+
+---
+
+## Funeral Rites
+
+**Layer:** 1
+
+**Fantasy:** A society is defined by how it treats its dead.
+
+**Mechanic:** Dead pops create "Corpse" items that cause grief. "Graves" or "Crematoriums" are required. A "Funeral" ceremony (Action) must be performed by friends/family to convert Grief into "Closure" (Memory). Unburied bodies cause "Haunted" moods.
+
+**Emergence:** After a massive raid, the survivors are too injured to bury the dead. The piling bodies cause a spiral of depression that kills more people than the raid did.
+
+**Tension:** Spend labor on the dead (no productivity) or the living (productivity)?
+
+---
+
+## Conveyor Logistics
+
+**Layer:** 1
+
+**Fantasy:** The transition from a village to a factory. Watching items flow like water.
+
+**Mechanic:** Constructible "Conveyor Belts" and "Inserters" that move items between stockpiles and machines automatically, consuming power. They block pathfinding for Pops (unless "Underground" or "Overhead").
+
+**Emergence:** You automate your entire food production. A power outage stops the belts. The food rots on the belt because no one can reach it to haul it manually.
+
+**Tension:** Flexible manual labor (Pops) vs. Efficient but rigid automation (Belts).
+
+---
+
+## Inter-Colony Trade Routes
+
+**Layer:** 2
+
+**Fantasy:** Space trucking. The lifeblood of an empire.
+
+**Mechanic:** Automated ships travel between your colonies on Layer 2, moving resources (e.g., Colony A makes Food, Colony B makes Metal). Routes take time and can be intercepted by pirates/storms.
+
+**Emergence:** A storm cuts off the food shipments to your mining world. You have to franticly re-tool the mine to grow mushrooms before everyone starves.
+
+**Tension:** Specialization (efficient but fragile) vs. Self-sufficiency (inefficient but robust).
+
+---
+
+## Penal Contracts
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Your colony is the galactic dumping ground. "Australia in Space."
+
+**Mechanic:** Accept contracts from Layer 3 civilizations to house "State Prisoners". You get paid per head per day. You must keep them alive and contained. If they escape or die, you face heavy penalties/hostility.
+
+**Emergence:** You take in a high-profile political dissident for the credits. A rescue fleet from his faction shows up demanding his release. You are caught in the middle.
+
+**Tension:** Easy money vs. Security risk and Diplomatic complications.
+
+---
