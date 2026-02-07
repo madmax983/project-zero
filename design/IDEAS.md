@@ -1615,3 +1615,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Easy money vs. Security risk and Diplomatic complications.
 
 ---
+
+## Cultural Artifacts
+
+**Layer:** 1
+
+**Fantasy:** A colony that remembers its history through art. The statue in the square isn't just decoration; it's a memory of the famine.
+
+**Mechanic:** Crafters create "Art" (Statues, Tapestries, Songs) tagged with recent major Colony Memories. These items radiate auras: "Victory" art buffs Courage, "Tragedy" art buffs Caution but lowers Mood.
+
+**Emergence:** A colony filled with monuments to a past massacre becomes grim, vigilant, and unshakeable. A colony with only "Feast" art becomes happy but soft.
+
+**Tension:** Erase the painful history (happiness) or preserve it (resilience)?
+
+---
+
+## The Exodus
+
+**Layer:** Cross-layer
+
+**Fantasy:** This world was never the destination; it was a cocoon.
+
+**Mechanic:** An endgame project to build an "Ark Ship". It requires massive resources, forcing you to cannibalize your own advanced infrastructure to build the engines. The colony must physically shrink and dismantle itself to leave.
+
+**Emergence:** The hospital is torn down to build the cryo-bay. The population huddles in the last remaining habitat module as the reactor is loaded onto the ship.
+
+**Tension:** Growth vs. Escape. What do you sacrifice to leave?
+
+---
+
+## The Golden Age
+
+**Layer:** 1
+
+**Fantasy:** The danger of peace. Hard times create strong men; good times create soft men.
+
+**Mechanic:** Long periods of high safety and fulfilled needs generate "Complacency". Complacent pops have high mood but reduced movement speed, slower skill gain, and ignore "Low Priority" alerts.
+
+**Emergence:** A raid occurs during the "Golden Age". The siren wails, but the pops slowly finish their meals before moving to the bunkers. They are slaughtered because they forgot fear.
+
+**Tension:** Maintain a state of low-level crisis to keep the edge, or allow paradise and risk vulnerability?
+
+---
