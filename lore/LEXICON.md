@@ -507,5 +507,122 @@
 ```
 
 ---
+---
+
+## Knowledge & Research
+
+### knowledge / memory
+
+**Replaces:** tech points, research points
+**Code reference:** `ColonyResources.knowledge`
+**Usage:**
+- "We have gathered much memory."
+- "The knowledge is dangerous."
+
+### the Archive
+
+**Replaces:** Library, Research Lab
+**Code reference:** `Library` building
+**Usage:**
+- "Silence in the Archive."
+- "The Archive grows."
+
+### remembering
+
+**Replaces:** researching
+**Code reference:** `ActionType::Research`
+**Usage:**
+- "He is remembering the old ways."
+- "We must remember how to forge steel."
+
+---
+
+## Fire & Elements
+
+### the Red Hunger / the Hunger
+
+**Replaces:** fire, blaze
+**Code reference:** `Fire` entity
+**Usage:**
+- "The Red Hunger eats the wood."
+- "Feed the Hunger or fight it."
+
+### ash
+
+**Replaces:** burned remains, fire damage
+**Code reference:** Burned terrain/buildings
+**Usage:**
+- "Only ash remains."
+- "Rising from the ash."
+
+---
+
+## Decay & Spoilage
+
+### the Grey / rot
+
+**Replaces:** spoilage, decay
+**Code reference:** `SPOILAGE` system
+**Usage:**
+- "The Grey is on the grain."
+- "Rot takes the harvest."
+
+### turning
+
+**Replaces:** spoiling
+**Code reference:** `spoilage_system`
+**Usage:**
+- "The food is turning."
+- "Eat before it turns."
+
+---
+
+## Health & Medicine
+
+### vitality
+
+**Replaces:** health points (HP)
+**Code reference:** `Health.current`
+**Usage:**
+- "His vitality is low."
+- "Full vitality."
+
+### whole
+
+**Replaces:** healthy, full HP
+**Code reference:** `Health.current == Health.max`
+**Usage:**
+- "She is whole again."
+- "None of us are truly whole."
+
+### broken
+
+**Replaces:** injured, damaged
+**Code reference:** `Health.current < Health.max`
+**Usage:**
+- "A broken limb."
+- "Broken bodies in the snow."
+
+---
+
+## Tools
+
+### iron-hands / the hands
+
+**Replaces:** tools
+**Code reference:** `Tool` item/resource
+**Usage:**
+- "Give him iron-hands to work."
+- "We are nothing without hands."
+
+### the forge
+
+**Replaces:** Smithy
+**Code reference:** `Smithy` building
+**Usage:**
+- "The forge is cold."
+- "Sparks from the forge."
+
+---
 
 *Update this lexicon as new mechanics are added. Consistency is sacred.*

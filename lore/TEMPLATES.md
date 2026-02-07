@@ -437,4 +437,76 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ---
 
+### KNOWLEDGE_BREAKTHROUGH
+
+**Slots:** `[COLONY]`, `[YEAR]`, `[TECH_NAME]`, `[TECH_FLAVOR]`, `[KNOWLEDGE_TOPIC]`
+
+```
+"Year [YEAR]. We have unlocked [TECH_NAME]. It was [TECH_FLAVOR]."
+"[TECH_NAME] is ours. [YEAR]. The [KNOWLEDGE_TOPIC] is clear now."
+"A breakthrough in [TECH_NAME] at [COLONY]. [YEAR]. We found it in [KNOWLEDGE_TOPIC]."
+```
+
+### FIRE_OUTBREAK
+
+**Slots:** `[COLONY]`, `[YEAR]`, `[FIRE_NAME]`, `[FIRE_DESCRIPTOR]`, `[SOURCE]?`
+
+```
+"Fire at [COLONY]. [YEAR]. The [FIRE_NAME] is here."
+"[YEAR]: A [FIRE_DESCRIPTOR] blaze. [SOURCE|Sparks] ignited the dark."
+"The Red Hunger wakes. [YEAR]. [COLONY] burns with [FIRE_DESCRIPTOR] heat."
+```
+
+### FIRE_EXTINGUISHED
+
+**Slots:** `[COLONY]`, `[YEAR]`, `[DURATION]`, `[DAMAGE_REPORT]`
+
+```
+"The fire is out. [YEAR]. It lasted [DURATION]. [DAMAGE_REPORT]."
+"[YEAR]: Silence returns. The ash is cold. [DAMAGE_REPORT]."
+"We beat back the Hunger at [COLONY]. [YEAR]. Cost: [DAMAGE_REPORT]."
+```
+
+### SPOILAGE_EVENT
+
+**Slots:** `[COLONY]`, `[YEAR]`, `[RESOURCE]`, `[AMOUNT]`, `[ROT_DESCRIPTOR]`
+
+```
+"[YEAR]. The [RESOURCE] has turned. [AMOUNT] lost. It is [ROT_DESCRIPTOR]."
+"Rot in the stores. [YEAR]. We lose [AMOUNT] [RESOURCE]. The smell is [ROT_DESCRIPTOR]."
+"The Grey takes its tithe. [AMOUNT] [RESOURCE] gone. [YEAR]."
+```
+
+### INJURY_ACCIDENT
+
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[INJURY_TYPE]`, `[CAUSE]`
+
+```
+"Accident at [COLONY]. [YEAR]. [NAME] suffers [INJURY_TYPE]. Cause: [CAUSE]."
+"[YEAR]: Blood on the floor. [NAME]. [INJURY_TYPE] from [CAUSE]."
+"[NAME] is hurt. [INJURY_TYPE]. The work is dangerous. [YEAR]."
+```
+
+### HEALING_SUCCESS
+
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[HEALING_METHOD]`
+
+```
+"[NAME] returns to the line. [YEAR]. Healed [HEALING_METHOD]."
+"[YEAR]: Recovery. [NAME] is whole again. [HEALING_METHOD]."
+"The medical rites succeed. [NAME] walks. [YEAR]."
+```
+
+### TOOL_BREAK
+
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[TOOL_NAME]`
+
+```
+"[NAME]'s [TOOL_NAME] snaps. [YEAR]. The metal was weak."
+"A broken [TOOL_NAME]. [YEAR]. [NAME] curses the forge."
+"Silence in the work-hall. [NAME] holds the pieces of a [TOOL_NAME]. [YEAR]."
+```
+
+---
+
 *Add new templates with clear slot definitions. Provide 3-4 pattern variants. Tag required vs optional slots.*
