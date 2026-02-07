@@ -23,6 +23,8 @@ pub mod hauling;
 pub mod health;
 /// Housing and rest mechanics.
 pub mod housing;
+/// Integration systems bridging domains.
+pub mod integration;
 /// Spatial primitives (GridPosition).
 pub mod map;
 #[cfg(test)]
@@ -72,6 +74,7 @@ pub use fire::*;
 pub use hauling::*;
 pub use health::*;
 pub use housing::*;
+pub use integration::*;
 pub use locations::*;
 pub use map::*;
 pub use needs::*;

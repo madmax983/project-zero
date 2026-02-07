@@ -38,3 +38,4 @@ Implemented features. Architect: read this to understand current state.
 - [x] `031` Pop Morale — `specs/031-pop-morale.md` — completed 2026-02-02
 - [x] `032` Entropy and Spoilage — `specs/032-entropy-spoilage.md` — completed 2026-02-18
 - [x] `035` Workplace Hazards — `specs/035-workplace-hazards.md` — completed 2026-02-18
+- [x] `INT-003` Integration: Fire -> Pop Health — completed 2026-02-18

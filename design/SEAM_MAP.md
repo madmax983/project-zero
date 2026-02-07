@@ -23,6 +23,13 @@ Map of connected and disconnected systems.
 - **Schedule:** `run_simulation_tick` in `src/simulation.rs` handles the order.
 - **Tests:** `tests/social_tavern.rs` (Integration test verified)
 
+### INT-003: Fire -> Pop Health
+- **Date:** 2026-02-18
+- **Systems connected:** `fire_spread_system` -> `fire_damage_pops_system` -> `death_system`
+- **Glue added:** `fire_damage_pops_system` in `src/layer1/integration.rs`
+- **Schedule:** Chained in Simulation, spread -> pop damage -> building damage
+- **Tests:** `tests/integration/fire_health.rs`
+
 ### Pending Seams
 
 - [ ] Utility AI -> Housing Assignment (Checked: Connected via `ActionType::SatisfyRest`)
