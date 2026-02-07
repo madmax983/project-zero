@@ -8,6 +8,7 @@ use bevy_ecs::prelude::*;
 use crate::layer1::designation::Designation;
 use crate::layer1::farm::Farm;
 use crate::layer1::housing::Housing;
+use crate::layer1::medical::Hospital;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
 use crate::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
@@ -38,13 +39,13 @@ pub struct GpuPopInput {
     /// Learned social weight.
     pub social_weight: f32,
     /// Per-action success counts.
-    pub success_count: [u32; 9],
+    pub success_count: [u32; 10],
     /// Per-action attempt counts.
-    pub attempt_count: [u32; 9],
+    pub attempt_count: [u32; 10],
     /// Utility score of the current action.
     pub current_utility: f32,
     /// Padding to 16-byte alignment.
-    pub _padding: [u32; 1],
+    pub _padding: [u32; 3],
 }
 
 /// GPU-aligned building/target input data. One per building.
@@ -138,7 +139,7 @@ pub fn extract_pop_inputs(world: &mut World) -> (Vec<Entity>, Vec<GpuPopInput>) 
             success_count: weights.action_success_count,
             attempt_count: weights.action_attempt_count,
             current_utility: action.current_utility,
-            _padding: [0; 1],
+            _padding: [0; 3],
         });
     }
 
@@ -216,6 +217,23 @@ pub fn extract_building_inputs(world: &mut World) -> (Vec<Entity>, Vec<GpuBuildi
                 building_type: 3,
                 capacity: 5,
                 occupied: 0,
+                resource_has_room: 0,
+                _padding: [0; 2],
+            });
+        }
+    }
+
+    // Hospitals (building_type = 7)
+    {
+        let mut query = world.query::<(Entity, &GridPosition, &Hospital)>();
+        for (entity, pos, _hospital) in query.iter(world) {
+            entities.push(entity);
+            inputs.push(GpuBuildingInput {
+                pos_x: pos.x,
+                pos_y: pos.y,
+                building_type: 7,
+                capacity: 10, // Assumed capacity for MVP
+                occupied: 0, // TODO: track patients
                 resource_has_room: 0,
                 _padding: [0; 2],
             });
@@ -319,9 +337,9 @@ mod tests {
 
     #[test]
     fn test_gpu_pop_input_size() {
-        // 2*i32 + 6*f32 + 9*u32 + 9*u32 + 1*f32 + 1*u32
-        // = 8 + 24 + 36 + 36 + 4 + 4 = 112 bytes
-        assert_eq!(std::mem::size_of::<GpuPopInput>(), 112);
+        // 2*i32 + 6*f32 + 10*u32 + 10*u32 + 1*f32 + 3*u32
+        // = 8 + 24 + 40 + 40 + 4 + 12 = 128 bytes
+        assert_eq!(std::mem::size_of::<GpuPopInput>(), 128);
     }
 
     #[test]
@@ -361,8 +379,8 @@ mod tests {
                     distance_weight: 1.2,
                     availability_weight: 0.8,
                     social_weight: 1.0,
-                    action_success_count: [1, 2, 3, 0, 0, 0, 0, 0, 0],
-                    action_attempt_count: [5, 5, 5, 0, 0, 0, 0, 0, 0],
+                    action_success_count: [1, 2, 3, 0, 0, 0, 0, 0, 0, 0],
+                    action_attempt_count: [5, 5, 5, 0, 0, 0, 0, 0, 0, 0],
                 },
                 PopAction {
                     current: ActionType::SatisfyHunger,

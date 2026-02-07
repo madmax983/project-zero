@@ -15,10 +15,10 @@ struct PopInput {
     distance_weight: f32,
     availability_weight: f32,
     social_weight: f32,
-    success_count: array<u32, 9>,
-    attempt_count: array<u32, 9>,
+    success_count: array<u32, 10>,
+    attempt_count: array<u32, 10>,
     current_utility: f32,
-    _pad: array<u32, 1>,
+    _pad: array<u32, 3>,
 }
 
 struct BuildingInput {
@@ -119,7 +119,7 @@ fn main(@builtin(global_invocation_id) global_id: vec3<u32>) {
 
     let pop = pops[pop_idx];
 
-    var best_action: u32 = 8u;          // Default: Idle
+    var best_action: u32 = 9u;          // Default: Idle
     var best_utility: f32 = 0.05;       // Idle baseline utility
     var best_target: u32 = 0xFFFFFFFFu; // No target (u32::MAX sentinel)
 
@@ -128,7 +128,7 @@ fn main(@builtin(global_invocation_id) global_id: vec3<u32>) {
         let bldg = buildings[i];
 
         var urgency: f32 = 0.0;
-        var action_idx: u32 = 8u;
+        var action_idx: u32 = 9u;
         var skip: bool = false;
 
         switch bldg.building_type {
@@ -172,6 +172,14 @@ fn main(@builtin(global_invocation_id) global_id: vec3<u32>) {
                 // Repair Designation -> Repair (action 5)
                 urgency = 0.6;
                 action_idx = 5u;
+            }
+            case 7u: {
+                // Hospital -> SeekMedicalCare (action 8)
+                // For GPU we approximate: urgency = 1.0 (TODO: pass health to GPU)
+                // Since we don't have health in GpuPopInput yet, we can't fully evaluate.
+                // But for now let's just make it possible.
+                urgency = 1.0;
+                action_idx = 8u;
             }
             default: {
                 skip = true;

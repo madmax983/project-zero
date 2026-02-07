@@ -256,6 +256,7 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
             ActionType::Repair => ("🔧", "Repairing"),
             ActionType::Research => ("📚", "Researching"),
             ActionType::Haul => ("📦", "Hauling"),
+            ActionType::SeekMedicalCare => ("🏥", "Healing"),
             ActionType::Idle => ("⏳", "Idle"),
         };
         Some(Line::from(vec![

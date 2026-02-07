@@ -25,4 +25,6 @@ pub enum AssignmentType {
     TavernVisitor,
     /// Working at a library.
     LibraryWorker,
+    /// Recovering in a hospital.
+    Patient,
 }

@@ -532,6 +532,7 @@ pub const fn get_building_char(building: BuildingType) -> char {
         BuildingType::Tailor => 't',
         BuildingType::FlowerBed => '*',
         BuildingType::Statue => 'I',
+        BuildingType::Hospital => '+',
     }
 }
 
@@ -561,6 +562,7 @@ pub const fn get_building_color(building: BuildingType) -> Color {
         BuildingType::Plantation => Color::Green,
         BuildingType::Weaver | BuildingType::Statue => Color::White,
         BuildingType::Tailor => Color::Blue,
+        BuildingType::Hospital => Color::Red,
     }
 }
 

@@ -16,7 +16,8 @@ use crate::layer1::{
     clean_dead_residents_system, clean_dead_workers_system, cleanup_previous_assignment_system,
     clothing_wear_system, consume_food_system, death_system, decay_needs_system,
     fire_damage_pops_system, fire_damage_system, fire_spread_system, haul_system,
-    hypothermia_system, memory_decay_system, movement_system, notification_expiration_system,
+    healing_system, hypothermia_system, memory_decay_system, movement_system,
+    notification_expiration_system,
     process_refining_system, process_research_system, process_scan_system,
     process_start_plan_system, produce_food_system, restore_leisure_system,
     restore_rest_in_housing_system, spoilage_system, starvation_damage_system,
@@ -73,6 +74,7 @@ pub fn build_simulation_schedule() -> Schedule {
         process_research_system.after(work_execution_system),
         restore_rest_in_housing_system.after(work_execution_system),
         restore_leisure_system.after(work_execution_system),
+        healing_system.after(work_execution_system),
         crate::layer1::beauty::update_beauty_grid_system.after(work_execution_system),
         crate::layer1::beauty::apply_beauty_effects_system
             .after(crate::layer1::beauty::update_beauty_grid_system),
