@@ -1,6 +1,6 @@
 use crate::layer1::{
     GridPosition, TerrainGrid, Viewport, building::Building, health::Health, needs::Needs,
-    pop::Pop, thoughts::Thought,
+    pop::Pop,
 };
 use bevy_ecs::prelude::*;
 use std::fmt::Write;
@@ -114,10 +114,6 @@ pub fn inspect_entity(world: &World, entity: Entity) -> String {
                 needs.hunger * 100.0,
                 needs.rest * 100.0
             );
-        }
-
-        if let Some(thought) = world.get::<Thought>(entity) {
-            let _ = writeln!(info, "Thought: \"{}\"", thought.text);
         }
 
         return info;
@@ -385,22 +381,4 @@ mod tests {
         assert_eq!(world_y, i32::MAX.wrapping_add(10));
     }
 
-    #[test]
-    fn test_inspect_entity_with_thought() {
-        use crate::layer1::thoughts::Thought;
-        let mut world = World::new();
-        let entity = world
-            .spawn((
-                Pop,
-                GridPosition { x: 1, y: 1 },
-                Thought {
-                    text: "I am thinking".to_string(),
-                    tick: 0,
-                },
-            ))
-            .id();
-
-        let info = inspect_entity(&world, entity);
-        assert!(info.contains("Thought: \"I am thinking\""));
-    }
 }

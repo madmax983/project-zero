@@ -59,8 +59,6 @@ pub mod stockpile;
 pub mod tech;
 /// Terrain generation and grid management.
 pub mod terrain;
-/// Pop thoughts and personality.
-pub mod thoughts;
 /// Emergent utility AI system.
 pub mod utility_ai;
 #[cfg(test)]
@@ -99,7 +97,6 @@ pub use spoilage::*;
 pub use stockpile::*;
 pub use tech::*;
 pub use terrain::*;
-pub use thoughts::*;
 pub use utility_ai::*;
 
 #[cfg(test)]

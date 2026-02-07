@@ -10,14 +10,14 @@ use bevy_ecs::prelude::*;
 use ratatui::{
     prelude::*,
     widgets::{
-        Block, BorderType, Borders, Cell, Gauge, List, ListItem, Paragraph, Row, Table, Wrap,
+        Block, BorderType, Borders, Cell, Gauge, List, ListItem, Paragraph, Row, Table,
     },
 };
 
 use crate::experimental::biography::Biography;
 use crate::layer1::{
     ColonyResources, Farm, GridPosition, Housing, TerrainGrid, building::Building, needs::Needs,
-    pop::Pop, resources::RefiningProgress, stockpile::Stockpile, thoughts::Thought,
+    pop::Pop, resources::RefiningProgress, stockpile::Stockpile,
 };
 use crate::shared::selection::{Selection, SelectionTarget};
 use crate::ui::map::{get_building_color, get_terrain_char, get_terrain_color};
@@ -270,24 +270,11 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         render_refining_details(frame, details_area, progress);
     }
 
-    // 4. Thoughts & Biography
+    // 4. Biography
     let bottom_area = layout[5];
-    let thought_opt = world.get::<Thought>(entity);
     let bio_opt = world.get::<Biography>(entity);
 
-    if let Some(thought) = thought_opt {
-        if let Some(bio) = bio_opt {
-            let chunks = Layout::default()
-                .direction(Direction::Vertical)
-                .constraints([Constraint::Length(3), Constraint::Min(1)])
-                .split(bottom_area);
-
-            render_thought(frame, chunks[0], thought);
-            render_biography(frame, chunks[1], bio);
-        } else {
-            render_thought(frame, bottom_area, thought);
-        }
-    } else if let Some(bio) = bio_opt {
+    if let Some(bio) = bio_opt {
         render_biography(frame, bottom_area, bio);
     }
 }
@@ -397,24 +384,6 @@ fn render_refining_details(frame: &mut Frame, area: Rect, progress: &RefiningPro
     frame.render_widget(gauge, area);
 }
 
-fn render_thought(frame: &mut Frame, area: Rect, thought: &Thought) {
-    let thought_block = Block::default()
-        .borders(Borders::TOP)
-        .title(" Thoughts ")
-        .title_style(Style::default().fg(Color::Magenta));
-
-    let thought_text = Paragraph::new(format!("\"{}\"", thought.text))
-        .wrap(Wrap { trim: true })
-        .style(
-            Style::default()
-                .fg(Color::White)
-                .add_modifier(Modifier::ITALIC),
-        )
-        .block(thought_block);
-
-    frame.render_widget(thought_text, area);
-}
-
 fn render_biography(frame: &mut Frame, area: Rect, bio: &Biography) {
     let bio_block = Block::default()
         .borders(Borders::TOP)
@@ -462,10 +431,6 @@ mod tests {
                     rest: 0.8,
                     ..Default::default()
                 },
-                Thought {
-                    text: "Thinking...".to_string(),
-                    tick: 0,
-                },
             ))
             .id();
 
@@ -503,9 +468,6 @@ mod tests {
         // We put title "Hunger" in the block.
         assert!(full_text.contains("Hunger"));
         assert!(full_text.contains("Rest"));
-
-        // Check Thought
-        assert!(full_text.contains("Thinking..."));
     }
 
     #[test]
