@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::GridPosition;
-use crate::layer1::fire::Fire;
 use crate::layer1::building::OccupiedTiles;
+use crate::layer1::fire::Fire;
+use bevy_ecs::prelude::*;
 
 /// Component representing the structural integrity of a building.
 #[derive(Component, Debug, Clone, Copy)]
@@ -63,7 +63,10 @@ pub fn fire_damage_structure_system(world: &mut World) {
 
             // Add log message
             if let Some(mut log) = world.get_resource_mut::<crate::shared::log::MessageLog>() {
-                log.add(format!("Structure destroyed by fire at ({}, {})", pos.x, pos.y));
+                log.add(format!(
+                    "Structure destroyed by fire at ({}, {})",
+                    pos.x, pos.y
+                ));
             }
         }
     }
@@ -110,12 +113,12 @@ pub fn process_repair(world: &mut World, designation_entity: Entity, amount: f32
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::building::{Building, BuildingType};
-    use crate::layer1::structure::{Structure, fire_damage_structure_system};
-    use crate::layer1::fire::{Fire, Flammable};
     use crate::layer1::GridPosition;
+    use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::designation::{Designation, DesignationType};
+    use crate::layer1::fire::{Fire, Flammable};
+    use crate::layer1::structure::{Structure, fire_damage_structure_system};
+    use bevy_ecs::prelude::*;
     // use crate::layer1::utility_ai::ActionType;
 
     #[test]
@@ -130,16 +133,26 @@ mod tests {
         let mut world = World::new();
 
         // Spawn a building with Structure and Flammable
-        let building = world.spawn((
-            Building { building_type: BuildingType::Housing },
-            Structure { current_hp: 100.0, max_hp: 100.0 },
-            Flammable::default(),
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let building = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Housing,
+                },
+                Structure {
+                    current_hp: 100.0,
+                    max_hp: 100.0,
+                },
+                Flammable::default(),
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
         // Spawn Fire on top of it
         world.spawn((
-            Fire { intensity: 1.0, lifetime: 10 },
+            Fire {
+                intensity: 1.0,
+                lifetime: 10,
+            },
             GridPosition { x: 0, y: 0 },
         ));
 
@@ -156,39 +169,63 @@ mod tests {
     fn test_structure_destruction_at_zero_hp() {
         let mut world = World::new();
 
-        let building = world.spawn((
-            Building { building_type: BuildingType::Housing },
-            Structure { current_hp: 1.0, max_hp: 100.0 },
-            Flammable::default(),
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let building = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Housing,
+                },
+                Structure {
+                    current_hp: 1.0,
+                    max_hp: 100.0,
+                },
+                Flammable::default(),
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
         // Fire deals damage 5.0 * 10.0 = 50.0 > 1.0
         world.spawn((
-            Fire { intensity: 10.0, lifetime: 10 },
+            Fire {
+                intensity: 10.0,
+                lifetime: 10,
+            },
             GridPosition { x: 0, y: 0 },
         ));
 
         fire_damage_structure_system(&mut world);
 
-        assert!(world.get_entity(building).is_err(), "Building should be destroyed at 0 HP");
+        assert!(
+            world.get_entity(building).is_err(),
+            "Building should be destroyed at 0 HP"
+        );
     }
 
     #[test]
     fn test_repair_restores_hp() {
         let mut world = World::new();
 
-        let building = world.spawn((
-            Building { building_type: BuildingType::Housing },
-            Structure { current_hp: 50.0, max_hp: 100.0 },
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let building = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Housing,
+                },
+                Structure {
+                    current_hp: 50.0,
+                    max_hp: 100.0,
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
         // Designation for Repair
-        let designation = world.spawn((
-            Designation { designation_type: DesignationType::Repair },
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let designation = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Repair,
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
         // Worker performing Repair
         crate::layer1::structure::process_repair(&mut world, designation, 10.0);
@@ -201,16 +238,27 @@ mod tests {
     fn test_repair_removes_designation_at_max_hp() {
         let mut world = World::new();
 
-        let building = world.spawn((
-            Building { building_type: BuildingType::Housing },
-            Structure { current_hp: 95.0, max_hp: 100.0 },
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let building = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Housing,
+                },
+                Structure {
+                    current_hp: 95.0,
+                    max_hp: 100.0,
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
-        let designation = world.spawn((
-            Designation { designation_type: DesignationType::Repair },
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let designation = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Repair,
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
         crate::layer1::structure::process_repair(&mut world, designation, 10.0);
 
@@ -219,6 +267,9 @@ mod tests {
         assert_eq!(structure.current_hp, 100.0, "HP should be capped at max");
 
         // Designation should be despawned
-        assert!(world.get_entity(designation).is_err(), "Designation should be removed when fully repaired");
+        assert!(
+            world.get_entity(designation).is_err(),
+            "Designation should be removed when fully repaired"
+        );
     }
 }

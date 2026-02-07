@@ -27,29 +27,34 @@ impl Default for Farm {
 
 /// Produces food from all farms with workers.
 pub fn produce_food_system(
-    farm_query: Query<&Farm>,
+    farm_query: Query<(&Farm, &crate::layer1::building::Building)>,
     pop_query: Query<&Pop>,
     season: Option<Res<SeasonState>>,
     mut resources: ResMut<ColonyResources>,
 ) {
     let modifier = season.map_or(1.0, |s| s.current_season.food_modifier());
 
-    #[allow(clippy::cast_precision_loss)]
-    let total_production: f32 = farm_query
-        .iter()
-        .map(|farm| {
-            let count = farm
-                .workers
-                .iter()
-                .filter(|&&e| pop_query.get(e).is_ok())
-                .count() as f32;
-            count * FOOD_PER_WORKER_PER_TICK
-        })
-        .sum::<f32>()
-        * modifier;
+    for (farm, building) in &farm_query {
+        #[allow(clippy::cast_precision_loss)]
+        let worker_count = farm
+            .workers
+            .iter()
+            .filter(|&&e| pop_query.get(e).is_ok())
+            .count() as f32;
 
-    if total_production > 0.0 {
-        resources.food += total_production;
+        let production = worker_count * FOOD_PER_WORKER_PER_TICK * modifier;
+
+        if production > 0.0 {
+            match building.building_type {
+                crate::layer1::building::BuildingType::Plantation => {
+                    resources.add_fiber(production);
+                }
+                _ => {
+                    // Default to food (Farm)
+                    resources.add_food(production);
+                }
+            }
+        }
     }
 }
 
@@ -122,7 +127,12 @@ mod tests {
         let worker = world.spawn(Pop).id();
         let mut farm = Farm::default();
         farm.workers.push(worker);
-        world.spawn(farm);
+        world.spawn((
+            farm,
+            Building {
+                building_type: BuildingType::Farm,
+            },
+        ));
 
         world.run_system_once(produce_food_system).unwrap();
 
@@ -140,7 +150,12 @@ mod tests {
         let mut farm = Farm::default();
         farm.workers.push(worker1);
         farm.workers.push(worker2);
-        world.spawn(farm);
+        world.spawn((
+            farm,
+            Building {
+                building_type: BuildingType::Farm,
+            },
+        ));
 
         world.run_system_once(produce_food_system).unwrap();
 
@@ -159,7 +174,12 @@ mod tests {
         let worker = world.spawn(Pop).id();
         let mut farm = Farm::default();
         farm.workers.push(worker);
-        world.spawn(farm);
+        world.spawn((
+            farm,
+            Building {
+                building_type: BuildingType::Farm,
+            },
+        ));
 
         for _ in 0..600 {
             world.run_system_once(produce_food_system).unwrap();
@@ -296,6 +316,7 @@ mod tests {
         let mut farm = Farm::default();
         farm.workers.push(worker1);
         farm.workers.push(worker2);
+        // Does not need Building because clean_dead_workers_system only queries Farm
         let farm_entity = world.spawn(farm).id();
 
         world.despawn(worker1);
@@ -322,12 +343,12 @@ mod tests {
         let count = world.query::<(&Building, &Farm)>().iter(&world).count();
         assert_eq!(count, 1);
     }
-
 }
 
 #[cfg(test)]
 mod seasonal_tests {
     use super::*;
+    use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::seasons::{Season, SeasonState};
     use bevy_ecs::system::RunSystemOnce;
 
@@ -342,7 +363,12 @@ mod seasonal_tests {
         let worker = world.spawn(Pop).id();
         let mut farm = Farm::default();
         farm.workers.push(worker);
-        world.spawn(farm);
+        world.spawn((
+            farm,
+            Building {
+                building_type: BuildingType::Farm,
+            },
+        ));
 
         world.run_system_once(produce_food_system).unwrap();
 
@@ -366,7 +392,12 @@ mod seasonal_tests {
         let worker = world.spawn(Pop).id();
         let mut farm = Farm::default();
         farm.workers.push(worker);
-        world.spawn(farm);
+        world.spawn((
+            farm,
+            Building {
+                building_type: BuildingType::Farm,
+            },
+        ));
 
         world.run_system_once(produce_food_system).unwrap();
 
@@ -376,6 +407,40 @@ mod seasonal_tests {
         assert!(
             (resources.food - expected).abs() < 0.0001,
             "Autumn production should be boosted"
+        );
+    }
+}
+
+#[cfg(test)]
+mod plantation_tests {
+    use super::*;
+    use crate::layer1::building::{Building, BuildingType};
+    use crate::layer1::pop::Pop;
+    use bevy_ecs::system::RunSystemOnce;
+
+    #[test]
+    fn test_produce_food_system_plantation() {
+        let mut world = World::new();
+        world.insert_resource(ColonyResources::default());
+
+        let worker = world.spawn(Pop).id();
+        let mut farm = Farm::default();
+        farm.workers.push(worker);
+        world.spawn((
+            farm,
+            Building {
+                building_type: BuildingType::Plantation,
+            },
+        ));
+
+        world.run_system_once(produce_food_system).unwrap();
+
+        let resources = world.resource::<ColonyResources>();
+        assert!(resources.fiber > 0.0, "Fiber should be produced");
+        // Default food is 10.0
+        assert!(
+            (resources.food - 10.0).abs() < f32::EPSILON,
+            "Food should NOT be produced"
         );
     }
 }

@@ -8,7 +8,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 - [ ] `038` Medical Care — `specs/038-medical-care.md`
 - [ ] `039` Trade System — `specs/039-trade-system.md`
-- [ ] `040` Clothing and Temperature — `specs/040-clothing-temperature.md`
 - [ ] `042` Energy System — `specs/042-energy-system.md`
 - [ ] `043` Defensive Structures — `specs/043-defensive-structures.md`
 - [ ] `044` Horticulture and Beauty — `specs/044-horticulture-beauty.md`

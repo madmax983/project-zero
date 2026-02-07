@@ -7,9 +7,9 @@
 //!
 //! # Concepts
 //!
-//! * **ChronicleEvent**: An atomic piece of history (e.g., "Colony Founded", "First Winter").
-//! * **EventImportance**: Determines how prominent the event is in the UI.
-//! * **Milestones**: Automatic achievements tracked by the `check_milestones_system`.
+//! * **`ChronicleEvent`**: An atomic piece of history (e.g., "Colony Founded", "First Winter").
+//! * **`EventImportance`**: Determines how prominent the event is in the UI.
+//! * **`Milestones`**: Automatic achievements tracked by the `check_milestones_system`.
 //!
 //! # Integration with Lore
 //!

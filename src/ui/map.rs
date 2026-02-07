@@ -509,6 +509,9 @@ pub const fn get_building_char(building: BuildingType) -> char {
         BuildingType::Smithy => '⚒',
         BuildingType::Tavern => 'T',
         BuildingType::Library => 'K',
+        BuildingType::Plantation => 'P',
+        BuildingType::Weaver => 'W',
+        BuildingType::Tailor => 't',
     }
 }
 
@@ -535,6 +538,9 @@ pub const fn get_building_color(building: BuildingType) -> Color {
         BuildingType::Smithy => Color::Rgb(192, 192, 192), // Silver
         BuildingType::Tavern => Color::Magenta,
         BuildingType::Library => Color::Cyan,
+        BuildingType::Plantation => Color::Green,
+        BuildingType::Weaver => Color::White,
+        BuildingType::Tailor => Color::Blue,
     }
 }
 

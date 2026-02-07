@@ -9,9 +9,7 @@
 use bevy_ecs::prelude::*;
 use ratatui::{
     prelude::*,
-    widgets::{
-        Block, BorderType, Borders, Cell, Gauge, List, ListItem, Paragraph, Row, Table,
-    },
+    widgets::{Block, BorderType, Borders, Cell, Gauge, List, ListItem, Paragraph, Row, Table},
 };
 
 use crate::experimental::biography::Biography;

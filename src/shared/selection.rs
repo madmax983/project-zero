@@ -1,6 +1,5 @@
 use crate::layer1::{
-    GridPosition, TerrainGrid, Viewport, building::Building, health::Health, needs::Needs,
-    pop::Pop,
+    GridPosition, TerrainGrid, Viewport, building::Building, health::Health, needs::Needs, pop::Pop,
 };
 use bevy_ecs::prelude::*;
 use std::fmt::Write;
@@ -380,5 +379,4 @@ mod tests {
         assert_eq!(world_x, i32::MAX.wrapping_add(10));
         assert_eq!(world_y, i32::MAX.wrapping_add(10));
     }
-
 }

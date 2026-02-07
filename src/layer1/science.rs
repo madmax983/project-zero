@@ -145,7 +145,8 @@ pub fn process_scan_system(world: &mut World) {
         }
 
         // Update progress
-        let is_complete = if let Some(mut progress) = world.get_mut::<ScanProgress>(anomaly_entity) {
+        let is_complete = if let Some(mut progress) = world.get_mut::<ScanProgress>(anomaly_entity)
+        {
             progress.current += scan_amount;
             progress.is_complete()
         } else {
@@ -157,7 +158,8 @@ pub fn process_scan_system(world: &mut World) {
         // Handle completion
         if is_complete {
             // Get anomaly data (safe now that mutable borrow of progress is dropped)
-            let (anomaly_type, reward) = if let Some(anomaly) = world.get::<Anomaly>(anomaly_entity) {
+            let (anomaly_type, reward) = if let Some(anomaly) = world.get::<Anomaly>(anomaly_entity)
+            {
                 (anomaly.anomaly_type, anomaly.reward_amount)
             } else {
                 cleanup_pop_explore_state(world, pop_entity);

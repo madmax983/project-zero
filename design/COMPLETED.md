@@ -42,3 +42,4 @@ Implemented features. Architect: read this to understand current state.
 - [x] `036` Pop Memory — `specs/036-pop-memory.md` — completed 2026-02-19
 - [x] `041` Field Science — `specs/041-field-science.md` — completed 2026-02-23
 - [x] `045` Structure Durability & Repair — `specs/045-structure-durability.md` — completed 2026-02-07
+- [x] `040` Clothing and Temperature — `specs/040-clothing-temperature.md` — completed 2026-02-07

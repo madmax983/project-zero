@@ -14,13 +14,13 @@ use crate::gpu::evaluate::gpu_evaluate_actions;
 use crate::layer1::{
     advance_season_system, arrival_handler_system, check_milestones_system,
     clean_dead_residents_system, clean_dead_workers_system, cleanup_previous_assignment_system,
-    consume_food_system, death_system, decay_needs_system, fire_damage_pops_system,
-    fire_damage_system, fire_spread_system, haul_system, memory_decay_system, movement_system,
-    process_refining_system, process_research_system, process_scan_system,
-    process_start_plan_system, produce_food_system, restore_leisure_system,
-    restore_rest_in_housing_system, spoilage_system, starvation_damage_system,
-    track_plan_outcomes_system, update_action_timer_system, update_resource_caps_system,
-    work_execution_system,
+    clothing_wear_system, consume_food_system, death_system, decay_needs_system,
+    fire_damage_pops_system, fire_damage_system, fire_spread_system, haul_system,
+    hypothermia_system, memory_decay_system, movement_system, process_refining_system,
+    process_research_system, process_scan_system, process_start_plan_system, produce_food_system,
+    restore_leisure_system, restore_rest_in_housing_system, spoilage_system,
+    starvation_damage_system, track_plan_outcomes_system, update_action_timer_system,
+    update_resource_caps_system, work_execution_system,
 };
 use crate::shared::time::SimulationTime;
 
@@ -90,11 +90,15 @@ pub fn build_simulation_schedule() -> Schedule {
         consume_food_system
             .after(produce_food_system)
             .after(update_resource_caps_system),
+        clothing_wear_system.after(consume_food_system),
         spoilage_system.after(consume_food_system),
         decay_needs_system.after(consume_food_system),
         memory_decay_system.after(decay_needs_system),
+        hypothermia_system.after(decay_needs_system),
         starvation_damage_system.after(decay_needs_system),
-        death_system.after(starvation_damage_system),
+        death_system
+            .after(starvation_damage_system)
+            .after(hypothermia_system),
         clean_dead_residents_system.after(death_system),
         clean_dead_workers_system.after(death_system),
     ));
