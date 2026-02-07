@@ -2,7 +2,10 @@ use bevy_ecs::archetype::Archetype;
 use bevy_ecs::prelude::*;
 use ratatui::{prelude::*, widgets::Paragraph};
 
-use crate::layer1::{BuildMode, ColonyResources, DesignationMode, NamedLocations, Pop, Viewport};
+use crate::layer1::{
+    BuildMode, ColonyResources, DesignationMode, NamedLocations, Pop, Viewport,
+};
+use crate::layer1::seasons::{Season, SeasonState};
 use crate::shared::state::GameState;
 use crate::shared::time::{SimSpeed, SimulationTime};
 
@@ -72,6 +75,10 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
         0.0
     };
 
+    let season = world
+        .get_resource::<SeasonState>()
+        .map(|s| s.current_season);
+
     let status = get_status_line(
         sim_time.tick,
         sim_time.speed,
@@ -83,7 +90,10 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
         resources.food,
         resources.tools,
         avg_morale,
+        season,
     );
+
+    let status = truncate_line(status, area.width);
 
     let bar = Paragraph::new(status).style(Style::default().bg(Color::DarkGray).fg(Color::White));
     frame.render_widget(bar, area);
@@ -124,6 +134,7 @@ pub fn get_status_line<'a>(
     food_yield: f32,
     tools: f32,
     morale: f32,
+    season: Option<Season>,
 ) -> Line<'a> {
     let mut spans = Vec::new();
 
@@ -136,6 +147,21 @@ pub fn get_status_line<'a>(
 
     // 2. Day
     spans.push(Span::raw(format!("Day {tick} │ ")));
+
+    // 2b. Season
+    if let Some(s) = season {
+        let color = match s {
+            Season::Spring => Color::Green,
+            Season::Summer => Color::Yellow,
+            Season::Autumn => Color::Rgb(200, 100, 0),
+            Season::Winter => Color::Cyan,
+        };
+        spans.push(Span::styled(
+            format!("{} ", s.name()),
+            Style::default().fg(color),
+        ));
+        spans.push(Span::raw("│ "));
+    }
 
     // 3. Souls
     spans.push(Span::styled("Souls: ", Style::default().fg(Color::Cyan)));
@@ -272,7 +298,8 @@ pub fn get_status_line<'a>(
 ///     5,                  // pop count
 ///     100.0,              // food
 ///     10.0,               // tools
-///     0.8                 // morale
+///     0.8,                // morale
+///     None,               // season
 /// );
 ///
 /// assert!(status.contains("Day 10"));
@@ -292,6 +319,7 @@ pub fn get_status_string(
     food_yield: f32,
     tools: f32,
     morale: f32,
+    season: Option<Season>,
 ) -> String {
     let line = get_status_line(
         tick,
@@ -304,6 +332,7 @@ pub fn get_status_string(
         food_yield,
         tools,
         morale,
+        season,
     );
 
     line.spans
@@ -312,10 +341,36 @@ pub fn get_status_string(
         .collect::<String>()
 }
 
+/// Truncates a status `Line` to fit within `max_width` columns.
+///
+/// If the combined length of all spans exceeds `max_width`, the line is truncated
+/// and the last visible span gets an ellipsis appended.
+fn truncate_line(line: Line<'_>, max_width: u16) -> Line<'_> {
+    let max = max_width as usize;
+    let mut total = 0usize;
+    let mut result = Vec::new();
+    for span in line.spans {
+        let len = span.content.len();
+        if total + len <= max {
+            result.push(span);
+            total += len;
+        } else {
+            let remaining = max.saturating_sub(total);
+            if remaining > 1 {
+                let truncated: String = span.content.chars().take(remaining - 1).collect();
+                result.push(Span::styled(format!("{truncated}\u{2026}"), span.style));
+            }
+            break;
+        }
+    }
+    Line::from(result)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
     use crate::layer1::{BuildMode, DesignationMode};
+    use crate::layer1::seasons::Season;
     use crate::shared::time::SimSpeed;
 
     #[test]
@@ -338,6 +393,7 @@ mod tests {
             123.0, // Food
             10.0,  // Tools
             0.85,  // Morale
+            None,  // Season
         );
 
         assert!(status.contains("Day 100"));
@@ -360,6 +416,7 @@ mod tests {
             0.0,
             0.0,
             0.0,
+            None, // Season
         );
 
         assert!(status_none.contains("Day 100"));
@@ -440,5 +497,69 @@ mod tests {
         let full_text = cells.join("");
 
         assert!(full_text.contains("Morale: 60%"));
+    }
+
+    #[test]
+    fn test_season_display_in_status() {
+        let status = get_status_string(
+            50,
+            SimSpeed::Normal,
+            false,
+            &BuildMode::default(),
+            &DesignationMode::default(),
+            None,
+            5,
+            100.0,
+            10.0,
+            0.8,
+            Some(Season::Summer),
+        );
+        assert!(status.contains("Summer"), "Status should contain season name");
+        assert!(status.contains("Day 50"));
+    }
+
+    #[test]
+    fn test_no_season_when_none() {
+        let status = get_status_string(
+            50,
+            SimSpeed::Normal,
+            false,
+            &BuildMode::default(),
+            &DesignationMode::default(),
+            None,
+            5,
+            100.0,
+            10.0,
+            0.8,
+            None,
+        );
+        assert!(!status.contains("Spring"));
+        assert!(!status.contains("Summer"));
+        assert!(!status.contains("Autumn"));
+        assert!(!status.contains("Winter"));
+    }
+
+    #[test]
+    fn test_truncate_line_no_truncation() {
+        let line = Line::from(vec![
+            Span::raw("Hello"),
+            Span::raw(" World"),
+        ]);
+        let result = truncate_line(line, 20);
+        let text: String = result.spans.iter().map(|s| s.content.as_ref()).collect();
+        assert_eq!(text, "Hello World");
+    }
+
+    #[test]
+    fn test_truncate_line_truncates() {
+        let line = Line::from(vec![
+            Span::raw("Hello"),
+            Span::raw(" World, this is long"),
+        ]);
+        // max_width = 10, "Hello" = 5 fits, " World, this is long" = 20 doesn't
+        // remaining = 10 - 5 = 5, take 4 chars + ellipsis = " Wor…"
+        let result = truncate_line(line, 10);
+        let text: String = result.spans.iter().map(|s| s.content.as_ref()).collect();
+        assert_eq!(text, "Hello Wor\u{2026}");
     }
 }

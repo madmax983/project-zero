@@ -48,6 +48,7 @@ mod tests {
             food,
             0.0,
             0.8,
+            None, // Season
         );
 
         // 4. Verify Glue

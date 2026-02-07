@@ -7,6 +7,7 @@ use std::collections::HashMap;
 use std::hash::BuildHasher;
 
 use crate::experimental::seasonal_gfx;
+use crate::layer1::fire::Fire;
 use crate::layer1::{
     Anomaly, AnomalyType, BuildMode, Building, BuildingType, Designation, DesignationMode,
     DesignationType, GridPosition, Needs, ResourceItem, ResourceType, TerrainGrid, TerrainType,
@@ -29,6 +30,8 @@ pub enum RenderEntity {
     Anomaly(AnomalyType),
     /// A loose resource item on the ground (e.g., [`ResourceType::Wood`]).
     Item(ResourceType),
+    /// An active fire spreading across the map.
+    Fire,
 }
 
 impl RenderEntity {
@@ -56,6 +59,7 @@ impl RenderEntity {
     #[must_use]
     pub const fn priority(&self) -> u8 {
         match self {
+            Self::Fire => 6,
             Self::Designation(_) => 5,
             Self::Building(_) => 4,
             Self::Pop(_, _) => 3,
@@ -117,6 +121,11 @@ pub fn update_render_cache(world: &mut World) {
                     *pos,
                     RenderEntity::Pop(text, color),
                 );
+            }
+
+            // Check for Fire
+            if e.get::<Fire>().is_some() {
+                insert_if_higher_priority(&mut cache.entities, *pos, RenderEntity::Fire);
             }
 
             // Check for Anomaly
@@ -300,6 +309,15 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
                 y: world_y,
             }) {
                 match entity {
+                    RenderEntity::Fire => {
+                        line_spans.push(Span::styled(
+                            "^",
+                            Style::default()
+                                .fg(Color::Rgb(255, 100, 0))
+                                .add_modifier(Modifier::BOLD),
+                        ));
+                        continue;
+                    }
                     RenderEntity::Designation(tool) => {
                         let color = Color::Red; // Standardize designation color as red
                         line_spans.push(Span::styled(

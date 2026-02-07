@@ -18,6 +18,7 @@ use crate::experimental::biography::Biography;
 use crate::layer1::{
     ActionType, ColonyResources, Farm, GridPosition, Housing, PopAction, TerrainGrid,
     building::Building, needs::Needs, pop::Pop, resources::RefiningProgress, stockpile::Stockpile,
+    structure::Structure,
 };
 use crate::shared::selection::{Selection, SelectionTarget};
 use crate::ui::map::{get_building_color, get_terrain_char, get_terrain_color};
@@ -38,6 +39,7 @@ pub fn render_inspector(frame: &mut Frame, area: Rect, world: &World) {
     }
 }
 
+#[allow(clippy::too_many_lines)]
 fn render_colony_stats(frame: &mut Frame, area: Rect, world: &World) {
     let resources = world.resource::<ColonyResources>();
 
@@ -66,7 +68,7 @@ fn render_colony_stats(frame: &mut Frame, area: Rect, world: &World) {
         .direction(Direction::Vertical)
         .constraints([
             Constraint::Length(6), // Demographics
-            Constraint::Min(6),    // Resources
+            Constraint::Min(9),    // Resources
         ])
         .split(area);
 
@@ -119,6 +121,27 @@ fn render_colony_stats(frame: &mut Frame, area: Rect, world: &World) {
         Row::new(vec![
             Cell::from("🔧 Tools").style(Style::default().fg(Color::Cyan)),
             Cell::from(format!("{:.1}/{:.0}", resources.tools, resources.max_tools)),
+        ]),
+        Row::new(vec![
+            Cell::from("Fb Fiber").style(Style::default().fg(Color::Green)),
+            Cell::from(format!(
+                "{:.1}/{:.0}",
+                resources.fiber, resources.max_fiber
+            )),
+        ]),
+        Row::new(vec![
+            Cell::from("Cl Cloth").style(Style::default().fg(Color::Magenta)),
+            Cell::from(format!(
+                "{:.1}/{:.0}",
+                resources.cloth, resources.max_cloth
+            )),
+        ]),
+        Row::new(vec![
+            Cell::from("Cg Clothing").style(Style::default().fg(Color::LightMagenta)),
+            Cell::from(format!(
+                "{:.1}/{:.0}",
+                resources.clothing, resources.max_clothing
+            )),
         ]),
     ];
 
@@ -250,6 +273,8 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         6
     };
 
+    let has_structure = world.get::<Structure>(entity).is_some();
+
     let layout = Layout::default()
         .direction(Direction::Vertical)
         .constraints([
@@ -258,6 +283,7 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
             Constraint::Length(u16::from(action_line.is_some())), // Action
             Constraint::Length(1),                                // Spacer
             Constraint::Length(details_height),                   // Needs or Details
+            Constraint::Length(u16::from(has_structure)),         // Structure HP
             Constraint::Length(1),                                // Spacer
             Constraint::Min(1),                                   // Thoughts/Extra
         ])
@@ -336,8 +362,34 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         render_refining_details(frame, details_area, progress);
     }
 
-    // 5. Biography
-    let bottom_area = layout[6];
+    // 5. Structure HP
+    if let Some(structure) = world.get::<Structure>(entity) {
+        let pct = if structure.max_hp > 0.0 {
+            (structure.current_hp / structure.max_hp * 100.0) as u16
+        } else {
+            0
+        };
+        let color = if pct > 66 {
+            Color::Green
+        } else if pct > 33 {
+            Color::Yellow
+        } else {
+            Color::Red
+        };
+        frame.render_widget(
+            Paragraph::new(Line::from(vec![
+                Span::raw("HP: "),
+                Span::styled(
+                    format!("{:.0}/{:.0}", structure.current_hp, structure.max_hp),
+                    Style::default().fg(color),
+                ),
+            ])),
+            layout[5],
+        );
+    }
+
+    // 6. Biography
+    let bottom_area = layout[7];
     let bio_opt = world.get::<Biography>(entity);
 
     if let Some(bio) = bio_opt {

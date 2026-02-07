@@ -29,6 +29,8 @@ pub mod inspector;
 pub mod map;
 /// Main menu rendering.
 pub mod menu;
+/// Notifications overlay rendering.
+pub mod notifications;
 /// Info panels (inspector, etc).
 pub mod panels;
 /// Status bar rendering.
@@ -43,6 +45,7 @@ use crate::shared::state::GameState;
 use self::chronicle::render_chronicle;
 use self::map::render_map;
 use self::menu::render_main_menu;
+use self::notifications::render_notifications;
 use self::panels::render_info_panel;
 use self::status::render_status_bar;
 
@@ -87,6 +90,9 @@ pub fn render(world: &World, frame: &mut Frame) {
 
     // Render map
     render_map(frame, map_area, world);
+
+    // Render notifications overlay on top of map
+    render_notifications(frame, map_area, world);
 
     // Render info panel
     render_info_panel(frame, info_area, world);

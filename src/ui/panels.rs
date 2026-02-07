@@ -46,11 +46,22 @@ pub fn render_info_panel(frame: &mut Frame, area: Rect, world: &World) {
     if let Some(log) = world.get_resource::<MessageLog>() {
         let height = log_inner.height as usize;
         let start = log.messages.len().saturating_sub(height);
+        let max_w = log_inner.width as usize;
         let items: Vec<ListItem> = log
             .messages
             .iter()
             .skip(start)
-            .map(|m| ListItem::new(Line::styled(m.text.clone(), Style::default().fg(m.color))))
+            .map(|m| {
+                let display_text = if m.text.len() > max_w && max_w > 1 {
+                    format!(
+                        "{}\u{2026}",
+                        &m.text.chars().take(max_w - 1).collect::<String>()
+                    )
+                } else {
+                    m.text.clone()
+                };
+                ListItem::new(Line::styled(display_text, Style::default().fg(m.color)))
+            })
             .collect();
 
         let list = List::new(items);
