@@ -134,11 +134,9 @@ pub fn initial_chronicle_event(world: &mut World) {
             .generate("COLONY_FOUNDED", &ctx)
             .unwrap_or_else(|_| "Colony founded. The journey begins.".to_string())
     };
-    world.resource_mut::<Chronicle>().add_event(
-        0,
-        text,
-        EventImportance::Legendary,
-    );
+    world
+        .resource_mut::<Chronicle>()
+        .add_event(0, text, EventImportance::Legendary);
 }
 
 /// Checks for building milestones and records them in the chronicle.

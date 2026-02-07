@@ -76,8 +76,8 @@ use scale::layer1::housing::Housing;
 use scale::layer1::needs::Needs;
 use scale::layer1::resources::ColonyResources;
 use scale::layer1::social::Tavern;
-use scale::layer1::utility_ai::types::{ActionType, PopAction, UtilityConfig, UtilityWeights};
 use scale::layer1::utility_ai::evaluate_actions_system;
+use scale::layer1::utility_ai::types::{ActionType, PopAction, UtilityConfig, UtilityWeights};
 
 /// Build a minimal world with `n_pops` pops and `n_buildings` buildings.
 fn make_bench_world(n_pops: usize, n_buildings: usize, gpu_ctx: Option<GpuContext>) -> World {
@@ -161,8 +161,7 @@ fn make_bench_world(n_pops: usize, n_buildings: usize, gpu_ctx: Option<GpuContex
 
 fn benchmark_utility_ai(c: &mut Criterion) {
     // Try to create GPU context once (shared across benchmarks)
-    let gpu_result =
-        std::panic::catch_unwind(|| pollster::block_on(GpuContext::new()));
+    let gpu_result = std::panic::catch_unwind(|| pollster::block_on(GpuContext::new()));
     let gpu_available = matches!(&gpu_result, Ok(Ok(_)));
 
     let mut group = c.benchmark_group("utility_ai_evaluate");

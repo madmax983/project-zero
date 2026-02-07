@@ -68,7 +68,11 @@ pub fn dream_system(
     }
 }
 
-fn generate_dream(rng: &mut impl Rng, bio: Option<&Biography>, generator: &NarrativeGenerator) -> String {
+fn generate_dream(
+    rng: &mut impl Rng,
+    bio: Option<&Biography>,
+    generator: &NarrativeGenerator,
+) -> String {
     if let Some(bio) = bio
         && !bio.events.is_empty()
         && rng.gen_bool(0.7)

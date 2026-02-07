@@ -2,6 +2,7 @@
 
 use bevy_ecs::prelude::*;
 
+use crate::gpu::context::GpuContext;
 use crate::layer1::{
     BuildMode, BuildingTracker, Chronicle, ChronicleUiState, ColonyMemory, ColonyResources,
     DesignationMode, NamedLocations, OccupiedTiles, SeasonState, TechState, UtilityConfig,
@@ -15,7 +16,6 @@ use crate::shared::selection::Selection;
 use crate::shared::state::GameState;
 use crate::shared::time::SimulationTime;
 use crate::shared::world_history::generate_world_history;
-use crate::gpu::context::GpuContext;
 use crate::ui::map::RenderCache;
 
 /// Ensures the Bevy task pools are initialized (required for `par_iter_mut`).
