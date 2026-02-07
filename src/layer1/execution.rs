@@ -288,6 +288,10 @@ pub fn arrival_handler_system(
                 // Work is handled by work_execution_system
                 // Just keep the AtTarget marker for that system
             }
+            ActionType::Haul => {
+                // Hauling is handled by haul_system
+                // Just keep the AtTarget marker for that system
+            }
             _ => {
                 commands
                     .entity(pop_entity)
