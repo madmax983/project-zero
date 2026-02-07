@@ -37,3 +37,4 @@ Implemented features. Architect: read this to understand current state.
 - [x] `033` Fire Propagation — `specs/033-fire-propagation.md` — completed 2026-02-18
 - [x] `031` Pop Morale — `specs/031-pop-morale.md` — completed 2026-02-02
 - [x] `032` Entropy and Spoilage — `specs/032-entropy-spoilage.md` — completed 2026-02-18
+- [x] `035` Workplace Hazards — `specs/035-workplace-hazards.md` — completed 2026-02-18

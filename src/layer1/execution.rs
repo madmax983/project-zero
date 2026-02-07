@@ -24,6 +24,7 @@
 
 use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::farm::Farm;
+use crate::layer1::health::Health;
 use crate::layer1::housing::Housing;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::{Needs, get_morale_efficiency};
@@ -33,6 +34,7 @@ use crate::layer1::resources::{
 use crate::layer1::social::Tavern;
 use crate::layer1::terrain::TerrainGrid;
 use crate::layer1::utility_ai::{ActionType, PopAction, StartPlan};
+use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
 use rand::Rng;
 
@@ -414,6 +416,24 @@ pub fn work_execution_system(world: &mut World) {
                 action.current = ActionType::Idle;
                 action.current_utility = 0.0;
                 action.ticks_committed = 1;
+            }
+        }
+
+        // Workplace Hazards
+        if worked {
+            let danger = ActionType::Work.danger_level();
+            let mut rng = rand::thread_rng();
+            if rng.gen_bool(danger) {
+                let damage = ActionType::Work.accident_damage();
+                // Apply damage if pop has Health
+                if let Some(mut health) = world.get_mut::<Health>(pop_entity) {
+                    health.take_damage(damage);
+
+                    // Log accident
+                    if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+                        log.add(format!("ACCIDENT: Worker injured! (-{damage} HP)"));
+                    }
+                }
             }
         }
 
