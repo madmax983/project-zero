@@ -56,6 +56,28 @@ pub fn death_system(world: &mut World) {
         .map(|(e, _)| e)
         .collect();
 
+    if to_despawn.is_empty() {
+        return;
+    }
+
+    let current_tick = world
+        .get_resource::<crate::shared::time::SimulationTime>()
+        .map_or(0, |t| t.tick);
+
+    // Apply WitnessedDeath to all living pops with Memories
+    // Using a collected vector of mut pointers or just iterating if possible.
+    // With &mut World we can create a query and iterate.
+    // We iterate once per death.
+    for _ in &to_despawn {
+        let mut query = world.query::<&mut crate::layer1::memory::Memories>();
+        for mut memories in query.iter_mut(world) {
+            memories.add(
+                crate::layer1::memory::MemoryType::WitnessedDeath,
+                current_tick,
+            );
+        }
+    }
+
     for entity in to_despawn {
         world.despawn(entity);
         if let Some(mut log) = world.get_resource_mut::<MessageLog>() {

@@ -1,6 +1,7 @@
 use crate::layer1::balance::{
     FOOD_HUNGER_THRESHOLD, FOOD_PER_MEAL, FOOD_PER_WORKER_PER_TICK, HUNGER_PER_MEAL,
 };
+use crate::layer1::memory::{Memories, MemoryType};
 use crate::layer1::needs::Needs;
 use crate::layer1::pop::Pop;
 use crate::layer1::resources::ColonyResources;
@@ -58,7 +59,7 @@ pub fn produce_food_system(
 
 /// Pops eat food when hungry.
 pub fn consume_food_system(
-    mut pop_query: Query<(Entity, &mut Needs), With<Pop>>,
+    mut pop_query: Query<(Entity, &mut Needs, Option<&mut Memories>), With<Pop>>,
     mut resources: ResMut<ColonyResources>,
     time: Res<SimulationTime>,
     mut commands: Commands,
@@ -73,8 +74,8 @@ pub fn consume_food_system(
     // Collect hungry pop entities first to avoid borrow issues with mut iteration
     let hungry_pops: Vec<Entity> = pop_query
         .iter()
-        .filter(|(_, needs)| needs.hunger < FOOD_HUNGER_THRESHOLD)
-        .map(|(e, _)| e)
+        .filter(|(_, needs, _)| needs.hunger < FOOD_HUNGER_THRESHOLD)
+        .map(|(e, _, _)| e)
         .collect();
 
     for entity in hungry_pops {
@@ -82,11 +83,18 @@ pub fn consume_food_system(
             break;
         }
 
-        if let Ok((_, mut needs)) = pop_query.get_mut(entity) {
+        if let Ok((_, mut needs, mut memories)) = pop_query.get_mut(entity) {
             food -= FOOD_PER_MEAL;
             needs.hunger = (needs.hunger + HUNGER_PER_MEAL).min(1.0);
 
             let mut rng = rand::thread_rng();
+            // 10% chance to gain a happy memory from a meal
+            if let Some(mem) = &mut memories
+                && rng.gen_bool(0.1)
+            {
+                mem.add(MemoryType::AteFineMeal, tick);
+            }
+
             let thoughts = [
                 "That hit the spot.",
                 "Finally, a good meal.",

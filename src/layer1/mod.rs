@@ -33,6 +33,8 @@ pub mod map;
 #[cfg(test)]
 /// Tests for metal industry (Spec 024).
 pub mod metal_industry_tests;
+/// Pop memory system (Spec 036).
+pub mod memory;
 /// Pop needs (hunger, rest).
 pub mod needs;
 /// Pop entity and management.
@@ -80,6 +82,7 @@ pub use housing::*;
 pub use integration::*;
 pub use locations::*;
 pub use map::*;
+pub use memory::*;
 pub use needs::*;
 pub use pop::*;
 pub use refining::*;

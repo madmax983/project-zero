@@ -28,6 +28,7 @@ use crate::layer1::farm::Farm;
 use crate::layer1::health::Health;
 use crate::layer1::housing::Housing;
 use crate::layer1::map::GridPosition;
+use crate::layer1::memory::Memories;
 use crate::layer1::needs::{Needs, get_morale_efficiency};
 use crate::layer1::resources::{
     ColonyResources, ForestryProgress, MiningProgress, chop_tree, mine_rock,
@@ -370,11 +371,16 @@ pub fn work_execution_system(world: &mut World) {
     // Since we need to access Needs which is a component, and we need &mut World later,
     // we should collect Needs data first.
     let workers_data: Vec<(Entity, Entity, f32)> = world
-        .query_filtered::<(Entity, &MovementTarget, Option<&Needs>), With<AtTarget>>()
+        .query_filtered::<(Entity, &MovementTarget, Option<&Needs>, Option<&Memories>), With<AtTarget>>()
         .iter(world)
-        .filter(|(_, mt, _)| mt.for_action == ActionType::Work)
-        .map(|(e, mt, needs)| {
-            let morale = needs.map_or(0.5, Needs::morale); // Default to neutral if no Needs
+        .filter(|(_, mt, _, _)| mt.for_action == ActionType::Work)
+        .map(|(e, mt, needs, memories)| {
+            let morale = needs.map_or(0.5, |n| {
+                memories.map_or_else(
+                    || n.morale(),
+                    |m| crate::layer1::calculate_effective_morale(n, m),
+                )
+            });
             (e, mt.target_entity, morale)
         })
         .collect();

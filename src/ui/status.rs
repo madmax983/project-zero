@@ -39,8 +39,18 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
     // Calculate average morale
     let (total_morale, morale_count) = world
         .iter_entities()
-        .filter_map(|e| e.get::<crate::layer1::Needs>())
-        .fold((0.0, 0), |(sum, needs), n| (sum + n.morale(), needs + 1));
+        .filter_map(|e| {
+            let needs = e.get::<crate::layer1::Needs>()?;
+            let memories = e.get::<crate::layer1::Memories>();
+            Some((needs, memories))
+        })
+        .fold((0.0, 0), |(sum, count), (needs, memories)| {
+            let morale = memories.map_or_else(
+                || needs.morale(),
+                |m| crate::layer1::calculate_effective_morale(needs, m),
+            );
+            (sum + morale, count + 1)
+        });
 
     #[allow(clippy::cast_precision_loss)]
     let avg_morale = if morale_count > 0 {
@@ -300,7 +310,7 @@ mod tests {
 
     #[test]
     fn test_render_status_bar_calculates_morale() {
-        use crate::layer1::{ColonyResources, NamedLocations, Needs, Pop, Viewport};
+        use crate::layer1::{ColonyResources, Memories, NamedLocations, Needs, Pop, Viewport};
         use crate::shared::state::GameState;
         use crate::shared::time::SimulationTime;
         use ratatui::Terminal;
@@ -324,6 +334,7 @@ mod tests {
                 rest: 1.0,
                 leisure: 1.0,
             },
+            Memories::default(),
         )); // Morale 1.0
         world.spawn((
             Pop,
@@ -332,6 +343,7 @@ mod tests {
                 rest: 0.0,
                 leisure: 0.0,
             },
+            Memories::default(),
         )); // Morale 0.0
         // Avg = 0.5
 
@@ -354,5 +366,46 @@ mod tests {
         let full_text = cells.join("");
 
         assert!(full_text.contains("Morale: 50%"));
+    }
+
+    #[test]
+    fn test_render_status_bar_no_pops() {
+        use crate::layer1::{ColonyResources, NamedLocations, Viewport};
+        use crate::shared::state::GameState;
+        use crate::shared::time::SimulationTime;
+        use ratatui::Terminal;
+        use ratatui::backend::TestBackend;
+
+        let mut world = World::new();
+        // Setup resources
+        world.insert_resource(SimulationTime::default());
+        world.insert_resource(GameState::Running);
+        world.insert_resource(BuildMode::default());
+        world.insert_resource(DesignationMode::default());
+        world.insert_resource(Viewport::default());
+        world.insert_resource(NamedLocations::default());
+        world.insert_resource(ColonyResources::default());
+
+        // No pops spawned
+
+        let backend = TestBackend::new(100, 1);
+        let mut terminal = Terminal::new(backend).unwrap();
+
+        terminal
+            .draw(|f| {
+                render_status_bar(f, f.area(), &world);
+            })
+            .unwrap();
+
+        // Check output
+        let buffer = terminal.backend().buffer();
+        let cells: Vec<String> = buffer
+            .content
+            .iter()
+            .map(|c| c.symbol().to_string())
+            .collect();
+        let full_text = cells.join("");
+
+        assert!(full_text.contains("Morale: 0%"));
     }
 }
