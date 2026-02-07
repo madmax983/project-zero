@@ -12,6 +12,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `042` Energy System — `specs/042-energy-system.md`
 - [ ] `043` Defensive Structures — `specs/043-defensive-structures.md`
 - [ ] `044` Horticulture and Beauty — `specs/044-horticulture-beauty.md`
+- [ ] `045` Structure Durability & Repair — `specs/045-structure-durability.md`
 
 ## MVP — Architecture Refactoring
 
