@@ -9,8 +9,9 @@ pub mod actions;
 pub mod balance;
 /// Building placement and types.
 pub mod building;
-/// Chronicle system and historical records.
 pub mod chronicle;
+/// Chronicle system and historical records.
+pub mod clothing;
 /// Designation system for player tools.
 pub mod designation;
 /// Execution layer bridging utility AI to actions.
@@ -104,3 +105,4 @@ pub use utility_ai::*;
 
 #[cfg(test)]
 mod tool_tests;
+pub use clothing::*;

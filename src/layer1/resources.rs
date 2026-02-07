@@ -93,6 +93,12 @@ pub struct ColonyResources {
     pub tools: f32,
     /// Total knowledge available in the colony.
     pub knowledge: f32,
+    /// Total fiber available in the colony.
+    pub fiber: f32,
+    /// Total cloth available in the colony.
+    pub cloth: f32,
+    /// Total clothing available in the colony.
+    pub clothing: f32,
     /// Maximum food capacity.
     pub max_food: f32,
     /// Maximum wood capacity.
@@ -111,6 +117,12 @@ pub struct ColonyResources {
     pub max_tools: f32,
     /// Maximum knowledge capacity.
     pub max_knowledge: f32,
+    /// Maximum fiber capacity.
+    pub max_fiber: f32,
+    /// Maximum cloth capacity.
+    pub max_cloth: f32,
+    /// Maximum clothing capacity.
+    pub max_clothing: f32,
 }
 
 impl Default for ColonyResources {
@@ -125,6 +137,9 @@ impl Default for ColonyResources {
             metal: 0.0,
             tools: 2.0,
             knowledge: 0.0,
+            fiber: 0.0,
+            cloth: 0.0,
+            clothing: 0.0,
             max_food: 50.0,
             max_wood: 50.0,
             max_stone: 20.0,
@@ -134,6 +149,9 @@ impl Default for ColonyResources {
             max_metal: 20.0,
             max_tools: 50.0,
             max_knowledge: 100.0, // Default for tests
+            max_fiber: 50.0,
+            max_cloth: 50.0,
+            max_clothing: 50.0,
         }
     }
 }
@@ -155,6 +173,9 @@ impl ColonyResources {
             metal: 0.0,
             tools: 0.0,
             knowledge: 0.0,
+            fiber: 0.0,
+            cloth: 0.0,
+            clothing: 0.0,
             max_food: 0.0,
             max_wood: 0.0,
             max_stone: 0.0,
@@ -164,6 +185,9 @@ impl ColonyResources {
             max_metal: 0.0,
             max_tools: 0.0,
             max_knowledge: 0.0,
+            max_fiber: 0.0,
+            max_cloth: 0.0,
+            max_clothing: 0.0,
         }
     }
 
@@ -212,6 +236,21 @@ impl ColonyResources {
         self.knowledge = (self.knowledge + amount).clamp(0.0, self.max_knowledge);
     }
 
+    /// Adds fiber, clamping to the maximum capacity.
+    pub fn add_fiber(&mut self, amount: f32) {
+        self.fiber = (self.fiber + amount).clamp(0.0, self.max_fiber);
+    }
+
+    /// Adds cloth, clamping to the maximum capacity.
+    pub fn add_cloth(&mut self, amount: f32) {
+        self.cloth = (self.cloth + amount).clamp(0.0, self.max_cloth);
+    }
+
+    /// Adds clothing, clamping to the maximum capacity.
+    pub fn add_clothing(&mut self, amount: f32) {
+        self.clothing = (self.clothing + amount).clamp(0.0, self.max_clothing);
+    }
+
     /// Checks if the colony can afford the given cost.
     ///
     /// # Parameters
@@ -232,6 +271,9 @@ impl ColonyResources {
             && self.metal >= cost.metal
             && self.tools >= cost.tools
             && self.knowledge >= cost.knowledge
+            && self.fiber >= cost.fiber
+            && self.cloth >= cost.cloth
+            && self.clothing >= cost.clothing
     }
 
     /// Deducts the given cost from the colony's resources.
@@ -249,6 +291,9 @@ impl ColonyResources {
         self.metal -= cost.metal;
         self.tools -= cost.tools;
         self.knowledge -= cost.knowledge;
+        self.fiber -= cost.fiber;
+        self.cloth -= cost.cloth;
+        self.clothing -= cost.clothing;
     }
 
     /// Attempts to deduct the given cost from the colony's resources.
@@ -648,7 +693,10 @@ mod tests {
         // 4. Resources should NOT be credited immediately
         let resources = world.resource::<ColonyResources>();
         // Default stone is 5.0. Should still be 5.0.
-        assert!((resources.stone - 5.0).abs() < f32::EPSILON, "Resources should not increase until hauled");
+        assert!(
+            (resources.stone - 5.0).abs() < f32::EPSILON,
+            "Resources should not increase until hauled"
+        );
 
         // 5. Check log
         let log = world.resource::<MessageLog>();
@@ -823,7 +871,10 @@ mod tests {
         // 4. Resources should NOT be credited immediately
         let resources = world.resource::<ColonyResources>();
         // Default wood is 15.0. Should still be 15.0.
-        assert!((resources.wood - 15.0).abs() < f32::EPSILON, "Resources should not increase until hauled");
+        assert!(
+            (resources.wood - 15.0).abs() < f32::EPSILON,
+            "Resources should not increase until hauled"
+        );
 
         // 5. Check log
         let log = world.resource::<MessageLog>();

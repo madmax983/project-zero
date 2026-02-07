@@ -51,6 +51,8 @@ pub fn process_refining_system(
             resources.add_blocks(output.blocks);
             resources.add_metal(output.metal);
             resources.add_tools(output.tools);
+            resources.add_cloth(output.cloth);
+            resources.add_clothing(output.clothing);
 
             if let Ok((_, _, _, mut progress)) = building_query.get_mut(*entity) {
                 progress.current = 0.0;
@@ -117,6 +119,28 @@ pub fn get_refining_recipe(
             },
             ColonyResources {
                 tools: 1.0,
+                ..Default::default()
+            },
+        ),
+        BuildingType::Weaver => (
+            res.fiber >= 1.0 && res.cloth < res.max_cloth,
+            ColonyResources {
+                fiber: 1.0,
+                ..Default::default()
+            },
+            ColonyResources {
+                cloth: 1.0,
+                ..Default::default()
+            },
+        ),
+        BuildingType::Tailor => (
+            res.cloth >= 1.0 && res.clothing < res.max_clothing,
+            ColonyResources {
+                cloth: 1.0,
+                ..Default::default()
+            },
+            ColonyResources {
+                clothing: 1.0,
                 ..Default::default()
             },
         ),

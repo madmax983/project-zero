@@ -19,46 +19,64 @@ fn test_death_causes_witnessed_memory() {
     let mut world = setup();
 
     // Spawn survivor first
-    let survivor = world.spawn((
-        Pop,
-        Health::default(),
-        Memories::default(),
-    )).id();
+    let survivor = world
+        .spawn((Pop, Health::default(), Memories::default()))
+        .id();
 
     // Spawn victim (dead)
-    let victim = world.spawn((
-        Pop,
-        Health { current: -1.0, max: 100.0 }, // Already dead
-        Memories::default(),
-    )).id();
+    let victim = world
+        .spawn((
+            Pop,
+            Health {
+                current: -1.0,
+                max: 100.0,
+            }, // Already dead
+            Memories::default(),
+        ))
+        .id();
 
     // Run death system
     death_system(&mut world);
 
     // Victim should be despawned
-    assert!(world.get_entity(victim).is_err(), "Victim should be despawned");
+    assert!(
+        world.get_entity(victim).is_err(),
+        "Victim should be despawned"
+    );
 
     // Survivor should have WitnessedDeath memory
-    let survivor_memories = world.get::<Memories>(survivor).expect("Survivor should have Memories");
+    let survivor_memories = world
+        .get::<Memories>(survivor)
+        .expect("Survivor should have Memories");
 
     // Assert failure (RED phase)
     if survivor_memories.items.is_empty() {
         panic!("RED PHASE: Survivor has no memories!");
     }
 
-    assert_eq!(survivor_memories.items[0].memory_type, MemoryType::WitnessedDeath, "Memory should be WitnessedDeath");
+    assert_eq!(
+        survivor_memories.items[0].memory_type,
+        MemoryType::WitnessedDeath,
+        "Memory should be WitnessedDeath"
+    );
 }
 
 #[test]
 fn test_starvation_causes_trauma_memory() {
     let mut world = setup();
 
-    let pop = world.spawn((
-        Pop,
-        Health::default(),
-        Needs { hunger: 0.0, rest: 1.0, leisure: 1.0 }, // Starving
-        Memories::default(),
-    )).id();
+    let pop = world
+        .spawn((
+            Pop,
+            Health::default(),
+            Needs {
+                hunger: 0.0,
+                rest: 1.0,
+                leisure: 1.0,
+            }, // Starving
+            Memories::default(),
+        ))
+        .id();
 
     // Run starvation system
     starvation_damage_system(&mut world);
@@ -75,5 +93,9 @@ fn test_starvation_causes_trauma_memory() {
         panic!("RED PHASE: Pop has no memories!");
     }
 
-    assert_eq!(memories.items[0].memory_type, MemoryType::StarvationTrauma, "Memory should be StarvationTrauma");
+    assert_eq!(
+        memories.items[0].memory_type,
+        MemoryType::StarvationTrauma,
+        "Memory should be StarvationTrauma"
+    );
 }

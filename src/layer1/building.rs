@@ -37,6 +37,12 @@ pub enum BuildingType {
     Tavern,
     /// Research center for Knowledge.
     Library,
+    /// Farming building for fiber production.
+    Plantation,
+    /// Refines Fiber into Cloth.
+    Weaver,
+    /// Refines Cloth into Clothing.
+    Tailor,
 }
 
 impl BuildingType {
@@ -71,6 +77,9 @@ impl BuildingType {
             Self::Smithy => "Smithy",
             Self::Tavern => "Tavern",
             Self::Library => "Library",
+            Self::Plantation => "Plantation",
+            Self::Weaver => "Weaver",
+            Self::Tailor => "Tailor",
         }
     }
 
@@ -84,8 +93,10 @@ impl BuildingType {
             Self::LumberMill => 'L',
             Self::StoneMason => 'M',
             Self::Smelter => 'S',
-            Self::Smithy | Self::Tavern => 'T',
+            Self::Smithy | Self::Tavern | Self::Tailor => 'T',
             Self::Library => '?', // Placeholder
+            Self::Plantation => 'P',
+            Self::Weaver => 'W',
         }
     }
 
@@ -127,6 +138,15 @@ impl BuildingType {
                 ..ColonyResources::zeroed()
             },
             Self::Library => ColonyResources::zeroed(),
+            Self::Plantation => ColonyResources {
+                wood: 20.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Weaver | Self::Tailor => ColonyResources {
+                wood: 30.0,
+                stone: 5.0,
+                ..ColonyResources::zeroed()
+            },
         }
     }
 
@@ -242,13 +262,13 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
         BuildingType::Housing => {
             entity.insert((Housing::default(), Flammable::default()));
         }
-        BuildingType::Farm => {
+        BuildingType::Farm | BuildingType::Plantation => {
             entity.insert((Farm::default(), Flammable::default()));
         }
         BuildingType::Stockpile => {
             entity.insert((Stockpile::default(), Flammable::default()));
         }
-        BuildingType::LumberMill => {
+        BuildingType::LumberMill | BuildingType::Weaver | BuildingType::Tailor => {
             entity.insert((
                 RefiningProgress {
                     current: 0.0,
@@ -384,7 +404,10 @@ mod tests {
         assert_eq!(BuildingType::Smelter.next(), BuildingType::Smithy);
         assert_eq!(BuildingType::Smithy.next(), BuildingType::Tavern);
         assert_eq!(BuildingType::Tavern.next(), BuildingType::Library);
-        assert_eq!(BuildingType::Library.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::Library.next(), BuildingType::Plantation);
+        assert_eq!(BuildingType::Plantation.next(), BuildingType::Weaver);
+        assert_eq!(BuildingType::Weaver.next(), BuildingType::Tailor);
+        assert_eq!(BuildingType::Tailor.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -457,6 +480,15 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Library);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Plantation);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Weaver);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Tailor);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

@@ -10,8 +10,8 @@ pub const fn get_texture_override(terrain: TerrainType, season: Option<Season>) 
     match season {
         Some(Season::Winter) => match terrain {
             TerrainType::Grass => Some(Color::Rgb(220, 220, 225)), // Snowy white/grey
-            TerrainType::Dirt => Some(Color::Rgb(200, 190, 180)), // Frozen dirt
-            TerrainType::Tree => Some(Color::Rgb(100, 100, 100)), // Bare branches
+            TerrainType::Dirt => Some(Color::Rgb(200, 190, 180)),  // Frozen dirt
+            TerrainType::Tree => Some(Color::Rgb(100, 100, 100)),  // Bare branches
             TerrainType::Water => Some(Color::Cyan),               // Icy blue
             _ => None,
         },
