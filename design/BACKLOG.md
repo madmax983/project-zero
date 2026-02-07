@@ -11,6 +11,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `035` Workplace Hazards — `specs/035-workplace-hazards.md`
 - [ ] `036` Pop Memory — `specs/036-pop-memory.md`
 - [ ] `038` Medical Care — `specs/038-medical-care.md`
+- [ ] `039` Trade System — `specs/039-trade-system.md`
 
 ## MVP — Architecture Refactoring
 
