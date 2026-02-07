@@ -6,6 +6,21 @@ use crate::layer1::{BuildMode, ColonyResources, DesignationMode, NamedLocations,
 use crate::shared::state::GameState;
 use crate::shared::time::{SimSpeed, SimulationTime};
 
+/// Renders the bottom status bar containing global simulation state.
+///
+/// Displays:
+/// - **Time**: Current day and speed.
+/// - **Population**: Total "Souls" count.
+/// - **Morale**: Average colony morale (color-coded).
+/// - **Resources**: Key resource totals (Food, Tools).
+/// - **Location**: Name of the location under the viewport center.
+/// - **Mode**: Current interaction mode (Build, Designate, or Hotkeys).
+///
+/// # Arguments
+///
+/// * `frame` - The `ratatui` frame to render into.
+/// * `area` - The rectangular area allocated for the status bar.
+/// * `world` - The ECS world to query resources and components from.
 pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
     let sim_time = world.resource::<SimulationTime>();
     let game_state = world.resource::<GameState>();
@@ -66,6 +81,23 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
     frame.render_widget(bar, area);
 }
 
+/// Constructs the styled `Line` for the status bar.
+///
+/// This separates the formatting logic from the ECS querying logic, making it easier
+/// to test the layout without mocking the entire `World`.
+///
+/// # Arguments
+///
+/// * `tick` - Current simulation tick (Day).
+/// * `speed` - Current simulation speed ([`SimSpeed`]).
+/// * `paused` - Whether the simulation is paused.
+/// * `build_mode` - State of the building placement tool ([`BuildMode`]).
+/// * `designation_mode` - State of the designation tool (e.g., Mining, [`DesignationMode`]).
+/// * `location_name` - Optional name of the location being viewed.
+/// * `pop_count` - Total number of colonists.
+/// * `food_yield` - Current food resource amount.
+/// * `tools` - Current tool resource amount.
+/// * `morale` - Average morale (0.0 to 1.0).
 #[must_use]
 #[allow(
     clippy::too_many_arguments,
@@ -211,6 +243,34 @@ pub fn get_status_line<'a>(
     Line::from(spans)
 }
 
+/// Helper to get the status string for headless testing or assertions.
+///
+/// Wraps [`get_status_line`] and converts the `Line` to a plain `String`.
+///
+/// # Examples
+///
+/// ```
+/// use scale::ui::status::get_status_string;
+/// use scale::shared::time::SimSpeed;
+/// use scale::layer1::{BuildMode, DesignationMode};
+///
+/// let status = get_status_string(
+///     10,                 // tick
+///     SimSpeed::Normal,   // speed
+///     false,              // paused
+///     &BuildMode::default(),
+///     &DesignationMode::default(),
+///     Some("Outpost"),    // location
+///     5,                  // pop count
+///     100.0,              // food
+///     10.0,               // tools
+///     0.8                 // morale
+/// );
+///
+/// assert!(status.contains("Day 10"));
+/// assert!(status.contains("Souls: 5"));
+/// assert!(status.contains("Outpost"));
+/// ```
 #[must_use]
 #[allow(clippy::too_many_arguments)]
 pub fn get_status_string(

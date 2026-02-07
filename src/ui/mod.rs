@@ -1,13 +1,37 @@
 //! User Interface.
 //!
 //! This module handles the TUI rendering using `ratatui`.
-#![allow(missing_docs)]
+//!
+//! # Architecture
+//!
+//! The UI is built using the `ratatui` crate, which provides a backend-agnostic way to
+//! render terminal interfaces. This allows the game to run:
+//! - **Natively** using `crossterm`.
+//! - **In Browser** using `ratzilla` (WASM).
+//!
+//! # Layout
+//!
+//! The `render` function acts as the main entry point for the UI system. It handles
+//! the high-level layout switching:
+//!
+//! 1. **Main Menu**: If `GameState` is `MainMenu`, it delegates to `render_main_menu`.
+//! 2. **Game Interface**: Otherwise, it renders the simulation view, split into:
+//!    - **Map**: The main gameplay area (`map::render_map`).
+//!    - **Info Panel**: Selected entity details (`panels::render_info_panel`).
+//!    - **Status Bar**: Global colony stats (`status::render_status_bar`).
+//!    - **Chronicle**: Historical events overlay (`chronicle::render_chronicle`).
 
+/// Chronicle overlay rendering.
 pub mod chronicle;
+/// Entity inspector panel.
 pub mod inspector;
+/// Map rendering logic.
 pub mod map;
+/// Main menu rendering.
 pub mod menu;
+/// Info panels (inspector, etc).
 pub mod panels;
+/// Status bar rendering.
 pub mod status;
 
 use bevy_ecs::prelude::*;
@@ -24,7 +48,14 @@ use self::status::render_status_bar;
 
 /// Render the full game UI for one frame.
 ///
-/// Works with any ratatui backend (native crossterm or WASM ratzilla).
+/// This function is called every frame by the platform layer (native main loop or WASM animation frame).
+/// It queries the ECS world for necessary state (`GameState`, `MenuState`, etc.) and draws to the
+/// provided `ratatui` frame.
+///
+/// # Arguments
+///
+/// * `world` - The ECS world containing all game state and resources.
+/// * `frame` - The `ratatui` frame to render into.
 pub fn render(world: &World, frame: &mut Frame) {
     if *world.resource::<GameState>() == GameState::MainMenu {
         let menu_state = world.resource::<MenuState>();

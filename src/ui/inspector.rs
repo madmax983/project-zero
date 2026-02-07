@@ -1,6 +1,11 @@
 #![allow(clippy::cast_sign_loss)]
 #![allow(clippy::cast_possible_truncation)]
 
+//! Inspector panel rendering.
+//!
+//! The inspector provides context-sensitive details about the currently selected entity or tile.
+//! It updates dynamically based on the [`crate::shared::selection::Selection`] resource.
+
 use bevy_ecs::prelude::*;
 use ratatui::{
     prelude::*,
@@ -18,6 +23,11 @@ use crate::shared::selection::{Selection, SelectionTarget};
 use crate::ui::map::{get_building_color, get_terrain_char, get_terrain_color};
 
 /// Renders the inspector panel content based on current selection.
+///
+/// Dispatches rendering to specific helpers based on the [`SelectionTarget`]:
+/// - [`SelectionTarget::None`] -> Colony stats (global overview).
+/// - [`SelectionTarget::Tile`] -> Tile inspector (terrain info).
+/// - [`SelectionTarget::Entity`] -> Entity inspector (pop/building details).
 pub fn render_inspector(frame: &mut Frame, area: Rect, world: &World) {
     let selection = world.resource::<Selection>();
 

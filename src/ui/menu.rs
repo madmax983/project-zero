@@ -2,6 +2,9 @@ use crate::shared::menu::MenuState;
 use ratatui::prelude::*;
 use ratatui::widgets::{Block, Borders, Paragraph};
 
+/// Renders the main menu screen.
+///
+/// Displays the game title and a selectable list of options (Start Game, Quit).
 pub fn render_main_menu(frame: &mut Frame, area: Rect, state: &MenuState) {
     let layout = Layout::default()
         .direction(Direction::Vertical)

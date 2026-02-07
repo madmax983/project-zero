@@ -6,6 +6,10 @@ use ratatui::{
 
 use crate::layer1::{Chronicle, ChronicleUiState, EventImportance, format_event_prefix};
 
+/// Renders the chronicle overlay if active.
+///
+/// This displays a scrolling history of colony events (births, deaths, construction, etc.).
+/// It is toggled by the [`ChronicleUiState`] resource.
 pub fn render_chronicle(frame: &mut Frame, area: Rect, world: &World) {
     let ui_state = world.resource::<ChronicleUiState>();
     if !ui_state.is_open {
@@ -86,6 +90,18 @@ fn centered_rect(percent_x: u16, percent_y: u16, r: Rect) -> Rect {
         .split(popup_layout[1])[1]
 }
 
+/// Returns the display color for an event based on its importance.
+///
+/// # Examples
+///
+/// ```
+/// use scale::ui::chronicle::get_importance_color;
+/// use scale::layer1::EventImportance;
+/// use ratatui::style::Color;
+///
+/// assert_eq!(get_importance_color(EventImportance::Legendary), Color::Yellow);
+/// assert_eq!(get_importance_color(EventImportance::Minor), Color::DarkGray);
+/// ```
 #[must_use]
 pub const fn get_importance_color(importance: EventImportance) -> Color {
     match importance {
