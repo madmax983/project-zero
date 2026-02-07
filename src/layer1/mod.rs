@@ -3,6 +3,8 @@
 //! This layer handles individual pops, buildings, and tile-based terrain
 //! similar to Dwarf Fortress or `RimWorld`.
 
+/// Pop actions logic.
+pub mod actions;
 /// Game balance constants.
 pub mod balance;
 /// Building placement and types.
@@ -80,6 +82,7 @@ pub use hauling::*;
 pub use health::*;
 pub use housing::*;
 pub use integration::*;
+pub use actions::*;
 pub use locations::*;
 pub use map::*;
 pub use memory::*;
