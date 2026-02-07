@@ -6,6 +6,7 @@
 )]
 
 use crate::layer1::GridPosition;
+use crate::layer1::structure::Structure;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use bevy_ecs::prelude::*;
 use rand::Rng;
@@ -191,10 +192,15 @@ pub fn fire_damage_system(world: &mut World) {
     // This requires a query scan which is O(N_buildings * N_burnt_tiles), ok for MVP
     if !burnt_entities.is_empty() {
         let mut entities_to_destroy = Vec::new();
-        let mut query = world.query::<(Entity, &GridPosition, &Flammable)>();
+        // Check for Structure component to avoid destroying durable buildings
+        let mut query = world.query::<(Entity, &GridPosition, &Flammable, Option<&Structure>)>();
 
-        for (entity, pos, _flammable) in query.iter(world) {
+        for (entity, pos, _flammable, structure) in query.iter(world) {
             if burnt_entities.contains(pos) {
+                // If it's a structure, it survives the fire burning out (unless HP was 0, handled elsewhere)
+                if structure.is_some() {
+                    continue;
+                }
                 entities_to_destroy.push(entity);
             }
         }

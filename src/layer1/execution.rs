@@ -155,9 +155,9 @@ pub fn movement_system(
         let target_pos = mt.target_position;
         let action = mt.for_action;
 
-        // For work actions, check if adjacent to an unwalkable target (rock/tree)
+        // For work/repair actions, check if adjacent to an unwalkable target (rock/tree/building)
         // Pops work FROM adjacent tiles, not ON the target
-        if action == ActionType::Work {
+        if action == ActionType::Work || action == ActionType::Repair {
             let target_walkable = is_walkable_terrain(&terrain, target_pos.x, target_pos.y);
             if !target_walkable {
                 let distance =
@@ -184,8 +184,8 @@ pub fn movement_system(
             commands.entity(pop_entity).insert(AtTarget);
         }
 
-        // For work actions on unwalkable targets, also check if now adjacent
-        if action == ActionType::Work {
+        // For work/repair actions on unwalkable targets, also check if now adjacent
+        if action == ActionType::Work || action == ActionType::Repair {
             let target_walkable = is_walkable_terrain(&terrain, target_pos.x, target_pos.y);
             if !target_walkable {
                 let distance = (new_pos.x - target_pos.x).abs() + (new_pos.y - target_pos.y).abs();
@@ -249,8 +249,8 @@ pub fn arrival_handler_system(
                     .remove::<MovementTarget>()
                     .remove::<AtTarget>();
             }
-            ActionType::Work | ActionType::Haul => {
-                // Work/Haul is handled by their respective systems
+            ActionType::Work | ActionType::Repair | ActionType::Haul => {
+                // Work/Repair/Haul is handled by their respective systems
                 // Just keep the AtTarget marker for that system
             }
             _ => {
@@ -334,10 +334,10 @@ pub fn work_execution_system(world: &mut World) {
     // Find pops at their work target and capture their morale
     // Since we need to access Needs which is a component, and we need &mut World later,
     // we should collect Needs data first.
-    let workers_data: Vec<(Entity, Entity, f32)> = world
+    let workers_data: Vec<(Entity, Entity, f32, ActionType)> = world
         .query_filtered::<(Entity, &MovementTarget, Option<&Needs>, Option<&Memories>), With<AtTarget>>()
         .iter(world)
-        .filter(|(_, mt, _, _)| mt.for_action == ActionType::Work)
+        .filter(|(_, mt, _, _)| mt.for_action == ActionType::Work || mt.for_action == ActionType::Repair)
         .map(|(e, mt, needs, memories)| {
             let morale = needs.map_or(0.5, |n| {
                 memories.map_or_else(
@@ -345,11 +345,11 @@ pub fn work_execution_system(world: &mut World) {
                     |m| calculate_effective_morale(n, m),
                 )
             });
-            (e, mt.target_entity, morale)
+            (e, mt.target_entity, morale, mt.for_action)
         })
         .collect();
 
-    for (pop_entity, designation_entity, morale) in workers_data {
+    for (pop_entity, designation_entity, morale, action_type) in workers_data {
         let morale_efficiency = get_morale_efficiency(morale);
         let work_amount = WORK_PER_TICK * tool_efficiency * morale_efficiency;
 
@@ -375,6 +375,10 @@ pub fn work_execution_system(world: &mut World) {
                 true
             }
             DesignationType::Demolish => execute_demolish(world, designation_entity),
+            DesignationType::Repair => {
+                crate::layer1::structure::process_repair(world, designation_entity, work_amount);
+                true
+            }
         };
 
         // After work: if designation was despawned (work completed), reset pop state
@@ -384,7 +388,7 @@ pub fn work_execution_system(world: &mut World) {
 
         // Workplace Hazards
         if worked {
-            handle_workplace_hazards(world, pop_entity);
+            handle_workplace_hazards(world, pop_entity, action_type);
 
             if has_tools && !tool_broken {
                 let mut rng = rand::thread_rng();
@@ -438,11 +442,11 @@ fn process_logging(world: &mut World, designation_entity: Entity, work_amount: f
     chop_tree(world, designation_entity, work_amount);
 }
 
-fn handle_workplace_hazards(world: &mut World, pop_entity: Entity) {
-    let danger = ActionType::Work.danger_level();
+fn handle_workplace_hazards(world: &mut World, pop_entity: Entity, action_type: ActionType) {
+    let danger = action_type.danger_level();
     let mut rng = rand::thread_rng();
     if rng.gen_bool(danger) {
-        let damage = ActionType::Work.accident_damage();
+        let damage = action_type.accident_damage();
         // Apply damage if pop has Health
         if let Some(mut health) = world.get_mut::<Health>(pop_entity) {
             health.take_damage(damage);

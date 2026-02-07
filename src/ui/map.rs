@@ -554,6 +554,7 @@ pub const fn get_designation_char(tool: DesignationType) -> &'static str {
         DesignationType::Mine => "%",
         DesignationType::Demolish => "X",
         DesignationType::Chop => "/",
+        DesignationType::Repair => "+",
     }
 }
 

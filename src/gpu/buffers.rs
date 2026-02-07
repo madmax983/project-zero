@@ -38,13 +38,13 @@ pub struct GpuPopInput {
     /// Learned social weight.
     pub social_weight: f32,
     /// Per-action success counts.
-    pub success_count: [u32; 8],
+    pub success_count: [u32; 9],
     /// Per-action attempt counts.
-    pub attempt_count: [u32; 8],
+    pub attempt_count: [u32; 9],
     /// Utility score of the current action.
     pub current_utility: f32,
     /// Padding to 16-byte alignment.
-    pub _padding: [u32; 3],
+    pub _padding: [u32; 1],
 }
 
 /// GPU-aligned building/target input data. One per building.
@@ -138,7 +138,7 @@ pub fn extract_pop_inputs(world: &mut World) -> (Vec<Entity>, Vec<GpuPopInput>) 
             success_count: weights.action_success_count,
             attempt_count: weights.action_attempt_count,
             current_utility: action.current_utility,
-            _padding: [0; 3],
+            _padding: [0; 1],
         });
     }
 
@@ -222,15 +222,21 @@ pub fn extract_building_inputs(world: &mut World) -> (Vec<Entity>, Vec<GpuBuildi
         }
     }
 
-    // Designations (building_type = 4)
+    // Designations (building_type = 4 for Work, 6 for Repair)
     {
+        use crate::layer1::designation::DesignationType;
         let mut query = world.query::<(Entity, &GridPosition, &Designation)>();
-        for (entity, pos, _designation) in query.iter(world) {
+        for (entity, pos, designation) in query.iter(world) {
+            let building_type = if designation.designation_type == DesignationType::Repair {
+                6
+            } else {
+                4
+            };
             entities.push(entity);
             inputs.push(GpuBuildingInput {
                 pos_x: pos.x,
                 pos_y: pos.y,
-                building_type: 4,
+                building_type,
                 capacity: 1,
                 occupied: 0,
                 resource_has_room: 0,
@@ -313,8 +319,8 @@ mod tests {
 
     #[test]
     fn test_gpu_pop_input_size() {
-        // 2*i32 + 6*f32 + 8*u32 + 8*u32 + 1*f32 + 3*u32
-        // = 8 + 24 + 32 + 32 + 4 + 12 = 112 bytes
+        // 2*i32 + 6*f32 + 9*u32 + 9*u32 + 1*f32 + 1*u32
+        // = 8 + 24 + 36 + 36 + 4 + 4 = 112 bytes
         assert_eq!(std::mem::size_of::<GpuPopInput>(), 112);
     }
 
@@ -355,8 +361,8 @@ mod tests {
                     distance_weight: 1.2,
                     availability_weight: 0.8,
                     social_weight: 1.0,
-                    action_success_count: [1, 2, 3, 0, 0, 0, 0, 0],
-                    action_attempt_count: [5, 5, 5, 0, 0, 0, 0, 0],
+                    action_success_count: [1, 2, 3, 0, 0, 0, 0, 0, 0],
+                    action_attempt_count: [5, 5, 5, 0, 0, 0, 0, 0, 0],
                 },
                 PopAction {
                     current: ActionType::SatisfyHunger,

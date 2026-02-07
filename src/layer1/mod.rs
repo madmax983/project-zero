@@ -55,6 +55,8 @@ pub mod social;
 pub mod spoilage;
 /// Resource storage limits and stockpile buildings.
 pub mod stockpile;
+/// Structure durability and repair.
+pub mod structure;
 /// Technology and research system.
 pub mod tech;
 /// Terrain generation and grid management.
@@ -95,6 +97,7 @@ pub use seasons::*;
 pub use social::*;
 pub use spoilage::*;
 pub use stockpile::*;
+pub use structure::*;
 pub use tech::*;
 pub use terrain::*;
 pub use utility_ai::*;

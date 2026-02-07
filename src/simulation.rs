@@ -78,9 +78,11 @@ pub fn build_simulation_schedule() -> Schedule {
     schedule.add_systems((
         fire_spread_system.after(work_execution_system),
         fire_damage_pops_system.after(fire_spread_system),
+        crate::layer1::structure::fire_damage_structure_system.after(fire_spread_system),
         fire_damage_system
             .after(fire_spread_system)
-            .after(fire_damage_pops_system),
+            .after(fire_damage_pops_system)
+            .after(crate::layer1::structure::fire_damage_structure_system),
     ));
 
     // --- Consumption Chain (sequential, depends on economy) ---

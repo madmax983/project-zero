@@ -14,6 +14,8 @@ pub enum ActionType {
     Explore,
     /// Perform designated work (Mine, Build, Chop)
     Work,
+    /// Repair damaged structures
+    Repair,
     /// Research new technologies at Library
     Research,
     /// Haul resources to stockpiles
@@ -24,7 +26,7 @@ pub enum ActionType {
 
 impl ActionType {
     /// Total number of action types
-    pub const COUNT: usize = 8;
+    pub const COUNT: usize = 9;
 
     /// Converts action type to array index
     #[must_use]
@@ -35,9 +37,10 @@ impl ActionType {
             Self::Socialize => 2,
             Self::Explore => 3,
             Self::Work => 4,
-            Self::Research => 5,
-            Self::Haul => 6,
-            Self::Idle => 7,
+            Self::Repair => 5,
+            Self::Research => 6,
+            Self::Haul => 7,
+            Self::Idle => 8,
         }
     }
 
@@ -45,7 +48,7 @@ impl ActionType {
     #[must_use]
     pub const fn danger_level(&self) -> f64 {
         match self {
-            Self::Work => 0.001, // 0.1% chance per tick
+            Self::Work | Self::Repair => 0.001, // 0.1% chance per tick
             _ => 0.0,
         }
     }
@@ -54,7 +57,7 @@ impl ActionType {
     #[must_use]
     pub const fn accident_damage(&self) -> f32 {
         match self {
-            Self::Work => 10.0,
+            Self::Work | Self::Repair => 10.0,
             _ => 0.0,
         }
     }
