@@ -96,7 +96,7 @@ pub fn cleanup_previous_assignment_system(
                     tavern.visitors.retain(|&v| v != pop_entity);
                 }
             }
-            AssignmentType::LibraryWorker => {}
+            AssignmentType::LibraryWorker | AssignmentType::Patient => {}
         }
 
         commands.entity(pop_entity).remove::<AssignedTo>();
@@ -212,6 +212,16 @@ pub fn arrival_handler_system(
         match action {
             ActionType::SatisfyHunger => {
                 handle_hunger_arrival(pop_entity, target_entity, &mut farms, &mut commands);
+                commands
+                    .entity(pop_entity)
+                    .remove::<MovementTarget>()
+                    .remove::<AtTarget>();
+            }
+            ActionType::SeekMedicalCare => {
+                commands.entity(pop_entity).insert(AssignedTo {
+                    entity: target_entity,
+                    assignment_type: AssignmentType::Patient,
+                });
                 commands
                     .entity(pop_entity)
                     .remove::<MovementTarget>()

@@ -37,6 +37,8 @@ pub mod integration;
 pub mod map;
 /// Pop memories and psychological effects.
 pub mod memory;
+/// Medical care and hospital logic.
+pub mod medical;
 #[cfg(test)]
 /// Tests for metal industry (Spec 024).
 pub mod metal_industry_tests;
@@ -93,6 +95,7 @@ pub use housing::*;
 pub use integration::*;
 pub use locations::*;
 pub use map::*;
+pub use medical::*;
 pub use memory::*;
 pub use needs::*;
 pub use notifications::*;

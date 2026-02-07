@@ -18,6 +18,7 @@ use crate::layer1::science::Anomaly;
 use crate::layer1::social::{Tavern, evaluate_socialize};
 use crate::layer1::stockpile::Stockpile;
 use crate::layer1::tech::Library;
+use crate::layer1::medical::{Hospital, evaluate_seek_medical_care};
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 
@@ -231,11 +232,13 @@ pub fn update_action_timer_system(mut query: Query<&mut PopAction>) {
 }
 
 /// System to evaluate and choose actions for pops.
+#[allow(clippy::too_many_lines, clippy::collapsible_if)]
 pub fn evaluate_actions_system(world: &mut World) {
     let config = world.resource::<UtilityConfig>().clone();
 
     // Collect pop data
     #[allow(unused_mut)]
+    // We break up the query to avoid complex iterator types
     let mut pop_data: Vec<(Entity, GridPosition, Needs, UtilityWeights, PopAction)> = world
         .query::<(Entity, &GridPosition, &Needs, &UtilityWeights, &PopAction)>()
         .iter(world)
@@ -264,12 +267,34 @@ pub fn evaluate_actions_system(world: &mut World) {
     let mut items_state = world.query::<(Entity, &GridPosition, &ResourceItem)>();
     let mut stockpiles_state = world.query::<(Entity, &GridPosition, &Stockpile)>();
     let mut anomalies_state = world.query::<(Entity, &GridPosition, &Anomaly)>();
+    let mut hospitals_state = world.query::<(Entity, &GridPosition, &Hospital)>();
+
+    // We need Health for medical care evaluation.
+    // The main query above only extracted (Entity, &GridPosition, &Needs, &UtilityWeights, &PopAction)
+    // We should probably add Health to it, or fetch it.
+    // Since Health is optional (maybe?), let's add it to the main query if possible, or get it inside.
+    // The pop_data collection above collects into a Vec, effectively decoupling from World.
+    // So we can't easily get Health later if we don't collect it.
+    // Let's modify the pop_data collection to include Health.
+
+    // But modifying the big query requires modifying the collection logic.
+    // Alternatively, we can use `world.get::<Health>(pop_entity)` inside the loop if we didn't collect the data into a detached Vec.
+    // But `pop_data` IS a detached Vec. And we are borrowing world mutably in `evaluate_actions_system`.
+    // Wait, `evaluate_actions_system` takes `world: &mut World`.
+    // The iteration `for (pop_entity, ...)` iterates over the `pop_data` Vec.
+    // Inside the loop, we call `evaluate_*` functions passing iterators derived from `world`.
+    // We CAN access `world.get::<Health>(pop_entity)` inside the loop?
+    // No, `farms_state.iter(world)` borrows world immutably.
+    // So we can use `world` immutably inside the loop.
 
     let resources = world.resource::<ColonyResources>().clone();
 
     // Evaluate each pop
     for (pop_entity, pop_pos, needs, weights, mut action) in pop_data {
         let mut utilities = Vec::new();
+
+        // Check Health
+        let health = world.get::<crate::layer1::health::Health>(pop_entity);
 
         // Evaluate SatisfyHunger
         if let Some((utility, target)) =
@@ -329,6 +354,19 @@ pub fn evaluate_actions_system(world: &mut World) {
             &resources,
         ) {
             utilities.push((ActionType::Haul, utility, Some(target)));
+        }
+
+        // Evaluate SeekMedicalCare
+        if let Some(health) = health {
+            if let Some((utility, target)) = evaluate_seek_medical_care(
+                &pop_pos,
+                &needs,
+                health,
+                &weights,
+                hospitals_state.iter(world),
+            ) {
+                utilities.push((ActionType::SeekMedicalCare, utility, Some(target)));
+            }
         }
 
         // Evaluate Idle
@@ -429,6 +467,7 @@ pub fn track_plan_outcomes_system(
             | ActionType::Explore
             | ActionType::Research
             | ActionType::Haul
+            | ActionType::SeekMedicalCare
             | ActionType::Idle => true,
         };
 

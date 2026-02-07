@@ -8,3 +8,4 @@ Tasks currently being implemented. Builders: if a task is here, pick something e
 - [ ] `010` Chronicle system — `specs/010-chronicle-system.md` — claimed 2026-02-02
 - [ ] `INT-004` Integration: Fix Hauling Execution Flow — claimed 2026-02-23
 - [ ] `INT-005` Integration: Pop Health -> Memories — claimed 2026-02-07
+- [ ] `038` Medical Care — `specs/038-medical-care.md` — claimed 2026-02-07

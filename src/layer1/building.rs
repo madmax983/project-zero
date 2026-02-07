@@ -47,6 +47,8 @@ pub enum BuildingType {
     FlowerBed,
     /// Decorative statue (Beauty +10).
     Statue,
+    /// Medical facility for healing.
+    Hospital,
 }
 
 impl BuildingType {
@@ -96,6 +98,7 @@ impl BuildingType {
             Self::Tailor => "Tailor",
             Self::FlowerBed => "Flower Bed",
             Self::Statue => "Statue",
+            Self::Hospital => "Hospital",
         }
     }
 
@@ -115,6 +118,7 @@ impl BuildingType {
             Self::Weaver => 'W',
             Self::FlowerBed => '*',
             Self::Statue => 'I',
+            Self::Hospital => '+',
         }
     }
 
@@ -150,7 +154,7 @@ impl BuildingType {
                 stone: 50.0,
                 ..ColonyResources::zeroed()
             },
-            Self::Tavern => ColonyResources {
+            Self::Tavern | Self::Hospital => ColonyResources {
                 wood: 40.0,
                 stone: 10.0,
                 ..ColonyResources::zeroed()
@@ -321,6 +325,12 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
         BuildingType::Statue => {
             // Statues are made of stone/metal, not flammable
         }
+        BuildingType::Hospital => {
+            entity.insert((
+                crate::layer1::medical::Hospital::default(),
+                Flammable::default(),
+            ));
+        }
     }
 }
 
@@ -441,7 +451,8 @@ mod tests {
         assert_eq!(BuildingType::Weaver.next(), BuildingType::Tailor);
         assert_eq!(BuildingType::Tailor.next(), BuildingType::FlowerBed);
         assert_eq!(BuildingType::FlowerBed.next(), BuildingType::Statue);
-        assert_eq!(BuildingType::Statue.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::Statue.next(), BuildingType::Hospital);
+        assert_eq!(BuildingType::Hospital.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -529,6 +540,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Statue);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Hospital);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

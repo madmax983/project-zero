@@ -72,6 +72,7 @@ pub fn biography_monitor_system(
             AssignmentType::HousingResident => format!("Moved into {target_name}."),
             AssignmentType::TavernVisitor => format!("Visited {target_name} to socialize."),
             AssignmentType::LibraryWorker => format!("Started research at {target_name}."),
+            AssignmentType::Patient => format!("Admitted to {target_name} for treatment."),
         };
 
         // Avoid duplicate consecutive events
