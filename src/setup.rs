@@ -5,8 +5,8 @@ use bevy_ecs::prelude::*;
 use crate::gpu::context::GpuContext;
 use crate::layer1::{
     BuildMode, BuildingTracker, Chronicle, ChronicleUiState, ColonyMemory, ColonyResources,
-    DesignationMode, NamedLocations, OccupiedTiles, SeasonState, TechState, UtilityConfig,
-    Viewport, generate_terrain, initial_chronicle_event, initial_naming_system,
+    DesignationMode, NamedLocations, NotificationQueue, OccupiedTiles, SeasonState, TechState,
+    UtilityConfig, Viewport, generate_terrain, initial_chronicle_event, initial_naming_system,
     spawn_initial_anomalies, spawn_initial_pops,
 };
 use crate::shared::colony::ColonyName;
@@ -44,6 +44,7 @@ pub fn setup_world() -> World {
     world.insert_resource(MessageLog::default());
     world.insert_resource(Chronicle::default());
     world.insert_resource(ChronicleUiState::default());
+    world.insert_resource(NotificationQueue::default());
     world.insert_resource(BuildingTracker::default());
     world.insert_resource(Selection::default());
     world.insert_resource(RenderCache::default());
@@ -96,6 +97,7 @@ mod tests {
         assert!(world.contains_resource::<ColonyResources>());
         assert!(world.contains_resource::<Chronicle>());
         assert!(world.contains_resource::<Selection>());
+        assert!(world.contains_resource::<NotificationQueue>());
         assert!(world.contains_resource::<RenderCache>());
         assert!(world.contains_resource::<UtilityConfig>());
         assert!(world.contains_resource::<SeasonState>());

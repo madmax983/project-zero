@@ -40,6 +40,8 @@ pub mod memory;
 pub mod metal_industry_tests;
 /// Pop needs (hunger, rest).
 pub mod needs;
+/// Notification system.
+pub mod notifications;
 /// Pop entity and management.
 pub mod pop;
 /// Refining industry (Lumber Mill, Stone Mason).
@@ -90,6 +92,7 @@ pub use locations::*;
 pub use map::*;
 pub use memory::*;
 pub use needs::*;
+pub use notifications::*;
 pub use pop::*;
 pub use refining::*;
 pub use resources::*;

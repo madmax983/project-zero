@@ -1,3 +1,5 @@
+#![allow(clippy::match_wildcard_for_single_variants)]
+
 use crate::layer1::seasons::Season;
 use crate::layer1::terrain::TerrainType;
 use ratatui::style::Color;
