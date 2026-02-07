@@ -6,7 +6,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 ## MVP — Layer 1: Colony Simulation
 
-- [ ] `032` Entropy and Spoilage — `specs/032-entropy-spoilage.md`
 - [ ] `035` Workplace Hazards — `specs/035-workplace-hazards.md`
 - [ ] `036` Pop Memory — `specs/036-pop-memory.md`
 - [ ] `038` Medical Care — `specs/038-medical-care.md`
