@@ -12,6 +12,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `043` Defensive Structures — `specs/043-defensive-structures.md`
 - [ ] `044` Horticulture and Beauty — `specs/044-horticulture-beauty.md`
 - [ ] `047` Pop Relationships — `specs/047-pop-relationships.md`
+- [ ] `048` Hostile Fauna — `specs/048-hostile-fauna.md`
 
 ## MVP — Architecture Refactoring
 
