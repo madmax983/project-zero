@@ -12,6 +12,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `047` Pop Relationships — `specs/047-pop-relationships.md`
 - [ ] `048` Hostile Fauna — `specs/048-hostile-fauna.md`
 - [ ] `049` Industrial Waste Management — `specs/049-industrial-waste.md`
+- [ ] `050` Civil Unrest — `specs/050-civil-unrest.md`
 
 ## MVP — Architecture Refactoring
 
