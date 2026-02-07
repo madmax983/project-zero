@@ -16,8 +16,8 @@ use ratatui::{
 
 use crate::experimental::biography::Biography;
 use crate::layer1::{
-    ColonyResources, Farm, GridPosition, Housing, TerrainGrid, building::Building, needs::Needs,
-    pop::Pop, resources::RefiningProgress, stockpile::Stockpile,
+    ActionType, ColonyResources, Farm, GridPosition, Housing, PopAction, TerrainGrid,
+    building::Building, needs::Needs, pop::Pop, resources::RefiningProgress, stockpile::Stockpile,
 };
 use crate::shared::selection::{Selection, SelectionTarget};
 use crate::ui::map::{get_building_color, get_terrain_char, get_terrain_color};
@@ -61,43 +61,83 @@ fn render_colony_stats(frame: &mut Frame, area: Rect, world: &World) {
             (count + 1, cap + f.capacity, used + f.workers.len())
         });
 
-    let rows = vec![
+    // Split layout into two sections
+    let chunks = Layout::default()
+        .direction(Direction::Vertical)
+        .constraints([
+            Constraint::Length(6), // Demographics
+            Constraint::Min(6),    // Resources
+        ])
+        .split(area);
+
+    // --- Demographics Table ---
+    let demo_rows = vec![
         Row::new(vec![
-            Cell::from("Population").style(Style::default().fg(Color::Cyan)),
+            Cell::from("👥 Population").style(Style::default().fg(Color::Cyan)),
             Cell::from(pop_count.to_string()),
         ]),
         Row::new(vec![
-            Cell::from("Housing").style(Style::default().fg(Color::Cyan)),
+            Cell::from("🏠 Housing").style(Style::default().fg(Color::Cyan)),
             Cell::from(format!(
-                "{housing_used}/{housing_capacity} ({housing_count} buildings)"
+                "{housing_used}/{housing_capacity} ({housing_count})"
             )),
         ]),
         Row::new(vec![
-            Cell::from("Workers").style(Style::default().fg(Color::Cyan)),
-            Cell::from(format!("{farm_used}/{farm_capacity} ({farm_count} farms)")),
-        ]),
-        Row::new(vec![Cell::from("")]), // Spacer
-        Row::new(vec![
-            Cell::from("Food").style(Style::default().fg(Color::Yellow)),
-            Cell::from(format!("{:.1}/{:.0}", resources.food, resources.max_food)),
-        ]),
-        Row::new(vec![
-            Cell::from("Wood").style(Style::default().fg(Color::Green)),
-            Cell::from(format!("{:.1}/{:.0}", resources.wood, resources.max_wood)),
-        ]),
-        Row::new(vec![
-            Cell::from("Stone").style(Style::default().fg(Color::Gray)),
-            Cell::from(format!("{:.1}/{:.0}", resources.stone, resources.max_stone)),
+            Cell::from("⚒  Workers").style(Style::default().fg(Color::Cyan)),
+            Cell::from(format!("{farm_used}/{farm_capacity} ({farm_count})")),
         ]),
     ];
 
-    let table = Table::new(
-        rows,
-        [Constraint::Percentage(40), Constraint::Percentage(60)],
+    let demo_table = Table::new(
+        demo_rows,
+        [Constraint::Percentage(50), Constraint::Percentage(50)],
     )
-    .block(Block::default().borders(Borders::NONE)); // Parent has borders
+    .block(
+        Block::default()
+            .title(" Demographics ")
+            .borders(Borders::ALL)
+            .border_type(BorderType::Rounded)
+            .border_style(Style::default().fg(Color::Cyan)),
+    );
 
-    frame.render_widget(table, area);
+    frame.render_widget(demo_table, chunks[0]);
+
+    // --- Resources Table ---
+    let resource_rows = vec![
+        Row::new(vec![
+            Cell::from("🍖 Food").style(Style::default().fg(Color::Yellow)),
+            Cell::from(format!("{:.1}/{:.0}", resources.food, resources.max_food)),
+        ]),
+        Row::new(vec![
+            Cell::from("🌲 Wood").style(Style::default().fg(Color::Green)),
+            Cell::from(format!("{:.1}/{:.0}", resources.wood, resources.max_wood)),
+        ]),
+        Row::new(vec![
+            Cell::from("🪨 Stone").style(Style::default().fg(Color::Gray)),
+            Cell::from(format!("{:.1}/{:.0}", resources.stone, resources.max_stone)),
+        ]),
+        Row::new(vec![
+            Cell::from("🔧 Tools").style(Style::default().fg(Color::Cyan)),
+            Cell::from(format!(
+                "{:.1}/{:.0}",
+                resources.tools, resources.max_tools
+            )),
+        ]),
+    ];
+
+    let resource_table = Table::new(
+        resource_rows,
+        [Constraint::Percentage(50), Constraint::Percentage(50)],
+    )
+    .block(
+        Block::default()
+            .title(" Resources ")
+            .borders(Borders::ALL)
+            .border_type(BorderType::Rounded)
+            .border_style(Style::default().fg(Color::Yellow)),
+    );
+
+    frame.render_widget(resource_table, chunks[1]);
 }
 
 fn render_tile_inspector(frame: &mut Frame, area: Rect, world: &World, x: i32, y: i32) {
@@ -185,6 +225,27 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         ("Entity", Color::White)
     };
 
+    // Determine Action if Pop
+    let action_line = if let Some(action) = world.get::<PopAction>(entity) {
+        let (icon, label) = match action.current {
+            ActionType::SatisfyHunger => ("🍖", "Eating"),
+            ActionType::SatisfyRest => ("💤", "Sleeping"),
+            ActionType::Socialize => ("💬", "Socializing"),
+            ActionType::Explore => ("🔭", "Exploring"),
+            ActionType::Work => ("⚒", "Working"),
+            ActionType::Repair => ("🔧", "Repairing"),
+            ActionType::Research => ("📚", "Researching"),
+            ActionType::Haul => ("📦", "Hauling"),
+            ActionType::Idle => ("⏳", "Idle"),
+        };
+        Some(Line::from(vec![
+            Span::raw("Action: "),
+            Span::styled(format!("{icon} {label}"), Style::default().fg(Color::White)),
+        ]))
+    } else {
+        None
+    };
+
     // Dynamic height for details section
     let details_height = if world.get::<Needs>(entity).is_some() {
         3
@@ -197,6 +258,7 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         .constraints([
             Constraint::Length(1),              // Name
             Constraint::Length(1),              // Pos
+            Constraint::Length(if action_line.is_some() { 1 } else { 0 }), // Action
             Constraint::Length(1),              // Spacer
             Constraint::Length(details_height), // Needs or Details
             Constraint::Length(1),              // Spacer
@@ -222,8 +284,13 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         );
     }
 
-    // 3. Needs or Building Details
-    let details_area = layout[3];
+    // 3. Action
+    if let Some(line) = action_line {
+        frame.render_widget(Paragraph::new(line), layout[2]);
+    }
+
+    // 4. Needs or Building Details
+    let details_area = layout[4];
     if let Some(needs) = world.get::<Needs>(entity) {
         let needs_layout = Layout::default()
             .direction(Direction::Horizontal)
@@ -251,11 +318,13 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         let hunger_gauge = Gauge::default()
             .block(Block::default().title("Hunger").borders(Borders::NONE))
             .gauge_style(Style::default().fg(hunger_color))
+            .label(format!("🍖 {}%", hunger_percent))
             .percent(hunger_percent);
 
         let rest_gauge = Gauge::default()
             .block(Block::default().title("Rest").borders(Borders::NONE))
             .gauge_style(Style::default().fg(rest_color))
+            .label(format!("💤 {}%", rest_percent))
             .percent(rest_percent);
 
         frame.render_widget(hunger_gauge, needs_layout[0]);
@@ -270,8 +339,8 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         render_refining_details(frame, details_area, progress);
     }
 
-    // 4. Biography
-    let bottom_area = layout[5];
+    // 5. Biography
+    let bottom_area = layout[6];
     let bio_opt = world.get::<Biography>(entity);
 
     if let Some(bio) = bio_opt {
@@ -280,51 +349,51 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
 }
 
 fn render_housing_details(frame: &mut Frame, area: Rect, housing: &Housing) {
-    let block = Block::default()
-        .borders(Borders::ALL)
-        .title(" Housing ")
-        .border_type(BorderType::Rounded)
-        .border_style(Style::default().fg(Color::Cyan));
-
     let residents_count = housing.residents.len();
     let capacity = housing.capacity;
+    let percent = (residents_count as f32 / capacity as f32).clamp(0.0, 1.0);
 
-    let text = format!("Residents: {residents_count} / {capacity}");
-
-    let p = Paragraph::new(text)
-        .block(block)
-        .alignment(Alignment::Center)
-        .style(Style::default().fg(if residents_count >= capacity {
+    let gauge = Gauge::default()
+        .block(
+            Block::default()
+                .title(" Housing ")
+                .borders(Borders::ALL)
+                .border_type(BorderType::Rounded)
+                .border_style(Style::default().fg(Color::Cyan)),
+        )
+        .gauge_style(Style::default().fg(if residents_count >= capacity {
             Color::Red
         } else {
             Color::Green
-        }));
+        }))
+        .label(format!("{residents_count}/{capacity}"))
+        .percent((percent * 100.0) as u16);
 
-    frame.render_widget(p, area);
+    frame.render_widget(gauge, area);
 }
 
 fn render_farm_details(frame: &mut Frame, area: Rect, farm: &Farm) {
-    let block = Block::default()
-        .borders(Borders::ALL)
-        .title(" Farm ")
-        .border_type(BorderType::Rounded)
-        .border_style(Style::default().fg(Color::Yellow));
-
     let workers_count = farm.workers.len();
     let capacity = farm.capacity;
+    let percent = (workers_count as f32 / capacity as f32).clamp(0.0, 1.0);
 
-    let text = format!("Workers: {workers_count} / {capacity}");
-
-    let p = Paragraph::new(text)
-        .block(block)
-        .alignment(Alignment::Center)
-        .style(Style::default().fg(if workers_count >= capacity {
+    let gauge = Gauge::default()
+        .block(
+            Block::default()
+                .title(" Farm ")
+                .borders(Borders::ALL)
+                .border_type(BorderType::Rounded)
+                .border_style(Style::default().fg(Color::Yellow)),
+        )
+        .gauge_style(Style::default().fg(if workers_count >= capacity {
             Color::Green
         } else {
             Color::Yellow
-        }));
+        }))
+        .label(format!("{workers_count}/{capacity}"))
+        .percent((percent * 100.0) as u16);
 
-    frame.render_widget(p, area);
+    frame.render_widget(gauge, area);
 }
 
 fn render_stockpile_details(frame: &mut Frame, area: Rect, stockpile: &Stockpile) {
