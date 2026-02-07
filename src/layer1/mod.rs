@@ -55,6 +55,9 @@ pub mod utility_ai;
 #[cfg(test)]
 /// Tests for utility AI work logic.
 pub mod utility_ai_work_tests;
+#[cfg(test)]
+/// Tests for hazards logic.
+pub mod hazards_tests;
 
 /// Named locations on the map.
 pub mod locations;

@@ -37,7 +37,7 @@ pub fn spoilage_system(
     }
 
     // 2. Handle Perishable Items
-    for (entity, mut perishable) in query.iter_mut() {
+    for (entity, mut perishable) in &mut query {
         perishable.current_ticks += 1;
         if perishable.current_ticks >= perishable.max_ticks {
             commands.entity(entity).despawn();
@@ -49,7 +49,6 @@ pub fn spoilage_system(
 mod tests {
     use super::*;
     use crate::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
-    use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
 
     #[test]

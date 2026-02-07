@@ -40,6 +40,24 @@ impl ActionType {
             Self::Idle => 7,
         }
     }
+
+    /// Returns the danger level of the action (probability of accident per tick).
+    #[must_use]
+    pub const fn danger_level(&self) -> f64 {
+        match self {
+            Self::Work => 0.001, // 0.1% chance per tick
+            _ => 0.0,
+        }
+    }
+
+    /// Returns the damage inflicted if an accident occurs.
+    #[must_use]
+    pub const fn accident_damage(&self) -> f32 {
+        match self {
+            Self::Work => 10.0,
+            _ => 0.0,
+        }
+    }
 }
 
 /// Pop's current action and commitment state

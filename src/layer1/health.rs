@@ -68,7 +68,6 @@ pub fn death_system(world: &mut World) {
 mod tests {
     use super::*;
     use crate::layer1::needs::Needs;
-    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_health_defaults() {
