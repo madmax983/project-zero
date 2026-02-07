@@ -7,6 +7,8 @@
 pub mod actions;
 /// Game balance constants.
 pub mod balance;
+/// Beauty and decoration system.
+pub mod beauty;
 /// Building placement and types.
 pub mod building;
 pub mod chronicle;
@@ -78,6 +80,7 @@ pub mod locations;
 
 pub use actions::*;
 pub use balance::*;
+pub use beauty::*;
 pub use building::*;
 pub use chronicle::*;
 pub use designation::*;
