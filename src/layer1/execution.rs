@@ -356,7 +356,6 @@ fn execute_demolish(world: &mut World, designation_entity: Entity) -> bool {
 }
 
 /// Executes work at designations when pop is at target with Work action.
-#[allow(clippy::too_many_lines)]
 pub fn work_execution_system(world: &mut World) {
     // Check tools at the start of the system
     let (has_tools, mut tool_broken) = {
@@ -385,49 +384,23 @@ pub fn work_execution_system(world: &mut World) {
 
         // Check if designation still exists
         if world.get_entity(designation_entity).is_err() {
-            // Designation already gone — clean up stale pop state
-            world
-                .entity_mut(pop_entity)
-                .remove::<MovementTarget>()
-                .remove::<AtTarget>();
-            if let Some(mut action) = world.get_mut::<PopAction>(pop_entity) {
-                action.current = ActionType::Idle;
-                action.current_utility = 0.0;
-                action.ticks_committed = 1;
-            }
+            cleanup_pop_work_state(world, pop_entity);
             continue;
         }
 
         // Get designation type
-        let designation_type =
-            if let Some(designation) = world.get::<Designation>(designation_entity) {
-                designation.designation_type
-            } else {
-                continue;
-            };
+        let Some(designation) = world.get::<Designation>(designation_entity) else {
+            continue;
+        };
+        let designation_type = designation.designation_type;
 
         let worked = match designation_type {
             DesignationType::Mine => {
-                // Ensure MiningProgress exists
-                if world.get::<MiningProgress>(designation_entity).is_none() {
-                    world
-                        .entity_mut(designation_entity)
-                        .insert(MiningProgress::default());
-                }
-                mine_rock(world, designation_entity, work_amount);
+                process_mining(world, designation_entity, work_amount);
                 true
             }
             DesignationType::Chop => {
-                // Ensure ForestryProgress exists
-                if world.get::<ForestryProgress>(designation_entity).is_none() {
-                    world
-                        .entity_mut(designation_entity)
-                        .insert(ForestryProgress {
-                            current: 0.0,
-                            max: 50.0,
-                        });
-                }
-                chop_tree(world, designation_entity, work_amount);
+                process_logging(world, designation_entity, work_amount);
                 true
             }
             DesignationType::Demolish => execute_demolish(world, designation_entity),
@@ -435,39 +408,18 @@ pub fn work_execution_system(world: &mut World) {
 
         // After work: if designation was despawned (work completed), reset pop state
         if world.get_entity(designation_entity).is_err() {
-            world
-                .entity_mut(pop_entity)
-                .remove::<MovementTarget>()
-                .remove::<AtTarget>();
-            if let Some(mut action) = world.get_mut::<PopAction>(pop_entity) {
-                action.current = ActionType::Idle;
-                action.current_utility = 0.0;
-                action.ticks_committed = 1;
-            }
+            cleanup_pop_work_state(world, pop_entity);
         }
 
         // Workplace Hazards
         if worked {
-            let danger = ActionType::Work.danger_level();
-            let mut rng = rand::thread_rng();
-            if rng.gen_bool(danger) {
-                let damage = ActionType::Work.accident_damage();
-                // Apply damage if pop has Health
-                if let Some(mut health) = world.get_mut::<Health>(pop_entity) {
-                    health.take_damage(damage);
+            handle_workplace_hazards(world, pop_entity);
 
-                    // Log accident
-                    if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
-                        log.add(format!("ACCIDENT: Worker injured! (-{damage} HP)"));
-                    }
+            if has_tools && !tool_broken {
+                let mut rng = rand::thread_rng();
+                if rng.gen_bool(TOOL_BREAK_CHANCE) {
+                    tool_broken = true;
                 }
-            }
-        }
-
-        if worked && has_tools && !tool_broken {
-            let mut rng = rand::thread_rng();
-            if rng.gen_bool(TOOL_BREAK_CHANCE) {
-                tool_broken = true;
             }
         }
     }
@@ -476,6 +428,58 @@ pub fn work_execution_system(world: &mut World) {
         let mut res = world.resource_mut::<ColonyResources>();
         if res.tools >= 1.0 {
             res.tools -= 1.0;
+        }
+    }
+}
+
+fn cleanup_pop_work_state(world: &mut World, pop_entity: Entity) {
+    world
+        .entity_mut(pop_entity)
+        .remove::<MovementTarget>()
+        .remove::<AtTarget>();
+    if let Some(mut action) = world.get_mut::<PopAction>(pop_entity) {
+        action.current = ActionType::Idle;
+        action.current_utility = 0.0;
+        action.ticks_committed = 1;
+    }
+}
+
+fn process_mining(world: &mut World, designation_entity: Entity, work_amount: f32) {
+    // Ensure MiningProgress exists
+    if world.get::<MiningProgress>(designation_entity).is_none() {
+        world
+            .entity_mut(designation_entity)
+            .insert(MiningProgress::default());
+    }
+    mine_rock(world, designation_entity, work_amount);
+}
+
+fn process_logging(world: &mut World, designation_entity: Entity, work_amount: f32) {
+    // Ensure ForestryProgress exists
+    if world.get::<ForestryProgress>(designation_entity).is_none() {
+        world
+            .entity_mut(designation_entity)
+            .insert(ForestryProgress {
+                current: 0.0,
+                max: 50.0,
+            });
+    }
+    chop_tree(world, designation_entity, work_amount);
+}
+
+fn handle_workplace_hazards(world: &mut World, pop_entity: Entity) {
+    let danger = ActionType::Work.danger_level();
+    let mut rng = rand::thread_rng();
+    if rng.gen_bool(danger) {
+        let damage = ActionType::Work.accident_damage();
+        // Apply damage if pop has Health
+        if let Some(mut health) = world.get_mut::<Health>(pop_entity) {
+            health.take_damage(damage);
+
+            // Log accident
+            if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+                log.add(format!("ACCIDENT: Worker injured! (-{damage} HP)"));
+            }
         }
     }
 }
