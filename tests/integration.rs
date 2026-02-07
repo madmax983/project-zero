@@ -6,3 +6,6 @@ mod fire_health;
 
 #[path = "integration/hauling_execution.rs"]
 mod hauling_execution;
+
+#[path = "integration/health_memory.rs"]
+mod health_memory;

@@ -36,3 +36,12 @@ Map of connected and disconnected systems.
 - [ ] Food Production -> Needs Satisfaction (Checked: Connected via `consume_food_system`)
 - [ ] Building Costs -> Resource Deduction (Checked: Connected via `try_place_building`)
 - [ ] Pop Death -> UI Counter (Resolved by INT-002)
+
+### INT-005: Pop Health -> Memories
+- **Date:** 2026-02-07
+- **Systems connected:** `death_system` -> `Memories` (WitnessedDeath), `starvation_damage_system` -> `Memories` (StarvationTrauma)
+- **Glue added:**
+    - Modified `death_system` in `src/layer1/health.rs` to add `WitnessedDeath` memory to survivors.
+    - Modified `starvation_damage_system` in `src/layer1/health.rs` to add `StarvationTrauma` memory.
+- **Schedule:** Part of standard simulation update.
+- **Tests:** `tests/integration/health_memory.rs`
