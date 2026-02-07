@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::balance::TICKS_PER_YEAR;
 use crate::layer1::resources::ColonyResources;
+use bevy_ecs::prelude::*;
 
 /// Component indicating an item can spoil/rot over time.
 #[derive(Component, Debug, Clone, Copy)]

@@ -40,10 +40,10 @@ pub mod resources;
 pub mod seasons;
 /// Social needs and tavern.
 pub mod social;
-/// Resource storage limits and stockpile buildings.
-pub mod stockpile;
 /// Spoilage and decay mechanics.
 pub mod spoilage;
+/// Resource storage limits and stockpile buildings.
+pub mod stockpile;
 /// Technology and research system.
 pub mod tech;
 /// Terrain generation and grid management.
