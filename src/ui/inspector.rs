@@ -118,10 +118,7 @@ fn render_colony_stats(frame: &mut Frame, area: Rect, world: &World) {
         ]),
         Row::new(vec![
             Cell::from("🔧 Tools").style(Style::default().fg(Color::Cyan)),
-            Cell::from(format!(
-                "{:.1}/{:.0}",
-                resources.tools, resources.max_tools
-            )),
+            Cell::from(format!("{:.1}/{:.0}", resources.tools, resources.max_tools)),
         ]),
     ];
 
@@ -256,13 +253,13 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
     let layout = Layout::default()
         .direction(Direction::Vertical)
         .constraints([
-            Constraint::Length(1),              // Name
-            Constraint::Length(1),              // Pos
+            Constraint::Length(1),                                // Name
+            Constraint::Length(1),                                // Pos
             Constraint::Length(u16::from(action_line.is_some())), // Action
-            Constraint::Length(1),              // Spacer
-            Constraint::Length(details_height), // Needs or Details
-            Constraint::Length(1),              // Spacer
-            Constraint::Min(1),                 // Thoughts/Extra
+            Constraint::Length(1),                                // Spacer
+            Constraint::Length(details_height),                   // Needs or Details
+            Constraint::Length(1),                                // Spacer
+            Constraint::Min(1),                                   // Thoughts/Extra
         ])
         .split(area);
 

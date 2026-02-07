@@ -1,5 +1,5 @@
-use bevy_ecs::prelude::*;
 use crate::shared::time::SimulationTime;
+use bevy_ecs::prelude::*;
 
 /// Severity level of a notification, used for UI styling.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -54,7 +54,7 @@ impl NotificationQueue {
         text: String,
         severity: NotificationSeverity,
         current_tick: u64,
-        expires_at: u64
+        expires_at: u64,
     ) -> u64 {
         let id = self.next_id;
         self.next_id += 1;
@@ -92,17 +92,19 @@ pub fn notification_expiration_system(
     time: Res<SimulationTime>,
 ) {
     let current_tick = time.tick;
-    queue.active.retain(|n| n.expires_at.is_none_or(|expiry| current_tick < expiry));
+    queue
+        .active
+        .retain(|n| n.expires_at.is_none_or(|expiry| current_tick < expiry));
 }
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use bevy_ecs::system::RunSystemOnce;
     use crate::layer1::notifications::{
-        NotificationQueue, NotificationSeverity, notification_expiration_system
+        NotificationQueue, NotificationSeverity, notification_expiration_system,
     };
     use crate::shared::time::SimulationTime;
+    use bevy_ecs::prelude::*;
+    use bevy_ecs::system::RunSystemOnce;
 
     #[test]
     fn test_notification_queue_resource_exists() {
@@ -125,19 +127,31 @@ mod tests {
     fn test_notification_expiration() {
         let mut world = World::new();
         world.insert_resource(NotificationQueue::default());
-        world.insert_resource(SimulationTime { tick: 100, ..Default::default() });
+        world.insert_resource(SimulationTime {
+            tick: 100,
+            ..Default::default()
+        });
 
         // Add notification that expires at tick 150
         let mut queue = world.resource_mut::<NotificationQueue>();
-        queue.add_with_expiration("Expires soon".to_string(), NotificationSeverity::Info, 100, 150);
+        queue.add_with_expiration(
+            "Expires soon".to_string(),
+            NotificationSeverity::Info,
+            100,
+            150,
+        );
 
         // Run system at tick 100 (should stay)
-        world.run_system_once(notification_expiration_system).unwrap();
+        world
+            .run_system_once(notification_expiration_system)
+            .unwrap();
         assert_eq!(world.resource::<NotificationQueue>().active.len(), 1);
 
         // Advance time to 151
         world.resource_mut::<SimulationTime>().tick = 151;
-        world.run_system_once(notification_expiration_system).unwrap();
+        world
+            .run_system_once(notification_expiration_system)
+            .unwrap();
         assert!(world.resource::<NotificationQueue>().active.is_empty());
     }
 

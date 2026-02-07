@@ -43,15 +43,29 @@ pub enum BuildingType {
     Weaver,
     /// Refines Cloth into Clothing.
     Tailor,
+    /// Decorative flower bed (Beauty +5).
+    FlowerBed,
+    /// Decorative statue (Beauty +10).
+    Statue,
 }
 
 impl BuildingType {
+    /// Returns the beauty value emitted by this building.
+    #[must_use]
+    pub const fn beauty_value(&self) -> f32 {
+        match self {
+            Self::FlowerBed => 5.0,
+            Self::Statue => 10.0,
+            _ => 0.0,
+        }
+    }
+
     /// Returns the tech required to build this building, if any.
     #[must_use]
     pub const fn required_tech(&self) -> Option<Tech> {
         match self {
             Self::Smelter | Self::Smithy => Some(Tech::MetalWorking),
-            Self::Tavern => Some(Tech::SocialStructures),
+            Self::Tavern | Self::Statue => Some(Tech::SocialStructures),
             _ => None,
         }
     }
@@ -80,6 +94,8 @@ impl BuildingType {
             Self::Plantation => "Plantation",
             Self::Weaver => "Weaver",
             Self::Tailor => "Tailor",
+            Self::FlowerBed => "Flower Bed",
+            Self::Statue => "Statue",
         }
     }
 
@@ -97,6 +113,8 @@ impl BuildingType {
             Self::Library => '?', // Placeholder
             Self::Plantation => 'P',
             Self::Weaver => 'W',
+            Self::FlowerBed => '*',
+            Self::Statue => 'I',
         }
     }
 
@@ -145,6 +163,14 @@ impl BuildingType {
             Self::Weaver | Self::Tailor => ColonyResources {
                 wood: 30.0,
                 stone: 5.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::FlowerBed => ColonyResources {
+                wood: 5.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Statue => ColonyResources {
+                stone: 20.0,
                 ..ColonyResources::zeroed()
             },
         }
@@ -289,6 +315,12 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
         BuildingType::Library => {
             entity.insert(Library);
         }
+        BuildingType::FlowerBed => {
+            entity.insert(Flammable::default());
+        }
+        BuildingType::Statue => {
+            // Statues are made of stone/metal, not flammable
+        }
     }
 }
 
@@ -407,7 +439,9 @@ mod tests {
         assert_eq!(BuildingType::Library.next(), BuildingType::Plantation);
         assert_eq!(BuildingType::Plantation.next(), BuildingType::Weaver);
         assert_eq!(BuildingType::Weaver.next(), BuildingType::Tailor);
-        assert_eq!(BuildingType::Tailor.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::Tailor.next(), BuildingType::FlowerBed);
+        assert_eq!(BuildingType::FlowerBed.next(), BuildingType::Statue);
+        assert_eq!(BuildingType::Statue.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -489,6 +523,12 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Tailor);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::FlowerBed);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Statue);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

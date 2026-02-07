@@ -512,6 +512,8 @@ pub const fn get_building_char(building: BuildingType) -> char {
         BuildingType::Plantation => 'P',
         BuildingType::Weaver => 'W',
         BuildingType::Tailor => 't',
+        BuildingType::FlowerBed => '*',
+        BuildingType::Statue => 'I',
     }
 }
 
@@ -536,10 +538,10 @@ pub const fn get_building_color(building: BuildingType) -> Color {
         BuildingType::StoneMason => Color::Rgb(119, 136, 153), // LightSlateGray
         BuildingType::Smelter => Color::Rgb(255, 69, 0),  // Red-Orange
         BuildingType::Smithy => Color::Rgb(192, 192, 192), // Silver
-        BuildingType::Tavern => Color::Magenta,
+        BuildingType::Tavern | BuildingType::FlowerBed => Color::Magenta,
         BuildingType::Library => Color::Cyan,
         BuildingType::Plantation => Color::Green,
-        BuildingType::Weaver => Color::White,
+        BuildingType::Weaver | BuildingType::Statue => Color::White,
         BuildingType::Tailor => Color::Blue,
     }
 }

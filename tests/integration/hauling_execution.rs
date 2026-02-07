@@ -30,6 +30,8 @@ mod tests {
         world.insert_resource(scale::layer1::chronicle::BuildingTracker::default());
         world.insert_resource(scale::layer1::utility_ai::types::ColonyMemory::default());
         world.insert_resource(scale::layer1::tech::TechState::default());
+        world.insert_resource(scale::layer1::beauty::BeautyGrid::new(10, 10));
+        world.insert_resource(scale::layer1::notifications::NotificationQueue::default());
 
         let generator = scale::shared::narrative::NarrativeGenerator::from_embedded();
         world.insert_resource(scale::shared::colony::ColonyName {

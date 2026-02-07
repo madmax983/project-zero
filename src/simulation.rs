@@ -73,6 +73,9 @@ pub fn build_simulation_schedule() -> Schedule {
         process_research_system.after(work_execution_system),
         restore_rest_in_housing_system.after(work_execution_system),
         restore_leisure_system.after(work_execution_system),
+        crate::layer1::beauty::update_beauty_grid_system.after(work_execution_system),
+        crate::layer1::beauty::apply_beauty_effects_system
+            .after(crate::layer1::beauty::update_beauty_grid_system),
     ));
 
     // --- Environment (Fire) ---

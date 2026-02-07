@@ -53,6 +53,7 @@ pub fn setup_world() -> World {
     world.insert_resource(SeasonState::default());
     world.insert_resource(NamedLocations::default());
     world.insert_resource(TechState::default());
+    world.insert_resource(crate::layer1::beauty::BeautyGrid::new(80, 50));
 
     // Initialize GPU compute context (non-fatal if no GPU available)
     match pollster::block_on(GpuContext::new()) {

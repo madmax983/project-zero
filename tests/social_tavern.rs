@@ -36,6 +36,8 @@ mod tests {
         world.insert_resource(scale::layer1::chronicle::Chronicle::default());
         world.insert_resource(scale::shared::narrative::NarrativeGenerator::from_embedded());
         world.insert_resource(scale::shared::colony::ColonyName::default());
+        world.insert_resource(scale::layer1::beauty::BeautyGrid::new(10, 10));
+        world.insert_resource(scale::layer1::notifications::NotificationQueue::default());
 
         world
     }
