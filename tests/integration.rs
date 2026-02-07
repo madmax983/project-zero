@@ -3,3 +3,6 @@ mod ui_stats;
 
 #[path = "integration/fire_health.rs"]
 mod fire_health;
+
+#[path = "integration/hauling_execution.rs"]
+mod hauling_execution;
