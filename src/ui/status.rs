@@ -36,6 +36,19 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
             .sum()
     });
 
+    // Calculate average morale
+    let (total_morale, morale_count) = world
+        .iter_entities()
+        .filter_map(|e| e.get::<crate::layer1::Needs>())
+        .fold((0.0, 0), |(sum, needs), n| (sum + n.morale(), needs + 1));
+
+    #[allow(clippy::cast_precision_loss)]
+    let avg_morale = if morale_count > 0 {
+        total_morale / morale_count as f32
+    } else {
+        0.0
+    };
+
     let status = get_status_line(
         sim_time.tick,
         sim_time.speed,
@@ -46,6 +59,7 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
         pop_count,
         resources.food,
         resources.tools,
+        avg_morale,
     );
 
     let bar = Paragraph::new(status).style(Style::default().bg(Color::DarkGray).fg(Color::White));
@@ -53,7 +67,12 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
 }
 
 #[must_use]
-#[allow(clippy::too_many_arguments)]
+#[allow(
+    clippy::too_many_arguments,
+    clippy::too_many_lines,
+    clippy::cast_possible_truncation,
+    clippy::cast_sign_loss
+)]
 pub fn get_status_line<'a>(
     tick: u64,
     speed: SimSpeed,
@@ -64,6 +83,7 @@ pub fn get_status_line<'a>(
     pop_count: usize,
     food_yield: f32,
     tools: f32,
+    morale: f32,
 ) -> Line<'a> {
     let mut spans = Vec::new();
 
@@ -84,7 +104,22 @@ pub fn get_status_line<'a>(
         Style::default().fg(Color::White),
     ));
 
-    // 4. Yield (Food)
+    // 4. Morale
+    let morale_percent = (morale * 100.0) as u8;
+    let morale_color = if morale < 0.3 {
+        Color::Red
+    } else if morale < 0.7 {
+        Color::Yellow
+    } else {
+        Color::Green
+    };
+    spans.push(Span::styled("Morale: ", Style::default().fg(morale_color)));
+    spans.push(Span::styled(
+        format!("{morale_percent}% │ "),
+        Style::default().fg(Color::White),
+    ));
+
+    // 5. Yield (Food)
     let food_color = if food_yield < 10.0 {
         Color::Red
     } else {
@@ -96,20 +131,20 @@ pub fn get_status_line<'a>(
         Style::default().fg(Color::White),
     ));
 
-    // 5. Tools
+    // 6. Tools
     spans.push(Span::styled("Tools: ", Style::default().fg(Color::Yellow)));
     spans.push(Span::styled(
         format!("{tools:.0} │ "),
         Style::default().fg(Color::White),
     ));
 
-    // 6. Speed
+    // 7. Speed
     spans.push(Span::styled(
         format!("{} ", speed.label()),
         Style::default().fg(Color::DarkGray),
     ));
 
-    // 7. Location
+    // 8. Location
     if let Some(name) = location_name {
         spans.push(Span::raw("│ 📍 "));
         spans.push(Span::styled(
@@ -118,7 +153,7 @@ pub fn get_status_line<'a>(
         ));
     }
 
-    // 8. Mode
+    // 9. Mode
     // Add some padding before mode
     spans.push(Span::raw(" "));
     if build_mode.active {
@@ -188,6 +223,7 @@ pub fn get_status_string(
     pop_count: usize,
     food_yield: f32,
     tools: f32,
+    morale: f32,
 ) -> String {
     let line = get_status_line(
         tick,
@@ -199,6 +235,7 @@ pub fn get_status_string(
         pop_count,
         food_yield,
         tools,
+        morale,
     );
 
     line.spans
@@ -232,10 +269,12 @@ mod tests {
             42,    // Pops
             123.0, // Food
             10.0,  // Tools
+            0.85,  // Morale
         );
 
         assert!(status.contains("Day 100"));
         assert!(status.contains("Souls: 42"));
+        assert!(status.contains("Morale: 85%"));
         assert!(status.contains("Yield: 123"));
         assert!(status.contains("Tools: 10"));
         assert!(status.contains("1x"));
@@ -252,9 +291,68 @@ mod tests {
             0,
             0.0,
             0.0,
+            0.0,
         );
 
         assert!(status_none.contains("Day 100"));
         assert!(!status_none.contains("📍"));
+    }
+
+    #[test]
+    fn test_render_status_bar_calculates_morale() {
+        use crate::layer1::{ColonyResources, NamedLocations, Needs, Pop, Viewport};
+        use crate::shared::state::GameState;
+        use crate::shared::time::SimulationTime;
+        use ratatui::backend::TestBackend;
+        use ratatui::Terminal;
+
+        let mut world = World::new();
+        // Setup resources needed by render_status_bar
+        world.insert_resource(SimulationTime::default());
+        world.insert_resource(GameState::Running);
+        world.insert_resource(BuildMode::default());
+        world.insert_resource(DesignationMode::default());
+        world.insert_resource(Viewport::default());
+        world.insert_resource(NamedLocations::default());
+        world.insert_resource(ColonyResources::default());
+
+        // Spawn pops with needs
+        world.spawn((
+            Pop,
+            Needs {
+                hunger: 1.0,
+                rest: 1.0,
+                leisure: 1.0,
+            },
+        )); // Morale 1.0
+        world.spawn((
+            Pop,
+            Needs {
+                hunger: 0.0,
+                rest: 0.0,
+                leisure: 0.0,
+            },
+        )); // Morale 0.0
+            // Avg = 0.5
+
+        let backend = TestBackend::new(100, 1);
+        let mut terminal = Terminal::new(backend).unwrap();
+
+        terminal
+            .draw(|f| {
+                render_status_bar(f, f.area(), &world);
+            })
+            .unwrap();
+
+        // Convert buffer to string to check content
+        let buffer = terminal.backend().buffer();
+        let cells: Vec<String> = buffer
+            .content
+            .iter()
+            .map(|c| c.symbol().to_string())
+            .collect();
+        let full_text = cells.join("");
+
+        assert!(full_text.contains("Morale: 50%"));
     }
 }
