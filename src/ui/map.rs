@@ -6,6 +6,7 @@ use ratatui::{
 use std::collections::HashMap;
 use std::hash::BuildHasher;
 
+use crate::experimental::seasonal_gfx;
 use crate::layer1::{
     Anomaly, AnomalyType, BuildMode, Building, BuildingType, Designation, DesignationMode,
     DesignationType, GridPosition, Needs, ResourceItem, ResourceType, TerrainGrid, TerrainType,
@@ -171,6 +172,8 @@ pub struct MapRenderContext<'a, S: BuildHasher> {
     pub build_mode: Option<(GridPosition, BuildingType, bool)>,
     /// Current designation mode state (cursor position, selected tool, valid placement, drag start).
     pub designation_mode: Option<(GridPosition, DesignationType, bool, Option<GridPosition>)>,
+    /// The current season, if available (for visual overlays).
+    pub season: Option<crate::layer1::seasons::Season>,
 }
 
 impl<S: BuildHasher> Clone for MapRenderContext<'_, S> {
@@ -189,6 +192,7 @@ pub fn build_terrain_spans(
     area: Rect,
     terrain: &TerrainGrid,
     viewport: &Viewport,
+    season: Option<crate::layer1::seasons::Season>,
 ) -> Vec<Line<'static>> {
     let mut spans: Vec<Line> = Vec::with_capacity(area.height as usize);
 
@@ -202,7 +206,9 @@ pub fn build_terrain_spans(
             let (text, color) =
                 if let (Ok(ux), Ok(uy)) = (usize::try_from(world_x), usize::try_from(world_y)) {
                     terrain.get(ux, uy).map_or((" ", Color::Black), |tile| {
-                        (get_terrain_char(tile), get_terrain_color(tile))
+                        let color = seasonal_gfx::get_texture_override(tile, season)
+                            .unwrap_or_else(|| get_terrain_color(tile));
+                        (get_terrain_char(tile), color)
                     })
                 } else {
                     (" ", Color::Black)
@@ -272,7 +278,9 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
                             (usize::try_from(world_x), usize::try_from(world_y))
                         {
                             ctx.terrain.get(ux, uy).map_or((" ", Color::Black), |tile| {
-                                (get_terrain_char(tile), get_terrain_color(tile))
+                                let color = seasonal_gfx::get_texture_override(tile, ctx.season)
+                                    .unwrap_or_else(|| get_terrain_color(tile));
+                                (get_terrain_char(tile), color)
                             })
                         } else {
                             (" ", Color::Black)
@@ -332,7 +340,9 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
             let (text, color) =
                 if let (Ok(ux), Ok(uy)) = (usize::try_from(world_x), usize::try_from(world_y)) {
                     ctx.terrain.get(ux, uy).map_or((" ", Color::Black), |tile| {
-                        (get_terrain_char(tile), get_terrain_color(tile))
+                        let color = seasonal_gfx::get_texture_override(tile, ctx.season)
+                            .unwrap_or_else(|| get_terrain_color(tile));
+                        (get_terrain_char(tile), color)
                     })
                 } else {
                     (" ", Color::Black)
@@ -373,6 +383,9 @@ pub fn render_map(frame: &mut Frame, area: Rect, world: &World) {
     let build_mode = world.resource::<BuildMode>();
     let designation_mode = world.resource::<DesignationMode>();
     let render_cache = world.resource::<RenderCache>();
+    let season = world
+        .get_resource::<crate::layer1::seasons::SeasonState>()
+        .map(|s| s.current_season);
 
     // Build mode cursor info
     let build_mode_cursor = if build_mode.active {
@@ -408,14 +421,21 @@ pub fn render_map(frame: &mut Frame, area: Rect, world: &World) {
         entities_data: &render_cache.entities,
         build_mode: build_mode_cursor,
         designation_mode: designation_mode_cursor,
+        season,
     };
 
     render_map_layer(frame, ctx);
 }
 
 /// Renders the terrain grid to the provided frame.
-pub fn render_terrain(frame: &mut Frame, area: Rect, terrain: &TerrainGrid, viewport: &Viewport) {
-    let spans = build_terrain_spans(area, terrain, viewport);
+pub fn render_terrain(
+    frame: &mut Frame,
+    area: Rect,
+    terrain: &TerrainGrid,
+    viewport: &Viewport,
+    season: Option<crate::layer1::seasons::Season>,
+) {
+    let spans = build_terrain_spans(area, terrain, viewport, season);
     let paragraph = Paragraph::new(spans);
     frame.render_widget(paragraph, area);
 }

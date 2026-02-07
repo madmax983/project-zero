@@ -6,3 +6,5 @@
 pub mod biography;
 /// Pop dreams.
 pub mod dreams;
+/// Seasonal visual overlays.
+pub mod seasonal_gfx;
