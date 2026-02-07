@@ -8,7 +8,7 @@ pub use types::*;
 
 use crate::layer1::actions::hunger::evaluate_satisfy_hunger;
 use crate::layer1::actions::rest::evaluate_satisfy_rest;
-use crate::layer1::designation::Designation;
+use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::farm::Farm;
 use crate::layer1::housing::Housing;
 use crate::layer1::map::GridPosition;
@@ -33,7 +33,12 @@ pub fn evaluate_work<'a>(
     // Base utility for working (could depend on traits later)
     let base_utility = 0.5;
 
-    for (entity, pos, _) in designations {
+    for (entity, pos, des) in designations {
+        // Skip Repair designations (handled by evaluate_repair)
+        if des.designation_type == DesignationType::Repair {
+            continue;
+        }
+
         let context = calculate_context_score(
             *pop_pos,
             Some(*pos),
@@ -43,6 +48,39 @@ pub fn evaluate_work<'a>(
         );
 
         let success = calculate_success_modifier(ActionType::Work, weights);
+        let utility = base_utility * context * success;
+
+        if best.is_none_or(|(best_u, _)| utility > best_u) {
+            best = Some((utility, entity));
+        }
+    }
+    best
+}
+
+/// Evaluates the utility of repairing structures.
+#[must_use]
+pub fn evaluate_repair<'a>(
+    pop_pos: &GridPosition,
+    weights: &UtilityWeights,
+    designations: impl Iterator<Item = (Entity, &'a GridPosition, &'a Designation)>,
+) -> Option<(f32, Entity)> {
+    let mut best: Option<(f32, Entity)> = None;
+    let base_utility = 0.6; // Higher priority than normal work
+
+    for (entity, pos, des) in designations {
+        if des.designation_type != DesignationType::Repair {
+            continue;
+        }
+
+        let context = calculate_context_score(
+            *pop_pos,
+            Some(*pos),
+            1, // Capacity
+            0, // Occupied
+            weights,
+        );
+
+        let success = calculate_success_modifier(ActionType::Repair, weights);
         let utility = base_utility * context * success;
 
         if best.is_none_or(|(best_u, _)| utility > best_u) {
@@ -261,6 +299,13 @@ pub fn evaluate_actions_system(world: &mut World) {
             utilities.push((ActionType::Work, utility, Some(target)));
         }
 
+        // Evaluate Repair
+        if let Some((utility, target)) =
+            evaluate_repair(&pop_pos, &weights, designations_state.iter(world))
+        {
+            utilities.push((ActionType::Repair, utility, Some(target)));
+        }
+
         // Evaluate Explore
         if let Some((utility, target)) =
             evaluate_explore(&pop_pos, &weights, anomalies_state.iter(world))
@@ -379,6 +424,7 @@ pub fn track_plan_outcomes_system(
             ActionType::SatisfyHunger => (needs_after.hunger - outcome.needs_before.hunger) > 0.05,
             ActionType::SatisfyRest => (needs_after.rest - outcome.needs_before.rest) > 0.05,
             ActionType::Work
+            | ActionType::Repair
             | ActionType::Socialize
             | ActionType::Explore
             | ActionType::Research

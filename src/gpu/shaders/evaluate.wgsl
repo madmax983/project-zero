@@ -15,10 +15,10 @@ struct PopInput {
     distance_weight: f32,
     availability_weight: f32,
     social_weight: f32,
-    success_count: array<u32, 8>,
-    attempt_count: array<u32, 8>,
+    success_count: array<u32, 9>,
+    attempt_count: array<u32, 9>,
     current_utility: f32,
-    _pad: array<u32, 3>,
+    _pad: array<u32, 1>,
 }
 
 struct BuildingInput {
@@ -119,7 +119,7 @@ fn main(@builtin(global_invocation_id) global_id: vec3<u32>) {
 
     let pop = pops[pop_idx];
 
-    var best_action: u32 = 7u;          // Default: Idle
+    var best_action: u32 = 8u;          // Default: Idle
     var best_utility: f32 = 0.05;       // Idle baseline utility
     var best_target: u32 = 0xFFFFFFFFu; // No target (u32::MAX sentinel)
 
@@ -128,7 +128,7 @@ fn main(@builtin(global_invocation_id) global_id: vec3<u32>) {
         let bldg = buildings[i];
 
         var urgency: f32 = 0.0;
-        var action_idx: u32 = 7u;
+        var action_idx: u32 = 8u;
         var skip: bool = false;
 
         switch bldg.building_type {
@@ -148,25 +148,30 @@ fn main(@builtin(global_invocation_id) global_id: vec3<u32>) {
                 action_idx = 2u;
             }
             case 3u: {
-                // Library -> Research (action 5)
+                // Library -> Research (action 6)
                 if globals.knowledge_full == 1u {
                     skip = true;
                 }
                 urgency = 0.4;
-                action_idx = 5u;
+                action_idx = 6u;
             }
             case 4u: {
-                // Designation -> Work (action 4)
+                // Work Designation -> Work (action 4)
                 urgency = 0.5;
                 action_idx = 4u;
             }
             case 5u: {
-                // ResourceItem -> Haul (action 6)
+                // ResourceItem -> Haul (action 7)
                 if globals.has_stockpile == 0u || bldg.resource_has_room == 0u {
                     skip = true;
                 }
                 urgency = 0.6;
-                action_idx = 6u;
+                action_idx = 7u;
+            }
+            case 6u: {
+                // Repair Designation -> Repair (action 5)
+                urgency = 0.6;
+                action_idx = 5u;
             }
             default: {
                 skip = true;

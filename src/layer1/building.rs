@@ -235,6 +235,9 @@ fn handle_placement_error(world: &mut World, error: PlacementError) {
 fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType) {
     let mut entity = world.spawn((Building { building_type }, GridPosition { x, y }));
 
+    // All buildings have Structure (HP)
+    entity.insert(crate::layer1::structure::Structure::default());
+
     match building_type {
         BuildingType::Housing => {
             entity.insert((Housing::default(), Flammable::default()));
@@ -850,5 +853,28 @@ mod tests {
         // Verify building exists
         let count = world.query::<&Building>().iter(&world).count();
         assert_eq!(count, 1);
+    }
+
+    #[test]
+    fn test_place_building_adds_structure() {
+        let mut world = World::new();
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        });
+        world.insert_resource(OccupiedTiles::default());
+        world.insert_resource(ColonyResources {
+            wood: 100.0,
+            ..Default::default()
+        });
+
+        try_place_building(&mut world, 5, 5, BuildingType::Housing);
+
+        let structure_count = world
+            .query::<&crate::layer1::structure::Structure>()
+            .iter(&world)
+            .count();
+        assert_eq!(structure_count, 1, "Should have added Structure component");
     }
 }

@@ -332,6 +332,7 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
                     DesignationType::Mine => '%',
                     DesignationType::Chop => '/',
                     DesignationType::Demolish => 'X',
+                    DesignationType::Repair => '+',
                 };
                 print!("{c}");
                 continue;
@@ -409,6 +410,9 @@ fn designate_at(world: &mut World, designation_type: DesignationType, x: i32, y:
             }
             DesignationType::Demolish => {
                 println!("Failed: no building at ({x}, {y})");
+            }
+            DesignationType::Repair => {
+                println!("Failed: no building to repair at ({x}, {y})");
             }
         }
     }
@@ -527,6 +531,7 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: i32) {
                 DesignationType::Mine => "mine",
                 DesignationType::Chop => "chop",
                 DesignationType::Demolish => "demolish",
+                DesignationType::Repair => "repair",
             };
             (p.x, p.y, dt.to_string())
         })

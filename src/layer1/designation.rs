@@ -23,6 +23,8 @@ pub enum DesignationType {
     Demolish,
     /// Designate a tree for chopping.
     Chop,
+    /// Designate a building for repair.
+    Repair,
 }
 
 impl DesignationType {
@@ -41,6 +43,7 @@ impl DesignationType {
             Self::Mine => '%',
             Self::Demolish => 'X',
             Self::Chop => '/',
+            Self::Repair => '+',
         }
     }
 
@@ -59,6 +62,7 @@ impl DesignationType {
             Self::Mine => "%",
             Self::Demolish => "X",
             Self::Chop => "/",
+            Self::Repair => "+",
         }
     }
 
@@ -77,6 +81,7 @@ impl DesignationType {
             Self::Mine => "Mine",
             Self::Demolish => "Demolish",
             Self::Chop => "Chop",
+            Self::Repair => "Repair",
         }
     }
 }
@@ -165,6 +170,12 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
             let terrain = world.resource::<TerrainGrid>();
             // Allow casting because we checked for negative above
             terrain.get(x as usize, y as usize) == Some(TerrainType::Tree)
+        }
+        DesignationType::Repair => {
+            let occupied = world.resource::<OccupiedTiles>();
+            // Only occupied tiles can be repaired (assumes building)
+            // Ideally check if building has Structure and < Max HP, but for MVP check occupancy is enough
+            occupied.0.contains(&(x, y))
         }
     }
 }
