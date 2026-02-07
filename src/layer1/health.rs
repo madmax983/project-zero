@@ -1,3 +1,4 @@
+use crate::layer1::memory::{Memories, MemoryType};
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
 
@@ -37,17 +38,30 @@ impl Health {
 
 /// Applies damage to pops that are starving (hunger <= 0).
 pub fn starvation_damage_system(world: &mut World) {
-    let mut query = world.query::<(&crate::layer1::needs::Needs, &mut Health)>();
-    for (needs, mut health) in query.iter_mut(world) {
+    let tick = world
+        .get_resource::<crate::shared::time::SimulationTime>()
+        .map_or(0, |t| t.tick);
+
+    let mut query =
+        world.query::<(&crate::layer1::needs::Needs, &mut Health, Option<&mut Memories>)>();
+    for (needs, mut health, mut memories) in query.iter_mut(world) {
         if needs.hunger <= 0.0 {
             // 1 damage per tick -> 100 ticks to die
             health.take_damage(1.0);
+
+            if let Some(mem) = memories.as_mut() {
+                mem.add(MemoryType::StarvationTrauma, tick);
+            }
         }
     }
 }
 
 /// Despawns entities that have lost all health.
 pub fn death_system(world: &mut World) {
+    let tick = world
+        .get_resource::<crate::shared::time::SimulationTime>()
+        .map_or(0, |t| t.tick);
+
     // Collect entities to despawn (can't modify world during iteration)
     let to_despawn: Vec<Entity> = world
         .query::<(Entity, &Health)>()
@@ -56,10 +70,24 @@ pub fn death_system(world: &mut World) {
         .map(|(e, _)| e)
         .collect();
 
+    if to_despawn.is_empty() {
+        return;
+    }
+
+    let death_count = to_despawn.len();
+
     for entity in to_despawn {
         world.despawn(entity);
         if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
             log.add("DEATH: A colonist has died!");
+        }
+    }
+
+    // Add WitnessedDeath memory to all survivors
+    let mut query = world.query::<&mut Memories>();
+    for mut memories in query.iter_mut(world) {
+        for _ in 0..death_count {
+            memories.add(MemoryType::WitnessedDeath, tick);
         }
     }
 }
