@@ -804,4 +804,124 @@ What happens in the tavern.
 
 ---
 
+## Knowledge Fragments
+
+### [KNOWLEDGE_TOPIC]
+What is being researched or learned.
+
+- the old ways
+- star-charts
+- engine logic
+- soil memory
+- void geometry
+- the language of silence
+- medical rites
+- architectural secrets
+- the path of iron
+
+### [BOOK_NAME]
+Names for books or data crystals.
+
+- The Manual of [NAME]
+- [CIV_NAME] Protocols
+- The Black Record
+- Songs of the [CIV_EPITHET]
+- The Last Theorem
+- Notes on [TOPIC]
+- The Grey Codex
+
+### [TECH_FLAVOR]
+How technology is described.
+
+- remembered
+- rediscovered
+- decoded
+- salvaged
+- stolen from the dead
+- whispered
+- dangerous
+- forbidden
+
+---
+
+## Fire Fragments
+
+### [FIRE_NAME]
+Names for fire events.
+
+- The Red Hunger
+- The Cleansing
+- The Bright Eater
+- The Ash-Maker
+- The Hearth-Breaker
+- The Unbound
+
+### [FIRE_DESCRIPTOR]
+Adjectives for fire.
+
+- hungry
+- wild
+- roaring
+- merciless
+- sudden
+- impossible
+- traitorous (if started by accident)
+
+---
+
+## Spoilage Fragments
+
+### [ROT_DESCRIPTOR]
+Describing decay.
+
+- grey
+- soft
+- ruined
+- wasted
+- silent
+- dust-choked
+- mouldering
+- time-eaten
+
+---
+
+## Health Fragments
+
+### [INJURY_TYPE]
+Types of injuries.
+
+- crushed limb
+- void-burn
+- deep cut
+- broken bone
+- inhalation
+- exhaustion
+- frozen skin
+
+### [HEALING_METHOD]
+How they are treated.
+
+- with splints and hope
+- with strange salves
+- in the stasis-bed
+- by the surgeon's knife
+- through long rest
+- with scarce medicine
+
+---
+
+## Tool Fragments
+
+### [TOOL_NAME]
+Flavor names for tools.
+
+- iron-hands
+- rock-breakers
+- soil-turners
+- star-wrenches
+- void-hammers
+- life-lines
+
+---
+
 *Add new fragments by type. Keep entries short. Vary tone. Leave room for combination.*

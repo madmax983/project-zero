@@ -103,4 +103,17 @@ The Wound is the game's memento mori. The reminder that the galaxy was here befo
 
 ---
 
+## Elemental Constants
+
+**Knowledge is dangerous.**
+It is not just data. It is memory of things lost. Uncovering the past may reveal why they fell. Research is "remembering."
+
+**Fire is hunger.**
+It consumes. It is not just a chemical reaction; it is an entity. "The Red Hunger." It must be fed or fought.
+
+**Time is rot.**
+Nothing stays pristine. Spoilage is the default. "The Grey" takes everything eventually. Preservation is an act of defiance.
+
+---
+
 *These themes are load-bearing. Every fragment, template, and grammar must serve them.*
