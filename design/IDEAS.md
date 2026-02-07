@@ -860,7 +860,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Field Science
+## Field Science [SPECCED]
 
 **Layer:** 1
 
