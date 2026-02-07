@@ -44,6 +44,16 @@ Rel(Inspector, Shared, "Reads Selection")
 Rel(Inspector, Pops, "Reads Components")
 ```
 
+## Core Dependencies
+
+```mermaid
+classDiagram
+  class Core
+  class Storage
+  Core --> Storage : Uses (Trait Bound)
+  %% Removed the circular dependency arrow
+```
+
 ## The Game Loop
 
 SCALE uses a hybrid architecture: `bevy_ecs` for logic and `ratatui` for rendering, managed by a custom loop.
@@ -173,3 +183,4 @@ Rel(Shared, Events, "Consumes")
 - [ADR 003: YAGNI - Excision of Layers 2 and 3](./adr/003-yagni-excision-of-layers-2-and-3.md)
 - [ADR 004: Modular UI Architecture](./adr/004-modular-ui-architecture.md)
 - [ADR 005: Adopt Emergent Utility AI](./adr/005-adopt-emergent-utility-ai.md)
+- [ADR 012: Decouple Storage from Core](./adr/012-decouple-storage-from-core.md)
