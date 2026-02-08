@@ -33,6 +33,7 @@ use crate::layer1::housing::Housing;
 use crate::layer1::map::GridPosition;
 use crate::layer1::memory::{Memories, calculate_effective_morale};
 use crate::layer1::needs::{Needs, get_morale_efficiency};
+use crate::layer1::pop::Speed;
 use crate::layer1::resources::{
     ColonyResources, ForestryProgress, MiningProgress, chop_tree, mine_rock,
 };
@@ -148,11 +149,28 @@ pub fn process_start_plan_system(
 /// When a pop arrives at its target position (or adjacent for work), this system
 /// marks it with `AtTarget`.
 pub fn movement_system(
-    mut pops: Query<(Entity, &mut GridPosition, &MovementTarget), Without<AtTarget>>,
+    mut pops: Query<
+        (
+            Entity,
+            &mut GridPosition,
+            &MovementTarget,
+            Option<&mut Speed>,
+        ),
+        Without<AtTarget>,
+    >,
     terrain: Res<TerrainGrid>,
     mut commands: Commands,
 ) {
-    for (pop_entity, mut current_pos, mt) in &mut pops {
+    for (pop_entity, mut current_pos, mt, mut speed_opt) in &mut pops {
+        // Handle variable movement speed
+        if let Some(ref mut speed) = speed_opt {
+            speed.accumulator += speed.current;
+            if speed.accumulator < 1.0 {
+                continue;
+            }
+            speed.accumulator -= 1.0;
+        }
+
         let target_pos = mt.target_position;
         let action = mt.for_action;
 
@@ -1665,5 +1683,37 @@ mod tests {
 
         let skills = world.get::<Skills>(pop).unwrap();
         assert_eq!(skills.get_xp(SkillType::Mining), 1.0);
+    }
+
+    #[test]
+    fn test_movement_with_speed_penalty() {
+        let mut world = setup_world();
+
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 0, y: 0 },
+                MovementTarget {
+                    target_entity: Entity::from_raw(1),
+                    target_position: GridPosition { x: 5, y: 0 },
+                    for_action: ActionType::Work,
+                },
+                Speed {
+                    base: 1.0,
+                    current: 0.5, // Move every 2 ticks
+                    accumulator: 0.0,
+                },
+            ))
+            .id();
+
+        // Tick 1: Accumulator 0.0 + 0.5 = 0.5 (< 1.0) -> No Move
+        world.run_system_once(movement_system).unwrap();
+        let pos = world.get::<GridPosition>(pop).unwrap();
+        assert_eq!(pos.x, 0);
+
+        // Tick 2: Accumulator 0.5 + 0.5 = 1.0 (>= 1.0) -> Move
+        world.run_system_once(movement_system).unwrap();
+        let pos = world.get::<GridPosition>(pop).unwrap();
+        assert_eq!(pos.x, 1);
     }
 }
