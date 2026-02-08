@@ -118,3 +118,5 @@ pub use clothing::*;
 
 #[cfg(test)]
 mod waste_tests;
+/// Pop skills and experience system.
+pub mod skills;

@@ -26,6 +26,7 @@ use super::health::Health;
 use super::map::GridPosition;
 use super::memory::Memories;
 use super::needs::Needs;
+use super::skills::Skills;
 use super::terrain::{TerrainGrid, TerrainType};
 use super::utility_ai::{PopAction, UtilityWeights};
 use bevy_ecs::prelude::*;
@@ -125,6 +126,7 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
                 Health::default(),
                 Needs::default(),
                 Memories::default(),
+                Skills::default(),
                 PopAction::default(),
                 UtilityWeights::default(),
             ));
@@ -169,6 +171,19 @@ mod tests {
         let mut query = world.query::<(&Pop, &GridPosition)>();
         let all_have_positions = query.iter(&world).count() == 5;
         assert!(all_have_positions, "All pops should have GridPosition");
+    }
+
+    #[test]
+    fn test_spawn_initial_pops_have_skills() {
+        let mut world = World::new();
+        let terrain = generate_terrain(80, 50);
+        world.insert_resource(terrain);
+
+        spawn_initial_pops(&mut world);
+
+        let mut query = world.query::<(&Pop, &Skills)>();
+        let all_have_skills = query.iter(&world).count() == 5;
+        assert!(all_have_skills, "All pops should have Skills component");
     }
 
     #[test]

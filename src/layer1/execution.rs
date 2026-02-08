@@ -36,6 +36,7 @@ use crate::layer1::needs::{Needs, get_morale_efficiency};
 use crate::layer1::resources::{
     ColonyResources, ForestryProgress, MiningProgress, chop_tree, mine_rock,
 };
+use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
 use crate::layer1::social::Tavern;
 use crate::layer1::terrain::TerrainGrid;
 use crate::layer1::utility_ai::{ActionType, PopAction, StartPlan};
@@ -360,9 +361,6 @@ pub fn work_execution_system(world: &mut World) {
         .collect();
 
     for (pop_entity, designation_entity, morale, action_type) in workers_data {
-        let morale_efficiency = get_morale_efficiency(morale);
-        let work_amount = WORK_PER_TICK * tool_efficiency * morale_efficiency;
-
         // Check if designation still exists
         if world.get_entity(designation_entity).is_err() {
             cleanup_pop_work_state(world, pop_entity);
@@ -374,6 +372,23 @@ pub fn work_execution_system(world: &mut World) {
             continue;
         };
         let designation_type = designation.designation_type;
+
+        // Determine Skill Type
+        let skill_type = match designation_type {
+            DesignationType::Mine => Some(SkillType::Mining),
+            DesignationType::Chop => Some(SkillType::Forestry),
+            DesignationType::Repair | DesignationType::Demolish => Some(SkillType::Construction),
+        };
+
+        // Calculate Work Amount with Skill Efficiency
+        let skill_efficiency = {
+            let skills = world.get::<Skills>(pop_entity);
+            skill_type.map_or(1.0, |st| get_skill_efficiency(skills, st))
+        };
+
+        let morale_efficiency = get_morale_efficiency(morale);
+        let work_amount =
+            WORK_PER_TICK * tool_efficiency * morale_efficiency * skill_efficiency;
 
         let worked = match designation_type {
             DesignationType::Mine => {
@@ -396,8 +411,15 @@ pub fn work_execution_system(world: &mut World) {
             cleanup_pop_work_state(world, pop_entity);
         }
 
-        // Workplace Hazards
+        // Workplace Hazards & XP Gain
         if worked {
+            // Add XP
+            if let Some(st) = skill_type {
+                if let Some(mut skills) = world.get_mut::<Skills>(pop_entity) {
+                    skills.add_xp(st, 1.0);
+                }
+            }
+
             handle_workplace_hazards(world, pop_entity, action_type);
 
             if has_tools && !tool_broken {
@@ -1542,5 +1564,100 @@ mod tests {
             "Expected 12.0 progress, got {}",
             progress.current
         );
+    }
+
+    #[test]
+    fn test_work_execution_skills_mining_efficiency() {
+        let mut world = World::new();
+        let mut tiles = vec![TerrainType::Grass; 100];
+        tiles[55] = TerrainType::Rock;
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
+        world.insert_resource(crate::layer1::resources::ColonyResources::default());
+
+        let designation = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Mine,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
+
+        // Pop with Mining skill level 1 (100 XP) -> Efficiency 1.1
+        let mut skills = Skills::default();
+        skills.add_xp(SkillType::Mining, 100.0);
+
+        let _pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 5, y: 5 },
+                skills,
+                MovementTarget {
+                    target_entity: designation,
+                    target_position: GridPosition { x: 5, y: 5 },
+                    for_action: ActionType::Work,
+                },
+                AtTarget,
+            ))
+            .id();
+
+        work_execution_system(&mut world);
+
+        let progress = world.get::<MiningProgress>(designation).unwrap();
+        // Base work = 10.0
+        // Tool efficiency = 1.0
+        // Morale efficiency = 1.0 (0.5 morale is neutral)
+        // Skill efficiency = 1.1
+        // Expected = 10.0 * 1.0 * 1.0 * 1.1 = 11.0
+        assert!(
+            (progress.current - 11.0).abs() < f32::EPSILON,
+            "Expected 11.0 progress, got {}",
+            progress.current
+        );
+    }
+
+    #[test]
+    fn test_work_execution_gains_xp() {
+        let mut world = World::new();
+        let mut tiles = vec![TerrainType::Grass; 100];
+        tiles[55] = TerrainType::Rock;
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
+        world.insert_resource(crate::layer1::resources::ColonyResources::default());
+
+        let designation = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Mine,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
+
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 5, y: 5 },
+                Skills::default(),
+                MovementTarget {
+                    target_entity: designation,
+                    target_position: GridPosition { x: 5, y: 5 },
+                    for_action: ActionType::Work,
+                },
+                AtTarget,
+            ))
+            .id();
+
+        work_execution_system(&mut world);
+
+        let skills = world.get::<Skills>(pop).unwrap();
+        assert_eq!(skills.get_xp(SkillType::Mining), 1.0);
     }
 }
