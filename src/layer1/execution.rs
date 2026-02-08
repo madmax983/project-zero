@@ -37,7 +37,7 @@ use crate::layer1::resources::{
     ColonyResources, ForestryProgress, MiningProgress, chop_tree, mine_rock,
 };
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
-use crate::layer1::social::Tavern;
+use crate::layer1::social::{SocialBuff, Tavern};
 use crate::layer1::terrain::TerrainGrid;
 use crate::layer1::utility_ai::{ActionType, PopAction, StartPlan};
 use crate::shared::log::MessageLog;
@@ -346,15 +346,20 @@ pub fn work_execution_system(world: &mut World) {
     // Since we need to access Needs which is a component, and we need &mut World later,
     // we should collect Needs data first.
     let workers_data: Vec<(Entity, Entity, f32, ActionType)> = world
-        .query_filtered::<(Entity, &MovementTarget, Option<&Needs>, Option<&Memories>), With<AtTarget>>()
+        .query_filtered::<(
+            Entity,
+            &MovementTarget,
+            Option<&Needs>,
+            Option<&Memories>,
+            Option<&SocialBuff>,
+        ), With<AtTarget>>()
         .iter(world)
-        .filter(|(_, mt, _, _)| mt.for_action == ActionType::Work || mt.for_action == ActionType::Repair)
-        .map(|(e, mt, needs, memories)| {
+        .filter(|(_, mt, _, _, _)| {
+            mt.for_action == ActionType::Work || mt.for_action == ActionType::Repair
+        })
+        .map(|(e, mt, needs, memories, social_buff)| {
             let morale = needs.map_or(0.5, |n| {
-                memories.map_or_else(
-                    || n.morale(),
-                    |m| calculate_effective_morale(n, m),
-                )
+                calculate_effective_morale(n, memories, social_buff)
             });
             (e, mt.target_entity, morale, mt.for_action)
         })
@@ -414,6 +419,7 @@ pub fn work_execution_system(world: &mut World) {
         // Workplace Hazards & XP Gain
         if worked {
             // Add XP
+            #[allow(clippy::collapsible_if)]
             if let Some(st) = skill_type {
                 if let Some(mut skills) = world.get_mut::<Skills>(pop_entity) {
                     skills.add_xp(st, 1.0);

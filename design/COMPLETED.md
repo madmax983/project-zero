@@ -49,3 +49,4 @@ Implemented features. Architect: read this to understand current state.
 - [x] `051` Pop Skills and Experience — `specs/051-pop-skills-xp.md` — completed 2026-03-05
 - [x] `013` Schedule and System Execution Ordering — `specs/013-schedule-system-ordering.md` — **implemented via Bevy Schedule** — 2026-03-05
 - [x] `014` Rendering Architecture and Z-Order — `specs/014-rendering-architecture.md` — **implemented via RenderCache priority** — 2026-03-05
+- [x] `047` Pop Relationships — `specs/047-pop-relationships.md` — completed 2026-03-05

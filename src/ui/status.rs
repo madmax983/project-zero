@@ -60,10 +60,8 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
         .filter_map(|e| {
             let needs = e.get::<crate::layer1::Needs>()?;
             let memories = e.get::<crate::layer1::Memories>();
-            let morale = memories.map_or_else(
-                || needs.morale(),
-                |m| crate::layer1::memory::calculate_effective_morale(needs, m),
-            );
+            let social_buff = e.get::<crate::layer1::social::SocialBuff>();
+            let morale = crate::layer1::memory::calculate_effective_morale(needs, memories, social_buff);
             Some(morale)
         })
         .fold((0.0, 0), |(sum, count), m| (sum + m, count + 1));

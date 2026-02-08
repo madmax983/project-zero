@@ -1,4 +1,5 @@
 use crate::layer1::needs::Needs;
+use crate::layer1::social::SocialBuff;
 use bevy_ecs::prelude::*;
 
 /// Types of memories a pop can acquire.
@@ -79,17 +80,24 @@ impl Memories {
     }
 }
 
-/// Calculates the effective morale including memory modifiers.
+/// Calculates the effective morale including memory and social modifiers.
 #[must_use]
-pub fn calculate_effective_morale(needs: &Needs, memories: &Memories) -> f32 {
+pub fn calculate_effective_morale(
+    needs: &Needs,
+    memories: Option<&Memories>,
+    social_buff: Option<&SocialBuff>,
+) -> f32 {
     let base = needs.morale();
-    let memory_modifier: f32 = memories
-        .items
-        .iter()
-        .map(|m| m.memory_type.base_mood_impact() * m.intensity)
-        .sum();
+    let memory_modifier: f32 = memories.map_or(0.0, |m| {
+        m.items
+            .iter()
+            .map(|i| i.memory_type.base_mood_impact() * i.intensity)
+            .sum()
+    });
 
-    (base + memory_modifier).clamp(0.0, 1.0)
+    let social_modifier = social_buff.map_or(0.0, |s| s.value);
+
+    (base + memory_modifier + social_modifier).clamp(0.0, 1.0)
 }
 
 /// System to decay memories every tick.
@@ -162,7 +170,7 @@ mod tests {
         // WitnessedDeath: -0.2 mood impact at max intensity
         memories.add(MemoryType::WitnessedDeath, 0);
 
-        let effective = calculate_effective_morale(&needs, &memories);
+        let effective = calculate_effective_morale(&needs, Some(&memories), None);
 
         // 0.5 - 0.2 = 0.3
         assert!((effective - 0.3).abs() < 0.001);
@@ -180,7 +188,7 @@ mod tests {
         memories.add(MemoryType::WitnessedDeath, 0); // -0.2
         memories.add(MemoryType::AteFineMeal, 0); // +0.1
 
-        let effective = calculate_effective_morale(&needs, &memories);
+        let effective = calculate_effective_morale(&needs, Some(&memories), None);
 
         // 0.5 - 0.2 + 0.1 = 0.4
         assert!((effective - 0.4).abs() < 0.001);
@@ -196,7 +204,20 @@ mod tests {
         let mut memories = Memories::default();
         memories.add(MemoryType::AteFineMeal, 0); // +0.1
 
-        let effective = calculate_effective_morale(&needs, &memories);
+        let effective = calculate_effective_morale(&needs, Some(&memories), None);
         assert!((effective - 1.0).abs() < f32::EPSILON);
+    }
+
+    #[test]
+    fn test_social_buff_stacking() {
+        let needs = Needs {
+            hunger: 0.5,
+            rest: 0.5,
+            leisure: 0.5,
+        }; // Base 0.5
+        let buff = crate::layer1::social::SocialBuff { value: 0.1 };
+
+        let effective = calculate_effective_morale(&needs, None, Some(&buff));
+        assert!((effective - 0.6).abs() < f32::EPSILON);
     }
 }
