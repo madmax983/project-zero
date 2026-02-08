@@ -29,11 +29,6 @@ fn main() -> anyhow::Result<()> {
     context.insert("ORIGIN_STAR", "Sol");
     context.insert("YEAR", "2150");
 
-    // Resolve EPITHET using CIV_EPITHET fragment manually because the names don't match
-    if let Some(epithet) = generator.get_random_fragment("CIV_EPITHET") {
-        context.insert("EPITHET", epithet);
-    }
-
     // 4. Generate Story
     println!("\nGenerating CIVILIZATION_RISE event...");
     let story = generator.generate("CIVILIZATION_RISE", &context)?;
