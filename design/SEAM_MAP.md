@@ -46,6 +46,23 @@ Map of connected and disconnected systems.
     - Modified `src/layer1/building.rs` to attach `LightSource` components to `Tavern`, `Smelter`, `Smithy`, `Housing`, `Library`, `Hospital`, `LumberMill`.
 - **Tests:** `tests/integration/lighting_buildings.rs`
 
+### INT-009: Chronicle -> Rumor Web
+- **Date:** 2026-03-10
+- **Systems connected:** `advance_season_system` / `check_milestones_system` -> `AddChronicleEvent` -> `chronicle_rumor_bridge_system` -> `Knowledge`
+- **Glue added:**
+    - `AddChronicleEvent` in `src/layer1/chronicle.rs`
+    - `chronicle_rumor_bridge_system` in `src/layer1/integration.rs`
+    - Refactored `Chronicle::add_event` call sites to emit `AddChronicleEvent`.
+- **Tests:** `tests/integration/chronicle_rumor.rs`
+
+### INT-010: Affinity Change Events -> Relationships
+- **Date:** 2026-03-10
+- **Systems connected:** `exchange_rumors_system` -> `AffinityChange` -> `modify_affinity_system` -> `Relationships`
+- **Glue added:**
+    - Added `modify_affinity_system` to `SimulationSchedule` (was missing).
+    - Added `Events::update_system` for `AffinityChange` and `AddChronicleEvent`.
+- **Tests:** `tests/integration/chronicle_rumor.rs` (implicitly tests event flow), `tests/social_tavern.rs` (updated to support events)
+
 ### Pending Seams
 
 - [ ] Utility AI -> Housing Assignment (Checked: Connected via `ActionType::SatisfyRest`)

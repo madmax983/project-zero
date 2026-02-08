@@ -48,6 +48,26 @@ pub enum EventImportance {
     Legendary,
 }
 
+/// Event triggered when a new chronicle entry should be added.
+#[derive(Event, Debug, Clone)]
+pub struct AddChronicleEvent {
+    /// The text description of the event.
+    pub text: String,
+    /// The importance level of the event.
+    pub importance: EventImportance,
+}
+
+/// System to process chronicle events and add them to the resource.
+pub fn chronicle_event_handler_system(
+    mut events: EventReader<AddChronicleEvent>,
+    mut chronicle: ResMut<Chronicle>,
+    time: Res<SimulationTime>,
+) {
+    for event in events.read() {
+        chronicle.add_event(time.tick, event.text.clone(), event.importance);
+    }
+}
+
 /// A single chronicle event.
 #[derive(Clone, Debug)]
 pub struct ChronicleEvent {
@@ -143,7 +163,7 @@ pub fn initial_chronicle_event(world: &mut World) {
 pub fn check_milestones_system(
     time: Res<SimulationTime>,
     mut tracker: ResMut<BuildingTracker>,
-    mut chronicle: ResMut<Chronicle>,
+    mut events: EventWriter<AddChronicleEvent>,
     buildings: Query<&Building>,
     generator: Res<NarrativeGenerator>,
     colony: Res<ColonyName>,
@@ -180,7 +200,10 @@ pub fn check_milestones_system(
         let text = generator
             .generate("FIRST_HOUSING", &ctx)
             .unwrap_or_else(|_| "First Housing constructed. A shelter from the void.".to_string());
-        chronicle.add_event(current_tick, text, EventImportance::Major);
+        events.send(AddChronicleEvent {
+            text,
+            importance: EventImportance::Major,
+        });
     }
     if found_farm && !tracker.has_built_farm {
         tracker.has_built_farm = true;
@@ -191,7 +214,10 @@ pub fn check_milestones_system(
         let text = generator
             .generate("FIRST_FARM", &ctx)
             .unwrap_or_else(|_| "First Farm operational. We shall not starve.".to_string());
-        chronicle.add_event(current_tick, text, EventImportance::Major);
+        events.send(AddChronicleEvent {
+            text,
+            importance: EventImportance::Major,
+        });
     }
 }
 
@@ -304,7 +330,7 @@ mod tests {
     #[test]
     fn test_check_milestones_system_housing() {
         let mut world = World::new();
-        world.insert_resource(Chronicle::default());
+        world.init_resource::<Events<AddChronicleEvent>>();
         world.insert_resource(BuildingTracker::default());
         world.insert_resource(SimulationTime::default());
         world.insert_resource(NarrativeGenerator::from_embedded());
@@ -320,9 +346,12 @@ mod tests {
 
         world.run_system_once(check_milestones_system).unwrap();
 
-        let chronicle = world.resource::<Chronicle>();
-        assert_eq!(chronicle.events.len(), 1);
-        assert!(!chronicle.events[0].text.is_empty());
+        let events = world.resource::<Events<AddChronicleEvent>>();
+        #[allow(deprecated)]
+        let mut reader = events.get_reader();
+        let emitted: Vec<_> = reader.read(events).collect();
+        assert_eq!(emitted.len(), 1);
+        assert!(!emitted[0].text.is_empty());
 
         let tracker = world.resource::<BuildingTracker>();
         assert!(tracker.has_built_housing);
@@ -331,7 +360,7 @@ mod tests {
     #[test]
     fn test_check_milestones_system_farm() {
         let mut world = World::new();
-        world.insert_resource(Chronicle::default());
+        world.init_resource::<Events<AddChronicleEvent>>();
         world.insert_resource(BuildingTracker::default());
         world.insert_resource(SimulationTime::default());
         world.insert_resource(NarrativeGenerator::from_embedded());
@@ -347,9 +376,12 @@ mod tests {
 
         world.run_system_once(check_milestones_system).unwrap();
 
-        let chronicle = world.resource::<Chronicle>();
-        assert_eq!(chronicle.events.len(), 1);
-        assert!(!chronicle.events[0].text.is_empty());
+        let events = world.resource::<Events<AddChronicleEvent>>();
+        #[allow(deprecated)]
+        let mut reader = events.get_reader();
+        let emitted: Vec<_> = reader.read(events).collect();
+        assert_eq!(emitted.len(), 1);
+        assert!(!emitted[0].text.is_empty());
 
         let tracker = world.resource::<BuildingTracker>();
         assert!(tracker.has_built_farm);
@@ -358,7 +390,7 @@ mod tests {
     #[test]
     fn test_check_milestones_system_only_once() {
         let mut world = World::new();
-        world.insert_resource(Chronicle::default());
+        world.init_resource::<Events<AddChronicleEvent>>();
         world.insert_resource(BuildingTracker::default());
         world.insert_resource(SimulationTime::default());
         world.insert_resource(NarrativeGenerator::from_embedded());
@@ -379,10 +411,39 @@ mod tests {
         ));
 
         world.run_system_once(check_milestones_system).unwrap();
-        world.run_system_once(check_milestones_system).unwrap(); // Run twice
 
-        let chronicle = world.resource::<Chronicle>();
-        assert_eq!(chronicle.events.len(), 1, "Should only record first farm");
+        {
+            let events = world.resource::<Events<AddChronicleEvent>>();
+            #[allow(deprecated)]
+            let mut reader = events.get_reader();
+            assert_eq!(reader.read(events).count(), 1, "Should only record first farm");
+        }
+
+        // Run twice
+        world.run_system_once(check_milestones_system).unwrap();
+
+        {
+            let events = world.resource::<Events<AddChronicleEvent>>();
+            #[allow(deprecated)]
+            let mut reader = events.get_reader();
+            // Reader tracks read events, so if we read again it should be empty?
+            // Actually get_reader creates a NEW reader every time (if it's not stored in Local or ResMut).
+            // `events.get_reader()` is deprecated and returns a ManualEventReader.
+            // If I create a new reader, it might read from the beginning of the buffer?
+            // No, ManualEventReader default constructor starts at 0?
+            // Wait, Bevy's manual reader usually needs to be updated or initialized correctly.
+            // But here I'm creating a new reader each block.
+            // If I want to check total count, I should probably check emitted count per run.
+            // The system should NOT emit again.
+            // So count should be 0 in the second run.
+
+            // However, since I'm creating a new reader, I might re-read the OLD event if it wasn't cleared.
+            // `Events::update()` clears old events. But I'm not calling update() here.
+            // So events persist.
+            // So a new reader will see ALL events.
+            // So I expect count to still be 1 (the first event).
+            assert_eq!(reader.read(events).count(), 1, "Should still see only 1 event total");
+        }
     }
 
     #[test]

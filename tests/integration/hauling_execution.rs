@@ -31,9 +31,12 @@ mod tests {
         world.insert_resource(scale::layer1::utility_ai::types::ColonyMemory::default());
         world.insert_resource(scale::layer1::tech::TechState::default());
         world.insert_resource(scale::layer1::beauty::BeautyGrid::new(10, 10));
+        world.insert_resource(scale::layer1::zone::ZoneGrid::new(10, 10));
         world.insert_resource(scale::layer1::lighting::LightMap::new(10, 10));
         world.insert_resource(scale::layer1::lighting::AmbientLight::default());
         world.insert_resource(scale::layer1::notifications::NotificationQueue::default());
+        world.init_resource::<Events<scale::layer1::chronicle::AddChronicleEvent>>();
+        world.init_resource::<Events<scale::layer1::social::AffinityChange>>();
 
         let generator = scale::shared::narrative::NarrativeGenerator::from_embedded();
         world.insert_resource(scale::shared::colony::ColonyName {

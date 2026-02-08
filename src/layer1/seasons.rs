@@ -2,7 +2,7 @@ use crate::layer1::balance::{
     SEASON_MODIFIER_AUTUMN, SEASON_MODIFIER_SPRING, SEASON_MODIFIER_SUMMER, SEASON_MODIFIER_WINTER,
     TICKS_PER_YEAR,
 };
-use crate::layer1::chronicle::{Chronicle, EventImportance};
+use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 
@@ -69,7 +69,7 @@ pub struct SeasonState {
 pub fn advance_season_system(
     time: Res<SimulationTime>,
     mut state: ResMut<SeasonState>,
-    mut chronicle: ResMut<Chronicle>,
+    mut events: EventWriter<AddChronicleEvent>,
 ) {
     let tick = time.tick;
     let ticks_per_season = TICKS_PER_YEAR / 4;
@@ -84,18 +84,16 @@ pub fn advance_season_system(
 
     if state.current_season != new_season {
         state.current_season = new_season;
-        chronicle.add_event(
-            tick,
-            format!("The season turns. {} has arrived.", new_season.name()),
-            EventImportance::Standard,
-        );
+        events.send(AddChronicleEvent {
+            text: format!("The season turns. {} has arrived.", new_season.name()),
+            importance: EventImportance::Standard,
+        });
     }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::chronicle::Chronicle;
     use crate::shared::time::SimulationTime;
     use bevy_ecs::system::RunSystemOnce;
 
@@ -121,7 +119,7 @@ mod tests {
             tick: 0,
             ..Default::default()
         });
-        world.insert_resource(Chronicle::default());
+        world.init_resource::<Events<AddChronicleEvent>>();
 
         world.run_system_once(advance_season_system).unwrap();
 
@@ -133,7 +131,7 @@ mod tests {
     fn test_advance_season_system_transition() {
         let mut world = World::new();
         world.insert_resource(SeasonState::default());
-        world.insert_resource(Chronicle::default());
+        world.init_resource::<Events<AddChronicleEvent>>();
 
         // Ticks per season = 1000 / 4 = 250
         // Spring: 0-249, Summer: 250-499
@@ -147,9 +145,13 @@ mod tests {
         let state = world.resource::<SeasonState>();
         assert_eq!(state.current_season, Season::Summer);
 
-        let chronicle = world.resource::<Chronicle>();
-        assert_eq!(chronicle.events.len(), 1);
-        assert!(chronicle.events[0].text.contains("Summer"));
+        // Verify Event was sent
+        let events = world.resource::<Events<AddChronicleEvent>>();
+        #[allow(deprecated)]
+        let mut reader = events.get_reader();
+        let emitted: Vec<_> = reader.read(events).collect();
+        assert_eq!(emitted.len(), 1);
+        assert!(emitted[0].text.contains("Summer"));
     }
 
     #[test]
@@ -158,7 +160,7 @@ mod tests {
         world.insert_resource(SeasonState {
             current_season: Season::Summer,
         });
-        world.insert_resource(Chronicle::default());
+        world.init_resource::<Events<AddChronicleEvent>>();
         world.insert_resource(SimulationTime {
             tick: 251,
             ..Default::default()
@@ -166,9 +168,13 @@ mod tests {
 
         world.run_system_once(advance_season_system).unwrap();
 
-        let chronicle = world.resource::<Chronicle>();
+        // Verify NO Event was sent
+        let events = world.resource::<Events<AddChronicleEvent>>();
+        #[allow(deprecated)]
+        let mut reader = events.get_reader();
+        let emitted: Vec<_> = reader.read(events).collect();
         assert!(
-            chronicle.events.is_empty(),
+            emitted.is_empty(),
             "Should not add event if season hasn't changed"
         );
     }

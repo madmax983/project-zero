@@ -3,6 +3,8 @@
 use bevy_ecs::prelude::*;
 
 use crate::gpu::context::GpuContext;
+use crate::layer1::chronicle::AddChronicleEvent;
+use crate::layer1::social::AffinityChange;
 use crate::layer1::{
     AmbientLight, BuildMode, BuildingTracker, Chronicle, ChronicleUiState, ColonyMemory,
     ColonyPolicies, ColonyResources, DesignationMode, LightMap, NamedLocations, NotificationQueue,
@@ -58,6 +60,8 @@ pub fn setup_world() -> World {
     world.insert_resource(crate::layer1::zone::ZoneGrid::new(80, 50));
     world.insert_resource(LightMap::new(80, 50));
     world.insert_resource(AmbientLight::default());
+    world.init_resource::<Events<AddChronicleEvent>>();
+    world.init_resource::<Events<AffinityChange>>();
 
     // Initialize GPU compute context (non-fatal if no GPU available)
     match pollster::block_on(GpuContext::new()) {
