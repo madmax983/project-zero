@@ -510,3 +510,104 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 ---
 
 *Add new templates with clear slot definitions. Provide 3-4 pattern variants. Tag required vs optional slots.*
+
+---
+
+## Beauty & Horticulture Templates
+
+### PARK_OPENED
+**Slots:** [COLONY], [YEAR], [PARK_NAME], [BEAUTY_DESCRIPTOR]
+
+```
+"[PARK_NAME] opens to the sky. [YEAR]. A [BEAUTY_DESCRIPTOR] space for rest."
+"Year [YEAR]. We plant the [PARK_NAME]. It is [BEAUTY_DESCRIPTOR] amidst the grey."
+"The [PARK_NAME] is complete. [YEAR]. Beauty returns to [COLONY]."
+```
+
+### STATUE_RAISED
+**Slots:** [COLONY], [YEAR], [SUBJECT], [ART_TYPE], [BEAUTY_DESCRIPTOR]
+
+```
+"A [ART_TYPE] is raised. [YEAR]. It honors [SUBJECT]. [BEAUTY_DESCRIPTOR]."
+"[YEAR]: We build a [ART_TYPE] for [SUBJECT]. A [BEAUTY_DESCRIPTOR] memory in stone."
+"The [SUBJECT] [ART_TYPE] stands watch over [COLONY]. [YEAR]."
+```
+
+---
+
+## Waste & Pollution Templates
+
+### LANDFILL_FULL
+**Slots:** [COLONY], [YEAR], [WASTE_NAME], [HEAP_NAME]
+
+```
+"The [HEAP_NAME] is full. [YEAR]. [WASTE_NAME] spills over."
+"[YEAR]: No more room for [WASTE_NAME]. The [HEAP_NAME] chokes [COLONY]."
+"Warning: [HEAP_NAME] at capacity. [YEAR]. The filth rises."
+```
+
+### WASTE_SPILL
+**Slots:** [COLONY], [YEAR], [WASTE_NAME], [POLLUTION_DESCRIPTOR]
+
+```
+"Leak at [COLONY]. [YEAR]. [WASTE_NAME] spreads. It is [POLLUTION_DESCRIPTOR]."
+"[YEAR]: The containment fails. [WASTE_NAME] everywhere. A [POLLUTION_DESCRIPTOR] stain."
+"[COLONY] weeps [WASTE_NAME]. [YEAR]. The ground is [POLLUTION_DESCRIPTOR]."
+```
+
+---
+
+## Skills & Mastery Templates
+
+### MASTERY_ACHIEVED
+**Slots:** [COLONY], [YEAR], [NAME], [SKILL_TITLE], [SKILL_TYPE]
+
+```
+"[NAME] is now a [SKILL_TITLE] of [SKILL_TYPE]. [YEAR]. We are stronger."
+"Year [YEAR]. [NAME] achieves mastery in [SKILL_TYPE]. A true [SKILL_TITLE]."
+"The [SKILL_TITLE] [NAME]. [YEAR]. Unmatched in [SKILL_TYPE]."
+```
+
+### MASTERWORK_CREATED
+**Slots:** [COLONY], [YEAR], [NAME], [ITEM_NAME], [MASTERWORK_ADJECTIVE]
+
+```
+"[NAME] forges [ITEM_NAME]. [YEAR]. It is [MASTERWORK_ADJECTIVE]."
+"A [MASTERWORK_ADJECTIVE] creation. [ITEM_NAME]. [NAME]'s hands are blessed. [YEAR]."
+"[YEAR]: The [ITEM_NAME] is finished. [NAME] calls it [MASTERWORK_ADJECTIVE]."
+```
+
+---
+
+## Relationship Templates
+
+### BOND_FORMED
+**Slots:** [COLONY], [YEAR], [NAME_A], [NAME_B], [BOND_TYPE]
+
+```
+"[NAME_A] and [NAME_B]. [YEAR]. They are [BOND_TYPE] now."
+"A bond forms. [YEAR]. [NAME_A], [NAME_B]. True [BOND_TYPE]."
+"[YEAR]: [NAME_A] stands with [NAME_B]. [BOND_TYPE] in the dark."
+```
+
+### RIVALRY_STARTED
+**Slots:** [COLONY], [YEAR], [NAME_A], [NAME_B], [RIVALRY_REASON]
+
+```
+"Bad blood between [NAME_A] and [NAME_B]. [YEAR]. Cause: [RIVALRY_REASON]."
+"[YEAR]: [NAME_A] turns against [NAME_B]. An [RIVALRY_REASON]."
+"Conflict in the ranks. [NAME_A] vs [NAME_B]. [YEAR]. [RIVALRY_REASON]."
+```
+
+---
+
+## Science Templates
+
+### ANOMALY_STUDIED
+**Slots:** [COLONY], [YEAR], [ANOMALY_TYPE], [SCIENCE_ACTION]
+
+```
+"We found a [ANOMALY_TYPE]. [YEAR]. It was [SCIENCE_ACTION]."
+"[YEAR]: Contact with [ANOMALY_TYPE]. We [SCIENCE_ACTION] it. Data secured."
+"The [ANOMALY_TYPE] at [COLONY]. [YEAR]. We have [SCIENCE_ACTION] its secrets."
+```

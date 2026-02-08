@@ -418,3 +418,91 @@ Shared memories become **Culture**.
 ---
 
 *These grammars are instructions to the generator. Architect will spec the generator; Builder will implement it.*
+
+---
+
+## Beauty & Waste Chaining
+
+### Beauty Events
+When beauty is created, it affects morale and inspiration.
+
+```yaml
+PARK_OPENED:
+  enables:
+    - SOCIAL_GATHERING (high, in park)
+    - STATUE_RAISED (medium, as centerpiece)
+  increases:
+    - HAPPINESS (high)
+    - ROMANCE (medium)
+
+STATUE_RAISED:
+  enables:
+    - LEGEND_BIRTH (medium, regarding subject)
+    - VANDALISM (low, if unrest)
+  increases:
+    - MEMORY_RETENTION (high)
+```
+
+### Waste Events
+Pollution creates problems.
+
+```yaml
+LANDFILL_FULL:
+  enables:
+    - WASTE_SPILL (high)
+    - NEW_LANDFILL_CONSTRUCTION (high)
+  increases:
+    - SICKNESS (medium)
+    - UNREST (low)
+
+WASTE_SPILL:
+  enables:
+    - SICKNESS_OUTBREAK (high)
+    - CLEANUP_EFFORT (high)
+    - MUTATION (very low, long term)
+  increases:
+    - UNREST (high)
+    - BEAUTY_LOSS (critical)
+```
+
+### Science & Skill Chaining
+
+```yaml
+ANOMALY_STUDIED:
+  enables:
+    - TECH_BREAKTHROUGH (high)
+    - ARTIFACT_DISCOVERY (medium)
+    - NEW_ANOMALY_SPAWN (low, chain reaction)
+  increases:
+    - KNOWLEDGE (high)
+    - VOID_MADNESS (low, depends on anomaly)
+
+MASTERY_ACHIEVED:
+  enables:
+    - MASTERWORK_CREATED (high)
+    - APPRENTICE_TRAINING (medium)
+  increases:
+    - EFFICIENCY (high)
+    - LEGEND_GENERATION (medium)
+```
+
+### Relationship Chaining
+
+```yaml
+BOND_FORMED:
+  enables:
+    - JOINT_ACTION (high)
+    - MARRIAGE/UNION (medium)
+    - GRIEF_TRAUMA (if one dies)
+  increases:
+    - STABILITY (medium)
+
+RIVALRY_STARTED:
+  enables:
+    - BRAWL (medium)
+    - SABOTAGE (low)
+    - RECONCILIATION (low)
+  increases:
+    - UNREST (low)
+    - STRESS (medium)
+```
