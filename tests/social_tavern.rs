@@ -5,6 +5,7 @@ mod tests {
     use bevy_ecs::prelude::*;
     use scale::layer1::building::OccupiedTiles;
     use scale::layer1::building::{Building, BuildingType};
+    use scale::layer1::lighting::{AmbientLight, LightMap};
     use scale::layer1::map::GridPosition;
     use scale::layer1::needs::Needs;
     use scale::layer1::pop::Pop;
@@ -38,6 +39,8 @@ mod tests {
         world.insert_resource(scale::shared::colony::ColonyName::default());
         world.insert_resource(scale::layer1::beauty::BeautyGrid::new(10, 10));
         world.insert_resource(scale::layer1::notifications::NotificationQueue::default());
+        world.insert_resource(LightMap::new(10, 10));
+        world.insert_resource(AmbientLight::default());
 
         world
     }
