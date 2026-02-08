@@ -5,6 +5,7 @@ use crate::layer1::GridPosition;
 use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::pop::Pop;
 use crate::layer1::resources::{ColonyResources, RefiningProgress, ResourceItem, ResourceType};
+use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
 use bevy_ecs::prelude::*;
 use rand::Rng;
 
@@ -14,10 +15,10 @@ use rand::Rng;
 /// and input resources are available, it increments progress. Upon completion,
 /// it consumes input resources and produces refined resources.
 pub fn process_refining_system(world: &mut World) {
-    let worker_positions: Vec<GridPosition> = world
-        .query_filtered::<&GridPosition, With<Pop>>()
+    let workers: Vec<(Entity, GridPosition)> = world
+        .query_filtered::<(Entity, &GridPosition), With<Pop>>()
         .iter(world)
-        .copied()
+        .map(|(e, p)| (e, *p))
         .collect();
 
     let resources_snapshot = world
@@ -27,25 +28,60 @@ pub fn process_refining_system(world: &mut World) {
 
     let mut finished_jobs: Vec<(Entity, ColonyResources, ColonyResources, GridPosition)> =
         Vec::new();
+    let mut xp_gains: Vec<Entity> = Vec::new();
 
-    let mut query = world.query::<(Entity, &Building, &GridPosition, &mut RefiningProgress)>();
-    for (entity, building, pos, mut progress) in query.iter_mut(world) {
-        let has_worker = worker_positions
+    // Iterate buildings
+    // We collect entities to avoid borrow conflict when accessing skills later
+    let buildings: Vec<(Entity, BuildingType, GridPosition, f32, f32)> = world
+        .query::<(Entity, &Building, &GridPosition, &RefiningProgress)>()
+        .iter(world)
+        .map(|(e, b, p, prog)| (e, b.building_type, *p, prog.current, prog.max))
+        .collect();
+
+    for (building_entity, building_type, pos, _current_prog, _max_prog) in buildings {
+        // Find nearest worker
+        let nearest_worker = workers
             .iter()
-            .any(|p| (p.x - pos.x).abs() + (p.y - pos.y).abs() <= 10);
+            .min_by_key(|(_, p)| (p.x - pos.x).abs() + (p.y - pos.y).abs());
 
-        if !has_worker {
+        let Some((worker_entity, worker_pos)) = nearest_worker else {
+            continue;
+        };
+
+        // Check range (10 tiles)
+        if (worker_pos.x - pos.x).abs() + (worker_pos.y - pos.y).abs() > 10 {
             continue;
         }
 
+        // Get skill efficiency
+        let efficiency = {
+            let skills = world.get::<Skills>(*worker_entity);
+            get_skill_efficiency(skills, SkillType::Crafting)
+        };
+
         let (can_refine, input_cost, output_gain) =
-            get_refining_recipe(building.building_type, &resources_snapshot);
+            get_refining_recipe(building_type, &resources_snapshot);
 
         if can_refine {
-            progress.current += 1.0;
-            if progress.is_complete() {
-                finished_jobs.push((entity, input_cost, output_gain, *pos));
+            // Update progress
+            // We need to write back to RefiningProgress
+            // Since we collected immutable data, we need to get_mut now.
+            if let Some(mut progress) = world.get_mut::<RefiningProgress>(building_entity) {
+                progress.current += 1.0 * efficiency;
+                if progress.is_complete() {
+                    finished_jobs.push((building_entity, input_cost, output_gain, pos));
+                }
             }
+
+            // Add XP
+            xp_gains.push(*worker_entity);
+        }
+    }
+
+    // Apply XP gains
+    for worker_entity in xp_gains {
+        if let Some(mut skills) = world.get_mut::<Skills>(worker_entity) {
+            skills.add_xp(SkillType::Crafting, 1.0);
         }
     }
 
@@ -182,6 +218,7 @@ mod tests {
     use crate::layer1::pop::Pop;
     use crate::layer1::refining::process_refining_system;
     use crate::layer1::resources::{ColonyResources, RefiningProgress};
+    use crate::layer1::skills::{SkillType, Skills};
     use bevy_ecs::prelude::*;
 
     #[test]
@@ -244,6 +281,65 @@ mod tests {
 
         let progress = world.query::<&RefiningProgress>().single(&world);
         assert!(progress.current > 0.0);
+    }
+
+    #[test]
+    fn test_process_refining_skills_efficiency() {
+        let mut world = World::new();
+        world.insert_resource(ColonyResources {
+            wood: 10.0,
+            ..Default::default()
+        });
+
+        world.spawn((
+            Building {
+                building_type: BuildingType::LumberMill,
+            },
+            GridPosition { x: 5, y: 5 },
+            RefiningProgress {
+                current: 0.0,
+                max: 10.0,
+            },
+        ));
+
+        // Worker with Level 1 Crafting -> 1.1 efficiency
+        let mut skills = Skills::default();
+        skills.add_xp(SkillType::Crafting, 100.0);
+        world.spawn((Pop, GridPosition { x: 5, y: 6 }, skills));
+
+        process_refining_system(&mut world);
+
+        let progress = world.query::<&RefiningProgress>().single(&world);
+        assert!((progress.current - 1.1).abs() < f32::EPSILON);
+    }
+
+    #[test]
+    fn test_process_refining_skills_xp() {
+        let mut world = World::new();
+        world.insert_resource(ColonyResources {
+            wood: 10.0,
+            ..Default::default()
+        });
+
+        world.spawn((
+            Building {
+                building_type: BuildingType::LumberMill,
+            },
+            GridPosition { x: 5, y: 5 },
+            RefiningProgress {
+                current: 0.0,
+                max: 10.0,
+            },
+        ));
+
+        let worker = world
+            .spawn((Pop, GridPosition { x: 5, y: 6 }, Skills::default()))
+            .id();
+
+        process_refining_system(&mut world);
+
+        let skills = world.get::<Skills>(worker).unwrap();
+        assert_eq!(skills.get_xp(SkillType::Crafting), 1.0);
     }
 
     #[test]

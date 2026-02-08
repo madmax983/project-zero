@@ -5,6 +5,7 @@ use crate::layer1::needs::Needs;
 use crate::layer1::pop::Pop;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::seasons::SeasonState;
+use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
 use bevy_ecs::prelude::*;
 
 /// Farm component - produces food when worked.
@@ -28,21 +29,38 @@ impl Default for Farm {
 /// Produces food from all farms with workers.
 pub fn produce_food_system(
     farm_query: Query<(&Farm, &crate::layer1::building::Building)>,
-    pop_query: Query<&Pop>,
+    mut pop_query: Query<(&Pop, Option<&mut Skills>)>,
     season: Option<Res<SeasonState>>,
     mut resources: ResMut<ColonyResources>,
 ) {
     let modifier = season.map_or(1.0, |s| s.current_season.food_modifier());
 
     for (farm, building) in &farm_query {
-        #[allow(clippy::cast_precision_loss)]
-        let worker_count = farm
-            .workers
-            .iter()
-            .filter(|&&e| pop_query.get(e).is_ok())
-            .count() as f32;
+        let mut total_efficiency = 0.0;
 
-        let production = worker_count * FOOD_PER_WORKER_PER_TICK * modifier;
+        for &worker_entity in &farm.workers {
+            if let Ok((_, skills_opt)) = pop_query.get_mut(worker_entity) {
+                // Determine skill based on building type (all Farming for now?)
+                // Spec says Farming for producing food/fiber.
+                let skill_type = SkillType::Farming;
+
+                // Calculate efficiency (immutable read)
+                // We need to re-borrow or use the value.
+                // Since we have &mut Skills, we can just use it.
+                // But get_skill_efficiency takes Option<&Skills>.
+                // We can re-borrow from Option<&mut Skills> as Option<&Skills>.
+                let efficiency =
+                    get_skill_efficiency(skills_opt.as_deref(), skill_type);
+                total_efficiency += efficiency;
+
+                // Add XP (mutable write)
+                if let Some(mut skills) = skills_opt.into_iter().next() {
+                    skills.add_xp(skill_type, 1.0);
+                }
+            }
+        }
+
+        let production = total_efficiency * FOOD_PER_WORKER_PER_TICK * modifier;
 
         if production > 0.0 {
             match building.building_type {
@@ -138,6 +156,60 @@ mod tests {
 
         let resources = world.resource::<ColonyResources>();
         assert!(resources.food > 0.0, "Food should be produced");
+    }
+
+    #[test]
+    fn test_produce_food_system_skills_xp() {
+        let mut world = World::new();
+        world.insert_resource(ColonyResources::default());
+
+        let worker = world.spawn((Pop, Skills::default())).id();
+        let mut farm = Farm::default();
+        farm.workers.push(worker);
+        world.spawn((
+            farm,
+            Building {
+                building_type: BuildingType::Farm,
+            },
+        ));
+
+        world.run_system_once(produce_food_system).unwrap();
+
+        // Check XP
+        let skills = world.get::<Skills>(worker).unwrap();
+        assert_eq!(skills.get_xp(SkillType::Farming), 1.0);
+    }
+
+    #[test]
+    fn test_produce_food_system_skills_efficiency() {
+        let mut world = World::new();
+        world.insert_resource(ColonyResources::default());
+
+        // Worker with Level 1 Farming (100 XP) -> 1.1 efficiency
+        let mut skills = Skills::default();
+        skills.add_xp(SkillType::Farming, 100.0);
+        let worker = world.spawn((Pop, skills)).id();
+
+        let mut farm = Farm::default();
+        farm.workers.push(worker);
+        world.spawn((
+            farm,
+            Building {
+                building_type: BuildingType::Farm,
+            },
+        ));
+
+        world.run_system_once(produce_food_system).unwrap();
+
+        let resources = world.resource::<ColonyResources>();
+        // Base = 0.005 (FOOD_PER_WORKER_PER_TICK)
+        // With skill = 0.005 * 1.1 = 0.0055
+        // Food starts at 10.0
+        // Expected = 10.0055
+        assert!(
+            (resources.food - 10.0055).abs() < f32::EPSILON,
+            "Food production should reflect skill efficiency"
+        );
     }
 
     #[test]
