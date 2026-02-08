@@ -10,6 +10,10 @@ use bevy_ecs::schedule::{IntoSystemConfigs, Schedule, ScheduleLabel};
 
 use crate::experimental::biography::biography_monitor_system;
 use crate::experimental::dreams::dream_system;
+#[cfg(feature = "nova")]
+use crate::experimental::ghosts::{
+    apply_ghost_beauty_system, ghost_light_damage_system, ghost_movement_system,
+};
 use crate::gpu::evaluate::gpu_evaluate_actions;
 use crate::layer1::{
     advance_season_system, apply_lighting_penalties_system, arrival_handler_system,
@@ -65,6 +69,9 @@ pub fn build_simulation_schedule() -> Schedule {
         process_scan_system.after(arrival_handler_system),
     ));
 
+    #[cfg(feature = "nova")]
+    schedule.add_systems(ghost_movement_system.after(movement_system));
+
     // --- Economy (after execution, before consumption) ---
     // These systems can run in parallel with each other.
     schedule.add_systems((
@@ -79,6 +86,14 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::beauty::update_beauty_grid_system.after(work_execution_system),
         crate::layer1::beauty::apply_beauty_effects_system
             .after(crate::layer1::beauty::update_beauty_grid_system),
+    ));
+
+    #[cfg(feature = "nova")]
+    schedule.add_systems((
+        apply_ghost_beauty_system
+            .after(crate::layer1::beauty::update_beauty_grid_system)
+            .before(crate::layer1::beauty::apply_beauty_effects_system),
+        ghost_light_damage_system.after(update_lighting_system),
     ));
 
     // --- Environment (Fire) ---
