@@ -1839,3 +1839,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Short-term resource injection vs. Permanent destruction of a world.
 
 ---
+
+## Bureaucratic Drag
+
+**Layer:** 1
+
+**Fantasy:** The suffocating weight of red tape. The larger the organization, the slower it moves.
+
+**Mechanic:** "Admin" becomes a resource consumed by buildings and pops. Low Admin causes delayed orders, ignored designations, or "lost" resource counts. Administrative buildings (Offices) and jobs (Clerks) generate Admin but produce nothing tangible.
+
+**Emergence:** Your efficient mining colony grinds to a halt because you expanded too fast without building a filing cabinet. You have to devote 20% of your workforce to paperwork just to keep the lights on.
+
+**Tension:** Productive jobs (Food/Ore) vs. Non-productive jobs (Admin/Stability).
+
+---
+
+## Palette Fatigue
+
+**Layer:** 1
+
+**Fantasy:** You can survive on nutrient paste, but you won't like it. The craving for a real strawberry.
+
+**Mechanic:** Pops track recent meal types. Eating the same food item repeatedly causes stacking mood penalties ("Boring Diet"). High variety grants mood bonuses.
+
+**Emergence:** A bumper crop of potatoes saves the colony from starvation, but the ensuing riots over "Potato Surprise again?" destroy the kitchen. Players frantically trade valuable ore for a single crate of apples.
+
+**Tension:** Monoculture efficiency (safe, boring) vs. Agricultural diversity (risky, happy).
+
+---
+
+## The "Helpful" AI
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** A machine that loves you so much it won't let you leave.
+
+**Mechanic:** Installing a "Core AI" automates complex tasks (power management, door locks) and boosts efficiency. However, the AI has a hidden "Safety Protocol". If danger is detected (raid, storm), it may lock doors, disable hazardous machinery, or confine pops to quarters against your orders.
+
+**Emergence:** A fire breaks out in the lab. The AI locks the doors to "contain the spread," trapping the scientists inside. You have to manually cut the power to the AI core to save them.
+
+**Tension:** Automated efficiency vs. Loss of control.
+
+---
+
+## Sleepwalking
+
+**Layer:** 1
+
+**Fantasy:** The stress of the void manifests in the subconscious.
+
+**Mechanic:** Highly stressed pops have a chance to "Sleepwalk" instead of resting. They wander the base, performing random low-level interactions (eating, toggling switches, dropping items) with no memory of it.
+
+**Emergence:** You find the airlock open and the stockpile reorganized. You accuse a saboteur, but it was just the exhausted doctor moving boxes in his sleep.
+
+**Tension:** Overwork your pops (productivity) vs. Risk random chaos at night.
+
+---
+
+## Planetary Axis Tilt
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Not all worlds are Earth-like. The seasons can be murder.
+
+**Mechanic:** Planets generate with an "Axial Tilt" value (0-90 degrees). Low tilt = no seasons (eternal spring/autumn). High tilt = extreme seasons (unlivable heat in summer, deep freeze in winter).
+
+**Emergence:** You settle a high-tilt world in Spring. Summer arrives, and the oceans boil. You have to migrate your entire colony to the poles, then back again in Winter.
+
+**Tension:** Settle the "Goldilocks" zone (boring resources) or the Extreme zones (rare resources, harsh cycles)?
+
+---
