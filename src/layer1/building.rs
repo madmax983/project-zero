@@ -49,6 +49,8 @@ pub enum BuildingType {
     Statue,
     /// Medical facility for healing.
     Hospital,
+    /// Waste storage facility.
+    Landfill,
 }
 
 impl BuildingType {
@@ -58,6 +60,7 @@ impl BuildingType {
         match self {
             Self::FlowerBed => 5.0,
             Self::Statue => 10.0,
+            Self::Landfill => -10.0,
             _ => 0.0,
         }
     }
@@ -99,6 +102,7 @@ impl BuildingType {
             Self::FlowerBed => "Flower Bed",
             Self::Statue => "Statue",
             Self::Hospital => "Hospital",
+            Self::Landfill => "Landfill",
         }
     }
 
@@ -119,6 +123,7 @@ impl BuildingType {
             Self::FlowerBed => '*',
             Self::Statue => 'I',
             Self::Hospital => '+',
+            Self::Landfill => '%',
         }
     }
 
@@ -137,6 +142,11 @@ impl BuildingType {
             },
             Self::Stockpile => ColonyResources {
                 wood: 50.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Landfill => ColonyResources {
+                wood: 20.0,
+                stone: 20.0,
                 ..ColonyResources::zeroed()
             },
             Self::LumberMill | Self::Smithy => ColonyResources {
@@ -298,6 +308,17 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
         BuildingType::Stockpile => {
             entity.insert((Stockpile::default(), Flammable::default()));
         }
+        BuildingType::Landfill => {
+            entity.insert((
+                Stockpile {
+                    waste_bonus: 100.0,
+                    food_bonus: 0.0,
+                    wood_bonus: 0.0,
+                    stone_bonus: 0.0,
+                },
+                Flammable::default(),
+            ));
+        }
         BuildingType::LumberMill | BuildingType::Weaver | BuildingType::Tailor => {
             entity.insert((
                 RefiningProgress {
@@ -452,7 +473,8 @@ mod tests {
         assert_eq!(BuildingType::Tailor.next(), BuildingType::FlowerBed);
         assert_eq!(BuildingType::FlowerBed.next(), BuildingType::Statue);
         assert_eq!(BuildingType::Statue.next(), BuildingType::Hospital);
-        assert_eq!(BuildingType::Hospital.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::Hospital.next(), BuildingType::Landfill);
+        assert_eq!(BuildingType::Landfill.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -543,6 +565,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Hospital);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Landfill);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

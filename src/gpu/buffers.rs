@@ -280,6 +280,7 @@ pub fn extract_building_inputs(world: &mut World) -> (Vec<Entity>, Vec<GpuBuildi
                 ResourceType::Metal => resources.metal < resources.max_metal,
                 ResourceType::Planks => resources.planks < resources.max_planks,
                 ResourceType::Blocks => resources.blocks < resources.max_blocks,
+                ResourceType::Waste => resources.waste < resources.max_waste,
             };
 
             entities.push(entity);

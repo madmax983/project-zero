@@ -158,6 +158,7 @@ pub fn evaluate_haul<'a>(
             crate::layer1::resources::ResourceType::Blocks => {
                 resources.blocks < resources.max_blocks
             }
+            crate::layer1::resources::ResourceType::Waste => resources.waste < resources.max_waste,
         };
 
         if !has_room {

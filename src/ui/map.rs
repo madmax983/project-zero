@@ -533,6 +533,7 @@ pub const fn get_building_char(building: BuildingType) -> char {
         BuildingType::FlowerBed => '*',
         BuildingType::Statue => 'I',
         BuildingType::Hospital => '+',
+        BuildingType::Landfill => '%',
     }
 }
 
@@ -563,6 +564,7 @@ pub const fn get_building_color(building: BuildingType) -> Color {
         BuildingType::Weaver | BuildingType::Statue => Color::White,
         BuildingType::Tailor => Color::Blue,
         BuildingType::Hospital => Color::Red,
+        BuildingType::Landfill => Color::Rgb(105, 105, 105), // DimGray
     }
 }
 
@@ -606,6 +608,7 @@ pub const fn get_resource_char(resource: ResourceType) -> &'static str {
         ResourceType::Metal => "m",
         ResourceType::Planks => "=",
         ResourceType::Blocks => "■",
+        ResourceType::Waste => "x",
     }
 }
 
@@ -630,6 +633,7 @@ pub const fn get_resource_color(resource: ResourceType) -> Color {
         ResourceType::Metal => Color::Cyan,
         ResourceType::Planks => Color::Yellow,
         ResourceType::Blocks => Color::White,
+        ResourceType::Waste => Color::Rgb(85, 107, 47), // DarkOliveGreen
     }
 }
 

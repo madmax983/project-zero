@@ -511,6 +511,15 @@ fn render_stockpile_details(frame: &mut Frame, area: Rect, stockpile: &Stockpile
             ),
         ]));
     }
+    if stockpile.waste_bonus > 0.0 {
+        lines.push(Line::from(vec![
+            Span::raw("Waste: +"),
+            Span::styled(
+                format!("{:.0}", stockpile.waste_bonus),
+                Style::default().fg(Color::Rgb(85, 107, 47)),
+            ),
+        ]));
+    }
 
     let p = Paragraph::new(lines)
         .block(block)
@@ -670,6 +679,7 @@ mod tests {
                     food_bonus: 0.0,
                     wood_bonus: 100.0,
                     stone_bonus: 50.0,
+                    waste_bonus: 0.0,
                 },
                 GridPosition { x: 5, y: 5 },
             ))
