@@ -296,7 +296,7 @@ impl ColonyResources {
     /// # Parameters
     ///
     /// * `cost`: The resources to deduct.
-    pub fn deduct(&mut self, cost: &Self) {
+    fn deduct(&mut self, cost: &Self) {
         self.food -= cost.food;
         self.wood -= cost.wood;
         self.stone -= cost.stone;
@@ -952,5 +952,33 @@ mod tests {
         assert!(!result);
         // Should be unchanged
         assert!((resources.wood - 3.0).abs() < f32::EPSILON);
+    }
+
+    #[test]
+    fn test_try_deduct_atomic_check() {
+        let mut resources = ColonyResources {
+            wood: 100.0,
+            stone: 10.0,
+            ..Default::default()
+        };
+        // Has enough wood (50 < 100), but not enough stone (20 > 10)
+        let cost = ColonyResources {
+            wood: 50.0,
+            stone: 20.0,
+            ..Default::default()
+        };
+
+        let success = resources.try_deduct(&cost);
+        assert!(!success);
+
+        // Ensure NOTHING was deducted (atomic)
+        assert!(
+            (resources.wood - 100.0).abs() < f32::EPSILON,
+            "Wood should not be deducted"
+        );
+        assert!(
+            (resources.stone - 10.0).abs() < f32::EPSILON,
+            "Stone should not be deducted"
+        );
     }
 }

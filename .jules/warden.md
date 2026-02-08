@@ -15,3 +15,7 @@
 **2025-05-27 - [Panic in Distance Calculation]**
 **Threat:** Integer overflow panic in `manhattan_distance` when calculating distance between extreme grid positions (e.g. `i32::MIN`).
 **Defense:** Switched to `i64` for intermediate calculations and clamped result to `i32::MAX`.
+
+**2024-10-24 - [Resource Underflow & Terrain Allocation DoS]**
+**Threat:** Public `deduct` method allowed underflow (logical bug). Unchecked `width * height` in `generate_terrain` allowed panic or DoS.
+**Defense:** Made `deduct` private, forcing usage of `try_deduct`. Added overflow check and max size limit (1M tiles) to `generate_terrain`.
