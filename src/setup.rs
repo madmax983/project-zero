@@ -64,12 +64,16 @@ pub fn setup_world() -> World {
     world.init_resource::<Events<AffinityChange>>();
 
     // Initialize GPU compute context (non-fatal if no GPU available)
-    match pollster::block_on(GpuContext::new()) {
-        Ok(ctx) => {
-            world.insert_resource(ctx);
-        }
-        Err(e) => {
-            eprintln!("GPU init failed ({e}), falling back to CPU evaluate");
+    // Skip on WASM since pollster::block_on doesn't work in browser context
+    #[cfg(not(target_arch = "wasm32"))]
+    {
+        match pollster::block_on(GpuContext::new()) {
+            Ok(ctx) => {
+                world.insert_resource(ctx);
+            }
+            Err(e) => {
+                eprintln!("GPU init failed ({e}), falling back to CPU evaluate");
+            }
         }
     }
 
