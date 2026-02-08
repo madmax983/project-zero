@@ -17,7 +17,11 @@ use ratatui::{
 use crate::experimental::biography::Biography;
 use crate::layer1::{
     ActionType, ColonyResources, Farm, GridPosition, Housing, PopAction, TerrainGrid,
-    building::Building, needs::Needs, pop::Pop, resources::RefiningProgress, stockpile::Stockpile,
+    building::Building,
+    needs::Needs,
+    pop::{Pop, PopName},
+    resources::RefiningProgress,
+    stockpile::Stockpile,
     structure::Structure,
 };
 use crate::shared::selection::{Selection, SelectionTarget};
@@ -124,17 +128,11 @@ fn render_colony_stats(frame: &mut Frame, area: Rect, world: &World) {
         ]),
         Row::new(vec![
             Cell::from("Fb Fiber").style(Style::default().fg(Color::Green)),
-            Cell::from(format!(
-                "{:.1}/{:.0}",
-                resources.fiber, resources.max_fiber
-            )),
+            Cell::from(format!("{:.1}/{:.0}", resources.fiber, resources.max_fiber)),
         ]),
         Row::new(vec![
             Cell::from("Cl Cloth").style(Style::default().fg(Color::Magenta)),
-            Cell::from(format!(
-                "{:.1}/{:.0}",
-                resources.cloth, resources.max_cloth
-            )),
+            Cell::from(format!("{:.1}/{:.0}", resources.cloth, resources.max_cloth)),
         ]),
         Row::new(vec![
             Cell::from("Cg Clothing").style(Style::default().fg(Color::LightMagenta)),
@@ -237,12 +235,17 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
     }
 
     // Determine Entity Type and Name
-    let (name, color) = if world.get::<Pop>(entity).is_some() {
-        ("Colonist", Color::Yellow)
+    let (name, color): (String, Color) = if let Some(pop_name) = world.get::<PopName>(entity) {
+        (pop_name.0.clone(), Color::Yellow)
+    } else if world.get::<Pop>(entity).is_some() {
+        ("Colonist".to_string(), Color::Yellow)
     } else if let Some(b) = world.get::<Building>(entity) {
-        (b.building_type.label(), get_building_color(b.building_type))
+        (
+            b.building_type.label().to_string(),
+            get_building_color(b.building_type),
+        )
     } else {
-        ("Entity", Color::White)
+        ("Entity".to_string(), Color::White)
     };
 
     // Determine Action if Pop
@@ -269,7 +272,7 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
 
     // Dynamic height for details section
     let details_height = if world.get::<Needs>(entity).is_some() {
-        3
+        5
     } else {
         6
     };
@@ -316,6 +319,12 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
     // 4. Needs or Building Details
     let details_area = layout[4];
     if let Some(needs) = world.get::<Needs>(entity) {
+        // Split into two rows: gauges on top, morale below
+        let rows = Layout::default()
+            .direction(Direction::Vertical)
+            .constraints([Constraint::Length(3), Constraint::Length(1)])
+            .split(details_area);
+
         let needs_layout = Layout::default()
             .direction(Direction::Horizontal)
             .constraints([
@@ -323,7 +332,7 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
                 Constraint::Length(1),
                 Constraint::Percentage(50),
             ])
-            .split(details_area);
+            .split(rows[0]);
 
         let hunger_percent = (needs.hunger * 100.0) as u16;
         let rest_percent = (needs.rest * 100.0) as u16;
@@ -353,6 +362,27 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
 
         frame.render_widget(hunger_gauge, needs_layout[0]);
         frame.render_widget(rest_gauge, needs_layout[2]);
+
+        // Morale row
+        let morale = needs.morale();
+        let morale_percent = (morale * 100.0) as u16;
+        let morale_color = if morale < 0.3 {
+            Color::Red
+        } else if morale < 0.7 {
+            Color::Yellow
+        } else {
+            Color::Green
+        };
+        frame.render_widget(
+            Paragraph::new(Line::from(vec![
+                Span::raw("Morale: "),
+                Span::styled(
+                    format!("{morale_percent}%"),
+                    Style::default().fg(morale_color),
+                ),
+            ])),
+            rows[1],
+        );
     } else if let Some(housing) = world.get::<Housing>(entity) {
         render_housing_details(frame, details_area, housing);
     } else if let Some(farm) = world.get::<Farm>(entity) {
@@ -538,12 +568,15 @@ mod tests {
 
     #[test]
     fn test_inspector_render_pop() {
+        use crate::layer1::pop::PopName;
+
         let mut world = World::new();
         // Setup world
         world.insert_resource(Selection::default());
         let entity = world
             .spawn((
                 Pop,
+                PopName("Ada".to_string()),
                 GridPosition { x: 1, y: 1 },
                 Needs {
                     hunger: 0.5,
@@ -567,12 +600,6 @@ mod tests {
 
         let buffer = terminal.backend().buffer();
 
-        // Assert content
-        // Convert buffer to string for checking
-        let _content = format!("{buffer:?}"); // Debug representation
-
-        // Check for specific strings
-        // We can't easily check full content but we can check cells exist with text
         let cells: Vec<String> = buffer
             .content
             .iter()
@@ -580,13 +607,52 @@ mod tests {
             .collect();
         let full_text = cells.join("");
 
-        // Check "Colonist" title
-        assert!(full_text.contains("Colonist"));
-        // Check Needs Gauge Titles (might be part of block titles or implicit?)
-        // The Gauge widget doesn't inherently render its title unless it's in a Block.
-        // We put title "Hunger" in the block.
+        // Check pop name appears instead of generic "Colonist"
+        assert!(full_text.contains("Ada"));
         assert!(full_text.contains("Hunger"));
         assert!(full_text.contains("Rest"));
+    }
+
+    #[test]
+    fn test_inspector_render_pop_morale() {
+        use crate::layer1::pop::PopName;
+
+        let mut world = World::new();
+        world.insert_resource(Selection::default());
+        let entity = world
+            .spawn((
+                Pop,
+                PopName("Bryn".to_string()),
+                GridPosition { x: 2, y: 3 },
+                Needs {
+                    hunger: 0.8,
+                    rest: 0.9,
+                    leisure: 0.6,
+                },
+            ))
+            .id();
+
+        world.resource_mut::<Selection>().select_entity(entity);
+
+        let backend = TestBackend::new(40, 20);
+        let mut terminal = Terminal::new(backend).unwrap();
+
+        terminal
+            .draw(|f| {
+                render_inspector(f, f.area(), &world);
+            })
+            .unwrap();
+
+        let buffer = terminal.backend().buffer();
+        let cells: Vec<String> = buffer
+            .content
+            .iter()
+            .map(|c| c.symbol().to_string())
+            .collect();
+        let full_text = cells.join("");
+
+        assert!(full_text.contains("Bryn"));
+        assert!(full_text.contains("Morale"));
     }
 
     #[test]

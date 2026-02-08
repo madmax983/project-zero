@@ -31,6 +31,22 @@ use super::utility_ai::{PopAction, UtilityWeights};
 use bevy_ecs::prelude::*;
 use rand::Rng;
 
+/// A pop's individual name.
+#[derive(Component, Clone, Debug)]
+pub struct PopName(pub String);
+
+const POP_NAMES: &[&str] = &[
+    "Ada", "Bryn", "Cole", "Dara", "Eli", "Fern", "Gale", "Hana", "Iris", "Joss", "Kael", "Luna",
+    "Milo", "Neva", "Orin", "Pax", "Quinn", "Rhea", "Sable", "Tarn", "Uma", "Vale", "Wren", "Xia",
+    "Yara", "Zev",
+];
+
+/// Pick a random name from the hardcoded list.
+fn generate_name<R: Rng>(rng: &mut R) -> PopName {
+    let idx = rng.gen_range(0..POP_NAMES.len());
+    PopName(POP_NAMES[idx].to_string())
+}
+
 /// Marker component for pop entities.
 ///
 /// This component identifies an entity as a "Citizen" of the colony. It is the
@@ -104,6 +120,7 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
         if is_walkable {
             world.spawn((
                 Pop,
+                generate_name(rng),
                 GridPosition { x, y },
                 Health::default(),
                 Needs::default(),
@@ -413,5 +430,35 @@ mod tests {
         // Verify that we didn't spawn anything (because map is full of water)
         let count = world.query::<&Pop>().iter(&world).count();
         assert_eq!(count, 0);
+    }
+
+    #[test]
+    fn test_pop_name_component() {
+        let mut world = World::new();
+        let entity = world.spawn(PopName("Ada".to_string())).id();
+        let name = world.get::<PopName>(entity).unwrap();
+        assert_eq!(name.0, "Ada");
+    }
+
+    #[test]
+    fn test_spawn_initial_pops_have_names() {
+        let mut world = World::new();
+        let terrain = generate_terrain(80, 50);
+        world.insert_resource(terrain);
+
+        spawn_initial_pops(&mut world);
+
+        let mut query = world.query::<(&Pop, &PopName)>();
+        let count = query.iter(&world).count();
+        assert_eq!(count, 5, "All 5 pops should have names");
+    }
+
+    #[test]
+    fn test_generated_names_not_empty() {
+        let mut rng = rand::thread_rng();
+        for _ in 0..50 {
+            let name = generate_name(&mut rng);
+            assert!(!name.0.is_empty(), "Generated name should not be empty");
+        }
     }
 }
