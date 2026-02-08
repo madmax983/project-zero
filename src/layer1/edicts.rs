@@ -77,8 +77,8 @@ pub fn get_morale_modifier(policies: &ColonyPolicies) -> f32 {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::needs::Needs;
     use crate::layer1::GridPosition;
+    use crate::layer1::needs::Needs;
 
     #[test]
     fn test_policies_resource_defaults() {
@@ -92,11 +92,17 @@ mod tests {
 
         // Enable Rationing
         policies.toggle(Policy::Rationing);
-        assert!(policies.is_active(Policy::Rationing), "Rationing should be active after toggle");
+        assert!(
+            policies.is_active(Policy::Rationing),
+            "Rationing should be active after toggle"
+        );
 
         // Disable Rationing
         policies.toggle(Policy::Rationing);
-        assert!(!policies.is_active(Policy::Rationing), "Rationing should be inactive after toggle");
+        assert!(
+            !policies.is_active(Policy::Rationing),
+            "Rationing should be inactive after toggle"
+        );
     }
 
     #[test]
@@ -107,14 +113,26 @@ mod tests {
         world.insert_resource(policies);
 
         // Spawn a pop with standard needs
-        let _pop = world.spawn((
-            Needs { hunger: 1.0, ..Default::default() },
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let _pop = world
+            .spawn((
+                Needs {
+                    hunger: 1.0,
+                    ..Default::default()
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
-        let modifier = crate::layer1::edicts::get_hunger_decay_modifier(&world.resource::<ColonyPolicies>());
-        assert!(modifier < 1.0, "Hunger decay modifier should be < 1.0 with Rationing");
-        assert!((modifier - 0.5).abs() < f32::EPSILON, "Hunger decay should be 0.5");
+        let modifier =
+            crate::layer1::edicts::get_hunger_decay_modifier(&world.resource::<ColonyPolicies>());
+        assert!(
+            modifier < 1.0,
+            "Hunger decay modifier should be < 1.0 with Rationing"
+        );
+        assert!(
+            (modifier - 0.5).abs() < f32::EPSILON,
+            "Hunger decay should be 0.5"
+        );
     }
 
     #[test]
@@ -125,10 +143,18 @@ mod tests {
         world.insert_resource(policies);
 
         // Check modifiers
-        let speed_mod = crate::layer1::edicts::get_work_speed_modifier(&world.resource::<ColonyPolicies>());
-        assert!(speed_mod > 1.0, "Work speed modifier should be > 1.0 with DoubleShifts");
+        let speed_mod =
+            crate::layer1::edicts::get_work_speed_modifier(&world.resource::<ColonyPolicies>());
+        assert!(
+            speed_mod > 1.0,
+            "Work speed modifier should be > 1.0 with DoubleShifts"
+        );
 
-        let morale_mod = crate::layer1::edicts::get_morale_modifier(&world.resource::<ColonyPolicies>());
-        assert!(morale_mod < 0.0, "Morale modifier should be negative with DoubleShifts");
+        let morale_mod =
+            crate::layer1::edicts::get_morale_modifier(&world.resource::<ColonyPolicies>());
+        assert!(
+            morale_mod < 0.0,
+            "Morale modifier should be negative with DoubleShifts"
+        );
     }
 }

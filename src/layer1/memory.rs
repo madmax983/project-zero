@@ -38,10 +38,10 @@ impl MemoryType {
     pub const fn decay_rate(&self) -> f32 {
         // Ticks to fade completely
         match self {
-            Self::WitnessedDeath => 0.0005,              // Slow fade (2000 ticks)
+            Self::WitnessedDeath => 0.0005, // Slow fade (2000 ticks)
             Self::StarvationTrauma | Self::AttendedFuneral => 0.001, // Medium
             Self::AteFineMeal | Self::WonFight => 0.002, // Fast (500 ticks)
-            Self::SawCorpse => 0.01,                     // Very fast fade (100 ticks)
+            Self::SawCorpse => 0.01,        // Very fast fade (100 ticks)
         }
     }
 }

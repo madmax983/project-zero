@@ -416,7 +416,11 @@ mod tests {
             let events = world.resource::<Events<AddChronicleEvent>>();
             #[allow(deprecated)]
             let mut reader = events.get_reader();
-            assert_eq!(reader.read(events).count(), 1, "Should only record first farm");
+            assert_eq!(
+                reader.read(events).count(),
+                1,
+                "Should only record first farm"
+            );
         }
 
         // Run twice
@@ -442,7 +446,11 @@ mod tests {
             // So events persist.
             // So a new reader will see ALL events.
             // So I expect count to still be 1 (the first event).
-            assert_eq!(reader.read(events).count(), 1, "Should still see only 1 event total");
+            assert_eq!(
+                reader.read(events).count(),
+                1,
+                "Should still see only 1 event total"
+            );
         }
     }
 

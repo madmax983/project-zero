@@ -107,7 +107,10 @@ pub struct Viewport {
 /// Panics if `width` or `height` is zero.
 #[must_use]
 pub fn generate_terrain(width: usize, height: usize) -> TerrainGrid {
-    assert!(width > 0 && height > 0, "Terrain dimensions must be positive");
+    assert!(
+        width > 0 && height > 0,
+        "Terrain dimensions must be positive"
+    );
     let count = width.checked_mul(height).expect("Terrain size overflow");
     assert!(count <= 1_000_000, "Terrain too large (max 1M tiles)");
 

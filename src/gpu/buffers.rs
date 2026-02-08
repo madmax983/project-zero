@@ -235,7 +235,7 @@ pub fn extract_building_inputs(world: &mut World) -> (Vec<Entity>, Vec<GpuBuildi
                 pos_y: pos.y,
                 building_type: 7,
                 capacity: 10, // Assumed capacity for MVP
-                occupied: 0, // TODO: track patients
+                occupied: 0,  // TODO: track patients
                 resource_has_room: 0,
                 _padding: [0; 2],
             });
@@ -301,10 +301,7 @@ pub fn extract_building_inputs(world: &mut World) -> (Vec<Entity>, Vec<GpuBuildi
     // Corpses (building_type = 9)
     {
         // Check if there are any empty graves globally
-        let any_empty_grave = world
-            .query::<&Grave>()
-            .iter(world)
-            .any(|g| !g.occupied);
+        let any_empty_grave = world.query::<&Grave>().iter(world).any(|g| !g.occupied);
 
         let mut query = world.query::<(Entity, &GridPosition, &Corpse)>();
         for (entity, pos, _corpse) in query.iter(world) {
@@ -514,13 +511,21 @@ mod tests {
             .id();
 
         // Corpse with grave available
-        let corpse_entity = world.spawn((
-             GridPosition { x: 13, y: 14 },
-             Corpse { name: "Dead".into(), decay: 0.0 }
-        )).id();
+        let corpse_entity = world
+            .spawn((
+                GridPosition { x: 13, y: 14 },
+                Corpse {
+                    name: "Dead".into(),
+                    decay: 0.0,
+                },
+            ))
+            .id();
 
         // Spawn an empty grave
-        world.spawn(Grave { occupied: false, corpse_name: None });
+        world.spawn(Grave {
+            occupied: false,
+            corpse_name: None,
+        });
 
         let (entities, inputs) = extract_building_inputs(&mut world);
 

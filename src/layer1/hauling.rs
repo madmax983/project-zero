@@ -169,7 +169,9 @@ fn find_and_target_item(world: &mut World, pop_entity: Entity, pos: GridPosition
                 crate::layer1::resources::ResourceType::Blocks => {
                     resources.blocks < resources.max_blocks
                 }
-                crate::layer1::resources::ResourceType::Waste => resources.waste < resources.max_waste,
+                crate::layer1::resources::ResourceType::Waste => {
+                    resources.waste < resources.max_waste
+                }
             };
 
             if has_room {

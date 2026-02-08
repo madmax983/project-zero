@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::health::Health;
+use bevy_ecs::prelude::*;
 
 /// Component indicating a building is a hospital that can heal patients.
 #[derive(Component)]
@@ -32,10 +32,10 @@ pub fn healing_system(world: &mut World) {
         }
 
         for (pop_entity, hospital_entity) in patients {
-             if let Some(hospital) = world.get::<Hospital>(hospital_entity) {
-                 let bonus = crate::layer1::zone::get_zone_bonus(world, hospital_entity);
-                 updates.push((pop_entity, hospital.healing_rate * (1.0 + bonus)));
-             }
+            if let Some(hospital) = world.get::<Hospital>(hospital_entity) {
+                let bonus = crate::layer1::zone::get_zone_bonus(world, hospital_entity);
+                updates.push((pop_entity, hospital.healing_rate * (1.0 + bonus)));
+            }
         }
     }
 
@@ -78,14 +78,14 @@ pub fn evaluate_seek_medical_care<'a>(
             *pop_pos,
             Some(*pos),
             10, // Assumed capacity for MVP
-            0, // Occupied (not tracked for MVP yet)
+            0,  // Occupied (not tracked for MVP yet)
             weights,
         );
 
         // Success modifier
         let success = crate::layer1::utility_ai::math::calculate_success_modifier(
             crate::layer1::utility_ai::ActionType::SeekMedicalCare,
-            weights
+            weights,
         );
 
         let utility = urgency * context * success;
@@ -101,9 +101,9 @@ pub fn evaluate_seek_medical_care<'a>(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::health::Health;
-    use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::actions::{AssignedTo, AssignmentType};
+    use crate::layer1::building::{Building, BuildingType};
+    use crate::layer1::health::Health;
     use crate::layer1::map::GridPosition;
     use crate::layer1::needs::Needs;
     use crate::layer1::utility_ai::UtilityWeights;
@@ -119,19 +119,28 @@ mod tests {
         let mut world = World::new();
 
         // Spawn Hospital
-        let hospital_entity = world.spawn((
-            Building { building_type: BuildingType::Hospital },
-            Hospital { healing_rate: 1.0 },
-        )).id();
+        let hospital_entity = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Hospital,
+                },
+                Hospital { healing_rate: 1.0 },
+            ))
+            .id();
 
         // Spawn Injured Pop assigned to Hospital (as patient)
-        let pop_entity = world.spawn((
-            Health { current: 50.0, max: 100.0 },
-            AssignedTo {
-                assignment_type: AssignmentType::Patient,
-                entity: hospital_entity,
-            }
-        )).id();
+        let pop_entity = world
+            .spawn((
+                Health {
+                    current: 50.0,
+                    max: 100.0,
+                },
+                AssignedTo {
+                    assignment_type: AssignmentType::Patient,
+                    entity: hospital_entity,
+                },
+            ))
+            .id();
 
         // Run system
         healing_system(&mut world);
@@ -145,18 +154,27 @@ mod tests {
     fn test_healing_stops_at_max() {
         let mut world = World::new();
 
-        let hospital_entity = world.spawn((
-            Building { building_type: BuildingType::Hospital },
-            Hospital { healing_rate: 10.0 },
-        )).id();
+        let hospital_entity = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Hospital,
+                },
+                Hospital { healing_rate: 10.0 },
+            ))
+            .id();
 
-        let pop_entity = world.spawn((
-            Health { current: 95.0, max: 100.0 },
-            AssignedTo {
-                assignment_type: AssignmentType::Patient,
-                entity: hospital_entity,
-            }
-        )).id();
+        let pop_entity = world
+            .spawn((
+                Health {
+                    current: 95.0,
+                    max: 100.0,
+                },
+                AssignedTo {
+                    assignment_type: AssignmentType::Patient,
+                    entity: hospital_entity,
+                },
+            ))
+            .id();
 
         healing_system(&mut world);
 
@@ -178,13 +196,13 @@ mod tests {
         let pop_pos = GridPosition { x: 0, y: 0 };
 
         // 96% health
-        let health = Health { current: 96.0, max: 100.0 };
+        let health = Health {
+            current: 96.0,
+            max: 100.0,
+        };
 
         // Spawn a hospital
-        world.spawn((
-            Hospital::default(),
-            GridPosition { x: 5, y: 5 }
-        ));
+        world.spawn((Hospital::default(), GridPosition { x: 5, y: 5 }));
 
         let mut hospitals_query = world.query::<(Entity, &GridPosition, &Hospital)>();
         let result = evaluate_seek_medical_care(
@@ -192,7 +210,7 @@ mod tests {
             &needs,
             &health,
             &weights,
-            hospitals_query.iter(&world)
+            hospitals_query.iter(&world),
         );
 
         assert!(result.is_none(), "Should not seek care if health >= 95%");
@@ -206,13 +224,15 @@ mod tests {
         let pop_pos = GridPosition { x: 0, y: 0 };
 
         // 90% health
-        let health = Health { current: 90.0, max: 100.0 };
+        let health = Health {
+            current: 90.0,
+            max: 100.0,
+        };
 
         // Spawn a hospital
-        let hospital_entity = world.spawn((
-            Hospital::default(),
-            GridPosition { x: 5, y: 5 }
-        )).id();
+        let hospital_entity = world
+            .spawn((Hospital::default(), GridPosition { x: 5, y: 5 }))
+            .id();
 
         let mut hospitals_query = world.query::<(Entity, &GridPosition, &Hospital)>();
         let result = evaluate_seek_medical_care(
@@ -220,7 +240,7 @@ mod tests {
             &needs,
             &health,
             &weights,
-            hospitals_query.iter(&world)
+            hospitals_query.iter(&world),
         );
 
         assert!(result.is_some(), "Should seek care if health < 95%");
@@ -235,34 +255,46 @@ mod tests {
         let pop_pos = GridPosition { x: 0, y: 0 };
 
         // Spawn a hospital
-        let _hospital = world.spawn((
-            Hospital::default(),
-            GridPosition { x: 5, y: 5 }
-        )).id();
+        let _hospital = world
+            .spawn((Hospital::default(), GridPosition { x: 5, y: 5 }))
+            .id();
 
         let mut hospitals_query = world.query::<(Entity, &GridPosition, &Hospital)>();
 
         // Slightly injured (90%)
-        let health_mild = Health { current: 90.0, max: 100.0 };
+        let health_mild = Health {
+            current: 90.0,
+            max: 100.0,
+        };
         let result_mild = evaluate_seek_medical_care(
             &pop_pos,
             &needs,
             &health_mild,
             &weights,
-            hospitals_query.iter(&world)
-        ).unwrap().0;
+            hospitals_query.iter(&world),
+        )
+        .unwrap()
+        .0;
 
         // Severely injured (10%)
-        let health_severe = Health { current: 10.0, max: 100.0 };
+        let health_severe = Health {
+            current: 10.0,
+            max: 100.0,
+        };
         let result_severe = evaluate_seek_medical_care(
             &pop_pos,
             &needs,
             &health_severe,
             &weights,
-            hospitals_query.iter(&world)
-        ).unwrap().0;
+            hospitals_query.iter(&world),
+        )
+        .unwrap()
+        .0;
 
-        assert!(result_severe > result_mild, "Severely injured pop should have higher utility");
+        assert!(
+            result_severe > result_mild,
+            "Severely injured pop should have higher utility"
+        );
     }
 
     #[test]
@@ -271,13 +303,15 @@ mod tests {
         let weights = UtilityWeights::default();
         let needs = Needs::default();
         let pop_pos = GridPosition { x: 0, y: 0 };
-        let health = Health { current: 50.0, max: 100.0 };
+        let health = Health {
+            current: 50.0,
+            max: 100.0,
+        };
 
         // Far hospital
-        let far_hospital = world.spawn((
-            Hospital::default(),
-            GridPosition { x: 20, y: 20 }
-        )).id();
+        let far_hospital = world
+            .spawn((Hospital::default(), GridPosition { x: 20, y: 20 }))
+            .id();
 
         let mut hospitals_query = world.query::<(Entity, &GridPosition, &Hospital)>();
         let result_far = evaluate_seek_medical_care(
@@ -285,26 +319,33 @@ mod tests {
             &needs,
             &health,
             &weights,
-            hospitals_query.iter(&world)
-        ).unwrap();
+            hospitals_query.iter(&world),
+        )
+        .unwrap();
         assert_eq!(result_far.1, far_hospital);
 
         // Close hospital
-        let close_hospital = world.spawn((
-            Hospital::default(),
-            GridPosition { x: 1, y: 1 }
-        )).id();
+        let close_hospital = world
+            .spawn((Hospital::default(), GridPosition { x: 1, y: 1 }))
+            .id();
 
         let result_close = evaluate_seek_medical_care(
             &pop_pos,
             &needs,
             &health,
             &weights,
-            hospitals_query.iter(&world)
-        ).unwrap();
+            hospitals_query.iter(&world),
+        )
+        .unwrap();
 
-        assert_eq!(result_close.1, close_hospital, "Should pick closer hospital");
-        assert!(result_close.0 > result_far.0, "Closer hospital should have higher utility");
+        assert_eq!(
+            result_close.1, close_hospital,
+            "Should pick closer hospital"
+        );
+        assert!(
+            result_close.0 > result_far.0,
+            "Closer hospital should have higher utility"
+        );
     }
 
     #[test]
@@ -313,7 +354,10 @@ mod tests {
         let weights = UtilityWeights::default();
         let needs = Needs::default();
         let pop_pos = GridPosition { x: 0, y: 0 };
-        let health = Health { current: 50.0, max: 100.0 };
+        let health = Health {
+            current: 50.0,
+            max: 100.0,
+        };
 
         let mut hospitals_query = world.query::<(Entity, &GridPosition, &Hospital)>();
         let result = evaluate_seek_medical_care(
@@ -321,7 +365,7 @@ mod tests {
             &needs,
             &health,
             &weights,
-            hospitals_query.iter(&world)
+            hospitals_query.iter(&world),
         );
 
         assert!(result.is_none());
@@ -335,42 +379,57 @@ mod tests {
         let fake_hospital = world.spawn(GridPosition { x: 0, y: 0 }).id();
 
         // Pop assigned to it
-        let pop = world.spawn((
-            Health { current: 50.0, max: 100.0 },
-            AssignedTo {
-                assignment_type: AssignmentType::Patient,
-                entity: fake_hospital,
-            }
-        )).id();
+        let pop = world
+            .spawn((
+                Health {
+                    current: 50.0,
+                    max: 100.0,
+                },
+                AssignedTo {
+                    assignment_type: AssignmentType::Patient,
+                    entity: fake_hospital,
+                },
+            ))
+            .id();
 
         healing_system(&mut world);
 
         let health = world.get::<Health>(pop).unwrap();
-        assert!((health.current - 50.0).abs() < f32::EPSILON, "Health should not change if assigned entity is not a hospital");
+        assert!(
+            (health.current - 50.0).abs() < f32::EPSILON,
+            "Health should not change if assigned entity is not a hospital"
+        );
     }
 
     #[test]
     fn test_healing_system_wrong_assignment_type() {
         let mut world = World::new();
 
-        let hospital = world.spawn((
-            Hospital { healing_rate: 10.0 },
-            GridPosition { x: 0, y: 0 }
-        )).id();
+        let hospital = world
+            .spawn((Hospital { healing_rate: 10.0 }, GridPosition { x: 0, y: 0 }))
+            .id();
 
         // Pop assigned as Worker (not Patient)
-        let pop = world.spawn((
-            Health { current: 50.0, max: 100.0 },
-            AssignedTo {
-                assignment_type: AssignmentType::FarmWorker, // Wrong type
-                entity: hospital,
-            }
-        )).id();
+        let pop = world
+            .spawn((
+                Health {
+                    current: 50.0,
+                    max: 100.0,
+                },
+                AssignedTo {
+                    assignment_type: AssignmentType::FarmWorker, // Wrong type
+                    entity: hospital,
+                },
+            ))
+            .id();
 
         healing_system(&mut world);
 
         let health = world.get::<Health>(pop).unwrap();
-        assert!((health.current - 50.0).abs() < f32::EPSILON, "Should not heal if not a Patient");
+        assert!(
+            (health.current - 50.0).abs() < f32::EPSILON,
+            "Should not heal if not a Patient"
+        );
     }
 
     #[test]
@@ -380,19 +439,28 @@ mod tests {
         zone_grid.set(0, 0, crate::layer1::zone::ZoneType::Hospital);
         world.insert_resource(zone_grid);
 
-        let hospital_entity = world.spawn((
-            Building { building_type: BuildingType::Hospital },
-            GridPosition { x: 0, y: 0 },
-            Hospital { healing_rate: 1.0 },
-        )).id();
+        let hospital_entity = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Hospital,
+                },
+                GridPosition { x: 0, y: 0 },
+                Hospital { healing_rate: 1.0 },
+            ))
+            .id();
 
-        let pop = world.spawn((
-            Health { current: 50.0, max: 100.0 },
-            AssignedTo {
-                assignment_type: AssignmentType::Patient,
-                entity: hospital_entity,
-            }
-        )).id();
+        let pop = world
+            .spawn((
+                Health {
+                    current: 50.0,
+                    max: 100.0,
+                },
+                AssignedTo {
+                    assignment_type: AssignmentType::Patient,
+                    entity: hospital_entity,
+                },
+            ))
+            .id();
 
         // Base: 1.0. Bonus (Hospital): 0.5. Total: 1.5.
         healing_system(&mut world);

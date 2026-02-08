@@ -1,8 +1,8 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::map::GridPosition;
-use crate::layer1::lighting::LightMap;
 use crate::layer1::beauty::BeautyGrid;
+use crate::layer1::lighting::LightMap;
+use crate::layer1::map::GridPosition;
 use crate::layer1::terrain::TerrainGrid;
+use bevy_ecs::prelude::*;
 use rand::Rng;
 
 /// Marker component for a ghost entity.
@@ -111,13 +111,19 @@ pub fn apply_ghost_beauty_system(
             // Simple 3x3 aura
             for dy in -1..=1 {
                 for dx in -1..=1 {
-                    if dx == 0 && dy == 0 { continue; } // Already handled center
+                    if dx == 0 && dy == 0 {
+                        continue;
+                    } // Already handled center
 
                     // Safe bounds check
                     let nx = x as isize + dx;
                     let ny = y as isize + dy;
 
-                    if nx >= 0 && ny >= 0 && nx < beauty_grid.width as isize && ny < beauty_grid.height as isize {
+                    if nx >= 0
+                        && ny >= 0
+                        && nx < beauty_grid.width as isize
+                        && ny < beauty_grid.height as isize
+                    {
                         let nx = nx as usize;
                         let ny = ny as usize;
                         let current = beauty_grid.get(nx, ny);
@@ -148,11 +154,9 @@ mod tests {
         light_map.set(5, 5, 1.0); // Bright light
         world.insert_resource(light_map);
 
-        let ghost = world.spawn((
-            Ghost,
-            Ectoplasm::default(),
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let ghost = world
+            .spawn((Ghost, Ectoplasm::default(), GridPosition { x: 5, y: 5 }))
+            .id();
 
         // Run system
         world.run_system_once(ghost_light_damage_system).unwrap();
@@ -172,11 +176,16 @@ mod tests {
         light_map.set(5, 5, 1.0);
         world.insert_resource(light_map);
 
-        let ghost = world.spawn((
-            Ghost,
-            Ectoplasm { current: 0.5, max: 100.0 }, // Almost dead
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let ghost = world
+            .spawn((
+                Ghost,
+                Ectoplasm {
+                    current: 0.5,
+                    max: 100.0,
+                }, // Almost dead
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         world.run_system_once(ghost_light_damage_system).unwrap();
 
@@ -190,10 +199,7 @@ mod tests {
         let beauty_grid = BeautyGrid::new(10, 10);
         world.insert_resource(beauty_grid);
 
-        world.spawn((
-            Ghost,
-            GridPosition { x: 5, y: 5 },
-        ));
+        world.spawn((Ghost, GridPosition { x: 5, y: 5 }));
 
         world.run_system_once(apply_ghost_beauty_system).unwrap();
 
@@ -217,10 +223,7 @@ mod tests {
         world.insert_resource(terrain);
 
         // Spawn ghost at edge (2, 2)
-        let ghost = world.spawn((
-            Ghost,
-            GridPosition { x: 2, y: 2 },
-        )).id();
+        let ghost = world.spawn((Ghost, GridPosition { x: 2, y: 2 })).id();
 
         // Run system multiple times to try to force movement
         let mut schedule = Schedule::default();
@@ -246,10 +249,15 @@ mod tests {
         world.insert_resource(crate::shared::log::MessageLog::default());
 
         // Spawn dying pop
-        let pop = world.spawn((
-            Health { current: -10.0, max: 100.0 },
-            GridPosition { x: 10, y: 10 },
-        )).id();
+        let pop = world
+            .spawn((
+                Health {
+                    current: -10.0,
+                    max: 100.0,
+                },
+                GridPosition { x: 10, y: 10 },
+            ))
+            .id();
 
         // Run death system
         death_system(&mut world);

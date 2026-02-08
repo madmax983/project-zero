@@ -1,8 +1,12 @@
-#![allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap, clippy::cast_sign_loss)]
+#![allow(
+    clippy::cast_possible_truncation,
+    clippy::cast_possible_wrap,
+    clippy::cast_sign_loss
+)]
 
-use bevy_ecs::prelude::*;
-use crate::layer1::map::GridPosition;
 use crate::layer1::building::{Building, BuildingType};
+use crate::layer1::map::GridPosition;
+use bevy_ecs::prelude::*;
 
 /// Types of zones that can be designated on the map.
 ///
@@ -64,7 +68,9 @@ impl ZoneGrid {
 /// Helper to get the zone at a specific position from the world.
 #[must_use]
 pub fn get_zone_at(world: &World, pos: GridPosition) -> ZoneType {
-    world.get_resource::<ZoneGrid>().map_or(ZoneType::None, |grid| grid.get(pos.x, pos.y))
+    world
+        .get_resource::<ZoneGrid>()
+        .map_or(ZoneType::None, |grid| grid.get(pos.x, pos.y))
 }
 
 /// Calculates the efficiency bonus for a building in a zone.
@@ -74,7 +80,7 @@ pub fn get_zone_at(world: &World, pos: GridPosition) -> ZoneType {
 pub const fn calculate_zone_bonus(zone: ZoneType, building_type: BuildingType) -> f32 {
     match (building_type, zone) {
         (BuildingType::Housing, ZoneType::Bedroom) => 0.2, // 20% better sleep
-        (BuildingType::Tavern, ZoneType::Dining) => 0.1, // 10% better social
+        (BuildingType::Tavern, ZoneType::Dining) => 0.1,   // 10% better social
         (BuildingType::Hospital, ZoneType::Hospital) => 0.5, // 50% better healing
         // Stockpiles might just affect organization, no direct float bonus yet
         _ => 0.0,
@@ -101,10 +107,16 @@ pub fn get_zone_bonus(world: &World, building_entity: Entity) -> f32 {
 pub fn apply_zone_designation_system(
     mut commands: Commands,
     mut zone_grid: ResMut<ZoneGrid>,
-    query: Query<(Entity, &crate::layer1::designation::Designation, &GridPosition)>,
+    query: Query<(
+        Entity,
+        &crate::layer1::designation::Designation,
+        &GridPosition,
+    )>,
 ) {
     for (entity, designation, pos) in &query {
-        if let crate::layer1::designation::DesignationType::SetZone(zone_type) = designation.designation_type {
+        if let crate::layer1::designation::DesignationType::SetZone(zone_type) =
+            designation.designation_type
+        {
             zone_grid.set(pos.x, pos.y, zone_type);
             commands.entity(entity).despawn();
         }
@@ -114,8 +126,8 @@ pub fn apply_zone_designation_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::map::GridPosition;
     use crate::layer1::building::{Building, BuildingType};
+    use crate::layer1::map::GridPosition;
 
     #[test]
     fn test_zone_grid_default() {
@@ -148,10 +160,14 @@ mod tests {
         world.insert_resource(zone_grid);
 
         // Spawn Bed at (2,2)
-        let bed = world.spawn((
-            Building { building_type: BuildingType::Housing },
-            GridPosition { x: 2, y: 2 },
-        )).id();
+        let bed = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Housing,
+                },
+                GridPosition { x: 2, y: 2 },
+            ))
+            .id();
 
         // Spawn Pop using the Bed (e.g. Sleeping state)
         // For test, we just check if helper function identifies the zone bonus
@@ -167,10 +183,14 @@ mod tests {
         zone_grid.set(2, 2, ZoneType::Dining); // Wrong zone for a Bed
         world.insert_resource(zone_grid);
 
-        let bed = world.spawn((
-            Building { building_type: BuildingType::Housing },
-            GridPosition { x: 2, y: 2 },
-        )).id();
+        let bed = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Housing,
+                },
+                GridPosition { x: 2, y: 2 },
+            ))
+            .id();
 
         let bonus = crate::layer1::zone::get_zone_bonus(&world, bed);
         assert_eq!(bonus, 0.0);

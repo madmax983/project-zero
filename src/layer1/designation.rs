@@ -614,6 +614,11 @@ mod tests {
         });
 
         // Can set zone anywhere
-        assert!(can_designate(&world, 0, 0, DesignationType::SetZone(ZoneType::Bedroom)));
+        assert!(can_designate(
+            &world,
+            0,
+            0,
+            DesignationType::SetZone(ZoneType::Bedroom)
+        ));
     }
 }

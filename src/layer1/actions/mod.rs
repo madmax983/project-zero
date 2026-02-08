@@ -5,18 +5,18 @@ pub mod hunger;
 /// Rest satisfaction action logic.
 pub mod rest;
 
-/// Work action logic.
-pub mod work;
+/// Explore action logic.
+pub mod explore;
+/// Haul action logic.
+pub mod haul;
+/// Idle action logic.
+pub mod idle;
 /// Repair action logic.
 pub mod repair;
 /// Research action logic.
 pub mod research;
-/// Haul action logic.
-pub mod haul;
-/// Explore action logic.
-pub mod explore;
-/// Idle action logic.
-pub mod idle;
+/// Work action logic.
+pub mod work;
 
 /// Component tracking what a pop is assigned to.
 #[derive(Component, Debug)]

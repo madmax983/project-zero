@@ -57,20 +57,14 @@ pub fn evaluate_socialize<'a>(
 /// Restores leisure for pops visiting taverns.
 pub fn restore_leisure_system(
     mut needs_query: Query<&mut Needs>,
-    tavern_query: Query<(
-        &Tavern,
-        &crate::layer1::building::Building,
-        &GridPosition,
-    )>,
+    tavern_query: Query<(&Tavern, &crate::layer1::building::Building, &GridPosition)>,
     zone_grid: Option<Res<crate::layer1::zone::ZoneGrid>>,
 ) {
     for (tavern, building, pos) in &tavern_query {
-        let zone_bonus = if let Some(grid) = &zone_grid {
+        let zone_bonus = zone_grid.as_ref().map_or(0.0, |grid| {
             let zone = grid.get(pos.x, pos.y);
             crate::layer1::zone::calculate_zone_bonus(zone, building.building_type)
-        } else {
-            0.0
-        };
+        });
 
         for &visitor in &tavern.visitors {
             if let Ok(mut needs) = needs_query.get_mut(visitor) {
@@ -172,9 +166,9 @@ pub fn proximity_social_system(
         }
 
         if total_buff.abs() > f32::EPSILON {
-            commands.entity(entity).insert(SocialBuff {
-                value: total_buff,
-            });
+            commands
+                .entity(entity)
+                .insert(SocialBuff { value: total_buff });
         } else {
             commands.entity(entity).remove::<SocialBuff>();
         }
@@ -186,7 +180,7 @@ mod tests {
     use super::*;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::map::GridPosition;
-    use crate::layer1::needs::{decay_needs_system, Needs};
+    use crate::layer1::needs::{Needs, decay_needs_system};
     use crate::layer1::pop::Pop;
     use crate::layer1::utility_ai::types::{ActionType, UtilityWeights};
     use bevy_ecs::system::RunSystemOnce;
@@ -297,7 +291,9 @@ mod tests {
         tavern.visitors.push(pop);
         world.spawn((
             tavern,
-            Building { building_type: BuildingType::Tavern },
+            Building {
+                building_type: BuildingType::Tavern,
+            },
             GridPosition { x: 0, y: 0 },
         ));
 
@@ -411,19 +407,10 @@ mod tests {
 
         // Pop 1 and Pop 2 are enemies (affinity -50)
         let pop1 = world
-            .spawn((
-                Pop,
-                GridPosition { x: 10, y: 10 },
-                Relationships::default(),
-            ))
+            .spawn((Pop, GridPosition { x: 10, y: 10 }, Relationships::default()))
             .id();
 
-        let pop2 = world
-            .spawn((
-                Pop,
-                GridPosition { x: 10, y: 11 },
-            ))
-            .id();
+        let pop2 = world.spawn((Pop, GridPosition { x: 10, y: 11 })).id();
 
         world
             .get_mut::<Relationships>(pop1)
@@ -446,22 +433,33 @@ mod tests {
         zone_grid.set(0, 0, crate::layer1::zone::ZoneType::Dining);
         world.insert_resource(zone_grid);
 
-        let pop = world.spawn((
+        let pop = world
+            .spawn((
                 Pop,
-                Needs { leisure: 0.5, ..Default::default() },
-            )).id();
+                Needs {
+                    leisure: 0.5,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         let mut tavern = Tavern::default();
         tavern.visitors.push(pop);
         world.spawn((
             tavern,
-            Building { building_type: BuildingType::Tavern },
+            Building {
+                building_type: BuildingType::Tavern,
+            },
             GridPosition { x: 0, y: 0 },
         ));
 
         // Base: 0.05. Bonus (Dining): 0.1. Total: 0.05 * 1.1 = 0.055.
         world.run_system_once(restore_leisure_system).unwrap();
         let needs = world.get::<Needs>(pop).unwrap();
-        assert!((needs.leisure - 0.555).abs() < f32::EPSILON, "Expected 0.555, got {}", needs.leisure);
+        assert!(
+            (needs.leisure - 0.555).abs() < f32::EPSILON,
+            "Expected 0.555, got {}",
+            needs.leisure
+        );
     }
 }

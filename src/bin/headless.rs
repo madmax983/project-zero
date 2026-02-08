@@ -237,30 +237,30 @@ fn print_status(world: &mut World) {
     let housing_count = world.query::<&Housing>().iter(world).count();
     let designation_count = world.query::<&Designation>().iter(world).count();
 
-    println!("=== COLONY STATUS (Tick {}) ===", tick);
+    println!("=== COLONY STATUS (Tick {tick}) ===");
 
     println!("\n[ POPULATION ]");
-    println!("  Citizens: {}", pop_count);
+    println!("  Citizens: {pop_count}");
 
     println!("\n[ RESOURCES ]");
-    println!("  Food:  {:.1}", food);
-    println!("  Wood:  {:.1}", wood);
-    println!("  Stone: {:.1}", stone);
+    println!("  Food:  {food:.1}");
+    println!("  Wood:  {wood:.1}");
+    println!("  Stone: {stone:.1}");
 
     println!("\n[ BUILDINGS ]");
-    println!("  Farms:   {}", farm_count);
-    println!("  Housing: {}", housing_count);
+    println!("  Farms:   {farm_count}");
+    println!("  Housing: {housing_count}");
 
     println!("\n[ TASKS ]");
-    println!("  Active Designations: {}", designation_count);
+    println!("  Active Designations: {designation_count}");
     println!("===================================");
 }
 
 fn print_pops(world: &mut World) {
     println!("=== Pop Details ===");
     println!(
-        "{:<8} {:<15} {:<10} {:<8} {:<8} {:<25} {}",
-        "ID", "Name", "Pos", "Hunger", "Rest", "Action", "Status"
+        "{:<8} {:<15} {:<10} {:<8} {:<8} {:<25} Status",
+        "ID", "Name", "Pos", "Hunger", "Rest", "Action"
     );
     println!("{}", "-".repeat(90));
 
