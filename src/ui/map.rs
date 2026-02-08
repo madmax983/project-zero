@@ -10,8 +10,8 @@ use crate::experimental::seasonal_gfx;
 use crate::layer1::fire::Fire;
 use crate::layer1::{
     Anomaly, AnomalyType, BuildMode, Building, BuildingType, Designation, DesignationMode,
-    DesignationType, GridPosition, Needs, ResourceItem, ResourceType, TerrainGrid, TerrainType,
-    Viewport,
+    DesignationType, ForestryProgress, GridPosition, MiningProgress, Needs, ResourceItem,
+    ResourceType, TerrainGrid, TerrainType, Viewport,
 };
 
 /// Represents a renderable entity on the map.
@@ -21,7 +21,8 @@ use crate::layer1::{
 #[derive(Clone, Copy, Debug)]
 pub enum RenderEntity {
     /// A player designation (e.g., [`DesignationType::Mine`], [`DesignationType::Chop`]).
-    Designation(DesignationType),
+    /// Includes optional progress (0.0 to 1.0) for active tasks.
+    Designation(DesignationType, Option<f32>),
     /// A constructed building (e.g., [`BuildingType::Farm`], [`BuildingType::Housing`]).
     Building(BuildingType),
     /// A colonist ([`crate::layer1::pop::Pop`]), carrying a display character and color based on status.
@@ -51,7 +52,7 @@ impl RenderEntity {
     /// use scale::layer1::DesignationType;
     /// use ratatui::style::Color;
     ///
-    /// let des = RenderEntity::Designation(DesignationType::Mine);
+    /// let des = RenderEntity::Designation(DesignationType::Mine, None);
     /// let pop = RenderEntity::Pop("☺", Color::Yellow);
     ///
     /// assert!(des.priority() > pop.priority());
@@ -60,7 +61,7 @@ impl RenderEntity {
     pub const fn priority(&self) -> u8 {
         match self {
             Self::Fire => 6,
-            Self::Designation(_) => 5,
+            Self::Designation(_, _) => 5,
             Self::Building(_) => 4,
             Self::Pop(_, _) => 3,
             Self::Anomaly(_) => 2,
@@ -97,10 +98,16 @@ pub fn update_render_cache(world: &mut World) {
         if let Some(pos) = e.get::<GridPosition>() {
             // Check for Designation
             if let Some(designation) = e.get::<Designation>() {
+                let progress = if let Some(p) = e.get::<MiningProgress>() {
+                    Some(p.current / p.max)
+                } else {
+                    e.get::<ForestryProgress>().map(|p| p.current / p.max)
+                };
+
                 insert_if_higher_priority(
                     &mut cache.entities,
                     *pos,
-                    RenderEntity::Designation(designation.designation_type),
+                    RenderEntity::Designation(designation.designation_type, progress),
                 );
             }
 
@@ -318,8 +325,19 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
                         ));
                         continue;
                     }
-                    RenderEntity::Designation(tool) => {
-                        let color = Color::Red; // Standardize designation color as red
+                    RenderEntity::Designation(tool, progress) => {
+                        let color = if let Some(p) = progress {
+                            if *p < 0.33 {
+                                Color::Red
+                            } else if *p < 0.66 {
+                                Color::Yellow
+                            } else {
+                                Color::Green
+                            }
+                        } else {
+                            Color::Red // Standardize designation color as red
+                        };
+
                         line_spans.push(Span::styled(
                             get_designation_char(*tool),
                             Style::default().fg(color),
