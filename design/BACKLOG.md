@@ -13,6 +13,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `048` Hostile Fauna — `specs/048-hostile-fauna.md`
 - [ ] `050` Civil Unrest — `specs/050-civil-unrest.md`
 - [ ] `052` Archaeological Excavation — `specs/052-archaeological-excavation.md`
+- [ ] `057` Funeral Rites — `specs/057-funeral-rites.md`
 
 ## MVP — User Interface
 
