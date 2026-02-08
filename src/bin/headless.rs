@@ -25,6 +25,9 @@
 #![allow(clippy::too_many_lines)]
 
 use bevy_ecs::prelude::*;
+use scale::experimental::biography::Biography;
+use scale::experimental::dreams::Dream;
+use scale::layer1::pop::PopName;
 use scale::layer1::{
     BuildingType, ColonyResources, Designation, DesignationType, Farm, GridPosition, Housing,
     MovementTarget, Needs, OccupiedTiles, Pop, PopAction, Stockpile, TerrainGrid, TerrainType,
@@ -158,6 +161,13 @@ fn main() {
                 }
             }
             "buildings" => print_buildings(&mut world),
+            "bio" => {
+                let id: Option<u32> = parts.get(1).and_then(|s| s.parse().ok());
+                match id {
+                    Some(id) => print_bio(&mut world, id),
+                    None => println!("Usage: bio <id>"),
+                }
+            }
             _ => println!("Unknown command: '{command}'. Type 'help' for commands."),
         }
         println!();
@@ -227,18 +237,35 @@ fn print_status(world: &mut World) {
     let housing_count = world.query::<&Housing>().iter(world).count();
     let designation_count = world.query::<&Designation>().iter(world).count();
 
-    println!("=== Colony Status (Tick {tick}) ===");
-    println!("Population: {pop_count} pops");
-    println!("Resources: {food:.1} food, {wood:.1} wood, {stone:.1} stone");
-    println!("Buildings: {farm_count} farms, {housing_count} housing");
-    println!("Designations: {designation_count} active");
+    println!("=== COLONY STATUS (Tick {}) ===", tick);
+
+    println!("\n[ POPULATION ]");
+    println!("  Citizens: {}", pop_count);
+
+    println!("\n[ RESOURCES ]");
+    println!("  Food:  {:.1}", food);
+    println!("  Wood:  {:.1}", wood);
+    println!("  Stone: {:.1}", stone);
+
+    println!("\n[ BUILDINGS ]");
+    println!("  Farms:   {}", farm_count);
+    println!("  Housing: {}", housing_count);
+
+    println!("\n[ TASKS ]");
+    println!("  Active Designations: {}", designation_count);
+    println!("===================================");
 }
 
 fn print_pops(world: &mut World) {
     println!("=== Pop Details ===");
+    println!(
+        "{:<8} {:<15} {:<10} {:<8} {:<8} {:<25} {}",
+        "ID", "Name", "Pos", "Hunger", "Rest", "Action", "Status"
+    );
+    println!("{}", "-".repeat(90));
 
-    for (entity, pos, needs, action) in world
-        .query::<(Entity, &GridPosition, &Needs, &PopAction)>()
+    for (entity, name, pos, needs, action) in world
+        .query::<(Entity, &PopName, &GridPosition, &Needs, &PopAction)>()
         .iter(world)
     {
         let mt = world.get::<MovementTarget>(entity);
@@ -247,22 +274,21 @@ fn print_pops(world: &mut World) {
         let status = if at_target {
             "at target".to_string()
         } else if let Some(mt) = mt {
-            format!(
-                "moving to ({},{})",
-                mt.target_position.x, mt.target_position.y
-            )
+            format!("mov ({},{})", mt.target_position.x, mt.target_position.y)
         } else {
-            "idle".to_string()
+            "-".to_string()
         };
 
+        let action_str = format!("{:?}", action.current);
+
         println!(
-            "Pop {:?} at ({},{}): hunger={:.0}% rest={:.0}% action={:?} [{}]",
-            entity,
-            pos.x,
-            pos.y,
-            needs.hunger * 100.0,
-            needs.rest * 100.0,
-            action.current,
+            "{:<8} {:<15} {:<10} {:<8} {:<8} {:<25} {}",
+            entity.index(),
+            name.0,
+            format!("{},{}", pos.x, pos.y),
+            format!("{:.0}%", needs.hunger * 100.0),
+            format!("{:.0}%", needs.rest * 100.0),
+            action_str,
             status
         );
     }
@@ -693,6 +719,41 @@ fn print_buildings(world: &mut World) {
     println!("BUILDINGS_END: count={count}");
 }
 
+fn print_bio(world: &mut World, target_id: u32) {
+    let mut query = world.query::<(Entity, &PopName, Option<&Biography>, Option<&Dream>)>();
+    let mut found = false;
+
+    for (entity, name, bio, dream) in query.iter(world) {
+        if entity.index() == target_id {
+            found = true;
+            println!("=== Biography for {} ({:?}) ===", name.0, entity);
+
+            println!("Life Events:");
+            if let Some(bio) = bio {
+                if bio.events.is_empty() {
+                    println!("  (No events recorded)");
+                } else {
+                    for event in &bio.events {
+                        println!("  [Tick {:>6}] {}", event.tick, event.text);
+                    }
+                }
+            } else {
+                println!("  (No biography component)");
+            }
+
+            if let Some(dream) = dream {
+                println!("\nLast Dream (Tick {}):", dream.tick);
+                println!("  \"{}\"", dream.content);
+            }
+            break;
+        }
+    }
+
+    if !found {
+        println!("Pop with ID {target_id} not found.");
+    }
+}
+
 fn print_help() {
     println!("=== Commands ===");
     println!("  tick [N]              - Advance N ticks (default 1)");
@@ -706,6 +767,7 @@ fn print_help() {
     println!("  mine <x> <y>          - Designate rock for mining");
     println!("  chop <x> <y>          - Designate tree for chopping");
     println!("  designations, d       - List all active designations");
+    println!("  bio <id>              - Show biography and dreams of a pop");
     println!("  find <terrain> [N]    - Find N terrain coords (default 10)");
     println!("  help, h               - Show this help");
     println!("  quit, q               - Exit");
