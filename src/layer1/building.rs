@@ -52,6 +52,8 @@ pub enum BuildingType {
     Hospital,
     /// Waste storage facility.
     Landfill,
+    /// A place to bury corpses.
+    Grave,
 }
 
 impl BuildingType {
@@ -62,6 +64,7 @@ impl BuildingType {
             Self::FlowerBed => 5.0,
             Self::Statue => 10.0,
             Self::Landfill => -10.0,
+            Self::Grave => -2.0, // Graves are slightly spooky
             _ => 0.0,
         }
     }
@@ -104,6 +107,7 @@ impl BuildingType {
             Self::Statue => "Statue",
             Self::Hospital => "Hospital",
             Self::Landfill => "Landfill",
+            Self::Grave => "Grave",
         }
     }
 
@@ -125,6 +129,7 @@ impl BuildingType {
             Self::Statue => 'I',
             Self::Hospital => '+',
             Self::Landfill => '%',
+            Self::Grave => '†',
         }
     }
 
@@ -186,6 +191,10 @@ impl BuildingType {
             },
             Self::Statue => ColonyResources {
                 stone: 20.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Grave => ColonyResources {
+                stone: 5.0,
                 ..ColonyResources::zeroed()
             },
         }
@@ -422,6 +431,9 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
                 },
             ));
         }
+        BuildingType::Grave => {
+            entity.insert(crate::layer1::funeral::Grave::default());
+        }
     }
 }
 
@@ -538,7 +550,8 @@ mod tests {
         assert_eq!(BuildingType::FlowerBed.next(), BuildingType::Statue);
         assert_eq!(BuildingType::Statue.next(), BuildingType::Hospital);
         assert_eq!(BuildingType::Hospital.next(), BuildingType::Landfill);
-        assert_eq!(BuildingType::Landfill.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::Landfill.next(), BuildingType::Grave);
+        assert_eq!(BuildingType::Grave.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -632,6 +645,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Landfill);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Grave);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

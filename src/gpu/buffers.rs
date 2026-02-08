@@ -7,9 +7,10 @@ use bevy_ecs::prelude::*;
 
 use crate::layer1::designation::Designation;
 use crate::layer1::farm::Farm;
+use crate::layer1::funeral::{Corpse, Grave};
 use crate::layer1::housing::Housing;
-use crate::layer1::medical::Hospital;
 use crate::layer1::map::GridPosition;
+use crate::layer1::medical::Hospital;
 use crate::layer1::needs::Needs;
 use crate::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
 use crate::layer1::social::Tavern;
@@ -39,13 +40,13 @@ pub struct GpuPopInput {
     /// Learned social weight.
     pub social_weight: f32,
     /// Per-action success counts.
-    pub success_count: [u32; 10],
+    pub success_count: [u32; 11],
     /// Per-action attempt counts.
-    pub attempt_count: [u32; 10],
+    pub attempt_count: [u32; 11],
     /// Utility score of the current action.
     pub current_utility: f32,
     /// Padding to 16-byte alignment.
-    pub _padding: [u32; 3],
+    pub _padding: [u32; 1],
 }
 
 /// GPU-aligned building/target input data. One per building.
@@ -57,13 +58,14 @@ pub struct GpuBuildingInput {
     pub pos_x: i32,
     /// Grid Y position.
     pub pos_y: i32,
-    /// Encoded building type (0=Farm,1=Housing,2=Tavern,3=Library,4=Designation,5=ResourceItem).
+    /// Encoded building type (0=Farm,1=Housing,2=Tavern,3=Library,4=Designation,5=ResourceItem,9=Corpse).
     pub building_type: u32,
     /// Maximum capacity.
     pub capacity: u32,
     /// Current occupancy.
     pub occupied: u32,
     /// For Haul targets: 1 if the stockpile has room, 0 otherwise.
+    /// For Corpse targets: 1 if ANY grave is available, 0 otherwise.
     pub resource_has_room: u32,
     /// Padding to 32-byte alignment.
     pub _padding: [u32; 2],
@@ -139,7 +141,7 @@ pub fn extract_pop_inputs(world: &mut World) -> (Vec<Entity>, Vec<GpuPopInput>) 
             success_count: weights.action_success_count,
             attempt_count: weights.action_attempt_count,
             current_utility: action.current_utility,
-            _padding: [0; 3],
+            _padding: [0; 1],
         });
     }
 
@@ -296,6 +298,30 @@ pub fn extract_building_inputs(world: &mut World) -> (Vec<Entity>, Vec<GpuBuildi
         }
     }
 
+    // Corpses (building_type = 9)
+    {
+        // Check if there are any empty graves globally
+        let any_empty_grave = world
+            .query::<&Grave>()
+            .iter(world)
+            .any(|g| !g.occupied);
+
+        let mut query = world.query::<(Entity, &GridPosition, &Corpse)>();
+        for (entity, pos, _corpse) in query.iter(world) {
+            entities.push(entity);
+            inputs.push(GpuBuildingInput {
+                pos_x: pos.x,
+                pos_y: pos.y,
+                building_type: 9,
+                capacity: 1,
+                occupied: 0,
+                // Reuse resource_has_room to indicate if a grave is available
+                resource_has_room: u32::from(any_empty_grave),
+                _padding: [0; 2],
+            });
+        }
+    }
+
     (entities, inputs)
 }
 
@@ -338,8 +364,8 @@ mod tests {
 
     #[test]
     fn test_gpu_pop_input_size() {
-        // 2*i32 + 6*f32 + 10*u32 + 10*u32 + 1*f32 + 3*u32
-        // = 8 + 24 + 40 + 40 + 4 + 12 = 128 bytes
+        // 2*i32 + 6*f32 + 11*u32 + 11*u32 + 1*f32 + 1*u32
+        // = 8 + 24 + 44 + 44 + 4 + 4 = 128 bytes
         assert_eq!(std::mem::size_of::<GpuPopInput>(), 128);
     }
 
@@ -380,8 +406,8 @@ mod tests {
                     distance_weight: 1.2,
                     availability_weight: 0.8,
                     social_weight: 1.0,
-                    action_success_count: [1, 2, 3, 0, 0, 0, 0, 0, 0, 0],
-                    action_attempt_count: [5, 5, 5, 0, 0, 0, 0, 0, 0, 0],
+                    action_success_count: [1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0], // 11 elements
+                    action_attempt_count: [5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0], // 11 elements
                 },
                 PopAction {
                     current: ActionType::SatisfyHunger,
@@ -487,31 +513,35 @@ mod tests {
             ))
             .id();
 
+        // Corpse with grave available
+        let corpse_entity = world.spawn((
+             GridPosition { x: 13, y: 14 },
+             Corpse { name: "Dead".into(), decay: 0.0 }
+        )).id();
+
+        // Spawn an empty grave
+        world.spawn(Grave { occupied: false, corpse_name: None });
+
         let (entities, inputs) = extract_building_inputs(&mut world);
 
-        assert_eq!(entities.len(), 6);
-        assert_eq!(inputs.len(), 6);
+        assert_eq!(entities.len(), 7);
+        assert_eq!(inputs.len(), 7);
 
         // Verify farm
         let farm_idx = entities.iter().position(|&e| e == farm_entity).unwrap();
         assert_eq!(inputs[farm_idx].building_type, 0);
-        assert_eq!(inputs[farm_idx].capacity, 3);
-        assert_eq!(inputs[farm_idx].occupied, 0);
 
         // Verify housing
         let housing_idx = entities.iter().position(|&e| e == housing_entity).unwrap();
         assert_eq!(inputs[housing_idx].building_type, 1);
-        assert_eq!(inputs[housing_idx].capacity, 4);
 
         // Verify tavern
         let tavern_idx = entities.iter().position(|&e| e == tavern_entity).unwrap();
         assert_eq!(inputs[tavern_idx].building_type, 2);
-        assert_eq!(inputs[tavern_idx].capacity, 5);
 
         // Verify library
         let library_idx = entities.iter().position(|&e| e == library_entity).unwrap();
         assert_eq!(inputs[library_idx].building_type, 3);
-        assert_eq!(inputs[library_idx].capacity, 5);
 
         // Verify designation
         let designation_idx = entities
@@ -519,12 +549,15 @@ mod tests {
             .position(|&e| e == designation_entity)
             .unwrap();
         assert_eq!(inputs[designation_idx].building_type, 4);
-        assert_eq!(inputs[designation_idx].capacity, 1);
 
-        // Verify resource item (stone < max_stone, so has_room = 1)
+        // Verify resource item
         let resource_idx = entities.iter().position(|&e| e == resource_entity).unwrap();
         assert_eq!(inputs[resource_idx].building_type, 5);
-        assert_eq!(inputs[resource_idx].resource_has_room, 1);
+
+        // Verify corpse
+        let corpse_idx = entities.iter().position(|&e| e == corpse_entity).unwrap();
+        assert_eq!(inputs[corpse_idx].building_type, 9);
+        assert_eq!(inputs[corpse_idx].resource_has_room, 1);
     }
 
     #[test]

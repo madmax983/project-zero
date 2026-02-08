@@ -41,6 +41,7 @@ use crate::layer1::actions::rest::evaluate_satisfy_rest;
 use crate::layer1::actions::work::evaluate_work;
 use crate::layer1::designation::Designation;
 use crate::layer1::farm::Farm;
+use crate::layer1::funeral::{Corpse, Grave, evaluate_bury_corpse};
 use crate::layer1::housing::Housing;
 use crate::layer1::map::GridPosition;
 use crate::layer1::medical::{Hospital, evaluate_seek_medical_care};
@@ -123,6 +124,8 @@ pub fn evaluate_actions_system(world: &mut World) {
     let mut stockpiles_state = world.query::<(Entity, &GridPosition, &Stockpile)>();
     let mut anomalies_state = world.query::<(Entity, &GridPosition, &Anomaly)>();
     let mut hospitals_state = world.query::<(Entity, &GridPosition, &Hospital)>();
+    let mut corpses_state = world.query::<(Entity, &GridPosition, &Corpse)>();
+    let mut graves_state = world.query::<&Grave>();
 
     // We need Health for medical care evaluation.
     // The main query above only extracted (Entity, &GridPosition, &Needs, &UtilityWeights, &PopAction)
@@ -239,6 +242,16 @@ pub fn evaluate_actions_system(world: &mut World) {
             }
         }
 
+        // Evaluate BuryCorpse
+        if let Some((utility, target)) = evaluate_bury_corpse(
+            &pop_pos,
+            corpses_state.iter(world),
+            graves_state.iter(world),
+            &weights,
+        ) {
+            check_best(ActionType::BuryCorpse, utility, Some(target));
+        }
+
         // Switch if best exceeds threshold
         if best_utility > action.current_utility + config.switch_threshold {
             // Update action
@@ -320,6 +333,7 @@ pub fn track_plan_outcomes_system(
             | ActionType::Research
             | ActionType::Haul
             | ActionType::SeekMedicalCare
+            | ActionType::BuryCorpse
             | ActionType::Idle => true,
         };
 

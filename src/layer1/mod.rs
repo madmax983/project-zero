@@ -134,3 +134,7 @@ pub use rumor::*;
 /// Designated zones logic (Spec 056).
 pub mod zone;
 pub use zone::*;
+
+/// Funeral rites and corpse management (Spec 057).
+pub mod funeral;
+pub use funeral::*;
