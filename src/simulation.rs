@@ -17,17 +17,23 @@ use crate::experimental::ghosts::{
 use crate::gpu::evaluate::gpu_evaluate_actions;
 use crate::layer1::{
     advance_season_system, apply_lighting_penalties_system, arrival_handler_system,
-    check_milestones_system, clean_dead_residents_system, clean_dead_workers_system,
-    cleanup_previous_assignment_system, clothing_wear_system, consume_food_system, death_system,
-    decay_needs_system, fire_damage_pops_system, fire_damage_system, fire_spread_system,
-    haul_system, healing_system, hypothermia_system, memory_decay_system, movement_system,
+    check_milestones_system, chronicle_event_handler_system, chronicle_rumor_bridge_system,
+    clean_dead_residents_system, clean_dead_workers_system, cleanup_previous_assignment_system,
+    clothing_wear_system, consume_food_system, death_system, decay_needs_system,
+    fire_damage_pops_system, fire_damage_system, fire_spread_system, haul_system, healing_system,
+    hypothermia_system, memory_decay_system, modify_affinity_system, movement_system,
     notification_expiration_system, process_refining_system, process_research_system,
     process_scan_system, process_start_plan_system, produce_food_system, restore_leisure_system,
     restore_rest_in_housing_system, spoilage_system, starvation_damage_system,
     track_plan_outcomes_system, update_action_timer_system, update_lighting_system,
-    update_resource_caps_system, work_execution_system,
+    update_resource_caps_system, work_execution_system, AddChronicleEvent, AffinityChange,
 };
 use crate::shared::time::SimulationTime;
+
+/// Helper system to update event buffers (clear old events).
+pub fn update_event_buffer<T: Event>(mut events: ResMut<Events<T>>) {
+    events.update();
+}
 
 /// Schedule label for the main simulation tick.
 #[derive(ScheduleLabel, Debug, Clone, PartialEq, Eq, Hash)]
@@ -49,6 +55,12 @@ pub struct SimulationSchedule;
 #[must_use]
 pub fn build_simulation_schedule() -> Schedule {
     let mut schedule = Schedule::new(SimulationSchedule);
+
+    // --- Event Cleanup (Start of Frame) ---
+    schedule.add_systems((
+        update_event_buffer::<AddChronicleEvent>,
+        update_event_buffer::<AffinityChange>,
+    ));
 
     // --- AI Decision Chain (GPU compute) ---
     schedule.add_systems((
@@ -135,6 +147,11 @@ pub fn build_simulation_schedule() -> Schedule {
         check_milestones_system.after(death_system),
         crate::layer1::rumor::generate_rumor_system.after(death_system),
         crate::layer1::rumor::exchange_rumors_system.after(death_system),
+        // Process new rumors and affinity changes
+        modify_affinity_system.after(crate::layer1::rumor::exchange_rumors_system),
+        // Process chronicle events
+        chronicle_event_handler_system.after(check_milestones_system),
+        chronicle_rumor_bridge_system.after(check_milestones_system),
     ));
 
     schedule

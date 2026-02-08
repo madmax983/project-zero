@@ -12,3 +12,6 @@ mod health_memory;
 
 #[path = "integration/lighting_buildings.rs"]
 mod lighting_buildings;
+
+#[path = "integration/chronicle_rumor.rs"]
+mod chronicle_rumor;
