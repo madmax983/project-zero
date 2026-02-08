@@ -1,3 +1,4 @@
+use crate::layer1::edicts::{ColonyPolicies, get_hunger_decay_modifier};
 use bevy_ecs::prelude::*;
 
 /// Pop survival needs.
@@ -63,9 +64,12 @@ const LEISURE_DECAY_PER_TICK: f32 = 0.0015; // Slightly faster than hunger/rest
 /// Decays needs for all pops each tick.
 ///
 /// Uses `par_iter_mut` for parallel processing across entities.
-pub fn decay_needs_system(mut query: Query<&mut Needs>) {
+pub fn decay_needs_system(mut query: Query<&mut Needs>, policies: Option<Res<ColonyPolicies>>) {
+    let hunger_mod = policies.map_or(1.0, |p| get_hunger_decay_modifier(&p));
+    let hunger_decay = HUNGER_DECAY_PER_TICK * hunger_mod;
+
     query.par_iter_mut().for_each(|mut needs| {
-        needs.hunger = (needs.hunger - HUNGER_DECAY_PER_TICK).max(0.0);
+        needs.hunger = (needs.hunger - hunger_decay).max(0.0);
         needs.rest = (needs.rest - REST_DECAY_PER_TICK).max(0.0);
         needs.leisure = (needs.leisure - LEISURE_DECAY_PER_TICK).max(0.0);
     });

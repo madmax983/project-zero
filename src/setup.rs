@@ -5,9 +5,9 @@ use bevy_ecs::prelude::*;
 use crate::gpu::context::GpuContext;
 use crate::layer1::{
     AmbientLight, BuildMode, BuildingTracker, Chronicle, ChronicleUiState, ColonyMemory,
-    ColonyResources, DesignationMode, LightMap, NamedLocations, NotificationQueue, OccupiedTiles,
-    SeasonState, TechState, UtilityConfig, Viewport, generate_terrain, initial_chronicle_event,
-    initial_naming_system, spawn_initial_anomalies, spawn_initial_pops,
+    ColonyPolicies, ColonyResources, DesignationMode, LightMap, NamedLocations, NotificationQueue,
+    OccupiedTiles, SeasonState, TechState, UtilityConfig, Viewport, generate_terrain,
+    initial_chronicle_event, initial_naming_system, spawn_initial_anomalies, spawn_initial_pops,
 };
 use crate::shared::colony::ColonyName;
 use crate::shared::input::InputContextStack;
@@ -40,6 +40,7 @@ pub fn setup_world() -> World {
     world.insert_resource(DesignationMode::default());
     world.insert_resource(OccupiedTiles::default());
     world.insert_resource(ColonyResources::default());
+    world.insert_resource(ColonyPolicies::default());
     world.insert_resource(InputContextStack::default());
     world.insert_resource(MessageLog::default());
     world.insert_resource(Chronicle::default());
