@@ -25,6 +25,7 @@
 use crate::layer1::actions::hunger::handle_arrival as handle_hunger_arrival;
 use crate::layer1::actions::rest::handle_arrival as handle_rest_arrival;
 use crate::layer1::actions::{AssignedTo, AssignmentType};
+use crate::layer1::edicts::{ColonyPolicies, get_work_speed_modifier};
 use crate::layer1::building::{Building, OccupiedTiles};
 use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::farm::Farm;
@@ -360,6 +361,11 @@ pub fn work_execution_system(world: &mut World) {
 
     let tool_efficiency = if has_tools { 1.0 } else { NO_TOOL_PENALTY };
 
+    let policies = world.get_resource::<ColonyPolicies>().cloned();
+    let work_speed_mod = policies
+        .as_ref()
+        .map_or(1.0, get_work_speed_modifier);
+
     // Find pops at their work target and capture their morale
     // Since we need to access Needs which is a component, and we need &mut World later,
     // we should collect Needs data first.
@@ -377,7 +383,7 @@ pub fn work_execution_system(world: &mut World) {
         })
         .map(|(e, mt, needs, memories, social_buff)| {
             let morale = needs.map_or(0.5, |n| {
-                calculate_effective_morale(n, memories, social_buff)
+                calculate_effective_morale(n, memories, social_buff, policies.as_ref())
             });
             (e, mt.target_entity, morale, mt.for_action)
         })
@@ -411,7 +417,7 @@ pub fn work_execution_system(world: &mut World) {
 
         let morale_efficiency = get_morale_efficiency(morale);
         let work_amount =
-            WORK_PER_TICK * tool_efficiency * morale_efficiency * skill_efficiency;
+            WORK_PER_TICK * tool_efficiency * morale_efficiency * skill_efficiency * work_speed_mod;
 
         let worked = match designation_type {
             DesignationType::Mine => {

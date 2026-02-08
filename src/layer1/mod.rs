@@ -16,6 +16,8 @@ pub mod chronicle;
 pub mod clothing;
 /// Designation system for player tools.
 pub mod designation;
+/// Colony policies and edicts.
+pub mod edicts;
 /// Execution layer bridging utility AI to actions.
 pub mod execution;
 /// Farm building and food production.
@@ -86,6 +88,7 @@ pub use beauty::*;
 pub use building::*;
 pub use chronicle::*;
 pub use designation::*;
+pub use edicts::*;
 pub use execution::*;
 pub use farm::*;
 pub use fire::*;

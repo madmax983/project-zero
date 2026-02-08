@@ -3,7 +3,7 @@ use bevy_ecs::prelude::*;
 use ratatui::{prelude::*, widgets::Paragraph};
 
 use crate::layer1::{
-    BuildMode, ColonyResources, DesignationMode, NamedLocations, Pop, Viewport,
+    BuildMode, ColonyPolicies, ColonyResources, DesignationMode, NamedLocations, Pop, Viewport,
 };
 use crate::layer1::seasons::{Season, SeasonState};
 use crate::shared::state::GameState;
@@ -32,6 +32,7 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
     let viewport = world.resource::<Viewport>();
     let locations = world.resource::<NamedLocations>();
     let resources = world.resource::<ColonyResources>();
+    let policies = world.get_resource::<ColonyPolicies>();
 
     // NOTE: Dual pause state check. GameState::Paused is controlled by spacebar,
     // SimSpeed::Paused exists but is currently not used (no key binds to it).
@@ -61,7 +62,12 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
             let needs = e.get::<crate::layer1::Needs>()?;
             let memories = e.get::<crate::layer1::Memories>();
             let social_buff = e.get::<crate::layer1::social::SocialBuff>();
-            let morale = crate::layer1::memory::calculate_effective_morale(needs, memories, social_buff);
+            let morale = crate::layer1::memory::calculate_effective_morale(
+                needs,
+                memories,
+                social_buff,
+                policies,
+            );
             Some(morale)
         })
         .fold((0.0, 0), |(sum, count), m| (sum + m, count + 1));
@@ -424,7 +430,8 @@ mod tests {
     #[test]
     fn test_render_status_bar_calculates_morale() {
         use crate::layer1::{
-            ColonyResources, Memories, MemoryType, NamedLocations, Needs, Pop, Viewport,
+            ColonyPolicies, ColonyResources, Memories, MemoryType, NamedLocations, Needs, Pop,
+            Viewport,
         };
         use crate::shared::state::GameState;
         use crate::shared::time::SimulationTime;
@@ -440,6 +447,7 @@ mod tests {
         world.insert_resource(Viewport::default());
         world.insert_resource(NamedLocations::default());
         world.insert_resource(ColonyResources::default());
+        world.insert_resource(ColonyPolicies::default());
 
         // Spawn pops with needs
         world.spawn((

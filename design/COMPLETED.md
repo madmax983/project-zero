@@ -51,3 +51,4 @@ Implemented features. Architect: read this to understand current state.
 - [x] `014` Rendering Architecture and Z-Order — `specs/014-rendering-architecture.md` — **implemented via RenderCache priority** — 2026-03-05
 - [x] `047` Pop Relationships — `specs/047-pop-relationships.md` — completed 2026-03-05
 - [x] `053` Lighting System — `specs/053-lighting-system.md` — completed 2026-03-06
+- [x] `054` Colony Edicts — `specs/054-colony-edicts.md` — completed 2026-03-08
