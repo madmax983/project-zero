@@ -55,11 +55,27 @@ pub fn evaluate_socialize<'a>(
 }
 
 /// Restores leisure for pops visiting taverns.
-pub fn restore_leisure_system(mut needs_query: Query<&mut Needs>, tavern_query: Query<&Tavern>) {
-    for tavern in &tavern_query {
+pub fn restore_leisure_system(
+    mut needs_query: Query<&mut Needs>,
+    tavern_query: Query<(
+        &Tavern,
+        &crate::layer1::building::Building,
+        &GridPosition,
+    )>,
+    zone_grid: Option<Res<crate::layer1::zone::ZoneGrid>>,
+) {
+    for (tavern, building, pos) in &tavern_query {
+        let zone_bonus = if let Some(grid) = &zone_grid {
+            let zone = grid.get(pos.x, pos.y);
+            crate::layer1::zone::calculate_zone_bonus(zone, building.building_type)
+        } else {
+            0.0
+        };
+
         for &visitor in &tavern.visitors {
             if let Ok(mut needs) = needs_query.get_mut(visitor) {
-                needs.leisure = (needs.leisure + 0.05).min(1.0);
+                let amount = 0.05 * (1.0 + zone_bonus);
+                needs.leisure = (needs.leisure + amount).min(1.0);
             }
         }
     }
@@ -279,7 +295,11 @@ mod tests {
 
         let mut tavern = Tavern::default();
         tavern.visitors.push(pop);
-        world.spawn(tavern);
+        world.spawn((
+            tavern,
+            Building { building_type: BuildingType::Tavern },
+            GridPosition { x: 0, y: 0 },
+        ));
 
         world.run_system_once(restore_leisure_system).unwrap();
 
@@ -417,5 +437,31 @@ mod tests {
         let buff = world.get::<SocialBuff>(pop1);
         assert!(buff.is_some());
         assert!(buff.unwrap().value < 0.0);
+    }
+
+    #[test]
+    fn test_restore_leisure_with_zone_bonus() {
+        let mut world = World::new();
+        let mut zone_grid = crate::layer1::zone::ZoneGrid::new(10, 10);
+        zone_grid.set(0, 0, crate::layer1::zone::ZoneType::Dining);
+        world.insert_resource(zone_grid);
+
+        let pop = world.spawn((
+                Pop,
+                Needs { leisure: 0.5, ..Default::default() },
+            )).id();
+
+        let mut tavern = Tavern::default();
+        tavern.visitors.push(pop);
+        world.spawn((
+            tavern,
+            Building { building_type: BuildingType::Tavern },
+            GridPosition { x: 0, y: 0 },
+        ));
+
+        // Base: 0.05. Bonus (Dining): 0.1. Total: 0.05 * 1.1 = 0.055.
+        world.run_system_once(restore_leisure_system).unwrap();
+        let needs = world.get::<Needs>(pop).unwrap();
+        assert!((needs.leisure - 0.555).abs() < f32::EPSILON, "Expected 0.555, got {}", needs.leisure);
     }
 }

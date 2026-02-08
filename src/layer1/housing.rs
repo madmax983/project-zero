@@ -58,6 +58,8 @@ const REST_RESTORE_PER_TICK: f32 = 0.05; // Full rest in ~20 ticks
 /// use scale::layer1::housing::{Housing, restore_rest_in_housing_system};
 /// use scale::layer1::needs::Needs;
 /// use scale::layer1::pop::Pop;
+/// use scale::layer1::building::{Building, BuildingType};
+/// use scale::layer1::GridPosition;
 /// use bevy_ecs::prelude::*;
 /// use bevy_ecs::system::RunSystemOnce;
 ///
@@ -67,10 +69,14 @@ const REST_RESTORE_PER_TICK: f32 = 0.05; // Full rest in ~20 ticks
 /// let pop = world.spawn((Pop, Needs { rest: 0.1, ..Default::default() })).id();
 ///
 /// // Assign to housing
-/// world.spawn(Housing {
-///     capacity: 1,
-///     residents: vec![pop],
-/// });
+/// world.spawn((
+///     Housing {
+///         capacity: 1,
+///         residents: vec![pop],
+///     },
+///     Building { building_type: BuildingType::Housing },
+///     GridPosition { x: 0, y: 0 },
+/// ));
 ///
 /// // Run system
 /// world.run_system_once(restore_rest_in_housing_system).unwrap();
@@ -80,13 +86,26 @@ const REST_RESTORE_PER_TICK: f32 = 0.05; // Full rest in ~20 ticks
 /// assert!(needs.rest > 0.1);
 /// ```
 pub fn restore_rest_in_housing_system(
-    housing_query: Query<&Housing>,
+    housing_query: Query<(
+        &Housing,
+        &crate::layer1::building::Building,
+        &crate::layer1::GridPosition,
+    )>,
     mut needs_query: Query<&mut Needs>,
+    zone_grid: Option<Res<crate::layer1::zone::ZoneGrid>>,
 ) {
-    for housing in &housing_query {
+    for (housing, building, pos) in &housing_query {
+        let zone_bonus = if let Some(grid) = &zone_grid {
+            let zone = grid.get(pos.x, pos.y);
+            crate::layer1::zone::calculate_zone_bonus(zone, building.building_type)
+        } else {
+            0.0
+        };
+
         for &resident in &housing.residents {
             if let Ok(mut needs) = needs_query.get_mut(resident) {
-                needs.rest = (needs.rest + REST_RESTORE_PER_TICK).min(1.0);
+                let amount = REST_RESTORE_PER_TICK * (1.0 + zone_bonus);
+                needs.rest = (needs.rest + amount).min(1.0);
             }
         }
     }
@@ -183,7 +202,11 @@ mod tests {
 
         let mut housing = Housing::default();
         housing.residents.push(pop);
-        world.spawn(housing);
+        world.spawn((
+            housing,
+            Building { building_type: BuildingType::Housing },
+            GridPosition { x: 0, y: 0 },
+        ));
 
         let rest_before = world.get::<Needs>(pop).unwrap().rest;
         world
@@ -212,7 +235,11 @@ mod tests {
 
         let mut housing = Housing::default();
         housing.residents.push(pop);
-        world.spawn(housing);
+        world.spawn((
+            housing,
+            Building { building_type: BuildingType::Housing },
+            GridPosition { x: 0, y: 0 },
+        ));
 
         world
             .run_system_once(restore_rest_in_housing_system)
@@ -250,7 +277,11 @@ mod tests {
         let mut housing = Housing::default();
         housing.residents.push(pop1);
         housing.residents.push(pop2);
-        world.spawn(housing);
+        world.spawn((
+            housing,
+            Building { building_type: BuildingType::Housing },
+            GridPosition { x: 0, y: 0 },
+        ));
 
         world
             .run_system_once(restore_rest_in_housing_system)
@@ -314,5 +345,31 @@ mod tests {
 
         let count = world.query::<(&Building, &Housing)>().iter(&world).count();
         assert_eq!(count, 1);
+    }
+
+    #[test]
+    fn test_restore_rest_with_zone_bonus() {
+        let mut world = World::new();
+        // Setup Grid
+        let mut zone_grid = crate::layer1::zone::ZoneGrid::new(10, 10);
+        zone_grid.set(0, 0, crate::layer1::zone::ZoneType::Bedroom);
+        world.insert_resource(zone_grid);
+
+        let pop = world.spawn((
+                Pop,
+                Needs { rest: 0.5, ..Default::default() },
+            )).id();
+
+        world.spawn((
+            Housing { capacity: 1, residents: vec![pop] },
+            Building { building_type: BuildingType::Housing },
+            GridPosition { x: 0, y: 0 },
+        ));
+
+        // Base restore: 0.05. Bonus (Bedroom): 0.2. Total: 0.05 * 1.2 = 0.06.
+        world.run_system_once(restore_rest_in_housing_system).unwrap();
+        let needs = world.get::<Needs>(pop).unwrap();
+
+        assert!((needs.rest - 0.56).abs() < f32::EPSILON, "Expected 0.56 (0.5 + 0.06), got {}", needs.rest);
     }
 }

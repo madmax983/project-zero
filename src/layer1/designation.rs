@@ -10,6 +10,7 @@
 //! * **DesignationType**: The kind of request (Mine, Demolish).
 //! * **Validation**: Rules for where designations can be placed (`can_designate`).
 
+use crate::layer1::zone::ZoneType;
 use crate::layer1::{GridPosition, OccupiedTiles, TerrainGrid, TerrainType};
 use bevy_ecs::prelude::*;
 
@@ -25,6 +26,8 @@ pub enum DesignationType {
     Chop,
     /// Designate a building for repair.
     Repair,
+    /// Set a zone type for a tile.
+    SetZone(ZoneType),
 }
 
 impl DesignationType {
@@ -44,6 +47,7 @@ impl DesignationType {
             Self::Demolish => 'X',
             Self::Chop => '/',
             Self::Repair => '+',
+            Self::SetZone(_) => 'Z',
         }
     }
 
@@ -63,6 +67,7 @@ impl DesignationType {
             Self::Demolish => "X",
             Self::Chop => "/",
             Self::Repair => "+",
+            Self::SetZone(_) => "Z",
         }
     }
 
@@ -82,6 +87,7 @@ impl DesignationType {
             Self::Demolish => "Demolish",
             Self::Chop => "Chop",
             Self::Repair => "Repair",
+            Self::SetZone(_) => "Set Zone",
         }
     }
 }
@@ -177,6 +183,7 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
             // Ideally check if building has Structure and < Max HP, but for MVP check occupancy is enough
             occupied.0.contains(&(x, y))
         }
+        DesignationType::SetZone(_) => true,
     }
 }
 
@@ -595,5 +602,18 @@ mod tests {
 
         let count = try_designate_area(&mut world, 0, 0, 2, 2, DesignationType::Mine);
         assert_eq!(count, 0);
+    }
+
+    #[test]
+    fn test_set_zone_always_valid() {
+        let mut world = World::new();
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        });
+
+        // Can set zone anywhere
+        assert!(can_designate(&world, 0, 0, DesignationType::SetZone(ZoneType::Bedroom)));
     }
 }
