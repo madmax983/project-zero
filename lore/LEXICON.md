@@ -626,3 +626,136 @@
 ---
 
 *Update this lexicon as new mechanics are added. Consistency is sacred.*
+
+---
+
+## Beauty & Horticulture
+
+### the Grace
+
+**Replaces:** beauty, aesthetics
+**Code reference:** `BeautyGrid`
+**Usage:**
+- "The Grace of this place."
+- "Restoring the Grace."
+
+### garden / sanctuary
+
+**Replaces:** park, flower bed
+**Code reference:** `BuildingType::Park`
+**Usage:**
+- "Walking in the sanctuary."
+- "The gardens bloom."
+
+### stone-memory
+
+**Replaces:** statue, monument
+**Code reference:** `BuildingType::Statue`
+**Usage:**
+- "Carved in stone-memory."
+- "A face from the past."
+
+---
+
+## Waste & Pollution
+
+### the Filth
+
+**Replaces:** pollution, waste
+**Code reference:** `ResourceType::Waste`
+**Usage:**
+- "The Filth rises."
+- "Choked by the Filth."
+
+### the Heap
+
+**Replaces:** landfill
+**Code reference:** `BuildingType::Landfill`
+**Usage:**
+- "Send it to the Heap."
+- "The Heap is full."
+
+### weeping
+
+**Replaces:** leaking, spilling
+**Code reference:** `WASTE_SPILL` event
+**Usage:**
+- "The pipes are weeping."
+- "Weeping rust."
+
+---
+
+## Skills & Mastery
+
+### the Craft
+
+**Replaces:** skill, expertise
+**Code reference:** `Skills` component
+**Usage:**
+- "He has the Craft."
+- "Learning the Craft of iron."
+
+### Master
+
+**Replaces:** high-level pop
+**Code reference:** Skill level > 8
+**Usage:**
+- "Master Tovar."
+- "Respect the Masters."
+
+### true-work
+
+**Replaces:** masterwork item
+**Code reference:** High quality item
+**Usage:**
+- "A piece of true-work."
+- "Forged in truth."
+
+---
+
+## Relationships
+
+### kin
+
+**Replaces:** friend, ally
+**Code reference:** High affinity
+**Usage:**
+- "He is kin to me."
+- "Not blood, but kin."
+
+### shadow
+
+**Replaces:** rival, enemy
+**Code reference:** Low affinity
+**Usage:**
+- "My shadow watches me."
+- "Old shadows, new fights."
+
+### the bond
+
+**Replaces:** relationship
+**Code reference:** `Relationships` component
+**Usage:**
+- "The bond is strong."
+- "Breaking the bond."
+
+---
+
+## Science
+
+### the Truth / the deep
+
+**Replaces:** scientific data, anomalies
+**Code reference:** `Anomaly`
+**Usage:**
+- "Seeking the Truth."
+- "Staring into the deep."
+- "The deep stares back."
+
+### echo
+
+**Replaces:** anomaly signal
+**Code reference:** `ActionType::Explore`
+**Usage:**
+- "Chasing an echo."
+- "A faint echo from the ruins."

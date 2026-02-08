@@ -925,3 +925,148 @@ Flavor names for tools.
 ---
 
 *Add new fragments by type. Keep entries short. Vary tone. Leave room for combination.*
+
+---
+
+## Beauty Fragments
+
+### [BEAUTY_DESCRIPTOR]
+Adjectives for beautiful places.
+
+- serene
+- perfect
+- quiet
+- graceful
+- blooming
+- ordered
+- bright
+- harmonious
+- gentle
+- still
+
+### [ART_TYPE]
+Types of artistic creations.
+
+- statue
+- garden
+- mosaic
+- fountain
+- carving
+- monument
+- painting
+- song-stone
+- light-well
+- void-glass
+
+---
+
+## Waste Fragments
+
+### [WASTE_NAME]
+Flavor names for pollution/waste.
+
+- slag
+- toxic sludge
+- reactor runoff
+- grey-water
+- ash-mud
+- chemical burn
+- foul-air
+- weeping-rust
+
+### [POLLUTION_DESCRIPTOR]
+Adjectives for polluted areas.
+
+- choking
+- foul
+- grey
+- dead
+- rusted
+- weeping
+- poisoned
+- sick
+- broken
+- silent (wrong kind)
+
+---
+
+## Skill Fragments
+
+### [SKILL_TITLE]
+Titles for high-skill pops.
+
+- Master
+- Prime
+- Elder
+- The Hand
+- First-Forged
+- Deep-Knower
+- The Voice
+- High-Artisan
+
+### [MASTERWORK_ADJECTIVE]
+Describing a masterwork item.
+
+- flawless
+- singing
+- eternal
+- unbreaking
+- perfect
+- legendary
+- named
+- soulful
+
+---
+
+## Relationship Fragments
+
+### [BOND_TYPE]
+Types of positive relationships.
+
+- blood-kin
+- void-brothers
+- shield-mates
+- star-crossed
+- oath-bound
+- silent-partners
+- hearth-sharers
+
+### [RIVALRY_REASON]
+Why two pops hate each other.
+
+- old grudge
+- broken oath
+- stolen credit
+- romantic slight
+- differing creeds
+- resource dispute
+- accidental insult
+- survival choice
+
+---
+
+## Science Fragments
+
+### [ANOMALY_TYPE]
+Types of scientific discoveries.
+
+- precursor ruin
+- void-echo
+- strange flora
+- gravity distortion
+- temporal rift
+- biological oddity
+- machine-mind fragment
+- foldspace scar
+
+### [SCIENCE_ACTION]
+Verbs for scientific study.
+
+- measured
+- catalogued
+- communed with
+- dissected
+- awakened
+- decoded
+- feared
+- worshipped (briefly)
