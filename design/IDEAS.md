@@ -874,7 +874,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Soil Fertility & Depletion
+## Soil Fertility & Depletion [SPECCED]
 
 **Layer:** 1
 
