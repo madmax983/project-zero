@@ -227,67 +227,42 @@ pub fn arrival_handler_system(
     for (pop_entity, mt) in &arrivals {
         let target_entity = mt.target_entity;
         let action = mt.for_action;
+        let mut keep_target = false;
 
         match action {
             ActionType::SatisfyHunger => {
                 handle_hunger_arrival(pop_entity, target_entity, &mut farms, &mut commands);
-                commands
-                    .entity(pop_entity)
-                    .remove::<MovementTarget>()
-                    .remove::<AtTarget>();
             }
             ActionType::SeekMedicalCare => {
                 commands.entity(pop_entity).insert(AssignedTo {
                     entity: target_entity,
                     assignment_type: AssignmentType::Patient,
                 });
-                commands
-                    .entity(pop_entity)
-                    .remove::<MovementTarget>()
-                    .remove::<AtTarget>();
             }
             ActionType::SatisfyRest => {
                 handle_rest_arrival(pop_entity, target_entity, &mut housing_q, &mut commands);
-                commands
-                    .entity(pop_entity)
-                    .remove::<MovementTarget>()
-                    .remove::<AtTarget>();
             }
             ActionType::Socialize => {
-                if let Ok(mut tavern) = taverns.get_mut(target_entity)
-                    && tavern.visitors.len() < tavern.capacity
-                {
-                    tavern.visitors.push(pop_entity);
-                    commands.entity(pop_entity).insert(AssignedTo {
-                        entity: target_entity,
-                        assignment_type: AssignmentType::TavernVisitor,
-                    });
+                if let Ok(mut tavern) = taverns.get_mut(target_entity) {
+                    handle_socialize_arrival(pop_entity, target_entity, &mut tavern, &mut commands);
                 }
-                commands
-                    .entity(pop_entity)
-                    .remove::<MovementTarget>()
-                    .remove::<AtTarget>();
             }
             ActionType::Research => {
-                commands.entity(pop_entity).insert(AssignedTo {
-                    entity: target_entity,
-                    assignment_type: AssignmentType::LibraryWorker,
-                });
-                commands
-                    .entity(pop_entity)
-                    .remove::<MovementTarget>()
-                    .remove::<AtTarget>();
+                handle_research_arrival(pop_entity, target_entity, &mut commands);
             }
             ActionType::Work | ActionType::Repair | ActionType::Haul => {
                 // Work/Repair/Haul is handled by their respective systems
                 // Just keep the AtTarget marker for that system
+                keep_target = true;
             }
-            _ => {
-                commands
-                    .entity(pop_entity)
-                    .remove::<MovementTarget>()
-                    .remove::<AtTarget>();
-            }
+            _ => {}
+        }
+
+        if !keep_target {
+            commands
+                .entity(pop_entity)
+                .remove::<MovementTarget>()
+                .remove::<AtTarget>();
         }
     }
 }
@@ -403,31 +378,17 @@ pub fn work_execution_system(world: &mut World) {
             DesignationType::Repair | DesignationType::Demolish => Some(SkillType::Construction),
         };
 
-        // Calculate Work Amount with Skill Efficiency
-        let skill_efficiency = {
+        let work_amount = {
             let skills = world.get::<Skills>(pop_entity);
-            skill_type.map_or(1.0, |st| get_skill_efficiency(skills, st))
+            calculate_work_amount(tool_efficiency, morale, skill_type, skills)
         };
 
-        let morale_efficiency = get_morale_efficiency(morale);
-        let work_amount =
-            WORK_PER_TICK * tool_efficiency * morale_efficiency * skill_efficiency;
-
-        let worked = match designation_type {
-            DesignationType::Mine => {
-                process_mining(world, designation_entity, work_amount);
-                true
-            }
-            DesignationType::Chop => {
-                process_logging(world, designation_entity, work_amount);
-                true
-            }
-            DesignationType::Demolish => execute_demolish(world, designation_entity),
-            DesignationType::Repair => {
-                crate::layer1::structure::process_repair(world, designation_entity, work_amount);
-                true
-            }
-        };
+        let worked = execute_work_on_designation(
+            world,
+            designation_entity,
+            designation_type,
+            work_amount,
+        );
 
         // After work: if designation was despawned (work completed), reset pop state
         if world.get_entity(designation_entity).is_err() {
@@ -436,22 +397,14 @@ pub fn work_execution_system(world: &mut World) {
 
         // Workplace Hazards & XP Gain
         if worked {
-            // Add XP
-            #[allow(clippy::collapsible_if)]
-            if let Some(st) = skill_type {
-                if let Some(mut skills) = world.get_mut::<Skills>(pop_entity) {
-                    skills.add_xp(st, 1.0);
-                }
-            }
-
-            handle_workplace_hazards(world, pop_entity, action_type);
-
-            if has_tools && !tool_broken {
-                let mut rng = rand::thread_rng();
-                if rng.gen_bool(TOOL_BREAK_CHANCE) {
-                    tool_broken = true;
-                }
-            }
+            handle_post_work_effects(
+                world,
+                pop_entity,
+                action_type,
+                skill_type,
+                has_tools,
+                &mut tool_broken,
+            );
         }
     }
 
@@ -513,6 +466,92 @@ fn handle_workplace_hazards(world: &mut World, pop_entity: Entity, action_type: 
             }
         }
     }
+}
+
+fn calculate_work_amount(
+    tool_efficiency: f32,
+    morale: f32,
+    skill_type: Option<SkillType>,
+    skills: Option<&Skills>,
+) -> f32 {
+    let skill_efficiency = skill_type.map_or(1.0, |st| get_skill_efficiency(skills, st));
+    let morale_efficiency = get_morale_efficiency(morale);
+    WORK_PER_TICK * tool_efficiency * morale_efficiency * skill_efficiency
+}
+
+fn execute_work_on_designation(
+    world: &mut World,
+    designation_entity: Entity,
+    designation_type: DesignationType,
+    work_amount: f32,
+) -> bool {
+    match designation_type {
+        DesignationType::Mine => {
+            process_mining(world, designation_entity, work_amount);
+            true
+        }
+        DesignationType::Chop => {
+            process_logging(world, designation_entity, work_amount);
+            true
+        }
+        DesignationType::Demolish => execute_demolish(world, designation_entity),
+        DesignationType::Repair => {
+            crate::layer1::structure::process_repair(world, designation_entity, work_amount);
+            true
+        }
+    }
+}
+
+fn handle_post_work_effects(
+    world: &mut World,
+    pop_entity: Entity,
+    action_type: ActionType,
+    skill_type: Option<SkillType>,
+    has_tools: bool,
+    tool_broken: &mut bool,
+) {
+    // Add XP
+    #[allow(clippy::collapsible_if)]
+    if let Some(st) = skill_type {
+        if let Some(mut skills) = world.get_mut::<Skills>(pop_entity) {
+            skills.add_xp(st, 1.0);
+        }
+    }
+
+    handle_workplace_hazards(world, pop_entity, action_type);
+
+    if has_tools && !*tool_broken {
+        let mut rng = rand::thread_rng();
+        if rng.gen_bool(TOOL_BREAK_CHANCE) {
+            *tool_broken = true;
+        }
+    }
+}
+
+fn handle_socialize_arrival(
+    pop_entity: Entity,
+    target_entity: Entity,
+    tavern: &mut Tavern,
+    commands: &mut Commands,
+) {
+    if tavern.visitors.len() < tavern.capacity {
+        tavern.visitors.push(pop_entity);
+        commands.entity(pop_entity).insert(AssignedTo {
+            entity: target_entity,
+            assignment_type: AssignmentType::TavernVisitor,
+        });
+    }
+}
+
+fn handle_research_arrival(
+    pop_entity: Entity,
+    target_entity: Entity,
+    commands: &mut Commands,
+) {
+    commands.entity(pop_entity).insert(AssignedTo {
+        entity: target_entity,
+        assignment_type: AssignmentType::LibraryWorker,
+    });
 }
 
 #[cfg(test)]
@@ -1682,7 +1721,7 @@ mod tests {
         work_execution_system(&mut world);
 
         let skills = world.get::<Skills>(pop).unwrap();
-        assert_eq!(skills.get_xp(SkillType::Mining), 1.0);
+        assert!((skills.get_xp(SkillType::Mining) - 1.0).abs() < f32::EPSILON);
     }
 
     #[test]
