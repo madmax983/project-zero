@@ -10,30 +10,30 @@ These fire during "Generating history..." before game start.
 
 ### CIVILIZATION_RISE
 
-**Slots:** `[CIV_NAME]`, `[ORIGIN_STAR]`, `[YEAR]`, `[EPITHET]`
+**Slots:** `[CIV_NAME]`, `[ORIGIN_STAR]`, `[YEAR]`, `[CIV_EPITHET]`
 
 ```
-"Year [YEAR]. The [CIV_NAME] arise from [ORIGIN_STAR]. They will come to be called [EPITHET]."
+"Year [YEAR]. The [CIV_NAME] arise from [ORIGIN_STAR]. They will come to be called [CIV_EPITHET]."
 
-"[CIV_NAME]—[EPITHET]—first reach beyond [ORIGIN_STAR] in [YEAR]."
+"[CIV_NAME]—[CIV_EPITHET]—first reach beyond [ORIGIN_STAR] in [YEAR]."
 
-"[YEAR]: First records of [CIV_NAME] expansion. Origin: [ORIGIN_STAR]. Later designation: [EPITHET]."
+"[YEAR]: First records of [CIV_NAME] expansion. Origin: [ORIGIN_STAR]. Later designation: [CIV_EPITHET]."
 
-"From [ORIGIN_STAR], in [YEAR], come the [CIV_NAME]. [EPITHET]. Remember them."
+"From [ORIGIN_STAR], in [YEAR], come the [CIV_NAME]. [CIV_EPITHET]. Remember them."
 ```
 
 ### CIVILIZATION_FALL
 
-**Slots:** `[CIV_NAME]`, `[YEAR]`, `[FATE]`, `[DURATION_PHRASE]`, `[EPITHET]?`
+**Slots:** `[CIV_NAME]`, `[YEAR]`, `[CIV_FATE]`, `[DURATION_PHRASE]`, `[CIV_EPITHET]?`
 
 ```
-"Year [YEAR]. The [CIV_NAME] [FATE]. They lasted [DURATION_PHRASE]."
+"Year [YEAR]. The [CIV_NAME] [CIV_FATE]. They lasted [DURATION_PHRASE]."
 
-"[YEAR]: [CIV_NAME] [FATE]. [DURATION_PHRASE] of history, ended."
+"[YEAR]: [CIV_NAME] [CIV_FATE]. [DURATION_PHRASE] of history, ended."
 
-"The [CIV_NAME]—[EPITHET]—[FATE] in [YEAR]. The silence that followed lasted [DURATION_PHRASE]."
+"The [CIV_NAME]—[CIV_EPITHET]—[CIV_FATE] in [YEAR]. The silence that followed lasted [DURATION_PHRASE]."
 
-"[YEAR]. [CIV_NAME] signals cease. Investigation finds: they [FATE]."
+"[YEAR]. [CIV_NAME] signals cease. Investigation finds: they [CIV_FATE]."
 ```
 
 ### WAR_RECORD

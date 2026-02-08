@@ -58,6 +58,8 @@ fn main() -> anyhow::Result<()> {
     // 2. Prepare Context
     let mut context = NarrativeContext::default();
     context.insert("CIV_NAME", "Terran Dominion");
+    context.insert("ORIGIN_STAR", "Sol Prime");
+    context.insert("YEAR", "2150");
 
     // 3. Generate Story
     let story = generator.generate("CIVILIZATION_RISE", &context)?;
