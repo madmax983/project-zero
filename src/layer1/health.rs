@@ -1,4 +1,6 @@
+use crate::layer1::funeral::Corpse;
 use crate::layer1::memory::{Memories, MemoryType};
+use crate::layer1::pop::PopName;
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
 #[cfg(feature = "nova")]
@@ -69,11 +71,22 @@ pub fn death_system(world: &mut World) {
 
     // Collect entities to despawn (can't modify world during iteration)
     // We capture position to spawn ghosts if needed
-    let to_despawn: Vec<(Entity, Option<crate::layer1::map::GridPosition>)> = world
-        .query::<(Entity, &Health, Option<&crate::layer1::map::GridPosition>)>()
+    let to_despawn: Vec<(Entity, Option<crate::layer1::map::GridPosition>, String)> = world
+        .query::<(
+            Entity,
+            &Health,
+            Option<&crate::layer1::map::GridPosition>,
+            Option<&PopName>,
+        )>()
         .iter(world)
-        .filter(|(_, h, _)| !h.is_alive())
-        .map(|(e, _, p)| (e, p.copied()))
+        .filter(|(_, h, _, _)| !h.is_alive())
+        .map(|(e, _, p, n)| {
+            (
+                e,
+                p.copied(),
+                n.map_or_else(|| "Unknown".to_string(), |name| name.0.clone()),
+            )
+        })
         .collect();
 
     if to_despawn.is_empty() {
@@ -82,9 +95,18 @@ pub fn death_system(world: &mut World) {
 
     let death_count = to_despawn.len();
 
-    for (entity, _pos) in to_despawn {
-        #[cfg(feature = "nova")]
-        if let Some(pos) = _pos {
+    for (entity, pos_opt, name) in to_despawn {
+        if let Some(pos) = pos_opt {
+            // Spawn Corpse
+            world.spawn((
+                Corpse {
+                    name,
+                    decay: 0.0,
+                },
+                pos,
+            ));
+
+            #[cfg(feature = "nova")]
             world.spawn((Ghost, Ectoplasm::default(), pos));
         }
 

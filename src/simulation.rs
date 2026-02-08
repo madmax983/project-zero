@@ -147,6 +147,7 @@ pub fn build_simulation_schedule() -> Schedule {
         check_milestones_system.after(death_system),
         crate::layer1::rumor::generate_rumor_system.after(death_system),
         crate::layer1::rumor::exchange_rumors_system.after(death_system),
+        crate::layer1::funeral::grief_system.after(death_system),
         // Process new rumors and affinity changes
         modify_affinity_system.after(crate::layer1::rumor::exchange_rumors_system),
         // Process chronicle events

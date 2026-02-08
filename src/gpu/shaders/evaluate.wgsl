@@ -15,10 +15,10 @@ struct PopInput {
     distance_weight: f32,
     availability_weight: f32,
     social_weight: f32,
-    success_count: array<u32, 10>,
-    attempt_count: array<u32, 10>,
+    success_count: array<u32, 11>,
+    attempt_count: array<u32, 11>,
     current_utility: f32,
-    _pad: array<u32, 3>,
+    _pad: array<u32, 1>,
 }
 
 struct BuildingInput {
@@ -119,7 +119,7 @@ fn main(@builtin(global_invocation_id) global_id: vec3<u32>) {
 
     let pop = pops[pop_idx];
 
-    var best_action: u32 = 9u;          // Default: Idle
+    var best_action: u32 = 10u;         // Default: Idle
     var best_utility: f32 = 0.05;       // Idle baseline utility
     var best_target: u32 = 0xFFFFFFFFu; // No target (u32::MAX sentinel)
 
@@ -128,7 +128,7 @@ fn main(@builtin(global_invocation_id) global_id: vec3<u32>) {
         let bldg = buildings[i];
 
         var urgency: f32 = 0.0;
-        var action_idx: u32 = 9u;
+        var action_idx: u32 = 10u;
         var skip: bool = false;
 
         switch bldg.building_type {
@@ -180,6 +180,14 @@ fn main(@builtin(global_invocation_id) global_id: vec3<u32>) {
                 // But for now let's just make it possible.
                 urgency = 1.0;
                 action_idx = 8u;
+            }
+            case 9u: {
+                // Corpse -> BuryCorpse (action 9)
+                if bldg.resource_has_room == 0u {
+                    skip = true;
+                }
+                urgency = 0.8;
+                action_idx = 9u;
             }
             default: {
                 skip = true;

@@ -60,6 +60,11 @@ pub enum ActionType {
     /// Triggered when health is damaged.
     SeekMedicalCare,
 
+    /// Bury a corpse in a grave.
+    ///
+    /// Triggered when a corpse exists and an empty grave is available.
+    BuryCorpse,
+
     /// Do nothing.
     ///
     /// The fallback action when no other options are viable or beneficial.
@@ -68,7 +73,7 @@ pub enum ActionType {
 
 impl ActionType {
     /// Total number of action types. Used for array sizing.
-    pub const COUNT: usize = 10;
+    pub const COUNT: usize = 11;
 
     /// Converts action type to a unique array index (0..COUNT-1).
     #[must_use]
@@ -83,7 +88,8 @@ impl ActionType {
             Self::Research => 6,
             Self::Haul => 7,
             Self::SeekMedicalCare => 8,
-            Self::Idle => 9,
+            Self::BuryCorpse => 9,
+            Self::Idle => 10,
         }
     }
 

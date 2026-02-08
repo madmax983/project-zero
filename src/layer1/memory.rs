@@ -14,6 +14,10 @@ pub enum MemoryType {
     AteFineMeal,
     /// Won a combat encounter.
     WonFight,
+    /// Saw a dead body (corpse).
+    SawCorpse,
+    /// Attended a funeral (closure).
+    AttendedFuneral,
 }
 
 impl MemoryType {
@@ -23,8 +27,9 @@ impl MemoryType {
         match self {
             Self::WitnessedDeath => -0.2,
             Self::StarvationTrauma => -0.15,
-            Self::AteFineMeal => 0.1,
+            Self::AteFineMeal | Self::AttendedFuneral => 0.1,
             Self::WonFight => 0.05,
+            Self::SawCorpse => -0.05,
         }
     }
 
@@ -34,8 +39,9 @@ impl MemoryType {
         // Ticks to fade completely
         match self {
             Self::WitnessedDeath => 0.0005,              // Slow fade (2000 ticks)
-            Self::StarvationTrauma => 0.001,             // Medium
+            Self::StarvationTrauma | Self::AttendedFuneral => 0.001, // Medium
             Self::AteFineMeal | Self::WonFight => 0.002, // Fast (500 ticks)
+            Self::SawCorpse => 0.01,                     // Very fast fade (100 ticks)
         }
     }
 }

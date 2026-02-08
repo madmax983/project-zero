@@ -25,14 +25,15 @@
 use crate::layer1::actions::hunger::handle_arrival as handle_hunger_arrival;
 use crate::layer1::actions::rest::handle_arrival as handle_rest_arrival;
 use crate::layer1::actions::{AssignedTo, AssignmentType};
-use crate::layer1::edicts::{ColonyPolicies, get_work_speed_modifier};
 use crate::layer1::building::{Building, OccupiedTiles};
 use crate::layer1::designation::{Designation, DesignationType};
+use crate::layer1::edicts::{ColonyPolicies, get_work_speed_modifier};
 use crate::layer1::farm::Farm;
+use crate::layer1::funeral::{Corpse, Grave};
 use crate::layer1::health::Health;
 use crate::layer1::housing::Housing;
 use crate::layer1::map::GridPosition;
-use crate::layer1::memory::{Memories, calculate_effective_morale};
+use crate::layer1::memory::{Memories, MemoryType, calculate_effective_morale};
 use crate::layer1::needs::{Needs, get_morale_efficiency};
 use crate::layer1::pop::Speed;
 use crate::layer1::resources::{
@@ -41,8 +42,9 @@ use crate::layer1::resources::{
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
 use crate::layer1::social::{SocialBuff, Tavern};
 use crate::layer1::terrain::TerrainGrid;
-use crate::layer1::utility_ai::{ActionType, PopAction, StartPlan};
+use crate::layer1::utility_ai::{ActionType, PopAction, StartPlan, manhattan_distance};
 use crate::shared::log::MessageLog;
+use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 use rand::Rng;
 
@@ -99,7 +101,7 @@ pub fn cleanup_previous_assignment_system(
                     tavern.visitors.retain(|&v| v != pop_entity);
                 }
             }
-            AssignmentType::LibraryWorker | AssignmentType::Patient => {}
+            AssignmentType::LibraryWorker | AssignmentType::Patient | AssignmentType::Funeral => {}
         }
 
         commands.entity(pop_entity).remove::<AssignedTo>();
@@ -219,13 +221,17 @@ pub fn movement_system(
 
 /// Handles arrival at targets: assigns pops to farms/housing.
 pub fn arrival_handler_system(
-    arrivals: Query<(Entity, &MovementTarget), With<AtTarget>>,
+    arrivals: Query<(Entity, &GridPosition, &MovementTarget), With<AtTarget>>,
     mut farms: Query<&mut Farm>,
     mut housing_q: Query<&mut Housing>,
     mut taverns: Query<&mut Tavern>,
+    corpses: Query<&Corpse>,
+    mut graves: Query<(Entity, &GridPosition, &mut Grave)>,
+    mut memories: Query<&mut Memories>,
+    time: Res<SimulationTime>,
     mut commands: Commands,
 ) {
-    for (pop_entity, mt) in &arrivals {
+    for (pop_entity, pop_pos, mt) in &arrivals {
         let target_entity = mt.target_entity;
         let action = mt.for_action;
 
@@ -274,6 +280,38 @@ pub fn arrival_handler_system(
                     entity: target_entity,
                     assignment_type: AssignmentType::LibraryWorker,
                 });
+                commands
+                    .entity(pop_entity)
+                    .remove::<MovementTarget>()
+                    .remove::<AtTarget>();
+            }
+            ActionType::BuryCorpse => {
+                // Verify corpse exists
+                if let Ok(corpse) = corpses.get(target_entity) {
+                    // Find nearest empty grave
+                    let best_grave = graves.iter_mut().min_by_key(|(_, grave_pos, grave)| {
+                        if grave.occupied {
+                            i32::MAX
+                        } else {
+                            manhattan_distance(pop_pos, grave_pos)
+                        }
+                    });
+
+                    if let Some((_, _, mut grave)) = best_grave {
+                        if !grave.occupied {
+                            // Perform burial
+                            grave.occupied = true;
+                            grave.corpse_name = Some(corpse.name.clone());
+
+                            commands.entity(target_entity).despawn();
+
+                            // Apply closure
+                            if let Ok(mut mem) = memories.get_mut(pop_entity) {
+                                mem.add(MemoryType::AttendedFuneral, time.tick);
+                            }
+                        }
+                    }
+                }
                 commands
                     .entity(pop_entity)
                     .remove::<MovementTarget>()
@@ -561,6 +599,7 @@ mod tests {
             tiles,
         });
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
+        world.insert_resource(crate::shared::time::SimulationTime::default());
         world
     }
 

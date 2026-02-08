@@ -40,4 +40,6 @@ pub enum AssignmentType {
     LibraryWorker,
     /// Recovering in a hospital.
     Patient,
+    /// Burying a corpse.
+    Funeral,
 }
