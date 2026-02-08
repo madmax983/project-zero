@@ -40,6 +40,8 @@ pub enum ResourceType {
     Planks,
     /// Refined stone from mason.
     Blocks,
+    /// Industrial waste (pollution).
+    Waste,
 }
 
 /// A physical resource item in the world (dropped on the ground).
@@ -99,6 +101,8 @@ pub struct ColonyResources {
     pub cloth: f32,
     /// Total clothing available in the colony.
     pub clothing: f32,
+    /// Total waste accumulated in the colony (must be hauled to landfill).
+    pub waste: f32,
     /// Maximum food capacity.
     pub max_food: f32,
     /// Maximum wood capacity.
@@ -123,6 +127,8 @@ pub struct ColonyResources {
     pub max_cloth: f32,
     /// Maximum clothing capacity.
     pub max_clothing: f32,
+    /// Maximum waste capacity.
+    pub max_waste: f32,
 }
 
 impl Default for ColonyResources {
@@ -140,6 +146,7 @@ impl Default for ColonyResources {
             fiber: 0.0,
             cloth: 0.0,
             clothing: 0.0,
+            waste: 0.0,
             max_food: 50.0,
             max_wood: 50.0,
             max_stone: 20.0,
@@ -152,6 +159,7 @@ impl Default for ColonyResources {
             max_fiber: 50.0,
             max_cloth: 50.0,
             max_clothing: 50.0,
+            max_waste: 0.0, // Defaults to 0, requires Landfill
         }
     }
 }
@@ -176,6 +184,7 @@ impl ColonyResources {
             fiber: 0.0,
             cloth: 0.0,
             clothing: 0.0,
+            waste: 0.0,
             max_food: 0.0,
             max_wood: 0.0,
             max_stone: 0.0,
@@ -188,6 +197,7 @@ impl ColonyResources {
             max_fiber: 0.0,
             max_cloth: 0.0,
             max_clothing: 0.0,
+            max_waste: 0.0,
         }
     }
 
@@ -249,6 +259,11 @@ impl ColonyResources {
     /// Adds clothing, clamping to the maximum capacity.
     pub fn add_clothing(&mut self, amount: f32) {
         self.clothing = (self.clothing + amount).clamp(0.0, self.max_clothing);
+    }
+
+    /// Adds waste, clamping to the maximum capacity.
+    pub fn add_waste(&mut self, amount: f32) {
+        self.waste = (self.waste + amount).clamp(0.0, self.max_waste);
     }
 
     /// Checks if the colony can afford the given cost.

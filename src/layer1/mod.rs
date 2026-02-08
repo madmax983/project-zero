@@ -115,3 +115,6 @@ pub use utility_ai::*;
 #[cfg(test)]
 mod tool_tests;
 pub use clothing::*;
+
+#[cfg(test)]
+mod waste_tests;

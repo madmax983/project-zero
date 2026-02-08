@@ -1,3 +1,4 @@
+#![allow(clippy::collapsible_if)]
 use bevy_ecs::prelude::*;
 
 /// Grid storing beauty values for the map.
@@ -50,6 +51,10 @@ pub fn update_beauty_grid_system(
         &crate::layer1::GridPosition,
         &crate::layer1::building::Building,
     )>,
+    items: Query<(
+        &crate::layer1::GridPosition,
+        &crate::layer1::resources::ResourceItem,
+    )>,
 ) {
     grid.clear();
 
@@ -60,6 +65,15 @@ pub fn update_beauty_grid_system(
             if let (Ok(x), Ok(y)) = (usize::try_from(pos.x), usize::try_from(pos.y)) {
                 let current = grid.get(x, y);
                 grid.set(x, y, current + value);
+            }
+        }
+    }
+
+    for (pos, item) in &items {
+        if item.resource_type == crate::layer1::resources::ResourceType::Waste {
+            if let (Ok(x), Ok(y)) = (usize::try_from(pos.x), usize::try_from(pos.y)) {
+                let current = grid.get(x, y);
+                grid.set(x, y, current - 5.0);
             }
         }
     }

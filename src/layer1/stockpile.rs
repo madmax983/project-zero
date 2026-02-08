@@ -10,6 +10,8 @@ pub struct Stockpile {
     pub wood_bonus: f32,
     /// Bonus to max stone capacity.
     pub stone_bonus: f32,
+    /// Bonus to max waste capacity.
+    pub waste_bonus: f32,
 }
 
 impl Default for Stockpile {
@@ -18,6 +20,7 @@ impl Default for Stockpile {
             food_bonus: 0.0,
             wood_bonus: 100.0,
             stone_bonus: 100.0,
+            waste_bonus: 0.0,
         }
     }
 }
@@ -30,20 +33,24 @@ pub fn update_resource_caps_system(
     let mut total_food_bonus = 0.0;
     let mut total_wood_bonus = 0.0;
     let mut total_stone_bonus = 0.0;
+    let mut total_waste_bonus = 0.0;
 
     for stockpile in &query {
         total_food_bonus += stockpile.food_bonus;
         total_wood_bonus += stockpile.wood_bonus;
         total_stone_bonus += stockpile.stone_bonus;
+        total_waste_bonus += stockpile.waste_bonus;
     }
 
     resources.max_food = BASE_MAX_FOOD + total_food_bonus;
     resources.max_wood = BASE_MAX_WOOD + total_wood_bonus;
     resources.max_stone = BASE_MAX_STONE + total_stone_bonus;
+    resources.max_waste = total_waste_bonus; // No base capacity for waste
 
     resources.food = resources.food.min(resources.max_food);
     resources.wood = resources.wood.min(resources.max_wood);
     resources.stone = resources.stone.min(resources.max_stone);
+    resources.waste = resources.waste.min(resources.max_waste);
 }
 
 #[cfg(test)]
@@ -111,6 +118,7 @@ mod tests {
                 food_bonus: 0.0,
                 wood_bonus: 100.0,
                 stone_bonus: 50.0,
+                waste_bonus: 0.0,
             },
         ));
         world.spawn((
@@ -121,6 +129,7 @@ mod tests {
                 food_bonus: 0.0,
                 wood_bonus: 100.0,
                 stone_bonus: 50.0,
+                waste_bonus: 0.0,
             },
         ));
 

@@ -95,6 +95,7 @@ fn handle_drop_off(world: &mut World, pop_entity: Entity, carrying: Carrying, po
             crate::layer1::resources::ResourceType::Metal => resources.add_metal(carrying.amount),
             crate::layer1::resources::ResourceType::Planks => resources.add_planks(carrying.amount),
             crate::layer1::resources::ResourceType::Blocks => resources.add_blocks(carrying.amount),
+            crate::layer1::resources::ResourceType::Waste => resources.add_waste(carrying.amount),
         }
 
         // Remove Carrying
@@ -168,6 +169,7 @@ fn find_and_target_item(world: &mut World, pop_entity: Entity, pos: GridPosition
                 crate::layer1::resources::ResourceType::Blocks => {
                     resources.blocks < resources.max_blocks
                 }
+                crate::layer1::resources::ResourceType::Waste => resources.waste < resources.max_waste,
             };
 
             if has_room {
