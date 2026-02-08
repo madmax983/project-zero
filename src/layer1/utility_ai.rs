@@ -31,257 +31,27 @@ pub mod types;
 pub use math::*;
 pub use types::*;
 
+use crate::layer1::actions::explore::evaluate_explore;
+use crate::layer1::actions::haul::evaluate_haul;
 use crate::layer1::actions::hunger::evaluate_satisfy_hunger;
+use crate::layer1::actions::idle::evaluate_idle;
+use crate::layer1::actions::repair::evaluate_repair;
+use crate::layer1::actions::research::evaluate_research;
 use crate::layer1::actions::rest::evaluate_satisfy_rest;
-use crate::layer1::designation::{Designation, DesignationType};
+use crate::layer1::actions::work::evaluate_work;
+use crate::layer1::designation::Designation;
 use crate::layer1::farm::Farm;
 use crate::layer1::housing::Housing;
 use crate::layer1::map::GridPosition;
+use crate::layer1::medical::{Hospital, evaluate_seek_medical_care};
 use crate::layer1::needs::Needs;
 use crate::layer1::resources::{ColonyResources, ResourceItem};
 use crate::layer1::science::Anomaly;
 use crate::layer1::social::{Tavern, evaluate_socialize};
 use crate::layer1::stockpile::Stockpile;
 use crate::layer1::tech::Library;
-use crate::layer1::medical::{Hospital, evaluate_seek_medical_care};
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
-
-/// Evaluates the utility of performing designated work (Mining, Building, etc.).
-///
-/// This checks all active [`Designation`]s (like "Mine this rock") and calculates
-/// a score based on distance and the Pop's work ethic.
-///
-/// **Note:** This function explicitly filters OUT [`DesignationType::Repair`] tasks,
-/// as those are handled separately by [`evaluate_repair`] to prioritize maintenance.
-///
-/// # Returns
-/// A tuple `(utility, designation_entity)` if a suitable task is found.
-#[must_use]
-pub fn evaluate_work<'a>(
-    pop_pos: &GridPosition,
-    weights: &UtilityWeights,
-    designations: impl Iterator<Item = (Entity, &'a GridPosition, &'a Designation)>,
-) -> Option<(f32, Entity)> {
-    let mut best: Option<(f32, Entity)> = None;
-
-    // Base utility for working (could depend on traits later)
-    let base_utility = 0.5;
-
-    for (entity, pos, des) in designations {
-        // Skip Repair designations (handled by evaluate_repair)
-        if des.designation_type == DesignationType::Repair {
-            continue;
-        }
-
-        let context = calculate_context_score(
-            *pop_pos,
-            Some(*pos),
-            1, // Capacity 1 (one worker per tile usually)
-            0, // Occupied 0 (simplified for now)
-            weights,
-        );
-
-        let success = calculate_success_modifier(ActionType::Work, weights);
-        let utility = base_utility * context * success;
-
-        if best.is_none_or(|(best_u, _)| utility > best_u) {
-            best = Some((utility, entity));
-        }
-    }
-    best
-}
-
-/// Evaluates the utility of repairing damaged structures.
-///
-/// Repair is critical for colony survival (preventing building collapse).
-/// Thus, it has a slightly higher `base_utility` (0.6) than regular work (0.5).
-///
-/// This function specifically looks for [`DesignationType::Repair`].
-#[must_use]
-pub fn evaluate_repair<'a>(
-    pop_pos: &GridPosition,
-    weights: &UtilityWeights,
-    designations: impl Iterator<Item = (Entity, &'a GridPosition, &'a Designation)>,
-) -> Option<(f32, Entity)> {
-    let mut best: Option<(f32, Entity)> = None;
-    let base_utility = 0.6; // Higher priority than normal work
-
-    for (entity, pos, des) in designations {
-        if des.designation_type != DesignationType::Repair {
-            continue;
-        }
-
-        let context = calculate_context_score(
-            *pop_pos,
-            Some(*pos),
-            1, // Capacity
-            0, // Occupied
-            weights,
-        );
-
-        let success = calculate_success_modifier(ActionType::Repair, weights);
-        let utility = base_utility * context * success;
-
-        if best.is_none_or(|(best_u, _)| utility > best_u) {
-            best = Some((utility, entity));
-        }
-    }
-    best
-}
-
-/// Evaluates the utility of performing scientific research at a [`Library`].
-///
-/// Research generates knowledge points, which unlock new [`crate::layer1::tech::Tech`].
-///
-/// **Constraints:**
-/// *   Returns `None` if the colony's knowledge storage ([`ColonyResources`]) is full.
-/// *   Requires an available worker slot at a [`Library`].
-#[must_use]
-pub fn evaluate_research<'a>(
-    pop_pos: &GridPosition,
-    weights: &UtilityWeights,
-    resources: &ColonyResources,
-    libraries: impl Iterator<Item = (Entity, &'a GridPosition, &'a Library)>,
-) -> Option<(f32, Entity)> {
-    // If knowledge is full, no utility
-    if resources.knowledge >= resources.max_knowledge {
-        return None;
-    }
-
-    let mut best: Option<(f32, Entity)> = None;
-    let base_utility = 0.4;
-
-    for (entity, pos, _) in libraries {
-        let context = calculate_context_score(
-            *pop_pos,
-            Some(*pos),
-            5, // Assumed capacity
-            0, // Assumed occupied (not tracked yet)
-            weights,
-        );
-
-        let success = calculate_success_modifier(ActionType::Research, weights);
-        let utility = base_utility * context * success;
-
-        if best.is_none_or(|(best_u, _)| utility > best_u) {
-            best = Some((utility, entity));
-        }
-    }
-    best
-}
-
-/// Evaluates the utility of hauling loose items to a [`Stockpile`].
-///
-/// A clean colony is a happy colony. Hauling items prevents beauty decay
-/// and makes resources available for crafting.
-///
-/// **Logic:**
-/// 1.  Checks if *any* [`Stockpile`] exists (short-circuit optimization).
-/// 2.  Iterates through all [`ResourceItem`] entities on the map.
-/// 3.  Checks if the colony has storage capacity for that specific resource type.
-///     (e.g., won't haul wood if `wood >= max_wood`).
-/// 4.  Scores based on distance to the item.
-///
-/// **Returns:** `Some((utility, item_entity))`
-#[must_use]
-pub fn evaluate_haul<'a>(
-    pop_pos: &GridPosition,
-    weights: &UtilityWeights,
-    items: impl Iterator<Item = (Entity, &'a GridPosition, &'a ResourceItem)>,
-    stockpiles: impl Iterator<Item = (Entity, &'a GridPosition, &'a Stockpile)>,
-    resources: &ColonyResources,
-) -> Option<(f32, Entity)> {
-    // 1. Check if any stockpile exists (optimization: no point hauling if nowhere to put it)
-    if stockpiles.count() == 0 {
-        return None;
-    }
-
-    // 2. Find closest item we have room for
-    let mut best: Option<(f32, Entity)> = None;
-    let base_utility = 0.6; // Slightly higher than work (0.5) to keep map clean
-
-    for (entity, pos, item) in items {
-        // Check capacity
-        let has_room = match item.resource_type {
-            crate::layer1::resources::ResourceType::Food => resources.food < resources.max_food,
-            crate::layer1::resources::ResourceType::Wood => resources.wood < resources.max_wood,
-            crate::layer1::resources::ResourceType::Stone => resources.stone < resources.max_stone,
-            crate::layer1::resources::ResourceType::Ore => resources.ore < resources.max_ore,
-            crate::layer1::resources::ResourceType::Metal => resources.metal < resources.max_metal,
-            crate::layer1::resources::ResourceType::Planks => {
-                resources.planks < resources.max_planks
-            }
-            crate::layer1::resources::ResourceType::Blocks => {
-                resources.blocks < resources.max_blocks
-            }
-            crate::layer1::resources::ResourceType::Waste => resources.waste < resources.max_waste,
-        };
-
-        if !has_room {
-            continue;
-        }
-
-        let context = calculate_context_score(
-            *pop_pos,
-            Some(*pos),
-            1, // Capacity
-            0, // Occupied
-            weights,
-        );
-
-        let success = calculate_success_modifier(ActionType::Haul, weights);
-        let utility = base_utility * context * success;
-
-        if best.is_none_or(|(best_u, _)| utility > best_u) {
-            best = Some((utility, entity));
-        }
-    }
-
-    best
-}
-
-/// Evaluates the utility of exploring an [`Anomaly`].
-///
-/// Anomalies (ruins, mysterious plants) provide unique rewards or trigger events.
-/// Exploration is a medium-priority task (0.55 utility) - slightly better than
-/// regular work but less critical than hauling food or healing.
-#[must_use]
-pub fn evaluate_explore<'a>(
-    pop_pos: &GridPosition,
-    weights: &UtilityWeights,
-    anomalies: impl Iterator<Item = (Entity, &'a GridPosition, &'a Anomaly)>,
-) -> Option<(f32, Entity)> {
-    let mut best: Option<(f32, Entity)> = None;
-    let base_utility = 0.55;
-
-    for (entity, pos, _) in anomalies {
-        let context = calculate_context_score(
-            *pop_pos,
-            Some(*pos),
-            1, // Capacity (simplified)
-            0, // Occupied (simplified)
-            weights,
-        );
-
-        let success = calculate_success_modifier(ActionType::Explore, weights);
-        let utility = base_utility * context * success;
-
-        if best.is_none_or(|(best_u, _)| utility > best_u) {
-            best = Some((utility, entity));
-        }
-    }
-    best
-}
-
-/// Evaluates the utility of being idle.
-///
-/// Idle is a low-priority fallback action. Pops should prefer productive
-/// activities (work, eating, resting) over standing around.
-#[must_use]
-pub const fn evaluate_idle(_needs: &Needs) -> f32 {
-    0.05
-}
 
 /// System to update commitment timers.
 /// Increments the committed-tick counter for every pop's action.

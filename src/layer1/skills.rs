@@ -1,3 +1,4 @@
+#![allow(clippy::float_cmp)]
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
 

@@ -100,7 +100,6 @@ pub fn evaluate_seek_medical_care<'a>(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_ecs::prelude::*;
     use crate::layer1::health::Health;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::actions::{AssignedTo, AssignmentType};

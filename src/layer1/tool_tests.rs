@@ -1,4 +1,5 @@
 #[cfg(test)]
+#[allow(clippy::float_cmp)]
 mod tests {
     use crate::layer1::building::BuildingType;
     use crate::layer1::refining::get_refining_recipe;
@@ -36,10 +37,12 @@ mod tests {
     // 3. Refining Recipe for Smithy
     #[test]
     fn test_smithy_recipe() {
-        let mut resources = ColonyResources::default();
-        resources.metal = 1.0;
-        resources.wood = 1.0;
-        resources.tools = 0.0;
+        let resources = ColonyResources {
+            metal: 1.0,
+            wood: 1.0,
+            tools: 0.0,
+            ..Default::default()
+        };
 
         let (can_refine, input, output) = get_refining_recipe(BuildingType::Smithy, &resources);
 
