@@ -6,12 +6,14 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 ## MVP — Layer 1: Colony Simulation
 
+- [ ] `038` Medical Care — `specs/038-medical-care.md`
 - [ ] `039` Trade System — `specs/039-trade-system.md`
 - [ ] `042` Energy System — `specs/042-energy-system.md`
 - [ ] `043` Defensive Structures — `specs/043-defensive-structures.md`
 - [ ] `047` Pop Relationships — `specs/047-pop-relationships.md`
 - [ ] `048` Hostile Fauna — `specs/048-hostile-fauna.md`
 - [ ] `050` Civil Unrest — `specs/050-civil-unrest.md`
+- [ ] `051` Pop Skills and Experience — `specs/051-pop-skills-xp.md`
 
 ## MVP — Architecture Refactoring
 
