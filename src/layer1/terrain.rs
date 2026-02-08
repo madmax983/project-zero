@@ -101,10 +101,18 @@ pub struct Viewport {
 }
 
 /// Generates a new terrain grid with procedural features.
+///
+/// # Panics
+///
+/// Panics if `width` or `height` is zero.
 #[must_use]
 pub fn generate_terrain(width: usize, height: usize) -> TerrainGrid {
+    assert!(width > 0 && height > 0, "Terrain dimensions must be positive");
+    let count = width.checked_mul(height).expect("Terrain size overflow");
+    assert!(count <= 1_000_000, "Terrain too large (max 1M tiles)");
+
     let mut rng = rand::thread_rng();
-    let mut tiles = vec![TerrainType::Grass; width * height];
+    let mut tiles = vec![TerrainType::Grass; count];
 
     // Scatter some dirt patches
     for _ in 0..50 {
@@ -306,5 +314,17 @@ mod tests {
         assert!(TerrainType::Tree.is_walkable());
         assert!(!TerrainType::Rock.is_walkable());
         assert!(!TerrainType::Water.is_walkable());
+    }
+
+    #[test]
+    #[should_panic(expected = "Terrain dimensions must be positive")]
+    fn test_generate_terrain_zero_size_panics() {
+        let _ = generate_terrain(0, 10);
+    }
+
+    #[test]
+    #[should_panic(expected = "Terrain too large")]
+    fn test_generate_terrain_too_large_panics() {
+        let _ = generate_terrain(1001, 1000); // 1,001,000 tiles
     }
 }

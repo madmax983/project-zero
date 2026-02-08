@@ -406,12 +406,9 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
         }
     }
 
-    // Check affordability
+    // Check affordability and deduct cost
     let cost = building_type.cost();
-    let can_afford = {
-        let resources = world.resource::<ColonyResources>();
-        resources.can_afford(&cost)
-    };
+    let can_afford = world.resource_mut::<ColonyResources>().try_deduct(&cost);
 
     if !can_afford {
         if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
@@ -422,9 +419,6 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
         }
         return false;
     }
-
-    // Deduct cost
-    world.resource_mut::<ColonyResources>().deduct(&cost);
 
     // Spawn building
     spawn_building(world, x, y, building_type);
