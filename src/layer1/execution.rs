@@ -416,8 +416,17 @@ pub fn work_execution_system(world: &mut World) {
         };
 
         let morale_efficiency = get_morale_efficiency(morale);
-        let work_amount =
-            WORK_PER_TICK * tool_efficiency * morale_efficiency * skill_efficiency * work_speed_mod;
+
+        // Ludwig: Add organic variation to work speed (0.9 - 1.1) so pops don't feel robotic
+        let mut rng = rand::thread_rng();
+        let organic_factor = rng.gen_range(0.9..1.1);
+
+        let work_amount = WORK_PER_TICK
+            * tool_efficiency
+            * morale_efficiency
+            * skill_efficiency
+            * work_speed_mod
+            * organic_factor;
 
         let worked = match designation_type {
             DesignationType::Mine => {
@@ -462,9 +471,18 @@ pub fn work_execution_system(world: &mut World) {
     }
 
     if tool_broken {
-        let mut res = world.resource_mut::<ColonyResources>();
-        if res.tools >= 1.0 {
-            res.tools -= 1.0;
+        let mut tools_lost = false;
+        {
+            let mut res = world.resource_mut::<ColonyResources>();
+            if res.tools >= 1.0 {
+                res.tools -= 1.0;
+                tools_lost = true;
+            }
+        }
+        if tools_lost {
+            if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+                log.add("CRACK! A tool has broken.");
+            }
         }
     }
 }
@@ -1534,9 +1552,10 @@ mod tests {
         // Tool efficiency = 1.0 (default resources has 2 tools)
         // Morale efficiency = 0.5 (low morale)
         // Expected = 10.0 * 1.0 * 0.5 = 5.0
+        // Ludwig: Organic factor (0.9-1.1) implies range 4.5 - 5.5
         assert!(
-            (progress.current - 5.0).abs() < f32::EPSILON,
-            "Expected 5.0 progress, got {}",
+            progress.current >= 4.5 && progress.current <= 5.5,
+            "Expected ~5.0 progress, got {}",
             progress.current
         );
     }
@@ -1589,9 +1608,10 @@ mod tests {
         // Tool efficiency = 1.0 (default resources has 2 tools)
         // Morale efficiency = 1.2 (high morale)
         // Expected = 10.0 * 1.0 * 1.2 = 12.0
+        // Ludwig: Organic factor (0.9-1.1) implies range 10.8 - 13.2
         assert!(
-            (progress.current - 12.0).abs() < f32::EPSILON,
-            "Expected 12.0 progress, got {}",
+            progress.current >= 10.8 && progress.current <= 13.2,
+            "Expected ~12.0 progress, got {}",
             progress.current
         );
     }
@@ -1643,9 +1663,10 @@ mod tests {
         // Morale efficiency = 1.0 (0.5 morale is neutral)
         // Skill efficiency = 1.1
         // Expected = 10.0 * 1.0 * 1.0 * 1.1 = 11.0
+        // Ludwig: Organic factor (0.9-1.1) implies range 9.9 - 12.1
         assert!(
-            (progress.current - 11.0).abs() < f32::EPSILON,
-            "Expected 11.0 progress, got {}",
+            progress.current >= 9.9 && progress.current <= 12.1,
+            "Expected ~11.0 progress, got {}",
             progress.current
         );
     }
