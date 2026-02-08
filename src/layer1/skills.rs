@@ -58,7 +58,7 @@ impl Skills {
         #[allow(clippy::cast_precision_loss)]
         let level_f32 = level as f32;
         // Optimization: Use mul_add if appropriate, though simplistic here
-        1.0 + (level_f32 * 0.1)
+        level_f32.mul_add(0.1, 1.0)
     }
 }
 

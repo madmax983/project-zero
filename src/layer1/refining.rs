@@ -87,21 +87,21 @@ pub fn process_refining_system(world: &mut World) {
 
     // Apply resource updates for finished jobs
     for (entity, input, output, pos) in finished_jobs {
-        let success = if let Some(mut resources) = world.get_resource_mut::<ColonyResources>() {
-            if resources.try_deduct(&input) {
-                resources.add_planks(output.planks);
-                resources.add_blocks(output.blocks);
-                resources.add_metal(output.metal);
-                resources.add_tools(output.tools);
-                resources.add_cloth(output.cloth);
-                resources.add_clothing(output.clothing);
-                true
-            } else {
-                false
-            }
-        } else {
-            false
-        };
+        let success = world
+            .get_resource_mut::<ColonyResources>()
+            .is_some_and(|mut resources| {
+                if resources.try_deduct(&input) {
+                    resources.add_planks(output.planks);
+                    resources.add_blocks(output.blocks);
+                    resources.add_metal(output.metal);
+                    resources.add_tools(output.tools);
+                    resources.add_cloth(output.cloth);
+                    resources.add_clothing(output.clothing);
+                    true
+                } else {
+                    false
+                }
+            });
 
         if success {
             // Spawn Waste (50% chance)
