@@ -127,3 +127,7 @@ pub mod skills;
 pub mod lighting;
 
 pub use lighting::*;
+
+/// Civil unrest and mental breaks.
+pub mod unrest;
+pub use unrest::*;

@@ -32,6 +32,32 @@ use super::utility_ai::{PopAction, UtilityWeights};
 use bevy_ecs::prelude::*;
 use rand::Rng;
 
+/// Represents the mental state of a pop.
+#[derive(Component, Debug, Clone, PartialEq, Eq)]
+pub enum MentalState {
+    /// Normal state, pop acts according to standard utility AI.
+    Normal,
+    /// Broken state, pop acts according to the break type.
+    Broken(MentalBreakType),
+}
+
+impl Default for MentalState {
+    fn default() -> Self {
+        Self::Normal
+    }
+}
+
+/// Types of mental breaks a pop can suffer.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MentalBreakType {
+    /// Destroys structures.
+    Vandalize,
+    /// Consumes excessive resources.
+    Binge,
+    /// Wanders aimlessly, doing nothing.
+    Daze,
+}
+
 /// A pop's individual name.
 #[derive(Component, Clone, Debug)]
 pub struct PopName(pub String);
@@ -155,6 +181,7 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
                 Speed::default(),
                 PopAction::default(),
                 UtilityWeights::default(),
+                MentalState::default(),
             ));
             spawned += 1;
         }

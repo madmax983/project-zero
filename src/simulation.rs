@@ -22,6 +22,7 @@ use crate::layer1::{
     restore_rest_in_housing_system, spoilage_system, starvation_damage_system,
     track_plan_outcomes_system, update_action_timer_system, update_lighting_system,
     update_resource_caps_system, work_execution_system,
+    unrest::{check_mental_break_system, evaluate_unrest_system, vandalism_execution_system},
 };
 use crate::shared::time::SimulationTime;
 
@@ -48,7 +49,9 @@ pub fn build_simulation_schedule() -> Schedule {
 
     // --- AI Decision Chain (GPU compute) ---
     schedule.add_systems((
-        gpu_evaluate_actions,
+        check_mental_break_system,
+        evaluate_unrest_system.after(check_mental_break_system),
+        gpu_evaluate_actions.after(evaluate_unrest_system),
         update_action_timer_system.after(gpu_evaluate_actions),
     ));
 
@@ -61,6 +64,7 @@ pub fn build_simulation_schedule() -> Schedule {
         movement_system.after(apply_lighting_penalties_system),
         arrival_handler_system.after(movement_system),
         work_execution_system.after(arrival_handler_system),
+        vandalism_execution_system.after(arrival_handler_system),
         haul_system.after(arrival_handler_system),
         process_scan_system.after(arrival_handler_system),
     ));

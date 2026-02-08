@@ -24,11 +24,17 @@ pub enum ActionType {
     SeekMedicalCare,
     /// Do nothing
     Idle,
+    /// Destroy structures (Mental Break)
+    Vandalize,
+    /// Consume resources excessively (Mental Break)
+    Binge,
+    /// Wander aimlessly (Mental Break)
+    Daze,
 }
 
 impl ActionType {
     /// Total number of action types
-    pub const COUNT: usize = 10;
+    pub const COUNT: usize = 13;
 
     /// Converts action type to array index
     #[must_use]
@@ -44,6 +50,9 @@ impl ActionType {
             Self::Haul => 7,
             Self::SeekMedicalCare => 8,
             Self::Idle => 9,
+            Self::Vandalize => 10,
+            Self::Binge => 11,
+            Self::Daze => 12,
         }
     }
 
@@ -63,6 +72,12 @@ impl ActionType {
             Self::Work | Self::Repair => 10.0,
             _ => 0.0,
         }
+    }
+
+    /// Returns true if this action is a mental break.
+    #[must_use]
+    pub const fn is_mental_break(&self) -> bool {
+        matches!(self, Self::Vandalize | Self::Binge | Self::Daze)
     }
 }
 

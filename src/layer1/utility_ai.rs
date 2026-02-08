@@ -292,6 +292,13 @@ pub fn evaluate_actions_system(world: &mut World) {
 
     // Evaluate each pop
     for (pop_entity, pop_pos, needs, weights, mut action) in pop_data {
+        // Skip pops with mental breaks (handled by evaluate_unrest_system)
+        if let Some(crate::layer1::pop::MentalState::Broken(_)) =
+            world.get::<crate::layer1::pop::MentalState>(pop_entity)
+        {
+            continue;
+        }
+
         // Optimization: Avoid heap allocation (Vec) for utilities.
         // Instead, track the best action found so far in a single pass.
 
@@ -466,7 +473,10 @@ pub fn track_plan_outcomes_system(
             | ActionType::Research
             | ActionType::Haul
             | ActionType::SeekMedicalCare
-            | ActionType::Idle => true,
+            | ActionType::Idle
+            | ActionType::Vandalize
+            | ActionType::Binge
+            | ActionType::Daze => true,
         };
 
         #[allow(clippy::cast_possible_truncation)]
