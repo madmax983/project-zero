@@ -1,3 +1,28 @@
+//! # Utility AI: The Brain of the Colony
+//!
+//! This module implements a **Utility-based AI** system (sometimes called "Need-based AI")
+//! that drives the behavior of every Pop in the colony.
+//!
+//! ## The Decision Cycle
+//!
+//! Every few ticks (configured in [`UtilityConfig`]), a Pop evaluates its options:
+//!
+//! 1.  **Identify Candidates**: Scans the world for possible actions (e.g., "There is a farm at (10, 5)").
+//! 2.  **Score Candidates**: Calculates a utility score (0.0 - 1.0+) for each option based on:
+//!     *   **Needs**: "I am hungry" (increases food utility).
+//!     *   **Distance**: "It's too far away" (decreases utility via [`calculate_context_score`]).
+//!     *   **Personality**: "I hate hauling" (modifiers from traits/memories).
+//!     *   **Learning**: "I failed at this last time" (reinforcement learning via [`UtilityWeights`]).
+//! 3.  **Select Best**: The action with the highest score wins.
+//! 4.  **Commit**: The Pop commits to the action for a duration or until a better option appears.
+//!
+//! ## Key Components
+//!
+//! *   [`evaluate_actions_system`]: The main loop that runs the decision cycle.
+//! *   [`ActionType`]: The enum of all possible behaviors.
+//! *   [`UtilityWeights`]: The "memory" of the Pop, adjusting scores based on past success/failure.
+//!
+
 /// Mathematical functions for utility scoring.
 pub mod math;
 /// Core types for Utility AI.
@@ -22,7 +47,16 @@ use crate::layer1::medical::{Hospital, evaluate_seek_medical_care};
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 
-/// Evaluates the utility of performing work on designations.
+/// Evaluates the utility of performing designated work (Mining, Building, etc.).
+///
+/// This checks all active [`Designation`]s (like "Mine this rock") and calculates
+/// a score based on distance and the Pop's work ethic.
+///
+/// **Note:** This function explicitly filters OUT [`DesignationType::Repair`] tasks,
+/// as those are handled separately by [`evaluate_repair`] to prioritize maintenance.
+///
+/// # Returns
+/// A tuple `(utility, designation_entity)` if a suitable task is found.
 #[must_use]
 pub fn evaluate_work<'a>(
     pop_pos: &GridPosition,
@@ -58,7 +92,12 @@ pub fn evaluate_work<'a>(
     best
 }
 
-/// Evaluates the utility of repairing structures.
+/// Evaluates the utility of repairing damaged structures.
+///
+/// Repair is critical for colony survival (preventing building collapse).
+/// Thus, it has a slightly higher `base_utility` (0.6) than regular work (0.5).
+///
+/// This function specifically looks for [`DesignationType::Repair`].
 #[must_use]
 pub fn evaluate_repair<'a>(
     pop_pos: &GridPosition,
@@ -91,7 +130,13 @@ pub fn evaluate_repair<'a>(
     best
 }
 
-/// Evaluates the utility of researching.
+/// Evaluates the utility of performing scientific research at a [`Library`].
+///
+/// Research generates knowledge points, which unlock new [`crate::layer1::tech::Tech`].
+///
+/// **Constraints:**
+/// *   Returns `None` if the colony's knowledge storage ([`ColonyResources`]) is full.
+/// *   Requires an available worker slot at a [`Library`].
 #[must_use]
 pub fn evaluate_research<'a>(
     pop_pos: &GridPosition,
@@ -126,7 +171,19 @@ pub fn evaluate_research<'a>(
     best
 }
 
-/// Evaluates the utility of hauling resources.
+/// Evaluates the utility of hauling loose items to a [`Stockpile`].
+///
+/// A clean colony is a happy colony. Hauling items prevents beauty decay
+/// and makes resources available for crafting.
+///
+/// **Logic:**
+/// 1.  Checks if *any* [`Stockpile`] exists (short-circuit optimization).
+/// 2.  Iterates through all [`ResourceItem`] entities on the map.
+/// 3.  Checks if the colony has storage capacity for that specific resource type.
+///     (e.g., won't haul wood if `wood >= max_wood`).
+/// 4.  Scores based on distance to the item.
+///
+/// **Returns:** `Some((utility, item_entity))`
 #[must_use]
 pub fn evaluate_haul<'a>(
     pop_pos: &GridPosition,
@@ -184,7 +241,11 @@ pub fn evaluate_haul<'a>(
     best
 }
 
-/// Evaluates the utility of exploring anomalies.
+/// Evaluates the utility of exploring an [`Anomaly`].
+///
+/// Anomalies (ruins, mysterious plants) provide unique rewards or trigger events.
+/// Exploration is a medium-priority task (0.55 utility) - slightly better than
+/// regular work but less critical than hauling food or healing.
 #[must_use]
 pub fn evaluate_explore<'a>(
     pop_pos: &GridPosition,
@@ -232,7 +293,30 @@ pub fn update_action_timer_system(mut query: Query<&mut PopAction>) {
     });
 }
 
-/// System to evaluate and choose actions for pops.
+/// The Main Brain Loop: Decides what every Pop should do next.
+///
+/// This system runs periodically (every tick, but individual pops only evaluate
+/// based on their `evaluation_interval`).
+///
+/// # The Algorithm
+///
+/// 1.  **Filter**: Selects Pops who have finished their commitment timer (`ticks_committed`).
+/// 2.  **Gather Context**: Pre-fetches all relevant entities (Farms, Stockpiles, etc.)
+///     into efficient query iterators.
+/// 3.  **Evaluate Candidates**:
+///     For each Pop, it calls every `evaluate_*` function:
+///     *   [`evaluate_satisfy_hunger`]
+///     *   [`evaluate_work`]
+///     *   [`evaluate_haul`]
+///     *   ...and so on.
+/// 4.  **Winner Takes All**: Tracks the single best `(Utility, Action, Target)` tuple.
+/// 5.  **Switch**: If the best new utility > current utility + threshold, the Pop switches tasks.
+///     *   Updates [`PopAction`].
+///     *   Inserts [`StartPlan`] to trigger HTN planning (if applicable).
+///
+/// # Performance Note
+/// This system avoids per-Pop heap allocations by using a single-pass "best so far"
+/// tracker instead of collecting a `Vec<ActionCandidate>`.
 #[allow(clippy::too_many_lines, clippy::collapsible_if)]
 pub fn evaluate_actions_system(world: &mut World) {
     let config = world.resource::<UtilityConfig>().clone();
