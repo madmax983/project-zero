@@ -55,6 +55,7 @@ pub fn setup_world() -> World {
     world.insert_resource(NamedLocations::default());
     world.insert_resource(TechState::default());
     world.insert_resource(crate::layer1::beauty::BeautyGrid::new(80, 50));
+    world.insert_resource(crate::layer1::zone::ZoneGrid::new(80, 50));
     world.insert_resource(LightMap::new(80, 50));
     world.insert_resource(AmbientLight::default());
 

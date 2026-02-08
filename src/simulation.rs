@@ -58,7 +58,8 @@ pub fn build_simulation_schedule() -> Schedule {
 
     // --- Execution Chain (must be sequential) ---
     schedule.add_systems((
-        cleanup_previous_assignment_system.after(update_action_timer_system),
+        crate::layer1::zone::apply_zone_designation_system.after(update_action_timer_system),
+        cleanup_previous_assignment_system.after(crate::layer1::zone::apply_zone_designation_system),
         process_start_plan_system.after(cleanup_previous_assignment_system),
         update_lighting_system.after(process_start_plan_system),
         apply_lighting_penalties_system.after(update_lighting_system),

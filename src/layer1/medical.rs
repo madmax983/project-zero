@@ -33,7 +33,8 @@ pub fn healing_system(world: &mut World) {
 
         for (pop_entity, hospital_entity) in patients {
              if let Some(hospital) = world.get::<Hospital>(hospital_entity) {
-                 updates.push((pop_entity, hospital.healing_rate));
+                 let bonus = crate::layer1::zone::get_zone_bonus(world, hospital_entity);
+                 updates.push((pop_entity, hospital.healing_rate * (1.0 + bonus)));
              }
         }
     }
@@ -370,5 +371,32 @@ mod tests {
 
         let health = world.get::<Health>(pop).unwrap();
         assert!((health.current - 50.0).abs() < f32::EPSILON, "Should not heal if not a Patient");
+    }
+
+    #[test]
+    fn test_healing_with_zone_bonus() {
+        let mut world = World::new();
+        let mut zone_grid = crate::layer1::zone::ZoneGrid::new(10, 10);
+        zone_grid.set(0, 0, crate::layer1::zone::ZoneType::Hospital);
+        world.insert_resource(zone_grid);
+
+        let hospital_entity = world.spawn((
+            Building { building_type: BuildingType::Hospital },
+            GridPosition { x: 0, y: 0 },
+            Hospital { healing_rate: 1.0 },
+        )).id();
+
+        let pop = world.spawn((
+            Health { current: 50.0, max: 100.0 },
+            AssignedTo {
+                assignment_type: AssignmentType::Patient,
+                entity: hospital_entity,
+            }
+        )).id();
+
+        // Base: 1.0. Bonus (Hospital): 0.5. Total: 1.5.
+        healing_system(&mut world);
+        let health = world.get::<Health>(pop).unwrap();
+        assert!((health.current - 51.5).abs() < f32::EPSILON);
     }
 }

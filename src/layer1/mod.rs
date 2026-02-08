@@ -130,3 +130,7 @@ pub mod rumor;
 
 pub use lighting::*;
 pub use rumor::*;
+
+/// Designated zones logic (Spec 056).
+pub mod zone;
+pub use zone::*;

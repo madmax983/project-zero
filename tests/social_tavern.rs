@@ -41,6 +41,7 @@ mod tests {
         world.insert_resource(scale::layer1::notifications::NotificationQueue::default());
         world.insert_resource(LightMap::new(10, 10));
         world.insert_resource(AmbientLight::default());
+        world.insert_resource(scale::layer1::zone::ZoneGrid::new(10, 10));
 
         world
     }

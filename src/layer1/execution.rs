@@ -407,6 +407,7 @@ pub fn work_execution_system(world: &mut World) {
             DesignationType::Mine => Some(SkillType::Mining),
             DesignationType::Chop => Some(SkillType::Forestry),
             DesignationType::Repair | DesignationType::Demolish => Some(SkillType::Construction),
+            DesignationType::SetZone(_) => None,
         };
 
         // Calculate Work Amount with Skill Efficiency
@@ -433,6 +434,7 @@ pub fn work_execution_system(world: &mut World) {
                 crate::layer1::structure::process_repair(world, designation_entity, work_amount);
                 true
             }
+            DesignationType::SetZone(_) => false,
         };
 
         // After work: if designation was despawned (work completed), reset pop state
