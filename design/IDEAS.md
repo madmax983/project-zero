@@ -1727,3 +1727,115 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Safe surface expansion vs. High-risk deep exploration.
 
 ---
+
+## The Galactic Market
+
+**Layer:** 3
+
+**Fantasy:** The invisible hand of the market is an iron fist.
+
+**Mechanic:** A galaxy-wide resource market where prices fluctuate based on supply and demand from all civilizations. Flooding the market crashes the price.
+
+**Emergence:** You fund your war by selling massive amounts of food, causing a price crash that starves your enemy's economy (who relied on food exports).
+
+**Tension:** Sell now for quick cash, or hoard to drive prices up?
+
+---
+
+## Planetary Governance
+
+**Layer:** 2
+
+**Fantasy:** You are the Emperor, not the Mayor.
+
+**Mechanic:** Assign high-ranking Pops as "Governors" to planets. They automate build queues and provide passive bonuses based on traits, but may develop "Corruption" or "Ambition".
+
+**Emergence:** Your most efficient governor declares independence because you let them get too powerful.
+
+**Tension:** Micro-manage (efficiency) vs. Delegate (scale but risk).
+
+---
+
+## The Justice System
+
+**Layer:** 1
+
+**Fantasy:** Law and order on the frontier.
+
+**Mechanic:** Pops who commit crimes (Vandalism from Unrest, Theft, Assault) generate "Wanted" tokens. "Sheriff" jobs track and arrest them, moving them to "Jail" zones for a duration.
+
+**Emergence:** The Sheriff arrests the only engineer capable of fixing the reactor. You have to "Pardon" them (causing corruption/anger) to save the colony.
+
+**Tension:** Strict justice (stability) vs. Pragmatic leniency (utility).
+
+---
+
+## Expeditionary Corps
+
+**Layer:** Cross-layer
+
+**Fantasy:** Going where no one has gone before.
+
+**Mechanic:** Form a squad of Pops (Soldiers, Scientists) and equip them for an off-map mission to a nearby Layer 2 node (Derelict Ship, Asteroid, Ruins). They return with loot/XP or not at all.
+
+**Emergence:** The expedition brings back a "Survivor" who is actually patient zero for a plague.
+
+**Tension:** Risk your best people for high-tier loot?
+
+---
+
+## Xeno-Botany
+
+**Layer:** 1
+
+**Fantasy:** The flora is beautiful, useful, and trying to kill you.
+
+**Mechanic:** "Greenhouse" buildings allow cultivation of alien plants found on the map. Researching them unlocks new drugs/materials but carries bio-hazard risks.
+
+**Emergence:** You cultivate "Whisper-Vines" for their mood-boosting pollen, but they grow out of control and strangle your power grid.
+
+**Tension:** Safe Earth crops (low yield) vs. Dangerous Alien crops (high yield/risk).
+
+---
+
+## The Ansible Network
+
+**Layer:** Cross-layer
+
+**Fantasy:** Information is the most valuable resource.
+
+**Mechanic:** Without an Ansible, Layer 2/3 information (enemy fleet movements, trade prices) is delayed by distance (light lag). Building an Ansible gives real-time data but consumes massive power.
+
+**Emergence:** You see an invasion fleet arriving "now", but the data is 2 weeks old. They are already in orbit.
+
+**Tension:** Power the guns or the phone?
+
+---
+
+## Planetary Defense Grid
+
+**Layer:** Cross-layer
+
+**Fantasy:** Turning your home into a fortress.
+
+**Mechanic:** Build massive "Surface-to-Orbit" cannons on Layer 1. They automatically fire at hostile ships in Layer 2 orbit. Requires line-of-sight (no roof) and massive power.
+
+**Emergence:** A missed shot from your cannon debris rains down on a neighboring friendly colony, causing a diplomatic incident.
+
+**Tension:** Placement: Spread out (harder to defend on ground) or clustered (vulnerable to orbital strike)?
+
+---
+
+## Stellar Engineering
+
+**Layer:** 3
+
+**Fantasy:** We have outgrown planets.
+
+**Mechanic:** Late-game megaprojects that alter the system map. "Starlifting" (minerals from sun), "Planet Cracking" (destroy planet for core resources).
+
+**Emergence:** You crack a planet to get the core metals, but the debris field blocks the trade lane to your capital.
+
+**Tension:** Short-term resource injection vs. Permanent destruction of a world.
+
+---
