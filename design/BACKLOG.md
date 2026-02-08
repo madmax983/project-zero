@@ -6,7 +6,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 ## MVP — Layer 1: Colony Simulation
 
-- [ ] `038` Medical Care — `specs/038-medical-care.md`
 - [ ] `039` Trade System — `specs/039-trade-system.md`
 - [ ] `042` Energy System — `specs/042-energy-system.md`
 - [ ] `043` Defensive Structures — `specs/043-defensive-structures.md`
@@ -15,6 +14,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `052` Archaeological Excavation — `specs/052-archaeological-excavation.md`
 - [ ] `055` The Rumor Web — `specs/055-rumor-web.md`
 - [ ] `056` Designated Zones — `specs/056-designated-zones.md`
+- [ ] `057` Funeral Rites — `specs/057-funeral-rites.md`
 
 ## MVP — User Interface
 
