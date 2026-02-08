@@ -9,3 +9,6 @@ mod hauling_execution;
 
 #[path = "integration/health_memory.rs"]
 mod health_memory;
+
+#[path = "integration/lighting_buildings.rs"]
+mod lighting_buildings;

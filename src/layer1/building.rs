@@ -6,6 +6,7 @@ use super::fire::Flammable;
 use super::housing::Housing;
 use super::social::Tavern;
 use super::stockpile::Stockpile;
+use crate::layer1::lighting::LightSource;
 use crate::layer1::resources::{ColonyResources, RefiningProgress};
 use crate::layer1::tech::{Library, Tech, TechState};
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
@@ -300,7 +301,15 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
 
     match building_type {
         BuildingType::Housing => {
-            entity.insert((Housing::default(), Flammable::default()));
+            entity.insert((
+                Housing::default(),
+                Flammable::default(),
+                LightSource {
+                    radius: 3.0,
+                    intensity: 0.5,
+                    color: (255, 255, 100), // Yellow
+                },
+            ));
         }
         BuildingType::Farm | BuildingType::Plantation => {
             entity.insert((Farm::default(), Flammable::default()));
@@ -319,7 +328,21 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
                 Flammable::default(),
             ));
         }
-        BuildingType::LumberMill | BuildingType::Weaver | BuildingType::Tailor => {
+        BuildingType::LumberMill => {
+            entity.insert((
+                RefiningProgress {
+                    current: 0.0,
+                    max: 10.0,
+                },
+                Flammable::default(),
+                LightSource {
+                    radius: 4.0,
+                    intensity: 0.5,
+                    color: (200, 180, 100), // Dim Wood light
+                },
+            ));
+        }
+        BuildingType::Weaver | BuildingType::Tailor => {
             entity.insert((
                 RefiningProgress {
                     current: 0.0,
@@ -329,16 +352,57 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
             ));
         }
         BuildingType::Tavern => {
-            entity.insert((Tavern::default(), Flammable::default()));
+            entity.insert((
+                Tavern::default(),
+                Flammable::default(),
+                LightSource {
+                    radius: 8.0,
+                    intensity: 0.8,
+                    color: (255, 140, 0), // Orange
+                },
+            ));
         }
-        BuildingType::StoneMason | BuildingType::Smelter | BuildingType::Smithy => {
+        BuildingType::Smelter => {
+            entity.insert((
+                RefiningProgress {
+                    current: 0.0,
+                    max: 10.0,
+                },
+                LightSource {
+                    radius: 5.0,
+                    intensity: 0.9,
+                    color: (255, 50, 0), // Red/Fire
+                },
+            ));
+        }
+        BuildingType::Smithy => {
+            entity.insert((
+                RefiningProgress {
+                    current: 0.0,
+                    max: 10.0,
+                },
+                LightSource {
+                    radius: 4.0,
+                    intensity: 0.7,
+                    color: (255, 100, 0), // Orange/Fire
+                },
+            ));
+        }
+        BuildingType::StoneMason => {
             entity.insert(RefiningProgress {
                 current: 0.0,
                 max: 10.0,
             });
         }
         BuildingType::Library => {
-            entity.insert(Library);
+            entity.insert((
+                Library,
+                LightSource {
+                    radius: 6.0,
+                    intensity: 0.6,
+                    color: (240, 240, 255), // White/Blueish
+                },
+            ));
         }
         BuildingType::FlowerBed => {
             entity.insert(Flammable::default());
@@ -350,6 +414,11 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
             entity.insert((
                 crate::layer1::medical::Hospital::default(),
                 Flammable::default(),
+                LightSource {
+                    radius: 6.0,
+                    intensity: 0.7,
+                    color: (255, 255, 255), // Pure White
+                },
             ));
         }
     }
