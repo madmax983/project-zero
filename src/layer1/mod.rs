@@ -125,5 +125,8 @@ mod waste_tests;
 pub mod skills;
 /// Lighting system.
 pub mod lighting;
+/// Rumor web system (Spec 055).
+pub mod rumor;
 
 pub use lighting::*;
+pub use rumor::*;

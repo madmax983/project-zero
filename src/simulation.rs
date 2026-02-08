@@ -117,6 +117,8 @@ pub fn build_simulation_schedule() -> Schedule {
         biography_monitor_system.after(death_system),
         dream_system.after(death_system),
         check_milestones_system.after(death_system),
+        crate::layer1::rumor::generate_rumor_system.after(death_system),
+        crate::layer1::rumor::exchange_rumors_system.after(death_system),
     ));
 
     schedule
