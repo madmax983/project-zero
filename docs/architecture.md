@@ -11,7 +11,10 @@ title Component Diagram - SCALE System Architecture
 Container(Main, "Main Entry", "Rust/Crossterm", "Initializes World, runs Game Loop")
 
 Container_Boundary(Simulation, "Simulation Core (Layer 1)") {
-    Component(UtilityAI, "Utility AI", "utility_ai.rs", "Evaluates Needs & Desires")
+    Component(UtilityOrchestrator, "Utility Orchestrator", "utility_ai.rs", "Coordinates Decision Cycle")
+    Component(Actions, "Action Modules", "layer1/actions/*.rs", "Generic Actions")
+    Component(DomainActions, "Domain Actions", "medical.rs, funeral.rs", "Specific Logic")
+
     Component(Pops, "Pops", "pop.rs", "Agents with Needs & Thoughts")
     Component(World, "World Entities", "farm.rs, housing.rs", "Interactable Buildings")
     Component(Resources, "Colony Resources", "resources.rs", "Global Inventory")
@@ -28,12 +31,14 @@ Container_Boundary(UI, "UI Layer") {
 }
 
 Rel(Main, Shared, "Uses")
-Rel(Main, UtilityAI, "Runs Systems")
+Rel(Main, UtilityOrchestrator, "Runs Systems")
 Rel(Main, MapRender, "Calls Render")
 
-Rel(UtilityAI, Pops, "Reads/Writes")
-Rel(UtilityAI, World, "Queries Availability")
-Rel(UtilityAI, Map, "Calculates Distance")
+Rel(UtilityOrchestrator, Actions, "Calls evaluate_*")
+Rel(UtilityOrchestrator, DomainActions, "Calls evaluate_*")
+Rel(UtilityOrchestrator, Pops, "Reads/Writes")
+Rel(UtilityOrchestrator, World, "Queries Availability")
+Rel(UtilityOrchestrator, Map, "Calculates Distance")
 
 Rel(Pops, World, "Interacts with")
 Rel(Pops, Resources, "Consumes/Produces")
@@ -108,9 +113,14 @@ sequenceDiagram
 
             rect rgb(40, 40, 50)
                 Note right of System: Evaluation Phase
-                System->>World: Query Farms/Housing
-                System->>Memory: Get Learned Weights
-                System->>System: Calculate Utility (Action = Urgency * Context * Weight)
+                System->>World: Query Entities (Farms, Items, etc.)
+
+                System->>System: Call evaluate_satisfy_hunger()
+                System->>System: Call evaluate_work()
+                System->>System: Call evaluate_haul()
+
+                Note over System: Actions typically return Option<(Score, Target)>
+                System->>System: Select Best Utility
             end
 
             System->>Pop: Update PopAction (Best Score)
@@ -183,4 +193,5 @@ Rel(Shared, Events, "Consumes")
 - [ADR 003: YAGNI - Excision of Layers 2 and 3](./adr/003-yagni-excision-of-layers-2-and-3.md)
 - [ADR 004: Modular UI Architecture](./adr/004-modular-ui-architecture.md)
 - [ADR 005: Adopt Emergent Utility AI](./adr/005-adopt-emergent-utility-ai.md)
+- [ADR 008: Modular Utility AI Structure](./adr/008-modular-utility-ai.md)
 - [ADR 012: Decouple Storage from Core](./adr/012-decouple-storage-from-core.md)
