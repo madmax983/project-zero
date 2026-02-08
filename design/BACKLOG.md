@@ -14,7 +14,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `050` Civil Unrest — `specs/050-civil-unrest.md`
 - [ ] `052` Archaeological Excavation — `specs/052-archaeological-excavation.md`
 - [ ] `058` Personal Tools — `specs/058-personal-tools.md`
-- [ ] `059` Soil Fertility and Depletion — `specs/059-soil-fertility.md`
 
 ## MVP — User Interface
 

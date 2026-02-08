@@ -11,3 +11,4 @@ Tasks currently being implemented. Builders: if a task is here, pick something e
 - [ ] `038` Medical Care — `specs/038-medical-care.md` — claimed 2026-02-07
 - [ ] `053` Lighting System — `specs/053-lighting-system.md` — claimed 2026-03-05
 - [ ] `057` Funeral Rites — `specs/057-funeral-rites.md` — claimed 2026-03-05
+- [ ] `059` Soil Fertility and Depletion — `specs/059-soil-fertility.md` — claimed 2026-02-08
