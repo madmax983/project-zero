@@ -67,6 +67,31 @@ fn generate_name<R: Rng>(rng: &mut R) -> PopName {
 #[derive(Component)]
 pub struct Pop;
 
+/// Movement speed of a pop.
+///
+/// Speed is a multiplier for movement. Base speed is 1.0 (1 tile per tick).
+/// Values < 1.0 slow down movement (e.g., 0.5 moves every 2 ticks).
+/// Values > 1.0 speed up movement (e.g., 2.0 moves 2 tiles per tick).
+#[derive(Component, Debug, Clone)]
+pub struct Speed {
+    /// Base speed multiplier (usually 1.0).
+    pub base: f32,
+    /// Current effective speed multiplier.
+    pub current: f32,
+    /// Accumulator for fractional movement.
+    pub accumulator: f32,
+}
+
+impl Default for Speed {
+    fn default() -> Self {
+        Self {
+            base: 1.0,
+            current: 1.0,
+            accumulator: 0.0,
+        }
+    }
+}
+
 /// Spawn 5 initial pops at random walkable positions.
 ///
 /// This function attempts to find valid starting locations for the initial colony.
@@ -127,6 +152,7 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
                 Needs::default(),
                 Memories::default(),
                 Skills::default(),
+                Speed::default(),
                 PopAction::default(),
                 UtilityWeights::default(),
             ));

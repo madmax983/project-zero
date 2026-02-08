@@ -4,10 +4,10 @@ use bevy_ecs::prelude::*;
 
 use crate::gpu::context::GpuContext;
 use crate::layer1::{
-    BuildMode, BuildingTracker, Chronicle, ChronicleUiState, ColonyMemory, ColonyResources,
-    DesignationMode, NamedLocations, NotificationQueue, OccupiedTiles, SeasonState, TechState,
-    UtilityConfig, Viewport, generate_terrain, initial_chronicle_event, initial_naming_system,
-    spawn_initial_anomalies, spawn_initial_pops,
+    AmbientLight, BuildMode, BuildingTracker, Chronicle, ChronicleUiState, ColonyMemory,
+    ColonyResources, DesignationMode, LightMap, NamedLocations, NotificationQueue, OccupiedTiles,
+    SeasonState, TechState, UtilityConfig, Viewport, generate_terrain, initial_chronicle_event,
+    initial_naming_system, spawn_initial_anomalies, spawn_initial_pops,
 };
 use crate::shared::colony::ColonyName;
 use crate::shared::input::InputContextStack;
@@ -54,6 +54,8 @@ pub fn setup_world() -> World {
     world.insert_resource(NamedLocations::default());
     world.insert_resource(TechState::default());
     world.insert_resource(crate::layer1::beauty::BeautyGrid::new(80, 50));
+    world.insert_resource(LightMap::new(80, 50));
+    world.insert_resource(AmbientLight::default());
 
     // Initialize GPU compute context (non-fatal if no GPU available)
     match pollster::block_on(GpuContext::new()) {

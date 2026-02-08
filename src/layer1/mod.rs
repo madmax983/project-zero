@@ -120,3 +120,7 @@ pub use clothing::*;
 mod waste_tests;
 /// Pop skills and experience system.
 pub mod skills;
+/// Lighting system.
+pub mod lighting;
+
+pub use lighting::*;

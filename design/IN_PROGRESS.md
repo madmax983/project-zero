@@ -9,3 +9,4 @@ Tasks currently being implemented. Builders: if a task is here, pick something e
 - [ ] `INT-004` Integration: Fix Hauling Execution Flow — claimed 2026-02-23
 - [ ] `INT-005` Integration: Pop Health -> Memories — claimed 2026-02-07
 - [ ] `038` Medical Care — `specs/038-medical-care.md` — claimed 2026-02-07
+- [ ] `053` Lighting System — `specs/053-lighting-system.md` — claimed 2026-03-05
