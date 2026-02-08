@@ -292,7 +292,22 @@ pub fn evaluate_actions_system(world: &mut World) {
 
     // Evaluate each pop
     for (pop_entity, pop_pos, needs, weights, mut action) in pop_data {
-        let mut utilities = Vec::new();
+        // Optimization: Avoid heap allocation (Vec) for utilities.
+        // Instead, track the best action found so far in a single pass.
+
+        // Start with Idle as the baseline
+        let mut best_action = ActionType::Idle;
+        let mut best_utility = evaluate_idle(&needs);
+        let mut best_target = None;
+
+        // Helper to update best if we found something better
+        let mut check_best = |act, util, tgt| {
+            if util > best_utility {
+                best_action = act;
+                best_utility = util;
+                best_target = tgt;
+            }
+        };
 
         // Check Health
         let health = world.get::<crate::layer1::health::Health>(pop_entity);
@@ -301,49 +316,49 @@ pub fn evaluate_actions_system(world: &mut World) {
         if let Some((utility, target)) =
             evaluate_satisfy_hunger(&pop_pos, &needs, &weights, farms_state.iter(world))
         {
-            utilities.push((ActionType::SatisfyHunger, utility, Some(target)));
+            check_best(ActionType::SatisfyHunger, utility, Some(target));
         }
 
         // Evaluate SatisfyRest
         if let Some((utility, target)) =
             evaluate_satisfy_rest(&pop_pos, &needs, &weights, housing_state.iter(world))
         {
-            utilities.push((ActionType::SatisfyRest, utility, Some(target)));
+            check_best(ActionType::SatisfyRest, utility, Some(target));
         }
 
         // Evaluate Socialize
         if let Some((utility, target)) =
             evaluate_socialize(&pop_pos, &needs, &weights, taverns_state.iter(world))
         {
-            utilities.push((ActionType::Socialize, utility, Some(target)));
+            check_best(ActionType::Socialize, utility, Some(target));
         }
 
         // Evaluate Work
         if let Some((utility, target)) =
             evaluate_work(&pop_pos, &weights, designations_state.iter(world))
         {
-            utilities.push((ActionType::Work, utility, Some(target)));
+            check_best(ActionType::Work, utility, Some(target));
         }
 
         // Evaluate Repair
         if let Some((utility, target)) =
             evaluate_repair(&pop_pos, &weights, designations_state.iter(world))
         {
-            utilities.push((ActionType::Repair, utility, Some(target)));
+            check_best(ActionType::Repair, utility, Some(target));
         }
 
         // Evaluate Explore
         if let Some((utility, target)) =
             evaluate_explore(&pop_pos, &weights, anomalies_state.iter(world))
         {
-            utilities.push((ActionType::Explore, utility, Some(target)));
+            check_best(ActionType::Explore, utility, Some(target));
         }
 
         // Evaluate Research
         if let Some((utility, target)) =
             evaluate_research(&pop_pos, &weights, &resources, libraries_state.iter(world))
         {
-            utilities.push((ActionType::Research, utility, Some(target)));
+            check_best(ActionType::Research, utility, Some(target));
         }
 
         // Evaluate Haul
@@ -354,7 +369,7 @@ pub fn evaluate_actions_system(world: &mut World) {
             stockpiles_state.iter(world),
             &resources,
         ) {
-            utilities.push((ActionType::Haul, utility, Some(target)));
+            check_best(ActionType::Haul, utility, Some(target));
         }
 
         // Evaluate SeekMedicalCare
@@ -366,45 +381,27 @@ pub fn evaluate_actions_system(world: &mut World) {
                 &weights,
                 hospitals_state.iter(world),
             ) {
-                utilities.push((ActionType::SeekMedicalCare, utility, Some(target)));
+                check_best(ActionType::SeekMedicalCare, utility, Some(target));
             }
         }
 
-        // Evaluate Idle
-        let idle_utility = evaluate_idle(&needs);
-        utilities.push((ActionType::Idle, idle_utility, None));
-
-        // Sort by utility
-        utilities.sort_by(|a, b| b.1.partial_cmp(&a.1).unwrap_or(std::cmp::Ordering::Equal));
-
         // Switch if best exceeds threshold
-        if let Some((best_action, best_utility, target)) = utilities.first() {
-            if *best_utility > action.current_utility + config.switch_threshold {
-                // Update action
-                action.current = *best_action;
-                action.current_utility = *best_utility;
-                action.ticks_committed = 0;
+        if best_utility > action.current_utility + config.switch_threshold {
+            // Update action
+            action.current = best_action;
+            action.current_utility = best_utility;
+            action.ticks_committed = 0;
 
-                // Write back to world
-                if let Some(mut pop_action) = world.get_mut::<PopAction>(pop_entity) {
-                    *pop_action = action;
-                }
-
-                // Insert StartPlan marker (for HTN system)
-                world.entity_mut(pop_entity).insert(StartPlan {
-                    action: *best_action,
-                    target: *target,
-                });
-            } else {
-                // Increment ticks committed? No, that happens elsewhere or we assume it increments.
-                // Actually, we should probably update current utility even if we don't switch?
-                // The spec doesn't say. But `evaluate_actions_system` updates `ticks_committed`?
-                // No, usually a separate system increments counters.
-                // But let's assume `ticks_committed` is updated by the loop or another system.
-                // Wait, if we don't switch, we should probably just reset `ticks_committed` if we re-evaluated?
-                // No, `ticks_committed` tracks how long we've been doing the current action.
-                // If we stick with it, we continue.
+            // Write back to world
+            if let Some(mut pop_action) = world.get_mut::<PopAction>(pop_entity) {
+                *pop_action = action;
             }
+
+            // Insert StartPlan marker (for HTN system)
+            world.entity_mut(pop_entity).insert(StartPlan {
+                action: best_action,
+                target: best_target,
+            });
         }
     }
 }

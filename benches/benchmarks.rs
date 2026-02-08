@@ -49,6 +49,7 @@ fn benchmark_rendering(c: &mut Criterion) {
                 entities_data: black_box(&entities_data),
                 build_mode: black_box(None),
                 designation_mode: black_box(None),
+                season: black_box(None),
             };
             build_map_layer_spans(ctx)
         });
