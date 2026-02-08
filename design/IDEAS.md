@@ -1909,3 +1909,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Settle the "Goldilocks" zone (boring resources) or the Extreme zones (rare resources, harsh cycles)?
 
 ---
+
+## Tidal Cycles
+
+**Layer:** 1
+
+**Fantasy:** Living on a world that breathes. The land is not safe, but it is rich.
+
+**Mechanic:** Water level rises and falls periodically (Daily/Seasonally). "Low Tide" reveals resources (shells, salt) and pathable terrain. "High Tide" floods low ground, drowning land-walkers and disabling non-waterproof buildings.
+
+**Emergence:** A greedy player builds mines in the tidal flats for quick profit. A storm surge coincides with high tide, destroying the mining district and drowning the night shift.
+
+**Tension:** Build safe/high (limited space) or risky/low (rich resources)?
+
+---
+
+## The Long Watch
+
+**Layer:** 1
+
+**Fantasy:** The psychological toll of isolation. "The Lighthouse" in space.
+
+**Mechanic:** Pops assigned to remote buildings (far from Social zones) accumulate "Isolation". High Isolation leads to madness or unique Traits. They must be rotated back to civilization to recover.
+
+**Emergence:** You forget to rotate the crew of the distant geothermal plant. They stop answering comms, barricade the doors, and start worshipping the turbine.
+
+**Tension:** Micro-manage shifts (effort) or risk insanity (efficiency)?
+
+---
+
+## Galactic Blockade
+
+**Layer:** 3 -> 1
+
+**Fantasy:** The galaxy tries to strangle you. You are under siege.
+
+**Mechanic:** Hostile fleets in Layer 2 orbit can "Blockade" the planet. Stops all Trade/Migrants. Increases "Unrest" due to shortages. You must survive on stockpiles or break the blockade (Military/Diplomacy).
+
+**Emergence:** A blockade hits right before the harvest. You have money but no food. The colony is forced to cannibalize its own livestock to survive the winter.
+
+**Tension:** Self-sufficiency (inefficient) vs. Trade dependence (fragile).
+
+---
+
+## Luxury Monopolies
+
+**Layer:** 3
+
+**Fantasy:** "The spice must flow." You control the universe's addiction.
+
+**Mechanic:** Each planet has a unique "Native Resource" (e.g., "Glow-Moss"). If you control the only source in the sector, you set the price. Other civs become dependent on you (Diplomatic leverage) but also covetous (War risk).
+
+**Emergence:** You corner the market on "Stardust". Your economy booms, but a coalition forms specifically to liberate the Stardust mines.
+
+**Tension:** Share the wealth (peace) or Gouge the galaxy (profit/war)?
+
+---
+
+## Generation Ship Arrival
+
+**Layer:** Cross-layer
+
+**Fantasy:** Meeting your ancestors, but they are strangers. A collision of eras.
+
+**Mechanic:** A massive, sub-light ship from the distant past arrives. It contains thousands of Pops with "Archaic" traits and low tech. They demand settlement rights.
+
+**Emergence:** You let them land. Suddenly your population triples, but they refuse to use neural interfaces and demand "Paper". A culture war erupts between the Spacers and the Ancients.
+
+**Tension:** Turn them away (they die/attack) or Integrate them (chaos/population boom)?
+
+---
