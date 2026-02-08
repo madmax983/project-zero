@@ -29,7 +29,7 @@ mod tests {
 
         let mut designations = world.query::<(Entity, &GridPosition, &Designation)>();
 
-        let result = evaluate_work(&pop_pos, &weights, designations.iter(&world));
+        let result = evaluate_work(&pop_pos, &weights, 1.0, designations.iter(&world));
 
         assert!(result.is_some());
         let (utility, target) = result.unwrap();
@@ -66,7 +66,7 @@ mod tests {
 
         let mut designations = world.query::<(Entity, &GridPosition, &Designation)>();
 
-        let (_, target) = evaluate_work(&pop_pos, &weights, designations.iter(&world)).unwrap();
+        let (_, target) = evaluate_work(&pop_pos, &weights, 1.0, designations.iter(&world)).unwrap();
         assert_eq!(target, close);
     }
 
@@ -78,7 +78,7 @@ mod tests {
 
         let mut designations = world.query::<(Entity, &GridPosition, &Designation)>();
 
-        let result = evaluate_work(&pop_pos, &weights, designations.iter(&world));
+        let result = evaluate_work(&pop_pos, &weights, 1.0, designations.iter(&world));
         assert!(result.is_none());
     }
 }

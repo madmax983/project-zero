@@ -12,10 +12,11 @@ use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::farm::Farm;
 use crate::layer1::housing::Housing;
 use crate::layer1::map::GridPosition;
+use crate::layer1::memory::{Memories, calculate_effective_morale};
 use crate::layer1::needs::Needs;
 use crate::layer1::resources::{ColonyResources, ResourceItem};
 use crate::layer1::science::Anomaly;
-use crate::layer1::social::{Tavern, evaluate_socialize};
+use crate::layer1::social::{Relationships, SocialBuff, Tavern, evaluate_socialize};
 use crate::layer1::stockpile::Stockpile;
 use crate::layer1::tech::Library;
 use crate::layer1::medical::{Hospital, evaluate_seek_medical_care};
@@ -27,12 +28,16 @@ use bevy_ecs::prelude::*;
 pub fn evaluate_work<'a>(
     pop_pos: &GridPosition,
     weights: &UtilityWeights,
+    morale: f32,
     designations: impl Iterator<Item = (Entity, &'a GridPosition, &'a Designation)>,
 ) -> Option<(f32, Entity)> {
     let mut best: Option<(f32, Entity)> = None;
 
-    // Base utility for working (could depend on traits later)
-    let base_utility = 0.5;
+    // Scale base utility by morale.
+    // Max morale (1.0) -> 0.5
+    // Min morale (0.0) -> 0.25
+    let morale_factor = 0.5 + 0.5 * morale;
+    let base_utility = 0.5 * morale_factor;
 
     for (entity, pos, des) in designations {
         // Skip Repair designations (handled by evaluate_repair)
@@ -311,6 +316,11 @@ pub fn evaluate_actions_system(world: &mut World) {
 
         // Check Health
         let health = world.get::<crate::layer1::health::Health>(pop_entity);
+        let relationships = world.get::<Relationships>(pop_entity);
+        let memories = world.get::<Memories>(pop_entity);
+        let social_buff = world.get::<SocialBuff>(pop_entity);
+
+        let effective_morale = calculate_effective_morale(&needs, memories, social_buff);
 
         // Evaluate SatisfyHunger
         if let Some((utility, target)) =
@@ -328,14 +338,14 @@ pub fn evaluate_actions_system(world: &mut World) {
 
         // Evaluate Socialize
         if let Some((utility, target)) =
-            evaluate_socialize(&pop_pos, &needs, &weights, taverns_state.iter(world))
+            evaluate_socialize(&pop_pos, &needs, &weights, relationships, taverns_state.iter(world))
         {
             check_best(ActionType::Socialize, utility, Some(target));
         }
 
         // Evaluate Work
         if let Some((utility, target)) =
-            evaluate_work(&pop_pos, &weights, designations_state.iter(world))
+            evaluate_work(&pop_pos, &weights, effective_morale, designations_state.iter(world))
         {
             check_best(ActionType::Work, utility, Some(target));
         }

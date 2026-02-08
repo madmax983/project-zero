@@ -9,3 +9,9 @@ mod hauling_execution;
 
 #[path = "integration/health_memory.rs"]
 mod health_memory;
+
+#[path = "integration/social_utility.rs"]
+mod social_utility;
+
+#[path = "integration/morale_work.rs"]
+mod morale_work;

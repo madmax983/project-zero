@@ -30,19 +30,31 @@ pub fn evaluate_socialize<'a>(
     pop_pos: &GridPosition,
     needs: &Needs,
     weights: &UtilityWeights,
+    relationships: Option<&Relationships>,
     taverns: impl Iterator<Item = (Entity, &'a GridPosition, &'a Tavern)>,
 ) -> Option<(f32, Entity)> {
     let urgency = need_response_curve(needs.leisure);
     let mut best: Option<(f32, Entity)> = None;
 
     for (entity, pos, tavern) in taverns {
-        let context = calculate_context_score(
+        let mut context = calculate_context_score(
             *pop_pos,
             Some(*pos),
             tavern.capacity,
             tavern.visitors.len(),
             weights,
         );
+
+        // Boost context score if friends are present
+        if let Some(rel) = relationships {
+            for &visitor in &tavern.visitors {
+                let affinity = rel.get_affinity(visitor);
+                // 100 affinity adds 0.1 to context score
+                if affinity > 0.0 {
+                    context += affinity * 0.001;
+                }
+            }
+        }
 
         let success = calculate_success_modifier(ActionType::Socialize, weights);
         let utility = urgency * context * success;
@@ -228,7 +240,7 @@ mod tests {
 
         let mut taverns = world.query::<(Entity, &GridPosition, &Tavern)>();
 
-        let result = evaluate_socialize(&pop_pos, &needs, &weights, taverns.iter(&world));
+        let result = evaluate_socialize(&pop_pos, &needs, &weights, None, taverns.iter(&world));
 
         assert!(result.is_some());
         let (utility, target) = result.unwrap();
@@ -257,7 +269,7 @@ mod tests {
         let mut taverns = world.query::<(Entity, &GridPosition, &Tavern)>();
 
         // Should produce very low utility or None depending on curve
-        let result = evaluate_socialize(&pop_pos, &needs, &weights, taverns.iter(&world));
+        let result = evaluate_socialize(&pop_pos, &needs, &weights, None, taverns.iter(&world));
 
         if let Some((utility, _)) = result {
             assert!(utility < 0.2, "High leisure should result in low utility");

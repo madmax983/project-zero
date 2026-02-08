@@ -38,6 +38,8 @@ mod tests {
         world.insert_resource(scale::shared::colony::ColonyName::default());
         world.insert_resource(scale::layer1::beauty::BeautyGrid::new(10, 10));
         world.insert_resource(scale::layer1::notifications::NotificationQueue::default());
+        world.insert_resource(scale::layer1::lighting::LightMap::new(10, 10));
+        world.insert_resource(scale::layer1::lighting::AmbientLight::default());
 
         world
     }
