@@ -13,11 +13,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `047` Pop Relationships — `specs/047-pop-relationships.md`
 - [ ] `048` Hostile Fauna — `specs/048-hostile-fauna.md`
 - [ ] `050` Civil Unrest — `specs/050-civil-unrest.md`
-
-## MVP — Architecture Refactoring
-
-- [ ] `013` Schedule and System Execution Ordering — `specs/013-schedule-system-ordering.md`
-- [ ] `014` Rendering Architecture and Z-Order — `specs/014-rendering-architecture.md`
+- [ ] `052` Archaeological Excavation — `specs/052-archaeological-excavation.md`
 
 ## MVP — User Interface
 
