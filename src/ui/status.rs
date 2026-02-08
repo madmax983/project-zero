@@ -2,10 +2,10 @@ use bevy_ecs::archetype::Archetype;
 use bevy_ecs::prelude::*;
 use ratatui::{prelude::*, widgets::Paragraph};
 
+use crate::layer1::seasons::{Season, SeasonState};
 use crate::layer1::{
     BuildMode, ColonyPolicies, ColonyResources, DesignationMode, NamedLocations, Pop, Viewport,
 };
-use crate::layer1::seasons::{Season, SeasonState};
 use crate::shared::state::GameState;
 use crate::shared::time::{SimSpeed, SimulationTime};
 
@@ -373,8 +373,8 @@ fn truncate_line(line: Line<'_>, max_width: u16) -> Line<'_> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::{BuildMode, DesignationMode};
     use crate::layer1::seasons::Season;
+    use crate::layer1::{BuildMode, DesignationMode};
     use crate::shared::time::SimSpeed;
 
     #[test]
@@ -520,7 +520,10 @@ mod tests {
             0.8,
             Some(Season::Summer),
         );
-        assert!(status.contains("Summer"), "Status should contain season name");
+        assert!(
+            status.contains("Summer"),
+            "Status should contain season name"
+        );
         assert!(status.contains("Day 50"));
     }
 
@@ -547,10 +550,7 @@ mod tests {
 
     #[test]
     fn test_truncate_line_no_truncation() {
-        let line = Line::from(vec![
-            Span::raw("Hello"),
-            Span::raw(" World"),
-        ]);
+        let line = Line::from(vec![Span::raw("Hello"), Span::raw(" World")]);
         let result = truncate_line(line, 20);
         let text: String = result.spans.iter().map(|s| s.content.as_ref()).collect();
         assert_eq!(text, "Hello World");
@@ -558,10 +558,7 @@ mod tests {
 
     #[test]
     fn test_truncate_line_truncates() {
-        let line = Line::from(vec![
-            Span::raw("Hello"),
-            Span::raw(" World, this is long"),
-        ]);
+        let line = Line::from(vec![Span::raw("Hello"), Span::raw(" World, this is long")]);
         // max_width = 10, "Hello" = 5 fits, " World, this is long" = 20 doesn't
         // remaining = 10 - 5 = 5, take 4 chars + ellipsis = " Wor…"
         let result = truncate_line(line, 10);

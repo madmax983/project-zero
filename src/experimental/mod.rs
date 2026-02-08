@@ -6,8 +6,8 @@
 pub mod biography;
 /// Pop dreams.
 pub mod dreams;
-/// Seasonal visual overlays.
-pub mod seasonal_gfx;
 /// Experimental ghost feature.
 #[cfg(feature = "nova")]
 pub mod ghosts;
+/// Seasonal visual overlays.
+pub mod seasonal_gfx;

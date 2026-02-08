@@ -7,10 +7,10 @@
 //! - Light sources (lamps, fire).
 //! - Effects on pop speed and morale.
 
-use bevy_ecs::prelude::*;
 use crate::layer1::map::GridPosition;
-use crate::layer1::pop::Speed;
 use crate::layer1::needs::Needs;
+use crate::layer1::pop::Speed;
+use bevy_ecs::prelude::*;
 
 /// Global ambient light level (0.0 = pitch black, 1.0 = bright day).
 #[derive(Resource)]
@@ -105,11 +105,7 @@ pub fn update_lighting_system(
                 let y = center_y + dy;
 
                 #[allow(clippy::cast_possible_wrap)]
-                if x < 0
-                    || y < 0
-                    || x >= light_map.width as i32
-                    || y >= light_map.height as i32
-                {
+                if x < 0 || y < 0 || x >= light_map.width as i32 || y >= light_map.height as i32 {
                     continue;
                 }
 
@@ -265,7 +261,9 @@ mod tests {
             .id();
 
         // Run system that updates speed based on light
-        world.run_system_once(apply_lighting_penalties_system).unwrap();
+        world
+            .run_system_once(apply_lighting_penalties_system)
+            .unwrap();
 
         let speed = world.get::<Speed>(pop).unwrap();
         // Should be penalized (e.g. 0.5)
@@ -281,7 +279,7 @@ mod tests {
     fn test_light_affects_morale() {
         let mut world = World::new();
         world.insert_resource(LightMap::new(10, 10));
-         // Pitch black
+        // Pitch black
         {
             let mut map = world.resource_mut::<LightMap>();
             map.tiles.fill(0.0);
@@ -299,7 +297,9 @@ mod tests {
             ))
             .id();
 
-        world.run_system_once(apply_lighting_penalties_system).unwrap();
+        world
+            .run_system_once(apply_lighting_penalties_system)
+            .unwrap();
 
         let needs = world.get::<Needs>(pop).unwrap();
         assert!(needs.leisure < 1.0, "Darkness should reduce leisure");
@@ -328,12 +328,15 @@ mod tests {
             ))
             .id();
 
-        world.run_system_once(apply_lighting_penalties_system).unwrap();
+        world
+            .run_system_once(apply_lighting_penalties_system)
+            .unwrap();
 
         let speed = world.get::<Speed>(pop).unwrap();
         assert!(
             (speed.current - 1.0).abs() < f32::EPSILON,
-            "Speed should be restored to base, got {}", speed.current
+            "Speed should be restored to base, got {}",
+            speed.current
         );
     }
 }

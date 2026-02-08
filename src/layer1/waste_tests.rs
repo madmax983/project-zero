@@ -1,20 +1,23 @@
 #[cfg(test)]
 mod tests {
+    use crate::layer1::GridPosition;
+    use crate::layer1::beauty::{BeautyGrid, update_beauty_grid_system};
+    use crate::layer1::building::{Building, BuildingType};
+    use crate::layer1::pop::Pop;
+    use crate::layer1::refining::process_refining_system;
+    use crate::layer1::resources::{ColonyResources, RefiningProgress, ResourceItem, ResourceType};
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
-    use crate::layer1::resources::{ColonyResources, ResourceItem, ResourceType, RefiningProgress};
-    use crate::layer1::building::{Building, BuildingType};
-    use crate::layer1::beauty::{BeautyGrid, update_beauty_grid_system};
-    use crate::layer1::refining::process_refining_system;
-    use crate::layer1::GridPosition;
-    use crate::layer1::pop::Pop;
 
     // 1. ResourceType::Waste exists
     #[test]
     fn test_resource_type_waste() {
         let waste = ResourceType::Waste;
         // Verify it can be used in ResourceItem
-        let item = ResourceItem { resource_type: waste, amount: 1.0 };
+        let item = ResourceItem {
+            resource_type: waste,
+            amount: 1.0,
+        };
         assert_eq!(item.resource_type, ResourceType::Waste);
     }
 
@@ -37,9 +40,14 @@ mod tests {
         // 50% chance per operation. With 100 mills, chance of failure is negligible.
         for i in 0..100 {
             world.spawn((
-                Building { building_type: BuildingType::LumberMill },
+                Building {
+                    building_type: BuildingType::LumberMill,
+                },
                 GridPosition { x: i, y: 0 },
-                RefiningProgress { current: 9.9, max: 10.0 }, // Almost done
+                RefiningProgress {
+                    current: 9.9,
+                    max: 10.0,
+                }, // Almost done
             ));
             world.spawn((Pop, GridPosition { x: i, y: 1 }));
         }
@@ -56,7 +64,10 @@ mod tests {
                 break;
             }
         }
-        assert!(found_waste, "Refining should spawn Waste item at building location (probabilistic)");
+        assert!(
+            found_waste,
+            "Refining should spawn Waste item at building location (probabilistic)"
+        );
     }
 
     // 3. Waste item emits negative beauty
@@ -67,7 +78,10 @@ mod tests {
 
         // Spawn Waste Item
         world.spawn((
-            ResourceItem { resource_type: ResourceType::Waste, amount: 1.0 },
+            ResourceItem {
+                resource_type: ResourceType::Waste,
+                amount: 1.0,
+            },
             GridPosition { x: 2, y: 2 },
         ));
 
@@ -76,7 +90,10 @@ mod tests {
 
         let grid = world.resource::<BeautyGrid>();
         // Expect negative value (e.g., -5.0)
-        assert!(grid.get(2, 2) < 0.0, "Waste item should emit negative beauty");
+        assert!(
+            grid.get(2, 2) < 0.0,
+            "Waste item should emit negative beauty"
+        );
     }
 
     // 4. Landfill Building
@@ -95,9 +112,14 @@ mod tests {
 
         // Spawn Landfill
         world.spawn((
-            Building { building_type: BuildingType::Landfill },
+            Building {
+                building_type: BuildingType::Landfill,
+            },
             // Stockpile component with waste_bonus
-            crate::layer1::stockpile::Stockpile { waste_bonus: 100.0, ..Default::default() },
+            crate::layer1::stockpile::Stockpile {
+                waste_bonus: 100.0,
+                ..Default::default()
+            },
         ));
 
         // Run cap update system

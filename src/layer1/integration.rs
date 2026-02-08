@@ -44,7 +44,7 @@ pub fn chronicle_rumor_bridge_system(
             let count = pop_entities.len().min(3);
             let witnesses: Vec<_> = pop_entities
                 .choose_multiple(&mut rng, count)
-                .cloned()
+                .copied()
                 .collect();
 
             for witness in witnesses {

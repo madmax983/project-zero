@@ -98,11 +98,10 @@ pub fn update_render_cache(world: &mut World) {
         if let Some(pos) = e.get::<GridPosition>() {
             // Check for Designation
             if let Some(designation) = e.get::<Designation>() {
-                let progress = if let Some(p) = e.get::<MiningProgress>() {
-                    Some(p.current / p.max)
-                } else {
-                    e.get::<ForestryProgress>().map(|p| p.current / p.max)
-                };
+                let progress = e.get::<MiningProgress>().map_or_else(
+                    || e.get::<ForestryProgress>().map(|p| p.current / p.max),
+                    |p| Some(p.current / p.max),
+                );
 
                 insert_if_higher_priority(
                     &mut cache.entities,
@@ -326,17 +325,15 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
                         continue;
                     }
                     RenderEntity::Designation(tool, progress) => {
-                        let color = if let Some(p) = progress {
-                            if *p < 0.33 {
+                        let color = progress.map_or(Color::Red, |p| {
+                            if p < 0.33 {
                                 Color::Red
-                            } else if *p < 0.66 {
+                            } else if p < 0.66 {
                                 Color::Yellow
                             } else {
                                 Color::Green
                             }
-                        } else {
-                            Color::Red // Standardize designation color as red
-                        };
+                        });
 
                         line_spans.push(Span::styled(
                             get_designation_char(*tool),
@@ -584,7 +581,7 @@ pub const fn get_building_color(building: BuildingType) -> Color {
         BuildingType::Tailor => Color::Blue,
         BuildingType::Hospital => Color::Red,
         BuildingType::Landfill => Color::Rgb(105, 105, 105), // DimGray
-        BuildingType::Grave => Color::Rgb(128, 128, 128), // Gray
+        BuildingType::Grave => Color::Rgb(128, 128, 128),    // Gray
     }
 }
 

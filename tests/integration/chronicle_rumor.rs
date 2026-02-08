@@ -1,13 +1,16 @@
+use bevy_ecs::prelude::*;
 use scale::layer1::chronicle::{AddChronicleEvent, Chronicle, EventImportance};
 use scale::layer1::pop::Pop;
 use scale::layer1::rumor::{Knowledge, RumorTopic};
 use scale::shared::time::SimulationTime;
-use bevy_ecs::prelude::*;
 
 #[test]
 fn test_chronicle_event_creates_rumor() {
     let mut world = World::new();
-    world.insert_resource(SimulationTime { tick: 100, ..Default::default() });
+    world.insert_resource(SimulationTime {
+        tick: 100,
+        ..Default::default()
+    });
     world.insert_resource(Chronicle::default());
     world.init_resource::<Events<AddChronicleEvent>>();
 
@@ -51,7 +54,10 @@ fn test_chronicle_event_creates_rumor() {
         }
     }
 
-    assert!(known_count > 0, "At least one pop should have heard the rumor");
+    assert!(
+        known_count > 0,
+        "At least one pop should have heard the rumor"
+    );
     // Since we pick 3 witnesses out of 5, it should be exactly 3.
     assert_eq!(known_count, 3, "Should pick 3 witnesses");
 }

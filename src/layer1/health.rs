@@ -1,10 +1,10 @@
+#[cfg(feature = "nova")]
+use crate::experimental::ghosts::{Ectoplasm, Ghost};
 use crate::layer1::funeral::Corpse;
 use crate::layer1::memory::{Memories, MemoryType};
 use crate::layer1::pop::PopName;
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
-#[cfg(feature = "nova")]
-use crate::experimental::ghosts::{Ectoplasm, Ghost};
 
 /// Represents the physical health of an entity (Pop).
 ///
@@ -98,13 +98,7 @@ pub fn death_system(world: &mut World) {
     for (entity, pos_opt, name) in to_despawn {
         if let Some(pos) = pos_opt {
             // Spawn Corpse
-            world.spawn((
-                Corpse {
-                    name,
-                    decay: 0.0,
-                },
-                pos,
-            ));
+            world.spawn((Corpse { name, decay: 0.0 }, pos));
 
             #[cfg(feature = "nova")]
             world.spawn((Ghost, Ectoplasm::default(), pos));

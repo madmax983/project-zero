@@ -49,8 +49,7 @@ pub fn produce_food_system(
                 // Since we have &mut Skills, we can just use it.
                 // But get_skill_efficiency takes Option<&Skills>.
                 // We can re-borrow from Option<&mut Skills> as Option<&Skills>.
-                let efficiency =
-                    get_skill_efficiency(skills_opt.as_deref(), skill_type);
+                let efficiency = get_skill_efficiency(skills_opt.as_deref(), skill_type);
                 total_efficiency += efficiency;
 
                 // Add XP (mutable write)

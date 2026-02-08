@@ -1,9 +1,9 @@
 use scale::layer1::{
-    AmbientLight, BuildingType, ColonyResources, GridPosition, LightMap, Pop, Speed, TerrainGrid,
-    TerrainType, try_place_building, TechState, Tech,
+    AmbientLight, BuildingType, ColonyResources, GridPosition, LightMap, Pop, Speed, Tech,
+    TechState, TerrainGrid, TerrainType, try_place_building,
 };
-use scale::simulation::run_simulation_tick;
 use scale::setup::setup_world;
+use scale::simulation::run_simulation_tick;
 
 #[test]
 fn test_tavern_emits_light() {
@@ -21,7 +21,9 @@ fn test_tavern_emits_light() {
     world.resource_mut::<ColonyResources>().stone = 1000.0;
 
     // 4. Unlock Tech
-    world.resource_mut::<TechState>().unlock(Tech::SocialStructures);
+    world
+        .resource_mut::<TechState>()
+        .unlock(Tech::SocialStructures);
 
     // 5. Place Tavern at (10, 10)
     let placed = try_place_building(&mut world, 10, 10, BuildingType::Tavern);
@@ -33,7 +35,11 @@ fn test_tavern_emits_light() {
     // 7. Check LightMap
     let light_map = world.resource::<LightMap>();
     let light_level = light_map.get(10, 10);
-    assert!(light_level > 0.1, "Tavern should emit light, got {}", light_level);
+    assert!(
+        light_level > 0.1,
+        "Tavern should emit light, got {}",
+        light_level
+    );
 }
 
 #[test]
@@ -52,27 +58,33 @@ fn test_building_light_affects_pop_speed() {
     world.resource_mut::<ColonyResources>().stone = 1000.0;
 
     // 4. Unlock Tech
-    world.resource_mut::<TechState>().unlock(Tech::SocialStructures);
+    world
+        .resource_mut::<TechState>()
+        .unlock(Tech::SocialStructures);
 
     // 5. Place Tavern at (10, 10)
     let placed = try_place_building(&mut world, 10, 10, BuildingType::Tavern);
     assert!(placed, "Should be able to place Tavern");
 
     // 6. Spawn Pop near Tavern (11, 10) -> Lit
-    let pop_lit = world.spawn((
-        Pop,
-        GridPosition { x: 11, y: 10 },
-        Speed::default(),
-        scale::layer1::Needs::default(),
-    )).id();
+    let pop_lit = world
+        .spawn((
+            Pop,
+            GridPosition { x: 11, y: 10 },
+            Speed::default(),
+            scale::layer1::Needs::default(),
+        ))
+        .id();
 
     // 7. Spawn Pop far away (0, 0) -> Dark
-    let pop_dark = world.spawn((
-        Pop,
-        GridPosition { x: 0, y: 0 },
-        Speed::default(),
-        scale::layer1::Needs::default(),
-    )).id();
+    let pop_dark = world
+        .spawn((
+            Pop,
+            GridPosition { x: 0, y: 0 },
+            Speed::default(),
+            scale::layer1::Needs::default(),
+        ))
+        .id();
 
     // 8. Run Tick
     run_simulation_tick(&mut world);
@@ -81,9 +93,22 @@ fn test_building_light_affects_pop_speed() {
     let speed_lit = world.get::<Speed>(pop_lit).unwrap().current;
     let speed_dark = world.get::<Speed>(pop_dark).unwrap().current;
 
-    assert!(speed_lit > speed_dark, "Lit pop speed ({}) should be > Dark pop speed ({})", speed_lit, speed_dark);
+    assert!(
+        speed_lit > speed_dark,
+        "Lit pop speed ({}) should be > Dark pop speed ({})",
+        speed_lit,
+        speed_dark
+    );
     // Dark pop speed should be penalized (base * 0.5)
     // Lit pop speed should be base (1.0)
-    assert!((speed_lit - 1.0).abs() < 0.1, "Lit pop speed should be ~1.0, got {}", speed_lit);
-    assert!((speed_dark - 0.5).abs() < 0.1, "Dark pop speed should be ~0.5, got {}", speed_dark);
+    assert!(
+        (speed_lit - 1.0).abs() < 0.1,
+        "Lit pop speed should be ~1.0, got {}",
+        speed_lit
+    );
+    assert!(
+        (speed_dark - 0.5).abs() < 0.1,
+        "Dark pop speed should be ~0.5, got {}",
+        speed_dark
+    );
 }

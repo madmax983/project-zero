@@ -37,10 +37,10 @@ pub mod housing;
 pub mod integration;
 /// Spatial primitives (GridPosition).
 pub mod map;
-/// Pop memories and psychological effects.
-pub mod memory;
 /// Medical care and hospital logic.
 pub mod medical;
+/// Pop memories and psychological effects.
+pub mod memory;
 #[cfg(test)]
 /// Tests for metal industry (Spec 024).
 pub mod metal_industry_tests;
@@ -119,14 +119,14 @@ pub use utility_ai::*;
 mod tool_tests;
 pub use clothing::*;
 
-#[cfg(test)]
-mod waste_tests;
-/// Pop skills and experience system.
-pub mod skills;
 /// Lighting system.
 pub mod lighting;
 /// Rumor web system (Spec 055).
 pub mod rumor;
+/// Pop skills and experience system.
+pub mod skills;
+#[cfg(test)]
+mod waste_tests;
 
 pub use lighting::*;
 pub use rumor::*;
@@ -138,3 +138,7 @@ pub use zone::*;
 /// Funeral rites and corpse management (Spec 057).
 pub mod funeral;
 pub use funeral::*;
+
+/// Acoustic simulation (Spec 060).
+pub mod acoustic;
+pub use acoustic::*;

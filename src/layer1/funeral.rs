@@ -1,9 +1,8 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::map::GridPosition;
 use crate::layer1::memory::{Memories, MemoryType};
-use crate::layer1::pop::Pop;
 use crate::layer1::utility_ai::{UtilityWeights, manhattan_distance};
 use crate::shared::time::SimulationTime;
+use bevy_ecs::prelude::*;
 
 /// Represents a dead body of a Pop.
 #[derive(Component, Debug, Clone)]
@@ -53,10 +52,12 @@ pub fn grief_system(world: &mut World) {
             // We should maybe limit frequency.
             // For MVP, just add it. Memories decay fast.
             // Or check if most recent SawCorpse is recent.
-            let recently_saw = memories.items.iter().any(|m|
-                m.memory_type == MemoryType::SawCorpse &&
+            let recently_saw = memories.items.iter().any(
+                |m| {
+                    m.memory_type == MemoryType::SawCorpse &&
                 current_tick > m.added_at && // ensure not same tick (though added_at is u64)
-                (current_tick - m.added_at) < 100 // debounce
+                (current_tick - m.added_at) < 100
+                }, // debounce
             );
 
             if !recently_saw {
@@ -134,17 +135,16 @@ pub fn evaluate_bury_corpse<'a>(
     best_target.map(|t| (best_score, t))
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_ecs::prelude::*;
-    use crate::layer1::health::{Health, death_system};
-    use crate::layer1::pop::{Pop, PopName};
-    use crate::layer1::map::GridPosition;
     use crate::layer1::building::{Building, BuildingType};
-    use crate::layer1::needs::Needs;
+    use crate::layer1::health::{Health, death_system};
+    use crate::layer1::map::GridPosition;
     use crate::layer1::memory::{Memories, MemoryType};
+    use crate::layer1::needs::Needs;
+    use crate::layer1::pop::{Pop, PopName};
+    use bevy_ecs::prelude::*;
     // use crate::layer1::execution::{Assignment, AssignmentType};
 
     #[test]
@@ -152,18 +152,26 @@ mod tests {
         let mut world = World::new();
         // Setup SimulationTime for death timestamp? Not needed for corpse spawn
 
-        let entity = world.spawn((
-            Pop,
-            PopName("TestSubject".to_string()),
-            Health { current: -10.0, max: 100.0 }, // Dead
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let entity = world
+            .spawn((
+                Pop,
+                PopName("TestSubject".to_string()),
+                Health {
+                    current: -10.0,
+                    max: 100.0,
+                }, // Dead
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         // Run death system
         death_system(&mut world);
 
         // Pop should be despawned
-        assert!(world.get_entity(entity).is_err(), "Pop entity should be despawned");
+        assert!(
+            world.get_entity(entity).is_err(),
+            "Pop entity should be despawned"
+        );
 
         // Corpse should be spawned at same location
         let mut query = world.query::<(&Corpse, &GridPosition)>();
@@ -180,38 +188,58 @@ mod tests {
 
         // Spawn Corpse
         world.spawn((
-            Corpse { name: "Dearly Departed".to_string(), decay: 0.5 },
+            Corpse {
+                name: "Dearly Departed".to_string(),
+                decay: 0.5,
+            },
             GridPosition { x: 0, y: 0 },
         ));
 
         // Spawn Witness (Pop) nearby
-        let witness = world.spawn((
-            Pop,
-            GridPosition { x: 1, y: 0 }, // Adjacent
-            Needs::default(), // Has morale
-            Memories::default(),
-        )).id();
+        let witness = world
+            .spawn((
+                Pop,
+                GridPosition { x: 1, y: 0 }, // Adjacent
+                Needs::default(),            // Has morale
+                Memories::default(),
+            ))
+            .id();
 
         // Run grief system
         grief_system(&mut world);
 
         // Check if witness has negative memory
         let memories = world.get::<Memories>(witness).unwrap();
-        assert!(memories.items.iter().any(|m| m.memory_type == MemoryType::SawCorpse));
+        assert!(
+            memories
+                .items
+                .iter()
+                .any(|m| m.memory_type == MemoryType::SawCorpse)
+        );
     }
 
     #[test]
     fn test_grave_accepts_corpse() {
         let mut world = World::new();
 
-        let grave = world.spawn((
-            Building { building_type: BuildingType::Grave },
-            Grave { occupied: false, corpse_name: None },
-        )).id();
+        let grave = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Grave,
+                },
+                Grave {
+                    occupied: false,
+                    corpse_name: None,
+                },
+            ))
+            .id();
 
-        let corpse = world.spawn((
-            Corpse { name: "Bob".to_string(), decay: 0.0 },
-        )).id();
+        let corpse = world
+            .spawn((Corpse {
+                name: "Bob".to_string(),
+                decay: 0.0,
+            },))
+            .id();
 
         // Simulate funeral completion
         bury_corpse(&mut world, grave, corpse);
@@ -230,17 +258,19 @@ mod tests {
         world.insert_resource(SimulationTime::default());
 
         // Setup pop
-        let pop = world.spawn((
-            Pop,
-            Memories::default(),
-        )).id();
+        let pop = world.spawn((Pop, Memories::default())).id();
 
         // Perform burial
         apply_closure(&mut world, pop);
 
         let memories = world.get::<Memories>(pop).unwrap();
         // Should have 'AttendedFuneral'
-        assert!(memories.items.iter().any(|m| m.memory_type == MemoryType::AttendedFuneral));
+        assert!(
+            memories
+                .items
+                .iter()
+                .any(|m| m.memory_type == MemoryType::AttendedFuneral)
+        );
     }
 
     #[test]
@@ -248,19 +278,18 @@ mod tests {
         let pop_pos = GridPosition { x: 0, y: 0 };
         let weights = UtilityWeights::default();
 
-        let pos = GridPosition{x: 1, y: 0};
-        let corpse = Corpse{name: "A".into(), decay: 0.0};
+        let pos = GridPosition { x: 1, y: 0 };
+        let corpse = Corpse {
+            name: "A".into(),
+            decay: 0.0,
+        };
         let corpses = vec![(Entity::from_raw(1), &pos, &corpse)];
 
         // Empty graves iter
         let graves: Vec<&Grave> = vec![];
 
-        let result = evaluate_bury_corpse(
-            &pop_pos,
-            corpses.into_iter(),
-            graves.into_iter(),
-            &weights
-        );
+        let result =
+            evaluate_bury_corpse(&pop_pos, corpses.into_iter(), graves.into_iter(), &weights);
 
         assert!(result.is_none());
     }
@@ -270,26 +299,31 @@ mod tests {
         let pop_pos = GridPosition { x: 0, y: 0 };
         let weights = UtilityWeights::default();
 
-        let pos1 = GridPosition{x: 1, y: 0};
-        let corpse1 = Corpse{name: "A".into(), decay: 0.0};
+        let pos1 = GridPosition { x: 1, y: 0 };
+        let corpse1 = Corpse {
+            name: "A".into(),
+            decay: 0.0,
+        };
         let c1 = (Entity::from_raw(1), &pos1, &corpse1);
 
-        let pos2 = GridPosition{x: 10, y: 0};
-        let corpse2 = Corpse{name: "B".into(), decay: 0.0};
+        let pos2 = GridPosition { x: 10, y: 0 };
+        let corpse2 = Corpse {
+            name: "B".into(),
+            decay: 0.0,
+        };
         let c2 = (Entity::from_raw(2), &pos2, &corpse2);
 
         let corpses = vec![c1, c2];
 
         // One empty grave
-        let grave = Grave { occupied: false, corpse_name: None };
+        let grave = Grave {
+            occupied: false,
+            corpse_name: None,
+        };
         let graves = vec![&grave];
 
-        let result = evaluate_bury_corpse(
-            &pop_pos,
-            corpses.into_iter(),
-            graves.into_iter(),
-            &weights
-        );
+        let result =
+            evaluate_bury_corpse(&pop_pos, corpses.into_iter(), graves.into_iter(), &weights);
 
         assert!(result.is_some());
         let (score, entity) = result.unwrap();

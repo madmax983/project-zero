@@ -1,3 +1,8 @@
+#![allow(
+    clippy::too_many_lines,
+    clippy::too_many_arguments,
+    clippy::collapsible_if
+)]
 //! Execution layer bridging utility AI decisions to actual pop actions.
 //!
 //! This module handles:
@@ -400,9 +405,7 @@ pub fn work_execution_system(world: &mut World) {
     let tool_efficiency = if has_tools { 1.0 } else { NO_TOOL_PENALTY };
 
     let policies = world.get_resource::<ColonyPolicies>().cloned();
-    let work_speed_mod = policies
-        .as_ref()
-        .map_or(1.0, get_work_speed_modifier);
+    let work_speed_mod = policies.as_ref().map_or(1.0, get_work_speed_modifier);
 
     // Find pops at their work target and capture their morale
     // Since we need to access Needs which is a component, and we need &mut World later,
