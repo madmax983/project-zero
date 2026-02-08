@@ -293,6 +293,7 @@ fn handle_placement_error(world: &mut World, error: PlacementError) {
     }
 }
 
+#[allow(clippy::too_many_lines)]
 fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType) {
     let mut entity = world.spawn((Building { building_type }, GridPosition { x, y }));
 

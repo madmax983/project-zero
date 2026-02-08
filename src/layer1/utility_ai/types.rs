@@ -231,7 +231,7 @@ pub struct ColonyMemory {
 /// Marker component to trigger HTN (Hierarchical Task Network) planning.
 ///
 /// When the Utility AI selects a new high-level [`ActionType`], it inserts this
-/// component to tell the planner to generate the specific steps (Walk -> PickUp -> Eat).
+/// component to tell the planner to generate the specific steps (Walk -> `PickUp` -> Eat).
 #[derive(Component)]
 pub struct StartPlan {
     /// The action to plan for.
