@@ -1,4 +1,3 @@
-use bevy_ecs::prelude::*;
 use scale::layer1::{Fire, GridPosition, Health, Needs, Pop};
 use scale::shared::state::GameState;
 use scale::simulation::run_simulation_tick;

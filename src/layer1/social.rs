@@ -168,7 +168,6 @@ pub fn proximity_social_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_ecs::prelude::*;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::map::GridPosition;
     use crate::layer1::needs::{decay_needs_system, Needs};

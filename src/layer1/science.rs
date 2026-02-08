@@ -247,14 +247,14 @@ fn cleanup_pop_explore_state(world: &mut World, pop_entity: Entity) {
 
 #[cfg(test)]
 mod tests {
+    use crate::layer1::actions::explore::evaluate_explore;
     use crate::layer1::execution::{AtTarget, MovementTarget};
     use crate::layer1::map::GridPosition;
-    use crate::layer1::resources::{ColonyResources, ResourceItem};
+    use crate::layer1::resources::ColonyResources;
     use crate::layer1::science::{
         Anomaly, AnomalyType, ScanProgress, process_scan_system, spawn_initial_anomalies,
     };
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
-    use crate::layer1::utility_ai::evaluate_explore;
     use crate::layer1::utility_ai::types::{ActionType, PopAction, UtilityWeights};
     use crate::shared::log::MessageLog;
     use bevy_ecs::prelude::*;

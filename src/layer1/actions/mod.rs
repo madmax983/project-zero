@@ -5,6 +5,19 @@ pub mod hunger;
 /// Rest satisfaction action logic.
 pub mod rest;
 
+/// Work action logic.
+pub mod work;
+/// Repair action logic.
+pub mod repair;
+/// Research action logic.
+pub mod research;
+/// Haul action logic.
+pub mod haul;
+/// Explore action logic.
+pub mod explore;
+/// Idle action logic.
+pub mod idle;
+
 /// Component tracking what a pop is assigned to.
 #[derive(Component, Debug)]
 pub struct AssignedTo {

@@ -24,11 +24,13 @@ mod tests {
         let mut world = World::new();
         // Setup Resources (Wood -> Planks + Waste)
         // We need enough wood for multiple attempts
-        let mut resources = ColonyResources::default();
-        resources.wood = 100.0;
-        resources.planks = 0.0;
-        resources.max_wood = 1000.0;
-        resources.max_planks = 1000.0;
+        let resources = ColonyResources {
+            wood: 200.0,
+            planks: 0.0,
+            max_wood: 1000.0,
+            max_planks: 1000.0,
+            ..Default::default()
+        };
         world.insert_resource(resources);
 
         // Spawn Multiple LumberMills to ensure probability hits
@@ -70,7 +72,7 @@ mod tests {
         ));
 
         // Run beauty system
-        world.run_system_once(update_beauty_grid_system);
+        let _ = world.run_system_once(update_beauty_grid_system);
 
         let grid = world.resource::<BeautyGrid>();
         // Expect negative value (e.g., -5.0)
@@ -99,7 +101,7 @@ mod tests {
         ));
 
         // Run cap update system
-        world.run_system_once(crate::layer1::stockpile::update_resource_caps_system);
+        let _ = world.run_system_once(crate::layer1::stockpile::update_resource_caps_system);
 
         let res = world.resource::<ColonyResources>();
         assert!(res.max_waste >= 100.0);

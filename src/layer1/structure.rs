@@ -1,3 +1,4 @@
+#![allow(clippy::float_cmp)]
 use crate::layer1::GridPosition;
 use crate::layer1::building::OccupiedTiles;
 use crate::layer1::fire::Fire;

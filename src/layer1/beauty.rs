@@ -111,7 +111,6 @@ mod tests {
     use crate::layer1::map::GridPosition;
     use crate::layer1::needs::Needs;
     use crate::layer1::pop::Pop;
-    use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
 
     // 1. Beauty Grid

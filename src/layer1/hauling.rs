@@ -195,10 +195,11 @@ fn find_and_target_item(world: &mut World, pop_entity: Entity, pos: GridPosition
 #[cfg(test)]
 mod tests {
     use super::haul_system;
+    use crate::layer1::actions::haul::evaluate_haul;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::resources::{Carrying, ColonyResources, ResourceItem, ResourceType};
     use crate::layer1::stockpile::Stockpile;
-    use crate::layer1::utility_ai::{ActionType, PopAction, UtilityWeights, evaluate_haul};
+    use crate::layer1::utility_ai::{ActionType, PopAction, UtilityWeights};
     use crate::layer1::{GridPosition, Pop};
     use crate::shared::time::SimulationTime;
     use bevy_ecs::prelude::*;

@@ -1,8 +1,9 @@
 #[cfg(test)]
 mod tests {
+    use crate::layer1::actions::work::evaluate_work;
     use crate::layer1::designation::{Designation, DesignationType};
     use crate::layer1::map::GridPosition;
-    use crate::layer1::utility_ai::{ActionType, UtilityWeights, evaluate_work};
+    use crate::layer1::utility_ai::{ActionType, UtilityWeights};
     use bevy_ecs::prelude::*;
 
     #[test]

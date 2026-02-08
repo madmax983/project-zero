@@ -156,7 +156,7 @@ mod tests {
     /// immediately OFF (Release), making pause appear broken.
     ///
     /// This test feeds raw crossterm events through the full pipeline:
-    /// crossterm KeyEvent → TryFrom → InputRouter → GameState
+    /// crossterm `KeyEvent` → `TryFrom` → `InputRouter` → `GameState`
     #[test]
     fn test_windows_press_release_does_not_double_toggle_pause() {
         use crate::layer1::{BuildMode, DesignationMode, Viewport};

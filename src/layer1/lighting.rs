@@ -1,3 +1,4 @@
+#![allow(clippy::float_cmp, clippy::uninlined_format_args)]
 //! Lighting system for the colony.
 //!
 //! Handles:
