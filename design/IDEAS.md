@@ -1657,3 +1657,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Maintain a state of low-level crisis to keep the edge, or allow paradise and risk vulnerability?
 
 ---
+
+## Solar Cycles
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The star is not a static lightbulb; it is a volatile nuclear furnace that dictates your survival.
+
+**Mechanic:** The local star cycles between "Solar Maximum" and "Solar Minimum" over years. Max = High Solar Power, High Radiation (sickness/mutation), Comms Interference. Min = Low Temp, Low Solar Power, Clear Comms.
+
+**Emergence:** You build a massive solar-powered industry during the 10-year Maximum. The Minimum hits, power output drops by 50%, and the colony freezes in the dark.
+
+**Tension:** Reliable but dirty power (Coal/Nuclear) vs. Cyclical clean power (Solar).
+
+---
+
+## Xeno-Artifacts
+
+**Layer:** 1
+
+**Fantasy:** Stumbling upon something ancient, powerful, and utterly incomprehensible. The "Monolith" experience.
+
+**Mechanic:** Map generation includes rare, indestructible "Artifact" tiles. They emit auras (e.g., "Insight": +Science XP, +Stress; "Vitality": +Heal rate, +Hunger). They cannot be moved, only built around.
+
+**Emergence:** Your research lab is built around a "Humming Obelisk." The scientists are brilliant but slowly going insane. A cult forms demanding you "Feed the Stone."
+
+**Tension:** Exploit the artifact (bonuses) vs. Quarantine it (safety).
+
+---
+
+## Drone Networks
+
+**Layer:** 1
+
+**Fantasy:** Replacing the fragile, complaining meat-workers with cold, hard steel.
+
+**Mechanic:** "Drone Hubs" deploy automated units for simple tasks (Haul, Clean, Repair). Drones consume Power and "Bandwidth" (a building cap) but have no Morale needs. They are vulnerable to EMP and hacking.
+
+**Emergence:** You replace your sanitation workers with drones. A solar flare disables the network. Trash piles up instantly, causing a plague before you can re-hire humans.
+
+**Tension:** Efficiency (Drones) vs. Resilience (Pops).
+
+---
+
+## The Galactic Council
+
+**Layer:** 3
+
+**Fantasy:** You can win the war but lose the vote. Space bureaucracy is the true endgame boss.
+
+**Mechanic:** Met on Layer 3. Civilizations vote on binding "Resolutions" (e.g., "Prohibit Strip Mining", "Universal Rights"). Vote weight depends on Population and Prestige.
+
+**Emergence:** You are strip-mining a world to fuel your fleet. The Council passes an "Environmental Protection Act." You must either stop (economic crash) or leave the Council (war with everyone).
+
+**Tension:** Sovereignty (do what you want) vs. Diplomacy (cooperation bonuses).
+
+---
+
+## Deep Crust Geomes
+
+**Layer:** 1
+
+**Fantasy:** There are worlds within worlds. Digging too deep and finding something beautiful and terrible.
+
+**Mechanic:** Deep mining layers (Z-levels) contain unique biomes: "Sunless Seas", "Magma Rivers", "Crystal Forests". They contain rare resources but unique hazards (Flooding, Heat, Spores).
+
+**Emergence:** You breach a cavern wall and drain a subterranean lake into your lower mines, drowning the night shift but revealing a rich vein of precursor alloy.
+
+**Tension:** Safe surface expansion vs. High-risk deep exploration.
+
+---
