@@ -1070,3 +1070,51 @@ Verbs for scientific study.
 - decoded
 - feared
 - worshipped (briefly)
+
+## Fragment Type: [MERCHANT_TITLE]
+
+- the Wanderer
+- the Void-Peddler
+- the Star-Skipper
+- the Caravan
+- a stranger
+- the Iron-Baron
+- the Dust-Merchant
+
+## Fragment Type: [NOISE_DESCRIPTOR]
+
+- deafening
+- ceaseless
+- grinding
+- thunderous
+- jarring
+- incessant
+- heavy
+
+## Fragment Type: [QUIET_DESCRIPTOR]
+
+- blessed
+- heavy
+- sudden
+- uneasy
+- peaceful
+- hollow
+- absolute
+
+## Fragment Type: [EDICT_VERB]
+
+- proclaimed
+- spoken
+- carved
+- mandated
+- decreed
+- etched
+
+## Fragment Type: [FUNERAL_TYPE]
+
+- rites
+- sending
+- returning to the void
+- last walk
+- earth-gift
+- silence
