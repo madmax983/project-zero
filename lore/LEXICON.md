@@ -759,3 +759,89 @@
 **Usage:**
 - "Chasing an echo."
 - "A faint echo from the ruins."
+
+## Trade & Exchange
+
+### the Wanderer / the Caravan
+
+**Replaces:** merchant, trader
+**Code reference:** `MerchantState`
+**Usage:**
+- "The Wanderer arrives."
+- "News from the Caravan."
+
+### the exchange / the barter
+
+**Replaces:** trade deal, transaction
+**Code reference:** `execute_trade`
+**Usage:**
+- "A fair exchange."
+- "No barter today."
+
+### credits / scrip
+
+**Replaces:** currency, money
+**Code reference:** `ColonyResources.credits`
+**Usage:**
+- "Paid in scrip."
+- "Credits are good anywhere."
+
+---
+
+## Sound & Silence
+
+### the Clamor / the Din
+
+**Replaces:** noise, loud sound
+**Code reference:** `NoiseMap`
+**Usage:**
+- "The Clamor is deafening."
+- "Living in the Din."
+
+### the Stillness / the Quiet
+
+**Replaces:** silence, peace
+**Code reference:** Low noise level
+**Usage:**
+- "The Stillness returns."
+- "A moment of Quiet."
+
+---
+
+## Law & Edicts
+
+### the Decree / the Word
+
+**Replaces:** edict, policy
+**Code reference:** `Edict`
+**Usage:**
+- "The Decree is absolute."
+- "The Word of the Substrate."
+
+### forbidden
+
+**Replaces:** banned, restricted
+**Code reference:** Edict restrictions
+**Usage:**
+- "This practice is forbidden."
+- "Forbidden by Decree."
+
+---
+
+## Death & Rites
+
+### the Sending / the Rites
+
+**Replaces:** funeral, burial ceremony
+**Code reference:** `ActionType::BuryCorpse`
+**Usage:**
+- "The Sending is tonight."
+- "Perform the Rites."
+
+### the resting place / barrow
+
+**Replaces:** grave, cemetery
+**Code reference:** `Grave` building
+**Usage:**
+- "To the resting place."
+- "A barrow for the fallen."

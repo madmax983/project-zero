@@ -506,3 +506,64 @@ RIVALRY_STARTED:
     - UNREST (low)
     - STRESS (medium)
 ```
+
+### Trade Chaining
+
+```yaml
+MERCHANT_ARRIVAL:
+  enables:
+    - TRADE_COMPLETED (high)
+    - MERCHANT_DEPARTURE (always)
+    - RUMOR_EXCHANGE (medium)
+  increases:
+    - WEALTH (medium)
+    - EXTERNAL_RELATIONS (low)
+
+TRADE_COMPLETED:
+  enables:
+    - NEW_TECH_AVAILABLE (low, via exotic goods)
+    - STOCKPILE_FULL (medium)
+  increases:
+    - HAPPINESS (low)
+```
+
+### Acoustics Chaining
+
+```yaml
+NOISE_COMPLAINT:
+  enables:
+    - INSOMNIA_EPIDEMIC (high)
+    - WORK_STOPPAGE (low)
+    - BRAWL (medium, due to stress)
+  increases:
+    - UNREST (medium)
+    - STRESS (high)
+
+QUIET_MOMENT:
+  enables:
+    - REFLECTION (high)
+    - ARTISTIC_INSPIRATION (medium)
+  increases:
+    - MORALE (medium)
+```
+
+### Death & Law Chaining
+
+```yaml
+FUNERAL_HELD:
+  enables:
+    - GRIEF_COUNSELING (medium)
+    - GRAVE_VISIT (high, recurring)
+    - GHOST_SIGHTING (low, if supported)
+  increases:
+    - MEMORY_RETENTION (high)
+    - SOCIAL_BOND (medium)
+
+EDICT_ISSUED:
+  enables:
+    - PROTEST (low, if unpopular)
+    - COMPLIANCE (high)
+  increases:
+    - STABILITY (medium)
+    - AUTHORITY (high)
+```

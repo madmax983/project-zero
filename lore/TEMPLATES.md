@@ -611,3 +611,80 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 "[YEAR]: Contact with [ANOMALY_TYPE]. We [SCIENCE_ACTION] it. Data secured."
 "The [ANOMALY_TYPE] at [COLONY]. [YEAR]. We have [SCIENCE_ACTION] its secrets."
 ```
+
+## Trade & Exchange Templates
+
+### MERCHANT_ARRIVAL
+**Slots:** [COLONY], [YEAR], [MERCHANT_TITLE]
+
+```
+"[MERCHANT_TITLE] arrives at [COLONY]. [YEAR]. The void brings gifts."
+"Year [YEAR]. A ship in orbit. [MERCHANT_TITLE] hails us."
+"Trade opportunity. [MERCHANT_TITLE] has docked at [COLONY]. [YEAR]."
+```
+
+### TRADE_COMPLETED
+**Slots:** [COLONY], [YEAR], [MERCHANT_TITLE], [RESOURCE_OUT], [RESOURCE_IN]
+
+```
+"Trade with [MERCHANT_TITLE] concluded. [YEAR]. We gave [RESOURCE_OUT], received [RESOURCE_IN]."
+"[YEAR]: The exchange is made. [RESOURCE_OUT] for [RESOURCE_IN]. The books balance."
+"[COLONY] prospers. [RESOURCE_IN] secured from [MERCHANT_TITLE]. Cost: [RESOURCE_OUT]. [YEAR]."
+```
+
+---
+
+## Sound & Silence Templates
+
+### NOISE_COMPLAINT
+**Slots:** [COLONY], [YEAR], [NOISE_DESCRIPTOR], [SOURCE]
+
+```
+"The Clamor grows. [YEAR]. [COLONY] cannot sleep. It is [NOISE_DESCRIPTOR]."
+"[YEAR]: Complaints of [NOISE_DESCRIPTOR] noise from the [SOURCE]. The people are restless."
+"Headaches and anger. The [SOURCE] is [NOISE_DESCRIPTOR]. [YEAR]."
+```
+
+### QUIET_MOMENT
+**Slots:** [COLONY], [YEAR], [QUIET_DESCRIPTOR]
+
+```
+"Stillness at [COLONY]. [YEAR]. A [QUIET_DESCRIPTOR] moment amidst the work."
+"[YEAR]: The machines stop. The silence is [QUIET_DESCRIPTOR]."
+"Peace returns to [COLONY]. [YEAR]. It feels [QUIET_DESCRIPTOR]."
+```
+
+---
+
+## Death & Rites Templates
+
+### FUNERAL_HELD
+**Slots:** [COLONY], [YEAR], [NAME], [FUNERAL_TYPE]
+
+```
+"[NAME] is returned to the void. [YEAR]. The [FUNERAL_TYPE] is spoken."
+"[YEAR]: We gather at the barrow. [NAME]. A [FUNERAL_TYPE]."
+"The earth takes back its own. [NAME]. [YEAR]. The [FUNERAL_TYPE] concludes."
+```
+
+---
+
+## Law & Edicts Templates
+
+### EDICT_ISSUED
+**Slots:** [COLONY], [YEAR], [EDICT_NAME], [EDICT_VERB]
+
+```
+"The Word is spoken: [EDICT_NAME]. [YEAR]. It is [EDICT_VERB]."
+"[YEAR]: New law. [EDICT_NAME] is [EDICT_VERB] at [COLONY]."
+"The Substrate commands. [EDICT_NAME]. [YEAR]."
+```
+
+### EDICT_REVOKED
+**Slots:** [COLONY], [YEAR], [EDICT_NAME]
+
+```
+"[EDICT_NAME] is rescinded. [YEAR]. The law changes."
+"[YEAR]: We turn from [EDICT_NAME]. It is no longer the way."
+"The Decree ends. [EDICT_NAME] is forgotten. [YEAR]."
+```
