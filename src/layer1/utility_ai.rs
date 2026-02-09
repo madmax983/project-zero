@@ -170,7 +170,9 @@ pub fn evaluate_actions_system(world: &mut World) {
     let resources = world.resource::<ColonyResources>().clone();
 
     // Evaluate each pop
-    for (pop_entity, pop_pos, needs, weights, mut action, equipment_opt, mental_state_opt) in pop_data {
+    for (pop_entity, pop_pos, needs, weights, mut action, equipment_opt, mental_state_opt) in
+        pop_data
+    {
         // Optimization: Avoid heap allocation (Vec) for utilities.
         // Instead, track the best action found so far in a single pass.
 
@@ -194,111 +196,111 @@ pub fn evaluate_actions_system(world: &mut World) {
                 MentalBreakType::Daze => ActionType::Daze,
             };
         } else {
-        // Helper to update best if we found something better
-        let mut check_best = |act, util, tgt| {
-            if util > best_utility {
-                best_action = act;
-                best_utility = util;
-                best_target = tgt;
+            // Helper to update best if we found something better
+            let mut check_best = |act, util, tgt| {
+                if util > best_utility {
+                    best_action = act;
+                    best_utility = util;
+                    best_target = tgt;
+                }
+            };
+
+            // Check Health
+            let health = world.get::<crate::layer1::health::Health>(pop_entity);
+
+            // Evaluate SatisfyHunger
+            if let Some((utility, target)) =
+                evaluate_satisfy_hunger(&pop_pos, &needs, &weights, farms_state.iter(world))
+            {
+                check_best(ActionType::SatisfyHunger, utility, Some(target));
             }
-        };
 
-        // Check Health
-        let health = world.get::<crate::layer1::health::Health>(pop_entity);
+            // Evaluate SatisfyRest
+            if let Some((utility, target)) =
+                evaluate_satisfy_rest(&pop_pos, &needs, &weights, housing_state.iter(world))
+            {
+                check_best(ActionType::SatisfyRest, utility, Some(target));
+            }
 
-        // Evaluate SatisfyHunger
-        if let Some((utility, target)) =
-            evaluate_satisfy_hunger(&pop_pos, &needs, &weights, farms_state.iter(world))
-        {
-            check_best(ActionType::SatisfyHunger, utility, Some(target));
-        }
+            // Evaluate Socialize
+            if let Some((utility, target)) =
+                evaluate_socialize(&pop_pos, &needs, &weights, taverns_state.iter(world))
+            {
+                check_best(ActionType::Socialize, utility, Some(target));
+            }
 
-        // Evaluate SatisfyRest
-        if let Some((utility, target)) =
-            evaluate_satisfy_rest(&pop_pos, &needs, &weights, housing_state.iter(world))
-        {
-            check_best(ActionType::SatisfyRest, utility, Some(target));
-        }
+            // Evaluate Work
+            if let Some((utility, target)) =
+                evaluate_work(&pop_pos, &weights, designations_state.iter(world))
+            {
+                check_best(ActionType::Work, utility, Some(target));
+            }
 
-        // Evaluate Socialize
-        if let Some((utility, target)) =
-            evaluate_socialize(&pop_pos, &needs, &weights, taverns_state.iter(world))
-        {
-            check_best(ActionType::Socialize, utility, Some(target));
-        }
-
-        // Evaluate Work
-        if let Some((utility, target)) =
-            evaluate_work(&pop_pos, &weights, designations_state.iter(world))
-        {
-            check_best(ActionType::Work, utility, Some(target));
-        }
-
-        // Evaluate FetchTool
-        let equipment = equipment_opt.unwrap_or_default();
-        if let Some((utility, target)) = evaluate_fetch_tool(
-            &pop_pos,
-            &equipment,
-            &resources,
-            stockpiles_state.iter(world),
-        ) {
-            check_best(ActionType::FetchTool, utility, Some(target));
-        }
-
-        // Evaluate Repair
-        if let Some((utility, target)) =
-            evaluate_repair(&pop_pos, &weights, designations_state.iter(world))
-        {
-            check_best(ActionType::Repair, utility, Some(target));
-        }
-
-        // Evaluate Explore
-        if let Some((utility, target)) =
-            evaluate_explore(&pop_pos, &weights, anomalies_state.iter(world))
-        {
-            check_best(ActionType::Explore, utility, Some(target));
-        }
-
-        // Evaluate Research
-        if let Some((utility, target)) =
-            evaluate_research(&pop_pos, &weights, &resources, libraries_state.iter(world))
-        {
-            check_best(ActionType::Research, utility, Some(target));
-        }
-
-        // Evaluate Haul
-        if let Some((utility, target)) = evaluate_haul(
-            &pop_pos,
-            &weights,
-            items_state.iter(world),
-            stockpiles_state.iter(world),
-            &resources,
-        ) {
-            check_best(ActionType::Haul, utility, Some(target));
-        }
-
-        // Evaluate SeekMedicalCare
-        if let Some(health) = health {
-            if let Some((utility, target)) = evaluate_seek_medical_care(
+            // Evaluate FetchTool
+            let equipment = equipment_opt.unwrap_or_default();
+            if let Some((utility, target)) = evaluate_fetch_tool(
                 &pop_pos,
-                &needs,
-                health,
-                &weights,
-                hospitals_state.iter(world),
+                &equipment,
+                &resources,
+                stockpiles_state.iter(world),
             ) {
-                check_best(ActionType::SeekMedicalCare, utility, Some(target));
+                check_best(ActionType::FetchTool, utility, Some(target));
             }
-        }
 
-        // Evaluate BuryCorpse
-        if let Some((utility, target)) = evaluate_bury_corpse(
-            &pop_pos,
-            corpses_state.iter(world),
-            graves_state.iter(world),
-            &weights,
-        ) {
-            check_best(ActionType::BuryCorpse, utility, Some(target));
-        }
+            // Evaluate Repair
+            if let Some((utility, target)) =
+                evaluate_repair(&pop_pos, &weights, designations_state.iter(world))
+            {
+                check_best(ActionType::Repair, utility, Some(target));
+            }
+
+            // Evaluate Explore
+            if let Some((utility, target)) =
+                evaluate_explore(&pop_pos, &weights, anomalies_state.iter(world))
+            {
+                check_best(ActionType::Explore, utility, Some(target));
+            }
+
+            // Evaluate Research
+            if let Some((utility, target)) =
+                evaluate_research(&pop_pos, &weights, &resources, libraries_state.iter(world))
+            {
+                check_best(ActionType::Research, utility, Some(target));
+            }
+
+            // Evaluate Haul
+            if let Some((utility, target)) = evaluate_haul(
+                &pop_pos,
+                &weights,
+                items_state.iter(world),
+                stockpiles_state.iter(world),
+                &resources,
+            ) {
+                check_best(ActionType::Haul, utility, Some(target));
+            }
+
+            // Evaluate SeekMedicalCare
+            if let Some(health) = health {
+                if let Some((utility, target)) = evaluate_seek_medical_care(
+                    &pop_pos,
+                    &needs,
+                    health,
+                    &weights,
+                    hospitals_state.iter(world),
+                ) {
+                    check_best(ActionType::SeekMedicalCare, utility, Some(target));
+                }
+            }
+
+            // Evaluate BuryCorpse
+            if let Some((utility, target)) = evaluate_bury_corpse(
+                &pop_pos,
+                corpses_state.iter(world),
+                graves_state.iter(world),
+                &weights,
+            ) {
+                check_best(ActionType::BuryCorpse, utility, Some(target));
+            }
         } // End of else block (normal evaluation)
 
         // Switch if best exceeds threshold

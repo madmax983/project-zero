@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::needs::Needs;
 use crate::layer1::structure::Structure;
+use bevy_ecs::prelude::*;
 
 /// Represents the mental stability of a Pop.
 #[derive(Component, Debug, Clone, PartialEq, Eq, Default)]
@@ -59,13 +59,13 @@ pub fn recover_mental_break_system(mut query: Query<(&Needs, &mut MentalState)>)
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_ecs::system::RunSystemOnce;
-    use crate::layer1::pop::Pop;
-    use crate::layer1::needs::Needs;
-    use crate::layer1::utility_ai::{ActionType, PopAction, evaluate_actions_system};
     use crate::layer1::building::{Building, BuildingType};
-    use crate::layer1::structure::Structure;
     use crate::layer1::map::GridPosition;
+    use crate::layer1::needs::Needs;
+    use crate::layer1::pop::Pop;
+    use crate::layer1::structure::Structure;
+    use crate::layer1::utility_ai::{ActionType, PopAction, evaluate_actions_system};
+    use bevy_ecs::system::RunSystemOnce;
 
     fn setup_world() -> World {
         let mut world = World::new();
@@ -85,15 +85,17 @@ mod tests {
     #[test]
     fn test_check_break_risk_triggers_break() {
         let mut world = setup_world();
-        let pop = world.spawn((
-            Pop,
-            Needs {
-                hunger: 0.1,
-                rest: 0.1,
-                leisure: 0.1,
-            }, // Very low morale (~0.1)
-            MentalState::Normal,
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Needs {
+                    hunger: 0.1,
+                    rest: 0.1,
+                    leisure: 0.1,
+                }, // Very low morale (~0.1)
+                MentalState::Normal,
+            ))
+            .id();
 
         // Run check system
         world.run_system_once(check_mental_break_system).unwrap();
@@ -109,23 +111,31 @@ mod tests {
         let mut world = setup_world();
 
         // Pop is Broken(Vandalize)
-        let pop = world.spawn((
-            Pop,
-            Needs::default(),
-            MentalState::Broken(MentalBreakType::Vandalize),
-            PopAction {
-                ticks_committed: 10,
-                ..Default::default()
-            },
-            GridPosition { x: 0, y: 0 },
-            crate::layer1::utility_ai::UtilityWeights::default(),
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Needs::default(),
+                MentalState::Broken(MentalBreakType::Vandalize),
+                PopAction {
+                    ticks_committed: 10,
+                    ..Default::default()
+                },
+                GridPosition { x: 0, y: 0 },
+                crate::layer1::utility_ai::UtilityWeights::default(),
+            ))
+            .id();
 
         // Add a building target
         world.spawn((
-            Building { building_type: BuildingType::Housing },
+            Building {
+                building_type: BuildingType::Housing,
+            },
             GridPosition { x: 1, y: 0 },
-            Structure { current_hp: 100.0, max_hp: 100.0, ..Default::default() },
+            Structure {
+                current_hp: 100.0,
+                max_hp: 100.0,
+                ..Default::default()
+            },
         ));
 
         // Run utility AI
@@ -140,17 +150,27 @@ mod tests {
     fn test_vandalize_damages_building() {
         let mut world = setup_world();
 
-        let building = world.spawn((
-            Building { building_type: BuildingType::Housing },
-            GridPosition { x: 1, y: 0 },
-            Structure { current_hp: 100.0, max_hp: 100.0, ..Default::default() },
-        )).id();
+        let building = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Housing,
+                },
+                GridPosition { x: 1, y: 0 },
+                Structure {
+                    current_hp: 100.0,
+                    max_hp: 100.0,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
-        let pop = world.spawn((
-            Pop,
-            GridPosition { x: 0, y: 0 },
-            MentalState::Broken(MentalBreakType::Vandalize),
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 0, y: 0 },
+                MentalState::Broken(MentalBreakType::Vandalize),
+            ))
+            .id();
 
         // Manually trigger damage logic
         perform_vandalize_logic(&mut world, pop, building);
@@ -163,15 +183,17 @@ mod tests {
     #[test]
     fn test_recover_from_break_when_morale_improves() {
         let mut world = setup_world();
-        let pop = world.spawn((
-            Pop,
-            Needs {
-                hunger: 0.1,
-                rest: 0.1,
-                leisure: 0.1,
-            },
-            MentalState::Broken(MentalBreakType::Vandalize),
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Needs {
+                    hunger: 0.1,
+                    rest: 0.1,
+                    leisure: 0.1,
+                },
+                MentalState::Broken(MentalBreakType::Vandalize),
+            ))
+            .id();
 
         // Improve morale
         let mut needs = world.get_mut::<Needs>(pop).unwrap();

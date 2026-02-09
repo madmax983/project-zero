@@ -31,9 +31,12 @@ pub enum ZoneType {
 /// Resource storing the grid of zones.
 #[derive(Resource)]
 pub struct ZoneGrid {
-    grid: Vec<ZoneType>,
-    width: usize,
-    height: usize,
+    /// Flattened grid data.
+    pub grid: Vec<ZoneType>,
+    /// Grid width.
+    pub width: usize,
+    /// Grid height.
+    pub height: usize,
 }
 
 impl ZoneGrid {

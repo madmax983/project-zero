@@ -156,8 +156,12 @@ pub use energy::*;
 /// Pop lifecycle and aging (Spec 062).
 pub mod lifecycle;
 pub use lifecycle::*;
-/// Civil unrest and mental break system.
-pub mod unrest;
 /// Atmospheric simulation (Spec 063).
 pub mod atmosphere;
+/// Civil unrest and mental break system.
+pub mod unrest;
 pub use atmosphere::*;
+
+/// Room quality calculation and memories (Spec 064).
+pub mod room_quality;
+pub use room_quality::*;

@@ -6,10 +6,11 @@ use crate::gpu::context::GpuContext;
 use crate::layer1::chronicle::AddChronicleEvent;
 use crate::layer1::social::AffinityChange;
 use crate::layer1::{
-    AmbientLight, AtmosphereGrid, BuildMode, BuildingTracker, Chronicle, ChronicleUiState, ColonyMemory,
-    ColonyPolicies, ColonyResources, DesignationMode, LightMap, NamedLocations, NotificationQueue,
-    OccupiedTiles, SeasonState, TechState, UtilityConfig, Viewport, generate_terrain,
-    initial_chronicle_event, initial_naming_system, spawn_initial_anomalies, spawn_initial_pops,
+    AmbientLight, AtmosphereGrid, BuildMode, BuildingTracker, Chronicle, ChronicleUiState,
+    ColonyMemory, ColonyPolicies, ColonyResources, DesignationMode, LightMap, NamedLocations,
+    NotificationQueue, OccupiedTiles, SeasonState, TechState, UtilityConfig, Viewport,
+    generate_terrain, initial_chronicle_event, initial_naming_system, spawn_initial_anomalies,
+    spawn_initial_pops,
 };
 use crate::shared::colony::ColonyName;
 use crate::shared::input::InputContextStack;
