@@ -63,6 +63,14 @@ Map of connected and disconnected systems.
     - Added `Events::update_system` for `AffinityChange` and `AddChronicleEvent`.
 - **Tests:** `tests/integration/chronicle_rumor.rs` (implicitly tests event flow), `tests/social_tavern.rs` (updated to support events)
 
+### INT-006: Energy System -> Refining System
+- **Date:** 2026-03-10
+- **Systems connected:** `PowerConsumer` -> `process_refining_system` -> `RefiningProgress`
+- **Glue added:**
+    - Modified `process_refining_system` in `src/layer1/refining.rs` to query `Option<&PowerConsumer>`.
+    - Added logic to skip refining if a consumer is present but inactive.
+- **Tests:** `tests/integration/power_refining_seam.rs`
+
 ### Pending Seams
 
 - [ ] Utility AI -> Housing Assignment (Checked: Connected via `ActionType::SatisfyRest`)

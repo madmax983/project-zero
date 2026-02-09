@@ -32,13 +32,28 @@ pub fn process_refining_system(world: &mut World) {
 
     // Iterate buildings
     // We collect entities to avoid borrow conflict when accessing skills later
-    let buildings: Vec<(Entity, BuildingType, GridPosition, f32, f32)> = world
-        .query::<(Entity, &Building, &GridPosition, &RefiningProgress)>()
+    // INT-006: Added PowerConsumer check. If building has PowerConsumer, it must be active.
+    let buildings: Vec<(Entity, BuildingType, GridPosition, f32, f32, bool)> = world
+        .query::<(
+            Entity,
+            &Building,
+            &GridPosition,
+            &RefiningProgress,
+            Option<&crate::layer1::energy::PowerConsumer>,
+        )>()
         .iter(world)
-        .map(|(e, b, p, prog)| (e, b.building_type, *p, prog.current, prog.max))
+        .map(|(e, b, p, prog, power)| {
+            // If no power consumer, assume active (e.g. LumberMill). If present, check active.
+            let active = power.is_none_or(|c| c.active);
+            (e, b.building_type, *p, prog.current, prog.max, active)
+        })
         .collect();
 
-    for (building_entity, building_type, pos, _current_prog, _max_prog) in buildings {
+    for (building_entity, building_type, pos, _current_prog, _max_prog, is_active) in buildings {
+        if !is_active {
+            continue;
+        }
+
         // Find nearest worker
         let nearest_worker = workers
             .iter()
