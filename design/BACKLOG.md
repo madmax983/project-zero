@@ -14,6 +14,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `061` Cultural Artifacts — `specs/061-cultural-artifacts.md`
 - [ ] `062` Pop Lifecycle and Aging — `specs/062-pop-lifecycle.md`
 - [ ] `063` Atmospheric Simulation — `specs/063-atmospheric-simulation.md`
+- [ ] `064` Room Quality — `specs/064-room-quality.md`
 
 ## MVP — User Interface
 
