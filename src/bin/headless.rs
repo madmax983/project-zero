@@ -3,20 +3,20 @@
 //! Run with: `cargo run --bin headless`
 //!
 //! Commands:
-//!   tick [N]       - Advance N ticks (default 1)
-//!   status         - Show colony resources and pop count
-//!   pops           - Show detailed pop states
-//!   map [x] [y]    - Show visual terrain around position
-//!   scan [x] [y] [r] - Semantic terrain output (parseable)
-//!   terrain <x> <y> - Get single tile info
-//!   buildings      - List all buildings with positions
-//!   build <type> <x> <y> - Build: farm, housing, stockpile
-//!   mine <x> <y>   - Designate rock for mining
-//!   chop <x> <y>   - Designate tree for chopping
-//!   designations   - List all active designations
-//!   find <terrain> [count] - Find terrain coordinates
-//!   help           - Show this help
-//!   quit           - Exit
+//!   `tick [N]`       - Advance N ticks (default 1)
+//!   `status`         - Show colony resources and pop count
+//!   `pops`           - Show detailed pop states
+//!   `map [x] [y]`    - Show visual terrain around position
+//!   `scan [x] [y] [r]` - Semantic terrain output (parseable)
+//!   `terrain <x> <y>` - Get single tile info
+//!   `buildings`      - List all buildings with positions
+//!   `build <type> <x> <y>` - Build: farm, housing, stockpile
+//!   `mine <x> <y>`   - Designate rock for mining
+//!   `chop <x> <y>`   - Designate tree for chopping
+//!   `designations`   - List all active designations
+//!   `find <terrain> [count]` - Find terrain coordinates
+//!   `help`           - Show this help
+//!   `quit`           - Exit
 
 #![allow(clippy::cast_sign_loss)]
 #![allow(clippy::cast_possible_truncation)]
