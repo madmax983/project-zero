@@ -633,7 +633,7 @@ pub fn chop_tree(world: &mut World, designation_entity: Entity, work_amount: f32
     }
 }
 
-/// Helper to ensure MiningProgress component exists and call mine_rock.
+/// Helper to ensure `MiningProgress` component exists and call `mine_rock`.
 pub fn process_mining(world: &mut World, designation_entity: Entity, work_amount: f32) {
     // Ensure MiningProgress exists
     if world.get::<MiningProgress>(designation_entity).is_none() {
@@ -644,7 +644,7 @@ pub fn process_mining(world: &mut World, designation_entity: Entity, work_amount
     mine_rock(world, designation_entity, work_amount);
 }
 
-/// Helper to ensure ForestryProgress component exists and call chop_tree.
+/// Helper to ensure `ForestryProgress` component exists and call `chop_tree`.
 pub fn process_logging(world: &mut World, designation_entity: Entity, work_amount: f32) {
     // Ensure ForestryProgress exists
     if world.get::<ForestryProgress>(designation_entity).is_none() {

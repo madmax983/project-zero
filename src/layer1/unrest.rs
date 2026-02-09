@@ -47,6 +47,7 @@ pub fn perform_vandalize_logic(world: &mut World, _pop: Entity, target: Entity) 
 /// System to check if Pops recover from a mental break.
 pub fn recover_mental_break_system(mut query: Query<(&Needs, &mut MentalState)>) {
     for (needs, mut state) in &mut query {
+        #[allow(clippy::collapsible_if)]
         if let MentalState::Broken(_) = *state {
             if needs.morale() > 0.3 {
                 *state = MentalState::Normal;

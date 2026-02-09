@@ -11,7 +11,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `052` Archaeological Excavation — `specs/052-archaeological-excavation.md`
 - [ ] `059` Soil Fertility — `specs/059-soil-fertility.md`
 - [ ] `061` Cultural Artifacts — `specs/061-cultural-artifacts.md`
-- [ ] `063` Atmospheric Simulation — `specs/063-atmospheric-simulation.md`
 - [ ] `064` Room Quality — `specs/064-room-quality.md`
 - [ ] `065` Day/Night Cycle — `specs/065-day-night-cycle.md`
 
