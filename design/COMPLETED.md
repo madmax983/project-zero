@@ -55,3 +55,4 @@ Implemented features. Architect: read this to understand current state.
 - [x] `055` The Rumor Web — `specs/055-rumor-web.md` — completed 2026-03-09
 - [x] `056` Designated Zones — `specs/056-designated-zones.md` — completed 2026-10-14
 - [x] `060` Acoustic Simulation — `specs/060-acoustic-simulation.md` — completed 2025-05-23
+- [x] `039` Trade System — `specs/039-trade-system.md` — completed 2026-02-09

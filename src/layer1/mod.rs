@@ -26,8 +26,6 @@ pub mod farm;
 pub mod fire;
 /// Hauling logic.
 pub mod hauling;
-/// Item definitions (Tools, Equipment).
-pub mod items;
 #[cfg(test)]
 /// Tests for hazards logic.
 pub mod hazards_tests;
@@ -37,6 +35,8 @@ pub mod health;
 pub mod housing;
 /// Integration systems bridging domains.
 pub mod integration;
+/// Item definitions (Tools, Equipment).
+pub mod items;
 /// Spatial primitives (GridPosition).
 pub mod map;
 /// Medical care and hospital logic.
@@ -95,10 +95,10 @@ pub use execution::*;
 pub use farm::*;
 pub use fire::*;
 pub use hauling::*;
-pub use items::*;
 pub use health::*;
 pub use housing::*;
 pub use integration::*;
+pub use items::*;
 pub use locations::*;
 pub use map::*;
 pub use medical::*;
@@ -145,3 +145,7 @@ pub use funeral::*;
 /// Acoustic simulation (Spec 060).
 pub mod acoustic;
 pub use acoustic::*;
+
+/// Trade system.
+pub mod trade;
+pub use trade::*;

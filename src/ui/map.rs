@@ -550,6 +550,7 @@ pub const fn get_building_char(building: BuildingType) -> char {
         BuildingType::Hospital => '+',
         BuildingType::Landfill => '%',
         BuildingType::Grave => '†',
+        BuildingType::TradeDepot => '$',
     }
 }
 
@@ -582,6 +583,7 @@ pub const fn get_building_color(building: BuildingType) -> Color {
         BuildingType::Hospital => Color::Red,
         BuildingType::Landfill => Color::Rgb(105, 105, 105), // DimGray
         BuildingType::Grave => Color::Rgb(128, 128, 128),    // Gray
+        BuildingType::TradeDepot => Color::Yellow,
     }
 }
 
