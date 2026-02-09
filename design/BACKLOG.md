@@ -6,7 +6,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 ## MVP — Layer 1: Colony Simulation
 
-- [ ] `042` Energy System — `specs/042-energy-system.md`
 - [ ] `043` Defensive Structures — `specs/043-defensive-structures.md`
 - [ ] `048` Hostile Fauna — `specs/048-hostile-fauna.md`
 - [ ] `050` Civil Unrest — `specs/050-civil-unrest.md`

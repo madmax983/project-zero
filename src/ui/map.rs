@@ -551,6 +551,8 @@ pub const fn get_building_char(building: BuildingType) -> char {
         BuildingType::Landfill => '%',
         BuildingType::Grave => '†',
         BuildingType::TradeDepot => '$',
+        BuildingType::Generator => '⚡',
+        BuildingType::PowerPole => '|',
     }
 }
 
@@ -574,7 +576,7 @@ pub const fn get_building_color(building: BuildingType) -> Color {
         BuildingType::LumberMill => Color::Rgb(205, 133, 63), // Peru
         BuildingType::StoneMason => Color::Rgb(119, 136, 153), // LightSlateGray
         BuildingType::Smelter => Color::Rgb(255, 69, 0),  // Red-Orange
-        BuildingType::Smithy => Color::Rgb(192, 192, 192), // Silver
+        BuildingType::Smithy | BuildingType::PowerPole => Color::Rgb(192, 192, 192), // Silver
         BuildingType::Tavern | BuildingType::FlowerBed => Color::Magenta,
         BuildingType::Library => Color::Cyan,
         BuildingType::Plantation => Color::Green,
@@ -584,6 +586,7 @@ pub const fn get_building_color(building: BuildingType) -> Color {
         BuildingType::Landfill => Color::Rgb(105, 105, 105), // DimGray
         BuildingType::Grave => Color::Rgb(128, 128, 128),    // Gray
         BuildingType::TradeDepot => Color::Yellow,
+        BuildingType::Generator => Color::Rgb(255, 215, 0), // Gold
     }
 }
 

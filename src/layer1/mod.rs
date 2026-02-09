@@ -149,3 +149,6 @@ pub use acoustic::*;
 /// Trade system.
 pub mod trade;
 pub use trade::*;
+/// Energy system (Spec 042).
+pub mod energy;
+pub use energy::*;
