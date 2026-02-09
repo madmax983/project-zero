@@ -21,3 +21,6 @@ mod power_refining_seam;
 
 #[path = "integration/acoustics_rest.rs"]
 mod acoustics_rest;
+
+#[path = "integration/death_chronicle.rs"]
+mod death_chronicle;

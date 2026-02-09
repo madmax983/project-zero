@@ -45,6 +45,9 @@ pub fn apply_waking_thoughts_system(
 /// - Beauty (sum of beauty in room)
 /// - Enclosure (fully walled vs open)
 pub fn calculate_room_quality(world: &mut World, pos: GridPosition) -> f32 {
+    // Cap room size to prevent infinite loops or massive CPU spikes
+    const MAX_ROOM_SIZE: usize = 100;
+
     // Build a set of wall positions for fast lookup
     // This is a bit expensive (iterating all buildings), but necessary without a spatial map for walls.
     // Optimization: If performance is an issue, maintain a WallGrid resource.
@@ -70,9 +73,6 @@ pub fn calculate_room_quality(world: &mut World, pos: GridPosition) -> f32 {
     let mut queue = vec![pos];
     let mut tiles = Vec::new();
     let mut enclosed = true;
-
-    // Cap room size to prevent infinite loops or massive CPU spikes
-    const MAX_ROOM_SIZE: usize = 100;
 
     while let Some(p) = queue.pop() {
         if visited.contains(&p) { continue; }
