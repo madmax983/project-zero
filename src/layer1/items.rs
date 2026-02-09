@@ -36,12 +36,12 @@ pub struct Equipment {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::pop::Pop;
-    use crate::layer1::utility_ai::{ActionType, PopAction};
-    use crate::layer1::execution::work_execution_system;
-    use crate::layer1::resources::{ColonyResources, MiningProgress};
-    use crate::layer1::map::GridPosition;
     use crate::layer1::designation::{Designation, DesignationType};
+    use crate::layer1::execution::work_execution_system;
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::pop::Pop;
+    use crate::layer1::resources::{ColonyResources, MiningProgress};
+    use crate::layer1::utility_ai::{ActionType, PopAction};
 
     #[test]
     fn test_equipment_component_exists() {
@@ -54,14 +54,16 @@ mod tests {
     #[test]
     fn test_tool_item_component() {
         let mut world = World::new();
-        let tool = world.spawn((
-            Item,
-            Tool {
-                tool_type: ToolType::Pickaxe,
-                durability: 100.0,
-                max_durability: 100.0,
-            }
-        )).id();
+        let tool = world
+            .spawn((
+                Item,
+                Tool {
+                    tool_type: ToolType::Pickaxe,
+                    durability: 100.0,
+                    max_durability: 100.0,
+                },
+            ))
+            .id();
 
         let t = world.get::<Tool>(tool).unwrap();
         assert_eq!(t.durability, 100.0);
@@ -81,18 +83,24 @@ mod tests {
         });
 
         // Spawn Tool
-        let tool = world.spawn(Tool {
-            tool_type: ToolType::Pickaxe,
-            durability: 10.0,
-            max_durability: 100.0,
-        }).id();
+        let tool = world
+            .spawn(Tool {
+                tool_type: ToolType::Pickaxe,
+                durability: 10.0,
+                max_durability: 100.0,
+            })
+            .id();
 
         // Spawn Designation (Mine)
-        let designation = world.spawn((
-            Designation { designation_type: DesignationType::Mine },
-            GridPosition { x: 5, y: 5 },
-            MiningProgress::default(),
-        )).id();
+        let designation = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Mine,
+                },
+                GridPosition { x: 5, y: 5 },
+                MiningProgress::default(),
+            ))
+            .id();
 
         // Spawn Pop with Equipment
         world.spawn((
@@ -106,7 +114,10 @@ mod tests {
                 for_action: ActionType::Work,
             },
             crate::layer1::execution::AtTarget,
-            PopAction { current: ActionType::Work, ..Default::default() },
+            PopAction {
+                current: ActionType::Work,
+                ..Default::default()
+            },
         ));
 
         // Run execution system
@@ -114,7 +125,11 @@ mod tests {
 
         // Check durability reduced
         let t = world.get::<Tool>(tool).unwrap();
-        assert!(t.durability < 10.0, "Durability should decrease (was {})", t.durability);
+        assert!(
+            t.durability < 10.0,
+            "Durability should decrease (was {})",
+            t.durability
+        );
     }
 
     #[test]
@@ -131,36 +146,50 @@ mod tests {
         });
 
         // Spawn Tool with VERY low durability
-        let tool = world.spawn(Tool {
-            tool_type: ToolType::Pickaxe,
-            durability: 0.00001, // Almost broken, effectively 0 after any work
-            max_durability: 100.0,
-        }).id();
+        let tool = world
+            .spawn(Tool {
+                tool_type: ToolType::Pickaxe,
+                durability: 0.00001, // Almost broken, effectively 0 after any work
+                max_durability: 100.0,
+            })
+            .id();
 
-        let designation = world.spawn((
-            Designation { designation_type: DesignationType::Mine },
-            GridPosition { x: 5, y: 5 },
-            MiningProgress::default(),
-        )).id();
+        let designation = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Mine,
+                },
+                GridPosition { x: 5, y: 5 },
+                MiningProgress::default(),
+            ))
+            .id();
 
-        let pop = world.spawn((
-            Pop,
-            Equipment { tool: Some(tool) },
-            GridPosition { x: 5, y: 5 },
-            crate::layer1::execution::MovementTarget {
-                target_entity: designation,
-                target_position: GridPosition { x: 5, y: 5 },
-                for_action: ActionType::Work,
-            },
-            crate::layer1::execution::AtTarget,
-            PopAction { current: ActionType::Work, ..Default::default() },
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Equipment { tool: Some(tool) },
+                GridPosition { x: 5, y: 5 },
+                crate::layer1::execution::MovementTarget {
+                    target_entity: designation,
+                    target_position: GridPosition { x: 5, y: 5 },
+                    for_action: ActionType::Work,
+                },
+                crate::layer1::execution::AtTarget,
+                PopAction {
+                    current: ActionType::Work,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         // Force durability to 0 or simulate enough work to break it
         work_execution_system(&mut world);
 
         // Tool entity should be despawned
-        assert!(world.get_entity(tool).is_err(), "Tool entity should be despawned");
+        assert!(
+            world.get_entity(tool).is_err(),
+            "Tool entity should be despawned"
+        );
 
         // Pop equipment should be None
         let eq = world.get::<Equipment>(pop).unwrap();

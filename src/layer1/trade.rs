@@ -82,7 +82,8 @@ pub fn merchant_arrival_system(world: &mut World) {
                 ));
             }
             state.cooldown = current_tick + 2000;
-        } else if state.active_merchant.is_none() && current_tick >= state.cooldown && depot_exists {
+        } else if state.active_merchant.is_none() && current_tick >= state.cooldown && depot_exists
+        {
             // Arrival Check
             let mut rng = rand::thread_rng();
 
@@ -274,12 +275,17 @@ mod tests {
         });
 
         // Advance time past departure
-        world.insert_resource(SimulationTime { tick: 101, ..Default::default() });
+        world.insert_resource(SimulationTime {
+            tick: 101,
+            ..Default::default()
+        });
         world.insert_resource(Chronicle::default());
 
         // Depot exists
         world.spawn((
-            Building { building_type: BuildingType::TradeDepot },
+            Building {
+                building_type: BuildingType::TradeDepot,
+            },
             TradeDepot::default(),
         ));
 

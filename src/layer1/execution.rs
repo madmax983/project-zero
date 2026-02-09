@@ -252,123 +252,151 @@ pub fn arrival_handler_system(
 
         match action {
             ActionType::FetchTool => {
-                if resources.tools >= 1.0 {
-                    resources.tools -= 1.0;
-
-                    let tool_entity = commands
-                        .spawn((
-                            Item,
-                            Tool {
-                                tool_type: ToolType::Pickaxe, // Generic for now
-                                durability: 100.0,
-                                max_durability: 100.0,
-                            },
-                        ))
-                        .id();
-
-                    if let Some(ref mut eq) = equipment_opt {
-                        eq.tool = Some(tool_entity);
-                    } else {
-                        commands.entity(pop_entity).insert(Equipment {
-                            tool: Some(tool_entity),
-                        });
-                    }
-                }
-                commands
-                    .entity(pop_entity)
-                    .remove::<MovementTarget>()
-                    .remove::<AtTarget>();
+                handle_fetch_tool(
+                    &mut commands,
+                    &mut resources,
+                    pop_entity,
+                    &mut equipment_opt,
+                );
+                remove_movement_components(&mut commands, pop_entity);
             }
             ActionType::SatisfyHunger => {
                 handle_hunger_arrival(pop_entity, target_entity, &mut farms, &mut commands);
-                commands
-                    .entity(pop_entity)
-                    .remove::<MovementTarget>()
-                    .remove::<AtTarget>();
+                remove_movement_components(&mut commands, pop_entity);
             }
             ActionType::SeekMedicalCare => {
                 commands.entity(pop_entity).insert(AssignedTo {
                     entity: target_entity,
                     assignment_type: AssignmentType::Patient,
                 });
-                commands
-                    .entity(pop_entity)
-                    .remove::<MovementTarget>()
-                    .remove::<AtTarget>();
+                remove_movement_components(&mut commands, pop_entity);
             }
             ActionType::SatisfyRest => {
                 handle_rest_arrival(pop_entity, target_entity, &mut housing_q, &mut commands);
-                commands
-                    .entity(pop_entity)
-                    .remove::<MovementTarget>()
-                    .remove::<AtTarget>();
+                remove_movement_components(&mut commands, pop_entity);
             }
             ActionType::Socialize => {
-                if let Ok(mut tavern) = taverns.get_mut(target_entity)
-                    && tavern.visitors.len() < tavern.capacity
-                {
-                    tavern.visitors.push(pop_entity);
-                    commands.entity(pop_entity).insert(AssignedTo {
-                        entity: target_entity,
-                        assignment_type: AssignmentType::TavernVisitor,
-                    });
-                }
-                commands
-                    .entity(pop_entity)
-                    .remove::<MovementTarget>()
-                    .remove::<AtTarget>();
+                handle_socialize(&mut commands, &mut taverns, target_entity, pop_entity);
+                remove_movement_components(&mut commands, pop_entity);
             }
             ActionType::Research => {
                 commands.entity(pop_entity).insert(AssignedTo {
                     entity: target_entity,
                     assignment_type: AssignmentType::LibraryWorker,
                 });
-                commands
-                    .entity(pop_entity)
-                    .remove::<MovementTarget>()
-                    .remove::<AtTarget>();
+                remove_movement_components(&mut commands, pop_entity);
             }
             ActionType::BuryCorpse => {
-                // Verify corpse exists
-                if let Ok(corpse) = corpses.get(target_entity) {
-                    // Find nearest empty grave
-                    let best_grave = graves.iter_mut().min_by_key(|(_, grave_pos, grave)| {
-                        if grave.occupied {
-                            i32::MAX
-                        } else {
-                            manhattan_distance(pop_pos, grave_pos)
-                        }
-                    });
-
-                    if let Some((_, _, mut grave)) = best_grave {
-                        if !grave.occupied {
-                            // Perform burial
-                            grave.occupied = true;
-                            grave.corpse_name = Some(corpse.name.clone());
-
-                            commands.entity(target_entity).despawn();
-
-                            // Apply closure
-                            if let Ok(mut mem) = memories.get_mut(pop_entity) {
-                                mem.add(MemoryType::AttendedFuneral, time.tick);
-                            }
-                        }
-                    }
-                }
-                commands
-                    .entity(pop_entity)
-                    .remove::<MovementTarget>()
-                    .remove::<AtTarget>();
+                handle_bury_corpse(
+                    &mut commands,
+                    &corpses,
+                    &mut graves,
+                    &mut memories,
+                    &time,
+                    target_entity,
+                    pop_entity,
+                    *pop_pos,
+                );
+                remove_movement_components(&mut commands, pop_entity);
             }
             ActionType::Work | ActionType::Repair | ActionType::Haul => {
                 // Work/Repair/Haul is handled by their respective systems
                 // Just keep the AtTarget marker for that system
             }
             _ => {
-                commands
-                    .entity(pop_entity)
-                    .remove::<MovementTarget>()
-                    .remove::<AtTarget>();
+                remove_movement_components(&mut commands, pop_entity);
+            }
+        }
+    }
+}
+
+fn remove_movement_components(commands: &mut Commands, pop_entity: Entity) {
+    commands
+        .entity(pop_entity)
+        .remove::<MovementTarget>()
+        .remove::<AtTarget>();
+}
+
+fn handle_fetch_tool(
+    commands: &mut Commands,
+    resources: &mut ColonyResources,
+    pop_entity: Entity,
+    equipment_opt: &mut Option<Mut<Equipment>>,
+) {
+    if resources.tools >= 1.0 {
+        resources.tools -= 1.0;
+
+        let tool_entity = commands
+            .spawn((
+                Item,
+                Tool {
+                    tool_type: ToolType::Pickaxe, // Generic for now
+                    durability: 100.0,
+                    max_durability: 100.0,
+                },
+            ))
+            .id();
+
+        if let Some(eq) = equipment_opt {
+            eq.tool = Some(tool_entity);
+        } else {
+            commands.entity(pop_entity).insert(Equipment {
+                tool: Some(tool_entity),
+            });
+        }
+    }
+}
+
+fn handle_socialize(
+    commands: &mut Commands,
+    taverns: &mut Query<&mut Tavern>,
+    target_entity: Entity,
+    pop_entity: Entity,
+) {
+    if let Ok(mut tavern) = taverns.get_mut(target_entity)
+        && tavern.visitors.len() < tavern.capacity
+    {
+        tavern.visitors.push(pop_entity);
+        commands.entity(pop_entity).insert(AssignedTo {
+            entity: target_entity,
+            assignment_type: AssignmentType::TavernVisitor,
+        });
+    }
+}
+
+fn handle_bury_corpse(
+    commands: &mut Commands,
+    corpses: &Query<&Corpse>,
+    graves: &mut Query<(Entity, &GridPosition, &mut Grave)>,
+    memories: &mut Query<&mut Memories>,
+    time: &Res<SimulationTime>,
+    target_entity: Entity,
+    pop_entity: Entity,
+    pop_pos: GridPosition,
+) {
+    // Verify corpse exists
+    if let Ok(corpse) = corpses.get(target_entity) {
+        // Find nearest empty grave
+        let best_grave = graves.iter_mut().min_by_key(|(_, grave_pos, grave)| {
+            if grave.occupied {
+                i32::MAX
+            } else {
+                manhattan_distance(&pop_pos, grave_pos)
+            }
+        });
+
+        if let Some((_, _, mut grave)) = best_grave {
+            if !grave.occupied {
+                // Perform burial
+                grave.occupied = true;
+                grave.corpse_name = Some(corpse.name.clone());
+
+                commands.entity(target_entity).despawn();
+
+                // Apply closure
+                if let Ok(mut mem) = memories.get_mut(pop_entity) {
+                    mem.add(MemoryType::AttendedFuneral, time.tick);
+                }
             }
         }
     }
@@ -462,108 +490,132 @@ pub fn work_execution_system(world: &mut World) {
         .collect();
 
     for (pop_entity, designation_entity, morale, action_type, equipment_opt) in workers_data {
-        // Check per-pop tool availability
-        let tool_entity_opt = equipment_opt.as_ref().and_then(|e| e.tool);
-        let has_tools = tool_entity_opt.is_some();
-        let tool_efficiency = if has_tools { 1.0 } else { NO_TOOL_PENALTY };
-        // Check if designation still exists
-        if world.get_entity(designation_entity).is_err() {
-            cleanup_pop_work_state(world, pop_entity);
-            continue;
+        process_single_worker(
+            world,
+            pop_entity,
+            designation_entity,
+            morale,
+            action_type,
+            equipment_opt,
+            work_speed_mod,
+        );
+    }
+}
+
+fn process_single_worker(
+    world: &mut World,
+    pop_entity: Entity,
+    designation_entity: Entity,
+    morale: f32,
+    action_type: ActionType,
+    equipment_opt: Option<Equipment>,
+    work_speed_mod: f32,
+) {
+    // Check per-pop tool availability
+    let tool_entity_opt = equipment_opt.as_ref().and_then(|e| e.tool);
+    let has_tools = tool_entity_opt.is_some();
+    let tool_efficiency = if has_tools { 1.0 } else { NO_TOOL_PENALTY };
+    // Check if designation still exists
+    if world.get_entity(designation_entity).is_err() {
+        cleanup_pop_work_state(world, pop_entity);
+        return;
+    }
+
+    // Get designation type
+    let Some(designation) = world.get::<Designation>(designation_entity) else {
+        return;
+    };
+    let designation_type = designation.designation_type;
+
+    // Determine Skill Type
+    let skill_type = match designation_type {
+        DesignationType::Mine => Some(SkillType::Mining),
+        DesignationType::Chop => Some(SkillType::Forestry),
+        DesignationType::Repair | DesignationType::Demolish => Some(SkillType::Construction),
+        DesignationType::SetZone(_) => None,
+    };
+
+    // Calculate Work Amount with Skill Efficiency
+    let skill_efficiency = {
+        let skills = world.get::<Skills>(pop_entity);
+        skill_type.map_or(1.0, |st| get_skill_efficiency(skills, st))
+    };
+
+    let morale_efficiency = get_morale_efficiency(morale);
+
+    // Ludwig: Add organic variation to work speed (0.9 - 1.1) so pops don't feel robotic
+    let mut rng = rand::thread_rng();
+    let organic_factor = rng.gen_range(0.9..1.1);
+
+    let work_amount = WORK_PER_TICK
+        * tool_efficiency
+        * morale_efficiency
+        * skill_efficiency
+        * work_speed_mod
+        * organic_factor;
+
+    let worked = match designation_type {
+        DesignationType::Mine => {
+            process_mining(world, designation_entity, work_amount);
+            true
+        }
+        DesignationType::Chop => {
+            process_logging(world, designation_entity, work_amount);
+            true
+        }
+        DesignationType::Demolish => execute_demolish(world, designation_entity),
+        DesignationType::Repair => {
+            crate::layer1::structure::process_repair(world, designation_entity, work_amount);
+            true
+        }
+        DesignationType::SetZone(_) => false,
+    };
+
+    // After work: if designation was despawned (work completed), reset pop state
+    if world.get_entity(designation_entity).is_err() {
+        cleanup_pop_work_state(world, pop_entity);
+    }
+
+    // Workplace Hazards & XP Gain
+    if worked {
+        // Add XP
+        #[allow(clippy::collapsible_if)]
+        if let Some(st) = skill_type {
+            if let Some(mut skills) = world.get_mut::<Skills>(pop_entity) {
+                skills.add_xp(st, 1.0);
+            }
         }
 
-        // Get designation type
-        let Some(designation) = world.get::<Designation>(designation_entity) else {
-            continue;
-        };
-        let designation_type = designation.designation_type;
+        handle_workplace_hazards(world, pop_entity, action_type);
 
-        // Determine Skill Type
-        let skill_type = match designation_type {
-            DesignationType::Mine => Some(SkillType::Mining),
-            DesignationType::Chop => Some(SkillType::Forestry),
-            DesignationType::Repair | DesignationType::Demolish => Some(SkillType::Construction),
-            DesignationType::SetZone(_) => None,
-        };
+        // Handle tool durability
+        if let Some(tool_entity) = tool_entity_opt {
+            handle_tool_durability(world, pop_entity, tool_entity);
+        }
+    }
+}
 
-        // Calculate Work Amount with Skill Efficiency
-        let skill_efficiency = {
-            let skills = world.get::<Skills>(pop_entity);
-            skill_type.map_or(1.0, |st| get_skill_efficiency(skills, st))
-        };
+fn handle_tool_durability(world: &mut World, pop_entity: Entity, tool_entity: Entity) {
+    let mut broke = false;
+    if let Some(mut tool) = world.get_mut::<Tool>(tool_entity) {
+        tool.durability -= TOOL_DURABILITY_LOSS;
+        if tool.durability <= 0.0 {
+            broke = true;
+        }
+    }
 
-        let morale_efficiency = get_morale_efficiency(morale);
+    if broke {
+        // Despawn tool
+        world.despawn(tool_entity);
 
-        // Ludwig: Add organic variation to work speed (0.9 - 1.1) so pops don't feel robotic
-        let mut rng = rand::thread_rng();
-        let organic_factor = rng.gen_range(0.9..1.1);
-
-        let work_amount = WORK_PER_TICK
-            * tool_efficiency
-            * morale_efficiency
-            * skill_efficiency
-            * work_speed_mod
-            * organic_factor;
-
-        let worked = match designation_type {
-            DesignationType::Mine => {
-                process_mining(world, designation_entity, work_amount);
-                true
-            }
-            DesignationType::Chop => {
-                process_logging(world, designation_entity, work_amount);
-                true
-            }
-            DesignationType::Demolish => execute_demolish(world, designation_entity),
-            DesignationType::Repair => {
-                crate::layer1::structure::process_repair(world, designation_entity, work_amount);
-                true
-            }
-            DesignationType::SetZone(_) => false,
-        };
-
-        // After work: if designation was despawned (work completed), reset pop state
-        if world.get_entity(designation_entity).is_err() {
-            cleanup_pop_work_state(world, pop_entity);
+        // Clear equipment
+        if let Some(mut eq) = world.get_mut::<Equipment>(pop_entity) {
+            eq.tool = None;
         }
 
-        // Workplace Hazards & XP Gain
-        if worked {
-            // Add XP
-            #[allow(clippy::collapsible_if)]
-            if let Some(st) = skill_type {
-                if let Some(mut skills) = world.get_mut::<Skills>(pop_entity) {
-                    skills.add_xp(st, 1.0);
-                }
-            }
-
-            handle_workplace_hazards(world, pop_entity, action_type);
-
-            // Handle tool durability
-            if let Some(tool_entity) = tool_entity_opt {
-                let mut broke = false;
-                if let Some(mut tool) = world.get_mut::<Tool>(tool_entity) {
-                    tool.durability -= TOOL_DURABILITY_LOSS;
-                    if tool.durability <= 0.0 {
-                        broke = true;
-                    }
-                }
-
-                if broke {
-                    // Despawn tool
-                    world.despawn(tool_entity);
-
-                    // Clear equipment
-                    if let Some(mut eq) = world.get_mut::<Equipment>(pop_entity) {
-                        eq.tool = None;
-                    }
-
-                    // Log breakage
-                    if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
-                        log.add("CRACK! A tool has broken.");
-                    }
-                }
-            }
+        // Log breakage
+        if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+            log.add("CRACK! A tool has broken.");
         }
     }
 }
@@ -1863,7 +1915,7 @@ mod tests {
         work_execution_system(&mut world);
 
         let skills = world.get::<Skills>(pop).unwrap();
-        assert_eq!(skills.get_xp(SkillType::Mining), 1.0);
+        assert!((skills.get_xp(SkillType::Mining) - 1.0).abs() < f32::EPSILON);
     }
 
     #[test]
