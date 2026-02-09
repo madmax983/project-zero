@@ -65,6 +65,7 @@ impl Default for Fauna {
 /// - **Wander**: Scans for Pops within `detection_range`. If found, transitions to `Chase`.
 /// - **Chase**: Moves toward target. If adjacent, transitions to `Attack`. If target lost/far, `Wander`.
 /// - **Attack**: Deals damage to target.
+#[allow(clippy::cast_precision_loss)]
 pub fn fauna_behavior_system(world: &mut World) {
     // 1. Query all Fauna
     let mut fauna_updates = Vec::new();
@@ -157,7 +158,7 @@ pub fn fauna_behavior_system(world: &mut World) {
                     fauna.state = FaunaState::Wander;
                  }
             }
-            _ => {}
+            FaunaState::Flee => {}
         }
     }
 

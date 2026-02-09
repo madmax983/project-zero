@@ -38,6 +38,8 @@ pub enum MemoryType {
     AteInGreatRoom,
     /// Ate in a legendary room.
     AteInLegendaryRoom,
+    /// Admired a piece of art.
+    AdmiredArt,
 }
 
 impl MemoryType {
@@ -49,7 +51,7 @@ impl MemoryType {
             Self::WitnessedDeath => -0.2,
             Self::StarvationTrauma => -0.15,
             Self::AteFineMeal | Self::AttendedFuneral => 0.1,
-            Self::WonFight => 0.05,
+            Self::WonFight | Self::AdmiredArt => 0.05,
             Self::SawCorpse => -0.05,
             Self::SleptInAwfulRoom => -0.1,
             Self::SleptInDullRoom => -0.05,
@@ -73,7 +75,7 @@ impl MemoryType {
             Self::WitnessedDeath => 0.0005, // Slow fade (2000 ticks)
             Self::StarvationTrauma | Self::AttendedFuneral => 0.001, // Medium
             Self::AteFineMeal | Self::WonFight => 0.002, // Fast (500 ticks)
-            Self::SawCorpse => 0.01,        // Very fast fade (100 ticks)
+            Self::SawCorpse | Self::AdmiredArt => 0.01, // Very fast fade (100 ticks)
             // Room thoughts last 1 day (100 ticks)
             Self::SleptInAwfulRoom
             | Self::SleptInDullRoom
@@ -272,5 +274,14 @@ mod tests {
 
         let effective = calculate_effective_morale(&needs, None, Some(&buff), None);
         assert!((effective - 0.6).abs() < f32::EPSILON);
+    }
+
+    #[test]
+    fn test_admired_art_properties() {
+        // Base mood impact: 0.05
+        assert!((MemoryType::AdmiredArt.base_mood_impact() - 0.05).abs() < f32::EPSILON);
+
+        // Decay rate: 0.01
+        assert!((MemoryType::AdmiredArt.decay_rate() - 0.01).abs() < f32::EPSILON);
     }
 }

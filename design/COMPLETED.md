@@ -67,3 +67,4 @@ Implemented features. Architect: read this to understand current state.
 - [x] `064` Room Quality — `specs/064-room-quality.md` — completed 2026-03-27
 - [x] `INT-011` Integration: Pop Death -> Chronicle — completed 2026-03-27
 - [x] `048` Hostile Fauna — `specs/048-hostile-fauna.md` — completed 2026-10-15
+- [x] `061` Cultural Artifacts — `specs/061-cultural-artifacts.md` — completed 2026-02-09
