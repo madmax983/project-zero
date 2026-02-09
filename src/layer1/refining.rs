@@ -1,6 +1,47 @@
 // src/layer1/refining.rs
 #![allow(clippy::too_many_lines, clippy::collapsible_if)]
 
+//! Resource processing and refinement system.
+//!
+//! This module handles the conversion of raw materials (e.g., Wood, Ore) into
+//! refined products (e.g., Planks, Metal) at industrial buildings.
+//!
+//! # The Refining Loop
+//!
+//! Refining is a continuous process that occurs tick-by-tick in [`process_refining_system`]:
+//!
+//! 1.  **Check Requirements**:
+//!     *   Is the building active? (Powered, if applicable).
+//!     *   Is there a worker nearby? (within 10 tiles).
+//!     *   Are there input resources available? (e.g., Wood > 1).
+//!     *   Is there storage space for output? (e.g., Planks < Max).
+//! 2.  **Progress**:
+//!     *   The worker's [`Skills`](crate::layer1::skills::Skills) (Crafting) determine efficiency.
+//!     *   Progress accumulates in [`RefiningProgress`].
+//! 3.  **Completion**:
+//!     *   Inputs are consumed.
+//!     *   Outputs are produced.
+//!     *   Waste (Pollution) may be generated.
+//!     *   Worker gains experience.
+//!
+//! # Example: Lumber Mill
+//!
+//! A Lumber Mill converts `1 Wood` -> `1 Planks` over 10 ticks (base speed).
+//!
+//! ```
+//! use scale::layer1::refining::get_refining_recipe;
+//! use scale::layer1::building::BuildingType;
+//! use scale::layer1::resources::ColonyResources;
+//!
+//! let mut res = ColonyResources::default();
+//! res.wood = 50.0;
+//!
+//! let (can_refine, cost, output) = get_refining_recipe(BuildingType::LumberMill, &res);
+//! assert!(can_refine);
+//! assert_eq!(cost.wood, 1.0);
+//! assert_eq!(output.planks, 1.0);
+//! ```
+
 use crate::layer1::GridPosition;
 use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::pop::Pop;
@@ -11,9 +52,21 @@ use rand::Rng;
 
 /// System that processes refining at buildings like Lumber Mills and Stone Masons.
 ///
-/// It iterates over buildings with `RefiningProgress`. If a worker (`Pop`) is nearby
-/// and input resources are available, it increments progress. Upon completion,
-/// it consumes input resources and produces refined resources.
+/// # Algorithm
+///
+/// 1.  **Filter Workers**: Collects all Pops with a [`GridPosition`].
+/// 2.  **Iterate Buildings**: Finds all entities with [`RefiningProgress`] and [`Building`].
+/// 3.  **Power Check**: Skips buildings with inactive [`PowerConsumer`](crate::layer1::energy::PowerConsumer) components.
+/// 4.  **Find Worker**: Searches for the nearest worker within 10 tiles (Manhattan distance).
+/// 5.  **Check Recipe**: Calls [`get_refining_recipe`] to verify resource availability.
+/// 6.  **Apply Work**:
+///     *   Calculates efficiency based on worker's `Crafting` skill.
+///     *   Increments progress.
+/// 7.  **Finalize**:
+///     *   On completion, atomically deducts input and adds output using [`ColonyResources::try_deduct`].
+///     *   Spawns `Waste` with 50% probability.
+///     *   Resets progress.
+#[doc(alias = "crafting")]
 pub fn process_refining_system(world: &mut World) {
     let workers: Vec<(Entity, GridPosition)> = world
         .query_filtered::<(Entity, &GridPosition), With<Pop>>()
@@ -142,8 +195,30 @@ pub fn process_refining_system(world: &mut World) {
 
 /// Returns the refining recipe for a building type.
 ///
+/// Maps a [`BuildingType`] to its input costs and output yields.
+///
 /// # Returns
-/// (`can_afford`, `input_cost`, `output_gain`)
+///
+/// A tuple containing:
+/// 1.  `bool`: `true` if the colony can afford the input AND has space for the output.
+/// 2.  `ColonyResources`: The input cost (to be deducted).
+/// 3.  `ColonyResources`: The output yield (to be added).
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::refining::get_refining_recipe;
+/// use scale::layer1::building::BuildingType;
+/// use scale::layer1::resources::ColonyResources;
+///
+/// let res = ColonyResources::default(); // Has wood by default
+/// let (possible, input, output) = get_refining_recipe(BuildingType::LumberMill, &res);
+///
+/// if possible {
+///     println!("Needs: {} Wood", input.wood);
+///     println!("Produces: {} Planks", output.planks);
+/// }
+/// ```
 #[must_use]
 pub fn get_refining_recipe(
     building_type: BuildingType,

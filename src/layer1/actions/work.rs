@@ -10,7 +10,7 @@ use bevy_ecs::prelude::*;
 /// a score based on distance and the Pop's work ethic.
 ///
 /// **Note:** This function explicitly filters OUT [`DesignationType::Repair`] tasks,
-/// as those are handled separately by [`evaluate_repair`] to prioritize maintenance.
+/// as those are handled separately by [`crate::layer1::actions::repair::evaluate_repair`] to prioritize maintenance.
 ///
 /// # Returns
 /// A tuple `(utility, designation_entity)` if a suitable task is found.

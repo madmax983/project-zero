@@ -68,12 +68,36 @@ pub struct Carrying {
 ///
 /// # Examples
 ///
+/// Basic usage:
 /// ```
 /// use scale::layer1::resources::ColonyResources;
 ///
 /// let mut resources = ColonyResources::default();
 /// resources.food += 10.0;
 /// assert_eq!(resources.food, 20.0); // default starts with 10.0
+/// ```
+///
+/// # The Hero's Journey: Building a Wall
+///
+/// Suppose you want to build a wall that costs 5 Stone.
+/// Use [`try_deduct`](ColonyResources::try_deduct) to ensure you don't overspend.
+///
+/// ```
+/// use scale::layer1::resources::ColonyResources;
+///
+/// let mut stockpile = ColonyResources::default();
+/// stockpile.stone = 4.0; // Not enough!
+///
+/// let wall_cost = ColonyResources {
+///     stone: 5.0,
+///     ..ColonyResources::zeroed()
+/// };
+///
+/// if stockpile.try_deduct(&wall_cost) {
+///     println!("Wall built!");
+/// } else {
+///     println!("Not enough stone, my lord.");
+/// }
 /// ```
 #[derive(Resource, Debug, Clone)]
 pub struct ColonyResources {
@@ -392,6 +416,17 @@ impl ForestryProgress {
 }
 
 /// Component tracking the progress of refining (e.g. at a Lumber Mill).
+///
+/// This component acts as a state container for the [`process_refining_system`](crate::layer1::refining::process_refining_system).
+/// It persists the current work amount across ticks.
+///
+/// # State Logic
+///
+/// * **`current`**: Accumulates as workers apply effort (scaled by efficiency).
+/// * **`max`**: The threshold to complete one batch.
+///
+/// When `current >= max`, the system triggers completion logic (resource swap, XP gain)
+/// and typically resets `current` to 0.0 or despawns the job depending on context.
 #[derive(Component, Debug, Default)]
 pub struct RefiningProgress {
     /// Current work done.
