@@ -6,13 +6,13 @@ use bevy_ecs::prelude::*;
 use rand::Rng;
 
 /// Marker component for a ghost entity.
-#[derive(Component, Default)]
+#[derive(Component, Default, Debug)]
 pub struct Ghost;
 
 /// Health component for a ghost.
 ///
 /// Represents "spiritual stability".
-#[derive(Component)]
+#[derive(Component, Debug)]
 pub struct Ectoplasm {
     /// Current stability. <= 0 means exorcism.
     pub current: f32,

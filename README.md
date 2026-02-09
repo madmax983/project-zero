@@ -162,6 +162,7 @@ scale/
 **Feature flags:**
 - `native` (default) — Terminal mode via crossterm
 - `wasm` — Browser mode via ratzilla
+- `nova` — Enables experimental features (e.g. Ghosts)
 
 **Profiles:**
 - `dev` — Optimized for fast iteration (opt-level = 1)
