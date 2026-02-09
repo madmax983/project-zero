@@ -80,9 +80,12 @@ pub fn build_simulation_schedule() -> Schedule {
         cleanup_previous_assignment_system
             .after(crate::layer1::room_quality::apply_waking_thoughts_system),
         process_start_plan_system.after(cleanup_previous_assignment_system),
+        crate::layer1::fauna::fauna_behavior_system.after(process_start_plan_system),
         update_lighting_system.after(process_start_plan_system),
         apply_lighting_penalties_system.after(update_lighting_system),
-        movement_system.after(apply_lighting_penalties_system),
+        movement_system
+            .after(apply_lighting_penalties_system)
+            .after(crate::layer1::fauna::fauna_behavior_system),
         arrival_handler_system.after(movement_system),
         work_execution_system.after(arrival_handler_system),
         crate::layer1::execution::vandalize_execution_system.after(arrival_handler_system),
