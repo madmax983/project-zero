@@ -1,10 +1,10 @@
 use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
-use crate::layer1::utility_ai::math::{
+use crate::layer1::utility_ai::{
     calculate_context_score, calculate_success_modifier, need_response_curve,
 };
-use crate::layer1::utility_ai::types::{ActionType, UtilityWeights};
+use crate::layer1::utility_ai::{ActionType, UtilityWeights};
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
 
@@ -201,7 +201,7 @@ mod tests {
     use crate::layer1::map::GridPosition;
     use crate::layer1::needs::{Needs, decay_needs_system};
     use crate::layer1::pop::Pop;
-    use crate::layer1::utility_ai::types::{ActionType, UtilityWeights};
+    use crate::layer1::utility_ai::{ActionType, UtilityWeights};
     use bevy_ecs::system::RunSystemOnce;
 
     #[test]
@@ -358,7 +358,7 @@ mod tests {
         schedule.run(&mut world);
 
         let rel = world.get::<Relationships>(pop1).unwrap();
-        assert_eq!(rel.get_affinity(pop2), 10.0);
+        assert!((rel.get_affinity(pop2) - 10.0).abs() < f32::EPSILON);
     }
 
     #[test]
@@ -380,7 +380,7 @@ mod tests {
         schedule.run(&mut world);
 
         let rel = world.get::<Relationships>(pop1).unwrap();
-        assert_eq!(rel.get_affinity(pop2), 100.0); // Clamped at 100
+        assert!((rel.get_affinity(pop2) - 100.0).abs() < f32::EPSILON); // Clamped at 100
     }
 
     #[test]

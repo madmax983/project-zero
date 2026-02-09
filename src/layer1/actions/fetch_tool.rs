@@ -108,7 +108,7 @@ mod tests {
             &pop_pos,
             &equipment,
             &resources,
-            stockpiles.into_iter().map(|(e, p, s)| (e, p, s)),
+            stockpiles.into_iter(),
         );
 
         assert!(result.is_none());
@@ -137,7 +137,7 @@ mod tests {
             &pop_pos,
             &equipment,
             &resources,
-            stockpiles.into_iter().map(|(e, p, s)| (e, p, s)),
+            stockpiles.into_iter(),
         );
 
         assert!(result.is_none());

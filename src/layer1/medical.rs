@@ -74,7 +74,7 @@ pub fn evaluate_seek_medical_care<'a>(
 
     for (entity, pos, _hospital) in hospitals {
         // Simple context score
-        let context = crate::layer1::utility_ai::math::calculate_context_score(
+        let context = crate::layer1::utility_ai::calculate_context_score(
             *pop_pos,
             Some(*pos),
             10, // Assumed capacity for MVP
@@ -83,7 +83,7 @@ pub fn evaluate_seek_medical_care<'a>(
         );
 
         // Success modifier
-        let success = crate::layer1::utility_ai::math::calculate_success_modifier(
+        let success = crate::layer1::utility_ai::calculate_success_modifier(
             crate::layer1::utility_ai::ActionType::SeekMedicalCare,
             weights,
         );

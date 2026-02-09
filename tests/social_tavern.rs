@@ -44,6 +44,7 @@ mod tests {
         world.insert_resource(scale::layer1::zone::ZoneGrid::new(10, 10));
         world.init_resource::<Events<scale::layer1::chronicle::AddChronicleEvent>>();
         world.init_resource::<Events<scale::layer1::social::AffinityChange>>();
+        world.insert_resource(scale::layer1::acoustic::NoiseMap::new(10, 10));
 
         world
     }
