@@ -6,7 +6,7 @@ use bevy_ecs::prelude::*;
 use wgpu::util::DeviceExt;
 
 use super::buffers::{
-    GpuPopDecision, extract_building_inputs, extract_global_state, extract_pop_inputs,
+    GpuBuffers, GpuPopDecision, extract_building_inputs, extract_global_state, extract_pop_inputs,
 };
 use super::context::GpuContext;
 use crate::layer1::utility_ai::evaluate_actions_system;
@@ -24,29 +24,60 @@ pub fn gpu_evaluate_actions(world: &mut World) {
         return;
     }
 
-    // 1. Extract data from ECS
-    let (pop_entities, pop_inputs) = extract_pop_inputs(world);
-    if pop_inputs.is_empty() {
-        return;
+    // Ensure GpuBuffers resource exists
+    if !world.contains_resource::<GpuBuffers>() {
+        world.init_resource::<GpuBuffers>();
     }
 
-    let (building_entities, building_inputs) = extract_building_inputs(world);
+    // Use resource_scope to get mutable access to buffers while keeping world access
+    world.resource_scope::<GpuBuffers, _>(|world, mut buffers| {
+        // Deref Mut<GpuBuffers> once to allow splitting borrows on fields
+        let buffers = &mut *buffers;
 
-    let global_state =
-        extract_global_state(world, pop_inputs.len() as u32, building_inputs.len() as u32);
+        // 1. Extract data from ECS
+        extract_pop_inputs(world, &mut buffers.pop_entities, &mut buffers.pop_inputs);
 
-    // 2. Get GPU context
-    let gpu = world.resource::<GpuContext>();
+        if buffers.pop_inputs.is_empty() {
+            return;
+        }
 
-    // 3. Dispatch and readback
-    let decisions = dispatch_and_readback(gpu, &pop_inputs, &building_inputs, &global_state);
+        extract_building_inputs(
+            world,
+            &mut buffers.building_entities,
+            &mut buffers.building_inputs,
+        );
 
-    let Some(decisions) = decisions else {
-        return;
-    };
+        let global_state = extract_global_state(
+            world,
+            buffers.pop_inputs.len() as u32,
+            buffers.building_inputs.len() as u32,
+        );
 
-    // 4. Apply decisions to ECS
-    apply_decisions(world, &pop_entities, &building_entities, &decisions);
+        // 2. Get GPU context
+        // We can access GpuContext because we are inside resource_scope, so world still has it
+        // (unless we removed it too, but we only removed GpuBuffers)
+        let gpu = world.resource::<GpuContext>();
+
+        // 3. Dispatch and readback
+        let decisions = dispatch_and_readback(
+            gpu,
+            &buffers.pop_inputs,
+            &buffers.building_inputs,
+            &global_state,
+        );
+
+        let Some(decisions) = decisions else {
+            return;
+        };
+
+        // 4. Apply decisions to ECS
+        apply_decisions(
+            world,
+            &buffers.pop_entities,
+            &buffers.building_entities,
+            &decisions,
+        );
+    });
 }
 
 /// Upload data, dispatch the compute shader, and read back results.
