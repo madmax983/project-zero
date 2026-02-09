@@ -171,3 +171,4 @@ pub mod fauna;
 pub use fauna::*;
 pub mod art;
 pub use art::*;
+pub mod combat;

@@ -266,6 +266,7 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
             ActionType::Vandalize => ("🔨", "Vandalizing"),
             ActionType::Binge => ("🍖", "Bingeing"),
             ActionType::Daze => ("😵", "Dazed"),
+            ActionType::Fight => ("⚔️", "Fighting"),
         };
         Some(Line::from(vec![
             Span::raw("Action: "),

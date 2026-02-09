@@ -11,7 +11,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `059` Soil Fertility — `specs/059-soil-fertility.md`
 - [ ] `065` Day/Night Cycle — `specs/065-day-night-cycle.md`
 - [ ] `066` Building Work AI Integration — `specs/066-building-work-ai.md`
-- [ ] `067` Militia System — `specs/067-militia-system.md`
 - [ ] `068` Pop Factions — `specs/068-pop-factions.md`
 - [ ] `069` Mentorship System — `specs/069-mentorship-system.md`
 - [ ] `070` Heirloom Tech — `specs/070-heirloom-tech.md`
