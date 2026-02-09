@@ -6,7 +6,7 @@ use crate::gpu::context::GpuContext;
 use crate::layer1::chronicle::AddChronicleEvent;
 use crate::layer1::social::AffinityChange;
 use crate::layer1::{
-    AmbientLight, BuildMode, BuildingTracker, Chronicle, ChronicleUiState, ColonyMemory,
+    AmbientLight, AtmosphereGrid, BuildMode, BuildingTracker, Chronicle, ChronicleUiState, ColonyMemory,
     ColonyPolicies, ColonyResources, DesignationMode, LightMap, NamedLocations, NotificationQueue,
     OccupiedTiles, SeasonState, TechState, UtilityConfig, Viewport, generate_terrain,
     initial_chronicle_event, initial_naming_system, spawn_initial_anomalies, spawn_initial_pops,
@@ -60,6 +60,7 @@ pub fn setup_world() -> World {
     world.insert_resource(crate::layer1::beauty::BeautyGrid::new(80, 50));
     world.insert_resource(crate::layer1::zone::ZoneGrid::new(80, 50));
     world.insert_resource(crate::layer1::acoustic::NoiseMap::new(80, 50));
+    world.insert_resource(AtmosphereGrid::new(80, 50));
     world.insert_resource(LightMap::new(80, 50));
     world.insert_resource(AmbientLight::default());
     world.init_resource::<Events<AddChronicleEvent>>();

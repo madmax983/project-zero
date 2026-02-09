@@ -101,11 +101,9 @@ pub fn restore_rest_in_housing_system(
             crate::layer1::zone::calculate_zone_bonus(zone, building.building_type)
         });
 
-        let noise_penalty = if let Some(map) = &noise_map {
-            map.get(pos.x, pos.y) * 0.5 // Reduce rest recovery by up to 50%
-        } else {
-            0.0
-        };
+        let noise_penalty = noise_map
+            .as_ref()
+            .map_or(0.0, |map| map.get(pos.x, pos.y) * 0.5);
 
         for &resident in &housing.residents {
             if let Ok(mut needs) = needs_query.get_mut(resident) {

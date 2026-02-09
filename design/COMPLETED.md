@@ -63,3 +63,4 @@ Implemented features. Architect: read this to understand current state.
 - [x] `062` Pop Lifecycle and Aging — `specs/062-pop-lifecycle.md` — completed 2026-03-05
 - [x] `050` Civil Unrest — `specs/050-civil-unrest.md` — completed 2026-02-09
 - [x] `INT-007` Integration: Acoustics -> Rest Recovery — completed 2026-02-09
+- [x] `063` Atmospheric Simulation — `specs/063-atmospheric-simulation.md` — completed 2026-03-24

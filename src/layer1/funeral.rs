@@ -94,6 +94,7 @@ pub fn apply_closure(world: &mut World, pop_entity: Entity) {
 }
 
 /// Executes the bury corpse action.
+#[allow(clippy::too_many_arguments, clippy::collapsible_if)]
 pub fn handle_bury_corpse(
     commands: &mut Commands,
     corpses: &Query<&Corpse>,
