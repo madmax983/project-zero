@@ -12,6 +12,7 @@ Container(Main, "Main Entry", "Rust/Crossterm", "Initializes World, runs Game Lo
 
 Container_Boundary(Simulation, "Simulation Core (Layer 1)") {
     Component(UtilityOrchestrator, "Utility Orchestrator", "utility_ai.rs", "Coordinates Decision Cycle")
+    Component(GPU, "GPU Compute", "gpu/evaluate.rs", "Parallel Scoring")
     Component(Actions, "Action Modules", "layer1/actions/*.rs", "Generic Actions")
     Component(DomainActions, "Domain Actions", "medical.rs, funeral.rs", "Specific Logic")
 
@@ -32,6 +33,7 @@ Container_Boundary(UI, "UI Layer") {
 
 Rel(Main, Shared, "Uses")
 Rel(Main, UtilityOrchestrator, "Runs Systems")
+Rel(UtilityOrchestrator, GPU, "Dispatches Work")
 Rel(Main, MapRender, "Calls Render")
 
 Rel(UtilityOrchestrator, Actions, "Calls evaluate_*")
@@ -100,32 +102,41 @@ The "Brain" of the simulation. Pops decide what to do based on internal needs an
 ```mermaid
 sequenceDiagram
     participant System as evaluate_actions_system
+    participant GPU as GPU Compute
     participant Pop as Pop Entity
     participant Needs as Needs Component
     participant World as World State
     participant Memory as Utility Weights
 
     loop Every Tick (Staggered)
-        System->>Pop: Check Commitment Timer
-        alt Timer Expired
-            System->>Needs: Read Hunger/Rest
-            Needs-->>System: Urgency Scores
+        alt GPU Enabled
+            System->>World: Query/Extract Ready Pops
+            System->>GPU: Upload Input Buffers
+            GPU->>GPU: Parallel Scoring (Shader)
+            GPU-->>System: Return Decisions
+            System->>Pop: Update PopAction (Batch)
+        else CPU Fallback
+            System->>Pop: Check Commitment Timer
+            alt Timer Expired
+                System->>Needs: Read Hunger/Rest
+                Needs-->>System: Urgency Scores
 
-            rect rgb(40, 40, 50)
-                Note right of System: Evaluation Phase
-                System->>World: Query Entities (Farms, Items, etc.)
+                rect rgb(40, 40, 50)
+                    Note right of System: Evaluation Phase
+                    System->>World: Query Entities (Farms, Items, etc.)
 
-                System->>System: Call evaluate_satisfy_hunger()
-                System->>System: Call evaluate_work()
-                System->>System: Call evaluate_haul()
+                    System->>System: Call evaluate_satisfy_hunger()
+                    System->>System: Call evaluate_work()
+                    System->>System: Call evaluate_haul()
 
-                Note over System: Actions typically return Option<(Score, Target)>
-                System->>System: Select Best Utility
+                    Note over System: Actions typically return Option<(Score, Target)>
+                    System->>System: Select Best Utility
+                end
+
+                System->>Pop: Update PopAction (Best Score)
+            else Timer Active
+                System->>Pop: Continue Current Action
             end
-
-            System->>Pop: Update PopAction (Best Score)
-        else Timer Active
-            System->>Pop: Continue Current Action
         end
     end
 ```
@@ -195,3 +206,4 @@ Rel(Shared, Events, "Consumes")
 - [ADR 005: Adopt Emergent Utility AI](./adr/005-adopt-emergent-utility-ai.md)
 - [ADR 008: Modular Utility AI Structure](./adr/008-modular-utility-ai.md)
 - [ADR 012: Decouple Storage from Core](./adr/012-decouple-storage-from-core.md)
+- [ADR 013: GPU Accelerated Utility AI](./adr/013-gpu-accelerated-utility-ai.md)
