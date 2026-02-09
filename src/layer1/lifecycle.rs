@@ -3,11 +3,11 @@
 //! Handles aging of Pops, life stage transitions (Child -> Adult -> Elder),
 //! and natural death due to old age.
 
-use bevy_ecs::prelude::*;
-use rand::Rng;
+use crate::layer1::balance::{AGE_ADULT, AGE_ELDER, TICKS_PER_YEAR};
 use crate::layer1::pop::Speed;
 use crate::shared::log::MessageLog;
-use crate::layer1::balance::{AGE_ADULT, AGE_ELDER, TICKS_PER_YEAR};
+use bevy_ecs::prelude::*;
+use rand::Rng;
 
 /// Life stages of a Pop.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
@@ -41,7 +41,10 @@ impl Age {
         } else {
             LifeStage::Elder
         };
-        Self { ticks_alive: ticks, stage }
+        Self {
+            ticks_alive: ticks,
+            stage,
+        }
     }
 }
 
@@ -105,18 +108,15 @@ pub fn natural_death_system(mut query: Query<(&Age, &mut crate::layer1::health::
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::pop::{Pop, Speed};
-    use crate::layer1::health::Health;
-    use crate::shared::time::SimulationTime;
     use crate::layer1::balance::{AGE_ADULT, AGE_ELDER, TICKS_PER_YEAR};
+    use crate::layer1::health::Health;
+    use crate::layer1::pop::{Pop, Speed};
+    use crate::shared::time::SimulationTime;
 
     #[test]
     fn test_pop_has_age_component() {
         let mut world = World::new();
-        let entity = world.spawn((
-            Pop,
-            Age::default(),
-        )).id();
+        let entity = world.spawn((Pop, Age::default())).id();
 
         let age = world.get::<Age>(entity);
         assert!(age.is_some());
@@ -131,11 +131,16 @@ mod tests {
         let mut schedule = Schedule::default();
         schedule.add_systems(aging_system);
 
-        let entity = world.spawn((
-            Pop,
-            Age { ticks_alive: 100, ..Default::default() },
-            Speed::default(),
-        )).id();
+        let entity = world
+            .spawn((
+                Pop,
+                Age {
+                    ticks_alive: 100,
+                    ..Default::default()
+                },
+                Speed::default(),
+            ))
+            .id();
 
         schedule.run(&mut world);
 
@@ -152,24 +157,28 @@ mod tests {
         schedule.add_systems(aging_system);
 
         // 1. Child -> Adult
-        let child = world.spawn((
-            Pop,
-            Age {
-                ticks_alive: AGE_ADULT - 1,
-                stage: LifeStage::Child
-            },
-            Speed::default(),
-        )).id();
+        let child = world
+            .spawn((
+                Pop,
+                Age {
+                    ticks_alive: AGE_ADULT - 1,
+                    stage: LifeStage::Child,
+                },
+                Speed::default(),
+            ))
+            .id();
 
         // 2. Adult -> Elder
-        let adult = world.spawn((
-            Pop,
-            Age {
-                ticks_alive: AGE_ELDER - 1,
-                stage: LifeStage::Adult
-            },
-            Speed::default(),
-        )).id();
+        let adult = world
+            .spawn((
+                Pop,
+                Age {
+                    ticks_alive: AGE_ELDER - 1,
+                    stage: LifeStage::Adult,
+                },
+                Speed::default(),
+            ))
+            .id();
 
         schedule.run(&mut world);
 
@@ -189,14 +198,20 @@ mod tests {
         schedule.add_systems(aging_system);
 
         // Spawn a pop about to become Elder
-        let entity = world.spawn((
-            Pop,
-            Age {
-                ticks_alive: AGE_ELDER - 1,
-                stage: LifeStage::Adult
-            },
-            Speed { base: 1.0, current: 1.0, accumulator: 0.0 },
-        )).id();
+        let entity = world
+            .spawn((
+                Pop,
+                Age {
+                    ticks_alive: AGE_ELDER - 1,
+                    stage: LifeStage::Adult,
+                },
+                Speed {
+                    base: 1.0,
+                    current: 1.0,
+                    accumulator: 0.0,
+                },
+            ))
+            .id();
 
         schedule.run(&mut world);
 
@@ -215,14 +230,19 @@ mod tests {
         let mut schedule = Schedule::default();
         schedule.add_systems(natural_death_system);
 
-        let entity = world.spawn((
-            Pop,
-            Age {
-                ticks_alive: 120 * TICKS_PER_YEAR, // Very old
-                stage: LifeStage::Elder
-            },
-            Health { current: 10.0, max: 10.0 },
-        )).id();
+        let entity = world
+            .spawn((
+                Pop,
+                Age {
+                    ticks_alive: 120 * TICKS_PER_YEAR, // Very old
+                    stage: LifeStage::Elder,
+                },
+                Health {
+                    current: 10.0,
+                    max: 10.0,
+                },
+            ))
+            .id();
 
         // Run many times to trigger probability.
         // With 0.00001 base chance * (120-60) = 0.0006 per tick.
@@ -248,11 +268,16 @@ mod tests {
         let mut schedule = Schedule::default();
         schedule.add_systems(aging_system);
 
-        let entity = world.spawn((
-            Pop,
-            Age { ticks_alive: 100, ..Default::default() },
-            // No Speed component
-        )).id();
+        let entity = world
+            .spawn((
+                Pop,
+                Age {
+                    ticks_alive: 100,
+                    ..Default::default()
+                },
+                // No Speed component
+            ))
+            .id();
 
         schedule.run(&mut world);
 
