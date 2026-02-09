@@ -13,6 +13,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `061` Cultural Artifacts — `specs/061-cultural-artifacts.md`
 - [ ] `064` Room Quality — `specs/064-room-quality.md`
 - [ ] `065` Day/Night Cycle — `specs/065-day-night-cycle.md`
+- [ ] `066` Building Work AI Integration — `specs/066-building-work-ai.md`
 
 ## MVP — User Interface
 
