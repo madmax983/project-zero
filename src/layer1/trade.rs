@@ -147,6 +147,14 @@ pub fn merchant_arrival_system(world: &mut World) {
 ///
 /// Returns `true` if the trade was successful.
 pub fn execute_trade(world: &mut World, deal: &TradeDeal) -> bool {
+    // Validate inputs (security hardening)
+    if deal.cost_amount < 0.0 || !deal.cost_amount.is_finite() {
+        return false;
+    }
+    if deal.give_amount < 0.0 || !deal.give_amount.is_finite() {
+        return false;
+    }
+
     let mut resources = world.resource_mut::<ColonyResources>();
 
     // Check affordability
@@ -202,7 +210,7 @@ mod tests {
 
     #[test]
     fn test_trade_depot_component_exists() {
-        let depot = TradeDepot::default();
+        let depot = TradeDepot;
         let _ = depot;
     }
 
@@ -246,7 +254,7 @@ mod tests {
             Building {
                 building_type: BuildingType::TradeDepot,
             },
-            TradeDepot::default(),
+            TradeDepot,
         ));
 
         merchant_arrival_system(&mut world);
@@ -286,7 +294,7 @@ mod tests {
             Building {
                 building_type: BuildingType::TradeDepot,
             },
-            TradeDepot::default(),
+            TradeDepot,
         ));
 
         merchant_arrival_system(&mut world);
@@ -304,9 +312,11 @@ mod tests {
     #[test]
     fn test_execute_trade_success() {
         let mut world = World::new();
-        let mut resources = ColonyResources::default();
-        resources.wood = 50.0;
-        resources.metal = 0.0;
+        let resources = ColonyResources {
+            wood: 50.0,
+            metal: 0.0,
+            ..Default::default()
+        };
         world.insert_resource(resources);
 
         let deal = TradeDeal {
@@ -327,8 +337,10 @@ mod tests {
     #[test]
     fn test_execute_trade_insufficient_funds() {
         let mut world = World::new();
-        let mut resources = ColonyResources::default();
-        resources.wood = 5.0; // Need 10
+        let resources = ColonyResources {
+            wood: 5.0, // Need 10
+            ..Default::default()
+        };
         world.insert_resource(resources);
 
         let deal = TradeDeal {
@@ -344,5 +356,55 @@ mod tests {
         let res = world.resource::<ColonyResources>();
         assert!((res.wood - 5.0).abs() < f32::EPSILON);
         assert!((res.metal - 0.0).abs() < f32::EPSILON);
+    }
+
+    #[test]
+    fn test_exploit_negative_cost_prevented() {
+        let mut world = World::new();
+        let resources = ColonyResources {
+            wood: 100.0,
+            metal: 0.0,
+            ..Default::default()
+        };
+        world.insert_resource(resources);
+
+        // Malicious deal: "Pay" -50 wood (gain 50 wood) to get 10 metal
+        let deal = TradeDeal {
+            cost_resource: ResourceType::Wood,
+            cost_amount: -50.0,
+            give_resource: ResourceType::Metal,
+            give_amount: 10.0,
+        };
+
+        // Should be rejected by validation
+        let success = execute_trade(&mut world, &deal);
+
+        assert!(!success, "Trade with negative cost should fail");
+
+        let res = world.resource::<ColonyResources>();
+        // Resources should remain unchanged
+        assert!((res.wood - 100.0).abs() < f32::EPSILON);
+        assert!((res.metal - 0.0).abs() < f32::EPSILON);
+    }
+
+    #[test]
+    fn test_exploit_infinite_cost_prevented() {
+        let mut world = World::new();
+        let resources = ColonyResources {
+            wood: 100.0,
+            ..Default::default()
+        };
+        world.insert_resource(resources);
+
+        let deal = TradeDeal {
+            cost_resource: ResourceType::Wood,
+            cost_amount: f32::INFINITY,
+            give_resource: ResourceType::Metal,
+            give_amount: 10.0,
+        };
+
+        let success = execute_trade(&mut world, &deal);
+
+        assert!(!success, "Trade with infinite cost should fail");
     }
 }
