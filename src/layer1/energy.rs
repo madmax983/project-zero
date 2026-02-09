@@ -3,8 +3,8 @@
 //! Handles power generation, distribution, and consumption.
 //! Grids are formed dynamically based on connectivity via `Conduit`s and power-related buildings.
 
-use bevy_ecs::prelude::*;
 use crate::layer1::map::GridPosition;
+use bevy_ecs::prelude::*;
 use std::collections::{HashMap, HashSet, VecDeque};
 
 /// Emits power to the grid.
@@ -114,7 +114,8 @@ pub fn power_grid_system(world: &mut World) {
         }
 
         // BFS for this grid
-        let (total_production, total_demand, grid_entities) = bfs_grid(start_pos, &grid_map, world, &mut visited);
+        let (total_production, total_demand, grid_entities) =
+            bfs_grid(start_pos, &grid_map, world, &mut visited);
 
         // 3. Update consumers
         // MVP Rule: If Production >= Demand, all Active. Else, all Inactive.
@@ -130,15 +131,18 @@ pub fn power_grid_system(world: &mut World) {
 
 #[cfg(test)]
 mod tests {
-    use super::{PowerSource, PowerConsumer, Conduit, calculate_grid_stats};
-    use crate::layer1::map::GridPosition;
+    use super::{Conduit, PowerConsumer, PowerSource, calculate_grid_stats};
     use crate::layer1::building::{Building, BuildingType};
+    use crate::layer1::map::GridPosition;
     use bevy_ecs::prelude::*;
 
     #[test]
     fn test_power_components() {
         let source = PowerSource { output: 10.0 };
-        let consumer = PowerConsumer { demand: 5.0, active: true };
+        let consumer = PowerConsumer {
+            demand: 5.0,
+            active: true,
+        };
         let _conduit = Conduit; // Marker
 
         assert_eq!(source.output, 10.0);
@@ -151,18 +155,29 @@ mod tests {
         let mut world = World::new();
 
         // Generator at 0,0
-        let generator = world.spawn((
-            PowerSource { output: 10.0 },
-            GridPosition { x: 0, y: 0 },
-            Building { building_type: BuildingType::Generator }, // Assume new type
-        )).id();
+        let generator = world
+            .spawn((
+                PowerSource { output: 10.0 },
+                GridPosition { x: 0, y: 0 },
+                Building {
+                    building_type: BuildingType::Generator,
+                }, // Assume new type
+            ))
+            .id();
 
         // Consumer at 10,10
-        let cons = world.spawn((
-            PowerConsumer { demand: 5.0, active: false },
-            GridPosition { x: 10, y: 10 },
-            Building { building_type: BuildingType::Smelter },
-        )).id();
+        let cons = world
+            .spawn((
+                PowerConsumer {
+                    demand: 5.0,
+                    active: false,
+                },
+                GridPosition { x: 10, y: 10 },
+                Building {
+                    building_type: BuildingType::Smelter,
+                },
+            ))
+            .id();
 
         // Run calculation
         let (production, _demand) = calculate_grid_stats(&mut world, generator); // Pass root entity to flood fill
@@ -181,25 +196,38 @@ mod tests {
         let mut world = World::new();
 
         // Generator at 0,0
-        let generator = world.spawn((
-            PowerSource { output: 10.0 },
-            GridPosition { x: 0, y: 0 },
-            Building { building_type: BuildingType::Generator },
-        )).id();
+        let generator = world
+            .spawn((
+                PowerSource { output: 10.0 },
+                GridPosition { x: 0, y: 0 },
+                Building {
+                    building_type: BuildingType::Generator,
+                },
+            ))
+            .id();
 
         // Conduit at 0,1
         world.spawn((
             Conduit,
             GridPosition { x: 0, y: 1 },
-            Building { building_type: BuildingType::PowerPole }, // New type
+            Building {
+                building_type: BuildingType::PowerPole,
+            }, // New type
         ));
 
         // Consumer at 0,2
-        let _cons = world.spawn((
-            PowerConsumer { demand: 5.0, active: false },
-            GridPosition { x: 0, y: 2 },
-            Building { building_type: BuildingType::Smelter },
-        )).id();
+        let _cons = world
+            .spawn((
+                PowerConsumer {
+                    demand: 5.0,
+                    active: false,
+                },
+                GridPosition { x: 0, y: 2 },
+                Building {
+                    building_type: BuildingType::Smelter,
+                },
+            ))
+            .id();
 
         // Run calculation (start from generator)
         let (production, demand) = calculate_grid_stats(&mut world, generator);
@@ -217,24 +245,40 @@ mod tests {
         world.spawn((
             PowerSource { output: 10.0 },
             GridPosition { x: 0, y: 0 },
-            Building { building_type: BuildingType::Generator },
+            Building {
+                building_type: BuildingType::Generator,
+            },
         ));
 
         // Cons 1 (10)
-        let c1 = world.spawn((
-            PowerConsumer { demand: 10.0, active: true },
-            GridPosition { x: 0, y: 1 },
-            Conduit, // Connect them implicitly or explicitly
-            Building { building_type: BuildingType::Smelter },
-        )).id();
+        let c1 = world
+            .spawn((
+                PowerConsumer {
+                    demand: 10.0,
+                    active: true,
+                },
+                GridPosition { x: 0, y: 1 },
+                Conduit, // Connect them implicitly or explicitly
+                Building {
+                    building_type: BuildingType::Smelter,
+                },
+            ))
+            .id();
 
         // Cons 2 (5)
-        let c2 = world.spawn((
-            PowerConsumer { demand: 5.0, active: true },
-            GridPosition { x: 0, y: 2 },
-            Conduit,
-            Building { building_type: BuildingType::Smelter },
-        )).id();
+        let c2 = world
+            .spawn((
+                PowerConsumer {
+                    demand: 5.0,
+                    active: true,
+                },
+                GridPosition { x: 0, y: 2 },
+                Conduit,
+                Building {
+                    building_type: BuildingType::Smelter,
+                },
+            ))
+            .id();
 
         // Run system
         super::power_grid_system(&mut world);

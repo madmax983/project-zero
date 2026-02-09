@@ -1,13 +1,13 @@
 #[cfg(test)]
 mod tests {
+    use bevy_ecs::prelude::*;
+    use scale::layer1::GridPosition;
     use scale::layer1::building::{Building, BuildingType};
     use scale::layer1::energy::PowerConsumer;
     use scale::layer1::pop::Pop;
     use scale::layer1::refining::process_refining_system;
     use scale::layer1::resources::{ColonyResources, RefiningProgress};
-    use scale::layer1::GridPosition;
     use scale::layer1::skills::Skills;
-    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_smelter_requires_power_to_operate() {
@@ -23,27 +23,25 @@ mod tests {
         world.insert_resource(resources);
 
         // Spawn Smelter with PowerConsumer (active: false)
-        let smelter = world.spawn((
-            Building {
-                building_type: BuildingType::Smelter,
-            },
-            GridPosition { x: 5, y: 5 },
-            RefiningProgress {
-                current: 0.0,
-                max: 10.0,
-            },
-            PowerConsumer {
-                demand: 5.0,
-                active: false, // Not powered!
-            },
-        )).id();
+        let smelter = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Smelter,
+                },
+                GridPosition { x: 5, y: 5 },
+                RefiningProgress {
+                    current: 0.0,
+                    max: 10.0,
+                },
+                PowerConsumer {
+                    demand: 5.0,
+                    active: false, // Not powered!
+                },
+            ))
+            .id();
 
         // Spawn Worker nearby
-        world.spawn((
-            Pop,
-            GridPosition { x: 5, y: 6 },
-            Skills::default(),
-        ));
+        world.spawn((Pop, GridPosition { x: 5, y: 6 }, Skills::default()));
 
         // Run system
         let mut schedule = Schedule::default();
@@ -55,7 +53,10 @@ mod tests {
 
         // ISSUE: Currently this will be > 0.0 because power is ignored.
         // We want it to be 0.0.
-        assert_eq!(progress.current, 0.0, "Smelter should not refine without power!");
+        assert_eq!(
+            progress.current, 0.0,
+            "Smelter should not refine without power!"
+        );
     }
 
     #[test]
@@ -72,27 +73,25 @@ mod tests {
         world.insert_resource(resources);
 
         // Spawn Smelter with PowerConsumer (active: true)
-        let smelter = world.spawn((
-            Building {
-                building_type: BuildingType::Smelter,
-            },
-            GridPosition { x: 5, y: 5 },
-            RefiningProgress {
-                current: 0.0,
-                max: 10.0,
-            },
-            PowerConsumer {
-                demand: 5.0,
-                active: true, // Powered!
-            },
-        )).id();
+        let smelter = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Smelter,
+                },
+                GridPosition { x: 5, y: 5 },
+                RefiningProgress {
+                    current: 0.0,
+                    max: 10.0,
+                },
+                PowerConsumer {
+                    demand: 5.0,
+                    active: true, // Powered!
+                },
+            ))
+            .id();
 
         // Spawn Worker nearby
-        world.spawn((
-            Pop,
-            GridPosition { x: 5, y: 6 },
-            Skills::default(),
-        ));
+        world.spawn((Pop, GridPosition { x: 5, y: 6 }, Skills::default()));
 
         // Run system
         let mut schedule = Schedule::default();

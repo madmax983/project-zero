@@ -1,9 +1,9 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::items::Equipment;
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::stockpile::Stockpile;
 use crate::layer1::utility_ai::manhattan_distance;
+use bevy_ecs::prelude::*;
 
 /// Evaluates if a pop should fetch a tool.
 pub fn evaluate_fetch_tool<'a>(
@@ -58,9 +58,9 @@ pub fn evaluate_fetch_tool<'a>(
 mod tests {
     use super::*;
     use crate::layer1::items::{Equipment, Tool, ToolType};
-    use crate::layer1::stockpile::Stockpile;
     use crate::layer1::map::GridPosition;
     use crate::layer1::resources::ColonyResources;
+    use crate::layer1::stockpile::Stockpile;
 
     #[test]
     fn test_evaluate_fetch_tool_no_tools_resource() {
@@ -85,11 +85,13 @@ mod tests {
     #[test]
     fn test_evaluate_fetch_tool_already_has_tool() {
         let mut world = World::new();
-        let tool = world.spawn(Tool {
-            tool_type: ToolType::Pickaxe,
-            durability: 100.0,
-            max_durability: 100.0,
-        }).id();
+        let tool = world
+            .spawn(Tool {
+                tool_type: ToolType::Pickaxe,
+                durability: 100.0,
+                max_durability: 100.0,
+            })
+            .id();
 
         let pop_pos = GridPosition { x: 0, y: 0 };
         let equipment = Equipment { tool: Some(tool) };
@@ -112,10 +114,9 @@ mod tests {
     #[test]
     fn test_evaluate_fetch_tool_success() {
         let mut world = World::new();
-        let stockpile_entity = world.spawn((
-            Stockpile::default(),
-            GridPosition { x: 5, y: 0 },
-        )).id();
+        let stockpile_entity = world
+            .spawn((Stockpile::default(), GridPosition { x: 5, y: 0 }))
+            .id();
         let stockpile_pos = GridPosition { x: 5, y: 0 };
         let stockpile_comp = Stockpile::default();
 
@@ -129,12 +130,7 @@ mod tests {
         // Mock iterator
         let stockpiles = vec![(stockpile_entity, &stockpile_pos, &stockpile_comp)];
 
-        let result = evaluate_fetch_tool(
-            &pop_pos,
-            &equipment,
-            &resources,
-            stockpiles.into_iter(),
-        );
+        let result = evaluate_fetch_tool(&pop_pos, &equipment, &resources, stockpiles.into_iter());
 
         assert!(result.is_some());
         let (utility, target) = result.unwrap();

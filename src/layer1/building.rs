@@ -71,7 +71,7 @@ impl BuildingType {
         match self {
             Self::Statue => 10.0,
             Self::Landfill => -10.0,
-            Self::Grave => -2.0,     // Graves are slightly spooky
+            Self::Grave => -2.0, // Graves are slightly spooky
             Self::FlowerBed | Self::TradeDepot => 5.0, // Trade brings goods and culture
             _ => 0.0,
         }
