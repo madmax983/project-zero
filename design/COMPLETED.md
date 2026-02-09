@@ -59,3 +59,4 @@ Implemented features. Architect: read this to understand current state.
 - [x] `038` Medical Care — `specs/038-medical-care.md` — completed 2026-03-10
 - [x] `057` Funeral Rites — `specs/057-funeral-rites.md` — completed 2026-03-10
 - [x] `058` Personal Tools — `specs/058-personal-tools.md` — completed 2026-03-10
+- [x] `INT-006` Integration: Energy System -> Refining System — completed 2026-02-09
