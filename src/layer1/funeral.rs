@@ -93,6 +93,56 @@ pub fn apply_closure(world: &mut World, pop_entity: Entity) {
     }
 }
 
+/// Executes the bury corpse action.
+pub fn handle_bury_corpse(
+    commands: &mut Commands,
+    corpses: &Query<&Corpse>,
+    graves: &mut Query<(Entity, &GridPosition, &mut Grave)>,
+    memories: &mut Query<&mut Memories>,
+    time: &Res<SimulationTime>,
+    target_entity: Entity,
+    pop_entity: Entity,
+    pop_pos: GridPosition,
+) {
+    // Verify corpse exists
+    if let Ok(corpse) = corpses.get(target_entity) {
+        // Find nearest empty grave
+        // We iterate graves to find the best one.
+        // Wait, the graves query is mutable, so we can't iterate it multiple times easily if we borrow it.
+        // But `min_by_key` consumes the iterator.
+        // However, `graves` is `&mut Query`. We can iterate it.
+        // But `min_by_key` will borrow elements. `grave` inside the closure is `&mut Grave`.
+        // The issue is `graves.iter_mut()` returns an iterator that yields mutable references.
+        // We can't use `min_by_key` easily because we need to return the mutable reference from the closure or keep the index/entity.
+        // Actually, `min_by_key` returns the element.
+        // So `best_grave` will be `Option<(Entity, &GridPosition, Mut<Grave>)>`.
+        // This works fine.
+
+        let best_grave = graves.iter_mut().min_by_key(|(_, grave_pos, grave)| {
+            if grave.occupied {
+                i32::MAX
+            } else {
+                manhattan_distance(&pop_pos, grave_pos)
+            }
+        });
+
+        if let Some((_, _, mut grave)) = best_grave {
+            if !grave.occupied {
+                // Perform burial
+                grave.occupied = true;
+                grave.corpse_name = Some(corpse.name.clone());
+
+                commands.entity(target_entity).despawn();
+
+                // Apply closure
+                if let Ok(mut mem) = memories.get_mut(pop_entity) {
+                    mem.add(MemoryType::AttendedFuneral, time.tick);
+                }
+            }
+        }
+    }
+}
+
 /// Evaluates the utility of burying corpses.
 ///
 /// Returns `Some((utility, corpse_entity))` if viable.
@@ -144,7 +194,6 @@ mod tests {
     use crate::layer1::memory::{Memories, MemoryType};
     use crate::layer1::needs::Needs;
     use crate::layer1::pop::{Pop, PopName};
-    use bevy_ecs::prelude::*;
     // use crate::layer1::execution::{Assignment, AssignmentType};
 
     #[test]

@@ -1,3 +1,4 @@
+use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
 use crate::layer1::utility_ai::math::{
@@ -52,6 +53,24 @@ pub fn evaluate_socialize<'a>(
         }
     }
     best
+}
+
+/// Executes the socialize action (pop entering tavern).
+pub fn handle_socialize(
+    commands: &mut Commands,
+    taverns: &mut Query<&mut Tavern>,
+    target_entity: Entity,
+    pop_entity: Entity,
+) {
+    if let Ok(mut tavern) = taverns.get_mut(target_entity)
+        && tavern.visitors.len() < tavern.capacity
+    {
+        tavern.visitors.push(pop_entity);
+        commands.entity(pop_entity).insert(AssignedTo {
+            entity: target_entity,
+            assignment_type: AssignmentType::TavernVisitor,
+        });
+    }
 }
 
 /// Restores leisure for pops visiting taverns.

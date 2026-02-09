@@ -1,4 +1,4 @@
-use crate::layer1::items::Equipment;
+use crate::layer1::items::{Equipment, Item, Tool, ToolType};
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::stockpile::Stockpile;
@@ -54,6 +54,38 @@ pub fn evaluate_fetch_tool<'a>(
         (utility, target)
     })
 }
+
+/// Executes the fetch tool action.
+pub fn handle_fetch_tool(
+    commands: &mut Commands,
+    resources: &mut ColonyResources,
+    pop_entity: Entity,
+    equipment_opt: &mut Option<Mut<Equipment>>,
+) {
+    if resources.tools >= 1.0 {
+        resources.tools -= 1.0;
+
+        let tool_entity = commands
+            .spawn((
+                Item,
+                Tool {
+                    tool_type: ToolType::Pickaxe, // Generic for now
+                    durability: 100.0,
+                    max_durability: 100.0,
+                },
+            ))
+            .id();
+
+        if let Some(eq) = equipment_opt {
+            eq.tool = Some(tool_entity);
+        } else {
+            commands.entity(pop_entity).insert(Equipment {
+                tool: Some(tool_entity),
+            });
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
