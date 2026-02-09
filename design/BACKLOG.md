@@ -14,6 +14,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `050` Civil Unrest — `specs/050-civil-unrest.md`
 - [ ] `052` Archaeological Excavation — `specs/052-archaeological-excavation.md`
 - [ ] `061` Cultural Artifacts — `specs/061-cultural-artifacts.md`
+- [ ] `062` Pop Lifecycle and Aging — `specs/062-pop-lifecycle.md`
 
 ## MVP — User Interface
 
