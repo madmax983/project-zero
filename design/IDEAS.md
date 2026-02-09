@@ -2119,3 +2119,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Risk the "Rod from God" (friendly fire) or fight on the ground (attrition)?
 
 ---
+
+## Orbital Mirrors
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Harnessing the power of a star. Playing god with the weather.
+
+**Mechanic:** Constructible mirrors in orbit (L2). Can be focused on specific L1 tiles to increase light/heat (boost crops in winter) or burn enemies (orbital laser). Misalignment burns the colony.
+
+**Emergence:** You try to save your frozen crops with a mirror, but a solar flare amplifies the beam and sets the entire farm on fire.
+
+**Tension:** High-yield farming (risk of fire) vs. Safe, slow farming. Weapon vs. Tool.
+
+---
+
+## Secret Societies
+
+**Layer:** 1
+
+**Fantasy:** The colony has a life you don't control. Cults, unions, and clubs form in the shadows.
+
+**Mechanic:** Pops with shared traits/grievances form hidden groups. They meet secretly to perform rituals or plot. Player only sees side effects (missing resources, weird buffs) until investigated via Espionage/Police.
+
+**Emergence:** A "Cult of the Machine" forms among the engineers. They start sacrificing food to the generator to make it run better (it works, but people starve).
+
+**Tension:** Crack down on privacy (security) or allow freedom (risk)?
+
+---
+
+## Refugee Waves
+
+**Layer:** 3 -> 1
+
+**Fantasy:** The galaxy is burning, and you are the lifeboat.
+
+**Mechanic:** Wars in neighboring sectors displace populations. Large groups of "Refugee" pops arrive in desperate condition (injured, starving). Accepting them strains resources but provides cheap labor. Rejecting them causes diplomatic penalties or combat.
+
+**Emergence:** You accept a wave of refugees who turn out to be the losing side of a civil war. The winning side demands you hand them over.
+
+**Tension:** Moral duty/Labor vs. Resource strain/Political risk.
+
+---
+
+## Megafauna Terrain
+
+**Layer:** 1
+
+**Fantasy:** The landscape is alive. That hill is breathing.
+
+**Mechanic:** Some large terrain features (Mountains, Forests) are actually dormant "Titan" creatures. Mining or damaging them wakes them up. They stand up, destroying buildings on top of them, and move or attack.
+
+**Emergence:** You build your capital on a perfect defensive plateau. One day, the plateau stands up and walks into the ocean, taking your city with it.
+
+**Tension:** Exploit the rich resource node (risk waking it) or leave it be (safety)?
+
+---
