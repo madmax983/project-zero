@@ -6,6 +6,7 @@ use super::fire::Flammable;
 use super::housing::Housing;
 use super::social::Tavern;
 use super::stockpile::Stockpile;
+use crate::layer1::energy::{Conduit, PowerConsumer, PowerSource};
 use crate::layer1::lighting::LightSource;
 use crate::layer1::resources::{ColonyResources, RefiningProgress};
 use crate::layer1::tech::{Library, Tech, TechState};
@@ -57,6 +58,10 @@ pub enum BuildingType {
     Grave,
     /// Trading center for merchants.
     TradeDepot,
+    /// Power generator (Energy).
+    Generator,
+    /// Power transmission pole (Energy).
+    PowerPole,
 }
 
 impl BuildingType {
@@ -76,7 +81,9 @@ impl BuildingType {
     #[must_use]
     pub const fn required_tech(&self) -> Option<Tech> {
         match self {
-            Self::Smelter | Self::Smithy => Some(Tech::MetalWorking),
+            Self::Smelter | Self::Smithy | Self::Generator | Self::PowerPole => {
+                Some(Tech::MetalWorking)
+            }
             Self::Tavern | Self::Statue => Some(Tech::SocialStructures),
             _ => None,
         }
@@ -112,6 +119,8 @@ impl BuildingType {
             Self::Landfill => "Landfill",
             Self::Grave => "Grave",
             Self::TradeDepot => "Trade Depot",
+            Self::Generator => "Generator",
+            Self::PowerPole => "Power Pole",
         }
     }
 
@@ -135,6 +144,8 @@ impl BuildingType {
             Self::Landfill => '%',
             Self::Grave => '†',
             Self::TradeDepot => '$',
+            Self::Generator => 'G',
+            Self::PowerPole => '|',
         }
     }
 
@@ -205,6 +216,15 @@ impl BuildingType {
             Self::TradeDepot => ColonyResources {
                 wood: 50.0,
                 stone: 20.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Generator => ColonyResources {
+                stone: 20.0,
+                metal: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::PowerPole => ColonyResources {
+                metal: 2.0,
                 ..ColonyResources::zeroed()
             },
         }
@@ -393,6 +413,10 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
                     intensity: 0.9,
                     color: (255, 50, 0), // Red/Fire
                 },
+                PowerConsumer {
+                    demand: 5.0,
+                    active: false,
+                },
             ));
         }
         BuildingType::Smithy => {
@@ -405,6 +429,10 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
                     radius: 4.0,
                     intensity: 0.7,
                     color: (255, 100, 0), // Orange/Fire
+                },
+                PowerConsumer {
+                    demand: 2.0,
+                    active: false,
                 },
             ));
         }
@@ -429,6 +457,12 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
         }
         BuildingType::Statue => {
             // Statues are made of stone/metal, not flammable
+        }
+        BuildingType::Generator => {
+            entity.insert(PowerSource { output: 10.0 });
+        }
+        BuildingType::PowerPole => {
+            entity.insert(Conduit);
         }
         BuildingType::Hospital => {
             entity.insert((

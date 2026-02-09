@@ -102,6 +102,7 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::beauty::apply_beauty_effects_system
             .after(crate::layer1::beauty::update_beauty_grid_system),
         crate::layer1::trade::merchant_arrival_system.after(work_execution_system),
+        crate::layer1::energy::power_grid_system.after(work_execution_system),
     ));
 
     #[cfg(feature = "nova")]
