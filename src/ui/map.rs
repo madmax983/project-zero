@@ -10,8 +10,8 @@ use crate::experimental::seasonal_gfx;
 use crate::layer1::fire::Fire;
 use crate::layer1::{
     Anomaly, AnomalyType, BuildMode, Building, BuildingType, Designation, DesignationMode,
-    DesignationType, ForestryProgress, GridPosition, MiningProgress, Needs, ResourceItem,
-    ResourceType, TerrainGrid, TerrainType, Viewport,
+    DesignationType, Fauna, FaunaType, ForestryProgress, GridPosition, MiningProgress, Needs,
+    ResourceItem, ResourceType, TerrainGrid, TerrainType, Viewport,
 };
 
 /// Represents a renderable entity on the map.
@@ -25,6 +25,8 @@ pub enum RenderEntity {
     Designation(DesignationType, Option<f32>),
     /// A constructed building (e.g., [`BuildingType::Farm`], [`BuildingType::Housing`]).
     Building(BuildingType),
+    /// A hostile animal (e.g., Wolf, Space Rat).
+    Fauna(FaunaType),
     /// A colonist ([`crate::layer1::pop::Pop`]), carrying a display character and color based on status.
     Pop(&'static str, Color),
     /// An anomaly scan target (e.g., Ruins, Flora).
@@ -63,7 +65,7 @@ impl RenderEntity {
             Self::Fire => 6,
             Self::Designation(_, _) => 5,
             Self::Building(_) => 4,
-            Self::Pop(_, _) => 3,
+            Self::Fauna(_) | Self::Pop(_, _) => 3,
             Self::Anomaly(_) => 2,
             Self::Item(_) => 1,
         }
@@ -116,6 +118,15 @@ pub fn update_render_cache(world: &mut World) {
                     &mut cache.entities,
                     *pos,
                     RenderEntity::Building(building.building_type),
+                );
+            }
+
+            // Check for Fauna
+            if let Some(fauna) = e.get::<Fauna>() {
+                insert_if_higher_priority(
+                    &mut cache.entities,
+                    *pos,
+                    RenderEntity::Fauna(fauna.fauna_type),
                 );
             }
 
@@ -345,6 +356,13 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
                         line_spans.push(Span::styled(
                             get_building_char(*b).to_string(),
                             Style::default().fg(get_building_color(*b)),
+                        ));
+                        continue;
+                    }
+                    RenderEntity::Fauna(ft) => {
+                        line_spans.push(Span::styled(
+                            get_fauna_char(*ft),
+                            Style::default().fg(get_fauna_color(*ft)),
                         ));
                         continue;
                     }
@@ -715,5 +733,23 @@ pub const fn get_anomaly_color(anomaly: AnomalyType) -> Color {
         AnomalyType::Ruins => Color::Cyan,
         AnomalyType::StrangeFlora => Color::Green,
         AnomalyType::Geode => Color::Magenta,
+    }
+}
+
+/// Returns the display character for a fauna type.
+#[must_use]
+pub const fn get_fauna_char(fauna: FaunaType) -> &'static str {
+    match fauna {
+        FaunaType::Wolf => "w",
+        FaunaType::SpaceRat => "r",
+    }
+}
+
+/// Returns the display color for a fauna type.
+#[must_use]
+pub const fn get_fauna_color(fauna: FaunaType) -> Color {
+    match fauna {
+        FaunaType::Wolf => Color::Red,
+        FaunaType::SpaceRat => Color::Rgb(105, 105, 105), // DimGray
     }
 }

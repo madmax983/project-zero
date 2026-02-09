@@ -1,0 +1,45 @@
+   Compiling zerocopy v0.8.39
+   Compiling wgpu-hal v24.0.4
+   Compiling wgpu-core v24.0.5
+   Compiling ahash v0.8.12
+   Compiling ppv-lite86 v0.2.21
+   Compiling hashbrown v0.14.5
+   Compiling rand_chacha v0.3.1
+   Compiling bevy_utils v0.15.3
+   Compiling bevy_reflect v0.15.1
+   Compiling rand v0.8.5
+   Compiling bevy_ecs v0.15.1
+   Compiling wgpu v24.0.5
+   Compiling scale v0.1.0 (/app)
+    Finished `dev` profile [optimized + debuginfo] target(s) in 1m 18s
+     Running `target/debug/headless`
+error: XDG_RUNTIME_DIR is invalid or not set in the environment.
+=== SCALE Headless Mode ===
+Type 'help' for commands, 'quit' to exit.
+
+=== COLONY STATUS (Tick 0) ===
+
+[ POPULATION ]
+  Citizens: 5
+
+[ RESOURCES ]
+  Food:  10.0
+  Wood:  15.0
+  Stone: 5.0
+
+[ BUILDINGS ]
+  Farms:   0
+  Housing: 0
+
+[ TASKS ]
+  Active Designations: 0
+===================================
+
+> Wolf at GridPosition { x: 0, y: 38 }
+Wolf at GridPosition { x: 0, y: 38 }
+Wolf at GridPosition { x: 1, y: 38 }
+Wolf at GridPosition { x: 1, y: 37 }
+Wolf at GridPosition { x: 1, y: 36 }
+Advanced 5 ticks (0 -> 5)
+
+> Goodbye!

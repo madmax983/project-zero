@@ -165,3 +165,7 @@ pub use atmosphere::*;
 /// Room quality calculation and memories (Spec 064).
 pub mod room_quality;
 pub use room_quality::*;
+
+/// Hostile Fauna (Spec 048).
+pub mod fauna;
+pub use fauna::*;
