@@ -1979,3 +1979,87 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Turn them away (they die/attack) or Integrate them (chaos/population boom)?
 
 ---
+
+## Emergent Faiths
+
+**Layer:** 1
+
+**Fantasy:** Your people turn to the divine when the material world fails them.
+
+**Mechanic:** Pops develop "Faith" based on what saves them. "Cult of the Sun" (Solar Power), "Children of the Core" (Geothermal). Temples devoted to these grant specific buffs but cause sectarian conflict.
+
+**Emergence:** You destroy the old coal plant to go green, and the "Coal-Burners" riot because you destroyed their shrine.
+
+**Tension:** Efficiency vs. Religious appeasement.
+
+---
+
+## Floating Colonies
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Living in the clouds of a gas giant, never touching the ground.
+
+**Mechanic:** On Gas Giants, there is no terrain. You build on "Platform" tiles that float. If a platform is destroyed (storm/attack), everything on it falls into the crusher depths.
+
+**Emergence:** A hurricane separates your power plant platform from the housing platform.
+
+**Tension:** Verticality and stability vs. Resource extraction.
+
+---
+
+## Cryo-Stasis Vaults
+
+**Layer:** 1
+
+**Fantasy:** Sleeping through the apocalypse.
+
+**Mechanic:** Constructible "Cryo-Pods". Player can manually freeze pops to stop their hunger/needs consumption. Thawing takes time and causes "Cryo-Sickness".
+
+**Emergence:** A famine hits. You freeze 90% of the population, leaving a skeleton crew of robots and martyrs to keep the power running until the harvest.
+
+**Tension:** Who gets the pod? Who stays awake to watch the fire?
+
+---
+
+## Gene Splicing
+
+**Layer:** 1
+
+**Fantasy:** Designing the perfect worker for a hellish world.
+
+**Mechanic:** Lab research unlocks "Gene Mods" (e.g., Night Vision, Gill-Lungs, Stone-Skin). Applying them costs Medical resources and time. Risks "Rejection" or mutation.
+
+**Emergence:** You mod your miners for the dark. They work great but now get "Light Blindness" and can never come to the surface again. A permanent underclass.
+
+**Tension:** Specialization (efficiency) vs. Flexibility (universality).
+
+---
+
+## Boarding Actions
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Close-quarters combat in the corridors of a dying ship.
+
+**Mechanic:** When a ship is disabled in Layer 2, you can launch a "Breaching Pod". This generates a small, temporary Layer 1 map (the enemy ship interior) for your squad to clear.
+
+**Emergence:** You board a "Pirate" ship to steal their fuel, only to find it's a refugee transport that fired in panic.
+
+**Tension:** Risk your elite soldiers for loot?
+
+---
+
+## University of the Stars
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Knowledge is power, and you are the librarian.
+
+**Mechanic:** High-level Education buildings attract "Foreign Students" (Pops from other Civs). They pay tuition (Credits/Diplomacy) but bring their home Civ's Ethics (Influence pressure).
+
+**Emergence:** Your colony becomes a pacifist democracy because you hosted too many students from the "Galactic Republic", toppling your own military junta.
+
+**Tension:** Profit/Science vs. Cultural contamination.
+
+---
