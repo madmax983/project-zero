@@ -27,6 +27,7 @@
 //!     ↓ calls mine_rock/chop_tree
 //! ```
 
+use crate::layer1::actions::fetch_tool::handle_fetch_tool;
 use crate::layer1::actions::hunger::handle_arrival as handle_hunger_arrival;
 use crate::layer1::actions::rest::handle_arrival as handle_rest_arrival;
 use crate::layer1::actions::{AssignedTo, AssignmentType};
@@ -34,21 +35,19 @@ use crate::layer1::building::{Building, OccupiedTiles};
 use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::edicts::{ColonyPolicies, get_work_speed_modifier};
 use crate::layer1::farm::Farm;
-use crate::layer1::funeral::{Corpse, Grave};
+use crate::layer1::funeral::{Corpse, Grave, handle_bury_corpse};
 use crate::layer1::health::Health;
 use crate::layer1::housing::Housing;
-use crate::layer1::items::{Equipment, Item, Tool, ToolType};
+use crate::layer1::items::{Equipment, Tool};
 use crate::layer1::map::GridPosition;
-use crate::layer1::memory::{Memories, MemoryType, calculate_effective_morale};
+use crate::layer1::memory::{Memories, calculate_effective_morale};
 use crate::layer1::needs::{Needs, get_morale_efficiency};
 use crate::layer1::pop::Speed;
-use crate::layer1::resources::{
-    ColonyResources, ForestryProgress, MiningProgress, chop_tree, mine_rock,
-};
+use crate::layer1::resources::{ColonyResources, process_logging, process_mining};
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
-use crate::layer1::social::{SocialBuff, Tavern};
+use crate::layer1::social::{SocialBuff, Tavern, handle_socialize};
 use crate::layer1::terrain::TerrainGrid;
-use crate::layer1::utility_ai::{ActionType, PopAction, StartPlan, manhattan_distance};
+use crate::layer1::utility_ai::{ActionType, PopAction, StartPlan};
 use crate::shared::log::MessageLog;
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
@@ -338,91 +337,6 @@ fn remove_movement_components(commands: &mut Commands, pop_entity: Entity) {
         .remove::<AtTarget>();
 }
 
-fn handle_fetch_tool(
-    commands: &mut Commands,
-    resources: &mut ColonyResources,
-    pop_entity: Entity,
-    equipment_opt: &mut Option<Mut<Equipment>>,
-) {
-    if resources.tools >= 1.0 {
-        resources.tools -= 1.0;
-
-        let tool_entity = commands
-            .spawn((
-                Item,
-                Tool {
-                    tool_type: ToolType::Pickaxe, // Generic for now
-                    durability: 100.0,
-                    max_durability: 100.0,
-                },
-            ))
-            .id();
-
-        if let Some(eq) = equipment_opt {
-            eq.tool = Some(tool_entity);
-        } else {
-            commands.entity(pop_entity).insert(Equipment {
-                tool: Some(tool_entity),
-            });
-        }
-    }
-}
-
-fn handle_socialize(
-    commands: &mut Commands,
-    taverns: &mut Query<&mut Tavern>,
-    target_entity: Entity,
-    pop_entity: Entity,
-) {
-    if let Ok(mut tavern) = taverns.get_mut(target_entity)
-        && tavern.visitors.len() < tavern.capacity
-    {
-        tavern.visitors.push(pop_entity);
-        commands.entity(pop_entity).insert(AssignedTo {
-            entity: target_entity,
-            assignment_type: AssignmentType::TavernVisitor,
-        });
-    }
-}
-
-fn handle_bury_corpse(
-    commands: &mut Commands,
-    corpses: &Query<&Corpse>,
-    graves: &mut Query<(Entity, &GridPosition, &mut Grave)>,
-    memories: &mut Query<&mut Memories>,
-    time: &Res<SimulationTime>,
-    target_entity: Entity,
-    pop_entity: Entity,
-    pop_pos: GridPosition,
-) {
-    // Verify corpse exists
-    if let Ok(corpse) = corpses.get(target_entity) {
-        // Find nearest empty grave
-        let best_grave = graves.iter_mut().min_by_key(|(_, grave_pos, grave)| {
-            if grave.occupied {
-                i32::MAX
-            } else {
-                manhattan_distance(&pop_pos, grave_pos)
-            }
-        });
-
-        if let Some((_, _, mut grave)) = best_grave {
-            if !grave.occupied {
-                // Perform burial
-                grave.occupied = true;
-                grave.corpse_name = Some(corpse.name.clone());
-
-                commands.entity(target_entity).despawn();
-
-                // Apply closure
-                if let Ok(mut mem) = memories.get_mut(pop_entity) {
-                    mem.add(MemoryType::AttendedFuneral, time.tick);
-                }
-            }
-        }
-    }
-}
-
 fn is_walkable_terrain(terrain: &TerrainGrid, x: i32, y: i32) -> bool {
     if let (Ok(x_idx), Ok(y_idx)) = (usize::try_from(x), usize::try_from(y)) {
         terrain
@@ -653,29 +567,6 @@ fn cleanup_pop_work_state(world: &mut World, pop_entity: Entity) {
     }
 }
 
-fn process_mining(world: &mut World, designation_entity: Entity, work_amount: f32) {
-    // Ensure MiningProgress exists
-    if world.get::<MiningProgress>(designation_entity).is_none() {
-        world
-            .entity_mut(designation_entity)
-            .insert(MiningProgress::default());
-    }
-    mine_rock(world, designation_entity, work_amount);
-}
-
-fn process_logging(world: &mut World, designation_entity: Entity, work_amount: f32) {
-    // Ensure ForestryProgress exists
-    if world.get::<ForestryProgress>(designation_entity).is_none() {
-        world
-            .entity_mut(designation_entity)
-            .insert(ForestryProgress {
-                current: 0.0,
-                max: 50.0,
-            });
-    }
-    chop_tree(world, designation_entity, work_amount);
-}
-
 fn handle_workplace_hazards(world: &mut World, pop_entity: Entity, action_type: ActionType) {
     let danger = action_type.danger_level();
     let mut rng = rand::thread_rng();
@@ -697,8 +588,10 @@ fn handle_workplace_hazards(world: &mut World, pop_entity: Entity, action_type: 
 mod tests {
     use super::*;
     use crate::layer1::building::{Building, BuildingType};
+    use crate::layer1::items::{Item, ToolType};
     use crate::layer1::needs::Needs;
     use crate::layer1::pop::Pop;
+    use crate::layer1::resources::{ForestryProgress, MiningProgress};
     use crate::layer1::terrain::TerrainType;
     use crate::layer1::utility_ai::{PopAction, UtilityWeights};
     use bevy_ecs::system::RunSystemOnce;

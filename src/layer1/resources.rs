@@ -633,6 +633,31 @@ pub fn chop_tree(world: &mut World, designation_entity: Entity, work_amount: f32
     }
 }
 
+/// Helper to ensure MiningProgress component exists and call mine_rock.
+pub fn process_mining(world: &mut World, designation_entity: Entity, work_amount: f32) {
+    // Ensure MiningProgress exists
+    if world.get::<MiningProgress>(designation_entity).is_none() {
+        world
+            .entity_mut(designation_entity)
+            .insert(MiningProgress::default());
+    }
+    mine_rock(world, designation_entity, work_amount);
+}
+
+/// Helper to ensure ForestryProgress component exists and call chop_tree.
+pub fn process_logging(world: &mut World, designation_entity: Entity, work_amount: f32) {
+    // Ensure ForestryProgress exists
+    if world.get::<ForestryProgress>(designation_entity).is_none() {
+        world
+            .entity_mut(designation_entity)
+            .insert(ForestryProgress {
+                current: 0.0,
+                max: 50.0,
+            });
+    }
+    chop_tree(world, designation_entity, work_amount);
+}
+
 #[cfg(test)]
 #[allow(clippy::float_cmp)]
 mod tests {
