@@ -97,7 +97,9 @@ pub fn build_simulation_schedule() -> Schedule {
         produce_food_system.after(work_execution_system),
         process_refining_system.after(work_execution_system),
         process_research_system.after(work_execution_system),
-        restore_rest_in_housing_system.after(work_execution_system),
+        restore_rest_in_housing_system
+            .after(work_execution_system)
+            .after(update_noise_system),
         restore_leisure_system.after(work_execution_system),
         healing_system.after(work_execution_system),
         crate::layer1::beauty::update_beauty_grid_system.after(work_execution_system),

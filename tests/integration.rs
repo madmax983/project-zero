@@ -18,3 +18,6 @@ mod chronicle_rumor;
 
 #[path = "integration/power_refining_seam.rs"]
 mod power_refining_seam;
+
+#[path = "integration/acoustics_rest.rs"]
+mod acoustics_rest;
