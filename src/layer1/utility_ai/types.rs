@@ -74,11 +74,20 @@ pub enum ActionType {
     ///
     /// The fallback action when no other options are viable or beneficial.
     Idle,
+
+    /// Destroy structures due to mental break.
+    Vandalize,
+
+    /// Consume resources uncontrollably due to mental break.
+    Binge,
+
+    /// Wander aimlessly in a catatonic state due to mental break.
+    Daze,
 }
 
 impl ActionType {
     /// Total number of action types. Used for array sizing.
-    pub const COUNT: usize = 12;
+    pub const COUNT: usize = 15;
 
     /// Converts action type to a unique array index (0..COUNT-1).
     #[must_use]
@@ -96,6 +105,9 @@ impl ActionType {
             Self::BuryCorpse => 9,
             Self::FetchTool => 10,
             Self::Idle => 11,
+            Self::Vandalize => 12,
+            Self::Binge => 13,
+            Self::Daze => 14,
         }
     }
 

@@ -156,3 +156,5 @@ pub use energy::*;
 /// Pop lifecycle and aging (Spec 062).
 pub mod lifecycle;
 pub use lifecycle::*;
+/// Civil unrest and mental break system.
+pub mod unrest;

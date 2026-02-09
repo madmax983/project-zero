@@ -53,6 +53,7 @@ use crate::layer1::science::Anomaly;
 use crate::layer1::social::{Tavern, evaluate_socialize};
 use crate::layer1::stockpile::Stockpile;
 use crate::layer1::tech::Library;
+use crate::layer1::unrest::{MentalBreakType, MentalState};
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 
@@ -96,6 +97,7 @@ pub fn evaluate_actions_system(world: &mut World) {
 
     // Collect pop data
     #[allow(unused_mut)]
+    #[allow(clippy::type_complexity)]
     // We break up the query to avoid complex iterator types
     let mut pop_data: Vec<(
         Entity,
@@ -104,6 +106,7 @@ pub fn evaluate_actions_system(world: &mut World) {
         UtilityWeights,
         PopAction,
         Option<Equipment>,
+        Option<MentalState>,
     )> = world
         .query::<(
             Entity,
@@ -112,10 +115,11 @@ pub fn evaluate_actions_system(world: &mut World) {
             &UtilityWeights,
             &PopAction,
             Option<&Equipment>,
+            Option<&MentalState>,
         )>()
         .iter(world)
-        .filter(|(_, _, _, _, action, _)| action.ticks_committed >= config.evaluation_interval)
-        .map(|(e, p, n, w, a, eq)| {
+        .filter(|(_, _, _, _, action, _, _)| action.ticks_committed >= config.evaluation_interval)
+        .map(|(e, p, n, w, a, eq, m)| {
             (
                 e,
                 *p,
@@ -127,6 +131,7 @@ pub fn evaluate_actions_system(world: &mut World) {
                     ticks_committed: a.ticks_committed,
                 },
                 eq.cloned(),
+                m.cloned(),
             )
         })
         .collect();
@@ -165,7 +170,7 @@ pub fn evaluate_actions_system(world: &mut World) {
     let resources = world.resource::<ColonyResources>().clone();
 
     // Evaluate each pop
-    for (pop_entity, pop_pos, needs, weights, mut action, equipment_opt) in pop_data {
+    for (pop_entity, pop_pos, needs, weights, mut action, equipment_opt, mental_state_opt) in pop_data {
         // Optimization: Avoid heap allocation (Vec) for utilities.
         // Instead, track the best action found so far in a single pass.
 
@@ -174,6 +179,21 @@ pub fn evaluate_actions_system(world: &mut World) {
         let mut best_utility = evaluate_idle(&needs);
         let mut best_target = None;
 
+        let mental_break = if let Some(MentalState::Broken(break_type)) = mental_state_opt {
+            Some(break_type)
+        } else {
+            None
+        };
+
+        if let Some(break_type) = mental_break {
+            best_utility = 100.0;
+            best_target = None;
+            best_action = match break_type {
+                MentalBreakType::Vandalize => ActionType::Vandalize,
+                MentalBreakType::Binge => ActionType::Binge,
+                MentalBreakType::Daze => ActionType::Daze,
+            };
+        } else {
         // Helper to update best if we found something better
         let mut check_best = |act, util, tgt| {
             if util > best_utility {
@@ -279,6 +299,7 @@ pub fn evaluate_actions_system(world: &mut World) {
         ) {
             check_best(ActionType::BuryCorpse, utility, Some(target));
         }
+        } // End of else block (normal evaluation)
 
         // Switch if best exceeds threshold
         if best_utility > action.current_utility + config.switch_threshold {
@@ -363,7 +384,10 @@ pub fn track_plan_outcomes_system(
             | ActionType::SeekMedicalCare
             | ActionType::BuryCorpse
             | ActionType::FetchTool
-            | ActionType::Idle => true,
+            | ActionType::Idle
+            | ActionType::Vandalize
+            | ActionType::Binge
+            | ActionType::Daze => true,
         };
 
         #[allow(clippy::cast_possible_truncation)]
