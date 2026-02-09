@@ -81,6 +81,7 @@ pub fn build_simulation_schedule() -> Schedule {
         movement_system.after(apply_lighting_penalties_system),
         arrival_handler_system.after(movement_system),
         work_execution_system.after(arrival_handler_system),
+        crate::layer1::execution::vandalize_execution_system.after(arrival_handler_system),
         haul_system.after(arrival_handler_system),
         process_scan_system.after(arrival_handler_system),
     ));
@@ -158,6 +159,8 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::rumor::generate_rumor_system.after(death_system),
         crate::layer1::rumor::exchange_rumors_system.after(death_system),
         crate::layer1::funeral::grief_system.after(death_system),
+        crate::layer1::unrest::check_mental_break_system.after(decay_needs_system),
+        crate::layer1::unrest::recover_mental_break_system.after(decay_needs_system),
         // Process new rumors and affinity changes
         modify_affinity_system.after(crate::layer1::rumor::exchange_rumors_system),
         // Process chronicle events

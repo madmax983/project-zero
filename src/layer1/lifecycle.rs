@@ -32,7 +32,8 @@ pub struct Age {
 
 impl Age {
     /// Creates a new Age component from years.
-    pub fn new(years: u64) -> Self {
+    #[must_use]
+    pub const fn new(years: u64) -> Self {
         let ticks = years * TICKS_PER_YEAR;
         let stage = if ticks < AGE_ADULT {
             LifeStage::Child
@@ -53,7 +54,7 @@ pub fn aging_system(
     mut query: Query<(Entity, &mut Age, Option<&mut Speed>)>,
     mut log: Option<ResMut<MessageLog>>,
 ) {
-    for (_entity, mut age, mut speed) in query.iter_mut() {
+    for (_entity, mut age, mut speed) in &mut query {
         age.ticks_alive += 1;
 
         let new_stage = if age.ticks_alive >= AGE_ELDER {
@@ -85,7 +86,7 @@ pub fn aging_system(
 pub fn natural_death_system(mut query: Query<(&Age, &mut crate::layer1::health::Health)>) {
     let mut rng = rand::thread_rng();
 
-    for (age, mut health) in query.iter_mut() {
+    for (age, mut health) in &mut query {
         if age.stage == LifeStage::Elder {
             #[allow(clippy::cast_precision_loss)]
             let years = age.ticks_alive as f64 / TICKS_PER_YEAR as f64;
@@ -97,7 +98,7 @@ pub fn natural_death_system(mut query: Query<(&Age, &mut crate::layer1::health::
                 // Over 1000 ticks (1 year), chance is ~18%.
                 let chance = (years - 60.0) * 0.00001;
 
-                if rng.gen_bool(chance.max(0.0).min(1.0)) {
+                if rng.gen_bool(chance.clamp(0.0, 1.0)) {
                     health.current = 0.0; // Die
                 }
             }

@@ -8,7 +8,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 - [ ] `043` Defensive Structures — `specs/043-defensive-structures.md`
 - [ ] `048` Hostile Fauna — `specs/048-hostile-fauna.md`
-- [ ] `050` Civil Unrest — `specs/050-civil-unrest.md`
 - [ ] `052` Archaeological Excavation — `specs/052-archaeological-excavation.md`
 - [ ] `059` Soil Fertility — `specs/059-soil-fertility.md`
 - [ ] `061` Cultural Artifacts — `specs/061-cultural-artifacts.md`
