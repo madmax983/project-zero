@@ -1,16 +1,16 @@
 #[cfg(test)]
 mod tests {
+    use bevy_ecs::prelude::*;
+    use bevy_ecs::system::RunSystemOnce;
     use scale::layer1::{
+        GridPosition,
         acoustic::{NoiseMap, NoiseSource, update_noise_system},
         building::{Building, BuildingType},
         housing::{Housing, restore_rest_in_housing_system},
         needs::Needs,
         pop::Pop,
         terrain::generate_terrain,
-        GridPosition,
     };
-    use bevy_ecs::prelude::*;
-    use bevy_ecs::system::RunSystemOnce;
 
     #[test]
     fn test_noise_reduces_rest_recovery() {
@@ -21,15 +21,25 @@ mod tests {
         world.insert_resource(generate_terrain(10, 10));
 
         // Create two pops with low rest
-        let pop_quiet = world.spawn((
-            Pop,
-            Needs { rest: 0.1, ..Default::default() },
-        )).id();
+        let pop_quiet = world
+            .spawn((
+                Pop,
+                Needs {
+                    rest: 0.1,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
-        let pop_noisy = world.spawn((
-            Pop,
-            Needs { rest: 0.1, ..Default::default() },
-        )).id();
+        let pop_noisy = world
+            .spawn((
+                Pop,
+                Needs {
+                    rest: 0.1,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         // Create quiet housing at (0, 0)
         let housing_quiet = Housing {
@@ -38,7 +48,9 @@ mod tests {
         };
         world.spawn((
             housing_quiet,
-            Building { building_type: BuildingType::Housing },
+            Building {
+                building_type: BuildingType::Housing,
+            },
             GridPosition { x: 0, y: 0 },
         ));
 
@@ -49,13 +61,18 @@ mod tests {
         };
         world.spawn((
             housing_noisy,
-            Building { building_type: BuildingType::Housing },
+            Building {
+                building_type: BuildingType::Housing,
+            },
             GridPosition { x: 5, y: 5 },
         ));
 
         // Add noise source at (5, 5)
         world.spawn((
-            NoiseSource { radius: 5.0, intensity: 1.0 },
+            NoiseSource {
+                radius: 5.0,
+                intensity: 1.0,
+            },
             GridPosition { x: 5, y: 5 },
         ));
 
@@ -66,7 +83,9 @@ mod tests {
         // 2. Restore rest
         // We run this multiple times to see a difference
         for _ in 0..10 {
-            world.run_system_once(restore_rest_in_housing_system).unwrap();
+            world
+                .run_system_once(restore_rest_in_housing_system)
+                .unwrap();
         }
 
         // Check results
@@ -76,6 +95,9 @@ mod tests {
         println!("Rest Quiet: {}, Rest Noisy: {}", rest_quiet, rest_noisy);
 
         // Expectation: Quiet rest recovery > Noisy rest recovery
-        assert!(rest_quiet > rest_noisy, "Noisy environment should reduce rest recovery");
+        assert!(
+            rest_quiet > rest_noisy,
+            "Noisy environment should reduce rest recovery"
+        );
     }
 }

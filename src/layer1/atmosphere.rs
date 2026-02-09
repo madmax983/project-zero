@@ -1,10 +1,10 @@
 // src/layer1/atmosphere.rs
 
-use bevy_ecs::prelude::*;
-use crate::layer1::map::GridPosition;
-use crate::layer1::health::Health;
-use crate::layer1::pop::Pop;
 use crate::layer1::building::{Building, BuildingType};
+use crate::layer1::health::Health;
+use crate::layer1::map::GridPosition;
+use crate::layer1::pop::Pop;
+use bevy_ecs::prelude::*;
 
 /// Represents the atmospheric pollution layer.
 /// Values range from 0.0 (Clean) to 1.0 (Toxic).
@@ -22,7 +22,11 @@ impl AtmosphereGrid {
     /// Create a new empty atmosphere grid.
     #[must_use]
     pub fn new(width: usize, height: usize) -> Self {
-        Self { width, height, values: vec![0.0; width * height] }
+        Self {
+            width,
+            height,
+            values: vec![0.0; width * height],
+        }
     }
 
     /// Get pollution level at (x, y). Returns 0.0 if out of bounds.
@@ -79,7 +83,11 @@ impl AtmosphereGrid {
                 for (dx, dy) in [(-1, 0), (1, 0), (0, -1), (0, 1)] {
                     let nx = x as i32 + dx;
                     let ny = y as i32 + dy;
-                    if nx >= 0 && ny >= 0 && (nx as usize) < self.width && (ny as usize) < self.height {
+                    if nx >= 0
+                        && ny >= 0
+                        && (nx as usize) < self.width
+                        && (ny as usize) < self.height
+                    {
                         sum += self.get(nx, ny);
                         count += 1.0;
                     }
@@ -150,10 +158,10 @@ pub fn pollution_effects_system(world: &mut World) {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::map::GridPosition;
-    use crate::layer1::health::Health;
-    use crate::layer1::pop::Pop;
     use crate::layer1::building::{Building, BuildingType};
+    use crate::layer1::health::Health;
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::pop::Pop;
 
     #[test]
     fn test_atmosphere_grid_initialization() {
@@ -171,7 +179,9 @@ mod tests {
 
         // Spawn a Smelter (dirty building)
         world.spawn((
-            Building { building_type: BuildingType::Smelter },
+            Building {
+                building_type: BuildingType::Smelter,
+            },
             GridPosition { x: 5, y: 5 },
         ));
 
@@ -192,9 +202,18 @@ mod tests {
         grid.diffuse();
 
         // Center should decrease, neighbors should increase
-        assert!(grid.get(1, 1) < 10.0, "Pollution should diffuse away from center");
-        assert!(grid.get(0, 1) > 0.0, "Pollution should diffuse to neighbors");
-        assert!(grid.get(1, 0) > 0.0, "Pollution should diffuse to neighbors");
+        assert!(
+            grid.get(1, 1) < 10.0,
+            "Pollution should diffuse away from center"
+        );
+        assert!(
+            grid.get(0, 1) > 0.0,
+            "Pollution should diffuse to neighbors"
+        );
+        assert!(
+            grid.get(1, 0) > 0.0,
+            "Pollution should diffuse to neighbors"
+        );
     }
 
     #[test]
@@ -205,17 +224,18 @@ mod tests {
         world.insert_resource(grid);
 
         // Spawn Pop in pollution
-        let pop = world.spawn((
-            Pop,
-            Health::default(),
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let pop = world
+            .spawn((Pop, Health::default(), GridPosition { x: 5, y: 5 }))
+            .id();
 
         // Run effects
         pollution_effects_system(&mut world);
 
         // Health should drop
         let health = world.get::<Health>(pop).unwrap();
-        assert!(health.current < 100.0, "Health should drop due to pollution");
+        assert!(
+            health.current < 100.0,
+            "Health should drop due to pollution"
+        );
     }
 }

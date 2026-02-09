@@ -62,6 +62,8 @@ pub enum BuildingType {
     Generator,
     /// Power transmission pole (Energy).
     PowerPole,
+    /// Basic wall for enclosure.
+    Wall,
 }
 
 impl BuildingType {
@@ -73,6 +75,7 @@ impl BuildingType {
             Self::Landfill => -10.0,
             Self::Grave => -2.0, // Graves are slightly spooky
             Self::FlowerBed | Self::TradeDepot => 5.0, // Trade brings goods and culture
+            Self::Wall => 0.0,   // Walls are neutral
             _ => 0.0,
         }
     }
@@ -121,6 +124,7 @@ impl BuildingType {
             Self::TradeDepot => "Trade Depot",
             Self::Generator => "Generator",
             Self::PowerPole => "Power Pole",
+            Self::Wall => "Wall",
         }
     }
 
@@ -146,6 +150,7 @@ impl BuildingType {
             Self::TradeDepot => '$',
             Self::Generator => 'G',
             Self::PowerPole => '|',
+            Self::Wall => '#',
         }
     }
 
@@ -153,6 +158,10 @@ impl BuildingType {
     #[must_use]
     pub const fn cost(&self) -> ColonyResources {
         match self {
+            Self::Wall => ColonyResources {
+                wood: 5.0,
+                ..ColonyResources::zeroed()
+            },
             Self::Housing => ColonyResources {
                 wood: 10.0,
                 ..ColonyResources::zeroed()
@@ -340,6 +349,9 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
     entity.insert(crate::layer1::structure::Structure::default());
 
     match building_type {
+        BuildingType::Wall => {
+            entity.insert(Flammable::default());
+        }
         BuildingType::Housing => {
             entity.insert((
                 Housing::default(),
@@ -608,7 +620,8 @@ mod tests {
         assert_eq!(BuildingType::Grave.next(), BuildingType::TradeDepot);
         assert_eq!(BuildingType::TradeDepot.next(), BuildingType::Generator);
         assert_eq!(BuildingType::Generator.next(), BuildingType::PowerPole);
-        assert_eq!(BuildingType::PowerPole.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::PowerPole.next(), BuildingType::Wall);
+        assert_eq!(BuildingType::Wall.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -714,6 +727,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::PowerPole);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Wall);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

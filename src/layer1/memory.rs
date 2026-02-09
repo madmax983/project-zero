@@ -18,6 +18,26 @@ pub enum MemoryType {
     SawCorpse,
     /// Attended a funeral (closure).
     AttendedFuneral,
+    /// Slept in an awful room.
+    SleptInAwfulRoom,
+    /// Slept in a dull room.
+    SleptInDullRoom,
+    /// Slept in a decent room.
+    SleptInDecentRoom,
+    /// Slept in a great room.
+    SleptInGreatRoom,
+    /// Slept in a legendary room.
+    SleptInLegendaryRoom,
+    /// Ate in an awful room.
+    AteInAwfulRoom,
+    /// Ate in a dull room.
+    AteInDullRoom,
+    /// Ate in a decent room.
+    AteInDecentRoom,
+    /// Ate in a great room.
+    AteInGreatRoom,
+    /// Ate in a legendary room.
+    AteInLegendaryRoom,
 }
 
 impl MemoryType {
@@ -30,6 +50,16 @@ impl MemoryType {
             Self::AteFineMeal | Self::AttendedFuneral => 0.1,
             Self::WonFight => 0.05,
             Self::SawCorpse => -0.05,
+            Self::SleptInAwfulRoom => -0.1,
+            Self::SleptInDullRoom => -0.05,
+            Self::SleptInDecentRoom => 0.0,
+            Self::SleptInGreatRoom => 0.05,
+            Self::SleptInLegendaryRoom => 0.1,
+            Self::AteInAwfulRoom => -0.05,
+            Self::AteInDullRoom => -0.02,
+            Self::AteInDecentRoom => 0.0,
+            Self::AteInGreatRoom => 0.02,
+            Self::AteInLegendaryRoom => 0.05,
         }
     }
 
@@ -42,6 +72,17 @@ impl MemoryType {
             Self::StarvationTrauma | Self::AttendedFuneral => 0.001, // Medium
             Self::AteFineMeal | Self::WonFight => 0.002, // Fast (500 ticks)
             Self::SawCorpse => 0.01,        // Very fast fade (100 ticks)
+            // Room thoughts last 1 day (100 ticks)
+            Self::SleptInAwfulRoom
+            | Self::SleptInDullRoom
+            | Self::SleptInDecentRoom
+            | Self::SleptInGreatRoom
+            | Self::SleptInLegendaryRoom
+            | Self::AteInAwfulRoom
+            | Self::AteInDullRoom
+            | Self::AteInDecentRoom
+            | Self::AteInGreatRoom
+            | Self::AteInLegendaryRoom => 0.01,
         }
     }
 }
