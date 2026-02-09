@@ -169,3 +169,5 @@ pub use room_quality::*;
 /// Hostile Fauna (Spec 048).
 pub mod fauna;
 pub use fauna::*;
+pub mod art;
+pub use art::*;

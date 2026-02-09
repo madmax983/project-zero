@@ -18,7 +18,8 @@ use crate::gpu::evaluate::gpu_evaluate_actions;
 use crate::layer1::{
     AddChronicleEvent, AffinityChange, PopDied, advance_season_system, aging_system,
     apply_lighting_penalties_system, apply_noise_effects_system, arrival_handler_system,
-    check_milestones_system, chronicle_event_handler_system, chronicle_rumor_bridge_system,
+    art_generation_system, art_observation_system, check_milestones_system,
+    chronicle_event_handler_system, chronicle_rumor_bridge_system,
     clean_dead_residents_system, clean_dead_workers_system, cleanup_previous_assignment_system,
     clothing_wear_system, consume_food_system, death_system, decay_needs_system,
     fire_damage_pops_system, fire_damage_system, fire_spread_system, haul_system, healing_system,
@@ -114,6 +115,7 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer1::beauty::update_beauty_grid_system),
         crate::layer1::trade::merchant_arrival_system.after(work_execution_system),
         crate::layer1::energy::power_grid_system.after(work_execution_system),
+        art_generation_system.after(work_execution_system),
     ));
 
     #[cfg(feature = "nova")]
@@ -179,6 +181,7 @@ pub fn build_simulation_schedule() -> Schedule {
         chronicle_event_handler_system.after(check_milestones_system),
         chronicle_rumor_bridge_system.after(check_milestones_system),
         pop_death_chronicle_bridge.after(death_system),
+        art_observation_system.after(death_system),
     ));
 
     schedule
