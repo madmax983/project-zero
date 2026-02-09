@@ -2063,3 +2063,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Profit/Science vs. Cultural contamination.
 
 ---
+
+## Heirloom Items
+
+**Layer:** 1
+
+**Fantasy:** "This rifle belonged to the Founder. It never misses."
+
+**Mechanic:** Tools and weapons track their "History" (kills, crafts, years owned). High-history items gain unique names and stat buffs. They persist after the owner dies.
+
+**Emergence:** A desperate fight to recover a "Legendary" medical kit from a burning building, not for the resources, but for the +20% Heal Rate it grants.
+
+**Tension:** Burry the hero with their gear (respect) or strip it for the next recruit (utility)?
+
+---
+
+## Diplomatic Reflection
+
+**Layer:** 3
+
+**Fantasy:** The galaxy judges you by your actions, not your words.
+
+**Mechanic:** Your Civilization's diplomatic traits (e.g., "Warlike", "Ecological") are dynamically updated based on the aggregate actions of your Layer 1 colonies (e.g., kills per capita, trees planted).
+
+**Emergence:** You try to roleplay a pacifist trader, but your colonists keep slaughtering local wildlife for leather. The galaxy labels you "Barbarians" and sanctions you.
+
+**Tension:** Enforce strict laws to maintain a diplomatic image, or let colonies adapt to their harsh realities?
+
+---
+
+## Migratory Flora
+
+**Layer:** 1
+
+**Fantasy:** The forest is not a location; it is a slow-moving herd.
+
+**Mechanic:** Certain plant species slowly shift position (1 tile per week) towards preferred conditions (Water, Light) or away from threats (Pollution, Fire).
+
+**Emergence:** You build a lumber mill next to the "Ironwood Grove". Over a year, the grove migrates up the mountain, leaving your mill stranded and useless.
+
+**Tension:** Chase the resources (mobile camps) or try to pen them in (walls/bait)?
+
+---
+
+## Orbital Bombardment
+
+**Layer:** Cross-layer
+
+**Fantasy:** Calling down the thunder.
+
+**Mechanic:** Player can order Layer 2 warships to fire on Layer 1 targets. Causes massive damage/terraforming but has a blast radius and "Scatter" chance based on atmosphere/tech.
+
+**Emergence:** You call a strike on a bug hive. The shot scatters and vaporizes your own forward operating base.
+
+**Tension:** Risk the "Rod from God" (friendly fire) or fight on the ground (attrition)?
+
+---
