@@ -24,6 +24,7 @@
 
 use super::health::Health;
 use super::items::Equipment;
+use super::lifecycle::Age;
 use super::map::GridPosition;
 use super::memory::Memories;
 use super::needs::Needs;
@@ -159,6 +160,7 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
                 Equipment::default(),
                 UtilityWeights::default(),
                 Knowledge::default(),
+                Age::new(rng.gen_range(20..40)),
             ));
             spawned += 1;
         }
@@ -504,6 +506,25 @@ mod tests {
         for _ in 0..50 {
             let name = generate_name(&mut rng);
             assert!(!name.0.is_empty(), "Generated name should not be empty");
+        }
+    }
+
+    #[test]
+    fn test_spawn_initial_pops_have_age() {
+        let mut world = World::new();
+        let terrain = generate_terrain(80, 50);
+        world.insert_resource(terrain);
+
+        spawn_initial_pops(&mut world);
+
+        let mut query = world.query::<(&Pop, &super::super::lifecycle::Age)>();
+        let count = query.iter(&world).count();
+        assert_eq!(count, 5, "All 5 pops should have Age component");
+
+        for (_, age) in query.iter(&world) {
+            // Check age range (20-40 years)
+            let years = age.ticks_alive / crate::layer1::balance::TICKS_PER_YEAR;
+            assert!(years >= 20 && years < 40, "Age should be between 20 and 40");
         }
     }
 }
