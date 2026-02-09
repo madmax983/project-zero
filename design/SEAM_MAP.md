@@ -77,3 +77,11 @@ Map of connected and disconnected systems.
 - [ ] Food Production -> Needs Satisfaction (Checked: Connected via `consume_food_system`)
 - [ ] Building Costs -> Resource Deduction (Checked: Connected via `try_place_building`)
 - [ ] Pop Death -> UI Counter (Resolved by INT-002)
+
+### INT-007: Acoustics -> Rest Recovery
+- **Date:** 2026-02-09
+- **Systems connected:** `update_noise_system` -> `restore_rest_in_housing_system` -> `Needs.rest`
+- **Glue added:**
+    - Modified `restore_rest_in_housing_system` in `src/layer1/housing.rs` to query `NoiseMap`.
+    - Updated `SimulationSchedule` in `src/simulation.rs` to order rest recovery after noise update.
+- **Tests:** `tests/integration/acoustics_rest.rs`

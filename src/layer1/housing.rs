@@ -93,6 +93,7 @@ pub fn restore_rest_in_housing_system(
     )>,
     mut needs_query: Query<&mut Needs>,
     zone_grid: Option<Res<crate::layer1::zone::ZoneGrid>>,
+    noise_map: Option<Res<crate::layer1::acoustic::NoiseMap>>,
 ) {
     for (housing, building, pos) in &housing_query {
         let zone_bonus = zone_grid.as_ref().map_or(0.0, |grid| {
@@ -100,9 +101,15 @@ pub fn restore_rest_in_housing_system(
             crate::layer1::zone::calculate_zone_bonus(zone, building.building_type)
         });
 
+        let noise_penalty = if let Some(map) = &noise_map {
+            map.get(pos.x, pos.y) * 0.5 // Reduce rest recovery by up to 50%
+        } else {
+            0.0
+        };
+
         for &resident in &housing.residents {
             if let Ok(mut needs) = needs_query.get_mut(resident) {
-                let amount = REST_RESTORE_PER_TICK * (1.0 + zone_bonus);
+                let amount = REST_RESTORE_PER_TICK * (1.0 + zone_bonus) * (1.0 - noise_penalty);
                 needs.rest = (needs.rest + amount).min(1.0);
             }
         }
