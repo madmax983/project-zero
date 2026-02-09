@@ -74,3 +74,125 @@ pub fn evaluate_haul<'a>(
 
     best
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
+    use crate::layer1::stockpile::Stockpile;
+    use crate::layer1::utility_ai::UtilityWeights;
+
+    #[test]
+    fn test_evaluate_haul_no_stockpiles() {
+        let pop_pos = GridPosition { x: 0, y: 0 };
+        let weights = UtilityWeights::default();
+        let resources = ColonyResources::default();
+        let items: Vec<(Entity, &GridPosition, &ResourceItem)> = vec![];
+        let stockpiles: Vec<(Entity, &GridPosition, &Stockpile)> = vec![];
+
+        let result = evaluate_haul(
+            &pop_pos,
+            &weights,
+            items.into_iter(),
+            stockpiles.into_iter(),
+            &resources,
+        );
+        assert!(result.is_none());
+    }
+
+    #[test]
+    fn test_evaluate_haul_no_items() {
+        let pop_pos = GridPosition { x: 0, y: 0 };
+        let weights = UtilityWeights::default();
+        let resources = ColonyResources::default();
+        let items: Vec<(Entity, &GridPosition, &ResourceItem)> = vec![];
+
+        let stockpile_entity = Entity::from_raw(1);
+        let stockpile_pos = GridPosition { x: 10, y: 10 };
+        let stockpile_comp = Stockpile::default();
+        let stockpiles = vec![(stockpile_entity, &stockpile_pos, &stockpile_comp)];
+
+        let result = evaluate_haul(
+            &pop_pos,
+            &weights,
+            items.into_iter(),
+            stockpiles.into_iter(),
+            &resources,
+        );
+        assert!(result.is_none());
+    }
+
+    #[test]
+    fn test_evaluate_haul_full_capacity() {
+        let pop_pos = GridPosition { x: 0, y: 0 };
+        let weights = UtilityWeights::default();
+        let mut resources = ColonyResources::default();
+        // Fill wood capacity
+        resources.wood = resources.max_wood;
+
+        let item_entity = Entity::from_raw(2);
+        let item_pos = GridPosition { x: 5, y: 5 };
+        let item_comp = ResourceItem {
+            resource_type: ResourceType::Wood,
+            amount: 10.0,
+        };
+        let items = vec![(item_entity, &item_pos, &item_comp)];
+
+        let stockpile_entity = Entity::from_raw(1);
+        let stockpile_pos = GridPosition { x: 10, y: 10 };
+        let stockpile_comp = Stockpile::default();
+        let stockpiles = vec![(stockpile_entity, &stockpile_pos, &stockpile_comp)];
+
+        let result = evaluate_haul(
+            &pop_pos,
+            &weights,
+            items.into_iter(),
+            stockpiles.into_iter(),
+            &resources,
+        );
+        assert!(result.is_none(), "Should not haul if wood storage is full");
+    }
+
+    #[test]
+    fn test_evaluate_haul_finds_closest_item() {
+        let pop_pos = GridPosition { x: 0, y: 0 };
+        let weights = UtilityWeights::default();
+        let resources = ColonyResources::default();
+
+        let item_close = ResourceItem {
+            resource_type: ResourceType::Wood,
+            amount: 10.0,
+        };
+        let item_far = ResourceItem {
+            resource_type: ResourceType::Stone,
+            amount: 10.0,
+        };
+        let pos_close = GridPosition { x: 2, y: 0 };
+        let pos_far = GridPosition { x: 10, y: 0 };
+        let entity_close = Entity::from_raw(1);
+        let entity_far = Entity::from_raw(2);
+
+        let items = vec![
+            (entity_far, &pos_far, &item_far),
+            (entity_close, &pos_close, &item_close),
+        ];
+
+        let stockpile_entity = Entity::from_raw(3);
+        let stockpile_pos = GridPosition { x: 10, y: 10 };
+        let stockpile_comp = Stockpile::default();
+        let stockpiles = vec![(stockpile_entity, &stockpile_pos, &stockpile_comp)];
+
+        let result = evaluate_haul(
+            &pop_pos,
+            &weights,
+            items.into_iter(),
+            stockpiles.into_iter(),
+            &resources,
+        );
+
+        assert!(result.is_some());
+        let (_, best_entity) = result.unwrap();
+        assert_eq!(best_entity, entity_close);
+    }
+}

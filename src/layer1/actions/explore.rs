@@ -36,3 +36,71 @@ pub fn evaluate_explore<'a>(
     }
     best
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::science::{Anomaly, AnomalyType};
+    use crate::layer1::utility_ai::UtilityWeights;
+
+    #[test]
+    fn test_evaluate_explore_no_anomalies() {
+        let pop_pos = GridPosition { x: 0, y: 0 };
+        let weights = UtilityWeights::default();
+        let anomalies: Vec<(Entity, &GridPosition, &Anomaly)> = vec![];
+
+        let result = evaluate_explore(&pop_pos, &weights, anomalies.into_iter());
+        assert!(result.is_none());
+    }
+
+    #[test]
+    fn test_evaluate_explore_finds_closest_anomaly() {
+        let pop_pos = GridPosition { x: 0, y: 0 };
+        let weights = UtilityWeights::default();
+
+        let anomaly_close = Anomaly {
+            anomaly_type: AnomalyType::Ruins,
+            reward_amount: 10.0,
+        };
+        let anomaly_far = Anomaly {
+            anomaly_type: AnomalyType::Geode,
+            reward_amount: 10.0,
+        };
+        let pos_close = GridPosition { x: 2, y: 0 };
+        let pos_far = GridPosition { x: 10, y: 0 };
+        let entity_close = Entity::from_raw(1);
+        let entity_far = Entity::from_raw(2);
+
+        let anomalies = vec![
+            (entity_far, &pos_far, &anomaly_far),
+            (entity_close, &pos_close, &anomaly_close),
+        ];
+
+        let result = evaluate_explore(&pop_pos, &weights, anomalies.into_iter());
+        assert!(result.is_some());
+        let (_, best_entity) = result.unwrap();
+        assert_eq!(best_entity, entity_close);
+    }
+
+    #[test]
+    fn test_evaluate_explore_handles_zero_distance() {
+        let pop_pos = GridPosition { x: 5, y: 5 };
+        let weights = UtilityWeights::default();
+
+        let anomaly = Anomaly {
+            anomaly_type: AnomalyType::Ruins,
+            reward_amount: 10.0,
+        };
+        let pos = GridPosition { x: 5, y: 5 };
+        let entity = Entity::from_raw(1);
+
+        let anomalies = vec![(entity, &pos, &anomaly)];
+
+        let result = evaluate_explore(&pop_pos, &weights, anomalies.into_iter());
+        assert!(result.is_some());
+        let (utility, best_entity) = result.unwrap();
+        assert_eq!(best_entity, entity);
+        assert!(utility > 0.0);
+    }
+}
