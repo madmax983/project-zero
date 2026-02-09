@@ -32,6 +32,7 @@ pub use math::*;
 pub use types::*;
 
 use crate::layer1::actions::explore::evaluate_explore;
+use crate::layer1::actions::fetch_tool::evaluate_fetch_tool;
 use crate::layer1::actions::haul::evaluate_haul;
 use crate::layer1::actions::hunger::evaluate_satisfy_hunger;
 use crate::layer1::actions::idle::evaluate_idle;
@@ -43,6 +44,7 @@ use crate::layer1::designation::Designation;
 use crate::layer1::farm::Farm;
 use crate::layer1::funeral::{Corpse, Grave, evaluate_bury_corpse};
 use crate::layer1::housing::Housing;
+use crate::layer1::items::Equipment;
 use crate::layer1::map::GridPosition;
 use crate::layer1::medical::{Hospital, evaluate_seek_medical_care};
 use crate::layer1::needs::Needs;
@@ -95,11 +97,25 @@ pub fn evaluate_actions_system(world: &mut World) {
     // Collect pop data
     #[allow(unused_mut)]
     // We break up the query to avoid complex iterator types
-    let mut pop_data: Vec<(Entity, GridPosition, Needs, UtilityWeights, PopAction)> = world
-        .query::<(Entity, &GridPosition, &Needs, &UtilityWeights, &PopAction)>()
+    let mut pop_data: Vec<(
+        Entity,
+        GridPosition,
+        Needs,
+        UtilityWeights,
+        PopAction,
+        Option<Equipment>,
+    )> = world
+        .query::<(
+            Entity,
+            &GridPosition,
+            &Needs,
+            &UtilityWeights,
+            &PopAction,
+            Option<&Equipment>,
+        )>()
         .iter(world)
-        .filter(|(_, _, _, _, action)| action.ticks_committed >= config.evaluation_interval)
-        .map(|(e, p, n, w, a)| {
+        .filter(|(_, _, _, _, action, _)| action.ticks_committed >= config.evaluation_interval)
+        .map(|(e, p, n, w, a, eq)| {
             (
                 e,
                 *p,
@@ -110,6 +126,7 @@ pub fn evaluate_actions_system(world: &mut World) {
                     current_utility: a.current_utility,
                     ticks_committed: a.ticks_committed,
                 },
+                eq.cloned(),
             )
         })
         .collect();
@@ -148,7 +165,7 @@ pub fn evaluate_actions_system(world: &mut World) {
     let resources = world.resource::<ColonyResources>().clone();
 
     // Evaluate each pop
-    for (pop_entity, pop_pos, needs, weights, mut action) in pop_data {
+    for (pop_entity, pop_pos, needs, weights, mut action, equipment_opt) in pop_data {
         // Optimization: Avoid heap allocation (Vec) for utilities.
         // Instead, track the best action found so far in a single pass.
 
@@ -195,6 +212,17 @@ pub fn evaluate_actions_system(world: &mut World) {
             evaluate_work(&pop_pos, &weights, designations_state.iter(world))
         {
             check_best(ActionType::Work, utility, Some(target));
+        }
+
+        // Evaluate FetchTool
+        let equipment = equipment_opt.unwrap_or_default();
+        if let Some((utility, target)) = evaluate_fetch_tool(
+            &pop_pos,
+            &equipment,
+            &resources,
+            stockpiles_state.iter(world),
+        ) {
+            check_best(ActionType::FetchTool, utility, Some(target));
         }
 
         // Evaluate Repair
@@ -334,6 +362,7 @@ pub fn track_plan_outcomes_system(
             | ActionType::Haul
             | ActionType::SeekMedicalCare
             | ActionType::BuryCorpse
+            | ActionType::FetchTool
             | ActionType::Idle => true,
         };
 

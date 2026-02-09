@@ -15,10 +15,10 @@ struct PopInput {
     distance_weight: f32,
     availability_weight: f32,
     social_weight: f32,
-    success_count: array<u32, 11>,
-    attempt_count: array<u32, 11>,
+    success_count: array<u32, 12>,
+    attempt_count: array<u32, 12>,
     current_utility: f32,
-    _pad: array<u32, 1>,
+    _pad: array<u32, 3>,
 }
 
 struct BuildingInput {
@@ -119,7 +119,7 @@ fn main(@builtin(global_invocation_id) global_id: vec3<u32>) {
 
     let pop = pops[pop_idx];
 
-    var best_action: u32 = 10u;         // Default: Idle
+    var best_action: u32 = 11u;         // Default: Idle
     var best_utility: f32 = 0.05;       // Idle baseline utility
     var best_target: u32 = 0xFFFFFFFFu; // No target (u32::MAX sentinel)
 
@@ -128,7 +128,7 @@ fn main(@builtin(global_invocation_id) global_id: vec3<u32>) {
         let bldg = buildings[i];
 
         var urgency: f32 = 0.0;
-        var action_idx: u32 = 10u;
+        var action_idx: u32 = 11u;
         var skip: bool = false;
 
         switch bldg.building_type {

@@ -26,6 +26,8 @@ pub mod farm;
 pub mod fire;
 /// Hauling logic.
 pub mod hauling;
+/// Item definitions (Tools, Equipment).
+pub mod items;
 #[cfg(test)]
 /// Tests for hazards logic.
 pub mod hazards_tests;
@@ -93,6 +95,7 @@ pub use execution::*;
 pub use farm::*;
 pub use fire::*;
 pub use hauling::*;
+pub use items::*;
 pub use health::*;
 pub use housing::*;
 pub use integration::*;
