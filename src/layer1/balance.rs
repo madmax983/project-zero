@@ -26,3 +26,9 @@ pub const SEASON_MODIFIER_AUTUMN: f32 = 1.5;
 
 /// Food production modifier for Winter.
 pub const SEASON_MODIFIER_WINTER: f32 = 0.5;
+
+/// Age in ticks when a Pop becomes an Adult.
+pub const AGE_ADULT: u64 = 18 * TICKS_PER_YEAR;
+
+/// Age in ticks when a Pop becomes an Elder.
+pub const AGE_ELDER: u64 = 60 * TICKS_PER_YEAR;

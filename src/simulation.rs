@@ -16,18 +16,19 @@ use crate::experimental::ghosts::{
 };
 use crate::gpu::evaluate::gpu_evaluate_actions;
 use crate::layer1::{
-    AddChronicleEvent, AffinityChange, advance_season_system, apply_lighting_penalties_system,
-    apply_noise_effects_system, arrival_handler_system, check_milestones_system,
-    chronicle_event_handler_system, chronicle_rumor_bridge_system, clean_dead_residents_system,
-    clean_dead_workers_system, cleanup_previous_assignment_system, clothing_wear_system,
-    consume_food_system, death_system, decay_needs_system, fire_damage_pops_system,
-    fire_damage_system, fire_spread_system, haul_system, healing_system, hypothermia_system,
-    memory_decay_system, modify_affinity_system, movement_system, notification_expiration_system,
-    process_refining_system, process_research_system, process_scan_system,
-    process_start_plan_system, produce_food_system, restore_leisure_system,
-    restore_rest_in_housing_system, spoilage_system, starvation_damage_system,
-    track_plan_outcomes_system, update_action_timer_system, update_lighting_system,
-    update_noise_system, update_resource_caps_system, work_execution_system,
+    AddChronicleEvent, AffinityChange, advance_season_system, aging_system,
+    apply_lighting_penalties_system, apply_noise_effects_system, arrival_handler_system,
+    check_milestones_system, chronicle_event_handler_system, chronicle_rumor_bridge_system,
+    clean_dead_residents_system, clean_dead_workers_system, cleanup_previous_assignment_system,
+    clothing_wear_system, consume_food_system, death_system, decay_needs_system,
+    fire_damage_pops_system, fire_damage_system, fire_spread_system, haul_system, healing_system,
+    hypothermia_system, memory_decay_system, modify_affinity_system, movement_system,
+    natural_death_system, notification_expiration_system, process_refining_system,
+    process_research_system, process_scan_system, process_start_plan_system, produce_food_system,
+    restore_leisure_system, restore_rest_in_housing_system, spoilage_system,
+    starvation_damage_system, track_plan_outcomes_system, update_action_timer_system,
+    update_lighting_system, update_noise_system, update_resource_caps_system,
+    work_execution_system,
 };
 use crate::shared::time::SimulationTime;
 
@@ -134,13 +135,16 @@ pub fn build_simulation_schedule() -> Schedule {
         clothing_wear_system.after(consume_food_system),
         spoilage_system.after(consume_food_system),
         decay_needs_system.after(consume_food_system),
+        aging_system.after(consume_food_system),
+        natural_death_system.after(aging_system),
         memory_decay_system.after(decay_needs_system),
         notification_expiration_system.after(decay_needs_system),
         hypothermia_system.after(decay_needs_system),
         starvation_damage_system.after(decay_needs_system),
         death_system
             .after(starvation_damage_system)
-            .after(hypothermia_system),
+            .after(hypothermia_system)
+            .after(natural_death_system),
         clean_dead_residents_system.after(death_system),
         clean_dead_workers_system.after(death_system),
     ));

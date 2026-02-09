@@ -152,3 +152,7 @@ pub use trade::*;
 /// Energy system (Spec 042).
 pub mod energy;
 pub use energy::*;
+
+/// Pop lifecycle and aging (Spec 062).
+pub mod lifecycle;
+pub use lifecycle::*;

@@ -60,3 +60,4 @@ Implemented features. Architect: read this to understand current state.
 - [x] `057` Funeral Rites — `specs/057-funeral-rites.md` — completed 2026-03-10
 - [x] `058` Personal Tools — `specs/058-personal-tools.md` — completed 2026-03-10
 - [x] `INT-006` Integration: Energy System -> Refining System — completed 2026-02-09
+- [x] `062` Pop Lifecycle and Aging — `specs/062-pop-lifecycle.md` — completed 2026-03-05

@@ -606,7 +606,9 @@ mod tests {
         assert_eq!(BuildingType::Hospital.next(), BuildingType::Landfill);
         assert_eq!(BuildingType::Landfill.next(), BuildingType::Grave);
         assert_eq!(BuildingType::Grave.next(), BuildingType::TradeDepot);
-        assert_eq!(BuildingType::TradeDepot.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::TradeDepot.next(), BuildingType::Generator);
+        assert_eq!(BuildingType::Generator.next(), BuildingType::PowerPole);
+        assert_eq!(BuildingType::PowerPole.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -706,6 +708,12 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::TradeDepot);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Generator);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::PowerPole);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);
