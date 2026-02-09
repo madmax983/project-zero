@@ -23,6 +23,7 @@ mod tests {
         });
         world.insert_resource(OccupiedTiles::default());
         world.insert_resource(ColonyResources::default());
+        world.insert_resource(crate::shared::time::SimulationTime::default());
         world
     }
 

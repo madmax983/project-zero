@@ -18,6 +18,8 @@ pub enum MemoryType {
     SawCorpse,
     /// Attended a funeral (closure).
     AttendedFuneral,
+    /// Finished a work task (satisfaction).
+    FinishedWork,
 }
 
 impl MemoryType {
@@ -30,6 +32,7 @@ impl MemoryType {
             Self::AteFineMeal | Self::AttendedFuneral => 0.1,
             Self::WonFight => 0.05,
             Self::SawCorpse => -0.05,
+            Self::FinishedWork => 0.05,
         }
     }
 
@@ -42,6 +45,7 @@ impl MemoryType {
             Self::StarvationTrauma | Self::AttendedFuneral => 0.001, // Medium
             Self::AteFineMeal | Self::WonFight => 0.002, // Fast (500 ticks)
             Self::SawCorpse => 0.01,        // Very fast fade (100 ticks)
+            Self::FinishedWork => 0.01,     // Very fast fade (100 ticks)
         }
     }
 }

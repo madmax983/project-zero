@@ -40,9 +40,9 @@ use crate::layer1::health::Health;
 use crate::layer1::housing::Housing;
 use crate::layer1::items::{Equipment, Tool};
 use crate::layer1::map::GridPosition;
-use crate::layer1::memory::{Memories, calculate_effective_morale};
+use crate::layer1::memory::{Memories, MemoryType, calculate_effective_morale};
 use crate::layer1::needs::{Needs, get_morale_efficiency};
-use crate::layer1::pop::Speed;
+use crate::layer1::pop::{Speed, WorkMomentum};
 use crate::layer1::resources::{ColonyResources, process_logging, process_mining};
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
 use crate::layer1::social::{SocialBuff, Tavern, handle_socialize};
@@ -136,16 +136,23 @@ pub fn cleanup_previous_assignment_system(
 
 /// Consumes `StartPlan` markers and creates `MovementTarget` components.
 ///
+/// Consumes `StartPlan` markers and creates `MovementTarget` components.
+///
 /// This system bridges the utility AI's decision (`StartPlan`) with the
 /// movement system by creating `MovementTarget` for each pop.
 pub fn process_start_plan_system(
-    plans: Query<(Entity, &StartPlan)>,
+    mut plans: Query<(Entity, &StartPlan, Option<&mut WorkMomentum>)>,
     positions: Query<&GridPosition>,
     mut commands: Commands,
 ) {
-    for (pop_entity, start_plan) in &plans {
+    for (pop_entity, start_plan, momentum_opt) in &mut plans {
         let action = start_plan.action;
         let target = start_plan.target;
+
+        // Reset WorkMomentum on new plan (Task Switching Penalty)
+        if let Some(mut momentum) = momentum_opt {
+            momentum.0 = 1.0;
+        }
 
         // Remove the StartPlan marker and any existing movement components
         commands
@@ -192,53 +199,67 @@ pub fn movement_system(
 ) {
     for (pop_entity, mut current_pos, mt, mut speed_opt) in &mut pops {
         // Handle variable movement speed
+        // If speed component exists, use accumulator. Otherwise 1 move/tick.
+        let mut moves_available = 1;
         if let Some(ref mut speed) = speed_opt {
             speed.accumulator += speed.current;
-            if speed.accumulator < 1.0 {
-                continue;
+            moves_available = 0;
+            // Cap at 10 moves per tick to prevent infinite loops or warp speed bugs
+            while speed.accumulator >= 1.0 && moves_available < 10 {
+                speed.accumulator -= 1.0;
+                moves_available += 1;
             }
-            speed.accumulator -= 1.0;
         }
 
         let target_pos = mt.target_position;
         let action = mt.for_action;
 
-        // For work/repair actions, check if adjacent to an unwalkable target (rock/tree/building)
-        // Pops work FROM adjacent tiles, not ON the target
-        if action == ActionType::Work || action == ActionType::Repair {
-            let target_walkable = is_walkable_terrain(&terrain, target_pos.x, target_pos.y);
-            if !target_walkable {
-                let distance =
-                    (current_pos.x - target_pos.x).abs() + (current_pos.y - target_pos.y).abs();
-                if distance == 1 {
-                    commands.entity(pop_entity).insert(AtTarget);
-                    continue;
+        for _ in 0..moves_available {
+            // Check arrival conditions BEFORE moving (for adjacent work targets)
+            // For work/repair actions, check if adjacent to an unwalkable target (rock/tree/building)
+            // Pops work FROM adjacent tiles, not ON the target
+            if action == ActionType::Work || action == ActionType::Repair {
+                let target_walkable = is_walkable_terrain(&terrain, target_pos.x, target_pos.y);
+                if !target_walkable {
+                    let distance = (current_pos.x - target_pos.x).abs()
+                        + (current_pos.y - target_pos.y).abs();
+                    if distance == 1 {
+                        commands.entity(pop_entity).insert(AtTarget);
+                        break; // Stop moving this tick
+                    }
                 }
             }
-        }
 
-        let Some(new_pos) = calculate_next_position(*current_pos, target_pos) else {
-            continue;
-        };
+            // Calculate next step
+            let Some(new_pos) = calculate_next_position(*current_pos, target_pos) else {
+                break; // No path or already at target (though usually handled below)
+            };
 
-        if !is_walkable_terrain(&terrain, new_pos.x, new_pos.y) {
-            continue;
-        }
+            // Check collision
+            if !is_walkable_terrain(&terrain, new_pos.x, new_pos.y) {
+                break; // Blocked
+            }
 
-        current_pos.x = new_pos.x;
-        current_pos.y = new_pos.y;
+            // Apply move
+            current_pos.x = new_pos.x;
+            current_pos.y = new_pos.y;
 
-        if new_pos == target_pos {
-            commands.entity(pop_entity).insert(AtTarget);
-        }
+            // Check arrival at exact target
+            if new_pos == target_pos {
+                commands.entity(pop_entity).insert(AtTarget);
+                break; // Stop moving
+            }
 
-        // For work/repair actions on unwalkable targets, also check if now adjacent
-        if action == ActionType::Work || action == ActionType::Repair {
-            let target_walkable = is_walkable_terrain(&terrain, target_pos.x, target_pos.y);
-            if !target_walkable {
-                let distance = (new_pos.x - target_pos.x).abs() + (new_pos.y - target_pos.y).abs();
-                if distance == 1 {
-                    commands.entity(pop_entity).insert(AtTarget);
+            // Check arrival at adjacent target (for work/repair) AFTER move
+            if action == ActionType::Work || action == ActionType::Repair {
+                let target_walkable = is_walkable_terrain(&terrain, target_pos.x, target_pos.y);
+                if !target_walkable {
+                    let distance = (new_pos.x - target_pos.x).abs()
+                        + (new_pos.y - target_pos.y).abs();
+                    if distance == 1 {
+                        commands.entity(pop_entity).insert(AtTarget);
+                        break;
+                    }
                 }
             }
         }
@@ -399,11 +420,16 @@ fn execute_demolish(world: &mut World, designation_entity: Entity) -> bool {
 pub fn work_execution_system(world: &mut World) {
     let policies = world.get_resource::<ColonyPolicies>().cloned();
     let work_speed_mod = policies.as_ref().map_or(1.0, get_work_speed_modifier);
+    let current_tick = world.resource::<SimulationTime>().tick;
 
     // Find pops at their work target and capture their morale
     // Since we need to access Needs which is a component, and we need &mut World later,
     // we should collect Needs data first.
-    let workers_data: Vec<(Entity, Entity, f32, ActionType, Option<Equipment>)> = world
+    // We also collect WorkMomentum to update it.
+    // However, we cannot mutate WorkMomentum here while iterating if we need &mut World later.
+    // So we collect the momentum value, pass it to process_single_worker, and update it inside process_single_worker via World.
+
+    let workers_data: Vec<(Entity, Entity, f32, ActionType, Option<Equipment>, f32)> = world
         .query_filtered::<(
             Entity,
             &MovementTarget,
@@ -411,20 +437,31 @@ pub fn work_execution_system(world: &mut World) {
             Option<&Memories>,
             Option<&SocialBuff>,
             Option<&Equipment>,
+            Option<&WorkMomentum>,
         ), With<AtTarget>>()
         .iter(world)
-        .filter(|(_, mt, _, _, _, _)| {
+        .filter(|(_, mt, _, _, _, _, _)| {
             mt.for_action == ActionType::Work || mt.for_action == ActionType::Repair
         })
-        .map(|(e, mt, needs, memories, social_buff, eq)| {
+        .map(|(e, mt, needs, memories, social_buff, eq, momentum): (Entity, &MovementTarget, Option<&Needs>, Option<&Memories>, Option<&SocialBuff>, Option<&Equipment>, Option<&WorkMomentum>)| {
             let morale = needs.map_or(0.5, |n| {
                 calculate_effective_morale(n, memories, social_buff, policies.as_ref())
             });
-            (e, mt.target_entity, morale, mt.for_action, eq.cloned())
+            let mom_val = momentum.map_or(1.0, |m| m.0);
+            (
+                e,
+                mt.target_entity,
+                morale,
+                mt.for_action,
+                eq.cloned(),
+                mom_val,
+            )
         })
         .collect();
 
-    for (pop_entity, designation_entity, morale, action_type, equipment_opt) in workers_data {
+    for (pop_entity, designation_entity, morale, action_type, equipment_opt, momentum_val) in
+        workers_data
+    {
         process_single_worker(
             world,
             pop_entity,
@@ -433,6 +470,8 @@ pub fn work_execution_system(world: &mut World) {
             action_type,
             equipment_opt,
             work_speed_mod,
+            momentum_val,
+            current_tick,
         );
     }
 }
@@ -445,6 +484,8 @@ fn process_single_worker(
     action_type: ActionType,
     equipment_opt: Option<Equipment>,
     work_speed_mod: f32,
+    momentum_val: f32,
+    current_tick: u64,
 ) {
     // Check per-pop tool availability
     let tool_entity_opt = equipment_opt.as_ref().and_then(|e| e.tool);
@@ -482,12 +523,19 @@ fn process_single_worker(
     let mut rng = rand::thread_rng();
     let organic_factor = rng.gen_range(0.9..1.1);
 
+    // Increase WorkMomentum (capped at 1.5)
+    // We update the component on the entity
+    if let Some(mut momentum_comp) = world.get_mut::<WorkMomentum>(pop_entity) {
+        momentum_comp.0 = (momentum_comp.0 + 0.1).min(1.5);
+    }
+
     let work_amount = WORK_PER_TICK
         * tool_efficiency
         * morale_efficiency
         * skill_efficiency
         * work_speed_mod
-        * organic_factor;
+        * organic_factor
+        * momentum_val; // Use the value from start of tick
 
     let worked = match designation_type {
         DesignationType::Mine => {
@@ -509,6 +557,11 @@ fn process_single_worker(
     // After work: if designation was despawned (work completed), reset pop state
     if world.get_entity(designation_entity).is_err() {
         cleanup_pop_work_state(world, pop_entity);
+
+        // Ludwig: Add "Job Well Done" memory
+        if let Some(mut memories) = world.get_mut::<Memories>(pop_entity) {
+            memories.add(MemoryType::FinishedWork, current_tick);
+        }
     }
 
     // Workplace Hazards & XP Gain
@@ -1003,6 +1056,7 @@ mod tests {
             tiles,
         });
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
+        world.insert_resource(crate::shared::time::SimulationTime::default());
 
         let designation = world
             .spawn((
@@ -1048,6 +1102,7 @@ mod tests {
             tiles,
         });
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
+        world.insert_resource(crate::shared::time::SimulationTime::default());
 
         let designation = world
             .spawn((
@@ -1102,6 +1157,7 @@ mod tests {
             tiles,
         });
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
+        world.insert_resource(crate::shared::time::SimulationTime::default());
 
         let designation = world
             .spawn((
@@ -1176,6 +1232,7 @@ mod tests {
             tiles,
         });
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
+        world.insert_resource(crate::shared::time::SimulationTime::default());
 
         let designation = world
             .spawn((
@@ -1257,6 +1314,7 @@ mod tests {
             tiles,
         });
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
+        world.insert_resource(crate::shared::time::SimulationTime::default());
 
         // Pop targeting a non-existent designation entity
         let pop = world
@@ -1599,6 +1657,7 @@ mod tests {
             tiles,
         });
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
+        world.insert_resource(crate::shared::time::SimulationTime::default());
 
         let designation = world
             .spawn((
@@ -1667,6 +1726,7 @@ mod tests {
             tiles,
         });
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
+        world.insert_resource(crate::shared::time::SimulationTime::default());
 
         let designation = world
             .spawn((
@@ -1735,6 +1795,7 @@ mod tests {
             tiles,
         });
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
+        world.insert_resource(crate::shared::time::SimulationTime::default());
 
         let designation = world
             .spawn((
@@ -1802,6 +1863,7 @@ mod tests {
             tiles,
         });
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
+        world.insert_resource(crate::shared::time::SimulationTime::default());
 
         let designation = world
             .spawn((
@@ -1862,5 +1924,175 @@ mod tests {
         world.run_system_once(movement_system).unwrap();
         let pos = world.get::<GridPosition>(pop).unwrap();
         assert_eq!(pos.x, 1);
+    }
+
+    #[test]
+    fn test_movement_with_high_speed() {
+        let mut world = setup_world();
+
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 0, y: 0 },
+                MovementTarget {
+                    target_entity: Entity::from_raw(1),
+                    target_position: GridPosition { x: 10, y: 0 },
+                    for_action: ActionType::Work,
+                },
+                Speed {
+                    base: 1.0,
+                    current: 2.5, // Move 2.5 tiles per tick
+                    accumulator: 0.0,
+                },
+            ))
+            .id();
+
+        // Tick 1: Accumulator 0.0 + 2.5 = 2.5. Move 2 tiles. Acc -> 0.5
+        world.run_system_once(movement_system).unwrap();
+        let pos = world.get::<GridPosition>(pop).unwrap();
+        assert_eq!(pos.x, 2, "Should move 2 tiles on first tick");
+
+        // Tick 2: Accumulator 0.5 + 2.5 = 3.0. Move 3 tiles. Acc -> 0.0
+        world.run_system_once(movement_system).unwrap();
+        let pos = world.get::<GridPosition>(pop).unwrap();
+        assert_eq!(pos.x, 5, "Should move 3 tiles (2+3=5) on second tick");
+    }
+
+    #[test]
+    fn test_work_momentum_increases_and_applies() {
+        let mut world = setup_world();
+        let mut tiles = vec![TerrainType::Grass; 100];
+        tiles[55] = TerrainType::Rock;
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
+
+        // Setup sim time
+        world.insert_resource(crate::shared::time::SimulationTime::default());
+
+        let designation = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Mine,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
+
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 5, y: 5 },
+                MovementTarget {
+                    target_entity: designation,
+                    target_position: GridPosition { x: 5, y: 5 },
+                    for_action: ActionType::Work,
+                },
+                AtTarget,
+                WorkMomentum(1.0),
+            ))
+            .id();
+
+        // Run work system once
+        work_execution_system(&mut world);
+
+        // Expected: Momentum increases to 1.1.
+        let momentum = world.get::<WorkMomentum>(pop).unwrap();
+        assert!((momentum.0 - 1.1).abs() < f32::EPSILON, "Momentum should increase to 1.1");
+
+        // Run again
+        work_execution_system(&mut world);
+
+        // Expected: Momentum increases to 1.2.
+        let momentum = world.get::<WorkMomentum>(pop).unwrap();
+        assert!((momentum.0 - 1.2).abs() < f32::EPSILON, "Momentum should increase to 1.2");
+    }
+
+    #[test]
+    fn test_work_momentum_resets_on_new_plan() {
+        let mut world = setup_world();
+
+        let farm = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Farm,
+                },
+                GridPosition { x: 5, y: 5 },
+                Farm::default(),
+            ))
+            .id();
+
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 0, y: 0 },
+                StartPlan {
+                    action: ActionType::SatisfyHunger,
+                    target: Some(farm),
+                },
+                WorkMomentum(1.5), // Has high momentum
+            ))
+            .id();
+
+        world.run_system_once(process_start_plan_system).unwrap();
+
+        let momentum = world.get::<WorkMomentum>(pop).unwrap();
+        assert!((momentum.0 - 1.0).abs() < f32::EPSILON, "Momentum should reset to 1.0");
+    }
+
+    #[test]
+    fn test_job_well_done_memory() {
+        let mut world = setup_world();
+        let mut tiles = vec![TerrainType::Grass; 100];
+        tiles[55] = TerrainType::Rock;
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
+
+        let mut sim_time = crate::shared::time::SimulationTime::default();
+        sim_time.tick = 123;
+        world.insert_resource(sim_time);
+
+        // Nearly finished designation
+        let designation = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Mine,
+                },
+                GridPosition { x: 5, y: 5 },
+                MiningProgress { current: 99.0, max: 100.0 },
+            ))
+            .id();
+
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 5, y: 5 },
+                MovementTarget {
+                    target_entity: designation,
+                    target_position: GridPosition { x: 5, y: 5 },
+                    for_action: ActionType::Work,
+                },
+                AtTarget,
+                Memories::default(),
+                WorkMomentum::default(),
+            ))
+            .id();
+
+        work_execution_system(&mut world);
+
+        // Designation should be gone
+        assert!(world.get_entity(designation).is_err());
+
+        // Pop should have memory
+        let memories = world.get::<Memories>(pop).unwrap();
+        let found = memories.items.iter().any(|m|
+            m.memory_type == crate::layer1::memory::MemoryType::FinishedWork && m.added_at == 123
+        );
+        assert!(found, "Pop should have FinishedWork memory");
     }
 }

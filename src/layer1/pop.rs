@@ -95,6 +95,20 @@ impl Default for Speed {
     }
 }
 
+/// "Flow State" momentum for working.
+///
+/// Starts at 1.0. Increases as the pop works on the same task.
+/// Resets when moving or changing tasks.
+/// Capped at 1.5 (50% bonus).
+#[derive(Component, Debug, Clone, Copy)]
+pub struct WorkMomentum(pub f32);
+
+impl Default for WorkMomentum {
+    fn default() -> Self {
+        Self(1.0)
+    }
+}
+
 /// Spawn 5 initial pops at random walkable positions.
 ///
 /// This function attempts to find valid starting locations for the initial colony.
@@ -156,6 +170,7 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
                 Memories::default(),
                 Skills::default(),
                 Speed::default(),
+                WorkMomentum::default(),
                 PopAction::default(),
                 Equipment::default(),
                 UtilityWeights::default(),
