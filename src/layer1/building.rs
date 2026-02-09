@@ -10,6 +10,7 @@ use crate::layer1::lighting::LightSource;
 use crate::layer1::resources::{ColonyResources, RefiningProgress};
 use crate::layer1::tech::{Library, Tech, TechState};
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
+use crate::layer1::trade::TradeDepot;
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
 use std::collections::HashSet;
@@ -54,6 +55,8 @@ pub enum BuildingType {
     Landfill,
     /// A place to bury corpses.
     Grave,
+    /// Trading center for merchants.
+    TradeDepot,
 }
 
 impl BuildingType {
@@ -61,10 +64,10 @@ impl BuildingType {
     #[must_use]
     pub const fn beauty_value(&self) -> f32 {
         match self {
-            Self::FlowerBed => 5.0,
             Self::Statue => 10.0,
             Self::Landfill => -10.0,
-            Self::Grave => -2.0, // Graves are slightly spooky
+            Self::Grave => -2.0,     // Graves are slightly spooky
+            Self::FlowerBed | Self::TradeDepot => 5.0, // Trade brings goods and culture
             _ => 0.0,
         }
     }
@@ -108,6 +111,7 @@ impl BuildingType {
             Self::Hospital => "Hospital",
             Self::Landfill => "Landfill",
             Self::Grave => "Grave",
+            Self::TradeDepot => "Trade Depot",
         }
     }
 
@@ -130,6 +134,7 @@ impl BuildingType {
             Self::Hospital => '+',
             Self::Landfill => '%',
             Self::Grave => '†',
+            Self::TradeDepot => '$',
         }
     }
 
@@ -195,6 +200,11 @@ impl BuildingType {
             },
             Self::Grave => ColonyResources {
                 stone: 5.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::TradeDepot => ColonyResources {
+                wood: 50.0,
+                stone: 20.0,
                 ..ColonyResources::zeroed()
             },
         }
@@ -434,6 +444,16 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
         BuildingType::Grave => {
             entity.insert(crate::layer1::funeral::Grave::default());
         }
+        BuildingType::TradeDepot => {
+            entity.insert((
+                TradeDepot,
+                LightSource {
+                    radius: 5.0,
+                    intensity: 0.6,
+                    color: (220, 220, 100), // Yellowish
+                },
+            ));
+        }
     }
 }
 
@@ -551,7 +571,8 @@ mod tests {
         assert_eq!(BuildingType::Statue.next(), BuildingType::Hospital);
         assert_eq!(BuildingType::Hospital.next(), BuildingType::Landfill);
         assert_eq!(BuildingType::Landfill.next(), BuildingType::Grave);
-        assert_eq!(BuildingType::Grave.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::Grave.next(), BuildingType::TradeDepot);
+        assert_eq!(BuildingType::TradeDepot.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -648,6 +669,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Grave);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::TradeDepot);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);
