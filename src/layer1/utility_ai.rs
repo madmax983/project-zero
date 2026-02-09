@@ -40,8 +40,10 @@ use crate::layer1::actions::repair::evaluate_repair;
 use crate::layer1::actions::research::evaluate_research;
 use crate::layer1::actions::rest::evaluate_satisfy_rest;
 use crate::layer1::actions::work::evaluate_work;
+use crate::layer1::combat::{Drafted, evaluate_fight_action};
 use crate::layer1::designation::Designation;
 use crate::layer1::farm::Farm;
+use crate::layer1::fauna::Fauna;
 use crate::layer1::funeral::{Corpse, Grave, evaluate_bury_corpse};
 use crate::layer1::housing::Housing;
 use crate::layer1::items::Equipment;
@@ -107,6 +109,7 @@ pub fn evaluate_actions_system(world: &mut World) {
         PopAction,
         Option<Equipment>,
         Option<MentalState>,
+        Option<Drafted>,
     )> = world
         .query::<(
             Entity,
@@ -116,10 +119,11 @@ pub fn evaluate_actions_system(world: &mut World) {
             &PopAction,
             Option<&Equipment>,
             Option<&MentalState>,
+            Option<&Drafted>,
         )>()
         .iter(world)
-        .filter(|(_, _, _, _, action, _, _)| action.ticks_committed >= config.evaluation_interval)
-        .map(|(e, p, n, w, a, eq, m)| {
+        .filter(|(_, _, _, _, action, _, _, _)| action.ticks_committed >= config.evaluation_interval)
+        .map(|(e, p, n, w, a, eq, m, d)| {
             (
                 e,
                 *p,
@@ -132,6 +136,7 @@ pub fn evaluate_actions_system(world: &mut World) {
                 },
                 eq.cloned(),
                 m.cloned(),
+                d.cloned(),
             )
         })
         .collect();
@@ -140,6 +145,7 @@ pub fn evaluate_actions_system(world: &mut World) {
     let mut farms_state = world.query::<(Entity, &GridPosition, &Farm)>();
     let mut housing_state = world.query::<(Entity, &GridPosition, &Housing)>();
     let mut taverns_state = world.query::<(Entity, &GridPosition, &Tavern)>();
+    let mut fauna_state = world.query::<(Entity, &GridPosition, &Fauna)>();
     let mut libraries_state = world.query::<(Entity, &GridPosition, &Library)>();
     let mut designations_state = world.query::<(Entity, &GridPosition, &Designation)>();
     let mut items_state = world.query::<(Entity, &GridPosition, &ResourceItem)>();
@@ -170,7 +176,7 @@ pub fn evaluate_actions_system(world: &mut World) {
     let resources = world.resource::<ColonyResources>().clone();
 
     // Evaluate each pop
-    for (pop_entity, pop_pos, needs, weights, mut action, equipment_opt, mental_state_opt) in
+    for (pop_entity, pop_pos, needs, weights, mut action, equipment_opt, mental_state_opt, drafted_opt) in
         pop_data
     {
         // Optimization: Avoid heap allocation (Vec) for utilities.
@@ -196,110 +202,141 @@ pub fn evaluate_actions_system(world: &mut World) {
                 MentalBreakType::Daze => ActionType::Daze,
             };
         } else {
-            // Helper to update best if we found something better
-            let mut check_best = |act, util, tgt| {
-                if util > best_utility {
-                    best_action = act;
-                    best_utility = util;
-                    best_target = tgt;
+            // Check for Drafted
+            let is_drafted = drafted_opt.is_some();
+            if is_drafted {
+                // Prioritize Fight
+                let enemies = fauna_state.iter(world).map(|(e, p, _)| (e, p));
+                if let Some((utility, target)) = evaluate_fight_action(true, &pop_pos, enemies) {
+                    best_action = ActionType::Fight;
+                    best_utility = utility;
+                    best_target = Some(target);
+                } else {
+                    // Drafted but no enemies? Maybe just stand ground (Idle) with high utility to prevent working?
+                    // Spec says: "If not in range: Move towards target".
+                    // evaluate_fight_action currently returns None if no target.
+                    // If no target, maybe Idle is fine, but utility should be higher than needs?
+                    // For now, if no enemies, fall back to normal evaluation, BUT drafted pops ignore work/needs.
+                    // The spec says "Drafted pops ignore normal work/needs".
+                    // So we should probably NOT run the rest of the evaluation if drafted.
+
+                    // If no enemies found, we might want to just stay put.
+                    // Let's set utility high enough to avoid switching to Work/Hunger if possible,
+                    // or just return Idle with high score?
+                    // But if we return here, we skip other evals.
+
+                    // Let's implement early exit for drafted pops.
+                    if best_action == ActionType::Idle {
+                         best_utility = 0.9; // Just stand there ready
+                    }
                 }
-            };
+            } else {
+                // Normal evaluation (undrafted)
+                // Helper to update best if we found something better
+                let mut check_best = |act, util, tgt| {
+                    if util > best_utility {
+                        best_action = act;
+                        best_utility = util;
+                        best_target = tgt;
+                    }
+                };
 
-            // Check Health
-            let health = world.get::<crate::layer1::health::Health>(pop_entity);
+                // Check Health
+                let health = world.get::<crate::layer1::health::Health>(pop_entity);
 
-            // Evaluate SatisfyHunger
-            if let Some((utility, target)) =
-                evaluate_satisfy_hunger(&pop_pos, &needs, &weights, farms_state.iter(world))
-            {
-                check_best(ActionType::SatisfyHunger, utility, Some(target));
-            }
+                // Evaluate SatisfyHunger
+                if let Some((utility, target)) =
+                    evaluate_satisfy_hunger(&pop_pos, &needs, &weights, farms_state.iter(world))
+                {
+                    check_best(ActionType::SatisfyHunger, utility, Some(target));
+                }
 
-            // Evaluate SatisfyRest
-            if let Some((utility, target)) =
-                evaluate_satisfy_rest(&pop_pos, &needs, &weights, housing_state.iter(world))
-            {
-                check_best(ActionType::SatisfyRest, utility, Some(target));
-            }
+                // Evaluate SatisfyRest
+                if let Some((utility, target)) =
+                    evaluate_satisfy_rest(&pop_pos, &needs, &weights, housing_state.iter(world))
+                {
+                    check_best(ActionType::SatisfyRest, utility, Some(target));
+                }
 
-            // Evaluate Socialize
-            if let Some((utility, target)) =
-                evaluate_socialize(&pop_pos, &needs, &weights, taverns_state.iter(world))
-            {
-                check_best(ActionType::Socialize, utility, Some(target));
-            }
+                // Evaluate Socialize
+                if let Some((utility, target)) =
+                    evaluate_socialize(&pop_pos, &needs, &weights, taverns_state.iter(world))
+                {
+                    check_best(ActionType::Socialize, utility, Some(target));
+                }
 
-            // Evaluate Work
-            if let Some((utility, target)) =
-                evaluate_work(&pop_pos, &weights, designations_state.iter(world))
-            {
-                check_best(ActionType::Work, utility, Some(target));
-            }
+                // Evaluate Work
+                if let Some((utility, target)) =
+                    evaluate_work(&pop_pos, &weights, designations_state.iter(world))
+                {
+                    check_best(ActionType::Work, utility, Some(target));
+                }
 
-            // Evaluate FetchTool
-            let equipment = equipment_opt.unwrap_or_default();
-            if let Some((utility, target)) = evaluate_fetch_tool(
-                &pop_pos,
-                &equipment,
-                &resources,
-                stockpiles_state.iter(world),
-            ) {
-                check_best(ActionType::FetchTool, utility, Some(target));
-            }
-
-            // Evaluate Repair
-            if let Some((utility, target)) =
-                evaluate_repair(&pop_pos, &weights, designations_state.iter(world))
-            {
-                check_best(ActionType::Repair, utility, Some(target));
-            }
-
-            // Evaluate Explore
-            if let Some((utility, target)) =
-                evaluate_explore(&pop_pos, &weights, anomalies_state.iter(world))
-            {
-                check_best(ActionType::Explore, utility, Some(target));
-            }
-
-            // Evaluate Research
-            if let Some((utility, target)) =
-                evaluate_research(&pop_pos, &weights, &resources, libraries_state.iter(world))
-            {
-                check_best(ActionType::Research, utility, Some(target));
-            }
-
-            // Evaluate Haul
-            if let Some((utility, target)) = evaluate_haul(
-                &pop_pos,
-                &weights,
-                items_state.iter(world),
-                stockpiles_state.iter(world),
-                &resources,
-            ) {
-                check_best(ActionType::Haul, utility, Some(target));
-            }
-
-            // Evaluate SeekMedicalCare
-            if let Some(health) = health {
-                if let Some((utility, target)) = evaluate_seek_medical_care(
+                // Evaluate FetchTool
+                let equipment = equipment_opt.unwrap_or_default();
+                if let Some((utility, target)) = evaluate_fetch_tool(
                     &pop_pos,
-                    &needs,
-                    health,
-                    &weights,
-                    hospitals_state.iter(world),
+                    &equipment,
+                    &resources,
+                    stockpiles_state.iter(world),
                 ) {
-                    check_best(ActionType::SeekMedicalCare, utility, Some(target));
+                    check_best(ActionType::FetchTool, utility, Some(target));
                 }
-            }
 
-            // Evaluate BuryCorpse
-            if let Some((utility, target)) = evaluate_bury_corpse(
-                &pop_pos,
-                corpses_state.iter(world),
-                graves_state.iter(world),
-                &weights,
-            ) {
-                check_best(ActionType::BuryCorpse, utility, Some(target));
+                // Evaluate Repair
+                if let Some((utility, target)) =
+                    evaluate_repair(&pop_pos, &weights, designations_state.iter(world))
+                {
+                    check_best(ActionType::Repair, utility, Some(target));
+                }
+
+                // Evaluate Explore
+                if let Some((utility, target)) =
+                    evaluate_explore(&pop_pos, &weights, anomalies_state.iter(world))
+                {
+                    check_best(ActionType::Explore, utility, Some(target));
+                }
+
+                // Evaluate Research
+                if let Some((utility, target)) =
+                    evaluate_research(&pop_pos, &weights, &resources, libraries_state.iter(world))
+                {
+                    check_best(ActionType::Research, utility, Some(target));
+                }
+
+                // Evaluate Haul
+                if let Some((utility, target)) = evaluate_haul(
+                    &pop_pos,
+                    &weights,
+                    items_state.iter(world),
+                    stockpiles_state.iter(world),
+                    &resources,
+                ) {
+                    check_best(ActionType::Haul, utility, Some(target));
+                }
+
+                // Evaluate SeekMedicalCare
+                if let Some(health) = health {
+                    if let Some((utility, target)) = evaluate_seek_medical_care(
+                        &pop_pos,
+                        &needs,
+                        health,
+                        &weights,
+                        hospitals_state.iter(world),
+                    ) {
+                        check_best(ActionType::SeekMedicalCare, utility, Some(target));
+                    }
+                }
+
+                // Evaluate BuryCorpse
+                if let Some((utility, target)) = evaluate_bury_corpse(
+                    &pop_pos,
+                    corpses_state.iter(world),
+                    graves_state.iter(world),
+                    &weights,
+                ) {
+                    check_best(ActionType::BuryCorpse, utility, Some(target));
+                }
             }
         } // End of else block (normal evaluation)
 
@@ -389,7 +426,8 @@ pub fn track_plan_outcomes_system(
             | ActionType::Idle
             | ActionType::Vandalize
             | ActionType::Binge
-            | ActionType::Daze => true,
+            | ActionType::Daze
+            | ActionType::Fight => true,
         };
 
         #[allow(clippy::cast_possible_truncation)]

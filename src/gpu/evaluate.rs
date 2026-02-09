@@ -251,6 +251,10 @@ const fn action_type_from_u32(v: u32) -> ActionType {
         8 => ActionType::SeekMedicalCare,
         9 => ActionType::BuryCorpse,
         10 => ActionType::FetchTool,
+        12 => ActionType::Vandalize,
+        13 => ActionType::Binge,
+        14 => ActionType::Daze,
+        15 => ActionType::Fight,
         _ => ActionType::Idle,
     }
 }
@@ -273,6 +277,10 @@ mod tests {
         assert_eq!(action_type_from_u32(9), ActionType::BuryCorpse);
         assert_eq!(action_type_from_u32(10), ActionType::FetchTool);
         assert_eq!(action_type_from_u32(11), ActionType::Idle);
+        assert_eq!(action_type_from_u32(12), ActionType::Vandalize);
+        assert_eq!(action_type_from_u32(13), ActionType::Binge);
+        assert_eq!(action_type_from_u32(14), ActionType::Daze);
+        assert_eq!(action_type_from_u32(15), ActionType::Fight);
         // Out of range defaults to Idle
         assert_eq!(action_type_from_u32(99), ActionType::Idle);
     }

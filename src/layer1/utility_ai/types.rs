@@ -83,11 +83,14 @@ pub enum ActionType {
 
     /// Wander aimlessly in a catatonic state due to mental break.
     Daze,
+
+    /// Engage in combat with hostile entities.
+    Fight,
 }
 
 impl ActionType {
     /// Total number of action types. Used for array sizing.
-    pub const COUNT: usize = 15;
+    pub const COUNT: usize = 16;
 
     /// Converts action type to a unique array index (0..COUNT-1).
     #[must_use]
@@ -108,12 +111,14 @@ impl ActionType {
             Self::Vandalize => 12,
             Self::Binge => 13,
             Self::Daze => 14,
+            Self::Fight => 15,
         }
     }
 
     /// Returns the danger level of the action (probability of accident per tick).
     ///
     /// *   Work/Repair: 0.1% chance.
+    /// *   Fight: 0% (Combat handles damage differently).
     /// *   Others: 0% chance.
     #[must_use]
     pub const fn danger_level(&self) -> f64 {

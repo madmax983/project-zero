@@ -32,6 +32,7 @@ use crate::layer1::actions::hunger::handle_arrival as handle_hunger_arrival;
 use crate::layer1::actions::rest::handle_arrival as handle_rest_arrival;
 use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::building::{Building, OccupiedTiles};
+use crate::layer1::combat::Weapon;
 use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::edicts::{ColonyPolicies, get_work_speed_modifier};
 use crate::layer1::farm::Farm;
@@ -52,6 +53,70 @@ use crate::shared::log::MessageLog;
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 use rand::Rng;
+
+/// Executes combat when pop is targeting an enemy.
+pub fn combat_execution_system(world: &mut World) {
+    // Collect combatants
+    let combatants: Vec<(Entity, Entity, Option<Equipment>)> = world
+        .query::<(
+            Entity,
+            &MovementTarget,
+            Option<&Equipment>,
+        )>()
+        .iter(world)
+        .filter(|(_, mt, _)| mt.for_action == ActionType::Fight)
+        .map(|(e, mt, eq)| (e, mt.target_entity, eq.cloned()))
+        .collect();
+
+    for (pop_entity, target_entity, equipment_opt) in combatants {
+        // Find target position (it might have moved)
+        let target_pos = if let Some(pos) = world.get::<GridPosition>(target_entity) {
+            *pos
+        } else {
+            // Target despawned?
+            cleanup_pop_work_state(world, pop_entity);
+            continue;
+        };
+
+        // Update MovementTarget if needed
+        if let Some(mut mt) = world.get_mut::<MovementTarget>(pop_entity) {
+            if mt.target_position != target_pos {
+                mt.target_position = target_pos;
+                // Remove AtTarget to ensure we chase if they moved away
+                // But only if we are now out of range?
+                // Actually, let's check range first.
+            }
+        }
+
+        // Check range
+        let pop_pos = *world.get::<GridPosition>(pop_entity).unwrap();
+        let dist = pop_pos.distance_chebyshev(target_pos) as f32;
+
+        let mut weapon_range = 1.0; // Default melee
+        if let Some(ref eq) = equipment_opt {
+            if let Some(weapon_entity) = eq.weapon {
+                if let Some(weapon) = world.get::<Weapon>(weapon_entity) {
+                    weapon_range = weapon.properties.range;
+                }
+            }
+        }
+
+        if dist <= weapon_range {
+            // In range!
+            // Stop movement
+            if world.get::<AtTarget>(pop_entity).is_none() {
+                world.entity_mut(pop_entity).insert(AtTarget);
+            }
+
+            // Attack
+            crate::layer1::combat::execute_attack(world, pop_entity, target_entity);
+        } else {
+            // Out of range
+            // Ensure we are moving (remove AtTarget if present)
+            world.entity_mut(pop_entity).remove::<AtTarget>();
+        }
+    }
+}
 
 /// Executes vandalism when pop is at target with Vandalize action.
 pub fn vandalize_execution_system(world: &mut World) {
@@ -1073,7 +1138,7 @@ mod tests {
             .spawn((
                 Pop,
                 GridPosition { x: 5, y: 5 },
-                Equipment { tool: Some(tool) },
+                Equipment { tool: Some(tool), ..Default::default() },
                 MovementTarget {
                     target_entity: designation,
                     target_position: GridPosition { x: 5, y: 5 },
@@ -1131,7 +1196,7 @@ mod tests {
             .spawn((
                 Pop,
                 GridPosition { x: 5, y: 5 },
-                Equipment { tool: Some(tool) },
+                Equipment { tool: Some(tool), ..Default::default() },
                 MovementTarget {
                     target_entity: designation,
                     target_position: GridPosition { x: 5, y: 5 },
@@ -1205,7 +1270,7 @@ mod tests {
             .spawn((
                 Pop,
                 GridPosition { x: 5, y: 5 },
-                Equipment { tool: Some(tool) },
+                Equipment { tool: Some(tool), ..Default::default() },
                 MovementTarget {
                     target_entity: designation,
                     target_position: GridPosition { x: 5, y: 5 },
@@ -1631,7 +1696,7 @@ mod tests {
                     rest: 0.1,
                     leisure: 0.1,
                 },
-                Equipment { tool: Some(tool) },
+                Equipment { tool: Some(tool), ..Default::default() },
                 MovementTarget {
                     target_entity: designation,
                     target_position: GridPosition { x: 5, y: 5 },
@@ -1699,7 +1764,7 @@ mod tests {
                     rest: 1.0,
                     leisure: 1.0,
                 },
-                Equipment { tool: Some(tool) },
+                Equipment { tool: Some(tool), ..Default::default() },
                 MovementTarget {
                     target_entity: designation,
                     target_position: GridPosition { x: 5, y: 5 },
@@ -1765,7 +1830,7 @@ mod tests {
                 Pop,
                 GridPosition { x: 5, y: 5 },
                 skills,
-                Equipment { tool: Some(tool) },
+                Equipment { tool: Some(tool), ..Default::default() },
                 MovementTarget {
                     target_entity: designation,
                     target_position: GridPosition { x: 5, y: 5 },
@@ -1862,5 +1927,104 @@ mod tests {
         world.run_system_once(movement_system).unwrap();
         let pos = world.get::<GridPosition>(pop).unwrap();
         assert_eq!(pos.x, 1);
+    }
+
+    #[test]
+    fn test_combat_execution_system_attacks_in_range() {
+        use crate::layer1::combat::{AttackProperties, Weapon};
+        use crate::layer1::health::Health;
+
+        let mut world = setup_world();
+
+        // Create Enemy
+        let enemy = world
+            .spawn((
+                GridPosition { x: 1, y: 0 },
+                Health { current: 100.0, max: 100.0 },
+            ))
+            .id();
+
+        // Create Weapon
+        let weapon = world
+            .spawn(Weapon {
+                properties: AttackProperties {
+                    damage: 10.0,
+                    range: 1.0,
+                    cooldown: 0,
+                    accuracy: 1.0,
+                },
+            })
+            .id();
+
+        // Create Pop targeting enemy
+        world
+            .spawn((
+                Pop,
+                GridPosition { x: 0, y: 0 }, // Adjacent (dist 1)
+                Equipment { weapon: Some(weapon), ..Default::default() },
+                MovementTarget {
+                    target_entity: enemy,
+                    target_position: GridPosition { x: 1, y: 0 },
+                    for_action: ActionType::Fight,
+                },
+            ));
+
+        combat_execution_system(&mut world);
+
+        // Enemy should take damage
+        let health = world.get::<Health>(enemy).unwrap();
+        assert_eq!(health.current, 90.0);
+    }
+
+    #[test]
+    fn test_combat_execution_system_chases_out_of_range() {
+        use crate::layer1::combat::{AttackProperties, Weapon};
+        use crate::layer1::health::Health;
+
+        let mut world = setup_world();
+
+        // Create Enemy far away
+        let enemy = world
+            .spawn((
+                GridPosition { x: 5, y: 0 },
+                Health { current: 100.0, max: 100.0 },
+            ))
+            .id();
+
+        let weapon = world
+            .spawn(Weapon {
+                properties: AttackProperties {
+                    damage: 10.0,
+                    range: 1.0, // Short range
+                    cooldown: 0,
+                    accuracy: 1.0,
+                },
+            })
+            .id();
+
+        // Create Pop targeting enemy
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 0, y: 0 },
+                Equipment { weapon: Some(weapon), ..Default::default() },
+                MovementTarget {
+                    target_entity: enemy,
+                    target_position: GridPosition { x: 5, y: 0 },
+                    for_action: ActionType::Fight,
+                },
+                AtTarget, // Simulate arrived at previous target position?
+                          // Or simply ensure AtTarget is removed if present
+            ))
+            .id();
+
+        combat_execution_system(&mut world);
+
+        // Enemy should NOT take damage
+        let health = world.get::<Health>(enemy).unwrap();
+        assert_eq!(health.current, 100.0);
+
+        // AtTarget should be removed (to allow movement)
+        assert!(world.get::<AtTarget>(pop).is_none());
     }
 }
