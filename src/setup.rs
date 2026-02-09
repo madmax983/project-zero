@@ -4,6 +4,7 @@ use bevy_ecs::prelude::*;
 
 use crate::gpu::context::GpuContext;
 use crate::layer1::chronicle::AddChronicleEvent;
+use crate::layer1::pop::PopDied;
 use crate::layer1::social::AffinityChange;
 use crate::layer1::{
     AmbientLight, AtmosphereGrid, BuildMode, BuildingTracker, Chronicle, ChronicleUiState,
@@ -66,6 +67,7 @@ pub fn setup_world() -> World {
     world.insert_resource(AmbientLight::default());
     world.init_resource::<Events<AddChronicleEvent>>();
     world.init_resource::<Events<AffinityChange>>();
+    world.init_resource::<Events<PopDied>>();
 
     // Initialize GPU compute context (non-fatal if no GPU available)
     // Skip on WASM since pollster::block_on doesn't work in browser context

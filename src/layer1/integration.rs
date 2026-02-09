@@ -1,15 +1,48 @@
 //! Integration systems that bridge multiple domains in Layer 1.
 
+use crate::layer1::balance::TICKS_PER_YEAR;
 use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer1::fire::Fire;
 use crate::layer1::health::Health;
 use crate::layer1::map::GridPosition;
-use crate::layer1::pop::Pop;
+use crate::layer1::pop::{Pop, PopDied};
 use crate::layer1::rumor::{Knowledge, Rumor, RumorTopic};
+use crate::shared::colony::ColonyName;
+use crate::shared::narrative::{NarrativeContext, NarrativeGenerator};
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 use rand::seq::SliceRandom;
 use std::collections::HashSet;
+
+/// Creates chronicle entries from [`PopDied`] events.
+///
+/// Bridges the Pop system (Death) and Chronicle system (History).
+pub fn pop_death_chronicle_bridge(
+    mut events: EventReader<PopDied>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+    generator: Res<NarrativeGenerator>,
+    colony: Res<ColonyName>,
+    time: Res<SimulationTime>,
+) {
+    for event in events.read() {
+        let year = (1 + time.tick / TICKS_PER_YEAR).to_string();
+
+        let mut ctx = NarrativeContext::new();
+        ctx.insert("COLONY", &colony.name);
+        ctx.insert("YEAR", &year);
+        ctx.insert("NAME", &event.name);
+        ctx.insert("REASON", &event.reason);
+
+        let text = generator
+            .generate("POP_DEATH", &ctx)
+            .unwrap_or_else(|_| format!("{} has died. Cause: {}", event.name, event.reason));
+
+        chronicle_events.send(AddChronicleEvent {
+            text,
+            importance: EventImportance::Major,
+        });
+    }
+}
 
 /// Creates rumors from significant chronicle events.
 ///

@@ -43,6 +43,7 @@ pub enum MemoryType {
 impl MemoryType {
     /// Returns the mood impact (0.0 to 1.0 or negative).
     #[must_use]
+    #[allow(clippy::match_same_arms)]
     pub const fn base_mood_impact(&self) -> f32 {
         match self {
             Self::WitnessedDeath => -0.2,
@@ -65,6 +66,7 @@ impl MemoryType {
 
     /// Returns the decay rate per tick.
     #[must_use]
+    #[allow(clippy::match_same_arms)]
     pub const fn decay_rate(&self) -> f32 {
         // Ticks to fade completely
         match self {

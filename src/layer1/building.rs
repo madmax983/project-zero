@@ -69,6 +69,7 @@ pub enum BuildingType {
 impl BuildingType {
     /// Returns the beauty value emitted by this building.
     #[must_use]
+    #[allow(clippy::match_same_arms)]
     pub const fn beauty_value(&self) -> f32 {
         match self {
             Self::Statue => 10.0,
@@ -156,6 +157,7 @@ impl BuildingType {
 
     /// Returns the resource cost to build this building.
     #[must_use]
+    #[allow(clippy::match_same_arms)]
     pub const fn cost(&self) -> ColonyResources {
         match self {
             Self::Wall => ColonyResources {
@@ -341,7 +343,7 @@ fn handle_placement_error(world: &mut World, error: PlacementError) {
     }
 }
 
-#[allow(clippy::too_many_lines)]
+#[allow(clippy::too_many_lines, clippy::match_same_arms)]
 fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType) {
     let mut entity = world.spawn((Building { building_type }, GridPosition { x, y }));
 

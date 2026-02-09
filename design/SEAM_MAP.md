@@ -85,3 +85,12 @@ Map of connected and disconnected systems.
     - Modified `restore_rest_in_housing_system` in `src/layer1/housing.rs` to query `NoiseMap`.
     - Updated `SimulationSchedule` in `src/simulation.rs` to order rest recovery after noise update.
 - **Tests:** `tests/integration/acoustics_rest.rs`
+
+### INT-011: Pop Death -> Chronicle
+- **Date:** 2026-03-27
+- **Systems connected:** `death_system` -> `PopDied` -> `pop_death_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:**
+    - `PopDied` event in `src/layer1/pop.rs`.
+    - `pop_death_chronicle_bridge` in `src/layer1/integration.rs`.
+    - Updated `death_system` in `src/layer1/health.rs` to emit `PopDied`.
+- **Tests:** `tests/integration/death_chronicle.rs`

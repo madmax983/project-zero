@@ -65,3 +65,4 @@ Implemented features. Architect: read this to understand current state.
 - [x] `INT-007` Integration: Acoustics -> Rest Recovery — completed 2026-02-09
 - [x] `063` Atmospheric Simulation — `specs/063-atmospheric-simulation.md` — completed 2026-03-24
 - [x] `064` Room Quality — `specs/064-room-quality.md` — completed 2026-03-27
+- [x] `INT-011` Integration: Pop Death -> Chronicle — completed 2026-03-27

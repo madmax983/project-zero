@@ -39,6 +39,19 @@ use rand::Rng;
 #[derive(Component, Clone, Debug)]
 pub struct PopName(pub String);
 
+/// Event triggered when a pop dies.
+#[derive(Event, Debug, Clone)]
+pub struct PopDied {
+    /// The entity that died.
+    pub entity: Entity,
+    /// The name of the pop.
+    pub name: String,
+    /// The tick when death occurred.
+    pub tick: u64,
+    /// The cause of death.
+    pub reason: String,
+}
+
 const POP_NAMES: &[&str] = &[
     "Ada", "Bryn", "Cole", "Dara", "Eli", "Fern", "Gale", "Hana", "Iris", "Joss", "Kael", "Luna",
     "Milo", "Neva", "Orin", "Pax", "Quinn", "Rhea", "Sable", "Tarn", "Uma", "Vale", "Wren", "Xia",
