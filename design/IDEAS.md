@@ -538,7 +538,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Pop Factions
+## Pop Factions [SPECCED]
 
 **Layer:** 1 -> Cross-layer
 
