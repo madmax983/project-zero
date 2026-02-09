@@ -18,6 +18,21 @@ use crate::layer1::stockpile::Stockpile;
 use crate::layer1::tech::Library;
 use crate::layer1::utility_ai::types::{PopAction, UtilityConfig, UtilityWeights};
 
+/// Buffer storage for GPU data marshalling.
+///
+/// Stores reusable vectors to avoid heap allocations every frame.
+#[derive(Resource, Default)]
+pub struct GpuBuffers {
+    /// Entities corresponding to `pop_inputs`.
+    pub pop_entities: Vec<Entity>,
+    /// Pop data to upload to GPU.
+    pub pop_inputs: Vec<GpuPopInput>,
+    /// Entities corresponding to `building_inputs`.
+    pub building_entities: Vec<Entity>,
+    /// Building data to upload to GPU.
+    pub building_inputs: Vec<GpuBuildingInput>,
+}
+
 /// GPU-aligned pop input data. One per pop being evaluated.
 #[repr(C)]
 #[derive(Copy, Clone, Debug, bytemuck::Pod, bytemuck::Zeroable)]
@@ -111,15 +126,19 @@ pub struct GpuPopDecision {
 /// Extracts pop data for GPU evaluation.
 ///
 /// Only includes pops whose `ticks_committed >= config.evaluation_interval`.
-/// Returns `(entity_list, gpu_data)` where `entity_list[i]` corresponds to `gpu_data[i]`.
+/// Populates `entities` and `inputs` vectors, clearing them first.
 #[allow(clippy::cast_possible_truncation)]
-pub fn extract_pop_inputs(world: &mut World) -> (Vec<Entity>, Vec<GpuPopInput>) {
+pub fn extract_pop_inputs(
+    world: &mut World,
+    entities: &mut Vec<Entity>,
+    inputs: &mut Vec<GpuPopInput>,
+) {
     let evaluation_interval = world
         .get_resource::<UtilityConfig>()
         .map_or(1, |c| c.evaluation_interval);
 
-    let mut entities = Vec::new();
-    let mut inputs = Vec::new();
+    entities.clear();
+    inputs.clear();
 
     let mut query = world.query::<(Entity, &GridPosition, &Needs, &UtilityWeights, &PopAction)>();
 
@@ -144,18 +163,20 @@ pub fn extract_pop_inputs(world: &mut World) -> (Vec<Entity>, Vec<GpuPopInput>) 
             _padding: [0; 3],
         });
     }
-
-    (entities, inputs)
 }
 
 /// Extracts building/target data for GPU evaluation.
 ///
 /// Combines multiple building types into a single array.
-/// Returns `(entity_list, gpu_data)` where `entity_list[i]` corresponds to `gpu_data[i]`.
+/// Populates `entities` and `inputs` vectors, clearing them first.
 #[allow(clippy::cast_possible_truncation, clippy::too_many_lines)]
-pub fn extract_building_inputs(world: &mut World) -> (Vec<Entity>, Vec<GpuBuildingInput>) {
-    let mut entities = Vec::new();
-    let mut inputs = Vec::new();
+pub fn extract_building_inputs(
+    world: &mut World,
+    entities: &mut Vec<Entity>,
+    inputs: &mut Vec<GpuBuildingInput>,
+) {
+    entities.clear();
+    inputs.clear();
 
     // Farms (building_type = 0)
     {
@@ -318,8 +339,6 @@ pub fn extract_building_inputs(world: &mut World) -> (Vec<Entity>, Vec<GpuBuildi
             });
         }
     }
-
-    (entities, inputs)
 }
 
 /// Extracts global state for GPU evaluation.
@@ -428,7 +447,9 @@ mod tests {
             ))
             .id();
 
-        let (entities, inputs) = extract_pop_inputs(&mut world);
+        let mut entities = Vec::new();
+        let mut inputs = Vec::new();
+        extract_pop_inputs(&mut world, &mut entities, &mut inputs);
 
         assert_eq!(entities.len(), 1);
         assert_eq!(inputs.len(), 1);
@@ -527,7 +548,9 @@ mod tests {
             corpse_name: None,
         });
 
-        let (entities, inputs) = extract_building_inputs(&mut world);
+        let mut entities = Vec::new();
+        let mut inputs = Vec::new();
+        extract_building_inputs(&mut world, &mut entities, &mut inputs);
 
         assert_eq!(entities.len(), 7);
         assert_eq!(inputs.len(), 7);
