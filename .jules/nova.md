@@ -12,3 +12,8 @@
 **Concept:** Implemented `Ghost` entities that spawn when pops die. Ghosts wander, dislike light (take damage), and emit negative `Beauty` (making the colony spooky).
 **Fate:** Merged
 **Lesson:** Death is not just a resource loss but a narrative event that changes the environment.
+
+## [Oneiric Resonance]
+**Concept:** Sleeping pops dream about `Chronicle` events. Legendary events give Leisure/Knowledge bonuses; nightmares give nothing.
+**Fate:** Merged
+**Lesson:** Connecting history (Chronicle) to individual state (Needs) creates emergent storytelling. The past haunts the present.
