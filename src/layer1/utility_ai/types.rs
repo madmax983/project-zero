@@ -65,6 +65,11 @@ pub enum ActionType {
     /// Triggered when a corpse exists and an empty grave is available.
     BuryCorpse,
 
+    /// Fetch a tool from a stockpile.
+    ///
+    /// Triggered when a pop has no tool but tools are available in the colony.
+    FetchTool,
+
     /// Do nothing.
     ///
     /// The fallback action when no other options are viable or beneficial.
@@ -73,7 +78,7 @@ pub enum ActionType {
 
 impl ActionType {
     /// Total number of action types. Used for array sizing.
-    pub const COUNT: usize = 11;
+    pub const COUNT: usize = 12;
 
     /// Converts action type to a unique array index (0..COUNT-1).
     #[must_use]
@@ -89,7 +94,8 @@ impl ActionType {
             Self::Haul => 7,
             Self::SeekMedicalCare => 8,
             Self::BuryCorpse => 9,
-            Self::Idle => 10,
+            Self::FetchTool => 10,
+            Self::Idle => 11,
         }
     }
 

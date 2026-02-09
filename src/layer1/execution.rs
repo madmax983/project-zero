@@ -37,6 +37,7 @@ use crate::layer1::farm::Farm;
 use crate::layer1::funeral::{Corpse, Grave};
 use crate::layer1::health::Health;
 use crate::layer1::housing::Housing;
+use crate::layer1::items::{Equipment, Item, Tool, ToolType};
 use crate::layer1::map::GridPosition;
 use crate::layer1::memory::{Memories, MemoryType, calculate_effective_morale};
 use crate::layer1::needs::{Needs, get_morale_efficiency};
@@ -56,8 +57,8 @@ use rand::Rng;
 /// Work amount applied per tick when a pop is working.
 const WORK_PER_TICK: f32 = 10.0;
 
-/// Chance for a tool to break per tick when used.
-const TOOL_BREAK_CHANCE: f64 = 0.01;
+/// Durability loss per tick when working.
+const TOOL_DURABILITY_LOSS: f32 = 0.1;
 
 /// Efficiency multiplier when working without tools.
 const NO_TOOL_PENALTY: f32 = 0.5;
@@ -226,21 +227,58 @@ pub fn movement_system(
 
 /// Handles arrival at targets: assigns pops to farms/housing.
 pub fn arrival_handler_system(
-    arrivals: Query<(Entity, &GridPosition, &MovementTarget), With<AtTarget>>,
+    mut arrivals: Query<
+        (
+            Entity,
+            &GridPosition,
+            &MovementTarget,
+            Option<&mut Equipment>,
+        ),
+        With<AtTarget>,
+    >,
     mut farms: Query<&mut Farm>,
     mut housing_q: Query<&mut Housing>,
     mut taverns: Query<&mut Tavern>,
     corpses: Query<&Corpse>,
     mut graves: Query<(Entity, &GridPosition, &mut Grave)>,
     mut memories: Query<&mut Memories>,
+    mut resources: ResMut<ColonyResources>,
     time: Res<SimulationTime>,
     mut commands: Commands,
 ) {
-    for (pop_entity, pop_pos, mt) in &arrivals {
+    for (pop_entity, pop_pos, mt, mut equipment_opt) in &mut arrivals {
         let target_entity = mt.target_entity;
         let action = mt.for_action;
 
         match action {
+            ActionType::FetchTool => {
+                if resources.tools >= 1.0 {
+                    resources.tools -= 1.0;
+
+                    let tool_entity = commands
+                        .spawn((
+                            Item,
+                            Tool {
+                                tool_type: ToolType::Pickaxe, // Generic for now
+                                durability: 100.0,
+                                max_durability: 100.0,
+                            },
+                        ))
+                        .id();
+
+                    if let Some(ref mut eq) = equipment_opt {
+                        eq.tool = Some(tool_entity);
+                    } else {
+                        commands.entity(pop_entity).insert(Equipment {
+                            tool: Some(tool_entity),
+                        });
+                    }
+                }
+                commands
+                    .entity(pop_entity)
+                    .remove::<MovementTarget>()
+                    .remove::<AtTarget>();
+            }
             ActionType::SatisfyHunger => {
                 handle_hunger_arrival(pop_entity, target_entity, &mut farms, &mut commands);
                 commands
@@ -396,41 +434,38 @@ fn execute_demolish(world: &mut World, designation_entity: Entity) -> bool {
 
 /// Executes work at designations when pop is at target with Work action.
 pub fn work_execution_system(world: &mut World) {
-    // Check tools at the start of the system
-    let (has_tools, mut tool_broken) = {
-        let res = world.resource::<ColonyResources>();
-        (res.tools >= 1.0, false)
-    };
-
-    let tool_efficiency = if has_tools { 1.0 } else { NO_TOOL_PENALTY };
-
     let policies = world.get_resource::<ColonyPolicies>().cloned();
     let work_speed_mod = policies.as_ref().map_or(1.0, get_work_speed_modifier);
 
     // Find pops at their work target and capture their morale
     // Since we need to access Needs which is a component, and we need &mut World later,
     // we should collect Needs data first.
-    let workers_data: Vec<(Entity, Entity, f32, ActionType)> = world
+    let workers_data: Vec<(Entity, Entity, f32, ActionType, Option<Equipment>)> = world
         .query_filtered::<(
             Entity,
             &MovementTarget,
             Option<&Needs>,
             Option<&Memories>,
             Option<&SocialBuff>,
+            Option<&Equipment>,
         ), With<AtTarget>>()
         .iter(world)
-        .filter(|(_, mt, _, _, _)| {
+        .filter(|(_, mt, _, _, _, _)| {
             mt.for_action == ActionType::Work || mt.for_action == ActionType::Repair
         })
-        .map(|(e, mt, needs, memories, social_buff)| {
+        .map(|(e, mt, needs, memories, social_buff, eq)| {
             let morale = needs.map_or(0.5, |n| {
                 calculate_effective_morale(n, memories, social_buff, policies.as_ref())
             });
-            (e, mt.target_entity, morale, mt.for_action)
+            (e, mt.target_entity, morale, mt.for_action, eq.cloned())
         })
         .collect();
 
-    for (pop_entity, designation_entity, morale, action_type) in workers_data {
+    for (pop_entity, designation_entity, morale, action_type, equipment_opt) in workers_data {
+        // Check per-pop tool availability
+        let tool_entity_opt = equipment_opt.as_ref().and_then(|e| e.tool);
+        let has_tools = tool_entity_opt.is_some();
+        let tool_efficiency = if has_tools { 1.0 } else { NO_TOOL_PENALTY };
         // Check if designation still exists
         if world.get_entity(designation_entity).is_err() {
             cleanup_pop_work_state(world, pop_entity);
@@ -504,27 +539,30 @@ pub fn work_execution_system(world: &mut World) {
 
             handle_workplace_hazards(world, pop_entity, action_type);
 
-            if has_tools && !tool_broken {
-                let mut rng = rand::thread_rng();
-                if rng.gen_bool(TOOL_BREAK_CHANCE) {
-                    tool_broken = true;
+            // Handle tool durability
+            if let Some(tool_entity) = tool_entity_opt {
+                let mut broke = false;
+                if let Some(mut tool) = world.get_mut::<Tool>(tool_entity) {
+                    tool.durability -= TOOL_DURABILITY_LOSS;
+                    if tool.durability <= 0.0 {
+                        broke = true;
+                    }
                 }
-            }
-        }
-    }
 
-    if tool_broken {
-        let mut tools_lost = false;
-        {
-            let mut res = world.resource_mut::<ColonyResources>();
-            if res.tools >= 1.0 {
-                res.tools -= 1.0;
-                tools_lost = true;
-            }
-        }
-        if tools_lost {
-            if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
-                log.add("CRACK! A tool has broken.");
+                if broke {
+                    // Despawn tool
+                    world.despawn(tool_entity);
+
+                    // Clear equipment
+                    if let Some(mut eq) = world.get_mut::<Equipment>(pop_entity) {
+                        eq.tool = None;
+                    }
+
+                    // Log breakage
+                    if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+                        log.add("CRACK! A tool has broken.");
+                    }
+                }
             }
         }
     }
@@ -1054,10 +1092,22 @@ mod tests {
             ))
             .id();
 
+        let tool = world
+            .spawn((
+                Item,
+                Tool {
+                    tool_type: ToolType::Pickaxe,
+                    durability: 100.0,
+                    max_durability: 100.0,
+                },
+            ))
+            .id();
+
         let _pop = world
             .spawn((
                 Pop,
                 GridPosition { x: 5, y: 5 },
+                Equipment { tool: Some(tool) },
                 MovementTarget {
                     target_entity: designation,
                     target_position: GridPosition { x: 5, y: 5 },
@@ -1100,10 +1150,22 @@ mod tests {
             ))
             .id();
 
+        let tool = world
+            .spawn((
+                Item,
+                Tool {
+                    tool_type: ToolType::Pickaxe,
+                    durability: 100.0,
+                    max_durability: 100.0,
+                },
+            ))
+            .id();
+
         let _pop = world
             .spawn((
                 Pop,
                 GridPosition { x: 5, y: 5 },
+                Equipment { tool: Some(tool) },
                 MovementTarget {
                     target_entity: designation,
                     target_position: GridPosition { x: 5, y: 5 },
@@ -1162,10 +1224,22 @@ mod tests {
             ))
             .id();
 
+        let tool = world
+            .spawn((
+                Item,
+                Tool {
+                    tool_type: ToolType::Pickaxe,
+                    durability: 100.0,
+                    max_durability: 100.0,
+                },
+            ))
+            .id();
+
         let pop = world
             .spawn((
                 Pop,
                 GridPosition { x: 5, y: 5 },
+                Equipment { tool: Some(tool) },
                 MovementTarget {
                     target_entity: designation,
                     target_position: GridPosition { x: 5, y: 5 },
@@ -1569,6 +1643,17 @@ mod tests {
             ))
             .id();
 
+        let tool = world
+            .spawn((
+                Item,
+                Tool {
+                    tool_type: ToolType::Pickaxe,
+                    durability: 100.0,
+                    max_durability: 100.0,
+                },
+            ))
+            .id();
+
         // Spawn a pop with low morale (hunger=0.1, rest=0.1, leisure=0.1 -> morale=0.1)
         // Expected efficiency: 0.5 (penalty)
         let _pop = world
@@ -1580,6 +1665,7 @@ mod tests {
                     rest: 0.1,
                     leisure: 0.1,
                 },
+                Equipment { tool: Some(tool) },
                 MovementTarget {
                     target_entity: designation,
                     target_position: GridPosition { x: 5, y: 5 },
@@ -1625,6 +1711,17 @@ mod tests {
             ))
             .id();
 
+        let tool = world
+            .spawn((
+                Item,
+                Tool {
+                    tool_type: ToolType::Pickaxe,
+                    durability: 100.0,
+                    max_durability: 100.0,
+                },
+            ))
+            .id();
+
         // Spawn a pop with high morale (all 1.0 -> morale=1.0)
         // Expected efficiency: 1.2 (bonus)
         let _pop = world
@@ -1636,6 +1733,7 @@ mod tests {
                     rest: 1.0,
                     leisure: 1.0,
                 },
+                Equipment { tool: Some(tool) },
                 MovementTarget {
                     target_entity: designation,
                     target_position: GridPosition { x: 5, y: 5 },
@@ -1685,11 +1783,23 @@ mod tests {
         let mut skills = Skills::default();
         skills.add_xp(SkillType::Mining, 100.0);
 
+        let tool = world
+            .spawn((
+                Item,
+                Tool {
+                    tool_type: ToolType::Pickaxe,
+                    durability: 100.0,
+                    max_durability: 100.0,
+                },
+            ))
+            .id();
+
         let _pop = world
             .spawn((
                 Pop,
                 GridPosition { x: 5, y: 5 },
                 skills,
+                Equipment { tool: Some(tool) },
                 MovementTarget {
                     target_entity: designation,
                     target_position: GridPosition { x: 5, y: 5 },

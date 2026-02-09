@@ -23,6 +23,7 @@
 //! * `UtilityWeights`: Personality/learning factors.
 
 use super::health::Health;
+use super::items::Equipment;
 use super::map::GridPosition;
 use super::memory::Memories;
 use super::needs::Needs;
@@ -155,6 +156,7 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
                 Skills::default(),
                 Speed::default(),
                 PopAction::default(),
+                Equipment::default(),
                 UtilityWeights::default(),
                 Knowledge::default(),
             ));

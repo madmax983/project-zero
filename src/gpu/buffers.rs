@@ -40,13 +40,13 @@ pub struct GpuPopInput {
     /// Learned social weight.
     pub social_weight: f32,
     /// Per-action success counts.
-    pub success_count: [u32; 11],
+    pub success_count: [u32; 12],
     /// Per-action attempt counts.
-    pub attempt_count: [u32; 11],
+    pub attempt_count: [u32; 12],
     /// Utility score of the current action.
     pub current_utility: f32,
     /// Padding to 16-byte alignment.
-    pub _padding: [u32; 1],
+    pub _padding: [u32; 3],
 }
 
 /// GPU-aligned building/target input data. One per building.
@@ -141,7 +141,7 @@ pub fn extract_pop_inputs(world: &mut World) -> (Vec<Entity>, Vec<GpuPopInput>) 
             success_count: weights.action_success_count,
             attempt_count: weights.action_attempt_count,
             current_utility: action.current_utility,
-            _padding: [0; 1],
+            _padding: [0; 3],
         });
     }
 
@@ -361,9 +361,9 @@ mod tests {
 
     #[test]
     fn test_gpu_pop_input_size() {
-        // 2*i32 + 6*f32 + 11*u32 + 11*u32 + 1*f32 + 1*u32
-        // = 8 + 24 + 44 + 44 + 4 + 4 = 128 bytes
-        assert_eq!(std::mem::size_of::<GpuPopInput>(), 128);
+        // 2*i32 + 6*f32 + 12*u32 + 12*u32 + 1*f32 + 3*u32
+        // = 8 + 24 + 48 + 48 + 4 + 12 = 144 bytes
+        assert_eq!(std::mem::size_of::<GpuPopInput>(), 144);
     }
 
     #[test]
@@ -403,8 +403,8 @@ mod tests {
                     distance_weight: 1.2,
                     availability_weight: 0.8,
                     social_weight: 1.0,
-                    action_success_count: [1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0], // 11 elements
-                    action_attempt_count: [5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0], // 11 elements
+                    action_success_count: [1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 12 elements
+                    action_attempt_count: [5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 12 elements
                 },
                 PopAction {
                     current: ActionType::SatisfyHunger,
