@@ -46,7 +46,7 @@ pub fn evaluate_refine<'a>(
 
         let utility = (base_utility + progress_bonus) * context * success;
 
-        if best.map_or(true, |(u, _)| utility > u) {
+        if best.is_none_or(|(u, _)| utility > u) {
             best = Some((utility, entity));
         }
     }

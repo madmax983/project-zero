@@ -15,10 +15,10 @@ struct PopInput {
     distance_weight: f32,
     availability_weight: f32,
     social_weight: f32,
-    success_count: array<u32, 16>,
-    attempt_count: array<u32, 16>,
+    success_count: array<u32, 19>,
+    attempt_count: array<u32, 19>,
     current_utility: f32,
-    _pad: array<u32, 3>,
+    _pad: array<u32, 1>,
 }
 
 struct BuildingInput {
@@ -188,6 +188,11 @@ fn main(@builtin(global_invocation_id) global_id: vec3<u32>) {
                 }
                 urgency = 0.8;
                 action_idx = 9u;
+            }
+            case 10u: {
+                // Wanted -> Warden (action 18)
+                urgency = 0.8; // High priority for maintaining order
+                action_idx = 18u;
             }
             default: {
                 skip = true;

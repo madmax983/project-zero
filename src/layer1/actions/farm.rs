@@ -37,7 +37,7 @@ pub fn evaluate_farm<'a>(
         let success = calculate_success_modifier(ActionType::Farm, weights);
         let utility = base_utility * context * success;
 
-        if best.map_or(true, |(u, _)| utility > u) {
+        if best.is_none_or(|(u, _)| utility > u) {
             best = Some((utility, entity));
         }
     }

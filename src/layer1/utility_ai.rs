@@ -60,6 +60,7 @@ use crate::layer1::structure::Structure;
 use crate::layer1::tech::Library;
 use crate::layer1::unrest::{MentalBreakType, MentalState};
 use crate::shared::time::SimulationTime;
+use crate::layer1::justice::Inmate;
 use bevy_ecs::prelude::*;
 
 /// System to update commitment timers.
@@ -123,12 +124,13 @@ pub fn evaluate_actions_system(world: &mut World) {
             Option<&Equipment>,
             Option<&MentalState>,
             Option<&Drafted>,
+            Option<&Inmate>,
         )>()
         .iter(world)
-        .filter(|(_, _, _, _, action, _, _, _)| {
-            action.ticks_committed >= config.evaluation_interval
+        .filter(|(_, _, _, _, action, _, _, _, inmate)| {
+            action.ticks_committed >= config.evaluation_interval && inmate.is_none()
         })
-        .map(|(e, p, n, w, a, eq, m, d)| {
+        .map(|(e, p, n, w, a, eq, m, d, _)| {
             (
                 e,
                 *p,
@@ -480,7 +482,8 @@ pub fn track_plan_outcomes_system(
             | ActionType::Daze
             | ActionType::Fight
             | ActionType::Refine
-            | ActionType::Farm => true,
+            | ActionType::Farm
+            | ActionType::Warden => true,
         };
 
         #[allow(clippy::cast_possible_truncation)]

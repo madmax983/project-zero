@@ -78,3 +78,4 @@ Implemented features. Architect: read this to understand current state.
 - [x] `042` Energy System — `specs/042-energy-system.md` — completed
 - [x] `066` Building Work AI — `specs/066-building-work-ai.md` — completed
 - [x] `074` Visitor System — `specs/074-visitor-system.md` — completed
+- [x] `072` Justice System — `specs/072-justice-system.md` — completed 2026-02-10

@@ -193,3 +193,5 @@ pub use visitor::*;
 /// Day/Night cycle system (Spec 065).
 pub mod day_night;
 pub use day_night::*;
+pub mod justice;
+pub use justice::*;

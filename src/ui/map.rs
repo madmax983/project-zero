@@ -573,14 +573,13 @@ pub const fn get_building_char(building: BuildingType) -> char {
         BuildingType::Tailor => 't',
         BuildingType::FlowerBed => '*',
         BuildingType::Statue => 'I',
-        BuildingType::Hospital => '+',
+        BuildingType::Hospital | BuildingType::Gate => '+',
         BuildingType::Landfill => '%',
         BuildingType::Grave => '†',
         BuildingType::TradeDepot => '$',
         BuildingType::Generator => '⚡',
         BuildingType::PowerPole => '|',
         BuildingType::Wall => '#',
-        BuildingType::Gate => '+',
         BuildingType::Tower => 'O',
     }
 }
