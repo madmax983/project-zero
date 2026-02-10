@@ -845,3 +845,81 @@
 **Usage:**
 - "To the resting place."
 - "A barrow for the fallen."
+
+## Vermin & Decay
+
+### the swarm / gnawers
+
+**Replaces:** vermin, pests
+**Code reference:** `Vermin` entity
+**Usage:**
+- "The swarm is in the walls."
+- "Gnawers took the grain."
+
+### spoiled / turned
+
+**Replaces:** rotten food
+**Code reference:** `Rot` state
+**Usage:**
+- "The meat has turned."
+- "Spoiled by the grey."
+
+---
+
+## Combat & Defense
+
+### the Watch / the Guard
+
+**Replaces:** militia, drafted pops
+**Code reference:** `Militia` component
+**Usage:**
+- "The Watch stands ready."
+- "Call the Guard."
+
+### skirmish / clash
+
+**Replaces:** combat encounter
+**Code reference:** `SKIRMISH_RESULT`
+**Usage:**
+- "A skirmish at the perimeter."
+- "The clash was brief."
+
+---
+
+## Fauna & Wild
+
+### beasts / wild-kin
+
+**Replaces:** hostile fauna
+**Code reference:** `Fauna` entity
+**Usage:**
+- "Beasts in the dark."
+- "The wild-kin are hungry."
+
+### the hunt
+
+**Replaces:** fighting fauna
+**Code reference:** `ActionType::Fight`
+**Usage:**
+- "The hunt is on."
+- "Returning from the hunt."
+
+---
+
+## Structure & Ruins
+
+### the fall / crumbling
+
+**Replaces:** building collapse
+**Code reference:** `STRUCTURE_COLLAPSE`
+**Usage:**
+- "We remember the fall of the tower."
+- "The crumbling took three souls."
+
+### old-bones
+
+**Replaces:** ruins, ancient structures
+**Code reference:** `Ruin` entity
+**Usage:**
+- "Digging up old-bones."
+- "The old-bones whisper."

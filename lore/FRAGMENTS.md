@@ -1118,3 +1118,106 @@ Verbs for scientific study.
 - last walk
 - earth-gift
 - silence
+
+## Vermin Fragments
+
+### [VERMIN_NAME]
+Name for pest infestations.
+
+- rust-rats
+- void-mites
+- gray-feeders
+- hull-worms
+- star-roaches
+- cable-biters
+- dust-spiders
+
+### [VERMIN_ACTION]
+What vermin do.
+
+- gnaws
+- swarms
+- burrows
+- consumes
+- multiplies
+- scurries
+- infects
+
+---
+
+## Militia Fragments
+
+### [MILITIA_NAME]
+Names for the colony defense force.
+
+- The Watch
+- Night Guard
+- The Iron Wall
+- Void-Sentinels
+- The Perimeter
+- First Response
+- The Shield
+
+### [WEAPON_NAME]
+Flavor names for militia weapons.
+
+- coil-gun
+- blast-pike
+- arc-hammer
+- void-rifle
+- shock-baton
+- kinetic-spear
+- plasma-cutter
+
+---
+
+## Fauna Fragments
+
+### [BEAST_NAME]
+Names for hostile local life.
+
+- rock-maws
+- shade-stalkers
+- void-wolves
+- crystal-spiders
+- burrow-kings
+- night-wings
+- ash-crawlers
+
+### [BEAST_ACTION]
+Behaviors of wild beasts.
+
+- howls
+- stalks
+- hunts
+- breaches
+- screams
+- watches
+- circles
+
+---
+
+## Structural Fragments
+
+### [COLLAPSE_SOUND]
+Sound of a building failing.
+
+- thunderous
+- grinding
+- shrieking
+- sudden
+- deafening
+- hollow
+- final
+
+### [RUIN_STATE]
+Condition of discovered ruins.
+
+- crumbled
+- half-buried
+- perfectly preserved
+- partially excavated by [UNKNOWN]
+- deliberately destroyed
+- still humming with power
+- overgrown
+- crystallized

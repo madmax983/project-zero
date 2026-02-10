@@ -49,6 +49,28 @@ mod tests {
             "EDICT_REVOKED template missing"
         );
 
+        // New templates added
+        assert!(
+            generator.generate("VERMIN_OUTBREAK", &context).is_ok(),
+            "VERMIN_OUTBREAK template missing"
+        );
+        assert!(
+            generator.generate("MILITIA_MUSTER", &context).is_ok(),
+            "MILITIA_MUSTER template missing"
+        );
+        assert!(
+            generator.generate("FAUNA_SIGHTING", &context).is_ok(),
+            "FAUNA_SIGHTING template missing"
+        );
+        assert!(
+            generator.generate("STRUCTURE_COLLAPSE", &context).is_ok(),
+            "STRUCTURE_COLLAPSE template missing"
+        );
+        assert!(
+            generator.generate("RUIN_DISCOVERY", &context).is_ok(),
+            "RUIN_DISCOVERY template missing"
+        );
+
         println!("Lore parsing successful!");
     }
 }
