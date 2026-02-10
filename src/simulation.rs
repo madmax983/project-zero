@@ -29,7 +29,8 @@ use crate::layer1::{
     process_start_plan_system, produce_food_system, restore_leisure_system,
     restore_rest_in_housing_system, spoilage_system, starvation_damage_system,
     track_plan_outcomes_system, update_action_timer_system, update_lighting_system,
-    update_noise_system, update_resource_caps_system, vermin_growth_system, work_execution_system,
+    update_noise_system, update_resource_caps_system, vermin_growth_system, vermin_morale_system,
+    work_execution_system,
 };
 use crate::shared::time::SimulationTime;
 
@@ -152,6 +153,7 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(update_resource_caps_system),
         clothing_wear_system.after(consume_food_system),
         vermin_growth_system.after(consume_food_system),
+        vermin_morale_system.after(vermin_growth_system),
         spoilage_system
             .after(consume_food_system)
             .after(vermin_growth_system),

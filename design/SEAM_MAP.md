@@ -94,3 +94,12 @@ Map of connected and disconnected systems.
     - `pop_death_chronicle_bridge` in `src/layer1/integration.rs`.
     - Updated `death_system` in `src/layer1/health.rs` to emit `PopDied`.
 - **Tests:** `tests/integration/death_chronicle.rs`
+
+### INT-012: Vermin -> Pop Morale
+- **Date:** 2026-10-17
+- **Systems connected:** `vermin_growth_system` -> `VerminState` -> `vermin_morale_system` -> `Memories`
+- **Glue added:**
+    - `vermin_morale_system` in `src/layer1/integration.rs`.
+    - `MemoryType::DisgustedByVermin` in `src/layer1/memory.rs`.
+    - Updated `SimulationSchedule` in `src/simulation.rs` to run `vermin_morale_system`.
+- **Tests:** `tests/integration/vermin_morale.rs` (Integration test verified)

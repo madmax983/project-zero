@@ -72,3 +72,4 @@ Implemented features. Architect: read this to understand current state.
 - [x] `071` Structural Integrity — `specs/071-structural-integrity.md` — completed 2026-04-18
 - [x] `052` Archaeological Excavation — `specs/052-archaeological-excavation.md` — completed 2026-03-05
 - [x] `073` Vermin Infestation — `specs/073-vermin-infestation.md` — completed 2026-02-10
+- [x] `INT-012` Integration: Vermin -> Pop Morale — completed 2026-10-17
