@@ -33,8 +33,6 @@ use crate::layer1::actions::fetch_tool::handle_fetch_tool;
 use crate::layer1::actions::hunger::handle_arrival as handle_hunger_arrival;
 use crate::layer1::actions::rest::handle_arrival as handle_rest_arrival;
 use crate::layer1::actions::{AssignedTo, AssignmentType};
-use crate::layer1::building::{Building, OccupiedTiles};
-use crate::layer1::combat::Weapon;
 use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::edicts::{ColonyPolicies, get_work_speed_modifier};
 use crate::layer1::farm::Farm;
@@ -45,11 +43,10 @@ use crate::layer1::items::{Equipment, Tool};
 use crate::layer1::map::GridPosition;
 use crate::layer1::memory::{Memories, calculate_effective_morale};
 use crate::layer1::needs::{Needs, get_morale_efficiency};
-use crate::layer1::pop::Speed;
+use crate::layer1::movement::{AtTarget, MovementTarget};
 use crate::layer1::resources::{ColonyResources, process_logging, process_mining};
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
 use crate::layer1::social::{SocialBuff, Tavern, handle_socialize};
-use crate::layer1::terrain::TerrainGrid;
 use crate::layer1::utility_ai::{ActionType, PopAction, StartPlan};
 use crate::shared::log::MessageLog;
 use crate::shared::time::SimulationTime;
@@ -67,64 +64,12 @@ pub fn combat_execution_system(world: &mut World) {
         .collect();
 
     for (pop_entity, target_entity, equipment_opt) in combatants {
-        process_single_combatant(world, pop_entity, target_entity, equipment_opt);
-    }
-}
-
-fn process_single_combatant(
-    world: &mut World,
-    pop_entity: Entity,
-    target_entity: Entity,
-    equipment_opt: Option<Equipment>,
-) {
-    // Find target position (it might have moved)
-    let target_pos = if let Some(pos) = world.get::<GridPosition>(target_entity) {
-        *pos
-    } else {
-        // Target despawned?
-        cleanup_pop_work_state(world, pop_entity);
-        return;
-    };
-
-    // Update MovementTarget if needed
-    if let Some(mut mt) = world.get_mut::<MovementTarget>(pop_entity) {
-        if mt.target_position != target_pos {
-            mt.target_position = target_pos;
-            // Remove AtTarget to ensure we chase if they moved away
-            // But only if we are now out of range?
-            // Actually, let's check range first.
-        }
-    }
-
-    // Check range
-    // Safety: Pop must have GridPosition
-    let Some(pop_pos) = world.get::<GridPosition>(pop_entity).copied() else {
-        return;
-    };
-    let dist = pop_pos.distance_chebyshev(target_pos) as f32;
-
-    let mut weapon_range = 1.0; // Default melee
-    if let Some(ref eq) = equipment_opt {
-        if let Some(weapon_entity) = eq.weapon {
-            if let Some(weapon) = world.get::<Weapon>(weapon_entity) {
-                weapon_range = weapon.properties.range;
-            }
-        }
-    }
-
-    if dist <= weapon_range {
-        // In range!
-        // Stop movement
-        if world.get::<AtTarget>(pop_entity).is_none() {
-            world.entity_mut(pop_entity).insert(AtTarget);
-        }
-
-        // Attack
-        crate::layer1::combat::execute_attack(world, pop_entity, target_entity);
-    } else {
-        // Out of range
-        // Ensure we are moving (remove AtTarget if present)
-        world.entity_mut(pop_entity).remove::<AtTarget>();
+        crate::layer1::combat::handle_combat_execution(
+            world,
+            pop_entity,
+            target_entity,
+            equipment_opt,
+        );
     }
 }
 
@@ -157,21 +102,6 @@ const TOOL_DURABILITY_LOSS: f32 = 0.1;
 
 /// Efficiency multiplier when working without tools.
 const NO_TOOL_PENALTY: f32 = 0.5;
-
-/// Component indicating a pop is moving toward a target.
-#[derive(Component, Debug)]
-pub struct MovementTarget {
-    /// The entity being targeted (farm, housing, or designation).
-    pub target_entity: Entity,
-    /// The grid position of the target.
-    pub target_position: GridPosition,
-    /// The action type this movement is for.
-    pub for_action: ActionType,
-}
-
-/// Marker component indicating a pop has arrived at its target.
-#[derive(Component, Debug)]
-pub struct AtTarget;
 
 /// Removes pops from farms/housing when they switch to a different action.
 ///
@@ -206,117 +136,6 @@ pub fn cleanup_previous_assignment_system(
         }
 
         commands.entity(pop_entity).remove::<AssignedTo>();
-    }
-}
-
-/// Consumes `StartPlan` markers and creates `MovementTarget` components.
-///
-/// This system bridges the utility AI's decision (`StartPlan`) with the
-/// movement system by creating `MovementTarget` for each pop.
-pub fn process_start_plan_system(
-    plans: Query<(Entity, &StartPlan)>,
-    positions: Query<&GridPosition>,
-    mut commands: Commands,
-) {
-    for (pop_entity, start_plan) in &plans {
-        let action = start_plan.action;
-        let target = start_plan.target;
-
-        // Remove the StartPlan marker and any existing movement components
-        commands
-            .entity(pop_entity)
-            .remove::<StartPlan>()
-            .remove::<MovementTarget>()
-            .remove::<AtTarget>();
-
-        // If there's no target, skip (e.g., Idle action)
-        let Some(target_entity) = target else {
-            continue;
-        };
-
-        // Get the target's position (also validates entity existence)
-        let Ok(&target_position) = positions.get(target_entity) else {
-            continue;
-        };
-
-        // Insert new MovementTarget
-        commands.entity(pop_entity).insert(MovementTarget {
-            target_entity,
-            target_position,
-            for_action: action,
-        });
-    }
-}
-
-/// Moves pops 1 tile per tick toward their target (Manhattan-style).
-///
-/// When a pop arrives at its target position (or adjacent for work), this system
-/// marks it with `AtTarget`.
-pub fn movement_system(
-    mut pops: Query<
-        (
-            Entity,
-            &mut GridPosition,
-            &MovementTarget,
-            Option<&mut Speed>,
-        ),
-        Without<AtTarget>,
-    >,
-    terrain: Res<TerrainGrid>,
-    mut commands: Commands,
-) {
-    for (pop_entity, mut current_pos, mt, mut speed_opt) in &mut pops {
-        // Handle variable movement speed
-        if let Some(ref mut speed) = speed_opt {
-            speed.accumulator += speed.current;
-            if speed.accumulator < 1.0 {
-                continue;
-            }
-            speed.accumulator -= 1.0;
-        }
-
-        let target_pos = mt.target_position;
-        let action = mt.for_action;
-
-        // For work/repair actions, check if adjacent to an unwalkable target (rock/tree/building)
-        // Pops work FROM adjacent tiles, not ON the target
-        if action == ActionType::Work || action == ActionType::Repair {
-            let target_walkable = is_walkable_terrain(&terrain, target_pos.x, target_pos.y);
-            if !target_walkable {
-                let distance =
-                    (current_pos.x - target_pos.x).abs() + (current_pos.y - target_pos.y).abs();
-                if distance == 1 {
-                    commands.entity(pop_entity).insert(AtTarget);
-                    continue;
-                }
-            }
-        }
-
-        let Some(new_pos) = calculate_next_position(*current_pos, target_pos) else {
-            continue;
-        };
-
-        if !is_walkable_terrain(&terrain, new_pos.x, new_pos.y) {
-            continue;
-        }
-
-        current_pos.x = new_pos.x;
-        current_pos.y = new_pos.y;
-
-        if new_pos == target_pos {
-            commands.entity(pop_entity).insert(AtTarget);
-        }
-
-        // For work/repair actions on unwalkable targets, also check if now adjacent
-        if action == ActionType::Work || action == ActionType::Repair {
-            let target_walkable = is_walkable_terrain(&terrain, target_pos.x, target_pos.y);
-            if !target_walkable {
-                let distance = (new_pos.x - target_pos.x).abs() + (new_pos.y - target_pos.y).abs();
-                if distance == 1 {
-                    commands.entity(pop_entity).insert(AtTarget);
-                }
-            }
-        }
     }
 }
 
@@ -360,11 +179,10 @@ pub fn arrival_handler_system(
                 true
             }
             ActionType::SeekMedicalCare => {
-                assign_pop(
+                crate::layer1::medical::handle_medical_arrival(
                     &mut commands,
                     pop_entity,
                     target_entity,
-                    AssignmentType::Patient,
                 );
                 true
             }
@@ -377,11 +195,10 @@ pub fn arrival_handler_system(
                 true
             }
             ActionType::Research => {
-                assign_pop(
+                crate::layer1::tech::handle_research_arrival(
                     &mut commands,
                     pop_entity,
                     target_entity,
-                    AssignmentType::LibraryWorker,
                 );
                 true
             }
@@ -412,81 +229,11 @@ pub fn arrival_handler_system(
     }
 }
 
-fn assign_pop(
-    commands: &mut Commands,
-    pop_entity: Entity,
-    target_entity: Entity,
-    assignment_type: AssignmentType,
-) {
-    commands.entity(pop_entity).insert(AssignedTo {
-        entity: target_entity,
-        assignment_type,
-    });
-}
-
 fn remove_movement_components(commands: &mut Commands, pop_entity: Entity) {
     commands
         .entity(pop_entity)
         .remove::<MovementTarget>()
         .remove::<AtTarget>();
-}
-
-fn is_walkable_terrain(terrain: &TerrainGrid, x: i32, y: i32) -> bool {
-    if let (Ok(x_idx), Ok(y_idx)) = (usize::try_from(x), usize::try_from(y)) {
-        terrain
-            .get(x_idx, y_idx)
-            .is_some_and(crate::layer1::terrain::TerrainType::is_walkable)
-    } else {
-        false
-    }
-}
-
-#[allow(clippy::missing_const_for_fn, clippy::unnecessary_wraps)]
-fn calculate_next_position(current: GridPosition, target: GridPosition) -> Option<GridPosition> {
-    // Calculate movement direction (Manhattan)
-    let dx = (target.x - current.x).signum();
-    let dy = (target.y - current.y).signum();
-
-    // Prefer horizontal movement, then vertical
-    if dx != 0 {
-        Some(GridPosition {
-            x: current.x + dx,
-            y: current.y,
-        })
-    } else {
-        Some(GridPosition {
-            x: current.x,
-            y: current.y + dy,
-        })
-    }
-}
-
-fn execute_demolish(world: &mut World, designation_entity: Entity) -> bool {
-    // Find designation position
-    world
-        .get::<GridPosition>(designation_entity)
-        .copied()
-        .is_some_and(|designation_pos| {
-            // Find building at this position
-            // We collect to avoid borrow issues if we need to mutate world later
-            let building_entity = world
-                .query::<(Entity, &GridPosition, &Building)>()
-                .iter(world)
-                .find(|(_, pos, _)| pos.x == designation_pos.x && pos.y == designation_pos.y)
-                .map(|(e, _, _)| e);
-
-            if let Some(entity) = building_entity {
-                world.despawn(entity);
-                // Remove from OccupiedTiles
-                if let Some(mut occupied) = world.get_resource_mut::<OccupiedTiles>() {
-                    occupied.0.remove(&(designation_pos.x, designation_pos.y));
-                }
-            }
-
-            // Despawn the designation itself
-            world.despawn(designation_entity);
-            true
-        })
 }
 
 /// Executes work at designations when pop is at target with Work action.
@@ -643,7 +390,9 @@ fn execute_work_on_designation(
             process_logging(world, designation_entity, work_amount);
             true
         }
-        DesignationType::Demolish => execute_demolish(world, designation_entity),
+        DesignationType::Demolish => {
+            crate::layer1::building::execute_demolish(world, designation_entity)
+        }
         DesignationType::Repair => {
             crate::layer1::structure::process_repair(world, designation_entity, work_amount);
             true
@@ -736,11 +485,13 @@ mod tests {
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::items::{Item, ToolType};
     use crate::layer1::needs::Needs;
-    use crate::layer1::pop::Pop;
+    use crate::layer1::pop::{Pop, Speed};
     use crate::layer1::resources::{ForestryProgress, MiningProgress};
-    use crate::layer1::terrain::TerrainType;
+    use crate::layer1::terrain::{TerrainGrid, TerrainType};
     use crate::layer1::utility_ai::{PopAction, UtilityWeights};
     use bevy_ecs::system::RunSystemOnce;
+    // Import movement systems for tests
+    use crate::layer1::movement::{movement_system, process_start_plan_system};
 
     fn setup_world() -> World {
         crate::setup::init_task_pools();

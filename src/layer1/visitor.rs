@@ -2,7 +2,7 @@
 //!
 //! Handles spawning, lifecycle, and behavior of temporary visitors.
 
-use crate::layer1::execution::MovementTarget;
+use crate::layer1::movement::MovementTarget;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
 use crate::layer1::pop::PopName;

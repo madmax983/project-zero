@@ -23,11 +23,11 @@ pub fn evaluate_haul<'a>(
     pop_pos: &GridPosition,
     weights: &UtilityWeights,
     items: impl Iterator<Item = (Entity, &'a GridPosition, &'a ResourceItem)>,
-    stockpiles: impl Iterator<Item = (Entity, &'a GridPosition, &'a Stockpile)>,
+    mut stockpiles: impl Iterator<Item = (Entity, &'a GridPosition, &'a Stockpile)>,
     resources: &ColonyResources,
 ) -> Option<(f32, Entity)> {
     // 1. Check if any stockpile exists (optimization: no point hauling if nowhere to put it)
-    if stockpiles.count() == 0 {
+    if stockpiles.next().is_none() {
         return None;
     }
 

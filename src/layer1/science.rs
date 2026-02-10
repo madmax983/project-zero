@@ -1,5 +1,5 @@
 use crate::layer1::building::OccupiedTiles;
-use crate::layer1::execution::{AtTarget, MovementTarget};
+use crate::layer1::movement::{AtTarget, MovementTarget};
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
 use crate::layer1::terrain::TerrainGrid;
@@ -248,7 +248,7 @@ fn cleanup_pop_explore_state(world: &mut World, pop_entity: Entity) {
 #[cfg(test)]
 mod tests {
     use crate::layer1::actions::explore::evaluate_explore;
-    use crate::layer1::execution::{AtTarget, MovementTarget};
+    use crate::layer1::movement::{AtTarget, MovementTarget};
     use crate::layer1::map::GridPosition;
     use crate::layer1::resources::ColonyResources;
     use crate::layer1::science::{

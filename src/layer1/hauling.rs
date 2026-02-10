@@ -1,5 +1,5 @@
 use crate::layer1::GridPosition;
-use crate::layer1::execution::{AtTarget, MovementTarget};
+use crate::layer1::movement::{AtTarget, MovementTarget};
 use crate::layer1::resources::{Carrying, ColonyResources, ResourceItem};
 use crate::layer1::stockpile::Stockpile;
 use crate::layer1::utility_ai::{ActionType, PopAction, manhattan_distance};
@@ -355,7 +355,7 @@ mod tests {
         // Manually add AtTarget to simulate arrival
         world
             .entity_mut(pop)
-            .insert(crate::layer1::execution::AtTarget);
+            .insert(crate::layer1::movement::AtTarget);
 
         // System should detect overlap, pick up item (add Carrying, despawn Item)
         haul_system(&mut world);
@@ -370,7 +370,7 @@ mod tests {
         );
         assert!(
             world
-                .get::<crate::layer1::execution::AtTarget>(pop)
+                .get::<crate::layer1::movement::AtTarget>(pop)
                 .is_none(),
             "AtTarget should be removed"
         );
@@ -381,7 +381,7 @@ mod tests {
         // Manually add AtTarget
         world
             .entity_mut(pop)
-            .insert(crate::layer1::execution::AtTarget);
+            .insert(crate::layer1::movement::AtTarget);
 
         haul_system(&mut world);
 

@@ -186,3 +186,5 @@ pub mod combat;
 /// Visitor system (Spec 074).
 pub mod visitor;
 pub use visitor::*;
+pub mod movement;
+pub use movement::*;

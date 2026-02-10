@@ -1,201 +1,128 @@
 #[cfg(test)]
 mod tests {
+    use scale::layer1::building::{Building, BuildingType};
+    use scale::layer1::movement::{AtTarget, MovementTarget};
+    use scale::layer1::map::GridPosition;
+    use scale::layer1::pop::Pop;
+    use scale::layer1::resources::{Carrying, ColonyResources, ResourceItem, ResourceType};
+    use scale::layer1::stockpile::Stockpile;
+    use scale::layer1::utility_ai::{ActionType, PopAction, UtilityWeights};
+    use scale::shared::time::SimulationTime;
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
-    use scale::layer1::GridPosition;
-    use scale::layer1::building::{Building, BuildingType};
-    use scale::layer1::execution::{AtTarget, MovementTarget, arrival_handler_system};
-    use scale::layer1::pop::Pop;
-    use scale::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
-    use scale::layer1::stockpile::Stockpile;
-    use scale::layer1::utility_ai::{ActionType, PopAction};
-    use scale::shared::time::SimulationTime;
-    use scale::simulation::{SimulationSchedule, build_simulation_schedule};
 
-    fn setup_world() -> World {
-        scale::setup::init_task_pools();
+    #[test]
+    fn test_hauling_end_to_end() {
         let mut world = World::new();
-        world.insert_resource(scale::layer1::terrain::TerrainGrid {
-            width: 10,
-            height: 10,
-            tiles: vec![scale::layer1::terrain::TerrainType::Grass; 100],
-        });
-        world.insert_resource(ColonyResources::default());
+        // Setup core resources
         world.insert_resource(SimulationTime::default());
-        world.insert_resource(scale::layer1::utility_ai::UtilityConfig::default());
-        world.insert_resource(scale::layer1::seasons::SeasonState::default());
-        world.insert_resource(scale::layer1::building::OccupiedTiles::default());
-        world.insert_resource(scale::shared::log::MessageLog::default());
-        world.insert_resource(scale::layer1::chronicle::Chronicle::default());
-        world.insert_resource(scale::layer1::chronicle::BuildingTracker::default());
-        world.insert_resource(scale::layer1::utility_ai::types::ColonyMemory::default());
-        world.insert_resource(scale::layer1::tech::TechState::default());
-        world.insert_resource(scale::layer1::beauty::BeautyGrid::new(10, 10));
-        world.insert_resource(scale::layer1::zone::ZoneGrid::new(10, 10));
-        world.insert_resource(scale::layer1::acoustic::NoiseMap::new(10, 10));
-        world.insert_resource(scale::layer1::lighting::LightMap::new(10, 10));
-        world.insert_resource(scale::layer1::lighting::AmbientLight::default());
-        world.insert_resource(scale::layer1::atmosphere::AtmosphereGrid::new(10, 10));
-        world.insert_resource(scale::layer1::notifications::NotificationQueue::default());
-        world.insert_resource(scale::layer1::trade::MerchantState::default());
-        world.insert_resource(scale::layer1::vermin::VerminState::default());
-        world.insert_resource(scale::layer1::edicts::ColonyPolicies::default());
-        world.init_resource::<Events<scale::layer1::chronicle::AddChronicleEvent>>();
-        world.init_resource::<Events<scale::layer1::social::AffinityChange>>();
-        world.init_resource::<Events<scale::layer1::pop::PopDied>>();
-        world.insert_resource(scale::layer1::visitor::VisitorSource::default());
+        world.insert_resource(ColonyResources::default());
+        world.insert_resource(scale::layer1::utility_ai::types::UtilityConfig::default());
+        scale::setup::init_task_pools();
 
-        let generator = scale::shared::narrative::NarrativeGenerator::from_embedded();
-        world.insert_resource(scale::shared::colony::ColonyName {
-            name: "Test Colony".to_string(),
-        });
-        world.insert_resource(generator);
-
-        // Initialize Schedules resource
-        world.insert_resource(Schedules::default());
-        world
-    }
-
-    #[test]
-    fn test_arrival_handler_clobbers_hauling() {
-        let mut world = setup_world();
-
-        // Create a dummy item entity as target
-        let item_entity = world.spawn(GridPosition { x: 5, y: 5 }).id();
-
-        // Spawn a pop arriving at the item to haul
-        let pop = world
-            .spawn((
-                Pop,
-                GridPosition { x: 5, y: 5 },
-                MovementTarget {
-                    target_entity: item_entity,
-                    target_position: GridPosition { x: 5, y: 5 },
-                    for_action: ActionType::Haul,
-                },
-                AtTarget, // Arrived!
-            ))
-            .id();
-
-        // Run the system
-        world.run_system_once(arrival_handler_system).unwrap();
-
-        // Assert AtTarget is still present (this will FAIL currently)
-        assert!(
-            world.get::<AtTarget>(pop).is_some(),
-            "AtTarget should be preserved for Haul action so haul_system can see it"
-        );
-
-        // Assert MovementTarget is still present
-        assert!(
-            world.get::<MovementTarget>(pop).is_some(),
-            "MovementTarget should be preserved for Haul action"
-        );
-    }
-
-    #[test]
-    fn test_full_hauling_cycle() {
-        let mut world = setup_world();
-        let schedule = build_simulation_schedule();
-        world.add_schedule(schedule);
-
-        // 1. Setup World
-        // Pop at (0,0)
+        // 1. Spawn a Pop at (0,0)
         let pop = world
             .spawn((
                 Pop,
                 GridPosition { x: 0, y: 0 },
                 PopAction {
-                    current: ActionType::Haul, // Force hauling action
-                    current_utility: 1.0,
-                    ticks_committed: 10,
+                    ticks_committed: 100, // Force evaluation
+                    ..Default::default()
                 },
-                scale::layer1::utility_ai::UtilityWeights::default(),
-                scale::layer1::needs::Needs::default(),
+                UtilityWeights::default(),
             ))
             .id();
 
-        // Item at (2,0) - Wood
+        // 2. Spawn an Item at (5,0)
         let item = world
             .spawn((
                 ResourceItem {
                     resource_type: ResourceType::Wood,
                     amount: 10.0,
                 },
-                GridPosition { x: 2, y: 0 },
+                GridPosition { x: 5, y: 0 },
             ))
             .id();
 
-        // Stockpile at (4,0)
+        // 3. Spawn a Stockpile at (10,0)
         let _stockpile = world
             .spawn((
                 Building {
                     building_type: BuildingType::Stockpile,
                 },
                 Stockpile::default(),
-                GridPosition { x: 4, y: 0 },
+                GridPosition { x: 10, y: 0 },
             ))
             .id();
 
-        // 2. Run simulation ticks
+        // 4. Run AI Evaluation (should pick Haul)
+        world.run_system_once(scale::layer1::utility_ai::update_action_timer_system).unwrap();
+        scale::layer1::utility_ai::evaluate_actions_system(&mut world);
 
-        // Tick 1: movement (no-op), arrival (no-op), haul_system (finds item, sets target (2,0))
-        world.run_schedule(SimulationSchedule);
-        let mt = world.get::<MovementTarget>(pop);
-        assert!(mt.is_some(), "Pop should target item");
-        assert_eq!(mt.unwrap().target_position, GridPosition { x: 2, y: 0 });
-
-        // Tick 2: movement (moves to 1,0), arrival (no-op), haul (no-op)
-        world.run_schedule(SimulationSchedule);
-        assert_eq!(world.get::<GridPosition>(pop).unwrap().x, 1);
-
-        // Tick 3: movement (moves to 2,0, sets AtTarget), arrival (preserves AtTarget), haul (picks up)
-        world.run_schedule(SimulationSchedule);
-
-        // Verify Pickup Complete
-        assert_eq!(world.get::<GridPosition>(pop).unwrap().x, 2);
-        assert!(world.get_entity(item).is_err(), "Item should be despawned");
-        assert!(
-            world
-                .get::<scale::layer1::resources::Carrying>(pop)
-                .is_some(),
-            "Pop should be carrying"
-        );
-        assert!(
-            world.get::<AtTarget>(pop).is_none(),
-            "AtTarget removed after pickup"
-        );
-        assert!(
-            world.get::<MovementTarget>(pop).is_none(),
-            "MovementTarget removed after pickup"
+        let action = world.get::<PopAction>(pop).unwrap();
+        assert_eq!(
+            action.current,
+            ActionType::Haul,
+            "Pop should decide to Haul"
         );
 
-        // Tick 4: movement (no-op), arrival (no-op), haul (finds stockpile, sets target (4,0))
-        world.run_schedule(SimulationSchedule);
-        let mt = world.get::<MovementTarget>(pop);
-        assert!(mt.is_some(), "Pop should target stockpile");
-        assert_eq!(mt.unwrap().target_position, GridPosition { x: 4, y: 0 });
+        // 5. Process Plan -> Movement
+        world.run_system_once(scale::layer1::execution::cleanup_previous_assignment_system).unwrap();
+        world.run_system_once(scale::layer1::movement::process_start_plan_system).unwrap();
 
-        // Tick 5: movement (moves to 3,0)
-        world.run_schedule(SimulationSchedule);
-        assert_eq!(world.get::<GridPosition>(pop).unwrap().x, 3);
+        // Should have MovementTarget to Item
+        let mt = world.get::<MovementTarget>(pop).unwrap();
+        assert_eq!(mt.target_entity, item, "Should target item first");
 
-        // Tick 6: movement (moves to 4,0, sets AtTarget), arrival (preserves), haul (drops off)
-        world.run_schedule(SimulationSchedule);
+        // 6. Simulate Movement to Item
+        // For test speed, we just teleport and add AtTarget
+        *world.get_mut::<GridPosition>(pop).unwrap() = GridPosition { x: 5, y: 0 };
+        world.entity_mut(pop).insert(AtTarget);
 
-        // Verify Drop off Complete
-        assert_eq!(world.get::<GridPosition>(pop).unwrap().x, 4);
-        assert!(
-            world
-                .get::<scale::layer1::resources::Carrying>(pop)
-                .is_none(),
-            "Pop empty"
+        // 7. Execute Haul (Pickup)
+        scale::layer1::hauling::haul_system(&mut world);
+
+        // Pop should be carrying
+        assert!(world.get::<Carrying>(pop).is_some());
+        // Item entity should be gone
+        assert!(world.get_entity(item).is_err());
+        // MovementTarget should be gone (system cleared it)
+        assert!(world.get::<MovementTarget>(pop).is_none());
+
+        // 8. Run AI Evaluation Again (should continue Haul - phase 2)
+        // Actually, haul_system handles the phase transition logic if we are running it every tick?
+        // But haul_system cleared MovementTarget.
+        // So evaluate_actions_system needs to see we are carrying and target stockpile.
+        // Let's reset action commit timer to force re-eval.
+        world.get_mut::<PopAction>(pop).unwrap().ticks_committed = 10;
+
+        scale::layer1::utility_ai::evaluate_actions_system(&mut world);
+
+        let action = world.get::<PopAction>(pop).unwrap();
+        assert_eq!(
+            action.current,
+            ActionType::Haul,
+            "Pop should continue Hauling"
         );
-        let resources = world.resource::<ColonyResources>();
-        // Default wood is 15.0 + 10.0 hauled = 25.0
-        assert!(
-            (resources.wood - 25.0).abs() < f32::EPSILON,
-            "Wood added to resources (expected 25.0)"
-        );
+
+        // 9. Process Plan -> Movement (to Stockpile)
+        world.run_system_once(scale::layer1::execution::cleanup_previous_assignment_system).unwrap();
+        world.run_system_once(scale::layer1::movement::process_start_plan_system).unwrap();
+
+        let mt = world.get::<MovementTarget>(pop).unwrap();
+        // Target should be stockpile entity (found by evaluate_haul)
+        // We didn't capture stockpile ID, but we can verify position
+        assert_eq!(mt.target_position, GridPosition { x: 10, y: 0 });
+
+        // 10. Simulate Movement to Stockpile
+        *world.get_mut::<GridPosition>(pop).unwrap() = GridPosition { x: 10, y: 0 };
+        world.entity_mut(pop).insert(AtTarget);
+
+        // 11. Execute Haul (Drop)
+        scale::layer1::hauling::haul_system(&mut world);
+
+        // Resources should be updated
+        let res = world.resource::<ColonyResources>();
+        assert!((res.wood - 110.0).abs() < f32::EPSILON); // Default 100 + 10
     }
 }

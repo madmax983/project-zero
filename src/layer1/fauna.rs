@@ -1,4 +1,4 @@
-use crate::layer1::execution::{AtTarget, MovementTarget};
+use crate::layer1::movement::{AtTarget, MovementTarget};
 use crate::layer1::health::Health;
 use crate::layer1::map::GridPosition;
 use crate::layer1::pop::Pop;
@@ -187,7 +187,7 @@ pub fn fauna_behavior_system(world: &mut World) {
 
 #[cfg(test)]
 mod tests {
-    use crate::layer1::execution::MovementTarget;
+    use crate::layer1::movement::MovementTarget;
     use crate::layer1::fauna::{Fauna, FaunaState, FaunaType, fauna_behavior_system};
     use crate::layer1::health::Health;
     use crate::layer1::map::GridPosition;

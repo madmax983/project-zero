@@ -47,6 +47,14 @@ pub fn healing_system(world: &mut World) {
     }
 }
 
+/// Handles a pop arriving at a hospital.
+pub fn handle_medical_arrival(commands: &mut Commands, pop_entity: Entity, target_entity: Entity) {
+    commands.entity(pop_entity).insert(AssignedTo {
+        entity: target_entity,
+        assignment_type: AssignmentType::Patient,
+    });
+}
+
 /// Evaluates the utility of seeking medical care.
 ///
 /// If health is low (e.g. < 90%), and there is a hospital available, return a score.

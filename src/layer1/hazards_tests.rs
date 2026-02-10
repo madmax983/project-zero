@@ -1,7 +1,8 @@
 #[cfg(test)]
 mod tests {
     use crate::layer1::designation::{Designation, DesignationType};
-    use crate::layer1::execution::{AtTarget, MovementTarget, work_execution_system};
+    use crate::layer1::execution::work_execution_system;
+    use crate::layer1::movement::{AtTarget, MovementTarget};
     use crate::layer1::health::Health;
     use crate::layer1::map::GridPosition;
     use crate::layer1::needs::Needs;

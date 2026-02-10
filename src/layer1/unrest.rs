@@ -214,9 +214,9 @@ mod tests {
 
     #[test]
     fn test_vandalize_integration_damages_building() {
-        use crate::layer1::execution::{
+        use crate::layer1::execution::vandalize_execution_system;
+        use crate::layer1::movement::{
             AtTarget, MovementTarget, movement_system, process_start_plan_system,
-            vandalize_execution_system,
         };
         use crate::layer1::utility_ai::{
             PopAction, StartPlan, UtilityWeights, evaluate_actions_system,

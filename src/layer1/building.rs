@@ -583,6 +583,38 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
     true
 }
 
+/// Executes demolition of a building at the designation's location.
+///
+/// Removes the building entity and clears the occupied tile.
+/// Despawns the designation entity upon completion.
+pub fn execute_demolish(world: &mut World, designation_entity: Entity) -> bool {
+    // Find designation position
+    world
+        .get::<GridPosition>(designation_entity)
+        .copied()
+        .is_some_and(|designation_pos| {
+            // Find building at this position
+            // We collect to avoid borrow issues if we need to mutate world later
+            let building_entity = world
+                .query::<(Entity, &GridPosition, &Building)>()
+                .iter(world)
+                .find(|(_, pos, _)| pos.x == designation_pos.x && pos.y == designation_pos.y)
+                .map(|(e, _, _)| e);
+
+            if let Some(entity) = building_entity {
+                world.despawn(entity);
+                // Remove from OccupiedTiles
+                if let Some(mut occupied) = world.get_resource_mut::<OccupiedTiles>() {
+                    occupied.0.remove(&(designation_pos.x, designation_pos.y));
+                }
+            }
+
+            // Despawn the designation itself
+            world.despawn(designation_entity);
+            true
+        })
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

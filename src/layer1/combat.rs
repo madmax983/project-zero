@@ -95,6 +95,79 @@ pub fn execute_attack(world: &mut World, attacker: Entity, target: Entity) {
     }
 }
 
+/// Handles combat logic for a single pop targeting an enemy.
+/// Updates movement intent (chase vs stop) and triggers attacks if in range.
+pub fn handle_combat_execution(
+    world: &mut World,
+    pop_entity: Entity,
+    target_entity: Entity,
+    equipment_opt: Option<crate::layer1::items::Equipment>,
+) {
+    // Find target position (it might have moved)
+    let target_pos = if let Some(pos) = world.get::<GridPosition>(target_entity) {
+        *pos
+    } else {
+        // Target despawned?
+        world
+            .entity_mut(pop_entity)
+            .remove::<crate::layer1::movement::MovementTarget>()
+            .remove::<crate::layer1::movement::AtTarget>();
+        if let Some(mut action) = world.get_mut::<crate::layer1::utility_ai::PopAction>(pop_entity)
+        {
+            action.current = crate::layer1::utility_ai::ActionType::Idle;
+            action.current_utility = 0.0;
+            action.ticks_committed = 1;
+        }
+        return;
+    };
+
+    // Update MovementTarget if needed
+    if let Some(mut mt) = world.get_mut::<crate::layer1::movement::MovementTarget>(pop_entity) {
+        if mt.target_position != target_pos {
+            mt.target_position = target_pos;
+        }
+    }
+
+    // Check range
+    // Safety: Pop must have GridPosition
+    let Some(pop_pos) = world.get::<GridPosition>(pop_entity).copied() else {
+        return;
+    };
+    #[allow(clippy::cast_precision_loss)]
+    let dist = pop_pos.distance_chebyshev(target_pos) as f32;
+
+    let mut weapon_range = 1.0; // Default melee
+    if let Some(ref eq) = equipment_opt {
+        if let Some(weapon_entity) = eq.weapon {
+            if let Some(weapon) = world.get::<Weapon>(weapon_entity) {
+                weapon_range = weapon.properties.range;
+            }
+        }
+    }
+
+    if dist <= weapon_range {
+        // In range!
+        // Stop movement
+        if world
+            .get::<crate::layer1::movement::AtTarget>(pop_entity)
+            .is_none()
+        {
+            world
+                .entity_mut(pop_entity)
+                .insert(crate::layer1::movement::AtTarget);
+        }
+
+        // Attack
+        execute_attack(world, pop_entity, target_entity);
+    } else {
+        // Out of range
+        // Ensure we are moving (remove AtTarget if present)
+        world
+            .entity_mut(pop_entity)
+            .remove::<crate::layer1::movement::AtTarget>();
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

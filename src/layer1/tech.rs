@@ -120,6 +120,14 @@ pub fn process_research_system(
     }
 }
 
+/// Handles a pop arriving at a library to conduct research.
+pub fn handle_research_arrival(commands: &mut Commands, pop_entity: Entity, target_entity: Entity) {
+    commands.entity(pop_entity).insert(AssignedTo {
+        entity: target_entity,
+        assignment_type: AssignmentType::LibraryWorker,
+    });
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

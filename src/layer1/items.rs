@@ -113,12 +113,12 @@ mod tests {
             },
             GridPosition { x: 5, y: 5 },
             // Add work components
-            crate::layer1::execution::MovementTarget {
+            crate::layer1::movement::MovementTarget {
                 target_entity: designation,
                 target_position: GridPosition { x: 5, y: 5 },
                 for_action: ActionType::Work,
             },
-            crate::layer1::execution::AtTarget,
+            crate::layer1::movement::AtTarget,
             PopAction {
                 current: ActionType::Work,
                 ..Default::default()
@@ -177,12 +177,12 @@ mod tests {
                     ..Default::default()
                 },
                 GridPosition { x: 5, y: 5 },
-                crate::layer1::execution::MovementTarget {
+                crate::layer1::movement::MovementTarget {
                     target_entity: designation,
                     target_position: GridPosition { x: 5, y: 5 },
                     for_action: ActionType::Work,
                 },
-                crate::layer1::execution::AtTarget,
+                crate::layer1::movement::AtTarget,
                 PopAction {
                     current: ActionType::Work,
                     ..Default::default()
