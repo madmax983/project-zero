@@ -6,7 +6,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 ## MVP — Layer 1: Colony Simulation
 
-- [ ] `043` Defensive Structures — `specs/043-defensive-structures.md`
 - [ ] `059` Soil Fertility — `specs/059-soil-fertility.md`
 - [ ] `066` Building Work AI Integration — `specs/066-building-work-ai.md`
 - [ ] `068` Pop Factions — `specs/068-pop-factions.md`

@@ -2,7 +2,7 @@
 use crate::experimental::ghosts::{Ectoplasm, Ghost};
 use crate::layer1::funeral::Corpse;
 use crate::layer1::memory::{Memories, MemoryType};
-use crate::layer1::pop::{PopDied, PopName};
+use crate::layer1::pop::{Pop, PopDied, PopName};
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
 
@@ -96,30 +96,38 @@ pub fn death_system(world: &mut World) {
     let death_count = to_despawn.len();
 
     for (entity, pos_opt, name) in to_despawn {
-        if let Some(pos) = pos_opt {
-            // Spawn Corpse
-            world.spawn((
-                Corpse {
-                    name: name.clone(),
-                    decay: 0.0,
-                },
-                pos,
-            ));
+        let is_pop = world.get::<Pop>(entity).is_some();
 
-            #[cfg(feature = "nova")]
-            world.spawn((Ghost, Ectoplasm::default(), pos));
+        if is_pop {
+            if let Some(pos) = pos_opt {
+                // Spawn Corpse
+                world.spawn((
+                    Corpse {
+                        name: name.clone(),
+                        decay: 0.0,
+                    },
+                    pos,
+                ));
+
+                #[cfg(feature = "nova")]
+                world.spawn((Ghost, Ectoplasm::default(), pos));
+            }
+
+            world.send_event(PopDied {
+                entity,
+                name,
+                tick,
+                reason: "the Void".to_string(),
+            });
         }
-
-        world.send_event(PopDied {
-            entity,
-            name,
-            tick,
-            reason: "the Void".to_string(),
-        });
 
         world.despawn(entity);
         if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
-            log.add("DEATH: A colonist has died!");
+            if is_pop {
+                log.add("DEATH: A colonist has died!");
+            } else {
+                log.add("Building destroyed!");
+            }
         }
     }
 

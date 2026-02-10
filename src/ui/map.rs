@@ -580,6 +580,8 @@ pub const fn get_building_char(building: BuildingType) -> char {
         BuildingType::Generator => '⚡',
         BuildingType::PowerPole => '|',
         BuildingType::Wall => '#',
+        BuildingType::Gate => '+',
+        BuildingType::Tower => 'O',
     }
 }
 
@@ -599,7 +601,9 @@ pub const fn get_building_color(building: BuildingType) -> Color {
     match building {
         BuildingType::Housing => Color::Rgb(139, 90, 43), // Brown
         BuildingType::Farm => Color::Rgb(218, 165, 32),   // Goldenrod
-        BuildingType::Stockpile | BuildingType::Wall => Color::Rgb(169, 169, 169), // DarkGray
+        BuildingType::Stockpile | BuildingType::Wall | BuildingType::Gate | BuildingType::Tower => {
+            Color::Rgb(169, 169, 169)
+        } // DarkGray
         BuildingType::LumberMill => Color::Rgb(205, 133, 63), // Peru
         BuildingType::StoneMason => Color::Rgb(119, 136, 153), // LightSlateGray
         BuildingType::Smelter => Color::Rgb(255, 69, 0),  // Red-Orange

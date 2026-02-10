@@ -64,9 +64,28 @@ pub enum BuildingType {
     PowerPole,
     /// Basic wall for enclosure.
     Wall,
+    /// Gate that can be opened/closed.
+    Gate,
+    /// Defensive tower.
+    Tower,
 }
 
 impl BuildingType {
+    /// Returns true if this building blocks movement.
+    #[must_use]
+    pub const fn is_obstacle(&self) -> bool {
+        match self {
+            Self::Farm
+            | Self::Stockpile
+            | Self::Plantation
+            | Self::FlowerBed
+            | Self::Grave
+            | Self::TradeDepot
+            | Self::Landfill => false,
+            _ => true,
+        }
+    }
+
     /// Returns the beauty value emitted by this building.
     #[must_use]
     #[allow(clippy::match_same_arms)]
@@ -76,7 +95,7 @@ impl BuildingType {
             Self::Landfill => -10.0,
             Self::Grave => -2.0, // Graves are slightly spooky
             Self::FlowerBed | Self::TradeDepot => 5.0, // Trade brings goods and culture
-            Self::Wall => 0.0,   // Walls are neutral
+            Self::Wall | Self::Gate | Self::Tower => 0.0,
             _ => 0.0,
         }
     }
@@ -89,6 +108,7 @@ impl BuildingType {
                 Some(Tech::MetalWorking)
             }
             Self::Tavern | Self::Statue => Some(Tech::SocialStructures),
+            Self::Tower => Some(Tech::Masonry),
             _ => None,
         }
     }
@@ -126,6 +146,8 @@ impl BuildingType {
             Self::Generator => "Generator",
             Self::PowerPole => "Power Pole",
             Self::Wall => "Wall",
+            Self::Gate => "Gate",
+            Self::Tower => "Tower",
         }
     }
 
@@ -152,6 +174,8 @@ impl BuildingType {
             Self::Generator => 'G',
             Self::PowerPole => '|',
             Self::Wall => '#',
+            Self::Gate => '+',
+            Self::Tower => 'O',
         }
     }
 
@@ -162,6 +186,15 @@ impl BuildingType {
         match self {
             Self::Wall => ColonyResources {
                 wood: 5.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Gate => ColonyResources {
+                wood: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Tower => ColonyResources {
+                wood: 30.0,
+                stone: 10.0,
                 ..ColonyResources::zeroed()
             },
             Self::Housing => ColonyResources {
@@ -351,7 +384,10 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
     entity.insert(crate::layer1::structure::Structure::default());
 
     match building_type {
-        BuildingType::Wall => {
+        BuildingType::Gate => {
+            entity.insert((crate::layer1::defense::Gate::default(), Flammable::default()));
+        }
+        BuildingType::Wall | BuildingType::Tower => {
             entity.insert(Flammable::default());
         }
         BuildingType::Housing => {
@@ -623,7 +659,9 @@ mod tests {
         assert_eq!(BuildingType::TradeDepot.next(), BuildingType::Generator);
         assert_eq!(BuildingType::Generator.next(), BuildingType::PowerPole);
         assert_eq!(BuildingType::PowerPole.next(), BuildingType::Wall);
-        assert_eq!(BuildingType::Wall.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::Wall.next(), BuildingType::Gate);
+        assert_eq!(BuildingType::Gate.next(), BuildingType::Tower);
+        assert_eq!(BuildingType::Tower.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -732,6 +770,12 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Wall);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Gate);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Tower);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);
@@ -1151,5 +1195,28 @@ mod tests {
             .iter(&world)
             .count();
         assert_eq!(structure_count, 1, "Should have added Structure component");
+    }
+
+    #[test]
+    fn test_place_gate_adds_gate_component() {
+        let mut world = World::new();
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        });
+        world.insert_resource(OccupiedTiles::default());
+        world.insert_resource(ColonyResources {
+            wood: 100.0,
+            ..Default::default()
+        });
+
+        try_place_building(&mut world, 5, 5, BuildingType::Gate);
+
+        let gate_count = world
+            .query::<&crate::layer1::defense::Gate>()
+            .iter(&world)
+            .count();
+        assert_eq!(gate_count, 1, "Should have added Gate component");
     }
 }

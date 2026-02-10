@@ -5,6 +5,8 @@
 
 /// Pop actions logic.
 pub mod actions;
+/// Defensive structures and logic.
+pub mod defense;
 /// Game balance constants.
 pub mod balance;
 /// Beauty and decoration system.
@@ -95,6 +97,7 @@ pub use balance::*;
 pub use beauty::*;
 pub use building::*;
 pub use chronicle::*;
+pub use defense::*;
 pub use designation::*;
 pub use edicts::*;
 pub use execution::*;

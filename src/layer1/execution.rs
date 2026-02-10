@@ -35,6 +35,7 @@ use crate::layer1::actions::rest::handle_arrival as handle_rest_arrival;
 use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::building::{Building, OccupiedTiles};
 use crate::layer1::combat::Weapon;
+use crate::layer1::defense::Gate;
 use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::edicts::{ColonyPolicies, get_work_speed_modifier};
 use crate::layer1::farm::Farm;
@@ -260,9 +261,11 @@ pub fn movement_system(
             &MovementTarget,
             Option<&mut Speed>,
         ),
-        Without<AtTarget>,
+        (Without<AtTarget>, Without<Building>),
     >,
     terrain: Res<TerrainGrid>,
+    occupied_tiles: Option<Res<OccupiedTiles>>,
+    buildings: Query<(&GridPosition, &Building, Option<&Gate>)>,
     mut commands: Commands,
 ) {
     for (pop_entity, mut current_pos, mt, mut speed_opt) in &mut pops {
@@ -281,7 +284,13 @@ pub fn movement_system(
         // For work/repair actions, check if adjacent to an unwalkable target (rock/tree/building)
         // Pops work FROM adjacent tiles, not ON the target
         if action == ActionType::Work || action == ActionType::Repair {
-            let target_walkable = is_walkable_terrain(&terrain, target_pos.x, target_pos.y);
+            let target_walkable = is_walkable(
+                &terrain,
+                occupied_tiles.as_deref(),
+                &buildings,
+                target_pos.x,
+                target_pos.y,
+            );
             if !target_walkable {
                 let distance =
                     (current_pos.x - target_pos.x).abs() + (current_pos.y - target_pos.y).abs();
@@ -296,7 +305,13 @@ pub fn movement_system(
             continue;
         };
 
-        if !is_walkable_terrain(&terrain, new_pos.x, new_pos.y) {
+        if !is_walkable(
+            &terrain,
+            occupied_tiles.as_deref(),
+            &buildings,
+            new_pos.x,
+            new_pos.y,
+        ) {
             continue;
         }
 
@@ -309,7 +324,13 @@ pub fn movement_system(
 
         // For work/repair actions on unwalkable targets, also check if now adjacent
         if action == ActionType::Work || action == ActionType::Repair {
-            let target_walkable = is_walkable_terrain(&terrain, target_pos.x, target_pos.y);
+            let target_walkable = is_walkable(
+                &terrain,
+                occupied_tiles.as_deref(),
+                &buildings,
+                target_pos.x,
+                target_pos.y,
+            );
             if !target_walkable {
                 let distance = (new_pos.x - target_pos.x).abs() + (new_pos.y - target_pos.y).abs();
                 if distance == 1 {
@@ -431,14 +452,43 @@ fn remove_movement_components(commands: &mut Commands, pop_entity: Entity) {
         .remove::<AtTarget>();
 }
 
-fn is_walkable_terrain(terrain: &TerrainGrid, x: i32, y: i32) -> bool {
+fn is_walkable(
+    terrain: &TerrainGrid,
+    occupied: Option<&OccupiedTiles>,
+    buildings: &Query<(&GridPosition, &Building, Option<&Gate>)>,
+    x: i32,
+    y: i32,
+) -> bool {
+    // Check Terrain
     if let (Ok(x_idx), Ok(y_idx)) = (usize::try_from(x), usize::try_from(y)) {
-        terrain
+        if !terrain
             .get(x_idx, y_idx)
             .is_some_and(crate::layer1::terrain::TerrainType::is_walkable)
+        {
+            return false;
+        }
     } else {
-        false
+        return false;
     }
+
+    // Check Buildings
+    if let Some(occupied_tiles) = occupied {
+        if occupied_tiles.0.contains(&(x, y)) {
+            for (pos, building, gate) in buildings.iter() {
+                if pos.x == x && pos.y == y {
+                    if let Some(g) = gate {
+                        if g.is_locked {
+                            return false;
+                        }
+                    } else if building.building_type.is_obstacle() {
+                        return false;
+                    }
+                    return true;
+                }
+            }
+        }
+    }
+    true
 }
 
 #[allow(clippy::missing_const_for_fn, clippy::unnecessary_wraps)]
@@ -756,6 +806,7 @@ mod tests {
         world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
         world.insert_resource(crate::shared::time::SimulationTime::default());
         world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
+        world.insert_resource(OccupiedTiles::default());
         world
     }
 
