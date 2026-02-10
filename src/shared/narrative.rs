@@ -56,6 +56,26 @@ pub struct NarrativeGenerator {
 }
 
 impl NarrativeGenerator {
+    /// Get a sorted list of all available template IDs.
+    pub fn get_template_ids(&self) -> Vec<&String> {
+        let mut ids: Vec<&String> = self.templates.keys().collect();
+        ids.sort();
+        ids
+    }
+
+    /// Get a sorted list of all available fragment IDs.
+    pub fn get_fragment_ids(&self) -> Vec<&String> {
+        let mut ids: Vec<&String> = self.fragments.keys().collect();
+        ids.sort();
+        ids
+    }
+
+    /// Get a specific template by ID.
+    #[must_use]
+    pub fn get_template(&self, id: &str) -> Option<&Template> {
+        self.templates.get(id)
+    }
+
     /// Load templates and fragments from the given directory.
     ///
     /// # Errors
