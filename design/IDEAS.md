@@ -2175,3 +2175,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Exploit the rich resource node (risk waking it) or leave it be (safety)?
 
 ---
+
+## Urban Spelunking
+
+**Layer:** 1
+
+**Fantasy:** Exploring the "Old City" underneath the "New City". Coruscant-style layers.
+
+**Mechanic:** Old buildings that are buried or built over become "Dungeon" tiles. They spawn vermin and loot but threaten the structural stability of the new city above.
+
+**Emergence:** Your thriving market district collapses into a forgotten sewer level from 50 years ago, releasing mutant rats.
+
+**Tension:** Do you demolish the old to build safe foundations (expensive), or build on top (risky)?
+
+---
+
+## Impact Event
+
+**Layer:** Cross-layer
+
+**Fantasy:** Looking up at the sky and seeing a rock getting bigger. The sky is falling.
+
+**Mechanic:** A meteor object tracks on Layer 2. If it intersects a colony, it spawns an "Impact Site" on Layer 1, destroying everything in a large radius but depositing rare stellar metals.
+
+**Emergence:** You see the impact coming days in advance. Do you evacuate the colony, try to build a "Deflector" in time, or just accept the loss and prepare to mine the crater?
+
+**Tension:** Sacrifice infrastructure for future wealth (let it hit) or spend resources to stop it (safety)?
+
+---
+
+## Cultural Projection
+
+**Layer:** 3
+
+**Fantasy:** Winning the war with blue jeans and rock music.
+
+**Mechanic:** High "Culture" stats on Layer 1 (Art, Luxury, Happiness) radiate "Influence" on the Layer 3 map. Neighboring systems slowly flip allegiance or gain the "Tourist" trait, sending visitors instead of fleets.
+
+**Emergence:** You neglect your military, but your neighbor's invasion force defects because they prefer your video games and synth-pop.
+
+**Tension:** Invest in guns (hard power) or galleries (soft power)?
+
+---
+
+## Planet Designation
+
+**Layer:** 2
+
+**Fantasy:** The Empire classifies worlds. "This is a Mining World. No parks allowed."
+
+**Mechanic:** Player (or Empire) sets a "Designation" (Agri-World, Forge World, Penal Colony). Grants global bonuses to specific jobs but penalties to others. Changing it causes "Bureaucratic Drag".
+
+**Emergence:** You designate a world as "Agri" for the food bonus, but then find gold. You can't mine it efficiently because the laws forbid heavy industry, forcing you to smuggle your own gold.
+
+**Tension:** Specialization (efficiency) vs. Flexibility (adaptation).
+
+---
+
+## Cabin Fever
+
+**Layer:** 1
+
+**Fantasy:** Being trapped inside during a storm makes people crazy.
+
+**Mechanic:** Pops confined to "Indoors" for long periods (due to weather, hazards, or lockdown) accumulate "Restlessness". High Restlessness triggers "Infighting" or "Breakout" attempts (running into the storm).
+
+**Emergence:** The storm outside is lethal, but your pops are breaking windows just to feel the wind. A brawl starts in the cramped canteen over a spilled drink.
+
+**Tension:** Keep them safe inside (mental break risk) or let them roam (physical danger)?
+
+---
