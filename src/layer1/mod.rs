@@ -1,7 +1,48 @@
-//! Layer 1: Colony Simulation.
+//! # Layer 1: The Colony Simulation
 //!
-//! This layer handles individual pops, buildings, and tile-based terrain
-//! similar to Dwarf Fortress or `RimWorld`.
+//! This layer implements the core "Dwarf Fortress-like" simulation of the game.
+//! It handles the lives of individual Pops, the construction of Buildings, and the
+//! physics of the world (Terrain, Fire, Structure).
+//!
+//! ## 🌍 The World
+//!
+//! The world is a 2D grid of tiles managed by [`terrain::TerrainGrid`].
+//! Entities (Pops, Buildings) have a [`map::GridPosition`] component to anchor them
+//! to this grid.
+//!
+//! ## 👥 The Agents (Pops)
+//!
+//! The primary agents are "Pops" (short for Population). Each Pop is an entity with:
+//! *   **Needs**: Hunger, Rest, Leisure (driven by [`needs`]).
+//! *   **Mind**: A Utility AI that decides what to do (driven by [`utility_ai`]).
+//! *   **Body**: Health, Age, and Skills (driven by [`health`], [`lifecycle`], [`skills`]).
+//! *   **Social**: Memories and Relationships (driven by [`memory`], [`social`]).
+//!
+//! ## 🏗️ The Economy
+//!
+//! The colony thrives by gathering and refining resources:
+//! 1.  **Extraction**: Mining rock, chopping trees ([`resources`]).
+//! 2.  **Refining**: Converting raw materials into goods ([`refining`]).
+//! 3.  **Construction**: Building structures to unlock new abilities ([`building`]).
+//! 4.  **Research**: Unlocking new technologies ([`tech`]).
+//!
+//! ## 🔄 The Simulation Loop
+//!
+//! The simulation runs in a strict order each tick (see `src/simulation.rs` for the schedule):
+//!
+//! 1.  **Think**: Pops evaluate their needs and environment to choose an action ([`utility_ai`]).
+//! 2.  **Plan**: Selected actions are converted into movement targets ([`execution`]).
+//! 3.  **Act**: Pops move and interact with the world (Work, Eat, Sleep).
+//! 4.  **Simulate**: Environmental systems run (Fire spread, Crop growth, Decay).
+//!
+//! ## 📦 Key Modules
+//!
+//! *   [`pop`]: Definition of the Pop entity.
+//! *   [`needs`]: Biological and psychological drives.
+//! *   [`utility_ai`]: The decision-making brain.
+//! *   [`building`]: Construction and building types.
+//! *   [`resources`]: Global inventory management.
+//! *   [`terrain`]: The map grid.
 
 /// Pop actions logic.
 pub mod actions;

@@ -1,3 +1,20 @@
+//! # Technology System
+//!
+//! This module handles the research and unlocking of new capabilities for the colony.
+//!
+//! ## 🔬 The Research Loop
+//!
+//! 1.  **Libraries**: Build [`Library`] structures (free cost).
+//! 2.  **Researchers**: Pops assigned to libraries generate [`ColonyResources::knowledge`].
+//! 3.  **Unlock**: Spend Knowledge to unlock [`Tech`] using [`unlock_tech`].
+//!
+//! ## 🛡️ Gated Content
+//!
+//! Technologies unlock:
+//! *   **Buildings**: `Tech::MetalWorking` unlocks `Smelter`.
+//! *   **Recipes**: (Future) New crafting options.
+//! *   **Edicts**: (Future) New policies.
+
 use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::resources::ColonyResources;
 use crate::shared::log::MessageLog;
@@ -46,6 +63,18 @@ pub struct TechState {
 
 impl TechState {
     /// Checks if a specific technology is unlocked.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use scale::layer1::tech::{Tech, TechState};
+    ///
+    /// let mut state = TechState::default();
+    /// assert!(!state.is_unlocked(Tech::Masonry));
+    ///
+    /// state.unlock(Tech::Masonry);
+    /// assert!(state.is_unlocked(Tech::Masonry));
+    /// ```
     #[must_use]
     pub fn is_unlocked(&self, tech: Tech) -> bool {
         self.unlocked.contains(&tech)

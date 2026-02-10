@@ -1,7 +1,51 @@
+//! # Needs System
+//!
+//! This module simulates the physiological and psychological drives of Pops.
+//! Needs decay over time and must be satisfied by actions (Eating, Sleeping, Socializing).
+//!
+//! ## 🧠 The Three Pillars
+//!
+//! 1.  **Hunger**: Represents caloric intake. Low hunger leads to starvation and death.
+//! 2.  **Rest**: Represents physical energy. Low rest leads to exhaustion and collapse.
+//! 3.  **Leisure**: Represents mental well-being. Low leisure leads to stress and mental breaks.
+//!
+//! ## 📉 The Decay Loop
+//!
+//! Every tick, `decay_needs_system` reduces each need by a small amount.
+//! *   **Hunger**: ~0.001 per tick (Starvation in ~1.5 days).
+//! *   **Rest**: ~0.001 per tick (Exhaustion in ~1.5 days).
+//! *   **Leisure**: ~0.0015 per tick (Boredom in ~1 day).
+//!
+//! Policies like `Rationing` can slow down decay rates.
+
 use crate::layer1::edicts::{ColonyPolicies, get_hunger_decay_modifier};
 use bevy_ecs::prelude::*;
 
 /// Pop survival needs.
+///
+/// Tracks the core statistics that keep a Pop alive and happy.
+/// Values range from 0.0 (Critical) to 1.0 (Satisfied).
+///
+/// # The Hero's Journey: A Day in the Life
+///
+/// ```
+/// use scale::layer1::needs::Needs;
+///
+/// let mut needs = Needs::default(); // Starts at 0.8 (Happy)
+///
+/// // Morning: Needs decay
+/// needs.hunger -= 0.1;
+/// needs.rest -= 0.05;
+///
+/// // Lunch time!
+/// needs.hunger += 0.5;
+/// needs.hunger = needs.hunger.min(1.0); // Clamp to max
+///
+/// // Check if happy
+/// if needs.morale() > 0.8 {
+///     println!("I love this colony!");
+/// }
+/// ```
 #[derive(Component, Clone, Copy, Debug)]
 pub struct Needs {
     /// Hunger level: 0.0 = starving, 1.0 = full.
@@ -24,6 +68,8 @@ impl Default for Needs {
 
 impl Needs {
     /// Returns the worst (lowest) need value.
+    ///
+    /// This is often used by AI to prioritize which need to address first.
     #[must_use]
     pub const fn worst(&self) -> f32 {
         let min_hr = if self.hunger < self.rest {
@@ -39,6 +85,9 @@ impl Needs {
     }
 
     /// Calculates aggregate morale score (0.0 to 1.0).
+    ///
+    /// # The Math
+    /// Currently a simple average: `(Hunger + Rest + Leisure) / 3.0`.
     #[must_use]
     pub fn morale(&self) -> f32 {
         (self.hunger + self.rest + self.leisure) / 3.0
@@ -46,6 +95,10 @@ impl Needs {
 }
 
 /// Returns work efficiency multiplier based on morale.
+///
+/// *   **High Morale (>= 0.8)**: 1.2x Speed (Inspired)
+/// *   **Low Morale (<= 0.2)**: 0.5x Speed (Depressed)
+/// *   **Normal**: 1.0x Speed
 #[must_use]
 pub fn get_morale_efficiency(morale: f32) -> f32 {
     if morale >= 0.8 {
@@ -64,6 +117,10 @@ const LEISURE_DECAY_PER_TICK: f32 = 0.0015; // Slightly faster than hunger/rest
 /// Decays needs for all pops each tick.
 ///
 /// Uses `par_iter_mut` for parallel processing across entities.
+///
+/// # Modifiers
+/// *   Applies `ColonyPolicies` modifiers (e.g., Rationing reduces hunger decay).
+/// *   Clamps all values to `0.0`.
 pub fn decay_needs_system(mut query: Query<&mut Needs>, policies: Option<Res<ColonyPolicies>>) {
     let hunger_mod = policies.map_or(1.0, |p| get_hunger_decay_modifier(&p));
     let hunger_decay = HUNGER_DECAY_PER_TICK * hunger_mod;
