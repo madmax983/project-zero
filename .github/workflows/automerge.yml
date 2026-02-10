@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Enable auto-merge
-        run: gh pr merge --auto --squash "${{ github.event.pull_request.number }}"
+        run: gh pr merge --auto --squash "${{ github.event.pull_request.number }}" || echo "Failed to enable auto-merge, proceeding anyway"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
