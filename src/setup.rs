@@ -37,7 +37,20 @@ pub fn setup_world() -> World {
     let mut world = World::new();
     world.insert_resource(GameState::default());
     world.insert_resource(MenuState::default());
-    world.insert_resource(generate_terrain(80, 50));
+
+    let terrain = generate_terrain(80, 50);
+    let mut roof = crate::layer1::structural_integrity::RoofGrid::new(terrain.width, terrain.height);
+    for y in 0..terrain.height {
+        for x in 0..terrain.width {
+            if terrain.get(x, y) == Some(crate::layer1::TerrainType::Rock) {
+                #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
+                roof.set(x as i32, y as i32, true);
+            }
+        }
+    }
+    world.insert_resource(terrain);
+    world.insert_resource(roof);
+
     world.insert_resource(Viewport::default());
     world.insert_resource(SimulationTime::default());
     world.insert_resource(BuildMode::default());

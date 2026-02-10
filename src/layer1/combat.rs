@@ -1,3 +1,4 @@
+#![allow(missing_docs, clippy::collapsible_if)]
 use bevy_ecs::prelude::*;
 use crate::layer1::map::GridPosition;
 #[derive(Component, Default, Debug, Clone)]
@@ -34,6 +35,7 @@ pub fn evaluate_fight_action<'a>(
     let mut min_dist = f32::MAX;
 
     for (entity, pos) in enemies {
+        #[allow(clippy::cast_precision_loss)]
         let dist = pop_pos.distance_chebyshev(*pos) as f32;
         if dist < min_dist {
             min_dist = dist;

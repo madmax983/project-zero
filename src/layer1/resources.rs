@@ -524,12 +524,15 @@ pub fn mine_rock(world: &mut World, designation_entity: Entity, work_amount: f32
     // 3. Handle completion
     if completed {
         // Change terrain
-        let mut terrain = world.resource_mut::<TerrainGrid>();
-        // Check bounds again? Technically redundant if terrain didn't shrink, but safe.
-        // Also we checked < 0 earlier.
-        let idx = (pos.y as usize) * terrain.width + (pos.x as usize);
-        if idx < terrain.tiles.len() {
-            terrain.tiles[idx] = TerrainType::Dirt;
+        // Scope the borrow of terrain so we can use world later
+        {
+            let mut terrain = world.resource_mut::<TerrainGrid>();
+            // Check bounds again? Technically redundant if terrain didn't shrink, but safe.
+            // Also we checked < 0 earlier.
+            let idx = (pos.y as usize) * terrain.width + (pos.x as usize);
+            if idx < terrain.tiles.len() {
+                terrain.tiles[idx] = TerrainType::Dirt;
+            }
         }
 
         // Spawn visual item on the ground (MUST BE HAULED)
@@ -562,6 +565,11 @@ pub fn mine_rock(world: &mut World, designation_entity: Entity, work_amount: f32
 
         // Remove designation
         world.despawn(designation_entity);
+
+        // Check Stability
+        if !crate::layer1::structural_integrity::check_stability(world, pos) {
+            crate::layer1::structural_integrity::apply_collapse(world, pos);
+        }
     }
 }
 
@@ -735,6 +743,7 @@ mod tests {
         });
         world.insert_resource(ColonyResources::default());
         world.insert_resource(MessageLog::default());
+        world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
 
         // Spawn Designation
         let designation = world

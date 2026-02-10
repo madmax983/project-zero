@@ -36,6 +36,7 @@ mod tests {
             tiles,
         });
         world.insert_resource(ColonyResources::default());
+        world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(100, 10));
 
         // Mine 100 rocks
         for i in 0..100 {
