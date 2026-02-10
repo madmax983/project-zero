@@ -28,9 +28,9 @@ use crate::layer1::{
     process_refining_system, process_research_system, process_scan_system,
     process_start_plan_system, produce_food_system, restore_leisure_system,
     restore_rest_in_housing_system, spoilage_system, starvation_damage_system,
-    track_plan_outcomes_system, update_action_timer_system, update_lighting_system,
-    update_noise_system, update_resource_caps_system, vermin_growth_system, vermin_morale_system,
-    work_execution_system,
+    track_plan_outcomes_system, update_action_timer_system, update_faction_membership_system,
+    update_faction_satisfaction_system, update_lighting_system, update_noise_system,
+    update_resource_caps_system, vermin_growth_system, vermin_morale_system, work_execution_system,
 };
 use crate::shared::time::SimulationTime;
 
@@ -109,6 +109,8 @@ pub fn build_simulation_schedule() -> Schedule {
     // --- Economy (after execution, before consumption) ---
     // These systems can run in parallel with each other.
     schedule.add_systems((
+        update_faction_membership_system.after(work_execution_system),
+        update_faction_satisfaction_system.after(update_faction_membership_system),
         update_resource_caps_system.after(work_execution_system),
         advance_season_system.after(work_execution_system),
         produce_food_system.after(work_execution_system),
@@ -191,7 +193,8 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::rumor::exchange_rumors_system.after(death_system),
         crate::layer1::funeral::grief_system.after(death_system),
         crate::layer1::unrest::check_mental_break_system.after(decay_needs_system),
-        crate::layer1::justice::check_crime_system.after(crate::layer1::unrest::check_mental_break_system),
+        crate::layer1::justice::check_crime_system
+            .after(crate::layer1::unrest::check_mental_break_system),
         crate::layer1::unrest::recover_mental_break_system.after(decay_needs_system),
         // Process new rumors and affinity changes
         modify_affinity_system.after(crate::layer1::rumor::exchange_rumors_system),

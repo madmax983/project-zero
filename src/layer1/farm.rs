@@ -1,3 +1,4 @@
+use crate::layer1::GridPosition;
 use crate::layer1::balance::{
     FOOD_HUNGER_THRESHOLD, FOOD_PER_MEAL, FOOD_PER_WORKER_PER_TICK, HUNGER_PER_MEAL,
 };
@@ -7,7 +8,6 @@ use crate::layer1::resources::ColonyResources;
 use crate::layer1::seasons::SeasonState;
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
 use crate::layer1::utility_ai::types::{ActionType, PopAction};
-use crate::layer1::GridPosition;
 use bevy_ecs::prelude::*;
 
 /// Farm component - produces food when worked.
@@ -32,10 +32,7 @@ impl Default for Farm {
 /// Produces food from all farms with active workers.
 pub fn produce_food_system(
     farm_query: Query<(&crate::layer1::building::Building, &GridPosition), With<Farm>>,
-    mut pop_query: Query<
-        (Entity, &GridPosition, &PopAction, Option<&mut Skills>),
-        With<Pop>,
-    >,
+    mut pop_query: Query<(Entity, &GridPosition, &PopAction, Option<&mut Skills>), With<Pop>>,
     season: Option<Res<SeasonState>>,
     mut resources: ResMut<ColonyResources>,
 ) {
@@ -53,10 +50,11 @@ pub fn produce_food_system(
     // However, we can query buildings by position? No.
     // We can collect farms into a Map<GridPosition, BuildingType>.
 
-    let farm_map: std::collections::HashMap<GridPosition, crate::layer1::building::BuildingType> = farm_query
-        .iter()
-        .map(|(b, p)| (*p, b.building_type))
-        .collect();
+    let farm_map: std::collections::HashMap<GridPosition, crate::layer1::building::BuildingType> =
+        farm_query
+            .iter()
+            .map(|(b, p)| (*p, b.building_type))
+            .collect();
 
     for (_, pos, action, skills_opt) in &mut pop_query {
         if action.current != ActionType::Farm {
@@ -187,15 +185,17 @@ mod tests {
             GridPosition { x: 5, y: 5 },
         ));
 
-        let worker = world.spawn((
-            Pop,
-            Skills::default(),
-            GridPosition { x: 5, y: 5 },
-            PopAction {
-                current: ActionType::Farm,
-                ..Default::default()
-            },
-        )).id();
+        let worker = world
+            .spawn((
+                Pop,
+                Skills::default(),
+                GridPosition { x: 5, y: 5 },
+                PopAction {
+                    current: ActionType::Farm,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         world.run_system_once(produce_food_system).unwrap();
 
@@ -261,12 +261,18 @@ mod tests {
         world.spawn((
             Pop,
             GridPosition { x: 5, y: 5 },
-            PopAction { current: ActionType::Farm, ..Default::default() },
+            PopAction {
+                current: ActionType::Farm,
+                ..Default::default()
+            },
         ));
         world.spawn((
             Pop,
             GridPosition { x: 5, y: 5 },
-            PopAction { current: ActionType::Farm, ..Default::default() },
+            PopAction {
+                current: ActionType::Farm,
+                ..Default::default()
+            },
         ));
 
         world.run_system_once(produce_food_system).unwrap();

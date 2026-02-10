@@ -5,8 +5,6 @@
 
 /// Pop actions logic.
 pub mod actions;
-/// Defensive structures and logic.
-pub mod defense;
 /// Game balance constants.
 pub mod balance;
 /// Beauty and decoration system.
@@ -16,12 +14,16 @@ pub mod building;
 pub mod chronicle;
 /// Chronicle system and historical records.
 pub mod clothing;
+/// Defensive structures and logic.
+pub mod defense;
 /// Designation system for player tools.
 pub mod designation;
 /// Colony policies and edicts.
 pub mod edicts;
 /// Execution layer bridging utility AI to actions.
 pub mod execution;
+/// Pop factions and political guilds.
+pub mod factions;
 /// Farm building and food production.
 pub mod farm;
 /// Fire propagation and damage.
@@ -101,6 +103,7 @@ pub use defense::*;
 pub use designation::*;
 pub use edicts::*;
 pub use execution::*;
+pub use factions::*;
 pub use farm::*;
 pub use fire::*;
 pub use hauling::*;

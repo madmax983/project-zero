@@ -1,8 +1,8 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::map::GridPosition;
-use crate::layer1::utility_ai::{ActionType, UtilityWeights};
-use crate::layer1::utility_ai::math::{calculate_context_score, calculate_success_modifier};
 use crate::layer1::farm::Farm;
+use crate::layer1::map::GridPosition;
+use crate::layer1::utility_ai::math::{calculate_context_score, calculate_success_modifier};
+use crate::layer1::utility_ai::{ActionType, UtilityWeights};
+use bevy_ecs::prelude::*;
 
 /// Evaluates the utility of farming.
 ///
@@ -31,7 +31,7 @@ pub fn evaluate_farm<'a>(
             Some(*pos),
             farm.capacity,
             farm.workers.len(),
-            weights
+            weights,
         );
 
         let success = calculate_success_modifier(ActionType::Farm, weights);

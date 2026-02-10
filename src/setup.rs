@@ -59,6 +59,7 @@ pub fn setup_world() -> World {
     world.insert_resource(OccupiedTiles::default());
     world.insert_resource(ColonyResources::default());
     world.insert_resource(ColonyPolicies::default());
+    world.insert_resource(crate::layer1::Factions::default());
     world.insert_resource(InputContextStack::default());
     world.insert_resource(MessageLog::default());
     world.insert_resource(Chronicle::default());

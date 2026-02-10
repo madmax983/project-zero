@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::building::{Building, OccupiedTiles};
 use crate::layer1::map::GridPosition;
 use crate::layer1::terrain::TerrainGrid;
+use bevy_ecs::prelude::*;
 
 /// Component representing a defense gate.
 #[derive(Component, Default, Debug)]
@@ -11,6 +11,7 @@ pub struct Gate {
 }
 
 /// Checks if a tile is walkable (Terrain + Buildings).
+#[allow(clippy::collapsible_if)]
 pub fn is_walkable(world: &mut World, x: i32, y: i32) -> bool {
     // 1. Check Terrain
     let terrain = world.resource::<TerrainGrid>();
@@ -54,20 +55,24 @@ pub fn is_walkable(world: &mut World, x: i32, y: i32) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
     use crate::layer1::building::{Building, BuildingType, OccupiedTiles};
-    use crate::layer1::map::GridPosition;
-    use crate::layer1::terrain::{TerrainGrid, TerrainType};
-    use crate::layer1::health::Health;
-    use crate::layer1::pop::Pop;
     use crate::layer1::execution::MovementTarget;
+    use crate::layer1::health::Health;
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::pop::Pop;
+    use crate::layer1::terrain::{TerrainGrid, TerrainType};
     use crate::layer1::utility_ai::ActionType;
+    use bevy_ecs::prelude::*;
 
     // Helper to setup world with flat grass
     fn setup_world() -> World {
         let mut world = World::new();
         let tiles = vec![TerrainType::Grass; 100];
-        world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
         world.insert_resource(OccupiedTiles::default());
         world
     }
@@ -75,7 +80,9 @@ mod tests {
     // 1. Building Obstacle Logic
     #[test]
     fn test_wall_is_obstacle() {
-        let wall = Building { building_type: BuildingType::Wall };
+        let wall = Building {
+            building_type: BuildingType::Wall,
+        };
         assert!(wall.building_type.is_obstacle());
     }
 
@@ -84,17 +91,24 @@ mod tests {
         // Gate requires extra component or state in Building?
         // For MVP, Gate is a BuildingType. We might need a `Gate` component.
         let mut world = World::new();
-        let gate_entity = world.spawn((
-            Building { building_type: BuildingType::Gate },
-            GridPosition { x: 0, y: 0 },
-            crate::layer1::defense::Gate { is_locked: false },
-        )).id();
+        let gate_entity = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Gate,
+                },
+                GridPosition { x: 0, y: 0 },
+                crate::layer1::defense::Gate { is_locked: false },
+            ))
+            .id();
 
         // Check obstacle logic via system or helper
         assert!(!crate::layer1::defense::is_obstacle(&world, gate_entity));
 
         // Lock it
-        world.get_mut::<crate::layer1::defense::Gate>(gate_entity).unwrap().is_locked = true;
+        world
+            .get_mut::<crate::layer1::defense::Gate>(gate_entity)
+            .unwrap()
+            .is_locked = true;
         assert!(crate::layer1::defense::is_obstacle(&world, gate_entity));
     }
 
@@ -103,10 +117,14 @@ mod tests {
         // Most buildings should be obstacles (Housing, Farm?)
         // Spec decision: Farms are walkable? Housing is obstacle?
         // Let's say: Housing = Obstacle, Farm = Walkable (crops).
-        let housing = Building { building_type: BuildingType::Housing };
+        let housing = Building {
+            building_type: BuildingType::Housing,
+        };
         assert!(housing.building_type.is_obstacle());
 
-        let farm = Building { building_type: BuildingType::Farm };
+        let farm = Building {
+            building_type: BuildingType::Farm,
+        };
         assert!(!farm.building_type.is_obstacle()); // Farms are walkable
     }
 
@@ -117,22 +135,26 @@ mod tests {
 
         // Place Wall at (1, 0)
         world.spawn((
-            Building { building_type: BuildingType::Wall },
+            Building {
+                building_type: BuildingType::Wall,
+            },
             GridPosition { x: 1, y: 0 },
             Health::default(),
         ));
         world.resource_mut::<OccupiedTiles>().0.insert((1, 0));
 
         // Pop at (0,0) trying to move to (2,0)
-        let _pop = world.spawn((
-            Pop,
-            GridPosition { x: 0, y: 0 },
-            MovementTarget {
-                target_entity: Entity::from_raw(999),
-                target_position: GridPosition { x: 2, y: 0 },
-                for_action: ActionType::Idle, // Just moving
-            },
-        )).id();
+        let _pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 0, y: 0 },
+                MovementTarget {
+                    target_entity: Entity::from_raw(999),
+                    target_position: GridPosition { x: 2, y: 0 },
+                    for_action: ActionType::Idle, // Just moving
+                },
+            ))
+            .id();
 
         // Run movement
         // We need to register the system or call it.
@@ -153,7 +175,9 @@ mod tests {
 
         // Gate at (1, 0)
         world.spawn((
-            Building { building_type: BuildingType::Gate },
+            Building {
+                building_type: BuildingType::Gate,
+            },
             GridPosition { x: 1, y: 0 },
             crate::layer1::defense::Gate { is_locked: false },
         ));
@@ -165,7 +189,10 @@ mod tests {
     // 3. Building Health & Death
     #[test]
     fn test_building_takes_damage() {
-        let mut health = Health { current: 100.0, max: 100.0 };
+        let mut health = Health {
+            current: 100.0,
+            max: 100.0,
+        };
         health.take_damage(10.0);
         assert_eq!(health.current, 90.0);
     }
@@ -176,10 +203,17 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(crate::shared::log::MessageLog::default());
 
-        let wall = world.spawn((
-            Building { building_type: BuildingType::Wall },
-            Health { current: -1.0, max: 100.0 },
-        )).id();
+        let wall = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Wall,
+                },
+                Health {
+                    current: -1.0,
+                    max: 100.0,
+                },
+            ))
+            .id();
 
         crate::layer1::health::death_system(&mut world);
 

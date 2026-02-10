@@ -22,6 +22,7 @@
 //! * `PopAction`: Current task state.
 //! * `UtilityWeights`: Personality/learning factors.
 
+use super::factions::FactionMember;
 use super::health::Health;
 use super::items::Equipment;
 use super::lifecycle::Age;
@@ -181,6 +182,7 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
                 UtilityWeights::default(),
                 Knowledge::default(),
                 Age::new(rng.gen_range(20..40)),
+                FactionMember::default(),
             ));
             spawned += 1;
         }
@@ -546,5 +548,25 @@ mod tests {
             let years = age.ticks_alive / crate::layer1::balance::TICKS_PER_YEAR;
             assert!(years >= 20 && years < 40, "Age should be between 20 and 40");
         }
+    }
+}
+
+
+#[cfg(test)]
+mod verification_tests {
+    use super::*;
+    use crate::layer1::terrain::generate_terrain;
+
+    #[test]
+    fn test_spawn_initial_pops_have_faction_member() {
+        let mut world = World::new();
+        let terrain = generate_terrain(80, 50);
+        world.insert_resource(terrain);
+
+        spawn_initial_pops(&mut world);
+
+        let mut query = world.query::<(&Pop, &FactionMember)>();
+        let count = query.iter(&world).count();
+        assert_eq!(count, 5, "All 5 pops should have FactionMember component");
     }
 }

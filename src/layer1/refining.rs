@@ -293,7 +293,7 @@ mod tests {
                 current: ActionType::Refine,
                 current_utility: 0.5,
                 ticks_committed: 1,
-            }
+            },
         ));
 
         process_refining_system(&mut world);
@@ -330,7 +330,7 @@ mod tests {
             PopAction {
                 current: ActionType::Refine,
                 ..Default::default()
-            }
+            },
         ));
 
         process_refining_system(&mut world);
@@ -366,7 +366,7 @@ mod tests {
                 PopAction {
                     current: ActionType::Refine,
                     ..Default::default()
-                }
+                },
             ))
             .id();
 
@@ -404,7 +404,7 @@ mod tests {
             PopAction {
                 current: ActionType::Refine,
                 ..Default::default()
-            }
+            },
         ));
 
         process_refining_system(&mut world);
@@ -439,7 +439,7 @@ mod tests {
             PopAction {
                 current: ActionType::Refine,
                 ..Default::default()
-            }
+            },
         ));
 
         process_refining_system(&mut world);

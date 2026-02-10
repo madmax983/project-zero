@@ -1,12 +1,12 @@
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::utility_ai::UtilityWeights;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::farm::Farm;
-    use crate::layer1::resources::{ColonyResources, RefiningProgress};
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
+    use crate::layer1::resources::{ColonyResources, RefiningProgress};
+    use crate::layer1::utility_ai::UtilityWeights;
+    use bevy_ecs::prelude::*;
 
     // Helper to evaluate refine
     use crate::layer1::actions::refine::evaluate_refine;
@@ -32,11 +32,18 @@ mod tests {
         let weights = UtilityWeights::default();
 
         // Spawn Lumber Mill
-        let mill = world.spawn((
-            Building { building_type: BuildingType::LumberMill },
-            GridPosition { x: 2, y: 0 },
-            RefiningProgress { current: 0.0, max: 10.0 },
-        )).id();
+        let mill = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::LumberMill,
+                },
+                GridPosition { x: 2, y: 0 },
+                RefiningProgress {
+                    current: 0.0,
+                    max: 10.0,
+                },
+            ))
+            .id();
 
         let mut buildings = world.query::<(Entity, &GridPosition, &Building, &RefiningProgress)>();
         let resources = world.resource::<ColonyResources>();
@@ -59,7 +66,9 @@ mod tests {
         let weights = UtilityWeights::default();
 
         world.spawn((
-            Building { building_type: BuildingType::LumberMill },
+            Building {
+                building_type: BuildingType::LumberMill,
+            },
             GridPosition { x: 2, y: 0 },
             RefiningProgress::default(),
         ));
@@ -78,11 +87,18 @@ mod tests {
         let weights = UtilityWeights::default();
 
         // Spawn Farm
-        let farm = world.spawn((
-            Building { building_type: BuildingType::Farm },
-            GridPosition { x: 2, y: 0 },
-            Farm { capacity: 1, workers: vec![] }, // Workers list might be deprecated/changed
-        )).id();
+        let farm = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Farm,
+                },
+                GridPosition { x: 2, y: 0 },
+                Farm {
+                    capacity: 1,
+                    workers: vec![],
+                }, // Workers list might be deprecated/changed
+            ))
+            .id();
 
         let mut farms = world.query::<(Entity, &GridPosition, &Farm)>();
 
@@ -107,9 +123,14 @@ mod tests {
         // MVP: Assume Farm struct has `workers` list that is updated when action starts.
         let worker = world.spawn(Pop).id();
         world.spawn((
-            Building { building_type: BuildingType::Farm },
+            Building {
+                building_type: BuildingType::Farm,
+            },
             GridPosition { x: 2, y: 0 },
-            Farm { capacity: 1, workers: vec![worker] },
+            Farm {
+                capacity: 1,
+                workers: vec![worker],
+            },
         ));
 
         let mut farms = world.query::<(Entity, &GridPosition, &Farm)>();
