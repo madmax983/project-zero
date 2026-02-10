@@ -183,3 +183,6 @@ pub use fauna::*;
 pub mod art;
 pub use art::*;
 pub mod combat;
+/// Visitor system (Spec 074).
+pub mod visitor;
+pub use visitor::*;

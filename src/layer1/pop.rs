@@ -64,6 +64,13 @@ fn generate_name<R: Rng>(rng: &mut R) -> PopName {
     PopName(POP_NAMES[idx].to_string())
 }
 
+impl PopName {
+    /// Generate a random name.
+    pub fn random<R: Rng>(rng: &mut R) -> Self {
+        generate_name(rng)
+    }
+}
+
 /// Marker component for pop entities.
 ///
 /// This component identifies an entity as a "Citizen" of the colony. It is the

@@ -70,6 +70,7 @@ pub fn build_simulation_schedule() -> Schedule {
     // --- AI Decision Chain (GPU compute) ---
     schedule.add_systems((
         gpu_evaluate_actions,
+        crate::layer1::visitor::visitor_behavior_system,
         update_action_timer_system.after(gpu_evaluate_actions),
     ));
 
@@ -115,6 +116,7 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::beauty::apply_beauty_effects_system
             .after(crate::layer1::beauty::update_beauty_grid_system),
         crate::layer1::trade::merchant_arrival_system.after(work_execution_system),
+        crate::layer1::visitor::spawn_visitor_system.after(work_execution_system),
         crate::layer1::energy::power_grid_system.after(work_execution_system),
         art_generation_system.after(work_execution_system),
     ));
@@ -153,6 +155,7 @@ pub fn build_simulation_schedule() -> Schedule {
         spoilage_system
             .after(consume_food_system)
             .after(vermin_growth_system),
+        crate::layer1::visitor::visitor_lifecycle_system.after(consume_food_system),
         decay_needs_system.after(consume_food_system),
         aging_system.after(consume_food_system),
         natural_death_system.after(aging_system),
