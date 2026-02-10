@@ -67,52 +67,64 @@ pub fn combat_execution_system(world: &mut World) {
         .collect();
 
     for (pop_entity, target_entity, equipment_opt) in combatants {
-        // Find target position (it might have moved)
-        let target_pos = if let Some(pos) = world.get::<GridPosition>(target_entity) {
-            *pos
-        } else {
-            // Target despawned?
-            cleanup_pop_work_state(world, pop_entity);
-            continue;
-        };
+        process_single_combatant(world, pop_entity, target_entity, equipment_opt);
+    }
+}
 
-        // Update MovementTarget if needed
-        if let Some(mut mt) = world.get_mut::<MovementTarget>(pop_entity) {
-            if mt.target_position != target_pos {
-                mt.target_position = target_pos;
-                // Remove AtTarget to ensure we chase if they moved away
-                // But only if we are now out of range?
-                // Actually, let's check range first.
+fn process_single_combatant(
+    world: &mut World,
+    pop_entity: Entity,
+    target_entity: Entity,
+    equipment_opt: Option<Equipment>,
+) {
+    // Find target position (it might have moved)
+    let target_pos = if let Some(pos) = world.get::<GridPosition>(target_entity) {
+        *pos
+    } else {
+        // Target despawned?
+        cleanup_pop_work_state(world, pop_entity);
+        return;
+    };
+
+    // Update MovementTarget if needed
+    if let Some(mut mt) = world.get_mut::<MovementTarget>(pop_entity) {
+        if mt.target_position != target_pos {
+            mt.target_position = target_pos;
+            // Remove AtTarget to ensure we chase if they moved away
+            // But only if we are now out of range?
+            // Actually, let's check range first.
+        }
+    }
+
+    // Check range
+    // Safety: Pop must have GridPosition
+    let Some(pop_pos) = world.get::<GridPosition>(pop_entity).copied() else {
+        return;
+    };
+    let dist = pop_pos.distance_chebyshev(target_pos) as f32;
+
+    let mut weapon_range = 1.0; // Default melee
+    if let Some(ref eq) = equipment_opt {
+        if let Some(weapon_entity) = eq.weapon {
+            if let Some(weapon) = world.get::<Weapon>(weapon_entity) {
+                weapon_range = weapon.properties.range;
             }
         }
+    }
 
-        // Check range
-        let pop_pos = *world.get::<GridPosition>(pop_entity).unwrap();
-        let dist = pop_pos.distance_chebyshev(target_pos) as f32;
-
-        let mut weapon_range = 1.0; // Default melee
-        if let Some(ref eq) = equipment_opt {
-            if let Some(weapon_entity) = eq.weapon {
-                if let Some(weapon) = world.get::<Weapon>(weapon_entity) {
-                    weapon_range = weapon.properties.range;
-                }
-            }
+    if dist <= weapon_range {
+        // In range!
+        // Stop movement
+        if world.get::<AtTarget>(pop_entity).is_none() {
+            world.entity_mut(pop_entity).insert(AtTarget);
         }
 
-        if dist <= weapon_range {
-            // In range!
-            // Stop movement
-            if world.get::<AtTarget>(pop_entity).is_none() {
-                world.entity_mut(pop_entity).insert(AtTarget);
-            }
-
-            // Attack
-            crate::layer1::combat::execute_attack(world, pop_entity, target_entity);
-        } else {
-            // Out of range
-            // Ensure we are moving (remove AtTarget if present)
-            world.entity_mut(pop_entity).remove::<AtTarget>();
-        }
+        // Attack
+        crate::layer1::combat::execute_attack(world, pop_entity, target_entity);
+    } else {
+        // Out of range
+        // Ensure we are moving (remove AtTarget if present)
+        world.entity_mut(pop_entity).remove::<AtTarget>();
     }
 }
 
@@ -333,7 +345,7 @@ pub fn arrival_handler_system(
         let target_entity = mt.target_entity;
         let action = mt.for_action;
 
-        match action {
+        let should_remove = match action {
             ActionType::FetchTool => {
                 handle_fetch_tool(
                     &mut commands,
@@ -341,33 +353,37 @@ pub fn arrival_handler_system(
                     pop_entity,
                     &mut equipment_opt,
                 );
-                remove_movement_components(&mut commands, pop_entity);
+                true
             }
             ActionType::SatisfyHunger => {
                 handle_hunger_arrival(pop_entity, target_entity, &mut farms, &mut commands);
-                remove_movement_components(&mut commands, pop_entity);
+                true
             }
             ActionType::SeekMedicalCare => {
-                commands.entity(pop_entity).insert(AssignedTo {
-                    entity: target_entity,
-                    assignment_type: AssignmentType::Patient,
-                });
-                remove_movement_components(&mut commands, pop_entity);
+                assign_pop(
+                    &mut commands,
+                    pop_entity,
+                    target_entity,
+                    AssignmentType::Patient,
+                );
+                true
             }
             ActionType::SatisfyRest => {
                 handle_rest_arrival(pop_entity, target_entity, &mut housing_q, &mut commands);
-                remove_movement_components(&mut commands, pop_entity);
+                true
             }
             ActionType::Socialize => {
                 handle_socialize(&mut commands, &mut taverns, target_entity, pop_entity);
-                remove_movement_components(&mut commands, pop_entity);
+                true
             }
             ActionType::Research => {
-                commands.entity(pop_entity).insert(AssignedTo {
-                    entity: target_entity,
-                    assignment_type: AssignmentType::LibraryWorker,
-                });
-                remove_movement_components(&mut commands, pop_entity);
+                assign_pop(
+                    &mut commands,
+                    pop_entity,
+                    target_entity,
+                    AssignmentType::LibraryWorker,
+                );
+                true
             }
             ActionType::BuryCorpse => {
                 handle_bury_corpse(
@@ -380,17 +396,32 @@ pub fn arrival_handler_system(
                     pop_entity,
                     *pop_pos,
                 );
-                remove_movement_components(&mut commands, pop_entity);
+                true
             }
             ActionType::Work | ActionType::Repair | ActionType::Haul => {
                 // Work/Repair/Haul is handled by their respective systems
                 // Just keep the AtTarget marker for that system
+                false
             }
-            _ => {
-                remove_movement_components(&mut commands, pop_entity);
-            }
+            _ => true,
+        };
+
+        if should_remove {
+            remove_movement_components(&mut commands, pop_entity);
         }
     }
+}
+
+fn assign_pop(
+    commands: &mut Commands,
+    pop_entity: Entity,
+    target_entity: Entity,
+    assignment_type: AssignmentType,
+) {
+    commands.entity(pop_entity).insert(AssignedTo {
+        entity: target_entity,
+        assignment_type,
+    });
 }
 
 fn remove_movement_components(commands: &mut Commands, pop_entity: Entity) {
@@ -509,11 +540,8 @@ fn process_single_worker(
     equipment_opt: Option<Equipment>,
     work_speed_mod: f32,
 ) {
-    // Check per-pop tool availability
-    let tool_entity_opt = equipment_opt.as_ref().and_then(|e| e.tool);
-    let has_tools = tool_entity_opt.is_some();
-    let tool_efficiency = if has_tools { 1.0 } else { NO_TOOL_PENALTY };
-    // Check if designation still exists
+    // Check if designation still exists (early exit)
+    // We need to check existence first because we need the component later
     if world.get_entity(designation_entity).is_err() {
         cleanup_pop_work_state(world, pop_entity);
         return;
@@ -521,19 +549,66 @@ fn process_single_worker(
 
     // Get designation type
     let Some(designation) = world.get::<Designation>(designation_entity) else {
+        // Should have designation component if entity exists, but safety first
         return;
     };
     let designation_type = designation.designation_type;
 
-    // Determine Skill Type
-    let skill_type = match designation_type {
+    // Check per-pop tool availability
+    let tool_entity_opt = equipment_opt.as_ref().and_then(|e| e.tool);
+    let has_tools = tool_entity_opt.is_some();
+
+    // Calculate Work Amount
+    let work_amount = calculate_work_amount(
+        world,
+        pop_entity,
+        designation_type,
+        has_tools,
+        morale,
+        work_speed_mod,
+    );
+
+    // Execute Work
+    let worked =
+        execute_work_on_designation(world, designation_entity, designation_type, work_amount);
+
+    // After work: if designation was despawned (work completed), reset pop state
+    if world.get_entity(designation_entity).is_err() {
+        cleanup_pop_work_state(world, pop_entity);
+    }
+
+    // Post-work effects (XP, Hazards, Durability)
+    if worked {
+        handle_post_work_effects(
+            world,
+            pop_entity,
+            designation_type,
+            action_type,
+            tool_entity_opt,
+        );
+    }
+}
+
+const fn get_skill_for_designation(designation_type: DesignationType) -> Option<SkillType> {
+    match designation_type {
         DesignationType::Mine => Some(SkillType::Mining),
         DesignationType::Chop => Some(SkillType::Forestry),
         DesignationType::Repair | DesignationType::Demolish => Some(SkillType::Construction),
         DesignationType::SetZone(_) => None,
-    };
+    }
+}
 
-    // Calculate Work Amount with Skill Efficiency
+fn calculate_work_amount(
+    world: &World,
+    pop_entity: Entity,
+    designation_type: DesignationType,
+    has_tools: bool,
+    morale: f32,
+    work_speed_mod: f32,
+) -> f32 {
+    let tool_efficiency = if has_tools { 1.0 } else { NO_TOOL_PENALTY };
+    let skill_type = get_skill_for_designation(designation_type);
+
     let skill_efficiency = {
         let skills = world.get::<Skills>(pop_entity);
         skill_type.map_or(1.0, |st| get_skill_efficiency(skills, st))
@@ -545,14 +620,21 @@ fn process_single_worker(
     let mut rng = rand::thread_rng();
     let organic_factor = rng.gen_range(0.9..1.1);
 
-    let work_amount = WORK_PER_TICK
+    WORK_PER_TICK
         * tool_efficiency
         * morale_efficiency
         * skill_efficiency
         * work_speed_mod
-        * organic_factor;
+        * organic_factor
+}
 
-    let worked = match designation_type {
+fn execute_work_on_designation(
+    world: &mut World,
+    designation_entity: Entity,
+    designation_type: DesignationType,
+    work_amount: f32,
+) -> bool {
+    match designation_type {
         DesignationType::Mine => {
             process_mining(world, designation_entity, work_amount);
             true
@@ -567,29 +649,30 @@ fn process_single_worker(
             true
         }
         DesignationType::SetZone(_) => false,
-    };
+    }
+}
 
-    // After work: if designation was despawned (work completed), reset pop state
-    if world.get_entity(designation_entity).is_err() {
-        cleanup_pop_work_state(world, pop_entity);
+fn handle_post_work_effects(
+    world: &mut World,
+    pop_entity: Entity,
+    designation_type: DesignationType,
+    action_type: ActionType,
+    tool_entity_opt: Option<Entity>,
+) {
+    let skill_type = get_skill_for_designation(designation_type);
+
+    // Add XP
+    if let Some(st) = skill_type {
+        if let Some(mut skills) = world.get_mut::<Skills>(pop_entity) {
+            skills.add_xp(st, 1.0);
+        }
     }
 
-    // Workplace Hazards & XP Gain
-    if worked {
-        // Add XP
-        #[allow(clippy::collapsible_if)]
-        if let Some(st) = skill_type {
-            if let Some(mut skills) = world.get_mut::<Skills>(pop_entity) {
-                skills.add_xp(st, 1.0);
-            }
-        }
+    handle_workplace_hazards(world, pop_entity, action_type);
 
-        handle_workplace_hazards(world, pop_entity, action_type);
-
-        // Handle tool durability
-        if let Some(tool_entity) = tool_entity_opt {
-            handle_tool_durability(world, pop_entity, tool_entity);
-        }
+    // Handle tool durability
+    if let Some(tool_entity) = tool_entity_opt {
+        handle_tool_durability(world, pop_entity, tool_entity);
     }
 }
 
@@ -2069,5 +2152,86 @@ mod tests {
 
         // AtTarget should be removed (to allow movement)
         assert!(world.get::<AtTarget>(pop).is_none());
+    }
+
+    #[test]
+    fn test_arrival_assigns_to_hospital() {
+        let mut world = setup_world();
+
+        // Hospital component might need to be imported or fully qualified
+        // It is fully qualified in the test body I prepared.
+        let hospital = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Hospital,
+                },
+                GridPosition { x: 5, y: 5 },
+                crate::layer1::medical::Hospital::default(),
+            ))
+            .id();
+
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 5, y: 5 },
+                Needs::default(),
+                MovementTarget {
+                    target_entity: hospital,
+                    target_position: GridPosition { x: 5, y: 5 },
+                    for_action: ActionType::SeekMedicalCare,
+                },
+                AtTarget,
+            ))
+            .id();
+
+        world.run_system_once(arrival_handler_system).unwrap();
+
+        let assigned = world.get::<AssignedTo>(pop);
+        assert!(assigned.is_some(), "Pop should be assigned to hospital");
+        assert_eq!(assigned.unwrap().assignment_type, AssignmentType::Patient);
+
+        // MovementTarget should be removed
+        assert!(world.get::<MovementTarget>(pop).is_none());
+    }
+
+    #[test]
+    fn test_arrival_assigns_to_library() {
+        let mut world = setup_world();
+
+        let library = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Library,
+                },
+                GridPosition { x: 5, y: 5 },
+                crate::layer1::tech::Library::default(),
+            ))
+            .id();
+
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 5, y: 5 },
+                Needs::default(),
+                MovementTarget {
+                    target_entity: library,
+                    target_position: GridPosition { x: 5, y: 5 },
+                    for_action: ActionType::Research,
+                },
+                AtTarget,
+            ))
+            .id();
+
+        world.run_system_once(arrival_handler_system).unwrap();
+
+        let assigned = world.get::<AssignedTo>(pop);
+        assert!(assigned.is_some(), "Pop should be assigned to library");
+        assert_eq!(
+            assigned.unwrap().assignment_type,
+            AssignmentType::LibraryWorker
+        );
+
+        // MovementTarget should be removed
+        assert!(world.get::<MovementTarget>(pop).is_none());
     }
 }
