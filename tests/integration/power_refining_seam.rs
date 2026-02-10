@@ -8,6 +8,7 @@ mod tests {
     use scale::layer1::refining::process_refining_system;
     use scale::layer1::resources::{ColonyResources, RefiningProgress};
     use scale::layer1::skills::Skills;
+    use scale::layer1::utility_ai::{ActionType, PopAction};
 
     #[test]
     fn test_smelter_requires_power_to_operate() {
@@ -40,8 +41,16 @@ mod tests {
             ))
             .id();
 
-        // Spawn Worker nearby
-        world.spawn((Pop, GridPosition { x: 5, y: 6 }, Skills::default()));
+        // Spawn Worker at building
+        world.spawn((
+            Pop,
+            GridPosition { x: 5, y: 5 },
+            Skills::default(),
+            PopAction {
+                current: ActionType::Refine,
+                ..Default::default()
+            },
+        ));
 
         // Run system
         let mut schedule = Schedule::default();
@@ -51,8 +60,7 @@ mod tests {
         // Check progress
         let progress = world.get::<RefiningProgress>(smelter).unwrap();
 
-        // ISSUE: Currently this will be > 0.0 because power is ignored.
-        // We want it to be 0.0.
+        // Should NOT work (no power)
         assert_eq!(
             progress.current, 0.0,
             "Smelter should not refine without power!"
@@ -90,8 +98,16 @@ mod tests {
             ))
             .id();
 
-        // Spawn Worker nearby
-        world.spawn((Pop, GridPosition { x: 5, y: 6 }, Skills::default()));
+        // Spawn Worker at building
+        world.spawn((
+            Pop,
+            GridPosition { x: 5, y: 5 },
+            Skills::default(),
+            PopAction {
+                current: ActionType::Refine,
+                ..Default::default()
+            },
+        ));
 
         // Run system
         let mut schedule = Schedule::default();

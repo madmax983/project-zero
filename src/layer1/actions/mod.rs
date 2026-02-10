@@ -20,6 +20,15 @@ pub mod research;
 /// Work action logic.
 pub mod work;
 
+/// Refine action logic.
+pub mod refine;
+
+/// Farm action logic.
+pub mod farm;
+
+#[cfg(test)]
+mod work_building_tests;
+
 /// Component tracking what a pop is assigned to.
 #[derive(Component, Debug)]
 pub struct AssignedTo {

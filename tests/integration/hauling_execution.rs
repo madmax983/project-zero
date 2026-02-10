@@ -23,6 +23,7 @@ mod tests {
         world.insert_resource(ColonyResources::default());
         world.insert_resource(SimulationTime::default());
         world.insert_resource(scale::layer1::utility_ai::UtilityConfig::default());
+        world.insert_resource(scale::layer1::day_night::DayNightCycle::default());
         world.insert_resource(scale::layer1::seasons::SeasonState::default());
         world.insert_resource(scale::layer1::building::OccupiedTiles::default());
         world.insert_resource(scale::shared::log::MessageLog::default());

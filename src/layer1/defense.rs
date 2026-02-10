@@ -3,8 +3,10 @@ use crate::layer1::building::{Building, OccupiedTiles};
 use crate::layer1::map::GridPosition;
 use crate::layer1::terrain::TerrainGrid;
 
+/// Component representing a defense gate.
 #[derive(Component, Default, Debug)]
 pub struct Gate {
+    /// Whether the gate is locked (impassable).
     pub is_locked: bool,
 }
 
