@@ -1,6 +1,14 @@
+#![allow(
+    clippy::cast_precision_loss,
+    clippy::cast_possible_truncation,
+    clippy::cast_sign_loss,
+    clippy::cast_possible_wrap
+)]
+
 use crate::layer1::beauty::BeautyGrid;
 use crate::layer1::lighting::LightMap;
 use crate::layer1::map::GridPosition;
+use crate::layer1::needs::Needs;
 use crate::layer1::terrain::TerrainGrid;
 use bevy_ecs::prelude::*;
 use rand::Rng;
@@ -38,21 +46,11 @@ pub fn ghost_movement_system(
     let width = i32::try_from(terrain.width).unwrap_or(i32::MAX);
     let height = i32::try_from(terrain.height).unwrap_or(i32::MAX);
 
-    // Simple random walk: 25% chance to move in any cardinal direction
-    // 50% chance to stay put?
-    // Let's say: 10% chance to move each tick to keep them floaty and slow.
-
+    // Simple random walk: 10% chance to move each tick to keep them floaty and slow.
     for mut pos in &mut query {
         if rng.gen_bool(0.1) {
             let dx = rng.gen_range(-1..=1);
             let dy = rng.gen_range(-1..=1);
-
-            // Allow diagonal movement for ghosts? Sure, why not.
-            // But GridPosition is usually updated carefully.
-            // Let's stick to cardinal or stay put.
-            // Actually, gen_range(-1..=1) includes 0. So (0,0) is possible.
-
-            // Bounds check? Ghosts shouldn't leave the map.
 
             let new_x = pos.x + dx;
             let new_y = pos.y + dy;
@@ -85,35 +83,29 @@ pub fn ghost_light_damage_system(
                 if ectoplasm.current <= 0.0 {
                     commands.entity(entity).despawn();
                 }
-            } else {
-                // Regenerate in darkness?
-                // ectoplasm.current = (ectoplasm.current + 0.1).min(ectoplasm.max);
             }
         }
     }
 }
 
-/// Ghosts make the world ugly/scary.
+/// Ghosts make the world ugly.
 pub fn apply_ghost_beauty_system(
     mut beauty_grid: ResMut<BeautyGrid>,
     ghosts: Query<&GridPosition, With<Ghost>>,
 ) {
     // This runs AFTER beauty grid is cleared and populated by buildings.
-    // So we just subtract.
-
     for pos in &ghosts {
         if let (Ok(x), Ok(y)) = (usize::try_from(pos.x), usize::try_from(pos.y)) {
             let current = beauty_grid.get(x, y);
             // Strong negative beauty (-10 is like a Landfill)
             beauty_grid.set(x, y, current - 10.0);
 
-            // Maybe affect neighbors too?
             // Simple 3x3 aura
             for dy in -1..=1 {
                 for dx in -1..=1 {
                     if dx == 0 && dy == 0 {
                         continue;
-                    } // Already handled center
+                    }
 
                     // Safe bounds check
                     let nx = x as isize + dx;
@@ -130,6 +122,34 @@ pub fn apply_ghost_beauty_system(
                         beauty_grid.set(nx, ny, current - 5.0);
                     }
                 }
+            }
+        }
+    }
+}
+
+/// Scares nearby pops, reducing their leisure and rest.
+pub fn ghost_scare_system(
+    ghosts: Query<&GridPosition, With<Ghost>>,
+    mut pops: Query<(&GridPosition, &mut Needs), Without<Ghost>>,
+) {
+    // Collect ghost positions first to avoid O(N*M) checks if possible,
+    // but N (ghosts) and M (pops) are likely small.
+    // However, Query iteration inside Query iteration is fine for small numbers.
+    let ghost_positions: Vec<GridPosition> = ghosts.iter().copied().collect();
+
+    if ghost_positions.is_empty() {
+        return;
+    }
+
+    for (pop_pos, mut needs) in &mut pops {
+        for ghost_pos in &ghost_positions {
+            let dist = (pop_pos.x - ghost_pos.x).abs() + (pop_pos.y - ghost_pos.y).abs();
+            if dist < 4 {
+                // Spooky range!
+                // Reduce leisure (stress)
+                needs.leisure = (needs.leisure - 0.005).max(0.0);
+                // Reduce rest (disturbed)
+                needs.rest = (needs.rest - 0.002).max(0.0);
             }
         }
     }
@@ -207,6 +227,49 @@ mod tests {
         assert!(grid.get(5, 5) <= -10.0); // Center
         assert!(grid.get(4, 5) <= -5.0); // Neighbor
         assert_eq!(grid.get(0, 0), 0.0); // Far away
+    }
+
+    #[test]
+    fn test_ghost_scare_system() {
+        let mut world = World::new();
+
+        // Spawn Ghost
+        world.spawn((Ghost, GridPosition { x: 5, y: 5 }));
+
+        // Spawn Pop nearby (3 tiles away: 2+1=3 < 4)
+        let pop = world
+            .spawn((
+                GridPosition { x: 7, y: 6 },
+                Needs {
+                    leisure: 0.5,
+                    rest: 0.5,
+                    ..Default::default()
+                },
+            ))
+            .id();
+
+        // Spawn Pop far away
+        let safe_pop = world
+            .spawn((
+                GridPosition { x: 0, y: 0 },
+                Needs {
+                    leisure: 0.5,
+                    rest: 0.5,
+                    ..Default::default()
+                },
+            ))
+            .id();
+
+        world.run_system_once(ghost_scare_system).unwrap();
+
+        // Check scared pop
+        let needs = world.get::<Needs>(pop).unwrap();
+        assert!(needs.leisure < 0.5);
+        assert!(needs.rest < 0.5);
+
+        // Check safe pop
+        let safe_needs = world.get::<Needs>(safe_pop).unwrap();
+        assert!((safe_needs.leisure - 0.5).abs() < f32::EPSILON);
     }
 
     #[test]

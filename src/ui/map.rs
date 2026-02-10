@@ -14,6 +14,9 @@ use crate::layer1::{
     ResourceItem, ResourceType, TerrainGrid, TerrainType, Viewport, Visitor,
 };
 
+#[cfg(feature = "nova")]
+use crate::experimental::ghosts::Ghost;
+
 /// Represents a renderable entity on the map.
 ///
 /// This enum abstracts the different types of entities that can appear on the map grid.
@@ -127,6 +130,16 @@ pub fn update_render_cache(world: &mut World) {
                     &mut cache.entities,
                     *pos,
                     RenderEntity::Fauna(fauna.fauna_type),
+                );
+            }
+
+            // Check for Ghost (Nova feature)
+            #[cfg(feature = "nova")]
+            if e.get::<Ghost>().is_some() {
+                insert_if_higher_priority(
+                    &mut cache.entities,
+                    *pos,
+                    RenderEntity::Pop("👻", Color::White),
                 );
             }
 

@@ -12,7 +12,7 @@ use crate::experimental::biography::biography_monitor_system;
 use crate::experimental::dreams::dream_system;
 #[cfg(feature = "nova")]
 use crate::experimental::ghosts::{
-    apply_ghost_beauty_system, ghost_light_damage_system, ghost_movement_system,
+    apply_ghost_beauty_system, ghost_light_damage_system, ghost_movement_system, ghost_scare_system,
 };
 use crate::gpu::evaluate::gpu_evaluate_actions;
 use crate::layer1::{
@@ -133,6 +133,7 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer1::beauty::update_beauty_grid_system)
             .before(crate::layer1::beauty::apply_beauty_effects_system),
         ghost_light_damage_system.after(update_lighting_system),
+        ghost_scare_system.after(ghost_movement_system),
     ));
 
     // --- Environment (Fire, Acoustic) ---
