@@ -40,6 +40,8 @@ pub enum MemoryType {
     AteInLegendaryRoom,
     /// Admired a piece of art.
     AdmiredArt,
+    /// Disgusted by vermin infestation.
+    DisgustedByVermin,
 }
 
 impl MemoryType {
@@ -50,6 +52,7 @@ impl MemoryType {
         match self {
             Self::WitnessedDeath => -0.2,
             Self::StarvationTrauma => -0.15,
+            Self::DisgustedByVermin => -0.1,
             Self::AteFineMeal | Self::AttendedFuneral => 0.1,
             Self::WonFight | Self::AdmiredArt => 0.05,
             Self::SawCorpse => -0.05,
@@ -75,7 +78,7 @@ impl MemoryType {
             Self::WitnessedDeath => 0.0005, // Slow fade (2000 ticks)
             Self::StarvationTrauma | Self::AttendedFuneral => 0.001, // Medium
             Self::AteFineMeal | Self::WonFight => 0.002, // Fast (500 ticks)
-            Self::SawCorpse | Self::AdmiredArt => 0.01, // Very fast fade (100 ticks)
+            Self::SawCorpse | Self::AdmiredArt | Self::DisgustedByVermin => 0.01, // Very fast fade (100 ticks)
             // Room thoughts last 1 day (100 ticks)
             Self::SleptInAwfulRoom
             | Self::SleptInDullRoom

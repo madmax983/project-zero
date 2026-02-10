@@ -5,13 +5,15 @@ use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer1::fire::Fire;
 use crate::layer1::health::Health;
 use crate::layer1::map::GridPosition;
+use crate::layer1::memory::{Memories, MemoryType};
 use crate::layer1::pop::{Pop, PopDied};
 use crate::layer1::rumor::{Knowledge, Rumor, RumorTopic};
+use crate::layer1::vermin::VerminState;
 use crate::shared::colony::ColonyName;
 use crate::shared::narrative::{NarrativeContext, NarrativeGenerator};
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
-use rand::seq::SliceRandom;
+use rand::prelude::*;
 use std::collections::HashSet;
 
 /// Creates chronicle entries from [`PopDied`] events.
@@ -87,6 +89,39 @@ pub fn chronicle_rumor_bridge_system(
             }
         }
     }
+}
+
+/// Applies `DisgustedByVermin` memory to pops if vermin severity is high.
+///
+/// Bridges the Vermin system (Environment) and Memory system (Psychology).
+pub fn vermin_morale_system(
+    vermin: Res<VerminState>,
+    mut query: Query<&mut Memories, With<Pop>>,
+    time: Res<SimulationTime>,
+) {
+    if vermin.severity < 50.0 {
+        return;
+    }
+
+    // Chance to apply memory scales with severity
+    // 50.0 -> 0.0
+    // 100.0 -> 0.10 (10% chance per tick)
+    let chance = (vermin.severity - 50.0) / 50.0 * 0.10;
+
+    query.par_iter_mut().for_each(|mut memories| {
+        let mut rng = rand::thread_rng();
+        if rng.r#gen::<f32>() < chance {
+            // Check if already has memory to avoid stacking
+            let has_memory = memories
+                .items
+                .iter()
+                .any(|m| m.memory_type == MemoryType::DisgustedByVermin);
+
+            if !has_memory {
+                memories.add(MemoryType::DisgustedByVermin, time.tick);
+            }
+        }
+    });
 }
 
 /// Applies damage to pops standing on fire.
