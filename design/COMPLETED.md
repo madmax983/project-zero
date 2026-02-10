@@ -74,3 +74,8 @@ Implemented features. Architect: read this to understand current state.
 - [x] `073` Vermin Infestation — `specs/073-vermin-infestation.md` — completed 2026-02-10
 - [x] `INT-012` Integration: Vermin -> Pop Morale — completed 2026-10-17
 - [x] `065` Day/Night Cycle — `specs/065-day-night-cycle.md` — completed 2026-03-05
+- [x] `010` Chronicle System — `specs/010-chronicle-system.md` — completed 2026-03-05
+- [x] `042` Energy System — `specs/042-energy-system.md` — completed 2026-02-09
+- [x] `074` Visitor System — `specs/074-visitor-system.md` — completed 2026-03-10
+- [x] `INT-004` Integration: Fix Hauling Execution Flow — completed 2026-02-23
+- [x] `INT-005` Integration: Pop Health -> Memories — completed 2026-02-07
