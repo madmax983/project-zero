@@ -10,11 +10,14 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `066` Building Work AI Integration — `specs/066-building-work-ai.md`
 - [ ] `068` Pop Factions — `specs/068-pop-factions.md`
 - [ ] `069` Mentorship System — `specs/069-mentorship-system.md`
+- [ ] `042` Energy System — `specs/042-energy-system.md`
 - [ ] `070` Heirloom Tech — `specs/070-heirloom-tech.md`
 - [ ] `072` Justice System — `specs/072-justice-system.md`
 - [ ] `075` Animal Husbandry — `specs/075-animal-husbandry.md`
 - [ ] `076` Heirloom Items — `specs/076-heirloom-items.md`
 - [ ] `077` Emergent Festivals — `specs/077-emergent-festivals.md`
+- [ ] `074` Visitor System — `specs/074-visitor-system.md`
+- [ ] `078` The Old Guard — `specs/078-the-old-guard.md`
 
 ## MVP — User Interface
 
