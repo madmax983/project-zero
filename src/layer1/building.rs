@@ -74,16 +74,16 @@ impl BuildingType {
     /// Returns true if this building blocks movement.
     #[must_use]
     pub const fn is_obstacle(&self) -> bool {
-        match self {
+        !matches!(
+            self,
             Self::Farm
-            | Self::Stockpile
-            | Self::Plantation
-            | Self::FlowerBed
-            | Self::Grave
-            | Self::TradeDepot
-            | Self::Landfill => false,
-            _ => true,
-        }
+                | Self::Stockpile
+                | Self::Plantation
+                | Self::FlowerBed
+                | Self::Grave
+                | Self::TradeDepot
+                | Self::Landfill
+        )
     }
 
     /// Returns the beauty value emitted by this building.
@@ -167,14 +167,13 @@ impl BuildingType {
             Self::Weaver => 'W',
             Self::FlowerBed => '*',
             Self::Statue => 'I',
-            Self::Hospital => '+',
+            Self::Hospital | Self::Gate => '+',
             Self::Landfill => '%',
             Self::Grave => '†',
             Self::TradeDepot => '$',
             Self::Generator => 'G',
             Self::PowerPole => '|',
             Self::Wall => '#',
-            Self::Gate => '+',
             Self::Tower => 'O',
         }
     }

@@ -141,6 +141,10 @@ pub mod skills;
 #[cfg(test)]
 mod waste_tests;
 
+/// Pop factions system (Spec 068).
+pub mod factions;
+pub use factions::*;
+
 /// Vermin infestation logic (Spec 073).
 pub mod vermin;
 pub use vermin::*;

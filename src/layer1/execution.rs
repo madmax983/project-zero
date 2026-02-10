@@ -3,7 +3,8 @@
     clippy::too_many_arguments,
     clippy::collapsible_if,
     clippy::missing_panics_doc,
-    clippy::cast_precision_loss
+    clippy::cast_precision_loss,
+    clippy::type_complexity
 )]
 //! Execution layer bridging utility AI decisions to actual pop actions.
 //!

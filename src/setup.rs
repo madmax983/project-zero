@@ -8,10 +8,10 @@ use crate::layer1::pop::PopDied;
 use crate::layer1::social::AffinityChange;
 use crate::layer1::{
     AmbientLight, AtmosphereGrid, BuildMode, BuildingTracker, Chronicle, ChronicleUiState,
-    ColonyMemory, ColonyPolicies, ColonyResources, DesignationMode, LightMap, NamedLocations,
-    NotificationQueue, OccupiedTiles, SeasonState, TechState, TerrainType, UtilityConfig, Viewport,
-    generate_terrain, initial_chronicle_event, initial_naming_system, spawn_initial_anomalies,
-    spawn_initial_pops,
+    ColonyMemory, ColonyPolicies, ColonyResources, DesignationMode, Factions, LightMap,
+    NamedLocations, NotificationQueue, OccupiedTiles, SeasonState, TechState, TerrainType,
+    UtilityConfig, Viewport, generate_terrain, initial_chronicle_event, initial_naming_system,
+    spawn_initial_anomalies, spawn_initial_pops,
 };
 use crate::shared::colony::ColonyName;
 use crate::shared::input::InputContextStack;
@@ -66,6 +66,7 @@ pub fn setup_world() -> World {
     world.insert_resource(NotificationQueue::default());
     world.insert_resource(BuildingTracker::default());
     world.insert_resource(crate::layer1::vermin::VerminState::default());
+    world.insert_resource(Factions::default());
     world.insert_resource(Selection::default());
     world.insert_resource(RenderCache::default());
     world.insert_resource(UtilityConfig::default());

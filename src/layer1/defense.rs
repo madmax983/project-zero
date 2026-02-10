@@ -26,26 +26,28 @@ pub fn is_walkable(world: &mut World, x: i32, y: i32) -> bool {
     }
 
     // 2. Check Buildings via OccupiedTiles
-    if let Some(occupied) = world.get_resource::<OccupiedTiles>() {
-        if occupied.0.contains(&(x, y)) {
-            // Find the building entity at this position
-            let mut blocked = false;
-            let mut buildings = world.query::<(&GridPosition, &Building, Option<&Gate>)>();
-            for (pos, building, gate) in buildings.iter(world) {
-                if pos.x == x && pos.y == y {
-                    if let Some(g) = gate {
-                        if g.is_locked {
-                            blocked = true;
-                        }
-                    } else if building.building_type.is_obstacle() {
+    let is_occupied = world
+        .get_resource::<OccupiedTiles>()
+        .is_some_and(|occupied| occupied.0.contains(&(x, y)));
+
+    if is_occupied {
+        // Find the building entity at this position
+        let mut blocked = false;
+        let mut buildings = world.query::<(&GridPosition, &Building, Option<&Gate>)>();
+        for (pos, building, gate) in buildings.iter(world) {
+            if pos.x == x && pos.y == y {
+                if let Some(g) = gate {
+                    if g.is_locked {
                         blocked = true;
                     }
-                    break;
+                } else if building.building_type.is_obstacle() {
+                    blocked = true;
                 }
+                break;
             }
-            if blocked {
-                return false;
-            }
+        }
+        if blocked {
+            return false;
         }
     }
 

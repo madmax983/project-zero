@@ -134,7 +134,7 @@ pub fn apply_lighting_penalties_system(
 
         let light = light_map.get(x, y);
 
-        if light < 0.2 {
+        if light <= 0.2 {
             // Darkness penalty
             speed.current = speed.base * 0.5;
             // Morale penalty (reduce leisure)

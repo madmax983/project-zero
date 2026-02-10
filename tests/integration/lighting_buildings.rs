@@ -1,6 +1,6 @@
 use scale::layer1::{
-    AmbientLight, BuildingType, ColonyResources, GridPosition, LightMap, Pop, Speed, Tech,
-    TechState, TerrainGrid, TerrainType, try_place_building,
+    AmbientLight, BuildingType, ColonyResources, DayNightCycle, GridPosition, LightMap, Pop, Speed,
+    Tech, TechState, TerrainGrid, TerrainType, TimeOfDay, try_place_building,
 };
 use scale::setup::setup_world;
 use scale::simulation::run_simulation_tick;
@@ -9,8 +9,12 @@ use scale::simulation::run_simulation_tick;
 fn test_tavern_emits_light() {
     let mut world = setup_world();
 
-    // 1. Set Ambient Light to 0.0 (Pitch Black)
-    world.resource_mut::<AmbientLight>().level = 0.0;
+    // 1. Set Time to Night (Ambient Light ~0.2)
+    {
+        let mut cycle = world.resource_mut::<DayNightCycle>();
+        cycle.time_of_day = TimeOfDay::Night;
+        cycle.ticks_per_day = 0; // Lock cycle
+    }
 
     // 2. Setup Terrain (ensure we can build)
     let mut terrain = world.resource_mut::<TerrainGrid>();
@@ -46,8 +50,12 @@ fn test_tavern_emits_light() {
 fn test_building_light_affects_pop_speed() {
     let mut world = setup_world();
 
-    // 1. Set Ambient Light to 0.0 (Pitch Black)
-    world.resource_mut::<AmbientLight>().level = 0.0;
+    // 1. Set Time to Night (Ambient Light ~0.2)
+    {
+        let mut cycle = world.resource_mut::<DayNightCycle>();
+        cycle.time_of_day = TimeOfDay::Night;
+        cycle.ticks_per_day = 0; // Lock cycle
+    }
 
     // 2. Setup Terrain (ensure we can build)
     let mut terrain = world.resource_mut::<TerrainGrid>();
