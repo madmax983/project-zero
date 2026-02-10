@@ -11,7 +11,7 @@ use crate::layer1::fire::Fire;
 use crate::layer1::{
     Anomaly, AnomalyType, BuildMode, Building, BuildingType, Designation, DesignationMode,
     DesignationType, Fauna, FaunaType, ForestryProgress, GridPosition, MiningProgress, Needs,
-    ResourceItem, ResourceType, TerrainGrid, TerrainType, Viewport,
+    ResourceItem, ResourceType, TerrainGrid, TerrainType, Viewport, Visitor,
 };
 
 /// Represents a renderable entity on the map.
@@ -130,8 +130,16 @@ pub fn update_render_cache(world: &mut World) {
                 );
             }
 
+            // Check for Visitor (Specific override)
+            if e.get::<Visitor>().is_some() {
+                insert_if_higher_priority(
+                    &mut cache.entities,
+                    *pos,
+                    RenderEntity::Pop("V", Color::Magenta),
+                );
+            }
             // Check for Pop (via Needs)
-            if let Some(needs) = e.get::<Needs>() {
+            else if let Some(needs) = e.get::<Needs>() {
                 let (text, color) = get_pop_display(needs);
                 insert_if_higher_priority(
                     &mut cache.entities,
