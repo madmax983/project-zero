@@ -89,6 +89,34 @@ impl TerrainGrid {
             None
         }
     }
+
+    /// Returns the flat index for the given coordinates if they are within bounds.
+    /// Returns `None` if x or y are out of bounds or negative.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use scale::layer1::terrain::TerrainGrid;
+    ///
+    /// let grid = TerrainGrid { width: 10, height: 10, tiles: vec![] };
+    /// assert_eq!(grid.get_index(0, 0), Some(0));
+    /// assert_eq!(grid.get_index(5, 5), Some(55));
+    /// assert_eq!(grid.get_index(-1, 0), None);
+    /// assert_eq!(grid.get_index(10, 0), None);
+    /// ```
+    #[must_use]
+    pub fn get_index(&self, x: i32, y: i32) -> Option<usize> {
+        if x < 0 || y < 0 {
+            return None;
+        }
+        let x = x as usize;
+        let y = y as usize;
+        if x >= self.width || y >= self.height {
+            return None;
+        }
+        // Safe calculation with overflow check
+        y.checked_mul(self.width)?.checked_add(x)
+    }
 }
 
 /// Defines the visible area of the map for the player.
@@ -254,6 +282,25 @@ mod tests {
         assert_eq!(grid.get(0, height), None);
         assert_eq!(grid.get(width, height), None);
         assert_eq!(grid.get(100, 100), None);
+    }
+
+    #[test]
+    fn test_get_index() {
+        let width = 10;
+        let height = 10;
+        let tiles = vec![TerrainType::Grass; width * height];
+        let grid = TerrainGrid {
+            width,
+            height,
+            tiles,
+        };
+
+        assert_eq!(grid.get_index(0, 0), Some(0));
+        assert_eq!(grid.get_index(9, 9), Some(99));
+        assert_eq!(grid.get_index(10, 0), None); // x out of bounds
+        assert_eq!(grid.get_index(0, 10), None); // y out of bounds
+        assert_eq!(grid.get_index(-1, 0), None); // negative x
+        assert_eq!(grid.get_index(0, -1), None); // negative y
     }
 
     #[test]

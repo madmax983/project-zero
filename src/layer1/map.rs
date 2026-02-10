@@ -61,7 +61,10 @@ impl GridPosition {
     /// This is the number of moves a King would take to get from A to B.
     #[must_use]
     pub fn distance_chebyshev(&self, other: Self) -> i32 {
-        (self.x - other.x).abs().max((self.y - other.y).abs())
+        let dx = (i64::from(self.x) - i64::from(other.x)).abs();
+        let dy = (i64::from(self.y) - i64::from(other.y)).abs();
+        // Saturate to i32::MAX if distance exceeds it (e.g. from i32::MIN to i32::MAX)
+        dx.max(dy).min(i64::from(i32::MAX)) as i32
     }
 }
 
@@ -119,3 +122,14 @@ mod tests {
         assert_eq!(pos2.y, 0);
     }
 }
+
+    #[test]
+    fn test_distance_chebyshev_overflow() {
+        let max_pos = GridPosition { x: i32::MAX, y: i32::MAX };
+        let min_pos = GridPosition { x: i32::MIN, y: i32::MIN };
+
+        // This should not panic or wrap unexpectedly.
+        // Distance from MIN to MAX exceeds i32::MAX, so it should saturate.
+        let dist = max_pos.distance_chebyshev(min_pos);
+        assert_eq!(dist, i32::MAX);
+    }

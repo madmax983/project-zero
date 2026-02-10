@@ -65,19 +65,20 @@ pub fn check_stability(world: &mut World, pos: GridPosition) -> bool {
 
     // 3. Check Nearby Rock
     // Optimization: we could use a spiral search or something, but simple box loop is fine for MVP.
-    #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
-    let min_x = (pos.x - MAX_SUPPORT_DIST).max(0);
-    #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
-    let max_x = (pos.x + MAX_SUPPORT_DIST).min(terrain.width as i32 - 1);
-    #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
-    let min_y = (pos.y - MAX_SUPPORT_DIST).max(0);
-    #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
-    let max_y = (pos.y + MAX_SUPPORT_DIST).min(terrain.height as i32 - 1);
+    let width_i32 = i32::try_from(terrain.width).unwrap_or(i32::MAX);
+    let height_i32 = i32::try_from(terrain.height).unwrap_or(i32::MAX);
+
+    let min_x = pos.x.saturating_sub(MAX_SUPPORT_DIST).max(0);
+    let max_x = pos.x.saturating_add(MAX_SUPPORT_DIST).min(width_i32 - 1);
+    let min_y = pos.y.saturating_sub(MAX_SUPPORT_DIST).max(0);
+    let max_y = pos.y.saturating_add(MAX_SUPPORT_DIST).min(height_i32 - 1);
 
     for y in min_y..=max_y {
         for x in min_x..=max_x {
             // Chebyshev Distance <= 5
-            if (x - pos.x).abs().max((y - pos.y).abs()) > MAX_SUPPORT_DIST {
+            let dx = (i64::from(x) - i64::from(pos.x)).abs();
+            let dy = (i64::from(y) - i64::from(pos.y)).abs();
+            if dx.max(dy) > i64::from(MAX_SUPPORT_DIST) {
                 continue;
             }
 
@@ -109,9 +110,10 @@ pub fn apply_collapse(world: &mut World, pos: GridPosition) {
     // We scope this mutable borrow of TerrainGrid
     {
         let mut terrain = world.resource_mut::<TerrainGrid>();
-        let idx = (pos.y as usize) * terrain.width + (pos.x as usize);
-        if idx < terrain.tiles.len() {
-            terrain.tiles[idx] = TerrainType::Rock;
+        if let Some(idx) = terrain.get_index(pos.x, pos.y) {
+            if idx < terrain.tiles.len() {
+                terrain.tiles[idx] = TerrainType::Rock;
+            }
         }
     }
 
