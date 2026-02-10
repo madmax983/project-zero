@@ -75,3 +75,6 @@ Implemented features. Architect: read this to understand current state.
 - [x] `INT-012` Integration: Vermin -> Pop Morale — completed 2026-10-17
 - [x] `065` Day/Night Cycle — `specs/065-day-night-cycle.md` — completed 2026-03-05
 - [x] `043` Defensive Structures — `specs/043-defensive-structures.md` — completed 2026-10-14
+- [x] `042` Energy System — `specs/042-energy-system.md` — completed
+- [x] `066` Building Work AI — `specs/066-building-work-ai.md` — completed
+- [x] `074` Visitor System — `specs/074-visitor-system.md` — completed
