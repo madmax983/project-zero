@@ -103,3 +103,15 @@ Map of connected and disconnected systems.
     - `MemoryType::DisgustedByVermin` in `src/layer1/memory.rs`.
     - Updated `SimulationSchedule` in `src/simulation.rs` to run `vermin_morale_system`.
 - **Tests:** `tests/integration/vermin_morale.rs` (Integration test verified)
+
+### INT-013: Core Events -> Notifications
+- **Date:** 2026-02-18
+- **Systems connected:**
+    - `pop_death_notification_system` -> `NotificationQueue`
+    - `unlock_tech` -> `NotificationQueue`
+    - `merchant_arrival_system` -> `NotificationQueue`
+    - `try_place_building` -> `NotificationQueue`
+- **Glue added:**
+    - `pop_death_notification_system` in `src/layer1/integration.rs`
+    - Explicit `queue.add()` calls in `tech.rs`, `trade.rs`, `building.rs`.
+- **Tests:** `tests/integration/notifications_integration.rs` (4 tests)

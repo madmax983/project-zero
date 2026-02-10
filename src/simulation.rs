@@ -25,7 +25,8 @@ use crate::layer1::{
     fire_damage_pops_system, fire_damage_system, fire_spread_system, haul_system, healing_system,
     hypothermia_system, memory_decay_system, modify_affinity_system, movement_system,
     natural_death_system, notification_expiration_system, pop_death_chronicle_bridge,
-    process_refining_system, process_research_system, process_scan_system,
+    pop_death_notification_system, process_refining_system, process_research_system,
+    process_scan_system,
     process_start_plan_system, produce_food_system, restore_leisure_system,
     restore_rest_in_housing_system, spoilage_system, starvation_damage_system,
     track_plan_outcomes_system, update_action_timer_system, update_lighting_system,
@@ -196,6 +197,7 @@ pub fn build_simulation_schedule() -> Schedule {
         chronicle_event_handler_system.after(check_milestones_system),
         chronicle_rumor_bridge_system.after(check_milestones_system),
         pop_death_chronicle_bridge.after(death_system),
+        pop_death_notification_system.after(death_system),
         art_observation_system.after(death_system),
     ));
 

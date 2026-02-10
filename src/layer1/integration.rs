@@ -6,6 +6,7 @@ use crate::layer1::fire::Fire;
 use crate::layer1::health::Health;
 use crate::layer1::map::GridPosition;
 use crate::layer1::memory::{Memories, MemoryType};
+use crate::layer1::notifications::{NotificationQueue, NotificationSeverity};
 use crate::layer1::pop::{Pop, PopDied};
 use crate::layer1::rumor::{Knowledge, Rumor, RumorTopic};
 use crate::layer1::vermin::VerminState;
@@ -88,6 +89,23 @@ pub fn chronicle_rumor_bridge_system(
                 }
             }
         }
+    }
+}
+
+/// Creates notifications for [`PopDied`] events.
+///
+/// Bridges the Pop system (Death) and Notification system (UI).
+pub fn pop_death_notification_system(
+    mut events: EventReader<PopDied>,
+    mut queue: ResMut<NotificationQueue>,
+    time: Res<SimulationTime>,
+) {
+    for event in events.read() {
+        queue.add(
+            format!("DEATH: {} ({})", event.name, event.reason),
+            NotificationSeverity::Error,
+            time.tick,
+        );
     }
 }
 

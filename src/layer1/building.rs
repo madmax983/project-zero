@@ -8,6 +8,7 @@ use super::social::Tavern;
 use super::stockpile::Stockpile;
 use crate::layer1::energy::{Conduit, PowerConsumer, PowerSource};
 use crate::layer1::lighting::LightSource;
+use crate::layer1::notifications::{NotificationQueue, NotificationSeverity};
 use crate::layer1::resources::{ColonyResources, RefiningProgress};
 use crate::layer1::tech::{Library, Tech, TechState};
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
@@ -373,6 +374,19 @@ fn handle_placement_error(world: &mut World, error: PlacementError) {
 
     if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
         log.add(format!("Failed: {reason}"));
+    }
+
+    // Add Notification on failure
+    let tick = world
+        .get_resource::<crate::shared::time::SimulationTime>()
+        .map_or(0, |t| t.tick);
+
+    if let Some(mut queue) = world.get_resource_mut::<NotificationQueue>() {
+        queue.add(
+            format!("Cannot build: {reason}"),
+            NotificationSeverity::Warning,
+            tick,
+        );
     }
 }
 

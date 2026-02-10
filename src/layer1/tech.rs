@@ -1,4 +1,5 @@
 use crate::layer1::actions::{AssignedTo, AssignmentType};
+use crate::layer1::notifications::{NotificationQueue, NotificationSeverity};
 use crate::layer1::resources::ColonyResources;
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
@@ -84,6 +85,20 @@ pub fn unlock_tech(world: &mut World, tech: Tech) -> bool {
         if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
             log.add(format!("Researched: {}", tech.label()));
         }
+
+        // Add Notification
+        let tick = world
+            .get_resource::<crate::shared::time::SimulationTime>()
+            .map_or(0, |t| t.tick);
+
+        if let Some(mut queue) = world.get_resource_mut::<NotificationQueue>() {
+            queue.add(
+                format!("Technology Researched: {}", tech.label()),
+                NotificationSeverity::Success,
+                tick,
+            );
+        }
+
         true
     } else {
         false

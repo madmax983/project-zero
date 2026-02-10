@@ -1,5 +1,6 @@
 use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::chronicle::{Chronicle, EventImportance};
+use crate::layer1::notifications::{NotificationQueue, NotificationSeverity};
 use crate::layer1::resources::{ColonyResources, ResourceType};
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
@@ -137,8 +138,19 @@ pub fn merchant_arrival_system(world: &mut World) {
 
     // Log events if any occurred
     if let Some((msg, importance)) = event_to_log {
+        // 1. Add to Chronicle
         if let Some(mut chronicle) = world.get_resource_mut::<Chronicle>() {
-            chronicle.add_event(current_tick, msg, importance);
+            chronicle.add_event(current_tick, msg.clone(), importance);
+        }
+
+        // 2. Add Notification (only for Major events like Arrival, or standard if desired)
+        // We'll notify for both arrival and departure for now.
+        if let Some(mut queue) = world.get_resource_mut::<NotificationQueue>() {
+            let severity = match importance {
+                EventImportance::Major | EventImportance::Legendary => NotificationSeverity::Info,
+                _ => NotificationSeverity::Info,
+            };
+            queue.add(msg, severity, current_tick);
         }
     }
 }
