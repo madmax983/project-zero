@@ -20,6 +20,8 @@ pub mod designation;
 pub mod edicts;
 /// Execution layer bridging utility AI to actions.
 pub mod execution;
+/// Faction system (Spec 068).
+pub mod factions;
 /// Farm building and food production.
 pub mod farm;
 /// Fire propagation and damage.
@@ -98,6 +100,7 @@ pub use chronicle::*;
 pub use designation::*;
 pub use edicts::*;
 pub use execution::*;
+pub use factions::*;
 pub use farm::*;
 pub use fire::*;
 pub use hauling::*;

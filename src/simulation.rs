@@ -111,6 +111,9 @@ pub fn build_simulation_schedule() -> Schedule {
         update_resource_caps_system.after(work_execution_system),
         advance_season_system.after(work_execution_system),
         produce_food_system.after(work_execution_system),
+        crate::layer1::factions::update_faction_membership_system.after(work_execution_system),
+        crate::layer1::factions::update_faction_satisfaction_system
+            .after(crate::layer1::factions::update_faction_membership_system),
         process_refining_system.after(work_execution_system),
         process_research_system.after(work_execution_system),
         restore_rest_in_housing_system
