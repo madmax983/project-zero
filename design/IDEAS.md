@@ -2175,3 +2175,87 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Exploit the rich resource node (risk waking it) or leave it be (safety)?
 
 ---
+
+## Media & Propaganda
+
+**Layer:** 1 -> Cross-Layer
+
+**Fantasy:** Controlling the narrative. "Everything is fine."
+
+**Mechanic:** "Broadcast Towers" or "Screens". Player selects the "News Feed" (Truth, Spin, or Lies). Affects global Morale and Trust.
+
+**Emergence:** You lie about the food shortage. Trust tanks. When you finally tell the truth about the invasion, no one believes you.
+
+**Tension:** Short-term morale (Lies) vs. Long-term stability (Trust).
+
+---
+
+## Skyhooks
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The beanstalk. Leaving the cradle without rockets.
+
+**Mechanic:** Massive late-game structure. Anchored on ground, extends to orbit. Allows continuous resource export without ships. Vulnerable to physics (severing the cable destroys the colony).
+
+**Emergence:** The cable snaps. The "whiplash" event obliterates a swath of the map.
+
+**Tension:** Massive economic gain vs. Massive catastrophic risk.
+
+---
+
+## Cryptids
+
+**Layer:** 1
+
+**Fantasy:** Every planet has its Bigfoot.
+
+**Mechanic:** Unique, procedurally generated legendary beasts. They are elusive, strong, and have unique behaviors (e.g., "The Metal-Eater", "The Shadow-Stalker").
+
+**Emergence:** The colony spends years hunting "Old One-Eye", only to realize he was keeping the raptor population in check.
+
+**Tension:** Hunt for trophy/resources or Preserve for ecosystem balance?
+
+---
+
+## Acoustic Harmonies
+
+**Layer:** 1
+
+**Fantasy:** The factory should sing.
+
+**Mechanic:** Machines have "Resonance" frequencies. Placing compatible machines near each other creates "Harmonies" (Efficiency buffs). Clashing frequencies cause "Dissonance" (Stress/Breakdowns).
+
+**Emergence:** Players design factory layouts that look weird but "sound" perfect.
+
+**Tension:** Visual/Logistical layout vs. Acoustic layout.
+
+---
+
+## Chromatic Psychology
+
+**Layer:** 1
+
+**Fantasy:** Red Alert means something.
+
+**Mechanic:** Colored lighting applies passive buffs/debuffs. Red = +Combat, -Rest. Blue = +Rest, -Work Speed. Amber = +Social.
+
+**Emergence:** You forget to turn off the "Red Alert" lights after the raid. Everyone has a nervous breakdown from lack of sleep.
+
+**Tension:** Micro-manage lighting for situations or set-and-forget?
+
+---
+
+## The Coup
+
+**Layer:** 1
+
+**Fantasy:** You are not the King; you are the Manager. And you can be fired.
+
+**Mechanic:** If Unrest/Dissatisfaction hits a critical threshold, Factions may attempt a Coup. If successful, they change Colony Policies forcibly and may execute/exile the "Leader" character (if one exists) or impose specific restrictions on the Player (e.g., "Cannot build Military for 1 year").
+
+**Emergence:** The "Miners Union" takes over. You lose control of the military tab, but production goes up. You have to play *with* them to regain power.
+
+**Tension:** Suppress the revolution (blood) or accept the demands (loss of agency)?
+
+---
