@@ -15,6 +15,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `072` Justice System — `specs/072-justice-system.md`
 - [ ] `074` Visitor System — `specs/074-visitor-system.md`
 - [ ] `075` Animal Husbandry — `specs/075-animal-husbandry.md`
+- [ ] `076` Heirloom Items — `specs/076-heirloom-items.md`
 
 ## MVP — User Interface
 
