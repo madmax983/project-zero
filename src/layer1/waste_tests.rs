@@ -6,6 +6,7 @@ mod tests {
     use crate::layer1::pop::Pop;
     use crate::layer1::refining::process_refining_system;
     use crate::layer1::resources::{ColonyResources, RefiningProgress, ResourceItem, ResourceType};
+    use crate::layer1::utility_ai::{ActionType, PopAction};
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
 
@@ -49,7 +50,14 @@ mod tests {
                     max: 10.0,
                 }, // Almost done
             ));
-            world.spawn((Pop, GridPosition { x: i, y: 1 }));
+            world.spawn((
+                Pop,
+                GridPosition { x: i, y: 0 },
+                PopAction {
+                    current: ActionType::Refine,
+                    ..Default::default()
+                },
+            ));
         }
 
         // Run system

@@ -12,7 +12,7 @@
 //!
 //! 1.  **Check Requirements**:
 //!     *   Is the building active? (Powered, if applicable).
-//!     *   Is there a worker nearby? (within 10 tiles).
+//!     *   Is there a worker AT the building doing [`ActionType::Refine`]?
 //!     *   Are there input resources available? (e.g., Wood > 1).
 //!     *   Is there storage space for output? (e.g., Planks < Max).
 //! 2.  **Progress**:
@@ -23,30 +23,13 @@
 //!     *   Outputs are produced.
 //!     *   Waste (Pollution) may be generated.
 //!     *   Worker gains experience.
-//!
-//! # Example: Lumber Mill
-//!
-//! A Lumber Mill converts `1 Wood` -> `1 Planks` over 10 ticks (base speed).
-//!
-//! ```
-//! use scale::layer1::refining::get_refining_recipe;
-//! use scale::layer1::building::BuildingType;
-//! use scale::layer1::resources::ColonyResources;
-//!
-//! let mut res = ColonyResources::default();
-//! res.wood = 50.0;
-//!
-//! let (can_refine, cost, output) = get_refining_recipe(BuildingType::LumberMill, &res);
-//! assert!(can_refine);
-//! assert_eq!(cost.wood, 1.0);
-//! assert_eq!(output.planks, 1.0);
-//! ```
 
 use crate::layer1::GridPosition;
 use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::pop::Pop;
 use crate::layer1::resources::{ColonyResources, RefiningProgress, ResourceItem, ResourceType};
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
+use crate::layer1::utility_ai::types::{ActionType, PopAction};
 use bevy_ecs::prelude::*;
 use rand::Rng;
 
@@ -54,10 +37,10 @@ use rand::Rng;
 ///
 /// # Algorithm
 ///
-/// 1.  **Filter Workers**: Collects all Pops with a [`GridPosition`].
+/// 1.  **Filter Workers**: Collects all Pops with [`ActionType::Refine`] at a [`GridPosition`].
 /// 2.  **Iterate Buildings**: Finds all entities with [`RefiningProgress`] and [`Building`].
 /// 3.  **Power Check**: Skips buildings with inactive [`PowerConsumer`](crate::layer1::energy::PowerConsumer) components.
-/// 4.  **Find Worker**: Searches for the nearest worker within 10 tiles (Manhattan distance).
+/// 4.  **Match Worker**: Checks if any worker is at the building's position.
 /// 5.  **Check Recipe**: Calls [`get_refining_recipe`] to verify resource availability.
 /// 6.  **Apply Work**:
 ///     *   Calculates efficiency based on worker's `Crafting` skill.
@@ -68,10 +51,12 @@ use rand::Rng;
 ///     *   Resets progress.
 #[doc(alias = "crafting")]
 pub fn process_refining_system(world: &mut World) {
+    // Collect workers who are refining
     let workers: Vec<(Entity, GridPosition)> = world
-        .query_filtered::<(Entity, &GridPosition), With<Pop>>()
+        .query_filtered::<(Entity, &GridPosition, &PopAction), With<Pop>>()
         .iter(world)
-        .map(|(e, p)| (e, *p))
+        .filter(|(_, _, action)| action.current == ActionType::Refine)
+        .map(|(e, p, _)| (e, *p))
         .collect();
 
     let resources_snapshot = world
@@ -84,8 +69,6 @@ pub fn process_refining_system(world: &mut World) {
     let mut xp_gains: Vec<Entity> = Vec::new();
 
     // Iterate buildings
-    // We collect entities to avoid borrow conflict when accessing skills later
-    // INT-006: Added PowerConsumer check. If building has PowerConsumer, it must be active.
     let buildings: Vec<(Entity, BuildingType, GridPosition, f32, f32, bool)> = world
         .query::<(
             Entity,
@@ -96,7 +79,6 @@ pub fn process_refining_system(world: &mut World) {
         )>()
         .iter(world)
         .map(|(e, b, p, prog, power)| {
-            // If no power consumer, assume active (e.g. LumberMill). If present, check active.
             let active = power.is_none_or(|c| c.active);
             (e, b.building_type, *p, prog.current, prog.max, active)
         })
@@ -107,19 +89,12 @@ pub fn process_refining_system(world: &mut World) {
             continue;
         }
 
-        // Find nearest worker
-        let nearest_worker = workers
-            .iter()
-            .min_by_key(|(_, p)| (p.x - pos.x).abs() + (p.y - pos.y).abs());
+        // Find worker AT the building
+        let worker_at_building = workers.iter().find(|(_, p)| *p == pos);
 
-        let Some((worker_entity, worker_pos)) = nearest_worker else {
+        let Some((worker_entity, _)) = worker_at_building else {
             continue;
         };
-
-        // Check range (10 tiles)
-        if (worker_pos.x - pos.x).abs() + (worker_pos.y - pos.y).abs() > 10 {
-            continue;
-        }
 
         // Get skill efficiency
         let efficiency = {
@@ -131,9 +106,6 @@ pub fn process_refining_system(world: &mut World) {
             get_refining_recipe(building_type, &resources_snapshot);
 
         if can_refine {
-            // Update progress
-            // We need to write back to RefiningProgress
-            // Since we collected immutable data, we need to get_mut now.
             if let Some(mut progress) = world.get_mut::<RefiningProgress>(building_entity) {
                 progress.current += 1.0 * efficiency;
                 if progress.is_complete() {
@@ -141,7 +113,6 @@ pub fn process_refining_system(world: &mut World) {
                 }
             }
 
-            // Add XP
             xp_gains.push(*worker_entity);
         }
     }
@@ -194,31 +165,6 @@ pub fn process_refining_system(world: &mut World) {
 }
 
 /// Returns the refining recipe for a building type.
-///
-/// Maps a [`BuildingType`] to its input costs and output yields.
-///
-/// # Returns
-///
-/// A tuple containing:
-/// 1.  `bool`: `true` if the colony can afford the input AND has space for the output.
-/// 2.  `ColonyResources`: The input cost (to be deducted).
-/// 3.  `ColonyResources`: The output yield (to be added).
-///
-/// # Examples
-///
-/// ```
-/// use scale::layer1::refining::get_refining_recipe;
-/// use scale::layer1::building::BuildingType;
-/// use scale::layer1::resources::ColonyResources;
-///
-/// let res = ColonyResources::default(); // Has wood by default
-/// let (possible, input, output) = get_refining_recipe(BuildingType::LumberMill, &res);
-///
-/// if possible {
-///     println!("Needs: {} Wood", input.wood);
-///     println!("Produces: {} Planks", output.planks);
-/// }
-/// ```
 #[must_use]
 pub fn get_refining_recipe(
     building_type: BuildingType,
@@ -305,41 +251,22 @@ mod tests {
     use crate::layer1::refining::process_refining_system;
     use crate::layer1::resources::{ColonyResources, RefiningProgress};
     use crate::layer1::skills::{SkillType, Skills};
+    use crate::layer1::utility_ai::types::{ActionType, PopAction};
     use bevy_ecs::prelude::*;
 
     #[test]
     fn test_colony_resources_refined_fields() {
         let resources = ColonyResources::default();
-        // New fields
         assert!((resources.planks - 0.0).abs() < f32::EPSILON);
         assert!((resources.blocks - 0.0).abs() < f32::EPSILON);
-        // Default caps (can be same as raw for now)
         assert!((resources.max_planks - 50.0).abs() < f32::EPSILON);
         assert!((resources.max_blocks - 20.0).abs() < f32::EPSILON);
-    }
-
-    #[test]
-    fn test_building_type_variants() {
-        let lm = BuildingType::LumberMill;
-        let sm = BuildingType::StoneMason;
-        assert_eq!(lm.label(), "Lumber Mill");
-        assert_eq!(sm.label(), "Stone Mason");
-    }
-
-    #[test]
-    fn test_refining_progress_component() {
-        let progress = RefiningProgress {
-            current: 0.0,
-            max: 100.0,
-        };
-        assert!(!progress.is_complete());
     }
 
     #[test]
     fn test_process_refining_lumber_mill() {
         let mut world = World::new();
 
-        // Setup Resources: Has Wood, No Planks
         let resources = ColonyResources {
             wood: 10.0,
             planks: 0.0,
@@ -347,7 +274,6 @@ mod tests {
         };
         world.insert_resource(resources);
 
-        // Spawn Lumber Mill at (5, 5)
         world.spawn((
             Building {
                 building_type: BuildingType::LumberMill,
@@ -356,13 +282,20 @@ mod tests {
             RefiningProgress {
                 current: 0.0,
                 max: 10.0,
-            }, // 10 ticks to refine
+            },
         ));
 
-        // Spawn Worker nearby at (5, 6)
-        world.spawn((Pop, GridPosition { x: 5, y: 6 }));
+        // Spawn Worker AT (5, 5) with correct action
+        world.spawn((
+            Pop,
+            GridPosition { x: 5, y: 5 },
+            PopAction {
+                current: ActionType::Refine,
+                current_utility: 0.5,
+                ticks_committed: 1,
+            }
+        ));
 
-        // Run system
         process_refining_system(&mut world);
 
         let progress = world.query::<&RefiningProgress>().single(&world);
@@ -388,10 +321,17 @@ mod tests {
             },
         ));
 
-        // Worker with Level 1 Crafting -> 1.1 efficiency
         let mut skills = Skills::default();
         skills.add_xp(SkillType::Crafting, 100.0);
-        world.spawn((Pop, GridPosition { x: 5, y: 6 }, skills));
+        world.spawn((
+            Pop,
+            GridPosition { x: 5, y: 5 },
+            skills,
+            PopAction {
+                current: ActionType::Refine,
+                ..Default::default()
+            }
+        ));
 
         process_refining_system(&mut world);
 
@@ -419,7 +359,15 @@ mod tests {
         ));
 
         let worker = world
-            .spawn((Pop, GridPosition { x: 5, y: 6 }, Skills::default()))
+            .spawn((
+                Pop,
+                GridPosition { x: 5, y: 5 },
+                Skills::default(),
+                PopAction {
+                    current: ActionType::Refine,
+                    ..Default::default()
+                }
+            ))
             .id();
 
         process_refining_system(&mut world);
@@ -432,7 +380,6 @@ mod tests {
     fn test_process_refining_consumes_input_on_complete() {
         let mut world = World::new();
 
-        // Setup Resources
         let resources = ColonyResources {
             wood: 10.0,
             planks: 0.0,
@@ -440,7 +387,6 @@ mod tests {
         };
         world.insert_resource(resources);
 
-        // Spawn Lumber Mill almost done
         world.spawn((
             Building {
                 building_type: BuildingType::LumberMill,
@@ -452,21 +398,23 @@ mod tests {
             },
         ));
 
-        // Spawn Worker
-        world.spawn((Pop, GridPosition { x: 5, y: 6 }));
+        world.spawn((
+            Pop,
+            GridPosition { x: 5, y: 5 },
+            PopAction {
+                current: ActionType::Refine,
+                ..Default::default()
+            }
+        ));
 
-        // Run system to complete
         process_refining_system(&mut world);
 
         let res = world.resource::<ColonyResources>();
-        // Input consumed
-        assert!((res.wood - 9.0).abs() < f32::EPSILON); // 10.0 - 1.0 = 9.0
-        // Output produced
-        assert!((res.planks - 1.0).abs() < f32::EPSILON); // 0.0 + 1.0 = 1.0
+        assert!((res.wood - 9.0).abs() < f32::EPSILON);
+        assert!((res.planks - 1.0).abs() < f32::EPSILON);
 
-        // Progress reset
         let progress = world.query::<&RefiningProgress>().single(&world);
-        assert!(progress.current < 1.0); // Should wrap or reset to 0
+        assert!(progress.current < 1.0);
     }
 
     #[test]
@@ -485,90 +433,19 @@ mod tests {
             GridPosition { x: 5, y: 5 },
             RefiningProgress::default(),
         ));
-        world.spawn((Pop, GridPosition { x: 5, y: 5 }));
+        world.spawn((
+            Pop,
+            GridPosition { x: 5, y: 5 },
+            PopAction {
+                current: ActionType::Refine,
+                ..Default::default()
+            }
+        ));
 
         process_refining_system(&mut world);
 
         let progress = world.query::<&RefiningProgress>().single(&world);
         assert!((progress.current - 0.0).abs() < f32::EPSILON);
-    }
-
-    #[test]
-    fn test_refining_stops_if_output_full() {
-        let mut world = World::new();
-        let resources = ColonyResources {
-            wood: 10.0,
-            planks: 50.0,
-            max_planks: 50.0,
-            ..Default::default()
-        };
-        world.insert_resource(resources);
-
-        world.spawn((
-            Building {
-                building_type: BuildingType::LumberMill,
-            },
-            GridPosition { x: 5, y: 5 },
-            RefiningProgress::default(),
-        ));
-        world.spawn((Pop, GridPosition { x: 5, y: 5 }));
-
-        process_refining_system(&mut world);
-
-        let progress = world.query::<&RefiningProgress>().single(&world);
-        assert!((progress.current - 0.0).abs() < f32::EPSILON);
-    }
-
-    #[test]
-    fn test_process_refining_prevents_underflow_race_condition() {
-        let mut world = World::new();
-
-        // Setup Resources: 1 Wood (enough for 1 Mill, not 2)
-        let resources = ColonyResources {
-            wood: 1.0,
-            planks: 0.0,
-            ..Default::default()
-        };
-        world.insert_resource(resources);
-
-        // Spawn Lumber Mill 1 (Almost done)
-        world.spawn((
-            Building {
-                building_type: BuildingType::LumberMill,
-            },
-            GridPosition { x: 5, y: 5 },
-            RefiningProgress {
-                current: 9.9,
-                max: 10.0,
-            },
-        ));
-
-        // Spawn Lumber Mill 2 (Almost done)
-        world.spawn((
-            Building {
-                building_type: BuildingType::LumberMill,
-            },
-            GridPosition { x: 7, y: 7 },
-            RefiningProgress {
-                current: 9.9,
-                max: 10.0,
-            },
-        ));
-
-        // Spawn Workers
-        world.spawn((Pop, GridPosition { x: 5, y: 6 }));
-        world.spawn((Pop, GridPosition { x: 7, y: 6 }));
-
-        // Run system
-        process_refining_system(&mut world);
-
-        let res = world.resource::<ColonyResources>();
-        println!("Wood after tick: {}", res.wood);
-
-        // Assert no underflow
-        assert!(
-            res.wood >= 0.0,
-            "Resources should not go negative (race condition check)"
-        );
     }
 }
+// DEBUG

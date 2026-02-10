@@ -32,10 +32,12 @@ pub use math::*;
 pub use types::*;
 
 use crate::layer1::actions::explore::evaluate_explore;
+use crate::layer1::actions::farm::evaluate_farm;
 use crate::layer1::actions::fetch_tool::evaluate_fetch_tool;
 use crate::layer1::actions::haul::evaluate_haul;
 use crate::layer1::actions::hunger::evaluate_satisfy_hunger;
 use crate::layer1::actions::idle::evaluate_idle;
+use crate::layer1::actions::refine::evaluate_refine;
 use crate::layer1::actions::repair::evaluate_repair;
 use crate::layer1::actions::research::evaluate_research;
 use crate::layer1::actions::rest::evaluate_satisfy_rest;
@@ -146,6 +148,12 @@ pub fn evaluate_actions_system(world: &mut World) {
 
     // Pre-create query states to avoid allocation in loop
     let mut farms_state = world.query::<(Entity, &GridPosition, &Farm)>();
+    let mut refining_state = world.query::<(
+        Entity,
+        &GridPosition,
+        &crate::layer1::building::Building,
+        &crate::layer1::resources::RefiningProgress,
+    )>();
     let mut housing_state = world.query::<(Entity, &GridPosition, &Housing)>();
     let mut taverns_state = world.query::<(Entity, &GridPosition, &Tavern)>();
     let mut fauna_state = world.query::<(Entity, &GridPosition, &Fauna)>();
@@ -299,6 +307,20 @@ pub fn evaluate_actions_system(world: &mut World) {
                     evaluate_work(&pop_pos, &weights, designations_state.iter(world))
                 {
                     check_best(ActionType::Work, utility, Some(target));
+                }
+
+                // Evaluate Refine
+                if let Some((utility, target)) =
+                    evaluate_refine(&pop_pos, &weights, &resources, refining_state.iter(world))
+                {
+                    check_best(ActionType::Refine, utility, Some(target));
+                }
+
+                // Evaluate Farm
+                if let Some((utility, target)) =
+                    evaluate_farm(&pop_pos, &weights, farms_state.iter(world))
+                {
+                    check_best(ActionType::Farm, utility, Some(target));
                 }
 
                 // Evaluate FetchTool
@@ -456,7 +478,9 @@ pub fn track_plan_outcomes_system(
             | ActionType::Vandalize
             | ActionType::Binge
             | ActionType::Daze
-            | ActionType::Fight => true,
+            | ActionType::Fight
+            | ActionType::Refine
+            | ActionType::Farm => true,
         };
 
         #[allow(clippy::cast_possible_truncation)]

@@ -55,9 +55,9 @@ pub struct GpuPopInput {
     /// Learned social weight.
     pub social_weight: f32,
     /// Per-action success counts.
-    pub success_count: [u32; 16],
+    pub success_count: [u32; 18],
     /// Per-action attempt counts.
-    pub attempt_count: [u32; 16],
+    pub attempt_count: [u32; 18],
     /// Utility score of the current action.
     pub current_utility: f32,
     /// Padding to 16-byte alignment.
@@ -380,9 +380,9 @@ mod tests {
 
     #[test]
     fn test_gpu_pop_input_size() {
-        // 2*i32 + 6*f32 + 16*u32 + 16*u32 + 1*f32 + 3*u32
-        // = 8 + 24 + 64 + 64 + 4 + 12 = 176 bytes
-        assert_eq!(std::mem::size_of::<GpuPopInput>(), 176);
+        // 2*i32 + 6*f32 + 18*u32 + 18*u32 + 1*f32 + 3*u32
+        // = 8 + 24 + 72 + 72 + 4 + 12 = 192 bytes
+        assert_eq!(std::mem::size_of::<GpuPopInput>(), 192);
     }
 
     #[test]
@@ -422,8 +422,8 @@ mod tests {
                     distance_weight: 1.2,
                     availability_weight: 0.8,
                     social_weight: 1.0,
-                    action_success_count: [1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 16 elements
-                    action_attempt_count: [5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 16 elements
+                    action_success_count: [1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 18 elements
+                    action_attempt_count: [5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 18 elements
                 },
                 PopAction {
                     current: ActionType::SatisfyHunger,

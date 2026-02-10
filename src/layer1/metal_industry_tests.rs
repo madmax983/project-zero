@@ -5,6 +5,7 @@ mod tests {
     use crate::layer1::refining::process_refining_system;
     use crate::layer1::resources::{ColonyResources, MiningProgress, RefiningProgress, mine_rock};
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
+    use crate::layer1::utility_ai::{ActionType, PopAction};
     use crate::layer1::{Designation, DesignationType, GridPosition};
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
@@ -92,7 +93,14 @@ mod tests {
         ));
 
         // Spawn Worker
-        world.spawn((Pop, GridPosition { x: 5, y: 6 }));
+        world.spawn((
+            Pop,
+            GridPosition { x: 5, y: 5 },
+            PopAction {
+                current: ActionType::Refine,
+                ..Default::default()
+            },
+        ));
 
         // Run system
         world.run_system_once(process_refining_system).unwrap();

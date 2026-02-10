@@ -86,11 +86,17 @@ pub enum ActionType {
 
     /// Engage in combat with hostile entities.
     Fight,
+
+    /// Refine resources at a building (e.g., Lumber Mill).
+    Refine,
+
+    /// Work at a farm to produce food.
+    Farm,
 }
 
 impl ActionType {
     /// Total number of action types. Used for array sizing.
-    pub const COUNT: usize = 16;
+    pub const COUNT: usize = 18;
 
     /// Converts action type to a unique array index (0..COUNT-1).
     #[must_use]
@@ -112,6 +118,8 @@ impl ActionType {
             Self::Binge => 13,
             Self::Daze => 14,
             Self::Fight => 15,
+            Self::Refine => 16,
+            Self::Farm => 17,
         }
     }
 
