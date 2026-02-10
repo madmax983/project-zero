@@ -293,11 +293,7 @@ pub fn get_refining_recipe(
                 ..ColonyResources::zeroed()
             },
         ),
-        _ => (
-            false,
-            ColonyResources::zeroed(),
-            ColonyResources::zeroed(),
-        ),
+        _ => (false, ColonyResources::zeroed(), ColonyResources::zeroed()),
     }
 }
 

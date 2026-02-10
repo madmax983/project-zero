@@ -2,14 +2,14 @@
 //!
 //! Handles spawning, lifecycle, and behavior of temporary visitors.
 
-use bevy_ecs::prelude::*;
+use crate::layer1::execution::MovementTarget;
 use crate::layer1::map::GridPosition;
-use crate::layer1::pop::PopName;
 use crate::layer1::needs::Needs;
+use crate::layer1::pop::PopName;
 use crate::layer1::social::Tavern;
 use crate::layer1::utility_ai::{ActionType, StartPlan};
-use crate::layer1::execution::MovementTarget;
 use crate::shared::time::SimulationTime;
+use bevy_ecs::prelude::*;
 use rand::Rng;
 
 /// State of a visitor in the colony.
@@ -87,7 +87,7 @@ pub fn spawn_visitor_system(
             spawn_pos,
             PopName::random(&mut rng),
             Needs::default(), // Needed for rendering (reusing Pop render logic for now)
-            // Note: We deliberately do NOT add UtilityWeights to avoid the main AI loop.
+                              // Note: We deliberately do NOT add UtilityWeights to avoid the main AI loop.
         ));
 
         // Update cooldown (next spawn in 2000-5000 ticks)
@@ -113,12 +113,12 @@ pub fn visitor_lifecycle_system(
                 if current_tick > visitor.arrival_tick + 100 {
                     visitor.state = VisitorState::Loitering;
                 }
-            },
+            }
             VisitorState::Loitering => {
                 if current_tick >= visitor.departure_tick {
                     visitor.state = VisitorState::Departing;
                 }
-            },
+            }
             VisitorState::Departing => {
                 // Check if at exit point
                 if exit_points.contains(pos) {
@@ -134,7 +134,12 @@ pub fn visitor_behavior_system(
     mut commands: Commands,
     source: Res<VisitorSource>,
     taverns: Query<Entity, With<Tavern>>,
-    visitors: Query<(Entity, &Visitor, Option<&MovementTarget>, Option<&StartPlan>)>,
+    visitors: Query<(
+        Entity,
+        &Visitor,
+        Option<&MovementTarget>,
+        Option<&StartPlan>,
+    )>,
 ) {
     let exit_points = &source.spawn_points;
     let taverns_list: Vec<Entity> = taverns.iter().collect();
@@ -158,7 +163,7 @@ pub fn visitor_behavior_system(
                         target: Some(tavern_entity),
                     });
                 }
-            },
+            }
             VisitorState::Loitering => {
                 // Socialize at Tavern
                 if !taverns_list.is_empty() {
@@ -169,7 +174,7 @@ pub fn visitor_behavior_system(
                     });
                 }
                 // Else Idle (default)
-            },
+            }
             VisitorState::Departing => {
                 // Move to random exit point
                 if !exit_points.is_empty() {
@@ -217,7 +222,10 @@ mod tests {
     #[test]
     fn test_spawn_visitor_system() {
         let mut world = World::new();
-        world.insert_resource(SimulationTime { tick: 100, ..Default::default() });
+        world.insert_resource(SimulationTime {
+            tick: 100,
+            ..Default::default()
+        });
         world.insert_resource(VisitorSource {
             spawn_points: vec![GridPosition { x: 0, y: 0 }],
             next_spawn_tick: 100,
@@ -231,7 +239,9 @@ mod tests {
         let count = world.query::<&Visitor>().iter(&world).count();
         assert_eq!(count, 1, "Should spawn 1 visitor");
 
-        let (visitor, pos, name) = world.query::<(&Visitor, &GridPosition, &PopName)>().single(&world);
+        let (visitor, pos, name) = world
+            .query::<(&Visitor, &GridPosition, &PopName)>()
+            .single(&world);
         assert_eq!(visitor.arrival_tick, 100);
         assert_eq!(pos.x, 0);
         assert!(!name.0.is_empty());
@@ -244,18 +254,23 @@ mod tests {
     #[test]
     fn test_visitor_departure_lifecycle() {
         let mut world = World::new();
-        world.insert_resource(SimulationTime { tick: 200, ..Default::default() });
+        world.insert_resource(SimulationTime {
+            tick: 200,
+            ..Default::default()
+        });
         world.insert_resource(VisitorSource::default()); // Added VisitorSource
 
         // Spawn visitor scheduled to leave at 200
-        let entity = world.spawn((
-            Visitor {
-                state: VisitorState::Loitering,
-                arrival_tick: 100,
-                departure_tick: 200,
-            },
-            GridPosition { x: 10, y: 10 },
-        )).id();
+        let entity = world
+            .spawn((
+                Visitor {
+                    state: VisitorState::Loitering,
+                    arrival_tick: 100,
+                    departure_tick: 200,
+                },
+                GridPosition { x: 10, y: 10 },
+            ))
+            .id();
 
         // Run lifecycle system
         world.run_system_once(visitor_lifecycle_system).unwrap();
@@ -268,21 +283,26 @@ mod tests {
     #[test]
     fn test_visitor_despawn_on_exit() {
         let mut world = World::new();
-        world.insert_resource(SimulationTime { tick: 300, ..Default::default() });
+        world.insert_resource(SimulationTime {
+            tick: 300,
+            ..Default::default()
+        });
         world.insert_resource(VisitorSource {
             spawn_points: vec![GridPosition { x: 0, y: 0 }], // Exit point
             ..Default::default()
         });
 
         // Spawn departing visitor at exit point
-        let entity = world.spawn((
-            Visitor {
-                state: VisitorState::Departing,
-                arrival_tick: 100,
-                departure_tick: 200,
-            },
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let entity = world
+            .spawn((
+                Visitor {
+                    state: VisitorState::Departing,
+                    arrival_tick: 100,
+                    departure_tick: 200,
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
         // Run lifecycle system
         world.run_system_once(visitor_lifecycle_system).unwrap();
@@ -296,13 +316,15 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(VisitorSource::default());
 
-        let visitor = world.spawn((
-            Visitor {
-                state: VisitorState::Arriving,
-                ..Default::default()
-            },
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let visitor = world
+            .spawn((
+                Visitor {
+                    state: VisitorState::Arriving,
+                    ..Default::default()
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
         // Run behavior system
         world.run_system_once(visitor_behavior_system).unwrap();
@@ -310,10 +332,12 @@ mod tests {
         // Should have StartPlan (to random tavern or idle)
         // Since no taverns, it might do nothing or idle.
         // Let's add a Tavern to ensure it picks it.
-        let tavern = world.spawn((
-            crate::layer1::social::Tavern::default(),
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let tavern = world
+            .spawn((
+                crate::layer1::social::Tavern::default(),
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         world.run_system_once(visitor_behavior_system).unwrap();
 
@@ -332,13 +356,15 @@ mod tests {
             ..Default::default()
         });
 
-        let visitor = world.spawn((
-            Visitor {
-                state: VisitorState::Departing,
-                ..Default::default()
-            },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let visitor = world
+            .spawn((
+                Visitor {
+                    state: VisitorState::Departing,
+                    ..Default::default()
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         world.run_system_once(visitor_behavior_system).unwrap();
 
@@ -353,18 +379,22 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(VisitorSource::default());
 
-        let visitor = world.spawn((
-            Visitor {
-                state: VisitorState::Loitering,
-                ..Default::default()
-            },
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let visitor = world
+            .spawn((
+                Visitor {
+                    state: VisitorState::Loitering,
+                    ..Default::default()
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
-        let tavern = world.spawn((
-            crate::layer1::social::Tavern::default(),
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let tavern = world
+            .spawn((
+                crate::layer1::social::Tavern::default(),
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         world.run_system_once(visitor_behavior_system).unwrap();
 
