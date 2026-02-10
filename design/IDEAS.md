@@ -2175,3 +2175,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Exploit the rich resource node (risk waking it) or leave it be (safety)?
 
 ---
+
+## Impact Event
+
+**Layer:** Cross-layer
+
+**Fantasy:** The sky is falling. The ultimate deadline.
+
+**Mechanic:** A massive asteroid is detected on Layer 2 with a countdown. It will destroy a large chunk of Layer 1. You must build defenses, deflect it (Layer 2 fleet), or evacuate.
+
+**Emergence:** You can't stop it. You spend the last year building a bunker deep underground. The surface is wiped clean. You emerge to a new, harsh world.
+
+**Tension:** Invest everything in deflection (all-or-nothing) or mitigation (survival)?
+
+---
+
+## Urban Spelunking
+
+**Layer:** 1
+
+**Fantasy:** The city is built on the bones of giants.
+
+**Mechanic:** Digging reveals active "Ancient Conduits" (Power/Water/Data). You can tap into them for free resources, but they are fragile and prone to "Surges" or "Leaks" of unknown substances.
+
+**Emergence:** You power your entire city with an ancient cable you found. It surges, frying every machine you own.
+
+**Tension:** Free, risky infrastructure vs. Expensive, reliable infrastructure.
+
+---
+
+## Cultural Projection
+
+**Layer:** 3
+
+**Fantasy:** Your blue jeans and rock music conquer the galaxy.
+
+**Mechanic:** High "Luxury" and "Art" production exerts "Cultural Pressure" on neighbors. Their pops start demanding your goods. Their leaders lose authority if they ban your trade.
+
+**Emergence:** An enemy empire declares war, but their own soldiers surrender because they want to defect to your paradise.
+
+**Tension:** Produce guns (Hard Power) or video games (Soft Power)?
+
+---
+
+## Planet Designation
+
+**Layer:** 2
+
+**Fantasy:** A galactic empire needs specialized organs. A stomach, a brain, a fist.
+
+**Mechanic:** Assign a "Designation" to a colony (e.g., "Agri-World", "Fortress World"). Grants massive bonuses to specific outputs but penalties to others. Changing it causes anarchy.
+
+**Emergence:** You designate a "Fortress World" on your border. The border moves. Now you have a useless, angry planet full of soldiers in the middle of your empire.
+
+**Tension:** Flexible generalist worlds vs. Efficient specialist worlds.
+
+---
+
+## Cabin Fever
+
+**Layer:** 1
+
+**Fantasy:** Trapped in a tin can with people you hate.
+
+**Mechanic:** Pops in "Crowded" or "Confined" states (during storms/sieges) accumulate "Aggression" rapidly. Requires "Privacy" (rooms) or "Distraction" (entertainment) to mitigate.
+
+**Emergence:** The storm outside is survivable, but the brawl in the mess hall over who ate the last ration destroys the airlock.
+
+**Tension:** Build spacious, expensive shelters or cram everyone in for safety?
+
+---
