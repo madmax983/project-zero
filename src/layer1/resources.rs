@@ -473,6 +473,8 @@ impl RefiningProgress {
 /// tiles[0] = TerrainType::Rock; // Target is rock
 /// world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
 /// world.insert_resource(ColonyResources::default());
+/// // RoofGrid is required for structural stability checks
+/// world.insert_resource(scale::layer1::structural_integrity::RoofGrid::new(10, 10));
 ///
 /// // 2. Create Designation
 /// let designation = world.spawn((

@@ -73,6 +73,11 @@ mod tests {
         world.insert_resource(crate::layer1::utility_ai::UtilityConfig::default());
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
         world.insert_resource(crate::shared::time::SimulationTime::default());
+        world.insert_resource(crate::layer1::terrain::TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![crate::layer1::terrain::TerrainType::Grass; 100],
+        });
         world
     }
 
@@ -205,5 +210,88 @@ mod tests {
 
         let state = world.get::<MentalState>(pop).unwrap();
         assert_eq!(*state, MentalState::Normal);
+    }
+
+    #[test]
+    fn test_vandalize_integration_damages_building() {
+        use crate::layer1::execution::{
+            AtTarget, MovementTarget, movement_system, process_start_plan_system,
+            vandalize_execution_system,
+        };
+        use crate::layer1::utility_ai::{
+            PopAction, StartPlan, UtilityWeights, evaluate_actions_system,
+        };
+
+        let mut world = setup_world();
+        crate::setup::init_task_pools(); // Ensure task pools are initialized
+
+        // Create a Building (Target)
+        let building = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Housing,
+                },
+                GridPosition { x: 1, y: 0 },
+                Structure {
+                    current_hp: 100.0,
+                    max_hp: 100.0,
+                    ..Default::default()
+                },
+            ))
+            .id();
+
+        // Create a Pop with Vandalize mental break
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 0, y: 0 },
+                Needs::default(),
+                MentalState::Broken(MentalBreakType::Vandalize),
+                PopAction {
+                    ticks_committed: 10, // Force evaluation
+                    ..Default::default()
+                },
+                UtilityWeights::default(),
+            ))
+            .id();
+
+        // 1. Evaluate Actions (should pick Vandalize AND a target)
+        evaluate_actions_system(&mut world);
+
+        // Verify action picked
+        let action = world.get::<PopAction>(pop).unwrap();
+        assert_eq!(
+            action.current,
+            ActionType::Vandalize,
+            "Should pick Vandalize action"
+        );
+
+        // Verify StartPlan has target (THIS IS WHERE IT FAILS CURRENTLY)
+        let plan = world.get::<StartPlan>(pop).unwrap();
+        assert_eq!(plan.action, ActionType::Vandalize);
+        assert!(plan.target.is_some(), "Vandalize requires a target!");
+        assert_eq!(plan.target, Some(building), "Should target the building");
+
+        // 2. Process StartPlan -> MovementTarget
+        world.run_system_once(process_start_plan_system).unwrap();
+        assert!(
+            world.get::<MovementTarget>(pop).is_some(),
+            "Should have MovementTarget"
+        );
+
+        // 3. Move (pop is adjacent, so should arrive immediately or in 1 tick)
+        world.run_system_once(movement_system).unwrap();
+
+        // If pop moved to (1,0), it should be AtTarget.
+        let pos = world.get::<GridPosition>(pop).unwrap();
+        assert_eq!(pos.x, 1);
+        assert!(world.get::<AtTarget>(pop).is_some(), "Should be AtTarget");
+
+        // 4. Execute Vandalize
+        world.run_system_once(vandalize_execution_system).unwrap();
+
+        // Verify Damage
+        let structure = world.get::<Structure>(building).unwrap();
+        assert!(structure.current_hp < 100.0, "Building should take damage");
     }
 }

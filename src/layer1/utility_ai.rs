@@ -54,6 +54,7 @@ use crate::layer1::resources::{ColonyResources, ResourceItem};
 use crate::layer1::science::Anomaly;
 use crate::layer1::social::{Tavern, evaluate_socialize};
 use crate::layer1::stockpile::Stockpile;
+use crate::layer1::structure::Structure;
 use crate::layer1::tech::Library;
 use crate::layer1::unrest::{MentalBreakType, MentalState};
 use crate::shared::time::SimulationTime;
@@ -156,6 +157,7 @@ pub fn evaluate_actions_system(world: &mut World) {
     let mut hospitals_state = world.query::<(Entity, &GridPosition, &Hospital)>();
     let mut corpses_state = world.query::<(Entity, &GridPosition, &Corpse)>();
     let mut graves_state = world.query::<&Grave>();
+    let mut structures_state = world.query::<(Entity, &GridPosition, &Structure)>();
 
     // We need Health for medical care evaluation.
     // The main query above only extracted (Entity, &GridPosition, &Needs, &UtilityWeights, &PopAction)
@@ -207,7 +209,24 @@ pub fn evaluate_actions_system(world: &mut World) {
             best_utility = 100.0;
             best_target = None;
             best_action = match break_type {
-                MentalBreakType::Vandalize => ActionType::Vandalize,
+                MentalBreakType::Vandalize => {
+                    // Find closest structure to destroy
+                    let mut closest_dist = i32::MAX;
+                    let mut closest_target = None;
+
+                    for (target_entity, target_pos, _) in structures_state.iter(world) {
+                        if target_entity == pop_entity {
+                            continue;
+                        }
+                        let dist = manhattan_distance(&pop_pos, target_pos);
+                        if dist < closest_dist {
+                            closest_dist = dist;
+                            closest_target = Some(target_entity);
+                        }
+                    }
+                    best_target = closest_target;
+                    ActionType::Vandalize
+                }
                 MentalBreakType::Binge => ActionType::Binge,
                 MentalBreakType::Daze => ActionType::Daze,
             };

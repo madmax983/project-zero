@@ -35,10 +35,15 @@ mod tests {
         world.insert_resource(scale::layer1::acoustic::NoiseMap::new(10, 10));
         world.insert_resource(scale::layer1::lighting::LightMap::new(10, 10));
         world.insert_resource(scale::layer1::lighting::AmbientLight::default());
+        world.insert_resource(scale::layer1::atmosphere::AtmosphereGrid::new(10, 10));
         world.insert_resource(scale::layer1::notifications::NotificationQueue::default());
         world.insert_resource(scale::layer1::trade::MerchantState::default());
+        world.insert_resource(scale::layer1::vermin::VerminState::default());
+        world.insert_resource(scale::layer1::edicts::ColonyPolicies::default());
         world.init_resource::<Events<scale::layer1::chronicle::AddChronicleEvent>>();
         world.init_resource::<Events<scale::layer1::social::AffinityChange>>();
+        world.init_resource::<Events<scale::layer1::pop::PopDied>>();
+        world.insert_resource(scale::layer1::visitor::VisitorSource::default());
 
         let generator = scale::shared::narrative::NarrativeGenerator::from_embedded();
         world.insert_resource(scale::shared::colony::ColonyName {

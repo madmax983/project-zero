@@ -9,7 +9,7 @@ use crate::layer1::social::AffinityChange;
 use crate::layer1::{
     AmbientLight, AtmosphereGrid, BuildMode, BuildingTracker, Chronicle, ChronicleUiState,
     ColonyMemory, ColonyPolicies, ColonyResources, DesignationMode, LightMap, NamedLocations,
-    NotificationQueue, OccupiedTiles, SeasonState, TechState, UtilityConfig, Viewport,
+    NotificationQueue, OccupiedTiles, SeasonState, TechState, TerrainType, UtilityConfig, Viewport,
     generate_terrain, initial_chronicle_event, initial_naming_system, spawn_initial_anomalies,
     spawn_initial_pops,
 };
@@ -81,38 +81,7 @@ pub fn setup_world() -> World {
     world.insert_resource(LightMap::new(80, 50));
     world.insert_resource(AmbientLight::default());
 
-    // Initialize VisitorSource with map edges
-    {
-        let terrain = world.resource::<crate::layer1::TerrainGrid>();
-        let mut spawn_points = Vec::new();
-        // Top and Bottom edges
-        for x in 0..terrain.width {
-            if terrain.get(x, 0).is_some_and(|t| t.is_walkable()) {
-                #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
-                spawn_points.push(crate::layer1::GridPosition { x: x as i32, y: 0 });
-            }
-            if terrain.get(x, terrain.height - 1).is_some_and(|t| t.is_walkable()) {
-                #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
-                spawn_points.push(crate::layer1::GridPosition { x: x as i32, y: (terrain.height - 1) as i32 });
-            }
-        }
-        // Left and Right edges (excluding corners already added)
-        for y in 1..(terrain.height - 1) {
-            if terrain.get(0, y).is_some_and(|t| t.is_walkable()) {
-                #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
-                spawn_points.push(crate::layer1::GridPosition { x: 0, y: y as i32 });
-            }
-            if terrain.get(terrain.width - 1, y).is_some_and(|t| t.is_walkable()) {
-                #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
-                spawn_points.push(crate::layer1::GridPosition { x: (terrain.width - 1) as i32, y: y as i32 });
-            }
-        }
-
-        world.insert_resource(crate::layer1::VisitorSource {
-            spawn_points,
-            next_spawn_tick: 500,
-        });
-    }
+    initialize_visitor_source(&mut world);
 
     world.init_resource::<Events<AddChronicleEvent>>();
     world.init_resource::<Events<AffinityChange>>();
@@ -144,6 +113,50 @@ pub fn setup_world() -> World {
     initial_chronicle_event(&mut world);
 
     world
+}
+
+fn initialize_visitor_source(world: &mut World) {
+    let terrain = world.resource::<crate::layer1::TerrainGrid>();
+    let mut spawn_points = Vec::new();
+    // Top and Bottom edges
+    for x in 0..terrain.width {
+        if terrain.get(x, 0).is_some_and(TerrainType::is_walkable) {
+            #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
+            spawn_points.push(crate::layer1::GridPosition { x: x as i32, y: 0 });
+        }
+        if terrain
+            .get(x, terrain.height - 1)
+            .is_some_and(TerrainType::is_walkable)
+        {
+            #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
+            spawn_points.push(crate::layer1::GridPosition {
+                x: x as i32,
+                y: (terrain.height - 1) as i32,
+            });
+        }
+    }
+    // Left and Right edges (excluding corners already added)
+    for y in 1..(terrain.height - 1) {
+        if terrain.get(0, y).is_some_and(TerrainType::is_walkable) {
+            #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
+            spawn_points.push(crate::layer1::GridPosition { x: 0, y: y as i32 });
+        }
+        if terrain
+            .get(terrain.width - 1, y)
+            .is_some_and(TerrainType::is_walkable)
+        {
+            #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
+            spawn_points.push(crate::layer1::GridPosition {
+                x: (terrain.width - 1) as i32,
+                y: y as i32,
+            });
+        }
+    }
+
+    world.insert_resource(crate::layer1::VisitorSource {
+        spawn_points,
+        next_spawn_tick: 500,
+    });
 }
 
 use crate::shared::menu::MenuState;
