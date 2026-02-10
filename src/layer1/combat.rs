@@ -1,6 +1,27 @@
 #![allow(missing_docs, clippy::collapsible_if)]
 use crate::layer1::map::GridPosition;
 use bevy_ecs::prelude::*;
+use rand::Rng;
+
+/// Chance to miss an attack entirely (0.0 to 1.0).
+const MISS_CHANCE: f64 = 0.1;
+/// Chance to land a critical hit (0.0 to 1.0).
+const CRIT_CHANCE: f64 = 0.05;
+/// Damage multiplier for critical hits.
+const CRIT_MULTIPLIER: f32 = 1.5;
+/// Minimum damage variance multiplier.
+const VARIANCE_MIN: f32 = 0.9;
+/// Maximum damage variance multiplier.
+const VARIANCE_MAX: f32 = 1.1;
+
+#[derive(Debug, PartialEq)]
+pub enum CombatOutcome {
+    Hit { damage: f32, is_crit: bool },
+    Miss,
+    Cooldown,
+    None,
+}
+
 #[derive(Component, Default, Debug, Clone)]
 pub struct Drafted;
 
@@ -56,7 +77,7 @@ pub fn evaluate_fight_action<'a>(
     None
 }
 
-pub fn execute_attack(world: &mut World, attacker: Entity, target: Entity) {
+pub fn execute_attack(world: &mut World, attacker: Entity, target: Entity) -> CombatOutcome {
     // 1. Get Attacker stats (Weapon, CombatState)
     // We need to query world for attacker components.
     // Since we have mutable access to world, we can't easily query while mutating.
@@ -77,7 +98,7 @@ pub fn execute_attack(world: &mut World, attacker: Entity, target: Entity) {
     // Check cooldown
     if let Some(mut state) = world.get_mut::<CombatState>(attacker) {
         if state.cooldown > 0 {
-            return;
+            return CombatOutcome::Cooldown;
         }
         state.cooldown = cooldown_val;
         state.last_target = Some(target);
@@ -87,12 +108,35 @@ pub fn execute_attack(world: &mut World, attacker: Entity, target: Entity) {
         // For now, proceed if we have damage.
     }
 
+    // RNG and Juice (Ludwig)
+    let mut rng = rand::thread_rng();
+
+    // 1. Miss Chance
+    if rng.gen_bool(MISS_CHANCE) {
+        return CombatOutcome::Miss;
+    }
+
+    // 2. Crit Chance
+    let is_crit = rng.gen_bool(CRIT_CHANCE);
+    let crit_mult = if is_crit { CRIT_MULTIPLIER } else { 1.0 };
+
+    // 3. Variance
+    let variance = rng.gen_range(VARIANCE_MIN..VARIANCE_MAX);
+
+    let final_damage = damage * variance * crit_mult;
+
     // 2. Apply damage to Target
-    if damage > 0.0 {
+    if final_damage > 0.0 {
         if let Some(mut health) = world.get_mut::<crate::layer1::health::Health>(target) {
-            health.take_damage(damage);
+            health.take_damage(final_damage);
+            return CombatOutcome::Hit {
+                damage: final_damage,
+                is_crit,
+            };
         }
     }
+
+    CombatOutcome::None
 }
 
 #[cfg(test)]
@@ -251,11 +295,24 @@ mod tests {
             .id();
 
         // Manually trigger attack (simulate execution system)
-        crate::layer1::combat::execute_attack(&mut world, pop, enemy);
+        let outcome = crate::layer1::combat::execute_attack(&mut world, pop, enemy);
 
-        // Check Enemy Health
-        let health = world.get::<Health>(enemy).unwrap();
-        assert_eq!(health.current, 80.0); // 100 - 20
+        // Check Outcome
+        match outcome {
+            CombatOutcome::Hit { damage, is_crit: _ } => {
+                // Damage range: 20 * 0.9 = 18.0 to 20 * 1.1 * 1.5 (crit) = 33.0
+                assert!(damage >= 18.0 && damage <= 33.0, "Damage out of range: {}", damage);
+
+                // Check Enemy Health
+                let health = world.get::<Health>(enemy).unwrap();
+                assert!((health.current - (100.0 - damage)).abs() < f32::EPSILON);
+            }
+            CombatOutcome::Miss => {
+                let health = world.get::<Health>(enemy).unwrap();
+                assert_eq!(health.current, 100.0);
+            }
+            _ => panic!("Expected Hit or Miss, got {:?}", outcome),
+        }
     }
 
     #[test]
@@ -276,7 +333,9 @@ mod tests {
         let enemy = world.spawn((Fauna::default(), Health::default())).id();
 
         // Try attack
-        crate::layer1::combat::execute_attack(&mut world, pop, enemy);
+        let outcome = crate::layer1::combat::execute_attack(&mut world, pop, enemy);
+
+        assert_eq!(outcome, CombatOutcome::Cooldown);
 
         // Should fail/no damage
         let health = world.get::<Health>(enemy).unwrap();

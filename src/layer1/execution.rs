@@ -34,7 +34,7 @@ use crate::layer1::actions::hunger::handle_arrival as handle_hunger_arrival;
 use crate::layer1::actions::rest::handle_arrival as handle_rest_arrival;
 use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::building::{Building, OccupiedTiles};
-use crate::layer1::combat::Weapon;
+use crate::layer1::combat::{CombatOutcome, Weapon};
 use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::edicts::{ColonyPolicies, get_work_speed_modifier};
 use crate::layer1::farm::Farm;
@@ -55,6 +55,7 @@ use crate::shared::log::MessageLog;
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 use rand::Rng;
+use ratatui::style::Color;
 
 /// Executes combat when pop is targeting an enemy.
 pub fn combat_execution_system(world: &mut World) {
@@ -120,7 +121,27 @@ fn process_single_combatant(
         }
 
         // Attack
-        crate::layer1::combat::execute_attack(world, pop_entity, target_entity);
+        let outcome = crate::layer1::combat::execute_attack(world, pop_entity, target_entity);
+
+        // Feedback Juice (Ludwig)
+        if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+            match outcome {
+                CombatOutcome::Hit { damage, is_crit } => {
+                    if is_crit {
+                        log.add_colored(format!("CRITICAL HIT! {:.1} damage!", damage), Color::Red);
+                    } else {
+                        log.add_colored(
+                            format!("Hit target for {:.1} damage.", damage),
+                            Color::White,
+                        );
+                    }
+                }
+                CombatOutcome::Miss => {
+                    log.add_colored("Attack missed!", Color::DarkGray);
+                }
+                _ => {}
+            }
+        }
     } else {
         // Out of range
         // Ensure we are moving (remove AtTarget if present)
@@ -2091,9 +2112,17 @@ mod tests {
 
         combat_execution_system(&mut world);
 
-        // Enemy should take damage
+        // Enemy should take damage (or miss, but we check ranges)
         let health = world.get::<Health>(enemy).unwrap();
-        assert_eq!(health.current, 90.0);
+        if (health.current - 100.0).abs() < f32::EPSILON {
+            // Missed
+        } else {
+            // Hit
+            let damage = 100.0 - health.current;
+            // 10.0 * 0.9 = 9.0 (min non-crit)
+            // 10.0 * 1.1 * 1.5 = 16.5 (max crit)
+            assert!(damage >= 9.0 && damage <= 16.5, "Damage out of range: {}", damage);
+        }
     }
 
     #[test]
