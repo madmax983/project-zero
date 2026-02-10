@@ -14,6 +14,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `069` Mentorship System — `specs/069-mentorship-system.md`
 - [ ] `070` Heirloom Tech — `specs/070-heirloom-tech.md`
 - [ ] `072` Justice System — `specs/072-justice-system.md`
+- [ ] `073` Vermin Infestation — `specs/073-vermin-infestation.md`
 
 ## MVP — User Interface
 
