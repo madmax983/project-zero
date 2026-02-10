@@ -15,6 +15,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `076` Heirloom Items — `specs/076-heirloom-items.md`
 - [ ] `077` Emergent Festivals — `specs/077-emergent-festivals.md`
 - [ ] `078` The Old Guard — `specs/078-the-old-guard.md`
+- [ ] `079` Weather Events — `specs/079-weather-events.md`
 
 ## MVP — User Interface
 
