@@ -567,3 +567,83 @@ EDICT_ISSUED:
     - STABILITY (medium)
     - AUTHORITY (high)
 ```
+
+### Vermin Chaining
+
+```yaml
+VERMIN_OUTBREAK:
+  enables:
+    - SPOILAGE_EVENT (high)
+    - VERMIN_CLEARED (medium)
+  increases:
+    - SICKNESS (high)
+    - STRESS (medium)
+
+VERMIN_CLEARED:
+  enables:
+    - STOCKPILE_AUDIT (low)
+  increases:
+    - MORALE (medium)
+    - HYGIENE (high)
+```
+
+### Combat & Militia Chaining
+
+```yaml
+MILITIA_MUSTER:
+  enables:
+    - SKIRMISH_RESULT (medium)
+    - DRILL_ACCIDENT (low)
+  increases:
+    - SECURITY (high)
+    - UNREST (low, if forced)
+
+SKIRMISH_RESULT:
+  enables:
+    - FUNERAL_HELD (high, if losses)
+    - MILITIA_DISBAND (medium, if victory)
+  increases:
+    - LEGEND_GENERATION (high, for heroes)
+    - TRAUMA (medium)
+```
+
+### Fauna Chaining
+
+```yaml
+FAUNA_SIGHTING:
+  enables:
+    - FAUNA_ATTACK (medium)
+    - HUNTING_PARTY (medium)
+  increases:
+    - FEAR (medium)
+    - CAUTION (high)
+
+FAUNA_ATTACK:
+  enables:
+    - INJURY_ACCIDENT (high)
+    - MILITIA_MUSTER (high)
+  increases:
+    - TRAUMA (high)
+    - HATRED_OF_WILD (medium)
+```
+
+### Structural Chaining
+
+```yaml
+STRUCTURE_COLLAPSE:
+  enables:
+    - INJURY_ACCIDENT (high)
+    - REBUILDING_EFFORT (high)
+    - INVESTIGATION (medium)
+  increases:
+    - FEAR (high)
+    - CAUTION (high)
+
+RUIN_DISCOVERY:
+  enables:
+    - ARTIFACT_DISCOVERED (high)
+    - TECH_SALVAGE (medium)
+    - CURSE_AWAKENING (low)
+  reveals:
+    - [RUIN_CIV] chronicle entries
+```

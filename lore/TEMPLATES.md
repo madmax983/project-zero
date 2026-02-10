@@ -688,3 +688,91 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 "[YEAR]: We turn from [EDICT_NAME]. It is no longer the way."
 "The Decree ends. [EDICT_NAME] is forgotten. [YEAR]."
 ```
+
+## Structural Integrity Templates
+
+### STRUCTURE_COLLAPSE
+**Slots:** [COLONY], [YEAR], [BUILDING_TYPE], [COLLAPSE_SOUND], [INJURY_COUNT]?
+
+```
+"The [BUILDING_TYPE] gives way. [YEAR]. A [COLLAPSE_SOUND] end."
+"[YEAR]: Structural failure. The [BUILDING_TYPE] falls with a [COLLAPSE_SOUND] roar."
+"Disaster at [COLONY]. The [BUILDING_TYPE] is gone. It was [COLLAPSE_SOUND]."
+[If INJURY_COUNT:]
+"The [BUILDING_TYPE] collapse takes [INJURY_COUNT] souls. [YEAR]. [COLLAPSE_SOUND]."
+```
+
+### RUIN_DISCOVERY
+**Slots:** [COLONY], [YEAR], [RUIN_CIV], [RUIN_AGE], [RUIN_STATE]
+
+```
+"[COLONY] surveyors report structures. [YEAR]. [RUIN_STATE]."
+"They found [RUIN_CIV] beneath the soil of [COLONY]. Dead [RUIN_AGE] years. It is [RUIN_STATE]."
+"Year [YEAR]: [COLONY] is not the first. [RUIN_CIV] was here. [RUIN_STATE]."
+```
+
+---
+
+## Vermin & Pest Templates
+
+### VERMIN_OUTBREAK
+**Slots:** [COLONY], [YEAR], [VERMIN_NAME], [VERMIN_ACTION]
+
+```
+"The [VERMIN_NAME] are here. [YEAR]. The swarm [VERMIN_ACTION]."
+"[YEAR]: Infestation. [VERMIN_NAME] in the walls. It [VERMIN_ACTION]."
+"They [VERMIN_ACTION] in the dark. [VERMIN_NAME] plague [COLONY]. [YEAR]."
+```
+
+### VERMIN_CLEARED
+**Slots:** [COLONY], [YEAR], [VERMIN_NAME]
+
+```
+"The [VERMIN_NAME] are gone. [YEAR]. The silence returns."
+"[YEAR]: We have purged the [VERMIN_NAME]. The stores are safe."
+"Victory over the swarm. [VERMIN_NAME] eradicated at [COLONY]. [YEAR]."
+```
+
+---
+
+## Militia & Combat Templates
+
+### MILITIA_MUSTER
+**Slots:** [COLONY], [YEAR], [MILITIA_NAME], [WEAPON_NAME]
+
+```
+"The [MILITIA_NAME] forms. [YEAR]. Armed with [WEAPON_NAME]."
+"[YEAR]: [COLONY] stands ready. The [MILITIA_NAME] raises its [WEAPON_NAME]."
+"Defenders of [COLONY]. The [MILITIA_NAME] is born. [YEAR]."
+```
+
+### SKIRMISH_RESULT
+**Slots:** [COLONY], [YEAR], [MILITIA_NAME], [ENEMY], [OUTCOME]
+
+```
+"Battle at [COLONY]. [YEAR]. The [MILITIA_NAME] fought [ENEMY]. [OUTCOME]."
+"[YEAR]: The [MILITIA_NAME] met the [ENEMY]. [OUTCOME]."
+"Conflict report. [YEAR]. [MILITIA_NAME] vs [ENEMY]. [OUTCOME]."
+```
+
+---
+
+## Fauna Templates
+
+### FAUNA_SIGHTING
+**Slots:** [COLONY], [YEAR], [BEAST_NAME], [BEAST_ACTION]
+
+```
+"[BEAST_NAME] spotted near [COLONY]. [YEAR]. It [BEAST_ACTION]."
+"[YEAR]: The wild comes close. [BEAST_NAME]. It [BEAST_ACTION] us."
+"Watchers report [BEAST_NAME]. [YEAR]. The pack [BEAST_ACTION]."
+```
+
+### FAUNA_ATTACK
+**Slots:** [COLONY], [YEAR], [BEAST_NAME], [INJURY_COUNT]
+
+```
+"Attack at the perimeter. [YEAR]. [BEAST_NAME]. [INJURY_COUNT] hurt."
+"[YEAR]: The [BEAST_NAME] breaches the line. [INJURY_COUNT] fall."
+"Blood on the snow. [BEAST_NAME] raid. [YEAR]. [INJURY_COUNT] casualties."
+```
