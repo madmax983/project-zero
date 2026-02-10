@@ -180,6 +180,9 @@ pub use room_quality::*;
 /// Hostile Fauna (Spec 048).
 pub mod fauna;
 pub use fauna::*;
+/// Animal Husbandry (Spec 075).
+pub mod husbandry;
+pub use husbandry::*;
 pub mod art;
 pub use art::*;
 pub mod combat;

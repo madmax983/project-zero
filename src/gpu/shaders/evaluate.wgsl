@@ -15,8 +15,8 @@ struct PopInput {
     distance_weight: f32,
     availability_weight: f32,
     social_weight: f32,
-    success_count: array<u32, 16>,
-    attempt_count: array<u32, 16>,
+    success_count: array<u32, 18>,
+    attempt_count: array<u32, 18>,
     current_utility: f32,
     _pad: array<u32, 3>,
 }
@@ -188,6 +188,11 @@ fn main(@builtin(global_invocation_id) global_id: vec3<u32>) {
                 }
                 urgency = 0.8;
                 action_idx = 9u;
+            }
+            case 10u: {
+                // Tame Designation -> Tame (action 16)
+                urgency = 0.5;
+                action_idx = 16u;
             }
             default: {
                 skip = true;

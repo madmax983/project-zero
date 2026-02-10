@@ -634,6 +634,7 @@ pub const fn get_designation_char(tool: DesignationType) -> &'static str {
         DesignationType::Demolish => "X",
         DesignationType::Chop => "/",
         DesignationType::Repair => "+",
+        DesignationType::Tame => "T",
         DesignationType::SetZone(_) => "Z",
     }
 }

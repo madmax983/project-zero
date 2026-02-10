@@ -359,6 +359,7 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
                     DesignationType::Chop => '/',
                     DesignationType::Demolish => 'X',
                     DesignationType::Repair => '+',
+                    DesignationType::Tame => 'T',
                     DesignationType::SetZone(_) => 'Z',
                 };
                 print!("{c}");
@@ -440,6 +441,9 @@ fn designate_at(world: &mut World, designation_type: DesignationType, x: i32, y:
             }
             DesignationType::Repair => {
                 println!("Failed: no building to repair at ({x}, {y})");
+            }
+            DesignationType::Tame => {
+                println!("Failed: no animal to tame at ({x}, {y})");
             }
             DesignationType::SetZone(_) => {
                 println!("Failed: cannot set zone at ({x}, {y})");
@@ -562,6 +566,7 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: i32) {
                 DesignationType::Chop => "chop",
                 DesignationType::Demolish => "demolish",
                 DesignationType::Repair => "repair",
+                DesignationType::Tame => "tame",
                 DesignationType::SetZone(_) => "zone",
             };
             (p.x, p.y, dt.to_string())

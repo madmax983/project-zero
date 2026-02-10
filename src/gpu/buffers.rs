@@ -55,9 +55,9 @@ pub struct GpuPopInput {
     /// Learned social weight.
     pub social_weight: f32,
     /// Per-action success counts.
-    pub success_count: [u32; 16],
+    pub success_count: [u32; 18],
     /// Per-action attempt counts.
-    pub attempt_count: [u32; 16],
+    pub attempt_count: [u32; 18],
     /// Utility score of the current action.
     pub current_utility: f32,
     /// Padding to 16-byte alignment.
@@ -268,10 +268,10 @@ pub fn extract_building_inputs(
         use crate::layer1::designation::DesignationType;
         let mut query = world.query::<(Entity, &GridPosition, &Designation)>();
         for (entity, pos, designation) in query.iter(world) {
-            let building_type = if designation.designation_type == DesignationType::Repair {
-                6
-            } else {
-                4
+            let building_type = match designation.designation_type {
+                DesignationType::Repair => 6,
+                DesignationType::Tame => 10,
+                _ => 4,
             };
             entities.push(entity);
             inputs.push(GpuBuildingInput {
@@ -380,9 +380,9 @@ mod tests {
 
     #[test]
     fn test_gpu_pop_input_size() {
-        // 2*i32 + 6*f32 + 16*u32 + 16*u32 + 1*f32 + 3*u32
-        // = 8 + 24 + 64 + 64 + 4 + 12 = 176 bytes
-        assert_eq!(std::mem::size_of::<GpuPopInput>(), 176);
+        // 2*i32 + 6*f32 + 18*u32 + 18*u32 + 1*f32 + 3*u32
+        // = 8 + 24 + 72 + 72 + 4 + 12 = 192 bytes
+        assert_eq!(std::mem::size_of::<GpuPopInput>(), 192);
     }
 
     #[test]
@@ -422,8 +422,8 @@ mod tests {
                     distance_weight: 1.2,
                     availability_weight: 0.8,
                     social_weight: 1.0,
-                    action_success_count: [1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 16 elements
-                    action_attempt_count: [5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 16 elements
+                    action_success_count: [1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 18 elements
+                    action_attempt_count: [5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 18 elements
                 },
                 PopAction {
                     current: ActionType::SatisfyHunger,
@@ -520,6 +520,16 @@ mod tests {
             ))
             .id();
 
+        // Tame Designation
+        let tame_entity = world
+            .spawn((
+                GridPosition { x: 9, y: 11 },
+                Designation {
+                    designation_type: DesignationType::Tame,
+                },
+            ))
+            .id();
+
         // ResourceItem with room
         let resource_entity = world
             .spawn((
@@ -552,8 +562,8 @@ mod tests {
         let mut inputs = Vec::new();
         extract_building_inputs(&mut world, &mut entities, &mut inputs);
 
-        assert_eq!(entities.len(), 7);
-        assert_eq!(inputs.len(), 7);
+        assert_eq!(entities.len(), 8);
+        assert_eq!(inputs.len(), 8);
 
         // Verify farm
         let farm_idx = entities.iter().position(|&e| e == farm_entity).unwrap();
@@ -577,6 +587,13 @@ mod tests {
             .position(|&e| e == designation_entity)
             .unwrap();
         assert_eq!(inputs[designation_idx].building_type, 4);
+
+        // Verify tame designation
+        let tame_idx = entities
+            .iter()
+            .position(|&e| e == tame_entity)
+            .unwrap();
+        assert_eq!(inputs[tame_idx].building_type, 10);
 
         // Verify resource item
         let resource_idx = entities.iter().position(|&e| e == resource_entity).unwrap();

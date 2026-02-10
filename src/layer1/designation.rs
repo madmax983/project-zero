@@ -26,6 +26,8 @@ pub enum DesignationType {
     Chop,
     /// Designate a building for repair.
     Repair,
+    /// Designate an animal for taming.
+    Tame,
     /// Set a zone type for a tile.
     SetZone(ZoneType),
 }
@@ -47,6 +49,7 @@ impl DesignationType {
             Self::Demolish => 'X',
             Self::Chop => '/',
             Self::Repair => '+',
+            Self::Tame => 'T',
             Self::SetZone(_) => 'Z',
         }
     }
@@ -67,6 +70,7 @@ impl DesignationType {
             Self::Demolish => "X",
             Self::Chop => "/",
             Self::Repair => "+",
+            Self::Tame => "T",
             Self::SetZone(_) => "Z",
         }
     }
@@ -87,6 +91,7 @@ impl DesignationType {
             Self::Demolish => "Demolish",
             Self::Chop => "Chop",
             Self::Repair => "Repair",
+            Self::Tame => "Tame",
             Self::SetZone(_) => "Set Zone",
         }
     }
@@ -182,6 +187,19 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
             // Only occupied tiles can be repaired (assumes building)
             // Ideally check if building has Structure and < Max HP, but for MVP check occupancy is enough
             occupied.0.contains(&(x, y))
+        }
+        DesignationType::Tame => {
+            // Check if there is a wild animal at this location
+            world
+                .iter_entities()
+                .filter_map(|e| {
+                    if e.contains::<crate::layer1::fauna::Fauna>() {
+                        e.get::<GridPosition>()
+                    } else {
+                        None
+                    }
+                })
+                .any(|pos| pos.x == x && pos.y == y)
         }
         DesignationType::SetZone(_) => true,
     }

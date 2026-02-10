@@ -26,6 +26,8 @@ pub enum ZoneType {
     Office,
     /// Storage zone (placeholder).
     Storage,
+    /// Pasture zone (confines tamed animals).
+    Pasture,
 }
 
 /// Resource storing the grid of zones.

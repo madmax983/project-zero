@@ -31,6 +31,7 @@ use crate::layer1::{
     track_plan_outcomes_system, update_action_timer_system, update_lighting_system,
     update_noise_system, update_resource_caps_system, vermin_growth_system, vermin_morale_system,
     work_execution_system,
+    husbandry_production_system, pasture_confinement_system,
 };
 use crate::shared::time::SimulationTime;
 
@@ -83,6 +84,7 @@ pub fn build_simulation_schedule() -> Schedule {
         cleanup_previous_assignment_system
             .after(crate::layer1::room_quality::apply_waking_thoughts_system),
         process_start_plan_system.after(cleanup_previous_assignment_system),
+        pasture_confinement_system.after(process_start_plan_system),
         crate::layer1::fauna::fauna_behavior_system.after(process_start_plan_system),
         update_lighting_system.after(process_start_plan_system),
         apply_lighting_penalties_system.after(update_lighting_system),
@@ -106,6 +108,7 @@ pub fn build_simulation_schedule() -> Schedule {
         update_resource_caps_system.after(work_execution_system),
         advance_season_system.after(work_execution_system),
         produce_food_system.after(work_execution_system),
+        husbandry_production_system.after(work_execution_system),
         process_refining_system.after(work_execution_system),
         process_research_system.after(work_execution_system),
         restore_rest_in_housing_system

@@ -456,7 +456,9 @@ pub fn track_plan_outcomes_system(
             | ActionType::Vandalize
             | ActionType::Binge
             | ActionType::Daze
-            | ActionType::Fight => true,
+            | ActionType::Fight
+            | ActionType::Tame
+            | ActionType::Slaughter => true,
         };
 
         #[allow(clippy::cast_possible_truncation)]

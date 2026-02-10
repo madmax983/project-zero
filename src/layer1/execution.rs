@@ -594,6 +594,7 @@ const fn get_skill_for_designation(designation_type: DesignationType) -> Option<
         DesignationType::Mine => Some(SkillType::Mining),
         DesignationType::Chop => Some(SkillType::Forestry),
         DesignationType::Repair | DesignationType::Demolish => Some(SkillType::Construction),
+        DesignationType::Tame => Some(SkillType::Husbandry),
         DesignationType::SetZone(_) => None,
     }
 }
@@ -634,6 +635,7 @@ fn execute_work_on_designation(
     designation_type: DesignationType,
     work_amount: f32,
 ) -> bool {
+    #[allow(clippy::match_same_arms)]
     match designation_type {
         DesignationType::Mine => {
             process_mining(world, designation_entity, work_amount);
@@ -647,6 +649,16 @@ fn execute_work_on_designation(
         DesignationType::Repair => {
             crate::layer1::structure::process_repair(world, designation_entity, work_amount);
             true
+        }
+        DesignationType::Tame => {
+            // Taming logic is handled in husbandry.rs, but we need to trigger it here?
+            // Or utility AI handles Tame action separately?
+            // If Tame is a Designation, then it goes through work execution IF we use ActionType::Work.
+            // But Tame uses ActionType::Tame.
+            // So process_single_worker might not be called for Tame if it uses ActionType::Tame.
+            // work_execution_system filters for ActionType::Work | Repair.
+            // So Tame action won't be processed here unless we add it to the filter.
+            false
         }
         DesignationType::SetZone(_) => false,
     }

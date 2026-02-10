@@ -79,9 +79,14 @@ pub fn fauna_behavior_system(world: &mut World) {
         .map(|(e, p)| (e, *p))
         .collect();
 
-    let mut query = world.query::<(Entity, &mut Fauna, &GridPosition)>();
+    let mut query = world.query::<(Entity, &mut Fauna, &GridPosition, Option<&crate::layer1::husbandry::Tame>)>();
 
-    for (entity, mut fauna, pos) in query.iter_mut(world) {
+    for (entity, mut fauna, pos, tame) in query.iter_mut(world) {
+        // If tamed, skip hostile AI
+        if tame.is_some() {
+            continue;
+        }
+
         if fauna.attack_cooldown > 0 {
             fauna.attack_cooldown -= 1;
         }
