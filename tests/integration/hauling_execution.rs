@@ -28,7 +28,7 @@ mod tests {
         world.insert_resource(scale::shared::log::MessageLog::default());
         world.insert_resource(scale::layer1::chronicle::Chronicle::default());
         world.insert_resource(scale::layer1::chronicle::BuildingTracker::default());
-        world.insert_resource(scale::layer1::utility_ai::types::ColonyMemory::default());
+        world.insert_resource(scale::layer1::utility_ai::ColonyMemory::default());
         world.insert_resource(scale::layer1::tech::TechState::default());
         world.insert_resource(scale::layer1::beauty::BeautyGrid::new(10, 10));
         world.insert_resource(scale::layer1::zone::ZoneGrid::new(10, 10));
@@ -40,6 +40,7 @@ mod tests {
         world.insert_resource(scale::layer1::trade::MerchantState::default());
         world.insert_resource(scale::layer1::vermin::VerminState::default());
         world.insert_resource(scale::layer1::edicts::ColonyPolicies::default());
+        world.insert_resource(scale::layer1::day_night::DayNightCycle::default());
         world.init_resource::<Events<scale::layer1::chronicle::AddChronicleEvent>>();
         world.init_resource::<Events<scale::layer1::social::AffinityChange>>();
         world.init_resource::<Events<scale::layer1::pop::PopDied>>();

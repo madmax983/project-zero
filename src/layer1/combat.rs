@@ -109,7 +109,7 @@ mod tests {
         let mut world = World::new();
         // Setup standard resources (Time, etc)
         world.insert_resource(crate::shared::time::SimulationTime::default());
-        world.insert_resource(crate::layer1::utility_ai::types::UtilityConfig::default());
+        world.insert_resource(crate::layer1::utility_ai::UtilityConfig::default());
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
         world
     }

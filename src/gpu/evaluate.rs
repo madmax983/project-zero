@@ -10,7 +10,7 @@ use super::buffers::{
 };
 use super::context::GpuContext;
 use crate::layer1::utility_ai::evaluate_actions_system;
-use crate::layer1::utility_ai::types::{ActionType, PopAction, StartPlan};
+use crate::layer1::utility_ai::{ActionType, PopAction, StartPlan};
 
 /// GPU-accelerated action evaluation system.
 ///
@@ -289,7 +289,7 @@ mod tests {
     fn test_gpu_evaluate_noop_without_context() {
         crate::setup::init_task_pools();
         let mut world = World::new();
-        world.insert_resource(crate::layer1::utility_ai::types::UtilityConfig::default());
+        world.insert_resource(crate::layer1::utility_ai::UtilityConfig::default());
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
 
         // No GpuContext resource — should return without panicking
@@ -300,7 +300,7 @@ mod tests {
     fn test_gpu_evaluate_noop_no_pops() {
         crate::setup::init_task_pools();
         let mut world = World::new();
-        world.insert_resource(crate::layer1::utility_ai::types::UtilityConfig::default());
+        world.insert_resource(crate::layer1::utility_ai::UtilityConfig::default());
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
 
         // No pops — should return without panicking even if GpuContext existed

@@ -255,7 +255,7 @@ mod tests {
         Anomaly, AnomalyType, ScanProgress, process_scan_system, spawn_initial_anomalies,
     };
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
-    use crate::layer1::utility_ai::types::{ActionType, PopAction, UtilityWeights};
+    use crate::layer1::utility_ai::{ActionType, PopAction, UtilityWeights};
     use crate::shared::log::MessageLog;
     use bevy_ecs::prelude::*;
 

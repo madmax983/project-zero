@@ -1,10 +1,10 @@
 use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
-use crate::layer1::utility_ai::math::{
+use crate::layer1::utility_ai::{
     calculate_context_score, calculate_success_modifier, need_response_curve,
 };
-use crate::layer1::utility_ai::types::{ActionType, UtilityWeights};
+use crate::layer1::utility_ai::{ActionType, UtilityWeights};
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
 
@@ -201,7 +201,7 @@ mod tests {
     use crate::layer1::map::GridPosition;
     use crate::layer1::needs::{Needs, decay_needs_system};
     use crate::layer1::pop::Pop;
-    use crate::layer1::utility_ai::types::{ActionType, UtilityWeights};
+    use crate::layer1::utility_ai::{ActionType, UtilityWeights};
     use bevy_ecs::system::RunSystemOnce;
 
     #[test]
