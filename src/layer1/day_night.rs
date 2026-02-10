@@ -77,7 +77,7 @@ pub fn update_day_night_cycle_system(time: Res<SimulationTime>, mut cycle: ResMu
 const DAWN_LIGHT: f32 = 0.6;
 const DAY_LIGHT: f32 = 1.0;
 const DUSK_LIGHT: f32 = 0.5;
-const NIGHT_LIGHT: f32 = 0.2;
+const NIGHT_LIGHT: f32 = 0.1;
 
 /// Updates `AmbientLight` based on `DayNightCycle`.
 pub fn update_ambient_light_from_cycle_system(

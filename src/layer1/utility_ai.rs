@@ -227,7 +227,32 @@ pub fn evaluate_actions_system(world: &mut World) {
                     best_target = closest_target;
                     ActionType::Vandalize
                 }
-                MentalBreakType::Binge => ActionType::Binge,
+                MentalBreakType::Binge => {
+                    // Find closest Tavern or Stockpile
+                    let mut closest_dist = i32::MAX;
+                    let mut closest_target = None;
+
+                    // Check Taverns
+                    for (target_entity, target_pos, _) in taverns_state.iter(world) {
+                        let dist = manhattan_distance(&pop_pos, target_pos);
+                        if dist < closest_dist {
+                            closest_dist = dist;
+                            closest_target = Some(target_entity);
+                        }
+                    }
+
+                    // Check Stockpiles
+                    for (target_entity, target_pos, _) in stockpiles_state.iter(world) {
+                        let dist = manhattan_distance(&pop_pos, target_pos);
+                        if dist < closest_dist {
+                            closest_dist = dist;
+                            closest_target = Some(target_entity);
+                        }
+                    }
+
+                    best_target = closest_target;
+                    ActionType::Binge
+                }
                 MentalBreakType::Daze => ActionType::Daze,
             };
         } else {

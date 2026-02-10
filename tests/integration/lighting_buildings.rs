@@ -9,8 +9,13 @@ use scale::simulation::run_simulation_tick;
 fn test_tavern_emits_light() {
     let mut world = setup_world();
 
-    // 1. Set Ambient Light to 0.0 (Pitch Black)
-    world.resource_mut::<AmbientLight>().level = 0.0;
+    // 1. Set Ambient Light to 0.0 (Pitch Black) by setting Night
+    // We must set the tick to Night time, otherwise update_day_night_cycle_system will reset it to Dawn/Day
+    {
+        let mut time = world.resource_mut::<scale::shared::time::SimulationTime>();
+        // Default ticks_per_day is 250. Night starts at 0.85 * 250 = 212.5
+        time.tick = 220;
+    }
 
     // 2. Setup Terrain (ensure we can build)
     let mut terrain = world.resource_mut::<TerrainGrid>();
@@ -46,8 +51,11 @@ fn test_tavern_emits_light() {
 fn test_building_light_affects_pop_speed() {
     let mut world = setup_world();
 
-    // 1. Set Ambient Light to 0.0 (Pitch Black)
-    world.resource_mut::<AmbientLight>().level = 0.0;
+    // 1. Set Ambient Light to 0.0 (Pitch Black) by setting Night
+    {
+        let mut time = world.resource_mut::<scale::shared::time::SimulationTime>();
+        time.tick = 220;
+    }
 
     // 2. Setup Terrain (ensure we can build)
     let mut terrain = world.resource_mut::<TerrainGrid>();

@@ -1,6 +1,9 @@
 use crate::layer1::needs::Needs;
+use crate::layer1::resources::ColonyResources;
 use crate::layer1::structure::Structure;
+use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
+use rand::Rng;
 
 /// Represents the mental stability of a Pop.
 #[derive(Component, Debug, Clone, PartialEq, Eq, Default)]
@@ -41,6 +44,28 @@ pub fn check_mental_break_system(mut query: Query<(&Needs, &mut MentalState)>) {
 pub fn perform_vandalize_logic(world: &mut World, _pop: Entity, target: Entity) {
     if let Some(mut structure) = world.get_mut::<Structure>(target) {
         structure.current_hp = (structure.current_hp - 10.0).max(0.0);
+    }
+}
+
+/// Logic for executing a Binge action (consuming resources).
+pub fn perform_binge_logic(world: &mut World, _pop: Entity) {
+    let mut rng = rand::thread_rng();
+
+    // Consume Food (Wasteful consumption) - 10% chance per tick to consume 1.0
+    // This averages to 0.1 per tick (25 per day), which is high but fitting for a binge.
+    if rng.gen_bool(0.1) {
+        if let Some(mut resources) = world.get_resource_mut::<ColonyResources>() {
+            if resources.food > 0.0 {
+                resources.food = (resources.food - 1.0).max(0.0);
+            }
+        }
+
+        // Log the event sparingly (10% of consumption events -> 1% total chance per tick)
+        if rng.gen_bool(0.1) {
+            if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+                log.add("Unrest: Pop is binging on supplies!");
+            }
+        }
     }
 }
 

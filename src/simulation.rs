@@ -98,6 +98,7 @@ pub fn build_simulation_schedule() -> Schedule {
         work_execution_system.after(arrival_handler_system),
         combat_execution_system.after(arrival_handler_system),
         crate::layer1::execution::vandalize_execution_system.after(arrival_handler_system),
+        crate::layer1::execution::binge_execution_system.after(arrival_handler_system),
         haul_system.after(arrival_handler_system),
         process_scan_system.after(arrival_handler_system),
     ));

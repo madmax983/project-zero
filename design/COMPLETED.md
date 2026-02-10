@@ -74,3 +74,4 @@ Implemented features. Architect: read this to understand current state.
 - [x] `073` Vermin Infestation — `specs/073-vermin-infestation.md` — completed 2026-02-10
 - [x] `INT-012` Integration: Vermin -> Pop Morale — completed 2026-10-17
 - [x] `065` Day/Night Cycle — `specs/065-day-night-cycle.md` — completed 2026-03-05
+- [x] `INT-013` Integration: Unrest (Binge) -> Resource Consumption — completed 2026-10-27

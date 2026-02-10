@@ -103,3 +103,14 @@ Map of connected and disconnected systems.
     - `MemoryType::DisgustedByVermin` in `src/layer1/memory.rs`.
     - Updated `SimulationSchedule` in `src/simulation.rs` to run `vermin_morale_system`.
 - **Tests:** `tests/integration/vermin_morale.rs` (Integration test verified)
+
+### INT-013: Unrest (Binge) -> Resource Consumption
+- **Date:** 2026-10-27
+- **Systems connected:** `utility_ai::evaluate_actions_system` -> `execution::arrival_handler_system` -> `unrest::perform_binge_logic` -> `ColonyResources`
+- **Glue added:**
+    - Updated `utility_ai.rs` to find `Tavern` or `Stockpile` for `Binge` action.
+    - Added `binge_execution_system` in `src/layer1/execution.rs`.
+    - Updated `arrival_handler_system` to persist Binge movement.
+    - Implemented `perform_binge_logic` in `src/layer1/unrest.rs`.
+    - Registered system in `src/simulation.rs`.
+- **Tests:** `tests/integration/unrest_binge.rs` (3 tests).

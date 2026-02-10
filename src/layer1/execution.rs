@@ -140,12 +140,21 @@ pub fn vandalize_execution_system(world: &mut World) {
 
     for (pop_entity, target_entity) in vandals {
         crate::layer1::unrest::perform_vandalize_logic(world, pop_entity, target_entity);
+    }
+}
 
-        // If target is destroyed (removed from world), stop vandalizing
-        // Since perform_vandalize_logic currently only reduces HP, the target remains.
-        // We assume another system handles structure destruction at 0 HP (if exists),
-        // or we should handle it here.
-        // For MVP Unrest, simple HP reduction is enough to satisfy the test.
+/// Executes binge action when pop is at target (Tavern/Stockpile).
+pub fn binge_execution_system(world: &mut World) {
+    // Find pops at target with Binge action
+    let bingers: Vec<(Entity, Entity)> = world
+        .query_filtered::<(Entity, &MovementTarget), With<AtTarget>>()
+        .iter(world)
+        .filter(|(_, mt)| mt.for_action == ActionType::Binge)
+        .map(|(e, mt)| (e, mt.target_entity))
+        .collect();
+
+    for (pop_entity, _target_entity) in bingers {
+        crate::layer1::unrest::perform_binge_logic(world, pop_entity);
     }
 }
 
@@ -398,8 +407,12 @@ pub fn arrival_handler_system(
                 );
                 true
             }
-            ActionType::Work | ActionType::Repair | ActionType::Haul => {
-                // Work/Repair/Haul is handled by their respective systems
+            ActionType::Work
+            | ActionType::Repair
+            | ActionType::Haul
+            | ActionType::Vandalize
+            | ActionType::Binge => {
+                // Work/Repair/Haul/Vandalize/Binge is handled by their respective systems
                 // Just keep the AtTarget marker for that system
                 false
             }
