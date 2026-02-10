@@ -2175,3 +2175,72 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Exploit the rich resource node (risk waking it) or leave it be (safety)?
 
 ---
+## Impact Event
+
+**Layer:** Cross-layer
+
+**Fantasy:** The sky is falling. The ultimate deadline.
+
+**Mechanic:** A massive asteroid is detected on Layer 2 with a collision course in X years. Player must build a deflection system (Lasers/Engines) or an Ark (Escape) before the timer hits 0.
+
+**Emergence:** The entire economy shifts to "War Mode" against a rock. Social order breaks down as the end nears.
+
+**Tension:** Long-term survival (deflection) vs Short-term panic.
+
+---
+
+## Urban Spelunking
+
+**Layer:** 1
+
+**Fantasy:** Scavenging a dead world. The "Stalker" experience.
+
+**Mechanic:** Map starts covered in "Ancient Ruins" (Walls, Floors, Machines). You don't mine rock; you dismantle buildings for refined materials. Some ruins contain active defenses or hazards (Radiation).
+
+**Emergence:** You dismantle a load-bearing wall and collapse a skyscraper on your explorers. You accidentally reactivate a dormant factory that starts producing killer drones.
+
+**Tension:** Safe dismantling (slow) vs. Explosive demolition (fast but dangerous).
+
+---
+
+## Cultural Projection
+
+**Layer:** 3
+
+**Fantasy:** Winning the war without firing a shot. "Blue Jeans and Rock & Roll".
+
+**Mechanic:** High "Culture" output (Art, Luxuries, Liberty) exerts pressure on neighboring systems. Enemy colonies may defect or demand to join you.
+
+**Emergence:** The enemy sends a fleet to conquer you, but their soldiers defect because they want to play your video games.
+
+**Tension:** Invest in guns (hard power) or art (soft power)?
+
+---
+
+## Planet Designation
+
+**Layer:** 2
+
+**Fantasy:** The Galactic Emperor ordering a world to be "The Breadbasket".
+
+**Mechanic:** Assign a "Designation" to a planet (e.g., Agri-World, Forge-World, Fortress-World). Grants massive bonuses to specific outputs but penalties to others (e.g., Forge World = -50% Food Growth).
+
+**Emergence:** Your Forge World starves because the trade fleet from the Agri-World was intercepted. Specialization creates vulnerability.
+
+**Tension:** Efficient specialization (fragile) vs. Inefficient generalism (robust).
+
+---
+
+## Cabin Fever
+
+**Layer:** 1
+
+**Fantasy:** The crushing weight of the ceiling. We need the sky.
+
+**Mechanic:** Pops who spend too long "Indoors" or "Underground" accumulate a "Claustrophobia" stress. They need "Outdoor" time or "Windows" (if surface is safe) or "Virtual Sky" rooms (if not).
+
+**Emergence:** On a toxic world, going outside kills you. Staying inside drives you mad. You have to build massive, expensive glass domes just to keep people sane.
+
+**Tension:** Armor/Radiation shielding (thick walls) vs. Mental health (windows).
+
+---
