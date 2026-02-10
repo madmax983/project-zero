@@ -81,6 +81,10 @@ pub mod utility_ai;
 pub mod utility_ai_work_tests;
 
 #[cfg(test)]
+/// Tests for mining logic (Spec 052).
+pub mod mining_tests;
+
+#[cfg(test)]
 mod execution_demolish_test;
 
 /// Named locations on the map.

@@ -18,6 +18,7 @@
 //! 5. Upon completion, the tile changes and resources are awarded.
 
 use crate::layer1::GridPosition;
+use crate::layer1::science::{Anomaly, AnomalyType, ScanProgress};
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
@@ -563,6 +564,9 @@ pub fn mine_rock(world: &mut World, designation_entity: Entity, work_amount: f32
             }
         }
 
+        // Probabilistic Anomaly Spawn (5%)
+        try_spawn_anomaly(world, pos);
+
         // Remove designation
         world.despawn(designation_entity);
 
@@ -664,6 +668,30 @@ pub fn process_logging(world: &mut World, designation_entity: Entity, work_amoun
             });
     }
     chop_tree(world, designation_entity, work_amount);
+}
+
+fn try_spawn_anomaly(world: &mut World, pos: GridPosition) {
+    let mut rng = rand::thread_rng();
+    if rng.gen_bool(0.05) {
+        let anomaly_type = match rng.gen_range(0..3) {
+            0 => AnomalyType::Ruins,
+            1 => AnomalyType::Geode,
+            _ => AnomalyType::StrangeFlora,
+        };
+
+        world.spawn((
+            Anomaly {
+                anomaly_type,
+                reward_amount: 50.0,
+            },
+            ScanProgress::default(),
+            pos,
+        ));
+
+        if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+            log.add("Discovery: Unearthed an Anomaly!");
+        }
+    }
 }
 
 #[cfg(test)]
