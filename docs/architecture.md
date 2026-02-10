@@ -168,6 +168,63 @@ sequenceDiagram
     end
 ```
 
+## Narrative Engine
+
+The Narrative Engine decouples simulation events from their text representation using a grammar-based generator.
+
+```mermaid
+classDiagram
+    class NarrativeGenerator {
+        +HashMap~String, Template~ templates
+        +HashMap~String, FragmentType~ fragments
+        +load_from_files(path)
+        +generate(template_id, context) String
+    }
+    class Template {
+        +String id
+        +Vec~String~ patterns
+    }
+    class FragmentType {
+        +String id
+        +Vec~String~ options
+    }
+    class NarrativeContext {
+        +HashMap~String, String~ slots
+        +insert(key, value)
+    }
+    NarrativeGenerator *-- Template : Manages
+    NarrativeGenerator *-- FragmentType : Manages
+    NarrativeGenerator ..> NarrativeContext : Uses
+```
+
+```mermaid
+sequenceDiagram
+    participant Sim as Simulation System
+    participant Context as NarrativeContext
+    participant Gen as NarrativeGenerator
+    participant Templ as Template
+    participant Frag as FragmentType
+    participant Chron as Chronicle Resource
+
+    Sim->>Context: new()
+    Sim->>Context: insert("ACTOR", "Bob")
+    Sim->>Gen: generate("POP_DIED", Context)
+
+    Gen->>Templ: get("POP_DIED")
+    Templ-->>Gen: Pattern "[ACTOR] [DEATH_VERB]!"
+
+    loop Parse Pattern
+        Gen->>Context: get("ACTOR")
+        Context-->>Gen: "Bob"
+
+        Gen->>Frag: get_random("DEATH_VERB")
+        Frag-->>Gen: "expired"
+    end
+
+    Gen-->>Sim: "Bob expired!"
+    Sim->>Chron: add_event("Bob expired!", Major)
+```
+
 ## Platform Abstraction
 
 SCALE supports both native (terminal) and web (browser) execution through a platform abstraction layer.
@@ -207,3 +264,4 @@ Rel(Shared, Events, "Consumes")
 - [ADR 008: Modular Utility AI Structure](./adr/008-modular-utility-ai.md)
 - [ADR 012: Decouple Storage from Core](./adr/012-decouple-storage-from-core.md)
 - [ADR 013: GPU Accelerated Utility AI](./adr/013-gpu-accelerated-utility-ai.md)
+- [ADR 014: Data-Driven Narrative Generation](./adr/014-data-driven-narrative.md)
