@@ -40,9 +40,17 @@ fn test_vermin_affects_morale() {
     }
 
     // 4. Assert Memory Gained
-    let memories = world.get::<Memories>(pop).expect("Pop should have Memories");
+    let memories = world
+        .get::<Memories>(pop)
+        .expect("Pop should have Memories");
 
-    let has_memory = memories.items.iter().any(|m| m.memory_type == MemoryType::DisgustedByVermin);
+    let has_memory = memories
+        .items
+        .iter()
+        .any(|m| m.memory_type == MemoryType::DisgustedByVermin);
 
-    assert!(has_memory, "Pop should have acquired DisgustedByVermin memory due to high severity");
+    assert!(
+        has_memory,
+        "Pop should have acquired DisgustedByVermin memory due to high severity"
+    );
 }
