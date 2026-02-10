@@ -5,6 +5,7 @@
 
 /// Pop actions logic.
 pub mod actions;
+pub use actions::*;
 /// Game balance constants.
 pub mod balance;
 /// Beauty and decoration system.

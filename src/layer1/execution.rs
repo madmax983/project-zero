@@ -398,8 +398,8 @@ pub fn arrival_handler_system(
                 );
                 true
             }
-            ActionType::Work | ActionType::Repair | ActionType::Haul => {
-                // Work/Repair/Haul is handled by their respective systems
+            ActionType::Work | ActionType::Repair | ActionType::Haul | ActionType::Tame => {
+                // Work/Repair/Haul/Tame is handled by their respective systems
                 // Just keep the AtTarget marker for that system
                 false
             }
@@ -508,7 +508,9 @@ pub fn work_execution_system(world: &mut World) {
         ), With<AtTarget>>()
         .iter(world)
         .filter(|(_, mt, _, _, _, _)| {
-            mt.for_action == ActionType::Work || mt.for_action == ActionType::Repair
+            mt.for_action == ActionType::Work
+                || mt.for_action == ActionType::Repair
+                || mt.for_action == ActionType::Tame
         })
         .map(|(e, mt, needs, memories, social_buff, eq)| {
             let morale = needs.map_or(0.5, |n| {
@@ -569,8 +571,13 @@ fn process_single_worker(
     );
 
     // Execute Work
-    let worked =
-        execute_work_on_designation(world, designation_entity, designation_type, work_amount);
+    let worked = execute_work_on_designation(
+        world,
+        pop_entity,
+        designation_entity,
+        designation_type,
+        work_amount,
+    );
 
     // After work: if designation was despawned (work completed), reset pop state
     if world.get_entity(designation_entity).is_err() {
@@ -631,6 +638,7 @@ fn calculate_work_amount(
 
 fn execute_work_on_designation(
     world: &mut World,
+    pop_entity: Entity,
     designation_entity: Entity,
     designation_type: DesignationType,
     work_amount: f32,
@@ -651,14 +659,32 @@ fn execute_work_on_designation(
             true
         }
         DesignationType::Tame => {
-            // Taming logic is handled in husbandry.rs, but we need to trigger it here?
-            // Or utility AI handles Tame action separately?
-            // If Tame is a Designation, then it goes through work execution IF we use ActionType::Work.
-            // But Tame uses ActionType::Tame.
-            // So process_single_worker might not be called for Tame if it uses ActionType::Tame.
-            // work_execution_system filters for ActionType::Work | Repair.
-            // So Tame action won't be processed here unless we add it to the filter.
-            false
+            // Find animal at designation position
+            let pos = if let Some(p) = world.get::<GridPosition>(designation_entity) {
+                *p
+            } else {
+                return false;
+            };
+
+            // We need to find the animal entity.
+            // We collect to avoid borrowing world while iterating query if we were doing it differently,
+            // but here we are just finding one.
+            let animal_entity = world
+                .query_filtered::<(Entity, &GridPosition), With<crate::layer1::fauna::Fauna>>()
+                .iter(world)
+                .find(|(_, p)| **p == pos)
+                .map(|(e, _)| e);
+
+            if let Some(animal) = animal_entity {
+                if crate::layer1::husbandry::attempt_tame(world, pop_entity, animal) {
+                    world.despawn(designation_entity);
+                }
+                true
+            } else {
+                // Animal gone? Remove designation
+                world.despawn(designation_entity);
+                true
+            }
         }
         DesignationType::SetZone(_) => false,
     }

@@ -39,6 +39,7 @@ use crate::layer1::actions::idle::evaluate_idle;
 use crate::layer1::actions::repair::evaluate_repair;
 use crate::layer1::actions::research::evaluate_research;
 use crate::layer1::actions::rest::evaluate_satisfy_rest;
+use crate::layer1::actions::tame::evaluate_tame;
 use crate::layer1::actions::work::evaluate_work;
 use crate::layer1::combat::{Drafted, evaluate_fight_action};
 use crate::layer1::designation::Designation;
@@ -179,6 +180,13 @@ pub fn evaluate_actions_system(world: &mut World) {
 
     let resources = world.resource::<ColonyResources>().clone();
 
+    // Collect data for Tame evaluation (avoiding repeated iteration/allocation inside loop)
+    let designations: Vec<_> = designations_state
+        .iter(world)
+        .map(|(e, p, d)| (e, *p, d.designation_type))
+        .collect();
+    let fauna_positions: Vec<_> = fauna_state.iter(world).map(|(_, p, _)| *p).collect();
+
     // Evaluate each pop
     for (
         pop_entity,
@@ -299,6 +307,18 @@ pub fn evaluate_actions_system(world: &mut World) {
                     evaluate_work(&pop_pos, &weights, designations_state.iter(world))
                 {
                     check_best(ActionType::Work, utility, Some(target));
+                }
+
+                // Evaluate Tame
+                let skills = world.get::<crate::layer1::skills::Skills>(pop_entity);
+                if let Some((utility, target)) = evaluate_tame(
+                    &pop_pos,
+                    skills,
+                    &weights,
+                    &designations,
+                    &fauna_positions,
+                ) {
+                    check_best(ActionType::Tame, utility, Some(target));
                 }
 
                 // Evaluate FetchTool

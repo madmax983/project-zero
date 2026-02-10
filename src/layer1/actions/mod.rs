@@ -19,6 +19,8 @@ pub mod repair;
 pub mod research;
 /// Work action logic.
 pub mod work;
+/// Tame action logic.
+pub mod tame;
 
 /// Component tracking what a pop is assigned to.
 #[derive(Component, Debug)]
