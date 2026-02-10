@@ -26,6 +26,8 @@ pub enum ZoneType {
     Office,
     /// Storage zone (placeholder).
     Storage,
+    /// Jail zone (for housing Inmates).
+    Jail,
 }
 
 /// Resource storing the grid of zones.

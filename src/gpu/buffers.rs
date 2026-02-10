@@ -17,6 +17,7 @@ use crate::layer1::social::Tavern;
 use crate::layer1::stockpile::Stockpile;
 use crate::layer1::tech::Library;
 use crate::layer1::utility_ai::types::{PopAction, UtilityConfig, UtilityWeights};
+use crate::layer1::justice::{Wanted, Inmate};
 
 /// Buffer storage for GPU data marshalling.
 ///
@@ -55,13 +56,13 @@ pub struct GpuPopInput {
     /// Learned social weight.
     pub social_weight: f32,
     /// Per-action success counts.
-    pub success_count: [u32; 18],
+    pub success_count: [u32; 19],
     /// Per-action attempt counts.
-    pub attempt_count: [u32; 18],
+    pub attempt_count: [u32; 19],
     /// Utility score of the current action.
     pub current_utility: f32,
     /// Padding to 16-byte alignment.
-    pub _padding: [u32; 3],
+    pub _padding: [u32; 1],
 }
 
 /// GPU-aligned building/target input data. One per building.
@@ -140,10 +141,10 @@ pub fn extract_pop_inputs(
     entities.clear();
     inputs.clear();
 
-    let mut query = world.query::<(Entity, &GridPosition, &Needs, &UtilityWeights, &PopAction)>();
+    let mut query = world.query::<(Entity, &GridPosition, &Needs, &UtilityWeights, &PopAction, Option<&Inmate>)>();
 
-    for (entity, pos, needs, weights, action) in query.iter(world) {
-        if action.ticks_committed < evaluation_interval {
+    for (entity, pos, needs, weights, action, inmate) in query.iter(world) {
+        if action.ticks_committed < evaluation_interval || inmate.is_some() {
             continue;
         }
 
@@ -160,7 +161,7 @@ pub fn extract_pop_inputs(
             success_count: weights.action_success_count,
             attempt_count: weights.action_attempt_count,
             current_utility: action.current_utility,
-            _padding: [0; 3],
+            _padding: [0; 1],
         });
     }
 }
@@ -339,6 +340,23 @@ pub fn extract_building_inputs(
             });
         }
     }
+
+    // Wanted criminals (building_type = 10)
+    {
+        let mut query = world.query::<(Entity, &GridPosition, &Wanted)>();
+        for (entity, pos, _wanted) in query.iter(world) {
+            entities.push(entity);
+            inputs.push(GpuBuildingInput {
+                pos_x: pos.x,
+                pos_y: pos.y,
+                building_type: 10,
+                capacity: 1,
+                occupied: 0,
+                resource_has_room: 1, // Always "available" to be arrested
+                _padding: [0; 2],
+            });
+        }
+    }
 }
 
 /// Extracts global state for GPU evaluation.
@@ -380,8 +398,8 @@ mod tests {
 
     #[test]
     fn test_gpu_pop_input_size() {
-        // 2*i32 + 6*f32 + 18*u32 + 18*u32 + 1*f32 + 3*u32
-        // = 8 + 24 + 72 + 72 + 4 + 12 = 192 bytes
+        // 2*i32 + 6*f32 + 19*u32 + 19*u32 + 1*f32 + 1*u32
+        // = 8 + 24 + 76 + 76 + 4 + 4 = 192 bytes
         assert_eq!(std::mem::size_of::<GpuPopInput>(), 192);
     }
 
@@ -422,8 +440,8 @@ mod tests {
                     distance_weight: 1.2,
                     availability_weight: 0.8,
                     social_weight: 1.0,
-                    action_success_count: [1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 18 elements
-                    action_attempt_count: [5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 18 elements
+                    action_success_count: [1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 19 elements
+                    action_attempt_count: [5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 19 elements
                 },
                 PopAction {
                     current: ActionType::SatisfyHunger,

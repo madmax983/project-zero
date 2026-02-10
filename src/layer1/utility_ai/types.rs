@@ -92,11 +92,14 @@ pub enum ActionType {
 
     /// Work at a farm to produce food.
     Farm,
+
+    /// Arrest Wanted criminals and escort them to jail.
+    Warden,
 }
 
 impl ActionType {
     /// Total number of action types. Used for array sizing.
-    pub const COUNT: usize = 18;
+    pub const COUNT: usize = 19;
 
     /// Converts action type to a unique array index (0..COUNT-1).
     #[must_use]
@@ -120,6 +123,7 @@ impl ActionType {
             Self::Fight => 15,
             Self::Refine => 16,
             Self::Farm => 17,
+            Self::Warden => 18,
         }
     }
 

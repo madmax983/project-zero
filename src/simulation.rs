@@ -97,6 +97,7 @@ pub fn build_simulation_schedule() -> Schedule {
         arrival_handler_system.after(movement_system),
         work_execution_system.after(arrival_handler_system),
         combat_execution_system.after(arrival_handler_system),
+        crate::layer1::justice::warden_execution_system.after(combat_execution_system),
         crate::layer1::execution::vandalize_execution_system.after(arrival_handler_system),
         haul_system.after(arrival_handler_system),
         process_scan_system.after(arrival_handler_system),
@@ -164,6 +165,7 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(vermin_growth_system),
         crate::layer1::visitor::visitor_lifecycle_system.after(consume_food_system),
         decay_needs_system.after(consume_food_system),
+        crate::layer1::justice::update_inmates_system.after(decay_needs_system),
         crate::layer1::day_night::circadian_rhythm_system.after(consume_food_system),
         aging_system.after(consume_food_system),
         natural_death_system.after(aging_system),
@@ -189,6 +191,7 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::rumor::exchange_rumors_system.after(death_system),
         crate::layer1::funeral::grief_system.after(death_system),
         crate::layer1::unrest::check_mental_break_system.after(decay_needs_system),
+        crate::layer1::justice::check_crime_system.after(crate::layer1::unrest::check_mental_break_system),
         crate::layer1::unrest::recover_mental_break_system.after(decay_needs_system),
         // Process new rumors and affinity changes
         modify_affinity_system.after(crate::layer1::rumor::exchange_rumors_system),
