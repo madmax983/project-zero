@@ -1,10 +1,10 @@
 #![allow(clippy::cast_sign_loss)]
-use bevy_ecs::prelude::*;
 use crate::layer1::GridPosition;
-use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::health::Health;
+use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::shared::log::MessageLog;
+use bevy_ecs::prelude::*;
 
 /// Maximum distance from a support (Rock/Wall) that a roof can sustain itself.
 pub const MAX_SUPPORT_DIST: i32 = 5;
@@ -76,8 +76,8 @@ pub fn check_stability(world: &mut World, pos: GridPosition) -> bool {
 
     for y in min_y..=max_y {
         for x in min_x..=max_x {
-             // Chebyshev Distance <= 5
-             if (x - pos.x).abs().max((y - pos.y).abs()) > MAX_SUPPORT_DIST {
+            // Chebyshev Distance <= 5
+            if (x - pos.x).abs().max((y - pos.y).abs()) > MAX_SUPPORT_DIST {
                 continue;
             }
 
@@ -143,16 +143,20 @@ pub fn apply_collapse(world: &mut World, pos: GridPosition) {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::terrain::{TerrainGrid, TerrainType};
-    use crate::layer1::health::Health;
-    use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::GridPosition;
+    use crate::layer1::building::{Building, BuildingType};
+    use crate::layer1::health::Health;
+    use crate::layer1::terrain::{TerrainGrid, TerrainType};
 
     #[test]
     fn test_roof_initialization() {
         let mut world = World::new();
         let tiles = vec![TerrainType::Rock; 100];
-        world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
 
         // Initialize RoofGrid based on Terrain
         // Rock should have roof, others false (unless specified)
@@ -183,7 +187,11 @@ mod tests {
         // 5x5 area
         let mut tiles = vec![TerrainType::Dirt; 25];
         tiles[0] = TerrainType::Rock; // Support at (0,0)
-        world.insert_resource(TerrainGrid { width: 5, height: 5, tiles });
+        world.insert_resource(TerrainGrid {
+            width: 5,
+            height: 5,
+            tiles,
+        });
 
         let mut roof_grid = RoofGrid::new(5, 5);
         roof_grid.set(1, 0, true); // Neighbor to Rock
@@ -199,7 +207,11 @@ mod tests {
         // 10x10 area
         let mut tiles = vec![TerrainType::Dirt; 100];
         tiles[0] = TerrainType::Rock; // Only support at (0,0)
-        world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
 
         let mut roof_grid = RoofGrid::new(10, 10);
         roof_grid.set(9, 9, true); // Far away
@@ -213,12 +225,18 @@ mod tests {
     fn test_building_provides_support() {
         let mut world = World::new();
         let tiles = vec![TerrainType::Dirt; 100];
-        world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
 
         // Place Wall at (0,0)
         world.spawn((
-            Building { building_type: BuildingType::Wall },
-            GridPosition { x: 0, y: 0 }
+            Building {
+                building_type: BuildingType::Wall,
+            },
+            GridPosition { x: 0, y: 0 },
         ));
 
         let mut roof_grid = RoofGrid::new(10, 10);
@@ -233,13 +251,22 @@ mod tests {
         let mut world = World::new();
         let mut tiles = vec![TerrainType::Dirt; 100];
         tiles[55] = TerrainType::Dirt; // (5,5)
-        world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
 
         // Spawn victim
-        let victim = world.spawn((
-            Health { current: 100.0, max: 100.0 },
-            GridPosition { x: 5, y: 5 }
-        )).id();
+        let victim = world
+            .spawn((
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         let mut roof_grid = RoofGrid::new(10, 10);
         roof_grid.set(5, 5, true);

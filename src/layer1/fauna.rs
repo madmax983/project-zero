@@ -1,9 +1,9 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::map::GridPosition;
+use crate::layer1::execution::{AtTarget, MovementTarget};
 use crate::layer1::health::Health;
+use crate::layer1::map::GridPosition;
 use crate::layer1::pop::Pop;
-use crate::layer1::execution::{MovementTarget, AtTarget};
 use crate::layer1::utility_ai::ActionType;
+use bevy_ecs::prelude::*;
 
 /// Type of fauna.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
@@ -133,16 +133,16 @@ pub fn fauna_behavior_system(world: &mut World) {
                         fauna.target = None;
                     }
                 } else {
-                     fauna.state = FaunaState::Wander;
+                    fauna.state = FaunaState::Wander;
                 }
             }
             FaunaState::Attack => {
-                 // Stick to target if still adjacent
-                 if let Some(target) = fauna.target {
+                // Stick to target if still adjacent
+                if let Some(target) = fauna.target {
                     if let Some((_, target_pos)) = pops.iter().find(|(e, _)| *e == target) {
                         let dist = pos.distance_chebyshev(*target_pos);
                         if dist <= 1 {
-                             if fauna.attack_cooldown == 0 {
+                            if fauna.attack_cooldown == 0 {
                                 attacks.push((target, fauna.attack_damage));
                                 fauna.attack_cooldown = 10;
                             }
@@ -154,9 +154,9 @@ pub fn fauna_behavior_system(world: &mut World) {
                         fauna.state = FaunaState::Wander;
                         fauna.target = None;
                     }
-                 } else {
+                } else {
                     fauna.state = FaunaState::Wander;
-                 }
+                }
             }
             FaunaState::Flee => {}
         }
@@ -177,8 +177,8 @@ pub fn fauna_behavior_system(world: &mut World) {
     for (target, damage) in attacks {
         if let Some(mut health) = world.get_mut::<Health>(target) {
             health.take_damage(damage);
-             // Log damage
-             if let Some(mut log) = world.get_resource_mut::<crate::shared::log::MessageLog>() {
+            // Log damage
+            if let Some(mut log) = world.get_resource_mut::<crate::shared::log::MessageLog>() {
                 log.add("DANGER: A wild animal is attacking!");
             }
         }
@@ -187,12 +187,12 @@ pub fn fauna_behavior_system(world: &mut World) {
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::fauna::{Fauna, FaunaType, FaunaState, fauna_behavior_system};
-    use crate::layer1::health::Health;
-    use crate::layer1::pop::Pop;
-    use crate::layer1::map::GridPosition;
     use crate::layer1::execution::MovementTarget;
+    use crate::layer1::fauna::{Fauna, FaunaState, FaunaType, fauna_behavior_system};
+    use crate::layer1::health::Health;
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::pop::Pop;
+    use bevy_ecs::prelude::*;
 
     // Helper to create a basic world with necessary resources
     fn setup_world() -> World {
@@ -203,7 +203,10 @@ mod tests {
 
     #[test]
     fn test_fauna_spawn_defaults() {
-        let rat = Fauna { fauna_type: FaunaType::SpaceRat, ..Default::default() };
+        let rat = Fauna {
+            fauna_type: FaunaType::SpaceRat,
+            ..Default::default()
+        };
         assert_eq!(rat.state, FaunaState::Wander);
         assert!(rat.detection_range > 0.0);
         assert!(rat.attack_damage > 0.0);
@@ -214,18 +217,22 @@ mod tests {
         let mut world = setup_world();
 
         // Spawn Wolf
-        let wolf = world.spawn((
-            Fauna { fauna_type: FaunaType::Wolf, detection_range: 5.0, ..Default::default() },
-            GridPosition { x: 0, y: 0 },
-            Health::default(),
-        )).id();
+        let wolf = world
+            .spawn((
+                Fauna {
+                    fauna_type: FaunaType::Wolf,
+                    detection_range: 5.0,
+                    ..Default::default()
+                },
+                GridPosition { x: 0, y: 0 },
+                Health::default(),
+            ))
+            .id();
 
         // Spawn Pop nearby
-        let pop = world.spawn((
-            Pop,
-            GridPosition { x: 2, y: 0 },
-            Health::default(),
-        )).id();
+        let pop = world
+            .spawn((Pop, GridPosition { x: 2, y: 0 }, Health::default()))
+            .id();
 
         // Run behavior system
         fauna_behavior_system(&mut world);
@@ -240,18 +247,20 @@ mod tests {
     fn test_fauna_ignores_target_out_of_range() {
         let mut world = setup_world();
 
-        let wolf = world.spawn((
-            Fauna { fauna_type: FaunaType::Wolf, detection_range: 5.0, ..Default::default() },
-            GridPosition { x: 0, y: 0 },
-            Health::default(),
-        )).id();
+        let wolf = world
+            .spawn((
+                Fauna {
+                    fauna_type: FaunaType::Wolf,
+                    detection_range: 5.0,
+                    ..Default::default()
+                },
+                GridPosition { x: 0, y: 0 },
+                Health::default(),
+            ))
+            .id();
 
         // Spawn Pop far away
-        world.spawn((
-            Pop,
-            GridPosition { x: 10, y: 0 },
-            Health::default(),
-        ));
+        world.spawn((Pop, GridPosition { x: 10, y: 0 }, Health::default()));
 
         fauna_behavior_system(&mut world);
 
@@ -265,17 +274,28 @@ mod tests {
         let mut world = setup_world();
 
         // Spawn Wolf adjacent to Pop
-        let wolf = world.spawn((
-            Fauna { fauna_type: FaunaType::Wolf, attack_damage: 10.0, ..Default::default() },
-            GridPosition { x: 0, y: 0 },
-            Health::default(),
-        )).id(); // Wolf
+        let wolf = world
+            .spawn((
+                Fauna {
+                    fauna_type: FaunaType::Wolf,
+                    attack_damage: 10.0,
+                    ..Default::default()
+                },
+                GridPosition { x: 0, y: 0 },
+                Health::default(),
+            ))
+            .id(); // Wolf
 
-        let pop = world.spawn((
-            Pop,
-            GridPosition { x: 1, y: 0 }, // Adjacent
-            Health { current: 100.0, max: 100.0 },
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 1, y: 0 }, // Adjacent
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                },
+            ))
+            .id();
 
         // Manually set state to Chase/Attack for test setup
         let mut wolf_mut = world.get_mut::<Fauna>(wolf).unwrap();
@@ -289,24 +309,34 @@ mod tests {
         assert!(health.current < 100.0);
         // Wolf should stay in Chase/Attack mode
         let wolf_comp = world.get::<Fauna>(wolf).unwrap();
-        assert!(matches!(wolf_comp.state, FaunaState::Chase | FaunaState::Attack));
+        assert!(matches!(
+            wolf_comp.state,
+            FaunaState::Chase | FaunaState::Attack
+        ));
     }
 
     #[test]
     fn test_fauna_sets_movement_target() {
         let mut world = setup_world();
 
-        let wolf = world.spawn((
-            Fauna { fauna_type: FaunaType::Wolf, ..Default::default() },
-            GridPosition { x: 0, y: 0 },
-            Health::default(),
-        )).id();
+        let wolf = world
+            .spawn((
+                Fauna {
+                    fauna_type: FaunaType::Wolf,
+                    ..Default::default()
+                },
+                GridPosition { x: 0, y: 0 },
+                Health::default(),
+            ))
+            .id();
 
-        let pop = world.spawn((
-            Pop,
-            GridPosition { x: 5, y: 0 }, // Far enough to move, close enough to chase
-            Health::default(),
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 5, y: 0 }, // Far enough to move, close enough to chase
+                Health::default(),
+            ))
+            .id();
 
         // Setup chase state
         let mut wolf_mut = world.get_mut::<Fauna>(wolf).unwrap();
@@ -326,23 +356,22 @@ mod tests {
     fn test_fauna_loses_target() {
         let mut world = setup_world();
 
-        let wolf = world.spawn((
-            Fauna {
-                fauna_type: FaunaType::Wolf,
-                state: FaunaState::Chase,
-                target: None, // Will set below
-                detection_range: 5.0,
-                ..Default::default()
-            },
-            GridPosition { x: 0, y: 0 },
-            Health::default(),
-        )).id();
+        let wolf = world
+            .spawn((
+                Fauna {
+                    fauna_type: FaunaType::Wolf,
+                    state: FaunaState::Chase,
+                    target: None, // Will set below
+                    detection_range: 5.0,
+                    ..Default::default()
+                },
+                GridPosition { x: 0, y: 0 },
+                Health::default(),
+            ))
+            .id();
 
         // Target (pop) is far away (distance 10 > 5 * 1.5 = 7.5)
-        let pop = world.spawn((
-            Pop,
-            GridPosition { x: 10, y: 0 },
-        )).id();
+        let pop = world.spawn((Pop, GridPosition { x: 10, y: 0 })).id();
 
         // Update target entity ID
         world.get_mut::<Fauna>(wolf).unwrap().target = Some(pop);

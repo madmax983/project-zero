@@ -256,7 +256,7 @@ mod tests {
 
     #[test]
     fn test_inspiration_gain() {
-         let mut world = World::new();
+        let mut world = World::new();
         world.insert_resource(SimulationTime::default());
         let mut resources = ColonyResources::default();
         resources.knowledge = 0.0;

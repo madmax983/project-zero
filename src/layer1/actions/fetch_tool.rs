@@ -127,7 +127,10 @@ mod tests {
             .id();
 
         let pop_pos = GridPosition { x: 0, y: 0 };
-        let equipment = Equipment { tool: Some(tool), ..Default::default() };
+        let equipment = Equipment {
+            tool: Some(tool),
+            ..Default::default()
+        };
         let resources = ColonyResources {
             tools: 10.0,
             ..Default::default()

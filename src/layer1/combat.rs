@@ -1,6 +1,6 @@
 #![allow(missing_docs, clippy::collapsible_if)]
-use bevy_ecs::prelude::*;
 use crate::layer1::map::GridPosition;
+use bevy_ecs::prelude::*;
 #[derive(Component, Default, Debug, Clone)]
 pub struct Drafted;
 
@@ -28,7 +28,9 @@ pub fn evaluate_fight_action<'a>(
     pop_pos: &GridPosition,
     enemies: impl Iterator<Item = (Entity, &'a GridPosition)>,
 ) -> Option<(f32, Entity)> {
-    if !drafted { return None; }
+    if !drafted {
+        return None;
+    }
 
     // Find nearest enemy
     let mut best_target = None;
@@ -54,11 +56,7 @@ pub fn evaluate_fight_action<'a>(
     None
 }
 
-pub fn execute_attack(
-    world: &mut World,
-    attacker: Entity,
-    target: Entity,
-) {
+pub fn execute_attack(world: &mut World, attacker: Entity, target: Entity) {
     // 1. Get Attacker stats (Weapon, CombatState)
     // We need to query world for attacker components.
     // Since we have mutable access to world, we can't easily query while mutating.
@@ -100,12 +98,12 @@ pub fn execute_attack(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::pop::Pop;
-    use crate::layer1::items::Equipment;
-    use crate::layer1::health::Health;
-    use crate::layer1::utility_ai::{ActionType, PopAction};
-    use crate::layer1::map::GridPosition;
     use crate::layer1::fauna::{Fauna, FaunaType};
+    use crate::layer1::health::Health;
+    use crate::layer1::items::Equipment;
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::pop::Pop;
+    use crate::layer1::utility_ai::{ActionType, PopAction};
 
     fn setup_world() -> World {
         let mut world = World::new();
@@ -120,16 +118,22 @@ mod tests {
     #[test]
     fn test_draft_toggle_overrides_behavior() {
         let mut world = setup_world();
-        let pop = world.spawn((
-            Pop,
-            Drafted, // The new component
-            PopAction { current: ActionType::Idle, ticks_committed: 10, ..Default::default() },
-            Equipment::default(),
-            GridPosition { x: 0, y: 0 },
-            crate::layer1::needs::Needs::default(),
-            crate::layer1::utility_ai::UtilityWeights::default(),
-            // Needs would normally drive behavior, but Drafted suppresses them
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Drafted, // The new component
+                PopAction {
+                    current: ActionType::Idle,
+                    ticks_committed: 10,
+                    ..Default::default()
+                },
+                Equipment::default(),
+                GridPosition { x: 0, y: 0 },
+                crate::layer1::needs::Needs::default(),
+                crate::layer1::utility_ai::UtilityWeights::default(),
+                // Needs would normally drive behavior, but Drafted suppresses them
+            ))
+            .id();
 
         // Run evaluation
         // We expect normal Utility AI to run, but Drafted should force Combat logic
@@ -139,11 +143,16 @@ mod tests {
         // when an enemy is present.
 
         // Spawn Enemy
-        let _enemy = world.spawn((
-            Fauna { fauna_type: FaunaType::Wolf, ..Default::default() },
-            GridPosition { x: 1, y: 0 },
-            Health::default(),
-        )).id();
+        let _enemy = world
+            .spawn((
+                Fauna {
+                    fauna_type: FaunaType::Wolf,
+                    ..Default::default()
+                },
+                GridPosition { x: 1, y: 0 },
+                Health::default(),
+            ))
+            .id();
 
         // Evaluate
         crate::layer1::utility_ai::evaluate_actions_system(&mut world);
@@ -155,21 +164,28 @@ mod tests {
     #[test]
     fn test_undrafted_pop_flees_or_ignores() {
         let mut world = setup_world();
-        let pop = world.spawn((
-            Pop,
-            // Not Drafted
-            PopAction::default(),
-            Equipment::default(),
-            GridPosition { x: 0, y: 0 },
-            crate::layer1::needs::Needs::default(),
-            crate::layer1::utility_ai::UtilityWeights::default(),
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                // Not Drafted
+                PopAction::default(),
+                Equipment::default(),
+                GridPosition { x: 0, y: 0 },
+                crate::layer1::needs::Needs::default(),
+                crate::layer1::utility_ai::UtilityWeights::default(),
+            ))
+            .id();
 
-        let _enemy = world.spawn((
-            Fauna { fauna_type: FaunaType::Wolf, ..Default::default() },
-            GridPosition { x: 1, y: 0 },
-            Health::default(),
-        )).id();
+        let _enemy = world
+            .spawn((
+                Fauna {
+                    fauna_type: FaunaType::Wolf,
+                    ..Default::default()
+                },
+                GridPosition { x: 1, y: 0 },
+                Health::default(),
+            ))
+            .id();
 
         crate::layer1::utility_ai::evaluate_actions_system(&mut world);
 
@@ -197,25 +213,42 @@ mod tests {
         let mut world = setup_world();
 
         // Create Weapon Entity
-        let sword = world.spawn(Weapon {
-            properties: AttackProperties { damage: 20.0, range: 1.0, cooldown: 10, accuracy: 1.0 },
-        }).id();
+        let sword = world
+            .spawn(Weapon {
+                properties: AttackProperties {
+                    damage: 20.0,
+                    range: 1.0,
+                    cooldown: 10,
+                    accuracy: 1.0,
+                },
+            })
+            .id();
 
         // Create Pop with Sword
-        let pop = world.spawn((
-            Pop,
-            Drafted,
-            Equipment { weapon: Some(sword), ..Default::default() }, // Updated Equipment struct
-            GridPosition { x: 0, y: 0 },
-            CombatState::default(),
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Drafted,
+                Equipment {
+                    weapon: Some(sword),
+                    ..Default::default()
+                }, // Updated Equipment struct
+                GridPosition { x: 0, y: 0 },
+                CombatState::default(),
+            ))
+            .id();
 
         // Create Enemy
-        let enemy = world.spawn((
-            Fauna::default(),
-            GridPosition { x: 1, y: 0 },
-            Health { current: 100.0, max: 100.0 },
-        )).id();
+        let enemy = world
+            .spawn((
+                Fauna::default(),
+                GridPosition { x: 1, y: 0 },
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                },
+            ))
+            .id();
 
         // Manually trigger attack (simulate execution system)
         crate::layer1::combat::execute_attack(&mut world, pop, enemy);
@@ -228,12 +261,17 @@ mod tests {
     #[test]
     fn test_attack_cooldown() {
         let mut world = setup_world();
-        let pop = world.spawn((
-            Pop,
-            Drafted,
-            CombatState { cooldown: 5, ..Default::default() }, // On cooldown
-            Equipment::default(),
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Drafted,
+                CombatState {
+                    cooldown: 5,
+                    ..Default::default()
+                }, // On cooldown
+                Equipment::default(),
+            ))
+            .id();
 
         let enemy = world.spawn((Fauna::default(), Health::default())).id();
 

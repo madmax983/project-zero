@@ -178,7 +178,6 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
             spawned += 1;
         }
     }
-
 }
 
 #[cfg(test)]
