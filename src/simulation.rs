@@ -84,7 +84,12 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer1::room_quality::apply_waking_thoughts_system),
         process_start_plan_system.after(cleanup_previous_assignment_system),
         crate::layer1::fauna::fauna_behavior_system.after(process_start_plan_system),
-        update_lighting_system.after(process_start_plan_system),
+        crate::layer1::day_night::update_day_night_cycle_system.after(process_start_plan_system),
+        crate::layer1::day_night::update_ambient_light_from_cycle_system
+            .after(crate::layer1::day_night::update_day_night_cycle_system),
+        update_lighting_system
+            .after(process_start_plan_system)
+            .after(crate::layer1::day_night::update_ambient_light_from_cycle_system),
         apply_lighting_penalties_system.after(update_lighting_system),
         movement_system
             .after(apply_lighting_penalties_system)
@@ -159,6 +164,7 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(vermin_growth_system),
         crate::layer1::visitor::visitor_lifecycle_system.after(consume_food_system),
         decay_needs_system.after(consume_food_system),
+        crate::layer1::day_night::circadian_rhythm_system.after(consume_food_system),
         aging_system.after(consume_food_system),
         natural_death_system.after(aging_system),
         memory_decay_system.after(decay_needs_system),

@@ -186,3 +186,7 @@ pub mod combat;
 /// Visitor system (Spec 074).
 pub mod visitor;
 pub use visitor::*;
+
+/// Day/Night cycle system (Spec 065).
+pub mod day_night;
+pub use day_night::*;
