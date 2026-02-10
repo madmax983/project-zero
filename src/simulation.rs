@@ -19,17 +19,17 @@ use crate::layer1::{
     AddChronicleEvent, AffinityChange, PopDied, advance_season_system, aging_system,
     apply_lighting_penalties_system, apply_noise_effects_system, arrival_handler_system,
     art_generation_system, art_observation_system, check_milestones_system,
-    chronicle_event_handler_system, chronicle_rumor_bridge_system,
-    clean_dead_residents_system, clean_dead_workers_system, cleanup_previous_assignment_system,
-    clothing_wear_system, combat_execution_system, consume_food_system, death_system,
-    decay_needs_system, fire_damage_pops_system, fire_damage_system, fire_spread_system,
-    haul_system, healing_system, hypothermia_system, memory_decay_system, modify_affinity_system,
-    movement_system, natural_death_system, notification_expiration_system,
-    pop_death_chronicle_bridge, process_refining_system, process_research_system,
-    process_scan_system, process_start_plan_system, produce_food_system, restore_leisure_system,
+    chronicle_event_handler_system, chronicle_rumor_bridge_system, clean_dead_residents_system,
+    clean_dead_workers_system, cleanup_previous_assignment_system, clothing_wear_system,
+    combat_execution_system, consume_food_system, death_system, decay_needs_system,
+    fire_damage_pops_system, fire_damage_system, fire_spread_system, haul_system, healing_system,
+    hypothermia_system, memory_decay_system, modify_affinity_system, movement_system,
+    natural_death_system, notification_expiration_system, pop_death_chronicle_bridge,
+    process_refining_system, process_research_system, process_scan_system,
+    process_start_plan_system, produce_food_system, restore_leisure_system,
     restore_rest_in_housing_system, spoilage_system, starvation_damage_system,
     track_plan_outcomes_system, update_action_timer_system, update_lighting_system,
-    update_noise_system, update_resource_caps_system, work_execution_system,
+    update_noise_system, update_resource_caps_system, vermin_growth_system, work_execution_system,
 };
 use crate::shared::time::SimulationTime;
 
@@ -149,7 +149,10 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(produce_food_system)
             .after(update_resource_caps_system),
         clothing_wear_system.after(consume_food_system),
-        spoilage_system.after(consume_food_system),
+        vermin_growth_system.after(consume_food_system),
+        spoilage_system
+            .after(consume_food_system)
+            .after(vermin_growth_system),
         decay_needs_system.after(consume_food_system),
         aging_system.after(consume_food_system),
         natural_death_system.after(aging_system),

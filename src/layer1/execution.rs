@@ -60,11 +60,7 @@ use rand::Rng;
 pub fn combat_execution_system(world: &mut World) {
     // Collect combatants
     let combatants: Vec<(Entity, Entity, Option<Equipment>)> = world
-        .query::<(
-            Entity,
-            &MovementTarget,
-            Option<&Equipment>,
-        )>()
+        .query::<(Entity, &MovementTarget, Option<&Equipment>)>()
         .iter(world)
         .filter(|(_, mt, _)| mt.for_action == ActionType::Fight)
         .map(|(e, mt, eq)| (e, mt.target_entity, eq.cloned()))
@@ -1149,7 +1145,10 @@ mod tests {
             .spawn((
                 Pop,
                 GridPosition { x: 5, y: 5 },
-                Equipment { tool: Some(tool), ..Default::default() },
+                Equipment {
+                    tool: Some(tool),
+                    ..Default::default()
+                },
                 MovementTarget {
                     target_entity: designation,
                     target_position: GridPosition { x: 5, y: 5 },
@@ -1208,7 +1207,10 @@ mod tests {
             .spawn((
                 Pop,
                 GridPosition { x: 5, y: 5 },
-                Equipment { tool: Some(tool), ..Default::default() },
+                Equipment {
+                    tool: Some(tool),
+                    ..Default::default()
+                },
                 MovementTarget {
                     target_entity: designation,
                     target_position: GridPosition { x: 5, y: 5 },
@@ -1283,7 +1285,10 @@ mod tests {
             .spawn((
                 Pop,
                 GridPosition { x: 5, y: 5 },
-                Equipment { tool: Some(tool), ..Default::default() },
+                Equipment {
+                    tool: Some(tool),
+                    ..Default::default()
+                },
                 MovementTarget {
                     target_entity: designation,
                     target_position: GridPosition { x: 5, y: 5 },
@@ -1714,7 +1719,10 @@ mod tests {
                     rest: 0.1,
                     leisure: 0.1,
                 },
-                Equipment { tool: Some(tool), ..Default::default() },
+                Equipment {
+                    tool: Some(tool),
+                    ..Default::default()
+                },
                 MovementTarget {
                     target_entity: designation,
                     target_position: GridPosition { x: 5, y: 5 },
@@ -1782,7 +1790,10 @@ mod tests {
                     rest: 1.0,
                     leisure: 1.0,
                 },
-                Equipment { tool: Some(tool), ..Default::default() },
+                Equipment {
+                    tool: Some(tool),
+                    ..Default::default()
+                },
                 MovementTarget {
                     target_entity: designation,
                     target_position: GridPosition { x: 5, y: 5 },
@@ -1848,7 +1859,10 @@ mod tests {
                 Pop,
                 GridPosition { x: 5, y: 5 },
                 skills,
-                Equipment { tool: Some(tool), ..Default::default() },
+                Equipment {
+                    tool: Some(tool),
+                    ..Default::default()
+                },
                 MovementTarget {
                     target_entity: designation,
                     target_position: GridPosition { x: 5, y: 5 },
@@ -1958,7 +1972,10 @@ mod tests {
         let enemy = world
             .spawn((
                 GridPosition { x: 1, y: 0 },
-                Health { current: 100.0, max: 100.0 },
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                },
             ))
             .id();
 
@@ -1975,17 +1992,19 @@ mod tests {
             .id();
 
         // Create Pop targeting enemy
-        world
-            .spawn((
-                Pop,
-                GridPosition { x: 0, y: 0 }, // Adjacent (dist 1)
-                Equipment { weapon: Some(weapon), ..Default::default() },
-                MovementTarget {
-                    target_entity: enemy,
-                    target_position: GridPosition { x: 1, y: 0 },
-                    for_action: ActionType::Fight,
-                },
-            ));
+        world.spawn((
+            Pop,
+            GridPosition { x: 0, y: 0 }, // Adjacent (dist 1)
+            Equipment {
+                weapon: Some(weapon),
+                ..Default::default()
+            },
+            MovementTarget {
+                target_entity: enemy,
+                target_position: GridPosition { x: 1, y: 0 },
+                for_action: ActionType::Fight,
+            },
+        ));
 
         combat_execution_system(&mut world);
 
@@ -2005,7 +2024,10 @@ mod tests {
         let enemy = world
             .spawn((
                 GridPosition { x: 5, y: 0 },
-                Health { current: 100.0, max: 100.0 },
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                },
             ))
             .id();
 
@@ -2025,7 +2047,10 @@ mod tests {
             .spawn((
                 Pop,
                 GridPosition { x: 0, y: 0 },
-                Equipment { weapon: Some(weapon), ..Default::default() },
+                Equipment {
+                    weapon: Some(weapon),
+                    ..Default::default()
+                },
                 MovementTarget {
                     target_entity: enemy,
                     target_position: GridPosition { x: 5, y: 0 },

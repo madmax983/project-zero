@@ -1,5 +1,6 @@
 use crate::layer1::balance::TICKS_PER_YEAR;
 use crate::layer1::resources::ColonyResources;
+use crate::layer1::vermin::VerminState;
 use bevy_ecs::prelude::*;
 
 /// Component indicating an item can spoil/rot over time.
@@ -29,10 +30,14 @@ pub fn spoilage_system(
     mut commands: Commands,
     mut resources: ResMut<ColonyResources>,
     mut query: Query<(Entity, &mut Perishable)>,
+    vermin: Option<Res<VerminState>>,
 ) {
     // 1. Handle Global Spoilage
     if resources.food > 0.0 {
-        let decay = resources.food * GLOBAL_SPOILAGE_RATE;
+        let modifier = vermin.map_or(1.0, |v| {
+            crate::layer1::vermin::calculate_spoilage_modifier(&v)
+        });
+        let decay = resources.food * GLOBAL_SPOILAGE_RATE * modifier;
         resources.food = (resources.food - decay).max(0.0);
     }
 

@@ -15,6 +15,8 @@ pub enum Policy {
     Rationing,
     /// Increases work speed but lowers morale.
     DoubleShifts,
+    /// Reduces vermin growth but lowers work speed.
+    PestControl,
 }
 
 impl ColonyPolicies {
@@ -49,11 +51,15 @@ pub fn get_hunger_decay_modifier(policies: &ColonyPolicies) -> f32 {
 /// Returns the modifier for work speed.
 ///
 /// * `DoubleShifts`: 1.2x speed.
+/// * `PestControl`: 0.95x speed.
 #[must_use]
 pub fn get_work_speed_modifier(policies: &ColonyPolicies) -> f32 {
     let mut modifier = 1.0;
     if policies.is_active(Policy::DoubleShifts) {
         modifier += 0.2;
+    }
+    if policies.is_active(Policy::PestControl) {
+        modifier -= 0.05;
     }
     modifier
 }
@@ -156,5 +162,14 @@ mod tests {
             morale_mod < 0.0,
             "Morale modifier should be negative with DoubleShifts"
         );
+    }
+
+    #[test]
+    fn test_pest_control_reduces_work_speed() {
+        let mut policies = ColonyPolicies::default();
+        policies.toggle(Policy::PestControl);
+        // Should reduce speed by 0.05
+        let modifier = get_work_speed_modifier(&policies);
+        assert!((modifier - 0.95).abs() < f32::EPSILON);
     }
 }

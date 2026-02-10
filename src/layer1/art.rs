@@ -79,8 +79,8 @@ mod tests {
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::chronicle::{Chronicle, EventImportance};
     use crate::layer1::map::GridPosition;
-    use crate::layer1::pop::Pop;
     use crate::layer1::memory::{Memories, MemoryType};
+    use crate::layer1::pop::Pop;
     use crate::shared::time::SimulationTime;
 
     // 1. Art Creation
@@ -92,10 +92,14 @@ mod tests {
         // Initialize Art plugin/systems if needed, or run manually
 
         // Spawn a Statue
-        let statue = world.spawn((
-            Building { building_type: BuildingType::Statue },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let statue = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Statue,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         // Run system that assigns art
         // (Assuming `art_generation_system` runs on Added<Building>)
@@ -116,10 +120,14 @@ mod tests {
         chronicle.add_event(0, "Colony Founded".to_string(), EventImportance::Legendary);
         world.insert_resource(chronicle);
 
-        let statue = world.spawn((
-            Building { building_type: BuildingType::Statue },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let statue = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Statue,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(art_generation_system);
@@ -135,10 +143,14 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(Chronicle::default()); // Empty
 
-        let statue = world.spawn((
-            Building { building_type: BuildingType::Statue },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let statue = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Statue,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(art_generation_system);
@@ -156,17 +168,23 @@ mod tests {
 
         // Spawn Art
         world.spawn((
-            Building { building_type: BuildingType::Statue },
+            Building {
+                building_type: BuildingType::Statue,
+            },
             GridPosition { x: 5, y: 5 },
-            Art { description: "Great Art".to_string() },
+            Art {
+                description: "Great Art".to_string(),
+            },
         ));
 
         // Spawn Pop nearby
-        let pop = world.spawn((
-            Pop,
-            GridPosition { x: 5, y: 5 }, // Same tile
-            Memories::default(),
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 5, y: 5 }, // Same tile
+                Memories::default(),
+            ))
+            .id();
 
         // Run observation system
         let mut schedule = Schedule::default();
@@ -176,7 +194,10 @@ mod tests {
         // Check Pop memories
         let memories = world.get::<Memories>(pop).unwrap();
         // Assume we add a specific "AdmiredArt" memory type
-        let found = memories.items.iter().any(|m| m.memory_type == MemoryType::AdmiredArt);
+        let found = memories
+            .items
+            .iter()
+            .any(|m| m.memory_type == MemoryType::AdmiredArt);
         assert!(found, "Pop should have AdmiredArt memory");
     }
 
@@ -187,24 +208,29 @@ mod tests {
 
         // Spawn Art
         world.spawn((
-            Building { building_type: BuildingType::Statue },
+            Building {
+                building_type: BuildingType::Statue,
+            },
             GridPosition { x: 5, y: 5 },
-            Art { description: "Great Art".to_string() },
+            Art {
+                description: "Great Art".to_string(),
+            },
         ));
 
         // Spawn Pop far away
-        let pop = world.spawn((
-            Pop,
-            GridPosition { x: 10, y: 10 },
-            Memories::default(),
-        )).id();
+        let pop = world
+            .spawn((Pop, GridPosition { x: 10, y: 10 }, Memories::default()))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(art_observation_system);
         schedule.run(&mut world);
 
         let memories = world.get::<Memories>(pop).unwrap();
-        let found = memories.items.iter().any(|m| m.memory_type == MemoryType::AdmiredArt);
+        let found = memories
+            .items
+            .iter()
+            .any(|m| m.memory_type == MemoryType::AdmiredArt);
         assert!(!found, "Pop too far away should not admire art");
     }
 }

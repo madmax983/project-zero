@@ -1,22 +1,20 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::map::GridPosition;
-use crate::layer1::zone::{ZoneGrid, ZoneType};
-use crate::layer1::beauty::BeautyGrid;
-use crate::layer1::terrain::{TerrainGrid, TerrainType};
-use crate::layer1::building::{Building, BuildingType};
-use crate::layer1::memory::{Memories, MemoryType};
-use crate::shared::time::SimulationTime;
 use crate::layer1::actions::{AssignedTo, AssignmentType};
+use crate::layer1::beauty::BeautyGrid;
+use crate::layer1::building::{Building, BuildingType};
+use crate::layer1::map::GridPosition;
+use crate::layer1::memory::{Memories, MemoryType};
+use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::utility_ai::StartPlan;
+use crate::layer1::zone::{ZoneGrid, ZoneType};
+use crate::shared::time::SimulationTime;
+use bevy_ecs::prelude::*;
 use std::collections::HashSet;
 
 /// System to apply thoughts when pops wake up or leave rooms.
 ///
 /// Runs before `cleanup_previous_assignment_system` to capture the state of the room
 /// the pop is leaving.
-pub fn apply_waking_thoughts_system(
-    world: &mut World,
-) {
+pub fn apply_waking_thoughts_system(world: &mut World) {
     // 1. Identify pops leaving housing or tavern
     // We collect entities to avoid borrowing conflicts when we call apply_room_quality_thoughts (which takes &mut World)
     let mut targets: Vec<(Entity, ZoneType)> = Vec::new();
@@ -59,9 +57,15 @@ pub fn calculate_room_quality(world: &mut World, pos: GridPosition) -> f32 {
         .map(|(p, _)| (p.x, p.y))
         .collect();
 
-    let Some(zones) = world.get_resource::<ZoneGrid>() else { return 0.0 };
-    let Some(beauty_grid) = world.get_resource::<BeautyGrid>() else { return 0.0 };
-    let Some(terrain) = world.get_resource::<TerrainGrid>() else { return 0.0 };
+    let Some(zones) = world.get_resource::<ZoneGrid>() else {
+        return 0.0;
+    };
+    let Some(beauty_grid) = world.get_resource::<BeautyGrid>() else {
+        return 0.0;
+    };
+    let Some(terrain) = world.get_resource::<TerrainGrid>() else {
+        return 0.0;
+    };
 
     let start_zone = zones.get(pos.x, pos.y);
     if start_zone == ZoneType::None {
@@ -75,7 +79,9 @@ pub fn calculate_room_quality(world: &mut World, pos: GridPosition) -> f32 {
     let mut enclosed = true;
 
     while let Some(p) = queue.pop() {
-        if visited.contains(&p) { continue; }
+        if visited.contains(&p) {
+            continue;
+        }
         visited.insert(p);
         tiles.push(p);
 
@@ -85,7 +91,11 @@ pub fn calculate_room_quality(world: &mut World, pos: GridPosition) -> f32 {
             let ny = p.y + dy;
 
             // Bounds check
-            if nx < 0 || ny < 0 || nx >= i32::try_from(zones.width).unwrap_or(i32::MAX) || ny >= i32::try_from(zones.height).unwrap_or(i32::MAX) {
+            if nx < 0
+                || ny < 0
+                || nx >= i32::try_from(zones.width).unwrap_or(i32::MAX)
+                || ny >= i32::try_from(zones.height).unwrap_or(i32::MAX)
+            {
                 // Edge of map counts as enclosure (or void?)
                 // Usually map edge is not enclosed unless walled.
                 // Let's say map edge is NOT enclosed (void leaks air).
@@ -109,11 +119,12 @@ pub fn calculate_room_quality(world: &mut World, pos: GridPosition) -> f32 {
 
                 let is_wall = walls.contains(&(nx, ny));
 
-                let is_walkable = if let (Ok(ux), Ok(uy)) = (usize::try_from(nx), usize::try_from(ny)) {
-                    terrain.get(ux, uy).is_some_and(TerrainType::is_walkable)
-                } else {
-                    false
-                };
+                let is_walkable =
+                    if let (Ok(ux), Ok(uy)) = (usize::try_from(nx), usize::try_from(ny)) {
+                        terrain.get(ux, uy).is_some_and(TerrainType::is_walkable)
+                    } else {
+                        false
+                    };
 
                 if !is_rock && !is_wall && is_walkable {
                     enclosed = false;
@@ -163,19 +174,31 @@ pub fn apply_room_quality_thoughts(world: &mut World, pop_entity: Entity, zone_t
     // Determine MemoryType
     let memory_type = match zone_type {
         ZoneType::Bedroom => {
-            if quality < 10.0 { MemoryType::SleptInAwfulRoom }
-            else if quality < 25.0 { MemoryType::SleptInDullRoom }
-            else if quality < 50.0 { MemoryType::SleptInDecentRoom }
-            else if quality < 100.0 { MemoryType::SleptInGreatRoom }
-            else { MemoryType::SleptInLegendaryRoom }
-        },
+            if quality < 10.0 {
+                MemoryType::SleptInAwfulRoom
+            } else if quality < 25.0 {
+                MemoryType::SleptInDullRoom
+            } else if quality < 50.0 {
+                MemoryType::SleptInDecentRoom
+            } else if quality < 100.0 {
+                MemoryType::SleptInGreatRoom
+            } else {
+                MemoryType::SleptInLegendaryRoom
+            }
+        }
         ZoneType::Dining => {
-            if quality < 10.0 { MemoryType::AteInAwfulRoom }
-            else if quality < 25.0 { MemoryType::AteInDullRoom }
-            else if quality < 50.0 { MemoryType::AteInDecentRoom }
-            else if quality < 100.0 { MemoryType::AteInGreatRoom }
-            else { MemoryType::AteInLegendaryRoom }
-        },
+            if quality < 10.0 {
+                MemoryType::AteInAwfulRoom
+            } else if quality < 25.0 {
+                MemoryType::AteInDullRoom
+            } else if quality < 50.0 {
+                MemoryType::AteInDecentRoom
+            } else if quality < 100.0 {
+                MemoryType::AteInGreatRoom
+            } else {
+                MemoryType::AteInLegendaryRoom
+            }
+        }
         _ => return,
     };
 
@@ -191,12 +214,12 @@ pub fn apply_room_quality_thoughts(world: &mut World, pop_entity: Entity, zone_t
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::layer1::beauty::BeautyGrid;
     use crate::layer1::map::GridPosition;
+    use crate::layer1::memory::{Memories, MemoryType};
+    use crate::layer1::pop::Pop;
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
     use crate::layer1::zone::{ZoneGrid, ZoneType};
-    use crate::layer1::beauty::BeautyGrid;
-    use crate::layer1::pop::Pop;
-    use crate::layer1::memory::{Memories, MemoryType};
 
     // Helper to setup world with grids
     fn setup_world() -> World {
@@ -264,10 +287,12 @@ mod tests {
 
         // Surround (1,1) with Walls
         use crate::layer1::building::{Building, BuildingType};
-        for (nx, ny) in [(1,0), (0,1), (2,1), (1,2)] {
+        for (nx, ny) in [(1, 0), (0, 1), (2, 1), (1, 2)] {
             world.spawn((
-                Building { building_type: BuildingType::Wall },
-                GridPosition { x: nx, y: ny }
+                Building {
+                    building_type: BuildingType::Wall,
+                },
+                GridPosition { x: nx, y: ny },
             ));
         }
 
@@ -276,7 +301,11 @@ mod tests {
         // 1x1 Room. Base 1.0. Enclosure Bonus x1.5 (spec).
         // Without walls: 1.0. With walls: 1.5.
         // 1.0 * 1.5 = 1.5
-        assert!(quality >= 1.5, "Quality {} should include enclosure bonus", quality);
+        assert!(
+            quality >= 1.5,
+            "Quality {} should include enclosure bonus",
+            quality
+        );
     }
 
     #[test]
@@ -284,11 +313,9 @@ mod tests {
         let mut world = setup_world();
 
         // Spawn pop
-        let pop = world.spawn((
-            Pop,
-            GridPosition { x: 0, y: 0 },
-            Memories::default(),
-        )).id();
+        let pop = world
+            .spawn((Pop, GridPosition { x: 0, y: 0 }, Memories::default()))
+            .id();
 
         // We can't easily force calculate_room_quality to return a specific value without mocking or building a huge room.
         // But for this test, we want to verify that apply_room_quality_thoughts calls calculate_room_quality and adds a memory.
@@ -307,6 +334,12 @@ mod tests {
         let memories = world.get::<Memories>(pop).unwrap();
         // Should have "SleptInLegendaryRoom" memory
         // Note: quality = (1 + 100*2) * 1.0 = 201 > 100 (Legendary threshold)
-        assert!(memories.items.iter().any(|m| m.memory_type == MemoryType::SleptInLegendaryRoom), "Should have SleptInLegendaryRoom memory");
+        assert!(
+            memories
+                .items
+                .iter()
+                .any(|m| m.memory_type == MemoryType::SleptInLegendaryRoom),
+            "Should have SleptInLegendaryRoom memory"
+        );
     }
 }

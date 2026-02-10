@@ -122,7 +122,9 @@ pub fn evaluate_actions_system(world: &mut World) {
             Option<&Drafted>,
         )>()
         .iter(world)
-        .filter(|(_, _, _, _, action, _, _, _)| action.ticks_committed >= config.evaluation_interval)
+        .filter(|(_, _, _, _, action, _, _, _)| {
+            action.ticks_committed >= config.evaluation_interval
+        })
         .map(|(e, p, n, w, a, eq, m, d)| {
             (
                 e,
@@ -176,8 +178,16 @@ pub fn evaluate_actions_system(world: &mut World) {
     let resources = world.resource::<ColonyResources>().clone();
 
     // Evaluate each pop
-    for (pop_entity, pop_pos, needs, weights, mut action, equipment_opt, mental_state_opt, drafted_opt) in
-        pop_data
+    for (
+        pop_entity,
+        pop_pos,
+        needs,
+        weights,
+        mut action,
+        equipment_opt,
+        mental_state_opt,
+        drafted_opt,
+    ) in pop_data
     {
         // Optimization: Avoid heap allocation (Vec) for utilities.
         // Instead, track the best action found so far in a single pass.
@@ -227,7 +237,7 @@ pub fn evaluate_actions_system(world: &mut World) {
 
                     // Let's implement early exit for drafted pops.
                     if best_action == ActionType::Idle {
-                         best_utility = 0.9; // Just stand there ready
+                        best_utility = 0.9; // Just stand there ready
                     }
                 }
             } else {

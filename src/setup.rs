@@ -39,7 +39,8 @@ pub fn setup_world() -> World {
     world.insert_resource(MenuState::default());
 
     let terrain = generate_terrain(80, 50);
-    let mut roof = crate::layer1::structural_integrity::RoofGrid::new(terrain.width, terrain.height);
+    let mut roof =
+        crate::layer1::structural_integrity::RoofGrid::new(terrain.width, terrain.height);
     for y in 0..terrain.height {
         for x in 0..terrain.width {
             if terrain.get(x, y) == Some(crate::layer1::TerrainType::Rock) {
@@ -64,6 +65,7 @@ pub fn setup_world() -> World {
     world.insert_resource(ChronicleUiState::default());
     world.insert_resource(NotificationQueue::default());
     world.insert_resource(BuildingTracker::default());
+    world.insert_resource(crate::layer1::vermin::VerminState::default());
     world.insert_resource(Selection::default());
     world.insert_resource(RenderCache::default());
     world.insert_resource(UtilityConfig::default());

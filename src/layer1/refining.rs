@@ -229,22 +229,22 @@ pub fn get_refining_recipe(
             res.wood >= 1.0 && res.planks < res.max_planks,
             ColonyResources {
                 wood: 1.0,
-                ..Default::default()
+                ..ColonyResources::zeroed()
             },
             ColonyResources {
                 planks: 1.0,
-                ..Default::default()
+                ..ColonyResources::zeroed()
             },
         ),
         BuildingType::StoneMason => (
             res.stone >= 1.0 && res.blocks < res.max_blocks,
             ColonyResources {
                 stone: 1.0,
-                ..Default::default()
+                ..ColonyResources::zeroed()
             },
             ColonyResources {
                 blocks: 1.0,
-                ..Default::default()
+                ..ColonyResources::zeroed()
             },
         ),
         BuildingType::Smelter => (
@@ -252,11 +252,11 @@ pub fn get_refining_recipe(
             ColonyResources {
                 ore: 1.0,
                 wood: 1.0,
-                ..Default::default()
+                ..ColonyResources::zeroed()
             },
             ColonyResources {
                 metal: 1.0,
-                ..Default::default()
+                ..ColonyResources::zeroed()
             },
         ),
         BuildingType::Smithy => (
@@ -264,39 +264,39 @@ pub fn get_refining_recipe(
             ColonyResources {
                 metal: 1.0,
                 wood: 1.0,
-                ..Default::default()
+                ..ColonyResources::zeroed()
             },
             ColonyResources {
                 tools: 1.0,
-                ..Default::default()
+                ..ColonyResources::zeroed()
             },
         ),
         BuildingType::Weaver => (
             res.fiber >= 1.0 && res.cloth < res.max_cloth,
             ColonyResources {
                 fiber: 1.0,
-                ..Default::default()
+                ..ColonyResources::zeroed()
             },
             ColonyResources {
                 cloth: 1.0,
-                ..Default::default()
+                ..ColonyResources::zeroed()
             },
         ),
         BuildingType::Tailor => (
             res.cloth >= 1.0 && res.clothing < res.max_clothing,
             ColonyResources {
                 cloth: 1.0,
-                ..Default::default()
+                ..ColonyResources::zeroed()
             },
             ColonyResources {
                 clothing: 1.0,
-                ..Default::default()
+                ..ColonyResources::zeroed()
             },
         ),
         _ => (
             false,
-            ColonyResources::default(),
-            ColonyResources::default(),
+            ColonyResources::zeroed(),
+            ColonyResources::zeroed(),
         ),
     }
 }

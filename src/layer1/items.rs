@@ -107,7 +107,10 @@ mod tests {
         // Spawn Pop with Equipment
         world.spawn((
             Pop,
-            Equipment { tool: Some(tool), ..Default::default() },
+            Equipment {
+                tool: Some(tool),
+                ..Default::default()
+            },
             GridPosition { x: 5, y: 5 },
             // Add work components
             crate::layer1::execution::MovementTarget {
@@ -169,7 +172,10 @@ mod tests {
         let pop = world
             .spawn((
                 Pop,
-                Equipment { tool: Some(tool), ..Default::default() },
+                Equipment {
+                    tool: Some(tool),
+                    ..Default::default()
+                },
                 GridPosition { x: 5, y: 5 },
                 crate::layer1::execution::MovementTarget {
                     target_entity: designation,

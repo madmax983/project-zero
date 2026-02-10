@@ -66,10 +66,10 @@ pub mod social;
 pub mod spoilage;
 /// Resource storage limits and stockpile buildings.
 pub mod stockpile;
-/// Structure durability and repair.
-pub mod structure;
 /// Structural integrity (cave-ins and supports).
 pub mod structural_integrity;
+/// Structure durability and repair.
+pub mod structure;
 /// Technology and research system.
 pub mod tech;
 /// Terrain generation and grid management.
@@ -119,8 +119,8 @@ pub use seasons::*;
 pub use social::*;
 pub use spoilage::*;
 pub use stockpile::*;
-pub use structure::*;
 pub use structural_integrity::*;
+pub use structure::*;
 pub use tech::*;
 pub use terrain::*;
 pub use utility_ai::*;
@@ -137,6 +137,10 @@ pub mod rumor;
 pub mod skills;
 #[cfg(test)]
 mod waste_tests;
+
+/// Vermin infestation logic (Spec 073).
+pub mod vermin;
+pub use vermin::*;
 
 pub use lighting::*;
 pub use rumor::*;

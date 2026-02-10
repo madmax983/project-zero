@@ -9,7 +9,7 @@
 //! ```
 
 #[cfg(feature = "nova")]
-use scale::experimental::ghosts::{Ghost, Ectoplasm};
+use scale::experimental::ghosts::{Ectoplasm, Ghost};
 
 fn main() -> anyhow::Result<()> {
     println!("👻 Ghost Demo");
