@@ -1,7 +1,9 @@
 #![allow(
     clippy::too_many_lines,
     clippy::too_many_arguments,
-    clippy::collapsible_if
+    clippy::collapsible_if,
+    clippy::missing_panics_doc,
+    clippy::cast_precision_loss
 )]
 //! Execution layer bridging utility AI decisions to actual pop actions.
 //!
@@ -671,7 +673,10 @@ mod tests {
             tiles,
         });
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
+        world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
+        world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
         world.insert_resource(crate::shared::time::SimulationTime::default());
+        world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
         world
     }
 
@@ -1068,6 +1073,12 @@ mod tests {
             tiles,
         });
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
+        world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
+        world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
+        world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
+        world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
+        world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
+        world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
 
         let designation = world
             .spawn((
@@ -1166,6 +1177,7 @@ mod tests {
             height: 10,
             tiles,
         });
+        world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
 
         let designation = world
@@ -1240,6 +1252,7 @@ mod tests {
             height: 10,
             tiles,
         });
+        world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
 
         let designation = world
@@ -1322,6 +1335,7 @@ mod tests {
             tiles,
         });
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
+        world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
 
         // Pop targeting a non-existent designation entity
         let pop = world
@@ -1664,6 +1678,10 @@ mod tests {
             tiles,
         });
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
+        world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
+        world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
+        world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
+        world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
 
         let designation = world
             .spawn((

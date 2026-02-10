@@ -69,3 +69,4 @@ Implemented features. Architect: read this to understand current state.
 - [x] `048` Hostile Fauna — `specs/048-hostile-fauna.md` — completed 2026-10-15
 - [x] `061` Cultural Artifacts — `specs/061-cultural-artifacts.md` — completed 2026-02-09
 - [x] `067` Militia System — `specs/067-militia-system.md` — completed 2026-03-05
+- [x] `071` Structural Integrity — `specs/071-structural-integrity.md` — completed 2026-04-18

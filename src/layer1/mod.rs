@@ -68,6 +68,8 @@ pub mod spoilage;
 pub mod stockpile;
 /// Structure durability and repair.
 pub mod structure;
+/// Structural integrity (cave-ins and supports).
+pub mod structural_integrity;
 /// Technology and research system.
 pub mod tech;
 /// Terrain generation and grid management.
@@ -114,6 +116,7 @@ pub use social::*;
 pub use spoilage::*;
 pub use stockpile::*;
 pub use structure::*;
+pub use structural_integrity::*;
 pub use tech::*;
 pub use terrain::*;
 pub use utility_ai::*;
