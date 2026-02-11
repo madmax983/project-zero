@@ -14,7 +14,7 @@ use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::trade::TradeDepot;
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
-use std::collections::HashSet;
+use std::collections::HashMap;
 use strum::IntoEnumIterator;
 use strum_macros::EnumIter;
 
@@ -317,8 +317,9 @@ pub struct BuildMode {
 }
 
 /// Tracks which tiles have buildings (for placement validation).
+/// Maps (x, y) -> Entity of the building.
 #[derive(Resource, Default)]
-pub struct OccupiedTiles(pub HashSet<(i32, i32)>);
+pub struct OccupiedTiles(pub HashMap<(i32, i32), Entity>);
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum PlacementError {
@@ -346,7 +347,7 @@ fn validate_building_placement(world: &World, x: i32, y: i32) -> Result<(), Plac
         TerrainType::Water | TerrainType::Rock => Err(PlacementError::InvalidTerrain(tile)),
         _ => {
             // Check occupation
-            if occupied.0.contains(&(x, y)) {
+            if occupied.0.contains_key(&(x, y)) {
                 Err(PlacementError::Occupied)
             } else {
                 Ok(())
@@ -376,7 +377,7 @@ fn handle_placement_error(world: &mut World, error: PlacementError) {
 }
 
 #[allow(clippy::too_many_lines, clippy::match_same_arms)]
-fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType) {
+fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType) -> Entity {
     let mut entity = world.spawn((Building { building_type }, GridPosition { x, y }));
 
     // All buildings have Structure (HP)
@@ -541,6 +542,7 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
             ));
         }
     }
+    entity.id()
 }
 
 /// Attempt to place a building at the given position.
@@ -609,10 +611,10 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
     }
 
     // Spawn building
-    spawn_building(world, x, y, building_type);
+    let entity = spawn_building(world, x, y, building_type);
 
     // Mark tile occupied
-    world.resource_mut::<OccupiedTiles>().0.insert((x, y));
+    world.resource_mut::<OccupiedTiles>().0.insert((x, y), entity);
 
     if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
         log.add(format!("Construction started: {}", building_type.label()));
@@ -792,9 +794,10 @@ mod tests {
     #[test]
     fn test_occupied_tiles_insertion() {
         let mut occupied = OccupiedTiles::default();
-        occupied.0.insert((5, 10));
-        assert!(occupied.0.contains(&(5, 10)));
-        assert!(!occupied.0.contains(&(5, 11)));
+        let entity = Entity::from_raw(0);
+        occupied.0.insert((5, 10), entity);
+        assert!(occupied.0.contains_key(&(5, 10)));
+        assert!(!occupied.0.contains_key(&(5, 11)));
     }
 
     #[test]
@@ -853,7 +856,8 @@ mod tests {
             tiles: vec![TerrainType::Grass; 100],
         });
         let mut occupied = OccupiedTiles::default();
-        occupied.0.insert((5, 5));
+        let entity = Entity::from_raw(0);
+        occupied.0.insert((5, 5), entity);
         world.insert_resource(occupied);
 
         let can_place = can_place_building(&world, 5, 5);
@@ -898,7 +902,7 @@ mod tests {
 
         let occupied = world.resource::<OccupiedTiles>();
         assert!(
-            occupied.0.contains(&(5, 5)),
+            occupied.0.contains_key(&(5, 5)),
             "Tile should be marked occupied"
         );
     }

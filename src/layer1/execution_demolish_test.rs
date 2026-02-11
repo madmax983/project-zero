@@ -42,7 +42,7 @@ mod tests {
             .id();
 
         // Mark as occupied
-        world.resource_mut::<OccupiedTiles>().0.insert((5, 5));
+        world.resource_mut::<OccupiedTiles>().0.insert((5, 5), building_entity);
 
         // 2. Spawn a Designation (Demolish) at (5, 5)
         let designation_entity = world
@@ -98,7 +98,7 @@ mod tests {
         // C. OccupiedTiles should be cleared
         let occupied = world.resource::<OccupiedTiles>();
         assert!(
-            !occupied.0.contains(&(5, 5)),
+            !occupied.0.contains_key(&(5, 5)),
             "Tile (5,5) should no longer be occupied"
         );
 

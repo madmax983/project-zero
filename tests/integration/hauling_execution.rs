@@ -41,6 +41,8 @@ mod tests {
         world.insert_resource(scale::layer1::trade::MerchantState::default());
         world.insert_resource(scale::layer1::vermin::VerminState::default());
         world.insert_resource(scale::layer1::edicts::ColonyPolicies::default());
+        world.insert_resource(scale::layer1::PlanetaryTraits::default());
+        world.insert_resource(scale::layer1::factions::Factions::default());
         world.init_resource::<Events<scale::layer1::chronicle::AddChronicleEvent>>();
         world.init_resource::<Events<scale::layer1::social::AffinityChange>>();
         world.init_resource::<Events<scale::layer1::pop::PopDied>>();

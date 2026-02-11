@@ -170,7 +170,7 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
         DesignationType::Demolish => {
             let occupied = world.resource::<OccupiedTiles>();
             // Only occupied tiles can be demolished
-            occupied.0.contains(&(x, y))
+            occupied.0.contains_key(&(x, y))
         }
         DesignationType::Chop => {
             let terrain = world.resource::<TerrainGrid>();
@@ -181,7 +181,7 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
             let occupied = world.resource::<OccupiedTiles>();
             // Only occupied tiles can be repaired (assumes building)
             // Ideally check if building has Structure and < Max HP, but for MVP check occupancy is enough
-            occupied.0.contains(&(x, y))
+            occupied.0.contains_key(&(x, y))
         }
         DesignationType::SetZone(_) => true,
     }
@@ -391,7 +391,7 @@ mod tests {
         });
 
         let mut occupied = OccupiedTiles::default();
-        occupied.0.insert((5, 5));
+        occupied.0.insert((5, 5), Entity::from_raw(0));
         world.insert_resource(occupied);
 
         // Can demolish occupied tile

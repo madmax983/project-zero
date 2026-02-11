@@ -63,7 +63,7 @@ pub fn spawn_initial_anomalies(world: &mut World, count: usize) {
     };
 
     // We can't access OccupiedTiles and world at the same time if we borrow world mutably.
-    // So we copy the occupied set.
+    // So we copy the occupied map.
     let occupied = world.resource::<OccupiedTiles>().0.clone();
 
     let mut rng = rand::thread_rng();
@@ -76,7 +76,7 @@ pub fn spawn_initial_anomalies(world: &mut World, count: usize) {
         let y = rng.gen_range(0..height);
 
         // Check occupation
-        if occupied.contains(&(x as i32, y as i32)) {
+        if occupied.contains_key(&(x as i32, y as i32)) {
             continue;
         }
 

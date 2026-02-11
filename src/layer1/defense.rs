@@ -1,5 +1,4 @@
 use crate::layer1::building::{Building, OccupiedTiles};
-use crate::layer1::map::GridPosition;
 use crate::layer1::terrain::TerrainGrid;
 use bevy_ecs::prelude::*;
 
@@ -28,24 +27,16 @@ pub fn is_walkable(world: &mut World, x: i32, y: i32) -> bool {
 
     // 2. Check Buildings via OccupiedTiles
     if let Some(occupied) = world.get_resource::<OccupiedTiles>() {
-        if occupied.0.contains(&(x, y)) {
+        if let Some(&entity) = occupied.0.get(&(x, y)) {
             // Find the building entity at this position
-            let mut blocked = false;
-            let mut buildings = world.query::<(&GridPosition, &Building, Option<&Gate>)>();
-            for (pos, building, gate) in buildings.iter(world) {
-                if pos.x == x && pos.y == y {
-                    if let Some(g) = gate {
-                        if g.is_locked {
-                            blocked = true;
-                        }
-                    } else if building.building_type.is_obstacle() {
-                        blocked = true;
-                    }
-                    break;
+            if let Some(gate) = world.get::<Gate>(entity) {
+                if gate.is_locked {
+                    return false;
                 }
-            }
-            if blocked {
-                return false;
+            } else if let Some(building) = world.get::<Building>(entity) {
+                if building.building_type.is_obstacle() {
+                    return false;
+                }
             }
         }
     }
@@ -134,14 +125,16 @@ mod tests {
         let mut world = setup_world();
 
         // Place Wall at (1, 0)
-        world.spawn((
-            Building {
-                building_type: BuildingType::Wall,
-            },
-            GridPosition { x: 1, y: 0 },
-            Health::default(),
-        ));
-        world.resource_mut::<OccupiedTiles>().0.insert((1, 0));
+        let wall = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Wall,
+                },
+                GridPosition { x: 1, y: 0 },
+                Health::default(),
+            ))
+            .id();
+        world.resource_mut::<OccupiedTiles>().0.insert((1, 0), wall);
 
         // Pop at (0,0) trying to move to (2,0)
         let _pop = world
@@ -174,14 +167,16 @@ mod tests {
         let mut world = setup_world();
 
         // Gate at (1, 0)
-        world.spawn((
-            Building {
-                building_type: BuildingType::Gate,
-            },
-            GridPosition { x: 1, y: 0 },
-            crate::layer1::defense::Gate { is_locked: false },
-        ));
-        world.resource_mut::<OccupiedTiles>().0.insert((1, 0));
+        let gate = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Gate,
+                },
+                GridPosition { x: 1, y: 0 },
+                crate::layer1::defense::Gate { is_locked: false },
+            ))
+            .id();
+        world.resource_mut::<OccupiedTiles>().0.insert((1, 0), gate);
 
         assert!(crate::layer1::defense::is_walkable(&mut world, 1, 0));
     }

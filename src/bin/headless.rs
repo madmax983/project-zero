@@ -403,7 +403,7 @@ fn build_at(world: &mut World, building_type: BuildingType, x: i32, y: i32) {
 
         if tile.is_none() {
             println!("Failed: ({x}, {y}) is out of bounds");
-        } else if occupied.0.contains(&(x, y)) {
+        } else if occupied.0.contains_key(&(x, y)) {
             println!("Failed: ({x}, {y}) is already occupied");
         } else if let Some(t) = tile {
             println!("Failed: cannot build on {t:?} at ({x}, {y})");
@@ -665,7 +665,7 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
         .iter(world)
         .any(|(_, p)| p.x == x && p.y == y);
 
-    let occupied = world.resource::<OccupiedTiles>().0.contains(&(x, y));
+    let occupied = world.resource::<OccupiedTiles>().0.contains_key(&(x, y));
 
     println!(
         "TILE_INFO: {x} {y} terrain={terrain_name} walkable={walkable} buildable={buildable} occupied={occupied} pop={has_pop} farm={has_farm} housing={has_housing}"

@@ -6,6 +6,7 @@
 )]
 
 use crate::layer1::GridPosition;
+use crate::layer1::building::OccupiedTiles;
 use crate::layer1::structure::Structure;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use bevy_ecs::prelude::*;
@@ -107,15 +108,16 @@ pub fn fire_spread_system(world: &mut World) {
                 }
             }
 
-            // Check Buildings (Flammable)
+            // Check Buildings (Flammable) via OccupiedTiles
             if !should_ignite {
-                let mut building_query = world.query::<(&GridPosition, &Flammable)>();
-                for (b_pos, _) in building_query.iter(world) {
-                    if *b_pos == n_pos {
-                        if rng.gen_bool(0.1) {
-                            should_ignite = true;
+                if let Some(occupied) = world.get_resource::<OccupiedTiles>() {
+                    if let Some(&entity) = occupied.0.get(&(nx, ny)) {
+                        // Check if the entity is Flammable
+                        if world.get::<Flammable>(entity).is_some() {
+                            if rng.gen_bool(0.1) {
+                                should_ignite = true;
+                            }
                         }
-                        break;
                     }
                 }
             }
@@ -190,23 +192,48 @@ pub fn fire_damage_system(world: &mut World) {
     // Destroy flammable entities at burnt locations
     // We do this by finding all Flammable entities at the burnt positions
     // This requires a query scan which is O(N_buildings * N_burnt_tiles), ok for MVP
+    // Optimization: Use OccupiedTiles lookup
     if !burnt_entities.is_empty() {
         let mut entities_to_destroy = Vec::new();
-        // Check for Structure component to avoid destroying durable buildings
-        let mut query = world.query::<(Entity, &GridPosition, &Flammable, Option<&Structure>)>();
 
-        for (entity, pos, _flammable, structure) in query.iter(world) {
-            if burnt_entities.contains(pos) {
-                // If it's a structure, it survives the fire burning out (unless HP was 0, handled elsewhere)
-                if structure.is_some() {
-                    continue;
+        // We can optimize this loop using OccupiedTiles if available
+        let occupied_opt = world.get_resource::<OccupiedTiles>().map(|o| o.0.clone());
+
+        if let Some(occupied) = occupied_opt {
+             for pos in &burnt_entities {
+                 if let Some(&entity) = occupied.get(&(pos.x, pos.y)) {
+                     if let Some((_, _, _flammable, structure)) = world.query::<(Entity, &GridPosition, &Flammable, Option<&Structure>)>().get(world, entity).ok() {
+                         // If it's a structure, it survives the fire burning out (unless HP was 0, handled elsewhere)
+                        if structure.is_some() {
+                            continue;
+                        }
+                        entities_to_destroy.push(entity);
+                     }
+                 }
+             }
+        } else {
+             // Fallback to query scan if OccupiedTiles missing (should not happen usually)
+            let mut query = world.query::<(Entity, &GridPosition, &Flammable, Option<&Structure>)>();
+            for (entity, pos, _flammable, structure) in query.iter(world) {
+                if burnt_entities.contains(pos) {
+                    if structure.is_some() {
+                        continue;
+                    }
+                    entities_to_destroy.push(entity);
                 }
-                entities_to_destroy.push(entity);
             }
         }
 
         for entity in entities_to_destroy {
+            // Retrieve position before despawning/borrowing world mutably
+            let pos_opt = world.get::<GridPosition>(entity).copied();
             world.despawn(entity);
+            // Also remove from OccupiedTiles
+            if let Some(pos) = pos_opt {
+                if let Some(mut occupied) = world.get_resource_mut::<OccupiedTiles>() {
+                    occupied.0.remove(&(pos.x, pos.y));
+                }
+            }
         }
     }
 }
@@ -245,6 +272,7 @@ mod tests {
             height: 10,
             tiles,
         });
+        world.insert_resource(OccupiedTiles::default());
 
         // Spawn Fire at (5,5)
         world.spawn((
@@ -280,6 +308,7 @@ mod tests {
             height: 10,
             tiles: vec![TerrainType::Grass; 100],
         });
+        world.insert_resource(OccupiedTiles::default());
 
         // Fire at (5,5)
         world.spawn((
@@ -291,13 +320,16 @@ mod tests {
         ));
 
         // Housing at (5,6) - Flammable
-        world.spawn((
+        let housing = world.spawn((
             Building {
                 building_type: BuildingType::Housing,
             },
             Flammable::default(),
             GridPosition { x: 5, y: 6 },
-        ));
+        )).id();
+
+        // Register in OccupiedTiles (Required for O(1) fire spread check)
+        world.resource_mut::<OccupiedTiles>().0.insert((5, 6), housing);
 
         for _ in 0..50 {
             // Increased iterations
@@ -325,6 +357,7 @@ mod tests {
             height: 10,
             tiles,
         });
+        world.insert_resource(OccupiedTiles::default());
 
         world.spawn((
             Fire {
@@ -356,6 +389,7 @@ mod tests {
             height: 10,
             tiles,
         });
+        world.insert_resource(OccupiedTiles::default());
 
         // Fire at (5,5) with short lifetime
         let fire_entity = world

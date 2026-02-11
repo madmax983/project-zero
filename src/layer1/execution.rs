@@ -474,18 +474,16 @@ fn is_walkable(
 
     // Check Buildings
     if let Some(occupied_tiles) = occupied {
-        if occupied_tiles.0.contains(&(x, y)) {
-            for (pos, building, gate) in buildings.iter() {
-                if pos.x == x && pos.y == y {
-                    if let Some(g) = gate {
-                        if g.is_locked {
-                            return false;
-                        }
-                    } else if building.building_type.is_obstacle() {
+        if let Some(&entity) = occupied_tiles.0.get(&(x, y)) {
+            if let Ok((_, building, gate)) = buildings.get(entity) {
+                if let Some(g) = gate {
+                    if g.is_locked {
                         return false;
                     }
-                    return true;
+                } else if building.building_type.is_obstacle() {
+                    return false;
                 }
+                return true;
             }
         }
     }
@@ -518,19 +516,25 @@ fn execute_demolish(world: &mut World, designation_entity: Entity) -> bool {
         .get::<GridPosition>(designation_entity)
         .copied()
         .is_some_and(|designation_pos| {
-            // Find building at this position
-            // We collect to avoid borrow issues if we need to mutate world later
+            let pos = (designation_pos.x, designation_pos.y);
+            // Find building at this position via OccupiedTiles
             let building_entity = world
-                .query::<(Entity, &GridPosition, &Building)>()
-                .iter(world)
-                .find(|(_, pos, _)| pos.x == designation_pos.x && pos.y == designation_pos.y)
-                .map(|(e, _, _)| e);
+                .get_resource::<OccupiedTiles>()
+                .and_then(|occupied| occupied.0.get(&pos).copied());
 
             if let Some(entity) = building_entity {
-                world.despawn(entity);
-                // Remove from OccupiedTiles
-                if let Some(mut occupied) = world.get_resource_mut::<OccupiedTiles>() {
-                    occupied.0.remove(&(designation_pos.x, designation_pos.y));
+                // Verify entity still exists and is a building (sanity check)
+                if world.get::<Building>(entity).is_some() {
+                    world.despawn(entity);
+                    // Remove from OccupiedTiles
+                    if let Some(mut occupied) = world.get_resource_mut::<OccupiedTiles>() {
+                        occupied.0.remove(&pos);
+                    }
+                } else {
+                    // Stale entry in OccupiedTiles? Remove it.
+                    if let Some(mut occupied) = world.get_resource_mut::<OccupiedTiles>() {
+                        occupied.0.remove(&pos);
+                    }
                 }
             }
 
