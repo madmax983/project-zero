@@ -2358,7 +2358,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Omens & Taboos
+## Omens & Taboos [SPECCED]
 
 **Layer:** 1
 
