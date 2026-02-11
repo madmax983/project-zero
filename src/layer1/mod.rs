@@ -240,3 +240,7 @@ mod sleepwalking_tests;
 /// Pop factions system (Spec 068).
 pub mod factions;
 pub use factions::*;
+
+/// Weather system (Spec 079).
+pub mod weather;
+pub use weather::*;

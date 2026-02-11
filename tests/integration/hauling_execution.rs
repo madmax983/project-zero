@@ -45,6 +45,9 @@ mod tests {
         world.init_resource::<Events<scale::layer1::social::AffinityChange>>();
         world.init_resource::<Events<scale::layer1::pop::PopDied>>();
         world.insert_resource(scale::layer1::visitor::VisitorSource::default());
+        world.insert_resource(scale::layer1::weather::WeatherState::default());
+        world.insert_resource(scale::layer1::quirks::PlanetaryTraits::default());
+        world.insert_resource(scale::layer1::factions::Factions::default());
 
         let generator = scale::shared::narrative::NarrativeGenerator::from_embedded();
         world.insert_resource(scale::shared::colony::ColonyName {

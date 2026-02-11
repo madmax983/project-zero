@@ -3,7 +3,7 @@ use scale::layer1::{
     TechState, TerrainGrid, TerrainType, try_place_building,
 };
 use scale::setup::setup_world;
-use scale::simulation::run_simulation_tick;
+use bevy_ecs::system::RunSystemOnce;
 
 #[test]
 fn test_tavern_emits_light() {
@@ -29,8 +29,8 @@ fn test_tavern_emits_light() {
     let placed = try_place_building(&mut world, 10, 10, BuildingType::Tavern);
     assert!(placed, "Should be able to place Tavern");
 
-    // 6. Run Tick (updates lighting)
-    run_simulation_tick(&mut world);
+    // 6. Run Lighting Systems Manually (avoid DayNightCycle interference)
+    world.run_system_once(scale::layer1::lighting::update_lighting_system).unwrap();
 
     // 7. Check LightMap
     let light_map = world.resource::<LightMap>();
@@ -86,8 +86,9 @@ fn test_building_light_affects_pop_speed() {
         ))
         .id();
 
-    // 8. Run Tick
-    run_simulation_tick(&mut world);
+    // 8. Run Systems Manually
+    world.run_system_once(scale::layer1::lighting::update_lighting_system).unwrap();
+    world.run_system_once(scale::layer1::lighting::apply_lighting_penalties_system).unwrap();
 
     // 9. Check Speeds
     let speed_lit = world.get::<Speed>(pop_lit).unwrap().current;
