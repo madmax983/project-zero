@@ -18,3 +18,4 @@ Tasks currently being implemented. Builders: if a task is here, pick something e
 - [ ] `080` Planetary Quirks — `specs/080-planetary-quirks.md` — claimed 2026-10-18
 - [ ] `077` Emergent Festivals — `specs/077-emergent-festivals.md` — claimed 2026-10-18
 - [ ] `069` Mentorship System — `specs/069-mentorship-system.md` — claimed 2026-10-19
+- [ ] `086` The Stowaway — `specs/086-the-stowaway.md` — claimed 2026-10-20

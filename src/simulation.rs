@@ -37,10 +37,10 @@ use crate::layer1::{
         apply_founder_benefits_system, apply_mood_modifiers_system,
         check_generational_friction_system, mood_lifecycle_system,
     },
-    spoilage_system, starvation_damage_system, track_plan_outcomes_system,
+    spoilage_system, starvation_damage_system, theft_system, track_plan_outcomes_system,
     update_action_timer_system, update_cabin_fever_system, update_lighting_system,
     update_noise_system, update_resource_caps_system, update_weather_system, vermin_growth_system,
-    vermin_morale_system, work_execution_system,
+    vermin_morale_system, work_execution_system, infiltration_system, discovery_system,
 };
 use crate::shared::time::SimulationTime;
 
@@ -120,6 +120,8 @@ pub fn build_simulation_schedule() -> Schedule {
         haul_system.after(arrival_handler_system),
         process_scan_system.after(arrival_handler_system),
         update_cabin_fever_system.after(movement_system),
+        infiltration_system.after(movement_system),
+        discovery_system.after(process_scan_system),
     ));
 
     #[cfg(feature = "nova")]
@@ -195,11 +197,15 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(consume_food_system)
             .after(vermin_growth_system),
         crate::layer1::visitor::visitor_lifecycle_system.after(consume_food_system),
+        theft_system.after(consume_food_system).before(decay_needs_system),
         decay_needs_system.after(consume_food_system),
         apply_cabin_fever_morale_system
             .after(decay_needs_system)
             .before(mood_lifecycle_system),
         mood_lifecycle_system.after(decay_needs_system),
+    ));
+
+    schedule.add_systems((
         crate::layer1::justice::update_inmates_system.after(decay_needs_system),
         crate::layer1::day_night::circadian_rhythm_system.after(consume_food_system),
         aging_system.after(consume_food_system),
