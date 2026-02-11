@@ -5,8 +5,6 @@
 
 /// Pop actions logic.
 pub mod actions;
-/// Defensive structures and logic.
-pub mod defense;
 /// Game balance constants.
 pub mod balance;
 /// Beauty and decoration system.
@@ -16,6 +14,8 @@ pub mod building;
 pub mod chronicle;
 /// Chronicle system and historical records.
 pub mod clothing;
+/// Defensive structures and logic.
+pub mod defense;
 /// Designation system for player tools.
 pub mod designation;
 /// Colony policies and edicts.
@@ -202,3 +202,7 @@ pub use quirks::*;
 
 #[cfg(test)]
 mod quirks_tests;
+
+/// Pop factions system (Spec 068).
+pub mod factions;
+pub use factions::*;

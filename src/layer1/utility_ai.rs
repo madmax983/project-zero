@@ -49,6 +49,7 @@ use crate::layer1::fauna::Fauna;
 use crate::layer1::funeral::{Corpse, Grave, evaluate_bury_corpse};
 use crate::layer1::housing::Housing;
 use crate::layer1::items::Equipment;
+use crate::layer1::justice::Inmate;
 use crate::layer1::map::GridPosition;
 use crate::layer1::medical::{Hospital, evaluate_seek_medical_care};
 use crate::layer1::needs::Needs;
@@ -60,7 +61,6 @@ use crate::layer1::structure::Structure;
 use crate::layer1::tech::Library;
 use crate::layer1::unrest::{MentalBreakType, MentalState};
 use crate::shared::time::SimulationTime;
-use crate::layer1::justice::Inmate;
 use bevy_ecs::prelude::*;
 
 /// System to update commitment timers.

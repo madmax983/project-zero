@@ -18,8 +18,7 @@ use crate::gpu::evaluate::gpu_evaluate_actions;
 use crate::layer1::{
     AddChronicleEvent, AffinityChange, PopDied, advance_season_system, aging_system,
     apply_lighting_penalties_system, apply_noise_effects_system, apply_quirk_modifiers_system,
-    arrival_handler_system,
-    art_generation_system, art_observation_system, check_milestones_system,
+    arrival_handler_system, art_generation_system, art_observation_system, check_milestones_system,
     chronicle_event_handler_system, chronicle_rumor_bridge_system, clean_dead_residents_system,
     clean_dead_workers_system, cleanup_previous_assignment_system, clothing_wear_system,
     combat_execution_system, consume_food_system, death_system, decay_needs_system,
@@ -128,6 +127,9 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::visitor::spawn_visitor_system.after(work_execution_system),
         crate::layer1::energy::power_grid_system.after(work_execution_system),
         art_generation_system.after(work_execution_system),
+        crate::layer1::factions::update_faction_membership_system.after(work_execution_system),
+        crate::layer1::factions::update_faction_satisfaction_system
+            .after(crate::layer1::factions::update_faction_membership_system),
     ));
 
     #[cfg(feature = "nova")]
@@ -193,7 +195,8 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::rumor::exchange_rumors_system.after(death_system),
         crate::layer1::funeral::grief_system.after(death_system),
         crate::layer1::unrest::check_mental_break_system.after(decay_needs_system),
-        crate::layer1::justice::check_crime_system.after(crate::layer1::unrest::check_mental_break_system),
+        crate::layer1::justice::check_crime_system
+            .after(crate::layer1::unrest::check_mental_break_system),
         crate::layer1::unrest::recover_mental_break_system.after(decay_needs_system),
         // Process new rumors and affinity changes
         modify_affinity_system.after(crate::layer1::rumor::exchange_rumors_system),

@@ -1,8 +1,8 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::pop::Speed;
+use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::energy::PowerSource;
-use crate::layer1::building::{Building, BuildingType};
+use crate::layer1::pop::Speed;
+use bevy_ecs::prelude::*;
 
 /// Traits that modify planetary conditions.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -120,7 +120,7 @@ pub fn apply_quirk_modifiers_system(
     // We use a hardcoded base value (10.0) because PowerSource does not store one.
     for (mut source, building) in &mut power_sources {
         if matches!(building.building_type, BuildingType::Generator) {
-             source.output = BASE_GENERATOR_OUTPUT * power_mod;
+            source.output = BASE_GENERATOR_OUTPUT * power_mod;
         }
     }
 }

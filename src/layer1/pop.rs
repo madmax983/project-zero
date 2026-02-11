@@ -22,6 +22,7 @@
 //! * `PopAction`: Current task state.
 //! * `UtilityWeights`: Personality/learning factors.
 
+use super::factions::FactionMember;
 use super::health::Health;
 use super::items::Equipment;
 use super::lifecycle::Age;
@@ -181,6 +182,7 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
                 UtilityWeights::default(),
                 Knowledge::default(),
                 Age::new(rng.gen_range(20..40)),
+                FactionMember::default(),
             ));
             spawned += 1;
         }
