@@ -31,6 +31,7 @@ use crate::layer1::{
     track_plan_outcomes_system, update_action_timer_system, update_lighting_system,
     update_noise_system, update_resource_caps_system, vermin_growth_system, vermin_morale_system,
     work_execution_system,
+    check_sleepwalking_start_system, sleepwalk_end_system, assign_sleepwalk_target_system,
 };
 use crate::shared::time::SimulationTime;
 
@@ -80,8 +81,10 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::zone::apply_zone_designation_system.after(update_action_timer_system),
         crate::layer1::room_quality::apply_waking_thoughts_system
             .after(crate::layer1::zone::apply_zone_designation_system),
-        cleanup_previous_assignment_system
+        assign_sleepwalk_target_system
             .after(crate::layer1::room_quality::apply_waking_thoughts_system),
+        cleanup_previous_assignment_system
+            .after(assign_sleepwalk_target_system),
         process_start_plan_system.after(cleanup_previous_assignment_system),
         crate::layer1::fauna::fauna_behavior_system.after(process_start_plan_system),
         crate::layer1::day_night::update_day_night_cycle_system.after(process_start_plan_system),
@@ -195,6 +198,8 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::rumor::exchange_rumors_system.after(death_system),
         crate::layer1::funeral::grief_system.after(death_system),
         crate::layer1::unrest::check_mental_break_system.after(decay_needs_system),
+        check_sleepwalking_start_system.after(decay_needs_system),
+        sleepwalk_end_system.after(decay_needs_system),
         crate::layer1::justice::check_crime_system
             .after(crate::layer1::unrest::check_mental_break_system),
         crate::layer1::unrest::recover_mental_break_system.after(decay_needs_system),

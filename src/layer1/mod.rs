@@ -200,8 +200,15 @@ pub use justice::*;
 pub mod quirks;
 pub use quirks::*;
 
+/// Sleepwalking mechanics (Spec 081).
+pub mod sleepwalking;
+pub use sleepwalking::*;
+
 #[cfg(test)]
 mod quirks_tests;
+
+#[cfg(test)]
+mod sleepwalking_tests;
 
 /// Pop factions system (Spec 068).
 pub mod factions;

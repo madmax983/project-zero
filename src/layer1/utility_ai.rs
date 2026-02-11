@@ -239,6 +239,11 @@ pub fn evaluate_actions_system(world: &mut World) {
                 }
                 MentalBreakType::Binge => ActionType::Binge,
                 MentalBreakType::Daze => ActionType::Daze,
+                MentalBreakType::Sleepwalking => {
+                    // Sleepwalkers just wander. Target is assigned by assign_sleepwalk_target_system.
+                    best_target = None;
+                    ActionType::Sleepwalking
+                }
             };
         } else {
             // Check for Drafted
@@ -483,7 +488,8 @@ pub fn track_plan_outcomes_system(
             | ActionType::Fight
             | ActionType::Refine
             | ActionType::Farm
-            | ActionType::Warden => true,
+            | ActionType::Warden
+            | ActionType::Sleepwalking => true,
         };
 
         #[allow(clippy::cast_possible_truncation)]

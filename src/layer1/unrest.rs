@@ -21,6 +21,8 @@ pub enum MentalBreakType {
     Binge,
     /// The Pop wanders aimlessly, unresponsive to commands.
     Daze,
+    /// The Pop sleepwalks while resting.
+    Sleepwalking,
 }
 
 /// System to check if Pops should suffer a mental break based on morale.
