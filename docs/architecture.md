@@ -17,6 +17,7 @@ Container_Boundary(Simulation, "Simulation Core (Layer 1)") {
     Component(DomainActions, "Domain Actions", "medical.rs, funeral.rs", "Specific Logic")
 
     Component(Pops, "Pops", "pop.rs", "Agents with Needs & Thoughts")
+    Component(CabinFever, "Cabin Fever System", "cabin_fever.rs", "Tracks Confinement & Crowding")
     Component(World, "World Entities", "farm.rs, housing.rs", "Interactable Buildings")
     Component(Resources, "Colony Resources", "resources.rs", "Global Inventory")
     Component(Map, "Map/Terrain", "map.rs", "Spatial Grid")
@@ -44,6 +45,7 @@ Rel(UtilityOrchestrator, Map, "Calculates Distance")
 
 Rel(Pops, World, "Interacts with")
 Rel(Pops, Resources, "Consumes/Produces")
+Rel(Pops, CabinFever, "Accumulates Stress")
 
 Rel(MapRender, Shared, "Reads State")
 Rel(MapRender, Map, "Reads Entities")
@@ -207,3 +209,4 @@ Rel(Shared, Events, "Consumes")
 - [ADR 008: Modular Utility AI Structure](./adr/008-modular-utility-ai.md)
 - [ADR 012: Decouple Storage from Core](./adr/012-decouple-storage-from-core.md)
 - [ADR 013: GPU Accelerated Utility AI](./adr/013-gpu-accelerated-utility-ai.md)
+- [ADR 014: Cabin Fever Mechanics](./adr/014-cabin-fever-mechanics.md)
