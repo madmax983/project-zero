@@ -2232,7 +2232,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Cabin Fever
+## Cabin Fever [SPECCED]
 
 **Layer:** 1
 
