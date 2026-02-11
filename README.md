@@ -162,7 +162,19 @@ scale/
 **Feature flags:**
 - `native` (default) — Terminal mode via crossterm
 - `wasm` — Browser mode via ratzilla
-- `nova` — Enables experimental features (e.g. Ghosts)
+- `nova` — Enables experimental features (Ghosts, Miasma)
+
+## Experimental Features (Project Nova)
+
+These features are in incubation and may change or break.
+
+**Available by default:**
+- **Dreams:** Pops dream about history and gain inspiration. (`scale::experimental::dreams`)
+- **Biography:** Pops record their life events. (`scale::experimental::biography`)
+
+**Requires `--features nova`:**
+- **Ghosts:** Spirits of the dead haunt the colony. (`scale::experimental::ghosts`)
+- **Miasma:** Bad smells from waste and corpses affect morale. (`scale::experimental::miasma`)
 
 **Profiles:**
 - `dev` — Optimized for fast iteration (opt-level = 1)
