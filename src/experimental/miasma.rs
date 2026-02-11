@@ -3,13 +3,13 @@
 //! Adds a layer of "bad smell" caused by waste, corpses, and landfills.
 //! Affects morale and can cause sickness.
 
-use bevy_ecs::prelude::*;
+use crate::layer1::building::{Building, BuildingType};
+use crate::layer1::health::Health;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
-use crate::layer1::health::Health;
-use crate::layer1::building::{Building, BuildingType};
-use crate::layer1::resources::{ResourceItem, ResourceType};
 use crate::layer1::pop::Pop;
+use crate::layer1::resources::{ResourceItem, ResourceType};
+use bevy_ecs::prelude::*;
 
 /// Grid tracking miasma levels (0.0 to 1.0).
 #[derive(Resource)]
@@ -145,10 +145,11 @@ pub fn apply_miasma_effects_system(
 
         if miasma > 0.6 && sickness.is_none() {
             // Chance to get sick
-            if rng.gen_bool(0.005) { // 0.5% chance per tick
+            if rng.gen_bool(0.005) {
+                // 0.5% chance per tick
                 commands.entity(entity).insert(Sickness {
                     severity: miasma, // Severity matches exposure
-                    duration: 500, // 500 ticks (~2 days)
+                    duration: 500,    // 500 ticks (~2 days)
                 });
             }
         }
@@ -203,14 +204,19 @@ mod tests {
 
         // Spawn Waste
         world.spawn((
-            ResourceItem { resource_type: ResourceType::Waste, amount: 10.0 },
-            GridPosition { x: 0, y: 0 }
+            ResourceItem {
+                resource_type: ResourceType::Waste,
+                amount: 10.0,
+            },
+            GridPosition { x: 0, y: 0 },
         ));
 
         // Spawn Landfill
         world.spawn((
-            Building { building_type: BuildingType::Landfill },
-            GridPosition { x: 5, y: 5 }
+            Building {
+                building_type: BuildingType::Landfill,
+            },
+            GridPosition { x: 5, y: 5 },
         ));
 
         // Spawn Corpse
@@ -221,8 +227,11 @@ mod tests {
         // Let's check `src/layer1/funeral.rs` content from memory or read it?
         // Ah, in `health.rs` I saw: `Corpse { name: ..., decay: ... }`.
         world.spawn((
-            Corpse { name: "John Doe".to_string(), decay: 0.0 },
-            GridPosition { x: 9, y: 9 }
+            Corpse {
+                name: "John Doe".to_string(),
+                decay: 0.0,
+            },
+            GridPosition { x: 9, y: 9 },
         ));
 
         let mut schedule = Schedule::default();
@@ -242,11 +251,16 @@ mod tests {
         grid.add(0, 0, 0.8); // High miasma
         world.insert_resource(grid);
 
-        let entity = world.spawn((
-            Pop,
-            GridPosition { x: 0, y: 0 },
-            Needs { leisure: 1.0, ..Default::default() },
-        )).id();
+        let entity = world
+            .spawn((
+                Pop,
+                GridPosition { x: 0, y: 0 },
+                Needs {
+                    leisure: 1.0,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(apply_miasma_effects_system);
@@ -259,10 +273,18 @@ mod tests {
     #[test]
     fn test_sickness_progression() {
         let mut world = World::new();
-        let entity = world.spawn((
-            Sickness { severity: 1.0, duration: 10 },
-            Health { current: 100.0, max: 100.0 }
-        )).id();
+        let entity = world
+            .spawn((
+                Sickness {
+                    severity: 1.0,
+                    duration: 10,
+                },
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                },
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(sickness_progression_system);

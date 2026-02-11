@@ -5,11 +5,11 @@
 //! - Weather transitions based on Seasons.
 //! - Effects on pop speed.
 
-use bevy_ecs::prelude::*;
-use rand::Rng;
-use crate::layer1::seasons::{Season, SeasonState};
 use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer1::pop::Speed;
+use crate::layer1::seasons::{Season, SeasonState};
+use bevy_ecs::prelude::*;
+use rand::Rng;
 
 /// Types of weather conditions.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
@@ -123,25 +123,41 @@ fn pick_weather_for_season(season: Season, rng: &mut impl Rng) -> WeatherType {
     let roll = rng.gen_range(0.0..1.0);
     match season {
         Season::Spring => {
-            if roll < 0.6 { WeatherType::Clear }
-            else if roll < 0.9 { WeatherType::Rain }
-            else { WeatherType::Fog }
-        },
+            if roll < 0.6 {
+                WeatherType::Clear
+            } else if roll < 0.9 {
+                WeatherType::Rain
+            } else {
+                WeatherType::Fog
+            }
+        }
         Season::Summer => {
-            if roll < 0.7 { WeatherType::Clear }
-            else if roll < 0.85 { WeatherType::Heatwave }
-            else { WeatherType::Storm }
-        },
+            if roll < 0.7 {
+                WeatherType::Clear
+            } else if roll < 0.85 {
+                WeatherType::Heatwave
+            } else {
+                WeatherType::Storm
+            }
+        }
         Season::Autumn => {
-            if roll < 0.5 { WeatherType::Clear }
-            else if roll < 0.8 { WeatherType::Rain }
-            else { WeatherType::Fog }
-        },
+            if roll < 0.5 {
+                WeatherType::Clear
+            } else if roll < 0.8 {
+                WeatherType::Rain
+            } else {
+                WeatherType::Fog
+            }
+        }
         Season::Winter => {
-            if roll < 0.4 { WeatherType::Clear }
-            else if roll < 0.9 { WeatherType::Snow }
-            else { WeatherType::Storm } // Blizzard
-        },
+            if roll < 0.4 {
+                WeatherType::Clear
+            } else if roll < 0.9 {
+                WeatherType::Snow
+            } else {
+                WeatherType::Storm
+            } // Blizzard
+        }
     }
 }
 
@@ -150,10 +166,7 @@ fn pick_weather_for_season(season: Season, rng: &mut impl Rng) -> WeatherType {
 /// Multiplies `Speed.current` by the weather modifier.
 /// Must run AFTER `apply_lighting_penalties_system` (which resets/sets base speed)
 /// and BEFORE `movement_system`.
-pub fn apply_weather_effects_system(
-    mut pops: Query<&mut Speed>,
-    weather: Res<WeatherState>,
-) {
+pub fn apply_weather_effects_system(mut pops: Query<&mut Speed>, weather: Res<WeatherState>) {
     let modifier = weather.current_weather.speed_modifier();
     // Optimization: Don't iterate if modifier is 1.0 (Clear)
     // However, if we skip 1.0, we rely on previous systems to have set the "clean" state.
@@ -171,9 +184,9 @@ pub fn apply_weather_effects_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::seasons::{Season, SeasonState};
     use crate::layer1::chronicle::Chronicle;
     use crate::layer1::pop::{Pop, Speed};
+    use crate::layer1::seasons::{Season, SeasonState};
     use crate::shared::time::SimulationTime;
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
@@ -244,14 +257,16 @@ mod tests {
             duration_remaining: 100,
         });
 
-        let pop = world.spawn((
-            Pop,
-            Speed {
-                base: 1.0,
-                current: 1.0,
-                accumulator: 0.0,
-            },
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Speed {
+                    base: 1.0,
+                    current: 1.0,
+                    accumulator: 0.0,
+                },
+            ))
+            .id();
 
         world.run_system_once(apply_weather_effects_system).unwrap();
 
@@ -270,19 +285,25 @@ mod tests {
             duration_remaining: 100,
         });
 
-        let pop = world.spawn((
-            Pop,
-            Speed {
-                base: 1.0,
-                current: 0.5, // Already slowed by darkness/lighting
-                accumulator: 0.0,
-            },
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Speed {
+                    base: 1.0,
+                    current: 0.5, // Already slowed by darkness/lighting
+                    accumulator: 0.0,
+                },
+            ))
+            .id();
 
         world.run_system_once(apply_weather_effects_system).unwrap();
 
         let speed = world.get::<Speed>(pop).unwrap();
         // Should be 0.5 (current) * 0.5 (weather) = 0.25
-        assert!((speed.current - 0.25).abs() < f32::EPSILON, "Expected 0.25, got {}", speed.current);
+        assert!(
+            (speed.current - 0.25).abs() < f32::EPSILON,
+            "Expected 0.25, got {}",
+            speed.current
+        );
     }
 }

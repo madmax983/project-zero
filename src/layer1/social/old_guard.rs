@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::balance::TICKS_PER_YEAR;
-use crate::layer1::pop::Pop;
 use crate::layer1::needs::Needs;
+use crate::layer1::pop::Pop;
+use bevy_ecs::prelude::*;
 
 /// The number of years after which new arrivals are considered Immigrants instead of Founders.
 pub const FOUNDER_CUTOFF_YEAR: u64 = 5;
@@ -39,9 +39,7 @@ impl Arrival {
 /// Modifiers act as a regeneration or decay acceleration on Leisure.
 /// Scale: 1.0 modifier value ~= 0.0005 leisure change per tick.
 /// A +5.0 buff provides +0.0025/tick, overcoming natural decay (0.0015).
-pub fn apply_mood_modifiers_system(
-    mut query: Query<(&MoodModifiers, &mut Needs)>,
-) {
+pub fn apply_mood_modifiers_system(mut query: Query<(&MoodModifiers, &mut Needs)>) {
     const MODIFIER_SCALE: f32 = 0.0005;
 
     for (modifiers, mut needs) in &mut query {
@@ -85,7 +83,10 @@ pub struct MoodModifiers {
 #[allow(clippy::type_complexity)]
 pub fn apply_founder_benefits_system(
     mut commands: Commands,
-    mut query: Query<(Entity, &Arrival, Option<&mut MoodModifiers>), (With<Pop>, Without<Generation>)>,
+    mut query: Query<
+        (Entity, &Arrival, Option<&mut MoodModifiers>),
+        (With<Pop>, Without<Generation>),
+    >,
 ) {
     for (entity, arrival, mut modifiers_opt) in &mut query {
         let generation = arrival.generation();

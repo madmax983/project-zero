@@ -7,7 +7,10 @@ fn test_take_damage_negative_healing() {
     // Exploit: healing via negative damage
     health.take_damage(-50.0);
     // Should stay 50.0 if fixed, but currently becomes 100.0
-    assert_eq!(health.current, 50.0, "Health should not increase from negative damage");
+    assert_eq!(
+        health.current, 50.0,
+        "Health should not increase from negative damage"
+    );
 }
 
 #[test]
