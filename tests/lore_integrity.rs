@@ -71,6 +71,24 @@ mod tests {
             "RUIN_DISCOVERY template missing"
         );
 
+        // New templates added for Energy, Visitors, Factions, Atmosphere
+        assert!(
+            generator.generate("POWER_OUTAGE", &context).is_ok(),
+            "POWER_OUTAGE template missing"
+        );
+        assert!(
+            generator.generate("VISITOR_ARRIVAL", &context).is_ok(),
+            "VISITOR_ARRIVAL template missing"
+        );
+        assert!(
+            generator.generate("FACTION_FORMED", &context).is_ok(),
+            "FACTION_FORMED template missing"
+        );
+        assert!(
+            generator.generate("ATMOSPHERE_EVENT", &context).is_ok(),
+            "ATMOSPHERE_EVENT template missing"
+        );
+
         println!("Lore parsing successful!");
     }
 }

@@ -1221,3 +1221,64 @@ Condition of discovered ruins.
 - still humming with power
 - overgrown
 - crystallized
+
+---
+
+## Energy Fragments
+
+### [POWER_SOURCE]
+Names for power generating structures or systems.
+
+- the reactor
+- the sun-catcher
+- the void-siphon
+- the core-tap
+- the dynamo
+- the battery-bank
+- the pulse-heart
+
+---
+
+## Visitor Fragments
+
+### [VISITOR_TYPE]
+Types of visitors arriving at the colony.
+
+- pilgrim
+- refugee
+- trader
+- wanderer
+- exile
+- messenger
+- surveyor
+
+---
+
+## Faction Fragments
+
+### [FACTION_NAME]
+Names for political/social groups.
+
+- The Iron Circle
+- The Seed-Keepers
+- The Void-Born
+- The Old Guard
+- The Machine-Sect
+- The Star-Watch
+- The Silence-Keepers
+
+---
+
+## Atmosphere Fragments
+
+### [ATMOSPHERE_DESCRIPTOR]
+Adjectives for air quality or atmospheric conditions.
+
+- thin
+- choking
+- sweet
+- stale
+- rich
+- toxic
+- heavy
+- sharp
