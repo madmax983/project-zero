@@ -2399,3 +2399,87 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Boost morale now (Feast) vs. Maintain sustainable expectations (Rationing).
 
 ---
+
+## Spontaneous Architecture
+
+**Layer:** 1
+
+**Fantasy:** The city grows organically, like a coral reef, not just a grid plan.
+
+**Mechanic:** Idle pops may "claim" empty tiles adjacent to their homes to build personal structures (Sheds, Gardens, Shrines) using their own resources. These provide happiness but block efficient planning.
+
+**Emergence:** You try to run a power line through a residential block, but "Old Man Jenkins" has built a prize-winning rose garden in the way, and bulldozing it would cause a riot.
+
+**Tension:** Rigid, efficient zoning vs. Organic, happy chaos.
+
+---
+
+## The Long Night
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Surviving an eclipse that lasts for years. The sun is a memory.
+
+**Mechanic:** Orbital events (Nebula clouds, planetary alignment) block the sun for extended periods. Solar power fails. Temperatures plummet. Crops die. Bioluminescent flora becomes the only light source.
+
+**Emergence:** The colony devolves into a subterranean society eating mushrooms in the dark. When the sun returns, the pops are blinded and terrified of the "Burning Eye".
+
+**Tension:** Reliance on renewable solar (cheap/easy) vs. Fuel-based power (expensive/reliable).
+
+---
+
+## Local Tributes
+
+**Layer:** 1
+
+**Fantasy:** We are not the masters of this world; we are guests. And the landlord is hungry.
+
+**Mechanic:** A massive local entity (Leviathan, Ancient AI, Hive Mind) demands periodic "Tribute" (Food, Energy, Pops). Appeasement grants protection/buffs. Refusal triggers attacks or disasters.
+
+**Emergence:** A cult forms that worships the "Great Worm". They sabotage your defenses to "let god in". You end up feeding your prisoners to the Worm to buy another month of peace.
+
+**Tension:** Fight the monster (High risk/cost) or Feed the monster (Moral/resource cost).
+
+---
+
+## Zero-G Industry
+
+**Layer:** 2
+
+**Fantasy:** Making things that simply cannot exist in a gravity well.
+
+**Mechanic:** Orbital stations can manufacture unique goods (Perfect Crystals, Foam Metal) that are impossible to make on the ground. These goods are required for high-tier tech but must be shipped down via shuttles.
+
+**Emergence:** Your ground economy is booming, but your space elevator is cut by rebels. The high-tech factories on the ground grind to a halt because they can't get the zero-G ball bearings.
+
+**Tension:** Expensive, vulnerable orbital infrastructure vs. Limited ground-based tech.
+
+---
+
+## The Whisper Network
+
+**Layer:** Cross-Layer
+
+**Fantasy:** Spies aren't trained agents; they are just bored bartenders listening to loose lips.
+
+**Mechanic:** "Listening Posts" on Layer 2 intercept comms. Taverns on Layer 1 generate "Intel" on neighboring factions (Trade routes, weakness) based on visitor traffic.
+
+**Emergence:** You find out a neighbor is starving because your bartender heard a rumor from a visiting merchant, allowing you to price-gouge food exports before they even ask for help.
+
+**Tension:** Open borders (more trade/intel) vs. Security (risk of being spied on).
+
+---
+
+## Atmospheric Strata
+
+**Layer:** 1
+
+**Fantasy:** The air is different up here. The rich live in the clouds; the poor breathe the smog.
+
+**Mechanic:** Building height matters. "High Altitude" floors (Skyscrapers, Mountains) have higher Wind/Solar efficiency but exposure to Radiation/Storms. "Low Altitude" floors trap Pollution (Smog) but are shielded from weather.
+
+**Emergence:** The Governor's mansion is a glittering spire above the clouds, while the workers cough in the toxic fog below. A storm blows the roof off the mansion, and the Governor has to move downstairs with the plebs.
+
+**Tension:** Vertical expansion (Weather risk/Prestige) vs. Horizontal/Subterranean (Pollution risk/Safety).
+
+---
