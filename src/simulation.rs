@@ -82,7 +82,10 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer1::zone::apply_zone_designation_system),
         cleanup_previous_assignment_system
             .after(crate::layer1::room_quality::apply_waking_thoughts_system),
-        process_start_plan_system.after(cleanup_previous_assignment_system),
+        crate::layer1::sleepwalking::assign_sleepwalk_target_system
+            .after(cleanup_previous_assignment_system),
+        process_start_plan_system
+            .after(crate::layer1::sleepwalking::assign_sleepwalk_target_system),
         crate::layer1::fauna::fauna_behavior_system.after(process_start_plan_system),
         crate::layer1::day_night::update_day_night_cycle_system.after(process_start_plan_system),
         crate::layer1::day_night::update_ambient_light_from_cycle_system
@@ -195,9 +198,13 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::rumor::exchange_rumors_system.after(death_system),
         crate::layer1::funeral::grief_system.after(death_system),
         crate::layer1::unrest::check_mental_break_system.after(decay_needs_system),
+        crate::layer1::sleepwalking::check_sleepwalking_start_system
+            .after(crate::layer1::unrest::check_mental_break_system),
         crate::layer1::justice::check_crime_system
             .after(crate::layer1::unrest::check_mental_break_system),
         crate::layer1::unrest::recover_mental_break_system.after(decay_needs_system),
+        crate::layer1::sleepwalking::sleepwalk_end_system.after(decay_needs_system),
+        crate::layer1::sleepwalking::cleanup_sleepwalk_targets_system.after(decay_needs_system),
         // Process new rumors and affinity changes
         modify_affinity_system.after(crate::layer1::rumor::exchange_rumors_system),
         // Process chronicle events

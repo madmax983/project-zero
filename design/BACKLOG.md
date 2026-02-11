@@ -14,7 +14,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `078` The Old Guard — `specs/078-the-old-guard.md`
 - [ ] `079` Weather Events — `specs/079-weather-events.md`
 - [ ] `080` Planetary Quirks — `specs/080-planetary-quirks.md`
-- [ ] `081` Sleepwalking — `specs/081-sleepwalking.md`
 
 ## MVP — User Interface
 

@@ -206,3 +206,5 @@ mod quirks_tests;
 /// Pop factions system (Spec 068).
 pub mod factions;
 pub use factions::*;
+/// Sleepwalking mechanics and systems.
+pub mod sleepwalking;
