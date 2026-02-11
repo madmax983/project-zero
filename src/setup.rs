@@ -70,6 +70,7 @@ pub fn setup_world() -> World {
     world.insert_resource(Selection::default());
     world.insert_resource(RenderCache::default());
     world.insert_resource(UtilityConfig::default());
+    world.insert_resource(crate::layer1::sleepwalking::SleepwalkingConfig::default());
     world.insert_resource(ColonyMemory::default());
     world.insert_resource(SeasonState::default());
     world.insert_resource(NamedLocations::default());

@@ -95,11 +95,14 @@ pub enum ActionType {
 
     /// Arrest Wanted criminals and escort them to jail.
     Warden,
+
+    /// Sleepwalk (Mental Break).
+    Sleepwalking,
 }
 
 impl ActionType {
     /// Total number of action types. Used for array sizing.
-    pub const COUNT: usize = 19;
+    pub const COUNT: usize = 20;
 
     /// Converts action type to a unique array index (0..COUNT-1).
     #[must_use]
@@ -124,6 +127,7 @@ impl ActionType {
             Self::Refine => 16,
             Self::Farm => 17,
             Self::Warden => 18,
+            Self::Sleepwalking => 19,
         }
     }
 
