@@ -15,6 +15,8 @@ use ratatui::{
 };
 
 use crate::experimental::biography::Biography;
+use crate::layer1::day_night::DayNightCycle;
+use crate::layer1::utility_ai::UtilityWeights;
 use crate::layer1::{
     ActionType, ColonyResources, Farm, GridPosition, Housing, PopAction, TerrainGrid,
     building::Building,
@@ -26,8 +28,6 @@ use crate::layer1::{
 };
 use crate::shared::selection::{Selection, SelectionTarget};
 use crate::ui::map::{get_building_color, get_terrain_char, get_terrain_color};
-use crate::layer1::utility_ai::UtilityWeights;
-use crate::layer1::day_night::DayNightCycle;
 
 /// Helper to format `ActionType` into an icon and label.
 const fn format_action_type(action: ActionType) -> (&'static str, &'static str, Color) {
@@ -609,10 +609,7 @@ fn render_biography(frame: &mut Frame, area: Rect, bio: &Biography, world: &Worl
 
             ListItem::new(Line::from(vec![
                 Span::styled(format!("Day {day} "), Style::default().fg(Color::White)),
-                Span::styled(
-                    format!("{phase:5} "),
-                    Style::default().fg(phase_color),
-                ),
+                Span::styled(format!("{phase:5} "), Style::default().fg(phase_color)),
                 Span::styled("│ ", Style::default().fg(Color::DarkGray)),
                 Span::raw(&e.text),
             ]))
@@ -633,16 +630,28 @@ fn render_personality(frame: &mut Frame, area: Rect, weights: &UtilityWeights) {
 
     // Distance
     if weights.distance_weight > 1.2 {
-        traits.push(Span::styled("Homebody", Style::default().fg(Color::LightBlue)));
+        traits.push(Span::styled(
+            "Homebody",
+            Style::default().fg(Color::LightBlue),
+        ));
     } else if weights.distance_weight < 0.8 {
-        traits.push(Span::styled("Nomad", Style::default().fg(Color::LightGreen)));
+        traits.push(Span::styled(
+            "Nomad",
+            Style::default().fg(Color::LightGreen),
+        ));
     }
 
     // Availability
     if weights.availability_weight > 1.2 {
-        traits.push(Span::styled("Introvert", Style::default().fg(Color::LightMagenta)));
+        traits.push(Span::styled(
+            "Introvert",
+            Style::default().fg(Color::LightMagenta),
+        ));
     } else if weights.availability_weight < 0.8 {
-        traits.push(Span::styled("Socialite", Style::default().fg(Color::Yellow)));
+        traits.push(Span::styled(
+            "Socialite",
+            Style::default().fg(Color::Yellow),
+        ));
     }
 
     // Social (Placeholder logic based on plan)
@@ -654,7 +663,10 @@ fn render_personality(frame: &mut Frame, area: Rect, weights: &UtilityWeights) {
 
     // Default if boring
     if traits.is_empty() {
-        traits.push(Span::styled("Average Joe", Style::default().fg(Color::Gray)));
+        traits.push(Span::styled(
+            "Average Joe",
+            Style::default().fg(Color::Gray),
+        ));
     }
 
     // Intersperse with commas
@@ -667,8 +679,7 @@ fn render_personality(frame: &mut Frame, area: Rect, weights: &UtilityWeights) {
         spans.push(t);
     }
 
-    let p = Paragraph::new(Line::from(spans))
-        .block(Block::default().borders(Borders::NONE)); // No block to save space
+    let p = Paragraph::new(Line::from(spans)).block(Block::default().borders(Borders::NONE)); // No block to save space
 
     frame.render_widget(p, area);
 }

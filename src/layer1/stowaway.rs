@@ -2,24 +2,24 @@
 //!
 //! Handles stowaways hiding in buildings, stealing resources, and eventually being discovered.
 
-use bevy_ecs::prelude::*;
-use crate::layer1::visitor::Visitor;
 use crate::layer1::building::{Building, BuildingType};
-use crate::layer1::map::GridPosition;
-use crate::layer1::resources::ColonyResources;
-use crate::shared::time::SimulationTime;
-use crate::layer1::pop::{Pop, PopName, Speed};
-use crate::layer1::needs::Needs;
-use crate::layer1::memory::Memories;
-use crate::layer1::skills::Skills;
-use crate::layer1::utility_ai::{PopAction, UtilityWeights};
-use crate::layer1::items::Equipment;
-use crate::layer1::rumor::Knowledge;
-use crate::layer1::lifecycle::Age;
-use crate::layer1::factions::FactionMember;
-use crate::layer1::social::old_guard::Arrival;
 use crate::layer1::cabin_fever::CabinFever;
+use crate::layer1::factions::FactionMember;
 use crate::layer1::health::Health;
+use crate::layer1::items::Equipment;
+use crate::layer1::lifecycle::Age;
+use crate::layer1::map::GridPosition;
+use crate::layer1::memory::Memories;
+use crate::layer1::needs::Needs;
+use crate::layer1::pop::{Pop, PopName, Speed};
+use crate::layer1::resources::ColonyResources;
+use crate::layer1::rumor::Knowledge;
+use crate::layer1::skills::Skills;
+use crate::layer1::social::old_guard::Arrival;
+use crate::layer1::utility_ai::{PopAction, UtilityWeights};
+use crate::layer1::visitor::Visitor;
+use crate::shared::time::SimulationTime;
+use bevy_ecs::prelude::*;
 use rand::Rng;
 
 /// Component for a stowaway hiding in a building.
@@ -63,7 +63,8 @@ pub fn infiltration_system(
             // Find nearby suitable building (Stockpile)
             for (building_entity, building_pos, building) in &buildings {
                 // Check if building is Stockpile and visitor is at same position
-                if building.building_type == BuildingType::Stockpile && visitor_pos == building_pos {
+                if building.building_type == BuildingType::Stockpile && visitor_pos == building_pos
+                {
                     // Infiltrate!
                     commands.entity(visitor_entity).despawn(); // Visitor "disappears"
 
@@ -130,24 +131,25 @@ pub fn discovery_system(
             commands.entity(entity).remove::<Stowaway>();
 
             // Spawn new Pop
-            commands.spawn((
-                Pop,
-                PopName::random(&mut rng), // Give them a name
-                *pos,
-                Health::default(),
-                Needs::default(),
-                Memories::default(),
-                Skills::default(),
-                Speed::default(),
-                PopAction::default(),
-                Equipment::default(),
-                UtilityWeights::default(),
-                Knowledge::default(),
-                Age::new(rng.gen_range(20..40)),
-                FactionMember::default(),
-                Arrival { tick: time.tick },
-            ))
-            .insert(CabinFever::default());
+            commands
+                .spawn((
+                    Pop,
+                    PopName::random(&mut rng), // Give them a name
+                    *pos,
+                    Health::default(),
+                    Needs::default(),
+                    Memories::default(),
+                    Skills::default(),
+                    Speed::default(),
+                    PopAction::default(),
+                    Equipment::default(),
+                    UtilityWeights::default(),
+                    Knowledge::default(),
+                    Age::new(rng.gen_range(20..40)),
+                    FactionMember::default(),
+                    Arrival { tick: time.tick },
+                ))
+                .insert(CabinFever::default());
 
             // Log event: "A stowaway was found hiding in the stockpile!"
         }
@@ -157,10 +159,10 @@ pub fn discovery_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::visitor::{Visitor, VisitorState};
     use crate::layer1::building::{Building, BuildingType};
-    use crate::layer1::resources::ColonyResources;
     use crate::layer1::map::GridPosition;
+    use crate::layer1::resources::ColonyResources;
+    use crate::layer1::visitor::{Visitor, VisitorState};
     use crate::shared::time::SimulationTime;
     use bevy_ecs::system::RunSystemOnce;
 
@@ -176,16 +178,25 @@ mod tests {
         let mut world = World::new();
 
         // Spawn Visitor near Building
-        let visitor = world.spawn((
-            Visitor { state: VisitorState::Loitering, ..Default::default() },
-            GridPosition { x: 10, y: 10 },
-            InfiltrationRisk { chance: 1.0 }, // Force infiltration
-        )).id();
+        let visitor = world
+            .spawn((
+                Visitor {
+                    state: VisitorState::Loitering,
+                    ..Default::default()
+                },
+                GridPosition { x: 10, y: 10 },
+                InfiltrationRisk { chance: 1.0 }, // Force infiltration
+            ))
+            .id();
 
-        let building = world.spawn((
-            Building { building_type: BuildingType::Stockpile },
-            GridPosition { x: 10, y: 10 },
-        )).id();
+        let building = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Stockpile,
+                },
+                GridPosition { x: 10, y: 10 },
+            ))
+            .id();
 
         // Run system
         world.run_system_once(infiltration_system).unwrap();
@@ -200,13 +211,24 @@ mod tests {
     #[test]
     fn test_stowaway_steals_food() {
         let mut world = World::new();
-        world.insert_resource(ColonyResources { food: 100.0, ..Default::default() });
-        world.insert_resource(SimulationTime { tick: 101, ..Default::default() });
+        world.insert_resource(ColonyResources {
+            food: 100.0,
+            ..Default::default()
+        });
+        world.insert_resource(SimulationTime {
+            tick: 101,
+            ..Default::default()
+        });
 
         // Spawn Building with Stowaway
         world.spawn((
-            Building { building_type: BuildingType::Stockpile },
-            Stowaway { hunger: 50.0, ..Default::default() }, // Hungry
+            Building {
+                building_type: BuildingType::Stockpile,
+            },
+            Stowaway {
+                hunger: 50.0,
+                ..Default::default()
+            }, // Hungry
         ));
 
         world.run_system_once(theft_system).unwrap();
@@ -218,14 +240,24 @@ mod tests {
     #[test]
     fn test_discovery_removes_component_spawns_pop() {
         let mut world = World::new();
-        world.insert_resource(SimulationTime { tick: 500, ..Default::default() });
+        world.insert_resource(SimulationTime {
+            tick: 500,
+            ..Default::default()
+        });
 
         // Spawn Building with Stowaway (low stealth)
-        let building = world.spawn((
-            Building { building_type: BuildingType::Stockpile },
-            Stowaway { stealth: 0.0, ..Default::default() }, // Revealed
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let building = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Stockpile,
+                },
+                Stowaway {
+                    stealth: 0.0,
+                    ..Default::default()
+                }, // Revealed
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         // Run system
         world.run_system_once(discovery_system).unwrap();
@@ -234,7 +266,10 @@ mod tests {
         assert!(world.get::<Stowaway>(building).is_none());
 
         // New Pop spawned at location
-        let pop_count = world.query::<&crate::layer1::pop::Pop>().iter(&world).count();
+        let pop_count = world
+            .query::<&crate::layer1::pop::Pop>()
+            .iter(&world)
+            .count();
         assert_eq!(pop_count, 1);
 
         // Verify Arrival tick

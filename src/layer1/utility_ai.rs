@@ -614,17 +614,28 @@ pub fn evaluate_actions_system(world: &mut World) {
         .collect();
 
     // Pre-create query states to avoid allocation in loop
-    let mut farms_state = world.query::<(Entity, &GridPosition, &Farm)>();
+    let mut farms_state = world.query::<(
+        Entity,
+        &GridPosition,
+        &Farm,
+        Option<&crate::layer1::building::ShiftSchedule>,
+    )>();
     let mut refining_state = world.query::<(
         Entity,
         &GridPosition,
         &crate::layer1::building::Building,
         &crate::layer1::resources::RefiningProgress,
+        Option<&crate::layer1::building::ShiftSchedule>,
     )>();
     let mut housing_state = world.query::<(Entity, &GridPosition, &Housing)>();
     let mut taverns_state = world.query::<(Entity, &GridPosition, &Tavern)>();
     let mut fauna_state = world.query::<(Entity, &GridPosition, &Fauna)>();
-    let mut libraries_state = world.query::<(Entity, &GridPosition, &Library)>();
+    let mut libraries_state = world.query::<(
+        Entity,
+        &GridPosition,
+        &Library,
+        Option<&crate::layer1::building::ShiftSchedule>,
+    )>();
     let mut designations_state = world.query::<(Entity, &GridPosition, &Designation)>();
     let mut items_state = world.query::<(Entity, &GridPosition, &ResourceItem)>();
     let mut stockpiles_state = world.query::<(Entity, &GridPosition, &Stockpile)>();
@@ -653,6 +664,9 @@ pub fn evaluate_actions_system(world: &mut World) {
     // So we can use `world` immutably inside the loop.
 
     let resources = world.resource::<ColonyResources>().clone();
+    let cycle = world
+        .resource::<crate::layer1::day_night::DayNightCycle>()
+        .clone();
 
     // Evaluate each pop
     for (
@@ -754,9 +768,12 @@ pub fn evaluate_actions_system(world: &mut World) {
                 let health = world.get::<crate::layer1::health::Health>(pop_entity);
 
                 // Evaluate SatisfyHunger
-                if let Some((utility, target)) =
-                    evaluate_satisfy_hunger(&pop_pos, &needs, &weights, farms_state.iter(world))
-                {
+                if let Some((utility, target)) = evaluate_satisfy_hunger(
+                    &pop_pos,
+                    &needs,
+                    &weights,
+                    farms_state.iter(world).map(|(e, p, f, _)| (e, p, f)),
+                ) {
                     check_best(ActionType::SatisfyHunger, utility, Some(target));
                 }
 
@@ -782,15 +799,19 @@ pub fn evaluate_actions_system(world: &mut World) {
                 }
 
                 // Evaluate Refine
-                if let Some((utility, target)) =
-                    evaluate_refine(&pop_pos, &weights, &resources, refining_state.iter(world))
-                {
+                if let Some((utility, target)) = evaluate_refine(
+                    &pop_pos,
+                    &weights,
+                    &resources,
+                    &cycle,
+                    refining_state.iter(world),
+                ) {
                     check_best(ActionType::Refine, utility, Some(target));
                 }
 
                 // Evaluate Farm
                 if let Some((utility, target)) =
-                    evaluate_farm(&pop_pos, &weights, farms_state.iter(world))
+                    evaluate_farm(&pop_pos, &weights, &cycle, farms_state.iter(world))
                 {
                     check_best(ActionType::Farm, utility, Some(target));
                 }
@@ -821,9 +842,13 @@ pub fn evaluate_actions_system(world: &mut World) {
                 }
 
                 // Evaluate Research
-                if let Some((utility, target)) =
-                    evaluate_research(&pop_pos, &weights, &resources, libraries_state.iter(world))
-                {
+                if let Some((utility, target)) = evaluate_research(
+                    &pop_pos,
+                    &weights,
+                    &resources,
+                    &cycle,
+                    libraries_state.iter(world),
+                ) {
                     check_best(ActionType::Research, utility, Some(target));
                 }
 
@@ -980,7 +1005,9 @@ mod tests {
 
     fn setup() -> World {
         crate::setup::init_task_pools();
-        World::new()
+        let mut world = World::new();
+        world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
+        world
     }
 
     #[test]
@@ -1169,6 +1196,7 @@ mod tests {
         world.insert_resource(UtilityConfig::default());
         world.insert_resource(SimulationTime::default());
         world.insert_resource(ColonyResources::default());
+        world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
 
         // Starving pop currently idle
         let pop = world
@@ -1219,6 +1247,7 @@ mod tests {
         });
         world.insert_resource(SimulationTime::default());
         world.insert_resource(ColonyResources::default());
+        world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
 
         let pop = world
             .spawn((
@@ -1468,6 +1497,7 @@ mod tests {
         world.insert_resource(UtilityConfig::default());
         world.insert_resource(SimulationTime::default());
         world.insert_resource(ColonyResources::default());
+        world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
 
         let pop = world
             .spawn((

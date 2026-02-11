@@ -80,6 +80,7 @@ mod tests {
         world.insert_resource(crate::layer1::utility_ai::UtilityConfig::default());
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
         world.insert_resource(crate::shared::time::SimulationTime::default());
+        world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
         world.insert_resource(crate::layer1::terrain::TerrainGrid {
             width: 10,
             height: 10,
