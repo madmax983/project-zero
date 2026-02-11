@@ -59,9 +59,12 @@ pub struct GridPosition {
 impl GridPosition {
     /// Returns the Chebyshev distance (chessboard distance) between two positions.
     /// This is the number of moves a King would take to get from A to B.
+    ///
+    /// This returns a `u32` to safely handle distances that might overflow `i32`
+    /// (e.g. between `i32::MIN` and `i32::MAX`).
     #[must_use]
-    pub fn distance_chebyshev(&self, other: Self) -> i32 {
-        (self.x - other.x).abs().max((self.y - other.y).abs())
+    pub fn distance_chebyshev(&self, other: Self) -> u32 {
+        self.x.abs_diff(other.x).max(self.y.abs_diff(other.y))
     }
 }
 

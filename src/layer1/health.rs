@@ -35,7 +35,11 @@ impl Health {
     }
 
     /// Reduces health by amount, clamped at 0.
+    /// Ignores negative damage (healing) and NaN.
     pub fn take_damage(&mut self, amount: f32) {
+        if amount.is_nan() || amount < 0.0 {
+            return;
+        }
         self.current = (self.current - amount).max(0.0);
     }
 }
