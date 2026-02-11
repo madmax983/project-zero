@@ -26,6 +26,34 @@ use crate::layer1::{
 };
 use crate::shared::selection::{Selection, SelectionTarget};
 use crate::ui::map::{get_building_color, get_terrain_char, get_terrain_color};
+use crate::layer1::utility_ai::UtilityWeights;
+use crate::layer1::day_night::DayNightCycle;
+
+/// Helper to format ActionType into an icon and label.
+fn format_action_type(action: ActionType) -> (&'static str, &'static str, Color) {
+    match action {
+        ActionType::SatisfyHunger => ("🍖", "Eating", Color::Green),
+        ActionType::SatisfyRest => ("💤", "Sleeping", Color::Blue),
+        ActionType::Socialize => ("💬", "Socializing", Color::Yellow),
+        ActionType::Explore => ("🔭", "Exploring", Color::Cyan),
+        ActionType::Work => ("⚒", "Working", Color::White),
+        ActionType::Repair => ("🔧", "Repairing", Color::White),
+        ActionType::Research => ("📚", "Researching", Color::Magenta),
+        ActionType::Haul => ("📦", "Hauling", Color::Gray),
+        ActionType::SeekMedicalCare => ("🏥", "Healing", Color::Red),
+        ActionType::BuryCorpse => ("⚰️", "Burying", Color::DarkGray),
+        ActionType::FetchTool => ("🔧", "Fetching Tool", Color::Gray),
+        ActionType::Idle => ("⏳", "Idle", Color::DarkGray),
+        ActionType::Vandalize => ("🔨", "Vandalizing", Color::Red),
+        ActionType::Binge => ("🍖", "Bingeing", Color::Red),
+        ActionType::Daze => ("😵", "Dazed", Color::Magenta),
+        ActionType::Fight => ("⚔️", "Fighting", Color::Red),
+        ActionType::Refine => ("⚙️", "Refining", Color::White),
+        ActionType::Farm => ("🌾", "Farming", Color::Green),
+        ActionType::Warden => ("👮", "Arresting", Color::Blue),
+        ActionType::Sleepwalking => ("💤", "Sleepwalking", Color::Magenta),
+    }
+}
 
 /// Renders the inspector panel content based on current selection.
 ///
@@ -250,31 +278,10 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
 
     // Determine Action if Pop
     let action_line = if let Some(action) = world.get::<PopAction>(entity) {
-        let (icon, label) = match action.current {
-            ActionType::SatisfyHunger => ("🍖", "Eating"),
-            ActionType::SatisfyRest => ("💤", "Sleeping"),
-            ActionType::Socialize => ("💬", "Socializing"),
-            ActionType::Explore => ("🔭", "Exploring"),
-            ActionType::Work => ("⚒", "Working"),
-            ActionType::Repair => ("🔧", "Repairing"),
-            ActionType::Research => ("📚", "Researching"),
-            ActionType::Haul => ("📦", "Hauling"),
-            ActionType::SeekMedicalCare => ("🏥", "Healing"),
-            ActionType::BuryCorpse => ("⚰️", "Burying"),
-            ActionType::FetchTool => ("🔧", "Fetching Tool"),
-            ActionType::Idle => ("⏳", "Idle"),
-            ActionType::Vandalize => ("🔨", "Vandalizing"),
-            ActionType::Binge => ("🍖", "Bingeing"),
-            ActionType::Daze => ("😵", "Dazed"),
-            ActionType::Fight => ("⚔️", "Fighting"),
-            ActionType::Refine => ("⚙️", "Refining"),
-            ActionType::Farm => ("🌾", "Farming"),
-            ActionType::Warden => ("👮", "Arresting"),
-            ActionType::Sleepwalking => ("💤", "Sleepwalking"),
-        };
+        let (icon, label, color) = format_action_type(action.current);
         Some(Line::from(vec![
             Span::raw("Action: "),
-            Span::styled(format!("{icon} {label}"), Style::default().fg(Color::White)),
+            Span::styled(format!("{icon} {label}"), Style::default().fg(color)),
         ]))
     } else {
         None
@@ -288,6 +295,8 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
     };
 
     let has_structure = world.get::<Structure>(entity).is_some();
+    let has_personality = world.get::<UtilityWeights>(entity).is_some();
+    let personality_height = if has_personality { 2 } else { 0 };
 
     let layout = Layout::default()
         .direction(Direction::Vertical)
@@ -298,8 +307,8 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
             Constraint::Length(1),                                // Spacer
             Constraint::Length(details_height),                   // Needs or Details
             Constraint::Length(u16::from(has_structure)),         // Structure HP
-            Constraint::Length(1),                                // Spacer
-            Constraint::Min(1),                                   // Thoughts/Extra
+            Constraint::Length(personality_height),               // Personality + Spacer
+            Constraint::Min(1),                                   // Biography
         ])
         .split(area);
 
@@ -429,12 +438,17 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         );
     }
 
-    // 6. Biography
+    // 6. Personality
+    if let Some(weights) = world.get::<UtilityWeights>(entity) {
+        render_personality(frame, layout[6], weights);
+    }
+
+    // 7. Biography
     let bottom_area = layout[7];
     let bio_opt = world.get::<Biography>(entity);
 
     if let Some(bio) = bio_opt {
-        render_biography(frame, bottom_area, bio);
+        render_biography(frame, bottom_area, bio, world);
     }
 }
 
@@ -552,11 +566,14 @@ fn render_refining_details(frame: &mut Frame, area: Rect, progress: &RefiningPro
     frame.render_widget(gauge, area);
 }
 
-fn render_biography(frame: &mut Frame, area: Rect, bio: &Biography) {
+fn render_biography(frame: &mut Frame, area: Rect, bio: &Biography, world: &World) {
     let bio_block = Block::default()
         .borders(Borders::TOP)
         .title(" Biography ")
         .title_style(Style::default().fg(Color::Blue));
+
+    let cycle = world.resource::<DayNightCycle>();
+    let ticks_per_day = cycle.ticks_per_day.max(1); // Avoid div by zero
 
     // Show last 5 events reversed
     let events: Vec<ListItem> = bio
@@ -565,11 +582,38 @@ fn render_biography(frame: &mut Frame, area: Rect, bio: &Biography) {
         .rev()
         .take(5)
         .map(|e| {
+            let day = e.tick / ticks_per_day;
+            let day_tick = e.tick % ticks_per_day;
+            #[allow(clippy::cast_precision_loss)]
+            let pct = day_tick as f32 / ticks_per_day as f32;
+
+            // Approximate phase for past events (since we don't store phase history)
+            // Using same thresholds as day_night.rs
+            let phase = if pct < 0.1 {
+                "Dawn"
+            } else if pct < 0.75 {
+                "Day"
+            } else if pct < 0.85 {
+                "Dusk"
+            } else {
+                "Night"
+            };
+
+            let phase_color = match phase {
+                "Dawn" => Color::LightYellow,
+                "Day" => Color::Yellow,
+                "Dusk" => Color::Rgb(255, 165, 0), // Orange-ish
+                "Night" => Color::Blue,
+                _ => Color::White,
+            };
+
             ListItem::new(Line::from(vec![
+                Span::styled(format!("Day {day} "), Style::default().fg(Color::White)),
                 Span::styled(
-                    format!("[{}] ", e.tick),
-                    Style::default().fg(Color::DarkGray),
+                    format!("{phase:5} "),
+                    Style::default().fg(phase_color),
                 ),
+                Span::styled("│ ", Style::default().fg(Color::DarkGray)),
                 Span::raw(&e.text),
             ]))
         })
@@ -578,6 +622,55 @@ fn render_biography(frame: &mut Frame, area: Rect, bio: &Biography) {
     let list = List::new(events).block(bio_block);
 
     frame.render_widget(list, area);
+}
+
+fn render_personality(frame: &mut Frame, area: Rect, weights: &UtilityWeights) {
+    if area.height < 2 {
+        return;
+    }
+
+    let mut traits = Vec::new();
+
+    // Distance
+    if weights.distance_weight > 1.2 {
+        traits.push(Span::styled("Homebody", Style::default().fg(Color::LightBlue)));
+    } else if weights.distance_weight < 0.8 {
+        traits.push(Span::styled("Nomad", Style::default().fg(Color::LightGreen)));
+    }
+
+    // Availability
+    if weights.availability_weight > 1.2 {
+        traits.push(Span::styled("Introvert", Style::default().fg(Color::LightMagenta)));
+    } else if weights.availability_weight < 0.8 {
+        traits.push(Span::styled("Socialite", Style::default().fg(Color::Yellow)));
+    }
+
+    // Social (Placeholder logic based on plan)
+    if weights.social_weight > 1.2 {
+        traits.push(Span::styled("Loner", Style::default().fg(Color::DarkGray)));
+    } else if weights.social_weight < 0.8 {
+        traits.push(Span::styled("Chatterbox", Style::default().fg(Color::Cyan)));
+    }
+
+    // Default if boring
+    if traits.is_empty() {
+        traits.push(Span::styled("Average Joe", Style::default().fg(Color::Gray)));
+    }
+
+    // Intersperse with commas
+    let mut spans = Vec::new();
+    spans.push(Span::raw("Traits: "));
+    for (i, t) in traits.into_iter().enumerate() {
+        if i > 0 {
+            spans.push(Span::raw(", "));
+        }
+        spans.push(t);
+    }
+
+    let p = Paragraph::new(Line::from(spans))
+        .block(Block::default().borders(Borders::NONE)); // No block to save space
+
+    frame.render_widget(p, area);
 }
 
 #[cfg(test)]
