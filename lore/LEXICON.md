@@ -923,3 +923,79 @@
 **Usage:**
 - "Digging up old-bones."
 - "The old-bones whisper."
+
+---
+
+## Energy
+
+### the spark / current
+
+**Replaces:** electricity, power
+**Code reference:** `Energy`
+**Usage:**
+- "The spark is weak."
+- "Feeding the current."
+
+### blackout / the dark
+
+**Replaces:** power outage
+**Code reference:** `POWER_OUTAGE`
+**Usage:**
+- "The dark took the south sector."
+- "Waiting out the blackout."
+
+---
+
+## Visitors
+
+### stranger / guest
+
+**Replaces:** visitor entity
+**Code reference:** `Visitor`
+**Usage:**
+- "Strangers in the hall."
+- "Treat the guests well."
+
+### pilgrim
+
+**Replaces:** specific visitor type
+**Usage:**
+- "A pilgrim seeking the Wound."
+
+---
+
+## Factions
+
+### circle / sect
+
+**Replaces:** faction
+**Code reference:** `Faction`
+**Usage:**
+- "He belongs to the inner circle."
+- "Sect politics."
+
+### sworn
+
+**Replaces:** faction member
+**Code reference:** `FactionMember`
+**Usage:**
+- "She is sworn to the Iron Guard."
+
+---
+
+## Atmosphere
+
+### the breath
+
+**Replaces:** air, oxygen
+**Code reference:** `Atmosphere`
+**Usage:**
+- "The breath is thin here."
+- "Checking the breath-levels."
+
+### thin air
+
+**Replaces:** low oxygen
+**Code reference:** Low `O2`
+**Usage:**
+- "Thin air makes for slow work."

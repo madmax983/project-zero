@@ -776,3 +776,55 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 "[YEAR]: The [BEAST_NAME] breaches the line. [INJURY_COUNT] fall."
 "Blood on the snow. [BEAST_NAME] raid. [YEAR]. [INJURY_COUNT] casualties."
 ```
+
+---
+
+## Energy & Power Templates
+
+### POWER_OUTAGE
+**Slots:** [COLONY], [YEAR], [POWER_SOURCE], [DURATION]
+
+```
+"The lights die. [YEAR]. The [POWER_SOURCE] fails. Darkness for [DURATION]."
+"[YEAR]: Blackout. The [POWER_SOURCE] is silent. We wait in the dark."
+"Power loss at [COLONY]. [YEAR]. The [POWER_SOURCE] sleeps. [DURATION] without the spark."
+```
+
+---
+
+## Visitor Templates
+
+### VISITOR_ARRIVAL
+**Slots:** [COLONY], [YEAR], [VISITOR_TYPE], [COUNT]
+
+```
+"A ship lands. [YEAR]. [COUNT] [VISITOR_TYPE]s step out."
+"[YEAR]: Guests at [COLONY]. A group of [VISITOR_TYPE]s. [COUNT] souls."
+"Strangers at the gate. [COUNT] [VISITOR_TYPE]s arrive. [YEAR]."
+```
+
+---
+
+## Faction Templates
+
+### FACTION_FORMED
+**Slots:** [COLONY], [YEAR], [FACTION_NAME], [FOUNDER_NAME]
+
+```
+"[FACTION_NAME] is born. [YEAR]. [FOUNDER_NAME] speaks for them."
+"[YEAR]: A new circle forms. They call themselves [FACTION_NAME]. [FOUNDER_NAME] leads."
+"Division at [COLONY]. [FACTION_NAME] rises. [YEAR]."
+```
+
+---
+
+## Atmosphere Templates
+
+### ATMOSPHERE_EVENT
+**Slots:** [COLONY], [YEAR], [ATMOSPHERE_DESCRIPTOR], [EFFECT]
+
+```
+"The air changes. [YEAR]. It tastes [ATMOSPHERE_DESCRIPTOR]. [EFFECT]."
+"[YEAR]: Atmospheric shift. The breath becomes [ATMOSPHERE_DESCRIPTOR]. [EFFECT]."
+"Warning: Air quality [ATMOSPHERE_DESCRIPTOR]. [YEAR]. [EFFECT] reported."
+```

@@ -647,3 +647,47 @@ RUIN_DISCOVERY:
   reveals:
     - [RUIN_CIV] chronicle entries
 ```
+
+---
+
+## Energy Chaining
+
+```yaml
+POWER_OUTAGE:
+  enables:
+    - PANIC_ATTACK (medium)
+    - SPOILAGE_EVENT (high, fridges fail)
+    - ACCIDENT (medium, dark)
+  increases:
+    - FEAR (high)
+    - UNREST (medium)
+```
+
+---
+
+## Visitor Chaining
+
+```yaml
+VISITOR_ARRIVAL:
+  enables:
+    - TRADE_OPPORTUNITY (high)
+    - DISEASE_OUTBREAK (low)
+    - RECRUITMENT (medium)
+  increases:
+    - CURIOSITY (medium)
+    - TENSION (low)
+```
+
+---
+
+## Faction Chaining
+
+```yaml
+FACTION_FORMED:
+  enables:
+    - RIVALRY_STARTED (high)
+    - DEMAND_ISSUED (medium)
+  increases:
+    - DIVISION (high)
+    - LOYALTY (high, within faction)
+```

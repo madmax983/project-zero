@@ -20,6 +20,9 @@ FTL exists but communication doesn't. Every colony is alone. News travels at the
 **Scale vs. Intimacy**
 You command a galactic civilization, but every statistic is a name. The famine killed 12 souls—twelve people with histories, relationships, unrealized futures. Zoom in. Remember.
 
+**Belonging vs. Isolation**
+Souls seek connection—in factions, in families, in crowds. But the galaxy is vast and alien. Strangers are both a threat and a lifeline. Who is "us" and who is "them"?
+
 ---
 
 ## Aesthetic Guidelines
@@ -113,6 +116,9 @@ It consumes. It is not just a chemical reaction; it is an entity. "The Red Hunge
 
 **Time is rot.**
 Nothing stays pristine. Spoilage is the default. "The Grey" takes everything eventually. Preservation is an act of defiance.
+
+**Energy is Life.**
+The machines are hungry too. Power is not infinite; it is harvested from stars that will one day die. A blackout is not an inconvenience; it is a suffocation.
 
 ---
 
