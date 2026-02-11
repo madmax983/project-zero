@@ -18,6 +18,7 @@ use crate::gpu::evaluate::gpu_evaluate_actions;
 use crate::layer1::{
     AddChronicleEvent, AffinityChange, PopDied, advance_season_system, aging_system,
     apply_lighting_penalties_system, apply_noise_effects_system, apply_quirk_modifiers_system,
+    apply_weather_effects_system,
     arrival_handler_system, art_generation_system, art_observation_system,
     assign_sleepwalk_target_system, check_milestones_system, check_sleepwalking_start_system,
     chronicle_event_handler_system, chronicle_rumor_bridge_system, clean_dead_residents_system,
@@ -32,7 +33,7 @@ use crate::layer1::{
     social::old_guard::{apply_founder_benefits_system, check_generational_friction_system, mood_lifecycle_system, apply_mood_modifiers_system},
     spoilage_system, starvation_damage_system, track_plan_outcomes_system,
     update_action_timer_system, update_lighting_system, update_noise_system,
-    update_resource_caps_system, vermin_growth_system, vermin_morale_system, work_execution_system,
+    update_resource_caps_system, update_weather_system, vermin_growth_system, vermin_morale_system, work_execution_system,
 };
 use crate::shared::time::SimulationTime;
 
@@ -94,7 +95,10 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(process_start_plan_system)
             .after(crate::layer1::day_night::update_ambient_light_from_cycle_system),
         apply_lighting_penalties_system.after(update_lighting_system),
-        apply_quirk_modifiers_system.after(apply_lighting_penalties_system),
+        apply_weather_effects_system.after(apply_lighting_penalties_system),
+        apply_quirk_modifiers_system
+            .after(apply_lighting_penalties_system)
+            .after(apply_weather_effects_system),
         movement_system
             .after(apply_quirk_modifiers_system)
             .after(crate::layer1::fauna::fauna_behavior_system),
@@ -115,6 +119,7 @@ pub fn build_simulation_schedule() -> Schedule {
     schedule.add_systems((
         update_resource_caps_system.after(work_execution_system),
         advance_season_system.after(work_execution_system),
+        update_weather_system.after(work_execution_system),
         produce_food_system.after(work_execution_system),
         process_refining_system.after(work_execution_system),
         process_research_system.after(work_execution_system),
