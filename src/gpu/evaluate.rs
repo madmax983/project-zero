@@ -291,6 +291,7 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(crate::layer1::utility_ai::UtilityConfig::default());
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
+        world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
 
         // No GpuContext resource — should return without panicking
         gpu_evaluate_actions(&mut world);
@@ -302,6 +303,7 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(crate::layer1::utility_ai::UtilityConfig::default());
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
+        world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
 
         // No pops — should return without panicking even if GpuContext existed
         gpu_evaluate_actions(&mut world);

@@ -32,6 +32,7 @@ mod tests {
         world.insert_resource(scale::layer1::utility_ai::ColonyMemory::default());
         world.insert_resource(scale::layer1::tech::TechState::default());
         world.insert_resource(scale::layer1::beauty::BeautyGrid::new(10, 10));
+        world.insert_resource(scale::layer1::structural_integrity::RoofGrid::new(10, 10));
         world.insert_resource(scale::layer1::zone::ZoneGrid::new(10, 10));
         world.insert_resource(scale::layer1::acoustic::NoiseMap::new(10, 10));
         world.insert_resource(scale::layer1::lighting::LightMap::new(10, 10));

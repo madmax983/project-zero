@@ -1,3 +1,5 @@
+use crate::layer1::building::ShiftSchedule;
+use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::tech::Library;
@@ -17,7 +19,15 @@ pub fn evaluate_research<'a>(
     pop_pos: &GridPosition,
     weights: &UtilityWeights,
     resources: &ColonyResources,
-    libraries: impl Iterator<Item = (Entity, &'a GridPosition, &'a Library)>,
+    cycle: &DayNightCycle,
+    libraries: impl Iterator<
+        Item = (
+            Entity,
+            &'a GridPosition,
+            &'a Library,
+            Option<&'a ShiftSchedule>,
+        ),
+    >,
 ) -> Option<(f32, Entity)> {
     // If knowledge is full, no utility
     if resources.knowledge >= resources.max_knowledge {
@@ -27,7 +37,12 @@ pub fn evaluate_research<'a>(
     let mut best: Option<(f32, Entity)> = None;
     let base_utility = 0.4;
 
-    for (entity, pos, _) in libraries {
+    for (entity, pos, _, schedule) in libraries {
+        // Check shift schedule
+        if schedule.is_some_and(|s| !s.is_active(cycle.time_of_day)) {
+            continue;
+        }
+
         let context = calculate_context_score(
             *pop_pos,
             Some(*pos),

@@ -413,6 +413,36 @@ fn handle_placement_error(world: &mut World, error: PlacementError) {
     }
 }
 
+/// Defines when a building operates.
+#[derive(Component, Debug, Clone, Copy)]
+pub struct ShiftSchedule {
+    /// Whether the building operates during the day (Dawn, Day, Dusk).
+    pub day_shift: bool,
+    /// Whether the building operates during the night.
+    pub night_shift: bool,
+}
+
+impl Default for ShiftSchedule {
+    fn default() -> Self {
+        Self {
+            day_shift: true,
+            night_shift: false,
+        }
+    }
+}
+
+impl ShiftSchedule {
+    /// Checks if the schedule is active for the given time of day.
+    #[must_use]
+    pub const fn is_active(&self, time: crate::layer1::day_night::TimeOfDay) -> bool {
+        use crate::layer1::day_night::TimeOfDay;
+        match time {
+            TimeOfDay::Night => self.night_shift,
+            _ => self.day_shift,
+        }
+    }
+}
+
 #[allow(clippy::too_many_lines, clippy::match_same_arms)]
 fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType) {
     let mut entity = world.spawn((Building { building_type }, GridPosition { x, y }));
@@ -442,7 +472,11 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
             ));
         }
         BuildingType::Farm | BuildingType::Plantation => {
-            entity.insert((Farm::default(), Flammable::default()));
+            entity.insert((
+                Farm::default(),
+                Flammable::default(),
+                ShiftSchedule::default(),
+            ));
         }
         BuildingType::Stockpile => {
             entity.insert((Stockpile::default(), Flammable::default()));
@@ -470,6 +504,7 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
                     intensity: 0.5,
                     color: (200, 180, 100), // Dim Wood light
                 },
+                ShiftSchedule::default(),
             ));
         }
         BuildingType::Weaver | BuildingType::Tailor => {
@@ -479,6 +514,7 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
                     max: 10.0,
                 },
                 Flammable::default(),
+                ShiftSchedule::default(),
             ));
         }
         BuildingType::Tavern => {
@@ -507,6 +543,7 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
                     demand: 5.0,
                     active: false,
                 },
+                ShiftSchedule::default(),
             ));
         }
         BuildingType::Smithy => {
@@ -524,13 +561,17 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
                     demand: 2.0,
                     active: false,
                 },
+                ShiftSchedule::default(),
             ));
         }
         BuildingType::StoneMason => {
-            entity.insert(RefiningProgress {
-                current: 0.0,
-                max: 10.0,
-            });
+            entity.insert((
+                RefiningProgress {
+                    current: 0.0,
+                    max: 10.0,
+                },
+                ShiftSchedule::default(),
+            ));
         }
         BuildingType::Library => {
             entity.insert((
@@ -540,6 +581,7 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
                     intensity: 0.6,
                     color: (240, 240, 255), // White/Blueish
                 },
+                ShiftSchedule::default(),
             ));
         }
         BuildingType::FlowerBed => {
@@ -563,6 +605,7 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
                     intensity: 0.7,
                     color: (255, 255, 255), // Pure White
                 },
+                ShiftSchedule::default(),
             ));
         }
         BuildingType::Grave => {
@@ -1258,5 +1301,86 @@ mod tests {
             .iter(&world)
             .count();
         assert_eq!(gate_count, 1, "Should have added Gate component");
+    }
+}
+
+#[cfg(test)]
+mod shift_tests {
+    use super::*;
+    use crate::layer1::day_night::TimeOfDay;
+
+    #[test]
+    fn test_shift_schedule_default() {
+        // Default behavior: Day shift enabled, Night shift disabled
+        let schedule = ShiftSchedule::default();
+        assert!(schedule.day_shift, "Day shift should be enabled by default");
+        assert!(
+            !schedule.night_shift,
+            "Night shift should be disabled by default"
+        );
+    }
+
+    #[test]
+    fn test_shift_active_during_day() {
+        let schedule = ShiftSchedule {
+            day_shift: true,
+            night_shift: false,
+        };
+
+        // Day shifts cover Dawn, Day, and Dusk
+        assert!(
+            schedule.is_active(TimeOfDay::Dawn),
+            "Should be active at Dawn"
+        );
+        assert!(
+            schedule.is_active(TimeOfDay::Day),
+            "Should be active at Day"
+        );
+        assert!(
+            schedule.is_active(TimeOfDay::Dusk),
+            "Should be active at Dusk"
+        );
+        assert!(
+            !schedule.is_active(TimeOfDay::Night),
+            "Should NOT be active at Night"
+        );
+    }
+
+    #[test]
+    fn test_shift_active_during_night() {
+        let schedule = ShiftSchedule {
+            day_shift: false,
+            night_shift: true,
+        };
+
+        assert!(
+            !schedule.is_active(TimeOfDay::Dawn),
+            "Should NOT be active at Dawn"
+        );
+        assert!(
+            !schedule.is_active(TimeOfDay::Day),
+            "Should NOT be active at Day"
+        );
+        assert!(
+            !schedule.is_active(TimeOfDay::Dusk),
+            "Should NOT be active at Dusk"
+        );
+        assert!(
+            schedule.is_active(TimeOfDay::Night),
+            "Should be active at Night"
+        );
+    }
+
+    #[test]
+    fn test_shift_active_always() {
+        let schedule = ShiftSchedule {
+            day_shift: true,
+            night_shift: true,
+        };
+
+        assert!(schedule.is_active(TimeOfDay::Dawn));
+        assert!(schedule.is_active(TimeOfDay::Day));
+        assert!(schedule.is_active(TimeOfDay::Dusk));
+        assert!(schedule.is_active(TimeOfDay::Night));
     }
 }

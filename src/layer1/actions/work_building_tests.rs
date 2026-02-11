@@ -1,6 +1,7 @@
 #[cfg(test)]
 mod tests {
-    use crate::layer1::building::{Building, BuildingType};
+    use crate::layer1::building::{Building, BuildingType, ShiftSchedule};
+    use crate::layer1::day_night::DayNightCycle;
     use crate::layer1::farm::Farm;
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
@@ -18,6 +19,7 @@ mod tests {
         world.insert_resource(crate::shared::time::SimulationTime::default());
         world.insert_resource(crate::layer1::utility_ai::UtilityConfig::default());
         world.insert_resource(ColonyResources::default());
+        world.insert_resource(DayNightCycle::default());
         world
     }
 
@@ -42,13 +44,21 @@ mod tests {
                     current: 0.0,
                     max: 10.0,
                 },
+                ShiftSchedule::default(),
             ))
             .id();
 
-        let mut buildings = world.query::<(Entity, &GridPosition, &Building, &RefiningProgress)>();
+        let mut buildings = world.query::<(
+            Entity,
+            &GridPosition,
+            &Building,
+            &RefiningProgress,
+            Option<&ShiftSchedule>,
+        )>();
         let resources = world.resource::<ColonyResources>();
+        let cycle = world.resource::<DayNightCycle>();
 
-        let result = evaluate_refine(&pop_pos, &weights, resources, buildings.iter(&world));
+        let result = evaluate_refine(&pop_pos, &weights, resources, cycle, buildings.iter(&world));
 
         assert!(result.is_some());
         let (utility, target) = result.unwrap();
@@ -71,12 +81,20 @@ mod tests {
             },
             GridPosition { x: 2, y: 0 },
             RefiningProgress::default(),
+            ShiftSchedule::default(),
         ));
 
-        let mut buildings = world.query::<(Entity, &GridPosition, &Building, &RefiningProgress)>();
+        let mut buildings = world.query::<(
+            Entity,
+            &GridPosition,
+            &Building,
+            &RefiningProgress,
+            Option<&ShiftSchedule>,
+        )>();
         let resources = world.resource::<ColonyResources>();
+        let cycle = world.resource::<DayNightCycle>();
 
-        let result = evaluate_refine(&pop_pos, &weights, resources, buildings.iter(&world));
+        let result = evaluate_refine(&pop_pos, &weights, resources, cycle, buildings.iter(&world));
         assert!(result.is_none(), "Should not refine if inputs are missing");
     }
 
@@ -97,12 +115,14 @@ mod tests {
                     capacity: 1,
                     workers: vec![],
                 }, // Workers list might be deprecated/changed
+                ShiftSchedule::default(),
             ))
             .id();
 
-        let mut farms = world.query::<(Entity, &GridPosition, &Farm)>();
+        let mut farms = world.query::<(Entity, &GridPosition, &Farm, Option<&ShiftSchedule>)>();
+        let cycle = world.resource::<DayNightCycle>();
 
-        let result = evaluate_farm(&pop_pos, &weights, farms.iter(&world));
+        let result = evaluate_farm(&pop_pos, &weights, cycle, farms.iter(&world));
 
         assert!(result.is_some());
         let (utility, target) = result.unwrap();
@@ -117,10 +137,6 @@ mod tests {
         let weights = UtilityWeights::default();
 
         // Spawn Full Farm (manually filling workers for test)
-        // Note: With dynamic AI, capacity check might need "Active Workers" count or "Claim" system.
-        // For this test, we assume Farm struct still tracks workers or we check proximity count.
-        // If we strictly follow Utility AI, we check `PopAction` of others.
-        // MVP: Assume Farm struct has `workers` list that is updated when action starts.
         let worker = world.spawn(Pop).id();
         world.spawn((
             Building {
@@ -131,11 +147,13 @@ mod tests {
                 capacity: 1,
                 workers: vec![worker],
             },
+            ShiftSchedule::default(),
         ));
 
-        let mut farms = world.query::<(Entity, &GridPosition, &Farm)>();
+        let mut farms = world.query::<(Entity, &GridPosition, &Farm, Option<&ShiftSchedule>)>();
+        let cycle = world.resource::<DayNightCycle>();
 
-        let result = evaluate_farm(&pop_pos, &weights, farms.iter(&world));
+        let result = evaluate_farm(&pop_pos, &weights, cycle, farms.iter(&world));
         assert!(result.is_none(), "Should not target full farm");
     }
 }

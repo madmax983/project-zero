@@ -26,5 +26,7 @@ mod acoustics_rest;
 #[path = "integration/death_chronicle.rs"]
 mod death_chronicle;
 
+#[path = "integration/building_shifts.rs"]
+mod building_shifts;
 #[path = "integration/vermin_morale.rs"]
 mod vermin_morale;

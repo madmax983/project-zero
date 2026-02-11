@@ -84,3 +84,4 @@ Implemented features. Architect: read this to understand current state.
 - [x] `078` The Old Guard — `specs/078-the-old-guard.md` — completed 2026-02-11
 - [x] `079` Weather Events — `specs/079-weather-events.md` — completed 2026-10-18
 - [x] `082` Cabin Fever — `specs/082-cabin-fever.md` — completed 2026-10-18
+- [x] `083` Building Shifts — `specs/083-building-shifts.md` — completed 2026-10-21

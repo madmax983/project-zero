@@ -1,4 +1,5 @@
-use crate::layer1::building::Building;
+use crate::layer1::building::{Building, ShiftSchedule};
+use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::map::GridPosition;
 use crate::layer1::refining::get_refining_recipe;
 use crate::layer1::resources::{ColonyResources, RefiningProgress};
@@ -18,12 +19,26 @@ pub fn evaluate_refine<'a>(
     pop_pos: &GridPosition,
     weights: &UtilityWeights,
     resources: &ColonyResources,
-    buildings: impl Iterator<Item = (Entity, &'a GridPosition, &'a Building, &'a RefiningProgress)>,
+    cycle: &DayNightCycle,
+    buildings: impl Iterator<
+        Item = (
+            Entity,
+            &'a GridPosition,
+            &'a Building,
+            &'a RefiningProgress,
+            Option<&'a ShiftSchedule>,
+        ),
+    >,
 ) -> Option<(f32, Entity)> {
     let mut best: Option<(f32, Entity)> = None;
     let base_utility = 0.5;
 
-    for (entity, pos, building, progress) in buildings {
+    for (entity, pos, building, progress, schedule) in buildings {
+        // Check shift schedule
+        if schedule.is_some_and(|s| !s.is_active(cycle.time_of_day)) {
+            continue;
+        }
+
         // Check recipe validity
         let (can_afford, _, _) = get_refining_recipe(building.building_type, resources);
 

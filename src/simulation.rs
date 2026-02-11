@@ -27,12 +27,13 @@ use crate::layer1::{
     check_milestones_system, check_sleepwalking_start_system, chronicle_event_handler_system,
     chronicle_rumor_bridge_system, clean_dead_residents_system, clean_dead_workers_system,
     cleanup_previous_assignment_system, clothing_wear_system, combat_execution_system,
-    consume_food_system, death_system, decay_needs_system, fire_damage_pops_system,
-    fire_damage_system, fire_spread_system, haul_system, healing_system, hypothermia_system,
-    memory_decay_system, modify_affinity_system, movement_system, natural_death_system,
-    notification_expiration_system, pop_death_chronicle_bridge, process_refining_system,
-    process_research_system, process_scan_system, process_start_plan_system, produce_food_system,
-    restore_leisure_system, restore_rest_in_housing_system, sleepwalk_end_system,
+    consume_food_system, death_system, decay_needs_system, discovery_system,
+    fire_damage_pops_system, fire_damage_system, fire_spread_system, haul_system, healing_system,
+    hypothermia_system, infiltration_system, memory_decay_system, modify_affinity_system,
+    movement_system, natural_death_system, notification_expiration_system,
+    pop_death_chronicle_bridge, process_refining_system, process_research_system,
+    process_scan_system, process_start_plan_system, produce_food_system, restore_leisure_system,
+    restore_rest_in_housing_system, sleepwalk_end_system,
     social::old_guard::{
         apply_founder_benefits_system, apply_mood_modifiers_system,
         check_generational_friction_system, mood_lifecycle_system,
@@ -40,7 +41,7 @@ use crate::layer1::{
     spoilage_system, starvation_damage_system, theft_system, track_plan_outcomes_system,
     update_action_timer_system, update_cabin_fever_system, update_lighting_system,
     update_noise_system, update_resource_caps_system, update_weather_system, vermin_growth_system,
-    vermin_morale_system, work_execution_system, infiltration_system, discovery_system,
+    vermin_morale_system, work_execution_system,
 };
 use crate::shared::time::SimulationTime;
 
@@ -197,7 +198,9 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(consume_food_system)
             .after(vermin_growth_system),
         crate::layer1::visitor::visitor_lifecycle_system.after(consume_food_system),
-        theft_system.after(consume_food_system).before(decay_needs_system),
+        theft_system
+            .after(consume_food_system)
+            .before(decay_needs_system),
         decay_needs_system.after(consume_food_system),
         apply_cabin_fever_morale_system
             .after(decay_needs_system)
