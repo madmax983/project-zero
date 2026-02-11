@@ -1,19 +1,67 @@
 //! The core library for SCALE.
 //!
-//! This library exposes the simulation layers and UI components of the game.
+//! This library exposes the simulation layers, shared utilities, and UI components of the game.
+//! It is designed to be platform-agnostic, running both natively (crossterm) and in the browser (WASM).
+//!
+//! # Architecture
+//!
+//! The game is built on `bevy_ecs`, utilizing a strict Entity-Component-System architecture.
+//!
+//! ## Layers
+//!
+//! 1.  **Layer 1 (Colony Simulation):** The core "Dwarf Fortress" mode. Handles individual Pops, Buildings, Needs, and Terrain.
+//!     See [`layer1`] for details.
+//! 2.  **Shared:** Common utilities used across layers and platforms (Time, Input, Narrative).
+//!     See [`shared`] for details.
+//! 3.  **UI:** The `ratatui`-based interface. It reads the ECS state and renders to a terminal grid.
+//!     See [`ui`] for details.
+//!
+//! ## Data Flow
+//!
+//! 1.  **Input:** Platform-specific input (Key/Mouse) is normalized into `InputContext` events.
+//! 2.  **Simulation:** The [`simulation::run_simulation_tick`] function advances the world state.
+//!     -   AI Decisions (GPU/CPU) -> `PopAction`
+//!     -   Execution Systems -> World Mutation
+//! 3.  **Render:** The UI systems query the world and draw to the screen.
+//!
+//! # Examples
+//!
+//! ## Initializing a Headless Simulation
+//!
+//! ```
+//! use scale::setup::setup_world;
+//! use scale::simulation::run_simulation_tick;
+//! use scale::shared::time::SimulationTime;
+//! use bevy_ecs::prelude::*;
+//!
+//! // 1. Setup the world (spawns initial pops, generates terrain)
+//! let mut world = setup_world();
+//!
+//! // 2. Run a few ticks
+//! for _ in 0..10 {
+//!     run_simulation_tick(&mut world);
+//! }
+//!
+//! // 3. Inspect state
+//! let time = world.resource::<SimulationTime>();
+//! println!("Current Tick: {}", time.tick);
+//! ```
 
 /// Experimental features.
 pub mod experimental;
 /// GPU compute for utility AI evaluation.
 pub mod gpu;
+/// Layer 1: Colony Simulation (Pops, Buildings, Terrain).
 pub mod layer1;
 /// Platform abstraction for native/WASM backends.
 pub mod platform;
 /// Shared world setup.
 pub mod setup;
+/// Shared utilities (Time, Input, Narrative).
 pub mod shared;
 /// Shared simulation tick logic.
 pub mod simulation;
+/// User Interface components.
 pub mod ui;
 
 pub use shared::selection::{Selection, SelectionTarget, inspect_entity, inspect_tile};

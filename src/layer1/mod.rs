@@ -1,7 +1,34 @@
 //! Layer 1: Colony Simulation.
 //!
-//! This layer handles individual pops, buildings, and tile-based terrain
-//! similar to Dwarf Fortress or `RimWorld`.
+//! This is the "Dwarf Fortress" or "RimWorld" layer of the game. It simulates the daily life
+//! of the colony on a tile-based grid.
+//!
+//! # Core Concepts
+//!
+//! ## The Grid
+//! The world is represented by a 2D grid of tiles (see [`map::GridPosition`] and [`terrain::TerrainGrid`]).
+//! Each tile can contain:
+//! - **Terrain:** The base layer (Grass, Water, Rock).
+//! - **Building:** Constructed structures (Housing, Farm, Walls). See [`building`].
+//! - **Entities:** Pops, Visitors, Fauna, and Items.
+//!
+//! ## The Agents (Pops)
+//! "Pops" are the primary agents. They are not directly controlled by the player. Instead, they:
+//! 1.  **Have Needs:** Hunger, Rest, Social, Leisure (see [`needs`]).
+//! 2.  **Make Decisions:** Utility AI scores potential actions based on needs and environment (see [`utility_ai`]).
+//! 3.  **Perform Actions:** Working, Eating, Sleeping, Socializing (see [`actions`]).
+//!
+//! ## The Simulation Loop
+//! The simulation advances in discrete ticks (see [`crate::simulation`]).
+//! 1.  **Decision Phase:** AI systems evaluate options and assign `PopAction`s.
+//! 2.  **Execution Phase:** Systems like `movement_system` and `work_execution_system` progress these actions.
+//! 3.  **Economy Phase:** Resources are produced/consumed, needs decay.
+//!
+//! # Module Structure
+//! - **Entities:** [`pop`], [`building`], [`fauna`], [`visitor`]
+//! - **Systems:** [`needs`], [`health`], [`combat`], [`tech`]
+//! - **Environment:** [`terrain`], [`map`], [`weather`], [`lighting`]
+//! - **Economy:** [`resources`], [`trade`], [`market`]
 
 /// Pop actions logic.
 pub mod actions;

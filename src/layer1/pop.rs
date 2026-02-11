@@ -8,19 +8,19 @@
 //!
 //! ## Lifecycle
 //!
-//! 1.  **Spawning**: Pops are created by `spawn_initial_pops` (or potential future immigration events).
+//! 1.  **Spawning**: Pops are created by [`spawn_initial_pops`] (or potential future immigration events).
 //! 2.  **Simulation**: Every tick, systems in `needs.rs` update their physiological state.
-//! 3.  **Decision**: The Utility AI (`utility_ai.rs`) evaluates options and assigns a `PopAction`.
+//! 3.  **Decision**: The Utility AI (`utility_ai.rs`) evaluates options and assigns a [`PopAction`].
 //! 4.  **Execution**: The chosen action is carried out, modifying the world or the pop's state.
 //!
 //! ## Components
 //!
 //! A fully initialized Pop entity typically has:
-//! * `Pop`: The marker component.
-//! * `GridPosition`: Physical location.
-//! * `Needs`: Hunger, rest, etc.
-//! * `PopAction`: Current task state.
-//! * `UtilityWeights`: Personality/learning factors.
+//! * [`Pop`]: The marker component.
+//! * [`GridPosition`]: Physical location.
+//! * [`Needs`]: Hunger, rest, etc.
+//! * [`PopAction`]: Current task state.
+//! * [`UtilityWeights`]: Personality/learning factors.
 
 use super::factions::FactionMember;
 use super::health::Health;
@@ -37,6 +37,20 @@ use bevy_ecs::prelude::*;
 use rand::Rng;
 
 /// A pop's individual name.
+///
+/// Currently selected from a hardcoded list of short names.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::pop::PopName;
+/// use rand::thread_rng;
+///
+/// let mut rng = thread_rng();
+/// let name = PopName::random(&mut rng);
+/// println!("New Citizen: {}", name.0);
+/// assert!(!name.0.is_empty());
+/// ```
 #[derive(Component, Clone, Debug)]
 pub struct PopName(pub String);
 
@@ -119,12 +133,17 @@ impl Default for Speed {
 /// Spawn 5 initial pops at random walkable positions.
 ///
 /// This function attempts to find valid starting locations for the initial colony.
-/// It will retry random coordinates until it finds a tile that is:
-/// * Within bounds
-/// * Not Water
-/// * Not Rock
+/// It uses a "Monte Carlo" approach:
 ///
-/// If it fails to find a spot after `MAX_ATTEMPTS` (1000), it gives up for that pop.
+/// 1.  Pick a random coordinate (x, y).
+/// 2.  Check if it is walkable (not Water, not Rock).
+/// 3.  If valid, spawn a Pop.
+/// 4.  If invalid, retry up to `MAX_ATTEMPTS` (1000) times.
+///
+/// # Panics
+///
+/// This function does not panic, but it might fail to spawn all 5 pops if the map
+/// is completely full of water/rock (though unlikely with 1000 attempts).
 pub fn spawn_initial_pops(world: &mut World) {
     let mut rng = rand::thread_rng();
     spawn_initial_pops_internal(world, &mut rng);
