@@ -78,9 +78,9 @@ mod tests {
 
         let mut world = setup_world();
         world.insert_resource(crate::layer1::terrain::TerrainGrid {
-            width: 10,
-            height: 10,
-            tiles: vec![crate::layer1::terrain::TerrainType::Grass; 100],
+            width: 30,
+            height: 30,
+            tiles: vec![crate::layer1::terrain::TerrainType::Grass; 900],
         });
         world.insert_resource(crate::layer1::building::OccupiedTiles::default());
 

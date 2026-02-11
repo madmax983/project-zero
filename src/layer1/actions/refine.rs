@@ -2,7 +2,7 @@ use crate::layer1::building::Building;
 use crate::layer1::map::GridPosition;
 use crate::layer1::refining::get_refining_recipe;
 use crate::layer1::resources::{ColonyResources, RefiningProgress};
-use crate::layer1::utility_ai::math::{calculate_context_score, calculate_success_modifier};
+use crate::layer1::utility_ai::{calculate_context_score, calculate_success_modifier};
 use crate::layer1::utility_ai::{ActionType, UtilityWeights};
 use bevy_ecs::prelude::*;
 

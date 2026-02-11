@@ -2,7 +2,7 @@ use super::{AssignedTo, AssignmentType};
 use crate::layer1::farm::Farm;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
-use crate::layer1::utility_ai::math::{
+use crate::layer1::utility_ai::{
     calculate_context_score, calculate_success_modifier, need_response_curve,
 };
 use crate::layer1::utility_ai::{ActionType, UtilityWeights};

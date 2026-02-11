@@ -17,7 +17,7 @@ use crate::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
 use crate::layer1::social::Tavern;
 use crate::layer1::stockpile::Stockpile;
 use crate::layer1::tech::Library;
-use crate::layer1::utility_ai::types::{PopAction, UtilityConfig, UtilityWeights};
+use crate::layer1::utility_ai::{PopAction, UtilityConfig, UtilityWeights};
 
 /// Buffer storage for GPU data marshalling.
 ///
@@ -400,7 +400,7 @@ pub fn extract_global_state(
 mod tests {
     use super::*;
     use crate::layer1::designation::{Designation, DesignationType};
-    use crate::layer1::utility_ai::types::ActionType;
+    use crate::layer1::utility_ai::ActionType;
     use crate::setup::init_task_pools;
 
     #[test]
