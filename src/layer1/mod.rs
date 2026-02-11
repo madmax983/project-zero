@@ -199,9 +199,11 @@ pub mod lifecycle;
 pub use lifecycle::*;
 /// Atmospheric simulation (Spec 063).
 pub mod atmosphere;
+pub mod cabin_fever;
 /// Civil unrest and mental break system.
 pub mod unrest;
 pub use atmosphere::*;
+pub use cabin_fever::*;
 
 /// Room quality calculation and memories (Spec 064).
 pub mod room_quality;

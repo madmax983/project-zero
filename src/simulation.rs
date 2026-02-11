@@ -179,7 +179,14 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(vermin_growth_system),
         crate::layer1::visitor::visitor_lifecycle_system.after(consume_food_system),
         decay_needs_system.after(consume_food_system),
+        crate::layer1::cabin_fever::update_cabin_fever_system.after(decay_needs_system),
+        crate::layer1::cabin_fever::apply_cabin_fever_morale_system
+            .after(crate::layer1::cabin_fever::update_cabin_fever_system)
+            .before(mood_lifecycle_system),
         mood_lifecycle_system.after(decay_needs_system),
+    ));
+
+    schedule.add_systems((
         crate::layer1::justice::update_inmates_system.after(decay_needs_system),
         crate::layer1::day_night::circadian_rhythm_system.after(consume_food_system),
         aging_system.after(consume_food_system),
