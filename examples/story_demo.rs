@@ -5,7 +5,7 @@
 use crossterm::{
     event::{self, DisableMouseCapture, EnableMouseCapture, Event, KeyCode, KeyEventKind},
     execute,
-    terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
+    terminal::{EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode, enable_raw_mode},
 };
 use ratatui::{prelude::*, widgets::*};
 use scale::shared::narrative::{NarrativeContext, NarrativeGenerator};
@@ -144,7 +144,9 @@ fn main() -> anyhow::Result<()> {
 
 fn run_app<B: Backend>(terminal: &mut Terminal<B>, app: &mut App) -> io::Result<()> {
     loop {
-        terminal.draw(|f| ui(f, app)).map_err(|e| io::Error::new(io::ErrorKind::Other, e.to_string()))?;
+        terminal
+            .draw(|f| ui(f, app))
+            .map_err(|e| io::Error::new(io::ErrorKind::Other, e.to_string()))?;
 
         if event::poll(Duration::from_millis(100))? {
             if let Event::Key(key) = event::read()? {
@@ -181,7 +183,11 @@ fn ui(f: &mut Frame, app: &mut App) {
 
     // Header
     let title = Paragraph::new("Mosaic 🎨: Nova Story Generator")
-        .style(Style::default().fg(Color::Cyan).add_modifier(Modifier::BOLD))
+        .style(
+            Style::default()
+                .fg(Color::Cyan)
+                .add_modifier(Modifier::BOLD),
+        )
         .block(Block::default().borders(Borders::ALL));
     f.render_widget(title, chunks[0]);
 
@@ -206,8 +212,7 @@ fn ui(f: &mut Frame, app: &mut App) {
         .template_ids
         .iter()
         .map(|id| {
-            ListItem::new(Line::from(vec![Span::raw(id)]))
-                .style(Style::default().fg(Color::White))
+            ListItem::new(Line::from(vec![Span::raw(id)])).style(Style::default().fg(Color::White))
         })
         .collect();
 
@@ -235,8 +240,12 @@ fn ui(f: &mut Frame, app: &mut App) {
     let selected_id = app.state.selected().and_then(|i| app.template_ids.get(i));
     let pattern_text = if let Some(id) = selected_id {
         if let Some(tmpl) = app.generator.get_template(id) {
-            let patterns: Vec<Line> = tmpl.patterns.iter().map(|p| Line::from(format!("• {}", p))).collect();
-             patterns
+            let patterns: Vec<Line> = tmpl
+                .patterns
+                .iter()
+                .map(|p| Line::from(format!("• {}", p)))
+                .collect();
+            patterns
         } else {
             vec![Line::from("Template not found.")]
         }
@@ -256,8 +265,16 @@ fn ui(f: &mut Frame, app: &mut App) {
         .unwrap_or("Press ENTER to generate a story...");
 
     let output_block = Paragraph::new(story_text)
-        .style(Style::default().fg(if app.generated_story.is_some() { Color::Green } else { Color::DarkGray }))
-        .block(Block::default().borders(Borders::ALL).title("Generated Story"))
+        .style(Style::default().fg(if app.generated_story.is_some() {
+            Color::Green
+        } else {
+            Color::DarkGray
+        }))
+        .block(
+            Block::default()
+                .borders(Borders::ALL)
+                .title("Generated Story"),
+        )
         .wrap(Wrap { trim: true });
     f.render_widget(output_block, right_chunks[1]);
 }

@@ -384,7 +384,10 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
 
     match building_type {
         BuildingType::Gate => {
-            entity.insert((crate::layer1::defense::Gate::default(), Flammable::default()));
+            entity.insert((
+                crate::layer1::defense::Gate::default(),
+                Flammable::default(),
+            ));
         }
         BuildingType::Wall | BuildingType::Tower => {
             entity.insert(Flammable::default());

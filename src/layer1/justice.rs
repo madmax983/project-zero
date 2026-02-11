@@ -10,13 +10,13 @@
 //! *   [`warden_execution_system`]: Executes the arrest logic when a warden reaches a criminal.
 //! *   [`update_inmates_system`]: Decays the sentence of incarcerated pops.
 
-use bevy_ecs::prelude::*;
-use crate::layer1::map::GridPosition;
-use crate::layer1::unrest::MentalState;
-use crate::layer1::unrest::MentalBreakType;
-use crate::layer1::zone::{ZoneGrid, ZoneType};
-use crate::layer1::utility_ai::{ActionType, PopAction};
 use crate::layer1::execution::{AtTarget, MovementTarget};
+use crate::layer1::map::GridPosition;
+use crate::layer1::unrest::MentalBreakType;
+use crate::layer1::unrest::MentalState;
+use crate::layer1::utility_ai::{ActionType, PopAction};
+use crate::layer1::zone::{ZoneGrid, ZoneType};
+use bevy_ecs::prelude::*;
 
 /// Component marking a Pop as a criminal to be arrested.
 ///
@@ -58,19 +58,15 @@ pub fn check_crime_system(
 /// Finds the nearest [`Wanted`] criminal and returns a score based on distance.
 /// Used by CPU-side logic (tests/utility AI overrides).
 #[must_use]
-pub fn evaluate_warden_action(
-    world: &World,
-    guard_pos: &GridPosition,
-) -> Option<(f32, Entity)> {
+pub fn evaluate_warden_action(world: &World, guard_pos: &GridPosition) -> Option<(f32, Entity)> {
     let mut best_target = None;
     let mut min_dist = f32::MAX;
 
     // Use iter_entities for safe read-only iteration
     for entity_ref in world.iter_entities() {
-        if let (Some(pos), Some(_wanted)) = (
-            entity_ref.get::<GridPosition>(),
-            entity_ref.get::<Wanted>(),
-        ) {
+        if let (Some(pos), Some(_wanted)) =
+            (entity_ref.get::<GridPosition>(), entity_ref.get::<Wanted>())
+        {
             #[allow(clippy::cast_precision_loss)]
             let dist = guard_pos.distance_chebyshev(*pos) as f32;
             if dist < min_dist {
@@ -119,16 +115,14 @@ pub fn warden_execution_system(world: &mut World) {
 /// 1. Removes [`Wanted`] status.
 /// 2. Adds [`Inmate`] status with a sentence.
 /// 3. Teleports the criminal to the nearest [`ZoneType::Jail`].
-pub fn execute_arrest_system(
-    world: &mut World,
-    _guard_entity: Entity,
-    target_entity: Entity,
-) {
+pub fn execute_arrest_system(world: &mut World, _guard_entity: Entity, target_entity: Entity) {
     // 1. Remove Wanted
     world.entity_mut(target_entity).remove::<Wanted>();
 
     // 2. Add Inmate
-    world.entity_mut(target_entity).insert(Inmate { sentence_ticks: 100 });
+    world.entity_mut(target_entity).insert(Inmate {
+        sentence_ticks: 100,
+    });
 
     // 3. Teleport to Jail (Find first Jail tile)
     let jail_pos = find_jail_spot(world);
@@ -140,7 +134,8 @@ pub fn execute_arrest_system(
     }
 
     // 4. Pacify Criminal (Clear AI state so they don't walk away)
-    world.entity_mut(target_entity)
+    world
+        .entity_mut(target_entity)
         .remove::<MovementTarget>()
         .remove::<AtTarget>()
         .remove::<crate::layer1::utility_ai::StartPlan>();
@@ -160,7 +155,10 @@ fn find_jail_spot(world: &World) -> Option<GridPosition> {
     for y in 0..zone_grid.height {
         for x in 0..zone_grid.width {
             if zone_grid.get(x as i32, y as i32) == ZoneType::Jail {
-                return Some(GridPosition { x: x as i32, y: y as i32 });
+                return Some(GridPosition {
+                    x: x as i32,
+                    y: y as i32,
+                });
             }
         }
     }
@@ -170,10 +168,7 @@ fn find_jail_spot(world: &World) -> Option<GridPosition> {
 /// System to decay the sentence of inmates.
 ///
 /// Runs every tick. When `sentence_ticks` reaches 0, the [`Inmate`] component is removed.
-pub fn update_inmates_system(
-    mut commands: Commands,
-    mut query: Query<(Entity, &mut Inmate)>,
-) {
+pub fn update_inmates_system(mut commands: Commands, mut query: Query<(Entity, &mut Inmate)>) {
     for (entity, mut inmate) in &mut query {
         if inmate.sentence_ticks > 0 {
             inmate.sentence_ticks -= 1;
@@ -187,13 +182,16 @@ pub fn update_inmates_system(
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::pop::Pop;
-    use crate::layer1::unrest::{MentalState, MentalBreakType};
-    use crate::layer1::zone::{ZoneGrid, ZoneType};
-    use crate::layer1::justice::{Wanted, Inmate, check_crime_system, evaluate_warden_action, execute_arrest_system, update_inmates_system};
-    use crate::layer1::utility_ai::PopAction;
+    use crate::layer1::justice::{
+        Inmate, Wanted, check_crime_system, evaluate_warden_action, execute_arrest_system,
+        update_inmates_system,
+    };
     use crate::layer1::map::GridPosition;
+    use crate::layer1::pop::Pop;
+    use crate::layer1::unrest::{MentalBreakType, MentalState};
+    use crate::layer1::utility_ai::PopAction;
+    use crate::layer1::zone::{ZoneGrid, ZoneType};
+    use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
 
     fn setup_world() -> World {
@@ -207,11 +205,13 @@ mod tests {
     #[test]
     fn test_vandalism_triggers_wanted_status() {
         let mut world = setup_world();
-        let pop = world.spawn((
-            Pop,
-            MentalState::Broken(MentalBreakType::Vandalize),
-            // Not yet Wanted
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                MentalState::Broken(MentalBreakType::Vandalize),
+                // Not yet Wanted
+            ))
+            .id();
 
         // Run detection
         world.run_system_once(check_crime_system).unwrap();
@@ -226,19 +226,19 @@ mod tests {
         let mut world = setup_world();
 
         // Criminal
-        let criminal = world.spawn((
-            Pop,
-            Wanted { severity: 1.0 },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let criminal = world
+            .spawn((Pop, Wanted { severity: 1.0 }, GridPosition { x: 5, y: 5 }))
+            .id();
 
         // Guard
-        let _guard = world.spawn((
-            Pop,
-            GridPosition { x: 0, y: 0 },
-            PopAction::default(),
-            crate::layer1::utility_ai::UtilityWeights::default(), // Warden weight implied default
-        )).id();
+        let _guard = world
+            .spawn((
+                Pop,
+                GridPosition { x: 0, y: 0 },
+                PopAction::default(),
+                crate::layer1::utility_ai::UtilityWeights::default(), // Warden weight implied default
+            ))
+            .id();
 
         // Run evaluation logic (simulated)
         let result = evaluate_warden_action(&world, &GridPosition { x: 0, y: 0 });
@@ -258,16 +258,20 @@ mod tests {
         // Define Jail Zone
         world.resource_mut::<ZoneGrid>().set(2, 2, ZoneType::Jail);
 
-        let criminal = world.spawn((
-            Pop,
-            Wanted { severity: 1.0 },
-            GridPosition { x: 1, y: 1 }, // Next to guard
-        )).id();
+        let criminal = world
+            .spawn((
+                Pop,
+                Wanted { severity: 1.0 },
+                GridPosition { x: 1, y: 1 }, // Next to guard
+            ))
+            .id();
 
-        let guard = world.spawn((
-            Pop,
-            GridPosition { x: 0, y: 0 }, // Adjacent
-        )).id();
+        let guard = world
+            .spawn((
+                Pop,
+                GridPosition { x: 0, y: 0 }, // Adjacent
+            ))
+            .id();
 
         // Simulate successful arrest action
         execute_arrest_system(&mut world, guard, criminal);
@@ -285,10 +289,7 @@ mod tests {
     #[test]
     fn test_inmate_sentence_decay() {
         let mut world = setup_world();
-        let inmate = world.spawn((
-            Pop,
-            Inmate { sentence_ticks: 1 },
-        )).id();
+        let inmate = world.spawn((Pop, Inmate { sentence_ticks: 1 })).id();
 
         // Update time/inmates
         world.run_system_once(update_inmates_system).unwrap();
@@ -300,8 +301,8 @@ mod tests {
     #[test]
     fn test_warden_execution_system_integration() {
         use crate::layer1::execution::{AtTarget, MovementTarget};
-        use crate::layer1::utility_ai::PopAction;
         use crate::layer1::utility_ai::ActionType;
+        use crate::layer1::utility_ai::PopAction;
 
         let mut world = setup_world();
 
@@ -309,31 +310,33 @@ mod tests {
         world.resource_mut::<ZoneGrid>().set(2, 2, ZoneType::Jail);
 
         // Criminal
-        let criminal = world.spawn((
-            Pop,
-            Wanted { severity: 1.0 },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let criminal = world
+            .spawn((Pop, Wanted { severity: 1.0 }, GridPosition { x: 5, y: 5 }))
+            .id();
 
         // Guard arrived at target
-        let guard = world.spawn((
-            Pop,
-            GridPosition { x: 5, y: 5 },
-            PopAction {
-                current: ActionType::Warden,
-                current_utility: 0.8,
-                ticks_committed: 10,
-            },
-            MovementTarget {
-                target_entity: criminal,
-                target_position: GridPosition { x: 5, y: 5 },
-                for_action: ActionType::Warden,
-            },
-            AtTarget,
-        )).id();
+        let guard = world
+            .spawn((
+                Pop,
+                GridPosition { x: 5, y: 5 },
+                PopAction {
+                    current: ActionType::Warden,
+                    current_utility: 0.8,
+                    ticks_committed: 10,
+                },
+                MovementTarget {
+                    target_entity: criminal,
+                    target_position: GridPosition { x: 5, y: 5 },
+                    for_action: ActionType::Warden,
+                },
+                AtTarget,
+            ))
+            .id();
 
         // Run system
-        world.run_system_once(crate::layer1::justice::warden_execution_system).unwrap();
+        world
+            .run_system_once(crate::layer1::justice::warden_execution_system)
+            .unwrap();
 
         // Arrest should happen
         assert!(world.get::<Inmate>(criminal).is_some());

@@ -9,6 +9,7 @@ use crate::layer1::designation::Designation;
 use crate::layer1::farm::Farm;
 use crate::layer1::funeral::{Corpse, Grave};
 use crate::layer1::housing::Housing;
+use crate::layer1::justice::{Inmate, Wanted};
 use crate::layer1::map::GridPosition;
 use crate::layer1::medical::Hospital;
 use crate::layer1::needs::Needs;
@@ -17,7 +18,6 @@ use crate::layer1::social::Tavern;
 use crate::layer1::stockpile::Stockpile;
 use crate::layer1::tech::Library;
 use crate::layer1::utility_ai::types::{PopAction, UtilityConfig, UtilityWeights};
-use crate::layer1::justice::{Wanted, Inmate};
 
 /// Buffer storage for GPU data marshalling.
 ///
@@ -141,7 +141,14 @@ pub fn extract_pop_inputs(
     entities.clear();
     inputs.clear();
 
-    let mut query = world.query::<(Entity, &GridPosition, &Needs, &UtilityWeights, &PopAction, Option<&Inmate>)>();
+    let mut query = world.query::<(
+        Entity,
+        &GridPosition,
+        &Needs,
+        &UtilityWeights,
+        &PopAction,
+        Option<&Inmate>,
+    )>();
 
     for (entity, pos, needs, weights, action, inmate) in query.iter(world) {
         if action.ticks_committed < evaluation_interval || inmate.is_some() {

@@ -59,6 +59,7 @@ pub fn setup_world() -> World {
     world.insert_resource(OccupiedTiles::default());
     world.insert_resource(ColonyResources::default());
     world.insert_resource(ColonyPolicies::default());
+    world.insert_resource(crate::layer1::factions::Factions::default());
     world.insert_resource(InputContextStack::default());
     world.insert_resource(MessageLog::default());
     world.insert_resource(Chronicle::default());
@@ -211,5 +212,11 @@ mod tests {
     fn test_setup_world_default_state_is_main_menu() {
         let world = setup_world();
         assert_eq!(*world.resource::<GameState>(), GameState::MainMenu);
+    }
+
+    #[test]
+    fn test_setup_world_creates_factions() {
+        let world = setup_world();
+        assert!(world.contains_resource::<crate::layer1::factions::Factions>());
     }
 }

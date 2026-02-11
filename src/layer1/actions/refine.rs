@@ -1,10 +1,10 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::map::GridPosition;
-use crate::layer1::utility_ai::{ActionType, UtilityWeights};
-use crate::layer1::utility_ai::math::{calculate_context_score, calculate_success_modifier};
 use crate::layer1::building::Building;
-use crate::layer1::resources::{ColonyResources, RefiningProgress};
+use crate::layer1::map::GridPosition;
 use crate::layer1::refining::get_refining_recipe;
+use crate::layer1::resources::{ColonyResources, RefiningProgress};
+use crate::layer1::utility_ai::math::{calculate_context_score, calculate_success_modifier};
+use crate::layer1::utility_ai::{ActionType, UtilityWeights};
+use bevy_ecs::prelude::*;
 
 /// Evaluates the utility of refining resources at a building.
 ///
@@ -28,7 +28,7 @@ pub fn evaluate_refine<'a>(
         let (can_afford, _, _) = get_refining_recipe(building.building_type, resources);
 
         if !can_afford {
-             continue;
+            continue;
         }
 
         let context = calculate_context_score(
@@ -36,7 +36,7 @@ pub fn evaluate_refine<'a>(
             Some(*pos),
             1, // Capacity assumption (1 worker per mill for now)
             0, // Occupied assumption (handled by execution system or race condition accepted for MVP)
-            weights
+            weights,
         );
 
         let success = calculate_success_modifier(ActionType::Refine, weights);
