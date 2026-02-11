@@ -286,7 +286,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Emergent Festivals
+## Emergent Festivals [SPECCED]
 
 **Layer:** 1
 
