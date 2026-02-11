@@ -11,7 +11,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `070` Heirloom Tech — `specs/070-heirloom-tech.md`
 - [ ] `075` Animal Husbandry — `specs/075-animal-husbandry.md`
 - [ ] `076` Heirloom Items — `specs/076-heirloom-items.md`
-- [ ] `077` Emergent Festivals — `specs/077-emergent-festivals.md`
 - [ ] `078` The Old Guard — `specs/078-the-old-guard.md`
 - [ ] `079` Weather Events — `specs/079-weather-events.md`
 - [ ] `080` Planetary Quirks — `specs/080-planetary-quirks.md`
