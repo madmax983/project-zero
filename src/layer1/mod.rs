@@ -195,3 +195,10 @@ pub mod day_night;
 pub use day_night::*;
 pub mod justice;
 pub use justice::*;
+
+/// Planetary Quirks (Spec 080).
+pub mod quirks;
+pub use quirks::*;
+
+#[cfg(test)]
+mod quirks_tests;

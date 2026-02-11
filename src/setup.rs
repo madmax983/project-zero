@@ -81,6 +81,7 @@ pub fn setup_world() -> World {
     world.insert_resource(LightMap::new(80, 50));
     world.insert_resource(AmbientLight::default());
     world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
+    world.insert_resource(crate::layer1::PlanetaryTraits::default());
 
     initialize_visitor_source(&mut world);
 

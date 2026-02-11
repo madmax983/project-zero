@@ -15,3 +15,4 @@ Tasks currently being implemented. Builders: if a task is here, pick something e
 - [ ] `058` Personal Tools — `specs/058-personal-tools.md` — claimed 2026-02-09
 - [ ] `042` Energy System — `specs/042-energy-system.md` — claimed 2026-02-09
 - [ ] `066` Building Work AI Integration — `specs/066-building-work-ai.md` — claimed 2026-02-10
+- [ ] `080` Planetary Quirks — `specs/080-planetary-quirks.md` — claimed 2026-10-18
