@@ -2343,3 +2343,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Quick cash (sponsorship) vs. Long-term autonomy.
 
 ---
+
+## Desire Paths
+
+**Layer:** 1
+
+**Fantasy:** The colony is shaped by its inhabitants, not just the architect. A mud path worn through the grass tells a story of daily life.
+
+**Mechanic:** Walking on natural terrain (Grass) slowly converts it to "Dirt" or "Path". Paths have higher walk speed than Grass but lower Beauty. Paved roads prevent wear but cost resources.
+
+**Emergence:** Players stop building grid-roads and start paving over the "natural" routes their pops take, creating organic city layouts.
+
+**Tension:** Aesthetics (green grass) vs. Efficiency (speed).
+
+---
+
+## Omens & Taboos
+
+**Layer:** 1
+
+**Fantasy:** In the face of the unknown, people find patterns. "Don't dig on Tuesdays."
+
+**Mechanic:** When a negative event occurs (Raid, Collapse), the game logs recent actions (e.g., "Mining Iron"). That action gains a temporary "Taboo" status. Pops gain Stress/Fear when performing Taboo actions.
+
+**Emergence:** Production of a vital resource halts because a miner broke his leg, and now the whole colony thinks the Iron vein is cursed.
+
+**Tension:** Force the work (High Stress) or respect the fear (Resource shortage).
+
+---
+
+## Jury-Rigging
+
+**Layer:** 1
+
+**Fantasy:** The MacGyver solution. Keeping the station running with duct tape and prayers.
+
+**Mechanic:** Broken/Damaged buildings can be "Jury-Rigged" instantly for free/cheap (no spare parts needed). Restores function but adds a "Fragile" trait (higher break chance, lower efficiency). Fragile stacks.
+
+**Emergence:** The entire power grid is a ticking time bomb of jury-rigged fuses because you never have time to fix it properly.
+
+**Tension:** Fix it right (Time/Cost) vs. Fix it now (Risk).
+
+---
+
+## The Hedonic Treadmill
+
+**Layer:** 1
+
+**Fantasy:** Yesterday's luxury is today's baseline. The struggle to keep a growing society happy.
+
+**Mechanic:** Pops track the "Quality" of items they use (Food, Beds, Clothes). After using High Quality items for a duration, their "Standard" rises. Reverting to Lower Quality causes a massive Mood penalty (worse than if they never had the luxury).
+
+**Emergence:** You treat the colony to a feast of "Glitter-Steak". They love it. Next week, they riot because you're back to "Nutrient Paste". You are trapped by your own success.
+
+**Tension:** Boost morale now (Feast) vs. Maintain sustainable expectations (Rationing).
+
+---
