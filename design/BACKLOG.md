@@ -19,3 +19,4 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 ## MVP — User Interface
 
 - [ ] `037` Tech Tree UI — `specs/037-tech-tree-ui.md`
+- [ ] `080` Planetary Quirks — `specs/080-planetary-quirks.md`
