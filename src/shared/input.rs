@@ -6,7 +6,8 @@ use crate::layer1::{
 };
 use crate::platform::input::{GameKeyCode, GameKeyEvent, GameMouseEvent};
 use crate::shared::menu::MenuState;
-use crate::shared::selection::{Selection, handle_selection_click, screen_to_world};
+use crate::layer1::{handle_selection_click, screen_to_world};
+use crate::shared::selection::Selection;
 use crate::shared::state::GameState;
 use crate::shared::time::{SimSpeed, SimulationTime};
 

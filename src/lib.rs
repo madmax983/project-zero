@@ -64,5 +64,6 @@ pub mod simulation;
 /// User Interface components.
 pub mod ui;
 
-pub use shared::selection::{Selection, SelectionTarget, inspect_entity, inspect_tile};
+pub use layer1::{inspect_entity, inspect_tile};
+pub use shared::selection::{Selection, SelectionTarget};
 pub use shared::state::GameState;

@@ -240,3 +240,7 @@ mod sleepwalking_tests;
 /// Pop factions system (Spec 068).
 pub mod factions;
 pub use factions::*;
+
+/// Selection logic (moved from shared).
+pub mod selection;
+pub use selection::*;
