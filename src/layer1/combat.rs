@@ -1,6 +1,8 @@
 #![allow(missing_docs, clippy::collapsible_if)]
 use crate::layer1::map::GridPosition;
 use bevy_ecs::prelude::*;
+use rand::Rng;
+
 #[derive(Component, Default, Debug, Clone)]
 pub struct Drafted;
 
@@ -8,6 +10,15 @@ pub struct Drafted;
 pub struct CombatState {
     pub cooldown: u32,
     pub last_target: Option<Entity>,
+}
+
+/// Result of an attack calculation.
+#[derive(Debug, Clone, Copy)]
+pub struct AttackResult {
+    /// Actual damage dealt (after crits/reductions).
+    pub damage: f32,
+    /// Whether this was a critical hit.
+    pub is_crit: bool,
 }
 
 #[derive(Clone, Copy, Debug)]
@@ -56,43 +67,75 @@ pub fn evaluate_fight_action<'a>(
     None
 }
 
-pub fn execute_attack(world: &mut World, attacker: Entity, target: Entity) {
+/// Calculates damage with potential critical hits.
+///
+/// Ludwig: Added 5% chance for 1.5x damage to make combat feel less static.
+fn calculate_damage(base_damage: f32) -> AttackResult {
+    let mut rng = rand::thread_rng();
+    // 5% Critical Hit Chance
+    if rng.gen_bool(0.05) {
+        AttackResult {
+            damage: base_damage * 1.5,
+            is_crit: true,
+        }
+    } else {
+        AttackResult {
+            damage: base_damage,
+            is_crit: false,
+        }
+    }
+}
+
+pub fn execute_attack(world: &mut World, attacker: Entity, target: Entity) -> Option<AttackResult> {
     // 1. Get Attacker stats (Weapon, CombatState)
     // We need to query world for attacker components.
     // Since we have mutable access to world, we can't easily query while mutating.
     // We'll fetch what we need first.
 
-    let mut damage = 0.0;
+    let mut base_damage = 0.0;
     let mut cooldown_val = 0;
 
     if let Some(equipment) = world.get::<crate::layer1::items::Equipment>(attacker) {
         if let Some(weapon_entity) = equipment.weapon {
             if let Some(weapon) = world.get::<Weapon>(weapon_entity) {
-                damage = weapon.properties.damage;
+                base_damage = weapon.properties.damage;
                 cooldown_val = weapon.properties.cooldown;
             }
         }
     }
 
     // Check cooldown
+    let mut combat_state_exists = false;
     if let Some(mut state) = world.get_mut::<CombatState>(attacker) {
         if state.cooldown > 0 {
-            return;
+            return None;
         }
         state.cooldown = cooldown_val;
         state.last_target = Some(target);
+        combat_state_exists = true;
     } else {
         // If no combat state, maybe we shouldn't attack?
         // Or assume default state (0 cooldown)?
         // For now, proceed if we have damage.
     }
 
-    // 2. Apply damage to Target
-    if damage > 0.0 {
+    // 2. Calculate & Apply damage to Target
+    let result = calculate_damage(base_damage);
+
+    if result.damage > 0.0 {
         if let Some(mut health) = world.get_mut::<crate::layer1::health::Health>(target) {
-            health.take_damage(damage);
+            health.take_damage(result.damage);
         }
     }
+
+    // Ludwig: Hit Stop (add cooldown) on Crit
+    if result.is_crit && combat_state_exists {
+        if let Some(mut state) = world.get_mut::<CombatState>(attacker) {
+            state.cooldown += 5; // 5 ticks hit stop for "weight"
+        }
+    }
+
+    Some(result)
 }
 
 #[cfg(test)]
@@ -251,11 +294,19 @@ mod tests {
             .id();
 
         // Manually trigger attack (simulate execution system)
-        crate::layer1::combat::execute_attack(&mut world, pop, enemy);
+        let result = crate::layer1::combat::execute_attack(&mut world, pop, enemy);
 
         // Check Enemy Health
         let health = world.get::<Health>(enemy).unwrap();
-        assert_eq!(health.current, 80.0); // 100 - 20
+
+        // Ludwig: Due to crit chance, damage is either 20.0 or 30.0
+        let damage = result.expect("Attack should execute").damage;
+        assert!(
+            (damage - 20.0).abs() < f32::EPSILON || (damage - 30.0).abs() < f32::EPSILON,
+            "Damage was {}, expected 20.0 or 30.0", damage
+        );
+
+        assert!((health.current - (100.0 - damage)).abs() < f32::EPSILON);
     }
 
     #[test]
@@ -276,9 +327,11 @@ mod tests {
         let enemy = world.spawn((Fauna::default(), Health::default())).id();
 
         // Try attack
-        crate::layer1::combat::execute_attack(&mut world, pop, enemy);
+        let result = crate::layer1::combat::execute_attack(&mut world, pop, enemy);
 
         // Should fail/no damage
+        assert!(result.is_none());
+
         let health = world.get::<Health>(enemy).unwrap();
         assert_eq!(health.current, health.max);
     }

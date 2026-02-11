@@ -51,11 +51,13 @@ use crate::layer1::resources::{ColonyResources, process_logging, process_mining}
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
 use crate::layer1::social::{SocialBuff, Tavern, handle_socialize};
 use crate::layer1::terrain::TerrainGrid;
+use crate::layer1::pop::PopName;
 use crate::layer1::utility_ai::{ActionType, PopAction, StartPlan};
 use crate::shared::log::MessageLog;
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 use rand::Rng;
+use ratatui::style::Color;
 
 /// Executes combat when pop is targeting an enemy.
 pub fn combat_execution_system(world: &mut World) {
@@ -121,7 +123,47 @@ fn process_single_combatant(
         }
 
         // Attack
-        crate::layer1::combat::execute_attack(world, pop_entity, target_entity);
+        let result_opt = crate::layer1::combat::execute_attack(world, pop_entity, target_entity);
+
+        // Ludwig: Add feedback juice
+        if let Some(result) = result_opt {
+            if result.damage > 0.0 {
+                // Get Attacker Name
+                // We need to re-borrow world carefully. execute_attack took &mut World, but it's returned.
+                let attacker_name = world
+                    .get::<PopName>(pop_entity)
+                    .map_or_else(|| "Colonist".to_string(), |n| n.0.clone());
+
+                // Get Target Name
+                let target_name = if let Some(name) = world.get::<PopName>(target_entity) {
+                    name.0.clone()
+                } else if let Some(fauna) = world.get::<crate::layer1::fauna::Fauna>(target_entity) {
+                    format!("{:?}", fauna.fauna_type)
+                } else {
+                    "Target".to_string()
+                };
+
+                if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+                    if result.is_crit {
+                        log.add_colored(
+                            format!(
+                                "CRITICAL! {} smashes {} for {:.1} damage!",
+                                attacker_name, target_name, result.damage
+                            ),
+                            Color::Red,
+                        );
+                    } else {
+                        log.add_colored(
+                            format!(
+                                "{} hits {} for {:.1} damage.",
+                                attacker_name, target_name, result.damage
+                            ),
+                            Color::White,
+                        );
+                    }
+                }
+            }
+        }
     } else {
         // Out of range
         // Ensure we are moving (remove AtTarget if present)
@@ -2145,7 +2187,11 @@ mod tests {
 
         // Enemy should take damage
         let health = world.get::<Health>(enemy).unwrap();
-        assert_eq!(health.current, 90.0);
+        // Damage is either 10.0 or 15.0 (crit)
+        assert!(
+            (health.current - 90.0).abs() < f32::EPSILON
+                || (health.current - 85.0).abs() < f32::EPSILON
+        );
     }
 
     #[test]

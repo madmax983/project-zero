@@ -48,6 +48,11 @@ mod tests {
         world.insert_resource(scale::layer1::edicts::ColonyPolicies::default());
         world.insert_resource(scale::layer1::trade::MerchantState::default());
         world.insert_resource(scale::layer1::atmosphere::AtmosphereGrid::new(10, 10));
+        world.insert_resource(scale::layer1::day_night::DayNightCycle::default());
+        world.insert_resource(scale::layer1::structural_integrity::RoofGrid::new(10, 10));
+        world.insert_resource(scale::layer1::quirks::PlanetaryTraits::default());
+        world.insert_resource(scale::layer1::factions::Factions::default());
+        world.insert_resource(scale::layer1::weather::WeatherState::default());
         world.init_resource::<Events<scale::layer1::chronicle::AddChronicleEvent>>();
         world.init_resource::<Events<scale::layer1::social::AffinityChange>>();
         world.init_resource::<Events<scale::layer1::pop::PopDied>>();

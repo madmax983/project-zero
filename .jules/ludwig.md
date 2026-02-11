@@ -15,3 +15,10 @@
 ## [Resource Loop]
 **Friction:** Mining instantly credited resources to the global bank, making the physical act of hauling feel redundant and exploitative (double resource gain bug).
 **Flow:** Removed instant resource credit. Resources now spawn as physical items that MUST be hauled to be counted. Added immediate log feedback ("Needs Hauling") to teach the player this new requirement.
+
+## [Combat Feedback]
+**Friction:** Combat was dry and deterministic. Units silently reduced HP by fixed amounts (10.0), making battles feel like spreadsheets.
+**Flow:** Added "Juice" to attacks:
+- **Randomness:** 5% chance for Critical Hits (1.5x damage).
+- **Impact:** Added colored log messages ("CRITICAL! Ada smashes Wolf!") to visualize the violence.
+- **Weight:** Simulated "Hit Stop" on crits by adding cooldown frames to the attacker, making big hits feel heavy.

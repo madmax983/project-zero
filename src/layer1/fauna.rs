@@ -1,9 +1,11 @@
 use crate::layer1::execution::{AtTarget, MovementTarget};
 use crate::layer1::health::Health;
 use crate::layer1::map::GridPosition;
-use crate::layer1::pop::Pop;
+use crate::layer1::pop::{Pop, PopName};
 use crate::layer1::utility_ai::ActionType;
 use bevy_ecs::prelude::*;
+use rand::Rng;
+use ratatui::style::Color;
 
 /// Type of fauna.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
@@ -114,7 +116,7 @@ pub fn fauna_behavior_system(world: &mut World) {
                         if dist <= 1 {
                             // Adjacent -> Attack
                             if fauna.attack_cooldown == 0 {
-                                attacks.push((target, fauna.attack_damage));
+                                attacks.push((entity, target, fauna.attack_damage));
                                 fauna.attack_cooldown = 10; // Cooldown ticks
                                 fauna.state = FaunaState::Attack;
                             }
@@ -143,7 +145,7 @@ pub fn fauna_behavior_system(world: &mut World) {
                         let dist = pos.distance_chebyshev(*target_pos);
                         if dist <= 1 {
                             if fauna.attack_cooldown == 0 {
-                                attacks.push((target, fauna.attack_damage));
+                                attacks.push((entity, target, fauna.attack_damage));
                                 fauna.attack_cooldown = 10;
                             }
                         } else {
@@ -174,12 +176,51 @@ pub fn fauna_behavior_system(world: &mut World) {
     }
 
     // Apply damage
-    for (target, damage) in attacks {
+    let mut rng = rand::thread_rng();
+
+    for (attacker, target, base_damage) in attacks {
+        // Fetch attacker info (immutable borrow)
+        let attacker_name = if let Some(f) = world.get::<Fauna>(attacker) {
+            format!("{:?}", f.fauna_type)
+        } else {
+            "Wild Beast".to_string()
+        };
+
+        // Fetch target info (immutable borrow)
+        let target_name = world
+            .get::<PopName>(target)
+            .map_or_else(|| "Colonist".to_string(), |n| n.0.clone());
+
         if let Some(mut health) = world.get_mut::<Health>(target) {
+            // Ludwig: Juice it up!
+            let is_crit = rng.gen_bool(0.05);
+            let damage = if is_crit {
+                base_damage * 1.5
+            } else {
+                base_damage
+            };
+
             health.take_damage(damage);
+
             // Log damage
             if let Some(mut log) = world.get_resource_mut::<crate::shared::log::MessageLog>() {
-                log.add("DANGER: A wild animal is attacking!");
+                if is_crit {
+                    log.add_colored(
+                        format!(
+                            "CRITICAL! A {} mauls {} for {:.1} damage!",
+                            attacker_name, target_name, damage
+                        ),
+                        Color::Red,
+                    );
+                } else {
+                    log.add_colored(
+                        format!(
+                            "A {} bites {} for {:.1} damage!",
+                            attacker_name, target_name, damage
+                        ),
+                        Color::Yellow,
+                    );
+                }
             }
         }
     }
