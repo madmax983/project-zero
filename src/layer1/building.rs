@@ -1221,4 +1221,105 @@ mod tests {
             .count();
         assert_eq!(gate_count, 1, "Should have added Gate component");
     }
+
+    #[test]
+    fn test_all_building_types_spawn_correctly() {
+        use crate::layer1::tech::{Tech, TechState};
+        use crate::layer1::resources::ColonyResources;
+        use crate::layer1::structure::Structure;
+        use crate::shared::log::MessageLog;
+        use strum::IntoEnumIterator;
+
+        let mut world = World::new();
+        // Setup shared resources
+        world.insert_resource(TerrainGrid {
+            width: 100, // Enough for all types
+            height: 100,
+            tiles: vec![TerrainType::Grass; 10000],
+        });
+        world.insert_resource(OccupiedTiles::default());
+        world.insert_resource(ColonyResources {
+            wood: 1000.0,
+            stone: 1000.0,
+            metal: 1000.0,
+            ..Default::default()
+        });
+        world.insert_resource(MessageLog::default());
+
+        // Unlock all techs
+        let mut tech_state = TechState::default();
+        tech_state.unlock(Tech::Masonry);
+        tech_state.unlock(Tech::MetalWorking);
+        tech_state.unlock(Tech::SocialStructures);
+        world.insert_resource(tech_state);
+
+        let mut x = 0;
+        for building_type in BuildingType::iter() {
+            // Place building
+            let success = try_place_building(&mut world, x, 0, building_type);
+            assert!(success, "Failed to place building type: {:?}", building_type);
+
+            // Find the spawned entity
+            let entity = world
+                .query::<(&Building, Entity)>()
+                .iter(&world)
+                .find(|(b, _)| b.building_type == building_type)
+                .map(|(_, e)| e);
+
+            assert!(entity.is_some(), "Building entity not found for {:?}", building_type);
+            let entity = entity.unwrap();
+
+            // Verify common components
+            assert!(world.get::<Structure>(entity).is_some(), "Missing Structure for {:?}", building_type);
+
+            // Verify specific components based on type
+            match building_type {
+                BuildingType::Housing => {
+                    assert!(world.get::<crate::layer1::housing::Housing>(entity).is_some());
+                    assert!(world.get::<crate::layer1::fire::Flammable>(entity).is_some());
+                    assert!(world.get::<crate::layer1::lighting::LightSource>(entity).is_some());
+                }
+                BuildingType::Farm | BuildingType::Plantation => {
+                    assert!(world.get::<crate::layer1::farm::Farm>(entity).is_some());
+                    assert!(world.get::<crate::layer1::fire::Flammable>(entity).is_some());
+                }
+                BuildingType::Stockpile | BuildingType::Landfill => {
+                    assert!(world.get::<crate::layer1::stockpile::Stockpile>(entity).is_some());
+                    assert!(world.get::<crate::layer1::fire::Flammable>(entity).is_some());
+                }
+                BuildingType::LumberMill | BuildingType::StoneMason | BuildingType::Smelter | BuildingType::Smithy | BuildingType::Weaver | BuildingType::Tailor => {
+                    assert!(world.get::<crate::layer1::resources::RefiningProgress>(entity).is_some(), "Missing RefiningProgress for {:?}", building_type);
+                }
+                BuildingType::Tavern => {
+                    assert!(world.get::<crate::layer1::social::Tavern>(entity).is_some());
+                    assert!(world.get::<crate::layer1::fire::Flammable>(entity).is_some());
+                    assert!(world.get::<crate::layer1::lighting::LightSource>(entity).is_some());
+                }
+                BuildingType::Library => {
+                    assert!(world.get::<crate::layer1::tech::Library>(entity).is_some());
+                }
+                BuildingType::Hospital => {
+                    assert!(world.get::<crate::layer1::medical::Hospital>(entity).is_some());
+                }
+                BuildingType::Grave => {
+                    assert!(world.get::<crate::layer1::funeral::Grave>(entity).is_some());
+                }
+                BuildingType::TradeDepot => {
+                    assert!(world.get::<crate::layer1::trade::TradeDepot>(entity).is_some());
+                }
+                BuildingType::Generator => {
+                    assert!(world.get::<crate::layer1::energy::PowerSource>(entity).is_some());
+                }
+                BuildingType::PowerPole => {
+                    assert!(world.get::<crate::layer1::energy::Conduit>(entity).is_some());
+                }
+                BuildingType::Gate => {
+                    assert!(world.get::<crate::layer1::defense::Gate>(entity).is_some());
+                }
+                _ => {}
+            }
+
+            x += 1;
+        }
+    }
 }
