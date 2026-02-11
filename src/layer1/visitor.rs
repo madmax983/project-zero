@@ -6,6 +6,7 @@ use crate::layer1::execution::MovementTarget;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
 use crate::layer1::pop::PopName;
+use crate::layer1::rumor::{Knowledge, Rumor, RumorTopic};
 use crate::layer1::social::Tavern;
 use crate::layer1::utility_ai::{ActionType, StartPlan};
 use crate::shared::time::SimulationTime;
@@ -77,6 +78,17 @@ pub fn spawn_visitor_system(
         let stay_duration = rng.gen_range(800..1200);
         let departure = current_tick + stay_duration;
 
+        // Generate initial rumor (News from outside)
+        let mut knowledge = Knowledge::default();
+        if rng.gen_bool(0.5) {
+            knowledge.add_rumor(Rumor {
+                topic: RumorTopic::EventNews("News from the Core Worlds".to_string()),
+                source: Entity::PLACEHOLDER,
+                timestamp: current_tick,
+                strength: 1.0,
+            });
+        }
+
         // Spawn entity
         commands.spawn((
             Visitor {
@@ -87,7 +99,8 @@ pub fn spawn_visitor_system(
             spawn_pos,
             PopName::random(&mut rng),
             Needs::default(), // Needed for rendering (reusing Pop render logic for now)
-                              // Note: We deliberately do NOT add UtilityWeights to avoid the main AI loop.
+            knowledge, // Needed for rumor exchange
+                       // Note: We deliberately do NOT add UtilityWeights to avoid the main AI loop.
         ));
 
         // Update cooldown (next spawn in 2000-5000 ticks)

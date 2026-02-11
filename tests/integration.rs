@@ -27,3 +27,6 @@ mod death_chronicle;
 
 #[path = "integration/vermin_morale.rs"]
 mod vermin_morale;
+
+#[path = "integration/visitor_rumors.rs"]
+mod visitor_rumors;

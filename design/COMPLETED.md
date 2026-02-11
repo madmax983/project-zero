@@ -83,3 +83,4 @@ Implemented features. Architect: read this to understand current state.
 - [x] `081` Sleepwalking — `specs/081-sleepwalking.md` — completed 2026-02-11
 - [x] `078` The Old Guard — `specs/078-the-old-guard.md` — completed 2026-02-11
 - [x] `079` Weather Events — `specs/079-weather-events.md` — completed 2026-10-18
+- [x] `INT-013` Integration: Visitor -> Rumor Web — completed 2026-02-11

@@ -103,3 +103,10 @@ Map of connected and disconnected systems.
     - `MemoryType::DisgustedByVermin` in `src/layer1/memory.rs`.
     - Updated `SimulationSchedule` in `src/simulation.rs` to run `vermin_morale_system`.
 - **Tests:** `tests/integration/vermin_morale.rs` (Integration test verified)
+
+### INT-013: Visitor -> Rumor Web
+- **Date:** 2026-02-11
+- **Systems connected:** `spawn_visitor_system` -> `Knowledge` -> `exchange_rumors_system`
+- **Glue added:**
+    - Modified `spawn_visitor_system` in `src/layer1/visitor.rs` to add `Knowledge` component and seed rumors.
+- **Tests:** `tests/integration/visitor_rumors.rs`
