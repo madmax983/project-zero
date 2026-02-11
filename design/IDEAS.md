@@ -2245,3 +2245,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Build spacious, expensive shelters or cram everyone in for safety?
 
 ---
+
+## Sensor Ambiguity
+
+**Layer:** 2
+
+**Fantasy:** The tension of submarine warfare. Starring at a blip on the radar, praying it's just a glitch.
+
+**Mechanic:** Unidentified objects on the System Map appear as generic "Contacts" with a "Signal Strength". Is it a pirate? A merchant? An asteroid? You have to fly closer (risk) or hail them (reveal yourself) to find out. High-tech sensors identify contacts at longer ranges.
+
+**Emergence:** You ignore a "weak signal" thinking it's space junk. It turns out to be a stealth frigate that nukes your orbital station.
+
+**Tension:** Investigate (safety/risk) vs. Ignore (economy/risk).
+
+---
+
+## Indoctrination
+
+**Layer:** 1
+
+**Fantasy:** Shaping the minds of the next generation. 1984 meets The Sims.
+
+**Mechanic:** Schools and Media Stations broadcast "Ethics". Pops exposed to them slowly shift their Ethics to match the State's. High alignment = Stability/Zeal. Low alignment = Dissent.
+
+**Emergence:** You try to brainwash a captured pirate population into being "Pacifists". It backfires, and they convert your teachers to "Militarism" instead.
+
+**Tension:** Free Thought (Innovation/Chaos) vs. State Ideology (Stability/Stagnation).
+
+---
+
+## Remittances
+
+**Layer:** Cross-layer
+
+**Fantasy:** The loneliness of the migrant worker. You are here to build a better life for someone else, far away.
+
+**Mechanic:** Pops with the "Family" trait (or from specific backgrounds) deduct a % of their earnings/resources to "send home". If they can't pay, they get "Homesick" (Depression). If they pay a lot, their home faction sends "Cousins" (new migrants).
+
+**Emergence:** Your economy drains because everyone is sending money off-world. You ban remittances to save gold, causing a massive "Homesick" depression wave and a diplomatic incident with the homeworld.
+
+**Tension:** Local wealth retention vs. Pop happiness/immigration.
+
+---
