@@ -482,3 +482,7 @@ mod tests {
         );
     }
 }
+/// Old Guard logic: Generational friction between Founders and Immigrants (Spec 078).
+pub mod old_guard;
+#[cfg(test)]
+mod old_guard_tests;

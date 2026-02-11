@@ -18,7 +18,8 @@ use crate::gpu::evaluate::gpu_evaluate_actions;
 use crate::layer1::{
     AddChronicleEvent, AffinityChange, PopDied, advance_season_system, aging_system,
     apply_lighting_penalties_system, apply_noise_effects_system, apply_quirk_modifiers_system,
-    arrival_handler_system, art_generation_system, art_observation_system, check_milestones_system,
+    arrival_handler_system, art_generation_system, art_observation_system,
+    assign_sleepwalk_target_system, check_milestones_system, check_sleepwalking_start_system,
     chronicle_event_handler_system, chronicle_rumor_bridge_system, clean_dead_residents_system,
     clean_dead_workers_system, cleanup_previous_assignment_system, clothing_wear_system,
     combat_execution_system, consume_food_system, death_system, decay_needs_system,
@@ -27,11 +28,11 @@ use crate::layer1::{
     natural_death_system, notification_expiration_system, pop_death_chronicle_bridge,
     process_refining_system, process_research_system, process_scan_system,
     process_start_plan_system, produce_food_system, restore_leisure_system,
-    restore_rest_in_housing_system, spoilage_system, starvation_damage_system,
-    track_plan_outcomes_system, update_action_timer_system, update_lighting_system,
-    update_noise_system, update_resource_caps_system, vermin_growth_system, vermin_morale_system,
-    work_execution_system,
-    check_sleepwalking_start_system, sleepwalk_end_system, assign_sleepwalk_target_system,
+    restore_rest_in_housing_system, sleepwalk_end_system,
+    social::old_guard::{apply_founder_benefits_system, check_generational_friction_system, mood_lifecycle_system, apply_mood_modifiers_system},
+    spoilage_system, starvation_damage_system, track_plan_outcomes_system,
+    update_action_timer_system, update_lighting_system, update_noise_system,
+    update_resource_caps_system, vermin_growth_system, vermin_morale_system, work_execution_system,
 };
 use crate::shared::time::SimulationTime;
 
@@ -83,8 +84,7 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer1::zone::apply_zone_designation_system),
         assign_sleepwalk_target_system
             .after(crate::layer1::room_quality::apply_waking_thoughts_system),
-        cleanup_previous_assignment_system
-            .after(assign_sleepwalk_target_system),
+        cleanup_previous_assignment_system.after(assign_sleepwalk_target_system),
         process_start_plan_system.after(cleanup_previous_assignment_system),
         crate::layer1::fauna::fauna_behavior_system.after(process_start_plan_system),
         crate::layer1::day_night::update_day_night_cycle_system.after(process_start_plan_system),
@@ -122,6 +122,7 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(work_execution_system)
             .after(update_noise_system),
         restore_leisure_system.after(work_execution_system),
+        apply_mood_modifiers_system.after(restore_leisure_system),
         healing_system.after(work_execution_system),
         crate::layer1::beauty::update_beauty_grid_system.after(work_execution_system),
         crate::layer1::beauty::apply_beauty_effects_system
@@ -133,6 +134,7 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::factions::update_faction_membership_system.after(work_execution_system),
         crate::layer1::factions::update_faction_satisfaction_system
             .after(crate::layer1::factions::update_faction_membership_system),
+        apply_founder_benefits_system.after(work_execution_system),
     ));
 
     #[cfg(feature = "nova")]
@@ -172,6 +174,7 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(vermin_growth_system),
         crate::layer1::visitor::visitor_lifecycle_system.after(consume_food_system),
         decay_needs_system.after(consume_food_system),
+        mood_lifecycle_system.after(decay_needs_system),
         crate::layer1::justice::update_inmates_system.after(decay_needs_system),
         crate::layer1::day_night::circadian_rhythm_system.after(consume_food_system),
         aging_system.after(consume_food_system),
@@ -203,6 +206,7 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::justice::check_crime_system
             .after(crate::layer1::unrest::check_mental_break_system),
         crate::layer1::unrest::recover_mental_break_system.after(decay_needs_system),
+        check_generational_friction_system.after(decay_needs_system),
         // Process new rumors and affinity changes
         modify_affinity_system.after(crate::layer1::rumor::exchange_rumors_system),
         // Process chronicle events
