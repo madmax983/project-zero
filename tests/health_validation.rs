@@ -1,3 +1,4 @@
+#![allow(missing_docs)]
 use scale::layer1::health::Health;
 
 #[test]

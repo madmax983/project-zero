@@ -248,3 +248,6 @@ pub use weather::*;
 /// Cabin Fever mechanics (Spec 082).
 pub mod cabin_fever;
 pub use cabin_fever::*;
+/// Mentorship system (Spec 069).
+pub mod mentorship;
+pub use mentorship::*;
