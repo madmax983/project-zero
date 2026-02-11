@@ -2287,3 +2287,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Local wealth retention vs. Pop happiness/immigration.
 
 ---
+
+## The Exile
+
+**Layer:** 1 -> 3
+
+**Fantasy:** Sometimes the only solution is to make someone else's problem.
+
+**Mechanic:** Instead of execution or imprisonment, you can "Banish" a troublesome Pop. They leave the map. Years later, they may return as a Pirate Captain, a wealthy Merchant, or a beggar, with traits reflecting their exile.
+
+**Emergence:** You banish a thief who stole food. Ten years later, a Pirate Dreadnought hails you. It's him. He wants his food back.
+
+**Tension:** Mercy (banishment) vs. Finality (execution).
+
+---
+
+## Bioluminescent Flora
+
+**Layer:** 1
+
+**Fantasy:** The alien night is not dark; it is alive with strange lights.
+
+**Mechanic:** Specific plants glow at night, providing small radii of light. Light reduces stress and monster spawn rates. Harvesting the plant removes the light.
+
+**Emergence:** You clear-cut the glowing forest to build a solar farm. When night falls, the base is pitch black, and the "Shadow Stalkers" spawn in the middle of your power grid.
+
+**Tension:** Resource extraction (wood/space) vs. Natural safety (light).
+
+---
+
+## Procedural Dialects
+
+**Layer:** 1
+
+**Fantasy:** A community forging its own identity through language.
+
+**Mechanic:** The game logs and chatter generate slang based on colony events. If a "Fire" killed 10 people, "Fire" becomes a curse word. If "Miner Bob" found the motherlode, "Pulling a Bob" means getting lucky.
+
+**Emergence:** New immigrants arrive speaking "Core Common," while your veterans speak a strange, localized creole of mining terms and tragedy.
+
+**Tension:** None—pure immersion and culture building.
+
+---
+
+## Corporate Sponsorship
+
+**Layer:** 3 -> 1
+
+**Fantasy:** This colony is brought to you by *Lightspeed Cola*.
+
+**Mechanic:** Accept funding/resources from a Layer 3 Corporation. In exchange, you must build "Billboards" (consume power, produce no resources) and use their specific, DRM-locked tech (cheaper but unrepairable).
+
+**Emergence:** The "Nano-Med-Bay" breaks down during a plague. You can't fix it because you violated the End User License Agreement by trying to repair it yourself.
+
+**Tension:** Quick cash (sponsorship) vs. Long-term autonomy.
+
+---
