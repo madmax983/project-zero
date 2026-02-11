@@ -251,3 +251,7 @@ pub use cabin_fever::*;
 /// Mentorship system (Spec 069).
 pub mod mentorship;
 pub use mentorship::*;
+
+/// Stowaway system (Spec 086).
+pub mod stowaway;
+pub use stowaway::*;

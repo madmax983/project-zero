@@ -7,6 +7,7 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
 use crate::layer1::pop::PopName;
 use crate::layer1::social::Tavern;
+use crate::layer1::stowaway::InfiltrationRisk;
 use crate::layer1::utility_ai::{ActionType, StartPlan};
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
@@ -78,7 +79,7 @@ pub fn spawn_visitor_system(
         let departure = current_tick + stay_duration;
 
         // Spawn entity
-        commands.spawn((
+        let mut entity_cmds = commands.spawn((
             Visitor {
                 state: VisitorState::Arriving,
                 arrival_tick: current_tick,
@@ -89,6 +90,11 @@ pub fn spawn_visitor_system(
             Needs::default(), // Needed for rendering (reusing Pop render logic for now)
                               // Note: We deliberately do NOT add UtilityWeights to avoid the main AI loop.
         ));
+
+        // Occasional risk of infiltration (10% chance)
+        if rng.gen_bool(0.1) {
+            entity_cmds.insert(InfiltrationRisk { chance: 0.01 });
+        }
 
         // Update cooldown (next spawn in 2000-5000 ticks)
         source.next_spawn_tick = current_tick + rng.gen_range(2000..5000);
