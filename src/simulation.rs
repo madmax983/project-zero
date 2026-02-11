@@ -14,6 +14,10 @@ use crate::experimental::dreams::dream_system;
 use crate::experimental::ghosts::{
     apply_ghost_beauty_system, ghost_light_damage_system, ghost_movement_system,
 };
+#[cfg(feature = "nova")]
+use crate::experimental::miasma::{
+    apply_miasma_effects_system, sickness_progression_system, update_miasma_system,
+};
 use crate::gpu::evaluate::gpu_evaluate_actions;
 use crate::layer1::{
     AddChronicleEvent, AffinityChange, PopDied, advance_season_system, aging_system,
@@ -166,6 +170,12 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer1::atmosphere::update_atmosphere_system),
     ));
 
+    #[cfg(feature = "nova")]
+    schedule.add_systems((
+        update_miasma_system.after(work_execution_system),
+        apply_miasma_effects_system.after(update_miasma_system),
+    ));
+
     // --- Consumption Chain (sequential, depends on economy) ---
     schedule.add_systems((
         consume_food_system
@@ -184,6 +194,8 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::day_night::circadian_rhythm_system.after(consume_food_system),
         aging_system.after(consume_food_system),
         natural_death_system.after(aging_system),
+        #[cfg(feature = "nova")]
+        sickness_progression_system.after(aging_system),
         memory_decay_system.after(decay_needs_system),
         notification_expiration_system.after(decay_needs_system),
         hypothermia_system.after(decay_needs_system),

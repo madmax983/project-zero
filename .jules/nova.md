@@ -17,3 +17,8 @@
 **Concept:** Sleeping pops dream about `Chronicle` events. Legendary events give Leisure/Knowledge bonuses; nightmares give nothing.
 **Fate:** Merged
 **Lesson:** Connecting history (Chronicle) to individual state (Needs) creates emergent storytelling. The past haunts the present.
+
+## [Miasma]
+**Concept:** Added `MiasmaGrid` resource and `Sickness` component. Waste, Corpses, and Landfills emit miasma which diffuses and causes morale loss and sickness in nearby pops.
+**Fate:** Merged
+**Lesson:** Environmental consequences for resource management (Waste) create natural gameplay loops (Cleanup/Burial) without explicit "Quests".

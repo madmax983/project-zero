@@ -79,6 +79,8 @@ pub fn setup_world() -> World {
     world.insert_resource(crate::layer1::beauty::BeautyGrid::new(80, 50));
     world.insert_resource(crate::layer1::zone::ZoneGrid::new(80, 50));
     world.insert_resource(crate::layer1::acoustic::NoiseMap::new(80, 50));
+    #[cfg(feature = "nova")]
+    world.insert_resource(crate::experimental::miasma::MiasmaGrid::new(80, 50));
     world.insert_resource(AtmosphereGrid::new(80, 50));
     world.insert_resource(LightMap::new(80, 50));
     world.insert_resource(AmbientLight::default());
