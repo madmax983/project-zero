@@ -382,11 +382,10 @@ pub fn arrival_handler_system(
                 true
             }
             ActionType::SeekMedicalCare => {
-                assign_pop(
+                crate::layer1::medical::handle_medical_arrival(
                     &mut commands,
                     pop_entity,
                     target_entity,
-                    AssignmentType::Patient,
                 );
                 true
             }
@@ -399,11 +398,10 @@ pub fn arrival_handler_system(
                 true
             }
             ActionType::Research => {
-                assign_pop(
+                crate::layer1::actions::research::handle_research_arrival(
                     &mut commands,
                     pop_entity,
                     target_entity,
-                    AssignmentType::LibraryWorker,
                 );
                 true
             }
@@ -434,17 +432,6 @@ pub fn arrival_handler_system(
     }
 }
 
-fn assign_pop(
-    commands: &mut Commands,
-    pop_entity: Entity,
-    target_entity: Entity,
-    assignment_type: AssignmentType,
-) {
-    commands.entity(pop_entity).insert(AssignedTo {
-        entity: target_entity,
-        assignment_type,
-    });
-}
 
 fn remove_movement_components(commands: &mut Commands, pop_entity: Entity) {
     commands
@@ -461,32 +448,36 @@ fn is_walkable(
     y: i32,
 ) -> bool {
     // Check Terrain
-    if let (Ok(x_idx), Ok(y_idx)) = (usize::try_from(x), usize::try_from(y)) {
-        if !terrain
-            .get(x_idx, y_idx)
-            .is_some_and(crate::layer1::terrain::TerrainType::is_walkable)
-        {
-            return false;
-        }
-    } else {
+    let (Ok(x_idx), Ok(y_idx)) = (usize::try_from(x), usize::try_from(y)) else {
+        return false;
+    };
+
+    if !terrain
+        .get(x_idx, y_idx)
+        .is_some_and(crate::layer1::terrain::TerrainType::is_walkable)
+    {
         return false;
     }
 
     // Check Buildings
-    if let Some(occupied_tiles) = occupied {
-        if occupied_tiles.0.contains(&(x, y)) {
-            for (pos, building, gate) in buildings.iter() {
-                if pos.x == x && pos.y == y {
-                    if let Some(g) = gate {
-                        if g.is_locked {
-                            return false;
-                        }
-                    } else if building.building_type.is_obstacle() {
-                        return false;
-                    }
-                    return true;
+    let Some(occupied_tiles) = occupied else {
+        return true;
+    };
+
+    if !occupied_tiles.0.contains(&(x, y)) {
+        return true;
+    }
+
+    for (pos, building, gate) in buildings.iter() {
+        if pos.x == x && pos.y == y {
+            if let Some(g) = gate {
+                if g.is_locked {
+                    return false;
                 }
+            } else if building.building_type.is_obstacle() {
+                return false;
             }
+            return true;
         }
     }
     true

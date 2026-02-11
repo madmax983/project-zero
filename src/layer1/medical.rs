@@ -1,6 +1,20 @@
-use crate::layer1::actions::{AssignedTo, AssignmentType};
+use crate::layer1::actions::{AssignedTo, AssignmentType, assign_pop};
 use crate::layer1::health::Health;
 use bevy_ecs::prelude::*;
+
+/// Handles a pop arriving at a Hospital to seek medical care.
+pub fn handle_medical_arrival(
+    commands: &mut Commands,
+    pop_entity: Entity,
+    hospital_entity: Entity,
+) {
+    assign_pop(
+        commands,
+        pop_entity,
+        hospital_entity,
+        AssignmentType::Patient,
+    );
+}
 
 /// Component indicating a building is a hospital that can heal patients.
 #[derive(Component)]

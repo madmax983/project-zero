@@ -54,3 +54,16 @@ pub enum AssignmentType {
     /// Burying a corpse.
     Funeral,
 }
+
+/// Helper to assign a pop to an entity with a specific role.
+pub fn assign_pop(
+    commands: &mut Commands,
+    pop_entity: Entity,
+    target_entity: Entity,
+    assignment_type: AssignmentType,
+) {
+    commands.entity(pop_entity).insert(AssignedTo {
+        entity: target_entity,
+        assignment_type,
+    });
+}

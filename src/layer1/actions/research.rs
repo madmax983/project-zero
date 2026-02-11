@@ -1,9 +1,24 @@
+use crate::layer1::actions::{AssignmentType, assign_pop};
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::tech::Library;
 use crate::layer1::utility_ai::math::{calculate_context_score, calculate_success_modifier};
 use crate::layer1::utility_ai::{ActionType, UtilityWeights};
 use bevy_ecs::prelude::*;
+
+/// Handles a pop arriving at a Library to perform research.
+pub fn handle_research_arrival(
+    commands: &mut Commands,
+    pop_entity: Entity,
+    library_entity: Entity,
+) {
+    assign_pop(
+        commands,
+        pop_entity,
+        library_entity,
+        AssignmentType::LibraryWorker,
+    );
+}
 
 /// Evaluates the utility of performing scientific research at a [`Library`].
 ///
