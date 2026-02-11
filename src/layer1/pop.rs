@@ -22,6 +22,7 @@
 //! * [`PopAction`]: Current task state.
 //! * [`UtilityWeights`]: Personality/learning factors.
 
+use super::cabin_fever::CabinFever;
 use super::factions::FactionMember;
 use super::health::Health;
 use super::items::Equipment;
@@ -188,23 +189,25 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
         };
 
         if is_walkable {
-            world.spawn((
-                Pop,
-                generate_name(rng),
-                GridPosition { x, y },
-                Health::default(),
-                Needs::default(),
-                Memories::default(),
-                Skills::default(),
-                Speed::default(),
-                PopAction::default(),
-                Equipment::default(),
-                UtilityWeights::default(),
-                Knowledge::default(),
-                Age::new(rng.gen_range(20..40)),
-                FactionMember::default(),
-                Arrival { tick: 0 },
-            ));
+            world
+                .spawn((
+                    Pop,
+                    generate_name(rng),
+                    GridPosition { x, y },
+                    Health::default(),
+                    Needs::default(),
+                    Memories::default(),
+                    Skills::default(),
+                    Speed::default(),
+                    PopAction::default(),
+                    Equipment::default(),
+                    UtilityWeights::default(),
+                    Knowledge::default(),
+                    Age::new(rng.gen_range(20..40)),
+                    FactionMember::default(),
+                    Arrival { tick: 0 },
+                ))
+                .insert(CabinFever::default());
             spawned += 1;
         }
     }

@@ -21,23 +21,26 @@ use crate::experimental::miasma::{
 use crate::gpu::evaluate::gpu_evaluate_actions;
 use crate::layer1::{
     AddChronicleEvent, AffinityChange, PopDied, advance_season_system, aging_system,
-    apply_lighting_penalties_system, apply_noise_effects_system, apply_quirk_modifiers_system,
-    apply_weather_effects_system,
-    arrival_handler_system, art_generation_system, art_observation_system,
-    assign_sleepwalk_target_system, check_milestones_system, check_sleepwalking_start_system,
-    chronicle_event_handler_system, chronicle_rumor_bridge_system, clean_dead_residents_system,
-    clean_dead_workers_system, cleanup_previous_assignment_system, clothing_wear_system,
-    combat_execution_system, consume_food_system, death_system, decay_needs_system,
-    fire_damage_pops_system, fire_damage_system, fire_spread_system, haul_system, healing_system,
-    hypothermia_system, memory_decay_system, modify_affinity_system, movement_system,
-    natural_death_system, notification_expiration_system, pop_death_chronicle_bridge,
-    process_refining_system, process_research_system, process_scan_system,
-    process_start_plan_system, produce_food_system, restore_leisure_system,
-    restore_rest_in_housing_system, sleepwalk_end_system,
-    social::old_guard::{apply_founder_benefits_system, check_generational_friction_system, mood_lifecycle_system, apply_mood_modifiers_system},
+    apply_cabin_fever_morale_system, apply_lighting_penalties_system, apply_noise_effects_system,
+    apply_quirk_modifiers_system, apply_weather_effects_system, arrival_handler_system,
+    art_generation_system, art_observation_system, assign_sleepwalk_target_system,
+    check_milestones_system, check_sleepwalking_start_system, chronicle_event_handler_system,
+    chronicle_rumor_bridge_system, clean_dead_residents_system, clean_dead_workers_system,
+    cleanup_previous_assignment_system, clothing_wear_system, combat_execution_system,
+    consume_food_system, death_system, decay_needs_system, fire_damage_pops_system,
+    fire_damage_system, fire_spread_system, haul_system, healing_system, hypothermia_system,
+    memory_decay_system, modify_affinity_system, movement_system, natural_death_system,
+    notification_expiration_system, pop_death_chronicle_bridge, process_refining_system,
+    process_research_system, process_scan_system, process_start_plan_system, produce_food_system,
+    restore_leisure_system, restore_rest_in_housing_system, sleepwalk_end_system,
+    social::old_guard::{
+        apply_founder_benefits_system, apply_mood_modifiers_system,
+        check_generational_friction_system, mood_lifecycle_system,
+    },
     spoilage_system, starvation_damage_system, track_plan_outcomes_system,
-    update_action_timer_system, update_lighting_system, update_noise_system,
-    update_resource_caps_system, update_weather_system, vermin_growth_system, vermin_morale_system, work_execution_system,
+    update_action_timer_system, update_cabin_fever_system, update_lighting_system,
+    update_noise_system, update_resource_caps_system, update_weather_system, vermin_growth_system,
+    vermin_morale_system, work_execution_system,
 };
 use crate::shared::time::SimulationTime;
 
@@ -103,6 +106,9 @@ pub fn build_simulation_schedule() -> Schedule {
         apply_quirk_modifiers_system
             .after(apply_lighting_penalties_system)
             .after(apply_weather_effects_system),
+    ));
+
+    schedule.add_systems((
         movement_system
             .after(apply_quirk_modifiers_system)
             .after(crate::layer1::fauna::fauna_behavior_system),
@@ -113,6 +119,7 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::execution::vandalize_execution_system.after(arrival_handler_system),
         haul_system.after(arrival_handler_system),
         process_scan_system.after(arrival_handler_system),
+        update_cabin_fever_system.after(movement_system),
     ));
 
     #[cfg(feature = "nova")]
@@ -189,6 +196,9 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(vermin_growth_system),
         crate::layer1::visitor::visitor_lifecycle_system.after(consume_food_system),
         decay_needs_system.after(consume_food_system),
+        apply_cabin_fever_morale_system
+            .after(decay_needs_system)
+            .before(mood_lifecycle_system),
         mood_lifecycle_system.after(decay_needs_system),
         crate::layer1::justice::update_inmates_system.after(decay_needs_system),
         crate::layer1::day_night::circadian_rhythm_system.after(consume_food_system),

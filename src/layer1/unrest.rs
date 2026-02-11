@@ -1,3 +1,4 @@
+use crate::layer1::cabin_fever::CabinFever;
 use crate::layer1::needs::Needs;
 use crate::layer1::structure::Structure;
 use bevy_ecs::prelude::*;
@@ -26,11 +27,15 @@ pub enum MentalBreakType {
 }
 
 /// System to check if Pops should suffer a mental break based on morale.
-pub fn check_mental_break_system(mut query: Query<(&Needs, &mut MentalState)>) {
-    for (needs, mut state) in &mut query {
+pub fn check_mental_break_system(
+    mut query: Query<(&Needs, Option<&CabinFever>, &mut MentalState)>,
+) {
+    for (needs, fever, mut state) in &mut query {
         if *state == MentalState::Normal {
             let morale = needs.morale();
-            if morale < 0.15 {
+            let stress_break = fever.is_some_and(|f| f.total_stress() >= 90.0);
+
+            if morale < 0.15 || stress_break {
                 // Simplified deterministic logic for Green phase
                 // In real game, use RNG.
                 *state = MentalState::Broken(MentalBreakType::Vandalize);

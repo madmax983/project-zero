@@ -1,12 +1,12 @@
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::social::old_guard::{
-        Arrival, Generation, FounderBuff, MoodModifiers, check_generational_friction_system,
-        apply_founder_benefits_system, FOUNDER_CUTOFF_YEAR
-    };
     use crate::layer1::balance::TICKS_PER_YEAR;
     use crate::layer1::pop::Pop;
+    use crate::layer1::social::old_guard::{
+        Arrival, FOUNDER_CUTOFF_YEAR, FounderBuff, Generation, MoodModifiers,
+        apply_founder_benefits_system, check_generational_friction_system,
+    };
+    use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
 
     #[test]
@@ -21,7 +21,9 @@ mod tests {
         let early = Arrival { tick: 100 };
         assert_eq!(early.generation(), Generation::Founder);
 
-        let late = Arrival { tick: FOUNDER_CUTOFF_YEAR * TICKS_PER_YEAR + 1000 };
+        let late = Arrival {
+            tick: FOUNDER_CUTOFF_YEAR * TICKS_PER_YEAR + 1000,
+        };
         assert_eq!(late.generation(), Generation::Immigrant);
     }
 
@@ -30,16 +32,20 @@ mod tests {
         let mut world = World::new();
 
         // Spawn a Founder
-        let founder = world.spawn((
-            Pop,
-            Arrival { tick: 100 }, // Year 0
-        )).id();
+        let founder = world
+            .spawn((
+                Pop,
+                Arrival { tick: 100 }, // Year 0
+            ))
+            .id();
 
         // Spawn an Immigrant
-        let immigrant = world.spawn((
-            Pop,
-            Arrival { tick: 6000 }, // Year 6
-        )).id();
+        let immigrant = world
+            .spawn((
+                Pop,
+                Arrival { tick: 6000 }, // Year 6
+            ))
+            .id();
 
         // Run system
         let _ = world.run_system_once(apply_founder_benefits_system);
@@ -50,7 +56,13 @@ mod tests {
         // Check for mood modifier
         let modifiers = world.get::<MoodModifiers>(founder);
         assert!(modifiers.is_some());
-        assert!(modifiers.unwrap().entries.iter().any(|m| m.value == 5.0 && m.source == "Legacy of the First"));
+        assert!(
+            modifiers
+                .unwrap()
+                .entries
+                .iter()
+                .any(|m| m.value == 5.0 && m.source == "Legacy of the First")
+        );
     }
 
     #[test]
@@ -69,7 +81,8 @@ mod tests {
 
         // Founder should have "Overwhelmed" mood modifier
         let mut query = world.query::<&MoodModifiers>();
-        let overwhelmed_count = query.iter(&world)
+        let overwhelmed_count = query
+            .iter(&world)
             .flat_map(|m| m.entries.iter())
             .filter(|entry| entry.source == "Overwhelmed by Strangers")
             .count();
@@ -93,7 +106,8 @@ mod tests {
 
         // Immigrant should have "Excluded" mood modifier
         let mut query = world.query::<&MoodModifiers>();
-        let excluded_count = query.iter(&world)
+        let excluded_count = query
+            .iter(&world)
             .flat_map(|m| m.entries.iter())
             .filter(|entry| entry.source == "Excluded by Clique")
             .count();

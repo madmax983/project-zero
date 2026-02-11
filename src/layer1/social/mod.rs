@@ -2,8 +2,8 @@ use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
 use crate::layer1::utility_ai::{
-    calculate_context_score, calculate_success_modifier, need_response_curve, ActionType,
-    UtilityWeights,
+    ActionType, UtilityWeights, calculate_context_score, calculate_success_modifier,
+    need_response_curve,
 };
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;

@@ -244,3 +244,7 @@ pub use factions::*;
 /// Weather system (Spec 079).
 pub mod weather;
 pub use weather::*;
+
+/// Cabin Fever mechanics (Spec 082).
+pub mod cabin_fever;
+pub use cabin_fever::*;

@@ -1,7 +1,7 @@
 use crate::layer1::farm::Farm;
 use crate::layer1::map::GridPosition;
-use crate::layer1::utility_ai::{calculate_context_score, calculate_success_modifier};
 use crate::layer1::utility_ai::{ActionType, UtilityWeights};
+use crate::layer1::utility_ai::{calculate_context_score, calculate_success_modifier};
 use bevy_ecs::prelude::*;
 
 /// Evaluates the utility of farming.

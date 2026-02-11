@@ -1,9 +1,9 @@
+use bevy_ecs::system::RunSystemOnce;
 use scale::layer1::{
     AmbientLight, BuildingType, ColonyResources, GridPosition, LightMap, Pop, Speed, Tech,
     TechState, TerrainGrid, TerrainType, try_place_building,
 };
 use scale::setup::setup_world;
-use bevy_ecs::system::RunSystemOnce;
 
 #[test]
 fn test_tavern_emits_light() {
@@ -30,7 +30,9 @@ fn test_tavern_emits_light() {
     assert!(placed, "Should be able to place Tavern");
 
     // 6. Run Lighting Systems Manually (avoid DayNightCycle interference)
-    world.run_system_once(scale::layer1::lighting::update_lighting_system).unwrap();
+    world
+        .run_system_once(scale::layer1::lighting::update_lighting_system)
+        .unwrap();
 
     // 7. Check LightMap
     let light_map = world.resource::<LightMap>();
@@ -87,8 +89,12 @@ fn test_building_light_affects_pop_speed() {
         .id();
 
     // 8. Run Systems Manually
-    world.run_system_once(scale::layer1::lighting::update_lighting_system).unwrap();
-    world.run_system_once(scale::layer1::lighting::apply_lighting_penalties_system).unwrap();
+    world
+        .run_system_once(scale::layer1::lighting::update_lighting_system)
+        .unwrap();
+    world
+        .run_system_once(scale::layer1::lighting::apply_lighting_penalties_system)
+        .unwrap();
 
     // 9. Check Speeds
     let speed_lit = world.get::<Speed>(pop_lit).unwrap().current;

@@ -1,9 +1,9 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::unrest::{MentalState, MentalBreakType};
-use crate::layer1::needs::Needs;
-use crate::layer1::utility_ai::{PopAction, ActionType, StartPlan};
 use crate::layer1::map::GridPosition;
+use crate::layer1::needs::Needs;
 use crate::layer1::terrain::TerrainGrid;
+use crate::layer1::unrest::{MentalBreakType, MentalState};
+use crate::layer1::utility_ai::{ActionType, PopAction, StartPlan};
+use bevy_ecs::prelude::*;
 use rand::Rng;
 
 /// Component tracking how many ticks a sleepwalking episode lasts.
@@ -41,7 +41,8 @@ pub fn check_sleepwalking_start_system(
     for (entity, needs, action, mut state) in &mut query {
         // Trigger condition: Trying to rest AND low morale
         // Check if currently resting or about to rest (SatisfyRest)
-        if action.current == ActionType::SatisfyRest && needs.morale() < 0.25
+        if action.current == ActionType::SatisfyRest
+            && needs.morale() < 0.25
             && rng.gen_bool(chance)
         {
             *state = MentalState::Broken(MentalBreakType::Sleepwalking);
@@ -84,20 +85,25 @@ pub fn assign_sleepwalk_target_system(
         if plan.action == ActionType::Sleepwalking && plan.target.is_none() {
             // Pick a random valid position within radius 10
             let mut target_pos = *pos;
-            for _ in 0..10 { // Try 10 times to find a valid spot
+            for _ in 0..10 {
+                // Try 10 times to find a valid spot
                 let dx = rng.gen_range(-10..=10);
                 let dy = rng.gen_range(-10..=10);
                 let new_x = pos.x + dx;
                 let new_y = pos.y + dy;
 
                 // Ensure within map bounds
-                if new_x >= 0 && (new_x as usize) < terrain.width && new_y >= 0 && (new_y as usize) < terrain.height {
-                     if let Some(tile) = terrain.get(new_x as usize, new_y as usize) {
-                         if tile.is_walkable() {
-                             target_pos = GridPosition { x: new_x, y: new_y };
-                             break;
-                         }
-                     }
+                if new_x >= 0
+                    && (new_x as usize) < terrain.width
+                    && new_y >= 0
+                    && (new_y as usize) < terrain.height
+                {
+                    if let Some(tile) = terrain.get(new_x as usize, new_y as usize) {
+                        if tile.is_walkable() {
+                            target_pos = GridPosition { x: new_x, y: new_y };
+                            break;
+                        }
+                    }
                 }
             }
 
