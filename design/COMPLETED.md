@@ -80,3 +80,4 @@ Implemented features. Architect: read this to understand current state.
 - [x] `074` Visitor System — `specs/074-visitor-system.md` — completed
 - [x] `072` Justice System — `specs/072-justice-system.md` — completed 2026-02-10
 - [x] `068` Pop Factions — `specs/068-pop-factions.md` — completed 2026-10-18
+- [x] `080` Planetary Quirks — `specs/080-planetary-quirks.md` — completed 2026-10-18
