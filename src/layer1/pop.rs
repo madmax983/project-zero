@@ -31,6 +31,7 @@ use super::memory::Memories;
 use super::needs::Needs;
 use super::rumor::Knowledge;
 use super::skills::Skills;
+use super::social::old_guard::Arrival;
 use super::terrain::{TerrainGrid, TerrainType};
 use super::utility_ai::{PopAction, UtilityWeights};
 use bevy_ecs::prelude::*;
@@ -183,6 +184,7 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
                 Knowledge::default(),
                 Age::new(rng.gen_range(20..40)),
                 FactionMember::default(),
+                Arrival { tick: 0 },
             ));
             spawned += 1;
         }
