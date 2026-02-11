@@ -1,3 +1,4 @@
+#![allow(missing_docs)]
 #[path = "integration/ui_stats.rs"]
 mod ui_stats;
 

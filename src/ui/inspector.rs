@@ -29,8 +29,8 @@ use crate::ui::map::{get_building_color, get_terrain_char, get_terrain_color};
 use crate::layer1::utility_ai::UtilityWeights;
 use crate::layer1::day_night::DayNightCycle;
 
-/// Helper to format ActionType into an icon and label.
-fn format_action_type(action: ActionType) -> (&'static str, &'static str, Color) {
+/// Helper to format `ActionType` into an icon and label.
+const fn format_action_type(action: ActionType) -> (&'static str, &'static str, Color) {
     match action {
         ActionType::SatisfyHunger => ("🍖", "Eating", Color::Green),
         ActionType::SatisfyRest => ("💤", "Sleeping", Color::Blue),

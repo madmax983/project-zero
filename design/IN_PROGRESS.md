@@ -17,3 +17,4 @@ Tasks currently being implemented. Builders: if a task is here, pick something e
 - [ ] `066` Building Work AI Integration — `specs/066-building-work-ai.md` — claimed 2026-02-10
 - [ ] `080` Planetary Quirks — `specs/080-planetary-quirks.md` — claimed 2026-10-18
 - [ ] `077` Emergent Festivals — `specs/077-emergent-festivals.md` — claimed 2026-10-18
+- [ ] `069` Mentorship System — `specs/069-mentorship-system.md` — claimed 2026-10-19

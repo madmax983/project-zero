@@ -188,7 +188,6 @@ mod tests {
     use crate::layer1::pop::{Pop, Speed};
     use crate::layer1::seasons::{Season, SeasonState};
     use crate::shared::time::SimulationTime;
-    use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
 
     #[test]
