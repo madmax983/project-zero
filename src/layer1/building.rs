@@ -1,5 +1,25 @@
 // src/layer1/building.rs
 
+//! Building placement and types.
+//!
+//! Buildings are the primary structures in the colony. They provide housing,
+//! production, defense, and social functions.
+//!
+//! # Core Systems
+//!
+//! *   **Placement:** Buildings are placed on the [`TerrainGrid`] using [`try_place_building`].
+//! *   **Cost:** Each [`BuildingType`] has a [`ColonyResources`] cost (see [`BuildingType::cost`]).
+//! *   **Tech:** Some buildings require specific [`Tech`] to be unlocked (see [`BuildingType::required_tech`]).
+//! *   **Obstacles:** Most buildings block movement, but some (like Farms/Stockpiles) are walkable.
+//!
+//! # Entities
+//!
+//! A built structure is an entity with:
+//! *   [`Building`]: The marker component containing the [`BuildingType`].
+//! *   [`GridPosition`]: Its location on the map.
+//! *   [`crate::layer1::structure::Structure`]: Health and durability.
+//! *   Specific Logic Components: e.g., [`Housing`], [`Farm`], [`Stockpile`].
+
 use super::GridPosition;
 use super::farm::Farm;
 use super::fire::Flammable;
@@ -19,6 +39,24 @@ use strum::IntoEnumIterator;
 use strum_macros::EnumIter;
 
 /// Building types available for construction.
+///
+/// This enum defines all constructible structures in the game. It contains metadata
+/// for costs, tech requirements, appearance, and placement rules.
+///
+/// # Examples
+///
+/// Checking costs and labels:
+///
+/// ```
+/// use scale::layer1::building::BuildingType;
+///
+/// let housing = BuildingType::Housing;
+/// assert_eq!(housing.label(), "Housing");
+///
+/// let cost = housing.cost();
+/// assert_eq!(cost.wood, 10.0);
+/// assert_eq!(cost.stone, 0.0);
+/// ```
 #[derive(Clone, Copy, PartialEq, Eq, Default, Debug, EnumIter)]
 pub enum BuildingType {
     /// Basic shelter for pops.
