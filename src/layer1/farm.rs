@@ -7,7 +7,7 @@ use crate::layer1::pop::Pop;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::seasons::SeasonState;
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
-use crate::layer1::utility_ai::types::{ActionType, PopAction};
+use crate::layer1::utility_ai::{ActionType, PopAction};
 use bevy_ecs::prelude::*;
 
 /// Farm component - produces food when worked.

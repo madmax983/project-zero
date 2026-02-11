@@ -11,8 +11,6 @@ pub mod explore;
 pub mod fetch_tool;
 /// Haul action logic.
 pub mod haul;
-/// Idle action logic.
-pub mod idle;
 /// Repair action logic.
 pub mod repair;
 /// Research action logic.
