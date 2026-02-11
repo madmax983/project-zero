@@ -11,6 +11,7 @@ pub struct Gate {
 }
 
 /// Checks if a tile is walkable (Terrain + Buildings).
+#[allow(clippy::collapsible_if)]
 pub fn is_walkable(world: &mut World, x: i32, y: i32) -> bool {
     // 1. Check Terrain
     let terrain = world.resource::<TerrainGrid>();

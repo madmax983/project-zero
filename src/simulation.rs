@@ -17,7 +17,8 @@ use crate::experimental::ghosts::{
 use crate::gpu::evaluate::gpu_evaluate_actions;
 use crate::layer1::{
     AddChronicleEvent, AffinityChange, PopDied, advance_season_system, aging_system,
-    apply_lighting_penalties_system, apply_noise_effects_system, arrival_handler_system,
+    apply_lighting_penalties_system, apply_noise_effects_system, apply_quirk_modifiers_system,
+    arrival_handler_system,
     art_generation_system, art_observation_system, check_milestones_system,
     chronicle_event_handler_system, chronicle_rumor_bridge_system, clean_dead_residents_system,
     clean_dead_workers_system, cleanup_previous_assignment_system, clothing_wear_system,
@@ -91,8 +92,9 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(process_start_plan_system)
             .after(crate::layer1::day_night::update_ambient_light_from_cycle_system),
         apply_lighting_penalties_system.after(update_lighting_system),
+        apply_quirk_modifiers_system.after(apply_lighting_penalties_system),
         movement_system
-            .after(apply_lighting_penalties_system)
+            .after(apply_quirk_modifiers_system)
             .after(crate::layer1::fauna::fauna_behavior_system),
         arrival_handler_system.after(movement_system),
         work_execution_system.after(arrival_handler_system),
