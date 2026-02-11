@@ -103,3 +103,11 @@ Map of connected and disconnected systems.
     - `MemoryType::DisgustedByVermin` in `src/layer1/memory.rs`.
     - Updated `SimulationSchedule` in `src/simulation.rs` to run `vermin_morale_system`.
 - **Tests:** `tests/integration/vermin_morale.rs` (Integration test verified)
+
+### INT-013: Factions -> Pop Needs
+- **Date:** 2026-10-18
+- **Systems connected:** `update_faction_satisfaction_system` -> `apply_faction_mood_system` -> `Needs.leisure`
+- **Glue added:**
+    - `apply_faction_mood_system` in `src/layer1/integration.rs`.
+    - Added to `SimulationSchedule` in `src/simulation.rs`.
+- **Tests:** `tests/integration/factions_needs.rs` (Integration test verified)

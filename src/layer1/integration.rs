@@ -2,10 +2,12 @@
 
 use crate::layer1::balance::TICKS_PER_YEAR;
 use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
+use crate::layer1::factions::{Factions, FactionMember};
 use crate::layer1::fire::Fire;
 use crate::layer1::health::Health;
 use crate::layer1::map::GridPosition;
 use crate::layer1::memory::{Memories, MemoryType};
+use crate::layer1::needs::Needs;
 use crate::layer1::pop::{Pop, PopDied};
 use crate::layer1::rumor::{Knowledge, Rumor, RumorTopic};
 use crate::layer1::vermin::VerminState;
@@ -144,6 +146,29 @@ pub fn fire_damage_pops_system(
             // Apply 5.0 damage per tick (20 ticks to die)
             let damage = 5.0;
             health.take_damage(damage);
+        }
+    }
+}
+
+/// Applies mood modifiers based on faction satisfaction.
+///
+/// Bridges the Faction system (Social) and Needs system (Simulation).
+pub fn apply_faction_mood_system(
+    factions: Res<Factions>,
+    mut query: Query<(&FactionMember, &mut Needs)>,
+) {
+    for (member, mut needs) in &mut query {
+        if let Some(faction_id) = member.faction_id {
+            if let Some(faction_data) = factions.get(faction_id) {
+                // Low satisfaction (< 0.3) -> Decay leisure
+                if faction_data.satisfaction < 0.3 {
+                    needs.leisure = (needs.leisure - 0.001).max(0.0);
+                }
+                // High satisfaction (> 0.8) -> Boost leisure
+                else if faction_data.satisfaction > 0.8 {
+                    needs.leisure = (needs.leisure + 0.001).min(1.0);
+                }
+            }
         }
     }
 }

@@ -17,9 +17,10 @@ use crate::experimental::ghosts::{
 use crate::gpu::evaluate::gpu_evaluate_actions;
 use crate::layer1::{
     AddChronicleEvent, AffinityChange, PopDied, advance_season_system, aging_system,
-    apply_lighting_penalties_system, apply_noise_effects_system, apply_quirk_modifiers_system,
-    arrival_handler_system, art_generation_system, art_observation_system, check_milestones_system,
-    chronicle_event_handler_system, chronicle_rumor_bridge_system, clean_dead_residents_system,
+    apply_faction_mood_system, apply_lighting_penalties_system, apply_noise_effects_system,
+    apply_quirk_modifiers_system, arrival_handler_system, art_generation_system,
+    art_observation_system, check_milestones_system, chronicle_event_handler_system,
+    chronicle_rumor_bridge_system, clean_dead_residents_system,
     clean_dead_workers_system, cleanup_previous_assignment_system, clothing_wear_system,
     combat_execution_system, consume_food_system, death_system, decay_needs_system,
     fire_damage_pops_system, fire_damage_system, fire_spread_system, haul_system, healing_system,
@@ -133,6 +134,8 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::factions::update_faction_membership_system.after(work_execution_system),
         crate::layer1::factions::update_faction_satisfaction_system
             .after(crate::layer1::factions::update_faction_membership_system),
+        apply_faction_mood_system
+            .after(crate::layer1::factions::update_faction_satisfaction_system),
     ));
 
     #[cfg(feature = "nova")]
