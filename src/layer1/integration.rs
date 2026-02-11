@@ -147,3 +147,30 @@ pub fn fire_damage_pops_system(
         }
     }
 }
+
+const FACTION_SATISFACTION_LOW: f32 = 0.3;
+const FACTION_SATISFACTION_HIGH: f32 = 0.8;
+const FACTION_MOOD_PENALTY: f32 = 0.002;
+const FACTION_MOOD_BONUS: f32 = 0.001;
+
+/// Applies mood penalties/bonuses based on Faction Satisfaction.
+///
+/// Bridges Faction system (Social) and Needs system (Psychology).
+pub fn apply_faction_mood_system(
+    factions: Res<crate::layer1::factions::Factions>,
+    mut query: Query<(&crate::layer1::factions::FactionMember, &mut crate::layer1::needs::Needs)>,
+) {
+    for (member, mut needs) in &mut query {
+        if let Some(faction_data) = member.faction_id.and_then(|id| factions.get(id)) {
+            // If satisfaction is low, apply penalty to leisure (unhappy at work/life)
+            if faction_data.satisfaction < FACTION_SATISFACTION_LOW {
+                // Decay leisure faster
+                needs.leisure = (needs.leisure - FACTION_MOOD_PENALTY).max(0.0);
+            }
+            // If satisfaction is high, apply small bonus (morale boost)
+            else if faction_data.satisfaction > FACTION_SATISFACTION_HIGH {
+                needs.leisure = (needs.leisure + FACTION_MOOD_BONUS).min(1.0);
+            }
+        }
+    }
+}
