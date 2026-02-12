@@ -47,7 +47,6 @@ impl TerrainType {
     pub const fn movement_cost(self) -> f32 {
         match self {
             Self::Path => 0.8,
-            Self::Dirt | Self::Grass => 1.0,
             Self::Tree => 1.5,
             _ => 1.0,
         }

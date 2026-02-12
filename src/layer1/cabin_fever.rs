@@ -313,25 +313,25 @@ mod tests {
         );
 
         // Now spawn 1 more to make it 4
-        world.spawn((
-            Pop,
-            GridPosition { x: 5, y: 5 },
-            CabinFever::default(),
-        ));
+        world.spawn((Pop, GridPosition { x: 5, y: 5 }, CabinFever::default()));
 
         // Run again
         let _ = world.run_system_once(update_cabin_fever_system);
 
         // Reset manual value to verify increase logic
-         world.entity_mut(pops[0]).get_mut::<CabinFever>().unwrap().crowding = 10.0;
+        world
+            .entity_mut(pops[0])
+            .get_mut::<CabinFever>()
+            .unwrap()
+            .crowding = 10.0;
 
-         let _ = world.run_system_once(update_cabin_fever_system);
-         let fever = world.get::<CabinFever>(pops[0]).unwrap();
+        let _ = world.run_system_once(update_cabin_fever_system);
+        let fever = world.get::<CabinFever>(pops[0]).unwrap();
 
-         assert!(
+        assert!(
             fever.crowding > 10.0,
             "Crowding should increase with 4 neighbors"
-         );
+        );
     }
 
     #[test]

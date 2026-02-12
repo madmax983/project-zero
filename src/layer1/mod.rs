@@ -105,11 +105,11 @@ pub mod tech;
 pub mod terrain;
 /// Emergent utility AI system.
 pub mod utility_ai;
-/// Shared types for utility AI.
-pub mod utility_types;
 #[cfg(test)]
 /// Tests for utility AI work logic.
 pub mod utility_ai_work_tests;
+/// Shared types for utility AI.
+pub mod utility_types;
 
 #[cfg(test)]
 /// Tests for mining logic (Spec 052).
@@ -270,5 +270,9 @@ pub use traits::*;
 /// Omens & Taboos system (Spec 088).
 pub mod taboo;
 pub use taboo::*;
+/// Erosion system (Spec 093).
 pub mod erosion;
 pub use erosion::*;
+#[cfg(test)]
+/// Tests for faction demands logic (Spec 085).
+pub mod faction_demands_tests;

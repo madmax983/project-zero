@@ -89,3 +89,4 @@ Implemented features. Architect: read this to understand current state.
 - [x] `088` Omens & Taboos — `specs/088-omens-and-taboos.md` — completed 2026-10-24
 - [x] `087` Food Preservation — `specs/087-food-preservation.md` — completed 2026-10-25
 - [x] `INT-014` Integration: Binge -> Resource Consumption — completed 2026-10-28
+- [x] `085` Faction Demands & Strikes — `specs/085-faction-demands-strikes.md` — completed 2026-10-26

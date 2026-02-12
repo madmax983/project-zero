@@ -1,10 +1,10 @@
-use bevy_ecs::prelude::*;
-use std::collections::HashMap;
-use crate::layer1::utility_types::ActionType;
-use crate::layer1::structural_integrity::StructureCollapsed;
 use crate::layer1::needs::Needs;
+use crate::layer1::structural_integrity::StructureCollapsed;
+use crate::layer1::utility_types::ActionType;
 use crate::layer1::utility_types::PopAction;
 use crate::shared::log::MessageLog;
+use bevy_ecs::prelude::*;
+use std::collections::HashMap;
 
 /// Tracks active taboos in the colony.
 #[derive(Resource, Default, Debug, Clone)]
@@ -96,14 +96,16 @@ pub fn evaluate_taboo_penalty(action: ActionType, state: &TabooState) -> f32 {
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::utility_ai::{ActionType, PopAction};
-    use crate::layer1::structural_integrity::StructureCollapsed;
-    use crate::layer1::taboo::{TabooState, taboo_event_system, apply_taboo_stress_system, evaluate_taboo_penalty};
-    use crate::layer1::needs::Needs;
     use crate::layer1::map::GridPosition;
+    use crate::layer1::needs::Needs;
     use crate::layer1::pop::Pop;
+    use crate::layer1::structural_integrity::StructureCollapsed;
+    use crate::layer1::taboo::{
+        TabooState, apply_taboo_stress_system, evaluate_taboo_penalty, taboo_event_system,
+    };
+    use crate::layer1::utility_ai::{ActionType, PopAction};
     use crate::shared::time::SimulationTime;
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_taboo_state_default() {
@@ -123,7 +125,7 @@ mod tests {
 
         // Trigger event
         world.send_event(StructureCollapsed {
-            pos: GridPosition { x: 0, y: 0 }
+            pos: GridPosition { x: 0, y: 0 },
         });
 
         // Run system
@@ -145,7 +147,10 @@ mod tests {
         // Add taboo manually
         state.add_taboo(ActionType::Work, 10); // 10 ticks duration
         world.insert_resource(state);
-        world.insert_resource(SimulationTime { tick: 0, ..Default::default() });
+        world.insert_resource(SimulationTime {
+            tick: 0,
+            ..Default::default()
+        });
 
         // Advance time
         use crate::layer1::taboo::update_taboo_duration_system;
@@ -170,11 +175,19 @@ mod tests {
         state.add_taboo(ActionType::Work, 100);
         world.insert_resource(state);
 
-        let pop = world.spawn((
-            Pop,
-            Needs { leisure: 1.0, ..Default::default() },
-            PopAction { current: ActionType::Work, ..Default::default() },
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Needs {
+                    leisure: 1.0,
+                    ..Default::default()
+                },
+                PopAction {
+                    current: ActionType::Work,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         // Run stress system
         let mut schedule = Schedule::default();

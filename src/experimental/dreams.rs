@@ -84,12 +84,8 @@ pub fn dream_system(
         // Mark as dreamt immediately to prevent multiple dreams per sleep
         commands.entity(entity).insert(DreamtThisSleep);
 
-        let (dream_content, impact, is_nightmare) = generate_dream_content(
-            &mut rng,
-            &chronicle_events,
-            &generator,
-            memories_opt,
-        );
+        let (dream_content, impact, is_nightmare) =
+            generate_dream_content(&mut rng, &chronicle_events, &generator, memories_opt);
 
         // Apply dream impact
         // Nightmares reduce leisure (stress), Good dreams increase it
@@ -132,11 +128,7 @@ pub fn dream_system(
         } else if let Some(ref mut log) = log {
             // Log vivid dreams or nightmares
             if is_nightmare || impact.abs() > 0.1 {
-                let prefix = if is_nightmare {
-                    "Nightmare"
-                } else {
-                    "Dream"
-                };
+                let prefix = if is_nightmare { "Nightmare" } else { "Dream" };
                 log.add(format!("{prefix}: {dream_content}"));
             }
         }
@@ -181,21 +173,11 @@ fn generate_dream_content(
     if !chronicle_events.is_empty() && rng.gen_bool(0.3) {
         let event = chronicle_events.choose(rng).unwrap();
         match event.importance {
-            EventImportance::Legendary | EventImportance::Major => (
-                format!("relived the glory of: {}", event.text),
-                0.2,
-                false,
-            ),
-            EventImportance::Standard => (
-                format!("recalled: {}", event.text),
-                0.05,
-                false,
-            ),
-            EventImportance::Minor => (
-                format!("faintly remembered: {}", event.text),
-                0.0,
-                false,
-            ),
+            EventImportance::Legendary | EventImportance::Major => {
+                (format!("relived the glory of: {}", event.text), 0.2, false)
+            }
+            EventImportance::Standard => (format!("recalled: {}", event.text), 0.05, false),
+            EventImportance::Minor => (format!("faintly remembered: {}", event.text), 0.0, false),
         }
     } else {
         // 3. Abstract / Random
@@ -230,7 +212,9 @@ fn interpret_memory(memory_type: MemoryType) -> (String, f32, bool) {
         MemoryType::AteFineMeal => ("dreamed of a delicious feast".to_string(), 0.1, false),
         MemoryType::AttendedFuneral => ("dreamed of saying goodbye".to_string(), 0.05, false),
         MemoryType::AdmiredArt => ("dreamed of beautiful art".to_string(), 0.1, false),
-        MemoryType::SleptInAwfulRoom => ("tossed and turned in a cold room".to_string(), -0.05, true),
+        MemoryType::SleptInAwfulRoom => {
+            ("tossed and turned in a cold room".to_string(), -0.05, true)
+        }
         MemoryType::SleptInLegendaryRoom => ("rested in a palace of gold".to_string(), 0.2, false),
         _ => ("dreamed of daily life".to_string(), 0.0, false),
     }
@@ -240,8 +224,8 @@ fn interpret_memory(memory_type: MemoryType) -> (String, f32, bool) {
 mod tests {
     use super::*;
     use crate::layer1::chronicle::Chronicle;
-    use crate::shared::narrative::NarrativeGenerator;
     use crate::layer1::memory::{ActiveMemory, MemoryType};
+    use crate::shared::narrative::NarrativeGenerator;
     use bevy_ecs::system::RunSystemOnce;
 
     #[test]
@@ -278,7 +262,10 @@ mod tests {
             }
         }
         assert!(triggered, "Dream system should add DreamJournal");
-        assert!(world.get::<DreamtThisSleep>(pop).is_some(), "Should be marked as dreamt");
+        assert!(
+            world.get::<DreamtThisSleep>(pop).is_some(),
+            "Should be marked as dreamt"
+        );
     }
 
     #[test]
@@ -297,12 +284,8 @@ mod tests {
         // Loop until we hit the memory case (probabilistic)
         let mut hit_memory = false;
         for _ in 0..100 {
-            let (content, impact, nightmare) = generate_dream_content(
-                &mut rng,
-                &events,
-                &generator,
-                Some(&memories)
-            );
+            let (content, impact, nightmare) =
+                generate_dream_content(&mut rng, &events, &generator, Some(&memories));
 
             if content.contains("nightmare of a friend dying") {
                 assert!(nightmare);
@@ -311,7 +294,10 @@ mod tests {
                 break;
             }
         }
-        assert!(hit_memory, "Should eventually dream about the traumatic memory");
+        assert!(
+            hit_memory,
+            "Should eventually dream about the traumatic memory"
+        );
     }
 
     #[test]
@@ -319,22 +305,26 @@ mod tests {
         let mut world = World::new();
 
         // Pop 1: Still sleeping -> Should keep marker
-        let p1 = world.spawn((
-            PopAction {
-                current: ActionType::SatisfyRest,
-                ..Default::default()
-            },
-            DreamtThisSleep
-        )).id();
+        let p1 = world
+            .spawn((
+                PopAction {
+                    current: ActionType::SatisfyRest,
+                    ..Default::default()
+                },
+                DreamtThisSleep,
+            ))
+            .id();
 
         // Pop 2: Woke up -> Should lose marker
-        let p2 = world.spawn((
-            PopAction {
-                current: ActionType::Work,
-                ..Default::default()
-            },
-            DreamtThisSleep
-        )).id();
+        let p2 = world
+            .spawn((
+                PopAction {
+                    current: ActionType::Work,
+                    ..Default::default()
+                },
+                DreamtThisSleep,
+            ))
+            .id();
 
         world.run_system_once(cleanup_dream_marker_system).unwrap();
 
