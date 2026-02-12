@@ -44,7 +44,7 @@ use crate::layer1::funeral::{Corpse, Grave, handle_bury_corpse};
 use crate::layer1::health::Health;
 use crate::layer1::housing::Housing;
 use crate::layer1::items::{Equipment, Tool};
-use crate::layer1::map::GridPosition;
+use crate::layer1::map::{GridPosition, ScreenShake};
 use crate::layer1::memory::{Memories, calculate_effective_morale};
 use crate::layer1::needs::{Needs, get_morale_efficiency};
 use crate::layer1::pop::Speed;
@@ -312,7 +312,10 @@ pub fn movement_system(
 
         // Check if we can move
         let can_move = if let Some(ref mut speed) = speed_opt {
-            if speed.accumulator >= movement_cost {
+            // Ludwig: "Coyote Speed" - Allow moving if we are *almost* there.
+            // This prevents the feeling of "just missing the bus" by 0.01 speed.
+            const COYOTE_THRESHOLD: f32 = 0.05;
+            if speed.accumulator >= (movement_cost - COYOTE_THRESHOLD) {
                 speed.accumulator -= movement_cost;
                 true
             } else {
@@ -589,6 +592,10 @@ fn execute_demolish(world: &mut World, designation_entity: Entity) -> bool {
 
             if let Some(entity) = building_entity {
                 world.despawn(entity);
+                // Trigger Screen Shake (Ludwig: "Juice")
+                if let Some(mut shake) = world.get_resource_mut::<ScreenShake>() {
+                    shake.trigger(0.5);
+                }
                 // Remove from OccupiedTiles
                 if let Some(mut occupied) = world.get_resource_mut::<OccupiedTiles>() {
                     occupied.0.remove(&(designation_pos.x, designation_pos.y));
@@ -2482,5 +2489,38 @@ mod tests {
         // Base 10.0 * 1.2 = 12.0.
         // Organic factor 0.9-1.1 -> Range 10.8 - 13.2
         assert!(progress.current >= 10.8 && progress.current <= 13.2);
+    }
+
+    #[test]
+    fn test_coyote_speed_movement() {
+        let mut world = setup_world();
+
+        // 0.96 accumulator, 1.0 cost.
+        // Without coyote: 0.96 < 1.0 -> No move.
+        // With coyote (0.05): 0.96 >= 0.95 -> Move.
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 0, y: 0 },
+                MovementTarget {
+                    target_entity: Entity::from_raw(1),
+                    target_position: GridPosition { x: 5, y: 0 },
+                    for_action: ActionType::Work,
+                },
+                Speed {
+                    base: 1.0,
+                    current: 0.0, // Don't add more speed this tick to isolate accumulator check
+                    accumulator: 0.96,
+                },
+            ))
+            .id();
+
+        world.run_system_once(movement_system).unwrap();
+        let pos = world.get::<GridPosition>(pop).unwrap();
+        assert_eq!(pos.x, 1, "Should move due to Coyote Speed");
+
+        let speed = world.get::<Speed>(pop).unwrap();
+        // 0.96 - 1.0 = -0.04
+        assert!((speed.accumulator - (-0.04)).abs() < 0.001);
     }
 }

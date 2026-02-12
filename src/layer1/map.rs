@@ -23,6 +23,49 @@
 //! map limits itself.
 
 use bevy_ecs::prelude::*;
+use rand::Rng;
+
+/// Resource to handle screen shake effects.
+#[derive(Resource, Default, Debug)]
+pub struct ScreenShake {
+    /// Current intensity of the shake (0.0 to 5.0).
+    pub intensity: f32,
+    /// Current offset applied to the viewport.
+    pub offset: (i32, i32),
+}
+
+impl ScreenShake {
+    /// Triggers a screen shake with the given intensity (additive, capped at 5.0).
+    pub fn trigger(&mut self, amount: f32) {
+        self.intensity = (self.intensity + amount).min(5.0);
+    }
+}
+
+/// System to update screen shake effects (decay and randomize offset).
+pub fn update_screen_shake_system(mut shake: ResMut<ScreenShake>) {
+    if shake.intensity > 0.0 {
+        let mut rng = rand::thread_rng();
+        // Calculate range based on intensity
+        #[allow(clippy::cast_possible_truncation)]
+        let range = (shake.intensity * 0.5).ceil() as i32;
+
+        if range > 0 {
+            shake.offset.0 = rng.gen_range(-range..=range);
+            shake.offset.1 = rng.gen_range(-range..=range);
+        } else {
+            shake.offset = (0, 0);
+        }
+
+        // Decay intensity
+        shake.intensity *= 0.9;
+        if shake.intensity < 0.1 {
+            shake.intensity = 0.0;
+            shake.offset = (0, 0);
+        }
+    } else {
+        shake.offset = (0, 0);
+    }
+}
 
 /// Grid position in world space.
 ///
@@ -120,5 +163,24 @@ mod tests {
         let pos2 = GridPosition { x: 0, y: 0 };
         assert_eq!(pos2.x, 0);
         assert_eq!(pos2.y, 0);
+    }
+
+    #[test]
+    fn test_screen_shake_system() {
+        use bevy_ecs::system::RunSystemOnce;
+
+        let mut world = World::new();
+        world.insert_resource(ScreenShake::default());
+
+        // Trigger shake
+        world.resource_mut::<ScreenShake>().trigger(2.0);
+        assert!((world.resource::<ScreenShake>().intensity - 2.0).abs() < f32::EPSILON);
+
+        // Run update system
+        world.run_system_once(update_screen_shake_system).unwrap();
+
+        let shake = world.resource::<ScreenShake>();
+        assert!(shake.intensity < 2.0); // Should decay (2.0 * 0.9 = 1.8)
+        assert!(shake.intensity > 1.0);
     }
 }
