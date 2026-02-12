@@ -28,5 +28,9 @@ mod death_chronicle;
 
 #[path = "integration/building_shifts.rs"]
 mod building_shifts;
+
 #[path = "integration/vermin_morale.rs"]
 mod vermin_morale;
+
+#[path = "integration/faction_morale.rs"]
+mod faction_morale;

@@ -85,3 +85,4 @@ Implemented features. Architect: read this to understand current state.
 - [x] `079` Weather Events — `specs/079-weather-events.md` — completed 2026-10-18
 - [x] `082` Cabin Fever — `specs/082-cabin-fever.md` — completed 2026-10-18
 - [x] `083` Building Shifts — `specs/083-building-shifts.md` — completed 2026-10-21
+- [x] `INT-013` Integration: Faction Satisfaction -> Pop Morale — completed 2026-10-23
