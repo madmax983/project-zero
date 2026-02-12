@@ -122,12 +122,12 @@ pub struct Material(pub MaterialType);
 /// Checking costs and labels:
 ///
 /// ```
-/// use scale::layer1::building::BuildingType;
+/// use scale::layer1::building::{BuildingType, MaterialType};
 ///
 /// let housing = BuildingType::Housing;
 /// assert_eq!(housing.label(), "Housing");
 ///
-/// let cost = housing.cost();
+/// let cost = housing.cost(MaterialType::default());
 /// assert_eq!(cost.wood, 10.0);
 /// assert_eq!(cost.stone, 0.0);
 /// ```
