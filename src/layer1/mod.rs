@@ -91,6 +91,8 @@ pub mod science;
 pub mod seasons;
 /// Social needs and tavern.
 pub mod social;
+/// The Inspector system (Spec 091).
+pub mod inspector;
 /// Spoilage and decay mechanics.
 pub mod spoilage;
 /// Resource storage limits and stockpile buildings.

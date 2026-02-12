@@ -30,9 +30,11 @@ use crate::layer1::{
     combat_execution_system, consume_food_system, death_system, decay_needs_system,
     discovery_system, faction_satisfaction_morale_bridge, fire_damage_pops_system,
     fire_damage_system, fire_spread_system, haul_system, healing_system, heirloom_decay_system,
-    hypothermia_system, infiltration_system, memory_decay_system, modify_affinity_system,
-    movement_system, natural_death_system, notification_expiration_system,
-    pop_death_chronicle_bridge, process_refining_system, process_research_system,
+    hypothermia_system, infiltration_system,
+    inspector::{inspector_report_system, observe_inspector_system, spawn_inspector_system},
+    memory_decay_system, modify_affinity_system, movement_system, natural_death_system,
+    notification_expiration_system, pop_death_chronicle_bridge, process_refining_system,
+    process_research_system,
     process_scan_system, process_start_plan_system, produce_food_system, regrowth_system,
     restore_leisure_system, restore_rest_in_housing_system, sleepwalk_end_system,
     social::old_guard::{
@@ -160,6 +162,7 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer1::beauty::update_beauty_grid_system),
         crate::layer1::trade::merchant_arrival_system.after(work_execution_system),
         crate::layer1::visitor::spawn_visitor_system.after(work_execution_system),
+        spawn_inspector_system.after(crate::layer1::visitor::spawn_visitor_system),
         crate::layer1::energy::power_grid_system.after(work_execution_system),
         art_generation_system.after(work_execution_system),
         crate::layer1::factions::update_faction_membership_system.after(work_execution_system),
@@ -277,6 +280,11 @@ pub fn build_simulation_schedule() -> Schedule {
         chronicle_rumor_bridge_system.after(check_milestones_system),
         pop_death_chronicle_bridge.after(death_system),
         art_observation_system.after(death_system),
+        observe_inspector_system.after(art_observation_system),
+    ));
+
+    schedule.add_systems((
+        inspector_report_system.after(chronicle_event_handler_system),
         taboo_event_system.after(death_system),
     ));
 

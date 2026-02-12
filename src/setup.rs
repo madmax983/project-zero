@@ -92,6 +92,9 @@ pub fn setup_world() -> World {
     world.insert_resource(crate::layer1::weather::WeatherState::default());
 
     initialize_visitor_source(&mut world);
+    world.insert_resource(crate::layer1::inspector::InspectorSource {
+        next_visit_tick: 5000,
+    });
 
     world.init_resource::<Events<AddChronicleEvent>>();
     world.init_resource::<Events<AffinityChange>>();

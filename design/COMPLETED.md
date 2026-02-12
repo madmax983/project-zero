@@ -1,48 +1,76 @@
-# Completed Tasks
+# Completed
 
-Tasks that have been implemented, tested, and merged.
+Features that have been fully implemented and tested.
 
 ---
 
-- [x] `001` Grid & Terrain — `specs/001-grid-terrain.md` — completed 2026-01-28
-- [x] `002` Basic UI — `specs/002-basic-ui.md` — completed 2026-01-29
-- [x] `003` Pop Entity — `specs/003-pop-entity.md` — completed 2026-01-30
-- [x] `004` Basic Input — `specs/004-basic-input.md` — completed 2026-01-31
-- [x] `006` Building Placement — `specs/006-building-placement.md` — completed 2026-02-02
-- [x] `007` Housing — `specs/007-housing.md` — completed 2026-02-02
-- [x] `008` Farming — `specs/008-farming.md` — completed 2026-02-03
-- [x] `009` Stockpiles — `specs/009-stockpiles.md` — completed 2026-02-03
-- [x] `016` Utility AI — `specs/016-utility-ai.md` — completed 2026-02-04
-- [x] `011` Work Assignments — `specs/011-work-assignments.md` — completed 2026-02-04
-- [x] `014` Mining — `specs/014-mining.md` — completed 2026-02-05
-- [x] `012` Resource Management — `specs/012-resource-management.md` — completed 2026-02-05
-- [x] `018` Forestry — `specs/018-forestry.md` — completed 2026-02-06
-- [x] `020` Refining — `specs/020-refining.md` — completed 2026-02-06
-- [x] `024` Tool Production — `specs/024-tool-production.md` — completed 2026-02-07
-- [x] `033` Fire System — `specs/033-fire-system.md` — completed 2026-02-08
-- [x] `031` Morale System — `specs/031-morale-system.md` — completed 2026-02-09
-- [x] `028` Research System — `specs/028-research-system.md` — completed 2026-02-10
-- [x] `022` Construction Materials — `specs/022-construction-materials.md` — completed 2026-02-11
-- [x] `048` Hostile Fauna — `specs/048-hostile-fauna.md` — completed 2026-02-12
-- [x] `052` Combat System — `specs/052-combat-system.md` — completed 2026-02-13
-- [x] `056` Zones — `specs/056-zones.md` — completed 2026-02-14
-- [x] `060` Acoustics — `specs/060-acoustics.md` — completed 2026-02-15
-- [x] `063` Atmosphere — `specs/063-atmosphere.md` — completed 2026-02-16
-- [x] `073` Vermin — `specs/073-vermin.md` — completed 2026-02-17
-- [x] `074` Visitors — `specs/074-visitors.md` — completed 2026-02-18
-- [x] `044` Flora & Beautification — `specs/044-flora-beautification.md` — completed 2026-02-19
-- [x] `062` Lifecycle — `specs/062-lifecycle.md` — completed 2026-02-20
-- [x] `064` Room Quality — `specs/064-room-quality.md` — completed 2026-02-21
-- [x] `079` Weather — `specs/079-weather.md` — completed 2026-02-22
-- [x] `065` Day/Night Cycle — `specs/065-day-night-cycle.md` — completed 2026-02-23
-- [x] `068` Factions — `specs/068-factions.md` — completed 2026-02-24
-- [x] `081` Sleepwalking — `specs/081-sleepwalking.md` — completed 2026-02-25
-- [x] `082` Cabin Fever — `specs/082-cabin-fever.md` — completed 2026-02-26
-- [x] `085` Faction Demands — `specs/085-faction-demands.md` — completed 2026-02-27
-- [x] `088` Omens & Taboos — `specs/088-omens-taboos.md` — completed 2026-02-28
-- [x] `093` Desire Paths — `specs/093-desire-paths.md` — completed 2026-03-01
-- [x] `070` Heirloom Tech — `specs/070-heirloom-tech.md` — completed 2026-03-02
-- [x] `075` Animal Husbandry — `specs/075-animal-husbandry.md` — completed 2026-03-03
-- [x] `071` Structural Integrity — `specs/071-structural-integrity.md` — completed 2026-03-04
-- [x] `096` Water Simulation — `specs/096-water-simulation.md` — completed 2026-10-26
-- [x] `038` Medical Care — `specs/038-medical-care.md` — found implemented 2026-03-XX
+## MVP — Layer 1: Colony Simulation
+
+- [x] `001` Grid and Terrain — `specs/001-grid-terrain.md` — completed 2025-01-20
+- [x] `002` Pop Entity — `specs/002-pop-entity.md` — completed 2025-01-21
+- [x] `003` Time and Simulation Loop — `specs/003-time-loop.md` — completed 2025-01-21
+- [x] `004` Basic UI — `specs/004-basic-ui.md` — completed 2025-01-21
+- [x] `005` Pop needs (hunger, rest) — `specs/005-pop-needs.md` — completed 2025-01-22
+- [x] `006` Building placement — `specs/006-building-placement.md` — completed 2025-01-22
+- [x] `007` Housing — `specs/007-housing.md` — completed 2025-01-22
+- [x] `008` Farming — `specs/008-farming.md` — completed 2025-01-23
+- [x] `009` Stockpiles and Resource Cap — `specs/009-stockpiles.md` — completed 2025-01-23
+- [x] `011` Designation System — `specs/011-designation-system.md` — completed 2025-01-24
+- [x] `012` Work Execution — `specs/012-work-execution.md` — completed 2025-01-24
+- [x] `013` Pathfinding (Movement) — `specs/013-pathfinding.md` — completed 2025-01-24
+- [x] `014` Resource Items and Hauling — `specs/014-resource-items.md` — completed 2025-01-25
+- [x] `016` Utility AI System — `specs/016-utility-ai.md` — completed 2025-01-26
+- [x] `017` Tools and Equipment — `specs/017-tools.md` — completed 2025-01-27
+- [x] `018` Status Bar — `specs/018-status-bar.md` — completed 2025-01-27
+- [x] `019` Skills and Experience — `specs/019-skills.md` — completed 2025-01-28
+- [x] `020` Death and Legacy — `specs/020-death-legacy.md` — completed 2025-01-28
+- [x] `021` Tech Tree and Research — `specs/021-tech-tree.md` — completed 2025-01-29
+- [x] `022` Structure Durability and Repair — `specs/022-structure-durability.md` — completed 2025-01-29
+- [x] `023` Seasons and Weather — `specs/023-seasons.md` — completed 2025-01-30
+- [x] `024` Refining Industry — `specs/024-refining-industry.md` — completed 2025-01-30
+- [x] `025` Clothing and Wear — `specs/025-clothing.md` — completed 2025-01-31
+- [x] `026` Trade and Merchants — `specs/026-trade.md` — completed 2025-02-01
+- [x] `029` Edicts and Policies — `specs/029-edicts.md` — completed 2025-02-02
+- [x] `030` Structural Integrity — `specs/030-structural-integrity.md` — completed 2025-02-03
+- [x] `031` Civil Unrest — `specs/031-civil-unrest.md` — completed 2025-02-03
+- [x] `032` Waste and Pollution — `specs/032-waste-pollution.md` — completed 2025-02-04
+- [x] `033` Vermin and Pestilence — `specs/033-vermin.md` — completed 2025-02-04
+- [x] `034` Fires and Firefighting — `specs/034-fire.md` — completed 2025-02-05
+- [x] `035` Notifications System — `specs/035-notifications.md` — completed 2025-02-05
+- [x] `036` Exploration and Fog of War — `specs/036-exploration.md` — completed 2025-02-06
+- [x] `039` Room Quality and Acoustics — `specs/039-room-quality.md` — completed 2025-02-08
+- [x] `040` Factions and Politics — `specs/040-factions.md` — completed 2025-02-08
+- [x] `041` Atmosphere Simulation — `specs/041-atmosphere.md` — completed 2025-02-09
+- [x] `043` Day/Night Cycle — `specs/043-day-night-cycle.md` — completed 2025-02-10
+- [x] `044` Horticulture and Beauty — `specs/044-horticulture.md` — completed 2025-02-10
+- [x] `045` Hostile Fauna — `specs/045-hostile-fauna.md` — completed 2025-02-11
+- [x] `046` Visitors and Hospitality — `specs/046-visitors.md` — completed 2025-02-11
+- [x] `047` Justice System — `specs/047-justice-system.md` — completed 2025-02-12
+- [x] `048` Combat System — `specs/048-combat-system.md` — completed 2025-02-12
+- [x] `049` Defense Structures — `specs/049-defense-structures.md` — completed 2025-02-13
+- [x] `050` Art and Culture — `specs/050-art-culture.md` — completed 2025-02-13
+- [x] `051` Rumor System — `specs/051-rumor-system.md` — completed 2025-02-14
+- [x] `052` Deep Mining — `specs/052-deep-mining.md` — completed 2025-02-14
+- [x] `054` Water Simulation — `specs/054-water-simulation.md` — completed 2026-03-05
+- [x] `055` Animal Husbandry — `specs/055-animal-husbandry.md` — completed 2026-03-05
+- [x] `056` Zones and Areas — `specs/056-zones-areas.md` — completed 2026-03-05
+- [x] `060` Acoustics — `specs/060-acoustics.md` — completed 2026-03-05
+- [x] `062` Lifecycle (Aging) — `specs/062-lifecycle.md` — completed 2026-03-05
+- [x] `063` Pollution Effects — `specs/063-pollution-effects.md` — completed 2026-03-05
+- [x] `064` Room Quality — `specs/064-room-quality.md` — completed 2026-03-05
+- [x] `065` Sleep Cycles — `specs/065-sleep-cycles.md` — completed 2026-03-05
+- [x] `068` Faction Demands — `specs/068-faction-demands.md` — completed 2026-03-05
+- [x] `070` Heirloom Tech — `specs/070-heirloom-tech.md` — completed 2026-03-05
+- [x] `071` Structural Collapse — `specs/071-structural-collapse.md` — completed 2026-03-05
+- [x] `073` Vermin Infestation — `specs/073-vermin-infestation.md` — completed 2026-03-05
+- [x] `074` Visitors — `specs/074-visitors.md` — completed 2026-03-05
+- [x] `075` Taming — `specs/075-taming.md` — completed 2026-03-05
+- [x] `078` The Old Guard — `specs/078-the-old-guard.md` — completed 2026-03-05
+- [x] `079` Extreme Weather — `specs/079-extreme-weather.md` — completed 2026-03-05
+- [x] `081` Sleepwalking — `specs/081-sleepwalking.md` — completed 2026-03-05
+- [x] `082` Cabin Fever — `specs/082-cabin-fever.md` — completed 2026-03-05
+- [x] `085` Faction Strikes — `specs/085-faction-strikes.md` — completed 2026-03-05
+- [x] `088` Omens and Taboos — `specs/088-omens-taboos.md` — completed 2026-03-05
+- [x] `093` Erosion and Desire Paths — `specs/093-erosion.md` — completed 2026-03-05
+- [x] `096` Water Dynamics — `specs/096-water-dynamics.md` — completed 2026-03-05
+- [x] `091` The Inspector — `specs/091-the-inspector.md` — completed 2026-03-06
