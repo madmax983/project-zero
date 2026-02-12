@@ -378,6 +378,7 @@ pub fn arrival_handler_system(
     mut graves: Query<(Entity, &GridPosition, &mut Grave)>,
     mut memories: Query<&mut Memories>,
     mut resources: ResMut<ColonyResources>,
+    mut log: Option<ResMut<MessageLog>>,
     time: Res<SimulationTime>,
     mut commands: Commands,
 ) {
@@ -386,6 +387,10 @@ pub fn arrival_handler_system(
         let action = mt.for_action;
 
         let should_remove = match action {
+            ActionType::Binge => {
+                handle_binge_arrival(&mut resources, log.as_deref_mut());
+                true
+            }
             ActionType::FetchTool => {
                 handle_fetch_tool(
                     &mut commands,
@@ -464,6 +469,25 @@ fn remove_movement_components(commands: &mut Commands, pop_entity: Entity) {
         .entity(pop_entity)
         .remove::<MovementTarget>()
         .remove::<AtTarget>();
+}
+
+fn handle_binge_arrival(resources: &mut ColonyResources, log: Option<&mut MessageLog>) {
+    let amount_needed = 5.0;
+    if resources.food >= amount_needed {
+        resources.food -= amount_needed;
+    } else {
+        let taken = resources.food;
+        resources.food = 0.0;
+        let remaining = amount_needed - taken;
+        if remaining > 0.0 {
+            // Subtract remaining from rations
+            resources.rations = (resources.rations - remaining).max(0.0);
+        }
+    }
+
+    if let Some(log) = log {
+        log.add("Pop is binge eating!");
+    }
 }
 
 fn is_walkable(
