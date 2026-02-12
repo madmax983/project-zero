@@ -15,6 +15,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `085` Faction Demands & Strikes — `specs/085-faction-demands-strikes.md`
 - [ ] `087` Food Preservation — `specs/087-food-preservation.md`
 - [ ] `088` Omens & Taboos — `specs/088-omens-and-taboos.md`
+- [ ] `089` Material Provenance — `specs/089-material-provenance.md`
 
 ## MVP — User Interface
 
