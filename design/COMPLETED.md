@@ -88,3 +88,4 @@ Implemented features. Architect: read this to understand current state.
 - [x] `INT-013` Integration: Faction Satisfaction -> Pop Morale — completed 2026-10-23
 - [x] `088` Omens & Taboos — `specs/088-omens-and-taboos.md` — completed 2026-10-24
 - [x] `087` Food Preservation — `specs/087-food-preservation.md` — completed 2026-10-25
+- [x] `INT-014` Integration: Binge -> Resource Consumption — completed 2026-10-28

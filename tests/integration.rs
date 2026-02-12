@@ -34,3 +34,6 @@ mod vermin_morale;
 
 #[path = "integration/faction_morale.rs"]
 mod faction_morale;
+
+#[path = "integration/binge_resources.rs"]
+mod binge_resources;

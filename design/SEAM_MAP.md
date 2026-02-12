@@ -111,3 +111,11 @@ Map of connected and disconnected systems.
     - `faction_satisfaction_morale_bridge` in `src/layer1/integration.rs`.
     - Registered system in `src/simulation.rs`.
 - **Tests:** `tests/integration/faction_morale.rs`
+
+### INT-014: Binge -> Resource Consumption
+- **Date:** 2026-10-28
+- **Systems connected:** `utility_ai::evaluate_actions_system` -> `execution::arrival_handler_system` -> `ColonyResources`
+- **Glue added:**
+    - Updated `evaluate_actions_system` in `src/layer1/utility_ai.rs` to target closest Stockpile/Farm for `Binge`.
+    - Updated `arrival_handler_system` in `src/layer1/execution.rs` to consume resources via `handle_binge_arrival`.
+- **Tests:** `tests/integration/binge_resources.rs`

@@ -765,7 +765,32 @@ pub fn evaluate_actions_system(world: &mut World) {
                     best_target = closest_target;
                     ActionType::Vandalize
                 }
-                MentalBreakType::Binge => ActionType::Binge,
+                MentalBreakType::Binge => {
+                    // Find closest Stockpile or Farm (Assumed food source)
+                    let mut closest_dist = i32::MAX;
+                    let mut closest_target = None;
+
+                    // Check Stockpiles
+                    for (entity, pos, _) in stockpiles_state.iter(world) {
+                        let dist = manhattan_distance(&pop_pos, pos);
+                        if dist < closest_dist {
+                            closest_dist = dist;
+                            closest_target = Some(entity);
+                        }
+                    }
+
+                    // Check Farms
+                    for (entity, pos, _, _) in farms_state.iter(world) {
+                        let dist = manhattan_distance(&pop_pos, pos);
+                        if dist < closest_dist {
+                            closest_dist = dist;
+                            closest_target = Some(entity);
+                        }
+                    }
+
+                    best_target = closest_target;
+                    ActionType::Binge
+                }
                 MentalBreakType::Daze => ActionType::Daze,
                 MentalBreakType::Sleepwalking => {
                     // Sleepwalkers just wander. Target is assigned by assign_sleepwalk_target_system.
