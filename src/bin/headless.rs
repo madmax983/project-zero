@@ -376,6 +376,7 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
                 TerrainType::Rock => '#',
                 TerrainType::Water => '~',
                 TerrainType::Tree => 'T',
+                TerrainType::Path => '=',
             };
             print!("{c}");
         }
@@ -584,6 +585,7 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: i32) {
                 TerrainType::Rock => "rock",
                 TerrainType::Water => "water",
                 TerrainType::Tree => "tree",
+                TerrainType::Path => "path",
             };
 
             // Check for entities
@@ -644,6 +646,7 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
         TerrainType::Rock => "rock",
         TerrainType::Water => "water",
         TerrainType::Tree => "tree",
+        TerrainType::Path => "path",
     };
 
     let walkable = tile.is_walkable();

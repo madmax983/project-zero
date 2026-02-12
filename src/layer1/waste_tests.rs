@@ -83,6 +83,11 @@ mod tests {
     fn test_waste_item_negative_beauty() {
         let mut world = World::new();
         world.insert_resource(BeautyGrid::new(10, 10));
+        world.insert_resource(crate::layer1::terrain::TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![crate::layer1::terrain::TerrainType::Grass; 100],
+        });
 
         // Spawn Waste Item
         world.spawn((

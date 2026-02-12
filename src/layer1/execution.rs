@@ -51,6 +51,7 @@ use crate::layer1::pop::Speed;
 use crate::layer1::resources::{ColonyResources, process_logging, process_mining};
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
 use crate::layer1::social::{SocialBuff, Tavern, handle_socialize};
+use crate::layer1::erosion::{ErosionGrid, MOVEMENT_EROSION_AMOUNT};
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::traits::{Traits, get_trait_move_speed_modifier, get_trait_work_speed_modifier};
 use crate::layer1::utility_ai::{ActionType, PopAction, StartPlan};
@@ -267,6 +268,7 @@ pub fn movement_system(
         ),
         (Without<AtTarget>, Without<Building>),
     >,
+    mut erosion: ResMut<ErosionGrid>,
     terrain: Res<TerrainGrid>,
     occupied_tiles: Option<Res<OccupiedTiles>>,
     buildings: Query<(&GridPosition, &Building, Option<&Gate>)>,
@@ -275,8 +277,9 @@ pub fn movement_system(
     for (pop_entity, mut current_pos, mt, mut speed_opt, traits) in &mut pops {
         let trait_mod = traits.map_or(1.0, get_trait_move_speed_modifier);
 
-        if !should_move(speed_opt.as_deref_mut(), trait_mod) {
-            continue;
+        // Accumulate speed
+        if let Some(ref mut speed) = speed_opt {
+            speed.accumulator += speed.current * trait_mod;
         }
 
         let target_pos = mt.target_position;
@@ -299,6 +302,30 @@ pub fn movement_system(
             continue;
         };
 
+        // Determine movement cost
+        let movement_cost = if let (Ok(x), Ok(y)) = (usize::try_from(new_pos.x), usize::try_from(new_pos.y))
+        {
+            terrain.get(x, y).map_or(1.0, |t| t.movement_cost())
+        } else {
+            1.0
+        };
+
+        // Check if we can move
+        let can_move = if let Some(ref mut speed) = speed_opt {
+            if speed.accumulator >= movement_cost {
+                speed.accumulator -= movement_cost;
+                true
+            } else {
+                false
+            }
+        } else {
+            true
+        };
+
+        if !can_move {
+            continue;
+        }
+
         if !is_walkable(
             &terrain,
             occupied_tiles.as_deref(),
@@ -311,6 +338,11 @@ pub fn movement_system(
 
         current_pos.x = new_pos.x;
         current_pos.y = new_pos.y;
+
+        // Apply Erosion
+        if let (Ok(x), Ok(y)) = (usize::try_from(new_pos.x), usize::try_from(new_pos.y)) {
+            erosion.add_erosion(x, y, MOVEMENT_EROSION_AMOUNT);
+        }
 
         if new_pos == target_pos {
             commands.entity(pop_entity).insert(AtTarget);
@@ -328,16 +360,6 @@ pub fn movement_system(
             commands.entity(pop_entity).insert(AtTarget);
         }
     }
-}
-
-fn should_move(speed_opt: Option<&mut Speed>, trait_mod: f32) -> bool {
-    let Some(speed) = speed_opt else { return true };
-    speed.accumulator += speed.current * trait_mod;
-    if speed.accumulator < 1.0 {
-        return false;
-    }
-    speed.accumulator -= 1.0;
-    true
 }
 
 fn check_work_adjacency(
@@ -862,6 +884,7 @@ mod tests {
             height: 10,
             tiles,
         });
+        world.insert_resource(crate::layer1::erosion::ErosionGrid::new(10, 10));
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
         world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
         world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
@@ -1069,6 +1092,7 @@ mod tests {
             height: 10,
             tiles,
         });
+        world.insert_resource(crate::layer1::erosion::ErosionGrid::new(10, 10));
 
         let pop = world
             .spawn((
@@ -1100,6 +1124,7 @@ mod tests {
             height: 10,
             tiles,
         });
+        world.insert_resource(crate::layer1::erosion::ErosionGrid::new(10, 10));
 
         let pop = world
             .spawn((

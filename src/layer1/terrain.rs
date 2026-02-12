@@ -14,6 +14,8 @@ pub enum TerrainType {
     Water,
     /// Green tree, yields wood when chopped.
     Tree,
+    /// Heavily trodden path, faster movement but lower beauty.
+    Path,
 }
 
 impl TerrainType {
@@ -34,6 +36,20 @@ impl TerrainType {
             Self::Rock => "Rock",
             Self::Water => "Water",
             Self::Tree => "Tree",
+            Self::Path => "Path",
+        }
+    }
+
+    /// Returns the movement cost for this terrain type.
+    ///
+    /// Lower is faster. Default is 1.0.
+    #[must_use]
+    pub const fn movement_cost(self) -> f32 {
+        match self {
+            Self::Path => 0.8,
+            Self::Dirt | Self::Grass => 1.0,
+            Self::Tree => 1.5,
+            _ => 1.0,
         }
     }
 
@@ -315,8 +331,16 @@ mod tests {
         assert!(TerrainType::Grass.is_walkable());
         assert!(TerrainType::Dirt.is_walkable());
         assert!(TerrainType::Tree.is_walkable());
+        assert!(TerrainType::Path.is_walkable());
         assert!(!TerrainType::Rock.is_walkable());
         assert!(!TerrainType::Water.is_walkable());
+    }
+
+    #[test]
+    fn test_movement_cost() {
+        assert!((TerrainType::Path.movement_cost() - 0.8).abs() < f32::EPSILON);
+        assert!((TerrainType::Grass.movement_cost() - 1.0).abs() < f32::EPSILON);
+        assert!((TerrainType::Tree.movement_cost() - 1.5).abs() < f32::EPSILON);
     }
 
     #[test]
