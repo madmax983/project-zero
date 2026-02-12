@@ -55,6 +55,7 @@ mod tests {
         world.insert_resource(scale::layer1::factions::Factions::default());
         world.insert_resource(scale::layer1::taboo::TabooState::default());
         world.insert_resource(scale::layer1::map::ScreenShake::default());
+        world.insert_resource(scale::layer1::inspector::InspectorSource::default());
 
         let generator = scale::shared::narrative::NarrativeGenerator::from_embedded();
         world.insert_resource(scale::shared::colony::ColonyName {
