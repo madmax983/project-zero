@@ -87,3 +87,4 @@ Implemented features. Architect: read this to understand current state.
 - [x] `083` Building Shifts — `specs/083-building-shifts.md` — completed 2026-10-21
 - [x] `INT-013` Integration: Faction Satisfaction -> Pop Morale — completed 2026-10-23
 - [x] `088` Omens & Taboos — `specs/088-omens-and-taboos.md` — completed 2026-10-24
+- [x] `087` Food Preservation — `specs/087-food-preservation.md` — completed 2026-10-25
