@@ -6,3 +6,6 @@
 
 **Threat:** Input Logic in `Health::take_damage`
 **Defense:** Added validation to ignore negative values (which would cause accidental healing) and `NaN` values. This ensures health is only reduced by valid damage amounts.
+
+**Threat:** Integer Overflow in `structural_integrity::apply_collapse`
+**Defense:** Added explicit bounds check `if pos.x < 0 || pos.y < 0` to prevent casting negative `i32` to huge `usize` values. Used `saturating_sub`/`add` in `check_stability` to prevent wrapping.

@@ -66,13 +66,19 @@ pub fn check_stability(world: &mut World, pos: GridPosition) -> bool {
     // 3. Check Nearby Rock
     // Optimization: we could use a spiral search or something, but simple box loop is fine for MVP.
     #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
-    let min_x = (pos.x - MAX_SUPPORT_DIST).max(0);
+    let min_x = pos.x.saturating_sub(MAX_SUPPORT_DIST).max(0);
     #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
-    let max_x = (pos.x + MAX_SUPPORT_DIST).min(terrain.width as i32 - 1);
+    let max_x = pos
+        .x
+        .saturating_add(MAX_SUPPORT_DIST)
+        .min(terrain.width as i32 - 1);
     #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
-    let min_y = (pos.y - MAX_SUPPORT_DIST).max(0);
+    let min_y = pos.y.saturating_sub(MAX_SUPPORT_DIST).max(0);
     #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
-    let max_y = (pos.y + MAX_SUPPORT_DIST).min(terrain.height as i32 - 1);
+    let max_y = pos
+        .y
+        .saturating_add(MAX_SUPPORT_DIST)
+        .min(terrain.height as i32 - 1);
 
     for y in min_y..=max_y {
         for x in min_x..=max_x {
@@ -105,10 +111,17 @@ pub fn check_stability(world: &mut World, pos: GridPosition) -> bool {
 /// Triggers a cave-in at the specified position.
 /// This changes terrain to Rock (rubble) and damages any entities present.
 pub fn apply_collapse(world: &mut World, pos: GridPosition) {
+    if pos.x < 0 || pos.y < 0 {
+        return;
+    }
+
     // 1. Change Terrain to Rock (Rubble)
     // We scope this mutable borrow of TerrainGrid
     {
         let mut terrain = world.resource_mut::<TerrainGrid>();
+        // SAFETY: We checked pos.x and pos.y are non-negative above.
+        // We still need to check upper bounds, which is done by idx < len check.
+        // However, converting to usize is now safe from wrapping huge negative numbers.
         let idx = (pos.y as usize) * terrain.width + (pos.x as usize);
         if idx < terrain.tiles.len() {
             terrain.tiles[idx] = TerrainType::Rock;
@@ -215,7 +228,7 @@ mod tests {
     }
 
     #[test]
-    fn test_stability_check_unsafe() {
+    fn test_stability_check_far() {
         let mut world = World::new();
         // 10x10 area
         let mut tiles = vec![TerrainType::Dirt; 100];
@@ -299,5 +312,50 @@ mod tests {
         // 3. Victim takes damage
         let health = world.get::<Health>(victim).unwrap();
         assert!(health.current < 100.0);
+    }
+
+    #[test]
+    fn test_collapse_negative_coords() {
+        let mut world = World::new();
+        // Setup simple terrain
+        let tiles = vec![TerrainType::Dirt; 100];
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
+
+        // Should not panic or crash
+        apply_collapse(&mut world, GridPosition { x: -1, y: -1 });
+    }
+
+    #[test]
+    fn test_stability_check_overflow() {
+        let mut world = World::new();
+        let tiles = vec![TerrainType::Dirt; 100];
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
+        world.insert_resource(RoofGrid::new(10, 10));
+
+        // Test near i32::MAX
+        let pos_max = GridPosition {
+            x: i32::MAX,
+            y: i32::MAX,
+        };
+        // Should use saturating add/sub and clamp to 0..width/height
+        // effectively checking nothing or just boundaries, but NOT panic
+        // Returns true (safe) because no roof found there (out of bounds)
+        assert!(check_stability(&mut world, pos_max));
+
+        // Test near i32::MIN
+        let pos_min = GridPosition {
+            x: i32::MIN,
+            y: i32::MIN,
+        };
+        // Returns true (safe) because no roof found there (out of bounds)
+        assert!(check_stability(&mut world, pos_min));
     }
 }
