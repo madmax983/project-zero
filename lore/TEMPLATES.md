@@ -828,3 +828,157 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 "[YEAR]: Atmospheric shift. The breath becomes [ATMOSPHERE_DESCRIPTOR]. [EFFECT]."
 "Warning: Air quality [ATMOSPHERE_DESCRIPTOR]. [YEAR]. [EFFECT] reported."
 ```
+
+---
+
+## Cabin Fever Templates
+
+### CABIN_FEVER_BREAK
+**Slots:** [COLONY], [YEAR], [NAME], [CABIN_FEVER_SYMPTOM]
+
+```
+"[NAME] breaks under the pressure. [YEAR]. They are [CABIN_FEVER_SYMPTOM]."
+"[YEAR]: The walls are too close for [NAME]. [CABIN_FEVER_SYMPTOM]."
+"Mental break reported. [NAME] is [CABIN_FEVER_SYMPTOM]. [YEAR]."
+```
+
+### CONFINEMENT_ALERT
+**Slots:** [COLONY], [YEAR], [CONFINEMENT_DESCRIPTOR]
+
+```
+"The lockdown continues. [YEAR]. The mood is [CONFINEMENT_DESCRIPTOR]."
+"[YEAR]: Confinement protocol. We are trapped. It feels [CONFINEMENT_DESCRIPTOR]."
+"Day after day inside. [COLONY] is [CONFINEMENT_DESCRIPTOR]. [YEAR]."
+```
+
+---
+
+## Shift Work Templates
+
+### SHIFT_CHANGE_DISPUTE
+**Slots:** [COLONY], [YEAR], [SHIFT_NAME], [SHIFT_COMPLAINT]
+
+```
+"Trouble on the [SHIFT_NAME]. [YEAR]. They cite [SHIFT_COMPLAINT]."
+"[YEAR]: The [SHIFT_NAME] refuses to work. Reason: [SHIFT_COMPLAINT]."
+"Dispute at shift change. [SHIFT_NAME] workers say they are [SHIFT_COMPLAINT]. [YEAR]."
+```
+
+---
+
+## Weather Templates
+
+### WEATHER_EVENT_START
+**Slots:** [COLONY], [YEAR], [WEATHER_TYPE], [WEATHER_INTENSITY]
+
+```
+"A [WEATHER_TYPE] hits [COLONY]. [YEAR]. It is [WEATHER_INTENSITY]."
+"[YEAR]: Storm warning. [WEATHER_TYPE] approaches. [WEATHER_INTENSITY] winds."
+"The sky turns dark. [WEATHER_TYPE] at [COLONY]. [YEAR]. [WEATHER_INTENSITY]."
+```
+
+### WEATHER_EVENT_END
+**Slots:** [COLONY], [YEAR], [WEATHER_TYPE]
+
+```
+"The [WEATHER_TYPE] passes. [YEAR]. The sky clears."
+"[YEAR]: We survived the [WEATHER_TYPE]. It is over."
+"Silence after the storm. The [WEATHER_TYPE] is gone from [COLONY]. [YEAR]."
+```
+
+### WEATHER_DAMAGE
+**Slots:** [COLONY], [YEAR], [STORM_NAME], [DAMAGE_REPORT]
+
+```
+"[STORM_NAME] leaves its mark. [YEAR]. [DAMAGE_REPORT]."
+"[YEAR]: Aftermath of [STORM_NAME]. We lost [DAMAGE_REPORT]."
+"Rebuilding after [STORM_NAME]. [DAMAGE_REPORT]. [YEAR]."
+```
+
+---
+
+## Omen & Taboo Templates
+
+### OMEN_WITNESSED
+**Slots:** [COLONY], [YEAR], [NAME], [OMEN_TYPE]
+
+```
+"[NAME] saw [OMEN_TYPE]. [YEAR]. A bad sign."
+"[YEAR]: Whispers of [OMEN_TYPE]. The colony is uneasy."
+"An omen at [COLONY]. [NAME] reports [OMEN_TYPE]. [YEAR]."
+```
+
+### TABOO_BROKEN
+**Slots:** [COLONY], [YEAR], [NAME], [TABOO_ACTION]
+
+```
+"[NAME] was caught [TABOO_ACTION]. [YEAR]. The others turned away."
+"[YEAR]: A taboo broken. [NAME] is [TABOO_ACTION]. Bad luck will follow."
+"Fear in the colony. [NAME] committed the error of [TABOO_ACTION]. [YEAR]."
+```
+
+---
+
+## Inspector Templates
+
+### INSPECTOR_ARRIVAL
+**Slots:** [COLONY], [YEAR], [INSPECTOR_TITLE]
+
+```
+"[INSPECTOR_TITLE] has arrived. [YEAR]. Look busy."
+"[YEAR]: Inspection day. [INSPECTOR_TITLE] walks the halls."
+"A shuttle lands. It carries [INSPECTOR_TITLE]. [YEAR]."
+```
+
+### INSPECTOR_JUDGMENT
+**Slots:** [COLONY], [YEAR], [INSPECTOR_TITLE], [VERDICT]
+
+```
+"The report is in. [INSPECTOR_TITLE] calls us [VERDICT]. [YEAR]."
+"[YEAR]: Judgment day. The colony is deemed [VERDICT] by [INSPECTOR_TITLE]."
+"[INSPECTOR_TITLE] departs. The verdict: [VERDICT]. [YEAR]."
+```
+
+---
+
+## Stowaway Templates
+
+### STOWAWAY_DISCOVERED
+**Slots:** [COLONY], [YEAR], [STOWAWAY_HIDING_SPOT]
+
+```
+"We found a stranger [STOWAWAY_HIDING_SPOT]. [YEAR]. They have been here for weeks."
+"[YEAR]: Discovery. A stowaway was [STOWAWAY_HIDING_SPOT]."
+"Security alert. Intruder found [STOWAWAY_HIDING_SPOT]. [YEAR]."
+```
+
+### THEFT_REPORT
+**Slots:** [COLONY], [YEAR], [RESOURCE], [AMOUNT]
+
+```
+"Supplies missing. [YEAR]. [AMOUNT] [RESOURCE] gone without a trace."
+"[YEAR]: Theft from the stores. We are short [AMOUNT] [RESOURCE]."
+"Someone is stealing [RESOURCE]. [AMOUNT] lost. [YEAR]."
+```
+
+---
+
+## Mood Templates
+
+### PANIC_SPREAD
+**Slots:** [COLONY], [YEAR], [MOOD_WAVE]
+
+```
+"Fear moves fast. [YEAR]. [MOOD_WAVE] takes the colony."
+"[YEAR]: [MOOD_WAVE]. Work stops. Eyes are wide."
+"A panic. [MOOD_WAVE] passes from soul to soul. [YEAR]."
+```
+
+### JOY_SPREAD
+**Slots:** [COLONY], [YEAR], [MOOD_WAVE]
+
+```
+"Laughter in the halls. [YEAR]. [MOOD_WAVE]."
+"[YEAR]: A lighter mood. [MOOD_WAVE] lifts us."
+"The darkness breaks. [MOOD_WAVE] at [COLONY]. [YEAR]."
+```

@@ -1282,3 +1282,174 @@ Adjectives for air quality or atmospheric conditions.
 - toxic
 - heavy
 - sharp
+
+---
+
+## Cabin Fever Fragments
+
+### [CABIN_FEVER_SYMPTOM]
+Manifestations of stress from confinement.
+
+- staring at walls
+- pacing the halls
+- speaking in whispers
+- hoarding rations
+- fearing the door
+- seeing shapes
+- forgetting names
+
+### [CONFINEMENT_DESCRIPTOR]
+How the feeling of being trapped is described.
+
+- crushing
+- silent
+- endless
+- suffocating
+- tightening
+- heavy
+- cage-like
+
+---
+
+## Shift Work Fragments
+
+### [SHIFT_NAME]
+Names for work shifts.
+
+- Day-Watch
+- Night-Shift
+- The Long Watch
+- Sun-Time
+- Dark-Time
+- Void-Shift
+- The Owl's Hour
+
+### [SHIFT_COMPLAINT]
+Complaints about shift work.
+
+- eyes hurt
+- sun-blind
+- missing the light
+- cold hands
+- silent halls
+- never sleeping
+- wrong time
+
+---
+
+## Weather Fragments
+
+### [WEATHER_TYPE]
+Types of weather events.
+
+- Dust Storm
+- Acid Rain
+- Blizzard
+- Heatwave
+- Solar Flare
+- Void-Fog
+- Meteor Shower
+
+### [WEATHER_INTENSITY]
+Severity of weather.
+
+- blinding
+- howling
+- merciless
+- sudden
+- gentle
+- passing
+- endless
+
+### [STORM_NAME]
+Flavor names for named storms.
+
+- The Scourge
+- The White Death
+- The Red Wind
+- The Burning Eye
+- The Great Silence
+- The Void-Breath
+- The Howler
+
+---
+
+## Omen & Taboo Fragments
+
+### [OMEN_TYPE]
+Signs of bad luck.
+
+- a bird hitting the dome
+- a cracked mirror
+- a flickering light
+- a strange dream
+- a cold spot
+- a missing tool
+- a double moon
+
+### [TABOO_ACTION]
+Forbidden or unlucky actions.
+
+- whistling at night
+- counting the dead
+- opening the outer door
+- speaking of the Wound
+- burning green wood
+- leaving food unfinished
+- ignoring the signals
+
+---
+
+## Inspector Fragments
+
+### [INSPECTOR_TITLE]
+Titles for the visiting inspector.
+
+- The Eye
+- The Judge
+- The Auditor
+- High Observer
+- The Voice of the Core
+- The Evaluator
+- The Silent Guest
+
+### [VERDICT]
+The result of an inspection.
+
+- exemplary
+- acceptable
+- lacking
+- disgraceful
+- concerning
+- pristine
+- chaotic
+
+---
+
+## Stowaway Fragments
+
+### [STOWAWAY_HIDING_SPOT]
+Where stowaways hide.
+
+- in the ventilation
+- under the floorboards
+- behind the crates
+- in the attic
+- inside the walls
+- within the cargo
+- among the pipes
+
+---
+
+## Mood Fragments
+
+### [MOOD_WAVE]
+How emotional contagion spreads.
+
+- a ripple of fear
+- a wave of panic
+- a spark of joy
+- a shadow of doubt
+- a sudden laugh
+- a shared silence
+- a collective sigh
