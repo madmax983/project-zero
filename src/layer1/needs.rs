@@ -234,11 +234,7 @@ mod tests {
         let mut world = setup();
         let glutton = Traits(HashSet::from([Trait::Glutton]));
 
-        world.spawn((
-            Pop,
-            Needs::default(),
-            glutton,
-        ));
+        world.spawn((Pop, Needs::default(), glutton));
 
         // Initial hunger 0.8
         // Glutton decay = Base (0.001) * 1.2 = 0.0012

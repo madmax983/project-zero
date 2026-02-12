@@ -52,9 +52,7 @@ use crate::layer1::resources::{ColonyResources, process_logging, process_mining}
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
 use crate::layer1::social::{SocialBuff, Tavern, handle_socialize};
 use crate::layer1::terrain::TerrainGrid;
-use crate::layer1::traits::{
-    Traits, get_trait_move_speed_modifier, get_trait_work_speed_modifier,
-};
+use crate::layer1::traits::{Traits, get_trait_move_speed_modifier, get_trait_work_speed_modifier};
 use crate::layer1::utility_ai::{ActionType, PopAction, StartPlan};
 use crate::shared::log::MessageLog;
 use crate::shared::time::SimulationTime;
@@ -553,9 +551,7 @@ pub fn work_execution_system(world: &mut World) {
     let work_speed_mod = policies.as_ref().map_or(1.0, get_work_speed_modifier);
 
     // Fetch DayNightCycle
-    let cycle = world
-        .get_resource::<DayNightCycle>()
-        .map(|c| c.time_of_day);
+    let cycle = world.get_resource::<DayNightCycle>().map(|c| c.time_of_day);
 
     // Find pops at their work target and capture their morale
     // Since we need to access Needs which is a component, and we need &mut World later,
@@ -2404,22 +2400,21 @@ mod tests {
             ))
             .id();
 
-        world
-            .spawn((
-                Pop,
-                GridPosition { x: 5, y: 5 },
-                Equipment {
-                    tool: Some(tool),
-                    ..Default::default()
-                },
-                MovementTarget {
-                    target_entity: designation,
-                    target_position: GridPosition { x: 5, y: 5 },
-                    for_action: ActionType::Work,
-                },
-                AtTarget,
-                Traits(HashSet::from([Trait::HardWorker])), // +20% Work Speed
-            ));
+        world.spawn((
+            Pop,
+            GridPosition { x: 5, y: 5 },
+            Equipment {
+                tool: Some(tool),
+                ..Default::default()
+            },
+            MovementTarget {
+                target_entity: designation,
+                target_position: GridPosition { x: 5, y: 5 },
+                for_action: ActionType::Work,
+            },
+            AtTarget,
+            Traits(HashSet::from([Trait::HardWorker])), // +20% Work Speed
+        ));
 
         work_execution_system(&mut world);
 

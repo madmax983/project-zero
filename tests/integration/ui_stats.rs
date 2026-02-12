@@ -46,7 +46,8 @@ mod tests {
             None,
             pop_count,
             food,
-            0.0,
+            0.0, // Rations
+            0.0, // Tools
             0.8,
             None, // Season
         );
@@ -56,10 +57,7 @@ mod tests {
             status.contains("Souls: 3"),
             "Status bar missing population count"
         );
-        assert!(
-            status.contains("Yield: 42"),
-            "Status bar missing food yield"
-        );
+        assert!(status.contains("Food: 42"), "Status bar missing food yield");
         assert!(status.contains("Morale: 80%"), "Status bar missing Morale");
         assert!(status.contains("Day 1000"), "Status bar missing Day");
     }

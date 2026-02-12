@@ -1,7 +1,9 @@
-use bevy_ecs::prelude::*;
-use std::collections::HashSet;
-use rand::Rng;
+//! Trait definitions for Pop personality quirks.
+
 use crate::layer1::day_night::TimeOfDay;
+use bevy_ecs::prelude::*;
+use rand::Rng;
+use std::collections::HashSet;
 
 /// Trait enum defining possible personality quirks.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -24,7 +26,8 @@ pub enum Trait {
 
 impl Trait {
     /// Returns a human-readable label for the trait.
-    pub fn label(&self) -> &'static str {
+    #[must_use]
+    pub const fn label(&self) -> &'static str {
         match self {
             Self::HardWorker => "Hard Worker",
             Self::Lazy => "Lazy",
@@ -46,70 +49,105 @@ impl Traits {
     pub fn random<R: Rng>(rng: &mut R) -> Self {
         let mut set = HashSet::new();
         // Simple logic: 50% chance to get 1 trait, 20% for 2.
-        let count = if rng.gen_bool(0.2) { 2 } else if rng.gen_bool(0.5) { 1 } else { 0 };
+        let count = if rng.gen_bool(0.2) {
+            2
+        } else {
+            usize::from(rng.gen_bool(0.5))
+        };
 
         // Pool of all traits
         let pool = [
-            Trait::HardWorker, Trait::Lazy,
-            Trait::Glutton, Trait::Ascetic,
-            Trait::NightOwl, Trait::EarlyBird,
-            Trait::FastWalker
+            Trait::HardWorker,
+            Trait::Lazy,
+            Trait::Glutton,
+            Trait::Ascetic,
+            Trait::NightOwl,
+            Trait::EarlyBird,
+            Trait::FastWalker,
         ];
 
         while set.len() < count {
             let t = pool[rng.gen_range(0..pool.len())];
 
             // Check conflicts
-            if t == Trait::HardWorker && set.contains(&Trait::Lazy) { continue; }
-            if t == Trait::Lazy && set.contains(&Trait::HardWorker) { continue; }
-            if t == Trait::Glutton && set.contains(&Trait::Ascetic) { continue; }
-            if t == Trait::Ascetic && set.contains(&Trait::Glutton) { continue; }
-            if t == Trait::NightOwl && set.contains(&Trait::EarlyBird) { continue; }
-            if t == Trait::EarlyBird && set.contains(&Trait::NightOwl) { continue; }
+            if t == Trait::HardWorker && set.contains(&Trait::Lazy) {
+                continue;
+            }
+            if t == Trait::Lazy && set.contains(&Trait::HardWorker) {
+                continue;
+            }
+            if t == Trait::Glutton && set.contains(&Trait::Ascetic) {
+                continue;
+            }
+            if t == Trait::Ascetic && set.contains(&Trait::Glutton) {
+                continue;
+            }
+            if t == Trait::NightOwl && set.contains(&Trait::EarlyBird) {
+                continue;
+            }
+            if t == Trait::EarlyBird && set.contains(&Trait::NightOwl) {
+                continue;
+            }
 
             set.insert(t);
         }
 
-        Traits(set)
+        Self(set)
     }
 }
 
 /// Returns the work speed modifier from traits.
+#[must_use]
 pub fn get_trait_work_speed_modifier(traits: &Traits) -> f32 {
     let mut modifier = 1.0;
-    if traits.0.contains(&Trait::HardWorker) { modifier += 0.2; }
-    if traits.0.contains(&Trait::Lazy) { modifier -= 0.2; }
+    if traits.0.contains(&Trait::HardWorker) {
+        modifier += 0.2;
+    }
+    if traits.0.contains(&Trait::Lazy) {
+        modifier -= 0.2;
+    }
     modifier
 }
 
 /// Returns the hunger decay modifier from traits.
+#[must_use]
 pub fn get_trait_hunger_decay_modifier(traits: &Traits) -> f32 {
     let mut modifier = 1.0;
-    if traits.0.contains(&Trait::Glutton) { modifier += 0.2; }
-    if traits.0.contains(&Trait::Ascetic) { modifier -= 0.2; }
+    if traits.0.contains(&Trait::Glutton) {
+        modifier += 0.2;
+    }
+    if traits.0.contains(&Trait::Ascetic) {
+        modifier -= 0.2;
+    }
     modifier
 }
 
 /// Returns the movement speed modifier from traits.
+#[must_use]
 pub fn get_trait_move_speed_modifier(traits: &Traits) -> f32 {
-    if traits.0.contains(&Trait::FastWalker) { 1.1 } else { 1.0 }
+    if traits.0.contains(&Trait::FastWalker) {
+        1.1
+    } else {
+        1.0
+    }
 }
 
 /// Returns the mood modifier from traits based on time of day.
+#[must_use]
 pub fn get_trait_mood_modifier(traits: &Traits, time_of_day: TimeOfDay) -> f32 {
     let mut modifier = 0.0;
     if traits.0.contains(&Trait::NightOwl) {
         match time_of_day {
             TimeOfDay::Night => modifier += 0.1,
             TimeOfDay::Day => modifier -= 0.05,
-            _ => {}
+            TimeOfDay::Dawn | TimeOfDay::Dusk => {}
         }
     }
     if traits.0.contains(&Trait::EarlyBird) {
         match time_of_day {
             TimeOfDay::Dawn | TimeOfDay::Day => modifier += 0.05,
             TimeOfDay::Night => modifier -= 0.1,
-            _ => {}
+            TimeOfDay::Dusk => {}
         }
     }
     modifier
@@ -118,7 +156,6 @@ pub fn get_trait_mood_modifier(traits: &Traits, time_of_day: TimeOfDay) -> f32 {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_ecs::prelude::*;
     use crate::layer1::day_night::TimeOfDay;
     use std::collections::HashSet;
 
@@ -135,9 +172,19 @@ mod tests {
         let lazy = Traits(HashSet::from([Trait::Lazy]));
         let normal = Traits(HashSet::new());
 
-        assert!(get_trait_work_speed_modifier(&hard_worker) > 1.0, "HardWorker should work faster");
-        assert!(get_trait_work_speed_modifier(&lazy) < 1.0, "Lazy should work slower");
-        assert_eq!(get_trait_work_speed_modifier(&normal), 1.0, "Normal should work at normal speed");
+        assert!(
+            get_trait_work_speed_modifier(&hard_worker) > 1.0,
+            "HardWorker should work faster"
+        );
+        assert!(
+            get_trait_work_speed_modifier(&lazy) < 1.0,
+            "Lazy should work slower"
+        );
+        assert_eq!(
+            get_trait_work_speed_modifier(&normal),
+            1.0,
+            "Normal should work at normal speed"
+        );
     }
 
     #[test]
@@ -146,9 +193,19 @@ mod tests {
         let ascetic = Traits(HashSet::from([Trait::Ascetic]));
         let normal = Traits(HashSet::new());
 
-        assert!(get_trait_hunger_decay_modifier(&glutton) > 1.0, "Glutton should eat more");
-        assert!(get_trait_hunger_decay_modifier(&ascetic) < 1.0, "Ascetic should eat less");
-        assert_eq!(get_trait_hunger_decay_modifier(&normal), 1.0, "Normal should eat normally");
+        assert!(
+            get_trait_hunger_decay_modifier(&glutton) > 1.0,
+            "Glutton should eat more"
+        );
+        assert!(
+            get_trait_hunger_decay_modifier(&ascetic) < 1.0,
+            "Ascetic should eat less"
+        );
+        assert_eq!(
+            get_trait_hunger_decay_modifier(&normal),
+            1.0,
+            "Normal should eat normally"
+        );
     }
 
     #[test]
@@ -169,15 +226,24 @@ mod tests {
             let traits = Traits::random(&mut rng);
             let has_lazy = traits.0.contains(&Trait::Lazy);
             let has_hard_worker = traits.0.contains(&Trait::HardWorker);
-            assert!(!(has_lazy && has_hard_worker), "Should not be both Lazy and HardWorker");
+            assert!(
+                !(has_lazy && has_hard_worker),
+                "Should not be both Lazy and HardWorker"
+            );
 
             let has_glutton = traits.0.contains(&Trait::Glutton);
             let has_ascetic = traits.0.contains(&Trait::Ascetic);
-            assert!(!(has_glutton && has_ascetic), "Should not be both Glutton and Ascetic");
+            assert!(
+                !(has_glutton && has_ascetic),
+                "Should not be both Glutton and Ascetic"
+            );
 
             let has_night_owl = traits.0.contains(&Trait::NightOwl);
             let has_early_bird = traits.0.contains(&Trait::EarlyBird);
-            assert!(!(has_night_owl && has_early_bird), "Should not be both NightOwl and EarlyBird");
+            assert!(
+                !(has_night_owl && has_early_bird),
+                "Should not be both NightOwl and EarlyBird"
+            );
         }
     }
 }

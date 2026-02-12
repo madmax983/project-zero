@@ -97,6 +97,7 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
         location_name,
         pop_count,
         resources.food,
+        resources.rations,
         resources.tools,
         avg_morale,
         season,
@@ -123,6 +124,7 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
 /// * `location_name` - Optional name of the location being viewed.
 /// * `pop_count` - Total number of colonists.
 /// * `food_yield` - Current food resource amount.
+/// * `rations` - Current rations resource amount.
 /// * `tools` - Current tool resource amount.
 /// * `morale` - Average morale (0.0 to 1.0).
 #[must_use]
@@ -141,6 +143,7 @@ pub fn get_status_line<'a>(
     location_name: Option<&'a str>,
     pop_count: usize,
     food_yield: f32,
+    rations: f32,
     tools: f32,
     morale: f32,
     season: Option<Season>,
@@ -195,14 +198,15 @@ pub fn get_status_line<'a>(
     ));
 
     // 5. Yield (Food)
-    let food_color = if food_yield < 10.0 {
+    let total_food = food_yield + rations;
+    let food_color = if total_food < 10.0 {
         Color::Red
     } else {
         Color::Green
     };
-    spans.push(Span::styled("Yield: ", Style::default().fg(food_color)));
+    spans.push(Span::styled("Food: ", Style::default().fg(food_color)));
     spans.push(Span::styled(
-        format!("{food_yield:.0} │ "),
+        format!("{food_yield:.0}+{rations:.0} │ "),
         Style::default().fg(Color::White),
     ));
 
@@ -326,6 +330,7 @@ pub fn get_status_string(
     location_name: Option<&str>,
     pop_count: usize,
     food_yield: f32,
+    rations: f32,
     tools: f32,
     morale: f32,
     season: Option<Season>,
@@ -339,6 +344,7 @@ pub fn get_status_string(
         location_name,
         pop_count,
         food_yield,
+        rations,
         tools,
         morale,
         season,
@@ -400,6 +406,7 @@ mod tests {
             Some("Test City"),
             42,    // Pops
             123.0, // Food
+            50.0,  // Rations
             10.0,  // Tools
             0.85,  // Morale
             None,  // Season
@@ -408,7 +415,7 @@ mod tests {
         assert!(status.contains("Day 100"));
         assert!(status.contains("Souls: 42"));
         assert!(status.contains("Morale: 85%"));
-        assert!(status.contains("Yield: 123"));
+        assert!(status.contains("Food: 123+50"));
         assert!(status.contains("Tools: 10"));
         assert!(status.contains("1x"));
         assert!(status.contains("📍 Test City"));
@@ -423,6 +430,7 @@ mod tests {
             None,
             0,
             0.0,
+            0.0, // Rations
             0.0,
             0.0,
             None, // Season
@@ -521,6 +529,7 @@ mod tests {
             None,
             5,
             100.0,
+            0.0,
             10.0,
             0.8,
             Some(Season::Summer),
@@ -543,6 +552,7 @@ mod tests {
             None,
             5,
             100.0,
+            0.0,
             10.0,
             0.8,
             None,

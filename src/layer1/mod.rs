@@ -114,6 +114,9 @@ pub mod utility_ai_work_tests;
 pub mod mining_tests;
 
 #[cfg(test)]
+mod preservation_tests;
+
+#[cfg(test)]
 mod execution_demolish_test;
 
 /// Named locations on the map.
@@ -255,5 +258,6 @@ pub use mentorship::*;
 /// Stowaway system (Spec 086).
 pub mod stowaway;
 pub use stowaway::*;
+/// Pop personality traits (Spec 084).
 pub mod traits;
 pub use traits::*;

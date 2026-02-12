@@ -24,6 +24,8 @@ impl Default for Perishable {
 
 /// Percentage of global food that spoils per tick (0.05%).
 pub const GLOBAL_SPOILAGE_RATE: f32 = 0.0005;
+/// Percentage of rations that spoil per tick (10% of global rate).
+pub const RATION_SPOILAGE_RATE: f32 = GLOBAL_SPOILAGE_RATE * 0.1;
 
 /// System that handles decay of `ColonyResources` (food) and `Perishable` entities.
 pub fn spoilage_system(
@@ -32,16 +34,23 @@ pub fn spoilage_system(
     mut query: Query<(Entity, &mut Perishable)>,
     vermin: Option<Res<VerminState>>,
 ) {
+    let vermin_modifier = vermin.map_or(1.0, |v| {
+        crate::layer1::vermin::calculate_spoilage_modifier(&v)
+    });
+
     // 1. Handle Global Spoilage
     if resources.food > 0.0 {
-        let modifier = vermin.map_or(1.0, |v| {
-            crate::layer1::vermin::calculate_spoilage_modifier(&v)
-        });
-        let decay = resources.food * GLOBAL_SPOILAGE_RATE * modifier;
+        let decay = resources.food * GLOBAL_SPOILAGE_RATE * vermin_modifier;
         resources.food = (resources.food - decay).max(0.0);
     }
 
-    // 2. Handle Perishable Items
+    // 2. Handle Rations Spoilage
+    if resources.rations > 0.0 {
+        let decay = resources.rations * RATION_SPOILAGE_RATE * vermin_modifier;
+        resources.rations = (resources.rations - decay).max(0.0);
+    }
+
+    // 3. Handle Perishable Items
     for (entity, mut perishable) in &mut query {
         perishable.current_ticks += 1;
         if perishable.current_ticks >= perishable.max_ticks {

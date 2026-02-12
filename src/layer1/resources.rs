@@ -128,6 +128,8 @@ pub struct ColonyResources {
     pub clothing: f32,
     /// Total waste accumulated in the colony (must be hauled to landfill).
     pub waste: f32,
+    /// Total rations available in the colony.
+    pub rations: f32,
     /// Maximum food capacity.
     pub max_food: f32,
     /// Maximum wood capacity.
@@ -154,6 +156,8 @@ pub struct ColonyResources {
     pub max_clothing: f32,
     /// Maximum waste capacity.
     pub max_waste: f32,
+    /// Maximum rations capacity.
+    pub max_rations: f32,
 }
 
 impl Default for ColonyResources {
@@ -172,6 +176,7 @@ impl Default for ColonyResources {
             cloth: 0.0,
             clothing: 0.0,
             waste: 0.0,
+            rations: 0.0,
             max_food: 50.0,
             max_wood: 50.0,
             max_stone: 20.0,
@@ -185,6 +190,7 @@ impl Default for ColonyResources {
             max_cloth: 50.0,
             max_clothing: 50.0,
             max_waste: 0.0, // Defaults to 0, requires Landfill
+            max_rations: 50.0,
         }
     }
 }
@@ -210,6 +216,7 @@ impl ColonyResources {
             cloth: 0.0,
             clothing: 0.0,
             waste: 0.0,
+            rations: 0.0,
             max_food: 0.0,
             max_wood: 0.0,
             max_stone: 0.0,
@@ -223,7 +230,13 @@ impl ColonyResources {
             max_cloth: 0.0,
             max_clothing: 0.0,
             max_waste: 0.0,
+            max_rations: 0.0,
         }
+    }
+
+    /// Adds rations, clamping to the maximum capacity.
+    pub fn add_rations(&mut self, amount: f32) {
+        self.rations = (self.rations + amount).clamp(0.0, self.max_rations);
     }
 
     /// Adds wood, clamping to the maximum capacity.
@@ -314,6 +327,7 @@ impl ColonyResources {
             && self.fiber >= cost.fiber
             && self.cloth >= cost.cloth
             && self.clothing >= cost.clothing
+            && self.rations >= cost.rations
     }
 
     /// Deducts the given cost from the colony's resources.
@@ -334,6 +348,7 @@ impl ColonyResources {
         self.fiber -= cost.fiber;
         self.cloth -= cost.cloth;
         self.clothing -= cost.clothing;
+        self.rations -= cost.rations;
     }
 
     /// Attempts to deduct the given cost from the colony's resources.

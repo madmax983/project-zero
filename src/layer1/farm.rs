@@ -93,11 +93,12 @@ pub fn consume_food_system(
     mut pop_query: Query<(Entity, &mut Needs), With<Pop>>,
     mut resources: ResMut<ColonyResources>,
 ) {
-    if resources.food < f32::EPSILON {
+    if resources.food < f32::EPSILON && resources.rations < f32::EPSILON {
         return;
     }
 
     let mut food = resources.food;
+    let mut rations = resources.rations;
 
     // Collect hungry pop entities first to avoid borrow issues with mut iteration
     let hungry_pops: Vec<Entity> = pop_query
@@ -107,17 +108,26 @@ pub fn consume_food_system(
         .collect();
 
     for entity in hungry_pops {
-        if food < FOOD_PER_MEAL {
-            break;
-        }
-
-        if let Ok((_, mut needs)) = pop_query.get_mut(entity) {
+        let ate = if food >= FOOD_PER_MEAL {
             food -= FOOD_PER_MEAL;
-            needs.hunger = (needs.hunger + HUNGER_PER_MEAL).min(1.0);
+            true
+        } else if rations >= FOOD_PER_MEAL {
+            rations -= FOOD_PER_MEAL;
+            true
+        } else {
+            false
+        };
+
+        if ate {
+            #[allow(clippy::collapsible_if)]
+            if let Ok((_, mut needs)) = pop_query.get_mut(entity) {
+                needs.hunger = (needs.hunger + HUNGER_PER_MEAL).min(1.0);
+            }
         }
     }
 
     resources.food = food;
+    resources.rations = rations;
 }
 
 /// Removes dead workers from farms.
