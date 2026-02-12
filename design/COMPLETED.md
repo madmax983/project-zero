@@ -91,3 +91,4 @@ Implemented features. Architect: read this to understand current state.
 - [x] `INT-014` Integration: Binge -> Resource Consumption — completed 2026-10-28
 - [x] `085` Faction Demands & Strikes — `specs/085-faction-demands-strikes.md` — completed 2026-10-26
 - [x] `INT-015` Integration: Waste -> Pollution — completed 2026-10-29
+- [x] `070` Heirloom Tech — `specs/070-heirloom-tech.md` — completed 2026-02-12

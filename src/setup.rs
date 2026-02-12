@@ -11,7 +11,7 @@ use crate::layer1::{
     ColonyMemory, ColonyPolicies, ColonyResources, DesignationMode, LightMap, NamedLocations,
     NotificationQueue, OccupiedTiles, ScreenShake, SeasonState, TechState, TerrainType,
     UtilityConfig, Viewport, generate_terrain, initial_chronicle_event, initial_naming_system,
-    spawn_initial_anomalies, spawn_initial_pops,
+    spawn_heirlooms, spawn_initial_anomalies, spawn_initial_pops,
 };
 use crate::shared::colony::ColonyName;
 use crate::shared::input::InputContextStack;
@@ -121,6 +121,7 @@ pub fn setup_world() -> World {
 
     spawn_initial_pops(&mut world);
     spawn_initial_anomalies(&mut world, 5);
+    spawn_heirlooms(&mut world);
     initial_naming_system(&mut world);
     initial_chronicle_event(&mut world);
 

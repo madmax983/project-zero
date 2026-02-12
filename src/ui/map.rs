@@ -599,6 +599,8 @@ pub const fn get_building_char(building: BuildingType) -> char {
         BuildingType::PowerPole => '|',
         BuildingType::Wall => '#',
         BuildingType::Tower => 'O',
+        BuildingType::AncientReactor => 'R',
+        BuildingType::AncientFabricator => 'F',
     }
 }
 
@@ -624,10 +626,10 @@ pub const fn get_building_color(building: BuildingType) -> Color {
         BuildingType::Smokehouse => Color::Rgb(200, 200, 200), // Smoky
         BuildingType::LumberMill => Color::Rgb(205, 133, 63), // Peru
         BuildingType::StoneMason => Color::Rgb(119, 136, 153), // LightSlateGray
-        BuildingType::Smelter => Color::Rgb(255, 69, 0),  // Red-Orange
-        BuildingType::Smithy | BuildingType::PowerPole => Color::Rgb(192, 192, 192), // Silver
+        BuildingType::Smelter | BuildingType::AncientReactor => Color::Rgb(255, 69, 0), // Red-Orange
+        BuildingType::Smithy | BuildingType::PowerPole => Color::Rgb(192, 192, 192),    // Silver
         BuildingType::Tavern | BuildingType::FlowerBed => Color::Magenta,
-        BuildingType::Library => Color::Cyan,
+        BuildingType::Library | BuildingType::AncientFabricator => Color::Cyan,
         BuildingType::Plantation => Color::Green,
         BuildingType::Weaver | BuildingType::Statue => Color::White,
         BuildingType::Tailor => Color::Blue,

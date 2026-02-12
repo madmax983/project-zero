@@ -29,12 +29,12 @@ use crate::layer1::{
     clean_dead_workers_system, cleanup_previous_assignment_system, clothing_wear_system,
     combat_execution_system, consume_food_system, death_system, decay_needs_system,
     discovery_system, faction_satisfaction_morale_bridge, fire_damage_pops_system,
-    fire_damage_system, fire_spread_system, haul_system, healing_system, hypothermia_system,
-    infiltration_system, memory_decay_system, modify_affinity_system, movement_system,
-    natural_death_system, notification_expiration_system, pop_death_chronicle_bridge,
-    process_refining_system, process_research_system, process_scan_system,
-    process_start_plan_system, produce_food_system, regrowth_system, restore_leisure_system,
-    restore_rest_in_housing_system, sleepwalk_end_system, waste_pollution_bridge,
+    fire_damage_system, fire_spread_system, haul_system, healing_system, heirloom_decay_system,
+    hypothermia_system, infiltration_system, memory_decay_system, modify_affinity_system,
+    movement_system, natural_death_system, notification_expiration_system,
+    pop_death_chronicle_bridge, process_refining_system, process_research_system,
+    process_scan_system, process_start_plan_system, produce_food_system, regrowth_system,
+    restore_leisure_system, restore_rest_in_housing_system, sleepwalk_end_system,
     social::old_guard::{
         apply_founder_benefits_system, apply_mood_modifiers_system,
         check_generational_friction_system, mood_lifecycle_system,
@@ -43,7 +43,8 @@ use crate::layer1::{
     track_plan_outcomes_system, update_action_timer_system, update_cabin_fever_system,
     update_erosion_system, update_lighting_system, update_noise_system,
     update_resource_caps_system, update_screen_shake_system, update_taboo_duration_system,
-    update_weather_system, vermin_growth_system, vermin_morale_system, work_execution_system,
+    update_weather_system, vermin_growth_system, vermin_morale_system, waste_pollution_bridge,
+    work_execution_system,
 };
 use crate::shared::time::SimulationTime;
 
@@ -187,6 +188,7 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(fire_spread_system)
             .after(fire_damage_pops_system)
             .after(crate::layer1::structure::fire_damage_structure_system),
+        heirloom_decay_system.after(work_execution_system),
         update_noise_system.after(work_execution_system),
         apply_noise_effects_system.after(update_noise_system),
         waste_pollution_bridge.after(work_execution_system),

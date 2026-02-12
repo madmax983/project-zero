@@ -276,3 +276,9 @@ pub use erosion::*;
 #[cfg(test)]
 /// Tests for faction demands logic (Spec 085).
 pub mod faction_demands_tests;
+
+/// Heirloom tech system (Spec 070).
+pub mod heirloom;
+pub use heirloom::*;
+#[cfg(test)]
+mod heirloom_tests;

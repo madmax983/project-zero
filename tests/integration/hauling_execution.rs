@@ -8,10 +8,10 @@ mod tests {
     use scale::layer1::pop::Pop;
     use scale::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
     use scale::layer1::stockpile::Stockpile;
+    use scale::layer1::structural_integrity::StructureCollapsed;
     use scale::layer1::utility_ai::{ActionType, PopAction};
     use scale::shared::time::SimulationTime;
     use scale::simulation::{SimulationSchedule, build_simulation_schedule};
-    use scale::layer1::structural_integrity::StructureCollapsed;
 
     fn setup_world() -> World {
         scale::setup::init_task_pools();

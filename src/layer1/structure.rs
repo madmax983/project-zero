@@ -89,9 +89,18 @@ pub fn process_repair(world: &mut World, designation_entity: Entity, amount: f32
 
     // Use a scope to borrow world for query
     {
-        let mut query = world.query::<(Entity, &GridPosition, &mut Structure)>();
-        for (entity, p, mut s) in query.iter_mut(world) {
+        let mut query = world.query::<(
+            Entity,
+            &GridPosition,
+            &mut Structure,
+            Option<&crate::layer1::heirloom::Heirloom>,
+        )>();
+        for (entity, p, mut s, heirloom) in query.iter_mut(world) {
             if *p == pos {
+                if heirloom.is_some() {
+                    // Cannot repair Heirloom! Stop here (structure_entity stays None, forcing despawn below)
+                    break;
+                }
                 s.current_hp = (s.current_hp + amount).min(s.max_hp);
                 new_hp = s.current_hp;
                 max_hp = s.max_hp;
