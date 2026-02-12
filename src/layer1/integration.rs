@@ -2,10 +2,12 @@
 
 use crate::layer1::balance::TICKS_PER_YEAR;
 use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
+use crate::layer1::factions::Factions;
 use crate::layer1::fire::Fire;
 use crate::layer1::health::Health;
 use crate::layer1::map::GridPosition;
 use crate::layer1::memory::{Memories, MemoryType};
+use crate::layer1::needs::Needs;
 use crate::layer1::pop::{Pop, PopDied};
 use crate::layer1::rumor::{Knowledge, Rumor, RumorTopic};
 use crate::layer1::vermin::VerminState;
@@ -85,6 +87,28 @@ pub fn chronicle_rumor_bridge_system(
             for witness in witnesses {
                 if let Ok((_, mut knowledge)) = query.get_mut(witness) {
                     knowledge.add_rumor(rumor.clone());
+                }
+            }
+        }
+    }
+}
+
+/// Applies morale penalties based on faction satisfaction.
+///
+/// Bridges the Faction system (Social) and Pop Needs system (Psychology).
+pub fn faction_satisfaction_morale_bridge(
+    factions: Res<Factions>,
+    mut query: Query<(&crate::layer1::factions::FactionMember, &mut Needs)>,
+) {
+    for (member, mut needs) in &mut query {
+        if let Some(faction_id) = member.faction_id {
+            if let Some(data) = factions.get(faction_id) {
+                // If satisfaction < 0.9, apply penalty
+                // Penalty scales: 0.9 -> 0.0, 0.0 -> 0.001 (approx 0.001)
+                // Let's use 0.001 per tick for max dissatisfaction (0.0)
+                if data.satisfaction < 0.9 {
+                    let penalty = (0.9 - data.satisfaction) * 0.001;
+                    needs.leisure = (needs.leisure - penalty).max(0.0);
                 }
             }
         }
