@@ -93,3 +93,8 @@ Implemented features. Architect: read this to understand current state.
 - [x] `INT-015` Integration: Waste -> Pollution — completed 2026-10-29
 - [x] `070` Heirloom Tech — `specs/070-heirloom-tech.md` — completed 2026-02-12
 - [x] `075` Animal Husbandry — `specs/075-animal-husbandry.md` — completed 2026-02-12
+- [x] `069` Mentorship System — `specs/069-mentorship-system.md` — completed 2026-10-30
+- [x] `080` Planetary Quirks — `specs/080-planetary-quirks.md` — completed 2026-10-31
+- [x] `084` Pop Traits — `specs/084-pop-traits.md` — completed 2026-11-01
+- [x] `086` The Stowaway — `specs/086-the-stowaway.md` — completed 2026-11-02
+- [x] `093` Desire Paths — `specs/093-desire-paths.md` — completed 2026-11-03
