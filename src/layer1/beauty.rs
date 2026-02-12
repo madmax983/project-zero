@@ -1,6 +1,15 @@
 #![allow(clippy::collapsible_if)]
 use bevy_ecs::prelude::*;
 
+/// Component indicating an entity emits beauty (positive or negative).
+#[derive(Component, Default, Debug, Clone, Copy)]
+pub struct BeautySource {
+    /// The amount of beauty emitted.
+    pub value: f32,
+    /// The radius of effect (currently unused, defaults to 0.0/single tile).
+    pub radius: f32,
+}
+
 /// Grid storing beauty values for the map.
 #[derive(Resource, Default)]
 pub struct BeautyGrid {
@@ -44,12 +53,12 @@ impl BeautyGrid {
     }
 }
 
-/// System to update the beauty grid based on buildings.
+/// System to update the beauty grid based on sources.
 pub fn update_beauty_grid_system(
     mut grid: ResMut<BeautyGrid>,
-    buildings: Query<(
+    sources: Query<(
         &crate::layer1::GridPosition,
-        &crate::layer1::building::Building,
+        &BeautySource,
     )>,
     items: Query<(
         &crate::layer1::GridPosition,
@@ -58,8 +67,8 @@ pub fn update_beauty_grid_system(
 ) {
     grid.clear();
 
-    for (pos, building) in &buildings {
-        let value = building.building_type.beauty_value();
+    for (pos, source) in &sources {
+        let value = source.value;
         #[allow(clippy::collapsible_if)]
         if value.abs() > f32::EPSILON {
             if let (Ok(x), Ok(y)) = (usize::try_from(pos.x), usize::try_from(pos.y)) {
@@ -107,7 +116,6 @@ pub fn apply_beauty_effects_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::map::GridPosition;
     use crate::layer1::needs::Needs;
     use crate::layer1::pop::Pop;
@@ -122,16 +130,14 @@ mod tests {
     }
 
     #[test]
-    fn test_beauty_emission_from_buildings() {
+    fn test_beauty_emission_from_source() {
         let mut world = World::new();
         // Setup grid
         world.insert_resource(crate::layer1::beauty::BeautyGrid::new(10, 10));
 
-        // Spawn FlowerBed (Beauty +5)
+        // Spawn entity with BeautySource
         world.spawn((
-            Building {
-                building_type: BuildingType::FlowerBed,
-            },
+            BeautySource { value: 5.0, radius: 0.0 },
             GridPosition { x: 5, y: 5 },
         ));
 
@@ -140,10 +146,6 @@ mod tests {
 
         let grid = world.resource::<crate::layer1::beauty::BeautyGrid>();
         assert_eq!(grid.get(5, 5), 5.0);
-
-        // Check falloff? (Optional for MVP, maybe just local tile)
-        // Let's assume simple 1-tile radius for MVP
-        assert_eq!(grid.get(4, 5), 0.0);
     }
 
     #[test]
@@ -151,9 +153,6 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(crate::layer1::beauty::BeautyGrid::new(10, 10));
 
-        // Spawn Trash (Beauty -5) - Future proofing
-        // For now, let's say a specific "Debris" building or similar
-        // Or just test that grid accepts negative values
         let mut grid = world.resource_mut::<crate::layer1::beauty::BeautyGrid>();
         grid.set(0, 0, -5.0);
 

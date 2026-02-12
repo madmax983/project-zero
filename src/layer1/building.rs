@@ -24,6 +24,7 @@ use super::GridPosition;
 use super::farm::Farm;
 use super::fire::Flammable;
 use super::housing::Housing;
+use super::beauty::BeautySource;
 use super::social::Tavern;
 use super::stockpile::Stockpile;
 use crate::layer1::energy::{Conduit, PowerConsumer, PowerSource};
@@ -37,6 +38,76 @@ use bevy_ecs::prelude::*;
 use std::collections::HashSet;
 use strum::IntoEnumIterator;
 use strum_macros::EnumIter;
+
+/// Material types for buildings.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, EnumIter)]
+pub enum MaterialType {
+    /// Basic wood material (Flammable).
+    #[default]
+    Wood,
+    /// Durable stone material.
+    Stone,
+    /// Strong metal material.
+    Metal,
+    /// Luxurious gold material (High Beauty).
+    Gold,
+}
+
+impl MaterialType {
+    /// Returns true if the material is flammable.
+    #[must_use]
+    pub const fn flammability(&self) -> bool {
+        matches!(self, Self::Wood)
+    }
+
+    /// Returns the HP modifier for this material.
+    #[must_use]
+    pub const fn hp_modifier(&self) -> f32 {
+        match self {
+            Self::Wood => 1.0,
+            Self::Stone => 4.0,
+            Self::Metal => 3.0,
+            Self::Gold => 0.5,
+        }
+    }
+
+    /// Returns the beauty modifier for this material.
+    #[must_use]
+    pub const fn beauty_modifier(&self) -> f32 {
+        match self {
+            Self::Wood | Self::Metal => 0.0,
+            Self::Stone => 1.0,
+            Self::Gold => 10.0,
+        }
+    }
+
+    /// Returns the label of the material.
+    #[must_use]
+    pub const fn label(&self) -> &'static str {
+        match self {
+            Self::Wood => "Wood",
+            Self::Stone => "Stone",
+            Self::Metal => "Metal",
+            Self::Gold => "Gold",
+        }
+    }
+
+    /// Returns the next material in the cycle.
+    #[must_use]
+    pub fn next(&self) -> Self {
+        let mut iter = Self::iter();
+        while let Some(current) = iter.next() {
+            if &current == self {
+                return iter.next().unwrap_or_else(|| Self::iter().next().unwrap());
+            }
+        }
+        Self::default()
+    }
+}
+
+/// Component defining the material of a building.
+#[derive(Component, Default, Debug, Clone, Copy)]
+pub struct Material(pub MaterialType);
 
 /// Building types available for construction.
 ///
@@ -111,6 +182,15 @@ pub enum BuildingType {
 }
 
 impl BuildingType {
+    /// Returns true if this building supports material variants.
+    #[must_use]
+    pub const fn supports_material(&self) -> bool {
+        matches!(
+            self,
+            Self::Wall | Self::Gate | Self::Housing | Self::Statue | Self::Tower
+        )
+    }
+
     /// Returns true if this building blocks movement.
     #[must_use]
     pub const fn is_obstacle(&self) -> bool {
@@ -220,27 +300,69 @@ impl BuildingType {
         }
     }
 
-    /// Returns the resource cost to build this building.
+    /// Returns the resource cost to build this building with the specified material.
     #[must_use]
-    #[allow(clippy::match_same_arms)]
-    pub const fn cost(&self) -> ColonyResources {
+    #[allow(clippy::match_same_arms, clippy::too_many_lines)]
+    pub const fn cost(&self, material: MaterialType) -> ColonyResources {
         match self {
-            Self::Wall => ColonyResources {
-                wood: 5.0,
-                ..ColonyResources::zeroed()
+            Self::Wall => match material {
+                MaterialType::Wood => ColonyResources {
+                    wood: 5.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Stone => ColonyResources {
+                    stone: 5.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Metal => ColonyResources {
+                    metal: 5.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Gold => ColonyResources {
+                    metal: 50.0, // Gold is expensive (approximated as metal for now or free if we don't track gold?)
+                    ..ColonyResources::zeroed()
+                },
             },
-            Self::Gate => ColonyResources {
-                wood: 10.0,
-                ..ColonyResources::zeroed()
+            Self::Gate => match material {
+                MaterialType::Wood => ColonyResources {
+                    wood: 10.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Stone => ColonyResources {
+                    stone: 10.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Metal => ColonyResources {
+                    metal: 10.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Gold => ColonyResources {
+                    metal: 100.0,
+                    ..ColonyResources::zeroed()
+                },
             },
             Self::Tower => ColonyResources {
                 wood: 30.0,
                 stone: 10.0,
                 ..ColonyResources::zeroed()
             },
-            Self::Housing => ColonyResources {
-                wood: 10.0,
-                ..ColonyResources::zeroed()
+            Self::Housing => match material {
+                MaterialType::Wood => ColonyResources {
+                    wood: 10.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Stone => ColonyResources {
+                    stone: 10.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Metal => ColonyResources {
+                    metal: 10.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Gold => ColonyResources {
+                    metal: 100.0,
+                    ..ColonyResources::zeroed()
+                },
             },
             Self::Farm => ColonyResources {
                 wood: 20.0,
@@ -295,9 +417,19 @@ impl BuildingType {
                 wood: 5.0,
                 ..ColonyResources::zeroed()
             },
-            Self::Statue => ColonyResources {
-                stone: 20.0,
-                ..ColonyResources::zeroed()
+            Self::Statue => match material {
+                MaterialType::Stone | MaterialType::Wood => ColonyResources {
+                    stone: 20.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Metal => ColonyResources {
+                    metal: 20.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Gold => ColonyResources {
+                    metal: 200.0,
+                    ..ColonyResources::zeroed()
+                },
             },
             Self::Grave => ColonyResources {
                 stone: 5.0,
@@ -361,6 +493,8 @@ pub struct BuildMode {
     pub cursor: GridPosition,
     /// The currently selected building type.
     pub selected: BuildingType,
+    /// The currently selected material.
+    pub selected_material: MaterialType,
 }
 
 /// Tracks which tiles have buildings (for placement validation).
@@ -453,26 +587,52 @@ impl ShiftSchedule {
 }
 
 #[allow(clippy::too_many_lines, clippy::match_same_arms)]
-fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType) {
-    let mut entity = world.spawn((Building { building_type }, GridPosition { x, y }));
+fn spawn_building(
+    world: &mut World,
+    x: i32,
+    y: i32,
+    building_type: BuildingType,
+    material: MaterialType,
+) {
+    let mut entity = world.spawn((
+        Building { building_type },
+        GridPosition { x, y },
+        Material(material),
+    ));
 
-    // All buildings have Structure (HP)
-    entity.insert(crate::layer1::structure::Structure::default());
+    // Calculate HP based on material
+    let base_hp = 50.0;
+    let max_hp = base_hp * material.hp_modifier();
+    entity.insert(crate::layer1::structure::Structure {
+        max_hp,
+        current_hp: max_hp,
+    });
+
+    // Flammability
+    if material.flammability() {
+        entity.insert(Flammable::default());
+    }
+
+    // Beauty
+    let base_beauty = building_type.beauty_value();
+    let final_beauty = base_beauty + material.beauty_modifier();
+    if final_beauty.abs() > f32::EPSILON {
+        entity.insert(BeautySource {
+            value: final_beauty,
+            radius: 0.0,
+        });
+    }
 
     match building_type {
         BuildingType::Gate => {
-            entity.insert((
-                crate::layer1::defense::Gate::default(),
-                Flammable::default(),
-            ));
+            entity.insert(crate::layer1::defense::Gate::default());
         }
         BuildingType::Wall | BuildingType::Tower => {
-            entity.insert(Flammable::default());
+            // Logic handled by generic material/structure above
         }
         BuildingType::Housing => {
             entity.insert((
                 Housing::default(),
-                Flammable::default(),
                 LightSource {
                     radius: 3.0,
                     intensity: 0.5,
@@ -481,14 +641,10 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
             ));
         }
         BuildingType::Farm | BuildingType::Plantation => {
-            entity.insert((
-                Farm::default(),
-                Flammable::default(),
-                ShiftSchedule::default(),
-            ));
+            entity.insert((Farm::default(), ShiftSchedule::default()));
         }
         BuildingType::Stockpile => {
-            entity.insert((Stockpile::default(), Flammable::default()));
+            entity.insert(Stockpile::default());
         }
         BuildingType::Smokehouse => {
             entity.insert((
@@ -496,7 +652,6 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
                     current: 0.0,
                     max: 10.0,
                 },
-                Flammable::default(),
                 LightSource {
                     radius: 4.0,
                     intensity: 0.5,
@@ -506,15 +661,12 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
             ));
         }
         BuildingType::Landfill => {
-            entity.insert((
-                Stockpile {
-                    waste_bonus: 100.0,
-                    food_bonus: 0.0,
-                    wood_bonus: 0.0,
-                    stone_bonus: 0.0,
-                },
-                Flammable::default(),
-            ));
+            entity.insert(Stockpile {
+                waste_bonus: 100.0,
+                food_bonus: 0.0,
+                wood_bonus: 0.0,
+                stone_bonus: 0.0,
+            });
         }
         BuildingType::LumberMill => {
             entity.insert((
@@ -522,7 +674,6 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
                     current: 0.0,
                     max: 10.0,
                 },
-                Flammable::default(),
                 LightSource {
                     radius: 4.0,
                     intensity: 0.5,
@@ -537,14 +688,12 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
                     current: 0.0,
                     max: 10.0,
                 },
-                Flammable::default(),
                 ShiftSchedule::default(),
             ));
         }
         BuildingType::Tavern => {
             entity.insert((
                 Tavern::default(),
-                Flammable::default(),
                 LightSource {
                     radius: 8.0,
                     intensity: 0.8,
@@ -609,6 +758,10 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
             ));
         }
         BuildingType::FlowerBed => {
+            // Flammability handled by material (likely wood/plant based for flower bed?)
+            // If FlowerBed is technically "Wood" (default), it's flammable.
+            // If we want it to always be flammable regardless of "Material" (because plants burn),
+            // we should force it.
             entity.insert(Flammable::default());
         }
         BuildingType::Statue => {
@@ -623,7 +776,6 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
         BuildingType::Hospital => {
             entity.insert((
                 crate::layer1::medical::Hospital::default(),
-                Flammable::default(),
                 LightSource {
                     radius: 6.0,
                     intensity: 0.7,
@@ -646,6 +798,17 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
             ));
         }
     }
+}
+
+/// Helper for spawning buildings in tests/tools.
+pub fn spawn_building_with_material(
+    world: &mut World,
+    x: i32,
+    y: i32,
+    building_type: BuildingType,
+    material: MaterialType,
+) {
+    spawn_building(world, x, y, building_type, material);
 }
 
 /// Attempt to place a building at the given position.
@@ -699,8 +862,19 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
         }
     }
 
+    // Get material
+    let mut material = world
+        .get_resource::<BuildMode>()
+        .map(|m| m.selected_material)
+        .unwrap_or_default();
+
+    // If building doesn't support material, force default (Wood)
+    if !building_type.supports_material() {
+        material = MaterialType::default();
+    }
+
     // Check affordability and deduct cost
-    let cost = building_type.cost();
+    let cost = building_type.cost(material);
     let can_afford = world.resource_mut::<ColonyResources>().try_deduct(&cost);
 
     if !can_afford {
@@ -714,7 +888,7 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
     }
 
     // Spawn building
-    spawn_building(world, x, y, building_type);
+    spawn_building(world, x, y, building_type, material);
 
     // Mark tile occupied
     world.resource_mut::<OccupiedTiles>().0.insert((x, y));
@@ -1116,14 +1290,14 @@ mod tests {
 
     #[test]
     fn test_housing_cost() {
-        let cost = BuildingType::Housing.cost();
+        let cost = BuildingType::Housing.cost(MaterialType::Wood);
         assert!((cost.wood - 10.0).abs() < f32::EPSILON);
         assert!((cost.stone - 0.0).abs() < f32::EPSILON);
     }
 
     #[test]
     fn test_farm_cost() {
-        let cost = BuildingType::Farm.cost();
+        let cost = BuildingType::Farm.cost(MaterialType::default());
         assert!((cost.wood - 20.0).abs() < f32::EPSILON);
         assert!((cost.stone - 5.0).abs() < f32::EPSILON);
     }

@@ -240,6 +240,9 @@ mod quirks_tests;
 #[cfg(test)]
 mod sleepwalking_tests;
 
+#[cfg(test)]
+mod material_provenance_tests;
+
 /// Pop factions system (Spec 068).
 pub mod factions;
 pub use factions::*;

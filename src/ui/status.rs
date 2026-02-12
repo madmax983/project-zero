@@ -236,7 +236,7 @@ pub fn get_status_line<'a>(
     // Add some padding before mode
     spans.push(Span::raw(" "));
     if build_mode.active {
-        let cost = build_mode.selected.cost();
+        let cost = build_mode.selected.cost(build_mode.selected_material);
         let mut cost_parts: Vec<String> = Vec::new();
         if cost.wood > 0.0 {
             cost_parts.push(format!("{:.0}W", cost.wood));

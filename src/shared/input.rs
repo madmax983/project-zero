@@ -285,6 +285,10 @@ fn handle_build_mode(world: &mut World, key: GameKeyEvent) {
             let mut build_mode = world.resource_mut::<BuildMode>();
             build_mode.selected = build_mode.selected.next();
         }
+        GameKeyCode::Char('m') => {
+            let mut build_mode = world.resource_mut::<BuildMode>();
+            build_mode.selected_material = build_mode.selected_material.next();
+        }
         _ => {}
     }
 }

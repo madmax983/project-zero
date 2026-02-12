@@ -29,7 +29,7 @@ mod tests {
         // assert_eq!(cost.stone, 10.0);
         // I will follow the spec test for cost.
 
-        let cost = bt.cost();
+        let cost = bt.cost(crate::layer1::building::MaterialType::default());
         assert_eq!(cost.wood, 30.0);
         assert_eq!(cost.stone, 10.0);
     }
