@@ -2,7 +2,7 @@ use crate::layer1::execution::{AtTarget, MovementTarget};
 use crate::layer1::health::Health;
 use crate::layer1::map::GridPosition;
 use crate::layer1::pop::Pop;
-use crate::layer1::utility_ai::ActionType;
+use crate::layer1::utility_types::ActionType;
 use bevy_ecs::prelude::*;
 
 /// Type of fauna.

@@ -2,8 +2,8 @@ use super::{AssignedTo, AssignmentType};
 use crate::layer1::farm::Farm;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
-use crate::layer1::utility_ai::{ActionType, UtilityWeights};
-use crate::layer1::utility_ai::{
+use crate::layer1::utility_types::{ActionType, UtilityWeights};
+use crate::layer1::utility_types::{
     calculate_context_score, calculate_success_modifier, need_response_curve,
 };
 use bevy_ecs::prelude::*;

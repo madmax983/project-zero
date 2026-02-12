@@ -24,6 +24,15 @@ pub mod refine;
 /// Farm action logic.
 pub mod farm;
 
+/// Funeral action logic.
+pub mod funeral;
+/// Medical action logic.
+pub mod medical;
+/// Social action logic.
+pub mod social;
+/// Fight action logic.
+pub mod fight;
+
 #[cfg(test)]
 mod work_building_tests;
 

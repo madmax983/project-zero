@@ -105,6 +105,8 @@ pub mod tech;
 pub mod terrain;
 /// Emergent utility AI system.
 pub mod utility_ai;
+/// Shared types for utility AI.
+pub mod utility_types;
 #[cfg(test)]
 /// Tests for utility AI work logic.
 pub mod utility_ai_work_tests;
@@ -157,6 +159,7 @@ pub use structure::*;
 pub use tech::*;
 pub use terrain::*;
 pub use utility_ai::*;
+pub use utility_types::*;
 
 #[cfg(test)]
 mod tool_tests;

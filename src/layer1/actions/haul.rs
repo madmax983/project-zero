@@ -1,8 +1,8 @@
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::{ColonyResources, ResourceItem};
 use crate::layer1::stockpile::Stockpile;
-use crate::layer1::utility_ai::{ActionType, UtilityWeights};
-use crate::layer1::utility_ai::{calculate_context_score, calculate_success_modifier};
+use crate::layer1::utility_types::{ActionType, UtilityWeights};
+use crate::layer1::utility_types::{calculate_context_score, calculate_success_modifier};
 use bevy_ecs::prelude::*;
 
 /// Evaluates the utility of hauling loose items to a [`Stockpile`].
@@ -81,7 +81,7 @@ mod tests {
     use crate::layer1::map::GridPosition;
     use crate::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
     use crate::layer1::stockpile::Stockpile;
-    use crate::layer1::utility_ai::UtilityWeights;
+    use crate::layer1::utility_types::UtilityWeights;
 
     #[test]
     fn test_evaluate_haul_no_stockpiles() {

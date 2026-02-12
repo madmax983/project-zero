@@ -6,7 +6,7 @@ mod tests {
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
     use crate::layer1::resources::{ColonyResources, RefiningProgress};
-    use crate::layer1::utility_ai::UtilityWeights;
+    use crate::layer1::utility_types::UtilityWeights;
     use bevy_ecs::prelude::*;
 
     // Helper to evaluate refine
@@ -17,7 +17,7 @@ mod tests {
     fn setup_world() -> World {
         let mut world = World::new();
         world.insert_resource(crate::shared::time::SimulationTime::default());
-        world.insert_resource(crate::layer1::utility_ai::UtilityConfig::default());
+        world.insert_resource(crate::layer1::utility_types::UtilityConfig::default());
         world.insert_resource(ColonyResources::default());
         world.insert_resource(DayNightCycle::default());
         world

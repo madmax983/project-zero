@@ -4,7 +4,7 @@ use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::map::GridPosition;
 use crate::layer1::memory::{Memories, MemoryType};
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
-use crate::layer1::utility_ai::StartPlan;
+use crate::layer1::utility_types::StartPlan;
 use crate::layer1::zone::{ZoneGrid, ZoneType};
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;

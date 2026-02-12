@@ -400,7 +400,7 @@ pub fn extract_global_state(
 mod tests {
     use super::*;
     use crate::layer1::designation::{Designation, DesignationType};
-    use crate::layer1::utility_ai::ActionType;
+    use crate::layer1::utility_types::ActionType;
     use crate::setup::init_task_pools;
 
     #[test]

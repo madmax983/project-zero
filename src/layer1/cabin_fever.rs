@@ -93,7 +93,7 @@ mod tests {
     fn setup_world() -> World {
         let mut world = World::new();
         crate::setup::init_task_pools();
-        world.insert_resource(crate::layer1::utility_ai::UtilityConfig::default());
+        world.insert_resource(crate::layer1::utility_types::UtilityConfig::default());
         world.insert_resource(crate::shared::time::SimulationTime::default());
         // Setup 10x10 map
         let mut roof = RoofGrid::new(10, 10);

@@ -1,9 +1,9 @@
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
-use crate::layer1::utility_ai::ActionType;
+use crate::layer1::utility_types::ActionType;
 use crate::layer1::structural_integrity::StructureCollapsed;
 use crate::layer1::needs::Needs;
-use crate::layer1::utility_ai::PopAction;
+use crate::layer1::utility_types::PopAction;
 use crate::shared::log::MessageLog;
 
 /// Tracks active taboos in the colony.

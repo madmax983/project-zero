@@ -16,7 +16,7 @@ use ratatui::{
 
 use crate::experimental::biography::Biography;
 use crate::layer1::day_night::DayNightCycle;
-use crate::layer1::utility_ai::UtilityWeights;
+use crate::layer1::utility_types::UtilityWeights;
 use crate::layer1::{
     ActionType, ColonyResources, Farm, GridPosition, Housing, PopAction, TerrainGrid,
     building::Building,

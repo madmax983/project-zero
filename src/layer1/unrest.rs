@@ -77,7 +77,7 @@ mod tests {
     fn setup_world() -> World {
         let mut world = World::new();
         crate::setup::init_task_pools(); // Required for parallel queries in evaluate_actions_system
-        world.insert_resource(crate::layer1::utility_ai::UtilityConfig::default());
+        world.insert_resource(crate::layer1::utility_types::UtilityConfig::default());
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
         world.insert_resource(crate::shared::time::SimulationTime::default());
         world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
@@ -135,7 +135,7 @@ mod tests {
                     ..Default::default()
                 },
                 GridPosition { x: 0, y: 0 },
-                crate::layer1::utility_ai::UtilityWeights::default(),
+                crate::layer1::utility_types::UtilityWeights::default(),
             ))
             .id();
 
