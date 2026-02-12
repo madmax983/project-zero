@@ -3,14 +3,14 @@
 //! # The "Pop" (Population Agent)
 //!
 //! A "Pop" is the atomic unit of agency in the colony. They are not just resources;
-//! they are semi-autonomous agents driven by a hierarchy of needs (see `needs.rs`)
-//! and decision-making logic (see `utility_ai.rs`).
+//! they are semi-autonomous agents driven by a hierarchy of needs (see [`crate::layer1::needs`])
+//! and decision-making logic (see [`crate::layer1::utility_ai`]).
 //!
 //! ## Lifecycle
 //!
 //! 1.  **Spawning**: Pops are created by [`spawn_initial_pops`] (or potential future immigration events).
-//! 2.  **Simulation**: Every tick, systems in `needs.rs` update their physiological state.
-//! 3.  **Decision**: The Utility AI (`utility_ai.rs`) evaluates options and assigns a [`PopAction`].
+//! 2.  **Simulation**: Every tick, systems in [`crate::layer1::needs`] update their physiological state.
+//! 3.  **Decision**: The Utility AI ([`crate::layer1::utility_ai`]) evaluates options and assigns a [`PopAction`].
 //! 4.  **Execution**: The chosen action is carried out, modifying the world or the pop's state.
 //!
 //! ## Components
