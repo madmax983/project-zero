@@ -2777,3 +2777,72 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Safe Trade vs. Risky Scavenging.
 
 ---
+## Command Center Dependency
+
+**Layer:** Cross-layer
+
+**Fantasy:** You are the Commander, but you are not omniscient. Your view of the empire depends on your sensors.
+
+**Mechanic:** Access to the System (L2) and Galaxy (L3) maps requires a functioning, staffed "Command Center" on the Colony (L1). If the building is destroyed or unpowered, the player loses access to those views (Fog of War / UI disabled).
+
+**Emergence:** A raid targets your Command Center. You are blind to the reinforcement fleet arriving in orbit until they actually land.
+
+**Tension:** Protect the "Brain" (Command Center) in the deepest bunker, or put it high up for better reception (bonus)?
+
+---
+
+## Void Sickness
+
+**Layer:** Cross-layer
+
+**Fantasy:** Humans weren't meant to live in the black. The stars change you.
+
+**Mechanic:** Pops assigned to off-world duties (Pilots, Station Crew) accumulate "Void Exposure" over time. High exposure leads to the "Void Touched" trait (High Intellect/Perception, Low Empathy/Social). They become strange to surface-dwellers.
+
+**Emergence:** A "Spacer Caste" emerges that refuses to sleep on the planet surface, demanding orbital habitats. Returning pilots struggle to reintegrate with their families.
+
+**Tension:** Rotate crews frequently (logistics headache) to keep them human, or embrace the Void (specialized but alien workforce)?
+
+---
+
+## The Gold Rush Beacon
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Hanging out a sign that says "Open for Business" in a lawless frontier.
+
+**Mechanic:** You can activate a "Colony Beacon" to attract Migrants and Traders rapidly. It boosts growth massively but increases the spawn rate of Pirates, Criminals, and Grifters (low-skill pops).
+
+**Emergence:** Desperate for workers, you light the beacon. You get the workers, but your colony transforms from a disciplined outpost into a chaotic, crime-ridden boomtown.
+
+**Tension:** Slow, safe growth vs. Fast, dangerous expansion.
+
+---
+
+## Smuggler's Coves
+
+**Layer:** 1
+
+**Fantasy:** The map is big, and you can't watch every canyon.
+
+**Mechanic:** If Colony Authority is low or Corruption is high, "Smuggler" ships will land in unobserved areas of the map (fog of war / far from buildings) to set up temporary shops. They sell illicit goods but drain credits and spread vice.
+
+**Emergence:** You notice your miners are addicted to "Red Sand". You follow them into the woods and find a hidden landing pad operating right under your nose.
+
+**Tension:** Patrol the wilderness (expensive) or tolerate the free market (social decay)?
+
+---
+
+## The Embassy Sector
+
+**Layer:** 1
+
+**Fantasy:** A slice of alien culture in your backyard. Diplomatic immunity.
+
+**Mechanic:** Designate a Zone as "Extraterritorial". Alien dignitaries and tourists live there under their own laws. If you violate their laws (e.g., arrest a diplomat for murder), war starts.
+
+**Emergence:** A diplomat commits a crime. Your own pops riot at the injustice because you can't touch him without starting a galactic war.
+
+**Tension:** Justice (arrest/war) vs. Peace (immunity/unrest).
+
+---
