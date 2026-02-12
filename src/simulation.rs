@@ -9,7 +9,7 @@ use bevy_ecs::prelude::*;
 use bevy_ecs::schedule::{IntoSystemConfigs, Schedule, ScheduleLabel};
 
 use crate::experimental::biography::biography_monitor_system;
-use crate::experimental::dreams::dream_system;
+use crate::experimental::dreams::{cleanup_dream_marker_system, dream_system};
 #[cfg(feature = "nova")]
 use crate::experimental::ghosts::{
     apply_ghost_beauty_system, ghost_light_damage_system, ghost_movement_system,
@@ -248,6 +248,7 @@ pub fn build_simulation_schedule() -> Schedule {
         track_plan_outcomes_system.after(death_system),
         biography_monitor_system.after(death_system),
         dream_system.after(death_system),
+        cleanup_dream_marker_system.after(dream_system),
         check_milestones_system.after(death_system),
         crate::layer1::rumor::generate_rumor_system.after(death_system),
         crate::layer1::rumor::exchange_rumors_system.after(death_system),
