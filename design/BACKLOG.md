@@ -17,6 +17,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `090` Emotional Contagion — `specs/090-emotional-contagion.md`
 - [ ] `091` The Inspector — `specs/091-the-inspector.md`
 - [ ] `092` Antagonistic Flora — `specs/092-antagonistic-flora.md`
+- [ ] `093` Desire Paths — `specs/093-desire-paths.md`
 
 ## MVP — User Interface
 
