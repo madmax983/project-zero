@@ -25,92 +25,129 @@
 
 /// The menu of high-level behaviors a Pop can choose from.
 ///
-/// These are "Goals" rather than atomic steps. For example, `Work` implies
+/// These are "Goals" rather than atomic steps. For example, [`ActionType::Work`] implies
 /// finding a designation, walking to it, and performing the task until complete.
+///
+/// Each action type corresponds to a specific `evaluate_*` function in the [`crate::layer1::actions`] module.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
 pub enum ActionType {
     /// Eat food to reduce hunger.
     ///
-    /// Triggered when `hunger` need is low. Requires access to a [`crate::layer1::farm::Farm`]
-    /// or food items.
+    /// *   **Trigger**: `hunger` need is low (< 0.5).
+    /// *   **Requirements**: A [`crate::layer1::farm::Farm`] with food or a `ResourceItem::Food`.
+    /// *   **Evaluator**: [`crate::layer1::actions::hunger::evaluate_satisfy_hunger`]
     SatisfyHunger,
 
     /// Sleep to reduce fatigue.
     ///
-    /// Triggered when `rest` need is low. Requires a [`crate::layer1::housing::Housing`] bed
-    /// or sleeping on the ground (lower utility).
+    /// *   **Trigger**: `rest` need is low (< 0.5).
+    /// *   **Requirements**: A [`crate::layer1::housing::Housing`] bed or safe ground.
+    /// *   **Evaluator**: [`crate::layer1::actions::rest::evaluate_satisfy_rest`]
     SatisfyRest,
 
     /// Interact with other pops to fulfill social needs.
     ///
-    /// Usually happens in a [`crate::layer1::social::Tavern`].
+    /// *   **Trigger**: `leisure` need is low (< 0.5) or it is "recreation time".
+    /// *   **Requirements**: A [`crate::layer1::social::Tavern`] or gathering spot.
+    /// *   **Evaluator**: [`crate::layer1::actions::social::evaluate_socialize`]
     Socialize,
 
     /// Wander to uncover the fog of war or investigate points of interest.
+    ///
+    /// *   **Trigger**: Idle time or specific `Explorer` trait.
+    /// *   **Evaluator**: [`crate::layer1::actions::explore::evaluate_explore`]
     Explore,
 
     /// Perform designated physical labor (Mine, Build, Chop).
     ///
-    /// The specific task depends on the [`crate::layer1::designation::Designation`] target.
+    /// *   **Trigger**: Player creates a [`crate::layer1::designation::Designation`].
+    /// *   **Evaluator**: [`crate::layer1::actions::work::evaluate_work`]
     Work,
 
     /// Repair damaged structures to prevent collapse.
     ///
-    /// Higher priority than `Work` to preserve infrastructure.
+    /// *   **Trigger**: Building HP < Max HP.
+    /// *   **Priority**: Higher than `Work` to preserve infrastructure.
+    /// *   **Evaluator**: [`crate::layer1::actions::repair::evaluate_repair`]
     Repair,
 
-    /// Research new technologies at a [`crate::layer1::tech::Library`].
+    /// Research new technologies at a library.
     ///
-    /// Generates knowledge points.
+    /// *   **Requirements**: A [`crate::layer1::tech::Library`] building.
+    /// *   **Output**: Generates knowledge points.
+    /// *   **Evaluator**: [`crate::layer1::actions::research::evaluate_research`]
     Research,
 
-    /// Haul loose resources to a [`crate::layer1::stockpile::Stockpile`].
+    /// Haul loose resources to a stockpile.
     ///
-    /// Keeps the map clean and consolidates resources.
+    /// *   **Trigger**: `ResourceItem` on ground + Empty [`crate::layer1::stockpile::Stockpile`].
+    /// *   **Evaluator**: [`crate::layer1::actions::haul::evaluate_haul`]
     Haul,
 
-    /// Seek medical care at a [`crate::layer1::medical::Hospital`].
+    /// Seek medical care at a hospital.
     ///
-    /// Triggered when health is damaged.
+    /// *   **Trigger**: Health is damaged.
+    /// *   **Requirements**: A [`crate::layer1::medical::Hospital`].
+    /// *   **Evaluator**: [`crate::layer1::actions::medical::evaluate_seek_medical_care`]
     SeekMedicalCare,
 
     /// Bury a corpse in a grave.
     ///
-    /// Triggered when a corpse exists and an empty grave is available.
+    /// *   **Trigger**: `Corpse` entity exists + Empty [`crate::layer1::funeral::Grave`].
+    /// *   **Evaluator**: [`crate::layer1::actions::funeral::evaluate_bury_corpse`]
     BuryCorpse,
 
     /// Fetch a tool from a stockpile.
     ///
-    /// Triggered when a pop has no tool but tools are available in the colony.
+    /// *   **Trigger**: Pop has no tool + Tools available in storage.
+    /// *   **Evaluator**: [`crate::layer1::actions::fetch_tool::evaluate_fetch_tool`]
     FetchTool,
 
     /// Do nothing.
     ///
     /// The fallback action when no other options are viable or beneficial.
+    /// Has a very low constant utility (0.05).
     Idle,
 
     /// Destroy structures due to mental break.
+    ///
+    /// *   **Trigger**: Morale critical + `MentalBreakType::Vandalize`.
     Vandalize,
 
     /// Consume resources uncontrollably due to mental break.
+    ///
+    /// *   **Trigger**: Morale critical + `MentalBreakType::Binge`.
     Binge,
 
     /// Wander aimlessly in a catatonic state due to mental break.
+    ///
+    /// *   **Trigger**: Morale critical + `MentalBreakType::Daze`.
     Daze,
 
     /// Engage in combat with hostile entities.
+    ///
+    /// *   **Trigger**: Pop is drafted or attacked.
+    /// *   **Evaluator**: [`crate::layer1::combat::evaluate_fight_action`]
     Fight,
 
     /// Refine resources at a building (e.g., Lumber Mill).
+    ///
+    /// *   **Evaluator**: [`crate::layer1::actions::refine::evaluate_refine`]
     Refine,
 
     /// Work at a farm to produce food.
+    ///
+    /// *   **Evaluator**: [`crate::layer1::actions::farm::evaluate_farm`]
     Farm,
 
     /// Arrest Wanted criminals and escort them to jail.
+    ///
+    /// *   **Trigger**: Pop assigned as Warden + `Inmate` exists.
     Warden,
 
     /// Sleepwalk (Mental Break).
+    ///
+    /// *   **Trigger**: Mental break + Night time.
     Sleepwalking,
 }
 
