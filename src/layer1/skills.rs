@@ -15,6 +15,8 @@ pub enum SkillType {
     Construction,
     /// Refining resources.
     Crafting,
+    /// Taming and caring for animals.
+    Husbandry,
 }
 
 /// Component storing experience points for various skills.

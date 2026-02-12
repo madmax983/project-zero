@@ -7,7 +7,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 ## MVP — Layer 1: Colony Simulation
 
 - [ ] `059` Soil Fertility — `specs/059-soil-fertility.md`
-- [ ] `075` Animal Husbandry — `specs/075-animal-husbandry.md`
 - [ ] `076` Heirloom Items — `specs/076-heirloom-items.md`
 - [ ] `080` Planetary Quirks — `specs/080-planetary-quirks.md`
 - [ ] `077` Emergent Festivals — `specs/077-emergent-festivals.md`

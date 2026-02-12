@@ -53,6 +53,8 @@ const fn format_action_type(action: ActionType) -> (&'static str, &'static str, 
         ActionType::Farm => ("🌾", "Farming", Color::Green),
         ActionType::Warden => ("👮", "Arresting", Color::Blue),
         ActionType::Sleepwalking => ("💤", "Sleepwalking", Color::Magenta),
+        ActionType::Tame => ("♥", "Taming", Color::LightGreen),
+        ActionType::Slaughter => ("🔪", "Slaughtering", Color::Red),
     }
 }
 

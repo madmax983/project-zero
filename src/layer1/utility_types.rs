@@ -48,11 +48,15 @@ pub enum ActionType {
     Warden,
     /// Sleepwalk (Mental Break).
     Sleepwalking,
+    /// Tame a wild animal.
+    Tame,
+    /// Slaughter a tamed animal for resources.
+    Slaughter,
 }
 
 impl ActionType {
     /// Total number of action types. Used for array sizing.
-    pub const COUNT: usize = 20;
+    pub const COUNT: usize = 22;
 
     /// Converts action type to a unique array index (0..COUNT-1).
     #[must_use]
@@ -78,6 +82,8 @@ impl ActionType {
             Self::Farm => 17,
             Self::Warden => 18,
             Self::Sleepwalking => 19,
+            Self::Tame => 20,
+            Self::Slaughter => 21,
         }
     }
 
@@ -90,6 +96,8 @@ impl ActionType {
     pub const fn danger_level(&self) -> f64 {
         match self {
             Self::Work | Self::Repair => 0.001, // 0.1% chance per tick
+            Self::Tame => 0.005,                // 0.5% chance per tick (animals bite!)
+            Self::Slaughter => 0.001,
             _ => 0.0,
         }
     }
@@ -99,6 +107,8 @@ impl ActionType {
     pub const fn accident_damage(&self) -> f32 {
         match self {
             Self::Work | Self::Repair => 10.0,
+            Self::Tame => 15.0,
+            Self::Slaughter => 5.0,
             _ => 0.0,
         }
     }

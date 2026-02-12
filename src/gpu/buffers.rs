@@ -56,9 +56,9 @@ pub struct GpuPopInput {
     /// Learned social weight.
     pub social_weight: f32,
     /// Per-action success counts.
-    pub success_count: [u32; 20],
+    pub success_count: [u32; 22],
     /// Per-action attempt counts.
-    pub attempt_count: [u32; 20],
+    pub attempt_count: [u32; 22],
     /// Utility score of the current action.
     pub current_utility: f32,
     /// Padding to 16-byte alignment.
@@ -276,10 +276,10 @@ pub fn extract_building_inputs(
         use crate::layer1::designation::DesignationType;
         let mut query = world.query::<(Entity, &GridPosition, &Designation)>();
         for (entity, pos, designation) in query.iter(world) {
-            let building_type = if designation.designation_type == DesignationType::Repair {
-                6
-            } else {
-                4
+            let building_type = match designation.designation_type {
+                DesignationType::Repair => 6,
+                DesignationType::Tame => 11,
+                _ => 4,
             };
             entities.push(entity);
             inputs.push(GpuBuildingInput {
@@ -405,9 +405,9 @@ mod tests {
 
     #[test]
     fn test_gpu_pop_input_size() {
-        // 2*i32 + 6*f32 + 20*u32 + 20*u32 + 1*f32 + 3*u32
-        // = 8 + 24 + 80 + 80 + 4 + 12 = 208 bytes
-        assert_eq!(std::mem::size_of::<GpuPopInput>(), 208);
+        // 2*i32 + 6*f32 + 22*u32 + 22*u32 + 1*f32 + 3*u32
+        // = 8 + 24 + 88 + 88 + 4 + 12 = 224 bytes
+        assert_eq!(std::mem::size_of::<GpuPopInput>(), 224);
     }
 
     #[test]
@@ -448,11 +448,11 @@ mod tests {
                     availability_weight: 0.8,
                     social_weight: 1.0,
                     action_success_count: [
-                        1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                    ], // 20 elements
+                        1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    ], // 22 elements
                     action_attempt_count: [
-                        5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                    ], // 20 elements
+                        5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    ], // 22 elements
                 },
                 PopAction {
                     current: ActionType::SatisfyHunger,

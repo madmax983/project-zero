@@ -740,7 +740,7 @@ const fn get_skill_for_designation(designation_type: DesignationType) -> Option<
         DesignationType::Mine => Some(SkillType::Mining),
         DesignationType::Chop => Some(SkillType::Forestry),
         DesignationType::Repair | DesignationType::Demolish => Some(SkillType::Construction),
-        DesignationType::SetZone(_) => None,
+        DesignationType::SetZone(_) | DesignationType::Tame => None,
     }
 }
 
@@ -794,7 +794,7 @@ fn execute_work_on_designation(
             crate::layer1::structure::process_repair(world, designation_entity, work_amount);
             true
         }
-        DesignationType::SetZone(_) => false,
+        DesignationType::SetZone(_) | DesignationType::Tame => false,
     }
 }
 
