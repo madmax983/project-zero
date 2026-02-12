@@ -2483,3 +2483,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Vertical expansion (Weather risk/Prestige) vs. Horizontal/Subterranean (Pollution risk/Safety).
 
 ---
+
+## Mass Driver Logistics
+
+**Layer:** 1 -> 2
+
+**Fantasy:** Shooting cargo into space because rockets are too expensive. The raw industrial power of a Mass Driver.
+
+**Mechanic:** Building that launches resource packets to other planets/ships. Requires precise timing/power.
+
+**Emergence:** Receiver guidance fails. 10 tons of Iron Ore impact the destination colony at Mach 20. "Delivery received, but the warehouse is gone."
+
+**Tension:** Cheap transport vs. catastrophic aim failure.
+
+---
+
+## Primitive Civilizations
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Being the alien invader (or god) to someone else.
+
+**Mechanic:** Some planets have Stone/Iron Age pops. You can build Observation Posts (Science) or invasion armies (Slaves/Land).
+
+**Emergence:** You play god, giving them tech. They form a cargo cult around you. Then they steal a blaster and shoot you.
+
+**Tension:** Ethics vs. Exploitation.
+
+---
+
+## Fleet Mutiny
+
+**Layer:** 2
+
+**Fantasy:** The captain goes rogue. The loneliness of command.
+
+**Mechanic:** Ships track "Crew Morale" (Food, Pay, Battle fatigue). Low morale = Ship turns Neutral/Hostile (Pirate).
+
+**Emergence:** You send your grand fleet to crush a rebellion. The fleet joins the rebellion because you didn't pay them.
+
+**Tension:** Large navy (power) vs. Upkeep/Loyalty (risk).
+
+---
+
+## Xeno-Gastronomy
+
+**Layer:** 1
+
+**Fantasy:** "I wonder what that purple slime tastes like?"
+
+**Mechanic:** "Chef" job experiments with alien ingredients. Randomized effects (Buffs, Poison, Addiction, Hallucination). "Cookbook" persists in knowledge.
+
+**Emergence:** The colony discovers "Glow-Moss" tastes like chocolate and cures depression. It becomes the main export. Then the side effects kick in.
+
+**Tension:** Science/Culinary delight vs. Poisoning the governor.
+
+---
+
+## Atmospheric Harvesting
+
+**Layer:** 2
+
+**Fantasy:** Skimming the clouds of giants.
+
+**Mechanic:** Gas Giants have "Scoop" zones in orbit. Ships can fly through to collect Fuel/Rare Gases but take hull damage from turbulence/storms.
+
+**Emergence:** You get greedy for that last tank of Helium-3 and fly too deep. The storm crushes the ship.
+
+**Tension:** Deep dive (rich resources/high damage) vs. Shallow skim (low resources/safe).
+
+---
