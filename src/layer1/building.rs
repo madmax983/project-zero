@@ -34,6 +34,7 @@ use crate::layer1::resources::{ColonyResources, RefiningProgress};
 use crate::layer1::tech::{Library, Tech, TechState};
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::trade::TradeDepot;
+use crate::layer1::water::{MAX_HYDRATION, WaterSource};
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
 use std::collections::HashSet;
@@ -139,6 +140,8 @@ pub enum BuildingType {
     Housing,
     /// Agricultural building for food production.
     Farm,
+    /// Source of water hydration.
+    Well,
     /// Storage for resources.
     Stockpile,
     /// Refines Food into Rations.
@@ -223,6 +226,7 @@ impl BuildingType {
             Self::Landfill => -10.0,
             Self::Grave => -2.0, // Graves are slightly spooky
             Self::FlowerBed | Self::TradeDepot => 5.0, // Trade brings goods and culture
+            Self::Well => 1.0,
             Self::Wall | Self::Gate | Self::Tower => 0.0,
             _ => 0.0,
         }
@@ -255,6 +259,7 @@ impl BuildingType {
         match self {
             Self::Housing => "Housing",
             Self::Farm => "Farm",
+            Self::Well => "Well",
             Self::Stockpile => "Stockpile",
             Self::Smokehouse => "Smokehouse",
             Self::LumberMill => "Lumber Mill",
@@ -288,6 +293,7 @@ impl BuildingType {
         match self {
             Self::Housing => 'H',
             Self::Farm | Self::AncientFabricator => 'F',
+            Self::Well => 'U',
             Self::Stockpile => '=',
             Self::Smokehouse => '♨',
             Self::LumberMill => 'L',
@@ -378,6 +384,11 @@ impl BuildingType {
             Self::Farm => ColonyResources {
                 wood: 20.0,
                 stone: 5.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Well => ColonyResources {
+                wood: 5.0,
+                stone: 10.0,
                 ..ColonyResources::zeroed()
             },
             Self::Stockpile => ColonyResources {
@@ -654,6 +665,12 @@ fn spawn_building(
         }
         BuildingType::Farm | BuildingType::Plantation => {
             entity.insert((Farm::default(), ShiftSchedule::default()));
+        }
+        BuildingType::Well => {
+            entity.insert(WaterSource {
+                range: 5,
+                amount: MAX_HYDRATION,
+            });
         }
         BuildingType::Stockpile => {
             entity.insert(Stockpile::default());
@@ -969,7 +986,8 @@ mod tests {
     #[test]
     fn test_building_type_next() {
         assert_eq!(BuildingType::Housing.next(), BuildingType::Farm);
-        assert_eq!(BuildingType::Farm.next(), BuildingType::Stockpile);
+        assert_eq!(BuildingType::Farm.next(), BuildingType::Well);
+        assert_eq!(BuildingType::Well.next(), BuildingType::Stockpile);
         assert_eq!(BuildingType::Stockpile.next(), BuildingType::Smokehouse);
         assert_eq!(BuildingType::Smokehouse.next(), BuildingType::LumberMill);
         assert_eq!(BuildingType::LumberMill.next(), BuildingType::StoneMason);
@@ -992,8 +1010,14 @@ mod tests {
         assert_eq!(BuildingType::Wall.next(), BuildingType::Gate);
         assert_eq!(BuildingType::Gate.next(), BuildingType::Tower);
         assert_eq!(BuildingType::Tower.next(), BuildingType::AncientReactor);
-        assert_eq!(BuildingType::AncientReactor.next(), BuildingType::AncientFabricator);
-        assert_eq!(BuildingType::AncientFabricator.next(), BuildingType::Housing);
+        assert_eq!(
+            BuildingType::AncientReactor.next(),
+            BuildingType::AncientFabricator
+        );
+        assert_eq!(
+            BuildingType::AncientFabricator.next(),
+            BuildingType::Housing
+        );
     }
 
     #[test]
@@ -1045,6 +1069,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Farm);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Well);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Stockpile);

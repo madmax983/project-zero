@@ -13,7 +13,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `090` Emotional Contagion — `specs/090-emotional-contagion.md`
 - [ ] `091` The Inspector — `specs/091-the-inspector.md`
 - [ ] `092` Antagonistic Flora — `specs/092-antagonistic-flora.md`
-- [ ] `096` Water Simulation — `specs/096-water-simulation.md`
 
 ## MVP — Layer 2: System Simulation
 

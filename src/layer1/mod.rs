@@ -286,3 +286,7 @@ mod heirloom_tests;
 /// Animal Husbandry system (Spec 075).
 pub mod husbandry;
 pub use husbandry::*;
+
+/// Water simulation (Spec 096).
+pub mod water;
+pub use water::*;
