@@ -1,5 +1,5 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
+use bevy_ecs::prelude::*;
 
 /// Usage threshold to convert Grass to Dirt.
 pub const EROSION_THRESHOLD_DIRT: u16 = 100;
@@ -63,14 +63,13 @@ impl ErosionGrid {
 }
 
 /// System that converts terrain based on accumulated erosion usage.
-pub fn update_erosion_system(
-    mut terrain: ResMut<TerrainGrid>,
-    erosion: Res<ErosionGrid>,
-) {
+pub fn update_erosion_system(mut terrain: ResMut<TerrainGrid>, erosion: Res<ErosionGrid>) {
     for y in 0..terrain.height {
         for x in 0..terrain.width {
             let idx = y * terrain.width + x;
-            if idx >= terrain.tiles.len() || idx >= erosion.values.len() { continue; }
+            if idx >= terrain.tiles.len() || idx >= erosion.values.len() {
+                continue;
+            }
 
             let current_type = terrain.tiles[idx];
             let erosion_val = erosion.values[idx];
@@ -85,10 +84,7 @@ pub fn update_erosion_system(
 }
 
 /// System that decays erosion usage and reverts terrain (Path -> Dirt -> Grass).
-pub fn regrowth_system(
-    mut terrain: ResMut<TerrainGrid>,
-    mut erosion: ResMut<ErosionGrid>,
-) {
+pub fn regrowth_system(mut terrain: ResMut<TerrainGrid>, mut erosion: ResMut<ErosionGrid>) {
     for i in 0..erosion.values.len() {
         if erosion.values[i] > 0 {
             erosion.values[i] = erosion.values[i].saturating_sub(1);
@@ -109,10 +105,10 @@ pub fn regrowth_system(
 
 #[cfg(test)]
 mod tests {
+    use crate::layer1::erosion::{ErosionGrid, update_erosion_system};
+    use crate::layer1::terrain::{TerrainGrid, TerrainType};
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
-    use crate::layer1::terrain::{TerrainGrid, TerrainType};
-    use crate::layer1::erosion::{ErosionGrid, update_erosion_system};
 
     fn setup_world() -> World {
         let mut world = World::new();

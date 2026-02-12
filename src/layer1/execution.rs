@@ -39,6 +39,7 @@ use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::defense::Gate;
 use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::edicts::{ColonyPolicies, get_work_speed_modifier};
+use crate::layer1::erosion::{ErosionGrid, MOVEMENT_EROSION_AMOUNT};
 use crate::layer1::farm::Farm;
 use crate::layer1::funeral::{Corpse, Grave, handle_bury_corpse};
 use crate::layer1::health::Health;
@@ -51,7 +52,6 @@ use crate::layer1::pop::Speed;
 use crate::layer1::resources::{ColonyResources, process_logging, process_mining};
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
 use crate::layer1::social::{SocialBuff, Tavern, handle_socialize};
-use crate::layer1::erosion::{ErosionGrid, MOVEMENT_EROSION_AMOUNT};
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::traits::{Traits, get_trait_move_speed_modifier, get_trait_work_speed_modifier};
 use crate::layer1::utility_ai::{ActionType, PopAction, StartPlan};
@@ -303,12 +303,14 @@ pub fn movement_system(
         };
 
         // Determine movement cost
-        let movement_cost = if let (Ok(x), Ok(y)) = (usize::try_from(new_pos.x), usize::try_from(new_pos.y))
-        {
-            terrain.get(x, y).map_or(1.0, |t| t.movement_cost())
-        } else {
-            1.0
-        };
+        let movement_cost =
+            if let (Ok(x), Ok(y)) = (usize::try_from(new_pos.x), usize::try_from(new_pos.y)) {
+                terrain
+                    .get(x, y)
+                    .map_or(1.0, crate::layer1::terrain::TerrainType::movement_cost)
+            } else {
+                1.0
+            };
 
         // Check if we can move
         let can_move = if let Some(ref mut speed) = speed_opt {
@@ -520,8 +522,12 @@ fn is_walkable(
     y: i32,
 ) -> bool {
     // Check Terrain bounds and type
-    let Ok(x_idx) = usize::try_from(x) else { return false };
-    let Ok(y_idx) = usize::try_from(y) else { return false };
+    let Ok(x_idx) = usize::try_from(x) else {
+        return false;
+    };
+    let Ok(y_idx) = usize::try_from(y) else {
+        return false;
+    };
 
     if !terrain
         .get(x_idx, y_idx)

@@ -1,6 +1,8 @@
 use crate::layer1::health::Health;
 use crate::layer1::medical::Hospital;
-use crate::layer1::utility_types::{ActionType, UtilityWeights, calculate_context_score, calculate_success_modifier};
+use crate::layer1::utility_types::{
+    ActionType, UtilityWeights, calculate_context_score, calculate_success_modifier,
+};
 use bevy_ecs::prelude::*;
 
 /// Evaluates the utility of seeking medical care.
@@ -39,10 +41,7 @@ pub fn evaluate_seek_medical_care<'a>(
         );
 
         // Success modifier
-        let success = calculate_success_modifier(
-            ActionType::SeekMedicalCare,
-            weights,
-        );
+        let success = calculate_success_modifier(ActionType::SeekMedicalCare, weights);
 
         let utility = urgency * context * success;
 

@@ -480,13 +480,17 @@ mod tests {
         let close_score = calculate_context_score(
             GridPosition { x: 0, y: 0 },
             Some(GridPosition { x: 1, y: 0 }),
-            4, 0, &weights,
+            4,
+            0,
+            &weights,
         );
 
         let far_score = calculate_context_score(
             GridPosition { x: 0, y: 0 },
             Some(GridPosition { x: 10, y: 0 }),
-            4, 0, &weights,
+            4,
+            0,
+            &weights,
         );
 
         assert!(close_score > far_score);
@@ -497,13 +501,11 @@ mod tests {
         let weights = UtilityWeights::default();
         let pos = GridPosition { x: 0, y: 0 };
 
-        let empty_score = calculate_context_score(
-            pos, Some(GridPosition { x: 5, y: 5 }), 4, 0, &weights,
-        );
+        let empty_score =
+            calculate_context_score(pos, Some(GridPosition { x: 5, y: 5 }), 4, 0, &weights);
 
-        let full_score = calculate_context_score(
-            pos, Some(GridPosition { x: 5, y: 5 }), 4, 3, &weights,
-        );
+        let full_score =
+            calculate_context_score(pos, Some(GridPosition { x: 5, y: 5 }), 4, 3, &weights);
 
         assert!(empty_score > full_score);
     }

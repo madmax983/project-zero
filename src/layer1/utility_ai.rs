@@ -82,6 +82,7 @@ pub type PopEvalData = (
     Option<Equipment>,
     Option<MentalState>,
     Option<Drafted>,
+    Option<crate::layer1::factions::FactionMember>,
 );
 
 /// Reusable buffer for `evaluate_actions_system` to avoid allocations.
@@ -139,13 +140,24 @@ pub fn evaluate_actions_system(world: &mut World) {
                 Option<&MentalState>,
                 Option<&Drafted>,
                 Option<&Inmate>,
+                Option<&crate::layer1::factions::FactionMember>,
             )>()
             .iter(world)
-            .filter(|(_, _, _, _, action, _, _, _, inmate)| {
+            .filter(|(_, _, _, _, action, _, _, _, inmate, _)| {
                 action.ticks_committed >= config.evaluation_interval && inmate.is_none()
             })
-            .map(|(e, p, n, w, a, eq, m, d, _)| {
-                (e, *p, *n, *w, *a, eq.copied(), m.copied(), d.copied())
+            .map(|(e, p, n, w, a, eq, m, d, _, fm)| {
+                (
+                    e,
+                    *p,
+                    *n,
+                    *w,
+                    *a,
+                    eq.copied(),
+                    m.copied(),
+                    d.copied(),
+                    fm.cloned(),
+                )
             }),
     );
 
@@ -186,6 +198,18 @@ pub fn evaluate_actions_system(world: &mut World) {
         .resource::<crate::layer1::day_night::DayNightCycle>()
         .clone();
     let taboo_state = world.resource::<crate::layer1::taboo::TabooState>().clone();
+    // Cannot clone Factions easily or it might be expensive, so we just check existence?
+    // Actually Factions is a Resource. We can get it from world.
+    // But we are in a system that takes `&mut World`.
+    // We iterate buffer, so we can access world inside loop if we wanted, but that's slow.
+    // Better to fetch Factions state once if possible.
+    // Factions struct contains HashMap. Cloning it is O(N). N=6. It's fine.
+    // Or just store Option<&Factions> is unsafe because we have mutable world reference...
+    // Wait, world is mutable.
+    // We can clone the Factions resource data.
+    let factions_data = world
+        .get_resource::<crate::layer1::factions::Factions>()
+        .map(|f| f.map.clone());
 
     // Evaluate each pop
     for (
@@ -197,6 +221,7 @@ pub fn evaluate_actions_system(world: &mut World) {
         equipment_opt,
         mental_state_opt,
         drafted_opt,
+        faction_member_opt,
     ) in &buffer.pop_data
     {
         let pop_entity = *pop_entity;
@@ -331,13 +356,28 @@ pub fn evaluate_actions_system(world: &mut World) {
                     check_best(ActionType::Socialize, utility, Some(target));
                 }
 
+                // Check if striking
+                let is_striking = factions_data.as_ref().is_some_and(|map| {
+                    faction_member_opt.as_ref().is_some_and(|member| {
+                        member.faction_id.is_some_and(|fid| {
+                            map.get(&fid).is_some_and(|data| {
+                                data.state == crate::layer1::factions::FactionState::Striking
+                            })
+                        })
+                    })
+                });
+
                 // Evaluate Work
-                if let Some((utility, target)) =
-                    evaluate_work(&pop_pos, &weights, designations_state.iter(world))
-                {
-                    let penalty =
-                        crate::layer1::taboo::evaluate_taboo_penalty(ActionType::Work, &taboo_state);
-                    check_best(ActionType::Work, utility + penalty, Some(target));
+                if !is_striking {
+                    if let Some((utility, target)) =
+                        evaluate_work(&pop_pos, &weights, designations_state.iter(world))
+                    {
+                        let penalty = crate::layer1::taboo::evaluate_taboo_penalty(
+                            ActionType::Work,
+                            &taboo_state,
+                        );
+                        check_best(ActionType::Work, utility + penalty, Some(target));
+                    }
                 }
 
                 // Evaluate Refine

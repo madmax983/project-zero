@@ -2,7 +2,7 @@
 mod tests {
     use bevy_ecs::prelude::*;
     use scale::layer1::building::{Building, BuildingType};
-    use scale::layer1::execution::{arrival_handler_system, AtTarget, MovementTarget};
+    use scale::layer1::execution::{AtTarget, MovementTarget, arrival_handler_system};
     use scale::layer1::map::GridPosition;
     use scale::layer1::needs::Needs;
     use scale::layer1::pop::Pop;
@@ -147,9 +147,7 @@ mod tests {
         let log = world.resource::<MessageLog>();
         assert!(!log.messages.is_empty());
         assert!(
-            log.messages
-                .iter()
-                .any(|m| m.text.contains("binge eating")),
+            log.messages.iter().any(|m| m.text.contains("binge eating")),
             "Should log binge eating event"
         );
 
