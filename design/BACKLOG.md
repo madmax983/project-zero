@@ -18,6 +18,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `089` Material Provenance — `specs/089-material-provenance.md`
 - [ ] `090` Emotional Contagion — `specs/090-emotional-contagion.md`
 - [ ] `091` The Inspector — `specs/091-the-inspector.md`
+- [ ] `092` Antagonistic Flora — `specs/092-antagonistic-flora.md`
 
 ## MVP — User Interface
 
