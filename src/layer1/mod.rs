@@ -270,3 +270,5 @@ pub use traits::*;
 /// Omens & Taboos system (Spec 088).
 pub mod taboo;
 pub use taboo::*;
+pub mod erosion;
+pub use erosion::*;

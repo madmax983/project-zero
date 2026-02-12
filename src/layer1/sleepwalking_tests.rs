@@ -93,6 +93,7 @@ mod tests {
             height: 30,
             tiles: vec![crate::layer1::terrain::TerrainType::Grass; 900],
         });
+        world.insert_resource(crate::layer1::erosion::ErosionGrid::new(30, 30));
         world.insert_resource(crate::layer1::building::OccupiedTiles::default());
 
         let pop = world

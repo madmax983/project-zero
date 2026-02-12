@@ -36,7 +36,8 @@ mod tests {
         world.insert_resource(scale::layer1::weather::WeatherState::default());
         world.insert_resource(scale::layer1::quirks::PlanetaryTraits::default());
         world.insert_resource(scale::layer1::factions::Factions::default());
-        world.insert_resource(scale::layer1::utility_ai::ColonyMemory::default());
+        world.insert_resource(scale::layer1::ColonyMemory::default());
+        world.insert_resource(scale::layer1::erosion::ErosionGrid::new(10, 10));
 
         // Needed for entity spawning
         world.insert_resource(scale::layer1::terrain::TerrainGrid {

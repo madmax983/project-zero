@@ -56,6 +56,7 @@ impl BeautyGrid {
 /// System to update the beauty grid based on sources.
 pub fn update_beauty_grid_system(
     mut grid: ResMut<BeautyGrid>,
+    terrain: Res<crate::layer1::TerrainGrid>,
     sources: Query<(&crate::layer1::GridPosition, &BeautySource)>,
     items: Query<(
         &crate::layer1::GridPosition,
@@ -63,6 +64,24 @@ pub fn update_beauty_grid_system(
     )>,
 ) {
     grid.clear();
+
+    // Terrain Beauty
+    for y in 0..terrain.height {
+        for x in 0..terrain.width {
+            if let Some(tile) = terrain.get(x, y) {
+                let mod_val = match tile {
+                    crate::layer1::TerrainType::Grass => 1.0f32,
+                    crate::layer1::TerrainType::Dirt => -1.0f32,
+                    crate::layer1::TerrainType::Path => -2.0f32,
+                    _ => 0.0f32,
+                };
+                if mod_val.abs() > f32::EPSILON {
+                    let current = grid.get(x, y);
+                    grid.set(x, y, current + mod_val);
+                }
+            }
+        }
+    }
 
     for (pos, source) in &sources {
         let value = source.value;
@@ -131,6 +150,11 @@ mod tests {
         let mut world = World::new();
         // Setup grid
         world.insert_resource(crate::layer1::beauty::BeautyGrid::new(10, 10));
+        world.insert_resource(crate::layer1::terrain::TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![crate::layer1::terrain::TerrainType::Grass; 100],
+        });
 
         // Spawn entity with BeautySource
         world.spawn((
@@ -145,13 +169,19 @@ mod tests {
         let _ = world.run_system_once(crate::layer1::beauty::update_beauty_grid_system);
 
         let grid = world.resource::<crate::layer1::beauty::BeautyGrid>();
-        assert_eq!(grid.get(5, 5), 5.0);
+        // 5.0 from source + 1.0 from Grass
+        assert_eq!(grid.get(5, 5), 6.0);
     }
 
     #[test]
     fn test_negative_beauty_from_trash() {
         let mut world = World::new();
         world.insert_resource(crate::layer1::beauty::BeautyGrid::new(10, 10));
+        world.insert_resource(crate::layer1::terrain::TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![crate::layer1::terrain::TerrainType::Grass; 100],
+        });
 
         let mut grid = world.resource_mut::<crate::layer1::beauty::BeautyGrid>();
         grid.set(0, 0, -5.0);
