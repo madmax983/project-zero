@@ -56,10 +56,7 @@ impl BeautyGrid {
 /// System to update the beauty grid based on sources.
 pub fn update_beauty_grid_system(
     mut grid: ResMut<BeautyGrid>,
-    sources: Query<(
-        &crate::layer1::GridPosition,
-        &BeautySource,
-    )>,
+    sources: Query<(&crate::layer1::GridPosition, &BeautySource)>,
     items: Query<(
         &crate::layer1::GridPosition,
         &crate::layer1::resources::ResourceItem,
@@ -137,7 +134,10 @@ mod tests {
 
         // Spawn entity with BeautySource
         world.spawn((
-            BeautySource { value: 5.0, radius: 0.0 },
+            BeautySource {
+                value: 5.0,
+                radius: 0.0,
+            },
             GridPosition { x: 5, y: 5 },
         ));
 

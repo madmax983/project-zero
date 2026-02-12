@@ -169,7 +169,7 @@ impl ActionType {
 }
 
 /// The current state of a Pop's brain.
-#[derive(Component, Debug)]
+#[derive(Component, Debug, Clone, Copy)]
 pub struct PopAction {
     /// The current action being performed.
     pub current: ActionType,
@@ -538,6 +538,25 @@ pub fn update_action_timer_system(mut query: Query<&mut PopAction>) {
     });
 }
 
+/// Data bundle for pop evaluation, optimized for copy.
+pub type PopEvalData = (
+    Entity,
+    GridPosition,
+    Needs,
+    UtilityWeights,
+    PopAction,
+    Option<Equipment>,
+    Option<MentalState>,
+    Option<Drafted>,
+);
+
+/// Reusable buffer for `evaluate_actions_system` to avoid allocations.
+#[derive(Resource, Default)]
+pub struct UtilityAIBuffer {
+    /// Buffer for pop data.
+    pub pop_data: Vec<PopEvalData>,
+}
+
 /// The Main Brain Loop: Decides what every Pop should do next.
 ///
 /// This system runs periodically (every tick, but individual pops only evaluate
@@ -566,52 +585,37 @@ pub fn update_action_timer_system(mut query: Query<&mut PopAction>) {
 pub fn evaluate_actions_system(world: &mut World) {
     let config = world.resource::<UtilityConfig>().clone();
 
-    // Collect pop data
-    #[allow(unused_mut)]
-    #[allow(clippy::type_complexity)]
-    // We break up the query to avoid complex iterator types
-    let mut pop_data: Vec<(
-        Entity,
-        GridPosition,
-        Needs,
-        UtilityWeights,
-        PopAction,
-        Option<Equipment>,
-        Option<MentalState>,
-        Option<Drafted>,
-    )> = world
-        .query::<(
-            Entity,
-            &GridPosition,
-            &Needs,
-            &UtilityWeights,
-            &PopAction,
-            Option<&Equipment>,
-            Option<&MentalState>,
-            Option<&Drafted>,
-            Option<&Inmate>,
-        )>()
-        .iter(world)
-        .filter(|(_, _, _, _, action, _, _, _, inmate)| {
-            action.ticks_committed >= config.evaluation_interval && inmate.is_none()
-        })
-        .map(|(e, p, n, w, a, eq, m, d, _)| {
-            (
-                e,
-                *p,
-                *n,
-                *w,
-                PopAction {
-                    current: a.current,
-                    current_utility: a.current_utility,
-                    ticks_committed: a.ticks_committed,
-                },
-                eq.cloned(),
-                m.cloned(),
-                d.cloned(),
-            )
-        })
-        .collect();
+    // Use reusable buffer to avoid repeated heap allocations
+    let mut buffer = if let Some(b) = world.remove_resource::<UtilityAIBuffer>() {
+        b
+    } else {
+        UtilityAIBuffer::default()
+    };
+
+    buffer.pop_data.clear();
+
+    // Collect pop data into buffer
+    buffer.pop_data.extend(
+        world
+            .query::<(
+                Entity,
+                &GridPosition,
+                &Needs,
+                &UtilityWeights,
+                &PopAction,
+                Option<&Equipment>,
+                Option<&MentalState>,
+                Option<&Drafted>,
+                Option<&Inmate>,
+            )>()
+            .iter(world)
+            .filter(|(_, _, _, _, action, _, _, _, inmate)| {
+                action.ticks_committed >= config.evaluation_interval && inmate.is_none()
+            })
+            .map(|(e, p, n, w, a, eq, m, d, _)| {
+                (e, *p, *n, *w, *a, eq.copied(), m.copied(), d.copied())
+            }),
+    );
 
     // Pre-create query states to avoid allocation in loop
     let mut farms_state = world.query::<(
@@ -674,12 +678,21 @@ pub fn evaluate_actions_system(world: &mut World) {
         pop_pos,
         needs,
         weights,
-        mut action,
+        action,
         equipment_opt,
         mental_state_opt,
         drafted_opt,
-    ) in pop_data
+    ) in &buffer.pop_data
     {
+        let pop_entity = *pop_entity;
+        let pop_pos = *pop_pos;
+        let needs = *needs;
+        let weights = *weights;
+        let mut action = *action;
+        let equipment_opt = *equipment_opt;
+        let mental_state_opt = *mental_state_opt;
+        let drafted_opt = *drafted_opt;
+
         // Optimization: Avoid heap allocation (Vec) for utilities.
         // Instead, track the best action found so far in a single pass.
 
@@ -907,6 +920,9 @@ pub fn evaluate_actions_system(world: &mut World) {
             });
         }
     }
+
+    // Return the buffer to the world
+    world.insert_resource(buffer);
 }
 
 /// Updates utility weights based on action outcome.

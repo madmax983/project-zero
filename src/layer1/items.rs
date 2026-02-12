@@ -27,7 +27,7 @@ pub struct Tool {
 }
 
 /// Component for equipment slots on a Pop.
-#[derive(Component, Debug, Default, Clone)]
+#[derive(Component, Debug, Default, Clone, Copy)]
 pub struct Equipment {
     /// The entity ID of the equipped tool.
     pub tool: Option<Entity>,
