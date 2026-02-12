@@ -130,6 +130,7 @@ pub fn process_refining_system(world: &mut World) {
             .get_resource_mut::<ColonyResources>()
             .is_some_and(|mut resources| {
                 if resources.try_deduct(&input) {
+                    resources.add_rations(output.rations);
                     resources.add_planks(output.planks);
                     resources.add_blocks(output.blocks);
                     resources.add_metal(output.metal);
@@ -171,6 +172,18 @@ pub fn get_refining_recipe(
     res: &ColonyResources,
 ) -> (bool, ColonyResources, ColonyResources) {
     match building_type {
+        BuildingType::Smokehouse => (
+            res.food >= 5.0 && res.wood >= 1.0 && res.rations < res.max_rations,
+            ColonyResources {
+                food: 5.0,
+                wood: 1.0,
+                ..ColonyResources::zeroed()
+            },
+            ColonyResources {
+                rations: 5.0,
+                ..ColonyResources::zeroed()
+            },
+        ),
         BuildingType::LumberMill => (
             res.wood >= 1.0 && res.planks < res.max_planks,
             ColonyResources {

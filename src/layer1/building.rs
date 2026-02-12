@@ -66,6 +66,8 @@ pub enum BuildingType {
     Farm,
     /// Storage for resources.
     Stockpile,
+    /// Refines Food into Rations.
+    Smokehouse,
     /// Refines Wood into Planks.
     LumberMill,
     /// Refines Stone into Blocks.
@@ -166,6 +168,7 @@ impl BuildingType {
             Self::Housing => "Housing",
             Self::Farm => "Farm",
             Self::Stockpile => "Stockpile",
+            Self::Smokehouse => "Smokehouse",
             Self::LumberMill => "Lumber Mill",
             Self::StoneMason => "Stone Mason",
             Self::Smelter => "Smelter",
@@ -196,6 +199,7 @@ impl BuildingType {
             Self::Housing => 'H',
             Self::Farm => 'F',
             Self::Stockpile => '=',
+            Self::Smokehouse => '♨',
             Self::LumberMill => 'L',
             Self::StoneMason => 'M',
             Self::Smelter => 'S',
@@ -245,6 +249,11 @@ impl BuildingType {
             },
             Self::Stockpile => ColonyResources {
                 wood: 50.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Smokehouse => ColonyResources {
+                wood: 30.0,
+                stone: 10.0,
                 ..ColonyResources::zeroed()
             },
             Self::Landfill => ColonyResources {
@@ -480,6 +489,21 @@ fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType
         }
         BuildingType::Stockpile => {
             entity.insert((Stockpile::default(), Flammable::default()));
+        }
+        BuildingType::Smokehouse => {
+            entity.insert((
+                RefiningProgress {
+                    current: 0.0,
+                    max: 10.0,
+                },
+                Flammable::default(),
+                LightSource {
+                    radius: 4.0,
+                    intensity: 0.5,
+                    color: (200, 200, 200), // Smoky white/grey
+                },
+                ShiftSchedule::default(),
+            ));
         }
         BuildingType::Landfill => {
             entity.insert((
@@ -724,7 +748,8 @@ mod tests {
     fn test_building_type_next() {
         assert_eq!(BuildingType::Housing.next(), BuildingType::Farm);
         assert_eq!(BuildingType::Farm.next(), BuildingType::Stockpile);
-        assert_eq!(BuildingType::Stockpile.next(), BuildingType::LumberMill);
+        assert_eq!(BuildingType::Stockpile.next(), BuildingType::Smokehouse);
+        assert_eq!(BuildingType::Smokehouse.next(), BuildingType::LumberMill);
         assert_eq!(BuildingType::LumberMill.next(), BuildingType::StoneMason);
         assert_eq!(BuildingType::StoneMason.next(), BuildingType::Smelter);
         assert_eq!(BuildingType::Smelter.next(), BuildingType::Smithy);
@@ -799,6 +824,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Stockpile);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Smokehouse);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::LumberMill);
