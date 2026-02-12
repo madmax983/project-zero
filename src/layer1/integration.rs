@@ -169,3 +169,28 @@ pub fn fire_damage_pops_system(
         }
     }
 }
+
+/// Bridges Waste (Resource/Building) and Atmosphere (Environment).
+///
+/// Adds pollution to the `AtmosphereGrid` based on:
+/// 1. `Waste` items on the ground (toxic fumes).
+/// 2. `Landfill` buildings (smell/leachate).
+pub fn waste_pollution_bridge(
+    mut grid: ResMut<crate::layer1::atmosphere::AtmosphereGrid>,
+    items: Query<(&crate::layer1::resources::ResourceItem, &GridPosition)>,
+    buildings: Query<(&crate::layer1::building::Building, &GridPosition)>,
+) {
+    // 1. Waste Items
+    for (item, pos) in &items {
+        if item.resource_type == crate::layer1::resources::ResourceType::Waste {
+            grid.add(pos.x, pos.y, 0.1);
+        }
+    }
+
+    // 2. Landfills
+    for (building, pos) in &buildings {
+        if building.building_type == crate::layer1::building::BuildingType::Landfill {
+            grid.add(pos.x, pos.y, 0.2);
+        }
+    }
+}

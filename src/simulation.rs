@@ -34,7 +34,7 @@ use crate::layer1::{
     natural_death_system, notification_expiration_system, pop_death_chronicle_bridge,
     process_refining_system, process_research_system, process_scan_system,
     process_start_plan_system, produce_food_system, regrowth_system, restore_leisure_system,
-    restore_rest_in_housing_system, sleepwalk_end_system,
+    restore_rest_in_housing_system, sleepwalk_end_system, waste_pollution_bridge,
     social::old_guard::{
         apply_founder_benefits_system, apply_mood_modifiers_system,
         check_generational_friction_system, mood_lifecycle_system,
@@ -189,7 +189,10 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer1::structure::fire_damage_structure_system),
         update_noise_system.after(work_execution_system),
         apply_noise_effects_system.after(update_noise_system),
-        crate::layer1::atmosphere::update_atmosphere_system.after(work_execution_system),
+        waste_pollution_bridge.after(work_execution_system),
+        crate::layer1::atmosphere::update_atmosphere_system
+            .after(work_execution_system)
+            .after(waste_pollution_bridge),
         crate::layer1::atmosphere::pollution_effects_system
             .after(crate::layer1::atmosphere::update_atmosphere_system),
     ));
