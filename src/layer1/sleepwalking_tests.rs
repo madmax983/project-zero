@@ -17,6 +17,7 @@ mod tests {
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
         world.insert_resource(crate::shared::time::SimulationTime::default());
         world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
+        world.insert_resource(crate::layer1::taboo::TabooState::default());
         world.insert_resource(SleepwalkingConfig { chance: 1.0 }); // Deterministic testing
         world
     }

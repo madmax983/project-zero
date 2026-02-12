@@ -93,6 +93,9 @@ pub fn setup_world() -> World {
     world.init_resource::<Events<AddChronicleEvent>>();
     world.init_resource::<Events<AffinityChange>>();
     world.init_resource::<Events<PopDied>>();
+    world.init_resource::<Events<crate::layer1::structural_integrity::StructureCollapsed>>();
+
+    world.insert_resource(crate::layer1::taboo::TabooState::default());
 
     // Initialize GPU compute context (non-fatal if no GPU available)
     // Skip on WASM since pollster::block_on doesn't work in browser context

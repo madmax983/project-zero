@@ -845,6 +845,7 @@ mod tests {
         world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
         world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
         world.insert_resource(OccupiedTiles::default());
+        world.insert_resource(crate::layer1::taboo::TabooState::default());
         world
     }
 
