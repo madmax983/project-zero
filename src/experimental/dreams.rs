@@ -1,13 +1,15 @@
 //! Experimental module for Pop dreams.
 //!
-//! Adds narrative depth by giving sleeping pops a chance to dream about the colony's history,
-//! affecting their leisure and potentially generating knowledge (Inspiration).
+//! Adds narrative depth by giving sleeping pops a chance to dream about the colony's history
+//! and their own memories, affecting their leisure and potentially generating knowledge.
 
 use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::chronicle::{Chronicle, EventImportance};
+use crate::layer1::memory::{Memories, MemoryType};
 use crate::layer1::needs::Needs;
 use crate::layer1::pop::Pop;
 use crate::layer1::resources::ColonyResources;
+use crate::layer1::utility_types::{ActionType, PopAction};
 use crate::shared::log::MessageLog;
 use crate::shared::narrative::NarrativeGenerator;
 use crate::shared::time::SimulationTime;
@@ -22,14 +24,40 @@ pub struct Dream {
     pub content: String,
     /// The tick when this dream occurred.
     pub tick: u64,
-    /// The impact on leisure (0.0 to 1.0).
+    /// The impact on leisure (positive or negative).
     pub impact: f32,
+    /// Whether it was a nightmare.
+    pub is_nightmare: bool,
 }
 
+/// Stores the dream history of a Pop.
+#[derive(Component, Debug, Default, Clone)]
+pub struct DreamJournal {
+    /// The most recent dream.
+    pub last_dream: Option<Dream>,
+    /// History of past dreams (capped).
+    pub history: Vec<Dream>,
+}
+
+/// Marker component indicating a pop has already dreamt during this sleep cycle.
+#[derive(Component)]
+pub struct DreamtThisSleep;
+
 /// System to generate dreams for sleeping pops.
+#[allow(clippy::type_complexity)]
 pub fn dream_system(
     time: Res<SimulationTime>,
-    mut sleeping_pops: Query<(Entity, &AssignedTo, &mut Needs), With<Pop>>,
+    mut sleeping_pops: Query<
+        (
+            Entity,
+            &AssignedTo,
+            &PopAction,
+            &mut Needs,
+            Option<&Memories>,
+            Option<&mut DreamJournal>,
+        ),
+        (With<Pop>, Without<DreamtThisSleep>),
+    >,
     chronicle: Res<Chronicle>,
     mut resources: ResMut<ColonyResources>,
     mut log: Option<ResMut<MessageLog>>,
@@ -37,54 +65,93 @@ pub fn dream_system(
     generator: Res<NarrativeGenerator>,
 ) {
     let current_tick = time.tick;
-    // Cache available events to avoid borrow checker issues or repeated lookups
     let chronicle_events: Vec<_> = chronicle.events.clone();
+    let mut rng = rand::thread_rng();
 
-    for (entity, assigned, mut needs) in &mut sleeping_pops {
-        if assigned.assignment_type != AssignmentType::HousingResident {
+    for (entity, assigned, action, mut needs, memories_opt, journal_opt) in &mut sleeping_pops {
+        // Must be sleeping in a bed
+        if assigned.assignment_type != AssignmentType::HousingResident
+            || action.current != ActionType::SatisfyRest
+        {
             continue;
         }
 
-        let mut rng = rand::thread_rng();
+        // 1% chance per tick to dream -> eventually happens during sleep
+        if !rng.gen_bool(0.01) {
+            continue;
+        }
 
-        // 1% chance per tick to dream while sleeping
-        if rng.gen_bool(0.01) {
-            let (dream_content, impact) =
-                generate_dream_content(&mut rng, &chronicle_events, &generator);
+        // Mark as dreamt immediately to prevent multiple dreams per sleep
+        commands.entity(entity).insert(DreamtThisSleep);
 
-            // Apply dream impact
-            if impact > 0.0 {
-                needs.leisure = (needs.leisure + impact).clamp(0.0, 1.0);
+        let (dream_content, impact, is_nightmare) = generate_dream_content(
+            &mut rng,
+            &chronicle_events,
+            &generator,
+            memories_opt,
+        );
+
+        // Apply dream impact
+        // Nightmares reduce leisure (stress), Good dreams increase it
+        needs.leisure = (needs.leisure + impact).clamp(0.0, 1.0);
+
+        let dream = Dream {
+            content: dream_content.clone(),
+            tick: current_tick,
+            impact,
+            is_nightmare,
+        };
+
+        // Update Journal
+        if let Some(mut journal) = journal_opt {
+            journal.history.push(dream.clone());
+            if journal.history.len() > 10 {
+                journal.history.remove(0);
             }
+            journal.last_dream = Some(dream);
+        } else {
+            // Create new journal if missing
+            let journal = DreamJournal {
+                last_dream: Some(dream.clone()),
+                history: vec![dream],
+            };
+            commands.entity(entity).insert(journal);
+        }
 
-            commands.entity(entity).insert(Dream {
-                content: dream_content.clone(),
-                tick: current_tick,
-                impact,
-            });
+        // Inspiration Chance (only on good dreams)
+        if !is_nightmare && rng.gen_bool(0.05) {
+            let knowledge_gain = 5.0;
+            resources.knowledge =
+                (resources.knowledge + knowledge_gain).clamp(0.0, resources.max_knowledge);
 
-            // 10% chance for Inspiration (net 0.1% chance per tick while sleeping)
-            if rng.gen_bool(0.10) {
-                let knowledge_gain = 5.0;
-                resources.knowledge =
-                    (resources.knowledge + knowledge_gain).clamp(0.0, resources.max_knowledge);
-
-                if let Some(ref mut log) = log {
-                    log.add(format!(
-                        "Inspiration: A pop dreamed of '{dream_content}' and gained insight!"
-                    ));
-                }
-            } else if let Some(ref mut log) = log {
-                // Log significant dreams
-                if impact > 0.0 {
-                    log.add(format!("Dream: {dream_content} (Leisure +{impact:.2})"));
+            if let Some(ref mut log) = log {
+                log.add(format!(
+                    "Inspiration: A pop had a vision of '{dream_content}' and gained insight!"
+                ));
+            }
+        } else if let Some(ref mut log) = log {
+            // Log vivid dreams or nightmares
+            if is_nightmare || impact.abs() > 0.1 {
+                let prefix = if is_nightmare {
+                    "Nightmare"
                 } else {
-                    // Only log minor dreams occasionally to avoid spam
-                    if rng.gen_bool(0.1) {
-                        log.add(format!("Dream: {dream_content}"));
-                    }
-                }
+                    "Dream"
+                };
+                log.add(format!("{prefix}: {dream_content}"));
             }
+        }
+    }
+}
+
+/// Removes the `DreamtThisSleep` marker when the pop wakes up.
+pub fn cleanup_dream_marker_system(
+    mut commands: Commands,
+    mut query: Query<(Entity, &PopAction), With<DreamtThisSleep>>,
+) {
+    for (entity, action) in &mut query {
+        // If no longer sleeping, remove marker
+        if action.current != ActionType::SatisfyRest {
+            commands.entity(entity).remove::<DreamtThisSleep>();
         }
     }
 }
@@ -93,30 +160,48 @@ fn generate_dream_content(
     rng: &mut impl Rng,
     chronicle_events: &[crate::layer1::chronicle::ChronicleEvent],
     generator: &NarrativeGenerator,
-) -> (String, f32) {
-    // 70% chance to dream about history if history exists
-    if !chronicle_events.is_empty() && rng.gen_bool(0.7) {
+    memories_opt: Option<&Memories>,
+) -> (String, f32, bool) {
+    // 1. Check for Trauma/Memories (50% chance if memories exist)
+    if let Some(memories) = memories_opt {
+        // Collapsible if is fine here for readability of the let-else
+        #[allow(clippy::collapsible_if)]
+        if !memories.items.is_empty() && rng.gen_bool(0.5) {
+            // Pick a random memory, weighted by intensity?
+            // For now just random.
+            if let Some(memory) = memories.items.choose(rng) {
+                let (text, impact, nightmare) = interpret_memory(memory.memory_type);
+                // Intensity scales the impact
+                return (text, impact * memory.intensity, nightmare);
+            }
+        }
+    }
+
+    // 2. History (30% chance)
+    if !chronicle_events.is_empty() && rng.gen_bool(0.3) {
         let event = chronicle_events.choose(rng).unwrap();
         match event.importance {
             EventImportance::Legendary | EventImportance::Major => (
                 format!("relived the glory of: {}", event.text),
-                0.2, // Significant leisure boost
+                0.2,
+                false,
             ),
             EventImportance::Standard => (
                 format!("recalled: {}", event.text),
-                0.05, // Minor leisure boost
+                0.05,
+                false,
             ),
             EventImportance::Minor => (
                 format!("faintly remembered: {}", event.text),
-                0.0, // No boost
+                0.0,
+                false,
             ),
         }
     } else {
-        // Abstract dreams
+        // 3. Abstract / Random
         let categories = [
             "VOID_ANOMALY",
             "EMOTIONAL_WEIGHT",
-            "MEMORY_TOPIC",
             "CATASTROPHE_TYPE",
             "PLACE_DESCRIPTOR",
         ];
@@ -125,90 +210,49 @@ fn generate_dream_content(
             .get_random_fragment(category)
             .cloned()
             .unwrap_or_else(|| "strange lights in the sky".to_string());
-        (format!("dreamed of {content}"), 0.0)
+
+        // Randomly decide if it's a nightmare (10%)
+        if rng.gen_bool(0.1) {
+            (format!("nightmare of {content}"), -0.1, true)
+        } else {
+            (format!("dreamed of {content}"), 0.05, false)
+        }
+    }
+}
+
+fn interpret_memory(memory_type: MemoryType) -> (String, f32, bool) {
+    match memory_type {
+        MemoryType::WitnessedDeath => ("nightmare of a friend dying".to_string(), -0.2, true),
+        MemoryType::StarvationTrauma => ("dreamed of gnawing hunger".to_string(), -0.15, true),
+        MemoryType::DisgustedByVermin => ("dreamed of crawling insects".to_string(), -0.1, true),
+        MemoryType::SawCorpse => ("nightmare of a dead body".to_string(), -0.1, true),
+        MemoryType::WonFight => ("dreamed of victory in battle".to_string(), 0.1, false),
+        MemoryType::AteFineMeal => ("dreamed of a delicious feast".to_string(), 0.1, false),
+        MemoryType::AttendedFuneral => ("dreamed of saying goodbye".to_string(), 0.05, false),
+        MemoryType::AdmiredArt => ("dreamed of beautiful art".to_string(), 0.1, false),
+        MemoryType::SleptInAwfulRoom => ("tossed and turned in a cold room".to_string(), -0.05, true),
+        MemoryType::SleptInLegendaryRoom => ("rested in a palace of gold".to_string(), 0.2, false),
+        _ => ("dreamed of daily life".to_string(), 0.0, false),
     }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::chronicle::{Chronicle, EventImportance};
+    use crate::layer1::chronicle::Chronicle;
     use crate::shared::narrative::NarrativeGenerator;
+    use crate::layer1::memory::{ActiveMemory, MemoryType};
     use bevy_ecs::system::RunSystemOnce;
 
     #[test]
-    fn test_dream_system_modifies_leisure() {
+    fn test_dream_system_adds_journal() {
         let mut world = World::new();
         world.insert_resource(SimulationTime::default());
         world.insert_resource(ColonyResources::default());
         world.insert_resource(MessageLog::default());
         world.insert_resource(NarrativeGenerator::from_embedded());
+        world.insert_resource(Chronicle::default());
 
-        // Setup Chronicle with a Legendary event
-        let mut chronicle = Chronicle::default();
-        chronicle.add_event(0, "Legendary Event".to_string(), EventImportance::Legendary);
-        world.insert_resource(chronicle);
-
-        // Spawn a sleeping pop with low leisure
-        let _pop = world
-            .spawn((
-                Pop,
-                AssignedTo {
-                    entity: Entity::PLACEHOLDER,
-                    assignment_type: AssignmentType::HousingResident,
-                },
-                Needs {
-                    leisure: 0.1,
-                    ..Default::default()
-                },
-            ))
-            .id();
-
-        // Run system until dream triggers (with high probability due to loop)
-        // We can force RNG but let's just run it enough times.
-        // Actually, integration tests usually run once.
-        // To verify the logic specifically, we might want to mock RNG or increase probability.
-        // But here we rely on statistical probability or just verify structure.
-        // Wait, for deterministic tests I should probably force it?
-        // Or I can just call `generate_dream_content` directly to test logic.
-
-        // Let's test `generate_dream_content` first.
-        let mut rng = rand::thread_rng();
-        let generator = NarrativeGenerator::from_embedded();
-        let events = vec![crate::layer1::chronicle::ChronicleEvent {
-            tick: 0,
-            year: 0,
-            text: "Legendary".to_string(),
-            importance: EventImportance::Legendary,
-        }];
-
-        // Force history dream logic (statistical)
-        let mut hit_legendary = false;
-        for _ in 0..100 {
-            let (content, impact) = generate_dream_content(&mut rng, &events, &generator);
-            if content.contains("relived the glory") {
-                assert!((impact - 0.2).abs() < f32::EPSILON);
-                hit_legendary = true;
-                break;
-            }
-        }
-        assert!(hit_legendary, "Should eventually pick the legendary event");
-    }
-
-    #[test]
-    fn test_dream_system_integration() {
-        let mut world = World::new();
-        world.insert_resource(SimulationTime::default());
-        world.insert_resource(ColonyResources::default());
-        world.insert_resource(MessageLog::default());
-        world.insert_resource(NarrativeGenerator::from_embedded());
-
-        // Add chronicle event
-        let mut chronicle = Chronicle::default();
-        chronicle.add_event(0, "Test Event".to_string(), EventImportance::Legendary);
-        world.insert_resource(chronicle);
-
-        // Spawn pop
         let pop = world
             .spawn((
                 Pop,
@@ -216,70 +260,85 @@ mod tests {
                     entity: Entity::PLACEHOLDER,
                     assignment_type: AssignmentType::HousingResident,
                 },
-                Needs {
-                    leisure: 0.1,
+                PopAction {
+                    current: ActionType::SatisfyRest,
                     ..Default::default()
-                },
-            ))
-            .id();
-
-        // Run until triggered (timeout to prevent infinite loop)
-        let mut triggered = false;
-        for _ in 0..1000 {
-            world.run_system_once(dream_system).unwrap();
-            if world.get::<Dream>(pop).is_some() {
-                triggered = true;
-                break;
-            }
-        }
-
-        assert!(triggered, "Dream system should trigger");
-
-        // Check if leisure increased (if it was a good dream)
-        // Since we only have Legendary event, it SHOULD be a good dream (70% chance).
-        // If it was abstract (30%), leisure is unchanged.
-        // We can't guarantee leisure increase in a single run without mocking RNG.
-        // But we verified the Dream component addition.
-    }
-
-    #[test]
-    fn test_abstract_dream_content() {
-        let mut rng = rand::thread_rng();
-        let generator = NarrativeGenerator::from_embedded();
-        let events = vec![]; // No history
-
-        let (content, impact) = generate_dream_content(&mut rng, &events, &generator);
-
-        assert!(content.contains("dreamed of"));
-        assert_eq!(impact, 0.0);
-    }
-
-    #[test]
-    fn test_inspiration_gain() {
-        let mut world = World::new();
-        world.insert_resource(SimulationTime::default());
-        let mut resources = ColonyResources::default();
-        resources.knowledge = 0.0;
-        resources.max_knowledge = 100.0;
-        world.insert_resource(resources);
-        world.insert_resource(MessageLog::default());
-        world.insert_resource(NarrativeGenerator::from_embedded());
-        world.insert_resource(Chronicle::default());
-
-        // Spawn pop
-        let _pop = world
-            .spawn((
-                Pop,
-                AssignedTo {
-                    entity: Entity::PLACEHOLDER,
-                    assignment_type: AssignmentType::HousingResident,
                 },
                 Needs::default(),
             ))
             .id();
 
-        // Run many times to trigger inspiration (0.1% chance)
-        // This is flaky. Instead, let's just verify resources exist and system runs without panic.
-        world.run_system_once(dream_system).unwrap();
+        // Run until dream triggers
+        let mut triggered = false;
+        for _ in 0..500 {
+            world.run_system_once(dream_system).unwrap();
+            if world.get::<DreamJournal>(pop).is_some() {
+                triggered = true;
+                break;
+            }
+        }
+        assert!(triggered, "Dream system should add DreamJournal");
+        assert!(world.get::<DreamtThisSleep>(pop).is_some(), "Should be marked as dreamt");
+    }
+
+    #[test]
+    fn test_dream_memory_influence() {
+        let mut rng = rand::thread_rng();
+        let generator = NarrativeGenerator::from_embedded();
+        let events = vec![];
+
+        let mut memories = Memories::default();
+        memories.items.push(ActiveMemory {
+            memory_type: MemoryType::WitnessedDeath,
+            added_at: 0,
+            intensity: 1.0,
+        });
+
+        // Loop until we hit the memory case (probabilistic)
+        let mut hit_memory = false;
+        for _ in 0..100 {
+            let (content, impact, nightmare) = generate_dream_content(
+                &mut rng,
+                &events,
+                &generator,
+                Some(&memories)
+            );
+
+            if content.contains("nightmare of a friend dying") {
+                assert!(nightmare);
+                assert!(impact < 0.0);
+                hit_memory = true;
+                break;
+            }
+        }
+        assert!(hit_memory, "Should eventually dream about the traumatic memory");
+    }
+
+    #[test]
+    fn test_cleanup_marker() {
+        let mut world = World::new();
+
+        // Pop 1: Still sleeping -> Should keep marker
+        let p1 = world.spawn((
+            PopAction {
+                current: ActionType::SatisfyRest,
+                ..Default::default()
+            },
+            DreamtThisSleep
+        )).id();
+
+        // Pop 2: Woke up -> Should lose marker
+        let p2 = world.spawn((
+            PopAction {
+                current: ActionType::Work,
+                ..Default::default()
+            },
+            DreamtThisSleep
+        )).id();
+
+        world.run_system_once(cleanup_dream_marker_system).unwrap();
+
+        assert!(world.get::<DreamtThisSleep>(p1).is_some());
+        assert!(world.get::<DreamtThisSleep>(p2).is_none());
     }
 }

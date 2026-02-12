@@ -15,6 +15,7 @@ use ratatui::{
 };
 
 use crate::experimental::biography::Biography;
+use crate::experimental::dreams::DreamJournal;
 use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::utility_types::UtilityWeights;
 use crate::layer1::{
@@ -297,6 +298,8 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
     let has_structure = world.get::<Structure>(entity).is_some();
     let has_personality = world.get::<UtilityWeights>(entity).is_some();
     let personality_height = if has_personality { 2 } else { 0 };
+    let has_dream = world.get::<DreamJournal>(entity).is_some();
+    let dream_height = u16::from(has_dream);
 
     let layout = Layout::default()
         .direction(Direction::Vertical)
@@ -308,6 +311,7 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
             Constraint::Length(details_height),                   // Needs or Details
             Constraint::Length(u16::from(has_structure)),         // Structure HP
             Constraint::Length(personality_height),               // Personality + Spacer
+            Constraint::Length(dream_height),                     // Last Dream
             Constraint::Min(1),                                   // Biography
         ])
         .split(area);
@@ -443,12 +447,32 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         render_personality(frame, layout[6], weights);
     }
 
-    // 7. Biography
-    let bottom_area = layout[7];
+    // 7. Last Dream
+    if let Some(journal) = world.get::<DreamJournal>(entity) {
+        render_dream_journal(frame, layout[7], journal);
+    }
+
+    // 8. Biography
+    let bottom_area = layout[8];
     let bio_opt = world.get::<Biography>(entity);
 
     if let Some(bio) = bio_opt {
         render_biography(frame, bottom_area, bio, world);
+    }
+}
+
+fn render_dream_journal(frame: &mut Frame, area: Rect, journal: &DreamJournal) {
+    if let Some(last_dream) = &journal.last_dream {
+        let color = if last_dream.is_nightmare {
+            Color::Red
+        } else {
+            Color::LightBlue
+        };
+        let p = Paragraph::new(Line::from(vec![
+            Span::raw("Dream: "),
+            Span::styled(&last_dream.content, Style::default().fg(color)),
+        ]));
+        frame.render_widget(p, area);
     }
 }
 
@@ -867,5 +891,53 @@ mod tests {
         assert!(full_text.contains("Lumber Mill"));
         // "Production" is the title of the gauge block
         assert!(full_text.contains("Production"));
+    }
+
+    #[test]
+    fn test_inspector_render_dream() {
+        use crate::experimental::dreams::{Dream, DreamJournal};
+        use crate::layer1::pop::PopName;
+
+        let mut world = World::new();
+        world.insert_resource(Selection::default());
+        let entity = world
+            .spawn((
+                Pop,
+                PopName("Dreamer".to_string()),
+                GridPosition { x: 1, y: 1 },
+                DreamJournal {
+                    last_dream: Some(Dream {
+                        content: "dreamed of flying pigs".to_string(),
+                        tick: 100,
+                        impact: 0.1,
+                        is_nightmare: false,
+                    }),
+                    history: vec![],
+                },
+            ))
+            .id();
+
+        world.resource_mut::<Selection>().select_entity(entity);
+
+        let backend = TestBackend::new(40, 20);
+        let mut terminal = Terminal::new(backend).unwrap();
+
+        terminal
+            .draw(|f| {
+                render_inspector(f, f.area(), &world);
+            })
+            .unwrap();
+
+        let buffer = terminal.backend().buffer();
+        let cells: Vec<String> = buffer
+            .content
+            .iter()
+            .map(|c| c.symbol().to_string())
+            .collect();
+        let full_text = cells.join("");
+
+        assert!(full_text.contains("Dreamer"));
+        assert!(full_text.contains("Dream:"));
+        assert!(full_text.contains("flying pigs"));
     }
 }
