@@ -21,6 +21,7 @@ Container_Boundary(Simulation, "Simulation Core (Layer 1)") {
     Component(World, "World Entities", "farm.rs, housing.rs", "Interactable Buildings")
     Component(Resources, "Colony Resources", "resources.rs", "Global Inventory")
     Component(Map, "Map/Terrain", "map.rs", "Spatial Grid")
+    Component(Integration, "Integration Bridges", "integration.rs", "Cross-Domain Logic")
 }
 
 Container(Shared, "Shared Lib", "Utilities", "GameState, Time, Input, Logs")
@@ -47,10 +48,36 @@ Rel(Pops, World, "Interacts with")
 Rel(Pops, Resources, "Consumes/Produces")
 Rel(Pops, CabinFever, "Accumulates Stress")
 
+Rel(Integration, Pops, "Updates Needs/Health")
+Rel(Integration, World, "Reacts to Events")
+Rel(Integration, Resources, "Pollution Bridge")
+
 Rel(MapRender, Shared, "Reads State")
 Rel(MapRender, Map, "Reads Entities")
 Rel(Inspector, Shared, "Reads Selection")
 Rel(Inspector, Pops, "Reads Components")
+```
+
+## Integration Bridge Pattern
+
+To avoid circular dependencies, cross-domain logic is centralized.
+
+```mermaid
+sequenceDiagram
+    participant Source as Source Domain
+    participant Bridge as Bridge System
+    participant Target as Target Domain
+    participant Events as Event Queue
+
+    Note over Source, Target: Example: Fire affecting Health
+
+    Source->>Events: Emit Event (e.g. FireSpread)
+
+    loop Integration Phase
+        Bridge->>Events: Read Events
+        Bridge->>Source: Query Context (Fire Intensity)
+        Bridge->>Target: Apply Effect (Take Damage)
+    end
 ```
 
 ## Core Dependencies
@@ -210,3 +237,4 @@ Rel(Shared, Events, "Consumes")
 - [ADR 012: Decouple Storage from Core](./adr/012-decouple-storage-from-core.md)
 - [ADR 013: GPU Accelerated Utility AI](./adr/013-gpu-accelerated-utility-ai.md)
 - [ADR 014: Cabin Fever Mechanics](./adr/014-cabin-fever-mechanics.md)
+- [ADR 015: Centralized Integration Bridges](./adr/015-centralized-integration-bridges.md)
