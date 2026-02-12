@@ -51,7 +51,7 @@ use crate::layer1::pop::Speed;
 use crate::layer1::resources::{ColonyResources, process_logging, process_mining};
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
 use crate::layer1::social::{SocialBuff, Tavern, handle_socialize};
-use crate::layer1::terrain::TerrainGrid;
+use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::traits::{Traits, get_trait_move_speed_modifier, get_trait_work_speed_modifier};
 use crate::layer1::utility_ai::{ActionType, PopAction, StartPlan};
 use crate::shared::log::MessageLog;
@@ -66,7 +66,7 @@ pub fn combat_execution_system(world: &mut World) {
         .query::<(Entity, &MovementTarget, Option<&Equipment>)>()
         .iter(world)
         .filter(|(_, mt, _)| mt.for_action == ActionType::Fight)
-        .map(|(e, mt, eq)| (e, mt.target_entity, eq.cloned()))
+        .map(|(e, mt, eq)| (e, mt.target_entity, eq.copied()))
         .collect();
 
     for (pop_entity, target_entity, equipment_opt) in combatants {
@@ -275,36 +275,24 @@ pub fn movement_system(
     for (pop_entity, mut current_pos, mt, mut speed_opt, traits) in &mut pops {
         let trait_mod = traits.map_or(1.0, get_trait_move_speed_modifier);
 
-        // Handle variable movement speed
-        if let Some(ref mut speed) = speed_opt {
-            speed.accumulator += speed.current * trait_mod;
-            if speed.accumulator < 1.0 {
-                continue;
-            }
-            speed.accumulator -= 1.0;
+        if !should_move(speed_opt.as_deref_mut(), trait_mod) {
+            continue;
         }
 
         let target_pos = mt.target_position;
         let action = mt.for_action;
 
-        // For work/repair actions, check if adjacent to an unwalkable target (rock/tree/building)
-        // Pops work FROM adjacent tiles, not ON the target
-        if action == ActionType::Work || action == ActionType::Repair {
-            let target_walkable = is_walkable(
-                &terrain,
-                occupied_tiles.as_deref(),
-                &buildings,
-                target_pos.x,
-                target_pos.y,
-            );
-            if !target_walkable {
-                let distance =
-                    (current_pos.x - target_pos.x).abs() + (current_pos.y - target_pos.y).abs();
-                if distance == 1 {
-                    commands.entity(pop_entity).insert(AtTarget);
-                    continue;
-                }
-            }
+        // Check pre-move adjacency for work
+        if check_work_adjacency(
+            *current_pos,
+            target_pos,
+            action,
+            &terrain,
+            occupied_tiles.as_deref(),
+            &buildings,
+        ) {
+            commands.entity(pop_entity).insert(AtTarget);
+            continue;
         }
 
         let Some(new_pos) = calculate_next_position(*current_pos, target_pos) else {
@@ -328,23 +316,48 @@ pub fn movement_system(
             commands.entity(pop_entity).insert(AtTarget);
         }
 
-        // For work/repair actions on unwalkable targets, also check if now adjacent
-        if action == ActionType::Work || action == ActionType::Repair {
-            let target_walkable = is_walkable(
-                &terrain,
-                occupied_tiles.as_deref(),
-                &buildings,
-                target_pos.x,
-                target_pos.y,
-            );
-            if !target_walkable {
-                let distance = (new_pos.x - target_pos.x).abs() + (new_pos.y - target_pos.y).abs();
-                if distance == 1 {
-                    commands.entity(pop_entity).insert(AtTarget);
-                }
-            }
+        // Check post-move adjacency for work
+        if check_work_adjacency(
+            new_pos,
+            target_pos,
+            action,
+            &terrain,
+            occupied_tiles.as_deref(),
+            &buildings,
+        ) {
+            commands.entity(pop_entity).insert(AtTarget);
         }
     }
+}
+
+fn should_move(speed_opt: Option<&mut Speed>, trait_mod: f32) -> bool {
+    let Some(speed) = speed_opt else { return true };
+    speed.accumulator += speed.current * trait_mod;
+    if speed.accumulator < 1.0 {
+        return false;
+    }
+    speed.accumulator -= 1.0;
+    true
+}
+
+fn check_work_adjacency(
+    current_pos: GridPosition,
+    target_pos: GridPosition,
+    action: ActionType,
+    terrain: &TerrainGrid,
+    occupied: Option<&OccupiedTiles>,
+    buildings: &Query<(&GridPosition, &Building, Option<&Gate>)>,
+) -> bool {
+    if action != ActionType::Work && action != ActionType::Repair {
+        return false;
+    }
+
+    if is_walkable(terrain, occupied, buildings, target_pos.x, target_pos.y) {
+        return false;
+    }
+
+    let distance = (current_pos.x - target_pos.x).abs() + (current_pos.y - target_pos.y).abs();
+    distance == 1
 }
 
 /// Handles arrival at targets: assigns pops to farms/housing.
@@ -386,15 +399,6 @@ pub fn arrival_handler_system(
                 handle_hunger_arrival(pop_entity, target_entity, &mut farms, &mut commands);
                 true
             }
-            ActionType::SeekMedicalCare => {
-                assign_pop(
-                    &mut commands,
-                    pop_entity,
-                    target_entity,
-                    AssignmentType::Patient,
-                );
-                true
-            }
             ActionType::SatisfyRest => {
                 handle_rest_arrival(pop_entity, target_entity, &mut housing_q, &mut commands);
                 true
@@ -403,15 +407,18 @@ pub fn arrival_handler_system(
                 handle_socialize(&mut commands, &mut taverns, target_entity, pop_entity);
                 true
             }
-            ActionType::Research => {
-                assign_pop(
-                    &mut commands,
-                    pop_entity,
-                    target_entity,
-                    AssignmentType::LibraryWorker,
-                );
-                true
-            }
+            ActionType::SeekMedicalCare => assign_pop(
+                &mut commands,
+                pop_entity,
+                target_entity,
+                AssignmentType::Patient,
+            ),
+            ActionType::Research => assign_pop(
+                &mut commands,
+                pop_entity,
+                target_entity,
+                AssignmentType::LibraryWorker,
+            ),
             ActionType::BuryCorpse => {
                 handle_bury_corpse(
                     &mut commands,
@@ -444,11 +451,12 @@ fn assign_pop(
     pop_entity: Entity,
     target_entity: Entity,
     assignment_type: AssignmentType,
-) {
+) -> bool {
     commands.entity(pop_entity).insert(AssignedTo {
         entity: target_entity,
         assignment_type,
     });
+    true
 }
 
 fn remove_movement_components(commands: &mut Commands, pop_entity: Entity) {
@@ -465,33 +473,35 @@ fn is_walkable(
     x: i32,
     y: i32,
 ) -> bool {
-    // Check Terrain
-    if let (Ok(x_idx), Ok(y_idx)) = (usize::try_from(x), usize::try_from(y)) {
-        if !terrain
-            .get(x_idx, y_idx)
-            .is_some_and(crate::layer1::terrain::TerrainType::is_walkable)
-        {
-            return false;
-        }
-    } else {
+    // Check Terrain bounds and type
+    let Ok(x_idx) = usize::try_from(x) else { return false };
+    let Ok(y_idx) = usize::try_from(y) else { return false };
+
+    if !terrain
+        .get(x_idx, y_idx)
+        .is_some_and(TerrainType::is_walkable)
+    {
         return false;
     }
 
     // Check Buildings
-    if let Some(occupied_tiles) = occupied {
-        if occupied_tiles.0.contains(&(x, y)) {
-            for (pos, building, gate) in buildings.iter() {
-                if pos.x == x && pos.y == y {
-                    if let Some(g) = gate {
-                        if g.is_locked {
-                            return false;
-                        }
-                    } else if building.building_type.is_obstacle() {
-                        return false;
-                    }
-                    return true;
+    let Some(occupied_tiles) = occupied else {
+        return true;
+    };
+    if !occupied_tiles.0.contains(&(x, y)) {
+        return true;
+    }
+
+    for (pos, building, gate) in buildings.iter() {
+        if pos.x == x && pos.y == y {
+            if let Some(g) = gate {
+                if g.is_locked {
+                    return false;
                 }
+            } else if building.building_type.is_obstacle() {
+                return false;
             }
+            return true;
         }
     }
     true
@@ -587,7 +597,7 @@ pub fn work_execution_system(world: &mut World) {
                 mt.target_entity,
                 morale,
                 mt.for_action,
-                eq.cloned(),
+                eq.copied(),
                 trait_work_mod,
             )
         })
