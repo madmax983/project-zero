@@ -21,6 +21,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 ## MVP — Layer 2: System Simulation
 
 - [ ] `094` System View Architecture — `specs/094-system-view.md`
+- [ ] `095` System Generation — `specs/095-system-generation.md`
 
 ## MVP — User Interface
 
