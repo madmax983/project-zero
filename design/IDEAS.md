@@ -2637,3 +2637,143 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Space efficiency (narrow halls) vs. Flow efficiency (wide halls).
 
 ---
+
+## Predictive Policing
+
+**Layer:** 1
+
+**Fantasy:** The Minority Report. Stopping crime before it happens.
+
+**Mechanic:** Security stations with high-tech sensors/AI predict "Mental Breaks" or "Crimes". You can preemptively arrest pops with high probability, even if they haven't done anything yet.
+
+**Emergence:** You arrest a popular hero because they were having a bad day. The colony riots against your tyranny.
+
+**Tension:** Security (prevention) vs. Liberty (innocence).
+
+---
+
+## Satellite Constellations
+
+**Layer:** 2
+
+**Fantasy:** Creating a technological web around the world.
+
+**Mechanic:** Launching specialized satellites into Layer 2 orbit provides global Layer 1 buffs. GPS (Movement Speed), Spy (Fog of War reduction), Weather (Storm warning), Relay (Morale). Satellites decay and need replacement.
+
+**Emergence:** Your GPS network degrades during a blizzard. Explorers lose their speed buff and freeze to death just outside the airlock.
+
+**Tension:** Persistent Upkeep (launches) vs. Global Efficiency.
+
+---
+
+## Xeno-Plague Variants
+
+**Layer:** 1
+
+**Fantasy:** Diseases shouldn't just be "take damage". They should be weird.
+
+**Mechanic:** Diseases with positive and negative traits. "Crystal-Skin" (Slow, High Defense). "Hyper-Metabolism" (Eat 3x, Work 2x). "Photosensitivity" (Burn in sunlight).
+
+**Emergence:** You intentionally infect your mining penal battalion with "Stone-Lung" to make them immune to toxic gas, accepting their shortened lifespans.
+
+**Tension:** Cure the plague (safety) or Weaponize it (utility)?
+
+---
+
+## Planetary Core Tap
+
+**Layer:** 1
+
+**Fantasy:** The greed of digging too deep.
+
+**Mechanic:** Endgame structure. Drills to the mantle. Infinite Energy/Heat. Risk of "Core Destabilization" (earthquakes) or "Magma Breach" (filling the map from bottom up).
+
+**Emergence:** The tap breaks. Lava slowly rises one Z-level per day. You have to rush to build a "Generation Ship" to escape before the whole map is consumed.
+
+**Tension:** Infinite Power vs. Ultimate Doom.
+
+---
+
+## Hull Breach Suction
+
+**Layer:** 1
+
+**Fantasy:** The terrifying physics of a vacuum.
+
+**Mechanic:** If a pressurized room is breached to a vacuum, air rushes out. Pops and loose items (resources) are pulled towards the breach. Small items are lost to space. Pops take impact damage or are ejected.
+
+**Emergence:** You deconstruct a wall to expand the warehouse, forgetting to depressurize. Your entire stockpile of Gold is sucked out into orbit.
+
+**Tension:** Safety protocols (slow airlocks/depressurizing) vs. Fast construction.
+
+---
+
+## Genetic Crop Modification
+
+**Layer:** 1
+
+**Fantasy:** Improving on nature, with unintended consequences.
+
+**Mechanic:** Splicing traits into crops in the lab. "Luminescent" (Light), "Hardy" (Cold resist), "Nutrient-Dense" (Food++). Risk of unstable mutations ("Aggressive Growth", "Toxic Spores").
+
+**Emergence:** You create "Super-Corn" that grows in winter. It mutates and starts growing *through* the hull, compromising structural integrity.
+
+**Tension:** Food Security vs. Bio-Safety.
+
+---
+
+## Orbital Traffic Control
+
+**Layer:** 2
+
+**Fantasy:** The sky is crowded.
+
+**Mechanic:** As trade/mining ships increase, collision risk in orbit rises. "Traffic Control" stations reduce risk but cap throughput. Collisions drop debris/burning wreckage on Layer 1.
+
+**Emergence:** You maximize trade for a boom economy, ignoring safety. Two freighters collide, raining burning electronics on your primary hospital.
+
+**Tension:** Economic Throughput vs. Safety.
+
+---
+
+## The "Mother" Lode
+
+**Layer:** 1
+
+**Fantasy:** The legendary vein that never ends.
+
+**Mechanic:** A procedural ore node that is incredibly rich/infinite but increases in "Hazard" (Heat, Radiation, Hardness) the more you mine it.
+
+**Emergence:** You build your economy around the Mother Lode. It becomes so radioactive that miners can only work 1-hour shifts. You keep sending them in.
+
+**Tension:** Greed vs. Worker Health.
+
+---
+
+## Magnetic Storms
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The sky is beautiful and deadly to machines.
+
+**Mechanic:** Solar event. Beautiful shaders in the sky. Unshielded electronics (Turrets, Bots, High-tech benches) are disabled or damaged. Comms are cut.
+
+**Emergence:** A storm hits during a raid. Your automated defenses shut down. You have to send the pacifist scientists out with wrenches to fight the raiders.
+
+**Tension:** Low-tech reliability (Mechanical) vs. High-tech power (Electronic).
+
+---
+
+## Salvage Rights
+
+**Layer:** 3
+
+**Fantasy:** Scavenging the graveyards of the galaxy.
+
+**Mechanic:** You purchase "Rights" to debris fields in other systems. You send a Layer 2 fleet off-map for a duration. They return with randomized loot (Components, Scrap, Artifacts) or damage.
+
+**Emergence:** Your salvage fleet brings back a "Dormant Warform". It wakes up in your stockpile and rampage.
+
+**Tension:** Safe Trade vs. Risky Scavenging.
+
+---
