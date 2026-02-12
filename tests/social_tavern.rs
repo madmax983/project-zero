@@ -11,6 +11,7 @@ mod tests {
     use scale::layer1::pop::Pop;
     use scale::layer1::resources::ColonyResources;
     use scale::layer1::social::Tavern;
+    use scale::layer1::structural_integrity::RoofGrid;
     use scale::layer1::terrain::{TerrainGrid, TerrainType};
     use scale::layer1::utility_ai::{ActionType, PopAction, UtilityConfig, UtilityWeights};
     use scale::shared::state::GameState;
@@ -49,6 +50,14 @@ mod tests {
         world.insert_resource(scale::layer1::edicts::ColonyPolicies::default());
         world.insert_resource(scale::layer1::trade::MerchantState::default());
         world.insert_resource(scale::layer1::atmosphere::AtmosphereGrid::new(10, 10));
+        world.insert_resource(scale::layer1::day_night::DayNightCycle::default());
+        world.insert_resource(scale::layer1::weather::WeatherState::default());
+        world.insert_resource(scale::layer1::quirks::PlanetaryTraits::default());
+        world.insert_resource(scale::layer1::factions::Factions::default());
+        world.insert_resource(scale::layer1::taboo::TabooState::default());
+        world.insert_resource(scale::layer1::map::ScreenShake::default());
+        world.insert_resource(RoofGrid::new(10, 10));
+        world.init_resource::<Events<scale::layer1::structural_integrity::StructureCollapsed>>();
         world.init_resource::<Events<scale::layer1::chronicle::AddChronicleEvent>>();
         world.init_resource::<Events<scale::layer1::social::AffinityChange>>();
         world.init_resource::<Events<scale::layer1::pop::PopDied>>();

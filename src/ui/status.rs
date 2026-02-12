@@ -310,6 +310,7 @@ pub fn get_status_line<'a>(
 ///     Some("Outpost"),    // location
 ///     5,                  // pop count
 ///     100.0,              // food
+///     0.0,                // rations
 ///     10.0,               // tools
 ///     0.8,                // morale
 ///     None,               // season

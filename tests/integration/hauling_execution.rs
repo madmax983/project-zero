@@ -11,6 +11,7 @@ mod tests {
     use scale::layer1::utility_ai::{ActionType, PopAction};
     use scale::shared::time::SimulationTime;
     use scale::simulation::{SimulationSchedule, build_simulation_schedule};
+    use scale::layer1::structural_integrity::StructureCollapsed;
 
     fn setup_world() -> World {
         scale::setup::init_task_pools();
@@ -46,10 +47,13 @@ mod tests {
         world.init_resource::<Events<scale::layer1::chronicle::AddChronicleEvent>>();
         world.init_resource::<Events<scale::layer1::social::AffinityChange>>();
         world.init_resource::<Events<scale::layer1::pop::PopDied>>();
+        world.init_resource::<Events<StructureCollapsed>>();
         world.insert_resource(scale::layer1::visitor::VisitorSource::default());
         world.insert_resource(scale::layer1::weather::WeatherState::default());
         world.insert_resource(scale::layer1::quirks::PlanetaryTraits::default());
         world.insert_resource(scale::layer1::factions::Factions::default());
+        world.insert_resource(scale::layer1::taboo::TabooState::default());
+        world.insert_resource(scale::layer1::map::ScreenShake::default());
 
         let generator = scale::shared::narrative::NarrativeGenerator::from_embedded();
         world.insert_resource(scale::shared::colony::ColonyName {

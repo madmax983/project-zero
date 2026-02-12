@@ -38,6 +38,7 @@ mod tests {
         world.insert_resource(scale::layer1::factions::Factions::default());
         world.insert_resource(scale::layer1::ColonyMemory::default());
         world.insert_resource(scale::layer1::erosion::ErosionGrid::new(10, 10));
+        world.insert_resource(scale::layer1::taboo::TabooState::default());
 
         // Needed for entity spawning
         world.insert_resource(scale::layer1::terrain::TerrainGrid {
