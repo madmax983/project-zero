@@ -691,3 +691,162 @@ FACTION_FORMED:
     - DIVISION (high)
     - LOYALTY (high, within faction)
 ```
+
+---
+
+## Atmosphere Chaining
+
+```yaml
+ATMOSPHERE_EVENT:
+  enables:
+    - SICKNESS_OUTBREAK (medium, if toxic)
+    - WORK_STOPPAGE (low)
+  increases:
+    - FEAR (medium)
+    - CAUTION (high)
+```
+
+---
+
+## Cabin Fever Chaining
+
+```yaml
+CONFINEMENT_ALERT:
+  enables:
+    - CABIN_FEVER_BREAK (high)
+    - BRAWL (medium)
+  increases:
+    - STRESS (high)
+    - AGGRESSION (high)
+
+CABIN_FEVER_BREAK:
+  enables:
+    - ASSAULT (medium)
+    - VANDALISM (high)
+  increases:
+    - FEAR (medium)
+    - MORALE_LOSS (high)
+```
+
+---
+
+## Weather Chaining
+
+```yaml
+WEATHER_EVENT_START:
+  enables:
+    - WEATHER_DAMAGE (high, if storm)
+    - POWER_OUTAGE (medium)
+    - CONFINEMENT_ALERT (high)
+  increases:
+    - FEAR (medium)
+    - AWE (low)
+
+WEATHER_DAMAGE:
+  enables:
+    - REBUILDING_EFFORT (high)
+    - RESOURCE_CRISIS (medium, if crops lost)
+  increases:
+    - TRAUMA (medium)
+```
+
+---
+
+## Inspector Chaining
+
+```yaml
+INSPECTOR_ARRIVAL:
+  enables:
+    - INSPECTOR_JUDGMENT (always)
+    - CLEANUP_EFFORT (high, panic cleaning)
+  increases:
+    - ANXIETY (high)
+    - PRODUCTIVITY (medium, look busy)
+
+INSPECTOR_JUDGMENT:
+  enables:
+    - CELEBRATION (if S/A grade)
+    - PUNISHMENT (if F grade)
+  increases:
+    - MORALE (variable)
+    - REPUTATION (variable)
+```
+
+---
+
+## Stowaway Chaining
+
+```yaml
+THEFT_REPORT:
+  enables:
+    - STOWAWAY_DISCOVERED (medium)
+    - PARANOIA (high)
+    - RATIONING (low)
+  increases:
+    - SUSPICION (high)
+    - UNREST (medium)
+
+STOWAWAY_DISCOVERED:
+  enables:
+    - ARREST (high)
+    - RECRUITMENT (medium)
+  increases:
+    - SAFETY (medium)
+    - CURIOSITY (low)
+```
+
+---
+
+## Mood Chaining
+
+```yaml
+PANIC_SPREAD:
+  enables:
+    - STAMPEDE (low)
+    - WORK_STOPPAGE (high)
+  increases:
+    - CHAOS (high)
+
+JOY_SPREAD:
+  enables:
+    - CELEBRATION (medium)
+    - PRODUCTIVITY_BOOST (high)
+  increases:
+    - COHESION (high)
+```
+
+---
+
+## Omen Chaining
+
+```yaml
+OMEN_WITNESSED:
+  enables:
+    - TABOO_BROKEN (low, fear reaction)
+    - RITUAL_PERFORMANCE (high)
+  increases:
+    - SUPERSTITION (high)
+    - ANXIETY (medium)
+
+TABOO_BROKEN:
+  enables:
+    - ACCIDENT (high, perceived cause)
+    - OSTRACISM (medium)
+  increases:
+    - FEAR (high)
+    - DIVISION (medium)
+```
+
+---
+
+## Shift Work Chaining
+
+```yaml
+SHIFT_CHANGE_DISPUTE:
+  enables:
+    - WORK_STOPPAGE (medium)
+    - BRAWL (low)
+  increases:
+    - FATIGUE (medium)
+    - RESENTMENT (high)
+```

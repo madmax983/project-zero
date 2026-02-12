@@ -999,3 +999,103 @@
 **Code reference:** Low `O2`
 **Usage:**
 - "Thin air makes for slow work."
+
+---
+
+## Cabin Fever
+
+### the Walls / the Cage
+
+**Replaces:** feeling of confinement
+**Code reference:** `CabinFever` component
+**Usage:**
+- "The Walls are closing in."
+- "He can't stand the Cage anymore."
+
+### cage-madness
+
+**Replaces:** high stress from confinement
+**Code reference:** `CabinFever.stress > 90`
+**Usage:**
+- "The cage-madness took him."
+- "Speaking nonsense—cage-madness."
+
+---
+
+## Shift Work
+
+### night-walkers / owls
+
+**Replaces:** night shift workers
+**Code reference:** `ShiftSchedule::Night`
+**Usage:**
+- "The night-walkers are silent."
+- "Only owls work the forge now."
+
+### the Long Watch
+
+**Replaces:** extended or difficult shifts
+**Code reference:** `WorkState::Working` (long duration)
+**Usage:**
+- "His eyes are red from the Long Watch."
+- "The Long Watch ends at dawn."
+
+---
+
+## Weather
+
+### the Scourge
+
+**Replaces:** severe storms
+**Code reference:** `WeatherType::Storm`
+**Usage:**
+- "The Scourge strips the paint."
+- "Hiding from the Scourge."
+
+### sky-wrath
+
+**Replaces:** lightning, thunder
+**Code reference:** `WeatherType::Thunder`
+**Usage:**
+- "Sky-wrath struck the tower."
+- "Listening to the sky-wrath."
+
+---
+
+## The Inspector
+
+### the Eye / the Judge
+
+**Replaces:** The Inspector entity
+**Code reference:** `Inspector` component
+**Usage:**
+- "The Eye sees all."
+- "The Judge is not pleased."
+
+### judgment
+
+**Replaces:** inspection report
+**Code reference:** `INSPECTOR_JUDGMENT`
+**Usage:**
+- "Awaiting judgment."
+- "The judgment was harsh."
+
+---
+
+## Stowaway
+
+### the Uninvited
+
+**Replaces:** stowaway entity
+**Code reference:** `Stowaway` component
+**Usage:**
+- "We have an Uninvited guest."
+- "Hunting the Uninvited."
+
+### ghost-eater
+
+**Replaces:** food thief
+**Code reference:** `theft_system`
+**Usage:**
+- "A ghost-eater is in the stores."
+- "Rations gone to the ghost-eater."
