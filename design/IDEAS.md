@@ -2553,3 +2553,87 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Deep dive (rich resources/high damage) vs. Shallow skim (low resources/safe).
 
 ---
+
+## Maintenance Debt
+
+**Layer:** 1
+
+**Fantasy:** "It'll hold together for one more shift."
+
+**Mechanic:** Instead of repairing buildings immediately (costing resources/time), players can "Defer" maintenance. The building continues to function but accumulates "Debt". If Debt > Integrity, it suffers a Catastrophic Failure (explosion/collapse), dealing damage proportional to the debt.
+
+**Emergence:** You defer maintenance on the fusion reactor during a raid to keep the guns firing. You win the raid, but the reactor explodes five minutes later, taking out the hospital.
+
+**Tension:** Short-term uptime (Defer) vs. Long-term safety (Repair).
+
+---
+
+## Gravity Slingshots
+
+**Layer:** 2
+
+**Fantasy:** Flying like a leaf on the wind.
+
+**Mechanic:** Moving adjacent to massive gravity wells (Stars, Gas Giants) grants a "Slingshot" momentum bonus (free movement) for the next turn but locks the trajectory. Miscalculation flings ships into deep space or the atmosphere.
+
+**Emergence:** A pirate fleet chases you. You dive into the gravity well of the local sun. You survive the G-force; they burn up.
+
+**Tension:** Safe, slow direct path vs. Fast, dangerous gravity assist.
+
+---
+
+## The Derelict Lottery
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Every wreck is a treasure chest that might bite.
+
+**Mechanic:** You find "Derelict Hulks" in orbit. Scanning gives vague info ("High Energy", "Biologicals"). You must tow them to Layer 1 to open them. They contain massive loot (Ancient Tech, Raw Resources) or massive threats (Xenomorphs, Plagues) that spill out immediately upon landing.
+
+**Emergence:** You tow a "Medical Frigate" hoping for medicine. It was a quarantine ship. You just landed a zombie plague in your city center.
+
+**Tension:** Safe scrap (orbit) vs. The Mystery Box (ground).
+
+---
+
+## Resource Purity
+
+**Layer:** 1
+
+**Fantasy:** Not all dirt is created equal.
+
+**Mechanic:** Ore nodes spawn with a "Purity" % (e.g., Iron 40%, Slag 60%). Low purity nodes produce more "Waste" items during refining. High purity nodes are rare and contested. Technology can improve extraction efficiency.
+
+**Emergence:** You build a massive industrial complex on a convenient Iron deposit, only to realize it's 10% purity. Your base floods with slag, blocking all stockpiles.
+
+**Tension:** Exploit the nearby low-quality source or travel for the high-quality one?
+
+---
+
+## The "Ship of Theseus" Protocol
+
+**Layer:** 1
+
+**Fantasy:** At what point do you stop being human?
+
+**Mechanic:** Pops with >50% Cybernetic replacements (Limbs, Organs) gain the "Cyborg" trait. They stop consuming Food and start consuming Power (recharging). They gain immunity to disease but vulnerability to EMP.
+
+**Emergence:** A famine strikes. Your biological pops starve. Your cyborgs are fine... until the power plant fails. Then the cyborgs die while the biologicals survive on raw moss.
+
+**Tension:** Biological resilience vs. Mechanical efficiency.
+
+---
+
+## The Gridlock
+
+**Layer:** 1
+
+**Fantasy:** The claustrophobia of a busy station.
+
+**Mechanic:** Tiles have a "Crowding" penalty. If multiple Pops occupy/traverse a tile in a short window, movement speed drops drastically. "Wide" corridors (3-tile) reduce this.
+
+**Emergence:** Shift change at the mine causes a stampede in the single-tile hallway. Productivity drops by 15% just because people are bumping into each other. You are forced to bulldoze housing to widen the roads.
+
+**Tension:** Space efficiency (narrow halls) vs. Flow efficiency (wide halls).
+
+---
