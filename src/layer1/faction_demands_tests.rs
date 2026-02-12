@@ -41,7 +41,10 @@ mod tests {
         }
 
         // Run demand generation system
-        let _ = bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, update_faction_demands_system);
+        let _ = bevy_ecs::system::RunSystemOnce::run_system_once(
+            &mut world,
+            update_faction_demands_system,
+        );
 
         let factions = world.resource::<Factions>();
         let data = factions.get(FactionId::MinersGuild).unwrap();
@@ -70,7 +73,10 @@ mod tests {
         }
 
         // Run strike update system
-        let _ = bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, update_faction_strikes_system);
+        let _ = bevy_ecs::system::RunSystemOnce::run_system_once(
+            &mut world,
+            update_faction_strikes_system,
+        );
 
         let factions = world.resource::<Factions>();
         let data = factions.get(FactionId::MinersGuild).unwrap();
@@ -134,7 +140,10 @@ mod tests {
             .toggle(Policy::DoubleShifts);
 
         // Run update system
-        let _ = bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, update_faction_demands_system);
+        let _ = bevy_ecs::system::RunSystemOnce::run_system_once(
+            &mut world,
+            update_faction_demands_system,
+        );
 
         let factions = world.resource::<Factions>();
         let data = factions.get(FactionId::MinersGuild).unwrap();

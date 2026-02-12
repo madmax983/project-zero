@@ -28,6 +28,7 @@ use super::housing::Housing;
 use super::social::Tavern;
 use super::stockpile::Stockpile;
 use crate::layer1::energy::{Conduit, PowerConsumer, PowerSource};
+use crate::layer1::heirloom::Heirloom;
 use crate::layer1::lighting::LightSource;
 use crate::layer1::resources::{ColonyResources, RefiningProgress};
 use crate::layer1::tech::{Library, Tech, TechState};
@@ -182,6 +183,10 @@ pub enum BuildingType {
     Gate,
     /// Defensive tower.
     Tower,
+    /// Ancient power generator (Heirloom).
+    AncientReactor,
+    /// Ancient manufacturing unit (Heirloom).
+    AncientFabricator,
 }
 
 impl BuildingType {
@@ -272,6 +277,8 @@ impl BuildingType {
             Self::Wall => "Wall",
             Self::Gate => "Gate",
             Self::Tower => "Tower",
+            Self::AncientReactor => "Ancient Reactor",
+            Self::AncientFabricator => "Ancient Fabricator",
         }
     }
 
@@ -280,7 +287,7 @@ impl BuildingType {
     pub const fn char(&self) -> char {
         match self {
             Self::Housing => 'H',
-            Self::Farm => 'F',
+            Self::Farm | Self::AncientFabricator => 'F',
             Self::Stockpile => '=',
             Self::Smokehouse => '♨',
             Self::LumberMill => 'L',
@@ -300,6 +307,7 @@ impl BuildingType {
             Self::PowerPole => '|',
             Self::Wall => '#',
             Self::Tower => 'O',
+            Self::AncientReactor => 'R',
         }
     }
 
@@ -452,6 +460,7 @@ impl BuildingType {
                 metal: 2.0,
                 ..ColonyResources::zeroed()
             },
+            Self::AncientReactor | Self::AncientFabricator => ColonyResources::zeroed(),
         }
     }
 
@@ -799,6 +808,43 @@ fn spawn_building(
                     color: (220, 220, 100), // Yellowish
                 },
             ));
+        }
+        BuildingType::AncientReactor => {
+            entity.insert((
+                PowerSource { output: 50.0 }, // Massive power
+                Heirloom,
+                LightSource {
+                    radius: 8.0,
+                    intensity: 1.0,
+                    color: (255, 215, 0), // Gold
+                },
+            ));
+            // Set high HP
+            if let Some(mut structure) = entity.get_mut::<crate::layer1::structure::Structure>() {
+                structure.max_hp = 1000.0;
+                structure.current_hp = 1000.0;
+            }
+        }
+        BuildingType::AncientFabricator => {
+            entity.insert((
+                // Refining logic needs to be added, maybe RefiningProgress with high speed?
+                // For now, just mark it.
+                RefiningProgress {
+                    current: 0.0,
+                    max: 1.0, // Very fast? Default is 10.0
+                },
+                Heirloom,
+                LightSource {
+                    radius: 6.0,
+                    intensity: 0.8,
+                    color: (0, 255, 255), // Cyan
+                },
+                ShiftSchedule::default(),
+            ));
+            if let Some(mut structure) = entity.get_mut::<crate::layer1::structure::Structure>() {
+                structure.max_hp = 1000.0;
+                structure.current_hp = 1000.0;
+            }
         }
     }
 }
