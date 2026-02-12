@@ -22,6 +22,7 @@ use crate::gpu::evaluate::gpu_evaluate_actions;
 use crate::layer1::{
     AddChronicleEvent, AffinityChange, PopDied, advance_season_system, aging_system,
     apply_cabin_fever_morale_system, apply_lighting_penalties_system, apply_noise_effects_system,
+    apply_taboo_stress_system,
     apply_quirk_modifiers_system, apply_weather_effects_system, arrival_handler_system,
     art_generation_system, art_observation_system, assign_sleepwalk_target_system,
     check_milestones_system, check_sleepwalking_start_system, chronicle_event_handler_system,
@@ -39,9 +40,10 @@ use crate::layer1::{
         apply_founder_benefits_system, apply_mood_modifiers_system,
         check_generational_friction_system, mood_lifecycle_system,
     },
-    spoilage_system, starvation_damage_system, theft_system, track_plan_outcomes_system,
-    update_action_timer_system, update_cabin_fever_system, update_lighting_system,
-    update_noise_system, update_resource_caps_system, update_weather_system, vermin_growth_system,
+    spoilage_system, starvation_damage_system, taboo_event_system, theft_system,
+    track_plan_outcomes_system, update_action_timer_system, update_cabin_fever_system,
+    update_lighting_system, update_noise_system, update_resource_caps_system,
+    update_taboo_duration_system, update_weather_system, vermin_growth_system,
     vermin_morale_system, work_execution_system,
 };
 use crate::shared::time::SimulationTime;
@@ -78,6 +80,7 @@ pub fn build_simulation_schedule() -> Schedule {
         update_event_buffer::<AddChronicleEvent>,
         update_event_buffer::<AffinityChange>,
         update_event_buffer::<PopDied>,
+        update_event_buffer::<crate::layer1::structural_integrity::StructureCollapsed>,
     ));
 
     // --- AI Decision Chain (GPU compute) ---
@@ -134,6 +137,7 @@ pub fn build_simulation_schedule() -> Schedule {
     schedule.add_systems((
         update_resource_caps_system.after(work_execution_system),
         advance_season_system.after(work_execution_system),
+        update_taboo_duration_system.after(work_execution_system),
         update_weather_system.after(work_execution_system),
         produce_food_system.after(work_execution_system),
         process_refining_system.after(work_execution_system),
@@ -209,6 +213,9 @@ pub fn build_simulation_schedule() -> Schedule {
         faction_satisfaction_morale_bridge
             .after(apply_cabin_fever_morale_system)
             .before(mood_lifecycle_system),
+        apply_taboo_stress_system
+            .after(decay_needs_system)
+            .before(mood_lifecycle_system),
         mood_lifecycle_system.after(decay_needs_system),
     ));
 
@@ -254,6 +261,7 @@ pub fn build_simulation_schedule() -> Schedule {
         chronicle_rumor_bridge_system.after(check_milestones_system),
         pop_death_chronicle_bridge.after(death_system),
         art_observation_system.after(death_system),
+        taboo_event_system.after(death_system),
     ));
 
     schedule

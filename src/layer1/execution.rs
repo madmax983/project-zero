@@ -66,7 +66,7 @@ pub fn combat_execution_system(world: &mut World) {
         .query::<(Entity, &MovementTarget, Option<&Equipment>)>()
         .iter(world)
         .filter(|(_, mt, _)| mt.for_action == ActionType::Fight)
-        .map(|(e, mt, eq)| (e, mt.target_entity, eq.cloned()))
+        .map(|(e, mt, eq)| (e, mt.target_entity, eq.copied()))
         .collect();
 
     for (pop_entity, target_entity, equipment_opt) in combatants {
@@ -587,7 +587,7 @@ pub fn work_execution_system(world: &mut World) {
                 mt.target_entity,
                 morale,
                 mt.for_action,
-                eq.cloned(),
+                eq.copied(),
                 trait_work_mod,
             )
         })
@@ -835,6 +835,7 @@ mod tests {
         world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
         world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
         world.insert_resource(OccupiedTiles::default());
+        world.insert_resource(crate::layer1::taboo::TabooState::default());
         world
     }
 

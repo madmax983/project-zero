@@ -93,6 +93,9 @@ impl MaterialType {
     }
 
     /// Returns the next material in the cycle.
+    ///
+    /// # Panics
+    /// Panics if enum has no variants.
     #[must_use]
     pub fn next(&self) -> Self {
         let mut iter = Self::iter();
@@ -863,15 +866,14 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
     }
 
     // Get material
-    let mut material = world
-        .get_resource::<BuildMode>()
-        .map(|m| m.selected_material)
-        .unwrap_or_default();
-
-    // If building doesn't support material, force default (Wood)
-    if !building_type.supports_material() {
-        material = MaterialType::default();
-    }
+    let material = if building_type.supports_material() {
+        world
+            .get_resource::<BuildMode>()
+            .map(|m| m.selected_material)
+            .unwrap_or_default()
+    } else {
+        MaterialType::default()
+    };
 
     // Check affordability and deduct cost
     let cost = building_type.cost(material);

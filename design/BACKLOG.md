@@ -14,7 +14,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `077` Emergent Festivals — `specs/077-emergent-festivals.md`
 - [ ] `085` Faction Demands & Strikes — `specs/085-faction-demands-strikes.md`
 - [ ] `087` Food Preservation — `specs/087-food-preservation.md`
-- [ ] `088` Omens & Taboos — `specs/088-omens-and-taboos.md`
 - [ ] `089` Material Provenance — `specs/089-material-provenance.md`
 - [ ] `090` Emotional Contagion — `specs/090-emotional-contagion.md`
 - [ ] `091` The Inspector — `specs/091-the-inspector.md`

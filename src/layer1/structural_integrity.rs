@@ -138,6 +138,19 @@ pub fn apply_collapse(world: &mut World, pos: GridPosition) {
     if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
         log.add(format!("CAVE-IN at ({}, {})!", pos.x, pos.y));
     }
+
+    // 4. Emit Collapse Event
+    // We check existence because unit tests might not initialize this event.
+    if world.contains_resource::<Events<StructureCollapsed>>() {
+        world.send_event(StructureCollapsed { pos });
+    }
+}
+
+/// Event triggered when a roof collapses due to lack of support.
+#[derive(Event, Debug, Clone)]
+pub struct StructureCollapsed {
+    /// Location of the collapse.
+    pub pos: GridPosition,
 }
 
 #[cfg(test)]

@@ -101,15 +101,13 @@ pub fn faction_satisfaction_morale_bridge(
     mut query: Query<(&crate::layer1::factions::FactionMember, &mut Needs)>,
 ) {
     for (member, mut needs) in &mut query {
-        if let Some(faction_id) = member.faction_id {
-            if let Some(data) = factions.get(faction_id) {
-                // If satisfaction < 0.9, apply penalty
-                // Penalty scales: 0.9 -> 0.0, 0.0 -> 0.001 (approx 0.001)
-                // Let's use 0.001 per tick for max dissatisfaction (0.0)
-                if data.satisfaction < 0.9 {
-                    let penalty = (0.9 - data.satisfaction) * 0.001;
-                    needs.leisure = (needs.leisure - penalty).max(0.0);
-                }
+        if let Some(data) = member.faction_id.and_then(|id| factions.get(id)) {
+            // If satisfaction < 0.9, apply penalty
+            // Penalty scales: 0.9 -> 0.0, 0.0 -> 0.001 (approx 0.001)
+            // Let's use 0.001 per tick for max dissatisfaction (0.0)
+            if data.satisfaction < 0.9 {
+                let penalty = (0.9 - data.satisfaction) * 0.001;
+                needs.leisure = (needs.leisure - penalty).max(0.0);
             }
         }
     }

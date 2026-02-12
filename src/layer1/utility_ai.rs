@@ -586,11 +586,9 @@ pub fn evaluate_actions_system(world: &mut World) {
     let config = world.resource::<UtilityConfig>().clone();
 
     // Use reusable buffer to avoid repeated heap allocations
-    let mut buffer = if let Some(b) = world.remove_resource::<UtilityAIBuffer>() {
-        b
-    } else {
-        UtilityAIBuffer::default()
-    };
+    let mut buffer = world
+        .remove_resource::<UtilityAIBuffer>()
+        .unwrap_or_default();
 
     buffer.pop_data.clear();
 
@@ -671,6 +669,7 @@ pub fn evaluate_actions_system(world: &mut World) {
     let cycle = world
         .resource::<crate::layer1::day_night::DayNightCycle>()
         .clone();
+    let taboo_state = world.resource::<crate::layer1::taboo::TabooState>().clone();
 
     // Evaluate each pop
     for (
@@ -808,7 +807,9 @@ pub fn evaluate_actions_system(world: &mut World) {
                 if let Some((utility, target)) =
                     evaluate_work(&pop_pos, &weights, designations_state.iter(world))
                 {
-                    check_best(ActionType::Work, utility, Some(target));
+                    let penalty =
+                        crate::layer1::taboo::evaluate_taboo_penalty(ActionType::Work, &taboo_state);
+                    check_best(ActionType::Work, utility + penalty, Some(target));
                 }
 
                 // Evaluate Refine
@@ -1023,6 +1024,7 @@ mod tests {
         crate::setup::init_task_pools();
         let mut world = World::new();
         world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
+        world.insert_resource(crate::layer1::taboo::TabooState::default());
         world
     }
 
@@ -1213,6 +1215,7 @@ mod tests {
         world.insert_resource(SimulationTime::default());
         world.insert_resource(ColonyResources::default());
         world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
+        world.insert_resource(crate::layer1::taboo::TabooState::default());
 
         // Starving pop currently idle
         let pop = world
@@ -1264,6 +1267,7 @@ mod tests {
         world.insert_resource(SimulationTime::default());
         world.insert_resource(ColonyResources::default());
         world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
+        world.insert_resource(crate::layer1::taboo::TabooState::default());
 
         let pop = world
             .spawn((
@@ -1514,6 +1518,7 @@ mod tests {
         world.insert_resource(SimulationTime::default());
         world.insert_resource(ColonyResources::default());
         world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
+        world.insert_resource(crate::layer1::taboo::TabooState::default());
 
         let pop = world
             .spawn((
