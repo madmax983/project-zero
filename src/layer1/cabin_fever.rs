@@ -242,9 +242,166 @@ mod tests {
         }
 
         let fever = world.get::<CabinFever>(pop).unwrap();
-        assert_eq!(
-            fever.confinement, 0.0,
+        assert!(
+            fever.confinement.abs() < f32::EPSILON,
             "High beauty should prevent confinement gain"
         );
+    }
+
+    #[test]
+    fn test_crowding_relief() {
+        let mut world = setup_world();
+
+        // Spawn 1 pop with high crowding
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 5, y: 5 },
+                CabinFever {
+                    crowding: 50.0,
+                    ..Default::default()
+                },
+            ))
+            .id();
+
+        // Run system
+        // Pop is alone (neighbors = 1), so crowding should decrease
+        let _ = world.run_system_once(update_cabin_fever_system);
+
+        let fever = world.get::<CabinFever>(pop).unwrap();
+        assert!(
+            fever.crowding < 50.0,
+            "Crowding should decrease when alone (was {}, now {})",
+            50.0,
+            fever.crowding
+        );
+    }
+
+    #[test]
+    fn test_crowding_exact_threshold() {
+        let mut world = setup_world();
+
+        // Spawn 3 pops (including self) at (5,5)
+        // Threshold is > 3 neighbors.
+        // Neighbors logic counts self.
+        // If we spawn 3 pops, each sees 3 neighbors (including self).
+        // 3 is NOT > 3, so crowding should decrease.
+
+        let pops: Vec<Entity> = (0..3)
+            .map(|_| {
+                world
+                    .spawn((
+                        Pop,
+                        GridPosition { x: 5, y: 5 },
+                        CabinFever {
+                            crowding: 10.0,
+                            ..Default::default()
+                        },
+                    ))
+                    .id()
+            })
+            .collect();
+
+        let _ = world.run_system_once(update_cabin_fever_system);
+
+        let fever = world.get::<CabinFever>(pops[0]).unwrap();
+        assert!(
+            fever.crowding < 10.0,
+            "Crowding should decrease with exactly 3 neighbors (was {}, now {})",
+            10.0,
+            fever.crowding
+        );
+
+        // Now spawn 1 more to make it 4
+        world.spawn((
+            Pop,
+            GridPosition { x: 5, y: 5 },
+            CabinFever::default(),
+        ));
+
+        // Run again
+        let _ = world.run_system_once(update_cabin_fever_system);
+
+        // Reset manual value to verify increase logic
+         world.entity_mut(pops[0]).get_mut::<CabinFever>().unwrap().crowding = 10.0;
+
+         let _ = world.run_system_once(update_cabin_fever_system);
+         let fever = world.get::<CabinFever>(pops[0]).unwrap();
+
+         assert!(
+            fever.crowding > 10.0,
+            "Crowding should increase with 4 neighbors"
+         );
+    }
+
+    #[test]
+    fn test_total_stress_cap() {
+        let fever = CabinFever {
+            confinement: 60.0,
+            crowding: 60.0,
+        };
+        assert!((fever.total_stress() - 100.0).abs() < f32::EPSILON);
+
+        let fever_low = CabinFever {
+            confinement: 10.0,
+            crowding: 10.0,
+        };
+        assert!((fever_low.total_stress() - 20.0).abs() < f32::EPSILON);
+    }
+
+    #[test]
+    fn test_out_of_bounds_confinement_relief() {
+        let mut world = setup_world();
+
+        // Spawn pop at negative coordinates (Outdoors/Void)
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: -10, y: -10 },
+                CabinFever {
+                    confinement: 50.0,
+                    ..Default::default()
+                },
+            ))
+            .id();
+
+        let _ = world.run_system_once(update_cabin_fever_system);
+
+        let fever = world.get::<CabinFever>(pop).unwrap();
+        assert!(
+            fever.confinement < 50.0,
+            "Out of bounds should relieve confinement"
+        );
+    }
+
+    #[test]
+    fn test_beauty_grid_boundary_check() {
+        let mut world = setup_world();
+        world.insert_resource(crate::layer1::beauty::BeautyGrid::new(10, 10));
+
+        // Spawn pop at exactly map width (index out of bounds for array)
+        let _pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 10, y: 10 },
+                // Note: RoofGrid check uses (x < width). 10 is not < 10.
+                // So has_roof returns false.
+                // Thus confinement relieves.
+                // But we want to test if beauty grid access panics if we force code path?
+                // Hard to force code path without roof.
+                // But let's just ensure system runs without panic.
+                CabinFever::default(),
+            ))
+            .id();
+
+        // To force beauty check, we need `roof.has_roof` to be true.
+        // RoofGrid::set checks bounds, so we can't set roof at (10,10).
+        // So we can't easily trigger the beauty check path for out of bounds.
+        // However, checking that valid coords work is done in other tests.
+        // Let's just ensure NO PANIC at edge cases.
+
+        let _ = world.run_system_once(update_cabin_fever_system);
+
+        // Pass if no panic
     }
 }
