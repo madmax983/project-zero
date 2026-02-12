@@ -289,7 +289,7 @@ mod tests {
     fn test_gpu_evaluate_noop_without_context() {
         crate::setup::init_task_pools();
         let mut world = World::new();
-        world.insert_resource(crate::layer1::utility_ai::UtilityConfig::default());
+        world.insert_resource(crate::layer1::utility_types::UtilityConfig::default());
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
         world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
         world.insert_resource(crate::layer1::taboo::TabooState::default());
@@ -302,7 +302,7 @@ mod tests {
     fn test_gpu_evaluate_noop_no_pops() {
         crate::setup::init_task_pools();
         let mut world = World::new();
-        world.insert_resource(crate::layer1::utility_ai::UtilityConfig::default());
+        world.insert_resource(crate::layer1::utility_types::UtilityConfig::default());
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
         world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
         world.insert_resource(crate::layer1::taboo::TabooState::default());

@@ -1,7 +1,7 @@
 use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::map::GridPosition;
-use crate::layer1::utility_ai::{ActionType, UtilityWeights};
-use crate::layer1::utility_ai::{calculate_context_score, calculate_success_modifier};
+use crate::layer1::utility_types::{ActionType, UtilityWeights};
+use crate::layer1::utility_types::{calculate_context_score, calculate_success_modifier};
 use bevy_ecs::prelude::*;
 
 /// Evaluates the utility of performing designated work (Mining, Building, etc.).
@@ -54,7 +54,7 @@ mod tests {
     use super::*;
     use crate::layer1::designation::{Designation, DesignationType};
     use crate::layer1::map::GridPosition;
-    use crate::layer1::utility_ai::UtilityWeights;
+    use crate::layer1::utility_types::UtilityWeights;
 
     #[test]
     fn test_evaluate_work_no_designations() {

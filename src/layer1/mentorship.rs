@@ -19,7 +19,7 @@ use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::execution::{AtTarget, MovementTarget};
 use crate::layer1::map::GridPosition;
 use crate::layer1::skills::Skills;
-use crate::layer1::utility_ai::ActionType;
+use crate::layer1::utility_types::ActionType;
 
 /// System to detect and establish mentorship relationships.
 /// Runs periodically to find Master-Apprentice pairs based on proximity and skill gap.
@@ -123,7 +123,7 @@ mod tests {
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
     use crate::layer1::skills::{SkillType, Skills};
-    use crate::layer1::utility_ai::ActionType;
+    use crate::layer1::utility_types::ActionType;
     use bevy_ecs::prelude::*;
 
     #[test]

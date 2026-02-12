@@ -1,7 +1,7 @@
 //! Justice System: Crime and Punishment
 //!
 //! Handles law enforcement within the colony. Pops can be marked as [`Wanted`] for crimes (like Vandalism).
-//! Designated Wardens (pops performing [`crate::layer1::utility_ai::ActionType::Warden`]) can arrest them
+//! Designated Wardens (pops performing [`crate::layer1::utility_types::ActionType::Warden`]) can arrest them
 //! and escort them to a [`crate::layer1::zone::ZoneType::Jail`].
 //!
 //! # Systems
@@ -138,7 +138,7 @@ pub fn execute_arrest_system(world: &mut World, _guard_entity: Entity, target_en
         .entity_mut(target_entity)
         .remove::<MovementTarget>()
         .remove::<AtTarget>()
-        .remove::<crate::layer1::utility_ai::StartPlan>();
+        .remove::<crate::layer1::utility_types::StartPlan>();
 
     if let Some(mut action) = world.get_mut::<PopAction>(target_entity) {
         action.current = ActionType::Idle;
@@ -189,7 +189,7 @@ mod tests {
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
     use crate::layer1::unrest::{MentalBreakType, MentalState};
-    use crate::layer1::utility_ai::PopAction;
+    use crate::layer1::utility_types::PopAction;
     use crate::layer1::zone::{ZoneGrid, ZoneType};
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
@@ -236,7 +236,7 @@ mod tests {
                 Pop,
                 GridPosition { x: 0, y: 0 },
                 PopAction::default(),
-                crate::layer1::utility_ai::UtilityWeights::default(), // Warden weight implied default
+                crate::layer1::utility_types::UtilityWeights::default(), // Warden weight implied default
             ))
             .id();
 
@@ -301,8 +301,8 @@ mod tests {
     #[test]
     fn test_warden_execution_system_integration() {
         use crate::layer1::execution::{AtTarget, MovementTarget};
-        use crate::layer1::utility_ai::ActionType;
-        use crate::layer1::utility_ai::PopAction;
+        use crate::layer1::utility_types::ActionType;
+        use crate::layer1::utility_types::PopAction;
 
         let mut world = setup_world();
 

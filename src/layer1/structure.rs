@@ -120,7 +120,7 @@ mod tests {
     use crate::layer1::fire::{Fire, Flammable};
     use crate::layer1::structure::{Structure, fire_damage_structure_system};
     use bevy_ecs::prelude::*;
-    // use crate::layer1::utility_ai::ActionType;
+    // use crate::layer1::utility_types::ActionType;
 
     #[test]
     fn test_structure_component_defaults() {

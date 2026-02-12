@@ -13,7 +13,7 @@ mod tests {
     fn setup_world() -> World {
         let mut world = World::new();
         crate::setup::init_task_pools();
-        world.insert_resource(crate::layer1::utility_ai::UtilityConfig::default());
+        world.insert_resource(crate::layer1::utility_types::UtilityConfig::default());
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
         world.insert_resource(crate::shared::time::SimulationTime::default());
         world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
@@ -71,7 +71,7 @@ mod tests {
                     ..Default::default()
                 },
                 GridPosition { x: 0, y: 0 },
-                crate::layer1::utility_ai::UtilityWeights::default(),
+                crate::layer1::utility_types::UtilityWeights::default(),
             ))
             .id();
 
@@ -85,7 +85,7 @@ mod tests {
     #[test]
     fn test_sleepwalking_movement() {
         use crate::layer1::execution::{movement_system, process_start_plan_system};
-        use crate::layer1::utility_ai::StartPlan;
+        use crate::layer1::utility_types::StartPlan;
 
         let mut world = setup_world();
         world.insert_resource(crate::layer1::terrain::TerrainGrid {
@@ -106,7 +106,7 @@ mod tests {
                     ticks_committed: 10,
                     ..Default::default()
                 },
-                crate::layer1::utility_ai::UtilityWeights::default(),
+                crate::layer1::utility_types::UtilityWeights::default(),
             ))
             .id();
 

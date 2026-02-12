@@ -1,5 +1,4 @@
 #![allow(missing_docs, clippy::collapsible_if)]
-use crate::layer1::map::GridPosition;
 use bevy_ecs::prelude::*;
 #[derive(Component, Default, Debug, Clone, Copy)]
 pub struct Drafted;
@@ -21,39 +20,6 @@ pub struct AttackProperties {
 #[derive(Component, Debug)]
 pub struct Weapon {
     pub properties: AttackProperties,
-}
-
-pub fn evaluate_fight_action<'a>(
-    drafted: bool,
-    pop_pos: &GridPosition,
-    enemies: impl Iterator<Item = (Entity, &'a GridPosition)>,
-) -> Option<(f32, Entity)> {
-    if !drafted {
-        return None;
-    }
-
-    // Find nearest enemy
-    let mut best_target = None;
-    let mut min_dist = f32::MAX;
-
-    for (entity, pos) in enemies {
-        #[allow(clippy::cast_precision_loss)]
-        let dist = pop_pos.distance_chebyshev(*pos) as f32;
-        if dist < min_dist {
-            min_dist = dist;
-            best_target = Some(entity);
-        }
-    }
-
-    if let Some(target) = best_target {
-        // High score for combat when drafted
-        // Distance penalty applies, but base score is high (e.g., 0.95)
-        // 0.95 - (dist * 0.01).min(0.5) ensures high priority even at range,
-        // but prefers closer targets.
-        return Some((0.95 - (min_dist * 0.01).min(0.5), target));
-    }
-
-    None
 }
 
 pub fn execute_attack(world: &mut World, attacker: Entity, target: Entity) {
@@ -109,7 +75,7 @@ mod tests {
         let mut world = World::new();
         // Setup standard resources (Time, etc)
         world.insert_resource(crate::shared::time::SimulationTime::default());
-        world.insert_resource(crate::layer1::utility_ai::UtilityConfig::default());
+        world.insert_resource(crate::layer1::utility_types::UtilityConfig::default());
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
         world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
         world.insert_resource(crate::layer1::taboo::TabooState::default());
@@ -132,7 +98,7 @@ mod tests {
                 Equipment::default(),
                 GridPosition { x: 0, y: 0 },
                 crate::layer1::needs::Needs::default(),
-                crate::layer1::utility_ai::UtilityWeights::default(),
+                crate::layer1::utility_types::UtilityWeights::default(),
                 // Needs would normally drive behavior, but Drafted suppresses them
             ))
             .id();
@@ -174,7 +140,7 @@ mod tests {
                 Equipment::default(),
                 GridPosition { x: 0, y: 0 },
                 crate::layer1::needs::Needs::default(),
-                crate::layer1::utility_ai::UtilityWeights::default(),
+                crate::layer1::utility_types::UtilityWeights::default(),
             ))
             .id();
 

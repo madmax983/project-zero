@@ -61,7 +61,7 @@ mod tests {
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
-    use crate::layer1::utility_ai::ActionType;
+    use crate::layer1::utility_types::ActionType;
     use bevy_ecs::prelude::*;
 
     // Helper to setup world with flat grass

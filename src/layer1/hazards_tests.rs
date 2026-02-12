@@ -8,7 +8,7 @@ mod tests {
     use crate::layer1::pop::Pop;
     use crate::layer1::resources::{ColonyResources, MiningProgress};
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
-    use crate::layer1::utility_ai::ActionType;
+    use crate::layer1::utility_types::ActionType;
     use crate::shared::log::MessageLog;
     use bevy_ecs::prelude::*;
 
