@@ -119,3 +119,11 @@ Map of connected and disconnected systems.
     - Updated `evaluate_actions_system` in `src/layer1/utility_ai.rs` to target closest Stockpile/Farm for `Binge`.
     - Updated `arrival_handler_system` in `src/layer1/execution.rs` to consume resources via `handle_binge_arrival`.
 - **Tests:** `tests/integration/binge_resources.rs`
+
+### INT-015: Waste -> Pollution
+- **Date:** 2026-02-12
+- **Systems connected:** `update_atmosphere_system` -> `AtmosphereGrid` <- `ResourceItem(Waste)` / `Landfill`
+- **Glue added:**
+    - Modified `update_atmosphere_system` in `src/layer1/atmosphere.rs` to iterate `ResourceItem` and check for `ResourceType::Waste`.
+    - Added check for `BuildingType::Landfill` to emit pollution.
+- **Tests:** `tests/integration/waste_pollution.rs`

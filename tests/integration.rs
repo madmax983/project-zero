@@ -37,3 +37,6 @@ mod faction_morale;
 
 #[path = "integration/binge_resources.rs"]
 mod binge_resources;
+
+#[path = "integration/waste_pollution.rs"]
+mod waste_pollution;
