@@ -203,6 +203,8 @@ pub struct MapRenderContext<'a, S: BuildHasher> {
     pub area: Rect,
     /// The terrain grid.
     pub terrain: &'a TerrainGrid,
+    /// The water grid.
+    pub water: &'a crate::layer1::water::WaterGrid,
     /// The viewport.
     pub viewport: &'a Viewport,
     /// Map of entity positions to their render data.
@@ -404,8 +406,23 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
             let (text, color) =
                 if let (Ok(ux), Ok(uy)) = (usize::try_from(world_x), usize::try_from(world_y)) {
                     ctx.terrain.get(ux, uy).map_or((" ", Color::Black), |tile| {
-                        let color = seasonal_gfx::get_texture_override(tile, ctx.season)
+                        let mut color = seasonal_gfx::get_texture_override(tile, ctx.season)
                             .unwrap_or_else(|| get_terrain_color(tile));
+
+                        // Hydration visualization
+                        let hydration = ctx.water.get(ux, uy);
+                        if hydration > 0 && tile != TerrainType::Water {
+                            if let Color::Rgb(r, g, b) = color {
+                                // Mix with Blue (80, 140, 255) based on hydration level (0-100)
+                                #[allow(clippy::cast_possible_truncation)]
+                                let factor = f32::from(hydration) / 200.0; // Max 50% mix
+                                let r = (f32::from(r) * (1.0 - factor) + 80.0 * factor) as u8;
+                                let g = (f32::from(g) * (1.0 - factor) + 140.0 * factor) as u8;
+                                let b = (f32::from(b) * (1.0 - factor) + 255.0 * factor) as u8;
+                                color = Color::Rgb(r, g, b);
+                            }
+                        }
+
                         (get_terrain_char(tile), color)
                     })
                 } else {
@@ -443,6 +460,7 @@ pub fn render_map(frame: &mut Frame, area: Rect, world: &World) {
 
     // Render terrain inside
     let terrain = world.resource::<TerrainGrid>();
+    let water = world.resource::<crate::layer1::water::WaterGrid>();
     let viewport = world.resource::<Viewport>();
     let build_mode = world.resource::<BuildMode>();
     let designation_mode = world.resource::<DesignationMode>();
@@ -491,6 +509,7 @@ pub fn render_map(frame: &mut Frame, area: Rect, world: &World) {
     let ctx = MapRenderContext {
         area: inner,
         terrain,
+        water,
         viewport: &effective_viewport,
         entities_data: &render_cache.entities,
         build_mode: build_mode_cursor,
@@ -578,6 +597,7 @@ pub const fn get_building_char(building: BuildingType) -> char {
     match building {
         BuildingType::Housing => '⌂',
         BuildingType::Farm => '♣',
+        BuildingType::Well => 'U',
         BuildingType::Stockpile => '≡',
         BuildingType::Smokehouse => '♨',
         BuildingType::LumberMill => 'L',
@@ -620,11 +640,12 @@ pub const fn get_building_color(building: BuildingType) -> Color {
     match building {
         BuildingType::Housing => Color::Rgb(139, 90, 43), // Brown
         BuildingType::Farm => Color::Rgb(218, 165, 32),   // Goldenrod
+        BuildingType::Well => Color::Blue,
         BuildingType::Stockpile | BuildingType::Wall | BuildingType::Gate | BuildingType::Tower => {
             Color::Rgb(169, 169, 169)
         } // DarkGray
         BuildingType::Smokehouse => Color::Rgb(200, 200, 200), // Smoky
-        BuildingType::LumberMill => Color::Rgb(205, 133, 63), // Peru
+        BuildingType::LumberMill => Color::Rgb(205, 133, 63),  // Peru
         BuildingType::StoneMason => Color::Rgb(119, 136, 153), // LightSlateGray
         BuildingType::Smelter | BuildingType::AncientReactor => Color::Rgb(255, 69, 0), // Red-Orange
         BuildingType::Smithy | BuildingType::PowerPole => Color::Rgb(192, 192, 192),    // Silver

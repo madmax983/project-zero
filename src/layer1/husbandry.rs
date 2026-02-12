@@ -1,13 +1,13 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::execution::MovementTarget;
 use crate::layer1::fauna::{Fauna, FaunaState, FaunaType};
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::{ResourceItem, ResourceType};
-use crate::layer1::skills::{Skills, SkillType};
+use crate::layer1::skills::{SkillType, Skills};
 use crate::layer1::utility_ai::{ActionType, PopAction, UtilityWeights};
 use crate::layer1::utility_types::{calculate_context_score, calculate_success_modifier};
 use crate::layer1::zone::{ZoneGrid, ZoneType};
+use bevy_ecs::prelude::*;
 
 /// Component tracking the taming status and resource production of an animal.
 #[derive(Component)]
@@ -150,13 +150,7 @@ pub fn evaluate_tame<'a>(
 
     for (entity, pos, des) in designations {
         if des.designation_type == DesignationType::Tame {
-            let context = calculate_context_score(
-                *pop_pos,
-                Some(*pos),
-                1,
-                0,
-                weights,
-            );
+            let context = calculate_context_score(*pop_pos, Some(*pos), 1, 0, weights);
             let success = calculate_success_modifier(ActionType::Tame, weights);
             let utility = base_utility * context * success;
 
@@ -182,8 +176,8 @@ pub fn tame_execution_system(world: &mut World) {
         let mut _success = false;
         // Find position of designation
         if let Some(pos) = world.get::<GridPosition>(designation_entity).copied() {
-             // Find animal at pos
-             let animal = world
+            // Find animal at pos
+            let animal = world
                 .query_filtered::<(Entity, &GridPosition), With<Fauna>>()
                 .iter(world)
                 .find(|(_, p)| p.x == pos.x && p.y == pos.y)
@@ -207,19 +201,22 @@ pub fn tame_execution_system(world: &mut World) {
             action.current_utility = 0.0;
             action.ticks_committed = 0;
         }
-        world.entity_mut(pop_entity).remove::<MovementTarget>().remove::<crate::layer1::execution::AtTarget>();
+        world
+            .entity_mut(pop_entity)
+            .remove::<MovementTarget>()
+            .remove::<crate::layer1::execution::AtTarget>();
     }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::fauna::{Fauna, FaunaType, FaunaState};
-    use crate::layer1::pop::Pop;
-    use crate::layer1::skills::{Skills, SkillType};
-    use crate::layer1::zone::{ZoneGrid, ZoneType};
+    use crate::layer1::fauna::{Fauna, FaunaState, FaunaType};
     use crate::layer1::map::GridPosition;
+    use crate::layer1::pop::Pop;
+    use crate::layer1::skills::{SkillType, Skills};
     use crate::layer1::utility_ai::ActionType;
+    use crate::layer1::zone::{ZoneGrid, ZoneType};
 
     // Helper to setup world
     fn setup_world() -> World {
@@ -240,19 +237,32 @@ mod tests {
         let tamer = world.spawn((Pop, skills, GridPosition { x: 0, y: 0 })).id();
 
         // Wild animal
-        let animal = world.spawn((
-            Fauna { fauna_type: FaunaType::Wolf, state: FaunaState::Wander, ..Default::default() },
-            GridPosition { x: 0, y: 1 },
-        )).id();
+        let animal = world
+            .spawn((
+                Fauna {
+                    fauna_type: FaunaType::Wolf,
+                    state: FaunaState::Wander,
+                    ..Default::default()
+                },
+                GridPosition { x: 0, y: 1 },
+            ))
+            .id();
 
         // Attempt tame
         let success = attempt_tame(&mut world, tamer, animal);
 
         assert!(success, "High skill should tame successfully");
-        assert!(world.get::<Tame>(animal).is_some(), "Animal should have Tame component");
+        assert!(
+            world.get::<Tame>(animal).is_some(),
+            "Animal should have Tame component"
+        );
 
         let fauna = world.get::<Fauna>(animal).unwrap();
-        assert_ne!(fauna.state, FaunaState::Attack, "Tamed animal should not attack");
+        assert_ne!(
+            fauna.state,
+            FaunaState::Attack,
+            "Tamed animal should not attack"
+        );
     }
 
     #[test]
@@ -260,23 +270,38 @@ mod tests {
         let mut world = setup_world();
 
         // No skill pop
-        let tamer = world.spawn((Pop, Skills::default(), GridPosition { x: 0, y: 0 })).id();
+        let tamer = world
+            .spawn((Pop, Skills::default(), GridPosition { x: 0, y: 0 }))
+            .id();
 
         // Wild animal
-        let animal = world.spawn((
-            Fauna { fauna_type: FaunaType::Wolf, state: FaunaState::Wander, ..Default::default() },
-            GridPosition { x: 0, y: 1 },
-        )).id();
+        let animal = world
+            .spawn((
+                Fauna {
+                    fauna_type: FaunaType::Wolf,
+                    state: FaunaState::Wander,
+                    ..Default::default()
+                },
+                GridPosition { x: 0, y: 1 },
+            ))
+            .id();
 
         // Force failure logic in test or rely on probability (mock RNG if possible)
         // For this test, assume 0 skill = fail
         let success = attempt_tame(&mut world, tamer, animal);
 
         assert!(!success, "Zero skill should likely fail");
-        assert!(world.get::<Tame>(animal).is_none(), "Failed tame should not add component");
+        assert!(
+            world.get::<Tame>(animal).is_none(),
+            "Failed tame should not add component"
+        );
 
         let fauna = world.get::<Fauna>(animal).unwrap();
-        assert_eq!(fauna.state, FaunaState::Attack, "Failed tame should trigger Attack");
+        assert_eq!(
+            fauna.state,
+            FaunaState::Attack,
+            "Failed tame should trigger Attack"
+        );
     }
 
     #[test]
@@ -292,23 +317,28 @@ mod tests {
         }
 
         // Tamed animal inside pasture
-        let animal = world.spawn((
-            Fauna::default(),
-            Tame::default(),
-            GridPosition { x: 1, y: 1 },
-            crate::layer1::execution::MovementTarget {
-                target_entity: Entity::PLACEHOLDER,
-                target_position: GridPosition { x: 5, y: 5 }, // Try to leave
-                for_action: ActionType::Idle,
-            },
-        )).id();
+        let animal = world
+            .spawn((
+                Fauna::default(),
+                Tame::default(),
+                GridPosition { x: 1, y: 1 },
+                crate::layer1::execution::MovementTarget {
+                    target_entity: Entity::PLACEHOLDER,
+                    target_position: GridPosition { x: 5, y: 5 }, // Try to leave
+                    for_action: ActionType::Idle,
+                },
+            ))
+            .id();
 
         // Run confinement system
         pasture_confinement_system(&mut world);
 
         // Movement target should be clamped to Pasture
         let target = world.get::<crate::layer1::execution::MovementTarget>(animal);
-        assert!(target.is_none(), "Tamed animal should be confined (movement target removed)");
+        assert!(
+            target.is_none(),
+            "Tamed animal should be confined (movement target removed)"
+        );
     }
 
     #[test]
@@ -316,18 +346,29 @@ mod tests {
         let mut world = setup_world();
 
         // Tamed animal (Cow/SpaceRat)
-        let animal = world.spawn((
-            Fauna { fauna_type: FaunaType::SpaceRat, ..Default::default() },
-            Tame { produce_timer: 0, ..Default::default() }, // Ready to produce
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let animal = world
+            .spawn((
+                Fauna {
+                    fauna_type: FaunaType::SpaceRat,
+                    ..Default::default()
+                },
+                Tame {
+                    produce_timer: 0,
+                    ..Default::default()
+                }, // Ready to produce
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
         // Run production system
         husbandry_production_system(&mut world);
 
         // Should spawn item? Or add to inventory?
         // For MVP, spawn an Item entity at location.
-        let items = world.query::<&crate::layer1::resources::ResourceItem>().iter(&world).count();
+        let items = world
+            .query::<&crate::layer1::resources::ResourceItem>()
+            .iter(&world)
+            .count();
         assert!(items > 0, "Should produce resource");
     }
 }

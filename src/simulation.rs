@@ -43,8 +43,8 @@ use crate::layer1::{
     track_plan_outcomes_system, update_action_timer_system, update_cabin_fever_system,
     update_erosion_system, update_lighting_system, update_noise_system,
     update_resource_caps_system, update_screen_shake_system, update_taboo_duration_system,
-    update_weather_system, vermin_growth_system, vermin_morale_system, waste_pollution_bridge,
-    work_execution_system,
+    update_water_system, update_weather_system, vermin_growth_system, vermin_morale_system,
+    waste_pollution_bridge, work_execution_system,
 };
 use crate::shared::time::SimulationTime;
 
@@ -140,6 +140,7 @@ pub fn build_simulation_schedule() -> Schedule {
         update_resource_caps_system.after(work_execution_system),
         advance_season_system.after(work_execution_system),
         update_taboo_duration_system.after(work_execution_system),
+        update_water_system.after(work_execution_system),
         update_weather_system.after(work_execution_system),
         produce_food_system.after(work_execution_system),
         process_refining_system.after(work_execution_system),
