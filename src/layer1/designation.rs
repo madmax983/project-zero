@@ -28,6 +28,8 @@ pub enum DesignationType {
     Repair,
     /// Set a zone type for a tile.
     SetZone(ZoneType),
+    /// Designate an animal for taming.
+    Tame,
 }
 
 impl DesignationType {
@@ -48,6 +50,7 @@ impl DesignationType {
             Self::Chop => '/',
             Self::Repair => '+',
             Self::SetZone(_) => 'Z',
+            Self::Tame => '♥',
         }
     }
 
@@ -68,6 +71,7 @@ impl DesignationType {
             Self::Chop => "/",
             Self::Repair => "+",
             Self::SetZone(_) => "Z",
+            Self::Tame => "♥",
         }
     }
 
@@ -88,6 +92,7 @@ impl DesignationType {
             Self::Chop => "Chop",
             Self::Repair => "Repair",
             Self::SetZone(_) => "Set Zone",
+            Self::Tame => "Tame",
         }
     }
 }
@@ -184,6 +189,20 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
             occupied.0.contains(&(x, y))
         }
         DesignationType::SetZone(_) => true,
+        DesignationType::Tame => {
+            // Must target a wild animal (Fauna without Tame component)
+            // This is O(N) over all entities if we don't have spatial index, but okay for MVP
+            world.iter_entities().any(|entity_ref| {
+                if let Some(pos) = entity_ref.get::<GridPosition>() {
+                    if pos.x == x && pos.y == y {
+                        if entity_ref.contains::<crate::layer1::fauna::Fauna>() {
+                            return !entity_ref.contains::<crate::layer1::husbandry::Tame>();
+                        }
+                    }
+                }
+                false
+            })
+        }
     }
 }
 

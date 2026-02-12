@@ -991,7 +991,9 @@ mod tests {
         assert_eq!(BuildingType::PowerPole.next(), BuildingType::Wall);
         assert_eq!(BuildingType::Wall.next(), BuildingType::Gate);
         assert_eq!(BuildingType::Gate.next(), BuildingType::Tower);
-        assert_eq!(BuildingType::Tower.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::Tower.next(), BuildingType::AncientReactor);
+        assert_eq!(BuildingType::AncientReactor.next(), BuildingType::AncientFabricator);
+        assert_eq!(BuildingType::AncientFabricator.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -1109,6 +1111,12 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Tower);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::AncientReactor);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::AncientFabricator);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

@@ -92,3 +92,4 @@ Implemented features. Architect: read this to understand current state.
 - [x] `085` Faction Demands & Strikes — `specs/085-faction-demands-strikes.md` — completed 2026-10-26
 - [x] `INT-015` Integration: Waste -> Pollution — completed 2026-10-29
 - [x] `070` Heirloom Tech — `specs/070-heirloom-tech.md` — completed 2026-02-12
+- [x] `075` Animal Husbandry — `specs/075-animal-husbandry.md` — completed 2026-02-12

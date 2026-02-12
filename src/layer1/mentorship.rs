@@ -44,6 +44,7 @@ pub fn check_mentorship_system(
                     Some(SkillType::Construction)
                 }
                 DesignationType::SetZone(_) => None,
+                DesignationType::Tame => Some(SkillType::Husbandry),
             };
             if let Some(st) = skill_type {
                 workers.push((entity, *pos, skills, st));

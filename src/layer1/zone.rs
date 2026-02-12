@@ -28,6 +28,8 @@ pub enum ZoneType {
     Storage,
     /// Jail zone (for housing Inmates).
     Jail,
+    /// Pasture for tamed animals.
+    Pasture,
 }
 
 /// Resource storing the grid of zones.

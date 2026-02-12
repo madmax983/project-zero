@@ -39,6 +39,7 @@ use crate::layer1::actions::social::evaluate_socialize;
 use crate::layer1::actions::work::evaluate_work;
 use crate::layer1::combat::Drafted;
 use crate::layer1::designation::Designation;
+use crate::layer1::husbandry::evaluate_tame;
 use crate::layer1::farm::Farm;
 use crate::layer1::fauna::Fauna;
 use crate::layer1::funeral::{Corpse, Grave};
@@ -467,6 +468,15 @@ pub fn evaluate_actions_system(world: &mut World) {
                 ) {
                     check_best(ActionType::BuryCorpse, utility, Some(target));
                 }
+
+                // Evaluate Tame
+                if let Some((utility, target)) = evaluate_tame(
+                    &pop_pos,
+                    &weights,
+                    designations_state.iter(world),
+                ) {
+                    check_best(ActionType::Tame, utility, Some(target));
+                }
             }
         } // End of else block (normal evaluation)
 
@@ -564,7 +574,9 @@ pub fn track_plan_outcomes_system(
             | ActionType::Refine
             | ActionType::Farm
             | ActionType::Warden
-            | ActionType::Sleepwalking => true,
+            | ActionType::Sleepwalking
+            | ActionType::Tame
+            | ActionType::Slaughter => true,
         };
 
         #[allow(clippy::cast_possible_truncation)]
