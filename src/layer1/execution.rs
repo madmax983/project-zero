@@ -35,6 +35,7 @@ use crate::layer1::actions::rest::handle_arrival as handle_rest_arrival;
 use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::building::{Building, OccupiedTiles};
 use crate::layer1::combat::Weapon;
+use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::defense::Gate;
 use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::edicts::{ColonyPolicies, get_work_speed_modifier};
@@ -51,6 +52,9 @@ use crate::layer1::resources::{ColonyResources, process_logging, process_mining}
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
 use crate::layer1::social::{SocialBuff, Tavern, handle_socialize};
 use crate::layer1::terrain::TerrainGrid;
+use crate::layer1::traits::{
+    Traits, get_trait_move_speed_modifier, get_trait_work_speed_modifier,
+};
 use crate::layer1::utility_ai::{ActionType, PopAction, StartPlan};
 use crate::shared::log::MessageLog;
 use crate::shared::time::SimulationTime;
@@ -261,6 +265,7 @@ pub fn movement_system(
             &mut GridPosition,
             &MovementTarget,
             Option<&mut Speed>,
+            Option<&Traits>,
         ),
         (Without<AtTarget>, Without<Building>),
     >,
@@ -269,10 +274,12 @@ pub fn movement_system(
     buildings: Query<(&GridPosition, &Building, Option<&Gate>)>,
     mut commands: Commands,
 ) {
-    for (pop_entity, mut current_pos, mt, mut speed_opt) in &mut pops {
+    for (pop_entity, mut current_pos, mt, mut speed_opt, traits) in &mut pops {
+        let trait_mod = traits.map_or(1.0, get_trait_move_speed_modifier);
+
         // Handle variable movement speed
         if let Some(ref mut speed) = speed_opt {
-            speed.accumulator += speed.current;
+            speed.accumulator += speed.current * trait_mod;
             if speed.accumulator < 1.0 {
                 continue;
             }
@@ -545,10 +552,15 @@ pub fn work_execution_system(world: &mut World) {
     let policies = world.get_resource::<ColonyPolicies>().cloned();
     let work_speed_mod = policies.as_ref().map_or(1.0, get_work_speed_modifier);
 
+    // Fetch DayNightCycle
+    let cycle = world
+        .get_resource::<DayNightCycle>()
+        .map(|c| c.time_of_day);
+
     // Find pops at their work target and capture their morale
     // Since we need to access Needs which is a component, and we need &mut World later,
     // we should collect Needs data first.
-    let workers_data: Vec<(Entity, Entity, f32, ActionType, Option<Equipment>)> = world
+    let workers_data: Vec<(Entity, Entity, f32, ActionType, Option<Equipment>, f32)> = world
         .query_filtered::<(
             Entity,
             &MovementTarget,
@@ -556,20 +568,38 @@ pub fn work_execution_system(world: &mut World) {
             Option<&Memories>,
             Option<&SocialBuff>,
             Option<&Equipment>,
+            Option<&Traits>,
         ), With<AtTarget>>()
         .iter(world)
-        .filter(|(_, mt, _, _, _, _)| {
+        .filter(|(_, mt, _, _, _, _, _)| {
             mt.for_action == ActionType::Work || mt.for_action == ActionType::Repair
         })
-        .map(|(e, mt, needs, memories, social_buff, eq)| {
+        .map(|(e, mt, needs, memories, social_buff, eq, traits)| {
             let morale = needs.map_or(0.5, |n| {
-                calculate_effective_morale(n, memories, social_buff, policies.as_ref())
+                calculate_effective_morale(
+                    n,
+                    memories,
+                    social_buff,
+                    policies.as_ref(),
+                    traits,
+                    cycle,
+                )
             });
-            (e, mt.target_entity, morale, mt.for_action, eq.cloned())
+            let trait_work_mod = traits.map_or(1.0, get_trait_work_speed_modifier);
+            (
+                e,
+                mt.target_entity,
+                morale,
+                mt.for_action,
+                eq.cloned(),
+                trait_work_mod,
+            )
         })
         .collect();
 
-    for (pop_entity, designation_entity, morale, action_type, equipment_opt) in workers_data {
+    for (pop_entity, designation_entity, morale, action_type, equipment_opt, trait_work_mod) in
+        workers_data
+    {
         process_single_worker(
             world,
             pop_entity,
@@ -577,7 +607,7 @@ pub fn work_execution_system(world: &mut World) {
             morale,
             action_type,
             equipment_opt,
-            work_speed_mod,
+            work_speed_mod * trait_work_mod,
         );
     }
 }
@@ -1211,6 +1241,7 @@ mod tests {
         world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
         world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
         world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
+        world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
 
         let designation = world
             .spawn((
@@ -1256,6 +1287,7 @@ mod tests {
             tiles,
         });
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
+        world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
 
         let designation = world
             .spawn((
@@ -1314,6 +1346,7 @@ mod tests {
         });
         world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
+        world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
 
         let designation = world
             .spawn((
@@ -1392,6 +1425,7 @@ mod tests {
         });
         world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
+        world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
 
         let designation = world
             .spawn((
@@ -1477,6 +1511,7 @@ mod tests {
         });
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
         world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
+        world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
 
         // Pop targeting a non-existent designation entity
         let pop = world
@@ -1823,6 +1858,9 @@ mod tests {
         world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
         world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
         world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
+        world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
+        world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
+        world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
 
         let designation = world
             .spawn((
@@ -1894,6 +1932,7 @@ mod tests {
             tiles,
         });
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
+        world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
 
         let designation = world
             .spawn((
@@ -1965,6 +2004,7 @@ mod tests {
             tiles,
         });
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
+        world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
 
         let designation = world
             .spawn((
@@ -2035,6 +2075,7 @@ mod tests {
             tiles,
         });
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
+        world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
 
         let designation = world
             .spawn((
@@ -2286,5 +2327,105 @@ mod tests {
 
         // MovementTarget should be removed
         assert!(world.get::<MovementTarget>(pop).is_none());
+    }
+
+    #[test]
+    fn test_movement_system_fast_walker() {
+        use crate::layer1::traits::{Trait, Traits};
+        use std::collections::HashSet;
+
+        let mut world = setup_world();
+
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 0, y: 0 },
+                MovementTarget {
+                    target_entity: Entity::from_raw(1),
+                    target_position: GridPosition { x: 5, y: 0 },
+                    for_action: ActionType::Work,
+                },
+                Speed {
+                    base: 1.0,
+                    current: 1.0,
+                    accumulator: 0.0,
+                },
+                Traits(HashSet::from([Trait::FastWalker])), // +10% speed
+            ))
+            .id();
+
+        // Tick 1: Acc = 0.0 + (1.0 * 1.1) = 1.1 -> Move -> Acc = 0.1
+        world.run_system_once(movement_system).unwrap();
+        let pos = world.get::<GridPosition>(pop).unwrap();
+        assert_eq!(pos.x, 1);
+        let speed = world.get::<Speed>(pop).unwrap();
+        assert!((speed.accumulator - 0.1).abs() < 0.001);
+    }
+
+    #[test]
+    fn test_work_execution_hard_worker() {
+        use crate::layer1::traits::{Trait, Traits};
+        use std::collections::HashSet;
+
+        let mut world = World::new();
+        let mut tiles = vec![TerrainType::Grass; 100];
+        tiles[55] = TerrainType::Rock;
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
+        world.insert_resource(crate::layer1::resources::ColonyResources::default());
+        world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
+        world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
+        world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
+        world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
+        world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
+        world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
+        world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
+
+        let designation = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Mine,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
+
+        let tool = world
+            .spawn((
+                Item,
+                Tool {
+                    tool_type: ToolType::Pickaxe,
+                    durability: 100.0,
+                    max_durability: 100.0,
+                },
+            ))
+            .id();
+
+        world
+            .spawn((
+                Pop,
+                GridPosition { x: 5, y: 5 },
+                Equipment {
+                    tool: Some(tool),
+                    ..Default::default()
+                },
+                MovementTarget {
+                    target_entity: designation,
+                    target_position: GridPosition { x: 5, y: 5 },
+                    for_action: ActionType::Work,
+                },
+                AtTarget,
+                Traits(HashSet::from([Trait::HardWorker])), // +20% Work Speed
+            ));
+
+        work_execution_system(&mut world);
+
+        let progress = world.get::<MiningProgress>(designation).unwrap();
+        // Base 10.0 * 1.2 = 12.0.
+        // Organic factor 0.9-1.1 -> Range 10.8 - 13.2
+        assert!(progress.current >= 10.8 && progress.current <= 13.2);
     }
 }

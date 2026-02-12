@@ -34,6 +34,7 @@ use super::rumor::Knowledge;
 use super::skills::Skills;
 use super::social::old_guard::Arrival;
 use super::terrain::{TerrainGrid, TerrainType};
+use super::traits::Traits;
 use super::utility_ai::{PopAction, UtilityWeights};
 use bevy_ecs::prelude::*;
 use rand::Rng;
@@ -207,6 +208,7 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
                     FactionMember::default(),
                     Arrival { tick: 0 },
                 ))
+                .insert(Traits::random(rng))
                 .insert(CabinFever::default());
             spawned += 1;
         }
@@ -262,6 +264,19 @@ mod tests {
         let mut query = world.query::<(&Pop, &Skills)>();
         let all_have_skills = query.iter(&world).count() == 5;
         assert!(all_have_skills, "All pops should have Skills component");
+    }
+
+    #[test]
+    fn test_spawn_initial_pops_have_traits() {
+        let mut world = World::new();
+        let terrain = generate_terrain(80, 50);
+        world.insert_resource(terrain);
+
+        spawn_initial_pops(&mut world);
+
+        let mut query = world.query::<(&Pop, &Traits)>();
+        let all_have_traits = query.iter(&world).count() == 5;
+        assert!(all_have_traits, "All pops should have Traits component");
     }
 
     #[test]
