@@ -3,6 +3,7 @@ use bevy_ecs::prelude::*;
 use ratatui::{prelude::*, widgets::Paragraph};
 
 use crate::layer1::seasons::{Season, SeasonState};
+use crate::layer1::traits::Traits;
 use crate::layer1::{
     BuildMode, ColonyPolicies, ColonyResources, DesignationMode, NamedLocations, Pop, Viewport,
 };
@@ -33,6 +34,7 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
     let locations = world.resource::<NamedLocations>();
     let resources = world.resource::<ColonyResources>();
     let policies = world.get_resource::<ColonyPolicies>();
+    let cycle = world.get_resource::<crate::layer1::day_night::DayNightCycle>();
 
     // NOTE: Dual pause state check. GameState::Paused is controlled by spacebar,
     // SimSpeed::Paused exists but is currently not used (no key binds to it).
@@ -62,11 +64,14 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
             let needs = e.get::<crate::layer1::Needs>()?;
             let memories = e.get::<crate::layer1::Memories>();
             let social_buff = e.get::<crate::layer1::social::SocialBuff>();
+            let traits = e.get::<Traits>();
             let morale = crate::layer1::memory::calculate_effective_morale(
                 needs,
                 memories,
                 social_buff,
                 policies,
+                traits,
+                cycle.map(|c| c.time_of_day),
             );
             Some(morale)
         })

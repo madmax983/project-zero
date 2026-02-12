@@ -1,6 +1,8 @@
+use crate::layer1::day_night::TimeOfDay;
 use crate::layer1::edicts::{ColonyPolicies, get_morale_modifier};
 use crate::layer1::needs::Needs;
 use crate::layer1::social::SocialBuff;
+use crate::layer1::traits::{Traits, get_trait_mood_modifier};
 use bevy_ecs::prelude::*;
 
 /// Types of memories a pop can acquire.
@@ -142,6 +144,8 @@ pub fn calculate_effective_morale(
     memories: Option<&Memories>,
     social_buff: Option<&SocialBuff>,
     policies: Option<&ColonyPolicies>,
+    traits: Option<&Traits>,
+    time_of_day: Option<TimeOfDay>,
 ) -> f32 {
     let base = needs.morale();
     let memory_modifier: f32 = memories.map_or(0.0, |m| {
@@ -155,7 +159,13 @@ pub fn calculate_effective_morale(
 
     let policy_modifier = policies.map_or(0.0, get_morale_modifier);
 
-    (base + memory_modifier + social_modifier + policy_modifier).clamp(0.0, 1.0)
+    let trait_modifier = if let (Some(t), Some(time)) = (traits, time_of_day) {
+        get_trait_mood_modifier(t, time)
+    } else {
+        0.0
+    };
+
+    (base + memory_modifier + social_modifier + policy_modifier + trait_modifier).clamp(0.0, 1.0)
 }
 
 /// System to decay memories every tick.
@@ -228,7 +238,7 @@ mod tests {
         // WitnessedDeath: -0.2 mood impact at max intensity
         memories.add(MemoryType::WitnessedDeath, 0);
 
-        let effective = calculate_effective_morale(&needs, Some(&memories), None, None);
+        let effective = calculate_effective_morale(&needs, Some(&memories), None, None, None, None);
 
         // 0.5 - 0.2 = 0.3
         assert!((effective - 0.3).abs() < 0.001);
@@ -246,7 +256,7 @@ mod tests {
         memories.add(MemoryType::WitnessedDeath, 0); // -0.2
         memories.add(MemoryType::AteFineMeal, 0); // +0.1
 
-        let effective = calculate_effective_morale(&needs, Some(&memories), None, None);
+        let effective = calculate_effective_morale(&needs, Some(&memories), None, None, None, None);
 
         // 0.5 - 0.2 + 0.1 = 0.4
         assert!((effective - 0.4).abs() < 0.001);
@@ -262,7 +272,7 @@ mod tests {
         let mut memories = Memories::default();
         memories.add(MemoryType::AteFineMeal, 0); // +0.1
 
-        let effective = calculate_effective_morale(&needs, Some(&memories), None, None);
+        let effective = calculate_effective_morale(&needs, Some(&memories), None, None, None, None);
         assert!((effective - 1.0).abs() < f32::EPSILON);
     }
 
@@ -275,7 +285,7 @@ mod tests {
         }; // Base 0.5
         let buff = crate::layer1::social::SocialBuff { value: 0.1 };
 
-        let effective = calculate_effective_morale(&needs, None, Some(&buff), None);
+        let effective = calculate_effective_morale(&needs, None, Some(&buff), None, None, None);
         assert!((effective - 0.6).abs() < f32::EPSILON);
     }
 
@@ -286,5 +296,29 @@ mod tests {
 
         // Decay rate: 0.01
         assert!((MemoryType::AdmiredArt.decay_rate() - 0.01).abs() < f32::EPSILON);
+    }
+
+    #[test]
+    fn test_trait_mood_modifier() {
+        use crate::layer1::traits::{Trait, Traits};
+        use crate::layer1::day_night::TimeOfDay;
+        use std::collections::HashSet;
+
+        let needs = Needs {
+            hunger: 0.5,
+            rest: 0.5,
+            leisure: 0.5,
+        };
+        let night_owl = Traits(HashSet::from([Trait::NightOwl]));
+
+        // Night time -> +0.1
+        let effective = calculate_effective_morale(&needs, None, None, None, Some(&night_owl), Some(TimeOfDay::Night));
+        // 0.5 + 0.1 = 0.6
+        assert!((effective - 0.6).abs() < 0.001);
+
+        // Day time -> -0.05
+        let effective_day = calculate_effective_morale(&needs, None, None, None, Some(&night_owl), Some(TimeOfDay::Day));
+        // 0.5 - 0.05 = 0.45
+        assert!((effective_day - 0.45).abs() < 0.001);
     }
 }

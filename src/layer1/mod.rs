@@ -255,3 +255,5 @@ pub use mentorship::*;
 /// Stowaway system (Spec 086).
 pub mod stowaway;
 pub use stowaway::*;
+pub mod traits;
+pub use traits::*;

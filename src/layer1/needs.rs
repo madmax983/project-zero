@@ -1,4 +1,5 @@
 use crate::layer1::edicts::{ColonyPolicies, get_hunger_decay_modifier};
+use crate::layer1::traits::{Traits, get_trait_hunger_decay_modifier};
 use bevy_ecs::prelude::*;
 
 /// Pop survival needs.
@@ -64,11 +65,17 @@ const LEISURE_DECAY_PER_TICK: f32 = 0.0015; // Slightly faster than hunger/rest
 /// Decays needs for all pops each tick.
 ///
 /// Uses `par_iter_mut` for parallel processing across entities.
-pub fn decay_needs_system(mut query: Query<&mut Needs>, policies: Option<Res<ColonyPolicies>>) {
+pub fn decay_needs_system(
+    mut query: Query<(&mut Needs, Option<&Traits>)>,
+    policies: Option<Res<ColonyPolicies>>,
+) {
     let hunger_mod = policies.map_or(1.0, |p| get_hunger_decay_modifier(&p));
-    let hunger_decay = HUNGER_DECAY_PER_TICK * hunger_mod;
+    let base_hunger_decay = HUNGER_DECAY_PER_TICK * hunger_mod;
 
-    query.par_iter_mut().for_each(|mut needs| {
+    query.par_iter_mut().for_each(|(mut needs, traits)| {
+        let trait_mod = traits.map_or(1.0, get_trait_hunger_decay_modifier);
+        let hunger_decay = base_hunger_decay * trait_mod;
+
         needs.hunger = (needs.hunger - hunger_decay).max(0.0);
         needs.rest = (needs.rest - REST_DECAY_PER_TICK).max(0.0);
         needs.leisure = (needs.leisure - LEISURE_DECAY_PER_TICK).max(0.0);
@@ -217,5 +224,29 @@ mod tests {
         // Low morale (<= 0.2) -> 0.5x speed
         assert_eq!(super::get_morale_efficiency(0.1), 0.5);
         assert_eq!(super::get_morale_efficiency(0.2), 0.5);
+    }
+
+    #[test]
+    fn test_trait_hunger_decay() {
+        use crate::layer1::traits::{Trait, Traits};
+        use std::collections::HashSet;
+
+        let mut world = setup();
+        let glutton = Traits(HashSet::from([Trait::Glutton]));
+
+        world.spawn((
+            Pop,
+            Needs::default(),
+            glutton,
+        ));
+
+        // Initial hunger 0.8
+        // Glutton decay = Base (0.001) * 1.2 = 0.0012
+
+        world.run_system_once(decay_needs_system).unwrap();
+
+        let needs = world.query::<&Needs>().single(&world);
+        // 0.8 - 0.0012 = 0.7988
+        assert!((needs.hunger - 0.7988).abs() < 0.0001);
     }
 }
