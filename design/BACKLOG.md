@@ -17,6 +17,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `088` Omens & Taboos — `specs/088-omens-and-taboos.md`
 - [ ] `089` Material Provenance — `specs/089-material-provenance.md`
 - [ ] `090` Emotional Contagion — `specs/090-emotional-contagion.md`
+- [ ] `091` The Inspector — `specs/091-the-inspector.md`
 
 ## MVP — User Interface
 
