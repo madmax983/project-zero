@@ -6,6 +6,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 ## MVP — Layer 1: Colony Simulation
 
+- [ ] `038` Medical Care — `specs/038-medical-care.md`
 - [ ] `059` Soil Fertility — `specs/059-soil-fertility.md`
 - [ ] `076` Heirloom Items — `specs/076-heirloom-items.md`
 - [ ] `077` Emergent Festivals — `specs/077-emergent-festivals.md`
@@ -13,6 +14,8 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `090` Emotional Contagion — `specs/090-emotional-contagion.md`
 - [ ] `091` The Inspector — `specs/091-the-inspector.md`
 - [ ] `092` Antagonistic Flora — `specs/092-antagonistic-flora.md`
+- [ ] `097` Social Need and Tavern — `specs/097-social-tavern.md`
+- [ ] `098` Pop Memory — `specs/098-pop-memory.md`
 
 ## MVP — Layer 2: System Simulation
 
