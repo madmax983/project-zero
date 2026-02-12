@@ -1,10 +1,10 @@
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
+    use crate::layer1::beauty::BeautySource;
     use crate::layer1::building::{Building, BuildingType, Material, MaterialType};
     use crate::layer1::fire::Flammable;
     use crate::layer1::structure::Structure;
-    use crate::layer1::beauty::BeautySource;
+    use bevy_ecs::prelude::*;
 
     fn setup_world() -> World {
         let world = World::new();
@@ -18,9 +18,10 @@ mod tests {
 
         crate::layer1::building::spawn_building_with_material(
             &mut world,
-            0, 0,
+            0,
+            0,
             BuildingType::Wall,
-            MaterialType::Wood
+            MaterialType::Wood,
         );
 
         // Wood Wall should be Flammable
@@ -29,7 +30,10 @@ mod tests {
             .single(&world);
 
         assert_eq!(material.0, MaterialType::Wood);
-        assert!(flammable.is_some(), "Wood wall should have Flammable component");
+        assert!(
+            flammable.is_some(),
+            "Wood wall should have Flammable component"
+        );
         assert_eq!(structure.max_hp, 50.0); // Wood wall HP (Base 50 * 1.0)
     }
 
@@ -39,9 +43,10 @@ mod tests {
 
         crate::layer1::building::spawn_building_with_material(
             &mut world,
-            0, 0,
+            0,
+            0,
             BuildingType::Wall,
-            MaterialType::Stone
+            MaterialType::Stone,
         );
 
         // Stone Wall should NOT be Flammable
@@ -50,7 +55,10 @@ mod tests {
             .single(&world);
 
         assert_eq!(material.0, MaterialType::Stone);
-        assert!(flammable.is_none(), "Stone wall should NOT have Flammable component");
+        assert!(
+            flammable.is_none(),
+            "Stone wall should NOT have Flammable component"
+        );
         assert_eq!(structure.max_hp, 200.0); // Stone wall HP (Base 50 * 4.0)
     }
 
@@ -61,9 +69,10 @@ mod tests {
         // Spawn Stone Statue
         crate::layer1::building::spawn_building_with_material(
             &mut world,
-            0, 0,
+            0,
+            0,
             BuildingType::Statue,
-            MaterialType::Stone
+            MaterialType::Stone,
         );
 
         let beauty_source = world.query::<&BeautySource>().single(&world);
@@ -79,14 +88,18 @@ mod tests {
         // Spawn Gold Statue
         crate::layer1::building::spawn_building_with_material(
             &mut world,
-            0, 0,
+            0,
+            0,
             BuildingType::Statue,
-            MaterialType::Gold
+            MaterialType::Gold,
         );
 
         let beauty_source = world.query::<&BeautySource>().single(&world);
         let gold_beauty = beauty_source.value;
 
-        assert!(gold_beauty > stone_beauty, "Gold statue should be more beautiful than Stone statue");
+        assert!(
+            gold_beauty > stone_beauty,
+            "Gold statue should be more beautiful than Stone statue"
+        );
     }
 }

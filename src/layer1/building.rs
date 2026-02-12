@@ -21,10 +21,10 @@
 //! *   Specific Logic Components: e.g., [`Housing`], [`Farm`], [`Stockpile`].
 
 use super::GridPosition;
+use super::beauty::BeautySource;
 use super::farm::Farm;
 use super::fire::Flammable;
 use super::housing::Housing;
-use super::beauty::BeautySource;
 use super::social::Tavern;
 use super::stockpile::Stockpile;
 use crate::layer1::energy::{Conduit, PowerConsumer, PowerSource};

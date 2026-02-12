@@ -4,7 +4,7 @@ use crate::layer1::structure::Structure;
 use bevy_ecs::prelude::*;
 
 /// Represents the mental stability of a Pop.
-#[derive(Component, Debug, Clone, PartialEq, Eq, Default)]
+#[derive(Component, Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum MentalState {
     /// The Pop is functioning normally.
     #[default]

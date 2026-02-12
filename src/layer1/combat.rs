@@ -1,7 +1,7 @@
 #![allow(missing_docs, clippy::collapsible_if)]
 use crate::layer1::map::GridPosition;
 use bevy_ecs::prelude::*;
-#[derive(Component, Default, Debug, Clone)]
+#[derive(Component, Default, Debug, Clone, Copy)]
 pub struct Drafted;
 
 #[derive(Component, Default, Debug)]
