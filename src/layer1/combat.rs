@@ -1,4 +1,5 @@
 #![allow(missing_docs, clippy::collapsible_if)]
+use crate::layer1::map::ScreenShake;
 use bevy_ecs::prelude::*;
 #[derive(Component, Default, Debug, Clone, Copy)]
 pub struct Drafted;
@@ -57,6 +58,10 @@ pub fn execute_attack(world: &mut World, attacker: Entity, target: Entity) {
     if damage > 0.0 {
         if let Some(mut health) = world.get_mut::<crate::layer1::health::Health>(target) {
             health.take_damage(damage);
+            // Trigger Screen Shake (Ludwig: Juice)
+            if let Some(mut shake) = world.get_resource_mut::<ScreenShake>() {
+                shake.trigger(0.2);
+            }
         }
     }
 }

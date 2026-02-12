@@ -42,8 +42,8 @@ use crate::layer1::{
     spoilage_system, starvation_damage_system, taboo_event_system, theft_system,
     track_plan_outcomes_system, update_action_timer_system, update_cabin_fever_system,
     update_erosion_system, update_lighting_system, update_noise_system,
-    update_resource_caps_system, update_taboo_duration_system, update_weather_system,
-    vermin_growth_system, vermin_morale_system, work_execution_system,
+    update_resource_caps_system, update_screen_shake_system, update_taboo_duration_system,
+    update_weather_system, vermin_growth_system, vermin_morale_system, work_execution_system,
 };
 use crate::shared::time::SimulationTime;
 
@@ -125,6 +125,7 @@ pub fn build_simulation_schedule() -> Schedule {
         process_scan_system.after(arrival_handler_system),
         update_cabin_fever_system.after(movement_system),
         update_erosion_system.after(movement_system),
+        update_screen_shake_system.after(movement_system),
         infiltration_system.after(movement_system),
         discovery_system.after(process_scan_system),
     ));

@@ -451,6 +451,16 @@ pub fn render_map(frame: &mut Frame, area: Rect, world: &World) {
         .get_resource::<crate::layer1::seasons::SeasonState>()
         .map(|s| s.current_season);
 
+    // Fetch ScreenShake
+    let shake_offset = world
+        .get_resource::<crate::layer1::map::ScreenShake>()
+        .map_or((0, 0), |s| s.offset);
+
+    let effective_viewport = Viewport {
+        x: viewport.x + shake_offset.0,
+        y: viewport.y + shake_offset.1,
+    };
+
     // Build mode cursor info
     let build_mode_cursor = if build_mode.active {
         let can_place =
@@ -481,7 +491,7 @@ pub fn render_map(frame: &mut Frame, area: Rect, world: &World) {
     let ctx = MapRenderContext {
         area: inner,
         terrain,
-        viewport,
+        viewport: &effective_viewport,
         entities_data: &render_cache.entities,
         build_mode: build_mode_cursor,
         designation_mode: designation_mode_cursor,
