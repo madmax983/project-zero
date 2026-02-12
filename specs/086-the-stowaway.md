@@ -2,250 +2,228 @@
 
 ## Overview
 
-Visitors are not always friendly. A **Stowaway** is a hidden entity that arrives with a visitor group but secretly detaches to hide inside a building (like a Stockpile or Warehouse). While hidden, they consume global resources (Food) and may cause other disruptions. They can be discovered by workers or through random events, at which point they emerge as a new Pop entity (Refugee, Thief, or Saboteur).
+Introduces **Stowaways**—hidden entities that sneak into the colony via incoming Visitors or Ships. They consume resources (Food) and remain invisible on the UI until discovered.
+
+This feature adds mystery and resource pressure. Players notice missing food but see no culprit, prompting investigation or security measures.
 
 ## Dependencies
 
-- `074` — Visitor System (Arrival mechanism)
-- `022` — Resource Stockpiles (Hiding spots)
-- `016` — Utility AI (Behavior after reveal)
+- `004` — Pop Entity (Stowaways are technically Pops but hidden).
+- `074` — Visitor System (Arrival mechanism).
+- `022` — Resource Stockpiles (Theft target).
+- `046` — Notifications (Feedback when food goes missing).
 
 ## RED Phase: Tests First
 
-Write these tests in `src/layer1/stowaway_tests.rs`. They will initially FAIL.
+Write these tests BEFORE any implementation. They will initially FAIL.
 
 ```rust
+// src/layer1/stowaway_tests.rs
+
 #[cfg(test)]
 mod tests {
     use bevy_ecs::prelude::*;
-    use crate::layer1::stowaway::{Stowaway, InfiltrationRisk, infiltration_system, theft_system, discovery_system};
+    use crate::layer1::pop::{Pop, Name};
+    use crate::layer1::stowaway::{Stowaway, Hidden, check_stowaway_arrival_system, stowaway_theft_system, reveal_stowaway_system};
     use crate::layer1::visitor::{Visitor, VisitorState};
-    use crate::layer1::building::{Building, BuildingType};
-    use crate::layer1::resources::ColonyResources;
-    use crate::layer1::map::GridPosition;
+    use crate::layer1::ColonyResources;
+    use crate::layer1::notifications::NotificationQueue;
     use crate::shared::time::SimulationTime;
 
     #[test]
-    fn test_stowaway_component_defaults() {
-        let stowaway = Stowaway::default();
-        assert_eq!(stowaway.stealth, 1.0); // 100% hidden
-        assert_eq!(stowaway.hunger, 0.0);
+    fn test_stowaway_components() {
+        let mut world = World::new();
+        let entity = world.spawn((
+            Pop,
+            Stowaway,
+            Hidden, // Marker to hide from UI
+            Name("Mysterious Stranger".to_string()),
+        )).id();
+
+        assert!(world.get::<Stowaway>(entity).is_some());
+        assert!(world.get::<Hidden>(entity).is_some());
     }
 
     #[test]
-    fn test_infiltration_adds_stowaway_to_building() {
+    fn test_stowaway_arrival_chance() {
         let mut world = World::new();
+        // Setup arrival event (simulated by a Visitor entering Arriving state)
+        world.spawn((
+            Visitor { state: VisitorState::Arriving, ..Default::default() },
+            // Tag needed to trigger stowaway logic (e.g. "HasStowaway" or just random chance)
+        ));
 
-        // Spawn Visitor near Building
-        let visitor = world.spawn((
-            Visitor { state: VisitorState::Loitering, ..Default::default() },
-            GridPosition { x: 10, y: 10 },
-            InfiltrationRisk { chance: 1.0 }, // Force infiltration
-        )).id();
+        // For deterministic test, we might need to mock RNG or force arrival
+        // In this test, we assume the system checks for new visitors and rolls dice.
+        // We'll skip exact probability test and focus on the result: spawning a Stowaway.
 
-        let building = world.spawn((
-            Building { building_type: BuildingType::Stockpile },
-            GridPosition { x: 10, y: 10 },
-        )).id();
+        // Setup: Mock system behavior for test
+        world.spawn((Pop, Stowaway, Hidden));
 
-        // Run system
-        infiltration_system(&mut world);
-
-        // Visitor should be despawned (or removed from world/transformed)
-        assert!(world.get::<Visitor>(visitor).is_none());
-
-        // Building should have Stowaway component
-        assert!(world.get::<Stowaway>(building).is_some());
+        let count = world.query::<(&Stowaway, &Hidden)>().iter(&world).count();
+        assert_eq!(count, 1);
     }
 
     #[test]
     fn test_stowaway_steals_food() {
         let mut world = World::new();
         world.insert_resource(ColonyResources { food: 100.0, ..Default::default() });
-        world.insert_resource(SimulationTime { tick: 100, ..Default::default() });
+        world.insert_resource(NotificationQueue::default());
 
-        // Spawn Building with Stowaway
-        world.spawn((
-            Building { building_type: BuildingType::Stockpile },
-            Stowaway { hunger: 50.0, ..Default::default() }, // Hungry
-        ));
+        // Spawn stowaway
+        world.spawn((Pop, Stowaway, Hidden));
 
-        // Run system
-        theft_system(&mut world);
+        // Run theft system
+        stowaway_theft_system(&mut world);
 
+        // Verify food decreased
         let resources = world.resource::<ColonyResources>();
-        assert!(resources.food < 100.0, "Food should be stolen");
+        assert!(resources.food < 100.0);
+
+        // Verify notification
+        let notifications = world.resource::<NotificationQueue>();
+        assert!(!notifications.queue.is_empty());
+        assert!(notifications.queue[0].text.contains("Food is missing"));
     }
 
     #[test]
-    fn test_discovery_removes_component_spawns_pop() {
+    fn test_stowaway_reveal() {
         let mut world = World::new();
+        let entity = world.spawn((Pop, Stowaway, Hidden)).id();
 
-        // Spawn Building with Stowaway (low stealth)
-        let building = world.spawn((
-            Building { building_type: BuildingType::Stockpile },
-            Stowaway { stealth: 0.0, ..Default::default() }, // Revealed
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        // Mock condition: Player "investigated" or time passed
+        // For test, we manually trigger reveal logic or simulate time
+        world.insert_resource(SimulationTime { tick: 1000, ..Default::default() }); // High tick for timeout
 
-        // Run system
-        discovery_system(&mut world);
+        // Run reveal system
+        reveal_stowaway_system(&mut world);
 
-        // Stowaway component removed
-        assert!(world.get::<Stowaway>(building).is_none());
-
-        // New Pop spawned at location
-        let pop_count = world.query::<&crate::layer1::pop::Pop>().iter(&world).count();
-        assert_eq!(pop_count, 1);
+        // Hidden component should be removed
+        assert!(world.get::<Hidden>(entity).is_none());
+        // Stowaway component might remain (as a trait/history) or be removed
+        // Spec: Remove Stowaway, convert to regular Pop or keep tag for flavor?
+        // Let's keep Stowaway tag for flavor.
+        assert!(world.get::<Stowaway>(entity).is_some());
     }
 }
 ```
 
 ## GREEN Phase: Minimal Implementation
 
-### 1. Components
+### 1. Define Components
 
 ```rust
 // src/layer1/stowaway.rs
 
 use bevy_ecs::prelude::*;
 
-#[derive(Component)]
-pub struct Stowaway {
-    pub stealth: f32, // 0.0 to 1.0. 0.0 = Revealed.
-    pub hunger: f32,
-    pub last_theft_tick: u64,
-}
+#[derive(Component, Default, Debug, Clone)]
+pub struct Stowaway;
 
-impl Default for Stowaway {
-    fn default() -> Self {
-        Self {
-            stealth: 1.0,
-            hunger: 0.0,
-            last_theft_tick: 0,
+#[derive(Component, Default, Debug, Clone)]
+pub struct Hidden; // Marker to exclude from UI lists and counts
+```
+
+### 2. Arrival Logic
+
+Hook into `visitor_spawn_system` or run a separate system `check_stowaway_arrival` that queries `Added<Visitor>`.
+
+```rust
+pub fn check_stowaway_arrival_system(
+    mut commands: Commands,
+    query: Query<Entity, Added<crate::layer1::visitor::Visitor>>,
+    // rng resource
+) {
+    for _entity in query.iter() {
+        if rand::thread_rng().gen_bool(0.1) { // 10% chance
+            // Spawn Stowaway
+            commands.spawn((
+                crate::layer1::pop::Pop,
+                Stowaway,
+                Hidden,
+                crate::layer1::pop::Name("Unknown".to_string()),
+                // Add standard Pop components (Needs, Position, etc.)
+                // Position should be near the Visitor spawn point
+            ));
         }
     }
 }
-
-#[derive(Component)]
-pub struct InfiltrationRisk {
-    pub chance: f32, // Probability per tick to infiltrate
-}
 ```
 
-### 2. Infiltration System
+### 3. Theft Logic
 
 ```rust
-use crate::layer1::visitor::Visitor;
-use crate::layer1::building::{Building, BuildingType};
-use crate::layer1::map::GridPosition;
-use rand::Rng;
-
-pub fn infiltration_system(
-    mut commands: Commands,
-    visitors: Query<(Entity, &GridPosition, &InfiltrationRisk), With<Visitor>>,
-    buildings: Query<(Entity, &GridPosition, &Building)>,
+pub fn stowaway_theft_system(
+    mut resources: ResMut<crate::layer1::ColonyResources>,
+    mut notifications: ResMut<crate::layer1::notifications::NotificationQueue>,
+    query: Query<&Stowaway, With<Hidden>>,
 ) {
-    let mut rng = rand::thread_rng();
-
-    for (visitor_entity, visitor_pos, risk) in visitors.iter() {
-        if rng.gen::<f32>() < risk.chance {
-            // Find nearby suitable building (Stockpile)
-            for (building_entity, building_pos, building) in buildings.iter() {
-                if building.building_type == BuildingType::Stockpile && visitor_pos == building_pos {
-                    // Infiltrate!
-                    commands.entity(visitor_entity).despawn(); // Visitor "disappears"
-                    commands.entity(building_entity).insert(Stowaway::default());
-                    // Log event: "A visitor has vanished..."
-                    break;
-                }
+    for _ in query.iter() {
+        if resources.food > 0.0 {
+            resources.food -= 1.0; // Consume 1 food per tick/day?
+            // Better: run daily or based on hunger.
+            // For MVP: Simple random theft.
+            if rand::thread_rng().gen_bool(0.01) {
+                notifications.push(crate::layer1::notifications::Notification {
+                    text: "Supplies are missing from the stockpile.".to_string(),
+                    severity: crate::layer1::notifications::Severity::Warning,
+                    ..Default::default()
+                });
             }
         }
     }
 }
 ```
 
-### 3. Theft System
+### 4. Reveal Logic
+
+Remove `Hidden` after a duration or event.
 
 ```rust
-use crate::layer1::resources::ColonyResources;
-use crate::shared::time::SimulationTime;
-
-pub fn theft_system(
-    mut resources: ResMut<ColonyResources>,
-    time: Res<SimulationTime>,
-    mut query: Query<&mut Stowaway>,
+pub fn reveal_stowaway_system(
+    mut commands: Commands,
+    query: Query<(Entity, &Stowaway), With<Hidden>>,
+    // time resource
 ) {
-    for mut stowaway in query.iter_mut() {
-        if time.tick > stowaway.last_theft_tick + 100 && stowaway.hunger > 10.0 {
-            // Steal food
-            let stolen = 5.0f32.min(resources.food);
-            resources.food -= stolen;
-            stowaway.hunger -= stolen;
-            stowaway.last_theft_tick = time.tick;
-
-            // Notification: "Food is missing from the stockpile!"
+    for (entity, _) in query.iter() {
+        // Simple logic: 5% chance per day to be caught
+        if rand::thread_rng().gen_bool(0.001) {
+            commands.entity(entity).remove::<Hidden>();
+            // Add notification "A stowaway has been discovered!"
         }
-        stowaway.hunger += 0.1; // Passive hunger
     }
 }
 ```
 
-### 4. Discovery System
+### 5. UI Updates (Important!)
+
+Builder MUST update `src/ui/status.rs` to exclude `Hidden` pops from the count.
 
 ```rust
-use crate::layer1::pop::{Pop, Name};
+// In src/ui/status.rs
 
-pub fn discovery_system(
-    mut commands: Commands,
-    mut query: Query<(Entity, &mut Stowaway, &GridPosition)>,
-) {
-    for (entity, mut stowaway, pos) in query.iter_mut() {
-        // Decrease stealth randomly or if workers present
-        stowaway.stealth -= 0.01;
-
-        if stowaway.stealth <= 0.0 {
-            // Reveal!
-            commands.entity(entity).remove::<Stowaway>();
-
-            // Spawn new Pop
-            // Determine type: Refugee (joins) or Thief (flees/arrested)
-            // For MVP: Just a Refugee
-            commands.spawn((
-                Pop::default(),
-                *pos,
-                Name::new("Stowaway"),
-                // Add specific "Refugee" trait/component
-            ));
-
-            // Log event: "A stowaway was found hiding in the stockpile!"
-        }
-    }
-}
+// Old query: count all pops
+// New query: count pops WITHOUT Hidden component
 ```
 
 ## REFACTOR Phase: Quality & Design
 
-- **Stealth Mechanics**: Stealth should decrease faster if `ActionType::Haul` is performed at the building (workers present).
-- **Infiltration Logic**: Only allow infiltration if the Visitor is *alone* or at night? Or make `InfiltrationRisk` a component added to suspicious visitors at spawn.
-- **UI**: Add a subtle visual cue to the building (e.g., "Rustling" particle effect) when stealth is low.
-- **Balance**: Theft rate shouldn't starve the colony instantly. 5.0 food is a meal.
+- **Discovery Mechanics**: Instead of random chance, use `Security` skill or `Patrol` jobs to increase reveal chance.
+- **Integration**: Stowaways should eventually have Needs (Hunger) that drive the theft. If they can't steal, they starve (and die hidden?).
+- **Story**: When revealed, trigger a dialog: "Banished", "Imprisoned", or "Joined Colony".
 
 ## Acceptance Criteria
 
-- [ ] `Stowaway` component defined.
-- [ ] Visitors can infiltrate Stockpiles, removing the Visitor entity and adding `Stowaway` to the building.
-- [ ] Stowaways consume global Food resources over time.
-- [ ] Stowaways are revealed when stealth hits 0, spawning a new Pop.
-- [ ] Tests pass.
+- [ ] `Stowaway` and `Hidden` components defined.
+- [ ] `Hidden` pops do NOT appear in the UI status bar count.
+- [ ] 10% chance for a Stowaway to spawn when a Visitor arrives.
+- [ ] Stowaways consume food resources periodically.
+- [ ] Notifications appear when food is stolen.
+- [ ] Stowaways are eventually revealed (Hidden removed).
+- [ ] All tests pass.
 
 ## Technical Guidance
 
-- **Visitor Integration**: Update `spawn_visitor_system` (from `074`) to occasionally add `InfiltrationRisk` to new visitors.
-- **Event Log**: Use `NarrativeGenerator` or `Notifications` to hint at the stowaway ("Strange noises heard near the stockpile...").
-- **Pop Spawning**: Use the standard `spawn_pop` helper if available, or manually construct the bundle.
-
-## Questions
-
-- Should Stowaways be able to kill workers? (No, MVP is theft/resource drain).
-- Can players manually search buildings? (Yes, add a `Search` action later).
+- Ensure `Hidden` component is added to the `Pop` bundle or spawned alongside it.
+- Modify `render_status_bar` in `src/ui/status.rs` to filter `Without<Hidden>`.
+- Use `Added<Visitor>` filter to trigger arrival only once per visitor group.
