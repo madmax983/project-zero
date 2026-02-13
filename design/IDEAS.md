@@ -3069,3 +3069,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Recycle waste (resources) or Shoot waste (defense).
 
 ---
+
+## Technological Rituals
+
+**Layer:** 1
+
+**Fantasy:** The machine spirit must be appeased.
+
+**Mechanic:** Aging or jury-rigged machines develop "Quirks" (e.g., "Hard Start"). Pops must perform specific, non-sensical "Rituals" (Kick it, Pray, Toggle switch 3 times) to operate them. Failure to perform the ritual reduces efficiency or causes breakdown.
+
+**Emergence:** Your colony survives on a 100-year-old Fusion Reactor that only runs if the Chief Engineer sings to it every morning. When he dies, the lights go out.
+
+**Tension:** Proper Repair (expensive) vs. Ritual Maintenance (Time/Specialist requirement).
+
+---
+
+## Memetic Hazards
+
+**Layer:** 1
+
+**Fantasy:** Knowledge that eats the mind. The danger of understanding things man was not meant to know.
+
+**Mechanic:** High-level Research or Alien Artifacts can contain "Memetic Viruses". Researchers gain massive XP but become "Carriers", spreading Obsessions (e.g., drawing symbols on walls, refusing to sleep) to pops they talk to.
+
+**Emergence:** You research the "Void Signal". Suddenly, half your science team stops eating to build a geometry-defying structure in the mess hall.
+
+**Tension:** Quarantine the genius (slow research) vs. Risk the infection (breakthroughs).
+
+---
+
+## Diplomatic White Elephants
+
+**Layer:** 3 -> 1
+
+**Fantasy:** A gift you cannot refuse from a friend you cannot afford to offend.
+
+**Mechanic:** Allied factions send "Gifts" that appear on the map. They provide huge Prestige/Relations buffs but have terrible side effects (Radioactive, ugly, attracts vermin, requires massive power). Moving or destroying them causes a Diplomatic Incident.
+
+**Emergence:** The Emperor sends you a "Sacred Beast". It eats 50% of your food supply. You let it eat because you need the Emperor's fleet protection.
+
+**Tension:** Diplomatic standing vs. Local resources/safety.
+
+---
+
+## Station Keeping
+
+**Layer:** 2
+
+**Fantasy:** Gravity is a relentless creditor.
+
+**Mechanic:** Orbital Stations and parked Fleets constantly consume minute amounts of "Fuel" to maintain orbit. If Fuel runs out, the orbit decays. The object eventually crashes onto the Layer 1 map, destroying itself and anything it hits.
+
+**Emergence:** You forget to authorize a fuel shipment to the Starbase. It turns into a meteor that wipes out your industrial district.
+
+**Tension:** Logistics overhead (refueling) vs. Orbital capability.
+
+---
