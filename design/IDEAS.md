@@ -622,7 +622,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Cometary Injection
+## Cometary Injection [SPECCED]
 
 **Layer:** 2
 
