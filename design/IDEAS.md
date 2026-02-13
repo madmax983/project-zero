@@ -2846,3 +2846,72 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Justice (arrest/war) vs. Peace (immunity/unrest).
 
 ---
+## Retrograde Engineering
+
+**Layer:** 1
+
+**Fantasy:** We are savages living in the ruins of giants. We can fix the machine, or we can break it to understand it.
+
+**Mechanic:** "Relic" buildings (found or starting) function but cannot be built. Deconstructing them grants massive Research points towards their tech, but destroys the building forever.
+
+**Emergence:** You destroy your only Fusion Reactor to learn "Nuclear Physics", hoping you can build a new one before the batteries run out. You fail.
+
+**Tension:** Short-term utility vs. Long-term knowledge.
+
+---
+
+## The Wild Child
+
+**Layer:** 1
+
+**Fantasy:** The planet claims your children. Nature vs. Nurture.
+
+**Mechanic:** Children left unattended in "Wild" zones for too long may gain the "Feral" trait. They gain buffs to Movement/Combat/Animal Handling but refuse to sleep indoors, wear clothes, or do "Intellectual" work.
+
+**Emergence:** A famine forces parents to work double shifts. The kids play in the woods. Ten years later, your militia is composed of spear-wielding, wolf-riding beastmasters who barely speak Common.
+
+**Tension:** Protect the youth (Childcare/School) or let the planet toughen them (Feral)?
+
+---
+
+## Orbital Tether
+
+**Layer:** Cross-layer
+
+**Fantasy:** The beanstalk. The bridge to the stars. And the whip.
+
+**Mechanic:** Massive project. Connects L1 to L2. Free transport. BUT, it has physical presence on the map. If destroyed at the anchor or in orbit, the cable falls. The "Whip" destroys *everything* in a line across the map.
+
+**Emergence:** Rebels attack the anchor. You frantically try to defend it. It snaps. The cable slices your city in half like a cheese wire.
+
+**Tension:** Ultimate logistical efficiency vs. The ultimate sword hanging over your head.
+
+---
+
+## Seismic Resonance
+
+**Layer:** 1
+
+**Fantasy:** The planet listens to your footsteps.
+
+**Mechanic:** Heavy machines (Drills, Stampers) generate "Vibration" (distinct from Noise). Some xenoflora/fauna are attracted to it; others are repelled or enraged. Crystalline structures might shatter.
+
+**Emergence:** You switch on the Heavy Bore. The vibrations cause the "Singing Crystals" in the nearby cavern to resonate and explode, blinding the miners. Or, it calls the "Thumper-Beasts".
+
+**Tension:** Industrial speed (Heavy machines) vs. Environmental stealth.
+
+---
+
+## The Blackout Protocol
+
+**Layer:** 1
+
+**Fantasy:** Playing dead.
+
+**Mechanic:** A global toggle to cut ALL power and light instantly. Used to avoid detection by sensitive enemies or reset overloaded grids. Pops panic in the dark unless trained.
+
+**Emergence:** The "Hunter-Killer" drone swarm arrives. You hit the Blackout switch. The colony holds its breath in the pitch black. One pop turns on a flashlight... and the swarm dives.
+
+**Tension:** Safety (Darkness) vs. Panic/Production.
+
+---
