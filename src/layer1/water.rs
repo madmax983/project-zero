@@ -22,6 +22,7 @@ pub struct WaterGrid {
 
 impl WaterGrid {
     /// Creates a new `WaterGrid` with the specified dimensions.
+    #[must_use]
     pub fn new(width: usize, height: usize) -> Self {
         Self {
             width,
@@ -31,6 +32,7 @@ impl WaterGrid {
     }
 
     /// Gets the hydration value at the specified coordinates.
+    #[must_use]
     pub fn get(&self, x: usize, y: usize) -> u8 {
         if x >= self.width || y >= self.height {
             return 0;
@@ -82,7 +84,9 @@ pub fn update_water_system(
     // Set sources (Buildings)
     for (pos, source) in &sources {
         if pos.x >= 0 && pos.y >= 0 {
+            #[allow(clippy::cast_sign_loss)]
             let x = pos.x as usize;
+            #[allow(clippy::cast_sign_loss)]
             let y = pos.y as usize;
             if x < width && y < height {
                 let idx = y * width + x;

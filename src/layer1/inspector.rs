@@ -1,9 +1,9 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::visitor::{Visitor, VisitorState, VisitorSource};
-use crate::layer1::map::GridPosition;
 use crate::layer1::beauty::BeautyGrid;
+use crate::layer1::map::GridPosition;
 use crate::layer1::notifications::{NotificationQueue, NotificationSeverity};
+use crate::layer1::visitor::{Visitor, VisitorSource, VisitorState};
 use crate::shared::time::SimulationTime;
+use bevy_ecs::prelude::*;
 use rand::Rng;
 
 /// The Inspector component tracks the evaluation state of an inspector visitor.
@@ -51,8 +51,8 @@ pub fn spawn_inspector_system(
             },
             spawn_pos,
             crate::layer1::pop::PopName::random(&mut rng), // Reuse Name
-            crate::layer1::needs::Needs::default(), // Ensure visual representation works
-            // Add visual component here (e.g. specialized color/sprite) if we had one
+            crate::layer1::needs::Needs::default(),        // Ensure visual representation works
+                                                           // Add visual component here (e.g. specialized color/sprite) if we had one
         ));
 
         // Schedule next visit (long cooldown)
@@ -89,20 +89,33 @@ pub fn inspector_report_system(
     for (entity, inspector, visitor) in &mut inspectors {
         if visitor.state == VisitorState::Departing {
             let avg_score = if inspector.samples_taken > 0 {
-                inspector.beauty_score / inspector.samples_taken as f32
+                #[allow(clippy::cast_precision_loss)]
+                {
+                    inspector.beauty_score / inspector.samples_taken as f32
+                }
             } else {
                 0.0
             };
 
             // Grading scale based on typical beauty values (-5 to +10)
-            let grade = if avg_score > 5.0 { "S" }
-            else if avg_score > 2.0 { "A" }
-            else if avg_score > 0.0 { "B" }
-            else if avg_score > -2.0 { "C" }
-            else { "F" };
+            let grade = if avg_score > 5.0 {
+                "S"
+            } else if avg_score > 2.0 {
+                "A"
+            } else if avg_score > 0.0 {
+                "B"
+            } else if avg_score > -2.0 {
+                "C"
+            } else {
+                "F"
+            };
 
-            let message = format!("Inspector Report: Grade {}. Avg Beauty: {:.1}", grade, avg_score);
-            let severity = if avg_score < 0.0 { NotificationSeverity::Warning } else { NotificationSeverity::Success };
+            let message = format!("Inspector Report: Grade {grade}. Avg Beauty: {avg_score:.1}");
+            let severity = if avg_score < 0.0 {
+                NotificationSeverity::Warning
+            } else {
+                NotificationSeverity::Success
+            };
 
             notifications.add(message, severity, time.tick);
 
@@ -128,7 +141,10 @@ mod tests {
     fn test_spawn_inspector_trigger() {
         let mut world = World::new();
         crate::setup::init_task_pools(); // Ensure task pools for commands if needed
-        world.insert_resource(SimulationTime { tick: 1000, ..Default::default() });
+        world.insert_resource(SimulationTime {
+            tick: 1000,
+            ..Default::default()
+        });
         world.insert_resource(VisitorSource {
             spawn_points: vec![GridPosition { x: 0, y: 0 }],
             ..Default::default()
@@ -153,13 +169,18 @@ mod tests {
         let mut beauty_grid = BeautyGrid::new(10, 10);
         beauty_grid.set(5, 5, 10.0); // High beauty at pos
         world.insert_resource(beauty_grid);
-        world.insert_resource(SimulationTime { tick: 100, ..Default::default() });
+        world.insert_resource(SimulationTime {
+            tick: 100,
+            ..Default::default()
+        });
 
-        let inspector = world.spawn((
-            Inspector::default(),
-            Visitor::default(),
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let inspector = world
+            .spawn((
+                Inspector::default(),
+                Visitor::default(),
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         // Run observation system
         world.run_system_once(observe_inspector_system).unwrap();
@@ -176,18 +197,20 @@ mod tests {
         world.insert_resource(SimulationTime::default());
 
         // Spawn inspector in Departing state
-        let inspector = world.spawn((
-            Inspector {
-                beauty_score: 50.0,
-                samples_taken: 5, // Avg 10.0 -> Grade A
-                ..Default::default()
-            },
-            Visitor {
-                state: VisitorState::Departing,
-                ..Default::default()
-            },
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let inspector = world
+            .spawn((
+                Inspector {
+                    beauty_score: 50.0,
+                    samples_taken: 5, // Avg 10.0 -> Grade A
+                    ..Default::default()
+                },
+                Visitor {
+                    state: VisitorState::Departing,
+                    ..Default::default()
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
         // Run report system
         world.run_system_once(inspector_report_system).unwrap();

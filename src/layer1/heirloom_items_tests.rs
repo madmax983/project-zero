@@ -1,16 +1,16 @@
 #[cfg(test)]
 mod tests {
+    use crate::layer1::designation::{Designation, DesignationType};
+    use crate::layer1::execution::work_execution_system; // Integration point
+    use crate::layer1::heirloom::{Heirloom, ToolHistory, check_heirloom_status_system};
+    use crate::layer1::items::Equipment;
+    use crate::layer1::items::{Item, Tool, ToolType};
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::pop::Pop;
+    use crate::layer1::resources::{ColonyResources, MiningProgress};
+    use crate::layer1::utility_ai::{ActionType, PopAction};
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
-    use crate::layer1::items::{Item, Tool, ToolType};
-    use crate::layer1::heirloom::{ToolHistory, Heirloom, check_heirloom_status_system};
-    use crate::layer1::execution::work_execution_system; // Integration point
-    use crate::layer1::pop::Pop;
-    use crate::layer1::items::Equipment;
-    use crate::layer1::utility_ai::{ActionType, PopAction};
-    use crate::layer1::map::GridPosition;
-    use crate::layer1::designation::{Designation, DesignationType};
-    use crate::layer1::resources::{ColonyResources, MiningProgress};
 
     #[test]
     fn test_tool_history_component_defaults() {
@@ -34,27 +34,36 @@ mod tests {
         world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
 
         // Spawn Tool with History
-        let tool = world.spawn((
-            Item,
-            Tool {
-                tool_type: ToolType::Pickaxe,
-                durability: 100.0,
-                max_durability: 100.0,
-            },
-            ToolHistory::default(),
-        )).id();
+        let tool = world
+            .spawn((
+                Item,
+                Tool {
+                    tool_type: ToolType::Pickaxe,
+                    durability: 100.0,
+                    max_durability: 100.0,
+                },
+                ToolHistory::default(),
+            ))
+            .id();
 
         // Spawn Pop using Tool
         // Note: Integration test assumes work_execution_system updates history
-        let designation = world.spawn((
-            Designation { designation_type: DesignationType::Mine },
-            GridPosition { x: 5, y: 5 },
-            MiningProgress::default(),
-        )).id();
+        let designation = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Mine,
+                },
+                GridPosition { x: 5, y: 5 },
+                MiningProgress::default(),
+            ))
+            .id();
 
         world.spawn((
             Pop,
-            Equipment { tool: Some(tool), ..Default::default() },
+            Equipment {
+                tool: Some(tool),
+                ..Default::default()
+            },
             GridPosition { x: 5, y: 5 },
             crate::layer1::execution::MovementTarget {
                 target_entity: designation,
@@ -62,14 +71,20 @@ mod tests {
                 for_action: ActionType::Work,
             },
             crate::layer1::execution::AtTarget,
-            PopAction { current: ActionType::Work, ..Default::default() },
+            PopAction {
+                current: ActionType::Work,
+                ..Default::default()
+            },
         ));
 
         // Run execution system
         work_execution_system(&mut world);
 
         let history = world.get::<ToolHistory>(tool).unwrap();
-        assert!(history.ticks_used > 0, "Working should increment ticks_used");
+        assert!(
+            history.ticks_used > 0,
+            "Working should increment ticks_used"
+        );
     }
 
     #[test]
@@ -77,18 +92,20 @@ mod tests {
         let mut world = World::new();
 
         // Spawn Tool with high history
-        let tool = world.spawn((
-            Item,
-            Tool {
-                tool_type: ToolType::Pickaxe,
-                durability: 100.0,
-                max_durability: 100.0,
-            },
-            ToolHistory {
-                ticks_used: 1000, // Threshold met
-                items_harvested: 100,
-            },
-        )).id();
+        let tool = world
+            .spawn((
+                Item,
+                Tool {
+                    tool_type: ToolType::Pickaxe,
+                    durability: 100.0,
+                    max_durability: 100.0,
+                },
+                ToolHistory {
+                    ticks_used: 1000, // Threshold met
+                    items_harvested: 100,
+                },
+            ))
+            .id();
 
         // Run check system
         world.run_system_once(check_heirloom_status_system).unwrap();

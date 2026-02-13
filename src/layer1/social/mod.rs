@@ -54,7 +54,10 @@ pub fn restore_leisure_system(
 
         let visitor_count = tavern.visitors.len();
         let social_bonus = if visitor_count > 1 {
-            (visitor_count as f32 - 1.0) * 0.1
+            #[allow(clippy::cast_precision_loss)]
+            {
+                (visitor_count as f32 - 1.0) * 0.1
+            }
         } else {
             0.0
         };

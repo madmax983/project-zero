@@ -43,6 +43,7 @@ pub fn check_mentorship_system(
                 DesignationType::Repair | DesignationType::Demolish => {
                     Some(SkillType::Construction)
                 }
+                DesignationType::ClearFlora => Some(SkillType::Farming),
                 DesignationType::SetZone(_) => None,
                 DesignationType::Tame => Some(SkillType::Husbandry),
             };

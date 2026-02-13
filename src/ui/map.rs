@@ -10,8 +10,9 @@ use crate::experimental::seasonal_gfx;
 use crate::layer1::fire::Fire;
 use crate::layer1::{
     Anomaly, AnomalyType, BuildMode, Building, BuildingType, Designation, DesignationMode,
-    DesignationType, Fauna, FaunaType, ForestryProgress, GridPosition, Mentorship, MiningProgress,
-    Needs, ResourceItem, ResourceType, TerrainGrid, TerrainType, Viewport, Visitor,
+    DesignationType, Fauna, FaunaType, Flora, FloraType, ForestryProgress, GridPosition,
+    Mentorship, MiningProgress, Needs, ResourceItem, ResourceType, TerrainGrid, TerrainType,
+    Viewport, Visitor,
 };
 
 /// Represents a renderable entity on the map.
@@ -27,6 +28,8 @@ pub enum RenderEntity {
     Building(BuildingType),
     /// A hostile animal (e.g., Wolf, Space Rat).
     Fauna(FaunaType),
+    /// Antagonistic flora (e.g., `XenoMoss`).
+    Flora(FloraType),
     /// A colonist ([`crate::layer1::pop::Pop`]), carrying a display character and color based on status.
     Pop(&'static str, Color),
     /// An anomaly scan target (e.g., Ruins, Flora).
@@ -66,8 +69,9 @@ impl RenderEntity {
             Self::Designation(_, _) => 5,
             Self::Building(_) => 4,
             Self::Fauna(_) | Self::Pop(_, _) => 3,
-            Self::Anomaly(_) => 2,
-            Self::Item(_) => 1,
+            Self::Flora(_) => 2,
+            Self::Anomaly(_) => 1,
+            Self::Item(_) => 0,
         }
     }
 }
@@ -127,6 +131,15 @@ pub fn update_render_cache(world: &mut World) {
                     &mut cache.entities,
                     *pos,
                     RenderEntity::Fauna(fauna.fauna_type),
+                );
+            }
+
+            // Check for Flora
+            if let Some(flora) = e.get::<Flora>() {
+                insert_if_higher_priority(
+                    &mut cache.entities,
+                    *pos,
+                    RenderEntity::Flora(flora.flora_type),
                 );
             }
 
@@ -381,6 +394,13 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
                         ));
                         continue;
                     }
+                    RenderEntity::Flora(ft) => {
+                        line_spans.push(Span::styled(
+                            get_flora_char(*ft),
+                            Style::default().fg(get_flora_color(*ft)),
+                        ));
+                        continue;
+                    }
                     RenderEntity::Pop(text, color) => {
                         line_spans.push(Span::styled(*text, Style::default().fg(*color)));
                         continue;
@@ -411,10 +431,15 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
 
                         // Hydration visualization
                         let hydration = ctx.water.get(ux, uy);
+                        #[allow(
+                            clippy::collapsible_if,
+                            clippy::cast_possible_truncation,
+                            clippy::cast_sign_loss,
+                            clippy::suboptimal_flops
+                        )]
                         if hydration > 0 && tile != TerrainType::Water {
                             if let Color::Rgb(r, g, b) = color {
                                 // Mix with Blue (80, 140, 255) based on hydration level (0-100)
-                                #[allow(clippy::cast_possible_truncation)]
                                 let factor = f32::from(hydration) / 200.0; // Max 50% mix
                                 let r = (f32::from(r) * (1.0 - factor) + 80.0 * factor) as u8;
                                 let g = (f32::from(g) * (1.0 - factor) + 140.0 * factor) as u8;
@@ -640,7 +665,7 @@ pub const fn get_building_color(building: BuildingType) -> Color {
     match building {
         BuildingType::Housing => Color::Rgb(139, 90, 43), // Brown
         BuildingType::Farm => Color::Rgb(218, 165, 32),   // Goldenrod
-        BuildingType::Well => Color::Blue,
+        BuildingType::Well | BuildingType::Tailor => Color::Blue,
         BuildingType::Stockpile | BuildingType::Wall | BuildingType::Gate | BuildingType::Tower => {
             Color::Rgb(169, 169, 169)
         } // DarkGray
@@ -653,7 +678,6 @@ pub const fn get_building_color(building: BuildingType) -> Color {
         BuildingType::Library | BuildingType::AncientFabricator => Color::Cyan,
         BuildingType::Plantation => Color::Green,
         BuildingType::Weaver | BuildingType::Statue => Color::White,
-        BuildingType::Tailor => Color::Blue,
         BuildingType::Hospital => Color::Red,
         BuildingType::Landfill => Color::Rgb(105, 105, 105), // DimGray
         BuildingType::Grave => Color::Rgb(128, 128, 128),    // Gray
@@ -681,6 +705,7 @@ pub const fn get_designation_char(tool: DesignationType) -> &'static str {
         DesignationType::Repair => "+",
         DesignationType::SetZone(_) => "Z",
         DesignationType::Tame => "♥",
+        DesignationType::ClearFlora => "F",
     }
 }
 
@@ -805,5 +830,23 @@ pub const fn get_fauna_color(fauna: FaunaType) -> Color {
     match fauna {
         FaunaType::Wolf => Color::Red,
         FaunaType::SpaceRat => Color::Rgb(105, 105, 105), // DimGray
+    }
+}
+
+/// Returns the display character for a flora type.
+#[must_use]
+pub const fn get_flora_char(flora: FloraType) -> &'static str {
+    match flora {
+        FloraType::XenoMoss => "▒",
+        FloraType::StrangleVines => "§",
+    }
+}
+
+/// Returns the display color for a flora type.
+#[must_use]
+pub const fn get_flora_color(flora: FloraType) -> Color {
+    match flora {
+        FloraType::XenoMoss => Color::Rgb(0, 100, 0), // DarkGreen
+        FloraType::StrangleVines => Color::Rgb(139, 0, 139), // DarkMagenta
     }
 }

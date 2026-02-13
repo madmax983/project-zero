@@ -62,6 +62,8 @@ pub mod hazards_tests;
 pub mod health;
 /// Housing and rest mechanics.
 pub mod housing;
+/// The Inspector system (Spec 091).
+pub mod inspector;
 /// Integration systems bridging domains.
 pub mod integration;
 /// Item definitions (Tools, Equipment).
@@ -91,8 +93,6 @@ pub mod science;
 pub mod seasons;
 /// Social needs and tavern.
 pub mod social;
-/// The Inspector system (Spec 091).
-pub mod inspector;
 /// Spoilage and decay mechanics.
 pub mod spoilage;
 /// Resource storage limits and stockpile buildings.
@@ -283,9 +283,9 @@ pub mod faction_demands_tests;
 pub mod heirloom;
 pub use heirloom::*;
 #[cfg(test)]
-mod heirloom_tests;
-#[cfg(test)]
 mod heirloom_items_tests;
+#[cfg(test)]
+mod heirloom_tests;
 
 /// Animal Husbandry system (Spec 075).
 pub mod husbandry;
@@ -294,3 +294,7 @@ pub use husbandry::*;
 /// Water simulation (Spec 096).
 pub mod water;
 pub use water::*;
+
+/// Antagonistic Flora system (Spec 092).
+pub mod flora;
+pub use flora::*;
