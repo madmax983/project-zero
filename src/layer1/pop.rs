@@ -110,16 +110,47 @@ pub struct Pop;
 
 /// Movement speed of a pop.
 ///
-/// Speed is a multiplier for movement. Base speed is 1.0 (1 tile per tick).
-/// Values < 1.0 slow down movement (e.g., 0.5 moves every 2 ticks).
-/// Values > 1.0 speed up movement (e.g., 2.0 moves 2 tiles per tick).
+/// Speed is a multiplier for movement logic, which is discrete (tile-based).
+/// Since we cannot move "0.5 tiles", we use an accumulator.
+///
+/// # How it works
+///
+/// 1. Every tick, `current` speed is added to `accumulator`.
+/// 2. If `accumulator >= 1.0`, the pop moves 1 tile and `1.0` is subtracted.
+/// 3. If `accumulator >= 2.0` (super speed), the pop moves multiple tiles.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::pop::Speed;
+///
+/// let mut speed = Speed {
+///     base: 1.0,
+///     current: 0.5, // Slow (encumbered or injured)
+///     accumulator: 0.0,
+/// };
+///
+/// // Tick 1: Accumulate 0.5
+/// speed.accumulator += speed.current;
+/// assert!(speed.accumulator < 1.0); // No move
+///
+/// // Tick 2: Accumulate 0.5 -> 1.0
+/// speed.accumulator += speed.current;
+/// if speed.accumulator >= 1.0 {
+///     // Move logic here
+///     speed.accumulator -= 1.0;
+/// }
+/// assert_eq!(speed.accumulator, 0.0);
+/// ```
 #[derive(Component, Debug, Clone)]
 pub struct Speed {
     /// Base speed multiplier (usually 1.0).
     pub base: f32,
     /// Current effective speed multiplier.
+    /// Modified by terrain, health, and traits.
     pub current: f32,
     /// Accumulator for fractional movement.
+    /// Tracks progress towards the next tile step.
     pub accumulator: f32,
 }
 
@@ -585,7 +616,10 @@ mod tests {
         for (_, age) in query.iter(&world) {
             // Check age range (20-40 years)
             let years = age.ticks_alive / crate::layer1::balance::TICKS_PER_YEAR;
-            assert!(years >= 20 && years < 40, "Age should be between 20 and 40");
+            assert!(
+                (20..40).contains(&years),
+                "Age should be between 20 and 40"
+            );
         }
     }
 }

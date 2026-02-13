@@ -379,8 +379,12 @@ impl ColonyResources {
 /// ```
 /// use scale::layer1::resources::MiningProgress;
 ///
-/// let progress = MiningProgress { current: 50.0, max: 100.0 };
+/// let mut progress = MiningProgress { current: 50.0, max: 100.0 };
 /// assert!(!progress.is_complete());
+///
+/// // Simulate work
+/// progress.current += 60.0;
+/// assert!(progress.is_complete());
 /// ```
 #[derive(Component, Debug)]
 pub struct MiningProgress {

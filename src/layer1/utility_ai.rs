@@ -22,6 +22,18 @@
 //! *   [`ActionType`]: The enum of all possible behaviors.
 //! *   [`UtilityWeights`]: The "memory" of the Pop, adjusting scores based on past success/failure.
 //!
+//! ## Performance Architecture
+//!
+//! The Utility AI system is one of the most computationally expensive parts of the simulation,
+//! potentially running for hundreds of pops every tick. To maintain high FPS:
+//!
+//! 1.  **Staggered Evaluation**: Not every pop thinks every tick. [`UtilityConfig::evaluation_interval`]
+//!     spreads the load (e.g., only 1/60th of pops think per frame).
+//! 2.  **Allocation-Free Loop**: [`evaluate_actions_system`] reuses a single `UtilityAIBuffer`
+//!     resource. It clears the buffer instead of dropping it, preventing thousands of
+//!     `Vec::new()` calls per frame.
+//! 3.  **Entity Iteration**: We use `Query::iter` (which is fast) rather than random access.
+//!
 
 use crate::layer1::actions::explore::evaluate_explore;
 use crate::layer1::actions::farm::evaluate_farm;

@@ -89,9 +89,13 @@ impl ActionType {
 
     /// Returns the danger level of the action (probability of accident per tick).
     ///
-    /// *   Work/Repair: 0.1% chance.
-    /// *   Fight: 0% (Combat handles damage differently).
-    /// *   Others: 0% chance.
+    /// This value is used by the execution systems (e.g., `work_execution_system`)
+    /// to determine if a Pop should suffer an injury while performing this task.
+    ///
+    /// *   **Work/Repair/Slaughter**: 0.1% chance per tick. (Low risk)
+    /// *   **Tame**: 0.5% chance per tick. (Moderate risk - animals bite!)
+    /// *   **Fight**: 0% (Combat handles damage via its own system).
+    /// *   **Others**: 0% chance.
     #[must_use]
     pub const fn danger_level(&self) -> f64 {
         match self {
@@ -102,6 +106,13 @@ impl ActionType {
     }
 
     /// Returns the damage inflicted if an accident occurs.
+    ///
+    /// If `danger_level` triggers an accident, this value determines the amount of HP
+    /// lost by the Pop.
+    ///
+    /// *   **Work/Repair**: 10.0 HP (minor injury).
+    /// *   **Tame**: 15.0 HP (animal bite/kick).
+    /// *   **Slaughter**: 5.0 HP (accidental cut).
     #[must_use]
     pub const fn accident_damage(&self) -> f32 {
         match self {
@@ -310,11 +321,13 @@ pub const fn manhattan_distance(pos1: &GridPosition, pos2: &GridPosition) -> i32
 
 /// Calculates a context score (0.0 - 1.0) based on distance and crowding.
 ///
+/// This score represents "how convenient" a target is.
+///
 /// # Formula
 ///
 /// 1.  **Distance**: Hyperbolic decay: `1.0 / (1.0 + 0.1 * distance)`.
 ///     *   At distance 0, score is 1.0.
-///     *   At distance 10, score is 0.5.
+///     *   At distance 10, score is 0.5 (half utility).
 ///     *   At distance 90, score is 0.1.
 ///     *   Raised to the power of `weights.distance_weight`.
 ///
@@ -324,25 +337,34 @@ pub const fn manhattan_distance(pos1: &GridPosition, pos2: &GridPosition) -> i32
 /// # Examples
 ///
 /// ```
-/// use scale::layer1::utility_types::calculate_context_score;
-/// use scale::layer1::utility_types::UtilityWeights;
+/// use scale::layer1::utility_types::{calculate_context_score, UtilityWeights};
 /// use scale::layer1::map::GridPosition;
 ///
 /// let pop_pos = GridPosition { x: 0, y: 0 };
-/// let farm_pos = GridPosition { x: 10, y: 0 }; // Distance 10
-/// let weights = UtilityWeights::default(); // Weight 1.0
+/// let farm_pos = GridPosition { x: 10, y: 0 };
+/// let weights = UtilityWeights::default();
 ///
-/// let score = calculate_context_score(
+/// // Scenario 1: Empty farm, moderate distance
+/// let score_empty = calculate_context_score(
 ///     pop_pos,
 ///     Some(farm_pos),
 ///     10, // Capacity
-///     0,  // Occupied (empty)
+///     0,  // Occupied
 ///     &weights
 /// );
-///
 /// // Distance factor: 1.0 / (1.0 + 0.1*10) = 0.5
-/// // Availability: 1.0
-/// assert!((score - 0.5).abs() < f32::EPSILON);
+/// assert!((score_empty - 0.5).abs() < f32::EPSILON);
+///
+/// // Scenario 2: Crowded farm (50% full)
+/// let score_crowded = calculate_context_score(
+///     pop_pos,
+///     Some(farm_pos),
+///     10,
+///     5,  // 5/10 occupied
+///     &weights
+/// );
+/// // Distance (0.5) * Availability (0.5) = 0.25
+/// assert!((score_crowded - 0.25).abs() < f32::EPSILON);
 /// ```
 #[must_use]
 pub fn calculate_context_score(
