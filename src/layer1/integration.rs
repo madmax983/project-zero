@@ -5,13 +5,16 @@ use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer1::factions::Factions;
 use crate::layer1::fire::Fire;
 use crate::layer1::health::Health;
+use crate::layer1::inspector::{Inspector, Reported};
 use crate::layer1::map::GridPosition;
 use crate::layer1::memory::{Memories, MemoryType};
 use crate::layer1::needs::Needs;
 use crate::layer1::pop::{Pop, PopDied};
+use crate::layer1::resources::ColonyResources;
 use crate::layer1::rumor::{Knowledge, Rumor, RumorTopic};
 use crate::layer1::vermin::VerminState;
 use crate::shared::colony::ColonyName;
+use crate::shared::log::MessageLog;
 use crate::shared::narrative::{NarrativeContext, NarrativeGenerator};
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
@@ -191,6 +194,82 @@ pub fn waste_pollution_bridge(
     for (building, pos) in &buildings {
         if building.building_type == crate::layer1::building::BuildingType::Landfill {
             grid.add(pos.x, pos.y, 0.2);
+        }
+    }
+}
+
+/// Applies consequences of an Inspector's report.
+///
+/// Bridges the Inspector system (Observation) and Pop/Resources system (Psychology/Economy).
+#[allow(clippy::cast_precision_loss)]
+pub fn inspector_outcome_bridge_system(
+    inspectors: Query<&Inspector, Added<Reported>>,
+    mut pop_memories: Query<&mut Memories, With<Pop>>,
+    mut resources: ResMut<ColonyResources>,
+    mut log: Option<ResMut<MessageLog>>,
+    time: Res<SimulationTime>,
+) {
+    for inspector in &inspectors {
+        let avg_score = if inspector.samples_taken > 0 {
+            inspector.beauty_score / inspector.samples_taken as f32
+        } else {
+            0.0
+        };
+
+        // Determine outcome
+        if avg_score > 5.0 {
+            // S Grade
+            // Grant Knowledge
+            resources.add_knowledge(10.0);
+
+            // Add Memory to ALL pops
+            pop_memories.par_iter_mut().for_each(|mut memories| {
+                if !memories
+                    .items
+                    .iter()
+                    .any(|m| m.memory_type == MemoryType::InspectorImpressed)
+                {
+                    memories.add(MemoryType::InspectorImpressed, time.tick);
+                }
+            });
+
+            if let Some(log) = log.as_mut() {
+                log.add(
+                    "Inspector Report: The colony is a shining beacon! (+10 Knowledge, Pop Morale Boost)",
+                );
+            }
+        } else if avg_score > 2.0 {
+            // A Grade
+            resources.add_knowledge(5.0);
+
+            pop_memories.par_iter_mut().for_each(|mut memories| {
+                if !memories
+                    .items
+                    .iter()
+                    .any(|m| m.memory_type == MemoryType::InspectorImpressed)
+                {
+                    memories.add(MemoryType::InspectorImpressed, time.tick);
+                }
+            });
+
+            if let Some(log) = log.as_mut() {
+                log.add("Inspector Report: An exemplary colony. (+5 Knowledge, Pop Morale Boost)");
+            }
+        } else if avg_score < -2.0 {
+            // F Grade
+            pop_memories.par_iter_mut().for_each(|mut memories| {
+                if !memories
+                    .items
+                    .iter()
+                    .any(|m| m.memory_type == MemoryType::InspectorDisappointed)
+                {
+                    memories.add(MemoryType::InspectorDisappointed, time.tick);
+                }
+            });
+
+            if let Some(log) = log.as_mut() {
+                log.add("Inspector Report: Disgraceful conditions! (Pop Morale Penalty)");
+            }
         }
     }
 }

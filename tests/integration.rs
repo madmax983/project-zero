@@ -42,3 +42,6 @@ mod binge_resources;
 mod quirks_atmosphere;
 #[path = "integration/waste_pollution.rs"]
 mod waste_pollution;
+
+#[path = "integration/inspector_outcome.rs"]
+mod inspector_outcome;
