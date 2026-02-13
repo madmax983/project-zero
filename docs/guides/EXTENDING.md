@@ -47,17 +47,17 @@ pub const fn label(&self) -> &'static str {
 Add a case to `cost()`:
 
 ```rust
-pub fn cost(&self) -> ColonyResources {
+pub const fn cost(&self, material: MaterialType) -> ColonyResources {
     match self {
         Self::Housing => ColonyResources {
             wood: 10.0,
-            ..Default::default()
+            ..ColonyResources::zeroed()
         },
         // ...
         Self::Statue => ColonyResources {
             wood: 50.0,
             stone: 20.0,
-            ..Default::default()
+            ..ColonyResources::zeroed()
         },
     }
 }
@@ -102,8 +102,18 @@ If your building has specific logic (like producing resources or housing pops), 
 Update `spawn_building` in `src/layer1/building.rs`:
 
 ```rust
-fn spawn_building(world: &mut World, x: i32, y: i32, building_type: BuildingType) {
-    let mut entity = world.spawn((Building { building_type }, GridPosition { x, y }));
+fn spawn_building(
+    world: &mut World,
+    x: i32,
+    y: i32,
+    building_type: BuildingType,
+    material: MaterialType,
+) {
+    let mut entity = world.spawn((
+        Building { building_type },
+        GridPosition { x, y },
+        Material(material),
+    ));
 
     match building_type {
         BuildingType::Housing => {
