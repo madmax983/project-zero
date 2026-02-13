@@ -16,6 +16,10 @@ pub struct AtmosphereGrid {
     pub height: usize,
     /// Flattened grid values.
     pub values: Vec<f32>,
+    /// Retention rate of pollution per tick (0.0 to 1.0).
+    /// Higher values mean pollution stays longer.
+    /// Default: 0.99.
+    pub diffusion_rate: f32,
 }
 
 impl AtmosphereGrid {
@@ -26,6 +30,7 @@ impl AtmosphereGrid {
             width,
             height,
             values: vec![0.0; width * height],
+            diffusion_rate: 0.99,
         }
     }
 
@@ -96,7 +101,7 @@ impl AtmosphereGrid {
                 // Average
                 new_values[idx] = sum / count;
                 // Decay
-                new_values[idx] *= 0.99;
+                new_values[idx] *= self.diffusion_rate;
             }
         }
         self.values = new_values;

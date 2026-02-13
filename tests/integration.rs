@@ -40,3 +40,5 @@ mod binge_resources;
 
 #[path = "integration/waste_pollution.rs"]
 mod waste_pollution;
+#[path = "integration/quirks_atmosphere.rs"]
+mod quirks_atmosphere;
