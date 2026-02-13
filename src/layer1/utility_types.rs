@@ -235,18 +235,6 @@ impl Default for UtilityConfig {
     }
 }
 
-/// Colony-wide memory (zeitgeist).
-///
-/// Tracks aggregate statistics about action success rates across all pops.
-/// (Currently used for debugging/inspector).
-#[derive(Resource, Default, Clone)]
-pub struct ColonyMemory {
-    /// Total successful actions across all pops.
-    pub total_successful_actions: [u32; ActionType::COUNT],
-    /// Average duration of actions (in ticks).
-    pub average_action_duration: [u32; ActionType::COUNT],
-}
-
 /// Marker component to trigger HTN (Hierarchical Task Network) planning.
 ///
 /// When the Utility AI selects a new high-level [`ActionType`], it inserts this
@@ -609,12 +597,5 @@ mod tests {
         assert_eq!(config.evaluation_interval, 1);
         assert!((config.learning_rate - 0.05).abs() < f32::EPSILON);
         assert_eq!(config.weight_clamp, (0.5, 2.0));
-    }
-
-    #[test]
-    fn test_colony_memory_default() {
-        let memory = ColonyMemory::default();
-        assert!(memory.total_successful_actions.iter().all(|&x| x == 0));
-        assert!(memory.average_action_duration.iter().all(|&x| x == 0));
     }
 }

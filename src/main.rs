@@ -8,7 +8,7 @@ use crossterm::{
 use ratatui::prelude::*;
 use scale::platform::input::{GameKeyEvent, GameMouseEvent};
 use scale::setup::setup_world;
-use scale::shared::input::InputRouter;
+use scale::shared::input::{route_input, route_mouse_input};
 use scale::shared::state::GameState;
 use scale::shared::time::{SimSpeed, SimulationTime};
 use scale::simulation::run_simulation_tick;
@@ -42,7 +42,6 @@ fn main() -> anyhow::Result<()> {
 
 fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Result<()> {
     let mut world = setup_world();
-    let mut input_router = InputRouter::new();
 
     // Main loop
     let tick_rate = Duration::from_millis(100); // 10 FPS base
@@ -57,12 +56,12 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
             match event::read()? {
                 Event::Key(key) => {
                     if let Ok(game_key) = GameKeyEvent::try_from(key) {
-                        input_router.route(&mut world, game_key);
+                        route_input(&mut world, game_key);
                     }
                 }
                 Event::Mouse(mouse) => {
                     if let Ok(game_mouse) = GameMouseEvent::try_from(mouse) {
-                        input_router.route_mouse(&mut world, game_mouse);
+                        route_mouse_input(&mut world, game_mouse);
                     }
                 }
                 _ => {}

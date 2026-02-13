@@ -7,11 +7,6 @@ pub struct SimulationTime {
     pub tick: u64,
     /// The current simulation speed.
     pub speed: SimSpeed,
-    /// Accumulator for partial ticks when running at non-integer speeds or variable frame rates.
-    ///
-    /// NOTE: Currently unused. Reserved for future implementation where speed multipliers
-    /// will be applied via fractional tick accumulation. For now, all speeds increment by 1.
-    pub accumulator: f32,
 }
 
 /// Defines the speed at which the simulation runs.
@@ -29,30 +24,6 @@ pub enum SimSpeed {
 }
 
 impl SimSpeed {
-    /// Returns the number of ticks per second for this speed.
-    ///
-    /// NOTE: Currently unused in the main game loop. The tick increment logic (main.rs:89)
-    /// always adds 1 per tick. This method is reserved for future implementation where
-    /// the speed multiplier will be applied via the `accumulator` field.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use scale::shared::time::SimSpeed;
-    ///
-    /// assert_eq!(SimSpeed::Normal.ticks_per_second(), 1.0);
-    /// assert_eq!(SimSpeed::Paused.ticks_per_second(), 0.0);
-    /// ```
-    #[must_use]
-    pub const fn ticks_per_second(&self) -> f32 {
-        match self {
-            Self::Paused => 0.0,
-            Self::Normal => 1.0,
-            Self::Fast => 3.0,
-            Self::Faster => 5.0,
-        }
-    }
-
     /// Returns a user-friendly label for the UI.
     ///
     /// # Examples
@@ -79,14 +50,6 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_sim_speed_values() {
-        assert!((SimSpeed::Paused.ticks_per_second() - 0.0).abs() < f32::EPSILON);
-        assert!((SimSpeed::Normal.ticks_per_second() - 1.0).abs() < f32::EPSILON);
-        assert!((SimSpeed::Fast.ticks_per_second() - 3.0).abs() < f32::EPSILON);
-        assert!((SimSpeed::Faster.ticks_per_second() - 5.0).abs() < f32::EPSILON);
-    }
-
-    #[test]
     fn test_sim_speed_labels() {
         assert!(SimSpeed::Paused.label().contains("Paused"));
         assert!(SimSpeed::Normal.label().contains("1x"));
@@ -99,7 +62,6 @@ mod tests {
         let sim_time = SimulationTime::default();
         assert_eq!(sim_time.tick, 0);
         assert_eq!(sim_time.speed, SimSpeed::Normal);
-        assert!((sim_time.accumulator - 0.0).abs() < f32::EPSILON);
     }
 
     #[test]
@@ -155,14 +117,5 @@ mod tests {
         sim_time.tick = 42;
         sim_time.speed = SimSpeed::Paused;
         assert_eq!(sim_time.tick, 42); // Tick preserved across speed change
-    }
-
-    #[test]
-    fn test_accumulator_field_exists() {
-        let mut sim_time = SimulationTime::default();
-        assert!((sim_time.accumulator - 0.0).abs() < f32::EPSILON);
-
-        sim_time.accumulator = 0.5;
-        assert!((sim_time.accumulator - 0.5).abs() < f32::EPSILON);
     }
 }

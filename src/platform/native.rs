@@ -2,7 +2,7 @@
 
 use crossterm::event::{KeyCode, KeyEvent, KeyEventKind, MouseEvent, MouseEventKind};
 
-use super::input::{GameKeyCode, GameKeyEvent, GameMouseEvent};
+use crate::platform::input::{GameKeyCode, GameKeyEvent, GameMouseEvent};
 
 /// Convert a crossterm `KeyEvent` to a platform-agnostic `GameKeyEvent`.
 ///
@@ -39,13 +39,12 @@ impl TryFrom<MouseEvent> for GameMouseEvent {
     type Error = ();
 
     fn try_from(mouse: MouseEvent) -> Result<Self, Self::Error> {
-        if let MouseEventKind::Down(_button) = mouse.kind {
-            Ok(Self {
+        match mouse.kind {
+            MouseEventKind::Down(_button) => Ok(Self {
                 x: mouse.column,
                 y: mouse.row,
-            })
-        } else {
-            Err(())
+            }),
+            _ => Err(()),
         }
     }
 }
@@ -160,7 +159,7 @@ mod tests {
     #[test]
     fn test_windows_press_release_does_not_double_toggle_pause() {
         use crate::layer1::{BuildMode, DesignationMode, Viewport};
-        use crate::shared::input::{InputContext, InputContextStack, InputRouter};
+        use crate::shared::input::{InputContext, InputContextStack, route_input};
         use crate::shared::menu::MenuState;
         use crate::shared::selection::Selection;
         use crate::shared::state::GameState;
@@ -178,8 +177,6 @@ mod tests {
         stack.push(InputContext::Normal);
         world.insert_resource(stack);
 
-        let mut router = InputRouter::new();
-
         // Simulate Windows keypress: Press then Release
         let press = KeyEvent::new_with_kind(
             KeyCode::Char(' '),
@@ -194,10 +191,10 @@ mod tests {
 
         // Feed both events through the same path as main.rs
         if let Ok(game_key) = GameKeyEvent::try_from(press) {
-            router.route(&mut world, game_key);
+            route_input(&mut world, game_key);
         }
         if let Ok(game_key) = GameKeyEvent::try_from(release) {
-            router.route(&mut world, game_key);
+            route_input(&mut world, game_key);
         }
 
         // Should be Paused — not toggled back to Running

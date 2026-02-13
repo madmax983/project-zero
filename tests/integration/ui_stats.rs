@@ -15,7 +15,6 @@ mod tests {
         world.insert_resource(SimulationTime {
             tick: 1000,
             speed: SimSpeed::Normal,
-            accumulator: 0.0,
         });
         world.insert_resource(GameState::Running);
         world.insert_resource(BuildMode::default());

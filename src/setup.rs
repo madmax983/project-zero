@@ -8,10 +8,10 @@ use crate::layer1::pop::PopDied;
 use crate::layer1::social::AffinityChange;
 use crate::layer1::{
     AmbientLight, AtmosphereGrid, BuildMode, BuildingTracker, Chronicle, ChronicleUiState,
-    ColonyMemory, ColonyPolicies, ColonyResources, DesignationMode, LightMap, NamedLocations,
-    NotificationQueue, OccupiedTiles, ScreenShake, SeasonState, TechState, TerrainType,
-    UtilityConfig, Viewport, generate_terrain, initial_chronicle_event, initial_naming_system,
-    spawn_ancient_structures, spawn_initial_anomalies, spawn_initial_pops,
+    ColonyPolicies, ColonyResources, DesignationMode, LightMap, NamedLocations, NotificationQueue,
+    OccupiedTiles, ScreenShake, SeasonState, TechState, TerrainType, UtilityConfig, Viewport,
+    generate_terrain, initial_chronicle_event, initial_naming_system, spawn_ancient_structures,
+    spawn_initial_anomalies, spawn_initial_pops,
 };
 use crate::shared::colony::ColonyName;
 use crate::shared::input::InputContextStack;
@@ -72,7 +72,6 @@ pub fn setup_world() -> World {
     world.insert_resource(RenderCache::default());
     world.insert_resource(UtilityConfig::default());
     world.insert_resource(crate::layer1::sleepwalking::SleepwalkingConfig::default());
-    world.insert_resource(ColonyMemory::default());
     world.insert_resource(SeasonState::default());
     world.insert_resource(NamedLocations::default());
     world.insert_resource(TechState::default());

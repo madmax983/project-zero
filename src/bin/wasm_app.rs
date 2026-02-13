@@ -9,7 +9,7 @@ use ratzilla::ratatui::Terminal;
 
 use scale::platform::input::{GameKeyEvent, GameMouseEvent};
 use scale::setup::setup_world;
-use scale::shared::input::InputRouter;
+use scale::shared::input::{route_input, route_mouse_input};
 use scale::shared::state::GameState;
 use scale::shared::time::{SimSpeed, SimulationTime};
 use scale::simulation::run_simulation_tick;
@@ -18,7 +18,6 @@ use scale::ui::render;
 
 fn main() -> std::io::Result<()> {
     let world = Rc::new(RefCell::new(setup_world()));
-    let input_router = Rc::new(RefCell::new(InputRouter::new()));
 
     let backend = DomBackend::new()?;
     let terminal = Terminal::new(backend)?;
@@ -26,10 +25,9 @@ fn main() -> std::io::Result<()> {
     // Key input handler
     terminal.on_key_event({
         let world = world.clone();
-        let router = input_router.clone();
         move |key_event| {
             if let Ok(game_key) = GameKeyEvent::try_from(key_event) {
-                router.borrow_mut().route(&mut world.borrow_mut(), game_key);
+                route_input(&mut world.borrow_mut(), game_key);
             }
         }
     });
@@ -37,12 +35,9 @@ fn main() -> std::io::Result<()> {
     // Mouse input handler
     terminal.on_mouse_event({
         let world = world.clone();
-        let router = input_router;
         move |mouse_event| {
             if let Ok(game_mouse) = GameMouseEvent::try_from(mouse_event) {
-                router
-                    .borrow_mut()
-                    .route_mouse(&mut world.borrow_mut(), game_mouse);
+                route_mouse_input(&mut world.borrow_mut(), game_mouse);
             }
         }
     });
