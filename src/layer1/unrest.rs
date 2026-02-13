@@ -1,6 +1,6 @@
 use crate::layer1::cabin_fever::CabinFever;
 use crate::layer1::needs::Needs;
-use crate::layer1::structure::Structure;
+use crate::layer1::structure::{FRAGILITY_DAMAGE_MULTIPLIER, Fragile, Structure};
 use bevy_ecs::prelude::*;
 
 /// Represents the mental stability of a Pop.
@@ -46,8 +46,14 @@ pub fn check_mental_break_system(
 
 /// Logic for executing a Vandalize action against a target.
 pub fn perform_vandalize_logic(world: &mut World, _pop: Entity, target: Entity) {
+    let mut damage = 10.0;
+
+    if let Some(fragile) = world.get::<Fragile>(target) {
+        damage *= 1.0 + (fragile.stacks as f32 * FRAGILITY_DAMAGE_MULTIPLIER);
+    }
+
     if let Some(mut structure) = world.get_mut::<Structure>(target) {
-        structure.current_hp = (structure.current_hp - 10.0).max(0.0);
+        structure.current_hp = (structure.current_hp - damage).max(0.0);
     }
 }
 

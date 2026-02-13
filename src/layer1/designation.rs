@@ -32,6 +32,8 @@ pub enum DesignationType {
     Tame,
     /// Designate flora for clearing.
     ClearFlora,
+    /// Designate a building for jury-rigging (quick, fragile repair).
+    JuryRig,
 }
 
 impl DesignationType {
@@ -54,6 +56,7 @@ impl DesignationType {
             Self::SetZone(_) => 'Z',
             Self::Tame => '♥',
             Self::ClearFlora => 'F',
+            Self::JuryRig => 'J',
         }
     }
 
@@ -76,6 +79,7 @@ impl DesignationType {
             Self::SetZone(_) => "Z",
             Self::Tame => "♥",
             Self::ClearFlora => "F",
+            Self::JuryRig => "J",
         }
     }
 
@@ -98,6 +102,7 @@ impl DesignationType {
             Self::SetZone(_) => "Set Zone",
             Self::Tame => "Tame",
             Self::ClearFlora => "Clear Flora",
+            Self::JuryRig => "Jury-Rig",
         }
     }
 }
@@ -218,6 +223,11 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
                 }
                 false
             })
+        }
+        DesignationType::JuryRig => {
+            let occupied = world.resource::<OccupiedTiles>();
+            // Only occupied tiles can be jury-rigged (assumes building)
+            occupied.0.contains(&(x, y))
         }
     }
 }

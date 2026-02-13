@@ -22,6 +22,17 @@ impl Default for Structure {
     }
 }
 
+/// Component added to buildings that have been jury-rigged.
+/// They take increased damage from all sources.
+#[derive(Component, Debug, Clone, Copy, Default)]
+pub struct Fragile {
+    /// Number of times the building has been jury-rigged.
+    pub stacks: u32,
+}
+
+/// Damage multiplier per stack of Fragility (50% increase per stack).
+pub const FRAGILITY_DAMAGE_MULTIPLIER: f32 = 0.5;
+
 /// System that applies fire damage to structures.
 ///
 /// This runs every tick and reduces HP of structures standing in fire.
@@ -39,11 +50,20 @@ pub fn fire_damage_structure_system(world: &mut World) {
     // Apply damage to structures at fire locations
     // This is O(F * S) which is fine for MVP. Optimization: Spatial Map.
     for (fire_pos, intensity) in fires {
-        let mut structure_query = world.query::<(Entity, &GridPosition, &mut Structure)>();
-        for (entity, pos, mut structure) in structure_query.iter_mut(world) {
+        let mut structure_query =
+            world.query::<(Entity, &GridPosition, &mut Structure, Option<&Fragile>)>();
+        for (entity, pos, mut structure, fragile) in structure_query.iter_mut(world) {
             if *pos == fire_pos {
-                let damage = 5.0 * intensity; // 5.0 damage per tick per intensity unit
-                structure.current_hp -= damage;
+                let base_damage = 5.0 * intensity; // 5.0 damage per tick per intensity unit
+
+                // Fragile buildings take extra damage
+                let multiplier = if let Some(f) = fragile {
+                    1.0 + (f.stacks as f32 * FRAGILITY_DAMAGE_MULTIPLIER)
+                } else {
+                    1.0
+                };
+
+                structure.current_hp -= base_damage * multiplier;
 
                 if structure.current_hp <= 0.0 {
                     destroyed.push((entity, *pos));
@@ -119,6 +139,28 @@ pub fn process_repair(world: &mut World, designation_entity: Entity, amount: f32
         // If no structure found (destroyed?), remove designation
         world.despawn(designation_entity);
     }
+}
+
+/// Instantly repairs a structure but adds fragility.
+///
+/// This is a "god power" or instant action that fully heals the building
+/// but makes it susceptible to future damage.
+pub fn process_jury_rig(world: &mut World, structure_entity: Entity) {
+    // 1. Fully heal
+    if let Some(mut structure) = world.get_mut::<Structure>(structure_entity) {
+        structure.current_hp = structure.max_hp;
+    }
+
+    // 2. Add/Increment Fragile
+    if let Some(mut fragile) = world.get_mut::<Fragile>(structure_entity) {
+        fragile.stacks += 1;
+    } else {
+        world.entity_mut(structure_entity).insert(Fragile { stacks: 1 });
+    }
+
+    // Note: The designation cleanup is handled by the caller (work execution system)
+    // unlike process_repair which handles it internally because it's incremental.
+    // If process_jury_rig is called directly, ensure designation is removed if applicable.
 }
 
 #[cfg(test)]

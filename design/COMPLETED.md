@@ -77,3 +77,4 @@ Features that have been fully implemented and tested.
 - [x] `076` Heirloom Items — `specs/076-heirloom-items.md` — completed 2026-03-06
 - [x] `097` Social Need & Tavern — `specs/097-social-tavern.md` — completed 2026-02-13
 - [x] `080` Planetary Quirks — `specs/080-planetary-quirks.md` — completed 2026-03-06
+- [x] `100` Jury-Rigging — `specs/100-jury-rigging.md` — completed 2026-10-25
