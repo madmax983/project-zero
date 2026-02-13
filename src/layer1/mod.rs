@@ -300,3 +300,5 @@ pub use water::*;
 /// Antagonistic Flora system (Spec 092).
 pub mod flora;
 pub use flora::*;
+pub mod private_stash;
+pub use private_stash::*;
