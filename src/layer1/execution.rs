@@ -50,6 +50,7 @@ use crate::layer1::items::{Equipment, Tool};
 use crate::layer1::map::{GridPosition, ScreenShake};
 use crate::layer1::memory::{Memories, calculate_effective_morale};
 use crate::layer1::needs::{Needs, get_morale_efficiency};
+use crate::layer1::particles::spawn_particle;
 use crate::layer1::pop::{Job, Speed};
 use crate::layer1::resources::{ColonyResources, process_logging, process_mining};
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
@@ -62,7 +63,6 @@ use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 use rand::Rng;
 use ratatui::style::Color;
-use crate::layer1::particles::spawn_particle;
 
 /// Executes combat when pop is targeting an enemy.
 pub fn combat_execution_system(world: &mut World) {

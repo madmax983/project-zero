@@ -308,3 +308,6 @@ pub use private_stash::*;
 /// Visual particle effects system (Juice).
 pub mod particles;
 pub use particles::*;
+
+#[cfg(test)]
+mod fuel_industry_tests;

@@ -190,6 +190,8 @@ pub enum BuildingType {
     AncientReactor,
     /// Ancient manufacturing unit (Ancient Structure).
     AncientFabricator,
+    /// Refines Ore into Fuel.
+    Refinery,
 }
 
 impl BuildingType {
@@ -284,6 +286,7 @@ impl BuildingType {
             Self::Tower => "Tower",
             Self::AncientReactor => "Ancient Reactor",
             Self::AncientFabricator => "Ancient Fabricator",
+            Self::Refinery => "Refinery",
         }
     }
 
@@ -313,7 +316,7 @@ impl BuildingType {
             Self::PowerPole => '|',
             Self::Wall => '#',
             Self::Tower => 'O',
-            Self::AncientReactor => 'R',
+            Self::AncientReactor | Self::Refinery => 'R',
         }
     }
 
@@ -469,6 +472,12 @@ impl BuildingType {
             },
             Self::PowerPole => ColonyResources {
                 metal: 2.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Refinery => ColonyResources {
+                wood: 20.0,
+                stone: 30.0,
+                metal: 10.0,
                 ..ColonyResources::zeroed()
             },
             Self::AncientReactor | Self::AncientFabricator => ColonyResources::zeroed(),
@@ -863,6 +872,20 @@ fn spawn_building(
                 structure.current_hp = 1000.0;
             }
         }
+        BuildingType::Refinery => {
+            entity.insert((
+                RefiningProgress {
+                    current: 0.0,
+                    max: 20.0, // Slower process
+                },
+                LightSource {
+                    radius: 6.0,
+                    intensity: 0.8,
+                    color: (100, 200, 255), // Chemical blue
+                },
+                ShiftSchedule::default(),
+            ));
+        }
     }
 }
 
@@ -1016,6 +1039,10 @@ mod tests {
         );
         assert_eq!(
             BuildingType::AncientFabricator.next(),
+            BuildingType::Refinery
+        );
+        assert_eq!(
+            BuildingType::Refinery.next(),
             BuildingType::Housing
         );
     }
@@ -1144,6 +1171,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::AncientFabricator);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Refinery);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

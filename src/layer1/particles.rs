@@ -1,5 +1,5 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::map::GridPosition;
+use bevy_ecs::prelude::*;
 use ratatui::style::Color;
 
 /// Visual particle effect component.
@@ -18,10 +18,7 @@ pub struct Particle {
 }
 
 /// System to update particle lifetimes and despawn expired ones.
-pub fn particle_system(
-    mut commands: Commands,
-    mut query: Query<(Entity, &mut Particle)>,
-) {
+pub fn particle_system(mut commands: Commands, mut query: Query<(Entity, &mut Particle)>) {
     for (entity, mut particle) in &mut query {
         if particle.lifetime > 0 {
             particle.lifetime -= 1;
