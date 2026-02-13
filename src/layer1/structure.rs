@@ -169,6 +169,7 @@ mod tests {
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::designation::{Designation, DesignationType};
     use crate::layer1::fire::{Fire, Flammable};
+    use crate::layer1::heirloom::AncientStructure;
     use crate::layer1::structure::{Structure, fire_damage_structure_system};
     use bevy_ecs::prelude::*;
     // use crate::layer1::utility_types::ActionType;
@@ -322,6 +323,50 @@ mod tests {
         assert!(
             world.get_entity(designation).is_err(),
             "Designation should be removed when fully repaired"
+        );
+    }
+
+    #[test]
+    fn test_repair_ignores_ancient_structures() {
+        let mut world = World::new();
+
+        let building = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::AncientReactor,
+                },
+                Structure {
+                    current_hp: 50.0,
+                    max_hp: 100.0,
+                },
+                AncientStructure,
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
+
+        let designation = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Repair,
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
+
+        // Attempt repair
+        crate::layer1::structure::process_repair(&mut world, designation, 10.0);
+
+        // HP should NOT change
+        let structure = world.get::<Structure>(building).unwrap();
+        assert!(
+            (structure.current_hp - 50.0).abs() < f32::EPSILON,
+            "Ancient Structure should not be repaired"
+        );
+
+        // Designation should be removed (cancelled)
+        assert!(
+            world.get_entity(designation).is_err(),
+            "Repair designation on Ancient Structure should be cancelled"
         );
     }
 }

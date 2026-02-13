@@ -19,3 +19,7 @@
 ## [Deadlock in Unimplemented Branch]
 **Learning:** `work_execution_system` silently failed for `Demolish` because the match arm returned `false` (unimplemented), causing pops to loop infinitely in `ActionType::Work` without progress or despawning the designation.
 **Action:** When stubbing out logic (TODOs), verify that the "failure" path (e.g. returning false) correctly cancels the action or cleans up state to prevent deadlocks.
+
+## [Setup Fragmentation]
+**Learning:** Many integration tests manually construct the `World` instead of using the central `setup::setup_world` helper. This causes fragility when new global resources (like `MiasmaGrid` or `AtmosphereGrid`) are added to core systems, leading to panics in unrelated tests.
+**Action:** Prefer `scale::setup::setup_world()` in tests or ensure local `setup_world` helpers mirror the main setup's resource list.

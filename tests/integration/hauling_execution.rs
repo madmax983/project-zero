@@ -40,6 +40,8 @@ mod tests {
         world.insert_resource(scale::layer1::acoustic::NoiseMap::new(10, 10));
         world.insert_resource(scale::layer1::lighting::LightMap::new(10, 10));
         world.insert_resource(scale::layer1::lighting::AmbientLight::default());
+        #[cfg(feature = "nova")]
+        world.insert_resource(scale::experimental::miasma::MiasmaGrid::new(10, 10));
         world.insert_resource(scale::layer1::atmosphere::AtmosphereGrid::new(10, 10));
         world.insert_resource(scale::layer1::notifications::NotificationQueue::default());
         world.insert_resource(scale::layer1::trade::MerchantState::default());

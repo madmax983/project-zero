@@ -2,6 +2,7 @@
 
 use bevy_ecs::prelude::*;
 
+#[cfg(all(not(target_arch = "wasm32"), not(test)))]
 use crate::gpu::context::GpuContext;
 use crate::layer1::chronicle::AddChronicleEvent;
 use crate::layer1::pop::PopDied;
@@ -105,7 +106,8 @@ pub fn setup_world() -> World {
 
     // Initialize GPU compute context (non-fatal if no GPU available)
     // Skip on WASM since pollster::block_on doesn't work in browser context
-    #[cfg(not(target_arch = "wasm32"))]
+    // Skip on tests to avoid XDG_RUNTIME_DIR errors in headless CI
+    #[cfg(all(not(target_arch = "wasm32"), not(test)))]
     {
         match pollster::block_on(GpuContext::new()) {
             Ok(ctx) => {

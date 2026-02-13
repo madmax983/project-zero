@@ -50,6 +50,8 @@ mod tests {
         world.insert_resource(scale::layer1::vermin::VerminState::default());
         world.insert_resource(scale::layer1::edicts::ColonyPolicies::default());
         world.insert_resource(scale::layer1::trade::MerchantState::default());
+        #[cfg(feature = "nova")]
+        world.insert_resource(scale::experimental::miasma::MiasmaGrid::new(10, 10));
         world.insert_resource(scale::layer1::atmosphere::AtmosphereGrid::new(10, 10));
         world.insert_resource(scale::layer1::day_night::DayNightCycle::default());
         world.insert_resource(scale::layer1::weather::WeatherState::default());
