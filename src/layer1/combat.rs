@@ -67,7 +67,10 @@ pub fn execute_attack(world: &mut World, attacker: Entity, target: Entity) {
             }
 
             // Ludwig: Spawn hit particle
-            if let Some(pos) = world.get::<crate::layer1::map::GridPosition>(target).copied() {
+            if let Some(pos) = world
+                .get::<crate::layer1::map::GridPosition>(target)
+                .copied()
+            {
                 spawn_particle(world, pos, '*', Color::Red, 5);
             }
         }

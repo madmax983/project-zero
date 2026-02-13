@@ -369,10 +369,7 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
             }) {
                 match entity {
                     RenderEntity::Particle(c, color) => {
-                        line_spans.push(Span::styled(
-                            c.to_string(),
-                            Style::default().fg(*color),
-                        ));
+                        line_spans.push(Span::styled(c.to_string(), Style::default().fg(*color)));
                         continue;
                     }
                     RenderEntity::Fire => {
@@ -665,7 +662,7 @@ pub const fn get_building_char(building: BuildingType) -> char {
         BuildingType::PowerPole => '|',
         BuildingType::Wall => '#',
         BuildingType::Tower => 'O',
-        BuildingType::AncientReactor => 'R',
+        BuildingType::AncientReactor | BuildingType::Refinery => 'R',
         BuildingType::AncientFabricator => 'F',
     }
 }
@@ -704,6 +701,7 @@ pub const fn get_building_color(building: BuildingType) -> Color {
         BuildingType::Grave => Color::Rgb(128, 128, 128),    // Gray
         BuildingType::TradeDepot => Color::Yellow,
         BuildingType::Generator => Color::Rgb(255, 215, 0), // Gold
+        BuildingType::Refinery => Color::Rgb(100, 200, 255), // Chemical Blue
     }
 }
 

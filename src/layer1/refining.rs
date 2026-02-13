@@ -137,6 +137,7 @@ pub fn process_refining_system(world: &mut World) {
                     resources.add_tools(output.tools);
                     resources.add_cloth(output.cloth);
                     resources.add_clothing(output.clothing);
+                    resources.add_fuel(output.fuel);
                     true
                 } else {
                     false
@@ -249,6 +250,17 @@ pub fn get_refining_recipe(
             },
             ColonyResources {
                 clothing: 1.0,
+                ..ColonyResources::zeroed()
+            },
+        ),
+        BuildingType::Refinery => (
+            res.ore >= 2.0 && res.fuel < res.max_fuel,
+            ColonyResources {
+                ore: 2.0,
+                ..ColonyResources::zeroed()
+            },
+            ColonyResources {
+                fuel: 1.0,
                 ..ColonyResources::zeroed()
             },
         ),

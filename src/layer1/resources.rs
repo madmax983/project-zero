@@ -130,6 +130,8 @@ pub struct ColonyResources {
     pub waste: f32,
     /// Total rations available in the colony.
     pub rations: f32,
+    /// Total fuel available in the colony.
+    pub fuel: f32,
     /// Maximum food capacity.
     pub max_food: f32,
     /// Maximum wood capacity.
@@ -158,6 +160,8 @@ pub struct ColonyResources {
     pub max_waste: f32,
     /// Maximum rations capacity.
     pub max_rations: f32,
+    /// Maximum fuel capacity.
+    pub max_fuel: f32,
 }
 
 impl Default for ColonyResources {
@@ -177,6 +181,7 @@ impl Default for ColonyResources {
             clothing: 0.0,
             waste: 0.0,
             rations: 0.0,
+            fuel: 0.0,
             max_food: 50.0,
             max_wood: 50.0,
             max_stone: 20.0,
@@ -191,6 +196,7 @@ impl Default for ColonyResources {
             max_clothing: 50.0,
             max_waste: 0.0, // Defaults to 0, requires Landfill
             max_rations: 50.0,
+            max_fuel: 20.0,
         }
     }
 }
@@ -217,6 +223,7 @@ impl ColonyResources {
             clothing: 0.0,
             waste: 0.0,
             rations: 0.0,
+            fuel: 0.0,
             max_food: 0.0,
             max_wood: 0.0,
             max_stone: 0.0,
@@ -231,12 +238,18 @@ impl ColonyResources {
             max_clothing: 0.0,
             max_waste: 0.0,
             max_rations: 0.0,
+            max_fuel: 0.0,
         }
     }
 
     /// Adds rations, clamping to the maximum capacity.
     pub fn add_rations(&mut self, amount: f32) {
         self.rations = (self.rations + amount).clamp(0.0, self.max_rations);
+    }
+
+    /// Adds fuel, clamping to the maximum capacity.
+    pub fn add_fuel(&mut self, amount: f32) {
+        self.fuel = (self.fuel + amount).clamp(0.0, self.max_fuel);
     }
 
     /// Adds wood, clamping to the maximum capacity.
@@ -328,6 +341,7 @@ impl ColonyResources {
             && self.cloth >= cost.cloth
             && self.clothing >= cost.clothing
             && self.rations >= cost.rations
+            && self.fuel >= cost.fuel
     }
 
     /// Deducts the given cost from the colony's resources.
@@ -349,6 +363,7 @@ impl ColonyResources {
         self.cloth -= cost.cloth;
         self.clothing -= cost.clothing;
         self.rations -= cost.rations;
+        self.fuel -= cost.fuel;
     }
 
     /// Attempts to deduct the given cost from the colony's resources.
