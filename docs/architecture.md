@@ -18,12 +18,16 @@ Container_Boundary(Simulation, "Simulation Core (Layer 1)") {
 
     Component(Pops, "Pops", "pop.rs", "Agents with Needs & Thoughts")
     Component(CabinFever, "Cabin Fever System", "cabin_fever.rs", "Tracks Confinement & Crowding")
+    Component(Acoustics, "Acoustics (Nova)", "acoustics.rs", "Noise Map & Weather Audio")
     Component(World, "World Entities", "farm.rs, housing.rs", "Interactable Buildings")
     Component(Resources, "Colony Resources", "resources.rs", "Global Inventory")
     Component(Map, "Map/Terrain", "map.rs", "Spatial Grid")
 }
 
 Container(Shared, "Shared Lib", "Utilities", "GameState, Time, Input, Logs")
+Container_Boundary(SharedLib, "Shared Components") {
+    Component(InputStack, "Input Context Stack", "input.rs", "Modal Input Handling")
+}
 
 Container_Boundary(UI, "UI Layer") {
     Component(MapRender, "Map Module", "map.rs", "Renders Grid & Entities")
@@ -46,6 +50,7 @@ Rel(UtilityOrchestrator, Map, "Calculates Distance")
 Rel(Pops, World, "Interacts with")
 Rel(Pops, Resources, "Consumes/Produces")
 Rel(Pops, CabinFever, "Accumulates Stress")
+Rel(Pops, Acoustics, "Reacts to Noise")
 
 Rel(MapRender, Shared, "Reads State")
 Rel(MapRender, Map, "Reads Entities")
@@ -63,6 +68,31 @@ classDiagram
   %% Removed the circular dependency arrow
 ```
 
+## Layer 2 Bridge
+
+The interface between the Colony Simulation (Layer 1) and the Orbital/System Data (Layer 2).
+
+```mermaid
+graph LR
+    subgraph Layer 1: Simulation
+        Colony[Colony Resources]
+        Builder[Builder Unit]
+        LP[Launch Pad Building]
+    end
+
+    subgraph Layer 2: Data Model
+        Fleet[Fleet Entity]
+        Orbit[Orbit Component]
+        Planet[Planet Entity]
+    end
+
+    Builder -->|Constructs| LP
+    LP -->|Consumes Fuel| Colony
+    LP -->|Spawns| Fleet
+    Fleet -->|Has Component| Orbit
+    Orbit -->|References| Planet
+```
+
 ## The Game Loop
 
 SCALE uses a hybrid architecture: `bevy_ecs` for logic and `ratatui` for rendering, managed by a custom loop.
@@ -71,18 +101,18 @@ SCALE uses a hybrid architecture: `bevy_ecs` for logic and `ratatui` for renderi
 sequenceDiagram
     participant User
     participant Main
-    participant Input as InputRouter
+    participant Input as InputContextStack
     participant ECS as Bevy World
     participant UI as TUI Layer
 
     loop Every Frame
         User->>Main: Key Press (Event)
-        Main->>Input: route(key)
+        Main->>Input: route(key) -> active_context
         Input->>ECS: Update Resources/Components
 
         opt Simulation Tick
             Main->>ECS: run_schedule()
-            ECS->>ECS: Systems Update (Utility AI, Refining, etc.)
+            ECS->>ECS: Systems Update (Utility AI, Refining, Acoustics)
         end
 
         Main->>UI: render(world, frame)
@@ -200,13 +230,16 @@ Rel(Shared, Events, "Consumes")
 
 ## Related Decisions
 
-- [ADR 006: WASM Browser Support](./adr/006-wasm-browser-support.md)
 - [ADR 001: Layered Architecture](./adr/001-layered-architecture.md)
 - [ADR 002: ECS-TUI Hybrid](./adr/002-ecs-tui-hybrid.md)
 - [ADR 003: YAGNI - Excision of Layers 2 and 3](./adr/003-yagni-excision-of-layers-2-and-3.md)
 - [ADR 004: Modular UI Architecture](./adr/004-modular-ui-architecture.md)
 - [ADR 005: Adopt Emergent Utility AI](./adr/005-adopt-emergent-utility-ai.md)
+- [ADR 006: WASM Browser Support](./adr/006-wasm-browser-support.md)
 - [ADR 008: Modular Utility AI Structure](./adr/008-modular-utility-ai.md)
 - [ADR 012: Decouple Storage from Core](./adr/012-decouple-storage-from-core.md)
 - [ADR 013: GPU Accelerated Utility AI](./adr/013-gpu-accelerated-utility-ai.md)
 - [ADR 014: Cabin Fever Mechanics](./adr/014-cabin-fever-mechanics.md)
+- [ADR 015: Experimental Feature Flags](./adr/015-experimental-feature-flags.md)
+- [ADR 016: Layer 2 Bridge Strategy](./adr/016-layer-2-bridge.md)
+- [ADR 017: Input Context Stack](./adr/017-input-context-stack.md)
