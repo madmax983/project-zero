@@ -123,6 +123,9 @@ mod preservation_tests;
 #[cfg(test)]
 mod execution_demolish_test;
 
+#[cfg(test)]
+mod medical_triage_tests;
+
 /// Named locations on the map.
 pub mod locations;
 

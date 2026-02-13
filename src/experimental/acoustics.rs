@@ -35,12 +35,12 @@ pub fn weather_ambience_system(
     mut ambience: ResMut<AmbientAudioLevel>,
 ) {
     let target = match weather.current_weather {
-        WeatherType::Storm => 0.3,   // Windy/Loud
-        WeatherType::Rain => 0.1,    // Patter
-        WeatherType::Fog => -0.05,   // Eerie silence (dampens base ambient)
-        WeatherType::Clear => 0.0,   // Normal
+        WeatherType::Storm => 0.3, // Windy/Loud
+        WeatherType::Rain => 0.1,  // Patter
+        WeatherType::Fog => -0.05, // Eerie silence (dampens base ambient)
+        WeatherType::Clear => 0.0, // Normal
         WeatherType::Heatwave => 0.0,
-        WeatherType::Snow => -0.02,  // Snow dampens sound slightly
+        WeatherType::Snow => -0.02, // Snow dampens sound slightly
     };
 
     // Smooth transition? No, immediate is fine for now.
@@ -50,10 +50,7 @@ pub fn weather_ambience_system(
 /// System to apply the ambient audio level to the NoiseMap.
 ///
 /// Runs after `update_noise_system` (which resets map to 0.1 + sources).
-pub fn apply_ambience_system(
-    ambience: Res<AmbientAudioLevel>,
-    mut noise_map: ResMut<NoiseMap>,
-) {
+pub fn apply_ambience_system(ambience: Res<AmbientAudioLevel>, mut noise_map: ResMut<NoiseMap>) {
     if ambience.level.abs() < f32::EPSILON {
         return;
     }
@@ -84,7 +81,7 @@ pub fn generate_thunder_system(
             Thunder { lifetime: 5 }, // Lasts 5 ticks
             GridPosition { x, y },
             NoiseSource {
-                radius: 15.0, // Huge radius
+                radius: 15.0,   // Huge radius
                 intensity: 1.0, // Max intensity
             },
         ));
@@ -92,10 +89,7 @@ pub fn generate_thunder_system(
 }
 
 /// System to handle thunder lifetime.
-pub fn thunder_lifetime_system(
-    mut commands: Commands,
-    mut query: Query<(Entity, &mut Thunder)>,
-) {
+pub fn thunder_lifetime_system(mut commands: Commands, mut query: Query<(Entity, &mut Thunder)>) {
     for (entity, mut thunder) in &mut query {
         if thunder.lifetime == 0 {
             commands.entity(entity).despawn();
@@ -110,7 +104,10 @@ pub fn industrial_noise_system(
     mut commands: Commands,
     day_night: Res<DayNightCycle>,
     // Query buildings without noise source to potentially add it
-    buildings_without_noise: Query<(Entity, &Building, Option<&ShiftSchedule>), Without<NoiseSource>>,
+    buildings_without_noise: Query<
+        (Entity, &Building, Option<&ShiftSchedule>),
+        Without<NoiseSource>,
+    >,
     // Query buildings with noise source to potentially remove it
     buildings_with_noise: Query<(Entity, &Building, Option<&ShiftSchedule>), With<NoiseSource>>,
 ) {
@@ -127,7 +124,9 @@ pub fn industrial_noise_system(
             };
 
             if active {
-                commands.entity(entity).insert(get_building_noise(building.building_type));
+                commands
+                    .entity(entity)
+                    .insert(get_building_noise(building.building_type));
             }
         }
     }
@@ -189,8 +188,8 @@ fn get_building_noise(bt: BuildingType) -> NoiseSource {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::day_night::TimeOfDay;
     use crate::layer1::building::BuildingType;
+    use crate::layer1::day_night::TimeOfDay;
 
     #[test]
     fn test_weather_ambience_update() {
@@ -232,14 +231,18 @@ mod tests {
         world.insert_resource(DayNightCycle::default());
 
         // Spawn Smelter (should be noisy)
-        let smelter = world.spawn(Building {
-            building_type: BuildingType::Smelter,
-        }).id();
+        let smelter = world
+            .spawn(Building {
+                building_type: BuildingType::Smelter,
+            })
+            .id();
 
         // Spawn Housing (quiet)
-        let housing = world.spawn(Building {
-            building_type: BuildingType::Housing,
-        }).id();
+        let housing = world
+            .spawn(Building {
+                building_type: BuildingType::Housing,
+            })
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(industrial_noise_system);
@@ -260,10 +263,17 @@ mod tests {
         world.insert_resource(day_night);
 
         // Spawn Smelter with Day shift only
-        let smelter = world.spawn((
-            Building { building_type: BuildingType::Smelter },
-            ShiftSchedule { day_shift: true, night_shift: false },
-        )).id();
+        let smelter = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Smelter,
+                },
+                ShiftSchedule {
+                    day_shift: true,
+                    night_shift: false,
+                },
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(industrial_noise_system);

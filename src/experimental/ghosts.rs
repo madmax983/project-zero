@@ -240,7 +240,7 @@ mod tests {
 
     #[test]
     fn test_death_spawns_ghost() {
-        use crate::layer1::health::{death_system, Health};
+        use crate::layer1::health::{Health, death_system};
         use crate::layer1::map::GridPosition;
         use crate::layer1::pop::Pop;
 
