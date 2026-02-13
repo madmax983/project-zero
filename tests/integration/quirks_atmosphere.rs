@@ -1,8 +1,8 @@
 use bevy_ecs::prelude::*;
 use scale::layer1::atmosphere::{AtmosphereGrid, update_atmosphere_system};
-use scale::layer1::quirks::{PlanetaryTrait, PlanetaryTraits, apply_quirk_modifiers_system};
+use scale::layer1::day_night::DayNightCycle;
 use scale::layer1::pop::{Pop, Speed};
-use scale::layer1::day_night::DayNightCycle; // Required by quirk system
+use scale::layer1::quirks::{PlanetaryTrait, PlanetaryTraits, apply_quirk_modifiers_system}; // Required by quirk system
 
 // Helper to setup world with required resources for quirk system
 fn setup_world() -> World {
@@ -56,9 +56,15 @@ fn test_dense_atmosphere_increases_pollution_retention() {
 
     // Control: Normal Atmosphere
     let mut world_normal = setup_world();
-    world_normal.resource_mut::<AtmosphereGrid>().set(5, 5, start_val);
-    world_normal.run_system_once(apply_quirk_modifiers_system).unwrap();
-    world_normal.run_system_once(update_atmosphere_system).unwrap();
+    world_normal
+        .resource_mut::<AtmosphereGrid>()
+        .set(5, 5, start_val);
+    world_normal
+        .run_system_once(apply_quirk_modifiers_system)
+        .unwrap();
+    world_normal
+        .run_system_once(update_atmosphere_system)
+        .unwrap();
     let val_normal = world_normal.resource::<AtmosphereGrid>().get(5, 5);
 
     // Dense should retain MORE pollution (higher value) than Normal
@@ -66,7 +72,12 @@ fn test_dense_atmosphere_increases_pollution_retention() {
     // "Dense Atmosphere" usually implies things stick around longer.
     // So retention (decay factor) should be closer to 1.0.
 
-    assert!(val_dense > val_normal, "Dense atmosphere should retain more pollution (val_dense: {}, val_normal: {})", val_dense, val_normal);
+    assert!(
+        val_dense > val_normal,
+        "Dense atmosphere should retain more pollution (val_dense: {}, val_normal: {})",
+        val_dense,
+        val_normal
+    );
 }
 
 #[test]
@@ -89,13 +100,24 @@ fn test_thin_atmosphere_decreases_pollution_retention() {
 
     // Control: Normal Atmosphere
     let mut world_normal = setup_world();
-    world_normal.resource_mut::<AtmosphereGrid>().set(5, 5, start_val);
-    world_normal.run_system_once(apply_quirk_modifiers_system).unwrap();
-    world_normal.run_system_once(update_atmosphere_system).unwrap();
+    world_normal
+        .resource_mut::<AtmosphereGrid>()
+        .set(5, 5, start_val);
+    world_normal
+        .run_system_once(apply_quirk_modifiers_system)
+        .unwrap();
+    world_normal
+        .run_system_once(update_atmosphere_system)
+        .unwrap();
     let val_normal = world_normal.resource::<AtmosphereGrid>().get(5, 5);
 
     // Thin should retain LESS pollution (lower value) than Normal
-    assert!(val_thin < val_normal, "Thin atmosphere should clear pollution faster (val_thin: {}, val_normal: {})", val_thin, val_normal);
+    assert!(
+        val_thin < val_normal,
+        "Thin atmosphere should clear pollution faster (val_thin: {}, val_normal: {})",
+        val_thin,
+        val_normal
+    );
 }
 
 #[test]
@@ -106,10 +128,16 @@ fn test_high_gravity_slows_movement() {
     world.insert_resource(PlanetaryTraits(vec![PlanetaryTrait::HighGravity]));
 
     // 2. Spawn Pop
-    let pop = world.spawn((
-        Pop,
-        Speed { base: 1.0, current: 1.0, accumulator: 0.0 }
-    )).id();
+    let pop = world
+        .spawn((
+            Pop,
+            Speed {
+                base: 1.0,
+                current: 1.0,
+                accumulator: 0.0,
+            },
+        ))
+        .id();
 
     // 3. Run quirk system
     use bevy_ecs::system::RunSystemOnce;
@@ -118,5 +146,8 @@ fn test_high_gravity_slows_movement() {
     // 4. Verify Speed
     let speed = world.get::<Speed>(pop).unwrap();
     // HighGravity is 0.8 modifier
-    assert!((speed.current - 0.8).abs() < f32::EPSILON, "High Gravity should slow speed to 0.8");
+    assert!(
+        (speed.current - 0.8).abs() < f32::EPSILON,
+        "High Gravity should slow speed to 0.8"
+    );
 }

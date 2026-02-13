@@ -155,7 +155,9 @@ pub fn process_jury_rig(world: &mut World, structure_entity: Entity) {
     if let Some(mut fragile) = world.get_mut::<Fragile>(structure_entity) {
         fragile.stacks += 1;
     } else {
-        world.entity_mut(structure_entity).insert(Fragile { stacks: 1 });
+        world
+            .entity_mut(structure_entity)
+            .insert(Fragile { stacks: 1 });
     }
 
     // Note: The designation cleanup is handled by the caller (work execution system)
