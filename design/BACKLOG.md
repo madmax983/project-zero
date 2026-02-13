@@ -19,6 +19,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `095` System Generation — `specs/095-system-generation.md`
 - [ ] `099` Fleet Movement — `specs/099-fleet-movement.md`
 - [ ] `101` System Mining — `specs/101-system-mining.md`
+- [ ] `102` Orbital Drop Logistics — `specs/102-orbital-drop-logistics.md`
 
 ## MVP — User Interface
 
