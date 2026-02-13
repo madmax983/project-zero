@@ -45,11 +45,12 @@ pub fn check_mental_break_system(
 }
 
 /// Logic for executing a Vandalize action against a target.
+#[allow(clippy::cast_precision_loss)]
 pub fn perform_vandalize_logic(world: &mut World, _pop: Entity, target: Entity) {
     let mut damage = 10.0;
 
     if let Some(fragile) = world.get::<Fragile>(target) {
-        damage *= 1.0 + (fragile.stacks as f32 * FRAGILITY_DAMAGE_MULTIPLIER);
+        damage *= (fragile.stacks as f32).mul_add(FRAGILITY_DAMAGE_MULTIPLIER, 1.0);
     }
 
     if let Some(mut structure) = world.get_mut::<Structure>(target) {

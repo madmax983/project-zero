@@ -227,6 +227,9 @@ pub fn build_simulation_schedule() -> Schedule {
         theft_system
             .after(consume_food_system)
             .before(decay_needs_system),
+        crate::layer1::private_stash::hoarding_system
+            .after(consume_food_system)
+            .before(decay_needs_system),
         decay_needs_system.after(consume_food_system),
         apply_cabin_fever_morale_system
             .after(decay_needs_system)

@@ -22,6 +22,10 @@ pub enum Trait {
     EarlyBird,
     /// +10% Move Speed.
     FastWalker,
+    /// Hoards Valuables (Metal, Luxuries).
+    Greedy,
+    /// Hoards Survival Goods (Food, Meds).
+    Anxious,
 }
 
 impl Trait {
@@ -36,6 +40,8 @@ impl Trait {
             Self::NightOwl => "Night Owl",
             Self::EarlyBird => "Early Bird",
             Self::FastWalker => "Fast Walker",
+            Self::Greedy => "Greedy",
+            Self::Anxious => "Anxious",
         }
     }
 }

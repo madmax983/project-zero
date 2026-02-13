@@ -57,11 +57,10 @@ pub fn fire_damage_structure_system(world: &mut World) {
                 let base_damage = 5.0 * intensity; // 5.0 damage per tick per intensity unit
 
                 // Fragile buildings take extra damage
-                let multiplier = if let Some(f) = fragile {
-                    1.0 + (f.stacks as f32 * FRAGILITY_DAMAGE_MULTIPLIER)
-                } else {
-                    1.0
-                };
+                #[allow(clippy::cast_precision_loss)]
+                let multiplier = fragile.map_or(1.0, |f| {
+                    (f.stacks as f32).mul_add(FRAGILITY_DAMAGE_MULTIPLIER, 1.0)
+                });
 
                 structure.current_hp -= base_damage * multiplier;
 
