@@ -13,6 +13,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `092` Antagonistic Flora — `specs/092-antagonistic-flora.md`
 - [ ] `097` Social Need & Tavern — `specs/097-social-tavern.md`
 - [ ] `098` Medical Triage Policies — `specs/098-medical-triage.md`
+- [ ] `100` Jury-Rigging — `specs/100-jury-rigging.md`
 
 ## MVP — Layer 2: System Simulation
 
