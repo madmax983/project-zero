@@ -2999,3 +2999,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Lose the skill (Death) or keep the ghost (Power cost/Insanity risk)?
 
 ---
+
+## Chronobiological Desync
+
+**Layer:** 1
+
+**Fantasy:** The planet's day is 30 hours, but your body wants 24.
+
+**Mechanic:** If planetary rotation != 24h, Pops suffer "Desync" (Fatigue/Stress) unless they use "Circadian Meds" or have "Adaptive" traits. Artificial Day/Night schedules (Lighting) can mitigate this.
+
+**Emergence:** Players build windowless bunkers with strictly timed lights to force a 24h cycle, creating a "Mole People" society that fears the actual sun.
+
+**Tension:** Natural light (free/desync) vs. Artificial light (power cost/sync).
+
+---
+
+## Indoor Weather
+
+**Layer:** 1
+
+**Fantasy:** The factory is so big it has its own climate.
+
+**Mechanic:** Massive enclosed spaces (Hangars, Bio-Domes) track internal humidity and temperature. Poor ventilation leads to "Indoor Rain" (corrosion/slipping) or "Fog" (sight penalty).
+
+**Emergence:** You build a mega-factory. It starts raining oil and sweat inside. Machines rust.
+
+**Tension:** Open plan (efficient layout) vs. Compartmentalized (climate control).
+
+---
+
+## Cloud Seeding
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Playing god with the rain.
+
+**Mechanic:** Launch rockets from Layer 1 or Ships in Layer 2 to detonate chemical payloads in the atmosphere. Triggers Rain/Snow to clear Pollution/Fires. Risk of "Toxic Rain" if atmosphere is dirty.
+
+**Emergence:** You seed clouds to put out a forest fire. The rain mixes with industrial smog and turns into acid, melting the solar panels.
+
+**Tension:** Endure the drought (crop failure) or risk the chemistry (potential disaster).
+
+---
+
+## Zero-G Sports
+
+**Layer:** 1
+
+**Fantasy:** Cultural evolution in the void.
+
+**Mechanic:** Specialized "Arena" rooms requiring Low Gravity (or Zero-G tech). Pops play matches. Winners get massive Mood buffs; Losers get injuries. Betting economy.
+
+**Emergence:** The "Crater-Ball" league becomes more important than the mining quota. Riots happen if the star player is assigned to a hauling job.
+
+**Tension:** Safety (ban dangerous sports) vs. Morale (circuses).
+
+---
+
+## Trash-Cannon Defense
+
+**Layer:** 1
+
+**Fantasy:** One man's trash is another man's shrapnel.
+
+**Mechanic:** Turrets that accept "Waste", "Slag", or "Stone" chunks as ammo. Cheap, short-range, causes "Messy" tiles (cleaning required) on impact.
+
+**Emergence:** You rely on trash turrets. You clean up your pollution problem so well that you run out of ammo during a raid.
+
+**Tension:** Recycle waste (resources) or Shoot waste (defense).
+
+---
