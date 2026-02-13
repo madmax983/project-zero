@@ -1,3 +1,4 @@
+use crate::layer1::heirloom::ToolHistory;
 use crate::layer1::items::{Equipment, Item, Tool, ToolType};
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::ColonyResources;
@@ -73,6 +74,7 @@ pub fn handle_fetch_tool(
                     durability: 100.0,
                     max_durability: 100.0,
                 },
+                ToolHistory::default(),
             ))
             .id();
 

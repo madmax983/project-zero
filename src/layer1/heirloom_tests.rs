@@ -3,13 +3,13 @@ mod tests {
     use crate::layer1::GridPosition;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::energy::PowerSource;
-    use crate::layer1::heirloom::{Heirloom, heirloom_decay_system};
+    use crate::layer1::heirloom::{AncientStructure, ancient_structure_decay_system};
     use crate::layer1::structure::{Structure, process_repair};
     use bevy_ecs::prelude::*;
 
     #[test]
-    fn test_heirloom_component_exists() {
-        let _h = Heirloom; // Marker component
+    fn test_ancient_structure_component_exists() {
+        let _h = AncientStructure; // Marker component
     }
 
     #[test]
@@ -28,7 +28,7 @@ mod tests {
                     max_hp: 1000.0,
                 },
                 PowerSource { output: 50.0 }, // High output
-                Heirloom,
+                AncientStructure,
                 GridPosition { x: 0, y: 0 },
             ))
             .id();
@@ -36,12 +36,12 @@ mod tests {
         let power = world.get::<PowerSource>(entity).unwrap();
         assert_eq!(power.output, 50.0);
 
-        let heirloom = world.get::<Heirloom>(entity);
-        assert!(heirloom.is_some());
+        let ancient_structure = world.get::<AncientStructure>(entity);
+        assert!(ancient_structure.is_some());
     }
 
     #[test]
-    fn test_heirloom_decay() {
+    fn test_ancient_structure_decay() {
         let mut world = World::new();
 
         let entity = world
@@ -53,23 +53,23 @@ mod tests {
                     current_hp: 1000.0,
                     max_hp: 1000.0,
                 },
-                Heirloom,
+                AncientStructure,
                 GridPosition { x: 0, y: 0 },
             ))
             .id();
 
         // Run decay system
         let mut schedule = Schedule::default();
-        schedule.add_systems(heirloom_decay_system);
+        schedule.add_systems(ancient_structure_decay_system);
         schedule.run(&mut world);
 
         let structure = world.get::<Structure>(entity).unwrap();
-        assert!(structure.current_hp < 1000.0, "Heirloom should decay");
+        assert!(structure.current_hp < 1000.0, "Ancient Structure should decay");
         assert!(structure.current_hp > 990.0, "Decay should be slow"); // Should be slow decay
     }
 
     #[test]
-    fn test_repair_prevention_on_heirloom() {
+    fn test_repair_prevention_on_ancient_structure() {
         let mut world = World::new();
 
         let entity = world
@@ -81,7 +81,7 @@ mod tests {
                     current_hp: 500.0,
                     max_hp: 1000.0,
                 },
-                Heirloom,
+                AncientStructure,
                 GridPosition { x: 0, y: 0 },
             ))
             .id();

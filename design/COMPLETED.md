@@ -74,3 +74,4 @@ Features that have been fully implemented and tested.
 - [x] `093` Erosion and Desire Paths — `specs/093-erosion.md` — completed 2026-03-05
 - [x] `096` Water Dynamics — `specs/096-water-dynamics.md` — completed 2026-03-05
 - [x] `091` The Inspector — `specs/091-the-inspector.md` — completed 2026-03-06
+- [x] `076` Heirloom Items — `specs/076-heirloom-items.md` — completed 2026-03-06
