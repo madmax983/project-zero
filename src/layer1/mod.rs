@@ -312,5 +312,13 @@ pub use purity::*;
 pub mod particles;
 pub use particles::*;
 
+/// Emotional Contagion system (Spec 090).
+pub mod contagion;
+pub use contagion::*;
+
+/// Morale system (Spec 031/090).
+pub mod morale;
+pub use morale::*;
+
 #[cfg(test)]
 mod fuel_industry_tests;

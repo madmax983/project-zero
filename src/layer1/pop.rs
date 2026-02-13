@@ -24,12 +24,14 @@
 
 use super::actions::AssignmentType;
 use super::cabin_fever::CabinFever;
+use super::contagion::ContagionCooldown;
 use super::factions::FactionMember;
 use super::health::Health;
 use super::items::Equipment;
 use super::lifecycle::Age;
 use super::map::GridPosition;
 use super::memory::Memories;
+use super::morale::Morale;
 use super::needs::Needs;
 use super::rumor::Knowledge;
 use super::skills::Skills;
@@ -249,8 +251,12 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
                     FactionMember::default(),
                     Arrival { tick: 0 },
                 ))
-                .insert(Traits::random(rng))
-                .insert(CabinFever::default());
+                .insert((
+                    Morale::default(),
+                    ContagionCooldown::default(),
+                    Traits::random(rng),
+                    CabinFever::default(),
+                ));
             spawned += 1;
         }
     }

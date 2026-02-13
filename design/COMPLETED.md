@@ -71,6 +71,7 @@ Features that have been fully implemented and tested.
 - [x] `082` Cabin Fever — `specs/082-cabin-fever.md` — completed 2026-03-05
 - [x] `085` Faction Strikes — `specs/085-faction-strikes.md` — completed 2026-03-05
 - [x] `088` Omens and Taboos — `specs/088-omens-taboos.md` — completed 2026-03-05
+- [x] `090` Emotional Contagion — `specs/090-emotional-contagion.md` — completed 2026-10-27
 - [x] `093` Erosion and Desire Paths — `specs/093-erosion.md` — completed 2026-03-05
 - [x] `096` Water Dynamics — `specs/096-water-dynamics.md` — completed 2026-03-05
 - [x] `091` The Inspector — `specs/091-the-inspector.md` — completed 2026-03-06

@@ -1,4 +1,5 @@
 use crate::layer1::cabin_fever::CabinFever;
+use crate::layer1::morale::Morale;
 use crate::layer1::needs::Needs;
 use crate::layer1::structure::{FRAGILITY_DAMAGE_MULTIPLIER, Fragile, Structure};
 use bevy_ecs::prelude::*;
@@ -28,11 +29,11 @@ pub enum MentalBreakType {
 
 /// System to check if Pops should suffer a mental break based on morale.
 pub fn check_mental_break_system(
-    mut query: Query<(&Needs, Option<&CabinFever>, &mut MentalState)>,
+    mut query: Query<(&Needs, Option<&Morale>, Option<&CabinFever>, &mut MentalState)>,
 ) {
-    for (needs, fever, mut state) in &mut query {
+    for (needs, morale_comp, fever, mut state) in &mut query {
         if *state == MentalState::Normal {
-            let morale = needs.morale();
+            let morale = morale_comp.map_or_else(|| needs.morale(), |m| m.value);
             let stress_break = fever.is_some_and(|f| f.total_stress() >= 90.0);
 
             if morale < 0.15 || stress_break {

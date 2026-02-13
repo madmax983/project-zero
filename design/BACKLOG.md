@@ -9,7 +9,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `059` Soil Fertility — `specs/059-soil-fertility.md`
 - [ ] `077` Emergent Festivals — `specs/077-emergent-festivals.md`
 - [ ] `089` Material Provenance — `specs/089-material-provenance.md`
-- [ ] `090` Emotional Contagion — `specs/090-emotional-contagion.md`
 - [ ] `106` Resource Purity — `specs/106-resource-purity.md`
 - [ ] `107` Biocompatibility — `specs/107-biocompatibility.md`
 
