@@ -269,6 +269,9 @@ pub use stowaway::*;
 /// Pop personality traits (Spec 084).
 pub mod traits;
 pub use traits::*;
+/// Private Stashes (Spec 103).
+pub mod private_stash;
+pub use private_stash::*;
 /// Omens & Taboos system (Spec 088).
 pub mod taboo;
 pub use taboo::*;
