@@ -41,6 +41,10 @@ mod tests {
         world.insert_resource(scale::layer1::beauty::BeautyGrid::new(10, 10));
         world.insert_resource(scale::layer1::water::WaterGrid::new(10, 10));
         world.insert_resource(scale::layer1::acoustic::NoiseMap::new(10, 10));
+        #[cfg(feature = "nova")]
+        world.insert_resource(scale::experimental::miasma::MiasmaGrid::new(10, 10));
+        #[cfg(feature = "nova")]
+        world.init_resource::<scale::experimental::acoustics::AmbientAudioLevel>();
         world.insert_resource(scale::layer1::notifications::NotificationQueue::default());
         world.insert_resource(LightMap::new(10, 10));
         world.insert_resource(AmbientLight::default());

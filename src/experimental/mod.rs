@@ -6,6 +6,9 @@
 pub mod biography;
 /// Pop dreams.
 pub mod dreams;
+/// Experimental acoustics feature (Weather/Industrial).
+#[cfg(feature = "nova")]
+pub mod acoustics;
 /// Experimental ghost feature.
 #[cfg(feature = "nova")]
 pub mod ghosts;

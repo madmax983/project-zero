@@ -8,6 +8,11 @@
 use bevy_ecs::prelude::*;
 use bevy_ecs::schedule::{IntoSystemConfigs, Schedule, ScheduleLabel};
 
+#[cfg(feature = "nova")]
+use crate::experimental::acoustics::{
+    apply_ambience_system, generate_thunder_system, industrial_noise_system,
+    thunder_lifetime_system, weather_ambience_system,
+};
 use crate::experimental::biography::biography_monitor_system;
 use crate::experimental::dreams::{cleanup_dream_marker_system, dream_system};
 #[cfg(feature = "nova")]
@@ -205,6 +210,19 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(waste_pollution_bridge),
         crate::layer1::atmosphere::pollution_effects_system
             .after(crate::layer1::atmosphere::update_atmosphere_system),
+    ));
+
+    #[cfg(feature = "nova")]
+    schedule.add_systems((
+        industrial_noise_system.before(update_noise_system),
+        generate_thunder_system
+            .after(update_weather_system)
+            .before(update_noise_system),
+        thunder_lifetime_system.before(generate_thunder_system),
+        weather_ambience_system.after(update_weather_system),
+        apply_ambience_system
+            .after(update_noise_system)
+            .after(weather_ambience_system),
     ));
 
     #[cfg(feature = "nova")]
