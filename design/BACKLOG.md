@@ -24,3 +24,5 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 ## MVP — User Interface
 
 - [ ] `037` Tech Tree UI — `specs/037-tech-tree-ui.md`
+- [ ] `104` Fuel Industry — `specs/104-fuel-industry.md`
+- [ ] `105` Launch Logistics — `specs/105-launch-logistics.md`
