@@ -2915,3 +2915,87 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Safety (Darkness) vs. Panic/Production.
 
 ---
+
+## Relativistic Time Dilation
+
+**Layer:** 3
+
+**Fantasy:** The universe is big and weird. Time is not constant.
+
+**Mechanic:** Systems near massive gravity wells (Black Holes, Neutron Stars) experience "Time Dilation". 1 turn there = X turns in the rest of the galaxy. Fleets stationed there age slower but react slower to galactic events.
+
+**Emergence:** You send a fleet to guard a dilated system. By the time they report an attack, the war was lost 50 years ago.
+
+**Tension:** High-value resources (near gravity wells) vs. Strategic lag.
+
+---
+
+## Nanite Fabrication
+
+**Layer:** 1
+
+**Fantasy:** Matter programming. The ultimate convenience, until it eats you.
+
+**Mechanic:** "Nanoforges" produce goods instantly from raw energy/mass without labor time. However, they have a "Containment Breach" risk. A breach spawns "Grey Goo" tiles that consume adjacent matter to replicate.
+
+**Emergence:** You rely on Nanoforges to build your defense fleet. A breach occurs during the launch. The fleet is eaten by its own shipyard.
+
+**Tension:** Instant production (Speed) vs. Existential threat (Safety).
+
+---
+
+## Orbital Commute
+
+**Layer:** Cross-layer
+
+**Fantasy:** The daily grind, in space. Living in the suburbs (orbit) and working in the city (surface).
+
+**Mechanic:** Pops can have homes on one Layer 1 map (Planet) and jobs on another (Orbital Station) connected by "Shuttle Routes". Commute time consumes "Free Time" and requires fuel.
+
+**Emergence:** A fuel shortage grounds the shuttles. Your orbital refinery shuts down because the workers are stuck on the ground playing cards.
+
+**Tension:** Centralized housing (Efficiency/Happiness) vs. Distributed specialized work (Logistics cost).
+
+---
+
+## Dynastic Succession
+
+**Layer:** 3 -> 1
+
+**Fantasy:** "The King is dead, long live the King."
+
+**Mechanic:** Your faction leader is a character with Traits and Heirs. When the leader dies, the Heir takes over, bringing new global modifiers (e.g., "Cruel": +Production, -Happiness). Heirs can be tutored or assassinated.
+
+**Emergence:** Your beloved pacifist Queen dies. Her militant son takes the throne and immediately declares war on your trade partners, ruining the economy.
+
+**Tension:** Invest in the Heir (Education cost) or let them grow wild (Bad traits)?
+
+---
+
+## O'Neill Cylinders
+
+**Layer:** 2
+
+**Fantasy:** Making a home in the void. "Gundam" colonies.
+
+**Mechanic:** Constructible "Artificial Worlds" in Layer 2 orbit. High cost, fully customizable biome/size. Mobile (slowly). Vulnerable to hull breaches (explosive decompression).
+
+**Emergence:** You build a perfect tropical paradise cylinder to escape a polluted planet. A stray asteroid punctures the hull, venting the atmosphere and freezing the paradise instantly.
+
+**Tension:** Create the perfect world (high cost/risk) or settle imperfect natural worlds?
+
+---
+
+## Digital Immortality
+
+**Layer:** 1
+
+**Fantasy:** The flesh is weak. The machine is eternal.
+
+**Mechanic:** "Mind Upload" tech allows saving a Pop's skills/personality to the "Mainframe". They become "Ghosts" (provide passive bonuses, consume massive power, no physical needs). Ghosts can be downloaded into "Sleeves" (robot bodies).
+
+**Emergence:** You upload your master engineer to save them from old age. As a Ghost, they get bored and start hacking the colony doors, locking everyone in the bathroom.
+
+**Tension:** Lose the skill (Death) or keep the ghost (Power cost/Insanity risk)?
+
+---
