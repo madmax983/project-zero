@@ -585,9 +585,15 @@ pub fn mine_rock(world: &mut World, designation_entity: Entity, work_amount: f32
             log.add("Mined Stone (Needs Hauling)");
         }
 
-        // Probabilistic Ore Yield (20%)
+        // Purity Logic: Ore (High Purity) vs Waste (Low Purity)
+        let purity = world
+            .get_resource::<crate::layer1::purity::PurityMap>()
+            .map_or(0.2, |map| map.get(pos.x, pos.y));
+
         let mut rng = rand::thread_rng();
-        if rng.gen_bool(0.2) {
+
+        // Ore Check: Probability = Purity
+        if rng.gen_bool(f64::from(purity)) {
             world.spawn((
                 ResourceItem {
                     resource_type: ResourceType::Ore,
@@ -597,6 +603,21 @@ pub fn mine_rock(world: &mut World, designation_entity: Entity, work_amount: f32
             ));
             if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
                 log.add("Mined Ore (Needs Hauling)");
+            }
+        }
+
+        // Waste Check: Probability = 1.0 - Purity
+        // This is independent, so mixed purity can yield both or neither.
+        if rng.gen_bool(f64::from(1.0 - purity)) {
+            world.spawn((
+                ResourceItem {
+                    resource_type: ResourceType::Waste,
+                    amount: 1.0,
+                },
+                pos,
+            ));
+            if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+                log.add("Mined Waste (Needs Hauling)");
             }
         }
 

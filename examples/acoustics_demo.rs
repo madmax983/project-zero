@@ -145,7 +145,10 @@ impl App {
                 radius: 8.0,
                 intensity: 1.0,
             },
-            GridPosition { x: x as i32, y: y as i32 },
+            GridPosition {
+                x: x as i32,
+                y: y as i32,
+            },
         ));
     }
 
@@ -305,11 +308,7 @@ fn render_grid(f: &mut Frame, app: &mut App, area: Rect) {
 
 #[cfg(feature = "nova")]
 fn render_stats(f: &mut Frame, app: &mut App, area: Rect) {
-    let source_count = app
-        .world
-        .query::<&NoiseSource>()
-        .iter(&app.world)
-        .count();
+    let source_count = app.world.query::<&NoiseSource>().iter(&app.world).count();
 
     let weather = app.world.resource::<WeatherState>();
     let ambience = app.world.resource::<AmbientAudioLevel>();
@@ -321,11 +320,17 @@ fn render_stats(f: &mut Frame, app: &mut App, area: Rect) {
     let stats_text = vec![
         Line::from(vec![
             Span::raw("Weather: "),
-            Span::styled(weather.current_weather.name(), Style::default().fg(Color::Cyan)),
+            Span::styled(
+                weather.current_weather.name(),
+                Style::default().fg(Color::Cyan),
+            ),
         ]),
         Line::from(vec![
             Span::raw("Ambient Level: "),
-            Span::styled(format!("{:.2}", ambience.level), Style::default().fg(Color::Yellow)),
+            Span::styled(
+                format!("{:.2}", ambience.level),
+                Style::default().fg(Color::Yellow),
+            ),
         ]),
         Line::from(format!("Sources: {source_count}")),
         Line::from(""),
