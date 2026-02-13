@@ -22,6 +22,7 @@
 //! * [`PopAction`]: Current task state.
 //! * [`UtilityWeights`]: Personality/learning factors.
 
+use super::actions::AssignmentType;
 use super::cabin_fever::CabinFever;
 use super::factions::FactionMember;
 use super::health::Health;
@@ -107,6 +108,15 @@ impl PopName {
 /// ```
 #[derive(Component)]
 pub struct Pop;
+
+/// Tracks a pop's persistent employment, even when temporarily reassigned (e.g. to hospital).
+#[derive(Component, Debug, Clone, PartialEq, Eq)]
+pub struct Job {
+    /// The building entity where the pop works.
+    pub workplace: Entity,
+    /// The type of job (e.g. `FarmWorker`, `LibraryWorker`).
+    pub job_type: AssignmentType,
+}
 
 /// Movement speed of a pop.
 ///
@@ -616,10 +626,7 @@ mod tests {
         for (_, age) in query.iter(&world) {
             // Check age range (20-40 years)
             let years = age.ticks_alive / crate::layer1::balance::TICKS_PER_YEAR;
-            assert!(
-                (20..40).contains(&years),
-                "Age should be between 20 and 40"
-            );
+            assert!((20..40).contains(&years), "Age should be between 20 and 40");
         }
     }
 }

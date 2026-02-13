@@ -2,6 +2,7 @@ use super::{AssignedTo, AssignmentType};
 use crate::layer1::farm::Farm;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
+use crate::layer1::pop::Job;
 use crate::layer1::utility_types::{ActionType, UtilityWeights};
 use crate::layer1::utility_types::{
     calculate_context_score, calculate_success_modifier, need_response_curve,
@@ -52,10 +53,16 @@ pub fn handle_arrival(
     if let Ok(mut farm) = farms.get_mut(target_entity) {
         if farm.workers.len() < farm.capacity {
             farm.workers.push(pop_entity);
-            commands.entity(pop_entity).insert(AssignedTo {
-                entity: target_entity,
-                assignment_type: AssignmentType::FarmWorker,
-            });
+            commands.entity(pop_entity).insert((
+                AssignedTo {
+                    entity: target_entity,
+                    assignment_type: AssignmentType::FarmWorker,
+                },
+                Job {
+                    workplace: target_entity,
+                    job_type: AssignmentType::FarmWorker,
+                },
+            ));
         }
     }
 }

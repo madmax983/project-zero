@@ -50,7 +50,7 @@ use crate::layer1::items::{Equipment, Tool};
 use crate::layer1::map::{GridPosition, ScreenShake};
 use crate::layer1::memory::{Memories, calculate_effective_morale};
 use crate::layer1::needs::{Needs, get_morale_efficiency};
-use crate::layer1::pop::Speed;
+use crate::layer1::pop::{Job, Speed};
 use crate::layer1::resources::{ColonyResources, process_logging, process_mining};
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
 use crate::layer1::social::{SocialBuff, Tavern, handle_socialize};
@@ -488,10 +488,29 @@ fn assign_pop(
     target_entity: Entity,
     assignment_type: AssignmentType,
 ) -> bool {
-    commands.entity(pop_entity).insert(AssignedTo {
+    let mut entity_cmds = commands.entity(pop_entity);
+    entity_cmds.insert(AssignedTo {
         entity: target_entity,
         assignment_type,
     });
+
+    // If this assignment counts as a Job (persistent employment), update the Job component.
+    match assignment_type {
+        AssignmentType::FarmWorker | AssignmentType::LibraryWorker => {
+            entity_cmds.insert(Job {
+                workplace: target_entity,
+                job_type: assignment_type,
+            });
+        }
+        AssignmentType::HousingResident
+        | AssignmentType::TavernVisitor
+        | AssignmentType::Patient
+        | AssignmentType::Funeral => {
+            // These are not jobs, so we don't update Job component.
+            // The pop keeps their previous job (if any).
+        }
+    }
+
     true
 }
 
@@ -1292,6 +1311,13 @@ mod tests {
             assigned.unwrap().assignment_type,
             AssignmentType::FarmWorker
         );
+
+        // Pop should have Job
+        let job = world.get::<Job>(pop);
+        assert!(job.is_some(), "FarmWorker assignment should create Job");
+        let job = job.unwrap();
+        assert_eq!(job.workplace, farm);
+        assert_eq!(job.job_type, AssignmentType::FarmWorker);
     }
 
     #[test]
@@ -1335,6 +1361,9 @@ mod tests {
             assigned.unwrap().assignment_type,
             AssignmentType::HousingResident
         );
+
+        // Housing is not a job
+        assert!(world.get::<Job>(pop).is_none());
     }
 
     #[test]
@@ -2442,6 +2471,9 @@ mod tests {
         assert!(assigned.is_some(), "Pop should be assigned to hospital");
         assert_eq!(assigned.unwrap().assignment_type, AssignmentType::Patient);
 
+        // Hospital is not a job
+        assert!(world.get::<Job>(pop).is_none());
+
         // MovementTarget should be removed
         assert!(world.get::<MovementTarget>(pop).is_none());
     }
@@ -2482,6 +2514,13 @@ mod tests {
             assigned.unwrap().assignment_type,
             AssignmentType::LibraryWorker
         );
+
+        // Library is a job
+        let job = world.get::<Job>(pop);
+        assert!(job.is_some(), "LibraryWorker assignment should create Job");
+        let job = job.unwrap();
+        assert_eq!(job.workplace, library);
+        assert_eq!(job.job_type, AssignmentType::LibraryWorker);
 
         // MovementTarget should be removed
         assert!(world.get::<MovementTarget>(pop).is_none());

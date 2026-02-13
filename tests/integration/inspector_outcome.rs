@@ -1,13 +1,13 @@
+use bevy_ecs::prelude::*;
 use scale::layer1::inspector::{Inspector, inspector_report_system};
 use scale::layer1::integration::inspector_outcome_bridge_system;
-use scale::layer1::visitor::{Visitor, VisitorState};
 use scale::layer1::map::GridPosition;
 use scale::layer1::memory::Memories;
+use scale::layer1::notifications::NotificationQueue;
 use scale::layer1::pop::Pop;
 use scale::layer1::resources::ColonyResources;
-use scale::layer1::notifications::NotificationQueue;
+use scale::layer1::visitor::{Visitor, VisitorState};
 use scale::shared::time::SimulationTime;
-use bevy_ecs::prelude::*;
 
 #[test]
 fn inspector_outcome_affects_colony() {
@@ -31,10 +31,7 @@ fn inspector_outcome_affects_colony() {
     // 3. Spawn Entities
 
     // Spawn a Pop (to receive memories)
-    let pop = world.spawn((
-        Pop,
-        Memories::default(),
-    )).id();
+    let pop = world.spawn((Pop, Memories::default())).id();
 
     // Spawn an Inspector who is departing with a Great Score (S Grade)
     // S Grade requires Avg Score > 5.0
@@ -60,15 +57,24 @@ fn inspector_outcome_affects_colony() {
 
     // Check Notification (should exist)
     let notifications = world.resource::<NotificationQueue>();
-    assert!(!notifications.active.is_empty(), "Notification should be generated");
+    assert!(
+        !notifications.active.is_empty(),
+        "Notification should be generated"
+    );
     assert!(notifications.active[0].text.contains("Grade S"));
 
     // Check Pop Memories (should have InspectorImpressed)
     let memories = world.get::<Memories>(pop).unwrap();
-    let has_memory = memories.items.iter().any(|m| format!("{:?}", m.memory_type) == "InspectorImpressed");
+    let has_memory = memories
+        .items
+        .iter()
+        .any(|m| format!("{:?}", m.memory_type) == "InspectorImpressed");
     assert!(has_memory, "Pop should remember the great inspection!");
 
     // Check Resources (should have gained Knowledge)
     let resources = world.resource::<ColonyResources>();
-    assert!(resources.knowledge > 0.0, "Colony should gain Knowledge from S-grade inspection");
+    assert!(
+        resources.knowledge > 0.0,
+        "Colony should gain Knowledge from S-grade inspection"
+    );
 }

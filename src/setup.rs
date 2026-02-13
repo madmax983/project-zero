@@ -92,6 +92,7 @@ pub fn setup_world() -> World {
     world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
     world.insert_resource(crate::layer1::PlanetaryTraits::default());
     world.insert_resource(crate::layer1::weather::WeatherState::default());
+    world.insert_resource(crate::layer1::medical::MedicalPolicy::default());
 
     initialize_visitor_source(&mut world);
     world.insert_resource(crate::layer1::inspector::InspectorSource {

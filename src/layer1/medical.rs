@@ -2,40 +2,114 @@ use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::health::Health;
 use bevy_ecs::prelude::*;
 
+/// Policy controlling how medical treatment is prioritized.
+#[derive(Resource, Default, Debug, PartialEq, Eq, Copy, Clone)]
+pub enum MedicalPolicy {
+    /// Treat everyone equally (FIFO or random).
+    #[default]
+    SaveEveryone,
+    /// Prioritize productive workers (those with a Job).
+    WorkersFirst,
+    /// Prioritize those with the lowest health percentage.
+    Triage,
+}
+
 /// Component indicating a building is a hospital that can heal patients.
 #[derive(Component)]
 pub struct Hospital {
     /// The amount of health restored per tick to patients.
     pub healing_rate: f32,
+    /// The maximum total health that can be dispensed per tick (capacity).
+    /// Simulates limited beds/medicine.
+    pub max_healing_per_tick: f32,
 }
 
 impl Default for Hospital {
     fn default() -> Self {
-        Self { healing_rate: 0.5 } // 0.5 HP per tick
+        Self {
+            healing_rate: 0.5,         // 0.5 HP per tick per patient
+            max_healing_per_tick: 5.0, // Default cap (e.g. 10 patients)
+        }
     }
 }
 
+use crate::layer1::pop::Job;
+use std::collections::HashMap;
+
 /// System to heal pops assigned to a hospital.
 pub fn healing_system(world: &mut World) {
-    let mut updates: Vec<(Entity, f32)> = Vec::new();
+    let policy = world
+        .get_resource::<MedicalPolicy>()
+        .copied()
+        .unwrap_or_default();
 
-    // Collect updates
+    // Group patients by hospital
+    // Key: Hospital Entity, Value: List of (Patient Entity, HP%, HasJob)
+    let mut hospitals: HashMap<Entity, Vec<(Entity, f32, bool)>> = HashMap::new();
+
     {
         // Query for pops assigned as Patient
-        let mut query = world.query::<(Entity, &Health, &AssignedTo)>();
+        let mut query = world.query::<(Entity, &Health, &AssignedTo, Option<&Job>)>();
 
-        let mut patients = Vec::new();
-        for (entity, health, assigned) in query.iter(world) {
+        for (entity, health, assigned, job) in query.iter(world) {
             if assigned.assignment_type == AssignmentType::Patient && health.current < health.max {
-                patients.push((entity, assigned.entity));
+                let hp_percent = if health.max > 0.0 {
+                    health.current / health.max
+                } else {
+                    0.0
+                };
+                let has_job = job.is_some();
+
+                hospitals
+                    .entry(assigned.entity)
+                    .or_default()
+                    .push((entity, hp_percent, has_job));
+            }
+        }
+    }
+
+    let mut updates: Vec<(Entity, f32)> = Vec::new();
+
+    // Process each hospital
+    for (hospital_ent, mut patients) in hospitals {
+        let Some(hospital) = world.get::<Hospital>(hospital_ent) else {
+            continue;
+        };
+
+        let zone_bonus = crate::layer1::zone::get_zone_bonus(world, hospital_ent);
+        let rate = hospital.healing_rate * (1.0 + zone_bonus);
+        let mut capacity = hospital.max_healing_per_tick;
+
+        // Apply Policy
+        match policy {
+            MedicalPolicy::WorkersFirst => {
+                // Filter out non-workers if we have workers waiting?
+                // Or strict priority? "Ignores unemployed" implies we don't treat them if policy is active.
+                // Spec says: "WorkersFirst policy ignores unemployed".
+                patients.retain(|(_, _, has_job)| *has_job);
+            }
+            MedicalPolicy::Triage => {
+                // Sort by Health % (Ascending) - sickest first
+                patients.sort_by(|a, b| a.1.partial_cmp(&b.1).unwrap_or(std::cmp::Ordering::Equal));
+            }
+            MedicalPolicy::SaveEveryone => {
+                // No sort needed (FIFO)
             }
         }
 
-        for (pop_entity, hospital_entity) in patients {
-            if let Some(hospital) = world.get::<Hospital>(hospital_entity) {
-                let bonus = crate::layer1::zone::get_zone_bonus(world, hospital_entity);
-                updates.push((pop_entity, hospital.healing_rate * (1.0 + bonus)));
-            }
+        // Distribute Healing
+        for (patient, _, _) in patients {
+            if capacity <= 0.001 {
+                break;
+            } // Epsilon check
+
+            // Each patient consumes 'rate' amount of capacity?
+            // Or capacity is total HP dispensed? Spec says "max_healing_per_tick".
+            // If rate is 0.5, we give 0.5.
+
+            let amount = rate.min(capacity);
+            updates.push((patient, amount));
+            capacity -= amount;
         }
     }
 
@@ -71,7 +145,10 @@ mod tests {
                 Building {
                     building_type: BuildingType::Hospital,
                 },
-                Hospital { healing_rate: 1.0 },
+                Hospital {
+                    healing_rate: 1.0,
+                    ..Default::default()
+                },
             ))
             .id();
 
@@ -106,7 +183,10 @@ mod tests {
                 Building {
                     building_type: BuildingType::Hospital,
                 },
-                Hospital { healing_rate: 10.0 },
+                Hospital {
+                    healing_rate: 10.0,
+                    ..Default::default()
+                },
             ))
             .id();
 
@@ -170,7 +250,13 @@ mod tests {
         let mut world = World::new();
 
         let hospital = world
-            .spawn((Hospital { healing_rate: 10.0 }, GridPosition { x: 0, y: 0 }))
+            .spawn((
+                Hospital {
+                    healing_rate: 10.0,
+                    ..Default::default()
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
             .id();
 
         // Pop assigned as Worker (not Patient)
@@ -209,7 +295,10 @@ mod tests {
                     building_type: BuildingType::Hospital,
                 },
                 GridPosition { x: 0, y: 0 },
-                Hospital { healing_rate: 1.0 },
+                Hospital {
+                    healing_rate: 1.0,
+                    ..Default::default()
+                },
             ))
             .id();
 
