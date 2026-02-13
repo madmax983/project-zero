@@ -309,7 +309,7 @@ mod tests {
         schedule.run(&mut world);
 
         let structure = world.get::<Structure>(building).unwrap();
-        assert_eq!(structure.current_hp, 90.0);
+        assert!((structure.current_hp - 90.0).abs() < f32::EPSILON);
     }
 
     #[test]
@@ -329,7 +329,7 @@ mod tests {
 
         // Should have progress
         let progress = world.get::<FloraClearingProgress>(designation).unwrap();
-        assert_eq!(progress.current, 50.0);
+        assert!((progress.current - 50.0).abs() < f32::EPSILON);
         assert!(world.get_entity(flora).is_ok());
 
         // Finish work

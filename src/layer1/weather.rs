@@ -226,7 +226,6 @@ mod tests {
         });
         world.insert_resource(SeasonState {
             current_season: Season::Winter,
-            ..Default::default()
         });
         world.insert_resource(Chronicle::default());
         world.insert_resource(SimulationTime::default());

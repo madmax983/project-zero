@@ -38,11 +38,12 @@
 use crate::layer1::actions::explore::evaluate_explore;
 use crate::layer1::actions::farm::evaluate_farm;
 use crate::layer1::actions::fetch_tool::evaluate_fetch_tool;
-use crate::layer1::actions::fight::evaluate_fight_action;
+use crate::layer1::actions::fight::evaluate_drafted_behavior;
 use crate::layer1::actions::funeral::evaluate_bury_corpse;
 use crate::layer1::actions::haul::evaluate_haul;
 use crate::layer1::actions::hunger::evaluate_satisfy_hunger;
 use crate::layer1::actions::medical::evaluate_seek_medical_care;
+use crate::layer1::actions::mental_break::evaluate_mental_break;
 use crate::layer1::actions::refine::evaluate_refine;
 use crate::layer1::actions::repair::evaluate_repair;
 use crate::layer1::actions::research::evaluate_research;
@@ -52,7 +53,6 @@ use crate::layer1::actions::work::evaluate_work;
 use crate::layer1::combat::Drafted;
 use crate::layer1::designation::Designation;
 use crate::layer1::farm::Farm;
-use crate::layer1::fauna::Fauna;
 use crate::layer1::funeral::{Corpse, Grave};
 use crate::layer1::housing::Housing;
 use crate::layer1::husbandry::evaluate_tame;
@@ -65,12 +65,11 @@ use crate::layer1::resources::{ColonyResources, ResourceItem};
 use crate::layer1::science::Anomaly;
 use crate::layer1::social::Tavern;
 use crate::layer1::stockpile::Stockpile;
-use crate::layer1::structure::Structure;
 use crate::layer1::tech::Library;
-use crate::layer1::unrest::{MentalBreakType, MentalState};
+use crate::layer1::unrest::MentalState;
 pub use crate::layer1::utility_types::{
-    ActionType, Plan, PlanOutcome, PopAction, StartPlan, UtilityConfig, UtilityWeights,
-    evaluate_idle, manhattan_distance,
+    ActionType, Plan, PlanOutcome, PopAction, PopEvalData, StartPlan, UtilityAIBuffer,
+    UtilityConfig, UtilityWeights, evaluate_idle, manhattan_distance,
 };
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
@@ -83,134 +82,6 @@ pub fn update_action_timer_system(mut query: Query<&mut PopAction>) {
     query.par_iter_mut().for_each(|mut action| {
         action.ticks_committed += 1;
     });
-}
-
-/// Data bundle for pop evaluation, optimized for copy.
-#[derive(Clone, Debug)]
-pub struct PopEvalData {
-    /// The entity ID of the pop.
-    pub entity: Entity,
-    /// The current grid position of the pop.
-    pub pos: GridPosition,
-    /// The current needs (hunger, rest, etc.) of the pop.
-    pub needs: Needs,
-    /// The personality/memory weights for decision making.
-    pub weights: UtilityWeights,
-    /// The current action state.
-    pub action: PopAction,
-    /// Equipment held by the pop, if any.
-    pub equipment: Option<Equipment>,
-    /// Current mental state (e.g., Broken, Dazed), if any.
-    pub mental_state: Option<MentalState>,
-    /// Draft status (combat mode), if any.
-    pub drafted: Option<Drafted>,
-    /// Faction membership details, if any.
-    pub faction_member: Option<crate::layer1::factions::FactionMember>,
-}
-
-/// Reusable buffer for `evaluate_actions_system` to avoid allocations.
-#[derive(Resource, Default)]
-pub struct UtilityAIBuffer {
-    /// Buffer for pop data.
-    pub pop_data: Vec<PopEvalData>,
-}
-
-/// Evaluates actions for a pop undergoing a mental break.
-fn evaluate_mental_break_action(
-    data: &PopEvalData,
-    world: &mut World,
-) -> Option<(ActionType, f32, Option<Entity>)> {
-    let Some(MentalState::Broken(break_type)) = data.mental_state else {
-        return None;
-    };
-
-    let best_utility = 100.0;
-    let mut best_target = None;
-
-    let best_action = match break_type {
-        MentalBreakType::Vandalize => {
-            // Find closest structure to destroy
-            let mut closest_dist = i32::MAX;
-            let mut closest_target = None;
-
-            let mut structures_state = world.query::<(Entity, &GridPosition, &Structure)>();
-
-            for (target_entity, target_pos, _) in structures_state.iter(world) {
-                if target_entity == data.entity {
-                    continue;
-                }
-                let dist = manhattan_distance(&data.pos, target_pos);
-                if dist < closest_dist {
-                    closest_dist = dist;
-                    closest_target = Some(target_entity);
-                }
-            }
-            best_target = closest_target;
-            ActionType::Vandalize
-        }
-        MentalBreakType::Binge => {
-            // Find closest Stockpile or Farm (Assumed food source)
-            let mut closest_dist = i32::MAX;
-            let mut closest_target = None;
-
-            let mut stockpiles_state = world.query::<(Entity, &GridPosition, &Stockpile)>();
-            for (entity, pos, _) in stockpiles_state.iter(world) {
-                let dist = manhattan_distance(&data.pos, pos);
-                if dist < closest_dist {
-                    closest_dist = dist;
-                    closest_target = Some(entity);
-                }
-            }
-
-            let mut farms_state = world.query::<(
-                Entity,
-                &GridPosition,
-                &Farm,
-                Option<&crate::layer1::building::ShiftSchedule>,
-            )>();
-            for (entity, pos, _, _) in farms_state.iter(world) {
-                let dist = manhattan_distance(&data.pos, pos);
-                if dist < closest_dist {
-                    closest_dist = dist;
-                    closest_target = Some(entity);
-                }
-            }
-
-            best_target = closest_target;
-            ActionType::Binge
-        }
-        MentalBreakType::Daze => ActionType::Daze,
-        MentalBreakType::Sleepwalking => {
-            // Sleepwalkers just wander. Target is assigned by assign_sleepwalk_target_system.
-            best_target = None;
-            ActionType::Sleepwalking
-        }
-    };
-
-    Some((best_action, best_utility, best_target))
-}
-
-/// Evaluates actions for a drafted pop (combat).
-fn evaluate_drafted_action(
-    data: &PopEvalData,
-    world: &mut World,
-) -> Option<(ActionType, f32, Option<Entity>)> {
-    data.drafted?;
-
-    let mut best_action = ActionType::Idle;
-    let mut best_utility = 0.9; // Just stand there ready
-    let mut best_target = None;
-
-    let mut fauna_state = world.query::<(Entity, &GridPosition, &Fauna)>();
-    let enemies = fauna_state.iter(world).map(|(e, p, _)| (e, p));
-
-    if let Some((utility, target)) = evaluate_fight_action(true, &data.pos, enemies) {
-        best_action = ActionType::Fight;
-        best_utility = utility;
-        best_target = Some(target);
-    }
-
-    Some((best_action, best_utility, best_target))
 }
 
 /// The Main Brain Loop: Decides what every Pop should do next.
@@ -347,11 +218,11 @@ pub fn evaluate_actions_system(world: &mut World) {
         let mut best_target = None;
 
         // 1. Check for Mental Break
-        if let Some((action, utility, target)) = evaluate_mental_break_action(data, world) {
+        if let Some((action, utility, target)) = evaluate_mental_break(data, world) {
             best_action = action;
             best_utility = utility;
             best_target = target;
-        } else if let Some((action, utility, target)) = evaluate_drafted_action(data, world) {
+        } else if let Some((action, utility, target)) = evaluate_drafted_behavior(data, world) {
             // 2. Check for Drafted
             best_action = action;
             best_utility = utility;

@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
     use crate::layer1::GridPosition;
-    use crate::layer1::designation::{Designation, DesignationType};
+    use crate::layer1::designation::DesignationType;
     use crate::layer1::fire::Fire;
     use crate::layer1::structure::{
         Fragile, Structure, fire_damage_structure_system, process_jury_rig,
@@ -9,10 +9,9 @@ mod tests {
     use bevy_ecs::prelude::*;
 
     fn setup_world() -> World {
-        let mut world = World::new();
         // Register components
         // Assuming Structure, Fire, Designation are registered by systems usually
-        world
+        World::new()
     }
 
     #[test]
@@ -37,7 +36,7 @@ mod tests {
         let structure = world.get::<Structure>(building).unwrap();
         // Should be fully healed? Or just functional (e.g., 50%)?
         // Spec decision: Fully healed for function, but Fragile.
-        assert_eq!(structure.current_hp, 100.0);
+        assert!((structure.current_hp - 100.0).abs() < f32::EPSILON);
     }
 
     #[test]
@@ -143,9 +142,7 @@ mod tests {
         // Fragile should have taken MORE damage (lower HP remaining)
         assert!(
             hp_fragile < hp_normal,
-            "Fragile building should take more damage. Normal: {}, Fragile: {}",
-            hp_normal,
-            hp_fragile
+            "Fragile building should take more damage. Normal: {hp_normal}, Fragile: {hp_fragile}",
         );
     }
 

@@ -178,7 +178,7 @@ mod tests {
                 accuracy: 0.9,
             },
         };
-        assert_eq!(sword.properties.damage, 10.0);
+        assert!((sword.properties.damage - 10.0).abs() < f32::EPSILON);
     }
 
     #[test]
@@ -228,7 +228,7 @@ mod tests {
 
         // Check Enemy Health
         let health = world.get::<Health>(enemy).unwrap();
-        assert_eq!(health.current, 80.0); // 100 - 20
+        assert!((health.current - 80.0).abs() < f32::EPSILON); // 100 - 20
     }
 
     #[test]
@@ -253,6 +253,6 @@ mod tests {
 
         // Should fail/no damage
         let health = world.get::<Health>(enemy).unwrap();
-        assert_eq!(health.current, health.max);
+        assert!((health.current - health.max).abs() < f32::EPSILON);
     }
 }

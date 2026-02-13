@@ -78,6 +78,11 @@ fn test_low_gravity_speeds_movement() {
 }
 
 #[test]
+#[allow(
+    clippy::cast_possible_truncation,
+    clippy::cast_sign_loss,
+    clippy::cast_precision_loss
+)]
 fn test_rapid_orbit_shortens_day() {
     let mut world = setup_world();
     world.insert_resource(PlanetaryTraits(vec![PlanetaryTrait::RapidOrbit]));

@@ -2,7 +2,7 @@
 mod tests {
     use crate::layer1::edicts::{ColonyPolicies, Policy};
     use crate::layer1::factions::{
-        FactionData, FactionDemand, FactionId, FactionMember, FactionState, Factions,
+        FactionDemand, FactionId, FactionMember, FactionState, Factions,
         is_pop_striking, update_faction_demands_system, update_faction_strikes_system,
     };
     use crate::layer1::unrest::MentalState;

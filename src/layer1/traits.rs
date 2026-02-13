@@ -180,9 +180,8 @@ mod tests {
             get_trait_work_speed_modifier(&lazy) < 1.0,
             "Lazy should work slower"
         );
-        assert_eq!(
-            get_trait_work_speed_modifier(&normal),
-            1.0,
+        assert!(
+            (get_trait_work_speed_modifier(&normal) - 1.0).abs() < f32::EPSILON,
             "Normal should work at normal speed"
         );
     }
@@ -201,9 +200,8 @@ mod tests {
             get_trait_hunger_decay_modifier(&ascetic) < 1.0,
             "Ascetic should eat less"
         );
-        assert_eq!(
-            get_trait_hunger_decay_modifier(&normal),
-            1.0,
+        assert!(
+            (get_trait_hunger_decay_modifier(&normal) - 1.0).abs() < f32::EPSILON,
             "Normal should eat normally"
         );
     }
