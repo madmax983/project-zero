@@ -15,3 +15,7 @@
 ## [Resource Loop]
 **Friction:** Mining instantly credited resources to the global bank, making the physical act of hauling feel redundant and exploitative (double resource gain bug).
 **Flow:** Removed instant resource credit. Resources now spawn as physical items that MUST be hauled to be counted. Added immediate log feedback ("Needs Hauling") to teach the player this new requirement.
+
+## [Juice System]
+**Friction:** Actions like mining and combat felt "dry" and numerical. Players only saw numbers change, lacking visceral feedback for their orders.
+**Flow:** Added a `Particle` system and integrated `ScreenShake`. Mining now kicks up dust/debris, and combat has impact particles and screen shake. This makes the simulation feel "alive" and responsive.

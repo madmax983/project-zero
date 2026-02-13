@@ -61,6 +61,8 @@ use crate::shared::log::MessageLog;
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 use rand::Rng;
+use ratatui::style::Color;
+use crate::layer1::particles::spawn_particle;
 
 /// Executes combat when pop is targeting an enemy.
 pub fn combat_execution_system(world: &mut World) {
@@ -604,6 +606,9 @@ fn execute_demolish(world: &mut World, designation_entity: Entity) -> bool {
                 if let Some(mut shake) = world.get_resource_mut::<ScreenShake>() {
                     shake.trigger(0.5);
                 }
+                // Ludwig: Spawn debris particles
+                spawn_particle(world, designation_pos, 'X', Color::Red, 10);
+
                 // Remove from OccupiedTiles
                 if let Some(mut occupied) = world.get_resource_mut::<OccupiedTiles>() {
                     occupied.0.remove(&(designation_pos.x, designation_pos.y));
@@ -803,13 +808,46 @@ fn execute_work_on_designation(
     designation_type: DesignationType,
     work_amount: f32,
 ) -> bool {
+    // Ludwig: Get position for juice effects
+    let pos = world.get::<GridPosition>(designation_entity).copied();
+
     match designation_type {
         DesignationType::Mine => {
             process_mining(world, designation_entity, work_amount);
+            if let Some(p) = pos {
+                if world.get_entity(designation_entity).is_err() {
+                    // Finished: Big shake + Debris
+                    if let Some(mut shake) = world.get_resource_mut::<ScreenShake>() {
+                        shake.trigger(0.5);
+                    }
+                    spawn_particle(world, p, '*', Color::White, 10);
+                } else {
+                    // Working: Small shake + Dust
+                    if let Some(mut shake) = world.get_resource_mut::<ScreenShake>() {
+                        shake.trigger(0.05);
+                    }
+                    spawn_particle(world, p, '.', Color::DarkGray, 3);
+                }
+            }
             true
         }
         DesignationType::Chop => {
             process_logging(world, designation_entity, work_amount);
+            if let Some(p) = pos {
+                if world.get_entity(designation_entity).is_err() {
+                    // Finished
+                    if let Some(mut shake) = world.get_resource_mut::<ScreenShake>() {
+                        shake.trigger(0.3);
+                    }
+                    spawn_particle(world, p, '^', Color::Green, 10);
+                } else {
+                    // Working
+                    if let Some(mut shake) = world.get_resource_mut::<ScreenShake>() {
+                        shake.trigger(0.02);
+                    }
+                    spawn_particle(world, p, '\'', Color::Rgb(139, 69, 19), 3);
+                }
+            }
             true
         }
         DesignationType::Demolish => execute_demolish(world, designation_entity),
