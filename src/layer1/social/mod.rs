@@ -52,9 +52,16 @@ pub fn restore_leisure_system(
             crate::layer1::zone::calculate_zone_bonus(zone, building.building_type)
         });
 
+        let visitor_count = tavern.visitors.len();
+        let social_bonus = if visitor_count > 1 {
+            (visitor_count as f32 - 1.0) * 0.1
+        } else {
+            0.0
+        };
+
         for &visitor in &tavern.visitors {
             if let Ok(mut needs) = needs_query.get_mut(visitor) {
-                let amount = 0.05 * (1.0 + zone_bonus);
+                let amount = 0.05 * (1.0 + zone_bonus + social_bonus);
                 needs.leisure = (needs.leisure + amount).min(1.0);
             }
         }
@@ -381,6 +388,56 @@ mod tests {
             (needs.leisure - 0.555).abs() < f32::EPSILON,
             "Expected 0.555, got {}",
             needs.leisure
+        );
+    }
+
+    #[test]
+    fn test_restore_leisure_social_bonus() {
+        let mut world = World::new();
+
+        let pop1 = world
+            .spawn((
+                Pop,
+                Needs {
+                    leisure: 0.5,
+                    ..Default::default()
+                },
+            ))
+            .id();
+
+        let pop2 = world
+            .spawn((
+                Pop,
+                Needs {
+                    leisure: 0.5,
+                    ..Default::default()
+                },
+            ))
+            .id();
+
+        let mut tavern = Tavern::default();
+        tavern.visitors.push(pop1);
+        tavern.visitors.push(pop2);
+
+        world.spawn((
+            tavern,
+            Building {
+                building_type: BuildingType::Tavern,
+            },
+            GridPosition { x: 0, y: 0 },
+        ));
+
+        // Base: 0.05
+        // Social Bonus: (2 - 1) * 0.1 = 0.1
+        // Total Amount: 0.05 * (1.0 + 0.1) = 0.055
+
+        world.run_system_once(restore_leisure_system).unwrap();
+
+        let needs1 = world.get::<Needs>(pop1).unwrap();
+        assert!(
+            (needs1.leisure - 0.555).abs() < f32::EPSILON,
+            "Expected 0.555 with social bonus, got {}",
+            needs1.leisure
         );
     }
 }
