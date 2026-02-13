@@ -69,14 +69,15 @@ pub fn update_water_system(
     let width = water.width;
     let height = water.height;
     // Reset grid to 0 every tick to allow water to recede
-    let mut next_values = vec![0; width * height];
+    // Bolt: Reuse existing buffer instead of allocating new Vec every tick
+    water.values.fill(0);
 
     // 1. Set sources (Terrain::Water)
     for y in 0..height {
         for x in 0..width {
             let idx = y * width + x;
             if terrain.tiles[idx] == TerrainType::Water {
-                next_values[idx] = MAX_HYDRATION;
+                water.values[idx] = MAX_HYDRATION;
             }
         }
     }
@@ -90,7 +91,7 @@ pub fn update_water_system(
             let y = pos.y as usize;
             if x < width && y < height {
                 let idx = y * width + x;
-                next_values[idx] = source.amount;
+                water.values[idx] = source.amount;
             }
         }
     }
@@ -109,16 +110,16 @@ pub fn update_water_system(
 
             // Check Left
             if x > 0 {
-                max_neighbor = max_neighbor.max(next_values[idx - 1]);
+                max_neighbor = max_neighbor.max(water.values[idx - 1]);
             }
             // Check Top
             if y > 0 {
-                max_neighbor = max_neighbor.max(next_values[idx - width]);
+                max_neighbor = max_neighbor.max(water.values[idx - width]);
             }
 
             let potential = max_neighbor.saturating_sub(HYDRATION_DECAY);
-            if potential > next_values[idx] {
-                next_values[idx] = potential;
+            if potential > water.values[idx] {
+                water.values[idx] = potential;
             }
         }
     }
@@ -135,21 +136,19 @@ pub fn update_water_system(
 
             // Check Right
             if x < width - 1 {
-                max_neighbor = max_neighbor.max(next_values[idx + 1]);
+                max_neighbor = max_neighbor.max(water.values[idx + 1]);
             }
             // Check Bottom
             if y < height - 1 {
-                max_neighbor = max_neighbor.max(next_values[idx + width]);
+                max_neighbor = max_neighbor.max(water.values[idx + width]);
             }
 
             let potential = max_neighbor.saturating_sub(HYDRATION_DECAY);
-            if potential > next_values[idx] {
-                next_values[idx] = potential;
+            if potential > water.values[idx] {
+                water.values[idx] = potential;
             }
         }
     }
-
-    water.values = next_values;
 }
 
 #[cfg(test)]
