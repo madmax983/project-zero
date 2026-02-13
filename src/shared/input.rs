@@ -1,12 +1,12 @@
 use bevy_ecs::prelude::*;
 
 use crate::layer1::{
-    BuildMode, ChronicleUiState, DesignationMode, DesignationType, GridPosition, Viewport,
-    try_cancel_designation, try_designate_area, try_place_building,
+    try_cancel_designation, try_designate_area, try_place_building, BuildMode, ChronicleUiState,
+    DesignationMode, DesignationType, GridPosition, Viewport,
 };
 use crate::platform::input::{GameKeyCode, GameKeyEvent, GameMouseEvent};
 use crate::shared::menu::MenuState;
-use crate::shared::selection::{Selection, handle_selection_click, screen_to_world};
+use crate::shared::selection::{handle_selection_click, screen_to_world, Selection};
 use crate::shared::state::GameState;
 use crate::shared::time::{SimSpeed, SimulationTime};
 
@@ -67,49 +67,32 @@ impl InputContextStack {
     }
 }
 
-/// Routes input to context-appropriate handlers.
-pub struct InputRouter;
+/// Route input to the appropriate handler based on current context.
+pub fn route_input(world: &mut World, key: GameKeyEvent) {
+    let context = world.resource::<InputContextStack>().current();
 
-impl InputRouter {
-    /// Create a new [`InputRouter`].
-    #[must_use]
-    pub const fn new() -> Self {
-        Self
-    }
-
-    /// Route input to the appropriate handler based on current context.
-    pub fn route(&mut self, world: &mut World, key: GameKeyEvent) {
-        let context = world.resource::<InputContextStack>().current();
-
-        match context {
-            InputContext::MainMenu => handle_main_menu_mode(world, key),
-            InputContext::Normal => handle_normal_mode(world, key),
-            InputContext::BuildMode => handle_build_mode(world, key),
-            InputContext::DesignationMode => handle_designation_mode(world, key),
-            InputContext::Overlay => handle_overlay_mode(world, key),
-        }
-    }
-
-    /// Route mouse input to the appropriate handler based on current context.
-    pub fn route_mouse(&mut self, world: &mut World, mouse: GameMouseEvent) {
-        let context = world.resource::<InputContextStack>().current();
-
-        match context {
-            InputContext::Normal => {
-                let viewport = *world.resource::<Viewport>();
-                handle_selection_click(world, mouse, &viewport);
-            }
-            InputContext::DesignationMode => {
-                handle_designation_mouse(world, mouse);
-            }
-            _ => {}
-        }
+    match context {
+        InputContext::MainMenu => handle_main_menu_mode(world, key),
+        InputContext::Normal => handle_normal_mode(world, key),
+        InputContext::BuildMode => handle_build_mode(world, key),
+        InputContext::DesignationMode => handle_designation_mode(world, key),
+        InputContext::Overlay => handle_overlay_mode(world, key),
     }
 }
 
-impl Default for InputRouter {
-    fn default() -> Self {
-        Self::new()
+/// Route mouse input to the appropriate handler based on current context.
+pub fn route_mouse_input(world: &mut World, mouse: GameMouseEvent) {
+    let context = world.resource::<InputContextStack>().current();
+
+    match context {
+        InputContext::Normal => {
+            let viewport = *world.resource::<Viewport>();
+            handle_selection_click(world, mouse, &viewport);
+        }
+        InputContext::DesignationMode => {
+            handle_designation_mouse(world, mouse);
+        }
+        _ => {}
     }
 }
 
@@ -451,8 +434,7 @@ mod tests {
         stack.push(InputContext::Normal);
         world.insert_resource(stack);
 
-        let mut router = InputRouter::new();
-        router.route(&mut world, key_event(GameKeyCode::Char('q')));
+        route_input(&mut world, key_event(GameKeyCode::Char('q')));
 
         assert_eq!(*world.resource::<GameState>(), GameState::Quitting);
     }
@@ -468,8 +450,7 @@ mod tests {
         selection.select_tile(10, 10);
         world.insert_resource(selection);
 
-        let mut router = InputRouter::new();
-        router.route(&mut world, key_event(GameKeyCode::Esc));
+        route_input(&mut world, key_event(GameKeyCode::Esc));
 
         assert!(!world.resource::<Selection>().is_selected());
         assert_eq!(*world.resource::<GameState>(), GameState::Running);
@@ -484,8 +465,7 @@ mod tests {
         world.insert_resource(stack);
         world.insert_resource(Selection::default()); // No selection
 
-        let mut router = InputRouter::new();
-        router.route(&mut world, key_event(GameKeyCode::Esc));
+        route_input(&mut world, key_event(GameKeyCode::Esc));
 
         assert_eq!(*world.resource::<GameState>(), GameState::Quitting);
     }
@@ -502,8 +482,7 @@ mod tests {
             ..Default::default()
         });
 
-        let mut router = InputRouter::new();
-        router.route(&mut world, key_event(GameKeyCode::Char('q')));
+        route_input(&mut world, key_event(GameKeyCode::Char('q')));
 
         // 'q' in build mode should NOT quit (should exit build mode instead)
         assert_eq!(*world.resource::<GameState>(), GameState::Running);
@@ -517,8 +496,7 @@ mod tests {
         world.insert_resource(stack);
         world.insert_resource(ChronicleUiState { is_open: true });
 
-        let mut router = InputRouter::new();
-        router.route(&mut world, key_event(GameKeyCode::Esc));
+        route_input(&mut world, key_event(GameKeyCode::Esc));
 
         // Escape in overlay should pop back to base
         assert_eq!(
@@ -537,10 +515,8 @@ mod tests {
         world.insert_resource(stack);
         world.insert_resource(ChronicleUiState::default());
 
-        let mut router = InputRouter::new();
-
         // Open with 'l'
-        router.route(&mut world, key_event(GameKeyCode::Char('l')));
+        route_input(&mut world, key_event(GameKeyCode::Char('l')));
         assert_eq!(
             world.resource::<InputContextStack>().current(),
             InputContext::Overlay
@@ -549,7 +525,7 @@ mod tests {
         assert_eq!(*world.resource::<GameState>(), GameState::Paused);
 
         // Close with 'l'
-        router.route(&mut world, key_event(GameKeyCode::Char('l')));
+        route_input(&mut world, key_event(GameKeyCode::Char('l')));
         assert_eq!(
             world.resource::<InputContextStack>().current(),
             InputContext::Normal
@@ -577,16 +553,14 @@ mod tests {
         world.insert_resource(DesignationMode::default());
         world.insert_resource(MenuState::default()); // Added for GameState toggle check if needed
 
-        let mut router = InputRouter::new();
-
         // Test all normal mode bindings work
-        router.route(&mut world, key_event(GameKeyCode::Char(' ')));
+        route_input(&mut world, key_event(GameKeyCode::Char(' ')));
         assert_eq!(*world.resource::<GameState>(), GameState::Paused);
 
-        router.route(&mut world, key_event(GameKeyCode::Char('1')));
+        route_input(&mut world, key_event(GameKeyCode::Char('1')));
         assert_eq!(world.resource::<SimulationTime>().speed, SimSpeed::Normal);
 
-        router.route(&mut world, key_event(GameKeyCode::Char('w')));
+        route_input(&mut world, key_event(GameKeyCode::Char('w')));
         assert_eq!(world.resource::<Viewport>().y, -1);
     }
 
@@ -602,14 +576,12 @@ mod tests {
             y: i32::MIN,
         });
 
-        let mut router = InputRouter::new();
-
         // Move right (x += 1) should wrap
-        router.route(&mut world, key_event(GameKeyCode::Char('d')));
+        route_input(&mut world, key_event(GameKeyCode::Char('d')));
         assert_eq!(world.resource::<Viewport>().x, i32::MIN);
 
         // Move up (y -= 1) should wrap
-        router.route(&mut world, key_event(GameKeyCode::Char('w')));
+        route_input(&mut world, key_event(GameKeyCode::Char('w')));
         assert_eq!(world.resource::<Viewport>().y, i32::MAX);
     }
 
@@ -631,14 +603,12 @@ mod tests {
         };
         world.insert_resource(build_mode);
 
-        let mut router = InputRouter::new();
-
         // Move right (x += 1) should saturate
-        router.route(&mut world, key_event(GameKeyCode::Char('d')));
+        route_input(&mut world, key_event(GameKeyCode::Char('d')));
         assert_eq!(world.resource::<BuildMode>().cursor.x, i32::MAX);
 
         // Move up (y -= 1) should saturate
-        router.route(&mut world, key_event(GameKeyCode::Char('w')));
+        route_input(&mut world, key_event(GameKeyCode::Char('w')));
         assert_eq!(world.resource::<BuildMode>().cursor.y, i32::MIN);
     }
 
@@ -652,10 +622,8 @@ mod tests {
         world.insert_resource(Viewport::default());
         world.insert_resource(DesignationMode::default());
 
-        let mut router = InputRouter::new();
-
         // Enter mine mode
-        router.route(&mut world, key_event(GameKeyCode::Char('m')));
+        route_input(&mut world, key_event(GameKeyCode::Char('m')));
         assert_eq!(
             world.resource::<InputContextStack>().current(),
             InputContext::DesignationMode
@@ -667,7 +635,7 @@ mod tests {
         );
 
         // Exit
-        router.route(&mut world, key_event(GameKeyCode::Esc));
+        route_input(&mut world, key_event(GameKeyCode::Esc));
         assert_eq!(
             world.resource::<InputContextStack>().current(),
             InputContext::Normal
@@ -675,7 +643,7 @@ mod tests {
         assert!(!world.resource::<DesignationMode>().active);
 
         // Enter demolish mode
-        router.route(&mut world, key_event(GameKeyCode::Char('x')));
+        route_input(&mut world, key_event(GameKeyCode::Char('x')));
         assert_eq!(
             world.resource::<InputContextStack>().current(),
             InputContext::DesignationMode
@@ -697,8 +665,7 @@ mod tests {
         // Need GridPosition/Entity to select? Or just select tile.
         // Selecting tile is enough to verify "something happened".
 
-        let mut router = InputRouter::new();
-        router.route_mouse(&mut world, mouse_event(10, 10));
+        route_mouse_input(&mut world, mouse_event(10, 10));
 
         let selection = world.resource::<Selection>();
         assert_eq!(selection.target(), SelectionTarget::Tile(10, 10));
@@ -713,8 +680,7 @@ mod tests {
         world.insert_resource(Viewport::default());
         world.insert_resource(Selection::default());
 
-        let mut router = InputRouter::new();
-        router.route_mouse(&mut world, mouse_event(10, 10));
+        route_mouse_input(&mut world, mouse_event(10, 10));
 
         let selection = world.resource::<Selection>();
         assert!(!selection.is_selected());
@@ -729,8 +695,7 @@ mod tests {
         world.insert_resource(Viewport::default());
         world.insert_resource(Selection::default());
 
-        let mut router = InputRouter::new();
-        router.route_mouse(&mut world, mouse_event(10, 10));
+        route_mouse_input(&mut world, mouse_event(10, 10));
 
         let selection = world.resource::<Selection>();
         assert!(!selection.is_selected());
