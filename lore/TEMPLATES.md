@@ -982,3 +982,69 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 "[YEAR]: A lighter mood. [MOOD_WAVE] lifts us."
 "The darkness breaks. [MOOD_WAVE] at [COLONY]. [YEAR]."
 ```
+
+## Water Templates
+
+### WATER_DISCOVERY
+**Slots:** [COLONY], [YEAR], [WATER_SOURCE_NAME], [RIVER_DESCRIPTOR]
+
+- "[COLONY] finds the life-blood. [YEAR]. A [RIVER_DESCRIPTOR] [WATER_SOURCE_NAME]."
+- "[YEAR]: Water. We name it [WATER_SOURCE_NAME]. It is [RIVER_DESCRIPTOR]."
+- "Thirst ends at [COLONY]. [YEAR]. The [WATER_SOURCE_NAME] is found."
+
+### FLOOD_EVENT
+**Slots:** [COLONY], [YEAR], [WATER_SOURCE_NAME], [RIVER_DESCRIPTOR]
+
+- "The [WATER_SOURCE_NAME] rises. [YEAR]. [RIVER_DESCRIPTOR] waters take the fields."
+- "[YEAR]: Flood at [COLONY]. The water is [RIVER_DESCRIPTOR] and hungry."
+- "[WATER_SOURCE_NAME] breaks its banks. [YEAR]. We are wet and cold."
+
+## Husbandry Templates
+
+### ANIMAL_TAMED
+**Slots:** [COLONY], [YEAR], [ANIMAL_NAME], [TAME_ACTION]
+
+- "We have [TAME_ACTION] the [ANIMAL_NAME]. [YEAR]. The herd grows."
+- "[YEAR]: The [ANIMAL_NAME] joins us. [TAME_ACTION] by hand and food."
+- "Livestock at [COLONY]. The [ANIMAL_NAME] is [TAME_ACTION]. [YEAR]."
+
+### ANIMAL_BORN
+**Slots:** [COLONY], [YEAR], [ANIMAL_NAME]
+
+- "New life in the pen. [YEAR]. A [ANIMAL_NAME] is born."
+- "[YEAR]: The herd multiplies. A young [ANIMAL_NAME] takes its first breath."
+- "Birth at [COLONY]. Small [ANIMAL_NAME], strong and loud. [YEAR]."
+
+## Aging Templates
+
+### ELDER_PASSING
+**Slots:** [COLONY], [YEAR], [NAME], [ELDER_TITLE]
+
+- "[NAME], our [ELDER_TITLE], has passed. [YEAR]. Time takes us all."
+- "[YEAR]: We mourn [NAME]. The [ELDER_TITLE] sleeps now."
+- "The clock stops for [NAME]. [YEAR]. Rest well, [ELDER_TITLE]."
+
+### CHILD_BORN
+**Slots:** [COLONY], [YEAR], [NAME], [YOUTH_TITLE]
+
+- "A [YOUTH_TITLE] arrives. [YEAR]. We name them [NAME]."
+- "[YEAR]: [NAME] is born. A [YOUTH_TITLE] for [COLONY]."
+- "Cry in the night. [NAME]. [YEAR]. Our new [YOUTH_TITLE]."
+
+## Sleepwalking Templates
+
+### SLEEPWALKER_FOUND
+**Slots:** [COLONY], [YEAR], [NAME], [DREAM_TYPE]
+
+- "[NAME] was found walking the perimeter. [YEAR]. Chasing [DREAM_TYPE]."
+- "[YEAR]: The Walking takes [NAME]. They sought [DREAM_TYPE] in their sleep."
+- "We woke [NAME] near the edge. [YEAR]. They spoke of [DREAM_TYPE]."
+
+## Planetary Quirk Templates
+
+### QUIRK_REVEALED
+**Slots:** [COLONY], [YEAR], [QUIRK_NAME]
+
+- "We feel it now. [YEAR]. This world has [QUIRK_NAME]."
+- "[YEAR]: The nature of the planet is clear. It is [QUIRK_NAME]."
+- "Adapting to [QUIRK_NAME]. [YEAR]. [COLONY] endures."
