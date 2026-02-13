@@ -296,8 +296,12 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer1::unrest::check_mental_break_system),
         crate::layer1::unrest::recover_mental_break_system.after(decay_needs_system),
         check_generational_friction_system.after(decay_needs_system),
+    ));
+
+    schedule.add_systems((
         // Process new rumors and affinity changes
         modify_affinity_system.after(crate::layer1::rumor::exchange_rumors_system),
+        crate::layer1::social::proximity_social_system.after(modify_affinity_system),
         // Process chronicle events
         chronicle_event_handler_system.after(check_milestones_system),
         chronicle_rumor_bridge_system.after(check_milestones_system),

@@ -144,3 +144,10 @@ Map of connected and disconnected systems.
     - `MemoryType::InspectorImpressed` / `InspectorDisappointed` in `src/layer1/memory.rs`.
     - Registered system in `src/simulation.rs`.
 - **Tests:** `tests/integration/inspector_outcome.rs`
+
+### INT-018: Social Proximity -> Morale
+- **Date:** 2026-12-07
+- **Systems connected:** `modify_affinity_system` -> `proximity_social_system` -> `SocialBuff` -> `calculate_effective_morale`
+- **Glue added:**
+    - Registered `proximity_social_system` in `src/simulation.rs`.
+- **Tests:** `tests/integration/social_proximity.rs` (Integration test verified)

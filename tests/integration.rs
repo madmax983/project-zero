@@ -45,3 +45,5 @@ mod waste_pollution;
 
 #[path = "integration/inspector_outcome.rs"]
 mod inspector_outcome;
+#[path = "integration/social_proximity.rs"]
+mod social_proximity;
