@@ -11,7 +11,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `089` Material Provenance — `specs/089-material-provenance.md`
 - [ ] `090` Emotional Contagion — `specs/090-emotional-contagion.md`
 - [ ] `098` Medical Triage Policies — `specs/098-medical-triage.md`
-- [ ] `100` Jury-Rigging — `specs/100-jury-rigging.md`
 
 ## MVP — Layer 2: System Simulation
 

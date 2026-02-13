@@ -286,6 +286,8 @@ pub use heirloom::*;
 mod heirloom_items_tests;
 #[cfg(test)]
 mod heirloom_tests;
+#[cfg(test)]
+mod structure_jury_rig_tests;
 
 /// Animal Husbandry system (Spec 075).
 pub mod husbandry;

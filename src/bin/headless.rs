@@ -362,6 +362,7 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
                     DesignationType::SetZone(_) => 'Z',
                     DesignationType::Tame => 'T',
                     DesignationType::ClearFlora => 'F',
+                    DesignationType::JuryRig => 'J',
                 };
                 print!("{c}");
                 continue;
@@ -452,6 +453,9 @@ fn designate_at(world: &mut World, designation_type: DesignationType, x: i32, y:
             }
             DesignationType::ClearFlora => {
                 println!("Failed: no flora at ({x}, {y})");
+            }
+            DesignationType::JuryRig => {
+                println!("Failed: no building to jury-rig at ({x}, {y})");
             }
         }
     }
@@ -574,6 +578,7 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: i32) {
                 DesignationType::SetZone(_) => "zone",
                 DesignationType::Tame => "tame",
                 DesignationType::ClearFlora => "clear_flora",
+                DesignationType::JuryRig => "jury_rig",
             };
             (p.x, p.y, dt.to_string())
         })

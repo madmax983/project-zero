@@ -747,7 +747,9 @@ const fn get_skill_for_designation(designation_type: DesignationType) -> Option<
     match designation_type {
         DesignationType::Mine => Some(SkillType::Mining),
         DesignationType::Chop => Some(SkillType::Forestry),
-        DesignationType::Repair | DesignationType::Demolish => Some(SkillType::Construction),
+        DesignationType::Repair | DesignationType::Demolish | DesignationType::JuryRig => {
+            Some(SkillType::Construction)
+        }
         DesignationType::ClearFlora => Some(SkillType::Farming),
         DesignationType::SetZone(_) | DesignationType::Tame => None,
     }
@@ -819,8 +821,32 @@ fn execute_work_on_designation(
             process_flora_clearing(world, designation_entity, work_amount);
             true
         }
+        DesignationType::JuryRig => execute_jury_rig(world, designation_entity),
         DesignationType::SetZone(_) | DesignationType::Tame => false,
     }
+}
+
+fn execute_jury_rig(world: &mut World, designation_entity: Entity) -> bool {
+    // Find designation position
+    world
+        .get::<GridPosition>(designation_entity)
+        .copied()
+        .is_some_and(|designation_pos| {
+            // Find structure at this position
+            let structure_entity = world
+                .query::<(Entity, &GridPosition, &crate::layer1::structure::Structure)>()
+                .iter(world)
+                .find(|(_, pos, _)| **pos == designation_pos)
+                .map(|(e, _, _)| e);
+
+            if let Some(entity) = structure_entity {
+                crate::layer1::structure::process_jury_rig(world, entity);
+            }
+
+            // Despawn the designation itself (Jury-Rig is one-shot)
+            world.despawn(designation_entity);
+            true
+        })
 }
 
 fn handle_post_work_effects(
