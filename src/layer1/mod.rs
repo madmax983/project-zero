@@ -302,3 +302,6 @@ pub mod flora;
 pub use flora::*;
 pub mod private_stash;
 pub use private_stash::*;
+/// Visual particle effects system (Juice).
+pub mod particles;
+pub use particles::*;

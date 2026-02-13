@@ -130,6 +130,7 @@ pub fn build_simulation_schedule() -> Schedule {
         update_cabin_fever_system.after(movement_system),
         update_erosion_system.after(movement_system),
         update_screen_shake_system.after(movement_system),
+        crate::layer1::particles::particle_system.after(movement_system),
         infiltration_system.after(movement_system),
         discovery_system.after(process_scan_system),
     ));

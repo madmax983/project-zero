@@ -1,6 +1,9 @@
 #![allow(missing_docs, clippy::collapsible_if)]
 use crate::layer1::map::ScreenShake;
+use crate::layer1::particles::spawn_particle;
 use bevy_ecs::prelude::*;
+use ratatui::style::Color;
+
 #[derive(Component, Default, Debug, Clone, Copy)]
 pub struct Drafted;
 
@@ -61,6 +64,11 @@ pub fn execute_attack(world: &mut World, attacker: Entity, target: Entity) {
             // Trigger Screen Shake (Ludwig: Juice)
             if let Some(mut shake) = world.get_resource_mut::<ScreenShake>() {
                 shake.trigger(0.2);
+            }
+
+            // Ludwig: Spawn hit particle
+            if let Some(pos) = world.get::<crate::layer1::map::GridPosition>(target).copied() {
+                spawn_particle(world, pos, '*', Color::Red, 5);
             }
         }
     }

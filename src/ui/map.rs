@@ -38,17 +38,21 @@ pub enum RenderEntity {
     Item(ResourceType),
     /// An active fire spreading across the map.
     Fire,
+    /// A visual particle effect (e.g., dust, sparks).
+    Particle(char, Color),
 }
 
 impl RenderEntity {
     /// Returns the rendering priority (higher is drawn on top).
     ///
     /// The z-ordering is:
-    /// 1. **Designations** (Top): Overlays like "Mine" need to be visible over everything.
-    /// 2. **Buildings**: Walls and structures cover pops.
-    /// 3. **Pops**: Colonists move around on the ground.
-    /// 4. **Anomalies**: Special sites (under pops).
-    /// 5. **Items** (Bottom): Resources sit on the floor.
+    /// 1. **Particles** (Top): Visual effects overlay everything.
+    /// 2. **Fire**: Overlays designations.
+    /// 3. **Designations**: Overlays like "Mine" need to be visible over buildings.
+    /// 4. **Buildings**: Walls and structures cover pops.
+    /// 5. **Pops**: Colonists move around on the ground.
+    /// 6. **Anomalies**: Special sites (under pops).
+    /// 7. **Items** (Bottom): Resources sit on the floor.
     ///
     /// # Examples
     ///
@@ -65,6 +69,7 @@ impl RenderEntity {
     #[must_use]
     pub const fn priority(&self) -> u8 {
         match self {
+            Self::Particle(_, _) => 7,
             Self::Fire => 6,
             Self::Designation(_, _) => 5,
             Self::Building(_) => 4,
@@ -169,6 +174,15 @@ pub fn update_render_cache(world: &mut World) {
             // Check for Fire
             if e.get::<Fire>().is_some() {
                 insert_if_higher_priority(&mut cache.entities, *pos, RenderEntity::Fire);
+            }
+
+            // Check for Particle
+            if let Some(particle) = e.get::<crate::layer1::Particle>() {
+                insert_if_higher_priority(
+                    &mut cache.entities,
+                    *pos,
+                    RenderEntity::Particle(particle.char, particle.color),
+                );
             }
 
             // Check for Anomaly
@@ -354,6 +368,13 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
                 y: world_y,
             }) {
                 match entity {
+                    RenderEntity::Particle(c, color) => {
+                        line_spans.push(Span::styled(
+                            c.to_string(),
+                            Style::default().fg(*color),
+                        ));
+                        continue;
+                    }
                     RenderEntity::Fire => {
                         line_spans.push(Span::styled(
                             "^",
