@@ -1099,3 +1099,78 @@
 **Usage:**
 - "A ghost-eater is in the stores."
 - "Rations gone to the ghost-eater."
+
+## Water & Fluids
+
+### the Flow / sweet-water
+**Replaces:** water resource
+**Code reference:** `WaterGrid`
+**Usage:**
+- "Follow the Flow."
+- "The sweet-water is running low."
+
+### the damp
+**Replaces:** humidity/wetness
+**Code reference:** `Moisture`
+**Usage:**
+- "The damp gets into the bones."
+
+## Beasts & Husbandry
+
+### beast-kin
+**Replaces:** tamed animals
+**Code reference:** `Tame` component
+**Usage:**
+- "Tend to the beast-kin."
+- "The kin are restless."
+
+### the pen / the fold
+**Replaces:** pasture/zone
+**Code reference:** `ZoneType::Pasture`
+**Usage:**
+- "Secure the fold."
+- "Life in the pen."
+
+## Life & Death
+
+### the Greying
+**Replaces:** aging process
+**Code reference:** `Lifecycle`
+**Usage:**
+- "The Greying comes to us all."
+- "He shows signs of the Greying."
+
+### cycles
+**Replaces:** age/years
+**Code reference:** `Age`
+**Usage:**
+- "She has seen 60 cycles."
+- "A child of 5 cycles."
+
+## Dreams & Sleep
+
+### the Walking
+**Replaces:** sleepwalking
+**Code reference:** `MentalBreakType::Sleepwalking`
+**Usage:**
+- "He is taken by the Walking."
+- "Lock the doors against the Walking."
+
+### night-terrors
+**Replaces:** bad dreams/low morale sleep
+**Usage:**
+- "Night-terrors plague the barracks."
+
+## World Traits
+
+### the heavy step
+**Replaces:** high gravity
+**Code reference:** `PlanetaryTrait::HighGravity`
+**Usage:**
+- "Working under the heavy step."
+
+### the float
+**Replaces:** low gravity
+**Code reference:** `PlanetaryTrait::LowGravity`
+**Usage:**
+- "Moving with the float."

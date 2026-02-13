@@ -850,3 +850,85 @@ SHIFT_CHANGE_DISPUTE:
     - FATIGUE (medium)
     - RESENTMENT (high)
 ```
+
+## Water Chaining
+
+```yaml
+WATER_DISCOVERY:
+  enables:
+    - FARM_EXPANSION (high)
+    - WELL_CONSTRUCTION (high)
+    - FLOOD_EVENT (low)
+  increases:
+    - MORALE (high)
+    - GROWTH (medium)
+
+FLOOD_EVENT:
+  enables:
+    - CROP_FAILURE (high)
+    - SICKNESS_OUTBREAK (medium)
+  increases:
+    - UNREST (medium)
+    - FEAR (medium)
+```
+
+## Husbandry Chaining
+
+```yaml
+ANIMAL_TAMED:
+  enables:
+    - ANIMAL_BORN (medium, over time)
+    - PEN_EXPANSION (high)
+    - PREDATOR_ATTACK (medium)
+  increases:
+    - FOOD_STABILITY (high)
+
+ANIMAL_BORN:
+  enables:
+    - FEAST (low)
+  increases:
+    - MORALE (medium)
+```
+
+## Aging Chaining
+
+```yaml
+ELDER_PASSING:
+  enables:
+    - FUNERAL_HELD (always)
+    - SUCCESSION_CRISIS (low, if leader)
+  increases:
+    - GRIEF (high)
+    - REFLECTION (medium)
+
+CHILD_BORN:
+  enables:
+    - CELEBRATION (medium)
+    - SCHOOL_CONSTRUCTION (low, later)
+  increases:
+    - HOPE (high)
+    - RESOURCE_DRAIN (low)
+```
+
+## Sleepwalking Chaining
+
+```yaml
+SLEEPWALKER_FOUND:
+  enables:
+    - ACCIDENT (medium)
+    - OMEN_WITNESSED (high, "what did they see?")
+  increases:
+    - UNEASE (medium)
+    - SUPERSTITION (high)
+```
+
+## Planetary Quirk Chaining
+
+```yaml
+QUIRK_REVEALED:
+  enables:
+    - TECH_ADAPTATION (high)
+    - SPECIALIZED_BUILDING (medium)
+  increases:
+    - DIFFICULTY_AWARENESS (high)
+```

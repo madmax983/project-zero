@@ -1453,3 +1453,101 @@ How emotional contagion spreads.
 - a sudden laugh
 - a shared silence
 - a collective sigh
+
+## Water Fragments
+
+### [WATER_SOURCE_NAME]
+Names for water bodies.
+
+- The Deep Well
+- The Sweet Spring
+- The Mirror
+- The Vein
+- The Cold Flow
+- Life-Blood
+- The Tears
+
+### [RIVER_DESCRIPTOR]
+Adjectives for flowing water.
+
+- rushing
+- silent
+- dark
+- clear
+- singing
+- treacherous
+- life-giving
+- cold
+
+## Husbandry Fragments
+
+### [ANIMAL_NAME]
+Flavor names for domesticated animals.
+
+- wool-beast
+- star-ox
+- milk-provider
+- rock-grazer
+- soft-hoof
+- herd-kin
+- fleece-bearer
+
+### [TAME_ACTION]
+How animals are tamed/handled.
+
+- gentled
+- called
+- bonded
+- broken (harsh)
+- led
+- soothed
+- fed
+
+## Aging Fragments
+
+### [ELDER_TITLE]
+Titles for old pops.
+
+- The Grey
+- The Witness
+- Old-One
+- The Memory
+- Winter-Born
+- Time-Keeper
+- Grand-Sire/Dame
+
+### [YOUTH_TITLE]
+Titles for young pops.
+
+- New-Blood
+- Sprout
+- Spring-Child
+- The Hope
+- Unwritten
+- Soft-Hand
+- Morning-Born
+
+## Sleepwalking Fragments
+
+### [DREAM_TYPE]
+What sleepwalkers are chasing.
+
+- a phantom sound
+- a lost memory
+- the edge of the map
+- a voice in the wall
+- the smell of rain
+- a ghost
+- the logic of the void
+
+## Planetary Quirk Fragments
+
+### [QUIRK_NAME]
+Names for planetary anomalies.
+
+- The Heavy Step (High Gravity)
+- The Float (Low Gravity)
+- The Fast Sun (Rapid Orbit)
+- The Long Dark (Slow Orbit)
+- The Thick Air (Dense Atmosphere)
+- The Crystal Sky (Thin Atmosphere)
