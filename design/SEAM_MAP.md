@@ -127,3 +127,11 @@ Map of connected and disconnected systems.
     - Modified `update_atmosphere_system` in `src/layer1/atmosphere.rs` to iterate `ResourceItem` and check for `ResourceType::Waste`.
     - Added check for `BuildingType::Landfill` to emit pollution.
 - **Tests:** `tests/integration/waste_pollution.rs`
+
+### INT-016: Planetary Quirks -> Atmosphere Simulation
+- **Date:** 2026-02-13
+- **Systems connected:** `PlanetaryTraits` -> `apply_quirk_modifiers_system` -> `AtmosphereGrid.diffusion_rate` -> `update_atmosphere_system`
+- **Glue added:**
+    - Modified `AtmosphereGrid` to support variable `diffusion_rate`.
+    - Updated `apply_quirk_modifiers_system` in `src/layer1/quirks.rs` to apply diffusion modifiers based on atmosphere density traits.
+- **Tests:** `tests/integration/quirks_atmosphere.rs`

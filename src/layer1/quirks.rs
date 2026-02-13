@@ -1,3 +1,4 @@
+use crate::layer1::atmosphere::AtmosphereGrid;
 use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::energy::PowerSource;
@@ -52,6 +53,16 @@ impl PlanetaryTrait {
         }
     }
 
+    /// Returns the diffusion rate modifier (pollution retention) for this trait.
+    #[must_use]
+    pub const fn diffusion_modifier(&self) -> f32 {
+        match self {
+            Self::DenseAtmosphere => 1.009, // ~0.999 retention
+            Self::ThinAtmosphere => 0.91,   // ~0.90 retention
+            _ => 1.0,
+        }
+    }
+
     /// Returns the human-readable label of the trait.
     #[must_use]
     pub const fn label(&self) -> &'static str {
@@ -76,15 +87,18 @@ pub struct PlanetaryTraits(pub Vec<PlanetaryTrait>);
 /// - `Speed`: Multiplies `current` speed.
 /// - `DayNightCycle`: Sets `ticks_per_day` based on base value (250).
 /// - `PowerSource`: Sets `output` for Generators based on base value (10.0).
+/// - `AtmosphereGrid`: Sets `diffusion_rate` based on base value (0.99).
 pub fn apply_quirk_modifiers_system(
     traits: Res<PlanetaryTraits>,
     mut pops: Query<&mut Speed>,
     mut day_night: ResMut<DayNightCycle>,
     mut power_sources: Query<(&mut PowerSource, &Building)>,
+    atmosphere: Option<ResMut<AtmosphereGrid>>,
 ) {
     // Constants defined at top of scope to appease clippy
     const BASE_TICKS_PER_DAY: f32 = 250.0;
     const BASE_GENERATOR_OUTPUT: f32 = 10.0;
+    const BASE_DIFFUSION_RATE: f32 = 0.99;
 
     if traits.0.is_empty() {
         return;
@@ -94,11 +108,13 @@ pub fn apply_quirk_modifiers_system(
     let mut speed_mod = 1.0;
     let mut day_mod = 1.0;
     let mut power_mod = 1.0;
+    let mut diffusion_mod = 1.0;
 
     for trait_ in &traits.0 {
         speed_mod *= trait_.speed_modifier();
         day_mod *= trait_.day_length_modifier();
         power_mod *= trait_.power_output_modifier();
+        diffusion_mod *= trait_.diffusion_modifier();
     }
 
     // 2. Apply to Pops (Speed)
@@ -122,5 +138,10 @@ pub fn apply_quirk_modifiers_system(
         if matches!(building.building_type, BuildingType::Generator) {
             source.output = BASE_GENERATOR_OUTPUT * power_mod;
         }
+    }
+
+    // 5. Apply to AtmosphereGrid
+    if let Some(mut grid) = atmosphere {
+        grid.diffusion_rate = (BASE_DIFFUSION_RATE * diffusion_mod).clamp(0.0, 1.0);
     }
 }
