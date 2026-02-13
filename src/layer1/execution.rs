@@ -49,6 +49,7 @@ use crate::layer1::housing::Housing;
 use crate::layer1::items::{Equipment, Tool};
 use crate::layer1::map::{GridPosition, ScreenShake};
 use crate::layer1::memory::{Memories, calculate_effective_morale};
+use crate::layer1::morale::Morale;
 use crate::layer1::needs::{Needs, get_morale_efficiency};
 use crate::layer1::particles::spawn_particle;
 use crate::layer1::pop::{Job, Speed};
@@ -660,12 +661,13 @@ pub fn work_execution_system(world: &mut World) {
             Option<&SocialBuff>,
             Option<&Equipment>,
             Option<&Traits>,
+            Option<&Morale>,
         ), With<AtTarget>>()
         .iter(world)
-        .filter(|(_, mt, _, _, _, _, _)| {
+        .filter(|(_, mt, _, _, _, _, _, _)| {
             mt.for_action == ActionType::Work || mt.for_action == ActionType::Repair
         })
-        .map(|(e, mt, needs, memories, social_buff, eq, traits)| {
+        .map(|(e, mt, needs, memories, social_buff, eq, traits, morale_comp)| {
             let morale = needs.map_or(0.5, |n| {
                 calculate_effective_morale(
                     n,
@@ -674,6 +676,7 @@ pub fn work_execution_system(world: &mut World) {
                     policies.as_ref(),
                     traits,
                     cycle,
+                    morale_comp,
                 )
             });
             let trait_work_mod = traits.map_or(1.0, get_trait_work_speed_modifier);

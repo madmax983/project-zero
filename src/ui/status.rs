@@ -65,6 +65,7 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
             let memories = e.get::<crate::layer1::Memories>();
             let social_buff = e.get::<crate::layer1::social::SocialBuff>();
             let traits = e.get::<Traits>();
+            let morale_comp = e.get::<crate::layer1::morale::Morale>();
             let morale = crate::layer1::memory::calculate_effective_morale(
                 needs,
                 memories,
@@ -72,6 +73,7 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
                 policies,
                 traits,
                 cycle.map(|c| c.time_of_day),
+                morale_comp,
             );
             Some(morale)
         })
