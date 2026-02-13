@@ -1041,10 +1041,7 @@ mod tests {
             BuildingType::AncientFabricator.next(),
             BuildingType::Refinery
         );
-        assert_eq!(
-            BuildingType::Refinery.next(),
-            BuildingType::Housing
-        );
+        assert_eq!(BuildingType::Refinery.next(), BuildingType::Housing);
     }
 
     #[test]
