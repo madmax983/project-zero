@@ -43,7 +43,7 @@ use crate::layer1::erosion::{ErosionGrid, MOVEMENT_EROSION_AMOUNT};
 use crate::layer1::farm::Farm;
 use crate::layer1::flora::process_flora_clearing;
 use crate::layer1::funeral::{Corpse, Grave, handle_bury_corpse};
-use crate::layer1::health::Health;
+use crate::layer1::hazards::handle_workplace_hazards;
 use crate::layer1::heirloom::{Heirloom, ToolHistory};
 use crate::layer1::housing::Housing;
 use crate::layer1::items::{Equipment, Tool};
@@ -667,28 +667,30 @@ pub fn work_execution_system(world: &mut World) {
         .filter(|(_, mt, _, _, _, _, _, _)| {
             mt.for_action == ActionType::Work || mt.for_action == ActionType::Repair
         })
-        .map(|(e, mt, needs, memories, social_buff, eq, traits, morale_comp)| {
-            let morale = needs.map_or(0.5, |n| {
-                calculate_effective_morale(
-                    n,
-                    memories,
-                    social_buff,
-                    policies.as_ref(),
-                    traits,
-                    cycle,
-                    morale_comp,
+        .map(
+            |(e, mt, needs, memories, social_buff, eq, traits, morale_comp)| {
+                let morale = needs.map_or(0.5, |n| {
+                    calculate_effective_morale(
+                        n,
+                        memories,
+                        social_buff,
+                        policies.as_ref(),
+                        traits,
+                        cycle,
+                        morale_comp,
+                    )
+                });
+                let trait_work_mod = traits.map_or(1.0, get_trait_work_speed_modifier);
+                (
+                    e,
+                    mt.target_entity,
+                    morale,
+                    mt.for_action,
+                    eq.copied(),
+                    trait_work_mod,
                 )
-            });
-            let trait_work_mod = traits.map_or(1.0, get_trait_work_speed_modifier);
-            (
-                e,
-                mt.target_entity,
-                morale,
-                mt.for_action,
-                eq.copied(),
-                trait_work_mod,
-            )
-        })
+            },
+        )
         .collect();
 
     for (pop_entity, designation_entity, morale, action_type, equipment_opt, trait_work_mod) in
@@ -967,23 +969,6 @@ fn cleanup_pop_work_state(world: &mut World, pop_entity: Entity) {
         action.current = ActionType::Idle;
         action.current_utility = 0.0;
         action.ticks_committed = 1;
-    }
-}
-
-fn handle_workplace_hazards(world: &mut World, pop_entity: Entity, action_type: ActionType) {
-    let danger = action_type.danger_level();
-    let mut rng = rand::thread_rng();
-    if rng.gen_bool(danger) {
-        let damage = action_type.accident_damage();
-        // Apply damage if pop has Health
-        if let Some(mut health) = world.get_mut::<Health>(pop_entity) {
-            health.take_damage(damage);
-
-            // Log accident
-            if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
-                log.add(format!("ACCIDENT: Worker injured! (-{damage} HP)"));
-            }
-        }
     }
 }
 

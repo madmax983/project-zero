@@ -173,7 +173,8 @@ pub fn calculate_raw_morale(
         0.0
     };
 
-    let morale_modifier: f32 = morale.map_or(0.0, |m| m.modifiers.iter().map(|modi| modi.value).sum());
+    let morale_modifier: f32 =
+        morale.map_or(0.0, |m| m.modifiers.iter().map(|modi| modi.value).sum());
 
     base + memory_modifier + social_modifier + policy_modifier + trait_modifier + morale_modifier
 }
@@ -321,7 +322,8 @@ mod tests {
         }; // Base 0.5
         let buff = crate::layer1::social::SocialBuff { value: 0.1 };
 
-        let effective = calculate_effective_morale(&needs, None, Some(&buff), None, None, None, None);
+        let effective =
+            calculate_effective_morale(&needs, None, Some(&buff), None, None, None, None);
         assert!((effective - 0.6).abs() < f32::EPSILON);
     }
 

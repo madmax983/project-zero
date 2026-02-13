@@ -82,3 +82,4 @@ Features that have been fully implemented and tested.
 - [x] `INT-016` Integration: Planetary Quirks -> Atmosphere — completed 2026-02-13
 - [x] `103` Private Stashes — `specs/103-private-stashes.md` — completed 2026-10-26
 - [x] `104` Fuel Industry — `specs/104-fuel-industry.md` — completed 2026-02-13
+- [x] `108` Workplace Hazards — `specs/108-workplace-hazards.md` — completed 2026-03-08

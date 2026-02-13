@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::morale::{MoodModifier, Morale};
 use crate::layer1::map::GridPosition;
+use crate::layer1::morale::{MoodModifier, Morale};
+use bevy_ecs::prelude::*;
 
 /// Component to prevent contagion spam from a single source.
 #[derive(Component, Default)]
@@ -48,7 +48,9 @@ pub fn emotional_contagion_system(
             }
 
             // Check distance (Chebyshev)
-            let dist = (target_pos.x - source_pos.x).abs().max((target_pos.y - source_pos.y).abs());
+            let dist = (target_pos.x - source_pos.x)
+                .abs()
+                .max((target_pos.y - source_pos.y).abs());
 
             if dist <= CONTAGION_RANGE {
                 morale.modifiers.push(MoodModifier {
@@ -64,9 +66,9 @@ pub fn emotional_contagion_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::morale::Morale;
+    use crate::layer1::contagion::{ContagionCooldown, emotional_contagion_system};
     use crate::layer1::map::GridPosition;
-    use crate::layer1::contagion::{emotional_contagion_system, ContagionCooldown};
+    use crate::layer1::morale::Morale;
     use bevy_ecs::prelude::*;
 
     #[test]
@@ -74,18 +76,28 @@ mod tests {
         let mut world = World::new();
 
         // 1. Create Source Pop (Low Morale)
-        let _source = world.spawn((
-            GridPosition { x: 10, y: 10 },
-            Morale { value: 0.1, modifiers: vec![] }, // Very Low
-            ContagionCooldown::default(),
-        )).id();
+        let _source = world
+            .spawn((
+                GridPosition { x: 10, y: 10 },
+                Morale {
+                    value: 0.1,
+                    modifiers: vec![],
+                }, // Very Low
+                ContagionCooldown::default(),
+            ))
+            .id();
 
         // 2. Create Target Pop (Neutral Morale, nearby)
-        let target = world.spawn((
-            GridPosition { x: 11, y: 10 }, // Adjacent
-            Morale { value: 0.5, modifiers: vec![] }, // Neutral
-            ContagionCooldown::default(),
-        )).id();
+        let target = world
+            .spawn((
+                GridPosition { x: 11, y: 10 }, // Adjacent
+                Morale {
+                    value: 0.5,
+                    modifiers: vec![],
+                }, // Neutral
+                ContagionCooldown::default(),
+            ))
+            .id();
 
         // 3. Run System
         let mut schedule = Schedule::default();
@@ -94,8 +106,13 @@ mod tests {
 
         // 4. Assert Target received negative modifier
         let target_morale = world.get::<Morale>(target).unwrap();
-        assert!(target_morale.modifiers.iter().any(|m| m.label == "Witnessed Breakdown"),
-            "Target should have 'Witnessed Breakdown' modifier");
+        assert!(
+            target_morale
+                .modifiers
+                .iter()
+                .any(|m| m.label == "Witnessed Breakdown"),
+            "Target should have 'Witnessed Breakdown' modifier"
+        );
     }
 
     #[test]
@@ -103,18 +120,28 @@ mod tests {
         let mut world = World::new();
 
         // 1. Create Source Pop (High Morale)
-        let _source = world.spawn((
-            GridPosition { x: 10, y: 10 },
-            Morale { value: 0.95, modifiers: vec![] }, // Very High
-            ContagionCooldown::default(),
-        )).id();
+        let _source = world
+            .spawn((
+                GridPosition { x: 10, y: 10 },
+                Morale {
+                    value: 0.95,
+                    modifiers: vec![],
+                }, // Very High
+                ContagionCooldown::default(),
+            ))
+            .id();
 
         // 2. Create Target Pop (Neutral Morale, nearby)
-        let target = world.spawn((
-            GridPosition { x: 11, y: 11 }, // Diagonal
-            Morale { value: 0.5, modifiers: vec![] },
-            ContagionCooldown::default(),
-        )).id();
+        let target = world
+            .spawn((
+                GridPosition { x: 11, y: 11 }, // Diagonal
+                Morale {
+                    value: 0.5,
+                    modifiers: vec![],
+                },
+                ContagionCooldown::default(),
+            ))
+            .id();
 
         // 3. Run System
         let mut schedule = Schedule::default();
@@ -123,8 +150,13 @@ mod tests {
 
         // 4. Assert Target received positive modifier
         let target_morale = world.get::<Morale>(target).unwrap();
-        assert!(target_morale.modifiers.iter().any(|m| m.label == "Witnessed Joy"),
-            "Target should have 'Witnessed Joy' modifier");
+        assert!(
+            target_morale
+                .modifiers
+                .iter()
+                .any(|m| m.label == "Witnessed Joy"),
+            "Target should have 'Witnessed Joy' modifier"
+        );
     }
 
     #[test]
@@ -132,18 +164,28 @@ mod tests {
         let mut world = World::new();
 
         // Source
-        let _source = world.spawn((
-            GridPosition { x: 10, y: 10 },
-            Morale { value: 0.05, modifiers: vec![] },
-            ContagionCooldown::default(),
-        )).id();
+        let _source = world
+            .spawn((
+                GridPosition { x: 10, y: 10 },
+                Morale {
+                    value: 0.05,
+                    modifiers: vec![],
+                },
+                ContagionCooldown::default(),
+            ))
+            .id();
 
         // Distant Target (Outside range, e.g., range is 5)
-        let distant_target = world.spawn((
-            GridPosition { x: 20, y: 20 },
-            Morale { value: 0.5, modifiers: vec![] },
-            ContagionCooldown::default(),
-        )).id();
+        let distant_target = world
+            .spawn((
+                GridPosition { x: 20, y: 20 },
+                Morale {
+                    value: 0.5,
+                    modifiers: vec![],
+                },
+                ContagionCooldown::default(),
+            ))
+            .id();
 
         // Run System
         let mut schedule = Schedule::default();
@@ -152,7 +194,10 @@ mod tests {
 
         // Assert NO modifier
         let target_morale = world.get::<Morale>(distant_target).unwrap();
-        assert!(target_morale.modifiers.is_empty(), "Distant target should not be affected");
+        assert!(
+            target_morale.modifiers.is_empty(),
+            "Distant target should not be affected"
+        );
     }
 
     #[test]
@@ -160,18 +205,28 @@ mod tests {
         let mut world = World::new();
 
         // Source
-        let _source = world.spawn((
-            GridPosition { x: 10, y: 10 },
-            Morale { value: 0.05, modifiers: vec![] },
-            ContagionCooldown { timer: 100 }, // Recently triggered
-        )).id();
+        let _source = world
+            .spawn((
+                GridPosition { x: 10, y: 10 },
+                Morale {
+                    value: 0.05,
+                    modifiers: vec![],
+                },
+                ContagionCooldown { timer: 100 }, // Recently triggered
+            ))
+            .id();
 
         // Target
-        let target = world.spawn((
-            GridPosition { x: 11, y: 10 },
-            Morale { value: 0.5, modifiers: vec![] },
-            ContagionCooldown::default(),
-        )).id();
+        let target = world
+            .spawn((
+                GridPosition { x: 11, y: 10 },
+                Morale {
+                    value: 0.5,
+                    modifiers: vec![],
+                },
+                ContagionCooldown::default(),
+            ))
+            .id();
 
         // Run System
         let mut schedule = Schedule::default();
@@ -180,6 +235,9 @@ mod tests {
 
         // Assert NO modifier (Source on cooldown)
         let target_morale = world.get::<Morale>(target).unwrap();
-        assert!(target_morale.modifiers.is_empty(), "Source on cooldown should not spread emotion");
+        assert!(
+            target_morale.modifiers.is_empty(),
+            "Source on cooldown should not spread emotion"
+        );
     }
 }

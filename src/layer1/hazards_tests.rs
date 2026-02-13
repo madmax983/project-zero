@@ -3,6 +3,7 @@ mod tests {
     use crate::layer1::designation::{Designation, DesignationType};
     use crate::layer1::execution::{AtTarget, MovementTarget, work_execution_system};
     use crate::layer1::health::Health;
+    use crate::layer1::husbandry::{HusbandryConfig, Tame, tame_execution_system};
     use crate::layer1::map::GridPosition;
     use crate::layer1::needs::Needs;
     use crate::layer1::pop::Pop;
@@ -35,7 +36,7 @@ mod tests {
     fn test_work_accident_occurs() {
         // Setup world
         let mut world = World::new();
-        crate::setup::init_task_pools(); // Initialize task pools for parallel iterators if needed
+        crate::setup::init_task_pools();
 
         // Resources
         let mut tiles = vec![TerrainType::Grass; 100];
@@ -81,12 +82,6 @@ mod tests {
         let initial_health = world.get::<Health>(pop).unwrap().current;
         let mut took_damage = false;
 
-        // Loop to simulate probability
-        // With 0.1% chance (0.001), 1000 iterations gives ~63% chance of occurring at least once.
-        // We'll increase iterations or verify that probability isn't 0.
-        // Or better, we can mock RNG if we refactor, but for now let's try statistical approach with high iterations.
-        // Actually, 2000 iterations gives ~86%.
-
         for _ in 0..5000 {
             // Reset health if damaged to avoid death
             if let Some(mut h) = world.get_mut::<Health>(pop) {
@@ -96,9 +91,6 @@ mod tests {
                 }
             }
 
-            // Run system
-            // Note: work_execution_system uses par_iter internally potentially? No, just iter.
-            // But it needs &mut World.
             work_execution_system(&mut world);
 
             if took_damage {
@@ -114,5 +106,106 @@ mod tests {
             log.messages.iter().any(|m| m.text.contains("ACCIDENT")),
             "Should log accident"
         );
+    }
+
+    #[test]
+    fn test_taming_is_dangerous() {
+        let mut world = World::new();
+        crate::setup::init_task_pools();
+
+        // Resources
+        world.insert_resource(crate::layer1::zone::ZoneGrid::new(10, 10));
+        world.insert_resource(HusbandryConfig::default());
+        world.insert_resource(MessageLog::default());
+
+        // Create initial designation
+        let mut designation = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Tame,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
+
+        // Create animal
+        let animal = world
+            .spawn((
+                crate::layer1::fauna::Fauna {
+                    fauna_type: crate::layer1::fauna::FaunaType::Wolf,
+                    ..Default::default()
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
+
+        // Create pop
+        let pop = world
+            .spawn((
+                Pop,
+                Health::default(),
+                Needs::default(),
+                GridPosition { x: 5, y: 5 },
+                MovementTarget {
+                    target_entity: designation,
+                    target_position: GridPosition { x: 5, y: 5 },
+                    for_action: ActionType::Tame,
+                },
+                AtTarget,
+            ))
+            .id();
+
+        let initial_health = world.get::<Health>(pop).unwrap().current;
+        let mut took_damage = false;
+
+        for _ in 0..5000 {
+            // 1. Heal if needed
+            if let Some(mut h) = world.get_mut::<Health>(pop) {
+                if h.current < initial_health {
+                    took_damage = true;
+                    h.current = initial_health;
+                }
+            }
+
+            // 2. Reset Pop State (MovementTarget removed by system)
+            if world.get::<MovementTarget>(pop).is_none() {
+                world.entity_mut(pop).insert((
+                    MovementTarget {
+                        target_entity: designation,
+                        target_position: GridPosition { x: 5, y: 5 },
+                        for_action: ActionType::Tame,
+                    },
+                    AtTarget,
+                ));
+            }
+
+            // 3. Reset Designation (Despawned by system)
+            if world.get_entity(designation).is_err() {
+                designation = world
+                    .spawn((
+                        Designation {
+                            designation_type: DesignationType::Tame,
+                        },
+                        GridPosition { x: 5, y: 5 },
+                    ))
+                    .id();
+                // Update target ref
+                if let Some(mut mt) = world.get_mut::<MovementTarget>(pop) {
+                    mt.target_entity = designation;
+                }
+            }
+
+            // 4. Reset Animal (Tame component added by system)
+            world.entity_mut(animal).remove::<Tame>();
+
+            // Run system
+            tame_execution_system(&mut world);
+
+            if took_damage {
+                break;
+            }
+        }
+
+        assert!(took_damage, "Taming should be dangerous");
     }
 }

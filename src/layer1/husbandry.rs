@@ -1,6 +1,7 @@
 use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::execution::MovementTarget;
 use crate::layer1::fauna::{Fauna, FaunaState, FaunaType};
+use crate::layer1::hazards::handle_workplace_hazards;
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::{ResourceItem, ResourceType};
 use crate::layer1::skills::{SkillType, Skills};
@@ -190,6 +191,9 @@ pub fn tame_execution_system(world: &mut World) {
         } else {
             // Designation gone
         }
+
+        // Apply Hazards
+        handle_workplace_hazards(world, pop_entity, ActionType::Tame);
 
         // Reset pop action
         if let Some(mut action) = world.get_mut::<PopAction>(pop_entity) {

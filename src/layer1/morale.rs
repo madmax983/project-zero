@@ -1,10 +1,10 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::edicts::ColonyPolicies;
 use crate::layer1::memory::{Memories, calculate_raw_morale};
 use crate::layer1::needs::Needs;
 use crate::layer1::social::SocialBuff;
 use crate::layer1::traits::Traits;
+use bevy_ecs::prelude::*;
 
 /// A temporary modifier affecting a Pop's morale.
 #[derive(Clone, Debug)]
@@ -63,21 +63,23 @@ pub fn update_morale_cache_system(
 ) {
     let cycle = day_night.map(|d| d.time_of_day);
 
-    query.par_iter_mut().for_each(|(mut morale, needs, memories, social, traits)| {
-        let raw = calculate_raw_morale(
-            needs,
-            memories,
-            social,
-            policies.as_deref(),
-            traits,
-            cycle,
-            None,
-        );
+    query
+        .par_iter_mut()
+        .for_each(|(mut morale, needs, memories, social, traits)| {
+            let raw = calculate_raw_morale(
+                needs,
+                memories,
+                social,
+                policies.as_deref(),
+                traits,
+                cycle,
+                None,
+            );
 
-        let modifier_sum: f32 = morale.modifiers.iter().map(|m| m.value).sum();
+            let modifier_sum: f32 = morale.modifiers.iter().map(|m| m.value).sum();
 
-        morale.value = (raw + modifier_sum).clamp(0.0, 1.0);
-    });
+            morale.value = (raw + modifier_sum).clamp(0.0, 1.0);
+        });
 }
 
 #[cfg(test)]
@@ -100,14 +102,16 @@ mod tests {
     #[test]
     fn test_decay_system() {
         let mut world = World::new();
-        let entity = world.spawn(Morale {
-            value: 0.5,
-            modifiers: vec![MoodModifier {
-                label: "Temp".to_string(),
-                value: 0.1,
-                duration: 1,
-            }],
-        }).id();
+        let entity = world
+            .spawn(Morale {
+                value: 0.5,
+                modifiers: vec![MoodModifier {
+                    label: "Temp".to_string(),
+                    value: 0.1,
+                    duration: 1,
+                }],
+            })
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(morale_decay_system);
