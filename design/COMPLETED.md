@@ -79,3 +79,4 @@ Features that have been fully implemented and tested.
 - [x] `080` Planetary Quirks — `specs/080-planetary-quirks.md` — completed 2026-03-06
 - [x] `100` Jury-Rigging — `specs/100-jury-rigging.md` — completed 2026-10-25
 - [x] `INT-016` Integration: Planetary Quirks -> Atmosphere — completed 2026-02-13
+- [x] `103` Private Stashes — `specs/103-private-stashes.md` — completed 2026-10-26
