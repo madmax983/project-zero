@@ -555,9 +555,9 @@ pub fn track_plan_outcomes_system(
         let success = match outcome.action {
             ActionType::SatisfyHunger => (needs_after.hunger - outcome.needs_before.hunger) > 0.05,
             ActionType::SatisfyRest => (needs_after.rest - outcome.needs_before.rest) > 0.05,
+            ActionType::Socialize => (needs_after.leisure - outcome.needs_before.leisure) > 0.05,
             ActionType::Work
             | ActionType::Repair
-            | ActionType::Socialize
             | ActionType::Explore
             | ActionType::Research
             | ActionType::Haul
@@ -993,6 +993,46 @@ mod tests {
             weights.action_success_count[ActionType::Work.as_index()],
             1,
             "Work action should be counted as success if completed"
+        );
+    }
+
+    #[test]
+    fn test_track_plan_outcomes_socialize_success() {
+        let mut world = World::new();
+        world.insert_resource(SimulationTime {
+            tick: 100,
+            ..Default::default()
+        });
+        world.insert_resource(UtilityConfig::default());
+
+        let pop = world
+            .spawn((
+                Pop,
+                Needs {
+                    hunger: 0.8,
+                    rest: 0.8,
+                    leisure: 0.7, // Improved from 0.2
+                },
+                UtilityWeights::default(),
+                PlanOutcome {
+                    action: ActionType::Socialize,
+                    started_at: 50,
+                    needs_before: Needs {
+                        hunger: 0.8,
+                        rest: 0.8,
+                        leisure: 0.2,
+                    },
+                },
+            ))
+            .id();
+
+        world.run_system_once(track_plan_outcomes_system).unwrap();
+
+        let weights = world.get::<UtilityWeights>(pop).unwrap();
+        assert_eq!(
+            weights.action_success_count[ActionType::Socialize.as_index()],
+            1,
+            "Socialize action should be counted as success if leisure improved"
         );
     }
 }
