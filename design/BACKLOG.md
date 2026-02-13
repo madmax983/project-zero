@@ -12,6 +12,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `106` Resource Purity — `specs/106-resource-purity.md`
 - [ ] `107` Biocompatibility — `specs/107-biocompatibility.md`
 - [ ] `109` Greenhouses — `specs/109-greenhouses.md`
+- [ ] `110` Spontaneous Architecture — `specs/110-spontaneous-architecture.md`
 
 ## MVP — Layer 2: System Simulation
 
