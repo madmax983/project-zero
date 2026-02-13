@@ -64,7 +64,10 @@ mod tests {
         schedule.run(&mut world);
 
         let structure = world.get::<Structure>(entity).unwrap();
-        assert!(structure.current_hp < 1000.0, "Ancient Structure should decay");
+        assert!(
+            structure.current_hp < 1000.0,
+            "Ancient Structure should decay"
+        );
         assert!(structure.current_hp > 990.0, "Decay should be slow"); // Should be slow decay
     }
 

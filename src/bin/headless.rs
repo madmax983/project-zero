@@ -361,6 +361,7 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
                     DesignationType::Repair => '+',
                     DesignationType::SetZone(_) => 'Z',
                     DesignationType::Tame => 'T',
+                    DesignationType::ClearFlora => 'F',
                 };
                 print!("{c}");
                 continue;
@@ -448,6 +449,9 @@ fn designate_at(world: &mut World, designation_type: DesignationType, x: i32, y:
             }
             DesignationType::Tame => {
                 println!("Failed: no wild animal at ({x}, {y})");
+            }
+            DesignationType::ClearFlora => {
+                println!("Failed: no flora at ({x}, {y})");
             }
         }
     }
@@ -569,6 +573,7 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: i32) {
                 DesignationType::Repair => "repair",
                 DesignationType::SetZone(_) => "zone",
                 DesignationType::Tame => "tame",
+                DesignationType::ClearFlora => "clear_flora",
             };
             (p.x, p.y, dt.to_string())
         })

@@ -45,11 +45,9 @@ impl Default for HusbandryConfig {
 /// Attempts to tame an animal. Returns true on success.
 pub fn attempt_tame(world: &mut World, tamer: Entity, animal: Entity) -> bool {
     // 1. Get Skill
-    let skill_level = if let Some(skills) = world.get::<Skills>(tamer) {
-        skills.get_efficiency(SkillType::Husbandry)
-    } else {
-        1.0
-    };
+    let skill_level = world
+        .get::<Skills>(tamer)
+        .map_or(1.0, |skills| skills.get_efficiency(SkillType::Husbandry));
 
     // 2. Roll vs Difficulty
     #[cfg(test)]
@@ -183,14 +181,12 @@ pub fn tame_execution_system(world: &mut World) {
                 .find(|(_, p)| p.x == pos.x && p.y == pos.y)
                 .map(|(e, _)| e);
 
-            if let Some(animal_entity) = animal {
-                if world.get::<Tame>(animal_entity).is_none() {
-                    _success = attempt_tame(world, pop_entity, animal_entity);
-                }
-                world.despawn(designation_entity);
-            } else {
-                world.despawn(designation_entity);
+            if let Some(animal_entity) = animal
+                && world.get::<Tame>(animal_entity).is_none()
+            {
+                _success = attempt_tame(world, pop_entity, animal_entity);
             }
+            world.despawn(designation_entity);
         } else {
             // Designation gone
         }

@@ -41,6 +41,7 @@ use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::edicts::{ColonyPolicies, get_work_speed_modifier};
 use crate::layer1::erosion::{ErosionGrid, MOVEMENT_EROSION_AMOUNT};
 use crate::layer1::farm::Farm;
+use crate::layer1::flora::process_flora_clearing;
 use crate::layer1::funeral::{Corpse, Grave, handle_bury_corpse};
 use crate::layer1::health::Health;
 use crate::layer1::heirloom::{Heirloom, ToolHistory};
@@ -747,6 +748,7 @@ const fn get_skill_for_designation(designation_type: DesignationType) -> Option<
         DesignationType::Mine => Some(SkillType::Mining),
         DesignationType::Chop => Some(SkillType::Forestry),
         DesignationType::Repair | DesignationType::Demolish => Some(SkillType::Construction),
+        DesignationType::ClearFlora => Some(SkillType::Farming),
         DesignationType::SetZone(_) | DesignationType::Tame => None,
     }
 }
@@ -811,6 +813,10 @@ fn execute_work_on_designation(
         DesignationType::Demolish => execute_demolish(world, designation_entity),
         DesignationType::Repair => {
             crate::layer1::structure::process_repair(world, designation_entity, work_amount);
+            true
+        }
+        DesignationType::ClearFlora => {
+            process_flora_clearing(world, designation_entity, work_amount);
             true
         }
         DesignationType::SetZone(_) | DesignationType::Tame => false,

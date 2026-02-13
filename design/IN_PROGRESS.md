@@ -20,3 +20,4 @@ Tasks currently being implemented. Builders: if a task is here, pick something e
 - [ ] `069` Mentorship System — `specs/069-mentorship-system.md` — claimed 2026-10-19
 - [ ] `086` The Stowaway — `specs/086-the-stowaway.md` — claimed 2026-10-20
 - [ ] `084` Pop Traits — `specs/084-pop-traits.md` — claimed 2026-02-12
+- [ ] `092` Antagonistic Flora — `specs/092-antagonistic-flora.md` — claimed 2026-02-09

@@ -30,6 +30,8 @@ pub enum DesignationType {
     SetZone(ZoneType),
     /// Designate an animal for taming.
     Tame,
+    /// Designate flora for clearing.
+    ClearFlora,
 }
 
 impl DesignationType {
@@ -51,6 +53,7 @@ impl DesignationType {
             Self::Repair => '+',
             Self::SetZone(_) => 'Z',
             Self::Tame => '♥',
+            Self::ClearFlora => 'F',
         }
     }
 
@@ -72,6 +75,7 @@ impl DesignationType {
             Self::Repair => "+",
             Self::SetZone(_) => "Z",
             Self::Tame => "♥",
+            Self::ClearFlora => "F",
         }
     }
 
@@ -93,6 +97,7 @@ impl DesignationType {
             Self::Repair => "Repair",
             Self::SetZone(_) => "Set Zone",
             Self::Tame => "Tame",
+            Self::ClearFlora => "Clear Flora",
         }
     }
 }
@@ -193,12 +198,23 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
             // Must target a wild animal (Fauna without Tame component)
             // This is O(N) over all entities if we don't have spatial index, but okay for MVP
             world.iter_entities().any(|entity_ref| {
+                if let Some(pos) = entity_ref.get::<GridPosition>()
+                    && pos.x == x
+                    && pos.y == y
+                    && entity_ref.contains::<crate::layer1::fauna::Fauna>()
+                {
+                    return !entity_ref.contains::<crate::layer1::husbandry::Tame>();
+                }
+                false
+            })
+        }
+        DesignationType::ClearFlora => {
+            // Must target a tile with Flora
+            world.iter_entities().any(|entity_ref| {
                 if let Some(pos) = entity_ref.get::<GridPosition>() {
-                    if pos.x == x && pos.y == y {
-                        if entity_ref.contains::<crate::layer1::fauna::Fauna>() {
-                            return !entity_ref.contains::<crate::layer1::husbandry::Tame>();
-                        }
-                    }
+                    return pos.x == x
+                        && pos.y == y
+                        && entity_ref.contains::<crate::layer1::flora::Flora>();
                 }
                 false
             })
@@ -640,4 +656,26 @@ mod tests {
             DesignationType::SetZone(ZoneType::Bedroom)
         ));
     }
+}
+
+#[test]
+fn test_can_designate_clear_flora() {
+    let mut world = World::new();
+    world.insert_resource(TerrainGrid {
+        width: 10,
+        height: 10,
+        tiles: vec![TerrainType::Grass; 100],
+    });
+
+    // Spawn Flora at (5, 5)
+    world.spawn((
+        crate::layer1::flora::Flora::default(),
+        GridPosition { x: 5, y: 5 },
+    ));
+
+    // Can designate ClearFlora on Flora
+    assert!(can_designate(&world, 5, 5, DesignationType::ClearFlora));
+
+    // Cannot designate ClearFlora on empty tile
+    assert!(!can_designate(&world, 5, 6, DesignationType::ClearFlora));
 }
