@@ -93,12 +93,12 @@ pub fn process_repair(world: &mut World, designation_entity: Entity, amount: f32
             Entity,
             &GridPosition,
             &mut Structure,
-            Option<&crate::layer1::heirloom::Heirloom>,
+            Option<&crate::layer1::heirloom::AncientStructure>,
         )>();
-        for (entity, p, mut s, heirloom) in query.iter_mut(world) {
+        for (entity, p, mut s, ancient_structure) in query.iter_mut(world) {
             if *p == pos {
-                if heirloom.is_some() {
-                    // Cannot repair Heirloom! Stop here (structure_entity stays None, forcing despawn below)
+                if ancient_structure.is_some() {
+                    // Cannot repair Ancient Structure! Stop here (structure_entity stays None, forcing despawn below)
                     break;
                 }
                 s.current_hp = (s.current_hp + amount).min(s.max_hp);

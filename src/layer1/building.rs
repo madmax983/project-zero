@@ -28,7 +28,7 @@ use super::housing::Housing;
 use super::social::Tavern;
 use super::stockpile::Stockpile;
 use crate::layer1::energy::{Conduit, PowerConsumer, PowerSource};
-use crate::layer1::heirloom::Heirloom;
+use crate::layer1::heirloom::AncientStructure;
 use crate::layer1::lighting::LightSource;
 use crate::layer1::resources::{ColonyResources, RefiningProgress};
 use crate::layer1::tech::{Library, Tech, TechState};
@@ -186,9 +186,9 @@ pub enum BuildingType {
     Gate,
     /// Defensive tower.
     Tower,
-    /// Ancient power generator (Heirloom).
+    /// Ancient power generator (Ancient Structure).
     AncientReactor,
-    /// Ancient manufacturing unit (Heirloom).
+    /// Ancient manufacturing unit (Ancient Structure).
     AncientFabricator,
 }
 
@@ -829,7 +829,7 @@ fn spawn_building(
         BuildingType::AncientReactor => {
             entity.insert((
                 PowerSource { output: 50.0 }, // Massive power
-                Heirloom,
+                AncientStructure,
                 LightSource {
                     radius: 8.0,
                     intensity: 1.0,
@@ -850,7 +850,7 @@ fn spawn_building(
                     current: 0.0,
                     max: 1.0, // Very fast? Default is 10.0
                 },
-                Heirloom,
+                AncientStructure,
                 LightSource {
                     radius: 6.0,
                     intensity: 0.8,

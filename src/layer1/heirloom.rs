@@ -5,15 +5,35 @@ use crate::layer1::structure::Structure;
 use crate::layer1::terrain::TerrainGrid;
 use bevy_ecs::prelude::*;
 
-/// Component marking an entity as an Heirloom.
+/// Component marking an entity as an Ancient Structure (formerly Heirloom Tech).
 ///
-/// Heirlooms are ancient, unrepairable structures from the Old World.
+/// Ancient Structures are unrepairable structures from the Old World.
 /// They decay over time and cannot be built by the player.
 #[derive(Component, Debug, Clone, Copy, Default)]
-pub struct Heirloom;
+pub struct AncientStructure;
 
-/// Decays the HP of Heirloom structures over time.
-pub fn heirloom_decay_system(mut query: Query<&mut Structure, With<Heirloom>>) {
+/// Component tracking the history of a tool.
+#[derive(Component, Debug, Default, Clone)]
+pub struct ToolHistory {
+    /// Number of ticks the tool has been used for work.
+    pub ticks_used: u32,
+    /// Number of items harvested/produced with this tool (optional metric).
+    pub items_harvested: u32,
+}
+
+/// Component marking a tool as an Heirloom Item.
+///
+/// Heirloom items have a unique name and provide efficiency bonuses.
+#[derive(Component, Debug, Clone)]
+pub struct Heirloom {
+    /// The unique name of the heirloom (e.g., "The Stone-Eater").
+    pub name: String,
+    /// The efficiency multiplier (e.g., 0.25 for +25%).
+    pub efficiency_bonus: f32,
+}
+
+/// Decays the HP of Ancient Structures over time.
+pub fn ancient_structure_decay_system(mut query: Query<&mut Structure, With<AncientStructure>>) {
     const DECAY_RATE: f32 = 0.05;
     for mut structure in &mut query {
         structure.current_hp -= DECAY_RATE;
@@ -23,8 +43,30 @@ pub fn heirloom_decay_system(mut query: Query<&mut Structure, With<Heirloom>>) {
     }
 }
 
-/// Spawns the initial Heirloom structures on the map.
-pub fn spawn_heirlooms(world: &mut World) {
+/// Checks if tools should be promoted to Heirloom status.
+pub fn check_heirloom_status_system(
+    mut commands: Commands,
+    query: Query<(Entity, &ToolHistory), Without<Heirloom>>,
+) {
+    const HEIRLOOM_THRESHOLD: u32 = 1000;
+
+    for (entity, history) in &query {
+        if history.ticks_used >= HEIRLOOM_THRESHOLD {
+            // Generate a cool name (placeholder for now)
+            let name = format!("Legendary Tool #{}", entity.index());
+
+            commands.entity(entity).insert(Heirloom {
+                name,
+                efficiency_bonus: 0.25, // +25% efficiency
+            });
+
+            // Optional: Log or notify about the new Heirloom
+        }
+    }
+}
+
+/// Spawns the initial Ancient Structures on the map.
+pub fn spawn_ancient_structures(world: &mut World) {
     let (width, height) = {
         let grid = world.resource::<TerrainGrid>();
         #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]

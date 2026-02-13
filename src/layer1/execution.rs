@@ -43,6 +43,7 @@ use crate::layer1::erosion::{ErosionGrid, MOVEMENT_EROSION_AMOUNT};
 use crate::layer1::farm::Farm;
 use crate::layer1::funeral::{Corpse, Grave, handle_bury_corpse};
 use crate::layer1::health::Health;
+use crate::layer1::heirloom::{Heirloom, ToolHistory};
 use crate::layer1::housing::Housing;
 use crate::layer1::items::{Equipment, Tool};
 use crate::layer1::map::{GridPosition, ScreenShake};
@@ -702,14 +703,20 @@ fn process_single_worker(
 
     // Check per-pop tool availability
     let tool_entity_opt = equipment_opt.as_ref().and_then(|e| e.tool);
-    let has_tools = tool_entity_opt.is_some();
+
+    // Update Tool History
+    if let Some(tool_entity) = tool_entity_opt {
+        if let Some(mut history) = world.get_mut::<ToolHistory>(tool_entity) {
+            history.ticks_used += 1;
+        }
+    }
 
     // Calculate Work Amount
     let work_amount = calculate_work_amount(
         world,
         pop_entity,
         designation_type,
-        has_tools,
+        tool_entity_opt,
         morale,
         work_speed_mod,
     );
@@ -748,11 +755,23 @@ fn calculate_work_amount(
     world: &World,
     pop_entity: Entity,
     designation_type: DesignationType,
-    has_tools: bool,
+    tool_entity: Option<Entity>,
     morale: f32,
     work_speed_mod: f32,
 ) -> f32 {
-    let tool_efficiency = if has_tools { 1.0 } else { NO_TOOL_PENALTY };
+    let mut tool_efficiency = if tool_entity.is_some() {
+        1.0
+    } else {
+        NO_TOOL_PENALTY
+    };
+
+    // Apply Heirloom bonus
+    if let Some(entity) = tool_entity {
+        if let Some(heirloom) = world.get::<Heirloom>(entity) {
+            tool_efficiency *= 1.0 + heirloom.efficiency_bonus;
+        }
+    }
+
     let skill_type = get_skill_for_designation(designation_type);
 
     let skill_efficiency = {
