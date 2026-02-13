@@ -169,8 +169,8 @@ mod tests {
     #[test]
     fn test_stowaway_component_defaults() {
         let stowaway = Stowaway::default();
-        assert_eq!(stowaway.stealth, 1.0); // 100% hidden
-        assert_eq!(stowaway.hunger, 0.0);
+        assert!((stowaway.stealth - 1.0).abs() < f32::EPSILON); // 100% hidden
+        assert!(stowaway.hunger.abs() < f32::EPSILON);
     }
 
     #[test]

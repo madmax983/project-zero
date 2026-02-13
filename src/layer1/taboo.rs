@@ -153,9 +153,8 @@ mod tests {
         });
 
         // Advance time
-        use crate::layer1::taboo::update_taboo_duration_system;
         let mut schedule = Schedule::default();
-        schedule.add_systems(update_taboo_duration_system);
+        schedule.add_systems(crate::layer1::taboo::update_taboo_duration_system);
 
         schedule.run(&mut world); // Tick 0 -> 1? (Depending on impl)
 
@@ -208,6 +207,6 @@ mod tests {
         let normal = evaluate_taboo_penalty(ActionType::Idle, &state);
 
         assert!(penalty < 0.0); // Should return a negative modifier
-        assert_eq!(normal, 0.0);
+        assert!(normal.abs() < f32::EPSILON);
     }
 }

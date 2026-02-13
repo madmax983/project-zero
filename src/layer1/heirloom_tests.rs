@@ -9,7 +9,8 @@ mod tests {
 
     #[test]
     fn test_ancient_structure_component_exists() {
-        let _h = AncientStructure; // Marker component
+        // Verify component exists and is a ZST
+        let _ = AncientStructure;
     }
 
     #[test]
@@ -34,7 +35,7 @@ mod tests {
             .id();
 
         let power = world.get::<PowerSource>(entity).unwrap();
-        assert_eq!(power.output, 50.0);
+        assert!((power.output - 50.0).abs() < f32::EPSILON);
 
         let ancient_structure = world.get::<AncientStructure>(entity);
         assert!(ancient_structure.is_some());
@@ -103,8 +104,8 @@ mod tests {
         process_repair(&mut world, designation, 10.0);
 
         let structure = world.get::<Structure>(entity).unwrap();
-        assert_eq!(
-            structure.current_hp, 500.0,
+        assert!(
+            (structure.current_hp - 500.0).abs() < f32::EPSILON,
             "Heirloom should not be repaired"
         ); // No change
     }

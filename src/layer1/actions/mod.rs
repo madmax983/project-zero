@@ -33,6 +33,9 @@ pub mod medical;
 /// Social action logic.
 pub mod social;
 
+/// Mental break action logic.
+pub mod mental_break;
+
 #[cfg(test)]
 mod work_building_tests;
 

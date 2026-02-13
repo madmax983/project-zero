@@ -342,7 +342,7 @@ mod tests {
         let mut world = setup_world();
 
         // Tamed animal (Cow/SpaceRat)
-        let animal = world
+        let _animal = world
             .spawn((
                 Fauna {
                     fauna_type: FaunaType::SpaceRat,

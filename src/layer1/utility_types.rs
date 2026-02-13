@@ -1,5 +1,9 @@
+use crate::layer1::combat::Drafted;
+use crate::layer1::factions::FactionMember;
+use crate::layer1::items::Equipment;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
+use crate::layer1::unrest::MentalState;
 use bevy_ecs::prelude::*;
 
 /// The menu of high-level behaviors a Pop can choose from.
@@ -258,6 +262,36 @@ pub struct StartPlan {
 /// Stub for HTN Plan component (future integration).
 #[derive(Component)]
 pub struct Plan;
+
+/// Data bundle for pop evaluation, optimized for copy.
+#[derive(Clone, Debug)]
+pub struct PopEvalData {
+    /// The entity ID of the pop.
+    pub entity: Entity,
+    /// The current grid position of the pop.
+    pub pos: GridPosition,
+    /// The current needs (hunger, rest, etc.) of the pop.
+    pub needs: Needs,
+    /// The personality/memory weights for decision making.
+    pub weights: UtilityWeights,
+    /// The current action state.
+    pub action: PopAction,
+    /// Equipment held by the pop, if any.
+    pub equipment: Option<Equipment>,
+    /// Current mental state (e.g., Broken, Dazed), if any.
+    pub mental_state: Option<MentalState>,
+    /// Draft status (combat mode), if any.
+    pub drafted: Option<Drafted>,
+    /// Faction membership details, if any.
+    pub faction_member: Option<FactionMember>,
+}
+
+/// Reusable buffer for `evaluate_actions_system` to avoid allocations.
+#[derive(Resource, Default)]
+pub struct UtilityAIBuffer {
+    /// Buffer for pop data.
+    pub pop_data: Vec<PopEvalData>,
+}
 
 /// Calculates urgency from a need value (0.0-1.0).
 ///

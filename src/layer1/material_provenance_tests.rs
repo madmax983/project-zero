@@ -7,9 +7,8 @@ mod tests {
     use bevy_ecs::prelude::*;
 
     fn setup_world() -> World {
-        let world = World::new();
         // Setup necessary resources if needed (e.g. BuildMode not needed for spawn_building_with_material)
-        world
+        World::new()
     }
 
     #[test]
@@ -34,7 +33,7 @@ mod tests {
             flammable.is_some(),
             "Wood wall should have Flammable component"
         );
-        assert_eq!(structure.max_hp, 50.0); // Wood wall HP (Base 50 * 1.0)
+        assert!((structure.max_hp - 50.0).abs() < f32::EPSILON); // Wood wall HP (Base 50 * 1.0)
     }
 
     #[test]
@@ -59,7 +58,7 @@ mod tests {
             flammable.is_none(),
             "Stone wall should NOT have Flammable component"
         );
-        assert_eq!(structure.max_hp, 200.0); // Stone wall HP (Base 50 * 4.0)
+        assert!((structure.max_hp - 200.0).abs() < f32::EPSILON); // Stone wall HP (Base 50 * 4.0)
     }
 
     #[test]
