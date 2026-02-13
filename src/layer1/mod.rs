@@ -55,6 +55,8 @@ pub mod farm;
 pub mod fire;
 /// Hauling logic.
 pub mod hauling;
+/// Workplace hazards logic.
+pub mod hazards;
 #[cfg(test)]
 /// Tests for hazards logic.
 pub mod hazards_tests;
@@ -141,6 +143,7 @@ pub use execution::*;
 pub use farm::*;
 pub use fire::*;
 pub use hauling::*;
+pub use hazards::*;
 pub use health::*;
 pub use housing::*;
 pub use integration::*;

@@ -11,7 +11,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `089` Material Provenance — `specs/089-material-provenance.md`
 - [ ] `106` Resource Purity — `specs/106-resource-purity.md`
 - [ ] `107` Biocompatibility — `specs/107-biocompatibility.md`
-- [ ] `108` Workplace Hazards — `specs/108-workplace-hazards.md`
 - [ ] `109` Greenhouses — `specs/109-greenhouses.md`
 
 ## MVP — Layer 2: System Simulation

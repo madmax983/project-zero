@@ -29,7 +29,12 @@ pub enum MentalBreakType {
 
 /// System to check if Pops should suffer a mental break based on morale.
 pub fn check_mental_break_system(
-    mut query: Query<(&Needs, Option<&Morale>, Option<&CabinFever>, &mut MentalState)>,
+    mut query: Query<(
+        &Needs,
+        Option<&Morale>,
+        Option<&CabinFever>,
+        &mut MentalState,
+    )>,
 ) {
     for (needs, morale_comp, fever, mut state) in &mut query {
         if *state == MentalState::Normal {
