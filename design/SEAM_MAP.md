@@ -135,3 +135,12 @@ Map of connected and disconnected systems.
     - Modified `AtmosphereGrid` to support variable `diffusion_rate`.
     - Updated `apply_quirk_modifiers_system` in `src/layer1/quirks.rs` to apply diffusion modifiers based on atmosphere density traits.
 - **Tests:** `tests/integration/quirks_atmosphere.rs`
+
+### INT-017: Inspector Report -> Faction Satisfaction & Resources
+- **Date:** 2026-11-20
+- **Systems connected:** `Inspector` -> `inspector_report_system` -> `Reported` -> `inspector_outcome_bridge_system` -> `Memories` / `ColonyResources`
+- **Glue added:**
+    - `inspector_outcome_bridge_system` in `src/layer1/integration.rs`.
+    - `MemoryType::InspectorImpressed` / `InspectorDisappointed` in `src/layer1/memory.rs`.
+    - Registered system in `src/simulation.rs`.
+- **Tests:** `tests/integration/inspector_outcome.rs`
