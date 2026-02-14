@@ -72,7 +72,12 @@ pub fn produce_food_system(
                 skills.add_xp(skill_type, 1.0);
             }
 
-            let production = efficiency * FOOD_PER_WORKER_PER_TICK * modifier;
+            let effective_modifier = match building_type {
+                crate::layer1::building::BuildingType::Greenhouse => 1.0,
+                _ => modifier,
+            };
+
+            let production = efficiency * FOOD_PER_WORKER_PER_TICK * effective_modifier;
 
             if production > 0.0 {
                 match building_type {

@@ -325,3 +325,5 @@ pub use morale::*;
 
 #[cfg(test)]
 mod fuel_industry_tests;
+#[cfg(test)]
+mod greenhouse_tests;

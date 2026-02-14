@@ -312,7 +312,7 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
     } else if let Some(b) = world.get::<Building>(entity) {
         let material = world
             .get::<Material>(entity)
-            .map_or(MaterialType::default(), |m| m.0);
+            .map_or_else(MaterialType::default, |m| m.0);
         (
             b.building_type.label().to_string(),
             get_building_color(b.building_type, material),

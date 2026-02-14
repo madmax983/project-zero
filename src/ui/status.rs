@@ -260,14 +260,14 @@ pub fn get_status_line<'a>(
 
         let mut name = build_mode.selected.label().to_string();
         if build_mode.selected.supports_material() {
-            name.push_str(&format!(" ({})", build_mode.selected_material.label()));
+            name.push_str(" (");
+            name.push_str(build_mode.selected_material.label());
+            name.push(')');
         }
 
         spans.push(Span::styled(
             format!(
-                "BUILD: {} [{}] (Tab:switch M/BackTab:material Enter:place Esc:exit)",
-                name,
-                cost_str,
+                "BUILD: {name} [{cost_str}] (Tab:switch M/BackTab:material Enter:place Esc:exit)",
             ),
             Style::default()
                 .fg(Color::Blue)

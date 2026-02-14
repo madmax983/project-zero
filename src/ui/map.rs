@@ -123,7 +123,7 @@ pub fn update_render_cache(world: &mut World) {
 
             // Check for Building
             if let Some(building) = e.get::<Building>() {
-                let material = e.get::<Material>().map_or(MaterialType::default(), |m| m.0);
+                let material = e.get::<Material>().map_or_else(MaterialType::default, |m| m.0);
                 insert_if_higher_priority(
                     &mut cache.entities,
                     *pos,
@@ -671,6 +671,7 @@ pub const fn get_building_char(building: BuildingType) -> char {
         BuildingType::Tower => 'O',
         BuildingType::AncientReactor | BuildingType::Refinery => 'R',
         BuildingType::AncientFabricator => 'F',
+        BuildingType::Greenhouse => 'G',
     }
 }
 
@@ -720,6 +721,7 @@ pub const fn get_building_color(building: BuildingType, material: MaterialType) 
             BuildingType::TradeDepot => Color::Yellow,
             BuildingType::Generator => Color::Rgb(255, 215, 0), // Gold
             BuildingType::Refinery => Color::Rgb(100, 200, 255), // Chemical Blue
+            BuildingType::Greenhouse => Color::Rgb(200, 255, 255), // Glass/Cyan
         }
     }
 }
