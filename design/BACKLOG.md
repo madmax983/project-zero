@@ -12,6 +12,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `109` Greenhouses — `specs/109-greenhouses.md`
 - [ ] `110` Spontaneous Architecture — `specs/110-spontaneous-architecture.md`
 - [ ] `111` Conveyor Logistics — `specs/111-conveyor-logistics.md`
+- [ ] `112` Maintenance Debt — `specs/112-maintenance-debt.md`
 
 ## MVP — Layer 2: System Simulation
 
