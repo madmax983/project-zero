@@ -2,7 +2,9 @@ use crate::layer1::GridPosition;
 use crate::layer1::balance::{
     FOOD_HUNGER_THRESHOLD, FOOD_PER_MEAL, FOOD_PER_WORKER_PER_TICK, HUNGER_PER_MEAL,
 };
+use crate::layer1::items::ItemType;
 use crate::layer1::needs::Needs;
+use crate::layer1::palette_fatigue::{DietaryHistory, record_meal};
 use crate::layer1::pop::Pop;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::seasons::SeasonState;
@@ -95,7 +97,8 @@ pub fn produce_food_system(
 
 /// Pops eat food when hungry.
 pub fn consume_food_system(
-    mut pop_query: Query<(Entity, &mut Needs), With<Pop>>,
+    mut commands: Commands,
+    mut pop_query: Query<(Entity, &mut Needs, Option<&mut DietaryHistory>), With<Pop>>,
     mut resources: ResMut<ColonyResources>,
 ) {
     if resources.food < f32::EPSILON && resources.rations < f32::EPSILON {
@@ -108,8 +111,8 @@ pub fn consume_food_system(
     // Collect hungry pop entities first to avoid borrow issues with mut iteration
     let hungry_pops: Vec<Entity> = pop_query
         .iter()
-        .filter(|(_, needs)| needs.hunger < FOOD_HUNGER_THRESHOLD)
-        .map(|(e, _)| e)
+        .filter(|(_, needs, _)| needs.hunger < FOOD_HUNGER_THRESHOLD)
+        .map(|(e, _, _)| e)
         .collect();
 
     for entity in hungry_pops {
@@ -125,8 +128,20 @@ pub fn consume_food_system(
 
         if ate {
             #[allow(clippy::collapsible_if)]
-            if let Ok((_, mut needs)) = pop_query.get_mut(entity) {
+            if let Ok((_, mut needs, mut history_opt)) = pop_query.get_mut(entity) {
                 needs.hunger = (needs.hunger + HUNGER_PER_MEAL).min(1.0);
+
+                // Palette Fatigue Logic
+                // For now, default to Potato as generic food source until item tracking exists
+                let meal_item = ItemType::Potato;
+
+                if let Some(ref mut history) = history_opt {
+                    record_meal(history, meal_item);
+                } else {
+                    let mut history = DietaryHistory::default();
+                    record_meal(&mut history, meal_item);
+                    commands.entity(entity).insert(history);
+                }
             }
         }
     }
@@ -322,5 +337,31 @@ mod tests {
         let food_after = world.resource::<ColonyResources>().food;
 
         assert!(food_after < food_before, "Food should be consumed");
+    }
+
+    #[test]
+    fn test_consume_food_adds_dietary_history() {
+        let mut world = World::new();
+        world.insert_resource(ColonyResources {
+            food: 1.0,
+            ..Default::default()
+        });
+        world.insert_resource(crate::shared::time::SimulationTime::default());
+
+        let pop = world.spawn((
+            Pop,
+            Needs {
+                hunger: 0.3,
+                rest: 0.8,
+                ..Default::default()
+            },
+        )).id();
+
+        world.run_system_once(consume_food_system).unwrap();
+
+        let history = world.get::<DietaryHistory>(pop);
+        assert!(history.is_some(), "DietaryHistory should be added when eating");
+        assert_eq!(history.unwrap().recent_meals.len(), 1);
+        assert_eq!(history.unwrap().recent_meals[0], ItemType::Potato);
     }
 }

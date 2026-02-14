@@ -90,3 +90,4 @@ Features that have been fully implemented and tested.
 - [x] `112` Maintenance Debt — `specs/112-maintenance-debt.md` — completed 2026-10-21
 - [x] `INT-019` Integration: Refinery -> Atmosphere — completed 2026-03-27
 - [x] `107` Biocompatibility — `specs/107-biocompatibility.md` — completed 2026-02-14
+- [x] `114` Palette Fatigue — `specs/114-palette-fatigue.md` — completed 2026-02-14
