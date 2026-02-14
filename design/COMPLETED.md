@@ -75,3 +75,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `071` Structural Integrity — `specs/071-structural-integrity.md` — completed 2026-02-22
 - [x] `112` Maintenance Debt — `specs/112-maintenance-debt.md` — completed 2026-02-23
 - [x] `110` Spontaneous Architecture — `specs/110-spontaneous-architecture.md` — completed 2026-02-23
+- [x] `115` The Overview Effect — `specs/115-observatory-effect.md` — completed 2026-02-14

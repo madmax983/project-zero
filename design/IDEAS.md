@@ -3445,5 +3445,170 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** You build a super-highway for your trade. It becomes so popular that pirates blockade it perfectly. You have to revert to "bush-whacking" through deep space to avoid them.
 
 **Tension:** Efficiency (Lane) vs. Security (Random path).
+## Colony Ship Cannibalization
+
+**Layer:** 1
+
+**Fantasy:** Burning the boats. There is no going back.
+
+**Mechanic:** You start with a "Lander" building that provides initial power/storage. You can "Cannibalize" it to get high-tier resources (Titanium, Uranium) early, but you lose the safety net (and the ability to launch satellites until you rebuild).
+
+**Emergence:** You scrap the ship to build a turret to survive a raid. Now you are truly stuck on the planet until you reinvent spaceflight from scratch.
+
+**Tension:** Early game acceleration (resources) vs. Safety/Utility (the ship's functions).
+
+---
+
+## Volumetric Gas Pockets
+
+**Layer:** 1
+
+**Fantasy:** The air is heavy and wants to kill you.
+
+**Mechanic:** Gases (CO2, Methane) have density. They pool in low-lying areas (mines, valleys) or rise to ceilings. Pops breathing bad gas suffocate or get sick. Ventilation systems are required to pump it out.
+
+**Emergence:** You dig a deep mine. Heavier-than-air CO2 pools at the bottom. The miners pass out silently. You send a rescue team; they pass out too. You have to pump oxygen down just to retrieve the bodies.
+
+**Tension:** Depth (resources) vs. Ventilation infrastructure (cost/power).
+
+---
+
+## Biometric Lockouts
+
+**Layer:** 1
+
+**Fantasy:** Access control. "I'm sorry, Dave, I can't do that."
+
+**Mechanic:** Doors and machines can be assigned to specific Pops or Roles (e.g., "Engineers Only"). Unauthorized pops cannot use them. Hacking or "Override Keys" can bypass this.
+
+**Emergence:** You lock the armory so only soldiers can enter. During a riot, the rioters kill the soldiers. Now no one can get the guns to defend against the alien raid.
+
+**Tension:** Security (internal safety) vs. Accessibility (emergency response).
+
+---
+
+## Prototyping Phase
+
+**Layer:** 1
+
+**Fantasy:** The first time you build a fusion reactor, it shouldn't work perfectly.
+
+**Mechanic:** The first time a complex building is constructed, it is a "Prototype". It has lower stats and higher breakdown chance. After X amount of runtime, the design is "Mastered", and future builds are normal.
+
+**Emergence:** Your prototype Shield Generator fails during the first test. It fries the grid, but the data gathered allows you to build the "Mark II" which saves the colony later.
+
+**Tension:** Rush to build many (bad prototypes) or test one carefully (slow mastery)?
+
+---
+
+## Thermal Bloom
+
+**Layer:** Cross-layer
+
+**Fantasy:** In space, everyone can see you sweat.
+
+**Mechanic:** Layer 1 heat generation creates a "Thermal Signature" on Layer 2. High signature attracts hostile space fauna or pirates. Cooling systems reduce signature but cost power/water.
+
+**Emergence:** You ramp up industry to build a fleet. The massive heat spike acts as a beacon. The enemy fleet arrives before yours is ready.
+
+**Tension:** Industrial output (Heat) vs. Stealth (Safety).
+
+---
+
+## Solar Sailing
+
+**Layer:** 2
+
+**Fantasy:** Riding the light. Elegant, slow, and infinite.
+
+**Mechanic:** Ships with Solar Sails consume no fuel but can only accelerate away from the star (or tack slowly). Movement is vector-based.
+
+**Emergence:** You send a solar sailer to the outer rim. It gets there for free. But it can't come back against the solar wind without a gravity assist. The crew is stranded for years waiting for the planets to align.
+
+**Tension:** Free travel (Sails) vs. Freedom of movement (Engines).
+
+---
+
+## Cryo-Amnesia
+
+**Layer:** 1
+
+**Fantasy:** The brain doesn't like being frozen.
+
+**Mechanic:** Pops waking from long-term cryo (starting pops or ancient finds) have "Memory Gaps". They might lose Skill XP or gain "False Memories" (traits/relationships that aren't real).
+
+**Emergence:** You wake up a "Master Doctor". He has amnesia and thinks he's a cook. You have to retrain him, or let him ruin the soup (and the surgery).
+
+**Tension:** Wake them now (need bodies) vs. Slow thaw (minimize damage).
+
+---
+
+## Diplomatic Wards
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Hostage diplomacy. "Your son will be safe with us... as long as you behave."
+
+**Mechanic:** You host children of rival faction leaders as "Wards" (Students/Guests). If they are happy/educated, relations improve. If they die or are mistreated, instant war.
+
+**Emergence:** The Warlord's son is your ward. He catches the flu and dies. The Warlord burns your sector to the ground.
+
+**Tension:** Leverage (hosting wards) vs. Liability (keeping them safe).
+
+---
+
+## Hyperlane Collapse
+
+**Layer:** 3
+
+**Fantasy:** The roads between stars are washing away.
+
+**Mechanic:** Hyperlanes are not permanent. They can destabilize and sever connections. Systems become isolated "Islands" reachable only by slow warp (decades) or dangerous experimental jump drives.
+
+**Emergence:** Your breadbasket colony is cut off. The empire starves. The isolated colony develops a strange new culture over the 50 years it takes to reconnect.
+
+**Tension:** Centralized trade hub (efficient) vs. Redundant decentralized networks (safe).
+
+---
+
+## Spare Parts Economy
+
+**Layer:** 1
+
+**Fantasy:** You can print a gun, but you can't print the spring.
+
+**Mechanic:** High-tech buildings require "Precursor Parts" (Chips, Cores) that cannot be crafted, only scavenged or traded. Maintaining them consumes these parts.
+
+**Emergence:** You have the plans for a Teleporter, but you need a "Quantum Core". You hear a rumor that a pirate boss has one on his belt buckle. You launch a raid just for the buckle.
+
+**Tension:** Build high-tech (powerful but finite life) vs. Low-tech (sustainable).
+
+---
+
+## Atmospheric Entry
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The 7 minutes of terror.
+
+**Mechanic:** Landing on a planet isn't a loading screen. Dropships take heat damage based on angle/speed. Atmosphere density affects landing zones. Crashes happen.
+
+**Emergence:** You try to land heavy mechs during a storm. The guidance fails. They scatter across the map, some burning up, others landing in the ocean.
+
+**Tension:** Safe, slow descent (vulnerable to AA) vs. Hot drop (risk of crash).
+
+---
+
+## Sub-light Communication
+
+**Layer:** 2
+
+**Fantasy:** The mail packet. News travels at the speed of the ship.
+
+**Mechanic:** If no FTL comms exist, "News" (price data, war declarations) travels via physical courier ships. Remote colonies are months out of date.
+
+**Emergence:** You arrive at a colony to trade, thinking they are allies. You didn't know the war started 3 months ago. They open fire as you dock.
+
+**Tension:** Information lag vs. Network infrastructure cost.
 
 ---

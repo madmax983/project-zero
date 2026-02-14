@@ -200,6 +200,8 @@ pub enum BuildingType {
     PersonalGarden,
     /// Small personal shrine (Spontaneous Architecture).
     PersonalShrine,
+    /// Research center for space observation.
+    Observatory,
 }
 
 impl BuildingType {
@@ -252,6 +254,7 @@ impl BuildingType {
             }
             Self::Tavern | Self::Statue => Some(Tech::SocialStructures),
             Self::Tower => Some(Tech::Masonry),
+            Self::Observatory => Some(Tech::Astronomy),
             _ => None,
         }
     }
@@ -300,6 +303,7 @@ impl BuildingType {
             Self::PersonalShed => "Shed",
             Self::PersonalGarden => "Garden",
             Self::PersonalShrine => "Shrine",
+            Self::Observatory => "Observatory",
         }
     }
 
@@ -330,6 +334,7 @@ impl BuildingType {
             Self::Wall => '#',
             Self::Tower => 'O',
             Self::AncientReactor | Self::Refinery => 'R',
+            Self::Observatory => 'O',
             Self::PersonalShed => 's',
             Self::PersonalGarden => '*',
             Self::PersonalShrine => '☗',
@@ -513,6 +518,12 @@ impl BuildingType {
             },
             Self::PersonalShrine => ColonyResources {
                 stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Observatory => ColonyResources {
+                wood: 20.0,
+                stone: 50.0,
+                metal: 10.0, // Needs advanced materials
                 ..ColonyResources::zeroed()
             },
         }
@@ -920,6 +931,24 @@ fn spawn_building(
                 ShiftSchedule::default(),
             ));
         }
+        BuildingType::Observatory => {
+            entity.insert((
+                crate::layer1::observatory::Observatory,
+                crate::layer1::tech::Library, // Generates research implicitly via logic, but maybe we want Library tag?
+                // Spec says "Pops working here generate Knowledge (similar to Libraries)".
+                // But we have custom logic in process_observe_system.
+                // If we add Library tag, process_research_system might ALSO count it if we use AssignmentType::LibraryWorker.
+                // But we use AssignmentType::ObservatoryWorker.
+                // So adding Library component is probably harmless or useful for "is this a research building?" queries.
+                // However, let's stick to the spec component: Observatory.
+                LightSource {
+                    radius: 6.0,
+                    intensity: 0.6,
+                    color: (135, 206, 235), // Sky Blue
+                },
+                ShiftSchedule::default(),
+            ));
+        }
         BuildingType::PersonalShed
         | BuildingType::PersonalGarden
         | BuildingType::PersonalShrine => {
@@ -1093,7 +1122,17 @@ mod tests {
             BuildingType::Refinery
         );
         assert_eq!(BuildingType::Refinery.next(), BuildingType::Greenhouse);
-        assert_eq!(BuildingType::Greenhouse.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::Greenhouse.next(), BuildingType::PersonalShed);
+        assert_eq!(BuildingType::PersonalShed.next(), BuildingType::PersonalGarden);
+        assert_eq!(
+            BuildingType::PersonalGarden.next(),
+            BuildingType::PersonalShrine
+        );
+        assert_eq!(
+            BuildingType::PersonalShrine.next(),
+            BuildingType::Observatory
+        );
+        assert_eq!(BuildingType::Observatory.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -1226,6 +1265,18 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Greenhouse);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::PersonalShed);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::PersonalGarden);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::PersonalShrine);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Observatory);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);
