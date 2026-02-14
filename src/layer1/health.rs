@@ -57,8 +57,9 @@ pub fn starvation_damage_system(world: &mut World) {
     )>();
     for (needs, mut health, mut memories) in query.iter_mut(world) {
         if needs.hunger <= 0.0 {
-            // 1 damage per tick -> 100 ticks to die
-            health.take_damage(1.0);
+            // Ludwig: Grace Period - Starving should feel urgent but not instant death.
+            // 0.2 damage per tick -> 500 ticks (50s) to die.
+            health.take_damage(0.2);
 
             if let Some(mem) = memories.as_mut() {
                 mem.add(MemoryType::StarvationTrauma, tick);

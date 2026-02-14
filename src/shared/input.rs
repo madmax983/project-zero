@@ -1,8 +1,8 @@
 use bevy_ecs::prelude::*;
 
 use crate::layer1::{
-    BuildMode, ChronicleUiState, DesignationMode, DesignationType, GridPosition, Viewport,
-    try_cancel_designation, try_designate_area, try_place_building,
+    BuildMode, CameraTarget, ChronicleUiState, DesignationMode, DesignationType, GridPosition,
+    Viewport, try_cancel_designation, try_designate_area, try_place_building,
 };
 use crate::platform::input::{GameKeyCode, GameKeyEvent, GameMouseEvent};
 use crate::shared::menu::MenuState;
@@ -128,20 +128,20 @@ fn handle_normal_mode(world: &mut World, key: GameKeyEvent) {
             world.resource_mut::<SimulationTime>().speed = SimSpeed::Faster;
         }
         GameKeyCode::Char('w') | GameKeyCode::Up => {
-            let mut viewport = world.resource_mut::<Viewport>();
-            viewport.y = viewport.y.wrapping_sub(1);
+            let mut target = world.resource_mut::<CameraTarget>();
+            target.y -= 1.0;
         }
         GameKeyCode::Char('s') | GameKeyCode::Down => {
-            let mut viewport = world.resource_mut::<Viewport>();
-            viewport.y = viewport.y.wrapping_add(1);
+            let mut target = world.resource_mut::<CameraTarget>();
+            target.y += 1.0;
         }
         GameKeyCode::Char('a') | GameKeyCode::Left => {
-            let mut viewport = world.resource_mut::<Viewport>();
-            viewport.x = viewport.x.wrapping_sub(1);
+            let mut target = world.resource_mut::<CameraTarget>();
+            target.x -= 1.0;
         }
         GameKeyCode::Char('d') | GameKeyCode::Right => {
-            let mut viewport = world.resource_mut::<Viewport>();
-            viewport.x = viewport.x.wrapping_add(1);
+            let mut target = world.resource_mut::<CameraTarget>();
+            target.x += 1.0;
         }
         GameKeyCode::Char('b') => {
             // Enter build mode
@@ -546,6 +546,7 @@ mod tests {
         world.insert_resource(GameState::Running);
         world.insert_resource(SimulationTime::default());
         world.insert_resource(Viewport::default());
+        world.insert_resource(CameraTarget::default());
         let mut stack = InputContextStack::default();
         stack.push(InputContext::Normal);
         world.insert_resource(stack);
@@ -561,28 +562,25 @@ mod tests {
         assert_eq!(world.resource::<SimulationTime>().speed, SimSpeed::Normal);
 
         route_input(&mut world, key_event(GameKeyCode::Char('w')));
-        assert_eq!(world.resource::<Viewport>().y, -1);
+        assert!((world.resource::<CameraTarget>().y - -1.0).abs() < f32::EPSILON);
     }
 
     #[test]
-    fn test_viewport_overflow_safety() {
+    fn test_camera_target_movement() {
         let mut world = World::new();
         world.insert_resource(GameState::Running);
         let mut stack = InputContextStack::default();
         stack.push(InputContext::Normal);
         world.insert_resource(stack);
-        world.insert_resource(Viewport {
-            x: i32::MAX,
-            y: i32::MIN,
-        });
+        world.insert_resource(CameraTarget { x: 100.0, y: 100.0 });
 
-        // Move right (x += 1) should wrap
+        // Move right (x += 1)
         route_input(&mut world, key_event(GameKeyCode::Char('d')));
-        assert_eq!(world.resource::<Viewport>().x, i32::MIN);
+        assert!((world.resource::<CameraTarget>().x - 101.0).abs() < f32::EPSILON);
 
-        // Move up (y -= 1) should wrap
+        // Move up (y -= 1)
         route_input(&mut world, key_event(GameKeyCode::Char('w')));
-        assert_eq!(world.resource::<Viewport>().y, i32::MAX);
+        assert!((world.resource::<CameraTarget>().y - 99.0).abs() < f32::EPSILON);
     }
 
     #[test]

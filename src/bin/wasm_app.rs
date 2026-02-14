@@ -7,6 +7,7 @@ use ratzilla::WebRenderer;
 use ratzilla::backend::dom::DomBackend;
 use ratzilla::ratatui::Terminal;
 
+use scale::layer1::map::update_camera_smooth;
 use scale::platform::input::{GameKeyEvent, GameMouseEvent};
 use scale::setup::setup_world;
 use scale::shared::input::{route_input, route_mouse_input};
@@ -64,6 +65,7 @@ fn main() -> std::io::Result<()> {
                 }
             }
 
+            update_camera_smooth(&mut world);
             update_render_cache(&mut world);
             render(&world, frame);
         }
