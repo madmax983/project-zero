@@ -34,7 +34,14 @@ impl RoofGrid {
     /// Sets the roof status for a specific tile.
     pub fn set(&mut self, x: i32, y: i32, val: bool) {
         if x >= 0 && y >= 0 && (x as usize) < self.width && (y as usize) < self.height {
-            self.has_roof[(y as usize) * self.width + (x as usize)] = val;
+            let idx = (y as usize)
+                .checked_mul(self.width)
+                .and_then(|i| i.checked_add(x as usize));
+            if let Some(idx) = idx {
+                if idx < self.has_roof.len() {
+                    self.has_roof[idx] = val;
+                }
+            }
         }
     }
 
@@ -44,7 +51,16 @@ impl RoofGrid {
         if x < 0 || y < 0 || (x as usize) >= self.width || (y as usize) >= self.height {
             return false;
         }
-        self.has_roof[(y as usize) * self.width + (x as usize)]
+        let idx = (y as usize)
+            .checked_mul(self.width)
+            .and_then(|i| i.checked_add(x as usize));
+
+        if let Some(idx) = idx {
+            if idx < self.has_roof.len() {
+                return self.has_roof[idx];
+            }
+        }
+        false
     }
 }
 
@@ -65,20 +81,23 @@ pub fn check_stability(world: &mut World, pos: GridPosition) -> bool {
 
     // 3. Check Nearby Rock
     // Optimization: we could use a spiral search or something, but simple box loop is fine for MVP.
-    #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
+
+    // Safely convert map dimensions to i32 bounds, clamping to i32::MAX if larger.
+    // This prevents wrap-around if width/height > i32::MAX (e.g. on 64-bit systems).
+    let map_w = i32::try_from(terrain.width).unwrap_or(i32::MAX);
+    let map_h = i32::try_from(terrain.height).unwrap_or(i32::MAX);
+
     let min_x = pos.x.saturating_sub(MAX_SUPPORT_DIST).max(0);
-    #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
     let max_x = pos
         .x
         .saturating_add(MAX_SUPPORT_DIST)
-        .min(terrain.width as i32 - 1);
-    #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
+        .min(map_w.saturating_sub(1));
+
     let min_y = pos.y.saturating_sub(MAX_SUPPORT_DIST).max(0);
-    #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
     let max_y = pos
         .y
         .saturating_add(MAX_SUPPORT_DIST)
-        .min(terrain.height as i32 - 1);
+        .min(map_h.saturating_sub(1));
 
     for y in min_y..=max_y {
         for x in min_x..=max_x {
@@ -122,9 +141,15 @@ pub fn apply_collapse(world: &mut World, pos: GridPosition) {
         // SAFETY: We checked pos.x and pos.y are non-negative above.
         // We still need to check upper bounds, which is done by idx < len check.
         // However, converting to usize is now safe from wrapping huge negative numbers.
-        let idx = (pos.y as usize) * terrain.width + (pos.x as usize);
-        if idx < terrain.tiles.len() {
-            terrain.tiles[idx] = TerrainType::Rock;
+        // We also use checked arithmetic to prevent overflow wrapping around to a valid index.
+        let idx = (pos.y as usize)
+            .checked_mul(terrain.width)
+            .and_then(|i| i.checked_add(pos.x as usize));
+
+        if let Some(idx) = idx {
+            if idx < terrain.tiles.len() {
+                terrain.tiles[idx] = TerrainType::Rock;
+            }
         }
     }
 
