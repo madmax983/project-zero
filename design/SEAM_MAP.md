@@ -151,3 +151,10 @@ Map of connected and disconnected systems.
 - **Glue added:**
     - Registered `proximity_social_system` in `src/simulation.rs`.
 - **Tests:** `tests/integration/social_proximity.rs` (Integration test verified)
+
+### INT-019: Refinery -> Atmosphere
+- **Date:** 2026-03-27
+- **Systems connected:** `update_atmosphere_system` -> `AtmosphereGrid` <- `Refinery`
+- **Glue added:**
+    - Modified `update_atmosphere_system` in `src/layer1/atmosphere.rs` to include `BuildingType::Refinery` and `AncientReactor`.
+- **Tests:** `tests/integration/pollution_refinery.rs`

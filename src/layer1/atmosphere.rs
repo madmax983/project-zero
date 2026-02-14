@@ -115,6 +115,7 @@ pub fn update_atmosphere_system(world: &mut World) {
     let mut query = world.query::<(&Building, &GridPosition)>();
     for (b, pos) in query.iter(world) {
         let emission = match b.building_type {
+            BuildingType::Refinery | BuildingType::AncientReactor => 0.08,
             BuildingType::Smelter | BuildingType::Generator => 0.05,
             BuildingType::Smithy => 0.02,
             _ => 0.0,
