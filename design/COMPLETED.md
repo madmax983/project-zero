@@ -88,3 +88,4 @@ Features that have been fully implemented and tested.
 - [x] `109` Greenhouses — `specs/109-greenhouses.md` — completed 2026-02-14
 - [x] `112` Maintenance Debt — `specs/112-maintenance-debt.md` — completed 2026-10-21
 - [x] `112` Maintenance Debt — `specs/112-maintenance-debt.md` — completed 2026-10-21
+- [x] `INT-019` Integration: Refinery -> Atmosphere — completed 2026-03-27
