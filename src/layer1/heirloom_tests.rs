@@ -28,7 +28,10 @@ mod tests {
                     current_hp: 1000.0,
                     max_hp: 1000.0,
                 },
-                PowerSource { output: 50.0 }, // High output
+                PowerSource {
+                    output: 50.0,
+                    ..Default::default()
+                }, // High output
                 AncientStructure,
                 GridPosition { x: 0, y: 0 },
             ))

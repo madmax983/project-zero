@@ -115,7 +115,10 @@ fn test_dense_atmosphere_reduces_solar_power() {
             Building {
                 building_type: BuildingType::Generator,
             },
-            PowerSource { output: 10.0 },
+            PowerSource {
+                output: 10.0,
+                ..Default::default()
+            },
         ))
         .id();
 
