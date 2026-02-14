@@ -337,3 +337,7 @@ pub mod palette_fatigue;
 mod structural_integrity_overflow_tests;
 mod structure_maintenance_tests;
 pub use palette_fatigue::*;
+
+/// Spontaneous Architecture system (Spec 110).
+pub mod spontaneous_architecture;
+pub use spontaneous_architecture::*;

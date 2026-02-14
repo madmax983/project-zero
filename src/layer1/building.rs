@@ -194,6 +194,12 @@ pub enum BuildingType {
     Refinery,
     /// Specialized farm that works in Winter.
     Greenhouse,
+    /// Small personal storage shed (Spontaneous Architecture).
+    PersonalShed,
+    /// Small personal garden (Spontaneous Architecture).
+    PersonalGarden,
+    /// Small personal shrine (Spontaneous Architecture).
+    PersonalShrine,
 }
 
 impl BuildingType {
@@ -218,6 +224,7 @@ impl BuildingType {
                 | Self::Grave
                 | Self::TradeDepot
                 | Self::Landfill
+                | Self::PersonalGarden
         )
     }
 
@@ -290,6 +297,9 @@ impl BuildingType {
             Self::AncientFabricator => "Ancient Fabricator",
             Self::Refinery => "Refinery",
             Self::Greenhouse => "Greenhouse",
+            Self::PersonalShed => "Shed",
+            Self::PersonalGarden => "Garden",
+            Self::PersonalShrine => "Shrine",
         }
     }
 
@@ -320,6 +330,9 @@ impl BuildingType {
             Self::Wall => '#',
             Self::Tower => 'O',
             Self::AncientReactor | Self::Refinery => 'R',
+            Self::PersonalShed => 's',
+            Self::PersonalGarden => '*',
+            Self::PersonalShrine => '☗',
         }
     }
 
@@ -488,6 +501,18 @@ impl BuildingType {
                 wood: 10.0,
                 stone: 20.0,
                 metal: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::PersonalShed => ColonyResources {
+                wood: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::PersonalGarden => ColonyResources {
+                wood: 5.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::PersonalShrine => ColonyResources {
+                stone: 10.0,
                 ..ColonyResources::zeroed()
             },
         }
@@ -894,6 +919,11 @@ fn spawn_building(
                 },
                 ShiftSchedule::default(),
             ));
+        }
+        BuildingType::PersonalShed
+        | BuildingType::PersonalGarden
+        | BuildingType::PersonalShrine => {
+            // Logic handled by components added in system
         }
     }
 }
