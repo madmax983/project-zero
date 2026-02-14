@@ -15,5 +15,8 @@ pub mod ghosts;
 /// Experimental miasma feature.
 #[cfg(feature = "nova")]
 pub mod miasma;
+/// Experimental oral tradition feature.
+#[cfg(feature = "nova")]
+pub mod oral_tradition;
 /// Seasonal visual overlays.
 pub mod seasonal_gfx;

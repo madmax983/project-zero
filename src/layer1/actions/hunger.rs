@@ -66,4 +66,3 @@ pub fn handle_arrival(
         }
     }
 }
-

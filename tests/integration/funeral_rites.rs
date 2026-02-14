@@ -1,6 +1,6 @@
-
 #[cfg(test)]
 mod integration_tests {
+    use bevy_ecs::prelude::*;
     use scale::layer1::building::{Building, BuildingType};
     use scale::layer1::funeral::{Corpse, Grave};
     use scale::layer1::health::Health;
@@ -12,7 +12,6 @@ mod integration_tests {
     use scale::layer1::utility_types::UtilityWeights;
     use scale::shared::time::SimulationTime;
     use scale::simulation::run_simulation_tick;
-    use bevy_ecs::prelude::*;
 
     fn setup_world() -> World {
         scale::setup::setup_world()
@@ -107,7 +106,10 @@ mod integration_tests {
         }
 
         // Verify Corpse is gone (buried)
-        assert!(world.get_entity(corpse_entity).is_err(), "Corpse should be buried (despawned)");
+        assert!(
+            world.get_entity(corpse_entity).is_err(),
+            "Corpse should be buried (despawned)"
+        );
 
         // Verify Grave is occupied
         let grave = world.get::<Grave>(grave_entity).unwrap();
@@ -117,7 +119,10 @@ mod integration_tests {
         // Verify Closure memory on undertaker
         let memories = world.get::<Memories>(undertaker).unwrap();
         assert!(
-            memories.items.iter().any(|m| m.memory_type == MemoryType::AttendedFuneral),
+            memories
+                .items
+                .iter()
+                .any(|m| m.memory_type == MemoryType::AttendedFuneral),
             "Undertaker should have AttendedFuneral memory"
         );
     }
@@ -153,7 +158,10 @@ mod integration_tests {
         // Check for SawCorpse memory
         let memories = world.get::<Memories>(witness).unwrap();
         assert!(
-            memories.items.iter().any(|m| m.memory_type == MemoryType::SawCorpse),
+            memories
+                .items
+                .iter()
+                .any(|m| m.memory_type == MemoryType::SawCorpse),
             "Witness should have SawCorpse memory"
         );
     }
