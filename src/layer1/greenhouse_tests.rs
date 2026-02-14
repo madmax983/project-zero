@@ -1,6 +1,5 @@
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::farm::{Farm, produce_food_system};
     use crate::layer1::map::GridPosition;
@@ -8,6 +7,7 @@ mod tests {
     use crate::layer1::resources::ColonyResources;
     use crate::layer1::seasons::{Season, SeasonState};
     use crate::layer1::utility_ai::{ActionType, PopAction};
+    use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
 
     #[test]
@@ -65,6 +65,9 @@ mod tests {
         // Should be expensive
         let cost = BuildingType::Greenhouse.cost(crate::layer1::building::MaterialType::Stone);
         assert!(cost.metal >= 10.0, "Greenhouse should require metal");
-        assert!(cost.stone >= 20.0, "Greenhouse should require stone/glass equivalent");
+        assert!(
+            cost.stone >= 20.0,
+            "Greenhouse should require stone/glass equivalent"
+        );
     }
 }

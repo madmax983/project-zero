@@ -65,11 +65,11 @@ pub fn emotional_contagion_system(
 
 #[cfg(test)]
 mod tests {
-    use super::*;
     use crate::layer1::contagion::{ContagionCooldown, emotional_contagion_system};
     use crate::layer1::map::GridPosition;
     use crate::layer1::morale::Morale;
-    use bevy_ecs::prelude::*;
+    use bevy_ecs::schedule::Schedule;
+    use bevy_ecs::world::World;
 
     #[test]
     fn test_contagion_spreads_negative_mood() {

@@ -401,20 +401,29 @@ pub fn calculate_context_score(
     // Distance factor (closer = better)
     if let Some(target) = target_pos {
         let distance = manhattan_distance(&pop_pos, &target);
-        #[allow(clippy::cast_precision_loss)]
-        let distance_factor = 1.0 / (distance as f32).mul_add(0.1, 1.0);
-        score *= distance_factor.powf(weights.distance_weight);
+        if distance > 0 {
+            #[allow(clippy::cast_precision_loss)]
+            let distance_factor = 1.0 / (distance as f32).mul_add(0.1, 1.0);
+
+            if (weights.distance_weight - 1.0).abs() < f32::EPSILON {
+                score *= distance_factor;
+            } else {
+                score *= distance_factor.powf(weights.distance_weight);
+            }
+        }
     }
 
     // Availability factor (less crowded = better)
     if building_capacity > 0 {
         #[allow(clippy::cast_precision_loss)]
         let availability = 1.0 - (building_occupied as f32 / building_capacity as f32);
-        score *= availability.powf(weights.availability_weight);
-    }
 
-    // Social factor (future - for now just identity)
-    score *= 1.0_f32.powf(weights.social_weight);
+        if (weights.availability_weight - 1.0).abs() < f32::EPSILON {
+            score *= availability;
+        } else {
+            score *= availability.powf(weights.availability_weight);
+        }
+    }
 
     score.clamp(0.0, 1.0)
 }

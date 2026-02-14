@@ -68,3 +68,7 @@ inherits = "release"
 [[bench]]
 name = "benchmarks"
 harness = false
+
+[[bench]]
+name = "utility_ai_bench"
+harness = false
