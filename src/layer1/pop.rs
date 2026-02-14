@@ -23,6 +23,7 @@
 //! * [`UtilityWeights`]: Personality/learning factors.
 
 use super::actions::AssignmentType;
+use super::biocompatibility::Biocompatibility;
 use super::cabin_fever::CabinFever;
 use super::contagion::ContagionCooldown;
 use super::factions::FactionMember;
@@ -256,6 +257,7 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
                     ContagionCooldown::default(),
                     Traits::random(rng),
                     CabinFever::default(),
+                    Biocompatibility::default(),
                 ));
             spawned += 1;
         }

@@ -20,7 +20,8 @@ use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::purity::PurityMap;
 use crate::layer1::utility_types::UtilityWeights;
 use crate::layer1::{
-    ActionType, ColonyResources, Farm, GridPosition, Housing, PopAction, TerrainGrid,
+    ActionType, Biocompatibility, ColonyResources, Farm, GridPosition, Housing, PopAction,
+    TerrainGrid,
     building::Building,
     building::Material,
     building::MaterialType,
@@ -334,11 +335,7 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
     };
 
     // Dynamic height for details section
-    let details_height = if world.get::<Needs>(entity).is_some() {
-        5
-    } else {
-        6
-    };
+    let details_height = 6;
 
     let has_structure = world.get::<Structure>(entity).is_some();
     let has_personality = world.get::<UtilityWeights>(entity).is_some();
@@ -387,10 +384,14 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
     // 4. Needs or Building Details
     let details_area = layout[4];
     if let Some(needs) = world.get::<Needs>(entity) {
-        // Split into two rows: gauges on top, morale below
+        // Split into three rows: gauges on top, morale below, bio below
         let rows = Layout::default()
             .direction(Direction::Vertical)
-            .constraints([Constraint::Length(3), Constraint::Length(1)])
+            .constraints([
+                Constraint::Length(3),
+                Constraint::Length(1),
+                Constraint::Length(1),
+            ])
             .split(details_area);
 
         let needs_layout = Layout::default()
@@ -451,6 +452,25 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
             ])),
             rows[1],
         );
+
+        // Bio-Comp row
+        if let Some(bio) = world.get::<Biocompatibility>(entity) {
+            let bio_percent = (bio.value * 100.0) as u16;
+            let bio_color = if bio.value < 0.4 {
+                Color::Red
+            } else if bio.value < 0.7 {
+                Color::Yellow
+            } else {
+                Color::Green
+            };
+            frame.render_widget(
+                Paragraph::new(Line::from(vec![
+                    Span::raw("Bio-Comp: "),
+                    Span::styled(format!("{bio_percent}%"), Style::default().fg(bio_color)),
+                ])),
+                rows[2],
+            );
+        }
     } else if let Some(housing) = world.get::<Housing>(entity) {
         render_housing_details(frame, details_area, housing);
     } else if let Some(farm) = world.get::<Farm>(entity) {
@@ -795,7 +815,7 @@ mod tests {
         let cells: Vec<String> = buffer
             .content
             .iter()
-            .map(|c| c.symbol().to_string())
+            .map(|c: &ratatui::buffer::Cell| c.symbol().to_string())
             .collect();
         let full_text = cells.join("");
 
@@ -1029,5 +1049,45 @@ mod tests {
 
         assert!(full_text.contains("Rock"));
         assert!(full_text.contains("Purity: 85%"));
+    }
+
+    #[test]
+    fn test_inspector_render_pop_biocompatibility() {
+        use crate::layer1::biocompatibility::Biocompatibility;
+        use crate::layer1::pop::PopName;
+
+        let mut world = World::new();
+        world.insert_resource(Selection::default());
+        let entity = world
+            .spawn((
+                Pop,
+                PopName("Cade".to_string()),
+                GridPosition { x: 2, y: 3 },
+                Needs::default(),
+                Biocompatibility { value: 0.85 },
+            ))
+            .id();
+
+        world.resource_mut::<Selection>().select_entity(entity);
+
+        let backend = TestBackend::new(40, 20);
+        let mut terminal = Terminal::new(backend).unwrap();
+
+        terminal
+            .draw(|f| {
+                render_inspector(f, f.area(), &world);
+            })
+            .unwrap();
+
+        let buffer = terminal.backend().buffer();
+        let cells: Vec<String> = buffer
+            .content
+            .iter()
+            .map(|c| c.symbol().to_string())
+            .collect();
+        let full_text = cells.join("");
+
+        assert!(full_text.contains("Cade"));
+        assert!(full_text.contains("Bio-Comp: 85%"));
     }
 }
