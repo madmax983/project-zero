@@ -17,6 +17,8 @@ Container_Boundary(Simulation, "Simulation Core (Layer 1)") {
     Component(DomainActions, "Domain Actions", "medical.rs, funeral.rs", "Specific Logic")
 
     Component(Pops, "Pops", "pop.rs", "Agents with Needs & Thoughts")
+    Component(Factions, "Factions", "factions.rs", "Guilds & Strikes")
+    Component(SpontaneousArch, "Spontaneous Arch", "spontaneous_architecture.rs", "Agent Building")
     Component(CabinFever, "Cabin Fever System", "cabin_fever.rs", "Tracks Confinement & Crowding")
     Component(Acoustics, "Acoustics (Nova)", "acoustics.rs", "Noise Map & Weather Audio")
     Component(World, "World Entities", "farm.rs, housing.rs", "Interactable Buildings")
@@ -48,9 +50,11 @@ Rel(UtilityOrchestrator, World, "Queries Availability")
 Rel(UtilityOrchestrator, Map, "Calculates Distance")
 
 Rel(Pops, World, "Interacts with")
+Rel(Pops, Factions, "Member Of")
 Rel(Pops, Resources, "Consumes/Produces")
 Rel(Pops, CabinFever, "Accumulates Stress")
 Rel(Pops, Acoustics, "Reacts to Noise")
+Rel(Pops, SpontaneousArch, "Builds")
 
 Rel(MapRender, Shared, "Reads State")
 Rel(MapRender, Map, "Reads Entities")
@@ -115,6 +119,7 @@ sequenceDiagram
             ECS->>ECS: Systems Update (Utility AI, Refining, Acoustics)
         end
 
+        Main->>ECS: update_camera_smooth()
         Main->>UI: render(world, frame)
 
         rect rgb(30, 30, 30)
@@ -243,3 +248,6 @@ Rel(Shared, Events, "Consumes")
 - [ADR 015: Experimental Feature Flags](./adr/015-experimental-feature-flags.md)
 - [ADR 016: Layer 2 Bridge Strategy](./adr/016-layer-2-bridge.md)
 - [ADR 017: Input Context Stack](./adr/017-input-context-stack.md)
+- [ADR 018: Faction System & State Injection](./adr/018-faction-system-architecture.md)
+- [ADR 019: Decoupled Camera Interpolation](./adr/019-decoupled-camera-interpolation.md)
+- [ADR 020: Spontaneous Architecture](./adr/020-spontaneous-architecture.md)
