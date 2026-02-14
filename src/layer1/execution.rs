@@ -864,9 +864,17 @@ fn execute_work_on_designation(
                     }
                     spawn_particle(world, p, '*', Color::White, 10);
                 } else {
-                    // Working: Small shake + Dust
+                    // Working: Dynamic shake + Dust
+                    let intensity = if let Some(prog) =
+                        world.get::<crate::layer1::resources::MiningProgress>(designation_entity)
+                    {
+                        0.05 + (prog.current / prog.max) * 0.15
+                    } else {
+                        0.05
+                    };
+
                     if let Some(mut shake) = world.get_resource_mut::<ScreenShake>() {
-                        shake.trigger(0.05);
+                        shake.trigger(intensity);
                     }
                     spawn_particle(world, p, '.', Color::DarkGray, 3);
                 }
@@ -884,8 +892,16 @@ fn execute_work_on_designation(
                     spawn_particle(world, p, '^', Color::Green, 10);
                 } else {
                     // Working
+                    let intensity = if let Some(prog) =
+                        world.get::<crate::layer1::resources::ForestryProgress>(designation_entity)
+                    {
+                        0.02 + (prog.current / prog.max) * 0.1
+                    } else {
+                        0.02
+                    };
+
                     if let Some(mut shake) = world.get_resource_mut::<ScreenShake>() {
-                        shake.trigger(0.02);
+                        shake.trigger(intensity);
                     }
                     spawn_particle(world, p, '\'', Color::Rgb(139, 69, 19), 3);
                 }

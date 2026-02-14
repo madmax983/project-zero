@@ -239,14 +239,7 @@ mod tests {
         world.despawn(storyteller);
 
         // Setup listener pointing to invalid storyteller
-        let listener = world
-            .spawn((
-                Pop,
-                Listener {
-                    storyteller,
-                },
-            ))
-            .id();
+        let listener = world.spawn((Pop, Listener { storyteller })).id();
 
         // Run system once
         world.run_system_once(perform_story_system).unwrap();
