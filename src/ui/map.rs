@@ -11,8 +11,8 @@ use crate::layer1::fire::Fire;
 use crate::layer1::{
     Anomaly, AnomalyType, BuildMode, Building, BuildingType, Designation, DesignationMode,
     DesignationType, Fauna, FaunaType, Flora, FloraType, ForestryProgress, GridPosition,
-    Mentorship, MiningProgress, Needs, ResourceItem, ResourceType, TerrainGrid, TerrainType,
-    Viewport, Visitor,
+    Material, MaterialType, Mentorship, MiningProgress, Needs, ResourceItem, ResourceType,
+    TerrainGrid, TerrainType, Viewport, Visitor,
 };
 
 /// Represents a renderable entity on the map.
@@ -25,7 +25,7 @@ pub enum RenderEntity {
     /// Includes optional progress (0.0 to 1.0) for active tasks.
     Designation(DesignationType, Option<f32>),
     /// A constructed building (e.g., [`BuildingType::Farm`], [`BuildingType::Housing`]).
-    Building(BuildingType),
+    Building(BuildingType, MaterialType),
     /// A hostile animal (e.g., Wolf, Space Rat).
     Fauna(FaunaType),
     /// Antagonistic flora (e.g., `XenoMoss`).
@@ -72,7 +72,7 @@ impl RenderEntity {
             Self::Particle(_, _) => 7,
             Self::Fire => 6,
             Self::Designation(_, _) => 5,
-            Self::Building(_) => 4,
+            Self::Building(_, _) => 4,
             Self::Fauna(_) | Self::Pop(_, _) => 3,
             Self::Flora(_) => 2,
             Self::Anomaly(_) => 1,
@@ -123,10 +123,11 @@ pub fn update_render_cache(world: &mut World) {
 
             // Check for Building
             if let Some(building) = e.get::<Building>() {
+                let material = e.get::<Material>().map_or(MaterialType::default(), |m| m.0);
                 insert_if_higher_priority(
                     &mut cache.entities,
                     *pos,
-                    RenderEntity::Building(building.building_type),
+                    RenderEntity::Building(building.building_type, material),
                 );
             }
 
@@ -236,8 +237,8 @@ pub struct MapRenderContext<'a, S: BuildHasher> {
     pub viewport: &'a Viewport,
     /// Map of entity positions to their render data.
     pub entities_data: &'a HashMap<GridPosition, RenderEntity, S>,
-    /// Current build mode state (cursor position, selected building, valid placement).
-    pub build_mode: Option<(GridPosition, BuildingType, bool)>,
+    /// Current build mode state (cursor position, selected building, selected material, valid placement).
+    pub build_mode: Option<(GridPosition, BuildingType, MaterialType, bool)>,
     /// Current designation mode state (cursor position, selected tool, valid placement, drag start).
     pub designation_mode: Option<(GridPosition, DesignationType, bool, Option<GridPosition>)>,
     /// The current season, if available (for visual overlays).
@@ -310,15 +311,16 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
             let world_x = ctx.viewport.x + i32::from(screen_x);
 
             // Build mode cursor (highest priority)
-            if let Some((_, selected, can_place)) = ctx
+            if let Some((_, selected, material, can_place)) = ctx
                 .build_mode
-                .filter(|(cursor, _, _)| cursor.x == world_x && cursor.y == world_y)
+                .filter(|(cursor, _, _, _)| cursor.x == world_x && cursor.y == world_y)
             {
                 let bg = if can_place { Color::Green } else { Color::Red };
                 let text = get_building_char(selected);
+                let fg = get_building_color(selected, material);
                 line_spans.push(Span::styled(
                     text.to_string(),
-                    Style::default().fg(Color::White).bg(bg),
+                    Style::default().fg(fg).bg(bg),
                 ));
                 continue;
             }
@@ -398,10 +400,10 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
                         ));
                         continue;
                     }
-                    RenderEntity::Building(b) => {
+                    RenderEntity::Building(b, m) => {
                         line_spans.push(Span::styled(
                             get_building_char(*b).to_string(),
-                            Style::default().fg(get_building_color(*b)),
+                            Style::default().fg(get_building_color(*b, *m)),
                         ));
                         continue;
                     }
@@ -526,7 +528,12 @@ pub fn render_map(frame: &mut Frame, area: Rect, world: &World) {
     let build_mode_cursor = if build_mode.active {
         let can_place =
             crate::layer1::can_place_building(world, build_mode.cursor.x, build_mode.cursor.y);
-        Some((build_mode.cursor, build_mode.selected, can_place))
+        Some((
+            build_mode.cursor,
+            build_mode.selected,
+            build_mode.selected_material,
+            can_place,
+        ))
     } else {
         None
     };
@@ -673,35 +680,47 @@ pub const fn get_building_char(building: BuildingType) -> char {
 ///
 /// ```
 /// use scale::ui::map::get_building_color;
-/// use scale::layer1::BuildingType;
+/// use scale::layer1::{BuildingType, MaterialType};
 /// use ratatui::style::Color;
 ///
-/// assert_eq!(get_building_color(BuildingType::Farm), Color::Rgb(218, 165, 32));
+/// assert_eq!(get_building_color(BuildingType::Farm, MaterialType::default()), Color::Rgb(218, 165, 32));
 /// ```
 #[must_use]
-pub const fn get_building_color(building: BuildingType) -> Color {
-    match building {
-        BuildingType::Housing => Color::Rgb(139, 90, 43), // Brown
-        BuildingType::Farm => Color::Rgb(218, 165, 32),   // Goldenrod
-        BuildingType::Well | BuildingType::Tailor => Color::Blue,
-        BuildingType::Stockpile | BuildingType::Wall | BuildingType::Gate | BuildingType::Tower => {
-            Color::Rgb(169, 169, 169)
-        } // DarkGray
-        BuildingType::Smokehouse => Color::Rgb(200, 200, 200), // Smoky
-        BuildingType::LumberMill => Color::Rgb(205, 133, 63),  // Peru
-        BuildingType::StoneMason => Color::Rgb(119, 136, 153), // LightSlateGray
-        BuildingType::Smelter | BuildingType::AncientReactor => Color::Rgb(255, 69, 0), // Red-Orange
-        BuildingType::Smithy | BuildingType::PowerPole => Color::Rgb(192, 192, 192),    // Silver
-        BuildingType::Tavern | BuildingType::FlowerBed => Color::Magenta,
-        BuildingType::Library | BuildingType::AncientFabricator => Color::Cyan,
-        BuildingType::Plantation => Color::Green,
-        BuildingType::Weaver | BuildingType::Statue => Color::White,
-        BuildingType::Hospital => Color::Red,
-        BuildingType::Landfill => Color::Rgb(105, 105, 105), // DimGray
-        BuildingType::Grave => Color::Rgb(128, 128, 128),    // Gray
-        BuildingType::TradeDepot => Color::Yellow,
-        BuildingType::Generator => Color::Rgb(255, 215, 0), // Gold
-        BuildingType::Refinery => Color::Rgb(100, 200, 255), // Chemical Blue
+pub const fn get_building_color(building: BuildingType, material: MaterialType) -> Color {
+    if building.supports_material() {
+        match material {
+            MaterialType::Wood => Color::Rgb(139, 90, 43),    // Brown
+            MaterialType::Stone => Color::Rgb(169, 169, 169), // DarkGray
+            MaterialType::Metal => Color::Cyan,
+            MaterialType::Gold => Color::Rgb(255, 215, 0), // Gold
+        }
+    } else {
+        match building {
+            BuildingType::Housing => Color::Rgb(139, 90, 43), // Fallback (should be covered above)
+            BuildingType::Farm => Color::Rgb(218, 165, 32),   // Goldenrod
+            BuildingType::Well | BuildingType::Tailor => Color::Blue,
+            BuildingType::Stockpile
+            | BuildingType::Wall
+            | BuildingType::Gate
+            | BuildingType::Tower => {
+                Color::Rgb(169, 169, 169)
+            } // Fallback (should be covered above)
+            BuildingType::Smokehouse => Color::Rgb(200, 200, 200), // Smoky
+            BuildingType::LumberMill => Color::Rgb(205, 133, 63),  // Peru
+            BuildingType::StoneMason => Color::Rgb(119, 136, 153), // LightSlateGray
+            BuildingType::Smelter | BuildingType::AncientReactor => Color::Rgb(255, 69, 0), // Red-Orange
+            BuildingType::Smithy | BuildingType::PowerPole => Color::Rgb(192, 192, 192),    // Silver
+            BuildingType::Tavern | BuildingType::FlowerBed => Color::Magenta,
+            BuildingType::Library | BuildingType::AncientFabricator => Color::Cyan,
+            BuildingType::Plantation => Color::Green,
+            BuildingType::Weaver | BuildingType::Statue => Color::White,
+            BuildingType::Hospital => Color::Red,
+            BuildingType::Landfill => Color::Rgb(105, 105, 105), // DimGray
+            BuildingType::Grave => Color::Rgb(128, 128, 128),    // Gray
+            BuildingType::TradeDepot => Color::Yellow,
+            BuildingType::Generator => Color::Rgb(255, 215, 0), // Gold
+            BuildingType::Refinery => Color::Rgb(100, 200, 255), // Chemical Blue
+        }
     }
 }
 
