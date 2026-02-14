@@ -11,7 +11,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `107` Biocompatibility — `specs/107-biocompatibility.md`
 - [ ] `110` Spontaneous Architecture — `specs/110-spontaneous-architecture.md`
 - [ ] `111` Conveyor Logistics — `specs/111-conveyor-logistics.md`
-- [ ] `112` Maintenance Debt — `specs/112-maintenance-debt.md`
 - [ ] `113` Social Stratification — `specs/113-social-stratification.md`
 
 ## MVP — Layer 2: System Simulation

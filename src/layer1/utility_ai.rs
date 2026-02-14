@@ -65,6 +65,7 @@ use crate::layer1::resources::{ColonyResources, ResourceItem};
 use crate::layer1::science::Anomaly;
 use crate::layer1::social::Tavern;
 use crate::layer1::stockpile::Stockpile;
+use crate::layer1::structure::{DeferMaintenance, Structure};
 use crate::layer1::tech::Library;
 use crate::layer1::unrest::MentalState;
 pub use crate::layer1::utility_types::{
@@ -180,6 +181,12 @@ pub fn evaluate_actions_system(world: &mut World) {
     let mut hospitals_state = world.query::<(Entity, &GridPosition, &Hospital)>();
     let mut corpses_state = world.query::<(Entity, &GridPosition, &Corpse)>();
     let mut graves_state = world.query::<&Grave>();
+    let mut structures_state = world.query::<(
+        Entity,
+        &GridPosition,
+        &Structure,
+        Option<&DeferMaintenance>,
+    )>();
 
     let resources = world.resource::<ColonyResources>().clone();
     let cycle = world
@@ -319,9 +326,12 @@ pub fn evaluate_actions_system(world: &mut World) {
             }
 
             // Evaluate Repair
-            if let Some((utility, target)) =
-                evaluate_repair(&pop_pos, &weights, designations_state.iter(world))
-            {
+            if let Some((utility, target)) = evaluate_repair(
+                &pop_pos,
+                &weights,
+                designations_state.iter(world),
+                structures_state.iter(world),
+            ) {
                 check_best(ActionType::Repair, utility, Some(target));
             }
 

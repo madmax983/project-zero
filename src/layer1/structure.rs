@@ -1,5 +1,7 @@
 #![allow(clippy::float_cmp)]
 use crate::layer1::GridPosition;
+use crate::layer1::building::Building;
+use crate::layer1::building::BuildingType;
 use crate::layer1::building::OccupiedTiles;
 use crate::layer1::fire::Fire;
 use bevy_ecs::prelude::*;
@@ -21,6 +23,13 @@ impl Default for Structure {
         }
     }
 }
+
+/// Component preventing automatic utility AI repairs.
+///
+/// Players can manually designate repairs, but pops will not automatically
+/// maintain this structure.
+#[derive(Component, Debug, Clone, Copy, Default)]
+pub struct DeferMaintenance;
 
 /// Component added to buildings that have been jury-rigged.
 /// They take increased damage from all sources.
@@ -92,52 +101,134 @@ pub fn fire_damage_structure_system(world: &mut World) {
     }
 }
 
+/// System that slowly degrades building HP over time (Entropy).
+pub fn entropy_system(world: &mut World) {
+    let mut query = world.query::<(&mut Structure, Option<&Building>)>();
+
+    for (mut structure, building) in query.iter_mut(world) {
+        // Base decay rate
+        let decay = 0.01; // 0.01 HP per tick.
+
+        // Modifiers based on building type (Walls decay slower?)
+        let modifier = if let Some(b) = building {
+            match b.building_type {
+                BuildingType::Wall | BuildingType::Gate => 0.1,
+                _ => 1.0,
+            }
+        } else {
+            1.0
+        };
+
+        structure.current_hp = (structure.current_hp - decay * modifier).max(0.0);
+    }
+}
+
+/// Calculates the probability of malfunction based on current HP percentage.
+pub fn calculate_malfunction_risk(current: f32, max: f32) -> f32 {
+    if max <= 0.0 {
+        return 0.0;
+    }
+    let percent = current / max;
+    if percent < 0.3 {
+        (0.3 - percent) * 0.1
+    } else {
+        0.0
+    }
+}
+
+/// System that triggers malfunctions in poorly maintained buildings.
+pub fn malfunction_system(world: &mut World) {
+    let mut events = Vec::new();
+    let mut query = world.query::<(Entity, &Structure, &GridPosition, Option<&Building>)>();
+
+    for (entity, structure, pos, _building) in query.iter(world) {
+        let risk = calculate_malfunction_risk(structure.current_hp, structure.max_hp);
+
+        if risk > 0.0 && rand::random::<f32>() < risk {
+            events.push((entity, *pos));
+        }
+    }
+
+    for (_entity, pos) in events {
+        // Trigger malfunction: Spawn Fire
+        world.spawn((
+            crate::layer1::fire::Fire { intensity: 1.0, lifetime: 10 },
+            pos,
+        ));
+
+        // Notification
+        if let Some(mut log) = world.get_resource_mut::<crate::shared::log::MessageLog>() {
+            log.add(format!("Malfunction at ({}, {}) due to lack of maintenance!", pos.x, pos.y));
+        }
+    }
+}
+
 /// Logic to process repair work.
 ///
-/// Increases structure HP and removes designation if fully repaired.
-pub fn process_repair(world: &mut World, designation_entity: Entity, amount: f32) {
-    // 1. Get designation position
-    let Some(pos) = world.get::<GridPosition>(designation_entity).copied() else {
-        return;
+/// Increases structure HP. Removes target if it is a fully completed designation.
+/// Does NOT remove target if it is the structure itself.
+///
+/// Returns `true` if repair is complete (max HP reached).
+pub fn process_repair(world: &mut World, target_entity: Entity, amount: f32) -> bool {
+    // 1. Determine target type and position
+    let is_designation = world.get::<crate::layer1::designation::Designation>(target_entity).is_some();
+    let is_structure = world.get::<Structure>(target_entity).is_some();
+
+    let Some(pos) = world.get::<GridPosition>(target_entity).copied() else {
+        return false;
     };
 
-    // 2. Find structure at that position
-    let mut structure_entity = None;
-    let mut new_hp = 0.0;
-    let mut max_hp = 0.0;
+    // 2. Identify the structure entity to repair
+    let mut structure_to_repair = None;
 
-    // Use a scope to borrow world for query
-    {
-        let mut query = world.query::<(
-            Entity,
-            &GridPosition,
-            &mut Structure,
-            Option<&crate::layer1::heirloom::AncientStructure>,
-        )>();
-        for (entity, p, mut s, ancient_structure) in query.iter_mut(world) {
+    if is_structure {
+        structure_to_repair = Some(target_entity);
+    } else {
+        // Search for structure at this position
+        // Use a scope to borrow world for query
+        let mut query = world.query_filtered::<(Entity, &GridPosition), With<Structure>>();
+        for (entity, p) in query.iter(world) {
             if *p == pos {
-                if ancient_structure.is_some() {
-                    // Cannot repair Ancient Structure! Stop here (structure_entity stays None, forcing despawn below)
-                    break;
-                }
-                s.current_hp = (s.current_hp + amount).min(s.max_hp);
-                new_hp = s.current_hp;
-                max_hp = s.max_hp;
-                structure_entity = Some(entity);
+                structure_to_repair = Some(entity);
                 break;
             }
         }
     }
 
-    // 3. If fully repaired, remove designation
-    if let Some(_entity) = structure_entity {
-        if (new_hp - max_hp).abs() < f32::EPSILON {
-            world.despawn(designation_entity);
+    let Some(structure_entity) = structure_to_repair else {
+        // Structure missing? If designation, remove it.
+        if is_designation {
+            world.despawn(target_entity);
         }
-    } else {
-        // If no structure found (destroyed?), remove designation
-        world.despawn(designation_entity);
+        return true; // Technically complete since target is gone
+    };
+
+    // 3. Apply repair
+    let mut new_hp = 0.0;
+    let mut max_hp = 0.0;
+    let mut ancient = false;
+
+    // Check for AncientStructure prevention
+    if world.get::<crate::layer1::heirloom::AncientStructure>(structure_entity).is_some() {
+        ancient = true;
+    } else if let Some(mut s) = world.get_mut::<Structure>(structure_entity) {
+        s.current_hp = (s.current_hp + amount).min(s.max_hp);
+        new_hp = s.current_hp;
+        max_hp = s.max_hp;
     }
+
+    if ancient {
+        return false; // Cannot repair
+    }
+
+    let fully_repaired = (new_hp - max_hp).abs() < f32::EPSILON;
+
+    // 4. Cleanup designation if fully repaired
+    if is_designation && fully_repaired {
+        world.despawn(target_entity);
+    }
+
+    fully_repaired
 }
 
 /// Instantly repairs a structure but adds fragility.
@@ -324,5 +415,31 @@ mod tests {
             world.get_entity(designation).is_err(),
             "Designation should be removed when fully repaired"
         );
+    }
+
+    #[test]
+    fn test_process_repair_on_direct_structure_does_not_despawn() {
+        let mut world = World::new();
+
+        let building = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Housing,
+                },
+                Structure {
+                    current_hp: 50.0,
+                    max_hp: 100.0,
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
+
+        // Repair building directly (no designation)
+        crate::layer1::structure::process_repair(&mut world, building, 60.0); // Full heal + extra
+
+        // Building should still exist
+        assert!(world.get_entity(building).is_ok(), "Building should not be despawned");
+        let s = world.get::<Structure>(building).unwrap();
+        assert_eq!(s.current_hp, 100.0);
     }
 }

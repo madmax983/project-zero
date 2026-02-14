@@ -86,3 +86,5 @@ Features that have been fully implemented and tested.
 - [x] `106` Resource Purity — `specs/106-resource-purity.md` — completed 2026-03-09
 - [x] `089` Material Provenance — `specs/089-material-provenance.md` — completed 2026-10-24
 - [x] `109` Greenhouses — `specs/109-greenhouses.md` — completed 2026-02-14
+- [x] `112` Maintenance Debt — `specs/112-maintenance-debt.md` — completed 2026-10-21
+- [x] `112` Maintenance Debt — `specs/112-maintenance-debt.md` — completed 2026-10-21
