@@ -77,3 +77,6 @@ Features that have been fully implemented, tested, and merged.
 - [x] `112` Maintenance Debt — `specs/112-maintenance-debt.md` — completed 2026-02-23
 - [x] `110` Spontaneous Architecture — `specs/110-spontaneous-architecture.md` — completed 2026-02-23
 - [x] `115` The Overview Effect — `specs/115-observatory-effect.md` — completed 2026-02-14
+- [x] `011` Named Locations — `specs/011-named-locations.md` — completed 2026-02-24
+- [x] `050` Civil Unrest — `specs/050-civil-unrest.md` — completed 2026-02-24
+- [x] `069` Mentorship System — `specs/069-mentorship-system.md` — completed 2026-02-24
