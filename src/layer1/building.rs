@@ -192,6 +192,8 @@ pub enum BuildingType {
     AncientFabricator,
     /// Refines Ore into Fuel.
     Refinery,
+    /// Specialized farm that works in Winter.
+    Greenhouse,
 }
 
 impl BuildingType {
@@ -287,6 +289,7 @@ impl BuildingType {
             Self::AncientReactor => "Ancient Reactor",
             Self::AncientFabricator => "Ancient Fabricator",
             Self::Refinery => "Refinery",
+            Self::Greenhouse => "Greenhouse",
         }
     }
 
@@ -312,7 +315,7 @@ impl BuildingType {
             Self::Landfill => '%',
             Self::Grave => '†',
             Self::TradeDepot => '$',
-            Self::Generator => 'G',
+            Self::Generator | Self::Greenhouse => 'G',
             Self::PowerPole => '|',
             Self::Wall => '#',
             Self::Tower => 'O',
@@ -481,6 +484,12 @@ impl BuildingType {
                 ..ColonyResources::zeroed()
             },
             Self::AncientReactor | Self::AncientFabricator => ColonyResources::zeroed(),
+            Self::Greenhouse => ColonyResources {
+                wood: 10.0,
+                stone: 20.0,
+                metal: 10.0,
+                ..ColonyResources::zeroed()
+            },
         }
     }
 
@@ -672,7 +681,7 @@ fn spawn_building(
                 },
             ));
         }
-        BuildingType::Farm | BuildingType::Plantation => {
+        BuildingType::Farm | BuildingType::Plantation | BuildingType::Greenhouse => {
             entity.insert((Farm::default(), ShiftSchedule::default()));
         }
         BuildingType::Well => {
@@ -1041,7 +1050,8 @@ mod tests {
             BuildingType::AncientFabricator.next(),
             BuildingType::Refinery
         );
-        assert_eq!(BuildingType::Refinery.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::Refinery.next(), BuildingType::Greenhouse);
+        assert_eq!(BuildingType::Greenhouse.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -1171,6 +1181,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Refinery);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Greenhouse);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

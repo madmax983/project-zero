@@ -9,7 +9,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `059` Soil Fertility — `specs/059-soil-fertility.md`
 - [ ] `077` Emergent Festivals — `specs/077-emergent-festivals.md`
 - [ ] `107` Biocompatibility — `specs/107-biocompatibility.md`
-- [ ] `109` Greenhouses — `specs/109-greenhouses.md`
 - [ ] `110` Spontaneous Architecture — `specs/110-spontaneous-architecture.md`
 - [ ] `111` Conveyor Logistics — `specs/111-conveyor-logistics.md`
 - [ ] `112` Maintenance Debt — `specs/112-maintenance-debt.md`

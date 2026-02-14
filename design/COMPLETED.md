@@ -85,3 +85,4 @@ Features that have been fully implemented and tested.
 - [x] `108` Workplace Hazards — `specs/108-workplace-hazards.md` — completed 2026-03-08
 - [x] `106` Resource Purity — `specs/106-resource-purity.md` — completed 2026-03-09
 - [x] `089` Material Provenance — `specs/089-material-provenance.md` — completed 2026-10-24
+- [x] `109` Greenhouses — `specs/109-greenhouses.md` — completed 2026-02-14
