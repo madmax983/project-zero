@@ -29,6 +29,7 @@ use crate::layer1::{
 };
 use crate::shared::selection::{Selection, SelectionTarget};
 use crate::ui::map::{get_building_color, get_terrain_char, get_terrain_color};
+use crate::layer1::purity::PurityMap;
 
 /// Helper to format `ActionType` into an icon and label.
 const fn format_action_type(action: ActionType) -> (&'static str, &'static str, Color) {
@@ -198,19 +199,49 @@ fn render_tile_inspector(frame: &mut Frame, area: Rect, world: &World, x: i32, y
         return;
     }
 
-    let (name, char, color) = terrain
+    let (name, char, color, terrain_type) = terrain
         .get(x as usize, y as usize)
-        .map_or(("Unknown", "?", Color::Red), |t| {
-            (t.name(), get_terrain_char(t), get_terrain_color(t))
+        .map_or(("Unknown", "?", Color::Red, None), |t| {
+            (t.name(), get_terrain_char(t), get_terrain_color(t), Some(t))
         });
+
+    // Purity Logic for Rocks
+    let purity_line = if terrain_type == Some(crate::layer1::terrain::TerrainType::Rock) {
+        if let Some(map) = world.get_resource::<PurityMap>() {
+            let purity = map.get(x, y);
+            let pct = (purity * 100.0) as u32;
+            let color = if purity > 0.8 {
+                Color::Green
+            } else if purity > 0.4 {
+                Color::Yellow
+            } else {
+                Color::Red
+            };
+            Some(Line::from(vec![
+                Span::raw("Purity: "),
+                Span::styled(format!("{pct}%"), Style::default().fg(color)),
+            ]))
+        } else {
+            None
+        }
+    } else {
+        None
+    };
+
+    let mut constraints = vec![
+        Constraint::Length(1), // Header
+        Constraint::Length(1), // Coords
+    ];
+
+    if purity_line.is_some() {
+        constraints.push(Constraint::Length(1));
+    }
+
+    constraints.push(Constraint::Min(1)); // Visual
 
     let layout = Layout::default()
         .direction(Direction::Vertical)
-        .constraints([
-            Constraint::Length(1), // Header
-            Constraint::Length(1), // Coords
-            Constraint::Min(1),    // Visual
-        ])
+        .constraints(constraints)
         .split(area);
 
     frame.render_widget(
@@ -229,13 +260,20 @@ fn render_tile_inspector(frame: &mut Frame, area: Rect, world: &World, x: i32, y
         layout[1],
     );
 
+    let visual_idx = if let Some(line) = purity_line {
+        frame.render_widget(Paragraph::new(line), layout[2]);
+        3
+    } else {
+        2
+    };
+
     // Big visual representation
     let visual_block = Block::default()
         .borders(Borders::ALL)
         .border_type(BorderType::Rounded)
         .title(" Visual ");
-    let visual_inner = visual_block.inner(layout[2]);
-    frame.render_widget(visual_block, layout[2]);
+    let visual_inner = visual_block.inner(layout[visual_idx]);
+    frame.render_widget(visual_block, layout[visual_idx]);
 
     let visual = Paragraph::new(char)
         .style(Style::default().fg(color))
@@ -941,5 +979,50 @@ mod tests {
         assert!(full_text.contains("Dreamer"));
         assert!(full_text.contains("Dream:"));
         assert!(full_text.contains("flying pigs"));
+    }
+
+    #[test]
+    fn test_inspector_render_rock_purity() {
+        use crate::layer1::terrain::{TerrainType, TerrainGrid};
+        use crate::layer1::purity::PurityMap;
+
+        let mut world = World::new();
+        // Setup Rock tile
+        let mut tiles = vec![TerrainType::Grass; 100];
+        tiles[55] = TerrainType::Rock; // (5, 5)
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
+
+        // Setup PurityMap
+        let mut purity_map = PurityMap::default();
+        purity_map.set_override(5, 5, 0.85);
+        world.insert_resource(purity_map);
+
+        // Select Tile
+        world.insert_resource(Selection::default());
+        world.resource_mut::<Selection>().select_tile(5, 5);
+
+        let backend = TestBackend::new(40, 20);
+        let mut terminal = Terminal::new(backend).unwrap();
+
+        terminal
+            .draw(|f| {
+                render_inspector(f, f.area(), &world);
+            })
+            .unwrap();
+
+        let buffer = terminal.backend().buffer();
+        let cells: Vec<String> = buffer
+            .content
+            .iter()
+            .map(|c| c.symbol().to_string())
+            .collect();
+        let full_text = cells.join("");
+
+        assert!(full_text.contains("Rock"));
+        assert!(full_text.contains("Purity: 85%"));
     }
 }
