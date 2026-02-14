@@ -35,6 +35,17 @@ impl Default for Morale {
     }
 }
 
+impl Morale {
+    /// Adds a temporary mood modifier.
+    pub fn add_modifier(&mut self, label: &str, value: f32, duration: u32) {
+        self.modifiers.push(MoodModifier {
+            label: label.to_string(),
+            value,
+            duration,
+        });
+    }
+}
+
 /// System to decay morale modifiers.
 pub fn morale_decay_system(mut query: Query<&mut Morale>) {
     query.par_iter_mut().for_each(|mut morale| {

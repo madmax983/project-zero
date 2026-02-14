@@ -311,6 +311,11 @@ pub use private_stash::*;
 /// Resource purity system (Spec 106).
 pub mod purity;
 pub use purity::*;
+
+/// Spontaneous Architecture system (Spec 110).
+pub mod spontaneous_architecture;
+pub use spontaneous_architecture::*;
+
 /// Visual particle effects system (Juice).
 pub mod particles;
 pub use particles::*;

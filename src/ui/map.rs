@@ -674,6 +674,9 @@ pub const fn get_building_char(building: BuildingType) -> char {
         BuildingType::AncientReactor | BuildingType::Refinery => 'R',
         BuildingType::AncientFabricator => 'F',
         BuildingType::Greenhouse => 'G',
+        BuildingType::PersonalShed => 's',
+        BuildingType::PersonalGarden => ';',
+        BuildingType::PersonalShrine => '¥',
     }
 }
 
@@ -699,8 +702,8 @@ pub const fn get_building_color(building: BuildingType, material: MaterialType) 
         }
     } else {
         match building {
-            BuildingType::Housing => Color::Rgb(139, 90, 43), // Fallback (should be covered above)
-            BuildingType::Farm => Color::Rgb(218, 165, 32),   // Goldenrod
+            BuildingType::Housing | BuildingType::PersonalShed => Color::Rgb(139, 90, 43), // Fallback & Shed
+            BuildingType::Farm => Color::Rgb(218, 165, 32), // Goldenrod
             BuildingType::Well | BuildingType::Tailor => Color::Blue,
             BuildingType::Stockpile
             | BuildingType::Wall
@@ -717,11 +720,12 @@ pub const fn get_building_color(building: BuildingType, material: MaterialType) 
             BuildingType::Weaver | BuildingType::Statue => Color::White,
             BuildingType::Hospital => Color::Red,
             BuildingType::Landfill => Color::Rgb(105, 105, 105), // DimGray
-            BuildingType::Grave => Color::Rgb(128, 128, 128),    // Gray
+            BuildingType::Grave | BuildingType::PersonalShrine => Color::Rgb(128, 128, 128), // Gray
             BuildingType::TradeDepot => Color::Yellow,
             BuildingType::Generator => Color::Rgb(255, 215, 0), // Gold
             BuildingType::Refinery => Color::Rgb(100, 200, 255), // Chemical Blue
             BuildingType::Greenhouse => Color::Rgb(200, 255, 255), // Glass/Cyan
+            BuildingType::PersonalGarden => Color::Rgb(50, 205, 50), // LimeGreen
         }
     }
 }

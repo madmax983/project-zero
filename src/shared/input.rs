@@ -262,7 +262,7 @@ fn handle_build_mode(world: &mut World, key: GameKeyEvent) {
             let build_mode = world.resource::<BuildMode>();
             let cursor = build_mode.cursor;
             let building_type = build_mode.selected;
-            try_place_building(world, cursor.x, cursor.y, building_type);
+            let _ = try_place_building(world, cursor.x, cursor.y, building_type);
         }
         GameKeyCode::Tab => {
             let mut build_mode = world.resource_mut::<BuildMode>();

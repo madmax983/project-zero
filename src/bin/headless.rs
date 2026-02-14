@@ -397,7 +397,7 @@ fn build_at(world: &mut World, building_type: BuildingType, x: i32, y: i32) {
     }
 
     let success = try_place_building(world, x, y, building_type);
-    if success {
+    if success.is_some() {
         println!("Built {building_type:?} at ({x}, {y})");
     } else {
         // Check why it failed

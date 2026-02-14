@@ -13,7 +13,7 @@
             ..Default::default()
         });
 
-        try_place_building(&mut world, 5, 5, BuildingType::Gate);
+        let _ = try_place_building(&mut world, 5, 5, BuildingType::Gate);
 
         let gate_count = world.query::<&crate::layer1::defense::Gate>().iter(&world).count();
         assert_eq!(gate_count, 1, "Should have added Gate component");

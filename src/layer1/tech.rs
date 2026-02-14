@@ -225,7 +225,7 @@ mod tests {
         // Try to place Smelter (needs MetalWorking)
         let success = try_place_building(&mut world, 5, 5, BuildingType::Smelter);
 
-        assert!(!success);
+        assert!(success.is_none());
     }
 
     #[test]
@@ -254,6 +254,6 @@ mod tests {
         // Try to place Smelter
         let success = try_place_building(&mut world, 5, 5, BuildingType::Smelter);
 
-        assert!(success);
+        assert!(success.is_some());
     }
 }

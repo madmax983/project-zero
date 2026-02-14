@@ -194,6 +194,12 @@ pub enum BuildingType {
     Refinery,
     /// Specialized farm that works in Winter.
     Greenhouse,
+    /// Personal shed built by pops.
+    PersonalShed,
+    /// Personal garden built by pops.
+    PersonalGarden,
+    /// Personal shrine built by pops.
+    PersonalShrine,
 }
 
 impl BuildingType {
@@ -218,6 +224,7 @@ impl BuildingType {
                 | Self::Grave
                 | Self::TradeDepot
                 | Self::Landfill
+                | Self::PersonalGarden
         )
     }
 
@@ -229,8 +236,9 @@ impl BuildingType {
             Self::Statue => 10.0,
             Self::Landfill => -10.0,
             Self::Grave => -2.0, // Graves are slightly spooky
-            Self::FlowerBed | Self::TradeDepot => 5.0, // Trade brings goods and culture
+            Self::FlowerBed | Self::TradeDepot | Self::PersonalGarden => 5.0, // Trade brings goods and culture
             Self::Well => 1.0,
+            Self::PersonalShrine => 2.0,
             Self::Wall | Self::Gate | Self::Tower => 0.0,
             _ => 0.0,
         }
@@ -290,6 +298,9 @@ impl BuildingType {
             Self::AncientFabricator => "Ancient Fabricator",
             Self::Refinery => "Refinery",
             Self::Greenhouse => "Greenhouse",
+            Self::PersonalShed => "Personal Shed",
+            Self::PersonalGarden => "Personal Garden",
+            Self::PersonalShrine => "Personal Shrine",
         }
     }
 
@@ -320,6 +331,9 @@ impl BuildingType {
             Self::Wall => '#',
             Self::Tower => 'O',
             Self::AncientReactor | Self::Refinery => 'R',
+            Self::PersonalShed => 's',
+            Self::PersonalGarden => ';',
+            Self::PersonalShrine => '¥',
         }
     }
 
@@ -490,6 +504,18 @@ impl BuildingType {
                 metal: 10.0,
                 ..ColonyResources::zeroed()
             },
+            Self::PersonalShed => ColonyResources {
+                wood: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::PersonalGarden => ColonyResources {
+                wood: 5.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::PersonalShrine => ColonyResources {
+                stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
         }
     }
 
@@ -634,7 +660,7 @@ fn spawn_building(
     y: i32,
     building_type: BuildingType,
     material: MaterialType,
-) {
+) -> Entity {
     let mut entity = world.spawn((
         Building { building_type },
         GridPosition { x, y },
@@ -895,7 +921,14 @@ fn spawn_building(
                 ShiftSchedule::default(),
             ));
         }
+        BuildingType::PersonalShed
+        | BuildingType::PersonalGarden
+        | BuildingType::PersonalShrine => {
+            // Logic handled by caller (attaching PersonalStructure)
+        }
     }
+
+    entity.id()
 }
 
 /// Helper for spawning buildings in tests/tools.
@@ -905,12 +938,12 @@ pub fn spawn_building_with_material(
     y: i32,
     building_type: BuildingType,
     material: MaterialType,
-) {
-    spawn_building(world, x, y, building_type, material);
+) -> Entity {
+    spawn_building(world, x, y, building_type, material)
 }
 
 /// Attempt to place a building at the given position.
-/// Returns true if successful, false if placement blocked.
+/// Returns `Some(Entity)` if successful, `None` if placement blocked.
 ///
 /// This will:
 /// 1. Check `can_place_building` (bounds, terrain, occupation).
@@ -935,12 +968,17 @@ pub fn spawn_building_with_material(
 /// });
 ///
 /// let placed = try_place_building(&mut world, 5, 5, BuildingType::Housing);
-/// assert!(placed);
+/// assert!(placed.is_some());
 /// ```
-pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: BuildingType) -> bool {
+pub fn try_place_building(
+    world: &mut World,
+    x: i32,
+    y: i32,
+    building_type: BuildingType,
+) -> Option<Entity> {
     if let Err(e) = validate_building_placement(world, x, y) {
         handle_placement_error(world, e);
-        return false;
+        return None;
     }
 
     // Check Tech requirements
@@ -956,7 +994,7 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
             if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
                 log.add(format!("Requires technology: {}", tech.label()));
             }
-            return false;
+            return None;
         }
     }
 
@@ -981,11 +1019,11 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
                 building_type.label()
             ));
         }
-        return false;
+        return None;
     }
 
     // Spawn building
-    spawn_building(world, x, y, building_type, material);
+    let entity = spawn_building(world, x, y, building_type, material);
 
     // Mark tile occupied
     world.resource_mut::<OccupiedTiles>().0.insert((x, y));
@@ -994,7 +1032,7 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
         log.add(format!("Construction started: {}", building_type.label()));
     }
 
-    true
+    Some(entity)
 }
 
 #[cfg(test)]
@@ -1051,7 +1089,16 @@ mod tests {
             BuildingType::Refinery
         );
         assert_eq!(BuildingType::Refinery.next(), BuildingType::Greenhouse);
-        assert_eq!(BuildingType::Greenhouse.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::Greenhouse.next(), BuildingType::PersonalShed);
+        assert_eq!(
+            BuildingType::PersonalShed.next(),
+            BuildingType::PersonalGarden
+        );
+        assert_eq!(
+            BuildingType::PersonalGarden.next(),
+            BuildingType::PersonalShrine
+        );
+        assert_eq!(BuildingType::PersonalShrine.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -1184,6 +1231,15 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Greenhouse);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::PersonalShed);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::PersonalGarden);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::PersonalShrine);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);
@@ -1388,7 +1444,7 @@ mod tests {
 
         // Test Water failure
         let success = try_place_building(&mut world, 5, 5, BuildingType::Housing);
-        assert!(!success);
+        assert!(success.is_none());
         let log = world.resource::<MessageLog>();
         assert_eq!(
             log.messages.back().unwrap().text,
@@ -1397,13 +1453,13 @@ mod tests {
 
         // Test OutOfBounds failure
         let success = try_place_building(&mut world, -1, 5, BuildingType::Housing);
-        assert!(!success);
+        assert!(success.is_none());
         let log = world.resource::<MessageLog>();
         assert_eq!(log.messages.back().unwrap().text, "Failed: Out of bounds");
 
         // Test Success
         let success = try_place_building(&mut world, 0, 0, BuildingType::Housing);
-        assert!(success);
+        assert!(success.is_some());
         let log = world.resource::<MessageLog>();
         assert_eq!(
             log.messages.back().unwrap().text,
@@ -1477,7 +1533,7 @@ mod tests {
         // Attempt placement
         let success = try_place_building(&mut world, 5, 5, BuildingType::Housing);
 
-        assert!(success);
+        assert!(success.is_some());
 
         // Verify deduction
         let resources = world.resource::<ColonyResources>();
@@ -1503,7 +1559,7 @@ mod tests {
         // Attempt placement
         let success = try_place_building(&mut world, 5, 5, BuildingType::Housing);
 
-        assert!(!success);
+        assert!(success.is_none());
 
         // Verify no deduction
         let resources = world.resource::<ColonyResources>();
@@ -1571,7 +1627,7 @@ mod tests {
 
         // Building on tree should be allowed
         let success = try_place_building(&mut world, 5, 5, BuildingType::Housing);
-        assert!(success, "Should be able to build on Tree");
+        assert!(success.is_some(), "Should be able to build on Tree");
 
         // Verify terrain is STILL Tree (current behavior)
         let terrain = world.resource::<TerrainGrid>();

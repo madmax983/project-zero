@@ -27,7 +27,7 @@ fn test_tavern_emits_light() {
 
     // 5. Place Tavern at (10, 10)
     let placed = try_place_building(&mut world, 10, 10, BuildingType::Tavern);
-    assert!(placed, "Should be able to place Tavern");
+    assert!(placed.is_some(), "Should be able to place Tavern");
 
     // 6. Run Lighting Systems Manually (avoid DayNightCycle interference)
     world
@@ -66,7 +66,7 @@ fn test_building_light_affects_pop_speed() {
 
     // 5. Place Tavern at (10, 10)
     let placed = try_place_building(&mut world, 10, 10, BuildingType::Tavern);
-    assert!(placed, "Should be able to place Tavern");
+    assert!(placed.is_some(), "Should be able to place Tavern");
 
     // 6. Spawn Pop near Tavern (11, 10) -> Lit
     let pop_lit = world
