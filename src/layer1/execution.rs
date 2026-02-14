@@ -211,7 +211,10 @@ pub fn cleanup_previous_assignment_system(
                     tavern.visitors.retain(|&v| v != pop_entity);
                 }
             }
-            AssignmentType::LibraryWorker | AssignmentType::Patient | AssignmentType::Funeral => {}
+            AssignmentType::LibraryWorker
+            | AssignmentType::Patient
+            | AssignmentType::Funeral
+            | AssignmentType::ObservatoryWorker => {}
         }
 
         commands.entity(pop_entity).remove::<AssignedTo>();
@@ -497,7 +500,9 @@ fn assign_pop(
 
     // If this assignment counts as a Job (persistent employment), update the Job component.
     match assignment_type {
-        AssignmentType::FarmWorker | AssignmentType::LibraryWorker => {
+        AssignmentType::FarmWorker
+        | AssignmentType::LibraryWorker
+        | AssignmentType::ObservatoryWorker => {
             entity_cmds.insert(Job {
                 workplace: target_entity,
                 job_type: assignment_type,

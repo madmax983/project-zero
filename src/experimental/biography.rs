@@ -74,6 +74,7 @@ pub fn biography_monitor_system(
             AssignmentType::LibraryWorker => format!("Started research at {target_name}."),
             AssignmentType::Patient => format!("Admitted to {target_name} for treatment."),
             AssignmentType::Funeral => format!("Attending funeral at {target_name}."),
+            AssignmentType::ObservatoryWorker => format!("Observing the cosmos at {target_name}."),
         };
 
         // Avoid duplicate consecutive events

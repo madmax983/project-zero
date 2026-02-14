@@ -6,7 +6,7 @@ use std::fs;
 use std::path::Path;
 
 /// A segment of a generated narrative.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum NarrativeSegment {
     /// Static text from the template.
     Text(String),
@@ -24,9 +24,9 @@ pub enum NarrativeSegment {
 impl std::fmt::Display for NarrativeSegment {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            NarrativeSegment::Text(s) => write!(f, "{s}"),
-            NarrativeSegment::Slot { value, .. } => write!(f, "{value}"),
-            NarrativeSegment::Error(s) => write!(f, "[ERROR: {s}]"),
+            Self::Text(s) => write!(f, "{s}"),
+            Self::Slot { value, .. } => write!(f, "{value}"),
+            Self::Error(s) => write!(f, "[ERROR: {s}]"),
         }
     }
 }
@@ -350,7 +350,7 @@ impl NarrativeGenerator {
     /// Returns an error if the template ID is not found or if the template has no patterns.
     pub fn generate(&self, template_id: &str, context: &NarrativeContext) -> Result<String> {
         let segments = self.generate_structured(template_id, context)?;
-        Ok(segments.iter().map(|s| s.to_string()).collect())
+        Ok(segments.iter().map(std::string::ToString::to_string).collect())
     }
 
     /// Generate a structured story from a template ID and context.

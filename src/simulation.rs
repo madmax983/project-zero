@@ -41,8 +41,9 @@ use crate::layer1::{
     inspector::{inspector_report_system, observe_inspector_system, spawn_inspector_system},
     inspector_outcome_bridge_system, malfunction_system, memory_decay_system,
     modify_affinity_system, movement_system, natural_death_system, notification_expiration_system,
-    pop_death_chronicle_bridge, process_refining_system, process_research_system,
-    process_scan_system, process_start_plan_system, produce_food_system, regrowth_system,
+    pop_death_chronicle_bridge, process_observe_system, process_refining_system,
+    process_research_system, process_scan_system, process_start_plan_system, produce_food_system,
+    regrowth_system,
     restore_leisure_system, restore_rest_in_housing_system, sleepwalk_end_system,
     social::old_guard::{
         apply_founder_benefits_system, apply_mood_modifiers_system,
@@ -155,6 +156,7 @@ pub fn build_simulation_schedule() -> Schedule {
         produce_food_system.after(work_execution_system),
         process_refining_system.after(work_execution_system),
         process_research_system.after(work_execution_system),
+        process_observe_system.after(work_execution_system),
         regrowth_system.after(work_execution_system),
         flora_spread_system.after(work_execution_system),
         restore_rest_in_housing_system

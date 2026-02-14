@@ -63,4 +63,6 @@ pub enum AssignmentType {
     Patient,
     /// Burying a corpse.
     Funeral,
+    /// Working at an observatory.
+    ObservatoryWorker,
 }
