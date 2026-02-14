@@ -5,6 +5,32 @@ use std::collections::HashMap;
 use std::fs;
 use std::path::Path;
 
+/// A segment of a generated narrative.
+#[derive(Debug, Clone, PartialEq)]
+pub enum NarrativeSegment {
+    /// Static text from the template.
+    Text(String),
+    /// A value filled into a slot (key, value).
+    Slot {
+        /// The key of the slot (e.g. "NAME").
+        key: String,
+        /// The value filled into the slot.
+        value: String,
+    },
+    /// An error or missing value.
+    Error(String),
+}
+
+impl std::fmt::Display for NarrativeSegment {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            NarrativeSegment::Text(s) => write!(f, "{s}"),
+            NarrativeSegment::Slot { value, .. } => write!(f, "{value}"),
+            NarrativeSegment::Error(s) => write!(f, "[ERROR: {s}]"),
+        }
+    }
+}
+
 /// Context for story generation, holding values for slots.
 #[derive(Debug, Default, Clone)]
 pub struct NarrativeContext {
@@ -323,6 +349,22 @@ impl NarrativeGenerator {
     /// # Errors
     /// Returns an error if the template ID is not found or if the template has no patterns.
     pub fn generate(&self, template_id: &str, context: &NarrativeContext) -> Result<String> {
+        let segments = self.generate_structured(template_id, context)?;
+        Ok(segments.iter().map(|s| s.to_string()).collect())
+    }
+
+    /// Generate a structured story from a template ID and context.
+    ///
+    /// Returns a vector of [`NarrativeSegment`]s, which preserves the distinction
+    /// between static text and filled slots for UI rendering.
+    ///
+    /// # Errors
+    /// Returns an error if the template ID is not found or if the template has no patterns.
+    pub fn generate_structured(
+        &self,
+        template_id: &str,
+        context: &NarrativeContext,
+    ) -> Result<Vec<NarrativeSegment>> {
         let template = self
             .templates
             .get(template_id)
@@ -334,9 +376,9 @@ impl NarrativeGenerator {
             .choose(&mut rand::thread_rng())
             .ok_or_else(|| anyhow::anyhow!("Template {template_id} has no patterns"))?;
 
-        // We'll iterate through the string and build the output
-        let mut output = String::new();
+        let mut segments = Vec::new();
         let mut char_iter = pattern.chars().peekable();
+        let mut current_text = String::new();
 
         while let Some(c) = char_iter.next() {
             if c == '[' {
@@ -355,6 +397,12 @@ impl NarrativeGenerator {
                 }
 
                 if closed {
+                    // Flush accumulated text
+                    if !current_text.is_empty() {
+                        segments.push(NarrativeSegment::Text(current_text));
+                        current_text = String::new();
+                    }
+
                     // Check for optional marker '?' at end of slot name
                     let is_optional = slot_name.ends_with('?');
                     let key = if is_optional {
@@ -365,35 +413,44 @@ impl NarrativeGenerator {
 
                     // Resolve slot
                     if let Some(val) = context.get(key) {
-                        output.push_str(val);
+                        segments.push(NarrativeSegment::Slot {
+                            key: key.to_string(),
+                            value: val.clone(),
+                        });
                     } else if let Some(fragment) = self.fragments.get(key) {
                         // Pick random fragment
                         if let Some(option) = fragment.options.choose(&mut rand::thread_rng()) {
-                            output.push_str(option);
+                            segments.push(NarrativeSegment::Slot {
+                                key: key.to_string(),
+                                value: option.clone(),
+                            });
                         } else {
-                            output.push_str("[MISSING_FRAGMENT_OPTIONS:");
-                            output.push_str(key);
-                            output.push(']');
+                            segments.push(NarrativeSegment::Error(format!(
+                                "MISSING_FRAGMENT_OPTIONS:{key}"
+                            )));
                         }
                     } else {
                         // Not found in context or fragments
                         if !is_optional {
-                            output.push('[');
-                            output.push_str(&slot_name);
-                            output.push(']');
+                            segments.push(NarrativeSegment::Error(slot_name.clone()));
                         }
                     }
                 } else {
                     // Malformed bracket, just push what we collected
-                    output.push('[');
-                    output.push_str(&slot_name);
+                    current_text.push('[');
+                    current_text.push_str(&slot_name);
                 }
             } else {
-                output.push(c);
+                current_text.push(c);
             }
         }
 
-        Ok(output)
+        // Push remaining text
+        if !current_text.is_empty() {
+            segments.push(NarrativeSegment::Text(current_text));
+        }
+
+        Ok(segments)
     }
 }
 
@@ -522,3 +579,41 @@ mod tests {
         assert!(err.to_string().contains("Directory not found"));
     }
 }
+
+    #[test]
+    fn test_generate_structured() {
+        let mut generator = NarrativeGenerator::default();
+        generator.add_template(
+            "STRUCT".to_string(),
+            vec!["Hello [NAME], welcome to [PLACE].".to_string()],
+        );
+
+        let mut ctx = NarrativeContext::new();
+        ctx.insert("NAME", "Mosaic");
+        ctx.insert("PLACE", "Codebase");
+
+        let segments = generator.generate_structured("STRUCT", &ctx).unwrap();
+
+        assert_eq!(segments.len(), 5);
+        assert_eq!(segments[0], NarrativeSegment::Text("Hello ".to_string()));
+        assert_eq!(
+            segments[1],
+            NarrativeSegment::Slot {
+                key: "NAME".to_string(),
+                value: "Mosaic".to_string()
+            }
+        );
+        assert_eq!(segments[2], NarrativeSegment::Text(", welcome to ".to_string()));
+        assert_eq!(
+            segments[3],
+            NarrativeSegment::Slot {
+                key: "PLACE".to_string(),
+                value: "Codebase".to_string()
+            }
+        );
+        assert_eq!(segments[4], NarrativeSegment::Text(".".to_string()));
+
+        // Test string conversion via generate (legacy)
+        let full_text = generator.generate("STRUCT", &ctx).unwrap();
+        assert_eq!(full_text, "Hello Mosaic, welcome to Codebase.");
+    }
