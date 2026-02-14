@@ -97,6 +97,8 @@ pub mod seasons;
 pub mod social;
 /// Spoilage and decay mechanics.
 pub mod spoilage;
+/// Spontaneous Architecture system (Spec 110).
+pub mod spontaneous_architecture;
 /// Resource storage limits and stockpile buildings.
 pub mod stockpile;
 /// Structural integrity (cave-ins and supports).
@@ -161,6 +163,7 @@ pub use science::*;
 pub use seasons::*;
 pub use social::*;
 pub use spoilage::*;
+pub use spontaneous_architecture::*;
 pub use stockpile::*;
 pub use structural_integrity::*;
 pub use structure::*;
@@ -331,9 +334,9 @@ pub use biocompatibility::*;
 mod fuel_industry_tests;
 #[cfg(test)]
 mod greenhouse_tests;
-mod structure_maintenance_tests;
-#[cfg(test)]
-mod structural_integrity_overflow_tests;
 /// Palette fatigue system (Spec 114).
 pub mod palette_fatigue;
+#[cfg(test)]
+mod structural_integrity_overflow_tests;
+mod structure_maintenance_tests;
 pub use palette_fatigue::*;

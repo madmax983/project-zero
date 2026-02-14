@@ -194,6 +194,12 @@ pub enum BuildingType {
     Refinery,
     /// Specialized farm that works in Winter.
     Greenhouse,
+    /// Personal structure: Shed (Storage/Hobby).
+    PersonalShed,
+    /// Personal structure: Garden (Beauty/Relaxation).
+    PersonalGarden,
+    /// Personal structure: Shrine (Spiritual/Meditation).
+    PersonalShrine,
 }
 
 impl BuildingType {
@@ -218,6 +224,7 @@ impl BuildingType {
                 | Self::Grave
                 | Self::TradeDepot
                 | Self::Landfill
+                | Self::PersonalGarden
         )
     }
 
@@ -229,8 +236,8 @@ impl BuildingType {
             Self::Statue => 10.0,
             Self::Landfill => -10.0,
             Self::Grave => -2.0, // Graves are slightly spooky
-            Self::FlowerBed | Self::TradeDepot => 5.0, // Trade brings goods and culture
-            Self::Well => 1.0,
+            Self::FlowerBed | Self::TradeDepot | Self::PersonalGarden => 5.0,
+            Self::Well | Self::PersonalShed | Self::PersonalShrine => 1.0,
             Self::Wall | Self::Gate | Self::Tower => 0.0,
             _ => 0.0,
         }
@@ -290,6 +297,9 @@ impl BuildingType {
             Self::AncientFabricator => "Ancient Fabricator",
             Self::Refinery => "Refinery",
             Self::Greenhouse => "Greenhouse",
+            Self::PersonalShed => "Shed",
+            Self::PersonalGarden => "Garden",
+            Self::PersonalShrine => "Shrine",
         }
     }
 
@@ -305,11 +315,11 @@ impl BuildingType {
             Self::LumberMill => 'L',
             Self::StoneMason => 'M',
             Self::Smelter => 'S',
-            Self::Smithy | Self::Tavern | Self::Tailor => 'T',
+            Self::Smithy | Self::Tavern | Self::Tailor | Self::PersonalShrine => 'T',
             Self::Library => '?', // Placeholder
             Self::Plantation => 'P',
             Self::Weaver => 'W',
-            Self::FlowerBed => '*',
+            Self::FlowerBed | Self::PersonalGarden => '*',
             Self::Statue => 'I',
             Self::Hospital | Self::Gate => '+',
             Self::Landfill => '%',
@@ -320,6 +330,7 @@ impl BuildingType {
             Self::Wall => '#',
             Self::Tower => 'O',
             Self::AncientReactor | Self::Refinery => 'R',
+            Self::PersonalShed => 's',
         }
     }
 
@@ -328,6 +339,18 @@ impl BuildingType {
     #[allow(clippy::match_same_arms, clippy::too_many_lines)]
     pub const fn cost(&self, material: MaterialType) -> ColonyResources {
         match self {
+            Self::PersonalShed => ColonyResources {
+                wood: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::PersonalGarden => ColonyResources {
+                wood: 5.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::PersonalShrine => ColonyResources {
+                stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
             Self::Wall => match material {
                 MaterialType::Wood => ColonyResources {
                     wood: 5.0,
@@ -627,8 +650,9 @@ impl ShiftSchedule {
     }
 }
 
+/// Spawns a building entity with the appropriate components.
 #[allow(clippy::too_many_lines, clippy::match_same_arms)]
-fn spawn_building(
+pub fn spawn_building(
     world: &mut World,
     x: i32,
     y: i32,
@@ -894,6 +918,11 @@ fn spawn_building(
                 },
                 ShiftSchedule::default(),
             ));
+        }
+        BuildingType::PersonalShed
+        | BuildingType::PersonalGarden
+        | BuildingType::PersonalShrine => {
+            // Logic handled by caller who attaches PersonalStructure
         }
     }
 }

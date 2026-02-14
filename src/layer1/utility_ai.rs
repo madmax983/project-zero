@@ -354,7 +354,11 @@ pub fn evaluate_single_pop(
 /// # Performance Note
 /// This system avoids per-Pop heap allocations by using a single-pass "best so far"
 /// tracker instead of collecting a `Vec<ActionCandidate>`.
-#[allow(clippy::too_many_lines, clippy::collapsible_if)]
+#[allow(
+    clippy::too_many_lines,
+    clippy::collapsible_if,
+    clippy::missing_panics_doc
+)]
 pub fn evaluate_actions_system(world: &mut World) {
     let config = world.resource::<UtilityConfig>().clone();
 

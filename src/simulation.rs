@@ -48,12 +48,16 @@ use crate::layer1::{
         apply_founder_benefits_system, apply_mood_modifiers_system,
         check_generational_friction_system, mood_lifecycle_system,
     },
-    spoilage_system, starvation_damage_system, taboo_event_system, theft_system,
-    track_plan_outcomes_system, update_action_timer_system, update_cabin_fever_system,
-    update_erosion_system, update_lighting_system, update_noise_system,
-    update_resource_caps_system, update_screen_shake_system, update_taboo_duration_system,
-    update_water_system, update_weather_system, vermin_growth_system, vermin_morale_system,
-    waste_pollution_bridge, work_execution_system,
+    spoilage_system,
+    spontaneous_architecture::{
+        check_spontaneous_build_system, demolish_personal_structure_system,
+    },
+    starvation_damage_system, taboo_event_system, theft_system, track_plan_outcomes_system,
+    update_action_timer_system, update_cabin_fever_system, update_erosion_system,
+    update_lighting_system, update_noise_system, update_resource_caps_system,
+    update_screen_shake_system, update_taboo_duration_system, update_water_system,
+    update_weather_system, vermin_growth_system, vermin_morale_system, waste_pollution_bridge,
+    work_execution_system,
 };
 use crate::shared::time::SimulationTime;
 
@@ -162,6 +166,7 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(update_noise_system),
         restore_leisure_system.after(work_execution_system),
         apply_mood_modifiers_system.after(restore_leisure_system),
+        check_spontaneous_build_system.after(work_execution_system),
     ));
 
     schedule.add_systems((
@@ -299,6 +304,7 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer1::unrest::check_mental_break_system),
         crate::layer1::unrest::recover_mental_break_system.after(decay_needs_system),
         check_generational_friction_system.after(decay_needs_system),
+        demolish_personal_structure_system.after(death_system),
     ));
 
     schedule.add_systems((

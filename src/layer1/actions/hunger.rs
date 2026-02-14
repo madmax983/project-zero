@@ -3,7 +3,9 @@ use crate::layer1::farm::Farm;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
 use crate::layer1::pop::Job;
-use crate::layer1::utility_types::{ActionEvaluator, ActionType, PopEvalData, UtilityWeights, WorldContext};
+use crate::layer1::utility_types::{
+    ActionEvaluator, ActionType, PopEvalData, UtilityWeights, WorldContext,
+};
 use crate::layer1::utility_types::{
     calculate_context_score, calculate_success_modifier, need_response_curve,
 };
@@ -68,9 +70,10 @@ pub fn handle_arrival(
     }
 }
 
-/// Evaluator for the SatisfyHunger action.
+/// Evaluator for the `SatisfyHunger` action.
 pub struct HungerEvaluator {
-    system_state: SystemState<Query<'static, 'static, (Entity, &'static GridPosition, &'static Farm)>>,
+    system_state:
+        SystemState<Query<'static, 'static, (Entity, &'static GridPosition, &'static Farm)>>,
 }
 
 impl HungerEvaluator {
@@ -91,12 +94,9 @@ impl ActionEvaluator for HungerEvaluator {
     ) -> Option<(ActionType, f32, Option<Entity>)> {
         let farms_query = self.system_state.get(world);
 
-        if let Some((utility, target)) = evaluate_satisfy_hunger(
-            &data.pos,
-            &data.needs,
-            &data.weights,
-            farms_query.iter(),
-        ) {
+        if let Some((utility, target)) =
+            evaluate_satisfy_hunger(&data.pos, &data.needs, &data.weights, farms_query.iter())
+        {
             return Some((ActionType::SatisfyHunger, utility, Some(target)));
         }
 

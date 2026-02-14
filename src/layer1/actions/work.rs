@@ -1,6 +1,8 @@
 use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::map::GridPosition;
-use crate::layer1::utility_types::{ActionEvaluator, ActionType, PopEvalData, UtilityWeights, WorldContext};
+use crate::layer1::utility_types::{
+    ActionEvaluator, ActionType, PopEvalData, UtilityWeights, WorldContext,
+};
 use crate::layer1::utility_types::{calculate_context_score, calculate_success_modifier};
 use bevy_ecs::prelude::*;
 use bevy_ecs::system::SystemState;
@@ -52,7 +54,8 @@ pub fn evaluate_work<'a>(
 
 /// Evaluator for the Work action.
 pub struct WorkEvaluator {
-    system_state: SystemState<Query<'static, 'static, (Entity, &'static GridPosition, &'static Designation)>>,
+    system_state:
+        SystemState<Query<'static, 'static, (Entity, &'static GridPosition, &'static Designation)>>,
 }
 
 impl WorkEvaluator {
@@ -88,11 +91,9 @@ impl ActionEvaluator for WorkEvaluator {
 
         let designations_query = self.system_state.get(world);
 
-        if let Some((utility, target)) = evaluate_work(
-            &data.pos,
-            &data.weights,
-            designations_query.iter(),
-        ) {
+        if let Some((utility, target)) =
+            evaluate_work(&data.pos, &data.weights, designations_query.iter())
+        {
             let penalty =
                 crate::layer1::taboo::evaluate_taboo_penalty(ActionType::Work, context.taboo);
             return Some((ActionType::Work, utility + penalty, Some(target)));
