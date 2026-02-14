@@ -1174,3 +1174,98 @@
 **Code reference:** `PlanetaryTrait::LowGravity`
 **Usage:**
 - "Moving with the float."
+
+## Private Stashes
+
+### squirrel-hole / hidey-hole
+**Replaces:** private stash, hidden inventory
+**Code reference:** `PrivateStash` component
+**Usage:**
+- "He has a squirrel-hole under the bed."
+- "Empty the hidey-holes."
+
+### hoarding
+**Replaces:** stealing, hiding resources
+**Code reference:** `ActionType::Stash`
+**Usage:**
+- "Stop the hoarding."
+- "Hoarding is theft."
+
+## Fuel Industry
+
+### juice / burn
+**Replaces:** fuel resource
+**Code reference:** `ColonyResources.fuel`
+**Usage:**
+- "We need more juice."
+- "The burn is clean."
+
+### liquid-fire
+**Replaces:** refined fuel
+**Code reference:** `ResourceType::Fuel`
+**Usage:**
+- "Careful with the liquid-fire."
+- "Tanks full of liquid-fire."
+
+## Resource Purity
+
+### star-blood
+**Replaces:** high purity ore
+**Code reference:** `Purity::High`
+**Usage:**
+- "This vein is pure star-blood."
+- "Nothing but star-blood here."
+
+### dross / slag
+**Replaces:** low purity ore, waste
+**Code reference:** `Purity::Low`
+**Usage:**
+- "Mining dross."
+- "Too much slag in the mix."
+
+## Jury-Rigging
+
+### patch-job
+**Replaces:** jury-rigged repair
+**Code reference:** `JuryRigged` component
+**Usage:**
+- "It's just a patch-job."
+- "Will the patch-job hold?"
+
+### spit-and-wire
+**Replaces:** temporary fix materials
+**Code reference:** `ActionType::JuryRig`
+**Usage:**
+- "Fixed with spit-and-wire."
+- "Holding together on spit-and-wire."
+
+## Greenhouses
+
+### glass-garden
+**Replaces:** greenhouse building
+**Code reference:** `BuildingType::Greenhouse`
+**Usage:**
+- "Walking in the glass-garden."
+- "The glass-garden is humid."
+
+### life-box
+**Replaces:** hydroponics bay
+**Code reference:** `BuildingType::Hydroponics`
+**Usage:**
+- "Checking the life-box."
+- "Green in the life-box."
+
+## Material Provenance
+
+### stone-memory
+**Replaces:** material history
+**Code reference:** `Provenance` component
+**Usage:**
+- "This wall has stone-memory."
+- "Reading the stone-memory."
+
+### blood-iron
+**Replaces:** recycled metal from conflict/death
+**Usage:**
+- "Forged from blood-iron."
+- "Do not use blood-iron for the cradle."

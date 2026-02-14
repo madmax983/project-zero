@@ -1048,3 +1048,83 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "We feel it now. [YEAR]. This world has [QUIRK_NAME]."
 - "[YEAR]: The nature of the planet is clear. It is [QUIRK_NAME]."
 - "Adapting to [QUIRK_NAME]. [YEAR]. [COLONY] endures."
+
+---
+
+## Private Stash Templates
+
+### STASH_FOUND
+**Slots:** [COLONY], [YEAR], [NAME], [STASH_LOCATION], [STASH_CONTAINER], [RESOURCE]
+
+- "We found [NAME]'s secret. [YEAR]. A [STASH_CONTAINER] [STASH_LOCATION]. It held [RESOURCE]."
+- "[YEAR]: Hoarding discovered. [NAME] hid [RESOURCE] in [STASH_CONTAINER]."
+- "A [STASH_CONTAINER] found [STASH_LOCATION]. [NAME] was keeping [RESOURCE] for themselves. [YEAR]."
+
+---
+
+## Fuel & Industry Templates
+
+### FUEL_PRODUCED
+**Slots:** [COLONY], [YEAR], [FUEL_TYPE], [FUEL_SOURCE]
+
+- "The tanks are full. [YEAR]. [FUEL_TYPE] from [FUEL_SOURCE]."
+- "[YEAR]: We have [FUEL_TYPE]. The [FUEL_SOURCE] yields power."
+- "Energy secured. [FUEL_TYPE] production begins at [COLONY]. [YEAR]."
+
+### REFINERY_ACCIDENT
+**Slots:** [COLONY], [YEAR], [REFINERY_NAME], [INJURY_TYPE]
+
+- "Flash-fire at the [REFINERY_NAME]. [YEAR]. [INJURY_TYPE] reported."
+- "[YEAR]: The mix was volatile. [REFINERY_NAME] breach. [INJURY_TYPE]."
+- "Danger in the works. [REFINERY_NAME] accident. [YEAR]. [INJURY_TYPE]."
+
+---
+
+## Purity Templates
+
+### PURITY_ANALYSIS
+**Slots:** [COLONY], [YEAR], [RESOURCE], [PURITY_LEVEL], [IMPURITY_TYPE]
+
+- "Survey complete. [YEAR]. The [RESOURCE] is [PURITY_LEVEL]. Signs of [IMPURITY_TYPE]."
+- "[YEAR]: [RESOURCE] quality report. It is [PURITY_LEVEL]. [IMPURITY_TYPE] detected."
+- "Digging through [IMPURITY_TYPE] to find the [RESOURCE]. It is [PURITY_LEVEL]. [YEAR]."
+
+---
+
+## Jury-Rigging Templates
+
+### JURY_RIG_EVENT
+**Slots:** [COLONY], [YEAR], [NAME], [BUILDING_TYPE], [JURY_RIG_METHOD], [JURY_RIG_MATERIAL]
+
+- "[NAME] fixes the [BUILDING_TYPE]. [YEAR]. Used [JURY_RIG_METHOD] and [JURY_RIG_MATERIAL]."
+- "[YEAR]: A patch-job on the [BUILDING_TYPE]. [NAME] applied [JURY_RIG_MATERIAL]."
+- "The [BUILDING_TYPE] holds together. [NAME]'s [JURY_RIG_METHOD] worked. [YEAR]."
+
+### JURY_RIG_FAILURE
+**Slots:** [COLONY], [YEAR], [BUILDING_TYPE], [JURY_RIG_MATERIAL]
+
+- "The patch failed. [YEAR]. [BUILDING_TYPE] breaks again. The [JURY_RIG_MATERIAL] gave way."
+- "[YEAR]: [BUILDING_TYPE] collapse. [JURY_RIG_MATERIAL] was not enough."
+- "Temporary measures fail. [BUILDING_TYPE] down. [YEAR]."
+
+---
+
+## Greenhouse Templates
+
+### GREENHOUSE_BUILT
+**Slots:** [COLONY], [YEAR], [GREENHOUSE_NAME], [GREENHOUSE_DESCRIPTOR]
+
+- "[GREENHOUSE_NAME] is sealed. [YEAR]. A [GREENHOUSE_DESCRIPTOR] refuge."
+- "[YEAR]: We build a glass sky. [GREENHOUSE_NAME]. It feels [GREENHOUSE_DESCRIPTOR]."
+- "Life under glass. [GREENHOUSE_NAME] complete at [COLONY]. [YEAR]."
+
+---
+
+## Provenance Templates
+
+### PROVENANCE_REVEALED
+**Slots:** [COLONY], [YEAR], [BUILDING_TYPE], [PROVENANCE_DESCRIPTOR]
+
+- "The [BUILDING_TYPE] is finished. [YEAR]. Built of [PROVENANCE_DESCRIPTOR]."
+- "[YEAR]: We live in [PROVENANCE_DESCRIPTOR] walls. The [BUILDING_TYPE] stands."
+- "[COLONY] remembers. The [BUILDING_TYPE] is made of [PROVENANCE_DESCRIPTOR]. [YEAR]."
