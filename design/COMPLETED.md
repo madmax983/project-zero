@@ -54,6 +54,7 @@ Features that have been fully implemented and tested.
 - [x] `054` Water Simulation — `specs/054-water-simulation.md` — completed 2026-03-05
 - [x] `055` Animal Husbandry — `specs/055-animal-husbandry.md` — completed 2026-03-05
 - [x] `056` Zones and Areas — `specs/056-zones-areas.md` — completed 2026-03-05
+- [x] `057` Funeral Rites — `specs/057-funeral-rites.md` — completed 2026-03-05
 - [x] `060` Acoustics — `specs/060-acoustics.md` — completed 2026-03-05
 - [x] `062` Lifecycle (Aging) — `specs/062-lifecycle.md` — completed 2026-03-05
 - [x] `063` Pollution Effects — `specs/063-pollution-effects.md` — completed 2026-03-05
