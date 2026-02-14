@@ -26,6 +26,10 @@ pub enum Trait {
     Greedy,
     /// Hoards Survival Goods (Food, Meds).
     Anxious,
+    /// Resists atmospheric hazards (+30% Biocompatibility).
+    NativeBorn,
+    /// Vulnerable to atmospheric hazards (-20% Biocompatibility).
+    WeakImmunity,
 }
 
 impl Trait {
@@ -42,6 +46,8 @@ impl Trait {
             Self::FastWalker => "Fast Walker",
             Self::Greedy => "Greedy",
             Self::Anxious => "Anxious",
+            Self::NativeBorn => "Native Born",
+            Self::WeakImmunity => "Weak Immunity",
         }
     }
 }
@@ -72,6 +78,8 @@ impl Traits {
             Trait::FastWalker,
             Trait::Greedy,
             Trait::Anxious,
+            Trait::NativeBorn,
+            Trait::WeakImmunity,
         ];
 
         while set.len() < count {
@@ -94,6 +102,12 @@ impl Traits {
                 continue;
             }
             if t == Trait::EarlyBird && set.contains(&Trait::NightOwl) {
+                continue;
+            }
+            if t == Trait::NativeBorn && set.contains(&Trait::WeakImmunity) {
+                continue;
+            }
+            if t == Trait::WeakImmunity && set.contains(&Trait::NativeBorn) {
                 continue;
             }
 

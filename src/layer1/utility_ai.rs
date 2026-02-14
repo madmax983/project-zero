@@ -91,7 +91,7 @@ pub struct WorldContext<'a> {
     >,
 }
 
-/// Encapsulates all QueryStates used to find action candidates.
+/// Encapsulates all `QueryStates` used to find action candidates.
 pub struct CandidateQueries {
     /// Query for farms.
     pub farms: QueryState<(
@@ -176,7 +176,7 @@ pub fn update_action_timer_system(mut query: Query<&mut PopAction>) {
 /// Helper function to evaluate all potential actions for a single Pop.
 ///
 /// Returns the best `(ActionType, Utility, Target)`.
-#[allow(clippy::too_many_lines)]
+#[allow(clippy::too_many_lines, clippy::collapsible_if)]
 pub fn evaluate_single_pop(
     queries: &mut CandidateQueries,
     world: &mut World,

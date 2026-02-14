@@ -1,8 +1,8 @@
+use bevy_ecs::prelude::*;
+use bevy_ecs::system::RunSystemOnce;
 use scale::layer1::atmosphere::{AtmosphereGrid, update_atmosphere_system};
 use scale::layer1::building::{Building, BuildingType};
 use scale::layer1::map::GridPosition;
-use bevy_ecs::prelude::*;
-use bevy_ecs::system::RunSystemOnce;
 
 #[test]
 fn test_refinery_emits_pollution() {
@@ -29,5 +29,9 @@ fn test_refinery_emits_pollution() {
 
     // Should be > 0.0
     // Currently fails because Refinery is not in the emission list
-    assert!(pollution > 0.0, "Refinery should emit pollution, got {}", pollution);
+    assert!(
+        pollution > 0.0,
+        "Refinery should emit pollution, got {}",
+        pollution
+    );
 }

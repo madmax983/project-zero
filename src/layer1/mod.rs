@@ -323,6 +323,10 @@ pub use contagion::*;
 pub mod morale;
 pub use morale::*;
 
+/// Biocompatibility system (Spec 107).
+pub mod biocompatibility;
+pub use biocompatibility::*;
+
 #[cfg(test)]
 mod fuel_industry_tests;
 #[cfg(test)]

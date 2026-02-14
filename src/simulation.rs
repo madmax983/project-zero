@@ -30,19 +30,19 @@ use crate::layer1::{
     apply_lighting_penalties_system, apply_noise_effects_system, apply_quirk_modifiers_system,
     apply_taboo_stress_system, apply_weather_effects_system, arrival_handler_system,
     art_generation_system, art_observation_system, assign_sleepwalk_target_system,
-    check_heirloom_status_system, check_milestones_system, check_sleepwalking_start_system,
-    chronicle_event_handler_system, chronicle_rumor_bridge_system, clean_dead_residents_system,
-    clean_dead_workers_system, cleanup_previous_assignment_system, clothing_wear_system,
-    combat_execution_system, consume_food_system, death_system, decay_needs_system,
-    discovery_system, entropy_system, faction_satisfaction_morale_bridge, fire_damage_pops_system,
-    fire_damage_system, fire_spread_system, flora_attack_system, flora_spread_system, haul_system,
-    healing_system, hypothermia_system, infiltration_system, malfunction_system,
+    biocompatibility_system, check_heirloom_status_system, check_milestones_system,
+    check_sleepwalking_start_system, chronicle_event_handler_system, chronicle_rumor_bridge_system,
+    clean_dead_residents_system, clean_dead_workers_system, cleanup_previous_assignment_system,
+    clothing_wear_system, combat_execution_system, consume_food_system, death_system,
+    decay_needs_system, discovery_system, entropy_system, faction_satisfaction_morale_bridge,
+    fire_damage_pops_system, fire_damage_system, fire_spread_system, flora_attack_system,
+    flora_spread_system, haul_system, healing_system, hypothermia_system, infiltration_system,
     inspector::{inspector_report_system, observe_inspector_system, spawn_inspector_system},
-    inspector_outcome_bridge_system, memory_decay_system, modify_affinity_system, movement_system,
-    natural_death_system, notification_expiration_system, pop_death_chronicle_bridge,
-    process_refining_system, process_research_system, process_scan_system,
-    process_start_plan_system, produce_food_system, regrowth_system, restore_leisure_system,
-    restore_rest_in_housing_system, sleepwalk_end_system,
+    inspector_outcome_bridge_system, malfunction_system, memory_decay_system,
+    modify_affinity_system, movement_system, natural_death_system, notification_expiration_system,
+    pop_death_chronicle_bridge, process_refining_system, process_research_system,
+    process_scan_system, process_start_plan_system, produce_food_system, regrowth_system,
+    restore_leisure_system, restore_rest_in_housing_system, sleepwalk_end_system,
     social::old_guard::{
         apply_founder_benefits_system, apply_mood_modifiers_system,
         check_generational_friction_system, mood_lifecycle_system,
@@ -211,8 +211,7 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::atmosphere::update_atmosphere_system
             .after(work_execution_system)
             .after(waste_pollution_bridge),
-        crate::layer1::atmosphere::pollution_effects_system
-            .after(crate::layer1::atmosphere::update_atmosphere_system),
+        biocompatibility_system.after(crate::layer1::atmosphere::update_atmosphere_system),
     ));
 
     #[cfg(feature = "nova")]

@@ -110,20 +110,17 @@ pub fn entropy_system(world: &mut World) {
         let decay = 0.01; // 0.01 HP per tick.
 
         // Modifiers based on building type (Walls decay slower?)
-        let modifier = if let Some(b) = building {
-            match b.building_type {
-                BuildingType::Wall | BuildingType::Gate => 0.1,
-                _ => 1.0,
-            }
-        } else {
-            1.0
-        };
+        let modifier = building.map_or(1.0, |b| match b.building_type {
+            BuildingType::Wall | BuildingType::Gate => 0.1,
+            _ => 1.0,
+        });
 
         structure.current_hp = (structure.current_hp - decay * modifier).max(0.0);
     }
 }
 
 /// Calculates the probability of malfunction based on current HP percentage.
+#[must_use]
 pub fn calculate_malfunction_risk(current: f32, max: f32) -> f32 {
     if max <= 0.0 {
         return 0.0;
@@ -152,13 +149,19 @@ pub fn malfunction_system(world: &mut World) {
     for (_entity, pos) in events {
         // Trigger malfunction: Spawn Fire
         world.spawn((
-            crate::layer1::fire::Fire { intensity: 1.0, lifetime: 10 },
+            crate::layer1::fire::Fire {
+                intensity: 1.0,
+                lifetime: 10,
+            },
             pos,
         ));
 
         // Notification
         if let Some(mut log) = world.get_resource_mut::<crate::shared::log::MessageLog>() {
-            log.add(format!("Malfunction at ({}, {}) due to lack of maintenance!", pos.x, pos.y));
+            log.add(format!(
+                "Malfunction at ({}, {}) due to lack of maintenance!",
+                pos.x, pos.y
+            ));
         }
     }
 }
@@ -171,7 +174,9 @@ pub fn malfunction_system(world: &mut World) {
 /// Returns `true` if repair is complete (max HP reached).
 pub fn process_repair(world: &mut World, target_entity: Entity, amount: f32) -> bool {
     // 1. Determine target type and position
-    let is_designation = world.get::<crate::layer1::designation::Designation>(target_entity).is_some();
+    let is_designation = world
+        .get::<crate::layer1::designation::Designation>(target_entity)
+        .is_some();
     let is_structure = world.get::<Structure>(target_entity).is_some();
 
     let Some(pos) = world.get::<GridPosition>(target_entity).copied() else {
@@ -179,21 +184,16 @@ pub fn process_repair(world: &mut World, target_entity: Entity, amount: f32) -> 
     };
 
     // 2. Identify the structure entity to repair
-    let mut structure_to_repair = None;
-
-    if is_structure {
-        structure_to_repair = Some(target_entity);
+    let structure_to_repair = if is_structure {
+        Some(target_entity)
     } else {
         // Search for structure at this position
         // Use a scope to borrow world for query
         let mut query = world.query_filtered::<(Entity, &GridPosition), With<Structure>>();
-        for (entity, p) in query.iter(world) {
-            if *p == pos {
-                structure_to_repair = Some(entity);
-                break;
-            }
-        }
-    }
+        query
+            .iter(world)
+            .find_map(|(entity, p)| if *p == pos { Some(entity) } else { None })
+    };
 
     let Some(structure_entity) = structure_to_repair else {
         // Structure missing? If designation, remove it.
@@ -209,7 +209,10 @@ pub fn process_repair(world: &mut World, target_entity: Entity, amount: f32) -> 
     let mut ancient = false;
 
     // Check for AncientStructure prevention
-    if world.get::<crate::layer1::heirloom::AncientStructure>(structure_entity).is_some() {
+    if world
+        .get::<crate::layer1::heirloom::AncientStructure>(structure_entity)
+        .is_some()
+    {
         ancient = true;
     } else if let Some(mut s) = world.get_mut::<Structure>(structure_entity) {
         s.current_hp = (s.current_hp + amount).min(s.max_hp);
@@ -438,7 +441,10 @@ mod tests {
         crate::layer1::structure::process_repair(&mut world, building, 60.0); // Full heal + extra
 
         // Building should still exist
-        assert!(world.get_entity(building).is_ok(), "Building should not be despawned");
+        assert!(
+            world.get_entity(building).is_ok(),
+            "Building should not be despawned"
+        );
         let s = world.get::<Structure>(building).unwrap();
         assert_eq!(s.current_hp, 100.0);
     }
