@@ -27,3 +27,8 @@
 **Bloat:** `SimulationTime` accumulator and `SimSpeed::ticks_per_second` unused "future proofing" (YAGNI).
 **Cut:** Removed fields and methods.
 **Saved:** ~15 lines of code, cleaner API.
+
+## [Reduction]
+**Bloat:** `ActionEvaluator` trait and `UtilityEvaluators` registry used for only two implementations (Hunger/Work).
+**Cut:** Replaced with direct function calls (`evaluate_satisfy_hunger`, `evaluate_work`) in `utility_ai.rs`.
+**Saved:** Removed dynamic dispatch, deleted 2 structs, 1 trait, and ~50 lines of boilerplate. Centralized control flow.

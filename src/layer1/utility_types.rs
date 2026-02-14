@@ -291,34 +291,11 @@ pub struct WorldContext<'a> {
     pub factions: Option<&'a HashMap<FactionId, FactionData>>,
 }
 
-/// Trait for decoupling action evaluation logic.
-pub trait ActionEvaluator: Send + Sync {
-    /// Evaluates the action for a specific pop.
-    ///
-    /// Returns `Some((ActionType, Utility, Target))` if a valid candidate is found.
-    fn evaluate(
-        &mut self,
-        world: &mut World,
-        data: &PopEvalData,
-        context: &WorldContext,
-    ) -> Option<(ActionType, f32, Option<Entity>)>;
-}
-
 /// Reusable buffer for `evaluate_actions_system` to avoid allocations.
 #[derive(Resource, Default)]
 pub struct UtilityAIBuffer {
     /// Buffer for pop data.
     pub pop_data: Vec<PopEvalData>,
-}
-
-/// Resource holding all registered action evaluators.
-///
-/// This registry allows decoupling specific action logic from the main AI loop.
-/// New actions can be added by implementing [`ActionEvaluator`] and adding it here.
-#[derive(Resource, Default)]
-pub struct UtilityEvaluators {
-    /// List of evaluators to check.
-    pub evaluators: Vec<Box<dyn ActionEvaluator>>,
 }
 
 /// Calculates urgency from a need value (0.0-1.0).
