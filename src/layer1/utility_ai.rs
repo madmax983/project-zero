@@ -74,6 +74,94 @@ pub use crate::layer1::utility_types::{
 };
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
+use bevy_ecs::query::QueryState;
+use std::collections::HashMap;
+
+/// Context data for utility evaluation (resources, time, etc.)
+pub struct WorldContext<'a> {
+    /// Reference to global colony resources (food, wood, etc.).
+    pub resources: &'a ColonyResources,
+    /// Reference to the day/night cycle (for shift checks).
+    pub cycle: &'a crate::layer1::day_night::DayNightCycle,
+    /// Reference to current taboo/law state.
+    pub taboo: &'a crate::layer1::taboo::TabooState,
+    /// Reference to faction data (for strike checks).
+    pub factions: Option<
+        &'a HashMap<crate::layer1::factions::FactionId, crate::layer1::factions::FactionData>,
+    >,
+}
+
+/// Encapsulates all QueryStates used to find action candidates.
+pub struct CandidateQueries {
+    /// Query for farms.
+    pub farms: QueryState<(
+        Entity,
+        &'static GridPosition,
+        &'static Farm,
+        Option<&'static crate::layer1::building::ShiftSchedule>,
+    )>,
+    /// Query for refining buildings.
+    pub refining: QueryState<(
+        Entity,
+        &'static GridPosition,
+        &'static crate::layer1::building::Building,
+        &'static crate::layer1::resources::RefiningProgress,
+        Option<&'static crate::layer1::building::ShiftSchedule>,
+    )>,
+    /// Query for housing.
+    pub housing: QueryState<(Entity, &'static GridPosition, &'static Housing)>,
+    /// Query for taverns.
+    pub taverns: QueryState<(Entity, &'static GridPosition, &'static Tavern)>,
+    /// Query for libraries.
+    pub libraries: QueryState<(
+        Entity,
+        &'static GridPosition,
+        &'static Library,
+        Option<&'static crate::layer1::building::ShiftSchedule>,
+    )>,
+    /// Query for designations (work targets).
+    pub designations: QueryState<(Entity, &'static GridPosition, &'static Designation)>,
+    /// Query for loose items (hauling targets).
+    pub items: QueryState<(Entity, &'static GridPosition, &'static ResourceItem)>,
+    /// Query for stockpiles.
+    pub stockpiles: QueryState<(Entity, &'static GridPosition, &'static Stockpile)>,
+    /// Query for anomalies (exploration targets).
+    pub anomalies: QueryState<(Entity, &'static GridPosition, &'static Anomaly)>,
+    /// Query for hospitals.
+    pub hospitals: QueryState<(Entity, &'static GridPosition, &'static Hospital)>,
+    /// Query for corpses.
+    pub corpses: QueryState<(Entity, &'static GridPosition, &'static Corpse)>,
+    /// Query for graves.
+    pub graves: QueryState<&'static Grave>,
+    /// Query for structures (repair targets).
+    pub structures: QueryState<(
+        Entity,
+        &'static GridPosition,
+        &'static Structure,
+        Option<&'static DeferMaintenance>,
+    )>,
+}
+
+impl CandidateQueries {
+    /// Initializes all queries from the world.
+    pub fn new(world: &mut World) -> Self {
+        Self {
+            farms: world.query(),
+            refining: world.query(),
+            housing: world.query(),
+            taverns: world.query(),
+            libraries: world.query(),
+            designations: world.query(),
+            items: world.query(),
+            stockpiles: world.query(),
+            anomalies: world.query(),
+            hospitals: world.query(),
+            corpses: world.query(),
+            graves: world.query(),
+            structures: world.query(),
+        }
+    }
+}
 
 /// System to update commitment timers.
 /// Increments the committed-tick counter for every pop's action.
@@ -83,6 +171,202 @@ pub fn update_action_timer_system(mut query: Query<&mut PopAction>) {
     query.par_iter_mut().for_each(|mut action| {
         action.ticks_committed += 1;
     });
+}
+
+/// Helper function to evaluate all potential actions for a single Pop.
+///
+/// Returns the best `(ActionType, Utility, Target)`.
+#[allow(clippy::too_many_lines)]
+pub fn evaluate_single_pop(
+    queries: &mut CandidateQueries,
+    world: &mut World,
+    data: &PopEvalData,
+    context: &WorldContext,
+) -> (ActionType, f32, Option<Entity>) {
+    let pop_entity = data.entity;
+    let pop_pos = data.pos;
+    let needs = data.needs;
+    let weights = data.weights;
+    let equipment_opt = data.equipment;
+    let faction_member_opt = &data.faction_member;
+
+    // Start with Idle as the baseline
+    let mut best_action = ActionType::Idle;
+    let mut best_utility = evaluate_idle(&needs);
+    let mut best_target = None;
+
+    // Helper closure to update best
+    let mut check_best = |act: ActionType, util: f32, tgt: Option<Entity>| {
+        if util > best_utility {
+            best_action = act;
+            best_utility = util;
+            best_target = tgt;
+        }
+    };
+
+    // 1. Check for Mental Break
+    // We must pass world because evaluate_mental_break constructs its own queries.
+    if let Some((action, utility, target)) = evaluate_mental_break(data, world) {
+        return (action, utility, target);
+    }
+
+    // 2. Check for Drafted
+    if let Some((action, utility, target)) = evaluate_drafted_behavior(data, world) {
+        return (action, utility, target);
+    }
+
+    // 3. Normal evaluation (undrafted, sane)
+
+    // Check Health
+    // Safety: world.get borrows immutable world, which is allowed as long as we don't mutate.
+    // evaluate_mental_break/drafted took &mut World but returned, so mutable borrow ended.
+    let health = world.get::<crate::layer1::health::Health>(pop_entity);
+
+    // Evaluate SatisfyHunger
+    if let Some((utility, target)) = evaluate_satisfy_hunger(
+        &pop_pos,
+        &needs,
+        &weights,
+        queries.farms.iter(world).map(|(e, p, f, _)| (e, p, f)),
+    ) {
+        check_best(ActionType::SatisfyHunger, utility, Some(target));
+    }
+
+    // Evaluate SatisfyRest
+    if let Some((utility, target)) =
+        evaluate_satisfy_rest(&pop_pos, &needs, &weights, queries.housing.iter(world))
+    {
+        check_best(ActionType::SatisfyRest, utility, Some(target));
+    }
+
+    // Evaluate Socialize
+    if let Some((utility, target)) =
+        evaluate_socialize(&pop_pos, &needs, &weights, queries.taverns.iter(world))
+    {
+        check_best(ActionType::Socialize, utility, Some(target));
+    }
+
+    // Check if striking
+    let is_striking = context.factions.as_ref().is_some_and(|map| {
+        faction_member_opt.as_ref().is_some_and(|member| {
+            member.faction_id.is_some_and(|fid| {
+                map.get(&fid).is_some_and(|data| {
+                    data.state == crate::layer1::factions::FactionState::Striking
+                })
+            })
+        })
+    });
+
+    // Evaluate Work
+    if !is_striking {
+        if let Some((utility, target)) =
+            evaluate_work(&pop_pos, &weights, queries.designations.iter(world))
+        {
+            let penalty =
+                crate::layer1::taboo::evaluate_taboo_penalty(ActionType::Work, context.taboo);
+            check_best(ActionType::Work, utility + penalty, Some(target));
+        }
+    }
+
+    // Evaluate Refine
+    if let Some((utility, target)) = evaluate_refine(
+        &pop_pos,
+        &weights,
+        context.resources,
+        context.cycle,
+        queries.refining.iter(world),
+    ) {
+        check_best(ActionType::Refine, utility, Some(target));
+    }
+
+    // Evaluate Farm
+    if let Some((utility, target)) =
+        evaluate_farm(&pop_pos, &weights, context.cycle, queries.farms.iter(world))
+    {
+        check_best(ActionType::Farm, utility, Some(target));
+    }
+
+    // Evaluate FetchTool
+    let equipment = equipment_opt.unwrap_or_default();
+    if let Some((utility, target)) = evaluate_fetch_tool(
+        &pop_pos,
+        &equipment,
+        context.resources,
+        queries.stockpiles.iter(world),
+    ) {
+        check_best(ActionType::FetchTool, utility, Some(target));
+    }
+
+    // Evaluate Repair
+    if let Some((utility, target)) = evaluate_repair(
+        &pop_pos,
+        &weights,
+        queries.designations.iter(world),
+        queries.structures.iter(world),
+    ) {
+        check_best(ActionType::Repair, utility, Some(target));
+    }
+
+    // Evaluate Explore
+    if let Some((utility, target)) =
+        evaluate_explore(&pop_pos, &weights, queries.anomalies.iter(world))
+    {
+        check_best(ActionType::Explore, utility, Some(target));
+    }
+
+    // Evaluate Research
+    if let Some((utility, target)) = evaluate_research(
+        &pop_pos,
+        &weights,
+        context.resources,
+        context.cycle,
+        queries.libraries.iter(world),
+    ) {
+        check_best(ActionType::Research, utility, Some(target));
+    }
+
+    // Evaluate Haul
+    if let Some((utility, target)) = evaluate_haul(
+        &pop_pos,
+        &weights,
+        queries.items.iter(world),
+        queries.stockpiles.iter(world),
+        context.resources,
+    ) {
+        check_best(ActionType::Haul, utility, Some(target));
+    }
+
+    // Evaluate SeekMedicalCare
+    if let Some(health) = health {
+        if let Some((utility, target)) = evaluate_seek_medical_care(
+            &pop_pos,
+            &needs,
+            health,
+            &weights,
+            queries.hospitals.iter(world),
+        ) {
+            check_best(ActionType::SeekMedicalCare, utility, Some(target));
+        }
+    }
+
+    // Evaluate BuryCorpse
+    if let Some((utility, target)) = evaluate_bury_corpse(
+        &pop_pos,
+        queries.corpses.iter(world),
+        queries.graves.iter(world),
+        &weights,
+    ) {
+        check_best(ActionType::BuryCorpse, utility, Some(target));
+    }
+
+    // Evaluate Tame
+    if let Some((utility, target)) =
+        evaluate_tame(&pop_pos, &weights, queries.designations.iter(world))
+    {
+        check_best(ActionType::Tame, utility, Some(target));
+    }
+
+    (best_action, best_utility, best_target)
 }
 
 /// The Main Brain Loop: Decides what every Pop should do next.
@@ -152,263 +436,46 @@ pub fn evaluate_actions_system(world: &mut World) {
             }),
     );
 
-    // Pre-create query states to avoid allocation in loop
-    let mut farms_state = world.query::<(
-        Entity,
-        &GridPosition,
-        &Farm,
-        Option<&crate::layer1::building::ShiftSchedule>,
-    )>();
-    let mut refining_state = world.query::<(
-        Entity,
-        &GridPosition,
-        &crate::layer1::building::Building,
-        &crate::layer1::resources::RefiningProgress,
-        Option<&crate::layer1::building::ShiftSchedule>,
-    )>();
-    let mut housing_state = world.query::<(Entity, &GridPosition, &Housing)>();
-    let mut taverns_state = world.query::<(Entity, &GridPosition, &Tavern)>();
-    let mut libraries_state = world.query::<(
-        Entity,
-        &GridPosition,
-        &Library,
-        Option<&crate::layer1::building::ShiftSchedule>,
-    )>();
-    let mut designations_state = world.query::<(Entity, &GridPosition, &Designation)>();
-    let mut items_state = world.query::<(Entity, &GridPosition, &ResourceItem)>();
-    let mut stockpiles_state = world.query::<(Entity, &GridPosition, &Stockpile)>();
-    let mut anomalies_state = world.query::<(Entity, &GridPosition, &Anomaly)>();
-    let mut hospitals_state = world.query::<(Entity, &GridPosition, &Hospital)>();
-    let mut corpses_state = world.query::<(Entity, &GridPosition, &Corpse)>();
-    let mut graves_state = world.query::<&Grave>();
-    let mut structures_state = world.query::<(
-        Entity,
-        &GridPosition,
-        &Structure,
-        Option<&DeferMaintenance>,
-    )>();
+    // Initialize Queries
+    let mut queries = CandidateQueries::new(world);
 
+    // Initialize Context
     let resources = world.resource::<ColonyResources>().clone();
     let cycle = world
         .resource::<crate::layer1::day_night::DayNightCycle>()
         .clone();
-    let taboo_state = world.resource::<crate::layer1::taboo::TabooState>().clone();
-    // Cannot clone Factions easily or it might be expensive, so we just check existence?
-    // Actually Factions is a Resource. We can get it from world.
-    // But we are in a system that takes `&mut World`.
-    // We iterate buffer, so we can access world inside loop if we wanted, but that's slow.
-    // Better to fetch Factions state once if possible.
-    // Factions struct contains HashMap. Cloning it is O(N). N=6. It's fine.
-    // Or just store Option<&Factions> is unsafe because we have mutable world reference...
-    // Wait, world is mutable.
-    // We can clone the Factions resource data.
+    let taboo = world.resource::<crate::layer1::taboo::TabooState>().clone();
     let factions_data = world
         .get_resource::<crate::layer1::factions::Factions>()
         .map(|f| f.map.clone());
 
+    let context = WorldContext {
+        resources: &resources,
+        cycle: &cycle,
+        taboo: &taboo,
+        factions: factions_data.as_ref(),
+    };
+
     // Evaluate each pop
     for data in &buffer.pop_data {
-        let pop_entity = data.entity;
-        let pop_pos = data.pos;
-        let needs = data.needs;
-        let weights = data.weights;
-        let mut action = data.action;
-        let equipment_opt = data.equipment;
-        let faction_member_opt = &data.faction_member;
-
-        // Optimization: Avoid heap allocation (Vec) for utilities.
-        // Instead, track the best action found so far in a single pass.
-
-        // Start with Idle as the baseline
-        let mut best_action = ActionType::Idle;
-        let mut best_utility = evaluate_idle(&needs);
-        let mut best_target = None;
-
-        // 1. Check for Mental Break
-        if let Some((action, utility, target)) = evaluate_mental_break(data, world) {
-            best_action = action;
-            best_utility = utility;
-            best_target = target;
-        } else if let Some((action, utility, target)) = evaluate_drafted_behavior(data, world) {
-            // 2. Check for Drafted
-            best_action = action;
-            best_utility = utility;
-            best_target = target;
-        } else {
-            // 3. Normal evaluation (undrafted, sane)
-            // Helper to update best if we found something better
-            let mut check_best = |act, util, tgt| {
-                if util > best_utility {
-                    best_action = act;
-                    best_utility = util;
-                    best_target = tgt;
-                }
-            };
-
-            // Check Health
-            let health = world.get::<crate::layer1::health::Health>(pop_entity);
-
-            // Evaluate SatisfyHunger
-            if let Some((utility, target)) = evaluate_satisfy_hunger(
-                &pop_pos,
-                &needs,
-                &weights,
-                farms_state.iter(world).map(|(e, p, f, _)| (e, p, f)),
-            ) {
-                check_best(ActionType::SatisfyHunger, utility, Some(target));
-            }
-
-            // Evaluate SatisfyRest
-            if let Some((utility, target)) =
-                evaluate_satisfy_rest(&pop_pos, &needs, &weights, housing_state.iter(world))
-            {
-                check_best(ActionType::SatisfyRest, utility, Some(target));
-            }
-
-            // Evaluate Socialize
-            if let Some((utility, target)) =
-                evaluate_socialize(&pop_pos, &needs, &weights, taverns_state.iter(world))
-            {
-                check_best(ActionType::Socialize, utility, Some(target));
-            }
-
-            // Check if striking
-            let is_striking = factions_data.as_ref().is_some_and(|map| {
-                faction_member_opt.as_ref().is_some_and(|member| {
-                    member.faction_id.is_some_and(|fid| {
-                        map.get(&fid).is_some_and(|data| {
-                            data.state == crate::layer1::factions::FactionState::Striking
-                        })
-                    })
-                })
-            });
-
-            // Evaluate Work
-            if !is_striking {
-                if let Some((utility, target)) =
-                    evaluate_work(&pop_pos, &weights, designations_state.iter(world))
-                {
-                    let penalty = crate::layer1::taboo::evaluate_taboo_penalty(
-                        ActionType::Work,
-                        &taboo_state,
-                    );
-                    check_best(ActionType::Work, utility + penalty, Some(target));
-                }
-            }
-
-            // Evaluate Refine
-            if let Some((utility, target)) = evaluate_refine(
-                &pop_pos,
-                &weights,
-                &resources,
-                &cycle,
-                refining_state.iter(world),
-            ) {
-                check_best(ActionType::Refine, utility, Some(target));
-            }
-
-            // Evaluate Farm
-            if let Some((utility, target)) =
-                evaluate_farm(&pop_pos, &weights, &cycle, farms_state.iter(world))
-            {
-                check_best(ActionType::Farm, utility, Some(target));
-            }
-
-            // Evaluate FetchTool
-            let equipment = equipment_opt.unwrap_or_default();
-            if let Some((utility, target)) = evaluate_fetch_tool(
-                &pop_pos,
-                &equipment,
-                &resources,
-                stockpiles_state.iter(world),
-            ) {
-                check_best(ActionType::FetchTool, utility, Some(target));
-            }
-
-            // Evaluate Repair
-            if let Some((utility, target)) = evaluate_repair(
-                &pop_pos,
-                &weights,
-                designations_state.iter(world),
-                structures_state.iter(world),
-            ) {
-                check_best(ActionType::Repair, utility, Some(target));
-            }
-
-            // Evaluate Explore
-            if let Some((utility, target)) =
-                evaluate_explore(&pop_pos, &weights, anomalies_state.iter(world))
-            {
-                check_best(ActionType::Explore, utility, Some(target));
-            }
-
-            // Evaluate Research
-            if let Some((utility, target)) = evaluate_research(
-                &pop_pos,
-                &weights,
-                &resources,
-                &cycle,
-                libraries_state.iter(world),
-            ) {
-                check_best(ActionType::Research, utility, Some(target));
-            }
-
-            // Evaluate Haul
-            if let Some((utility, target)) = evaluate_haul(
-                &pop_pos,
-                &weights,
-                items_state.iter(world),
-                stockpiles_state.iter(world),
-                &resources,
-            ) {
-                check_best(ActionType::Haul, utility, Some(target));
-            }
-
-            // Evaluate SeekMedicalCare
-            if let Some(health) = health {
-                if let Some((utility, target)) = evaluate_seek_medical_care(
-                    &pop_pos,
-                    &needs,
-                    health,
-                    &weights,
-                    hospitals_state.iter(world),
-                ) {
-                    check_best(ActionType::SeekMedicalCare, utility, Some(target));
-                }
-            }
-
-            // Evaluate BuryCorpse
-            if let Some((utility, target)) = evaluate_bury_corpse(
-                &pop_pos,
-                corpses_state.iter(world),
-                graves_state.iter(world),
-                &weights,
-            ) {
-                check_best(ActionType::BuryCorpse, utility, Some(target));
-            }
-
-            // Evaluate Tame
-            if let Some((utility, target)) =
-                evaluate_tame(&pop_pos, &weights, designations_state.iter(world))
-            {
-                check_best(ActionType::Tame, utility, Some(target));
-            }
-        } // End of else block (normal evaluation)
+        let (best_action, best_utility, best_target) =
+            evaluate_single_pop(&mut queries, world, data, &context);
 
         // Switch if best exceeds threshold
-        if best_utility > action.current_utility + config.switch_threshold {
+        if best_utility > data.action.current_utility + config.switch_threshold {
             // Update action
+            let mut action = data.action;
             action.current = best_action;
             action.current_utility = best_utility;
             action.ticks_committed = 0;
 
             // Write back to world
-            if let Some(mut pop_action) = world.get_mut::<PopAction>(pop_entity) {
+            if let Some(mut pop_action) = world.get_mut::<PopAction>(data.entity) {
                 *pop_action = action;
             }
 
             // Insert StartPlan marker (for HTN system)
-            world.entity_mut(pop_entity).insert(StartPlan {
+            world.entity_mut(data.entity).insert(StartPlan {
                 action: best_action,
                 target: best_target,
             });
