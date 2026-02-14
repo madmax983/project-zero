@@ -12,6 +12,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `113` Social Stratification — `specs/113-social-stratification.md`
 - [ ] `047` Pop Relationships — `specs/047-pop-relationships.md`
 - [ ] `116` Drone Networks — `specs/116-drone-networks.md`
+- [ ] `118` Penal Labor — `specs/118-penal-labor.md`
 
 ## MVP — Layer 2: System Simulation
 
