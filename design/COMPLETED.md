@@ -81,3 +81,7 @@ Features that have been fully implemented, tested, and merged.
 - [x] `050` Civil Unrest — `specs/050-civil-unrest.md` — completed 2026-02-24
 - [x] `069` Mentorship System — `specs/069-mentorship-system.md` — completed 2026-02-24
 - [x] `117` Fuel Consumption — `specs/117-fuel-consumption.md` — completed 2026-10-25
+- [x] `083` Building Shifts — `specs/083-building-shifts.md` — completed 2026-02-25
+- [x] `047` Pop Relationships — `specs/047-pop-relationships.md` — completed 2026-02-25
+- [x] `056` Designated Zones — `specs/056-designated-zones.md` — completed 2026-02-25
+- [x] `058` Personal Tools — `specs/058-personal-tools.md` — completed 2026-02-25
