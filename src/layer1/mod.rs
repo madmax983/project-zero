@@ -341,3 +341,7 @@ pub use palette_fatigue::*;
 /// Spontaneous Architecture system (Spec 110).
 pub mod spontaneous_architecture;
 pub use spontaneous_architecture::*;
+
+/// Observatory and Overview Effect (Spec 115).
+pub mod observatory;
+pub use observatory::*;

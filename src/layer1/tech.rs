@@ -14,6 +14,8 @@ pub enum Tech {
     MetalWorking,
     /// Allows advanced social buildings (Tavern).
     SocialStructures,
+    /// Allows construction of the Observatory.
+    Astronomy,
 }
 
 impl Tech {
@@ -24,6 +26,7 @@ impl Tech {
             Self::Masonry => 10.0,
             Self::MetalWorking => 20.0,
             Self::SocialStructures => 15.0,
+            Self::Astronomy => 50.0,
         }
     }
 
@@ -34,6 +37,7 @@ impl Tech {
             Self::Masonry => "Masonry",
             Self::MetalWorking => "Metal Working",
             Self::SocialStructures => "Social Structures",
+            Self::Astronomy => "Astronomy",
         }
     }
 }

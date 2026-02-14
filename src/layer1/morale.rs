@@ -35,6 +35,13 @@ impl Default for Morale {
     }
 }
 
+impl Morale {
+    /// Adds a mood modifier to the pop.
+    pub fn add_modifier(&mut self, modifier: MoodModifier) {
+        self.modifiers.push(modifier);
+    }
+}
+
 /// System to decay morale modifiers.
 pub fn morale_decay_system(mut query: Query<&mut Morale>) {
     query.par_iter_mut().for_each(|mut morale| {
