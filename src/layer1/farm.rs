@@ -348,19 +348,24 @@ mod tests {
         });
         world.insert_resource(crate::shared::time::SimulationTime::default());
 
-        let pop = world.spawn((
-            Pop,
-            Needs {
-                hunger: 0.3,
-                rest: 0.8,
-                ..Default::default()
-            },
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Needs {
+                    hunger: 0.3,
+                    rest: 0.8,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         world.run_system_once(consume_food_system).unwrap();
 
         let history = world.get::<DietaryHistory>(pop);
-        assert!(history.is_some(), "DietaryHistory should be added when eating");
+        assert!(
+            history.is_some(),
+            "DietaryHistory should be added when eating"
+        );
         assert_eq!(history.unwrap().recent_meals.len(), 1);
         assert_eq!(history.unwrap().recent_meals[0], ItemType::Potato);
     }

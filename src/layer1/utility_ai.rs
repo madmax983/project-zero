@@ -223,11 +223,9 @@ pub fn evaluate_single_pop(
     });
 
     if !is_striking {
-        if let Some((utility, target)) = evaluate_work(
-            &pop_pos,
-            &weights,
-            queries.designations.iter(world),
-        ) {
+        if let Some((utility, target)) =
+            evaluate_work(&pop_pos, &weights, queries.designations.iter(world))
+        {
             let penalty =
                 crate::layer1::taboo::evaluate_taboo_penalty(ActionType::Work, context.taboo);
             check_best(ActionType::Work, utility + penalty, Some(target));

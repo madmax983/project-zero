@@ -1,7 +1,7 @@
+use crate::layer1::items::ItemType;
+use crate::layer1::morale::{MoodModifier, Morale};
 use bevy_ecs::prelude::*;
 use std::collections::VecDeque;
-use crate::layer1::items::ItemType;
-use crate::layer1::morale::{Morale, MoodModifier};
 
 /// Tracks the last 5 meals eaten by a Pop to calculate palette fatigue.
 #[derive(Component, Debug, Clone, Default)]
@@ -56,20 +56,21 @@ pub fn calculate_palette_fatigue(history: &DietaryHistory) -> f32 {
 }
 
 /// System to apply morale modifiers based on dietary variety.
-pub fn apply_palette_fatigue_system(
-    mut query: Query<(&mut Morale, &DietaryHistory)>,
-) {
+pub fn apply_palette_fatigue_system(mut query: Query<(&mut Morale, &DietaryHistory)>) {
     for (mut morale, history) in &mut query {
         let fatigue = calculate_palette_fatigue(history);
 
         // Remove old modifier
-        morale.modifiers.retain(|m| m.label != "Boring Diet" && m.label != "Varied Diet");
+        morale
+            .modifiers
+            .retain(|m| m.label != "Boring Diet" && m.label != "Varied Diet");
 
-        if fatigue >= 0.8 { // High fatigue
+        if fatigue >= 0.8 {
+            // High fatigue
             morale.modifiers.push(MoodModifier {
                 label: "Boring Diet".to_string(),
                 value: -0.1 * fatigue, // Scales with fatigue
-                duration: 200, // Lingers
+                duration: 200,         // Lingers
             });
         } else if fatigue <= 0.25 && history.recent_meals.len() >= 3 {
             morale.modifiers.push(MoodModifier {
@@ -83,11 +84,11 @@ pub fn apply_palette_fatigue_system(
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::pop::Pop;
     use crate::layer1::items::ItemType;
     use crate::layer1::morale::Morale;
-    use crate::layer1::palette_fatigue::{DietaryHistory, record_meal, calculate_palette_fatigue};
+    use crate::layer1::palette_fatigue::{DietaryHistory, calculate_palette_fatigue, record_meal};
+    use crate::layer1::pop::Pop;
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_record_meal_updates_history() {
@@ -139,16 +140,18 @@ mod tests {
     #[test]
     fn test_apply_morale_modifier() {
         let mut world = World::new();
-        let pop = world.spawn((
-            Pop,
-            Morale {
-                value: 0.8,
-                modifiers: Vec::new(),
-            },
-            DietaryHistory {
-                recent_meals: vec![ItemType::Potato; 5].into(),
-            },
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Morale {
+                    value: 0.8,
+                    modifiers: Vec::new(),
+                },
+                DietaryHistory {
+                    recent_meals: vec![ItemType::Potato; 5].into(),
+                },
+            ))
+            .id();
 
         // Run system
         let mut schedule = Schedule::default();

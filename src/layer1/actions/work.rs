@@ -49,7 +49,6 @@ pub fn evaluate_work<'a>(
     best
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;

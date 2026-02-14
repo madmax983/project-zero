@@ -331,9 +331,9 @@ pub use biocompatibility::*;
 mod fuel_industry_tests;
 #[cfg(test)]
 mod greenhouse_tests;
-mod structure_maintenance_tests;
-#[cfg(test)]
-mod structural_integrity_overflow_tests;
 /// Palette fatigue system (Spec 114).
 pub mod palette_fatigue;
+#[cfg(test)]
+mod structural_integrity_overflow_tests;
+mod structure_maintenance_tests;
 pub use palette_fatigue::*;

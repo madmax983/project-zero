@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::map::GridPosition;
-use crate::layer1::structural_integrity::{RoofGrid, check_stability, apply_collapse};
+use crate::layer1::structural_integrity::{RoofGrid, apply_collapse, check_stability};
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
+use bevy_ecs::prelude::*;
 
 #[test]
 fn test_check_stability_overflow() {
