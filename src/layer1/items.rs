@@ -35,6 +35,22 @@ pub struct Equipment {
     pub weapon: Option<Entity>,
 }
 
+/// Types of food items Pops can consume.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
+pub enum ItemType {
+    /// Default food type (e.g. from Farms).
+    #[default]
+    Potato,
+    /// Grain crop.
+    Wheat,
+    /// Protein from animals.
+    Meat,
+    /// Protein from water.
+    Fish,
+    /// Gathered or grown fruit.
+    Fruit,
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -44,6 +60,11 @@ mod tests {
     use crate::layer1::pop::Pop;
     use crate::layer1::resources::{ColonyResources, MiningProgress};
     use crate::layer1::utility_ai::{ActionType, PopAction};
+
+    #[test]
+    fn test_item_type_default() {
+        assert_eq!(ItemType::default(), ItemType::Potato);
+    }
 
     #[test]
     fn test_equipment_component_exists() {

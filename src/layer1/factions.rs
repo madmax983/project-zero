@@ -203,11 +203,11 @@ pub struct FactionMember {
 
 /// System to update faction membership based on highest skill.
 ///
-/// *   **Mining** -> MinersGuild
-/// *   **Farming/Husbandry** -> FarmersGuild
-/// *   **Construction** -> MasonsGuild
-/// *   **Forestry** -> LoggersGuild
-/// *   **Crafting** -> ArtisansGuild
+/// *   **Mining** -> `MinersGuild`
+/// *   **Farming/Husbandry** -> `FarmersGuild`
+/// *   **Construction** -> `MasonsGuild`
+/// *   **Forestry** -> `LoggersGuild`
+/// *   **Crafting** -> `ArtisansGuild`
 /// *   **None/Tie** -> Unaligned (default tie-breaking order exists)
 pub fn update_faction_membership_system(
     mut query: Query<

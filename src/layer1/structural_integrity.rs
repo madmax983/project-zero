@@ -37,10 +37,9 @@ impl RoofGrid {
             let idx = (y as usize)
                 .checked_mul(self.width)
                 .and_then(|i| i.checked_add(x as usize));
-            if let Some(idx) = idx {
-                if idx < self.has_roof.len() {
-                    self.has_roof[idx] = val;
-                }
+
+            if let Some(idx) = idx.filter(|&i| i < self.has_roof.len()) {
+                self.has_roof[idx] = val;
             }
         }
     }
@@ -55,10 +54,8 @@ impl RoofGrid {
             .checked_mul(self.width)
             .and_then(|i| i.checked_add(x as usize));
 
-        if let Some(idx) = idx {
-            if idx < self.has_roof.len() {
-                return self.has_roof[idx];
-            }
+        if let Some(idx) = idx.filter(|&i| i < self.has_roof.len()) {
+            return self.has_roof[idx];
         }
         false
     }
@@ -146,10 +143,8 @@ pub fn apply_collapse(world: &mut World, pos: GridPosition) {
             .checked_mul(terrain.width)
             .and_then(|i| i.checked_add(pos.x as usize));
 
-        if let Some(idx) = idx {
-            if idx < terrain.tiles.len() {
-                terrain.tiles[idx] = TerrainType::Rock;
-            }
+        if let Some(idx) = idx.filter(|&i| i < terrain.tiles.len()) {
+            terrain.tiles[idx] = TerrainType::Rock;
         }
     }
 
