@@ -1,3 +1,4 @@
+#![allow(clippy::collapsible_if)]
 use crate::layer1::GridPosition;
 use crate::layer1::execution::{AtTarget, MovementTarget};
 use crate::layer1::factions::{FactionMember, FactionState, Factions};
