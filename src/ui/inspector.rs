@@ -21,6 +21,7 @@ use crate::layer1::utility_types::UtilityWeights;
 use crate::layer1::{
     ActionType, ColonyResources, Farm, GridPosition, Housing, PopAction, TerrainGrid,
     building::Building,
+    building::Material, building::MaterialType,
     needs::Needs,
     pop::{Pop, PopName},
     resources::RefiningProgress,
@@ -309,9 +310,12 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
     } else if world.get::<Pop>(entity).is_some() {
         ("Colonist".to_string(), Color::Yellow)
     } else if let Some(b) = world.get::<Building>(entity) {
+        let material = world
+            .get::<Material>(entity)
+            .map_or(MaterialType::default(), |m| m.0);
         (
             b.building_type.label().to_string(),
-            get_building_color(b.building_type),
+            get_building_color(b.building_type, material),
         )
     } else {
         ("Entity".to_string(), Color::White)

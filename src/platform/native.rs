@@ -20,6 +20,7 @@ impl TryFrom<KeyEvent> for GameKeyEvent {
             KeyCode::Enter => GameKeyCode::Enter,
             KeyCode::Esc => GameKeyCode::Esc,
             KeyCode::Tab => GameKeyCode::Tab,
+            KeyCode::BackTab => GameKeyCode::BackTab,
             KeyCode::Up => GameKeyCode::Up,
             KeyCode::Down => GameKeyCode::Down,
             KeyCode::Left => GameKeyCode::Left,
@@ -111,6 +112,12 @@ mod tests {
     fn test_translate_tab() {
         let game_key = GameKeyEvent::try_from(crossterm_key(KeyCode::Tab)).unwrap();
         assert_eq!(game_key.code, GameKeyCode::Tab);
+    }
+
+    #[test]
+    fn test_translate_backtab() {
+        let game_key = GameKeyEvent::try_from(crossterm_key(KeyCode::BackTab)).unwrap();
+        assert_eq!(game_key.code, GameKeyCode::BackTab);
     }
 
     #[test]

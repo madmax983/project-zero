@@ -268,7 +268,7 @@ fn handle_build_mode(world: &mut World, key: GameKeyEvent) {
             let mut build_mode = world.resource_mut::<BuildMode>();
             build_mode.selected = build_mode.selected.next();
         }
-        GameKeyCode::Char('m') => {
+        GameKeyCode::Char('m') | GameKeyCode::BackTab => {
             let mut build_mode = world.resource_mut::<BuildMode>();
             build_mode.selected_material = build_mode.selected_material.next();
         }
@@ -699,5 +699,28 @@ mod tests {
 
         let selection = world.resource::<Selection>();
         assert!(!selection.is_selected());
+    }
+
+    #[test]
+    fn test_build_mode_backtab_cycles_material() {
+        use crate::layer1::{BuildingType, MaterialType};
+        let mut world = World::new();
+        world.insert_resource(GameState::Running);
+        let mut stack = InputContextStack::default();
+        stack.push(InputContext::BuildMode);
+        world.insert_resource(stack);
+        world.insert_resource(BuildMode {
+            active: true,
+            selected: BuildingType::Wall, // Walls support materials
+            selected_material: MaterialType::Wood,
+            ..Default::default()
+        });
+
+        // First BackTab -> Stone
+        route_input(&mut world, key_event(GameKeyCode::BackTab));
+        assert_eq!(
+            world.resource::<BuildMode>().selected_material,
+            MaterialType::Stone
+        );
     }
 }

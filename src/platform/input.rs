@@ -27,6 +27,8 @@ pub enum GameKeyCode {
     Backspace,
     /// Delete.
     Delete,
+    /// Shift+Tab.
+    BackTab,
 }
 
 /// A platform-agnostic keyboard event.
@@ -118,6 +120,7 @@ mod tests {
             GameKeyCode::Right,
             GameKeyCode::Backspace,
             GameKeyCode::Delete,
+            GameKeyCode::BackTab,
         ];
         // Each variant should be distinct from the others
         for (i, a) in codes.iter().enumerate() {

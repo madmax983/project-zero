@@ -16,6 +16,7 @@ impl TryFrom<KeyEvent> for GameKeyEvent {
             KeyCode::Enter => GameKeyCode::Enter,
             KeyCode::Esc => GameKeyCode::Esc,
             KeyCode::Tab => GameKeyCode::Tab,
+            KeyCode::BackTab => GameKeyCode::BackTab,
             KeyCode::Up => GameKeyCode::Up,
             KeyCode::Down => GameKeyCode::Down,
             KeyCode::Left => GameKeyCode::Left,

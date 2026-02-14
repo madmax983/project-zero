@@ -257,10 +257,16 @@ pub fn get_status_line<'a>(
         } else {
             cost_parts.join(" ")
         };
+
+        let mut name = build_mode.selected.label().to_string();
+        if build_mode.selected.supports_material() {
+            name.push_str(&format!(" ({})", build_mode.selected_material.label()));
+        }
+
         spans.push(Span::styled(
             format!(
-                "BUILD: {} [{}] (Tab:switch Enter:place Esc:exit)",
-                build_mode.selected.label(),
+                "BUILD: {} [{}] (Tab:switch M/BackTab:material Enter:place Esc:exit)",
+                name,
                 cost_str,
             ),
             Style::default()
