@@ -5,12 +5,13 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
 use crate::layer1::unrest::MentalState;
 use bevy_ecs::prelude::*;
+use strum_macros::EnumIter;
 
 /// The menu of high-level behaviors a Pop can choose from.
 ///
 /// These are "Goals" rather than atomic steps. For example, [`ActionType::Work`] implies
 /// finding a designation, walking to it, and performing the task until complete.
-#[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, Debug, EnumIter)]
 pub enum ActionType {
     /// Eat food to reduce hunger.
     SatisfyHunger,
@@ -482,6 +483,79 @@ pub const fn evaluate_idle(_needs: &Needs) -> f32 {
 mod tests {
     use super::*;
     use crate::layer1::map::GridPosition;
+    use strum::IntoEnumIterator;
+
+    #[test]
+    fn test_action_type_completeness() {
+        for action in ActionType::iter() {
+            assert!(
+                action.as_index() < ActionType::COUNT,
+                "Action index out of bounds: {:?}",
+                action
+            );
+        }
+    }
+
+    #[test]
+    fn test_action_type_count_matches() {
+        assert_eq!(
+            ActionType::iter().count(),
+            ActionType::COUNT,
+            "ActionType::COUNT mismatch"
+        );
+    }
+
+    #[test]
+    fn test_need_response_curve_boundaries() {
+        // Curve: 1.0 - x^2
+        // If x=1.5, 1.0 - 2.25 = -1.25.
+        // If x=-0.5, 1.0 - 0.25 = 0.75.
+        let val_over = need_response_curve(1.5);
+        assert!(val_over < 0.0);
+
+        let val_neg = need_response_curve(-0.5);
+        assert!(val_neg < 1.0 && val_neg > 0.0);
+    }
+
+    #[test]
+    fn test_calculate_context_score_zero_capacity() {
+        let weights = UtilityWeights::default();
+        let pop_pos = GridPosition { x: 0, y: 0 };
+        // Capacity 0 should not panic and return valid score (considering availability logic skipped)
+        let score = calculate_context_score(pop_pos, None, 0, 0, &weights);
+        assert!((score - 1.0).abs() < f32::EPSILON);
+    }
+
+    #[test]
+    fn test_calculate_success_modifier_overflow() {
+        let mut weights = UtilityWeights::default();
+        let idx = ActionType::SatisfyHunger.as_index();
+
+        // Edge case: More successes than attempts (data corruption?)
+        weights.action_attempt_count[idx] = 10;
+        weights.action_success_count[idx] = 20;
+
+        let mod_val = calculate_success_modifier(ActionType::SatisfyHunger, &weights);
+        // Rate = 2.0. Modifier = 2.0 * 0.4 + 0.8 = 1.6.
+        assert!(mod_val > 1.2);
+    }
+
+    #[test]
+    fn test_manhattan_distance_extreme() {
+        // Test overflow protection
+        let min = GridPosition {
+            x: i32::MIN,
+            y: i32::MIN,
+        };
+        let max = GridPosition {
+            x: i32::MAX,
+            y: i32::MAX,
+        };
+
+        // Distance should be huge but clamped to i32::MAX
+        let dist = manhattan_distance(&min, &max);
+        assert_eq!(dist, i32::MAX);
+    }
 
     #[test]
     fn test_manhattan_distance_overflow() {
