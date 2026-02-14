@@ -1,3 +1,4 @@
+#![allow(clippy::cast_precision_loss)]
 //! Spatial primitives and map utilities.
 //!
 //! This module defines the foundational spatial component `GridPosition`.

@@ -1,3 +1,4 @@
+#![allow(clippy::collapsible_if)]
 use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::factions::{FactionMember, FactionState, Factions};
 use crate::layer1::resources::ColonyResources;

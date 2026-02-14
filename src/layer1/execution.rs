@@ -870,13 +870,11 @@ fn execute_work_on_designation(
                     spawn_particle(world, p, '*', Color::White, 10);
                 } else {
                     // Working: Dynamic shake + Dust
-                    let intensity = if let Some(prog) =
-                        world.get::<crate::layer1::resources::MiningProgress>(designation_entity)
-                    {
-                        0.05 + (prog.current / prog.max) * 0.15
-                    } else {
-                        0.05
-                    };
+                    let intensity = world
+                        .get::<crate::layer1::resources::MiningProgress>(designation_entity)
+                        .map_or(0.05, |prog| {
+                            (prog.current / prog.max).mul_add(0.15, 0.05)
+                        });
 
                     if let Some(mut shake) = world.get_resource_mut::<ScreenShake>() {
                         shake.trigger(intensity);
@@ -897,13 +895,11 @@ fn execute_work_on_designation(
                     spawn_particle(world, p, '^', Color::Green, 10);
                 } else {
                     // Working
-                    let intensity = if let Some(prog) =
-                        world.get::<crate::layer1::resources::ForestryProgress>(designation_entity)
-                    {
-                        0.02 + (prog.current / prog.max) * 0.1
-                    } else {
-                        0.02
-                    };
+                    let intensity = world
+                        .get::<crate::layer1::resources::ForestryProgress>(designation_entity)
+                        .map_or(0.02, |prog| {
+                            (prog.current / prog.max).mul_add(0.1, 0.02)
+                        });
 
                     if let Some(mut shake) = world.get_resource_mut::<ScreenShake>() {
                         shake.trigger(intensity);

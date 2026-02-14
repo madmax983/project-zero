@@ -323,7 +323,7 @@ impl BuildingType {
             Self::Library => '?', // Placeholder
             Self::Plantation => 'P',
             Self::Weaver => 'W',
-            Self::FlowerBed => '*',
+            Self::FlowerBed | Self::PersonalGarden => '*',
             Self::Statue => 'I',
             Self::Hospital | Self::Gate => '+',
             Self::Landfill => '%',
@@ -332,11 +332,9 @@ impl BuildingType {
             Self::Generator | Self::Greenhouse => 'G',
             Self::PowerPole => '|',
             Self::Wall => '#',
-            Self::Tower => 'O',
+            Self::Tower | Self::Observatory => 'O',
             Self::AncientReactor | Self::Refinery => 'R',
-            Self::Observatory => 'O',
             Self::PersonalShed => 's',
-            Self::PersonalGarden => '*',
             Self::PersonalShrine => '☗',
         }
     }

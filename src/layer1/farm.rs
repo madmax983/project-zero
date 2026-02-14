@@ -1,3 +1,4 @@
+#![allow(clippy::collapsible_if, clippy::type_complexity)]
 use crate::layer1::GridPosition;
 use crate::layer1::balance::{
     FOOD_HUNGER_THRESHOLD, FOOD_PER_MEAL, FOOD_PER_WORKER_PER_TICK, HUNGER_PER_MEAL,
