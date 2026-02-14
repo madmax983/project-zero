@@ -41,7 +41,7 @@ use crate::layer1::actions::fetch_tool::evaluate_fetch_tool;
 use crate::layer1::actions::fight::evaluate_drafted_behavior;
 use crate::layer1::actions::funeral::evaluate_bury_corpse;
 use crate::layer1::actions::haul::evaluate_haul;
-use crate::layer1::actions::hunger::evaluate_satisfy_hunger;
+use crate::layer1::actions::hunger::HungerEvaluator;
 use crate::layer1::actions::medical::evaluate_seek_medical_care;
 use crate::layer1::actions::mental_break::evaluate_mental_break;
 use crate::layer1::actions::refine::evaluate_refine;
@@ -49,7 +49,7 @@ use crate::layer1::actions::repair::evaluate_repair;
 use crate::layer1::actions::research::evaluate_research;
 use crate::layer1::actions::rest::evaluate_satisfy_rest;
 use crate::layer1::actions::social::evaluate_socialize;
-use crate::layer1::actions::work::evaluate_work;
+use crate::layer1::actions::work::WorkEvaluator;
 use crate::layer1::combat::Drafted;
 use crate::layer1::designation::Designation;
 use crate::layer1::farm::Farm;
@@ -70,26 +70,12 @@ use crate::layer1::tech::Library;
 use crate::layer1::unrest::MentalState;
 pub use crate::layer1::utility_types::{
     ActionType, Plan, PlanOutcome, PopAction, PopEvalData, StartPlan, UtilityAIBuffer,
-    UtilityConfig, UtilityWeights, evaluate_idle, manhattan_distance,
+    UtilityConfig, UtilityEvaluators, UtilityWeights, WorldContext, evaluate_idle,
+    manhattan_distance,
 };
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 use bevy_ecs::query::QueryState;
-use std::collections::HashMap;
-
-/// Context data for utility evaluation (resources, time, etc.)
-pub struct WorldContext<'a> {
-    /// Reference to global colony resources (food, wood, etc.).
-    pub resources: &'a ColonyResources,
-    /// Reference to the day/night cycle (for shift checks).
-    pub cycle: &'a crate::layer1::day_night::DayNightCycle,
-    /// Reference to current taboo/law state.
-    pub taboo: &'a crate::layer1::taboo::TabooState,
-    /// Reference to faction data (for strike checks).
-    pub factions: Option<
-        &'a HashMap<crate::layer1::factions::FactionId, crate::layer1::factions::FactionData>,
-    >,
-}
 
 /// Encapsulates all `QueryStates` used to find action candidates.
 pub struct CandidateQueries {
@@ -178,6 +164,7 @@ pub fn update_action_timer_system(mut query: Query<&mut PopAction>) {
 /// Returns the best `(ActionType, Utility, Target)`.
 #[allow(clippy::too_many_lines, clippy::collapsible_if)]
 pub fn evaluate_single_pop(
+    evaluators: &mut UtilityEvaluators,
     queries: &mut CandidateQueries,
     world: &mut World,
     data: &PopEvalData,
@@ -188,7 +175,6 @@ pub fn evaluate_single_pop(
     let needs = data.needs;
     let weights = data.weights;
     let equipment_opt = data.equipment;
-    let faction_member_opt = &data.faction_member;
 
     // Start with Idle as the baseline
     let mut best_action = ActionType::Idle;
@@ -217,20 +203,17 @@ pub fn evaluate_single_pop(
 
     // 3. Normal evaluation (undrafted, sane)
 
+    // Evaluate Dynamic Evaluators (Hunger, Work)
+    for evaluator in &mut evaluators.evaluators {
+        if let Some((action, utility, target)) = evaluator.evaluate(world, data, context) {
+            check_best(action, utility, target);
+        }
+    }
+
     // Check Health
     // Safety: world.get borrows immutable world, which is allowed as long as we don't mutate.
     // evaluate_mental_break/drafted took &mut World but returned, so mutable borrow ended.
     let health = world.get::<crate::layer1::health::Health>(pop_entity);
-
-    // Evaluate SatisfyHunger
-    if let Some((utility, target)) = evaluate_satisfy_hunger(
-        &pop_pos,
-        &needs,
-        &weights,
-        queries.farms.iter(world).map(|(e, p, f, _)| (e, p, f)),
-    ) {
-        check_best(ActionType::SatisfyHunger, utility, Some(target));
-    }
 
     // Evaluate SatisfyRest
     if let Some((utility, target)) =
@@ -244,28 +227,6 @@ pub fn evaluate_single_pop(
         evaluate_socialize(&pop_pos, &needs, &weights, queries.taverns.iter(world))
     {
         check_best(ActionType::Socialize, utility, Some(target));
-    }
-
-    // Check if striking
-    let is_striking = context.factions.as_ref().is_some_and(|map| {
-        faction_member_opt.as_ref().is_some_and(|member| {
-            member.faction_id.is_some_and(|fid| {
-                map.get(&fid).is_some_and(|data| {
-                    data.state == crate::layer1::factions::FactionState::Striking
-                })
-            })
-        })
-    });
-
-    // Evaluate Work
-    if !is_striking {
-        if let Some((utility, target)) =
-            evaluate_work(&pop_pos, &weights, queries.designations.iter(world))
-        {
-            let penalty =
-                crate::layer1::taboo::evaluate_taboo_penalty(ActionType::Work, context.taboo);
-            check_best(ActionType::Work, utility + penalty, Some(target));
-        }
     }
 
     // Evaluate Refine
@@ -436,6 +397,16 @@ pub fn evaluate_actions_system(world: &mut World) {
             }),
     );
 
+    // Initialize Evaluators
+    if !world.contains_resource::<UtilityEvaluators>() {
+        let mut evals = UtilityEvaluators::default();
+        evals.evaluators.push(Box::new(HungerEvaluator::new(world)));
+        evals.evaluators.push(Box::new(WorkEvaluator::new(world)));
+        world.insert_resource(evals);
+    }
+
+    let mut evaluators = world.remove_resource::<UtilityEvaluators>().unwrap();
+
     // Initialize Queries
     let mut queries = CandidateQueries::new(world);
 
@@ -459,7 +430,7 @@ pub fn evaluate_actions_system(world: &mut World) {
     // Evaluate each pop
     for data in &buffer.pop_data {
         let (best_action, best_utility, best_target) =
-            evaluate_single_pop(&mut queries, world, data, &context);
+            evaluate_single_pop(&mut evaluators, &mut queries, world, data, &context);
 
         // Switch if best exceeds threshold
         if best_utility > data.action.current_utility + config.switch_threshold {
@@ -484,6 +455,8 @@ pub fn evaluate_actions_system(world: &mut World) {
 
     // Return the buffer to the world
     world.insert_resource(buffer);
+    // Return evaluators
+    world.insert_resource(evaluators);
 }
 
 /// Updates utility weights based on action outcome.

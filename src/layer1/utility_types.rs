@@ -1,10 +1,14 @@
 use crate::layer1::combat::Drafted;
-use crate::layer1::factions::FactionMember;
+use crate::layer1::day_night::DayNightCycle;
+use crate::layer1::factions::{FactionData, FactionId, FactionMember};
 use crate::layer1::items::Equipment;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
+use crate::layer1::resources::ColonyResources;
+use crate::layer1::taboo::TabooState;
 use crate::layer1::unrest::MentalState;
 use bevy_ecs::prelude::*;
+use std::collections::HashMap;
 use strum_macros::EnumIter;
 
 /// The menu of high-level behaviors a Pop can choose from.
@@ -275,11 +279,46 @@ pub struct PopEvalData {
     pub faction_member: Option<FactionMember>,
 }
 
+/// Context data for utility evaluation (resources, time, etc.)
+pub struct WorldContext<'a> {
+    /// Reference to global colony resources (food, wood, etc.).
+    pub resources: &'a ColonyResources,
+    /// Reference to the day/night cycle (for shift checks).
+    pub cycle: &'a DayNightCycle,
+    /// Reference to current taboo/law state.
+    pub taboo: &'a TabooState,
+    /// Reference to faction data (for strike checks).
+    pub factions: Option<&'a HashMap<FactionId, FactionData>>,
+}
+
+/// Trait for decoupling action evaluation logic.
+pub trait ActionEvaluator: Send + Sync {
+    /// Evaluates the action for a specific pop.
+    ///
+    /// Returns `Some((ActionType, Utility, Target))` if a valid candidate is found.
+    fn evaluate(
+        &mut self,
+        world: &mut World,
+        data: &PopEvalData,
+        context: &WorldContext,
+    ) -> Option<(ActionType, f32, Option<Entity>)>;
+}
+
 /// Reusable buffer for `evaluate_actions_system` to avoid allocations.
 #[derive(Resource, Default)]
 pub struct UtilityAIBuffer {
     /// Buffer for pop data.
     pub pop_data: Vec<PopEvalData>,
+}
+
+/// Resource holding all registered action evaluators.
+///
+/// This registry allows decoupling specific action logic from the main AI loop.
+/// New actions can be added by implementing [`ActionEvaluator`] and adding it here.
+#[derive(Resource, Default)]
+pub struct UtilityEvaluators {
+    /// List of evaluators to check.
+    pub evaluators: Vec<Box<dyn ActionEvaluator>>,
 }
 
 /// Calculates urgency from a need value (0.0-1.0).

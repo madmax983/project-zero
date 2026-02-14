@@ -1,8 +1,9 @@
 use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::map::GridPosition;
-use crate::layer1::utility_types::{ActionType, UtilityWeights};
+use crate::layer1::utility_types::{ActionEvaluator, ActionType, PopEvalData, UtilityWeights, WorldContext};
 use crate::layer1::utility_types::{calculate_context_score, calculate_success_modifier};
 use bevy_ecs::prelude::*;
+use bevy_ecs::system::SystemState;
 
 /// Evaluates the utility of performing designated work (Mining, Building, etc.).
 ///
@@ -47,6 +48,58 @@ pub fn evaluate_work<'a>(
         }
     }
     best
+}
+
+/// Evaluator for the Work action.
+pub struct WorkEvaluator {
+    system_state: SystemState<Query<'static, 'static, (Entity, &'static GridPosition, &'static Designation)>>,
+}
+
+impl WorkEvaluator {
+    /// Creates a new `WorkEvaluator`.
+    pub fn new(world: &mut World) -> Self {
+        Self {
+            system_state: SystemState::new(world),
+        }
+    }
+}
+
+impl ActionEvaluator for WorkEvaluator {
+    fn evaluate(
+        &mut self,
+        world: &mut World,
+        data: &PopEvalData,
+        context: &WorldContext,
+    ) -> Option<(ActionType, f32, Option<Entity>)> {
+        // Check if striking
+        let is_striking = context.factions.as_ref().is_some_and(|map| {
+            data.faction_member.as_ref().is_some_and(|member| {
+                member.faction_id.is_some_and(|fid| {
+                    map.get(&fid).is_some_and(|data| {
+                        data.state == crate::layer1::factions::FactionState::Striking
+                    })
+                })
+            })
+        });
+
+        if is_striking {
+            return None;
+        }
+
+        let designations_query = self.system_state.get(world);
+
+        if let Some((utility, target)) = evaluate_work(
+            &data.pos,
+            &data.weights,
+            designations_query.iter(),
+        ) {
+            let penalty =
+                crate::layer1::taboo::evaluate_taboo_penalty(ActionType::Work, context.taboo);
+            return Some((ActionType::Work, utility + penalty, Some(target)));
+        }
+
+        None
+    }
 }
 
 #[cfg(test)]
