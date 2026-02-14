@@ -154,7 +154,7 @@ impl CandidateQueries {
 /// Uses `par_iter_mut` for parallel processing across entities.
 pub fn update_action_timer_system(mut query: Query<&mut PopAction>) {
     query.par_iter_mut().for_each(|mut action| {
-        action.ticks_committed += 1;
+        action.ticks_committed = action.ticks_committed.saturating_add(1);
     });
 }
 
@@ -500,10 +500,10 @@ pub fn update_weights_from_outcome(
 ) {
     // Track attempt
     let idx = action.as_index();
-    weights.action_attempt_count[idx] += 1;
+    weights.action_attempt_count[idx] = weights.action_attempt_count[idx].saturating_add(1);
 
     if success {
-        weights.action_success_count[idx] += 1;
+        weights.action_success_count[idx] = weights.action_success_count[idx].saturating_add(1);
 
         // Successful action: reinforce weights
         if duration < 10 {

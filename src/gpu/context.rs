@@ -1,4 +1,3 @@
-#![allow(unsafe_code)]
 //! wgpu device and queue initialization.
 
 use bevy_ecs::prelude::*;
@@ -21,9 +20,11 @@ pub struct GpuContext {
 // and are !Send + !Sync, but WASM is single-threaded so this is safe.
 #[cfg(target_arch = "wasm32")]
 // SAFETY: WASM is single-threaded; these types will never be sent across threads.
+#[allow(unsafe_code)]
 unsafe impl Send for GpuContext {}
 #[cfg(target_arch = "wasm32")]
 // SAFETY: WASM is single-threaded; these types will never be accessed from multiple threads.
+#[allow(unsafe_code)]
 unsafe impl Sync for GpuContext {}
 
 impl Resource for GpuContext {}
