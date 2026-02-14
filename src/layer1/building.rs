@@ -27,7 +27,7 @@ use super::fire::Flammable;
 use super::housing::Housing;
 use super::social::Tavern;
 use super::stockpile::Stockpile;
-use crate::layer1::energy::{Conduit, PowerConsumer, PowerSource};
+use crate::layer1::energy::{Conduit, FuelConsumer, PowerConsumer, PowerSource};
 use crate::layer1::heirloom::AncientStructure;
 use crate::layer1::lighting::LightSource;
 use crate::layer1::resources::{ColonyResources, RefiningProgress};
@@ -849,7 +849,13 @@ fn spawn_building(
             // Statues are made of stone/metal, not flammable
         }
         BuildingType::Generator => {
-            entity.insert(PowerSource { output: 10.0 });
+            entity.insert((
+                PowerSource {
+                    output: 10.0,
+                    ..Default::default()
+                },
+                FuelConsumer { amount: 1.0 },
+            ));
         }
         BuildingType::PowerPole => {
             entity.insert(Conduit);
@@ -880,7 +886,10 @@ fn spawn_building(
         }
         BuildingType::AncientReactor => {
             entity.insert((
-                PowerSource { output: 50.0 }, // Massive power
+                PowerSource {
+                    output: 50.0,
+                    ..Default::default()
+                }, // Massive power
                 AncientStructure,
                 LightSource {
                     radius: 8.0,

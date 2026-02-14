@@ -330,6 +330,8 @@ pub use biocompatibility::*;
 #[cfg(test)]
 mod fuel_industry_tests;
 #[cfg(test)]
+mod fuel_consumption_tests;
+#[cfg(test)]
 mod greenhouse_tests;
 /// Palette fatigue system (Spec 114).
 pub mod palette_fatigue;

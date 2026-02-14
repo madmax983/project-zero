@@ -4,6 +4,7 @@
 //! Grids are formed dynamically based on connectivity via `Conduit`s and power-related buildings.
 
 use crate::layer1::map::GridPosition;
+use crate::layer1::resources::ColonyResources;
 use bevy_ecs::prelude::*;
 use std::collections::{HashMap, HashSet, VecDeque};
 
@@ -12,6 +13,17 @@ use std::collections::{HashMap, HashSet, VecDeque};
 pub struct PowerSource {
     /// Amount of power produced per tick.
     pub output: f32,
+    /// Whether the source is currently active (e.g., has fuel).
+    pub active: bool,
+}
+
+impl Default for PowerSource {
+    fn default() -> Self {
+        Self {
+            output: 10.0,
+            active: true,
+        }
+    }
 }
 
 /// Consumes power from the grid.
@@ -21,6 +33,13 @@ pub struct PowerConsumer {
     pub demand: f32,
     /// Whether the consumer is currently powered.
     pub active: bool,
+}
+
+/// Consumes fuel to operate.
+#[derive(Component, Debug, Clone)]
+pub struct FuelConsumer {
+    /// Amount of fuel consumed per tick.
+    pub amount: f32,
 }
 
 /// Connects power grid elements.
@@ -60,7 +79,7 @@ fn bfs_grid(
         if let Some(&entity) = grid_map.get(&pos) {
             grid_entities.push(entity);
 
-            if let Some(source) = world.get::<PowerSource>(entity) {
+            if let Some(source) = world.get::<PowerSource>(entity).filter(|s| s.active) {
                 total_production += source.output;
             }
             if let Some(consumer) = world.get::<PowerConsumer>(entity) {
@@ -129,6 +148,38 @@ pub fn power_grid_system(world: &mut World) {
     }
 }
 
+/// System to process fuel consumption for power sources.
+pub fn process_fuel_consumption_system(
+    mut resources: ResMut<ColonyResources>,
+    mut query: Query<(&mut PowerSource, &FuelConsumer)>,
+) {
+    let available_fuel = resources.fuel;
+    let mut fuel_spent = 0.0;
+
+    for (mut source, consumer) in &mut query {
+        if available_fuel - fuel_spent >= consumer.amount {
+            // Have fuel
+            fuel_spent += consumer.amount;
+
+            // Activate if inactive
+            if !source.active {
+                source.active = true;
+            }
+        } else {
+            // Out of fuel
+            // Deactivate if active
+            if source.active {
+                source.active = false;
+            }
+        }
+    }
+
+    // Deduct total from global resources
+    if fuel_spent > 0.0 {
+        resources.fuel = (resources.fuel - fuel_spent).max(0.0);
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::{Conduit, PowerConsumer, PowerSource, calculate_grid_stats};
@@ -138,7 +189,7 @@ mod tests {
 
     #[test]
     fn test_power_components() {
-        let source = PowerSource { output: 10.0 };
+        let source = PowerSource { output: 10.0, active: true };
         let consumer = PowerConsumer {
             demand: 5.0,
             active: true,
@@ -157,7 +208,7 @@ mod tests {
         // Generator at 0,0
         let generator = world
             .spawn((
-                PowerSource { output: 10.0 },
+                PowerSource { output: 10.0, active: true },
                 GridPosition { x: 0, y: 0 },
                 Building {
                     building_type: BuildingType::Generator,
@@ -198,7 +249,7 @@ mod tests {
         // Generator at 0,0
         let generator = world
             .spawn((
-                PowerSource { output: 10.0 },
+                PowerSource { output: 10.0, active: true },
                 GridPosition { x: 0, y: 0 },
                 Building {
                     building_type: BuildingType::Generator,
@@ -243,7 +294,7 @@ mod tests {
 
         // Gen 10
         world.spawn((
-            PowerSource { output: 10.0 },
+            PowerSource { output: 10.0, active: true },
             GridPosition { x: 0, y: 0 },
             Building {
                 building_type: BuildingType::Generator,

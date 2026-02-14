@@ -80,3 +80,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `011` Named Locations — `specs/011-named-locations.md` — completed 2026-02-24
 - [x] `050` Civil Unrest — `specs/050-civil-unrest.md` — completed 2026-02-24
 - [x] `069` Mentorship System — `specs/069-mentorship-system.md` — completed 2026-02-24
+- [x] `117` Fuel Consumption — `specs/117-fuel-consumption.md` — completed 2026-10-25
