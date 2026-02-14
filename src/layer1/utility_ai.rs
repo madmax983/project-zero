@@ -252,71 +252,88 @@ pub fn evaluate_single_pop(
     }
 
     // Evaluate Refine
-    if let Some((utility, target)) = evaluate_refine(
-        &pop_pos,
-        &weights,
-        context.resources,
-        context.cycle,
-        queries.refining.iter(world),
-    ) {
-        check_best(ActionType::Refine, utility, Some(target));
+    if !is_striking {
+        if let Some((utility, target)) = evaluate_refine(
+            &pop_pos,
+            &weights,
+            context.resources,
+            context.cycle,
+            queries.refining.iter(world),
+        ) {
+            check_best(ActionType::Refine, utility, Some(target));
+        }
     }
 
     // Evaluate Farm
-    if let Some((utility, target)) =
-        evaluate_farm(&pop_pos, &weights, context.cycle, queries.farms.iter(world))
-    {
-        check_best(ActionType::Farm, utility, Some(target));
+    if !is_striking {
+        if let Some((utility, target)) =
+            evaluate_farm(&pop_pos, &weights, context.cycle, queries.farms.iter(world))
+        {
+            check_best(ActionType::Farm, utility, Some(target));
+        }
     }
 
     // Evaluate FetchTool
-    let equipment = equipment_opt.unwrap_or_default();
-    if let Some((utility, target)) = evaluate_fetch_tool(
-        &pop_pos,
-        &equipment,
-        context.resources,
-        queries.stockpiles.iter(world),
-    ) {
-        check_best(ActionType::FetchTool, utility, Some(target));
+    // FetchTool supports work (fetching tools for work).
+    // If striking, they don't need tools for work, but might need for other things?
+    // Probably safe to block if striking, as tool usage implies work.
+    if !is_striking {
+        let equipment = equipment_opt.unwrap_or_default();
+        if let Some((utility, target)) = evaluate_fetch_tool(
+            &pop_pos,
+            &equipment,
+            context.resources,
+            queries.stockpiles.iter(world),
+        ) {
+            check_best(ActionType::FetchTool, utility, Some(target));
+        }
     }
 
     // Evaluate Repair
-    if let Some((utility, target)) = evaluate_repair(
-        &pop_pos,
-        &weights,
-        queries.designations.iter(world),
-        queries.structures.iter(world),
-    ) {
-        check_best(ActionType::Repair, utility, Some(target));
+    if !is_striking {
+        if let Some((utility, target)) = evaluate_repair(
+            &pop_pos,
+            &weights,
+            queries.designations.iter(world),
+            queries.structures.iter(world),
+        ) {
+            check_best(ActionType::Repair, utility, Some(target));
+        }
     }
 
     // Evaluate Explore
-    if let Some((utility, target)) =
-        evaluate_explore(&pop_pos, &weights, queries.anomalies.iter(world))
-    {
-        check_best(ActionType::Explore, utility, Some(target));
+    if !is_striking {
+        if let Some((utility, target)) =
+            evaluate_explore(&pop_pos, &weights, queries.anomalies.iter(world))
+        {
+            check_best(ActionType::Explore, utility, Some(target));
+        }
     }
 
     // Evaluate Research
-    if let Some((utility, target)) = evaluate_research(
-        &pop_pos,
-        &weights,
-        context.resources,
-        context.cycle,
-        queries.libraries.iter(world),
-    ) {
-        check_best(ActionType::Research, utility, Some(target));
+    if !is_striking {
+        if let Some((utility, target)) = evaluate_research(
+            &pop_pos,
+            &weights,
+            context.resources,
+            context.cycle,
+            queries.libraries.iter(world),
+        ) {
+            check_best(ActionType::Research, utility, Some(target));
+        }
     }
 
     // Evaluate Haul
-    if let Some((utility, target)) = evaluate_haul(
-        &pop_pos,
-        &weights,
-        queries.items.iter(world),
-        queries.stockpiles.iter(world),
-        context.resources,
-    ) {
-        check_best(ActionType::Haul, utility, Some(target));
+    if !is_striking {
+        if let Some((utility, target)) = evaluate_haul(
+            &pop_pos,
+            &weights,
+            queries.items.iter(world),
+            queries.stockpiles.iter(world),
+            context.resources,
+        ) {
+            check_best(ActionType::Haul, utility, Some(target));
+        }
     }
 
     // Evaluate SeekMedicalCare
@@ -333,20 +350,24 @@ pub fn evaluate_single_pop(
     }
 
     // Evaluate BuryCorpse
-    if let Some((utility, target)) = evaluate_bury_corpse(
-        &pop_pos,
-        queries.corpses.iter(world),
-        queries.graves.iter(world),
-        &weights,
-    ) {
-        check_best(ActionType::BuryCorpse, utility, Some(target));
+    if !is_striking {
+        if let Some((utility, target)) = evaluate_bury_corpse(
+            &pop_pos,
+            queries.corpses.iter(world),
+            queries.graves.iter(world),
+            &weights,
+        ) {
+            check_best(ActionType::BuryCorpse, utility, Some(target));
+        }
     }
 
     // Evaluate Tame
-    if let Some((utility, target)) =
-        evaluate_tame(&pop_pos, &weights, queries.designations.iter(world))
-    {
-        check_best(ActionType::Tame, utility, Some(target));
+    if !is_striking {
+        if let Some((utility, target)) =
+            evaluate_tame(&pop_pos, &weights, queries.designations.iter(world))
+        {
+            check_best(ActionType::Tame, utility, Some(target));
+        }
     }
 
     (best_action, best_utility, best_target)

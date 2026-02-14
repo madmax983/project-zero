@@ -26,6 +26,7 @@
 
 use crate::layer1::GridPosition;
 use crate::layer1::building::{Building, BuildingType};
+use crate::layer1::factions::{FactionMember, FactionState, Factions};
 use crate::layer1::pop::Pop;
 use crate::layer1::resources::{ColonyResources, RefiningProgress, ResourceItem, ResourceType};
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
@@ -51,12 +52,36 @@ use rand::Rng;
 ///     *   Resets progress.
 #[doc(alias = "crafting")]
 pub fn process_refining_system(world: &mut World) {
+    let factions_data = world
+        .get_resource::<Factions>()
+        .map(|f| f.map.clone());
+
     // Collect workers who are refining
     let workers: Vec<(Entity, GridPosition)> = world
-        .query_filtered::<(Entity, &GridPosition, &PopAction), With<Pop>>()
+        .query_filtered::<(
+            Entity,
+            &GridPosition,
+            &PopAction,
+            Option<&FactionMember>,
+        ), With<Pop>>()
         .iter(world)
-        .filter(|(_, _, action)| action.current == ActionType::Refine)
-        .map(|(e, p, _)| (e, *p))
+        .filter(|(_, _, action, member)| {
+            if action.current != ActionType::Refine {
+                return false;
+            }
+
+            if let Some(map) = &factions_data {
+                if let Some(m) = member {
+                    if let Some(fid) = m.faction_id {
+                        if map.get(&fid).is_some_and(|d| d.state == FactionState::Striking) {
+                            return false;
+                        }
+                    }
+                }
+            }
+            true
+        })
+        .map(|(e, p, _, _)| (e, *p))
         .collect();
 
     let resources_snapshot = world

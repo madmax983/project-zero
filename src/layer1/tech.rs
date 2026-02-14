@@ -1,4 +1,5 @@
 use crate::layer1::actions::{AssignedTo, AssignmentType};
+use crate::layer1::factions::{FactionMember, FactionState, Factions};
 use crate::layer1::resources::ColonyResources;
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
@@ -92,14 +93,28 @@ pub fn unlock_tech(world: &mut World, tech: Tech) -> bool {
 
 /// Generates knowledge based on pops working at Libraries.
 pub fn process_research_system(
-    pops: Query<&AssignedTo>,
+    pops: Query<(&AssignedTo, Option<&FactionMember>)>,
     libraries: Query<Entity, With<Library>>,
     mut resources: ResMut<ColonyResources>,
+    factions: Option<Res<Factions>>,
 ) {
     let mut library_workers = std::collections::HashMap::<Entity, u32>::new();
 
-    for assignment in &pops {
+    for (assignment, member_opt) in &pops {
         if assignment.assignment_type == AssignmentType::LibraryWorker {
+            if let Some(factions) = &factions {
+                if let Some(member) = member_opt {
+                    if let Some(fid) = member.faction_id {
+                        if factions
+                            .get(fid)
+                            .is_some_and(|d| d.state == FactionState::Striking)
+                        {
+                            continue;
+                        }
+                    }
+                }
+            }
+
             *library_workers.entry(assignment.entity).or_insert(0) += 1;
         }
     }

@@ -53,3 +53,6 @@ mod pollution_refinery;
 
 #[path = "integration/funeral_rites.rs"]
 mod funeral_rites;
+
+#[path = "integration/strikes_work.rs"]
+mod strikes_work;

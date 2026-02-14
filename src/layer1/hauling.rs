@@ -1,5 +1,6 @@
 use crate::layer1::GridPosition;
 use crate::layer1::execution::{AtTarget, MovementTarget};
+use crate::layer1::factions::{FactionMember, FactionState, Factions};
 use crate::layer1::resources::{Carrying, ColonyResources, ResourceItem};
 use crate::layer1::stockpile::Stockpile;
 use crate::layer1::utility_ai::{ActionType, PopAction, manhattan_distance};
@@ -7,6 +8,10 @@ use bevy_ecs::prelude::*;
 
 /// Moves resources from the world to stockpiles.
 pub fn haul_system(world: &mut World) {
+    let factions_data = world
+        .get_resource::<Factions>()
+        .map(|f| f.map.clone());
+
     // Collect hauling pops
     let mut haulers = Vec::new();
     let mut query = world.query::<(
@@ -15,9 +20,20 @@ pub fn haul_system(world: &mut World) {
         &GridPosition,
         Option<&Carrying>,
         Option<&AtTarget>,
+        Option<&FactionMember>,
     )>();
-    for (entity, action, pos, carrying, at_target) in query.iter(world) {
+    for (entity, action, pos, carrying, at_target, member) in query.iter(world) {
         if action.current == ActionType::Haul {
+            if let Some(map) = &factions_data {
+                if let Some(m) = member {
+                    if let Some(fid) = m.faction_id {
+                        if map.get(&fid).is_some_and(|d| d.state == FactionState::Striking) {
+                            continue;
+                        }
+                    }
+                }
+            }
+
             haulers.push((entity, *pos, carrying.copied(), at_target.is_some()));
         }
     }
