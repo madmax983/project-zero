@@ -8,6 +8,7 @@ use crate::layer1::palette_fatigue::{DietaryHistory, record_meal};
 use crate::layer1::pop::Pop;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::seasons::SeasonState;
+use crate::layer1::factions::{FactionMember, FactionState, Factions};
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
 use crate::layer1::utility_ai::{ActionType, PopAction};
 use bevy_ecs::prelude::*;
@@ -34,9 +35,19 @@ impl Default for Farm {
 /// Produces food from all farms with active workers.
 pub fn produce_food_system(
     farm_query: Query<(&crate::layer1::building::Building, &GridPosition), With<Farm>>,
-    mut pop_query: Query<(Entity, &GridPosition, &PopAction, Option<&mut Skills>), With<Pop>>,
+    mut pop_query: Query<
+        (
+            Entity,
+            &GridPosition,
+            &PopAction,
+            Option<&mut Skills>,
+            Option<&FactionMember>,
+        ),
+        With<Pop>,
+    >,
     season: Option<Res<SeasonState>>,
     mut resources: ResMut<ColonyResources>,
+    factions: Option<Res<Factions>>,
 ) {
     let modifier = season.map_or(1.0, |s| s.current_season.food_modifier());
 
@@ -58,9 +69,23 @@ pub fn produce_food_system(
             .map(|(b, p)| (*p, b.building_type))
             .collect();
 
-    for (_, pos, action, skills_opt) in &mut pop_query {
+    for (_, pos, action, skills_opt, faction_member_opt) in &mut pop_query {
         if action.current != ActionType::Farm {
             continue;
+        }
+
+        // Check for strikes
+        if let Some(factions) = &factions {
+            if let Some(member) = faction_member_opt {
+                if let Some(fid) = member.faction_id {
+                    if factions
+                        .get(fid)
+                        .is_some_and(|d| d.state == FactionState::Striking)
+                    {
+                        continue;
+                    }
+                }
+            }
         }
 
         if let Some(building_type) = farm_map.get(pos) {
