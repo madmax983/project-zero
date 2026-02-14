@@ -3405,3 +3405,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Density (Efficiency) vs. Aesthetics/Mental Health.
 
 ---
+
+## Subscription Prosthetics
+
+**Layer:** 1
+
+**Fantasy:** You own the arm, but the corp owns the hand. Cybernetics as a service.
+
+**Mechanic:** Advanced prosthetics give huge bonuses but require monthly "License Key" updates (Credits) or "Proprietary Fluid" (Resource). Miss a payment/shipment, and the limb locks up (huge debuff).
+
+**Emergence:** A trade war cuts off the supply of "Bio-Gel". Your super-miners are suddenly statues. You have to amputate the high-tech arms and replace them with rusty hooks just to get work done.
+
+**Tension:** High-tech dependency vs. Low-tech autonomy.
+
+---
+
+## Cryo-Dreams
+
+**Layer:** 1
+
+**Fantasy:** The subconscious of the frozen. Even in sleep, they work for you.
+
+**Mechanic:** Pops in cryo-stasis aren't fully inactive. They generate "Dream Data" (Research/Art) based on their traits, but risk "Nightmares" that cause mental trauma upon waking.
+
+**Emergence:** You keep a philosopher in the fridge for 10 years to generate culture points. When you wake him, he's insane from a decade of lucid nightmares.
+
+**Tension:** Using people as processors (efficiency) vs. Ethics (risk of trauma).
+
+---
+
+## Space Lanes
+
+**Layer:** 2
+
+**Fantasy:** Blazing a trail through the dark.
+
+**Mechanic:** Repeated ship travel between two nodes creates a "Lane". Lanes are faster and safer (nav data). Unused lanes decay. Pirates prefer camping high-traffic lanes.
+
+**Emergence:** You build a super-highway for your trade. It becomes so popular that pirates blockade it perfectly. You have to revert to "bush-whacking" through deep space to avoid them.
+
+**Tension:** Efficiency (Lane) vs. Security (Random path).
+
+---
