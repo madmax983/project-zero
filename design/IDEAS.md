@@ -3125,3 +3125,143 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Logistics overhead (refueling) vs. Orbital capability.
 
 ---
+
+## Memory Crystals
+
+**Layer:** 1
+
+**Fantasy:** The skills of the master smith survive death, but so does his fear of spiders.
+
+**Mechanic:** A "Memory Crystal" item can be crafted from a dying Pop's neural pattern. A living Pop can "Equip" it to gain the skills, but they also inherit the dead Pop's Traits and Mood triggers (e.g., Phobias).
+
+**Emergence:** You equip your new soldier with the "General's Crystal". He becomes a tactical genius but suddenly refuses to eat anything but synthetic nutrient paste because the General had a stomach ulcer.
+
+**Tension:** Preserve valuable skills (Efficiency) vs. Dilute the individuality of the living (Identity).
+
+---
+
+## Radio Nostalgia
+
+**Layer:** Cross-layer
+
+**Fantasy:** The stars are a time machine. The news from home arrives 50 years late.
+
+**Mechanic:** Your Comms Console picks up broadcasts from the Homeworld, delayed by light-years. "New" music or political news shifts Colony Ethics or Moods. The news might be about a war that ended before you were born.
+
+**Emergence:** The colony receives a "Victory" broadcast from the Empire. Morale soars. Two years later, a refugee ship arrives saying the Empire actually fell 20 years ago. The "Victory" was propaganda.
+
+**Tension:** Censor the news (Control) or let it play (Morale/Chaos)?
+
+---
+
+## The Colony Mascot
+
+**Layer:** 1
+
+**Fantasy:** A useless, ugly little creature that the marines would die for.
+
+**Mechanic:** A non-hostile, non-productive unique animal spawns. It wanders social zones. Interacting with it gives a massive Mood buff. If it is killed (starvation/raid), the entire colony suffers a "Grief" breakdown.
+
+**Emergence:** During a famine, the "Mascot" is the only one eating well. A "Pragmatist" faction pop tries to butcher it, sparking a civil war with the "Sentimentalist" faction.
+
+**Tension:** Resource drain for morale vs. Ruthless efficiency.
+
+---
+
+## Zero-G Fermentation
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Some things just taste better when they haven't touched gravity.
+
+**Mechanic:** Specific luxury goods (e.g., "Void-Ale", "Foam-Cake") can *only* be produced in Orbital Stations (Layer 2). They trade for massive value on the ground.
+
+**Emergence:** Your ground colony is a grim industrial hellscape, but the Governor demands his Void-Ale. You launch a shuttle just to pick up a keg, wasting tons of fuel for a drink.
+
+**Tension:** Logistics cost vs. Luxury/Trade value.
+
+---
+
+## Accidental Gods
+
+**Layer:** 3 -> 2
+
+**Fantasy:** To the Stone Age locals, your mining ship is a chariot of fire.
+
+**Mechanic:** Discovering a Primitive world allows you to establish an "Observation Post". If you periodically drop supplies (Food/Tech), you gain "Faith" (a Diplomatic/Unity currency). If you stop, they build effigies and burn them, causing Diplomatic penalties.
+
+**Emergence:** You forget to drop the "Manna" (nutrient paste) because of a pirate raid. The primitives launch a crude rocket at your station in retaliation. It actually hits.
+
+**Tension:** Resource cost of "Miracles" vs. Influence gain.
+
+---
+
+## Geodetic Sentience
+
+**Layer:** 1
+
+**Fantasy:** I swear that rock was on the left side of the room yesterday.
+
+**Mechanic:** Rare "Living Stone" items found in deep mines. They are Resources, but they slowly move towards heat sources or other stones when unobserved. If enough gather, they fuse into a Golem.
+
+**Emergence:** You stockpile the stones in the warehouse. Overnight, they migrate to the reactor room and wall in the door. The night shift engineer is trapped.
+
+**Tension:** Secure containment (hassle) vs. Easy storage (risk).
+
+---
+
+## Skyhooks
+
+**Layer:** 2
+
+**Fantasy:** Catching the train to the stars.
+
+**Mechanic:** A rotating orbital structure that dips into the upper atmosphere. Ships can "Hook" onto it for a momentum boost to orbit without burning fuel. Requires precise timing window. Miss the window = crash.
+
+**Emergence:** You time the launch of a heavy freighter perfectly. But the Skyhook was damaged by debris and releases early, flinging the freighter into deep space instead of orbit.
+
+**Tension:** High skill/risk logistics (Free fuel) vs. Reliable rockets (Fuel cost).
+
+---
+
+## Atmospheric Tides
+
+**Layer:** 1
+
+**Fantasy:** The air itself is an ocean that rises and falls.
+
+**Mechanic:** Global air pressure cycles. "High Tide" (Thick air) = High Wind Power, Slower Movement, Chemical reactions faster. "Low Tide" (Thin air) = Low Wind, Fast Movement, Suffocation risk for weak pops.
+
+**Emergence:** You rely on wind turbines. "Low Tide" hits during a cold snap. Power fails. You have to burn your furniture to stay warm because the air is too thin to spin the blades.
+
+**Tension:** Buffer infrastructure (Batteries/Tanks) vs. Just-in-time production.
+
+---
+
+## Scrapcode
+
+**Layer:** 1
+
+**Fantasy:** A virus that attacks the very concept of a chair.
+
+**Mechanic:** A digital infection in the colony database. It randomly corrupts Building Recipes (e.g., a Bed now costs 50 Steel instead of 10 Wood). Must be "Purged" by Scientists, but purging takes the database offline (no building).
+
+**Emergence:** You need to build turrets *now* to stop a raid, but the Scrapcode has changed the recipe to require "Gold". You don't have Gold. You have to fight with pistols.
+
+**Tension:** Digital security upkeep vs. Production uptime.
+
+---
+
+## The "Thing" in the Ice
+
+**Layer:** 1
+
+**Fantasy:** We dug too deep, and we found something that was sleeping.
+
+**Mechanic:** Mining ice or frozen terrain has a chance to spawn a "Frozen Block". Thawing it (Heat) releases *something* (Ancient Pop, Precursor Robot, or Horrific Beast). You don't know until you thaw it.
+
+**Emergence:** You thaw a block hoping for an Ancient Scientist. It's a "Phase-Spider". It eats the intern.
+
+**Tension:** Curiosity (Potential reward) vs. Safety.
+
+---
