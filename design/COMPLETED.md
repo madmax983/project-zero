@@ -1,93 +1,77 @@
 # Completed
 
-Features that have been fully implemented and tested.
+Features that have been fully implemented, tested, and merged.
 
 ---
 
 ## MVP — Layer 1: Colony Simulation
 
-- [x] `001` Grid and Terrain — `specs/001-grid-terrain.md` — completed 2025-01-20
-- [x] `002` Pop Entity — `specs/002-pop-entity.md` — completed 2025-01-21
-- [x] `003` Time and Simulation Loop — `specs/003-time-loop.md` — completed 2025-01-21
-- [x] `004` Basic UI — `specs/004-basic-ui.md` — completed 2025-01-21
-- [x] `005` Pop needs (hunger, rest) — `specs/005-pop-needs.md` — completed 2025-01-22
-- [x] `006` Building placement — `specs/006-building-placement.md` — completed 2025-01-22
-- [x] `007` Housing — `specs/007-housing.md` — completed 2025-01-22
-- [x] `008` Farming — `specs/008-farming.md` — completed 2025-01-23
-- [x] `009` Stockpiles and Resource Cap — `specs/009-stockpiles.md` — completed 2025-01-23
-- [x] `011` Designation System — `specs/011-designation-system.md` — completed 2025-01-24
-- [x] `012` Work Execution — `specs/012-work-execution.md` — completed 2025-01-24
-- [x] `013` Pathfinding (Movement) — `specs/013-pathfinding.md` — completed 2025-01-24
-- [x] `014` Resource Items and Hauling — `specs/014-resource-items.md` — completed 2025-01-25
-- [x] `016` Utility AI System — `specs/016-utility-ai.md` — completed 2025-01-26
-- [x] `017` Tools and Equipment — `specs/017-tools.md` — completed 2025-01-27
-- [x] `018` Status Bar — `specs/018-status-bar.md` — completed 2025-01-27
-- [x] `019` Skills and Experience — `specs/019-skills.md` — completed 2025-01-28
-- [x] `020` Death and Legacy — `specs/020-death-legacy.md` — completed 2025-01-28
-- [x] `021` Tech Tree and Research — `specs/021-tech-tree.md` — completed 2025-01-29
-- [x] `022` Structure Durability and Repair — `specs/022-structure-durability.md` — completed 2025-01-29
-- [x] `023` Seasons and Weather — `specs/023-seasons.md` — completed 2025-01-30
-- [x] `024` Refining Industry — `specs/024-refining-industry.md` — completed 2025-01-30
-- [x] `025` Clothing and Wear — `specs/025-clothing.md` — completed 2025-01-31
-- [x] `026` Trade and Merchants — `specs/026-trade.md` — completed 2025-02-01
-- [x] `029` Edicts and Policies — `specs/029-edicts.md` — completed 2025-02-02
-- [x] `030` Structural Integrity — `specs/030-structural-integrity.md` — completed 2025-02-03
-- [x] `031` Civil Unrest — `specs/031-civil-unrest.md` — completed 2025-02-03
-- [x] `032` Entropy and Spoilage — `specs/032-entropy-spoilage.md` — completed 2025-02-04
-- [x] `033` Vermin and Pestilence — `specs/033-vermin.md` — completed 2025-02-04
-- [x] `034` Fires and Firefighting — `specs/034-fire.md` — completed 2025-02-05
-- [x] `035` Notifications System — `specs/035-notifications.md` — completed 2025-02-05
-- [x] `036` Exploration and Fog of War — `specs/036-exploration.md` — completed 2025-02-06
-- [x] `039` Room Quality and Acoustics — `specs/039-room-quality.md` — completed 2025-02-08
-- [x] `040` Factions and Politics — `specs/040-factions.md` — completed 2025-02-08
-- [x] `063` Atmosphere Simulation — `specs/063-atmospheric-simulation.md` — completed 2025-02-09
-- [x] `043` Day/Night Cycle — `specs/043-day-night-cycle.md` — completed 2025-02-10
-- [x] `044` Horticulture and Beauty — `specs/044-horticulture.md` — completed 2025-02-10
-- [x] `045` Hostile Fauna — `specs/045-hostile-fauna.md` — completed 2025-02-11
-- [x] `046` Visitors and Hospitality — `specs/046-visitors.md` — completed 2025-02-11
-- [x] `072` Justice System — `specs/072-justice-system.md` — completed 2025-02-12
-- [x] `048` Combat System — `specs/048-combat-system.md` — completed 2025-02-12
-- [x] `049` Defense Structures — `specs/049-defense-structures.md` — completed 2025-02-13
-- [x] `050` Art and Culture — `specs/050-art-culture.md` — completed 2025-02-13
-- [x] `051` Rumor System — `specs/051-rumor-system.md` — completed 2025-02-14
-- [x] `052` Deep Mining — `specs/052-deep-mining.md` — completed 2025-02-14
-- [x] `054` Water Simulation — `specs/054-water-simulation.md` — completed 2026-03-05
-- [x] `055` Animal Husbandry — `specs/055-animal-husbandry.md` — completed 2026-03-05
-- [x] `056` Zones and Areas — `specs/056-zones-areas.md` — completed 2026-03-05
-- [x] `057` Funeral Rites — `specs/057-funeral-rites.md` — completed 2026-03-05
-- [x] `060` Acoustics — `specs/060-acoustics.md` — completed 2026-03-05
-- [x] `062` Lifecycle (Aging) — `specs/062-lifecycle.md` — completed 2026-03-05
-- [x] `064` Room Quality — `specs/064-room-quality.md` — completed 2026-03-05
-- [x] `065` Sleep Cycles — `specs/065-sleep-cycles.md` — completed 2026-03-05
-- [x] `068` Faction Demands — `specs/068-faction-demands.md` — completed 2026-03-05
-- [x] `070` Heirloom Tech — `specs/070-heirloom-tech.md` — completed 2026-03-05
-- [x] `071` Structural Collapse — `specs/071-structural-collapse.md` — completed 2026-03-05
-- [x] `073` Vermin Infestation — `specs/073-vermin-infestation.md` — completed 2026-03-05
-- [x] `074` Visitors — `specs/074-visitors.md` — completed 2026-03-05
-- [x] `075` Taming — `specs/075-taming.md` — completed 2026-03-05
-- [x] `078` The Old Guard — `specs/078-the-old-guard.md` — completed 2026-03-05
-- [x] `079` Extreme Weather — `specs/079-extreme-weather.md` — completed 2026-03-05
-- [x] `081` Sleepwalking — `specs/081-sleepwalking.md` — completed 2026-03-05
-- [x] `082` Cabin Fever — `specs/082-cabin-fever.md` — completed 2026-03-05
-- [x] `085` Faction Strikes — `specs/085-faction-strikes.md` — completed 2026-03-05
-- [x] `088` Omens and Taboos — `specs/088-omens-taboos.md` — completed 2026-03-05
-- [x] `090` Emotional Contagion — `specs/090-emotional-contagion.md` — completed 2026-10-27
-- [x] `093` Erosion and Desire Paths — `specs/093-erosion.md` — completed 2026-03-05
-- [x] `096` Water Dynamics — `specs/096-water-dynamics.md` — completed 2026-03-05
-- [x] `091` The Inspector — `specs/091-the-inspector.md` — completed 2026-03-06
-- [x] `076` Heirloom Items — `specs/076-heirloom-items.md` — completed 2026-03-06
-- [x] `097` Social Need & Tavern — `specs/097-social-tavern.md` — completed 2026-02-13
-- [x] `080` Planetary Quirks — `specs/080-planetary-quirks.md` — completed 2026-03-06
-- [x] `100` Jury-Rigging — `specs/100-jury-rigging.md` — completed 2026-10-25
-- [x] `INT-016` Integration: Planetary Quirks -> Atmosphere — completed 2026-02-13
-- [x] `103` Private Stashes — `specs/103-private-stashes.md` — completed 2026-10-26
-- [x] `104` Fuel Industry — `specs/104-fuel-industry.md` — completed 2026-02-13
-- [x] `108` Workplace Hazards — `specs/108-workplace-hazards.md` — completed 2026-03-08
-- [x] `106` Resource Purity — `specs/106-resource-purity.md` — completed 2026-03-09
-- [x] `089` Material Provenance — `specs/089-material-provenance.md` — completed 2026-10-24
-- [x] `109` Greenhouses — `specs/109-greenhouses.md` — completed 2026-02-14
-- [x] `112` Maintenance Debt — `specs/112-maintenance-debt.md` — completed 2026-10-21
-- [x] `INT-019` Integration: Refinery -> Atmosphere — completed 2026-03-27
-- [x] `107` Biocompatibility — `specs/107-biocompatibility.md` — completed 2026-02-14
-- [x] `114` Palette Fatigue — `specs/114-palette-fatigue.md` — completed 2026-02-14
-- [x] `INT-021` Integration: Faction Strike -> Work Execution — completed 2026-03-27
+- [x] `001` Project Scaffold — `specs/001-project-scaffold.md` — completed 2026-01-30
+- [x] `002` Terrain Grid — `specs/002-terrain-grid.md` — completed 2026-01-30
+- [x] `003` UI Layout — `specs/003-ui-layout.md` — completed 2026-01-30
+- [x] `004` Pop Entity — `specs/004-pop-entity.md` — completed 2026-01-31
+- [x] `005` Pop Needs — `specs/005-pop-needs.md` — completed 2026-01-31
+- [x] `006` Building Placement — `specs/006-building-placement.md` — completed 2026-01-31
+- [x] `007` Building: Housing — `specs/007-building-housing.md` — completed 2026-02-01
+- [x] `008` Building: Farm — `specs/008-building-farm.md` — completed 2026-02-01
+- [x] `009` Job System — `specs/009-job-system.md` — completed 2026-02-01
+- [x] `016` Utility AI — `specs/016-utility-ai-system.md` — completed 2026-02-02
+- [x] `017` Designation System — `specs/017-designation-system.md` — completed 2026-02-02
+- [x] `018` Mining Resources — `specs/018-mining-resources.md` — completed 2026-02-03
+- [x] `020` Construction Costs — `specs/020-construction-costs.md` — completed 2026-02-03
+- [x] `021` Utility AI: Work — `specs/021-utility-ai-work.md` — completed 2026-02-03
+- [x] `012` Input Architecture — `specs/012-input-architecture.md` — completed 2026-02-03
+- [x] `022` Resource Stockpiles — `specs/022-resource-stockpiles.md` — completed 2026-02-04
+- [x] `032` Entropy and Spoilage — `specs/032-entropy-spoilage.md` — completed 2026-02-04
+- [x] `033` Fire Propagation — `specs/033-fire-propagation.md` — completed 2026-02-04
+- [x] `025` Hauling Logistics — `specs/025-hauling-logistics.md` — completed 2026-02-05
+- [x] `034` Pop Health — `specs/034-pop-health.md` — completed 2026-02-05
+- [x] `023` Refining Industry — `specs/023-refining-industry.md` — completed 2026-02-05
+- [x] `035` Workplace Hazards — `specs/035-workplace-hazards.md` — completed 2026-02-06
+- [x] `036` Pop Memory — `specs/036-pop-memory.md` — completed 2026-02-06
+- [x] `029` Knowledge System — `specs/029-knowledge-system.md` — completed 2026-02-06
+- [x] `024` Metal Industry — `specs/024-metal-industry.md` — completed 2026-02-07
+- [x] `031` Pop Morale — `specs/031-pop-morale.md` — completed 2026-02-07
+- [x] `045` Structure Durability — `specs/045-structure-durability.md` — completed 2026-02-08
+- [x] `019` Forestry System — `specs/019-forestry-system.md` — completed 2026-02-08
+- [x] `040` Clothing and Temperature — `specs/040-clothing-temperature.md` — completed 2026-02-08
+- [x] `046` Notifications System — `specs/046-notifications-system.md` — completed 2026-02-08
+- [x] `051` Pop Skills and XP — `specs/051-pop-skills-xp.md` — completed 2026-02-09
+- [x] `030` Tool Economy — `specs/030-tool-economy.md` — completed 2026-02-09
+- [x] `052` Archaeological Excavation — `specs/052-archaeological-excavation.md` — completed 2026-02-10
+- [x] `063` Atmospheric Simulation — `specs/063-atmospheric-simulation.md` — completed 2026-02-10
+- [x] `064` Room Quality — `specs/064-room-quality.md` — completed 2026-02-11
+- [x] `039` Trade System — `specs/039-trade-system.md` — completed 2026-02-11
+- [x] `048` Hostile Fauna — `specs/048-hostile-fauna.md` — completed 2026-02-11
+- [x] `026` Main Menu — `specs/026-main-menu.md` — completed 2026-02-11
+- [x] `065` Day/Night Cycle — `specs/065-day-night-cycle.md` — completed 2026-02-12
+- [x] `074` Visitor System — `specs/074-visitor-system.md` — completed 2026-02-12
+- [x] `072` Justice System — `specs/072-justice-system.md` — completed 2026-02-13
+- [x] `081` Sleepwalking — `specs/081-sleepwalking.md` — completed 2026-02-13
+- [x] `027` Seasonal Rhythms — `specs/027-seasonal-rhythms.md` — completed 2026-02-13
+- [x] `089` Material Provenance — `specs/089-material-provenance.md` — completed 2026-02-14
+- [x] `068` Pop Factions — `specs/068-pop-factions.md` — completed 2026-02-14
+- [x] `079` Weather Events — `specs/079-weather-events.md` — completed 2026-02-14
+- [x] `082` Cabin Fever — `specs/082-cabin-fever.md` — completed 2026-02-15
+- [x] `086` The Stowaway — `specs/086-the-stowaway.md` — completed 2026-02-15
+- [x] `043` Defensive Structures — `specs/043-defensive-structures.md` — completed 2026-02-15
+- [x] `088` Omens and Taboos — `specs/088-omens-and-taboos.md` — completed 2026-02-16
+- [x] `093` Erosion System — `specs/093-desire-paths.md` — completed 2026-02-16
+- [x] `085` Faction Demands and Strikes — `specs/085-faction-demands-strikes.md` — completed 2026-02-16
+- [x] `070` Heirloom Tech — `specs/070-heirloom-tech.md` — completed 2026-02-17
+- [x] `076` Heirloom Items — `specs/076-heirloom-items.md` — completed 2026-02-17
+- [x] `100` Jury-Rigging — `specs/100-jury-rigging.md` — completed 2026-02-17
+- [x] `075` Animal Husbandry — `specs/075-animal-husbandry.md` — completed 2026-02-18
+- [x] `096` Water Simulation — `specs/096-water-simulation.md` — completed 2026-02-18
+- [x] `073` Vermin Infestation — `specs/073-vermin-infestation.md` — completed 2026-02-19
+- [x] `103` Private Stashes — `specs/103-private-stashes.md` — completed 2026-02-19
+- [x] `106` Resource Purity — `specs/106-resource-purity.md` — completed 2026-02-19
+- [x] `090` Emotional Contagion — `specs/090-emotional-contagion.md` — completed 2026-02-20
+- [x] `097` Social Tavern — `specs/097-social-tavern.md` — completed 2026-02-20
+- [x] `107` Biocompatibility — `specs/107-biocompatibility.md` — completed 2026-02-20
+- [x] `104` Fuel Industry — `specs/104-fuel-industry.md` — completed 2026-02-21
+- [x] `109` Greenhouses — `specs/109-greenhouses.md` — completed 2026-02-21
+- [x] `114` Palette Fatigue — `specs/114-palette-fatigue.md` — completed 2026-02-22
+- [x] `071` Structural Integrity — `specs/071-structural-integrity.md` — completed 2026-02-22
+- [x] `112` Maintenance Debt — `specs/112-maintenance-debt.md` — completed 2026-02-23
+- [x] `110` Spontaneous Architecture — `specs/110-spontaneous-architecture.md` — completed 2026-02-23

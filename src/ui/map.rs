@@ -674,6 +674,9 @@ pub const fn get_building_char(building: BuildingType) -> char {
         BuildingType::AncientReactor | BuildingType::Refinery => 'R',
         BuildingType::AncientFabricator => 'F',
         BuildingType::Greenhouse => 'G',
+        BuildingType::PersonalShed => 's',
+        BuildingType::PersonalGarden => '*',
+        BuildingType::PersonalShrine => '☗',
     }
 }
 
@@ -722,6 +725,9 @@ pub const fn get_building_color(building: BuildingType, material: MaterialType) 
             BuildingType::Generator => Color::Rgb(255, 215, 0), // Gold
             BuildingType::Refinery => Color::Rgb(100, 200, 255), // Chemical Blue
             BuildingType::Greenhouse => Color::Rgb(200, 255, 255), // Glass/Cyan
+            BuildingType::PersonalShed => Color::Rgb(139, 90, 43), // Brown
+            BuildingType::PersonalGarden => Color::Green,
+            BuildingType::PersonalShrine => Color::Rgb(169, 169, 169), // Grey
         }
     }
 }
