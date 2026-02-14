@@ -35,6 +35,7 @@ Features that have been fully implemented, tested, and merged.
 - [x] `045` Structure Durability — `specs/045-structure-durability.md` — completed 2026-02-08
 - [x] `019` Forestry System — `specs/019-forestry-system.md` — completed 2026-02-08
 - [x] `040` Clothing and Temperature — `specs/040-clothing-temperature.md` — completed 2026-02-08
+- [x] `041` Field Science — `specs/041-field-science.md` — completed 2026-02-08
 - [x] `046` Notifications System — `specs/046-notifications-system.md` — completed 2026-02-08
 - [x] `051` Pop Skills and XP — `specs/051-pop-skills-xp.md` — completed 2026-02-09
 - [x] `030` Tool Economy — `specs/030-tool-economy.md` — completed 2026-02-09
