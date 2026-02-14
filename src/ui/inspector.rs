@@ -17,11 +17,13 @@ use ratatui::{
 use crate::experimental::biography::Biography;
 use crate::experimental::dreams::DreamJournal;
 use crate::layer1::day_night::DayNightCycle;
+use crate::layer1::purity::PurityMap;
 use crate::layer1::utility_types::UtilityWeights;
 use crate::layer1::{
     ActionType, ColonyResources, Farm, GridPosition, Housing, PopAction, TerrainGrid,
     building::Building,
-    building::Material, building::MaterialType,
+    building::Material,
+    building::MaterialType,
     needs::Needs,
     pop::{Pop, PopName},
     resources::RefiningProgress,
@@ -30,7 +32,6 @@ use crate::layer1::{
 };
 use crate::shared::selection::{Selection, SelectionTarget};
 use crate::ui::map::{get_building_color, get_terrain_char, get_terrain_color};
-use crate::layer1::purity::PurityMap;
 
 /// Helper to format `ActionType` into an icon and label.
 const fn format_action_type(action: ActionType) -> (&'static str, &'static str, Color) {
@@ -987,8 +988,8 @@ mod tests {
 
     #[test]
     fn test_inspector_render_rock_purity() {
-        use crate::layer1::terrain::{TerrainType, TerrainGrid};
         use crate::layer1::purity::PurityMap;
+        use crate::layer1::terrain::{TerrainGrid, TerrainType};
 
         let mut world = World::new();
         // Setup Rock tile

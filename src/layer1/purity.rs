@@ -215,6 +215,10 @@ mod tests {
         // With frequency 0.1, we expect change to be relatively small per step.
         // It shouldn't be tiny (like 0.001) but definitely less than white noise (0.33).
         println!("Avg Delta: {}", avg_delta);
-        assert!(avg_delta < 0.15, "Purity map should be smooth (veins), but avg delta was {}", avg_delta);
+        assert!(
+            avg_delta < 0.15,
+            "Purity map should be smooth (veins), but avg delta was {}",
+            avg_delta
+        );
     }
 }

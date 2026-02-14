@@ -10,9 +10,9 @@ use crate::experimental::seasonal_gfx;
 use crate::layer1::fire::Fire;
 use crate::layer1::{
     Anomaly, AnomalyType, BuildMode, Building, BuildingType, Designation, DesignationMode,
-    DesignationType, Fauna, FaunaType, Flora, FloraType, ForestryProgress, GridPosition,
-    Material, MaterialType, Mentorship, MiningProgress, Needs, ResourceItem, ResourceType,
-    TerrainGrid, TerrainType, Viewport, Visitor,
+    DesignationType, Fauna, FaunaType, Flora, FloraType, ForestryProgress, GridPosition, Material,
+    MaterialType, Mentorship, MiningProgress, Needs, ResourceItem, ResourceType, TerrainGrid,
+    TerrainType, Viewport, Visitor,
 };
 
 /// Represents a renderable entity on the map.
@@ -123,7 +123,9 @@ pub fn update_render_cache(world: &mut World) {
 
             // Check for Building
             if let Some(building) = e.get::<Building>() {
-                let material = e.get::<Material>().map_or_else(MaterialType::default, |m| m.0);
+                let material = e
+                    .get::<Material>()
+                    .map_or_else(MaterialType::default, |m| m.0);
                 insert_if_higher_priority(
                     &mut cache.entities,
                     *pos,
@@ -690,7 +692,7 @@ pub const fn get_building_char(building: BuildingType) -> char {
 pub const fn get_building_color(building: BuildingType, material: MaterialType) -> Color {
     if building.supports_material() {
         match material {
-            MaterialType::Wood => Color::Rgb(139, 90, 43),    // Brown
+            MaterialType::Wood => Color::Rgb(139, 90, 43), // Brown
             MaterialType::Stone => Color::Rgb(169, 169, 169), // DarkGray
             MaterialType::Metal => Color::Cyan,
             MaterialType::Gold => Color::Rgb(255, 215, 0), // Gold
@@ -703,14 +705,12 @@ pub const fn get_building_color(building: BuildingType, material: MaterialType) 
             BuildingType::Stockpile
             | BuildingType::Wall
             | BuildingType::Gate
-            | BuildingType::Tower => {
-                Color::Rgb(169, 169, 169)
-            } // Fallback (should be covered above)
+            | BuildingType::Tower => Color::Rgb(169, 169, 169), // Fallback (should be covered above)
             BuildingType::Smokehouse => Color::Rgb(200, 200, 200), // Smoky
             BuildingType::LumberMill => Color::Rgb(205, 133, 63),  // Peru
             BuildingType::StoneMason => Color::Rgb(119, 136, 153), // LightSlateGray
             BuildingType::Smelter | BuildingType::AncientReactor => Color::Rgb(255, 69, 0), // Red-Orange
-            BuildingType::Smithy | BuildingType::PowerPole => Color::Rgb(192, 192, 192),    // Silver
+            BuildingType::Smithy | BuildingType::PowerPole => Color::Rgb(192, 192, 192), // Silver
             BuildingType::Tavern | BuildingType::FlowerBed => Color::Magenta,
             BuildingType::Library | BuildingType::AncientFabricator => Color::Cyan,
             BuildingType::Plantation => Color::Green,
