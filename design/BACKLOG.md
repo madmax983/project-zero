@@ -9,6 +9,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `110` Spontaneous Architecture — `specs/110-spontaneous-architecture.md`
 - [ ] `111` Conveyor Logistics — `specs/111-conveyor-logistics.md`
 - [ ] `113` Social Stratification — `specs/113-social-stratification.md`
+- [ ] `115` The Overview Effect — `specs/115-observatory-effect.md`
 
 ## MVP — Layer 2: System Simulation
 
