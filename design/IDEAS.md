@@ -3265,3 +3265,143 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Curiosity (Potential reward) vs. Safety.
 
 ---
+
+## Soil Liquefaction
+
+**Layer:** 1
+
+**Fantasy:** The ground turns to soup. The horror of watching your fortress sink.
+
+**Mechanic:** During "Seismic Events", specific terrain types (Sand, Mud, Riverbanks) lose their "Solid" property. Buildings on them take massive structural damage or sink (destroyed). Pops caught in it drown.
+
+**Emergence:** You build your power plant on the cheap riverbank land. An earthquake hits. The bank dissolves, taking your reactor into the river.
+
+**Tension:** Cheap, flat land (risk) vs. Hard, uneven bedrock (safety).
+
+---
+
+## Radioactive Hearth
+
+**Layer:** 1
+
+**Fantasy:** Desperate survival. Keeping warm with the glow of death.
+
+**Mechanic:** "Radioactive" items (Waste, Ore) emit Heat. In extreme cold biomes, players can intentionally stockpile radioactive material in residential walls to heat rooms without power. Causes slow radiation sickness.
+
+**Emergence:** The "Glowing Hearth" inn is the warmest place in the colony, and the only place to survive the -100C winter. But the innkeeper has three arms and a cough.
+
+**Tension:** Freeze to death immediately vs. Die of radiation slowly.
+
+---
+
+## Bureaucratic Roulette
+
+**Layer:** Cross-layer
+
+**Fantasy:** Beggars can't be choosers. The Empire helps, but they don't care.
+
+**Mechanic:** You can request emergency aid from the Core Worlds. Instead of choosing what you get, you receive a "Care Package" based on *their* surplus. It might be food, or it might be 500 crates of "Formal Wear".
+
+**Emergence:** You are starving. You beg for aid. The drop pod lands. It's full of "Decorative Fountains". You have to dismantle them for stone to build graves.
+
+**Tension:** Self-sufficiency vs. Relying on an uncaring bureaucracy.
+
+---
+
+## Polyglot Confusion
+
+**Layer:** 1
+
+**Fantasy:** We don't speak the same language. The Tower of Babel in space.
+
+**Mechanic:** Migrants from different sectors speak different "Dialects". Mixed crews suffer a "Coordination" penalty (slower work speed) until they learn "Common" (Time/Education).
+
+**Emergence:** A critical reactor repair fails because the engineer screamed "Stop!" and the technician heard "Go!" in their native tongue.
+
+**Tension:** Homogenous workforce (Efficient communication) vs. Diverse workforce (Access to skills/bodies).
+
+---
+
+## Data Physicality
+
+**Layer:** 1
+
+**Fantasy:** Knowledge has weight. Burn the library, lose the history.
+
+**Mechanic:** Research/Map Data isn't abstract; it's stored in "Server Banks" or "File Cabinets". Destroying the storage deletes the unlocked tech or map visibility (Fog of War returns) associated with it.
+
+**Emergence:** A fire in the archives wipes out your knowledge of "Advanced Masonry". You literally forget how to build stone walls until you research it again.
+
+**Tension:** Centralized data storage (Efficient/Risky) vs. Decentralized backups (Expensive/Safe).
+
+---
+
+## Urban Canyons
+
+**Layer:** 1
+
+**Fantasy:** The city shapes the wind. Walking against the gale.
+
+**Mechanic:** Tall buildings adjacent to each other channel wind, increasing wind speed in the "Canyon" (street). High wind hampers movement but boosts Wind Turbines placed there.
+
+**Emergence:** You build a dense city center. The wind speed in the main street becomes so high that pops are blown backward and can't get to work.
+
+**Tension:** Density (Space efficiency) vs. Walkability/Micro-climate.
+
+---
+
+## Pollen Season
+
+**Layer:** 1
+
+**Fantasy:** It's beautiful, but I can't breathe. The air itself is flammable.
+
+**Mechanic:** Seasonal event. Massive clouds of pollen reduce visibility and cause "Allergy" debuffs (Stamina drain). The pollen clouds are highly flammable.
+
+**Emergence:** A spark from a mining drill ignites the pollen cloud. The air itself burns, flashing through the entire forest and your wooden outpost in seconds.
+
+**Tension:** Clear-cut the forest (no pollen, no wood) or suffer the season?
+
+---
+
+## Hull Geometry
+
+**Layer:** 2
+
+**Fantasy:** Fitting a square peg in a round hull. Ship design is a puzzle.
+
+**Mechanic:** Ship modules have adjacency effects. Heat-generating engines next to Ammo Magazines = Explosion risk. Shield generators need direct Power adjacency.
+
+**Emergence:** You build a "Glass Cannon" ship. One hit to the engine chain-reacts through the ammo and splits the ship in half.
+
+**Tension:** Compact design (Small target/cheap) vs. Safe design (Spaced out/expensive).
+
+---
+
+## Ice Architecture
+
+**Layer:** 1
+
+**Fantasy:** Building with the season. The ultimate temporary housing.
+
+**Mechanic:** "Ice" is a buildable material in freezing biomes. It is free and fast to build but melts if Temperature > 0C.
+
+**Emergence:** You build a cheap ice-wall against the winter raid. Spring comes early. The wall melts during the night. The wolves get in.
+
+**Tension:** Cheap/Temporary vs. Expensive/Permanent.
+
+---
+
+## Window Views
+
+**Layer:** 1
+
+**Fantasy:** A room with a view. The psychological impact of architecture.
+
+**Mechanic:** Room "Beauty" calculation includes raycasting out of windows. Seeing Nature/Sky = Good. Seeing a Brick Wall/Factory = Bad.
+
+**Emergence:** You accidentally block the Governor's view of the mountains with a new smokestack. He gets depressed and starts passing draconian laws.
+
+**Tension:** Density (Efficiency) vs. Aesthetics/Mental Health.
+
+---
