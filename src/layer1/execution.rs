@@ -717,19 +717,28 @@ fn process_single_worker(
     equipment_opt: Option<Equipment>,
     work_speed_mod: f32,
 ) {
-    // Check if designation still exists (early exit)
+    // Check if designation/target still exists (early exit)
     // We need to check existence first because we need the component later
     if world.get_entity(designation_entity).is_err() {
         cleanup_pop_work_state(world, pop_entity);
         return;
     }
 
-    // Get designation type
-    let Some(designation) = world.get::<Designation>(designation_entity) else {
-        // Should have designation component if entity exists, but safety first
+    // Get designation type or infer from target
+    let designation_type = if let Some(des) = world.get::<Designation>(designation_entity) {
+        des.designation_type
+    } else if world
+        .get::<crate::layer1::structure::Structure>(designation_entity)
+        .is_some()
+        && action_type == ActionType::Repair
+    {
+        // Implicit repair designation for structures
+        DesignationType::Repair
+    } else {
+        // Invalid target type
+        cleanup_pop_work_state(world, pop_entity);
         return;
     };
-    let designation_type = designation.designation_type;
 
     // Check per-pop tool availability
     let tool_entity_opt = equipment_opt.as_ref().and_then(|e| e.tool);
@@ -755,8 +764,17 @@ fn process_single_worker(
     let worked =
         execute_work_on_designation(world, designation_entity, designation_type, work_amount);
 
-    // After work: if designation was despawned (work completed), reset pop state
-    if world.get_entity(designation_entity).is_err() {
+    // After work: Check if target is "done"
+    let target_gone = world.get_entity(designation_entity).is_err();
+    let structure_full = if !target_gone && designation_type == DesignationType::Repair {
+        world
+            .get::<crate::layer1::structure::Structure>(designation_entity)
+            .is_some_and(|s| (s.current_hp - s.max_hp).abs() < f32::EPSILON)
+    } else {
+        false
+    };
+
+    if target_gone || structure_full {
         cleanup_pop_work_state(world, pop_entity);
     }
 
