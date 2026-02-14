@@ -158,3 +158,12 @@ Map of connected and disconnected systems.
 - **Glue added:**
     - Modified `update_atmosphere_system` in `src/layer1/atmosphere.rs` to include `BuildingType::Refinery` and `AncientReactor`.
 - **Tests:** `tests/integration/pollution_refinery.rs`
+
+### INT-020: Funeral Rites -> Closure
+- **Date:** 2026-03-05
+- **Systems connected:** `death_system` -> `Corpse` -> `utility_ai::evaluate_bury_corpse` -> `execution::handle_bury_corpse` -> `Grave` / `Memories(Closure)`
+- **Glue added:**
+    - Verified `evaluate_bury_corpse` in `src/layer1/utility_ai.rs`.
+    - Verified `handle_bury_corpse` in `src/layer1/execution.rs`.
+    - Added comprehensive integration tests.
+- **Tests:** `tests/integration/funeral_rites.rs` (Integration test verified)

@@ -50,3 +50,6 @@ mod social_proximity;
 
 #[path = "integration/pollution_refinery.rs"]
 mod pollution_refinery;
+
+#[path = "integration/funeral_rites.rs"]
+mod funeral_rites;
