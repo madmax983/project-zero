@@ -932,3 +932,80 @@ QUIRK_REVEALED:
   increases:
     - DIFFICULTY_AWARENESS (high)
 ```
+
+## Private Stash Chaining
+
+```yaml
+STASH_FOUND:
+  enables:
+    - THEFT_REPORT (high, confirming missing items)
+    - BRAWL (medium, if owner present)
+    - CONFISCATION (high)
+  increases:
+    - UNREST (medium, jealousy)
+    - RELIEF (low, resources recovered)
+```
+
+## Fuel Chaining
+
+```yaml
+FUEL_PRODUCED:
+  enables:
+    - POWER_PLANT_CONSTRUCTION (high)
+    - REFINERY_ACCIDENT (low, risk starts)
+    - POLLUTION_EVENT (medium, smog)
+  increases:
+    - INDUSTRY_CAPACITY (high)
+
+REFINERY_ACCIDENT:
+  enables:
+    - FIRE_OUTBREAK (high)
+    - INJURY_ACCIDENT (high)
+    - SHUTDOWN (medium)
+  increases:
+    - FEAR_OF_TECH (medium)
+```
+
+## Jury-Rigging Chaining
+
+```yaml
+JURY_RIG_EVENT:
+  enables:
+    - JURY_RIG_FAILURE (medium, later)
+    - WORK_RESUMED (high)
+  increases:
+    - ACCIDENT_RISK (high)
+    - CONFIDENCE (low)
+
+JURY_RIG_FAILURE:
+  enables:
+    - STRUCTURE_COLLAPSE (medium)
+    - INJURY_ACCIDENT (high)
+  increases:
+    - FRUSTRATION (high)
+```
+
+## Greenhouse Chaining
+
+```yaml
+GREENHOUSE_BUILT:
+  enables:
+    - FIRST_HARVEST (high)
+    - JOY_SPREAD (medium, nature view)
+    - GLASS_BREAKAGE (low)
+  increases:
+    - HOPE (high)
+    - FOOD_STABILITY (medium)
+```
+
+## Provenance Chaining
+
+```yaml
+PROVENANCE_REVEALED:
+  enables:
+    - MEMORY_FORMATION (high)
+    - HAUNTING (low, if grim provenance)
+    - INSPIRATION (medium, if heroic provenance)
+  increases:
+    - ATTACHMENT_TO_PLACE (high)
+```

@@ -1551,3 +1551,142 @@ Names for planetary anomalies.
 - The Long Dark (Slow Orbit)
 - The Thick Air (Dense Atmosphere)
 - The Crystal Sky (Thin Atmosphere)
+
+---
+
+## Stash Fragments
+
+### [STASH_LOCATION]
+Where hidden items are found.
+
+- under the floorboards
+- inside a hollow wall
+- buried in the garden
+- behind the ventilation grate
+- in a false crate
+- within the mattress
+- under a loose stone
+
+### [STASH_CONTAINER]
+What items are hidden in.
+
+- a rusted box
+- a cloth wrap
+- a sealed jar
+- an old boot
+- a locked case
+- a hollow book
+
+---
+
+## Fuel Fragments
+
+### [FUEL_TYPE]
+Names for fuel resources.
+
+- liquid-fire
+- star-juice
+- refined-burn
+- reactor-blood
+- volatile-mix
+- heavy-oil
+
+### [FUEL_SOURCE]
+Where fuel comes from.
+
+- the deep press
+- the refinery
+- the old tanks
+- the synth-vat
+- the dark veins
+
+---
+
+## Purity Fragments
+
+### [PURITY_LEVEL]
+Descriptors for resource purity.
+
+- pristine
+- star-blood (100%)
+- mixed
+- tainted
+- slag-heavy
+- dross
+- pure
+- corrupted
+
+### [IMPURITY_TYPE]
+What contaminates the resource.
+
+- sulfur-veins
+- void-rot
+- rust-flakes
+- heavy-metals
+- ancient-dust
+- organic-waste
+
+---
+
+## Jury-Rigging Fragments
+
+### [JURY_RIG_METHOD]
+How things are temporarily fixed.
+
+- percussive maintenance
+- duct tape and prayer
+- wire bypass
+- structural foam
+- borrowed parts
+- brute force
+
+### [JURY_RIG_MATERIAL]
+What is used to fix it.
+
+- scrap-metal
+- adhesive strips
+- spare wiring
+- hull-plate
+- literal garbage
+- hope
+
+---
+
+## Greenhouse Fragments
+
+### [GREENHOUSE_NAME]
+Names for greenhouse buildings.
+
+- The Glass Garden
+- Life-Box
+- The Green Lung
+- Sun-Catcher
+- The Bubble
+- Eden-Block
+- The Leaf-Hold
+
+### [GREENHOUSE_DESCRIPTOR]
+Adjectives for the greenhouse environment.
+
+- humid
+- lush
+- alien
+- sweet-smelling
+- over-grown
+- carefully-tended
+- mist-filled
+
+---
+
+## Provenance Fragments
+
+### [PROVENANCE_DESCRIPTOR]
+How the origin of materials is described.
+
+- blood-iron (from a battlefield)
+- star-metal (from a meteorite)
+- deep-stone (from the core)
+- void-touched (from space)
+- ancient-clay (from ruins)
+- recycled-dead (grim)
+- memory-wood (old growth)
