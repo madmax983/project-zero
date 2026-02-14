@@ -19,7 +19,7 @@ pub enum BuildingType {
     Housing,
     Farm,
     Stockpile,
-    Statue, // <--- Your new building
+    Obelisk, // <--- Your new building
 }
 ```
 
@@ -38,7 +38,7 @@ pub const fn label(&self) -> &'static str {
         Self::Housing => "Housing",
         Self::Farm => "Farm",
         Self::Stockpile => "Stockpile",
-        Self::Statue => "Statue", // <--- Your label
+        Self::Obelisk => "Obelisk", // <--- Your label
     }
 }
 ```
@@ -54,9 +54,8 @@ pub const fn cost(&self, material: MaterialType) -> ColonyResources {
             ..ColonyResources::zeroed()
         },
         // ...
-        Self::Statue => ColonyResources {
-            wood: 50.0,
-            stone: 20.0,
+        Self::Obelisk => ColonyResources {
+            stone: 100.0,
             ..ColonyResources::zeroed()
         },
     }
@@ -76,24 +75,30 @@ pub const fn get_building_char(building: BuildingType) -> char {
         BuildingType::Housing => '⌂',
         BuildingType::Farm => '♣',
         BuildingType::Stockpile => '≡',
-        BuildingType::Statue => '¥', // <--- Your char
+        BuildingType::Obelisk => '▲', // <--- Your char
     }
 }
 ```
 
 #### Color
-Add a case to `get_building_color()`:
+Add a case to `get_building_color()`. Note that this function takes `material` as an argument, and handles material-supported buildings separately.
 
 ```rust
-pub const fn get_building_color(building: BuildingType) -> Color {
-    match building {
-        BuildingType::Housing => Color::Rgb(139, 90, 43),
-        BuildingType::Farm => Color::Rgb(218, 165, 32),
-        BuildingType::Stockpile => Color::Rgb(169, 169, 169),
-        BuildingType::Statue => Color::Gray, // <--- Your color
+pub const fn get_building_color(building: BuildingType, material: MaterialType) -> Color {
+    if building.supports_material() {
+        // ...
+    } else {
+        match building {
+            BuildingType::Housing => Color::Rgb(139, 90, 43),
+            BuildingType::Farm => Color::Rgb(218, 165, 32),
+            // ...
+            BuildingType::Obelisk => Color::Cyan, // <--- Your color
+        }
     }
 }
 ```
+
+> **Note:** If your building supports materials (defined in `supports_material()`), its color logic will be handled in the `if` block. Otherwise, add it to the `else` match block.
 
 ### 4. Implement Logic (Optional)
 
@@ -122,8 +127,8 @@ fn spawn_building(
         BuildingType::Farm => {
             entity.insert(Farm::default());
         }
-        BuildingType::Statue => {
-             // Add any components specific to Statue here
+        BuildingType::Obelisk => {
+             // Add any components specific to Obelisk here
              // entity.insert(Decor::default());
         }
     }
