@@ -33,19 +33,19 @@ Features that have been fully implemented and tested.
 - [x] `029` Edicts and Policies — `specs/029-edicts.md` — completed 2025-02-02
 - [x] `030` Structural Integrity — `specs/030-structural-integrity.md` — completed 2025-02-03
 - [x] `031` Civil Unrest — `specs/031-civil-unrest.md` — completed 2025-02-03
-- [x] `032` Waste and Pollution — `specs/032-waste-pollution.md` — completed 2025-02-04
+- [x] `032` Entropy and Spoilage — `specs/032-entropy-spoilage.md` — completed 2025-02-04
 - [x] `033` Vermin and Pestilence — `specs/033-vermin.md` — completed 2025-02-04
 - [x] `034` Fires and Firefighting — `specs/034-fire.md` — completed 2025-02-05
 - [x] `035` Notifications System — `specs/035-notifications.md` — completed 2025-02-05
 - [x] `036` Exploration and Fog of War — `specs/036-exploration.md` — completed 2025-02-06
 - [x] `039` Room Quality and Acoustics — `specs/039-room-quality.md` — completed 2025-02-08
 - [x] `040` Factions and Politics — `specs/040-factions.md` — completed 2025-02-08
-- [x] `041` Atmosphere Simulation — `specs/041-atmosphere.md` — completed 2025-02-09
+- [x] `063` Atmosphere Simulation — `specs/063-atmospheric-simulation.md` — completed 2025-02-09
 - [x] `043` Day/Night Cycle — `specs/043-day-night-cycle.md` — completed 2025-02-10
 - [x] `044` Horticulture and Beauty — `specs/044-horticulture.md` — completed 2025-02-10
 - [x] `045` Hostile Fauna — `specs/045-hostile-fauna.md` — completed 2025-02-11
 - [x] `046` Visitors and Hospitality — `specs/046-visitors.md` — completed 2025-02-11
-- [x] `047` Justice System — `specs/047-justice-system.md` — completed 2025-02-12
+- [x] `072` Justice System — `specs/072-justice-system.md` — completed 2025-02-12
 - [x] `048` Combat System — `specs/048-combat-system.md` — completed 2025-02-12
 - [x] `049` Defense Structures — `specs/049-defense-structures.md` — completed 2025-02-13
 - [x] `050` Art and Culture — `specs/050-art-culture.md` — completed 2025-02-13
@@ -57,7 +57,6 @@ Features that have been fully implemented and tested.
 - [x] `057` Funeral Rites — `specs/057-funeral-rites.md` — completed 2026-03-05
 - [x] `060` Acoustics — `specs/060-acoustics.md` — completed 2026-03-05
 - [x] `062` Lifecycle (Aging) — `specs/062-lifecycle.md` — completed 2026-03-05
-- [x] `063` Pollution Effects — `specs/063-pollution-effects.md` — completed 2026-03-05
 - [x] `064` Room Quality — `specs/064-room-quality.md` — completed 2026-03-05
 - [x] `065` Sleep Cycles — `specs/065-sleep-cycles.md` — completed 2026-03-05
 - [x] `068` Faction Demands — `specs/068-faction-demands.md` — completed 2026-03-05
@@ -87,7 +86,6 @@ Features that have been fully implemented and tested.
 - [x] `106` Resource Purity — `specs/106-resource-purity.md` — completed 2026-03-09
 - [x] `089` Material Provenance — `specs/089-material-provenance.md` — completed 2026-10-24
 - [x] `109` Greenhouses — `specs/109-greenhouses.md` — completed 2026-02-14
-- [x] `112` Maintenance Debt — `specs/112-maintenance-debt.md` — completed 2026-10-21
 - [x] `112` Maintenance Debt — `specs/112-maintenance-debt.md` — completed 2026-10-21
 - [x] `INT-019` Integration: Refinery -> Atmosphere — completed 2026-03-27
 - [x] `107` Biocompatibility — `specs/107-biocompatibility.md` — completed 2026-02-14

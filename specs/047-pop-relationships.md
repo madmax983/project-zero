@@ -14,7 +14,7 @@ Key features:
 
 - `004` — Pop Entity
 - `031` — Pop Morale (Needs/Morale calculation)
-- `028` — Social Tavern (Socialize action)
+- `097` — Social Tavern (Socialize action)
 
 ## RED Phase: Tests First
 
