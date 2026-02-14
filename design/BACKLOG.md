@@ -6,12 +6,11 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 ## MVP — Layer 1: Colony Simulation
 
-- [ ] `059` Soil Fertility — `specs/059-soil-fertility.md`
-- [ ] `077` Emergent Festivals — `specs/077-emergent-festivals.md`
 - [ ] `107` Biocompatibility — `specs/107-biocompatibility.md`
 - [ ] `110` Spontaneous Architecture — `specs/110-spontaneous-architecture.md`
 - [ ] `111` Conveyor Logistics — `specs/111-conveyor-logistics.md`
 - [ ] `113` Social Stratification — `specs/113-social-stratification.md`
+- [ ] `114` Palette Fatigue — `specs/114-palette-fatigue.md`
 
 ## MVP — Layer 2: System Simulation
 

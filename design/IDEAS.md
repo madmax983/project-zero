@@ -1854,7 +1854,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Palette Fatigue
+## Palette Fatigue [SPECCED]
 
 **Layer:** 1
 
