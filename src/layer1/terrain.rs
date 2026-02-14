@@ -99,7 +99,14 @@ impl TerrainGrid {
     #[must_use]
     pub fn get(&self, x: usize, y: usize) -> Option<TerrainType> {
         if x < self.width && y < self.height {
-            Some(self.tiles[y * self.width + x])
+            // Use checked arithmetic to prevent overflow wrapping around to a valid index
+            // and verify the index is within the actual data buffer.
+            let idx = y.checked_mul(self.width)?.checked_add(x)?;
+            if idx < self.tiles.len() {
+                Some(self.tiles[idx])
+            } else {
+                None
+            }
         } else {
             None
         }
@@ -352,5 +359,26 @@ mod tests {
     #[should_panic(expected = "Terrain too large")]
     fn test_generate_terrain_too_large_panics() {
         let _ = generate_terrain(1001, 1000); // 1,001,000 tiles
+    }
+
+    #[test]
+    fn test_get_overflow_protection() {
+        // Construct a grid with huge dimensions but small buffer
+        // This simulates a potentially malicious or corrupted state
+        let width = usize::MAX / 2;
+        let height = 10;
+        let tiles = vec![TerrainType::Grass; 1];
+
+        let grid = TerrainGrid {
+            width,
+            height,
+            tiles,
+        };
+
+        // (2, 0) -> index 2. 2 > 1. Should be None.
+        assert_eq!(grid.get(2, 0), None);
+
+        // (0, 0) -> index 0. 0 < 1. Should be Some.
+        assert_eq!(grid.get(0, 0), Some(TerrainType::Grass));
     }
 }

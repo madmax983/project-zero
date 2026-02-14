@@ -332,3 +332,5 @@ mod fuel_industry_tests;
 #[cfg(test)]
 mod greenhouse_tests;
 mod structure_maintenance_tests;
+#[cfg(test)]
+mod structural_integrity_overflow_tests;
