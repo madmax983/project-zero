@@ -11,6 +11,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `113` Social Stratification — `specs/113-social-stratification.md`
 - [ ] `115` The Overview Effect — `specs/115-observatory-effect.md`
 - [ ] `047` Pop Relationships — `specs/047-pop-relationships.md`
+- [ ] `116` Drone Networks — `specs/116-drone-networks.md`
 
 ## MVP — Layer 2: System Simulation
 
