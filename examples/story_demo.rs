@@ -8,7 +8,7 @@ use crossterm::{
     terminal::{EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode, enable_raw_mode},
 };
 use ratatui::{prelude::*, widgets::*};
-use scale::shared::narrative::{NarrativeContext, NarrativeGenerator};
+use scale::shared::narrative::{NarrativeContext, NarrativeGenerator, NarrativeSegment};
 use std::io;
 use std::time::Duration;
 
@@ -16,7 +16,8 @@ struct App {
     generator: NarrativeGenerator,
     template_ids: Vec<String>,
     state: ListState,
-    generated_story: Option<String>,
+    generated_segments: Option<Vec<NarrativeSegment>>,
+    error_message: Option<String>,
     context: NarrativeContext,
     should_quit: bool,
 }
@@ -52,7 +53,8 @@ impl App {
             generator,
             template_ids,
             state,
-            generated_story: None,
+            generated_segments: None,
+            error_message: None,
             context,
             should_quit: false,
         })
@@ -91,9 +93,15 @@ impl App {
     fn generate(&mut self) {
         if let Some(i) = self.state.selected() {
             if let Some(id) = self.template_ids.get(i) {
-                match self.generator.generate(id, &self.context) {
-                    Ok(story) => self.generated_story = Some(story),
-                    Err(e) => self.generated_story = Some(format!("Error: {}", e)),
+                match self.generator.generate_structured(id, &self.context) {
+                    Ok(segments) => {
+                        self.generated_segments = Some(segments);
+                        self.error_message = None;
+                    }
+                    Err(e) => {
+                        self.generated_segments = None;
+                        self.error_message = Some(format!("Error: {e}"));
+                    }
                 }
             }
         }
@@ -259,22 +267,50 @@ fn ui(f: &mut Frame, app: &mut App) {
     f.render_widget(pattern_block, right_chunks[0]);
 
     // Generated Output
-    let story_text = app
-        .generated_story
-        .as_deref()
-        .unwrap_or("Press ENTER to generate a story...");
+    let output_block = if let Some(err) = &app.error_message {
+        Paragraph::new(err.as_str())
+            .style(Style::default().fg(Color::Red))
+            .block(
+                Block::default()
+                    .borders(Borders::ALL)
+                    .title("Generated Story"),
+            )
+            .wrap(Wrap { trim: true })
+    } else if let Some(segments) = &app.generated_segments {
+        let spans: Vec<Span> = segments
+            .iter()
+            .map(|seg| match seg {
+                NarrativeSegment::Text(t) => Span::raw(t),
+                NarrativeSegment::Slot { value, .. } => Span::styled(
+                    value,
+                    Style::default()
+                        .fg(Color::Cyan)
+                        .add_modifier(Modifier::BOLD),
+                ),
+                NarrativeSegment::Error(e) => {
+                    Span::styled(format!("[{e}]"), Style::default().fg(Color::Red))
+                }
+            })
+            .collect();
 
-    let output_block = Paragraph::new(story_text)
-        .style(Style::default().fg(if app.generated_story.is_some() {
-            Color::Green
-        } else {
-            Color::DarkGray
-        }))
-        .block(
-            Block::default()
-                .borders(Borders::ALL)
-                .title("Generated Story"),
-        )
-        .wrap(Wrap { trim: true });
+        let line = Line::from(spans);
+        Paragraph::new(line)
+            .block(
+                Block::default()
+                    .borders(Borders::ALL)
+                    .title("Generated Story"),
+            )
+            .wrap(Wrap { trim: true })
+    } else {
+        Paragraph::new("Press ENTER to generate a story...")
+            .style(Style::default().fg(Color::DarkGray))
+            .block(
+                Block::default()
+                    .borders(Borders::ALL)
+                    .title("Generated Story"),
+            )
+            .wrap(Wrap { trim: true })
+    };
+
     f.render_widget(output_block, right_chunks[1]);
 }
