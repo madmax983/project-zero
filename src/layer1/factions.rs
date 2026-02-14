@@ -1,3 +1,27 @@
+//! # Factions & Guilds
+//!
+//! Factions represent the organized interests of the colony's workforce.
+//! Unlike individual Pops who have personal Needs, Factions care about
+//! colony-wide policy and working conditions.
+//!
+//! ## Core Concepts
+//!
+//! *   **Guilds:** Pops automatically join a Faction based on their highest [Skill](crate::layer1::skills::SkillType).
+//!     *   Miners -> Miners' Guild
+//!     *   Farmers -> Growers' Circle
+//!     *   Masons -> Masons' Lodge
+//!     *   etc.
+//!
+//! *   **Satisfaction:** A value from 0.0 (Furious) to 1.0 (Content).
+//!     *   It is recalculated every tick based on active [Policies](crate::layer1::edicts::Policy).
+//!     *   Penalties (like `DoubleShifts`) lower satisfaction.
+//!
+//! *   **Demands & Strikes:**
+//!     *   **Loyal** (> 0.4): The faction is cooperative.
+//!     *   **Unhappy** (<= 0.4): The faction issues a [`FactionDemand`] (e.g., "End Double Shifts").
+//!     *   **Striking**: If the demand is ignored for too long, the faction enters the [`FactionState::Striking`] state.
+//!         Striking pops will refuse to work (checked by the execution system).
+
 use crate::layer1::edicts::Policy;
 use crate::layer1::skills::SkillType;
 use bevy_ecs::prelude::*;
@@ -7,21 +31,26 @@ use std::collections::HashMap;
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum FactionState {
     /// Faction is content (Satisfaction > 0.4).
+    /// Pops work normally.
     Loyal,
     /// Faction is unhappy (Satisfaction <= 0.4) and has issued a demand.
+    /// Pops continue to work, but the clock is ticking.
     Unhappy,
     /// Faction is on strike (Demand ignored/timed out).
+    /// Pops in this faction will refuse `Work` actions.
     Striking,
 }
 
 /// A specific demand issued by a faction.
+///
+/// Demands usually require the player to change a specific [`Policy`].
 #[derive(Debug, Clone, PartialEq)]
 pub struct FactionDemand {
-    /// The policy they want changed (Toggle).
+    /// The policy they want changed (usually toggled off if it's a penalty).
     pub policy: Option<Policy>,
-    /// Ticks remaining until strike.
+    /// Ticks remaining until the faction goes on strike.
     pub remaining_time: f32,
-    /// Human-readable description.
+    /// Human-readable description of the demand.
     pub description: String,
 }
 
@@ -38,28 +67,32 @@ impl Default for FactionDemand {
 /// Unique identifier for each faction.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum FactionId {
-    /// Faction for miners.
+    /// Faction for miners (`SkillType::Mining`).
     MinersGuild,
-    /// Faction for farmers.
+    /// Faction for farmers (`SkillType::Farming`, `SkillType::Husbandry`).
     FarmersGuild,
-    /// Faction for construction workers.
+    /// Faction for construction workers (`SkillType::Construction`).
     MasonsGuild,
-    /// Faction for foresters.
+    /// Faction for foresters (`SkillType::Forestry`).
     LoggersGuild,
-    /// Faction for crafters.
+    /// Faction for crafters (`SkillType::Crafting`).
     ArtisansGuild,
-    /// Faction for those with no specific skill focus.
+    /// Faction for those with no specific skill focus or balanced skills.
     Unaligned,
 }
 
 /// Data associated with a faction.
+///
+/// Tracks the state, membership count, and current mood of a guild.
 #[derive(Debug, Clone)]
 pub struct FactionData {
-    /// Display name of the faction.
+    /// Display name of the faction (e.g., "Miners' Union").
     pub name: String,
     /// Current satisfaction level (0.0 to 1.0).
+    /// *   **1.0**: Perfect.
+    /// *   **< 0.4**: Unhappy (Demand triggered).
     pub satisfaction: f32,
-    /// Number of members in the faction.
+    /// Number of members in the faction (updated every tick).
     pub members_count: usize,
     /// Current state of the faction (Loyal, Unhappy, Striking).
     pub state: FactionState,
@@ -79,7 +112,22 @@ impl Default for FactionData {
     }
 }
 
-/// Resource containing all factions.
+/// Resource containing all factions in the colony.
+///
+/// This is the primary interface for querying faction status.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::factions::{Factions, FactionId};
+///
+/// let mut factions = Factions::default();
+/// factions.initialize();
+///
+/// if let Some(miners) = factions.get(FactionId::MinersGuild) {
+///     println!("Miners: {} members", miners.members_count);
+/// }
+/// ```
 #[derive(Resource, Default)]
 pub struct Factions {
     /// Map of `FactionId` to `FactionData`.
@@ -94,6 +142,8 @@ impl Factions {
     }
 
     /// Initializes default factions if the map is empty.
+    ///
+    /// Called automatically by `update_faction_satisfaction_system`, but useful for tests.
     pub fn initialize(&mut self) {
         if self.map.is_empty() {
             self.map.insert(
@@ -143,6 +193,8 @@ impl Factions {
 }
 
 /// Component indicating faction membership.
+///
+/// Every Pop has this component. It is updated periodically based on their highest skill.
 #[derive(Component, Default, Debug, Clone)]
 pub struct FactionMember {
     /// The ID of the faction this entity belongs to.
@@ -150,6 +202,13 @@ pub struct FactionMember {
 }
 
 /// System to update faction membership based on highest skill.
+///
+/// *   **Mining** -> MinersGuild
+/// *   **Farming/Husbandry** -> FarmersGuild
+/// *   **Construction** -> MasonsGuild
+/// *   **Forestry** -> LoggersGuild
+/// *   **Crafting** -> ArtisansGuild
+/// *   **None/Tie** -> Unaligned (default tie-breaking order exists)
 pub fn update_faction_membership_system(
     mut query: Query<
         (&crate::layer1::skills::Skills, &mut FactionMember),
@@ -192,6 +251,13 @@ pub fn update_faction_membership_system(
 }
 
 /// System to update faction satisfaction and member counts.
+///
+/// # Logic
+/// 1.  Resets all faction satisfaction to 1.0 (base).
+/// 2.  Recalculates member counts.
+/// 3.  Applies penalties based on active policies:
+///     *   `DoubleShifts`: -0.2
+///     *   `Rationing`: -0.1
 pub fn update_faction_satisfaction_system(
     policies: Res<crate::layer1::edicts::ColonyPolicies>,
     mut factions: ResMut<Factions>,
@@ -231,6 +297,11 @@ pub fn update_faction_satisfaction_system(
 }
 
 /// System to manage faction demands based on satisfaction.
+///
+/// # Demand Cycle
+/// 1.  **Generate**: If satisfaction < 0.4 and no demand exists, generate a demand to stop a penalty policy.
+/// 2.  **Resolve**: If satisfaction recovers (> 0.5) OR the demanded policy is toggled off, the demand is cleared.
+/// 3.  **Strike**: Handled by `update_faction_strikes_system` if demand times out.
 pub fn update_faction_demands_system(
     mut factions: ResMut<Factions>,
     policies: Res<crate::layer1::edicts::ColonyPolicies>,
@@ -238,62 +309,23 @@ pub fn update_faction_demands_system(
     for data in factions.map.values_mut() {
         // 1. Resolve existing demands if met
         if let Some(demand) = &data.active_demand {
-            let met = if let Some(_policy) = demand.policy {
-                // If the demand implies "Stop Policy", we check if it's inactive?
-                // Or if it implies "Start Policy"?
-                // Spec says "Demand (e.g., 'Enact Policy X')".
-                // In the RED test, we assumed:
-                // "Assume DoubleShifts is currently ACTIVE, so they want it ENDED (toggled off)."
-                // But generally, a demand should likely be explicit about state.
-                // For GREEN phase simplification:
-                // We assume satisfaction > 0.5 clears the demand, OR specific policy change.
-                // Since `FactionDemand` just stores `Option<Policy>`, let's rely on Satisfaction for now
-                // to match the spec's simpler resolution path, OR implement specific toggle check.
+            // Check if demand is met:
+            // A. Satisfaction has recovered (> 0.5).
+            // B. The specific policy demanded (e.g. Stop DoubleShifts) has been enacted (set to inactive).
 
-                // Test "test_meeting_demand_resolves_strike" sets DoubleShifts ON, then Toggles OFF.
-                // So the demand was likely "Turn Off DoubleShifts".
-                // We'll use a simple heuristic: if satisfaction improves to > 0.5, demand is dropped.
-                // OR if the policy is toggled.
-                // Let's stick to satisfaction check as primary resolution + "Toggle" check if we can infer intent.
-                // For GREEN phase, let's just check satisfaction > 0.5.
-                data.satisfaction > 0.5
-            } else {
-                false
-            };
-
-            // Also allow clearing if we simply toggled the policy?
-            // The test `test_meeting_demand_resolves_strike` expects resolution after toggle.
-            // But satisfaction update happens separately.
-            // If we toggle policy -> penalty removed -> satisfaction increases -> resolution.
-            // That flow works.
-            // BUT: The test manually toggles policy and calls `update_faction_demands_system`.
-            // It does NOT call `update_faction_satisfaction_system`.
-            // So we must check policy state directly if we want to pass that test without re-running satisfaction.
-
-            // Let's assume the demand is "Toggle whatever state it was when demanded".
-            // Ideally we'd store `desired_state: bool`.
-            // For now, let's check if the policy state matches "inactive" if it was active?
-            // Actually, the test is:
-            // 1. Set Active.
-            // 2. Demand DoubleShifts.
-            // 3. Toggle (Inactive).
-            // 4. Expect resolution.
-            // So if `policy` is NOT in `active_policies` (or is, depending on demand), it resolves.
-            // Since we don't know if they wanted ON or OFF, let's assume they want it OFF if it's a penalty policy.
-            // DoubleShifts is a penalty policy (-0.2). So they likely want it OFF.
-            // So if !active, met = true.
+            let satisfaction_improved = data.satisfaction > 0.5;
 
             let policy_met = demand.policy.is_some_and(|p| {
                 if p == Policy::DoubleShifts || p == Policy::Rationing {
+                    // They want these penalties OFF.
                     !policies.is_active(p)
                 } else {
-                    // For positive policies (if any), maybe they want it ON.
-                    // Default to: if Active, met = true.
+                    // Default for other policies: assume they want them ON.
                     policies.is_active(p)
                 }
             });
 
-            if met || policy_met {
+            if satisfaction_improved || policy_met {
                 data.active_demand = None;
                 data.state = FactionState::Loyal;
                 continue;
@@ -309,7 +341,7 @@ pub fn update_faction_demands_system(
             } else if policies.is_active(Policy::Rationing) {
                 Some(Policy::Rationing)
             } else {
-                // Otherwise maybe random? Or just DoubleShifts as placeholder.
+                // Default fallback if angry for other reasons
                 Some(Policy::DoubleShifts)
             };
 
@@ -324,6 +356,9 @@ pub fn update_faction_demands_system(
 }
 
 /// System to handle strike timeouts.
+///
+/// Decrements the `remaining_time` on active demands.
+/// If time runs out while still Unhappy, the faction goes on Strike.
 pub fn update_faction_strikes_system(mut factions: ResMut<Factions>) {
     for data in factions.map.values_mut() {
         if let Some(demand) = &mut data.active_demand {
@@ -339,6 +374,8 @@ pub fn update_faction_strikes_system(mut factions: ResMut<Factions>) {
 }
 
 /// Helper to check if a pop is in a striking faction.
+///
+/// Used by the Execution system to prevent work.
 #[must_use]
 pub fn is_pop_striking(world: &World, entity: Entity) -> bool {
     world
