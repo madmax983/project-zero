@@ -1269,3 +1269,125 @@
 **Usage:**
 - "Forged from blood-iron."
 - "Do not use blood-iron for the cradle."
+
+---
+
+## Antagonistic Flora
+
+### The Creep / The Green
+**Replaces:** hostile flora
+**Code reference:** `Flora` entity
+**Usage:**
+- "The Creep is spreading."
+- "Burn the Green back."
+
+### Green-Choke
+**Replaces:** structure damage by flora
+**Code reference:** `STRUCTURE_STRANGLED`
+**Usage:**
+- "The wall has Green-Choke."
+- "Lost the pump to the Choke."
+
+---
+
+## Logistics
+
+### The Stream / The Flow
+**Replaces:** conveyor belts
+**Code reference:** `ConveyorBelt` component
+**Usage:**
+- "Keep the Stream moving."
+- "The Flow feeds the furnace."
+
+### The Mouth
+**Replaces:** hopper / input
+**Code reference:** `Hopper` building
+**Usage:**
+- "Feed the Mouth."
+- "The Mouth is hungry."
+
+---
+
+## Observatory & Cosmos
+
+### Star-Gazing
+**Replaces:** astronomy work
+**Code reference:** `AssignmentType::ObservatoryWorker`
+**Usage:**
+- "He is Star-Gazing tonight."
+- "Too much Star-Gazing makes you strange."
+
+### The Watch-Glass
+**Replaces:** observatory building
+**Code reference:** `BuildingType::Observatory`
+**Usage:**
+- "Up in the Watch-Glass."
+- "Clean the Watch-Glass."
+
+### Void-Touched
+**Replaces:** cosmic inspiration / dread
+**Code reference:** `CosmicInspiration` / `ExistentialDread`
+**Usage:**
+- "She came back Void-Touched."
+- "Eyes wide—Void-Touched."
+
+---
+
+## Mentorship
+
+### The Teaching
+**Replaces:** mentorship process
+**Code reference:** `Mentorship` component
+**Usage:**
+- "Pass on the Teaching."
+- "Respect the Teaching."
+
+### Grey-Hand
+**Replaces:** mentor
+**Code reference:** `Mentorship.master`
+**Usage:**
+- "Listen to the Grey-Hand."
+- "A Grey-Hand leads the young."
+
+### Soft-Hand
+**Replaces:** apprentice
+**Code reference:** `Mentorship.apprentice`
+**Usage:**
+- "Just a Soft-Hand."
+- "Teach the Soft-Hand well."
+
+---
+
+## Spontaneous Architecture
+
+### Heart-Work
+**Replaces:** spontaneous building
+**Code reference:** `PersonalStructure`
+**Usage:**
+- "This shrine is Heart-Work."
+- "No plans, just Heart-Work."
+
+### Folly
+**Replaces:** useless but personal structure
+**Code reference:** `StructureType::Folly` (implied)
+**Usage:**
+- "It's just a Folly."
+- "Leave his Folly alone."
+
+---
+
+## Lighting
+
+### Sun-Spark
+**Replaces:** light source / lamp
+**Code reference:** `LightSource`
+**Usage:**
+- "Hang a Sun-Spark here."
+- "The Sun-Spark flickers."
+
+### Shadow-Line
+**Replaces:** edge of lit area
+**Code reference:** `LightGrid` boundary
+**Usage:**
+- "Don't cross the Shadow-Line."
+- "Working at the Shadow-Line."

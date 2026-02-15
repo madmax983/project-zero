@@ -1128,3 +1128,114 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "The [BUILDING_TYPE] is finished. [YEAR]. Built of [PROVENANCE_DESCRIPTOR]."
 - "[YEAR]: We live in [PROVENANCE_DESCRIPTOR] walls. The [BUILDING_TYPE] stands."
 - "[COLONY] remembers. The [BUILDING_TYPE] is made of [PROVENANCE_DESCRIPTOR]. [YEAR]."
+
+---
+
+## Antagonistic Flora Templates
+
+### FLORA_OUTBREAK
+**Slots:** [COLONY], [YEAR], [FLORA_NAME], [FLORA_ACTION], [FLORA_DESCRIPTOR]
+
+- "The [FLORA_NAME] appears. [YEAR]. It [FLORA_ACTION]. It is [FLORA_DESCRIPTOR]."
+- "[YEAR]: Infestation. The [FLORA_NAME] spreads. A [FLORA_DESCRIPTOR] growth."
+- "[COLONY] fights the green. [FLORA_NAME]. [YEAR]. It [FLORA_ACTION] everything."
+
+### FLORA_CLEARED
+**Slots:** [COLONY], [YEAR], [FLORA_NAME]
+
+- "We burn the [FLORA_NAME]. [YEAR]. The walls are clean."
+- "[YEAR]: Victory over the [FLORA_NAME]. [COLONY] breathes again."
+- "The roots are dead. [FLORA_NAME] eradicated. [YEAR]."
+
+### STRUCTURE_STRANGLED
+**Slots:** [COLONY], [YEAR], [BUILDING_TYPE], [FLORA_NAME]
+
+- "The [BUILDING_TYPE] is lost. [YEAR]. taken by [FLORA_NAME]."
+- "[YEAR]: [FLORA_NAME] breaches the [BUILDING_TYPE]. We abandon it."
+- "Choked by [FLORA_NAME]. The [BUILDING_TYPE] falls silent. [YEAR]."
+
+---
+
+## Observatory Templates
+
+### OBSERVATORY_BUILT
+**Slots:** [COLONY], [YEAR], [OBSERVATORY_NAME]
+
+- "[OBSERVATORY_NAME] is open. [YEAR]. We look up."
+- "[YEAR]: The lens is polished. [OBSERVATORY_NAME] sees the deep."
+- "Eyes to the void. [OBSERVATORY_NAME] completed at [COLONY]. [YEAR]."
+
+### COSMIC_EPIPHANY
+**Slots:** [COLONY], [YEAR], [NAME], [COSMIC_SIGHT], [VOID_EMOTION]
+
+- "[NAME] saw [COSMIC_SIGHT]. [YEAR]. They feel [VOID_EMOTION]."
+- "[YEAR]: Inspiration from the dark. [NAME] witnessed [COSMIC_SIGHT]."
+- "The void speaks to [NAME]. [COSMIC_SIGHT]. A moment of [VOID_EMOTION]. [YEAR]."
+
+### VOID_GAZE
+**Slots:** [COLONY], [YEAR], [NAME], [COSMIC_SIGHT], [VOID_EMOTION]
+
+- "[NAME] stared too long. [YEAR]. Saw [COSMIC_SIGHT]. Now: [VOID_EMOTION]."
+- "[YEAR]: The abyss stares back. [NAME] is shaken by [COSMIC_SIGHT]."
+- "Dread at [COLONY]. [NAME] reports [COSMIC_SIGHT]. [VOID_EMOTION]. [YEAR]."
+
+---
+
+## Mentorship Templates
+
+### MENTORSHIP_STARTED
+**Slots:** [COLONY], [YEAR], [MENTOR_NAME], [LEARNER_NAME], [MENTOR_TITLE]
+
+- "[MENTOR_NAME] takes [LEARNER_NAME] as a student. [YEAR]. The [MENTOR_TITLE] teaches."
+- "[YEAR]: A bond of learning. [MENTOR_NAME] and [LEARNER_NAME]. The path begins."
+- "[MENTOR_NAME], the [MENTOR_TITLE], guides [LEARNER_NAME]. [YEAR]."
+
+### LESSON_COMPLETED
+**Slots:** [COLONY], [YEAR], [MENTOR_NAME], [LEARNER_NAME], [LESSON_TOPIC]
+
+- "[LEARNER_NAME] has learned [LESSON_TOPIC]. [YEAR]. Thanks to [MENTOR_NAME]."
+- "[YEAR]: The lesson ends. [LESSON_TOPIC] passed from [MENTOR_NAME] to [LEARNER_NAME]."
+- "Wisdom shared. [MENTOR_NAME] teaches [LESSON_TOPIC]. [LEARNER_NAME] grows. [YEAR]."
+
+---
+
+## Spontaneous Architecture Templates
+
+### FOLLY_RAISED
+**Slots:** [COLONY], [YEAR], [NAME], [FOLLY_NAME], [FOLLY_PURPOSE]
+
+- "[NAME] built something. [YEAR]. A [FOLLY_NAME]. Used [FOLLY_PURPOSE]."
+- "[YEAR]: [FOLLY_NAME] appears. [NAME]'s work. [FOLLY_PURPOSE]."
+- "Unauthorized construction. [NAME] makes a [FOLLY_NAME] [FOLLY_PURPOSE]. [YEAR]."
+
+### FOLLY_DISCOVERED
+**Slots:** [COLONY], [YEAR], [FOLLY_NAME], [FOLLY_DESCRIPTOR]
+
+- "We found a [FOLLY_NAME]. [YEAR]. It is [FOLLY_DESCRIPTOR]."
+- "[YEAR]: Hidden among the works. A [FOLLY_DESCRIPTOR] [FOLLY_NAME]."
+- "Secret structure found. [FOLLY_NAME]. [FOLLY_DESCRIPTOR] and strange. [YEAR]."
+
+---
+
+## Logistics Templates
+
+### LOGISTICS_JAM
+**Slots:** [COLONY], [YEAR], [CONVEYOR_NAME], [JAM_DESCRIPTOR]
+
+- "The [CONVEYOR_NAME] stops. [YEAR]. It is [JAM_DESCRIPTOR]."
+- "[YEAR]: Production halted. [CONVEYOR_NAME] failure. [JAM_DESCRIPTOR]."
+- "Silence on the line. The [CONVEYOR_NAME] is [JAM_DESCRIPTOR]. [YEAR]."
+
+### FLOW_RESTORED
+**Slots:** [COLONY], [YEAR], [CONVEYOR_NAME]
+
+- "The [CONVEYOR_NAME] moves again. [YEAR]. The blockage clears."
+- "[YEAR]: Efficiency returns. [CONVEYOR_NAME] operational."
+- "The hum of the [CONVEYOR_NAME]. Restored at [COLONY]. [YEAR]."
+
+### LIGHT_INSTALLED
+**Slots:** [COLONY], [YEAR], [LIGHT_SOURCE_NAME], [SHADOW_DESCRIPTOR]
+
+- "First [LIGHT_SOURCE_NAME] in the sector. [YEAR]. Banish the [SHADOW_DESCRIPTOR] dark."
+- "[YEAR]: We hang a [LIGHT_SOURCE_NAME]. The shadows were [SHADOW_DESCRIPTOR]."
+- "Light brings hope. [LIGHT_SOURCE_NAME] lit. [YEAR]."

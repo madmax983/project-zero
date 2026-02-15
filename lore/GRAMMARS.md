@@ -1009,3 +1009,120 @@ PROVENANCE_REVEALED:
   increases:
     - ATTACHMENT_TO_PLACE (high)
 ```
+
+---
+
+## Antagonistic Flora Chaining
+
+```yaml
+FLORA_OUTBREAK:
+  enables:
+    - FLORA_CLEARED (high)
+    - STRUCTURE_STRANGLED (medium)
+    - CROP_LOSS (high, if near farms)
+  increases:
+    - FEAR (high)
+    - MILITIA_MUSTER (medium)
+
+STRUCTURE_STRANGLED:
+  enables:
+    - STRUCTURE_COLLAPSE (medium)
+    - REBUILDING_EFFORT (high)
+  increases:
+    - HATRED_OF_WILD (high)
+```
+
+---
+
+## Observatory Chaining
+
+```yaml
+OBSERVATORY_BUILT:
+  enables:
+    - COSMIC_EPIPHANY (medium)
+    - VOID_GAZE (medium)
+    - ANOMALY_STUDIED (high)
+  increases:
+    - SCIENCE_OUTPUT (high)
+    - EXISTENTIAL_DREAD (low)
+
+COSMIC_EPIPHANY:
+  enables:
+    - ARTISTIC_INSPIRATION (high)
+    - TECH_BREAKTHROUGH (medium)
+  increases:
+    - MORALE (high)
+
+VOID_GAZE:
+  enables:
+    - CABIN_FEVER_BREAK (medium)
+    - OMEN_WITNESSED (high)
+  increases:
+    - STRESS (high)
+    - UNREST (low)
+```
+
+---
+
+## Mentorship Chaining
+
+```yaml
+MENTORSHIP_STARTED:
+  enables:
+    - LESSON_COMPLETED (high)
+    - BOND_FORMED (high)
+    - MASTERY_ACHIEVED (medium, eventually)
+  increases:
+    - SKILL_GAIN (high)
+    - COHESION (medium)
+
+LESSON_COMPLETED:
+  enables:
+    - MASTERWORK_CREATED (low)
+    - PROMOTION (medium)
+  increases:
+    - CONFIDENCE (high)
+```
+
+---
+
+## Spontaneous Architecture Chaining
+
+```yaml
+FOLLY_RAISED:
+  enables:
+    - FOLLY_DISCOVERED (always)
+    - SOCIAL_GATHERING (medium, if shrine/garden)
+    - SECRET_MEETING (low)
+  increases:
+    - HAPPINESS (high, for builder)
+    - CONFUSION (low, for others)
+
+FOLLY_DISCOVERED:
+  enables:
+    - INSPECTOR_JUDGMENT (medium, if illegal)
+    - CELEBRATION (low, if beautiful)
+  increases:
+    - CURIOSITY (medium)
+```
+
+---
+
+## Logistics Chaining
+
+```yaml
+LOGISTICS_JAM:
+  enables:
+    - FLOW_RESTORED (high)
+    - WORK_STOPPAGE (high)
+    - SPOILAGE_EVENT (medium, if food stuck)
+  increases:
+    - FRUSTRATION (high)
+    - EFFICIENCY_LOSS (high)
+
+FLOW_RESTORED:
+  enables:
+    - STOCKPILE_FULL (low, sudden influx)
+  increases:
+    - RELIEF (medium)
+```
