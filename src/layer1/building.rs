@@ -208,6 +208,8 @@ pub enum BuildingType {
     Generator,
     /// Power transmission pole (Energy).
     PowerPole,
+    /// Battery for energy storage.
+    Battery,
     /// Basic wall for enclosure.
     Wall,
     /// Gate that can be opened/closed.
@@ -293,6 +295,7 @@ impl BuildingType {
             | Self::Smithy
             | Self::Generator
             | Self::PowerPole
+            | Self::Battery
             | Self::ConveyorBelt
             | Self::Hopper
             | Self::LifeSupport
@@ -339,6 +342,7 @@ impl BuildingType {
             Self::TradeDepot => "Trade Depot",
             Self::Generator => "Generator",
             Self::PowerPole => "Power Pole",
+            Self::Battery => "Battery",
             Self::Wall => "Wall",
             Self::Gate => "Gate",
             Self::Tower => "Tower",
@@ -383,6 +387,7 @@ impl BuildingType {
             Self::TradeDepot => '$',
             Self::Generator | Self::Greenhouse => 'G',
             Self::PowerPole => '|',
+            Self::Battery => 'B',
             Self::Wall => '#',
             Self::Tower | Self::Observatory => 'O',
             Self::AncientReactor | Self::Refinery => 'R',
@@ -582,6 +587,11 @@ impl BuildingType {
             },
             Self::PowerPole => ColonyResources {
                 metal: 2.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Battery => ColonyResources {
+                metal: 10.0,
+                stone: 10.0,
                 ..ColonyResources::zeroed()
             },
             Self::Refinery => ColonyResources {
@@ -951,6 +961,16 @@ fn spawn_building(
         BuildingType::PowerPole => {
             entity.insert(Conduit);
         }
+        BuildingType::Battery => {
+            entity.insert((
+                crate::layer1::energy::Battery {
+                    capacity: 100.0,
+                    charge: 0.0,
+                    max_throughput: 10.0,
+                },
+                Conduit,
+            ));
+        }
         BuildingType::Hospital => {
             entity.insert((
                 crate::layer1::medical::Hospital::default(),
@@ -1257,7 +1277,8 @@ mod tests {
         assert_eq!(BuildingType::Grave.next(), BuildingType::TradeDepot);
         assert_eq!(BuildingType::TradeDepot.next(), BuildingType::Generator);
         assert_eq!(BuildingType::Generator.next(), BuildingType::PowerPole);
-        assert_eq!(BuildingType::PowerPole.next(), BuildingType::Wall);
+        assert_eq!(BuildingType::PowerPole.next(), BuildingType::Battery);
+        assert_eq!(BuildingType::Battery.next(), BuildingType::Wall);
         assert_eq!(BuildingType::Wall.next(), BuildingType::Gate);
         assert_eq!(BuildingType::Gate.next(), BuildingType::Tower);
         assert_eq!(BuildingType::Tower.next(), BuildingType::AncientReactor);
@@ -1403,6 +1424,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::PowerPole);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Battery);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Wall);
