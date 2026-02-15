@@ -36,6 +36,9 @@ pub mod panels;
 /// Status bar rendering.
 pub mod status;
 
+#[cfg(test)]
+mod waste_ui_tests;
+
 use bevy_ecs::prelude::*;
 use ratatui::prelude::*;
 

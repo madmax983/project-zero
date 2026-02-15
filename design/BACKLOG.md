@@ -6,7 +6,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 ## MVP — Layer 1: Colony Simulation
 
-- [ ] `049` Industrial Waste — `specs/049-industrial-waste.md`
 - [ ] `059` Soil Fertility — `specs/059-soil-fertility.md`
 - [ ] `066` Building Work AI — `specs/066-building-work-ai.md`
 - [ ] `067` Militia System — `specs/067-militia-system.md`

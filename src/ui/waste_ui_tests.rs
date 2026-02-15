@@ -1,0 +1,41 @@
+#![cfg(test)]
+
+use bevy_ecs::prelude::*;
+use ratatui::Terminal;
+use ratatui::backend::TestBackend;
+use crate::layer1::resources::ColonyResources;
+use crate::shared::selection::Selection;
+use crate::ui::inspector::render_inspector;
+
+#[test]
+fn test_inspector_shows_waste_stats() {
+    let mut world = World::new();
+    world.insert_resource(Selection::default());
+
+    // Setup resources with waste
+    let mut resources = ColonyResources::default();
+    resources.waste = 5.0;
+    resources.max_waste = 10.0;
+    world.insert_resource(resources);
+
+    // Render Inspector (Selection::None shows stats)
+    let backend = TestBackend::new(40, 20);
+    let mut terminal = Terminal::new(backend).unwrap();
+
+    terminal
+        .draw(|f| {
+            render_inspector(f, f.area(), &world);
+        })
+        .unwrap();
+
+    let buffer = terminal.backend().buffer();
+    let cells: Vec<String> = buffer
+        .content
+        .iter()
+        .map(|c| c.symbol().to_string())
+        .collect();
+    let full_text = cells.join("");
+
+    assert!(full_text.contains("Waste"), "Inspector should display Waste in global stats");
+    assert!(full_text.contains("5.0/10"), "Inspector should display Waste amounts");
+}

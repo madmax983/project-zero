@@ -176,6 +176,10 @@ fn render_colony_stats(frame: &mut Frame, area: Rect, world: &World) {
                 resources.clothing, resources.max_clothing
             )),
         ]),
+        Row::new(vec![
+            Cell::from("🗑 Waste").style(Style::default().fg(Color::Rgb(85, 107, 47))),
+            Cell::from(format!("{:.1}/{:.0}", resources.waste, resources.max_waste)),
+        ]),
     ];
 
     let resource_table = Table::new(
