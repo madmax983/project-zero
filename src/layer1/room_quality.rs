@@ -5,6 +5,7 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::memory::{Memories, MemoryType};
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::utility_types::StartPlan;
+use crate::layer1::social_stratification::SocialClass;
 use crate::layer1::zone::{ZoneGrid, ZoneType};
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
@@ -166,34 +167,49 @@ pub fn apply_room_quality_thoughts(world: &mut World, pop_entity: Entity, zone_t
         return;
     };
 
+    let social_class = world
+        .get::<SocialClass>(pop_entity)
+        .copied()
+        .unwrap_or(SocialClass::Labor);
+
     // Calculate quality
     // Note: calculate_room_quality creates a query which requires read access to World.
     // But we have &mut World. This is fine.
     let quality = calculate_room_quality(world, pos);
 
+    // Define thresholds based on social class
+    // Labor: 10, 25, 50, 100
+    // Middle: 20, 40, 75, 125
+    // Elite: 40, 75, 125, 200
+    let (t_awful, t_dull, t_decent, t_great) = match social_class {
+        SocialClass::Labor => (10.0, 25.0, 50.0, 100.0),
+        SocialClass::Middle => (20.0, 40.0, 75.0, 125.0),
+        SocialClass::Elite => (40.0, 75.0, 125.0, 200.0),
+    };
+
     // Determine MemoryType
     let memory_type = match zone_type {
         ZoneType::Bedroom => {
-            if quality < 10.0 {
+            if quality < t_awful {
                 MemoryType::SleptInAwfulRoom
-            } else if quality < 25.0 {
+            } else if quality < t_dull {
                 MemoryType::SleptInDullRoom
-            } else if quality < 50.0 {
+            } else if quality < t_decent {
                 MemoryType::SleptInDecentRoom
-            } else if quality < 100.0 {
+            } else if quality < t_great {
                 MemoryType::SleptInGreatRoom
             } else {
                 MemoryType::SleptInLegendaryRoom
             }
         }
         ZoneType::Dining => {
-            if quality < 10.0 {
+            if quality < t_awful {
                 MemoryType::AteInAwfulRoom
-            } else if quality < 25.0 {
+            } else if quality < t_dull {
                 MemoryType::AteInDullRoom
-            } else if quality < 50.0 {
+            } else if quality < t_decent {
                 MemoryType::AteInDecentRoom
-            } else if quality < 100.0 {
+            } else if quality < t_great {
                 MemoryType::AteInGreatRoom
             } else {
                 MemoryType::AteInLegendaryRoom

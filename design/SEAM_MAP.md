@@ -13,3 +13,11 @@
     - Updated `src/layer1/execution.rs` to query Factions and block work.
     - Updated `src/layer1/science.rs` to query Factions and block scanning.
 - **Tests:** `tests/integration/strikes_mining_science.rs` (2 tests verified)
+
+### INT-022: Social Class -> Room Quality Expectations
+- **Date:** 2026-11-23
+- **Systems connected:** `SocialClass` -> `apply_room_quality_thoughts`
+- **Glue added:**
+    - Updated `src/layer1/room_quality.rs` to fetch `SocialClass`.
+    - Modified quality thresholds based on class (Elites demand higher quality).
+- **Tests:** `tests/integration/social_room_quality.rs` (1 test verified)
