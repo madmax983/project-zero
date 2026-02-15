@@ -1,8 +1,9 @@
 #![allow(clippy::collapsible_if, clippy::type_complexity)]
-use crate::layer1::GridPosition;
 use crate::layer1::balance::{
     FOOD_HUNGER_THRESHOLD, FOOD_PER_MEAL, FOOD_PER_WORKER_PER_TICK, HUNGER_PER_MEAL,
 };
+use crate::layer1::building::{Building, BuildingType};
+use crate::layer1::energy::PowerConsumer;
 use crate::layer1::factions::{FactionMember, FactionState, Factions};
 use crate::layer1::items::ItemType;
 use crate::layer1::needs::Needs;
@@ -12,7 +13,13 @@ use crate::layer1::resources::ColonyResources;
 use crate::layer1::seasons::SeasonState;
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
 use crate::layer1::utility_ai::{ActionType, PopAction};
+use crate::layer1::GridPosition;
 use bevy_ecs::prelude::*;
+
+/// Water cost per tick per worker for Hydroponics.
+const HYDROPONICS_WATER_COST: f32 = 0.1;
+/// Production multiplier for Hydroponics.
+const HYDROPONICS_MULTIPLIER: f32 = 2.0;
 
 /// Farm component - produces food when worked.
 #[derive(Component)]
@@ -35,7 +42,7 @@ impl Default for Farm {
 
 /// Produces food from all farms with active workers.
 pub fn produce_food_system(
-    farm_query: Query<(&crate::layer1::building::Building, &GridPosition), With<Farm>>,
+    farm_query: Query<(&Building, &GridPosition, Option<&PowerConsumer>), With<Farm>>,
     mut pop_query: Query<
         (
             Entity,
@@ -64,11 +71,10 @@ pub fn produce_food_system(
     // However, we can query buildings by position? No.
     // We can collect farms into a Map<GridPosition, BuildingType>.
 
-    let farm_map: std::collections::HashMap<GridPosition, crate::layer1::building::BuildingType> =
-        farm_query
-            .iter()
-            .map(|(b, p)| (*p, b.building_type))
-            .collect();
+    let farm_map: std::collections::HashMap<GridPosition, (BuildingType, bool)> = farm_query
+        .iter()
+        .map(|(b, p, pc)| (*p, (b.building_type, pc.is_some_and(|c| c.active))))
+        .collect();
 
     for (_, pos, action, skills_opt, faction_member_opt) in &mut pop_query {
         if action.current != ActionType::Farm {
@@ -89,7 +95,7 @@ pub fn produce_food_system(
             }
         }
 
-        if let Some(building_type) = farm_map.get(pos) {
+        if let Some((building_type, is_powered)) = farm_map.get(pos) {
             let skill_type = SkillType::Farming;
 
             // Calculate efficiency
@@ -100,16 +106,33 @@ pub fn produce_food_system(
                 skills.add_xp(skill_type, 1.0);
             }
 
-            let effective_modifier = match building_type {
-                crate::layer1::building::BuildingType::Greenhouse => 1.0,
-                _ => modifier,
+            let (water_cost, effective_modifier) = match building_type {
+                BuildingType::HydroponicsBay => {
+                    if *is_powered {
+                        (HYDROPONICS_WATER_COST, HYDROPONICS_MULTIPLIER)
+                    } else {
+                        (0.0, 0.0)
+                    }
+                }
+                BuildingType::Greenhouse => (0.0, 1.0),
+                _ => (0.0, modifier),
             };
+
+            // Check water availability
+            if water_cost > 0.0 && resources.water < water_cost {
+                continue;
+            }
+
+            // Deduct water
+            if water_cost > 0.0 {
+                resources.water -= water_cost;
+            }
 
             let production = efficiency * FOOD_PER_WORKER_PER_TICK * effective_modifier;
 
             if production > 0.0 {
                 match building_type {
-                    crate::layer1::building::BuildingType::Plantation => {
+                    BuildingType::Plantation => {
                         resources.add_fiber(production);
                     }
                     _ => {

@@ -678,6 +678,7 @@ pub const fn get_building_char(building: BuildingType) -> char {
         BuildingType::PersonalShrine => '☗',
         BuildingType::ConveyorBelt => '>',
         BuildingType::Hopper => 'V',
+        BuildingType::HydroponicsBay => 'Y',
     }
 }
 
@@ -729,7 +730,7 @@ pub const fn get_building_color(building: BuildingType, material: MaterialType) 
             BuildingType::TradeDepot => Color::Yellow,
             BuildingType::Generator => Color::Rgb(255, 215, 0), // Gold
             BuildingType::Refinery => Color::Rgb(100, 200, 255), // Chemical Blue
-            BuildingType::Greenhouse => Color::Rgb(200, 255, 255), // Glass/Cyan
+            BuildingType::Greenhouse | BuildingType::HydroponicsBay => Color::Rgb(200, 255, 255), // Glass/Cyan
             BuildingType::ConveyorBelt => Color::Cyan,
         }
     }

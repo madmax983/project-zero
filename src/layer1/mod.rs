@@ -333,6 +333,8 @@ mod fuel_consumption_tests;
 mod fuel_industry_tests;
 #[cfg(test)]
 mod greenhouse_tests;
+#[cfg(test)]
+mod hydroponics_tests;
 /// Palette fatigue system (Spec 114).
 pub mod palette_fatigue;
 #[cfg(test)]

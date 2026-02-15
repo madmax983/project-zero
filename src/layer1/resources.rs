@@ -132,6 +132,8 @@ pub struct ColonyResources {
     pub rations: f32,
     /// Total fuel available in the colony.
     pub fuel: f32,
+    /// Total water available in the colony.
+    pub water: f32,
     /// Maximum food capacity.
     pub max_food: f32,
     /// Maximum wood capacity.
@@ -162,6 +164,8 @@ pub struct ColonyResources {
     pub max_rations: f32,
     /// Maximum fuel capacity.
     pub max_fuel: f32,
+    /// Maximum water capacity.
+    pub max_water: f32,
 }
 
 impl Default for ColonyResources {
@@ -197,6 +201,8 @@ impl Default for ColonyResources {
             max_waste: 0.0, // Defaults to 0, requires Landfill
             max_rations: 50.0,
             max_fuel: 20.0,
+            water: 0.0,
+            max_water: 50.0,
         }
     }
 }
@@ -239,7 +245,14 @@ impl ColonyResources {
             max_waste: 0.0,
             max_rations: 0.0,
             max_fuel: 0.0,
+            water: 0.0,
+            max_water: 0.0,
         }
+    }
+
+    /// Adds water, clamping to the maximum capacity.
+    pub fn add_water(&mut self, amount: f32) {
+        self.water = (self.water + amount).clamp(0.0, self.max_water);
     }
 
     /// Adds rations, clamping to the maximum capacity.
@@ -342,6 +355,7 @@ impl ColonyResources {
             && self.clothing >= cost.clothing
             && self.rations >= cost.rations
             && self.fuel >= cost.fuel
+            && self.water >= cost.water
     }
 
     /// Deducts the given cost from the colony's resources.
@@ -364,6 +378,7 @@ impl ColonyResources {
         self.clothing -= cost.clothing;
         self.rations -= cost.rations;
         self.fuel -= cost.fuel;
+        self.water -= cost.water;
     }
 
     /// Attempts to deduct the given cost from the colony's resources.
