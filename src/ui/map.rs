@@ -268,11 +268,11 @@ pub fn build_terrain_spans(
     let mut spans: Vec<Line> = Vec::with_capacity(area.height as usize);
 
     for screen_y in 0..area.height {
-        let world_y = viewport.y + i32::from(screen_y);
+        let world_y = viewport.y.saturating_add(i32::from(screen_y));
         let mut line_spans = Vec::with_capacity(area.width as usize);
 
         for screen_x in 0..area.width {
-            let world_x = viewport.x + i32::from(screen_x);
+            let world_x = viewport.x.saturating_add(i32::from(screen_x));
 
             let (text, color) =
                 if let (Ok(ux), Ok(uy)) = (usize::try_from(world_x), usize::try_from(world_y)) {
@@ -306,11 +306,11 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
     let mut lines: Vec<Line> = Vec::with_capacity(ctx.area.height as usize);
 
     for screen_y in 0..ctx.area.height {
-        let world_y = ctx.viewport.y + i32::from(screen_y);
+        let world_y = ctx.viewport.y.saturating_add(i32::from(screen_y));
         let mut line_spans = Vec::with_capacity(ctx.area.width as usize);
 
         for screen_x in 0..ctx.area.width {
-            let world_x = ctx.viewport.x + i32::from(screen_x);
+            let world_x = ctx.viewport.x.saturating_add(i32::from(screen_x));
 
             // Build mode cursor (highest priority)
             if let Some((_, selected, material, can_place)) = ctx
