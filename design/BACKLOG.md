@@ -4,6 +4,11 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 ---
 
+## High Priority / Core Tech
+
+- [ ] `014` Rendering Architecture — `specs/014-rendering-architecture.md`
+- [ ] `037` Tech Tree UI — `specs/037-tech-tree-ui.md`
+
 ## MVP — Layer 1: Colony Simulation
 
 - [ ] `059` Soil Fertility — `specs/059-soil-fertility.md`
@@ -24,8 +29,3 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `101` System Mining — `specs/101-system-mining.md`
 - [ ] `102` Orbital Drop Logistics — `specs/102-orbital-drop-logistics.md`
 - [ ] `105` Launch Logistics — `specs/105-launch-logistics.md`
-
-## MVP — User Interface
-
-- [ ] `014` Rendering Architecture — `specs/014-rendering-architecture.md`
-- [ ] `037` Tech Tree UI — `specs/037-tech-tree-ui.md`
