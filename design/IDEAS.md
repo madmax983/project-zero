@@ -3780,3 +3780,115 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Rely on the temporary boost or ignore it?
 
 ---
+
+## Rogue Planets
+
+**Layer:** 2
+
+**Fantasy:** A world without a sun, drifting through the dark. A treasure chest frozen in time.
+
+**Mechanic:** Temporary System Nodes that appear and drift across the map before vanishing. They have 0 Solar Power and extreme Cold, but contain massive deposits of rare resources (having "vacuumed" them up over eons).
+
+**Emergence:** You scramble a mining fleet to intercept the Rogue Planet. You have 6 months to strip-mine it before it drifts out of shuttle range. Your miners work in pitch blackness, powered by nuclear heaters.
+
+**Tension:** High risk/reward rush vs. Safe, steady planetary mining.
+
+---
+
+## Nebulae
+
+**Layer:** 2
+
+**Fantasy:** The fog of war in space. Hiding in the clouds.
+
+**Mechanic:** Regions of the System Map with environmental effects. "Ion Clouds" disable shields/sensors. "Dust Clouds" slow movement. "Protoplanetary Disks" damage hulls.
+
+**Emergence:** You are outgunned by a Pirate Dreadnought. You dive into the Ion Cloud. Their sensors go blind, and you slip away—or ambush them at point-blank range.
+
+**Tension:** Safety of open space vs. Tactical advantage/hazard of the nebula.
+
+---
+
+## Pop Hobbies
+
+**Layer:** 1
+
+**Fantasy:** Pops are people, not just workers. They need to express themselves.
+
+**Mechanic:** Idle pops engage in "Hobbies" based on Traits (e.g., Whittling, Painting, Gardening, Tinkering). Hobbies reduce Stress and produce low-value "Flavor Items" or decor.
+
+**Emergence:** Your base is filled with terrible wooden ducks because you have a lot of idle time and plenty of wood. A pop "Tinkering" accidentally upgrades a machine—or breaks it.
+
+**Tension:** Enforce 100% work schedules (Efficiency) vs. Allow idle time (Culture/Stress reduction).
+
+---
+
+## Latent Psionics
+
+**Layer:** 1
+
+**Fantasy:** The mind is the next frontier. The stress of the void unlocks something.
+
+**Mechanic:** Rare "Latent" trait. High Stress or exposure to "Alien Artifacts" can trigger an Awakening. Powers range from "Empathy" (Mood Aura) to "Pyrokinesis" (Fire starting) or "Foresight" (Warning of raids).
+
+**Emergence:** Your Cook gets stressed during a famine and awakens as a Pyrokinetic. Now every time he burns the soup, he *literally* burns the kitchen.
+
+**Tension:** Exile the witch (Safety) or Weaponize the talent (Power)?
+
+---
+
+## Derelict Stations
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Ghost towns in orbit. It's cheaper to fix the dead than build the new.
+
+**Mechanic:** Abandoned stations spawn on the System Map. You can "Claim" them. They start with a layout of damaged/ruined buildings. Repairing them is cheaper than building fresh, but they may have "Quirks" (Haunted, Gas Leaks, hidden pests).
+
+**Emergence:** You move into an old Science Station. You fix the reactor, but you can't figure out why the previous crew welded the airlocks shut from the *outside*. Then you hear the vents rattle.
+
+**Tension:** Cheap reclamation (Unknown risks) vs. Expensive new construction (Safe/Clean).
+
+---
+
+## Binary Star Systems
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Two suns in the sky. The shadows are wrong.
+
+**Mechanic:** System generation variant. Complex day/night cycles (e.g., "The Long Day", "Double Noon"). Solar power fluctuates wildly based on which star is dominant. Heat waves are common.
+
+**Emergence:** The "Red Sun" sets, but the "Blue Sun" rises immediately. The crops never get a rest cycle and wither. You have to build blackout curtains for the greenhouses.
+
+**Tension:** Solar abundance vs. Environmental harshness.
+
+---
+
+## Proxy Wars
+
+**Layer:** 3
+
+**Fantasy:** Being a pawn (or a knight) in a galactic game.
+
+**Mechanic:** Large Civilizations pay you to attack their enemies without declaring war themselves. You gain "Privateer" status (legal piracy) and Credits, but generate "Threat" with the target.
+
+**Emergence:** You get rich raiding the "Merchant Guild" for the "Empire". Then the Empire signs a trade deal with the Guild and disavows you. Now you are just a pirate.
+
+**Tension:** Easy money (Mercenary work) vs. Diplomatic independence.
+
+---
+
+## Dying Stars
+
+**Layer:** 2
+
+**Fantasy:** The clock is ticking. The ultimate deadline.
+
+**Mechanic:** The local star is unstable. It progresses through stages ("Flare Up", "Expansion", "Nova"). Each stage changes planetary conditions (Heat++, Rads++). The game becomes a race to build an Ark Ship or Gate before the final boom.
+
+**Emergence:** The star expands, swallowing the inner planets. Your "Safe Core World" is now a "Molten Hellscape". You have to evacuate to the outer rim moons, which are now thawing out.
+
+**Tension:** Invest in infrastructure (Temporary) vs. Invest in escape (Permanent).
+
+---
