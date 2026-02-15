@@ -1,3 +1,16 @@
+//! Trade system for the colony.
+//!
+//! This module manages visiting merchants, trade deals, and the exchange of resources.
+//!
+//! # The Trade Cycle
+//!
+//! 1.  **Requirement**: A [`TradeDepot`] building must exist in the colony.
+//! 2.  **Arrival**: Every few ticks, if the cooldown has expired, a new [`Merchant`] arrives
+//!     (handled by [`merchant_arrival_system`]).
+//! 3.  **Deals**: The merchant brings a random set of [`TradeDeal`]s (e.g., "Give 10 Wood for 5 Metal").
+//! 4.  **Trading**: The player (or AI) calls [`execute_trade`] to accept a deal.
+//! 5.  **Departure**: After a set duration, the merchant leaves, and a cooldown begins before the next one arrives.
+
 use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::chronicle::{Chronicle, EventImportance};
 use crate::layer1::resources::{ColonyResources, ResourceType};
@@ -6,6 +19,8 @@ use bevy_ecs::prelude::*;
 use rand::Rng;
 
 /// Component marker for the Trade Depot building.
+///
+/// Merchants will only visit if at least one Trade Depot exists.
 #[derive(Component, Default)]
 pub struct TradeDepot;
 
@@ -146,6 +161,41 @@ pub fn merchant_arrival_system(world: &mut World) {
 /// Executes a trade deal, exchanging resources if affordable.
 ///
 /// Returns `true` if the trade was successful.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::trade::{execute_trade, TradeDeal};
+/// use scale::layer1::resources::{ColonyResources, ResourceType};
+/// use bevy_ecs::prelude::*;
+///
+/// let mut world = World::new();
+///
+/// // Setup resources
+/// world.insert_resource(ColonyResources {
+///     wood: 100.0,
+///     metal: 0.0,
+///     ..Default::default()
+/// });
+///
+/// // Define a deal: 10 Wood -> 5 Metal
+/// let deal = TradeDeal {
+///     cost_resource: ResourceType::Wood,
+///     cost_amount: 10.0,
+///     give_resource: ResourceType::Metal,
+///     give_amount: 5.0,
+/// };
+///
+/// // Execute
+/// let success = execute_trade(&mut world, &deal);
+///
+/// assert!(success);
+///
+/// // Verify exchange
+/// let res = world.resource::<ColonyResources>();
+/// assert_eq!(res.wood, 90.0);
+/// assert_eq!(res.metal, 5.0);
+/// ```
 pub fn execute_trade(world: &mut World, deal: &TradeDeal) -> bool {
     // Validate inputs (security hardening)
     if deal.cost_amount < 0.0 || !deal.cost_amount.is_finite() {
