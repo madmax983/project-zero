@@ -41,6 +41,33 @@ use std::collections::HashSet;
 use strum::IntoEnumIterator;
 use strum_macros::EnumIter;
 
+/// Direction for buildings (e.g., Conveyor Belts).
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
+pub enum Direction {
+    #[default]
+    /// North direction (0, -1).
+    North,
+    /// East direction (1, 0).
+    East,
+    /// South direction (0, 1).
+    South,
+    /// West direction (-1, 0).
+    West,
+}
+
+impl Direction {
+    /// Returns the vector representation of the direction (dx, dy).
+    #[must_use]
+    pub const fn to_delta(&self) -> (i32, i32) {
+        match self {
+            Self::North => (0, -1),
+            Self::East => (1, 0),
+            Self::South => (0, 1),
+            Self::West => (-1, 0),
+        }
+    }
+}
+
 /// Material types for buildings.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, EnumIter)]
 pub enum MaterialType {
@@ -202,6 +229,10 @@ pub enum BuildingType {
     PersonalShrine,
     /// Research center for space observation.
     Observatory,
+    /// Logistics: Moves items.
+    ConveyorBelt,
+    /// Logistics: Collects items into global storage.
+    Hopper,
 }
 
 impl BuildingType {
@@ -227,6 +258,7 @@ impl BuildingType {
                 | Self::TradeDepot
                 | Self::Landfill
                 | Self::PersonalGarden
+                | Self::ConveyorBelt
         )
     }
 
@@ -249,9 +281,12 @@ impl BuildingType {
     #[must_use]
     pub const fn required_tech(&self) -> Option<Tech> {
         match self {
-            Self::Smelter | Self::Smithy | Self::Generator | Self::PowerPole => {
-                Some(Tech::MetalWorking)
-            }
+            Self::Smelter
+            | Self::Smithy
+            | Self::Generator
+            | Self::PowerPole
+            | Self::ConveyorBelt
+            | Self::Hopper => Some(Tech::MetalWorking),
             Self::Tavern | Self::Statue => Some(Tech::SocialStructures),
             Self::Tower => Some(Tech::Masonry),
             Self::Observatory => Some(Tech::Astronomy),
@@ -304,6 +339,8 @@ impl BuildingType {
             Self::PersonalGarden => "Garden",
             Self::PersonalShrine => "Shrine",
             Self::Observatory => "Observatory",
+            Self::ConveyorBelt => "Conveyor Belt",
+            Self::Hopper => "Hopper",
         }
     }
 
@@ -336,6 +373,8 @@ impl BuildingType {
             Self::AncientReactor | Self::Refinery => 'R',
             Self::PersonalShed => 's',
             Self::PersonalShrine => '☗',
+            Self::ConveyorBelt => '>',
+            Self::Hopper => 'V',
         }
     }
 
@@ -344,6 +383,14 @@ impl BuildingType {
     #[allow(clippy::match_same_arms, clippy::too_many_lines)]
     pub const fn cost(&self, material: MaterialType) -> ColonyResources {
         match self {
+            Self::ConveyorBelt => ColonyResources {
+                metal: 5.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Hopper => ColonyResources {
+                metal: 10.0,
+                ..ColonyResources::zeroed()
+            },
             Self::Wall => match material {
                 MaterialType::Wood => ColonyResources {
                     wood: 5.0,
@@ -961,6 +1008,27 @@ fn spawn_building(
         | BuildingType::PersonalShrine => {
             // Logic handled by components added in system
         }
+        BuildingType::ConveyorBelt => {
+            entity.insert((
+                crate::layer1::logistics::ConveyorBelt {
+                    direction: crate::layer1::building::Direction::East,
+                    speed: 1.0,
+                },
+                PowerConsumer {
+                    demand: 1.0,
+                    active: false,
+                },
+            ));
+        }
+        BuildingType::Hopper => {
+            entity.insert((
+                crate::layer1::logistics::Hopper,
+                PowerConsumer {
+                    demand: 5.0,
+                    active: false,
+                },
+            ));
+        }
     }
 }
 
@@ -1139,7 +1207,9 @@ mod tests {
             BuildingType::PersonalShrine.next(),
             BuildingType::Observatory
         );
-        assert_eq!(BuildingType::Observatory.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::Observatory.next(), BuildingType::ConveyorBelt);
+        assert_eq!(BuildingType::ConveyorBelt.next(), BuildingType::Hopper);
+        assert_eq!(BuildingType::Hopper.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -1284,6 +1354,12 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Observatory);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::ConveyorBelt);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Hopper);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

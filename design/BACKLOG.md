@@ -6,7 +6,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 ## MVP — Layer 1: Colony Simulation
 
-- [ ] `111` Conveyor Logistics — `specs/111-conveyor-logistics.md`
 - [ ] `113` Social Stratification — `specs/113-social-stratification.md`
 - [ ] `116` Drone Networks — `specs/116-drone-networks.md`
 - [ ] `118` Penal Labor — `specs/118-penal-labor.md`

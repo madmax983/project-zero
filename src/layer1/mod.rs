@@ -347,3 +347,7 @@ pub use spontaneous_architecture::*;
 /// Observatory and Overview Effect (Spec 115).
 pub mod observatory;
 pub use observatory::*;
+
+/// Conveyor and Hopper Logistics (Spec 111).
+pub mod logistics;
+pub use logistics::*;
