@@ -135,10 +135,7 @@ mod tests {
             if (structure.current_hp - structure.max_hp).abs() < f32::EPSILON {
                 continue;
             }
-            proxies.push(StructureProxy {
-                entity,
-                pos: *pos,
-            });
+            proxies.push(StructureProxy { entity, pos: *pos });
         }
 
         let result = evaluate_repair(&pop_pos, &weights, &designations, &proxies);

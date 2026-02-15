@@ -177,8 +177,7 @@ pub fn evaluate_single_pop(
     }
 
     // Evaluate Socialize
-    if let Some((utility, target)) =
-        evaluate_socialize(&pop_pos, &needs, &weights, &buffer.taverns)
+    if let Some((utility, target)) = evaluate_socialize(&pop_pos, &needs, &weights, &buffer.taverns)
     {
         check_best(ActionType::Socialize, utility, Some(target));
     }
@@ -203,12 +202,9 @@ pub fn evaluate_single_pop(
     // Probably safe to block if striking, as tool usage implies work.
     if !is_striking {
         let equipment = equipment_opt.unwrap_or_default();
-        if let Some((utility, target)) = evaluate_fetch_tool(
-            &pop_pos,
-            &equipment,
-            context.resources,
-            &buffer.stockpiles,
-        ) {
+        if let Some((utility, target)) =
+            evaluate_fetch_tool(&pop_pos, &equipment, context.resources, &buffer.stockpiles)
+        {
             check_best(ActionType::FetchTool, utility, Some(target));
         }
     }
@@ -499,9 +495,7 @@ pub fn evaluate_actions_system(world: &mut World) {
     buffer.stockpiles.clear();
     let mut stock_query = world.query::<(Entity, &GridPosition, &Stockpile)>();
     for (entity, pos, _) in stock_query.iter(world) {
-        buffer
-            .stockpiles
-            .push(StockpileProxy { entity, pos: *pos });
+        buffer.stockpiles.push(StockpileProxy { entity, pos: *pos });
     }
 
     // Anomalies
@@ -536,9 +530,10 @@ pub fn evaluate_actions_system(world: &mut World) {
     let mut grave_query = world.query::<(Entity, &Grave)>();
     for (entity, grave) in grave_query.iter(world) {
         if !grave.occupied {
-            buffer
-                .graves
-                .push(GraveProxy { entity, occupied: false });
+            buffer.graves.push(GraveProxy {
+                entity,
+                occupied: false,
+            });
         }
     }
 

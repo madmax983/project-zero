@@ -7,9 +7,7 @@ mod tests {
     use crate::layer1::pop::Pop;
     use crate::layer1::resources::{ColonyResources, RefiningProgress};
     use crate::layer1::tech::Library;
-    use crate::layer1::utility_types::{
-        FarmProxy, LibraryProxy, RefiningProxy, UtilityWeights,
-    };
+    use crate::layer1::utility_types::{FarmProxy, LibraryProxy, RefiningProxy, UtilityWeights};
     use bevy_ecs::prelude::*;
 
     // Helper to evaluate refine

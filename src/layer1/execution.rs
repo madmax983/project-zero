@@ -319,7 +319,45 @@ pub fn movement_system(
             continue;
         }
 
-        let Some(new_pos) = calculate_next_position(*current_pos, target_pos) else {
+        // Check if already at target (for non-work actions requiring exact position)
+        if *current_pos == target_pos {
+            commands.entity(pop_entity).insert(AtTarget);
+            continue;
+        }
+
+        let (primary, secondary) = calculate_next_positions(*current_pos, target_pos);
+        let mut chosen_pos = None;
+
+        // Selection Phase: Find first walkable candidate
+        // Try Primary
+        if let Some(pos) = primary {
+            if is_walkable(
+                &terrain,
+                occupied_tiles.as_deref(),
+                &buildings,
+                pos.x,
+                pos.y,
+            ) {
+                chosen_pos = Some(pos);
+            }
+        }
+
+        // Try Secondary (if primary blocked or invalid)
+        if chosen_pos.is_none() {
+            if let Some(pos) = secondary {
+                if is_walkable(
+                    &terrain,
+                    occupied_tiles.as_deref(),
+                    &buildings,
+                    pos.x,
+                    pos.y,
+                ) {
+                    chosen_pos = Some(pos);
+                }
+            }
+        }
+
+        let Some(new_pos) = chosen_pos else {
             continue;
         };
 
@@ -349,16 +387,6 @@ pub fn movement_system(
         };
 
         if !can_move {
-            continue;
-        }
-
-        if !is_walkable(
-            &terrain,
-            occupied_tiles.as_deref(),
-            &buildings,
-            new_pos.x,
-            new_pos.y,
-        ) {
             continue;
         }
 
@@ -620,22 +648,37 @@ fn is_walkable(
 }
 
 #[allow(clippy::missing_const_for_fn, clippy::unnecessary_wraps)]
-fn calculate_next_position(current: GridPosition, target: GridPosition) -> Option<GridPosition> {
+fn calculate_next_positions(
+    current: GridPosition,
+    target: GridPosition,
+) -> (Option<GridPosition>, Option<GridPosition>) {
     // Calculate movement direction (Manhattan)
     let dx = (target.x - current.x).signum();
     let dy = (target.y - current.y).signum();
 
-    // Prefer horizontal movement, then vertical
-    if dx != 0 {
+    let move_x = if dx != 0 {
         Some(GridPosition {
             x: current.x + dx,
             y: current.y,
         })
     } else {
+        None
+    };
+
+    let move_y = if dy != 0 {
         Some(GridPosition {
             x: current.x,
             y: current.y + dy,
         })
+    } else {
+        None
+    };
+
+    // Prefer horizontal movement
+    if dx != 0 {
+        (move_x, move_y)
+    } else {
+        (move_y, None)
     }
 }
 
@@ -2727,5 +2770,39 @@ mod tests {
         let speed = world.get::<Speed>(pop).unwrap();
         // 0.96 - 1.0 = -0.04
         assert!((speed.accumulator - (-0.04)).abs() < 0.001);
+    }
+    #[test]
+    fn test_movement_system_stuck_in_greedy_corner() {
+        let mut world = setup_world();
+
+        // Map setup
+        // P # .
+        // . . T
+        // Pop at (0,0). Target at (2,1). Wall at (1,0).
+
+        {
+            let mut terrain = world.resource_mut::<TerrainGrid>();
+            terrain.tiles[1] = TerrainType::Rock; // (1,0)
+        }
+
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 0, y: 0 },
+                MovementTarget {
+                    target_entity: Entity::from_raw(1),
+                    target_position: GridPosition { x: 2, y: 1 },
+                    for_action: ActionType::Work,
+                },
+            ))
+            .id();
+
+        // Run movement
+        world.run_system_once(movement_system).unwrap();
+
+        // Expectation: Pop moves to (0,1) because (1,0) is blocked
+        let pos = world.get::<GridPosition>(pop).unwrap();
+        assert_eq!(pos.x, 0);
+        assert_eq!(pos.y, 1, "Pop should detour to Y if X is blocked");
     }
 }
