@@ -56,6 +56,7 @@ use crate::layer1::pop::{Job, Speed};
 use crate::layer1::resources::{ColonyResources, process_logging, process_mining};
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
 use crate::layer1::social::{SocialBuff, Tavern, handle_socialize};
+use crate::layer1::social_stratification::Prestige;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::traits::{Traits, get_trait_move_speed_modifier, get_trait_work_speed_modifier};
 use crate::layer1::utility_ai::{ActionType, PopAction, StartPlan};
@@ -214,7 +215,19 @@ pub fn cleanup_previous_assignment_system(
             AssignmentType::LibraryWorker
             | AssignmentType::Patient
             | AssignmentType::Funeral
-            | AssignmentType::ObservatoryWorker => {}
+            | AssignmentType::ObservatoryWorker
+            | AssignmentType::Miner
+            | AssignmentType::Hauler
+            | AssignmentType::Builder
+            | AssignmentType::Crafter
+            | AssignmentType::Guard
+            | AssignmentType::Engineer
+            | AssignmentType::Doctor
+            | AssignmentType::Merchant
+            | AssignmentType::Scientist
+            | AssignmentType::Artist
+            | AssignmentType::Governor
+            | AssignmentType::Administrator => {}
         }
 
         commands.entity(pop_entity).remove::<AssignedTo>();
@@ -502,11 +515,26 @@ fn assign_pop(
     match assignment_type {
         AssignmentType::FarmWorker
         | AssignmentType::LibraryWorker
-        | AssignmentType::ObservatoryWorker => {
-            entity_cmds.insert(Job {
-                workplace: target_entity,
-                job_type: assignment_type,
-            });
+        | AssignmentType::ObservatoryWorker
+        | AssignmentType::Miner
+        | AssignmentType::Hauler
+        | AssignmentType::Builder
+        | AssignmentType::Crafter
+        | AssignmentType::Guard
+        | AssignmentType::Engineer
+        | AssignmentType::Doctor
+        | AssignmentType::Merchant
+        | AssignmentType::Scientist
+        | AssignmentType::Artist
+        | AssignmentType::Governor
+        | AssignmentType::Administrator => {
+            entity_cmds.insert((
+                Job {
+                    workplace: target_entity,
+                    job_type: assignment_type,
+                },
+                Prestige::from_job(assignment_type),
+            ));
         }
         AssignmentType::HousingResident
         | AssignmentType::TavernVisitor
@@ -872,9 +900,7 @@ fn execute_work_on_designation(
                     // Working: Dynamic shake + Dust
                     let intensity = world
                         .get::<crate::layer1::resources::MiningProgress>(designation_entity)
-                        .map_or(0.05, |prog| {
-                            (prog.current / prog.max).mul_add(0.15, 0.05)
-                        });
+                        .map_or(0.05, |prog| (prog.current / prog.max).mul_add(0.15, 0.05));
 
                     if let Some(mut shake) = world.get_resource_mut::<ScreenShake>() {
                         shake.trigger(intensity);
@@ -897,9 +923,7 @@ fn execute_work_on_designation(
                     // Working
                     let intensity = world
                         .get::<crate::layer1::resources::ForestryProgress>(designation_entity)
-                        .map_or(0.02, |prog| {
-                            (prog.current / prog.max).mul_add(0.1, 0.02)
-                        });
+                        .map_or(0.02, |prog| (prog.current / prog.max).mul_add(0.1, 0.02));
 
                     if let Some(mut shake) = world.get_resource_mut::<ScreenShake>() {
                         shake.trigger(intensity);

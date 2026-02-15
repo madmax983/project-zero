@@ -648,19 +648,30 @@ mod tests {
     #[test]
     fn test_shader_array_size_matches_action_count() {
         // Assert CPU side constant
-        assert_eq!(ActionType::COUNT, 22, "ActionType::COUNT changed! Update GPU buffers and shader.");
+        assert_eq!(
+            ActionType::COUNT,
+            22,
+            "ActionType::COUNT changed! Update GPU buffers and shader."
+        );
 
         // Read shader file
         let manifest_dir = std::env::var("CARGO_MANIFEST_DIR").unwrap();
         let shader_path = std::path::Path::new(&manifest_dir).join("src/gpu/shaders/evaluate.wgsl");
-        let shader_content = std::fs::read_to_string(shader_path).expect("Failed to read shader file");
+        let shader_content =
+            std::fs::read_to_string(shader_path).expect("Failed to read shader file");
 
         // Check for success_count array size
         let success_pattern = "success_count: array<u32, 22>";
-        assert!(shader_content.contains(success_pattern), "Shader success_count array size mismatch or pattern changed.");
+        assert!(
+            shader_content.contains(success_pattern),
+            "Shader success_count array size mismatch or pattern changed."
+        );
 
         // Check for attempt_count array size
         let attempt_pattern = "attempt_count: array<u32, 22>";
-        assert!(shader_content.contains(attempt_pattern), "Shader attempt_count array size mismatch or pattern changed.");
+        assert!(
+            shader_content.contains(attempt_pattern),
+            "Shader attempt_count array size mismatch or pattern changed."
+        );
     }
 }

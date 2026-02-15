@@ -9,9 +9,7 @@ use bevy_ecs::prelude::*;
 
 /// Moves resources from the world to stockpiles.
 pub fn haul_system(world: &mut World) {
-    let factions_data = world
-        .get_resource::<Factions>()
-        .map(|f| f.map.clone());
+    let factions_data = world.get_resource::<Factions>().map(|f| f.map.clone());
 
     // Collect hauling pops
     let mut haulers = Vec::new();
@@ -28,7 +26,10 @@ pub fn haul_system(world: &mut World) {
             if let Some(map) = &factions_data {
                 if let Some(m) = member {
                     if let Some(fid) = m.faction_id {
-                        if map.get(&fid).is_some_and(|d| d.state == FactionState::Striking) {
+                        if map
+                            .get(&fid)
+                            .is_some_and(|d| d.state == FactionState::Striking)
+                        {
                             continue;
                         }
                     }

@@ -52,18 +52,11 @@ use rand::Rng;
 ///     *   Resets progress.
 #[doc(alias = "crafting")]
 pub fn process_refining_system(world: &mut World) {
-    let factions_data = world
-        .get_resource::<Factions>()
-        .map(|f| f.map.clone());
+    let factions_data = world.get_resource::<Factions>().map(|f| f.map.clone());
 
     // Collect workers who are refining
     let workers: Vec<(Entity, GridPosition)> = world
-        .query_filtered::<(
-            Entity,
-            &GridPosition,
-            &PopAction,
-            Option<&FactionMember>,
-        ), With<Pop>>()
+        .query_filtered::<(Entity, &GridPosition, &PopAction, Option<&FactionMember>), With<Pop>>()
         .iter(world)
         .filter(|(_, _, action, member)| {
             if action.current != ActionType::Refine {
@@ -73,7 +66,10 @@ pub fn process_refining_system(world: &mut World) {
             if let Some(map) = &factions_data {
                 if let Some(m) = member {
                     if let Some(fid) = m.faction_id {
-                        if map.get(&fid).is_some_and(|d| d.state == FactionState::Striking) {
+                        if map
+                            .get(&fid)
+                            .is_some_and(|d| d.state == FactionState::Striking)
+                        {
                             return false;
                         }
                     }

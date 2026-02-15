@@ -328,9 +328,9 @@ pub mod biocompatibility;
 pub use biocompatibility::*;
 
 #[cfg(test)]
-mod fuel_industry_tests;
-#[cfg(test)]
 mod fuel_consumption_tests;
+#[cfg(test)]
+mod fuel_industry_tests;
 #[cfg(test)]
 mod greenhouse_tests;
 /// Palette fatigue system (Spec 114).
@@ -351,3 +351,7 @@ pub use observatory::*;
 /// Conveyor and Hopper Logistics (Spec 111).
 pub mod logistics;
 pub use logistics::*;
+
+/// Social stratification system (Spec 113).
+pub mod social_stratification;
+pub use social_stratification::*;

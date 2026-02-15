@@ -1198,7 +1198,10 @@ mod tests {
         );
         assert_eq!(BuildingType::Refinery.next(), BuildingType::Greenhouse);
         assert_eq!(BuildingType::Greenhouse.next(), BuildingType::PersonalShed);
-        assert_eq!(BuildingType::PersonalShed.next(), BuildingType::PersonalGarden);
+        assert_eq!(
+            BuildingType::PersonalShed.next(),
+            BuildingType::PersonalGarden
+        );
         assert_eq!(
             BuildingType::PersonalGarden.next(),
             BuildingType::PersonalShrine

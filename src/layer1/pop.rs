@@ -23,6 +23,8 @@
 //! * [`UtilityWeights`]: Personality/learning factors.
 
 use super::actions::AssignmentType;
+/// Alias for `AssignmentType` for job-related contexts (Spec 113).
+pub use super::actions::AssignmentType as JobType;
 use super::biocompatibility::Biocompatibility;
 use super::cabin_fever::CabinFever;
 use super::contagion::ContagionCooldown;
