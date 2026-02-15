@@ -123,14 +123,37 @@ pub fn spawn_initial_anomalies(world: &mut World, count: usize) {
 ///
 /// Panics if the anomaly entity exists but lacks the `Anomaly` component.
 pub fn process_scan_system(world: &mut World) {
+    // Collect striking factions
+    let striking_factions: std::collections::HashSet<crate::layer1::factions::FactionId> = world
+        .get_resource::<crate::layer1::factions::Factions>()
+        .map(|f| {
+            f.map
+                .iter()
+                .filter(|(_, d)| d.state == crate::layer1::factions::FactionState::Striking)
+                .map(|(id, _)| *id)
+                .collect()
+        })
+        .unwrap_or_default();
+
     // 1. Collect scanner pops
     let mut scanners = Vec::new();
 
     // Query manually to avoid borrow checker issues with world
-    let mut query = world.query_filtered::<(Entity, &MovementTarget), With<AtTarget>>();
-    for (entity, mt) in query.iter(world) {
+    let mut query = world.query_filtered::<(
+        Entity,
+        &MovementTarget,
+        Option<&crate::layer1::factions::FactionMember>,
+    ), With<AtTarget>>();
+    for (entity, mt, faction_member) in query.iter(world) {
         if mt.for_action == ActionType::Explore {
-            scanners.push((entity, mt.target_entity));
+            // Check strike
+            let is_striking = faction_member
+                .and_then(|m| m.faction_id)
+                .is_some_and(|fid| striking_factions.contains(&fid));
+
+            if !is_striking {
+                scanners.push((entity, mt.target_entity));
+            }
         }
     }
 

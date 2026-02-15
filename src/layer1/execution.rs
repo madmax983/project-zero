@@ -682,6 +682,19 @@ pub fn work_execution_system(world: &mut World) {
     // Fetch DayNightCycle
     let cycle = world.get_resource::<DayNightCycle>().map(|c| c.time_of_day);
 
+    // Fetch Factions for strike check
+    // We collect striking factions into a set to avoid borrowing conflicts with world
+    let striking_factions: std::collections::HashSet<crate::layer1::factions::FactionId> = world
+        .get_resource::<crate::layer1::factions::Factions>()
+        .map(|f| {
+            f.map
+                .iter()
+                .filter(|(_, d)| d.state == crate::layer1::factions::FactionState::Striking)
+                .map(|(id, _)| *id)
+                .collect()
+        })
+        .unwrap_or_default();
+
     // Find pops at their work target and capture their morale
     // Since we need to access Needs which is a component, and we need &mut World later,
     // we should collect Needs data first.
@@ -695,13 +708,24 @@ pub fn work_execution_system(world: &mut World) {
             Option<&Equipment>,
             Option<&Traits>,
             Option<&Morale>,
+            Option<&crate::layer1::factions::FactionMember>,
         ), With<AtTarget>>()
         .iter(world)
-        .filter(|(_, mt, _, _, _, _, _, _)| {
-            mt.for_action == ActionType::Work || mt.for_action == ActionType::Repair
+        .filter(|(_, mt, _, _, _, _, _, _, faction_member)| {
+            let is_work = mt.for_action == ActionType::Work || mt.for_action == ActionType::Repair;
+            if !is_work {
+                return false;
+            }
+
+            // Check strike
+            let is_striking = faction_member
+                .and_then(|m| m.faction_id)
+                .is_some_and(|fid| striking_factions.contains(&fid));
+
+            !is_striking
         })
         .map(
-            |(e, mt, needs, memories, social_buff, eq, traits, morale_comp)| {
+            |(e, mt, needs, memories, social_buff, eq, traits, morale_comp, _)| {
                 let morale = needs.map_or(0.5, |n| {
                     calculate_effective_morale(
                         n,
