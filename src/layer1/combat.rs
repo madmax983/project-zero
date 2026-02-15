@@ -145,9 +145,17 @@ pub fn execute_attack(world: &mut World, attacker: Entity, target: Entity) {
     if damage > 0.0 {
         if let Some(mut health) = world.get_mut::<crate::layer1::health::Health>(target) {
             health.take_damage(damage);
+
+            // Scale feedback based on damage
+            let (shake_intensity, particle_color, particle_count) = if damage >= 15.0 {
+                (0.4, Color::Magenta, 10)
+            } else {
+                (0.2, Color::Red, 5)
+            };
+
             // Trigger Screen Shake (Ludwig: Juice)
             if let Some(mut shake) = world.get_resource_mut::<ScreenShake>() {
-                shake.trigger(0.2);
+                shake.trigger(shake_intensity);
             }
 
             // Ludwig: Spawn hit particle
@@ -155,7 +163,7 @@ pub fn execute_attack(world: &mut World, attacker: Entity, target: Entity) {
                 .get::<crate::layer1::map::GridPosition>(target)
                 .copied()
             {
-                spawn_particle(world, pos, '*', Color::Red, 5);
+                spawn_particle(world, pos, '*', particle_color, particle_count);
             }
         }
     }
