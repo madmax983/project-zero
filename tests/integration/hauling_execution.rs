@@ -44,6 +44,7 @@ mod tests {
         world.insert_resource(scale::layer1::lighting::LightMap::new(10, 10));
         world.insert_resource(scale::layer1::lighting::AmbientLight::default());
         world.insert_resource(scale::layer1::atmosphere::AtmosphereGrid::new(10, 10));
+        world.insert_resource(scale::layer1::pressure::PressureGrid::new(10, 10));
         world.insert_resource(scale::layer1::notifications::NotificationQueue::default());
         world.insert_resource(scale::layer1::trade::MerchantState::default());
         world.insert_resource(scale::layer1::vermin::VerminState::default());

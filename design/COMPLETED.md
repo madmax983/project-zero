@@ -110,3 +110,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `123` Technological Rituals — `specs/123-technological-rituals.md` — completed 2026-11-22
 - [x] `119` Airlock & Pressure — `specs/119-airlock-pressure.md` — completed 2026-12-05
 - [x] `INT-023` Integration: Vacuum clears pollution — completed 2026-12-06
+- [x] `049` Industrial Waste — `specs/049-industrial-waste.md` — completed 2026-03-05

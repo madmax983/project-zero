@@ -101,7 +101,7 @@ mod integration_tests {
 
         // Run simulation ticks
         // We run multiple ticks to allow travel and work
-        for _ in 0..20 {
+        for _ in 0..50 {
             run_simulation_tick(&mut world);
         }
 

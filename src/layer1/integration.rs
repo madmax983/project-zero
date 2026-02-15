@@ -103,13 +103,13 @@ pub fn vacuum_clears_pollution_system(
     mut atmosphere: ResMut<crate::layer1::atmosphere::AtmosphereGrid>,
     pressure: Res<crate::layer1::pressure::PressureGrid>,
 ) {
+    // Parallel iteration would be better if these were huge, but simple loop is fine for MVP
+    const VACUUM_THRESHOLD: f32 = 0.1;
+
     // If dimensions match, proceed
     if atmosphere.width != pressure.width || atmosphere.height != pressure.height {
         return;
     }
-
-    // Parallel iteration would be better if these were huge, but simple loop is fine for MVP
-    const VACUUM_THRESHOLD: f32 = 0.1;
 
     for i in 0..atmosphere.values.len() {
         // If pressure is near vacuum, clear pollution
