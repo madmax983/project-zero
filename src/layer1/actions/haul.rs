@@ -1,6 +1,7 @@
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::ColonyResources;
-use crate::layer1::utility_types::{ActionType, ItemProxy, StockpileProxy, UtilityWeights};
+use crate::layer1::utility_eval_types::{ItemProxy, StockpileProxy};
+use crate::layer1::utility_types::{ActionType, UtilityWeights};
 use crate::layer1::utility_types::{calculate_context_score, calculate_success_modifier};
 use bevy_ecs::prelude::*;
 

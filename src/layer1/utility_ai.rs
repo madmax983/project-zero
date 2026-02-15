@@ -74,12 +74,14 @@ use crate::layer1::stockpile::Stockpile;
 use crate::layer1::structure::{DeferMaintenance, Structure};
 use crate::layer1::tech::Library;
 use crate::layer1::unrest::MentalState;
+pub use crate::layer1::utility_eval_types::{
+    AnomalyProxy, CorpseProxy, FarmProxy, GraveProxy, HospitalProxy, HousingProxy, ItemProxy,
+    LibraryProxy, PlanOutcome, PopEvalData, RefiningProxy, RepairDesignationProxy, StockpileProxy,
+    StructureProxy, TameDesignationProxy, TavernProxy, UtilityAIBuffer, WorkDesignationProxy,
+    WorldContext, evaluate_idle,
+};
 pub use crate::layer1::utility_types::{
-    ActionType, AnomalyProxy, CorpseProxy, FarmProxy, GraveProxy, HospitalProxy, HousingProxy,
-    ItemProxy, LibraryProxy, Plan, PlanOutcome, PopAction, PopEvalData, RefiningProxy,
-    RepairDesignationProxy, StartPlan, StockpileProxy, StructureProxy, TameDesignationProxy,
-    TavernProxy, UtilityAIBuffer, UtilityConfig, UtilityWeights, WorkDesignationProxy,
-    WorldContext, evaluate_idle, manhattan_distance,
+    ActionType, Plan, PopAction, StartPlan, UtilityConfig, UtilityWeights, manhattan_distance,
 };
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;

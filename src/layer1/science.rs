@@ -280,7 +280,7 @@ mod tests {
     };
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
     use crate::layer1::utility_ai::{ActionType, PopAction, UtilityWeights};
-    use crate::layer1::utility_types::AnomalyProxy;
+    use crate::layer1::utility_eval_types::AnomalyProxy;
     use crate::shared::log::MessageLog;
     use bevy_ecs::prelude::*;
 

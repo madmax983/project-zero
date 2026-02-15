@@ -6,7 +6,8 @@ mod tests {
     use crate::layer1::structure::{
         DeferMaintenance, Structure, calculate_malfunction_risk, entropy_system,
     };
-    use crate::layer1::utility_types::{RepairDesignationProxy, StructureProxy, UtilityWeights};
+    use crate::layer1::utility_eval_types::{RepairDesignationProxy, StructureProxy};
+    use crate::layer1::utility_types::UtilityWeights;
     use bevy_ecs::prelude::*;
 
     fn setup_world() -> World {

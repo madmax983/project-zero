@@ -1,6 +1,7 @@
 use crate::layer1::fauna::Fauna;
 use crate::layer1::map::GridPosition;
-use crate::layer1::utility_types::{ActionType, PopEvalData};
+use crate::layer1::utility_eval_types::PopEvalData;
+use crate::layer1::utility_types::ActionType;
 use bevy_ecs::prelude::*;
 
 /// Evaluates the utility of fighting an enemy.

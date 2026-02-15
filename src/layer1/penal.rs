@@ -100,7 +100,7 @@ mod tests {
     use crate::layer1::pop::Pop;
     use crate::layer1::utility_types::PopAction;
     use crate::layer1::zone::{ZoneGrid, ZoneType};
-    use bevy_ecs::prelude::*;
+
     use bevy_ecs::system::RunSystemOnce;
 
     fn setup_world() -> World {

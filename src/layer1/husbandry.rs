@@ -5,9 +5,8 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::resources::{ResourceItem, ResourceType};
 use crate::layer1::skills::{SkillType, Skills};
 use crate::layer1::utility_ai::{ActionType, PopAction, UtilityWeights};
-use crate::layer1::utility_types::{
-    TameDesignationProxy, calculate_context_score, calculate_success_modifier,
-};
+use crate::layer1::utility_eval_types::TameDesignationProxy;
+use crate::layer1::utility_types::{calculate_context_score, calculate_success_modifier};
 use crate::layer1::zone::{ZoneGrid, ZoneType};
 use bevy_ecs::prelude::*;
 

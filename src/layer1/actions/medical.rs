@@ -1,7 +1,8 @@
 use crate::layer1::health::Health;
 use crate::layer1::map::GridPosition;
+use crate::layer1::utility_eval_types::HospitalProxy;
 use crate::layer1::utility_types::{
-    ActionType, HospitalProxy, UtilityWeights, calculate_context_score, calculate_success_modifier,
+    ActionType, UtilityWeights, calculate_context_score, calculate_success_modifier,
 };
 use bevy_ecs::prelude::*;
 

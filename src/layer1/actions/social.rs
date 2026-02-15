@@ -1,6 +1,7 @@
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
-use crate::layer1::utility_types::{ActionType, TavernProxy, UtilityWeights};
+use crate::layer1::utility_eval_types::TavernProxy;
+use crate::layer1::utility_types::{ActionType, UtilityWeights};
 use crate::layer1::utility_types::{calculate_context_score, calculate_success_modifier};
 use bevy_ecs::prelude::*;
 
