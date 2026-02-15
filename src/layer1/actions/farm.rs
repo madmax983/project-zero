@@ -1,8 +1,5 @@
-use crate::layer1::building::ShiftSchedule;
-use crate::layer1::day_night::DayNightCycle;
-use crate::layer1::farm::Farm;
 use crate::layer1::map::GridPosition;
-use crate::layer1::utility_types::{ActionType, UtilityWeights};
+use crate::layer1::utility_types::{ActionType, FarmProxy, UtilityWeights};
 use crate::layer1::utility_types::{calculate_context_score, calculate_success_modifier};
 use bevy_ecs::prelude::*;
 
@@ -13,39 +10,23 @@ use bevy_ecs::prelude::*;
 /// # Returns
 ///
 /// `Some((utility, target_entity))` if a valid farm is found, `None` otherwise.
-pub fn evaluate_farm<'a>(
+#[must_use]
+pub fn evaluate_farm(
     pop_pos: &GridPosition,
     weights: &UtilityWeights,
-    cycle: &DayNightCycle,
-    farms: impl Iterator<
-        Item = (
-            Entity,
-            &'a GridPosition,
-            &'a Farm,
-            Option<&'a ShiftSchedule>,
-        ),
-    >,
+    farms: &[FarmProxy],
 ) -> Option<(f32, Entity)> {
     let mut best: Option<(f32, Entity)> = None;
     let base_utility = 0.5;
 
-    for (entity, pos, farm, schedule) in farms {
-        // Check shift schedule
-        if schedule.is_some_and(|s| !s.is_active(cycle.time_of_day)) {
-            continue;
-        }
-
-        // Check capacity
-        // Note: farm.workers might be legacy/not fully synced, but we use it for capacity check as per spec/tests.
-        if farm.workers.len() >= farm.capacity {
-            continue;
-        }
+    for farm in farms {
+        // Pre-filtered for schedule and capacity in evaluate_actions_system
 
         let context = calculate_context_score(
             *pop_pos,
-            Some(*pos),
+            Some(farm.pos),
             farm.capacity,
-            farm.workers.len(),
+            farm.workers,
             weights,
         );
 
@@ -53,7 +34,7 @@ pub fn evaluate_farm<'a>(
         let utility = base_utility * context * success;
 
         if best.is_none_or(|(u, _)| utility > u) {
-            best = Some((utility, entity));
+            best = Some((utility, farm.entity));
         }
     }
     best

@@ -256,6 +256,7 @@ mod tests {
     };
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
     use crate::layer1::utility_ai::{ActionType, PopAction, UtilityWeights};
+    use crate::layer1::utility_types::AnomalyProxy;
     use crate::shared::log::MessageLog;
     use bevy_ecs::prelude::*;
 
@@ -295,9 +296,13 @@ mod tests {
             ))
             .id();
 
-        let mut anomalies = world.query::<(Entity, &GridPosition, &Anomaly)>();
+        let anomalies: Vec<AnomalyProxy> = world
+            .query::<(Entity, &GridPosition, &Anomaly)>()
+            .iter(&world)
+            .map(|(e, p, _)| AnomalyProxy { entity: e, pos: *p })
+            .collect();
 
-        let result = evaluate_explore(&pop_pos, &weights, anomalies.iter(&world));
+        let result = evaluate_explore(&pop_pos, &weights, &anomalies);
 
         assert!(result.is_some());
         let (_, target) = result.unwrap();

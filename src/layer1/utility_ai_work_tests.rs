@@ -4,6 +4,7 @@ mod tests {
     use crate::layer1::designation::{Designation, DesignationType};
     use crate::layer1::map::GridPosition;
     use crate::layer1::utility_ai::{ActionType, UtilityWeights};
+    use crate::layer1::utility_types::WorkDesignationProxy;
     use bevy_ecs::prelude::*;
 
     #[test]
@@ -28,9 +29,13 @@ mod tests {
             ))
             .id();
 
-        let mut designations = world.query::<(Entity, &GridPosition, &Designation)>();
+        let proxies: Vec<WorkDesignationProxy> = world
+            .query::<(Entity, &GridPosition, &Designation)>()
+            .iter(&world)
+            .map(|(e, p, _)| WorkDesignationProxy { entity: e, pos: *p })
+            .collect();
 
-        let result = evaluate_work(&pop_pos, &weights, designations.iter(&world));
+        let result = evaluate_work(&pop_pos, &weights, &proxies);
 
         assert!(result.is_some());
         let (utility, target) = result.unwrap();
@@ -65,9 +70,13 @@ mod tests {
             ))
             .id();
 
-        let mut designations = world.query::<(Entity, &GridPosition, &Designation)>();
+        let proxies: Vec<WorkDesignationProxy> = world
+            .query::<(Entity, &GridPosition, &Designation)>()
+            .iter(&world)
+            .map(|(e, p, _)| WorkDesignationProxy { entity: e, pos: *p })
+            .collect();
 
-        let (_, target) = evaluate_work(&pop_pos, &weights, designations.iter(&world)).unwrap();
+        let (_, target) = evaluate_work(&pop_pos, &weights, &proxies).unwrap();
         assert_eq!(target, close);
     }
 
@@ -77,9 +86,9 @@ mod tests {
         let pop_pos = GridPosition { x: 0, y: 0 };
         let weights = UtilityWeights::default();
 
-        let mut designations = world.query::<(Entity, &GridPosition, &Designation)>();
+        let proxies: Vec<WorkDesignationProxy> = vec![];
 
-        let result = evaluate_work(&pop_pos, &weights, designations.iter(&world));
+        let result = evaluate_work(&pop_pos, &weights, &proxies);
         assert!(result.is_none());
     }
 }

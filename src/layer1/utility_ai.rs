@@ -33,7 +33,10 @@
 //!     resource. It clears the buffer instead of dropping it, preventing thousands of
 //!     `Vec::new()` calls per frame.
 //! 3.  **Entity Iteration**: We use `Query::iter` (which is fast) rather than random access.
-//!
+//! 4.  **Proxy Buffering**: We pre-collect candidate entities (Farms, Stockpiles, etc.) into flat
+//!     vectors at the start of the system. This avoids repeatedly querying the world or creating
+//!     iterators for every single Pop, converting an O(N*M) query operation into O(M) query + O(N*M)
+//!     vector iteration (which is much faster due to cache locality and no ECS overhead).
 
 use crate::layer1::actions::explore::evaluate_explore;
 use crate::layer1::actions::farm::evaluate_farm;
@@ -50,8 +53,9 @@ use crate::layer1::actions::research::evaluate_research;
 use crate::layer1::actions::rest::evaluate_satisfy_rest;
 use crate::layer1::actions::social::evaluate_socialize;
 use crate::layer1::actions::work::evaluate_work;
+use crate::layer1::building::{Building, ShiftSchedule};
 use crate::layer1::combat::Drafted;
-use crate::layer1::designation::Designation;
+use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::farm::Farm;
 use crate::layer1::funeral::{Corpse, Grave};
 use crate::layer1::housing::Housing;
@@ -61,7 +65,8 @@ use crate::layer1::justice::Inmate;
 use crate::layer1::map::GridPosition;
 use crate::layer1::medical::Hospital;
 use crate::layer1::needs::Needs;
-use crate::layer1::resources::{ColonyResources, ResourceItem};
+use crate::layer1::refining::get_refining_recipe;
+use crate::layer1::resources::{ColonyResources, RefiningProgress, ResourceItem};
 use crate::layer1::science::Anomaly;
 use crate::layer1::social::Tavern;
 use crate::layer1::stockpile::Stockpile;
@@ -69,84 +74,14 @@ use crate::layer1::structure::{DeferMaintenance, Structure};
 use crate::layer1::tech::Library;
 use crate::layer1::unrest::MentalState;
 pub use crate::layer1::utility_types::{
-    ActionType, Plan, PlanOutcome, PopAction, PopEvalData, StartPlan, UtilityAIBuffer,
-    UtilityConfig, UtilityWeights, WorldContext, evaluate_idle, manhattan_distance,
+    ActionType, AnomalyProxy, CorpseProxy, FarmProxy, GraveProxy, HospitalProxy, HousingProxy,
+    ItemProxy, LibraryProxy, Plan, PlanOutcome, PopAction, PopEvalData, RefiningProxy,
+    RepairDesignationProxy, StartPlan, StockpileProxy, StructureProxy, TameDesignationProxy,
+    TavernProxy, UtilityAIBuffer, UtilityConfig, UtilityWeights, WorkDesignationProxy,
+    WorldContext, evaluate_idle, manhattan_distance,
 };
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
-use bevy_ecs::query::QueryState;
-
-/// Encapsulates all `QueryStates` used to find action candidates.
-pub struct CandidateQueries {
-    /// Query for farms.
-    pub farms: QueryState<(
-        Entity,
-        &'static GridPosition,
-        &'static Farm,
-        Option<&'static crate::layer1::building::ShiftSchedule>,
-    )>,
-    /// Query for refining buildings.
-    pub refining: QueryState<(
-        Entity,
-        &'static GridPosition,
-        &'static crate::layer1::building::Building,
-        &'static crate::layer1::resources::RefiningProgress,
-        Option<&'static crate::layer1::building::ShiftSchedule>,
-    )>,
-    /// Query for housing.
-    pub housing: QueryState<(Entity, &'static GridPosition, &'static Housing)>,
-    /// Query for taverns.
-    pub taverns: QueryState<(Entity, &'static GridPosition, &'static Tavern)>,
-    /// Query for libraries.
-    pub libraries: QueryState<(
-        Entity,
-        &'static GridPosition,
-        &'static Library,
-        Option<&'static crate::layer1::building::ShiftSchedule>,
-    )>,
-    /// Query for designations (work targets).
-    pub designations: QueryState<(Entity, &'static GridPosition, &'static Designation)>,
-    /// Query for loose items (hauling targets).
-    pub items: QueryState<(Entity, &'static GridPosition, &'static ResourceItem)>,
-    /// Query for stockpiles.
-    pub stockpiles: QueryState<(Entity, &'static GridPosition, &'static Stockpile)>,
-    /// Query for anomalies (exploration targets).
-    pub anomalies: QueryState<(Entity, &'static GridPosition, &'static Anomaly)>,
-    /// Query for hospitals.
-    pub hospitals: QueryState<(Entity, &'static GridPosition, &'static Hospital)>,
-    /// Query for corpses.
-    pub corpses: QueryState<(Entity, &'static GridPosition, &'static Corpse)>,
-    /// Query for graves.
-    pub graves: QueryState<&'static Grave>,
-    /// Query for structures (repair targets).
-    pub structures: QueryState<(
-        Entity,
-        &'static GridPosition,
-        &'static Structure,
-        Option<&'static DeferMaintenance>,
-    )>,
-}
-
-impl CandidateQueries {
-    /// Initializes all queries from the world.
-    pub fn new(world: &mut World) -> Self {
-        Self {
-            farms: world.query(),
-            refining: world.query(),
-            housing: world.query(),
-            taverns: world.query(),
-            libraries: world.query(),
-            designations: world.query(),
-            items: world.query(),
-            stockpiles: world.query(),
-            anomalies: world.query(),
-            hospitals: world.query(),
-            corpses: world.query(),
-            graves: world.query(),
-            structures: world.query(),
-        }
-    }
-}
 
 /// System to update commitment timers.
 /// Increments the committed-tick counter for every pop's action.
@@ -163,7 +98,7 @@ pub fn update_action_timer_system(mut query: Query<&mut PopAction>) {
 /// Returns the best `(ActionType, Utility, Target)`.
 #[allow(clippy::too_many_lines, clippy::collapsible_if)]
 pub fn evaluate_single_pop(
-    queries: &mut CandidateQueries,
+    buffer: &UtilityAIBuffer,
     world: &mut World,
     data: &PopEvalData,
     context: &WorldContext,
@@ -202,12 +137,9 @@ pub fn evaluate_single_pop(
     // 3. Normal evaluation (undrafted, sane)
 
     // Evaluate Hunger
-    if let Some((utility, target)) = evaluate_satisfy_hunger(
-        &pop_pos,
-        &needs,
-        &weights,
-        queries.farms.iter(world).map(|(e, p, f, _)| (e, p, f)),
-    ) {
+    if let Some((utility, target)) =
+        evaluate_satisfy_hunger(&pop_pos, &needs, &weights, &buffer.farms)
+    {
         check_best(ActionType::SatisfyHunger, utility, Some(target));
     }
 
@@ -224,7 +156,7 @@ pub fn evaluate_single_pop(
 
     if !is_striking {
         if let Some((utility, target)) =
-            evaluate_work(&pop_pos, &weights, queries.designations.iter(world))
+            evaluate_work(&pop_pos, &weights, &buffer.work_designations)
         {
             let penalty =
                 crate::layer1::taboo::evaluate_taboo_penalty(ActionType::Work, context.taboo);
@@ -239,36 +171,28 @@ pub fn evaluate_single_pop(
 
     // Evaluate SatisfyRest
     if let Some((utility, target)) =
-        evaluate_satisfy_rest(&pop_pos, &needs, &weights, queries.housing.iter(world))
+        evaluate_satisfy_rest(&pop_pos, &needs, &weights, &buffer.housing)
     {
         check_best(ActionType::SatisfyRest, utility, Some(target));
     }
 
     // Evaluate Socialize
     if let Some((utility, target)) =
-        evaluate_socialize(&pop_pos, &needs, &weights, queries.taverns.iter(world))
+        evaluate_socialize(&pop_pos, &needs, &weights, &buffer.taverns)
     {
         check_best(ActionType::Socialize, utility, Some(target));
     }
 
     // Evaluate Refine
     if !is_striking {
-        if let Some((utility, target)) = evaluate_refine(
-            &pop_pos,
-            &weights,
-            context.resources,
-            context.cycle,
-            queries.refining.iter(world),
-        ) {
+        if let Some((utility, target)) = evaluate_refine(&pop_pos, &weights, &buffer.refining) {
             check_best(ActionType::Refine, utility, Some(target));
         }
     }
 
     // Evaluate Farm
     if !is_striking {
-        if let Some((utility, target)) =
-            evaluate_farm(&pop_pos, &weights, context.cycle, queries.farms.iter(world))
-        {
+        if let Some((utility, target)) = evaluate_farm(&pop_pos, &weights, &buffer.farms) {
             check_best(ActionType::Farm, utility, Some(target));
         }
     }
@@ -283,7 +207,7 @@ pub fn evaluate_single_pop(
             &pop_pos,
             &equipment,
             context.resources,
-            queries.stockpiles.iter(world),
+            &buffer.stockpiles,
         ) {
             check_best(ActionType::FetchTool, utility, Some(target));
         }
@@ -291,11 +215,14 @@ pub fn evaluate_single_pop(
 
     // Evaluate Repair
     if !is_striking {
+        // We pass BOTH designations (manual repair) and structures (auto repair)
+        // But evaluate_repair needs to handle them separately or together?
+        // evaluate_repair takes two iterators. We update it to take two slices.
         if let Some((utility, target)) = evaluate_repair(
             &pop_pos,
             &weights,
-            queries.designations.iter(world),
-            queries.structures.iter(world),
+            &buffer.repair_designations,
+            &buffer.repair_structures,
         ) {
             check_best(ActionType::Repair, utility, Some(target));
         }
@@ -303,22 +230,16 @@ pub fn evaluate_single_pop(
 
     // Evaluate Explore
     if !is_striking {
-        if let Some((utility, target)) =
-            evaluate_explore(&pop_pos, &weights, queries.anomalies.iter(world))
-        {
+        if let Some((utility, target)) = evaluate_explore(&pop_pos, &weights, &buffer.anomalies) {
             check_best(ActionType::Explore, utility, Some(target));
         }
     }
 
     // Evaluate Research
     if !is_striking {
-        if let Some((utility, target)) = evaluate_research(
-            &pop_pos,
-            &weights,
-            context.resources,
-            context.cycle,
-            queries.libraries.iter(world),
-        ) {
+        if let Some((utility, target)) =
+            evaluate_research(&pop_pos, &weights, context.resources, &buffer.libraries)
+        {
             check_best(ActionType::Research, utility, Some(target));
         }
     }
@@ -328,8 +249,8 @@ pub fn evaluate_single_pop(
         if let Some((utility, target)) = evaluate_haul(
             &pop_pos,
             &weights,
-            queries.items.iter(world),
-            queries.stockpiles.iter(world),
+            &buffer.items,
+            &buffer.stockpiles,
             context.resources,
         ) {
             check_best(ActionType::Haul, utility, Some(target));
@@ -338,25 +259,18 @@ pub fn evaluate_single_pop(
 
     // Evaluate SeekMedicalCare
     if let Some(health) = health {
-        if let Some((utility, target)) = evaluate_seek_medical_care(
-            &pop_pos,
-            &needs,
-            health,
-            &weights,
-            queries.hospitals.iter(world),
-        ) {
+        if let Some((utility, target)) =
+            evaluate_seek_medical_care(&pop_pos, &needs, health, &weights, &buffer.hospitals)
+        {
             check_best(ActionType::SeekMedicalCare, utility, Some(target));
         }
     }
 
     // Evaluate BuryCorpse
     if !is_striking {
-        if let Some((utility, target)) = evaluate_bury_corpse(
-            &pop_pos,
-            queries.corpses.iter(world),
-            queries.graves.iter(world),
-            &weights,
-        ) {
+        if let Some((utility, target)) =
+            evaluate_bury_corpse(&pop_pos, &buffer.corpses, &buffer.graves, &weights)
+        {
             check_best(ActionType::BuryCorpse, utility, Some(target));
         }
     }
@@ -364,7 +278,7 @@ pub fn evaluate_single_pop(
     // Evaluate Tame
     if !is_striking {
         if let Some((utility, target)) =
-            evaluate_tame(&pop_pos, &weights, queries.designations.iter(world))
+            evaluate_tame(&pop_pos, &weights, &buffer.tame_designations)
         {
             check_best(ActionType::Tame, utility, Some(target));
         }
@@ -382,21 +296,14 @@ pub fn evaluate_single_pop(
 ///
 /// 1.  **Filter**: Selects Pops who have finished their commitment timer (`ticks_committed`).
 /// 2.  **Gather Context**: Pre-fetches all relevant entities (Farms, Stockpiles, etc.)
-///     into efficient query iterators.
+///     into efficient proxy vectors.
 /// 3.  **Evaluate Candidates**:
-///     For each Pop, it calls every `evaluate_*` function:
-///     *   [`evaluate_satisfy_hunger`]
-///     *   [`evaluate_work`]
-///     *   [`evaluate_haul`]
-///     *   ...and so on.
+///     For each Pop, it calls every `evaluate_*` function using the proxies.
 /// 4.  **Winner Takes All**: Tracks the single best `(Utility, Action, Target)` tuple.
 /// 5.  **Switch**: If the best new utility > current utility + threshold, the Pop switches tasks.
-///     *   Updates [`PopAction`].
-///     *   Inserts [`StartPlan`] to trigger HTN planning (if applicable).
 ///
 /// # Performance Note
-/// This system avoids per-Pop heap allocations by using a single-pass "best so far"
-/// tracker instead of collecting a `Vec<ActionCandidate>`.
+/// This system avoids per-Pop query iteration by collecting candidates once per frame.
 #[allow(clippy::too_many_lines, clippy::collapsible_if)]
 pub fn evaluate_actions_system(world: &mut World) {
     let config = world.resource::<UtilityConfig>().clone();
@@ -406,9 +313,8 @@ pub fn evaluate_actions_system(world: &mut World) {
         .remove_resource::<UtilityAIBuffer>()
         .unwrap_or_default();
 
+    // 1. Collect Pop Data
     buffer.pop_data.clear();
-
-    // Collect pop data into buffer
     buffer.pop_data.extend(
         world
             .query::<(
@@ -440,10 +346,7 @@ pub fn evaluate_actions_system(world: &mut World) {
             }),
     );
 
-    // Initialize Queries
-    let mut queries = CandidateQueries::new(world);
-
-    // Initialize Context
+    // 2. Initialize Context
     let resources = world.resource::<ColonyResources>().clone();
     let cycle = world
         .resource::<crate::layer1::day_night::DayNightCycle>()
@@ -460,10 +363,206 @@ pub fn evaluate_actions_system(world: &mut World) {
         factions: factions_data.as_ref(),
     };
 
-    // Evaluate each pop
+    // 3. Populate Proxies (The Optimization)
+    // We clear buffers and populate them once, filtering invalid targets early.
+
+    // Farms
+    buffer.farms.clear();
+    let mut farm_query = world.query::<(Entity, &GridPosition, &Farm, Option<&ShiftSchedule>)>();
+    for (entity, pos, farm, schedule) in farm_query.iter(world) {
+        if schedule.is_some_and(|s| !s.is_active(cycle.time_of_day)) {
+            continue;
+        }
+        if farm.workers.len() >= farm.capacity {
+            continue;
+        }
+        buffer.farms.push(FarmProxy {
+            entity,
+            pos: *pos,
+            capacity: farm.capacity,
+            workers: farm.workers.len(),
+        });
+    }
+
+    // Housing
+    buffer.housing.clear();
+    let mut housing_query = world.query::<(Entity, &GridPosition, &Housing)>();
+    for (entity, pos, housing) in housing_query.iter(world) {
+        if housing.residents.len() >= housing.capacity {
+            continue;
+        }
+        buffer.housing.push(HousingProxy {
+            entity,
+            pos: *pos,
+            capacity: housing.capacity,
+            occupants: housing.residents.len(),
+        });
+    }
+
+    // Taverns
+    buffer.taverns.clear();
+    let mut tavern_query = world.query::<(Entity, &GridPosition, &Tavern)>();
+    for (entity, pos, tavern) in tavern_query.iter(world) {
+        if tavern.visitors.len() >= tavern.capacity {
+            continue;
+        }
+        buffer.taverns.push(TavernProxy {
+            entity,
+            pos: *pos,
+            capacity: tavern.capacity,
+            patrons: tavern.visitors.len(),
+        });
+    }
+
+    // Libraries
+    buffer.libraries.clear();
+    let mut library_query =
+        world.query::<(Entity, &GridPosition, &Library, Option<&ShiftSchedule>)>();
+    for (entity, pos, _library, schedule) in library_query.iter(world) {
+        if schedule.is_some_and(|s| !s.is_active(cycle.time_of_day)) {
+            continue;
+        }
+        // Library capacity is currently hardcoded/assumed in logic, but we push anyway.
+        // We assume 5 capacity/0 occupied for now as per original code.
+        buffer.libraries.push(LibraryProxy {
+            entity,
+            pos: *pos,
+            capacity: 5,
+            researchers: 0,
+        });
+    }
+
+    // Refining
+    buffer.refining.clear();
+    let mut refine_query = world.query::<(
+        Entity,
+        &GridPosition,
+        &Building,
+        &RefiningProgress,
+        Option<&ShiftSchedule>,
+    )>();
+    for (entity, pos, building, progress, schedule) in refine_query.iter(world) {
+        if schedule.is_some_and(|s| !s.is_active(cycle.time_of_day)) {
+            continue;
+        }
+
+        // Check recipe affordability (Global check)
+        let (can_afford, _, _) = get_refining_recipe(building.building_type, &resources);
+        if !can_afford {
+            continue;
+        }
+
+        buffer.refining.push(RefiningProxy {
+            entity,
+            pos: *pos,
+            progress_current: progress.current,
+        });
+    }
+
+    // Designations (Work, Repair, Tame)
+    buffer.work_designations.clear();
+    buffer.repair_designations.clear();
+    buffer.tame_designations.clear();
+    let mut des_query = world.query::<(Entity, &GridPosition, &Designation)>();
+    for (entity, pos, des) in des_query.iter(world) {
+        match des.designation_type {
+            DesignationType::Repair => {
+                buffer
+                    .repair_designations
+                    .push(RepairDesignationProxy { entity, pos: *pos });
+            }
+            DesignationType::Tame => {
+                buffer
+                    .tame_designations
+                    .push(TameDesignationProxy { entity, pos: *pos });
+            }
+            _ => {
+                buffer
+                    .work_designations
+                    .push(WorkDesignationProxy { entity, pos: *pos });
+            }
+        }
+    }
+
+    // Items
+    buffer.items.clear();
+    let mut item_query = world.query::<(Entity, &GridPosition, &ResourceItem)>();
+    for (entity, pos, item) in item_query.iter(world) {
+        buffer.items.push(ItemProxy {
+            entity,
+            pos: *pos,
+            resource_type: item.resource_type,
+        });
+    }
+
+    // Stockpiles
+    buffer.stockpiles.clear();
+    let mut stock_query = world.query::<(Entity, &GridPosition, &Stockpile)>();
+    for (entity, pos, _) in stock_query.iter(world) {
+        buffer
+            .stockpiles
+            .push(StockpileProxy { entity, pos: *pos });
+    }
+
+    // Anomalies
+    buffer.anomalies.clear();
+    let mut anomaly_query = world.query::<(Entity, &GridPosition, &Anomaly)>();
+    for (entity, pos, _) in anomaly_query.iter(world) {
+        buffer.anomalies.push(AnomalyProxy { entity, pos: *pos });
+    }
+
+    // Hospitals
+    buffer.hospitals.clear();
+    let mut hospital_query = world.query::<(Entity, &GridPosition, &Hospital)>();
+    for (entity, pos, _) in hospital_query.iter(world) {
+        // Hardcoded capacity logic from original file
+        buffer.hospitals.push(HospitalProxy {
+            entity,
+            pos: *pos,
+            capacity: 10,
+            patients: 0,
+        });
+    }
+
+    // Corpses
+    buffer.corpses.clear();
+    let mut corpse_query = world.query::<(Entity, &GridPosition, &Corpse)>();
+    for (entity, pos, _) in corpse_query.iter(world) {
+        buffer.corpses.push(CorpseProxy { entity, pos: *pos });
+    }
+
+    // Graves
+    buffer.graves.clear();
+    let mut grave_query = world.query::<(Entity, &Grave)>();
+    for (entity, grave) in grave_query.iter(world) {
+        if !grave.occupied {
+            buffer
+                .graves
+                .push(GraveProxy { entity, occupied: false });
+        }
+    }
+
+    // Structures (Auto-Repair)
+    buffer.repair_structures.clear();
+    let mut struct_query =
+        world.query::<(Entity, &GridPosition, &Structure, Option<&DeferMaintenance>)>();
+    for (entity, pos, structure, defer) in struct_query.iter(world) {
+        if defer.is_some() {
+            continue;
+        }
+        if (structure.current_hp - structure.max_hp).abs() < f32::EPSILON {
+            continue;
+        }
+
+        buffer
+            .repair_structures
+            .push(StructureProxy { entity, pos: *pos });
+    }
+
+    // 4. Evaluate each pop
     for data in &buffer.pop_data {
         let (best_action, best_utility, best_target) =
-            evaluate_single_pop(&mut queries, world, data, &context);
+            evaluate_single_pop(&buffer, world, data, &context);
 
         // Switch if best exceeds threshold
         if best_utility > data.action.current_utility + config.switch_threshold {
