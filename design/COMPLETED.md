@@ -80,7 +80,7 @@ Features that have been fully implemented, tested, and merged.
 - [x] `011` Named Locations — `specs/011-named-locations.md` — completed 2026-02-24
 - [x] `050` Civil Unrest — `specs/050-civil-unrest.md` — completed 2026-02-24
 - [x] `069` Mentorship System — `specs/069-mentorship-system.md` — completed 2026-02-24
-- [x] `117` Fuel Consumption — `specs/117-fuel-consumption.md` — completed 2026-10-25
+- [x] `117` Fuel Consumption — `specs/117-fuel-consumption.md` — completed 2026-02-25
 - [x] `083` Building Shifts — `specs/083-building-shifts.md` — completed 2026-02-25
 - [x] `047` Pop Relationships — `specs/047-pop-relationships.md` — completed 2026-02-25
 - [x] `056` Designated Zones — `specs/056-designated-zones.md` — completed 2026-02-25
@@ -88,3 +88,18 @@ Features that have been fully implemented, tested, and merged.
 - [x] `111` Conveyor Logistics — `specs/111-conveyor-logistics.md` — completed 2026-03-05
 - [x] `091` The Inspector — `specs/091-the-inspector.md` — completed 2026-03-05
 - [x] `092` Antagonistic Flora — `specs/092-antagonistic-flora.md` — completed 2026-03-05
+- [x] `010` Chronicle System — `specs/010-chronicle-system.md` — completed 2026-03-05
+- [x] `015` Selection System — `specs/015-selection-system.md` — completed 2026-03-05
+- [x] `042` Energy System — `specs/042-energy-system.md` — completed 2026-03-05
+- [x] `044` Horticulture & Beauty — `specs/044-horticulture-beauty.md` — completed 2026-03-05
+- [x] `053` Lighting System — `specs/053-lighting-system.md` — completed 2026-03-05
+- [x] `054` Colony Edicts — `specs/054-colony-edicts.md` — completed 2026-03-05
+- [x] `055` Rumor Web — `specs/055-rumor-web.md` — completed 2026-03-05
+- [x] `057` Funeral Rites — `specs/057-funeral-rites.md` — completed 2026-03-05
+- [x] `060` Acoustic Simulation — `specs/060-acoustic-simulation.md` — completed 2026-03-05
+- [x] `061` Cultural Artifacts — `specs/061-cultural-artifacts.md` — completed 2026-03-05
+- [x] `062` Pop Lifecycle — `specs/062-pop-lifecycle.md` — completed 2026-03-05
+- [x] `080` Planetary Quirks — `specs/080-planetary-quirks.md` — completed 2026-03-05
+- [x] `084` Pop Traits — `specs/084-pop-traits.md` — completed 2026-03-05
+- [x] `087` Food Preservation — `specs/087-food-preservation.md` — completed 2026-03-05
+- [x] `098` Medical Triage — `specs/098-medical-triage.md` — completed 2026-03-05
