@@ -27,6 +27,8 @@ Container_Boundary(Simulation, "Simulation Core (Layer 1)") {
 }
 
 Container(Shared, "Shared Lib", "Utilities", "GameState, Time, Input, Logs")
+Container(Storage, "Storage Crate", "Persistence", "Handles Save/Load")
+
 Container_Boundary(SharedLib, "Shared Components") {
     Component(InputStack, "Input Context Stack", "input.rs", "Modal Input Handling")
 }
@@ -39,6 +41,7 @@ Container_Boundary(UI, "UI Layer") {
 }
 
 Rel(Main, Shared, "Uses")
+Rel(Main, Storage, "Uses")
 Rel(Main, UtilityOrchestrator, "Runs Systems")
 Rel(UtilityOrchestrator, GPU, "Dispatches Work")
 Rel(Main, MapRender, "Calls Render")
@@ -69,7 +72,22 @@ classDiagram
   class Core
   class Storage
   Core --> Storage : Uses (Trait Bound)
+  %% Reflected in ADR 012
   %% Removed the circular dependency arrow
+```
+
+### Persistence Flow
+
+```mermaid
+sequenceDiagram
+    participant Core
+    participant Storage
+    participant Disk
+
+    Core->>Storage: save_world_state()
+    Storage->>Disk: serialize_to_file()
+    Disk-->>Storage: success
+    Storage-->>Core: Ok()
 ```
 
 ## Layer 2 Bridge
