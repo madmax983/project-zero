@@ -1,13 +1,14 @@
 #[cfg(test)]
 mod tests {
     use crate::layer1::building::{Building, BuildingType, ShiftSchedule};
-    use crate::layer1::day_night::{DayNightCycle, TimeOfDay};
+    use crate::layer1::day_night::DayNightCycle;
     use crate::layer1::farm::Farm;
     use crate::layer1::map::GridPosition;
-    use crate::layer1::pop::Pop;
+
     use crate::layer1::resources::{ColonyResources, RefiningProgress};
-    use crate::layer1::tech::Library;
-    use crate::layer1::utility_types::{FarmProxy, LibraryProxy, RefiningProxy, UtilityWeights};
+
+    use crate::layer1::utility_eval_types::{FarmProxy, RefiningProxy};
+    use crate::layer1::utility_types::UtilityWeights;
     use bevy_ecs::prelude::*;
 
     // Helper to evaluate refine
@@ -15,7 +16,6 @@ mod tests {
     // Helper to evaluate farm
     use crate::layer1::actions::farm::evaluate_farm;
     // Helper to evaluate research
-    use crate::layer1::actions::research::evaluate_research;
 
     fn setup_world() -> World {
         let mut world = World::new();

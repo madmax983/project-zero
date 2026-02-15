@@ -1,5 +1,6 @@
 use crate::layer1::map::GridPosition;
-use crate::layer1::utility_types::{CorpseProxy, GraveProxy, UtilityWeights, manhattan_distance};
+use crate::layer1::utility_eval_types::{CorpseProxy, GraveProxy};
+use crate::layer1::utility_types::{UtilityWeights, manhattan_distance};
 use bevy_ecs::prelude::*;
 
 /// Evaluates the utility of burying corpses.

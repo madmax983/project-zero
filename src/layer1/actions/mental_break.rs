@@ -3,7 +3,8 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::stockpile::Stockpile;
 use crate::layer1::structure::Structure;
 use crate::layer1::unrest::{MentalBreakType, MentalState};
-use crate::layer1::utility_types::{ActionType, PopEvalData, manhattan_distance};
+use crate::layer1::utility_eval_types::PopEvalData;
+use crate::layer1::utility_types::{ActionType, manhattan_distance};
 use bevy_ecs::prelude::*;
 
 /// Evaluates actions for a pop undergoing a mental break.

@@ -220,7 +220,7 @@ mod tests {
     use crate::layer1::resources::{Carrying, ColonyResources, ResourceItem, ResourceType};
     use crate::layer1::stockpile::Stockpile;
     use crate::layer1::utility_ai::{ActionType, PopAction, UtilityWeights};
-    use crate::layer1::utility_types::{ItemProxy, StockpileProxy};
+    use crate::layer1::utility_eval_types::{ItemProxy, StockpileProxy};
     use crate::layer1::{GridPosition, Pop};
     use crate::shared::time::SimulationTime;
     use bevy_ecs::prelude::*;
@@ -254,7 +254,7 @@ mod tests {
             .id();
 
         // Spawn Stockpile with capacity
-        let stockpile_entity = world
+        let _stockpile_entity = world
             .spawn((
                 Building {
                     building_type: BuildingType::Stockpile,

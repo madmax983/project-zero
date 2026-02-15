@@ -135,7 +135,6 @@ mod tests {
     use crate::layer1::map::GridPosition;
     use crate::layer1::morale::Morale;
     use crate::layer1::pop::{Job, JobType, Pop};
-    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_job_prestige_mapping() {

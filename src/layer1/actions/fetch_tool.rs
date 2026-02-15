@@ -1,7 +1,8 @@
 use crate::layer1::items::{Equipment, Item, Tool, ToolType};
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::ColonyResources;
-use crate::layer1::utility_types::{StockpileProxy, manhattan_distance};
+use crate::layer1::utility_eval_types::StockpileProxy;
+use crate::layer1::utility_types::manhattan_distance;
 use bevy_ecs::prelude::*;
 
 /// Evaluates if a pop should fetch a tool.

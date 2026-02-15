@@ -4,7 +4,7 @@ mod tests {
     use crate::layer1::designation::{Designation, DesignationType};
     use crate::layer1::map::GridPosition;
     use crate::layer1::utility_ai::{ActionType, UtilityWeights};
-    use crate::layer1::utility_types::WorkDesignationProxy;
+    use crate::layer1::utility_eval_types::WorkDesignationProxy;
     use bevy_ecs::prelude::*;
 
     #[test]
@@ -82,7 +82,7 @@ mod tests {
 
     #[test]
     fn test_evaluate_work_no_designations() {
-        let mut world = World::new();
+        let _world = World::new();
         let pop_pos = GridPosition { x: 0, y: 0 };
         let weights = UtilityWeights::default();
 
