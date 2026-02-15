@@ -20,6 +20,10 @@ use crate::experimental::ghosts::{
     apply_ghost_beauty_system, ghost_light_damage_system, ghost_movement_system,
 };
 #[cfg(feature = "nova")]
+use crate::experimental::graffiti::{
+    apply_graffiti_beauty_system, graffiti_creation_system, graffiti_decay_system,
+};
+#[cfg(feature = "nova")]
 use crate::experimental::miasma::{
     apply_miasma_effects_system, sickness_progression_system, update_miasma_system,
 };
@@ -45,17 +49,16 @@ use crate::layer1::{
     natural_death_system, notification_expiration_system, pop_death_chronicle_bridge,
     process_fuel_consumption_system, process_observe_system, process_refining_system,
     process_research_system, process_scan_system, process_start_plan_system, produce_food_system,
-    regrowth_system, restore_leisure_system, restore_rest_in_housing_system, sleepwalk_end_system,
+    quirk_generation_system, regrowth_system, restore_leisure_system,
+    restore_rest_in_housing_system, sleepwalk_end_system,
     social::old_guard::{
         apply_founder_benefits_system, apply_mood_modifiers_system,
         check_generational_friction_system, mood_lifecycle_system,
     },
-    quirk_generation_system,
     social_stratification::{class_friction_system, update_social_class_system},
     spirit_decay_system, spoilage_system, starvation_damage_system, taboo_event_system,
     theft_system, track_plan_outcomes_system, update_action_timer_system,
-    update_cabin_fever_system,
-    update_erosion_system, update_lighting_system, update_noise_system,
+    update_cabin_fever_system, update_erosion_system, update_lighting_system, update_noise_system,
     update_resource_caps_system, update_screen_shake_system, update_taboo_duration_system,
     update_water_system, update_weather_system, vermin_growth_system, vermin_morale_system,
     waste_pollution_bridge, work_execution_system,
@@ -150,7 +153,11 @@ pub fn build_simulation_schedule() -> Schedule {
     ));
 
     #[cfg(feature = "nova")]
-    schedule.add_systems(ghost_movement_system.after(movement_system));
+    schedule.add_systems((
+        ghost_movement_system.after(movement_system),
+        graffiti_creation_system.after(work_execution_system),
+        graffiti_decay_system.after(work_execution_system),
+    ));
 
     // --- Economy (after execution, before consumption) ---
     // These systems can run in parallel with each other.
@@ -201,6 +208,9 @@ pub fn build_simulation_schedule() -> Schedule {
     #[cfg(feature = "nova")]
     schedule.add_systems((
         apply_ghost_beauty_system
+            .after(crate::layer1::beauty::update_beauty_grid_system)
+            .before(crate::layer1::beauty::apply_beauty_effects_system),
+        apply_graffiti_beauty_system
             .after(crate::layer1::beauty::update_beauty_grid_system)
             .before(crate::layer1::beauty::apply_beauty_effects_system),
         ghost_light_damage_system.after(update_lighting_system),

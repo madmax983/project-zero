@@ -23,13 +23,8 @@ pub fn evaluate_satisfy_hunger(
     let mut best: Option<(f32, Entity)> = None;
 
     for farm in farms {
-        let context_score = calculate_context_score(
-            *pop_pos,
-            Some(farm.pos),
-            farm.capacity,
-            farm.usage,
-            weights,
-        );
+        let context_score =
+            calculate_context_score(*pop_pos, Some(farm.pos), farm.capacity, farm.usage, weights);
 
         let success_mod = calculate_success_modifier(ActionType::SatisfyHunger, weights);
 

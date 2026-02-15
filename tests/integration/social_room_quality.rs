@@ -85,7 +85,10 @@ fn social_class_affects_room_expectations() {
     // So 31 is Awful for Elite.
     let elite_memories = world.get::<Memories>(elite_pop).unwrap();
     assert!(
-        elite_memories.items.iter().any(|m| m.memory_type == MemoryType::SleptInAwfulRoom),
+        elite_memories
+            .items
+            .iter()
+            .any(|m| m.memory_type == MemoryType::SleptInAwfulRoom),
         "Elite should consider quality 31 as Awful (Standard Decent is Awful for them). Got: {:?}",
         elite_memories.items
     );
