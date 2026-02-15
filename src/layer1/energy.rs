@@ -80,7 +80,14 @@ fn bfs_grid(
             grid_entities.push(entity);
 
             if let Some(source) = world.get::<PowerSource>(entity).filter(|s| s.active) {
-                total_production += source.output;
+                // Check if a Quirk stops production
+                let is_stopped = world
+                    .get::<crate::layer1::rituals::Quirk>(entity)
+                    .is_some_and(crate::layer1::rituals::Quirk::stops_production);
+
+                if !is_stopped {
+                    total_production += source.output;
+                }
             }
             if let Some(consumer) = world.get::<PowerConsumer>(entity) {
                 total_demand += consumer.demand;
@@ -354,5 +361,33 @@ mod tests {
 
         assert!(!c1_state.active);
         assert!(!c2_state.active);
+    }
+
+    #[test]
+    fn test_quirk_stops_power_production() {
+        use crate::layer1::rituals::{Quirk, QuirkType};
+        let mut world = World::new();
+
+        let generator = world
+            .spawn((
+                PowerSource {
+                    output: 10.0,
+                    active: true,
+                },
+                GridPosition { x: 0, y: 0 },
+                Building {
+                    building_type: BuildingType::Generator,
+                },
+                Quirk {
+                    quirk_type: QuirkType::Glitchy,
+                }, // Should stop production
+            ))
+            .id();
+
+        let (production, _) = calculate_grid_stats(&mut world, generator);
+        assert_eq!(
+            production, 0.0,
+            "Glitchy generator should produce 0 power"
+        );
     }
 }

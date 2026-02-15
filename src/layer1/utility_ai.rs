@@ -164,10 +164,11 @@ pub fn evaluate_single_pop(
         {
             let penalty =
                 crate::layer1::taboo::evaluate_taboo_penalty(ActionType::Work, context.taboo);
-            let mut bonus = 0.0;
-            if is_penal {
-                bonus = 1.0; // High priority for penal labor
-            }
+            let bonus = if is_penal {
+                1.0 // High priority for penal labor
+            } else {
+                0.0
+            };
             check_best(ActionType::Work, utility + penalty + bonus, Some(target));
         }
     }

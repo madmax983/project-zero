@@ -32,7 +32,8 @@ pub struct RevoltRisk {
     pub threshold: f32,
 }
 
-/// Checks if Inmates are in a Penal Zone and assigns PenalLabor status.
+/// Checks if Inmates are in a Penal Zone and assigns `PenalLabor` status.
+#[allow(clippy::type_complexity)]
 pub fn evaluate_penal_work_system(
     mut commands: Commands,
     zone_grid: Res<ZoneGrid>,
@@ -51,7 +52,7 @@ pub fn evaluate_penal_work_system(
     }
 }
 
-/// Removes PenalLabor if Inmate leaves zone.
+/// Removes `PenalLabor` if Inmate leaves zone.
 pub fn cleanup_penal_work_system(
     mut commands: Commands,
     zone_grid: Res<ZoneGrid>,

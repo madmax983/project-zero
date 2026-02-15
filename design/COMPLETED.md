@@ -107,3 +107,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `INT-006` Integration: Strikes -> Work/Science Execution — completed 2026-10-26
 - [x] `122` Retrograde Engineering — `specs/122-retrograde-engineering.md` — completed 2026-11-20
 - [x] `118` Penal Labor — `specs/118-penal-labor.md` — completed 2026-11-21
+- [x] `123` Technological Rituals — `specs/123-technological-rituals.md` — completed 2026-11-22

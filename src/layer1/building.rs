@@ -30,6 +30,7 @@ use super::stockpile::Stockpile;
 use crate::layer1::energy::{Conduit, FuelConsumer, PowerConsumer, PowerSource};
 use crate::layer1::heirloom::AncientStructure;
 use crate::layer1::lighting::LightSource;
+use crate::layer1::rituals::MachineSpirit;
 use crate::layer1::resources::{ColonyResources, RefiningProgress};
 use crate::layer1::tech::{Library, Tech, TechState};
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
@@ -948,6 +949,7 @@ fn spawn_building(
                     ..Default::default()
                 }, // Massive power
                 AncientStructure,
+                MachineSpirit::default(),
                 LightSource {
                     radius: 8.0,
                     intensity: 1.0,
@@ -969,6 +971,7 @@ fn spawn_building(
                     max: 1.0, // Very fast? Default is 10.0
                 },
                 AncientStructure,
+                MachineSpirit::default(),
                 LightSource {
                     radius: 6.0,
                     intensity: 0.8,
@@ -1829,6 +1832,30 @@ mod tests {
             .iter(&world)
             .count();
         assert_eq!(gate_count, 1, "Should have added Gate component");
+    }
+
+    #[test]
+    fn test_ancient_reactor_has_machine_spirit() {
+        let mut world = World::new();
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        });
+        world.insert_resource(OccupiedTiles::default());
+        world.insert_resource(ColonyResources {
+            wood: 100.0,
+            ..Default::default()
+        });
+
+        // AncientReactor is free (cost zeroed), so resources don't matter much
+        try_place_building(&mut world, 5, 5, BuildingType::AncientReactor);
+
+        let spirit_count = world
+            .query::<&crate::layer1::rituals::MachineSpirit>()
+            .iter(&world)
+            .count();
+        assert_eq!(spirit_count, 1, "Should have added MachineSpirit component");
     }
 }
 
