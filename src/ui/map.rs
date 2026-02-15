@@ -676,6 +676,8 @@ pub const fn get_building_char(building: BuildingType) -> char {
         BuildingType::Greenhouse => 'G',
         BuildingType::PersonalShed => 's',
         BuildingType::PersonalShrine => '☗',
+        BuildingType::ConveyorBelt => '>',
+        BuildingType::Hopper => 'V',
     }
 }
 
@@ -708,7 +710,8 @@ pub const fn get_building_color(building: BuildingType, material: MaterialType) 
             | BuildingType::Wall
             | BuildingType::Gate
             | BuildingType::Tower
-            | BuildingType::PersonalShrine => Color::Rgb(169, 169, 169), // Fallback (should be covered above)
+            | BuildingType::PersonalShrine
+            | BuildingType::Hopper => Color::Rgb(169, 169, 169), // Fallback (should be covered above)
             BuildingType::Smokehouse => Color::Rgb(200, 200, 200), // Smoky
             BuildingType::LumberMill => Color::Rgb(205, 133, 63),  // Peru
             BuildingType::StoneMason => Color::Rgb(119, 136, 153), // LightSlateGray
@@ -727,6 +730,7 @@ pub const fn get_building_color(building: BuildingType, material: MaterialType) 
             BuildingType::Generator => Color::Rgb(255, 215, 0), // Gold
             BuildingType::Refinery => Color::Rgb(100, 200, 255), // Chemical Blue
             BuildingType::Greenhouse => Color::Rgb(200, 255, 255), // Glass/Cyan
+            BuildingType::ConveyorBelt => Color::Cyan,
         }
     }
 }

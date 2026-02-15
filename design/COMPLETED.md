@@ -85,3 +85,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `047` Pop Relationships — `specs/047-pop-relationships.md` — completed 2026-02-25
 - [x] `056` Designated Zones — `specs/056-designated-zones.md` — completed 2026-02-25
 - [x] `058` Personal Tools — `specs/058-personal-tools.md` — completed 2026-02-25
+- [x] `111` Conveyor Logistics — `specs/111-conveyor-logistics.md` — completed 2026-03-05
