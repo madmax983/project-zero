@@ -326,36 +326,12 @@ pub fn movement_system(
         }
 
         let (primary, secondary) = calculate_next_positions(*current_pos, target_pos);
-        let mut chosen_pos = None;
 
         // Selection Phase: Find first walkable candidate
-        // Try Primary
-        if let Some(pos) = primary {
-            if is_walkable(
-                &terrain,
-                occupied_tiles.as_deref(),
-                &buildings,
-                pos.x,
-                pos.y,
-            ) {
-                chosen_pos = Some(pos);
-            }
-        }
-
-        // Try Secondary (if primary blocked or invalid)
-        if chosen_pos.is_none() {
-            if let Some(pos) = secondary {
-                if is_walkable(
-                    &terrain,
-                    occupied_tiles.as_deref(),
-                    &buildings,
-                    pos.x,
-                    pos.y,
-                ) {
-                    chosen_pos = Some(pos);
-                }
-            }
-        }
+        let chosen_pos =
+            try_get_walkable_pos(primary, &terrain, occupied_tiles.as_deref(), &buildings).or_else(
+                || try_get_walkable_pos(secondary, &terrain, occupied_tiles.as_deref(), &buildings),
+            );
 
         let Some(new_pos) = chosen_pos else {
             continue;
@@ -459,71 +435,96 @@ pub fn arrival_handler_system(
     mut commands: Commands,
 ) {
     for (pop_entity, pop_pos, mt, mut equipment_opt) in &mut arrivals {
-        let target_entity = mt.target_entity;
-        let action = mt.for_action;
-
-        let should_remove = match action {
-            ActionType::Binge => {
-                handle_binge_arrival(&mut resources, log.as_deref_mut());
-                true
-            }
-            ActionType::FetchTool => {
-                handle_fetch_tool(
-                    &mut commands,
-                    &mut resources,
-                    pop_entity,
-                    &mut equipment_opt,
-                );
-                true
-            }
-            ActionType::SatisfyHunger => {
-                handle_hunger_arrival(pop_entity, target_entity, &mut farms, &mut commands);
-                true
-            }
-            ActionType::SatisfyRest => {
-                handle_rest_arrival(pop_entity, target_entity, &mut housing_q, &mut commands);
-                true
-            }
-            ActionType::Socialize => {
-                handle_socialize(&mut commands, &mut taverns, target_entity, pop_entity);
-                true
-            }
-            ActionType::SeekMedicalCare => assign_pop(
-                &mut commands,
-                pop_entity,
-                target_entity,
-                AssignmentType::Patient,
-            ),
-            ActionType::Research => assign_pop(
-                &mut commands,
-                pop_entity,
-                target_entity,
-                AssignmentType::LibraryWorker,
-            ),
-            ActionType::BuryCorpse => {
-                handle_bury_corpse(
-                    &mut commands,
-                    &corpses,
-                    &mut graves,
-                    &mut memories,
-                    &time,
-                    target_entity,
-                    pop_entity,
-                    *pop_pos,
-                );
-                true
-            }
-            ActionType::Work | ActionType::Repair | ActionType::Haul => {
-                // Work/Repair/Haul is handled by their respective systems
-                // Just keep the AtTarget marker for that system
-                false
-            }
-            _ => true,
-        };
+        let should_remove = process_arrival(
+            mt.for_action,
+            pop_entity,
+            mt.target_entity,
+            *pop_pos,
+            &mut equipment_opt,
+            &mut commands,
+            &mut resources,
+            log.as_deref_mut(),
+            &mut farms,
+            &mut housing_q,
+            &mut taverns,
+            &corpses,
+            &mut graves,
+            &mut memories,
+            &time,
+        );
 
         if should_remove {
             remove_movement_components(&mut commands, pop_entity);
         }
+    }
+}
+
+fn process_arrival(
+    action: ActionType,
+    pop_entity: Entity,
+    target_entity: Entity,
+    pop_pos: GridPosition,
+    equipment_opt: &mut Option<Mut<Equipment>>,
+    commands: &mut Commands,
+    resources: &mut ColonyResources,
+    log: Option<&mut MessageLog>,
+    farms: &mut Query<&mut Farm>,
+    housing_q: &mut Query<&mut Housing>,
+    taverns: &mut Query<&mut Tavern>,
+    corpses: &Query<&Corpse>,
+    graves: &mut Query<(Entity, &GridPosition, &mut Grave)>,
+    memories: &mut Query<&mut Memories>,
+    time: &Res<SimulationTime>,
+) -> bool {
+    match action {
+        ActionType::Binge => {
+            handle_binge_arrival(resources, log);
+            true
+        }
+        ActionType::FetchTool => {
+            handle_fetch_tool(commands, resources, pop_entity, equipment_opt);
+            true
+        }
+        ActionType::SatisfyHunger => {
+            handle_hunger_arrival(pop_entity, target_entity, farms, commands);
+            true
+        }
+        ActionType::SatisfyRest => {
+            handle_rest_arrival(pop_entity, target_entity, housing_q, commands);
+            true
+        }
+        ActionType::Socialize => {
+            handle_socialize(commands, taverns, target_entity, pop_entity);
+            true
+        }
+        ActionType::SeekMedicalCare => {
+            assign_pop(commands, pop_entity, target_entity, AssignmentType::Patient)
+        }
+        ActionType::Research => assign_pop(
+            commands,
+            pop_entity,
+            target_entity,
+            AssignmentType::LibraryWorker,
+        ),
+        ActionType::BuryCorpse => {
+            handle_bury_corpse(
+                commands,
+                corpses,
+                graves,
+                memories,
+                time,
+                target_entity,
+                pop_entity,
+                pop_pos,
+            );
+            true
+        }
+        ActionType::Work | ActionType::Repair | ActionType::Haul => {
+            // Work/Repair/Haul is handled by their respective systems
+            // Just keep the AtTarget marker for that system
+            false
+        }
+        _ => true,
     }
 }
 
@@ -599,6 +600,20 @@ fn handle_binge_arrival(resources: &mut ColonyResources, log: Option<&mut Messag
 
     if let Some(log) = log {
         log.add("Pop is binge eating!");
+    }
+}
+
+fn try_get_walkable_pos(
+    pos: Option<GridPosition>,
+    terrain: &TerrainGrid,
+    occupied_tiles: Option<&OccupiedTiles>,
+    buildings: &Query<(&GridPosition, &Building, Option<&Gate>)>,
+) -> Option<GridPosition> {
+    let p = pos?;
+    if is_walkable(terrain, occupied_tiles, buildings, p.x, p.y) {
+        Some(p)
+    } else {
+        None
     }
 }
 
@@ -988,52 +1003,8 @@ fn execute_work_on_designation(
     let pos = world.get::<GridPosition>(designation_entity).copied();
 
     match designation_type {
-        DesignationType::Mine => {
-            process_mining(world, designation_entity, work_amount);
-            if let Some(p) = pos {
-                if world.get_entity(designation_entity).is_err() {
-                    // Finished: Big shake + Debris
-                    if let Some(mut shake) = world.get_resource_mut::<ScreenShake>() {
-                        shake.trigger(0.5);
-                    }
-                    spawn_particle(world, p, '*', Color::White, 10);
-                } else {
-                    // Working: Dynamic shake + Dust
-                    let intensity = world
-                        .get::<crate::layer1::resources::MiningProgress>(designation_entity)
-                        .map_or(0.05, |prog| (prog.current / prog.max).mul_add(0.15, 0.05));
-
-                    if let Some(mut shake) = world.get_resource_mut::<ScreenShake>() {
-                        shake.trigger(intensity);
-                    }
-                    spawn_particle(world, p, '.', Color::DarkGray, 3);
-                }
-            }
-            true
-        }
-        DesignationType::Chop => {
-            process_logging(world, designation_entity, work_amount);
-            if let Some(p) = pos {
-                if world.get_entity(designation_entity).is_err() {
-                    // Finished
-                    if let Some(mut shake) = world.get_resource_mut::<ScreenShake>() {
-                        shake.trigger(0.3);
-                    }
-                    spawn_particle(world, p, '^', Color::Green, 10);
-                } else {
-                    // Working
-                    let intensity = world
-                        .get::<crate::layer1::resources::ForestryProgress>(designation_entity)
-                        .map_or(0.02, |prog| (prog.current / prog.max).mul_add(0.1, 0.02));
-
-                    if let Some(mut shake) = world.get_resource_mut::<ScreenShake>() {
-                        shake.trigger(intensity);
-                    }
-                    spawn_particle(world, p, '\'', Color::Rgb(139, 69, 19), 3);
-                }
-            }
-            true
-        }
+        DesignationType::Mine => handle_mining_work(world, designation_entity, work_amount, pos),
+        DesignationType::Chop => handle_chopping_work(world, designation_entity, work_amount, pos),
         DesignationType::Demolish => execute_demolish(world, designation_entity),
         DesignationType::Repair => {
             crate::layer1::structure::process_repair(world, designation_entity, work_amount);
@@ -1045,6 +1016,62 @@ fn execute_work_on_designation(
         }
         DesignationType::JuryRig => execute_jury_rig(world, designation_entity),
         DesignationType::SetZone(_) | DesignationType::Tame => false,
+    }
+}
+
+fn handle_mining_work(
+    world: &mut World,
+    entity: Entity,
+    work_amount: f32,
+    pos: Option<GridPosition>,
+) -> bool {
+    process_mining(world, entity, work_amount);
+    if let Some(p) = pos {
+        if world.get_entity(entity).is_err() {
+            // Finished: Big shake + Debris
+            trigger_shake(world, 0.5);
+            spawn_particle(world, p, '*', Color::White, 10);
+        } else {
+            // Working: Dynamic shake + Dust
+            let intensity = world
+                .get::<crate::layer1::resources::MiningProgress>(entity)
+                .map_or(0.05, |prog| (prog.current / prog.max).mul_add(0.15, 0.05));
+
+            trigger_shake(world, intensity);
+            spawn_particle(world, p, '.', Color::DarkGray, 3);
+        }
+    }
+    true
+}
+
+fn handle_chopping_work(
+    world: &mut World,
+    entity: Entity,
+    work_amount: f32,
+    pos: Option<GridPosition>,
+) -> bool {
+    process_logging(world, entity, work_amount);
+    if let Some(p) = pos {
+        if world.get_entity(entity).is_err() {
+            // Finished
+            trigger_shake(world, 0.3);
+            spawn_particle(world, p, '^', Color::Green, 10);
+        } else {
+            // Working
+            let intensity = world
+                .get::<crate::layer1::resources::ForestryProgress>(entity)
+                .map_or(0.02, |prog| (prog.current / prog.max).mul_add(0.1, 0.02));
+
+            trigger_shake(world, intensity);
+            spawn_particle(world, p, '\'', Color::Rgb(139, 69, 19), 3);
+        }
+    }
+    true
+}
+
+fn trigger_shake(world: &mut World, intensity: f32) {
+    if let Some(mut shake) = world.get_resource_mut::<ScreenShake>() {
+        shake.trigger(intensity);
     }
 }
 
@@ -2533,7 +2560,7 @@ mod tests {
 
         // Enemy should take damage
         let health = world.get::<Health>(enemy).unwrap();
-        assert_eq!(health.current, 90.0);
+        assert!((health.current - 90.0).abs() < f32::EPSILON);
     }
 
     #[test]
@@ -2588,7 +2615,7 @@ mod tests {
 
         // Enemy should NOT take damage
         let health = world.get::<Health>(enemy).unwrap();
-        assert_eq!(health.current, 100.0);
+        assert!((health.current - 100.0).abs() < f32::EPSILON);
 
         // AtTarget should be removed (to allow movement)
         assert!(world.get::<AtTarget>(pop).is_none());
@@ -2647,7 +2674,7 @@ mod tests {
                     building_type: BuildingType::Library,
                 },
                 GridPosition { x: 5, y: 5 },
-                crate::layer1::tech::Library::default(),
+                crate::layer1::tech::Library,
             ))
             .id();
 
