@@ -2846,7 +2846,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Justice (arrest/war) vs. Peace (immunity/unrest).
 
 ---
-## Retrograde Engineering
+## Retrograde Engineering [SPECCED]
 
 **Layer:** 1
 
