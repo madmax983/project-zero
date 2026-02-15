@@ -1,16 +1,19 @@
 #[cfg(test)]
 mod tests {
+    use crate::layer1::building::{Building, BuildingType};
+    use crate::layer1::energy::{FuelConsumer, PowerSource, process_fuel_consumption_system};
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::resources::ColonyResources;
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
-    use crate::layer1::energy::{PowerSource, FuelConsumer, process_fuel_consumption_system};
-    use crate::layer1::resources::ColonyResources;
-    use crate::layer1::building::{Building, BuildingType};
-    use crate::layer1::map::GridPosition;
 
     #[test]
     fn test_power_source_default_active() {
         // PowerSource should default to active
-        let source = PowerSource { output: 10.0, ..Default::default() };
+        let source = PowerSource {
+            output: 10.0,
+            ..Default::default()
+        };
         assert!(source.active);
     }
 
@@ -24,22 +27,33 @@ mod tests {
         });
 
         // Spawn Generator with FuelConsumer
-        let generator = world.spawn((
-            PowerSource { output: 10.0, active: true },
-            FuelConsumer { amount: 1.0 },
-            Building {
-                building_type: BuildingType::Generator,
-            },
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let generator = world
+            .spawn((
+                PowerSource {
+                    output: 10.0,
+                    active: true,
+                },
+                FuelConsumer { amount: 1.0 },
+                Building {
+                    building_type: BuildingType::Generator,
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
         // Run system
-        world.run_system_once(process_fuel_consumption_system).unwrap();
+        world
+            .run_system_once(process_fuel_consumption_system)
+            .unwrap();
 
         // Verify fuel consumed
         let res = world.resource::<ColonyResources>();
         // Assert fuel decreased
-        assert!((res.fuel - 4.0).abs() < f32::EPSILON, "Expected 4.0 fuel, got {}", res.fuel);
+        assert!(
+            (res.fuel - 4.0).abs() < f32::EPSILON,
+            "Expected 4.0 fuel, got {}",
+            res.fuel
+        );
 
         // Verify generator still active
         let source = world.get::<PowerSource>(generator).unwrap();
@@ -56,17 +70,24 @@ mod tests {
         });
 
         // Spawn Generator
-        let generator = world.spawn((
-            PowerSource { output: 10.0, active: true },
-            FuelConsumer { amount: 1.0 },
-            Building {
-                building_type: BuildingType::Generator,
-            },
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let generator = world
+            .spawn((
+                PowerSource {
+                    output: 10.0,
+                    active: true,
+                },
+                FuelConsumer { amount: 1.0 },
+                Building {
+                    building_type: BuildingType::Generator,
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
         // Run system
-        world.run_system_once(process_fuel_consumption_system).unwrap();
+        world
+            .run_system_once(process_fuel_consumption_system)
+            .unwrap();
 
         // Verify fuel unchanged (0)
         let res = world.resource::<ColonyResources>();
@@ -74,7 +95,10 @@ mod tests {
 
         // Verify generator INACTIVE
         let source = world.get::<PowerSource>(generator).unwrap();
-        assert!(!source.active, "Generator should be inactive due to lack of fuel");
+        assert!(
+            !source.active,
+            "Generator should be inactive due to lack of fuel"
+        );
     }
 
     #[test]
@@ -86,24 +110,34 @@ mod tests {
             ..ColonyResources::zeroed()
         });
 
-        let generator = world.spawn((
-            PowerSource { output: 10.0, active: false }, // Previously disabled
-            FuelConsumer { amount: 1.0 },
-            Building {
-                building_type: BuildingType::Generator,
-            },
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let generator = world
+            .spawn((
+                PowerSource {
+                    output: 10.0,
+                    active: false,
+                }, // Previously disabled
+                FuelConsumer { amount: 1.0 },
+                Building {
+                    building_type: BuildingType::Generator,
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
         // Add fuel
         world.resource_mut::<ColonyResources>().fuel = 10.0;
 
         // Run system
-        world.run_system_once(process_fuel_consumption_system).unwrap();
+        world
+            .run_system_once(process_fuel_consumption_system)
+            .unwrap();
 
         // Verify active
         let source = world.get::<PowerSource>(generator).unwrap();
-        assert!(source.active, "Generator should reactivate when fuel is available");
+        assert!(
+            source.active,
+            "Generator should reactivate when fuel is available"
+        );
     }
 
     #[test]
@@ -114,19 +148,29 @@ mod tests {
             ..ColonyResources::zeroed()
         });
 
-        let generator = world.spawn((
-            PowerSource { output: 10.0, active: false },
-            FuelConsumer { amount: 1.0 },
-            Building {
-                building_type: BuildingType::Generator,
-            },
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let generator = world
+            .spawn((
+                PowerSource {
+                    output: 10.0,
+                    active: false,
+                },
+                FuelConsumer { amount: 1.0 },
+                Building {
+                    building_type: BuildingType::Generator,
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
-        world.run_system_once(process_fuel_consumption_system).unwrap();
+        world
+            .run_system_once(process_fuel_consumption_system)
+            .unwrap();
 
         let source = world.get::<PowerSource>(generator).unwrap();
-        assert!(!source.active, "Generator should remain inactive when no fuel available");
+        assert!(
+            !source.active,
+            "Generator should remain inactive when no fuel available"
+        );
 
         let res = world.resource::<ColonyResources>();
         assert_eq!(res.fuel, 0.0);

@@ -21,3 +21,4 @@ Tasks currently being implemented. Builders: if a task is here, pick something e
 - [ ] `084` Pop Traits — `specs/084-pop-traits.md` — claimed 2026-02-12
 - [ ] `092` Antagonistic Flora — `specs/092-antagonistic-flora.md` — claimed 2026-02-09
 - [ ] `098` Medical Triage Policies — `specs/098-medical-triage.md` — claimed 2026-02-13
+- [ ] `113` Social Stratification — `specs/113-social-stratification.md` — claimed 2026-10-24

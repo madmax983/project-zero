@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::morale::{MoodModifier, Morale};
 use crate::layer1::resources::ColonyResources;
+use bevy_ecs::prelude::*;
 use rand::Rng;
 
 /// Component marker for Observatory buildings.
@@ -27,7 +27,7 @@ pub fn process_observe_system(
         {
             // 1. Generate Knowledge
             resources.knowledge += 0.02;
-                resources.knowledge = resources.knowledge.clamp(0.0, resources.max_knowledge);
+            resources.knowledge = resources.knowledge.clamp(0.0, resources.max_knowledge);
 
             // 2. Chance for Overview Effect (1% per tick)
             if rng.gen_bool(0.01) {
@@ -70,7 +70,10 @@ mod tests {
 
     #[test]
     fn test_observatory_requires_astronomy() {
-        assert_eq!(BuildingType::Observatory.required_tech(), Some(Tech::Astronomy));
+        assert_eq!(
+            BuildingType::Observatory.required_tech(),
+            Some(Tech::Astronomy)
+        );
     }
 
     #[test]
@@ -112,14 +115,16 @@ mod tests {
         world.insert_resource(ColonyResources::default());
 
         let observatory = world.spawn(Observatory).id();
-        let pop = world.spawn((
-            Pop,
-            Morale::default(),
-            AssignedTo {
-                entity: observatory,
-                assignment_type: AssignmentType::ObservatoryWorker,
-            },
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Morale::default(),
+                AssignedTo {
+                    entity: observatory,
+                    assignment_type: AssignmentType::ObservatoryWorker,
+                },
+            ))
+            .id();
 
         // Run system multiple times to ensure probability triggers
         let mut schedule = Schedule::default();
@@ -136,7 +141,10 @@ mod tests {
             .modifiers
             .iter()
             .any(|m| m.label == "Cosmic Inspiration");
-        let has_dread = morale.modifiers.iter().any(|m| m.label == "Existential Dread");
+        let has_dread = morale
+            .modifiers
+            .iter()
+            .any(|m| m.label == "Existential Dread");
 
         assert!(
             has_inspired || has_dread,

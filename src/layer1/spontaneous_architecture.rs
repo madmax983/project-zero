@@ -46,12 +46,14 @@ pub fn check_spontaneous_build_system(world: &mut World) {
         for (pos, housing) in housing_query.iter(world) {
             for &resident in &housing.residents {
                 // Check if resident exists and doesn't own a structure
-                if world.get::<Pop>(resident).is_some() && world.get::<OwnsStructure>(resident).is_none() {
+                if world.get::<Pop>(resident).is_some()
+                    && world.get::<OwnsStructure>(resident).is_none()
+                {
                     // 1% chance per tick (simulated here with random)
                     // In tests we might force this.
                     let mut rng = rand::thread_rng();
                     if rng.gen_bool(0.01) {
-                         builders.push((resident, *pos));
+                        builders.push((resident, *pos));
                     }
                 }
             }
@@ -63,8 +65,14 @@ pub fn check_spontaneous_build_system(world: &mut World) {
         // Find a valid spot
         let mut target_pos = None;
         let mut neighbors = [
-            (0, 1), (0, -1), (1, 0), (-1, 0),
-            (1, 1), (1, -1), (-1, 1), (-1, -1)
+            (0, 1),
+            (0, -1),
+            (1, 0),
+            (-1, 0),
+            (1, 1),
+            (1, -1),
+            (-1, 1),
+            (-1, -1),
         ];
 
         let mut rng = rand::thread_rng();
@@ -105,7 +113,8 @@ pub fn check_spontaneous_build_system(world: &mut World) {
 
                 // New scope for query
                 {
-                    let mut q = world.query::<(Entity, &GridPosition, &crate::layer1::building::Building)>();
+                    let mut q = world
+                        .query::<(Entity, &GridPosition, &crate::layer1::building::Building)>();
                     for (e, p, _) in q.iter(world) {
                         if p.x == x && p.y == y {
                             found_structure = Some(e);
@@ -117,18 +126,22 @@ pub fn check_spontaneous_build_system(world: &mut World) {
                 if let Some(structure_entity) = found_structure {
                     // Attach components
                     let beauty_bonus = match structure_type {
-                         PersonalStructureType::Shed => 0.0,
-                         PersonalStructureType::Garden => 5.0,
-                         PersonalStructureType::Shrine => 2.0,
+                        PersonalStructureType::Shed => 0.0,
+                        PersonalStructureType::Garden => 5.0,
+                        PersonalStructureType::Shrine => 2.0,
                     };
 
-                    world.entity_mut(structure_entity).insert(PersonalStructure {
-                        owner: pop_entity,
-                        structure_type,
-                        beauty_bonus,
-                    });
+                    world
+                        .entity_mut(structure_entity)
+                        .insert(PersonalStructure {
+                            owner: pop_entity,
+                            structure_type,
+                            beauty_bonus,
+                        });
 
-                    world.entity_mut(pop_entity).insert(OwnsStructure(structure_entity));
+                    world
+                        .entity_mut(pop_entity)
+                        .insert(OwnsStructure(structure_entity));
                 }
             }
         }
@@ -156,16 +169,16 @@ pub fn demolish_personal_structure_system(world: &mut World) {
         }
 
         for (pop_e, struct_e) in check_list {
-             if world.get_entity(struct_e).is_err() {
-                 upgrades.push(pop_e);
-             }
+            if world.get_entity(struct_e).is_err() {
+                upgrades.push(pop_e);
+            }
         }
     }
 
     // 2. Apply penalties
     for pop_e in upgrades {
         if let Some(mut morale) = world.get_mut::<Morale>(pop_e) {
-             morale.modifiers.push(MoodModifier {
+            morale.modifiers.push(MoodModifier {
                 label: "Personal Structure Demolished".to_string(),
                 value: -0.2,
                 duration: 100,
@@ -177,18 +190,18 @@ pub fn demolish_personal_structure_system(world: &mut World) {
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::pop::Pop;
-    use crate::layer1::map::GridPosition;
     use crate::layer1::building::{Building, BuildingType, OccupiedTiles};
     use crate::layer1::housing::Housing;
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::morale::Morale;
+    use crate::layer1::pop::Pop;
     use crate::layer1::resources::ColonyResources;
     use crate::layer1::spontaneous_architecture::{
-        PersonalStructure, PersonalStructureType, check_spontaneous_build_system,
-        demolish_personal_structure_system, OwnsStructure
+        OwnsStructure, PersonalStructure, PersonalStructureType, check_spontaneous_build_system,
+        demolish_personal_structure_system,
     };
-    use crate::layer1::morale::Morale;
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_personal_structure_component() {
@@ -220,20 +233,26 @@ mod tests {
 
         // Setup Pop with Home
         let home_pos = GridPosition { x: 5, y: 5 };
-        let pop = world.spawn((
-            Pop,
-            // GridPosition { x: 5, y: 5 }, // At home (not strictly needed for logic, but good for context)
-            // Idle state would be checked by system logic, here we test the outcome
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                // GridPosition { x: 5, y: 5 }, // At home (not strictly needed for logic, but good for context)
+                // Idle state would be checked by system logic, here we test the outcome
+            ))
+            .id();
 
-        let _home = world.spawn((
-            Building { building_type: BuildingType::Housing },
-            Housing {
-                capacity: 1,
-                residents: vec![pop],
-            },
-            home_pos,
-        )).id();
+        let _home = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Housing,
+                },
+                Housing {
+                    capacity: 1,
+                    residents: vec![pop],
+                },
+                home_pos,
+            ))
+            .id();
 
         // Run system multiple times to overcome RNG or mock RNG (since we used gen_bool(0.01))
 
@@ -248,7 +267,10 @@ mod tests {
         assert!(built, "Should have built a structure eventually");
 
         // Assert: A personal structure should spawn adjacent to (5,5)
-        let structures: Vec<_> = world.query::<(&PersonalStructure, &GridPosition)>().iter(&world).collect();
+        let structures: Vec<_> = world
+            .query::<(&PersonalStructure, &GridPosition)>()
+            .iter(&world)
+            .collect();
         assert_eq!(structures.len(), 1);
 
         let (_, pos) = structures[0];
@@ -277,48 +299,64 @@ mod tests {
         });
 
         let pop = world.spawn(Pop).id();
-        let _home = world.spawn((
-            Building { building_type: BuildingType::Housing },
-            Housing {
-                capacity: 1,
-                residents: vec![pop],
-            },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let _home = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Housing,
+                },
+                Housing {
+                    capacity: 1,
+                    residents: vec![pop],
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         // Loop until build
         let mut built = false;
         for _ in 0..1000 {
-             check_spontaneous_build_system(&mut world);
-             if world.query::<&PersonalStructure>().iter(&world).count() > 0 {
-                 built = true;
-                 break;
-             }
+            check_spontaneous_build_system(&mut world);
+            if world.query::<&PersonalStructure>().iter(&world).count() > 0 {
+                built = true;
+                break;
+            }
         }
         assert!(built);
 
         let res = world.resource::<ColonyResources>();
         // Costs are 10 or 5.
-        assert!(res.wood < 1000.0 || res.stone < 1000.0, "Should consume resources");
+        assert!(
+            res.wood < 1000.0 || res.stone < 1000.0,
+            "Should consume resources"
+        );
     }
 
     #[test]
     fn test_demolish_causes_sadness() {
         let mut world = World::new();
 
-        let owner = world.spawn((
-            Pop,
-            Morale { value: 0.8, modifiers: vec![] },
-        )).id();
+        let owner = world
+            .spawn((
+                Pop,
+                Morale {
+                    value: 0.8,
+                    modifiers: vec![],
+                },
+            ))
+            .id();
 
-        let structure = world.spawn((
-            Building { building_type: BuildingType::PersonalGarden }, // Add building component to make it "real"
-            PersonalStructure {
-                owner,
-                structure_type: PersonalStructureType::Garden,
-                beauty_bonus: 5.0,
-            },
-        )).id();
+        let structure = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::PersonalGarden,
+                }, // Add building component to make it "real"
+                PersonalStructure {
+                    owner,
+                    structure_type: PersonalStructureType::Garden,
+                    beauty_bonus: 5.0,
+                },
+            ))
+            .id();
 
         // Attach ownership
         world.entity_mut(owner).insert(OwnsStructure(structure));
@@ -364,14 +402,18 @@ mod tests {
         });
 
         let pop = world.spawn(Pop).id();
-        let _home = world.spawn((
-            Building { building_type: BuildingType::Housing },
-            Housing {
-                capacity: 1,
-                residents: vec![pop],
-            },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let _home = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Housing,
+                },
+                Housing {
+                    capacity: 1,
+                    residents: vec![pop],
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         for _ in 0..100 {
             check_spontaneous_build_system(&mut world);

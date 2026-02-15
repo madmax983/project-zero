@@ -328,22 +328,13 @@ mod tests {
 
         // Evaluate Research -> Should be None
         {
-            let mut libraries = world.query::<(
-                Entity,
-                &GridPosition,
-                &Library,
-                Option<&ShiftSchedule>,
-            )>();
+            let mut libraries =
+                world.query::<(Entity, &GridPosition, &Library, Option<&ShiftSchedule>)>();
             let resources = world.resource::<ColonyResources>();
             let cycle = world.resource::<DayNightCycle>();
 
-            let result = evaluate_research(
-                &pop_pos,
-                &weights,
-                resources,
-                cycle,
-                libraries.iter(&world),
-            );
+            let result =
+                evaluate_research(&pop_pos, &weights, resources, cycle, libraries.iter(&world));
             assert!(
                 result.is_none(),
                 "Should not research at night if night shift is disabled"
@@ -358,22 +349,13 @@ mod tests {
 
         // Evaluate Research -> Should be Some
         {
-            let mut libraries = world.query::<(
-                Entity,
-                &GridPosition,
-                &Library,
-                Option<&ShiftSchedule>,
-            )>();
+            let mut libraries =
+                world.query::<(Entity, &GridPosition, &Library, Option<&ShiftSchedule>)>();
             let resources = world.resource::<ColonyResources>();
             let cycle = world.resource::<DayNightCycle>();
 
-            let result = evaluate_research(
-                &pop_pos,
-                &weights,
-                resources,
-                cycle,
-                libraries.iter(&world),
-            );
+            let result =
+                evaluate_research(&pop_pos, &weights, resources, cycle, libraries.iter(&world));
             assert!(
                 result.is_some(),
                 "Should research at night if night shift is enabled"

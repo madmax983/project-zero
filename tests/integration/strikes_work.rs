@@ -2,9 +2,7 @@
 mod tests {
     use bevy_ecs::prelude::*;
     use scale::layer1::building::{Building, BuildingType};
-    use scale::layer1::factions::{
-        FactionData, FactionId, FactionMember, FactionState, Factions,
-    };
+    use scale::layer1::factions::{FactionData, FactionId, FactionMember, FactionState, Factions};
     use scale::layer1::farm::{Farm, produce_food_system};
     use scale::layer1::map::GridPosition;
     use scale::layer1::pop::Pop;
@@ -137,6 +135,10 @@ mod tests {
             ActionType::Farm,
             "Striking pop should not choose Farm"
         );
-        assert_eq!(action.current, ActionType::Idle, "Striking pop should be Idle");
+        assert_eq!(
+            action.current,
+            ActionType::Idle,
+            "Striking pop should be Idle"
+        );
     }
 }

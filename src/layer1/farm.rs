@@ -3,13 +3,13 @@ use crate::layer1::GridPosition;
 use crate::layer1::balance::{
     FOOD_HUNGER_THRESHOLD, FOOD_PER_MEAL, FOOD_PER_WORKER_PER_TICK, HUNGER_PER_MEAL,
 };
+use crate::layer1::factions::{FactionMember, FactionState, Factions};
 use crate::layer1::items::ItemType;
 use crate::layer1::needs::Needs;
 use crate::layer1::palette_fatigue::{DietaryHistory, record_meal};
 use crate::layer1::pop::Pop;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::seasons::SeasonState;
-use crate::layer1::factions::{FactionMember, FactionState, Factions};
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
 use crate::layer1::utility_ai::{ActionType, PopAction};
 use bevy_ecs::prelude::*;

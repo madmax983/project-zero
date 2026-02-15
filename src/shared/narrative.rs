@@ -350,7 +350,10 @@ impl NarrativeGenerator {
     /// Returns an error if the template ID is not found or if the template has no patterns.
     pub fn generate(&self, template_id: &str, context: &NarrativeContext) -> Result<String> {
         let segments = self.generate_structured(template_id, context)?;
-        Ok(segments.iter().map(std::string::ToString::to_string).collect())
+        Ok(segments
+            .iter()
+            .map(std::string::ToString::to_string)
+            .collect())
     }
 
     /// Generate a structured story from a template ID and context.
@@ -580,40 +583,43 @@ mod tests {
     }
 }
 
-    #[test]
-    fn test_generate_structured() {
-        let mut generator = NarrativeGenerator::default();
-        generator.add_template(
-            "STRUCT".to_string(),
-            vec!["Hello [NAME], welcome to [PLACE].".to_string()],
-        );
+#[test]
+fn test_generate_structured() {
+    let mut generator = NarrativeGenerator::default();
+    generator.add_template(
+        "STRUCT".to_string(),
+        vec!["Hello [NAME], welcome to [PLACE].".to_string()],
+    );
 
-        let mut ctx = NarrativeContext::new();
-        ctx.insert("NAME", "Mosaic");
-        ctx.insert("PLACE", "Codebase");
+    let mut ctx = NarrativeContext::new();
+    ctx.insert("NAME", "Mosaic");
+    ctx.insert("PLACE", "Codebase");
 
-        let segments = generator.generate_structured("STRUCT", &ctx).unwrap();
+    let segments = generator.generate_structured("STRUCT", &ctx).unwrap();
 
-        assert_eq!(segments.len(), 5);
-        assert_eq!(segments[0], NarrativeSegment::Text("Hello ".to_string()));
-        assert_eq!(
-            segments[1],
-            NarrativeSegment::Slot {
-                key: "NAME".to_string(),
-                value: "Mosaic".to_string()
-            }
-        );
-        assert_eq!(segments[2], NarrativeSegment::Text(", welcome to ".to_string()));
-        assert_eq!(
-            segments[3],
-            NarrativeSegment::Slot {
-                key: "PLACE".to_string(),
-                value: "Codebase".to_string()
-            }
-        );
-        assert_eq!(segments[4], NarrativeSegment::Text(".".to_string()));
+    assert_eq!(segments.len(), 5);
+    assert_eq!(segments[0], NarrativeSegment::Text("Hello ".to_string()));
+    assert_eq!(
+        segments[1],
+        NarrativeSegment::Slot {
+            key: "NAME".to_string(),
+            value: "Mosaic".to_string()
+        }
+    );
+    assert_eq!(
+        segments[2],
+        NarrativeSegment::Text(", welcome to ".to_string())
+    );
+    assert_eq!(
+        segments[3],
+        NarrativeSegment::Slot {
+            key: "PLACE".to_string(),
+            value: "Codebase".to_string()
+        }
+    );
+    assert_eq!(segments[4], NarrativeSegment::Text(".".to_string()));
 
-        // Test string conversion via generate (legacy)
-        let full_text = generator.generate("STRUCT", &ctx).unwrap();
-        assert_eq!(full_text, "Hello Mosaic, welcome to Codebase.");
-    }
+    // Test string conversion via generate (legacy)
+    let full_text = generator.generate("STRUCT", &ctx).unwrap();
+    assert_eq!(full_text, "Hello Mosaic, welcome to Codebase.");
+}

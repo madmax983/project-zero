@@ -189,7 +189,10 @@ mod tests {
 
     #[test]
     fn test_power_components() {
-        let source = PowerSource { output: 10.0, active: true };
+        let source = PowerSource {
+            output: 10.0,
+            active: true,
+        };
         let consumer = PowerConsumer {
             demand: 5.0,
             active: true,
@@ -208,7 +211,10 @@ mod tests {
         // Generator at 0,0
         let generator = world
             .spawn((
-                PowerSource { output: 10.0, active: true },
+                PowerSource {
+                    output: 10.0,
+                    active: true,
+                },
                 GridPosition { x: 0, y: 0 },
                 Building {
                     building_type: BuildingType::Generator,
@@ -249,7 +255,10 @@ mod tests {
         // Generator at 0,0
         let generator = world
             .spawn((
-                PowerSource { output: 10.0, active: true },
+                PowerSource {
+                    output: 10.0,
+                    active: true,
+                },
                 GridPosition { x: 0, y: 0 },
                 Building {
                     building_type: BuildingType::Generator,
@@ -294,7 +303,10 @@ mod tests {
 
         // Gen 10
         world.spawn((
-            PowerSource { output: 10.0, active: true },
+            PowerSource {
+                output: 10.0,
+                active: true,
+            },
             GridPosition { x: 0, y: 0 },
             Building {
                 building_type: BuildingType::Generator,

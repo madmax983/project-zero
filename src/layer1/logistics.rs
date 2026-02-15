@@ -2,12 +2,12 @@
 //!
 //! Systems for automated transport and collection of resources.
 
-use bevy_ecs::prelude::*;
 use crate::layer1::building::{Building, BuildingType, Direction};
 use crate::layer1::energy::PowerConsumer;
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
+use bevy_ecs::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 /// Component for a conveyor belt that moves items.
@@ -74,7 +74,10 @@ pub fn conveyor_system(
                 }
 
                 // Check building obstacles
-                if obstacles.contains(&GridPosition { x: target_x, y: target_y }) {
+                if obstacles.contains(&GridPosition {
+                    x: target_x,
+                    y: target_y,
+                }) {
                     continue;
                 }
 
@@ -170,17 +173,30 @@ mod tests {
 
         // Setup Conveyor at (0,0) facing East (Active)
         world.spawn((
-            Building { building_type: BuildingType::ConveyorBelt },
-            ConveyorBelt { direction: Direction::East, speed: 1.0 },
+            Building {
+                building_type: BuildingType::ConveyorBelt,
+            },
+            ConveyorBelt {
+                direction: Direction::East,
+                speed: 1.0,
+            },
             GridPosition { x: 0, y: 0 },
-            PowerConsumer { demand: 1.0, active: true },
+            PowerConsumer {
+                demand: 1.0,
+                active: true,
+            },
         ));
 
         // Spawn Item at (0,0)
-        let item = world.spawn((
-            ResourceItem { resource_type: ResourceType::Stone, amount: 1.0 },
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let item = world
+            .spawn((
+                ResourceItem {
+                    resource_type: ResourceType::Stone,
+                    amount: 1.0,
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
         // Run system
         let _ = world.run_system_once(conveyor_system);
@@ -202,16 +218,29 @@ mod tests {
 
         // Inactive Conveyor
         world.spawn((
-            Building { building_type: BuildingType::ConveyorBelt },
-            ConveyorBelt { direction: Direction::East, speed: 1.0 },
+            Building {
+                building_type: BuildingType::ConveyorBelt,
+            },
+            ConveyorBelt {
+                direction: Direction::East,
+                speed: 1.0,
+            },
             GridPosition { x: 0, y: 0 },
-            PowerConsumer { demand: 1.0, active: false }, // No power
+            PowerConsumer {
+                demand: 1.0,
+                active: false,
+            }, // No power
         ));
 
-        let item = world.spawn((
-            ResourceItem { resource_type: ResourceType::Stone, amount: 1.0 },
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let item = world
+            .spawn((
+                ResourceItem {
+                    resource_type: ResourceType::Stone,
+                    amount: 1.0,
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
         let _ = world.run_system_once(conveyor_system);
 
@@ -233,17 +262,27 @@ mod tests {
 
         // Active Hopper at (0,0)
         world.spawn((
-            Building { building_type: BuildingType::Hopper },
+            Building {
+                building_type: BuildingType::Hopper,
+            },
             Hopper,
             GridPosition { x: 0, y: 0 },
-            PowerConsumer { demand: 5.0, active: true },
+            PowerConsumer {
+                demand: 5.0,
+                active: true,
+            },
         ));
 
         // Item on Hopper
-        let item = world.spawn((
-            ResourceItem { resource_type: ResourceType::Stone, amount: 5.0 },
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let item = world
+            .spawn((
+                ResourceItem {
+                    resource_type: ResourceType::Stone,
+                    amount: 5.0,
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
         let _ = world.run_system_once(hopper_system);
 
@@ -270,17 +309,27 @@ mod tests {
 
         // Active Hopper
         world.spawn((
-            Building { building_type: BuildingType::Hopper },
+            Building {
+                building_type: BuildingType::Hopper,
+            },
             Hopper,
             GridPosition { x: 0, y: 0 },
-            PowerConsumer { demand: 5.0, active: true },
+            PowerConsumer {
+                demand: 5.0,
+                active: true,
+            },
         ));
 
         // Item with amount 5.0
-        let item = world.spawn((
-            ResourceItem { resource_type: ResourceType::Stone, amount: 5.0 },
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let item = world
+            .spawn((
+                ResourceItem {
+                    resource_type: ResourceType::Stone,
+                    amount: 5.0,
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
         let _ = world.run_system_once(hopper_system);
 
@@ -305,23 +354,38 @@ mod tests {
 
         // Conveyor at 0,0 facing East
         world.spawn((
-            Building { building_type: BuildingType::ConveyorBelt },
-            ConveyorBelt { direction: Direction::East, speed: 1.0 },
+            Building {
+                building_type: BuildingType::ConveyorBelt,
+            },
+            ConveyorBelt {
+                direction: Direction::East,
+                speed: 1.0,
+            },
             GridPosition { x: 0, y: 0 },
-            PowerConsumer { demand: 1.0, active: true },
+            PowerConsumer {
+                demand: 1.0,
+                active: true,
+            },
         ));
 
         // Wall at 1,0 (Obstacle)
         world.spawn((
-            Building { building_type: BuildingType::Wall },
+            Building {
+                building_type: BuildingType::Wall,
+            },
             GridPosition { x: 1, y: 0 },
         ));
 
         // Item at 0,0
-        let item = world.spawn((
-            ResourceItem { resource_type: ResourceType::Stone, amount: 1.0 },
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let item = world
+            .spawn((
+                ResourceItem {
+                    resource_type: ResourceType::Stone,
+                    amount: 1.0,
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
         let _ = world.run_system_once(conveyor_system);
 
@@ -343,25 +407,43 @@ mod tests {
 
         // Conveyor at 0,0 facing East
         world.spawn((
-            Building { building_type: BuildingType::ConveyorBelt },
-            ConveyorBelt { direction: Direction::East, speed: 1.0 },
+            Building {
+                building_type: BuildingType::ConveyorBelt,
+            },
+            ConveyorBelt {
+                direction: Direction::East,
+                speed: 1.0,
+            },
             GridPosition { x: 0, y: 0 },
-            PowerConsumer { demand: 1.0, active: true },
+            PowerConsumer {
+                demand: 1.0,
+                active: true,
+            },
         ));
 
         // Hopper at 1,0 (Obstacle, but should accept item)
         world.spawn((
-            Building { building_type: BuildingType::Hopper },
+            Building {
+                building_type: BuildingType::Hopper,
+            },
             Hopper,
             GridPosition { x: 1, y: 0 },
-            PowerConsumer { demand: 5.0, active: true },
+            PowerConsumer {
+                demand: 5.0,
+                active: true,
+            },
         ));
 
         // Item at 0,0
-        let item = world.spawn((
-            ResourceItem { resource_type: ResourceType::Stone, amount: 5.0 },
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let item = world
+            .spawn((
+                ResourceItem {
+                    resource_type: ResourceType::Stone,
+                    amount: 5.0,
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
         // Run conveyor system -> Move to 1,0
         let _ = world.run_system_once(conveyor_system);

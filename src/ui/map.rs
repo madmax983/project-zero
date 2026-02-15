@@ -704,7 +704,7 @@ pub const fn get_building_color(building: BuildingType, material: MaterialType) 
     } else {
         match building {
             BuildingType::Housing | BuildingType::PersonalShed => Color::Rgb(139, 90, 43), // Fallback (should be covered above)
-            BuildingType::Farm => Color::Rgb(218, 165, 32),                                // Goldenrod
+            BuildingType::Farm => Color::Rgb(218, 165, 32), // Goldenrod
             BuildingType::Well | BuildingType::Tailor => Color::Blue,
             BuildingType::Stockpile
             | BuildingType::Wall
