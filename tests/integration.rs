@@ -58,3 +58,5 @@ mod funeral_rites;
 mod strikes_mining_science;
 #[path = "integration/strikes_work.rs"]
 mod strikes_work;
+#[path = "integration/social_room_quality.rs"]
+mod social_room_quality;
