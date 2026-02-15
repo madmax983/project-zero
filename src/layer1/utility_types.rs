@@ -52,11 +52,17 @@ pub enum ActionType {
     Tame,
     /// Slaughter a tamed animal for resources.
     Slaughter,
+    /// Starts fires (Mental Break).
+    FireStarting,
+    /// Hides in room (Mental Break).
+    HideInRoom,
+    /// Wanders sadly (Mental Break).
+    SadWander,
 }
 
 impl ActionType {
     /// Total number of action types. Used for array sizing.
-    pub const COUNT: usize = 22;
+    pub const COUNT: usize = 25;
 
     /// Converts action type to a unique array index (0..COUNT-1).
     #[must_use]
@@ -84,6 +90,9 @@ impl ActionType {
             Self::Sleepwalking => 19,
             Self::Tame => 20,
             Self::Slaughter => 21,
+            Self::FireStarting => 22,
+            Self::HideInRoom => 23,
+            Self::SadWander => 24,
         }
     }
 

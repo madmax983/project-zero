@@ -45,10 +45,10 @@ use crate::layer1::{
     inspector::{inspector_report_system, observe_inspector_system, spawn_inspector_system},
     inspector_outcome_bridge_system,
     logistics::{conveyor_system, hopper_system},
-    malfunction_system, memory_decay_system, modify_affinity_system, movement_system,
-    natural_death_system, notification_expiration_system, pop_death_chronicle_bridge,
-    pressure_damage_system, process_fuel_consumption_system, process_observe_system,
-    process_refining_system, process_research_system, process_scan_system,
+    malfunction_system, memory_decay_system, modify_affinity_system, morale_decay_system,
+    movement_system, natural_death_system, notification_expiration_system,
+    pop_death_chronicle_bridge, pressure_damage_system, process_fuel_consumption_system,
+    process_observe_system, process_refining_system, process_research_system, process_scan_system,
     process_start_plan_system, produce_food_system, quirk_generation_system, regrowth_system,
     restore_leisure_system, restore_rest_in_housing_system, sleepwalk_end_system,
     social::old_guard::{
@@ -58,10 +58,12 @@ use crate::layer1::{
     social_stratification::{class_friction_system, update_social_class_system},
     spirit_decay_system, spoilage_system, starvation_damage_system, taboo_event_system,
     theft_system, track_plan_outcomes_system, update_action_timer_system,
-    update_cabin_fever_system, update_erosion_system, update_lighting_system, update_noise_system,
+    update_breakdown_system, update_cabin_fever_system, update_catharsis_duration_system,
+    update_erosion_system, update_lighting_system, update_morale_cache_system, update_noise_system,
     update_pressure_system, update_resource_caps_system, update_screen_shake_system,
     update_taboo_duration_system, update_water_system, update_weather_system, vermin_growth_system,
     vermin_morale_system, waste_pollution_bridge, work_execution_system,
+    apply_catharsis_morale_bonus_system, check_stress_breakdown_system,
 };
 use crate::shared::time::SimulationTime;
 
@@ -179,6 +181,9 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(update_noise_system),
         restore_leisure_system.after(work_execution_system),
         apply_mood_modifiers_system.after(restore_leisure_system),
+        apply_catharsis_morale_bonus_system.after(apply_mood_modifiers_system),
+        update_morale_cache_system.after(apply_catharsis_morale_bonus_system),
+        morale_decay_system.after(update_morale_cache_system),
     ));
 
     schedule.add_systems((
@@ -324,6 +329,9 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::rumor::exchange_rumors_system.after(death_system),
         crate::layer1::funeral::grief_system.after(death_system),
         crate::layer1::unrest::check_mental_break_system.after(decay_needs_system),
+        check_stress_breakdown_system.after(decay_needs_system),
+        update_breakdown_system.after(check_stress_breakdown_system),
+        update_catharsis_duration_system.after(decay_needs_system),
         check_sleepwalking_start_system.after(decay_needs_system),
         sleepwalk_end_system.after(decay_needs_system),
         crate::layer1::justice::check_crime_system

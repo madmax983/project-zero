@@ -23,3 +23,4 @@ Tasks currently being implemented. Builders: if a task is here, pick something e
 - [ ] `098` Medical Triage Policies — `specs/098-medical-triage.md` — claimed 2026-02-13
 - [ ] `113` Social Stratification — `specs/113-social-stratification.md` — claimed 2026-10-24
 - [ ] `120` Crop Diversity — `specs/120-crop-diversity.md` — claimed 2026-02-15
+- [ ] `127` Stress Breakdowns — `specs/127-stress-breakdowns.md` — claimed 2026-02-15

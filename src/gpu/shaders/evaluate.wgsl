@@ -15,11 +15,10 @@ struct PopInput {
     distance_weight: f32,
     availability_weight: f32,
     social_weight: f32,
-    success_count: array<u32, 22>,
-    attempt_count: array<u32, 22>,
+    success_count: array<u32, 25>,
+    attempt_count: array<u32, 25>,
     current_utility: f32,
     drafted: u32,
-    _pad: array<u32, 2>,
 }
 
 struct BuildingInput {
