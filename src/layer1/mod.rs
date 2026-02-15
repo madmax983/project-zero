@@ -368,3 +368,7 @@ pub mod social_stratification;
 pub use social_stratification::*;
 pub mod rituals;
 pub use rituals::*;
+
+/// Airlock & Pressure system (Spec 119).
+pub mod pressure;
+pub use pressure::*;

@@ -12,7 +12,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `067` Militia System — `specs/067-militia-system.md`
 - [ ] `077` Emergent Festivals — `specs/077-emergent-festivals.md`
 - [ ] `116` Drone Networks — `specs/116-drone-networks.md`
-- [ ] `119` Airlock & Pressure — `specs/119-airlock-pressure.md`
 - [ ] `124` The Wild Child — `specs/124-the-wild-child.md`
 
 ## MVP — Layer 2: System Simulation
