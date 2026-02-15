@@ -220,6 +220,7 @@ mod tests {
     use crate::layer1::resources::{Carrying, ColonyResources, ResourceItem, ResourceType};
     use crate::layer1::stockpile::Stockpile;
     use crate::layer1::utility_ai::{ActionType, PopAction, UtilityWeights};
+    use crate::layer1::utility_types::{ItemProxy, StockpileProxy};
     use crate::layer1::{GridPosition, Pop};
     use crate::shared::time::SimulationTime;
     use bevy_ecs::prelude::*;
@@ -253,7 +254,7 @@ mod tests {
             .id();
 
         // Spawn Stockpile with capacity
-        let _stockpile_entity = world
+        let stockpile_entity = world
             .spawn((
                 Building {
                     building_type: BuildingType::Stockpile,
@@ -263,17 +264,25 @@ mod tests {
             ))
             .id();
 
-        let mut items = world.query::<(Entity, &GridPosition, &ResourceItem)>();
-        let mut stockpiles = world.query::<(Entity, &GridPosition, &Stockpile)>();
+        // Manual Proxy Creation for Test
+        let items: Vec<ItemProxy> = world
+            .query::<(Entity, &GridPosition, &ResourceItem)>()
+            .iter(&world)
+            .map(|(e, p, i)| ItemProxy {
+                entity: e,
+                pos: *p,
+                resource_type: i.resource_type,
+            })
+            .collect();
+
+        let stockpiles: Vec<StockpileProxy> = world
+            .query::<(Entity, &GridPosition, &Stockpile)>()
+            .iter(&world)
+            .map(|(e, p, _)| StockpileProxy { entity: e, pos: *p })
+            .collect();
 
         let resources = world.resource::<ColonyResources>();
-        let result = evaluate_haul(
-            &pop_pos,
-            &weights,
-            items.iter(&world),
-            stockpiles.iter(&world),
-            resources,
-        );
+        let result = evaluate_haul(&pop_pos, &weights, &items, &stockpiles, resources);
 
         assert!(result.is_some());
         let (utility, target) = result.unwrap();
@@ -310,18 +319,25 @@ mod tests {
             GridPosition { x: 10, y: 0 },
         ));
 
-        let mut items = world.query::<(Entity, &GridPosition, &ResourceItem)>();
-        let mut stockpiles = world.query::<(Entity, &GridPosition, &Stockpile)>();
+        let items: Vec<ItemProxy> = world
+            .query::<(Entity, &GridPosition, &ResourceItem)>()
+            .iter(&world)
+            .map(|(e, p, i)| ItemProxy {
+                entity: e,
+                pos: *p,
+                resource_type: i.resource_type,
+            })
+            .collect();
+
+        let stockpiles: Vec<StockpileProxy> = world
+            .query::<(Entity, &GridPosition, &Stockpile)>()
+            .iter(&world)
+            .map(|(e, p, _)| StockpileProxy { entity: e, pos: *p })
+            .collect();
 
         // Should return None because global storage is full
         let resources = world.resource::<ColonyResources>();
-        let result = evaluate_haul(
-            &pop_pos,
-            &weights,
-            items.iter(&world),
-            stockpiles.iter(&world),
-            resources,
-        );
+        let result = evaluate_haul(&pop_pos, &weights, &items, &stockpiles, resources);
 
         // Since we filled global resources, we expect None.
         assert!(result.is_none());

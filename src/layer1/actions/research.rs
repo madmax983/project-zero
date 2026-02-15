@@ -1,9 +1,6 @@
-use crate::layer1::building::ShiftSchedule;
-use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::ColonyResources;
-use crate::layer1::tech::Library;
-use crate::layer1::utility_types::{ActionType, UtilityWeights};
+use crate::layer1::utility_types::{ActionType, LibraryProxy, UtilityWeights};
 use crate::layer1::utility_types::{calculate_context_score, calculate_success_modifier};
 use bevy_ecs::prelude::*;
 
@@ -15,19 +12,11 @@ use bevy_ecs::prelude::*;
 /// *   Returns `None` if the colony's knowledge storage ([`ColonyResources`]) is full.
 /// *   Requires an available worker slot at a [`Library`].
 #[must_use]
-pub fn evaluate_research<'a>(
+pub fn evaluate_research(
     pop_pos: &GridPosition,
     weights: &UtilityWeights,
     resources: &ColonyResources,
-    cycle: &DayNightCycle,
-    libraries: impl Iterator<
-        Item = (
-            Entity,
-            &'a GridPosition,
-            &'a Library,
-            Option<&'a ShiftSchedule>,
-        ),
-    >,
+    libraries: &[LibraryProxy],
 ) -> Option<(f32, Entity)> {
     // If knowledge is full, no utility
     if resources.knowledge >= resources.max_knowledge {
@@ -37,15 +26,12 @@ pub fn evaluate_research<'a>(
     let mut best: Option<(f32, Entity)> = None;
     let base_utility = 0.4;
 
-    for (entity, pos, _, schedule) in libraries {
-        // Check shift schedule
-        if schedule.is_some_and(|s| !s.is_active(cycle.time_of_day)) {
-            continue;
-        }
+    for library in libraries {
+        // Pre-filtered for schedule
 
         let context = calculate_context_score(
             *pop_pos,
-            Some(*pos),
+            Some(library.pos),
             5, // Assumed capacity
             0, // Assumed occupied (not tracked yet)
             weights,
@@ -55,7 +41,7 @@ pub fn evaluate_research<'a>(
         let utility = base_utility * context * success;
 
         if best.is_none_or(|(best_u, _)| utility > best_u) {
-            best = Some((utility, entity));
+            best = Some((utility, library.entity));
         }
     }
     best

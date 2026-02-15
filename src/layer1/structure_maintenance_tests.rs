@@ -6,7 +6,7 @@ mod tests {
     use crate::layer1::structure::{
         DeferMaintenance, Structure, calculate_malfunction_risk, entropy_system,
     };
-    use crate::layer1::utility_types::UtilityWeights;
+    use crate::layer1::utility_types::{RepairDesignationProxy, StructureProxy, UtilityWeights};
     use bevy_ecs::prelude::*;
 
     fn setup_world() -> World {
@@ -121,14 +121,27 @@ mod tests {
 
         let pop_pos = GridPosition { x: 0, y: 0 };
         let weights = UtilityWeights::default();
-        let designations = std::iter::empty(); // No manual designations
+        let designations: Vec<RepairDesignationProxy> = vec![];
 
-        // Build structures iterator
+        // Simulate evaluate_actions_system filtering logic
+        let mut proxies = Vec::new();
         let mut query =
             world.query::<(Entity, &GridPosition, &Structure, Option<&DeferMaintenance>)>();
-        let structures = query.iter(&world);
+        for (entity, pos, structure, defer) in query.iter(&world) {
+            // Logic mirrored from utility_ai.rs
+            if defer.is_some() {
+                continue;
+            }
+            if (structure.current_hp - structure.max_hp).abs() < f32::EPSILON {
+                continue;
+            }
+            proxies.push(StructureProxy {
+                entity,
+                pos: *pos,
+            });
+        }
 
-        let result = evaluate_repair(&pop_pos, &weights, designations, structures);
+        let result = evaluate_repair(&pop_pos, &weights, &designations, &proxies);
 
         assert!(result.is_some());
         assert_eq!(

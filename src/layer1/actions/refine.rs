@@ -1,9 +1,5 @@
-use crate::layer1::building::{Building, ShiftSchedule};
-use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::map::GridPosition;
-use crate::layer1::refining::get_refining_recipe;
-use crate::layer1::resources::{ColonyResources, RefiningProgress};
-use crate::layer1::utility_types::{ActionType, UtilityWeights};
+use crate::layer1::utility_types::{ActionType, RefiningProxy, UtilityWeights};
 use crate::layer1::utility_types::{calculate_context_score, calculate_success_modifier};
 use bevy_ecs::prelude::*;
 
@@ -15,40 +11,21 @@ use bevy_ecs::prelude::*;
 /// # Returns
 ///
 /// `Some((utility, target_entity))` if a valid job is found, `None` otherwise.
-pub fn evaluate_refine<'a>(
+#[must_use]
+pub fn evaluate_refine(
     pop_pos: &GridPosition,
     weights: &UtilityWeights,
-    resources: &ColonyResources,
-    cycle: &DayNightCycle,
-    buildings: impl Iterator<
-        Item = (
-            Entity,
-            &'a GridPosition,
-            &'a Building,
-            &'a RefiningProgress,
-            Option<&'a ShiftSchedule>,
-        ),
-    >,
+    buildings: &[RefiningProxy],
 ) -> Option<(f32, Entity)> {
     let mut best: Option<(f32, Entity)> = None;
     let base_utility = 0.5;
 
-    for (entity, pos, building, progress, schedule) in buildings {
-        // Check shift schedule
-        if schedule.is_some_and(|s| !s.is_active(cycle.time_of_day)) {
-            continue;
-        }
-
-        // Check recipe validity
-        let (can_afford, _, _) = get_refining_recipe(building.building_type, resources);
-
-        if !can_afford {
-            continue;
-        }
+    for building in buildings {
+        // Pre-filtered for schedule and recipe affordability
 
         let context = calculate_context_score(
             *pop_pos,
-            Some(*pos),
+            Some(building.pos),
             1, // Capacity assumption (1 worker per mill for now)
             0, // Occupied assumption (handled by execution system or race condition accepted for MVP)
             weights,
@@ -57,12 +34,12 @@ pub fn evaluate_refine<'a>(
         let success = calculate_success_modifier(ActionType::Refine, weights);
 
         // Boost utility if progress is already made
-        let progress_bonus = if progress.current > 0.0 { 0.1 } else { 0.0 };
+        let progress_bonus = if building.progress_current > 0.0 { 0.1 } else { 0.0 };
 
         let utility = (base_utility + progress_bonus) * context * success;
 
         if best.is_none_or(|(u, _)| utility > u) {
-            best = Some((utility, entity));
+            best = Some((utility, building.entity));
         }
     }
     best

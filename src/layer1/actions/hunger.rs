@@ -3,7 +3,7 @@ use crate::layer1::farm::Farm;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
 use crate::layer1::pop::Job;
-use crate::layer1::utility_types::{ActionType, UtilityWeights};
+use crate::layer1::utility_types::{ActionType, FarmProxy, UtilityWeights};
 use crate::layer1::utility_types::{
     calculate_context_score, calculate_success_modifier, need_response_curve,
 };
@@ -11,22 +11,22 @@ use bevy_ecs::prelude::*;
 
 /// Evaluates the utility of satisfying hunger at available farms.
 #[must_use]
-pub fn evaluate_satisfy_hunger<'a>(
+pub fn evaluate_satisfy_hunger(
     pop_pos: &GridPosition,
     needs: &Needs,
     weights: &UtilityWeights,
-    farms: impl Iterator<Item = (Entity, &'a GridPosition, &'a Farm)>,
+    farms: &[FarmProxy],
 ) -> Option<(f32, Entity)> {
     let hunger_urgency = need_response_curve(needs.hunger);
 
     let mut best: Option<(f32, Entity)> = None;
 
-    for (farm_entity, farm_pos, farm) in farms {
+    for farm in farms {
         let context_score = calculate_context_score(
             *pop_pos,
-            Some(*farm_pos),
+            Some(farm.pos),
             farm.capacity,
-            farm.workers.len(),
+            farm.workers,
             weights,
         );
 
@@ -35,7 +35,7 @@ pub fn evaluate_satisfy_hunger<'a>(
         let utility = hunger_urgency * context_score * success_mod;
 
         if best.is_none_or(|(best_u, _)| utility > best_u) {
-            best = Some((utility, farm_entity));
+            best = Some((utility, farm.entity));
         }
     }
 

@@ -1,4 +1,4 @@
-use crate::layer1::designation::{Designation, DesignationType};
+use crate::layer1::designation::DesignationType;
 use crate::layer1::execution::MovementTarget;
 use crate::layer1::fauna::{Fauna, FaunaState, FaunaType};
 use crate::layer1::hazards::handle_workplace_hazards;
@@ -6,7 +6,9 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::resources::{ResourceItem, ResourceType};
 use crate::layer1::skills::{SkillType, Skills};
 use crate::layer1::utility_ai::{ActionType, PopAction, UtilityWeights};
-use crate::layer1::utility_types::{calculate_context_score, calculate_success_modifier};
+use crate::layer1::utility_types::{
+    TameDesignationProxy, calculate_context_score, calculate_success_modifier,
+};
 use crate::layer1::zone::{ZoneGrid, ZoneType};
 use bevy_ecs::prelude::*;
 
@@ -139,23 +141,22 @@ pub fn husbandry_production_system(world: &mut World) {
 }
 
 /// Evaluates the utility of taming designated animals.
-pub fn evaluate_tame<'a>(
+pub fn evaluate_tame(
     pop_pos: &GridPosition,
     weights: &UtilityWeights,
-    designations: impl Iterator<Item = (Entity, &'a GridPosition, &'a Designation)>,
+    designations: &[TameDesignationProxy],
 ) -> Option<(f32, Entity)> {
     let mut best: Option<(f32, Entity)> = None;
     let base_utility = 0.6;
 
-    for (entity, pos, des) in designations {
-        if des.designation_type == DesignationType::Tame {
-            let context = calculate_context_score(*pop_pos, Some(*pos), 1, 0, weights);
-            let success = calculate_success_modifier(ActionType::Tame, weights);
-            let utility = base_utility * context * success;
+    for des in designations {
+        // Pre-filtered for Tame type
+        let context = calculate_context_score(*pop_pos, Some(des.pos), 1, 0, weights);
+        let success = calculate_success_modifier(ActionType::Tame, weights);
+        let utility = base_utility * context * success;
 
-            if best.is_none_or(|(best_u, _)| utility > best_u) {
-                best = Some((utility, entity));
-            }
+        if best.is_none_or(|(best_u, _)| utility > best_u) {
+            best = Some((utility, des.entity));
         }
     }
     best
@@ -182,10 +183,10 @@ pub fn tame_execution_system(world: &mut World) {
                 .find(|(_, p)| p.x == pos.x && p.y == pos.y)
                 .map(|(e, _)| e);
 
-            if let Some(animal_entity) = animal
-                && world.get::<Tame>(animal_entity).is_none()
-            {
-                _success = attempt_tame(world, pop_entity, animal_entity);
+            if let Some(animal_entity) = animal {
+                if world.get::<Tame>(animal_entity).is_none() {
+                    _success = attempt_tame(world, pop_entity, animal_entity);
+                }
             }
             world.despawn(designation_entity);
         } else {
