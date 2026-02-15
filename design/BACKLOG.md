@@ -19,6 +19,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `120` Crop Diversity — `specs/120-crop-diversity.md`
 - [ ] `124` The Wild Child — `specs/124-the-wild-child.md`
 - [ ] `126` Blackout Protocol — `specs/126-blackout-protocol.md`
+- [ ] `127` Stress Breakdowns — `specs/127-stress-breakdowns.md`
 
 ## MVP — Layer 2: System Simulation
 
