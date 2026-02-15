@@ -1,31 +1,115 @@
-#![allow(missing_docs, clippy::collapsible_if)]
+#![allow(clippy::collapsible_if)]
+//! Combat system logic, drafting, and attack resolution.
+//!
+//! This module handles the "Drafted" state of pops, weapon definitions, and the
+//! mechanics of resolving attacks.
+//!
+//! # The Combat Flow
+//!
+//! 1.  **Drafting**: A pop is marked with the [`Drafted`] component. This overrides their
+//!     normal Utility AI logic (eating, working) and forces them to prioritize [`ActionType::Fight`](crate::layer1::utility_ai::ActionType::Fight).
+//! 2.  **Targeting**: The [`crate::layer1::utility_ai::evaluate_actions_system`] assigns a target (Hostile Fauna, Invaders)
+//!     if one is in range.
+//! 3.  **Execution**: The [`execute_attack`] function is called by the execution layer
+//!     when the pop is in range and ready to strike.
+//! 4.  **Damage**: Damage is calculated based on the equipped [`Weapon`] and applied to the target's [`crate::layer1::health::Health`].
+//!
+//! # Key Components
+//!
+//! *   [`Drafted`]: The switch that turns a worker into a soldier.
+//! *   [`CombatState`]: Tracks internal cooldowns and last targets.
+//! *   [`Weapon`]: Defines damage, range, and accuracy.
+
 use crate::layer1::map::ScreenShake;
 use crate::layer1::particles::spawn_particle;
 use bevy_ecs::prelude::*;
 use ratatui::style::Color;
 
+/// Component marker for pops that have been drafted for military service.
+///
+/// When a pop is drafted:
+/// *   They ignore needs like Hunger/Rest (up to a point).
+/// *   They prioritize combat actions.
+/// *   They move to the rally point (cursor).
 #[derive(Component, Default, Debug, Clone, Copy)]
 pub struct Drafted;
 
+/// Tracks the combat cooldowns and state for an entity.
+///
+/// This component ensures that entities do not attack every single tick.
 #[derive(Component, Default, Debug)]
 pub struct CombatState {
+    /// Ticks remaining until the entity can attack again.
     pub cooldown: u32,
+    /// The last entity targeted by this combatant.
     pub last_target: Option<Entity>,
 }
 
+/// Defines the statistical properties of an attack or weapon.
 #[derive(Clone, Copy, Debug)]
 pub struct AttackProperties {
+    /// Amount of damage dealt per hit.
     pub damage: f32,
+    /// Range in tiles (Chebyshev distance).
     pub range: f32,
+    /// Number of ticks to wait between attacks.
     pub cooldown: u32,
+    /// Chance to hit (0.0 to 1.0). Currently unused in MVP.
     pub accuracy: f32,
 }
 
+/// Component defining an entity as a weapon.
+///
+/// Weapons are items that can be equipped by pops in the [`crate::layer1::items::Equipment`] slot.
 #[derive(Component, Debug)]
 pub struct Weapon {
+    /// The stats of the weapon.
     pub properties: AttackProperties,
 }
 
+/// Resolves an attack from one entity to another.
+///
+/// This function:
+/// 1.  Checks if the attacker has a [`Weapon`] equipped.
+/// 2.  Checks if the attacker is on cooldown (via [`CombatState`]).
+/// 3.  Applies damage to the target's [`crate::layer1::health::Health`].
+/// 4.  Triggers visual effects (particles, screen shake).
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::combat::{execute_attack, CombatState, Weapon, AttackProperties};
+/// use scale::layer1::health::Health;
+/// use scale::layer1::items::Equipment;
+/// use bevy_ecs::prelude::*;
+///
+/// let mut world = World::new();
+///
+/// // 1. Setup Attacker with a Weapon
+/// let sword = world.spawn(Weapon {
+///     properties: AttackProperties {
+///         damage: 10.0,
+///         range: 1.0,
+///         cooldown: 5,
+///         accuracy: 1.0,
+///     }
+/// }).id();
+///
+/// let attacker = world.spawn((
+///     CombatState::default(),
+///     Equipment { weapon: Some(sword), ..Default::default() }
+/// )).id();
+///
+/// // 2. Setup Target
+/// let target = world.spawn(Health { current: 100.0, max: 100.0 }).id();
+///
+/// // 3. Execute Attack
+/// execute_attack(&mut world, attacker, target);
+///
+/// // 4. Verify Damage
+/// let health = world.get::<Health>(target).unwrap();
+/// assert_eq!(health.current, 90.0);
+/// ```
 pub fn execute_attack(world: &mut World, attacker: Entity, target: Entity) {
     // 1. Get Attacker stats (Weapon, CombatState)
     // We need to query world for attacker components.
