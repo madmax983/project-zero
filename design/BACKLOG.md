@@ -13,7 +13,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `077` Emergent Festivals — `specs/077-emergent-festivals.md`
 - [ ] `116` Drone Networks — `specs/116-drone-networks.md`
 - [ ] `119` Airlock & Pressure — `specs/119-airlock-pressure.md`
-- [ ] `123` Technological Rituals — `specs/123-technological-rituals.md`
 
 ## MVP — Layer 2: System Simulation
 

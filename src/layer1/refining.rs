@@ -97,11 +97,20 @@ pub fn process_refining_system(world: &mut World) {
             &GridPosition,
             &RefiningProgress,
             Option<&crate::layer1::energy::PowerConsumer>,
+            Option<&crate::layer1::rituals::Quirk>,
         )>()
         .iter(world)
-        .map(|(e, b, p, prog, power)| {
+        .map(|(e, b, p, prog, power, quirk)| {
             let active = power.is_none_or(|c| c.active);
-            (e, b.building_type, *p, prog.current, prog.max, active)
+            let quirk_stops = quirk.is_some_and(crate::layer1::rituals::Quirk::stops_production);
+            (
+                e,
+                b.building_type,
+                *p,
+                prog.current,
+                prog.max,
+                active && !quirk_stops,
+            )
         })
         .collect();
 
@@ -493,5 +502,45 @@ mod tests {
         let progress = world.query::<&RefiningProgress>().single(&world);
         assert!((progress.current - 0.0).abs() < f32::EPSILON);
     }
+
+    #[test]
+    fn test_quirk_stops_refining() {
+        use crate::layer1::rituals::{Quirk, QuirkType};
+        let mut world = World::new();
+
+        world.insert_resource(ColonyResources {
+            wood: 10.0,
+            ..Default::default()
+        });
+
+        world.spawn((
+            Building {
+                building_type: BuildingType::LumberMill,
+            },
+            GridPosition { x: 5, y: 5 },
+            RefiningProgress {
+                current: 0.0,
+                max: 10.0,
+            },
+            Quirk {
+                quirk_type: QuirkType::Glitchy,
+            },
+        ));
+
+        // Worker
+        world.spawn((
+            Pop,
+            GridPosition { x: 5, y: 5 },
+            PopAction {
+                current: ActionType::Refine,
+                current_utility: 0.5,
+                ticks_committed: 1,
+            },
+        ));
+
+        process_refining_system(&mut world);
+
+        let progress = world.query::<&RefiningProgress>().single(&world);
+        assert_eq!(progress.current, 0.0, "Glitchy mill should not progress");
+    }
 }
-// DEBUG

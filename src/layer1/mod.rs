@@ -112,9 +112,9 @@ pub mod utility_ai;
 #[cfg(test)]
 /// Tests for utility AI work logic.
 pub mod utility_ai_work_tests;
-/// Shared types for utility AI evaluation (PopEvalData, Proxies).
+/// Shared types for utility AI evaluation (`PopEvalData`, Proxies).
 pub mod utility_eval_types;
-/// Shared types for utility AI state (ActionType, UtilityWeights).
+/// Shared types for utility AI state (`ActionType`, `UtilityWeights`).
 pub mod utility_types;
 
 #[cfg(test)]
@@ -366,3 +366,5 @@ pub use logistics::*;
 /// Social stratification system (Spec 113).
 pub mod social_stratification;
 pub use social_stratification::*;
+pub mod rituals;
+pub use rituals::*;
