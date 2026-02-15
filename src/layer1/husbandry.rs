@@ -1,4 +1,3 @@
-use crate::layer1::designation::DesignationType;
 use crate::layer1::execution::MovementTarget;
 use crate::layer1::fauna::{Fauna, FaunaState, FaunaType};
 use crate::layer1::hazards::handle_workplace_hazards;
@@ -141,6 +140,7 @@ pub fn husbandry_production_system(world: &mut World) {
 }
 
 /// Evaluates the utility of taming designated animals.
+#[must_use]
 pub fn evaluate_tame(
     pop_pos: &GridPosition,
     weights: &UtilityWeights,
@@ -183,10 +183,8 @@ pub fn tame_execution_system(world: &mut World) {
                 .find(|(_, p)| p.x == pos.x && p.y == pos.y)
                 .map(|(e, _)| e);
 
-            if let Some(animal_entity) = animal {
-                if world.get::<Tame>(animal_entity).is_none() {
-                    _success = attempt_tame(world, pop_entity, animal_entity);
-                }
+            if let Some(animal_entity) = animal.filter(|&e| world.get::<Tame>(e).is_none()) {
+                _success = attempt_tame(world, pop_entity, animal_entity);
             }
             world.despawn(designation_entity);
         } else {
