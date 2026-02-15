@@ -6,7 +6,11 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 ## MVP — Layer 1: Colony Simulation
 
+- [ ] `120` Crop Diversity — `specs/120-crop-diversity.md`
+- [ ] `121` Hydroponics — `specs/121-hydroponics.md`
 - [ ] `059` Soil Fertility — `specs/059-soil-fertility.md`
+- [ ] `066` Building Work AI — `specs/066-building-work-ai.md`
+- [ ] `067` Militia System — `specs/067-militia-system.md`
 - [ ] `077` Emergent Festivals — `specs/077-emergent-festivals.md`
 - [ ] `116` Drone Networks — `specs/116-drone-networks.md`
 - [ ] `118` Penal Labor — `specs/118-penal-labor.md`
@@ -23,4 +27,5 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 ## MVP — User Interface
 
+- [ ] `014` Rendering Architecture — `specs/014-rendering-architecture.md`
 - [ ] `037` Tech Tree UI — `specs/037-tech-tree-ui.md`
