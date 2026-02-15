@@ -45,6 +45,7 @@ pub fn evaluate_satisfy_rest(
 }
 
 /// Handles the arrival of a pop at housing to rest.
+#[allow(clippy::collapsible_if)]
 pub fn handle_arrival(
     pop_entity: Entity,
     target_entity: Entity,

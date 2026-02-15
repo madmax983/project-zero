@@ -682,7 +682,11 @@ fn calculate_next_positions(
     }
 }
 
-fn execute_demolish(world: &mut World, designation_entity: Entity) -> bool {
+/// Executes the demolition of a building at the designation's location.
+///
+/// If the building is an Ancient Structure, this triggers "Retrograde Engineering",
+/// awarding Knowledge instead of resources/debris.
+pub fn execute_demolish(world: &mut World, designation_entity: Entity) -> bool {
     // Find designation position
     world
         .get::<GridPosition>(designation_entity)
@@ -697,13 +701,43 @@ fn execute_demolish(world: &mut World, designation_entity: Entity) -> bool {
                 .map(|(e, _, _)| e);
 
             if let Some(entity) = building_entity {
+                // Check for AncientStructure before despawn
+                let is_ancient = world
+                    .get::<crate::layer1::heirloom::AncientStructure>(entity)
+                    .is_some();
+                let building_type = world.get::<Building>(entity).map(|b| b.building_type);
+
+                if is_ancient {
+                    // Retrograde Engineering: Award Knowledge
+                    let amount = calculate_knowledge_reward(building_type);
+
+                    if let Some(mut res) = world.get_resource_mut::<ColonyResources>() {
+                        res.add_knowledge(amount);
+                    }
+
+                    if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+                        let label = building_type.map_or("Ancient Structure", |b| b.label());
+                        log.add_colored(
+                            format!(
+                                "Retrograde Engineering: Deconstructed {label} for {amount} Knowledge."
+                            ),
+                            Color::Cyan,
+                        );
+                    }
+
+                    // Cyan 'data' sparks
+                    spawn_particle(world, designation_pos, '?', Color::Cyan, 15);
+                } else {
+                    // Normal Debris
+                    spawn_particle(world, designation_pos, 'X', Color::Red, 10);
+                }
+
                 world.despawn(entity);
+
                 // Trigger Screen Shake (Ludwig: "Juice")
                 if let Some(mut shake) = world.get_resource_mut::<ScreenShake>() {
                     shake.trigger(0.5);
                 }
-                // Ludwig: Spawn debris particles
-                spawn_particle(world, designation_pos, 'X', Color::Red, 10);
 
                 // Remove from OccupiedTiles
                 if let Some(mut occupied) = world.get_resource_mut::<OccupiedTiles>() {
@@ -1095,6 +1129,17 @@ fn cleanup_pop_work_state(world: &mut World, pop_entity: Entity) {
         action.current = ActionType::Idle;
         action.current_utility = 0.0;
         action.ticks_committed = 1;
+    }
+}
+
+const fn calculate_knowledge_reward(
+    building_type: Option<crate::layer1::building::BuildingType>,
+) -> f32 {
+    use crate::layer1::building::BuildingType;
+    match building_type {
+        Some(BuildingType::AncientReactor) => 500.0,
+        Some(BuildingType::AncientFabricator) => 300.0,
+        _ => 100.0,
     }
 }
 

@@ -122,6 +122,7 @@ pub fn spawn_initial_anomalies(world: &mut World, count: usize) {
 /// # Panics
 ///
 /// Panics if the anomaly entity exists but lacks the `Anomaly` component.
+#[allow(clippy::too_many_lines)]
 pub fn process_scan_system(world: &mut World) {
     // Collect striking factions
     let striking_factions: std::collections::HashSet<crate::layer1::factions::FactionId> = world
