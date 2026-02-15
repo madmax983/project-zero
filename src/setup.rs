@@ -31,9 +31,22 @@ pub fn init_task_pools() {
     bevy_tasks::ComputeTaskPool::get_or_init(bevy_tasks::TaskPool::default);
 }
 
+/// Configuration for world setup.
+#[derive(Debug, Default, Clone, Copy)]
+pub struct SetupConfig {
+    /// If true, skip GPU initialization (for headless environments).
+    pub headless: bool,
+}
+
 /// Create and initialize a new game world with all resources.
 #[must_use]
 pub fn setup_world() -> World {
+    setup_world_with_config(SetupConfig::default())
+}
+
+/// Create and initialize a new game world with custom configuration.
+#[must_use]
+pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -> World {
     init_task_pools();
     let mut world = World::new();
     world.insert_resource(GameState::default());
@@ -112,8 +125,9 @@ pub fn setup_world() -> World {
 
     // Initialize GPU compute context (non-fatal if no GPU available)
     // Skip on WASM since pollster::block_on doesn't work in browser context
+    // Skip if headless mode is requested
     #[cfg(all(not(target_arch = "wasm32"), not(test)))]
-    {
+    if !config.headless {
         match pollster::block_on(GpuContext::new()) {
             Ok(ctx) => {
                 world.insert_resource(ctx);
