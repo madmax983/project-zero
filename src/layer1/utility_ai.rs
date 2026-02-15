@@ -75,13 +75,11 @@ use crate::layer1::structure::{DeferMaintenance, Structure};
 use crate::layer1::tech::Library;
 use crate::layer1::unrest::MentalState;
 pub use crate::layer1::utility_eval_types::{
-    AnomalyProxy, CorpseProxy, FarmProxy, GraveProxy, HospitalProxy, HousingProxy, ItemProxy,
-    LibraryProxy, PlanOutcome, PopEvalData, RefiningProxy, RepairDesignationProxy, StockpileProxy,
-    StructureProxy, TameDesignationProxy, TavernProxy, UtilityAIBuffer, WorkDesignationProxy,
-    WorldContext, evaluate_idle,
+    CapacityProxy, ItemProxy, PlanOutcome, PopEvalData, PositionProxy, RefiningProxy,
+    UtilityAIBuffer, WorldContext, evaluate_idle,
 };
 pub use crate::layer1::utility_types::{
-    ActionType, Plan, PopAction, StartPlan, UtilityConfig, UtilityWeights, manhattan_distance,
+    ActionType, PopAction, StartPlan, UtilityConfig, UtilityWeights, manhattan_distance,
 };
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
@@ -387,11 +385,11 @@ pub fn evaluate_actions_system(world: &mut World) {
         if farm.workers.len() >= farm.capacity {
             continue;
         }
-        buffer.farms.push(FarmProxy {
+        buffer.farms.push(CapacityProxy {
             entity,
             pos: *pos,
             capacity: farm.capacity,
-            workers: farm.workers.len(),
+            usage: farm.workers.len(),
         });
     }
 
@@ -402,11 +400,11 @@ pub fn evaluate_actions_system(world: &mut World) {
         if housing.residents.len() >= housing.capacity {
             continue;
         }
-        buffer.housing.push(HousingProxy {
+        buffer.housing.push(CapacityProxy {
             entity,
             pos: *pos,
             capacity: housing.capacity,
-            occupants: housing.residents.len(),
+            usage: housing.residents.len(),
         });
     }
 
@@ -417,11 +415,11 @@ pub fn evaluate_actions_system(world: &mut World) {
         if tavern.visitors.len() >= tavern.capacity {
             continue;
         }
-        buffer.taverns.push(TavernProxy {
+        buffer.taverns.push(CapacityProxy {
             entity,
             pos: *pos,
             capacity: tavern.capacity,
-            patrons: tavern.visitors.len(),
+            usage: tavern.visitors.len(),
         });
     }
 
@@ -435,11 +433,11 @@ pub fn evaluate_actions_system(world: &mut World) {
         }
         // Library capacity is currently hardcoded/assumed in logic, but we push anyway.
         // We assume 5 capacity/0 occupied for now as per original code.
-        buffer.libraries.push(LibraryProxy {
+        buffer.libraries.push(CapacityProxy {
             entity,
             pos: *pos,
             capacity: 5,
-            researchers: 0,
+            usage: 0,
         });
     }
 
@@ -480,17 +478,17 @@ pub fn evaluate_actions_system(world: &mut World) {
             DesignationType::Repair => {
                 buffer
                     .repair_designations
-                    .push(RepairDesignationProxy { entity, pos: *pos });
+                    .push(PositionProxy { entity, pos: *pos });
             }
             DesignationType::Tame => {
                 buffer
                     .tame_designations
-                    .push(TameDesignationProxy { entity, pos: *pos });
+                    .push(PositionProxy { entity, pos: *pos });
             }
             _ => {
                 buffer
                     .work_designations
-                    .push(WorkDesignationProxy { entity, pos: *pos });
+                    .push(PositionProxy { entity, pos: *pos });
             }
         }
     }
@@ -510,14 +508,14 @@ pub fn evaluate_actions_system(world: &mut World) {
     buffer.stockpiles.clear();
     let mut stock_query = world.query::<(Entity, &GridPosition, &Stockpile)>();
     for (entity, pos, _) in stock_query.iter(world) {
-        buffer.stockpiles.push(StockpileProxy { entity, pos: *pos });
+        buffer.stockpiles.push(PositionProxy { entity, pos: *pos });
     }
 
     // Anomalies
     buffer.anomalies.clear();
     let mut anomaly_query = world.query::<(Entity, &GridPosition, &Anomaly)>();
     for (entity, pos, _) in anomaly_query.iter(world) {
-        buffer.anomalies.push(AnomalyProxy { entity, pos: *pos });
+        buffer.anomalies.push(PositionProxy { entity, pos: *pos });
     }
 
     // Hospitals
@@ -525,11 +523,11 @@ pub fn evaluate_actions_system(world: &mut World) {
     let mut hospital_query = world.query::<(Entity, &GridPosition, &Hospital)>();
     for (entity, pos, _) in hospital_query.iter(world) {
         // Hardcoded capacity logic from original file
-        buffer.hospitals.push(HospitalProxy {
+        buffer.hospitals.push(CapacityProxy {
             entity,
             pos: *pos,
             capacity: 10,
-            patients: 0,
+            usage: 0,
         });
     }
 
@@ -537,17 +535,18 @@ pub fn evaluate_actions_system(world: &mut World) {
     buffer.corpses.clear();
     let mut corpse_query = world.query::<(Entity, &GridPosition, &Corpse)>();
     for (entity, pos, _) in corpse_query.iter(world) {
-        buffer.corpses.push(CorpseProxy { entity, pos: *pos });
+        buffer.corpses.push(PositionProxy { entity, pos: *pos });
     }
 
     // Graves
     buffer.graves.clear();
-    let mut grave_query = world.query::<(Entity, &Grave)>();
-    for (entity, grave) in grave_query.iter(world) {
+    // Added GridPosition to query for PositionProxy
+    let mut grave_query = world.query::<(Entity, &GridPosition, &Grave)>();
+    for (entity, pos, grave) in grave_query.iter(world) {
         if !grave.occupied {
-            buffer.graves.push(GraveProxy {
+            buffer.graves.push(PositionProxy {
                 entity,
-                occupied: false,
+                pos: *pos,
             });
         }
     }
@@ -566,7 +565,7 @@ pub fn evaluate_actions_system(world: &mut World) {
 
         buffer
             .repair_structures
-            .push(StructureProxy { entity, pos: *pos });
+            .push(PositionProxy { entity, pos: *pos });
     }
 
     // 4. Evaluate each pop
@@ -639,7 +638,7 @@ pub fn update_weights_from_outcome(
 
 /// System to track completed plans and trigger learning.
 pub fn track_plan_outcomes_system(
-    mut completed: Query<(Entity, &PlanOutcome, &Needs, &mut UtilityWeights), Without<Plan>>,
+    mut completed: Query<(Entity, &PlanOutcome, &Needs, &mut UtilityWeights)>,
     config: Res<UtilityConfig>,
     time: Res<SimulationTime>,
     mut commands: Commands,

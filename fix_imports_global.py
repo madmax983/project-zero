@@ -4,7 +4,7 @@ import re
 
 MOVED_TYPES = [
     "ActionType", "PopAction", "UtilityWeights", "PlanOutcome", "UtilityConfig",
-    "ColonyMemory", "StartPlan", "Plan", "need_response_curve",
+    "ColonyMemory", "StartPlan", "need_response_curve",
     "manhattan_distance", "calculate_context_score", "calculate_success_modifier",
     "evaluate_idle"
 ]

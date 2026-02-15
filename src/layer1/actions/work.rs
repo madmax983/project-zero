@@ -1,5 +1,5 @@
 use crate::layer1::map::GridPosition;
-use crate::layer1::utility_eval_types::WorkDesignationProxy;
+use crate::layer1::utility_eval_types::PositionProxy;
 use crate::layer1::utility_types::{ActionType, UtilityWeights};
 use crate::layer1::utility_types::{calculate_context_score, calculate_success_modifier};
 use bevy_ecs::prelude::*;
@@ -9,7 +9,7 @@ use bevy_ecs::prelude::*;
 /// This checks all active [`crate::layer1::designation::Designation`]s (like "Mine this rock") and calculates
 /// a score based on distance and the Pop's work ethic.
 ///
-/// **Note:** This function receives `WorkDesignationProxy` which excludes `Repair` designations,
+/// **Note:** This function receives `PositionProxy` which excludes `Repair` designations,
 /// as those are handled separately by [`crate::layer1::actions::repair::evaluate_repair`].
 ///
 /// # Returns
@@ -18,7 +18,7 @@ use bevy_ecs::prelude::*;
 pub fn evaluate_work(
     pop_pos: &GridPosition,
     weights: &UtilityWeights,
-    designations: &[WorkDesignationProxy],
+    designations: &[PositionProxy],
 ) -> Option<(f32, Entity)> {
     let mut best: Option<(f32, Entity)> = None;
 

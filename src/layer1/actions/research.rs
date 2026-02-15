@@ -1,6 +1,6 @@
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::ColonyResources;
-use crate::layer1::utility_eval_types::LibraryProxy;
+use crate::layer1::utility_eval_types::CapacityProxy;
 use crate::layer1::utility_types::{ActionType, UtilityWeights};
 use crate::layer1::utility_types::{calculate_context_score, calculate_success_modifier};
 use bevy_ecs::prelude::*;
@@ -17,7 +17,7 @@ pub fn evaluate_research(
     pop_pos: &GridPosition,
     weights: &UtilityWeights,
     resources: &ColonyResources,
-    libraries: &[LibraryProxy],
+    libraries: &[CapacityProxy],
 ) -> Option<(f32, Entity)> {
     // If knowledge is full, no utility
     if resources.knowledge >= resources.max_knowledge {
@@ -33,8 +33,8 @@ pub fn evaluate_research(
         let context = calculate_context_score(
             *pop_pos,
             Some(library.pos),
-            5, // Assumed capacity
-            0, // Assumed occupied (not tracked yet)
+            library.capacity,
+            library.usage,
             weights,
         );
 

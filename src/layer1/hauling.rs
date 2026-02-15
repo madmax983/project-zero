@@ -220,7 +220,7 @@ mod tests {
     use crate::layer1::resources::{Carrying, ColonyResources, ResourceItem, ResourceType};
     use crate::layer1::stockpile::Stockpile;
     use crate::layer1::utility_ai::{ActionType, PopAction, UtilityWeights};
-    use crate::layer1::utility_eval_types::{ItemProxy, StockpileProxy};
+    use crate::layer1::utility_eval_types::{ItemProxy, PositionProxy};
     use crate::layer1::{GridPosition, Pop};
     use crate::shared::time::SimulationTime;
     use bevy_ecs::prelude::*;
@@ -275,10 +275,10 @@ mod tests {
             })
             .collect();
 
-        let stockpiles: Vec<StockpileProxy> = world
+        let stockpiles: Vec<PositionProxy> = world
             .query::<(Entity, &GridPosition, &Stockpile)>()
             .iter(&world)
-            .map(|(e, p, _)| StockpileProxy { entity: e, pos: *p })
+            .map(|(e, p, _)| PositionProxy { entity: e, pos: *p })
             .collect();
 
         let resources = world.resource::<ColonyResources>();
@@ -329,10 +329,10 @@ mod tests {
             })
             .collect();
 
-        let stockpiles: Vec<StockpileProxy> = world
+        let stockpiles: Vec<PositionProxy> = world
             .query::<(Entity, &GridPosition, &Stockpile)>()
             .iter(&world)
-            .map(|(e, p, _)| StockpileProxy { entity: e, pos: *p })
+            .map(|(e, p, _)| PositionProxy { entity: e, pos: *p })
             .collect();
 
         // Should return None because global storage is full

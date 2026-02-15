@@ -1,7 +1,7 @@
 use crate::layer1::housing::Housing;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
-use crate::layer1::utility_eval_types::HousingProxy;
+use crate::layer1::utility_eval_types::CapacityProxy;
 use crate::layer1::utility_types::{ActionType, UtilityWeights};
 use crate::layer1::utility_types::{calculate_context_score, calculate_success_modifier};
 use bevy_ecs::prelude::*;
@@ -18,7 +18,7 @@ pub fn evaluate_satisfy_rest(
     pop_pos: &GridPosition,
     needs: &Needs,
     weights: &UtilityWeights,
-    housing: &[HousingProxy],
+    housing: &[CapacityProxy],
 ) -> Option<(f32, Entity)> {
     let mut best: Option<(f32, Entity)> = None;
     let base_utility = 0.5;
@@ -31,7 +31,7 @@ pub fn evaluate_satisfy_rest(
             *pop_pos,
             Some(house.pos),
             house.capacity,
-            house.occupants,
+            house.usage,
             weights,
         );
 

@@ -1,6 +1,6 @@
 use crate::layer1::health::Health;
 use crate::layer1::map::GridPosition;
-use crate::layer1::utility_eval_types::HospitalProxy;
+use crate::layer1::utility_eval_types::CapacityProxy;
 use crate::layer1::utility_types::{
     ActionType, UtilityWeights, calculate_context_score, calculate_success_modifier,
 };
@@ -16,7 +16,7 @@ pub fn evaluate_seek_medical_care(
     _needs: &crate::layer1::needs::Needs,
     health: &Health,
     weights: &UtilityWeights,
-    hospitals: &[HospitalProxy],
+    hospitals: &[CapacityProxy],
 ) -> Option<(f32, Entity)> {
     if health.current >= health.max * 0.95 {
         return None;
@@ -37,7 +37,7 @@ pub fn evaluate_seek_medical_care(
             *pop_pos,
             Some(hospital.pos),
             hospital.capacity, // Use proxy capacity (likely 10)
-            hospital.patients, // Occupied (likely 0)
+            hospital.usage, // Occupied (likely 0)
             weights,
         );
 
