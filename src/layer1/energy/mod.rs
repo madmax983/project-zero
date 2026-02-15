@@ -6,7 +6,12 @@
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::ColonyResources;
 use bevy_ecs::prelude::*;
+use rand::Rng;
+use rand::seq::SliceRandom;
 use std::collections::{HashMap, HashSet, VecDeque};
+
+#[cfg(test)]
+mod instability_tests;
 
 /// Emits power to the grid.
 #[derive(Component, Debug, Clone)]
@@ -46,12 +51,37 @@ pub struct FuelConsumer {
 #[derive(Component, Debug, Clone)]
 pub struct Conduit;
 
+/// Stores excess power to buffer brownouts.
+#[derive(Component, Debug, Clone)]
+pub struct Battery {
+    /// Total capacity.
+    pub capacity: f32,
+    /// Current charge.
+    pub charge: f32,
+    /// Maximum charge/discharge per tick.
+    pub max_throughput: f32,
+}
+
+impl Battery {
+    /// Charges the battery.
+    pub fn charge(&mut self, amount: f32) {
+        self.charge = (self.charge + amount).min(self.capacity);
+    }
+
+    /// Discharges the battery.
+    pub fn discharge(&mut self, amount: f32) -> f32 {
+        let actual = amount.min(self.charge).min(self.max_throughput);
+        self.charge -= actual;
+        actual
+    }
+}
+
 fn build_grid_map(world: &mut World) -> HashMap<(i32, i32), Entity> {
     let mut grid_map = HashMap::new();
     let mut query = world.query_filtered::<(
         Entity,
         &GridPosition,
-    ), Or<(With<PowerSource>, With<PowerConsumer>, With<Conduit>)>>();
+    ), Or<(With<PowerSource>, With<PowerConsumer>, With<Conduit>, With<Battery>)>>();
 
     for (entity, pos) in query.iter(world) {
         grid_map.insert((pos.x, pos.y), entity);
@@ -143,13 +173,101 @@ pub fn power_grid_system(world: &mut World) {
         let (total_production, total_demand, grid_entities) =
             bfs_grid(start_pos, &grid_map, world, &mut visited);
 
-        // 3. Update consumers
-        // MVP Rule: If Production >= Demand, all Active. Else, all Inactive.
-        let active = total_production >= total_demand;
+        // 3. Calculate Net & Handle Batteries
+        let mut net = total_production - total_demand;
 
+        // Collect batteries in this grid
+        let batteries: Vec<Entity> = grid_entities
+            .iter()
+            .filter(|e| world.get::<Battery>(**e).is_some())
+            .copied()
+            .collect();
+
+        if net > 0.0 {
+            // Surplus: Charge batteries
+            #[allow(clippy::cast_precision_loss)]
+            let charge_per_battery = net / (batteries.len().max(1) as f32);
+            for bat_entity in &batteries {
+                if let Some(mut bat) = world.get_mut::<Battery>(*bat_entity) {
+                    bat.charge(charge_per_battery);
+                }
+            }
+        } else if net < 0.0 {
+            // Deficit: Discharge batteries
+            let mut needed = -net;
+            let mut provided = 0.0;
+            for bat_entity in &batteries {
+                if let Some(mut bat) = world.get_mut::<Battery>(*bat_entity) {
+                    let amount = bat.discharge(needed);
+                    provided += amount;
+                    needed -= amount;
+                    if needed <= 0.0 {
+                        break;
+                    }
+                }
+            }
+            // Update net after battery discharge (effectively increasing production availability)
+            // net = (production + provided) - demand
+            // original net = production - demand
+            // new net = original net + provided
+            net += provided;
+        }
+
+        // 4. Handle Activation & Overload
+        // Recalculate effective supply ratio
+        // If net >= 0, supply_ratio = 1.0 (fully powered)
+        // If net < 0, supply_ratio = (production + provided) / demand
+
+        // total_available = total_production + battery_provided
+        // battery_provided is calculated above.
+        // If net < 0 originally: provided is what batteries gave.
+        // New net = old_net + provided.
+        // total_available = total_production + provided = total_demand + New net.
+
+        let total_available = total_demand + net;
+
+        let supply_ratio = if total_demand > 0.0 {
+            (total_available / total_demand).min(1.0)
+        } else {
+            1.0
+        };
+
+        let overload_ratio = if total_production > 0.0 {
+            total_demand / total_production
+        } else {
+            1.0
+        };
+
+        let mut rng = rand::thread_rng();
+
+        // Overload Check (>150% demand vs base production)
+        // Batteries don't prevent overload damage caused by high demand on generators
+        if overload_ratio > 1.5 {
+            // Risk of damage to random entity in grid
+            // Chance increases with overload: (ratio - 1.5) * 0.05
+            // e.g. 2.0 ratio -> 0.025 (2.5%) per tick
+            if rng.gen_bool((0.05 * f64::from(overload_ratio - 1.5)).min(1.0)) {
+                // Pick random entity
+                if let Some(victim) = grid_entities.choose(&mut rng) {
+                    // Clippy suggests collapsing, but let_chains is unstable
+                    #[allow(clippy::collapsible_if)]
+                    if let Some(mut health) = world.get_mut::<crate::layer1::health::Health>(*victim) {
+                        health.take_damage(10.0);
+                    }
+                }
+            }
+        }
+
+        // Activation
         for entity in grid_entities {
             if let Some(mut consumer) = world.get_mut::<PowerConsumer>(entity) {
-                consumer.active = active;
+                if net >= -f32::EPSILON {
+                    consumer.active = true;
+                } else {
+                    // Brownout: Probabilistic activation
+                    // e.g. 80% supply -> 80% chance to run
+                    consumer.active = rng.gen_bool(f64::from(supply_ratio));
+                }
             }
         }
     }
