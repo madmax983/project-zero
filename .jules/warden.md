@@ -16,3 +16,7 @@
 - Hardened `TerrainGrid::get` and `RoofGrid` methods to use `checked_mul` and `checked_add` for index calculation, ensuring indices are within valid buffer bounds.
 - Refactored `check_stability` to use `i32` bounds derived from `usize` dimensions with safe clamping, preventing loop overflows on large maps.
 - Verified with regression tests using `usize::MAX` dimensions and `i32::MAX` coordinates.
+
+## 2024-05-25 - Render Loop DoS Protection
+**Threat:** Integer overflow in `build_terrain_spans` and `build_map_layer_spans` when calculating world coordinates from viewport position + screen offset. This causes a panic (DoS) if the viewport moves to `i32::MAX`.
+**Defense:** Switched to `saturating_add` for coordinate calculation. This clamps the value to `i32::MAX`, avoiding panic. Downstream logic handles out-of-bounds coordinates gracefully.
