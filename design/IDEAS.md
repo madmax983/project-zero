@@ -3654,3 +3654,129 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Quick capital (Loans) vs. Sovereignty.
 
 ---
+
+## Xeno-Zoo
+
+**Layer:** 1
+
+**Fantasy:** Jurassic Park in space. The thrill of keeping monsters in a glass cage.
+
+**Mechanic:** Build containment cells for captured hostile fauna. Generates "Tourism" (credits) and "Science" (Bio-research). High upkeep/risk.
+
+**Emergence:** Power fails, the shields drop, and the T-Rex eats the tourists. The "Zoo" becomes a hunting ground.
+
+**Tension:** Profit vs. Safety.
+
+---
+
+## Bio-Ship Breeding
+
+**Layer:** 2
+
+**Fantasy:** Your fleet is alive and hungry. You don't build ships; you hatch them.
+
+**Mechanic:** "Hatcheries" instead of Shipyards. Ships need Food instead of Fuel. They heal over time but can panic or get "Sick".
+
+**Emergence:** You run out of food during a siege, and your battleship eats the escort frigate to survive.
+
+**Tension:** Sustainable (Heals self) vs. Controllable (Machines don't panic).
+
+---
+
+## Gravitational Anomalies
+
+**Layer:** 1
+
+**Fantasy:** The laws of physics are broken in this valley.
+
+**Mechanic:** Localized zones of high/low gravity. High G = Slow movement, crushing damage. Low G = Fast movement, increased projectile range.
+
+**Emergence:** Players build "Jump Towers" in Low G zones to launch gliders across the map. A heavy hauler gets stuck in a High G rut.
+
+**Tension:** Build in the safe Neutral zone, or the risky but useful Anomaly?
+
+---
+
+## The Seed Protocol
+
+**Layer:** 2 -> 3
+
+**Fantasy:** Ensuring the survival of the species, even if it's not *you*.
+
+**Mechanic:** Construct and launch automated "Ark Pods". They leave the system to spawn AI-controlled allied colonies.
+
+**Emergence:** You are wiped out, but your "child" colony returns 100 years later as a Fallen Empire to avenge you.
+
+**Tension:** Spend massive resources on a ship you can't control?
+
+---
+
+## Psychic Stains
+
+**Layer:** 1
+
+**Fantasy:** A place where something terrible happened *feels* wrong.
+
+**Mechanic:** Tiles where Pops die violently retain a "Trauma" value. High Trauma causes stress/fear in passersby. Can be "Cleansed" by Chaplains or time.
+
+**Emergence:** The site of a brave last stand becomes a "Cursed" zone that no one will enter, forcing you to seal off that wing of the base.
+
+**Tension:** Reclaim the bloody hallway (space efficiency) or seal it off (morale)?
+
+---
+
+## Atmospheric Processors
+
+**Layer:** 1 -> 2
+
+**Fantasy:** Changing the sky from red to blue. The ultimate mastery of nature.
+
+**Mechanic:** Massive buildings that consume huge power to shift planetary stats (Temperature, Atmosphere Toxic -> Breathable) over years.
+
+**Emergence:** You terraform the planet to be breathable, inadvertently killing all the native "Oxygen-Toxic" livestock you depended on for food.
+
+**Tension:** Adapt to the world vs. Force the world to adapt.
+
+---
+
+## The Blob
+
+**Layer:** 1
+
+**Fantasy:** The slow, creeping doom. The "Grey Goo" scenario on a micro scale.
+
+**Mechanic:** An indestructible, slow-growing entity (Slime/Crystal) that consumes tiles. Can only be "contained" (walls) or "fed" (sacrifices) to direct its growth.
+
+**Emergence:** You keep the Blob as a garbage disposal system. It grows too big and eats the garbage disposal room.
+
+**Tension:** Destroying it is impossible; management is the only option.
+
+---
+
+## Social Debt
+
+**Layer:** 1
+
+**Fantasy:** "You owe me one." The informal economy of favors.
+
+**Mechanic:** Pops track "Favors". If Pop A saves Pop B (Medical/Combat), Pop B "Owes" Pop A. They will perform tasks for them or support their Faction regardless of their own ethics.
+
+**Emergence:** The unpopular Governor stays in power only because he personally saved the Union Leader from a fire, calling in the debt.
+
+**Tension:** None, pure social simulation depth.
+
+---
+
+## Ephemeral Moons
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The night sky is not static.
+
+**Mechanic:** The planet captures temporary asteroids/moons. They alter tides/light for a few months before being ejected or crashing.
+
+**Emergence:** A "Bright Moon" gives you solar power at night for a week, allowing a production sprint. You delay the launch window to wait for the moon to pass.
+
+**Tension:** Rely on the temporary boost or ignore it?
+
+---
