@@ -1690,3 +1690,197 @@ How the origin of materials is described.
 - ancient-clay (from ruins)
 - recycled-dead (grim)
 - memory-wood (old growth)
+
+## Antagonistic Flora Fragments
+
+### [FLORA_NAME]
+Flavor names for hostile plants.
+
+- Creep
+- Green-Choke
+- Rot-Vine
+- Void-Moss
+- Strangler
+- Rust-Root
+- Shadow-Bloom
+
+### [FLORA_ACTION]
+What the flora does.
+
+- strangles
+- covers
+- eats
+- breaches
+- whispers
+- grows
+- tightens
+
+### [FLORA_DESCRIPTOR]
+Adjectives for the infestation.
+
+- thick
+- pulsing
+- unnatural
+- deep-green
+- wrong
+- hungry
+- relentless
+
+---
+
+## Logistics Fragments
+
+### [CONVEYOR_NAME]
+Flavor names for logistics systems.
+
+- Stream
+- Flow
+- Line
+- Iron-River
+- Vein
+- Feed
+
+### [JAM_DESCRIPTOR]
+Describing a logistics failure.
+
+- clogged
+- frozen
+- backed-up
+- silent
+- dry
+- overflowing
+- broken
+
+---
+
+## Observatory Fragments
+
+### [COSMIC_SIGHT]
+What is seen in the telescope.
+
+- a dying star
+- a void-shadow
+- an impossible color
+- the face of God
+- a pattern in the noise
+- a ship that shouldn't be
+- the edge of the map
+
+### [OBSERVATORY_NAME]
+Names for observatory buildings.
+
+- The Eye
+- The Watch-Glass
+- Star-Catcher
+- Void-Pier
+- The Lens
+- Far-Sight
+- The Zenith
+
+### [VOID_EMOTION]
+Feelings inspired by the cosmos.
+
+- dread
+- awe
+- insignificance
+- clarity
+- vertigo
+- longing
+- cold
+
+---
+
+## Mentorship Fragments
+
+### [MENTOR_TITLE]
+Titles for mentors.
+
+- Guide
+- Grey-Hand
+- Teacher
+- The Voice
+- Path-Shower
+- Old-Soul
+
+### [LEARNER_TITLE]
+Titles for apprentices.
+
+- Soft-Hand
+- New-Blood
+- Listener
+- Follower
+- The Promise
+- Empty-Cup
+
+### [LESSON_TOPIC]
+What is being taught.
+
+- the way of iron
+- patience
+- the rhythm of the machine
+- how to listen to the void
+- the weight of command
+- survival
+- memory
+
+---
+
+## Spontaneous Architecture Fragments
+
+### [FOLLY_NAME]
+Names for spontaneous structures.
+
+- Shed
+- Rest
+- Shrine
+- Nook
+- Hide
+- Folly
+- Heart-Place
+
+### [FOLLY_PURPOSE]
+Why it was built.
+
+- for prayer
+- for hiding
+- for thinking
+- for remembering
+- for silence
+- for secret meetings
+- for nothing
+
+### [FOLLY_DESCRIPTOR]
+Adjectives for spontaneous buildings.
+
+- ramshackle
+- strange
+- beautiful
+- hidden
+- quiet
+- personal
+- crooked
+
+---
+
+## Lighting Fragments
+
+### [LIGHT_SOURCE_NAME]
+Flavor names for lights.
+
+- Sun-Spark
+- Glow-Bead
+- Void-Candle
+- Star-Lamp
+- Beacon
+- Warmth-Point
+
+### [SHADOW_DESCRIPTOR]
+Adjectives for darkness/shadows.
+
+- heavy
+- pressing
+- ink-black
+- hungry
+- cold
+- watching
+- deep
