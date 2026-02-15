@@ -6,6 +6,7 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
 use crate::layer1::penal::PenalLabor;
 use crate::layer1::resources::{ColonyResources, ResourceType};
+use crate::layer1::stress::Breakdown;
 use crate::layer1::taboo::TabooState;
 use crate::layer1::unrest::MentalState;
 use crate::layer1::utility_types::{ActionType, PopAction, UtilityWeights};
@@ -58,6 +59,8 @@ pub struct PopEvalData {
     pub faction_member: Option<FactionMember>,
     /// Penal labor status, if any.
     pub penal_labor: Option<PenalLabor>,
+    /// Breakdown status, if any.
+    pub breakdown: Option<Breakdown>,
 }
 
 /// Context data for utility evaluation (resources, time, etc.)

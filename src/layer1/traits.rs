@@ -30,6 +30,8 @@ pub enum Trait {
     NativeBorn,
     /// Vulnerable to atmospheric hazards (-20% Biocompatibility).
     WeakImmunity,
+    /// Loves fire (starts fires during breakdowns).
+    Pyromaniac,
 }
 
 impl Trait {
@@ -48,6 +50,7 @@ impl Trait {
             Self::Anxious => "Anxious",
             Self::NativeBorn => "Native Born",
             Self::WeakImmunity => "Weak Immunity",
+            Self::Pyromaniac => "Pyromaniac",
         }
     }
 }
@@ -80,6 +83,7 @@ impl Traits {
             Trait::Anxious,
             Trait::NativeBorn,
             Trait::WeakImmunity,
+            Trait::Pyromaniac,
         ];
 
         while set.len() < count {

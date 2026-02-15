@@ -71,6 +71,7 @@ use crate::layer1::resources::{ColonyResources, RefiningProgress, ResourceItem};
 use crate::layer1::science::Anomaly;
 use crate::layer1::social::Tavern;
 use crate::layer1::stockpile::Stockpile;
+use crate::layer1::stress::Breakdown;
 use crate::layer1::structure::{DeferMaintenance, Structure};
 use crate::layer1::tech::Library;
 use crate::layer1::unrest::MentalState;
@@ -335,13 +336,14 @@ pub fn evaluate_actions_system(world: &mut World) {
                 Option<&Inmate>,
                 Option<&crate::layer1::factions::FactionMember>,
                 Option<&PenalLabor>,
+                Option<&Breakdown>,
             )>()
             .iter(world)
-            .filter(|(_, _, _, _, action, _, _, _, inmate, _, penal_labor)| {
+            .filter(|(_, _, _, _, action, _, _, _, inmate, _, penal_labor, _)| {
                 action.ticks_committed >= config.evaluation_interval
                     && (inmate.is_none() || penal_labor.is_some())
             })
-            .map(|(e, p, n, w, a, eq, m, d, _, fm, pl)| PopEvalData {
+            .map(|(e, p, n, w, a, eq, m, d, _, fm, pl, b)| PopEvalData {
                 entity: e,
                 pos: *p,
                 needs: *n,
@@ -352,6 +354,7 @@ pub fn evaluate_actions_system(world: &mut World) {
                 drafted: d.copied(),
                 faction_member: fm.cloned(),
                 penal_labor: pl.copied(),
+                breakdown: b.copied(),
             }),
     );
 
@@ -667,7 +670,10 @@ pub fn track_plan_outcomes_system(
             | ActionType::Warden
             | ActionType::Sleepwalking
             | ActionType::Tame
-            | ActionType::Slaughter => true,
+            | ActionType::Slaughter
+            | ActionType::FireStarting
+            | ActionType::HideInRoom
+            | ActionType::SadWander => true,
         };
 
         #[allow(clippy::cast_possible_truncation)]

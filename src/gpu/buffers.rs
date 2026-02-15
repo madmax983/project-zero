@@ -58,15 +58,13 @@ pub struct GpuPopInput {
     /// Learned social weight.
     pub social_weight: f32,
     /// Per-action success counts.
-    pub success_count: [u32; 22],
+    pub success_count: [u32; 25],
     /// Per-action attempt counts.
-    pub attempt_count: [u32; 22],
+    pub attempt_count: [u32; 25],
     /// Utility score of the current action.
     pub current_utility: f32,
     /// 1 if the pop is drafted for combat, 0 otherwise.
     pub drafted: u32,
-    /// Padding to 16-byte alignment.
-    pub _padding: [u32; 2],
 }
 
 /// GPU-aligned building/target input data. One per building.
@@ -174,7 +172,6 @@ pub fn extract_pop_inputs(
             attempt_count: weights.action_attempt_count,
             current_utility: action.current_utility,
             drafted: u32::from(drafted.is_some()),
-            _padding: [0; 2],
         });
     }
 }
@@ -490,9 +487,9 @@ mod tests {
 
     #[test]
     fn test_gpu_pop_input_size() {
-        // 2*i32 + 6*f32 + 22*u32 + 22*u32 + 1*f32 + 1*u32 + 2*u32
-        // = 8 + 24 + 88 + 88 + 4 + 4 + 8 = 224 bytes
-        assert_eq!(std::mem::size_of::<GpuPopInput>(), 224);
+        // 2*i32 + 6*f32 + 25*u32 + 25*u32 + 1*f32 + 1*u32
+        // = 8 + 24 + 100 + 100 + 4 + 4 = 240 bytes
+        assert_eq!(std::mem::size_of::<GpuPopInput>(), 240);
     }
 
     #[test]
@@ -533,11 +530,11 @@ mod tests {
                     availability_weight: 0.8,
                     social_weight: 1.0,
                     action_success_count: [
-                        1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                    ], // 22 elements
+                        1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    ], // 25 elements
                     action_attempt_count: [
-                        5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                    ], // 22 elements
+                        5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    ], // 25 elements
                 },
                 PopAction {
                     current: ActionType::SatisfyHunger,
@@ -735,7 +732,7 @@ mod tests {
         // Assert CPU side constant
         assert_eq!(
             ActionType::COUNT,
-            22,
+            25,
             "ActionType::COUNT changed! Update GPU buffers and shader."
         );
 
@@ -746,14 +743,14 @@ mod tests {
             std::fs::read_to_string(shader_path).expect("Failed to read shader file");
 
         // Check for success_count array size
-        let success_pattern = "success_count: array<u32, 22>";
+        let success_pattern = "success_count: array<u32, 25>";
         assert!(
             shader_content.contains(success_pattern),
             "Shader success_count array size mismatch or pattern changed."
         );
 
         // Check for attempt_count array size
-        let attempt_pattern = "attempt_count: array<u32, 22>";
+        let attempt_pattern = "attempt_count: array<u32, 25>";
         assert!(
             shader_content.contains(attempt_pattern),
             "Shader attempt_count array size mismatch or pattern changed."
