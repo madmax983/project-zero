@@ -11,7 +11,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `116` Drone Networks — `specs/116-drone-networks.md`
 - [ ] `118` Penal Labor — `specs/118-penal-labor.md`
 - [ ] `119` Airlock & Pressure — `specs/119-airlock-pressure.md`
-- [ ] `120` Crop Diversity — `specs/120-crop-diversity.md`
 
 ## MVP — Layer 2: System Simulation
 
