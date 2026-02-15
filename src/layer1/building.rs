@@ -233,6 +233,8 @@ pub enum BuildingType {
     ConveyorBelt,
     /// Logistics: Collects items into global storage.
     Hopper,
+    /// Hydroponics Bay: Grows food using water and power.
+    HydroponicsBay,
 }
 
 impl BuildingType {
@@ -271,7 +273,7 @@ impl BuildingType {
             Self::Landfill => -10.0,
             Self::Grave => -2.0, // Graves are slightly spooky
             Self::FlowerBed | Self::TradeDepot => 5.0, // Trade brings goods and culture
-            Self::Well => 1.0,
+            Self::Well | Self::HydroponicsBay => 1.0,
             Self::Wall | Self::Gate | Self::Tower => 0.0,
             _ => 0.0,
         }
@@ -290,6 +292,7 @@ impl BuildingType {
             Self::Tavern | Self::Statue => Some(Tech::SocialStructures),
             Self::Tower => Some(Tech::Masonry),
             Self::Observatory => Some(Tech::Astronomy),
+            Self::HydroponicsBay => Some(Tech::Hydroponics),
             _ => None,
         }
     }
@@ -341,6 +344,7 @@ impl BuildingType {
             Self::Observatory => "Observatory",
             Self::ConveyorBelt => "Conveyor Belt",
             Self::Hopper => "Hopper",
+            Self::HydroponicsBay => "Hydroponics Bay",
         }
     }
 
@@ -350,6 +354,7 @@ impl BuildingType {
         match self {
             Self::Housing => 'H',
             Self::Farm | Self::AncientFabricator => 'F',
+            Self::HydroponicsBay => 'Y',
             Self::Well => 'U',
             Self::Stockpile => '=',
             Self::Smokehouse => '♨',
@@ -389,6 +394,11 @@ impl BuildingType {
             },
             Self::Hopper => ColonyResources {
                 metal: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::HydroponicsBay => ColonyResources {
+                metal: 30.0,
+                stone: 20.0, // 10 Stone + 10 Glass fallback
                 ..ColonyResources::zeroed()
             },
             Self::Wall => match material {
@@ -1029,6 +1039,16 @@ fn spawn_building(
                 },
             ));
         }
+        BuildingType::HydroponicsBay => {
+            entity.insert((
+                Farm::default(),
+                PowerConsumer {
+                    demand: 5.0,
+                    active: false,
+                },
+                ShiftSchedule::default(),
+            ));
+        }
     }
 }
 
@@ -1212,7 +1232,8 @@ mod tests {
         );
         assert_eq!(BuildingType::Observatory.next(), BuildingType::ConveyorBelt);
         assert_eq!(BuildingType::ConveyorBelt.next(), BuildingType::Hopper);
-        assert_eq!(BuildingType::Hopper.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::Hopper.next(), BuildingType::HydroponicsBay);
+        assert_eq!(BuildingType::HydroponicsBay.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -1363,6 +1384,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Hopper);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::HydroponicsBay);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

@@ -103,3 +103,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `084` Pop Traits — `specs/084-pop-traits.md` — completed 2026-03-05
 - [x] `087` Food Preservation — `specs/087-food-preservation.md` — completed 2026-03-05
 - [x] `098` Medical Triage — `specs/098-medical-triage.md` — completed 2026-03-05
+- [x] `121` Hydroponics — `specs/121-hydroponics.md` — completed 2026-10-25

@@ -17,6 +17,8 @@ pub enum Tech {
     SocialStructures,
     /// Allows construction of the Observatory.
     Astronomy,
+    /// Allows construction of Hydroponics Bays.
+    Hydroponics,
 }
 
 impl Tech {
@@ -28,6 +30,7 @@ impl Tech {
             Self::MetalWorking => 20.0,
             Self::SocialStructures => 15.0,
             Self::Astronomy => 50.0,
+            Self::Hydroponics => 30.0,
         }
     }
 
@@ -39,6 +42,7 @@ impl Tech {
             Self::MetalWorking => "Metal Working",
             Self::SocialStructures => "Social Structures",
             Self::Astronomy => "Astronomy",
+            Self::Hydroponics => "Hydroponics",
         }
     }
 }

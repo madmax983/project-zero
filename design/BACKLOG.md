@@ -7,7 +7,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 ## MVP — Layer 1: Colony Simulation
 
 - [ ] `120` Crop Diversity — `specs/120-crop-diversity.md`
-- [ ] `121` Hydroponics — `specs/121-hydroponics.md`
 - [ ] `059` Soil Fertility — `specs/059-soil-fertility.md`
 - [ ] `066` Building Work AI — `specs/066-building-work-ai.md`
 - [ ] `067` Militia System — `specs/067-militia-system.md`
