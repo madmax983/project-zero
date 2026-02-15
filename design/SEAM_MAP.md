@@ -21,3 +21,11 @@
     - Updated `src/layer1/room_quality.rs` to fetch `SocialClass`.
     - Modified quality thresholds based on class (Elites demand higher quality).
 - **Tests:** `tests/integration/social_room_quality.rs` (1 test verified)
+
+### INT-023: Vacuum Clears Pollution
+- **Date:** 2026-12-06
+- **Systems connected:** `PressureGrid` -> `AtmosphereGrid`
+- **Glue added:**
+    - Added `vacuum_clears_pollution_system` to `src/layer1/integration.rs`.
+    - Registered in `src/simulation.rs` after `update_pressure_system`.
+- **Tests:** `tests/integration/atmosphere_vacuum.rs` (Integration test verified)

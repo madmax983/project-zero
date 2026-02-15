@@ -96,6 +96,29 @@ pub fn chronicle_rumor_bridge_system(
     }
 }
 
+/// Bridges Atmosphere (Environment) and Pressure (Environment).
+///
+/// If a tile is a vacuum (low pressure), any pollution should be rapidly vented/cleared.
+pub fn vacuum_clears_pollution_system(
+    mut atmosphere: ResMut<crate::layer1::atmosphere::AtmosphereGrid>,
+    pressure: Res<crate::layer1::pressure::PressureGrid>,
+) {
+    // If dimensions match, proceed
+    if atmosphere.width != pressure.width || atmosphere.height != pressure.height {
+        return;
+    }
+
+    // Parallel iteration would be better if these were huge, but simple loop is fine for MVP
+    const VACUUM_THRESHOLD: f32 = 0.1;
+
+    for i in 0..atmosphere.values.len() {
+        // If pressure is near vacuum, clear pollution
+        if pressure.values[i] < VACUUM_THRESHOLD {
+            atmosphere.values[i] = 0.0;
+        }
+    }
+}
+
 /// Applies morale penalties based on faction satisfaction.
 ///
 /// Bridges the Faction system (Social) and Pop Needs system (Psychology).

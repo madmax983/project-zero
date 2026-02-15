@@ -60,3 +60,6 @@ mod social_room_quality;
 mod strikes_mining_science;
 #[path = "integration/strikes_work.rs"]
 mod strikes_work;
+
+#[path = "integration/atmosphere_vacuum.rs"]
+mod atmosphere_vacuum;
