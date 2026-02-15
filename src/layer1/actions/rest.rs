@@ -54,10 +54,12 @@ pub fn handle_arrival(
     if let Ok(mut house) = housing.get_mut(target_entity) {
         if house.residents.len() < house.capacity {
             house.residents.push(pop_entity);
-            commands.entity(pop_entity).insert(crate::layer1::actions::AssignedTo {
-                entity: target_entity,
-                assignment_type: crate::layer1::actions::AssignmentType::HousingResident,
-            });
+            commands
+                .entity(pop_entity)
+                .insert(crate::layer1::actions::AssignedTo {
+                    entity: target_entity,
+                    assignment_type: crate::layer1::actions::AssignmentType::HousingResident,
+                });
         }
     }
 }

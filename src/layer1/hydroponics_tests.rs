@@ -1,14 +1,14 @@
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
     use crate::layer1::building::{Building, BuildingType};
+    use crate::layer1::energy::PowerConsumer;
     use crate::layer1::farm::{Farm, produce_food_system};
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
     use crate::layer1::resources::ColonyResources;
     use crate::layer1::seasons::{Season, SeasonState};
     use crate::layer1::utility_ai::{ActionType, PopAction};
-    use crate::layer1::energy::PowerConsumer;
+    use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
 
     #[test]
@@ -26,26 +26,36 @@ mod tests {
         // But the system will likely check `PowerConsumer.active`.
 
         world.insert_resource(res);
-        world.insert_resource(SeasonState { current_season: Season::Spring }); // Default season
+        world.insert_resource(SeasonState {
+            current_season: Season::Spring,
+        }); // Default season
 
         // Spawn Hydroponics Bay
         world.spawn((
             Farm::default(),
-            Building { building_type: BuildingType::HydroponicsBay },
+            Building {
+                building_type: BuildingType::HydroponicsBay,
+            },
             GridPosition { x: 5, y: 5 },
             // Manually add PowerConsumer for now (spawn_building does it in GREEN phase)
             // But if we use spawn_building helper, it might not add it yet.
             // Let's rely on manual component addition to test the SYSTEM logic.
             // Or better: The test in the spec uses `Building { ... }` and assumes components are there or system handles it.
             // If the system queries for PowerConsumer, we MUST add it here.
-            PowerConsumer { demand: 5.0, active: true },
+            PowerConsumer {
+                demand: 5.0,
+                active: true,
+            },
         ));
 
         // Worker
         world.spawn((
             Pop,
             GridPosition { x: 5, y: 5 },
-            PopAction { current: ActionType::Farm, ..Default::default() },
+            PopAction {
+                current: ActionType::Farm,
+                ..Default::default()
+            },
         ));
 
         world.run_system_once(produce_food_system).unwrap();
@@ -65,21 +75,31 @@ mod tests {
         res.water = 100.0;
         res.food = 0.0;
         world.insert_resource(res);
-        world.insert_resource(SeasonState { current_season: Season::Winter });
+        world.insert_resource(SeasonState {
+            current_season: Season::Winter,
+        });
 
         // Hydroponics
         world.spawn((
             Farm::default(),
-            Building { building_type: BuildingType::HydroponicsBay },
+            Building {
+                building_type: BuildingType::HydroponicsBay,
+            },
             GridPosition { x: 5, y: 5 },
-            PowerConsumer { demand: 5.0, active: true },
+            PowerConsumer {
+                demand: 5.0,
+                active: true,
+            },
         ));
 
         // Worker
         world.spawn((
             Pop,
             GridPosition { x: 5, y: 5 },
-            PopAction { current: ActionType::Farm, ..Default::default() },
+            PopAction {
+                current: ActionType::Farm,
+                ..Default::default()
+            },
         ));
 
         world.run_system_once(produce_food_system).unwrap();
@@ -87,7 +107,10 @@ mod tests {
         let res = world.resource::<ColonyResources>();
         // Base 0.005. Hydroponics multiplier 2.0. Winter ignore.
         // Expected ~0.01
-        assert!(res.food >= 0.009, "Hydroponics should produce ~2x base yield");
+        assert!(
+            res.food >= 0.009,
+            "Hydroponics should produce ~2x base yield"
+        );
     }
 
     #[test]
@@ -97,19 +120,29 @@ mod tests {
         res.water = 0.0; // No water
         res.food = 0.0;
         world.insert_resource(res);
-        world.insert_resource(SeasonState { current_season: Season::Spring });
+        world.insert_resource(SeasonState {
+            current_season: Season::Spring,
+        });
 
         world.spawn((
             Farm::default(),
-            Building { building_type: BuildingType::HydroponicsBay },
+            Building {
+                building_type: BuildingType::HydroponicsBay,
+            },
             GridPosition { x: 5, y: 5 },
-            PowerConsumer { demand: 5.0, active: true },
+            PowerConsumer {
+                demand: 5.0,
+                active: true,
+            },
         ));
 
         world.spawn((
             Pop,
             GridPosition { x: 5, y: 5 },
-            PopAction { current: ActionType::Farm, ..Default::default() },
+            PopAction {
+                current: ActionType::Farm,
+                ..Default::default()
+            },
         ));
 
         world.run_system_once(produce_food_system).unwrap();
@@ -125,19 +158,29 @@ mod tests {
         res.water = 100.0;
         res.food = 0.0;
         world.insert_resource(res);
-        world.insert_resource(SeasonState { current_season: Season::Spring });
+        world.insert_resource(SeasonState {
+            current_season: Season::Spring,
+        });
 
         world.spawn((
             Farm::default(),
-            Building { building_type: BuildingType::HydroponicsBay },
+            Building {
+                building_type: BuildingType::HydroponicsBay,
+            },
             GridPosition { x: 5, y: 5 },
-            PowerConsumer { demand: 5.0, active: false }, // Not powered
+            PowerConsumer {
+                demand: 5.0,
+                active: false,
+            }, // Not powered
         ));
 
         world.spawn((
             Pop,
             GridPosition { x: 5, y: 5 },
-            PopAction { current: ActionType::Farm, ..Default::default() },
+            PopAction {
+                current: ActionType::Farm,
+                ..Default::default()
+            },
         ));
 
         world.run_system_once(produce_food_system).unwrap();
@@ -152,11 +195,15 @@ mod tests {
     fn test_spawn_hydroponics_components() {
         let mut world = World::new();
 
-        use crate::layer1::building::{try_place_building, OccupiedTiles};
+        use crate::layer1::building::{OccupiedTiles, try_place_building};
+        use crate::layer1::tech::{Tech, TechState};
         use crate::layer1::terrain::{TerrainGrid, TerrainType};
-        use crate::layer1::tech::{TechState, Tech};
 
-        world.insert_resource(TerrainGrid { width: 10, height: 10, tiles: vec![TerrainType::Grass; 100] });
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        });
         world.insert_resource(OccupiedTiles::default());
         world.insert_resource(ColonyResources {
             metal: 100.0,
@@ -171,9 +218,17 @@ mod tests {
         let success = try_place_building(&mut world, 5, 5, BuildingType::HydroponicsBay);
         assert!(success, "Should place building");
 
-        let entity = world.query_filtered::<Entity, With<Building>>().single(&world);
+        let entity = world
+            .query_filtered::<Entity, With<Building>>()
+            .single(&world);
 
-        assert!(world.get::<Farm>(entity).is_some(), "Should have Farm component");
-        assert!(world.get::<PowerConsumer>(entity).is_some(), "Should have PowerConsumer component");
+        assert!(
+            world.get::<Farm>(entity).is_some(),
+            "Should have Farm component"
+        );
+        assert!(
+            world.get::<PowerConsumer>(entity).is_some(),
+            "Should have PowerConsumer component"
+        );
     }
 }

@@ -34,7 +34,11 @@ pub fn evaluate_refine(
         let success = calculate_success_modifier(ActionType::Refine, weights);
 
         // Boost utility if progress is already made
-        let progress_bonus = if building.progress_current > 0.0 { 0.1 } else { 0.0 };
+        let progress_bonus = if building.progress_current > 0.0 {
+            0.1
+        } else {
+            0.0
+        };
 
         let utility = (base_utility + progress_bonus) * context * success;
 

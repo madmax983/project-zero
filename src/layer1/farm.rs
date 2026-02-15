@@ -1,4 +1,5 @@
 #![allow(clippy::collapsible_if, clippy::type_complexity)]
+use crate::layer1::GridPosition;
 use crate::layer1::balance::{
     FOOD_HUNGER_THRESHOLD, FOOD_PER_MEAL, FOOD_PER_WORKER_PER_TICK, HUNGER_PER_MEAL,
 };
@@ -13,7 +14,6 @@ use crate::layer1::resources::ColonyResources;
 use crate::layer1::seasons::SeasonState;
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
 use crate::layer1::utility_ai::{ActionType, PopAction};
-use crate::layer1::GridPosition;
 use bevy_ecs::prelude::*;
 
 /// Water cost per tick per worker for Hydroponics.
