@@ -86,3 +86,5 @@ Features that have been fully implemented, tested, and merged.
 - [x] `056` Designated Zones — `specs/056-designated-zones.md` — completed 2026-02-25
 - [x] `058` Personal Tools — `specs/058-personal-tools.md` — completed 2026-02-25
 - [x] `111` Conveyor Logistics — `specs/111-conveyor-logistics.md` — completed 2026-03-05
+- [x] `091` The Inspector — `specs/091-the-inspector.md` — completed 2026-03-05
+- [x] `092` Antagonistic Flora — `specs/092-antagonistic-flora.md` — completed 2026-03-05
