@@ -18,6 +18,7 @@ use crate::experimental::biography::Biography;
 use crate::experimental::dreams::DreamJournal;
 use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::purity::PurityMap;
+use crate::layer1::rituals::{MachineSpirit, Quirk, QuirkType};
 use crate::layer1::utility_types::UtilityWeights;
 use crate::layer1::{
     ActionType, Biocompatibility, ColonyResources, Farm, GridPosition, Housing, PopAction,
@@ -342,6 +343,10 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
     let personality_height = if has_personality { 2 } else { 0 };
     let has_dream = world.get::<DreamJournal>(entity).is_some();
     let dream_height = u16::from(has_dream);
+    let has_spirit = world.get::<MachineSpirit>(entity).is_some();
+    let spirit_height = u16::from(has_spirit);
+    let has_quirk = world.get::<Quirk>(entity).is_some();
+    let quirk_height = u16::from(has_quirk);
 
     let layout = Layout::default()
         .direction(Direction::Vertical)
@@ -352,6 +357,8 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
             Constraint::Length(1),                                // Spacer
             Constraint::Length(details_height),                   // Needs or Details
             Constraint::Length(u16::from(has_structure)),         // Structure HP
+            Constraint::Length(spirit_height),                    // Machine Spirit
+            Constraint::Length(quirk_height),                     // Quirk
             Constraint::Length(personality_height),               // Personality + Spacer
             Constraint::Length(dream_height),                     // Last Dream
             Constraint::Min(1),                                   // Biography
@@ -507,23 +514,67 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         );
     }
 
-    // 6. Personality
+    // 6. Machine Spirit
+    if let Some(spirit) = world.get::<MachineSpirit>(entity) {
+        render_machine_spirit(frame, layout[6], spirit);
+    }
+
+    // 7. Quirk
+    if let Some(quirk) = world.get::<Quirk>(entity) {
+        render_quirk(frame, layout[7], quirk);
+    }
+
+    // 8. Personality
     if let Some(weights) = world.get::<UtilityWeights>(entity) {
-        render_personality(frame, layout[6], weights);
+        render_personality(frame, layout[8], weights);
     }
 
-    // 7. Last Dream
+    // 9. Last Dream
     if let Some(journal) = world.get::<DreamJournal>(entity) {
-        render_dream_journal(frame, layout[7], journal);
+        render_dream_journal(frame, layout[9], journal);
     }
 
-    // 8. Biography
-    let bottom_area = layout[8];
+    // 10. Biography
+    let bottom_area = layout[10];
     let bio_opt = world.get::<Biography>(entity);
 
     if let Some(bio) = bio_opt {
         render_biography(frame, bottom_area, bio, world);
     }
+}
+
+fn render_machine_spirit(frame: &mut Frame, area: Rect, spirit: &MachineSpirit) {
+    let pct = spirit.anger.clamp(0.0, 100.0) as u16;
+    let color = if spirit.anger > 70.0 {
+        Color::Red
+    } else if spirit.anger > 30.0 {
+        Color::Yellow
+    } else {
+        Color::Green
+    };
+
+    let gauge = Gauge::default()
+        .block(Block::default().borders(Borders::NONE))
+        .gauge_style(Style::default().fg(color))
+        .label(format!("Spirit Anger: {:.0}%", spirit.anger))
+        .percent(pct);
+
+    frame.render_widget(gauge, area);
+}
+
+fn render_quirk(frame: &mut Frame, area: Rect, quirk: &Quirk) {
+    let text = match quirk.quirk_type {
+        QuirkType::Glitchy => "⚠ Glitchy (Stops Production)",
+        QuirkType::Overheating => "⚠ Overheating (Fire Risk)",
+        QuirkType::Demanding => "⚠ Demanding (Anger++)",
+    };
+
+    let p = Paragraph::new(text).style(
+        Style::default()
+            .fg(Color::Red)
+            .add_modifier(Modifier::BOLD),
+    );
+    frame.render_widget(p, area);
 }
 
 fn render_dream_journal(frame: &mut Frame, area: Rect, journal: &DreamJournal) {
@@ -1089,5 +1140,48 @@ mod tests {
 
         assert!(full_text.contains("Cade"));
         assert!(full_text.contains("Bio-Comp: 85%"));
+    }
+
+    #[test]
+    fn test_inspector_render_machine_spirit() {
+        use crate::layer1::building::BuildingType;
+        use crate::layer1::rituals::{MachineSpirit, Quirk, QuirkType};
+
+        let mut world = World::new();
+        world.insert_resource(Selection::default());
+        let entity = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::AncientReactor,
+                },
+                MachineSpirit { anger: 80.0 },
+                Quirk {
+                    quirk_type: QuirkType::Glitchy,
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
+
+        world.resource_mut::<Selection>().select_entity(entity);
+
+        let backend = TestBackend::new(40, 20);
+        let mut terminal = Terminal::new(backend).unwrap();
+
+        terminal
+            .draw(|f| {
+                render_inspector(f, f.area(), &world);
+            })
+            .unwrap();
+
+        let buffer = terminal.backend().buffer();
+        let cells: Vec<String> = buffer
+            .content
+            .iter()
+            .map(|c| c.symbol().to_string())
+            .collect();
+        let full_text = cells.join("");
+
+        assert!(full_text.contains("Spirit Anger: 80%"));
+        assert!(full_text.contains("Glitchy"));
     }
 }
