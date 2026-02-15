@@ -112,3 +112,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `INT-023` Integration: Vacuum clears pollution — completed 2026-12-06
 - [x] `049` Industrial Waste — `specs/049-industrial-waste.md` — completed 2026-03-05
 - [x] `125` Grid Instability — `specs/125-grid-instability.md` — completed 2026-03-05
+- [x] `067` Militia System — `specs/067-militia-system.md` — completed 2026-02-15

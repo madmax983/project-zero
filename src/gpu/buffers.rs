@@ -5,8 +5,10 @@
 
 use bevy_ecs::prelude::*;
 
+use crate::layer1::combat::Drafted;
 use crate::layer1::designation::Designation;
 use crate::layer1::farm::Farm;
+use crate::layer1::fauna::Fauna;
 use crate::layer1::funeral::{Corpse, Grave};
 use crate::layer1::housing::Housing;
 use crate::layer1::justice::{Inmate, Wanted};
@@ -61,8 +63,10 @@ pub struct GpuPopInput {
     pub attempt_count: [u32; 22],
     /// Utility score of the current action.
     pub current_utility: f32,
+    /// 1 if the pop is drafted for combat, 0 otherwise.
+    pub drafted: u32,
     /// Padding to 16-byte alignment.
-    pub _padding: [u32; 3],
+    pub _padding: [u32; 2],
 }
 
 /// GPU-aligned building/target input data. One per building.
@@ -148,9 +152,10 @@ pub fn extract_pop_inputs(
         &UtilityWeights,
         &PopAction,
         Option<&Inmate>,
+        Option<&Drafted>,
     )>();
 
-    for (entity, pos, needs, weights, action, inmate) in query.iter(world) {
+    for (entity, pos, needs, weights, action, inmate, drafted) in query.iter(world) {
         if action.ticks_committed < evaluation_interval || inmate.is_some() {
             continue;
         }
@@ -168,7 +173,8 @@ pub fn extract_pop_inputs(
             success_count: weights.action_success_count,
             attempt_count: weights.action_attempt_count,
             current_utility: action.current_utility,
-            _padding: [0; 3],
+            drafted: u32::from(drafted.is_some()),
+            _padding: [0; 2],
         });
     }
 }
@@ -364,6 +370,23 @@ pub fn extract_building_inputs(
             });
         }
     }
+
+    // Fauna (building_type = 12)
+    {
+        let mut query = world.query::<(Entity, &GridPosition, &Fauna)>();
+        for (entity, pos, _fauna) in query.iter(world) {
+            entities.push(entity);
+            inputs.push(GpuBuildingInput {
+                pos_x: pos.x,
+                pos_y: pos.y,
+                building_type: 12,
+                capacity: 1,
+                occupied: 0,
+                resource_has_room: 1, // Always "available"
+                _padding: [0; 2],
+            });
+        }
+    }
 }
 
 /// Extracts global state for GPU evaluation.
@@ -399,14 +422,76 @@ pub fn extract_global_state(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::layer1::combat::Drafted;
     use crate::layer1::designation::{Designation, DesignationType};
+    use crate::layer1::fauna::Fauna;
     use crate::layer1::utility_types::ActionType;
     use crate::setup::init_task_pools;
 
     #[test]
+    fn test_extract_fauna_as_targets() {
+        init_task_pools();
+        let mut world = World::new();
+        world.insert_resource(ColonyResources::default());
+
+        let fauna_entity = world
+            .spawn((GridPosition { x: 10, y: 10 }, Fauna::default()))
+            .id();
+
+        let mut entities = Vec::new();
+        let mut inputs = Vec::new();
+        extract_building_inputs(&mut world, &mut entities, &mut inputs);
+
+        // Should find the fauna
+        let fauna_idx = entities.iter().position(|&e| e == fauna_entity);
+        assert!(fauna_idx.is_some(), "Fauna should be extracted as target");
+
+        let idx = fauna_idx.unwrap();
+        assert_eq!(
+            inputs[idx].building_type, 12,
+            "Fauna should map to building_type 12"
+        );
+        assert_eq!(
+            inputs[idx].resource_has_room, 1,
+            "Fauna should be available target"
+        );
+    }
+
+    #[test]
+    fn test_extract_drafted_status() {
+        init_task_pools();
+        let mut world = World::new();
+        world.insert_resource(UtilityConfig::default());
+
+        // Drafted pop
+        let _pop = world
+            .spawn((
+                GridPosition { x: 0, y: 0 },
+                Needs::default(),
+                UtilityWeights::default(),
+                PopAction {
+                    ticks_committed: 10, // Eligible for evaluation
+                    ..Default::default()
+                },
+                Drafted,
+            ))
+            .id();
+
+        let mut entities = Vec::new();
+        let mut inputs = Vec::new();
+        extract_pop_inputs(&mut world, &mut entities, &mut inputs);
+
+        assert_eq!(entities.len(), 1);
+        assert_eq!(
+            inputs[0].drafted, 1,
+            "Drafted pop should have drafted flag set to 1"
+        );
+    }
+
+    #[test]
     fn test_gpu_pop_input_size() {
-        // 2*i32 + 6*f32 + 22*u32 + 22*u32 + 1*f32 + 3*u32
-        // = 8 + 24 + 88 + 88 + 4 + 12 = 224 bytes
+        // 2*i32 + 6*f32 + 22*u32 + 22*u32 + 1*f32 + 1*u32 + 2*u32
+        // = 8 + 24 + 88 + 88 + 4 + 4 + 8 = 224 bytes
         assert_eq!(std::mem::size_of::<GpuPopInput>(), 224);
     }
 
