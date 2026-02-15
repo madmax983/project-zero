@@ -3892,3 +3892,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Invest in infrastructure (Temporary) vs. Invest in escape (Permanent).
 
 ---
+
+## Bio-Architecture
+
+**Layer:** 1
+
+**Fantasy:** Growing your base instead of building it. A symbiotic relationship with the structure.
+
+**Mechanic:** "Grown" buildings (using Biomass) heal themselves but have "Hunger" (consume Nutrient Paste/Water). They can get "Sick" (reduced efficiency) or "Infected" (hostile).
+
+**Emergence:** You run out of food. Your walls start to digest the furniture. Then they try to digest the sleepers.
+
+**Tension:** Self-repairing (efficient) vs. Food cost (expensive during famine).
+
+---
+
+## Inertial Logistics
+
+**Layer:** 2
+
+**Fantasy:** Newtonian physics is a harsh mistress. "Flip and Burn".
+
+**Mechanic:** Ships have "Momentum". Changing direction requires Fuel and Time. Heavy ships turn slow. Overshooting a destination requires a "Retro-Burn".
+
+**Emergence:** You try to stop a heavy freighter at the station. You miscalculate the braking burn. The freighter smashes through the station dock.
+
+**Tension:** High speed (fast travel) vs. Control (stopping distance).
+
+---
+
+## Emergency Venting
+
+**Layer:** 1
+
+**Fantasy:** The ultimate fire extinguisher.
+
+**Mechanic:** Manual control to open airlocks/vents to vacuum. Instantly extinguishes fire and sucks out gas/smoke, but also sucks out unanchored items/pops and causes cold damage.
+
+**Emergence:** A lab fire threatens the antimatter storage. You hit the "Vent" button. The fire is out. The Chief Scientist is also out (in orbit).
+
+**Tension:** Save the ship/base vs. Save the crew in that room.
+
+---
+
+## Silent Running
+
+**Layer:** 2
+
+**Fantasy:** Submarine warfare in space. Holding your breath.
+
+**Mechanic:** Toggle "Silent Mode". Shields off, Engines min, Sensors passive. Reduces "Detection Radius". High Heat generation (Heat Sinks fill up).
+
+**Emergence:** You go silent to hide from a patrol. Your heat sinks fill up. You have to choose: boil the crew (damage) or vent heat (flare up and be seen).
+
+**Tension:** Stealth vs. Heat/Capability.
+
+---
+
+## Space Barnacles
+
+**Layer:** 2
+
+**Fantasy:** The hull needs scraping. Nature clutches at your ankles.
+
+**Mechanic:** Void-fauna attach to ships over time (especially in Nebulae). They add Mass (slow) and Drain Power. Removal requires EVA (time) or Atmospheric Dipping (risk).
+
+**Emergence:** You ignore the barnacles to make a deadline. Your ship becomes too heavy to escape a gravity well and spirals into the sun.
+
+**Tension:** Maintenance downtime vs. creeping inefficiency.
+
+---
