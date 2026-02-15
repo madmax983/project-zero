@@ -3612,3 +3612,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Information lag vs. Network infrastructure cost.
 
 ---
+
+## Stellar Cartography
+
+**Layer:** 3
+
+**Fantasy:** The galaxy is dark and unknown. Information is the first resource you need.
+
+**Mechanic:** Star systems are hidden. You can send "Probe" ships (slow, cheap) or buy "Star Charts" (fast, expensive) from traders. Charts have "Freshness"; old charts might miss a new supernova or pirate base.
+
+**Emergence:** You buy a "cheap" chart from a smuggler. It leads you into a Nebula that disables your shields, right where his pirate buddies are waiting.
+
+**Tension:** Risk a blind jump (speed) vs. Wait for probes (safety).
+
+---
+
+## Ventilation Networks
+
+**Layer:** 1
+
+**Fantasy:** The unseen arteries of the station. Useful for air, dangerous for security.
+
+**Mechanic:** "Vents" connect rooms for atmosphere equalization. However, they also allow passage for "Small" entities (Vermin, Drones, Spies) even if doors are locked. "Grates" block movement but reduce airflow.
+
+**Emergence:** You seal the bio-lab to contain a virus. A "Rat" crawls through the vent, gets infected, and crawls into the kitchen. The plague spreads.
+
+**Tension:** Efficient Life Support (Open Vents) vs. Biosecurity (Grated/Sealed Vents).
+
+---
+
+## Corporate Foreclosure
+
+**Layer:** Cross-layer
+
+**Fantasy:** You didn't read the terms of service.
+
+**Mechanic:** If you are in debt to a Layer 3 faction (Loans), they can "Foreclose" on specific Layer 1 buildings. They take ownership (you lose control), and the output goes to them. You must pay to buy them back.
+
+**Emergence:** You took a loan to build a Fusion Reactor. You missed a payment. Now the bank owns your power plant and threatens to turn it off if you don't pay "Rent".
+
+**Tension:** Quick capital (Loans) vs. Sovereignty.
+
+---
