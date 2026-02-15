@@ -42,7 +42,9 @@ trunk serve
 
 ## Usage as a Library
 
-To use SCALE's procedural generation (e.g. `NarrativeGenerator`) in your own Rust code:
+### Procedural Generation (Narrative)
+
+To use SCALE's procedural generation in your own Rust code:
 
 ```rust
 use scale::shared::narrative::{NarrativeContext, NarrativeGenerator};
@@ -58,6 +60,7 @@ fn main() -> anyhow::Result<()> {
     // 2. Prepare Context
     let mut context = NarrativeContext::default();
     context.insert("CIV_NAME", "Terran Dominion");
+    // Note: Missing context variables will appear as [ERROR: KEY] in the text.
     context.insert("ORIGIN_STAR", "Sol Prime");
     context.insert("YEAR", "2150");
 
@@ -70,6 +73,36 @@ fn main() -> anyhow::Result<()> {
 ```
 
 See `examples/story_demo.rs` for a complete example.
+
+### Headless Simulation
+
+To run the full simulation loop without a window or GPU (e.g. for servers or AI training):
+
+```rust
+use scale::setup::{setup_world_with_config, SetupConfig};
+use scale::simulation::run_simulation_tick;
+use scale::shared::time::SimulationTime;
+
+fn main() {
+    // 1. Setup the world with headless configuration
+    let config = SetupConfig {
+        headless: true,
+        ..Default::default()
+    };
+    let mut world = setup_world_with_config(config);
+
+    // 2. Run a few ticks
+    for _ in 0..10 {
+        run_simulation_tick(&mut world);
+    }
+
+    // 3. Inspect state
+    let time = world.resource::<SimulationTime>();
+    println!("Current Tick: {}", time.tick);
+}
+```
+
+See `examples/headless_demo.rs` for a complete example.
 
 ## Controls
 

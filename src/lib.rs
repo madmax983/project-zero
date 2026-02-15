@@ -29,13 +29,17 @@
 //! ## Initializing a Headless Simulation
 //!
 //! ```
-//! use scale::setup::setup_world;
+//! use scale::setup::{setup_world_with_config, SetupConfig};
 //! use scale::simulation::run_simulation_tick;
 //! use scale::shared::time::SimulationTime;
 //! use bevy_ecs::prelude::*;
 //!
-//! // 1. Setup the world (spawns initial pops, generates terrain)
-//! let mut world = setup_world();
+//! // 1. Setup the world with headless configuration
+//! let config = SetupConfig {
+//!     headless: true,
+//!     ..Default::default()
+//! };
+//! let mut world = setup_world_with_config(config);
 //!
 //! // 2. Run a few ticks
 //! for _ in 0..10 {
