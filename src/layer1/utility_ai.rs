@@ -65,6 +65,7 @@ use crate::layer1::justice::Inmate;
 use crate::layer1::map::GridPosition;
 use crate::layer1::medical::Hospital;
 use crate::layer1::needs::Needs;
+use crate::layer1::penal::PenalLabor;
 use crate::layer1::refining::get_refining_recipe;
 use crate::layer1::resources::{ColonyResources, RefiningProgress, ResourceItem};
 use crate::layer1::science::Anomaly;
@@ -108,6 +109,7 @@ pub fn evaluate_single_pop(
     let needs = data.needs;
     let weights = data.weights;
     let equipment_opt = data.equipment;
+    let is_penal = data.penal_labor.is_some();
 
     // Start with Idle as the baseline
     let mut best_action = ActionType::Idle;
@@ -160,7 +162,11 @@ pub fn evaluate_single_pop(
         {
             let penalty =
                 crate::layer1::taboo::evaluate_taboo_penalty(ActionType::Work, context.taboo);
-            check_best(ActionType::Work, utility + penalty, Some(target));
+            let mut bonus = 0.0;
+            if is_penal {
+                bonus = 1.0; // High priority for penal labor
+            }
+            check_best(ActionType::Work, utility + penalty + bonus, Some(target));
         }
     }
 
@@ -177,20 +183,23 @@ pub fn evaluate_single_pop(
     }
 
     // Evaluate Socialize
-    if let Some((utility, target)) = evaluate_socialize(&pop_pos, &needs, &weights, &buffer.taverns)
-    {
-        check_best(ActionType::Socialize, utility, Some(target));
+    if !is_penal {
+        if let Some((utility, target)) =
+            evaluate_socialize(&pop_pos, &needs, &weights, &buffer.taverns)
+        {
+            check_best(ActionType::Socialize, utility, Some(target));
+        }
     }
 
     // Evaluate Refine
-    if !is_striking {
+    if !is_striking && !is_penal {
         if let Some((utility, target)) = evaluate_refine(&pop_pos, &weights, &buffer.refining) {
             check_best(ActionType::Refine, utility, Some(target));
         }
     }
 
     // Evaluate Farm
-    if !is_striking {
+    if !is_striking && !is_penal {
         if let Some((utility, target)) = evaluate_farm(&pop_pos, &weights, &buffer.farms) {
             check_best(ActionType::Farm, utility, Some(target));
         }
@@ -225,14 +234,14 @@ pub fn evaluate_single_pop(
     }
 
     // Evaluate Explore
-    if !is_striking {
+    if !is_striking && !is_penal {
         if let Some((utility, target)) = evaluate_explore(&pop_pos, &weights, &buffer.anomalies) {
             check_best(ActionType::Explore, utility, Some(target));
         }
     }
 
     // Evaluate Research
-    if !is_striking {
+    if !is_striking && !is_penal {
         if let Some((utility, target)) =
             evaluate_research(&pop_pos, &weights, context.resources, &buffer.libraries)
         {
@@ -324,12 +333,14 @@ pub fn evaluate_actions_system(world: &mut World) {
                 Option<&Drafted>,
                 Option<&Inmate>,
                 Option<&crate::layer1::factions::FactionMember>,
+                Option<&PenalLabor>,
             )>()
             .iter(world)
-            .filter(|(_, _, _, _, action, _, _, _, inmate, _)| {
-                action.ticks_committed >= config.evaluation_interval && inmate.is_none()
+            .filter(|(_, _, _, _, action, _, _, _, inmate, _, penal_labor)| {
+                action.ticks_committed >= config.evaluation_interval
+                    && (inmate.is_none() || penal_labor.is_some())
             })
-            .map(|(e, p, n, w, a, eq, m, d, _, fm)| PopEvalData {
+            .map(|(e, p, n, w, a, eq, m, d, _, fm, pl)| PopEvalData {
                 entity: e,
                 pos: *p,
                 needs: *n,
@@ -339,6 +350,7 @@ pub fn evaluate_actions_system(world: &mut World) {
                 mental_state: m.copied(),
                 drafted: d.copied(),
                 faction_member: fm.cloned(),
+                penal_labor: pl.copied(),
             }),
     );
 
@@ -1115,6 +1127,65 @@ mod tests {
             weights.action_success_count[ActionType::Socialize.as_index()],
             1,
             "Socialize action should be counted as success if leisure improved"
+        );
+    }
+
+    #[test]
+    fn test_penal_labor_prioritizes_work() {
+        use crate::layer1::designation::{Designation, DesignationType};
+        use crate::layer1::justice::Inmate;
+        use crate::layer1::penal::PenalLabor;
+
+        let mut world = World::new();
+        world.insert_resource(UtilityConfig::default());
+        world.insert_resource(SimulationTime::default());
+        world.insert_resource(ColonyResources::default());
+        world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
+        world.insert_resource(crate::layer1::taboo::TabooState::default());
+
+        // Inmate with PenalLabor
+        let inmate = world
+            .spawn((
+                Pop,
+                GridPosition { x: 0, y: 0 },
+                Needs::default(),
+                UtilityWeights::default(),
+                PopAction {
+                    ticks_committed: 10,
+                    ..Default::default()
+                },
+                Inmate {
+                    sentence_ticks: 100,
+                },
+                PenalLabor::default(),
+            ))
+            .id();
+
+        // Work designation available
+        world.spawn((
+            Designation {
+                designation_type: DesignationType::Mine,
+            },
+            GridPosition { x: 5, y: 5 },
+        ));
+
+        // Available tavern (normally attractive)
+        world.spawn((
+            crate::layer1::social::Tavern::default(),
+            GridPosition { x: 1, y: 1 },
+        ));
+
+        evaluate_actions_system(&mut world);
+
+        let action = world.get::<PopAction>(inmate).unwrap();
+        assert_eq!(
+            action.current,
+            ActionType::Work,
+            "Penal Labor should prioritize Work over other actions"
+        );
+        assert!(
+            action.current_utility > 1.0,
+            "Should have high utility bonus"
         );
     }
 }

@@ -4,6 +4,7 @@ use crate::layer1::factions::{FactionData, FactionId, FactionMember};
 use crate::layer1::items::Equipment;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
+use crate::layer1::penal::PenalLabor;
 use crate::layer1::resources::{ColonyResources, ResourceType};
 use crate::layer1::taboo::TabooState;
 use crate::layer1::unrest::MentalState;
@@ -277,6 +278,8 @@ pub struct PopEvalData {
     pub drafted: Option<Drafted>,
     /// Faction membership details, if any.
     pub faction_member: Option<FactionMember>,
+    /// Penal labor status, if any.
+    pub penal_labor: Option<PenalLabor>,
 }
 
 /// Context data for utility evaluation (resources, time, etc.)

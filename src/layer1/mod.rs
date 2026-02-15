@@ -237,6 +237,10 @@ pub use day_night::*;
 pub mod justice;
 pub use justice::*;
 
+/// Penal labor system (Spec 118).
+pub mod penal;
+pub use penal::*;
+
 /// Planetary Quirks (Spec 080).
 pub mod quirks;
 pub use quirks::*;

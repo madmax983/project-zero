@@ -1,9 +1,9 @@
 #[cfg(test)]
 mod tests {
-    use scale::ui::map::{build_map_layer_spans, MapRenderContext};
-    use scale::layer1::{TerrainGrid, Viewport, TerrainType};
-    use scale::layer1::water::WaterGrid;
     use ratatui::layout::Rect;
+    use scale::layer1::water::WaterGrid;
+    use scale::layer1::{TerrainGrid, TerrainType, Viewport};
+    use scale::ui::map::{MapRenderContext, build_map_layer_spans};
     use std::collections::HashMap;
 
     #[test]
@@ -12,14 +12,26 @@ mod tests {
         let width = 10;
         let height = 10;
         let tiles = vec![TerrainType::Grass; width * height];
-        let terrain = TerrainGrid { width, height, tiles };
+        let terrain = TerrainGrid {
+            width,
+            height,
+            tiles,
+        };
 
         let water = WaterGrid::new(10, 10);
-        let viewport = Viewport { x: i32::MAX - 5, y: 0 }; // Near max
+        let viewport = Viewport {
+            x: i32::MAX - 5,
+            y: 0,
+        }; // Near max
         let entities = HashMap::new();
 
         let ctx = MapRenderContext {
-            area: Rect { x: 0, y: 0, width: 20, height: 10 }, // Width 20.
+            area: Rect {
+                x: 0,
+                y: 0,
+                width: 20,
+                height: 10,
+            }, // Width 20.
             // viewport.x (i32::MAX - 5) + screen_x (6) = i32::MAX + 1 -> Overflow!
             terrain: &terrain,
             water: &water,
