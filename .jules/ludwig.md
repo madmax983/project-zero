@@ -19,3 +19,7 @@
 ## [Juice System]
 **Friction:** Actions like mining and combat felt "dry" and numerical. Players only saw numbers change, lacking visceral feedback for their orders.
 **Flow:** Added a `Particle` system and integrated `ScreenShake`. Mining now kicks up dust/debris, and combat has impact particles and screen shake. This makes the simulation feel "alive" and responsive.
+
+## [Juice System]
+**Friction:** Mining and Chopping felt monotonous with consistent tick rates. Combat lacked weight for heavy hits.
+**Flow:** Introduced "Critical Success" (5% chance) for work actions to create variable rewards. Scaled screen shake and particles based on damage output to emphasize impact.

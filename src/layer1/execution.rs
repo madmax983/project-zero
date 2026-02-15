@@ -351,7 +351,7 @@ pub fn movement_system(
         let can_move = if let Some(ref mut speed) = speed_opt {
             // Ludwig: "Coyote Speed" - Allow moving if we are *almost* there.
             // This prevents the feeling of "just missing the bus" by 0.01 speed.
-            const COYOTE_THRESHOLD: f32 = 0.05;
+            const COYOTE_THRESHOLD: f32 = 0.1;
             if speed.accumulator >= (movement_cost - COYOTE_THRESHOLD) {
                 speed.accumulator -= movement_cost;
                 true
@@ -1025,7 +1025,23 @@ fn handle_mining_work(
     work_amount: f32,
     pos: Option<GridPosition>,
 ) -> bool {
-    process_mining(world, entity, work_amount);
+    let mut rng = rand::thread_rng();
+    let is_crit = rng.gen_bool(0.05);
+
+    let mut effective_work = work_amount;
+    if is_crit {
+        effective_work *= 5.0;
+        if let Some(p) = pos {
+            spawn_particle(world, p, '*', Color::Yellow, 10);
+            trigger_shake(world, 0.3);
+        }
+        if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+            log.add_colored("Critical Mine!", Color::Yellow);
+        }
+    }
+
+    process_mining(world, entity, effective_work);
+
     if let Some(p) = pos {
         if world.get_entity(entity).is_err() {
             // Finished: Big shake + Debris
@@ -1033,12 +1049,14 @@ fn handle_mining_work(
             spawn_particle(world, p, '*', Color::White, 10);
         } else {
             // Working: Dynamic shake + Dust
-            let intensity = world
-                .get::<crate::layer1::resources::MiningProgress>(entity)
-                .map_or(0.05, |prog| (prog.current / prog.max).mul_add(0.15, 0.05));
+            if !is_crit {
+                let intensity = world
+                    .get::<crate::layer1::resources::MiningProgress>(entity)
+                    .map_or(0.05, |prog| (prog.current / prog.max).mul_add(0.15, 0.05));
 
-            trigger_shake(world, intensity);
-            spawn_particle(world, p, '.', Color::DarkGray, 3);
+                trigger_shake(world, intensity);
+                spawn_particle(world, p, '.', Color::DarkGray, 3);
+            }
         }
     }
     true
@@ -1050,7 +1068,23 @@ fn handle_chopping_work(
     work_amount: f32,
     pos: Option<GridPosition>,
 ) -> bool {
-    process_logging(world, entity, work_amount);
+    let mut rng = rand::thread_rng();
+    let is_crit = rng.gen_bool(0.05);
+
+    let mut effective_work = work_amount;
+    if is_crit {
+        effective_work *= 5.0;
+        if let Some(p) = pos {
+            spawn_particle(world, p, '^', Color::LightGreen, 10);
+            trigger_shake(world, 0.3);
+        }
+        if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+            log.add_colored("Critical Chop!", Color::LightGreen);
+        }
+    }
+
+    process_logging(world, entity, effective_work);
+
     if let Some(p) = pos {
         if world.get_entity(entity).is_err() {
             // Finished
@@ -1058,12 +1092,14 @@ fn handle_chopping_work(
             spawn_particle(world, p, '^', Color::Green, 10);
         } else {
             // Working
-            let intensity = world
-                .get::<crate::layer1::resources::ForestryProgress>(entity)
-                .map_or(0.02, |prog| (prog.current / prog.max).mul_add(0.1, 0.02));
+            if !is_crit {
+                let intensity = world
+                    .get::<crate::layer1::resources::ForestryProgress>(entity)
+                    .map_or(0.02, |prog| (prog.current / prog.max).mul_add(0.1, 0.02));
 
-            trigger_shake(world, intensity);
-            spawn_particle(world, p, '\'', Color::Rgb(139, 69, 19), 3);
+                trigger_shake(world, intensity);
+                spawn_particle(world, p, '\'', Color::Rgb(139, 69, 19), 3);
+            }
         }
     }
     true
