@@ -18,7 +18,8 @@ struct PopInput {
     success_count: array<u32, 22>,
     attempt_count: array<u32, 22>,
     current_utility: f32,
-    _pad: array<u32, 3>,
+    drafted: u32,
+    _pad: array<u32, 2>,
 }
 
 struct BuildingInput {
@@ -198,6 +199,15 @@ fn main(@builtin(global_invocation_id) global_id: vec3<u32>) {
                 // Tame Designation -> Tame (action 20)
                 urgency = 0.6;
                 action_idx = 20u;
+            }
+            case 12u: {
+                // Fauna -> Fight (action 15)
+                if pop.drafted == 1u {
+                    urgency = 0.95;
+                    action_idx = 15u;
+                } else {
+                    skip = true;
+                }
             }
             default: {
                 skip = true;
