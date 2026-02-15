@@ -6,7 +6,7 @@ mod tests {
     use crate::layer1::structure::{
         DeferMaintenance, Structure, calculate_malfunction_risk, entropy_system,
     };
-    use crate::layer1::utility_eval_types::{RepairDesignationProxy, StructureProxy};
+    use crate::layer1::utility_eval_types::PositionProxy;
     use crate::layer1::utility_types::UtilityWeights;
     use bevy_ecs::prelude::*;
 
@@ -122,7 +122,7 @@ mod tests {
 
         let pop_pos = GridPosition { x: 0, y: 0 };
         let weights = UtilityWeights::default();
-        let designations: Vec<RepairDesignationProxy> = vec![];
+        let designations: Vec<PositionProxy> = vec![];
 
         // Simulate evaluate_actions_system filtering logic
         let mut proxies = Vec::new();
@@ -136,7 +136,7 @@ mod tests {
             if (structure.current_hp - structure.max_hp).abs() < f32::EPSILON {
                 continue;
             }
-            proxies.push(StructureProxy { entity, pos: *pos });
+            proxies.push(PositionProxy { entity, pos: *pos });
         }
 
         let result = evaluate_repair(&pop_pos, &weights, &designations, &proxies);

@@ -1,5 +1,5 @@
 use crate::layer1::map::GridPosition;
-use crate::layer1::utility_eval_types::{CorpseProxy, GraveProxy};
+use crate::layer1::utility_eval_types::PositionProxy;
 use crate::layer1::utility_types::{UtilityWeights, manhattan_distance};
 use bevy_ecs::prelude::*;
 
@@ -10,8 +10,8 @@ use bevy_ecs::prelude::*;
 #[must_use]
 pub fn evaluate_bury_corpse(
     pop_pos: &GridPosition,
-    corpses: &[CorpseProxy],
-    graves: &[GraveProxy],
+    corpses: &[PositionProxy],
+    graves: &[PositionProxy],
     weights: &UtilityWeights,
 ) -> Option<(f32, Entity)> {
     // Check if any grave is available (pre-filtered in buffer)

@@ -1,7 +1,7 @@
 use crate::layer1::items::{Equipment, Item, Tool, ToolType};
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::ColonyResources;
-use crate::layer1::utility_eval_types::StockpileProxy;
+use crate::layer1::utility_eval_types::PositionProxy;
 use crate::layer1::utility_types::manhattan_distance;
 use bevy_ecs::prelude::*;
 
@@ -11,7 +11,7 @@ pub fn evaluate_fetch_tool(
     pop_pos: &GridPosition,
     equipment: &Equipment,
     resources: &ColonyResources,
-    stockpiles: &[StockpileProxy],
+    stockpiles: &[PositionProxy],
 ) -> Option<(f32, Entity)> {
     // If already has a tool, no need to fetch
     if equipment.tool.is_some() {

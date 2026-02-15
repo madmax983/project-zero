@@ -1,5 +1,5 @@
 use crate::layer1::map::GridPosition;
-use crate::layer1::utility_eval_types::AnomalyProxy;
+use crate::layer1::utility_eval_types::PositionProxy;
 use crate::layer1::utility_types::{ActionType, UtilityWeights};
 use crate::layer1::utility_types::{calculate_context_score, calculate_success_modifier};
 use bevy_ecs::prelude::*;
@@ -13,7 +13,7 @@ use bevy_ecs::prelude::*;
 pub fn evaluate_explore(
     pop_pos: &GridPosition,
     weights: &UtilityWeights,
-    anomalies: &[AnomalyProxy],
+    anomalies: &[PositionProxy],
 ) -> Option<(f32, Entity)> {
     let mut best: Option<(f32, Entity)> = None;
     let base_utility = 0.55;

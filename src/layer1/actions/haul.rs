@@ -1,6 +1,6 @@
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::ColonyResources;
-use crate::layer1::utility_eval_types::{ItemProxy, StockpileProxy};
+use crate::layer1::utility_eval_types::{ItemProxy, PositionProxy};
 use crate::layer1::utility_types::{ActionType, UtilityWeights};
 use crate::layer1::utility_types::{calculate_context_score, calculate_success_modifier};
 use bevy_ecs::prelude::*;
@@ -23,7 +23,7 @@ pub fn evaluate_haul(
     pop_pos: &GridPosition,
     weights: &UtilityWeights,
     items: &[ItemProxy],
-    stockpiles: &[StockpileProxy],
+    stockpiles: &[PositionProxy],
     resources: &ColonyResources,
 ) -> Option<(f32, Entity)> {
     // 1. Check if any stockpile exists (optimization: no point hauling if nowhere to put it)

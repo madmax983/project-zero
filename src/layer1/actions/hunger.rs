@@ -3,7 +3,7 @@ use crate::layer1::farm::Farm;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
 use crate::layer1::pop::Job;
-use crate::layer1::utility_eval_types::FarmProxy;
+use crate::layer1::utility_eval_types::CapacityProxy;
 use crate::layer1::utility_types::{ActionType, UtilityWeights};
 use crate::layer1::utility_types::{
     calculate_context_score, calculate_success_modifier, need_response_curve,
@@ -16,7 +16,7 @@ pub fn evaluate_satisfy_hunger(
     pop_pos: &GridPosition,
     needs: &Needs,
     weights: &UtilityWeights,
-    farms: &[FarmProxy],
+    farms: &[CapacityProxy],
 ) -> Option<(f32, Entity)> {
     let hunger_urgency = need_response_curve(needs.hunger);
 
@@ -27,7 +27,7 @@ pub fn evaluate_satisfy_hunger(
             *pop_pos,
             Some(farm.pos),
             farm.capacity,
-            farm.workers,
+            farm.usage,
             weights,
         );
 

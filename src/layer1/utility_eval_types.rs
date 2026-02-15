@@ -77,56 +77,26 @@ pub struct WorldContext<'a> {
 // into flat vectors, avoiding repeated query iterations and complex
 // component access during the hot loop of utility evaluation.
 
-/// Proxy struct for Farms.
+/// Generic proxy for entities with position.
 #[derive(Clone, Copy, Debug)]
-pub struct FarmProxy {
-    /// The farm entity.
+pub struct PositionProxy {
+    /// The entity.
     pub entity: Entity,
-    /// The location of the farm.
+    /// The location.
     pub pos: GridPosition,
-    /// Total worker capacity.
-    pub capacity: usize,
-    /// Current number of workers.
-    pub workers: usize,
 }
 
-/// Proxy struct for Housing.
+/// Generic proxy for entities with capacity (e.g., buildings).
 #[derive(Clone, Copy, Debug)]
-pub struct HousingProxy {
-    /// The housing entity.
+pub struct CapacityProxy {
+    /// The entity.
     pub entity: Entity,
-    /// The location of the house.
+    /// The location.
     pub pos: GridPosition,
-    /// Total resident capacity.
+    /// Total capacity.
     pub capacity: usize,
-    /// Current number of residents.
-    pub occupants: usize,
-}
-
-/// Proxy struct for Taverns.
-#[derive(Clone, Copy, Debug)]
-pub struct TavernProxy {
-    /// The tavern entity.
-    pub entity: Entity,
-    /// The location of the tavern.
-    pub pos: GridPosition,
-    /// Total visitor capacity.
-    pub capacity: usize,
-    /// Current number of patrons.
-    pub patrons: usize,
-}
-
-/// Proxy struct for Libraries.
-#[derive(Clone, Copy, Debug)]
-pub struct LibraryProxy {
-    /// The library entity.
-    pub entity: Entity,
-    /// The location of the library.
-    pub pos: GridPosition,
-    /// Total researcher capacity.
-    pub capacity: usize,
-    /// Current number of researchers.
-    pub researchers: usize,
+    /// Current usage.
+    pub usage: usize,
 }
 
 /// Proxy struct for Refining Buildings.
@@ -140,33 +110,6 @@ pub struct RefiningProxy {
     pub progress_current: f32,
 }
 
-/// Proxy struct for Work Designations.
-#[derive(Clone, Copy, Debug)]
-pub struct WorkDesignationProxy {
-    /// The designation entity.
-    pub entity: Entity,
-    /// The location of the designation.
-    pub pos: GridPosition,
-}
-
-/// Proxy struct for Repair Designations.
-#[derive(Clone, Copy, Debug)]
-pub struct RepairDesignationProxy {
-    /// The designation entity.
-    pub entity: Entity,
-    /// The location of the designation.
-    pub pos: GridPosition,
-}
-
-/// Proxy struct for Tame Designations.
-#[derive(Clone, Copy, Debug)]
-pub struct TameDesignationProxy {
-    /// The designation entity.
-    pub entity: Entity,
-    /// The location of the designation.
-    pub pos: GridPosition,
-}
-
 /// Proxy struct for Resource Items.
 #[derive(Clone, Copy, Debug)]
 pub struct ItemProxy {
@@ -178,64 +121,6 @@ pub struct ItemProxy {
     pub resource_type: ResourceType,
 }
 
-/// Proxy struct for Stockpiles.
-#[derive(Clone, Copy, Debug)]
-pub struct StockpileProxy {
-    /// The stockpile entity.
-    pub entity: Entity,
-    /// The location of the stockpile.
-    pub pos: GridPosition,
-}
-
-/// Proxy struct for Anomalies.
-#[derive(Clone, Copy, Debug)]
-pub struct AnomalyProxy {
-    /// The anomaly entity.
-    pub entity: Entity,
-    /// The location of the anomaly.
-    pub pos: GridPosition,
-}
-
-/// Proxy struct for Hospitals.
-#[derive(Clone, Copy, Debug)]
-pub struct HospitalProxy {
-    /// The hospital entity.
-    pub entity: Entity,
-    /// The location of the hospital.
-    pub pos: GridPosition,
-    /// Total patient capacity.
-    pub capacity: usize,
-    /// Current number of patients.
-    pub patients: usize,
-}
-
-/// Proxy struct for Corpses.
-#[derive(Clone, Copy, Debug)]
-pub struct CorpseProxy {
-    /// The corpse entity.
-    pub entity: Entity,
-    /// The location of the corpse.
-    pub pos: GridPosition,
-}
-
-/// Proxy struct for Graves.
-#[derive(Clone, Copy, Debug)]
-pub struct GraveProxy {
-    /// The grave entity.
-    pub entity: Entity,
-    /// Whether the grave is occupied.
-    pub occupied: bool,
-}
-
-/// Proxy struct for Structures (needing repair).
-#[derive(Clone, Copy, Debug)]
-pub struct StructureProxy {
-    /// The structure entity.
-    pub entity: Entity,
-    /// The location of the structure.
-    pub pos: GridPosition,
-}
-
 /// Reusable buffer for `evaluate_actions_system` to avoid allocations.
 #[derive(Resource, Default)]
 pub struct UtilityAIBuffer {
@@ -244,33 +129,33 @@ pub struct UtilityAIBuffer {
 
     // Candidate Buffers
     /// Buffer for farm candidates.
-    pub farms: Vec<FarmProxy>,
+    pub farms: Vec<CapacityProxy>,
     /// Buffer for housing candidates.
-    pub housing: Vec<HousingProxy>,
+    pub housing: Vec<CapacityProxy>,
     /// Buffer for tavern candidates.
-    pub taverns: Vec<TavernProxy>,
+    pub taverns: Vec<CapacityProxy>,
     /// Buffer for library candidates.
-    pub libraries: Vec<LibraryProxy>,
+    pub libraries: Vec<CapacityProxy>,
     /// Buffer for refining candidates.
     pub refining: Vec<RefiningProxy>,
     /// Buffer for work designation candidates.
-    pub work_designations: Vec<WorkDesignationProxy>,
+    pub work_designations: Vec<PositionProxy>,
     /// Buffer for repair designation candidates.
-    pub repair_designations: Vec<RepairDesignationProxy>,
+    pub repair_designations: Vec<PositionProxy>,
     /// Buffer for tame designation candidates.
-    pub tame_designations: Vec<TameDesignationProxy>,
+    pub tame_designations: Vec<PositionProxy>,
     /// Buffer for loose item candidates.
     pub items: Vec<ItemProxy>,
     /// Buffer for stockpile candidates.
-    pub stockpiles: Vec<StockpileProxy>,
+    pub stockpiles: Vec<PositionProxy>,
     /// Buffer for anomaly candidates.
-    pub anomalies: Vec<AnomalyProxy>,
+    pub anomalies: Vec<PositionProxy>,
     /// Buffer for hospital candidates.
-    pub hospitals: Vec<HospitalProxy>,
+    pub hospitals: Vec<CapacityProxy>,
     /// Buffer for corpse candidates.
-    pub corpses: Vec<CorpseProxy>,
+    pub corpses: Vec<PositionProxy>,
     /// Buffer for grave candidates.
-    pub graves: Vec<GraveProxy>,
+    pub graves: Vec<PositionProxy>,
     /// Buffer for structure candidates needing repair.
-    pub repair_structures: Vec<StructureProxy>,
+    pub repair_structures: Vec<PositionProxy>,
 }

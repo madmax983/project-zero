@@ -1,6 +1,6 @@
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
-use crate::layer1::utility_eval_types::TavernProxy;
+use crate::layer1::utility_eval_types::CapacityProxy;
 use crate::layer1::utility_types::{ActionType, UtilityWeights};
 use crate::layer1::utility_types::{calculate_context_score, calculate_success_modifier};
 use bevy_ecs::prelude::*;
@@ -17,7 +17,7 @@ pub fn evaluate_socialize(
     pop_pos: &GridPosition,
     needs: &Needs,
     weights: &UtilityWeights,
-    taverns: &[TavernProxy],
+    taverns: &[CapacityProxy],
 ) -> Option<(f32, Entity)> {
     let mut best: Option<(f32, Entity)> = None;
     let base_utility = 0.5;
@@ -30,7 +30,7 @@ pub fn evaluate_socialize(
             *pop_pos,
             Some(tavern.pos),
             tavern.capacity,
-            tavern.patrons,
+            tavern.usage,
             weights,
         );
 

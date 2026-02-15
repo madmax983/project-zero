@@ -229,10 +229,6 @@ pub struct StartPlan {
     pub target: Option<Entity>,
 }
 
-/// Stub for HTN Plan component (future integration).
-#[derive(Component)]
-pub struct Plan;
-
 /// Calculates urgency from a need value (0.0-1.0).
 ///
 /// **Formula**: `1.0 - (need_value^2)`

@@ -7,7 +7,7 @@ mod tests {
 
     use crate::layer1::resources::{ColonyResources, RefiningProgress};
 
-    use crate::layer1::utility_eval_types::{FarmProxy, RefiningProxy};
+    use crate::layer1::utility_eval_types::{CapacityProxy, RefiningProxy};
     use crate::layer1::utility_types::UtilityWeights;
     use bevy_ecs::prelude::*;
 
@@ -88,11 +88,11 @@ mod tests {
             .id();
 
         // Create Proxy
-        let proxies = vec![FarmProxy {
+        let proxies = vec![CapacityProxy {
             entity: farm,
             pos: GridPosition { x: 2, y: 0 },
             capacity: 1,
-            workers: 0,
+            usage: 0,
         }];
 
         let result = evaluate_farm(&pop_pos, &weights, &proxies);

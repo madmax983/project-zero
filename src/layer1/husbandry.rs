@@ -5,7 +5,7 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::resources::{ResourceItem, ResourceType};
 use crate::layer1::skills::{SkillType, Skills};
 use crate::layer1::utility_ai::{ActionType, PopAction, UtilityWeights};
-use crate::layer1::utility_eval_types::TameDesignationProxy;
+use crate::layer1::utility_eval_types::PositionProxy;
 use crate::layer1::utility_types::{calculate_context_score, calculate_success_modifier};
 use crate::layer1::zone::{ZoneGrid, ZoneType};
 use bevy_ecs::prelude::*;
@@ -143,7 +143,7 @@ pub fn husbandry_production_system(world: &mut World) {
 pub fn evaluate_tame(
     pop_pos: &GridPosition,
     weights: &UtilityWeights,
-    designations: &[TameDesignationProxy],
+    designations: &[PositionProxy],
 ) -> Option<(f32, Entity)> {
     let mut best: Option<(f32, Entity)> = None;
     let base_utility = 0.6;
