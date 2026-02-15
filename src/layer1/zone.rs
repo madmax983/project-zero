@@ -30,6 +30,8 @@ pub enum ZoneType {
     Jail,
     /// Pasture for tamed animals.
     Pasture,
+    /// Penal zone for forced labor.
+    Penal,
 }
 
 /// Resource storing the grid of zones.
