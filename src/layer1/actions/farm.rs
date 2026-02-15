@@ -23,13 +23,8 @@ pub fn evaluate_farm(
     for farm in farms {
         // Pre-filtered for schedule and capacity in evaluate_actions_system
 
-        let context = calculate_context_score(
-            *pop_pos,
-            Some(farm.pos),
-            farm.capacity,
-            farm.usage,
-            weights,
-        );
+        let context =
+            calculate_context_score(*pop_pos, Some(farm.pos), farm.capacity, farm.usage, weights);
 
         let success = calculate_success_modifier(ActionType::Farm, weights);
         let utility = base_utility * context * success;

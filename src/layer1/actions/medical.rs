@@ -37,7 +37,7 @@ pub fn evaluate_seek_medical_care(
             *pop_pos,
             Some(hospital.pos),
             hospital.capacity, // Use proxy capacity (likely 10)
-            hospital.usage, // Occupied (likely 0)
+            hospital.usage,    // Occupied (likely 0)
             weights,
         );
 

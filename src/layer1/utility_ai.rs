@@ -544,10 +544,7 @@ pub fn evaluate_actions_system(world: &mut World) {
     let mut grave_query = world.query::<(Entity, &GridPosition, &Grave)>();
     for (entity, pos, grave) in grave_query.iter(world) {
         if !grave.occupied {
-            buffer.graves.push(PositionProxy {
-                entity,
-                pos: *pos,
-            });
+            buffer.graves.push(PositionProxy { entity, pos: *pos });
         }
     }
 

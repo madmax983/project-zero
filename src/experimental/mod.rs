@@ -12,6 +12,9 @@ pub mod dreams;
 /// Experimental ghost feature.
 #[cfg(feature = "nova")]
 pub mod ghosts;
+/// Experimental graffiti feature.
+#[cfg(feature = "nova")]
+pub mod graffiti;
 /// Experimental miasma feature.
 #[cfg(feature = "nova")]
 pub mod miasma;

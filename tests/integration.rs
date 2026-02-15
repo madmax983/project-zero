@@ -54,9 +54,9 @@ mod pollution_refinery;
 #[path = "integration/funeral_rites.rs"]
 mod funeral_rites;
 
+#[path = "integration/social_room_quality.rs"]
+mod social_room_quality;
 #[path = "integration/strikes_mining_science.rs"]
 mod strikes_mining_science;
 #[path = "integration/strikes_work.rs"]
 mod strikes_work;
-#[path = "integration/social_room_quality.rs"]
-mod social_room_quality;

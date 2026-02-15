@@ -385,9 +385,6 @@ mod tests {
             .id();
 
         let (production, _) = calculate_grid_stats(&mut world, generator);
-        assert_eq!(
-            production, 0.0,
-            "Glitchy generator should produce 0 power"
-        );
+        assert_eq!(production, 0.0, "Glitchy generator should produce 0 power");
     }
 }

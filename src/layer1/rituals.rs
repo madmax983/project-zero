@@ -99,10 +99,7 @@ mod tests {
     use super::*;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::heirloom::AncientStructure;
-    use bevy_ecs::{
-        prelude::World,
-        schedule::Schedule,
-    };
+    use bevy_ecs::{prelude::World, schedule::Schedule};
 
     #[test]
     fn test_machine_spirit_initialization() {
@@ -248,7 +245,10 @@ mod tests {
         perform_ritual(&mut world, entity);
 
         let spirit = world.get::<MachineSpirit>(entity).unwrap();
-        assert!((spirit.anger - 0.0).abs() < f32::EPSILON, "Anger should clamp to 0.0");
+        assert!(
+            (spirit.anger - 0.0).abs() < f32::EPSILON,
+            "Anger should clamp to 0.0"
+        );
     }
 
     #[test]
