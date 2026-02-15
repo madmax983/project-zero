@@ -679,6 +679,8 @@ pub const fn get_building_char(building: BuildingType) -> char {
         BuildingType::ConveyorBelt => '>',
         BuildingType::Hopper => 'V',
         BuildingType::HydroponicsBay => 'Y',
+        BuildingType::LifeSupport => '♼',
+        BuildingType::Airlock => '⌷',
     }
 }
 
@@ -717,7 +719,9 @@ pub const fn get_building_color(building: BuildingType, material: MaterialType) 
             BuildingType::LumberMill => Color::Rgb(205, 133, 63),  // Peru
             BuildingType::StoneMason => Color::Rgb(119, 136, 153), // LightSlateGray
             BuildingType::Smelter | BuildingType::AncientReactor => Color::Rgb(255, 69, 0), // Red-Orange
-            BuildingType::Smithy | BuildingType::PowerPole => Color::Rgb(192, 192, 192), // Silver
+            BuildingType::Smithy | BuildingType::PowerPole | BuildingType::Airlock => {
+                Color::Rgb(192, 192, 192)
+            } // Silver
             BuildingType::Tavern | BuildingType::FlowerBed => Color::Magenta,
             BuildingType::Library | BuildingType::AncientFabricator | BuildingType::Observatory => {
                 Color::Cyan
@@ -731,7 +735,7 @@ pub const fn get_building_color(building: BuildingType, material: MaterialType) 
             BuildingType::Generator => Color::Rgb(255, 215, 0), // Gold
             BuildingType::Refinery => Color::Rgb(100, 200, 255), // Chemical Blue
             BuildingType::Greenhouse | BuildingType::HydroponicsBay => Color::Rgb(200, 255, 255), // Glass/Cyan
-            BuildingType::ConveyorBelt => Color::Cyan,
+            BuildingType::ConveyorBelt | BuildingType::LifeSupport => Color::Cyan,
         }
     }
 }

@@ -47,10 +47,10 @@ use crate::layer1::{
     logistics::{conveyor_system, hopper_system},
     malfunction_system, memory_decay_system, modify_affinity_system, movement_system,
     natural_death_system, notification_expiration_system, pop_death_chronicle_bridge,
-    process_fuel_consumption_system, process_observe_system, process_refining_system,
-    process_research_system, process_scan_system, process_start_plan_system, produce_food_system,
-    quirk_generation_system, regrowth_system, restore_leisure_system,
-    restore_rest_in_housing_system, sleepwalk_end_system,
+    pressure_damage_system, process_fuel_consumption_system, process_observe_system,
+    process_refining_system, process_research_system, process_scan_system,
+    process_start_plan_system, produce_food_system, quirk_generation_system, regrowth_system,
+    restore_leisure_system, restore_rest_in_housing_system, sleepwalk_end_system,
     social::old_guard::{
         apply_founder_benefits_system, apply_mood_modifiers_system,
         check_generational_friction_system, mood_lifecycle_system,
@@ -59,9 +59,9 @@ use crate::layer1::{
     spirit_decay_system, spoilage_system, starvation_damage_system, taboo_event_system,
     theft_system, track_plan_outcomes_system, update_action_timer_system,
     update_cabin_fever_system, update_erosion_system, update_lighting_system, update_noise_system,
-    update_resource_caps_system, update_screen_shake_system, update_taboo_duration_system,
-    update_water_system, update_weather_system, vermin_growth_system, vermin_morale_system,
-    waste_pollution_bridge, work_execution_system,
+    update_pressure_system, update_resource_caps_system, update_screen_shake_system,
+    update_taboo_duration_system, update_water_system, update_weather_system, vermin_growth_system,
+    vermin_morale_system, waste_pollution_bridge, work_execution_system,
 };
 use crate::shared::time::SimulationTime;
 
@@ -237,6 +237,7 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::atmosphere::update_atmosphere_system
             .after(work_execution_system)
             .after(waste_pollution_bridge),
+        update_pressure_system.after(work_execution_system),
         biocompatibility_system.after(crate::layer1::atmosphere::update_atmosphere_system),
     ));
 
@@ -298,10 +299,12 @@ pub fn build_simulation_schedule() -> Schedule {
         memory_decay_system.after(decay_needs_system),
         notification_expiration_system.after(decay_needs_system),
         hypothermia_system.after(decay_needs_system),
+        pressure_damage_system.after(decay_needs_system),
         starvation_damage_system.after(decay_needs_system),
         death_system
             .after(starvation_damage_system)
             .after(hypothermia_system)
+            .after(pressure_damage_system)
             .after(natural_death_system),
         clean_dead_residents_system.after(death_system),
         clean_dead_workers_system.after(death_system),

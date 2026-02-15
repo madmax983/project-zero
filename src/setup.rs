@@ -90,6 +90,7 @@ pub fn setup_world() -> World {
     #[cfg(feature = "nova")]
     world.init_resource::<crate::experimental::acoustics::AmbientAudioLevel>();
     world.insert_resource(AtmosphereGrid::new(80, 50));
+    world.insert_resource(crate::layer1::pressure::PressureGrid::new(80, 50));
     world.insert_resource(LightMap::new(80, 50));
     world.insert_resource(AmbientLight::default());
     world.insert_resource(crate::layer1::day_night::DayNightCycle::default());

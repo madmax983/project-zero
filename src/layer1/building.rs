@@ -236,6 +236,10 @@ pub enum BuildingType {
     Hopper,
     /// Hydroponics Bay: Grows food using water and power.
     HydroponicsBay,
+    /// Generates atmospheric pressure.
+    LifeSupport,
+    /// Maintains pressure while allowing passage.
+    Airlock,
 }
 
 impl BuildingType {
@@ -244,7 +248,7 @@ impl BuildingType {
     pub const fn supports_material(&self) -> bool {
         matches!(
             self,
-            Self::Wall | Self::Gate | Self::Housing | Self::Statue | Self::Tower
+            Self::Wall | Self::Gate | Self::Housing | Self::Statue | Self::Tower | Self::Airlock
         )
     }
 
@@ -262,6 +266,7 @@ impl BuildingType {
                 | Self::Landfill
                 | Self::PersonalGarden
                 | Self::ConveyorBelt
+                | Self::Airlock
         )
     }
 
@@ -274,8 +279,8 @@ impl BuildingType {
             Self::Landfill => -10.0,
             Self::Grave => -2.0, // Graves are slightly spooky
             Self::FlowerBed | Self::TradeDepot => 5.0, // Trade brings goods and culture
-            Self::Well | Self::HydroponicsBay => 1.0,
-            Self::Wall | Self::Gate | Self::Tower => 0.0,
+            Self::Well | Self::HydroponicsBay | Self::LifeSupport => 1.0,
+            Self::Wall | Self::Gate | Self::Tower | Self::Airlock => 0.0,
             _ => 0.0,
         }
     }
@@ -289,7 +294,9 @@ impl BuildingType {
             | Self::Generator
             | Self::PowerPole
             | Self::ConveyorBelt
-            | Self::Hopper => Some(Tech::MetalWorking),
+            | Self::Hopper
+            | Self::LifeSupport
+            | Self::Airlock => Some(Tech::MetalWorking),
             Self::Tavern | Self::Statue => Some(Tech::SocialStructures),
             Self::Tower => Some(Tech::Masonry),
             Self::Observatory => Some(Tech::Astronomy),
@@ -346,6 +353,8 @@ impl BuildingType {
             Self::ConveyorBelt => "Conveyor Belt",
             Self::Hopper => "Hopper",
             Self::HydroponicsBay => "Hydroponics Bay",
+            Self::LifeSupport => "Life Support",
+            Self::Airlock => "Airlock",
         }
     }
 
@@ -381,6 +390,8 @@ impl BuildingType {
             Self::PersonalShrine => '☗',
             Self::ConveyorBelt => '>',
             Self::Hopper => 'V',
+            Self::LifeSupport => '♼',
+            Self::Airlock => '⌷',
         }
     }
 
@@ -389,6 +400,28 @@ impl BuildingType {
     #[allow(clippy::match_same_arms, clippy::too_many_lines)]
     pub const fn cost(&self, material: MaterialType) -> ColonyResources {
         match self {
+            Self::LifeSupport => ColonyResources {
+                metal: 50.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Airlock => match material {
+                MaterialType::Wood => ColonyResources {
+                    wood: 15.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Stone => ColonyResources {
+                    stone: 15.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Metal => ColonyResources {
+                    metal: 15.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Gold => ColonyResources {
+                    metal: 150.0,
+                    ..ColonyResources::zeroed()
+                },
+            },
             Self::ConveyorBelt => ColonyResources {
                 metal: 5.0,
                 ..ColonyResources::zeroed()
@@ -1052,6 +1085,23 @@ fn spawn_building(
                 ShiftSchedule::default(),
             ));
         }
+        BuildingType::LifeSupport => {
+            entity.insert((
+                PowerConsumer {
+                    demand: 10.0,
+                    active: true, // Always on if possible
+                },
+                LightSource {
+                    radius: 4.0,
+                    intensity: 0.6,
+                    color: (200, 255, 255), // Cyan-ish
+                },
+            ));
+        }
+        BuildingType::Airlock => {
+            // Airlock behaves like a gate but sealed
+            // Currently no specific component for Airlock logic other than BuildingType check
+        }
     }
 }
 
@@ -1236,7 +1286,12 @@ mod tests {
         assert_eq!(BuildingType::Observatory.next(), BuildingType::ConveyorBelt);
         assert_eq!(BuildingType::ConveyorBelt.next(), BuildingType::Hopper);
         assert_eq!(BuildingType::Hopper.next(), BuildingType::HydroponicsBay);
-        assert_eq!(BuildingType::HydroponicsBay.next(), BuildingType::Housing);
+        assert_eq!(
+            BuildingType::HydroponicsBay.next(),
+            BuildingType::LifeSupport
+        );
+        assert_eq!(BuildingType::LifeSupport.next(), BuildingType::Airlock);
+        assert_eq!(BuildingType::Airlock.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -1390,6 +1445,12 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::HydroponicsBay);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::LifeSupport);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Airlock);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);
