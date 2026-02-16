@@ -45,7 +45,7 @@ impl NarrativeContext {
     }
 
     /// Insert a value for a slot (e.g., "`CIV_NAME`" -> "The Empire").
-    pub fn insert(&mut self, key: &str, value: &str) {
+    pub fn insert<V: ToString>(&mut self, key: &str, value: V) {
         self.slots.insert(key.to_string(), value.to_string());
     }
 
@@ -466,6 +466,13 @@ mod tests {
         let mut ctx = NarrativeContext::new();
         ctx.insert("KEY", "VALUE");
         assert_eq!(ctx.get("KEY").unwrap(), "VALUE");
+
+        // Test non-string types
+        ctx.insert("YEAR", 2150);
+        assert_eq!(ctx.get("YEAR").unwrap(), "2150");
+
+        ctx.insert("ACTIVE", true);
+        assert_eq!(ctx.get("ACTIVE").unwrap(), "true");
     }
 
     #[test]
