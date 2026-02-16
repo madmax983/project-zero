@@ -32,6 +32,15 @@ pub struct Heirloom {
     pub efficiency_bonus: f32,
 }
 
+/// Event triggered when an Ancient Structure is sacrificed for knowledge.
+#[derive(Event, Debug, Clone)]
+pub struct RetrogradeEngineeringEvent {
+    /// The label of the building destroyed (e.g. "Ancient Reactor").
+    pub building_label: String,
+    /// Amount of knowledge gained.
+    pub knowledge_gained: f32,
+}
+
 /// Decays the HP of Ancient Structures over time.
 pub fn ancient_structure_decay_system(mut query: Query<&mut Structure, With<AncientStructure>>) {
     const DECAY_RATE: f32 = 0.05;

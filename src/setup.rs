@@ -7,6 +7,7 @@ use crate::gpu::context::GpuContext;
 use crate::layer1::chronicle::AddChronicleEvent;
 use crate::layer1::pop::PopDied;
 use crate::layer1::social::AffinityChange;
+use crate::layer1::heirloom::RetrogradeEngineeringEvent;
 use crate::layer1::{
     AmbientLight, AtmosphereGrid, BuildMode, BuildingTracker, CameraCurrent, CameraTarget,
     Chronicle, ChronicleUiState, ColonyPolicies, ColonyResources, DesignationMode, LightMap,
@@ -122,6 +123,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::DeathEvent>>();
     world.init_resource::<Events<PopDied>>();
     world.init_resource::<Events<crate::layer1::structural_integrity::StructureCollapsed>>();
+    world.init_resource::<Events<RetrogradeEngineeringEvent>>();
 
     world.insert_resource(crate::layer1::taboo::TabooState::default());
 

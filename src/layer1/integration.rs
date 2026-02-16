@@ -296,3 +296,23 @@ pub fn inspector_outcome_bridge_system(
         }
     }
 }
+
+/// Creates chronicle entries from [`RetrogradeEngineeringEvent`] events.
+///
+/// Bridges Retrograde Engineering (Heirloom) and Chronicle system (History).
+pub fn retrograde_chronicle_bridge(
+    mut events: EventReader<crate::layer1::heirloom::RetrogradeEngineeringEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for event in events.read() {
+        let text = format!(
+            "Sacrificed {} for {:.0} Knowledge. The past fuels the future.",
+            event.building_label, event.knowledge_gained
+        );
+
+        chronicle_events.send(AddChronicleEvent {
+            text,
+            importance: EventImportance::Major,
+        });
+    }
+}
