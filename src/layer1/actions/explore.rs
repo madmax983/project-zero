@@ -10,7 +10,7 @@ use bevy_ecs::prelude::*;
 /// Exploration is a medium-priority task (0.55 utility) - slightly better than
 /// regular work but less critical than hauling food or healing.
 #[must_use]
-pub fn evaluate_explore(
+pub(crate) fn evaluate_explore(
     pop_pos: &GridPosition,
     weights: &UtilityWeights,
     anomalies: &[PositionProxy],

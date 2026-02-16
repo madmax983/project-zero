@@ -11,7 +11,7 @@ use bevy_ecs::prelude::*;
 /// If health is low (e.g. < 90%), and there is a hospital available, return a score.
 /// Score increases as health decreases.
 #[must_use]
-pub fn evaluate_seek_medical_care(
+pub(crate) fn evaluate_seek_medical_care(
     pop_pos: &GridPosition,
     _needs: &crate::layer1::needs::Needs,
     health: &Health,

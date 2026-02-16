@@ -14,7 +14,7 @@ use bevy_ecs::prelude::*;
 ///
 /// `Some((utility, target_entity))` if a valid house is found, `None` otherwise.
 #[must_use]
-pub fn evaluate_satisfy_rest(
+pub(crate) fn evaluate_satisfy_rest(
     pop_pos: &GridPosition,
     needs: &Needs,
     weights: &UtilityWeights,

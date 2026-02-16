@@ -9,7 +9,7 @@ use crate::layer1::utility_types::{ActionType, manhattan_distance};
 use bevy_ecs::prelude::*;
 
 /// Evaluates actions for a pop undergoing a mental break.
-pub fn evaluate_mental_break(
+pub(crate) fn evaluate_mental_break(
     data: &PopEvalData,
     world: &mut World,
 ) -> Option<(ActionType, f32, Option<Entity>)> {

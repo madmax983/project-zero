@@ -15,7 +15,7 @@ use bevy_ecs::prelude::*;
 /// # Returns
 /// A tuple `(utility, designation_entity)` if a suitable task is found.
 #[must_use]
-pub fn evaluate_work(
+pub(crate) fn evaluate_work(
     pop_pos: &GridPosition,
     weights: &UtilityWeights,
     designations: &[PositionProxy],

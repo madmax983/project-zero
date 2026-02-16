@@ -13,7 +13,7 @@ use bevy_ecs::prelude::*;
 ///
 /// `Some((utility, target_entity))` if a tavern is found, `None` otherwise.
 #[must_use]
-pub fn evaluate_socialize(
+pub(crate) fn evaluate_socialize(
     pop_pos: &GridPosition,
     needs: &Needs,
     weights: &UtilityWeights,

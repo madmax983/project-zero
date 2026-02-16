@@ -19,7 +19,7 @@ use bevy_ecs::prelude::*;
 ///
 /// **Returns:** `Some((utility, item_entity))`
 #[must_use]
-pub fn evaluate_haul(
+pub(crate) fn evaluate_haul(
     pop_pos: &GridPosition,
     weights: &UtilityWeights,
     items: &[ItemProxy],

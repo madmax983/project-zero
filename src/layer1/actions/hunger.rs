@@ -12,7 +12,7 @@ use bevy_ecs::prelude::*;
 
 /// Evaluates the utility of satisfying hunger at available farms.
 #[must_use]
-pub fn evaluate_satisfy_hunger(
+pub(crate) fn evaluate_satisfy_hunger(
     pop_pos: &GridPosition,
     needs: &Needs,
     weights: &UtilityWeights,
