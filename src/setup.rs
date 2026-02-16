@@ -126,6 +126,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<PopDied>>();
     world.init_resource::<Events<crate::layer1::structural_integrity::StructureCollapsed>>();
     world.init_resource::<Events<RetrogradeEngineeringEvent>>();
+    world.init_resource::<Events<crate::layer1::energy::GridOverloadEvent>>();
 
     world.insert_resource(crate::layer1::taboo::TabooState::default());
 

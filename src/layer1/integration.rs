@@ -316,3 +316,27 @@ pub fn retrograde_chronicle_bridge(
         });
     }
 }
+
+/// Spawns fire when a grid component is overloaded.
+///
+/// Bridges Energy (Overload) and Environment (Fire).
+pub fn grid_overload_fire_bridge(
+    mut events: EventReader<crate::layer1::energy::GridOverloadEvent>,
+    mut commands: Commands,
+    grid_positions: Query<&GridPosition>,
+    existing_fires: Query<&GridPosition, With<crate::layer1::fire::Fire>>,
+) {
+    for event in events.read() {
+        if let Ok(pos) = grid_positions.get(event.victim) {
+            // Check if fire already exists at this position
+            let already_burning = existing_fires.iter().any(|p| *p == *pos);
+
+            if !already_burning {
+                commands.spawn((
+                    crate::layer1::fire::Fire::default(),
+                    *pos,
+                ));
+            }
+        }
+    }
+}

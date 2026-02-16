@@ -37,3 +37,10 @@
     - Updated `PopEvalData` to include `Carrying`.
     - Updated `evaluate_haul` to target stockpiles if already carrying.
 - **Tests:** `tests/integration/hauling_flow.rs` (Integration test verified)
+
+### INT-008: Grid Overload -> Fire Ignition
+- **Date:** 2026-02-16
+- **Systems connected:** `power_grid_system` (Energy) -> `Fire` (Environment)
+- **Glue added:**
+    - Updated `src/layer1/energy/mod.rs` to spawn `Fire` entity on severe overload.
+- **Tests:** `tests/energy_fire.rs` (Integration test verified)
