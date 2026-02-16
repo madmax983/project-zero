@@ -161,6 +161,7 @@ pub fn build_simulation_schedule() -> Schedule {
         arrival_handler_system.after(movement_system),
         work_execution_system.after(arrival_handler_system),
         combat_execution_system.after(arrival_handler_system),
+        crate::layer1::turret::turret_fire_system.after(combat_execution_system),
         crate::layer1::justice::warden_execution_system.after(combat_execution_system),
         crate::layer1::execution::vandalize_execution_system.after(arrival_handler_system),
         update_social_class_system.after(arrival_handler_system),

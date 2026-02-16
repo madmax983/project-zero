@@ -19,6 +19,8 @@ pub enum Tech {
     Astronomy,
     /// Allows construction of Hydroponics Bays.
     Hydroponics,
+    /// Allows active defense (Trash Cannon, Militia).
+    Militia,
 }
 
 impl Tech {
@@ -31,6 +33,7 @@ impl Tech {
             Self::SocialStructures => 15.0,
             Self::Astronomy => 50.0,
             Self::Hydroponics => 30.0,
+            Self::Militia => 25.0,
         }
     }
 
@@ -43,6 +46,7 @@ impl Tech {
             Self::SocialStructures => "Social Structures",
             Self::Astronomy => "Astronomy",
             Self::Hydroponics => "Hydroponics",
+            Self::Militia => "Militia",
         }
     }
 }
