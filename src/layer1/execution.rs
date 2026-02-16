@@ -29,6 +29,7 @@
 //!     ↓ calls mine_rock/chop_tree
 //! ```
 
+use crate::layer1::actions::fetch_clothing::handle_fetch_clothing;
 use crate::layer1::actions::fetch_tool::handle_fetch_tool;
 use crate::layer1::actions::hunger::handle_arrival as handle_hunger_arrival;
 use crate::layer1::actions::rest::handle_arrival as handle_rest_arrival;
@@ -483,6 +484,10 @@ fn process_arrival(
         }
         ActionType::FetchTool => {
             handle_fetch_tool(commands, resources, pop_entity, equipment_opt);
+            true
+        }
+        ActionType::FetchClothing => {
+            handle_fetch_clothing(commands, resources, pop_entity, equipment_opt);
             true
         }
         ActionType::SatisfyHunger => {

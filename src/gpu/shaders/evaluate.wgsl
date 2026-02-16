@@ -15,8 +15,8 @@ struct PopInput {
     distance_weight: f32,
     availability_weight: f32,
     social_weight: f32,
-    success_count: array<u32, 25>,
-    attempt_count: array<u32, 25>,
+    success_count: array<u32, 26>,
+    attempt_count: array<u32, 26>,
     current_utility: f32,
     drafted: u32,
 }

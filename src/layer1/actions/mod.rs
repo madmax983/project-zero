@@ -9,6 +9,8 @@ pub mod rest;
 pub mod explore;
 /// Fetch tool action logic.
 pub mod fetch_tool;
+/// Fetch clothing action logic.
+pub mod fetch_clothing;
 /// Haul action logic.
 pub mod haul;
 /// Repair action logic.

@@ -33,6 +33,32 @@ pub struct Equipment {
     pub tool: Option<Entity>,
     /// The entity ID of the equipped weapon.
     pub weapon: Option<Entity>,
+    /// The entity ID of the equipped body clothing.
+    pub body: Option<Entity>,
+    /// The entity ID of the equipped headgear.
+    pub head: Option<Entity>,
+}
+
+/// Types of clothing items.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum ClothingType {
+    /// Basic tunic.
+    Tunic,
+    /// Warm parka.
+    Parka,
+}
+
+/// Component representing a clothing item.
+#[derive(Component, Debug, Clone)]
+pub struct Clothing {
+    /// The type of clothing.
+    pub clothing_type: ClothingType,
+    /// Insulation value (0.0 to 1.0).
+    pub insulation: f32,
+    /// Current durability remaining.
+    pub durability: f32,
+    /// Maximum durability.
+    pub max_durability: f32,
 }
 
 /// Types of food items Pops can consume.
