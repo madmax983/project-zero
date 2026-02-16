@@ -120,3 +120,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `INT-004` Integration: Fix Hauling Execution Flow — completed 2026-12-10
 - [x] `INT-008` Integration: Grid Overload -> Fire Ignition — completed 2026-02-16
 - [x] `135` Trash Cannon Defense — `specs/135-trash-cannon-defense.md` — completed 2026-02-23
+- [x] `136` Explosive Decompression — `specs/136-explosive-decompression.md` — completed 2026-02-16

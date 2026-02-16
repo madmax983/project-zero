@@ -381,6 +381,9 @@ pub use rituals::*;
 /// Airlock & Pressure system (Spec 119).
 pub mod pressure;
 pub use pressure::*;
+/// Explosive Decompression system (Spec 136).
+pub mod suction;
+pub use suction::*;
 /// Stress and mental breakdown system (Spec 127).
 pub mod stress;
 pub use stress::*;
