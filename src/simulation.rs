@@ -52,7 +52,8 @@ use crate::layer1::{
     pressure_damage_system, process_fuel_consumption_system, process_observe_system,
     process_refining_system, process_research_system, process_scan_system,
     process_start_plan_system, produce_food_system, quirk_generation_system, regrowth_system,
-    restore_leisure_system, restore_rest_in_housing_system, sleepwalk_end_system,
+    restore_leisure_system, restore_rest_in_housing_system, retrograde_chronicle_bridge,
+    sleepwalk_end_system,
     social::old_guard::{
         apply_founder_benefits_system, apply_mood_modifiers_system,
         check_generational_friction_system, mood_lifecycle_system,
@@ -72,6 +73,7 @@ use crate::layer1::{
     vermin_morale_system, waste_pollution_bridge, work_execution_system,
 };
 use crate::shared::time::SimulationTime;
+use crate::layer1::heirloom::RetrogradeEngineeringEvent;
 
 /// Helper system to update event buffers (clear old events).
 pub fn update_event_buffer<T: Event>(mut events: ResMut<Events<T>>) {
@@ -107,6 +109,7 @@ pub fn build_simulation_schedule() -> Schedule {
         update_event_buffer::<DeathEvent>,
         update_event_buffer::<PopDied>,
         update_event_buffer::<crate::layer1::structural_integrity::StructureCollapsed>,
+        update_event_buffer::<RetrogradeEngineeringEvent>,
     ));
 
     // --- AI Decision Chain (GPU compute) ---
@@ -368,6 +371,7 @@ pub fn build_simulation_schedule() -> Schedule {
         chronicle_event_handler_system.after(check_milestones_system),
         chronicle_rumor_bridge_system.after(check_milestones_system),
         pop_death_chronicle_bridge.after(death_system),
+        retrograde_chronicle_bridge.after(work_execution_system),
         art_observation_system.after(death_system),
         observe_inspector_system.after(art_observation_system),
     ));

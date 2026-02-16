@@ -24,3 +24,4 @@ Tasks currently being implemented. Builders: if a task is here, pick something e
 - [ ] `113` Social Stratification — `specs/113-social-stratification.md` — claimed 2026-10-24
 - [ ] `120` Crop Diversity — `specs/120-crop-diversity.md` — claimed 2026-02-15
 - [ ] `127` Stress Breakdowns — `specs/127-stress-breakdowns.md` — claimed 2026-02-15
+- [ ] `INT-007` Integration: Retrograde Engineering -> Chronicle — claimed 2026-10-26

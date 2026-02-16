@@ -44,7 +44,7 @@ use crate::layer1::farm::Farm;
 use crate::layer1::flora::process_flora_clearing;
 use crate::layer1::funeral::{Corpse, Grave, handle_bury_corpse};
 use crate::layer1::hazards::handle_workplace_hazards;
-use crate::layer1::heirloom::{Heirloom, ToolHistory};
+use crate::layer1::heirloom::{Heirloom, RetrogradeEngineeringEvent, ToolHistory};
 use crate::layer1::housing::Housing;
 use crate::layer1::items::{Equipment, Tool};
 use crate::layer1::map::{GridPosition, ScreenShake};
@@ -730,8 +730,15 @@ pub fn execute_demolish(world: &mut World, designation_entity: Entity) -> bool {
                         res.add_knowledge(amount);
                     }
 
+                    let label = building_type.map_or("Ancient Structure".to_string(), |b| b.label().to_string());
+
+                    // Fire integration event
+                    world.send_event(RetrogradeEngineeringEvent {
+                        building_label: label.clone(),
+                        knowledge_gained: amount,
+                    });
+
                     if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
-                        let label = building_type.map_or("Ancient Structure", |b| b.label());
                         log.add_colored(
                             format!(
                                 "Retrograde Engineering: Deconstructed {label} for {amount} Knowledge."

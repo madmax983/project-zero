@@ -63,3 +63,6 @@ mod strikes_work;
 
 #[path = "integration/atmosphere_vacuum.rs"]
 mod atmosphere_vacuum;
+
+#[path = "integration/retrograde_chronicle.rs"]
+mod retrograde_chronicle;
