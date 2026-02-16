@@ -4101,3 +4101,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Coexistence (Trade) vs. Monopoly (War).
 
 ---
+
+## The Observer Effect
+
+**Layer:** 1
+
+**Fantasy:** The universe only renders what you look at.
+
+**Mechanic:** Areas under "Fog of War" (unobserved by Pops/Sensors) become unstable. Resources might shift, or entropy accelerates. You have to keep looking at things to keep them real.
+
+**Emergence:** You forget to patrol the back warehouse. You go back a month later, and the crates have turned into... something else.
+
+**Tension:** Surveillance (stability) vs. Privacy/Power cost.
+
+---
+
+## The Living Constitution
+
+**Layer:** 1
+
+**Fantasy:** Laws evolve.
+
+**Mechanic:** The "Colony Edicts" aren't static. They gain XP. A "Martial Law" edict used for 10 years becomes "Tradition". Removing it causes massive unrest.
+
+**Emergence:** You enacted "Rationing" during the war. The war ended 5 years ago, but the colony refuses to stop rationing because "it's our way".
+
+**Tension:** Short-term Policy (flexibility) vs. Long-term Tradition (stability).
+
+---
+
+## Cargo Cult Logistics
+
+**Layer:** 1
+
+**Fantasy:** Doing the right thing for the wrong reason.
+
+**Mechanic:** If a supply drop lands when a Pop is doing a specific action (e.g., dancing), they might link the two. They start dancing to summon supplies.
+
+**Emergence:** Your haulers start performing elaborate rituals at the landing pad, slowing down efficiency but keeping morale high.
+
+**Tension:** Efficiency (standard procedure) vs. Morale (ritual comfort).
+
+---
+
+## Pheromone Gardening
+
+**Layer:** 1
+
+**Fantasy:** Communicating without words.
+
+**Mechanic:** Alien flora emits pheromones/colors based on colony state. You can "plant" messages to influence Pop moods (e.g., planting "Calm-Lilies" near the reactor).
+
+**Emergence:** The lilies turn red (Danger) before the sensors pick up the earthquake. The plants know first.
+
+**Tension:** Biological sensors (maintenance) vs. Electronic sensors (power).
+
+---
