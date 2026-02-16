@@ -8,6 +8,7 @@ use std::collections::HashSet;
 
 /// System to simulate explosive decompression suction.
 /// Entities are moved from high pressure to low pressure if the gradient is steep enough.
+#[allow(clippy::type_complexity)]
 pub fn suction_system(
     mut _commands: Commands,
     pressure: Res<PressureGrid>,
@@ -23,7 +24,7 @@ pub fn suction_system(
         .map(|pos| (pos.x, pos.y))
         .collect();
 
-    for (_entity, mut pos) in query.iter_mut() {
+    for (_entity, mut pos) in &mut query {
         let current_p = pressure.get(pos.x, pos.y);
 
         // Check 4 neighbors
@@ -31,7 +32,7 @@ pub fn suction_system(
         let mut best_target = None;
         let mut max_diff = 0.0;
 
-        for (dx, dy) in neighbors.iter() {
+        for (dx, dy) in &neighbors {
             let nx = pos.x + dx;
             let ny = pos.y + dy;
 
@@ -40,6 +41,7 @@ pub fn suction_system(
                 continue;
             }
             // Safe cast since we checked < 0
+            #[allow(clippy::cast_sign_loss)]
             if (nx as usize) >= pressure.width || (ny as usize) >= pressure.height {
                 continue;
             }

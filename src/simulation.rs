@@ -46,7 +46,8 @@ use crate::layer1::{
     clean_dead_workers_system, cleanup_previous_assignment_system, clothing_wear_system,
     combat_execution_system, consume_food_system, death_system, decay_needs_system,
     discovery_system, entropy_system, faction_satisfaction_morale_bridge, fire_damage_pops_system,
-    fire_damage_system, fire_spread_system, flora_attack_system, flora_spread_system, haul_system,
+    fire_damage_system, fire_pressure_check_system, fire_spread_system, flora_attack_system,
+    flora_spread_system, haul_system,
     healing_system, hypothermia_system, infiltration_system,
     inspector::{inspector_report_system, observe_inspector_system, spawn_inspector_system},
     inspector_outcome_bridge_system,
@@ -251,7 +252,8 @@ pub fn build_simulation_schedule() -> Schedule {
 
     // --- Environment (Fire, Acoustic) ---
     schedule.add_systems((
-        fire_spread_system.after(work_execution_system),
+        fire_pressure_check_system.after(work_execution_system),
+        fire_spread_system.after(fire_pressure_check_system),
         fire_damage_pops_system.after(fire_spread_system),
         crate::layer1::structure::fire_damage_structure_system.after(fire_spread_system),
         fire_damage_system

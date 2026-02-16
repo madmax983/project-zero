@@ -58,7 +58,7 @@ fn generate_civilizations(
         let mut ctx = NarrativeContext::new();
         ctx.insert("CIV_NAME", &civ_name);
         ctx.insert("ORIGIN_STAR", &star_name);
-        ctx.insert("YEAR", &year.to_string());
+        ctx.insert("YEAR", year.to_string());
 
         let text = generator
             .generate("CIVILIZATION_RISE", &ctx)
@@ -72,7 +72,7 @@ fn generate_civilizations(
             let fall_year = year + rng.gen_range(200..=3000);
             let mut fall_ctx = NarrativeContext::new();
             fall_ctx.insert("CIV_NAME", &civ_name);
-            fall_ctx.insert("YEAR", &fall_year.to_string());
+            fall_ctx.insert("YEAR", fall_year.to_string());
 
             let fall_text = generator
                 .generate("CIVILIZATION_FALL", &fall_ctx)
@@ -109,8 +109,8 @@ fn generate_wars(
         let mut ctx = NarrativeContext::new();
         ctx.insert("CIV_A", &civ_names[a]);
         ctx.insert("CIV_B", &civ_names[b]);
-        ctx.insert("START_YEAR", &start_year.to_string());
-        ctx.insert("END_YEAR", &end_year.to_string());
+        ctx.insert("START_YEAR", start_year.to_string());
+        ctx.insert("END_YEAR", end_year.to_string());
 
         let war_name = format!("the {}-{} War", &civ_names[a], &civ_names[b]);
         ctx.insert("WAR_NAME", &war_name);
@@ -155,7 +155,7 @@ fn generate_catastrophe(
 ) {
     let year = rng.gen_range(5000..=9500);
     let mut ctx = NarrativeContext::new();
-    ctx.insert("YEAR", &year.to_string());
+    ctx.insert("YEAR", year.to_string());
 
     let regions = [
         "the Reaching",
@@ -204,7 +204,7 @@ fn generate_era_transitions(
     for _ in 0..num_eras {
         let year = rng.gen_range(2000..=9800);
         let mut ctx = NarrativeContext::new();
-        ctx.insert("YEAR", &year.to_string());
+        ctx.insert("YEAR", year.to_string());
 
         let old_idx = rng.gen_range(0..eras.len());
         let mut new_idx = rng.gen_range(0..eras.len());
@@ -256,7 +256,7 @@ fn generate_artifacts(
     for _ in 0..num_artifacts {
         let year = rng.gen_range(2000..=9000);
         let mut ctx = NarrativeContext::new();
-        ctx.insert("YEAR", &year.to_string());
+        ctx.insert("YEAR", year.to_string());
 
         let name = names[rng.gen_range(0..names.len())];
         ctx.insert("ARTIFACT_NAME", name);

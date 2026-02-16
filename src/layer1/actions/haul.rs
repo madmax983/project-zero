@@ -20,7 +20,7 @@ use bevy_ecs::prelude::*;
 /// **Returns:** `Some((utility, item_entity))`
 #[must_use]
 pub(crate) fn evaluate_haul(
-    pop_pos: &GridPosition,
+    pop_pos: GridPosition,
     weights: &UtilityWeights,
     items: &[ItemProxy],
     stockpiles: &[PositionProxy],
@@ -39,7 +39,7 @@ pub(crate) fn evaluate_haul(
         let mut min_dist = i32::MAX;
 
         for stockpile in stockpiles {
-            let dist = crate::layer1::utility_types::manhattan_distance(pop_pos, &stockpile.pos);
+            let dist = crate::layer1::utility_types::manhattan_distance(&pop_pos, &stockpile.pos);
             if dist < min_dist {
                 min_dist = dist;
                 best_stockpile = Some(stockpile.entity);
@@ -79,7 +79,7 @@ pub(crate) fn evaluate_haul(
         }
 
         let context = calculate_context_score(
-            *pop_pos,
+            pop_pos,
             Some(item.pos),
             1, // Capacity
             0, // Occupied

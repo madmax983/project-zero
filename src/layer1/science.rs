@@ -326,7 +326,7 @@ mod tests {
             .map(|(e, p, _)| PositionProxy { entity: e, pos: *p })
             .collect();
 
-        let result = evaluate_explore(&pop_pos, &weights, &anomalies);
+        let result = evaluate_explore(pop_pos, &weights, &anomalies);
 
         assert!(result.is_some());
         let (_, target) = result.unwrap();

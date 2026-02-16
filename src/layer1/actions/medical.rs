@@ -12,9 +12,9 @@ use bevy_ecs::prelude::*;
 /// Score increases as health decreases.
 #[must_use]
 pub(crate) fn evaluate_seek_medical_care(
-    pop_pos: &GridPosition,
+    pop_pos: GridPosition,
     _needs: &crate::layer1::needs::Needs,
-    health: &Health,
+    health: Health,
     weights: &UtilityWeights,
     hospitals: &[CapacityProxy],
 ) -> Option<(f32, Entity)> {
@@ -34,7 +34,7 @@ pub(crate) fn evaluate_seek_medical_care(
     for hospital in hospitals {
         // Simple context score
         let context = calculate_context_score(
-            *pop_pos,
+            pop_pos,
             Some(hospital.pos),
             hospital.capacity, // Use proxy capacity (likely 10)
             hospital.usage,    // Occupied (likely 0)

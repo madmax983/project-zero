@@ -10,7 +10,7 @@ use bevy_ecs::prelude::*;
 /// The score is high (0.95 base) minus a distance penalty, prioritizing closest enemies.
 pub(crate) fn evaluate_fight_action<'a>(
     drafted: bool,
-    pop_pos: &GridPosition,
+    pop_pos: GridPosition,
     enemies: impl Iterator<Item = (Entity, &'a GridPosition)>,
 ) -> Option<(f32, Entity)> {
     if !drafted {
@@ -55,7 +55,7 @@ pub(crate) fn evaluate_drafted_behavior(
     let mut fauna_state = world.query::<(Entity, &GridPosition, &Fauna)>();
     let enemies = fauna_state.iter(world).map(|(e, p, _)| (e, p));
 
-    if let Some((utility, target)) = evaluate_fight_action(true, &data.pos, enemies) {
+    if let Some((utility, target)) = evaluate_fight_action(true, data.pos, enemies) {
         best_action = ActionType::Fight;
         best_utility = utility;
         best_target = Some(target);
@@ -73,7 +73,7 @@ mod tests {
     fn test_evaluate_fight_action_not_drafted() {
         let pop_pos = GridPosition { x: 0, y: 0 };
         let enemies = vec![];
-        let result = evaluate_fight_action(false, &pop_pos, enemies.into_iter());
+        let result = evaluate_fight_action(false, pop_pos, enemies.into_iter());
         assert!(result.is_none());
     }
 
@@ -81,7 +81,7 @@ mod tests {
     fn test_evaluate_fight_action_drafted_no_enemies() {
         let pop_pos = GridPosition { x: 0, y: 0 };
         let enemies = vec![];
-        let result = evaluate_fight_action(true, &pop_pos, enemies.into_iter());
+        let result = evaluate_fight_action(true, pop_pos, enemies.into_iter());
         assert!(result.is_none());
     }
 
@@ -91,7 +91,7 @@ mod tests {
         let enemy_pos = GridPosition { x: 5, y: 0 };
         let enemies = vec![(Entity::from_raw(1), &enemy_pos)];
 
-        let result = evaluate_fight_action(true, &pop_pos, enemies.into_iter());
+        let result = evaluate_fight_action(true, pop_pos, enemies.into_iter());
         assert!(result.is_some());
         assert_eq!(result.unwrap().1, Entity::from_raw(1));
     }

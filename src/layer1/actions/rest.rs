@@ -15,7 +15,7 @@ use bevy_ecs::prelude::*;
 /// `Some((utility, target_entity))` if a valid house is found, `None` otherwise.
 #[must_use]
 pub(crate) fn evaluate_satisfy_rest(
-    pop_pos: &GridPosition,
+    pop_pos: GridPosition,
     needs: &Needs,
     weights: &UtilityWeights,
     housing: &[CapacityProxy],
@@ -28,7 +28,7 @@ pub(crate) fn evaluate_satisfy_rest(
 
     for house in housing {
         let context = calculate_context_score(
-            *pop_pos,
+            pop_pos,
             Some(house.pos),
             house.capacity,
             house.usage,

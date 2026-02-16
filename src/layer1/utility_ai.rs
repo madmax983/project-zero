@@ -142,7 +142,7 @@ pub(crate) fn evaluate_single_pop(
 
     // Evaluate Hunger
     if let Some((utility, target)) =
-        evaluate_satisfy_hunger(&pop_pos, &needs, &weights, &buffer.farms)
+        evaluate_satisfy_hunger(pop_pos, &needs, &weights, &buffer.farms)
     {
         check_best(ActionType::SatisfyHunger, utility, Some(target));
     }
@@ -160,7 +160,7 @@ pub(crate) fn evaluate_single_pop(
 
     if !is_striking {
         if let Some((utility, target)) =
-            evaluate_work(&pop_pos, &weights, &buffer.work_designations)
+            evaluate_work(pop_pos, &weights, &buffer.work_designations)
         {
             let penalty =
                 crate::layer1::taboo::evaluate_taboo_penalty(ActionType::Work, context.taboo);
@@ -180,7 +180,7 @@ pub(crate) fn evaluate_single_pop(
 
     // Evaluate SatisfyRest
     if let Some((utility, target)) =
-        evaluate_satisfy_rest(&pop_pos, &needs, &weights, &buffer.housing)
+        evaluate_satisfy_rest(pop_pos, &needs, &weights, &buffer.housing)
     {
         check_best(ActionType::SatisfyRest, utility, Some(target));
     }
@@ -188,7 +188,7 @@ pub(crate) fn evaluate_single_pop(
     // Evaluate Socialize
     if !is_penal {
         if let Some((utility, target)) =
-            evaluate_socialize(&pop_pos, &needs, &weights, &buffer.taverns)
+            evaluate_socialize(pop_pos, &needs, &weights, &buffer.taverns)
         {
             check_best(ActionType::Socialize, utility, Some(target));
         }
@@ -196,14 +196,14 @@ pub(crate) fn evaluate_single_pop(
 
     // Evaluate Refine
     if !is_striking && !is_penal {
-        if let Some((utility, target)) = evaluate_refine(&pop_pos, &weights, &buffer.refining) {
+        if let Some((utility, target)) = evaluate_refine(pop_pos, &weights, &buffer.refining) {
             check_best(ActionType::Refine, utility, Some(target));
         }
     }
 
     // Evaluate Farm
     if !is_striking && !is_penal {
-        if let Some((utility, target)) = evaluate_farm(&pop_pos, &weights, &buffer.farms) {
+        if let Some((utility, target)) = evaluate_farm(pop_pos, &weights, &buffer.farms) {
             check_best(ActionType::Farm, utility, Some(target));
         }
     }
@@ -215,7 +215,7 @@ pub(crate) fn evaluate_single_pop(
     if !is_striking {
         let equipment = equipment_opt.unwrap_or_default();
         if let Some((utility, target)) =
-            evaluate_fetch_tool(&pop_pos, &equipment, context.resources, &buffer.stockpiles)
+            evaluate_fetch_tool(pop_pos, &equipment, context.resources, &buffer.stockpiles)
         {
             check_best(ActionType::FetchTool, utility, Some(target));
         }
@@ -225,7 +225,7 @@ pub(crate) fn evaluate_single_pop(
     if !is_striking {
         let equipment = equipment_opt.unwrap_or_default();
         if let Some((utility, target)) = evaluate_fetch_clothing(
-            &pop_pos,
+            pop_pos,
             &equipment,
             context.resources,
             &buffer.stockpiles,
@@ -240,7 +240,7 @@ pub(crate) fn evaluate_single_pop(
         // But evaluate_repair needs to handle them separately or together?
         // evaluate_repair takes two iterators. We update it to take two slices.
         if let Some((utility, target)) = evaluate_repair(
-            &pop_pos,
+            pop_pos,
             &weights,
             &buffer.repair_designations,
             &buffer.repair_structures,
@@ -251,7 +251,7 @@ pub(crate) fn evaluate_single_pop(
 
     // Evaluate Explore
     if !is_striking && !is_penal {
-        if let Some((utility, target)) = evaluate_explore(&pop_pos, &weights, &buffer.anomalies) {
+        if let Some((utility, target)) = evaluate_explore(pop_pos, &weights, &buffer.anomalies) {
             check_best(ActionType::Explore, utility, Some(target));
         }
     }
@@ -259,7 +259,7 @@ pub(crate) fn evaluate_single_pop(
     // Evaluate Research
     if !is_striking && !is_penal {
         if let Some((utility, target)) =
-            evaluate_research(&pop_pos, &weights, context.resources, &buffer.libraries)
+            evaluate_research(pop_pos, &weights, context.resources, &buffer.libraries)
         {
             check_best(ActionType::Research, utility, Some(target));
         }
@@ -268,7 +268,7 @@ pub(crate) fn evaluate_single_pop(
     // Evaluate Haul
     if !is_striking {
         if let Some((utility, target)) = evaluate_haul(
-            &pop_pos,
+            pop_pos,
             &weights,
             &buffer.items,
             &buffer.stockpiles,
@@ -282,7 +282,7 @@ pub(crate) fn evaluate_single_pop(
     // Evaluate SeekMedicalCare
     if let Some(health) = health {
         if let Some((utility, target)) =
-            evaluate_seek_medical_care(&pop_pos, &needs, health, &weights, &buffer.hospitals)
+            evaluate_seek_medical_care(pop_pos, &needs, *health, &weights, &buffer.hospitals)
         {
             check_best(ActionType::SeekMedicalCare, utility, Some(target));
         }
@@ -291,7 +291,7 @@ pub(crate) fn evaluate_single_pop(
     // Evaluate BuryCorpse
     if !is_striking {
         if let Some((utility, target)) =
-            evaluate_bury_corpse(&pop_pos, &buffer.corpses, &buffer.graves, &weights)
+            evaluate_bury_corpse(pop_pos, &buffer.corpses, &buffer.graves, &weights)
         {
             check_best(ActionType::BuryCorpse, utility, Some(target));
         }

@@ -27,6 +27,7 @@ use super::fire::Flammable;
 use super::housing::Housing;
 use super::social::Tavern;
 use super::stockpile::Stockpile;
+use crate::layer1::control::DoorControl;
 use crate::layer1::energy::{Conduit, FuelConsumer, PowerConsumer, PowerSource};
 use crate::layer1::heirloom::AncientStructure;
 use crate::layer1::lighting::LightSource;
@@ -319,12 +320,11 @@ impl BuildingType {
             | Self::ConveyorBelt
             | Self::Hopper
             | Self::LifeSupport
-            | Self::Airlock => Some(Tech::MetalWorking),
+            | Self::Airlock | Self::Vent => Some(Tech::MetalWorking),
             Self::Tavern | Self::Statue => Some(Tech::SocialStructures),
             Self::Tower => Some(Tech::Masonry),
             Self::Observatory => Some(Tech::Astronomy),
             Self::HydroponicsBay => Some(Tech::Hydroponics),
-            Self::Vent => Some(Tech::MetalWorking),
             Self::TrashCannon => Some(Tech::Militia),
             _ => None,
         }
@@ -836,7 +836,10 @@ fn spawn_building(
 
     match building_type {
         BuildingType::Gate => {
-            entity.insert(crate::layer1::defense::Gate::default());
+            entity.insert((
+                crate::layer1::defense::Gate::default(),
+                DoorControl::default(),
+            ));
         }
         BuildingType::Wall | BuildingType::Tower => {
             // Logic handled by generic material/structure above
@@ -1154,8 +1157,7 @@ fn spawn_building(
             ));
         }
         BuildingType::Airlock => {
-            // Airlock behaves like a gate but sealed
-            // Currently no specific component for Airlock logic other than BuildingType check
+            entity.insert(DoorControl::default());
         }
         BuildingType::Vent => {
             // Vent allows flow but blocks movement
@@ -1533,6 +1535,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Vent);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::TrashCannon);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

@@ -83,6 +83,8 @@ pub mod memory;
 pub mod metal_industry_tests;
 /// Pop needs (hunger, rest).
 pub mod needs;
+/// Door control system (Spec 134).
+pub mod control;
 /// Notification system.
 pub mod notifications;
 /// Pathfinding algorithms.
@@ -160,6 +162,7 @@ pub use mascot::*;
 pub use medical::*;
 pub use memory::*;
 pub use needs::*;
+pub use control::*;
 pub use notifications::*;
 pub use pop::*;
 pub use refining::*;
@@ -188,6 +191,8 @@ pub mod rumor;
 pub mod skills;
 #[cfg(test)]
 mod waste_tests;
+#[cfg(test)]
+mod venting_tests;
 
 /// Vermin infestation logic (Spec 073).
 pub mod vermin;

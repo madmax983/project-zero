@@ -13,7 +13,7 @@ use bevy_ecs::prelude::*;
 /// `Some((utility, target_entity))` if a valid farm is found, `None` otherwise.
 #[must_use]
 pub(crate) fn evaluate_farm(
-    pop_pos: &GridPosition,
+    pop_pos: GridPosition,
     weights: &UtilityWeights,
     farms: &[CapacityProxy],
 ) -> Option<(f32, Entity)> {
@@ -24,7 +24,7 @@ pub(crate) fn evaluate_farm(
         // Pre-filtered for schedule and capacity in evaluate_actions_system
 
         let context =
-            calculate_context_score(*pop_pos, Some(farm.pos), farm.capacity, farm.usage, weights);
+            calculate_context_score(pop_pos, Some(farm.pos), farm.capacity, farm.usage, weights);
 
         let success = calculate_success_modifier(ActionType::Farm, weights);
         let utility = base_utility * context * success;

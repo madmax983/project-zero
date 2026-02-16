@@ -35,7 +35,7 @@ mod tests {
             .map(|(e, p, _)| PositionProxy { entity: e, pos: *p })
             .collect();
 
-        let result = evaluate_work(&pop_pos, &weights, &proxies);
+        let result = evaluate_work(pop_pos, &weights, &proxies);
 
         assert!(result.is_some());
         let (utility, target) = result.unwrap();
@@ -76,7 +76,7 @@ mod tests {
             .map(|(e, p, _)| PositionProxy { entity: e, pos: *p })
             .collect();
 
-        let (_, target) = evaluate_work(&pop_pos, &weights, &proxies).unwrap();
+        let (_, target) = evaluate_work(pop_pos, &weights, &proxies).unwrap();
         assert_eq!(target, close);
     }
 
@@ -88,7 +88,7 @@ mod tests {
 
         let proxies: Vec<PositionProxy> = vec![];
 
-        let result = evaluate_work(&pop_pos, &weights, &proxies);
+        let result = evaluate_work(pop_pos, &weights, &proxies);
         assert!(result.is_none());
     }
 }
