@@ -21,6 +21,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `130` Social Debt — `specs/130-social-debt.md`
 - [ ] `134` Emergency Venting — `specs/134-emergency-venting.md`
 - [ ] `135` Trash Cannon Defense — `specs/135-trash-cannon-defense.md`
+- [ ] `136` Explosive Decompression — `specs/136-explosive-decompression.md`
 
 ## MVP — Layer 2: System Simulation
 
