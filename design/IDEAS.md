@@ -3962,3 +3962,72 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Maintenance downtime vs. creeping inefficiency.
 
 ---
+## Chronal Anomalies
+
+**Layer:** 1
+
+**Fantasy:** Time is just another resource to manage.
+
+**Mechanic:** Localized zones where `TimeScale` is >1 or <1. Crops grow fast but spoil fast. Wounds heal fast but pops age fast. Machines work fast but break fast.
+
+**Emergence:** You build your hospital in a "Slow Time" zone to keep critical patients stable while you research a cure. You build your farm in "Fast Time" and have to harvest every hour.
+
+**Tension:** Speed (Production) vs. Longevity (Maintenance/Life).
+
+---
+
+## Phase-Shift Architecture
+
+**Layer:** 1
+
+**Fantasy:** Hiding your ugly industry in the closet of reality.
+
+**Mechanic:** A "Phase Shifter" building allows pops to enter a "Shadow Layer" of the map. You can build there (doubling space), but "Shadow" entities slowly drain Sanity.
+
+**Emergence:** You move all your noisy, dirty generators to the Shadow Layer. The engineers who maintain them come back... wrong. They start whispering to the generators.
+
+**Tension:** Space efficiency vs. Sanity/Horror.
+
+---
+
+## Galactic Insurance
+
+**Layer:** Cross-layer
+
+**Fantasy:** Scamming the galaxy.
+
+**Mechanic:** Pay monthly credits to a Layer 3 Corp. If a specific disaster (Fire, Raid) is detected, you get a payout. Premiums rise with claims. Fraud detection exists.
+
+**Emergence:** You are broke. You order a pop to start a fire in the empty warehouse. You collect the insurance money to buy food. The investigator arrives.
+
+**Tension:** Safety net vs. Cost. Honesty vs. Fraud.
+
+---
+
+## Predatory Weather
+
+**Layer:** 2
+
+**Fantasy:** The planet is hunting you.
+
+**Mechanic:** Storms on the planetary map aren't random; they pathfind towards high Energy/Heat concentrations.
+
+**Emergence:** You turn on the planetary shield (massive energy spike). The "Great Eye" storm immediately U-turns and smashes into your capital.
+
+**Tension:** Power usage vs. Weather aggro.
+
+---
+
+## The Last Light
+
+**Layer:** 3
+
+**Fantasy:** You are the last light in the dark ages.
+
+**Mechanic:** As other Layer 3 Civilizations collapse (due to wars/crisis), they emit "Refugee Fleets" and "Lost Tech". If your "Stability" is high, they come to you.
+
+**Emergence:** The Galaxy burns. You are swamped with billions of refugees. You have the tech of a dozen dead empires, but you can't feed the people. You become a Museum City of starving scholars.
+
+**Tension:** Open borders (Knowledge/Pop gain) vs. Closed borders (Survival).
+
+---
