@@ -6,19 +6,19 @@
 //!
 //! # The Combat Flow
 //!
-//! 1.  **Drafting**: A pop is marked with the [`Drafted`] component. This overrides their
+//! 1.  **Drafting**: A pop is marked with the [`crate::layer1::combat::Drafted`] component. This overrides their
 //!     normal Utility AI logic (eating, working) and forces them to prioritize [`ActionType::Fight`](crate::layer1::utility_ai::ActionType::Fight).
 //! 2.  **Targeting**: The [`crate::layer1::utility_ai::evaluate_actions_system`] assigns a target (Hostile Fauna, Invaders)
 //!     if one is in range.
-//! 3.  **Execution**: The [`execute_attack`] function is called by the execution layer
+//! 3.  **Execution**: The [`crate::layer1::combat::execute_attack`] function is called by the execution layer
 //!     when the pop is in range and ready to strike.
-//! 4.  **Damage**: Damage is calculated based on the equipped [`Weapon`] and applied to the target's [`crate::layer1::health::Health`].
+//! 4.  **Damage**: Damage is calculated based on the equipped [`crate::layer1::combat::Weapon`] and applied to the target's [`crate::layer1::health::Health`].
 //!
 //! # Key Components
 //!
-//! *   [`Drafted`]: The switch that turns a worker into a soldier.
-//! *   [`CombatState`]: Tracks internal cooldowns and last targets.
-//! *   [`Weapon`]: Defines damage, range, and accuracy.
+//! *   [`crate::layer1::combat::Drafted`]: The switch that turns a worker into a soldier.
+//! *   [`crate::layer1::combat::CombatState`]: Tracks internal cooldowns and last targets.
+//! *   [`crate::layer1::combat::Weapon`]: Defines damage, range, and accuracy.
 
 use crate::layer1::map::ScreenShake;
 use crate::layer1::particles::spawn_particle;

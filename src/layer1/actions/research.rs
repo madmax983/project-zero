@@ -5,13 +5,13 @@ use crate::layer1::utility_types::{ActionType, UtilityWeights};
 use crate::layer1::utility_types::{calculate_context_score, calculate_success_modifier};
 use bevy_ecs::prelude::*;
 
-/// Evaluates the utility of performing scientific research at a [`Library`].
+/// Evaluates the utility of performing scientific research at a [`crate::layer1::tech::Library`].
 ///
 /// Research generates knowledge points, which unlock new [`crate::layer1::tech::Tech`].
 ///
 /// **Constraints:**
 /// *   Returns `None` if the colony's knowledge storage ([`ColonyResources`]) is full.
-/// *   Requires an available worker slot at a [`Library`].
+/// *   Requires an available worker slot at a [`crate::layer1::tech::Library`].
 #[must_use]
 pub fn evaluate_research(
     pop_pos: &GridPosition,

@@ -297,7 +297,7 @@ pub fn inspector_outcome_bridge_system(
     }
 }
 
-/// Creates chronicle entries from [`RetrogradeEngineeringEvent`] events.
+/// Creates chronicle entries from [`crate::layer1::heirloom::RetrogradeEngineeringEvent`] events.
 ///
 /// Bridges Retrograde Engineering (Heirloom) and Chronicle system (History).
 pub fn retrograde_chronicle_bridge(

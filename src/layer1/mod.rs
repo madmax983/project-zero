@@ -6,17 +6,17 @@
 //! # Core Concepts
 //!
 //! ## The Grid
-//! The world is represented by a 2D grid of tiles (see [`map::GridPosition`] and [`terrain::TerrainGrid`]).
+//! The world is represented by a 2D grid of tiles (see [`crate::layer1::map::GridPosition`] and [`crate::layer1::terrain::TerrainGrid`]).
 //! Each tile can contain:
 //! - **Terrain:** The base layer (Grass, Water, Rock).
-//! - **Building:** Constructed structures (Housing, Farm, Walls). See [`building`].
+//! - **Building:** Constructed structures (Housing, Farm, Walls). See [`crate::layer1::building`].
 //! - **Entities:** Pops, Visitors, Fauna, and Items.
 //!
 //! ## The Agents (Pops)
 //! "Pops" are the primary agents. They are not directly controlled by the player. Instead, they:
-//! 1.  **Have Needs:** Hunger, Rest, Social, Leisure (see [`needs`]).
-//! 2.  **Make Decisions:** Utility AI scores potential actions based on needs and environment (see [`utility_ai`]).
-//! 3.  **Perform Actions:** Working, Eating, Sleeping, Socializing (see [`actions`]).
+//! 1.  **Have Needs:** Hunger, Rest, Social, Leisure (see [`crate::layer1::needs`]).
+//! 2.  **Make Decisions:** Utility AI scores potential actions based on needs and environment (see [`crate::layer1::utility_ai`]).
+//! 3.  **Perform Actions:** Working, Eating, Sleeping, Socializing (see [`crate::layer1::actions`]).
 //!
 //! ## The Simulation Loop
 //! The simulation advances in discrete ticks (see [`crate::simulation`]).
@@ -25,10 +25,10 @@
 //! 3.  **Economy Phase:** Resources are produced/consumed, needs decay.
 //!
 //! # Module Structure
-//! - **Entities:** [`pop`], [`building`], [`fauna`], [`visitor`]
-//! - **Systems:** [`needs`], [`health`], [`combat`], [`tech`]
-//! - **Environment:** [`terrain`], [`map`], [`weather`], [`lighting`]
-//! - **Economy:** [`resources`], [`trade`], [`market`]
+//! - **Entities:** [`crate::layer1::pop`], [`crate::layer1::building`], [`crate::layer1::fauna`], [`crate::layer1::visitor`]
+//! - **Systems:** [`crate::layer1::needs`], [`crate::layer1::health`], [`crate::layer1::combat`], [`crate::layer1::tech`]
+//! - **Environment:** [`crate::layer1::terrain`], [`crate::layer1::map`], [`crate::layer1::weather`], [`crate::layer1::lighting`]
+//! - **Economy:** [`crate::layer1::resources`], [`crate::layer1::trade`]
 
 /// Pop actions logic.
 pub mod actions;
@@ -230,8 +230,10 @@ pub use room_quality::*;
 /// Hostile Fauna (Spec 048).
 pub mod fauna;
 pub use fauna::*;
+/// Cultural Artifacts and Statues.
 pub mod art;
 pub use art::*;
+/// Combat system and drafting logic.
 pub mod combat;
 /// Visitor system (Spec 074).
 pub mod visitor;
@@ -240,6 +242,7 @@ pub use visitor::*;
 /// Day/Night cycle system (Spec 065).
 pub mod day_night;
 pub use day_night::*;
+/// Justice system (Spec 072).
 pub mod justice;
 pub use justice::*;
 
@@ -318,6 +321,7 @@ pub use water::*;
 /// Antagonistic Flora system (Spec 092).
 pub mod flora;
 pub use flora::*;
+/// Private stash system for pops.
 pub mod private_stash;
 pub use private_stash::*;
 /// Resource purity system (Spec 106).
@@ -369,12 +373,14 @@ pub use logistics::*;
 /// Social stratification system (Spec 113).
 pub mod social_stratification;
 pub use social_stratification::*;
+/// Technological rituals and machine spirits.
 pub mod rituals;
 pub use rituals::*;
 
 /// Airlock & Pressure system (Spec 119).
 pub mod pressure;
 pub use pressure::*;
+/// Stress and mental breakdown system (Spec 127).
 pub mod stress;
 pub use stress::*;
 /// Social mimicry system (Spec 128).
