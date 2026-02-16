@@ -11,14 +11,14 @@ use bevy_ecs::prelude::*;
 #[derive(Resource)]
 pub struct AtmosphereGrid {
     /// Width of the grid.
-    pub width: usize,
+    pub(crate) width: usize,
     /// Height of the grid.
-    pub height: usize,
+    pub(crate) height: usize,
     /// Flattened grid values.
-    pub values: Vec<f32>,
+    pub(crate) values: Vec<f32>,
     /// Secondary buffer for diffusion calculation (double buffering).
     /// Used to avoid allocating a new vector every tick.
-    pub scratch: Vec<f32>,
+    pub(crate) scratch: Vec<f32>,
     /// Retention rate of pollution per tick (0.0 to 1.0).
     /// Higher values mean pollution stays longer.
     /// Default: 0.99.

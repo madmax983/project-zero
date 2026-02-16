@@ -2335,9 +2335,13 @@ mod tests {
         // Morale efficiency = 0.5 (low morale)
         // Expected = 10.0 * 1.0 * 0.5 = 5.0
         // Ludwig: Organic factor (0.9-1.1) implies range 4.5 - 5.5
+        // Note: 5% Critical hit chance multiplies by 5.0 -> ~25.0
+        let is_crit_range = progress.current >= 22.5 && progress.current <= 27.5;
+        let is_normal_range = progress.current >= 4.5 && progress.current <= 5.5;
+
         assert!(
-            progress.current >= 4.5 && progress.current <= 5.5,
-            "Expected ~5.0 progress, got {}",
+            is_normal_range || is_crit_range,
+            "Expected ~5.0 (or ~25.0 crit) progress, got {}",
             progress.current
         );
     }
