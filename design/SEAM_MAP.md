@@ -29,3 +29,11 @@
     - Added `vacuum_clears_pollution_system` to `src/layer1/integration.rs`.
     - Registered in `src/simulation.rs` after `update_pressure_system`.
 - **Tests:** `tests/integration/atmosphere_vacuum.rs` (Integration test verified)
+
+### INT-004: Hauling Execution Flow
+- **Date:** 2026-12-10
+- **Systems connected:** `evaluate_haul` (Utility AI) -> `haul_system` (Execution)
+- **Glue added:**
+    - Updated `PopEvalData` to include `Carrying`.
+    - Updated `evaluate_haul` to target stockpiles if already carrying.
+- **Tests:** `tests/integration/hauling_flow.rs` (Integration test verified)
