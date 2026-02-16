@@ -13,7 +13,7 @@ use bevy_ecs::prelude::*;
 ///
 /// `Some((utility, target_entity))` if a valid job is found, `None` otherwise.
 #[must_use]
-pub fn evaluate_refine(
+pub(crate) fn evaluate_refine(
     pop_pos: &GridPosition,
     weights: &UtilityWeights,
     buildings: &[RefiningProxy],

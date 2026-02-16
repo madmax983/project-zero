@@ -7,7 +7,7 @@ use bevy_ecs::prelude::*;
 
 /// Evaluates if a pop should fetch clothing.
 #[must_use]
-pub fn evaluate_fetch_clothing(
+pub(crate) fn evaluate_fetch_clothing(
     pop_pos: &GridPosition,
     equipment: &Equipment,
     resources: &ColonyResources,

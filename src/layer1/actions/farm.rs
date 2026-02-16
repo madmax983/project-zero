@@ -12,7 +12,7 @@ use bevy_ecs::prelude::*;
 ///
 /// `Some((utility, target_entity))` if a valid farm is found, `None` otherwise.
 #[must_use]
-pub fn evaluate_farm(
+pub(crate) fn evaluate_farm(
     pop_pos: &GridPosition,
     weights: &UtilityWeights,
     farms: &[CapacityProxy],

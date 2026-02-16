@@ -8,7 +8,7 @@ use bevy_ecs::prelude::*;
 ///
 /// Returns `Some((utility, target))` if drafted and enemies are present.
 /// The score is high (0.95 base) minus a distance penalty, prioritizing closest enemies.
-pub fn evaluate_fight_action<'a>(
+pub(crate) fn evaluate_fight_action<'a>(
     drafted: bool,
     pop_pos: &GridPosition,
     enemies: impl Iterator<Item = (Entity, &'a GridPosition)>,
@@ -42,7 +42,7 @@ pub fn evaluate_fight_action<'a>(
 }
 
 /// Evaluates actions for a drafted pop (combat).
-pub fn evaluate_drafted_behavior(
+pub(crate) fn evaluate_drafted_behavior(
     data: &PopEvalData,
     world: &mut World,
 ) -> Option<(ActionType, f32, Option<Entity>)> {

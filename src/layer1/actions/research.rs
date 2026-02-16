@@ -13,7 +13,7 @@ use bevy_ecs::prelude::*;
 /// *   Returns `None` if the colony's knowledge storage ([`ColonyResources`]) is full.
 /// *   Requires an available worker slot at a [`crate::layer1::tech::Library`].
 #[must_use]
-pub fn evaluate_research(
+pub(crate) fn evaluate_research(
     pop_pos: &GridPosition,
     weights: &UtilityWeights,
     resources: &ColonyResources,

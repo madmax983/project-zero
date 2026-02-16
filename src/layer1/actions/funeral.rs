@@ -8,7 +8,7 @@ use bevy_ecs::prelude::*;
 /// Returns `Some((utility, corpse_entity))` if viable.
 #[allow(clippy::cast_precision_loss)]
 #[must_use]
-pub fn evaluate_bury_corpse(
+pub(crate) fn evaluate_bury_corpse(
     pop_pos: &GridPosition,
     corpses: &[PositionProxy],
     graves: &[PositionProxy],

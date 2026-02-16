@@ -115,7 +115,7 @@ pub mod utility_ai;
 /// Tests for utility AI work logic.
 pub mod utility_ai_work_tests;
 /// Shared types for utility AI evaluation (`PopEvalData`, Proxies).
-pub mod utility_eval_types;
+pub(crate) mod utility_eval_types;
 /// Shared types for utility AI state (`ActionType`, `UtilityWeights`).
 pub mod utility_types;
 
@@ -172,7 +172,6 @@ pub use structure::*;
 pub use tech::*;
 pub use terrain::*;
 pub use utility_ai::*;
-pub use utility_eval_types::*;
 pub use utility_types::*;
 
 #[cfg(test)]

@@ -13,7 +13,7 @@ use bevy_ecs::prelude::*;
 /// 1. Manual [`crate::layer1::designation::DesignationType::Repair`].
 /// 2. Automatic repair of damaged [`crate::layer1::structure::Structure`]s (unless [`crate::layer1::structure::DeferMaintenance`] is present).
 #[must_use]
-pub fn evaluate_repair(
+pub(crate) fn evaluate_repair(
     pop_pos: &GridPosition,
     weights: &UtilityWeights,
     designations: &[PositionProxy],

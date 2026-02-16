@@ -76,7 +76,7 @@ use crate::layer1::stress::Breakdown;
 use crate::layer1::structure::{DeferMaintenance, Structure};
 use crate::layer1::tech::Library;
 use crate::layer1::unrest::MentalState;
-pub use crate::layer1::utility_eval_types::{
+use crate::layer1::utility_eval_types::{
     CapacityProxy, ItemProxy, PlanOutcome, PopEvalData, PositionProxy, RefiningProxy,
     UtilityAIBuffer, WorldContext, evaluate_idle,
 };
@@ -100,7 +100,7 @@ pub fn update_action_timer_system(mut query: Query<&mut PopAction>) {
 ///
 /// Returns the best `(ActionType, Utility, Target)`.
 #[allow(clippy::too_many_lines, clippy::collapsible_if)]
-pub fn evaluate_single_pop(
+pub(crate) fn evaluate_single_pop(
     buffer: &UtilityAIBuffer,
     world: &mut World,
     data: &PopEvalData,
@@ -613,7 +613,7 @@ pub fn evaluate_actions_system(world: &mut World) {
 }
 
 /// Updates utility weights based on action outcome.
-pub fn update_weights_from_outcome(
+pub(crate) fn update_weights_from_outcome(
     weights: &mut UtilityWeights,
     action: ActionType,
     success: bool,

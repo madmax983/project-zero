@@ -7,7 +7,7 @@ use bevy_ecs::prelude::*;
 
 /// Evaluates if a pop should fetch a tool.
 #[must_use]
-pub fn evaluate_fetch_tool(
+pub(crate) fn evaluate_fetch_tool(
     pop_pos: &GridPosition,
     equipment: &Equipment,
     resources: &ColonyResources,
