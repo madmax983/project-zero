@@ -5,3 +5,7 @@
 ## 2024-05-24 - [Action Enum Docs]
 **Confusion:** `ActionType` variants were just names, requiring users to grep for the implementation.
 **Clarification:** Added "Trigger", "Requirements", and "Evaluator" fields to the enum docs, creating a direct map to the logic.
+
+## 2024-05-25 - [Missing Architecture Docs]
+**Confusion:** The `README.md` pointed to `DESIGN.md` for architectural details, but `DESIGN.md` was a stub/duplicate of the README, leaving the system architecture undocumented.
+**Clarification:** Rewrote `DESIGN.md` to serve as the definitive architecture guide, covering the 3-layer simulation, ECS structure, and key data flows.
