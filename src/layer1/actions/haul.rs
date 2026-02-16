@@ -25,13 +25,35 @@ pub fn evaluate_haul(
     items: &[ItemProxy],
     stockpiles: &[PositionProxy],
     resources: &ColonyResources,
+    carrying: Option<crate::layer1::resources::Carrying>,
 ) -> Option<(f32, Entity)> {
     // 1. Check if any stockpile exists (optimization: no point hauling if nowhere to put it)
     if stockpiles.is_empty() {
         return None;
     }
 
-    // 2. Find closest item we have room for
+    // 2. If already carrying, go to stockpile
+    if carrying.is_some() {
+        // Find closest stockpile
+        let mut best_stockpile = None;
+        let mut min_dist = i32::MAX;
+
+        for stockpile in stockpiles {
+            let dist = crate::layer1::utility_types::manhattan_distance(pop_pos, &stockpile.pos);
+            if dist < min_dist {
+                min_dist = dist;
+                best_stockpile = Some(stockpile.entity);
+            }
+        }
+
+        return best_stockpile.map(|entity| {
+            // High utility to finish the job
+            // We use a high base because completing a haul is efficient
+            (0.9, entity)
+        });
+    }
+
+    // 3. Find closest item we have room for
     let mut best: Option<(f32, Entity)> = None;
     let base_utility = 0.6; // Slightly higher than work (0.5) to keep map clean
 

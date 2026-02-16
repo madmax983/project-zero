@@ -62,12 +62,14 @@ mod tests {
         world.insert_resource(scale::layer1::taboo::TabooState::default());
         world.insert_resource(scale::layer1::map::ScreenShake::default());
         world.insert_resource(scale::layer1::inspector::InspectorSource::default());
+        world.insert_resource(scale::layer1::social_mimicry::Trend::default());
         world.insert_resource(RoofGrid::new(10, 10));
         world.init_resource::<Events<scale::layer1::structural_integrity::StructureCollapsed>>();
         world.init_resource::<Events<scale::layer1::chronicle::AddChronicleEvent>>();
         world.init_resource::<Events<scale::layer1::social::AffinityChange>>();
         world.init_resource::<Events<scale::layer1::DeathEvent>>();
         world.init_resource::<Events<scale::layer1::pop::PopDied>>();
+        world.init_resource::<Events<scale::layer1::heirloom::RetrogradeEngineeringEvent>>();
 
         world
     }

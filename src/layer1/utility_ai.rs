@@ -273,6 +273,7 @@ pub fn evaluate_single_pop(
             &buffer.items,
             &buffer.stockpiles,
             context.resources,
+            data.carrying,
         ) {
             check_best(ActionType::Haul, utility, Some(target));
         }
@@ -345,6 +346,7 @@ pub fn evaluate_actions_system(world: &mut World) {
                 &UtilityWeights,
                 &PopAction,
                 Option<&Equipment>,
+                Option<&crate::layer1::resources::Carrying>,
                 Option<&MentalState>,
                 Option<&Drafted>,
                 Option<&Inmate>,
@@ -353,17 +355,18 @@ pub fn evaluate_actions_system(world: &mut World) {
                 Option<&Breakdown>,
             )>()
             .iter(world)
-            .filter(|(_, _, _, _, action, _, _, _, inmate, _, penal_labor, _)| {
+            .filter(|(_, _, _, _, action, _, _, _, _, inmate, _, penal_labor, _)| {
                 action.ticks_committed >= config.evaluation_interval
                     && (inmate.is_none() || penal_labor.is_some())
             })
-            .map(|(e, p, n, w, a, eq, m, d, _, fm, pl, b)| PopEvalData {
+            .map(|(e, p, n, w, a, eq, c, m, d, _, fm, pl, b)| PopEvalData {
                 entity: e,
                 pos: *p,
                 needs: *n,
                 weights: *w,
                 action: *a,
                 equipment: eq.copied(),
+                carrying: c.copied(),
                 mental_state: m.copied(),
                 drafted: d.copied(),
                 faction_member: fm.cloned(),

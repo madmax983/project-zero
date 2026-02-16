@@ -66,3 +66,6 @@ mod atmosphere_vacuum;
 
 #[path = "integration/retrograde_chronicle.rs"]
 mod retrograde_chronicle;
+
+#[path = "integration/hauling_flow.rs"]
+mod hauling_flow;

@@ -51,6 +51,8 @@ pub struct PopEvalData {
     pub action: PopAction,
     /// Equipment held by the pop, if any.
     pub equipment: Option<Equipment>,
+    /// Resource currently carried by the pop, if any.
+    pub carrying: Option<crate::layer1::resources::Carrying>,
     /// Current mental state (e.g., Broken, Dazed), if any.
     pub mental_state: Option<MentalState>,
     /// Draft status (combat mode), if any.
