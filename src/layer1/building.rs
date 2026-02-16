@@ -244,6 +244,8 @@ pub enum BuildingType {
     Airlock,
     /// Allows gases to pass freely while maintaining physical security.
     Vent,
+    /// Defensive structure that consumes Waste as ammunition.
+    TrashCannon,
 }
 
 impl BuildingType {
@@ -300,6 +302,7 @@ impl BuildingType {
             Self::FlowerBed | Self::TradeDepot => 5.0, // Trade brings goods and culture
             Self::Well | Self::HydroponicsBay | Self::LifeSupport => 1.0,
             Self::Wall | Self::Gate | Self::Tower | Self::Airlock | Self::Vent => 0.0,
+            Self::TrashCannon => -2.0, // Industrial machinery is ugly
             _ => 0.0,
         }
     }
@@ -322,6 +325,7 @@ impl BuildingType {
             Self::Observatory => Some(Tech::Astronomy),
             Self::HydroponicsBay => Some(Tech::Hydroponics),
             Self::Vent => Some(Tech::MetalWorking),
+            Self::TrashCannon => Some(Tech::Militia),
             _ => None,
         }
     }
@@ -378,6 +382,7 @@ impl BuildingType {
             Self::LifeSupport => "Life Support",
             Self::Airlock => "Airlock",
             Self::Vent => "Vent",
+            Self::TrashCannon => "Trash Cannon",
         }
     }
 
@@ -417,6 +422,7 @@ impl BuildingType {
             Self::LifeSupport => '♼',
             Self::Airlock => '⌷',
             Self::Vent => '≡',
+            Self::TrashCannon => '♣',
         }
     }
 
@@ -425,6 +431,11 @@ impl BuildingType {
     #[allow(clippy::match_same_arms, clippy::too_many_lines)]
     pub const fn cost(&self, material: MaterialType) -> ColonyResources {
         match self {
+            Self::TrashCannon => ColonyResources {
+                metal: 20.0,
+                stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
             Self::LifeSupport => ColonyResources {
                 metal: 50.0,
                 ..ColonyResources::zeroed()
@@ -1149,6 +1160,21 @@ fn spawn_building(
         BuildingType::Vent => {
             // Vent allows flow but blocks movement
         }
+        BuildingType::TrashCannon => {
+            entity.insert((
+                crate::layer1::turret::Turret {
+                    attack: crate::layer1::combat::AttackProperties {
+                        damage: 15.0,
+                        range: 7.0,
+                        cooldown: 30,
+                        accuracy: 0.9,
+                    },
+                    ammo_cost: 1.0,
+                    ammo_type: crate::layer1::resources::ResourceType::Waste,
+                },
+                crate::layer1::combat::CombatState::default(),
+            ));
+        }
     }
 }
 
@@ -1340,7 +1366,8 @@ mod tests {
         );
         assert_eq!(BuildingType::LifeSupport.next(), BuildingType::Airlock);
         assert_eq!(BuildingType::Airlock.next(), BuildingType::Vent);
-        assert_eq!(BuildingType::Vent.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::Vent.next(), BuildingType::TrashCannon);
+        assert_eq!(BuildingType::TrashCannon.next(), BuildingType::Housing);
     }
 
     #[test]
