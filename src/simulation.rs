@@ -63,10 +63,11 @@ use crate::layer1::{
     },
     social_stratification::{class_friction_system, update_social_class_system},
     spirit_decay_system, spoilage_system, starvation_damage_system, taboo_event_system,
-    theft_system, track_plan_outcomes_system, update_action_timer_system, update_breakdown_system,
-    update_cabin_fever_system, update_catharsis_duration_system, update_erosion_system,
-    update_lighting_system, update_morale_cache_system, update_noise_system,
-    update_pressure_system, update_resource_caps_system, update_screen_shake_system,
+    theft_system, track_plan_outcomes_system, update_action_timer_system,
+    update_bioluminescence_system, update_breakdown_system, update_cabin_fever_system,
+    update_catharsis_duration_system, update_erosion_system, update_lighting_system,
+    update_morale_cache_system, update_noise_system, update_pressure_system,
+    update_resource_caps_system, update_screen_shake_system,
     update_taboo_duration_system, update_water_system, update_weather_system, vermin_growth_system,
     vermin_morale_system, waste_pollution_bridge, work_execution_system,
 };
@@ -129,9 +130,12 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::day_night::update_day_night_cycle_system.after(process_start_plan_system),
         crate::layer1::day_night::update_ambient_light_from_cycle_system
             .after(crate::layer1::day_night::update_day_night_cycle_system),
+        update_bioluminescence_system
+            .after(crate::layer1::day_night::update_day_night_cycle_system),
         update_lighting_system
             .after(process_start_plan_system)
-            .after(crate::layer1::day_night::update_ambient_light_from_cycle_system),
+            .after(crate::layer1::day_night::update_ambient_light_from_cycle_system)
+            .after(update_bioluminescence_system),
         apply_lighting_penalties_system.after(update_lighting_system),
         apply_weather_effects_system.after(apply_lighting_penalties_system),
         apply_quirk_modifiers_system

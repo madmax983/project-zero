@@ -51,8 +51,10 @@ mod tests {
         world.insert_resource(scale::layer1::edicts::ColonyPolicies::default());
         world.init_resource::<Events<scale::layer1::chronicle::AddChronicleEvent>>();
         world.init_resource::<Events<scale::layer1::social::AffinityChange>>();
+        world.init_resource::<Events<scale::layer1::DeathEvent>>();
         world.init_resource::<Events<scale::layer1::pop::PopDied>>();
         world.init_resource::<Events<StructureCollapsed>>();
+        world.insert_resource(scale::layer1::social_mimicry::Trend::default());
         world.insert_resource(scale::layer1::visitor::VisitorSource::default());
         world.insert_resource(scale::layer1::weather::WeatherState::default());
         world.insert_resource(scale::layer1::quirks::PlanetaryTraits::default());

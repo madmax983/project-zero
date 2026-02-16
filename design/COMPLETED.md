@@ -116,3 +116,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `128` Social Mimicry — `specs/128-social-mimicry.md` — completed 2026-12-08
 - [x] `126` Blackout Protocol — `specs/126-blackout-protocol.md` — completed 2026-12-09
 - [x] `129` The Colony Mascot — `specs/129-the-colony-mascot.md` — completed 2026-02-16
+- [x] `131` Bioluminescent Flora — `specs/131-bioluminescent-flora.md` — completed 2026-10-25

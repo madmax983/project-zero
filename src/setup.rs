@@ -119,6 +119,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
 
     world.init_resource::<Events<AddChronicleEvent>>();
     world.init_resource::<Events<AffinityChange>>();
+    world.init_resource::<Events<crate::layer1::DeathEvent>>();
     world.init_resource::<Events<PopDied>>();
     world.init_resource::<Events<crate::layer1::structural_integrity::StructureCollapsed>>();
 
