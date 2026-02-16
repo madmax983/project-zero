@@ -21,6 +21,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `130` Social Debt — `specs/130-social-debt.md`
 - [ ] `137` Pop Hobbies — `specs/137-pop-hobbies.md`
 - [ ] `138` The Blob — `specs/138-the-blob.md`
+- [ ] `139` Cryo-Stasis Vaults — `specs/139-cryo-stasis.md`
 
 ## MVP — Layer 2: System Simulation
 
