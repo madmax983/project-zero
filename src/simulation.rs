@@ -24,6 +24,11 @@ use crate::experimental::graffiti::{
     apply_graffiti_beauty_system, graffiti_creation_system, graffiti_decay_system,
 };
 #[cfg(feature = "nova")]
+use crate::experimental::echoes::{
+    absorb_death_echoes_system, absorb_joy_echoes_system, apply_echo_effects_system,
+    update_echoes_system,
+};
+#[cfg(feature = "nova")]
 use crate::experimental::miasma::{
     apply_miasma_effects_system, sickness_progression_system, update_miasma_system,
 };
@@ -285,6 +290,17 @@ pub fn build_simulation_schedule() -> Schedule {
         apply_miasma_effects_system.after(update_miasma_system),
     ));
 
+    #[cfg(feature = "nova")]
+    schedule.add_systems((
+        update_echoes_system.after(work_execution_system),
+        absorb_death_echoes_system.after(death_system),
+        absorb_joy_echoes_system.after(work_execution_system),
+        apply_echo_effects_system
+            .after(update_echoes_system)
+            .after(absorb_death_echoes_system)
+            .after(absorb_joy_echoes_system),
+    ));
+
     // --- Consumption Chain (sequential, depends on economy) ---
     schedule.add_systems((
         consume_food_system
@@ -390,6 +406,11 @@ pub fn run_simulation_tick(world: &mut World) {
     // Initialize schedule on first call (stored in World's Schedules resource)
     if !world.contains_resource::<Schedules>() {
         world.insert_resource(Schedules::default());
+    }
+
+    #[cfg(feature = "nova")]
+    if !world.contains_resource::<crate::experimental::echoes::EchoMap>() {
+        world.init_resource::<crate::experimental::echoes::EchoMap>();
     }
 
     // Add our schedule if not yet added

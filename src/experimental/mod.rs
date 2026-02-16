@@ -9,6 +9,9 @@ pub mod acoustics;
 pub mod biography;
 /// Pop dreams.
 pub mod dreams;
+/// Experimental echo feature (Whispering Walls).
+#[cfg(feature = "nova")]
+pub mod echoes;
 /// Experimental ghost feature.
 #[cfg(feature = "nova")]
 pub mod ghosts;
