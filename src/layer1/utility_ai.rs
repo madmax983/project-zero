@@ -95,231 +95,297 @@ pub fn update_action_timer_system(mut query: Query<&mut PopAction>) {
     });
 }
 
+/// Helper struct to encapsulate action evaluation state.
+struct ActionEvaluator<'a> {
+    buffer: &'a UtilityAIBuffer,
+    context: &'a WorldContext<'a>,
+    data: &'a PopEvalData,
+    health: Option<&'a crate::layer1::health::Health>,
+    best_action: ActionType,
+    best_utility: f32,
+    best_target: Option<Entity>,
+    is_striking: bool,
+    is_penal: bool,
+}
+
+impl<'a> ActionEvaluator<'a> {
+    fn new(
+        buffer: &'a UtilityAIBuffer,
+        context: &'a WorldContext<'a>,
+        data: &'a PopEvalData,
+        health: Option<&'a crate::layer1::health::Health>,
+    ) -> Self {
+        let is_striking = context.factions.as_ref().is_some_and(|map| {
+            data.faction_member.as_ref().is_some_and(|member| {
+                member.faction_id.is_some_and(|fid| {
+                    map.get(&fid).is_some_and(|data| {
+                        data.state == crate::layer1::factions::FactionState::Striking
+                    })
+                })
+            })
+        });
+
+        Self {
+            buffer,
+            context,
+            data,
+            health,
+            best_action: ActionType::Idle,
+            best_utility: evaluate_idle(&data.needs),
+            best_target: None,
+            is_striking,
+            is_penal: data.penal_labor.is_some(),
+        }
+    }
+
+    /// Update best action if the candidate has higher utility.
+    fn check(&mut self, action: ActionType, result: Option<(f32, Entity)>) {
+        if let Some((utility, target)) = result {
+            self.update_best(action, utility, Some(target));
+        }
+    }
+
+    /// Update best action with an added utility bonus/penalty.
+    fn check_with_modifier(
+        &mut self,
+        action: ActionType,
+        result: Option<(f32, Entity)>,
+        modifier: f32,
+    ) {
+        if let Some((utility, target)) = result {
+            self.update_best(action, utility + modifier, Some(target));
+        }
+    }
+
+    fn update_best(&mut self, action: ActionType, utility: f32, target: Option<Entity>) {
+        if utility > self.best_utility {
+            self.best_action = action;
+            self.best_utility = utility;
+            self.best_target = target;
+        }
+    }
+
+    /// Evaluate needs-based actions (Hunger, Rest, Socialize, Medical).
+    fn evaluate_needs(&mut self) {
+        // Hunger
+        self.check(
+            ActionType::SatisfyHunger,
+            evaluate_satisfy_hunger(
+                &self.data.pos,
+                &self.data.needs,
+                &self.data.weights,
+                &self.buffer.farms,
+            ),
+        );
+
+        // Rest
+        self.check(
+            ActionType::SatisfyRest,
+            evaluate_satisfy_rest(
+                &self.data.pos,
+                &self.data.needs,
+                &self.data.weights,
+                &self.buffer.housing,
+            ),
+        );
+
+        // Socialize (Penal labor cannot socialize)
+        if !self.is_penal {
+            self.check(
+                ActionType::Socialize,
+                evaluate_socialize(
+                    &self.data.pos,
+                    &self.data.needs,
+                    &self.data.weights,
+                    &self.buffer.taverns,
+                ),
+            );
+        }
+
+        // Medical Care
+        if let Some(health) = self.health {
+            self.check(
+                ActionType::SeekMedicalCare,
+                evaluate_seek_medical_care(
+                    &self.data.pos,
+                    &self.data.needs,
+                    health,
+                    &self.data.weights,
+                    &self.buffer.hospitals,
+                ),
+            );
+        }
+    }
+
+    /// Evaluate work-related actions.
+    fn evaluate_work(&mut self) {
+        if self.is_striking {
+            return;
+        }
+
+        // Work Designation
+        let penalty =
+            crate::layer1::taboo::evaluate_taboo_penalty(ActionType::Work, self.context.taboo);
+        let bonus = if self.is_penal { 1.0 } else { 0.0 };
+
+        self.check_with_modifier(
+            ActionType::Work,
+            evaluate_work(
+                &self.data.pos,
+                &self.data.weights,
+                &self.buffer.work_designations,
+            ),
+            penalty + bonus,
+        );
+
+        // Fetch Tool
+        let equipment = self.data.equipment.unwrap_or_default();
+        self.check(
+            ActionType::FetchTool,
+            evaluate_fetch_tool(
+                &self.data.pos,
+                &equipment,
+                self.context.resources,
+                &self.buffer.stockpiles,
+            ),
+        );
+
+        // Repair
+        self.check(
+            ActionType::Repair,
+            evaluate_repair(
+                &self.data.pos,
+                &self.data.weights,
+                &self.buffer.repair_designations,
+                &self.buffer.repair_structures,
+            ),
+        );
+
+        // Haul
+        self.check(
+            ActionType::Haul,
+            evaluate_haul(
+                &self.data.pos,
+                &self.data.weights,
+                &self.buffer.items,
+                &self.buffer.stockpiles,
+                self.context.resources,
+            ),
+        );
+
+        // Bury Corpse
+        self.check(
+            ActionType::BuryCorpse,
+            evaluate_bury_corpse(
+                &self.data.pos,
+                &self.buffer.corpses,
+                &self.buffer.graves,
+                &self.data.weights,
+            ),
+        );
+
+        // Tame
+        self.check(
+            ActionType::Tame,
+            evaluate_tame(
+                &self.data.pos,
+                &self.data.weights,
+                &self.buffer.tame_designations,
+            ),
+        );
+    }
+
+    /// Evaluate specialized jobs that are blocked by strikes AND penal labor.
+    fn evaluate_specialized_jobs(&mut self) {
+        if self.is_striking || self.is_penal {
+            return;
+        }
+
+        // Refine
+        self.check(
+            ActionType::Refine,
+            evaluate_refine(
+                &self.data.pos,
+                &self.data.weights,
+                &self.buffer.refining,
+            ),
+        );
+
+        // Farm
+        self.check(
+            ActionType::Farm,
+            evaluate_farm(&self.data.pos, &self.data.weights, &self.buffer.farms),
+        );
+
+        // Explore
+        self.check(
+            ActionType::Explore,
+            evaluate_explore(
+                &self.data.pos,
+                &self.data.weights,
+                &self.buffer.anomalies,
+            ),
+        );
+
+        // Research
+        self.check(
+            ActionType::Research,
+            evaluate_research(
+                &self.data.pos,
+                &self.data.weights,
+                self.context.resources,
+                &self.buffer.libraries,
+            ),
+        );
+    }
+}
+
 /// Helper function to evaluate all potential actions for a single Pop.
 ///
 /// Returns the best `(ActionType, Utility, Target)`.
-#[allow(clippy::too_many_lines, clippy::collapsible_if)]
 pub fn evaluate_single_pop(
     buffer: &UtilityAIBuffer,
     world: &mut World,
     data: &PopEvalData,
     context: &WorldContext,
 ) -> (ActionType, f32, Option<Entity>) {
-    let pop_entity = data.entity;
-    let pop_pos = data.pos;
-    let needs = data.needs;
-    let weights = data.weights;
-    let equipment_opt = data.equipment;
-    let is_penal = data.penal_labor.is_some();
+    // 1. High Priority Overrides (Mental Break, Drafted)
+    // These require mutable world access or produce side effects immediately.
 
-    // Start with Idle as the baseline
-    let mut best_action = ActionType::Idle;
-    let mut best_utility = evaluate_idle(&needs);
-    let mut best_target = None;
-
-    // Helper closure to update best
-    let mut check_best = |act: ActionType, util: f32, tgt: Option<Entity>| {
-        if util > best_utility {
-            best_action = act;
-            best_utility = util;
-            best_target = tgt;
-        }
-    };
-
-    // 1. Check for Mental Break
-    // We must pass world because evaluate_mental_break constructs its own queries.
     if let Some((action, utility, target)) = evaluate_mental_break(data, world) {
         return (action, utility, target);
     }
 
-    // 2. Check for Drafted
     if let Some((action, utility, target)) = evaluate_drafted_behavior(data, world) {
         return (action, utility, target);
     }
 
-    // 3. Normal evaluation (undrafted, sane)
+    // 2. Standard Evaluation
+    // Safety: We borrow Health immutably here. Since we returned above if mutable access
+    // was used successfully, this is safe.
+    let health = world.get::<crate::layer1::health::Health>(data.entity);
 
-    // Evaluate Hunger
-    if let Some((utility, target)) =
-        evaluate_satisfy_hunger(&pop_pos, &needs, &weights, &buffer.farms)
-    {
-        check_best(ActionType::SatisfyHunger, utility, Some(target));
-    }
+    let mut evaluator = ActionEvaluator::new(buffer, context, data, health);
 
-    // Evaluate Work
-    let is_striking = context.factions.as_ref().is_some_and(|map| {
-        data.faction_member.as_ref().is_some_and(|member| {
-            member.faction_id.is_some_and(|fid| {
-                map.get(&fid).is_some_and(|data| {
-                    data.state == crate::layer1::factions::FactionState::Striking
-                })
-            })
-        })
-    });
+    evaluator.evaluate_needs();
+    evaluator.evaluate_work();
+    evaluator.evaluate_specialized_jobs();
 
-    if !is_striking {
-        if let Some((utility, target)) =
-            evaluate_work(&pop_pos, &weights, &buffer.work_designations)
-        {
-            let penalty =
-                crate::layer1::taboo::evaluate_taboo_penalty(ActionType::Work, context.taboo);
-            let bonus = if is_penal {
-                1.0 // High priority for penal labor
-            } else {
-                0.0
-            };
-            check_best(ActionType::Work, utility + penalty + bonus, Some(target));
-        }
-    }
-
-    // Check Health
-    // Safety: world.get borrows immutable world, which is allowed as long as we don't mutate.
-    // evaluate_mental_break/drafted took &mut World but returned, so mutable borrow ended.
-    let health = world.get::<crate::layer1::health::Health>(pop_entity);
-
-    // Evaluate SatisfyRest
-    if let Some((utility, target)) =
-        evaluate_satisfy_rest(&pop_pos, &needs, &weights, &buffer.housing)
-    {
-        check_best(ActionType::SatisfyRest, utility, Some(target));
-    }
-
-    // Evaluate Socialize
-    if !is_penal {
-        if let Some((utility, target)) =
-            evaluate_socialize(&pop_pos, &needs, &weights, &buffer.taverns)
-        {
-            check_best(ActionType::Socialize, utility, Some(target));
-        }
-    }
-
-    // Evaluate Refine
-    if !is_striking && !is_penal {
-        if let Some((utility, target)) = evaluate_refine(&pop_pos, &weights, &buffer.refining) {
-            check_best(ActionType::Refine, utility, Some(target));
-        }
-    }
-
-    // Evaluate Farm
-    if !is_striking && !is_penal {
-        if let Some((utility, target)) = evaluate_farm(&pop_pos, &weights, &buffer.farms) {
-            check_best(ActionType::Farm, utility, Some(target));
-        }
-    }
-
-    // Evaluate FetchTool
-    // FetchTool supports work (fetching tools for work).
-    // If striking, they don't need tools for work, but might need for other things?
-    // Probably safe to block if striking, as tool usage implies work.
-    if !is_striking {
-        let equipment = equipment_opt.unwrap_or_default();
-        if let Some((utility, target)) =
-            evaluate_fetch_tool(&pop_pos, &equipment, context.resources, &buffer.stockpiles)
-        {
-            check_best(ActionType::FetchTool, utility, Some(target));
-        }
-    }
-
-    // Evaluate Repair
-    if !is_striking {
-        // We pass BOTH designations (manual repair) and structures (auto repair)
-        // But evaluate_repair needs to handle them separately or together?
-        // evaluate_repair takes two iterators. We update it to take two slices.
-        if let Some((utility, target)) = evaluate_repair(
-            &pop_pos,
-            &weights,
-            &buffer.repair_designations,
-            &buffer.repair_structures,
-        ) {
-            check_best(ActionType::Repair, utility, Some(target));
-        }
-    }
-
-    // Evaluate Explore
-    if !is_striking && !is_penal {
-        if let Some((utility, target)) = evaluate_explore(&pop_pos, &weights, &buffer.anomalies) {
-            check_best(ActionType::Explore, utility, Some(target));
-        }
-    }
-
-    // Evaluate Research
-    if !is_striking && !is_penal {
-        if let Some((utility, target)) =
-            evaluate_research(&pop_pos, &weights, context.resources, &buffer.libraries)
-        {
-            check_best(ActionType::Research, utility, Some(target));
-        }
-    }
-
-    // Evaluate Haul
-    if !is_striking {
-        if let Some((utility, target)) = evaluate_haul(
-            &pop_pos,
-            &weights,
-            &buffer.items,
-            &buffer.stockpiles,
-            context.resources,
-        ) {
-            check_best(ActionType::Haul, utility, Some(target));
-        }
-    }
-
-    // Evaluate SeekMedicalCare
-    if let Some(health) = health {
-        if let Some((utility, target)) =
-            evaluate_seek_medical_care(&pop_pos, &needs, health, &weights, &buffer.hospitals)
-        {
-            check_best(ActionType::SeekMedicalCare, utility, Some(target));
-        }
-    }
-
-    // Evaluate BuryCorpse
-    if !is_striking {
-        if let Some((utility, target)) =
-            evaluate_bury_corpse(&pop_pos, &buffer.corpses, &buffer.graves, &weights)
-        {
-            check_best(ActionType::BuryCorpse, utility, Some(target));
-        }
-    }
-
-    // Evaluate Tame
-    if !is_striking {
-        if let Some((utility, target)) =
-            evaluate_tame(&pop_pos, &weights, &buffer.tame_designations)
-        {
-            check_best(ActionType::Tame, utility, Some(target));
-        }
-    }
-
-    (best_action, best_utility, best_target)
+    (
+        evaluator.best_action,
+        evaluator.best_utility,
+        evaluator.best_target,
+    )
 }
 
-/// The Main Brain Loop: Decides what every Pop should do next.
-///
-/// This system runs periodically (every tick, but individual pops only evaluate
-/// based on their `evaluation_interval`).
-///
-/// # The Algorithm
-///
-/// 1.  **Filter**: Selects Pops who have finished their commitment timer (`ticks_committed`).
-/// 2.  **Gather Context**: Pre-fetches all relevant entities (Farms, Stockpiles, etc.)
-///     into efficient proxy vectors.
-/// 3.  **Evaluate Candidates**:
-///     For each Pop, it calls every `evaluate_*` function using the proxies.
-/// 4.  **Winner Takes All**: Tracks the single best `(Utility, Action, Target)` tuple.
-/// 5.  **Switch**: If the best new utility > current utility + threshold, the Pop switches tasks.
-///
-/// # Performance Note
-/// This system avoids per-Pop query iteration by collecting candidates once per frame.
-#[allow(clippy::too_many_lines, clippy::collapsible_if)]
-pub fn evaluate_actions_system(world: &mut World) {
-    let config = world.resource::<UtilityConfig>().clone();
-
-    // Use reusable buffer to avoid repeated heap allocations
-    let mut buffer = world
-        .remove_resource::<UtilityAIBuffer>()
-        .unwrap_or_default();
-
+/// Helper function to populate the AI buffer with world data.
+#[allow(clippy::too_many_lines)]
+fn populate_ai_buffer(
+    world: &mut World,
+    buffer: &mut UtilityAIBuffer,
+    context: &WorldContext,
+    config: &UtilityConfig,
+) {
     // 1. Collect Pop Data
     buffer.pop_data.clear();
     buffer.pop_data.extend(
@@ -358,25 +424,9 @@ pub fn evaluate_actions_system(world: &mut World) {
             }),
     );
 
-    // 2. Initialize Context
-    let resources = world.resource::<ColonyResources>().clone();
-    let cycle = world
-        .resource::<crate::layer1::day_night::DayNightCycle>()
-        .clone();
-    let taboo = world.resource::<crate::layer1::taboo::TabooState>().clone();
-    let factions_data = world
-        .get_resource::<crate::layer1::factions::Factions>()
-        .map(|f| f.map.clone());
-
-    let context = WorldContext {
-        resources: &resources,
-        cycle: &cycle,
-        taboo: &taboo,
-        factions: factions_data.as_ref(),
-    };
-
-    // 3. Populate Proxies (The Optimization)
-    // We clear buffers and populate them once, filtering invalid targets early.
+    // 2. Populate Proxies
+    let cycle = context.cycle;
+    let resources = context.resources;
 
     // Farms
     buffer.farms.clear();
@@ -459,7 +509,7 @@ pub fn evaluate_actions_system(world: &mut World) {
         }
 
         // Check recipe affordability (Global check)
-        let (can_afford, _, _) = get_refining_recipe(building.building_type, &resources);
+        let (can_afford, _, _) = get_refining_recipe(building.building_type, resources);
         if !can_afford {
             continue;
         }
@@ -567,8 +617,55 @@ pub fn evaluate_actions_system(world: &mut World) {
             .repair_structures
             .push(PositionProxy { entity, pos: *pos });
     }
+}
 
-    // 4. Evaluate each pop
+/// The Main Brain Loop: Decides what every Pop should do next.
+///
+/// This system runs periodically (every tick, but individual pops only evaluate
+/// based on their `evaluation_interval`).
+///
+/// # The Algorithm
+///
+/// 1.  **Filter**: Selects Pops who have finished their commitment timer (`ticks_committed`).
+/// 2.  **Gather Context**: Pre-fetches all relevant entities (Farms, Stockpiles, etc.)
+///     into efficient proxy vectors.
+/// 3.  **Evaluate Candidates**:
+///     For each Pop, it calls every `evaluate_*` function using the proxies.
+/// 4.  **Winner Takes All**: Tracks the single best `(Utility, Action, Target)` tuple.
+/// 5.  **Switch**: If the best new utility > current utility + threshold, the Pop switches tasks.
+///
+/// # Performance Note
+/// This system avoids per-Pop query iteration by collecting candidates once per frame.
+#[allow(clippy::too_many_lines, clippy::collapsible_if)]
+pub fn evaluate_actions_system(world: &mut World) {
+    let config = world.resource::<UtilityConfig>().clone();
+
+    // Use reusable buffer to avoid repeated heap allocations
+    let mut buffer = world
+        .remove_resource::<UtilityAIBuffer>()
+        .unwrap_or_default();
+
+    // Initialize Context
+    let resources = world.resource::<ColonyResources>().clone();
+    let cycle = world
+        .resource::<crate::layer1::day_night::DayNightCycle>()
+        .clone();
+    let taboo = world.resource::<crate::layer1::taboo::TabooState>().clone();
+    let factions_data = world
+        .get_resource::<crate::layer1::factions::Factions>()
+        .map(|f| f.map.clone());
+
+    let context = WorldContext {
+        resources: &resources,
+        cycle: &cycle,
+        taboo: &taboo,
+        factions: factions_data.as_ref(),
+    };
+
+    // Populate Buffer
+    populate_ai_buffer(world, &mut buffer, &context, &config);
+
+    // Evaluate each pop
     for data in &buffer.pop_data {
         let (best_action, best_utility, best_target) =
             evaluate_single_pop(&buffer, world, data, &context);
