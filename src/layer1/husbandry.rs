@@ -118,7 +118,7 @@ pub fn husbandry_production_system(world: &mut World) {
             tame.produce_timer = 1000; // Reset
             let item_type = match fauna.fauna_type {
                 FaunaType::SpaceRat => Some(ResourceType::Food), // Rat Milk
-                FaunaType::Wolf => None,
+                FaunaType::Wolf | FaunaType::Mascot => None,
             };
 
             if let Some(itype) = item_type {

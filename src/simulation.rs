@@ -29,27 +29,28 @@ use crate::experimental::miasma::{
 };
 use crate::gpu::evaluate::gpu_evaluate_actions;
 use crate::layer1::{
-    AddChronicleEvent, AffinityChange, PopDied, advance_season_system, aging_system,
+    AddChronicleEvent, AffinityChange, DeathEvent, PopDied, advance_season_system, aging_system,
     ancient_structure_decay_system, apply_cabin_fever_morale_system,
     apply_catharsis_morale_bonus_system, apply_lighting_penalties_system,
     apply_noise_effects_system, apply_palette_fatigue_system, apply_quirk_modifiers_system,
     apply_taboo_stress_system, apply_weather_effects_system, arrival_handler_system,
     art_generation_system, art_observation_system, assign_sleepwalk_target_system,
-    biocompatibility_system, check_heirloom_status_system, check_milestones_system,
-    check_sleepwalking_start_system, check_stress_breakdown_system, chronicle_event_handler_system,
-    chronicle_rumor_bridge_system, clean_dead_residents_system, clean_dead_workers_system,
-    cleanup_previous_assignment_system, clothing_wear_system, combat_execution_system,
-    consume_food_system, death_system, decay_needs_system, discovery_system, entropy_system,
-    faction_satisfaction_morale_bridge, fire_damage_pops_system, fire_damage_system,
-    fire_spread_system, flora_attack_system, flora_spread_system, haul_system, healing_system,
-    hypothermia_system, infiltration_system,
+    biocompatibility_system, check_death_event_system, check_heirloom_status_system,
+    check_milestones_system, check_sleepwalking_start_system, check_stress_breakdown_system,
+    chronicle_event_handler_system, chronicle_rumor_bridge_system, clean_dead_residents_system,
+    clean_dead_workers_system, cleanup_previous_assignment_system, clothing_wear_system,
+    combat_execution_system, consume_food_system, death_system, decay_needs_system,
+    discovery_system, entropy_system, faction_satisfaction_morale_bridge, fire_damage_pops_system,
+    fire_damage_system, fire_spread_system, flora_attack_system, flora_spread_system, haul_system,
+    healing_system, hypothermia_system, infiltration_system,
     inspector::{inspector_report_system, observe_inspector_system, spawn_inspector_system},
     inspector_outcome_bridge_system,
     logistics::{conveyor_system, hopper_system},
-    malfunction_system, memory_decay_system, modify_affinity_system, morale_decay_system,
-    movement_system, natural_death_system, notification_expiration_system,
-    pop_death_chronicle_bridge, pressure_damage_system, process_fuel_consumption_system,
-    process_observe_system, process_refining_system, process_research_system, process_scan_system,
+    malfunction_system, mascot_behavior_system, mascot_buff_system, mascot_death_grief_system,
+    memory_decay_system, modify_affinity_system, morale_decay_system, movement_system,
+    natural_death_system, notification_expiration_system, pop_death_chronicle_bridge,
+    pressure_damage_system, process_fuel_consumption_system, process_observe_system,
+    process_refining_system, process_research_system, process_scan_system,
     process_start_plan_system, produce_food_system, quirk_generation_system, regrowth_system,
     restore_leisure_system, restore_rest_in_housing_system, sleepwalk_end_system,
     social::old_guard::{
@@ -102,6 +103,7 @@ pub fn build_simulation_schedule() -> Schedule {
     schedule.add_systems((
         update_event_buffer::<AddChronicleEvent>,
         update_event_buffer::<AffinityChange>,
+        update_event_buffer::<DeathEvent>,
         update_event_buffer::<PopDied>,
         update_event_buffer::<crate::layer1::structural_integrity::StructureCollapsed>,
     ));
@@ -123,6 +125,7 @@ pub fn build_simulation_schedule() -> Schedule {
         cleanup_previous_assignment_system.after(assign_sleepwalk_target_system),
         process_start_plan_system.after(cleanup_previous_assignment_system),
         crate::layer1::fauna::fauna_behavior_system.after(process_start_plan_system),
+        mascot_behavior_system.after(process_start_plan_system),
         crate::layer1::day_night::update_day_night_cycle_system.after(process_start_plan_system),
         crate::layer1::day_night::update_ambient_light_from_cycle_system
             .after(crate::layer1::day_night::update_day_night_cycle_system),
@@ -185,8 +188,11 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(update_noise_system),
         restore_leisure_system.after(work_execution_system),
         apply_mood_modifiers_system.after(restore_leisure_system),
+        mascot_buff_system.after(restore_leisure_system),
         apply_catharsis_morale_bonus_system.after(apply_mood_modifiers_system),
-        update_morale_cache_system.after(apply_catharsis_morale_bonus_system),
+        update_morale_cache_system
+            .after(apply_catharsis_morale_bonus_system)
+            .after(mascot_buff_system),
         morale_decay_system.after(update_morale_cache_system),
     ));
 
@@ -317,11 +323,13 @@ pub fn build_simulation_schedule() -> Schedule {
         hypothermia_system.after(decay_needs_system),
         pressure_damage_system.after(decay_needs_system),
         starvation_damage_system.after(decay_needs_system),
-        death_system
+        check_death_event_system
             .after(starvation_damage_system)
             .after(hypothermia_system)
             .after(pressure_damage_system)
             .after(natural_death_system),
+        mascot_death_grief_system.after(check_death_event_system),
+        death_system.after(mascot_death_grief_system),
         clean_dead_residents_system.after(death_system),
         clean_dead_workers_system.after(death_system),
     ));

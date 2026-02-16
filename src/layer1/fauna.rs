@@ -13,6 +13,8 @@ pub enum FaunaType {
     Wolf,
     /// A space rat.
     SpaceRat,
+    /// A friendly colony mascot.
+    Mascot,
 }
 
 /// Current state of the fauna.

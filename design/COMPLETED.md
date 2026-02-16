@@ -115,3 +115,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `067` Militia System — `specs/067-militia-system.md` — completed 2026-02-15
 - [x] `128` Social Mimicry — `specs/128-social-mimicry.md` — completed 2026-12-08
 - [x] `126` Blackout Protocol — `specs/126-blackout-protocol.md` — completed 2026-12-09
+- [x] `129` The Colony Mascot — `specs/129-the-colony-mascot.md` — completed 2026-02-16
