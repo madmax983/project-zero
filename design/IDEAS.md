@@ -4031,3 +4031,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Open borders (Knowledge/Pop gain) vs. Closed borders (Survival).
 
 ---
+
+## Radio Broadcasts
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Shouting into the void and seeing what answers.
+
+**Mechanic:** Build a "Comms Array" to broadcast signals (e.g., "Trade", "Distress", "Intimidation"). Signals attract specific ship types (Merchants, Pirates, Refugees) but increase "System Threat" (Alien attention).
+
+**Emergence:** You broadcast a "Distress Signal" during a plague. A Merchant arrives with medicine, but so do the Reavers who track the signal.
+
+**Tension:** Visibility (Resources/Help) vs. Anonymity (Safety).
+
+---
+
+## Dream Shaping
+
+**Layer:** 1
+
+**Fantasy:** Programming the subconscious of your population. Inception on a massive scale.
+
+**Mechanic:** "Somnambulator" towers project "Themes" to sleeping Pops (e.g., "Compliance", "Valor", "Consumption"). Accelerates Ethic shifts or XP gain, but reduces Sleep Quality and risks "Nightmare" events.
+
+**Emergence:** You broadcast "Valor" to prepare for an invasion. Pops wake up so aggressive they start barroom brawls, filling the hospital before the enemy even arrives.
+
+**Tension:** Social Control (Efficiency) vs. Mental Health (Stability).
+
+---
+
+## The Syzygy
+
+**Layer:** 2
+
+**Fantasy:** The planets align. A moment of cosmic significance.
+
+**Mechanic:** Planetary orbits periodically align (The Grand Conjunction). During this window, Psionic powers are boosted, Gravity is reduced (cheap launches), and Tides are extreme.
+
+**Emergence:** You delay your colony ship launch for 5 years to catch the Syzygy window. When it hits, you launch everything at once, but the massive tides flood your spaceport.
+
+**Tension:** Patience (Timing the window) vs. Opportunism.
+
+---
+
+## Reality Anchors
+
+**Layer:** 1
+
+**Fantasy:** Science has gone too far. Physics is starting to peel at the edges.
+
+**Mechanic:** High-tier experiments (FTL, Void Energy) lower "Local Reality Stability". Low stability causes anomalies (teleporting pops, gravity failure). "Reality Anchors" stabilize the grid but consume massive power.
+
+**Emergence:** You turn on the Hyper-Relay. The cafeteria disappears. You have to shut down the defenses to power the Anchors before the whole colony dissolves into static.
+
+**Tension:** Advanced Tech vs. Existence.
+
+---
+
+## Corporate Rivals
+
+**Layer:** 2 -> 1
+
+**Fantasy:** A hostile takeover. The planet isn't big enough for both of us.
+
+**Mechanic:** A rival faction lands a colony on your map (or region). They claim territory, mine resources, and compete for trade contracts. You can sabotage, negotiate, or war with them.
+
+**Emergence:** They dam the river upstream, cutting off your water. You retaliate by setting their forest on fire. The fire spreads to your base.
+
+**Tension:** Coexistence (Trade) vs. Monopoly (War).
+
+---
