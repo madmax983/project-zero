@@ -14,7 +14,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `059` Soil Fertility — `specs/059-soil-fertility.md`
 - [ ] `066` Building Work AI — `specs/066-building-work-ai.md`
 - [ ] `077` Emergent Festivals — `specs/077-emergent-festivals.md`
-- [ ] `078` The Old Guard — `specs/078-the-old-guard.md`
 - [ ] `116` Drone Networks — `specs/116-drone-networks.md`
 - [ ] `120` Crop Diversity — `specs/120-crop-diversity.md`
 - [ ] `124` The Wild Child — `specs/124-the-wild-child.md`

@@ -422,6 +422,10 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<crate::experimental::echoes::EchoMap>();
     }
 
+    if !world.contains_resource::<crate::layer1::social::old_guard::Demographics>() {
+        world.init_resource::<crate::layer1::social::old_guard::Demographics>();
+    }
+
     // Add our schedule if not yet added
     {
         let schedules = world.resource::<Schedules>();

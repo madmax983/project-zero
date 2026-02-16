@@ -1,9 +1,9 @@
 #[cfg(test)]
 mod tests {
-    use crate::layer1::balance::TICKS_PER_YEAR;
+    use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
     use crate::layer1::pop::Pop;
     use crate::layer1::social::old_guard::{
-        Arrival, FOUNDER_CUTOFF_YEAR, FounderBuff, Generation, MoodModifiers,
+        Arrival, Demographics, FOUNDER_CUTOFF_YEAR, FounderBuff, Generation, MoodModifiers,
         apply_founder_benefits_system, check_generational_friction_system,
     };
     use bevy_ecs::prelude::*;
@@ -22,7 +22,7 @@ mod tests {
         assert_eq!(early.generation(), Generation::Founder);
 
         let late = Arrival {
-            tick: FOUNDER_CUTOFF_YEAR * TICKS_PER_YEAR + 1000,
+            tick: FOUNDER_CUTOFF_YEAR * crate::layer1::balance::TICKS_PER_YEAR + 1000,
         };
         assert_eq!(late.generation(), Generation::Immigrant);
     }
@@ -68,6 +68,8 @@ mod tests {
     #[test]
     fn test_friction_founders_overwhelmed() {
         let mut world = World::new();
+        world.init_resource::<Demographics>(); // Initialize resource to avoid panic if system expects it
+        world.init_resource::<Events<AddChronicleEvent>>();
 
         // 1 Founder
         world.spawn((Pop, Arrival { tick: 100 }, Generation::Founder));
@@ -93,6 +95,8 @@ mod tests {
     #[test]
     fn test_friction_immigrants_excluded() {
         let mut world = World::new();
+        world.init_resource::<Demographics>();
+        world.init_resource::<Events<AddChronicleEvent>>();
 
         // 3 Founders
         world.spawn((Pop, Arrival { tick: 100 }, Generation::Founder));
@@ -113,5 +117,79 @@ mod tests {
             .count();
 
         assert_eq!(excluded_count, 1);
+    }
+
+    #[test]
+    fn test_demographics_tracking() {
+        let mut world = World::new();
+        world.insert_resource(Demographics::default());
+        world.init_resource::<Events<AddChronicleEvent>>();
+
+        // 2 Founders, 1 Immigrant
+        world.spawn((Pop, Generation::Founder));
+        world.spawn((Pop, Generation::Founder));
+        world.spawn((Pop, Generation::Immigrant));
+
+        let _ = world.run_system_once(check_generational_friction_system);
+
+        let demographics = world.resource::<Demographics>();
+        assert_eq!(demographics.founders, 2);
+        assert_eq!(demographics.immigrants, 1);
+    }
+
+    #[test]
+    fn test_chronicle_event_turning_point() {
+        let mut world = World::new();
+        world.insert_resource(Demographics::default());
+        world.init_resource::<Events<AddChronicleEvent>>();
+
+        // Initial state: Majority Founders (3 vs 1)
+        world.resource_mut::<Demographics>().founders = 3;
+        world.resource_mut::<Demographics>().immigrants = 1;
+
+        // Spawn entities to match demographics for the system query
+        world.spawn((Pop, Generation::Founder));
+        world.spawn((Pop, Generation::Founder));
+        world.spawn((Pop, Generation::Founder));
+        world.spawn((Pop, Generation::Immigrant));
+
+        // Run system - should NOT trigger event yet
+        let _ = world.run_system_once(check_generational_friction_system);
+
+        {
+            let events = world.resource::<Events<AddChronicleEvent>>();
+            let mut reader = events.get_cursor();
+            assert_eq!(reader.read(events).count(), 0);
+        }
+
+        // Add more Immigrants to flip majority (3 vs 4)
+        world.spawn((Pop, Generation::Immigrant));
+        world.spawn((Pop, Generation::Immigrant));
+        world.spawn((Pop, Generation::Immigrant));
+
+        // Run system - SHOULD trigger event
+        let _ = world.run_system_once(check_generational_friction_system);
+
+        {
+            let events = world.resource::<Events<AddChronicleEvent>>();
+            let mut reader = events.get_cursor();
+            let events: Vec<_> = reader.read(events).collect();
+            assert_eq!(events.len(), 1);
+            assert_eq!(events[0].importance, EventImportance::Major);
+            assert!(events[0].text.contains("Turning Point"));
+        }
+
+        // Run again - SHOULD NOT trigger event (only once)
+        let _ = world.run_system_once(check_generational_friction_system);
+
+        {
+            // Let's just check the resource flag.
+            let demo = world.resource::<Demographics>();
+            assert!(demo.has_triggered_turning_point);
+
+            // Check total count of events in the resource (should still be 1)
+            let events_res = world.resource::<Events<AddChronicleEvent>>();
+            assert_eq!(events_res.len(), 1);
+        }
     }
 }

@@ -19,6 +19,7 @@ use crate::experimental::dreams::DreamJournal;
 use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::purity::PurityMap;
 use crate::layer1::rituals::{MachineSpirit, Quirk, QuirkType};
+use crate::layer1::social::old_guard::{Arrival, Generation};
 use crate::layer1::utility_types::UtilityWeights;
 use crate::layer1::{
     ActionType, Biocompatibility, ColonyResources, Farm, GridPosition, Housing, PopAction,
@@ -384,6 +385,32 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         None
     };
 
+    // Determine Generation
+    let generation_line = if let Some(generation) = world.get::<Generation>(entity) {
+        let label = match generation {
+            Generation::Founder => "Founder",
+            Generation::Immigrant => "Immigrant",
+        };
+        let year_str = if let Some(arrival) = world.get::<Arrival>(entity) {
+            let year = 1 + arrival.tick / crate::layer1::balance::TICKS_PER_YEAR;
+            format!(" (Year {year})")
+        } else {
+            String::new()
+        };
+
+        let color = match generation {
+            Generation::Founder => Color::LightYellow,
+            Generation::Immigrant => Color::Gray,
+        };
+
+        Some(Line::from(vec![
+            Span::raw("Status: "),
+            Span::styled(format!("{label}{year_str}"), Style::default().fg(color)),
+        ]))
+    } else {
+        None
+    };
+
     // Dynamic height for details section
     let details_height = 6;
 
@@ -400,17 +427,18 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
     let layout = Layout::default()
         .direction(Direction::Vertical)
         .constraints([
-            Constraint::Length(1),                                // Name
-            Constraint::Length(1),                                // Pos
-            Constraint::Length(u16::from(action_line.is_some())), // Action
-            Constraint::Length(1),                                // Spacer
-            Constraint::Length(details_height),                   // Needs or Details
-            Constraint::Length(u16::from(has_structure)),         // Structure HP
-            Constraint::Length(spirit_height),                    // Machine Spirit
-            Constraint::Length(quirk_height),                     // Quirk
-            Constraint::Length(personality_height),               // Personality + Spacer
-            Constraint::Length(dream_height),                     // Last Dream
-            Constraint::Min(1),                                   // Biography
+            Constraint::Length(1),                                    // Name
+            Constraint::Length(1),                                    // Pos
+            Constraint::Length(u16::from(generation_line.is_some())), // Generation
+            Constraint::Length(u16::from(action_line.is_some())),     // Action
+            Constraint::Length(1),                                    // Spacer
+            Constraint::Length(details_height),                       // Needs or Details
+            Constraint::Length(u16::from(has_structure)),             // Structure HP
+            Constraint::Length(spirit_height),                        // Machine Spirit
+            Constraint::Length(quirk_height),                         // Quirk
+            Constraint::Length(personality_height),                   // Personality + Spacer
+            Constraint::Length(dream_height),                         // Last Dream
+            Constraint::Min(1),                                       // Biography
         ])
         .split(area);
 
@@ -432,13 +460,18 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         );
     }
 
-    // 3. Action
-    if let Some(line) = action_line {
+    // 3. Generation
+    if let Some(line) = generation_line {
         frame.render_widget(Paragraph::new(line), layout[2]);
     }
 
-    // 4. Needs or Building Details
-    let details_area = layout[4];
+    // 4. Action
+    if let Some(line) = action_line {
+        frame.render_widget(Paragraph::new(line), layout[3]);
+    }
+
+    // 5. Needs or Building Details
+    let details_area = layout[5];
     if let Some(needs) = world.get::<Needs>(entity) {
         // Split into three rows: gauges on top, morale below, bio below
         let rows = Layout::default()
@@ -537,7 +570,7 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         render_refining_details(frame, details_area, progress);
     }
 
-    // 5. Structure HP
+    // 6. Structure HP
     if let Some(structure) = world.get::<Structure>(entity) {
         let pct = if structure.max_hp > 0.0 {
             (structure.current_hp / structure.max_hp * 100.0) as u16
@@ -559,32 +592,32 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
                     Style::default().fg(color),
                 ),
             ])),
-            layout[5],
+            layout[6],
         );
     }
 
-    // 6. Machine Spirit
+    // 7. Machine Spirit
     if let Some(spirit) = world.get::<MachineSpirit>(entity) {
-        render_machine_spirit(frame, layout[6], spirit);
+        render_machine_spirit(frame, layout[7], spirit);
     }
 
-    // 7. Quirk
+    // 8. Quirk
     if let Some(quirk) = world.get::<Quirk>(entity) {
-        render_quirk(frame, layout[7], quirk);
+        render_quirk(frame, layout[8], quirk);
     }
 
-    // 8. Personality
+    // 9. Personality
     if let Some(weights) = world.get::<UtilityWeights>(entity) {
-        render_personality(frame, layout[8], weights);
+        render_personality(frame, layout[9], weights);
     }
 
-    // 9. Last Dream
+    // 10. Last Dream
     if let Some(journal) = world.get::<DreamJournal>(entity) {
-        render_dream_journal(frame, layout[9], journal);
+        render_dream_journal(frame, layout[10], journal);
     }
 
-    // 10. Biography
-    let bottom_area = layout[10];
+    // 11. Biography
+    let bottom_area = layout[11];
     let bio_opt = world.get::<Biography>(entity);
 
     if let Some(bio) = bio_opt {
