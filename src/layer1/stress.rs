@@ -3,10 +3,10 @@
 //! This module implements the stress system where Pops accumulate stress when morale is low,
 //! leading to mental breakdowns.
 
-use bevy_ecs::prelude::*;
-use crate::layer1::morale::{Morale, MoodModifier};
+use crate::layer1::morale::{MoodModifier, Morale};
 use crate::layer1::needs::Needs;
 use crate::layer1::traits::{Trait, Traits};
+use bevy_ecs::prelude::*;
 
 /// Tracks stress accumulation when morale is low.
 #[derive(Component, Default, Debug)]
@@ -61,7 +61,15 @@ pub const CATHARSIS_DURATION: u32 = 2000;
 #[allow(clippy::type_complexity)]
 pub fn check_stress_breakdown_system(
     mut commands: Commands,
-    mut query: Query<(Entity, &Needs, &mut StressTracker, Option<&Traits>, Option<&Breakdown>, Option<&Catharsis>, Option<&Morale>)>,
+    mut query: Query<(
+        Entity,
+        &Needs,
+        &mut StressTracker,
+        Option<&Traits>,
+        Option<&Breakdown>,
+        Option<&Catharsis>,
+        Option<&Morale>,
+    )>,
 ) {
     for (entity, needs, mut tracker, traits, breakdown, catharsis, morale_comp) in &mut query {
         // If already broken or has catharsis, skip stress tracking
@@ -103,7 +111,7 @@ fn determine_breakdown_type(traits: Option<&Traits>) -> BreakdownType {
             return BreakdownType::HideInRoom;
         }
         if t.0.contains(&Trait::Lazy) || t.0.contains(&Trait::Ascetic) {
-             return BreakdownType::SadWander;
+            return BreakdownType::SadWander;
         }
         // Add more trait mappings here
     }
@@ -111,10 +119,7 @@ fn determine_breakdown_type(traits: Option<&Traits>) -> BreakdownType {
 }
 
 /// System to update and expire breakdowns.
-pub fn update_breakdown_system(
-    mut commands: Commands,
-    mut query: Query<(Entity, &mut Breakdown)>,
-) {
+pub fn update_breakdown_system(mut commands: Commands, mut query: Query<(Entity, &mut Breakdown)>) {
     for (entity, mut breakdown) in &mut query {
         if breakdown.duration_remaining > 0 {
             breakdown.duration_remaining -= 1;
@@ -130,16 +135,14 @@ pub fn update_breakdown_system(
 }
 
 /// System to apply morale bonus from Catharsis.
-pub fn apply_catharsis_morale_bonus_system(
-    mut query: Query<(&mut Morale, &Catharsis)>,
-) {
+pub fn apply_catharsis_morale_bonus_system(mut query: Query<(&mut Morale, &Catharsis)>) {
     for (mut morale, catharsis) in &mut query {
         morale.add_modifier(MoodModifier {
             label: "Catharsis".to_string(),
             value: catharsis.morale_bonus,
             duration: 1, // Applied every tick, or duration should match remaining?
-            // Since this runs every tick, duration 1 is safe if we don't want to persist it if Catharsis is removed.
-            // But Morale system decays modifiers. If we add it every tick, it's fine.
+                         // Since this runs every tick, duration 1 is safe if we don't want to persist it if Catharsis is removed.
+                         // But Morale system decays modifiers. If we add it every tick, it's fine.
         });
     }
 }
@@ -149,7 +152,7 @@ pub fn update_catharsis_duration_system(
     mut commands: Commands,
     mut query: Query<(Entity, &mut Catharsis)>,
 ) {
-     for (entity, mut catharsis) in &mut query {
+    for (entity, mut catharsis) in &mut query {
         if catharsis.duration_remaining > 0 {
             catharsis.duration_remaining -= 1;
         } else {
@@ -161,8 +164,8 @@ pub fn update_catharsis_duration_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::pop::Pop;
     use crate::layer1::needs::Needs;
+    use crate::layer1::pop::Pop;
     use crate::layer1::traits::{Trait, Traits};
 
     #[test]
@@ -172,12 +175,18 @@ mod tests {
         schedule.add_systems(check_stress_breakdown_system);
 
         // Pop with very low morale (0.05)
-        let pop = world.spawn((
-            Pop,
-            Needs { hunger: 0.05, rest: 0.05, leisure: 0.05 }, // Morale = 0.05
-            StressTracker::default(),
-            Traits(std::collections::HashSet::new()),
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Needs {
+                    hunger: 0.05,
+                    rest: 0.05,
+                    leisure: 0.05,
+                }, // Morale = 0.05
+                StressTracker::default(),
+                Traits(std::collections::HashSet::new()),
+            ))
+            .id();
 
         // Run schedule 10 times
         for _ in 0..10 {
@@ -185,7 +194,10 @@ mod tests {
         }
 
         let tracker = world.get::<StressTracker>(pop).unwrap();
-        assert!(tracker.ticks_at_low_morale > 0, "Should accumulate stress ticks");
+        assert!(
+            tracker.ticks_at_low_morale > 0,
+            "Should accumulate stress ticks"
+        );
     }
 
     #[test]
@@ -195,19 +207,30 @@ mod tests {
         schedule.add_systems(check_stress_breakdown_system);
 
         // Pop with maxed out stress ticks
-        let pop = world.spawn((
-            Pop,
-            Needs { hunger: 0.0, rest: 0.0, leisure: 0.0 },
-            StressTracker { ticks_at_low_morale: 1000 }, // Assume threshold is < 1000
-            Traits(std::collections::HashSet::new()),
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Needs {
+                    hunger: 0.0,
+                    rest: 0.0,
+                    leisure: 0.0,
+                },
+                StressTracker {
+                    ticks_at_low_morale: 1000,
+                }, // Assume threshold is < 1000
+                Traits(std::collections::HashSet::new()),
+            ))
+            .id();
 
         schedule.run(&mut world);
 
         // Should have Breakdown component
         assert!(world.get::<Breakdown>(pop).is_some());
         // Should reset tracker
-        assert_eq!(world.get::<StressTracker>(pop).unwrap().ticks_at_low_morale, 0);
+        assert_eq!(
+            world.get::<StressTracker>(pop).unwrap().ticks_at_low_morale,
+            0
+        );
     }
 
     #[test]
@@ -220,12 +243,20 @@ mod tests {
         let mut traits = std::collections::HashSet::new();
         traits.insert(Trait::Pyromaniac);
 
-        let pop = world.spawn((
-            Pop,
-            Needs { hunger: 0.0, rest: 0.0, leisure: 0.0 },
-            StressTracker { ticks_at_low_morale: 1000 },
-            Traits(traits),
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Needs {
+                    hunger: 0.0,
+                    rest: 0.0,
+                    leisure: 0.0,
+                },
+                StressTracker {
+                    ticks_at_low_morale: 1000,
+                },
+                Traits(traits),
+            ))
+            .id();
 
         schedule.run(&mut world);
 
@@ -239,12 +270,20 @@ mod tests {
         let mut schedule = Schedule::default();
         schedule.add_systems(check_stress_breakdown_system);
 
-        let pop = world.spawn((
-            Pop,
-            Needs { hunger: 0.0, rest: 0.0, leisure: 0.0 },
-            StressTracker { ticks_at_low_morale: 1000 },
-            Traits(std::collections::HashSet::new()), // No traits
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Needs {
+                    hunger: 0.0,
+                    rest: 0.0,
+                    leisure: 0.0,
+                },
+                StressTracker {
+                    ticks_at_low_morale: 1000,
+                },
+                Traits(std::collections::HashSet::new()), // No traits
+            ))
+            .id();
 
         schedule.run(&mut world);
 
@@ -258,11 +297,16 @@ mod tests {
         let mut schedule = Schedule::default();
         schedule.add_systems(apply_catharsis_morale_bonus_system);
 
-        let pop = world.spawn((
-            Pop,
-            Morale::default(),
-            Catharsis { duration_remaining: 10, morale_bonus: 0.5 },
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Morale::default(),
+                Catharsis {
+                    duration_remaining: 10,
+                    morale_bonus: 0.5,
+                },
+            ))
+            .id();
 
         schedule.run(&mut world);
 
@@ -273,15 +317,20 @@ mod tests {
 
     #[test]
     fn test_breakdown_lifecycle() {
-         let mut world = World::new();
+        let mut world = World::new();
         let mut schedule = Schedule::default();
         schedule.add_systems((update_breakdown_system, apply_deferred));
         schedule.add_systems(update_catharsis_duration_system);
 
-        let pop = world.spawn((
-            Pop,
-            Breakdown { breakdown_type: BreakdownType::Dazing, duration_remaining: 0 },
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Breakdown {
+                    breakdown_type: BreakdownType::Dazing,
+                    duration_remaining: 0,
+                },
+            ))
+            .id();
 
         // Tick 1: Breakdown duration 0 -> removed, Catharsis added
         schedule.run(&mut world);

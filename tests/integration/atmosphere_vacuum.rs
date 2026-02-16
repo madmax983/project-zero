@@ -1,8 +1,8 @@
 use bevy_ecs::prelude::*;
 use bevy_ecs::system::RunSystemOnce;
 use scale::layer1::atmosphere::AtmosphereGrid;
-use scale::layer1::pressure::PressureGrid;
 use scale::layer1::integration::vacuum_clears_pollution_system;
+use scale::layer1::pressure::PressureGrid;
 
 #[test]
 fn test_vacuum_clears_pollution() {
@@ -22,11 +22,17 @@ fn test_vacuum_clears_pollution() {
     world.insert_resource(pressure);
 
     // 3. Run the system
-    world.run_system_once(vacuum_clears_pollution_system).unwrap();
+    world
+        .run_system_once(vacuum_clears_pollution_system)
+        .unwrap();
 
     // 4. Assert pollution is cleared
     let atmosphere = world.resource::<AtmosphereGrid>();
     let pollution = atmosphere.get(5, 5);
 
-    assert!(pollution < 0.01, "Pollution should be cleared in vacuum! Found: {}", pollution);
+    assert!(
+        pollution < 0.01,
+        "Pollution should be cleared in vacuum! Found: {}",
+        pollution
+    );
 }

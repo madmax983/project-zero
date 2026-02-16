@@ -1,12 +1,9 @@
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::energy::{
-        PowerSource, PowerConsumer, Battery, Conduit,
-        power_grid_system
-    };
+    use crate::layer1::energy::{Battery, Conduit, PowerConsumer, PowerSource, power_grid_system};
+    use crate::layer1::health::Health;
     use crate::layer1::map::GridPosition;
-    use crate::layer1::health::Health; // From Spec 034/071
+    use bevy_ecs::prelude::*; // From Spec 034/071
 
     // 1. Battery Logic
     #[test]
@@ -38,19 +35,31 @@ mod tests {
 
         // Generator: 10 Output
         world.spawn((
-            PowerSource { output: 10.0, active: true },
+            PowerSource {
+                output: 10.0,
+                active: true,
+            },
             GridPosition { x: 0, y: 0 },
         ));
 
         // Consumer: 15 Demand
-        let consumer = world.spawn((
-            PowerConsumer { demand: 15.0, active: false },
-            GridPosition { x: 0, y: 1 },
-        )).id();
+        let consumer = world
+            .spawn((
+                PowerConsumer {
+                    demand: 15.0,
+                    active: false,
+                },
+                GridPosition { x: 0, y: 1 },
+            ))
+            .id();
 
         // Battery: 100 Charge
         world.spawn((
-            Battery { capacity: 100.0, charge: 100.0, max_throughput: 10.0 },
+            Battery {
+                capacity: 100.0,
+                charge: 100.0,
+                max_throughput: 10.0,
+            },
             GridPosition { x: 0, y: 2 },
             Conduit, // Connects to grid
         ));
@@ -74,7 +83,10 @@ mod tests {
 
         // Generator: 10 Output
         world.spawn((
-            PowerSource { output: 10.0, active: true },
+            PowerSource {
+                output: 10.0,
+                active: true,
+            },
             GridPosition { x: 0, y: 0 },
         ));
 
@@ -82,10 +94,17 @@ mod tests {
         // Deficit: 10 Supply vs 20 Demand -> 50% Supply Ratio
         let mut consumers = Vec::new();
         for i in 0..10 {
-            consumers.push(world.spawn((
-                PowerConsumer { demand: 2.0, active: true }, // Start active
-                GridPosition { x: 0, y: i + 1 },
-            )).id());
+            consumers.push(
+                world
+                    .spawn((
+                        PowerConsumer {
+                            demand: 2.0,
+                            active: true,
+                        }, // Start active
+                        GridPosition { x: 0, y: i + 1 },
+                    ))
+                    .id(),
+            );
         }
 
         // Run system
@@ -94,7 +113,8 @@ mod tests {
         // Check activation count
         // Should be roughly 50% (5 consumers) active
         // Allow variance for RNG, but ensure SOME are off and SOME are on
-        let active_count = consumers.iter()
+        let active_count = consumers
+            .iter()
             .filter(|&e| world.get::<PowerConsumer>(*e).unwrap().active)
             .count();
 
@@ -108,15 +128,26 @@ mod tests {
         let mut world = World::new();
 
         // Generator: 10 Output
-        let generator = world.spawn((
-            PowerSource { output: 10.0, active: true },
-            GridPosition { x: 0, y: 0 },
-            Health { current: 100.0, max: 100.0 }, // Has Health
-        )).id();
+        let generator = world
+            .spawn((
+                PowerSource {
+                    output: 10.0,
+                    active: true,
+                },
+                GridPosition { x: 0, y: 0 },
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                }, // Has Health
+            ))
+            .id();
 
         // Consumer: 30 Demand (300% Load) -> Severe Overload
         world.spawn((
-            PowerConsumer { demand: 30.0, active: true },
+            PowerConsumer {
+                demand: 30.0,
+                active: true,
+            },
             GridPosition { x: 0, y: 1 },
         ));
 
@@ -127,6 +158,9 @@ mod tests {
 
         // Generator should have taken damage
         let health = world.get::<Health>(generator).unwrap();
-        assert!(health.current < 100.0, "Generator should take damage from 300% overload");
+        assert!(
+            health.current < 100.0,
+            "Generator should take damage from 300% overload"
+        );
     }
 }

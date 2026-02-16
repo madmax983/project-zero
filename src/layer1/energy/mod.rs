@@ -11,6 +11,8 @@ use rand::seq::SliceRandom;
 use std::collections::{HashMap, HashSet, VecDeque};
 
 #[cfg(test)]
+mod blackout_tests;
+#[cfg(test)]
 mod instability_tests;
 
 /// Emits power to the grid.
@@ -51,6 +53,13 @@ pub struct FuelConsumer {
 #[derive(Component, Debug, Clone)]
 pub struct Conduit;
 
+/// Global protocol to cut power in emergencies.
+#[derive(Resource, Default, Debug, Clone, Copy)]
+pub struct BlackoutProtocol {
+    /// Whether the blackout is currently active.
+    pub active: bool,
+}
+
 /// Stores excess power to buffer brownouts.
 #[derive(Component, Debug, Clone)]
 pub struct Battery {
@@ -78,10 +87,12 @@ impl Battery {
 
 fn build_grid_map(world: &mut World) -> HashMap<(i32, i32), Entity> {
     let mut grid_map = HashMap::new();
-    let mut query = world.query_filtered::<(
-        Entity,
-        &GridPosition,
-    ), Or<(With<PowerSource>, With<PowerConsumer>, With<Conduit>, With<Battery>)>>();
+    let mut query = world.query_filtered::<(Entity, &GridPosition), Or<(
+        With<PowerSource>,
+        With<PowerConsumer>,
+        With<Conduit>,
+        With<Battery>,
+    )>>();
 
     for (entity, pos) in query.iter(world) {
         grid_map.insert((pos.x, pos.y), entity);
@@ -157,6 +168,19 @@ pub fn calculate_grid_stats(world: &mut World, start_entity: Entity) -> (f32, f3
 /// System to update power grids.
 /// Identifies connected components, sums production/demand, and enables/disables consumers.
 pub fn power_grid_system(world: &mut World) {
+    // 0. Check Protocol
+    let blackout = world
+        .get_resource::<BlackoutProtocol>()
+        .is_some_and(|b| b.active);
+
+    if blackout {
+        let mut consumers = world.query::<&mut PowerConsumer>();
+        for mut consumer in consumers.iter_mut(world) {
+            consumer.active = false;
+        }
+        return;
+    }
+
     // 1. Build grid map
     let grid_map = build_grid_map(world);
 
@@ -251,7 +275,9 @@ pub fn power_grid_system(world: &mut World) {
                 if let Some(victim) = grid_entities.choose(&mut rng) {
                     // Clippy suggests collapsing, but let_chains is unstable
                     #[allow(clippy::collapsible_if)]
-                    if let Some(mut health) = world.get_mut::<crate::layer1::health::Health>(*victim) {
+                    if let Some(mut health) =
+                        world.get_mut::<crate::layer1::health::Health>(*victim)
+                    {
                         health.take_damage(10.0);
                     }
                 }
