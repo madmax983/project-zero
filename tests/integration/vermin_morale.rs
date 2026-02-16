@@ -22,7 +22,7 @@ fn test_vermin_affects_morale() {
 
     // Set pressure to avoid suffocation
     if let Some(mut pressure) = world.get_resource_mut::<scale::layer1::pressure::PressureGrid>() {
-        pressure.values.fill(1.0);
+        pressure.fill(1.0);
     }
 
     // 2. Spawn Pop
@@ -41,6 +41,10 @@ fn test_vermin_affects_morale() {
     // At 80 severity, chance is ~6% per tick.
     // Over 200 ticks, failure chance is negligible (~0.0004%).
     for _ in 0..500 {
+        // Refill pressure to prevent suffocation (since edges leak to vacuum)
+        if let Some(mut pressure) = world.get_resource_mut::<scale::layer1::pressure::PressureGrid>() {
+            pressure.fill(1.0);
+        }
         scale::simulation::run_simulation_tick(&mut world);
     }
 

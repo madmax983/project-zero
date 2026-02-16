@@ -6,14 +6,19 @@ use std::collections::HashMap;
 #[derive(Resource)]
 pub struct PressureGrid {
     /// Width of the grid.
-    pub width: usize,
+    pub(crate) width: usize,
     /// Height of the grid.
-    pub height: usize,
+    pub(crate) height: usize,
     /// Flattened grid values.
-    pub values: Vec<f32>,
+    pub(crate) values: Vec<f32>,
 }
 
 impl PressureGrid {
+    /// Fills the entire grid with a value.
+    pub fn fill(&mut self, value: f32) {
+        self.values.fill(value);
+    }
+
     /// Create a new empty pressure grid (initialized to 0.0).
     #[must_use]
     pub fn new(width: usize, height: usize) -> Self {

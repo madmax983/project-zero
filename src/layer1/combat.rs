@@ -138,10 +138,15 @@ pub fn execute_attack(world: &mut World, attacker: Entity, target: Entity) {
     } else {
         // Sentry: Auto-initialize CombatState to prevent "machine gun" bug
         // where missing state allows ignoring cooldowns.
-        world.entity_mut(attacker).insert(CombatState {
-            cooldown: cooldown_val,
-            last_target: Some(target),
-        });
+        if let Ok(mut entity_cmds) = world.get_entity_mut(attacker) {
+            entity_cmds.insert(CombatState {
+                cooldown: cooldown_val,
+                last_target: Some(target),
+            });
+        } else {
+            // Attacker despawned or invalid entity. Abort attack.
+            return;
+        }
     }
 
     // 2. Apply damage to Target
