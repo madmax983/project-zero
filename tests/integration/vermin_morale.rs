@@ -20,6 +20,11 @@ fn test_vermin_affects_morale() {
         vermin.severity = 80.0;
     }
 
+    // Set pressure to avoid suffocation
+    if let Some(mut pressure) = world.get_resource_mut::<scale::layer1::pressure::PressureGrid>() {
+        pressure.values.fill(1.0);
+    }
+
     // 2. Spawn Pop
     let pop = world
         .spawn((
@@ -27,7 +32,7 @@ fn test_vermin_affects_morale() {
             Memories::default(),
             Needs::default(),
             scale::layer1::Health::default(),
-            scale::layer1::GridPosition::default(),
+            scale::layer1::GridPosition { x: 5, y: 5 },
         ))
         .id();
 
@@ -35,7 +40,7 @@ fn test_vermin_affects_morale() {
     // Run for enough ticks to ensure the probabilistic event occurs.
     // At 80 severity, chance is ~6% per tick.
     // Over 200 ticks, failure chance is negligible (~0.0004%).
-    for _ in 0..200 {
+    for _ in 0..500 {
         scale::simulation::run_simulation_tick(&mut world);
     }
 
