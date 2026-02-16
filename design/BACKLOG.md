@@ -20,6 +20,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `124` The Wild Child — `specs/124-the-wild-child.md`
 - [ ] `130` Social Debt — `specs/130-social-debt.md`
 - [ ] `133` Ventilation Networks — `specs/133-ventilation-networks.md`
+- [ ] `134` Emergency Venting — `specs/134-emergency-venting.md`
 
 ## MVP — Layer 2: System Simulation
 
