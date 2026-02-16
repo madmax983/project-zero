@@ -104,6 +104,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(crate::experimental::miasma::MiasmaGrid::new(80, 50));
     #[cfg(feature = "nova")]
     world.init_resource::<crate::experimental::acoustics::AmbientAudioLevel>();
+    #[cfg(feature = "nova")]
+    world.init_resource::<crate::experimental::echoes::EchoMap>();
     world.insert_resource(AtmosphereGrid::new(80, 50));
     world.insert_resource(crate::layer1::pressure::PressureGrid::new(80, 50));
     world.insert_resource(LightMap::new(80, 50));

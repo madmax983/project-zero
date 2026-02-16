@@ -22,3 +22,8 @@
 **Concept:** Added `MiasmaGrid` resource and `Sickness` component. Waste, Corpses, and Landfills emit miasma which diffuses and causes morale loss and sickness in nearby pops.
 **Fate:** Merged
 **Lesson:** Environmental consequences for resource management (Waste) create natural gameplay loops (Cleanup/Burial) without explicit "Quests".
+
+## [Echoes of the Past]
+**Concept:** Implemented `EchoMap` resource and `Echo` entities (Screams, Laughter). Echoes persist on the map after events (Death, Crowded Taverns) and affect Pop mood.
+**Fate:** Merged (Pending)
+**Lesson:** Emotional persistence adds "texture" to the environment, making spaces feel lived-in (or died-in).
