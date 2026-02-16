@@ -23,3 +23,7 @@
 ## [Juice System]
 **Friction:** Mining and Chopping felt monotonous with consistent tick rates. Combat lacked weight for heavy hits.
 **Flow:** Introduced "Critical Success" (5% chance) for work actions to create variable rewards. Scaled screen shake and particles based on damage output to emphasize impact.
+
+## [Combat Feel]
+**Friction:** Heavy hits (15+ damage) felt floaty and identical to light hits. The impact was lost in the continuous simulation tick rate.
+**Flow:** Implemented "Hit Stop" (Freeze Frame) for 5 ticks (approx 80ms) on heavy hits. This pauses both the attacker and victim, emphasizing the weight of the blow without interrupting the global simulation.

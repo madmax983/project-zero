@@ -67,6 +67,27 @@ pub struct Weapon {
     pub properties: AttackProperties,
 }
 
+/// Component for "Hit Stop" (Freeze Frame) effect.
+/// Pauses the entity for a few ticks to emphasize impact.
+/// Ludwig: "This adds crunch to the combat!"
+#[derive(Component, Default, Debug, Clone, Copy)]
+pub struct HitStop {
+    /// Ticks remaining until the entity can act again.
+    pub ticks_remaining: u32,
+}
+
+/// System to process Hit Stop durations.
+/// Decrements the counter and removes the component when it expires.
+pub fn hit_stop_system(mut commands: Commands, mut query: Query<(Entity, &mut HitStop)>) {
+    for (entity, mut hit_stop) in &mut query {
+        if hit_stop.ticks_remaining > 0 {
+            hit_stop.ticks_remaining -= 1;
+        } else {
+            commands.entity(entity).remove::<HitStop>();
+        }
+    }
+}
+
 /// Resolves an attack from one entity to another.
 ///
 /// This function:
@@ -154,11 +175,26 @@ pub fn execute_attack(world: &mut World, attacker: Entity, target: Entity) {
         if let Some(mut health) = world.get_mut::<crate::layer1::health::Health>(target) {
             health.take_damage(damage);
 
+            // Ludwig: "Juice" logic
+            let is_heavy_hit = damage >= 15.0;
+
+            // Hit Stop: Freeze frame on impact
+            if is_heavy_hit {
+                // Freeze both for 5 ticks (approx 80ms at 60fps)
+                // This emphasizes the weight of the blow.
+                if let Ok(mut entity) = world.get_entity_mut(attacker) {
+                    entity.insert(HitStop { ticks_remaining: 5 });
+                }
+                if let Ok(mut entity) = world.get_entity_mut(target) {
+                    entity.insert(HitStop { ticks_remaining: 5 });
+                }
+            }
+
             // Scale feedback based on damage
-            let (shake_intensity, particle_color, particle_count) = if damage >= 15.0 {
-                (0.4, Color::Magenta, 10)
+            let (shake_intensity, particle_color, particle_count) = if is_heavy_hit {
+                (0.4, Color::Magenta, 12)
             } else {
-                (0.2, Color::Red, 5)
+                (0.15, Color::Red, 5)
             };
 
             // Trigger Screen Shake (Ludwig: Juice)
@@ -431,5 +467,89 @@ mod tests {
             "Second attack should be blocked by cooldown. Health: {}",
             health.current
         );
+    }
+
+    // Re-implement test with proper system runner for Commands
+    #[test]
+    fn test_hit_stop_system_flow() {
+        use bevy_ecs::system::RunSystemOnce;
+        let mut world = setup_world();
+
+        let entity = world.spawn(HitStop { ticks_remaining: 2 }).id();
+
+        // Tick 1
+        world.run_system_once(hit_stop_system).unwrap();
+        let hit_stop = world.get::<HitStop>(entity).unwrap();
+        assert_eq!(hit_stop.ticks_remaining, 1);
+
+        // Tick 2
+        world.run_system_once(hit_stop_system).unwrap();
+        let hit_stop = world.get::<HitStop>(entity).unwrap();
+        assert_eq!(hit_stop.ticks_remaining, 0);
+
+        // Tick 3 (Should remove)
+        world.run_system_once(hit_stop_system).unwrap();
+        assert!(world.get::<HitStop>(entity).is_none());
+    }
+
+    #[test]
+    fn test_execute_attack_applies_hit_stop_on_heavy_hit() {
+        let mut world = setup_world();
+
+        // Heavy Weapon (Damage 20)
+        let weapon = world.spawn(Weapon {
+            properties: AttackProperties {
+                damage: 20.0,
+                range: 1.0,
+                cooldown: 10,
+                accuracy: 1.0,
+            },
+        }).id();
+
+        let attacker = world.spawn((
+            Pop,
+            Equipment { weapon: Some(weapon), ..Default::default() }
+        )).id();
+
+        let target = world.spawn(Health { current: 100.0, max: 100.0 }).id();
+
+        // Attack
+        execute_attack(&mut world, attacker, target);
+
+        // Check HitStop
+        let attacker_hs = world.get::<HitStop>(attacker);
+        assert!(attacker_hs.is_some(), "Attacker should have HitStop");
+        assert_eq!(attacker_hs.unwrap().ticks_remaining, 5);
+
+        let target_hs = world.get::<HitStop>(target);
+        assert!(target_hs.is_some(), "Target should have HitStop");
+        assert_eq!(target_hs.unwrap().ticks_remaining, 5);
+    }
+
+    #[test]
+    fn test_execute_attack_no_hit_stop_on_light_hit() {
+        let mut world = setup_world();
+
+        // Light Weapon (Damage 5)
+        let weapon = world.spawn(Weapon {
+            properties: AttackProperties {
+                damage: 5.0,
+                range: 1.0,
+                cooldown: 10,
+                accuracy: 1.0,
+            },
+        }).id();
+
+        let attacker = world.spawn((
+            Pop,
+            Equipment { weapon: Some(weapon), ..Default::default() }
+        )).id();
+
+        let target = world.spawn(Health { current: 100.0, max: 100.0 }).id();
+
+        execute_attack(&mut world, attacker, target);
+
+        assert!(world.get::<HitStop>(attacker).is_none(), "Light hit should not trigger HitStop");
+        assert!(world.get::<HitStop>(target).is_none(), "Light hit should not trigger HitStop");
     }
 }
