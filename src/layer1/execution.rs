@@ -35,7 +35,7 @@ use crate::layer1::actions::hunger::handle_arrival as handle_hunger_arrival;
 use crate::layer1::actions::rest::handle_arrival as handle_rest_arrival;
 use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::building::{Building, OccupiedTiles};
-use crate::layer1::combat::Weapon;
+use crate::layer1::combat::{HitStop, Weapon};
 use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::defense::Gate;
 use crate::layer1::designation::{Designation, DesignationType};
@@ -71,10 +71,18 @@ use ratatui::style::Color;
 pub fn combat_execution_system(world: &mut World) {
     // Collect combatants
     let combatants: Vec<(Entity, Entity, Option<Equipment>)> = world
-        .query::<(Entity, &MovementTarget, Option<&Equipment>)>()
+        .query::<(Entity, &MovementTarget, Option<&Equipment>, Option<&HitStop>)>()
         .iter(world)
-        .filter(|(_, mt, _)| mt.for_action == ActionType::Fight)
-        .map(|(e, mt, eq)| (e, mt.target_entity, eq.copied()))
+        .filter(|(_, mt, _, hit_stop)| {
+            // Ludwig: Check Hit Stop
+            if let Some(hs) = hit_stop {
+                if hs.ticks_remaining > 0 {
+                    return false;
+                }
+            }
+            mt.for_action == ActionType::Fight
+        })
+        .map(|(e, mt, eq, _)| (e, mt.target_entity, eq.copied()))
         .collect();
 
     for (pop_entity, target_entity, equipment_opt) in combatants {
@@ -287,6 +295,7 @@ pub fn movement_system(
             &MovementTarget,
             Option<&mut Speed>,
             Option<&Traits>,
+            Option<&HitStop>,
         ),
         (Without<AtTarget>, Without<Building>),
     >,
@@ -296,7 +305,14 @@ pub fn movement_system(
     buildings: Query<(&GridPosition, &Building, Option<&Gate>)>,
     mut commands: Commands,
 ) {
-    for (pop_entity, mut current_pos, mt, mut speed_opt, traits) in &mut pops {
+    for (pop_entity, mut current_pos, mt, mut speed_opt, traits, hit_stop) in &mut pops {
+        // Ludwig: Check Hit Stop
+        if let Some(hs) = hit_stop {
+            if hs.ticks_remaining > 0 {
+                continue;
+            }
+        }
+
         let trait_mod = traits.map_or(1.0, get_trait_move_speed_modifier);
 
         // Accumulate speed
@@ -2928,5 +2944,91 @@ mod tests {
         let pos = world.get::<GridPosition>(pop).unwrap();
         assert_eq!(pos.x, 0);
         assert_eq!(pos.y, 1, "Pop should detour to Y if X is blocked");
+    }
+
+    #[test]
+    fn test_movement_system_blocked_by_hit_stop() {
+        let mut world = setup_world();
+
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 0, y: 0 },
+                MovementTarget {
+                    target_entity: Entity::from_raw(1),
+                    target_position: GridPosition { x: 5, y: 0 },
+                    for_action: ActionType::Work,
+                },
+                HitStop { ticks_remaining: 1 },
+            ))
+            .id();
+
+        // Run movement
+        world.run_system_once(movement_system).unwrap();
+
+        // Should NOT move
+        let pos = world.get::<GridPosition>(pop).unwrap();
+        assert_eq!(pos.x, 0, "Pop should be frozen by HitStop");
+
+        // Decrement HitStop (manually or via system)
+        world.get_mut::<HitStop>(pop).unwrap().ticks_remaining = 0;
+
+        // Run movement again
+        world.run_system_once(movement_system).unwrap();
+
+        // Should move now (if HitStop is 0, we still check ticks_remaining)
+        // Wait, if ticks_remaining is 0, we treat it as no hit stop?
+        // My implementation: if hit_stop.ticks_remaining > 0 { continue }
+        // So 0 is fine.
+        let pos = world.get::<GridPosition>(pop).unwrap();
+        assert_eq!(pos.x, 1, "Pop should move when HitStop expires");
+    }
+
+    #[test]
+    fn test_combat_execution_blocked_by_hit_stop() {
+        use crate::layer1::combat::{AttackProperties, Weapon};
+        use crate::layer1::health::Health;
+
+        let mut world = setup_world();
+
+        let enemy = world
+            .spawn((
+                GridPosition { x: 1, y: 0 },
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                },
+            ))
+            .id();
+
+        let weapon = world.spawn(Weapon {
+            properties: AttackProperties {
+                damage: 10.0,
+                range: 1.0,
+                cooldown: 0,
+                accuracy: 1.0,
+            },
+        }).id();
+
+        world.spawn((
+            Pop,
+            GridPosition { x: 0, y: 0 },
+            Equipment {
+                weapon: Some(weapon),
+                ..Default::default()
+            },
+            MovementTarget {
+                target_entity: enemy,
+                target_position: GridPosition { x: 1, y: 0 },
+                for_action: ActionType::Fight,
+            },
+            HitStop { ticks_remaining: 1 },
+        ));
+
+        combat_execution_system(&mut world);
+
+        // Enemy should NOT take damage
+        let health = world.get::<Health>(enemy).unwrap();
+        assert!((health.current - 100.0).abs() < f32::EPSILON, "HitStop should prevent attack");
     }
 }

@@ -149,12 +149,14 @@ pub fn build_simulation_schedule() -> Schedule {
         apply_quirk_modifiers_system
             .after(apply_lighting_penalties_system)
             .after(apply_weather_effects_system),
+        crate::layer1::combat::hit_stop_system.after(process_start_plan_system),
     ));
 
     schedule.add_systems((
         movement_system
             .after(apply_quirk_modifiers_system)
-            .after(crate::layer1::fauna::fauna_behavior_system),
+            .after(crate::layer1::fauna::fauna_behavior_system)
+            .after(crate::layer1::combat::hit_stop_system),
         arrival_handler_system.after(movement_system),
         work_execution_system.after(arrival_handler_system),
         combat_execution_system.after(arrival_handler_system),
