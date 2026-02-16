@@ -70,6 +70,7 @@ pub struct WorldContext<'a> {
     /// Reference to global colony resources (food, wood, etc.).
     pub resources: &'a ColonyResources,
     /// Reference to the day/night cycle (for shift checks).
+    #[allow(dead_code)]
     pub cycle: &'a DayNightCycle,
     /// Reference to current taboo/law state.
     pub taboo: &'a TabooState,

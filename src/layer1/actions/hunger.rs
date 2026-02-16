@@ -13,7 +13,7 @@ use bevy_ecs::prelude::*;
 /// Evaluates the utility of satisfying hunger at available farms.
 #[must_use]
 pub(crate) fn evaluate_satisfy_hunger(
-    pop_pos: &GridPosition,
+    pop_pos: GridPosition,
     needs: &Needs,
     weights: &UtilityWeights,
     farms: &[CapacityProxy],
@@ -24,7 +24,7 @@ pub(crate) fn evaluate_satisfy_hunger(
 
     for farm in farms {
         let context_score =
-            calculate_context_score(*pop_pos, Some(farm.pos), farm.capacity, farm.usage, weights);
+            calculate_context_score(pop_pos, Some(farm.pos), farm.capacity, farm.usage, weights);
 
         let success_mod = calculate_success_modifier(ActionType::SatisfyHunger, weights);
 

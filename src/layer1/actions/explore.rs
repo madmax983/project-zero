@@ -11,7 +11,7 @@ use bevy_ecs::prelude::*;
 /// regular work but less critical than hauling food or healing.
 #[must_use]
 pub(crate) fn evaluate_explore(
-    pop_pos: &GridPosition,
+    pop_pos: GridPosition,
     weights: &UtilityWeights,
     anomalies: &[PositionProxy],
 ) -> Option<(f32, Entity)> {
@@ -20,7 +20,7 @@ pub(crate) fn evaluate_explore(
 
     for anomaly in anomalies {
         let context = calculate_context_score(
-            *pop_pos,
+            pop_pos,
             Some(anomaly.pos),
             1, // Capacity (simplified)
             0, // Occupied (simplified)

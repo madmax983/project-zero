@@ -139,7 +139,7 @@ mod tests {
             proxies.push(PositionProxy { entity, pos: *pos });
         }
 
-        let result = evaluate_repair(&pop_pos, &weights, &designations, &proxies);
+        let result = evaluate_repair(pop_pos, &weights, &designations, &proxies);
 
         assert!(result.is_some());
         assert_eq!(

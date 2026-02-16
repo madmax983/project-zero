@@ -14,7 +14,7 @@ use bevy_ecs::prelude::*;
 /// `Some((utility, target_entity))` if a valid job is found, `None` otherwise.
 #[must_use]
 pub(crate) fn evaluate_refine(
-    pop_pos: &GridPosition,
+    pop_pos: GridPosition,
     weights: &UtilityWeights,
     buildings: &[RefiningProxy],
 ) -> Option<(f32, Entity)> {
@@ -25,7 +25,7 @@ pub(crate) fn evaluate_refine(
         // Pre-filtered for schedule and recipe affordability
 
         let context = calculate_context_score(
-            *pop_pos,
+            pop_pos,
             Some(building.pos),
             1, // Capacity assumption (1 worker per mill for now)
             0, // Occupied assumption (handled by execution system or race condition accepted for MVP)

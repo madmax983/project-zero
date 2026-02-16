@@ -75,11 +75,9 @@ fn find_path_internal(
     // Map (x, y) -> (BuildingType, is_locked_gate)
     let mut building_map = HashMap::new();
     for entity in world.iter_entities() {
-        if let Some(pos) = entity.get::<GridPosition>() {
-            if let Some(b) = entity.get::<Building>() {
-                let is_locked = entity.get::<Gate>().map_or(false, |g| g.is_locked);
-                building_map.insert((pos.x, pos.y), (b.building_type, is_locked));
-            }
+        if let (Some(pos), Some(b)) = (entity.get::<GridPosition>(), entity.get::<Building>()) {
+            let is_locked = entity.get::<Gate>().is_some_and(|g| g.is_locked);
+            building_map.insert((pos.x, pos.y), (b.building_type, is_locked));
         }
     }
 
@@ -133,6 +131,7 @@ fn find_path_internal(
 
             // Movement cost (default 1 + terrain cost)
             let tile_cost = if let (Ok(x), Ok(y)) = (usize::try_from(next.0), usize::try_from(next.1)) {
+                #[allow(clippy::cast_possible_truncation)]
                 terrain.get(x, y).map_or(1, |t| t.movement_cost() as i32)
             } else {
                 1
@@ -156,7 +155,7 @@ fn find_path_internal(
     None
 }
 
-fn manhattan_distance(a: (i32, i32), b: (i32, i32)) -> i32 {
+const fn manhattan_distance(a: (i32, i32), b: (i32, i32)) -> i32 {
     (a.0 - b.0).abs() + (a.1 - b.1).abs()
 }
 

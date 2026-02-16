@@ -211,6 +211,36 @@ pub fn fire_damage_system(world: &mut World) {
     }
 }
 
+/// System to extinguish fire in low pressure (vacuum).
+pub fn fire_pressure_check_system(world: &mut World) {
+    use crate::layer1::pressure::PressureGrid;
+
+    let mut to_despawn = Vec::new();
+
+    // 1. Collect fire positions
+    let mut fire_positions = Vec::new();
+    {
+        let mut query = world.query_filtered::<(Entity, &GridPosition), With<Fire>>();
+        for (e, pos) in query.iter(world) {
+            fire_positions.push((e, *pos));
+        }
+    }
+
+    // 2. Check pressure
+    if let Some(pressure) = world.get_resource::<PressureGrid>() {
+        for (e, pos) in fire_positions {
+            if pressure.get(pos.x, pos.y) < 0.1 {
+                to_despawn.push(e);
+            }
+        }
+    }
+
+    // 3. Despawn extinguished fires
+    for e in to_despawn {
+        world.despawn(e);
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

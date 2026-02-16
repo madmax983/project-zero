@@ -14,7 +14,7 @@ use bevy_ecs::prelude::*;
 /// *   Requires an available worker slot at a [`crate::layer1::tech::Library`].
 #[must_use]
 pub(crate) fn evaluate_research(
-    pop_pos: &GridPosition,
+    pop_pos: GridPosition,
     weights: &UtilityWeights,
     resources: &ColonyResources,
     libraries: &[CapacityProxy],
@@ -31,7 +31,7 @@ pub(crate) fn evaluate_research(
         // Pre-filtered for schedule
 
         let context = calculate_context_score(
-            *pop_pos,
+            pop_pos,
             Some(library.pos),
             library.capacity,
             library.usage,

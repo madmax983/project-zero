@@ -121,3 +121,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `INT-008` Integration: Grid Overload -> Fire Ignition — completed 2026-02-16
 - [x] `135` Trash Cannon Defense — `specs/135-trash-cannon-defense.md` — completed 2026-02-23
 - [x] `136` Explosive Decompression — `specs/136-explosive-decompression.md` — completed 2026-02-16
+- [x] `134` Emergency Venting — `specs/134-emergency-venting.md` — completed 2026-10-27

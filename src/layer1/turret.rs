@@ -68,7 +68,10 @@ pub fn turret_fire_system(world: &mut World) {
 
         for (target_entity, target_pos) in &targets {
             // Euclidean distance
-            let dist = ((turret_pos.x - target_pos.x).pow(2) as f32 + (turret_pos.y - target_pos.y).pow(2) as f32).sqrt();
+            #[allow(clippy::cast_precision_loss)]
+            let dist = ((turret_pos.x - target_pos.x).pow(2) as f32
+                + (turret_pos.y - target_pos.y).pow(2) as f32)
+                .sqrt();
 
             if dist <= turret_data.attack.range && dist < min_dist {
                 min_dist = dist;
@@ -79,9 +82,8 @@ pub fn turret_fire_system(world: &mut World) {
         if let Some((target_entity, target_pos)) = best_target {
             // Deduct Ammo
             let mut resources = world.resource_mut::<ColonyResources>();
-            match turret_data.ammo_type {
-                ResourceType::Waste => resources.waste -= turret_data.ammo_cost,
-                _ => {},
+            if turret_data.ammo_type == ResourceType::Waste {
+                resources.waste -= turret_data.ammo_cost;
             }
 
             // Deal Damage

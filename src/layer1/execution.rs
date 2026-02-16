@@ -751,7 +751,7 @@ pub fn execute_demolish(world: &mut World, designation_entity: Entity) -> bool {
                         res.add_knowledge(amount);
                     }
 
-                    let label = building_type.map_or("Ancient Structure".to_string(), |b| b.label().to_string());
+                    let label = building_type.map_or_else(|| "Ancient Structure".to_string(), |b| b.label().to_string());
 
                     // Fire integration event
                     world.send_event(RetrogradeEngineeringEvent {

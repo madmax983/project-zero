@@ -58,7 +58,7 @@ mod tests {
             progress_current: 0.0,
         }];
 
-        let result = evaluate_refine(&pop_pos, &weights, &proxies);
+        let result = evaluate_refine(pop_pos, &weights, &proxies);
 
         assert!(result.is_some());
         let (utility, target) = result.unwrap();
@@ -95,7 +95,7 @@ mod tests {
             usage: 0,
         }];
 
-        let result = evaluate_farm(&pop_pos, &weights, &proxies);
+        let result = evaluate_farm(pop_pos, &weights, &proxies);
 
         assert!(result.is_some());
         let (utility, target) = result.unwrap();

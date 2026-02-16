@@ -14,7 +14,7 @@ use bevy_ecs::prelude::*;
 /// 2. Automatic repair of damaged [`crate::layer1::structure::Structure`]s (unless [`crate::layer1::structure::DeferMaintenance`] is present).
 #[must_use]
 pub(crate) fn evaluate_repair(
-    pop_pos: &GridPosition,
+    pop_pos: GridPosition,
     weights: &UtilityWeights,
     designations: &[PositionProxy],
     structures: &[PositionProxy],
@@ -25,7 +25,7 @@ pub(crate) fn evaluate_repair(
     // 1. Check Manual Designations (Pre-filtered for Repair type)
     for des in designations {
         let context = calculate_context_score(
-            *pop_pos,
+            pop_pos,
             Some(des.pos),
             1, // Capacity
             0, // Occupied
@@ -45,7 +45,7 @@ pub(crate) fn evaluate_repair(
     for structure in structures {
         // Automatic repair logic
         let context = calculate_context_score(
-            *pop_pos,
+            pop_pos,
             Some(structure.pos),
             1, // Capacity
             0, // Occupied

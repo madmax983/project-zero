@@ -14,7 +14,7 @@ use bevy_ecs::prelude::*;
 /// `Some((utility, target_entity))` if a tavern is found, `None` otherwise.
 #[must_use]
 pub(crate) fn evaluate_socialize(
-    pop_pos: &GridPosition,
+    pop_pos: GridPosition,
     needs: &Needs,
     weights: &UtilityWeights,
     taverns: &[CapacityProxy],
@@ -27,7 +27,7 @@ pub(crate) fn evaluate_socialize(
 
     for tavern in taverns {
         let context = calculate_context_score(
-            *pop_pos,
+            pop_pos,
             Some(tavern.pos),
             tavern.capacity,
             tavern.usage,

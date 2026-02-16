@@ -70,6 +70,7 @@ mod tests {
         world.init_resource::<Events<scale::layer1::DeathEvent>>();
         world.init_resource::<Events<scale::layer1::pop::PopDied>>();
         world.init_resource::<Events<scale::layer1::heirloom::RetrogradeEngineeringEvent>>();
+        world.init_resource::<Events<scale::layer1::energy::GridOverloadEvent>>();
 
         world
     }

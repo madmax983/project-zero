@@ -8,7 +8,7 @@ use bevy_ecs::prelude::*;
 /// Evaluates if a pop should fetch clothing.
 #[must_use]
 pub(crate) fn evaluate_fetch_clothing(
-    pop_pos: &GridPosition,
+    pop_pos: GridPosition,
     equipment: &Equipment,
     resources: &ColonyResources,
     stockpiles: &[PositionProxy],
@@ -28,7 +28,7 @@ pub(crate) fn evaluate_fetch_clothing(
     let mut min_dist = i32::MAX;
 
     for stockpile in stockpiles {
-        let dist = manhattan_distance(pop_pos, &stockpile.pos);
+        let dist = manhattan_distance(&pop_pos, &stockpile.pos);
         if dist < min_dist {
             min_dist = dist;
             best_target = Some(stockpile.entity);
@@ -103,7 +103,7 @@ mod tests {
             pos: GridPosition { x: 5, y: 0 },
         }];
 
-        let result = evaluate_fetch_clothing(&pop_pos, &equipment, &resources, &stockpiles);
+        let result = evaluate_fetch_clothing(pop_pos, &equipment, &resources, &stockpiles);
         assert!(result.is_some());
         let (utility, target) = result.unwrap();
         assert_eq!(target, stockpile_entity);
@@ -126,7 +126,7 @@ mod tests {
             pos: GridPosition { x: 5, y: 0 },
         }];
 
-        let result = evaluate_fetch_clothing(&pop_pos, &equipment, &resources, &stockpiles);
+        let result = evaluate_fetch_clothing(pop_pos, &equipment, &resources, &stockpiles);
         assert!(result.is_none());
     }
 
@@ -143,7 +143,7 @@ mod tests {
             pos: GridPosition { x: 5, y: 0 },
         }];
 
-        let result = evaluate_fetch_clothing(&pop_pos, &equipment, &resources, &stockpiles);
+        let result = evaluate_fetch_clothing(pop_pos, &equipment, &resources, &stockpiles);
         assert!(result.is_none());
     }
 }

@@ -205,6 +205,7 @@ fn render_colony_stats(frame: &mut Frame, area: Rect, world: &World) {
     frame.render_widget(resource_table, chunks[1]);
 }
 
+#[allow(clippy::too_many_lines)]
 fn render_tile_inspector(frame: &mut Frame, area: Rect, world: &World, x: i32, y: i32) {
     let terrain = world.resource::<TerrainGrid>();
 

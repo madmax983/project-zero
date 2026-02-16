@@ -16,7 +16,7 @@ use bevy_ecs::prelude::*;
 /// A tuple `(utility, designation_entity)` if a suitable task is found.
 #[must_use]
 pub(crate) fn evaluate_work(
-    pop_pos: &GridPosition,
+    pop_pos: GridPosition,
     weights: &UtilityWeights,
     designations: &[PositionProxy],
 ) -> Option<(f32, Entity)> {
@@ -29,7 +29,7 @@ pub(crate) fn evaluate_work(
         // Repair designations are pre-filtered out
 
         let context = calculate_context_score(
-            *pop_pos,
+            pop_pos,
             Some(des.pos),
             1, // Capacity 1 (one worker per tile usually)
             0, // Occupied 0 (simplified for now)

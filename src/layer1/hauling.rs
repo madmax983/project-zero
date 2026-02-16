@@ -282,7 +282,7 @@ mod tests {
             .collect();
 
         let resources = world.resource::<ColonyResources>();
-        let result = evaluate_haul(&pop_pos, &weights, &items, &stockpiles, resources, None);
+        let result = evaluate_haul(pop_pos, &weights, &items, &stockpiles, resources, None);
 
         assert!(result.is_some());
         let (utility, target) = result.unwrap();
@@ -337,7 +337,7 @@ mod tests {
 
         // Should return None because global storage is full
         let resources = world.resource::<ColonyResources>();
-        let result = evaluate_haul(&pop_pos, &weights, &items, &stockpiles, resources, None);
+        let result = evaluate_haul(pop_pos, &weights, &items, &stockpiles, resources, None);
 
         // Since we filled global resources, we expect None.
         assert!(result.is_none());

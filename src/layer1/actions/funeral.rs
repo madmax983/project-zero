@@ -9,7 +9,7 @@ use bevy_ecs::prelude::*;
 #[allow(clippy::cast_precision_loss)]
 #[must_use]
 pub(crate) fn evaluate_bury_corpse(
-    pop_pos: &GridPosition,
+    pop_pos: GridPosition,
     corpses: &[PositionProxy],
     graves: &[PositionProxy],
     weights: &UtilityWeights,
@@ -23,7 +23,7 @@ pub(crate) fn evaluate_bury_corpse(
     let mut best_target = None;
 
     for corpse in corpses {
-        let dist = manhattan_distance(pop_pos, &corpse.pos);
+        let dist = manhattan_distance(&pop_pos, &corpse.pos);
 
         // Urgency: 0.8 base (high priority to clean up)
         // Distance penalty

@@ -136,10 +136,24 @@ pub fn update_pressure_system(world: &mut World) {
     // 1. Identify blockers
     let mut blockers = HashMap::new();
     {
-        let mut query = world.query::<(&Building, &GridPosition)>();
-        for (b, pos) in query.iter(world) {
-            if let Some(transmissivity) = b.building_type.flow_transmissivity() {
-                blockers.insert((pos.x, pos.y), transmissivity);
+        let mut query = world.query::<(
+            &Building,
+            &GridPosition,
+            Option<&crate::layer1::control::DoorControl>,
+        )>();
+        for (b, pos, control) in query.iter(world) {
+            let mut transmissivity = b.building_type.flow_transmissivity();
+
+            if let Some(ctrl) = control {
+                match ctrl.state {
+                    crate::layer1::control::DoorState::Open => transmissivity = Some(1.0),
+                    crate::layer1::control::DoorState::Locked => transmissivity = Some(0.0),
+                    crate::layer1::control::DoorState::Auto => {}
+                }
+            }
+
+            if let Some(t) = transmissivity {
+                blockers.insert((pos.x, pos.y), t);
             }
         }
     }
