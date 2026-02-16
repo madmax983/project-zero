@@ -21,6 +21,9 @@ Container_Boundary(Simulation, "Simulation Core (Layer 1)") {
     Component(SpontaneousArch, "Spontaneous Arch", "spontaneous_architecture.rs", "Agent Building")
     Component(CabinFever, "Cabin Fever System", "cabin_fever.rs", "Tracks Confinement & Crowding")
     Component(Acoustics, "Acoustics (Nova)", "acoustics.rs", "Noise Map & Weather Audio")
+    Component(Atmosphere, "Atmosphere", "atmosphere.rs", "Pollution Diffusion")
+    Component(Pressure, "Pressure", "pressure.rs", "Decompression")
+    Component(Pathfinding, "Pathfinding", "pathfinding.rs", "A* with Capabilities")
     Component(World, "World Entities", "farm.rs, housing.rs", "Interactable Buildings")
     Component(Resources, "Colony Resources", "resources.rs", "Global Inventory")
     Component(Map, "Map/Terrain", "map.rs", "Spatial Grid")
@@ -51,6 +54,7 @@ Rel(UtilityOrchestrator, DomainActions, "Calls evaluate_*")
 Rel(UtilityOrchestrator, Pops, "Reads/Writes")
 Rel(UtilityOrchestrator, World, "Queries Availability")
 Rel(UtilityOrchestrator, Map, "Calculates Distance")
+Rel(UtilityOrchestrator, Pathfinding, "Calculates Path")
 
 Rel(Pops, World, "Interacts with")
 Rel(Pops, Factions, "Member Of")
@@ -58,6 +62,8 @@ Rel(Pops, Resources, "Consumes/Produces")
 Rel(Pops, CabinFever, "Accumulates Stress")
 Rel(Pops, Acoustics, "Reacts to Noise")
 Rel(Pops, SpontaneousArch, "Builds")
+Rel(Pops, Atmosphere, "Takes Damage")
+Rel(Pops, Pressure, "Moved by Force")
 
 Rel(MapRender, Shared, "Reads State")
 Rel(MapRender, Map, "Reads Entities")
@@ -196,6 +202,41 @@ sequenceDiagram
     end
 ```
 
+## Atmospheric & Ventilation Flow
+
+The simulation handles fluid dynamics (Pollution, Pressure) and entity movement through a centralized logic in `BuildingType`.
+
+```mermaid
+classDiagram
+    class AtmosphereGrid {
+        +values: Vec<f32>
+        +scratch: Vec<f32>
+        +diffuse(blockers)
+    }
+    class PressureGrid {
+        +values: Vec<f32>
+        +scratch: Vec<f32>
+        +simulate_flow(blockers)
+    }
+    class BuildingType {
+        <<Enum>>
+        +flow_transmissivity() Option<f32>
+        +is_obstacle() bool
+    }
+    class Pathfinding {
+        <<Module>>
+        +find_path(start, end, capabilities)
+    }
+    class Vermin {
+        <<Component>>
+    }
+
+    AtmosphereGrid ..> BuildingType : Uses flow_transmissivity
+    PressureGrid ..> BuildingType : Uses flow_transmissivity
+    Pathfinding ..> BuildingType : Checks obstacles
+    Pathfinding ..> Vermin : Capability check (can_use_vents)
+```
+
 ## UI Inspector Flow
 
 The Inspector pattern allows detailed viewing of entities without coupling the UI to specific entity types.
@@ -269,3 +310,4 @@ Rel(Shared, Events, "Consumes")
 - [ADR 018: Faction System & State Injection](./adr/018-faction-system-architecture.md)
 - [ADR 019: Decoupled Camera Interpolation](./adr/019-decoupled-camera-interpolation.md)
 - [ADR 020: Spontaneous Architecture](./adr/020-spontaneous-architecture.md)
+- [ADR 022: Atmospheric & Ventilation Flow](./adr/022-atmospheric-flow-architecture.md)
