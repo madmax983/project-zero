@@ -136,9 +136,12 @@ pub fn execute_attack(world: &mut World, attacker: Entity, target: Entity) {
         state.cooldown = cooldown_val;
         state.last_target = Some(target);
     } else {
-        // If no combat state, maybe we shouldn't attack?
-        // Or assume default state (0 cooldown)?
-        // For now, proceed if we have damage.
+        // Sentry: Auto-initialize CombatState to prevent "machine gun" bug
+        // where missing state allows ignoring cooldowns.
+        world.entity_mut(attacker).insert(CombatState {
+            cooldown: cooldown_val,
+            last_target: Some(target),
+        });
     }
 
     // 2. Apply damage to Target
@@ -357,5 +360,71 @@ mod tests {
         // Should fail/no damage
         let health = world.get::<Health>(enemy).unwrap();
         assert!((health.current - health.max).abs() < f32::EPSILON);
+    }
+
+    #[test]
+    fn test_execute_attack_auto_initializes_combat_state() {
+        let mut world = setup_world();
+
+        // 1. Create Weapon (Damage 10, Cooldown 10)
+        let sword = world
+            .spawn(Weapon {
+                properties: AttackProperties {
+                    damage: 10.0,
+                    range: 1.0,
+                    cooldown: 10,
+                    accuracy: 1.0,
+                },
+            })
+            .id();
+
+        // 2. Create Attacker (NO CombatState)
+        let attacker = world
+            .spawn((
+                Pop,
+                Equipment {
+                    weapon: Some(sword),
+                    ..Default::default()
+                },
+            ))
+            .id();
+
+        // 3. Create Target
+        let target = world
+            .spawn(Health {
+                current: 100.0,
+                max: 100.0,
+            })
+            .id();
+
+        // 4. First Attack: Should deal damage AND add CombatState
+        crate::layer1::combat::execute_attack(&mut world, attacker, target);
+
+        // Check Damage
+        let health = world.get::<Health>(target).unwrap();
+        assert!(
+            (health.current - 90.0).abs() < f32::EPSILON,
+            "First attack should deal damage"
+        );
+
+        // Check CombatState Existence
+        let state = world.get::<CombatState>(attacker);
+        assert!(
+            state.is_some(),
+            "execute_attack should verify or insert CombatState to prevent rapid fire"
+        );
+        let state = state.unwrap();
+        assert_eq!(state.cooldown, 10, "Cooldown should be set");
+
+        // 5. Second Attack: Should be blocked by cooldown
+        crate::layer1::combat::execute_attack(&mut world, attacker, target);
+
+        // Check Damage (Should be unchanged at 90.0)
+        let health = world.get::<Health>(target).unwrap();
+        assert!(
+            (health.current - 90.0).abs() < f32::EPSILON,
+            "Second attack should be blocked by cooldown. Health: {}",
+            health.current
+        );
     }
 }
