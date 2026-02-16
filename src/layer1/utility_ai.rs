@@ -40,6 +40,7 @@
 
 use crate::layer1::actions::explore::evaluate_explore;
 use crate::layer1::actions::farm::evaluate_farm;
+use crate::layer1::actions::fetch_clothing::evaluate_fetch_clothing;
 use crate::layer1::actions::fetch_tool::evaluate_fetch_tool;
 use crate::layer1::actions::fight::evaluate_drafted_behavior;
 use crate::layer1::actions::funeral::evaluate_bury_corpse;
@@ -217,6 +218,19 @@ pub fn evaluate_single_pop(
             evaluate_fetch_tool(&pop_pos, &equipment, context.resources, &buffer.stockpiles)
         {
             check_best(ActionType::FetchTool, utility, Some(target));
+        }
+    }
+
+    // Evaluate FetchClothing
+    if !is_striking {
+        let equipment = equipment_opt.unwrap_or_default();
+        if let Some((utility, target)) = evaluate_fetch_clothing(
+            &pop_pos,
+            &equipment,
+            context.resources,
+            &buffer.stockpiles,
+        ) {
+            check_best(ActionType::FetchClothing, utility, Some(target));
         }
     }
 
@@ -673,7 +687,8 @@ pub fn track_plan_outcomes_system(
             | ActionType::Slaughter
             | ActionType::FireStarting
             | ActionType::HideInRoom
-            | ActionType::SadWander => true,
+            | ActionType::SadWander
+            | ActionType::FetchClothing => true,
         };
 
         #[allow(clippy::cast_possible_truncation)]
