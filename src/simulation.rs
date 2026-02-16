@@ -55,6 +55,10 @@ use crate::layer1::{
         apply_founder_benefits_system, apply_mood_modifiers_system,
         check_generational_friction_system, mood_lifecycle_system,
     },
+    social_mimicry::{
+        clear_just_consumed_system, trend_satisfaction_system, trend_setting_system,
+        trend_spread_system,
+    },
     social_stratification::{class_friction_system, update_social_class_system},
     spirit_decay_system, spoilage_system, starvation_damage_system, taboo_event_system,
     theft_system, track_plan_outcomes_system, update_action_timer_system,
@@ -295,6 +299,10 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(decay_needs_system)
             .before(mood_lifecycle_system),
         mood_lifecycle_system.after(decay_needs_system),
+        trend_setting_system.after(consume_food_system),
+        trend_spread_system.after(trend_setting_system),
+        trend_satisfaction_system.after(trend_spread_system),
+        clear_just_consumed_system.after(trend_satisfaction_system),
     ));
 
     schedule.add_systems((

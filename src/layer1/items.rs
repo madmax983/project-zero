@@ -49,6 +49,8 @@ pub enum ItemType {
     Fish,
     /// Gathered or grown fruit.
     Fruit,
+    /// High-quality prepared food.
+    LuxuryMeal,
 }
 
 #[cfg(test)]

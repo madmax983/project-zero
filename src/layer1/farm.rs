@@ -13,6 +13,7 @@ use crate::layer1::pop::Pop;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::seasons::SeasonState;
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
+use crate::layer1::social_mimicry::JustConsumed;
 use crate::layer1::utility_ai::{ActionType, PopAction};
 use bevy_ecs::prelude::*;
 
@@ -191,6 +192,9 @@ pub fn consume_food_system(
                     record_meal(&mut history, meal_item);
                     commands.entity(entity).insert(history);
                 }
+
+                // Mimicry Integration
+                commands.entity(entity).insert(JustConsumed { item: meal_item });
             }
         }
     }

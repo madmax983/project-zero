@@ -374,3 +374,6 @@ pub mod pressure;
 pub use pressure::*;
 pub mod stress;
 pub use stress::*;
+/// Social mimicry system (Spec 128).
+pub mod social_mimicry;
+pub use social_mimicry::*;
