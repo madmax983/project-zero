@@ -5,6 +5,7 @@ use crate::layer1::health::Health;
 use crate::layer1::map::GridPosition;
 use crate::layer1::pop::Pop;
 use bevy_ecs::prelude::*;
+use std::collections::HashMap;
 
 /// Represents the atmospheric pollution layer.
 /// Values range from 0.0 (Clean) to 1.0 (Toxic).
@@ -81,7 +82,7 @@ impl AtmosphereGrid {
         clippy::cast_possible_wrap,
         clippy::cast_sign_loss
     )]
-    pub fn diffuse(&mut self) {
+    pub fn diffuse(&mut self, blockers: &HashMap<(i32, i32), f32>) {
         // Ensure scratch buffer size matches (in case of dynamic resizing, though rare)
         if self.scratch.len() != self.values.len() {
             self.scratch = vec![0.0; self.values.len()];
@@ -89,9 +90,18 @@ impl AtmosphereGrid {
 
         for y in 0..self.height {
             for x in 0..self.width {
+                // If the cell itself is a solid blocker (Wall), it contains no pollution.
+                if blockers
+                    .get(&(x as i32, y as i32))
+                    .is_some_and(|&trans| trans <= f32::EPSILON)
+                {
+                    self.scratch[y * self.width + x] = 0.0;
+                    continue;
+                }
+
                 let idx = y * self.width + x;
                 let mut sum = self.values[idx];
-                let mut count = 1.0;
+                let mut total_weight = 1.0;
 
                 // Check 4 neighbors
                 for (dx, dy) in [(-1, 0), (1, 0), (0, -1), (0, 1)] {
@@ -102,13 +112,26 @@ impl AtmosphereGrid {
                         && (nx as usize) < self.width
                         && (ny as usize) < self.height
                     {
-                        sum += self.get(nx, ny);
-                        count += 1.0;
+                        let neighbor_val = self.get(nx, ny);
+                        let neighbor_trans = *blockers.get(&(nx, ny)).unwrap_or(&1.0);
+
+                        if neighbor_trans > f32::EPSILON {
+                            sum += neighbor_val * neighbor_trans;
+                            total_weight += neighbor_trans;
+                        }
+                    } else {
+                        // Vacuum edge sucks pollution away
+                        sum += 0.0;
+                        total_weight += 1.0;
                     }
                 }
 
                 // Average
-                self.scratch[idx] = sum / count;
+                if total_weight > 0.0 {
+                    self.scratch[idx] = sum / total_weight;
+                } else {
+                    self.scratch[idx] = 0.0;
+                }
                 // Decay
                 self.scratch[idx] *= self.diffusion_rate;
             }
@@ -120,10 +143,18 @@ impl AtmosphereGrid {
 
 /// System to update atmospheric simulation (emission + diffusion).
 pub fn update_atmosphere_system(world: &mut World) {
-    // 1. Emission
+    // 1. Identify Blockers & Emitters
+    let mut blockers = HashMap::new();
     let mut emitters = Vec::new();
+
     let mut query = world.query::<(&Building, &GridPosition)>();
     for (b, pos) in query.iter(world) {
+        // Blockers
+        if let Some(transmissivity) = b.building_type.flow_transmissivity() {
+            blockers.insert((pos.x, pos.y), transmissivity);
+        }
+
+        // Emitters
         let emission = match b.building_type {
             BuildingType::Refinery | BuildingType::AncientReactor => 0.08,
             BuildingType::Smelter | BuildingType::Generator => 0.05,
@@ -140,7 +171,7 @@ pub fn update_atmosphere_system(world: &mut World) {
         for (pos, amount) in emitters {
             grid.add(pos.x, pos.y, amount);
         }
-        grid.diffuse();
+        grid.diffuse(&blockers);
     }
 }
 
@@ -215,7 +246,7 @@ mod tests {
         grid.set(1, 1, 10.0); // High pollution in center
 
         // Simulate one step of diffusion
-        grid.diffuse();
+        grid.diffuse(&HashMap::new());
 
         // Center should decrease, neighbors should increase
         assert!(
@@ -253,5 +284,57 @@ mod tests {
             health.current < 100.0,
             "Health should drop due to pollution"
         );
+    }
+
+    #[test]
+    fn test_pollution_blocked_by_wall() {
+        let mut world = World::new();
+        let mut grid = AtmosphereGrid::new(5, 1);
+        grid.set(0, 0, 1.0); // Source
+        world.insert_resource(grid);
+
+        // Wall at (1, 0)
+        world.spawn((
+            Building { building_type: BuildingType::Wall },
+            GridPosition { x: 1, y: 0 },
+        ));
+
+        // Run atmosphere update
+        for _ in 0..5 {
+            update_atmosphere_system(&mut world);
+        }
+
+        let grid = world.resource::<AtmosphereGrid>();
+        assert!(grid.get(2, 0) < 0.01, "Pollution should NOT pass through Wall");
+    }
+
+    #[test]
+    fn test_pollution_passes_through_vent() {
+        let mut world = World::new();
+        let mut grid = AtmosphereGrid::new(5, 1);
+        grid.set(0, 0, 1.0); // Source
+        world.insert_resource(grid);
+
+        // Smelter at (0, 0) to maintain source
+        world.spawn((
+            Building { building_type: BuildingType::Smelter },
+            GridPosition { x: 0, y: 0 },
+        ));
+
+        // Vent at (1, 0)
+        world.spawn((
+            Building { building_type: BuildingType::Vent },
+            GridPosition { x: 1, y: 0 },
+        ));
+
+        // Run atmosphere update
+        for _ in 0..20 {
+            // Manually refill source
+            world.resource_mut::<AtmosphereGrid>().set(0, 0, 1.0);
+            update_atmosphere_system(&mut world);
+        }
+
+        let grid = world.resource::<AtmosphereGrid>();
+        assert!(grid.get(2, 0) > 0.05, "Pollution SHOULD pass through Vent");
     }
 }

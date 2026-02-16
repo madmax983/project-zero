@@ -85,6 +85,8 @@ pub mod metal_industry_tests;
 pub mod needs;
 /// Notification system.
 pub mod notifications;
+/// Pathfinding algorithms.
+pub mod pathfinding;
 /// Pop entity and management.
 pub mod pop;
 /// Refining industry (Lumber Mill, Stone Mason).

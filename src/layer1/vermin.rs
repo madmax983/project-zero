@@ -20,6 +20,10 @@ impl Default for VerminState {
     }
 }
 
+/// Marker component for vermin entities.
+#[derive(Component)]
+pub struct Vermin;
+
 // Growth Constants
 // 1000 food -> ~10.0 severity over a season (250 ticks).
 // 10 / 250 = 0.04 per tick.
