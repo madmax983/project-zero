@@ -271,6 +271,7 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(work_execution_system)
             .after(waste_pollution_bridge),
         update_pressure_system.after(work_execution_system),
+        crate::layer1::suction::suction_system.after(update_pressure_system),
         crate::layer1::integration::vacuum_clears_pollution_system
             .after(crate::layer1::atmosphere::update_atmosphere_system)
             .after(update_pressure_system),
