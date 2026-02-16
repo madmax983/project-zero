@@ -1,11 +1,11 @@
 #![cfg(test)]
 
-use bevy_ecs::prelude::*;
-use ratatui::Terminal;
-use ratatui::backend::TestBackend;
 use crate::layer1::resources::ColonyResources;
 use crate::shared::selection::Selection;
 use crate::ui::inspector::render_inspector;
+use bevy_ecs::prelude::*;
+use ratatui::Terminal;
+use ratatui::backend::TestBackend;
 
 #[test]
 fn test_inspector_shows_waste_stats() {
@@ -36,6 +36,12 @@ fn test_inspector_shows_waste_stats() {
         .collect();
     let full_text = cells.join("");
 
-    assert!(full_text.contains("Waste"), "Inspector should display Waste in global stats");
-    assert!(full_text.contains("5.0/10"), "Inspector should display Waste amounts");
+    assert!(
+        full_text.contains("Waste"),
+        "Inspector should display Waste in global stats"
+    );
+    assert!(
+        full_text.contains("5.0/10"),
+        "Inspector should display Waste amounts"
+    );
 }

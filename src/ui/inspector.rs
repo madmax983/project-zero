@@ -576,11 +576,8 @@ fn render_quirk(frame: &mut Frame, area: Rect, quirk: &Quirk) {
         QuirkType::Demanding => "⚠ Demanding (Anger++)",
     };
 
-    let p = Paragraph::new(text).style(
-        Style::default()
-            .fg(Color::Red)
-            .add_modifier(Modifier::BOLD),
-    );
+    let p =
+        Paragraph::new(text).style(Style::default().fg(Color::Red).add_modifier(Modifier::BOLD));
     frame.render_widget(p, area);
 }
 

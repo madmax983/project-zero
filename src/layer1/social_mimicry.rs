@@ -1,8 +1,8 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::items::ItemType;
 use crate::layer1::map::GridPosition;
+use crate::layer1::morale::{MoodModifier, Morale};
 use crate::layer1::social_stratification::SocialClass;
-use crate::layer1::morale::{Morale, MoodModifier};
+use bevy_ecs::prelude::*;
 
 /// Tracks the current "hot" item in the colony.
 #[derive(Resource, Default, Debug)]
@@ -60,7 +60,10 @@ pub fn trend_setting_system(
 /// System: Trends spread to non-elites (Labor/Middle).
 pub fn trend_spread_system(
     trend: Res<Trend>,
-    mut query: Query<(&GridPosition, &mut SocialMimicry), Without<crate::layer1::social_stratification::Prestige>>,
+    mut query: Query<
+        (&GridPosition, &mut SocialMimicry),
+        Without<crate::layer1::social_stratification::Prestige>,
+    >,
 ) {
     let weak_trend = trend.current_item.is_none() || trend.strength < 0.2;
 
@@ -76,7 +79,7 @@ pub fn trend_spread_system(
 
         // If near the trend source (let's say 20 tiles is "gossip range")
         if dist < 20 {
-             mimicry.desired_item = trend.current_item;
+            mimicry.desired_item = trend.current_item;
         }
     }
 }
@@ -94,7 +97,7 @@ pub fn trend_satisfaction_system(
             if let Some(mut morale) = morale_opt {
                 morale.add_modifier(MoodModifier {
                     label: "Feeling Trendy".to_string(),
-                    value: 0.1, // +10% morale
+                    value: 0.1,   // +10% morale
                     duration: 50, // Lasts for 50 ticks (short-ish)
                 });
             }
@@ -115,11 +118,11 @@ pub fn clear_just_consumed_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::pop::Pop;
-    use crate::layer1::social_stratification::{SocialClass, Prestige};
     use crate::layer1::items::ItemType;
     use crate::layer1::map::GridPosition;
     use crate::layer1::morale::Morale;
+    use crate::layer1::pop::Pop;
+    use crate::layer1::social_stratification::{Prestige, SocialClass};
 
     #[test]
     fn test_elite_sets_trend() {
@@ -132,7 +135,9 @@ mod tests {
             SocialClass::Elite,
             Prestige { value: 10 },
             GridPosition { x: 5, y: 5 },
-            JustConsumed { item: ItemType::LuxuryMeal },
+            JustConsumed {
+                item: ItemType::LuxuryMeal,
+            },
         ));
 
         // Run system
@@ -156,12 +161,14 @@ mod tests {
         });
 
         // Spawn Laborer nearby
-        let laborer = world.spawn((
-            Pop,
-            SocialClass::Labor,
-            GridPosition { x: 6, y: 5 }, // Adjacent
-            SocialMimicry::default(),
-        )).id();
+        let laborer = world
+            .spawn((
+                Pop,
+                SocialClass::Labor,
+                GridPosition { x: 6, y: 5 }, // Adjacent
+                SocialMimicry::default(),
+            ))
+            .id();
 
         // Run spread system
         let mut schedule = Schedule::default();
@@ -178,12 +185,18 @@ mod tests {
         let mut world = World::new();
 
         // Spawn Pop who wants LuxuryMeal and just ate it
-        let pop = world.spawn((
-            Pop,
-            SocialMimicry { desired_item: Some(ItemType::LuxuryMeal) },
-            JustConsumed { item: ItemType::LuxuryMeal },
-            Morale::default(),
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                SocialMimicry {
+                    desired_item: Some(ItemType::LuxuryMeal),
+                },
+                JustConsumed {
+                    item: ItemType::LuxuryMeal,
+                },
+                Morale::default(),
+            ))
+            .id();
 
         // Run satisfaction system
         let mut schedule = Schedule::default();
@@ -198,7 +211,11 @@ mod tests {
     #[test]
     fn test_clear_just_consumed() {
         let mut world = World::new();
-        let entity = world.spawn(JustConsumed { item: ItemType::Potato }).id();
+        let entity = world
+            .spawn(JustConsumed {
+                item: ItemType::Potato,
+            })
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(clear_just_consumed_system);

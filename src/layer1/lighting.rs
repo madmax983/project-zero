@@ -7,9 +7,11 @@
 //! - Light sources (lamps, fire).
 //! - Effects on pop speed and morale.
 
+use crate::layer1::energy::PowerConsumer;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
 use crate::layer1::pop::Speed;
+use crate::layer1::traits::{Trait, Traits};
 use bevy_ecs::prelude::*;
 
 /// Global ambient light level (0.0 = pitch black, 1.0 = bright day).
@@ -80,13 +82,17 @@ pub struct LightSource {
 pub fn update_lighting_system(
     mut light_map: ResMut<LightMap>,
     ambient: Res<AmbientLight>,
-    sources: Query<(&LightSource, &GridPosition)>,
+    sources: Query<(&LightSource, &GridPosition, Option<&PowerConsumer>)>,
 ) {
     // 1. Reset map to Ambient
     light_map.tiles.fill(ambient.level);
 
     // 2. Iterate sources and spread light
-    for (source, pos) in &sources {
+    for (source, pos, power) in &sources {
+        if power.is_some_and(|p| !p.active) {
+            continue;
+        }
+
         #[allow(clippy::cast_possible_truncation)]
         let radius_ceil = source.radius.ceil() as i32;
         let center_x = pos.x;
@@ -125,9 +131,9 @@ pub fn update_lighting_system(
 /// Applies penalties (speed, morale) to pops in darkness.
 pub fn apply_lighting_penalties_system(
     light_map: Res<LightMap>,
-    mut pops: Query<(&GridPosition, &mut Speed, &mut Needs)>,
+    mut pops: Query<(&GridPosition, &mut Speed, &mut Needs, Option<&Traits>)>,
 ) {
-    for (pos, mut speed, mut needs) in &mut pops {
+    for (pos, mut speed, mut needs, traits) in &mut pops {
         // Safe cast: GridPosition shouldn't be negative in valid map area
         let x = u32::try_from(pos.x).unwrap_or(0);
         let y = u32::try_from(pos.y).unwrap_or(0);
@@ -137,8 +143,20 @@ pub fn apply_lighting_penalties_system(
         if light < 0.2 {
             // Darkness penalty
             speed.current = speed.base * 0.5;
+
             // Morale penalty (reduce leisure)
-            needs.leisure = (needs.leisure - 0.005).max(0.0);
+            let mut stress_factor = 1.0;
+
+            if let Some(t) = traits {
+                if t.0.contains(&Trait::Anxious) {
+                    stress_factor = 2.0; // Panic!
+                } else if t.0.contains(&Trait::NightOwl) {
+                    stress_factor = 0.1; // Minimal stress
+                }
+            }
+
+            let penalty = 0.005 * stress_factor;
+            needs.leisure = (needs.leisure - penalty).max(0.0);
         } else {
             // Restore speed
             speed.current = speed.base;
