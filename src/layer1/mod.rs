@@ -72,6 +72,8 @@ pub mod integration;
 pub mod items;
 /// Spatial primitives (GridPosition).
 pub mod map;
+/// Colony Mascot system (Spec 129).
+pub mod mascot;
 /// Medical care and hospital logic.
 pub mod medical;
 /// Pop memories and psychological effects.
@@ -152,6 +154,7 @@ pub use integration::*;
 pub use items::*;
 pub use locations::*;
 pub use map::*;
+pub use mascot::*;
 pub use medical::*;
 pub use memory::*;
 pub use needs::*;

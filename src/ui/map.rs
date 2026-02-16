@@ -879,6 +879,7 @@ pub const fn get_fauna_char(fauna: FaunaType) -> &'static str {
     match fauna {
         FaunaType::Wolf => "w",
         FaunaType::SpaceRat => "r",
+        FaunaType::Mascot => "M",
     }
 }
 
@@ -888,6 +889,7 @@ pub const fn get_fauna_color(fauna: FaunaType) -> Color {
     match fauna {
         FaunaType::Wolf => Color::Red,
         FaunaType::SpaceRat => Color::Rgb(105, 105, 105), // DimGray
+        FaunaType::Mascot => Color::Yellow,
     }
 }
 

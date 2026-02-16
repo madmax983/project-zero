@@ -18,6 +18,13 @@ pub struct Health {
     pub max: f32,
 }
 
+/// Event triggered when any entity dies (Health <= 0).
+#[derive(Event, Debug, Clone)]
+pub struct DeathEvent {
+    /// The entity that died.
+    pub entity: Entity,
+}
+
 impl Default for Health {
     fn default() -> Self {
         Self {
@@ -65,6 +72,22 @@ pub fn starvation_damage_system(world: &mut World) {
                 mem.add(MemoryType::StarvationTrauma, tick);
             }
         }
+    }
+}
+
+/// System that checks for entities with zero health and emits [`DeathEvent`].
+/// Must run BEFORE [`death_system`] (which despawns them).
+pub fn check_death_event_system(world: &mut World) {
+    let mut dead_entities = Vec::new();
+    let mut query = world.query::<(Entity, &Health)>();
+    for (entity, health) in query.iter(world) {
+        if !health.is_alive() {
+            dead_entities.push(entity);
+        }
+    }
+
+    for entity in dead_entities {
+        world.send_event(DeathEvent { entity });
     }
 }
 
