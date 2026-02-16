@@ -16,6 +16,9 @@ pub struct AtmosphereGrid {
     pub height: usize,
     /// Flattened grid values.
     pub values: Vec<f32>,
+    /// Secondary buffer for diffusion calculation (double buffering).
+    /// Used to avoid allocating a new vector every tick.
+    pub scratch: Vec<f32>,
     /// Retention rate of pollution per tick (0.0 to 1.0).
     /// Higher values mean pollution stays longer.
     /// Default: 0.99.
@@ -26,10 +29,12 @@ impl AtmosphereGrid {
     /// Create a new empty atmosphere grid.
     #[must_use]
     pub fn new(width: usize, height: usize) -> Self {
+        let size = width * height;
         Self {
             width,
             height,
-            values: vec![0.0; width * height],
+            values: vec![0.0; size],
+            scratch: vec![0.0; size],
             diffusion_rate: 0.99,
         }
     }
@@ -77,7 +82,11 @@ impl AtmosphereGrid {
         clippy::cast_sign_loss
     )]
     pub fn diffuse(&mut self) {
-        let mut new_values = self.values.clone();
+        // Ensure scratch buffer size matches (in case of dynamic resizing, though rare)
+        if self.scratch.len() != self.values.len() {
+            self.scratch = vec![0.0; self.values.len()];
+        }
+
         for y in 0..self.height {
             for x in 0..self.width {
                 let idx = y * self.width + x;
@@ -99,12 +108,13 @@ impl AtmosphereGrid {
                 }
 
                 // Average
-                new_values[idx] = sum / count;
+                self.scratch[idx] = sum / count;
                 // Decay
-                new_values[idx] *= self.diffusion_rate;
+                self.scratch[idx] *= self.diffusion_rate;
             }
         }
-        self.values = new_values;
+        // Swap buffers
+        std::mem::swap(&mut self.values, &mut self.scratch);
     }
 }
 
