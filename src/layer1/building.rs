@@ -242,6 +242,8 @@ pub enum BuildingType {
     LifeSupport,
     /// Maintains pressure while allowing passage.
     Airlock,
+    /// Allows gases to pass freely while maintaining physical security.
+    Vent,
 }
 
 impl BuildingType {
@@ -252,6 +254,18 @@ impl BuildingType {
             self,
             Self::Wall | Self::Gate | Self::Housing | Self::Statue | Self::Tower | Self::Airlock
         )
+    }
+
+    /// Returns the flow transmissivity (0.0 to 1.0) for atmospheric simulation.
+    /// Returns `None` if the building does not affect flow (treat as 1.0).
+    #[must_use]
+    pub const fn flow_transmissivity(&self) -> Option<f32> {
+        match self {
+            Self::Wall | Self::Airlock => Some(0.0),
+            Self::Gate => Some(0.5),
+            Self::Vent => Some(1.0),
+            _ => None,
+        }
     }
 
     /// Returns true if this building blocks movement.
@@ -269,6 +283,9 @@ impl BuildingType {
                 | Self::PersonalGarden
                 | Self::ConveyorBelt
                 | Self::Airlock
+                // Vent is explicitly an obstacle for standard movement (blocks Pops),
+                // but Vermin can pass through it (handled in pathfinding).
+                // So here it returns true (is obstacle).
         )
     }
 
@@ -282,7 +299,7 @@ impl BuildingType {
             Self::Grave => -2.0, // Graves are slightly spooky
             Self::FlowerBed | Self::TradeDepot => 5.0, // Trade brings goods and culture
             Self::Well | Self::HydroponicsBay | Self::LifeSupport => 1.0,
-            Self::Wall | Self::Gate | Self::Tower | Self::Airlock => 0.0,
+            Self::Wall | Self::Gate | Self::Tower | Self::Airlock | Self::Vent => 0.0,
             _ => 0.0,
         }
     }
@@ -304,6 +321,7 @@ impl BuildingType {
             Self::Tower => Some(Tech::Masonry),
             Self::Observatory => Some(Tech::Astronomy),
             Self::HydroponicsBay => Some(Tech::Hydroponics),
+            Self::Vent => Some(Tech::MetalWorking),
             _ => None,
         }
     }
@@ -359,6 +377,7 @@ impl BuildingType {
             Self::HydroponicsBay => "Hydroponics Bay",
             Self::LifeSupport => "Life Support",
             Self::Airlock => "Airlock",
+            Self::Vent => "Vent",
         }
     }
 
@@ -397,6 +416,7 @@ impl BuildingType {
             Self::Hopper => 'V',
             Self::LifeSupport => '♼',
             Self::Airlock => '⌷',
+            Self::Vent => '≡',
         }
     }
 
@@ -426,6 +446,10 @@ impl BuildingType {
                     metal: 150.0,
                     ..ColonyResources::zeroed()
                 },
+            },
+            Self::Vent => ColonyResources {
+                metal: 5.0,
+                ..ColonyResources::zeroed()
             },
             Self::ConveyorBelt => ColonyResources {
                 metal: 5.0,
@@ -1122,6 +1146,9 @@ fn spawn_building(
             // Airlock behaves like a gate but sealed
             // Currently no specific component for Airlock logic other than BuildingType check
         }
+        BuildingType::Vent => {
+            // Vent allows flow but blocks movement
+        }
     }
 }
 
@@ -1312,7 +1339,8 @@ mod tests {
             BuildingType::LifeSupport
         );
         assert_eq!(BuildingType::LifeSupport.next(), BuildingType::Airlock);
-        assert_eq!(BuildingType::Airlock.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::Airlock.next(), BuildingType::Vent);
+        assert_eq!(BuildingType::Vent.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -1475,6 +1503,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Airlock);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Vent);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

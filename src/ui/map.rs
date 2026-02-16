@@ -682,6 +682,7 @@ pub const fn get_building_char(building: BuildingType) -> char {
         BuildingType::LifeSupport => '♼',
         BuildingType::Airlock => '⌷',
         BuildingType::Battery => 'B',
+        BuildingType::Vent => '≡',
     }
 }
 
@@ -739,6 +740,7 @@ pub const fn get_building_color(building: BuildingType, material: MaterialType) 
             BuildingType::Generator => Color::Rgb(255, 215, 0), // Gold
             BuildingType::Refinery => Color::Rgb(100, 200, 255), // Chemical Blue
             BuildingType::Greenhouse | BuildingType::HydroponicsBay => Color::Rgb(200, 255, 255), // Glass/Cyan
+            BuildingType::Vent => Color::Rgb(169, 169, 169),
         }
     }
 }

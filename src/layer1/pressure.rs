@@ -138,12 +138,9 @@ pub fn update_pressure_system(world: &mut World) {
     {
         let mut query = world.query::<(&Building, &GridPosition)>();
         for (b, pos) in query.iter(world) {
-            let transmissivity = match b.building_type {
-                BuildingType::Wall | BuildingType::Airlock => 0.0,
-                BuildingType::Gate => 0.5,
-                _ => continue,
-            };
-            blockers.insert((pos.x, pos.y), transmissivity);
+            if let Some(transmissivity) = b.building_type.flow_transmissivity() {
+                blockers.insert((pos.x, pos.y), transmissivity);
+            }
         }
     }
 
@@ -347,5 +344,35 @@ mod tests {
 
         let health = world.get::<Health>(pop).unwrap();
         assert!(health.current < 100.0, "Pop in vacuum should take damage");
+    }
+
+    #[test]
+    fn test_pressure_passes_through_vent() {
+        let mut world = World::new();
+        let mut grid = PressureGrid::new(5, 1);
+        grid.set(0, 0, 1.0); // Source
+        world.insert_resource(grid);
+
+        // Source generator at (0, 0) to maintain pressure against vacuum
+        world.spawn((
+            Building { building_type: BuildingType::LifeSupport },
+            GridPosition { x: 0, y: 0 },
+        ));
+
+        // Vent at (1, 0)
+        world.spawn((
+            Building { building_type: BuildingType::Vent },
+            GridPosition { x: 1, y: 0 },
+        ));
+
+        // Run pressure update multiple times to allow diffusion
+        for _ in 0..20 {
+            // Manually refill source to fight vacuum decay for test purposes
+            world.resource_mut::<PressureGrid>().set(0, 0, 1.0);
+            update_pressure_system(&mut world);
+        }
+
+        let grid = world.resource::<PressureGrid>();
+        assert!(grid.get(2, 0) > 0.05, "Pressure SHOULD pass through Vent");
     }
 }
