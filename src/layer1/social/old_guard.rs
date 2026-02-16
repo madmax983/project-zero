@@ -1,4 +1,5 @@
 use crate::layer1::balance::TICKS_PER_YEAR;
+use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer1::needs::Needs;
 use crate::layer1::pop::Pop;
 use bevy_ecs::prelude::*;
@@ -77,6 +78,17 @@ pub struct MoodModifiers {
     pub entries: Vec<MoodModifierEntry>,
 }
 
+/// Resource tracking population demographics.
+#[derive(Resource, Default)]
+pub struct Demographics {
+    /// Number of founders.
+    pub founders: usize,
+    /// Number of immigrants.
+    pub immigrants: usize,
+    /// Whether the "Turning Point" event has triggered.
+    pub has_triggered_turning_point: bool,
+}
+
 /// System to assign Generation and apply initial Founder benefits.
 ///
 /// Runs only for Pops that have an Arrival component but no Generation yet.
@@ -120,6 +132,8 @@ pub fn check_generational_friction_system(
     mut commands: Commands,
     count_query: Query<&Generation, With<Pop>>,
     mut pop_query: Query<(Entity, &Generation, Option<&mut MoodModifiers>), With<Pop>>,
+    mut demographics: ResMut<Demographics>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
 ) {
     let mut founders = 0;
     let mut immigrants = 0;
@@ -129,6 +143,20 @@ pub fn check_generational_friction_system(
             Generation::Founder => founders += 1,
             Generation::Immigrant => immigrants += 1,
         }
+    }
+
+    // Update resource
+    demographics.founders = founders;
+    demographics.immigrants = immigrants;
+
+    // Check for Turning Point
+    if !demographics.has_triggered_turning_point && founders > 0 && immigrants > founders {
+        demographics.has_triggered_turning_point = true;
+        chronicle_events.send(AddChronicleEvent {
+            text: "The Turning Point. For the first time, new arrivals outnumber the founders."
+                .to_string(),
+            importance: EventImportance::Major,
+        });
     }
 
     if founders == 0 && immigrants == 0 {
