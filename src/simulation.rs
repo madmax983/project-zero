@@ -115,6 +115,7 @@ pub fn build_simulation_schedule() -> Schedule {
         update_event_buffer::<PopDied>,
         update_event_buffer::<crate::layer1::structural_integrity::StructureCollapsed>,
         update_event_buffer::<RetrogradeEngineeringEvent>,
+        update_event_buffer::<crate::layer1::energy::GridOverloadEvent>,
     ));
 
     // --- AI Decision Chain (GPU compute) ---
@@ -223,6 +224,8 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::energy::power_grid_system
             .after(work_execution_system)
             .after(process_fuel_consumption_system),
+        crate::layer1::integration::grid_overload_fire_bridge
+            .after(crate::layer1::energy::power_grid_system),
         art_generation_system.after(work_execution_system),
         crate::layer1::factions::update_faction_membership_system.after(work_execution_system),
         crate::layer1::factions::update_faction_satisfaction_system

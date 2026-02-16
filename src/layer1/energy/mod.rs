@@ -53,6 +53,13 @@ pub struct FuelConsumer {
 #[derive(Component, Debug, Clone)]
 pub struct Conduit;
 
+/// Event emitted when a grid component takes damage from overload.
+#[derive(Event, Debug, Clone, Copy)]
+pub struct GridOverloadEvent {
+    /// The entity that was overloaded.
+    pub victim: Entity,
+}
+
 /// Global protocol to cut power in emergencies.
 #[derive(Resource, Default, Debug, Clone, Copy)]
 pub struct BlackoutProtocol {
@@ -280,6 +287,9 @@ pub fn power_grid_system(world: &mut World) {
                     {
                         health.take_damage(10.0);
                     }
+
+                    // Emit overload event
+                    world.send_event(GridOverloadEvent { victim: *victim });
                 }
             }
         }

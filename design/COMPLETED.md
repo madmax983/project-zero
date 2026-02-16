@@ -118,3 +118,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `129` The Colony Mascot — `specs/129-the-colony-mascot.md` — completed 2026-02-16
 - [x] `131` Bioluminescent Flora — `specs/131-bioluminescent-flora.md` — completed 2026-10-25
 - [x] `INT-004` Integration: Fix Hauling Execution Flow — completed 2026-12-10
+- [x] `INT-008` Integration: Grid Overload -> Fire Ignition — completed 2026-02-16
