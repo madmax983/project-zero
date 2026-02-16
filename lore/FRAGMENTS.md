@@ -1884,3 +1884,133 @@ Adjectives for darkness/shadows.
 - cold
 - watching
 - deep
+
+---
+
+## Retrograde Engineering Fragments
+
+### [RETROGRADE_ACTION]
+Verbs for taking tech apart.
+
+- stripped
+- gutted
+- reverse-engineered
+- dissected
+- unmade
+- salvaged
+- broke down
+
+### [TECH_FLAW]
+Why the tech failed or was discarded.
+
+- micro-fractures
+- logic-rot
+- incompatible power
+- void-corrosion
+- missing core
+- burnt circuits
+- ancient lock
+
+---
+
+## Penal Labor Fragments
+
+### [PRISONER_TITLE]
+How prisoners are referred to.
+
+- The Indentured
+- Debt-Bound
+- Ward-Guest
+- Numbered
+- Penitant
+- The Owed
+- Chain-Gang
+
+### [CRIME]
+Why they are here.
+
+- theft of rations
+- insubordination
+- sabotage
+- hoarding
+- violence
+- debt-default
+- political exile
+
+---
+
+## Technological Ritual Fragments
+
+### [RITUAL_NAME]
+Names for machine appeasement rites.
+
+- The Anointing
+- Percussive Maintenance
+- The Dawn-Boot
+- The Cycle-Prayer
+- Machine-Calm
+- Void-Cleansing
+- The Hum-Chant
+
+### [MACHINE_SPIRIT_MOOD]
+The perceived temper of the machine.
+
+- angry
+- hungry
+- pleased
+- sleeping
+- rebellious
+- stubborn
+- singing
+
+---
+
+## Social Mimicry Fragments
+
+### [TREND_NAME]
+Names for social trends.
+
+- The Blue-Shift
+- Ration-Hoarding
+- Void-Staring
+- The New-Speak
+- Metal-Wearing
+- Soft-Step
+- Night-Shift-Chic
+
+### [FASHION_ITEM]
+Items that become trendy.
+
+- copper-rings
+- void-glass shards
+- red-scarves
+- tool-belts
+- polished-boots
+- ancient-coins
+- wire-bracelets
+
+---
+
+## Colony Mascot Fragments
+
+### [MASCOT_TITLE]
+Titles for the colony pet.
+
+- The Good Boy/Girl
+- Colony Heart
+- The Little King/Queen
+- Chief Morale Officer
+- The Fuzzy One
+- Void-Chaser
+- The Mascot
+
+### [MASCOT_ACTION]
+What the mascot does.
+
+- barks at the dark
+- steals a ration
+- comforts a child
+- chases a vermin
+- sleeps on the vent
+- leads the patrol
+- demands scratches

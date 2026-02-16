@@ -1239,3 +1239,114 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "First [LIGHT_SOURCE_NAME] in the sector. [YEAR]. Banish the [SHADOW_DESCRIPTOR] dark."
 - "[YEAR]: We hang a [LIGHT_SOURCE_NAME]. The shadows were [SHADOW_DESCRIPTOR]."
 - "Light brings hope. [LIGHT_SOURCE_NAME] lit. [YEAR]."
+
+---
+
+## Retrograde Engineering Templates
+
+### TECH_DECONSTRUCTED
+**Slots:** [COLONY], [YEAR], [NAME], [ARTIFACT_TYPE], [RETROGRADE_ACTION], [TECH_FLAW]
+
+- "[NAME] [RETROGRADE_ACTION] the [ARTIFACT_TYPE]. [YEAR]. Found [TECH_FLAW]."
+- "[YEAR]: We learn from the dead. [ARTIFACT_TYPE] [RETROGRADE_ACTION]. It had [TECH_FLAW]."
+- "The [ARTIFACT_TYPE] is [RETROGRADE_ACTION]. [NAME] reports [TECH_FLAW]. [YEAR]."
+
+### FLAW_DISCOVERED
+**Slots:** [COLONY], [YEAR], [NAME], [TECH_FLAW]
+
+- "A warning from [NAME]. [YEAR]. The core suffers from [TECH_FLAW]."
+- "[YEAR]: [TECH_FLAW] detected. We must be careful."
+- "The logic is unsound. [TECH_FLAW]. [NAME] found it. [YEAR]."
+
+---
+
+## Penal Labor Templates
+
+### PRISONER_ARRIVED
+**Slots:** [COLONY], [YEAR], [PRISONER_TITLE], [CRIME]
+
+- "New [PRISONER_TITLE] arrive. [YEAR]. Convicted of [CRIME]."
+- "[YEAR]: The shuttle brings [PRISONER_TITLE]. Their debt is [CRIME]."
+- "Chains and silence. [PRISONER_TITLE] for [CRIME]. [YEAR]."
+
+### SENTENCE_SERVED
+**Slots:** [COLONY], [YEAR], [NAME], [PRISONER_TITLE]
+
+- "[NAME] is free. [YEAR]. No longer [PRISONER_TITLE]."
+- "[YEAR]: The debt is paid. [NAME] walks without chains."
+- "Release day for [NAME]. The [PRISONER_TITLE] is a citizen. [YEAR]."
+
+### PRISON_RIOT
+**Slots:** [COLONY], [YEAR], [PRISONER_TITLE]
+
+- "Uprising. [YEAR]. The [PRISONER_TITLE] break their bonds."
+- "[YEAR]: Riot in the block. [PRISONER_TITLE] demand freedom."
+- "Violence from the [PRISONER_TITLE]. [COLONY] locks down. [YEAR]."
+
+---
+
+## Technological Ritual Templates
+
+### RITUAL_PERFORMED
+**Slots:** [COLONY], [YEAR], [NAME], [RITUAL_NAME]
+
+- "[NAME] performs the [RITUAL_NAME]. [YEAR]. The machine hums."
+- "[YEAR]: We observe the [RITUAL_NAME]. The spirits are listening."
+- "Incense and oil. The [RITUAL_NAME] is complete. [YEAR]."
+
+### SPIRIT_APPEASED
+**Slots:** [COLONY], [YEAR], [MACHINE_SPIRIT_MOOD]
+
+- "The machine is [MACHINE_SPIRIT_MOOD]. [YEAR]. Production flows."
+- "[YEAR]: Harmony. The spirit is [MACHINE_SPIRIT_MOOD]."
+- "We are blessed. The core is [MACHINE_SPIRIT_MOOD]. [YEAR]."
+
+### SPIRIT_ANGERED
+**Slots:** [COLONY], [YEAR], [MACHINE_SPIRIT_MOOD]
+
+- "Warning signs. [YEAR]. The machine is [MACHINE_SPIRIT_MOOD]."
+- "[YEAR]: The [RITUAL_NAME] failed. The spirit is [MACHINE_SPIRIT_MOOD]."
+- "Red lights. The core is [MACHINE_SPIRIT_MOOD]. Run. [YEAR]."
+
+---
+
+## Social Mimicry Templates
+
+### TREND_STARTED
+**Slots:** [COLONY], [YEAR], [TREND_NAME], [FASHION_ITEM]
+
+- "[TREND_NAME] sweeps the colony. [YEAR]. Everyone wants [FASHION_ITEM]."
+- "[YEAR]: It is the time of [TREND_NAME]. We wear [FASHION_ITEM]."
+- "New style: [TREND_NAME]. [FASHION_ITEM] is the sign. [YEAR]."
+
+### TREND_DIED
+**Slots:** [COLONY], [YEAR], [TREND_NAME]
+
+- "The [TREND_NAME] is over. [YEAR]. We move on."
+- "[YEAR]: Nobody speaks of [TREND_NAME] anymore."
+- "The fad ends. [TREND_NAME] is forgotten. [YEAR]."
+
+---
+
+## Colony Mascot Templates
+
+### MASCOT_NAMED
+**Slots:** [COLONY], [YEAR], [MASCOT_TITLE], [NAME]
+
+- "We have a [MASCOT_TITLE]. [YEAR]. Its name is [NAME]."
+- "[YEAR]: Meet [NAME]. Our [MASCOT_TITLE]."
+- "[NAME] joins the colony. The [MASCOT_TITLE] has arrived. [YEAR]."
+
+### MASCOT_EVENT
+**Slots:** [COLONY], [YEAR], [NAME], [MASCOT_ACTION]
+
+- "[NAME] [MASCOT_ACTION]. [YEAR]. We all laughed."
+- "[YEAR]: Good omen. [NAME] [MASCOT_ACTION]."
+- "The [MASCOT_TITLE] [MASCOT_ACTION]. Morale is high. [YEAR]."
+
+### MASCOT_DEATH
+**Slots:** [COLONY], [YEAR], [NAME]
+
+- "[NAME] is gone. [YEAR]. The colony mourns."
+- "[YEAR]: A dark day. We lost [NAME]."
+- "Rest well, [NAME]. You were a good [MASCOT_TITLE]. [YEAR]."

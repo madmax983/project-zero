@@ -1391,3 +1391,93 @@
 **Usage:**
 - "Don't cross the Shadow-Line."
 - "Working at the Shadow-Line."
+
+---
+
+## Retrograde & Scavenging
+
+### strip-mining
+**Replaces:** deconstructing/recycling
+**Code reference:** `ActionType::Deconstruct`
+**Usage:**
+- "Strip-mining the old engines."
+- "We live by strip-mining the dead."
+
+### scrap-code
+**Replaces:** recovered data/blueprints
+**Code reference:** `Retrograde` output
+**Usage:**
+- "Reading the scrap-code."
+- "Found some scrap-code in the core."
+
+---
+
+## Penal Labor
+
+### the debt
+**Replaces:** sentence/imprisonment
+**Code reference:** `PenalState`
+**Usage:**
+- "Working off the debt."
+- "His debt is heavy."
+
+### ward-guest
+**Replaces:** prisoner
+**Code reference:** `PopType::Prisoner`
+**Usage:**
+- "New ward-guests arriving."
+- "Treat the ward-guests fairly."
+
+---
+
+## Technological Rituals
+
+### the rite
+**Replaces:** maintenance/repair action
+**Code reference:** `ActionType::Repair` (with ritual trait)
+**Usage:**
+- "Perform the rite of oil."
+- "The rite is complete."
+
+### machine-calm
+**Replaces:** optimal operating state
+**Code reference:** `MachineSpirit.mood`
+**Usage:**
+- "The core is in machine-calm."
+- "Maintain the machine-calm."
+
+---
+
+## Social Mimicry
+
+### the wave
+**Replaces:** viral trend
+**Code reference:** `Trend` component
+**Usage:**
+- "Caught in the wave."
+- "The wave demands red scarves."
+
+### echo-wearing
+**Replaces:** adopting a fashion
+**Code reference:** `Mimicry` behavior
+**Usage:**
+- "She is echo-wearing the Captain."
+- "Stop echo-wearing me."
+
+---
+
+## Colony Mascot
+
+### Colony Heart
+**Replaces:** mascot animal
+**Code reference:** `FaunaType::Mascot`
+**Usage:**
+- "The Colony Heart is sleeping."
+- "Protect the Colony Heart."
+
+### morale-patrol
+**Replaces:** mascot wandering
+**Code reference:** `MascotBehavior`
+**Usage:**
+- "On morale-patrol."
+- "The dog is doing rounds—morale-patrol."

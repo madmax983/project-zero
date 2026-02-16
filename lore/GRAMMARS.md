@@ -1125,4 +1125,142 @@ FLOW_RESTORED:
     - STOCKPILE_FULL (low, sudden influx)
   increases:
     - RELIEF (medium)
+
+---
+
+## Retrograde Chaining
+
+```yaml
+TECH_DECONSTRUCTED:
+  enables:
+    - TECH_BREAKTHROUGH (high)
+    - FLAW_DISCOVERED (medium)
+    - COMPONENT_RECOVERY (high)
+  increases:
+    - KNOWLEDGE (high)
+    - WASTE (medium, scrap)
+
+FLAW_DISCOVERED:
+  enables:
+    - RETROFIT_PROJECT (high)
+    - ACCIDENT_PREVENTION (high)
+  increases:
+    - CAUTION (medium)
+    - TRUST_IN_LEADERSHIP (low)
+```
+
+---
+
+## Penal Labor Chaining
+
+```yaml
+PRISONER_ARRIVED:
+  enables:
+    - PRISON_RIOT (low, if morale low)
+    - SENTENCE_SERVED (always, eventually)
+    - ESCAPE_ATTEMPT (medium)
+  increases:
+    - WORKFORCE (high)
+    - TENSION (medium)
+
+SENTENCE_SERVED:
+  enables:
+    - FULL_CITIZENSHIP (always)
+    - CELEBRATION (low)
+  increases:
+    - HOPE (high)
+    - LOYALTY (high)
+
+PRISON_RIOT:
+  enables:
+    - MILITIA_MUSTER (high)
+    - LOCKDOWN (high)
+    - NEGOTIATION (medium)
+  increases:
+    - FEAR (high)
+    - INJURY_COUNT (medium)
+```
+
+---
+
+## Technological Ritual Chaining
+
+```yaml
+RITUAL_PERFORMED:
+  enables:
+    - SPIRIT_APPEASED (high)
+    - SPIRIT_ANGERED (low, if botched)
+    - EFFICIENCY_BOOST (medium)
+  increases:
+    - SUPERSTITION (high)
+    - CONFIDENCE (medium)
+
+SPIRIT_APPEASED:
+  enables:
+    - PRODUCTION_BONUS (high)
+    - ACCIDENT_AVOIDANCE (high)
+  increases:
+    - MORALE (medium)
+
+SPIRIT_ANGERED:
+  enables:
+    - MACHINE_MALFUNCTION (high)
+    - ACCIDENT (medium)
+    - OMEN_WITNESSED (high)
+  increases:
+    - FEAR (high)
+    - CAUTION (high)
+```
+
+---
+
+## Social Mimicry Chaining
+
+```yaml
+TREND_STARTED:
+  enables:
+    - RESOURCE_SHORTAGE (medium, of trend item)
+    - TREND_DIED (always, eventually)
+    - CLIQUE_FORMATION (low)
+  increases:
+    - COHESION (high)
+    - CONSUMPTION (medium)
+
+TREND_DIED:
+  enables:
+    - NEW_TREND (medium)
+    - STOCKPILE_GLUT (low, unused items)
+  increases:
+    - BOREDOM (low)
+```
+
+---
+
+## Colony Mascot Chaining
+
+```yaml
+MASCOT_NAMED:
+  enables:
+    - MASCOT_EVENT (high, recurring)
+    - MASCOT_DEATH (eventually)
+  increases:
+    - MORALE (high)
+    - ATTACHMENT (high)
+
+MASCOT_EVENT:
+  enables:
+    - JOY_SPREAD (high)
+    - RUMOR_SPREAD (medium, cute stories)
+  increases:
+    - HAPPINESS (high)
+    - STRESS_REDUCTION (high)
+
+MASCOT_DEATH:
+  enables:
+    - FUNERAL_HELD (high)
+    - STATUE_RAISED (medium)
+  increases:
+    - GRIEF (high)
+    - UNITY (medium)
+```
 ```
