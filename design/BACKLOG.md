@@ -20,6 +20,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `124` The Wild Child — `specs/124-the-wild-child.md`
 - [ ] `129` The Colony Mascot — `specs/129-the-colony-mascot.md`
 - [ ] `130` Social Debt — `specs/130-social-debt.md`
+- [ ] `131` Bioluminescent Flora — `specs/131-bioluminescent-flora.md`
 
 ## MVP — Layer 2: System Simulation
 
