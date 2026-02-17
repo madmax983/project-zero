@@ -497,21 +497,33 @@ mod tests {
         let mut world = setup_world();
 
         // Heavy Weapon (Damage 20)
-        let weapon = world.spawn(Weapon {
-            properties: AttackProperties {
-                damage: 20.0,
-                range: 1.0,
-                cooldown: 10,
-                accuracy: 1.0,
-            },
-        }).id();
+        let weapon = world
+            .spawn(Weapon {
+                properties: AttackProperties {
+                    damage: 20.0,
+                    range: 1.0,
+                    cooldown: 10,
+                    accuracy: 1.0,
+                },
+            })
+            .id();
 
-        let attacker = world.spawn((
-            Pop,
-            Equipment { weapon: Some(weapon), ..Default::default() }
-        )).id();
+        let attacker = world
+            .spawn((
+                Pop,
+                Equipment {
+                    weapon: Some(weapon),
+                    ..Default::default()
+                },
+            ))
+            .id();
 
-        let target = world.spawn(Health { current: 100.0, max: 100.0 }).id();
+        let target = world
+            .spawn(Health {
+                current: 100.0,
+                max: 100.0,
+            })
+            .id();
 
         // Attack
         execute_attack(&mut world, attacker, target);
@@ -531,25 +543,43 @@ mod tests {
         let mut world = setup_world();
 
         // Light Weapon (Damage 5)
-        let weapon = world.spawn(Weapon {
-            properties: AttackProperties {
-                damage: 5.0,
-                range: 1.0,
-                cooldown: 10,
-                accuracy: 1.0,
-            },
-        }).id();
+        let weapon = world
+            .spawn(Weapon {
+                properties: AttackProperties {
+                    damage: 5.0,
+                    range: 1.0,
+                    cooldown: 10,
+                    accuracy: 1.0,
+                },
+            })
+            .id();
 
-        let attacker = world.spawn((
-            Pop,
-            Equipment { weapon: Some(weapon), ..Default::default() }
-        )).id();
+        let attacker = world
+            .spawn((
+                Pop,
+                Equipment {
+                    weapon: Some(weapon),
+                    ..Default::default()
+                },
+            ))
+            .id();
 
-        let target = world.spawn(Health { current: 100.0, max: 100.0 }).id();
+        let target = world
+            .spawn(Health {
+                current: 100.0,
+                max: 100.0,
+            })
+            .id();
 
         execute_attack(&mut world, attacker, target);
 
-        assert!(world.get::<HitStop>(attacker).is_none(), "Light hit should not trigger HitStop");
-        assert!(world.get::<HitStop>(target).is_none(), "Light hit should not trigger HitStop");
+        assert!(
+            world.get::<HitStop>(attacker).is_none(),
+            "Light hit should not trigger HitStop"
+        );
+        assert!(
+            world.get::<HitStop>(target).is_none(),
+            "Light hit should not trigger HitStop"
+        );
     }
 }

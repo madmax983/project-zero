@@ -295,7 +295,9 @@ mod tests {
 
         // Wall at (1, 0)
         world.spawn((
-            Building { building_type: BuildingType::Wall },
+            Building {
+                building_type: BuildingType::Wall,
+            },
             GridPosition { x: 1, y: 0 },
         ));
 
@@ -305,7 +307,10 @@ mod tests {
         }
 
         let grid = world.resource::<AtmosphereGrid>();
-        assert!(grid.get(2, 0) < 0.01, "Pollution should NOT pass through Wall");
+        assert!(
+            grid.get(2, 0) < 0.01,
+            "Pollution should NOT pass through Wall"
+        );
     }
 
     #[test]
@@ -317,13 +322,17 @@ mod tests {
 
         // Smelter at (0, 0) to maintain source
         world.spawn((
-            Building { building_type: BuildingType::Smelter },
+            Building {
+                building_type: BuildingType::Smelter,
+            },
             GridPosition { x: 0, y: 0 },
         ));
 
         // Vent at (1, 0)
         world.spawn((
-            Building { building_type: BuildingType::Vent },
+            Building {
+                building_type: BuildingType::Vent,
+            },
             GridPosition { x: 1, y: 0 },
         ));
 

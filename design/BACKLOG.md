@@ -22,7 +22,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `138` The Blob — `specs/138-the-blob.md`
 - [ ] `139` Cryo-Stasis Vaults — `specs/139-cryo-stasis.md`
 - [ ] `140` Thermal Management — `specs/140-thermal-management.md`
-- [ ] `141` Colony Ship Cannibalization — `specs/141-colony-ship-cannibalization.md`
 
 ## MVP — Layer 2: System Simulation
 

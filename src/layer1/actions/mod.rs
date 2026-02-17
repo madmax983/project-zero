@@ -7,10 +7,10 @@ pub mod rest;
 
 /// Explore action logic.
 pub mod explore;
-/// Fetch tool action logic.
-pub mod fetch_tool;
 /// Fetch clothing action logic.
 pub mod fetch_clothing;
+/// Fetch tool action logic.
+pub mod fetch_tool;
 /// Haul action logic.
 pub mod haul;
 /// Repair action logic.

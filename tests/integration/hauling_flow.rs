@@ -1,15 +1,17 @@
 #[cfg(test)]
 mod tests {
+    use bevy_ecs::prelude::*;
+    use bevy_ecs::system::RunSystemOnce;
     use scale::layer1::building::{Building, BuildingType};
     use scale::layer1::map::GridPosition;
     use scale::layer1::needs::Needs;
     use scale::layer1::pop::Pop;
     use scale::layer1::resources::{Carrying, ColonyResources, ResourceItem, ResourceType};
     use scale::layer1::stockpile::Stockpile;
-    use scale::layer1::utility_ai::{ActionType, PopAction, UtilityConfig, UtilityWeights, evaluate_actions_system};
+    use scale::layer1::utility_ai::{
+        ActionType, PopAction, UtilityConfig, UtilityWeights, evaluate_actions_system,
+    };
     use scale::shared::time::SimulationTime;
-    use bevy_ecs::prelude::*;
-    use bevy_ecs::system::RunSystemOnce;
 
     fn setup_world() -> World {
         scale::setup::init_task_pools();
@@ -90,7 +92,8 @@ mod tests {
             target,
             Some(stockpile),
             "Pop should target stockpile when carrying, but targeted {:?} (likely loose item {:?})",
-            target, loose_item
+            target,
+            loose_item
         );
     }
 }

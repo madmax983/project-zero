@@ -26,3 +26,4 @@ Tasks currently being implemented. Builders: if a task is here, pick something e
 - [ ] `INT-007` Integration: Retrograde Engineering -> Chronicle — claimed 2026-10-26
 - [ ] `132` Equipment & Wear — `specs/132-equipment-and-wear.md` — claimed 2026-02-16
 - [ ] `133` Ventilation Networks — `specs/133-ventilation-networks.md` — claimed 2026-02-16
+- [ ] `141` Colony Ship Cannibalization — `specs/141-colony-ship-cannibalization.md` — claimed 2026-10-27

@@ -123,6 +123,8 @@ pub fn hopper_system(
                 ResourceType::Planks => (resources.planks, resources.max_planks),
                 ResourceType::Blocks => (resources.blocks, resources.max_blocks),
                 ResourceType::Waste => (resources.waste, resources.max_waste),
+                ResourceType::Rations => (resources.rations, resources.max_rations),
+                ResourceType::Fuel => (resources.fuel, resources.max_fuel),
             };
 
             let space = (max - current).max(0.0);
@@ -138,6 +140,8 @@ pub fn hopper_system(
                     ResourceType::Planks => resources.add_planks(added),
                     ResourceType::Blocks => resources.add_blocks(added),
                     ResourceType::Waste => resources.add_waste(added),
+                    ResourceType::Rations => resources.add_rations(added),
+                    ResourceType::Fuel => resources.add_fuel(added),
                 }
 
                 item.amount -= added;

@@ -69,13 +69,13 @@ pub fn clothing_wear_system(
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::pop::Pop;
-    use crate::layer1::items::{Item, Clothing, ClothingType, Equipment};
+    use super::{clothing_wear_system, hypothermia_system};
     use crate::layer1::health::Health;
+    use crate::layer1::items::{Clothing, ClothingType, Equipment, Item};
+    use crate::layer1::pop::Pop;
     use crate::layer1::resources::ColonyResources;
     use crate::layer1::seasons::{Season, SeasonState};
-    use super::{hypothermia_system, clothing_wear_system};
+    use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
 
     // 1. Equipment Slots
@@ -94,15 +94,17 @@ mod tests {
     #[test]
     fn test_clothing_component() {
         let mut world = World::new();
-        let tunic = world.spawn((
-            Item,
-            Clothing {
-                clothing_type: ClothingType::Tunic,
-                insulation: 1.0,
-                durability: 100.0,
-                max_durability: 100.0,
-            }
-        )).id();
+        let tunic = world
+            .spawn((
+                Item,
+                Clothing {
+                    clothing_type: ClothingType::Tunic,
+                    insulation: 1.0,
+                    durability: 100.0,
+                    max_durability: 100.0,
+                },
+            ))
+            .id();
 
         let c = world.get::<Clothing>(tunic).unwrap();
         assert_eq!(c.insulation, 1.0);
@@ -112,31 +114,48 @@ mod tests {
     #[test]
     fn test_hypothermia_checks_equipment() {
         let mut world = World::new();
-        world.insert_resource(SeasonState { current_season: Season::Winter });
+        world.insert_resource(SeasonState {
+            current_season: Season::Winter,
+        });
         // Global resource should be ignored or used only for "available" count,
         // but damage depends on Equipment.
         world.insert_resource(ColonyResources::default());
 
         // Pop 1: Naked (Should take damage)
-        let pop1 = world.spawn((
-            Pop,
-            Health { current: 100.0, max: 100.0 },
-            Equipment::default(), // No body
-        )).id();
+        let pop1 = world
+            .spawn((
+                Pop,
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                },
+                Equipment::default(), // No body
+            ))
+            .id();
 
         // Pop 2: Clothed (Should be safe)
-        let tunic = world.spawn(Clothing {
-            clothing_type: ClothingType::Tunic,
-            insulation: 1.0,
-            durability: 100.0,
-            max_durability: 100.0,
-        }).id();
+        let tunic = world
+            .spawn(Clothing {
+                clothing_type: ClothingType::Tunic,
+                insulation: 1.0,
+                durability: 100.0,
+                max_durability: 100.0,
+            })
+            .id();
 
-        let pop2 = world.spawn((
-            Pop,
-            Health { current: 100.0, max: 100.0 },
-            Equipment { body: Some(tunic), ..Default::default() },
-        )).id();
+        let pop2 = world
+            .spawn((
+                Pop,
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                },
+                Equipment {
+                    body: Some(tunic),
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         // Run system
         // With logic implemented:
@@ -157,17 +176,24 @@ mod tests {
     fn test_clothing_degrades_on_wearer() {
         let mut world = World::new();
 
-        let tunic = world.spawn(Clothing {
-            clothing_type: ClothingType::Tunic,
-            insulation: 1.0,
-            durability: 10.0,
-            max_durability: 100.0,
-        }).id();
+        let tunic = world
+            .spawn(Clothing {
+                clothing_type: ClothingType::Tunic,
+                insulation: 1.0,
+                durability: 10.0,
+                max_durability: 100.0,
+            })
+            .id();
 
-        let _pop = world.spawn((
-            Pop,
-            Equipment { body: Some(tunic), ..Default::default() },
-        )).id();
+        let _pop = world
+            .spawn((
+                Pop,
+                Equipment {
+                    body: Some(tunic),
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         world.run_system_once(clothing_wear_system).unwrap();
 
@@ -182,17 +208,24 @@ mod tests {
     fn test_clothing_breaks() {
         let mut world = World::new();
 
-        let tunic = world.spawn(Clothing {
-            clothing_type: ClothingType::Tunic,
-            insulation: 1.0,
-            durability: 0.001, // Almost broken
-            max_durability: 100.0,
-        }).id();
+        let tunic = world
+            .spawn(Clothing {
+                clothing_type: ClothingType::Tunic,
+                insulation: 1.0,
+                durability: 0.001, // Almost broken
+                max_durability: 100.0,
+            })
+            .id();
 
-        let pop = world.spawn((
-            Pop,
-            Equipment { body: Some(tunic), ..Default::default() },
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Equipment {
+                    body: Some(tunic),
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         // Should break and despawn
         world.run_system_once(clothing_wear_system).unwrap();

@@ -247,6 +247,8 @@ pub enum BuildingType {
     Vent,
     /// Defensive structure that consumes Waste as ammunition.
     TrashCannon,
+    /// The colony's starting ship (can be cannibalized for resources).
+    Lander,
 }
 
 impl BuildingType {
@@ -285,10 +287,9 @@ impl BuildingType {
                 | Self::Landfill
                 | Self::PersonalGarden
                 | Self::ConveyorBelt
-                | Self::Airlock
-                // Vent is explicitly an obstacle for standard movement (blocks Pops),
-                // but Vermin can pass through it (handled in pathfinding).
-                // So here it returns true (is obstacle).
+                | Self::Airlock // Vent is explicitly an obstacle for standard movement (blocks Pops),
+                                // but Vermin can pass through it (handled in pathfinding).
+                                // So here it returns true (is obstacle).
         )
     }
 
@@ -320,7 +321,8 @@ impl BuildingType {
             | Self::ConveyorBelt
             | Self::Hopper
             | Self::LifeSupport
-            | Self::Airlock | Self::Vent => Some(Tech::MetalWorking),
+            | Self::Airlock
+            | Self::Vent => Some(Tech::MetalWorking),
             Self::Tavern | Self::Statue => Some(Tech::SocialStructures),
             Self::Tower => Some(Tech::Masonry),
             Self::Observatory => Some(Tech::Astronomy),
@@ -383,6 +385,7 @@ impl BuildingType {
             Self::Airlock => "Airlock",
             Self::Vent => "Vent",
             Self::TrashCannon => "Trash Cannon",
+            Self::Lander => "Lander",
         }
     }
 
@@ -423,6 +426,7 @@ impl BuildingType {
             Self::Airlock => '⌷',
             Self::Vent => '≡',
             Self::TrashCannon => '♣',
+            Self::Lander => 'Λ',
         }
     }
 
@@ -660,6 +664,7 @@ impl BuildingType {
                 metal: 10.0, // Needs advanced materials
                 ..ColonyResources::zeroed()
             },
+            Self::Lander => ColonyResources::zeroed(),
         }
     }
 
@@ -1177,6 +1182,33 @@ fn spawn_building(
                 crate::layer1::combat::CombatState::default(),
             ));
         }
+        BuildingType::Lander => {
+            entity.insert((
+                Housing {
+                    capacity: 5,
+                    ..Default::default()
+                },
+                Stockpile {
+                    food_bonus: 50.0,
+                    wood_bonus: 50.0,
+                    stone_bonus: 20.0,
+                    waste_bonus: 0.0,
+                },
+                PowerSource {
+                    output: 10.0,
+                    active: true,
+                },
+                LightSource {
+                    radius: 8.0,
+                    intensity: 0.8,
+                    color: (200, 200, 255),
+                },
+            ));
+            if let Some(mut structure) = entity.get_mut::<crate::layer1::structure::Structure>() {
+                structure.max_hp = 500.0;
+                structure.current_hp = 500.0;
+            }
+        }
     }
 }
 
@@ -1369,7 +1401,8 @@ mod tests {
         assert_eq!(BuildingType::LifeSupport.next(), BuildingType::Airlock);
         assert_eq!(BuildingType::Airlock.next(), BuildingType::Vent);
         assert_eq!(BuildingType::Vent.next(), BuildingType::TrashCannon);
-        assert_eq!(BuildingType::TrashCannon.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::TrashCannon.next(), BuildingType::Lander);
+        assert_eq!(BuildingType::Lander.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -1538,6 +1571,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::TrashCannon);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Lander);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

@@ -66,7 +66,15 @@ mod tests {
         let mut chronicle_reader = chronicle_events.get_reader();
         let chronicle_emitted: Vec<_> = chronicle_reader.read(chronicle_events).collect();
 
-        assert_eq!(chronicle_emitted.len(), 1, "Glue should produce Chronicle event");
-        assert!(chronicle_emitted[0].text.contains("Sacrificed Ancient Reactor"));
+        assert_eq!(
+            chronicle_emitted.len(),
+            1,
+            "Glue should produce Chronicle event"
+        );
+        assert!(
+            chronicle_emitted[0]
+                .text
+                .contains("Sacrificed Ancient Reactor")
+        );
     }
 }
