@@ -41,6 +41,8 @@ pub mod building;
 pub mod chronicle;
 /// Chronicle system and historical records.
 pub mod clothing;
+/// Door control system (Spec 134).
+pub mod control;
 /// Defensive structures and logic.
 pub mod defense;
 /// Designation system for player tools.
@@ -83,8 +85,6 @@ pub mod memory;
 pub mod metal_industry_tests;
 /// Pop needs (hunger, rest).
 pub mod needs;
-/// Door control system (Spec 134).
-pub mod control;
 /// Notification system.
 pub mod notifications;
 /// Pathfinding algorithms.
@@ -144,6 +144,7 @@ pub use balance::*;
 pub use beauty::*;
 pub use building::*;
 pub use chronicle::*;
+pub use control::*;
 pub use defense::*;
 pub use designation::*;
 pub use edicts::*;
@@ -162,7 +163,6 @@ pub use mascot::*;
 pub use medical::*;
 pub use memory::*;
 pub use needs::*;
-pub use control::*;
 pub use notifications::*;
 pub use pop::*;
 pub use refining::*;
@@ -190,9 +190,9 @@ pub mod rumor;
 /// Pop skills and experience system.
 pub mod skills;
 #[cfg(test)]
-mod waste_tests;
-#[cfg(test)]
 mod venting_tests;
+#[cfg(test)]
+mod waste_tests;
 
 /// Vermin infestation logic (Spec 073).
 pub mod vermin;

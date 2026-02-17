@@ -369,13 +369,17 @@ mod tests {
 
         // Source generator at (0, 0) to maintain pressure against vacuum
         world.spawn((
-            Building { building_type: BuildingType::LifeSupport },
+            Building {
+                building_type: BuildingType::LifeSupport,
+            },
             GridPosition { x: 0, y: 0 },
         ));
 
         // Vent at (1, 0)
         world.spawn((
-            Building { building_type: BuildingType::Vent },
+            Building {
+                building_type: BuildingType::Vent,
+            },
             GridPosition { x: 1, y: 0 },
         ));
 

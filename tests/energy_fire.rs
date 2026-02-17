@@ -1,11 +1,11 @@
 #[cfg(test)]
 mod tests {
-    use scale::layer1::energy::{PowerConsumer, PowerSource, power_grid_system, GridOverloadEvent};
+    use bevy_ecs::prelude::*;
+    use scale::layer1::energy::{GridOverloadEvent, PowerConsumer, PowerSource, power_grid_system};
     use scale::layer1::fire::Fire;
-    use scale::layer1::map::GridPosition;
     use scale::layer1::health::Health;
     use scale::layer1::integration::grid_overload_fire_bridge;
-    use bevy_ecs::prelude::*;
+    use scale::layer1::map::GridPosition;
 
     #[test]
     fn test_overload_starts_fire() {
@@ -16,17 +16,29 @@ mod tests {
 
         // Generator at 0,0
         world.spawn((
-            PowerSource { output: 10.0, active: true },
+            PowerSource {
+                output: 10.0,
+                active: true,
+            },
             GridPosition { x: 0, y: 0 },
-            Health { current: 100.0, max: 100.0 },
+            Health {
+                current: 100.0,
+                max: 100.0,
+            },
         ));
 
         // Consumer at 0,1 (Connected via adjacency)
         // Demand 30 vs Output 10 => Ratio 3.0 (> 1.5 threshold)
         world.spawn((
-            PowerConsumer { demand: 30.0, active: true },
+            PowerConsumer {
+                demand: 30.0,
+                active: true,
+            },
             GridPosition { x: 0, y: 1 },
-            Health { current: 100.0, max: 100.0 },
+            Health {
+                current: 100.0,
+                max: 100.0,
+            },
         ));
 
         // Create a schedule to run systems
@@ -52,6 +64,9 @@ mod tests {
             }
         }
 
-        assert!(fire_spawned, "Severe overload should eventually start a fire");
+        assert!(
+            fire_spawned,
+            "Severe overload should eventually start a fire"
+        );
     }
 }

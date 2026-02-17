@@ -34,6 +34,8 @@ pub enum DesignationType {
     ClearFlora,
     /// Designate a building for jury-rigging (quick, fragile repair).
     JuryRig,
+    /// Designate the Lander for cannibalization (destructive resource extraction).
+    Cannibalize,
 }
 
 impl DesignationType {
@@ -57,6 +59,7 @@ impl DesignationType {
             Self::Tame => '♥',
             Self::ClearFlora => 'F',
             Self::JuryRig => 'J',
+            Self::Cannibalize => 'C',
         }
     }
 
@@ -80,6 +83,7 @@ impl DesignationType {
             Self::Tame => "♥",
             Self::ClearFlora => "F",
             Self::JuryRig => "J",
+            Self::Cannibalize => "C",
         }
     }
 
@@ -103,6 +107,7 @@ impl DesignationType {
             Self::Tame => "Tame",
             Self::ClearFlora => "Clear Flora",
             Self::JuryRig => "Jury-Rig",
+            Self::Cannibalize => "Cannibalize",
         }
     }
 }
@@ -228,6 +233,19 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
             let occupied = world.resource::<OccupiedTiles>();
             // Only occupied tiles can be jury-rigged (assumes building)
             occupied.0.contains(&(x, y))
+        }
+        DesignationType::Cannibalize => {
+            // Must target the Lander
+            world.iter_entities().any(|entity_ref| {
+                if let Some(pos) = entity_ref.get::<GridPosition>()
+                    && pos.x == x
+                    && pos.y == y
+                    && let Some(b) = entity_ref.get::<crate::layer1::building::Building>()
+                {
+                    return b.building_type == crate::layer1::building::BuildingType::Lander;
+                }
+                false
+            })
         }
     }
 }

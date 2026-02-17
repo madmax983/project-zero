@@ -57,8 +57,8 @@ pub fn find_path_for_entity<T: Component>(
     end: (i32, i32),
     _capability: &T,
 ) -> Option<Vec<(i32, i32)>> {
-    let can_use_vents = std::any::TypeId::of::<T>()
-        == std::any::TypeId::of::<crate::layer1::vermin::Vermin>();
+    let can_use_vents =
+        std::any::TypeId::of::<T>() == std::any::TypeId::of::<crate::layer1::vermin::Vermin>();
     find_path_internal(world, start, end, can_use_vents)
 }
 
@@ -130,12 +130,13 @@ fn find_path_internal(
             }
 
             // Movement cost (default 1 + terrain cost)
-            let tile_cost = if let (Ok(x), Ok(y)) = (usize::try_from(next.0), usize::try_from(next.1)) {
-                #[allow(clippy::cast_possible_truncation)]
-                terrain.get(x, y).map_or(1, |t| t.movement_cost() as i32)
-            } else {
-                1
-            };
+            let tile_cost =
+                if let (Ok(x), Ok(y)) = (usize::try_from(next.0), usize::try_from(next.1)) {
+                    #[allow(clippy::cast_possible_truncation)]
+                    terrain.get(x, y).map_or(1, |t| t.movement_cost() as i32)
+                } else {
+                    1
+                };
 
             let new_cost = cost + tile_cost;
 
@@ -261,7 +262,10 @@ mod tests {
         // Since map is 10x10 grass, it will just walk around (0,1) -> (1,1) -> (2,1) -> (2,0).
 
         if let Some(p) = path {
-            assert!(!p.contains(&(1, 0)), "Path should NOT contain Vent at (1,0)");
+            assert!(
+                !p.contains(&(1, 0)),
+                "Path should NOT contain Vent at (1,0)"
+            );
         }
 
         // Let's make a corridor to force block
@@ -269,7 +273,9 @@ mod tests {
         // Wall at (1, 1). Edge is y=0.
         // So (1,0) is the choke point if we block (1,1).
         world.spawn((
-            Building { building_type: BuildingType::Wall },
+            Building {
+                building_type: BuildingType::Wall,
+            },
             GridPosition { x: 1, y: 1 },
         ));
         world.resource_mut::<OccupiedTiles>().0.insert((1, 1));
@@ -288,21 +294,36 @@ mod tests {
         let mut world = setup_world();
         // Block rows 0 and 2
         for x in 0..3 {
-            world.spawn((Building { building_type: BuildingType::Wall }, GridPosition { x, y: 0 }));
+            world.spawn((
+                Building {
+                    building_type: BuildingType::Wall,
+                },
+                GridPosition { x, y: 0 },
+            ));
             world.resource_mut::<OccupiedTiles>().0.insert((x, 0));
-            world.spawn((Building { building_type: BuildingType::Wall }, GridPosition { x, y: 2 }));
+            world.spawn((
+                Building {
+                    building_type: BuildingType::Wall,
+                },
+                GridPosition { x, y: 2 },
+            ));
             world.resource_mut::<OccupiedTiles>().0.insert((x, 2));
         }
 
         // Vent at (1, 1)
         world.spawn((
-            Building { building_type: BuildingType::Vent },
+            Building {
+                building_type: BuildingType::Vent,
+            },
             GridPosition { x: 1, y: 1 },
         ));
         world.resource_mut::<OccupiedTiles>().0.insert((1, 1));
 
         let path = find_path(&world, (0, 1), (2, 1));
-        assert!(path.is_none(), "Pop should not path through Vent when it is the only way");
+        assert!(
+            path.is_none(),
+            "Pop should not path through Vent when it is the only way"
+        );
     }
 
     #[test]
@@ -311,15 +332,27 @@ mod tests {
 
         // Block rows 0 and 2
         for x in 0..3 {
-            world.spawn((Building { building_type: BuildingType::Wall }, GridPosition { x, y: 0 }));
+            world.spawn((
+                Building {
+                    building_type: BuildingType::Wall,
+                },
+                GridPosition { x, y: 0 },
+            ));
             world.resource_mut::<OccupiedTiles>().0.insert((x, 0));
-            world.spawn((Building { building_type: BuildingType::Wall }, GridPosition { x, y: 2 }));
+            world.spawn((
+                Building {
+                    building_type: BuildingType::Wall,
+                },
+                GridPosition { x, y: 2 },
+            ));
             world.resource_mut::<OccupiedTiles>().0.insert((x, 2));
         }
 
         // Vent at (1, 1)
         world.spawn((
-            Building { building_type: BuildingType::Vent },
+            Building {
+                building_type: BuildingType::Vent,
+            },
             GridPosition { x: 1, y: 1 },
         ));
         world.resource_mut::<OccupiedTiles>().0.insert((1, 1));

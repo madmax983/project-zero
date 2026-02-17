@@ -3,12 +3,12 @@
 //! This module defines the `Turret` component and the logic for automated defenses like the
 //! Trash Cannon. Turrets require ammo, track targets, and fire upon them.
 
-use bevy_ecs::prelude::*;
 use crate::layer1::combat::{AttackProperties, CombatState};
-use crate::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
-use crate::layer1::map::GridPosition;
-use crate::layer1::health::Health;
 use crate::layer1::fauna::Fauna;
+use crate::layer1::health::Health;
+use crate::layer1::map::GridPosition;
+use crate::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
+use bevy_ecs::prelude::*;
 
 /// Component defining a building as a turret.
 #[derive(Component, Debug, Clone)]
@@ -32,9 +32,9 @@ pub fn turret_fire_system(world: &mut World) {
     for (entity, pos, health) in query.iter(world) {
         if health.current > 0.0 {
             // Check if it's hostile? (Fauna usually is, or check specific component)
-             if world.get::<Fauna>(entity).is_some() {
-                 targets.push((entity, *pos));
-             }
+            if world.get::<Fauna>(entity).is_some() {
+                targets.push((entity, *pos));
+            }
         }
     }
 
@@ -60,7 +60,9 @@ pub fn turret_fire_system(world: &mut World) {
             }
         };
 
-        if !has_ammo { continue; }
+        if !has_ammo {
+            continue;
+        }
 
         // Find Target in Range
         let mut best_target = None;
@@ -111,7 +113,7 @@ pub fn turret_fire_system(world: &mut World) {
                 target_pos,
                 'x',
                 ratatui::style::Color::DarkGray,
-                5
+                5,
             );
         }
     }
@@ -119,14 +121,14 @@ pub fn turret_fire_system(world: &mut World) {
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::combat::{AttackProperties, CombatState};
+    use crate::layer1::fauna::{Fauna, FaunaType};
     use crate::layer1::health::Health;
     use crate::layer1::map::GridPosition;
     use crate::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
     use crate::layer1::turret::{Turret, turret_fire_system};
-    use crate::layer1::fauna::{Fauna, FaunaType};
+    use bevy_ecs::prelude::*;
 
     fn setup_world() -> World {
         let mut world = World::new();
@@ -161,28 +163,40 @@ mod tests {
         world.resource_mut::<ColonyResources>().waste = 0.0;
 
         // Spawn Turret
-        let _turret = world.spawn((
-            Building { building_type: BuildingType::TrashCannon },
-            Turret {
-                attack: AttackProperties {
-                    damage: 10.0,
-                    range: 5.0,
-                    cooldown: 0,
-                    accuracy: 1.0,
+        let _turret = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::TrashCannon,
                 },
-                ammo_cost: 1.0,
-                ammo_type: ResourceType::Waste,
-            },
-            GridPosition { x: 0, y: 0 },
-            CombatState::default(),
-        )).id();
+                Turret {
+                    attack: AttackProperties {
+                        damage: 10.0,
+                        range: 5.0,
+                        cooldown: 0,
+                        accuracy: 1.0,
+                    },
+                    ammo_cost: 1.0,
+                    ammo_type: ResourceType::Waste,
+                },
+                GridPosition { x: 0, y: 0 },
+                CombatState::default(),
+            ))
+            .id();
 
         // Spawn Enemy in range
-        let enemy = world.spawn((
-            Fauna { fauna_type: FaunaType::Wolf, ..Default::default() },
-            GridPosition { x: 2, y: 0 },
-            Health { current: 100.0, max: 100.0 },
-        )).id();
+        let enemy = world
+            .spawn((
+                Fauna {
+                    fauna_type: FaunaType::Wolf,
+                    ..Default::default()
+                },
+                GridPosition { x: 2, y: 0 },
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                },
+            ))
+            .id();
 
         // Run system
         turret_fire_system(&mut world);
@@ -200,28 +214,40 @@ mod tests {
         world.resource_mut::<ColonyResources>().waste = 10.0;
 
         // Spawn Turret
-        let turret = world.spawn((
-            Building { building_type: BuildingType::TrashCannon },
-            Turret {
-                attack: AttackProperties {
-                    damage: 10.0,
-                    range: 5.0,
-                    cooldown: 10, // Set cooldown
-                    accuracy: 1.0,
+        let turret = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::TrashCannon,
                 },
-                ammo_cost: 1.0,
-                ammo_type: ResourceType::Waste,
-            },
-            GridPosition { x: 0, y: 0 },
-            CombatState::default(),
-        )).id();
+                Turret {
+                    attack: AttackProperties {
+                        damage: 10.0,
+                        range: 5.0,
+                        cooldown: 10, // Set cooldown
+                        accuracy: 1.0,
+                    },
+                    ammo_cost: 1.0,
+                    ammo_type: ResourceType::Waste,
+                },
+                GridPosition { x: 0, y: 0 },
+                CombatState::default(),
+            ))
+            .id();
 
         // Spawn Enemy
-        let enemy = world.spawn((
-            Fauna { fauna_type: FaunaType::Wolf, ..Default::default() },
-            GridPosition { x: 2, y: 0 },
-            Health { current: 100.0, max: 100.0 },
-        )).id();
+        let enemy = world
+            .spawn((
+                Fauna {
+                    fauna_type: FaunaType::Wolf,
+                    ..Default::default()
+                },
+                GridPosition { x: 2, y: 0 },
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                },
+            ))
+            .id();
 
         // Run system
         turret_fire_system(&mut world);
@@ -245,28 +271,40 @@ mod tests {
         let mut world = setup_world();
         world.resource_mut::<ColonyResources>().waste = 10.0;
 
-        let _turret = world.spawn((
-            Building { building_type: BuildingType::TrashCannon },
-            Turret {
-                attack: AttackProperties {
-                    damage: 10.0,
-                    range: 5.0,
-                    cooldown: 0,
-                    accuracy: 1.0,
+        let _turret = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::TrashCannon,
                 },
-                ammo_cost: 1.0,
-                ammo_type: ResourceType::Waste,
-            },
-            GridPosition { x: 0, y: 0 },
-            CombatState::default(),
-        )).id();
+                Turret {
+                    attack: AttackProperties {
+                        damage: 10.0,
+                        range: 5.0,
+                        cooldown: 0,
+                        accuracy: 1.0,
+                    },
+                    ammo_cost: 1.0,
+                    ammo_type: ResourceType::Waste,
+                },
+                GridPosition { x: 0, y: 0 },
+                CombatState::default(),
+            ))
+            .id();
 
         let enemy_pos = GridPosition { x: 3, y: 3 };
-        let _enemy = world.spawn((
-            Fauna { fauna_type: FaunaType::Wolf, ..Default::default() },
-            enemy_pos,
-            Health { current: 100.0, max: 100.0 },
-        )).id();
+        let _enemy = world
+            .spawn((
+                Fauna {
+                    fauna_type: FaunaType::Wolf,
+                    ..Default::default()
+                },
+                enemy_pos,
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                },
+            ))
+            .id();
 
         turret_fire_system(&mut world);
 
@@ -279,6 +317,9 @@ mod tests {
                 break;
             }
         }
-        assert!(found_waste, "Impact should spawn Waste item at target location");
+        assert!(
+            found_waste,
+            "Impact should spawn Waste item at target location"
+        );
     }
 }

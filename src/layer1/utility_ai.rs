@@ -159,8 +159,7 @@ pub(crate) fn evaluate_single_pop(
     });
 
     if !is_striking {
-        if let Some((utility, target)) =
-            evaluate_work(pop_pos, &weights, &buffer.work_designations)
+        if let Some((utility, target)) = evaluate_work(pop_pos, &weights, &buffer.work_designations)
         {
             let penalty =
                 crate::layer1::taboo::evaluate_taboo_penalty(ActionType::Work, context.taboo);
@@ -224,12 +223,9 @@ pub(crate) fn evaluate_single_pop(
     // Evaluate FetchClothing
     if !is_striking {
         let equipment = equipment_opt.unwrap_or_default();
-        if let Some((utility, target)) = evaluate_fetch_clothing(
-            pop_pos,
-            &equipment,
-            context.resources,
-            &buffer.stockpiles,
-        ) {
+        if let Some((utility, target)) =
+            evaluate_fetch_clothing(pop_pos, &equipment, context.resources, &buffer.stockpiles)
+        {
             check_best(ActionType::FetchClothing, utility, Some(target));
         }
     }
@@ -355,10 +351,12 @@ pub fn evaluate_actions_system(world: &mut World) {
                 Option<&Breakdown>,
             )>()
             .iter(world)
-            .filter(|(_, _, _, _, action, _, _, _, _, inmate, _, penal_labor, _)| {
-                action.ticks_committed >= config.evaluation_interval
-                    && (inmate.is_none() || penal_labor.is_some())
-            })
+            .filter(
+                |(_, _, _, _, action, _, _, _, _, inmate, _, penal_labor, _)| {
+                    action.ticks_committed >= config.evaluation_interval
+                        && (inmate.is_none() || penal_labor.is_some())
+                },
+            )
             .map(|(e, p, n, w, a, eq, c, m, d, _, fm, pl, b)| PopEvalData {
                 entity: e,
                 pos: *p,

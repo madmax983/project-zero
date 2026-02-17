@@ -5,9 +5,9 @@ use bevy_ecs::prelude::*;
 #[cfg(all(not(target_arch = "wasm32"), not(test)))]
 use crate::gpu::context::GpuContext;
 use crate::layer1::chronicle::AddChronicleEvent;
+use crate::layer1::heirloom::RetrogradeEngineeringEvent;
 use crate::layer1::pop::PopDied;
 use crate::layer1::social::AffinityChange;
-use crate::layer1::heirloom::RetrogradeEngineeringEvent;
 use crate::layer1::{
     AmbientLight, AtmosphereGrid, BuildMode, BuildingTracker, CameraCurrent, CameraTarget,
     Chronicle, ChronicleUiState, ColonyPolicies, ColonyResources, DesignationMode, LightMap,
@@ -114,6 +114,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(crate::layer1::PlanetaryTraits::default());
     world.insert_resource(crate::layer1::weather::WeatherState::default());
     world.insert_resource(crate::layer1::medical::MedicalPolicy::default());
+    world.init_resource::<crate::layer1::social::old_guard::Demographics>();
 
     initialize_visitor_source(&mut world);
     world.insert_resource(crate::layer1::inspector::InspectorSource {

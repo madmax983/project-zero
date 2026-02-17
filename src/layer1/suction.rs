@@ -1,9 +1,9 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::pressure::PressureGrid;
-use crate::layer1::map::GridPosition;
 use crate::layer1::building::Building;
-use crate::layer1::pop::Pop;
 use crate::layer1::items::Item;
+use crate::layer1::map::GridPosition;
+use crate::layer1::pop::Pop;
+use crate::layer1::pressure::PressureGrid;
+use bevy_ecs::prelude::*;
 use std::collections::HashSet;
 
 /// System to simulate explosive decompression suction.
@@ -19,10 +19,8 @@ pub fn suction_system(
     const SUCTION_THRESHOLD: f32 = 0.5;
 
     // Build a set of building positions for O(1) lookup
-    let building_positions: HashSet<(i32, i32)> = buildings
-        .iter()
-        .map(|pos| (pos.x, pos.y))
-        .collect();
+    let building_positions: HashSet<(i32, i32)> =
+        buildings.iter().map(|pos| (pos.x, pos.y)).collect();
 
     for (_entity, mut pos) in &mut query {
         let current_p = pressure.get(pos.x, pos.y);
@@ -69,12 +67,12 @@ pub fn suction_system(
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::pressure::PressureGrid;
-    use crate::layer1::map::GridPosition;
-    use crate::layer1::pop::Pop;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::health::Health;
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::pop::Pop;
+    use crate::layer1::pressure::PressureGrid;
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_entity_sucked_into_vacuum() {
@@ -87,11 +85,9 @@ mod tests {
         world.insert_resource(grid);
 
         // Spawn Pop at (5,5)
-        let pop = world.spawn((
-            Pop,
-            GridPosition { x: 5, y: 5 },
-            Health::default(),
-        )).id();
+        let pop = world
+            .spawn((Pop, GridPosition { x: 5, y: 5 }, Health::default()))
+            .id();
 
         // Run system
         let mut schedule = Schedule::default();
@@ -100,7 +96,11 @@ mod tests {
 
         // Assert Pop moved to (6,5)
         let pos = world.get::<GridPosition>(pop).unwrap();
-        assert_eq!(*pos, GridPosition { x: 6, y: 5 }, "Pop should be sucked into vacuum");
+        assert_eq!(
+            *pos,
+            GridPosition { x: 6, y: 5 },
+            "Pop should be sucked into vacuum"
+        );
     }
 
     #[test]
@@ -113,10 +113,14 @@ mod tests {
         world.insert_resource(grid);
 
         // Spawn Wall at (5,5) - Walls are anchored/immovable
-        let wall = world.spawn((
-            Building { building_type: BuildingType::Wall },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let wall = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Wall,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         // Run system
         let mut schedule = Schedule::default();
@@ -124,7 +128,11 @@ mod tests {
         schedule.run(&mut world);
 
         let pos = world.get::<GridPosition>(wall).unwrap();
-        assert_eq!(*pos, GridPosition { x: 5, y: 5 }, "Building should NOT move");
+        assert_eq!(
+            *pos,
+            GridPosition { x: 5, y: 5 },
+            "Building should NOT move"
+        );
     }
 
     #[test]
@@ -136,10 +144,7 @@ mod tests {
         grid.set(6, 5, 0.9); // Small difference
         world.insert_resource(grid);
 
-        let pop = world.spawn((
-            Pop,
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let pop = world.spawn((Pop, GridPosition { x: 5, y: 5 })).id();
 
         // Run system
         let mut schedule = Schedule::default();
@@ -147,6 +152,10 @@ mod tests {
         schedule.run(&mut world);
 
         let pos = world.get::<GridPosition>(pop).unwrap();
-        assert_eq!(*pos, GridPosition { x: 5, y: 5 }, "Small gradient should not cause suction");
+        assert_eq!(
+            *pos,
+            GridPosition { x: 5, y: 5 },
+            "Small gradient should not cause suction"
+        );
     }
 }

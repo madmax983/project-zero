@@ -43,6 +43,10 @@ pub enum ResourceType {
     Blocks,
     /// Industrial waste (pollution).
     Waste,
+    /// Rations for survival (high nutrition).
+    Rations,
+    /// Fuel for reactors and ships.
+    Fuel,
 }
 
 /// A physical resource item in the world (dropped on the ground).

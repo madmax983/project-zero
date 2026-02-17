@@ -40,9 +40,10 @@ pub fn check_mentorship_system(
             let skill_type = match designation.designation_type {
                 DesignationType::Mine => Some(SkillType::Mining),
                 DesignationType::Chop => Some(SkillType::Forestry),
-                DesignationType::Repair | DesignationType::Demolish | DesignationType::JuryRig => {
-                    Some(SkillType::Construction)
-                }
+                DesignationType::Repair
+                | DesignationType::Demolish
+                | DesignationType::JuryRig
+                | DesignationType::Cannibalize => Some(SkillType::Construction),
                 DesignationType::ClearFlora => Some(SkillType::Farming),
                 DesignationType::SetZone(_) => None,
                 DesignationType::Tame => Some(SkillType::Husbandry),

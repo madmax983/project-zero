@@ -682,6 +682,7 @@ pub const fn get_building_char(building: BuildingType) -> char {
         BuildingType::LifeSupport => '♼',
         BuildingType::Airlock => '⌷',
         BuildingType::Battery => 'B',
+        BuildingType::Lander => 'Λ',
     }
 }
 
@@ -732,7 +733,7 @@ pub const fn get_building_color(building: BuildingType, material: MaterialType) 
             | BuildingType::LifeSupport
             | BuildingType::Battery => Color::Cyan,
             BuildingType::Plantation | BuildingType::PersonalGarden => Color::Green,
-            BuildingType::Weaver | BuildingType::Statue => Color::White,
+            BuildingType::Weaver | BuildingType::Statue | BuildingType::Lander => Color::White,
             BuildingType::Hospital => Color::Red,
             BuildingType::Landfill => Color::Rgb(105, 105, 105), // DimGray
             BuildingType::Grave => Color::Rgb(128, 128, 128),    // Gray
@@ -766,6 +767,7 @@ pub const fn get_designation_char(tool: DesignationType) -> &'static str {
         DesignationType::Tame => "♥",
         DesignationType::ClearFlora => "F",
         DesignationType::JuryRig => "J",
+        DesignationType::Cannibalize => "C",
     }
 }
 
@@ -790,6 +792,8 @@ pub const fn get_resource_char(resource: ResourceType) -> &'static str {
         ResourceType::Planks => "=",
         ResourceType::Blocks => "■",
         ResourceType::Waste => "x",
+        ResourceType::Rations => "R",
+        ResourceType::Fuel => "F",
     }
 }
 
@@ -815,6 +819,8 @@ pub const fn get_resource_color(resource: ResourceType) -> Color {
         ResourceType::Planks => Color::Yellow,
         ResourceType::Blocks => Color::White,
         ResourceType::Waste => Color::Rgb(85, 107, 47), // DarkOliveGreen
+        ResourceType::Rations => Color::Rgb(255, 105, 180), // HotPink
+        ResourceType::Fuel => Color::Rgb(255, 140, 0),  // DarkOrange
     }
 }
 

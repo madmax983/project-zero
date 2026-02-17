@@ -71,7 +71,12 @@ use ratatui::style::Color;
 pub fn combat_execution_system(world: &mut World) {
     // Collect combatants
     let combatants: Vec<(Entity, Entity, Option<Equipment>)> = world
-        .query::<(Entity, &MovementTarget, Option<&Equipment>, Option<&HitStop>)>()
+        .query::<(
+            Entity,
+            &MovementTarget,
+            Option<&Equipment>,
+            Option<&HitStop>,
+        )>()
         .iter(world)
         .filter(|(_, mt, _, hit_stop)| {
             // Ludwig: Check Hit Stop
@@ -971,9 +976,10 @@ const fn get_skill_for_designation(designation_type: DesignationType) -> Option<
     match designation_type {
         DesignationType::Mine => Some(SkillType::Mining),
         DesignationType::Chop => Some(SkillType::Forestry),
-        DesignationType::Repair | DesignationType::Demolish | DesignationType::JuryRig => {
-            Some(SkillType::Construction)
-        }
+        DesignationType::Repair
+        | DesignationType::Demolish
+        | DesignationType::JuryRig
+        | DesignationType::Cannibalize => Some(SkillType::Construction),
         DesignationType::ClearFlora => Some(SkillType::Farming),
         DesignationType::SetZone(_) | DesignationType::Tame => None,
     }
@@ -1021,6 +1027,98 @@ fn calculate_work_amount(
         * organic_factor
 }
 
+/// Executes the cannibalization of the Lander.
+///
+/// This destroys the Lander and spawns a large amount of resources.
+pub fn execute_cannibalize(world: &mut World, designation_entity: Entity) -> bool {
+    let Some(designation_pos) = world.get::<GridPosition>(designation_entity).copied() else {
+        return false;
+    };
+
+    // Find building at this position
+    let building_entity = world
+        .query::<(Entity, &GridPosition, &crate::layer1::building::Building)>()
+        .iter(world)
+        .find(|(_, pos, b)| {
+            pos.x == designation_pos.x
+                && pos.y == designation_pos.y
+                && b.building_type == crate::layer1::building::BuildingType::Lander
+        })
+        .map(|(e, _, _)| e);
+
+    if let Some(entity) = building_entity {
+        // Spawn Resources
+        spawn_resource_pile(
+            world,
+            designation_pos,
+            crate::layer1::resources::ResourceType::Metal,
+            100.0,
+        );
+        spawn_resource_pile(
+            world,
+            designation_pos,
+            crate::layer1::resources::ResourceType::Fuel,
+            50.0,
+        );
+        spawn_resource_pile(
+            world,
+            designation_pos,
+            crate::layer1::resources::ResourceType::Rations,
+            50.0,
+        );
+
+        if let Some(mut log) = world.get_resource_mut::<crate::shared::log::MessageLog>() {
+            log.add_colored(
+                "Lander cannibalized! Massive resources gained.",
+                ratatui::style::Color::Yellow,
+            );
+        }
+
+        // VFX
+        crate::layer1::particles::spawn_particle(
+            world,
+            designation_pos,
+            'X',
+            ratatui::style::Color::Red,
+            20,
+        );
+        if let Some(mut shake) = world.get_resource_mut::<crate::layer1::map::ScreenShake>() {
+            shake.trigger(0.8);
+        }
+
+        // Cleanup
+        world.despawn(entity);
+        if let Some(mut occupied) =
+            world.get_resource_mut::<crate::layer1::building::OccupiedTiles>()
+        {
+            occupied.0.remove(&(designation_pos.x, designation_pos.y));
+        }
+
+        world.despawn(designation_entity);
+        return true;
+    }
+
+    // If we are here, we didn't find a Lander (maybe destroyed already)
+    // Clean up designation anyway
+    world.despawn(designation_entity);
+    false
+}
+
+fn spawn_resource_pile(
+    world: &mut World,
+    pos: GridPosition,
+    res_type: crate::layer1::resources::ResourceType,
+    amount: f32,
+) {
+    world.spawn((
+        crate::layer1::resources::ResourceItem {
+            resource_type: res_type,
+            amount,
+        },
+        pos,
+    ));
+}
+
 fn execute_work_on_designation(
     world: &mut World,
     designation_entity: Entity,
@@ -1043,6 +1141,7 @@ fn execute_work_on_designation(
             true
         }
         DesignationType::JuryRig => execute_jury_rig(world, designation_entity),
+        DesignationType::Cannibalize => execute_cannibalize(world, designation_entity),
         DesignationType::SetZone(_) | DesignationType::Tame => false,
     }
 }
@@ -3001,14 +3100,16 @@ mod tests {
             ))
             .id();
 
-        let weapon = world.spawn(Weapon {
-            properties: AttackProperties {
-                damage: 10.0,
-                range: 1.0,
-                cooldown: 0,
-                accuracy: 1.0,
-            },
-        }).id();
+        let weapon = world
+            .spawn(Weapon {
+                properties: AttackProperties {
+                    damage: 10.0,
+                    range: 1.0,
+                    cooldown: 0,
+                    accuracy: 1.0,
+                },
+            })
+            .id();
 
         world.spawn((
             Pop,
@@ -3029,6 +3130,9 @@ mod tests {
 
         // Enemy should NOT take damage
         let health = world.get::<Health>(enemy).unwrap();
-        assert!((health.current - 100.0).abs() < f32::EPSILON, "HitStop should prevent attack");
+        assert!(
+            (health.current - 100.0).abs() < f32::EPSILON,
+            "HitStop should prevent attack"
+        );
     }
 }

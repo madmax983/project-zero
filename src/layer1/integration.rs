@@ -332,10 +332,7 @@ pub fn grid_overload_fire_bridge(
             let already_burning = existing_fires.iter().any(|p| *p == *pos);
 
             if !already_burning {
-                commands.spawn((
-                    crate::layer1::fire::Fire::default(),
-                    *pos,
-                ));
+                commands.spawn((crate::layer1::fire::Fire::default(), *pos));
             }
         }
     }

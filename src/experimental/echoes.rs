@@ -148,8 +148,12 @@ pub fn apply_echo_effects_system(
                     // Morale system might stack them. We'll add a short duration one.
                     // To prevent stack overflow, maybe check if one exists?
                     // For now, let's just add a small short one.
-                    if !morale.modifiers.iter().any(|m| m.label == "Heard ghostly screams") {
-                         morale.add_modifier(MoodModifier {
+                    if !morale
+                        .modifiers
+                        .iter()
+                        .any(|m| m.label == "Heard ghostly screams")
+                    {
+                        morale.add_modifier(MoodModifier {
                             label: "Heard ghostly screams".to_string(),
                             value: -0.05 * echo.intensity,
                             duration: 50, // Short duration, refreshes while standing there
@@ -157,7 +161,11 @@ pub fn apply_echo_effects_system(
                     }
                 }
                 EchoType::Laughter => {
-                    if !morale.modifiers.iter().any(|m| m.label == "Felt a warm presence") {
+                    if !morale
+                        .modifiers
+                        .iter()
+                        .any(|m| m.label == "Felt a warm presence")
+                    {
                         morale.add_modifier(MoodModifier {
                             label: "Felt a warm presence".to_string(),
                             value: 0.05 * echo.intensity,
@@ -220,7 +228,10 @@ mod tests {
 
         // Spawn a new Corpse
         world.spawn((
-            Corpse { name: "Bob".into(), decay: 0.0 },
+            Corpse {
+                name: "Bob".into(),
+                decay: 0.0,
+            },
             GridPosition { x: 5, y: 5 },
         ));
 
@@ -244,19 +255,26 @@ mod tests {
         map.add(0, 0, EchoType::Scream, 1.0, 0);
         world.insert_resource(map);
 
-        let pop = world.spawn((
-            Pop,
-            GridPosition { x: 0, y: 0 },
-            Morale::default(),
-        )).id();
+        let pop = world
+            .spawn((Pop, GridPosition { x: 0, y: 0 }, Morale::default()))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(apply_echo_effects_system);
         schedule.run(&mut world);
 
         let morale = world.get::<Morale>(pop).unwrap();
-        assert!(morale.modifiers.iter().any(|m| m.label == "Heard ghostly screams"));
-        let modifier = morale.modifiers.iter().find(|m| m.label == "Heard ghostly screams").unwrap();
+        assert!(
+            morale
+                .modifiers
+                .iter()
+                .any(|m| m.label == "Heard ghostly screams")
+        );
+        let modifier = morale
+            .modifiers
+            .iter()
+            .find(|m| m.label == "Heard ghostly screams")
+            .unwrap();
         assert!(modifier.value < 0.0);
     }
 }

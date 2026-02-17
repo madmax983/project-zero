@@ -16,6 +16,11 @@ use crate::experimental::acoustics::{
 use crate::experimental::biography::biography_monitor_system;
 use crate::experimental::dreams::{cleanup_dream_marker_system, dream_system};
 #[cfg(feature = "nova")]
+use crate::experimental::echoes::{
+    absorb_death_echoes_system, absorb_joy_echoes_system, apply_echo_effects_system,
+    update_echoes_system,
+};
+#[cfg(feature = "nova")]
 use crate::experimental::ghosts::{
     apply_ghost_beauty_system, ghost_light_damage_system, ghost_movement_system,
 };
@@ -24,15 +29,11 @@ use crate::experimental::graffiti::{
     apply_graffiti_beauty_system, graffiti_creation_system, graffiti_decay_system,
 };
 #[cfg(feature = "nova")]
-use crate::experimental::echoes::{
-    absorb_death_echoes_system, absorb_joy_echoes_system, apply_echo_effects_system,
-    update_echoes_system,
-};
-#[cfg(feature = "nova")]
 use crate::experimental::miasma::{
     apply_miasma_effects_system, sickness_progression_system, update_miasma_system,
 };
 use crate::gpu::evaluate::gpu_evaluate_actions;
+use crate::layer1::heirloom::RetrogradeEngineeringEvent;
 use crate::layer1::{
     AddChronicleEvent, AffinityChange, DeathEvent, PopDied, advance_season_system, aging_system,
     ancient_structure_decay_system, apply_cabin_fever_morale_system,
@@ -47,8 +48,7 @@ use crate::layer1::{
     combat_execution_system, consume_food_system, death_system, decay_needs_system,
     discovery_system, entropy_system, faction_satisfaction_morale_bridge, fire_damage_pops_system,
     fire_damage_system, fire_pressure_check_system, fire_spread_system, flora_attack_system,
-    flora_spread_system, haul_system,
-    healing_system, hypothermia_system, infiltration_system,
+    flora_spread_system, haul_system, healing_system, hypothermia_system, infiltration_system,
     inspector::{inspector_report_system, observe_inspector_system, spawn_inspector_system},
     inspector_outcome_bridge_system,
     logistics::{conveyor_system, hopper_system},
@@ -74,12 +74,11 @@ use crate::layer1::{
     update_bioluminescence_system, update_breakdown_system, update_cabin_fever_system,
     update_catharsis_duration_system, update_erosion_system, update_lighting_system,
     update_morale_cache_system, update_noise_system, update_pressure_system,
-    update_resource_caps_system, update_screen_shake_system,
-    update_taboo_duration_system, update_water_system, update_weather_system, vermin_growth_system,
-    vermin_morale_system, waste_pollution_bridge, work_execution_system,
+    update_resource_caps_system, update_screen_shake_system, update_taboo_duration_system,
+    update_water_system, update_weather_system, vermin_growth_system, vermin_morale_system,
+    waste_pollution_bridge, work_execution_system,
 };
 use crate::shared::time::SimulationTime;
-use crate::layer1::heirloom::RetrogradeEngineeringEvent;
 
 /// Helper system to update event buffers (clear old events).
 pub fn update_event_buffer<T: Event>(mut events: ResMut<Events<T>>) {
