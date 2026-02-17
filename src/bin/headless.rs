@@ -25,6 +25,8 @@
 #![allow(clippy::too_many_lines)]
 
 use bevy_ecs::prelude::*;
+use comfy_table::{Attribute, Cell, Color, ContentArrangement, Table, presets::UTF8_FULL};
+use crossterm::style::Stylize;
 use scale::layer1::biography::Biography;
 use scale::layer1::dreams::Dream;
 use scale::layer1::pop::PopName;
@@ -38,8 +40,6 @@ use scale::shared::state::GameState;
 use scale::shared::time::SimulationTime;
 use scale::simulation::run_simulation_tick;
 use std::io::{self, BufRead, Write};
-use comfy_table::{Table, Cell, presets::UTF8_FULL, ContentArrangement, Color, Attribute};
-use crossterm::style::Stylize;
 
 fn main() {
     let mut world = setup_world_with_config(SetupConfig {
@@ -242,7 +242,12 @@ fn print_status(world: &mut World) {
     let housing_count = world.query::<&Housing>().iter(world).count();
     let designation_count = world.query::<&Designation>().iter(world).count();
 
-    println!("{}", format!("=== COLONY STATUS (Tick {tick}) ===").green().bold());
+    println!(
+        "{}",
+        format!("=== COLONY STATUS (Tick {tick}) ===")
+            .green()
+            .bold()
+    );
 
     let mut table = Table::new();
     table
@@ -263,7 +268,11 @@ fn print_status(world: &mut World) {
     table.add_row(vec![
         Cell::new("Resources").fg(Color::Yellow),
         Cell::new("Food"),
-        Cell::new(format!("{:.1}", food)).fg(if food < 20.0 { Color::Red } else { Color::Green }),
+        Cell::new(format!("{:.1}", food)).fg(if food < 20.0 {
+            Color::Red
+        } else {
+            Color::Green
+        }),
     ]);
     table.add_row(vec![
         Cell::new(""),
@@ -333,8 +342,20 @@ fn print_pops(world: &mut World) {
         // Color code needs: Low is BAD (Red), High is GOOD (Green) ??
         // Wait, hunger is 0..1. Usually 1.0 is full (good).
         // Let's assume 1.0 is Satiated (Good). 0.0 is Starving (Bad).
-        let hunger_color = if needs.hunger < 0.2 { Color::Red } else if needs.hunger < 0.5 { Color::Yellow } else { Color::Green };
-        let rest_color = if needs.rest < 0.2 { Color::Red } else if needs.rest < 0.5 { Color::Yellow } else { Color::Green };
+        let hunger_color = if needs.hunger < 0.2 {
+            Color::Red
+        } else if needs.hunger < 0.5 {
+            Color::Yellow
+        } else {
+            Color::Green
+        };
+        let rest_color = if needs.rest < 0.2 {
+            Color::Red
+        } else if needs.rest < 0.5 {
+            Color::Yellow
+        } else {
+            Color::Green
+        };
 
         table.add_row(vec![
             Cell::new(entity.index().to_string()),
@@ -867,7 +888,11 @@ fn print_help() {
         ("scan [x] [y] [r]", "", "Semantic terrain scan (parseable)"),
         ("terrain <x> <y>", "", "Get single tile info"),
         ("buildings", "", "List all buildings with positions"),
-        ("build <type> <x> <y>", "b", "Build: farm, housing, stockpile"),
+        (
+            "build <type> <x> <y>",
+            "b",
+            "Build: farm, housing, stockpile",
+        ),
         ("mine <x> <y>", "", "Designate rock for mining"),
         ("chop <x> <y>", "", "Designate tree for chopping"),
         ("designations", "d", "List all active designations"),

@@ -6,7 +6,6 @@ use ratatui::{
 use std::collections::HashMap;
 use std::hash::BuildHasher;
 
-use crate::ui::seasonal_gfx;
 use crate::layer1::fire::Fire;
 use crate::layer1::{
     Anomaly, AnomalyType, BuildMode, Building, BuildingType, Designation, DesignationMode,
@@ -15,6 +14,7 @@ use crate::layer1::{
     TerrainType, Viewport, Visitor,
 };
 use crate::shared::time::WallTime;
+use crate::ui::seasonal_gfx;
 
 /// Represents a renderable entity on the map.
 ///

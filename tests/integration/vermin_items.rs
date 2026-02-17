@@ -1,11 +1,11 @@
 #[cfg(test)]
 mod tests {
+    use bevy_ecs::prelude::*;
+    use bevy_ecs::system::RunSystemOnce;
     use scale::layer1::edicts::ColonyPolicies;
     use scale::layer1::map::GridPosition;
     use scale::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
-    use scale::layer1::vermin::{vermin_growth_system, VerminState};
-    use bevy_ecs::prelude::*;
-    use bevy_ecs::system::RunSystemOnce;
+    use scale::layer1::vermin::{VerminState, vermin_growth_system};
 
     fn setup_world() -> World {
         let mut world = World::new();

@@ -416,7 +416,10 @@ pub mod wild_child;
 pub use wild_child::*;
 pub mod blob;
 
+pub mod prototyping;
 #[cfg(test)]
 mod tech_storage_tests;
-pub mod prototyping;
 pub use prototyping::*;
+/// Cybernetic augmentation system (Spec 151).
+pub mod cybernetics;
+pub use cybernetics::*;

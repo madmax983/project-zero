@@ -725,7 +725,8 @@ pub fn track_plan_outcomes_system(
             | ActionType::FireStarting
             | ActionType::HideInRoom
             | ActionType::SadWander
-            | ActionType::FetchClothing => true,
+            | ActionType::FetchClothing
+            | ActionType::Surgery => true,
         };
 
         #[allow(clippy::cast_possible_truncation)]

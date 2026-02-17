@@ -1,9 +1,9 @@
 #[cfg(test)]
 mod tests {
+    use crate::layer1::building::{Building, BuildingType};
+    use crate::layer1::tech::{DataStorage, Tech, TechState, TechStatus};
     use bevy_ecs::prelude::*;
     use bevy_ecs::schedule::Schedule;
-    use crate::layer1::tech::{Tech, TechState, TechStatus, DataStorage};
-    use crate::layer1::building::{Building, BuildingType};
 
     #[test]
     fn test_tech_has_storage_cost() {
@@ -60,8 +60,11 @@ mod tests {
 
         // Expectation: TechStatus::Corrupted
         match state.techs.get(&Tech::Masonry) {
-             Some(TechStatus::Corrupted) => {},
-             _ => panic!("Expected Corrupted, got {:?}", state.techs.get(&Tech::Masonry)),
+            Some(TechStatus::Corrupted) => {}
+            _ => panic!(
+                "Expected Corrupted, got {:?}",
+                state.techs.get(&Tech::Masonry)
+            ),
         }
     }
 
@@ -79,11 +82,18 @@ mod tests {
         world.insert_resource(TechState::default());
 
         // Spawn ServerBank
-        let _id = world.spawn((
-            Building { building_type: BuildingType::ServerBank },
-            DataStorage { capacity: 50.0 },
-            crate::layer1::energy::PowerConsumer { active: true, ..Default::default() },
-        )).id();
+        let _id = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::ServerBank,
+                },
+                DataStorage { capacity: 50.0 },
+                crate::layer1::energy::PowerConsumer {
+                    active: true,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         // Run system
         let mut schedule = Schedule::default();
@@ -102,7 +112,9 @@ mod tests {
 
         // Spawn Passive Storage (e.g. Lander)
         world.spawn((
-            Building { building_type: BuildingType::Lander },
+            Building {
+                building_type: BuildingType::Lander,
+            },
             DataStorage { capacity: 10.0 },
             // No PowerConsumer
         ));

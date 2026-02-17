@@ -1,4 +1,5 @@
 use crate::layer1::actions::{AssignedTo, AssignmentType};
+use crate::layer1::cybernetics::{Augmentations, Prosthetic};
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
 use bevy_ecs::prelude::*;
@@ -114,11 +115,30 @@ pub struct AffinityChange {
 pub fn modify_affinity_system(
     mut events: EventReader<AffinityChange>,
     mut query: Query<&mut Relationships>,
+    augmentations: Query<&Augmentations>,
+    prosthetics: Query<&Prosthetic>,
 ) {
     for event in events.read() {
         if let Ok(mut rel) = query.get_mut(event.source) {
+            let mut amount = event.amount;
+
+            // Apply Cybernetic Penalty if Target has augmentations (Pops dislike cyborgs)
+            if let Ok(augs) = augmentations.get(event.target) {
+                let mut penalty = 0.0;
+                for &item in &augs.installed {
+                    if let Ok(prosthetic) = prosthetics.get(item) {
+                        penalty += prosthetic.social_penalty;
+                    }
+                }
+
+                // If gain is positive, reduce it by penalty
+                if amount > 0.0 {
+                    amount *= (1.0 - penalty).max(0.0);
+                }
+            }
+
             let current = rel.get_affinity(event.target);
-            rel.set_affinity(event.target, current + event.amount);
+            rel.set_affinity(event.target, current + amount);
         }
     }
 }
@@ -444,10 +464,10 @@ mod tests {
         );
     }
 }
+/// Social debt system (Spec 130).
+pub mod debt;
 /// Old Guard logic: Generational friction between Founders and Immigrants (Spec 078).
 pub mod old_guard;
 #[cfg(test)]
 mod old_guard_tests;
-/// Social debt system (Spec 130).
-pub mod debt;
 pub use debt::*;

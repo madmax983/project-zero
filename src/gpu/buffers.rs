@@ -58,9 +58,9 @@ pub struct GpuPopInput {
     /// Learned social weight.
     pub social_weight: f32,
     /// Per-action success counts.
-    pub success_count: [u32; 26],
+    pub success_count: [u32; 27],
     /// Per-action attempt counts.
-    pub attempt_count: [u32; 26],
+    pub attempt_count: [u32; 27],
     /// Utility score of the current action.
     pub current_utility: f32,
     /// 1 if the pop is drafted for combat, 0 otherwise.
@@ -489,9 +489,9 @@ mod tests {
 
     #[test]
     fn test_gpu_pop_input_size() {
-        // 2*i32 + 6*f32 + 26*u32 + 26*u32 + 1*f32 + 1*u32
-        // = 8 + 24 + 104 + 104 + 4 + 4 = 248 bytes
-        assert_eq!(std::mem::size_of::<GpuPopInput>(), 248);
+        // 2*i32 + 6*f32 + 27*u32 + 27*u32 + 1*f32 + 1*u32
+        // = 8 + 24 + 108 + 108 + 4 + 4 = 256 bytes
+        assert_eq!(std::mem::size_of::<GpuPopInput>(), 256);
     }
 
     #[test]
@@ -533,12 +533,12 @@ mod tests {
                     social_weight: 1.0,
                     action_success_count: [
                         1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                        0,
-                    ], // 26 elements
+                        0, 0,
+                    ], // 27 elements
                     action_attempt_count: [
                         5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                        0,
-                    ], // 26 elements
+                        0, 0,
+                    ], // 27 elements
                 },
                 PopAction {
                     current: ActionType::SatisfyHunger,
@@ -736,7 +736,7 @@ mod tests {
         // Assert CPU side constant
         assert_eq!(
             ActionType::COUNT,
-            26,
+            27,
             "ActionType::COUNT changed! Update GPU buffers and shader."
         );
 
@@ -747,14 +747,14 @@ mod tests {
             std::fs::read_to_string(shader_path).expect("Failed to read shader file");
 
         // Check for success_count array size
-        let success_pattern = "success_count: array<u32, 26>";
+        let success_pattern = "success_count: array<u32, 27>";
         assert!(
             shader_content.contains(success_pattern),
             "Shader success_count array size mismatch or pattern changed."
         );
 
         // Check for attempt_count array size
-        let attempt_pattern = "attempt_count: array<u32, 26>";
+        let attempt_pattern = "attempt_count: array<u32, 27>";
         assert!(
             shader_content.contains(attempt_pattern),
             "Shader attempt_count array size mismatch or pattern changed."

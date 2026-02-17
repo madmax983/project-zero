@@ -87,6 +87,7 @@ pub fn biography_monitor_system(
             AssignmentType::Artist => format!("Started creating art at {target_name}."),
             AssignmentType::Governor => format!("Assumed governorship at {target_name}."),
             AssignmentType::Administrator => format!("Started administration at {target_name}."),
+            AssignmentType::Surgery => format!("Undergoing surgery at {target_name}."),
         };
 
         // Avoid duplicate consecutive events

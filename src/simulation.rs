@@ -174,6 +174,7 @@ pub fn build_simulation_schedule() -> Schedule {
         regrowth_system.after(work_execution_system),
         flora_spread_system.after(work_execution_system),
         mastery_accumulation_system.after(work_execution_system),
+        crate::layer1::cybernetics::surgery_system.after(work_execution_system),
     ));
 
     schedule.add_systems((
