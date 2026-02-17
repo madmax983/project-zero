@@ -28,6 +28,7 @@ Features that have been fully implemented, tested, and merged.
 - [x] `047` Pop Relationships — `specs/047-pop-relationships.md` — completed 2026-02-17
 - [x] `056` Designated Zones — `specs/056-designated-zones.md` — completed 2026-02-20
 - [x] `058` Personal Tools — `specs/058-personal-tools.md` — completed 2026-02-09
+- [x] `060` Acoustic Simulation — `specs/060-acoustic-simulation.md` — completed 2026-10-27
 - [x] `063` Atmospheric Simulation — `specs/063-atmospheric-simulation.md` — completed 2026-03-01
 - [x] `067` Militia System — `specs/067-militia-system.md` — completed 2026-03-10
 - [x] `072` Justice System — `specs/072-justice-system.md` — completed 2026-03-15
@@ -35,9 +36,13 @@ Features that have been fully implemented, tested, and merged.
 - [x] `091` The Inspector — `specs/091-the-inspector.md` — completed 2026-10-21
 - [x] `092` Antagonistic Flora — `specs/092-antagonistic-flora.md` — completed 2026-02-09
 - [x] `097` Social Tavern — `specs/097-social-tavern.md` — completed 2026-10-23
+- [x] `107` Biocompatibility — `specs/107-biocompatibility.md` — completed 2026-10-27
+- [x] `112` Maintenance Debt — `specs/112-maintenance-debt.md` — completed 2026-10-27
+- [x] `113` Social Stratification — `specs/113-social-stratification.md` — completed 2026-10-27
 - [x] `119` Airlock and Pressure — `specs/119-airlock-and-pressure.md` — completed 2026-10-25
 - [x] `121` Hydroponics — `specs/121-hydroponics.md` — completed 2026-02-15
 - [x] `122` Retrograde Engineering — `specs/122-retrograde-engineering.md` — completed 2026-10-26
+- [x] `123` Technological Rituals — `specs/123-technological-rituals.md` — completed 2026-10-27
 - [x] `124` The Wild Child — `specs/124-the-wild-child.md` — completed 2026-02-15
 - [x] `125` Grid Instability — `specs/125-grid-instability.md` — completed 2026-02-15
 - [x] `127` Stress Breakdowns — `specs/127-stress-breakdowns.md` — completed 2026-02-15
