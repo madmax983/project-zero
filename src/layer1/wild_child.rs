@@ -3,12 +3,12 @@
 //! Children who spend too much time outside of "Civilized" areas (Buildings or Designated Zones)
 //! accumulate `WildExposure`. If exposure reaches a threshold, they gain the `Feral` trait.
 
-use bevy_ecs::prelude::*;
+use crate::layer1::building::OccupiedTiles;
 use crate::layer1::lifecycle::{Age, LifeStage};
 use crate::layer1::map::GridPosition;
-use crate::layer1::zone::{ZoneGrid, ZoneType};
-use crate::layer1::building::OccupiedTiles;
 use crate::layer1::traits::{Trait, Traits};
+use crate::layer1::zone::{ZoneGrid, ZoneType};
+use bevy_ecs::prelude::*;
 
 /// Threshold of exposure required to become Feral.
 pub const FERAL_THRESHOLD: f32 = 1000.0;
@@ -61,13 +61,13 @@ pub fn wild_child_system(
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::lifecycle::{Age, LifeStage};
-    use crate::layer1::traits::{Trait, Traits};
-    use crate::layer1::map::GridPosition;
-    use crate::layer1::zone::{ZoneGrid, ZoneType};
+    use super::{FERAL_THRESHOLD, WildExposure, wild_child_system};
     use crate::layer1::building::OccupiedTiles;
-    use super::{WildExposure, wild_child_system, FERAL_THRESHOLD};
+    use crate::layer1::lifecycle::{Age, LifeStage};
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::traits::{Trait, Traits};
+    use crate::layer1::zone::{ZoneGrid, ZoneType};
+    use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
     use std::collections::HashSet;
 
@@ -89,12 +89,17 @@ mod tests {
         world.insert_resource(OccupiedTiles::default()); // No buildings
 
         // Spawn a Child at (5,5) - Wild
-        let child = world.spawn((
-            WildExposure::default(),
-            Age { ticks_alive: 100, stage: LifeStage::Child },
-            GridPosition { x: 5, y: 5 },
-            Traits(HashSet::new()),
-        )).id();
+        let child = world
+            .spawn((
+                WildExposure::default(),
+                Age {
+                    ticks_alive: 100,
+                    stage: LifeStage::Child,
+                },
+                GridPosition { x: 5, y: 5 },
+                Traits(HashSet::new()),
+            ))
+            .id();
 
         // Run system
         let _ = world.run_system_once(wild_child_system);
@@ -114,17 +119,25 @@ mod tests {
         world.insert_resource(OccupiedTiles::default());
 
         // Spawn a Child with some exposure
-        let child = world.spawn((
-            WildExposure { current: 10.0 },
-            Age { ticks_alive: 100, stage: LifeStage::Child },
-            GridPosition { x: 5, y: 5 },
-            Traits(HashSet::new()),
-        )).id();
+        let child = world
+            .spawn((
+                WildExposure { current: 10.0 },
+                Age {
+                    ticks_alive: 100,
+                    stage: LifeStage::Child,
+                },
+                GridPosition { x: 5, y: 5 },
+                Traits(HashSet::new()),
+            ))
+            .id();
 
         let _ = world.run_system_once(wild_child_system);
 
         let exposure = world.get::<WildExposure>(child).unwrap();
-        assert!(exposure.current < 10.0, "Exposure should decrease in civilization");
+        assert!(
+            exposure.current < 10.0,
+            "Exposure should decrease in civilization"
+        );
     }
 
     #[test]
@@ -134,12 +147,19 @@ mod tests {
         world.insert_resource(OccupiedTiles::default());
 
         // Spawn Child near threshold
-        let child = world.spawn((
-            WildExposure { current: FERAL_THRESHOLD - 0.1 },
-            Age { ticks_alive: 100, stage: LifeStage::Child },
-            GridPosition { x: 5, y: 5 },
-            Traits(HashSet::new()),
-        )).id();
+        let child = world
+            .spawn((
+                WildExposure {
+                    current: FERAL_THRESHOLD - 0.1,
+                },
+                Age {
+                    ticks_alive: 100,
+                    stage: LifeStage::Child,
+                },
+                GridPosition { x: 5, y: 5 },
+                Traits(HashSet::new()),
+            ))
+            .id();
 
         // Run system enough times to cross threshold
         // Assuming increase is >= 0.1 per tick
@@ -148,7 +168,10 @@ mod tests {
         }
 
         let traits = world.get::<Traits>(child).unwrap();
-        assert!(traits.0.contains(&Trait::Feral), "Child should become Feral");
+        assert!(
+            traits.0.contains(&Trait::Feral),
+            "Child should become Feral"
+        );
     }
 
     #[test]
@@ -157,12 +180,17 @@ mod tests {
         world.insert_resource(ZoneGrid::new(10, 10));
         world.insert_resource(OccupiedTiles::default());
 
-        let adult = world.spawn((
-            WildExposure::default(),
-            Age { ticks_alive: 20000, stage: LifeStage::Adult },
-            GridPosition { x: 5, y: 5 },
-            Traits(HashSet::new()), // Need Traits component for system query
-        )).id();
+        let adult = world
+            .spawn((
+                WildExposure::default(),
+                Age {
+                    ticks_alive: 20000,
+                    stage: LifeStage::Adult,
+                },
+                GridPosition { x: 5, y: 5 },
+                Traits(HashSet::new()), // Need Traits component for system query
+            ))
+            .id();
 
         let _ = world.run_system_once(wild_child_system);
 

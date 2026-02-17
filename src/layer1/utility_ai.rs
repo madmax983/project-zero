@@ -113,7 +113,10 @@ pub(crate) fn evaluate_single_pop(
     let weights = data.weights;
     let equipment_opt = data.equipment;
     let is_penal = data.penal_labor.is_some();
-    let is_feral = data.traits.as_ref().is_some_and(|t| t.0.contains(&Trait::Feral));
+    let is_feral = data
+        .traits
+        .as_ref()
+        .is_some_and(|t| t.0.contains(&Trait::Feral));
 
     // Start with Idle as the baseline
     let mut best_action = ActionType::Idle;
@@ -360,21 +363,23 @@ pub fn evaluate_actions_system(world: &mut World) {
                         && (inmate.is_none() || penal_labor.is_some())
                 },
             )
-            .map(|(e, p, n, w, a, eq, c, m, d, _, fm, pl, b, t)| PopEvalData {
-                entity: e,
-                pos: *p,
-                needs: *n,
-                weights: *w,
-                action: *a,
-                equipment: eq.copied(),
-                carrying: c.copied(),
-                mental_state: m.copied(),
-                drafted: d.copied(),
-                faction_member: fm.cloned(),
-                penal_labor: pl.copied(),
-                breakdown: b.copied(),
-                traits: t.cloned(),
-            }),
+            .map(
+                |(e, p, n, w, a, eq, c, m, d, _, fm, pl, b, t)| PopEvalData {
+                    entity: e,
+                    pos: *p,
+                    needs: *n,
+                    weights: *w,
+                    action: *a,
+                    equipment: eq.copied(),
+                    carrying: c.copied(),
+                    mental_state: m.copied(),
+                    drafted: d.copied(),
+                    faction_member: fm.cloned(),
+                    penal_labor: pl.copied(),
+                    breakdown: b.copied(),
+                    traits: t.cloned(),
+                },
+            ),
     );
 
     // 2. Initialize Context

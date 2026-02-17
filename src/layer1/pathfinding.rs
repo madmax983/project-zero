@@ -4,6 +4,7 @@ use std::collections::{BinaryHeap, HashMap};
 
 use crate::layer1::access_control::{AccessControl, AccessMode};
 use crate::layer1::building::{Building, BuildingType, OccupiedTiles};
+use crate::layer1::control::{DoorControl, DoorState};
 use crate::layer1::map::GridPosition;
 use crate::layer1::pop::Role;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
@@ -12,6 +13,8 @@ struct AccessCredentials {
     entity: Entity,
     role: Option<Role>,
 }
+
+type BuildingMap = HashMap<(i32, i32), (BuildingType, Option<AccessControl>, Option<DoorControl>)>;
 
 /// Node for A* pathfinding.
 #[derive(Clone, Copy, PartialEq, Eq)]
@@ -98,12 +101,12 @@ fn find_path_internal(
     let occupied = world.get_resource::<OccupiedTiles>();
 
     // Optimization: Collect building data into a map for fast lookups
-    // Map (x, y) -> (BuildingType, Option<AccessControl>)
-    let mut building_map = HashMap::new();
+    let mut building_map: BuildingMap = HashMap::new();
     for entity in world.iter_entities() {
         if let (Some(pos), Some(b)) = (entity.get::<GridPosition>(), entity.get::<Building>()) {
             let access = entity.get::<AccessControl>().cloned();
-            building_map.insert((pos.x, pos.y), (b.building_type, access));
+            let door = entity.get::<DoorControl>().copied();
+            building_map.insert((pos.x, pos.y), (b.building_type, access, door));
         }
     }
 
@@ -191,7 +194,7 @@ fn is_walkable(
     pos: (i32, i32),
     terrain: &TerrainGrid,
     occupied: Option<&OccupiedTiles>,
-    building_map: &HashMap<(i32, i32), (BuildingType, Option<AccessControl>)>,
+    building_map: &BuildingMap,
     can_use_vents: bool,
     credentials: Option<&AccessCredentials>,
     _is_target: bool,
@@ -220,7 +223,16 @@ fn is_walkable(
     }
 
     // 3. Check Building Type
-    if let Some(&(building_type, ref access_opt)) = building_map.get(&(x, y)) {
+    if let Some(&(building_type, ref access_opt, ref door_opt)) = building_map.get(&(x, y)) {
+        // Check Door Control first (physical state overrides)
+        if let Some(door) = door_opt {
+            match door.state {
+                DoorState::Locked => return false,
+                DoorState::Open => return true,
+                DoorState::Auto => { /* Continue to check AccessControl */ }
+            }
+        }
+
         if let Some(access) = access_opt {
             return match access.mode {
                 AccessMode::Public => true,
@@ -398,5 +410,100 @@ mod tests {
         // Check pathfinding with Vermin capability
         let path = find_path_for_entity(&world, (0, 1), (2, 1), &Vermin);
         assert!(path.is_some(), "Vermin SHOULD path through Vent");
+    }
+
+    #[test]
+    fn test_locked_door_blocks_path() {
+        let mut world = setup_world();
+
+        // Block rows 0 and 2
+        for x in 0..3 {
+            world.spawn((
+                Building {
+                    building_type: BuildingType::Wall,
+                },
+                GridPosition { x, y: 0 },
+            ));
+            world.resource_mut::<OccupiedTiles>().0.insert((x, 0));
+            world.spawn((
+                Building {
+                    building_type: BuildingType::Wall,
+                },
+                GridPosition { x, y: 2 },
+            ));
+            world.resource_mut::<OccupiedTiles>().0.insert((x, 2));
+        }
+
+        // Gate at (1, 1) - Public Access but Locked DoorControl
+        world.spawn((
+            Building {
+                building_type: BuildingType::Gate,
+            },
+            GridPosition { x: 1, y: 1 },
+            AccessControl {
+                mode: AccessMode::Public,
+                ..Default::default()
+            },
+            DoorControl {
+                state: DoorState::Locked,
+            },
+        ));
+        world.resource_mut::<OccupiedTiles>().0.insert((1, 1));
+
+        // Try to path from (0, 1) to (2, 1)
+        let path = find_path(&world, (0, 1), (2, 1));
+        assert!(
+            path.is_none(),
+            "Locked door should block path even if Public"
+        );
+    }
+
+    #[test]
+    fn test_open_door_allows_path_restricted() {
+        use crate::layer1::pop::Pop;
+        let mut world = setup_world();
+
+        // Block rows 0 and 2
+        for x in 0..3 {
+            world.spawn((
+                Building {
+                    building_type: BuildingType::Wall,
+                },
+                GridPosition { x, y: 0 },
+            ));
+            world.resource_mut::<OccupiedTiles>().0.insert((x, 0));
+            world.spawn((
+                Building {
+                    building_type: BuildingType::Wall,
+                },
+                GridPosition { x, y: 2 },
+            ));
+            world.resource_mut::<OccupiedTiles>().0.insert((x, 2));
+        }
+
+        // Gate at (1, 1) - Lockdown Access but Open DoorControl
+        world.spawn((
+            Building {
+                building_type: BuildingType::Gate,
+            },
+            GridPosition { x: 1, y: 1 },
+            AccessControl {
+                mode: AccessMode::Lockdown,
+                ..Default::default()
+            },
+            DoorControl {
+                state: DoorState::Open,
+            },
+        ));
+        world.resource_mut::<OccupiedTiles>().0.insert((1, 1));
+
+        let pop = world.spawn(Pop).id();
+
+        // Try to path from (0, 1) to (2, 1)
+        let path = crate::layer1::pathfinding::find_path_for_pop(&world, (0, 1), (2, 1), pop);
+        assert!(
+            path.is_some(),
+            "Open door should allow path even if Lockdown"
+        );
     }
 }
