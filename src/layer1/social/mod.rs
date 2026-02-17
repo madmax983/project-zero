@@ -448,3 +448,6 @@ mod tests {
 pub mod old_guard;
 #[cfg(test)]
 mod old_guard_tests;
+/// Social debt system (Spec 130).
+pub mod debt;
+pub use debt::*;
