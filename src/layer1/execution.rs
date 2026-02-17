@@ -61,7 +61,7 @@ use crate::layer1::social::{SocialBuff, Tavern, handle_socialize};
 use crate::layer1::social_stratification::Prestige;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::traits::{Traits, get_trait_move_speed_modifier, get_trait_work_speed_modifier};
-use crate::layer1::utility_ai::{ActionType, PopAction, StartPlan};
+use crate::layer1::utility_types::{ActionType, PopAction, StartPlan};
 use crate::shared::log::MessageLog;
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
@@ -1419,7 +1419,7 @@ mod tests {
     use crate::layer1::pop::Pop;
     use crate::layer1::resources::{ForestryProgress, MiningProgress};
     use crate::layer1::terrain::TerrainType;
-    use crate::layer1::utility_ai::{PopAction, UtilityWeights};
+    use crate::layer1::utility_types::{PopAction, UtilityWeights};
     use bevy_ecs::system::RunSystemOnce;
 
     fn setup_world() -> World {

@@ -8,8 +8,7 @@ mod integration_tests {
     use scale::layer1::memory::{Memories, MemoryType};
     use scale::layer1::needs::Needs;
     use scale::layer1::pop::{Pop, PopName};
-    use scale::layer1::utility_ai::{PopAction, UtilityConfig};
-    use scale::layer1::utility_types::UtilityWeights;
+    use scale::layer1::utility_types::{PopAction, UtilityConfig, UtilityWeights};
     use scale::shared::time::SimulationTime;
     use scale::simulation::run_simulation_tick;
 
@@ -61,6 +60,15 @@ mod integration_tests {
             evaluation_interval: 1, // Evaluate every tick
             ..Default::default()
         });
+
+        // Despawn initial pops to avoid interference
+        let initial_pops: Vec<Entity> = world
+            .query_filtered::<Entity, With<Pop>>()
+            .iter(&world)
+            .collect();
+        for e in initial_pops {
+            world.despawn(e);
+        }
 
         // 1. Create a corpse (simulate death having happened)
         let corpse_entity = world
