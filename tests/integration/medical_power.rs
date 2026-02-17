@@ -1,14 +1,14 @@
 #[cfg(test)]
 mod tests {
+    use bevy_ecs::prelude::*;
     use scale::layer1::actions::{AssignedTo, AssignmentType};
-    use scale::layer1::building::{spawn_building_with_material, BuildingType, MaterialType};
+    use scale::layer1::building::{BuildingType, MaterialType, spawn_building_with_material};
     use scale::layer1::energy::{
-        power_grid_system, BlackoutProtocol, Conduit, PowerConsumer, PowerSource,
+        BlackoutProtocol, Conduit, PowerConsumer, PowerSource, power_grid_system,
     };
     use scale::layer1::health::Health;
     use scale::layer1::map::GridPosition;
-    use scale::layer1::medical::{healing_system, Hospital};
-    use bevy_ecs::prelude::*;
+    use scale::layer1::medical::{Hospital, healing_system};
 
     fn setup_world() -> World {
         let mut world = World::new();
@@ -35,10 +35,15 @@ mod tests {
             MaterialType::default(),
         );
 
-        let entity = world.query_filtered::<Entity, With<Hospital>>().single(&world);
+        let entity = world
+            .query_filtered::<Entity, With<Hospital>>()
+            .single(&world);
         let consumer = world.get::<PowerConsumer>(entity);
 
-        assert!(consumer.is_some(), "Hospital must have PowerConsumer component");
+        assert!(
+            consumer.is_some(),
+            "Hospital must have PowerConsumer component"
+        );
     }
 
     #[test]
@@ -99,7 +104,7 @@ mod tests {
 
         // Verify Active
         if let Some(cons) = world.get::<PowerConsumer>(hospital_entity) {
-             assert!(cons.active, "Hospital should be powered");
+            assert!(cons.active, "Hospital should be powered");
         } else {
             // If component missing, we can't test power logic, fail.
             panic!("Hospital missing PowerConsumer");
@@ -109,7 +114,10 @@ mod tests {
         healing_system(&mut world);
 
         let health = world.get::<Health>(patient).unwrap();
-        assert!(health.current > 50.0, "Patient should be healed when hospital is powered");
+        assert!(
+            health.current > 50.0,
+            "Patient should be healed when hospital is powered"
+        );
     }
 
     #[test]
@@ -147,17 +155,23 @@ mod tests {
         power_grid_system(&mut world);
 
         if let Some(cons) = world.get::<PowerConsumer>(hospital_entity) {
-             assert!(!cons.active, "Hospital should be unpowered");
+            assert!(!cons.active, "Hospital should be unpowered");
         } else {
-             // Forcing component for test if spawn not updated yet
-             world.entity_mut(hospital_entity).insert(PowerConsumer { demand: 5.0, active: false });
+            // Forcing component for test if spawn not updated yet
+            world.entity_mut(hospital_entity).insert(PowerConsumer {
+                demand: 5.0,
+                active: false,
+            });
         }
 
         // 4. Run Healing System -> Should NOT Heal
         healing_system(&mut world);
 
         let health = world.get::<Health>(patient).unwrap();
-        assert_eq!(health.current, 50.0, "Patient should NOT be healed when hospital is unpowered");
+        assert_eq!(
+            health.current, 50.0,
+            "Patient should NOT be healed when hospital is unpowered"
+        );
     }
 
     #[test]
@@ -168,14 +182,36 @@ mod tests {
         world.resource_mut::<BlackoutProtocol>().active = true;
 
         // 2. Spawn Generator & Hospital (Connected)
-        spawn_building_with_material(&mut world, 0, 0, BuildingType::Generator, MaterialType::default());
-        spawn_building_with_material(&mut world, 0, 1, BuildingType::Hospital, MaterialType::default());
+        spawn_building_with_material(
+            &mut world,
+            0,
+            0,
+            BuildingType::Generator,
+            MaterialType::default(),
+        );
+        spawn_building_with_material(
+            &mut world,
+            0,
+            1,
+            BuildingType::Hospital,
+            MaterialType::default(),
+        );
 
-        let hospital_entity = world.query_filtered::<Entity, With<Hospital>>().single(&world);
-        let patient = world.spawn((
-            Health { current: 50.0, max: 100.0 },
-            AssignedTo { assignment_type: AssignmentType::Patient, entity: hospital_entity },
-        )).id();
+        let hospital_entity = world
+            .query_filtered::<Entity, With<Hospital>>()
+            .single(&world);
+        let patient = world
+            .spawn((
+                Health {
+                    current: 50.0,
+                    max: 100.0,
+                },
+                AssignedTo {
+                    assignment_type: AssignmentType::Patient,
+                    entity: hospital_entity,
+                },
+            ))
+            .id();
 
         // 3. Run Power System
         power_grid_system(&mut world);
@@ -184,7 +220,7 @@ mod tests {
         if let Some(cons) = world.get::<PowerConsumer>(hospital_entity) {
             assert!(!cons.active, "Hospital should be inactive during blackout");
         } else {
-             panic!("Hospital missing PowerConsumer");
+            panic!("Hospital missing PowerConsumer");
         }
 
         // 5. Run Healing
