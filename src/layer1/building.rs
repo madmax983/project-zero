@@ -255,6 +255,8 @@ pub enum BuildingType {
     ServerBank,
     /// The colony's starting ship (can be cannibalized for resources).
     Lander,
+    /// Command Center providing system visibility.
+    CommandCenter,
 }
 
 impl BuildingType {
@@ -326,6 +328,7 @@ impl BuildingType {
             Self::Wall | Self::Gate | Self::Tower | Self::Airlock | Self::Vent => 0.0,
             Self::TrashCannon => -2.0, // Industrial machinery is ugly
             Self::Heater | Self::ServerBank => 0.0,
+            Self::CommandCenter => 0.0,
             _ => 0.0,
         }
     }
@@ -345,7 +348,8 @@ impl BuildingType {
             | Self::Airlock
             | Self::Vent
             | Self::Heater
-            | Self::ServerBank => Some(Tech::MetalWorking),
+            | Self::ServerBank
+            | Self::CommandCenter => Some(Tech::MetalWorking),
             Self::Tavern | Self::Statue => Some(Tech::SocialStructures),
             Self::Tower => Some(Tech::Masonry),
             Self::Observatory => Some(Tech::Astronomy),
@@ -411,6 +415,7 @@ impl BuildingType {
             Self::Heater => "Heater",
             Self::ServerBank => "Server Bank",
             Self::Lander => "Lander",
+            Self::CommandCenter => "Command Center",
         }
     }
 
@@ -454,6 +459,7 @@ impl BuildingType {
             Self::Heater => 'h',
             Self::ServerBank => '▥',
             Self::Lander => 'Λ',
+            Self::CommandCenter => 'C',
         }
     }
 
@@ -462,6 +468,11 @@ impl BuildingType {
     #[allow(clippy::match_same_arms, clippy::too_many_lines)]
     pub const fn cost(&self, material: MaterialType) -> ColonyResources {
         match self {
+            Self::CommandCenter => ColonyResources {
+                metal: 50.0,
+                stone: 50.0,
+                ..ColonyResources::zeroed()
+            },
             Self::ServerBank => ColonyResources {
                 metal: 20.0,
                 stone: 10.0,
@@ -1289,6 +1300,24 @@ fn spawn_building(
                 structure.current_hp = 500.0;
             }
         }
+        BuildingType::CommandCenter => {
+            entity.insert((
+                PowerConsumer {
+                    demand: 50.0,
+                    active: false,
+                },
+                LightSource {
+                    radius: 5.0,
+                    intensity: 0.8,
+                    color: (0, 0, 255), // Blue
+                },
+            ));
+            // High HP
+            if let Some(mut structure) = entity.get_mut::<crate::layer1::structure::Structure>() {
+                structure.max_hp = 500.0;
+                structure.current_hp = 500.0;
+            }
+        }
     }
 }
 
@@ -1484,7 +1513,8 @@ mod tests {
         assert_eq!(BuildingType::TrashCannon.next(), BuildingType::Heater);
         assert_eq!(BuildingType::Heater.next(), BuildingType::ServerBank);
         assert_eq!(BuildingType::ServerBank.next(), BuildingType::Lander);
-        assert_eq!(BuildingType::Lander.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::Lander.next(), BuildingType::CommandCenter);
+        assert_eq!(BuildingType::CommandCenter.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -1662,6 +1692,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Lander);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::CommandCenter);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

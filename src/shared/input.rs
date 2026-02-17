@@ -183,11 +183,20 @@ fn handle_normal_mode(world: &mut World, key: GameKeyEvent) {
             *world.resource_mut::<GameState>() = GameState::Paused;
         }
         GameKeyCode::Tab => {
+            let visibility = *world.resource::<crate::layer2::visibility::SystemVisibility>();
             let mut view_mode = world.resource_mut::<ViewMode>();
-            *view_mode = match *view_mode {
-                ViewMode::Colony => ViewMode::System,
-                ViewMode::System => ViewMode::Colony,
-            };
+            match *view_mode {
+                ViewMode::Colony => {
+                    if visibility == crate::layer2::visibility::SystemVisibility::Full {
+                        *view_mode = ViewMode::System;
+                    } else if let Some(mut log) =
+                        world.get_resource_mut::<crate::shared::log::MessageLog>()
+                    {
+                        log.add("Cannot switch view: Command Center Required (Powered)");
+                    }
+                }
+                ViewMode::System => *view_mode = ViewMode::Colony,
+            }
         }
         _ => {}
     }

@@ -7,3 +7,5 @@
 pub mod render;
 /// Core system simulation components and resources.
 pub mod system;
+/// System visibility logic (Command Center).
+pub mod visibility;

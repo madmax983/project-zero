@@ -214,6 +214,10 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::factions::update_faction_strikes_system
             .after(crate::layer1::factions::update_faction_demands_system),
         apply_founder_benefits_system.after(work_execution_system),
+        crate::layer2::visibility::update_visibility_system
+            .after(crate::layer1::energy::power_grid_system),
+        crate::layer2::visibility::enforce_view_mode_system
+            .after(crate::layer2::visibility::update_visibility_system),
     ));
 
     // --- Environment (Fire, Acoustic) ---
