@@ -24,8 +24,13 @@ Features that have been fully implemented, tested, and merged.
 - [x] `019` Pop Thoughts & Mood — `specs/019-pop-thoughts.md` — completed 2026-02-08
 - [x] `020` Death & Burial — `specs/020-death-and-burial.md` — completed 2026-02-10
 - [x] `021` Vermin Infestations — `specs/021-vermin-infestations.md` — completed 2026-02-12
+- [x] `025` Hauling Logistics — `specs/025-hauling-logistics.md` — completed 2026-10-28
 - [x] `032` Entropy and Spoilage — `specs/032-entropy-spoilage.md` — completed 2026-02-14
+- [x] `033` Fire Propagation — `specs/033-fire-propagation.md` — completed 2026-10-28
+- [x] `038` Medical Care — `specs/038-medical-care.md` — completed 2026-10-28
+- [x] `041` Field Science — `specs/041-field-science.md` — completed 2026-10-28
 - [x] `047` Pop Relationships — `specs/047-pop-relationships.md` — completed 2026-02-17
+- [x] `054` Colony Edicts — `specs/054-colony-edicts.md` — completed 2026-10-28
 - [x] `056` Designated Zones — `specs/056-designated-zones.md` — completed 2026-02-20
 - [x] `058` Personal Tools — `specs/058-personal-tools.md` — completed 2026-02-09
 - [x] `060` Acoustic Simulation — `specs/060-acoustic-simulation.md` — completed 2026-10-27
