@@ -76,7 +76,7 @@ use crate::layer1::{
     update_morale_cache_system, update_noise_system, update_pressure_system,
     update_resource_caps_system, update_screen_shake_system, update_taboo_duration_system,
     update_water_system, update_weather_system, vermin_growth_system, vermin_morale_system,
-    waste_pollution_bridge, work_execution_system,
+    waste_pollution_bridge, wild_child_system, work_execution_system,
 };
 use crate::shared::time::SimulationTime;
 
@@ -170,6 +170,7 @@ pub fn build_simulation_schedule() -> Schedule {
         conveyor_system.after(haul_system),
         process_scan_system.after(arrival_handler_system),
         update_cabin_fever_system.after(movement_system),
+        wild_child_system.after(movement_system),
         update_erosion_system.after(movement_system),
         update_screen_shake_system.after(movement_system),
         crate::layer1::particles::particle_system.after(movement_system),

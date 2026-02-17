@@ -42,6 +42,7 @@ use super::social::old_guard::Arrival;
 use super::terrain::{TerrainGrid, TerrainType};
 use super::traits::Traits;
 use super::utility_ai::{PopAction, UtilityWeights};
+use super::wild_child::WildExposure;
 use bevy_ecs::prelude::*;
 use rand::Rng;
 
@@ -274,6 +275,7 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
                     Traits::random(rng),
                     CabinFever::default(),
                     Biocompatibility::default(),
+                    WildExposure::default(),
                 ));
             spawned += 1;
         }
@@ -651,6 +653,23 @@ mod tests {
             // Check age range (20-40 years)
             let years = age.ticks_alive / crate::layer1::balance::TICKS_PER_YEAR;
             assert!((20..40).contains(&years), "Age should be between 20 and 40");
+        }
+    }
+
+    #[test]
+    fn test_spawn_initial_pops_have_wild_exposure() {
+        let mut world = World::new();
+        let terrain = generate_terrain(80, 50);
+        world.insert_resource(terrain);
+
+        spawn_initial_pops(&mut world);
+
+        let mut query = world.query::<(&Pop, &WildExposure)>();
+        let count = query.iter(&world).count();
+        assert_eq!(count, 5, "All 5 pops should have WildExposure component");
+
+        for (_, exposure) in query.iter(&world) {
+            assert_eq!(exposure.current, 0.0);
         }
     }
 }

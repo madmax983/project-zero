@@ -1,3 +1,10 @@
+#![allow(
+    clippy::cast_possible_truncation,
+    clippy::cast_sign_loss,
+    clippy::cast_possible_wrap,
+    clippy::missing_docs_in_private_items,
+    clippy::collapsible_if
+)]
 use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::energy::PowerConsumer;
 use crate::layer1::health::Health;
@@ -11,7 +18,9 @@ use std::collections::HashMap;
 /// Grid managing temperature simulation.
 #[derive(Resource)]
 pub struct TemperatureGrid {
+    /// Grid width.
     pub width: usize,
+    /// Grid height.
     pub height: usize,
     /// Current temperature values (Celsius).
     pub values: Vec<f32>,
@@ -23,6 +32,7 @@ pub struct TemperatureGrid {
 
 impl TemperatureGrid {
     /// Create a new temperature grid.
+    #[must_use]
     pub fn new(width: usize, height: usize, ambient: f32) -> Self {
         Self {
             width,
@@ -35,6 +45,7 @@ impl TemperatureGrid {
 
     /// Get temperature at coordinates.
     /// Returns ambient if out of bounds.
+    #[must_use]
     pub fn get(&self, x: usize, y: usize) -> f32 {
         if x >= self.width || y >= self.height {
             return self.ambient;
@@ -130,7 +141,7 @@ impl TemperatureGrid {
 
 /// System to update the temperature grid.
 pub fn update_temperature_system(
-    mut grid: Option<ResMut<TemperatureGrid>>,
+    grid: Option<ResMut<TemperatureGrid>>,
     season: Option<Res<SeasonState>>,
     buildings: Query<(&Building, &GridPosition, Option<&PowerConsumer>)>,
 ) {
