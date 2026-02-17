@@ -4325,3 +4325,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Massive space efficiency vs. Catastrophic single-point-of-failure.
 
 ---
+
+## Temporal Fugue
+
+**Layer:** 1
+
+**Fantasy:** Working so hard you lose time.
+
+**Mechanic:** "Flow State". Highly skilled pops can enter a fugue state where they work 300% speed but ignore all needs (hunger/sleep) until they collapse or complete the task.
+
+**Emergence:** The engineer fixes the reactor in record time, then dies of starvation instantly.
+
+**Tension:** Interrupt them (save life, stop work) vs. Let them cook (finish work, risk death).
+
+---
+
+## The Artist's Muse
+
+**Layer:** 1
+
+**Fantasy:** Great art comes from suffering.
+
+**Mechanic:** Pops with "Artistic" traits create better works (high value/mood buff) when their own Mood is *Low* or they have "Trauma". Happy artists make boring art.
+
+**Emergence:** You keep your best sculptor in a dungeon (bad room, poor food) so he produces masterpieces.
+
+**Tension:** Ethics vs. Aesthetics/Profit.
+
+---
+
+## Gravity Plating Failure
+
+**Layer:** 1
+
+**Fantasy:** The floor is gone.
+
+**Mechanic:** If gravity generators fail, the base (or zones) goes Zero-G. Movement changes to "Drifting". Objects float. Combat changes.
+
+**Emergence:** You turn off gravity to save power. Raiders enter and can't walk, floating helplessly while your Zero-G trained militia picks them off.
+
+**Tension:** Power vs. Normal Physics.
+
+---
+
+## The Lottery
+
+**Layer:** 1
+
+**Fantasy:** Sacrifice for the greater good.
+
+**Mechanic:** When resources are critically low, a "Lottery" can be held to... remove... a portion of the population or deny them resources.
+
+**Emergence:** The colony survives winter because 10 people "volunteered" to walk into the snow. The survivors are haunted.
+
+**Tension:** Utilitarian survival vs. Moral collapse.
+
+---
