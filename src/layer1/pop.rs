@@ -41,7 +41,7 @@ use super::skills::Skills;
 use super::social::old_guard::Arrival;
 use super::terrain::{TerrainGrid, TerrainType};
 use super::traits::Traits;
-use super::utility_ai::{PopAction, UtilityWeights};
+use super::utility_types::{PopAction, UtilityWeights};
 use super::wild_child::WildExposure;
 use bevy_ecs::prelude::*;
 use rand::Rng;

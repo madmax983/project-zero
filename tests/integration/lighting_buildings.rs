@@ -21,6 +21,7 @@ fn test_tavern_emits_light() {
     world.resource_mut::<ColonyResources>().stone = 1000.0;
 
     // 4. Unlock Tech
+    world.resource_mut::<TechState>().total_capacity = 100.0;
     world
         .resource_mut::<TechState>()
         .unlock(Tech::SocialStructures);
@@ -60,6 +61,7 @@ fn test_building_light_affects_pop_speed() {
     world.resource_mut::<ColonyResources>().stone = 1000.0;
 
     // 4. Unlock Tech
+    world.resource_mut::<TechState>().total_capacity = 100.0;
     world
         .resource_mut::<TechState>()
         .unlock(Tech::SocialStructures);
