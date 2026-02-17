@@ -20,3 +20,7 @@
 ## 2024-05-25 - Render Loop DoS Protection
 **Threat:** Integer overflow in `build_terrain_spans` and `build_map_layer_spans` when calculating world coordinates from viewport position + screen offset. This causes a panic (DoS) if the viewport moves to `i32::MAX`.
 **Defense:** Switched to `saturating_add` for coordinate calculation. This clamps the value to `i32::MAX`, avoiding panic. Downstream logic handles out-of-bounds coordinates gracefully.
+
+## 2024-05-26 - Negative Ammo Cost Exploit
+**Threat:** Logic bug in `turret_fire_system` allowed negative `ammo_cost` in `Turret` component to increase `ColonyResources.waste` instead of consuming it.
+**Defense:** Added input validation in `turret_fire_system` to ensure `ammo_cost` is non-negative and finite. Added regression test `test_exploit_negative_ammo_cost_prevented`.
