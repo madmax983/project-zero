@@ -33,14 +33,19 @@ use scale::layer1::{
     MovementTarget, Needs, OccupiedTiles, Pop, PopAction, Stockpile, TerrainGrid, TerrainType,
     try_designate, try_place_building,
 };
-use scale::setup::setup_world;
+use scale::setup::{SetupConfig, setup_world_with_config};
 use scale::shared::state::GameState;
 use scale::shared::time::SimulationTime;
 use scale::simulation::run_simulation_tick;
 use std::io::{self, BufRead, Write};
+use comfy_table::{Table, Cell, presets::UTF8_FULL, ContentArrangement, Color, Attribute};
+use crossterm::style::Stylize;
 
 fn main() {
-    let mut world = setup_world();
+    let mut world = setup_world_with_config(SetupConfig {
+        headless: true,
+        ..Default::default()
+    });
     *world.resource_mut::<GameState>() = GameState::Running;
 
     println!("=== SCALE Headless Mode ===");
@@ -237,32 +242,76 @@ fn print_status(world: &mut World) {
     let housing_count = world.query::<&Housing>().iter(world).count();
     let designation_count = world.query::<&Designation>().iter(world).count();
 
-    println!("=== COLONY STATUS (Tick {tick}) ===");
+    println!("{}", format!("=== COLONY STATUS (Tick {tick}) ===").green().bold());
 
-    println!("\n[ POPULATION ]");
-    println!("  Citizens: {pop_count}");
+    let mut table = Table::new();
+    table
+        .load_preset(UTF8_FULL)
+        .set_content_arrangement(ContentArrangement::Dynamic)
+        .set_header(vec![
+            Cell::new("Category").add_attribute(Attribute::Bold),
+            Cell::new("Metric").add_attribute(Attribute::Bold),
+            Cell::new("Value").add_attribute(Attribute::Bold),
+        ]);
 
-    println!("\n[ RESOURCES ]");
-    println!("  Food:  {food:.1}");
-    println!("  Wood:  {wood:.1}");
-    println!("  Stone: {stone:.1}");
+    table.add_row(vec![
+        Cell::new("Population").fg(Color::Cyan),
+        Cell::new("Citizens"),
+        Cell::new(pop_count.to_string()),
+    ]);
 
-    println!("\n[ BUILDINGS ]");
-    println!("  Farms:   {farm_count}");
-    println!("  Housing: {housing_count}");
+    table.add_row(vec![
+        Cell::new("Resources").fg(Color::Yellow),
+        Cell::new("Food"),
+        Cell::new(format!("{:.1}", food)).fg(if food < 20.0 { Color::Red } else { Color::Green }),
+    ]);
+    table.add_row(vec![
+        Cell::new(""),
+        Cell::new("Wood"),
+        Cell::new(format!("{:.1}", wood)),
+    ]);
+    table.add_row(vec![
+        Cell::new(""),
+        Cell::new("Stone"),
+        Cell::new(format!("{:.1}", stone)),
+    ]);
 
-    println!("\n[ TASKS ]");
-    println!("  Active Designations: {designation_count}");
-    println!("===================================");
+    table.add_row(vec![
+        Cell::new("Buildings").fg(Color::Magenta),
+        Cell::new("Farms"),
+        Cell::new(farm_count.to_string()),
+    ]);
+    table.add_row(vec![
+        Cell::new(""),
+        Cell::new("Housing"),
+        Cell::new(housing_count.to_string()),
+    ]);
+
+    table.add_row(vec![
+        Cell::new("Tasks").fg(Color::Blue),
+        Cell::new("Active Designations"),
+        Cell::new(designation_count.to_string()),
+    ]);
+
+    println!("{table}");
 }
 
 fn print_pops(world: &mut World) {
-    println!("=== Pop Details ===");
-    println!(
-        "{:<8} {:<15} {:<10} {:<8} {:<8} {:<25} Status",
-        "ID", "Name", "Pos", "Hunger", "Rest", "Action"
-    );
-    println!("{}", "-".repeat(90));
+    println!("{}", "=== Pop Details ===".green().bold());
+
+    let mut table = Table::new();
+    table
+        .load_preset(UTF8_FULL)
+        .set_content_arrangement(ContentArrangement::Dynamic)
+        .set_header(vec![
+            Cell::new("ID").add_attribute(Attribute::Bold),
+            Cell::new("Name").add_attribute(Attribute::Bold),
+            Cell::new("Pos").add_attribute(Attribute::Bold),
+            Cell::new("Hunger").add_attribute(Attribute::Bold),
+            Cell::new("Rest").add_attribute(Attribute::Bold),
+            Cell::new("Action").add_attribute(Attribute::Bold),
+            Cell::new("Status").add_attribute(Attribute::Bold),
+        ]);
 
     for (entity, name, pos, needs, action) in world
         .query::<(Entity, &PopName, &GridPosition, &Needs, &PopAction)>()
@@ -281,17 +330,24 @@ fn print_pops(world: &mut World) {
 
         let action_str = format!("{:?}", action.current);
 
-        println!(
-            "{:<8} {:<15} {:<10} {:<8} {:<8} {:<25} {}",
-            entity.index(),
-            name.0,
-            format!("{},{}", pos.x, pos.y),
-            format!("{:.0}%", needs.hunger * 100.0),
-            format!("{:.0}%", needs.rest * 100.0),
-            action_str,
-            status
-        );
+        // Color code needs: Low is BAD (Red), High is GOOD (Green) ??
+        // Wait, hunger is 0..1. Usually 1.0 is full (good).
+        // Let's assume 1.0 is Satiated (Good). 0.0 is Starving (Bad).
+        let hunger_color = if needs.hunger < 0.2 { Color::Red } else if needs.hunger < 0.5 { Color::Yellow } else { Color::Green };
+        let rest_color = if needs.rest < 0.2 { Color::Red } else if needs.rest < 0.5 { Color::Yellow } else { Color::Green };
+
+        table.add_row(vec![
+            Cell::new(entity.index().to_string()),
+            Cell::new(&name.0),
+            Cell::new(format!("{},{}", pos.x, pos.y)),
+            Cell::new(format!("{:.0}%", needs.hunger * 100.0)).fg(hunger_color),
+            Cell::new(format!("{:.0}%", needs.rest * 100.0)).fg(rest_color),
+            Cell::new(action_str),
+            Cell::new(status),
+        ]);
     }
+
+    println!("{table}");
 }
 
 fn print_map(world: &mut World, center_x: i32, center_y: i32) {
@@ -697,19 +753,28 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
 
 /// List all buildings with positions
 fn print_buildings(world: &mut World) {
-    println!("BUILDINGS:");
+    println!("{}", "=== Buildings ===".green().bold());
+
+    let mut table = Table::new();
+    table
+        .load_preset(UTF8_FULL)
+        .set_content_arrangement(ContentArrangement::Dynamic)
+        .set_header(vec![
+            Cell::new("ID").add_attribute(Attribute::Bold),
+            Cell::new("Type").add_attribute(Attribute::Bold),
+            Cell::new("Pos").add_attribute(Attribute::Bold),
+            Cell::new("Occupancy").add_attribute(Attribute::Bold),
+        ]);
 
     let mut count = 0;
 
     for (entity, pos, farm) in world.query::<(Entity, &GridPosition, &Farm)>().iter(world) {
-        println!(
-            "  BUILDING: {:?} type=farm pos=({},{}) workers={}/{}",
-            entity,
-            pos.x,
-            pos.y,
-            farm.workers.len(),
-            farm.capacity
-        );
+        table.add_row(vec![
+            Cell::new(entity.index().to_string()),
+            Cell::new("Farm").fg(Color::Green),
+            Cell::new(format!("{},{}", pos.x, pos.y)),
+            Cell::new(format!("{}/{}", farm.workers.len(), farm.capacity)),
+        ]);
         count += 1;
     }
 
@@ -717,14 +782,12 @@ fn print_buildings(world: &mut World) {
         .query::<(Entity, &GridPosition, &Housing)>()
         .iter(world)
     {
-        println!(
-            "  BUILDING: {:?} type=housing pos=({},{}) residents={}/{}",
-            entity,
-            pos.x,
-            pos.y,
-            housing.residents.len(),
-            housing.capacity
-        );
+        table.add_row(vec![
+            Cell::new(entity.index().to_string()),
+            Cell::new("Housing").fg(Color::Blue),
+            Cell::new(format!("{},{}", pos.x, pos.y)),
+            Cell::new(format!("{}/{}", housing.residents.len(), housing.capacity)),
+        ]);
         count += 1;
     }
 
@@ -732,14 +795,20 @@ fn print_buildings(world: &mut World) {
         .query::<(Entity, &GridPosition, &Stockpile)>()
         .iter(world)
     {
-        println!(
-            "  BUILDING: {:?} type=stockpile pos=({},{})",
-            entity, pos.x, pos.y
-        );
+        table.add_row(vec![
+            Cell::new(entity.index().to_string()),
+            Cell::new("Stockpile").fg(Color::Yellow),
+            Cell::new(format!("{},{}", pos.x, pos.y)),
+            Cell::new("-"),
+        ]);
         count += 1;
     }
 
-    println!("BUILDINGS_END: count={count}");
+    if count == 0 {
+        println!("  (No buildings found)");
+    } else {
+        println!("{table}");
+    }
 }
 
 fn print_bio(world: &mut World, target_id: u32) {
@@ -778,20 +847,43 @@ fn print_bio(world: &mut World, target_id: u32) {
 }
 
 fn print_help() {
-    println!("=== Commands ===");
-    println!("  tick [N]              - Advance N ticks (default 1)");
-    println!("  status, s             - Show colony resources and pop count");
-    println!("  pops, p               - Show detailed pop states");
-    println!("  map [x] [y]           - Show visual terrain around position");
-    println!("  scan [x] [y] [r]      - Semantic terrain scan (parseable)");
-    println!("  terrain <x> <y>       - Get single tile info");
-    println!("  buildings             - List all buildings with positions");
-    println!("  build <type> <x> <y>  - Build: farm, housing, stockpile");
-    println!("  mine <x> <y>          - Designate rock for mining");
-    println!("  chop <x> <y>          - Designate tree for chopping");
-    println!("  designations, d       - List all active designations");
-    println!("  bio <id>              - Show biography and dreams of a pop");
-    println!("  find <terrain> [N]    - Find N terrain coords (default 10)");
-    println!("  help, h               - Show this help");
-    println!("  quit, q               - Exit");
+    println!("{}", "=== Commands ===".green().bold());
+
+    let mut table = Table::new();
+    table
+        .load_preset(UTF8_FULL)
+        .set_content_arrangement(ContentArrangement::Dynamic)
+        .set_header(vec![
+            Cell::new("Command").add_attribute(Attribute::Bold),
+            Cell::new("Alias").add_attribute(Attribute::Bold),
+            Cell::new("Description").add_attribute(Attribute::Bold),
+        ]);
+
+    let commands = vec![
+        ("tick [N]", "", "Advance N ticks (default 1)"),
+        ("status", "s", "Show colony resources and pop count"),
+        ("pops", "p", "Show detailed pop states"),
+        ("map [x] [y]", "m", "Show visual terrain around position"),
+        ("scan [x] [y] [r]", "", "Semantic terrain scan (parseable)"),
+        ("terrain <x> <y>", "", "Get single tile info"),
+        ("buildings", "", "List all buildings with positions"),
+        ("build <type> <x> <y>", "b", "Build: farm, housing, stockpile"),
+        ("mine <x> <y>", "", "Designate rock for mining"),
+        ("chop <x> <y>", "", "Designate tree for chopping"),
+        ("designations", "d", "List all active designations"),
+        ("bio <id>", "", "Show biography and dreams of a pop"),
+        ("find <type> [N]", "", "Find N terrain coords (default 10)"),
+        ("help", "h, ?", "Show this help"),
+        ("quit", "q, exit", "Exit"),
+    ];
+
+    for (cmd, alias, desc) in commands {
+        table.add_row(vec![
+            Cell::new(cmd).fg(Color::Cyan),
+            Cell::new(alias).fg(Color::DarkGrey),
+            Cell::new(desc),
+        ]);
+    }
+
+    println!("{table}");
 }
