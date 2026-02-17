@@ -1,5 +1,5 @@
 use crate::layer1::edicts::{ColonyPolicies, Policy};
-use crate::layer1::resources::ColonyResources;
+use crate::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
 use bevy_ecs::prelude::*;
 
 /// Tracks the severity of vermin infestation in the colony.
@@ -37,9 +37,23 @@ pub fn vermin_growth_system(
     mut vermin: ResMut<VerminState>,
     resources: Res<ColonyResources>,
     policies: Res<ColonyPolicies>,
+    items: Query<&ResourceItem>,
 ) {
-    let food_impact = resources.food * GROWTH_FACTOR_FOOD;
-    let waste_impact = resources.waste * GROWTH_FACTOR_WASTE;
+    // 1. Calculate totals from stored resources
+    let mut total_food = resources.food;
+    let mut total_waste = resources.waste;
+
+    // 2. Add items on the ground
+    for item in &items {
+        match item.resource_type {
+            ResourceType::Food => total_food += item.amount,
+            ResourceType::Waste => total_waste += item.amount,
+            _ => {}
+        }
+    }
+
+    let food_impact = total_food * GROWTH_FACTOR_FOOD;
+    let waste_impact = total_waste * GROWTH_FACTOR_WASTE;
 
     let mut growth = food_impact + waste_impact;
 
