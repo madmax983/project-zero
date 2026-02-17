@@ -116,7 +116,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(crate::layer1::prototyping::BuildingMastery::default());
     world.init_resource::<crate::layer1::social::old_guard::Demographics>();
     world.insert_resource(crate::layer2::system::ViewMode::default());
-    world.insert_resource(crate::layer2::system::SystemMap::default());
+    world.insert_resource(crate::layer2::system::SystemMap);
+    world.insert_resource(crate::layer2::visibility::SystemVisibility::default());
 
     initialize_visitor_source(&mut world);
     world.insert_resource(crate::layer1::inspector::InspectorSource {
