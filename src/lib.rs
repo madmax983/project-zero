@@ -51,8 +51,6 @@
 //! println!("Current Tick: {}", time.tick);
 //! ```
 
-/// Experimental features.
-pub mod experimental;
 /// GPU compute for utility AI evaluation.
 pub mod gpu;
 /// Layer 1: Colony Simulation (Pops, Buildings, Terrain).

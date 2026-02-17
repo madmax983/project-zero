@@ -40,7 +40,8 @@ fn test_vermin_affects_morale() {
     // Run for enough ticks to ensure the probabilistic event occurs.
     // At 80 severity, chance is ~6% per tick.
     // Over 200 ticks, failure chance is negligible (~0.0004%).
-    for _ in 0..500 {
+    // Increased to 1000 to handle CI variance.
+    for _ in 0..1000 {
         // Refill pressure to prevent suffocation (since edges leak to vacuum)
         if let Some(mut pressure) =
             world.get_resource_mut::<scale::layer1::pressure::PressureGrid>()

@@ -8,32 +8,10 @@
 use bevy_ecs::prelude::*;
 use bevy_ecs::schedule::{IntoSystemConfigs, Schedule, ScheduleLabel};
 
-#[cfg(feature = "nova")]
-use crate::experimental::acoustics::{
-    apply_ambience_system, generate_thunder_system, industrial_noise_system,
-    thunder_lifetime_system, weather_ambience_system,
-};
-use crate::experimental::biography::biography_monitor_system;
-use crate::experimental::dreams::{cleanup_dream_marker_system, dream_system};
-#[cfg(feature = "nova")]
-use crate::experimental::echoes::{
-    absorb_death_echoes_system, absorb_joy_echoes_system, apply_echo_effects_system,
-    update_echoes_system,
-};
-#[cfg(feature = "nova")]
-use crate::experimental::ghosts::{
-    apply_ghost_beauty_system, ghost_light_damage_system, ghost_movement_system,
-};
-#[cfg(feature = "nova")]
-use crate::experimental::graffiti::{
-    apply_graffiti_beauty_system, graffiti_creation_system, graffiti_decay_system,
-};
-#[cfg(feature = "nova")]
-use crate::experimental::miasma::{
-    apply_miasma_effects_system, sickness_progression_system, update_miasma_system,
-};
 use crate::gpu::evaluate::gpu_evaluate_actions;
+use crate::layer1::biography::biography_monitor_system;
 use crate::layer1::blob::{blob_consumption_system, blob_spread_system};
+use crate::layer1::dreams::{cleanup_dream_marker_system, dream_system};
 use crate::layer1::heirloom::RetrogradeEngineeringEvent;
 use crate::layer1::{
     AddChronicleEvent, AffinityChange, DeathEvent, PopDied, advance_season_system, aging_system,
@@ -179,13 +157,6 @@ pub fn build_simulation_schedule() -> Schedule {
         discovery_system.after(process_scan_system),
     ));
 
-    #[cfg(feature = "nova")]
-    schedule.add_systems((
-        ghost_movement_system.after(movement_system),
-        graffiti_creation_system.after(work_execution_system),
-        graffiti_decay_system.after(work_execution_system),
-    ));
-
     // --- Economy (after execution, before consumption) ---
     // These systems can run in parallel with each other.
     schedule.add_systems((
@@ -241,17 +212,6 @@ pub fn build_simulation_schedule() -> Schedule {
         apply_founder_benefits_system.after(work_execution_system),
     ));
 
-    #[cfg(feature = "nova")]
-    schedule.add_systems((
-        apply_ghost_beauty_system
-            .after(crate::layer1::beauty::update_beauty_grid_system)
-            .before(crate::layer1::beauty::apply_beauty_effects_system),
-        apply_graffiti_beauty_system
-            .after(crate::layer1::beauty::update_beauty_grid_system)
-            .before(crate::layer1::beauty::apply_beauty_effects_system),
-        ghost_light_damage_system.after(update_lighting_system),
-    ));
-
     // --- Environment (Fire, Acoustic) ---
     schedule.add_systems((
         fire_pressure_check_system.after(work_execution_system),
@@ -286,36 +246,6 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer1::atmosphere::update_atmosphere_system)
             .after(update_pressure_system),
         biocompatibility_system.after(crate::layer1::atmosphere::update_atmosphere_system),
-    ));
-
-    #[cfg(feature = "nova")]
-    schedule.add_systems((
-        industrial_noise_system.before(update_noise_system),
-        generate_thunder_system
-            .after(update_weather_system)
-            .before(update_noise_system),
-        thunder_lifetime_system.before(generate_thunder_system),
-        weather_ambience_system.after(update_weather_system),
-        apply_ambience_system
-            .after(update_noise_system)
-            .after(weather_ambience_system),
-    ));
-
-    #[cfg(feature = "nova")]
-    schedule.add_systems((
-        update_miasma_system.after(work_execution_system),
-        apply_miasma_effects_system.after(update_miasma_system),
-    ));
-
-    #[cfg(feature = "nova")]
-    schedule.add_systems((
-        update_echoes_system.after(work_execution_system),
-        absorb_death_echoes_system.after(death_system),
-        absorb_joy_echoes_system.after(work_execution_system),
-        apply_echo_effects_system
-            .after(update_echoes_system)
-            .after(absorb_death_echoes_system)
-            .after(absorb_joy_echoes_system),
     ));
 
     // --- Consumption Chain (sequential, depends on economy) ---
@@ -356,8 +286,6 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::day_night::circadian_rhythm_system.after(consume_food_system),
         aging_system.after(consume_food_system),
         natural_death_system.after(aging_system),
-        #[cfg(feature = "nova")]
-        sickness_progression_system.after(aging_system),
         memory_decay_system.after(decay_needs_system),
         notification_expiration_system.after(decay_needs_system),
         crate::layer1::temperature::thermal_damage_system.after(decay_needs_system),
@@ -423,11 +351,6 @@ pub fn run_simulation_tick(world: &mut World) {
     // Initialize schedule on first call (stored in World's Schedules resource)
     if !world.contains_resource::<Schedules>() {
         world.insert_resource(Schedules::default());
-    }
-
-    #[cfg(feature = "nova")]
-    if !world.contains_resource::<crate::experimental::echoes::EchoMap>() {
-        world.init_resource::<crate::experimental::echoes::EchoMap>();
     }
 
     if !world.contains_resource::<crate::layer1::social::old_guard::Demographics>() {

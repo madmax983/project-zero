@@ -1,5 +1,3 @@
-#[cfg(feature = "nova")]
-use crate::experimental::ghosts::{Ectoplasm, Ghost};
 use crate::layer1::funeral::Corpse;
 use crate::layer1::memory::{Memories, MemoryType};
 use crate::layer1::pop::{Pop, PopDied, PopName};
@@ -137,8 +135,6 @@ pub fn death_system(world: &mut World) {
                     pos,
                 ));
 
-                #[cfg(feature = "nova")]
-                world.spawn((Ghost, Ectoplasm::default(), pos));
             }
 
             world.send_event(PopDied {

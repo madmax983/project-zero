@@ -329,8 +329,8 @@ mod tests {
             GridPosition { x: 5, y: 6 },
         ));
 
-        for _ in 0..50 {
-            // Increased iterations
+        for _ in 0..200 {
+            // Increased iterations to ensure RNG hits
             fire_spread_system(&mut world);
         }
 

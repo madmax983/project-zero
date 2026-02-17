@@ -33,6 +33,8 @@ pub mod menu;
 pub mod notifications;
 /// Info panels (inspector, etc).
 pub mod panels;
+/// Seasonal graphics helpers.
+pub mod seasonal_gfx;
 /// Status bar rendering.
 pub mod status;
 
