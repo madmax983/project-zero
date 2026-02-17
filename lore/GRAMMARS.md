@@ -1125,6 +1125,7 @@ FLOW_RESTORED:
     - STOCKPILE_FULL (low, sudden influx)
   increases:
     - RELIEF (medium)
+```
 
 ---
 
@@ -1263,4 +1264,109 @@ MASCOT_DEATH:
     - GRIEF (high)
     - UNITY (medium)
 ```
+
+## Security Chaining
+
+```yaml
+ACCESS_DENIED:
+  enables:
+    - HACKING_ATTEMPT (medium)
+    - WORK_DELAY (high)
+  increases:
+    - FRUSTRATION (high)
+
+LOCKOUT_OVERRIDE:
+  enables:
+    - SECURITY_ALERT (high)
+    - INSPECTOR_JUDGMENT (medium, if illegal)
+  increases:
+    - SUSPICION (medium)
 ```
+
+## Old Guard Chaining
+
+```yaml
+GENERATION_CLASH:
+  enables:
+    - DEMAND_ISSUED (high, from Old Guard)
+    - FACTION_FORMED (medium, New Blood)
+  increases:
+    - DIVISION (high)
+
+TRADITION_UPHELD:
+  enables:
+    - CELEBRATION (medium)
+    - RESENTMENT (low, from New Blood)
+  increases:
+    - STABILITY (medium)
+```
+
+## Vacuum Chaining
+
+```yaml
+EMERGENCY_VENT:
+  enables:
+    - FIRE_EXTINGUISHED (high)
+    - INJURY_ACCIDENT (medium)
+    - ITEM_LOSS (high, sucked out)
+  increases:
+    - FEAR (high)
+    - RELIEF (medium, if fire gone)
+
+HULL_BREACH:
+  enables:
+    - DECOMPRESSION_EVENT (always)
+    - REPAIR_RUSH (high)
+  increases:
+    - PANIC (high)
+```
+
+## Trash Cannon Chaining
+
+```yaml
+CANNON_FIRED:
+  enables:
+    - THREAT_DESTROYED (medium)
+    - WASTE_REDUCTION (high)
+    - ACCIDENTAL_HIT (low)
+  increases:
+    - SECURITY (medium)
+    - MORALE (low, "taking out the trash")
+
+AMMO_DEPLETED:
+  enables:
+    - CANNON_FIRED (impossible until refilled)
+    - THREAT_IGNORED (high)
+  increases:
+    - FEAR (high)
+    - URGENCY (high)
+```
+
+## Flora Chaining
+
+GLOW_DISCOVERED:
+  enables:
+    - RESEARCH_BREAKTHROUGH (high)
+    - GARDEN_CONSTRUCTION (medium)
+  increases:
+    - WONDER (high)
+    - LIGHT_LEVEL (medium)
+
+## Grid Chaining
+
+GRID_SURGE:
+  enables:
+    - FIRE_OUTBREAK (high)
+    - MACHINE_DAMAGE (medium)
+    - BLACKOUT (low)
+  increases:
+    - FEAR (medium)
+    - MAINTENANCE_DEBT (high)
+
+BROWNOUT:
+  enables:
+    - WORK_STOPPAGE (high)
+    - SPOILAGE_EVENT (medium, if fridges fail)
+  increases:
+    - FRUSTRATION (high)
+    - EFFICIENCY_LOSS (high)

@@ -1350,3 +1350,104 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[NAME] is gone. [YEAR]. The colony mourns."
 - "[YEAR]: A dark day. We lost [NAME]."
 - "Rest well, [NAME]. You were a good [MASCOT_TITLE]. [YEAR]."
+
+---
+
+## Security Templates
+
+### ACCESS_DENIED
+**Slots:** [COLONY], [YEAR], [NAME], [LOCK_STATUS]
+
+- "[NAME] hits the wall. [YEAR]. Access [LOCK_STATUS]."
+- "[YEAR]: Security alert. [NAME] found the door [LOCK_STATUS]."
+- "Denied. [NAME] cannot pass. The system is [LOCK_STATUS]. [YEAR]."
+
+### LOCKOUT_OVERRIDE
+**Slots:** [COLONY], [YEAR], [NAME], [ACCESS_LEVEL]
+
+- "[NAME] bypasses the lock. [YEAR]. Gained [ACCESS_LEVEL] clearance."
+- "[YEAR]: Security breach. [NAME] forces [ACCESS_LEVEL] entry."
+- "The door opens for [NAME]. [ACCESS_LEVEL] authorized. [YEAR]."
+
+---
+
+## Old Guard Templates
+
+### GENERATION_CLASH
+**Slots:** [COLONY], [YEAR], [GENERATION_NAME], [OLD_GUARD_TITLE]
+
+- "Tension in the mess. [YEAR]. The [GENERATION_NAME] demand respect."
+- "[YEAR]: Words between the new and the old. The [OLD_GUARD_TITLE] speaks."
+- "Conflict of eras. [GENERATION_NAME] vs the new arrivals. [YEAR]."
+
+### TRADITION_UPHELD
+**Slots:** [COLONY], [YEAR], [OLD_GUARD_TITLE], [GENERATION_NAME]
+
+- "The [OLD_GUARD_TITLE]s gather. [YEAR]. They remember the Hunger."
+- "[YEAR]: A council of the first. The [OLD_GUARD_TITLE] leads."
+- "Whispers of the [OLD_GUARD_TITLE]. The [GENERATION_NAME] are plotting. [YEAR]."
+
+---
+
+## Vacuum Templates
+
+### EMERGENCY_VENT
+**Slots:** [COLONY], [YEAR], [SUCTION_DESCRIPTOR]
+
+- "Atmosphere vented. [YEAR]. The [SUCTION_DESCRIPTOR] pull clears the room."
+- "[YEAR]: Emergency cycle. The air is gone. It was [SUCTION_DESCRIPTOR]."
+- "Silence falls. We vented the sector. The vacuum is [SUCTION_DESCRIPTOR]. [YEAR]."
+
+### HULL_BREACH
+**Slots:** [COLONY], [YEAR], [DECOMPRESSION_SOUND], [SUCTION_DESCRIPTOR]
+
+- "Structure failure! [YEAR]. A [DECOMPRESSION_SOUND] and then silence."
+- "[YEAR]: Breach. The [SUCTION_DESCRIPTOR] dark enters. [DECOMPRESSION_SOUND]."
+- "We lost pressure. [YEAR]. The [DECOMPRESSION_SOUND] haunts us."
+
+---
+
+## Trash Cannon Templates
+
+### CANNON_FIRED
+**Slots:** [COLONY], [YEAR], [CANNON_NAME], [PROJECTILE_TYPE]
+
+- "[CANNON_NAME] fires. [YEAR]. Sending [PROJECTILE_TYPE] to the void."
+- "[YEAR]: We clear the stores. The [CANNON_NAME] spits [PROJECTILE_TYPE]."
+- "Defense active. [CANNON_NAME] launches [PROJECTILE_TYPE]. [YEAR]."
+
+### AMMO_DEPLETED
+**Slots:** [COLONY], [YEAR], [CANNON_NAME]
+
+- "[CANNON_NAME] clicks empty. [YEAR]. We need more waste."
+- "[YEAR]: Silence from the [CANNON_NAME]. No ammo remains."
+- "The [CANNON_NAME] is hungry. Feed it. [YEAR]."
+
+---
+
+## Bioluminescent Flora Templates
+
+### GLOW_DISCOVERED
+**Slots:** [COLONY], [YEAR], [LIGHT_PLANT_NAME], [GLOW_COLOR]
+
+- "Soft light in the deep. [YEAR]. [LIGHT_PLANT_NAME] glowing [GLOW_COLOR]."
+- "[YEAR]: We found [LIGHT_PLANT_NAME]. It shines [GLOW_COLOR]."
+- "Nature's lamp. [LIGHT_PLANT_NAME] found at [COLONY]. [GLOW_COLOR] light. [YEAR]."
+
+---
+
+## Grid Instability Templates
+
+### GRID_SURGE
+**Slots:** [COLONY], [YEAR], [GRID_SOUND], [POWER_FLUCTUATION]
+
+- "Power spike! [YEAR]. The conduit makes a [GRID_SOUND]."
+- "[YEAR]: Dangerous [POWER_FLUCTUATION]. The lights flare."
+- "The grid is unstable. [POWER_FLUCTUATION] detected. It [GRID_SOUND]s. [YEAR]."
+
+### BROWNOUT
+**Slots:** [COLONY], [YEAR], [POWER_FLUCTUATION]
+
+- "Lights dim. [YEAR]. A [POWER_FLUCTUATION] hits the sector."
+- "[YEAR]: Low power. The machines slow. [POWER_FLUCTUATION]."
+- "Energy drops. [POWER_FLUCTUATION] at [COLONY]. [YEAR]."
