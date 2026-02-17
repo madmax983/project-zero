@@ -38,6 +38,8 @@ pub enum RenderEntity {
     Item(ResourceType),
     /// An active fire spreading across the map.
     Fire,
+    /// The Blob (hazard).
+    Blob,
     /// A visual particle effect (e.g., dust, sparks).
     Particle(char, Color),
 }
@@ -70,7 +72,7 @@ impl RenderEntity {
     pub const fn priority(&self) -> u8 {
         match self {
             Self::Particle(_, _) => 7,
-            Self::Fire => 6,
+            Self::Fire | Self::Blob => 6,
             Self::Designation(_, _) => 5,
             Self::Building(_, _) => 4,
             Self::Fauna(_) | Self::Pop(_, _) => 3,
@@ -177,6 +179,11 @@ pub fn update_render_cache(world: &mut World) {
             // Check for Fire
             if e.get::<Fire>().is_some() {
                 insert_if_higher_priority(&mut cache.entities, *pos, RenderEntity::Fire);
+            }
+
+            // Check for Blob
+            if e.get::<crate::layer1::blob::Blob>().is_some() {
+                insert_if_higher_priority(&mut cache.entities, *pos, RenderEntity::Blob);
             }
 
             // Check for Particle
@@ -378,6 +385,15 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
                             "^",
                             Style::default()
                                 .fg(Color::Rgb(255, 100, 0))
+                                .add_modifier(Modifier::BOLD),
+                        ));
+                        continue;
+                    }
+                    RenderEntity::Blob => {
+                        line_spans.push(Span::styled(
+                            "%",
+                            Style::default()
+                                .fg(Color::Magenta)
                                 .add_modifier(Modifier::BOLD),
                         ));
                         continue;

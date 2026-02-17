@@ -37,6 +37,7 @@ use crate::layer1::pop::Job;
 use std::collections::HashMap;
 
 /// System to heal pops assigned to a hospital.
+#[allow(clippy::collapsible_if)]
 pub fn healing_system(world: &mut World) {
     let policy = world
         .get_resource::<MedicalPolicy>()

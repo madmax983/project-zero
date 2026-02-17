@@ -18,7 +18,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `120` Crop Diversity — `specs/120-crop-diversity.md`
 - [ ] `130` Social Debt — `specs/130-social-debt.md`
 - [ ] `137` Pop Hobbies — `specs/137-pop-hobbies.md`
-- [ ] `138` The Blob — `specs/138-the-blob.md`
 - [ ] `139` Cryo-Stasis Vaults — `specs/139-cryo-stasis.md`
 - [ ] `143` Data Physicality — `specs/143-data-physicality.md`
 - [ ] `144` Graffiti and Signage — `specs/144-graffiti-and-signage.md`
