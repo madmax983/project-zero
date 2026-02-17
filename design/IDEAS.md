@@ -4227,3 +4227,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Power (Symbiosis) vs. Upkeep (Food/Health cost).
 
 ---
+
+## Mobile Architecture
+
+**Layer:** 1
+
+**Fantasy:** The colony is a caravan, not a castle. Following the resources, or the sun.
+
+**Mechanic:** Buildings can be constructed on "Chassis" foundations. They can transform into a mobile mode (Walker/Treads) to relocate slowly, consuming fuel.
+
+**Emergence:** A "City on Wheels" that perpetually moves west to stay in the sunlight for solar power. A mining town that walks to the next mountain when the ore runs dry.
+
+**Tension:** High cost/upkeep of mobile foundations vs. The flexibility of relocation.
+
+---
+
+## Legacy Code
+
+**Layer:** 1
+
+**Fantasy:** The colony's central computer is getting slow, bloated, and "haunted" by old protocols.
+
+**Mechanic:** Over time, the "Operating System" accumulates "Bloat". Computing tasks (Research, Turret Targeting, Auto-Doors) gain latency. "Reformatting" clears Bloat but requires a total system shutdown (0 power/control) for a duration.
+
+**Emergence:** You delay the Reformat for decades. The defense grid lag is now 3 seconds. Raiders simply run past the turrets before they can lock on.
+
+**Tension:** Risk the Downtime (vulnerability) or live with the Lag (inefficiency)?
+
+---
+
+## Planetary Scarring
+
+**Layer:** Cross-layer
+
+**Fantasy:** Your actions leave a permanent mark on the world, visible from the stars.
+
+**Mechanic:** Major Layer 1 events (Nuclear blasts, Forest fires, Mega-Dams) dynamically update the planet's texture and icon on the Layer 2/3 maps.
+
+**Emergence:** You start on a "Green/Blue" marble. By the endgame, the planet icon is a scarred, grey wasteland with visible craters from your wars. The history is written on the globe.
+
+**Tension:** Purely visual/narrative weight of your decisions.
+
+---
