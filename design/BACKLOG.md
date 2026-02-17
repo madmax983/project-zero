@@ -22,6 +22,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `138` The Blob — `specs/138-the-blob.md`
 - [ ] `139` Cryo-Stasis Vaults — `specs/139-cryo-stasis.md`
 - [ ] `140` Thermal Management — `specs/140-thermal-management.md`
+- [ ] `142` Biometric Lockouts — `specs/142-biometric-lockouts.md`
 
 ## MVP — Layer 2: System Simulation
 
