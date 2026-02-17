@@ -34,7 +34,7 @@ use crate::layer1::heirloom::AncientStructure;
 use crate::layer1::lighting::LightSource;
 use crate::layer1::resources::{ColonyResources, RefiningProgress};
 use crate::layer1::rituals::MachineSpirit;
-use crate::layer1::tech::{Library, Tech, TechState};
+use crate::layer1::tech::{DataStorage, Library, Tech, TechState};
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::trade::TradeDepot;
 use crate::layer1::water::{MAX_HYDRATION, WaterSource};
@@ -250,6 +250,8 @@ pub enum BuildingType {
     TrashCannon,
     /// Generates heat to combat cold temperatures.
     Heater,
+    /// Stores data capacity for technology.
+    ServerBank,
     /// The colony's starting ship (can be cannibalized for resources).
     Lander,
 }
@@ -322,7 +324,7 @@ impl BuildingType {
             Self::Well | Self::HydroponicsBay | Self::LifeSupport => 1.0,
             Self::Wall | Self::Gate | Self::Tower | Self::Airlock | Self::Vent => 0.0,
             Self::TrashCannon => -2.0, // Industrial machinery is ugly
-            Self::Heater => 0.0,
+            Self::Heater | Self::ServerBank => 0.0,
             _ => 0.0,
         }
     }
@@ -341,7 +343,8 @@ impl BuildingType {
             | Self::LifeSupport
             | Self::Airlock
             | Self::Vent
-            | Self::Heater => Some(Tech::MetalWorking),
+            | Self::Heater
+            | Self::ServerBank => Some(Tech::MetalWorking),
             Self::Tavern | Self::Statue => Some(Tech::SocialStructures),
             Self::Tower => Some(Tech::Masonry),
             Self::Observatory => Some(Tech::Astronomy),
@@ -405,6 +408,7 @@ impl BuildingType {
             Self::Vent => "Vent",
             Self::TrashCannon => "Trash Cannon",
             Self::Heater => "Heater",
+            Self::ServerBank => "Server Bank",
             Self::Lander => "Lander",
         }
     }
@@ -447,6 +451,7 @@ impl BuildingType {
             Self::Vent => '≡',
             Self::TrashCannon => '♣',
             Self::Heater => 'h',
+            Self::ServerBank => '▥',
             Self::Lander => 'Λ',
         }
     }
@@ -456,6 +461,11 @@ impl BuildingType {
     #[allow(clippy::match_same_arms, clippy::too_many_lines)]
     pub const fn cost(&self, material: MaterialType) -> ColonyResources {
         match self {
+            Self::ServerBank => ColonyResources {
+                metal: 20.0,
+                stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
             Self::TrashCannon => ColonyResources {
                 metal: 20.0,
                 stone: 10.0,
@@ -1225,6 +1235,20 @@ fn spawn_building(
                 },
             ));
         }
+        BuildingType::ServerBank => {
+            entity.insert((
+                DataStorage { capacity: 50.0 },
+                PowerConsumer {
+                    demand: 10.0,
+                    active: false, // Wait for power grid to activate
+                },
+                crate::layer1::lighting::LightSource {
+                    radius: 2.0,
+                    intensity: 0.4,
+                    color: (0, 255, 100), // Data Green
+                },
+            ));
+        }
         BuildingType::Lander => {
             entity.insert((
                 Housing {
@@ -1246,6 +1270,9 @@ fn spawn_building(
                     intensity: 0.8,
                     color: (200, 200, 255),
                 },
+                // Spec Q&A says Library/Lander should provide base capacity.
+                // I will add DataStorage to Lander too!
+                DataStorage { capacity: 10.0 }, // Base capacity
             ));
             if let Some(mut structure) = entity.get_mut::<crate::layer1::structure::Structure>() {
                 structure.max_hp = 500.0;
@@ -1445,7 +1472,8 @@ mod tests {
         assert_eq!(BuildingType::Airlock.next(), BuildingType::Vent);
         assert_eq!(BuildingType::Vent.next(), BuildingType::TrashCannon);
         assert_eq!(BuildingType::TrashCannon.next(), BuildingType::Heater);
-        assert_eq!(BuildingType::Heater.next(), BuildingType::Lander);
+        assert_eq!(BuildingType::Heater.next(), BuildingType::ServerBank);
+        assert_eq!(BuildingType::ServerBank.next(), BuildingType::Lander);
         assert_eq!(BuildingType::Lander.next(), BuildingType::Housing);
     }
 
@@ -1618,6 +1646,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Heater);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::ServerBank);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Lander);

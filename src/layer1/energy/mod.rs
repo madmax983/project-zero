@@ -34,7 +34,7 @@ impl Default for PowerSource {
 }
 
 /// Consumes power from the grid.
-#[derive(Component, Debug, Clone)]
+#[derive(Component, Debug, Clone, Default)]
 pub struct PowerConsumer {
     /// Amount of power consumed per tick.
     pub demand: f32,
