@@ -60,11 +60,13 @@ pub enum ActionType {
     SadWander,
     /// Fetch clothing from a stockpile.
     FetchClothing,
+    /// Charge battery at a drone hub (for Drones).
+    Charge,
 }
 
 impl ActionType {
     /// Total number of action types. Used for array sizing.
-    pub const COUNT: usize = 26;
+    pub const COUNT: usize = 27;
 
     /// Converts action type to a unique array index (0..COUNT-1).
     #[must_use]
@@ -96,6 +98,7 @@ impl ActionType {
             Self::HideInRoom => 23,
             Self::SadWander => 24,
             Self::FetchClothing => 25,
+            Self::Charge => 26,
         }
     }
 

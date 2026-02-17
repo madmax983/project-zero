@@ -159,4 +159,6 @@ pub enum AssignmentType {
     Governor,
     /// Administrator job.
     Administrator,
+    /// Charging at a drone hub.
+    Charge,
 }

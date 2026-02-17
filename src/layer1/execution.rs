@@ -242,7 +242,8 @@ pub fn cleanup_previous_assignment_system(
             | AssignmentType::Scientist
             | AssignmentType::Artist
             | AssignmentType::Governor
-            | AssignmentType::Administrator => {}
+            | AssignmentType::Administrator
+            | AssignmentType::Charge => {}
         }
 
         commands.entity(pop_entity).remove::<AssignedTo>();
@@ -586,8 +587,8 @@ fn process_arrival(
             );
             true
         }
-        ActionType::Work | ActionType::Repair | ActionType::Haul => {
-            // Work/Repair/Haul is handled by their respective systems
+        ActionType::Work | ActionType::Repair | ActionType::Haul | ActionType::Charge => {
+            // Work/Repair/Haul/Charge is handled by their respective systems
             // Just keep the AtTarget marker for that system
             false
         }
@@ -635,7 +636,8 @@ fn assign_pop(
         AssignmentType::HousingResident
         | AssignmentType::TavernVisitor
         | AssignmentType::Patient
-        | AssignmentType::Funeral => {
+        | AssignmentType::Funeral
+        | AssignmentType::Charge => {
             // These are not jobs, so we don't update Job component.
             // The pop keeps their previous job (if any).
         }

@@ -254,6 +254,8 @@ pub enum BuildingType {
     ServerBank,
     /// The colony's starting ship (can be cannibalized for resources).
     Lander,
+    /// Automated hub for drones.
+    DroneHub,
 }
 
 impl BuildingType {
@@ -350,6 +352,7 @@ impl BuildingType {
             Self::Observatory => Some(Tech::Astronomy),
             Self::HydroponicsBay => Some(Tech::Hydroponics),
             Self::TrashCannon => Some(Tech::Militia),
+            Self::DroneHub => Some(Tech::MetalWorking),
             _ => None,
         }
     }
@@ -410,6 +413,7 @@ impl BuildingType {
             Self::Heater => "Heater",
             Self::ServerBank => "Server Bank",
             Self::Lander => "Lander",
+            Self::DroneHub => "Drone Hub",
         }
     }
 
@@ -453,6 +457,7 @@ impl BuildingType {
             Self::Heater => 'h',
             Self::ServerBank => '▥',
             Self::Lander => 'Λ',
+            Self::DroneHub => 'D',
         }
     }
 
@@ -700,6 +705,11 @@ impl BuildingType {
                 ..ColonyResources::zeroed()
             },
             Self::Lander => ColonyResources::zeroed(),
+            Self::DroneHub => ColonyResources {
+                metal: 30.0,
+                stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
         }
     }
 
@@ -1279,6 +1289,20 @@ fn spawn_building(
                 structure.current_hp = 500.0;
             }
         }
+        BuildingType::DroneHub => {
+            entity.insert((
+                crate::layer1::drone::DroneHub,
+                PowerConsumer {
+                    demand: 10.0,
+                    active: false,
+                },
+                crate::layer1::lighting::LightSource {
+                    radius: 4.0,
+                    intensity: 0.6,
+                    color: (0, 255, 255), // Cyan
+                },
+            ));
+        }
     }
 }
 
@@ -1474,7 +1498,8 @@ mod tests {
         assert_eq!(BuildingType::TrashCannon.next(), BuildingType::Heater);
         assert_eq!(BuildingType::Heater.next(), BuildingType::ServerBank);
         assert_eq!(BuildingType::ServerBank.next(), BuildingType::Lander);
-        assert_eq!(BuildingType::Lander.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::Lander.next(), BuildingType::DroneHub);
+        assert_eq!(BuildingType::DroneHub.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -1652,6 +1677,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Lander);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::DroneHub);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

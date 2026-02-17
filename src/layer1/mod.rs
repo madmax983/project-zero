@@ -407,6 +407,9 @@ pub use social_mimicry::*;
 /// Turret system (Spec 135).
 pub mod turret;
 pub use turret::*;
+/// Drone system (Spec 116).
+pub mod drone;
+pub use drone::*;
 /// Temperature simulation (Spec 140).
 pub mod temperature;
 pub use temperature::*;

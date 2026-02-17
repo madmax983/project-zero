@@ -100,6 +100,7 @@ pub fn build_simulation_schedule() -> Schedule {
     // --- AI Decision Chain (GPU compute) ---
     schedule.add_systems((
         gpu_evaluate_actions,
+        crate::layer1::drone::evaluate_drone_actions_system.after(gpu_evaluate_actions),
         crate::layer1::visitor::visitor_behavior_system,
         update_action_timer_system.after(gpu_evaluate_actions),
     ));
@@ -170,6 +171,10 @@ pub fn build_simulation_schedule() -> Schedule {
         process_refining_system.after(work_execution_system),
         crate::layer1::tech::update_tech_capacity_system.after(work_execution_system),
         process_research_system.after(work_execution_system),
+        crate::layer1::drone::process_charge_system.after(work_execution_system),
+    ));
+
+    schedule.add_systems((
         process_observe_system.after(work_execution_system),
         regrowth_system.after(work_execution_system),
         flora_spread_system.after(work_execution_system),
@@ -253,6 +258,7 @@ pub fn build_simulation_schedule() -> Schedule {
         consume_food_system
             .after(produce_food_system)
             .after(update_resource_caps_system),
+        crate::layer1::drone::battery_drain_system.after(consume_food_system),
         clothing_wear_system.after(consume_food_system),
         vermin_growth_system.after(consume_food_system),
         vermin_morale_system.after(vermin_growth_system),
