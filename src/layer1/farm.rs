@@ -57,6 +57,7 @@ pub fn produce_food_system(
     season: Option<Res<SeasonState>>,
     mut resources: ResMut<ColonyResources>,
     factions: Option<Res<Factions>>,
+    tech_state: Option<Res<crate::layer1::tech::TechState>>,
 ) {
     let modifier = season.map_or(1.0, |s| s.current_season.food_modifier());
 
@@ -97,6 +98,17 @@ pub fn produce_food_system(
         }
 
         if let Some((building_type, is_powered)) = farm_map.get(pos) {
+            // Tech Corruption Check
+            if let Some(tech) = building_type.required_tech() {
+                let tech_active = tech_state
+                    .as_ref()
+                    .map_or(true, |ts| ts.is_active(tech));
+
+                if !tech_active {
+                    continue;
+                }
+            }
+
             let skill_type = SkillType::Farming;
 
             // Calculate efficiency

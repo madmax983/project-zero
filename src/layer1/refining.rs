@@ -89,6 +89,13 @@ pub fn process_refining_system(world: &mut World) {
         Vec::new();
     let mut xp_gains: Vec<Entity> = Vec::new();
 
+    // Extract tech state
+    let tech_state_exists = world.contains_resource::<crate::layer1::tech::TechState>();
+    let tech_map = world
+        .get_resource::<crate::layer1::tech::TechState>()
+        .map(|ts| ts.techs.clone())
+        .unwrap_or_default();
+
     // Iterate buildings
     let buildings: Vec<(Entity, BuildingType, GridPosition, f32, f32, bool)> = world
         .query::<(
@@ -117,6 +124,15 @@ pub fn process_refining_system(world: &mut World) {
     for (building_entity, building_type, pos, _current_prog, _max_prog, is_active) in buildings {
         if !is_active {
             continue;
+        }
+
+        // Tech Corruption Check
+        if let Some(tech) = building_type.required_tech() {
+            if tech_state_exists
+                && tech_map.get(&tech) != Some(&crate::layer1::tech::TechStatus::Active)
+            {
+                continue;
+            }
         }
 
         // Find worker AT the building
