@@ -36,6 +36,7 @@ use crate::layer1::resources::{ColonyResources, RefiningProgress};
 use crate::layer1::rituals::MachineSpirit;
 use crate::layer1::tech::{DataStorage, Library, Tech, TechState};
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
+use crate::layer1::prototyping::{BuildingMastery, Prototype};
 use crate::layer1::trade::TradeDepot;
 use crate::layer1::water::{MAX_HYDRATION, WaterSource};
 use crate::shared::log::MessageLog;
@@ -163,7 +164,7 @@ pub struct Material(pub MaterialType);
 /// assert_eq!(cost.wood, 10.0);
 /// assert_eq!(cost.stone, 0.0);
 /// ```
-#[derive(Clone, Copy, PartialEq, Eq, Default, Debug, EnumIter)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, Default, Debug, EnumIter)]
 pub enum BuildingType {
     /// Basic shelter for pops.
     #[default]
@@ -845,11 +846,20 @@ fn spawn_building(
     building_type: BuildingType,
     material: MaterialType,
 ) {
+    // Prototyping Phase: Check mastery before mutable borrow
+    let is_mastered = world
+        .get_resource::<BuildingMastery>()
+        .map_or(true, |m| m.is_mastered(building_type));
+
     let mut entity = world.spawn((
         Building { building_type },
         GridPosition { x, y },
         Material(material),
     ));
+
+    if !is_mastered {
+        entity.insert(Prototype::default());
+    }
 
     // Calculate HP based on material
     let base_hp = 50.0;

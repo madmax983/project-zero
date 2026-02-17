@@ -32,10 +32,10 @@ use crate::layer1::{
     inspector_outcome_bridge_system,
     logistics::{conveyor_system, hopper_system},
     malfunction_system, mascot_behavior_system, mascot_buff_system, mascot_death_grief_system,
-    memory_decay_system, modify_affinity_system, morale_decay_system, movement_system,
-    natural_death_system, notification_expiration_system, pop_death_chronicle_bridge,
-    pressure_damage_system, process_fuel_consumption_system, process_observe_system,
-    process_refining_system, process_research_system, process_scan_system,
+    mastery_accumulation_system, memory_decay_system, modify_affinity_system, morale_decay_system,
+    movement_system, natural_death_system, notification_expiration_system,
+    pop_death_chronicle_bridge, pressure_damage_system, process_fuel_consumption_system,
+    process_observe_system, process_refining_system, process_research_system, process_scan_system,
     process_start_plan_system, produce_food_system, quirk_generation_system, regrowth_system,
     restore_leisure_system, restore_rest_in_housing_system, retrograde_chronicle_bridge,
     sleepwalk_end_system,
@@ -173,6 +173,10 @@ pub fn build_simulation_schedule() -> Schedule {
         process_observe_system.after(work_execution_system),
         regrowth_system.after(work_execution_system),
         flora_spread_system.after(work_execution_system),
+        mastery_accumulation_system.after(work_execution_system),
+    ));
+
+    schedule.add_systems((
         restore_rest_in_housing_system
             .after(work_execution_system)
             .after(update_noise_system),

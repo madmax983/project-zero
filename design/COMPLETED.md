@@ -61,3 +61,4 @@ Features that have been fully implemented, tested, and merged.
 ## MVP — Layer 2: System Simulation
 
 - [x] `094` System View Architecture — `specs/094-system-view.md` — completed 2026-10-27
+- [x] `145` Prototyping Phase — `specs/145-prototyping-phase.md` — completed 2026-02-17
