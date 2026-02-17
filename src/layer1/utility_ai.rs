@@ -75,6 +75,7 @@ use crate::layer1::stockpile::Stockpile;
 use crate::layer1::stress::Breakdown;
 use crate::layer1::structure::{DeferMaintenance, Structure};
 use crate::layer1::tech::Library;
+use crate::layer1::traits::Trait;
 use crate::layer1::unrest::MentalState;
 use crate::layer1::utility_eval_types::{
     CapacityProxy, ItemProxy, PlanOutcome, PopEvalData, PositionProxy, RefiningProxy,
@@ -112,6 +113,7 @@ pub(crate) fn evaluate_single_pop(
     let weights = data.weights;
     let equipment_opt = data.equipment;
     let is_penal = data.penal_labor.is_some();
+    let is_feral = data.traits.as_ref().is_some_and(|t| t.0.contains(&Trait::Feral));
 
     // Start with Idle as the baseline
     let mut best_action = ActionType::Idle;
@@ -253,7 +255,7 @@ pub(crate) fn evaluate_single_pop(
     }
 
     // Evaluate Research
-    if !is_striking && !is_penal {
+    if !is_striking && !is_penal && !is_feral {
         if let Some((utility, target)) =
             evaluate_research(pop_pos, &weights, context.resources, &buffer.libraries)
         {
@@ -349,15 +351,16 @@ pub fn evaluate_actions_system(world: &mut World) {
                 Option<&crate::layer1::factions::FactionMember>,
                 Option<&PenalLabor>,
                 Option<&Breakdown>,
+                Option<&crate::layer1::traits::Traits>,
             )>()
             .iter(world)
             .filter(
-                |(_, _, _, _, action, _, _, _, _, inmate, _, penal_labor, _)| {
+                |(_, _, _, _, action, _, _, _, _, inmate, _, penal_labor, _, _)| {
                     action.ticks_committed >= config.evaluation_interval
                         && (inmate.is_none() || penal_labor.is_some())
                 },
             )
-            .map(|(e, p, n, w, a, eq, c, m, d, _, fm, pl, b)| PopEvalData {
+            .map(|(e, p, n, w, a, eq, c, m, d, _, fm, pl, b, t)| PopEvalData {
                 entity: e,
                 pos: *p,
                 needs: *n,
@@ -370,6 +373,7 @@ pub fn evaluate_actions_system(world: &mut World) {
                 faction_member: fm.cloned(),
                 penal_labor: pl.copied(),
                 breakdown: b.copied(),
+                traits: t.cloned(),
             }),
     );
 

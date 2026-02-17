@@ -2,7 +2,6 @@
 //!
 //! Handles Hypothermia in Winter and Clothing degradation.
 
-use crate::layer1::health::Health;
 use crate::layer1::items::{Clothing, Equipment};
 use crate::layer1::pop::Pop;
 // use crate::layer1::resources::ColonyResources; // Unused in new logic

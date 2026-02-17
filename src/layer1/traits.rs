@@ -32,6 +32,8 @@ pub enum Trait {
     WeakImmunity,
     /// Loves fire (starts fires during breakdowns).
     Pyromaniac,
+    /// Raised in the wild (+20% Move Speed, -Intellectual).
+    Feral,
 }
 
 impl Trait {
@@ -51,6 +53,7 @@ impl Trait {
             Self::NativeBorn => "Native Born",
             Self::WeakImmunity => "Weak Immunity",
             Self::Pyromaniac => "Pyromaniac",
+            Self::Feral => "Feral",
         }
     }
 }
@@ -151,11 +154,14 @@ pub fn get_trait_hunger_decay_modifier(traits: &Traits) -> f32 {
 /// Returns the movement speed modifier from traits.
 #[must_use]
 pub fn get_trait_move_speed_modifier(traits: &Traits) -> f32 {
+    let mut modifier = 1.0;
     if traits.0.contains(&Trait::FastWalker) {
-        1.1
-    } else {
-        1.0
+        modifier += 0.1;
     }
+    if traits.0.contains(&Trait::Feral) {
+        modifier += 0.2;
+    }
+    modifier
 }
 
 /// Returns the mood modifier from traits based on time of day.
@@ -229,6 +235,26 @@ mod tests {
         assert!(
             (get_trait_hunger_decay_modifier(&normal) - 1.0).abs() < f32::EPSILON,
             "Normal should eat normally"
+        );
+    }
+
+    #[test]
+    fn test_feral_speed_modifier() {
+        let feral = Traits(HashSet::from([Trait::Feral]));
+        let fast = Traits(HashSet::from([Trait::FastWalker]));
+        let both = Traits(HashSet::from([Trait::Feral, Trait::FastWalker]));
+
+        assert!(
+            (get_trait_move_speed_modifier(&feral) - 1.2).abs() < 0.0001,
+            "Feral should be 20% faster"
+        );
+        assert!(
+            (get_trait_move_speed_modifier(&fast) - 1.1).abs() < 0.0001,
+            "FastWalker should be 10% faster"
+        );
+        assert!(
+            (get_trait_move_speed_modifier(&both) - 1.3).abs() < 0.0001,
+            "Both should be 30% faster"
         );
     }
 

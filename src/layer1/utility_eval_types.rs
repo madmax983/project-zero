@@ -8,6 +8,7 @@ use crate::layer1::penal::PenalLabor;
 use crate::layer1::resources::{ColonyResources, ResourceType};
 use crate::layer1::stress::Breakdown;
 use crate::layer1::taboo::TabooState;
+use crate::layer1::traits::Traits;
 use crate::layer1::unrest::MentalState;
 use crate::layer1::utility_types::{ActionType, PopAction, UtilityWeights};
 use bevy_ecs::prelude::*;
@@ -63,6 +64,8 @@ pub struct PopEvalData {
     pub penal_labor: Option<PenalLabor>,
     /// Breakdown status, if any.
     pub breakdown: Option<Breakdown>,
+    /// Personality traits, if any.
+    pub traits: Option<Traits>,
 }
 
 /// Context data for utility evaluation (resources, time, etc.)

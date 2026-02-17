@@ -404,3 +404,7 @@ pub use turret::*;
 /// Temperature simulation (Spec 140).
 pub mod temperature;
 pub use temperature::*;
+
+/// Wild Child system (Spec 124).
+pub mod wild_child;
+pub use wild_child::*;

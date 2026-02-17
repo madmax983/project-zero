@@ -2654,9 +2654,12 @@ mod tests {
         // Skill efficiency = 1.1
         // Expected = 10.0 * 1.0 * 1.0 * 1.1 = 11.0
         // Ludwig: Organic factor (0.9-1.1) implies range 9.9 - 12.1
+        // Crit (5%) -> Range 49.5 - 60.5
+        let is_normal = progress.current >= 9.9 && progress.current <= 12.1;
+        let is_crit = progress.current >= 49.5 && progress.current <= 60.5;
         assert!(
-            progress.current >= 9.9 && progress.current <= 12.1,
-            "Expected ~11.0 progress, got {}",
+            is_normal || is_crit,
+            "Expected ~11.0 (or ~55.0 crit) progress, got {}",
             progress.current
         );
     }
@@ -3032,7 +3035,10 @@ mod tests {
         let progress = world.get::<MiningProgress>(designation).unwrap();
         // Base 10.0 * 1.2 = 12.0.
         // Organic factor 0.9-1.1 -> Range 10.8 - 13.2
-        assert!(progress.current >= 10.8 && progress.current <= 13.2);
+        // Crit (5%) -> Range 54.0 - 66.0
+        let is_normal = progress.current >= 10.8 && progress.current <= 13.2;
+        let is_crit = progress.current >= 54.0 && progress.current <= 66.0;
+        assert!(is_normal || is_crit, "Got {}", progress.current);
     }
 
     #[test]

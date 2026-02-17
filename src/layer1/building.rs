@@ -265,7 +265,6 @@ impl BuildingType {
             Self::Wall => 0.05,
             Self::Airlock => 0.1, // Closed airlock insulates well but has leakage
             Self::Gate => 0.5,    // Gates are less insulated than walls
-            Self::Vent => 1.0,
             _ => 1.0, // Most buildings don't block heat flow significantly
         }
     }
