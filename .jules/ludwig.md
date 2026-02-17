@@ -27,3 +27,7 @@
 ## [Combat Feel]
 **Friction:** Heavy hits (15+ damage) felt floaty and identical to light hits. The impact was lost in the continuous simulation tick rate.
 **Flow:** Implemented "Hit Stop" (Freeze Frame) for 5 ticks (approx 80ms) on heavy hits. This pauses both the attacker and victim, emphasizing the weight of the blow without interrupting the global simulation.
+
+## [UI Responsiveness]
+**Friction:** The build cursor and designation rectangle felt static and lifeless, making it hard to see active selection states against the terrain.
+**Flow:** Implemented `WallTime` resource to decouple UI animation from simulation tick rate. Added a smooth sine-wave pulse to the build cursor and designation area, providing immediate visual feedback that the tool is active and ready.

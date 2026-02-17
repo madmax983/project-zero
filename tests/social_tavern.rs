@@ -59,6 +59,7 @@ mod tests {
         world.insert_resource(scale::layer1::map::ScreenShake::default());
         world.insert_resource(scale::layer1::inspector::InspectorSource::default());
         world.insert_resource(scale::layer1::social_mimicry::Trend::default());
+        world.insert_resource(scale::layer1::tech::TechState::default());
         world.insert_resource(RoofGrid::new(10, 10));
         world.init_resource::<Events<scale::layer1::structural_integrity::StructureCollapsed>>();
         world.init_resource::<Events<scale::layer1::chronicle::AddChronicleEvent>>();
