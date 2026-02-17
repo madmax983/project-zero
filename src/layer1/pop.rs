@@ -111,7 +111,7 @@ impl PopName {
 ///     query.iter().count()
 /// }
 /// ```
-#[derive(Component)]
+#[derive(Component, Default)]
 pub struct Pop;
 
 /// Tracks a pop's persistent employment, even when temporarily reassigned (e.g. to hospital).

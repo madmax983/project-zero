@@ -248,11 +248,28 @@ pub enum BuildingType {
     Vent,
     /// Defensive structure that consumes Waste as ammunition.
     TrashCannon,
+    /// Generates heat to combat cold temperatures.
+    Heater,
     /// The colony's starting ship (can be cannibalized for resources).
     Lander,
 }
 
 impl BuildingType {
+    /// Returns the thermal conductivity (0.0 to 1.0) of the building.
+    /// Lower values mean better insulation.
+    /// - 1.0: Passes heat freely (Vent, Empty)
+    /// - 0.05: Good insulation (Wall)
+    #[must_use]
+    pub const fn thermal_conductivity(&self) -> f32 {
+        match self {
+            Self::Wall => 0.05,
+            Self::Airlock => 0.1, // Closed airlock insulates well but has leakage
+            Self::Gate => 0.5,    // Gates are less insulated than walls
+            Self::Vent => 1.0,
+            _ => 1.0, // Most buildings don't block heat flow significantly
+        }
+    }
+
     /// Returns true if this building supports material variants.
     #[must_use]
     pub const fn supports_material(&self) -> bool {
@@ -306,6 +323,7 @@ impl BuildingType {
             Self::Well | Self::HydroponicsBay | Self::LifeSupport => 1.0,
             Self::Wall | Self::Gate | Self::Tower | Self::Airlock | Self::Vent => 0.0,
             Self::TrashCannon => -2.0, // Industrial machinery is ugly
+            Self::Heater => 0.0,
             _ => 0.0,
         }
     }
@@ -323,7 +341,8 @@ impl BuildingType {
             | Self::Hopper
             | Self::LifeSupport
             | Self::Airlock
-            | Self::Vent => Some(Tech::MetalWorking),
+            | Self::Vent
+            | Self::Heater => Some(Tech::MetalWorking),
             Self::Tavern | Self::Statue => Some(Tech::SocialStructures),
             Self::Tower => Some(Tech::Masonry),
             Self::Observatory => Some(Tech::Astronomy),
@@ -386,6 +405,7 @@ impl BuildingType {
             Self::Airlock => "Airlock",
             Self::Vent => "Vent",
             Self::TrashCannon => "Trash Cannon",
+            Self::Heater => "Heater",
             Self::Lander => "Lander",
         }
     }
@@ -427,6 +447,7 @@ impl BuildingType {
             Self::Airlock => '⌷',
             Self::Vent => '≡',
             Self::TrashCannon => '♣',
+            Self::Heater => 'h',
             Self::Lander => 'Λ',
         }
     }
@@ -439,6 +460,10 @@ impl BuildingType {
             Self::TrashCannon => ColonyResources {
                 metal: 20.0,
                 stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Heater => ColonyResources {
+                metal: 20.0,
                 ..ColonyResources::zeroed()
             },
             Self::LifeSupport => ColonyResources {
@@ -695,7 +720,7 @@ impl BuildingType {
 }
 
 /// Building component - attached to building entities.
-#[derive(Component)]
+#[derive(Component, Default)]
 pub struct Building {
     /// The type of this building.
     pub building_type: BuildingType,
@@ -1184,6 +1209,19 @@ fn spawn_building(
                 crate::layer1::combat::CombatState::default(),
             ));
         }
+        BuildingType::Heater => {
+            entity.insert((
+                PowerConsumer {
+                    demand: 5.0,
+                    active: true, // Typically on, logic will toggle if needed
+                },
+                crate::layer1::lighting::LightSource {
+                    radius: 3.0,
+                    intensity: 0.5,
+                    color: (255, 100, 50), // Warm Orange
+                },
+            ));
+        }
         BuildingType::Lander => {
             entity.insert((
                 Housing {
@@ -1403,7 +1441,8 @@ mod tests {
         assert_eq!(BuildingType::LifeSupport.next(), BuildingType::Airlock);
         assert_eq!(BuildingType::Airlock.next(), BuildingType::Vent);
         assert_eq!(BuildingType::Vent.next(), BuildingType::TrashCannon);
-        assert_eq!(BuildingType::TrashCannon.next(), BuildingType::Lander);
+        assert_eq!(BuildingType::TrashCannon.next(), BuildingType::Heater);
+        assert_eq!(BuildingType::Heater.next(), BuildingType::Lander);
         assert_eq!(BuildingType::Lander.next(), BuildingType::Housing);
     }
 
@@ -1573,6 +1612,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::TrashCannon);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Heater);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Lander);

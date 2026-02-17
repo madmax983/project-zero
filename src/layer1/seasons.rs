@@ -53,6 +53,17 @@ impl Season {
             Self::Winter => "Winter",
         }
     }
+
+    /// Returns the base ambient temperature for this season (Celsius).
+    #[must_use]
+    pub const fn base_temperature(&self) -> f32 {
+        match self {
+            Self::Spring => 15.0,
+            Self::Summer => 30.0,
+            Self::Autumn => 10.0,
+            Self::Winter => -5.0,
+        }
+    }
 }
 
 /// Tracks the current season of the colony.
@@ -185,5 +196,13 @@ mod tests {
         assert!((Season::Summer.food_modifier() - 1.2).abs() < f32::EPSILON);
         assert!((Season::Autumn.food_modifier() - 1.5).abs() < f32::EPSILON);
         assert!((Season::Winter.food_modifier() - 0.5).abs() < f32::EPSILON);
+    }
+
+    #[test]
+    fn test_base_temperature() {
+        assert!((Season::Spring.base_temperature() - 15.0).abs() < f32::EPSILON);
+        assert!((Season::Summer.base_temperature() - 30.0).abs() < f32::EPSILON);
+        assert!((Season::Autumn.base_temperature() - 10.0).abs() < f32::EPSILON);
+        assert!((Season::Winter.base_temperature() + 5.0).abs() < f32::EPSILON);
     }
 }

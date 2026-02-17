@@ -48,7 +48,7 @@ use crate::layer1::{
     combat_execution_system, consume_food_system, death_system, decay_needs_system,
     discovery_system, entropy_system, faction_satisfaction_morale_bridge, fire_damage_pops_system,
     fire_damage_system, fire_pressure_check_system, fire_spread_system, flora_attack_system,
-    flora_spread_system, haul_system, healing_system, hypothermia_system, infiltration_system,
+    flora_spread_system, haul_system, healing_system, infiltration_system,
     inspector::{inspector_report_system, observe_inspector_system, spawn_inspector_system},
     inspector_outcome_bridge_system,
     logistics::{conveyor_system, hopper_system},
@@ -272,6 +272,7 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(work_execution_system)
             .after(waste_pollution_bridge),
         update_pressure_system.after(work_execution_system),
+        crate::layer1::temperature::update_temperature_system.after(update_pressure_system),
         crate::layer1::suction::suction_system.after(update_pressure_system),
         crate::layer1::integration::vacuum_clears_pollution_system
             .after(crate::layer1::atmosphere::update_atmosphere_system)
@@ -351,12 +352,12 @@ pub fn build_simulation_schedule() -> Schedule {
         sickness_progression_system.after(aging_system),
         memory_decay_system.after(decay_needs_system),
         notification_expiration_system.after(decay_needs_system),
-        hypothermia_system.after(decay_needs_system),
+        crate::layer1::temperature::thermal_damage_system.after(decay_needs_system),
         pressure_damage_system.after(decay_needs_system),
         starvation_damage_system.after(decay_needs_system),
         check_death_event_system
             .after(starvation_damage_system)
-            .after(hypothermia_system)
+            .after(crate::layer1::temperature::thermal_damage_system)
             .after(pressure_damage_system)
             .after(natural_death_system),
         mascot_death_grief_system.after(check_death_event_system),
