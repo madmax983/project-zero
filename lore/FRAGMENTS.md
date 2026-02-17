@@ -2014,3 +2014,110 @@ What the mascot does.
 - sleeps on the vent
 - leads the patrol
 - demands scratches
+
+---
+
+## Fragment Type: [LOCK_STATUS]
+- engaged
+- frozen
+- rejecting
+- dead-locked
+- cycling
+- unyielding
+- cold
+
+## Fragment Type: [ACCESS_LEVEL]
+- red-tier
+- command-only
+- restricted
+- black-listed
+- void-level
+- core-access
+- eyes-only
+
+## Fragment Type: [GENERATION_NAME]
+- First-Born
+- The Root
+- Founder-Kin
+- Deep-Sleepers
+- The Awake
+- Star-Fathers
+- Void-Mothers
+
+## Fragment Type: [OLD_GUARD_TITLE]
+- Elder
+- First
+- Keeper
+- Memory
+- Root-Holder
+- Seed-Planter
+
+## Fragment Type: [DECOMPRESSION_SOUND]
+- pop
+- scream
+- boom
+- hiss
+- crack
+- thunder-clap
+- void-roar
+
+## Fragment Type: [SUCTION_DESCRIPTOR]
+- hungry
+- relentless
+- tearing
+- dragging
+- cold
+- invisible
+- giant
+
+## Fragment Type: [CANNON_NAME]
+- The Maw
+- Void-Spitter
+- Trash-Eater
+- The Belch
+- Slag-Thrower
+- Junk-Jet
+- The Cleaner
+
+## Fragment Type: [PROJECTILE_TYPE]
+- slag-ball
+- junk-shot
+- waste-packet
+- scrap-bundle
+- filth-bomb
+- refuse-slug
+
+## Fragment Type: [GLOW_COLOR]
+- pale-blue
+- sick-green
+- void-purple
+- cold-white
+- blood-orange
+- ghost-grey
+
+## Fragment Type: [LIGHT_PLANT_NAME]
+- ghost-fern
+- star-moss
+- lantern-bulb
+- void-lily
+- moon-creeper
+- cold-fire
+- spirit-vine
+
+## Fragment Type: [GRID_SOUND]
+- hum
+- whine
+- crackle
+- buzz
+- scream
+- thrum
+- stutter
+
+## Fragment Type: [POWER_FLUCTUATION]
+- flicker
+- surge
+- dip
+- spike
+- brownout
+- pulse
+- spasm

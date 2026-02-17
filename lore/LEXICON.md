@@ -1481,3 +1481,96 @@
 **Usage:**
 - "On morale-patrol."
 - "The dog is doing rounds—morale-patrol."
+
+## Security & Access
+
+### the lock-out / denied
+**Replaces:** biometric access failure
+**Code reference:** `AccessControl`
+**Usage:**
+- "Hit the lock-out."
+- "Denied by the door."
+
+### hand-shake
+**Replaces:** biometric authentication
+**Code reference:** `Biometric` check
+**Usage:**
+- "The hand-shake is slow today."
+- "Waiting for the hand-shake."
+
+## The Old Guard
+
+### First-Born / The Root
+**Replaces:** original colonists / Old Guard
+**Code reference:** `Generation::Founder`
+**Usage:**
+- "Respect the First-Born."
+- "The Root runs deep."
+
+### New-Blood / Saplings
+**Replaces:** new arrivals
+**Code reference:** `Generation::Immigrant`
+**Usage:**
+- "New-Blood doesn't remember the Hunger."
+- "Saplings need water, not words."
+
+## Pressure & Vacuum
+
+### the Flush / void-kiss
+**Replaces:** emergency venting
+**Code reference:** `EMERGENCY_VENT`
+**Usage:**
+- "Give it the Flush."
+- "He felt the void-kiss."
+
+### the Pop
+**Replaces:** explosive decompression
+**Code reference:** `DECOMPRESSION` event
+**Usage:**
+- "Fear the Pop."
+- "We lost sector 4 to the Pop."
+
+### breath-hold
+**Replaces:** low pressure warning
+**Usage:**
+- "It's a breath-hold in there."
+
+## Defense & Ballistics
+
+### maw-feeder
+**Replaces:** trash cannon loader
+**Code reference:** `TrashCannon`
+**Usage:**
+- "Maw-feeder needs more slag."
+- "Loading the maw."
+
+### void-shot
+**Replaces:** firing trash into space
+**Code reference:** `CannonFire`
+**Usage:**
+- "Good void-shot."
+- "Sending a void-shot to the visitors."
+
+## Flora & Light
+
+### ghost-light
+**Replaces:** bioluminescent flora
+**Code reference:** `Bioluminescence`
+**Usage:**
+- "Reading by ghost-light."
+- "The ghost-light is pretty, but cold."
+
+## Grid Stability
+
+### the flicker
+**Replaces:** grid instability / brownout
+**Code reference:** `GridInstability`
+**Usage:**
+- "Did you see the flicker?"
+- "Living with the flicker."
+
+### surge-fear
+**Replaces:** fear of overload
+**Code reference:** `Overload` risk
+**Usage:**
+- "Surge-fear keeps me awake."
