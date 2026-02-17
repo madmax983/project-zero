@@ -12,7 +12,7 @@ use scale::platform::input::{GameKeyEvent, GameMouseEvent};
 use scale::setup::setup_world;
 use scale::shared::input::{route_input, route_mouse_input};
 use scale::shared::state::GameState;
-use scale::shared::time::{SimSpeed, SimulationTime};
+use scale::shared::time::{SimSpeed, SimulationTime, WallTime};
 use scale::simulation::run_simulation_tick;
 use scale::ui::map::update_render_cache;
 use scale::ui::render;
@@ -50,6 +50,9 @@ fn main() -> std::io::Result<()> {
         let world = world;
         move |frame| {
             let mut world = world.borrow_mut();
+
+            // Update wall time (approx 60fps)
+            world.resource_mut::<WallTime>().0 += 1.0 / 60.0;
 
             // Rate-limit simulation: every 6 frames ≈ 10 ticks/sec at 60fps
             let mut count = frame_count.borrow_mut();

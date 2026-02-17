@@ -9,6 +9,11 @@ pub struct SimulationTime {
     pub speed: SimSpeed,
 }
 
+/// Tracks the wall-clock time for UI animations (e.g. pulsing cursors).
+/// This is updated every frame, independent of simulation speed.
+#[derive(Resource, Default, Debug, Clone, Copy)]
+pub struct WallTime(pub f32);
+
 /// Defines the speed at which the simulation runs.
 #[derive(Clone, Copy, PartialEq, Eq, Default, Debug)]
 pub enum SimSpeed {
@@ -62,6 +67,12 @@ mod tests {
         let sim_time = SimulationTime::default();
         assert_eq!(sim_time.tick, 0);
         assert_eq!(sim_time.speed, SimSpeed::Normal);
+    }
+
+    #[test]
+    fn test_wall_time_default() {
+        let wall_time = WallTime::default();
+        assert!((wall_time.0 - 0.0).abs() < f32::EPSILON);
     }
 
     #[test]

@@ -14,6 +14,7 @@ use crate::layer1::{
     MaterialType, Mentorship, MiningProgress, Needs, ResourceItem, ResourceType, TerrainGrid,
     TerrainType, Viewport, Visitor,
 };
+use crate::shared::time::WallTime;
 
 /// Represents a renderable entity on the map.
 ///
@@ -252,6 +253,8 @@ pub struct MapRenderContext<'a, S: BuildHasher> {
     pub designation_mode: Option<(GridPosition, DesignationType, bool, Option<GridPosition>)>,
     /// The current season, if available (for visual overlays).
     pub season: Option<crate::layer1::seasons::Season>,
+    /// The current wall time for UI animations.
+    pub wall_time: f32,
 }
 
 impl<S: BuildHasher> Clone for MapRenderContext<'_, S> {
@@ -324,7 +327,16 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
                 .build_mode
                 .filter(|(cursor, _, _, _)| cursor.x == world_x && cursor.y == world_y)
             {
-                let bg = if can_place { Color::Green } else { Color::Red };
+                // Ludwig: Pulsing cursor effect
+                let pulse = (ctx.wall_time * 5.0).sin().abs(); // 0.0 to 1.0
+                let intensity = (50.0 + 100.0 * pulse) as u8; // 50 to 150
+
+                let bg = if can_place {
+                    Color::Rgb(0, intensity + 50, 0) // Green pulse
+                } else {
+                    Color::Rgb(intensity + 100, 0, 0) // Red pulse
+                };
+
                 let text = get_building_char(selected);
                 let fg = get_building_color(selected, material);
                 line_spans.push(Span::styled(text, Style::default().fg(fg).bg(bg)));
@@ -334,7 +346,16 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
             // Designation mode cursor (highest priority, shared with build mode)
             if let Some((cursor, selected, can_place, drag_start)) = ctx.designation_mode {
                 if cursor.x == world_x && cursor.y == world_y {
-                    let bg = if can_place { Color::Green } else { Color::Red };
+                    // Ludwig: Pulsing cursor effect
+                    let pulse = (ctx.wall_time * 5.0).sin().abs();
+                    let intensity = (50.0 + 100.0 * pulse) as u8;
+
+                    let bg = if can_place {
+                        Color::Rgb(0, intensity + 50, 0)
+                    } else {
+                        Color::Rgb(intensity + 100, 0, 0)
+                    };
+
                     let text = get_designation_char(selected);
                     line_spans.push(Span::styled(text, Style::default().fg(Color::White).bg(bg)));
                     continue;
@@ -361,9 +382,14 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
                         } else {
                             (" ", Color::Black)
                         };
+
+                        // Ludwig: Gentle pulsing highlight for selection area
+                        let pulse = (ctx.wall_time * 2.0).sin().abs(); // Slower pulse
+                        let blue = (50.0 + 30.0 * pulse) as u8;
+
                         line_spans.push(Span::styled(
                             text,
-                            Style::default().fg(fg).bg(Color::Rgb(50, 50, 80)),
+                            Style::default().fg(fg).bg(Color::Rgb(50, 50, blue)),
                         ));
                         continue;
                     }
@@ -529,6 +555,8 @@ pub fn render_map(frame: &mut Frame, area: Rect, world: &World) {
         .get_resource::<crate::layer1::seasons::SeasonState>()
         .map(|s| s.current_season);
 
+    let wall_time = world.resource::<WallTime>().0;
+
     // Fetch ScreenShake
     let shake_offset = world
         .get_resource::<crate::layer1::map::ScreenShake>()
@@ -580,6 +608,7 @@ pub fn render_map(frame: &mut Frame, area: Rect, world: &World) {
         build_mode: build_mode_cursor,
         designation_mode: designation_mode_cursor,
         season,
+        wall_time,
     };
 
     render_map_layer(frame, ctx);

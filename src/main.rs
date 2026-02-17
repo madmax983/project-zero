@@ -11,7 +11,7 @@ use scale::platform::input::{GameKeyEvent, GameMouseEvent};
 use scale::setup::setup_world;
 use scale::shared::input::{route_input, route_mouse_input};
 use scale::shared::state::GameState;
-use scale::shared::time::{SimSpeed, SimulationTime};
+use scale::shared::time::{SimSpeed, SimulationTime, WallTime};
 use scale::simulation::run_simulation_tick;
 use scale::ui::map::update_render_cache;
 use scale::ui::render;
@@ -47,8 +47,15 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
     // Main loop
     let tick_rate = Duration::from_millis(100); // 10 FPS base
     let mut last_tick = Instant::now();
+    let mut last_frame = Instant::now();
 
     loop {
+        let now = Instant::now();
+        let delta = now.duration_since(last_frame);
+        last_frame = now;
+
+        world.resource_mut::<WallTime>().0 += delta.as_secs_f32();
+
         // Input
         // event::read() must only be called after event::poll() indicates that an event is available.
         // The nested if structure preserves this ordering and cannot be safely collapsed.

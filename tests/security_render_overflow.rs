@@ -40,6 +40,7 @@ mod tests {
             build_mode: None,
             designation_mode: None,
             season: None,
+            wall_time: 0.0,
         };
 
         // This should panic in debug mode due to overflow if not handled
