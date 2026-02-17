@@ -1,3 +1,24 @@
+//! Logic for the "Haul" action.
+//!
+//! # The Haul Action
+//!
+//! A clean colony is an efficient colony. Hauling serves two purposes:
+//! 1.  **Sanitation**: Clearing waste and debris to improve beauty.
+//! 2.  **Logistics**: Moving resources to stockpiles where they can be used for crafting.
+//!
+//! ## Logic Flow
+//!
+//! 1.  **Global Check**: Is there *any* stockpile space? If not, abort immediately (Optimization).
+//! 2.  **Drop-off**: If the Pop is already carrying something, find the nearest valid stockpile.
+//! 3.  **Pick-up**: If empty-handed, find the nearest loose item on the ground that:
+//!     *   Has storage space available (e.g., won't pick up Wood if Wood storage is full).
+//!     *   Is reachable.
+//!
+//! ## Capacity Management
+//!
+//! Haulers check [`ColonyResources`](crate::layer1::resources::ColonyResources) capacity before picking up an item.
+//! This prevents "juggle hauling" where items are picked up and immediately dropped because there's nowhere to put them.
+
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::utility_eval_types::{ItemProxy, PositionProxy};
@@ -5,19 +26,52 @@ use crate::layer1::utility_types::{ActionType, UtilityWeights};
 use crate::layer1::utility_types::{calculate_context_score, calculate_success_modifier};
 use bevy_ecs::prelude::*;
 
-/// Evaluates the utility of hauling loose items to a [`Stockpile`](crate::layer1::stockpile::Stockpile).
+/// Evaluates the utility of hauling loose items to a [`crate::layer1::stockpile::Stockpile`].
 ///
-/// A clean colony is a happy colony. Hauling items prevents beauty decay
-/// and makes resources available for crafting.
+/// **Returns:**
+/// *   `Some((0.9, stockpile_entity))` if carrying an item (High priority to finish).
+/// *   `Some((utility, item_entity))` if finding an item (Based on distance).
+/// *   `None` if no stockpiles exist or no valid items found.
 ///
-/// **Logic:**
-/// 1.  Checks if *any* [`Stockpile`](crate::layer1::stockpile::Stockpile) exists (short-circuit optimization).
-/// 2.  Iterates through all [`ItemProxy`] entities on the map.
-/// 3.  Checks if the colony has storage capacity for that specific resource type.
-///     (e.g., won't haul wood if `wood >= max_wood`).
-/// 4.  Scores based on distance to the item.
+/// # Examples
 ///
-/// **Returns:** `Some((utility, item_entity))`
+/// ```rust,ignore
+/// use scale::layer1::actions::haul::evaluate_haul;
+/// use scale::layer1::map::GridPosition;
+/// use scale::layer1::resources::{ColonyResources, ResourceType, Carrying};
+/// use scale::layer1::utility_types::UtilityWeights;
+/// use scale::layer1::utility_eval_types::{ItemProxy, PositionProxy};
+/// use bevy_ecs::prelude::*;
+///
+/// let pop_pos = GridPosition { x: 0, y: 0 };
+/// let weights = UtilityWeights::default();
+/// let resources = ColonyResources::default();
+///
+/// // Scenario: Carrying Wood, need to find stockpile
+/// let carrying = Some(Carrying {
+///     resource_type: ResourceType::Wood,
+///     amount: 1.0,
+/// });
+///
+/// let stockpiles = vec![PositionProxy {
+///     entity: Entity::PLACEHOLDER,
+///     pos: GridPosition { x: 10, y: 0 },
+/// }];
+///
+/// let result = evaluate_haul(
+///     pop_pos,
+///     &weights,
+///     &[], // No items on ground needed for drop-off logic
+///     &stockpiles,
+///     &resources,
+///     carrying
+/// );
+///
+/// if let Some((utility, entity)) = result {
+///     println!("Drop-off utility: {}", utility);
+///     assert_eq!(utility, 0.9); // High priority to drop off
+/// }
+/// ```
 #[must_use]
 pub(crate) fn evaluate_haul(
     pop_pos: GridPosition,
