@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::energy::PowerConsumer;
 use crate::layer2::system::ViewMode;
+use bevy_ecs::prelude::*;
 
 /// Defines the visibility state of the system view (Layer 2).
 #[derive(Resource, Default, Debug, PartialEq, Eq, Clone, Copy)]
@@ -48,16 +48,19 @@ pub fn enforce_view_mode_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_ecs::prelude::*;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::energy::PowerConsumer;
     use crate::layer2::system::ViewMode;
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_visibility_defaults_to_none() {
         let mut world = World::new();
         world.init_resource::<SystemVisibility>();
-        assert_eq!(*world.resource::<SystemVisibility>(), SystemVisibility::None);
+        assert_eq!(
+            *world.resource::<SystemVisibility>(),
+            SystemVisibility::None
+        );
     }
 
     #[test]
@@ -67,8 +70,14 @@ mod tests {
 
         // Spawn a powered Command Center
         world.spawn((
-            Building { building_type: BuildingType::CommandCenter },
-            PowerConsumer { active: true, demand: 10.0, ..Default::default() },
+            Building {
+                building_type: BuildingType::CommandCenter,
+            },
+            PowerConsumer {
+                active: true,
+                demand: 10.0,
+                ..Default::default()
+            },
         ));
 
         // Run visibility update system
@@ -76,7 +85,10 @@ mod tests {
         schedule.add_systems(update_visibility_system);
         schedule.run(&mut world);
 
-        assert_eq!(*world.resource::<SystemVisibility>(), SystemVisibility::Full);
+        assert_eq!(
+            *world.resource::<SystemVisibility>(),
+            SystemVisibility::Full
+        );
     }
 
     #[test]
@@ -86,15 +98,24 @@ mod tests {
 
         // Spawn an unpowered Command Center
         world.spawn((
-            Building { building_type: BuildingType::CommandCenter },
-            PowerConsumer { active: false, demand: 10.0, ..Default::default() },
+            Building {
+                building_type: BuildingType::CommandCenter,
+            },
+            PowerConsumer {
+                active: false,
+                demand: 10.0,
+                ..Default::default()
+            },
         ));
 
         let mut schedule = Schedule::default();
         schedule.add_systems(update_visibility_system);
         schedule.run(&mut world);
 
-        assert_eq!(*world.resource::<SystemVisibility>(), SystemVisibility::None);
+        assert_eq!(
+            *world.resource::<SystemVisibility>(),
+            SystemVisibility::None
+        );
     }
 
     #[test]

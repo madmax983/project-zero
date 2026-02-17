@@ -159,4 +159,6 @@ pub enum AssignmentType {
     Governor,
     /// Administrator job.
     Administrator,
+    /// Undergoing surgery.
+    Surgery,
 }

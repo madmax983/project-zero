@@ -69,3 +69,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `145` Prototyping Phase — `specs/145-prototyping-phase.md` — completed 2026-02-17
 - [x] `INT-024` Integration: Items on Ground -> Vermin Growth — completed 2026-03-27
 - [x] `130` Social Debt — `specs/130-social-debt.md` — completed 2026-10-27
+- [x] `151` Cybernetic Augmentation — `specs/151-cybernetic-augmentation.md` — completed 2026-02-17

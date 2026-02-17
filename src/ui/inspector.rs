@@ -15,8 +15,8 @@ use ratatui::{
 };
 
 use crate::layer1::biography::Biography;
-use crate::layer1::dreams::DreamJournal;
 use crate::layer1::day_night::DayNightCycle;
+use crate::layer1::dreams::DreamJournal;
 use crate::layer1::purity::PurityMap;
 use crate::layer1::rituals::{MachineSpirit, Quirk, QuirkType};
 use crate::layer1::social::old_guard::{Arrival, Generation};
@@ -65,6 +65,7 @@ const fn format_action_type(action: ActionType) -> (&'static str, &'static str, 
         ActionType::HideInRoom => ("🚪", "Hiding", Color::DarkGray),
         ActionType::SadWander => ("😢", "Wandering Sadly", Color::Blue),
         ActionType::FetchClothing => ("👕", "Fetching Clothes", Color::Cyan),
+        ActionType::Surgery => ("🏥", "Undergoing Surgery", Color::Red),
     }
 }
 

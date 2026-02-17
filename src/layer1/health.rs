@@ -134,7 +134,6 @@ pub fn death_system(world: &mut World) {
                     },
                     pos,
                 ));
-
             }
 
             world.send_event(PopDied {

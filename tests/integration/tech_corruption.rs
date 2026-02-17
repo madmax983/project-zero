@@ -54,7 +54,7 @@ mod tests {
 
         // Unlock Tech
         let mut tech_state = TechState::default();
-    tech_state.total_capacity = 100.0;
+        tech_state.total_capacity = 100.0;
         tech_state.unlock(Tech::MetalWorking);
         world.insert_resource(tech_state);
 
@@ -87,7 +87,10 @@ mod tests {
         // 1. Verify it works when Active
         process_refining_system(&mut world);
         let progress = world.get::<RefiningProgress>(smelter).unwrap();
-        assert!(progress.current > 0.0, "Smelter should work when tech is active");
+        assert!(
+            progress.current > 0.0,
+            "Smelter should work when tech is active"
+        );
 
         // Reset Progress
         world.entity_mut(smelter).insert(RefiningProgress {
@@ -97,7 +100,9 @@ mod tests {
 
         // 2. Corrupt Tech
         let mut tech_state = world.resource_mut::<TechState>();
-    tech_state.techs.insert(Tech::MetalWorking, TechStatus::Corrupted);
+        tech_state
+            .techs
+            .insert(Tech::MetalWorking, TechStatus::Corrupted);
 
         // 3. Verify it stops working
         process_refining_system(&mut world);
@@ -117,7 +122,7 @@ mod tests {
 
         // Unlock Tech
         let mut tech_state = TechState::default();
-    tech_state.total_capacity = 100.0;
+        tech_state.total_capacity = 100.0;
         tech_state.unlock(Tech::Hydroponics);
         world.insert_resource(tech_state);
 
@@ -149,14 +154,19 @@ mod tests {
         // 1. Verify it works when Active
         world.run_system_once(produce_food_system).unwrap();
         let res = world.resource::<ColonyResources>();
-        assert!(res.food > 0.0, "Hydroponics should produce food when tech is active");
+        assert!(
+            res.food > 0.0,
+            "Hydroponics should produce food when tech is active"
+        );
 
         // Reset Food
         world.resource_mut::<ColonyResources>().food = 0.0;
 
         // 2. Corrupt Tech
         let mut tech_state = world.resource_mut::<TechState>();
-    tech_state.techs.insert(Tech::Hydroponics, TechStatus::Corrupted);
+        tech_state
+            .techs
+            .insert(Tech::Hydroponics, TechStatus::Corrupted);
 
         // 3. Verify it stops working
         world.run_system_once(produce_food_system).unwrap();
@@ -173,7 +183,7 @@ mod tests {
 
         // Unlock Tech
         let mut tech_state = TechState::default();
-    tech_state.total_capacity = 100.0;
+        tech_state.total_capacity = 100.0;
         tech_state.unlock(Tech::Militia);
         world.insert_resource(tech_state);
 
@@ -217,7 +227,10 @@ mod tests {
         // 1. Verify it fires when Active
         turret_fire_system(&mut world);
         let health = world.get::<Health>(enemy).unwrap();
-        assert!(health.current < 100.0, "Turret should fire when tech is active");
+        assert!(
+            health.current < 100.0,
+            "Turret should fire when tech is active"
+        );
 
         // Reset Enemy Health
         world.entity_mut(enemy).insert(Health {
@@ -232,7 +245,9 @@ mod tests {
 
         // 2. Corrupt Tech
         let mut tech_state = world.resource_mut::<TechState>();
-    tech_state.techs.insert(Tech::Militia, TechStatus::Corrupted);
+        tech_state
+            .techs
+            .insert(Tech::Militia, TechStatus::Corrupted);
 
         // 3. Verify it stops firing
         turret_fire_system(&mut world);

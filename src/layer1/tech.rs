@@ -249,7 +249,10 @@ pub fn unlock_tech(world: &mut World, tech: Tech) -> bool {
         true
     } else {
         if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
-            log.add(format!("Failed to research {}: Insufficient Data Capacity", tech.label()));
+            log.add(format!(
+                "Failed to research {}: Insufficient Data Capacity",
+                tech.label()
+            ));
         }
         false
     }

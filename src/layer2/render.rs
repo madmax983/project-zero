@@ -1,8 +1,11 @@
 //! Rendering logic for Layer 2: System View.
 
-use ratatui::{prelude::*, widgets::{Block, Borders, Paragraph}};
+use crate::layer2::system::{Orbit, OrbitalBody};
 use bevy_ecs::prelude::*;
-use crate::layer2::system::{OrbitalBody, Orbit};
+use ratatui::{
+    prelude::*,
+    widgets::{Block, Borders, Paragraph},
+};
 
 /// Renders the System View (Layer 2).
 ///
@@ -29,7 +32,10 @@ pub fn render_system_view(frame: &mut Frame, area: Rect, world: &World) {
 
     // Draw the sun (center)
     let sun_pos = (center_x, center_y);
-    if inner.contains(ratatui::layout::Position { x: sun_pos.0, y: sun_pos.1 }) {
+    if inner.contains(ratatui::layout::Position {
+        x: sun_pos.0,
+        y: sun_pos.1,
+    }) {
         frame.buffer_mut().set_string(
             sun_pos.0,
             sun_pos.1,

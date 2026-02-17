@@ -394,6 +394,10 @@ mod tests {
         turret_fire_system(&mut world);
 
         let res = world.resource::<ColonyResources>();
-        assert!((res.waste - 0.0).abs() < f32::EPSILON, "Should not gain waste from negative cost. Current waste: {}", res.waste);
+        assert!(
+            (res.waste - 0.0).abs() < f32::EPSILON,
+            "Should not gain waste from negative cost. Current waste: {}",
+            res.waste
+        );
     }
 }

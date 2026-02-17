@@ -44,8 +44,8 @@ pub struct SystemMap;
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::shared::input::{InputContextStack, InputContext};
     use crate::platform::input::{GameKeyCode, GameKeyEvent};
+    use crate::shared::input::{InputContext, InputContextStack};
     use crate::shared::state::GameState;
     // InputRouter might not be public or available directly. Let's check imports.
     // route_input is a function in crate::shared::input.
@@ -66,12 +66,14 @@ mod tests {
     #[test]
     fn test_orbital_body_component() {
         let mut world = World::new();
-        let entity = world.spawn(OrbitalBody {
-            name: "Planet".to_string(),
-            radius: 10.0,
-            color: Color::Blue,
-            char: 'O',
-        }).id();
+        let entity = world
+            .spawn(OrbitalBody {
+                name: "Planet".to_string(),
+                radius: 10.0,
+                color: Color::Blue,
+                char: 'O',
+            })
+            .id();
 
         let body = world.get::<OrbitalBody>(entity).unwrap();
         assert_eq!(body.name, "Planet");
@@ -82,12 +84,14 @@ mod tests {
     fn test_orbit_component() {
         let mut world = World::new();
         let sun = world.spawn_empty().id();
-        let planet = world.spawn(Orbit {
-            parent: sun,
-            radius: 100.0,
-            speed: 0.1,
-            angle: 0.0,
-        }).id();
+        let planet = world
+            .spawn(Orbit {
+                parent: sun,
+                radius: 100.0,
+                speed: 0.1,
+                angle: 0.0,
+            })
+            .id();
 
         let orbit = world.get::<Orbit>(planet).unwrap();
         assert_eq!(orbit.parent, sun);
@@ -109,10 +113,18 @@ mod tests {
         // Note: route_input is the function to call.
         route_input(&mut world, key_event(GameKeyCode::Tab));
 
-        assert_eq!(*world.resource::<ViewMode>(), ViewMode::System, "Tab should switch to System view");
+        assert_eq!(
+            *world.resource::<ViewMode>(),
+            ViewMode::System,
+            "Tab should switch to System view"
+        );
 
         // Press Tab to switch back to Colony View
         route_input(&mut world, key_event(GameKeyCode::Tab));
-        assert_eq!(*world.resource::<ViewMode>(), ViewMode::Colony, "Tab should switch back to Colony view");
+        assert_eq!(
+            *world.resource::<ViewMode>(),
+            ViewMode::Colony,
+            "Tab should switch back to Colony view"
+        );
     }
 }

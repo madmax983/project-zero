@@ -37,6 +37,7 @@ use crate::layer1::actions::rest::handle_arrival as handle_rest_arrival;
 use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::building::{Building, OccupiedTiles};
 use crate::layer1::combat::{HitStop, Weapon};
+use crate::layer1::cybernetics::get_efficiency_bonus;
 use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::defense::Gate;
 use crate::layer1::designation::{Designation, DesignationType};
@@ -242,7 +243,8 @@ pub fn cleanup_previous_assignment_system(
             | AssignmentType::Scientist
             | AssignmentType::Artist
             | AssignmentType::Governor
-            | AssignmentType::Administrator => {}
+            | AssignmentType::Administrator
+            | AssignmentType::Surgery => {}
         }
 
         commands.entity(pop_entity).remove::<AssignedTo>();
@@ -635,7 +637,8 @@ fn assign_pop(
         AssignmentType::HousingResident
         | AssignmentType::TavernVisitor
         | AssignmentType::Patient
-        | AssignmentType::Funeral => {
+        | AssignmentType::Funeral
+        | AssignmentType::Surgery => {
             // These are not jobs, so we don't update Job component.
             // The pop keeps their previous job (if any).
         }
@@ -1096,11 +1099,14 @@ fn calculate_work_amount(
     let mut rng = rand::thread_rng();
     let organic_factor = rng.gen_range(0.9..1.1);
 
+    let augmentation_bonus = get_efficiency_bonus(world, pop_entity);
+
     WORK_PER_TICK
         * tool_efficiency
         * morale_efficiency
         * skill_efficiency
         * work_speed_mod
+        * (1.0 + augmentation_bonus)
         * organic_factor
 }
 
@@ -3216,6 +3222,88 @@ mod tests {
         assert!(
             (health.current - 100.0).abs() < f32::EPSILON,
             "HitStop should prevent attack"
+        );
+    }
+
+    #[test]
+    fn test_work_execution_augmentation_bonus() {
+        use crate::layer1::cybernetics::{Augmentations, Prosthetic, ProstheticType};
+
+        let mut world = setup_world();
+        let mut tiles = vec![TerrainType::Grass; 100];
+        tiles[55] = TerrainType::Rock;
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
+        world.insert_resource(crate::layer1::resources::ColonyResources::default());
+        world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
+
+        let designation = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Mine,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
+
+        let tool = world
+            .spawn((
+                Item,
+                Tool {
+                    tool_type: ToolType::Pickaxe,
+                    durability: 100.0,
+                    max_durability: 100.0,
+                },
+            ))
+            .id();
+
+        // Prosthetic with +50% efficiency
+        let prosthetic = world
+            .spawn(Prosthetic {
+                prosthetic_type: ProstheticType::BionicArm,
+                efficiency_bonus: 0.5,
+                social_penalty: 0.0,
+                power_consumption: 0.0,
+            })
+            .id();
+
+        world.spawn((
+            Pop,
+            GridPosition { x: 5, y: 5 },
+            Equipment {
+                tool: Some(tool),
+                ..Default::default()
+            },
+            MovementTarget {
+                target_entity: designation,
+                target_position: GridPosition { x: 5, y: 5 },
+                for_action: ActionType::Work,
+            },
+            AtTarget,
+            Augmentations {
+                installed: vec![prosthetic],
+            },
+        ));
+
+        work_execution_system(&mut world);
+
+        let progress = world.get::<MiningProgress>(designation).unwrap();
+        // Base 10.0. Tool 1.0. Morale 1.0 (neutral 0.5).
+        // Augmentation +0.5 -> Multiplier 1.5.
+        // Expected: 10.0 * 1.5 = 15.0.
+        // Organic: 13.5 - 16.5.
+        // Crit (5%): ~75.0.
+
+        let is_normal = progress.current >= 13.5 && progress.current <= 16.5;
+        let is_crit = progress.current >= 67.5 && progress.current <= 82.5;
+
+        assert!(
+            is_normal || is_crit,
+            "Expected ~15.0 (or crit), got {}",
+            progress.current
         );
     }
 }

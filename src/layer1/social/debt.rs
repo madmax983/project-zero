@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
-use std::collections::HashMap;
 use crate::layer1::social::AffinityChange;
+use bevy_ecs::prelude::*;
 use rand::Rng;
+use std::collections::HashMap;
 
 /// Component tracking favors owed to other entities.
 #[derive(Component, Default, Debug)]
@@ -54,10 +54,7 @@ pub struct FavorChange {
 }
 
 /// System to process `FavorChange` events and update `SocialDebt`.
-pub fn accrue_debt_system(
-    mut events: EventReader<FavorChange>,
-    mut query: Query<&mut SocialDebt>,
-) {
+pub fn accrue_debt_system(mut events: EventReader<FavorChange>, mut query: Query<&mut SocialDebt>) {
     for evt in events.read() {
         if let Ok(mut debt) = query.get_mut(evt.debtor) {
             debt.add_debt(evt.creditor, evt.amount);
@@ -67,9 +64,7 @@ pub fn accrue_debt_system(
 }
 
 /// System to decay social debt over time.
-pub fn debt_decay_system(
-    mut query: Query<&mut SocialDebt>,
-) {
+pub fn debt_decay_system(mut query: Query<&mut SocialDebt>) {
     const DECAY_RATE: f32 = 0.1; // Per tick
     for mut debt in &mut query {
         debt.decay(DECAY_RATE);
@@ -93,7 +88,7 @@ pub fn debt_impact_system(
     for (debtor, debt) in &query {
         for (&creditor, &amount) in &debt.owed_to {
             if amount > 10.0 {
-                 affinity_events.send(AffinityChange {
+                affinity_events.send(AffinityChange {
                     source: debtor,
                     target: creditor,
                     amount: 0.1 * (amount / 100.0), // Small drip feed
@@ -105,10 +100,10 @@ pub fn debt_impact_system(
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::pop::Pop;
-    use crate::layer1::social::{Relationships, AffinityChange};
     use super::*;
+    use crate::layer1::pop::Pop;
+    use crate::layer1::social::{AffinityChange, Relationships};
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_social_debt_initialization() {
@@ -168,11 +163,13 @@ mod tests {
 
         let pop_a = world.spawn(Pop).id();
         // Pop B owes Pop A 100 favors
-        let pop_b = world.spawn((
-            Pop,
-            SocialDebt::with_debt(pop_a, 100.0),
-            Relationships::default(),
-        )).id();
+        let pop_b = world
+            .spawn((
+                Pop,
+                SocialDebt::with_debt(pop_a, 100.0),
+                Relationships::default(),
+            ))
+            .id();
 
         // Run impact system
         let mut schedule = Schedule::default();

@@ -3,8 +3,8 @@
 //! Handles the "Prototype" status of buildings, which applies penalties to efficiency and
 //! breakdown chance until the building type is "Mastered".
 
-use bevy_ecs::prelude::*;
 use crate::layer1::building::{Building, BuildingType};
+use bevy_ecs::prelude::*;
 use std::collections::HashMap;
 
 // --- Resources & Components ---
@@ -66,7 +66,14 @@ impl Default for Prototype {
 pub fn mastery_accumulation_system(
     mut mastery: ResMut<BuildingMastery>,
     // We only count ACTIVE prototypes.
-    prototypes: Query<(&Building, Option<&crate::layer1::energy::PowerConsumer>, Option<&crate::layer1::energy::PowerSource>), With<Prototype>>,
+    prototypes: Query<
+        (
+            &Building,
+            Option<&crate::layer1::energy::PowerConsumer>,
+            Option<&crate::layer1::energy::PowerSource>,
+        ),
+        With<Prototype>,
+    >,
     _time: Res<crate::shared::time::SimulationTime>,
 ) {
     // Constant: Mastery takes 100 ticks to complete per active building.
@@ -88,7 +95,6 @@ pub fn mastery_accumulation_system(
         }
     }
 }
-
 
 #[cfg(test)]
 mod tests {
@@ -117,7 +123,7 @@ mod tests {
         // Simulate construction logic (manual injection for now as we test logic unit, not integration here)
         let mastery = world.resource::<BuildingMastery>();
         if !mastery.is_mastered(building_type) {
-             world.entity_mut(entity).insert(Prototype::default());
+            world.entity_mut(entity).insert(Prototype::default());
         }
 
         assert!(world.entity(entity).contains::<Prototype>());
@@ -134,11 +140,16 @@ mod tests {
         world.spawn((
             Building { building_type },
             Prototype::default(),
-            PowerSource { output: 10.0, active: true }
+            PowerSource {
+                output: 10.0,
+                active: true,
+            },
         ));
 
         // Advance simulation time (simulate tick)
-        world.resource_mut::<crate::shared::time::SimulationTime>().tick += 1;
+        world
+            .resource_mut::<crate::shared::time::SimulationTime>()
+            .tick += 1;
 
         // Run system
         let mut schedule = Schedule::new(TestSchedule);
@@ -158,13 +169,15 @@ mod tests {
         let building_type = BuildingType::Generator;
 
         // Set mastery to complete
-        world.resource_mut::<BuildingMastery>().set_mastered(building_type);
+        world
+            .resource_mut::<BuildingMastery>()
+            .set_mastered(building_type);
 
         let entity = world.spawn(Building { building_type }).id();
 
         let mastery = world.resource::<BuildingMastery>();
         if !mastery.is_mastered(building_type) {
-             world.entity_mut(entity).insert(Prototype::default());
+            world.entity_mut(entity).insert(Prototype::default());
         }
 
         assert!(!world.entity(entity).contains::<Prototype>());
@@ -173,10 +186,17 @@ mod tests {
     #[test]
     fn test_prototype_efficiency_affects_production() {
         let mut world = setup_app();
-        let entity = world.spawn((
-            Building { building_type: BuildingType::Generator },
-            Prototype { efficiency_modifier: 0.5, ..Default::default() },
-        )).id();
+        let entity = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Generator,
+                },
+                Prototype {
+                    efficiency_modifier: 0.5,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         let prototype = world.entity(entity).get::<Prototype>().unwrap();
         assert_eq!(prototype.efficiency_modifier, 0.5);
