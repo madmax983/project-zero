@@ -24,7 +24,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 ## MVP — Layer 2: System Simulation
 
-- [ ] `094` System View Architecture — `specs/094-system-view.md`
 - [ ] `095` System Generation — `specs/095-system-generation.md`
 - [ ] `099` Fleet Movement — `specs/099-fleet-movement.md`
 - [ ] `101` System Mining — `specs/101-system-mining.md`

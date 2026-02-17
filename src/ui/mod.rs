@@ -42,6 +42,8 @@ mod waste_ui_tests;
 use bevy_ecs::prelude::*;
 use ratatui::prelude::*;
 
+use crate::layer2::render::render_system_view;
+use crate::layer2::system::ViewMode;
 use crate::shared::menu::MenuState;
 use crate::shared::state::GameState;
 
@@ -66,6 +68,14 @@ pub fn render(world: &World, frame: &mut Frame) {
     if *world.resource::<GameState>() == GameState::MainMenu {
         let menu_state = world.resource::<MenuState>();
         render_main_menu(frame, frame.area(), menu_state);
+        return;
+    }
+
+    // Check ViewMode
+    let view_mode = world.resource::<ViewMode>();
+
+    if *view_mode == ViewMode::System {
+        render_system_view(frame, frame.area(), world);
         return;
     }
 

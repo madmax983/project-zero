@@ -4,6 +4,7 @@ use crate::layer1::{
     BuildMode, CameraTarget, ChronicleUiState, DesignationMode, DesignationType, GridPosition,
     Viewport, try_cancel_designation, try_designate_area, try_place_building,
 };
+use crate::layer2::system::ViewMode;
 use crate::platform::input::{GameKeyCode, GameKeyEvent, GameMouseEvent};
 use crate::shared::menu::MenuState;
 use crate::shared::selection::{Selection, handle_selection_click, screen_to_world};
@@ -180,6 +181,13 @@ fn handle_normal_mode(world: &mut World, key: GameKeyEvent) {
                 .push(InputContext::Overlay);
             world.resource_mut::<ChronicleUiState>().is_open = true;
             *world.resource_mut::<GameState>() = GameState::Paused;
+        }
+        GameKeyCode::Tab => {
+            let mut view_mode = world.resource_mut::<ViewMode>();
+            *view_mode = match *view_mode {
+                ViewMode::Colony => ViewMode::System,
+                ViewMode::System => ViewMode::Colony,
+            };
         }
         _ => {}
     }
