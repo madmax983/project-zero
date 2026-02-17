@@ -320,10 +320,7 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
                 let bg = if can_place { Color::Green } else { Color::Red };
                 let text = get_building_char(selected);
                 let fg = get_building_color(selected, material);
-                line_spans.push(Span::styled(
-                    text.to_string(),
-                    Style::default().fg(fg).bg(bg),
-                ));
+                line_spans.push(Span::styled(text, Style::default().fg(fg).bg(bg)));
                 continue;
             }
 
@@ -404,7 +401,7 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
                     }
                     RenderEntity::Building(b, m) => {
                         line_spans.push(Span::styled(
-                            get_building_char(*b).to_string(),
+                            get_building_char(*b),
                             Style::default().fg(get_building_color(*b, *m)),
                         ));
                         continue;
@@ -642,48 +639,48 @@ pub const fn get_terrain_color(terrain: TerrainType) -> Color {
 /// use scale::ui::map::get_building_char;
 /// use scale::layer1::BuildingType;
 ///
-/// assert_eq!(get_building_char(BuildingType::Housing), '⌂');
+/// assert_eq!(get_building_char(BuildingType::Housing), "⌂");
 /// ```
 #[must_use]
-pub const fn get_building_char(building: BuildingType) -> char {
+pub const fn get_building_char(building: BuildingType) -> &'static str {
     match building {
-        BuildingType::Housing => '⌂',
-        BuildingType::Farm | BuildingType::TrashCannon => '♣',
-        BuildingType::Well => 'U',
-        BuildingType::Stockpile | BuildingType::Vent => '≡',
-        BuildingType::Smokehouse => '♨',
-        BuildingType::LumberMill => 'L',
-        BuildingType::StoneMason => 'M',
-        BuildingType::Smelter => 'S',
-        BuildingType::Smithy => '⚒',
-        BuildingType::Tavern => 'T',
-        BuildingType::Library => 'K',
-        BuildingType::Plantation => 'P',
-        BuildingType::Weaver => 'W',
-        BuildingType::Tailor => 't',
-        BuildingType::FlowerBed | BuildingType::PersonalGarden => '*',
-        BuildingType::Statue => 'I',
-        BuildingType::Hospital | BuildingType::Gate => '+',
-        BuildingType::Landfill => '%',
-        BuildingType::Grave => '†',
-        BuildingType::TradeDepot => '$',
-        BuildingType::Generator => '⚡',
-        BuildingType::PowerPole => '|',
-        BuildingType::Wall => '#',
-        BuildingType::Tower | BuildingType::Observatory => 'O',
-        BuildingType::AncientReactor | BuildingType::Refinery => 'R',
-        BuildingType::AncientFabricator => 'F',
-        BuildingType::Greenhouse => 'G',
-        BuildingType::PersonalShed => 's',
-        BuildingType::PersonalShrine => '☗',
-        BuildingType::ConveyorBelt => '>',
-        BuildingType::Hopper => 'V',
-        BuildingType::HydroponicsBay => 'Y',
-        BuildingType::LifeSupport => '♼',
-        BuildingType::Airlock => '⌷',
-        BuildingType::Battery => 'B',
-        BuildingType::Heater => '☼',
-        BuildingType::Lander => 'Λ',
+        BuildingType::Housing => "⌂",
+        BuildingType::Farm | BuildingType::TrashCannon => "♣",
+        BuildingType::Well => "U",
+        BuildingType::Stockpile | BuildingType::Vent => "≡",
+        BuildingType::Smokehouse => "♨",
+        BuildingType::LumberMill => "L",
+        BuildingType::StoneMason => "M",
+        BuildingType::Smelter => "S",
+        BuildingType::Smithy => "⚒",
+        BuildingType::Tavern => "T",
+        BuildingType::Library => "K",
+        BuildingType::Plantation => "P",
+        BuildingType::Weaver => "W",
+        BuildingType::Tailor => "t",
+        BuildingType::FlowerBed | BuildingType::PersonalGarden => "*",
+        BuildingType::Statue => "I",
+        BuildingType::Hospital | BuildingType::Gate => "+",
+        BuildingType::Landfill => "%",
+        BuildingType::Grave => "†",
+        BuildingType::TradeDepot => "$",
+        BuildingType::Generator => "⚡",
+        BuildingType::PowerPole => "|",
+        BuildingType::Wall => "#",
+        BuildingType::Tower | BuildingType::Observatory => "O",
+        BuildingType::AncientReactor | BuildingType::Refinery => "R",
+        BuildingType::AncientFabricator => "F",
+        BuildingType::Greenhouse => "G",
+        BuildingType::PersonalShed => "s",
+        BuildingType::PersonalShrine => "☗",
+        BuildingType::ConveyorBelt => ">",
+        BuildingType::Hopper => "V",
+        BuildingType::HydroponicsBay => "Y",
+        BuildingType::LifeSupport => "♼",
+        BuildingType::Airlock => "⌷",
+        BuildingType::Battery => "B",
+        BuildingType::Heater => "☼",
+        BuildingType::Lander => "Λ",
     }
 }
 

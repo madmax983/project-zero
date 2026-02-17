@@ -8,9 +8,55 @@
 
 use criterion::{Criterion, black_box, criterion_group, criterion_main};
 use ratatui::prelude::{Color, Rect};
-use scale::layer1::{GridPosition, TerrainGrid, TerrainType, Viewport};
+use scale::layer1::water::WaterGrid;
+use scale::layer1::{BuildingType, GridPosition, MaterialType, TerrainGrid, TerrainType, Viewport};
 use scale::ui::map::{MapRenderContext, RenderEntity, build_map_layer_spans};
 use std::collections::HashMap;
+
+fn benchmark_rendering_buildings(c: &mut Criterion) {
+    let width = 80;
+    let height = 50;
+    let tiles = vec![TerrainType::Grass; width * height];
+    let grid = TerrainGrid {
+        width,
+        height,
+        tiles,
+    };
+    let water_grid = WaterGrid::new(width, height);
+    let viewport = Viewport { x: 0, y: 0 };
+    let area = Rect::new(0, 0, 80, 50);
+
+    // Create 1000 random buildings scattered across the map
+    let mut entities_data = HashMap::with_capacity(1000);
+    // Use a simple deterministic loop to place buildings
+    for i in 0..1000 {
+        let x = (i * 7) % width;
+        let y = (i * 13) % height;
+        entities_data.insert(
+            GridPosition {
+                x: x as i32,
+                y: y as i32,
+            },
+            RenderEntity::Building(BuildingType::Housing, MaterialType::Wood),
+        );
+    }
+
+    c.bench_function("render_map_layer_1000_buildings", |b| {
+        b.iter(|| {
+            let ctx = MapRenderContext {
+                area: black_box(area),
+                terrain: black_box(&grid),
+                water: black_box(&water_grid),
+                viewport: black_box(&viewport),
+                entities_data: black_box(&entities_data),
+                build_mode: black_box(None),
+                designation_mode: black_box(None),
+                season: black_box(None),
+            };
+            build_map_layer_spans(ctx)
+        });
+    });
+}
 
 fn benchmark_rendering(c: &mut Criterion) {
     let width = 80;
@@ -21,6 +67,7 @@ fn benchmark_rendering(c: &mut Criterion) {
         height,
         tiles,
     };
+    let water_grid = WaterGrid::new(width, height);
     let viewport = Viewport { x: 0, y: 0 };
     let area = Rect::new(0, 0, 80, 50);
 
@@ -45,6 +92,7 @@ fn benchmark_rendering(c: &mut Criterion) {
             let ctx = MapRenderContext {
                 area: black_box(area),
                 terrain: black_box(&grid),
+                water: black_box(&water_grid),
                 viewport: black_box(&viewport),
                 entities_data: black_box(&entities_data),
                 build_mode: black_box(None),
@@ -70,7 +118,7 @@ use scale::layer1::needs::Needs;
 use scale::layer1::resources::ColonyResources;
 use scale::layer1::social::Tavern;
 use scale::layer1::utility_ai::evaluate_actions_system;
-use scale::layer1::utility_ai::types::{ActionType, PopAction, UtilityConfig, UtilityWeights};
+use scale::layer1::utility_types::{ActionType, PopAction, UtilityConfig, UtilityWeights};
 
 /// Build a minimal world with `n_pops` pops and `n_buildings` buildings.
 fn make_bench_world(n_pops: usize, n_buildings: usize, gpu_ctx: Option<GpuContext>) -> World {
@@ -206,5 +254,10 @@ fn benchmark_utility_ai(c: &mut Criterion) {
     group.finish();
 }
 
-criterion_group!(benches, benchmark_rendering, benchmark_utility_ai);
+criterion_group!(
+    benches,
+    benchmark_rendering,
+    benchmark_rendering_buildings,
+    benchmark_utility_ai
+);
 criterion_main!(benches);
