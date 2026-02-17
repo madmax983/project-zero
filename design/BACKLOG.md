@@ -16,7 +16,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `077` Emergent Festivals — `specs/077-emergent-festivals.md`
 - [ ] `116` Drone Networks — `specs/116-drone-networks.md`
 - [ ] `120` Crop Diversity — `specs/120-crop-diversity.md`
-- [ ] `130` Social Debt — `specs/130-social-debt.md`
 - [ ] `137` Pop Hobbies — `specs/137-pop-hobbies.md`
 - [ ] `139` Cryo-Stasis Vaults — `specs/139-cryo-stasis.md`
 - [ ] `144` Graffiti and Signage — `specs/144-graffiti-and-signage.md`

@@ -38,6 +38,7 @@ use super::morale::Morale;
 use super::needs::Needs;
 use super::rumor::Knowledge;
 use super::skills::Skills;
+use super::social::debt::SocialDebt;
 use super::social::old_guard::Arrival;
 use super::terrain::{TerrainGrid, TerrainType};
 use super::traits::Traits;
@@ -270,6 +271,7 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
                     Arrival { tick: 0 },
                 ))
                 .insert((
+                    SocialDebt::default(),
                     Morale::default(),
                     ContagionCooldown::default(),
                     Traits::random(rng),
