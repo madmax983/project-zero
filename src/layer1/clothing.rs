@@ -6,40 +6,7 @@ use crate::layer1::health::Health;
 use crate::layer1::items::{Clothing, Equipment};
 use crate::layer1::pop::Pop;
 // use crate::layer1::resources::ColonyResources; // Unused in new logic
-use crate::layer1::seasons::{Season, SeasonState};
 use bevy_ecs::prelude::*;
-use rand::Rng;
-
-/// Applies hypothermia damage to pops without clothing during Winter.
-pub fn hypothermia_system(
-    mut pop_query: Query<(&mut Health, &Equipment), With<Pop>>,
-    clothing_query: Query<&Clothing>,
-    season: Option<Res<SeasonState>>,
-) {
-    // Only applies in Winter
-    if !matches!(season.map(|s| s.current_season), Some(Season::Winter)) {
-        return;
-    }
-
-    let mut rng = rand::thread_rng();
-
-    for (mut health, equipment) in &mut pop_query {
-        let mut insulation = 0.0;
-
-        if let Some(item) = equipment.body.and_then(|e| clothing_query.get(e).ok()) {
-            insulation += item.insulation;
-        }
-
-        // Damage chance = 1.0 - insulation
-        // If insulation is 1.0 (Full), chance is 0.
-        // If insulation is 0.0 (Naked), chance is 100%.
-        let damage_chance = (1.0 - insulation).clamp(0.0, 1.0);
-
-        if rng.gen_bool(f64::from(damage_chance)) {
-            health.take_damage(1.0);
-        }
-    }
-}
 
 /// Degrades clothing over time based on usage.
 pub fn clothing_wear_system(
@@ -69,12 +36,9 @@ pub fn clothing_wear_system(
 
 #[cfg(test)]
 mod tests {
-    use super::{clothing_wear_system, hypothermia_system};
-    use crate::layer1::health::Health;
+    use super::clothing_wear_system;
     use crate::layer1::items::{Clothing, ClothingType, Equipment, Item};
     use crate::layer1::pop::Pop;
-    use crate::layer1::resources::ColonyResources;
-    use crate::layer1::seasons::{Season, SeasonState};
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
 
@@ -108,67 +72,6 @@ mod tests {
 
         let c = world.get::<Clothing>(tunic).unwrap();
         assert_eq!(c.insulation, 1.0);
-    }
-
-    // 3. Hypothermia Logic (Refactored)
-    #[test]
-    fn test_hypothermia_checks_equipment() {
-        let mut world = World::new();
-        world.insert_resource(SeasonState {
-            current_season: Season::Winter,
-        });
-        // Global resource should be ignored or used only for "available" count,
-        // but damage depends on Equipment.
-        world.insert_resource(ColonyResources::default());
-
-        // Pop 1: Naked (Should take damage)
-        let pop1 = world
-            .spawn((
-                Pop,
-                Health {
-                    current: 100.0,
-                    max: 100.0,
-                },
-                Equipment::default(), // No body
-            ))
-            .id();
-
-        // Pop 2: Clothed (Should be safe)
-        let tunic = world
-            .spawn(Clothing {
-                clothing_type: ClothingType::Tunic,
-                insulation: 1.0,
-                durability: 100.0,
-                max_durability: 100.0,
-            })
-            .id();
-
-        let pop2 = world
-            .spawn((
-                Pop,
-                Health {
-                    current: 100.0,
-                    max: 100.0,
-                },
-                Equipment {
-                    body: Some(tunic),
-                    ..Default::default()
-                },
-            ))
-            .id();
-
-        // Run system
-        // With logic implemented:
-        // Pop 1 (naked) -> 100% chance -> takes 1.0 damage.
-        // Pop 2 (insulation 1.0) -> 0% chance -> takes 0 damage.
-
-        world.run_system_once(hypothermia_system).unwrap();
-
-        let h1 = world.get::<Health>(pop1).unwrap();
-        let h2 = world.get::<Health>(pop2).unwrap();
-
-        assert!(h1.current < 100.0, "Naked pop should freeze");
-        assert_eq!(h2.current, 100.0, "Clothed pop should be warm");
     }
 
     // 4. Wear Logic
