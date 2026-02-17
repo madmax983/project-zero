@@ -22,6 +22,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `138` The Blob — `specs/138-the-blob.md`
 - [ ] `139` Cryo-Stasis Vaults — `specs/139-cryo-stasis.md`
 - [ ] `143` Data Physicality — `specs/143-data-physicality.md`
+- [ ] `144` Graffiti and Signage — `specs/144-graffiti-and-signage.md`
 
 ## MVP — Layer 2: System Simulation
 
