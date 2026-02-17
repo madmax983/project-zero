@@ -57,6 +57,8 @@ pub mod experimental;
 pub mod gpu;
 /// Layer 1: Colony Simulation (Pops, Buildings, Terrain).
 pub mod layer1;
+/// Layer 2: System Simulation (Orbital Bodies, Fleets).
+pub mod layer2;
 /// Platform abstraction for native/WASM backends.
 pub mod platform;
 /// Shared world setup.
