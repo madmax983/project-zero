@@ -6,7 +6,7 @@ use ratatui::{
 use std::collections::HashMap;
 use std::hash::BuildHasher;
 
-use crate::experimental::seasonal_gfx;
+use crate::ui::seasonal_gfx;
 use crate::layer1::fire::Fire;
 use crate::layer1::{
     Anomaly, AnomalyType, BuildMode, Building, BuildingType, Designation, DesignationMode,

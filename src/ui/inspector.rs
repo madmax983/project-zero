@@ -14,8 +14,8 @@ use ratatui::{
     widgets::{Block, BorderType, Borders, Cell, Gauge, List, ListItem, Paragraph, Row, Table},
 };
 
-use crate::experimental::biography::Biography;
-use crate::experimental::dreams::DreamJournal;
+use crate::layer1::biography::Biography;
+use crate::layer1::dreams::DreamJournal;
 use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::purity::PurityMap;
 use crate::layer1::rituals::{MachineSpirit, Quirk, QuirkType};
@@ -35,9 +35,6 @@ use crate::layer1::{
 };
 use crate::shared::selection::{Selection, SelectionTarget};
 use crate::ui::map::{get_building_color, get_terrain_char, get_terrain_color};
-
-#[cfg(feature = "nova")]
-use crate::experimental::echoes::{EchoMap, EchoType};
 
 /// Helper to format `ActionType` into an icon and label.
 const fn format_action_type(action: ActionType) -> (&'static str, &'static str, Color) {
@@ -245,31 +242,6 @@ fn render_tile_inspector(frame: &mut Frame, area: Rect, world: &World, x: i32, y
         None
     };
 
-    // Echoes Logic
-    #[cfg(feature = "nova")]
-    let echo_line = if let Some(map) = world.get_resource::<EchoMap>() {
-        if let Some(echo) = map.echoes.get(&(x, y)) {
-            if echo.intensity > 0.1 {
-                let (icon, label, color) = match echo.echo_type {
-                    EchoType::Scream => ("👻", "Screams", Color::Red),
-                    EchoType::Laughter => ("✨", "Laughter", Color::Yellow),
-                };
-                let pct = (echo.intensity * 100.0) as u32;
-                Some(Line::from(vec![
-                    Span::raw(format!("{icon} ")),
-                    Span::styled(format!("{label}: {pct}%"), Style::default().fg(color)),
-                ]))
-            } else {
-                None
-            }
-        } else {
-            None
-        }
-    } else {
-        None
-    };
-
-    #[cfg(not(feature = "nova"))]
     let echo_line: Option<Line> = None;
 
     let mut constraints = vec![
@@ -1090,7 +1062,7 @@ mod tests {
 
     #[test]
     fn test_inspector_render_dream() {
-        use crate::experimental::dreams::{Dream, DreamJournal};
+        use crate::layer1::dreams::{Dream, DreamJournal};
         use crate::layer1::pop::PopName;
 
         let mut world = World::new();
@@ -1262,50 +1234,5 @@ mod tests {
 
         assert!(full_text.contains("Spirit Anger: 80%"));
         assert!(full_text.contains("Glitchy"));
-    }
-
-    #[test]
-    #[cfg(feature = "nova")]
-    fn test_inspector_render_echoes() {
-        use crate::experimental::echoes::{EchoMap, EchoType};
-        use crate::layer1::terrain::{TerrainGrid, TerrainType};
-
-        let mut world = World::new();
-        // Setup simple map
-        let tiles = vec![TerrainType::Grass; 100];
-        world.insert_resource(TerrainGrid {
-            width: 10,
-            height: 10,
-            tiles,
-        });
-
-        // Setup EchoMap
-        let mut map = EchoMap::default();
-        map.add(5, 5, EchoType::Scream, 0.8, 100);
-        world.insert_resource(map);
-
-        // Select Tile
-        world.insert_resource(Selection::default());
-        world.resource_mut::<Selection>().select_tile(5, 5);
-
-        let backend = TestBackend::new(40, 20);
-        let mut terminal = Terminal::new(backend).unwrap();
-
-        terminal
-            .draw(|f| {
-                render_inspector(f, f.area(), &world);
-            })
-            .unwrap();
-
-        let buffer = terminal.backend().buffer();
-        let cells: Vec<String> = buffer
-            .content
-            .iter()
-            .map(|c| c.symbol().to_string())
-            .collect();
-        let full_text = cells.join("");
-
-        assert!(full_text.contains("Screams: 80%"));
-        assert!(full_text.contains("👻"));
     }
 }

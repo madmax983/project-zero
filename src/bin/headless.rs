@@ -25,8 +25,8 @@
 #![allow(clippy::too_many_lines)]
 
 use bevy_ecs::prelude::*;
-use scale::experimental::biography::Biography;
-use scale::experimental::dreams::Dream;
+use scale::layer1::biography::Biography;
+use scale::layer1::dreams::Dream;
 use scale::layer1::pop::PopName;
 use scale::layer1::{
     BuildingType, ColonyResources, Designation, DesignationType, Farm, GridPosition, Housing,

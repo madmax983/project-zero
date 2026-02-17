@@ -38,6 +38,8 @@ pub mod actions;
 pub mod balance;
 /// Beauty and decoration system.
 pub mod beauty;
+/// Pop biography system.
+pub mod biography;
 /// Building placement and types.
 pub mod building;
 pub mod chronicle;
@@ -49,6 +51,8 @@ pub mod control;
 pub mod defense;
 /// Designation system for player tools.
 pub mod designation;
+/// Pop dreams system.
+pub mod dreams;
 /// Colony policies and edicts.
 pub mod edicts;
 /// Execution layer bridging utility AI to actions.
@@ -145,11 +149,13 @@ pub use access_control::*;
 pub use actions::*;
 pub use balance::*;
 pub use beauty::*;
+pub use biography::*;
 pub use building::*;
 pub use chronicle::*;
 pub use control::*;
 pub use defense::*;
 pub use designation::*;
+pub use dreams::*;
 pub use edicts::*;
 pub use execution::*;
 pub use farm::*;
