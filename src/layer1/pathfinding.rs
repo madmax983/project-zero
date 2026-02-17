@@ -2,10 +2,16 @@ use bevy_ecs::prelude::*;
 use std::cmp::Ordering;
 use std::collections::{BinaryHeap, HashMap};
 
+use crate::layer1::access_control::{AccessControl, AccessMode};
 use crate::layer1::building::{Building, BuildingType, OccupiedTiles};
-use crate::layer1::defense::Gate;
 use crate::layer1::map::GridPosition;
+use crate::layer1::pop::Role;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
+
+struct AccessCredentials {
+    entity: Entity,
+    role: Option<Role>,
+}
 
 /// Node for A* pathfinding.
 #[derive(Clone, Copy, PartialEq, Eq)]
@@ -40,7 +46,26 @@ impl PartialOrd for Node {
 /// * `start` - Starting coordinates (x, y).
 /// * `end` - Target coordinates (x, y).
 pub fn find_path(world: &World, start: (i32, i32), end: (i32, i32)) -> Option<Vec<(i32, i32)>> {
-    find_path_internal(world, start, end, false)
+    find_path_internal(world, start, end, false, None)
+}
+
+/// Finds a path for a specific pop, considering access control.
+///
+/// # Arguments
+///
+/// * `world` - The Bevy World.
+/// * `start` - Starting coordinates.
+/// * `end` - Target coordinates.
+/// * `pop` - The pop entity.
+pub fn find_path_for_pop(
+    world: &World,
+    start: (i32, i32),
+    end: (i32, i32),
+    pop: Entity,
+) -> Option<Vec<(i32, i32)>> {
+    let role = world.get::<Role>(pop).copied();
+    let credentials = Some(AccessCredentials { entity: pop, role });
+    find_path_internal(world, start, end, false, credentials.as_ref())
 }
 
 /// Finds a path for a specific entity, considering its capabilities.
@@ -59,7 +84,7 @@ pub fn find_path_for_entity<T: Component>(
 ) -> Option<Vec<(i32, i32)>> {
     let can_use_vents =
         std::any::TypeId::of::<T>() == std::any::TypeId::of::<crate::layer1::vermin::Vermin>();
-    find_path_internal(world, start, end, can_use_vents)
+    find_path_internal(world, start, end, can_use_vents, None)
 }
 
 fn find_path_internal(
@@ -67,17 +92,18 @@ fn find_path_internal(
     start: (i32, i32),
     end: (i32, i32),
     can_use_vents: bool,
+    credentials: Option<&AccessCredentials>,
 ) -> Option<Vec<(i32, i32)>> {
     let terrain = world.resource::<TerrainGrid>();
     let occupied = world.get_resource::<OccupiedTiles>();
 
     // Optimization: Collect building data into a map for fast lookups
-    // Map (x, y) -> (BuildingType, is_locked_gate)
+    // Map (x, y) -> (BuildingType, Option<AccessControl>)
     let mut building_map = HashMap::new();
     for entity in world.iter_entities() {
         if let (Some(pos), Some(b)) = (entity.get::<GridPosition>(), entity.get::<Building>()) {
-            let is_locked = entity.get::<Gate>().is_some_and(|g| g.is_locked);
-            building_map.insert((pos.x, pos.y), (b.building_type, is_locked));
+            let access = entity.get::<AccessControl>().cloned();
+            building_map.insert((pos.x, pos.y), (b.building_type, access));
         }
     }
 
@@ -118,6 +144,7 @@ fn find_path_internal(
                 occupied,
                 &building_map,
                 can_use_vents,
+                credentials,
                 next == end, // Ignore obstacle at target? Usually yes for "Interact", but for "MoveTo" maybe not.
                              // Greedy movement in execution.rs checks adjacency.
                              // find_path usually implies reaching the tile.
@@ -164,8 +191,9 @@ fn is_walkable(
     pos: (i32, i32),
     terrain: &TerrainGrid,
     occupied: Option<&OccupiedTiles>,
-    building_map: &HashMap<(i32, i32), (BuildingType, bool)>,
+    building_map: &HashMap<(i32, i32), (BuildingType, Option<AccessControl>)>,
     can_use_vents: bool,
+    credentials: Option<&AccessCredentials>,
     _is_target: bool,
 ) -> bool {
     let (x, y) = pos;
@@ -192,9 +220,18 @@ fn is_walkable(
     }
 
     // 3. Check Building Type
-    if let Some(&(building_type, is_locked)) = building_map.get(&(x, y)) {
-        if is_locked {
-            return false;
+    if let Some(&(building_type, ref access_opt)) = building_map.get(&(x, y)) {
+        if let Some(access) = access_opt {
+            return match access.mode {
+                AccessMode::Public => true,
+                AccessMode::Lockdown => false,
+                AccessMode::Restricted => credentials.is_some_and(|creds| {
+                    access.allowed_pops.contains(&creds.entity)
+                        || creds
+                            .role
+                            .is_some_and(|r| access.allowed_roles.contains(&r))
+                }),
+            };
         }
 
         if building_type == BuildingType::Vent && can_use_vents {

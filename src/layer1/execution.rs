@@ -29,6 +29,7 @@
 //!     ↓ calls mine_rock/chop_tree
 //! ```
 
+use crate::layer1::access_control::{AccessControl, AccessMode};
 use crate::layer1::actions::fetch_clothing::handle_fetch_clothing;
 use crate::layer1::actions::fetch_tool::handle_fetch_tool;
 use crate::layer1::actions::hunger::handle_arrival as handle_hunger_arrival;
@@ -53,7 +54,7 @@ use crate::layer1::memory::{Memories, calculate_effective_morale};
 use crate::layer1::morale::Morale;
 use crate::layer1::needs::{Needs, get_morale_efficiency};
 use crate::layer1::particles::spawn_particle;
-use crate::layer1::pop::{Job, Speed};
+use crate::layer1::pop::{Job, Role, Speed};
 use crate::layer1::resources::{ColonyResources, process_logging, process_mining};
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
 use crate::layer1::social::{SocialBuff, Tavern, handle_socialize};
@@ -301,16 +302,17 @@ pub fn movement_system(
             Option<&mut Speed>,
             Option<&Traits>,
             Option<&HitStop>,
+            Option<&Role>,
         ),
         (Without<AtTarget>, Without<Building>),
     >,
     mut erosion: ResMut<ErosionGrid>,
     terrain: Res<TerrainGrid>,
     occupied_tiles: Option<Res<OccupiedTiles>>,
-    buildings: Query<(&GridPosition, &Building, Option<&Gate>)>,
+    buildings: Query<(&GridPosition, &Building, Option<&Gate>, Option<&AccessControl>)>,
     mut commands: Commands,
 ) {
-    for (pop_entity, mut current_pos, mt, mut speed_opt, traits, hit_stop) in &mut pops {
+    for (pop_entity, mut current_pos, mt, mut speed_opt, traits, hit_stop, role) in &mut pops {
         // Ludwig: Check Hit Stop
         if let Some(hs) = hit_stop {
             if hs.ticks_remaining > 0 {
@@ -336,6 +338,8 @@ pub fn movement_system(
             &terrain,
             occupied_tiles.as_deref(),
             &buildings,
+            pop_entity,
+            role.copied(),
         ) {
             commands.entity(pop_entity).insert(AtTarget);
             continue;
@@ -350,10 +354,24 @@ pub fn movement_system(
         let (primary, secondary) = calculate_next_positions(*current_pos, target_pos);
 
         // Selection Phase: Find first walkable candidate
-        let chosen_pos =
-            try_get_walkable_pos(primary, &terrain, occupied_tiles.as_deref(), &buildings).or_else(
-                || try_get_walkable_pos(secondary, &terrain, occupied_tiles.as_deref(), &buildings),
-            );
+        let chosen_pos = try_get_walkable_pos(
+            primary,
+            &terrain,
+            occupied_tiles.as_deref(),
+            &buildings,
+            pop_entity,
+            role.copied(),
+        )
+        .or_else(|| {
+            try_get_walkable_pos(
+                secondary,
+                &terrain,
+                occupied_tiles.as_deref(),
+                &buildings,
+                pop_entity,
+                role.copied(),
+            )
+        });
 
         let Some(new_pos) = chosen_pos else {
             continue;
@@ -408,25 +426,38 @@ pub fn movement_system(
             &terrain,
             occupied_tiles.as_deref(),
             &buildings,
+            pop_entity,
+            role.copied(),
         ) {
             commands.entity(pop_entity).insert(AtTarget);
         }
     }
 }
 
+#[allow(clippy::too_many_arguments)]
 fn check_work_adjacency(
     current_pos: GridPosition,
     target_pos: GridPosition,
     action: ActionType,
     terrain: &TerrainGrid,
     occupied: Option<&OccupiedTiles>,
-    buildings: &Query<(&GridPosition, &Building, Option<&Gate>)>,
+    buildings: &Query<(&GridPosition, &Building, Option<&Gate>, Option<&AccessControl>)>,
+    pop_entity: Entity,
+    pop_role: Option<Role>,
 ) -> bool {
     if action != ActionType::Work && action != ActionType::Repair {
         return false;
     }
 
-    if is_walkable(terrain, occupied, buildings, target_pos.x, target_pos.y) {
+    if is_walkable(
+        terrain,
+        occupied,
+        buildings,
+        target_pos.x,
+        target_pos.y,
+        pop_entity,
+        pop_role,
+    ) {
         return false;
     }
 
@@ -633,10 +664,20 @@ fn try_get_walkable_pos(
     pos: Option<GridPosition>,
     terrain: &TerrainGrid,
     occupied_tiles: Option<&OccupiedTiles>,
-    buildings: &Query<(&GridPosition, &Building, Option<&Gate>)>,
+    buildings: &Query<(&GridPosition, &Building, Option<&Gate>, Option<&AccessControl>)>,
+    pop_entity: Entity,
+    pop_role: Option<Role>,
 ) -> Option<GridPosition> {
     let p = pos?;
-    if is_walkable(terrain, occupied_tiles, buildings, p.x, p.y) {
+    if is_walkable(
+        terrain,
+        occupied_tiles,
+        buildings,
+        p.x,
+        p.y,
+        pop_entity,
+        pop_role,
+    ) {
         Some(p)
     } else {
         None
@@ -646,9 +687,11 @@ fn try_get_walkable_pos(
 fn is_walkable(
     terrain: &TerrainGrid,
     occupied: Option<&OccupiedTiles>,
-    buildings: &Query<(&GridPosition, &Building, Option<&Gate>)>,
+    buildings: &Query<(&GridPosition, &Building, Option<&Gate>, Option<&AccessControl>)>,
     x: i32,
     y: i32,
+    pop_entity: Entity,
+    pop_role: Option<Role>,
 ) -> bool {
     // Check Terrain bounds and type
     let Ok(x_idx) = usize::try_from(x) else {
@@ -673,13 +716,27 @@ fn is_walkable(
         return true;
     }
 
-    for (pos, building, gate) in buildings.iter() {
+    for (pos, building, _gate, access_opt) in buildings.iter() {
         if pos.x == x && pos.y == y {
-            if let Some(g) = gate {
-                if g.is_locked {
-                    return false;
-                }
-            } else if building.building_type.is_obstacle() {
+            // Priority: AccessControl
+            if let Some(access) = access_opt {
+                return match access.mode {
+                    AccessMode::Public => true,
+                    AccessMode::Lockdown => false,
+                    AccessMode::Restricted => {
+                        access.allowed_pops.contains(&pop_entity)
+                            || pop_role.is_some_and(|r| access.allowed_roles.contains(&r))
+                    }
+                };
+            }
+
+            // Fallback: Gate (Legacy) - deprecated but kept for safety if AccessControl missing
+            // If we decide to fully remove logic, we can just skip this.
+            // But spec said "Replace Gate.is_locked".
+            // Since we are adding AccessControl to Gates, we should rely on AccessControl.
+            // If AccessControl is missing, we check building.is_obstacle().
+            // Gate is an obstacle.
+            if building.building_type.is_obstacle() {
                 return false;
             }
             return true;

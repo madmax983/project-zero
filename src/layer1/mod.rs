@@ -41,6 +41,8 @@ pub mod building;
 pub mod chronicle;
 /// Chronicle system and historical records.
 pub mod clothing;
+/// Biometric access control system (Spec 142).
+pub mod access_control;
 /// Door control system (Spec 134).
 pub mod control;
 /// Defensive structures and logic.
@@ -139,6 +141,7 @@ mod medical_triage_tests;
 /// Named locations on the map.
 pub mod locations;
 
+pub use access_control::*;
 pub use actions::*;
 pub use balance::*;
 pub use beauty::*;
