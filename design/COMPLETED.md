@@ -125,3 +125,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `078` The Old Guard — `specs/078-the-old-guard.md` — completed 2026-10-27
 - [x] `142` Biometric Lockouts — `specs/142-biometric-lockouts.md` — completed 2026-12-11
 - [x] `124` The Wild Child — `specs/124-the-wild-child.md` — completed 2026-02-27
+- [x] `INT-009` Integration: Hospital Power Dependency — completed 2026-10-28

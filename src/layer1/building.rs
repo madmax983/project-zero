@@ -1048,6 +1048,10 @@ fn spawn_building(
                     intensity: 0.7,
                     color: (255, 255, 255), // Pure White
                 },
+                PowerConsumer {
+                    demand: 5.0,
+                    active: false,
+                },
                 ShiftSchedule::default(),
             ));
         }

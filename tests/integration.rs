@@ -69,3 +69,6 @@ mod retrograde_chronicle;
 
 #[path = "integration/hauling_flow.rs"]
 mod hauling_flow;
+
+#[path = "integration/medical_power.rs"]
+mod medical_power;

@@ -44,3 +44,11 @@
 - **Glue added:**
     - Updated `src/layer1/energy/mod.rs` to spawn `Fire` entity on severe overload.
 - **Tests:** `tests/energy_fire.rs` (Integration test verified)
+
+### INT-009: Medical Power Dependency
+- **Date:** 2026-10-28
+- **Systems connected:** `PowerConsumer` (Energy) -> `healing_system` (Medical)
+- **Glue added:**
+    - Updated `src/layer1/building.rs` to add `PowerConsumer` to `Hospital`.
+    - Updated `src/layer1/medical.rs` to query `PowerConsumer` and block healing if inactive.
+- **Tests:** `tests/integration/medical_power.rs` (4 tests verified)

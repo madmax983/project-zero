@@ -76,6 +76,13 @@ pub fn healing_system(world: &mut World) {
             continue;
         };
 
+        // Check Power
+        if let Some(power) = world.get::<crate::layer1::energy::PowerConsumer>(hospital_ent) {
+            if !power.active {
+                continue;
+            }
+        }
+
         let zone_bonus = crate::layer1::zone::get_zone_bonus(world, hospital_ent);
         let rate = hospital.healing_rate * (1.0 + zone_bonus);
         let mut capacity = hospital.max_healing_per_tick;
