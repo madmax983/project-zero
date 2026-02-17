@@ -179,6 +179,20 @@ impl Default for Speed {
     }
 }
 
+/// Role of a pop (Spec 142).
+#[derive(Component, Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
+pub enum Role {
+    #[default]
+    /// Standard citizen with no special access.
+    Civilian,
+    /// Professional military personnel.
+    Soldier,
+    /// Technical personnel for maintenance and construction.
+    Engineer,
+    /// Conscripted defense force.
+    Militia,
+}
+
 /// Spawn 5 initial pops at random walkable positions.
 ///
 /// This function attempts to find valid starting locations for the initial colony.

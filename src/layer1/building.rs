@@ -27,6 +27,7 @@ use super::fire::Flammable;
 use super::housing::Housing;
 use super::social::Tavern;
 use super::stockpile::Stockpile;
+use crate::layer1::access_control::AccessControl;
 use crate::layer1::control::DoorControl;
 use crate::layer1::energy::{Conduit, FuelConsumer, PowerConsumer, PowerSource};
 use crate::layer1::heirloom::AncientStructure;
@@ -844,6 +845,7 @@ fn spawn_building(
             entity.insert((
                 crate::layer1::defense::Gate::default(),
                 DoorControl::default(),
+                AccessControl::default(),
             ));
         }
         BuildingType::Wall | BuildingType::Tower => {
@@ -1162,7 +1164,7 @@ fn spawn_building(
             ));
         }
         BuildingType::Airlock => {
-            entity.insert(DoorControl::default());
+            entity.insert((DoorControl::default(), AccessControl::default()));
         }
         BuildingType::Vent => {
             // Vent allows flow but blocks movement

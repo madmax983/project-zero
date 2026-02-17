@@ -1,3 +1,4 @@
+use crate::layer1::access_control::{AccessControl, AccessMode};
 use crate::layer1::building::{Building, OccupiedTiles};
 use crate::layer1::map::GridPosition;
 use crate::layer1::terrain::TerrainGrid;
@@ -11,6 +12,9 @@ pub struct Gate {
 }
 
 /// Checks if a tile is walkable (Terrain + Buildings).
+///
+/// This generic check assumes the agent has no special credentials.
+/// It returns false for Restricted/Lockdown access controls.
 #[allow(clippy::collapsible_if)]
 pub fn is_walkable(world: &mut World, x: i32, y: i32) -> bool {
     // 1. Check Terrain
@@ -31,10 +35,27 @@ pub fn is_walkable(world: &mut World, x: i32, y: i32) -> bool {
         if occupied.0.contains(&(x, y)) {
             // Find the building entity at this position
             let mut blocked = false;
-            let mut buildings = world.query::<(&GridPosition, &Building, Option<&Gate>)>();
-            for (pos, building, gate) in buildings.iter(world) {
+            let mut buildings = world.query::<(
+                &GridPosition,
+                &Building,
+                Option<&Gate>,
+                Option<&AccessControl>,
+            )>();
+            for (pos, building, gate, access_opt) in buildings.iter(world) {
                 if pos.x == x && pos.y == y {
-                    if let Some(g) = gate {
+                    // Priority: AccessControl
+                    if let Some(access) = access_opt {
+                        match access.mode {
+                            AccessMode::Public => {
+                                // Walkable
+                            }
+                            _ => {
+                                // Restricted or Lockdown -> Blocked for generic walker
+                                blocked = true;
+                            }
+                        }
+                    } else if let Some(g) = gate {
+                        // Legacy Gate Logic
                         if g.is_locked {
                             blocked = true;
                         }
@@ -55,6 +76,7 @@ pub fn is_walkable(world: &mut World, x: i32, y: i32) -> bool {
 
 #[cfg(test)]
 mod tests {
+    use crate::layer1::access_control::{AccessControl, AccessMode};
     use crate::layer1::building::{Building, BuildingType, OccupiedTiles};
     use crate::layer1::execution::MovementTarget;
     use crate::layer1::health::Health;
@@ -110,6 +132,30 @@ mod tests {
             .unwrap()
             .is_locked = true;
         assert!(crate::layer1::defense::is_obstacle(&world, gate_entity));
+    }
+
+    #[test]
+    fn test_access_control_overrides_obstacle() {
+        let mut world = World::new();
+        // Spawn a Gate (obstacle) with AccessControl::Public
+        let gate = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Gate,
+                },
+                GridPosition { x: 0, y: 0 },
+                AccessControl {
+                    mode: AccessMode::Public,
+                    ..Default::default()
+                },
+            ))
+            .id();
+
+        assert!(!crate::layer1::defense::is_obstacle(&world, gate));
+
+        // Change to Lockdown
+        world.get_mut::<AccessControl>(gate).unwrap().mode = AccessMode::Lockdown;
+        assert!(crate::layer1::defense::is_obstacle(&world, gate));
     }
 
     #[test]
@@ -234,6 +280,13 @@ mod tests {
 
 /// Helper to check if a specific building entity is an obstacle (locked gate or solid building).
 pub fn is_obstacle(world: &World, entity: Entity) -> bool {
+    if let Some(access) = world.get::<AccessControl>(entity) {
+        return match access.mode {
+            AccessMode::Public => false,
+            _ => true, // Restricted/Lockdown are generic obstacles
+        };
+    }
+
     if let Some(gate) = world.get::<Gate>(entity) {
         return gate.is_locked;
     }
