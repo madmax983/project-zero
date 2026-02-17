@@ -4157,3 +4157,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Biological sensors (maintenance) vs. Electronic sensors (power).
 
 ---
+
+## Paperwork Physicality
+
+**Layer:** 1
+
+**Fantasy:** The crushing weight of bureaucracy, literally. You are an administrator whose decrees must be physically carried to be enacted.
+
+**Mechanic:** High-tier actions (Laws, Tech Unlocks, Building Permits) require "Form" items to be crafted at an Admin Office and hauled to the relevant location (e.g., Construction Site, Research Lab) to authorize work.
+
+**Emergence:** A fire in the Archives destroys the "Permit to Extinguish Fires", paralyzing the fire brigade because they can't act without the form.
+
+**Tension:** Efficiency (ignoring forms/illegal action with penalties) vs. Legality (slow, safe bureaucratic process).
+
+---
+
+## Propaganda Press
+
+**Layer:** 1
+
+**Fantasy:** Controlling the narrative. You decide what truth the colony remembers.
+
+**Mechanic:** A "Printing Press" building generates a "Daily Chronicle" item based on game logs. The player can Redact specific lines (e.g., hiding a death). Pops reading the paper get Mood buffs/debuffs based on the *printed* version, but Witnesses to the redacted event gain "Dissident" traits.
+
+**Emergence:** You try to cover up a famine by redacting "Starvation" logs. The "Dissident" faction grows until they storm the press.
+
+**Tension:** Transparency (Panic) vs. Censorship (Stability/Risk of revolt).
+
+---
+
+## The Shattered World
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Living on the drift. A world broken into floating islands where a misstep means falling forever.
+
+**Mechanic:** Map generation creates non-contiguous "Islands" of terrain separated by "Void" tiles. Travel requires constructible Bridges or Shuttles. Gravity near edges is weird.
+
+**Emergence:** A rebel faction blows the only bridge to the Power Plant island, sieging the main city by cutting the power.
+
+**Tension:** Connectivity (expensive bridges) vs. Defense (natural moats).
+
+---
+
+## Teleporter Psychosis
+
+**Layer:** 1
+
+**Fantasy:** The convenience of instant travel comes at the cost of the soul.
+
+**Mechanic:** "Teleporter Pads" allow instant travel between distant points. However, usage adds a hidden "Dissociation" counter. High counters lead to "Phantom" traits (ignoring hunger, walking through walls) or eventual permadeath (fading away).
+
+**Emergence:** You build a teleporter network to maximize efficiency. Your best workers slowly turn into ghosts who refuse to acknowledge the physical world, eventually vanishing mid-shift.
+
+**Tension:** Speed (Teleport) vs. Safety (Walk).
+
+---
+
+## Symbiotic Gear
+
+**Layer:** 1
+
+**Fantasy:** The armor protects you, but it's hungry.
+
+**Mechanic:** "Living" equipment (Bio-Suits, Parasite-Guns) provides superior stats but has a "Hunger" need. If the wearer doesn't feed it (by eating extra food), the gear eats the wearer's HP.
+
+**Emergence:** A famine hits. You have to strip your soldiers of their Bio-Armor because you can't afford to feed the suits, leaving them vulnerable right when you need them most.
+
+**Tension:** Power (Symbiosis) vs. Upkeep (Food/Health cost).
+
+---
