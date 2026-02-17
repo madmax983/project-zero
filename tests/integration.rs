@@ -72,3 +72,6 @@ mod hauling_flow;
 
 #[path = "integration/medical_power.rs"]
 mod medical_power;
+
+#[path = "integration/tech_corruption.rs"]
+mod tech_corruption;

@@ -52,3 +52,12 @@
     - Updated `src/layer1/building.rs` to add `PowerConsumer` to `Hospital`.
     - Updated `src/layer1/medical.rs` to query `PowerConsumer` and block healing if inactive.
 - **Tests:** `tests/integration/medical_power.rs` (4 tests verified)
+
+### INT-010: Tech Corruption -> Building Functionality
+- **Date:** 2026-02-28
+- **Systems connected:** `TechState` (Research) -> `process_refining_system` (Refining) / `produce_food_system` (Farming) / `turret_fire_system` (Defense)
+- **Glue added:**
+    - Updated `src/layer1/refining.rs` to skip production if required tech is corrupted.
+    - Updated `src/layer1/farm.rs` to skip food production if required tech is corrupted.
+    - Updated `src/layer1/turret.rs` to skip firing if required tech is corrupted.
+- **Tests:** `tests/integration/tech_corruption.rs` (3 tests verified)

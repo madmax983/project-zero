@@ -39,9 +39,32 @@ pub fn turret_fire_system(world: &mut World) {
     }
 
     // 2. Iterate Turrets
+    // Extract tech state for validation
+    let tech_state_exists = world.contains_resource::<crate::layer1::tech::TechState>();
+    let tech_map = world
+        .get_resource::<crate::layer1::tech::TechState>()
+        .map(|ts| ts.techs.clone())
+        .unwrap_or_default();
+
     let mut turrets = Vec::new();
-    let mut query = world.query::<(Entity, &GridPosition, &Turret, &mut CombatState)>();
-    for (entity, pos, turret, mut state) in query.iter_mut(world) {
+    let mut query = world.query::<(
+        Entity,
+        &GridPosition,
+        &Turret,
+        &mut CombatState,
+        &crate::layer1::building::Building,
+    )>();
+    for (entity, pos, turret, mut state, building) in query.iter_mut(world) {
+        // Check Tech Corruption
+        if let Some(tech) = building.building_type.required_tech() {
+            // Only check if TechState system is initialized (backward compat for tests)
+            if tech_state_exists
+                && tech_map.get(&tech) != Some(&crate::layer1::tech::TechStatus::Active)
+            {
+                continue;
+            }
+        }
+
         if state.cooldown == 0 {
             turrets.push((entity, *pos, turret.clone()));
         } else {
