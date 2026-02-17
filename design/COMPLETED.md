@@ -62,3 +62,4 @@ Features that have been fully implemented, tested, and merged.
 
 - [x] `094` System View Architecture — `specs/094-system-view.md` — completed 2026-10-27
 - [x] `145` Prototyping Phase — `specs/145-prototyping-phase.md` — completed 2026-02-17
+- [x] `INT-024` Integration: Items on Ground -> Vermin Growth — completed 2026-03-27

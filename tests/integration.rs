@@ -75,3 +75,5 @@ mod medical_power;
 
 #[path = "integration/tech_corruption.rs"]
 mod tech_corruption;
+#[path = "integration/vermin_items.rs"]
+mod vermin_items;

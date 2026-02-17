@@ -61,3 +61,10 @@
     - Updated `src/layer1/farm.rs` to skip food production if required tech is corrupted.
     - Updated `src/layer1/turret.rs` to skip firing if required tech is corrupted.
 - **Tests:** `tests/integration/tech_corruption.rs` (3 tests verified)
+
+### INT-024: Items on Ground -> Vermin Growth
+- **Date:** 2026-03-27
+- **Systems connected:** `ResourceItem` (World) -> `VerminState` (Environment)
+- **Glue added:**
+    - Updated `src/layer1/vermin.rs` to query `ResourceItem` and add to growth calculation.
+- **Tests:** `tests/integration/vermin_items.rs` (3 tests verified)
