@@ -108,7 +108,9 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<crate::experimental::echoes::EchoMap>();
     world.insert_resource(AtmosphereGrid::new(80, 50));
     world.insert_resource(crate::layer1::pressure::PressureGrid::new(80, 50));
-    world.insert_resource(crate::layer1::temperature::TemperatureGrid::new(80, 50, 15.0));
+    world.insert_resource(crate::layer1::temperature::TemperatureGrid::new(
+        80, 50, 15.0,
+    ));
     world.insert_resource(LightMap::new(80, 50));
     world.insert_resource(AmbientLight::default());
     world.insert_resource(crate::layer1::day_night::DayNightCycle::default());

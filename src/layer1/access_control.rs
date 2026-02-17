@@ -1,5 +1,5 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::pop::Role;
+use bevy_ecs::prelude::*;
 use std::collections::HashSet;
 
 /// Defines the access level of a building.
@@ -73,19 +73,27 @@ mod tests {
         let door = world.spawn(AccessControl::default()).id();
         let pop = world.spawn(Pop).id();
 
-        assert!(check_access(&world, door, pop), "Default door should be accessible");
+        assert!(
+            check_access(&world, door, pop),
+            "Default door should be accessible"
+        );
     }
 
     #[test]
     fn test_lockdown_blocks_everyone() {
         let mut world = World::new();
-        let door = world.spawn(AccessControl {
-            mode: AccessMode::Lockdown,
-            ..Default::default()
-        }).id();
+        let door = world
+            .spawn(AccessControl {
+                mode: AccessMode::Lockdown,
+                ..Default::default()
+            })
+            .id();
         let pop = world.spawn(Pop).id();
 
-        assert!(!check_access(&world, door, pop), "Lockdown should block everyone");
+        assert!(
+            !check_access(&world, door, pop),
+            "Lockdown should block everyone"
+        );
     }
 
     #[test]
@@ -97,14 +105,22 @@ mod tests {
         let mut allowed = HashSet::new();
         allowed.insert(pop_allowed);
 
-        let door = world.spawn(AccessControl {
-            mode: AccessMode::Restricted,
-            allowed_pops: allowed,
-            ..Default::default()
-        }).id();
+        let door = world
+            .spawn(AccessControl {
+                mode: AccessMode::Restricted,
+                allowed_pops: allowed,
+                ..Default::default()
+            })
+            .id();
 
-        assert!(check_access(&world, door, pop_allowed), "Allowed pop should pass");
-        assert!(!check_access(&world, door, pop_denied), "Denied pop should fail");
+        assert!(
+            check_access(&world, door, pop_allowed),
+            "Allowed pop should pass"
+        );
+        assert!(
+            !check_access(&world, door, pop_denied),
+            "Denied pop should fail"
+        );
     }
 
     #[test]
@@ -116,27 +132,36 @@ mod tests {
         let mut allowed_roles = HashSet::new();
         allowed_roles.insert(Role::Soldier);
 
-        let door = world.spawn(AccessControl {
-            mode: AccessMode::Restricted,
-            allowed_roles,
-            ..Default::default()
-        }).id();
+        let door = world
+            .spawn(AccessControl {
+                mode: AccessMode::Restricted,
+                allowed_roles,
+                ..Default::default()
+            })
+            .id();
 
         assert!(check_access(&world, door, soldier), "Soldier should pass");
-        assert!(!check_access(&world, door, civilian), "Civilian should fail");
+        assert!(
+            !check_access(&world, door, civilian),
+            "Civilian should fail"
+        );
     }
 
     #[test]
     fn test_pathfinding_integration() {
-        use crate::layer1::map::GridPosition;
         use crate::layer1::building::{Building, BuildingType, OccupiedTiles};
+        use crate::layer1::map::GridPosition;
         use crate::layer1::pathfinding::find_path_for_pop;
         use crate::layer1::terrain::{TerrainGrid, TerrainType};
 
         let mut world = World::new();
         // Setup Map
         let tiles = vec![TerrainType::Grass; 100];
-        world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
         world.insert_resource(OccupiedTiles::default());
 
         let pop = world.spawn(Pop).id();
@@ -145,7 +170,9 @@ mod tests {
         // Block (1, 1) with a Wall
         world.spawn((
             GridPosition { x: 1, y: 1 },
-            Building { building_type: BuildingType::Wall },
+            Building {
+                building_type: BuildingType::Wall,
+            },
         ));
         world.resource_mut::<OccupiedTiles>().0.insert((1, 1));
 
@@ -157,15 +184,22 @@ mod tests {
         // Wall at (0, 1)
         world.spawn((
             GridPosition { x: 0, y: 1 },
-            Building { building_type: BuildingType::Wall },
+            Building {
+                building_type: BuildingType::Wall,
+            },
         ));
         world.resource_mut::<OccupiedTiles>().0.insert((0, 1));
 
         // Locked Door at (1, 0)
         world.spawn((
             GridPosition { x: 1, y: 0 },
-            AccessControl { mode: AccessMode::Lockdown, ..Default::default() },
-            Building { building_type: BuildingType::Gate }, // Gate is an obstacle
+            AccessControl {
+                mode: AccessMode::Lockdown,
+                ..Default::default()
+            },
+            Building {
+                building_type: BuildingType::Gate,
+            }, // Gate is an obstacle
         ));
         world.resource_mut::<OccupiedTiles>().0.insert((1, 0));
 

@@ -198,11 +198,7 @@ pub fn update_temperature_system(
 /// System to apply thermal damage to pops.
 pub fn thermal_damage_system(
     grid: Option<Res<TemperatureGrid>>,
-    mut pops: Query<(
-        &mut Health,
-        &GridPosition,
-        &Equipment,
-    ), With<Pop>>,
+    mut pops: Query<(&mut Health, &GridPosition, &Equipment), With<Pop>>,
     clothing_query: Query<&Clothing>,
 ) {
     let Some(grid) = grid else { return };
@@ -241,21 +237,25 @@ pub fn thermal_damage_system(
 
 #[cfg(test)]
 mod tests {
+    use crate::layer1::building::{Building, BuildingType};
+    use crate::layer1::energy::PowerConsumer;
+    use crate::layer1::health::Health;
+    use crate::layer1::items::{Clothing, ClothingType, Equipment};
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::pop::Pop;
+    use crate::layer1::seasons::{Season, SeasonState};
+    use crate::layer1::temperature::{
+        TemperatureGrid, thermal_damage_system, update_temperature_system,
+    };
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
-    use crate::layer1::temperature::{TemperatureGrid, update_temperature_system, thermal_damage_system};
-    use crate::layer1::map::GridPosition;
-    use crate::layer1::health::Health;
-    use crate::layer1::pop::Pop;
-    use crate::layer1::building::{Building, BuildingType};
-    use crate::layer1::seasons::{Season, SeasonState};
-    use crate::layer1::items::{Clothing, Equipment, ClothingType};
-    use crate::layer1::energy::PowerConsumer;
 
     #[test]
     fn test_grid_initialization_to_ambient() {
         let mut world = World::new();
-        world.insert_resource(SeasonState { current_season: Season::Winter }); // -5.0 C
+        world.insert_resource(SeasonState {
+            current_season: Season::Winter,
+        }); // -5.0 C
 
         // Initialize grid
         let grid = TemperatureGrid::new(10, 10, -5.0);
@@ -272,9 +272,14 @@ mod tests {
 
         // Spawn Heater (Active)
         world.spawn((
-            Building { building_type: BuildingType::Heater },
+            Building {
+                building_type: BuildingType::Heater,
+            },
             GridPosition { x: 5, y: 5 },
-            PowerConsumer { demand: 5.0, active: true },
+            PowerConsumer {
+                demand: 5.0,
+                active: true,
+            },
         ));
 
         // Run update
@@ -294,16 +299,24 @@ mod tests {
 
         // Spawn Heater (Inactive)
         world.spawn((
-            Building { building_type: BuildingType::Heater },
+            Building {
+                building_type: BuildingType::Heater,
+            },
             GridPosition { x: 5, y: 5 },
-            PowerConsumer { demand: 5.0, active: false },
+            PowerConsumer {
+                demand: 5.0,
+                active: false,
+            },
         ));
 
         // Run update
         world.run_system_once(update_temperature_system).unwrap();
 
         let grid = world.resource::<TemperatureGrid>();
-        assert!((grid.get(5, 5) - 15.0).abs() < f32::EPSILON, "Inactive heater should not raise temperature");
+        assert!(
+            (grid.get(5, 5) - 15.0).abs() < f32::EPSILON,
+            "Inactive heater should not raise temperature"
+        );
     }
 
     #[test]
@@ -316,7 +329,9 @@ mod tests {
 
         // Wall at (2, 0)
         world.spawn((
-            Building { building_type: BuildingType::Wall },
+            Building {
+                building_type: BuildingType::Wall,
+            },
             GridPosition { x: 2, y: 0 },
         ));
 
@@ -331,7 +346,10 @@ mod tests {
         assert!(grid.get(1, 0) > 10.0);
         // (3,0) should be cold (blocked by wall)
         // Walls are not perfect insulators (0.05 conductivity), but significantly colder than open air
-        assert!(grid.get(3, 0) < grid.get(1, 0) * 0.5, "Wall should block most heat");
+        assert!(
+            grid.get(3, 0) < grid.get(1, 0) * 0.5,
+            "Wall should block most heat"
+        );
     }
 
     #[test]
@@ -341,12 +359,17 @@ mod tests {
         grid.set(5, 5, -20.0); // Freezing
         world.insert_resource(grid);
 
-        let pop = world.spawn((
-            Pop::default(),
-            Health { current: 100.0, max: 100.0 },
-            Equipment::default(),
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let pop = world
+            .spawn((
+                Pop::default(),
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                },
+                Equipment::default(),
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         world.run_system_once(thermal_damage_system).unwrap();
 
@@ -359,7 +382,9 @@ mod tests {
         // Tiles should slowly drift towards season ambient temp if not insulated
         let mut world = World::new();
         // let ambient = -10.0;
-        world.insert_resource(SeasonState { current_season: Season::Winter }); // Assume Winter = -5.0
+        world.insert_resource(SeasonState {
+            current_season: Season::Winter,
+        }); // Assume Winter = -5.0
         let mut grid = TemperatureGrid::new(10, 10, 20.0); // Start warm (20 C)
         // Set explicit ambient on grid to match season for test clarity,
         // though system will overwrite it.
@@ -381,22 +406,29 @@ mod tests {
         world.insert_resource(grid);
 
         // Create Clothing entity
-        let coat = world.spawn(Clothing {
-            clothing_type: ClothingType::Tunic, // Generic
-            insulation: 1.0, // Protects ~30 degrees
-            durability: 100.0,
-            max_durability: 100.0,
-        }).id();
+        let coat = world
+            .spawn(Clothing {
+                clothing_type: ClothingType::Tunic, // Generic
+                insulation: 1.0,                    // Protects ~30 degrees
+                durability: 100.0,
+                max_durability: 100.0,
+            })
+            .id();
 
-        let pop = world.spawn((
-            Pop::default(),
-            Health { current: 100.0, max: 100.0 },
-            Equipment {
-                body: Some(coat),
-                ..Default::default()
-            },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let pop = world
+            .spawn((
+                Pop::default(),
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                },
+                Equipment {
+                    body: Some(coat),
+                    ..Default::default()
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         world.run_system_once(thermal_damage_system).unwrap();
 

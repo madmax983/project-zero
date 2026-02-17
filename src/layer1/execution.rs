@@ -309,7 +309,12 @@ pub fn movement_system(
     mut erosion: ResMut<ErosionGrid>,
     terrain: Res<TerrainGrid>,
     occupied_tiles: Option<Res<OccupiedTiles>>,
-    buildings: Query<(&GridPosition, &Building, Option<&Gate>, Option<&AccessControl>)>,
+    buildings: Query<(
+        &GridPosition,
+        &Building,
+        Option<&Gate>,
+        Option<&AccessControl>,
+    )>,
     mut commands: Commands,
 ) {
     for (pop_entity, mut current_pos, mt, mut speed_opt, traits, hit_stop, role) in &mut pops {
@@ -441,7 +446,12 @@ fn check_work_adjacency(
     action: ActionType,
     terrain: &TerrainGrid,
     occupied: Option<&OccupiedTiles>,
-    buildings: &Query<(&GridPosition, &Building, Option<&Gate>, Option<&AccessControl>)>,
+    buildings: &Query<(
+        &GridPosition,
+        &Building,
+        Option<&Gate>,
+        Option<&AccessControl>,
+    )>,
     pop_entity: Entity,
     pop_role: Option<Role>,
 ) -> bool {
@@ -664,7 +674,12 @@ fn try_get_walkable_pos(
     pos: Option<GridPosition>,
     terrain: &TerrainGrid,
     occupied_tiles: Option<&OccupiedTiles>,
-    buildings: &Query<(&GridPosition, &Building, Option<&Gate>, Option<&AccessControl>)>,
+    buildings: &Query<(
+        &GridPosition,
+        &Building,
+        Option<&Gate>,
+        Option<&AccessControl>,
+    )>,
     pop_entity: Entity,
     pop_role: Option<Role>,
 ) -> Option<GridPosition> {
@@ -687,7 +702,12 @@ fn try_get_walkable_pos(
 fn is_walkable(
     terrain: &TerrainGrid,
     occupied: Option<&OccupiedTiles>,
-    buildings: &Query<(&GridPosition, &Building, Option<&Gate>, Option<&AccessControl>)>,
+    buildings: &Query<(
+        &GridPosition,
+        &Building,
+        Option<&Gate>,
+        Option<&AccessControl>,
+    )>,
     x: i32,
     y: i32,
     pop_entity: Entity,

@@ -30,6 +30,8 @@
 //! - **Environment:** [`crate::layer1::terrain`], [`crate::layer1::map`], [`crate::layer1::weather`], [`crate::layer1::lighting`]
 //! - **Economy:** [`crate::layer1::resources`], [`crate::layer1::trade`]
 
+/// Biometric access control system (Spec 142).
+pub mod access_control;
 /// Pop actions logic.
 pub mod actions;
 /// Game balance constants.
@@ -41,8 +43,6 @@ pub mod building;
 pub mod chronicle;
 /// Chronicle system and historical records.
 pub mod clothing;
-/// Biometric access control system (Spec 142).
-pub mod access_control;
 /// Door control system (Spec 134).
 pub mod control;
 /// Defensive structures and logic.
