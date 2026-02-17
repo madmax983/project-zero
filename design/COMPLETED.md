@@ -126,3 +126,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `142` Biometric Lockouts — `specs/142-biometric-lockouts.md` — completed 2026-12-11
 - [x] `124` The Wild Child — `specs/124-the-wild-child.md` — completed 2026-02-27
 - [x] `INT-009` Integration: Hospital Power Dependency — completed 2026-10-28
+- [x] `138` The Blob — `specs/138-the-blob.md` — completed 2026-02-17

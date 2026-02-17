@@ -47,6 +47,7 @@ pub fn setup_world() -> World {
 
 /// Create and initialize a new game world with custom configuration.
 #[must_use]
+#[allow(clippy::too_many_lines)]
 pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -> World {
     init_task_pools();
     let mut world = World::new();

@@ -33,6 +33,7 @@ use crate::experimental::miasma::{
     apply_miasma_effects_system, sickness_progression_system, update_miasma_system,
 };
 use crate::gpu::evaluate::gpu_evaluate_actions;
+use crate::layer1::blob::{blob_consumption_system, blob_spread_system};
 use crate::layer1::heirloom::RetrogradeEngineeringEvent;
 use crate::layer1::{
     AddChronicleEvent, AffinityChange, DeathEvent, PopDied, advance_season_system, aging_system,
@@ -260,11 +261,16 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(fire_spread_system)
             .after(fire_damage_pops_system)
             .after(crate::layer1::structure::fire_damage_structure_system),
+        blob_spread_system.after(work_execution_system),
+        blob_consumption_system.after(blob_spread_system),
         flora_attack_system.after(work_execution_system),
         ancient_structure_decay_system.after(work_execution_system),
         spirit_decay_system.after(work_execution_system),
         quirk_generation_system.after(spirit_decay_system),
         entropy_system.after(work_execution_system),
+    ));
+
+    schedule.add_systems((
         malfunction_system.after(entropy_system),
         update_noise_system.after(work_execution_system),
         apply_noise_effects_system.after(update_noise_system),
