@@ -44,7 +44,7 @@ trunk serve
 
 ### Procedural Generation (Narrative)
 
-To use SCALE's procedural generation in your own Rust code:
+To use SCALE's procedural generation in your own Rust code (available in the default build, no feature flags required):
 
 ```rust
 use scale::shared::narrative::{NarrativeContext, NarrativeGenerator};
@@ -195,7 +195,6 @@ scale/
 **Feature flags:**
 - `native` (default) — Terminal mode via crossterm
 - `wasm` — Browser mode via ratzilla
-- `nova` — Enables experimental features (e.g. Ghosts)
 
 **Profiles:**
 - `dev` — Optimized for fast iteration (opt-level = 1)
