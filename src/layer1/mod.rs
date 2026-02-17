@@ -409,3 +409,6 @@ pub use temperature::*;
 pub mod wild_child;
 pub use wild_child::*;
 pub mod blob;
+
+#[cfg(test)]
+mod tech_storage_tests;

@@ -127,3 +127,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `124` The Wild Child — `specs/124-the-wild-child.md` — completed 2026-02-27
 - [x] `INT-009` Integration: Hospital Power Dependency — completed 2026-10-28
 - [x] `138` The Blob — `specs/138-the-blob.md` — completed 2026-02-17
+- [x] `143` Data Physicality — `specs/143-data-physicality.md` — completed 2026-02-28

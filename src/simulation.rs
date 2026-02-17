@@ -197,6 +197,7 @@ pub fn build_simulation_schedule() -> Schedule {
         produce_food_system.after(work_execution_system),
         hopper_system.after(produce_food_system),
         process_refining_system.after(work_execution_system),
+        crate::layer1::tech::update_tech_capacity_system.after(work_execution_system),
         process_research_system.after(work_execution_system),
         process_observe_system.after(work_execution_system),
         regrowth_system.after(work_execution_system),

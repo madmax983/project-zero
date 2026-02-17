@@ -4,7 +4,7 @@ use crate::layer1::factions::{FactionMember, FactionState, Factions};
 use crate::layer1::resources::ColonyResources;
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
-use std::collections::HashSet;
+use std::collections::HashMap;
 
 /// Available technologies in the tech tree.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -49,25 +49,160 @@ impl Tech {
             Self::Militia => "Militia",
         }
     }
+
+    /// Returns the data storage cost (in TB) required to maintain this technology.
+    #[must_use]
+    pub const fn storage_cost(&self) -> f32 {
+        match self {
+            Self::Masonry => 5.0,
+            Self::MetalWorking | Self::Militia => 10.0,
+            Self::SocialStructures | Self::Hydroponics => 15.0,
+            Self::Astronomy => 20.0,
+        }
+    }
+}
+
+/// Status of a researched technology.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum TechStatus {
+    /// Technology is fully functional.
+    Active,
+    /// Technology is corrupted due to data loss/capacity issues.
+    Corrupted,
 }
 
 /// Resource tracking the state of technology research.
 #[derive(Resource, Default, Debug)]
 pub struct TechState {
-    /// The set of unlocked technologies.
-    pub unlocked: HashSet<Tech>,
+    /// The set of unlocked technologies and their status.
+    pub techs: HashMap<Tech, TechStatus>,
+    /// Total data capacity available (TB).
+    pub total_capacity: f32,
+    /// Currently used data capacity (TB).
+    pub used_capacity: f32,
 }
 
 impl TechState {
-    /// Checks if a specific technology is unlocked.
+    /// Checks if a specific technology is unlocked AND active.
+    /// Returns false if the tech is not researched or is Corrupted.
     #[must_use]
     pub fn is_unlocked(&self, tech: Tech) -> bool {
-        self.unlocked.contains(&tech)
+        self.is_active(tech)
     }
 
-    /// Unlocks a technology.
+    /// Checks if a specific technology has been researched (Active or Corrupted).
+    #[must_use]
+    pub fn is_researched(&self, tech: Tech) -> bool {
+        self.techs.contains_key(&tech)
+    }
+
+    /// Checks if a specific technology is fully active.
+    #[must_use]
+    pub fn is_active(&self, tech: Tech) -> bool {
+        self.techs.get(&tech) == Some(&TechStatus::Active)
+    }
+
+    /// Unlocks a technology (forces Active).
+    /// Used by existing tests/code that bypass cost checks.
     pub fn unlock(&mut self, tech: Tech) {
-        self.unlocked.insert(tech);
+        self.techs.insert(tech, TechStatus::Active);
+        self.update_corruption(); // Recalculate used capacity
+    }
+
+    /// Attempts to unlock a technology if capacity allows.
+    pub fn try_unlock(&mut self, tech: Tech) -> bool {
+        if self.techs.contains_key(&tech) {
+            return true;
+        }
+
+        if self.used_capacity + tech.storage_cost() > self.total_capacity {
+            return false;
+        }
+
+        self.techs.insert(tech, TechStatus::Active);
+        self.used_capacity += tech.storage_cost();
+        true
+    }
+
+    /// Helper for tests to force a specific status.
+    #[cfg(test)]
+    pub fn force_unlock(&mut self, tech: Tech, status: TechStatus) {
+        self.techs.insert(tech, status);
+        self.update_corruption();
+    }
+
+    /// Returns the status of a tech, if unlocked.
+    #[cfg(test)]
+    pub fn status(&self, tech: Tech) -> TechStatus {
+        *self.techs.get(&tech).unwrap_or(&TechStatus::Active)
+    }
+
+    /// Updates corruption state based on capacity.
+    pub fn update_corruption(&mut self) {
+        // Calculate used capacity from active techs
+        let active_usage: f32 = self
+            .techs
+            .iter()
+            .filter(|(_, status)| **status == TechStatus::Active)
+            .map(|(t, _)| t.storage_cost())
+            .sum();
+
+        if active_usage > self.total_capacity {
+            // Over capacity! Corrupt the MOST EXPENSIVE techs first.
+            let mut active_techs: Vec<Tech> = self
+                .techs
+                .iter()
+                .filter(|(_, s)| **s == TechStatus::Active)
+                .map(|(t, _)| *t)
+                .collect();
+
+            active_techs.sort_by(|a, b| {
+                b.storage_cost()
+                    .partial_cmp(&a.storage_cost())
+                    .unwrap_or(std::cmp::Ordering::Equal)
+            });
+
+            let mut current_usage = active_usage;
+            for tech in active_techs {
+                if current_usage <= self.total_capacity {
+                    break;
+                }
+
+                self.techs.insert(tech, TechStatus::Corrupted);
+                current_usage -= tech.storage_cost();
+            }
+        } else {
+            // Auto-repair if capacity allows
+            let mut corrupted_techs: Vec<Tech> = self
+                .techs
+                .iter()
+                .filter(|(_, s)| **s == TechStatus::Corrupted)
+                .map(|(t, _)| *t)
+                .collect();
+
+            // Sort by cost asc (restore cheap first)
+            corrupted_techs.sort_by(|a, b| {
+                a.storage_cost()
+                    .partial_cmp(&b.storage_cost())
+                    .unwrap_or(std::cmp::Ordering::Equal)
+            });
+
+            let mut current_usage = active_usage;
+            for tech in corrupted_techs {
+                if current_usage + tech.storage_cost() <= self.total_capacity {
+                    self.techs.insert(tech, TechStatus::Active);
+                    current_usage += tech.storage_cost();
+                }
+            }
+        }
+
+        // Final update of used_capacity
+        self.used_capacity = self
+            .techs
+            .iter()
+            .filter(|(_, status)| **status == TechStatus::Active)
+            .map(|(t, _)| t.storage_cost())
+            .sum();
     }
 }
 
@@ -75,31 +210,47 @@ impl TechState {
 #[derive(Component, Default)]
 pub struct Library;
 
+/// Component providing data storage capacity.
+#[derive(Component, Default)]
+pub struct DataStorage {
+    /// Capacity in Terabytes (TB).
+    pub capacity: f32,
+}
+
 /// Attempts to unlock a technology using Knowledge.
 ///
 /// Returns `true` if successful (affordable and not already unlocked, or already unlocked).
 /// Deducts Knowledge from `ColonyResources`.
 pub fn unlock_tech(world: &mut World, tech: Tech) -> bool {
-    // Check if already unlocked?
-    if world.resource::<TechState>().is_unlocked(tech) {
+    // Check if already researched (even if Corrupted)?
+    if world.resource::<TechState>().is_researched(tech) {
         return true;
     }
 
     let cost = tech.cost();
-    let can_afford = {
+    let can_afford_resources = {
         let res = world.resource::<ColonyResources>();
         res.knowledge >= cost
     };
 
-    if can_afford {
-        world.resource_mut::<ColonyResources>().knowledge -= cost;
-        world.resource_mut::<TechState>().unlock(tech);
+    if !can_afford_resources {
+        return false;
+    }
 
+    // Try to unlock (checking capacity)
+    // Note: We need to borrow TechState mutably
+    let unlocked = world.resource_mut::<TechState>().try_unlock(tech);
+
+    if unlocked {
+        world.resource_mut::<ColonyResources>().knowledge -= cost;
         if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
             log.add(format!("Researched: {}", tech.label()));
         }
         true
     } else {
+        if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+            log.add(format!("Failed to research {}: Insufficient Data Capacity", tech.label()));
+        }
         false
     }
 }
@@ -148,6 +299,21 @@ pub fn process_research_system(
     }
 }
 
+/// Updates global tech capacity based on powered servers.
+pub fn update_tech_capacity_system(
+    mut tech_state: ResMut<TechState>,
+    query: Query<(&DataStorage, Option<&crate::layer1::energy::PowerConsumer>)>,
+) {
+    let total_cap: f32 = query
+        .iter()
+        .filter(|(_, power)| power.map_or(true, |p| p.active))
+        .map(|(storage, _)| storage.capacity)
+        .sum();
+
+    tech_state.total_capacity = total_cap;
+    tech_state.update_corruption();
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -186,7 +352,9 @@ mod tests {
     #[test]
     fn test_unlock_tech_success() {
         let mut world = World::new();
-        world.insert_resource(TechState::default());
+        let mut state = TechState::default();
+        state.total_capacity = 100.0; // Needs capacity now!
+        world.insert_resource(state);
         world.insert_resource(MessageLog::default());
         world.insert_resource(ColonyResources {
             knowledge: 20.0,
@@ -260,6 +428,7 @@ mod tests {
     fn test_placement_succeeds_if_tech_unlocked() {
         let mut world = World::new();
         let mut state = TechState::default();
+        state.total_capacity = 100.0;
         state.unlock(Tech::MetalWorking);
         world.insert_resource(state);
         world.insert_resource(MessageLog::default());
