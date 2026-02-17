@@ -237,6 +237,71 @@ classDiagram
     Pathfinding ..> Vermin : Capability check (can_use_vents)
 ```
 
+## Technology Architecture
+
+Data Physicality splits technology into "Knowledge" (Software) and "Capacity" (Hardware). Tech unlocks require storage space; exceeding capacity triggers corruption.
+
+```mermaid
+classDiagram
+    class TechState {
+        +HashMap~Tech, TechStatus~ techs
+        +f32 total_capacity
+        +f32 used_capacity
+        +is_active(Tech) bool
+        +update_corruption()
+    }
+    class TechStatus {
+        <<Enumeration>>
+        Active
+        Corrupted
+    }
+    class Tech {
+        <<Enumeration>>
+        +storage_cost() f32
+        +knowledge_cost() f32
+    }
+    class DataStorage {
+        +f32 capacity
+    }
+    class Building {
+        +required_tech() Option~Tech~
+    }
+    class PowerConsumer {
+        +active bool
+    }
+
+    TechState --> TechStatus : manages
+    TechState ..> DataStorage : Aggregates capacity from
+    DataStorage --|> PowerConsumer : Requires Power
+    Building ..> TechState : Checks requirement
+    TechState ..> Tech : Key
+```
+
+### Corruption Cascade
+
+When power fails or servers are destroyed, capacity drops, forcing a "Corruption Cascade" that disables high-tech systems.
+
+```mermaid
+sequenceDiagram
+    participant PowerSystem
+    participant ServerBank
+    participant TechState
+    participant Techs
+
+    PowerSystem->>ServerBank: Power Failure (Active=False)
+    ServerBank->>TechState: Update Total Capacity
+    TechState->>TechState: Check Used vs Total
+
+    alt Over Capacity
+        TechState->>Techs: Sort Active by Cost (Desc)
+        loop Until Under Capacity
+            Techs->>TechState: Mark Highest Cost as CORRUPTED
+        end
+    end
+
+    Note right of TechState: High-tier tech (e.g. Turrets) <br/> becomes unusable.
+```
+
 ## UI Inspector Flow
 
 The Inspector pattern allows detailed viewing of entities without coupling the UI to specific entity types.
@@ -311,3 +376,4 @@ Rel(Shared, Events, "Consumes")
 - [ADR 019: Decoupled Camera Interpolation](./adr/019-decoupled-camera-interpolation.md)
 - [ADR 020: Spontaneous Architecture](./adr/020-spontaneous-architecture.md)
 - [ADR 022: Atmospheric & Ventilation Flow](./adr/022-atmospheric-flow-architecture.md)
+- [ADR 023: Data Physicality & Tech Corruption](./adr/023-data-physicality.md)
