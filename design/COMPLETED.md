@@ -123,3 +123,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `136` Explosive Decompression — `specs/136-explosive-decompression.md` — completed 2026-02-16
 - [x] `134` Emergency Venting — `specs/134-emergency-venting.md` — completed 2026-10-27
 - [x] `078` The Old Guard — `specs/078-the-old-guard.md` — completed 2026-10-27
+- [x] `142` Biometric Lockouts — `specs/142-biometric-lockouts.md` — completed 2026-12-11
