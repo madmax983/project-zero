@@ -14,8 +14,10 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `059` Soil Fertility — `specs/059-soil-fertility.md`
 - [ ] `066` Building Work AI — `specs/066-building-work-ai.md`
 - [ ] `068` Pop Factions — `specs/068-pop-factions.md`
+- [ ] `075` Animal Husbandry — `specs/075-animal-husbandry.md`
 - [ ] `077` Emergent Festivals — `specs/077-emergent-festivals.md`
 - [ ] `080` Planetary Quirks — `specs/080-planetary-quirks.md`
+- [ ] `115` The Overview Effect — `specs/115-observatory-effect.md`
 - [ ] `116` Drone Networks — `specs/116-drone-networks.md`
 - [ ] `120` Crop Diversity — `specs/120-crop-diversity.md`
 - [ ] `132` Equipment & Wear — `specs/132-equipment-and-wear.md`
@@ -35,3 +37,4 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `105` Launch Logistics — `specs/105-launch-logistics.md`
 - [ ] `146` Command Center & System Visibility — `specs/146-command-center.md`
 - [ ] `149` Cometary Injection — `specs/149-cometary-injection.md`
+- [ ] `150` Sensor Ambiguity — `specs/150-sensor-ambiguity.md`
