@@ -3473,7 +3473,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Biometric Lockouts
+## Biometric Lockouts [SPECCED]
 
 **Layer:** 1
 
