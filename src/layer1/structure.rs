@@ -136,10 +136,20 @@ pub fn calculate_malfunction_risk(current: f32, max: f32) -> f32 {
 /// System that triggers malfunctions in poorly maintained buildings.
 pub fn malfunction_system(world: &mut World) {
     let mut events = Vec::new();
-    let mut query = world.query::<(Entity, &Structure, &GridPosition, Option<&Building>)>();
+    let mut query = world.query::<(
+        Entity,
+        &Structure,
+        &GridPosition,
+        Option<&Building>,
+        Option<&crate::layer1::prototyping::Prototype>,
+    )>();
 
-    for (entity, structure, pos, _building) in query.iter(world) {
-        let risk = calculate_malfunction_risk(structure.current_hp, structure.max_hp);
+    for (entity, structure, pos, _building, prototype) in query.iter(world) {
+        let base_risk = calculate_malfunction_risk(structure.current_hp, structure.max_hp);
+
+        // Apply Prototype modifier
+        let modifier = prototype.map_or(1.0, |p| p.breakdown_chance_modifier);
+        let risk = base_risk * modifier;
 
         if risk > 0.0 && rand::random::<f32>() < risk {
             events.push((entity, *pos));

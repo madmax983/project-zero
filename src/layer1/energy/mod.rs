@@ -134,7 +134,10 @@ fn bfs_grid(
                     .is_some_and(crate::layer1::rituals::Quirk::stops_production);
 
                 if !is_stopped {
-                    total_production += source.output;
+                    let efficiency = world
+                        .get::<crate::layer1::prototyping::Prototype>(entity)
+                        .map_or(1.0, |p| p.efficiency_modifier);
+                    total_production += source.output * efficiency;
                 }
             }
             if let Some(consumer) = world.get::<PowerConsumer>(entity) {

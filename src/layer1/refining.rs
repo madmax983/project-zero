@@ -97,7 +97,7 @@ pub fn process_refining_system(world: &mut World) {
         .unwrap_or_default();
 
     // Iterate buildings
-    let buildings: Vec<(Entity, BuildingType, GridPosition, f32, f32, bool)> = world
+    let buildings: Vec<(Entity, BuildingType, GridPosition, f32, f32, bool, f32)> = world
         .query::<(
             Entity,
             &Building,
@@ -105,11 +105,13 @@ pub fn process_refining_system(world: &mut World) {
             &RefiningProgress,
             Option<&crate::layer1::energy::PowerConsumer>,
             Option<&crate::layer1::rituals::Quirk>,
+            Option<&crate::layer1::prototyping::Prototype>,
         )>()
         .iter(world)
-        .map(|(e, b, p, prog, power, quirk)| {
+        .map(|(e, b, p, prog, power, quirk, prototype)| {
             let active = power.is_none_or(|c| c.active);
             let quirk_stops = quirk.is_some_and(crate::layer1::rituals::Quirk::stops_production);
+            let efficiency_mod = prototype.map_or(1.0, |pr| pr.efficiency_modifier);
             (
                 e,
                 b.building_type,
@@ -117,11 +119,21 @@ pub fn process_refining_system(world: &mut World) {
                 prog.current,
                 prog.max,
                 active && !quirk_stops,
+                efficiency_mod,
             )
         })
         .collect();
 
-    for (building_entity, building_type, pos, _current_prog, _max_prog, is_active) in buildings {
+    for (
+        building_entity,
+        building_type,
+        pos,
+        _current_prog,
+        _max_prog,
+        is_active,
+        efficiency_mod,
+    ) in buildings
+    {
         if !is_active {
             continue;
         }
@@ -153,7 +165,7 @@ pub fn process_refining_system(world: &mut World) {
 
         if can_refine {
             if let Some(mut progress) = world.get_mut::<RefiningProgress>(building_entity) {
-                progress.current += 1.0 * efficiency;
+                progress.current += 1.0 * efficiency * efficiency_mod;
                 if progress.is_complete() {
                     finished_jobs.push((building_entity, input_cost, output_gain, pos));
                 }
