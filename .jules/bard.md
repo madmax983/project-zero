@@ -9,3 +9,7 @@
 ## 2024-05-25 - [Missing Architecture Docs]
 **Confusion:** The `README.md` pointed to `DESIGN.md` for architectural details, but `DESIGN.md` was a stub/duplicate of the README, leaving the system architecture undocumented.
 **Clarification:** Rewrote `DESIGN.md` to serve as the definitive architecture guide, covering the 3-layer simulation, ECS structure, and key data flows.
+
+## 2026-02-17 - [Action System Black Box]
+**Confusion:** The `layer1::actions` module was a bare list of files. Developers had to read source code to understand the "Evaluate -> Select -> Execute" lifecycle or the contract for `evaluate_*` functions.
+**Clarification:** Added module-level documentation to `layer1::actions::mod.rs` explaining the architecture, lifecycle, and contract. Documented key actions (`work`, `repair`, `haul`) with usage examples.
