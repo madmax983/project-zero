@@ -51,6 +51,11 @@ pub fn turret_fire_system(world: &mut World) {
 
     // 3. Fire Logic (Mutable World Access needed)
     for (turret_entity, turret_pos, turret_data) in turrets {
+        // Validate ammo cost (Harden Input)
+        if turret_data.ammo_cost < 0.0 || !turret_data.ammo_cost.is_finite() {
+            continue;
+        }
+
         // Check Ammo
         let has_ammo = {
             let resources = world.resource::<ColonyResources>();
@@ -321,5 +326,51 @@ mod tests {
             found_waste,
             "Impact should spawn Waste item at target location"
         );
+    }
+
+    #[test]
+    fn test_exploit_negative_ammo_cost_prevented() {
+        let mut world = setup_world();
+        world.resource_mut::<ColonyResources>().waste = 0.0;
+
+        let _turret = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::TrashCannon,
+                },
+                Turret {
+                    attack: AttackProperties {
+                        damage: 10.0,
+                        range: 5.0,
+                        cooldown: 0,
+                        accuracy: 1.0,
+                    },
+                    ammo_cost: -100.0, // Malicious input (would add 100 waste)
+                    ammo_type: ResourceType::Waste,
+                },
+                GridPosition { x: 0, y: 0 },
+                CombatState::default(),
+            ))
+            .id();
+
+        // Spawn Target
+        let _enemy = world
+            .spawn((
+                Fauna {
+                    fauna_type: FaunaType::Wolf,
+                    ..Default::default()
+                },
+                GridPosition { x: 2, y: 0 },
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                },
+            ))
+            .id();
+
+        turret_fire_system(&mut world);
+
+        let res = world.resource::<ColonyResources>();
+        assert!((res.waste - 0.0).abs() < f32::EPSILON, "Should not gain waste from negative cost. Current waste: {}", res.waste);
     }
 }
