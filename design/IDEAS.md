@@ -4269,3 +4269,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Purely visual/narrative weight of your decisions.
 
 ---
+
+## Ecophagy
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Eating a planet to build a fleet.
+
+**Mechanic:** "World Eater" ships strip-mine Layer 1 tiles permanently, turning them into Bedrock/Void to generate massive raw resources instantly.
+
+**Emergence:** You eat the northern continent to build a defense fleet. Now the weather patterns change because the mountains are gone, and your southern farms dry up.
+
+**Tension:** Permanent destruction of the map vs. Immediate resource injection.
+
+---
+
+## The Shadow Cabinet
+
+**Layer:** 1
+
+**Fantasy:** Real power isn't in the throne room; it's in the kitchen and the maintenance tunnels.
+
+**Mechanic:** Pops with critical access (Cooks, Janitors, Engineers) form hidden alliances. If the Governor (Player) ignores their specific needs, they cause "Passive Resistance" (slow doors, cold food, "lost" paperwork) without open rebellion.
+
+**Emergence:** The Janitor is the most powerful person in the colony because he creates "shortcuts" for his friends and locks doors for his enemies.
+
+**Tension:** Appease the visible leaders (Officers) or the invisible ones (Workers)?
+
+---
+
+## The Hive Mind Integration
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** Peace with the planet, at the cost of your soul.
+
+**Mechanic:** Researching "Xeno-Integration" allows implanting Pops with local flora. They stop needing Sleep/Leisure and become immune to planetary hazards, but lose their Personality/Individual Traits and join a "Collective".
+
+**Emergence:** You integrate half the colony to survive a harsh winter. The integrated half decides the non-integrated half is "inefficient" and stops feeding them.
+
+**Tension:** Individual humanity (fragile) vs. Collective post-humanity (robust).
+
+---
+
+## Spatial Compression
+
+**Layer:** 1
+
+**Fantasy:** Why build out when you can build *in*? A city in a bottle.
+
+**Mechanic:** High-tech "Pocket Dimension" rooms take 1 tile on the map but contain a 10x10 interior grid. Entering costs Energy and Sanity. If external Power fails, the contents are ejected (explosively) or lost forever.
+
+**Emergence:** You build your entire housing district inside a single "Apartment Block" tile. A rat chews the power cable. 500 people are instantly ejected into the hallway, crushing each other.
+
+**Tension:** Massive space efficiency vs. Catastrophic single-point-of-failure.
+
+---
