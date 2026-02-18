@@ -15,6 +15,8 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::unrest::MentalBreakType;
 use crate::layer1::unrest::MentalState;
 use crate::layer1::utility_ai::{ActionType, PopAction};
+use crate::layer1::utility_eval_types::PositionProxy;
+use crate::layer1::utility_types::manhattan_distance;
 use crate::layer1::zone::{ZoneGrid, ZoneType};
 use bevy_ecs::prelude::*;
 
@@ -58,21 +60,18 @@ pub fn check_crime_system(
 /// Finds the nearest [`Wanted`] criminal and returns a score based on distance.
 /// Used by CPU-side logic (tests/utility AI overrides).
 #[must_use]
-pub fn evaluate_warden_action(world: &World, guard_pos: &GridPosition) -> Option<(f32, Entity)> {
+pub fn evaluate_warden_action(
+    guard_pos: &GridPosition,
+    criminals: &[PositionProxy],
+) -> Option<(f32, Entity)> {
     let mut best_target = None;
-    let mut min_dist = f32::MAX;
+    let mut min_dist = i32::MAX;
 
-    // Use iter_entities for safe read-only iteration
-    for entity_ref in world.iter_entities() {
-        if let (Some(pos), Some(_wanted)) =
-            (entity_ref.get::<GridPosition>(), entity_ref.get::<Wanted>())
-        {
-            #[allow(clippy::cast_precision_loss)]
-            let dist = guard_pos.distance_chebyshev(*pos) as f32;
-            if dist < min_dist {
-                min_dist = dist;
-                best_target = Some(entity_ref.id());
-            }
+    for criminal in criminals {
+        let dist = manhattan_distance(guard_pos, &criminal.pos);
+        if dist < min_dist {
+            min_dist = dist;
+            best_target = Some(criminal.entity);
         }
     }
 
@@ -189,6 +188,7 @@ mod tests {
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
     use crate::layer1::unrest::{MentalBreakType, MentalState};
+    use crate::layer1::utility_eval_types::PositionProxy;
     use crate::layer1::utility_types::PopAction;
     use crate::layer1::zone::{ZoneGrid, ZoneType};
     use bevy_ecs::prelude::*;
@@ -226,28 +226,24 @@ mod tests {
         let mut world = setup_world();
 
         // Criminal
-        let criminal = world
+        let criminal_entity = world
             .spawn((Pop, Wanted { severity: 1.0 }, GridPosition { x: 5, y: 5 }))
             .id();
 
-        // Guard
-        let _guard = world
-            .spawn((
-                Pop,
-                GridPosition { x: 0, y: 0 },
-                PopAction::default(),
-                crate::layer1::utility_types::UtilityWeights::default(), // Warden weight implied default
-            ))
-            .id();
+        // Use Proxy manually
+        let criminals = vec![PositionProxy {
+            entity: criminal_entity,
+            pos: GridPosition { x: 5, y: 5 },
+        }];
 
         // Run evaluation logic (simulated)
-        let result = evaluate_warden_action(&world, &GridPosition { x: 0, y: 0 });
+        let result = evaluate_warden_action(&GridPosition { x: 0, y: 0 }, &criminals);
 
         // Assert result
         assert!(result.is_some());
         let (score, target) = result.unwrap();
         assert!(score > 0.0);
-        assert_eq!(target, criminal);
+        assert_eq!(target, criminal_entity);
     }
 
     // 3. Arrest Execution
@@ -302,7 +298,6 @@ mod tests {
     fn test_warden_execution_system_integration() {
         use crate::layer1::execution::{AtTarget, MovementTarget};
         use crate::layer1::utility_types::ActionType;
-        use crate::layer1::utility_types::PopAction;
 
         let mut world = setup_world();
 
