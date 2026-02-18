@@ -185,9 +185,11 @@ pub fn build_simulation_schedule() -> Schedule {
         restore_leisure_system.after(work_execution_system),
         apply_mood_modifiers_system.after(restore_leisure_system),
         mascot_buff_system.after(restore_leisure_system),
+        crate::layer1::graffiti::graffiti_observation_system.after(apply_mood_modifiers_system),
         apply_catharsis_morale_bonus_system.after(apply_mood_modifiers_system),
         update_morale_cache_system
             .after(apply_catharsis_morale_bonus_system)
+            .after(crate::layer1::graffiti::graffiti_observation_system)
             .after(mascot_buff_system),
         morale_decay_system.after(update_morale_cache_system),
     ));
@@ -238,6 +240,7 @@ pub fn build_simulation_schedule() -> Schedule {
         blob_consumption_system.after(blob_spread_system),
         flora_attack_system.after(work_execution_system),
         ancient_structure_decay_system.after(work_execution_system),
+        crate::layer1::graffiti::graffiti_decay_system.after(work_execution_system),
         spirit_decay_system.after(work_execution_system),
         quirk_generation_system.after(spirit_decay_system),
         entropy_system.after(work_execution_system),
@@ -318,6 +321,7 @@ pub fn build_simulation_schedule() -> Schedule {
     schedule.add_systems((
         track_plan_outcomes_system.after(death_system),
         biography_monitor_system.after(death_system),
+        crate::layer1::graffiti::graffiti_placement_system.after(death_system),
         dream_system.after(death_system),
         cleanup_dream_marker_system.after(dream_system),
         check_milestones_system.after(death_system),

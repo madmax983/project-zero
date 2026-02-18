@@ -147,6 +147,9 @@ mod medical_triage_tests;
 /// Named locations on the map.
 pub mod locations;
 
+/// Graffiti and Signage system (Spec 144).
+pub mod graffiti;
+
 pub use access_control::*;
 pub use actions::*;
 pub use ai_core::*;
@@ -163,6 +166,7 @@ pub use edicts::*;
 pub use execution::*;
 pub use farm::*;
 pub use fire::*;
+pub use graffiti::*;
 pub use hauling::*;
 pub use hazards::*;
 pub use health::*;
