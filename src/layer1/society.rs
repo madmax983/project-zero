@@ -1,6 +1,6 @@
+use crate::layer1::traits::{Trait, Traits};
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
-use crate::layer1::traits::{Traits, Trait};
 
 /// Data structure representing a single secret society.
 #[derive(Debug, Clone)]
@@ -25,12 +25,15 @@ pub struct SecretSocieties {
 impl SecretSocieties {
     /// Registers a new secret society.
     pub fn add_society(&mut self, name: &str, power: f32, secrecy: f32) {
-        self.map.insert(name.to_string(), SocietyData {
-            name: name.to_string(),
-            power,
-            secrecy,
-            members: Vec::new(),
-        });
+        self.map.insert(
+            name.to_string(),
+            SocietyData {
+                name: name.to_string(),
+                power,
+                secrecy,
+                members: Vec::new(),
+            },
+        );
     }
 
     /// Gets a reference to society data.
@@ -129,9 +132,7 @@ pub fn form_societies_system(
 
 /// System to increase society power based on member count.
 #[allow(clippy::cast_precision_loss)]
-pub fn society_meeting_system(
-    mut societies: ResMut<SecretSocieties>,
-) {
+pub fn society_meeting_system(mut societies: ResMut<SecretSocieties>) {
     for society in societies.map.values_mut() {
         if !society.members.is_empty() {
             society.power = 0.001f32
@@ -173,9 +174,9 @@ pub fn suppression_handler_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_ecs::prelude::*;
     use crate::layer1::pop::Pop;
-    use crate::layer1::traits::{Traits, Trait};
+    use crate::layer1::traits::{Trait, Traits};
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_society_formation_based_on_traits() {
@@ -208,7 +209,11 @@ mod tests {
 
         // Add a member so the meeting happens
         let member = world.spawn(Pop).id();
-        societies.get_mut("Cult of the Machine").unwrap().members.push(member);
+        societies
+            .get_mut("Cult of the Machine")
+            .unwrap()
+            .members
+            .push(member);
 
         world.insert_resource(societies);
 
@@ -230,13 +235,21 @@ mod tests {
         world.insert_resource(societies);
         world.init_resource::<Events<InvestigationEvent>>();
 
-        let pop = world.spawn((
-            Pop,
-            SocietyMember { society_id: "Thieves Guild".to_string(), known: false },
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                SocietyMember {
+                    society_id: "Thieves Guild".to_string(),
+                    known: false,
+                },
+            ))
+            .id();
 
         // Simulate Sheriff investigation success
-        world.send_event(InvestigationEvent { target: pop, success: true });
+        world.send_event(InvestigationEvent {
+            target: pop,
+            success: true,
+        });
 
         // Run investigation handler system
         let mut schedule = Schedule::default();
@@ -257,7 +270,9 @@ mod tests {
         world.insert_resource(societies);
 
         // Player suppresses the society
-        world.send_event(SuppressSocietyEvent { society_id: "Rebels".to_string() });
+        world.send_event(SuppressSocietyEvent {
+            society_id: "Rebels".to_string(),
+        });
 
         // Run suppression system
         let mut schedule = Schedule::default();

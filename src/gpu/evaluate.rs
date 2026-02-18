@@ -255,6 +255,16 @@ const fn action_type_from_u32(v: u32) -> ActionType {
         13 => ActionType::Binge,
         14 => ActionType::Daze,
         15 => ActionType::Fight,
+        16 => ActionType::Refine,
+        17 => ActionType::Farm,
+        18 => ActionType::Warden,
+        19 => ActionType::Sleepwalking,
+        20 => ActionType::Tame,
+        21 => ActionType::FireStarting,
+        22 => ActionType::HideInRoom,
+        23 => ActionType::SadWander,
+        24 => ActionType::FetchClothing,
+        25 => ActionType::Surgery,
         _ => ActionType::Idle,
     }
 }

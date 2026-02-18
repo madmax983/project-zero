@@ -318,6 +318,7 @@ pub fn try_designate(world: &mut World, x: i32, y: i32, designation_type: Design
 ///
 /// assert_eq!(try_designate_area(&mut world, 5, 5, 6, 5, DesignationType::Mine), 2);
 /// ```
+#[allow(clippy::too_many_lines)]
 pub fn try_designate_area(
     world: &mut World,
     x1: i32,
@@ -355,7 +356,12 @@ pub fn try_designate_area(
     let valid_targets: Option<HashSet<(i32, i32)>> = match tool {
         DesignationType::Tame => Some(
             world
-                .query::<(Entity, &GridPosition, &crate::layer1::fauna::Fauna, Option<&crate::layer1::husbandry::Tame>)>()
+                .query::<(
+                    Entity,
+                    &GridPosition,
+                    &crate::layer1::fauna::Fauna,
+                    Option<&crate::layer1::husbandry::Tame>,
+                )>()
                 .iter(world)
                 .filter_map(|(_, pos, _, tame)| {
                     if tame.is_none() {
@@ -399,34 +405,40 @@ pub fn try_designate_area(
         for y in min_y..=max_y {
             for x in min_x..=max_x {
                 // Bounds check
-                if x < 0 || y < 0 { continue; }
+                if x < 0 || y < 0 {
+                    continue;
+                }
 
                 #[allow(clippy::cast_sign_loss)]
-                if terrain_grid.is_some_and(|grid| (x as usize) >= grid.width || (y as usize) >= grid.height) {
+                if terrain_grid
+                    .is_some_and(|grid| (x as usize) >= grid.width || (y as usize) >= grid.height)
+                {
                     continue;
                 }
 
                 // Check existing
-                if existing_designations.contains(&(x, y)) { continue; }
+                if existing_designations.contains(&(x, y)) {
+                    continue;
+                }
 
                 #[allow(clippy::cast_sign_loss)]
                 let is_valid = match tool {
-                    DesignationType::Mine => {
-                        terrain_grid.is_some_and(|g| g.get(x as usize, y as usize) == Some(TerrainType::Rock))
-                    }
+                    DesignationType::Mine => terrain_grid
+                        .is_some_and(|g| g.get(x as usize, y as usize) == Some(TerrainType::Rock)),
                     DesignationType::Demolish => {
                         occupied_tiles.is_some_and(|o| o.0.contains(&(x, y)))
                     }
-                    DesignationType::Chop => {
-                        terrain_grid.is_some_and(|g| g.get(x as usize, y as usize) == Some(TerrainType::Tree))
-                    }
+                    DesignationType::Chop => terrain_grid
+                        .is_some_and(|g| g.get(x as usize, y as usize) == Some(TerrainType::Tree)),
                     DesignationType::Repair | DesignationType::JuryRig => {
                         occupied_tiles.is_some_and(|o| o.0.contains(&(x, y)))
                     }
                     DesignationType::SetZone(_) => true,
-                    DesignationType::Tame | DesignationType::ClearFlora | DesignationType::Cannibalize => {
-                        valid_targets.as_ref().is_some_and(|targets| targets.contains(&(x, y)))
-                    }
+                    DesignationType::Tame
+                    | DesignationType::ClearFlora
+                    | DesignationType::Cannibalize => valid_targets
+                        .as_ref()
+                        .is_some_and(|targets| targets.contains(&(x, y))),
                 };
 
                 if is_valid {
@@ -439,7 +451,12 @@ pub fn try_designate_area(
     // 4. Spawn entities
     let mut count = 0;
     for (x, y) in to_spawn {
-        world.spawn((Designation { designation_type: tool }, GridPosition { x, y }));
+        world.spawn((
+            Designation {
+                designation_type: tool,
+            },
+            GridPosition { x, y },
+        ));
         count += 1;
     }
 

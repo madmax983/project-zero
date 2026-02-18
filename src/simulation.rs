@@ -121,6 +121,7 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer1::room_quality::apply_waking_thoughts_system),
         cleanup_previous_assignment_system.after(assign_sleepwalk_target_system),
         process_start_plan_system.after(cleanup_previous_assignment_system),
+        crate::layer1::husbandry::pasture_confinement_system.after(process_start_plan_system),
         crate::layer1::fauna::fauna_behavior_system.after(process_start_plan_system),
         mascot_behavior_system.after(process_start_plan_system),
         crate::layer1::day_night::update_day_night_cycle_system.after(process_start_plan_system),
@@ -147,6 +148,7 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer1::combat::hit_stop_system),
         arrival_handler_system.after(movement_system),
         work_execution_system.after(arrival_handler_system),
+        crate::layer1::husbandry::tame_execution_system.after(arrival_handler_system),
         combat_execution_system.after(arrival_handler_system),
         crate::layer1::turret::turret_fire_system.after(combat_execution_system),
         crate::layer1::justice::warden_execution_system.after(combat_execution_system),
@@ -174,6 +176,7 @@ pub fn build_simulation_schedule() -> Schedule {
         update_water_system.after(work_execution_system),
         update_weather_system.after(work_execution_system),
         produce_food_system.after(work_execution_system),
+        crate::layer1::husbandry::husbandry_production_system.after(produce_food_system),
         hopper_system.after(produce_food_system),
         process_refining_system.after(work_execution_system),
         crate::layer1::tech::update_tech_capacity_system.after(work_execution_system),
@@ -372,9 +375,11 @@ pub fn build_simulation_schedule() -> Schedule {
         chronicle_event_handler_system.after(check_milestones_system),
         chronicle_rumor_bridge_system.after(check_milestones_system),
         #[cfg(feature = "nova")]
-        crate::layer1::oral_tradition::collect_chronicles_system.after(chronicle_event_handler_system),
+        crate::layer1::oral_tradition::collect_chronicles_system
+            .after(chronicle_event_handler_system),
         #[cfg(feature = "nova")]
-        crate::layer1::oral_tradition::storytelling_system.after(crate::layer1::rumor::exchange_rumors_system),
+        crate::layer1::oral_tradition::storytelling_system
+            .after(crate::layer1::rumor::exchange_rumors_system),
         pop_death_chronicle_bridge.after(death_system),
         retrograde_chronicle_bridge.after(work_execution_system),
         amputation_handler_system.after(work_execution_system),

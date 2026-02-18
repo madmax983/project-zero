@@ -262,8 +262,7 @@ fn evaluate_group_work(
 
     // Evaluate Warden
     if !is_penal {
-        if let Some((utility, target)) =
-            evaluate_warden_action(&pop_pos, &buffer.wanted_criminals)
+        if let Some((utility, target)) = evaluate_warden_action(&pop_pos, &buffer.wanted_criminals)
         {
             evaluator.consider(ActionType::Warden, utility, Some(target));
         }
@@ -585,7 +584,9 @@ fn populate_buffer_items_and_misc(world: &mut World, buffer: &mut UtilityAIBuffe
     buffer.wanted_criminals.clear();
     let mut wanted_query = world.query::<(Entity, &GridPosition, &Wanted)>();
     for (entity, pos, _) in wanted_query.iter(world) {
-        buffer.wanted_criminals.push(PositionProxy { entity, pos: *pos });
+        buffer
+            .wanted_criminals
+            .push(PositionProxy { entity, pos: *pos });
     }
 }
 

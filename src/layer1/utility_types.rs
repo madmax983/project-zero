@@ -165,7 +165,7 @@ impl ActionType {
     pub const fn danger_level(&self) -> f64 {
         match self {
             Self::Work | Self::Repair => 0.001, // 0.1% chance per tick
-            Self::Tame => 0.005, // 0.5% chance per tick (animals bite!)
+            Self::Tame => 0.005,                // 0.5% chance per tick (animals bite!)
             _ => 0.0,
         }
     }

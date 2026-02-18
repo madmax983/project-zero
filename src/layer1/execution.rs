@@ -588,8 +588,8 @@ fn process_arrival(
             );
             true
         }
-        ActionType::Work | ActionType::Repair | ActionType::Haul => {
-            // Work/Repair/Haul is handled by their respective systems
+        ActionType::Work | ActionType::Repair | ActionType::Haul | ActionType::Tame => {
+            // Work/Repair/Haul/Tame is handled by their respective systems
             // Just keep the AtTarget marker for that system
             false
         }
