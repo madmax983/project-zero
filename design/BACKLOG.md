@@ -28,6 +28,8 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `139` Cryo-Stasis Vaults — `specs/139-cryo-stasis.md`
 - [ ] `156` Xeno-Artifacts — `specs/156-xeno-artifacts.md`
 
+- [ ] `046` Notifications System — `specs/046-notifications-system.md`
+- [ ] `055` Rumor Web — `specs/055-rumor-web.md`
 ## MVP — Layer 2: System Simulation
 
 - [ ] `095` System Generation — `specs/095-system-generation.md`

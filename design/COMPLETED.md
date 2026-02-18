@@ -75,3 +75,5 @@ Features that have been fully implemented, tested, and merged.
 - [x] `154` Named Locations — `specs/154-named-locations.md` — completed 2026-10-27
 - [x] `144` Graffiti and Signage — `specs/144-graffiti-and-signage.md` — completed 2026-10-27
 - [x] `INT-026` Integration: Amputation -> Cybernetics/Memory — completed 2026-02-18
+- [x] 030 Tool Economy — specs/030-tool-economy.md — completed 2026-10-29
+- [x] 042 Energy System — specs/042-energy-system.md — completed 2026-10-29
