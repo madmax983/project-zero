@@ -45,6 +45,18 @@
 //! 2.  Create `src/layer1/actions/pray.rs` with an `evaluate_pray` function.
 //! 3.  Register the evaluation in [`crate::layer1::utility_ai::evaluate_single_pop`].
 //! 4.  Implement the execution logic (e.g., `pray_execution_system`).
+//!
+//! # Action Registry
+//!
+//! While most actions are defined in this module, some domain-specific actions live in their respective modules:
+//!
+//! | Action Type | Evaluation Logic | Execution Logic |
+//! |:---|:---|:---|
+//! | **Warden** | [`crate::layer1::justice::evaluate_warden_action`] | [`crate::layer1::justice::warden_execution_system`] |
+//! | **Tame** | [`crate::layer1::husbandry::evaluate_tame`] | [`crate::layer1::husbandry::tame_execution_system`] |
+//! | **Sleepwalking** | [`crate::layer1::actions::mental_break::evaluate_mental_break`] | [`crate::layer1::sleepwalking::check_sleepwalking_start_system`] |
+//! | **Vandalize** | [`crate::layer1::actions::mental_break::evaluate_mental_break`] | [`crate::layer1::execution::vandalize_execution_system`] |
+//! | **Surgery** | *Passive / Assigned* | [`crate::layer1::cybernetics::surgery_system`] |
 
 use bevy_ecs::prelude::*;
 
