@@ -3,12 +3,12 @@
 //! Pops can leave permanent "Markings" on walls and buildings based on their Morale.
 //! These markings persist and influence other Pops who see them.
 
-use bevy_ecs::prelude::*;
+use crate::layer1::building::OccupiedTiles;
 use crate::layer1::map::GridPosition;
 use crate::layer1::morale::{MoodModifier, Morale};
-use crate::layer1::building::OccupiedTiles;
-use std::collections::HashMap;
+use bevy_ecs::prelude::*;
 use rand::Rng;
+use std::collections::HashMap;
 
 /// Types of graffiti that can be placed.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -110,11 +110,14 @@ pub fn graffiti_placement_system(
                     _ => (1000.0, 0.0),
                 };
 
-                graffiti_map.markings.insert(target, Graffiti {
-                    graffiti_type,
-                    decay,
-                    modifier,
-                });
+                graffiti_map.markings.insert(
+                    target,
+                    Graffiti {
+                        graffiti_type,
+                        decay,
+                        modifier,
+                    },
+                );
                 break; // Only place one
             }
         }
@@ -193,12 +196,12 @@ pub fn graffiti_decay_system(world: &mut World) {
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
     use super::*;
-    use crate::layer1::map::GridPosition;
-    use crate::layer1::pop::Pop;
-    use crate::layer1::morale::Morale;
     use crate::layer1::building::{Building, BuildingType, OccupiedTiles};
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::morale::Morale;
+    use crate::layer1::pop::Pop;
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_graffiti_map_starts_empty() {
@@ -218,7 +221,9 @@ mod tests {
 
         // Spawn Wall at (5,5)
         world.spawn((
-            Building { building_type: BuildingType::Wall },
+            Building {
+                building_type: BuildingType::Wall,
+            },
             GridPosition { x: 5, y: 5 },
         ));
 
@@ -227,7 +232,10 @@ mod tests {
         world.spawn((
             Pop,
             GridPosition { x: 5, y: 4 },
-            Morale { value: 0.1, ..Default::default() },
+            Morale {
+                value: 0.1,
+                ..Default::default()
+            },
         ));
 
         // Run placement system repeatedly to overcome 1% chance
@@ -245,7 +253,11 @@ mod tests {
         let mut placed = false;
         for _ in 0..1000 {
             schedule.run(&mut world);
-            if world.resource::<GraffitiMap>().markings.contains_key(&(5, 5)) {
+            if world
+                .resource::<GraffitiMap>()
+                .markings
+                .contains_key(&(5, 5))
+            {
                 placed = true;
                 break;
             }
@@ -269,7 +281,9 @@ mod tests {
         world.insert_resource(occupied);
 
         world.spawn((
-            Building { building_type: BuildingType::Wall },
+            Building {
+                building_type: BuildingType::Wall,
+            },
             GridPosition { x: 5, y: 5 },
         ));
 
@@ -277,7 +291,10 @@ mod tests {
         world.spawn((
             Pop,
             GridPosition { x: 5, y: 4 },
-            Morale { value: 0.95, ..Default::default() },
+            Morale {
+                value: 0.95,
+                ..Default::default()
+            },
         ));
 
         let mut schedule = Schedule::default();
@@ -286,7 +303,11 @@ mod tests {
         let mut placed = false;
         for _ in 0..1000 {
             schedule.run(&mut world);
-            if world.resource::<GraffitiMap>().markings.contains_key(&(5, 5)) {
+            if world
+                .resource::<GraffitiMap>()
+                .markings
+                .contains_key(&(5, 5))
+            {
                 placed = true;
                 break;
             }
@@ -306,19 +327,27 @@ mod tests {
 
         // Pre-place Vandalism
         let mut map = GraffitiMap::default();
-        map.markings.insert((5, 5), Graffiti {
-            graffiti_type: GraffitiType::Vandalism,
-            decay: 100.0,
-            modifier: -0.05,
-        });
+        map.markings.insert(
+            (5, 5),
+            Graffiti {
+                graffiti_type: GraffitiType::Vandalism,
+                decay: 100.0,
+                modifier: -0.05,
+            },
+        );
         world.insert_resource(map);
 
         // Spawn Pop at (5,4) observing (5,5)
-        let pop_id = world.spawn((
-            Pop,
-            GridPosition { x: 5, y: 4 },
-            Morale { value: 0.5, ..Default::default() },
-        )).id();
+        let pop_id = world
+            .spawn((
+                Pop,
+                GridPosition { x: 5, y: 4 },
+                Morale {
+                    value: 0.5,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         // Run observation system
         let mut schedule = Schedule::default();
@@ -327,10 +356,16 @@ mod tests {
 
         // Check Mood reduced
         let morale = world.get::<Morale>(pop_id).unwrap();
-        assert!(!morale.modifiers.is_empty(), "Should have added a mood modifier");
+        assert!(
+            !morale.modifiers.is_empty(),
+            "Should have added a mood modifier"
+        );
         let modifier = &morale.modifiers[0];
         // Value should be -0.05
-        assert!((modifier.value - -0.05).abs() < f32::EPSILON, "Modifier should be -0.05");
+        assert!(
+            (modifier.value - -0.05).abs() < f32::EPSILON,
+            "Modifier should be -0.05"
+        );
         assert_eq!(modifier.label, "Saw Vandalism");
     }
 
@@ -338,17 +373,23 @@ mod tests {
     fn test_graffiti_decay() {
         let mut world = World::new();
         let mut map = GraffitiMap::default();
-        map.markings.insert((0, 0), Graffiti {
-            graffiti_type: GraffitiType::Vandalism,
-            decay: 1.0, // Almost gone
-            modifier: -0.05,
-        });
+        map.markings.insert(
+            (0, 0),
+            Graffiti {
+                graffiti_type: GraffitiType::Vandalism,
+                decay: 1.0, // Almost gone
+                modifier: -0.05,
+            },
+        );
         world.insert_resource(map);
 
         // Run decay system
         super::graffiti_decay_system(&mut world);
 
         let map = world.resource::<GraffitiMap>();
-        assert!(map.markings.is_empty(), "Graffiti should be removed after decay reaches 0");
+        assert!(
+            map.markings.is_empty(),
+            "Graffiti should be removed after decay reaches 0"
+        );
     }
 }
