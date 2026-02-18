@@ -55,6 +55,8 @@ pub mod defense;
 pub mod designation;
 /// Pop dreams system.
 pub mod dreams;
+/// Ecological succession system (Spec 161).
+pub mod ecology;
 /// Colony policies and edicts.
 pub mod edicts;
 /// Execution layer bridging utility AI to actions.
@@ -165,6 +167,7 @@ pub use control::*;
 pub use defense::*;
 pub use designation::*;
 pub use dreams::*;
+pub use ecology::*;
 pub use edicts::*;
 pub use execution::*;
 pub use farm::*;
@@ -374,6 +377,8 @@ pub use morale::*;
 pub mod biocompatibility;
 pub use biocompatibility::*;
 
+#[cfg(test)]
+mod ecology_tests;
 #[cfg(test)]
 mod fuel_consumption_tests;
 #[cfg(test)]

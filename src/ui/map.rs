@@ -662,6 +662,8 @@ pub const fn get_terrain_char(terrain: TerrainType) -> &'static str {
         TerrainType::Water => "~",
         TerrainType::Tree => "↑",
         TerrainType::Path => "░",
+        TerrainType::Shrub => "\"",
+        TerrainType::Sapling => "t",
     }
 }
 
@@ -686,6 +688,8 @@ pub const fn get_terrain_color(terrain: TerrainType) -> Color {
         TerrainType::Water => Color::Rgb(80, 140, 255),
         TerrainType::Tree => Color::Rgb(50, 180, 50),
         TerrainType::Path => Color::Rgb(180, 130, 70),
+        TerrainType::Shrub => Color::Rgb(80, 180, 80),
+        TerrainType::Sapling => Color::Rgb(100, 220, 100),
     }
 }
 

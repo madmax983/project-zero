@@ -16,6 +16,10 @@ pub enum TerrainType {
     Tree,
     /// Heavily trodden path, faster movement but lower beauty.
     Path,
+    /// Pioneer vegetation, the first stage of succession.
+    Shrub,
+    /// Young tree, will grow into a full tree.
+    Sapling,
 }
 
 impl TerrainType {
@@ -37,6 +41,8 @@ impl TerrainType {
             Self::Water => "Water",
             Self::Tree => "Tree",
             Self::Path => "Path",
+            Self::Shrub => "Shrub",
+            Self::Sapling => "Sapling",
         }
     }
 
@@ -48,6 +54,8 @@ impl TerrainType {
         match self {
             Self::Path => 0.8,
             Self::Tree => 1.5,
+            Self::Shrub => 1.2,
+            Self::Sapling => 1.1,
             _ => 1.0,
         }
     }
