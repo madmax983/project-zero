@@ -141,6 +141,7 @@ fn is_pop_striking(data: &PopEvalData, context: &WorldContext) -> bool {
     })
 }
 
+#[allow(clippy::collapsible_if)]
 fn evaluate_group_survival(
     evaluator: &mut CandidateEvaluator,
     data: &PopEvalData,
@@ -200,6 +201,7 @@ fn evaluate_group_social(
     }
 }
 
+#[allow(clippy::collapsible_if)]
 fn evaluate_group_work(
     evaluator: &mut CandidateEvaluator,
     data: &PopEvalData,

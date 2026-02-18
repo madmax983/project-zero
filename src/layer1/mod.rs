@@ -248,6 +248,10 @@ pub mod atmosphere;
 pub mod unrest;
 pub use atmosphere::*;
 
+/// Secret Societies system (Spec 147).
+pub mod society;
+pub use society::*;
+
 /// Room quality calculation and memories (Spec 064).
 pub mod room_quality;
 pub use room_quality::*;
