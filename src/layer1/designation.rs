@@ -13,6 +13,7 @@
 use crate::layer1::zone::ZoneType;
 use crate::layer1::{GridPosition, OccupiedTiles, TerrainGrid, TerrainType};
 use bevy_ecs::prelude::*;
+use std::collections::HashSet;
 
 /// Types of designations a player can apply to the map.
 #[derive(Clone, Copy, PartialEq, Eq, Debug, Default)]
@@ -163,6 +164,14 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
     // Check bounds (basic check, more detailed check in terrain/occupied logic)
     if x < 0 || y < 0 {
         return false;
+    }
+
+    // Verify coordinates are within map bounds
+    if let Some(terrain) = world.get_resource::<TerrainGrid>() {
+        // Safe cast: we already checked negative values
+        if (x as usize) >= terrain.width || (y as usize) >= terrain.height {
+            return false;
+        }
     }
 
     // Check for existing designation at this location
@@ -317,16 +326,123 @@ pub fn try_designate_area(
     y2: i32,
     tool: DesignationType,
 ) -> u32 {
-    let (min_x, max_x) = (x1.min(x2), x1.max(x2));
-    let (min_y, max_y) = (y1.min(y2), y1.max(y2));
-    let mut count = 0;
-    for y in min_y..=max_y {
-        for x in min_x..=max_x {
-            if try_designate(world, x, y, tool) {
-                count += 1;
+    // 1. Enforce Area Limits to prevent DoS (e.g. 50x50 max selection)
+    const MAX_DIMENSION: i32 = 50;
+
+    let min_x_raw = x1.min(x2);
+    let max_x_raw = x1.max(x2);
+    let min_y_raw = y1.min(y2);
+    let max_y_raw = y1.max(y2);
+
+    let width = (max_x_raw - min_x_raw).min(MAX_DIMENSION);
+    let height = (max_y_raw - min_y_raw).min(MAX_DIMENSION);
+
+    // Clamp to start point + max dimension
+    let min_x = min_x_raw;
+    let max_x = min_x_raw + width;
+    let min_y = min_y_raw;
+    let max_y = min_y_raw + height;
+
+    // 2. Pre-fetch existing designations (Optimization: O(N) -> O(1) lookup)
+    let existing_designations: HashSet<(i32, i32)> = world
+        .query::<(&Designation, &GridPosition)>()
+        .iter(world)
+        .map(|(_, pos)| (pos.x, pos.y))
+        .collect();
+
+    // 3. Pre-fetch relevant targets if needed
+    // This avoids iterating all entities for every tile in the loop
+    let valid_targets: Option<HashSet<(i32, i32)>> = match tool {
+        DesignationType::Tame => Some(
+            world
+                .query::<(Entity, &GridPosition, &crate::layer1::fauna::Fauna, Option<&crate::layer1::husbandry::Tame>)>()
+                .iter(world)
+                .filter_map(|(_, pos, _, tame)| {
+                    if tame.is_none() {
+                        Some((pos.x, pos.y))
+                    } else {
+                        None
+                    }
+                })
+                .collect(),
+        ),
+        DesignationType::ClearFlora => Some(
+            world
+                .query::<(&GridPosition, &crate::layer1::flora::Flora)>()
+                .iter(world)
+                .map(|(pos, _)| (pos.x, pos.y))
+                .collect(),
+        ),
+        DesignationType::Cannibalize => Some(
+            world
+                .query::<(&GridPosition, &crate::layer1::building::Building)>()
+                .iter(world)
+                .filter_map(|(pos, b)| {
+                    if b.building_type == crate::layer1::building::BuildingType::Lander {
+                        Some((pos.x, pos.y))
+                    } else {
+                        None
+                    }
+                })
+                .collect(),
+        ),
+        _ => None,
+    };
+
+    let mut to_spawn = Vec::new();
+
+    // Scope the immutable borrows so we can mutate world later
+    {
+        let terrain_grid = world.get_resource::<TerrainGrid>();
+        let occupied_tiles = world.get_resource::<OccupiedTiles>();
+
+        for y in min_y..=max_y {
+            for x in min_x..=max_x {
+                // Bounds check
+                if x < 0 || y < 0 { continue; }
+
+                #[allow(clippy::cast_sign_loss)]
+                if terrain_grid.is_some_and(|grid| (x as usize) >= grid.width || (y as usize) >= grid.height) {
+                    continue;
+                }
+
+                // Check existing
+                if existing_designations.contains(&(x, y)) { continue; }
+
+                #[allow(clippy::cast_sign_loss)]
+                let is_valid = match tool {
+                    DesignationType::Mine => {
+                        terrain_grid.is_some_and(|g| g.get(x as usize, y as usize) == Some(TerrainType::Rock))
+                    }
+                    DesignationType::Demolish => {
+                        occupied_tiles.is_some_and(|o| o.0.contains(&(x, y)))
+                    }
+                    DesignationType::Chop => {
+                        terrain_grid.is_some_and(|g| g.get(x as usize, y as usize) == Some(TerrainType::Tree))
+                    }
+                    DesignationType::Repair | DesignationType::JuryRig => {
+                        occupied_tiles.is_some_and(|o| o.0.contains(&(x, y)))
+                    }
+                    DesignationType::SetZone(_) => true,
+                    DesignationType::Tame | DesignationType::ClearFlora | DesignationType::Cannibalize => {
+                        valid_targets.as_ref().is_some_and(|targets| targets.contains(&(x, y)))
+                    }
+                };
+
+                if is_valid {
+                    to_spawn.push((x, y));
+                }
             }
         }
     }
+
+    // 4. Spawn entities
+    let mut count = 0;
+    for (x, y) in to_spawn {
+        world.spawn((Designation { designation_type: tool }, GridPosition { x, y }));
+        count += 1;
+    }
+
     count
 }
 
@@ -706,4 +822,49 @@ fn test_can_designate_clear_flora() {
 
     // Cannot designate ClearFlora on empty tile
     assert!(!can_designate(&world, 5, 6, DesignationType::ClearFlora));
+}
+
+#[test]
+fn test_try_designate_area_limit() {
+    let mut world = World::new();
+    world.insert_resource(TerrainGrid {
+        width: 100,
+        height: 100,
+        tiles: vec![TerrainType::Rock; 10000],
+    });
+    world.insert_resource(OccupiedTiles::default());
+
+    // Try to designate 60x60 (3600 tiles). Should be clamped.
+    // MAX_DIMENSION = 50.
+    // Width clamp = 50. Range 0..=(0+50) = 0..=50 (51 items).
+    // Height clamp = 50. Range 0..=(0+50) = 0..=50 (51 items).
+    // Total = 51 * 51 = 2601.
+
+    let count = try_designate_area(&mut world, 0, 0, 59, 59, DesignationType::Mine);
+    assert_eq!(count, 2601);
+}
+
+#[test]
+fn test_try_designate_area_performance_smoke_test() {
+    // This isn't a true benchmark, but ensures the optimized path runs correctly
+    // without crashing or infinite looping on a larger area.
+    let mut world = World::new();
+    world.insert_resource(TerrainGrid {
+        width: 100,
+        height: 100,
+        tiles: vec![TerrainType::Rock; 10000],
+    });
+    world.insert_resource(OccupiedTiles::default());
+
+    // Spawn some existing designations to test the HashSet lookup
+    for x in 0..10 {
+        try_designate(&mut world, x, 0, DesignationType::Mine);
+    }
+
+    // Designate a 50x50 area (0..49) -> diff 49. width 49. loop 0..=49. 50 items.
+    // 50*50 = 2500 items.
+    let count = try_designate_area(&mut world, 0, 0, 49, 49, DesignationType::Mine);
+
+    // Total area 2500. 10 already existed. So 2490 should be new.
+    assert_eq!(count, 2490);
 }
