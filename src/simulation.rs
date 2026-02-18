@@ -15,12 +15,13 @@ use crate::layer1::dreams::{cleanup_dream_marker_system, dream_system};
 use crate::layer1::heirloom::RetrogradeEngineeringEvent;
 use crate::layer1::{
     AddChronicleEvent, AffinityChange, DeathEvent, PopDied, advance_season_system, aging_system,
-    ancient_structure_decay_system, apply_cabin_fever_morale_system,
-    apply_catharsis_morale_bonus_system, apply_lighting_penalties_system,
-    apply_noise_effects_system, apply_palette_fatigue_system, apply_quirk_modifiers_system,
-    apply_taboo_stress_system, apply_weather_effects_system, arrival_handler_system,
-    art_generation_system, art_observation_system, assign_sleepwalk_target_system,
-    biocompatibility_system, check_death_event_system, check_heirloom_status_system,
+    ai_automation_system, ai_rogue_system, ancient_structure_decay_system,
+    apply_cabin_fever_morale_system, apply_catharsis_morale_bonus_system,
+    apply_lighting_penalties_system, apply_noise_effects_system,
+    apply_palette_fatigue_system, apply_quirk_modifiers_system, apply_taboo_stress_system,
+    apply_weather_effects_system, arrival_handler_system, art_generation_system,
+    art_observation_system, assign_sleepwalk_target_system, biocompatibility_system,
+    check_death_event_system, check_heirloom_status_system,
     check_milestones_system, check_sleepwalking_start_system, check_stress_breakdown_system,
     chronicle_event_handler_system, chronicle_rumor_bridge_system, clean_dead_residents_system,
     clean_dead_workers_system, cleanup_previous_assignment_system, clothing_wear_system,
@@ -204,6 +205,8 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::energy::power_grid_system
             .after(work_execution_system)
             .after(process_fuel_consumption_system),
+        ai_automation_system.after(crate::layer1::energy::power_grid_system),
+        ai_rogue_system.after(work_execution_system),
         crate::layer1::integration::grid_overload_fire_bridge
             .after(crate::layer1::energy::power_grid_system),
         art_generation_system.after(work_execution_system),
