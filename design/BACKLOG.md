@@ -25,7 +25,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `137` Pop Hobbies — `specs/137-pop-hobbies.md`
 - [ ] `139` Cryo-Stasis Vaults — `specs/139-cryo-stasis.md`
 - [ ] `147` Secret Societies — `specs/147-secret-societies.md`
-- [ ] `153` Geological Instability — `specs/153-geological-instability.md`
 - [ ] `156` Xeno-Artifacts — `specs/156-xeno-artifacts.md`
 
 ## MVP — Layer 2: System Simulation

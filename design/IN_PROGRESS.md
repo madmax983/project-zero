@@ -26,7 +26,6 @@ Tasks currently being implemented. Builders: if a task is here, pick something e
 - [ ] `127` Stress Breakdowns — `specs/127-stress-breakdowns.md` — claimed 2026-02-15
 - [ ] `INT-007` Integration: Retrograde Engineering -> Chronicle — claimed 2026-10-26
 - [ ] `132` Equipment & Wear — `specs/132-equipment-and-wear.md` — claimed 2026-02-16
-- [x] `155` Advanced Workplace Hazards — `specs/155-advanced-hazards.md` — completed 2026-03-20
 - [ ] `133` Ventilation Networks — `specs/133-ventilation-networks.md` — claimed 2026-02-16
 - [ ] `141` Colony Ship Cannibalization — `specs/141-colony-ship-cannibalization.md` — claimed 2026-10-27
 - [ ] `140` Thermal Management — `specs/140-thermal-management.md` — claimed 2026-02-17

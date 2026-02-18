@@ -1251,6 +1251,10 @@ fn handle_mining_work(
         }
     }
 
+    if let Some(p) = pos {
+        crate::layer1::geology::add_seismic_stress(world, p, 1.0);
+    }
+
     process_mining(world, entity, effective_work);
 
     if let Some(p) = pos {
@@ -1369,7 +1373,7 @@ fn handle_post_work_effects(
     {
         world
             .get::<crate::layer1::structure::Structure>(designation_entity)
-            .cloned() // Clone to avoid borrow issues
+            .copied() // Copy to avoid borrow issues
     } else {
         None
     };
