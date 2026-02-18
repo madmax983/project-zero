@@ -70,3 +70,5 @@ Features that have been fully implemented, tested, and merged.
 - [x] `INT-024` Integration: Items on Ground -> Vermin Growth — completed 2026-03-27
 - [x] `130` Social Debt — `specs/130-social-debt.md` — completed 2026-10-27
 - [x] `151` Cybernetic Augmentation — `specs/151-cybernetic-augmentation.md` — completed 2026-02-17
+- [x] `154` Named Locations — `specs/154-named-locations.md` — completed 2026-10-27
+- [x] `144` Graffiti and Signage — `specs/144-graffiti-and-signage.md` — completed 2026-10-27

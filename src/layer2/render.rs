@@ -53,15 +53,19 @@ pub fn render_system_view(frame: &mut Frame, area: Rect, world: &World) {
                 let radius_x = orbit.radius * 2.0;
                 let radius_y = orbit.radius;
 
-                let x = center_x as f32 + radius_x * orbit.angle.cos();
-                let y = center_y as f32 + radius_y * orbit.angle.sin();
+                let x = radius_x.mul_add(orbit.angle.cos(), f32::from(center_x));
+                let y = radius_y.mul_add(orbit.angle.sin(), f32::from(center_y));
 
                 // Cast to i32 for safe comparison before casting to u16
+                #[allow(clippy::cast_possible_truncation)]
                 let x_i32 = x.round() as i32;
+                #[allow(clippy::cast_possible_truncation)]
                 let y_i32 = y.round() as i32;
 
                 if x_i32 >= 0 && y_i32 >= 0 {
+                    #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
                     let pos_x = x_i32 as u16;
+                    #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
                     let pos_y = y_i32 as u16;
 
                     if inner.contains(ratatui::layout::Position { x: pos_x, y: pos_y }) {
