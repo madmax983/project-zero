@@ -7,3 +7,7 @@
 **[Optimized Fallback Utility AI]**
 **Learning:** Vec::collect in a loop over entities is a hidden performance killer. Reusing a Resource buffer (even if it requires temporarily removing it from the World to satisfy the borrow checker) is a powerful pattern to eliminate per-tick allocations.
 **Action:** Look for collect::<Vec<_>>() in hot paths and replace with a Resource-cached buffer. Also, aggressively derive Copy for small components (< 64 bytes) to avoid clone() overhead.
+
+**[Borrow Checker in Test Helpers]**
+**Learning:** When writing helper functions for tests that take `&mut World`, be careful not to hold a mutable borrow of a Resource (like `world.resource_mut::<T>()`) while iterating a Query using `world`. This causes a double borrow error.
+**Action:** Extract data from the Query into a collection (e.g., `Vec`) first, drop the query borrow, then mutate the Resource using the collected data.

@@ -11,6 +11,7 @@ use bevy_ecs::schedule::{IntoSystemConfigs, Schedule, ScheduleLabel};
 use crate::gpu::evaluate::gpu_evaluate_actions;
 use crate::layer1::biography::biography_monitor_system;
 use crate::layer1::blob::{blob_consumption_system, blob_spread_system};
+use crate::layer1::building::{BuildingMap, update_building_map_system};
 use crate::layer1::dreams::{cleanup_dream_marker_system, dream_system};
 use crate::layer1::heirloom::RetrogradeEngineeringEvent;
 use crate::layer1::{
@@ -100,7 +101,8 @@ pub fn build_simulation_schedule() -> Schedule {
 
     // --- AI Decision Chain (GPU compute) ---
     schedule.add_systems((
-        gpu_evaluate_actions,
+        update_building_map_system,
+        gpu_evaluate_actions.after(update_building_map_system),
         crate::layer1::visitor::visitor_behavior_system,
         update_action_timer_system.after(gpu_evaluate_actions),
     ));
@@ -371,6 +373,10 @@ pub fn run_simulation_tick(world: &mut World) {
 
     if !world.contains_resource::<crate::layer1::social::old_guard::Demographics>() {
         world.init_resource::<crate::layer1::social::old_guard::Demographics>();
+    }
+
+    if !world.contains_resource::<BuildingMap>() {
+        world.init_resource::<BuildingMap>();
     }
 
     // Add our schedule if not yet added
