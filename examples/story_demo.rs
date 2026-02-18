@@ -1,6 +1,13 @@
 //! Demo of the `NarrativeGenerator` system with a TUI interface.
 //!
 //! This example shows how to browse lore templates and generate stories interactively.
+//!
+//! # Note on "Nova" Feature
+//!
+//! This example demonstrates the base `NarrativeGenerator` which is available by default.
+//! The "Oral Tradition" system (often referred to as the "Nova feature") is a separate
+//! system in `scale::layer1::oral_tradition` that builds upon this generator but requires
+//! the `nova` feature flag (`cargo run --features nova`).
 
 use crossterm::{
     event::{self, DisableMouseCapture, EnableMouseCapture, Event, KeyCode, KeyEventKind},
@@ -190,7 +197,7 @@ fn ui(f: &mut Frame, app: &mut App) {
         .split(f.area());
 
     // Header
-    let title = Paragraph::new("Mosaic 🎨: Nova Story Generator")
+    let title = Paragraph::new("Mosaic 🎨: Narrative Generator Demo")
         .style(
             Style::default()
                 .fg(Color::Cyan)
