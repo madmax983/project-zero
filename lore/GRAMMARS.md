@@ -1370,3 +1370,118 @@ BROWNOUT:
   increases:
     - FRUSTRATION (high)
     - EFFICIENCY_LOSS (high)
+
+
+---
+
+
+---
+
+## Wild Child Chaining
+
+```yaml
+WILD_CHILD_FOUND:
+  enables:
+    - CHILD_RECOVERED (high, if housed)
+    - CHILD_GOES_FERAL (high, if left outside)
+    - RUMOR_SPREAD (medium)
+  increases:
+    - CURIOSITY (medium)
+    - PITY (medium)
+
+CHILD_GOES_FERAL:
+  enables:
+    - THEFT_REPORT (high, stealing food)
+    - FAUNA_SIGHTING (medium, running with beasts)
+  increases:
+    - FEAR (medium)
+    - SADNESS (high)
+```
+
+## Blob Chaining
+
+```yaml
+BLOB_SIGHTING:
+  enables:
+    - BLOB_CONSUMPTION (high)
+    - BLOB_DAMAGE (medium)
+    - MILITIA_MUSTER (high)
+  increases:
+    - FEAR (high)
+    - URGENCY (high)
+
+BLOB_DAMAGE:
+  enables:
+    - STRUCTURE_COLLAPSE (high)
+    - REBUILDING_EFFORT (high)
+  increases:
+    - HATRED_OF_WILD (high)
+```
+
+## Cybernetics Chaining
+
+```yaml
+SURGERY_COMPLETED:
+  enables:
+    - EFFICIENCY_BOOST (always)
+    - SOCIAL_ISOLATION (medium, due to penalty)
+    - NEW_SURGERY (low, addiction)
+  increases:
+    - PRODUCTIVITY (high)
+    - ALIENATION (medium)
+
+SURGERY_FAILED:
+  enables:
+    - INJURY_ACCIDENT (medium)
+    - MEDICAL_RITES (high)
+  increases:
+    - FEAR_OF_TECH (medium)
+```
+
+## Heirloom Chaining
+
+```yaml
+HEIRLOOM_CREATED:
+  enables:
+    - LEGEND_BIRTH (high)
+    - THEFT_REPORT (low, valuable item)
+  increases:
+    - MORALE (high)
+    - TRADITION (high)
+
+ANCIENT_DECAY:
+  enables:
+    - RETROGRADE_SACRIFICE (medium, save the data)
+    - STRUCTURE_COLLAPSE (high, if ignored)
+  increases:
+    - URGENCY (medium)
+    - LOSS (medium)
+
+RETROGRADE_SACRIFICE:
+  enables:
+    - KNOWLEDGE_BREAKTHROUGH (high)
+    - MEMORY_FRAGMENT (medium)
+  increases:
+    - KNOWLEDGE (high)
+    - REGRET (low)
+```
+
+## Social Stratification Chaining
+
+```yaml
+CLASS_FRICTION_EVENT:
+  enables:
+    - BRAWL (high)
+    - EDICT_ISSUED (medium, crackdown)
+    - STRIKE (medium)
+  increases:
+    - UNREST (high)
+    - DIVISION (high)
+
+SOCIAL_PROMOTION:
+  enables:
+    - CELEBRATION (low)
+    - RESENTMENT (medium, from former peers)
+  increases:
+    - AMBITION (medium)
+```

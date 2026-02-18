@@ -1451,3 +1451,115 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "Lights dim. [YEAR]. A [POWER_FLUCTUATION] hits the sector."
 - "[YEAR]: Low power. The machines slow. [POWER_FLUCTUATION]."
 - "Energy drops. [POWER_FLUCTUATION] at [COLONY]. [YEAR]."
+
+
+---
+
+## Wild Child Templates
+
+### WILD_CHILD_FOUND
+**Slots:** [COLONY], [YEAR], [NAME], [FERAL_NAME], [WILD_ACTION]
+
+- "[NAME] was found in the wastes. [YEAR]. We call them [FERAL_NAME]. They [WILD_ACTION]."
+- "[YEAR]: A child in the wild. [NAME]. Known as [FERAL_NAME]. Found [WILD_ACTION]."
+- "We brought [NAME] in from the cold. [YEAR]. The [FERAL_NAME] still [WILD_ACTION]."
+
+### CHILD_GOES_FERAL
+**Slots:** [COLONY], [YEAR], [NAME], [WILD_ACTION]
+
+- "[NAME] is lost to the wild. [YEAR]. They [WILD_ACTION] at us now."
+- "[YEAR]: The exposure took [NAME]. Feral. [WILD_ACTION]."
+- "We lost a child to the wastes. [NAME] has turned. [YEAR]."
+
+### CHILD_RECOVERED
+**Slots:** [COLONY], [YEAR], [NAME]
+
+- "[NAME] returns to us. [YEAR]. The wild is washed away."
+- "[YEAR]: Rehabilitation complete. [NAME] speaks again."
+- "Saved from the feral state. [NAME] is civilized. [YEAR]."
+
+---
+
+## Blob Templates
+
+### BLOB_SIGHTING
+**Slots:** [COLONY], [YEAR], [BLOB_NAME], [BLOB_DESCRIPTOR]
+
+- "[BLOB_NAME] spotted. [YEAR]. It is [BLOB_DESCRIPTOR]."
+- "[YEAR]: The anomaly grows. [BLOB_NAME]. [BLOB_DESCRIPTOR] and moving."
+- "Contact with [BLOB_NAME]. [YEAR]. A [BLOB_DESCRIPTOR] mass."
+
+### BLOB_CONSUMPTION
+**Slots:** [COLONY], [YEAR], [BLOB_NAME], [RESOURCE], [BLOB_ACTION]
+
+- "The [BLOB_NAME] [BLOB_ACTION] our [RESOURCE]. [YEAR]. Nothing left."
+- "[YEAR]: [RESOURCE] lost to the [BLOB_NAME]. It just [BLOB_ACTION] over it."
+- "Feeding time. The [BLOB_NAME] takes the [RESOURCE]. [YEAR]."
+
+### BLOB_DAMAGE
+**Slots:** [COLONY], [YEAR], [BLOB_NAME], [BUILDING_TYPE]
+
+- "The [BLOB_NAME] crushes the [BUILDING_TYPE]. [YEAR]. Structure critical."
+- "[YEAR]: [BUILDING_TYPE] breached by [BLOB_NAME]. We cannot stop it."
+- "Destruction at [COLONY]. The [BLOB_NAME] eats the [BUILDING_TYPE]. [YEAR]."
+
+---
+
+## Cybernetics Templates
+
+### SURGERY_COMPLETED
+**Slots:** [COLONY], [YEAR], [NAME], [PROSTHETIC_NAME], [SURGERY_OUTCOME]
+
+- "[NAME] receives the [PROSTHETIC_NAME]. [YEAR]. The metal is [SURGERY_OUTCOME]."
+- "[YEAR]: Upgrade complete. [NAME] is now part [PROSTHETIC_NAME]."
+- "The flesh is weak. [NAME] chooses [PROSTHETIC_NAME]. [YEAR]. [SURGERY_OUTCOME]."
+
+### SURGERY_FAILED
+**Slots:** [COLONY], [YEAR], [NAME], [PROSTHETIC_NAME]
+
+- "Rejection. [NAME]'s body fights the [PROSTHETIC_NAME]. [YEAR]."
+- "[YEAR]: Surgery failure. The [PROSTHETIC_NAME] will not seat."
+- "[NAME] remains unchanged. The [PROSTHETIC_NAME] was incompatible. [YEAR]."
+
+---
+
+## Heirloom & Ancient Tech Templates
+
+### HEIRLOOM_CREATED
+**Slots:** [COLONY], [YEAR], [NAME], [LEGENDARY_TOOL]
+
+- "[NAME]'s tool is named [LEGENDARY_TOOL]. [YEAR]. It does not break."
+- "[YEAR]: A legend is forged. [NAME] wields [LEGENDARY_TOOL]."
+- "The [LEGENDARY_TOOL]. Born from [NAME]'s labor. [YEAR]."
+
+### ANCIENT_DECAY
+**Slots:** [COLONY], [YEAR], [ANCIENT_STRUCTURE]
+
+- "The [ANCIENT_STRUCTURE] is failing. [YEAR]. Time eats the metal."
+- "[YEAR]: Warning from the [ANCIENT_STRUCTURE]. Systems dying."
+- "Decay takes the [ANCIENT_STRUCTURE]. [YEAR]. We cannot fix it."
+
+### RETROGRADE_SACRIFICE
+**Slots:** [COLONY], [YEAR], [ANCIENT_STRUCTURE], [KNOWLEDGE_TOPIC]
+
+- "We tore apart the [ANCIENT_STRUCTURE]. [YEAR]. Learned [KNOWLEDGE_TOPIC]."
+- "[YEAR]: Sacrifice for knowledge. The [ANCIENT_STRUCTURE] is gone. We found [KNOWLEDGE_TOPIC]."
+- "The [ANCIENT_STRUCTURE] gave its life for [KNOWLEDGE_TOPIC]. [YEAR]."
+
+---
+
+## Social Stratification Templates
+
+### CLASS_FRICTION_EVENT
+**Slots:** [COLONY], [YEAR], [CLASS_NAME], [FRICTION_SOURCE]
+
+- "Tension between the classes. [YEAR]. The [CLASS_NAME] complain of [FRICTION_SOURCE]."
+- "[YEAR]: Unrest rises. [CLASS_NAME] vs the others. Cause: [FRICTION_SOURCE]."
+- "The divide grows. [CLASS_NAME] are angry about [FRICTION_SOURCE]. [YEAR]."
+
+### SOCIAL_PROMOTION
+**Slots:** [COLONY], [YEAR], [NAME], [CLASS_NAME]
+
+- "[NAME] rises to the [CLASS_NAME]. [YEAR]. They leave the old life behind."
+- "[YEAR]: Status change. [NAME] is now [CLASS_NAME]."
+- "Ascension. [NAME] joins the [CLASS_NAME]. [YEAR]."
