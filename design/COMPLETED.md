@@ -79,3 +79,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `INT-026` Integration: Amputation -> Cybernetics/Memory — completed 2026-02-18
 - [x] 030 Tool Economy — specs/030-tool-economy.md — completed 2026-10-29
 - [x] 042 Energy System — specs/042-energy-system.md — completed 2026-10-29
+- [x] `161` Ecological Succession — `specs/161-ecological-succession.md` — completed 2026-02-18

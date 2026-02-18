@@ -183,6 +183,7 @@ pub fn build_simulation_schedule() -> Schedule {
         process_research_system.after(work_execution_system),
         process_observe_system.after(work_execution_system),
         regrowth_system.after(work_execution_system),
+        crate::layer1::ecology::process_ecological_succession.after(work_execution_system),
         flora_spread_system.after(work_execution_system),
         mastery_accumulation_system.after(work_execution_system),
         crate::layer1::cybernetics::surgery_system.after(work_execution_system),
