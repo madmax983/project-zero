@@ -101,6 +101,7 @@ pub fn build_simulation_schedule() -> Schedule {
         update_event_buffer::<crate::layer1::geology::GeologicalEvent>,
         update_event_buffer::<crate::layer1::society::InvestigationEvent>,
         update_event_buffer::<crate::layer1::society::SuppressSocietyEvent>,
+        update_event_buffer::<crate::layer1::medical::PatientTreated>,
     ));
 
     // --- AI Decision Chain (GPU compute) ---
@@ -202,6 +203,7 @@ pub fn build_simulation_schedule() -> Schedule {
 
     schedule.add_systems((
         healing_system.after(work_execution_system),
+        crate::layer1::integration::medical_debt_bridge_system.after(healing_system),
         crate::layer1::beauty::update_beauty_grid_system.after(work_execution_system),
         crate::layer1::beauty::apply_beauty_effects_system
             .after(crate::layer1::beauty::update_beauty_grid_system),
@@ -215,6 +217,9 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(process_fuel_consumption_system),
         ai_automation_system.after(crate::layer1::energy::power_grid_system),
         ai_rogue_system.after(work_execution_system),
+    ));
+
+    schedule.add_systems((
         crate::layer1::integration::grid_overload_fire_bridge
             .after(crate::layer1::energy::power_grid_system),
         art_generation_system.after(work_execution_system),
