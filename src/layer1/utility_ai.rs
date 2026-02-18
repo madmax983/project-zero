@@ -62,7 +62,7 @@ use crate::layer1::funeral::{Corpse, Grave};
 use crate::layer1::housing::Housing;
 use crate::layer1::husbandry::evaluate_tame;
 use crate::layer1::items::Equipment;
-use crate::layer1::justice::Inmate;
+use crate::layer1::justice::{Inmate, Wanted, evaluate_warden_action};
 use crate::layer1::map::GridPosition;
 use crate::layer1::medical::Hospital;
 use crate::layer1::needs::Needs;
@@ -258,6 +258,15 @@ fn evaluate_group_work(
     // Evaluate Tame
     if let Some((utility, target)) = evaluate_tame(&pop_pos, &weights, &buffer.tame_designations) {
         evaluator.consider(ActionType::Tame, utility, Some(target));
+    }
+
+    // Evaluate Warden
+    if !is_penal {
+        if let Some((utility, target)) =
+            evaluate_warden_action(&pop_pos, &buffer.wanted_criminals)
+        {
+            evaluator.consider(ActionType::Warden, utility, Some(target));
+        }
     }
 }
 
@@ -571,6 +580,13 @@ fn populate_buffer_items_and_misc(world: &mut World, buffer: &mut UtilityAIBuffe
             .repair_structures
             .push(PositionProxy { entity, pos: *pos });
     }
+
+    // Wanted criminals
+    buffer.wanted_criminals.clear();
+    let mut wanted_query = world.query::<(Entity, &GridPosition, &Wanted)>();
+    for (entity, pos, _) in wanted_query.iter(world) {
+        buffer.wanted_criminals.push(PositionProxy { entity, pos: *pos });
+    }
 }
 
 /// Populates the AI buffer with candidate entities from the world.
@@ -779,7 +795,6 @@ pub fn track_plan_outcomes_system(
             | ActionType::Warden
             | ActionType::Sleepwalking
             | ActionType::Tame
-            | ActionType::Slaughter
             | ActionType::FireStarting
             | ActionType::HideInRoom
             | ActionType::SadWander

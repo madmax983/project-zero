@@ -92,10 +92,6 @@ pub enum ActionType {
     ///
     /// See [`crate::layer1::husbandry::evaluate_tame`].
     Tame,
-    /// Slaughter a tamed animal for resources.
-    ///
-    /// **Note**: Currently unimplemented in Utility AI.
-    Slaughter,
     /// Starts fires (Mental Break).
     ///
     /// See [`crate::layer1::actions::mental_break::evaluate_mental_break`].
@@ -121,7 +117,7 @@ pub enum ActionType {
 
 impl ActionType {
     /// Total number of action types. Used for array sizing.
-    pub const COUNT: usize = 27;
+    pub const COUNT: usize = 26;
 
     /// Converts action type to a unique array index (0..COUNT-1).
     #[must_use]
@@ -148,12 +144,11 @@ impl ActionType {
             Self::Warden => 18,
             Self::Sleepwalking => 19,
             Self::Tame => 20,
-            Self::Slaughter => 21,
-            Self::FireStarting => 22,
-            Self::HideInRoom => 23,
-            Self::SadWander => 24,
-            Self::FetchClothing => 25,
-            Self::Surgery => 26,
+            Self::FireStarting => 21,
+            Self::HideInRoom => 22,
+            Self::SadWander => 23,
+            Self::FetchClothing => 24,
+            Self::Surgery => 25,
         }
     }
 
@@ -162,14 +157,14 @@ impl ActionType {
     /// This value is used by the execution systems (e.g., `work_execution_system`)
     /// to determine if a Pop should suffer an injury while performing this task.
     ///
-    /// *   **Work/Repair/Slaughter**: 0.1% chance per tick. (Low risk)
+    /// *   **Work/Repair**: 0.1% chance per tick. (Low risk)
     /// *   **Tame**: 0.5% chance per tick. (Moderate risk - animals bite!)
     /// *   **Fight**: 0% (Combat handles damage via its own system).
     /// *   **Others**: 0% chance.
     #[must_use]
     pub const fn danger_level(&self) -> f64 {
         match self {
-            Self::Work | Self::Repair | Self::Slaughter => 0.001, // 0.1% chance per tick
+            Self::Work | Self::Repair => 0.001, // 0.1% chance per tick
             Self::Tame => 0.005, // 0.5% chance per tick (animals bite!)
             _ => 0.0,
         }
@@ -182,13 +177,11 @@ impl ActionType {
     ///
     /// *   **Work/Repair**: 10.0 HP (minor injury).
     /// *   **Tame**: 15.0 HP (animal bite/kick).
-    /// *   **Slaughter**: 5.0 HP (accidental cut).
     #[must_use]
     pub const fn accident_damage(&self) -> f32 {
         match self {
             Self::Work | Self::Repair => 10.0,
             Self::Tame => 15.0,
-            Self::Slaughter => 5.0,
             _ => 0.0,
         }
     }
