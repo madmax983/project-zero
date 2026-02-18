@@ -78,7 +78,7 @@ classDiagram
   class Core
   class Storage
   Core --> Storage : Uses (Trait Bound)
-  %% Reflected in ADR 012
+  %% Reflected in ADR 026
   %% Removed the circular dependency arrow
 ```
 
@@ -90,6 +90,7 @@ sequenceDiagram
     participant Storage
     participant Disk
 
+    %% Reflected in ADR 026
     Core->>Storage: save_world_state()
     Storage->>Disk: serialize_to_file()
     Disk-->>Storage: success
@@ -377,3 +378,4 @@ Rel(Shared, Events, "Consumes")
 - [ADR 020: Spontaneous Architecture](./adr/020-spontaneous-architecture.md)
 - [ADR 022: Atmospheric & Ventilation Flow](./adr/022-atmospheric-flow-architecture.md)
 - [ADR 023: Data Physicality & Tech Corruption](./adr/023-data-physicality.md)
+- [ADR 026: Decouple Storage from Core](./adr/026-decouple-storage.md)
