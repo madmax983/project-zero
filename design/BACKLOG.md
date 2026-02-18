@@ -25,6 +25,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `133` Ventilation Networks — `specs/133-ventilation-networks.md`
 - [ ] `137` Pop Hobbies — `specs/137-pop-hobbies.md`
 - [ ] `156` Xeno-Artifacts — `specs/156-xeno-artifacts.md`
+- [ ] `162` Tech Envy — `specs/162-tech-envy.md`
 
 ## MVP — Layer 2: System Simulation
 
