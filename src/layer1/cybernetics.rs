@@ -37,6 +37,14 @@ pub struct Augmentations {
     pub installed: Vec<Entity>,
 }
 
+/// Component representing a missing limb (e.g. from accident).
+#[derive(Component, Debug, Clone)]
+pub struct MissingLimb {
+    /// Severity of the loss (0.0 to 1.0).
+    /// Typically 0.5 for a single limb.
+    pub severity: f32,
+}
+
 /// Component indicating a surgery is in progress.
 #[derive(Component, Debug, Clone)]
 pub struct PendingSurgery {
@@ -74,6 +82,16 @@ pub fn surgery_system(world: &mut World) {
             augs.installed.push(item_entity);
         }
 
+        // Check if we fixed a missing limb
+        if let Some(prosthetic) = world.get::<Prosthetic>(item_entity) {
+            if matches!(
+                prosthetic.prosthetic_type,
+                ProstheticType::BionicArm | ProstheticType::BionicLeg
+            ) {
+                world.entity_mut(pop_entity).remove::<MissingLimb>();
+            }
+        }
+
         // Remove PendingSurgery component
         world.entity_mut(pop_entity).remove::<PendingSurgery>();
 
@@ -97,6 +115,11 @@ pub fn get_efficiency_bonus(world: &World, pop: Entity) -> f32 {
             }
         }
     }
+
+    if let Some(missing) = world.get::<MissingLimb>(pop) {
+        total -= missing.severity;
+    }
+
     total
 }
 

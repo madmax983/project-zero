@@ -74,3 +74,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `151` Cybernetic Augmentation — `specs/151-cybernetic-augmentation.md` — completed 2026-02-17
 - [x] `154` Named Locations — `specs/154-named-locations.md` — completed 2026-10-27
 - [x] `144` Graffiti and Signage — `specs/144-graffiti-and-signage.md` — completed 2026-10-27
+- [x] `INT-026` Integration: Amputation -> Cybernetics/Memory — completed 2026-02-18
