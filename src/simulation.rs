@@ -16,20 +16,20 @@ use crate::layer1::dreams::{cleanup_dream_marker_system, dream_system};
 use crate::layer1::heirloom::RetrogradeEngineeringEvent;
 use crate::layer1::{
     AddChronicleEvent, AffinityChange, DeathEvent, PopDied, advance_season_system, aging_system,
-    ai_automation_system, ai_rogue_system, ancient_structure_decay_system,
-    amputation_handler_system, apply_cabin_fever_morale_system,
+    ai_automation_system, ai_rogue_system, amputation_handler_system,
+    ancient_structure_decay_system, apply_cabin_fever_morale_system,
     apply_catharsis_morale_bonus_system, apply_lighting_penalties_system,
     apply_noise_effects_system, apply_palette_fatigue_system, apply_quirk_modifiers_system,
     apply_taboo_stress_system, apply_weather_effects_system, arrival_handler_system,
     art_generation_system, art_observation_system, assign_sleepwalk_target_system,
-    biocompatibility_system, check_death_event_system,
-    check_heirloom_status_system, check_milestones_system, check_sleepwalking_start_system,
-    check_stress_breakdown_system, chronicle_event_handler_system, chronicle_rumor_bridge_system,
-    clean_dead_residents_system, clean_dead_workers_system, cleanup_previous_assignment_system,
-    clothing_wear_system, combat_execution_system, consume_food_system, death_system,
-    decay_needs_system, discovery_system, entropy_system, faction_satisfaction_morale_bridge,
-    fire_damage_pops_system, fire_damage_system, fire_pressure_check_system, fire_spread_system,
-    flora_attack_system, flora_spread_system, haul_system, healing_system, infiltration_system,
+    biocompatibility_system, check_death_event_system, check_heirloom_status_system,
+    check_milestones_system, check_sleepwalking_start_system, check_stress_breakdown_system,
+    chronicle_event_handler_system, chronicle_rumor_bridge_system, clean_dead_residents_system,
+    clean_dead_workers_system, cleanup_previous_assignment_system, clothing_wear_system,
+    combat_execution_system, consume_food_system, death_system, decay_needs_system,
+    discovery_system, entropy_system, faction_satisfaction_morale_bridge, fire_damage_pops_system,
+    fire_damage_system, fire_pressure_check_system, fire_spread_system, flora_attack_system,
+    flora_spread_system, haul_system, healing_system, infiltration_system,
     inspector::{inspector_report_system, observe_inspector_system, spawn_inspector_system},
     inspector_outcome_bridge_system,
     logistics::{conveyor_system, hopper_system},
@@ -253,6 +253,7 @@ pub fn build_simulation_schedule() -> Schedule {
         spirit_decay_system.after(work_execution_system),
         quirk_generation_system.after(spirit_decay_system),
         entropy_system.after(work_execution_system),
+        crate::layer1::structure::fragile_decay_system.after(entropy_system),
     ));
 
     schedule.add_systems((

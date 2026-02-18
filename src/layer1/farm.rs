@@ -100,7 +100,7 @@ pub fn produce_food_system(
         if let Some((building_type, is_powered)) = farm_map.get(pos) {
             // Tech Corruption Check
             if let Some(tech) = building_type.required_tech() {
-                let tech_active = tech_state.as_ref().map_or(true, |ts| ts.is_active(tech));
+                let tech_active = tech_state.as_ref().is_none_or(|ts| ts.is_active(tech));
 
                 if !tech_active {
                     continue;

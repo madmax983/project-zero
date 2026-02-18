@@ -31,7 +31,8 @@ pub enum RenderEntity {
     /// Includes optional progress (0.0 to 1.0) for active tasks.
     Designation(DesignationType, Option<f32>),
     /// A constructed building (e.g., [`BuildingType::Farm`], [`BuildingType::Housing`]).
-    Building(BuildingType, MaterialType),
+    /// The `bool` flag indicates if the building is "Fragile" (Jury-Rigged).
+    Building(BuildingType, MaterialType, bool),
     /// A hostile animal (e.g., Wolf, Space Rat).
     Fauna(FaunaType),
     /// Antagonistic flora (e.g., `XenoMoss`).
@@ -80,7 +81,7 @@ impl RenderEntity {
             Self::Particle(_, _) => 7,
             Self::Fire | Self::Blob => 6,
             Self::Designation(_, _) => 5,
-            Self::Building(_, _) => 4,
+            Self::Building(_, _, _) => 4,
             Self::Fauna(_) | Self::Pop(_, _) => 3,
             Self::Flora(_) => 2,
             Self::Anomaly(_) => 1,
@@ -134,10 +135,11 @@ pub fn update_render_cache(world: &mut World) {
                 let material = e
                     .get::<Material>()
                     .map_or_else(MaterialType::default, |m| m.0);
+                let is_fragile = e.contains::<crate::layer1::structure::Fragile>();
                 insert_if_higher_priority(
                     &mut cache.entities,
                     *pos,
-                    RenderEntity::Building(building.building_type, material),
+                    RenderEntity::Building(building.building_type, material, is_fragile),
                 );
             }
 
@@ -446,11 +448,17 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
                         ));
                         continue;
                     }
-                    RenderEntity::Building(b, m) => {
-                        line_spans.push(Span::styled(
-                            get_building_char(*b),
-                            Style::default().fg(get_building_color(*b, *m)),
-                        ));
+                    RenderEntity::Building(b, m, fragile) => {
+                        let mut fg = get_building_color(*b, *m);
+                        if *fragile {
+                            // Pulsing red effect for Jury-Rigged buildings
+                            let pulse = (ctx.wall_time * 8.0).sin();
+                            if pulse > 0.0 {
+                                fg = Color::LightRed;
+                            }
+                        }
+                        line_spans
+                            .push(Span::styled(get_building_char(*b), Style::default().fg(fg)));
                         continue;
                     }
                     RenderEntity::Fauna(ft) => {
