@@ -31,3 +31,7 @@
 ## [UI Responsiveness]
 **Friction:** The build cursor and designation rectangle felt static and lifeless, making it hard to see active selection states against the terrain.
 **Flow:** Implemented `WallTime` resource to decouple UI animation from simulation tick rate. Added a smooth sine-wave pulse to the build cursor and designation area, providing immediate visual feedback that the tool is active and ready.
+
+## [Combat Dynamics]
+**Friction:** Combat damage felt predictable and linear. Even with basic Hit Stop, "Heavy" hits didn't feel rare or special enough.
+**Flow:** Introduced Critical Hits (5% chance, 2x Damage). Scaled Hit Stop dynamically (0/2/5/10 ticks) based on damage severity. Crits now trigger a massive 10-tick freeze, yellow particles, and 0.8 screen shake, creating "High Moments" in battle.
