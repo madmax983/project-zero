@@ -68,3 +68,12 @@
 - **Glue added:**
     - Updated `src/layer1/vermin.rs` to query `ResourceItem` and add to growth calculation.
 - **Tests:** `tests/integration/vermin_items.rs` (3 tests verified)
+
+### INT-026: Amputation -> Cybernetics/Memory
+- **Date:** 2026-02-18
+- **Systems connected:** `AmputationEvent` (Hazards) -> `MissingLimb` (Cybernetics) / `Memories` (Pop)
+- **Glue added:**
+    - Added `amputation_handler_system` in `src/layer1/integration.rs`.
+    - Modified `get_efficiency_bonus` to account for `MissingLimb`.
+    - Modified `surgery_system` to cure `MissingLimb`.
+- **Tests:** `tests/integration/amputation_prosthetic.rs` (3 tests verified)

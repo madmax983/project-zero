@@ -2,8 +2,10 @@
 
 use crate::layer1::balance::TICKS_PER_YEAR;
 use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
+use crate::layer1::cybernetics::MissingLimb;
 use crate::layer1::factions::Factions;
 use crate::layer1::fire::Fire;
+use crate::layer1::hazards::AmputationEvent;
 use crate::layer1::health::Health;
 use crate::layer1::inspector::{Inspector, Reported};
 use crate::layer1::map::GridPosition;
@@ -19,6 +21,7 @@ use crate::shared::narrative::{NarrativeContext, NarrativeGenerator};
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 use rand::prelude::*;
+use ratatui::style::Color;
 use std::collections::HashSet;
 
 /// Creates chronicle entries from [`PopDied`] events.
@@ -334,6 +337,43 @@ pub fn grid_overload_fire_bridge(
             if !already_burning {
                 commands.spawn((crate::layer1::fire::Fire::default(), *pos));
             }
+        }
+    }
+}
+
+/// Handles amputation events by applying MissingLimb component and memory.
+///
+/// Bridges Hazards (Accident) and Cybernetics/Memory (Consequence).
+pub fn amputation_handler_system(
+    mut events: EventReader<AmputationEvent>,
+    mut commands: Commands,
+    mut memories_query: Query<&mut Memories>,
+    mut log: Option<ResMut<MessageLog>>,
+    time: Res<SimulationTime>,
+    pop_query: Query<&crate::layer1::pop::Pop>,
+) {
+    for event in events.read() {
+        let entity = event.entity;
+
+        // Verify entity is a Pop (just in case)
+        if pop_query.get(entity).is_err() {
+            continue;
+        }
+
+        // 1. Add MissingLimb Component
+        commands.entity(entity).insert(MissingLimb { severity: 0.5 });
+
+        // 2. Add Memory
+        if let Ok(mut memories) = memories_query.get_mut(entity) {
+            memories.add(MemoryType::LostLimb, time.tick);
+        }
+
+        // 3. Log
+        if let Some(ref mut l) = log {
+            l.add_colored(
+                "CRITICAL: A colonist has lost a limb in a terrible accident!",
+                Color::Red,
+            );
         }
     }
 }

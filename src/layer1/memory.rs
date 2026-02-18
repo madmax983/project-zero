@@ -51,6 +51,8 @@ pub enum MemoryType {
     InspectorDisappointed,
     /// The colony mascot died.
     MascotDeath,
+    /// Lost a limb in an accident.
+    LostLimb,
 }
 
 impl MemoryType {
@@ -60,7 +62,7 @@ impl MemoryType {
     pub const fn base_mood_impact(&self) -> f32 {
         match self {
             Self::WitnessedDeath => -0.2,
-            Self::MascotDeath => -0.3, // High impact grief
+            Self::MascotDeath | Self::LostLimb => -0.3, // High impact grief/trauma
             Self::StarvationTrauma => -0.15,
             Self::DisgustedByVermin | Self::InspectorDisappointed => -0.1,
             Self::InspectorImpressed => 0.15,
@@ -86,8 +88,8 @@ impl MemoryType {
     pub const fn decay_rate(&self) -> f32 {
         // Ticks to fade completely
         match self {
-            Self::WitnessedDeath => 0.0005, // Slow fade (2000 ticks)
-            Self::MascotDeath => 0.0005,    // Slow fade (2000 ticks)
+            Self::WitnessedDeath | Self::LostLimb => 0.0005, // Slow fade (2000 ticks)
+            Self::MascotDeath => 0.0005,                     // Slow fade (2000 ticks)
             Self::StarvationTrauma | Self::AttendedFuneral => 0.001, // Medium
             Self::AteFineMeal | Self::WonFight => 0.002, // Fast (500 ticks)
             Self::SawCorpse | Self::AdmiredArt | Self::DisgustedByVermin => 0.01, // Very fast fade (100 ticks)

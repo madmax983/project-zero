@@ -29,3 +29,4 @@ Tasks currently being implemented. Builders: if a task is here, pick something e
 - [ ] `133` Ventilation Networks — `specs/133-ventilation-networks.md` — claimed 2026-02-16
 - [ ] `141` Colony Ship Cannibalization — `specs/141-colony-ship-cannibalization.md` — claimed 2026-10-27
 - [ ] `140` Thermal Management — `specs/140-thermal-management.md` — claimed 2026-02-17
+- [ ] `INT-026` Integration: Amputation -> Cybernetics/Memory — claimed 2026-02-18
