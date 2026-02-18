@@ -9,6 +9,7 @@ use crate::layer1::hazards::AmputationEvent;
 use crate::layer1::health::Health;
 use crate::layer1::inspector::{Inspector, Reported};
 use crate::layer1::map::GridPosition;
+use crate::layer1::medical::PatientTreated;
 use crate::layer1::memory::{Memories, MemoryType};
 use crate::layer1::needs::Needs;
 use crate::layer1::pop::{Pop, PopDied};
@@ -95,6 +96,36 @@ pub fn chronicle_rumor_bridge_system(
                     knowledge.add_rumor(rumor.clone());
                 }
             }
+        }
+    }
+}
+
+/// Applies social debt when a doctor treats a patient.
+///
+/// Bridges Medical system (Treatment) and Social system (Debt).
+pub fn medical_debt_bridge_system(
+    mut events: EventReader<PatientTreated>,
+    mut social_debt_events: EventWriter<crate::layer1::social::FavorChange>,
+    doctors: Query<(Entity, &crate::layer1::pop::Job)>,
+) {
+    for event in events.read() {
+        // Find doctors at this hospital
+        let hospital_doctors: Vec<Entity> = doctors
+            .iter()
+            .filter(|(_, job)| {
+                job.workplace == event.hospital
+                    && job.job_type == crate::layer1::actions::AssignmentType::Doctor
+            })
+            .map(|(e, _)| e)
+            .collect();
+
+        if let Some(&doctor) = hospital_doctors.first() {
+            social_debt_events.send(crate::layer1::social::FavorChange {
+                debtor: event.patient,
+                creditor: doctor,
+                amount: event.amount,
+                reason: "Medical Treatment".to_string(),
+            });
         }
     }
 }

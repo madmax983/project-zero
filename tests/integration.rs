@@ -80,3 +80,5 @@ mod vermin_items;
 
 #[path = "integration/amputation_prosthetic.rs"]
 mod amputation_prosthetic;
+#[path = "integration/medical_debt.rs"]
+mod medical_debt;

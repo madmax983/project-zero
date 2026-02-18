@@ -77,3 +77,12 @@
     - Modified `get_efficiency_bonus` to account for `MissingLimb`.
     - Modified `surgery_system` to cure `MissingLimb`.
 - **Tests:** `tests/integration/amputation_prosthetic.rs` (3 tests verified)
+
+### INT-002: Medical Treatment -> Social Debt
+- **Date:** 2026-02-xx
+- **Systems connected:** `healing_system` (Medical) -> `medical_debt_bridge_system` (Integration) -> `SocialDebt` (Social)
+- **Glue added:**
+    - Added `PatientTreated` event in `src/layer1/medical.rs`.
+    - Modified `healing_system` to emit `PatientTreated`.
+    - Added `medical_debt_bridge_system` in `src/layer1/integration.rs` to create debt.
+- **Tests:** `tests/integration/medical_debt.rs` (Integration test verified)

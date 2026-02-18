@@ -14,6 +14,17 @@ pub enum MedicalPolicy {
     Triage,
 }
 
+/// Event emitted when a patient is treated.
+#[derive(Event, Debug, Clone)]
+pub struct PatientTreated {
+    /// The patient being healed.
+    pub patient: Entity,
+    /// The hospital where treatment occurred.
+    pub hospital: Entity,
+    /// The amount of health restored.
+    pub amount: f32,
+}
+
 /// Component indicating a building is a hospital that can heal patients.
 #[derive(Component)]
 pub struct Hospital {
@@ -69,7 +80,7 @@ pub fn healing_system(world: &mut World) {
         }
     }
 
-    let mut updates: Vec<(Entity, f32)> = Vec::new();
+    let mut updates: Vec<(Entity, f32, Entity)> = Vec::new();
 
     // Process each hospital
     for (hospital_ent, mut patients) in hospitals {
@@ -116,15 +127,28 @@ pub fn healing_system(world: &mut World) {
             // If rate is 0.5, we give 0.5.
 
             let amount = rate.min(capacity);
-            updates.push((patient, amount));
+            updates.push((patient, amount, hospital_ent));
             capacity -= amount;
         }
     }
 
     // Apply updates
-    for (entity, amount) in updates {
+    for (entity, amount, hospital) in updates {
         if let Some(mut health) = world.get_mut::<Health>(entity) {
             health.current = (health.current + amount).min(health.max);
+
+            // Emit event
+            if amount > 0.0 {
+                // We use resource_mut because we are in an exclusive system.
+                // We must ensure the resource exists to avoid panic, though it should exist in simulation.
+                if let Some(mut events) = world.get_resource_mut::<Events<PatientTreated>>() {
+                    events.send(PatientTreated {
+                        patient: entity,
+                        hospital,
+                        amount,
+                    });
+                }
+            }
         }
     }
 }
