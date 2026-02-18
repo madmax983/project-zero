@@ -2,9 +2,9 @@
 //!
 //! Tracks seismic stress and triggers earthquakes.
 
-use bevy_ecs::prelude::*;
 use crate::layer1::GridPosition;
 use crate::layer1::map::ScreenShake;
+use bevy_ecs::prelude::*;
 use ratatui::style::Color;
 
 /// Grid tracking seismic stress accumulation.
@@ -67,14 +67,14 @@ pub enum GeologicalEvent {
     /// A minor tremor (warning).
     Tremor {
         /// Center of the tremor.
-        center: GridPosition
+        center: GridPosition,
     },
     /// A major earthquake (damage).
     Earthquake {
         /// Center of the earthquake.
         center: GridPosition,
         /// Magnitude of the earthquake (determines damage radius and intensity).
-        magnitude: f32
+        magnitude: f32,
     },
 }
 
@@ -92,7 +92,10 @@ pub fn seismic_decay_system(mut grid: ResMut<SeismicGrid>) {
 
 /// System that checks for stress thresholds and triggers events.
 #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
-pub fn check_seismic_events(mut grid: ResMut<SeismicGrid>, mut events: EventWriter<GeologicalEvent>) {
+pub fn check_seismic_events(
+    mut grid: ResMut<SeismicGrid>,
+    mut events: EventWriter<GeologicalEvent>,
+) {
     for y in 0..grid.height {
         for x in 0..grid.width {
             let idx = y * grid.width + x;
@@ -101,7 +104,10 @@ pub fn check_seismic_events(mut grid: ResMut<SeismicGrid>, mut events: EventWrit
                 // Reset stress (release energy)
                 grid.stress[idx] = 0.0;
                 events.send(GeologicalEvent::Earthquake {
-                    center: GridPosition { x: x as i32, y: y as i32 },
+                    center: GridPosition {
+                        x: x as i32,
+                        y: y as i32,
+                    },
                     magnitude: 5.0, // Simplified magnitude
                 });
             }
@@ -145,11 +151,14 @@ pub fn apply_geological_event_system(
 
 #[cfg(test)]
 mod tests {
+    use crate::layer1::GridPosition;
+    use crate::layer1::geology::{
+        GeologicalEvent, SeismicGrid, add_seismic_stress, apply_geological_event_system,
+        check_seismic_events,
+    };
+    use crate::layer1::health::Health;
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
-    use crate::layer1::geology::{SeismicGrid, GeologicalEvent, add_seismic_stress, check_seismic_events, apply_geological_event_system};
-    use crate::layer1::GridPosition;
-    use crate::layer1::health::Health;
 
     #[test]
     fn test_seismic_grid_initialization() {
@@ -178,7 +187,9 @@ mod tests {
         world.insert_resource(grid);
 
         // Run decay system (simulated)
-        world.run_system_once(crate::layer1::geology::seismic_decay_system).unwrap();
+        world
+            .run_system_once(crate::layer1::geology::seismic_decay_system)
+            .unwrap();
 
         let grid = world.resource::<SeismicGrid>();
         assert!(grid.get_stress(5, 5) < 50.0);
@@ -206,7 +217,7 @@ mod tests {
             GeologicalEvent::Earthquake { center, .. } => {
                 assert_eq!(center.x, 5);
                 assert_eq!(center.y, 5);
-            },
+            }
             _ => panic!("Expected Earthquake"),
         }
     }
@@ -217,20 +228,27 @@ mod tests {
         world.init_resource::<Events<GeologicalEvent>>();
 
         // Setup building/victim
-        let victim = world.spawn((
-            Health { current: 100.0, max: 100.0 },
-            GridPosition { x: 5, y: 5 }
-        )).id();
+        let victim = world
+            .spawn((
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
         world.insert_resource(crate::layer1::map::ScreenShake::default());
 
         // Send event
         world.send_event(GeologicalEvent::Earthquake {
             center: GridPosition { x: 5, y: 5 },
-            magnitude: 5.0
+            magnitude: 5.0,
         });
 
         // Run system
-        world.run_system_once(apply_geological_event_system).unwrap();
+        world
+            .run_system_once(apply_geological_event_system)
+            .unwrap();
 
         // Check damage
         let health = world.get::<Health>(victim).unwrap();
