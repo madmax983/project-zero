@@ -79,6 +79,8 @@ pub struct WorldContext<'a> {
     pub taboo: &'a TabooState,
     /// Reference to faction data (for strike checks).
     pub factions: Option<&'a HashMap<FactionId, FactionData>>,
+    /// Reference to zone grid (for sanctuary checks).
+    pub zone_grid: &'a crate::layer1::zone::ZoneGrid,
 }
 
 // --- PROXY TYPES ---
