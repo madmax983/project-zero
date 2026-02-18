@@ -4381,3 +4381,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Utilitarian survival vs. Moral collapse.
 
 ---
+
+## Sanctuary Districts
+
+**Layer:** 1
+
+**Fantasy:** The law stops at this door. A safe haven for the desperate and the dangerous.
+
+**Mechanic:** Designate a zone where "Police" cannot enter or make arrests. "Wanted" pops flock there. High Crime/Vice, but keeps criminals contained and productive (black market).
+
+**Emergence:** You need a hacker for a mission, but he's wanted for fraud. You meet him in the Sanctuary, hire him, and smuggle him out.
+
+**Tension:** Rule of Law (stability) vs. Pragmatism (utility).
+
+---
+
+## Tech Envy
+
+**Layer:** 1
+
+**Fantasy:** The new model is shiny, and mine is rust.
+
+**Mechanic:** If a "Tier 2" machine exists in the colony, pops working on "Tier 1" machines get a mood penalty ("Obsolescence"). Upgrading one lab forces you to upgrade them all or face resentment.
+
+**Emergence:** You install one cutting-edge Fabricator for the Chief Engineer. The rest of the engineering team goes on strike until they get one too.
+
+**Tension:** Incremental upgrades (budget friendly) vs. Mass overhaul (morale friendly).
+
+---
+
+## The Zoo Hypothesis
+
+**Layer:** 3
+
+**Fantasy:** We are not players; we are content.
+
+**Mechanic:** An advanced Alien race observes the colony. They reward "Interesting" behavior (War, Disaster, Art) with resources/tech and punish "Boring" stability.
+
+**Emergence:** You intentionally start a fire in the warehouse to entertain the aliens so they drop a care package of food.
+
+**Tension:** Peace/Stability (Boring/Punished) vs. Chaos/Drama (Rewarded).
+
+---
