@@ -1574,3 +1574,97 @@
 **Code reference:** `Overload` risk
 **Usage:**
 - "Surge-fear keeps me awake."
+
+
+---
+
+## Wild Child
+
+### feral / the wilding
+**Replaces:** wild child status
+**Code reference:** `Trait::Feral`
+**Usage:**
+- "The child has gone feral."
+- "Lost to the wilding."
+
+### wild-blood
+**Replaces:** recovered wild child
+**Usage:**
+- "He has wild-blood in him."
+- "You can't tame the wild-blood."
+
+## The Blob
+
+### the Sludge / the Jelly
+**Replaces:** blob entity
+**Code reference:** `Blob` entity
+**Usage:**
+- "The Sludge is moving."
+- "Burn the Jelly."
+
+### creeping-death
+**Replaces:** blob spread
+**Code reference:** `blob_spread_system`
+**Usage:**
+- "Watch out for the creeping-death."
+
+## Cybernetics
+
+### chrome / iron-skin
+**Replaces:** prosthetics
+**Code reference:** `Prosthetic` item
+**Usage:**
+- "He has too much chrome."
+- "Iron-skin doesn't feel the cold."
+
+### the cut
+**Replaces:** surgery
+**Code reference:** `AssignmentType::Surgery`
+**Usage:**
+- "Going under the cut."
+- "Survived the cut."
+
+### metal-sickness
+**Replaces:** social penalty / rejection
+**Usage:**
+- "She has the metal-sickness."
+- "People avoid him—metal-sickness."
+
+## Heirloom Tech
+
+### old-blood
+**Replaces:** heirloom tool
+**Code reference:** `Heirloom` component
+**Usage:**
+- "Working with old-blood."
+- "That hammer is old-blood."
+
+### ancient-bones
+**Replaces:** ancient structures
+**Code reference:** `AncientStructure`
+**Usage:**
+- "Don't disturb the ancient-bones."
+- "The ancient-bones are humming."
+
+## Social Stratification
+
+### high-born / the Heights
+**Replaces:** elite class
+**Code reference:** `SocialClass::Elite`
+**Usage:**
+- "The high-born eat well."
+- "Trouble in the Heights."
+
+### low-born / the Dregs
+**Replaces:** labor class
+**Code reference:** `SocialClass::Labor`
+**Usage:**
+- "Just a low-born miner."
+- "Rumors from the Dregs."
+
+### the Climb
+**Replaces:** social promotion
+**Code reference:** Prestige gain
+**Usage:**
+- "He is making the Climb."
+- "The Climb is steep."

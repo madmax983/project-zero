@@ -2121,3 +2121,141 @@ What the mascot does.
 - brownout
 - pulse
 - spasm
+
+
+---
+
+## Wild Child Fragments
+
+### [FERAL_NAME]
+Names given to children found in the wild.
+
+- Wolf-Kin
+- No-Name
+- Lost-One
+- Void-Cub
+- Dust-Child
+- Wild-Seed
+- The Foundling
+
+### [WILD_ACTION]
+Behaviors of feral children.
+
+- hisses
+- bites
+- hides
+- watches
+- growls
+- steals food
+- mimics beasts
+
+---
+
+## Blob Fragments
+
+### [BLOB_NAME]
+Names for the Blob entity.
+
+- The Grey-Sludge
+- The Eater
+- Void-Jelly
+- The Creeping Rot
+- Star-Vomit
+- The Amorphous
+- Living-Oil
+
+### [BLOB_ACTION]
+What the Blob does.
+
+- surges
+- expands
+- digests
+- dissolves
+- ripples
+- consumes
+- pulses
+
+### [BLOB_DESCRIPTOR]
+Adjectives for the Blob.
+
+- hungry
+- mindless
+- relentless
+- acidic
+- viscous
+- unstoppable
+- oily
+
+---
+
+## Cybernetics Fragments
+
+### [PROSTHETIC_NAME]
+Flavor names for augmentations.
+
+- Iron-Arm
+- Void-Eye
+- Chrome-Skin
+- Star-Leg
+- Neural-Lace
+- Steel-Heart
+- Logic-Core
+
+### [SURGERY_OUTCOME]
+Results of cybernetic surgery.
+
+- integrated
+- accepted
+- rejected
+- fused
+- seated
+- locked
+
+---
+
+## Heirloom Fragments
+
+### [ANCIENT_STRUCTURE]
+Names for ancient tech buildings.
+
+- The Reactor
+- The Fabricator
+- The Core-Mind
+- The Star-Forge
+- The Void-Lens
+- The Old Engine
+
+### [LEGENDARY_TOOL]
+Names for heirloom tools.
+
+- Stone-Biter
+- Star-Slicer
+- Void-Hammer
+- The Unbreaking
+- Iron-Will
+- Deep-Singer
+
+---
+
+## Social Stratification Fragments
+
+### [CLASS_NAME]
+Names for social classes.
+
+- The High-Born
+- The Low-Born
+- The Middle-Step
+- The Elite
+- The Labor
+- The Core-Circle
+- The Rim-Dwellers
+
+### [FRICTION_SOURCE]
+Reasons for class conflict.
+
+- better rations
+- softer beds
+- cleaner air
+- lighter work
+- hoarded tech
+- secret meetings
