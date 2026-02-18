@@ -26,6 +26,8 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `139` Cryo-Stasis Vaults — `specs/139-cryo-stasis.md`
 - [ ] `144` Graffiti and Signage — `specs/144-graffiti-and-signage.md`
 - [ ] `147` Secret Societies — `specs/147-secret-societies.md`
+- [ ] `153` Geological Instability — `specs/153-geological-instability.md`
+- [ ] `154` Named Locations — `specs/154-named-locations.md`
 
 ## MVP — Layer 2: System Simulation
 
