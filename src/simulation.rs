@@ -99,6 +99,8 @@ pub fn build_simulation_schedule() -> Schedule {
         update_event_buffer::<crate::layer1::energy::GridOverloadEvent>,
         update_event_buffer::<crate::layer1::hazards::AmputationEvent>,
         update_event_buffer::<crate::layer1::geology::GeologicalEvent>,
+        update_event_buffer::<crate::layer1::society::InvestigationEvent>,
+        update_event_buffer::<crate::layer1::society::SuppressSocietyEvent>,
     ));
 
     // --- AI Decision Chain (GPU compute) ---
@@ -334,9 +336,16 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::graffiti::graffiti_placement_system.after(death_system),
         dream_system.after(death_system),
         cleanup_dream_marker_system.after(dream_system),
+    ));
+
+    schedule.add_systems((
         check_milestones_system.after(death_system),
         crate::layer1::rumor::generate_rumor_system.after(death_system),
         crate::layer1::rumor::exchange_rumors_system.after(death_system),
+        crate::layer1::society::form_societies_system.after(death_system),
+        crate::layer1::society::society_meeting_system.after(death_system),
+        crate::layer1::society::investigation_handler_system.after(death_system),
+        crate::layer1::society::suppression_handler_system.after(death_system),
         crate::layer1::funeral::grief_system.after(death_system),
         crate::layer1::unrest::check_mental_break_system.after(decay_needs_system),
         check_stress_breakdown_system.after(decay_needs_system),

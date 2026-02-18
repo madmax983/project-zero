@@ -44,7 +44,6 @@ use std::io::{self, BufRead, Write};
 fn main() {
     let mut world = setup_world_with_config(SetupConfig {
         headless: true,
-        ..Default::default()
     });
     *world.resource_mut::<GameState>() = GameState::Running;
 
@@ -268,7 +267,7 @@ fn print_status(world: &mut World) {
     table.add_row(vec![
         Cell::new("Resources").fg(Color::Yellow),
         Cell::new("Food"),
-        Cell::new(format!("{:.1}", food)).fg(if food < 20.0 {
+        Cell::new(format!("{food:.1}")).fg(if food < 20.0 {
             Color::Red
         } else {
             Color::Green
@@ -277,12 +276,12 @@ fn print_status(world: &mut World) {
     table.add_row(vec![
         Cell::new(""),
         Cell::new("Wood"),
-        Cell::new(format!("{:.1}", wood)),
+        Cell::new(format!("{wood:.1}")),
     ]);
     table.add_row(vec![
         Cell::new(""),
         Cell::new("Stone"),
-        Cell::new(format!("{:.1}", stone)),
+        Cell::new(format!("{stone:.1}")),
     ]);
 
     table.add_row(vec![
