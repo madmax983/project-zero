@@ -1045,6 +1045,7 @@ fn process_single_worker(
         handle_post_work_effects(
             world,
             pop_entity,
+            designation_entity,
             designation_type,
             action_type,
             tool_entity_opt,
@@ -1347,6 +1348,7 @@ fn execute_jury_rig(world: &mut World, designation_entity: Entity) -> bool {
 fn handle_post_work_effects(
     world: &mut World,
     pop_entity: Entity,
+    designation_entity: Entity,
     designation_type: DesignationType,
     action_type: ActionType,
     tool_entity_opt: Option<Entity>,
@@ -1360,7 +1362,28 @@ fn handle_post_work_effects(
         }
     }
 
-    handle_workplace_hazards(world, pop_entity, action_type);
+    // Fetch structure if designation targets one
+    let structure_opt = if world
+        .get::<crate::layer1::structure::Structure>(designation_entity)
+        .is_some()
+    {
+        world
+            .get::<crate::layer1::structure::Structure>(designation_entity)
+            .cloned() // Clone to avoid borrow issues
+    } else {
+        None
+    };
+
+    // Fetch skills
+    let skills = world.get::<Skills>(pop_entity).cloned().unwrap_or_default();
+
+    handle_workplace_hazards(
+        world,
+        pop_entity,
+        action_type,
+        structure_opt.as_ref(),
+        &skills,
+    );
 
     // Handle tool durability
     if let Some(tool_entity) = tool_entity_opt {

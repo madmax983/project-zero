@@ -2,11 +2,11 @@
 //!
 //! Handles base automation and rogue AI mechanics.
 
-use bevy_ecs::prelude::*;
-use crate::layer1::building::{Building, BuildingType};
-use crate::layer1::energy::{PowerConsumer, Battery};
 use crate::layer1::access_control::{AccessControl, AccessMode};
+use crate::layer1::building::{Building, BuildingType};
+use crate::layer1::energy::{Battery, PowerConsumer};
 use crate::layer1::structure::Structure;
+use bevy_ecs::prelude::*;
 use rand::Rng;
 
 /// Component for the AI Core building.
@@ -121,7 +121,7 @@ fn is_low_priority(b: BuildingType) -> bool {
         BuildingType::Statue |
         BuildingType::FlowerBed |
         BuildingType::Housing // Maybe housing lights?
-        // Note: Lamp, Sign, Arcade from spec don't exist yet
+                              // Note: Lamp, Sign, Arcade from spec don't exist yet
     )
 }
 
@@ -131,19 +131,23 @@ fn is_external_door(b: BuildingType) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::building::{Building, BuildingType};
-    use crate::layer1::energy::{PowerConsumer, Battery};
-    use crate::layer1::structure::Structure;
     use crate::layer1::access_control::{AccessControl, AccessMode};
     use crate::layer1::ai_core::{AICore, RaidDetected, ai_automation_system, ai_rogue_system};
+    use crate::layer1::building::{Building, BuildingType};
+    use crate::layer1::energy::{Battery, PowerConsumer};
+    use crate::layer1::structure::Structure;
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_ai_core_building_type() {
         let b = BuildingType::AICore;
         assert_eq!(b.label(), "AI Core");
         // Ensure it's constructible and has high cost
-        assert!(b.cost(crate::layer1::building::MaterialType::default()).metal > 40.0); // Cost is 50.0
+        assert!(
+            b.cost(crate::layer1::building::MaterialType::default())
+                .metal
+                > 40.0
+        ); // Cost is 50.0
     }
 
     #[test]
@@ -152,8 +156,13 @@ mod tests {
 
         // Spawn AI Core
         world.spawn((
-            Building { building_type: BuildingType::AICore },
-            AICore { automation_enabled: true, ..Default::default() },
+            Building {
+                building_type: BuildingType::AICore,
+            },
+            AICore {
+                automation_enabled: true,
+                ..Default::default()
+            },
             Structure::default(), // Healthy
         ));
 
@@ -165,16 +174,32 @@ mod tests {
         });
 
         // Spawn Low Priority Consumer (e.g., Tavern)
-        let lamp = world.spawn((
-            Building { building_type: BuildingType::Tavern }, // Assume Tavern is low priority
-            PowerConsumer { active: true, demand: 1.0, ..Default::default() },
-        )).id();
+        let lamp = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Tavern,
+                }, // Assume Tavern is low priority
+                PowerConsumer {
+                    active: true,
+                    demand: 1.0,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         // Spawn High Priority Consumer (e.g., Life Support)
-        let life_support = world.spawn((
-            Building { building_type: BuildingType::LifeSupport },
-            PowerConsumer { active: true, demand: 10.0, ..Default::default() },
-        )).id();
+        let life_support = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::LifeSupport,
+                },
+                PowerConsumer {
+                    active: true,
+                    demand: 10.0,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         // Run System
         let mut schedule = Schedule::default();
@@ -193,16 +218,28 @@ mod tests {
 
         // Spawn AI Core
         world.spawn((
-            Building { building_type: BuildingType::AICore },
-            AICore { automation_enabled: true, ..Default::default() },
+            Building {
+                building_type: BuildingType::AICore,
+            },
+            AICore {
+                automation_enabled: true,
+                ..Default::default()
+            },
             Structure::default(),
         ));
 
         // Spawn External Door (Gate)
-        let gate = world.spawn((
-            Building { building_type: BuildingType::Gate },
-            AccessControl { mode: AccessMode::Public, ..Default::default() },
-        )).id();
+        let gate = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Gate,
+                },
+                AccessControl {
+                    mode: AccessMode::Public,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         // Trigger Raid
         world.insert_resource(RaidDetected { active: true });
@@ -213,7 +250,10 @@ mod tests {
         schedule.run(&mut world);
 
         // Assert Gate is locked down
-        assert_eq!(world.get::<AccessControl>(gate).unwrap().mode, AccessMode::Lockdown);
+        assert_eq!(
+            world.get::<AccessControl>(gate).unwrap().mode,
+            AccessMode::Lockdown
+        );
     }
 
     #[test]
@@ -221,11 +261,21 @@ mod tests {
         let mut world = World::new();
 
         // Spawn Damaged AI Core (< 20% HP)
-        let ai = world.spawn((
-            Building { building_type: BuildingType::AICore },
-            AICore { rogue: false, ..Default::default() },
-            Structure { current_hp: 10.0, max_hp: 100.0 },
-        )).id();
+        let ai = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::AICore,
+                },
+                AICore {
+                    rogue: false,
+                    ..Default::default()
+                },
+                Structure {
+                    current_hp: 10.0,
+                    max_hp: 100.0,
+                },
+            ))
+            .id();
 
         // Run System
         let mut schedule = Schedule::default();
@@ -242,16 +292,28 @@ mod tests {
 
         // Spawn Rogue AI
         world.spawn((
-            Building { building_type: BuildingType::AICore },
-            AICore { rogue: true, ..Default::default() },
+            Building {
+                building_type: BuildingType::AICore,
+            },
+            AICore {
+                rogue: true,
+                ..Default::default()
+            },
             Structure::default(),
         ));
 
         // Spawn internal door
-        let door = world.spawn((
-            Building { building_type: BuildingType::Housing },
-            AccessControl { mode: AccessMode::Public, ..Default::default() },
-        )).id();
+        let door = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Housing,
+                },
+                AccessControl {
+                    mode: AccessMode::Public,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         // Run System (Mock RNG to force action)
         let mut schedule = Schedule::default();

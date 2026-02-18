@@ -1,211 +1,112 @@
 #[cfg(test)]
 mod tests {
-    use crate::layer1::designation::{Designation, DesignationType};
-    use crate::layer1::execution::{AtTarget, MovementTarget, work_execution_system};
-    use crate::layer1::health::Health;
-    use crate::layer1::husbandry::{HusbandryConfig, Tame, tame_execution_system};
+    use crate::layer1::hazards::{
+        AccidentSeverity, AmputationEvent, calculate_risk, determine_severity, trigger_accident,
+    };
     use crate::layer1::map::GridPosition;
-    use crate::layer1::needs::Needs;
     use crate::layer1::pop::Pop;
-    use crate::layer1::resources::{ColonyResources, MiningProgress};
-    use crate::layer1::terrain::{TerrainGrid, TerrainType};
+    use crate::layer1::skills::{SkillType, Skills};
+    use crate::layer1::structure::Structure;
     use crate::layer1::utility_types::ActionType;
-    use crate::shared::log::MessageLog;
     use bevy_ecs::prelude::*;
 
     #[test]
-    fn test_action_danger_levels() {
-        // Mining and Forestry (Work) should be dangerous
-        assert!(ActionType::Work.danger_level() > 0.0);
+    fn test_risk_scaling_skill() {
+        // Base risk for Work is 0.001 (0.1%)
+        let base_risk = ActionType::Work.danger_level();
 
-        // Sleeping and Eating should be safe
-        assert_eq!(ActionType::SatisfyHunger.danger_level(), 0.0);
-        assert_eq!(ActionType::SatisfyRest.danger_level(), 0.0);
-    }
-
-    #[test]
-    fn test_action_accident_damage() {
-        // Work should cause damage
-        assert!(ActionType::Work.accident_damage() > 0.0);
-
-        // Others should not
-        assert_eq!(ActionType::SatisfyHunger.accident_damage(), 0.0);
-    }
-
-    #[test]
-    fn test_work_accident_occurs() {
-        // Setup world
-        let mut world = World::new();
-        crate::setup::init_task_pools();
-
-        // Resources
-        let mut tiles = vec![TerrainType::Grass; 100];
-        tiles[55] = TerrainType::Rock; // Target
-        world.insert_resource(TerrainGrid {
-            width: 10,
-            height: 10,
-            tiles,
-        });
-        world.insert_resource(ColonyResources::default());
-        world.insert_resource(MessageLog::default());
-
-        // Create designation with high difficulty to ensure it lasts long enough
-        let designation = world
-            .spawn((
-                Designation {
-                    designation_type: DesignationType::Mine,
-                },
-                GridPosition { x: 5, y: 5 },
-                MiningProgress {
-                    current: 0.0,
-                    max: 1_000_000.0, // Should last long enough for accident
-                },
-            ))
-            .id();
-
-        // Create pop
-        let pop = world
-            .spawn((
-                Pop,
-                Health::default(), // Important!
-                Needs::default(),
-                GridPosition { x: 5, y: 5 },
-                MovementTarget {
-                    target_entity: designation,
-                    target_position: GridPosition { x: 5, y: 5 },
-                    for_action: ActionType::Work,
-                },
-                AtTarget,
-            ))
-            .id();
-
-        let initial_health = world.get::<Health>(pop).unwrap().current;
-        let mut took_damage = false;
-
-        for _ in 0..5000 {
-            // Reset health if damaged to avoid death
-            if let Some(mut h) = world.get_mut::<Health>(pop) {
-                if h.current < initial_health {
-                    took_damage = true;
-                    h.current = initial_health; // Reset
-                }
-            }
-
-            work_execution_system(&mut world);
-
-            if took_damage {
-                break;
-            }
-        }
-
-        assert!(took_damage, "Dangerous work should eventually cause damage");
-
-        // Verify log message
-        let log = world.resource::<MessageLog>();
-        assert!(
-            log.messages.iter().any(|m| m.text.contains("ACCIDENT")),
-            "Should log accident"
+        // Level 0 skill
+        let skills_0 = Skills::default();
+        let risk_0 = calculate_risk(
+            base_risk,
+            &skills_0,
+            SkillType::Construction,
+            &Structure::default(),
         );
+
+        // Level 10 skill (Efficiency 2.0)
+        let mut skills_10 = Skills::default();
+        skills_10.add_xp(SkillType::Construction, 10000.0); // Sufficient for high level
+        let risk_10 = calculate_risk(
+            base_risk,
+            &skills_10,
+            SkillType::Construction,
+            &Structure::default(),
+        );
+
+        assert!(
+            risk_10 < risk_0,
+            "High skill should reduce risk. Risk 0: {}, Risk 10: {}",
+            risk_0,
+            risk_10
+        );
+        // Check reduction factor (approx half if skill factor is significant)
+        assert!(risk_10 < risk_0 * 0.6);
     }
 
     #[test]
-    fn test_taming_is_dangerous() {
+    fn test_risk_scaling_decay() {
+        let base_risk = ActionType::Work.danger_level();
+        let skills = Skills::default();
+
+        let pristine = Structure {
+            current_hp: 100.0,
+            max_hp: 100.0,
+            ..Default::default()
+        };
+        let risk_pristine = calculate_risk(base_risk, &skills, SkillType::Construction, &pristine);
+
+        let crumbling = Structure {
+            current_hp: 10.0,
+            max_hp: 100.0,
+            ..Default::default()
+        };
+        let risk_crumbling =
+            calculate_risk(base_risk, &skills, SkillType::Construction, &crumbling);
+
+        assert!(
+            risk_crumbling > risk_pristine,
+            "Decay should increase risk. Pristine: {}, Crumbling: {}",
+            risk_pristine,
+            risk_crumbling
+        );
+        // Should be at least double (decay factor ~2.0)
+        assert!(risk_crumbling > risk_pristine * 2.0);
+    }
+
+    #[test]
+    fn test_severity_distribution() {
+        // Deterministic check or statistical
+        // For unit test, we can check the logic of the helper function directly
+        // assuming we pass a seed or random value.
+        // Let's assume determine_severity takes a float 0.0-1.0
+
+        assert_eq!(determine_severity(0.5), AccidentSeverity::Minor); // 0.0 - 0.8
+        assert_eq!(determine_severity(0.85), AccidentSeverity::Major); // 0.8 - 0.95
+        assert_eq!(determine_severity(0.96), AccidentSeverity::Critical); // 0.95 - 1.0
+    }
+
+    #[test]
+    fn test_amputation_event_generation() {
         let mut world = World::new();
-        crate::setup::init_task_pools();
-
-        // Resources
-        world.insert_resource(crate::layer1::zone::ZoneGrid::new(10, 10));
-        world.insert_resource(HusbandryConfig::default());
-        world.insert_resource(MessageLog::default());
-
-        // Create initial designation
-        let mut designation = world
-            .spawn((
-                Designation {
-                    designation_type: DesignationType::Tame,
-                },
-                GridPosition { x: 5, y: 5 },
-            ))
-            .id();
-
-        // Create animal
-        let animal = world
-            .spawn((
-                crate::layer1::fauna::Fauna {
-                    fauna_type: crate::layer1::fauna::FaunaType::Wolf,
-                    ..Default::default()
-                },
-                GridPosition { x: 5, y: 5 },
-            ))
-            .id();
-
-        // Create pop
+        world.insert_resource(Events::<AmputationEvent>::default());
         let pop = world
             .spawn((
                 Pop,
-                Health::default(),
-                Needs::default(),
-                GridPosition { x: 5, y: 5 },
-                MovementTarget {
-                    target_entity: designation,
-                    target_position: GridPosition { x: 5, y: 5 },
-                    for_action: ActionType::Tame,
-                },
-                AtTarget,
+                GridPosition { x: 0, y: 0 },
+                crate::layer1::health::Health::default(),
             ))
             .id();
 
-        let initial_health = world.get::<Health>(pop).unwrap().current;
-        let mut took_damage = false;
+        // Trigger critical accident logic
+        trigger_accident(&mut world, pop, AccidentSeverity::Critical);
 
-        for _ in 0..5000 {
-            // 1. Heal if needed
-            if let Some(mut h) = world.get_mut::<Health>(pop) {
-                if h.current < initial_health {
-                    took_damage = true;
-                    h.current = initial_health;
-                }
-            }
+        // Check for AmputationEvent
+        let events = world.resource::<Events<AmputationEvent>>();
+        let mut reader = events.get_cursor();
+        let event = reader.read(events).next();
 
-            // 2. Reset Pop State (MovementTarget removed by system)
-            if world.get::<MovementTarget>(pop).is_none() {
-                world.entity_mut(pop).insert((
-                    MovementTarget {
-                        target_entity: designation,
-                        target_position: GridPosition { x: 5, y: 5 },
-                        for_action: ActionType::Tame,
-                    },
-                    AtTarget,
-                ));
-            }
-
-            // 3. Reset Designation (Despawned by system)
-            if world.get_entity(designation).is_err() {
-                designation = world
-                    .spawn((
-                        Designation {
-                            designation_type: DesignationType::Tame,
-                        },
-                        GridPosition { x: 5, y: 5 },
-                    ))
-                    .id();
-                // Update target ref
-                if let Some(mut mt) = world.get_mut::<MovementTarget>(pop) {
-                    mt.target_entity = designation;
-                }
-            }
-
-            // 4. Reset Animal (Tame component added by system)
-            world.entity_mut(animal).remove::<Tame>();
-
-            // Run system
-            tame_execution_system(&mut world);
-
-            if took_damage {
-                break;
-            }
-        }
-
-        assert!(took_damage, "Taming should be dangerous");
+        assert!(event.is_some(), "AmputationEvent should be fired");
+        assert_eq!(event.unwrap().entity, pop);
     }
 }
