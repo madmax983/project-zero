@@ -4423,3 +4423,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Peace/Stability (Boring/Punished) vs. Chaos/Drama (Rewarded).
 
 ---
+
+## Subspace Currents
+
+**Layer:** 2
+
+**Fantasy:** The geography of space isn't empty; it has invisible winds you must sail.
+
+**Mechanic:** Invisible "Currents" on the system map push ships in specific directions. Going with the flow is fast and fuel-efficient. Going against it is slow and expensive. Currents shift seasonally.
+
+**Emergence:** The current shifts during your trade run. Your route is now upstream. Your economy collapses because fuel costs triple, stranding your fleet.
+
+**Tension:** Follow the current (easy but fixed path) or fight it (hard but direct)?
+
+---
+
+## Epigenetic Trauma
+
+**Layer:** 1
+
+**Fantasy:** The sins of the father are visited upon the son. A generation raised in fear is different.
+
+**Mechanic:** Children born to parents with high Stress or Trauma traits inherit "Phobias" or "Resiliences". The "Starvation Generation" produces children who are "Hoarders" (eat less, store more).
+
+**Emergence:** Your colony survives a brutal winter famine. The next generation of workers obsessively hides food under their beds, messing up your inventory counts but surviving the next famine easily.
+
+**Tension:** Protect the parents to protect the future, or burn them out for survival now?
+
+---
+
+## The Monuments of Failure
+
+**Layer:** 1
+
+**Fantasy:** We build on the bones of the past. A ruin is just a free wall.
+
+**Mechanic:** Destroyed buildings leave "Ruin" tiles that provide partial cover, storage, or materials. They lower Beauty but increase "History". You can refurbish them cheaper than building new, but they retain "Scars" (lower max HP).
+
+**Emergence:** You fight a desperate defense in the ruins of your old cafeteria. It becomes a legendary bunker. You decide never to rebuild it, leaving it as a war memorial.
+
+**Tension:** Rebuild (clean slate/cost) vs. Adapt (scars/history).
+
+---
+
+## Technological Orthodoxy
+
+**Layer:** 3
+
+**Fantasy:** Science is a religion, and you are a heretic.
+
+**Mechanic:** Civilizations adopt "Standard" tech protocols. Researching or using "Heretical" (unsafe, alien, or AI) tech causes diplomatic penalties with Orthodox civs.
+
+**Emergence:** You install AI cores to boost efficiency. The Galactic Council declares you a "Threat to Biological Life" and blockades you. You must prove your AI has a soul to rejoin the community.
+
+**Tension:** Power (Forbidden Tech) vs. Conformity (Diplomacy).
+
+---
