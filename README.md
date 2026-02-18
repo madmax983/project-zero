@@ -74,6 +74,18 @@ fn main() -> anyhow::Result<()> {
 
 See `examples/story_demo.rs` for a complete example.
 
+**Note:** This is the base narrative system. For the advanced "Oral Tradition" system (Nova feature), see below.
+
+### Oral Tradition (Nova Feature)
+
+The "Nova" feature (Oral Tradition) builds upon the base narrative system to create living legends that evolve in taverns. It is located in `scale::layer1::oral_tradition`.
+
+To use it, you must enable the `nova` feature:
+
+```bash
+cargo run --features nova
+```
+
 ### Headless Simulation
 
 To run the full simulation loop without a window or GPU (e.g. for servers or AI training):
