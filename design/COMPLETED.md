@@ -25,26 +25,48 @@ Features that have been fully implemented, tested, and merged.
 - [x] `020` Death & Burial — `specs/020-death-and-burial.md` — completed 2026-02-10
 - [x] `021` Vermin Infestations — `specs/021-vermin-infestations.md` — completed 2026-02-12
 - [x] `025` Hauling Logistics — `specs/025-hauling-logistics.md` — completed 2026-10-28
+- [x] `030` Tool Economy — `specs/030-tool-economy.md` — completed 2026-10-29
 - [x] `032` Entropy and Spoilage — `specs/032-entropy-spoilage.md` — completed 2026-02-14
 - [x] `033` Fire Propagation — `specs/033-fire-propagation.md` — completed 2026-10-28
 - [x] `038` Medical Care — `specs/038-medical-care.md` — completed 2026-10-28
 - [x] `041` Field Science — `specs/041-field-science.md` — completed 2026-10-28
+- [x] `042` Energy System — `specs/042-energy-system.md` — completed 2026-10-29
 - [x] `046` Notifications System — `specs/046-notifications-system.md` — completed 2026-03-31
 - [x] `047` Pop Relationships — `specs/047-pop-relationships.md` — completed 2026-02-17
+- [x] `049` Industrial Waste — `specs/049-industrial-waste.md` — completed 2026-10-31
 - [x] `054` Colony Edicts — `specs/054-colony-edicts.md` — completed 2026-10-28
+- [x] `055` Rumor Web — `specs/055-rumor-web.md` — completed 2026-10-31
 - [x] `056` Designated Zones — `specs/056-designated-zones.md` — completed 2026-02-20
 - [x] `058` Personal Tools — `specs/058-personal-tools.md` — completed 2026-02-09
 - [x] `060` Acoustic Simulation — `specs/060-acoustic-simulation.md` — completed 2026-10-27
 - [x] `063` Atmospheric Simulation — `specs/063-atmospheric-simulation.md` — completed 2026-03-01
 - [x] `067` Militia System — `specs/067-militia-system.md` — completed 2026-03-10
+- [x] `068` Pop Factions — `specs/068-pop-factions.md` — completed 2026-10-31
 - [x] `072` Justice System — `specs/072-justice-system.md` — completed 2026-03-15
+- [x] `075` Animal Husbandry — `specs/075-animal-husbandry.md` — completed 2026-10-30
 - [x] `078` The Old Guard — `specs/078-the-old-guard.md` — completed 2026-10-18
+- [x] `080` Planetary Quirks — `specs/080-planetary-quirks.md` — completed 2026-10-31
+- [x] `081` Sleepwalking — `specs/081-sleepwalking.md` — completed 2026-10-31
+- [x] `082` Cabin Fever — `specs/082-cabin-fever.md` — completed 2026-10-31
+- [x] `086` The Stowaway — `specs/086-the-stowaway.md` — completed 2026-10-31
+- [x] `090` Emotional Contagion — `specs/090-emotional-contagion.md` — completed 2026-10-31
 - [x] `091` The Inspector — `specs/091-the-inspector.md` — completed 2026-10-21
 - [x] `092` Antagonistic Flora — `specs/092-antagonistic-flora.md` — completed 2026-02-09
 - [x] `097` Social Tavern — `specs/097-social-tavern.md` — completed 2026-10-23
+- [x] `098` Medical Triage Policies — `specs/098-medical-triage.md` — completed 2026-10-31
+- [x] `103` Private Stashes — `specs/103-private-stashes.md` — completed 2026-10-31
+- [x] `104` Fuel Industry — `specs/104-fuel-industry.md` — completed 2026-10-31
+- [x] `106` Resource Purity — `specs/106-resource-purity.md` — completed 2026-10-31
 - [x] `107` Biocompatibility — `specs/107-biocompatibility.md` — completed 2026-10-27
+- [x] `109` Greenhouses — `specs/109-greenhouses.md` — completed 2026-10-31
+- [x] `110` Spontaneous Architecture — `specs/110-spontaneous-architecture.md` — completed 2026-10-31
+- [x] `111` Conveyor Logistics — `specs/111-conveyor-logistics.md` — completed 2026-10-31
 - [x] `112` Maintenance Debt — `specs/112-maintenance-debt.md` — completed 2026-10-27
 - [x] `113` Social Stratification — `specs/113-social-stratification.md` — completed 2026-10-27
+- [x] `114` Palette Fatigue — `specs/114-palette-fatigue.md` — completed 2026-10-31
+- [x] `115` The Overview Effect — `specs/115-observatory-effect.md` — completed 2026-10-31
+- [x] `117` Fuel Consumption — `specs/117-fuel-consumption.md` — completed 2026-10-31
+- [x] `118` Penal Labor — `specs/118-penal-labor.md` — completed 2026-10-31
 - [x] `119` Airlock and Pressure — `specs/119-airlock-and-pressure.md` — completed 2026-10-25
 - [x] `121` Hydroponics — `specs/121-hydroponics.md` — completed 2026-02-15
 - [x] `122` Retrograde Engineering — `specs/122-retrograde-engineering.md` — completed 2026-10-26
@@ -55,6 +77,7 @@ Features that have been fully implemented, tested, and merged.
 - [x] `128` Social Mimicry — `specs/128-social-mimicry.md` — completed 2026-02-15
 - [x] `129` The Colony Mascot — `specs/129-colony-mascot.md` — completed 2026-02-15
 - [x] `131` Bioluminescent Flora — `specs/131-bioluminescent-flora.md` — completed 2026-02-16
+- [x] `132` Equipment & Wear — `specs/132-equipment-and-wear.md` — completed 2026-10-31
 - [x] `134` Emergency Venting — `specs/134-emergency-venting.md` — completed 2026-02-16
 - [x] `135` Trash Cannon Defense — `specs/135-trash-cannon-defense.md` — completed 2026-02-16
 - [x] `136` Explosive Decompression — `specs/136-explosive-decompression.md` — completed 2026-02-16
@@ -63,19 +86,18 @@ Features that have been fully implemented, tested, and merged.
 - [x] `141` Colony Ship Cannibalization — `specs/141-colony-ship-cannibalization.md` — completed 2026-10-27
 - [x] `142` Biometric Lockouts — `specs/142-biometric-lockouts.md` — completed 2026-10-27
 - [x] `143` Data Physicality — `specs/143-data-physicality.md` — completed 2026-10-27
+- [x] `147` Secret Societies — `specs/147-secret-societies.md` — completed 2026-10-31
+- [x] `148` The Helpful AI — `specs/148-helpful-ai.md` — completed 2026-10-31
 - [x] `153` Geological Instability — `specs/153-geological-instability.md` — completed 2026-03-20
 - [x] `155` Advanced Workplace Hazards — `specs/155-advanced-hazards.md` — completed 2026-03-20
-- [x] `075` Animal Husbandry — `specs/075-animal-husbandry.md` — completed 2026-10-30
 
 ## MVP — Layer 2: System Simulation
 
 - [x] `094` System View Architecture — `specs/094-system-view.md` — completed 2026-10-27
-- [x] `145` Prototyping Phase — `specs/145-prototyping-phase.md` — completed 2026-02-17
-- [x] `INT-024` Integration: Items on Ground -> Vermin Growth — completed 2026-03-27
 - [x] `130` Social Debt — `specs/130-social-debt.md` — completed 2026-10-27
+- [x] `144` Graffiti and Signage — `specs/144-graffiti-and-signage.md` — completed 2026-10-27
+- [x] `145` Prototyping Phase — `specs/145-prototyping-phase.md` — completed 2026-02-17
 - [x] `151` Cybernetic Augmentation — `specs/151-cybernetic-augmentation.md` — completed 2026-02-17
 - [x] `154` Named Locations — `specs/154-named-locations.md` — completed 2026-10-27
-- [x] `144` Graffiti and Signage — `specs/144-graffiti-and-signage.md` — completed 2026-10-27
+- [x] `INT-024` Integration: Items on Ground -> Vermin Growth — completed 2026-03-27
 - [x] `INT-026` Integration: Amputation -> Cybernetics/Memory — completed 2026-02-18
-- [x] 030 Tool Economy — specs/030-tool-economy.md — completed 2026-10-29
-- [x] 042 Energy System — specs/042-energy-system.md — completed 2026-10-29
