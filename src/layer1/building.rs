@@ -42,7 +42,7 @@ use crate::layer1::trade::TradeDepot;
 use crate::layer1::water::{MAX_HYDRATION, WaterSource};
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
 use strum::IntoEnumIterator;
 use strum_macros::EnumIter;
 
@@ -774,6 +774,24 @@ pub struct BuildMode {
 /// Tracks which tiles have buildings (for placement validation).
 #[derive(Resource, Default)]
 pub struct OccupiedTiles(pub HashSet<(i32, i32)>);
+
+/// A spatial map of buildings for fast lookup (Pos -> Entity).
+#[derive(Resource, Default)]
+pub struct BuildingMap(pub HashMap<(i32, i32), Entity>);
+
+/// System to update the spatial building map.
+///
+/// This rebuilds the map every frame to ensure pathfinding has fresh data.
+/// It avoids iterating all entities during pathfinding calls.
+pub fn update_building_map_system(
+    mut map: ResMut<BuildingMap>,
+    query: Query<(Entity, &GridPosition), With<Building>>,
+) {
+    map.0.clear();
+    for (entity, pos) in query.iter() {
+        map.0.insert((pos.x, pos.y), entity);
+    }
+}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum PlacementError {

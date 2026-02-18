@@ -149,7 +149,7 @@ mod tests {
 
     #[test]
     fn test_pathfinding_integration() {
-        use crate::layer1::building::{Building, BuildingType, OccupiedTiles};
+        use crate::layer1::building::{Building, BuildingMap, BuildingType, OccupiedTiles};
         use crate::layer1::map::GridPosition;
         use crate::layer1::pathfinding::find_path_for_pop;
         use crate::layer1::terrain::{TerrainGrid, TerrainType};
@@ -163,6 +163,7 @@ mod tests {
             tiles,
         });
         world.insert_resource(OccupiedTiles::default());
+        world.insert_resource(BuildingMap::default());
 
         let pop = world.spawn(Pop).id();
 
@@ -202,6 +203,20 @@ mod tests {
             }, // Gate is an obstacle
         ));
         world.resource_mut::<OccupiedTiles>().0.insert((1, 0));
+
+        // Update BuildingMap
+        {
+            let mut query = world.query::<(Entity, &GridPosition, &Building)>();
+            let entries: Vec<_> = query
+                .iter(&world)
+                .map(|(e, pos, _)| ((pos.x, pos.y), e))
+                .collect();
+            let mut map = world.resource_mut::<BuildingMap>();
+            map.0.clear();
+            for (pos, e) in entries {
+                map.0.insert(pos, e);
+            }
+        }
 
         let path = find_path_for_pop(&world, (0, 0), (2, 0), pop);
         assert!(path.is_none(), "Path should be blocked by lockdown");

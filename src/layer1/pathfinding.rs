@@ -3,9 +3,8 @@ use std::cmp::Ordering;
 use std::collections::{BinaryHeap, HashMap};
 
 use crate::layer1::access_control::{AccessControl, AccessMode};
-use crate::layer1::building::{Building, BuildingType, OccupiedTiles};
+use crate::layer1::building::{Building, BuildingMap, BuildingType, OccupiedTiles};
 use crate::layer1::control::{DoorControl, DoorState};
-use crate::layer1::map::GridPosition;
 use crate::layer1::pop::Role;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 
@@ -13,8 +12,6 @@ struct AccessCredentials {
     entity: Entity,
     role: Option<Role>,
 }
-
-type BuildingMap = HashMap<(i32, i32), (BuildingType, Option<AccessControl>, Option<DoorControl>)>;
 
 /// Node for A* pathfinding.
 #[derive(Clone, Copy, PartialEq, Eq)]
@@ -99,16 +96,7 @@ fn find_path_internal(
 ) -> Option<Vec<(i32, i32)>> {
     let terrain = world.resource::<TerrainGrid>();
     let occupied = world.get_resource::<OccupiedTiles>();
-
-    // Optimization: Collect building data into a map for fast lookups
-    let mut building_map: BuildingMap = HashMap::new();
-    for entity in world.iter_entities() {
-        if let (Some(pos), Some(b)) = (entity.get::<GridPosition>(), entity.get::<Building>()) {
-            let access = entity.get::<AccessControl>().cloned();
-            let door = entity.get::<DoorControl>().copied();
-            building_map.insert((pos.x, pos.y), (b.building_type, access, door));
-        }
-    }
+    let building_map = world.resource::<BuildingMap>();
 
     let mut open_set = BinaryHeap::new();
     let mut came_from: HashMap<(i32, i32), (i32, i32)> = HashMap::new();
@@ -143,18 +131,13 @@ fn find_path_internal(
             // Check if walkable
             if !is_walkable(
                 next,
+                world,
                 terrain,
                 occupied,
-                &building_map,
+                building_map,
                 can_use_vents,
                 credentials,
-                next == end, // Ignore obstacle at target? Usually yes for "Interact", but for "MoveTo" maybe not.
-                             // Greedy movement in execution.rs checks adjacency.
-                             // find_path usually implies reaching the tile.
-                             // But if target is a Wall/Vent, we can't stand inside it unless we can pass through.
-                             // For Vermin -> Vent, they CAN pass through, so it is walkable.
-                             // For Pop -> Wall, they cannot.
-                             // So we should NOT ignore obstacle at target unless logic allows.
+                next == end,
             ) {
                 continue;
             }
@@ -190,8 +173,10 @@ const fn manhattan_distance(a: (i32, i32), b: (i32, i32)) -> i32 {
     (a.0 - b.0).abs() + (a.1 - b.1).abs()
 }
 
+#[allow(clippy::too_many_arguments, clippy::collapsible_if)]
 fn is_walkable(
     pos: (i32, i32),
+    world: &World,
     terrain: &TerrainGrid,
     occupied: Option<&OccupiedTiles>,
     building_map: &BuildingMap,
@@ -223,35 +208,40 @@ fn is_walkable(
     }
 
     // 3. Check Building Type
-    if let Some(&(building_type, ref access_opt, ref door_opt)) = building_map.get(&(x, y)) {
-        // Check Door Control first (physical state overrides)
-        if let Some(door) = door_opt {
-            match door.state {
-                DoorState::Locked => return false,
-                DoorState::Open => return true,
-                DoorState::Auto => { /* Continue to check AccessControl */ }
+    if let Some(&entity) = building_map.0.get(&(x, y)) {
+        if let Some(building) = world.get::<Building>(entity) {
+            let access_opt = world.get::<AccessControl>(entity);
+            let door_opt = world.get::<DoorControl>(entity);
+
+            // Check Door Control first (physical state overrides)
+            if let Some(door) = door_opt {
+                match door.state {
+                    DoorState::Locked => return false,
+                    DoorState::Open => return true,
+                    DoorState::Auto => { /* Continue to check AccessControl */ }
+                }
             }
-        }
 
-        if let Some(access) = access_opt {
-            return match access.mode {
-                AccessMode::Public => true,
-                AccessMode::Lockdown => false,
-                AccessMode::Restricted => credentials.is_some_and(|creds| {
-                    access.allowed_pops.contains(&creds.entity)
-                        || creds
-                            .role
-                            .is_some_and(|r| access.allowed_roles.contains(&r))
-                }),
-            };
-        }
+            if let Some(access) = access_opt {
+                return match access.mode {
+                    AccessMode::Public => true,
+                    AccessMode::Lockdown => false,
+                    AccessMode::Restricted => credentials.is_some_and(|creds| {
+                        access.allowed_pops.contains(&creds.entity)
+                            || creds
+                                .role
+                                .is_some_and(|r| access.allowed_roles.contains(&r))
+                    }),
+                };
+            }
 
-        if building_type == BuildingType::Vent && can_use_vents {
-            return true;
-        }
+            if building.building_type == BuildingType::Vent && can_use_vents {
+                return true;
+            }
 
-        if building_type.is_obstacle() {
-            return false;
+            if building.building_type.is_obstacle() {
+                return false;
+            }
         }
     }
 
@@ -276,7 +266,22 @@ mod tests {
             tiles,
         });
         world.insert_resource(OccupiedTiles::default());
+        world.insert_resource(BuildingMap::default());
         world
+    }
+
+    fn update_map(world: &mut World) {
+        let mut query = world.query::<(Entity, &GridPosition, &Building)>();
+        let entries: Vec<_> = query
+            .iter(world)
+            .map(|(e, pos, _)| ((pos.x, pos.y), e))
+            .collect();
+
+        let mut map = world.resource_mut::<BuildingMap>();
+        map.0.clear();
+        for (pos, e) in entries {
+            map.0.insert(pos, e);
+        }
     }
 
     #[test]
@@ -302,6 +307,7 @@ mod tests {
             GridPosition { x: 1, y: 0 },
         ));
         world.resource_mut::<OccupiedTiles>().0.insert((1, 0));
+        update_map(&mut world);
 
         // Pop at (0, 0) trying to move to (2, 0)
         // Check pathfinding
@@ -367,6 +373,7 @@ mod tests {
             GridPosition { x: 1, y: 1 },
         ));
         world.resource_mut::<OccupiedTiles>().0.insert((1, 1));
+        update_map(&mut world);
 
         let path = find_path(&world, (0, 1), (2, 1));
         assert!(
@@ -405,6 +412,7 @@ mod tests {
             GridPosition { x: 1, y: 1 },
         ));
         world.resource_mut::<OccupiedTiles>().0.insert((1, 1));
+        update_map(&mut world);
 
         // Vermin at (0, 1)
         // Check pathfinding with Vermin capability
@@ -449,6 +457,7 @@ mod tests {
             },
         ));
         world.resource_mut::<OccupiedTiles>().0.insert((1, 1));
+        update_map(&mut world);
 
         // Try to path from (0, 1) to (2, 1)
         let path = find_path(&world, (0, 1), (2, 1));
@@ -496,6 +505,7 @@ mod tests {
             },
         ));
         world.resource_mut::<OccupiedTiles>().0.insert((1, 1));
+        update_map(&mut world);
 
         let pop = world.spawn(Pop).id();
 
