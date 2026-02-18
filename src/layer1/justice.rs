@@ -44,11 +44,17 @@ pub struct Inmate {
 ///
 /// Currently detects:
 /// *   `MentalBreakType::Vandalize`: Immediate 1.0 severity.
+///
+/// Pops located in [`ZoneType::Sanctuary`] are ignored.
 pub fn check_crime_system(
     mut commands: Commands,
-    query: Query<(Entity, &MentalState), Without<Wanted>>,
+    query: Query<(Entity, &MentalState, &GridPosition), Without<Wanted>>,
+    zone_grid: Res<ZoneGrid>,
 ) {
-    for (entity, state) in query.iter() {
+    for (entity, state, pos) in query.iter() {
+        if zone_grid.get(pos.x, pos.y) == ZoneType::Sanctuary {
+            continue;
+        }
         if matches!(state, MentalState::Broken(MentalBreakType::Vandalize)) {
             commands.entity(entity).insert(Wanted { severity: 1.0 });
         }
@@ -58,16 +64,22 @@ pub fn check_crime_system(
 /// Evaluates the utility of performing a Warden action.
 ///
 /// Finds the nearest [`Wanted`] criminal and returns a score based on distance.
+/// Ignores criminals in [`ZoneType::Sanctuary`].
 /// Used by CPU-side logic (tests/utility AI overrides).
 #[must_use]
 pub fn evaluate_warden_action(
     guard_pos: &GridPosition,
     criminals: &[PositionProxy],
+    zone_grid: &ZoneGrid,
 ) -> Option<(f32, Entity)> {
     let mut best_target = None;
     let mut min_dist = i32::MAX;
 
     for criminal in criminals {
+        if zone_grid.get(criminal.pos.x, criminal.pos.y) == ZoneType::Sanctuary {
+            continue;
+        }
+
         let dist = manhattan_distance(guard_pos, &criminal.pos);
         if dist < min_dist {
             min_dist = dist;
@@ -209,6 +221,7 @@ mod tests {
             .spawn((
                 Pop,
                 MentalState::Broken(MentalBreakType::Vandalize),
+                GridPosition { x: 0, y: 0 },
                 // Not yet Wanted
             ))
             .id();
@@ -237,7 +250,11 @@ mod tests {
         }];
 
         // Run evaluation logic (simulated)
-        let result = evaluate_warden_action(&GridPosition { x: 0, y: 0 }, &criminals);
+        let result = evaluate_warden_action(
+            &GridPosition { x: 0, y: 0 },
+            &criminals,
+            &world.resource::<ZoneGrid>(),
+        );
 
         // Assert result
         assert!(result.is_some());

@@ -84,6 +84,7 @@ use crate::layer1::utility_eval_types::{
 pub use crate::layer1::utility_types::{
     ActionType, PopAction, StartPlan, UtilityConfig, UtilityWeights, manhattan_distance,
 };
+use crate::layer1::zone::ZoneGrid;
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 
@@ -262,7 +263,8 @@ fn evaluate_group_work(
 
     // Evaluate Warden
     if !is_penal {
-        if let Some((utility, target)) = evaluate_warden_action(&pop_pos, &buffer.wanted_criminals)
+        if let Some((utility, target)) =
+            evaluate_warden_action(&pop_pos, &buffer.wanted_criminals, context.zone_grid)
         {
             evaluator.consider(ActionType::Warden, utility, Some(target));
         }
@@ -682,12 +684,14 @@ pub fn evaluate_actions_system(world: &mut World) {
     let factions_data = world
         .get_resource::<crate::layer1::factions::Factions>()
         .map(|f| f.map.clone());
+    let zone_grid = world.resource::<ZoneGrid>().clone();
 
     let context = WorldContext {
         resources: &resources,
         cycle: &cycle,
         taboo: &taboo,
         factions: factions_data.as_ref(),
+        zone_grid: &zone_grid,
     };
 
     // 3. Populate Proxies (The Optimization)
@@ -851,6 +855,7 @@ mod tests {
         world.insert_resource(ColonyResources::default());
         world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
         world.insert_resource(crate::layer1::taboo::TabooState::default());
+        world.insert_resource(crate::layer1::zone::ZoneGrid::new(10, 10));
 
         // Starving pop currently idle
         let pop = world
@@ -903,6 +908,7 @@ mod tests {
         world.insert_resource(ColonyResources::default());
         world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
         world.insert_resource(crate::layer1::taboo::TabooState::default());
+        world.insert_resource(crate::layer1::zone::ZoneGrid::new(10, 10));
 
         let pop = world
             .spawn((
@@ -1127,6 +1133,7 @@ mod tests {
         world.insert_resource(ColonyResources::default());
         world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
         world.insert_resource(crate::layer1::taboo::TabooState::default());
+        world.insert_resource(crate::layer1::zone::ZoneGrid::new(10, 10));
 
         let pop = world
             .spawn((
@@ -1274,6 +1281,7 @@ mod tests {
         world.insert_resource(ColonyResources::default());
         world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
         world.insert_resource(crate::layer1::taboo::TabooState::default());
+        world.insert_resource(crate::layer1::zone::ZoneGrid::new(10, 10));
 
         // Inmate with PenalLabor
         let inmate = world

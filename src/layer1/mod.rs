@@ -447,3 +447,5 @@ pub use geology::*;
 pub mod oral_tradition;
 #[cfg(feature = "nova")]
 pub use oral_tradition::*;
+#[cfg(test)]
+mod justice_tests;

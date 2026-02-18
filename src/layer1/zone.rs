@@ -32,10 +32,12 @@ pub enum ZoneType {
     Pasture,
     /// Penal zone for forced labor.
     Penal,
+    /// Sanctuary district where laws are ignored.
+    Sanctuary,
 }
 
 /// Resource storing the grid of zones.
-#[derive(Resource)]
+#[derive(Resource, Clone)]
 pub struct ZoneGrid {
     /// Flattened grid data.
     pub grid: Vec<ZoneType>,
