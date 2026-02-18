@@ -34,6 +34,12 @@ pub enum Trait {
     Pyromaniac,
     /// Raised in the wild (+20% Move Speed, -Intellectual).
     Feral,
+    /// Optimistic outlook (+Mood from Observatory).
+    Optimist,
+    /// Curious nature (+Knowledge/Mood from Observatory).
+    Curious,
+    /// Traditional values (-Mood from Observatory).
+    Traditionalist,
 }
 
 impl Trait {
@@ -54,6 +60,9 @@ impl Trait {
             Self::WeakImmunity => "Weak Immunity",
             Self::Pyromaniac => "Pyromaniac",
             Self::Feral => "Feral",
+            Self::Optimist => "Optimist",
+            Self::Curious => "Curious",
+            Self::Traditionalist => "Traditionalist",
         }
     }
 }
@@ -87,6 +96,9 @@ impl Traits {
             Trait::NativeBorn,
             Trait::WeakImmunity,
             Trait::Pyromaniac,
+            Trait::Optimist,
+            Trait::Curious,
+            Trait::Traditionalist,
         ];
 
         while set.len() < count {
@@ -115,6 +127,18 @@ impl Traits {
                 continue;
             }
             if t == Trait::WeakImmunity && set.contains(&Trait::NativeBorn) {
+                continue;
+            }
+            if t == Trait::Optimist && set.contains(&Trait::Anxious) {
+                continue;
+            }
+            if t == Trait::Anxious && set.contains(&Trait::Optimist) {
+                continue;
+            }
+            if t == Trait::Curious && set.contains(&Trait::Traditionalist) {
+                continue;
+            }
+            if t == Trait::Traditionalist && set.contains(&Trait::Curious) {
                 continue;
             }
 
