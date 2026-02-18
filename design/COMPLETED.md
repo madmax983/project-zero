@@ -29,6 +29,7 @@ Features that have been fully implemented, tested, and merged.
 - [x] `033` Fire Propagation — `specs/033-fire-propagation.md` — completed 2026-10-28
 - [x] `038` Medical Care — `specs/038-medical-care.md` — completed 2026-10-28
 - [x] `041` Field Science — `specs/041-field-science.md` — completed 2026-10-28
+- [x] `046` Notifications System — `specs/046-notifications-system.md` — completed 2026-03-31
 - [x] `047` Pop Relationships — `specs/047-pop-relationships.md` — completed 2026-02-17
 - [x] `054` Colony Edicts — `specs/054-colony-edicts.md` — completed 2026-10-28
 - [x] `056` Designated Zones — `specs/056-designated-zones.md` — completed 2026-02-20

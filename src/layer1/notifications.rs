@@ -43,15 +43,40 @@ impl NotificationQueue {
     const MAX_NOTIFICATIONS: usize = 10;
 
     /// Adds a notification with default expiration (300 ticks).
-    pub fn add(&mut self, text: String, severity: NotificationSeverity, current_tick: u64) -> u64 {
+    pub fn add(
+        &mut self,
+        text: impl Into<String>,
+        severity: NotificationSeverity,
+        current_tick: u64,
+    ) -> u64 {
         // Default expiration: 300 ticks (30s at 10TPS)
         self.add_with_expiration(text, severity, current_tick, current_tick + 300)
+    }
+
+    /// Adds an informational notification.
+    pub fn add_info(&mut self, text: impl Into<String>, current_tick: u64) -> u64 {
+        self.add(text, NotificationSeverity::Info, current_tick)
+    }
+
+    /// Adds a success notification.
+    pub fn add_success(&mut self, text: impl Into<String>, current_tick: u64) -> u64 {
+        self.add(text, NotificationSeverity::Success, current_tick)
+    }
+
+    /// Adds a warning notification.
+    pub fn add_warning(&mut self, text: impl Into<String>, current_tick: u64) -> u64 {
+        self.add(text, NotificationSeverity::Warning, current_tick)
+    }
+
+    /// Adds an error notification.
+    pub fn add_error(&mut self, text: impl Into<String>, current_tick: u64) -> u64 {
+        self.add(text, NotificationSeverity::Error, current_tick)
     }
 
     /// Adds a notification with explicit expiration.
     pub fn add_with_expiration(
         &mut self,
-        text: String,
+        text: impl Into<String>,
         severity: NotificationSeverity,
         current_tick: u64,
         expires_at: u64,
@@ -61,7 +86,7 @@ impl NotificationQueue {
 
         let notification = Notification {
             id,
-            text,
+            text: text.into(),
             severity,
             created_at: current_tick,
             expires_at: Some(expires_at),
@@ -179,5 +204,34 @@ mod tests {
         assert_eq!(queue.active.len(), 1);
         queue.dismiss(id);
         assert!(queue.active.is_empty());
+    }
+
+    #[test]
+    fn test_convenience_methods() {
+        let mut queue = NotificationQueue::default();
+        let tick = 100;
+
+        let id_info = queue.add_info("Info", tick);
+        let id_success = queue.add_success("Success", tick);
+        let id_warning = queue.add_warning("Warning", tick);
+        let id_error = queue.add_error("Error", tick);
+
+        assert_eq!(queue.active.len(), 4);
+
+        let n_info = queue.active.iter().find(|n| n.id == id_info).unwrap();
+        assert_eq!(n_info.text, "Info");
+        assert_eq!(n_info.severity, NotificationSeverity::Info);
+
+        let n_success = queue.active.iter().find(|n| n.id == id_success).unwrap();
+        assert_eq!(n_success.text, "Success");
+        assert_eq!(n_success.severity, NotificationSeverity::Success);
+
+        let n_warning = queue.active.iter().find(|n| n.id == id_warning).unwrap();
+        assert_eq!(n_warning.text, "Warning");
+        assert_eq!(n_warning.severity, NotificationSeverity::Warning);
+
+        let n_error = queue.active.iter().find(|n| n.id == id_error).unwrap();
+        assert_eq!(n_error.text, "Error");
+        assert_eq!(n_error.severity, NotificationSeverity::Error);
     }
 }
