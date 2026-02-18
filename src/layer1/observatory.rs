@@ -1,6 +1,8 @@
 use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::morale::{MoodModifier, Morale};
 use crate::layer1::resources::ColonyResources;
+use crate::layer1::traits::{Trait, Traits};
+use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
 use rand::Rng;
 
@@ -15,13 +17,14 @@ pub struct Observatory;
 ///    - 50% "Cosmic Inspiration" (+0.15)
 ///    - 50% "Existential Dread" (-0.10)
 pub fn process_observe_system(
-    mut pops: Query<(Entity, &AssignedTo, &mut Morale)>,
+    mut pops: Query<(Entity, &AssignedTo, &mut Morale, Option<&Traits>)>,
     observatories: Query<&Observatory>,
     mut resources: ResMut<ColonyResources>,
+    mut log: Option<ResMut<MessageLog>>,
 ) {
     let mut rng = rand::thread_rng();
 
-    for (_entity, assignment, mut morale) in &mut pops {
+    for (_entity, assignment, mut morale, traits) in &mut pops {
         if assignment.assignment_type == AssignmentType::ObservatoryWorker
             && observatories.get(assignment.entity).is_ok()
         {
@@ -31,19 +34,39 @@ pub fn process_observe_system(
 
             // 2. Chance for Overview Effect (1% per tick)
             if rng.gen_bool(0.01) {
-                // 50/50 split for now
-                if rng.gen_bool(0.5) {
+                let mut inspiration_chance: f64 = 0.5;
+
+                if let Some(traits) = traits {
+                    if traits.0.contains(&Trait::Optimist) || traits.0.contains(&Trait::Curious) {
+                        inspiration_chance += 0.3;
+                    }
+                    if traits.0.contains(&Trait::Anxious) || traits.0.contains(&Trait::Traditionalist)
+                    {
+                        inspiration_chance -= 0.3;
+                    }
+                }
+
+                // Clamp just in case (0.2 to 0.8 range typically)
+                inspiration_chance = inspiration_chance.clamp(0.1, 0.9);
+
+                if rng.gen_bool(inspiration_chance) {
                     morale.add_modifier(MoodModifier {
                         label: "Cosmic Inspiration".to_string(),
                         value: 0.15,
                         duration: 500,
                     });
+                    if let Some(log) = &mut log {
+                        log.add("A colonist was inspired by the cosmos!");
+                    }
                 } else {
                     morale.add_modifier(MoodModifier {
                         label: "Existential Dread".to_string(),
                         value: -0.10,
                         duration: 500,
                     });
+                    if let Some(log) = &mut log {
+                        log.add("A colonist stared into the void...");
+                    }
                 }
             }
         }
@@ -59,6 +82,8 @@ mod tests {
     use crate::layer1::pop::Pop;
     use crate::layer1::resources::ColonyResources;
     use crate::layer1::tech::Tech;
+    use crate::layer1::traits::{Trait, Traits};
+    use crate::shared::log::MessageLog;
     use bevy_ecs::prelude::*;
 
     #[test]
@@ -150,5 +175,153 @@ mod tests {
             has_inspired || has_dread,
             "Should have triggered a mood modifier"
         );
+    }
+
+    #[test]
+    fn test_optimist_gets_more_inspiration() {
+        let mut world = World::new();
+        world.insert_resource(ColonyResources::default());
+        let observatory = world.spawn(Observatory).id();
+
+        // Spawn many pops to get statistical significance faster
+        let pop_count = 100;
+        let mut pops = Vec::new();
+        for _ in 0..pop_count {
+            pops.push(
+                world
+                    .spawn((
+                        Pop,
+                        Morale::default(),
+                        Traits(std::collections::HashSet::from([Trait::Optimist])),
+                        AssignedTo {
+                            entity: observatory,
+                            assignment_type: AssignmentType::ObservatoryWorker,
+                        },
+                    ))
+                    .id(),
+            );
+        }
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(process_observe_system);
+
+        // Run for enough ticks to get events
+        for _ in 0..200 {
+            schedule.run(&mut world);
+        }
+
+        let mut inspired_count = 0;
+        let mut dread_count = 0;
+
+        for pop in pops {
+            let morale = world.get::<Morale>(pop).unwrap();
+            for modifier in &morale.modifiers {
+                if modifier.label == "Cosmic Inspiration" {
+                    inspired_count += 1;
+                } else if modifier.label == "Existential Dread" {
+                    dread_count += 1;
+                }
+            }
+        }
+
+        assert!(
+            inspired_count > dread_count * 2,
+            "Optimists should have significantly more inspiration than dread. Got Inspired: {}, Dread: {}",
+            inspired_count,
+            dread_count
+        );
+    }
+
+    #[test]
+    fn test_anxious_gets_more_dread() {
+        let mut world = World::new();
+        world.insert_resource(ColonyResources::default());
+        let observatory = world.spawn(Observatory).id();
+
+        // Spawn many pops
+        let pop_count = 100;
+        let mut pops = Vec::new();
+        for _ in 0..pop_count {
+            pops.push(
+                world
+                    .spawn((
+                        Pop,
+                        Morale::default(),
+                        Traits(std::collections::HashSet::from([Trait::Anxious])),
+                        AssignedTo {
+                            entity: observatory,
+                            assignment_type: AssignmentType::ObservatoryWorker,
+                        },
+                    ))
+                    .id(),
+            );
+        }
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(process_observe_system);
+
+        for _ in 0..200 {
+            schedule.run(&mut world);
+        }
+
+        let mut inspired_count = 0;
+        let mut dread_count = 0;
+
+        for pop in pops {
+            let morale = world.get::<Morale>(pop).unwrap();
+            for modifier in &morale.modifiers {
+                if modifier.label == "Cosmic Inspiration" {
+                    inspired_count += 1;
+                } else if modifier.label == "Existential Dread" {
+                    dread_count += 1;
+                }
+            }
+        }
+
+        assert!(
+            dread_count > inspired_count * 2,
+            "Anxious pops should have significantly more dread than inspiration. Got Inspired: {}, Dread: {}",
+            inspired_count,
+            dread_count
+        );
+    }
+
+    #[test]
+    fn test_observatory_logs_message() {
+        let mut world = World::new();
+        world.insert_resource(ColonyResources::default());
+        world.insert_resource(MessageLog::default()); // Add MessageLog
+        let observatory = world.spawn(Observatory).id();
+
+        world.spawn((
+            Pop,
+            Morale::default(),
+            AssignedTo {
+                entity: observatory,
+                assignment_type: AssignmentType::ObservatoryWorker,
+            },
+        ));
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(process_observe_system);
+
+        // Run until log appears
+        let mut log_found = false;
+        for _ in 0..500 {
+            schedule.run(&mut world);
+            let log = world.resource::<MessageLog>();
+            if !log.messages.is_empty() {
+                log_found = true;
+                let msg = &log.messages.back().unwrap().text;
+                assert!(
+                    msg.contains("inspired by the cosmos") || msg.contains("stared into the void"),
+                    "Unexpected log message: {}",
+                    msg
+                );
+                break;
+            }
+        }
+
+        assert!(log_found, "Should have logged a message");
     }
 }

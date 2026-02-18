@@ -4,6 +4,7 @@ Tasks currently being implemented. Builders: if a task is here, pick something e
 
 ---
 
+- [ ] `115` The Overview Effect — `specs/115-observatory-effect.md` — claimed 2026-05-23
 - [ ] `148` The 'Helpful' AI — `specs/148-helpful-ai.md` — claimed 2026-03-20
 - [ ] `015` Selection and Inspection System — `specs/015-selection-system.md` — claimed 2026-02-02
 - [ ] `010` Chronicle system — `specs/010-chronicle-system.md` — claimed 2026-02-02
