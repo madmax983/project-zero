@@ -4549,7 +4549,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Standard trade (low margin) vs. Niche arbitrage (high margin but complex).
 
 ---
-## Ecological Succession
+## Ecological Succession [SPECCED]
 
 **Layer:** 1
 
