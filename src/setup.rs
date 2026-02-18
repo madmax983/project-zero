@@ -118,6 +118,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(crate::layer1::geology::SeismicGrid::new(80, 50));
     world.insert_resource(crate::layer1::society::SecretSocieties::default());
     world.insert_resource(crate::layer1::society::Unrest::default());
+    #[cfg(feature = "nova")]
+    world.init_resource::<crate::layer1::oral_tradition::OralTradition>();
     world.init_resource::<crate::layer1::social::old_guard::Demographics>();
     world.insert_resource(crate::layer2::system::ViewMode::default());
     world.insert_resource(crate::layer2::system::SystemMap);

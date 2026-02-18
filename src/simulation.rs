@@ -371,6 +371,10 @@ pub fn build_simulation_schedule() -> Schedule {
         // Process chronicle events
         chronicle_event_handler_system.after(check_milestones_system),
         chronicle_rumor_bridge_system.after(check_milestones_system),
+        #[cfg(feature = "nova")]
+        crate::layer1::oral_tradition::collect_chronicles_system.after(chronicle_event_handler_system),
+        #[cfg(feature = "nova")]
+        crate::layer1::oral_tradition::storytelling_system.after(crate::layer1::rumor::exchange_rumors_system),
         pop_death_chronicle_bridge.after(death_system),
         retrograde_chronicle_bridge.after(work_execution_system),
         amputation_handler_system.after(work_execution_system),
