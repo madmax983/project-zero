@@ -4479,3 +4479,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Power (Forbidden Tech) vs. Conformity (Diplomacy).
 
 ---
+
+## Vermin Evolution
+
+**Layer:** 1
+
+**Fantasy:** The pests are part of the ecosystem, and they adapt to your industry.
+
+**Mechanic:** Vermin populations inherit traits from the resources they consume. Rats eating from the "Uranium Stockpile" become "Rad-Rats" (emit radiation). Rats eating "Glow-Moss" become bioluminescent.
+
+**Emergence:** You have a pest problem in the explosives warehouse. They become "Boom-Rats". You try to shoot one, and it blows up the whole bunker.
+
+**Tension:** Secure containment (hassle) vs. Easy storage (risk).
+
+---
+
+## Gravity Engineering
+
+**Layer:** 1
+
+**Fantasy:** Architecture must bow to physics.
+
+**Mechanic:** Planets have a "Max Structure Height" based on Gravity. Exceeding it requires expensive "Reinforced Materials". High-G worlds force wide, flat bunkers. Low-G worlds allow needle-spires.
+
+**Emergence:** You import a blueprint from a Low-G moon to a High-G planet. The moment the construction drones finish the 10th floor, the building crumbles under its own weight.
+
+**Tension:** Vertical ambition (density) vs. Gravitational reality (cost).
+
+---
+
+## The Mycelial Network
+
+**Layer:** 2
+
+**Fantasy:** The solar system is a single living organism.
+
+**Mechanic:** Invisible "Bio-Links" connect planetary bodies. Excessive industrial damage/harvesting on one node triggers "Immune Responses" (Space Fauna spawns) at connected nodes.
+
+**Emergence:** You strip-mine an asteroid belt. The gas giant next door releases a swarm of "Void Wasps" that follow the invisible link back to your miners.
+
+**Tension:** Exploitation (resources) vs. System Health (aggro).
+
+---
+
+## Open Source Science
+
+**Layer:** Cross-Layer
+
+**Fantasy:** Contributing to the sum of galactic knowledge, at a price.
+
+**Mechanic:** Player can "Publish" discovery data (Maps, Alien Biology, Tech Specs) to the Galactic Layer. Grants massive Prestige and Relations, but gives enemies bonuses against you (e.g., "Known Shield Frequency").
+
+**Emergence:** You publish your star charts for cash. Pirates use them to find your hidden backdoor route.
+
+**Tension:** Fame/Fortune (publishing) vs. OpSec (secrecy).
+
+---
+
+## Subjective Economics
+
+**Layer:** 3
+
+**Fantasy:** One species' trash is another's treasure.
+
+**Mechanic:** Alien factions have distinct "Value Matrices". Lithoids pay premium for "Tasty Granite" but treat Food as "Bio-Waste". Robots buy "Scrap" as "Medical Supplies".
+
+**Emergence:** You get rich becoming the "Garbage Dump" for a high-tech robotic civilization, importing their "Waste" (High-grade Alloys) and selling them your "Waste" (Rocks).
+
+**Tension:** Standard trade (low margin) vs. Niche arbitrage (high margin but complex).
+
+---
