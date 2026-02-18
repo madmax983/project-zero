@@ -129,6 +129,216 @@ impl CandidateEvaluator {
     }
 }
 
+fn is_pop_striking(data: &PopEvalData, context: &WorldContext) -> bool {
+    context.factions.as_ref().is_some_and(|map| {
+        data.faction_member.as_ref().is_some_and(|member| {
+            member.faction_id.is_some_and(|fid| {
+                map.get(&fid).is_some_and(|data| {
+                    data.state == crate::layer1::factions::FactionState::Striking
+                })
+            })
+        })
+    })
+}
+
+fn evaluate_group_survival(
+    evaluator: &mut CandidateEvaluator,
+    data: &PopEvalData,
+    buffer: &UtilityAIBuffer,
+    world: &World,
+) {
+    let pop_entity = data.entity;
+    let pop_pos = data.pos;
+    let needs = data.needs;
+    let weights = data.weights;
+
+    // Evaluate Hunger
+    if let Some((utility, target)) =
+        evaluate_satisfy_hunger(pop_pos, &needs, &weights, &buffer.farms)
+    {
+        evaluator.consider(ActionType::SatisfyHunger, utility, Some(target));
+    }
+
+    // Evaluate SatisfyRest
+    if let Some((utility, target)) =
+        evaluate_satisfy_rest(pop_pos, &needs, &weights, &buffer.housing)
+    {
+        evaluator.consider(ActionType::SatisfyRest, utility, Some(target));
+    }
+
+    // Check Health
+    let health = world.get::<crate::layer1::health::Health>(pop_entity);
+
+    // Evaluate SeekMedicalCare
+    if let Some(health) = health {
+        if let Some((utility, target)) =
+            evaluate_seek_medical_care(pop_pos, &needs, *health, &weights, &buffer.hospitals)
+        {
+            evaluator.consider(ActionType::SeekMedicalCare, utility, Some(target));
+        }
+    }
+}
+
+fn evaluate_group_social(
+    evaluator: &mut CandidateEvaluator,
+    data: &PopEvalData,
+    buffer: &UtilityAIBuffer,
+) {
+    let pop_pos = data.pos;
+    let needs = data.needs;
+    let weights = data.weights;
+    let is_penal = data.penal_labor.is_some();
+
+    if is_penal {
+        return;
+    }
+
+    // Evaluate Socialize
+    if let Some((utility, target)) = evaluate_socialize(pop_pos, &needs, &weights, &buffer.taverns)
+    {
+        evaluator.consider(ActionType::Socialize, utility, Some(target));
+    }
+}
+
+fn evaluate_group_work(
+    evaluator: &mut CandidateEvaluator,
+    data: &PopEvalData,
+    buffer: &UtilityAIBuffer,
+    context: &WorldContext,
+    is_striking: bool,
+) {
+    let pop_pos = data.pos;
+    let weights = data.weights;
+    let is_penal = data.penal_labor.is_some();
+    let is_feral = data
+        .traits
+        .as_ref()
+        .is_some_and(|t| t.0.contains(&Trait::Feral));
+
+    if is_striking {
+        return;
+    }
+
+    // Evaluate Work
+    if let Some((utility, target)) = evaluate_work(pop_pos, &weights, &buffer.work_designations) {
+        let penalty = crate::layer1::taboo::evaluate_taboo_penalty(ActionType::Work, context.taboo);
+        let bonus = if is_penal {
+            1.0 // High priority for penal labor
+        } else {
+            0.0
+        };
+        evaluator.consider(ActionType::Work, utility + penalty + bonus, Some(target));
+    }
+
+    // Evaluate Refine
+    if !is_penal {
+        if let Some((utility, target)) = evaluate_refine(pop_pos, &weights, &buffer.refining) {
+            evaluator.consider(ActionType::Refine, utility, Some(target));
+        }
+    }
+
+    // Evaluate Farm
+    if !is_penal {
+        if let Some((utility, target)) = evaluate_farm(pop_pos, &weights, &buffer.farms) {
+            evaluator.consider(ActionType::Farm, utility, Some(target));
+        }
+    }
+
+    // Evaluate Research
+    if !is_penal && !is_feral {
+        if let Some((utility, target)) =
+            evaluate_research(pop_pos, &weights, context.resources, &buffer.libraries)
+        {
+            evaluator.consider(ActionType::Research, utility, Some(target));
+        }
+    }
+
+    // Evaluate Tame
+    if let Some((utility, target)) = evaluate_tame(&pop_pos, &weights, &buffer.tame_designations) {
+        evaluator.consider(ActionType::Tame, utility, Some(target));
+    }
+}
+
+fn evaluate_group_logistics(
+    evaluator: &mut CandidateEvaluator,
+    data: &PopEvalData,
+    buffer: &UtilityAIBuffer,
+    context: &WorldContext,
+    is_striking: bool,
+) {
+    let pop_pos = data.pos;
+    let weights = data.weights;
+    let equipment_opt = data.equipment;
+
+    if is_striking {
+        return;
+    }
+
+    // Evaluate FetchTool
+    let equipment = equipment_opt.unwrap_or_default();
+    if let Some((utility, target)) =
+        evaluate_fetch_tool(pop_pos, &equipment, context.resources, &buffer.stockpiles)
+    {
+        evaluator.consider(ActionType::FetchTool, utility, Some(target));
+    }
+
+    // Evaluate FetchClothing
+    if let Some((utility, target)) =
+        evaluate_fetch_clothing(pop_pos, &equipment, context.resources, &buffer.stockpiles)
+    {
+        evaluator.consider(ActionType::FetchClothing, utility, Some(target));
+    }
+
+    // Evaluate Repair
+    if let Some((utility, target)) = evaluate_repair(
+        pop_pos,
+        &weights,
+        &buffer.repair_designations,
+        &buffer.repair_structures,
+    ) {
+        evaluator.consider(ActionType::Repair, utility, Some(target));
+    }
+
+    // Evaluate Haul
+    if let Some((utility, target)) = evaluate_haul(
+        pop_pos,
+        &weights,
+        &buffer.items,
+        &buffer.stockpiles,
+        context.resources,
+        data.carrying,
+    ) {
+        evaluator.consider(ActionType::Haul, utility, Some(target));
+    }
+
+    // Evaluate BuryCorpse
+    if let Some((utility, target)) =
+        evaluate_bury_corpse(pop_pos, &buffer.corpses, &buffer.graves, &weights)
+    {
+        evaluator.consider(ActionType::BuryCorpse, utility, Some(target));
+    }
+}
+
+fn evaluate_group_exploration(
+    evaluator: &mut CandidateEvaluator,
+    data: &PopEvalData,
+    buffer: &UtilityAIBuffer,
+    is_striking: bool,
+) {
+    let pop_pos = data.pos;
+    let weights = data.weights;
+    let is_penal = data.penal_labor.is_some();
+
+    if is_striking || is_penal {
+        return;
+    }
+
+    // Evaluate Explore
+    if let Some((utility, target)) = evaluate_explore(pop_pos, &weights, &buffer.anomalies) {
+        evaluator.consider(ActionType::Explore, utility, Some(target));
+    }
+}
+
 /// Helper function to evaluate all potential actions for a single Pop.
 ///
 /// Returns the best `(ActionType, Utility, Target)`.
@@ -139,19 +349,7 @@ pub(crate) fn evaluate_single_pop(
     data: &PopEvalData,
     context: &WorldContext,
 ) -> (ActionType, f32, Option<Entity>) {
-    let pop_entity = data.entity;
-    let pop_pos = data.pos;
-    let needs = data.needs;
-    let weights = data.weights;
-    let equipment_opt = data.equipment;
-    let is_penal = data.penal_labor.is_some();
-    let is_feral = data
-        .traits
-        .as_ref()
-        .is_some_and(|t| t.0.contains(&Trait::Feral));
-
     // 1. Check for Mental Break (Returns early)
-    // We must pass world because evaluate_mental_break constructs its own queries.
     if let Some((action, utility, target)) = evaluate_mental_break(data, world) {
         return (action, utility, target);
     }
@@ -162,180 +360,23 @@ pub(crate) fn evaluate_single_pop(
     }
 
     // 3. Normal evaluation (undrafted, sane)
-    let mut evaluator = CandidateEvaluator::new(evaluate_idle(&needs));
+    let mut evaluator = CandidateEvaluator::new(evaluate_idle(&data.needs));
+    let is_striking = is_pop_striking(data, context);
 
-    // Evaluate Hunger
-    if let Some((utility, target)) =
-        evaluate_satisfy_hunger(pop_pos, &needs, &weights, &buffer.farms)
-    {
-        evaluator.consider(ActionType::SatisfyHunger, utility, Some(target));
-    }
-
-    // Evaluate Work
-    let is_striking = context.factions.as_ref().is_some_and(|map| {
-        data.faction_member.as_ref().is_some_and(|member| {
-            member.faction_id.is_some_and(|fid| {
-                map.get(&fid).is_some_and(|data| {
-                    data.state == crate::layer1::factions::FactionState::Striking
-                })
-            })
-        })
-    });
-
-    if !is_striking {
-        if let Some((utility, target)) = evaluate_work(pop_pos, &weights, &buffer.work_designations)
-        {
-            let penalty =
-                crate::layer1::taboo::evaluate_taboo_penalty(ActionType::Work, context.taboo);
-            let bonus = if is_penal {
-                1.0 // High priority for penal labor
-            } else {
-                0.0
-            };
-            evaluator.consider(ActionType::Work, utility + penalty + bonus, Some(target));
-        }
-    }
-
-    // Check Health
-    // Safety: world.get borrows immutable world, which is allowed as long as we don't mutate.
-    // evaluate_mental_break/drafted took &mut World but returned, so mutable borrow ended.
-    let health = world.get::<crate::layer1::health::Health>(pop_entity);
-
-    // Evaluate SatisfyRest
-    if let Some((utility, target)) =
-        evaluate_satisfy_rest(pop_pos, &needs, &weights, &buffer.housing)
-    {
-        evaluator.consider(ActionType::SatisfyRest, utility, Some(target));
-    }
-
-    // Evaluate Socialize
-    if !is_penal {
-        if let Some((utility, target)) =
-            evaluate_socialize(pop_pos, &needs, &weights, &buffer.taverns)
-        {
-            evaluator.consider(ActionType::Socialize, utility, Some(target));
-        }
-    }
-
-    // Evaluate Refine
-    if !is_striking && !is_penal {
-        if let Some((utility, target)) = evaluate_refine(pop_pos, &weights, &buffer.refining) {
-            evaluator.consider(ActionType::Refine, utility, Some(target));
-        }
-    }
-
-    // Evaluate Farm
-    if !is_striking && !is_penal {
-        if let Some((utility, target)) = evaluate_farm(pop_pos, &weights, &buffer.farms) {
-            evaluator.consider(ActionType::Farm, utility, Some(target));
-        }
-    }
-
-    // Evaluate FetchTool
-    // FetchTool supports work (fetching tools for work).
-    // If striking, they don't need tools for work, but might need for other things?
-    // Probably safe to block if striking, as tool usage implies work.
-    if !is_striking {
-        let equipment = equipment_opt.unwrap_or_default();
-        if let Some((utility, target)) =
-            evaluate_fetch_tool(pop_pos, &equipment, context.resources, &buffer.stockpiles)
-        {
-            evaluator.consider(ActionType::FetchTool, utility, Some(target));
-        }
-    }
-
-    // Evaluate FetchClothing
-    if !is_striking {
-        let equipment = equipment_opt.unwrap_or_default();
-        if let Some((utility, target)) =
-            evaluate_fetch_clothing(pop_pos, &equipment, context.resources, &buffer.stockpiles)
-        {
-            evaluator.consider(ActionType::FetchClothing, utility, Some(target));
-        }
-    }
-
-    // Evaluate Repair
-    if !is_striking {
-        // We pass BOTH designations (manual repair) and structures (auto repair)
-        // But evaluate_repair needs to handle them separately or together?
-        // evaluate_repair takes two iterators. We update it to take two slices.
-        if let Some((utility, target)) = evaluate_repair(
-            pop_pos,
-            &weights,
-            &buffer.repair_designations,
-            &buffer.repair_structures,
-        ) {
-            evaluator.consider(ActionType::Repair, utility, Some(target));
-        }
-    }
-
-    // Evaluate Explore
-    if !is_striking && !is_penal {
-        if let Some((utility, target)) = evaluate_explore(pop_pos, &weights, &buffer.anomalies) {
-            evaluator.consider(ActionType::Explore, utility, Some(target));
-        }
-    }
-
-    // Evaluate Research
-    if !is_striking && !is_penal && !is_feral {
-        if let Some((utility, target)) =
-            evaluate_research(pop_pos, &weights, context.resources, &buffer.libraries)
-        {
-            evaluator.consider(ActionType::Research, utility, Some(target));
-        }
-    }
-
-    // Evaluate Haul
-    if !is_striking {
-        if let Some((utility, target)) = evaluate_haul(
-            pop_pos,
-            &weights,
-            &buffer.items,
-            &buffer.stockpiles,
-            context.resources,
-            data.carrying,
-        ) {
-            evaluator.consider(ActionType::Haul, utility, Some(target));
-        }
-    }
-
-    // Evaluate SeekMedicalCare
-    if let Some(health) = health {
-        if let Some((utility, target)) =
-            evaluate_seek_medical_care(pop_pos, &needs, *health, &weights, &buffer.hospitals)
-        {
-            evaluator.consider(ActionType::SeekMedicalCare, utility, Some(target));
-        }
-    }
-
-    // Evaluate BuryCorpse
-    if !is_striking {
-        if let Some((utility, target)) =
-            evaluate_bury_corpse(pop_pos, &buffer.corpses, &buffer.graves, &weights)
-        {
-            evaluator.consider(ActionType::BuryCorpse, utility, Some(target));
-        }
-    }
-
-    // Evaluate Tame
-    if !is_striking {
-        if let Some((utility, target)) =
-            evaluate_tame(&pop_pos, &weights, &buffer.tame_designations)
-        {
-            evaluator.consider(ActionType::Tame, utility, Some(target));
-        }
-    }
+    evaluate_group_survival(&mut evaluator, data, buffer, world);
+    evaluate_group_social(&mut evaluator, data, buffer);
+    evaluate_group_work(&mut evaluator, data, buffer, context, is_striking);
+    evaluate_group_logistics(&mut evaluator, data, buffer, context, is_striking);
+    evaluate_group_exploration(&mut evaluator, data, buffer, is_striking);
 
     evaluator.result()
 }
 
-/// Populates the AI buffer with candidate entities from the world.
-///
-/// This function queries the world for all relevant entities (buildings, items, designations)
-/// and stores their data in the reusable `UtilityAIBuffer`. This avoids repeated queries
-/// during the per-pop evaluation phase.
-#[allow(clippy::too_many_lines)]
-fn populate_ai_buffer(world: &mut World, buffer: &mut UtilityAIBuffer, context: &WorldContext) {
+fn populate_buffer_buildings(
+    world: &mut World,
+    buffer: &mut UtilityAIBuffer,
+    context: &WorldContext,
+) {
     let cycle = context.cycle;
     let resources = context.resources;
 
@@ -430,6 +471,20 @@ fn populate_ai_buffer(world: &mut World, buffer: &mut UtilityAIBuffer, context: 
         });
     }
 
+    // Hospitals
+    buffer.hospitals.clear();
+    let mut hospital_query = world.query::<(Entity, &GridPosition, &Hospital)>();
+    for (entity, pos, _) in hospital_query.iter(world) {
+        buffer.hospitals.push(CapacityProxy {
+            entity,
+            pos: *pos,
+            capacity: 10,
+            usage: 0,
+        });
+    }
+}
+
+fn populate_buffer_designations(world: &mut World, buffer: &mut UtilityAIBuffer) {
     // Designations (Work, Repair, Tame)
     buffer.work_designations.clear();
     buffer.repair_designations.clear();
@@ -454,7 +509,9 @@ fn populate_ai_buffer(world: &mut World, buffer: &mut UtilityAIBuffer, context: 
             }
         }
     }
+}
 
+fn populate_buffer_items_and_misc(world: &mut World, buffer: &mut UtilityAIBuffer) {
     // Items
     buffer.items.clear();
     let mut item_query = world.query::<(Entity, &GridPosition, &ResourceItem)>();
@@ -478,18 +535,6 @@ fn populate_ai_buffer(world: &mut World, buffer: &mut UtilityAIBuffer, context: 
     let mut anomaly_query = world.query::<(Entity, &GridPosition, &Anomaly)>();
     for (entity, pos, _) in anomaly_query.iter(world) {
         buffer.anomalies.push(PositionProxy { entity, pos: *pos });
-    }
-
-    // Hospitals
-    buffer.hospitals.clear();
-    let mut hospital_query = world.query::<(Entity, &GridPosition, &Hospital)>();
-    for (entity, pos, _) in hospital_query.iter(world) {
-        buffer.hospitals.push(CapacityProxy {
-            entity,
-            pos: *pos,
-            capacity: 10,
-            usage: 0,
-        });
     }
 
     // Corpses
@@ -524,6 +569,17 @@ fn populate_ai_buffer(world: &mut World, buffer: &mut UtilityAIBuffer, context: 
             .repair_structures
             .push(PositionProxy { entity, pos: *pos });
     }
+}
+
+/// Populates the AI buffer with candidate entities from the world.
+///
+/// This function queries the world for all relevant entities (buildings, items, designations)
+/// and stores their data in the reusable `UtilityAIBuffer`. This avoids repeated queries
+/// during the per-pop evaluation phase.
+fn populate_ai_buffer(world: &mut World, buffer: &mut UtilityAIBuffer, context: &WorldContext) {
+    populate_buffer_buildings(world, buffer, context);
+    populate_buffer_designations(world, buffer);
+    populate_buffer_items_and_misc(world, buffer);
 }
 
 /// The Main Brain Loop: Decides what every Pop should do next.
