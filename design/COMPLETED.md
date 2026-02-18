@@ -62,6 +62,7 @@ Features that have been fully implemented, tested, and merged.
 - [x] `141` Colony Ship Cannibalization — `specs/141-colony-ship-cannibalization.md` — completed 2026-10-27
 - [x] `142` Biometric Lockouts — `specs/142-biometric-lockouts.md` — completed 2026-10-27
 - [x] `143` Data Physicality — `specs/143-data-physicality.md` — completed 2026-10-27
+- [x] `153` Geological Instability — `specs/153-geological-instability.md` — completed 2026-03-20
 - [x] `155` Advanced Workplace Hazards — `specs/155-advanced-hazards.md` — completed 2026-03-20
 
 ## MVP — Layer 2: System Simulation

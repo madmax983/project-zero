@@ -115,6 +115,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(crate::layer1::medical::MedicalPolicy::default());
     world.insert_resource(crate::layer1::prototyping::BuildingMastery::default());
     world.insert_resource(crate::layer1::graffiti::GraffitiMap::default());
+    world.insert_resource(crate::layer1::geology::SeismicGrid::new(80, 50));
     world.init_resource::<crate::layer1::social::old_guard::Demographics>();
     world.insert_resource(crate::layer2::system::ViewMode::default());
     world.insert_resource(crate::layer2::system::SystemMap);
@@ -132,6 +133,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::structural_integrity::StructureCollapsed>>();
     world.init_resource::<Events<RetrogradeEngineeringEvent>>();
     world.init_resource::<Events<crate::layer1::energy::GridOverloadEvent>>();
+    world.init_resource::<Events<crate::layer1::geology::GeologicalEvent>>();
 
     world.insert_resource(crate::layer1::taboo::TabooState::default());
 

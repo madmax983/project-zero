@@ -96,6 +96,7 @@ pub fn build_simulation_schedule() -> Schedule {
         update_event_buffer::<RetrogradeEngineeringEvent>,
         update_event_buffer::<crate::layer1::energy::GridOverloadEvent>,
         update_event_buffer::<crate::layer1::hazards::AmputationEvent>,
+        update_event_buffer::<crate::layer1::geology::GeologicalEvent>,
     ));
 
     // --- AI Decision Chain (GPU compute) ---
@@ -241,6 +242,11 @@ pub fn build_simulation_schedule() -> Schedule {
         flora_attack_system.after(work_execution_system),
         ancient_structure_decay_system.after(work_execution_system),
         crate::layer1::graffiti::graffiti_decay_system.after(work_execution_system),
+        crate::layer1::geology::seismic_decay_system.after(work_execution_system),
+        crate::layer1::geology::check_seismic_events
+            .after(crate::layer1::geology::seismic_decay_system),
+        crate::layer1::geology::apply_geological_event_system
+            .after(crate::layer1::geology::check_seismic_events),
         spirit_decay_system.after(work_execution_system),
         quirk_generation_system.after(spirit_decay_system),
         entropy_system.after(work_execution_system),
