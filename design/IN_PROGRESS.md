@@ -33,3 +33,4 @@ Tasks currently being implemented. Builders: if a task is here, pick something e
 - [ ] `140` Thermal Management — `specs/140-thermal-management.md` — claimed 2026-02-17
 - [ ] `INT-026` Integration: Amputation -> Cybernetics/Memory — claimed 2026-02-18
 - [ ] `147` Secret Societies — `specs/147-secret-societies.md` — claimed 2026-10-27
+- [ ] `139` Cryo-Stasis Vaults — `specs/139-cryo-stasis.md` — claimed 2026-02-18
