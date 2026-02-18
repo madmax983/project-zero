@@ -49,17 +49,18 @@ pub struct OralTradition {
 impl OralTradition {
     /// Adds a story if it's not a duplicate (based on origin tick).
     pub fn add_story(&mut self, story: Story) {
-        if !self.stories.iter().any(|s| s.origin_tick == story.origin_tick) {
+        if !self
+            .stories
+            .iter()
+            .any(|s| s.origin_tick == story.origin_tick)
+        {
             self.stories.push(story);
         }
     }
 }
 
 /// System to convert new Chronicle events into Stories.
-pub fn collect_chronicles_system(
-    mut tradition: ResMut<OralTradition>,
-    chronicle: Res<Chronicle>,
-) {
+pub fn collect_chronicles_system(mut tradition: ResMut<OralTradition>, chronicle: Res<Chronicle>) {
     // Only look at events since last check
     let new_events: Vec<_> = chronicle
         .events
@@ -78,10 +79,14 @@ pub fn collect_chronicles_system(
 
     for event in new_events {
         // Heuristic for genre
-        let genre = if event.text.to_lowercase().contains("died") || event.text.to_lowercase().contains("death") {
-             StoryGenre::Tragedy
-        } else if event.text.to_lowercase().contains("collapsed") || event.text.to_lowercase().contains("starvation") {
-             StoryGenre::Cautionary
+        let genre = if event.text.to_lowercase().contains("died")
+            || event.text.to_lowercase().contains("death")
+        {
+            StoryGenre::Tragedy
+        } else if event.text.to_lowercase().contains("collapsed")
+            || event.text.to_lowercase().contains("starvation")
+        {
+            StoryGenre::Cautionary
         } else {
             match event.importance {
                 EventImportance::Legendary => StoryGenre::Heroic,

@@ -42,9 +42,7 @@ use scale::simulation::run_simulation_tick;
 use std::io::{self, BufRead, Write};
 
 fn main() {
-    let mut world = setup_world_with_config(SetupConfig {
-        headless: true,
-    });
+    let mut world = setup_world_with_config(SetupConfig { headless: true });
     *world.resource_mut::<GameState>() = GameState::Running;
 
     println!("=== SCALE Headless Mode ===");

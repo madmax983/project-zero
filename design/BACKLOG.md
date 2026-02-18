@@ -14,7 +14,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `059` Soil Fertility — `specs/059-soil-fertility.md`
 - [ ] `066` Building Work AI — `specs/066-building-work-ai.md`
 - [ ] `068` Pop Factions — `specs/068-pop-factions.md`
-- [ ] `075` Animal Husbandry — `specs/075-animal-husbandry.md`
 - [ ] `077` Emergent Festivals — `specs/077-emergent-festivals.md`
 - [ ] `080` Planetary Quirks — `specs/080-planetary-quirks.md`
 - [ ] `098` Medical Triage Policies — `specs/098-medical-triage.md`

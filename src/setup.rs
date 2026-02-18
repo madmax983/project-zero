@@ -140,6 +140,9 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::geology::GeologicalEvent>>();
     world.init_resource::<Events<crate::layer1::society::InvestigationEvent>>();
     world.init_resource::<Events<crate::layer1::society::SuppressSocietyEvent>>();
+    world.init_resource::<Events<crate::layer1::medical::PatientTreated>>();
+    world.init_resource::<Events<crate::layer1::hazards::AmputationEvent>>();
+    world.init_resource::<Events<crate::layer1::social::FavorChange>>();
 
     world.insert_resource(crate::layer1::taboo::TabooState::default());
 
