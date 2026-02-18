@@ -12,17 +12,19 @@ use std::collections::HashMap;
 /// Tracks the mastery progress for each building type.
 #[derive(Resource, Default, Debug)]
 pub struct BuildingMastery {
-    /// Map of BuildingType -> Progress (0.0 to 1.0).
+    /// Map of `BuildingType` -> Progress (0.0 to 1.0).
     pub progress: HashMap<BuildingType, f32>,
 }
 
 impl BuildingMastery {
     /// Returns the mastery progress for a building type (0.0 to 1.0).
+    #[must_use]
     pub fn get_progress(&self, building: BuildingType) -> f32 {
         *self.progress.get(&building).unwrap_or(&0.0)
     }
 
     /// Returns true if the building type is mastered (progress >= 1.0).
+    #[must_use]
     pub fn is_mastered(&self, building: BuildingType) -> bool {
         self.get_progress(building) >= 1.0
     }
@@ -63,6 +65,8 @@ impl Default for Prototype {
 /// Accumulates mastery for active prototypes.
 ///
 /// Takes 100 seconds (at 1x speed) to master a building type if one prototype is active.
+#[allow(clippy::type_complexity)]
+#[allow(clippy::option_if_let_else)]
 pub fn mastery_accumulation_system(
     mut mastery: ResMut<BuildingMastery>,
     // We only count ACTIVE prototypes.

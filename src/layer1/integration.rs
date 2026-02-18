@@ -341,7 +341,7 @@ pub fn grid_overload_fire_bridge(
     }
 }
 
-/// Handles amputation events by applying MissingLimb component and memory.
+/// Handles amputation events by applying `MissingLimb` component and memory.
 ///
 /// Bridges Hazards (Accident) and Cybernetics/Memory (Consequence).
 pub fn amputation_handler_system(
@@ -361,7 +361,9 @@ pub fn amputation_handler_system(
         }
 
         // 1. Add MissingLimb Component
-        commands.entity(entity).insert(MissingLimb { severity: 0.5 });
+        commands
+            .entity(entity)
+            .insert(MissingLimb { severity: 0.5 });
 
         // 2. Add Memory
         if let Ok(mut memories) = memories_query.get_mut(entity) {

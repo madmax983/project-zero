@@ -26,6 +26,7 @@ pub struct RaidDetected {
 }
 
 /// System handles normal automation (Power/Lockdown).
+#[allow(clippy::type_complexity)]
 pub fn ai_automation_system(
     mut queries: ParamSet<(
         Query<(&AICore, Option<&PowerConsumer>), (With<Building>, With<Structure>)>,
@@ -38,7 +39,7 @@ pub fn ai_automation_system(
     // 1. Check if we have a functional AI Core
     // Must be: Not Rogue, Automation Enabled, AND Powered (if it consumes power)
     let ai_exists = queries.p0().iter().any(|(ai, power)| {
-        let powered = power.map_or(true, |p| p.active);
+        let powered = power.is_none_or(|p| p.active);
         !ai.rogue && ai.automation_enabled && powered
     });
 
@@ -62,7 +63,7 @@ pub fn ai_automation_system(
 
     if battery_percent < 0.10 {
         // Disable low priority consumers
-        for (b, mut power) in queries.p1().iter_mut() {
+        for (b, mut power) in &mut queries.p1() {
             if is_low_priority(b.building_type) && power.active {
                 power.active = false;
             }
@@ -70,12 +71,12 @@ pub fn ai_automation_system(
     }
 
     // 3. Auto-Lockdown Logic
-    if let Some(raid) = raid {
-        if raid.active {
-            for (b, mut access) in &mut doors {
-                if is_external_door(b.building_type) && access.mode != AccessMode::Lockdown {
-                    access.mode = AccessMode::Lockdown;
-                }
+    if let Some(raid) = raid
+        && raid.active
+    {
+        for (b, mut access) in &mut doors {
+            if is_external_door(b.building_type) && access.mode != AccessMode::Lockdown {
+                access.mode = AccessMode::Lockdown;
             }
         }
     }
@@ -114,7 +115,7 @@ pub fn ai_rogue_system(
 }
 
 // Helpers
-fn is_low_priority(b: BuildingType) -> bool {
+const fn is_low_priority(b: BuildingType) -> bool {
     matches!(
         b,
         BuildingType::Tavern | // Used in test
@@ -125,7 +126,7 @@ fn is_low_priority(b: BuildingType) -> bool {
     )
 }
 
-fn is_external_door(b: BuildingType) -> bool {
+const fn is_external_door(b: BuildingType) -> bool {
     matches!(b, BuildingType::Gate | BuildingType::Airlock)
 }
 

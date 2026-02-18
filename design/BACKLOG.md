@@ -18,7 +18,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `077` Emergent Festivals — `specs/077-emergent-festivals.md`
 - [ ] `080` Planetary Quirks — `specs/080-planetary-quirks.md`
 - [ ] `098` Medical Triage Policies — `specs/098-medical-triage.md`
-- [ ] `100` Jury-Rigging — `specs/100-jury-rigging.md`
 - [ ] `115` The Overview Effect — `specs/115-observatory-effect.md`
 - [ ] `116` Drone Networks — `specs/116-drone-networks.md`
 - [ ] `117` Fuel Consumption — `specs/117-fuel-consumption.md`

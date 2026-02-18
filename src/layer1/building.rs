@@ -889,7 +889,7 @@ fn spawn_building(
     // Prototyping Phase: Check mastery before mutable borrow
     let is_mastered = world
         .get_resource::<BuildingMastery>()
-        .map_or(true, |m| m.is_mastered(building_type));
+        .is_none_or(|m| m.is_mastered(building_type));
 
     let mut entity = world.spawn((
         Building { building_type },

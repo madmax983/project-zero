@@ -309,7 +309,7 @@ pub fn update_tech_capacity_system(
 ) {
     let total_cap: f32 = query
         .iter()
-        .filter(|(_, power)| power.map_or(true, |p| p.active))
+        .filter(|(_, power)| power.is_none_or(|p| p.active))
         .map(|(storage, _)| storage.capacity)
         .sum();
 

@@ -9,6 +9,7 @@ Tasks currently being implemented. Builders: if a task is here, pick something e
 - [ ] `010` Chronicle system — `specs/010-chronicle-system.md` — claimed 2026-02-02
 - [ ] `INT-005` Integration: Pop Health -> Memories — claimed 2026-02-07
 - [ ] `038` Medical Care — `specs/038-medical-care.md` — claimed 2026-02-07
+- [ ] `100` Jury-Rigging — `specs/100-jury-rigging.md` — claimed 2026-03-27
 - [ ] `053` Lighting System — `specs/053-lighting-system.md` — claimed 2026-03-05
 - [ ] `059` Soil Fertility and Depletion — `specs/059-soil-fertility.md` — claimed 2026-02-08
 - [ ] `058` Personal Tools — `specs/058-personal-tools.md` — claimed 2026-02-09

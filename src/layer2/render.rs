@@ -46,36 +46,36 @@ pub fn render_system_view(frame: &mut Frame, area: Rect, world: &World) {
 
     // Draw orbital bodies
     for entity in world.iter_entities() {
-        if let Some(body) = entity.get::<OrbitalBody>() {
-            if let Some(orbit) = entity.get::<Orbit>() {
-                // Simple polar to cartesian projection
-                // Terminal cells are roughly 1:2 aspect ratio, so multiply X by 2 for circular appearance
-                let radius_x = orbit.radius * 2.0;
-                let radius_y = orbit.radius;
+        if let Some(body) = entity.get::<OrbitalBody>()
+            && let Some(orbit) = entity.get::<Orbit>()
+        {
+            // Simple polar to cartesian projection
+            // Terminal cells are roughly 1:2 aspect ratio, so multiply X by 2 for circular appearance
+            let radius_x = orbit.radius * 2.0;
+            let radius_y = orbit.radius;
 
-                let x = radius_x.mul_add(orbit.angle.cos(), f32::from(center_x));
-                let y = radius_y.mul_add(orbit.angle.sin(), f32::from(center_y));
+            let x = radius_x.mul_add(orbit.angle.cos(), f32::from(center_x));
+            let y = radius_y.mul_add(orbit.angle.sin(), f32::from(center_y));
 
-                // Cast to i32 for safe comparison before casting to u16
-                #[allow(clippy::cast_possible_truncation)]
-                let x_i32 = x.round() as i32;
-                #[allow(clippy::cast_possible_truncation)]
-                let y_i32 = y.round() as i32;
+            // Cast to i32 for safe comparison before casting to u16
+            #[allow(clippy::cast_possible_truncation)]
+            let x_i32 = x.round() as i32;
+            #[allow(clippy::cast_possible_truncation)]
+            let y_i32 = y.round() as i32;
 
-                if x_i32 >= 0 && y_i32 >= 0 {
-                    #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
-                    let pos_x = x_i32 as u16;
-                    #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
-                    let pos_y = y_i32 as u16;
+            if x_i32 >= 0 && y_i32 >= 0 {
+                #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
+                let pos_x = x_i32 as u16;
+                #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
+                let pos_y = y_i32 as u16;
 
-                    if inner.contains(ratatui::layout::Position { x: pos_x, y: pos_y }) {
-                        frame.buffer_mut().set_string(
-                            pos_x,
-                            pos_y,
-                            body.char.to_string(),
-                            Style::default().fg(body.color),
-                        );
-                    }
+                if inner.contains(ratatui::layout::Position { x: pos_x, y: pos_y }) {
+                    frame.buffer_mut().set_string(
+                        pos_x,
+                        pos_y,
+                        body.char.to_string(),
+                        Style::default().fg(body.color),
+                    );
                 }
             }
         }

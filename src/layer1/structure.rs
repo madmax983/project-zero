@@ -268,6 +268,23 @@ pub fn process_jury_rig(world: &mut World, structure_entity: Entity) {
     // If process_jury_rig is called directly, ensure designation is removed if applicable.
 }
 
+/// System that slowly damages Fragile buildings over time.
+#[allow(clippy::cast_precision_loss)]
+pub fn fragile_decay_system(world: &mut World) {
+    let mut query = world.query::<(&mut Structure, &Fragile)>();
+    for (mut structure, fragile) in query.iter_mut(world) {
+        // Base chance of decay per tick (0.1% per stack)
+        // At 60 ticks/sec, this is ~6% chance per second per stack.
+        // Over a "day" (many ticks), it will accumulate.
+        let base_chance = 0.001;
+        let chance = base_chance * (fragile.stacks as f32);
+
+        if rand::random::<f32>() < chance {
+            structure.current_hp -= 1.0;
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use crate::layer1::GridPosition;
