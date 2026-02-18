@@ -23,7 +23,17 @@
 use crate::layer1::map::ScreenShake;
 use crate::layer1::particles::spawn_particle;
 use bevy_ecs::prelude::*;
+use rand::Rng;
 use ratatui::style::Color;
+
+// Ludwig's Tuning Constants
+const CRIT_CHANCE: f64 = 0.05;
+const CRIT_MULTIPLIER: f32 = 2.0;
+
+const HIT_STOP_CRIT: u32 = 10;
+const HIT_STOP_HEAVY: u32 = 5;
+const HIT_STOP_MEDIUM: u32 = 2;
+const HIT_STOP_LIGHT: u32 = 0;
 
 /// Component marker for pops that have been drafted for military service.
 ///
@@ -172,29 +182,46 @@ pub fn execute_attack(world: &mut World, attacker: Entity, target: Entity) {
 
     // 2. Apply damage to Target
     if damage > 0.0 {
+        // Ludwig: Roll for Crit
+        let mut rng = rand::thread_rng();
+        let is_crit = rng.gen_bool(CRIT_CHANCE);
+
+        if is_crit {
+            damage *= CRIT_MULTIPLIER;
+        }
+
         if let Some(mut health) = world.get_mut::<crate::layer1::health::Health>(target) {
             health.take_damage(damage);
 
             // Ludwig: "Juice" logic
-            let is_heavy_hit = damage >= 15.0;
+            // Scale Hit Stop based on damage severity
+            let hit_stop_ticks = if is_crit {
+                HIT_STOP_CRIT
+            } else if damage >= 15.0 {
+                HIT_STOP_HEAVY
+            } else if damage >= 5.0 {
+                HIT_STOP_MEDIUM
+            } else {
+                HIT_STOP_LIGHT
+            };
 
             // Hit Stop: Freeze frame on impact
-            if is_heavy_hit {
-                // Freeze both for 5 ticks (approx 80ms at 60fps)
-                // This emphasizes the weight of the blow.
+            if hit_stop_ticks > 0 {
                 if let Ok(mut entity) = world.get_entity_mut(attacker) {
-                    entity.insert(HitStop { ticks_remaining: 5 });
+                    entity.insert(HitStop { ticks_remaining: hit_stop_ticks });
                 }
                 if let Ok(mut entity) = world.get_entity_mut(target) {
-                    entity.insert(HitStop { ticks_remaining: 5 });
+                    entity.insert(HitStop { ticks_remaining: hit_stop_ticks });
                 }
             }
 
             // Scale feedback based on damage
-            let (shake_intensity, particle_color, particle_count) = if is_heavy_hit {
-                (0.4, Color::Magenta, 12)
+            let (shake_intensity, particle_char, particle_color, particle_lifetime) = if is_crit {
+                (0.8, '!', Color::Yellow, 20)
+            } else if damage >= 15.0 {
+                (0.4, 'X', Color::Magenta, 12)
             } else {
-                (0.15, Color::Red, 5)
+                (0.15, '*', Color::Red, 5)
             };
 
             // Trigger Screen Shake (Ludwig: Juice)
@@ -207,7 +234,7 @@ pub fn execute_attack(world: &mut World, attacker: Entity, target: Entity) {
                 .get::<crate::layer1::map::GridPosition>(target)
                 .copied()
             {
-                spawn_particle(world, pos, '*', particle_color, particle_count);
+                spawn_particle(world, pos, particle_char, particle_color, particle_lifetime);
             }
         }
     }
@@ -375,7 +402,16 @@ mod tests {
 
         // Check Enemy Health
         let health = world.get::<Health>(enemy).unwrap();
-        assert!((health.current - 80.0).abs() < f32::EPSILON); // 100 - 20
+        let expected_normal = 80.0; // 100 - 20
+        let expected_crit = 60.0; // 100 - 40
+        assert!(
+            (health.current - expected_normal).abs() < f32::EPSILON
+                || (health.current - expected_crit).abs() < f32::EPSILON,
+            "Health should be either normal ({}) or crit ({}), got {}",
+            expected_normal,
+            expected_crit,
+            health.current
+        );
     }
 
     #[test]
@@ -443,10 +479,14 @@ mod tests {
 
         // Check Damage
         let health = world.get::<Health>(target).unwrap();
+        let expected_normal = 90.0;
+        let expected_crit = 80.0;
         assert!(
-            (health.current - 90.0).abs() < f32::EPSILON,
-            "First attack should deal damage"
+            (health.current - expected_normal).abs() < f32::EPSILON
+                || (health.current - expected_crit).abs() < f32::EPSILON,
+            "First attack should deal damage (normal or crit)"
         );
+        let hp_after_first = health.current;
 
         // Check CombatState Existence
         let state = world.get::<CombatState>(attacker);
@@ -460,10 +500,10 @@ mod tests {
         // 5. Second Attack: Should be blocked by cooldown
         crate::layer1::combat::execute_attack(&mut world, attacker, target);
 
-        // Check Damage (Should be unchanged at 90.0)
+        // Check Damage (Should be unchanged)
         let health = world.get::<Health>(target).unwrap();
         assert!(
-            (health.current - 90.0).abs() < f32::EPSILON,
+            (health.current - hp_after_first).abs() < f32::EPSILON,
             "Second attack should be blocked by cooldown. Health: {}",
             health.current
         );
@@ -497,6 +537,8 @@ mod tests {
         let mut world = setup_world();
 
         // Heavy Weapon (Damage 20)
+        // Normal: 20 dmg -> Heavy (5 ticks)
+        // Crit: 40 dmg -> Crit (10 ticks)
         let weapon = world
             .spawn(Weapon {
                 properties: AttackProperties {
@@ -531,22 +573,26 @@ mod tests {
         // Check HitStop
         let attacker_hs = world.get::<HitStop>(attacker);
         assert!(attacker_hs.is_some(), "Attacker should have HitStop");
-        assert_eq!(attacker_hs.unwrap().ticks_remaining, 5);
+        let ticks = attacker_hs.unwrap().ticks_remaining;
+        assert!(ticks == 5 || ticks == 10, "Expected 5 or 10 ticks, got {}", ticks);
 
         let target_hs = world.get::<HitStop>(target);
         assert!(target_hs.is_some(), "Target should have HitStop");
-        assert_eq!(target_hs.unwrap().ticks_remaining, 5);
+        let ticks_target = target_hs.unwrap().ticks_remaining;
+        assert!(ticks_target == 5 || ticks_target == 10);
     }
 
     #[test]
-    fn test_execute_attack_no_hit_stop_on_light_hit() {
+    fn test_execute_attack_hit_stop_scaling_light() {
         let mut world = setup_world();
 
-        // Light Weapon (Damage 5)
+        // Very Light Weapon (Damage 4)
+        // Normal: 4 dmg -> Light (0 ticks)
+        // Crit: 8 dmg -> Medium (2 ticks)
         let weapon = world
             .spawn(Weapon {
                 properties: AttackProperties {
-                    damage: 5.0,
+                    damage: 4.0,
                     range: 1.0,
                     cooldown: 10,
                     accuracy: 1.0,
@@ -573,13 +619,59 @@ mod tests {
 
         execute_attack(&mut world, attacker, target);
 
-        assert!(
-            world.get::<HitStop>(attacker).is_none(),
-            "Light hit should not trigger HitStop"
-        );
-        assert!(
-            world.get::<HitStop>(target).is_none(),
-            "Light hit should not trigger HitStop"
-        );
+        let hs = world.get::<HitStop>(attacker);
+        if hs.is_some() {
+            // Must have critted (Damage 4 * 2 = 8, but Crit flag overrides to Crit duration)
+            // Implementation: if is_crit { HIT_STOP_CRIT (10) }
+            assert_eq!(hs.unwrap().ticks_remaining, 10, "Crit on light weapon should give CRIT ticks (10)");
+        } else {
+            // Normal (Damage 4 < 5) -> Light (0 ticks)
+            assert!(hs.is_none(), "Normal light hit should give 0 ticks");
+        }
+    }
+
+    #[test]
+    fn test_execute_attack_hit_stop_scaling_medium() {
+        let mut world = setup_world();
+
+        // Medium Weapon (Damage 10)
+        // Normal: 10 dmg -> Medium (2 ticks)
+        // Crit: 20 dmg -> Crit (10 ticks) - because 20 >= 15 is Heavy, but Crit flag overrides to Crit duration?
+        // Wait, implementation: if is_crit { 10 } else if dmg >= 15 { 5 } ...
+        // So yes, Crit -> 10 ticks.
+        let weapon = world
+            .spawn(Weapon {
+                properties: AttackProperties {
+                    damage: 10.0,
+                    range: 1.0,
+                    cooldown: 10,
+                    accuracy: 1.0,
+                },
+            })
+            .id();
+
+        let attacker = world
+            .spawn((
+                Pop,
+                Equipment {
+                    weapon: Some(weapon),
+                    ..Default::default()
+                },
+            ))
+            .id();
+
+        let target = world
+            .spawn(Health {
+                current: 100.0,
+                max: 100.0,
+            })
+            .id();
+
+        execute_attack(&mut world, attacker, target);
+
+        let hs = world.get::<HitStop>(attacker);
+        assert!(hs.is_some());
+        let ticks = hs.unwrap().ticks_remaining;
+        assert!(ticks == 2 || ticks == 10, "Expected 2 (Normal) or 10 (Crit), got {}", ticks);
     }
 }
