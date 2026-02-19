@@ -4,6 +4,8 @@ use crate::layer1::building::Building;
 use crate::layer1::building::BuildingType;
 use crate::layer1::building::OccupiedTiles;
 use crate::layer1::fire::Fire;
+use crate::layer1::ruins::{Ruin, RuinHistory};
+use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 
 /// Component representing the structural integrity of a building.
@@ -61,8 +63,8 @@ pub fn fire_damage_structure_system(world: &mut World) {
     // This is O(F * S) which is fine for MVP. Optimization: Spatial Map.
     for (fire_pos, intensity) in fires {
         let mut structure_query =
-            world.query::<(Entity, &GridPosition, &mut Structure, Option<&Fragile>)>();
-        for (entity, pos, mut structure, fragile) in structure_query.iter_mut(world) {
+            world.query::<(Entity, &GridPosition, &mut Structure, Option<&Fragile>, Option<&Building>)>();
+        for (entity, pos, mut structure, fragile, building) in structure_query.iter_mut(world) {
             if *pos == fire_pos {
                 let base_damage = 5.0 * intensity; // 5.0 damage per tick per intensity unit
 
@@ -74,28 +76,65 @@ pub fn fire_damage_structure_system(world: &mut World) {
                 structure.current_hp -= base_damage * multiplier;
 
                 if structure.current_hp <= 0.0 {
-                    destroyed.push((entity, *pos));
+                    let b_type = building.map(|b| b.building_type);
+                    destroyed.push((entity, *pos, b_type));
                 }
             }
         }
     }
 
     // Despawn destroyed structures
-    for (entity, pos) in destroyed {
+    for (entity, pos, b_type_opt) in destroyed {
         // Double check it still exists (though unlikely to change within loop)
         if world.get_entity(entity).is_ok() {
             world.despawn(entity);
-            // Clean up OccupiedTiles
-            if let Some(mut occupied) = world.get_resource_mut::<OccupiedTiles>() {
-                occupied.0.remove(&(pos.x, pos.y));
+
+            let mut ruin_spawned = false;
+            // Spawn Ruin if it was a building
+            if let Some(b_type) = b_type_opt {
+                 let current_tick = world.get_resource::<SimulationTime>().map_or(0, |t| t.tick);
+                 world.spawn((
+                    Ruin { original_type: b_type },
+                    RuinHistory {
+                        destruction_tick: current_tick,
+                        reason: "Fire".to_string(),
+                    },
+                    pos,
+                    // Visuals handled by renderer looking for Ruin component
+                 ));
+
+                 // Particle effect for destruction
+                 crate::layer1::particles::spawn_particle(
+                    world,
+                    pos,
+                    'X',
+                    ratatui::style::Color::DarkGray,
+                    20,
+                 );
+
+                 ruin_spawned = true;
+            }
+
+            // Clean up OccupiedTiles ONLY if no ruin spawned
+            if !ruin_spawned {
+                if let Some(mut occupied) = world.get_resource_mut::<OccupiedTiles>() {
+                    occupied.0.remove(&(pos.x, pos.y));
+                }
             }
 
             // Add log message
             if let Some(mut log) = world.get_resource_mut::<crate::shared::log::MessageLog>() {
-                log.add(format!(
-                    "Structure destroyed by fire at ({}, {})",
-                    pos.x, pos.y
-                ));
+                if ruin_spawned {
+                     log.add(format!(
+                        "Building destroyed by fire at ({}, {}). Ruin left.",
+                        pos.x, pos.y
+                    ));
+                } else {
+                    log.add(format!(
+                        "Structure destroyed by fire at ({}, {})",
+                        pos.x, pos.y
+                    ));
+                }
             }
         }
     }

@@ -35,3 +35,4 @@ Tasks currently being implemented. Builders: if a task is here, pick something e
 - [ ] `147` Secret Societies — `specs/147-secret-societies.md` — claimed 2026-10-27
 - [ ] `139` Cryo-Stasis Vaults — `specs/139-cryo-stasis.md` — claimed 2026-02-18
 - [ ] `160` Sanctuary Districts — `specs/160-sanctuary-districts.md` — claimed 2026-05-24
+- [ ] `167` Monuments of Failure — `specs/167-monuments-of-failure.md` — claimed 2026-02-19

@@ -822,6 +822,13 @@ pub fn execute_demolish(world: &mut World, designation_entity: Entity) -> bool {
                 .find(|(_, pos, _)| pos.x == designation_pos.x && pos.y == designation_pos.y)
                 .map(|(e, _, _)| e);
 
+            // Also check for Ruins
+            let ruin_entity = world
+                .query::<(Entity, &GridPosition, &crate::layer1::ruins::Ruin)>()
+                .iter(world)
+                .find(|(_, pos, _)| pos.x == designation_pos.x && pos.y == designation_pos.y)
+                .map(|(e, _, _)| e);
+
             if let Some(entity) = building_entity {
                 // Check for AncientStructure before despawn
                 let is_ancient = world
@@ -872,9 +879,26 @@ pub fn execute_demolish(world: &mut World, designation_entity: Entity) -> bool {
                 if let Some(mut occupied) = world.get_resource_mut::<OccupiedTiles>() {
                     occupied.0.remove(&(designation_pos.x, designation_pos.y));
                 }
+
+                // Despawn the designation itself
+                world.despawn(designation_entity);
+                return true;
+            } else if let Some(entity) = ruin_entity {
+                // Scavenge Ruin
+                crate::layer1::ruins::process_scavenge(world, entity);
+
+                // Visuals
+                spawn_particle(world, designation_pos, '*', Color::Gray, 15);
+                if let Some(mut shake) = world.get_resource_mut::<ScreenShake>() {
+                    shake.trigger(0.3);
+                }
+
+                // Despawn the designation itself
+                world.despawn(designation_entity);
+                return true;
             }
 
-            // Despawn the designation itself
+            // Despawn the designation itself (nothing found to demolish)
             world.despawn(designation_entity);
             true
         })
@@ -3333,5 +3357,34 @@ mod tests {
             "Expected ~15.0 (or crit), got {}",
             progress.current
         );
+    }
+
+    #[test]
+    fn test_execute_demolish_on_ruin() {
+        use crate::layer1::ruins::Ruin;
+        use crate::layer1::building::BuildingType;
+
+        let mut world = setup_world();
+
+        // Spawn a Ruin
+        let ruin = world.spawn((
+            Ruin { original_type: BuildingType::Wall },
+            GridPosition { x: 5, y: 5 },
+        )).id();
+
+        // Spawn Designation
+        let designation = world.spawn((
+            Designation {
+                designation_type: DesignationType::Demolish,
+            },
+            GridPosition { x: 5, y: 5 },
+        )).id();
+
+        // Execute Demolish
+        let success = execute_demolish(&mut world, designation);
+
+        assert!(success, "Demolish should succeed on Ruin");
+        assert!(world.get_entity(ruin).is_err(), "Ruin should be despawned");
+        assert!(world.get_entity(designation).is_err(), "Designation should be despawned");
     }
 }

@@ -266,6 +266,7 @@ pub use society::*;
 
 /// Room quality calculation and memories (Spec 064).
 pub mod room_quality;
+pub mod ruins;
 pub use room_quality::*;
 
 /// Hostile Fauna (Spec 048).
