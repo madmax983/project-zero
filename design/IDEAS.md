@@ -4618,3 +4618,101 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Production uptime vs. Worker health during weather events.
 
 ---
+
+## Dream-Share
+
+**Layer:** 1
+
+**Fantasy:** In the tight quarters of a colony, privacy of the mind dissolves.
+
+**Mechanic:** Pops sleeping in close proximity (Barracks) share "Dreams". If one has a Nightmare (Trauma), adjacent sleepers get Stress. If one has "Inspiration", adjacent sleepers get XP or Mood buffs.
+
+**Emergence:** A traumatized soldier gives nightmares to the whole barracks, lowering combat effectiveness. You have to give him a private room (or isolate him).
+
+**Tension:** Density (Space efficiency) vs. Mental Hygiene.
+
+---
+
+## The Water Table
+
+**Layer:** 1
+
+**Fantasy:** The water isn't just in the river; it's under your feet.
+
+**Mechanic:** Depleting the local water table (via pumps/farming) causes ground subsidence (Sinkholes) and kills local flora. Rain slowly recharges it.
+
+**Emergence:** You drain the aquifer for industry. The forest dies. The "Dryad" faction revolts. The ground swallows your factory.
+
+**Tension:** Water access (Industrial scale) vs. Environmental stability.
+
+---
+
+## Supply Chain Contamination
+
+**Layer:** 1
+
+**Fantasy:** Poison in the well. One bad apple spoils the bunch.
+
+**Mechanic:** Contaminants (Radiation, Poison, Spores) track through the conveyor/stockpile system. Contaminated items ruin recipes (Food poisoning) or damage buildings.
+
+**Emergence:** A radioactive ore chunk gets mixed into the "Common Stone" pile. It gets built into a wall in the nursery. The babies get sick. You have to Geiger-counter every wall to find it.
+
+**Tension:** Fast sorting (Bulk storage) vs. Safe sorting (Scanning/Separation).
+
+---
+
+## Relics of the Future
+
+**Layer:** 1
+
+**Fantasy:** Time is a flat circle. Finding tech that hasn't been invented yet.
+
+**Mechanic:** You dig up an artifact stamped with a manufacturing date 1000 years in the *future*. It works perfectly but degrades "Local Reality Stability" (see Reality Anchors).
+
+**Emergence:** You use the future-gun to win a war, but it accidentally erases the inventor's grandfather from existence (a Pop in your colony), causing the gun to vanish mid-battle.
+
+**Tension:** Power vs. Causality.
+
+---
+
+## The Face of the Enemy
+
+**Layer:** 3 -> 1
+
+**Fantasy:** The enemy admiral isn't a stat block; he's a person.
+
+**Mechanic:** Layer 3 Leaders (Admirals, Generals) exist as physical Pops on their Flagships/Planets. You can kidnap/assassinate them via Layer 1 missions.
+
+**Emergence:** You send a stealth team to kidnap the enemy Emperor from his palace. You succeed. The war ends instantly because they have no heir.
+
+**Tension:** Grand Strategy (Fleets) vs. Spec Ops (Agents).
+
+---
+
+## Memorial Forests
+
+**Layer:** 1
+
+**Fantasy:** Life from death.
+
+**Mechanic:** Instead of graves, you plant trees over bodies. The tree inherits a trait or "memory" of the deceased. Chopping it down yields special wood but causes massive grief.
+
+**Emergence:** You are desperate for wood in winter. You have to chop down "Grandpa".
+
+**Tension:** Resource vs. Memory.
+
+---
+
+## Orbital Slots
+
+**Layer:** 2
+
+**Fantasy:** The best view costs extra.
+
+**Mechanic:** Orbits are finite slots (Geosynchronous, LEO, High Orbit). Different slots give different bonuses (Comms, Spy, Solar). You have to fight/bid for the best slots.
+
+**Emergence:** You start a war just to evict a rival's satellite from the "Golden Slot" over your capital.
+
+**Tension:** Optimal placement vs. Diplomatic friction.
+
+---
