@@ -36,6 +36,7 @@ use scale::layer1::{
     try_designate, try_place_building,
 };
 use scale::setup::{SetupConfig, setup_world_with_config};
+use scale::shared::log::MessageLog;
 use scale::shared::state::GameState;
 use scale::shared::time::SimulationTime;
 use scale::simulation::run_simulation_tick;
@@ -175,6 +176,7 @@ fn main() {
                     None => println!("Usage: bio <id>"),
                 }
             }
+            "log" | "l" => print_log(&mut world),
             _ => println!("Unknown command: '{command}'. Type 'help' for commands."),
         }
         println!();
@@ -424,7 +426,7 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
 
             // Check for pop
             if pop_positions.iter().any(|&(px, py)| px == x && py == y) {
-                print!("@");
+                print!("{}", "@".cyan().bold());
                 continue;
             }
 
@@ -444,7 +446,7 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
                     DesignationType::JuryRig => 'J',
                     DesignationType::Cannibalize => 'C',
                 };
-                print!("{c}");
+                print!("{}", format!("{c}").magenta());
                 continue;
             }
 
@@ -453,17 +455,17 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
                 .get(&(x, y))
                 .copied()
                 .unwrap_or(TerrainType::Grass);
-            let c = match tile {
-                TerrainType::Grass => '.',
-                TerrainType::Dirt => ',',
-                TerrainType::Rock => '#',
-                TerrainType::Water => '~',
-                TerrainType::Tree => 'T',
-                TerrainType::Path => '=',
-                TerrainType::Shrub => '"',
-                TerrainType::Sapling => 't',
+            let s = match tile {
+                TerrainType::Grass => ".".green(),
+                TerrainType::Dirt => ",".yellow(),
+                TerrainType::Rock => "#".white().dim(),
+                TerrainType::Water => "~".blue(),
+                TerrainType::Tree => "T".dark_green(),
+                TerrainType::Path => "=".white(),
+                TerrainType::Shrub => "\"".green().dim(),
+                TerrainType::Sapling => "t".green().dim(),
             };
-            print!("{c}");
+            print!("{s}");
         }
         println!();
     }
@@ -847,24 +849,36 @@ fn print_bio(world: &mut World, target_id: u32) {
     for (entity, name, bio, dream) in query.iter(world) {
         if entity.index() == target_id {
             found = true;
-            println!("=== Biography for {} ({:?}) ===", name.0, entity);
+            println!("{}", format!("=== Biography for {} ({:?}) ===", name.0, entity).green().bold());
 
-            println!("Life Events:");
             if let Some(bio) = bio {
                 if bio.events.is_empty() {
                     println!("  (No events recorded)");
                 } else {
+                    let mut table = Table::new();
+                    table
+                        .load_preset(UTF8_FULL)
+                        .set_content_arrangement(ContentArrangement::Dynamic)
+                        .set_header(vec![
+                            Cell::new("Tick").add_attribute(Attribute::Bold),
+                            Cell::new("Event").add_attribute(Attribute::Bold),
+                        ]);
+
                     for event in &bio.events {
-                        println!("  [Tick {:>6}] {}", event.tick, event.text);
+                        table.add_row(vec![
+                            Cell::new(event.tick.to_string()),
+                            Cell::new(&event.text),
+                        ]);
                     }
+                    println!("{table}");
                 }
             } else {
                 println!("  (No biography component)");
             }
 
             if let Some(dream) = dream {
-                println!("\nLast Dream (Tick {}):", dream.tick);
-                println!("  \"{}\"", dream.content);
+                println!("\n{}", "Last Dream:".cyan().bold());
+                println!("  [Tick {}] \"{}\"", dream.tick, dream.content);
             }
             break;
         }
@@ -872,6 +886,64 @@ fn print_bio(world: &mut World, target_id: u32) {
 
     if !found {
         println!("Pop with ID {target_id} not found.");
+    }
+}
+
+fn print_log(world: &mut World) {
+    let log = world.resource::<MessageLog>();
+
+    println!("{}", "=== Message Log ===".green().bold());
+
+    if log.messages.is_empty() {
+        println!("  (No messages)");
+        return;
+    }
+
+    let mut table = Table::new();
+    table
+        .load_preset(UTF8_FULL)
+        .set_content_arrangement(ContentArrangement::Dynamic)
+        .set_header(vec![
+            Cell::new("Color").add_attribute(Attribute::Bold),
+            Cell::new("Message").add_attribute(Attribute::Bold),
+        ]);
+
+    for msg in &log.messages {
+        let color = to_comfy_color(msg.color);
+        // Display color name as indicator, but colored
+        let color_name = format!("{:?}", msg.color);
+
+        table.add_row(vec![
+            Cell::new(color_name).fg(color),
+            Cell::new(&msg.text).fg(color),
+        ]);
+    }
+
+    println!("{table}");
+}
+
+fn to_comfy_color(c: ratatui::style::Color) -> comfy_table::Color {
+    use ratatui::style::Color as RColor;
+    use comfy_table::Color as CColor;
+
+    match c {
+        RColor::Black => CColor::Black,
+        RColor::Red => CColor::Red,
+        RColor::Green => CColor::Green,
+        RColor::Yellow => CColor::Yellow,
+        RColor::Blue => CColor::Blue,
+        RColor::Magenta => CColor::Magenta,
+        RColor::Cyan => CColor::Cyan,
+        RColor::Gray => CColor::Grey,
+        RColor::DarkGray => CColor::DarkGrey,
+        RColor::LightRed => CColor::Red,
+        RColor::LightGreen => CColor::Green,
+        RColor::LightYellow => CColor::Yellow,
+        RColor::LightBlue => CColor::Blue,
+        RColor::LightMagenta => CColor::Magenta,
+        RColor::LightCyan => CColor::Cyan,
+        RColor::White => CColor::White,
+        _ => CColor::White,
     }
 }
 
@@ -905,6 +977,7 @@ fn print_help() {
         ("chop <x> <y>", "", "Designate tree for chopping"),
         ("designations", "d", "List all active designations"),
         ("bio <id>", "", "Show biography and dreams of a pop"),
+        ("log", "l", "Show message log"),
         ("find <type> [N]", "", "Find N terrain coords (default 10)"),
         ("help", "h, ?", "Show this help"),
         ("quit", "q, exit", "Exit"),
