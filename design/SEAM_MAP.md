@@ -86,3 +86,11 @@
     - Modified `healing_system` to emit `PatientTreated`.
     - Added `medical_debt_bridge_system` in `src/layer1/integration.rs` to create debt.
 - **Tests:** `tests/integration/medical_debt.rs` (Integration test verified)
+
+### INT-030: Drone Networks -> Sanctuary Districts
+- **Date:** 2026-06-03
+- **Systems connected:** `haul_system` (Logistics) -> `ZoneType::Sanctuary` (Zone)
+- **Glue added:**
+    - Updated `src/layer1/hauling.rs` to filter targets based on Zone.
+    - Drones ignore items and stockpiles in Sanctuary zones.
+- **Tests:** `tests/integration/drone_sanctuary.rs` (Integration test verified)

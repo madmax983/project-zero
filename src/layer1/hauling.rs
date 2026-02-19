@@ -5,6 +5,8 @@ use crate::layer1::factions::{FactionMember, FactionState, Factions};
 use crate::layer1::resources::{Carrying, ColonyResources, ResourceItem};
 use crate::layer1::stockpile::Stockpile;
 use crate::layer1::utility_ai::{ActionType, PopAction, manhattan_distance};
+use crate::layer1::zone::{ZoneGrid, ZoneType};
+use crate::layer1::drone::Drone;
 use bevy_ecs::prelude::*;
 
 /// Moves resources from the world to stockpiles.
@@ -137,13 +139,30 @@ fn find_and_target_stockpile(
     pos: GridPosition,
     _carrying: Carrying,
 ) {
-    // Find closest stockpile
+    // Check if drone
+    let is_drone = world.get::<Drone>(pop_entity).is_some();
+
+    // 1. Create query state first (requires &mut World temporarily)
+    let mut query = world.query::<(Entity, &GridPosition, &Stockpile)>();
+
+    // 2. Get resource reference (requires &World)
+    let zone_grid = world.get_resource::<ZoneGrid>();
+
+    // 3. Find closest stockpile
     let target = {
-        let mut query = world.query::<(Entity, &GridPosition, &Stockpile)>();
         let mut best = None;
         let mut min_dist = i32::MAX;
 
         for (e, p, _) in query.iter(world) {
+            // Drone Check: Drones cannot use stockpiles in Sanctuary
+            if is_drone {
+                if let Some(grid) = zone_grid {
+                    if grid.get(p.x, p.y) == ZoneType::Sanctuary {
+                        continue;
+                    }
+                }
+            }
+
             let dist = manhattan_distance(&pos, p);
             if dist < min_dist {
                 min_dist = dist;
@@ -163,18 +182,30 @@ fn find_and_target_stockpile(
 }
 
 fn find_and_target_item(world: &mut World, pop_entity: Entity, pos: GridPosition) {
-    // Reuse evaluate_haul logic? Or simple closest item logic?
-    // evaluate_haul considers capacity checks. We should too.
-    // But evaluating utility again is complex. Let's just find closest item that fits.
+    // Check if drone
+    let is_drone = world.get::<Drone>(pop_entity).is_some();
 
-    let resources = world.resource::<ColonyResources>().clone();
+    // 1. Create query state first
+    let mut query = world.query::<(Entity, &GridPosition, &ResourceItem)>();
+
+    // 2. Get resources
+    let resources = world.resource::<ColonyResources>().clone(); // Clone small struct
+    let zone_grid = world.get_resource::<ZoneGrid>();
 
     let target = {
-        let mut query = world.query::<(Entity, &GridPosition, &ResourceItem)>();
         let mut best = None;
         let mut min_dist = i32::MAX;
 
         for (e, p, item) in query.iter(world) {
+            // Drone Check: Drones cannot pickup items in Sanctuary
+            if is_drone {
+                if let Some(grid) = zone_grid {
+                    if grid.get(p.x, p.y) == ZoneType::Sanctuary {
+                        continue;
+                    }
+                }
+            }
+
             let has_room = match item.resource_type {
                 crate::layer1::resources::ResourceType::Food => resources.food < resources.max_food,
                 crate::layer1::resources::ResourceType::Wood => resources.wood < resources.max_wood,

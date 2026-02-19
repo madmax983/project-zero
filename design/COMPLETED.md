@@ -89,3 +89,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `162` Tech Envy — `specs/162-tech-envy.md` — completed 2026-02-19
 - [x] `156` Xeno-Artifacts — `specs/156-xeno-artifacts.md` — completed 2026-05-25
 - [x] `116` Drone Networks — `specs/116-drone-networks.md` — completed 2026-06-01
+- [x] `INT-030` Integration: Drones <-> Sanctuary Districts — completed 2026-06-03
