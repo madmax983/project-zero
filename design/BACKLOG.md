@@ -25,6 +25,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `167` Monuments of Failure — `specs/167-monuments-of-failure.md`
 - [ ] `168` The Mother Lode — `specs/168-the-mother-lode.md`
 - [ ] `170` Pheromone Gardening — `specs/170-pheromone-gardening.md`
+- [ ] `171` Seismic Resonance — `specs/171-seismic-resonance.md`
 
 ## MVP — Layer 2: System Simulation
 
