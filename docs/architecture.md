@@ -27,6 +27,11 @@ Container_Boundary(Simulation, "Simulation Core (Layer 1)") {
     Component(World, "World Entities", "farm.rs, housing.rs", "Interactable Buildings")
     Component(Resources, "Colony Resources", "resources.rs", "Global Inventory")
     Component(Map, "Map/Terrain", "map.rs", "Spatial Grid")
+
+    Component(DroneSystem, "Drone System", "drone.rs", "Automated Workers")
+    Component(OralTradition, "Oral Tradition", "oral_tradition.rs", "History -> Buffs")
+    Component(Ecology, "Ecology", "ecology.rs", "Flora/Fauna Simulation")
+    Component(Tech, "Tech System", "tech.rs", "Research & Data Physicality")
 }
 
 Container(Shared, "Shared Lib", "Utilities", "GameState, Time, Input, Logs")
@@ -65,6 +70,13 @@ Rel(Pops, SpontaneousArch, "Builds")
 Rel(Pops, Atmosphere, "Takes Damage")
 Rel(Pops, Pressure, "Moved by Force")
 
+Rel(UtilityOrchestrator, DroneSystem, "Runs Logic")
+Rel(Chronicle, OralTradition, "Feeds Events")
+Rel(OralTradition, Pops, "Buffs Needs")
+Rel(Tech, Resources, "Consumes Knowledge")
+Rel(Tech, World, "Unlocks Buildings")
+Rel(Ecology, Map, "Updates Terrain")
+
 Rel(MapRender, Shared, "Reads State")
 Rel(MapRender, Map, "Reads Entities")
 Rel(Inspector, Shared, "Reads Selection")
@@ -78,7 +90,7 @@ classDiagram
   class Core
   class Storage
   Core --> Storage : Uses (Trait Bound)
-  %% Reflected in ADR 026
+  %% Reflected in ADR 012
   %% Removed the circular dependency arrow
 ```
 
@@ -90,7 +102,7 @@ sequenceDiagram
     participant Storage
     participant Disk
 
-    %% Reflected in ADR 026
+    %% Reflected in ADR 012
     Core->>Storage: save_world_state()
     Storage->>Disk: serialize_to_file()
     Disk-->>Storage: success
@@ -378,4 +390,3 @@ Rel(Shared, Events, "Consumes")
 - [ADR 020: Spontaneous Architecture](./adr/020-spontaneous-architecture.md)
 - [ADR 022: Atmospheric & Ventilation Flow](./adr/022-atmospheric-flow-architecture.md)
 - [ADR 023: Data Physicality & Tech Corruption](./adr/023-data-physicality.md)
-- [ADR 026: Decouple Storage from Core](./adr/026-decouple-storage.md)
