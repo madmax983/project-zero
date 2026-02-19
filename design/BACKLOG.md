@@ -16,7 +16,9 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `066` Building Work AI — `specs/066-building-work-ai.md`
 - [ ] `068` Pop Factions — `specs/068-pop-factions.md`
 - [ ] `077` Emergent Festivals — `specs/077-emergent-festivals.md`
+- [ ] `079` Weather Events — `specs/079-weather-events.md`
 - [ ] `080` Planetary Quirks — `specs/080-planetary-quirks.md`
+- [ ] `084` Pop Traits — `specs/084-pop-traits.md`
 - [ ] `098` Medical Triage Policies — `specs/098-medical-triage.md`
 - [ ] `116` Drone Networks — `specs/116-drone-networks.md`
 - [ ] `117` Fuel Consumption — `specs/117-fuel-consumption.md`
@@ -25,6 +27,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `133` Ventilation Networks — `specs/133-ventilation-networks.md`
 - [ ] `137` Pop Hobbies — `specs/137-pop-hobbies.md`
 - [ ] `163` Vermin Evolution — `specs/163-vermin-evolution.md`
+- [ ] `164` Modular Fauna — `specs/164-modular-fauna.md`
 
 ## MVP — Layer 2: System Simulation
 
