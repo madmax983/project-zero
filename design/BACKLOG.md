@@ -11,21 +11,12 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 ## MVP — Layer 1: Colony Simulation
 
-- [ ] `055` Rumor Web — `specs/055-rumor-web.md`
 - [ ] `059` Soil Fertility — `specs/059-soil-fertility.md`
-- [ ] `066` Building Work AI — `specs/066-building-work-ai.md`
-- [ ] `068` Pop Factions — `specs/068-pop-factions.md`
 - [ ] `077` Emergent Festivals — `specs/077-emergent-festivals.md`
-- [ ] `079` Weather Events — `specs/079-weather-events.md`
-- [ ] `080` Planetary Quirks — `specs/080-planetary-quirks.md`
-- [ ] `084` Pop Traits — `specs/084-pop-traits.md`
 - [ ] `093` Desire Paths — `specs/093-desire-paths.md`
-- [ ] `098` Medical Triage Policies — `specs/098-medical-triage.md`
-- [ ] `117` Fuel Consumption — `specs/117-fuel-consumption.md`
 - [ ] `120` Crop Diversity — `specs/120-crop-diversity.md`
 - [ ] `132` Equipment & Wear — `specs/132-equipment-and-wear.md`
 - [ ] `133` Ventilation Networks — `specs/133-ventilation-networks.md`
-- [ ] `137` Pop Hobbies — `specs/137-pop-hobbies.md`
 - [ ] `164` Modular Fauna — `specs/164-modular-fauna.md`
 - [ ] `165` Gene Banks — `specs/165-gene-banks.md`
 - [ ] `166` Xeno-Gastronomy — `specs/166-xeno-gastronomy.md`
@@ -46,3 +37,4 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `157` Ship Classes & Construction — `specs/157-ship-classes.md`
 - [ ] `158` Fleet Management (Merge & Split) — `specs/158-fleet-management.md`
 - [ ] `159` Fleet Combat Resolution — `specs/159-fleet-combat.md`
+- [ ] `169` Subspace Currents — `specs/169-subspace-currents.md`

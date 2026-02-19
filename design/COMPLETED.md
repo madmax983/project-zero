@@ -33,22 +33,30 @@ Features that have been fully implemented, tested, and merged.
 - [x] `047` Pop Relationships — `specs/047-pop-relationships.md` — completed 2026-02-17
 - [x] `049` Industrial Waste — `specs/049-industrial-waste.md` — completed 2026-06-02
 - [x] `054` Colony Edicts — `specs/054-colony-edicts.md` — completed 2026-10-28
+- [x] `055` Rumor Web — `specs/055-rumor-web.md` — completed 2026-06-03
 - [x] `056` Designated Zones — `specs/056-designated-zones.md` — completed 2026-02-20
 - [x] `058` Personal Tools — `specs/058-personal-tools.md` — completed 2026-02-09
 - [x] `060` Acoustic Simulation — `specs/060-acoustic-simulation.md` — completed 2026-10-27
 - [x] `063` Atmospheric Simulation — `specs/063-atmospheric-simulation.md` — completed 2026-03-01
+- [x] `066` Building Work AI — `specs/066-building-work-ai.md` — completed 2026-06-03
 - [x] `067` Militia System — `specs/067-militia-system.md` — completed 2026-03-10
+- [x] `068` Pop Factions — `specs/068-pop-factions.md` — completed 2026-06-03
 - [x] `069` Mentorship System — `specs/069-mentorship-system.md` — completed 2026-06-02
 - [x] `072` Justice System — `specs/072-justice-system.md` — completed 2026-03-15
 - [x] `078` The Old Guard — `specs/078-the-old-guard.md` — completed 2026-10-18
+- [x] `079` Weather Events — `specs/079-weather-events.md` — completed 2026-06-03
+- [x] `080` Planetary Quirks — `specs/080-planetary-quirks.md` — completed 2026-06-03
+- [x] `084` Pop Traits — `specs/084-pop-traits.md` — completed 2026-06-03
 - [x] `086` The Stowaway — `specs/086-the-stowaway.md` — completed 2026-06-02
 - [x] `091` The Inspector — `specs/091-the-inspector.md` — completed 2026-10-21
 - [x] `092` Antagonistic Flora — `specs/092-antagonistic-flora.md` — completed 2026-02-09
 - [x] `097` Social Tavern — `specs/097-social-tavern.md` — completed 2026-10-23
+- [x] `098` Medical Triage Policies — `specs/098-medical-triage.md` — completed 2026-06-03
 - [x] `103` Private Stashes — `specs/103-private-stashes.md` — completed 2026-06-02
 - [x] `107` Biocompatibility — `specs/107-biocompatibility.md` — completed 2026-10-27
 - [x] `112` Maintenance Debt — `specs/112-maintenance-debt.md` — completed 2026-10-27
 - [x] `113` Social Stratification — `specs/113-social-stratification.md` — completed 2026-10-27
+- [x] `117` Fuel Consumption — `specs/117-fuel-consumption.md` — completed 2026-06-03
 - [x] `119` Airlock and Pressure — `specs/119-airlock-and-pressure.md` — completed 2026-10-25
 - [x] `121` Hydroponics — `specs/121-hydroponics.md` — completed 2026-02-15
 - [x] `122` Retrograde Engineering — `specs/122-retrograde-engineering.md` — completed 2026-10-26
@@ -62,6 +70,7 @@ Features that have been fully implemented, tested, and merged.
 - [x] `134` Emergency Venting — `specs/134-emergency-venting.md` — completed 2026-02-16
 - [x] `135` Trash Cannon Defense — `specs/135-trash-cannon-defense.md` — completed 2026-02-16
 - [x] `136` Explosive Decompression — `specs/136-explosive-decompression.md` — completed 2026-02-16
+- [x] `137` Pop Hobbies — `specs/137-pop-hobbies.md` — completed 2026-06-03
 - [x] `138` The Blob — `specs/138-the-blob.md` — completed 2026-02-17
 - [x] `140` Thermal Management — `specs/140-thermal-management.md` — completed 2026-02-17
 - [x] `141` Colony Ship Cannibalization — `specs/141-colony-ship-cannibalization.md` — completed 2026-10-27
