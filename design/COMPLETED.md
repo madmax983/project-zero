@@ -81,3 +81,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] 042 Energy System — specs/042-energy-system.md — completed 2026-10-29
 - [x] `161` Ecological Succession — `specs/161-ecological-succession.md` — completed 2026-02-18
 - [x] `162` Tech Envy — `specs/162-tech-envy.md` — completed 2026-02-19
+- [x] `156` Xeno-Artifacts — `specs/156-xeno-artifacts.md` — completed 2026-05-25
