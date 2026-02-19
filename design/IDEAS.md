@@ -4618,3 +4618,87 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Production uptime vs. Worker health during weather events.
 
 ---
+
+## Gut Biome
+
+**Layer:** 1
+
+**Fantasy:** You are what you eat.
+
+**Mechanic:** Pops have a "Gut Biome". Eating Alien food adapts the biome. Sudden diet changes cause sickness.
+
+**Emergence:** Your colony eats "Moss-Bread" for years. You finally harvest "Real Wheat". Everyone gets sick because they can't digest it anymore.
+
+**Tension:** Dietary stability vs. Variety.
+
+---
+
+## Pollination Vectors
+
+**Layer:** 1
+
+**Fantasy:** The fragility of closed ecosystems.
+
+**Mechanic:** Crops require pollination (Insects/Wind). Sealed greenhouses need "Pollinator Drones" or "Hand-Pollination" (Labor intensive).
+
+**Emergence:** You kill all the "annoying bugs" with pesticide. The harvest fails.
+
+**Tension:** Open farms (free pollination/pests) vs. Closed farms (labor cost/safety).
+
+---
+
+## Masterwork Legacy
+
+**Layer:** 1
+
+**Fantasy:** A master craftsman leaves a mark.
+
+**Mechanic:** High-skill builders imprint bonuses on structures. "Hargin's Wall" is stronger.
+
+**Emergence:** Hargin dies. His walls are irreplaceable. You build a shrine around the last "Hargin Turret".
+
+**Tension:** Demolish the obsolete masterpiece or keep it for the buff/sentiment?
+
+---
+
+## Thermal Camouflage
+
+**Layer:** 1
+
+**Fantasy:** Holding your breath and cooling your blood.
+
+**Mechanic:** Detection is heat-based. "Running Hot" (Working/Shooting) makes you visible. "Running Cold" (Idle/Cryo) makes you invisible to sensors/fauna.
+
+**Emergence:** A monster is hunting the crew. The only way to survive is to turn off life support and freeze.
+
+**Tension:** Action (Heat) vs. Safety (Cold).
+
+---
+
+## Prohibition & Contraband
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** Forbidden pleasures.
+
+**Mechanic:** Banning items (e.g., "No Alcohol") creates a "Black Market" price premium. Smuggling increases.
+
+**Emergence:** You ban stims to improve health. The miners start brewing "Engine-Coolant Moonshine" which is 10x more toxic.
+
+**Tension:** Legalization (Control/Tax) vs. Prohibition (Health/Crime).
+
+---
+
+## Swarm Intelligence
+
+**Layer:** 1
+
+**Fantasy:** The whole is smarter than the parts.
+
+**Mechanic:** Individual drones are dumb. A group of drones shares CPU power, unlocking complex behaviors (flanking, repair) only when clustered.
+
+**Emergence:** A stray drone gets lost and reverts to "Bump into wall" behavior. You have to herd them like sheep to get them to fix the reactor.
+
+**Tension:** Dispersed coverage (dumb) vs. Concentrated swarm (smart).
+
+---
