@@ -92,6 +92,9 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
         apply_quirk_modifiers_system
             .after(apply_lighting_penalties_system)
             .after(apply_weather_effects_system),
+        #[cfg(feature = "nova")]
+        crate::layer1::observer::observer_reaction_system
+            .after(apply_lighting_penalties_system),
         crate::layer1::combat::hit_stop_system.after(process_start_plan_system),
     ).in_set(Layer1SystemSet::Execution));
 
@@ -297,6 +300,8 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
         crate::layer1::graffiti::graffiti_placement_system.after(death_system),
         dream_system.after(death_system),
         cleanup_dream_marker_system.after(dream_system),
+        #[cfg(feature = "nova")]
+        crate::layer1::observer::observer_awareness_system.after(death_system),
     ).in_set(Layer1SystemSet::Observation));
 
     schedule.add_systems((
