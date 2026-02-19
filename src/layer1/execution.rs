@@ -398,7 +398,8 @@ pub fn movement_system(
         let can_move = if let Some(ref mut speed) = speed_opt {
             // Ludwig: "Coyote Speed" - Allow moving if we are *almost* there.
             // This prevents the feeling of "just missing the bus" by 0.01 speed.
-            const COYOTE_THRESHOLD: f32 = 0.1;
+            // Increased to 0.15 for better flow.
+            const COYOTE_THRESHOLD: f32 = 0.15;
             if speed.accumulator >= (movement_cost - COYOTE_THRESHOLD) {
                 speed.accumulator -= movement_cost;
                 true

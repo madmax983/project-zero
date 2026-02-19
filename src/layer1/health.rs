@@ -1,8 +1,11 @@
 use crate::layer1::funeral::Corpse;
 use crate::layer1::memory::{Memories, MemoryType};
+use crate::layer1::map::ScreenShake;
+use crate::layer1::particles::spawn_particle;
 use crate::layer1::pop::{Pop, PopDied, PopName};
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
+use ratatui::style::Color;
 
 /// Represents the physical health of an entity (Pop).
 ///
@@ -123,6 +126,10 @@ pub fn death_system(world: &mut World) {
 
     for (entity, pos_opt, name) in to_despawn {
         let is_pop = world.get::<Pop>(entity).is_some();
+        let is_building = world
+            .get::<crate::layer1::building::Building>(entity)
+            .is_some();
+        let is_fauna = world.get::<crate::layer1::fauna::Fauna>(entity).is_some();
 
         if is_pop {
             if let Some(pos) = pos_opt {
@@ -134,6 +141,14 @@ pub fn death_system(world: &mut World) {
                     },
                     pos,
                 ));
+
+                // Ludwig: Spawn Soul Particle
+                spawn_particle(world, pos, '@', Color::Cyan, 20);
+            }
+
+            // Ludwig: Screen Shake for significant death
+            if let Some(mut shake) = world.get_resource_mut::<ScreenShake>() {
+                shake.trigger(0.5);
             }
 
             world.send_event(PopDied {
@@ -142,14 +157,31 @@ pub fn death_system(world: &mut World) {
                 tick,
                 reason: "the Void".to_string(),
             });
+        } else if is_building {
+            // Ludwig: Building Destruction Juice
+            if let Some(pos) = pos_opt {
+                spawn_particle(world, pos, '#', Color::DarkGray, 10);
+            }
+            if let Some(mut shake) = world.get_resource_mut::<ScreenShake>() {
+                shake.trigger(0.2);
+            }
+        } else if is_fauna {
+            // Ludwig: Fauna Death Juice
+            if let Some(pos) = pos_opt {
+                spawn_particle(world, pos, '%', Color::Red, 10);
+            }
         }
 
         world.despawn(entity);
         if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
             if is_pop {
-                log.add("DEATH: A colonist has died!");
+                log.add_colored("DEATH: A colonist has died!", Color::Red);
+            } else if is_building {
+                log.add_colored("Building destroyed!", Color::Red);
+            } else if is_fauna {
+                log.add_colored("Creature slain!", Color::Red);
             } else {
-                log.add("Building destroyed!");
+                log.add("Entity destroyed!");
             }
         }
     }

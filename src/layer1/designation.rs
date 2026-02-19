@@ -10,9 +10,11 @@
 //! * **DesignationType**: The kind of request (Mine, Demolish).
 //! * **Validation**: Rules for where designations can be placed (`can_designate`).
 
+use crate::layer1::particles::spawn_particle;
 use crate::layer1::zone::ZoneType;
 use crate::layer1::{GridPosition, OccupiedTiles, TerrainGrid, TerrainType};
 use bevy_ecs::prelude::*;
+use ratatui::style::Color;
 use std::collections::HashSet;
 
 /// Types of designations a player can apply to the map.
@@ -286,12 +288,20 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
 /// assert!(try_designate(&mut world, 5, 5, DesignationType::Mine));
 /// assert!(!try_designate(&mut world, 5, 5, DesignationType::Mine)); // Duplicate
 /// ```
-pub fn try_designate(world: &mut World, x: i32, y: i32, designation_type: DesignationType) -> bool {
+pub fn try_designate(
+    world: &mut World,
+    x: i32,
+    y: i32,
+    designation_type: DesignationType,
+) -> bool {
     if !can_designate(world, x, y, designation_type) {
         return false;
     }
 
     world.spawn((Designation { designation_type }, GridPosition { x, y }));
+
+    // Ludwig: Spawn Confirm Particle
+    spawn_particle(world, GridPosition { x, y }, '+', Color::Green, 10);
 
     true
 }
@@ -678,14 +688,14 @@ mod tests {
         world.insert_resource(OccupiedTiles::default());
 
         try_designate(&mut world, 5, 5, DesignationType::Mine);
-        assert_eq!(world.entities().len(), 1);
+        // Expect 2 entities: Designation + Particle
+        assert_eq!(world.entities().len(), 2);
 
         let removed = try_cancel_designation(&mut world, 5, 5);
         assert!(removed);
 
-        // Entity should be despawned or component removed
-        // Since designation is the main component, entity despawn is cleaner
-        assert_eq!(world.entities().len(), 0);
+        // Designation entity should be despawned. Particle remains (it has lifetime).
+        assert_eq!(world.entities().len(), 1);
     }
 
     #[test]
