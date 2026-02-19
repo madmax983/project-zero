@@ -268,6 +268,10 @@ pub use society::*;
 pub mod room_quality;
 pub use room_quality::*;
 
+/// Ruins system (Spec 167).
+pub mod ruins;
+pub use ruins::*;
+
 /// Hostile Fauna (Spec 048).
 pub mod fauna;
 pub use fauna::*;
