@@ -1485,3 +1485,76 @@ SOCIAL_PROMOTION:
   increases:
     - AMBITION (medium)
 ```
+
+---
+
+## Justice & Sanctuary Chaining
+
+```yaml
+SANCTUARY_DECLARED:
+  enables:
+    - CRIMINAL_FLIGHT (high)
+    - BLACK_MARKET_ACTIVITY (medium)
+  increases:
+    - CRIME_RATE (medium, localized)
+    - STABILITY (medium, pressure valve)
+
+CRIMINAL_FLIGHT:
+  enables:
+    - WANTED_ESCAPE (high)
+    - WARDEN_FRUSTRATION (medium)
+  increases:
+    - AUTHORITY_LOSS (low)
+```
+
+## Tech Envy Chaining
+
+```yaml
+TECH_ENVY_COMPLAINT:
+  enables:
+    - DEMAND_ISSUED (high)
+    - THEFT_REPORT (medium, stealing upgrades)
+    - WORK_SLOWDOWN (high)
+  increases:
+    - UNREST (medium)
+    - GREED (high)
+```
+
+## Ecological Succession Chaining
+
+```yaml
+SUCCESSION_STAGE:
+  enables:
+    - FLORA_OUTBREAK (medium)
+    - STRUCTURE_STRANGLED (low, if ignored)
+    - BEAUTY_GAIN (medium, nature reclaim)
+  increases:
+    - MAINTENANCE_DEBT (medium)
+```
+
+## Xeno-Artifact Chaining
+
+```yaml
+ARTIFACT_AURA_FELT:
+  enables:
+    - MOOD_WAVE (high)
+    - OMEN_WITNESSED (medium)
+    - VOID_GAZE (low)
+  increases:
+    - WONDER (medium)
+    - DREAD (medium)
+```
+
+## Vermin Evolution Chaining
+
+```yaml
+VERMIN_EVOLVED:
+  enables:
+    - INJURY_ACCIDENT (high, if toxic/volatile)
+    - SPOILAGE_EVENT (high)
+    - MILITIA_MUSTER (high)
+  increases:
+    - FEAR (high)
+    - URGENCY (high)
+```
+```

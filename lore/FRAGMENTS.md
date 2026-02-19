@@ -1143,6 +1143,16 @@ What vermin do.
 - scurries
 - infects
 
+### VERMIN_VARIANT
+Types of evolved vermin.
+
+- toxic-spitters
+- fire-bellies
+- acid-bloods
+- void-touched
+- iron-jaws
+- spore-carriers
+
 ---
 
 ## Militia Fragments
@@ -2060,6 +2070,43 @@ What the mascot does.
 - crack
 - thunder-clap
 - void-roar
+
+## Fragment Type: [TECH_ENVY_DESCRIPTOR]
+- outdated
+- rusted
+- primitive
+- shameful
+- obsolete
+- dead-tech
+- slow-iron
+
+## Fragment Type: [AURA_EFFECT]
+- dread
+- awe
+- heat
+- cold
+- whispering
+- singing
+- pressure
+- sickness
+
+## Fragment Type: [SANCTUARY_NAME]
+- Free-Town
+- Zero-Sec
+- The Edge
+- Liberty
+- No-Law
+- The Haven
+- Blind-Spot
+
+## Fragment Type: [GROWTH_STAGE]
+- sprout
+- sapling
+- creeper
+- root-web
+- elder-tree
+- canopy
+- choke-vine
 
 ## Fragment Type: [SUCTION_DESCRIPTOR]
 - hungry

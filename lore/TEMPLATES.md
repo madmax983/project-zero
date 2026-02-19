@@ -733,6 +733,15 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 "Victory over the swarm. [VERMIN_NAME] eradicated at [COLONY]. [YEAR]."
 ```
 
+### VERMIN_EVOLVED
+**Slots:** [COLONY], [YEAR], [VERMIN_NAME], [VERMIN_VARIANT]
+
+```
+"The [VERMIN_NAME] are changing. [YEAR]. They are now [VERMIN_VARIANT]."
+"[YEAR]: Mutation in the swarm. [VERMIN_NAME] become [VERMIN_VARIANT]."
+"New threat: [VERMIN_VARIANT] [VERMIN_NAME]. Evolution at work. [YEAR]."
+```
+
 ---
 
 ## Militia & Combat Templates
@@ -1563,3 +1572,54 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[NAME] rises to the [CLASS_NAME]. [YEAR]. They leave the old life behind."
 - "[YEAR]: Status change. [NAME] is now [CLASS_NAME]."
 - "Ascension. [NAME] joins the [CLASS_NAME]. [YEAR]."
+
+---
+
+## Tech Envy Templates
+
+### TECH_ENVY_COMPLAINT
+**Slots:** [COLONY], [YEAR], [NAME], [TECH_ENVY_DESCRIPTOR]
+
+- "[NAME] refuses to work. [YEAR]. Cites [TECH_ENVY_DESCRIPTOR] equipment."
+- "[YEAR]: Morale drops. [NAME] calls our tech [TECH_ENVY_DESCRIPTOR]."
+- "Demand for upgrades. [NAME] is tired of [TECH_ENVY_DESCRIPTOR] tools. [YEAR]."
+
+---
+
+## Justice & Sanctuary Templates
+
+### SANCTUARY_DECLARED
+**Slots:** [COLONY], [YEAR], [SANCTUARY_NAME]
+
+- "We draw the line. [YEAR]. [SANCTUARY_NAME] is established."
+- "[YEAR]: The Free Zone is born. We call it [SANCTUARY_NAME]."
+- "Law ends here. [SANCTUARY_NAME] declared at [COLONY]. [YEAR]."
+
+### CRIMINAL_FLIGHT
+**Slots:** [COLONY], [YEAR], [NAME], [SANCTUARY_NAME], [CRIME]
+
+- "[NAME] runs to [SANCTUARY_NAME]. [YEAR]. Wanted for [CRIME]."
+- "[YEAR]: The law stops at the edge. [NAME] is safe in [SANCTUARY_NAME]."
+- "Escape. [NAME] disappears into [SANCTUARY_NAME] to avoid judgment for [CRIME]. [YEAR]."
+
+---
+
+## Ecological Succession Templates
+
+### SUCCESSION_STAGE
+**Slots:** [COLONY], [YEAR], [GROWTH_STAGE], [FOREST_DESCRIPTOR]
+
+- "The green returns. [YEAR]. [GROWTH_STAGE] spotted in the ruins."
+- "[YEAR]: Nature reclaims the stone. [GROWTH_STAGE] appears. It is [FOREST_DESCRIPTOR]."
+- "Life finds a way. [GROWTH_STAGE] growth at [COLONY]. [YEAR]."
+
+---
+
+## Xeno-Artifact Templates
+
+### ARTIFACT_AURA_FELT
+**Slots:** [COLONY], [YEAR], [NAME], [ARTIFACT_NAME], [AURA_EFFECT]
+
+- "[NAME] stood too close to [ARTIFACT_NAME]. [YEAR]. Felt [AURA_EFFECT]."
+- "[YEAR]: The [ARTIFACT_NAME] sings. [NAME] reports [AURA_EFFECT]."
+- "Strange energies. [NAME] is touched by [AURA_EFFECT] from [ARTIFACT_NAME]. [YEAR]."
