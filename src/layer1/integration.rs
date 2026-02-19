@@ -410,3 +410,58 @@ pub fn amputation_handler_system(
         }
     }
 }
+
+/// Spawns drones at active DroneHubs if the population is low.
+///
+/// Bridges Building (DroneHub) and Drone system (Agents).
+pub fn drone_spawner_bridge_system(
+    mut commands: Commands,
+    hubs: Query<(&GridPosition, &crate::layer1::energy::PowerConsumer), With<crate::layer1::drone::DroneHub>>,
+    drones: Query<&crate::layer1::drone::Drone>,
+    _time: Res<SimulationTime>,
+) {
+    // Limit total drones to 3 * Hubs
+    let hub_count = hubs.iter().count();
+    if hub_count == 0 { return; }
+
+    let drone_count = drones.iter().count();
+    let max_drones = hub_count * 3;
+
+    if drone_count >= max_drones {
+        return;
+    }
+
+    // Spawn 1 drone per tick max
+    for (pos, power) in hubs.iter() {
+        if power.active {
+            // Spawn drone
+             commands.spawn((
+                crate::layer1::drone::Drone,
+                *pos,
+                crate::layer1::utility_ai::PopAction::default(),
+                crate::layer1::drone::DroneBattery { current: 100.0, max: 100.0 },
+                crate::layer1::pop::Speed { base: 1.0, current: 1.0, accumulator: 0.0 },
+                crate::layer1::utility_ai::UtilityWeights::default(),
+             ));
+             break; // Only one per tick
+        }
+    }
+}
+
+/// Assigns work to idle drones.
+///
+/// Bridges Drone system (Idle agents) and Work system (Hauling).
+pub fn drone_work_bridge_system(
+    mut query: Query<(&mut crate::layer1::utility_ai::PopAction, &crate::layer1::drone::DroneBattery), With<crate::layer1::drone::Drone>>,
+) {
+    for (mut action, battery) in query.iter_mut() {
+        // If idle and battery > 20%, start hauling
+        // Drones handle charging logic in evaluate_drone_actions_system which sets action to Charge.
+        // We only override Idle.
+        if action.current == crate::layer1::utility_ai::ActionType::Idle && battery.current > 20.0 {
+            action.current = crate::layer1::utility_ai::ActionType::Haul;
+            action.current_utility = 0.8; // High utility to persist
+            action.ticks_committed = 0;
+        }
+    }
+}

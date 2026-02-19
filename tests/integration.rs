@@ -85,3 +85,6 @@ mod medical_debt;
 
 #[path = "integration/husbandry_integration_tests.rs"]
 mod husbandry_integration_tests;
+
+#[path = "integration/drone_network.rs"]
+mod drone_network;

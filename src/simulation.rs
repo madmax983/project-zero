@@ -122,6 +122,8 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer1::room_quality::apply_waking_thoughts_system),
         cleanup_previous_assignment_system.after(assign_sleepwalk_target_system),
         process_start_plan_system.after(cleanup_previous_assignment_system),
+        crate::layer1::integration::drone_spawner_bridge_system.after(process_start_plan_system),
+        crate::layer1::integration::drone_work_bridge_system.after(process_start_plan_system),
         crate::layer1::husbandry::pasture_confinement_system.after(process_start_plan_system),
         crate::layer1::fauna::fauna_behavior_system.after(process_start_plan_system),
         mascot_behavior_system.after(process_start_plan_system),
