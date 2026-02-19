@@ -11,13 +11,13 @@ mod app {
     use crossterm::{
         event::{self, DisableMouseCapture, EnableMouseCapture, Event, KeyCode, KeyEventKind},
         execute,
-        terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
+        terminal::{EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode, enable_raw_mode},
     };
     use ratatui::{prelude::*, widgets::*};
     use scale::layer1::chronicle::{Chronicle, EventImportance};
     use scale::layer1::needs::Needs;
     use scale::layer1::oral_tradition::{
-        collect_chronicles_system, storytelling_system, OralTradition, StoryGenre,
+        OralTradition, StoryGenre, collect_chronicles_system, storytelling_system,
     };
     use scale::layer1::social::Tavern;
     use scale::shared::log::MessageLog;
@@ -155,16 +155,13 @@ mod app {
             let events = [
                 ("A meteor struck the warehouse!", EventImportance::Legendary),
                 ("Famine struck the outer rim.", EventImportance::Major),
-                (
-                    "A mysterious stranger arrived.",
-                    EventImportance::Standard,
-                ),
-                (
-                    "The reactor core stabilized.",
-                    EventImportance::Standard,
-                ),
+                ("A mysterious stranger arrived.", EventImportance::Standard),
+                ("The reactor core stabilized.", EventImportance::Standard),
                 ("A ghostly figure was seen.", EventImportance::Minor),
-                ("The ancient prophecy was fulfilled.", EventImportance::Legendary),
+                (
+                    "The ancient prophecy was fulfilled.",
+                    EventImportance::Legendary,
+                ),
             ];
 
             let (text, importance) = events[rng.gen_range(0..events.len())];
@@ -178,13 +175,10 @@ mod app {
             if count == 0 {
                 return;
             }
-            let i = self.state.selected().map_or(0, |i| {
-                if i >= count - 1 {
-                    0
-                } else {
-                    i + 1
-                }
-            });
+            let i = self
+                .state
+                .selected()
+                .map_or(0, |i| if i >= count - 1 { 0 } else { i + 1 });
             self.state.select(Some(i));
         }
 
@@ -193,13 +187,10 @@ mod app {
             if count == 0 {
                 return;
             }
-            let i = self.state.selected().map_or(0, |i| {
-                if i == 0 {
-                    count - 1
-                } else {
-                    i - 1
-                }
-            });
+            let i = self
+                .state
+                .selected()
+                .map_or(0, |i| if i == 0 { count - 1 } else { i - 1 });
             self.state.select(Some(i));
         }
 
@@ -278,7 +269,9 @@ mod app {
             f.render_stateful_widget(list, main_chunks[0], &mut self.state);
 
             // Right: Details
-            let details_block = Block::default().borders(Borders::ALL).title("Legend Details");
+            let details_block = Block::default()
+                .borders(Borders::ALL)
+                .title("Legend Details");
 
             if let Some(i) = self.state.selected() {
                 if let Some(story) = tradition.stories.get(i) {
@@ -300,10 +293,7 @@ mod app {
                             "Current Text:",
                             Style::default().add_modifier(Modifier::UNDERLINED),
                         )),
-                        Line::from(Span::styled(
-                            &story.text,
-                            Style::default().fg(Color::Green),
-                        )),
+                        Line::from(Span::styled(&story.text, Style::default().fg(Color::Green))),
                         Line::from(""),
                         Line::from(Span::styled(
                             "Effect:",
@@ -317,13 +307,21 @@ mod app {
                         }),
                     ];
 
-                    let p = Paragraph::new(details_text).block(details_block).wrap(Wrap { trim: true });
+                    let p = Paragraph::new(details_text)
+                        .block(details_block)
+                        .wrap(Wrap { trim: true });
                     f.render_widget(p, main_chunks[1]);
                 } else {
-                     f.render_widget(Paragraph::new("Select a story...").block(details_block), main_chunks[1]);
+                    f.render_widget(
+                        Paragraph::new("Select a story...").block(details_block),
+                        main_chunks[1],
+                    );
                 }
             } else {
-                f.render_widget(Paragraph::new("Select a story...").block(details_block), main_chunks[1]);
+                f.render_widget(
+                    Paragraph::new("Select a story...").block(details_block),
+                    main_chunks[1],
+                );
             }
         }
     }

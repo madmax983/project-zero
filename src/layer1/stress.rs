@@ -3,10 +3,10 @@
 //! This module implements the stress system where Pops accumulate stress when morale is low,
 //! leading to mental breakdowns.
 
+use crate::layer1::artifacts::{ActiveAuras, AuraEffect};
 use crate::layer1::morale::{MoodModifier, Morale};
 use crate::layer1::needs::Needs;
 use crate::layer1::traits::{Trait, Traits};
-use crate::layer1::artifacts::{ActiveAuras, AuraEffect};
 use bevy_ecs::prelude::*;
 
 /// Tracks stress accumulation when morale is low.
@@ -73,7 +73,9 @@ pub fn check_stress_breakdown_system(
         Option<&ActiveAuras>,
     )>,
 ) {
-    for (entity, needs, mut tracker, traits, breakdown, catharsis, morale_comp, active_auras) in &mut query {
+    for (entity, needs, mut tracker, traits, breakdown, catharsis, morale_comp, active_auras) in
+        &mut query
+    {
         // If already broken or has catharsis, skip stress tracking
         if breakdown.is_some() || catharsis.is_some() {
             tracker.accumulated_stress = 0.0;
@@ -174,10 +176,10 @@ pub fn update_catharsis_duration_system(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::layer1::artifacts::{ActiveAuras, AuraEffect};
     use crate::layer1::needs::Needs;
     use crate::layer1::pop::Pop;
     use crate::layer1::traits::{Trait, Traits};
-    use crate::layer1::artifacts::{ActiveAuras, AuraEffect};
 
     #[test]
     fn test_stress_accumulation() {
@@ -378,7 +380,7 @@ mod tests {
                 Traits(std::collections::HashSet::new()),
                 ActiveAuras {
                     effects: vec![AuraEffect::StressModifier(2.0)],
-                }
+                },
             ))
             .id();
 

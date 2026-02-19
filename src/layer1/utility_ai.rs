@@ -675,23 +675,33 @@ pub fn evaluate_actions_system(world: &mut World) {
             ),
     );
 
+    // Early exit if no pops need evaluation
+    if buffer.pop_data.is_empty() {
+        world.insert_resource(buffer);
+        return;
+    }
+
     // 2. Initialize Context
+    // Optimization: Temporarily remove large resources to avoid cloning them
+    let zone_grid_opt = world.remove_resource::<ZoneGrid>();
+    let zone_grid_fallback = ZoneGrid::new(1, 1);
+    let zone_grid_ref = zone_grid_opt.as_ref().unwrap_or(&zone_grid_fallback);
+
+    let factions_res = world.remove_resource::<crate::layer1::factions::Factions>();
+    let factions_data = factions_res.as_ref().map(|f| &f.map);
+
     let resources = world.resource::<ColonyResources>().clone();
     let cycle = world
         .resource::<crate::layer1::day_night::DayNightCycle>()
         .clone();
     let taboo = world.resource::<crate::layer1::taboo::TabooState>().clone();
-    let factions_data = world
-        .get_resource::<crate::layer1::factions::Factions>()
-        .map(|f| f.map.clone());
-    let zone_grid = world.resource::<ZoneGrid>().clone();
 
     let context = WorldContext {
         resources: &resources,
         cycle: &cycle,
         taboo: &taboo,
-        factions: factions_data.as_ref(),
-        zone_grid: &zone_grid,
+        factions: factions_data,
+        zone_grid: zone_grid_ref,
     };
 
     // 3. Populate Proxies (The Optimization)
@@ -726,6 +736,14 @@ pub fn evaluate_actions_system(world: &mut World) {
 
     // Return the buffer to the world
     world.insert_resource(buffer);
+
+    // Restore removed resources
+    if let Some(zg) = zone_grid_opt {
+        world.insert_resource(zg);
+    }
+    if let Some(f) = factions_res {
+        world.insert_resource(f);
+    }
 }
 
 /// Updates utility weights based on action outcome.

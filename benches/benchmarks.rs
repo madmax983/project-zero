@@ -37,7 +37,7 @@ fn benchmark_rendering_buildings(c: &mut Criterion) {
                 x: x as i32,
                 y: y as i32,
             },
-            RenderEntity::Building(BuildingType::Housing, MaterialType::Wood),
+            RenderEntity::Building(BuildingType::Housing, MaterialType::Wood, false),
         );
     }
 
@@ -52,6 +52,7 @@ fn benchmark_rendering_buildings(c: &mut Criterion) {
                 build_mode: black_box(None),
                 designation_mode: black_box(None),
                 season: black_box(None),
+                wall_time: 0.0,
             };
             build_map_layer_spans(ctx)
         });
@@ -98,6 +99,7 @@ fn benchmark_rendering(c: &mut Criterion) {
                 build_mode: black_box(None),
                 designation_mode: black_box(None),
                 season: black_box(None),
+                wall_time: 0.0,
             };
             build_map_layer_spans(ctx)
         });
@@ -126,6 +128,9 @@ fn make_bench_world(n_pops: usize, n_buildings: usize, gpu_ctx: Option<GpuContex
     let mut world = World::new();
     world.insert_resource(UtilityConfig::default());
     world.insert_resource(ColonyResources::default());
+    world.insert_resource(scale::layer1::day_night::DayNightCycle::default());
+    world.insert_resource(scale::layer1::taboo::TabooState::default());
+    world.insert_resource(scale::layer1::zone::ZoneGrid::new(200, 200));
 
     if let Some(ctx) = gpu_ctx {
         world.insert_resource(ctx);

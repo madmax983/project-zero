@@ -1,5 +1,5 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::map::GridPosition;
+use bevy_ecs::prelude::*;
 
 /// A rare, indestructible entity that emits an aura.
 #[derive(Component, Default)]
@@ -91,12 +91,14 @@ mod tests {
         ));
 
         // Spawn Pop at (12, 10) (Distance 2, inside radius)
-        let pop = world.spawn((
-            Pop,
-            GridPosition { x: 12, y: 10 },
-            StressTracker::default(),
-            ActiveAuras::default(), // Component to track applied auras
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 12, y: 10 },
+                StressTracker::default(),
+                ActiveAuras::default(), // Component to track applied auras
+            ))
+            .id();
 
         // Run system
         let mut schedule = Schedule::default();
@@ -115,16 +117,17 @@ mod tests {
         // Artifact at (10, 10), Radius 2
         world.spawn((
             Artifact,
-            Aura { radius: 2.0, effect: AuraEffect::HealRate(1.5) },
+            Aura {
+                radius: 2.0,
+                effect: AuraEffect::HealRate(1.5),
+            },
             GridPosition { x: 10, y: 10 },
         ));
 
         // Pop at (15, 15) (Distance ~7, outside radius)
-        let pop = world.spawn((
-            Pop,
-            GridPosition { x: 15, y: 15 },
-            ActiveAuras::default(),
-        )).id();
+        let pop = world
+            .spawn((Pop, GridPosition { x: 15, y: 15 }, ActiveAuras::default()))
+            .id();
 
         // Run system
         let mut schedule = Schedule::default();
@@ -147,6 +150,9 @@ mod tests {
         schedule.run(&mut world);
 
         let active_auras = world.get::<ActiveAuras>(pop).unwrap();
-        assert!(active_auras.is_empty(), "Aura should be removed when leaving range");
+        assert!(
+            active_auras.is_empty(),
+            "Aura should be removed when leaving range"
+        );
     }
 }

@@ -11,3 +11,7 @@
 **[Borrow Checker in Test Helpers]**
 **Learning:** When writing helper functions for tests that take `&mut World`, be careful not to hold a mutable borrow of a Resource (like `world.resource_mut::<T>()`) while iterating a Query using `world`. This causes a double borrow error.
 **Action:** Extract data from the Query into a collection (e.g., `Vec`) first, drop the query borrow, then mutate the Resource using the collected data.
+
+**[Zero-Copy Resource Access]**
+**Learning:** Large resources like `ZoneGrid` (40KB+) cloned every frame for read-only access in a mutable system context create significant overhead (10%+).
+**Action:** Use `world.remove_resource::<T>()` to temporarily extract the resource, use it by reference, and re-insert it at the end. This avoids allocation/copying entirely while satisfying the borrow checker for concurrent world access.

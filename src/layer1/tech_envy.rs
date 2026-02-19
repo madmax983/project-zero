@@ -2,10 +2,10 @@
 //!
 //! Handles the "Obsolescence" mood penalty for pops working in outdated buildings.
 
-use bevy_ecs::prelude::*;
-use crate::layer1::building::Building;
-use crate::layer1::morale::{Morale, MoodModifier};
 use crate::layer1::actions::AssignedTo;
+use crate::layer1::building::Building;
+use crate::layer1::morale::{MoodModifier, Morale};
+use bevy_ecs::prelude::*;
 use std::collections::HashMap;
 
 /// Configuration for the Tech Envy system.
@@ -44,10 +44,10 @@ pub fn tech_envy_system(
     let mut max_tiers = HashMap::new();
     for building in buildings.iter() {
         if let Some((category, tier)) = building.building_type.tier_info() {
-             let current_max = max_tiers.entry(category).or_insert(tier);
-             if tier > *current_max {
-                 *current_max = tier;
-             }
+            let current_max = max_tiers.entry(category).or_insert(tier);
+            if tier > *current_max {
+                *current_max = tier;
+            }
         }
     }
 
@@ -88,8 +88,14 @@ mod tests {
     #[test]
     fn test_building_tiers_and_categories() {
         // Verify metadata exists
-        assert_eq!(BuildingType::Farm.tier_info(), Some((Category::FoodProduction, Tier::Basic)));
-        assert_eq!(BuildingType::HydroponicsBay.tier_info(), Some((Category::FoodProduction, Tier::HighTech)));
+        assert_eq!(
+            BuildingType::Farm.tier_info(),
+            Some((Category::FoodProduction, Tier::Basic))
+        );
+        assert_eq!(
+            BuildingType::HydroponicsBay.tier_info(),
+            Some((Category::FoodProduction, Tier::HighTech))
+        );
         assert_eq!(BuildingType::Housing.tier_info(), None); // Housing doesn't trigger envy (handled by Room Quality)
     }
 
@@ -100,20 +106,27 @@ mod tests {
         world.insert_resource(TechEnvyConfig::default());
 
         // 1. Spawn a Tier 1 Building (Farm)
-        let farm = world.spawn((
-            Building { building_type: BuildingType::Farm },
-        )).id();
+        let farm = world
+            .spawn((Building {
+                building_type: BuildingType::Farm,
+            },))
+            .id();
 
         // 2. Spawn a Pop assigned to the Farm
-        let pop = world.spawn((
-            AssignedTo { entity: farm, assignment_type: AssignmentType::FarmWorker },
-            Morale::default(),
-        )).id();
+        let pop = world
+            .spawn((
+                AssignedTo {
+                    entity: farm,
+                    assignment_type: AssignmentType::FarmWorker,
+                },
+                Morale::default(),
+            ))
+            .id();
 
         // 3. Spawn a Tier 2 Building (HydroponicsBay) of the same category
-        world.spawn((
-            Building { building_type: BuildingType::HydroponicsBay },
-        ));
+        world.spawn((Building {
+            building_type: BuildingType::HydroponicsBay,
+        },));
 
         // 4. Run the system
         let mut schedule = Schedule::default();
@@ -137,14 +150,25 @@ mod tests {
         world.insert_resource(TechEnvyConfig::default());
 
         // Spawn Tier 1 Farm and Pop
-        let farm = world.spawn(Building { building_type: BuildingType::Farm }).id();
-        let pop = world.spawn((
-            AssignedTo { entity: farm, assignment_type: AssignmentType::FarmWorker },
-            Morale::default(),
-        )).id();
+        let farm = world
+            .spawn(Building {
+                building_type: BuildingType::Farm,
+            })
+            .id();
+        let pop = world
+            .spawn((
+                AssignedTo {
+                    entity: farm,
+                    assignment_type: AssignmentType::FarmWorker,
+                },
+                Morale::default(),
+            ))
+            .id();
 
         // Spawn another Tier 1 Farm
-        world.spawn(Building { building_type: BuildingType::Farm });
+        world.spawn(Building {
+            building_type: BuildingType::Farm,
+        });
 
         // Run system
         let mut schedule = Schedule::default();
@@ -162,14 +186,25 @@ mod tests {
         world.insert_resource(TechEnvyConfig::default());
 
         // Spawn Tier 1 Farm and Pop
-        let farm = world.spawn(Building { building_type: BuildingType::Farm }).id();
-        let pop = world.spawn((
-            AssignedTo { entity: farm, assignment_type: AssignmentType::FarmWorker },
-            Morale::default(),
-        )).id();
+        let farm = world
+            .spawn(Building {
+                building_type: BuildingType::Farm,
+            })
+            .id();
+        let pop = world
+            .spawn((
+                AssignedTo {
+                    entity: farm,
+                    assignment_type: AssignmentType::FarmWorker,
+                },
+                Morale::default(),
+            ))
+            .id();
 
         // Spawn Tier 3 Power Building (AncientReactor)
-        world.spawn(Building { building_type: BuildingType::AncientReactor });
+        world.spawn(Building {
+            building_type: BuildingType::AncientReactor,
+        });
 
         // Run system
         let mut schedule = Schedule::default();
@@ -187,14 +222,25 @@ mod tests {
         world.insert_resource(TechEnvyConfig::default());
 
         // Spawn Tier 1 Farm and Pop
-        let farm = world.spawn(Building { building_type: BuildingType::Farm }).id();
-        let pop = world.spawn((
-            AssignedTo { entity: farm, assignment_type: AssignmentType::FarmWorker },
-            Morale::default(),
-        )).id();
+        let farm = world
+            .spawn(Building {
+                building_type: BuildingType::Farm,
+            })
+            .id();
+        let pop = world
+            .spawn((
+                AssignedTo {
+                    entity: farm,
+                    assignment_type: AssignmentType::FarmWorker,
+                },
+                Morale::default(),
+            ))
+            .id();
 
         // Spawn Tier 2 Greenhouse
-        world.spawn(Building { building_type: BuildingType::Greenhouse });
+        world.spawn(Building {
+            building_type: BuildingType::Greenhouse,
+        });
 
         let mut schedule = Schedule::default();
         schedule.add_systems(tech_envy_system);
@@ -203,17 +249,29 @@ mod tests {
         schedule.run(&mut world);
 
         let morale = world.get::<Morale>(pop).unwrap();
-        let count_1 = morale.modifiers.iter().filter(|m| m.label == "Obsolescence").count();
+        let count_1 = morale
+            .modifiers
+            .iter()
+            .filter(|m| m.label == "Obsolescence")
+            .count();
         assert_eq!(count_1, 1);
 
         // Run again
         schedule.run(&mut world);
 
         let morale = world.get::<Morale>(pop).unwrap();
-        let count_2 = morale.modifiers.iter().filter(|m| m.label == "Obsolescence").count();
+        let count_2 = morale
+            .modifiers
+            .iter()
+            .filter(|m| m.label == "Obsolescence")
+            .count();
         assert_eq!(count_2, 1, "Should not stack duplicate modifiers");
 
-        let modifier = morale.modifiers.iter().find(|m| m.label == "Obsolescence").unwrap();
+        let modifier = morale
+            .modifiers
+            .iter()
+            .find(|m| m.label == "Obsolescence")
+            .unwrap();
         assert_eq!(modifier.duration, 10, "Duration should be refreshed");
     }
 }
