@@ -2,7 +2,7 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::utility_eval_types::CapacityProxy;
 use crate::layer1::utility_types::{ActionType, UtilityWeights};
-use crate::layer1::utility_types::{calculate_context_score, calculate_success_modifier};
+use crate::layer1::utility_types::calculate_context_score;
 use bevy_ecs::prelude::*;
 
 /// Evaluates the utility of performing scientific research at a [`crate::layer1::tech::Library`].
@@ -38,8 +38,7 @@ pub(crate) fn evaluate_research(
             weights,
         );
 
-        let success = calculate_success_modifier(ActionType::Research, weights);
-        let utility = base_utility * context * success;
+        let utility = base_utility * context;
 
         if best.is_none_or(|(best_u, _)| utility > best_u) {
             best = Some((utility, library.entity));

@@ -847,13 +847,6 @@ fn render_personality(frame: &mut Frame, area: Rect, weights: &UtilityWeights) {
         ));
     }
 
-    // Social (Placeholder logic based on plan)
-    if weights.social_weight > 1.2 {
-        traits.push(Span::styled("Loner", Style::default().fg(Color::DarkGray)));
-    } else if weights.social_weight < 0.8 {
-        traits.push(Span::styled("Chatterbox", Style::default().fg(Color::Cyan)));
-    }
-
     // Default if boring
     if traits.is_empty() {
         traits.push(Span::styled(

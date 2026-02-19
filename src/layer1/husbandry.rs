@@ -6,7 +6,7 @@ use crate::layer1::resources::{ResourceItem, ResourceType};
 use crate::layer1::skills::{SkillType, Skills};
 use crate::layer1::utility_ai::{ActionType, PopAction, UtilityWeights};
 use crate::layer1::utility_eval_types::PositionProxy;
-use crate::layer1::utility_types::{calculate_context_score, calculate_success_modifier};
+use crate::layer1::utility_types::calculate_context_score;
 use crate::layer1::zone::{ZoneGrid, ZoneType};
 use bevy_ecs::prelude::*;
 
@@ -151,8 +151,7 @@ pub fn evaluate_tame(
     for des in designations {
         // Pre-filtered for Tame type
         let context = calculate_context_score(*pop_pos, Some(des.pos), 1, 0, weights);
-        let success = calculate_success_modifier(ActionType::Tame, weights);
-        let utility = base_utility * context * success;
+        let utility = base_utility * context;
 
         if best.is_none_or(|(best_u, _)| utility > best_u) {
             best = Some((utility, des.entity));

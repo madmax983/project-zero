@@ -55,12 +55,6 @@ pub struct GpuPopInput {
     pub distance_weight: f32,
     /// Learned availability weight.
     pub availability_weight: f32,
-    /// Learned social weight.
-    pub social_weight: f32,
-    /// Per-action success counts.
-    pub success_count: [u32; 28],
-    /// Per-action attempt counts.
-    pub attempt_count: [u32; 28],
     /// Utility score of the current action.
     pub current_utility: f32,
     /// 1 if the pop is drafted for combat, 0 otherwise.
@@ -167,9 +161,6 @@ pub fn extract_pop_inputs(
             leisure: needs.leisure,
             distance_weight: weights.distance_weight,
             availability_weight: weights.availability_weight,
-            social_weight: weights.social_weight,
-            success_count: weights.action_success_count,
-            attempt_count: weights.action_attempt_count,
             current_utility: action.current_utility,
             drafted: u32::from(drafted.is_some()),
         });
@@ -489,9 +480,9 @@ mod tests {
 
     #[test]
     fn test_gpu_pop_input_size() {
-        // 2*i32 + 6*f32 + 27*u32 + 27*u32 + 1*f32 + 1*u32
-        // = 8 + 24 + 108 + 108 + 4 + 4 = 256 bytes
-        assert_eq!(std::mem::size_of::<GpuPopInput>(), 256);
+        // 2*i32 + 3*f32 + 2*f32 + 1*f32 + 1*u32
+        // = 8 + 12 + 8 + 4 + 4 = 36 bytes
+        assert_eq!(std::mem::size_of::<GpuPopInput>(), 36);
     }
 
     #[test]
@@ -530,15 +521,6 @@ mod tests {
                 UtilityWeights {
                     distance_weight: 1.2,
                     availability_weight: 0.8,
-                    social_weight: 1.0,
-                    action_success_count: [
-                        1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                        0, 0, 0,
-                    ], // 28 elements
-                    action_attempt_count: [
-                        5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                        0, 0, 0,
-                    ], // 28 elements
                 },
                 PopAction {
                     current: ActionType::SatisfyHunger,
@@ -578,8 +560,6 @@ mod tests {
         assert!((input.leisure - 0.9).abs() < f32::EPSILON);
         assert!((input.distance_weight - 1.2).abs() < f32::EPSILON);
         assert!((input.availability_weight - 0.8).abs() < f32::EPSILON);
-        assert_eq!(input.success_count[0], 1);
-        assert_eq!(input.attempt_count[2], 5);
         assert!((input.current_utility - 0.75).abs() < f32::EPSILON);
     }
 
@@ -731,33 +711,4 @@ mod tests {
         assert_eq!(state.building_count, 25);
     }
 
-    #[test]
-    fn test_shader_array_size_matches_action_count() {
-        // Assert CPU side constant
-        assert_eq!(
-            ActionType::COUNT,
-            27,
-            "ActionType::COUNT changed! Update GPU buffers and shader."
-        );
-
-        // Read shader file
-        let manifest_dir = std::env::var("CARGO_MANIFEST_DIR").unwrap();
-        let shader_path = std::path::Path::new(&manifest_dir).join("src/gpu/shaders/evaluate.wgsl");
-        let shader_content =
-            std::fs::read_to_string(shader_path).expect("Failed to read shader file");
-
-        // Check for success_count array size
-        let success_pattern = "success_count: array<u32, 27>";
-        assert!(
-            shader_content.contains(success_pattern),
-            "Shader success_count array size mismatch or pattern changed."
-        );
-
-        // Check for attempt_count array size
-        let attempt_pattern = "attempt_count: array<u32, 27>";
-        assert!(
-            shader_content.contains(attempt_pattern),
-            "Shader attempt_count array size mismatch or pattern changed."
-        );
-    }
 }

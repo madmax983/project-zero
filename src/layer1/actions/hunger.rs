@@ -6,7 +6,7 @@ use crate::layer1::pop::Job;
 use crate::layer1::utility_eval_types::CapacityProxy;
 use crate::layer1::utility_types::{ActionType, UtilityWeights};
 use crate::layer1::utility_types::{
-    calculate_context_score, calculate_success_modifier, need_response_curve,
+    calculate_context_score, need_response_curve,
 };
 use bevy_ecs::prelude::*;
 
@@ -26,9 +26,7 @@ pub(crate) fn evaluate_satisfy_hunger(
         let context_score =
             calculate_context_score(pop_pos, Some(farm.pos), farm.capacity, farm.usage, weights);
 
-        let success_mod = calculate_success_modifier(ActionType::SatisfyHunger, weights);
-
-        let utility = hunger_urgency * context_score * success_mod;
+        let utility = hunger_urgency * context_score;
 
         if best.is_none_or(|(best_u, _)| utility > best_u) {
             best = Some((utility, farm.entity));

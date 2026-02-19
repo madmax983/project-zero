@@ -14,9 +14,6 @@ struct PopInput {
     leisure: f32,
     distance_weight: f32,
     availability_weight: f32,
-    social_weight: f32,
-    success_count: array<u32, 28>,
-    attempt_count: array<u32, 28>,
     current_utility: f32,
     drafted: u32,
 }
@@ -92,20 +89,6 @@ fn calculate_context_score(
     }
 
     return clamp(score, 0.0, 1.0);
-}
-
-/// Success-rate modifier in the 0.8-1.2 range.
-/// Mirrors `calculate_success_modifier` in math.rs.
-fn calculate_success_modifier(action_idx: u32, pop: PopInput) -> f32 {
-    let attempts = pop.attempt_count[action_idx];
-    let successes = pop.success_count[action_idx];
-
-    if attempts == 0u {
-        return 1.0;
-    }
-
-    let success_rate = f32(successes) / f32(attempts);
-    return success_rate * 0.4 + 0.8;
 }
 
 // ---------- Main entry point ----------
@@ -221,8 +204,7 @@ fn main(@builtin(global_invocation_id) global_id: vec3<u32>) {
                 pop.distance_weight, pop.availability_weight
             );
 
-            let success_mod = calculate_success_modifier(action_idx, pop);
-            let utility = urgency * context * success_mod;
+            let utility = urgency * context;
 
             if utility > best_utility {
                 best_utility = utility;
