@@ -1,6 +1,19 @@
 use crate::layer1::edicts::{ColonyPolicies, Policy};
+use crate::layer1::fire::Fire;
 use crate::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
+use crate::layer1::GridPosition;
 use bevy_ecs::prelude::*;
+use rand::Rng;
+use std::collections::HashSet;
+
+/// Traits acquired by the vermin population based on their diet.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub enum VerminTrait {
+    /// Acquired from consuming Waste. Resists pest control.
+    Toxic,
+    /// Acquired from consuming Fuel. Can ignite fires.
+    Volatile,
+}
 
 /// Tracks the severity of vermin infestation in the colony.
 #[derive(Resource)]
@@ -9,6 +22,8 @@ pub struct VerminState {
     pub severity: f32,
     /// The maximum possible severity level.
     pub max_severity: f32,
+    /// Evolved traits of the vermin population.
+    pub traits: HashSet<VerminTrait>,
 }
 
 impl Default for VerminState {
@@ -16,6 +31,7 @@ impl Default for VerminState {
         Self {
             severity: 0.0,
             max_severity: 100.0,
+            traits: HashSet::new(),
         }
     }
 }
@@ -30,6 +46,7 @@ pub struct Vermin;
 // 0.04 / 1000 = 0.00004
 const GROWTH_FACTOR_FOOD: f32 = 0.00005;
 const GROWTH_FACTOR_WASTE: f32 = 0.0001; // Waste attracts more vermin
+const GROWTH_FACTOR_FUEL: f32 = 0.00008; // Fuel is tasty but dangerous?
 const NATURAL_DECAY: f32 = 0.05; // Dies off slowly if no food
 
 /// System that updates vermin severity based on available food and waste.
@@ -42,24 +59,43 @@ pub fn vermin_growth_system(
     // 1. Calculate totals from stored resources
     let mut total_food = resources.food;
     let mut total_waste = resources.waste;
+    let mut total_fuel = resources.fuel;
 
     // 2. Add items on the ground
     for item in &items {
         match item.resource_type {
             ResourceType::Food => total_food += item.amount,
             ResourceType::Waste => total_waste += item.amount,
+            ResourceType::Fuel => total_fuel += item.amount,
             _ => {}
         }
     }
 
     let food_impact = total_food * GROWTH_FACTOR_FOOD;
     let waste_impact = total_waste * GROWTH_FACTOR_WASTE;
+    let fuel_impact = total_fuel * GROWTH_FACTOR_FUEL;
 
-    let mut growth = food_impact + waste_impact;
+    let mut growth = food_impact + waste_impact + fuel_impact;
+
+    // Trait Evolution Logic
+    // If > 20% of growth comes from Waste, become Toxic
+    if growth > 0.0 {
+        if waste_impact > (growth * 0.2) {
+            vermin.traits.insert(VerminTrait::Toxic);
+        }
+        if fuel_impact > (growth * 0.2) {
+            vermin.traits.insert(VerminTrait::Volatile);
+        }
+    }
 
     // Apply Pest Control Policy
     if policies.is_active(Policy::PestControl) {
-        growth *= 0.5; // Halves growth rate
+        let efficacy = if vermin.traits.contains(&VerminTrait::Toxic) {
+            0.9 // Resistant: only 10% reduction
+        } else {
+            0.5 // Default: Halves growth rate
+        };
+        growth *= efficacy;
     }
 
     if growth > 0.0 {
@@ -70,6 +106,32 @@ pub fn vermin_growth_system(
 
     // Clamp
     vermin.severity = vermin.severity.clamp(0.0, vermin.max_severity);
+}
+
+/// System that handles active effects of evolved vermin traits.
+pub fn vermin_effect_system(
+    mut commands: Commands,
+    vermin: Res<VerminState>,
+    query: Query<(&ResourceItem, &GridPosition)>,
+) {
+    if !vermin.traits.contains(&VerminTrait::Volatile) {
+        return;
+    }
+
+    let mut rng = rand::thread_rng();
+
+    for (item, pos) in &query {
+        if item.resource_type == ResourceType::Fuel {
+            // Chance based on severity
+            // 0.001 * severity (e.g., 50 -> 0.05 or 5%)
+            let chance = (0.001 * vermin.severity).clamp(0.0, 1.0);
+            if rng.gen_bool(chance.into()) {
+                // Ignite!
+                commands.spawn((Fire::default(), *pos));
+                // Optional: Destroy fuel? Handled by fire system if flammable.
+            }
+        }
+    }
 }
 
 /// Calculates the food spoilage modifier based on vermin severity.

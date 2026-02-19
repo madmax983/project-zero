@@ -66,6 +66,7 @@ Features that have been fully implemented, tested, and merged.
 - [x] `153` Geological Instability — `specs/153-geological-instability.md` — completed 2026-03-20
 - [x] `155` Advanced Workplace Hazards — `specs/155-advanced-hazards.md` — completed 2026-03-20
 - [x] `075` Animal Husbandry — `specs/075-animal-husbandry.md` — completed 2026-10-30
+- [x] `163` Vermin Evolution — `specs/163-vermin-evolution.md` — completed 2026-05-31
 
 ## MVP — Layer 2: System Simulation
 

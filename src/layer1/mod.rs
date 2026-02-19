@@ -220,6 +220,9 @@ mod waste_tests;
 pub mod vermin;
 pub use vermin::*;
 
+#[cfg(test)]
+mod vermin_evolution_tests;
+
 pub use lighting::*;
 pub use rumor::*;
 

@@ -26,7 +26,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `132` Equipment & Wear — `specs/132-equipment-and-wear.md`
 - [ ] `133` Ventilation Networks — `specs/133-ventilation-networks.md`
 - [ ] `137` Pop Hobbies — `specs/137-pop-hobbies.md`
-- [ ] `163` Vermin Evolution — `specs/163-vermin-evolution.md`
 - [ ] `164` Modular Fauna — `specs/164-modular-fauna.md`
 
 ## MVP — Layer 2: System Simulation
