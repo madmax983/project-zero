@@ -1,7 +1,7 @@
 use crate::layer1::map::GridPosition;
 use crate::layer1::utility_eval_types::PositionProxy;
 use crate::layer1::utility_types::{ActionType, UtilityWeights};
-use crate::layer1::utility_types::{calculate_context_score, calculate_success_modifier};
+use crate::layer1::utility_types::calculate_context_score;
 use bevy_ecs::prelude::*;
 
 /// Evaluates the utility of exploring an [`crate::layer1::science::Anomaly`].
@@ -27,8 +27,7 @@ pub(crate) fn evaluate_explore(
             weights,
         );
 
-        let success = calculate_success_modifier(ActionType::Explore, weights);
-        let utility = base_utility * context * success;
+        let utility = base_utility * context;
 
         if best.is_none_or(|(best_u, _)| utility > best_u) {
             best = Some((utility, anomaly.entity));

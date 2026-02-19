@@ -2,7 +2,7 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
 use crate::layer1::utility_eval_types::CapacityProxy;
 use crate::layer1::utility_types::{ActionType, UtilityWeights};
-use crate::layer1::utility_types::{calculate_context_score, calculate_success_modifier};
+use crate::layer1::utility_types::calculate_context_score;
 use bevy_ecs::prelude::*;
 
 /// Evaluates the utility of socializing at a tavern.
@@ -34,8 +34,7 @@ pub(crate) fn evaluate_socialize(
             weights,
         );
 
-        let success = calculate_success_modifier(ActionType::Socialize, weights);
-        let utility = (base_utility + urgency) * context * success;
+        let utility = (base_utility + urgency) * context;
 
         if best.is_none_or(|(u, _)| utility > u) {
             best = Some((utility, tavern.entity));

@@ -14,20 +14,6 @@ use crate::layer1::utility_types::{ActionType, PopAction, UtilityWeights, HobbyT
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
 
-/// Tracks the outcome of a plan for learning purposes.
-///
-/// When an action completes (success or failure), this component is used
-/// to update the [`UtilityWeights`].
-#[derive(Component, Debug)]
-pub struct PlanOutcome {
-    /// The action type being tracked.
-    pub action: ActionType,
-    /// Tick when the action started.
-    pub started_at: u64,
-    /// Needs state before the action (to measure improvement).
-    pub needs_before: Needs,
-}
-
 /// Evaluates the utility of being idle.
 ///
 /// Idle is a low-priority fallback action. Pops should prefer productive

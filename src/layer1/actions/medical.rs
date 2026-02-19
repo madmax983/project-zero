@@ -2,7 +2,7 @@ use crate::layer1::health::Health;
 use crate::layer1::map::GridPosition;
 use crate::layer1::utility_eval_types::CapacityProxy;
 use crate::layer1::utility_types::{
-    ActionType, UtilityWeights, calculate_context_score, calculate_success_modifier,
+    ActionType, UtilityWeights, calculate_context_score,
 };
 use bevy_ecs::prelude::*;
 
@@ -41,10 +41,7 @@ pub(crate) fn evaluate_seek_medical_care(
             weights,
         );
 
-        // Success modifier
-        let success = calculate_success_modifier(ActionType::SeekMedicalCare, weights);
-
-        let utility = urgency * context * success;
+        let utility = urgency * context;
 
         if best.is_none_or(|(best_u, _)| utility > best_u) {
             best = Some((utility, hospital.entity));

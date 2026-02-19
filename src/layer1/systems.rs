@@ -293,7 +293,6 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
 
     // --- Observation ---
     schedule.add_systems((
-        track_plan_outcomes_system.after(death_system),
         biography_monitor_system.after(death_system),
         crate::layer1::graffiti::graffiti_placement_system.after(death_system),
         dream_system.after(death_system),

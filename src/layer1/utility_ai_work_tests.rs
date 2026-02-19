@@ -92,47 +92,6 @@ mod tests {
         assert!(result.is_none());
     }
 
-    #[test]
-    fn test_evaluate_work_success_modifier() {
-        // Setup
-        let pop_pos = GridPosition { x: 0, y: 0 };
-        let mut weights = UtilityWeights::default();
-        let idx = ActionType::Work.as_index();
-
-        let proxies = vec![PositionProxy {
-            entity: Entity::PLACEHOLDER,
-            pos: GridPosition { x: 0, y: 0 },
-        }];
-
-        // Case 1: Neutral (No history) -> Utility ~0.5
-        let (base_u, _) = evaluate_work(pop_pos, &weights, &proxies).unwrap();
-        assert!(
-            (base_u - 0.5).abs() < 0.01,
-            "Base utility should be ~0.5, got {}",
-            base_u
-        );
-
-        // Case 2: High Success -> Higher Utility
-        weights.action_attempt_count[idx] = 10;
-        weights.action_success_count[idx] = 10;
-        let (high_u, _) = evaluate_work(pop_pos, &weights, &proxies).unwrap();
-        assert!(
-            high_u > base_u,
-            "Success history should increase utility ({} > {})",
-            high_u,
-            base_u
-        );
-
-        // Case 3: High Failure -> Lower Utility
-        weights.action_success_count[idx] = 2; // 20% success
-        let (low_u, _) = evaluate_work(pop_pos, &weights, &proxies).unwrap();
-        assert!(
-            low_u < base_u,
-            "Failure history should decrease utility ({} < {})",
-            low_u,
-            base_u
-        );
-    }
 
     #[test]
     fn test_evaluate_work_distance_scaling() {

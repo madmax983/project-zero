@@ -1,7 +1,7 @@
 use crate::layer1::map::GridPosition;
 use crate::layer1::utility_eval_types::CapacityProxy;
 use crate::layer1::utility_types::{ActionType, UtilityWeights};
-use crate::layer1::utility_types::{calculate_context_score, calculate_success_modifier};
+use crate::layer1::utility_types::calculate_context_score;
 use bevy_ecs::prelude::*;
 
 /// Evaluates the utility of farming.
@@ -26,8 +26,7 @@ pub(crate) fn evaluate_farm(
         let context =
             calculate_context_score(pop_pos, Some(farm.pos), farm.capacity, farm.usage, weights);
 
-        let success = calculate_success_modifier(ActionType::Farm, weights);
-        let utility = base_utility * context * success;
+        let utility = base_utility * context;
 
         if best.is_none_or(|(u, _)| utility > u) {
             best = Some((utility, farm.entity));

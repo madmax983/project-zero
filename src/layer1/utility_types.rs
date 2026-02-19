@@ -224,12 +224,7 @@ impl Default for PopAction {
     }
 }
 
-/// The "Personality" or "Memory" of a Pop (Reinforcement Learning).
-///
-/// Pops learn from experience. If they successfully find food far away, they might
-/// increase their tolerance for distance (`distance_weight` decreases).
-/// If they fail to find a spot in a crowded tavern, they become more sensitive
-/// to crowding (`availability_weight` increases).
+/// The "Personality" or "Memory" of a Pop.
 #[derive(Component, Clone, Copy, Debug)]
 pub struct UtilityWeights {
     /// How much distance penalties affect scoring.
@@ -241,15 +236,6 @@ pub struct UtilityWeights {
     /// *   Higher: Hates crowds (introvert).
     /// *   Lower: Doesn't mind sharing space.
     pub availability_weight: f32,
-
-    /// Preference for social interactions.
-    pub social_weight: f32,
-
-    /// Count of successful actions per type (Long-term memory).
-    pub action_success_count: [u32; ActionType::COUNT],
-
-    /// Count of attempted actions per type.
-    pub action_attempt_count: [u32; ActionType::COUNT],
 }
 
 impl Default for UtilityWeights {
@@ -257,9 +243,6 @@ impl Default for UtilityWeights {
         Self {
             distance_weight: 1.0,
             availability_weight: 1.0,
-            social_weight: 1.0,
-            action_success_count: [0; ActionType::COUNT],
-            action_attempt_count: [0; ActionType::COUNT],
         }
     }
 }
@@ -274,15 +257,6 @@ pub struct UtilityConfig {
     /// How often (in ticks) to re-evaluate actions.
     /// Higher = better performance but slower reaction time.
     pub evaluation_interval: u32,
-
-    /// How fast weights adjust (0.0 to 1.0).
-    /// *   High: Volatile personality (reacts strongly to recent events).
-    /// *   Low: Stubborn personality.
-    pub learning_rate: f32,
-
-    /// Min and max values for weights (e.g., 0.5 to 2.0).
-    /// Prevents weights from exploding to infinity or zero.
-    pub weight_clamp: (f32, f32),
 }
 
 impl Default for UtilityConfig {
@@ -290,8 +264,6 @@ impl Default for UtilityConfig {
         Self {
             switch_threshold: 0.15,
             evaluation_interval: 1,
-            learning_rate: 0.05,
-            weight_clamp: (0.5, 2.0),
         }
     }
 }
@@ -455,46 +427,6 @@ pub fn calculate_context_score(
     score.clamp(0.0, 1.0)
 }
 
-/// Calculates a modifier based on past success rates.
-///
-/// Returns a multiplier between **0.8** (failure prone) and **1.2** (reliable).
-///
-/// *   **New Action**: Returns 1.0 (neutral).
-/// *   **High Success**: Approaches 1.2.
-/// *   **High Failure**: Approaches 0.8.
-///
-/// # Examples
-///
-/// ```
-/// use scale::layer1::utility_types::calculate_success_modifier;
-/// use scale::layer1::utility_types::{ActionType, UtilityWeights};
-///
-/// let mut weights = UtilityWeights::default();
-///
-/// // Simulate 100% success rate
-/// weights.action_attempt_count[ActionType::SatisfyHunger.as_index()] = 10;
-/// weights.action_success_count[ActionType::SatisfyHunger.as_index()] = 10;
-///
-/// let modifier = calculate_success_modifier(ActionType::SatisfyHunger, &weights);
-/// assert!((modifier - 1.2).abs() < 0.0001);
-/// ```
-#[must_use]
-pub fn calculate_success_modifier(action: ActionType, weights: &UtilityWeights) -> f32 {
-    let idx = action.as_index();
-    let attempts = weights.action_attempt_count[idx];
-    let successes = weights.action_success_count[idx];
-
-    if attempts == 0 {
-        return 1.0;
-    }
-
-    #[allow(clippy::cast_precision_loss)]
-    let success_rate = successes as f32 / attempts as f32;
-
-    // Convert to modifier: 0.8-1.2 range
-    // Linear interpolation: rate * 0.4 + 0.8
-    success_rate.mul_add(0.4, 0.8)
-}
 
 #[cfg(test)]
 mod tests {
@@ -543,19 +475,6 @@ mod tests {
         assert!((score - 1.0).abs() < f32::EPSILON);
     }
 
-    #[test]
-    fn test_calculate_success_modifier_overflow() {
-        let mut weights = UtilityWeights::default();
-        let idx = ActionType::SatisfyHunger.as_index();
-
-        // Edge case: More successes than attempts (data corruption?)
-        weights.action_attempt_count[idx] = 10;
-        weights.action_success_count[idx] = 20;
-
-        let mod_val = calculate_success_modifier(ActionType::SatisfyHunger, &weights);
-        // Rate = 2.0. Modifier = 2.0 * 0.4 + 0.8 = 1.6.
-        assert!(mod_val > 1.2);
-    }
 
     #[test]
     fn test_manhattan_distance_extreme() {
@@ -606,9 +525,6 @@ mod tests {
         let weights = UtilityWeights::default();
         assert!((weights.distance_weight - 1.0).abs() < f32::EPSILON);
         assert!((weights.availability_weight - 1.0).abs() < f32::EPSILON);
-        assert!((weights.social_weight - 1.0).abs() < f32::EPSILON);
-        assert!(weights.action_success_count.iter().all(|&x| x == 0));
-        assert!(weights.action_attempt_count.iter().all(|&x| x == 0));
     }
 
     #[test]
@@ -663,22 +579,6 @@ mod tests {
         assert!(empty_score > full_score);
     }
 
-    #[test]
-    fn test_calculate_success_modifier() {
-        let mut weights = UtilityWeights::default();
-
-        let neutral = calculate_success_modifier(ActionType::SatisfyHunger, &weights);
-        assert!(neutral > 0.9 && neutral < 1.1);
-
-        weights.action_attempt_count[ActionType::SatisfyHunger.as_index()] = 10;
-        weights.action_success_count[ActionType::SatisfyHunger.as_index()] = 9;
-        let high = calculate_success_modifier(ActionType::SatisfyHunger, &weights);
-        assert!(high > 1.0);
-
-        weights.action_success_count[ActionType::SatisfyHunger.as_index()] = 2;
-        let low = calculate_success_modifier(ActionType::SatisfyHunger, &weights);
-        assert!(low < 1.0);
-    }
 
     #[test]
     fn test_manhattan_distance() {
@@ -695,7 +595,5 @@ mod tests {
         let config = UtilityConfig::default();
         assert!((config.switch_threshold - 0.15).abs() < f32::EPSILON);
         assert_eq!(config.evaluation_interval, 1);
-        assert!((config.learning_rate - 0.05).abs() < f32::EPSILON);
-        assert_eq!(config.weight_clamp, (0.5, 2.0));
     }
 }
