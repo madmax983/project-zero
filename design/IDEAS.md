@@ -4702,3 +4702,58 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Dispersed coverage (dumb) vs. Concentrated swarm (smart).
 
 ---
+## Dead Protocols
+
+**Layer:** 3
+
+**Fantasy:** Discovering an ancient treaty that is still technically in effect.
+
+**Mechanic:** You find a "Diplomatic Beacon" from a dead empire. It broadcasts a set of rules (e.g., "Do not mine Red Planets", "Tribute is due on Solstice"). Following the rules grants mysterious rewards. Breaking them activates the "Enforcers" (dormant automated fleets).
+
+**Emergence:** You strip mine a Red Planet because the empire has been dead for 10,000 years. The moon wakes up. It's not a moon.
+
+**Tension:** Superstition/Safety vs. Freedom/Profit.
+
+---
+
+## Institutional Memory
+
+**Layer:** 1
+
+**Fantasy:** The knowledge of the ancients is just a coffee-stained notebook left by the old Chief Engineer.
+
+**Mechanic:** High-skill Pops automatically write "Manuals" or "Logs" when working. These items provide XP buffs to lower-skill Pops reading them or working nearby. Manuals degrade over time or can be destroyed.
+
+**Emergence:** The colony's entire water filtration expertise is contained in "Old Tom's Diary". When the library burns down, nobody knows how to clean the filters, and the water turns toxic.
+
+**Tension:** Centralized knowledge (Library) vs. Distributed knowledge (Personal inventories).
+
+---
+
+## Emergency Blind Jump
+
+**Layer:** 2
+
+**Fantasy:** The desperate escape. Punching it without coordinates.
+
+**Mechanic:** Ships in combat can trigger a "Blind Jump". Instantly escapes to a random nearby node (or deep space). High risk of hull damage, system failure, or landing in a star.
+
+**Emergence:** Your flagship is about to explode. You blind jump. You end up in a nebula with no fuel, 5 systems away. You saved the ship, but now you have to mount a rescue mission for the rescue mission.
+
+**Tension:** Certain death (staying) vs. Probable death (jumping).
+
+---
+
+## Gravity Caste
+
+**Layer:** 1
+
+**Fantasy:** Biology diverges based on where you live.
+
+**Mechanic:** Pops born/living in Low-G environments become tall, frail, and intelligent ("Spacers"). Pops in High-G become short, dense, and strong ("Squats"). They suffer massive health penalties if they swap environments.
+
+**Emergence:** You try to transfer your best scientists (Spacers) to a new colony on a Super-Earth. They all break their legs walking off the shuttle. You have to build them exo-suits or segregated habitats.
+
+**Tension:** Biological specialization vs. Workforce flexibility.
+
+---
