@@ -56,8 +56,8 @@ use crate::layer1::{
     update_catharsis_duration_system, update_erosion_system, update_lighting_system,
     update_morale_cache_system, update_noise_system, update_pressure_system,
     update_resource_caps_system, update_screen_shake_system, update_taboo_duration_system,
-    update_water_system, update_weather_system, vermin_growth_system, vermin_morale_system,
-    waste_pollution_bridge, wild_child_system, work_execution_system,
+    update_water_system, update_weather_system, vermin_effect_system, vermin_growth_system,
+    vermin_morale_system, waste_pollution_bridge, wild_child_system, work_execution_system,
 };
 use crate::shared::time::SimulationTime;
 
@@ -296,6 +296,7 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(update_resource_caps_system),
         clothing_wear_system.after(consume_food_system),
         vermin_growth_system.after(consume_food_system),
+        vermin_effect_system.after(vermin_growth_system),
         vermin_morale_system.after(vermin_growth_system),
         spoilage_system
             .after(consume_food_system)
