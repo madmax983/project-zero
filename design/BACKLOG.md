@@ -20,7 +20,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `080` Planetary Quirks — `specs/080-planetary-quirks.md`
 - [ ] `084` Pop Traits — `specs/084-pop-traits.md`
 - [ ] `098` Medical Triage Policies — `specs/098-medical-triage.md`
-- [ ] `116` Drone Networks — `specs/116-drone-networks.md`
 - [ ] `117` Fuel Consumption — `specs/117-fuel-consumption.md`
 - [ ] `120` Crop Diversity — `specs/120-crop-diversity.md`
 - [ ] `132` Equipment & Wear — `specs/132-equipment-and-wear.md`

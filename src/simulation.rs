@@ -109,6 +109,7 @@ pub fn build_simulation_schedule() -> Schedule {
         update_building_map_system,
         gpu_evaluate_actions.after(update_building_map_system),
         crate::layer1::visitor::visitor_behavior_system,
+        crate::layer1::drone::evaluate_drone_actions_system.after(update_building_map_system),
         update_action_timer_system.after(gpu_evaluate_actions),
     ));
 
@@ -154,6 +155,7 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::turret::turret_fire_system.after(combat_execution_system),
         crate::layer1::justice::warden_execution_system.after(combat_execution_system),
         crate::layer1::execution::vandalize_execution_system.after(arrival_handler_system),
+        crate::layer1::drone::process_charge_system.after(arrival_handler_system),
         update_social_class_system.after(arrival_handler_system),
         class_friction_system.after(update_social_class_system),
         haul_system.after(arrival_handler_system),
@@ -294,6 +296,7 @@ pub fn build_simulation_schedule() -> Schedule {
         consume_food_system
             .after(produce_food_system)
             .after(update_resource_caps_system),
+        crate::layer1::drone::drone_battery_system.after(consume_food_system),
         clothing_wear_system.after(consume_food_system),
         vermin_growth_system.after(consume_food_system),
         vermin_effect_system.after(vermin_growth_system),
