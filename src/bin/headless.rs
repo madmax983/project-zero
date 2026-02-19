@@ -88,7 +88,12 @@ fn main() {
             }
             "tick" | "t" => {
                 let n: u64 = parts.get(1).and_then(|s| s.parse().ok()).unwrap_or(1);
-                run_ticks(&mut world, n);
+                // Cap tick count to prevent DoS (accidental or malicious infinite loops)
+                let safe_n = n.min(1000);
+                if n > 1000 {
+                    println!("Warning: Capping ticks to 1000 to prevent freeze.");
+                }
+                run_ticks(&mut world, safe_n);
             }
             "build" | "b" => {
                 if parts.len() < 4 {

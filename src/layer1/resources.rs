@@ -334,7 +334,32 @@ impl ColonyResources {
         self.waste = (self.waste + amount).clamp(0.0, self.max_waste);
     }
 
+    /// Checks if any resource value is negative.
+    ///
+    /// Used for validation to prevent exploit vectors where negative costs
+    /// effectively add resources.
+    #[must_use]
+    pub fn has_negative(&self) -> bool {
+        self.food < 0.0
+            || self.wood < 0.0
+            || self.stone < 0.0
+            || self.planks < 0.0
+            || self.blocks < 0.0
+            || self.ore < 0.0
+            || self.metal < 0.0
+            || self.tools < 0.0
+            || self.knowledge < 0.0
+            || self.fiber < 0.0
+            || self.cloth < 0.0
+            || self.clothing < 0.0
+            || self.rations < 0.0
+            || self.fuel < 0.0
+            || self.water < 0.0
+    }
+
     /// Checks if the colony can afford the given cost.
+    ///
+    /// Also validates that the cost is non-negative to prevent exploits.
     ///
     /// # Parameters
     ///
@@ -342,9 +367,13 @@ impl ColonyResources {
     ///
     /// # Returns
     ///
-    /// True if all resources are sufficient.
+    /// True if all resources are sufficient and cost is valid.
     #[must_use]
     pub fn can_afford(&self, cost: &Self) -> bool {
+        if cost.has_negative() {
+            return false;
+        }
+
         self.food >= cost.food
             && self.wood >= cost.wood
             && self.stone >= cost.stone
