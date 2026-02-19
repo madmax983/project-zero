@@ -19,3 +19,7 @@
 ## [Deadlock in Unimplemented Branch]
 **Learning:** `work_execution_system` silently failed for `Demolish` because the match arm returned `false` (unimplemented), causing pops to loop infinitely in `ActionType::Work` without progress or despawning the designation.
 **Action:** When stubbing out logic (TODOs), verify that the "failure" path (e.g. returning false) correctly cancels the action or cleans up state to prevent deadlocks.
+
+## [Implicit Constants in Utility AI]
+**Learning:** `evaluate_work` uses hardcoded magic numbers (0.5 base, 0.1 distance decay) that were not visible in the function signature, making it fragile to changes.
+**Action:** When testing "utility" functions, always use a "Base Case" test (dist=0, status=neutral) to verify and lock down these magic numbers, ensuring changes are intentional.
