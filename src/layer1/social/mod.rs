@@ -1,3 +1,16 @@
+//! Social Simulation and Relationships.
+//!
+//! This module handles the "Layer 1" social interactions between pops.
+//! Unlike grand strategy games where factions interact abstractly, here individual pops
+//! form relationships, hold grudges, and socialize in physical spaces.
+//!
+//! # Key Systems
+//!
+//! *   **Taverns**: Dedicated spaces for leisure recovery and socialization.
+//! *   **Relationships**: Pairwise affinity scores (-100 to +100) between pops.
+//! *   **Social Debt**: Informal favors tracked via [`debt::SocialDebt`].
+//! *   **Proximity**: Pops gain morale buffs/debuffs simply by being near friends/enemies.
+
 use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::cybernetics::{Augmentations, Prosthetic};
 use crate::layer1::map::GridPosition;
@@ -6,11 +19,14 @@ use bevy_ecs::prelude::*;
 use std::collections::HashMap;
 
 /// Social gathering place component.
+///
+/// Attached to buildings (like Taverns) where pops go to relax.
+/// Stores a list of current visitors to enable social interactions.
 #[derive(Component)]
 pub struct Tavern {
-    /// Maximum number of visitors.
+    /// Maximum number of visitors allowed simultaneously.
     pub capacity: usize,
-    /// List of visitors currently socializing.
+    /// List of visitors currently socializing inside.
     pub visitors: Vec<Entity>,
 }
 
@@ -24,6 +40,8 @@ impl Default for Tavern {
 }
 
 /// Executes the socialize action (pop entering tavern).
+///
+/// Checks capacity and assigns the pop to the tavern as a `TavernVisitor`.
 pub fn handle_socialize(
     commands: &mut Commands,
     taverns: &mut Query<&mut Tavern>,
@@ -42,6 +60,16 @@ pub fn handle_socialize(
 }
 
 /// Restores leisure for pops visiting taverns.
+///
+/// Calculates leisure recovery based on the environment and crowd.
+///
+/// # Formula
+///
+/// `Recovery = Base * (1.0 + ZoneBonus + SocialBonus)`
+///
+/// *   **Base**: 0.05 per tick.
+/// *   **ZoneBonus**: From [`crate::layer1::zone::ZoneType`] (e.g. Dining zone).
+/// *   **SocialBonus**: `(VisitorCount - 1) * 0.1`. More people = more fun.
 pub fn restore_leisure_system(
     mut needs_query: Query<&mut Needs>,
     tavern_query: Query<(&Tavern, &crate::layer1::building::Building, &GridPosition)>,
@@ -73,6 +101,10 @@ pub fn restore_leisure_system(
 }
 
 /// Relationships component storing affinity values for other pops.
+///
+/// Every pop has this component to track how they feel about others.
+/// *   **Positive**: Friend (>20), Best Friend (>80).
+/// *   **Negative**: Rival (<-20), Nemesis (<-80).
 #[derive(Component, Default)]
 pub struct Relationships {
     /// Map of target entity to affinity value (-100.0 to 100.0).
@@ -80,7 +112,7 @@ pub struct Relationships {
 }
 
 impl Relationships {
-    /// Gets the affinity towards a target entity. defaults to 0.0.
+    /// Gets the affinity towards a target entity. Defaults to 0.0 (Neutral).
     #[must_use]
     pub fn get_affinity(&self, target: Entity) -> f32 {
         *self.affinities.get(&target).unwrap_or(&0.0)
@@ -101,17 +133,23 @@ impl Relationships {
 }
 
 /// Event triggered when affinity between pops changes.
+///
+/// Use this to modify relationships. The system handles clamping and
+/// modifiers (like cybernetic prejudice).
 #[derive(Event)]
 pub struct AffinityChange {
     /// The pop whose opinion is changing.
     pub source: Entity,
     /// The target of the opinion.
     pub target: Entity,
-    /// The amount to change affinity by.
+    /// The amount to change affinity by (positive or negative).
     pub amount: f32,
 }
 
 /// System to apply affinity changes from events.
+///
+/// Processes [`AffinityChange`] events and updates [`Relationships`].
+/// Also applies "Cybernetic Prejudice": pops gain less affinity with cyborgs.
 pub fn modify_affinity_system(
     mut events: EventReader<AffinityChange>,
     mut query: Query<&mut Relationships>,
@@ -151,6 +189,13 @@ pub struct SocialBuff {
 }
 
 /// System to calculate social proximity buffs/debuffs.
+///
+/// Checks for other pops within 5 tiles.
+/// *   **Friends (>20 affinity)**: +0.1 morale per friend.
+/// *   **Enemies (<-20 affinity)**: -0.1 morale per enemy.
+///
+/// Note: This is currently O(N^2) and should be optimized with spatial partitioning
+/// if pop count grows large.
 pub fn proximity_social_system(
     mut commands: Commands,
     pops: Query<(Entity, &GridPosition, &Relationships)>,

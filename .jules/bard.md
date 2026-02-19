@@ -13,3 +13,11 @@
 ## 2026-02-17 - [Action System Black Box]
 **Confusion:** The `layer1::actions` module was a bare list of files. Developers had to read source code to understand the "Evaluate -> Select -> Execute" lifecycle or the contract for `evaluate_*` functions.
 **Clarification:** Added module-level documentation to `layer1::actions::mod.rs` explaining the architecture, lifecycle, and contract. Documented key actions (`work`, `repair`, `haul`) with usage examples.
+
+## 2026-02-17 - [Social Bonus Mystery]
+**Confusion:** The formula for leisure restoration in taverns was buried in `restore_leisure_system` with magic numbers `0.05` and `0.1`.
+**Clarification:** Documented `restore_leisure_system` in `layer1::social::mod.rs` with the explicit formula: `Recovery = Base * (1.0 + ZoneBonus + SocialBonus)`.
+
+## 2026-02-17 - [Ecological Config]
+**Confusion:** `EcologyConfig` fields like `growth_rate` and `pioneer_chance` were public but undocumented, making it unclear how to tune the simulation.
+**Clarification:** Added documentation to `layer1::ecology::mod.rs` explaining the stochastic growth model and providing example configuration values.
