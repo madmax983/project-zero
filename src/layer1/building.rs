@@ -146,6 +146,30 @@ impl MaterialType {
 #[derive(Component, Default, Debug, Clone, Copy)]
 pub struct Material(pub MaterialType);
 
+/// Building tech tier.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub enum Tier {
+    /// Basic, primitive technology.
+    Basic = 1,
+    /// Advanced, industrial technology.
+    Advanced = 2,
+    /// High-tech, futuristic or ancient technology.
+    HighTech = 3,
+}
+
+/// Building category for tech comparisons.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub enum Category {
+    /// Related to food (Farms, Hydroponics).
+    FoodProduction,
+    /// Related to material processing (Smelters, Refineries).
+    Manufacturing,
+    /// Related to energy generation (Generators, Reactors).
+    Power,
+    /// Related to science and data (Libraries, AI Cores).
+    Research,
+}
+
 /// Building types available for construction.
 ///
 /// This enum defines all constructible structures in the game. It contains metadata
@@ -263,6 +287,32 @@ pub enum BuildingType {
 }
 
 impl BuildingType {
+    /// Returns the tech tier and category for this building, if applicable.
+    /// Used for Tech Envy (Spec 162).
+    #[must_use]
+    pub const fn tier_info(&self) -> Option<(Category, Tier)> {
+        match self {
+            Self::Farm => Some((Category::FoodProduction, Tier::Basic)),
+            Self::Greenhouse => Some((Category::FoodProduction, Tier::Advanced)),
+            Self::HydroponicsBay => Some((Category::FoodProduction, Tier::HighTech)),
+
+            Self::Smithy | Self::LumberMill | Self::StoneMason => {
+                Some((Category::Manufacturing, Tier::Basic))
+            }
+            Self::Smelter | Self::Refinery => Some((Category::Manufacturing, Tier::Advanced)),
+            Self::AncientFabricator => Some((Category::Manufacturing, Tier::HighTech)),
+
+            Self::Generator => Some((Category::Power, Tier::Basic)),
+            Self::AncientReactor => Some((Category::Power, Tier::HighTech)),
+
+            Self::Library => Some((Category::Research, Tier::Basic)),
+            Self::Observatory => Some((Category::Research, Tier::Advanced)),
+            Self::AICore => Some((Category::Research, Tier::HighTech)),
+
+            _ => None,
+        }
+    }
+
     /// Returns the thermal conductivity (0.0 to 1.0) of the building.
     /// Lower values mean better insulation.
     /// - 1.0: Passes heat freely (Vent, Empty)
