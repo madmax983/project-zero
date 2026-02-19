@@ -46,7 +46,10 @@ pub fn check_access(world: &World, door_entity: Entity, pop_entity: Entity) -> b
         AccessMode::Restricted => {
             // Check specific Pop allow list
             if access.allowed_pops.contains(&pop_entity) {
-                return true;
+                // Verify entity is alive to prevent ID reuse exploits or logic bugs
+                if world.get_entity(pop_entity).is_ok() {
+                    return true;
+                }
             }
             // Check Role allow list
             if world
