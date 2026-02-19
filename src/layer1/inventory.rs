@@ -4,6 +4,7 @@ use bevy_ecs::prelude::*;
 /// An item in an inventory.
 #[derive(Debug, Clone, PartialEq)]
 pub struct InventoryItem {
+    /// The specific type of the item (e.g., Potato, Curio).
     pub item_type: ItemType,
 }
 
@@ -18,6 +19,7 @@ impl Default for InventoryItem {
 /// Component for storing personal items (tools, curios, etc.).
 #[derive(Component, Debug, Default, Clone)]
 pub struct Inventory {
+    /// The list of items currently held in the inventory.
     pub items: Vec<InventoryItem>,
 }
 

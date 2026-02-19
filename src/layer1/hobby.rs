@@ -8,8 +8,12 @@ use crate::layer1::utility_types::HobbyType;
 use bevy_ecs::prelude::*;
 use rand::Rng;
 
+/// A component representing a Pop's personal hobby.
+///
+/// Hobbies are assigned based on [`crate::layer1::traits::Traits`] and provide stress relief.
 #[derive(Component, Debug, Clone)]
 pub struct Hobby {
+    /// The specific type of hobby this Pop enjoys.
     pub hobby_type: HobbyType,
 }
 
@@ -50,6 +54,9 @@ fn pick_hobby_for_traits(traits: &crate::layer1::traits::Traits, rng: &mut impl 
     candidates[rng.gen_range(0..candidates.len())]
 }
 
+/// System to assign hobbies to Pops that don't have one yet.
+///
+/// Uses the Pop's [`crate::layer1::traits::Traits`] to select a suitable hobby.
 pub fn assign_hobby_system(mut commands: Commands, query: Query<(Entity, &crate::layer1::traits::Traits), Without<Hobby>>) {
     let mut rng = rand::thread_rng();
     for (entity, traits) in &query {
@@ -58,6 +65,10 @@ pub fn assign_hobby_system(mut commands: Commands, query: Query<(Entity, &crate:
     }
 }
 
+/// Evaluates the utility of performing a hobby.
+///
+/// Driven by stress levels. High stress = high desire to do hobby.
+/// Also slightly boosted if currently Idle.
 pub fn evaluate_hobby(data: &PopEvalData, _hobby_type: HobbyType) -> f32 {
     let base_score = 0.1;
     let stress_factor = data.stress * 0.8; // Up to 0.8 from stress
@@ -69,6 +80,9 @@ pub fn evaluate_hobby(data: &PopEvalData, _hobby_type: HobbyType) -> f32 {
     (base_score + stress_factor + idle_bonus).min(1.0)
 }
 
+/// System to execute hobby actions.
+///
+/// Reduces stress over time and occasionally produces items (Curios).
 pub fn execute_hobby_system(
     mut query: Query<(&mut StressTracker, &Hobby, Option<&mut Inventory>, &PopAction)>,
 ) {
@@ -110,7 +124,7 @@ mod tests {
     use crate::layer1::traits::{Trait, Traits};
     use crate::layer1::stress::StressTracker;
     use crate::layer1::utility_ai::{ActionType, PopAction};
-    use crate::layer1::inventory::{Inventory, InventoryItem};
+    use crate::layer1::inventory::Inventory;
     use crate::layer1::items::ItemType;
     use crate::layer1::utility_eval_types::PopEvalData;
     use crate::layer1::utility_ai::UtilityWeights;
@@ -141,7 +155,7 @@ mod tests {
 
     #[test]
     fn test_evaluate_hobby_high_when_stressed() {
-        let mut eval_data = PopEvalData {
+        let eval_data = PopEvalData {
             entity: Entity::from_raw(0),
             pos: GridPosition { x: 0, y: 0 },
             needs: Needs::default(),

@@ -122,11 +122,16 @@ pub enum ActionType {
 /// Types of hobbies.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum HobbyType {
-    Whittling,      // Creative
-    CloudWatching,  // Lazy/Nature
-    Meditation,     // Stoic
-    Gossip,         // Social
-    Tinkering,      // Industrial
+    /// Carving small objects from wood (Creative).
+    Whittling,
+    /// Watching the clouds go by (Lazy/Nature).
+    CloudWatching,
+    /// Seeking inner peace (Stoic).
+    Meditation,
+    /// Sharing rumors and stories (Social).
+    Gossip,
+    /// Messing with mechanical parts (Industrial).
+    Tinkering,
 }
 
 impl ActionType {

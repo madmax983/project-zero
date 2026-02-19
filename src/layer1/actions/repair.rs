@@ -19,7 +19,7 @@
 
 use crate::layer1::map::GridPosition;
 use crate::layer1::utility_eval_types::PositionProxy;
-use crate::layer1::utility_types::{ActionType, UtilityWeights};
+use crate::layer1::utility_types::UtilityWeights;
 use crate::layer1::utility_types::calculate_context_score;
 use bevy_ecs::prelude::*;
 

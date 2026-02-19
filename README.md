@@ -80,11 +80,15 @@ See `examples/story_demo.rs` for a complete example.
 
 The "Nova" feature (Oral Tradition) builds upon the base narrative system to create living legends that evolve in taverns. It is located in `scale::layer1::oral_tradition`.
 
-To use it, you must enable the `nova` feature:
+> **⚠️ REQUIRES `nova` FEATURE**
+>
+> To use this feature, you must enable the `nova` feature flag:
 
 ```bash
 cargo run --features nova
 ```
+
+See `examples/oral_tradition_demo.rs` for a complete example.
 
 ### Headless Simulation
 
