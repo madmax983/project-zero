@@ -1,7 +1,7 @@
+use crate::layer1::GridPosition;
 use crate::layer1::edicts::{ColonyPolicies, Policy};
 use crate::layer1::fire::Fire;
 use crate::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
-use crate::layer1::GridPosition;
 use bevy_ecs::prelude::*;
 use rand::Rng;
 use std::collections::HashSet;

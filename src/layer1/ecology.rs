@@ -1,6 +1,6 @@
+use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use bevy_ecs::prelude::*;
 use rand::Rng;
-use crate::layer1::terrain::{TerrainGrid, TerrainType};
 
 /// Configuration for ecological succession rates.
 #[derive(Resource)]
@@ -76,7 +76,7 @@ pub fn process_ecological_succession(world: &mut World) {
                 } else {
                     None
                 }
-            },
+            }
             TerrainType::Grass => {
                 // Check neighbors for seeds (Trees)
                 let has_seed_source = check_neighbors_for_tree(&grid, x, y);
@@ -89,14 +89,14 @@ pub fn process_ecological_succession(world: &mut World) {
                 } else {
                     None
                 }
-            },
+            }
             TerrainType::Sapling => {
                 if rng.gen_bool(maturation_chance) {
                     Some(TerrainType::Tree)
                 } else {
                     None
                 }
-            },
+            }
             _ => None,
         };
 

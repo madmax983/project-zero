@@ -1,11 +1,11 @@
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::vermin::{VerminState, VerminTrait, vermin_growth_system};
-    use crate::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
     use crate::layer1::edicts::{ColonyPolicies, Policy};
     use crate::layer1::fire::Fire;
     use crate::layer1::map::GridPosition;
+    use crate::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
+    use crate::layer1::vermin::{VerminState, VerminTrait, vermin_growth_system};
+    use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
 
     fn setup_world() -> World {
@@ -33,7 +33,10 @@ mod tests {
         }
 
         let vermin = world.resource::<VerminState>();
-        assert!(vermin.traits.contains(&VerminTrait::Toxic), "Vermin should become Toxic from waste");
+        assert!(
+            vermin.traits.contains(&VerminTrait::Toxic),
+            "Vermin should become Toxic from waste"
+        );
     }
 
     #[test]
@@ -52,7 +55,10 @@ mod tests {
         }
 
         let vermin = world.resource::<VerminState>();
-        assert!(vermin.traits.contains(&VerminTrait::Volatile), "Vermin should become Volatile from fuel");
+        assert!(
+            vermin.traits.contains(&VerminTrait::Volatile),
+            "Vermin should become Volatile from fuel"
+        );
     }
 
     #[test]
@@ -93,7 +99,10 @@ mod tests {
 
         // Let's rely on specific numbers for the test or logic check
         let growth = vermin.severity - 50.0;
-        assert!(growth > 0.026, "Toxic vermin should resist pest control (growth > 0.025)");
+        assert!(
+            growth > 0.026,
+            "Toxic vermin should resist pest control (growth > 0.025)"
+        );
     }
 
     #[test]
@@ -109,15 +118,20 @@ mod tests {
 
         // Spawn Fuel Item
         world.spawn((
-            ResourceItem { resource_type: ResourceType::Fuel, amount: 10.0 },
-            GridPosition { x: 5, y: 5 }
+            ResourceItem {
+                resource_type: ResourceType::Fuel,
+                amount: 10.0,
+            },
+            GridPosition { x: 5, y: 5 },
         ));
 
         // Run a new system: vermin_effect_system
         // This system handles the active effects of traits
         // Note: vermin_effect_system doesn't exist yet, but we need to reference it.
         // We will reference it from crate::layer1::vermin
-        world.run_system_once(crate::layer1::vermin::vermin_effect_system).unwrap();
+        world
+            .run_system_once(crate::layer1::vermin::vermin_effect_system)
+            .unwrap();
 
         // Check for Fire
         // Since it's probabilistic, we might need to mock RNG or force it.
@@ -126,11 +140,13 @@ mod tests {
 
         let mut ignited = false;
         for _ in 0..100 {
-             world.run_system_once(crate::layer1::vermin::vermin_effect_system).unwrap();
-             if world.query::<&Fire>().iter(&world).count() > 0 {
-                 ignited = true;
-                 break;
-             }
+            world
+                .run_system_once(crate::layer1::vermin::vermin_effect_system)
+                .unwrap();
+            if world.query::<&Fire>().iter(&world).count() > 0 {
+                ignited = true;
+                break;
+            }
         }
 
         assert!(ignited, "Volatile vermin should eventually ignite fuel");

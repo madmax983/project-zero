@@ -40,7 +40,8 @@ pub fn process_observe_system(
                     if traits.0.contains(&Trait::Optimist) || traits.0.contains(&Trait::Curious) {
                         inspiration_chance += 0.3;
                     }
-                    if traits.0.contains(&Trait::Anxious) || traits.0.contains(&Trait::Traditionalist)
+                    if traits.0.contains(&Trait::Anxious)
+                        || traits.0.contains(&Trait::Traditionalist)
                     {
                         inspiration_chance -= 0.3;
                     }

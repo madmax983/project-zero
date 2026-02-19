@@ -208,10 +208,14 @@ pub fn execute_attack(world: &mut World, attacker: Entity, target: Entity) {
             // Hit Stop: Freeze frame on impact
             if hit_stop_ticks > 0 {
                 if let Ok(mut entity) = world.get_entity_mut(attacker) {
-                    entity.insert(HitStop { ticks_remaining: hit_stop_ticks });
+                    entity.insert(HitStop {
+                        ticks_remaining: hit_stop_ticks,
+                    });
                 }
                 if let Ok(mut entity) = world.get_entity_mut(target) {
-                    entity.insert(HitStop { ticks_remaining: hit_stop_ticks });
+                    entity.insert(HitStop {
+                        ticks_remaining: hit_stop_ticks,
+                    });
                 }
             }
 
@@ -574,7 +578,11 @@ mod tests {
         let attacker_hs = world.get::<HitStop>(attacker);
         assert!(attacker_hs.is_some(), "Attacker should have HitStop");
         let ticks = attacker_hs.unwrap().ticks_remaining;
-        assert!(ticks == 5 || ticks == 10, "Expected 5 or 10 ticks, got {}", ticks);
+        assert!(
+            ticks == 5 || ticks == 10,
+            "Expected 5 or 10 ticks, got {}",
+            ticks
+        );
 
         let target_hs = world.get::<HitStop>(target);
         assert!(target_hs.is_some(), "Target should have HitStop");
@@ -623,7 +631,11 @@ mod tests {
         if hs.is_some() {
             // Must have critted (Damage 4 * 2 = 8, but Crit flag overrides to Crit duration)
             // Implementation: if is_crit { HIT_STOP_CRIT (10) }
-            assert_eq!(hs.unwrap().ticks_remaining, 10, "Crit on light weapon should give CRIT ticks (10)");
+            assert_eq!(
+                hs.unwrap().ticks_remaining,
+                10,
+                "Crit on light weapon should give CRIT ticks (10)"
+            );
         } else {
             // Normal (Damage 4 < 5) -> Light (0 ticks)
             assert!(hs.is_none(), "Normal light hit should give 0 ticks");
@@ -672,6 +684,10 @@ mod tests {
         let hs = world.get::<HitStop>(attacker);
         assert!(hs.is_some());
         let ticks = hs.unwrap().ticks_remaining;
-        assert!(ticks == 2 || ticks == 10, "Expected 2 (Normal) or 10 (Crit), got {}", ticks);
+        assert!(
+            ticks == 2 || ticks == 10,
+            "Expected 2 (Normal) or 10 (Crit), got {}",
+            ticks
+        );
     }
 }

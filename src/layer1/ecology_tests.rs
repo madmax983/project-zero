@@ -1,8 +1,8 @@
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::terrain::{TerrainType, TerrainGrid};
     use crate::layer1::ecology::{EcologyConfig, process_ecological_succession};
+    use crate::layer1::terrain::{TerrainGrid, TerrainType};
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_terrain_type_shrub() {
@@ -21,7 +21,11 @@ mod tests {
         let mut world = World::new();
         let tiles = vec![TerrainType::Dirt; 9];
         // Center is dirt
-        world.insert_resource(TerrainGrid { width: 3, height: 3, tiles });
+        world.insert_resource(TerrainGrid {
+            width: 3,
+            height: 3,
+            tiles,
+        });
 
         let mut config = EcologyConfig::default();
         config.growth_rate = 1.0; // Ensure check happens
@@ -41,7 +45,11 @@ mod tests {
         let mut world = World::new();
         let mut tiles = vec![TerrainType::Grass; 9];
         tiles[0] = TerrainType::Tree; // (0,0) is a seed source
-        world.insert_resource(TerrainGrid { width: 3, height: 3, tiles });
+        world.insert_resource(TerrainGrid {
+            width: 3,
+            height: 3,
+            tiles,
+        });
 
         let mut config = EcologyConfig::default();
         config.growth_rate = 1.0;
@@ -59,7 +67,11 @@ mod tests {
         let grid = world.resource::<TerrainGrid>();
         // Neighbors of tree should have chance to become Sapling
         // Specifically check (0,1) or (1,0) or (1,1)
-        let sapling_count = grid.tiles.iter().filter(|&&t| t == TerrainType::Sapling).count();
+        let sapling_count = grid
+            .tiles
+            .iter()
+            .filter(|&&t| t == TerrainType::Sapling)
+            .count();
         assert!(sapling_count > 0);
     }
 
@@ -67,7 +79,11 @@ mod tests {
     fn test_sapling_growth_to_tree() {
         let mut world = World::new();
         let tiles = vec![TerrainType::Sapling; 9];
-        world.insert_resource(TerrainGrid { width: 3, height: 3, tiles });
+        world.insert_resource(TerrainGrid {
+            width: 3,
+            height: 3,
+            tiles,
+        });
 
         let mut config = EcologyConfig::default();
         config.growth_rate = 1.0;
@@ -80,7 +96,11 @@ mod tests {
         }
 
         let grid = world.resource::<TerrainGrid>();
-        let tree_count = grid.tiles.iter().filter(|&&t| t == TerrainType::Tree).count();
+        let tree_count = grid
+            .tiles
+            .iter()
+            .filter(|&&t| t == TerrainType::Tree)
+            .count();
         assert!(tree_count > 0);
     }
 
@@ -88,7 +108,11 @@ mod tests {
     fn test_rock_does_not_grow() {
         let mut world = World::new();
         let tiles = vec![TerrainType::Rock; 9];
-        world.insert_resource(TerrainGrid { width: 3, height: 3, tiles });
+        world.insert_resource(TerrainGrid {
+            width: 3,
+            height: 3,
+            tiles,
+        });
         world.insert_resource(EcologyConfig::default());
 
         process_ecological_succession(&mut world);
