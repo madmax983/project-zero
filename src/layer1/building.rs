@@ -43,6 +43,7 @@ use crate::layer1::trade::TradeDepot;
 use crate::layer1::water::{MAX_HYDRATION, WaterSource};
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
+use bevy_ecs::world::EntityWorldMut;
 use std::collections::{HashMap, HashSet};
 use strum::IntoEnumIterator;
 use strum_macros::EnumIter;
@@ -985,16 +986,60 @@ fn spawn_building(
     }
 
     match building_type {
-        BuildingType::Gate => {
-            entity.insert((
-                crate::layer1::defense::Gate::default(),
-                DoorControl::default(),
-                AccessControl::default(),
-            ));
+        BuildingType::Housing | BuildingType::Lander => configure_housing(&mut entity, building_type),
+        BuildingType::Farm
+        | BuildingType::Plantation
+        | BuildingType::Greenhouse
+        | BuildingType::HydroponicsBay
+        | BuildingType::Smokehouse
+        | BuildingType::LumberMill
+        | BuildingType::StoneMason
+        | BuildingType::Smelter
+        | BuildingType::Smithy
+        | BuildingType::Weaver
+        | BuildingType::Tailor
+        | BuildingType::Refinery
+        | BuildingType::AncientFabricator => configure_production(&mut entity, building_type),
+        BuildingType::Stockpile | BuildingType::Landfill => {
+            configure_storage(&mut entity, building_type);
         }
-        BuildingType::Wall | BuildingType::Tower => {
-            // Logic handled by generic material/structure above
+        BuildingType::Tavern
+        | BuildingType::Library
+        | BuildingType::FlowerBed
+        | BuildingType::Statue
+        | BuildingType::Hospital
+        | BuildingType::Grave
+        | BuildingType::TradeDepot => configure_civic(&mut entity, building_type),
+        BuildingType::Wall
+        | BuildingType::Gate
+        | BuildingType::Tower
+        | BuildingType::Well
+        | BuildingType::ConveyorBelt
+        | BuildingType::Hopper
+        | BuildingType::Airlock
+        | BuildingType::Vent => configure_infrastructure(&mut entity, building_type),
+        BuildingType::Generator
+        | BuildingType::PowerPole
+        | BuildingType::Battery
+        | BuildingType::AncientReactor
+        | BuildingType::Heater => configure_power(&mut entity, building_type),
+        BuildingType::Observatory
+        | BuildingType::LifeSupport
+        | BuildingType::TrashCannon
+        | BuildingType::ServerBank
+        | BuildingType::CommandCenter
+        | BuildingType::AICore
+        | BuildingType::DroneHub => configure_tech(&mut entity, building_type),
+        BuildingType::PersonalShed
+        | BuildingType::PersonalGarden
+        | BuildingType::PersonalShrine => {
+            // Logic handled by components added in system
         }
+    }
+}
+
+fn configure_housing(entity: &mut EntityWorldMut, building_type: BuildingType) {
+    match building_type {
         BuildingType::Housing => {
             entity.insert((
                 Housing::default(),
@@ -1005,17 +1050,55 @@ fn spawn_building(
                 },
             ));
         }
+        BuildingType::Lander => {
+            entity.insert((
+                Housing {
+                    capacity: 5,
+                    ..Default::default()
+                },
+                Stockpile {
+                    food_bonus: 50.0,
+                    wood_bonus: 50.0,
+                    stone_bonus: 20.0,
+                    waste_bonus: 0.0,
+                },
+                PowerSource {
+                    output: 10.0,
+                    active: true,
+                },
+                LightSource {
+                    radius: 8.0,
+                    intensity: 0.8,
+                    color: (200, 200, 255),
+                },
+                // Spec Q&A says Library/Lander should provide base capacity.
+                // I will add DataStorage to Lander too!
+                DataStorage { capacity: 10.0 }, // Base capacity
+            ));
+            if let Some(mut structure) = entity.get_mut::<crate::layer1::structure::Structure>() {
+                structure.max_hp = 500.0;
+                structure.current_hp = 500.0;
+            }
+        }
+        _ => {}
+    }
+}
+
+#[allow(clippy::too_many_lines)]
+fn configure_production(entity: &mut EntityWorldMut, building_type: BuildingType) {
+    match building_type {
         BuildingType::Farm | BuildingType::Plantation | BuildingType::Greenhouse => {
             entity.insert((Farm::default(), ShiftSchedule::default()));
         }
-        BuildingType::Well => {
-            entity.insert(WaterSource {
-                range: 5,
-                amount: MAX_HYDRATION,
-            });
-        }
-        BuildingType::Stockpile => {
-            entity.insert(Stockpile::default());
+        BuildingType::HydroponicsBay => {
+            entity.insert((
+                Farm::default(),
+                PowerConsumer {
+                    demand: 5.0,
+                    active: false,
+                },
+                ShiftSchedule::default(),
+            ));
         }
         BuildingType::Smokehouse => {
             entity.insert((
@@ -1031,14 +1114,6 @@ fn spawn_building(
                 ShiftSchedule::default(),
             ));
         }
-        BuildingType::Landfill => {
-            entity.insert(Stockpile {
-                waste_bonus: 100.0,
-                food_bonus: 0.0,
-                wood_bonus: 0.0,
-                stone_bonus: 0.0,
-            });
-        }
         BuildingType::LumberMill => {
             entity.insert((
                 RefiningProgress {
@@ -1051,25 +1126,6 @@ fn spawn_building(
                     color: (200, 180, 100), // Dim Wood light
                 },
                 ShiftSchedule::default(),
-            ));
-        }
-        BuildingType::Weaver | BuildingType::Tailor => {
-            entity.insert((
-                RefiningProgress {
-                    current: 0.0,
-                    max: 10.0,
-                },
-                ShiftSchedule::default(),
-            ));
-        }
-        BuildingType::Tavern => {
-            entity.insert((
-                Tavern::default(),
-                LightSource {
-                    radius: 8.0,
-                    intensity: 0.8,
-                    color: (255, 140, 0), // Orange
-                },
             ));
         }
         BuildingType::Smelter => {
@@ -1108,13 +1164,82 @@ fn spawn_building(
                 ShiftSchedule::default(),
             ));
         }
-        BuildingType::StoneMason => {
+        BuildingType::StoneMason | BuildingType::Weaver | BuildingType::Tailor => {
             entity.insert((
                 RefiningProgress {
                     current: 0.0,
                     max: 10.0,
                 },
                 ShiftSchedule::default(),
+            ));
+        }
+        BuildingType::Refinery => {
+            entity.insert((
+                RefiningProgress {
+                    current: 0.0,
+                    max: 20.0, // Slower process
+                },
+                LightSource {
+                    radius: 6.0,
+                    intensity: 0.8,
+                    color: (100, 200, 255), // Chemical blue
+                },
+                ShiftSchedule::default(),
+            ));
+        }
+        BuildingType::AncientFabricator => {
+            entity.insert((
+                // Refining logic needs to be added, maybe RefiningProgress with high speed?
+                // For now, just mark it.
+                RefiningProgress {
+                    current: 0.0,
+                    max: 1.0, // Very fast? Default is 10.0
+                },
+                AncientStructure,
+                MachineSpirit::default(),
+                LightSource {
+                    radius: 6.0,
+                    intensity: 0.8,
+                    color: (0, 255, 255), // Cyan
+                },
+                ShiftSchedule::default(),
+            ));
+            if let Some(mut structure) = entity.get_mut::<crate::layer1::structure::Structure>() {
+                structure.max_hp = 1000.0;
+                structure.current_hp = 1000.0;
+            }
+        }
+        _ => {}
+    }
+}
+
+fn configure_storage(entity: &mut EntityWorldMut, building_type: BuildingType) {
+    match building_type {
+        BuildingType::Stockpile => {
+            entity.insert(Stockpile::default());
+        }
+        BuildingType::Landfill => {
+            entity.insert(Stockpile {
+                waste_bonus: 100.0,
+                food_bonus: 0.0,
+                wood_bonus: 0.0,
+                stone_bonus: 0.0,
+            });
+        }
+        _ => {}
+    }
+}
+
+fn configure_civic(entity: &mut EntityWorldMut, building_type: BuildingType) {
+    match building_type {
+        BuildingType::Tavern => {
+            entity.insert((
+                Tavern::default(),
+                LightSource {
+                    radius: 8.0,
+                    intensity: 0.8,
+                    color: (255, 140, 0), // Orange
+                },
             ));
         }
         BuildingType::Library => {
@@ -1134,31 +1259,6 @@ fn spawn_building(
             // If we want it to always be flammable regardless of "Material" (because plants burn),
             // we should force it.
             entity.insert(Flammable::default());
-        }
-        BuildingType::Statue => {
-            // Statues are made of stone/metal, not flammable
-        }
-        BuildingType::Generator => {
-            entity.insert((
-                PowerSource {
-                    output: 10.0,
-                    ..Default::default()
-                },
-                FuelConsumer { amount: 1.0 },
-            ));
-        }
-        BuildingType::PowerPole => {
-            entity.insert(Conduit);
-        }
-        BuildingType::Battery => {
-            entity.insert((
-                crate::layer1::energy::Battery {
-                    capacity: 100.0,
-                    charge: 0.0,
-                    max_throughput: 10.0,
-                },
-                Conduit,
-            ));
         }
         BuildingType::Hospital => {
             entity.insert((
@@ -1188,84 +1288,24 @@ fn spawn_building(
                 },
             ));
         }
-        BuildingType::AncientReactor => {
+        _ => {}
+    }
+}
+
+fn configure_infrastructure(entity: &mut EntityWorldMut, building_type: BuildingType) {
+    match building_type {
+        BuildingType::Gate => {
             entity.insert((
-                PowerSource {
-                    output: 50.0,
-                    ..Default::default()
-                }, // Massive power
-                AncientStructure,
-                MachineSpirit::default(),
-                LightSource {
-                    radius: 8.0,
-                    intensity: 1.0,
-                    color: (255, 215, 0), // Gold
-                },
-            ));
-            // Set high HP
-            if let Some(mut structure) = entity.get_mut::<crate::layer1::structure::Structure>() {
-                structure.max_hp = 1000.0;
-                structure.current_hp = 1000.0;
-            }
-        }
-        BuildingType::AncientFabricator => {
-            entity.insert((
-                // Refining logic needs to be added, maybe RefiningProgress with high speed?
-                // For now, just mark it.
-                RefiningProgress {
-                    current: 0.0,
-                    max: 1.0, // Very fast? Default is 10.0
-                },
-                AncientStructure,
-                MachineSpirit::default(),
-                LightSource {
-                    radius: 6.0,
-                    intensity: 0.8,
-                    color: (0, 255, 255), // Cyan
-                },
-                ShiftSchedule::default(),
-            ));
-            if let Some(mut structure) = entity.get_mut::<crate::layer1::structure::Structure>() {
-                structure.max_hp = 1000.0;
-                structure.current_hp = 1000.0;
-            }
-        }
-        BuildingType::Refinery => {
-            entity.insert((
-                RefiningProgress {
-                    current: 0.0,
-                    max: 20.0, // Slower process
-                },
-                LightSource {
-                    radius: 6.0,
-                    intensity: 0.8,
-                    color: (100, 200, 255), // Chemical blue
-                },
-                ShiftSchedule::default(),
+                crate::layer1::defense::Gate::default(),
+                DoorControl::default(),
+                AccessControl::default(),
             ));
         }
-        BuildingType::Observatory => {
-            entity.insert((
-                crate::layer1::observatory::Observatory,
-                crate::layer1::tech::Library, // Generates research implicitly via logic, but maybe we want Library tag?
-                // Spec says "Pops working here generate Knowledge (similar to Libraries)".
-                // But we have custom logic in process_observe_system.
-                // If we add Library tag, process_research_system might ALSO count it if we use AssignmentType::LibraryWorker.
-                // But we use AssignmentType::ObservatoryWorker.
-                // So adding Library component is probably harmless or useful for "is this a research building?" queries.
-                // However, let's stick to the spec component: Observatory.
-                LightSource {
-                    radius: 6.0,
-                    intensity: 0.6,
-                    color: (135, 206, 235), // Sky Blue
-                },
-                ShiftSchedule::default(),
-            ));
-        }
-        BuildingType::PersonalShed
-        | BuildingType::PersonalGarden
-        | BuildingType::PersonalShrine => {
-            // Logic handled by components added in system
+        BuildingType::Well => {
+            entity.insert(WaterSource {
+                range: 5,
+                amount: MAX_HYDRATION,
+            });
         }
         BuildingType::ConveyorBelt => {
             entity.insert((
@@ -1288,12 +1328,85 @@ fn spawn_building(
                 },
             ));
         }
-        BuildingType::HydroponicsBay => {
+        BuildingType::Airlock => {
+            entity.insert((DoorControl::default(), AccessControl::default()));
+        }
+        _ => {}
+    }
+}
+
+fn configure_power(entity: &mut EntityWorldMut, building_type: BuildingType) {
+    match building_type {
+        BuildingType::Generator => {
             entity.insert((
-                Farm::default(),
+                PowerSource {
+                    output: 10.0,
+                    ..Default::default()
+                },
+                FuelConsumer { amount: 1.0 },
+            ));
+        }
+        BuildingType::PowerPole => {
+            entity.insert(Conduit);
+        }
+        BuildingType::Battery => {
+            entity.insert((
+                crate::layer1::energy::Battery {
+                    capacity: 100.0,
+                    charge: 0.0,
+                    max_throughput: 10.0,
+                },
+                Conduit,
+            ));
+        }
+        BuildingType::AncientReactor => {
+            entity.insert((
+                PowerSource {
+                    output: 50.0,
+                    ..Default::default()
+                }, // Massive power
+                AncientStructure,
+                MachineSpirit::default(),
+                LightSource {
+                    radius: 8.0,
+                    intensity: 1.0,
+                    color: (255, 215, 0), // Gold
+                },
+            ));
+            // Set high HP
+            if let Some(mut structure) = entity.get_mut::<crate::layer1::structure::Structure>() {
+                structure.max_hp = 1000.0;
+                structure.current_hp = 1000.0;
+            }
+        }
+        BuildingType::Heater => {
+            entity.insert((
                 PowerConsumer {
                     demand: 5.0,
-                    active: false,
+                    active: true, // Typically on, logic will toggle if needed
+                },
+                crate::layer1::lighting::LightSource {
+                    radius: 3.0,
+                    intensity: 0.5,
+                    color: (255, 100, 50), // Warm Orange
+                },
+            ));
+        }
+        _ => {}
+    }
+}
+
+#[allow(clippy::too_many_lines)]
+fn configure_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
+    match building_type {
+        BuildingType::Observatory => {
+            entity.insert((
+                crate::layer1::observatory::Observatory,
+                crate::layer1::tech::Library, // Generates research implicitly via logic
+                LightSource {
+                    radius: 6.0,
+                    intensity: 0.6,
+                    color: (135, 206, 235), // Sky Blue
                 },
                 ShiftSchedule::default(),
             ));
@@ -1311,12 +1424,6 @@ fn spawn_building(
                 },
             ));
         }
-        BuildingType::Airlock => {
-            entity.insert((DoorControl::default(), AccessControl::default()));
-        }
-        BuildingType::Vent => {
-            // Vent allows flow but blocks movement
-        }
         BuildingType::TrashCannon => {
             entity.insert((
                 crate::layer1::turret::Turret {
@@ -1332,19 +1439,6 @@ fn spawn_building(
                 crate::layer1::combat::CombatState::default(),
             ));
         }
-        BuildingType::Heater => {
-            entity.insert((
-                PowerConsumer {
-                    demand: 5.0,
-                    active: true, // Typically on, logic will toggle if needed
-                },
-                crate::layer1::lighting::LightSource {
-                    radius: 3.0,
-                    intensity: 0.5,
-                    color: (255, 100, 50), // Warm Orange
-                },
-            ));
-        }
         BuildingType::ServerBank => {
             entity.insert((
                 DataStorage { capacity: 50.0 },
@@ -1358,36 +1452,6 @@ fn spawn_building(
                     color: (0, 255, 100), // Data Green
                 },
             ));
-        }
-        BuildingType::Lander => {
-            entity.insert((
-                Housing {
-                    capacity: 5,
-                    ..Default::default()
-                },
-                Stockpile {
-                    food_bonus: 50.0,
-                    wood_bonus: 50.0,
-                    stone_bonus: 20.0,
-                    waste_bonus: 0.0,
-                },
-                PowerSource {
-                    output: 10.0,
-                    active: true,
-                },
-                LightSource {
-                    radius: 8.0,
-                    intensity: 0.8,
-                    color: (200, 200, 255),
-                },
-                // Spec Q&A says Library/Lander should provide base capacity.
-                // I will add DataStorage to Lander too!
-                DataStorage { capacity: 10.0 }, // Base capacity
-            ));
-            if let Some(mut structure) = entity.get_mut::<crate::layer1::structure::Structure>() {
-                structure.max_hp = 500.0;
-                structure.current_hp = 500.0;
-            }
         }
         BuildingType::CommandCenter => {
             entity.insert((
@@ -1435,6 +1499,7 @@ fn spawn_building(
                 },
             ));
         }
+        _ => {}
     }
 }
 
