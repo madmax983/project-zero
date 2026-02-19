@@ -59,6 +59,7 @@ use crate::layer1::combat::Drafted;
 use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::farm::Farm;
 use crate::layer1::funeral::{Corpse, Grave};
+use crate::layer1::hobby::{Hobby, evaluate_hobby};
 use crate::layer1::housing::Housing;
 use crate::layer1::husbandry::evaluate_tame;
 use crate::layer1::items::Equipment;
@@ -72,7 +73,7 @@ use crate::layer1::resources::{ColonyResources, RefiningProgress, ResourceItem};
 use crate::layer1::science::Anomaly;
 use crate::layer1::social::Tavern;
 use crate::layer1::stockpile::Stockpile;
-use crate::layer1::stress::Breakdown;
+use crate::layer1::stress::{Breakdown, StressTracker, BREAKDOWN_TICKS_REQUIRED};
 use crate::layer1::structure::{DeferMaintenance, Structure};
 use crate::layer1::tech::Library;
 use crate::layer1::traits::Trait;
@@ -351,6 +352,16 @@ fn evaluate_group_exploration(
     }
 }
 
+fn evaluate_group_leisure(
+    evaluator: &mut CandidateEvaluator,
+    data: &PopEvalData,
+) {
+    if let Some(hobby_type) = data.hobby_type {
+        let utility = evaluate_hobby(data, hobby_type);
+        evaluator.consider(ActionType::Hobby, utility, None);
+    }
+}
+
 /// Helper function to evaluate all potential actions for a single Pop.
 ///
 /// Returns the best `(ActionType, Utility, Target)`.
@@ -377,6 +388,7 @@ pub(crate) fn evaluate_single_pop(
 
     evaluate_group_survival(&mut evaluator, data, buffer, world);
     evaluate_group_social(&mut evaluator, data, buffer);
+    evaluate_group_leisure(&mut evaluator, data);
     evaluate_group_work(&mut evaluator, data, buffer, context, is_striking);
     evaluate_group_logistics(&mut evaluator, data, buffer, context, is_striking);
     evaluate_group_exploration(&mut evaluator, data, buffer, is_striking);
@@ -647,17 +659,59 @@ pub fn evaluate_actions_system(world: &mut World) {
                 Option<&crate::layer1::factions::FactionMember>,
                 Option<&PenalLabor>,
                 Option<&Breakdown>,
-                Option<&crate::layer1::traits::Traits>,
+                (
+                    Option<&crate::layer1::traits::Traits>,
+                    Option<&StressTracker>,
+                    Option<&Hobby>,
+                ),
             )>()
             .iter(world)
             .filter(
-                |(_, _, _, _, action, _, _, _, _, inmate, _, penal_labor, _, _)| {
+                |(_, _, _, _, action, _, _, _, _, inmate, _, penal_labor, _, _): &(
+                    Entity,
+                    &GridPosition,
+                    &Needs,
+                    &UtilityWeights,
+                    &PopAction,
+                    Option<&Equipment>,
+                    Option<&crate::layer1::resources::Carrying>,
+                    Option<&MentalState>,
+                    Option<&Drafted>,
+                    Option<&Inmate>,
+                    Option<&crate::layer1::factions::FactionMember>,
+                    Option<&PenalLabor>,
+                    Option<&Breakdown>,
+                    (
+                        Option<&crate::layer1::traits::Traits>,
+                        Option<&StressTracker>,
+                        Option<&Hobby>,
+                    ),
+                )| {
                     action.ticks_committed >= config.evaluation_interval
                         && (inmate.is_none() || penal_labor.is_some())
                 },
             )
             .map(
-                |(e, p, n, w, a, eq, c, m, d, _, fm, pl, b, t)| PopEvalData {
+                |(e, p, n, w, a, eq, c, m, d, _, fm, pl, b, (t, st, h)): (
+                    Entity,
+                    &GridPosition,
+                    &Needs,
+                    &UtilityWeights,
+                    &PopAction,
+                    Option<&Equipment>,
+                    Option<&crate::layer1::resources::Carrying>,
+                    Option<&MentalState>,
+                    Option<&Drafted>,
+                    Option<&Inmate>,
+                    Option<&crate::layer1::factions::FactionMember>,
+                    Option<&PenalLabor>,
+                    Option<&Breakdown>,
+                    (
+                        Option<&crate::layer1::traits::Traits>,
+                        Option<&StressTracker>,
+                        Option<&Hobby>,
+                    ),
+                )| PopEvalData {
                     entity: e,
                     pos: *p,
                     needs: *n,
@@ -671,6 +725,8 @@ pub fn evaluate_actions_system(world: &mut World) {
                     penal_labor: pl.copied(),
                     breakdown: b.copied(),
                     traits: t.cloned(),
+                    stress: st.map_or(0.0, |s| s.accumulated_stress / BREAKDOWN_TICKS_REQUIRED),
+                    hobby_type: h.map(|comp| comp.hobby_type),
                 },
             ),
     );
@@ -823,7 +879,8 @@ pub fn track_plan_outcomes_system(
             | ActionType::SadWander
             | ActionType::FetchClothing
             | ActionType::Surgery
-            | ActionType::Charge => true,
+            | ActionType::Charge
+            | ActionType::Hobby => true,
         };
 
         #[allow(clippy::cast_possible_truncation)]

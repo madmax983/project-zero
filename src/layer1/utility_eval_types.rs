@@ -10,7 +10,7 @@ use crate::layer1::stress::Breakdown;
 use crate::layer1::taboo::TabooState;
 use crate::layer1::traits::Traits;
 use crate::layer1::unrest::MentalState;
-use crate::layer1::utility_types::{ActionType, PopAction, UtilityWeights};
+use crate::layer1::utility_types::{ActionType, PopAction, UtilityWeights, HobbyType};
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
 
@@ -66,6 +66,10 @@ pub struct PopEvalData {
     pub breakdown: Option<Breakdown>,
     /// Personality traits, if any.
     pub traits: Option<Traits>,
+    /// Accumulated stress (normalized 0.0-1.0), derived from StressTracker.
+    pub stress: f32,
+    /// Assigned hobby type, if any.
+    pub hobby_type: Option<HobbyType>,
 }
 
 /// Context data for utility evaluation (resources, time, etc.)
