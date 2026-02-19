@@ -639,12 +639,12 @@
 - "The Grace of this place."
 - "Restoring the Grace."
 
-### garden / sanctuary
+### garden / green-place
 
 **Replaces:** park, flower bed
 **Code reference:** `BuildingType::Park`
 **Usage:**
-- "Walking in the sanctuary."
+- "Walking in the green-place."
 - "The gardens bloom."
 
 ### stone-memory
@@ -1550,6 +1550,70 @@
 **Usage:**
 - "Good void-shot."
 - "Sending a void-shot to the visitors."
+
+## Justice & Zones
+
+### Sanctuary / The Free Zone
+**Replaces:** police-free zone
+**Code reference:** `ZoneType::Sanctuary`
+**Usage:**
+- "He fled to Sanctuary."
+- "The Free Zone is growing."
+
+### The Edge
+**Replaces:** boundary of legal zone
+**Code reference:** Zone border
+**Usage:**
+- "Crossing the Edge."
+- "Safe beyond the Edge."
+
+## Tech Envy
+
+### gear-lust
+**Replaces:** desire for better tech
+**Code reference:** `TechEnvy` mood
+**Usage:**
+- "Suffering from gear-lust."
+- "Looking at the new fab with gear-lust."
+
+### rust-shame
+**Replaces:** shame of using old tech
+**Code reference:** `Obsolescence`
+**Usage:**
+- "This old drill brings me rust-shame."
+- "Living in rust-shame."
+
+## Ecological Succession
+
+### the reclaim
+**Replaces:** nature taking over
+**Code reference:** `EcologicalSuccession`
+**Usage:**
+- "The reclaim is fast here."
+- "Fighting back the reclaim."
+
+### new-growth
+**Replaces:** saplings/sprouts
+**Code reference:** `TerrainType::Sapling`
+**Usage:**
+- "Clearing the new-growth."
+- "New-growth on the runway."
+
+## Xeno-Artifacts
+
+### the Hum
+**Replaces:** artifact aura
+**Code reference:** `Aura` component
+**Usage:**
+- "Can you feel the Hum?"
+- "The Hum is angry today."
+
+### the Sing
+**Replaces:** positive aura effect
+**Code reference:** Beneficial `Aura`
+**Usage:**
+- "Basking in the Sing."
+- "A warm Sing from the stone."
 
 ## Flora & Light
 
