@@ -377,19 +377,20 @@ pub fn grid_overload_fire_bridge(
 /// Bridges Hazards (Accident) and Cybernetics/Memory (Consequence).
 pub fn amputation_handler_system(
     mut events: EventReader<AmputationEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
     mut commands: Commands,
     mut memories_query: Query<&mut Memories>,
     mut log: Option<ResMut<MessageLog>>,
     time: Res<SimulationTime>,
-    pop_query: Query<&crate::layer1::pop::Pop>,
+    pop_query: Query<(&crate::layer1::pop::Pop, Option<&crate::layer1::pop::PopName>)>,
 ) {
     for event in events.read() {
         let entity = event.entity;
 
         // Verify entity is a Pop (just in case)
-        if pop_query.get(entity).is_err() {
+        let Ok((_, name_opt)) = pop_query.get(entity) else {
             continue;
-        }
+        };
 
         // 1. Add MissingLimb Component
         commands
@@ -408,6 +409,16 @@ pub fn amputation_handler_system(
                 Color::Red,
             );
         }
+
+        // 4. Chronicle
+        let name = name_opt
+            .map(|n| n.0.as_str())
+            .unwrap_or("A colonist");
+
+        chronicle_events.send(AddChronicleEvent {
+            text: format!("{name} has lost a limb in a tragic accident."),
+            importance: EventImportance::Major,
+        });
     }
 }
 
@@ -462,6 +473,40 @@ pub fn drone_work_bridge_system(
             action.current = crate::layer1::utility_ai::ActionType::Haul;
             action.current_utility = 0.8; // High utility to persist
             action.ticks_committed = 0;
+        }
+    }
+}
+
+/// Creates chronicle entries from significant FavorChange events.
+///
+/// Bridges Social (Debt) and Chronicle system (History).
+pub fn favor_chronicle_bridge(
+    mut events: EventReader<crate::layer1::social::FavorChange>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+    pop_names: Query<&crate::layer1::pop::PopName>,
+) {
+    // Only chronicle major favors (amount > 40.0)
+    // Small favors (5-10) happen too often.
+    const CHRONICLE_THRESHOLD: f32 = 40.0;
+
+    for event in events.read() {
+        if event.amount > CHRONICLE_THRESHOLD {
+            let debtor_name = pop_names
+                .get(event.debtor)
+                .map(|n| n.0.as_str())
+                .unwrap_or("Someone");
+            let creditor_name = pop_names
+                .get(event.creditor)
+                .map(|n| n.0.as_str())
+                .unwrap_or("Someone");
+
+            chronicle_events.send(AddChronicleEvent {
+                text: format!(
+                    "{debtor_name} is deeply indebted to {creditor_name}: {}",
+                    event.reason
+                ),
+                importance: EventImportance::Standard,
+            });
         }
     }
 }

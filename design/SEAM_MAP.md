@@ -86,3 +86,12 @@
     - Modified `healing_system` to emit `PatientTreated`.
     - Added `medical_debt_bridge_system` in `src/layer1/integration.rs` to create debt.
 - **Tests:** `tests/integration/medical_debt.rs` (Integration test verified)
+
+### INT-027: Favor/Medical/Amputation -> Chronicle
+- **Date:** 2026-05-31
+- **Systems connected:** `FavorChange` (Social) / `AmputationEvent` (Hazards) -> `AddChronicleEvent` (Chronicle)
+- **Glue added:**
+    - Modified `amputation_handler_system` in `src/layer1/integration.rs` to emit chronicle events.
+    - Added `favor_chronicle_bridge` in `src/layer1/integration.rs` to log significant debts.
+    - Added `update_event_buffer::<FavorChange>` to `src/simulation.rs`.
+- **Tests:** `tests/integration/chronicle_logging.rs` (2 tests verified)

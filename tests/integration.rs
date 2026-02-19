@@ -88,3 +88,5 @@ mod husbandry_integration_tests;
 
 #[path = "integration/drone_network.rs"]
 mod drone_network;
+#[path = "integration/chronicle_logging.rs"]
+mod chronicle_logging;

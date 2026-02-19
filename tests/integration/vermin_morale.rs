@@ -42,6 +42,9 @@ fn test_vermin_affects_morale() {
     // Over 200 ticks, failure chance is negligible (~0.0004%).
     // Increased to 1000 to handle CI variance.
     for _ in 0..1000 {
+        // Maintain severity (it decays naturally if no food)
+        world.resource_mut::<VerminState>().severity = 80.0;
+
         // Refill pressure to prevent suffocation (since edges leak to vacuum)
         if let Some(mut pressure) =
             world.get_resource_mut::<scale::layer1::pressure::PressureGrid>()

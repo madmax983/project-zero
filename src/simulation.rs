@@ -102,6 +102,7 @@ pub fn build_simulation_schedule() -> Schedule {
         update_event_buffer::<crate::layer1::society::InvestigationEvent>,
         update_event_buffer::<crate::layer1::society::SuppressSocietyEvent>,
         update_event_buffer::<crate::layer1::medical::PatientTreated>,
+        update_event_buffer::<crate::layer1::social::FavorChange>,
     ));
 
     // --- AI Decision Chain (GPU compute) ---
@@ -397,6 +398,7 @@ pub fn build_simulation_schedule() -> Schedule {
         pop_death_chronicle_bridge.after(death_system),
         retrograde_chronicle_bridge.after(work_execution_system),
         amputation_handler_system.after(work_execution_system),
+        crate::layer1::integration::favor_chronicle_bridge.after(work_execution_system),
         art_observation_system.after(death_system),
         observe_inspector_system.after(art_observation_system),
     ));

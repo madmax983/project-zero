@@ -19,6 +19,7 @@ fn test_amputation_applies_component_and_memory() {
     let mut world = World::new();
     world.insert_resource(MessageLog::default());
     world.init_resource::<Events<AmputationEvent>>();
+    world.init_resource::<Events<scale::layer1::chronicle::AddChronicleEvent>>();
     world.init_resource::<SimulationTime>();
 
     let pop = world

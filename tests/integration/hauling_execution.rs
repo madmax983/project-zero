@@ -43,15 +43,23 @@ mod tests {
         world.insert_resource(scale::layer1::pressure::PressureGrid::new(10, 10));
         world.insert_resource(scale::layer1::notifications::NotificationQueue::default());
         world.insert_resource(scale::layer1::trade::MerchantState::default());
+        world.insert_resource(scale::layer1::prototyping::BuildingMastery::default());
         world.insert_resource(scale::layer1::vermin::VerminState::default());
         world.insert_resource(scale::layer1::edicts::ColonyPolicies::default());
         world.init_resource::<Events<scale::layer1::chronicle::AddChronicleEvent>>();
         world.init_resource::<Events<scale::layer1::social::AffinityChange>>();
+        world.init_resource::<Events<scale::layer1::social::FavorChange>>();
+        world.init_resource::<Events<scale::layer1::medical::PatientTreated>>();
+        world.init_resource::<Events<scale::layer1::hazards::AmputationEvent>>();
         world.init_resource::<Events<scale::layer1::DeathEvent>>();
         world.init_resource::<Events<scale::layer1::pop::PopDied>>();
+        world.insert_resource(scale::layer1::geology::SeismicGrid::new(10, 10));
         world.init_resource::<Events<StructureCollapsed>>();
         world.init_resource::<Events<scale::layer1::heirloom::RetrogradeEngineeringEvent>>();
         world.init_resource::<Events<scale::layer1::energy::GridOverloadEvent>>();
+        world.init_resource::<Events<scale::layer1::geology::GeologicalEvent>>();
+        world.init_resource::<Events<scale::layer1::society::InvestigationEvent>>();
+        world.init_resource::<Events<scale::layer1::society::SuppressSocietyEvent>>();
         world.insert_resource(scale::layer1::social_mimicry::Trend::default());
         world.insert_resource(scale::layer1::visitor::VisitorSource::default());
         world.insert_resource(scale::layer1::weather::WeatherState::default());
@@ -60,7 +68,9 @@ mod tests {
         world.insert_resource(scale::layer1::taboo::TabooState::default());
         world.insert_resource(scale::layer1::map::ScreenShake::default());
         world.insert_resource(scale::layer1::inspector::InspectorSource::default());
+        world.insert_resource(scale::layer1::tech_envy::TechEnvyConfig::default());
         world.init_resource::<scale::layer1::social::old_guard::Demographics>();
+        world.insert_resource(scale::layer1::building::BuildingMap::default());
 
         let generator = scale::shared::narrative::NarrativeGenerator::from_embedded();
         world.insert_resource(scale::shared::colony::ColonyName {
