@@ -335,6 +335,11 @@ pub use taboo::*;
 /// Erosion system (Spec 093).
 pub mod erosion;
 pub use erosion::*;
+
+/// Pheromone Gardening system (Spec 170).
+pub mod pheromone;
+pub use pheromone::*;
+
 #[cfg(test)]
 /// Tests for faction demands logic (Spec 085).
 pub mod faction_demands_tests;

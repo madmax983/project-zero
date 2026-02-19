@@ -236,6 +236,10 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             .after(crate::layer1::atmosphere::update_atmosphere_system)
             .after(update_pressure_system),
         biocompatibility_system.after(crate::layer1::atmosphere::update_atmosphere_system),
+        crate::layer1::pheromone::reactive_emitter_system
+            .after(crate::layer1::atmosphere::update_atmosphere_system),
+        crate::layer1::pheromone::pheromone_emission_system
+            .after(crate::layer1::pheromone::reactive_emitter_system),
     ).in_set(Layer1SystemSet::Environment));
 
     // --- Consumption ---
