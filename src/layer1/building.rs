@@ -30,6 +30,7 @@ use super::stockpile::Stockpile;
 use crate::layer1::access_control::AccessControl;
 use crate::layer1::ai_core::AICore;
 use crate::layer1::control::DoorControl;
+use crate::layer1::drone::DroneHub;
 use crate::layer1::energy::{Conduit, FuelConsumer, PowerConsumer, PowerSource};
 use crate::layer1::heirloom::AncientStructure;
 use crate::layer1::lighting::LightSource;
@@ -284,6 +285,8 @@ pub enum BuildingType {
     CommandCenter,
     /// High-tech AI Core for base automation.
     AICore,
+    /// Hub for spawning and recharging Drones.
+    DroneHub,
 }
 
 impl BuildingType {
@@ -471,6 +474,7 @@ impl BuildingType {
             Self::Lander => "Lander",
             Self::CommandCenter => "Command Center",
             Self::AICore => "AI Core",
+            Self::DroneHub => "Drone Hub",
         }
     }
 
@@ -481,6 +485,7 @@ impl BuildingType {
             Self::Housing => 'H',
             Self::Farm | Self::AncientFabricator => 'F',
             Self::HydroponicsBay => 'Y',
+            Self::DroneHub => 'D',
             Self::Well => 'U',
             Self::Stockpile => '=',
             Self::Smokehouse => '♨',
@@ -527,6 +532,11 @@ impl BuildingType {
             Self::AICore => ColonyResources {
                 metal: 50.0,
                 stone: 20.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::DroneHub => ColonyResources {
+                metal: 30.0,
+                stone: 10.0,
                 ..ColonyResources::zeroed()
             },
             Self::CommandCenter => ColonyResources {
@@ -1411,6 +1421,20 @@ fn spawn_building(
                 },
             ));
         }
+        BuildingType::DroneHub => {
+            entity.insert((
+                DroneHub,
+                PowerConsumer {
+                    demand: 10.0,
+                    active: false,
+                },
+                LightSource {
+                    radius: 3.0,
+                    intensity: 0.6,
+                    color: (0, 255, 255), // Cyan
+                },
+            ));
+        }
     }
 }
 
@@ -1608,7 +1632,8 @@ mod tests {
         assert_eq!(BuildingType::ServerBank.next(), BuildingType::Lander);
         assert_eq!(BuildingType::Lander.next(), BuildingType::CommandCenter);
         assert_eq!(BuildingType::CommandCenter.next(), BuildingType::AICore);
-        assert_eq!(BuildingType::AICore.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::AICore.next(), BuildingType::DroneHub);
+        assert_eq!(BuildingType::DroneHub.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -1792,6 +1817,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::AICore);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::DroneHub);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

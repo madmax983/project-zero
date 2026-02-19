@@ -746,6 +746,7 @@ pub const fn get_building_char(building: BuildingType) -> &'static str {
         BuildingType::Lander => "Λ",
         BuildingType::CommandCenter => "C",
         BuildingType::AICore => "A",
+        BuildingType::DroneHub => "D",
     }
 }
 
@@ -794,7 +795,8 @@ pub const fn get_building_color(building: BuildingType, material: MaterialType) 
             | BuildingType::Observatory
             | BuildingType::ConveyorBelt
             | BuildingType::LifeSupport
-            | BuildingType::Battery => Color::Cyan,
+            | BuildingType::Battery
+            | BuildingType::DroneHub => Color::Cyan,
             BuildingType::Plantation | BuildingType::PersonalGarden => Color::Green,
             BuildingType::Weaver | BuildingType::Statue | BuildingType::Lander => Color::White,
             BuildingType::Hospital => Color::Red,

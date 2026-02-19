@@ -65,6 +65,7 @@ const fn format_action_type(action: ActionType) -> (&'static str, &'static str, 
         ActionType::SadWander => ("😢", "Wandering Sadly", Color::Blue),
         ActionType::FetchClothing => ("👕", "Fetching Clothes", Color::Cyan),
         ActionType::Surgery => ("🏥", "Undergoing Surgery", Color::Red),
+        ActionType::Charge => ("⚡", "Charging", Color::Cyan),
     }
 }
 

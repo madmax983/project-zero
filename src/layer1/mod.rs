@@ -461,3 +461,10 @@ pub mod tech_envy;
 /// Xeno-Artifacts system (Spec 156).
 pub mod artifacts;
 pub use artifacts::*;
+
+/// Drone Networks (Spec 116).
+pub mod drone;
+pub use drone::*;
+
+#[cfg(test)]
+mod drone_tests;

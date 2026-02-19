@@ -113,11 +113,13 @@ pub enum ActionType {
     /// **Note**: Passive action assigned by system, not chosen by AI.
     /// See [`crate::layer1::cybernetics::surgery_system`].
     Surgery,
+    /// Recharge battery at a Drone Hub (Drones only).
+    Charge,
 }
 
 impl ActionType {
     /// Total number of action types. Used for array sizing.
-    pub const COUNT: usize = 26;
+    pub const COUNT: usize = 27;
 
     /// Converts action type to a unique array index (0..COUNT-1).
     #[must_use]
@@ -149,6 +151,7 @@ impl ActionType {
             Self::SadWander => 23,
             Self::FetchClothing => 24,
             Self::Surgery => 25,
+            Self::Charge => 26,
         }
     }
 
