@@ -57,6 +57,7 @@ use crate::layer1::needs::{Needs, get_morale_efficiency};
 use crate::layer1::particles::spawn_particle;
 use crate::layer1::pop::{Job, Role, Speed};
 use crate::layer1::resources::{ColonyResources, process_logging, process_mining};
+use crate::layer1::ruins::Ruin;
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
 use crate::layer1::social::{SocialBuff, Tavern, handle_socialize};
 use crate::layer1::social_stratification::Prestige;
@@ -814,7 +815,26 @@ pub fn execute_demolish(world: &mut World, designation_entity: Entity) -> bool {
         .get::<GridPosition>(designation_entity)
         .copied()
         .is_some_and(|designation_pos| {
-            // Find building at this position
+            // 1. Check for Ruin first (Scavenging)
+            let ruin_entity = world
+                .query::<(Entity, &GridPosition, &Ruin)>()
+                .iter(world)
+                .find(|(_, pos, _)| **pos == designation_pos)
+                .map(|(e, _, _)| e);
+
+            if let Some(ruin) = ruin_entity {
+                let yielded = crate::layer1::ruins::process_scavenge(world, ruin);
+                if !yielded.is_empty() {
+                    if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+                        log.add_colored("Scavenged resources from Ruin.", Color::Green);
+                    }
+                }
+                // Despawn the designation itself
+                world.despawn(designation_entity);
+                return true;
+            }
+
+            // 2. Check for Building (Existing logic)
             // We collect to avoid borrow issues if we need to mutate world later
             let building_entity = world
                 .query::<(Entity, &GridPosition, &Building)>()

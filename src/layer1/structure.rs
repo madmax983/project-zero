@@ -2,8 +2,11 @@
 use crate::layer1::GridPosition;
 use crate::layer1::building::Building;
 use crate::layer1::building::BuildingType;
+use crate::layer1::building::Material;
 use crate::layer1::building::OccupiedTiles;
 use crate::layer1::fire::Fire;
+use crate::layer1::ruins::{Ruin, RuinHistory};
+use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 
 /// Component representing the structural integrity of a building.
@@ -60,9 +63,17 @@ pub fn fire_damage_structure_system(world: &mut World) {
     // Apply damage to structures at fire locations
     // This is O(F * S) which is fine for MVP. Optimization: Spatial Map.
     for (fire_pos, intensity) in fires {
-        let mut structure_query =
-            world.query::<(Entity, &GridPosition, &mut Structure, Option<&Fragile>)>();
-        for (entity, pos, mut structure, fragile) in structure_query.iter_mut(world) {
+        let mut structure_query = world.query::<(
+            Entity,
+            &GridPosition,
+            &mut Structure,
+            Option<&Fragile>,
+            Option<&Building>,
+            Option<&Material>,
+        )>();
+        for (entity, pos, mut structure, fragile, building, material) in
+            structure_query.iter_mut(world)
+        {
             if *pos == fire_pos {
                 let base_damage = 5.0 * intensity; // 5.0 damage per tick per intensity unit
 
@@ -74,20 +85,45 @@ pub fn fire_damage_structure_system(world: &mut World) {
                 structure.current_hp -= base_damage * multiplier;
 
                 if structure.current_hp <= 0.0 {
-                    destroyed.push((entity, *pos));
+                    let b_type = building.map(|b| b.building_type);
+                    let m_type = material.map(|m| m.0);
+                    destroyed.push((entity, *pos, b_type, m_type));
                 }
             }
         }
     }
 
     // Despawn destroyed structures
-    for (entity, pos) in destroyed {
+    for (entity, pos, b_type, m_type) in destroyed {
         // Double check it still exists (though unlikely to change within loop)
         if world.get_entity(entity).is_ok() {
             world.despawn(entity);
-            // Clean up OccupiedTiles
-            if let Some(mut occupied) = world.get_resource_mut::<OccupiedTiles>() {
-                occupied.0.remove(&(pos.x, pos.y));
+
+            if let Some(building_type) = b_type {
+                // Spawn Ruin
+                let material = m_type.unwrap_or_default();
+                let current_tick = world
+                    .get_resource::<SimulationTime>()
+                    .map_or(0, |t| t.tick);
+
+                world.spawn((
+                    Ruin {
+                        original_type: building_type,
+                        material,
+                    },
+                    RuinHistory {
+                        destruction_tick: current_tick,
+                        reason: "Fire/Damage".to_string(),
+                    },
+                    pos, // GridPosition
+                ));
+
+                // DO NOT remove from OccupiedTiles if Ruin spawns (it blocks construction)
+            } else {
+                // Clean up OccupiedTiles if it wasn't a building (or failed to spawn ruin)
+                if let Some(mut occupied) = world.get_resource_mut::<OccupiedTiles>() {
+                    occupied.0.remove(&(pos.x, pos.y));
+                }
             }
 
             // Add log message

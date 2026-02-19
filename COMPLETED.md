@@ -1,0 +1,1 @@
+- [x] `167` Monuments of Failure — `specs/167-monuments-of-failure.md` — completed 2026-05-25
