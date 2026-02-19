@@ -14,14 +14,17 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `059` Soil Fertility — `specs/059-soil-fertility.md`
 - [ ] `077` Emergent Festivals — `specs/077-emergent-festivals.md`
 - [ ] `093` Desire Paths — `specs/093-desire-paths.md`
+- [ ] `114` Palette Fatigue — `specs/114-palette-fatigue.md`
 - [ ] `120` Crop Diversity — `specs/120-crop-diversity.md`
 - [ ] `132` Equipment & Wear — `specs/132-equipment-and-wear.md`
 - [ ] `133` Ventilation Networks — `specs/133-ventilation-networks.md`
+- [ ] `139` Cryo-Stasis Vaults — `specs/139-cryo-stasis.md`
 - [ ] `164` Modular Fauna — `specs/164-modular-fauna.md`
 - [ ] `165` Gene Banks — `specs/165-gene-banks.md`
 - [ ] `166` Xeno-Gastronomy — `specs/166-xeno-gastronomy.md`
 - [ ] `167` Monuments of Failure — `specs/167-monuments-of-failure.md`
 - [ ] `168` The Mother Lode — `specs/168-the-mother-lode.md`
+- [ ] `170` Pheromone Gardening — `specs/170-pheromone-gardening.md`
 
 ## MVP — Layer 2: System Simulation
 
