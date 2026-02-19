@@ -25,6 +25,7 @@
 use super::actions::AssignmentType;
 /// Alias for `AssignmentType` for job-related contexts (Spec 113).
 pub use super::actions::AssignmentType as JobType;
+use super::artifacts::ActiveAuras;
 use super::biocompatibility::Biocompatibility;
 use super::cabin_fever::CabinFever;
 use super::contagion::ContagionCooldown;
@@ -271,6 +272,7 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
                     Arrival { tick: 0 },
                 ))
                 .insert((
+                    ActiveAuras::default(),
                     SocialDebt::default(),
                     Morale::default(),
                     ContagionCooldown::default(),

@@ -455,3 +455,6 @@ pub use oral_tradition::*;
 #[cfg(test)]
 mod justice_tests;
 pub mod tech_envy;
+/// Xeno-Artifacts system (Spec 156).
+pub mod artifacts;
+pub use artifacts::*;

@@ -6,13 +6,14 @@
 use crate::layer1::morale::{MoodModifier, Morale};
 use crate::layer1::needs::Needs;
 use crate::layer1::traits::{Trait, Traits};
+use crate::layer1::artifacts::{ActiveAuras, AuraEffect};
 use bevy_ecs::prelude::*;
 
 /// Tracks stress accumulation when morale is low.
 #[derive(Component, Default, Debug)]
 pub struct StressTracker {
-    /// Number of consecutive ticks with low morale.
-    pub ticks_at_low_morale: u32,
+    /// Number of consecutive ticks with low morale or high stress.
+    pub accumulated_stress: f32,
 }
 
 /// A component indicating a Pop is undergoing a mental breakdown.
@@ -51,7 +52,7 @@ pub struct Catharsis {
 /// Morale threshold below which stress accumulates.
 pub const LOW_MORALE_THRESHOLD: f32 = 0.15;
 /// Ticks required to trigger a breakdown.
-pub const BREAKDOWN_TICKS_REQUIRED: u32 = 100;
+pub const BREAKDOWN_TICKS_REQUIRED: f32 = 100.0;
 /// Duration of a breakdown in ticks.
 pub const BREAKDOWN_DURATION: u32 = 500;
 /// Duration of catharsis in ticks.
@@ -69,32 +70,44 @@ pub fn check_stress_breakdown_system(
         Option<&Breakdown>,
         Option<&Catharsis>,
         Option<&Morale>,
+        Option<&ActiveAuras>,
     )>,
 ) {
-    for (entity, needs, mut tracker, traits, breakdown, catharsis, morale_comp) in &mut query {
+    for (entity, needs, mut tracker, traits, breakdown, catharsis, morale_comp, active_auras) in &mut query {
         // If already broken or has catharsis, skip stress tracking
         if breakdown.is_some() || catharsis.is_some() {
-            tracker.ticks_at_low_morale = 0;
+            tracker.accumulated_stress = 0.0;
             continue;
         }
 
         // Use effective morale if available, otherwise raw needs
         let morale_value = morale_comp.map_or_else(|| needs.morale(), |m| m.value);
+        let low_morale = morale_value < LOW_MORALE_THRESHOLD;
 
-        if morale_value < LOW_MORALE_THRESHOLD {
-            tracker.ticks_at_low_morale += 1;
-        } else {
-            tracker.ticks_at_low_morale = tracker.ticks_at_low_morale.saturating_sub(1);
+        // Calculate Aura Modifier
+        let mut aura_stress_mod = 0.0;
+        if let Some(auras) = active_auras {
+            for effect in &auras.effects {
+                if let AuraEffect::StressModifier(amount) = effect {
+                    aura_stress_mod += amount;
+                }
+            }
         }
 
-        if tracker.ticks_at_low_morale >= BREAKDOWN_TICKS_REQUIRED {
+        let base_change = if low_morale { 1.0 } else { -1.0 };
+        let total_change = base_change + aura_stress_mod;
+
+        // Accumulate stress, clamped to 0
+        tracker.accumulated_stress = (tracker.accumulated_stress + total_change).max(0.0);
+
+        if tracker.accumulated_stress >= BREAKDOWN_TICKS_REQUIRED {
             // Trigger Breakdown
             let b_type = determine_breakdown_type(traits);
             commands.entity(entity).insert(Breakdown {
                 breakdown_type: b_type,
                 duration_remaining: BREAKDOWN_DURATION,
             });
-            tracker.ticks_at_low_morale = 0;
+            tracker.accumulated_stress = 0.0;
         }
     }
 }
@@ -113,7 +126,6 @@ fn determine_breakdown_type(traits: Option<&Traits>) -> BreakdownType {
         if t.0.contains(&Trait::Lazy) || t.0.contains(&Trait::Ascetic) {
             return BreakdownType::SadWander;
         }
-        // Add more trait mappings here
     }
     BreakdownType::Dazing
 }
@@ -140,9 +152,7 @@ pub fn apply_catharsis_morale_bonus_system(mut query: Query<(&mut Morale, &Catha
         morale.add_modifier(MoodModifier {
             label: "Catharsis".to_string(),
             value: catharsis.morale_bonus,
-            duration: 1, // Applied every tick, or duration should match remaining?
-                         // Since this runs every tick, duration 1 is safe if we don't want to persist it if Catharsis is removed.
-                         // But Morale system decays modifiers. If we add it every tick, it's fine.
+            duration: 1,
         });
     }
 }
@@ -167,6 +177,7 @@ mod tests {
     use crate::layer1::needs::Needs;
     use crate::layer1::pop::Pop;
     use crate::layer1::traits::{Trait, Traits};
+    use crate::layer1::artifacts::{ActiveAuras, AuraEffect};
 
     #[test]
     fn test_stress_accumulation() {
@@ -195,7 +206,7 @@ mod tests {
 
         let tracker = world.get::<StressTracker>(pop).unwrap();
         assert!(
-            tracker.ticks_at_low_morale > 0,
+            tracker.accumulated_stress > 0.0,
             "Should accumulate stress ticks"
         );
     }
@@ -216,7 +227,7 @@ mod tests {
                     leisure: 0.0,
                 },
                 StressTracker {
-                    ticks_at_low_morale: 1000,
+                    accumulated_stress: 1000.0,
                 }, // Assume threshold is < 1000
                 Traits(std::collections::HashSet::new()),
             ))
@@ -228,8 +239,8 @@ mod tests {
         assert!(world.get::<Breakdown>(pop).is_some());
         // Should reset tracker
         assert_eq!(
-            world.get::<StressTracker>(pop).unwrap().ticks_at_low_morale,
-            0
+            world.get::<StressTracker>(pop).unwrap().accumulated_stress,
+            0.0
         );
     }
 
@@ -239,7 +250,6 @@ mod tests {
         let mut schedule = Schedule::default();
         schedule.add_systems(check_stress_breakdown_system);
 
-        // We assume 'Pyromaniac' is added to Trait enum during implementation
         let mut traits = std::collections::HashSet::new();
         traits.insert(Trait::Pyromaniac);
 
@@ -252,7 +262,7 @@ mod tests {
                     leisure: 0.0,
                 },
                 StressTracker {
-                    ticks_at_low_morale: 1000,
+                    accumulated_stress: 1000.0,
                 },
                 Traits(traits),
             ))
@@ -279,7 +289,7 @@ mod tests {
                     leisure: 0.0,
                 },
                 StressTracker {
-                    ticks_at_low_morale: 1000,
+                    accumulated_stress: 1000.0,
                 },
                 Traits(std::collections::HashSet::new()), // No traits
             ))
@@ -345,5 +355,41 @@ mod tests {
         schedule.run(&mut world);
         let catharsis = world.get::<Catharsis>(pop).unwrap();
         assert_eq!(catharsis.duration_remaining, CATHARSIS_DURATION - 1);
+    }
+
+    #[test]
+    fn test_aura_stress_integration() {
+        let mut world = World::new();
+        let mut schedule = Schedule::default();
+        schedule.add_systems(check_stress_breakdown_system);
+
+        // Pop with high morale (needs satisfied), so base change is -1.0
+        // But Aura adds +2.0 Stress/tick
+        // Net change should be +1.0
+        let pop = world
+            .spawn((
+                Pop,
+                Needs {
+                    hunger: 1.0,
+                    rest: 1.0,
+                    leisure: 1.0,
+                }, // High Morale
+                StressTracker::default(),
+                Traits(std::collections::HashSet::new()),
+                ActiveAuras {
+                    effects: vec![AuraEffect::StressModifier(2.0)],
+                }
+            ))
+            .id();
+
+        schedule.run(&mut world);
+
+        let tracker = world.get::<StressTracker>(pop).unwrap();
+        assert_eq!(tracker.accumulated_stress, 1.0);
+
+        // Another run
+        schedule.run(&mut world);
+        let tracker = world.get::<StressTracker>(pop).unwrap();
+        assert_eq!(tracker.accumulated_stress, 2.0);
     }
 }

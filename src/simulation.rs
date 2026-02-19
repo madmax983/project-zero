@@ -146,6 +146,7 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(apply_quirk_modifiers_system)
             .after(crate::layer1::fauna::fauna_behavior_system)
             .after(crate::layer1::combat::hit_stop_system),
+        crate::layer1::artifacts::aura_system.after(movement_system),
         arrival_handler_system.after(movement_system),
         work_execution_system.after(arrival_handler_system),
         crate::layer1::husbandry::tame_execution_system.after(arrival_handler_system),
@@ -159,6 +160,9 @@ pub fn build_simulation_schedule() -> Schedule {
         conveyor_system.after(haul_system),
         process_scan_system.after(arrival_handler_system),
         update_cabin_fever_system.after(movement_system),
+    ));
+
+    schedule.add_systems((
         wild_child_system.after(movement_system),
         update_erosion_system.after(movement_system),
         update_screen_shake_system.after(movement_system),
