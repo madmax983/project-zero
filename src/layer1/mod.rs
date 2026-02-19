@@ -472,5 +472,8 @@ pub use artifacts::*;
 pub mod drone;
 pub use drone::*;
 
+/// System registration and sets (Facade).
+pub mod systems;
+
 #[cfg(test)]
 mod drone_tests;
