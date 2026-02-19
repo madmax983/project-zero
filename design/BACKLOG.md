@@ -30,6 +30,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `165` Gene Banks — `specs/165-gene-banks.md`
 - [ ] `166` Xeno-Gastronomy — `specs/166-xeno-gastronomy.md`
 - [ ] `167` Monuments of Failure — `specs/167-monuments-of-failure.md`
+- [ ] `168` The Mother Lode — `specs/168-the-mother-lode.md`
 
 ## MVP — Layer 2: System Simulation
 
