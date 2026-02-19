@@ -27,3 +27,8 @@
 **Concept:** Implemented `EchoMap` resource and `Echo` entities (Screams, Laughter). Echoes persist on the map after events (Death, Crowded Taverns) and affect Pop mood.
 **Fate:** Merged (Pending)
 **Lesson:** Emotional persistence adds "texture" to the environment, making spaces feel lived-in (or died-in).
+
+## [The Observer Effect]
+**Concept:** Added `Observed` component to Pops when selected. Modifies Speed/Stress based on Traits (Lazy pops work faster out of fear, Optimists get morale boost).
+**Fate:** Merged
+**Lesson:** Connecting UI (Selection) to Simulation (Stats) creates a "Quantum Consciousness" vibe. Speed modifiers must run after `lighting_penalties`.

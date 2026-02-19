@@ -472,6 +472,12 @@ pub use artifacts::*;
 pub mod drone;
 pub use drone::*;
 
+/// The Observer Effect (Nova Feature).
+#[cfg(feature = "nova")]
+pub mod observer;
+#[cfg(feature = "nova")]
+pub use observer::*;
+
 /// System registration and sets (Facade).
 pub mod systems;
 
