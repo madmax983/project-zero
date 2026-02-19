@@ -88,3 +88,6 @@ mod husbandry_integration_tests;
 
 #[path = "integration/drone_network.rs"]
 mod drone_network;
+
+#[path = "integration/drone_sanctuary.rs"]
+mod drone_sanctuary;
