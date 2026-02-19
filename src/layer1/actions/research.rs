@@ -1,8 +1,8 @@
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::utility_eval_types::CapacityProxy;
-use crate::layer1::utility_types::{ActionType, UtilityWeights};
 use crate::layer1::utility_types::calculate_context_score;
+use crate::layer1::utility_types::{ActionType, UtilityWeights};
 use bevy_ecs::prelude::*;
 
 /// Evaluates the utility of performing scientific research at a [`crate::layer1::tech::Library`].

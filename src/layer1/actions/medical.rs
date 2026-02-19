@@ -1,9 +1,7 @@
 use crate::layer1::health::Health;
 use crate::layer1::map::GridPosition;
 use crate::layer1::utility_eval_types::CapacityProxy;
-use crate::layer1::utility_types::{
-    ActionType, UtilityWeights, calculate_context_score,
-};
+use crate::layer1::utility_types::{ActionType, UtilityWeights, calculate_context_score};
 use bevy_ecs::prelude::*;
 
 /// Evaluates the utility of seeking medical care.

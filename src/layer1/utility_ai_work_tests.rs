@@ -92,7 +92,6 @@ mod tests {
         assert!(result.is_none());
     }
 
-
     #[test]
     fn test_evaluate_work_distance_scaling() {
         let pop_pos = GridPosition { x: 0, y: 0 };
@@ -100,10 +99,10 @@ mod tests {
 
         // Formula: 1.0 / (1.0 + 0.1 * dist)
         let cases = vec![
-            (0, 1.0),   // 1.0 / 1.0 = 1.0
-            (10, 0.5),  // 1.0 / 2.0 = 0.5
+            (0, 1.0),    // 1.0 / 1.0 = 1.0
+            (10, 0.5),   // 1.0 / 2.0 = 0.5
             (20, 0.333), // 1.0 / 3.0 = 0.333
-            (90, 0.1),  // 1.0 / 10.0 = 0.1
+            (90, 0.1),   // 1.0 / 10.0 = 0.1
         ];
 
         for (dist, expected_factor) in cases {

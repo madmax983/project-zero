@@ -52,8 +52,7 @@ pub fn build_simulation_schedule() -> Schedule {
 
     // --- Layer 2 Integration ---
     schedule.add_systems((
-        crate::layer2::visibility::update_visibility_system
-            .after(Layer1SystemSet::Economy),
+        crate::layer2::visibility::update_visibility_system.after(Layer1SystemSet::Economy),
         crate::layer2::visibility::enforce_view_mode_system
             .after(crate::layer2::visibility::update_visibility_system),
     ));

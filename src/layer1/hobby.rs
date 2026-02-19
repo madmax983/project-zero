@@ -2,8 +2,8 @@ use crate::layer1::inventory::{Inventory, InventoryItem};
 use crate::layer1::items::ItemType;
 use crate::layer1::stress::StressTracker;
 use crate::layer1::traits::Trait;
-use crate::layer1::utility_eval_types::PopEvalData;
 use crate::layer1::utility_ai::{ActionType, PopAction};
+use crate::layer1::utility_eval_types::PopEvalData;
 use crate::layer1::utility_types::HobbyType;
 use bevy_ecs::prelude::*;
 use rand::Rng;
@@ -25,7 +25,8 @@ fn pick_hobby_for_traits(traits: &crate::layer1::traits::Traits, rng: &mut impl 
     if traits.0.contains(&Trait::Ascetic) || traits.0.contains(&Trait::Traditionalist) {
         return HobbyType::Meditation;
     }
-    if traits.0.contains(&Trait::Greedy) || traits.0.contains(&Trait::Optimist) { // Mapping Social to Gossip?
+    if traits.0.contains(&Trait::Greedy) || traits.0.contains(&Trait::Optimist) {
+        // Mapping Social to Gossip?
         return HobbyType::Gossip;
     }
 
@@ -50,7 +51,10 @@ fn pick_hobby_for_traits(traits: &crate::layer1::traits::Traits, rng: &mut impl 
     candidates[rng.gen_range(0..candidates.len())]
 }
 
-pub fn assign_hobby_system(mut commands: Commands, query: Query<(Entity, &crate::layer1::traits::Traits), Without<Hobby>>) {
+pub fn assign_hobby_system(
+    mut commands: Commands,
+    query: Query<(Entity, &crate::layer1::traits::Traits), Without<Hobby>>,
+) {
     let mut rng = rand::thread_rng();
     for (entity, traits) in &query {
         let hobby_type = pick_hobby_for_traits(traits, &mut rng);
@@ -70,7 +74,12 @@ pub fn evaluate_hobby(data: &PopEvalData, _hobby_type: HobbyType) -> f32 {
 }
 
 pub fn execute_hobby_system(
-    mut query: Query<(&mut StressTracker, &Hobby, Option<&mut Inventory>, &PopAction)>,
+    mut query: Query<(
+        &mut StressTracker,
+        &Hobby,
+        Option<&mut Inventory>,
+        &PopAction,
+    )>,
 ) {
     let mut rng = rand::thread_rng();
 
@@ -87,17 +96,17 @@ pub fn execute_hobby_system(
 
         // Chance to produce item (e.g., 1% per tick)
         if rng.gen_bool(0.01) {
-             if let Some(mut inv) = inventory {
-                 let item_type = match hobby.hobby_type {
-                     HobbyType::Whittling => Some(ItemType::Curio("Wooden Duck".to_string())),
-                     HobbyType::Tinkering => Some(ItemType::Curio("Bent Gear".to_string())),
-                     _ => None,
-                 };
+            if let Some(mut inv) = inventory {
+                let item_type = match hobby.hobby_type {
+                    HobbyType::Whittling => Some(ItemType::Curio("Wooden Duck".to_string())),
+                    HobbyType::Tinkering => Some(ItemType::Curio("Bent Gear".to_string())),
+                    _ => None,
+                };
 
-                 if let Some(t) = item_type {
-                     inv.add(InventoryItem { item_type: t });
-                 }
-             }
+                if let Some(t) = item_type {
+                    inv.add(InventoryItem { item_type: t });
+                }
+            }
         }
     }
 }
@@ -106,16 +115,16 @@ pub fn execute_hobby_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::pop::Pop;
-    use crate::layer1::traits::{Trait, Traits};
-    use crate::layer1::stress::StressTracker;
-    use crate::layer1::utility_ai::{ActionType, PopAction};
     use crate::layer1::inventory::{Inventory, InventoryItem};
     use crate::layer1::items::ItemType;
-    use crate::layer1::utility_eval_types::PopEvalData;
-    use crate::layer1::utility_ai::UtilityWeights;
-    use crate::layer1::needs::Needs;
     use crate::layer1::map::GridPosition;
+    use crate::layer1::needs::Needs;
+    use crate::layer1::pop::Pop;
+    use crate::layer1::stress::StressTracker;
+    use crate::layer1::traits::{Trait, Traits};
+    use crate::layer1::utility_ai::UtilityWeights;
+    use crate::layer1::utility_ai::{ActionType, PopAction};
+    use crate::layer1::utility_eval_types::PopEvalData;
     use bevy_ecs::prelude::*;
     use std::collections::HashSet;
 
@@ -124,10 +133,9 @@ mod tests {
         let mut world = World::new();
 
         // Spawn pop with Curious trait (should get Tinkering)
-        let pop = world.spawn((
-            Pop,
-            Traits(HashSet::from([Trait::Curious])),
-        )).id();
+        let pop = world
+            .spawn((Pop, Traits(HashSet::from([Trait::Curious]))))
+            .id();
 
         // Run assignment system
         let mut schedule = Schedule::default();
@@ -146,7 +154,10 @@ mod tests {
             pos: GridPosition { x: 0, y: 0 },
             needs: Needs::default(),
             weights: UtilityWeights::default(),
-            action: PopAction { current: ActionType::Idle, ..Default::default() }, // Idle
+            action: PopAction {
+                current: ActionType::Idle,
+                ..Default::default()
+            }, // Idle
             equipment: None,
             carrying: None,
             mental_state: None,
@@ -166,12 +177,21 @@ mod tests {
     #[test]
     fn test_hobby_execution_reduces_stress() {
         let mut world = World::new();
-        let pop = world.spawn((
-            Pop,
-            StressTracker { accumulated_stress: 50.0 },
-            Hobby { hobby_type: HobbyType::Meditation },
-            PopAction { current: ActionType::Hobby, ..Default::default() },
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                StressTracker {
+                    accumulated_stress: 50.0,
+                },
+                Hobby {
+                    hobby_type: HobbyType::Meditation,
+                },
+                PopAction {
+                    current: ActionType::Hobby,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         // Simulate execution tick
         let mut schedule = Schedule::default();
@@ -179,19 +199,29 @@ mod tests {
         schedule.run(&mut world);
 
         let stress = world.get::<StressTracker>(pop).unwrap();
-        assert!(stress.accumulated_stress < 50.0, "Hobby should reduce stress");
+        assert!(
+            stress.accumulated_stress < 50.0,
+            "Hobby should reduce stress"
+        );
     }
 
     #[test]
     fn test_hobby_produces_curio() {
         let mut world = World::new();
-        let pop = world.spawn((
-            Pop,
-            Hobby { hobby_type: HobbyType::Whittling },
-            Inventory::default(),
-            StressTracker::default(),
-            PopAction { current: ActionType::Hobby, ..Default::default() },
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Hobby {
+                    hobby_type: HobbyType::Whittling,
+                },
+                Inventory::default(),
+                StressTracker::default(),
+                PopAction {
+                    current: ActionType::Hobby,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         // Force production trigger by running enough times or mocking RNG?
         // Since we can't easily mock RNG in the system without DI, we loop.
@@ -203,7 +233,11 @@ mod tests {
         for _ in 0..1000 {
             schedule.run(&mut world);
             let inventory = world.get::<Inventory>(pop).unwrap();
-            if inventory.items.iter().any(|i| matches!(i.item_type, ItemType::Curio(_))) {
+            if inventory
+                .items
+                .iter()
+                .any(|i| matches!(i.item_type, ItemType::Curio(_)))
+            {
                 produced = true;
                 break;
             }

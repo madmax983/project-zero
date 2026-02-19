@@ -67,8 +67,6 @@ pub mod farm;
 pub mod fire;
 /// Hauling logic.
 pub mod hauling;
-/// Pop hobbies logic (Spec 137).
-pub mod hobby;
 /// Workplace hazards logic.
 pub mod hazards;
 #[cfg(test)]
@@ -76,6 +74,8 @@ pub mod hazards;
 pub mod hazards_tests;
 /// Pop health and damage.
 pub mod health;
+/// Pop hobbies logic (Spec 137).
+pub mod hobby;
 /// Housing and rest mechanics.
 pub mod housing;
 /// The Inspector system (Spec 091).
@@ -179,11 +179,11 @@ pub use fire::*;
 pub use graffiti::*;
 pub use hauling::*;
 pub use hazards::*;
-pub use hobby::*;
-pub use inventory::*;
 pub use health::*;
+pub use hobby::*;
 pub use housing::*;
 pub use integration::*;
+pub use inventory::*;
 pub use items::*;
 pub use locations::*;
 pub use map::*;

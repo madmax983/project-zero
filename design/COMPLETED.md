@@ -53,6 +53,7 @@ Features that have been fully implemented, tested, and merged.
 - [x] `121` Hydroponics — `specs/121-hydroponics.md` — completed 2026-02-15
 - [x] `122` Retrograde Engineering — `specs/122-retrograde-engineering.md` — completed 2026-10-26
 - [x] `123` Technological Rituals — `specs/123-technological-rituals.md` — completed 2026-10-27
+- [x] `055` Rumor Web — `specs/055-rumor-web.md` — completed 2026-06-03
 - [x] `124` The Wild Child — `specs/124-the-wild-child.md` — completed 2026-02-15
 - [x] `125` Grid Instability — `specs/125-grid-instability.md` — completed 2026-02-15
 - [x] `127` Stress Breakdowns — `specs/127-stress-breakdowns.md` — completed 2026-02-15
