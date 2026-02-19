@@ -1,4 +1,5 @@
 use bevy_ecs::prelude::*;
+#[allow(clippy::wildcard_imports)]
 use super::*;
 
 use crate::layer1::blob::{blob_consumption_system, blob_spread_system};
@@ -36,6 +37,7 @@ pub enum Layer1SystemSet {
 ///
 /// This function groups systems into ordered `SystemSet`s to enforce
 /// execution order and logical grouping.
+#[allow(clippy::too_many_lines)]
 pub fn register_layer1_systems(schedule: &mut Schedule) {
     // Configure Sets
     schedule.configure_sets((
@@ -150,6 +152,8 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
         flora_spread_system,
         mastery_accumulation_system,
         crate::layer1::cybernetics::surgery_system,
+        crate::layer1::institutional_memory::produce_manual_system,
+        crate::layer1::institutional_memory::manual_aura_system,
     ).in_set(Layer1SystemSet::Economy));
 
     schedule.add_systems((

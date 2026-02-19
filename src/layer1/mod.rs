@@ -94,6 +94,8 @@ pub mod mascot;
 pub mod medical;
 /// Pop memories and psychological effects.
 pub mod memory;
+/// Institutional Memory system (Spec 172).
+pub mod institutional_memory;
 #[cfg(test)]
 /// Tests for metal industry (Spec 024).
 pub mod metal_industry_tests;
@@ -190,6 +192,7 @@ pub use map::*;
 pub use mascot::*;
 pub use medical::*;
 pub use memory::*;
+pub use institutional_memory::*;
 pub use needs::*;
 pub use notifications::*;
 pub use pop::*;
@@ -492,3 +495,5 @@ pub mod systems;
 
 #[cfg(test)]
 mod drone_tests;
+#[cfg(test)]
+mod institutional_memory_tests;
