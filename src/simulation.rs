@@ -194,6 +194,7 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(work_execution_system)
             .after(update_noise_system),
         restore_leisure_system.after(work_execution_system),
+        crate::layer1::tech_envy::tech_envy_system.after(restore_leisure_system),
         apply_mood_modifiers_system.after(restore_leisure_system),
         mascot_buff_system.after(restore_leisure_system),
         crate::layer1::graffiti::graffiti_observation_system.after(apply_mood_modifiers_system),
@@ -410,6 +411,10 @@ pub fn run_simulation_tick(world: &mut World) {
 
     if !world.contains_resource::<BuildingMap>() {
         world.init_resource::<BuildingMap>();
+    }
+
+    if !world.contains_resource::<crate::layer1::tech_envy::TechEnvyConfig>() {
+        world.init_resource::<crate::layer1::tech_envy::TechEnvyConfig>();
     }
 
     // Add our schedule if not yet added
