@@ -48,7 +48,7 @@ pub fn trend_setting_system(
     for (class, pos, consumed) in &query {
         if *class == SocialClass::Elite {
             // Elite sets the trend!
-            trend.current_item = Some(consumed.item);
+            trend.current_item = Some(consumed.item.clone());
             trend.strength = 1.0; // Max strength
             trend.setter_pos = *pos;
             // Only one elite needs to set it per tick (first one wins for MVP)
@@ -79,7 +79,7 @@ pub fn trend_spread_system(
 
         // If near the trend source (let's say 20 tiles is "gossip range")
         if dist < 20 {
-            mimicry.desired_item = trend.current_item;
+            mimicry.desired_item = trend.current_item.clone();
         }
     }
 }
@@ -91,8 +91,8 @@ pub fn trend_satisfaction_system(
     mut query: Query<(Entity, &SocialMimicry, &JustConsumed, Option<&mut Morale>)>,
 ) {
     for (_entity, mimicry, consumed, morale_opt) in &mut query {
-        if let Some(desired) = mimicry.desired_item
-            && consumed.item == desired
+        if let Some(desired) = &mimicry.desired_item
+            && &consumed.item == desired
         {
             if let Some(mut morale) = morale_opt {
                 morale.add_modifier(MoodModifier {

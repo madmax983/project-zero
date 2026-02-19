@@ -58,9 +58,9 @@ pub struct GpuPopInput {
     /// Learned social weight.
     pub social_weight: f32,
     /// Per-action success counts.
-    pub success_count: [u32; 27],
+    pub success_count: [u32; 28],
     /// Per-action attempt counts.
-    pub attempt_count: [u32; 27],
+    pub attempt_count: [u32; 28],
     /// Utility score of the current action.
     pub current_utility: f32,
     /// 1 if the pop is drafted for combat, 0 otherwise.
@@ -533,12 +533,12 @@ mod tests {
                     social_weight: 1.0,
                     action_success_count: [
                         1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                        0, 0,
-                    ], // 27 elements
+                        0, 0, 0,
+                    ], // 28 elements
                     action_attempt_count: [
                         5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                        0, 0,
-                    ], // 27 elements
+                        0, 0, 0,
+                    ], // 28 elements
                 },
                 PopAction {
                     current: ActionType::SatisfyHunger,

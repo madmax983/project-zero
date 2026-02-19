@@ -67,6 +67,8 @@ pub mod farm;
 pub mod fire;
 /// Hauling logic.
 pub mod hauling;
+/// Pop hobbies logic (Spec 137).
+pub mod hobby;
 /// Workplace hazards logic.
 pub mod hazards;
 #[cfg(test)]
@@ -80,6 +82,8 @@ pub mod housing;
 pub mod inspector;
 /// Integration systems bridging domains.
 pub mod integration;
+/// Personal inventory system.
+pub mod inventory;
 /// Item definitions (Tools, Equipment).
 pub mod items;
 /// Spatial primitives (GridPosition).
@@ -175,6 +179,8 @@ pub use fire::*;
 pub use graffiti::*;
 pub use hauling::*;
 pub use hazards::*;
+pub use hobby::*;
+pub use inventory::*;
 pub use health::*;
 pub use housing::*;
 pub use integration::*;

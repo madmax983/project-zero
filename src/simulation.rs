@@ -152,6 +152,7 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::artifacts::aura_system.after(movement_system),
         arrival_handler_system.after(movement_system),
         work_execution_system.after(arrival_handler_system),
+        crate::layer1::hobby::execute_hobby_system.after(arrival_handler_system),
         crate::layer1::husbandry::tame_execution_system.after(arrival_handler_system),
         combat_execution_system.after(arrival_handler_system),
         crate::layer1::turret::turret_fire_system.after(combat_execution_system),
@@ -377,6 +378,7 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer1::unrest::check_mental_break_system),
         crate::layer1::unrest::recover_mental_break_system.after(decay_needs_system),
         check_generational_friction_system.after(decay_needs_system),
+        crate::layer1::hobby::assign_hobby_system.after(decay_needs_system),
     ));
 
     schedule.add_systems((

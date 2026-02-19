@@ -62,7 +62,7 @@ pub struct Clothing {
 }
 
 /// Types of food items Pops can consume.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub enum ItemType {
     /// Default food type (e.g. from Farms).
     #[default]
@@ -77,6 +77,8 @@ pub enum ItemType {
     Fruit,
     /// High-quality prepared food.
     LuxuryMeal,
+    /// A unique item produced by a hobby (e.g., "Wooden Duck").
+    Curio(String),
 }
 
 #[cfg(test)]

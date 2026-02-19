@@ -196,10 +196,10 @@ pub fn consume_food_system(
                 let meal_item = ItemType::Potato;
 
                 if let Some(ref mut history) = history_opt {
-                    record_meal(history, meal_item);
+                    record_meal(history, meal_item.clone());
                 } else {
                     let mut history = DietaryHistory::default();
-                    record_meal(&mut history, meal_item);
+                    record_meal(&mut history, meal_item.clone());
                     commands.entity(entity).insert(history);
                 }
 

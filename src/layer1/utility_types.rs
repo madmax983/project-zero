@@ -115,11 +115,23 @@ pub enum ActionType {
     Surgery,
     /// Recharge battery at a Drone Hub (Drones only).
     Charge,
+    /// Engage in a hobby to reduce stress.
+    Hobby,
+}
+
+/// Types of hobbies.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub enum HobbyType {
+    Whittling,      // Creative
+    CloudWatching,  // Lazy/Nature
+    Meditation,     // Stoic
+    Gossip,         // Social
+    Tinkering,      // Industrial
 }
 
 impl ActionType {
     /// Total number of action types. Used for array sizing.
-    pub const COUNT: usize = 27;
+    pub const COUNT: usize = 28;
 
     /// Converts action type to a unique array index (0..COUNT-1).
     #[must_use]
@@ -152,6 +164,7 @@ impl ActionType {
             Self::FetchClothing => 24,
             Self::Surgery => 25,
             Self::Charge => 26,
+            Self::Hobby => 27,
         }
     }
 
