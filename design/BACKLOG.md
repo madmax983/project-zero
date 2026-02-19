@@ -19,6 +19,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `079` Weather Events — `specs/079-weather-events.md`
 - [ ] `080` Planetary Quirks — `specs/080-planetary-quirks.md`
 - [ ] `084` Pop Traits — `specs/084-pop-traits.md`
+- [ ] `093` Desire Paths — `specs/093-desire-paths.md`
 - [ ] `098` Medical Triage Policies — `specs/098-medical-triage.md`
 - [ ] `117` Fuel Consumption — `specs/117-fuel-consumption.md`
 - [ ] `120` Crop Diversity — `specs/120-crop-diversity.md`
@@ -27,6 +28,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `137` Pop Hobbies — `specs/137-pop-hobbies.md`
 - [ ] `164` Modular Fauna — `specs/164-modular-fauna.md`
 - [ ] `165` Gene Banks — `specs/165-gene-banks.md`
+- [ ] `166` Xeno-Gastronomy — `specs/166-xeno-gastronomy.md`
 
 ## MVP — Layer 2: System Simulation
 
