@@ -10,7 +10,7 @@ use crate::layer1::stress::Breakdown;
 use crate::layer1::taboo::TabooState;
 use crate::layer1::traits::Traits;
 use crate::layer1::unrest::MentalState;
-use crate::layer1::utility_types::{ActionType, PopAction, UtilityWeights, HobbyType};
+use crate::layer1::utility_types::{PopAction, UtilityWeights, HobbyType};
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
 
