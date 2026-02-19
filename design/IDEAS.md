@@ -4424,7 +4424,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Subspace Currents
+## Subspace Currents [SPECCED]
 
 **Layer:** 2
 
