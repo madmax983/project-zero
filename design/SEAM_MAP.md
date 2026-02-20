@@ -94,3 +94,12 @@
     - Updated `src/layer1/hauling.rs` to filter targets based on Zone.
     - Drones ignore items and stockpiles in Sanctuary zones.
 - **Tests:** `tests/integration/drone_sanctuary.rs` (Integration test verified)
+
+### INT-031: Institutional Memory (Items) -> Hauling System
+- **Date:** 2026-06-04
+- **Systems connected:** `produce_manual_system` (Output) -> `haul_system` (Logistics)
+- **Glue added:**
+    - Updated `haul_system` in `src/layer1/hauling.rs` to support `CarryingItem`.
+    - Updated `utility_ai.rs` to evaluate hauling for generic `Item` entities.
+    - Updated `src/layer1/items.rs` with `CarryingItem` component.
+- **Tests:** `test_haul_manual_system_lifecycle` in `src/layer1/hauling.rs` (Integration test verified)

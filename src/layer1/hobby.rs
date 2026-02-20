@@ -174,6 +174,7 @@ mod tests {
             }, // Idle
             equipment: None,
             carrying: None,
+            carrying_item: None,
             mental_state: None,
             drafted: None,
             faction_member: None,

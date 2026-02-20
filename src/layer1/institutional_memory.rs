@@ -101,7 +101,9 @@ pub fn produce_manual_system(
             let multiplier = (level as f32).mul_add(0.05, 1.0);
 
             commands.spawn((
-                Item::default(), // Marker for Hauling
+                Item {
+                    item_type: crate::layer1::items::ItemType::Manual,
+                }, // Marker for Hauling
                 Manual {
                     skill_type: chosen_skill,
                     xp_multiplier: multiplier,
