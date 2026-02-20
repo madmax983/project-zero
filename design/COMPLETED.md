@@ -50,8 +50,10 @@ Features that have been fully implemented, tested, and merged.
 - [x] `086` The Stowaway — `specs/086-the-stowaway.md` — completed 2026-06-02
 - [x] `091` The Inspector — `specs/091-the-inspector.md` — completed 2026-10-21
 - [x] `092` Antagonistic Flora — `specs/092-antagonistic-flora.md` — completed 2026-02-09
+- [x] `093` Desire Paths — `specs/093-desire-paths.md` — completed 2026-11-01
 - [x] `097` Social Tavern — `specs/097-social-tavern.md` — completed 2026-10-23
 - [x] `098` Medical Triage Policies — `specs/098-medical-triage.md` — completed 2026-06-03
+- [x] `100` Jury-Rigging — `specs/100-jury-rigging.md` — completed 2026-11-01
 - [x] `103` Private Stashes — `specs/103-private-stashes.md` — completed 2026-06-02
 - [x] `107` Biocompatibility — `specs/107-biocompatibility.md` — completed 2026-10-27
 - [x] `112` Maintenance Debt — `specs/112-maintenance-debt.md` — completed 2026-10-27
@@ -80,6 +82,7 @@ Features that have been fully implemented, tested, and merged.
 - [x] `155` Advanced Workplace Hazards — `specs/155-advanced-hazards.md` — completed 2026-03-20
 - [x] `075` Animal Husbandry — `specs/075-animal-husbandry.md` — completed 2026-10-30
 - [x] `163` Vermin Evolution — `specs/163-vermin-evolution.md` — completed 2026-05-31
+- [x] `170` Pheromone Gardening — `specs/170-pheromone-gardening.md` — completed 2026-11-01
 - [x] `172` Institutional Memory — `specs/172-institutional-memory.md` — completed 2026-10-27
 - [x] `176` The Gridlock — `specs/176-gridlock-crowding.md` — completed 2026-10-29
 - [x] `178` Scrapcode — `specs/178-scrapcode.md` — completed 2026-10-31
@@ -87,6 +90,7 @@ Features that have been fully implemented, tested, and merged.
 ## MVP — Layer 2: System Simulation
 
 - [x] `094` System View Architecture — `specs/094-system-view.md` — completed 2026-10-27
+- [x] `095` System Generation — `specs/095-system-generation.md` — completed 2026-11-01
 - [x] `145` Prototyping Phase — `specs/145-prototyping-phase.md` — completed 2026-02-17
 - [x] `INT-024` Integration: Items on Ground -> Vermin Growth — completed 2026-03-27
 - [x] `130` Social Debt — `specs/130-social-debt.md` — completed 2026-10-27

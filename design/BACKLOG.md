@@ -13,8 +13,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 - [ ] `059` Soil Fertility — `specs/059-soil-fertility.md`
 - [ ] `077` Emergent Festivals — `specs/077-emergent-festivals.md`
-- [ ] `093` Desire Paths — `specs/093-desire-paths.md`
-- [ ] `100` Jury-Rigging — `specs/100-jury-rigging.md`
 - [ ] `114` Palette Fatigue — `specs/114-palette-fatigue.md`
 - [ ] `120` Crop Diversity — `specs/120-crop-diversity.md`
 - [ ] `132` Equipment & Wear — `specs/132-equipment-and-wear.md`
@@ -25,7 +23,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `165` Gene Banks — `specs/165-gene-banks.md`
 - [ ] `166` Xeno-Gastronomy — `specs/166-xeno-gastronomy.md`
 - [ ] `168` The Mother Lode — `specs/168-the-mother-lode.md`
-- [ ] `170` Pheromone Gardening — `specs/170-pheromone-gardening.md`
 - [ ] `174` Memetic Hazards — `specs/174-memetic-hazards.md`
 - [ ] `175` Bureaucratic Drag — `specs/175-bureaucratic-drag.md`
 - [ ] `179` Magnetic Storms — `specs/179-magnetic-storms.md`
@@ -33,7 +30,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 ## MVP — Layer 2: System Simulation
 
-- [ ] `095` System Generation — `specs/095-system-generation.md`
 - [ ] `099` Fleet Movement — `specs/099-fleet-movement.md`
 - [ ] `101` System Mining — `specs/101-system-mining.md`
 - [ ] `102` Orbital Drop Logistics — `specs/102-orbital-drop-logistics.md`
