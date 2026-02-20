@@ -4757,3 +4757,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Biological specialization vs. Workforce flexibility.
 
 ---
+
+## Gravity Fishing
+
+**Layer:** 1 -> 2
+
+**Fantasy:** Reeling in a big one from the junkyard of orbit.
+
+**Mechanic:** Constructible "Gravity Harpoons" lock onto passing Layer 2 debris/derelicts. They slowly winch the object down to a designated "Drop Zone" on Layer 1. Requires massive power and risks "Cable Snap" (debris crashes randomly) or pulling down active threats (Pirate Boarding Pods).
+
+**Emergence:** You hook a massive Fuel Tanker to solve your energy crisis. It's heavier than expected. The harpoon anchor fails, and the winch is pulled *up* into the sky, taking the operator with it.
+
+**Tension:** Safe scavenging (Wait for crash) vs. Active retrieval (Harpoon).
+
+---
+
+## Subspace Pen Pals
+
+**Layer:** 1 -> 3
+
+**Fantasy:** Love and friendship bloom on the battlefield.
+
+**Mechanic:** Pops with Comms Console access form "Remote Bonds" with citizens of other Layer 3 Factions. They exchange "Culture" (Ethics shift towards the friend's faction) and "Intel" (Map data/Trade routes).
+
+**Emergence:** Your Lead Scientist falls in love with a Hive Mind drone via subspace text. He starts smuggling "Bio-Mass" out of the colony to "feed" his partner, draining your food stores but gaining you a permanent non-aggression pact with the Swarm.
+
+**Tension:** Allow open comms (Free Intel/Diplomacy) or firewall them (Prevent cultural contamination/Espionage)?
+
+---
+
+## Placebo Protocols
+
+**Layer:** 1
+
+**Fantasy:** Managing panic with lies. "Everything is under control."
+
+**Mechanic:** Ability to issue "Fake Orders" or "Propaganda" that solves a problem *temporarily* by tricking the Pop's UI/Mood. e.g., "distribute Vitamin X" (Sugar pills) reduces Sickness Fear but not Sickness. "Inspect Support Beams" reduces Collapse Fear but fixes nothing.
+
+**Emergence:** You quell a riot by broadcasting "Reinforcements Inbound". The rioters calm down. When the raiders arrive and no one comes, the riot restarts with double intensity and the "Betrayed" trait.
+
+**Tension:** Solve the mood (Cheap/Fast) vs. Solve the problem (Expensive/Real).
+
+---
+
+## Smart Matter Architecture
+
+**Layer:** 1
+
+**Fantasy:** The walls are alive and listening.
+
+**Mechanic:** Buildings constructed with "Smart Matter" can change state based on conditions. "Smart Walls" become windows in sunlight or armored bunkers during raids. "Smart Floors" become conveyor belts. Requires constant power/CPU.
+
+**Emergence:** The power fails during a solar flare. The Smart Walls get stuck in "Window" mode during a raid, leaving your base transparent and defenseless. Or the floor turns into "Conveyor" mode and flings the defenders into the enemy.
+
+**Tension:** Expensive adaptable tech (Versatile) vs. Cheap static matter (Reliable).
+
+---
