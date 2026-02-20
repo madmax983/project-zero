@@ -30,9 +30,10 @@ use ratatui::style::Color;
 const CRIT_CHANCE: f64 = 0.05;
 const CRIT_MULTIPLIER: f32 = 2.0;
 
-const HIT_STOP_CRIT: u32 = 10;
-const HIT_STOP_HEAVY: u32 = 5;
-const HIT_STOP_MEDIUM: u32 = 2;
+// Ludwig: Reduced hit stop times for snappier combat (Game Feel)
+const HIT_STOP_CRIT: u32 = 6;
+const HIT_STOP_HEAVY: u32 = 3;
+const HIT_STOP_MEDIUM: u32 = 1;
 const HIT_STOP_LIGHT: u32 = 0;
 
 /// Component marker for pops that have been drafted for military service.
@@ -579,15 +580,15 @@ mod tests {
         assert!(attacker_hs.is_some(), "Attacker should have HitStop");
         let ticks = attacker_hs.unwrap().ticks_remaining;
         assert!(
-            ticks == 5 || ticks == 10,
-            "Expected 5 or 10 ticks, got {}",
+            ticks == 3 || ticks == 6,
+            "Expected 3 or 6 ticks, got {}",
             ticks
         );
 
         let target_hs = world.get::<HitStop>(target);
         assert!(target_hs.is_some(), "Target should have HitStop");
         let ticks_target = target_hs.unwrap().ticks_remaining;
-        assert!(ticks_target == 5 || ticks_target == 10);
+        assert!(ticks_target == 3 || ticks_target == 6);
     }
 
     #[test]
@@ -630,11 +631,11 @@ mod tests {
         let hs = world.get::<HitStop>(attacker);
         if hs.is_some() {
             // Must have critted (Damage 4 * 2 = 8, but Crit flag overrides to Crit duration)
-            // Implementation: if is_crit { HIT_STOP_CRIT (10) }
+            // Implementation: if is_crit { HIT_STOP_CRIT (6) }
             assert_eq!(
                 hs.unwrap().ticks_remaining,
-                10,
-                "Crit on light weapon should give CRIT ticks (10)"
+                6,
+                "Crit on light weapon should give CRIT ticks (6)"
             );
         } else {
             // Normal (Damage 4 < 5) -> Light (0 ticks)
@@ -685,8 +686,8 @@ mod tests {
         assert!(hs.is_some());
         let ticks = hs.unwrap().ticks_remaining;
         assert!(
-            ticks == 2 || ticks == 10,
-            "Expected 2 (Normal) or 10 (Crit), got {}",
+            ticks == 1 || ticks == 6,
+            "Expected 1 (Normal) or 6 (Crit), got {}",
             ticks
         );
     }
