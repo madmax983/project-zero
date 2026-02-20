@@ -1,30 +1,68 @@
+//! Simulation time management.
+//!
+//! This module handles the passage of time in the game world, distinguishing between
+//! "Simulation Time" (game state updates) and "Wall Time" (real-world seconds).
+//!
+//! # The Time Model
+//!
+//! 1.  **Ticks ([`crate::shared::time::SimulationTime`])**: The fundamental quantum of game logic.
+//!     *   Simulation systems run once per tick.
+//!     *   1 tick is roughly 100ms of "game time" (at 1x speed).
+//!     *   The game is deterministic based on ticks, not real time.
+//!
+//! 2.  **Speed ([`crate::shared::time::SimSpeed`])**: Controls how many ticks occur per second.
+//!     *   **Paused**: 0 ticks/sec.
+//!     *   **1x**: 10 ticks/sec.
+//!     *   **3x**: 30 ticks/sec.
+//!     *   **5x**: 50 ticks/sec.
+//!
+//! 3.  **Wall Time ([`crate::shared::time::WallTime`])**: Measures real-world seconds since app start.
+//!     *   Used for UI animations (pulsing cursors, fading notifications) that must
+//!         continue even when the game is paused.
+
 use bevy_ecs::prelude::*;
 
 /// Tracks the global simulation time and speed.
+///
+/// This resource is the "clock" of the colony.
+///
+/// # Examples
+///
+/// Reading the current tick:
+/// ```
+/// use scale::shared::time::SimulationTime;
+///
+/// let time = SimulationTime::default();
+/// println!("Current tick: {}", time.tick);
+/// ```
 #[derive(Resource, Default)]
 pub struct SimulationTime {
     /// The current simulation tick (update count).
+    ///
+    /// Monotonically increasing. Only increments when the game is unpaused.
     pub tick: u64,
-    /// The current simulation speed.
+    /// The current simulation speed target.
     pub speed: SimSpeed,
 }
 
 /// Tracks the wall-clock time for UI animations (e.g. pulsing cursors).
-/// This is updated every frame, independent of simulation speed.
+///
+/// This is updated every frame (render loop), independent of simulation speed or pausing.
+/// Use this for visual effects that shouldn't freeze when the game is paused.
 #[derive(Resource, Default, Debug, Clone, Copy)]
 pub struct WallTime(pub f32);
 
 /// Defines the speed at which the simulation runs.
 #[derive(Clone, Copy, PartialEq, Eq, Default, Debug)]
 pub enum SimSpeed {
-    /// The simulation is paused.
+    /// The simulation is paused (0 ticks/sec).
     Paused,
-    /// The simulation runs at 1x speed.
+    /// The simulation runs at normal speed (10 ticks/sec).
     #[default]
     Normal,
-    /// The simulation runs at 3x speed.
+    /// The simulation runs at fast speed (30 ticks/sec).
     Fast,
-    /// The simulation runs at 5x speed.
+    /// The simulation runs at maximum speed (50 ticks/sec).
     Faster,
 }
 
