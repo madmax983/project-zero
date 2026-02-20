@@ -245,6 +245,7 @@ pub fn cleanup_previous_assignment_system(
             | AssignmentType::Artist
             | AssignmentType::Governor
             | AssignmentType::Administrator
+            | AssignmentType::Chef
             | AssignmentType::Surgery => {}
         }
 
@@ -627,7 +628,8 @@ fn assign_pop(
         | AssignmentType::Scientist
         | AssignmentType::Artist
         | AssignmentType::Governor
-        | AssignmentType::Administrator => {
+        | AssignmentType::Administrator
+        | AssignmentType::Chef => {
             entity_cmds.insert((
                 Job {
                     workplace: target_entity,
@@ -1967,7 +1969,7 @@ mod tests {
 
         let tool = world
             .spawn((
-                Item,
+                Item::default(),
                 Tool {
                     tool_type: ToolType::Pickaxe,
                     durability: 100.0,
@@ -2030,7 +2032,7 @@ mod tests {
 
         let tool = world
             .spawn((
-                Item,
+                Item::default(),
                 Tool {
                     tool_type: ToolType::Pickaxe,
                     durability: 100.0,
@@ -2109,7 +2111,7 @@ mod tests {
 
         let tool = world
             .spawn((
-                Item,
+                Item::default(),
                 Tool {
                     tool_type: ToolType::Pickaxe,
                     durability: 100.0,
@@ -2540,7 +2542,7 @@ mod tests {
 
         let tool = world
             .spawn((
-                Item,
+                Item::default(),
                 Tool {
                     tool_type: ToolType::Pickaxe,
                     durability: 100.0,
@@ -2616,7 +2618,7 @@ mod tests {
 
         let tool = world
             .spawn((
-                Item,
+                Item::default(),
                 Tool {
                     tool_type: ToolType::Pickaxe,
                     durability: 100.0,
@@ -2692,7 +2694,7 @@ mod tests {
 
         let tool = world
             .spawn((
-                Item,
+                Item::default(),
                 Tool {
                     tool_type: ToolType::Pickaxe,
                     durability: 100.0,
@@ -3079,7 +3081,7 @@ mod tests {
 
         let tool = world
             .spawn((
-                Item,
+                Item::default(),
                 Tool {
                     tool_type: ToolType::Pickaxe,
                     durability: 100.0,
@@ -3299,7 +3301,7 @@ mod tests {
 
         let tool = world
             .spawn((
-                Item,
+                Item::default(),
                 Tool {
                     tool_type: ToolType::Pickaxe,
                     durability: 100.0,

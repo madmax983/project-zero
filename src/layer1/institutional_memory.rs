@@ -56,7 +56,7 @@ pub fn produce_manual_system(
                 DesignationType::Demolish | DesignationType::Repair | DesignationType::JuryRig => Some(SkillType::Construction),
                 DesignationType::Tame => Some(SkillType::Husbandry),
                 DesignationType::SetZone(_) => Some(SkillType::Construction),
-                _ => None,
+                DesignationType::Cannibalize => None,
             }
         } else {
             None
@@ -74,7 +74,7 @@ pub fn produce_manual_system(
              let mut best_skill = None;
              let mut max_level = 0;
 
-             for (s, _) in &skills.xp {
+             for s in skills.xp.keys() {
                  let lvl = skills.get_level(*s);
                  if lvl >= 5 && lvl > max_level {
                      max_level = lvl;
@@ -91,10 +91,10 @@ pub fn produce_manual_system(
 
         if rng.gen_bool(chance) {
              #[allow(clippy::cast_precision_loss)]
-             let multiplier = 1.0 + (level as f32 * 0.05);
+             let multiplier = (level as f32).mul_add(0.05, 1.0);
 
              commands.spawn((
-                Item, // Marker for Hauling
+                Item::default(), // Marker for Hauling
                 Manual {
                     skill_type: chosen_skill,
                     xp_multiplier: multiplier,

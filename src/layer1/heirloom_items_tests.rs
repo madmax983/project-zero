@@ -36,7 +36,7 @@ mod tests {
         // Spawn Tool with History
         let tool = world
             .spawn((
-                Item,
+                Item::default(),
                 Tool {
                     tool_type: ToolType::Pickaxe,
                     durability: 100.0,
@@ -94,7 +94,7 @@ mod tests {
         // Spawn Tool with high history
         let tool = world
             .spawn((
-                Item,
+                Item::default(),
                 Tool {
                     tool_type: ToolType::Pickaxe,
                     durability: 100.0,

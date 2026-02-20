@@ -183,7 +183,7 @@ mod tests {
         // Spawn Prosthetic Item
         let bionic_arm = world
             .spawn((
-                Item,
+                Item::default(),
                 Prosthetic {
                     prosthetic_type: ProstheticType::BionicArm,
                     efficiency_bonus: 0.5,
