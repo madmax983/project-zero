@@ -14,11 +14,13 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `059` Soil Fertility — `specs/059-soil-fertility.md`
 - [ ] `077` Emergent Festivals — `specs/077-emergent-festivals.md`
 - [ ] `093` Desire Paths — `specs/093-desire-paths.md`
+- [ ] `100` Jury-Rigging — `specs/100-jury-rigging.md`
 - [ ] `114` Palette Fatigue — `specs/114-palette-fatigue.md`
 - [ ] `120` Crop Diversity — `specs/120-crop-diversity.md`
 - [ ] `132` Equipment & Wear — `specs/132-equipment-and-wear.md`
 - [ ] `133` Ventilation Networks — `specs/133-ventilation-networks.md`
 - [ ] `139` Cryo-Stasis Vaults — `specs/139-cryo-stasis.md`
+- [ ] `148` The 'Helpful' AI — `specs/148-helpful-ai.md`
 - [ ] `164` Modular Fauna — `specs/164-modular-fauna.md`
 - [ ] `165` Gene Banks — `specs/165-gene-banks.md`
 - [ ] `166` Xeno-Gastronomy — `specs/166-xeno-gastronomy.md`
@@ -28,6 +30,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `173` Predictive Policing — `specs/173-predictive-policing.md`
 - [ ] `174` Memetic Hazards — `specs/174-memetic-hazards.md`
 - [ ] `175` Bureaucratic Drag — `specs/175-bureaucratic-drag.md`
+- [ ] `178` Scrapcode — `specs/178-scrapcode.md`
 
 ## MVP — Layer 2: System Simulation
 
