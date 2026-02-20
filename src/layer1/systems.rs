@@ -123,6 +123,7 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             combat_execution_system.after(arrival_handler_system),
             crate::layer1::turret::turret_fire_system.after(combat_execution_system),
             crate::layer1::justice::warden_execution_system.after(combat_execution_system),
+            crate::layer1::predictive_policing::pre_crime_execution_system.after(combat_execution_system),
             crate::layer1::execution::vandalize_execution_system.after(arrival_handler_system),
             crate::layer1::drone::process_charge_system.after(arrival_handler_system),
             update_social_class_system.after(arrival_handler_system),
@@ -377,6 +378,7 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             crate::layer1::unrest::recover_mental_break_system.after(decay_needs_system),
             check_generational_friction_system.after(decay_needs_system),
             crate::layer1::hobby::assign_hobby_system.after(decay_needs_system),
+            crate::layer1::predictive_policing::check_prediction_system.after(decay_needs_system),
         )
             .in_set(Layer1SystemSet::Observation),
     );

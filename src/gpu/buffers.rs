@@ -361,6 +361,24 @@ pub fn extract_building_inputs(
         }
     }
 
+    // Suspects (building_type = 13)
+    {
+        use crate::layer1::predictive_policing::Suspect;
+        let mut query = world.query::<(Entity, &GridPosition, &Suspect)>();
+        for (entity, pos, _suspect) in query.iter(world) {
+            entities.push(entity);
+            inputs.push(GpuBuildingInput {
+                pos_x: pos.x,
+                pos_y: pos.y,
+                building_type: 13,
+                capacity: 1,
+                occupied: 0,
+                resource_has_room: 1, // Always "available" to be arrested
+                _padding: [0; 2],
+            });
+        }
+    }
+
     // Fauna (building_type = 12)
     {
         let mut query = world.query::<(Entity, &GridPosition, &Fauna)>();

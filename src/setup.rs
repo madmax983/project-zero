@@ -122,6 +122,10 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(crate::layer1::society::Unrest::default());
     world.insert_resource(crate::layer1::tech_envy::TechEnvyConfig::default());
     world.insert_resource(crate::layer1::building::BuildingMap::default());
+    world.insert_resource(crate::layer1::predictive_policing::PredictionConfig {
+        threshold: 0.8,
+        enabled: true,
+    });
     #[cfg(feature = "nova")]
     world.init_resource::<crate::layer1::oral_tradition::OralTradition>();
     world.init_resource::<crate::layer1::social::old_guard::Demographics>();

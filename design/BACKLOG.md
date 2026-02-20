@@ -26,7 +26,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `166` Xeno-Gastronomy — `specs/166-xeno-gastronomy.md`
 - [ ] `168` The Mother Lode — `specs/168-the-mother-lode.md`
 - [ ] `170` Pheromone Gardening — `specs/170-pheromone-gardening.md`
-- [ ] `173` Predictive Policing — `specs/173-predictive-policing.md`
 - [ ] `174` Memetic Hazards — `specs/174-memetic-hazards.md`
 - [ ] `175` Bureaucratic Drag — `specs/175-bureaucratic-drag.md`
 - [ ] `179` Magnetic Storms — `specs/179-magnetic-storms.md`

@@ -348,6 +348,9 @@ pub use taboo::*;
 /// Erosion system (Spec 093).
 pub mod erosion;
 pub use erosion::*;
+/// Predictive Policing system (Spec 173).
+pub mod predictive_policing;
+pub use predictive_policing::*;
 
 /// Pheromone Gardening system (Spec 170).
 pub mod pheromone;
