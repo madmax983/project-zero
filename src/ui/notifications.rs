@@ -5,6 +5,7 @@ use ratatui::{
 };
 
 use crate::layer1::notifications::{NotificationQueue, NotificationSeverity};
+use crate::shared::time::SimulationTime;
 
 /// Renders the notifications overlay in the top-right corner of the given area.
 ///
@@ -41,6 +42,10 @@ pub fn render_notifications(frame: &mut Frame, area: Rect, world: &World) {
 
     let max_text_width = inner.width as usize;
 
+    let current_tick = world
+        .get_resource::<SimulationTime>()
+        .map_or(0, |t| t.tick);
+
     // Take the last `display_count` notifications, show newest first
     let items: Vec<ListItem> = queue
         .active
@@ -48,12 +53,21 @@ pub fn render_notifications(frame: &mut Frame, area: Rect, world: &World) {
         .rev()
         .take(display_count)
         .map(|n| {
-            let color = match n.severity {
+            let age = current_tick.saturating_sub(n.created_at);
+            let time_left = n.expires_at.unwrap_or(u64::MAX).saturating_sub(current_tick);
+
+            // Fade Out Logic (Ludwig: "Ease-Out")
+            // If expiring in < 20 ticks (2s), dim the text.
+            let mut color = match n.severity {
                 NotificationSeverity::Info => Color::Cyan,
                 NotificationSeverity::Success => Color::Green,
                 NotificationSeverity::Warning => Color::Yellow,
                 NotificationSeverity::Error => Color::Red,
             };
+
+            if time_left < 20 {
+                color = Color::DarkGray;
+            }
 
             let display_text = if n.text.len() > max_text_width && max_text_width > 1 {
                 format!(
@@ -64,7 +78,20 @@ pub fn render_notifications(frame: &mut Frame, area: Rect, world: &World) {
                 n.text.clone()
             };
 
-            ListItem::new(Line::styled(display_text, Style::default().fg(color)))
+            // Slide In Logic (Ludwig: "Juice")
+            // If new (< 5 ticks), slide in from right by reducing padding.
+            // Padding decreases as age increases.
+            // t=0 -> pad=5
+            // t=5 -> pad=0
+            let padding = if age < 5 {
+                (5 - age) as usize
+            } else {
+                0
+            };
+
+            let padded_text = format!("{:width$}{}", "", display_text, width = padding);
+
+            ListItem::new(Line::styled(padded_text, Style::default().fg(color)))
         })
         .collect();
 
