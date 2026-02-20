@@ -385,8 +385,8 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
         let max_y = i32::try_from(terrain.height).unwrap_or(i32::MAX);
 
         let mut tiles = std::collections::HashMap::new();
-        for y in (center_y - radius)..=(center_y + radius) {
-            for x in (center_x - radius)..=(center_x + radius) {
+        for y in center_y.saturating_sub(radius)..=center_y.saturating_add(radius) {
+            for x in center_x.saturating_sub(radius)..=center_x.saturating_add(radius) {
                 if x >= 0
                     && y >= 0
                     && x < max_x
@@ -416,9 +416,9 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
         .map(|(p, d)| (p.x, p.y, d.designation_type))
         .collect();
 
-    for y in (center_y - radius)..=(center_y + radius) {
+    for y in center_y.saturating_sub(radius)..=center_y.saturating_add(radius) {
         print!("{y:3} ");
-        for x in (center_x - radius)..=(center_x + radius) {
+        for x in center_x.saturating_sub(radius)..=center_x.saturating_add(radius) {
             if x < 0 || y < 0 || x >= width || y >= height {
                 print!(" ");
                 continue;
@@ -616,8 +616,8 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: i32) {
         let max_y = i32::try_from(terrain.height).unwrap_or(i32::MAX);
 
         let mut tiles = std::collections::HashMap::new();
-        for y in (center_y - radius)..=(center_y + radius) {
-            for x in (center_x - radius)..=(center_x + radius) {
+        for y in center_y.saturating_sub(radius)..=center_y.saturating_add(radius) {
+            for x in center_x.saturating_sub(radius)..=center_x.saturating_add(radius) {
                 if x >= 0
                     && y >= 0
                     && x < max_x
@@ -672,8 +672,8 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: i32) {
         })
         .collect();
 
-    for y in (center_y - radius)..=(center_y + radius) {
-        for x in (center_x - radius)..=(center_x + radius) {
+    for y in center_y.saturating_sub(radius)..=center_y.saturating_add(radius) {
+        for x in center_x.saturating_sub(radius)..=center_x.saturating_add(radius) {
             if x < 0 || y < 0 || x >= width || y >= height {
                 continue;
             }
@@ -997,4 +997,43 @@ fn print_help() {
     }
 
     println!("{table}");
+}
+
+#[cfg(test)]
+mod reproduction_tests {
+    use super::*;
+    use scale::layer1::terrain::{TerrainGrid, TerrainType};
+
+    fn setup_minimal_world() -> World {
+        let mut world = World::new();
+        let tiles = vec![TerrainType::Grass; 100];
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
+        world.insert_resource(scale::layer1::building::OccupiedTiles::default());
+        world
+    }
+
+    #[test]
+    fn test_print_map_overflow() {
+        let mut world = setup_minimal_world();
+        // This should panic in debug mode due to overflow if not handled
+        print_map(&mut world, i32::MAX, i32::MAX);
+    }
+
+    #[test]
+    fn test_print_map_underflow() {
+        let mut world = setup_minimal_world();
+        // This should panic in debug mode due to underflow if not handled
+        print_map(&mut world, i32::MIN, i32::MIN);
+    }
+
+    #[test]
+    fn test_scan_terrain_overflow() {
+        let mut world = setup_minimal_world();
+        // This should panic in debug mode due to overflow if not handled
+        scan_terrain(&mut world, i32::MAX, i32::MAX, 10);
+    }
 }

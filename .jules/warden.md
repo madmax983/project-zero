@@ -24,3 +24,6 @@
 ## 2024-05-26 - Negative Ammo Cost Exploit
 **Threat:** Logic bug in `turret_fire_system` allowed negative `ammo_cost` in `Turret` component to increase `ColonyResources.waste` instead of consuming it.
 **Defense:** Added input validation in `turret_fire_system` to ensure `ammo_cost` is non-negative and finite. Added regression test `test_exploit_negative_ammo_cost_prevented`.
+**2024-05-24 - Integer Overflow in CLI and Uncapped Logic**
+**Threat:** Integer overflow in `headless` CLI map rendering allowed potential DoS via panic. Unbounded multipliers in work calculation could destabilize economy.
+**Defense:** Switched to saturating arithmetic for map bounds. Capped `calculate_work_amount` to 1000.0.

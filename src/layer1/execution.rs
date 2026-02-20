@@ -1187,14 +1187,17 @@ fn calculate_work_amount(
         .get_resource::<AdminStats>()
         .map_or(1.0, |stats| stats.efficiency);
 
-    WORK_PER_TICK
+    let amount = WORK_PER_TICK
         * tool_efficiency
         * morale_efficiency
         * skill_efficiency
         * work_speed_mod
         * admin_efficiency
         * (1.0 + augmentation_bonus)
-        * organic_factor
+        * organic_factor;
+
+    // Cap work amount to prevent logic bugs / economy exploits
+    amount.min(1000.0)
 }
 
 /// Executes the cannibalization of the Lander.
@@ -1983,6 +1986,11 @@ mod tests {
                 GridPosition { x: 5, y: 5 },
             ))
             .id();
+
+        world.entity_mut(designation).insert(crate::layer1::resources::MiningProgress {
+            current: 0.0,
+            max: 1000000.0,
+        });
 
         let pop = world
             .spawn((
@@ -3418,5 +3426,54 @@ mod tests {
             "Expected ~15.0 (or crit), got {}",
             progress.current
         );
+    }
+
+    #[test]
+    fn test_calculate_work_amount_cap() {
+        use crate::layer1::cybernetics::{Augmentations, Prosthetic, ProstheticType};
+
+        let mut world = setup_world();
+        // Insert AdminStats with efficiency 1.0 (default struct is 0.0)
+        world.insert_resource(crate::layer1::admin::AdminStats {
+            efficiency: 1.0,
+            ..Default::default()
+        });
+
+        let pop = world.spawn(Pop).id();
+        let tool_entity = world.spawn((
+            Item::default(),
+            Tool {
+                tool_type: ToolType::Pickaxe,
+                durability: 100.0,
+                max_durability: 100.0,
+            }
+        )).id();
+
+        // Massive augmentation bonus (10,000x)
+        let prosthetic = world
+            .spawn(Prosthetic {
+                prosthetic_type: ProstheticType::BionicArm,
+                efficiency_bonus: 10000.0,
+                social_penalty: 0.0,
+                power_consumption: 0.0,
+            })
+            .id();
+        world.entity_mut(pop).insert(Augmentations {
+            installed: vec![prosthetic],
+        });
+
+        // Call logic directly
+        let work_amount = calculate_work_amount(
+            &world,
+            pop,
+            DesignationType::Mine,
+            Some(tool_entity),
+            1.0, // Morale
+            1.0, // Work Speed Mod
+        );
+
+        // Raw would be ~10 * 10000 = 100,000.
+        // Cap is 1000.0.
+        assert!((work_amount - 1000.0).abs() < 0.001, "Work amount should be capped at 1000.0, got {}", work_amount);
     }
 }
