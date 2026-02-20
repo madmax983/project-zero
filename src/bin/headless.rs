@@ -31,9 +31,9 @@ use scale::layer1::biography::Biography;
 use scale::layer1::dreams::Dream;
 use scale::layer1::pop::PopName;
 use scale::layer1::{
-    BuildingType, ColonyResources, Designation, DesignationType, Farm, GridPosition, Housing,
-    MovementTarget, Needs, OccupiedTiles, Pop, PopAction, Stockpile, TerrainGrid, TerrainType,
-    try_designate, try_place_building,
+    BuildingType, Chronicle, ColonyResources, Designation, DesignationType, EventImportance, Farm,
+    GridPosition, Housing, MovementTarget, Needs, OccupiedTiles, Pop, PopAction, Stockpile,
+    TerrainGrid, TerrainType, try_designate, try_place_building,
 };
 use scale::setup::{SetupConfig, setup_world_with_config};
 use scale::shared::log::MessageLog;
@@ -176,6 +176,7 @@ fn main() {
                     None => println!("Usage: bio <id>"),
                 }
             }
+            "chronicle" | "c" | "history" => print_chronicle(&mut world),
             "log" | "l" => print_log(&mut world),
             _ => println!("Unknown command: '{command}'. Type 'help' for commands."),
         }
@@ -894,6 +895,50 @@ fn print_bio(world: &mut World, target_id: u32) {
     }
 }
 
+fn print_chronicle(world: &mut World) {
+    let chronicle = world.resource::<Chronicle>();
+
+    println!("{}", "=== Colony Chronicle ===".green().bold());
+
+    if chronicle.events.is_empty() {
+        println!("  (No history recorded)");
+        return;
+    }
+
+    let mut table = Table::new();
+    table
+        .load_preset(UTF8_FULL)
+        .set_content_arrangement(ContentArrangement::Dynamic)
+        .set_header(vec![
+            Cell::new("Year").add_attribute(Attribute::Bold),
+            Cell::new("Tick").add_attribute(Attribute::Bold),
+            Cell::new("Event").add_attribute(Attribute::Bold),
+        ]);
+
+    for event in &chronicle.events {
+        let importance_color = match event.importance {
+            EventImportance::Legendary => Color::Yellow,
+            EventImportance::Major => Color::Cyan,
+            EventImportance::Standard => Color::White,
+            EventImportance::Minor => Color::Grey,
+        };
+
+        // Legendary events get bold text
+        let mut event_cell = Cell::new(&event.text).fg(importance_color);
+        if event.importance == EventImportance::Legendary {
+            event_cell = event_cell.add_attribute(Attribute::Bold);
+        }
+
+        table.add_row(vec![
+            Cell::new(event.year.to_string()),
+            Cell::new(event.tick.to_string()),
+            event_cell,
+        ]);
+    }
+
+    println!("{table}");
+}
+
 fn print_log(world: &mut World) {
     let log = world.resource::<MessageLog>();
 
@@ -982,6 +1027,7 @@ fn print_help() {
         ("chop <x> <y>", "", "Designate tree for chopping"),
         ("designations", "d", "List all active designations"),
         ("bio <id>", "", "Show biography and dreams of a pop"),
+        ("chronicle", "c, history", "Show colony history events"),
         ("log", "l", "Show message log"),
         ("find <type> [N]", "", "Find N terrain coords (default 10)"),
         ("help", "h, ?", "Show this help"),
