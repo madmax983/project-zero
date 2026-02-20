@@ -1623,3 +1623,101 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[NAME] stood too close to [ARTIFACT_NAME]. [YEAR]. Felt [AURA_EFFECT]."
 - "[YEAR]: The [ARTIFACT_NAME] sings. [NAME] reports [AURA_EFFECT]."
 - "Strange energies. [NAME] is touched by [AURA_EFFECT] from [ARTIFACT_NAME]. [YEAR]."
+
+---
+
+## Drone Templates
+
+### DRONE_ACTIVATED
+**Slots:** [COLONY], [YEAR], [DRONE_NAME], [DRONE_ACTION]
+
+- "The [DRONE_NAME] comes online. [YEAR]. It [DRONE_ACTION]."
+- "[YEAR]: New servitor. [DRONE_NAME]. [DRONE_ACTION] for the colony."
+- "Mechanical life. [DRONE_NAME] joins the workforce. [YEAR]."
+
+### DRONE_MALFUNCTION
+**Slots:** [COLONY], [YEAR], [DRONE_NAME], [DRONE_ACTION]
+
+- "[DRONE_NAME] stops working. [YEAR]. It [DRONE_ACTION] strangely."
+- "[YEAR]: Error in the logic. [DRONE_NAME] [DRONE_ACTION] instead of hauling."
+- "Glitch report. [DRONE_NAME] is broken. [YEAR]."
+
+---
+
+## Graffiti Templates
+
+### GRAFFITI_SPOTTED
+**Slots:** [COLONY], [YEAR], [GRAFFITI_TEXT], [GRAFFITI_STYLE], [GRAFFITI_MEDIUM]
+
+- "Words on the wall. [YEAR]. '[GRAFFITI_TEXT]'. Written in [GRAFFITI_MEDIUM]."
+- "[YEAR]: Vandalism or warning? [GRAFFITI_STYLE] letters say '[GRAFFITI_TEXT]'."
+- "Someone wrote '[GRAFFITI_TEXT]' in [GRAFFITI_MEDIUM]. [YEAR]."
+
+---
+
+## Cannibalization Templates
+
+### SHIP_PART_SALVAGED
+**Slots:** [COLONY], [YEAR], [SHIP_COMPONENT], [CANNIBALIZE_ACTION], [SHIP_EMOTION]
+
+- "We [CANNIBALIZE_ACTION] the [SHIP_COMPONENT]. [YEAR]. Felt [SHIP_EMOTION]."
+- "[YEAR]: The ship gives us life. [SHIP_COMPONENT] is gone. [SHIP_EMOTION]."
+- "Tearing down the past. [SHIP_COMPONENT] [CANNIBALIZE_ACTION]. [YEAR]."
+
+### SHIP_GONE
+**Slots:** [COLONY], [YEAR], [SHIP_EMOTION]
+
+- "The last of the ship is gone. [YEAR]. Only [SHIP_EMOTION] remains."
+- "[YEAR]: No more hull. We are truly here now. [SHIP_EMOTION]."
+- "The skeleton is picked clean. [YEAR]. [SHIP_EMOTION] silence."
+
+---
+
+## Geological Templates
+
+### SEISMIC_TREMOR
+**Slots:** [COLONY], [YEAR], [QUAKE_DESCRIPTOR], [GROUND_SOUND]
+
+- "The ground moves. [YEAR]. A [QUAKE_DESCRIPTOR] shake."
+- "[YEAR]: Seismic alert. We hear a [GROUND_SOUND]. The earth is [QUAKE_DESCRIPTOR]."
+- "Tremor at [COLONY]. [QUAKE_DESCRIPTOR] and loud. [YEAR]."
+
+---
+
+## Thermal Templates
+
+### HEAT_SPIKE
+**Slots:** [COLONY], [YEAR], [HEAT_SOURCE], [THERMAL_STATE]
+
+- "Temperature rising. [YEAR]. The [HEAT_SOURCE] is [THERMAL_STATE]."
+- "[YEAR]: Heat warning. [HEAT_SOURCE] pushes us to [THERMAL_STATE]."
+- "Sweat and alarms. [HEAT_SOURCE] overload. [YEAR]."
+
+### FREEZE_EVENT
+**Slots:** [COLONY], [YEAR], [COLD_SOURCE], [THERMAL_STATE]
+
+- "Cold snap. [YEAR]. The [COLD_SOURCE] makes it [THERMAL_STATE]."
+- "[YEAR]: Frost on the walls. [COLD_SOURCE] breach. We are [THERMAL_STATE]."
+- "Shivering in the dark. [COLD_SOURCE] brings the [THERMAL_STATE]. [YEAR]."
+
+---
+
+## Data Templates
+
+### DATA_FOUND
+**Slots:** [COLONY], [YEAR], [DATA_CARRIER], [DATA_TYPE]
+
+- "We found a [DATA_CARRIER]. [YEAR]. It contains [DATA_TYPE]."
+- "[YEAR]: Information recovery. A [DATA_CARRIER] full of [DATA_TYPE]."
+- "Secrets in the [DATA_CARRIER]. [DATA_TYPE] revealed. [YEAR]."
+
+---
+
+## Social Debt Templates
+
+### FAVOR_CALLED
+**Slots:** [COLONY], [YEAR], [NAME], [FAVOR_TYPE], [DEBT_FEELING]
+
+- "[NAME] calls in a [FAVOR_TYPE]. [YEAR]. It feels [DEBT_FEELING]."
+- "[YEAR]: The debt is due. [NAME] demands payment. [FAVOR_TYPE]."
+- "A [FAVOR_TYPE] is settled. [NAME] collects. [DEBT_FEELING]. [YEAR]."

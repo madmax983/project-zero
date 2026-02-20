@@ -2306,3 +2306,229 @@ Reasons for class conflict.
 - lighter work
 - hoarded tech
 - secret meetings
+
+---
+
+## Drone Fragments
+
+### [DRONE_NAME]
+Flavor names for robotic workers.
+
+- Unit-734
+- Haul-Bot
+- The Spider
+- Iron-Mite
+- Silent-One
+- Gear-Kin
+- Servo-Scout
+
+### [DRONE_ACTION]
+What drones do.
+
+- hums
+- clicks
+- hauls
+- scans
+- whirs
+- obeys
+- waits
+
+### [DRONE_DESCRIPTOR]
+Adjectives for drones.
+
+- tireless
+- silent
+- efficient
+- cold
+- loyal
+- worn
+- rusted
+
+---
+
+## Graffiti Fragments
+
+### [GRAFFITI_TEXT]
+Messages scrawled on walls.
+
+- "We are watching"
+- "The Hunger remains"
+- "Iron lies"
+- "Remember the lost"
+- "Silence is safety"
+- "Do not trust the [ROLE]"
+- "The Void knows"
+
+### [GRAFFITI_STYLE]
+How the graffiti looks.
+
+- jagged
+- rushed
+- intricate
+- fading
+- bold
+- hidden
+- clumsy
+
+### [GRAFFITI_MEDIUM]
+What was used to write it.
+
+- chalk
+- grease
+- blood (fake?)
+- scratched-metal
+- paint
+- soot
+- acid
+
+---
+
+## Cannibalization Fragments
+
+### [SHIP_COMPONENT]
+Parts of the colony ship being dismantled.
+
+- engine bell
+- cryo-bay wall
+- hull plate
+- reactor shielding
+- navigation core
+- life-support duct
+- landing strut
+
+### [CANNIBALIZE_ACTION]
+Verbs for taking the ship apart.
+
+- stripped
+- cut
+- melted
+- salvaged
+- repurposed
+- tore
+- rendered
+
+### [SHIP_EMOTION]
+Feelings about destroying the ship.
+
+- regret
+- necessity
+- guilt
+- relief
+- cold-pragmatism
+- hesitation
+- finality
+
+---
+
+## Geological Fragments
+
+### [QUAKE_DESCRIPTOR]
+Adjectives for seismic events.
+
+- deep
+- rolling
+- sharp
+- grinding
+- sudden
+- bone-shaking
+- heavy
+
+### [GROUND_SOUND]
+Sounds of the earth moving.
+
+- groan
+- snap
+- roar
+- rumble
+- crack
+- thud
+- hiss
+
+---
+
+## Thermal Fragments
+
+### [HEAT_SOURCE]
+Things that generate heat.
+
+- the core
+- the vents
+- the sun-side wall
+- the machinery
+- the friction
+- the overload
+- the magma-tap
+
+### [COLD_SOURCE]
+Things that bring cold.
+
+- the void-wind
+- the shadow
+- the leak
+- the night-side
+- the cryo-leak
+- the stone
+- the silence
+
+### [THERMAL_STATE]
+Conditions of temperature.
+
+- freezing
+- boiling
+- sweating
+- shivering
+- stable
+- critical
+- fluctuating
+
+---
+
+## Data Fragments
+
+### [DATA_CARRIER]
+Physical objects holding data.
+
+- memory-shard
+- crystal-stack
+- tape-reel
+- punch-card
+- light-slab
+- bio-knot
+- hard-drive
+
+### [DATA_TYPE]
+Kinds of information found.
+
+- star-charts
+- music
+- logs
+- blueprints
+- secrets
+- lies
+- nonsense
+
+---
+
+## Social Debt Fragments
+
+### [FAVOR_TYPE]
+Kinds of social debts.
+
+- a life-debt
+- a ration-debt
+- a silence-debt
+- a work-debt
+- a blood-debt
+- a promise
+- an oath
+
+### [DEBT_FEELING]
+How it feels to owe someone.
+
+- heavy
+- binding
+- annoying
+- honorable
+- shameful
+- necessary
+- dangerous

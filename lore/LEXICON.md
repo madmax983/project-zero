@@ -1732,3 +1732,107 @@
 **Usage:**
 - "He is making the Climb."
 - "The Climb is steep."
+
+---
+
+## Drones
+
+### Servitor / Iron-Kin
+**Replaces:** drone entity
+**Code reference:** `Drone` component
+**Usage:**
+- "The Servitors never sleep."
+- "Treat the Iron-Kin well."
+
+### the hum
+**Replaces:** drone activity
+**Usage:**
+- "The constant hum of work."
+
+## Cannibalization
+
+### The Rendering
+**Replaces:** dismantling the colony ship
+**Code reference:** `ActionType::Deconstruct` (on ship)
+**Usage:**
+- "The Rendering is complete."
+- "We live by the Rendering."
+
+### Mother's Flesh
+**Replaces:** ship hull/materials
+**Usage:**
+- "Building walls from Mother's Flesh."
+- "Warmth from the Mother's heart (reactor)."
+
+## Graffiti
+
+### Wall-Talk
+**Replaces:** graffiti
+**Code reference:** `Graffiti` component
+**Usage:**
+- "Too much Wall-Talk in sector 4."
+- "Read the Wall-Talk."
+
+### scrawl
+**Replaces:** act of writing graffiti
+**Code reference:** `ActionType::Scrawl`
+**Usage:**
+- "He was caught scrawling."
+
+## Geological
+
+### The Shakes
+**Replaces:** seismic activity
+**Code reference:** `SeismicGrid`
+**Usage:**
+- "The Shakes are bad today."
+- "Built to withstand the Shakes."
+
+### groan
+**Replaces:** sound of ground moving
+**Usage:**
+- "Hear the earth groan."
+
+## Thermal
+
+### Heat-Sink
+**Replaces:** hot area / thermal vent
+**Code reference:** `TemperatureGrid` (high)
+**Usage:**
+- "Sweating in the Heat-Sink."
+- "Dump the waste in the Heat-Sink."
+
+### The Chill / Void-Cold
+**Replaces:** cold area
+**Code reference:** `TemperatureGrid` (low)
+**Usage:**
+- "The Chill gets in your joints."
+- "Void-Cold takes the fingers."
+
+## Data
+
+### Hard-Mem
+**Replaces:** physical data item
+**Code reference:** `DataItem`
+**Usage:**
+- "Slot the Hard-Mem."
+- "Carrying a stack of Hard-Mem."
+
+### ghosts
+**Replaces:** corrupted data
+**Usage:**
+- "The file is full of ghosts."
+
+## Social Debt
+
+### Owed
+**Replaces:** social debt status
+**Code reference:** `SocialDebt`
+**Usage:**
+- "I am Owed by Tovar."
+- "He is Owed to the Guild."
+
+### marker
+**Replaces:** token of debt
+**Usage:**
+- "Calling in a marker."
