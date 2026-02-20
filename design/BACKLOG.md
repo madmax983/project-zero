@@ -30,6 +30,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `174` Memetic Hazards — `specs/174-memetic-hazards.md`
 - [ ] `175` Bureaucratic Drag — `specs/175-bureaucratic-drag.md`
 - [ ] `178` Scrapcode — `specs/178-scrapcode.md`
+- [ ] `179` Magnetic Storms — `specs/179-magnetic-storms.md`
 
 ## MVP — Layer 2: System Simulation
 
