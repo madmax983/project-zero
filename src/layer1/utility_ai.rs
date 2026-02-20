@@ -56,11 +56,13 @@ use crate::layer1::actions::rest::evaluate_satisfy_rest;
 use crate::layer1::actions::social::evaluate_socialize;
 use crate::layer1::actions::work::evaluate_work;
 use crate::layer1::admin::Office;
-use crate::layer1::building::{Building, ShiftSchedule};
+use crate::layer1::building::{Building, BuildingType, ShiftSchedule};
 use crate::layer1::combat::Drafted;
 use crate::layer1::designation::{Designation, DesignationType};
+use crate::layer1::fauna::Fauna;
 use crate::layer1::farm::Farm;
 use crate::layer1::funeral::{Corpse, Grave};
+use crate::layer1::health::Health;
 use crate::layer1::hobby::{Hobby, evaluate_hobby};
 use crate::layer1::housing::Housing;
 use crate::layer1::husbandry::evaluate_tame;
@@ -68,6 +70,7 @@ use crate::layer1::items::Equipment;
 use crate::layer1::justice::{Inmate, Wanted, evaluate_warden_action};
 use crate::layer1::map::GridPosition;
 use crate::layer1::medical::Hospital;
+use crate::layer1::memetic::MemeticCarrier;
 use crate::layer1::needs::Needs;
 use crate::layer1::penal::PenalLabor;
 use crate::layer1::refining::get_refining_recipe;
@@ -149,9 +152,7 @@ fn evaluate_group_survival(
     evaluator: &mut CandidateEvaluator,
     data: &PopEvalData,
     buffer: &UtilityAIBuffer,
-    world: &World,
 ) {
-    let pop_entity = data.entity;
     let pop_pos = data.pos;
     let needs = data.needs;
     let weights = data.weights;
@@ -170,13 +171,10 @@ fn evaluate_group_survival(
         evaluator.consider(ActionType::SatisfyRest, utility, Some(target));
     }
 
-    // Check Health
-    let health = world.get::<crate::layer1::health::Health>(pop_entity);
-
     // Evaluate SeekMedicalCare
-    if let Some(health) = health {
+    if let Some(health) = data.health {
         if let Some((utility, target)) =
-            evaluate_seek_medical_care(pop_pos, &needs, *health, &weights, &buffer.hospitals)
+            evaluate_seek_medical_care(pop_pos, &needs, health, &weights, &buffer.hospitals)
         {
             evaluator.consider(ActionType::SeekMedicalCare, utility, Some(target));
         }
@@ -376,24 +374,23 @@ fn evaluate_group_leisure(
 #[allow(clippy::too_many_lines, clippy::collapsible_if)]
 pub(crate) fn evaluate_single_pop(
     buffer: &UtilityAIBuffer,
-    world: &mut World,
     data: &PopEvalData,
     context: &WorldContext,
 ) -> (ActionType, f32, Option<Entity>) {
     // 1. Check for Mental Break (Returns early)
-    if let Some((action, utility, target)) = evaluate_mental_break(data, world) {
+    if let Some((action, utility, target)) = evaluate_mental_break(data, buffer) {
         return (action, utility, target);
     }
 
     // 1b. Check for Memetic Compulsion (Returns early, overrides drafted)
     if let Some((action, utility, target)) =
-        crate::layer1::actions::scrawl_sigil::evaluate_scrawl_memetic_sigil(data, world)
+        crate::layer1::actions::scrawl_sigil::evaluate_scrawl_memetic_sigil(data, buffer)
     {
         return (action, utility, target);
     }
 
     // 2. Check for Drafted (Returns early)
-    if let Some((action, utility, target)) = evaluate_drafted_behavior(data, world) {
+    if let Some((action, utility, target)) = evaluate_drafted_behavior(data, buffer) {
         return (action, utility, target);
     }
 
@@ -401,7 +398,7 @@ pub(crate) fn evaluate_single_pop(
     let mut evaluator = CandidateEvaluator::new(evaluate_idle(&data.needs));
     let is_striking = is_pop_striking(data, context);
 
-    evaluate_group_survival(&mut evaluator, data, buffer, world);
+    evaluate_group_survival(&mut evaluator, data, buffer);
     evaluate_group_social(&mut evaluator, data, buffer);
     evaluate_group_leisure(&mut evaluator, data);
     evaluate_group_work(&mut evaluator, data, buffer, context, is_striking);
@@ -411,19 +408,27 @@ pub(crate) fn evaluate_single_pop(
     evaluator.result()
 }
 
+struct PopulateContext {
+    resources: ColonyResources,
+    cycle: crate::layer1::day_night::DayNightCycle,
+}
+
 #[allow(clippy::too_many_lines)]
 fn populate_buffer_buildings(
     world: &mut World,
     buffer: &mut UtilityAIBuffer,
-    context: &WorldContext,
+    context: &PopulateContext,
 ) {
-    let cycle = context.cycle;
-    let resources = context.resources;
+    let cycle = &context.cycle;
+    let resources = &context.resources;
 
     // Farms
     buffer.farms.clear();
+    buffer.all_farms.clear();
     let mut farm_query = world.query::<(Entity, &GridPosition, &Farm, Option<&ShiftSchedule>)>();
     for (entity, pos, farm, schedule) in farm_query.iter(world) {
+        buffer.all_farms.push(PositionProxy { entity, pos: *pos });
+
         if schedule.is_some_and(|s| !s.is_active(cycle.time_of_day)) {
             continue;
         }
@@ -436,6 +441,15 @@ fn populate_buffer_buildings(
             capacity: farm.capacity,
             usage: farm.workers.len(),
         });
+    }
+
+    // Walls
+    buffer.walls.clear();
+    let mut wall_query = world.query::<(Entity, &GridPosition, &Building)>();
+    for (entity, pos, building) in wall_query.iter(world) {
+        if building.building_type == BuildingType::Wall {
+            buffer.walls.push(PositionProxy { entity, pos: *pos });
+        }
     }
 
     // Housing
@@ -613,9 +627,12 @@ fn populate_buffer_items_and_misc(world: &mut World, buffer: &mut UtilityAIBuffe
 
     // Structures (Auto-Repair)
     buffer.repair_structures.clear();
+    buffer.all_structures.clear();
     let mut struct_query =
         world.query::<(Entity, &GridPosition, &Structure, Option<&DeferMaintenance>)>();
     for (entity, pos, structure, defer) in struct_query.iter(world) {
+        buffer.all_structures.push(PositionProxy { entity, pos: *pos });
+
         if defer.is_some() {
             continue;
         }
@@ -638,15 +655,24 @@ fn populate_buffer_items_and_misc(world: &mut World, buffer: &mut UtilityAIBuffe
     }
 }
 
+fn populate_buffer_enemies(world: &mut World, buffer: &mut UtilityAIBuffer) {
+    buffer.enemies.clear();
+    let mut query = world.query::<(Entity, &GridPosition, &Fauna)>();
+    for (entity, pos, _) in query.iter(world) {
+        buffer.enemies.push(PositionProxy { entity, pos: *pos });
+    }
+}
+
 /// Populates the AI buffer with candidate entities from the world.
 ///
 /// This function queries the world for all relevant entities (buildings, items, designations)
 /// and stores their data in the reusable `UtilityAIBuffer`. This avoids repeated queries
 /// during the per-pop evaluation phase.
-fn populate_ai_buffer(world: &mut World, buffer: &mut UtilityAIBuffer, context: &WorldContext) {
+fn populate_ai_buffer(world: &mut World, buffer: &mut UtilityAIBuffer, context: &PopulateContext) {
     populate_buffer_buildings(world, buffer, context);
     populate_buffer_designations(world, buffer);
     populate_buffer_items_and_misc(world, buffer);
+    populate_buffer_enemies(world, buffer);
 }
 
 /// The Main Brain Loop: Decides what every Pop should do next.
@@ -701,6 +727,8 @@ pub fn evaluate_actions_system(world: &mut World) {
                     Option<&crate::layer1::traits::Traits>,
                     Option<&StressTracker>,
                     Option<&Hobby>,
+                    Option<&Health>,
+                    Option<&MemeticCarrier>,
                 ),
             )>()
             .iter(world)
@@ -723,6 +751,8 @@ pub fn evaluate_actions_system(world: &mut World) {
                         Option<&crate::layer1::traits::Traits>,
                         Option<&StressTracker>,
                         Option<&Hobby>,
+                        Option<&Health>,
+                        Option<&MemeticCarrier>,
                     ),
                 )| {
                     action.ticks_committed >= config.evaluation_interval
@@ -730,7 +760,7 @@ pub fn evaluate_actions_system(world: &mut World) {
                 },
             )
             .map(
-                |(e, p, n, w, a, eq, c, m, d, _, fm, pl, b, (t, st, h)): (
+                |(e, p, n, w, a, eq, c, m, d, _, fm, pl, b, (t, st, h, hel, mc)): (
                     Entity,
                     &GridPosition,
                     &Needs,
@@ -748,6 +778,8 @@ pub fn evaluate_actions_system(world: &mut World) {
                         Option<&crate::layer1::traits::Traits>,
                         Option<&StressTracker>,
                         Option<&Hobby>,
+                        Option<&Health>,
+                        Option<&MemeticCarrier>,
                     ),
                 )| PopEvalData {
                     entity: e,
@@ -765,6 +797,8 @@ pub fn evaluate_actions_system(world: &mut World) {
                     traits: t.cloned(),
                     stress: st.map_or(0.0, |s| s.accumulated_stress / BREAKDOWN_TICKS_REQUIRED),
                     hobby_type: h.map(|comp| comp.hobby_type),
+                    health: hel.copied(),
+                    is_memetic_carrier: mc.is_some(),
                 },
             ),
     );
@@ -775,69 +809,66 @@ pub fn evaluate_actions_system(world: &mut World) {
         return;
     }
 
-    // 2. Initialize Context
-    // Optimization: Temporarily remove large resources to avoid cloning them
-    let zone_grid_opt = world.remove_resource::<ZoneGrid>();
-    let zone_grid_fallback = ZoneGrid::new(1, 1);
-    let zone_grid_ref = zone_grid_opt.as_ref().unwrap_or(&zone_grid_fallback);
-
-    let factions_res = world.remove_resource::<crate::layer1::factions::Factions>();
-    let factions_data = factions_res.as_ref().map(|f| &f.map);
-
+    // 2. Populate Buffers (Read World)
+    // We clone small resources to allow creating a context that doesn't borrow World mutably,
+    // so we can pass &mut World to populate_ai_buffer (which requires it for queries).
     let resources = world.resource::<ColonyResources>().clone();
-    let cycle = world
-        .resource::<crate::layer1::day_night::DayNightCycle>()
-        .clone();
-    let taboo = world.resource::<crate::layer1::taboo::TabooState>().clone();
+    let cycle = world.resource::<crate::layer1::day_night::DayNightCycle>().clone();
+
+    let pop_context = PopulateContext {
+        resources: resources.clone(),
+        cycle: cycle.clone(),
+    };
+
+    populate_ai_buffer(world, &mut buffer, &pop_context);
+
+    // 3. Initialize Context & Evaluate (Pure calculation, no mutable world access)
+    // Now we create the full context for evaluation, borrowing from World immutably.
+    let zone_grid_fallback = ZoneGrid::new(1, 1);
+    let zone_grid = world.get_resource::<ZoneGrid>().unwrap_or(&zone_grid_fallback);
+    let factions_res = world.get_resource::<crate::layer1::factions::Factions>();
+    let factions_data = factions_res.map(|f| &f.map);
+    let taboo = world.resource::<crate::layer1::taboo::TabooState>();
 
     let context = WorldContext {
         resources: &resources,
         cycle: &cycle,
-        taboo: &taboo,
+        taboo,
         factions: factions_data,
-        zone_grid: zone_grid_ref,
+        zone_grid,
     };
 
-    // 3. Populate Proxies (The Optimization)
-    // We clear buffers and populate them once, filtering invalid targets early.
-    populate_ai_buffer(world, &mut buffer, &context);
+    // 4. Evaluate each pop and collect results
+    // Using a temporary vector for results to avoid mutable world access during loop
+    let mut results = Vec::with_capacity(buffer.pop_data.len());
 
-    // 4. Evaluate each pop
     for data in &buffer.pop_data {
         let (best_action, best_utility, best_target) =
-            evaluate_single_pop(&buffer, world, data, &context);
+            evaluate_single_pop(&buffer, data, &context);
 
         // Switch if best exceeds threshold
         if best_utility > data.action.current_utility + config.switch_threshold {
-            // Update action
-            let mut action = data.action;
-            action.current = best_action;
-            action.current_utility = best_utility;
-            action.ticks_committed = 0;
-
-            // Write back to world
-            if let Some(mut pop_action) = world.get_mut::<PopAction>(data.entity) {
-                *pop_action = action;
-            }
-
-            // Insert StartPlan marker (for HTN system)
-            world.entity_mut(data.entity).insert(StartPlan {
-                action: best_action,
-                target: best_target,
-            });
+            results.push((data.entity, best_action, best_utility, best_target));
         }
+    }
+
+    // 5. Apply Results (Write to World)
+    for (entity, best_action, best_utility, best_target) in results {
+        if let Some(mut pop_action) = world.get_mut::<PopAction>(entity) {
+            pop_action.current = best_action;
+            pop_action.current_utility = best_utility;
+            pop_action.ticks_committed = 0;
+        }
+
+        // Insert StartPlan marker
+        world.entity_mut(entity).insert(StartPlan {
+            action: best_action,
+            target: best_target,
+        });
     }
 
     // Return the buffer to the world
     world.insert_resource(buffer);
-
-    // Restore removed resources
-    if let Some(zg) = zone_grid_opt {
-        world.insert_resource(zg);
-    }
-    if let Some(f) = factions_res {
-        world.insert_resource(f);
-    }
 }
 
 

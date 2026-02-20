@@ -1,6 +1,7 @@
 use crate::layer1::combat::Drafted;
 use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::factions::{FactionData, FactionId, FactionMember};
+use crate::layer1::health::Health;
 use crate::layer1::items::Equipment;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
@@ -10,7 +11,7 @@ use crate::layer1::stress::Breakdown;
 use crate::layer1::taboo::TabooState;
 use crate::layer1::traits::Traits;
 use crate::layer1::unrest::MentalState;
-use crate::layer1::utility_types::{PopAction, UtilityWeights, HobbyType};
+use crate::layer1::utility_types::{HobbyType, PopAction, UtilityWeights};
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
 
@@ -56,6 +57,10 @@ pub struct PopEvalData {
     pub stress: f32,
     /// Assigned hobby type, if any.
     pub hobby_type: Option<HobbyType>,
+    /// Physical health state.
+    pub health: Option<Health>,
+    /// Whether the pop is a carrier of a memetic virus.
+    pub is_memetic_carrier: bool,
 }
 
 /// Context data for utility evaluation (resources, time, etc.)
@@ -163,4 +168,14 @@ pub struct UtilityAIBuffer {
     pub wanted_criminals: Vec<PositionProxy>,
     /// Buffer for office candidates.
     pub offices: Vec<CapacityProxy>,
+
+    // New Buffers for Optimization (removing &mut World from hot path)
+    /// Buffer for wall candidates (for memetic sigils).
+    pub walls: Vec<PositionProxy>,
+    /// Buffer for ALL structures (for vandalism/fire starting).
+    pub all_structures: Vec<PositionProxy>,
+    /// Buffer for ALL farms (for binge eating), ignoring capacity/schedule.
+    pub all_farms: Vec<PositionProxy>,
+    /// Buffer for enemies (Fauna).
+    pub enemies: Vec<PositionProxy>,
 }

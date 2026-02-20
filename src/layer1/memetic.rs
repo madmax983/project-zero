@@ -41,7 +41,6 @@ mod tests {
     use crate::layer1::utility_ai::evaluate_actions_system;
     use crate::layer1::resources::ColonyResources;
     use crate::shared::time::SimulationTime;
-    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_unlocking_hazardous_tech_infects_researcher() {
@@ -104,7 +103,7 @@ mod tests {
         )).id();
 
         // Setup wall at (5,6) to scrawl on
-        let wall = world.spawn((
+        let _wall = world.spawn((
             Building { building_type: BuildingType::Wall },
             GridPosition { x: 5, y: 6 },
             // OccupiedTiles is usually a resource, but utility AI might use it for validity checks?

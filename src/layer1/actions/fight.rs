@@ -1,6 +1,5 @@
-use crate::layer1::fauna::Fauna;
 use crate::layer1::map::GridPosition;
-use crate::layer1::utility_eval_types::PopEvalData;
+use crate::layer1::utility_eval_types::{PopEvalData, UtilityAIBuffer};
 use crate::layer1::utility_types::ActionType;
 use bevy_ecs::prelude::*;
 
@@ -44,7 +43,7 @@ pub(crate) fn evaluate_fight_action<'a>(
 /// Evaluates actions for a drafted pop (combat).
 pub(crate) fn evaluate_drafted_behavior(
     data: &PopEvalData,
-    world: &mut World,
+    buffer: &UtilityAIBuffer,
 ) -> Option<(ActionType, f32, Option<Entity>)> {
     data.drafted?;
 
@@ -52,8 +51,7 @@ pub(crate) fn evaluate_drafted_behavior(
     let mut best_utility = 0.9; // Just stand there ready
     let mut best_target = None;
 
-    let mut fauna_state = world.query::<(Entity, &GridPosition, &Fauna)>();
-    let enemies = fauna_state.iter(world).map(|(e, p, _)| (e, p));
+    let enemies = buffer.enemies.iter().map(|p| (p.entity, &p.pos));
 
     if let Some((utility, target)) = evaluate_fight_action(true, data.pos, enemies) {
         best_action = ActionType::Fight;
