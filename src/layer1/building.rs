@@ -28,6 +28,7 @@ use super::housing::Housing;
 use super::social::Tavern;
 use super::stockpile::Stockpile;
 use crate::layer1::access_control::AccessControl;
+use crate::layer1::admin::{AdminConsumer, AdminProvider, Office};
 use crate::layer1::ai_core::AICore;
 use crate::layer1::control::DoorControl;
 use crate::layer1::drone::DroneHub;
@@ -196,6 +197,8 @@ pub enum BuildingType {
     /// Basic shelter for pops.
     #[default]
     Housing,
+    /// Office for administration.
+    Office,
     /// Agricultural building for food production.
     Farm,
     /// Source of water hydration.
@@ -430,6 +433,7 @@ impl BuildingType {
     pub const fn label(&self) -> &'static str {
         match self {
             Self::Housing => "Housing",
+            Self::Office => "Office",
             Self::Farm => "Farm",
             Self::Well => "Well",
             Self::Stockpile => "Stockpile",
@@ -484,6 +488,7 @@ impl BuildingType {
     pub const fn char(&self) -> char {
         match self {
             Self::Housing => 'H',
+            Self::Office => 'O',
             Self::Farm | Self::AncientFabricator => 'F',
             Self::HydroponicsBay => 'Y',
             Self::DroneHub => 'D',
@@ -656,6 +661,11 @@ impl BuildingType {
                     metal: 100.0,
                     ..ColonyResources::zeroed()
                 },
+            },
+            Self::Office => ColonyResources {
+                wood: 50.0,
+                stone: 20.0,
+                ..ColonyResources::zeroed()
             },
             Self::Farm => ColonyResources {
                 wood: 20.0,
@@ -985,7 +995,20 @@ fn spawn_building(
         });
     }
 
+    // Admin Consumer (All buildings consume admin)
+    // Default 1.0, maybe scale by tier later?
+    entity.insert(AdminConsumer { demand: 1.0 });
+
     match building_type {
+        BuildingType::Office => {
+            entity.insert((
+                // Office provides admin
+                AdminProvider { amount: 10.0 },
+                Office::default(),
+                // Office typically operates during the day
+                ShiftSchedule::default(),
+            ));
+        }
         BuildingType::Housing | BuildingType::Lander => configure_housing(&mut entity, building_type),
         BuildingType::Farm
         | BuildingType::Plantation
@@ -1634,7 +1657,8 @@ mod tests {
 
     #[test]
     fn test_building_type_next() {
-        assert_eq!(BuildingType::Housing.next(), BuildingType::Farm);
+        assert_eq!(BuildingType::Housing.next(), BuildingType::Office);
+        assert_eq!(BuildingType::Office.next(), BuildingType::Farm);
         assert_eq!(BuildingType::Farm.next(), BuildingType::Well);
         assert_eq!(BuildingType::Well.next(), BuildingType::Stockpile);
         assert_eq!(BuildingType::Stockpile.next(), BuildingType::Smokehouse);
@@ -1747,6 +1771,9 @@ mod tests {
     fn test_build_mode_type_cycling() {
         let mut mode = BuildMode::default();
         assert_eq!(mode.selected, BuildingType::Housing);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Office);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Farm);

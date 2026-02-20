@@ -117,6 +117,10 @@ pub enum ActionType {
     Charge,
     /// Engage in a hobby to reduce stress.
     Hobby,
+    /// Work as an Administrator in an Office.
+    ///
+    /// See [`crate::layer1::actions::admin::evaluate_admin`].
+    Admin,
 }
 
 /// Types of hobbies.
@@ -136,7 +140,7 @@ pub enum HobbyType {
 
 impl ActionType {
     /// Total number of action types. Used for array sizing.
-    pub const COUNT: usize = 28;
+    pub const COUNT: usize = 29;
 
     /// Converts action type to a unique array index (0..COUNT-1).
     #[must_use]
@@ -170,6 +174,7 @@ impl ActionType {
             Self::Surgery => 25,
             Self::Charge => 26,
             Self::Hobby => 27,
+            Self::Admin => 28,
         }
     }
 

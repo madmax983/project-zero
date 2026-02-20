@@ -161,4 +161,6 @@ pub struct UtilityAIBuffer {
     pub repair_structures: Vec<PositionProxy>,
     /// Buffer for wanted criminals.
     pub wanted_criminals: Vec<PositionProxy>,
+    /// Buffer for office candidates.
+    pub offices: Vec<CapacityProxy>,
 }

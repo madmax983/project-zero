@@ -34,6 +34,8 @@
 pub mod access_control;
 /// Pop actions logic.
 pub mod actions;
+/// Bureaucratic Drag system (Spec 175).
+pub mod admin;
 /// AI Core system (Spec 148).
 pub mod ai_core;
 /// Game balance constants.
@@ -163,6 +165,7 @@ pub mod graffiti;
 
 pub use access_control::*;
 pub use actions::*;
+pub use admin::*;
 pub use ai_core::*;
 pub use balance::*;
 pub use beauty::*;

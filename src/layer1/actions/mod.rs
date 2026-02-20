@@ -83,6 +83,8 @@ pub mod work;
 /// Refine action logic.
 pub mod refine;
 
+/// Admin action logic.
+pub mod admin;
 /// Farm action logic.
 pub mod farm;
 

@@ -25,6 +25,7 @@
 use super::actions::AssignmentType;
 /// Alias for `AssignmentType` for job-related contexts (Spec 113).
 pub use super::actions::AssignmentType as JobType;
+use crate::layer1::admin::AdminConsumer;
 use super::artifacts::ActiveAuras;
 use super::biocompatibility::Biocompatibility;
 use super::cabin_fever::CabinFever;
@@ -280,6 +281,7 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
                     CabinFever::default(),
                     Biocompatibility::default(),
                     WildExposure::default(),
+                    AdminConsumer { demand: 1.0 },
                 ));
             spawned += 1;
         }
