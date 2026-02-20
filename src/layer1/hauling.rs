@@ -398,7 +398,7 @@ mod tests {
     use crate::layer1::resources::{Carrying, ColonyResources, ResourceItem, ResourceType};
     use crate::layer1::stockpile::Stockpile;
     use crate::layer1::utility_ai::{ActionType, PopAction, UtilityWeights};
-    use crate::layer1::utility_eval_types::{ItemEntityProxy, ItemProxy, PositionProxy};
+    use crate::layer1::utility_eval_types::ScorableCandidate;
     use crate::layer1::{GridPosition, Pop};
     use crate::shared::time::SimulationTime;
     use bevy_ecs::prelude::*;
@@ -443,20 +443,20 @@ mod tests {
             .id();
 
         // Manual Proxy Creation for Test
-        let items: Vec<ItemProxy> = world
+        let items: Vec<ScorableCandidate> = world
             .query::<(Entity, &GridPosition, &ResourceItem)>()
             .iter(&world)
-            .map(|(e, p, i)| ItemProxy {
-                entity: e,
-                pos: *p,
-                resource_type: i.resource_type,
+            .map(|(e, p, i)| {
+                let mut c = ScorableCandidate::new(e, *p);
+                c.resource_type = Some(i.resource_type);
+                c
             })
             .collect();
 
-        let stockpiles: Vec<PositionProxy> = world
+        let stockpiles: Vec<ScorableCandidate> = world
             .query::<(Entity, &GridPosition, &Stockpile)>()
             .iter(&world)
-            .map(|(e, p, _)| PositionProxy { entity: e, pos: *p })
+            .map(|(e, p, _)| ScorableCandidate::new(e, *p))
             .collect();
 
         let resources = world.resource::<ColonyResources>();
@@ -506,20 +506,20 @@ mod tests {
             GridPosition { x: 10, y: 0 },
         ));
 
-        let items: Vec<ItemProxy> = world
+        let items: Vec<ScorableCandidate> = world
             .query::<(Entity, &GridPosition, &ResourceItem)>()
             .iter(&world)
-            .map(|(e, p, i)| ItemProxy {
-                entity: e,
-                pos: *p,
-                resource_type: i.resource_type,
+            .map(|(e, p, i)| {
+                let mut c = ScorableCandidate::new(e, *p);
+                c.resource_type = Some(i.resource_type);
+                c
             })
             .collect();
 
-        let stockpiles: Vec<PositionProxy> = world
+        let stockpiles: Vec<ScorableCandidate> = world
             .query::<(Entity, &GridPosition, &Stockpile)>()
             .iter(&world)
-            .map(|(e, p, _)| PositionProxy { entity: e, pos: *p })
+            .map(|(e, p, _)| ScorableCandidate::new(e, *p))
             .collect();
 
         // Should return None because global storage is full
@@ -655,16 +655,16 @@ mod tests {
             ))
             .id();
 
-        let item_entities = vec![ItemEntityProxy {
-            entity: manual_entity,
-            pos: GridPosition { x: 5, y: 0 },
-            item_type: ItemType::Manual,
+        let item_entities = vec![{
+            let mut c = ScorableCandidate::new(manual_entity, GridPosition { x: 5, y: 0 });
+            c.item_type = Some(ItemType::Manual);
+            c
         }];
 
-        let stockpiles = vec![PositionProxy {
-            entity: stockpile_entity,
-            pos: GridPosition { x: 10, y: 0 },
-        }];
+        let stockpiles = vec![ScorableCandidate::new(
+            stockpile_entity,
+            GridPosition { x: 10, y: 0 },
+        )];
 
         let result = evaluate_haul(
             pop_pos,

@@ -1,7 +1,6 @@
 use crate::layer1::map::GridPosition;
-use crate::layer1::utility_eval_types::RefiningProxy;
+use crate::layer1::utility_eval_types::{ScorableCandidate, evaluate_candidates};
 use crate::layer1::utility_types::UtilityWeights;
-use crate::layer1::utility_types::calculate_context_score;
 use bevy_ecs::prelude::*;
 
 /// Evaluates the utility of refining resources at a building.
@@ -16,34 +15,7 @@ use bevy_ecs::prelude::*;
 pub(crate) fn evaluate_refine(
     pop_pos: GridPosition,
     weights: &UtilityWeights,
-    buildings: &[RefiningProxy],
+    buildings: &[ScorableCandidate],
 ) -> Option<(f32, Entity)> {
-    let mut best: Option<(f32, Entity)> = None;
-    let base_utility = 0.5;
-
-    for building in buildings {
-        // Pre-filtered for schedule and recipe affordability
-
-        let context = calculate_context_score(
-            pop_pos,
-            Some(building.pos),
-            1, // Capacity assumption (1 worker per mill for now)
-            0, // Occupied assumption (handled by execution system or race condition accepted for MVP)
-            weights,
-        );
-
-        // Boost utility if progress is already made
-        let progress_bonus = if building.progress_current > 0.0 {
-            0.1
-        } else {
-            0.0
-        };
-
-        let utility = (base_utility + progress_bonus) * context;
-
-        if best.is_none_or(|(u, _)| utility > u) {
-            best = Some((utility, building.entity));
-        }
-    }
-    best
+    evaluate_candidates(pop_pos, weights, buildings, 0.5)
 }

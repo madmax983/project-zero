@@ -12,7 +12,9 @@ use crate::layer1::stress::{BREAKDOWN_TICKS_REQUIRED, Breakdown, StressTracker};
 use crate::layer1::taboo::TabooState;
 use crate::layer1::traits::Traits;
 use crate::layer1::unrest::MentalState;
-use crate::layer1::utility_types::{HobbyType, PopAction, UtilityWeights};
+use crate::layer1::utility_types::{
+    calculate_context_score, HobbyType, PopAction, UtilityWeights,
+};
 use bevy_ecs::prelude::*;
 use bevy_ecs::query::QueryData;
 use std::collections::HashMap;
@@ -130,65 +132,98 @@ pub struct WorldContext<'a> {
     pub zone_grid: &'a crate::layer1::zone::ZoneGrid,
 }
 
-// --- PROXY TYPES ---
-// These lightweight structs allow us to pre-filter and gather candidates
-// into flat vectors, avoiding repeated query iterations and complex
-// component access during the hot loop of utility evaluation.
+// --- UNIFIED PROXY ---
+// Razor's Cut: Replaced 5 repetitive proxy structs with one generic candidate struct.
 
-/// Generic proxy for entities with position.
-#[derive(Clone, Copy, Debug)]
-pub struct PositionProxy {
-    /// The entity.
-    pub entity: Entity,
-    /// The location.
-    pub pos: GridPosition,
-}
-
-/// Generic proxy for entities with capacity (e.g., buildings).
-#[derive(Clone, Copy, Debug)]
-pub struct CapacityProxy {
-    /// The entity.
-    pub entity: Entity,
-    /// The location.
-    pub pos: GridPosition,
-    /// Total capacity.
-    pub capacity: usize,
-    /// Current usage.
-    pub usage: usize,
-}
-
-/// Proxy struct for Refining Buildings.
-#[derive(Clone, Copy, Debug)]
-pub struct RefiningProxy {
-    /// The building entity.
-    pub entity: Entity,
-    /// The location of the building.
-    pub pos: GridPosition,
-    /// Current progress of the refining batch.
-    pub progress_current: f32,
-}
-
-/// Proxy struct for Resource Items.
-#[derive(Clone, Copy, Debug)]
-pub struct ItemProxy {
-    /// The item entity.
-    pub entity: Entity,
-    /// The location of the item.
-    pub pos: GridPosition,
-    /// The type of resource.
-    pub resource_type: ResourceType,
-}
-
-/// Proxy struct for Generic Items (Entities).
+/// Represents any entity that a Pop might interact with (Workplace, Item, Location).
 #[derive(Clone, Debug)]
-pub struct ItemEntityProxy {
-    /// The item entity.
+pub struct ScorableCandidate {
+    /// The entity ID.
     pub entity: Entity,
-    /// The location of the item.
+    /// The location on the grid.
     pub pos: GridPosition,
-    /// The type of item.
-    #[allow(dead_code)]
-    pub item_type: ItemType,
+    /// Total capacity (default 1).
+    pub capacity: usize,
+    /// Current usage (default 0).
+    pub usage: usize,
+    /// Generic score bonus (e.g., refining progress).
+    pub score_bonus: f32,
+    /// Type of resource (if an item).
+    pub resource_type: Option<ResourceType>,
+    /// Type of generic item (if an item entity).
+    pub item_type: Option<ItemType>,
+}
+
+impl ScorableCandidate {
+    /// Creates a simple position-based candidate.
+    pub fn new(entity: Entity, pos: GridPosition) -> Self {
+        Self {
+            entity,
+            pos,
+            capacity: 1,
+            usage: 0,
+            score_bonus: 0.0,
+            resource_type: None,
+            item_type: None,
+        }
+    }
+
+    /// Creates a candidate with capacity.
+    pub fn with_capacity(
+        entity: Entity,
+        pos: GridPosition,
+        capacity: usize,
+        usage: usize,
+    ) -> Self {
+        Self {
+            entity,
+            pos,
+            capacity,
+            usage,
+            score_bonus: 0.0,
+            resource_type: None,
+            item_type: None,
+        }
+    }
+}
+
+/// Generic evaluation function for finding the best candidate.
+///
+/// Replaces repetitive loops in individual `evaluate_*` functions.
+///
+/// # Arguments
+/// * `pop_pos` - The position of the Pop.
+/// * `weights` - The Pop's utility weights.
+/// * `candidates` - The list of candidates to evaluate.
+/// * `base_utility` - The base score for this action.
+///
+/// # Returns
+/// * `Some((utility, entity))` if a valid candidate is found.
+#[must_use]
+pub fn evaluate_candidates(
+    pop_pos: GridPosition,
+    weights: &UtilityWeights,
+    candidates: &[ScorableCandidate],
+    base_utility: f32,
+) -> Option<(f32, Entity)> {
+    let mut best: Option<(f32, Entity)> = None;
+
+    for candidate in candidates {
+        let context = calculate_context_score(
+            pop_pos,
+            Some(candidate.pos),
+            candidate.capacity,
+            candidate.usage,
+            weights,
+        );
+
+        let utility = (base_utility + candidate.score_bonus) * context;
+
+        if best.is_none_or(|(u, _)| utility > u) {
+            best = Some((utility, candidate.entity));
+        }
+    }
+    best
 }
 
 /// Reusable buffer for `evaluate_actions_system` to avoid allocations.
@@ -199,39 +234,39 @@ pub struct UtilityAIBuffer {
 
     // Candidate Buffers
     /// Buffer for farm candidates.
-    pub farms: Vec<CapacityProxy>,
+    pub farms: Vec<ScorableCandidate>,
     /// Buffer for housing candidates.
-    pub housing: Vec<CapacityProxy>,
+    pub housing: Vec<ScorableCandidate>,
     /// Buffer for tavern candidates.
-    pub taverns: Vec<CapacityProxy>,
+    pub taverns: Vec<ScorableCandidate>,
     /// Buffer for library candidates.
-    pub libraries: Vec<CapacityProxy>,
+    pub libraries: Vec<ScorableCandidate>,
     /// Buffer for refining candidates.
-    pub refining: Vec<RefiningProxy>,
+    pub refining: Vec<ScorableCandidate>,
     /// Buffer for work designation candidates.
-    pub work_designations: Vec<PositionProxy>,
+    pub work_designations: Vec<ScorableCandidate>,
     /// Buffer for repair designation candidates.
-    pub repair_designations: Vec<PositionProxy>,
+    pub repair_designations: Vec<ScorableCandidate>,
     /// Buffer for tame designation candidates.
-    pub tame_designations: Vec<PositionProxy>,
+    pub tame_designations: Vec<ScorableCandidate>,
     /// Buffer for loose item candidates.
-    pub items: Vec<ItemProxy>,
+    pub items: Vec<ScorableCandidate>,
     /// Buffer for loose generic item candidates.
-    pub item_entities: Vec<ItemEntityProxy>,
+    pub item_entities: Vec<ScorableCandidate>,
     /// Buffer for stockpile candidates.
-    pub stockpiles: Vec<PositionProxy>,
+    pub stockpiles: Vec<ScorableCandidate>,
     /// Buffer for anomaly candidates.
-    pub anomalies: Vec<PositionProxy>,
+    pub anomalies: Vec<ScorableCandidate>,
     /// Buffer for hospital candidates.
-    pub hospitals: Vec<CapacityProxy>,
+    pub hospitals: Vec<ScorableCandidate>,
     /// Buffer for corpse candidates.
-    pub corpses: Vec<PositionProxy>,
+    pub corpses: Vec<ScorableCandidate>,
     /// Buffer for grave candidates.
-    pub graves: Vec<PositionProxy>,
+    pub graves: Vec<ScorableCandidate>,
     /// Buffer for structure candidates needing repair.
-    pub repair_structures: Vec<PositionProxy>,
+    pub repair_structures: Vec<ScorableCandidate>,
     /// Buffer for wanted criminals.
-    pub wanted_criminals: Vec<PositionProxy>,
+    pub wanted_criminals: Vec<ScorableCandidate>,
     /// Buffer for office candidates.
-    pub offices: Vec<CapacityProxy>,
+    pub offices: Vec<ScorableCandidate>,
 }
