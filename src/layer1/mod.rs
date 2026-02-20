@@ -284,6 +284,8 @@ pub use ruins::*;
 /// Hostile Fauna (Spec 048).
 pub mod fauna;
 pub use fauna::*;
+/// Procedural Fauna Generation (Spec 164).
+pub mod fauna_gen;
 /// Cultural Artifacts and Statues.
 pub mod art;
 pub use art::*;
@@ -516,3 +518,5 @@ pub use seismic::*;
 /// Scrapcode virus system (Spec 178).
 pub mod scrapcode;
 pub use scrapcode::*;
+#[cfg(test)]
+mod fauna_modular_tests;

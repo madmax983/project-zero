@@ -109,3 +109,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `INT-031` Integration: Institutional Memory (Items) -> Hauling System — completed 2026-06-04
 - [x] `INT-002` Integration: Power Grid -> Utility AI (Refining, Farming, Medical) — completed 2026-02-20
 - [x] `173` Predictive Policing — `specs/173-predictive-policing.md` — completed 2026-10-31
+- [x] `164` Modular Fauna — `specs/164-modular-fauna.md` — completed 2026-11-01

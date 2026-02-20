@@ -108,16 +108,30 @@ pub fn pasture_confinement_system(world: &mut World) {
 pub fn husbandry_production_system(world: &mut World) {
     let mut produced = Vec::new();
 
-    let mut query = world.query::<(Entity, &mut Tame, &GridPosition, &Fauna)>();
-    for (_entity, mut tame, pos, fauna) in query.iter_mut(world) {
+    let mut query = world.query::<(
+        Entity,
+        &mut Tame,
+        &GridPosition,
+        &Fauna,
+        Option<&crate::layer1::fauna::FaunaBody>,
+    )>();
+    for (_entity, mut tame, pos, fauna, body) in query.iter_mut(world) {
         if tame.produce_timer > 0 {
             tame.produce_timer -= 1;
         } else {
             // Produce!
             tame.produce_timer = 1000; // Reset
-            let item_type = match fauna.fauna_type {
-                FaunaType::SpaceRat => Some(ResourceType::Food), // Rat Milk
-                FaunaType::Wolf | FaunaType::Mascot => None,
+            let item_type = if let Some(b) = body {
+                if b.can_produce("Milk") {
+                    Some(ResourceType::Food)
+                } else {
+                    None
+                }
+            } else {
+                match fauna.fauna_type {
+                    FaunaType::SpaceRat => Some(ResourceType::Food), // Rat Milk
+                    FaunaType::Wolf | FaunaType::Mascot => None,
+                }
             };
 
             if let Some(itype) = item_type {
