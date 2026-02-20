@@ -72,6 +72,10 @@ pub struct Clothing {
     pub max_durability: f32,
 }
 
+/// Component representing a generic item being carried by a Pop.
+#[derive(Component, Debug, Clone, Copy)]
+pub struct CarryingItem(pub Entity);
+
 /// Types of food items Pops can consume.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub enum ItemType {

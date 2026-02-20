@@ -3,6 +3,7 @@ use crate::layer1::GridPosition;
 use crate::layer1::drone::Drone;
 use crate::layer1::execution::{AtTarget, MovementTarget};
 use crate::layer1::factions::{FactionMember, FactionState, Factions};
+use crate::layer1::items::{CarryingItem, Item};
 use crate::layer1::resources::{Carrying, ColonyResources, ResourceItem};
 use crate::layer1::stockpile::Stockpile;
 use crate::layer1::utility_ai::{ActionType, PopAction, manhattan_distance};
@@ -20,10 +21,11 @@ pub fn haul_system(world: &mut World) {
         &PopAction,
         &GridPosition,
         Option<&Carrying>,
+        Option<&CarryingItem>,
         Option<&AtTarget>,
         Option<&FactionMember>,
     )>();
-    for (entity, action, pos, carrying, at_target, member) in query.iter(world) {
+    for (entity, action, pos, carrying, carrying_item, at_target, member) in query.iter(world) {
         if action.current == ActionType::Haul {
             if let Some(map) = &factions_data {
                 if let Some(m) = member {
@@ -38,17 +40,26 @@ pub fn haul_system(world: &mut World) {
                 }
             }
 
-            haulers.push((entity, *pos, carrying.copied(), at_target.is_some()));
+            haulers.push((
+                entity,
+                *pos,
+                carrying.copied(),
+                carrying_item.copied(),
+                at_target.is_some(),
+            ));
         }
     }
 
     // Process each hauler
-    for (entity, pos, carrying, at_target) in haulers {
+    for (entity, pos, carrying, carrying_item, at_target) in haulers {
         if at_target {
             // Arrived at target
             if let Some(carrying_data) = carrying {
                 // Phase 2 complete: Drop at stockpile
                 handle_drop_off(world, entity, carrying_data, pos);
+            } else if let Some(carrying_item_data) = carrying_item {
+                // Phase 2 complete: Drop Item at stockpile
+                handle_drop_off_item(world, entity, carrying_item_data, pos);
             } else {
                 // Phase 1 complete: Pickup item
                 handle_pickup(world, entity, pos);
@@ -58,6 +69,9 @@ pub fn haul_system(world: &mut World) {
             if let Some(carrying_data) = carrying {
                 // Carrying -> Need to find stockpile
                 find_and_target_stockpile(world, entity, pos, carrying_data);
+            } else if let Some(carrying_item_data) = carrying_item {
+                // Carrying Item -> Need to find stockpile
+                find_and_target_stockpile_item(world, entity, pos, carrying_item_data);
             } else {
                 // Not carrying -> Need to find item
                 find_and_target_item(world, entity, pos);
@@ -67,8 +81,7 @@ pub fn haul_system(world: &mut World) {
 }
 
 fn handle_pickup(world: &mut World, pop_entity: Entity, pos: GridPosition) {
-    // Find item at current position
-    // Note: We need to be careful not to modify world while querying
+    // 1. Try to find ResourceItem
     let item_to_pickup = {
         let mut query = world.query::<(Entity, &GridPosition, &ResourceItem)>();
         let mut target = None;
@@ -82,12 +95,31 @@ fn handle_pickup(world: &mut World, pop_entity: Entity, pos: GridPosition) {
     };
 
     if let Some((item_entity, item_data)) = item_to_pickup {
-        // Pickup
+        // Pickup Resource
         world.entity_mut(pop_entity).insert(Carrying {
             resource_type: item_data.resource_type,
             amount: item_data.amount,
         });
         world.despawn(item_entity);
+    } else {
+        // 2. Try to find Generic Item
+        let generic_item_to_pickup = {
+            let mut query = world.query::<(Entity, &GridPosition, &Item)>();
+            let mut target = None;
+            for (e, p, _) in query.iter(world) {
+                if *p == pos {
+                    target = Some(e);
+                    break;
+                }
+            }
+            target
+        };
+
+        if let Some(item_entity) = generic_item_to_pickup {
+            // Pickup Item
+            world.entity_mut(pop_entity).insert(CarryingItem(item_entity));
+            world.entity_mut(item_entity).remove::<GridPosition>();
+        }
     }
 
     // Clear movement state regardless of success (if item gone, we retry next tick)
@@ -178,6 +210,110 @@ fn find_and_target_stockpile(
             target_position: target_pos,
             for_action: ActionType::Haul,
         });
+    } else {
+        // Fallback: Find Generic Item
+        find_and_target_generic_item(world, pop_entity, pos);
+    }
+}
+
+fn find_and_target_generic_item(world: &mut World, pop_entity: Entity, pos: GridPosition) {
+    let is_drone = world.get::<Drone>(pop_entity).is_some();
+
+    // Collect stockpile positions to avoid hauling items already stored
+    let stockpiles: Vec<GridPosition> = world
+        .query::<(&GridPosition, &Stockpile)>()
+        .iter(world)
+        .map(|(p, _)| *p)
+        .collect();
+
+    let mut query = world.query::<(Entity, &GridPosition, &Item)>();
+    let zone_grid = world.get_resource::<ZoneGrid>();
+
+    let mut best = None;
+    let mut min_dist = i32::MAX;
+
+    for (e, p, _) in query.iter(world) {
+        if is_drone {
+            if let Some(grid) = zone_grid {
+                if grid.get(p.x, p.y) == ZoneType::Sanctuary {
+                    continue;
+                }
+            }
+        }
+
+        if stockpiles.contains(p) {
+            continue;
+        }
+
+        let dist = manhattan_distance(&pos, p);
+        if dist < min_dist {
+            min_dist = dist;
+            best = Some((e, *p));
+        }
+    }
+
+    if let Some((target_entity, target_pos)) = best {
+        world.entity_mut(pop_entity).insert(MovementTarget {
+            target_entity,
+            target_position: target_pos,
+            for_action: ActionType::Haul,
+        });
+    }
+}
+
+fn handle_drop_off_item(
+    world: &mut World,
+    pop_entity: Entity,
+    item_entity: CarryingItem,
+    pos: GridPosition,
+) {
+    // Drop item at position
+    world.entity_mut(item_entity.0).insert(pos);
+    world.entity_mut(pop_entity).remove::<CarryingItem>();
+
+    // Clear movement
+    world
+        .entity_mut(pop_entity)
+        .remove::<AtTarget>()
+        .remove::<MovementTarget>();
+}
+
+fn find_and_target_stockpile_item(
+    world: &mut World,
+    pop_entity: Entity,
+    pos: GridPosition,
+    _carrying_item: CarryingItem,
+) {
+    let is_drone = world.get::<Drone>(pop_entity).is_some();
+
+    let mut query = world.query::<(Entity, &GridPosition, &Stockpile)>();
+    let zone_grid = world.get_resource::<ZoneGrid>();
+
+    let mut best = None;
+    let mut min_dist = i32::MAX;
+
+    for (e, p, _) in query.iter(world) {
+        if is_drone {
+            if let Some(grid) = zone_grid {
+                if grid.get(p.x, p.y) == ZoneType::Sanctuary {
+                    continue;
+                }
+            }
+        }
+
+        let dist = manhattan_distance(&pos, p);
+        if dist < min_dist {
+            min_dist = dist;
+            best = Some((e, *p));
+        }
+    }
+
+    if let Some((target_entity, target_pos)) = best {
+        world.entity_mut(pop_entity).insert(MovementTarget {
+            target_entity,
+            target_position: target_pos,
+            for_action: ActionType::Haul,
+        });
     }
 }
 
@@ -256,10 +392,11 @@ mod tests {
     use super::haul_system;
     use crate::layer1::actions::haul::evaluate_haul;
     use crate::layer1::building::{Building, BuildingType};
+    use crate::layer1::items::{CarryingItem, Item, ItemType};
     use crate::layer1::resources::{Carrying, ColonyResources, ResourceItem, ResourceType};
     use crate::layer1::stockpile::Stockpile;
     use crate::layer1::utility_ai::{ActionType, PopAction, UtilityWeights};
-    use crate::layer1::utility_eval_types::{ItemProxy, PositionProxy};
+    use crate::layer1::utility_eval_types::{ItemEntityProxy, ItemProxy, PositionProxy};
     use crate::layer1::{GridPosition, Pop};
     use crate::shared::time::SimulationTime;
     use bevy_ecs::prelude::*;
@@ -321,7 +458,16 @@ mod tests {
             .collect();
 
         let resources = world.resource::<ColonyResources>();
-        let result = evaluate_haul(pop_pos, &weights, &items, &stockpiles, resources, None);
+        let result = evaluate_haul(
+            pop_pos,
+            &weights,
+            &items,
+            &[],
+            &stockpiles,
+            resources,
+            None,
+            None,
+        );
 
         assert!(result.is_some());
         let (utility, target) = result.unwrap();
@@ -376,7 +522,16 @@ mod tests {
 
         // Should return None because global storage is full
         let resources = world.resource::<ColonyResources>();
-        let result = evaluate_haul(pop_pos, &weights, &items, &stockpiles, resources, None);
+        let result = evaluate_haul(
+            pop_pos,
+            &weights,
+            &items,
+            &[],
+            &stockpiles,
+            resources,
+            None,
+            None,
+        );
 
         // Since we filled global resources, we expect None.
         assert!(result.is_none());
@@ -468,5 +623,103 @@ mod tests {
             world.get::<Carrying>(pop).is_none(),
             "Pop should no longer be carrying"
         );
+    }
+
+    #[test]
+    fn test_evaluate_haul_generic_item() {
+        let mut world = World::new();
+        let pop_pos = GridPosition { x: 0, y: 0 };
+        let weights = UtilityWeights::default();
+        let resources = ColonyResources::default();
+
+        // Spawn Manual
+        let manual_entity = world.spawn((
+            Item { item_type: ItemType::Manual },
+            GridPosition { x: 5, y: 0 },
+        )).id();
+
+        // Spawn Stockpile
+        let stockpile_entity = world.spawn((
+            Building { building_type: BuildingType::Stockpile },
+            Stockpile::default(),
+            GridPosition { x: 10, y: 0 },
+        )).id();
+
+        let item_entities = vec![ItemEntityProxy {
+            entity: manual_entity,
+            pos: GridPosition { x: 5, y: 0 },
+            item_type: ItemType::Manual,
+        }];
+
+        let stockpiles = vec![PositionProxy {
+            entity: stockpile_entity,
+            pos: GridPosition { x: 10, y: 0 },
+        }];
+
+        let result = evaluate_haul(
+            pop_pos,
+            &weights,
+            &[],
+            &item_entities,
+            &stockpiles,
+            &resources,
+            None,
+            None,
+        );
+
+        assert!(result.is_some());
+        let (_, target) = result.unwrap();
+        assert_eq!(target, manual_entity);
+    }
+
+    #[test]
+    fn test_haul_manual_system_lifecycle() {
+         let mut world = World::new();
+         world.insert_resource(SimulationTime::default());
+         world.insert_resource(crate::layer1::factions::Factions::default());
+         world.insert_resource(ColonyResources::default());
+
+         // 1. Setup
+         let pop = world.spawn((
+             Pop,
+             GridPosition { x: 2, y: 0 }, // At Item location
+             PopAction { current: ActionType::Haul, ..Default::default() },
+         )).id();
+
+         let manual = world.spawn((
+             Item { item_type: ItemType::Manual },
+             GridPosition { x: 2, y: 0 },
+         )).id();
+
+         let _stockpile = world.spawn((
+             Building { building_type: BuildingType::Stockpile },
+             Stockpile::default(),
+             GridPosition { x: 10, y: 0 },
+         )).id();
+
+         // 2. Pickup
+         world.entity_mut(pop).insert(crate::layer1::execution::AtTarget);
+         haul_system(&mut world);
+
+         assert!(world.get::<CarryingItem>(pop).is_some());
+         assert_eq!(world.get::<CarryingItem>(pop).unwrap().0, manual);
+         assert!(world.get::<GridPosition>(manual).is_none()); // Picked up
+
+         // 3. Find Dropoff Target
+         haul_system(&mut world);
+
+         let target = world.get::<crate::layer1::execution::MovementTarget>(pop);
+         assert!(target.is_some());
+         assert_eq!(target.unwrap().target_position, GridPosition { x: 10, y: 0 });
+
+         // 4. Dropoff
+         *world.get_mut::<GridPosition>(pop).unwrap() = GridPosition { x: 10, y: 0 };
+         world.entity_mut(pop).insert(crate::layer1::execution::AtTarget);
+
+         haul_system(&mut world);
+
+         assert!(world.get::<CarryingItem>(pop).is_none());
+         assert!(world.get::<GridPosition>(manual).is_some());
+         assert_eq!(*world.get::<GridPosition>(manual).unwrap(), GridPosition { x: 10, y: 0 });
     }
 }

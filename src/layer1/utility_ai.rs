@@ -64,7 +64,7 @@ use crate::layer1::funeral::{Corpse, Grave};
 use crate::layer1::hobby::{Hobby, evaluate_hobby};
 use crate::layer1::housing::Housing;
 use crate::layer1::husbandry::evaluate_tame;
-use crate::layer1::items::Equipment;
+use crate::layer1::items::{CarryingItem, Equipment, Item};
 use crate::layer1::justice::{Inmate, Wanted, evaluate_warden_action};
 use crate::layer1::map::GridPosition;
 use crate::layer1::medical::Hospital;
@@ -81,8 +81,8 @@ use crate::layer1::tech::Library;
 use crate::layer1::traits::Trait;
 use crate::layer1::unrest::MentalState;
 use crate::layer1::utility_eval_types::{
-    CapacityProxy, ItemProxy, PopEvalData, PositionProxy, RefiningProxy, UtilityAIBuffer,
-    WorldContext, evaluate_idle,
+    CapacityProxy, ItemEntityProxy, ItemProxy, PopEvalData, PositionProxy, RefiningProxy,
+    UtilityAIBuffer, WorldContext, evaluate_idle,
 };
 pub use crate::layer1::utility_types::{
     ActionType, PopAction, StartPlan, UtilityConfig, UtilityWeights, manhattan_distance,
@@ -325,9 +325,11 @@ fn evaluate_group_logistics(
         pop_pos,
         &weights,
         &buffer.items,
+        &buffer.item_entities,
         &buffer.stockpiles,
         context.resources,
         data.carrying,
+        data.carrying_item,
     ) {
         evaluator.consider(ActionType::Haul, utility, Some(target));
     }
@@ -568,7 +570,14 @@ fn populate_buffer_designations(world: &mut World, buffer: &mut UtilityAIBuffer)
 }
 
 fn populate_buffer_items_and_misc(world: &mut World, buffer: &mut UtilityAIBuffer) {
-    // Items
+    // Stockpiles (First, so we can filter items)
+    buffer.stockpiles.clear();
+    let mut stock_query = world.query::<(Entity, &GridPosition, &Stockpile)>();
+    for (entity, pos, _) in stock_query.iter(world) {
+        buffer.stockpiles.push(PositionProxy { entity, pos: *pos });
+    }
+
+    // Items (ResourceItem)
     buffer.items.clear();
     let mut item_query = world.query::<(Entity, &GridPosition, &ResourceItem)>();
     for (entity, pos, item) in item_query.iter(world) {
@@ -579,11 +588,21 @@ fn populate_buffer_items_and_misc(world: &mut World, buffer: &mut UtilityAIBuffe
         });
     }
 
-    // Stockpiles
-    buffer.stockpiles.clear();
-    let mut stock_query = world.query::<(Entity, &GridPosition, &Stockpile)>();
-    for (entity, pos, _) in stock_query.iter(world) {
-        buffer.stockpiles.push(PositionProxy { entity, pos: *pos });
+    // Item Entities (Generic Items like Manuals)
+    buffer.item_entities.clear();
+    let mut item_entity_query = world.query::<(Entity, &GridPosition, &Item)>();
+    for (entity, pos, item) in item_entity_query.iter(world) {
+        // Optimization: Don't haul items that are already at a stockpile
+        let at_stockpile = buffer.stockpiles.iter().any(|s| s.pos == *pos);
+        if at_stockpile {
+            continue;
+        }
+
+        buffer.item_entities.push(ItemEntityProxy {
+            entity,
+            pos: *pos,
+            item_type: item.item_type.clone(),
+        });
     }
 
     // Anomalies
@@ -689,6 +708,7 @@ pub fn evaluate_actions_system(world: &mut World) {
                 &PopAction,
                 Option<&Equipment>,
                 Option<&crate::layer1::resources::Carrying>,
+                Option<&CarryingItem>,
                 Option<&MentalState>,
                 Option<&Drafted>,
                 Option<&Inmate>,
@@ -703,7 +723,7 @@ pub fn evaluate_actions_system(world: &mut World) {
             )>()
             .iter(world)
             .filter(
-                |(_, _, _, _, action, _, _, _, _, inmate, _, penal_labor, _, _): &(
+                |(_, _, _, _, action, _, _, _, _, _, inmate, _, penal_labor, _, _): &(
                     Entity,
                     &GridPosition,
                     &Needs,
@@ -711,6 +731,7 @@ pub fn evaluate_actions_system(world: &mut World) {
                     &PopAction,
                     Option<&Equipment>,
                     Option<&crate::layer1::resources::Carrying>,
+                    Option<&CarryingItem>,
                     Option<&MentalState>,
                     Option<&Drafted>,
                     Option<&Inmate>,
@@ -728,7 +749,7 @@ pub fn evaluate_actions_system(world: &mut World) {
                 },
             )
             .map(
-                |(e, p, n, w, a, eq, c, m, d, _, fm, pl, b, (t, st, h)): (
+                |(e, p, n, w, a, eq, c, ci, m, d, _, fm, pl, b, (t, st, h)): (
                     Entity,
                     &GridPosition,
                     &Needs,
@@ -736,6 +757,7 @@ pub fn evaluate_actions_system(world: &mut World) {
                     &PopAction,
                     Option<&Equipment>,
                     Option<&crate::layer1::resources::Carrying>,
+                    Option<&CarryingItem>,
                     Option<&MentalState>,
                     Option<&Drafted>,
                     Option<&Inmate>,
@@ -755,6 +777,7 @@ pub fn evaluate_actions_system(world: &mut World) {
                     action: *a,
                     equipment: eq.copied(),
                     carrying: c.copied(),
+                    carrying_item: ci.map(|c| c.0),
                     mental_state: m.copied(),
                     drafted: d.copied(),
                     faction_member: fm.cloned(),

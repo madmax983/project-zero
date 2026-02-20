@@ -21,7 +21,7 @@
 
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::ColonyResources;
-use crate::layer1::utility_eval_types::{ItemProxy, PositionProxy};
+use crate::layer1::utility_eval_types::{ItemEntityProxy, ItemProxy, PositionProxy};
 use crate::layer1::utility_types::UtilityWeights;
 use crate::layer1::utility_types::calculate_context_score;
 use bevy_ecs::prelude::*;
@@ -77,9 +77,11 @@ pub(crate) fn evaluate_haul(
     pop_pos: GridPosition,
     weights: &UtilityWeights,
     items: &[ItemProxy],
+    item_entities: &[ItemEntityProxy],
     stockpiles: &[PositionProxy],
     resources: &ColonyResources,
     carrying: Option<crate::layer1::resources::Carrying>,
+    carrying_item: Option<Entity>,
 ) -> Option<(f32, Entity)> {
     // 1. Check if any stockpile exists (optimization: no point hauling if nowhere to put it)
     if stockpiles.is_empty() {
@@ -87,7 +89,7 @@ pub(crate) fn evaluate_haul(
     }
 
     // 2. If already carrying, go to stockpile
-    if carrying.is_some() {
+    if carrying.is_some() || carrying_item.is_some() {
         // Find closest stockpile
         let mut best_stockpile = None;
         let mut min_dist = i32::MAX;
@@ -111,6 +113,7 @@ pub(crate) fn evaluate_haul(
     let mut best: Option<(f32, Entity)> = None;
     let base_utility = 0.6; // Slightly higher than work (0.5) to keep map clean
 
+    // Check Resource Items
     for item in items {
         // Check capacity
         let has_room = match item.resource_type {
@@ -136,6 +139,24 @@ pub(crate) fn evaluate_haul(
             continue;
         }
 
+        let context = calculate_context_score(
+            pop_pos,
+            Some(item.pos),
+            1, // Capacity
+            0, // Occupied
+            weights,
+        );
+
+        let utility = base_utility * context;
+
+        if best.is_none_or(|(best_u, _)| utility > best_u) {
+            best = Some((utility, item.entity));
+        }
+    }
+
+    // Check Generic Item Entities
+    for item in item_entities {
+        // Assuming unlimited capacity for items on ground for now (or reliant on stockpile existence which is true)
         let context = calculate_context_score(
             pop_pos,
             Some(item.pos),

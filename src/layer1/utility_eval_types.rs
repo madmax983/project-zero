@@ -1,7 +1,7 @@
 use crate::layer1::combat::Drafted;
 use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::factions::{FactionData, FactionId, FactionMember};
-use crate::layer1::items::Equipment;
+use crate::layer1::items::{Equipment, ItemType};
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
 use crate::layer1::penal::PenalLabor;
@@ -40,6 +40,8 @@ pub struct PopEvalData {
     pub equipment: Option<Equipment>,
     /// Resource currently carried by the pop, if any.
     pub carrying: Option<crate::layer1::resources::Carrying>,
+    /// Item currently carried by the pop (as a physical entity), if any.
+    pub carrying_item: Option<Entity>,
     /// Current mental state (e.g., Broken, Dazed), if any.
     pub mental_state: Option<MentalState>,
     /// Draft status (combat mode), if any.
@@ -122,6 +124,17 @@ pub struct ItemProxy {
     pub resource_type: ResourceType,
 }
 
+/// Proxy struct for Generic Items (Entities).
+#[derive(Clone, Debug)]
+pub struct ItemEntityProxy {
+    /// The item entity.
+    pub entity: Entity,
+    /// The location of the item.
+    pub pos: GridPosition,
+    /// The type of item.
+    pub item_type: ItemType,
+}
+
 /// Reusable buffer for `evaluate_actions_system` to avoid allocations.
 #[derive(Resource, Default)]
 pub struct UtilityAIBuffer {
@@ -147,6 +160,8 @@ pub struct UtilityAIBuffer {
     pub tame_designations: Vec<PositionProxy>,
     /// Buffer for loose item candidates.
     pub items: Vec<ItemProxy>,
+    /// Buffer for loose generic item candidates.
+    pub item_entities: Vec<ItemEntityProxy>,
     /// Buffer for stockpile candidates.
     pub stockpiles: Vec<PositionProxy>,
     /// Buffer for anomaly candidates.
