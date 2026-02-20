@@ -28,6 +28,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `173` Predictive Policing — `specs/173-predictive-policing.md`
 - [ ] `174` Memetic Hazards — `specs/174-memetic-hazards.md`
 - [ ] `175` Bureaucratic Drag — `specs/175-bureaucratic-drag.md`
+- [ ] `176` The Gridlock — `specs/176-gridlock-crowding.md`
 
 ## MVP — Layer 2: System Simulation
 
