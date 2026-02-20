@@ -60,7 +60,7 @@ pub fn handle_fetch_clothing(
 
         let clothing_entity = commands
             .spawn((
-                Item,
+                Item::default(),
                 Clothing {
                     clothing_type: ClothingType::Tunic, // Generic for now
                     insulation: 1.0,

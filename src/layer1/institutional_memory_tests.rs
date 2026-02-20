@@ -85,7 +85,7 @@ mod tests {
 
         // Spawn Manual on ground
         world.spawn((
-            Item,
+            Item::default(),
             Manual {
                 skill_type: SkillType::Mining,
                 xp_multiplier: 1.5,
@@ -199,7 +199,7 @@ mod tests {
 
         // Manual for Mining
         world.spawn((
-            Item,
+            Item::default(),
             Manual {
                 skill_type: SkillType::Mining,
                 xp_multiplier: 1.5,
@@ -242,7 +242,7 @@ mod tests {
         let mut world = World::new();
         // Manual at 0,0
         world.spawn((
-            Item,
+            Item::default(),
             Manual {
                 skill_type: SkillType::Mining,
                 xp_multiplier: 1.5,

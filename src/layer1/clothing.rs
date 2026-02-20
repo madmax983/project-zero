@@ -59,7 +59,7 @@ mod tests {
         let mut world = World::new();
         let tunic = world
             .spawn((
-                Item,
+                Item::default(),
                 Clothing {
                     clothing_type: ClothingType::Tunic,
                     insulation: 1.0,

@@ -1,8 +1,19 @@
 use bevy_ecs::prelude::*;
 
 /// Marker component for an item entity.
-#[derive(Component, Debug, Clone, Copy)]
-pub struct Item;
+#[derive(Component, Debug, Clone, PartialEq, Eq)]
+pub struct Item {
+    /// The specific type of the item.
+    pub item_type: ItemType,
+}
+
+impl Default for Item {
+    fn default() -> Self {
+        Self {
+            item_type: ItemType::default(),
+        }
+    }
+}
 
 /// Type of tool.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -64,8 +75,18 @@ pub struct Clothing {
 /// Types of food items Pops can consume.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
 pub enum ItemType {
-    /// Default food type (e.g. from Farms).
+    /// Default generic item type (safe fallback).
     #[default]
+    None,
+    /// Tools (Pickaxe, etc.).
+    Tool,
+    /// Clothing items.
+    Clothing,
+    /// Cybernetic prosthetics.
+    Prosthetic,
+    /// Institutional memory manuals.
+    Manual,
+    /// Default food type (e.g. from Farms).
     Potato,
     /// Grain crop.
     Wheat,
@@ -77,6 +98,14 @@ pub enum ItemType {
     Fruit,
     /// High-quality prepared food.
     LuxuryMeal,
+    /// Alien meat variety A.
+    AlienMeatA,
+    /// Alien meat variety B.
+    AlienMeatB,
+    /// Glowing mushroom.
+    GlowMushroom,
+    /// A meal with unknown effects.
+    MysteryMeal,
     /// A unique item produced by a hobby (e.g., "Wooden Duck").
     Curio(String),
 }
@@ -93,7 +122,7 @@ mod tests {
 
     #[test]
     fn test_item_type_default() {
-        assert_eq!(ItemType::default(), ItemType::Potato);
+        assert_eq!(ItemType::default(), ItemType::None);
     }
 
     #[test]
@@ -109,7 +138,7 @@ mod tests {
         let mut world = World::new();
         let tool = world
             .spawn((
-                Item,
+                Item::default(),
                 Tool {
                     tool_type: ToolType::Pickaxe,
                     durability: 100.0,

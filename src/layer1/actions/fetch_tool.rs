@@ -71,7 +71,7 @@ pub fn handle_fetch_tool(
 
         let tool_entity = commands
             .spawn((
-                Item,
+                Item::default(),
                 Tool {
                     tool_type: ToolType::Pickaxe, // Generic for now
                     durability: 100.0,

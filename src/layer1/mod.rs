@@ -373,6 +373,10 @@ pub use husbandry::*;
 pub mod water;
 pub use water::*;
 
+/// Gastronomy system (Spec 166).
+pub mod gastronomy;
+pub use gastronomy::*;
+
 /// Antagonistic Flora system (Spec 092).
 pub mod flora;
 pub use flora::*;
