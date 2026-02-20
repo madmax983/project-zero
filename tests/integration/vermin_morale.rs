@@ -17,12 +17,17 @@ fn test_vermin_affects_morale() {
     // Set high severity
     {
         let mut vermin = world.resource_mut::<VerminState>();
-        vermin.severity = 80.0;
+        vermin.severity = 100.0;
     }
 
     // Set pressure to avoid suffocation
     if let Some(mut pressure) = world.get_resource_mut::<scale::layer1::pressure::PressureGrid>() {
         pressure.fill(1.0);
+    }
+
+    // Force safe terrain at spawn point
+    if let Some(mut terrain) = world.get_resource_mut::<scale::layer1::terrain::TerrainGrid>() {
+        terrain.set(5, 5, scale::layer1::terrain::TerrainType::Grass);
     }
 
     // 2. Spawn Pop
@@ -38,16 +43,24 @@ fn test_vermin_affects_morale() {
 
     // 3. Run Simulation Ticks
     // Run for enough ticks to ensure the probabilistic event occurs.
-    // At 80 severity, chance is ~6% per tick.
-    // Over 200 ticks, failure chance is negligible (~0.0004%).
-    // Increased to 1000 to handle CI variance.
-    for _ in 0..1000 {
+    // At 100 severity, chance is 10% per tick.
+    // Over 2000 ticks, failure chance is effectively zero.
+    for i in 0..2000 {
         // Refill pressure to prevent suffocation (since edges leak to vacuum)
         if let Some(mut pressure) =
             world.get_resource_mut::<scale::layer1::pressure::PressureGrid>()
         {
             pressure.fill(1.0);
         }
+
+        // Keep pop alive
+        if i % 100 == 0 {
+            if let Ok(mut needs) = world.query::<&mut Needs>().get_single_mut(&mut world) {
+                needs.hunger = 1.0;
+                needs.rest = 1.0;
+            }
+        }
+
         scale::simulation::run_simulation_tick(&mut world);
     }
 

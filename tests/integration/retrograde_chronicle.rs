@@ -50,7 +50,7 @@ mod tests {
 
         // 2. Check for RetrogradeEngineeringEvent (This part tests emission)
         let events = world.resource::<Events<RetrogradeEngineeringEvent>>();
-        let mut reader = events.get_reader();
+        let mut reader = events.get_cursor();
         let emitted: Vec<_> = reader.read(events).collect();
 
         assert_eq!(emitted.len(), 1, "Should emit RetrogradeEngineeringEvent");
@@ -63,7 +63,7 @@ mod tests {
         schedule.run(&mut world);
 
         let chronicle_events = world.resource::<Events<AddChronicleEvent>>();
-        let mut chronicle_reader = chronicle_events.get_reader();
+        let mut chronicle_reader = chronicle_events.get_cursor();
         let chronicle_emitted: Vec<_> = chronicle_reader.read(chronicle_events).collect();
 
         assert_eq!(

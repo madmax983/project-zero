@@ -70,6 +70,13 @@ mod integration_tests {
             world.despawn(e);
         }
 
+        // Force safe terrain
+        if let Some(mut terrain) = world.get_resource_mut::<scale::layer1::terrain::TerrainGrid>() {
+            for x in 0..10 {
+                terrain.set(x, 5, scale::layer1::terrain::TerrainType::Grass);
+            }
+        }
+
         // 1. Create a corpse (simulate death having happened)
         let corpse_entity = world
             .spawn((

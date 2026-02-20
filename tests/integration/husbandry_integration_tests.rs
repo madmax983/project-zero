@@ -37,7 +37,7 @@ fn test_husbandry_full_loop() {
     let mut skills = Skills::default();
     skills.add_xp(SkillType::Husbandry, 60000.0); // High XP to guarantee success
 
-    let pop = world
+    let _pop = world
         .spawn((
             Pop,
             GridPosition { x: 0, y: 0 },

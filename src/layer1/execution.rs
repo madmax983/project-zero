@@ -2002,6 +2002,8 @@ mod tests {
                     for_action: ActionType::Work,
                 },
                 AtTarget,
+                Needs::default(), // Add standard components
+                UtilityWeights::default(),
             ))
             .id();
 
@@ -2934,7 +2936,12 @@ mod tests {
 
         // Enemy should take damage
         let health = world.get::<Health>(enemy).unwrap();
-        assert!((health.current - 90.0).abs() < f32::EPSILON);
+        let dmg = 100.0 - health.current;
+        assert!(
+            (dmg - 10.0).abs() < f32::EPSILON || (dmg - 20.0).abs() < f32::EPSILON,
+            "Damage should be 10.0 or 20.0 (crit), got {}",
+            dmg
+        );
     }
 
     #[test]
