@@ -4757,3 +4757,101 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Biological specialization vs. Workforce flexibility.
 
 ---
+
+## Phantom Limbs
+
+**Layer:** 1
+
+**Fantasy:** The body remembers what it lost. The ghost in the flesh.
+
+**Mechanic:** Pops who lose limbs (amputation) gain the "Phantom Pain" trait. Causes periodic Stress spikes. Rarely, they attempt to use the missing limb (dropping items, failing tasks). Cybernetics cure this.
+
+**Emergence:** Your best soldier tries to throw a grenade with an arm he lost yesterday. It drops at his feet.
+
+**Tension:** Expensive prosthetics (Cure) vs. Managing the trauma (Cheap).
+
+---
+
+## Seismic Battery
+
+**Layer:** 1
+
+**Fantasy:** Harnessing the wrath of the planet.
+
+**Mechanic:** A building that absorbs seismic energy (Earthquakes, Thumpers) to charge internal capacitors. Reduces local ground damage. Releasing the energy provides massive Power but triggers a localized mini-quake.
+
+**Emergence:** You save the colony from a massive tectonic shift, storing 1.21 Gigawatts. Then a stray shot hits the battery, releasing it all at once and cracking the continent.
+
+**Tension:** Safety (Dampening) vs. Greed (Power storage).
+
+---
+
+## Lithobraking
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Stopping is optional. Surviving is mandatory.
+
+**Mechanic:** Cheap, one-way cargo gliders that do not use fuel to land. They intentionally crash into soft terrain (Swamp, Snow, Sand). The ship is destroyed, but the cargo (and hull scrap) survives.
+
+**Emergence:** You order a vital food shipment via glider. The only soft terrain is the "Acid Swamps". The food lands, but now you have to retrieve it before the acid eats the cans.
+
+**Tension:** Fuel efficiency (Gliders) vs. Cargo safety/Retrieval logistics (Shuttles).
+
+---
+
+## Accumulated Grime
+
+**Layer:** 1
+
+**Fantasy:** Entropy isn't just explosions; it's dust.
+
+**Mechanic:** Indoor tiles accumulate "Grime" over time based on foot traffic and industry. Grime lowers Beauty and increases Infection risk. Rain cleans outdoors; Janitors clean indoors.
+
+**Emergence:** You build a hyper-efficient factory but forget janitor closets. The dust buildup causes the precision lasers to misfire, blinding a worker.
+
+**Tension:** Labor for cleaning (unproductive) vs. Health/Beauty standards.
+
+---
+
+## Psionic Gestalt
+
+**Layer:** 1
+
+**Fantasy:** We are one. The burden of shared emotion.
+
+**Mechanic:** Pops with the "Psionic" trait link their Moods. If the "Prime" (or average) is happy, all get a buff. If one suffers Trauma, all suffer "Psychic Shock".
+
+**Emergence:** A psionic miner witnesses a horror in the deep dark. Instantly, the psionic governor in the safe capital goes catatonic from the shock.
+
+**Tension:** Unified happiness (easy to buff) vs. Cascade failure risk.
+
+---
+
+## Hyperlane Sabotage
+
+**Layer:** 3
+
+**Fantasy:** Burning the bridges behind you.
+
+**Mechanic:** High-cost operation to "Destabilize" a hyperlane connection, severing it for X years. Used to block invasion routes or quarantine sectors.
+
+**Emergence:** You blow the lane to stop the enemy fleet. You succeed. But now your trade fleet is trapped on the wrong side of the collapse, waiting for the route to heal.
+
+**Tension:** Strategic denial vs. Economic isolation.
+
+---
+
+## Machine Spirits
+
+**Layer:** 2
+
+**Fantasy:** Ships develop personalities over light-years of travel.
+
+**Mechanic:** Ships gain "Traits" based on their history. A ship that survives many battles becomes "Bold" (Bonus Fire rate). A ship that runs trade routes becomes "Patient" (Fuel efficiency). Remodeling the ship resets the spirit.
+
+**Emergence:** You try to scrap an old, beloved hauler "Old Bessie" to build a warship. The crew protests, and the ship "accidentally" jams the docking clamps.
+
+**Tension:** Optimized new hulls vs. Quirky veteran ships.
+
+---
