@@ -508,3 +508,7 @@ mod drone_tests;
 #[cfg(test)]
 mod institutional_memory_tests;
 pub mod memetic;
+/// Predictive Policing system (Spec 173).
+pub mod predictive_policing;
+#[cfg(test)]
+mod predictive_policing_tests;

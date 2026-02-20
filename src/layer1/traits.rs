@@ -40,6 +40,8 @@ pub enum Trait {
     Curious,
     /// Traditional values (-Mood from Observatory).
     Traditionalist,
+    /// Prone to sudden outbursts (Risk factor for Predictive Policing).
+    Volatile,
 }
 
 impl Trait {
@@ -63,6 +65,7 @@ impl Trait {
             Self::Optimist => "Optimist",
             Self::Curious => "Curious",
             Self::Traditionalist => "Traditionalist",
+            Self::Volatile => "Volatile",
         }
     }
 }
@@ -99,6 +102,7 @@ impl Traits {
             Trait::Optimist,
             Trait::Curious,
             Trait::Traditionalist,
+            Trait::Volatile,
         ];
 
         while set.len() < count {

@@ -265,6 +265,11 @@ const fn action_type_from_u32(v: u32) -> ActionType {
         23 => ActionType::SadWander,
         24 => ActionType::FetchClothing,
         25 => ActionType::Surgery,
+        26 => ActionType::Charge,
+        27 => ActionType::Hobby,
+        28 => ActionType::Admin,
+        29 => ActionType::ScrawlMemeticSigil,
+        30 => ActionType::PreCrimeArrest,
         _ => ActionType::Idle,
     }
 }

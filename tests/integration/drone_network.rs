@@ -90,6 +90,7 @@ mod tests {
         world.insert_resource(scale::layer1::society::SecretSocieties::default());
         world.insert_resource(scale::layer1::society::Unrest::default());
         world.insert_resource(scale::layer1::sleepwalking::SleepwalkingConfig::default());
+        world.insert_resource(scale::layer1::predictive_policing::PredictionConfig::default());
         world.insert_resource(scale::layer1::medical::MedicalPolicy::default());
         world.insert_resource(scale::layer1::building::BuildMode::default());
         world.insert_resource(scale::layer1::designation::DesignationMode::default());

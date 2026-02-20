@@ -32,6 +32,8 @@ mod tests {
         world.insert_resource(scale::shared::log::MessageLog::default());
         world.insert_resource(scale::layer1::chronicle::Chronicle::default());
         world.insert_resource(scale::layer1::chronicle::BuildingTracker::default());
+        world.insert_resource(scale::layer1::prototyping::BuildingMastery::default());
+        world.insert_resource(scale::layer1::predictive_policing::PredictionConfig::default());
         world.insert_resource(scale::layer1::erosion::ErosionGrid::new(10, 10));
         world.insert_resource(scale::layer1::water::WaterGrid::new(10, 10));
         world.insert_resource(scale::layer1::tech::TechState::default());

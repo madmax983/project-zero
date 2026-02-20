@@ -67,6 +67,7 @@ use crate::layer1::items::Item;
 use crate::layer1::justice::{Wanted, evaluate_warden_action};
 use crate::layer1::map::GridPosition;
 use crate::layer1::medical::Hospital;
+use crate::layer1::predictive_policing::{Suspect, evaluate_pre_crime_arrest_proxies};
 use crate::layer1::refining::get_refining_recipe;
 use crate::layer1::resources::{ColonyResources, RefiningProgress, ResourceItem};
 use crate::layer1::science::Anomaly;
@@ -271,6 +272,15 @@ fn evaluate_group_work(
             evaluate_warden_action(&pop_pos, &buffer.wanted_criminals, context.zone_grid)
         {
             evaluator.consider(ActionType::Warden, utility, Some(target));
+        }
+    }
+
+    // Evaluate Pre-Crime Arrest
+    if !is_penal {
+        if let Some((utility, target)) =
+            evaluate_pre_crime_arrest_proxies(&pop_pos, &buffer.suspects, context.zone_grid)
+        {
+            evaluator.consider(ActionType::PreCrimeArrest, utility, Some(target));
         }
     }
 }
@@ -596,12 +606,21 @@ fn populate_buffer_items_and_misc(world: &mut World, buffer: &mut UtilityAIBuffe
     populate_graves(world, &mut buffer.graves);
     populate_repair_structures(world, &mut buffer.repair_structures);
     populate_wanted_criminals(world, &mut buffer.wanted_criminals);
+    populate_suspects(world, &mut buffer.suspects);
 }
 
 fn populate_stockpiles(world: &mut World, buffer: &mut Vec<PositionProxy>) {
     buffer.clear();
     let mut stock_query = world.query::<(Entity, &GridPosition, &Stockpile)>();
     for (entity, pos, _) in stock_query.iter(world) {
+        buffer.push(PositionProxy { entity, pos: *pos });
+    }
+}
+
+fn populate_suspects(world: &mut World, buffer: &mut Vec<PositionProxy>) {
+    buffer.clear();
+    let mut suspect_query = world.query::<(Entity, &GridPosition, &Suspect)>();
+    for (entity, pos, _) in suspect_query.iter(world) {
         buffer.push(PositionProxy { entity, pos: *pos });
     }
 }
