@@ -6,7 +6,6 @@ mod tests {
     use scale::layer1::drone::{Drone, DroneHub};
     use scale::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
     use scale::layer1::stockpile::Stockpile;
-    use scale::layer1::utility_ai::PopAction;
     use scale::shared::time::SimulationTime;
     use scale::simulation::{SimulationSchedule, build_simulation_schedule};
 

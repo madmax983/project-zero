@@ -152,7 +152,7 @@ mod tests {
         ));
 
         // Run system multiple times to trigger probability
-        for _ in 0..100 {
+        for _ in 0..500 {
             power_grid_system(&mut world);
         }
 

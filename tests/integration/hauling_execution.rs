@@ -70,6 +70,16 @@ mod tests {
         world.insert_resource(scale::layer1::inspector::InspectorSource::default());
         world.insert_resource(scale::layer1::prototyping::BuildingMastery::default());
         world.init_resource::<scale::layer1::social::old_guard::Demographics>();
+        world.insert_resource(scale::layer1::prototyping::BuildingMastery::default());
+        world.insert_resource(scale::layer1::graffiti::GraffitiMap::default());
+        world.insert_resource(scale::layer1::geology::SeismicGrid::new(10, 10));
+        world.insert_resource(scale::layer1::ecology::EcologyConfig::default());
+        world.insert_resource(scale::layer1::society::SecretSocieties::default());
+        world.insert_resource(scale::layer1::society::Unrest::default());
+        world.insert_resource(scale::layer1::tech_envy::TechEnvyConfig::default());
+        world.insert_resource(scale::layer2::visibility::SystemVisibility::default());
+        world.insert_resource(scale::layer2::system::ViewMode::default());
+        world.insert_resource(scale::layer2::system::SystemMap);
 
         let generator = scale::shared::narrative::NarrativeGenerator::from_embedded();
         world.insert_resource(scale::shared::colony::ColonyName {

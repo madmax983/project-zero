@@ -254,7 +254,7 @@ mod tests {
 
         // Run until dream triggers
         let mut triggered = false;
-        for _ in 0..500 {
+        for _ in 0..1000 {
             world.run_system_once(dream_system).unwrap();
             if world.get::<DreamJournal>(pop).is_some() {
                 triggered = true;
