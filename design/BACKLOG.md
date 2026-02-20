@@ -45,3 +45,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `158` Fleet Management (Merge & Split) — `specs/158-fleet-management.md`
 - [ ] `159` Fleet Combat Resolution — `specs/159-fleet-combat.md`
 - [ ] `169` Subspace Currents — `specs/169-subspace-currents.md`
+
+## MVP — Layer 3: Galaxy Simulation
+
+- [ ] `177` Stellar Cartography — `specs/177-stellar-cartography.md`
