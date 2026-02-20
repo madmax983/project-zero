@@ -4757,3 +4757,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Biological specialization vs. Workforce flexibility.
 
 ---
+
+## Nutrient Recycling
+
+**Layer:** 1
+
+**Fantasy:** Waste not, want not. The grim reality of closed-loop survival in deep space.
+
+**Mechanic:** A "Recycler" building turns *any* organic matter (Corpses, Spoiled Food, Alien Meat) into generic "Nutrient Paste". High efficiency, but eating "Corpse-Paste" causes hidden "Prion Disease" or massive mood hits if discovered.
+
+**Emergence:** The colony loves the new "Protein Bars" until a doctor finds a finger in one. A "Cannibal" trait spreads among the survivors of the famine.
+
+**Tension:** Starvation (death) vs. Taboo (disease/mood).
+
+---
+
+## Vintage Stockpiles
+
+**Layer:** 1
+
+**Fantasy:** Good things come to those who wait. A bottle of wine from Earth is worth more than a fusion reactor.
+
+**Mechanic:** Certain items (Alcohol, Cheese, Art, Data) gain value and quality traits the longer they are stored in specific conditions (Temperature/Humidity). Spoiled food becomes "Rot", but spoiled wine becomes "Vintage".
+
+**Emergence:** A raid threatens the warehouse. The fire brigade saves the 50-year-old Whiskey barrel instead of the Ammo crate because it's the most valuable thing on the planet.
+
+**Tension:** Sell now (low value) vs. Store (space cost/risk) for later.
+
+---
+
+## Honor Duels
+
+**Layer:** 1
+
+**Fantasy:** Civilized people don't riot; they duel. Conflict resolution with a blade.
+
+**Mechanic:** Pops with "Proud" or "Warrior" traits resolve conflicts via Duels (First Blood or To Death) instead of Arguments. Resolves the "Rival" status instantly but risks injury/death. Player can Legalize or Ban dueling via Edicts.
+
+**Emergence:** The colony's best surgeon is killed in a duel over a card game. You ban dueling, and the "Warrior Caste" revolts because you insulted their honor.
+
+**Tension:** Allow Duels (Low Unrest, High Injury) vs. Ban Duels (High Unrest, Safety).
+
+---
+
+## Decoy Operations
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Outsmarting the enemy fleet. The empty fortress tactic.
+
+**Mechanic:** Construct "Decoy Beacons" or "Fake Settlements" on Layer 2. Enemy AI fleets prioritize targets based on "Signal Strength". Decoys emit massive signals but have 0 defense/loot.
+
+**Emergence:** The pirate dreadnought blows up your expensive decoy station while your undefended freighter slips past with the critical medicine.
+
+**Tension:** Resource cost of decoys vs. Military defense.
+
+---
+
+## The Deadman Switch
+
+**Layer:** 1
+
+**Fantasy:** If I go down, I'm taking the station with me. Paranoia as a security feature.
+
+**Mechanic:** Leaders/Pops can link critical systems (Doors, Reactors, Data Wipes) to their own biometrics. If they die, the linked action triggers automatically.
+
+**Emergence:** The paranoid Governor rigs the reactor coolant to his pulse. He suffers a heart attack during a speech. The colony loses power instantly and the reactor melts down in sympathy.
+
+**Tension:** Ultimate security against assassination vs. Single point of failure.
+
+---
