@@ -6,6 +6,8 @@ use crate::layer1::balance::{
 use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::energy::PowerConsumer;
 use crate::layer1::factions::{FactionMember, FactionState, Factions};
+use crate::layer1::fauna::{Fauna, FaunaType};
+use crate::layer1::husbandry::Tame;
 use crate::layer1::items::ItemType;
 use crate::layer1::needs::Needs;
 use crate::layer1::palette_fatigue::{DietaryHistory, record_meal};
@@ -16,6 +18,7 @@ use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
 use crate::layer1::social_mimicry::JustConsumed;
 use crate::layer1::utility_ai::{ActionType, PopAction};
 use bevy_ecs::prelude::*;
+use rand::seq::SliceRandom;
 
 /// Water cost per tick per worker for Hydroponics.
 const HYDROPONICS_WATER_COST: f32 = 0.1;
@@ -39,6 +42,13 @@ impl Default for Farm {
             workers: Vec::new(),
         }
     }
+}
+
+/// Component representing the type of crop grown in a farm.
+#[derive(Component, Debug, Clone, PartialEq, Eq)]
+pub struct Crop {
+    /// The type of item produced.
+    pub crop_type: ItemType,
 }
 
 /// Produces food from all farms with active workers.
@@ -160,6 +170,8 @@ pub fn consume_food_system(
     mut commands: Commands,
     mut pop_query: Query<(Entity, &mut Needs, Option<&mut DietaryHistory>), With<Pop>>,
     mut resources: ResMut<ColonyResources>,
+    farm_query: Query<&Crop>,
+    animal_query: Query<&Fauna, With<Tame>>,
 ) {
     if resources.food < f32::EPSILON && resources.rations < f32::EPSILON {
         return;
@@ -168,12 +180,28 @@ pub fn consume_food_system(
     let mut food = resources.food;
     let mut rations = resources.rations;
 
+    // Collect available food types from active sources
+    let mut available_items = Vec::new();
+    for crop in &farm_query {
+        available_items.push(crop.crop_type.clone());
+    }
+    for fauna in &animal_query {
+        match fauna.fauna_type {
+            FaunaType::SpaceRat | FaunaType::Wolf => {
+                available_items.push(ItemType::Meat);
+            }
+            FaunaType::Mascot => {}
+        }
+    }
+
     // Collect hungry pop entities first to avoid borrow issues with mut iteration
     let hungry_pops: Vec<Entity> = pop_query
         .iter()
         .filter(|(_, needs, _)| needs.hunger < FOOD_HUNGER_THRESHOLD)
         .map(|(e, _, _)| e)
         .collect();
+
+    let mut rng = rand::thread_rng();
 
     for entity in hungry_pops {
         let ate = if food >= FOOD_PER_MEAL {
@@ -192,8 +220,11 @@ pub fn consume_food_system(
                 needs.hunger = (needs.hunger + HUNGER_PER_MEAL).min(1.0);
 
                 // Palette Fatigue Logic
-                // For now, default to Potato as generic food source until item tracking exists
-                let meal_item = ItemType::Potato;
+                // Probabilistically determine what was eaten based on available sources
+                let meal_item = available_items
+                    .choose(&mut rng)
+                    .cloned()
+                    .unwrap_or(ItemType::Potato);
 
                 if let Some(ref mut history) = history_opt {
                     record_meal(history, meal_item.clone());
@@ -433,5 +464,67 @@ mod tests {
         );
         assert_eq!(history.unwrap().recent_meals.len(), 1);
         assert_eq!(history.unwrap().recent_meals[0], ItemType::Potato);
+    }
+
+    #[test]
+    fn test_consume_food_picks_active_crop() {
+        let mut world = World::new();
+        world.insert_resource(ColonyResources {
+            food: 10.0,
+            ..Default::default()
+        });
+
+        // Spawn a Wheat Farm
+        world.spawn((
+            Farm::default(),
+            Crop { crop_type: ItemType::Wheat },
+            GridPosition { x: 0, y: 0 }
+        ));
+
+        // Spawn a Pop
+        let pop = world.spawn((
+            Pop,
+            Needs { hunger: 0.0, ..Default::default() },
+            DietaryHistory::default(),
+        )).id();
+
+        world.run_system_once(consume_food_system).unwrap();
+
+        let history = world.get::<DietaryHistory>(pop).unwrap();
+        assert_eq!(history.recent_meals[0], ItemType::Wheat);
+    }
+
+    #[test]
+    fn test_consume_food_picks_meat_from_animals() {
+        use crate::layer1::fauna::{Fauna, FaunaType, FaunaState};
+        use crate::layer1::husbandry::Tame;
+
+        let mut world = World::new();
+        world.insert_resource(ColonyResources {
+            food: 10.0,
+            ..Default::default()
+        });
+
+        // Spawn Tamed SpaceRat
+        world.spawn((
+            Fauna {
+                fauna_type: FaunaType::SpaceRat,
+                state: FaunaState::Wander,
+                ..Default::default()
+            },
+            Tame::default(),
+            GridPosition { x: 0, y: 0 }
+        ));
+
+        let pop = world.spawn((
+            Pop,
+            Needs { hunger: 0.0, ..Default::default() },
+            DietaryHistory::default(),
+        )).id();
+
+        world.run_system_once(consume_food_system).unwrap();
+
+        let history = world.get::<DietaryHistory>(pop).unwrap();
+        assert_eq!(history.recent_meals[0], ItemType::Meat);
     }
 }

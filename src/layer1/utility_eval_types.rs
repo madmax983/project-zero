@@ -187,6 +187,7 @@ pub struct ItemEntityProxy {
     /// The location of the item.
     pub pos: GridPosition,
     /// The type of item.
+    #[allow(dead_code)]
     pub item_type: ItemType,
 }
 
