@@ -1,17 +1,20 @@
 use crate::layer1::combat::Drafted;
 use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::factions::{FactionData, FactionId, FactionMember};
-use crate::layer1::items::{Equipment, ItemType};
+use crate::layer1::hobby::Hobby;
+use crate::layer1::items::{CarryingItem, Equipment, ItemType};
+use crate::layer1::justice::Inmate;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
 use crate::layer1::penal::PenalLabor;
-use crate::layer1::resources::{ColonyResources, ResourceType};
-use crate::layer1::stress::Breakdown;
+use crate::layer1::resources::{Carrying, ColonyResources, ResourceType};
+use crate::layer1::stress::{BREAKDOWN_TICKS_REQUIRED, Breakdown, StressTracker};
 use crate::layer1::taboo::TabooState;
 use crate::layer1::traits::Traits;
 use crate::layer1::unrest::MentalState;
 use crate::layer1::utility_types::{HobbyType, PopAction, UtilityWeights};
 use bevy_ecs::prelude::*;
+use bevy_ecs::query::QueryData;
 use std::collections::HashMap;
 
 /// Evaluates the utility of being idle.
@@ -21,6 +24,58 @@ use std::collections::HashMap;
 #[must_use]
 pub const fn evaluate_idle(_needs: &Needs) -> f32 {
     0.05
+}
+
+/// Query data for pop evaluation.
+///
+/// This struct replaces the large tuple query in `evaluate_actions_system`,
+/// improving readability and maintainability.
+#[derive(QueryData)]
+#[query_data(derive(Debug))]
+pub struct PopEvaluationQuery {
+    pub entity: Entity,
+    pub pos: &'static GridPosition,
+    pub needs: &'static Needs,
+    pub weights: &'static UtilityWeights,
+    pub action: &'static PopAction,
+    pub equipment: Option<&'static Equipment>,
+    pub carrying: Option<&'static Carrying>,
+    pub carrying_item: Option<&'static CarryingItem>,
+    pub mental_state: Option<&'static MentalState>,
+    pub drafted: Option<&'static Drafted>,
+    pub inmate: Option<&'static Inmate>,
+    pub faction_member: Option<&'static FactionMember>,
+    pub penal_labor: Option<&'static PenalLabor>,
+    pub breakdown: Option<&'static Breakdown>,
+    pub traits: Option<&'static Traits>,
+    pub stress: Option<&'static StressTracker>,
+    pub hobby: Option<&'static Hobby>,
+}
+
+impl PopEvalData {
+    /// Converts a query item into `PopEvalData`.
+    pub fn from_query_item(item: PopEvaluationQueryItem<'_>) -> Self {
+        Self {
+            entity: item.entity,
+            pos: *item.pos,
+            needs: *item.needs,
+            weights: *item.weights,
+            action: *item.action,
+            equipment: item.equipment.copied(),
+            carrying: item.carrying.copied(),
+            carrying_item: item.carrying_item.map(|c| c.0),
+            mental_state: item.mental_state.copied(),
+            drafted: item.drafted.copied(),
+            faction_member: item.faction_member.cloned(),
+            penal_labor: item.penal_labor.copied(),
+            breakdown: item.breakdown.copied(),
+            traits: item.traits.cloned(),
+            stress: item
+                .stress
+                .map_or(0.0, |s| s.accumulated_stress / BREAKDOWN_TICKS_REQUIRED),
+            hobby_type: item.hobby.map(|comp| comp.hobby_type),
+        }
+    }
 }
 
 /// Data bundle for pop evaluation, optimized for copy.
@@ -39,7 +94,7 @@ pub struct PopEvalData {
     /// Equipment held by the pop, if any.
     pub equipment: Option<Equipment>,
     /// Resource currently carried by the pop, if any.
-    pub carrying: Option<crate::layer1::resources::Carrying>,
+    pub carrying: Option<Carrying>,
     /// Item currently carried by the pop (as a physical entity), if any.
     pub carrying_item: Option<Entity>,
     /// Current mental state (e.g., Broken, Dazed), if any.

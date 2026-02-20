@@ -620,7 +620,10 @@ mod tests {
         let score = calculate_context_score(pop_pos, None, 10, 20, &weights);
 
         // This assertion ensures we don't propagate NaNs
-        assert!(!score.is_nan(), "Score should not be NaN even if over capacity");
+        assert!(
+            !score.is_nan(),
+            "Score should not be NaN even if over capacity"
+        );
         assert_eq!(score, 0.0, "Score should be clamped to 0.0");
     }
 
@@ -642,7 +645,10 @@ mod tests {
         // 50% full
         let score = calculate_context_score(pop_pos, None, 10, 5, &weights);
         // Availability 0.5. 0.5^100 should be tiny.
-        assert!(score < 0.0001, "Score should be tiny with high availability weight");
+        assert!(
+            score < 0.0001,
+            "Score should be tiny with high availability weight"
+        );
 
         weights.availability_weight = 0.0; // Doesn't care about crowds
         let score_ignore = calculate_context_score(pop_pos, None, 10, 5, &weights);

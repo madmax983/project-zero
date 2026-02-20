@@ -57,32 +57,27 @@ use crate::layer1::actions::social::evaluate_socialize;
 use crate::layer1::actions::work::evaluate_work;
 use crate::layer1::admin::Office;
 use crate::layer1::building::{Building, ShiftSchedule};
-use crate::layer1::combat::Drafted;
 use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::farm::Farm;
 use crate::layer1::funeral::{Corpse, Grave};
-use crate::layer1::hobby::{Hobby, evaluate_hobby};
+use crate::layer1::hobby::evaluate_hobby;
 use crate::layer1::housing::Housing;
 use crate::layer1::husbandry::evaluate_tame;
-use crate::layer1::items::{CarryingItem, Equipment, Item};
-use crate::layer1::justice::{Inmate, Wanted, evaluate_warden_action};
+use crate::layer1::items::Item;
+use crate::layer1::justice::{Wanted, evaluate_warden_action};
 use crate::layer1::map::GridPosition;
 use crate::layer1::medical::Hospital;
-use crate::layer1::needs::Needs;
-use crate::layer1::penal::PenalLabor;
 use crate::layer1::refining::get_refining_recipe;
 use crate::layer1::resources::{ColonyResources, RefiningProgress, ResourceItem};
 use crate::layer1::science::Anomaly;
 use crate::layer1::social::Tavern;
 use crate::layer1::stockpile::Stockpile;
-use crate::layer1::stress::{BREAKDOWN_TICKS_REQUIRED, Breakdown, StressTracker};
 use crate::layer1::structure::{DeferMaintenance, Structure};
 use crate::layer1::tech::Library;
 use crate::layer1::traits::Trait;
-use crate::layer1::unrest::MentalState;
 use crate::layer1::utility_eval_types::{
-    CapacityProxy, ItemEntityProxy, ItemProxy, PopEvalData, PositionProxy, RefiningProxy,
-    UtilityAIBuffer, WorldContext, evaluate_idle,
+    CapacityProxy, ItemEntityProxy, ItemProxy, PopEvalData, PopEvaluationQuery, PositionProxy,
+    RefiningProxy, UtilityAIBuffer, WorldContext, evaluate_idle,
 };
 pub use crate::layer1::utility_types::{
     ActionType, PopAction, StartPlan, UtilityConfig, UtilityWeights, manhattan_distance,
@@ -410,17 +405,26 @@ pub(crate) fn evaluate_single_pop(
     evaluator.result()
 }
 
-#[allow(clippy::too_many_lines)]
 fn populate_buffer_buildings(
     world: &mut World,
     buffer: &mut UtilityAIBuffer,
     context: &WorldContext,
 ) {
-    let cycle = context.cycle;
-    let resources = context.resources;
+    populate_farms(world, &mut buffer.farms, context.cycle);
+    populate_housing(world, &mut buffer.housing);
+    populate_taverns(world, &mut buffer.taverns);
+    populate_libraries(world, &mut buffer.libraries, context.cycle);
+    populate_refining(world, &mut buffer.refining, context);
+    populate_hospitals(world, &mut buffer.hospitals);
+    populate_offices(world, &mut buffer.offices, context.cycle);
+}
 
-    // Farms
-    buffer.farms.clear();
+fn populate_farms(
+    world: &mut World,
+    buffer: &mut Vec<CapacityProxy>,
+    cycle: &crate::layer1::day_night::DayNightCycle,
+) {
+    buffer.clear();
     let mut farm_query = world.query::<(Entity, &GridPosition, &Farm, Option<&ShiftSchedule>)>();
     for (entity, pos, farm, schedule) in farm_query.iter(world) {
         if schedule.is_some_and(|s| !s.is_active(cycle.time_of_day)) {
@@ -429,62 +433,70 @@ fn populate_buffer_buildings(
         if farm.workers.len() >= farm.capacity {
             continue;
         }
-        buffer.farms.push(CapacityProxy {
+        buffer.push(CapacityProxy {
             entity,
             pos: *pos,
             capacity: farm.capacity,
             usage: farm.workers.len(),
         });
     }
+}
 
-    // Housing
-    buffer.housing.clear();
+fn populate_housing(world: &mut World, buffer: &mut Vec<CapacityProxy>) {
+    buffer.clear();
     let mut housing_query = world.query::<(Entity, &GridPosition, &Housing)>();
     for (entity, pos, housing) in housing_query.iter(world) {
         if housing.residents.len() >= housing.capacity {
             continue;
         }
-        buffer.housing.push(CapacityProxy {
+        buffer.push(CapacityProxy {
             entity,
             pos: *pos,
             capacity: housing.capacity,
             usage: housing.residents.len(),
         });
     }
+}
 
-    // Taverns
-    buffer.taverns.clear();
+fn populate_taverns(world: &mut World, buffer: &mut Vec<CapacityProxy>) {
+    buffer.clear();
     let mut tavern_query = world.query::<(Entity, &GridPosition, &Tavern)>();
     for (entity, pos, tavern) in tavern_query.iter(world) {
         if tavern.visitors.len() >= tavern.capacity {
             continue;
         }
-        buffer.taverns.push(CapacityProxy {
+        buffer.push(CapacityProxy {
             entity,
             pos: *pos,
             capacity: tavern.capacity,
             usage: tavern.visitors.len(),
         });
     }
+}
 
-    // Libraries
-    buffer.libraries.clear();
+fn populate_libraries(
+    world: &mut World,
+    buffer: &mut Vec<CapacityProxy>,
+    cycle: &crate::layer1::day_night::DayNightCycle,
+) {
+    buffer.clear();
     let mut library_query =
         world.query::<(Entity, &GridPosition, &Library, Option<&ShiftSchedule>)>();
     for (entity, pos, _library, schedule) in library_query.iter(world) {
         if schedule.is_some_and(|s| !s.is_active(cycle.time_of_day)) {
             continue;
         }
-        buffer.libraries.push(CapacityProxy {
+        buffer.push(CapacityProxy {
             entity,
             pos: *pos,
             capacity: 5,
             usage: 0,
         });
     }
+}
 
-    // Refining
-    buffer.refining.clear();
+fn populate_refining(world: &mut World, buffer: &mut Vec<RefiningProxy>, context: &WorldContext) {
+    buffer.clear();
     let mut refine_query = world.query::<(
         Entity,
         &GridPosition,
@@ -493,37 +505,43 @@ fn populate_buffer_buildings(
         Option<&ShiftSchedule>,
     )>();
     for (entity, pos, building, progress, schedule) in refine_query.iter(world) {
-        if schedule.is_some_and(|s| !s.is_active(cycle.time_of_day)) {
+        if schedule.is_some_and(|s| !s.is_active(context.cycle.time_of_day)) {
             continue;
         }
 
         // Check recipe affordability (Global check)
-        let (can_afford, _, _) = get_refining_recipe(building.building_type, resources);
+        let (can_afford, _, _) = get_refining_recipe(building.building_type, context.resources);
         if !can_afford {
             continue;
         }
 
-        buffer.refining.push(RefiningProxy {
+        buffer.push(RefiningProxy {
             entity,
             pos: *pos,
             progress_current: progress.current,
         });
     }
+}
 
-    // Hospitals
-    buffer.hospitals.clear();
+fn populate_hospitals(world: &mut World, buffer: &mut Vec<CapacityProxy>) {
+    buffer.clear();
     let mut hospital_query = world.query::<(Entity, &GridPosition, &Hospital)>();
     for (entity, pos, _) in hospital_query.iter(world) {
-        buffer.hospitals.push(CapacityProxy {
+        buffer.push(CapacityProxy {
             entity,
             pos: *pos,
             capacity: 10,
             usage: 0,
         });
     }
+}
 
-    // Offices
-    buffer.offices.clear();
+fn populate_offices(
+    world: &mut World,
+    buffer: &mut Vec<CapacityProxy>,
+    cycle: &crate::layer1::day_night::DayNightCycle,
+) {
+    buffer.clear();
     let mut office_query =
         world.query::<(Entity, &GridPosition, &Office, Option<&ShiftSchedule>)>();
     for (entity, pos, office, schedule) in office_query.iter(world) {
@@ -533,7 +551,7 @@ fn populate_buffer_buildings(
         if office.workers.len() >= office.capacity {
             continue;
         }
-        buffer.offices.push(CapacityProxy {
+        buffer.push(CapacityProxy {
             entity,
             pos: *pos,
             capacity: office.capacity,
@@ -570,66 +588,86 @@ fn populate_buffer_designations(world: &mut World, buffer: &mut UtilityAIBuffer)
 }
 
 fn populate_buffer_items_and_misc(world: &mut World, buffer: &mut UtilityAIBuffer) {
-    // Stockpiles (First, so we can filter items)
-    buffer.stockpiles.clear();
+    populate_stockpiles(world, &mut buffer.stockpiles);
+    populate_items(world, &mut buffer.items);
+    populate_generic_items(world, &buffer.stockpiles, &mut buffer.item_entities);
+    populate_anomalies(world, &mut buffer.anomalies);
+    populate_corpses(world, &mut buffer.corpses);
+    populate_graves(world, &mut buffer.graves);
+    populate_repair_structures(world, &mut buffer.repair_structures);
+    populate_wanted_criminals(world, &mut buffer.wanted_criminals);
+}
+
+fn populate_stockpiles(world: &mut World, buffer: &mut Vec<PositionProxy>) {
+    buffer.clear();
     let mut stock_query = world.query::<(Entity, &GridPosition, &Stockpile)>();
     for (entity, pos, _) in stock_query.iter(world) {
-        buffer.stockpiles.push(PositionProxy { entity, pos: *pos });
+        buffer.push(PositionProxy { entity, pos: *pos });
     }
+}
 
-    // Items (ResourceItem)
-    buffer.items.clear();
+fn populate_items(world: &mut World, buffer: &mut Vec<ItemProxy>) {
+    buffer.clear();
     let mut item_query = world.query::<(Entity, &GridPosition, &ResourceItem)>();
     for (entity, pos, item) in item_query.iter(world) {
-        buffer.items.push(ItemProxy {
+        buffer.push(ItemProxy {
             entity,
             pos: *pos,
             resource_type: item.resource_type,
         });
     }
+}
 
-    // Item Entities (Generic Items like Manuals)
-    buffer.item_entities.clear();
+fn populate_generic_items(
+    world: &mut World,
+    stockpiles: &[PositionProxy],
+    buffer: &mut Vec<ItemEntityProxy>,
+) {
+    buffer.clear();
     let mut item_entity_query = world.query::<(Entity, &GridPosition, &Item)>();
     for (entity, pos, item) in item_entity_query.iter(world) {
         // Optimization: Don't haul items that are already at a stockpile
-        let at_stockpile = buffer.stockpiles.iter().any(|s| s.pos == *pos);
+        let at_stockpile = stockpiles.iter().any(|s| s.pos == *pos);
         if at_stockpile {
             continue;
         }
 
-        buffer.item_entities.push(ItemEntityProxy {
+        buffer.push(ItemEntityProxy {
             entity,
             pos: *pos,
             item_type: item.item_type.clone(),
         });
     }
+}
 
-    // Anomalies
-    buffer.anomalies.clear();
+fn populate_anomalies(world: &mut World, buffer: &mut Vec<PositionProxy>) {
+    buffer.clear();
     let mut anomaly_query = world.query::<(Entity, &GridPosition, &Anomaly)>();
     for (entity, pos, _) in anomaly_query.iter(world) {
-        buffer.anomalies.push(PositionProxy { entity, pos: *pos });
+        buffer.push(PositionProxy { entity, pos: *pos });
     }
+}
 
-    // Corpses
-    buffer.corpses.clear();
+fn populate_corpses(world: &mut World, buffer: &mut Vec<PositionProxy>) {
+    buffer.clear();
     let mut corpse_query = world.query::<(Entity, &GridPosition, &Corpse)>();
     for (entity, pos, _) in corpse_query.iter(world) {
-        buffer.corpses.push(PositionProxy { entity, pos: *pos });
+        buffer.push(PositionProxy { entity, pos: *pos });
     }
+}
 
-    // Graves
-    buffer.graves.clear();
+fn populate_graves(world: &mut World, buffer: &mut Vec<PositionProxy>) {
+    buffer.clear();
     let mut grave_query = world.query::<(Entity, &GridPosition, &Grave)>();
     for (entity, pos, grave) in grave_query.iter(world) {
         if !grave.occupied {
-            buffer.graves.push(PositionProxy { entity, pos: *pos });
+            buffer.push(PositionProxy { entity, pos: *pos });
         }
     }
+}
 
-    // Structures (Auto-Repair)
-    buffer.repair_structures.clear();
+fn populate_repair_structures(world: &mut World, buffer: &mut Vec<PositionProxy>) {
+    buffer.clear();
     let mut struct_query =
         world.query::<(Entity, &GridPosition, &Structure, Option<&DeferMaintenance>)>();
     for (entity, pos, structure, defer) in struct_query.iter(world) {
@@ -640,18 +678,15 @@ fn populate_buffer_items_and_misc(world: &mut World, buffer: &mut UtilityAIBuffe
             continue;
         }
 
-        buffer
-            .repair_structures
-            .push(PositionProxy { entity, pos: *pos });
+        buffer.push(PositionProxy { entity, pos: *pos });
     }
+}
 
-    // Wanted criminals
-    buffer.wanted_criminals.clear();
+fn populate_wanted_criminals(world: &mut World, buffer: &mut Vec<PositionProxy>) {
+    buffer.clear();
     let mut wanted_query = world.query::<(Entity, &GridPosition, &Wanted)>();
     for (entity, pos, _) in wanted_query.iter(world) {
-        buffer
-            .wanted_criminals
-            .push(PositionProxy { entity, pos: *pos });
+        buffer.push(PositionProxy { entity, pos: *pos });
     }
 }
 
@@ -700,94 +735,13 @@ pub fn evaluate_actions_system(world: &mut World) {
     buffer.pop_data.clear();
     buffer.pop_data.extend(
         world
-            .query::<(
-                Entity,
-                &GridPosition,
-                &Needs,
-                &UtilityWeights,
-                &PopAction,
-                Option<&Equipment>,
-                Option<&crate::layer1::resources::Carrying>,
-                Option<&CarryingItem>,
-                Option<&MentalState>,
-                Option<&Drafted>,
-                Option<&Inmate>,
-                Option<&crate::layer1::factions::FactionMember>,
-                Option<&PenalLabor>,
-                Option<&Breakdown>,
-                (
-                    Option<&crate::layer1::traits::Traits>,
-                    Option<&StressTracker>,
-                    Option<&Hobby>,
-                ),
-            )>()
+            .query::<PopEvaluationQuery>()
             .iter(world)
-            .filter(
-                |(_, _, _, _, action, _, _, _, _, _, inmate, _, penal_labor, _, _): &(
-                    Entity,
-                    &GridPosition,
-                    &Needs,
-                    &UtilityWeights,
-                    &PopAction,
-                    Option<&Equipment>,
-                    Option<&crate::layer1::resources::Carrying>,
-                    Option<&CarryingItem>,
-                    Option<&MentalState>,
-                    Option<&Drafted>,
-                    Option<&Inmate>,
-                    Option<&crate::layer1::factions::FactionMember>,
-                    Option<&PenalLabor>,
-                    Option<&Breakdown>,
-                    (
-                        Option<&crate::layer1::traits::Traits>,
-                        Option<&StressTracker>,
-                        Option<&Hobby>,
-                    ),
-                )| {
-                    action.ticks_committed >= config.evaluation_interval
-                        && (inmate.is_none() || penal_labor.is_some())
-                },
-            )
-            .map(
-                |(e, p, n, w, a, eq, c, ci, m, d, _, fm, pl, b, (t, st, h)): (
-                    Entity,
-                    &GridPosition,
-                    &Needs,
-                    &UtilityWeights,
-                    &PopAction,
-                    Option<&Equipment>,
-                    Option<&crate::layer1::resources::Carrying>,
-                    Option<&CarryingItem>,
-                    Option<&MentalState>,
-                    Option<&Drafted>,
-                    Option<&Inmate>,
-                    Option<&crate::layer1::factions::FactionMember>,
-                    Option<&PenalLabor>,
-                    Option<&Breakdown>,
-                    (
-                        Option<&crate::layer1::traits::Traits>,
-                        Option<&StressTracker>,
-                        Option<&Hobby>,
-                    ),
-                )| PopEvalData {
-                    entity: e,
-                    pos: *p,
-                    needs: *n,
-                    weights: *w,
-                    action: *a,
-                    equipment: eq.copied(),
-                    carrying: c.copied(),
-                    carrying_item: ci.map(|c| c.0),
-                    mental_state: m.copied(),
-                    drafted: d.copied(),
-                    faction_member: fm.cloned(),
-                    penal_labor: pl.copied(),
-                    breakdown: b.copied(),
-                    traits: t.cloned(),
-                    stress: st.map_or(0.0, |s| s.accumulated_stress / BREAKDOWN_TICKS_REQUIRED),
-                    hobby_type: h.map(|comp| comp.hobby_type),
-                },
-            ),
+            .filter(|item| {
+                item.action.ticks_committed >= config.evaluation_interval
+                    && (item.inmate.is_none() || item.penal_labor.is_some())
+            })
+            .map(PopEvalData::from_query_item),
     );
 
     // Early exit if no pops need evaluation
@@ -866,6 +820,7 @@ pub fn evaluate_actions_system(world: &mut World) {
 mod tests {
     use super::*;
     use crate::layer1::building::{Building, BuildingType};
+    use crate::layer1::needs::Needs;
     use crate::layer1::pop::Pop;
     use crate::shared::time::SimulationTime;
     use bevy_ecs::system::RunSystemOnce;
