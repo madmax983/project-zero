@@ -1,3 +1,35 @@
+//! Pathfinding and navigation logic.
+//!
+//! This module implements the A* (A-Star) search algorithm to navigate agents across the colony grid.
+//! It handles complex movement rules including terrain costs, crowding penalties, and building access control.
+//!
+//! # The Movement Model
+//!
+//! ## 1. Algorithm
+//! We use **A*** with a **Manhattan distance** heuristic (`|dx| + |dy|`). This is optimal for our
+//! 4-connected grid (North, South, East, West movement only).
+//!
+//! ## 2. Walkability Logic
+//! A tile is considered "walkable" only if **ALL** of the following are true:
+//! *   **Bounds**: The coordinate is within the map dimensions.
+//! *   **Terrain**: The `TerrainType` allows movement (e.g., `Grass` is walkable, `Water` is not).
+//! *   **Occupancy**: The tile is not in the `OccupiedTiles` set (generic blockers).
+//! *   **Buildings**: If a building exists on the tile:
+//!     *   **Physical**: It must not be an obstacle (e.g., `Wall` blocks, `Floor` does not).
+//!     *   **Door State**: If it has a `DoorControl`, it must not be `Locked`.
+//!     *   **Access Control**: If it has `AccessControl`, the agent must have permission (Public, Role, or specific ID).
+//!     *   **Special**: Vents are walkable only for entities with the `Vermin` capability.
+//!
+//! ## 3. Cost Function
+//! The cost to enter a tile `C` is calculated as:
+//!
+//! $$ C = C_{terrain} + C_{crowding} $$
+//!
+//! *   $C_{terrain}$: Base cost from `TerrainType` (e.g., Dirt=1, Rock=2).
+//! *   $C_{crowding}$: Dynamic penalty from `CrowdingGrid` (high traffic = slower movement).
+//!
+//! This encourages agents to use "Desire Paths" (paved roads) and avoid congested hallways.
+
 use bevy_ecs::prelude::*;
 use std::cmp::Ordering;
 use std::collections::{BinaryHeap, HashMap};
@@ -14,6 +46,13 @@ struct AccessCredentials {
 }
 
 /// Node for A* pathfinding.
+///
+/// Represents a step in the path search.
+///
+/// * `pos`: The (x, y) grid coordinate.
+/// * `cost`: The `g` score (cost from start to this node).
+/// * `heuristic`: The `h` score (estimated cost from this node to goal).
+/// * The priority queue uses `f = g + h`.
 #[derive(Clone, Copy, PartialEq, Eq)]
 struct Node {
     pos: (i32, i32),
@@ -36,27 +75,82 @@ impl PartialOrd for Node {
     }
 }
 
-/// Finds a path between two points.
+/// Finds a path between two points ignoring access restrictions.
+///
+/// This is useful for generic queries (e.g., "Is this area reachable at all?").
+/// For agent movement, use [`find_path_for_pop`] or [`find_path_for_entity`] instead.
 ///
 /// Returns `None` if no path is found.
 ///
 /// # Arguments
 ///
-/// * `world` - The Bevy World.
+/// * `world` - The Bevy World (must contain `TerrainGrid`, `OccupiedTiles`, `BuildingMap`).
 /// * `start` - Starting coordinates (x, y).
 /// * `end` - Target coordinates (x, y).
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::pathfinding::find_path;
+/// use scale::layer1::terrain::{TerrainGrid, TerrainType};
+/// use scale::layer1::building::{BuildingMap, OccupiedTiles};
+/// use bevy_ecs::prelude::*;
+///
+/// let mut world = World::new();
+/// // Setup minimal map resources
+/// world.insert_resource(TerrainGrid {
+///     width: 10,
+///     height: 10,
+///     tiles: vec![TerrainType::Grass; 100],
+/// });
+/// world.insert_resource(OccupiedTiles::default());
+/// world.insert_resource(BuildingMap::default());
+///
+/// let path = find_path(&world, (0, 0), (2, 0));
+/// assert!(path.is_some());
+/// let p = path.unwrap();
+/// assert_eq!(p.last(), Some(&(2, 0)));
+/// ```
 pub fn find_path(world: &World, start: (i32, i32), end: (i32, i32)) -> Option<Vec<(i32, i32)>> {
     find_path_internal(world, start, end, false, None)
 }
 
-/// Finds a path for a specific pop, considering access control.
+/// Finds a path for a specific Pop, considering their access rights.
+///
+/// This function checks `AccessControl` (e.g., "Staff Only" doors) and `DoorControl` (Locked doors).
+/// A Pop with the correct [`Role`] or specific ID permission can traverse restricted areas.
 ///
 /// # Arguments
 ///
 /// * `world` - The Bevy World.
 /// * `start` - Starting coordinates.
 /// * `end` - Target coordinates.
-/// * `pop` - The pop entity.
+/// * `pop` - The Pop entity (checked for [`Role`] component).
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::pathfinding::find_path_for_pop;
+/// use scale::layer1::pop::Pop;
+/// use scale::layer1::terrain::{TerrainGrid, TerrainType};
+/// use scale::layer1::building::{BuildingMap, OccupiedTiles};
+/// use bevy_ecs::prelude::*;
+///
+/// let mut world = World::new();
+/// world.insert_resource(TerrainGrid {
+///     width: 10,
+///     height: 10,
+///     tiles: vec![TerrainType::Grass; 100],
+/// });
+/// world.insert_resource(OccupiedTiles::default());
+/// world.insert_resource(BuildingMap::default());
+///
+/// let pop = world.spawn(Pop).id();
+///
+/// // Standard pathfinding for this pop
+/// let path = find_path_for_pop(&world, (0, 0), (5, 5), pop);
+/// assert!(path.is_some());
+/// ```
 pub fn find_path_for_pop(
     world: &World,
     start: (i32, i32),
@@ -68,14 +162,16 @@ pub fn find_path_for_pop(
     find_path_internal(world, start, end, false, credentials.as_ref())
 }
 
-/// Finds a path for a specific entity, considering its capabilities.
+/// Finds a path for a specific entity type, considering unique capabilities.
+///
+/// Useful for entities like **Vermin**, which can traverse Vents that are impassable to humans.
 ///
 /// # Arguments
 ///
 /// * `world` - The Bevy World.
 /// * `start` - Starting coordinates.
 /// * `end` - Target coordinates.
-/// * `_capability` - The entity capability component (e.g. Vermin).
+/// * `_capability` - The marker component (e.g. [`crate::layer1::vermin::Vermin`]).
 pub fn find_path_for_entity<T: Component>(
     world: &World,
     start: (i32, i32),
@@ -87,6 +183,10 @@ pub fn find_path_for_entity<T: Component>(
     find_path_internal(world, start, end, can_use_vents, None)
 }
 
+/// Internal A* implementation.
+///
+/// Shared logic for all pathfinding variants. It abstracts the "Can I enter this tile?" logic
+/// into the helper `is_walkable`.
 fn find_path_internal(
     world: &World,
     start: (i32, i32),
@@ -172,7 +272,13 @@ fn find_path_internal(
     None
 }
 
-const fn manhattan_distance(a: (i32, i32), b: (i32, i32)) -> i32 {
+/// Calculates the Manhattan distance (L1 norm) between two grid points.
+///
+/// `|x1 - x2| + |y1 - y2|`
+///
+/// This heuristic is admissible for 4-connected grids, guaranteeing the shortest path
+/// if edge weights are >= 1.
+pub const fn manhattan_distance(a: (i32, i32), b: (i32, i32)) -> i32 {
     (a.0 - b.0).abs() + (a.1 - b.1).abs()
 }
 
@@ -327,23 +433,6 @@ mod tests {
         }
 
         // Let's make a corridor to force block
-        // Walls at (1, -1) and (1, 1)? Map is 0..10.
-        // Wall at (1, 1). Edge is y=0.
-        // So (1,0) is the choke point if we block (1,1).
-        world.spawn((
-            Building {
-                building_type: BuildingType::Wall,
-            },
-            GridPosition { x: 1, y: 1 },
-        ));
-        world.resource_mut::<OccupiedTiles>().0.insert((1, 1));
-
-        // Wall at (0, 1) and (2, 1) too to be sure?
-        // Actually, let's just assert that if we ask to path THROUGH it, it fails if it's the only option.
-        // Or simpler: check if `is_walkable` logic (if exposed) works.
-        // But `find_path` is high level.
-
-        // Let's create a map where (1,0) is the only bridge.
         // W W W
         // S V E
         // W W W

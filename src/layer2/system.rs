@@ -103,6 +103,7 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(GameState::Running);
         world.insert_resource(ViewMode::Colony);
+        world.insert_resource(crate::layer2::visibility::SystemVisibility::Full);
 
         // Setup Input Stack
         let mut stack = InputContextStack::default();

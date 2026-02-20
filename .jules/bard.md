@@ -21,3 +21,11 @@
 ## 2026-02-17 - [Ecological Config]
 **Confusion:** `EcologyConfig` fields like `growth_rate` and `pioneer_chance` were public but undocumented, making it unclear how to tune the simulation.
 **Clarification:** Added documentation to `layer1::ecology::mod.rs` explaining the stochastic growth model and providing example configuration values.
+
+## 2026-02-18 - [Time Model Confusion]
+**Confusion:** The relationship between `SimulationTime`, `SimSpeed`, and `WallTime` was unclear.
+**Clarification:** Documented `shared::time` explaining the difference between logical ticks (game state) and wall time (UI animations), and how `SimSpeed` multiplies tick rate.
+
+## 2026-02-18 - [Pathfinding Mechanics]
+**Confusion:** The `find_path` functions were poorly documented, leaving the A* implementation, cost heuristics (Manhattan), and walkability logic (Terrain -> Occupied -> Building -> Access Control) implicit.
+**Clarification:** Added module-level documentation to `layer1::pathfinding` explaining the movement model and access control checks, plus examples.

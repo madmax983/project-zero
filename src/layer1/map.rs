@@ -1,7 +1,7 @@
 #![allow(clippy::cast_precision_loss)]
 //! Spatial primitives and map utilities.
 //!
-//! This module defines the foundational spatial component `GridPosition`.
+//! This module defines the foundational spatial component [`GridPosition`] and the camera/viewport logic.
 //!
 //! # The Coordinate System
 //!
@@ -10,23 +10,45 @@
 //! * **X-Axis**: Increases to the right (East).
 //! * **Y-Axis**: Increases downwards (South).
 //!
-//! While `GridPosition` uses `i32` to allow for flexibility (and potentially negative
-//! coordinates for off-map entities or infinite scrolling in the future), the valid
-//! gameplay area is typically bounded by the `TerrainGrid` dimensions (0..width, 0..height).
+//! ## Type Safety (`i32`)
+//! We use `i32` for coordinates rather than `usize` or `u32` because:
+//! 1.  **Safety**: Prevents underflow panics when calculating relative offsets (e.g., `x - 1` at the left edge).
+//! 2.  **Flexibility**: Allows for off-map entities (spawners, cinematic cameras) or infinite scrolling in the future.
+//! 3.  **Chebyshev Distance**: Simplifies distance math (`abs()`).
 //!
-//! # Relationship with `TerrainGrid`
+//! # Logical vs. Visual Position
 //!
-//! The `TerrainGrid` resource stores tile data in a flat vector. To access tile data
-//! for a given `GridPosition`, you must convert the (x, y) coordinates to a linear index:
-//! `index = y * width + x`.
+//! The simulation has two concepts of "position":
 //!
-//! Always check bounds before accessing the grid, as `GridPosition` does not enforce
-//! map limits itself.
+//! 1.  **Logical ([`GridPosition`])**: Discrete tile coordinates. Used for gameplay logic (pathfinding, collision).
+//!     *   *Truth*: An entity is exactly at (10, 5).
+//!
+//! 2.  **Visual ([`CameraCurrent`])**: Continuous float coordinates. Used for rendering interpolation.
+//!     *   *Truth*: The camera is currently looking at (10.2, 5.0) while panning.
+//!
+//! Systems like [`update_camera_smooth`] bridge this gap by lerping the visual position towards the logical target.
 
 use bevy_ecs::prelude::*;
 use rand::Rng;
 
-/// Resource to handle screen shake effects.
+/// Resource to handle screen shake effects (juice).
+///
+/// Use this to add impact to events like explosions, heavy machinery, or earthquakes.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::map::ScreenShake;
+///
+/// // Create a shake instance
+/// let mut shake = ScreenShake::default();
+///
+/// // Trigger a small rumble (e.g. door slam)
+/// shake.trigger(0.5);
+///
+/// // Trigger a massive quake
+/// shake.trigger(5.0); // Clamped to 5.0 max
+/// ```
 #[derive(Resource, Default, Debug)]
 pub struct ScreenShake {
     /// Current intensity of the shake (0.0 to 5.0).
@@ -43,6 +65,8 @@ impl ScreenShake {
 }
 
 /// System to update screen shake effects (decay and randomize offset).
+///
+/// This runs every frame to update the visual offset.
 pub fn update_screen_shake_system(mut shake: ResMut<ScreenShake>) {
     if shake.intensity > 0.0 {
         let mut rng = rand::thread_rng();
@@ -112,7 +136,9 @@ impl GridPosition {
     }
 }
 
-/// Target position for smooth camera movement (Destination).
+/// Target position for smooth camera movement (The "Destination").
+///
+/// This is where the camera *wants* to be.
 #[derive(Resource, Default, Clone, Copy, Debug)]
 pub struct CameraTarget {
     /// Target X coordinate.
@@ -122,6 +148,8 @@ pub struct CameraTarget {
 }
 
 /// Current interpolated position of the camera (Float precision).
+///
+/// This is where the camera *actually is* this frame.
 #[derive(Resource, Default, Clone, Copy, Debug)]
 pub struct CameraCurrent {
     /// Current X coordinate.
@@ -132,8 +160,9 @@ pub struct CameraCurrent {
 
 /// Updates the viewport position to smoothly interpolate towards the camera target.
 ///
-/// This function should be called every frame (update loop) rather than every simulation tick
-/// to ensure smooth animation.
+/// This function implements a standard "Asymptotic Averaging" (Lerp) smoothing.
+/// It should be called every frame (update loop) rather than every simulation tick
+/// to ensure smooth animation at high refresh rates.
 #[allow(clippy::cast_possible_truncation)]
 pub fn update_camera_smooth(world: &mut World) {
     // 1. Ensure Resources exist
