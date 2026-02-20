@@ -430,7 +430,7 @@ pub fn calculate_context_score(
     // Availability factor (less crowded = better)
     if building_capacity > 0 {
         #[allow(clippy::cast_precision_loss)]
-        let availability = 1.0 - (building_occupied as f32 / building_capacity as f32);
+        let availability = (1.0 - (building_occupied as f32 / building_capacity as f32)).max(0.0);
 
         if (weights.availability_weight - 1.0).abs() < f32::EPSILON {
             score *= availability;
@@ -607,5 +607,49 @@ mod tests {
         let config = UtilityConfig::default();
         assert!((config.switch_threshold - 0.15).abs() < f32::EPSILON);
         assert_eq!(config.evaluation_interval, 1);
+    }
+
+    #[test]
+    fn test_calculate_context_score_over_capacity_nan() {
+        let mut weights = UtilityWeights::default();
+        weights.availability_weight = 0.5; // Fractional power to trigger NaN on negative base
+
+        let pop_pos = GridPosition { x: 0, y: 0 };
+        // Occupied (20) > Capacity (10) => availability = 1.0 - 2.0 = -1.0
+        // -1.0.powf(0.5) => NaN
+        let score = calculate_context_score(pop_pos, None, 10, 20, &weights);
+
+        // This assertion ensures we don't propagate NaNs
+        assert!(!score.is_nan(), "Score should not be NaN even if over capacity");
+        assert_eq!(score, 0.0, "Score should be clamped to 0.0");
+    }
+
+    #[test]
+    fn test_calculate_context_score_full_capacity() {
+        let weights = UtilityWeights::default();
+        let pop_pos = GridPosition { x: 0, y: 0 };
+        // Occupied == Capacity
+        let score = calculate_context_score(pop_pos, None, 10, 10, &weights);
+        assert_eq!(score, 0.0, "Score should be 0.0 when full");
+    }
+
+    #[test]
+    fn test_calculate_context_score_extreme_weights() {
+        let mut weights = UtilityWeights::default();
+        weights.availability_weight = 100.0; // Extremely picky about crowds
+        let pop_pos = GridPosition { x: 0, y: 0 };
+
+        // 50% full
+        let score = calculate_context_score(pop_pos, None, 10, 5, &weights);
+        // Availability 0.5. 0.5^100 should be tiny.
+        assert!(score < 0.0001, "Score should be tiny with high availability weight");
+
+        weights.availability_weight = 0.0; // Doesn't care about crowds
+        let score_ignore = calculate_context_score(pop_pos, None, 10, 5, &weights);
+        // Availability 0.5. 0.5^0 = 1.0.
+        assert!(
+            (score_ignore - 1.0).abs() < f32::EPSILON,
+            "Score should be 1.0 when weight is 0"
+        );
     }
 }
