@@ -102,9 +102,7 @@ pub fn fire_damage_structure_system(world: &mut World) {
             if let Some(building_type) = b_type {
                 // Spawn Ruin
                 let material = m_type.unwrap_or_default();
-                let current_tick = world
-                    .get_resource::<SimulationTime>()
-                    .map_or(0, |t| t.tick);
+                let current_tick = world.get_resource::<SimulationTime>().map_or(0, |t| t.tick);
 
                 world.spawn((
                     Ruin {

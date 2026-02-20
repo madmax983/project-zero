@@ -2,8 +2,8 @@
 //!
 //! Handles the creation of "Mystery Meals" from alien ingredients, with randomized effects.
 
-use bevy_ecs::prelude::*;
 use crate::layer1::items::ItemType;
+use bevy_ecs::prelude::*;
 use rand::{Rng, SeedableRng, rngs::StdRng};
 use std::hash::{Hash, Hasher};
 
@@ -96,9 +96,11 @@ pub fn perform_experiment(world: &mut World, _chef: Entity, ingredient_entity: E
 
     // 4. Produce Mystery Meal with Effect Component
     world.spawn((
-        crate::layer1::items::Item { item_type: crate::layer1::items::ItemType::MysteryMeal },
+        crate::layer1::items::Item {
+            item_type: crate::layer1::items::ItemType::MysteryMeal,
+        },
         MealHiddenEffect { effect },
-        crate::layer1::map::GridPosition { x: 0, y: 0 } // Should be at Chef's pos ideally
+        crate::layer1::map::GridPosition { x: 0, y: 0 }, // Should be at Chef's pos ideally
     ));
 
     // 5. Update Cookbook
@@ -121,16 +123,16 @@ pub fn apply_meal_effect(world: &mut World, pop: Entity, effect: MealEffect) {
                     duration: 100,
                 });
             }
-        },
+        }
         MealEffect::MoodDebuff => {
-             if let Some(mut morale) = world.get_mut::<crate::layer1::morale::Morale>(pop) {
+            if let Some(mut morale) = world.get_mut::<crate::layer1::morale::Morale>(pop) {
                 morale.modifiers.push(crate::layer1::morale::MoodModifier {
                     label: "Disgusting Meal".to_string(),
                     value: -0.2,
                     duration: 100,
                 });
             }
-        },
+        }
         // TODO: Implement other effects
         _ => {}
     }
@@ -141,14 +143,11 @@ pub const fn analyze_ingredient_system() {}
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
+    use crate::layer1::gastronomy::{Cookbook, MealEffect, generate_meal_effect};
     use crate::layer1::items::{Item, ItemType};
-    use crate::layer1::gastronomy::{
-        Cookbook, MealEffect,
-        generate_meal_effect
-    };
-    use crate::layer1::pop::Pop;
     use crate::layer1::morale::Morale;
+    use crate::layer1::pop::Pop;
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_generate_consistent_effect() {
@@ -167,7 +166,10 @@ mod tests {
                 break;
             }
         }
-        assert!(found_different, "Different seed should eventually yield different effect");
+        assert!(
+            found_different,
+            "Different seed should eventually yield different effect"
+        );
     }
 
     #[test]
@@ -180,7 +182,10 @@ mod tests {
         cookbook.discover(ItemType::AlienMeatA, MealEffect::HighEnergy);
 
         assert!(cookbook.is_known(&ItemType::AlienMeatA));
-        assert_eq!(cookbook.get_effect(&ItemType::AlienMeatA), Some(MealEffect::HighEnergy));
+        assert_eq!(
+            cookbook.get_effect(&ItemType::AlienMeatA),
+            Some(MealEffect::HighEnergy)
+        );
     }
 
     #[test]
@@ -190,30 +195,42 @@ mod tests {
 
         // Setup Chef and Ingredients
         let chef = world.spawn(Pop).id();
-        let ingredient = world.spawn(Item {
-            item_type: ItemType::AlienMeatA,
-        }).id();
+        let ingredient = world
+            .spawn(Item {
+                item_type: ItemType::AlienMeatA,
+            })
+            .id();
 
         // Add Cooking Experiment component to Chef or Workstation
         // For simplicity, let's say Chef performs action
         let success = crate::layer1::gastronomy::perform_experiment(&mut world, chef, ingredient);
 
         assert!(success);
-        assert!(world.get_entity(ingredient).is_err(), "Ingredient should be consumed");
+        assert!(
+            world.get_entity(ingredient).is_err(),
+            "Ingredient should be consumed"
+        );
 
         // Check for Output Meal
         let mut query = world.query::<&Item>();
-        let found = query.iter(&world).any(|i| i.item_type == ItemType::MysteryMeal);
+        let found = query
+            .iter(&world)
+            .any(|i| i.item_type == ItemType::MysteryMeal);
         assert!(found, "Should produce Mystery Meal");
     }
 
     #[test]
     fn test_eating_mystery_meal_applies_effect() {
         let mut world = World::new();
-        let pop = world.spawn((
-            Pop,
-            Morale { value: 0.5, ..Default::default() }
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Morale {
+                    value: 0.5,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         // Apply effect manually (simulating eating)
         let effect = MealEffect::MoodBoost;

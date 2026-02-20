@@ -121,10 +121,7 @@ mod tests {
         ));
 
         // 3. Spawn Consumer (Pop)
-        world.spawn((
-            Pop,
-            AdminConsumer { demand: 1.0 },
-        ));
+        world.spawn((Pop, AdminConsumer { demand: 1.0 }));
 
         // Run calculation
         calculate_admin_stats(&mut world);

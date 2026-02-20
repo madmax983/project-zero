@@ -31,15 +31,17 @@ mod tests {
     use super::*;
     use crate::layer1::actions::{AssignedTo, AssignmentType};
     use crate::layer1::building::{Building, BuildingType, OccupiedTiles};
-    use crate::layer1::graffiti::{Graffiti, GraffitiMap, GraffitiType, graffiti_observation_system};
+    use crate::layer1::graffiti::{
+        Graffiti, GraffitiMap, GraffitiType, graffiti_observation_system,
+    };
     use crate::layer1::map::GridPosition;
     use crate::layer1::morale::Morale;
     use crate::layer1::needs::Needs;
     use crate::layer1::pop::Pop;
-    use crate::layer1::tech::{Tech, TechState, unlock_tech};
-    use crate::layer1::utility_types::{ActionType, PopAction, UtilityConfig, UtilityWeights};
-    use crate::layer1::utility_ai::evaluate_actions_system;
     use crate::layer1::resources::ColonyResources;
+    use crate::layer1::tech::{Tech, TechState, unlock_tech};
+    use crate::layer1::utility_ai::evaluate_actions_system;
+    use crate::layer1::utility_types::{ActionType, PopAction, UtilityConfig, UtilityWeights};
     use crate::shared::time::SimulationTime;
     use bevy_ecs::prelude::*;
 
@@ -63,11 +65,16 @@ mod tests {
         // `candidates.into_iter().choose(&mut rng)`
         // `choose` from 1 candidate is 100%.
 
-        let researcher = world.spawn((
-            Pop,
-            AssignedTo { assignment_type: AssignmentType::LibraryWorker, entity: Entity::PLACEHOLDER }, // entity placeholder is fine for assignment type check
-            GridPosition::default()
-        )).id();
+        let researcher = world
+            .spawn((
+                Pop,
+                AssignedTo {
+                    assignment_type: AssignmentType::LibraryWorker,
+                    entity: Entity::PLACEHOLDER,
+                }, // entity placeholder is fine for assignment type check
+                GridPosition::default(),
+            ))
+            .id();
 
         // Define a hazardous tech (e.g. VoidWhispers)
         // Unlock it
@@ -91,26 +98,32 @@ mod tests {
         world.insert_resource(crate::layer1::zone::ZoneGrid::new(10, 10));
 
         // Setup infected pop
-        let pop = world.spawn((
-            Pop,
-            MemeticCarrier,
-            GridPosition { x: 5, y: 5 },
-            UtilityWeights::default(),
-            PopAction {
-                ticks_committed: 100, // Ensure ready for evaluation
-                ..Default::default()
-            },
-            Needs::default(),
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                MemeticCarrier,
+                GridPosition { x: 5, y: 5 },
+                UtilityWeights::default(),
+                PopAction {
+                    ticks_committed: 100, // Ensure ready for evaluation
+                    ..Default::default()
+                },
+                Needs::default(),
+            ))
+            .id();
 
         // Setup wall at (5,6) to scrawl on
-        let wall = world.spawn((
-            Building { building_type: BuildingType::Wall },
-            GridPosition { x: 5, y: 6 },
-            // OccupiedTiles is usually a resource, but utility AI might use it for validity checks?
-            // Actually, evaluate_scrawl_memetic_sigil will likely query Buildings directly or use OccupiedTiles.
-            // Let's ensure OccupiedTiles exists and has the wall.
-        )).id();
+        let wall = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Wall,
+                },
+                GridPosition { x: 5, y: 6 },
+                // OccupiedTiles is usually a resource, but utility AI might use it for validity checks?
+                // Actually, evaluate_scrawl_memetic_sigil will likely query Buildings directly or use OccupiedTiles.
+                // Let's ensure OccupiedTiles exists and has the wall.
+            ))
+            .id();
 
         let mut occupied = OccupiedTiles::default();
         occupied.0.insert((5, 6));
@@ -131,11 +144,9 @@ mod tests {
     fn test_observing_sigil_spreads_infection() {
         let mut world = World::new();
         // Setup clean pop
-        let victim = world.spawn((
-            Pop,
-            GridPosition { x: 5, y: 5 },
-            Morale::default()
-        )).id();
+        let victim = world
+            .spawn((Pop, GridPosition { x: 5, y: 5 }, Morale::default()))
+            .id();
 
         // Place Memetic Sigil at (5,6)
         let mut map = GraffitiMap::default();
@@ -145,14 +156,16 @@ mod tests {
                 // GraffitiType::MemeticSigil doesn't exist yet
                 graffiti_type: GraffitiType::MemeticSigil,
                 decay: 100.0,
-                modifier: -0.1
-            }
+                modifier: -0.1,
+            },
         );
         world.insert_resource(map);
 
         // Run observation system
         // Set high infection chance for test
-        world.insert_resource(MemeticConfig { infection_chance: 1.0 });
+        world.insert_resource(MemeticConfig {
+            infection_chance: 1.0,
+        });
 
         let mut schedule = Schedule::default();
         schedule.add_systems(graffiti_observation_system);

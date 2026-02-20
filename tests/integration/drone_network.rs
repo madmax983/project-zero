@@ -7,8 +7,8 @@ mod tests {
     use scale::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
     use scale::layer1::stockpile::Stockpile;
     use scale::layer1::utility_ai::PopAction;
-    use scale::simulation::{SimulationSchedule, build_simulation_schedule};
     use scale::shared::time::SimulationTime;
+    use scale::simulation::{SimulationSchedule, build_simulation_schedule};
 
     fn setup_world() -> World {
         scale::setup::init_task_pools();
@@ -70,7 +70,9 @@ mod tests {
         world.insert_resource(scale::layer1::inspector::InspectorSource::default());
         world.init_resource::<scale::layer1::social::old_guard::Demographics>();
         world.insert_resource(scale::layer1::tech_envy::TechEnvyConfig::default());
-        world.insert_resource(scale::shared::colony::ColonyName { name: "Test".to_string() });
+        world.insert_resource(scale::shared::colony::ColonyName {
+            name: "Test".to_string(),
+        });
         let generator = scale::shared::narrative::NarrativeGenerator::from_embedded();
         world.insert_resource(generator);
 
@@ -79,7 +81,9 @@ mod tests {
         world.insert_resource(scale::layer1::chronicle::BuildingTracker::default());
         world.insert_resource(scale::layer1::prototyping::BuildingMastery::default());
         world.insert_resource(scale::layer1::seasons::SeasonState::default());
-        world.insert_resource(scale::layer1::temperature::TemperatureGrid::new(10, 10, 20.0));
+        world.insert_resource(scale::layer1::temperature::TemperatureGrid::new(
+            10, 10, 20.0,
+        ));
         world.insert_resource(scale::layer1::graffiti::GraffitiMap::default());
         world.insert_resource(scale::layer1::ecology::EcologyConfig::default());
         world.insert_resource(scale::layer1::society::SecretSocieties::default());
@@ -127,18 +131,28 @@ mod tests {
 
         // Spawn Power Source (Generator) at (0,1)
         world.spawn((
-            Building { building_type: BuildingType::Generator },
+            Building {
+                building_type: BuildingType::Generator,
+            },
             GridPosition { x: 0, y: 1 },
-            scale::layer1::energy::PowerSource { output: 100.0, active: true },
+            scale::layer1::energy::PowerSource {
+                output: 100.0,
+                active: true,
+            },
             scale::layer1::energy::Conduit, // Connect to hub
         ));
 
         // Spawn DroneHub at (0,0)
         world.spawn((
-            Building { building_type: BuildingType::DroneHub },
+            Building {
+                building_type: BuildingType::DroneHub,
+            },
             GridPosition { x: 0, y: 0 },
             DroneHub,
-            scale::layer1::energy::PowerConsumer { demand: 10.0, active: false },
+            scale::layer1::energy::PowerConsumer {
+                demand: 10.0,
+                active: false,
+            },
             scale::layer1::energy::Conduit,
         ));
 
@@ -159,36 +173,50 @@ mod tests {
         // 1. Setup Infrastructure
         // Power Source
         world.spawn((
-            Building { building_type: BuildingType::Generator },
+            Building {
+                building_type: BuildingType::Generator,
+            },
             GridPosition { x: 0, y: 0 },
-            scale::layer1::energy::PowerSource { output: 100.0, active: true },
+            scale::layer1::energy::PowerSource {
+                output: 100.0,
+                active: true,
+            },
             scale::layer1::energy::Conduit,
         ));
 
         // DroneHub
         world.spawn((
-            Building { building_type: BuildingType::DroneHub },
+            Building {
+                building_type: BuildingType::DroneHub,
+            },
             GridPosition { x: 1, y: 0 },
             DroneHub,
-            scale::layer1::energy::PowerConsumer { demand: 10.0, active: false },
+            scale::layer1::energy::PowerConsumer {
+                demand: 10.0,
+                active: false,
+            },
             scale::layer1::energy::Conduit,
         ));
 
         // Stockpile at (9,0)
         world.spawn((
-            Building { building_type: BuildingType::Stockpile },
+            Building {
+                building_type: BuildingType::Stockpile,
+            },
             GridPosition { x: 9, y: 0 },
             Stockpile::default(),
         ));
 
         // Resource Item at (5,0) - Wood
-        let item = world.spawn((
-            ResourceItem {
-                resource_type: ResourceType::Wood,
-                amount: 10.0,
-            },
-            GridPosition { x: 5, y: 0 },
-        )).id();
+        let item = world
+            .spawn((
+                ResourceItem {
+                    resource_type: ResourceType::Wood,
+                    amount: 10.0,
+                },
+                GridPosition { x: 5, y: 0 },
+            ))
+            .id();
 
         // 2. Run simulation
         // Wait for spawn
@@ -219,6 +247,10 @@ mod tests {
         // Check resources (Wood should increase by 10)
         // Default wood is 15.0. Expected 25.0.
         let res = world.resource::<ColonyResources>();
-        assert!((res.wood - 25.0).abs() < f32::EPSILON, "Resources should be delivered. Current: {}", res.wood);
+        assert!(
+            (res.wood - 25.0).abs() < f32::EPSILON,
+            "Resources should be delivered. Current: {}",
+            res.wood
+        );
     }
 }

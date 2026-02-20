@@ -1,12 +1,12 @@
 #![allow(clippy::collapsible_if)]
 use crate::layer1::GridPosition;
+use crate::layer1::drone::Drone;
 use crate::layer1::execution::{AtTarget, MovementTarget};
 use crate::layer1::factions::{FactionMember, FactionState, Factions};
 use crate::layer1::resources::{Carrying, ColonyResources, ResourceItem};
 use crate::layer1::stockpile::Stockpile;
 use crate::layer1::utility_ai::{ActionType, PopAction, manhattan_distance};
 use crate::layer1::zone::{ZoneGrid, ZoneType};
-use crate::layer1::drone::Drone;
 use bevy_ecs::prelude::*;
 
 /// Moves resources from the world to stockpiles.

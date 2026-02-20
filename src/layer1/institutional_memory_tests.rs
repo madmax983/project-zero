@@ -1,35 +1,41 @@
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::skills::{Skills, SkillType};
+    use crate::layer1::execution::{AtTarget, MovementTarget};
+    use crate::layer1::institutional_memory::{
+        InstitutionalMemoryConfig, Manual, manual_aura_system, produce_manual_system,
+    };
     use crate::layer1::items::Item;
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
-    use crate::layer1::institutional_memory::{Manual, produce_manual_system, manual_aura_system, InstitutionalMemoryConfig};
+    use crate::layer1::skills::{SkillType, Skills};
     use crate::layer1::utility_ai::ActionType;
-    use crate::layer1::execution::{MovementTarget, AtTarget};
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_produce_manual_high_skill() {
         let mut world = World::new();
 
         // Guarantee production for test
-        world.insert_resource(InstitutionalMemoryConfig { production_chance: 1.0 });
+        world.insert_resource(InstitutionalMemoryConfig {
+            production_chance: 1.0,
+        });
 
         // Spawn high-skill pop working
         let mut skills = Skills::default();
         skills.add_xp(SkillType::Mining, 2500.0); // Level 5
-        let _pop = world.spawn((
-            Pop,
-            skills,
-            GridPosition { x: 5, y: 5 },
-            MovementTarget {
-                target_entity: Entity::from_raw(0),
-                target_position: GridPosition { x: 5, y: 5 },
-                for_action: ActionType::Work
-            },
-            AtTarget // Must be actively working
-        )).id();
+        let _pop = world
+            .spawn((
+                Pop,
+                skills,
+                GridPosition { x: 5, y: 5 },
+                MovementTarget {
+                    target_entity: Entity::from_raw(0),
+                    target_position: GridPosition { x: 5, y: 5 },
+                    for_action: ActionType::Work,
+                },
+                AtTarget, // Must be actively working
+            ))
+            .id();
 
         // Run system multiple times to trigger chance (or mock RNG)
         let mut schedule = Schedule::default();
@@ -62,9 +68,9 @@ mod tests {
             MovementTarget {
                 target_entity: Entity::from_raw(0),
                 target_position: GridPosition { x: 5, y: 5 },
-                for_action: ActionType::Work
+                for_action: ActionType::Work,
             },
-            AtTarget
+            AtTarget,
         ));
 
         let mut schedule = Schedule::default();
@@ -92,21 +98,23 @@ mod tests {
                 durability: 100.0,
                 max_durability: 100.0,
             },
-            GridPosition { x: 5, y: 5 }
+            GridPosition { x: 5, y: 5 },
         ));
 
         // Spawn Worker nearby (Level 0)
-        let worker = world.spawn((
-            Pop,
-            Skills::default(),
-            GridPosition { x: 6, y: 5 }, // Adjacent
-            MovementTarget {
-                target_entity: Entity::from_raw(0),
-                target_position: GridPosition { x: 6, y: 5 },
-                for_action: ActionType::Work
-            },
-            AtTarget
-        )).id();
+        let worker = world
+            .spawn((
+                Pop,
+                Skills::default(),
+                GridPosition { x: 6, y: 5 }, // Adjacent
+                MovementTarget {
+                    target_entity: Entity::from_raw(0),
+                    target_position: GridPosition { x: 6, y: 5 },
+                    for_action: ActionType::Work,
+                },
+                AtTarget,
+            ))
+            .id();
 
         // Run aura system
         let mut schedule = Schedule::default();
@@ -115,21 +123,26 @@ mod tests {
 
         // Verify XP gain
         let skills = world.get::<Skills>(worker).unwrap();
-        assert!(skills.get_xp(SkillType::Mining) > 0.0, "Should gain passive XP from Manual aura");
+        assert!(
+            skills.get_xp(SkillType::Mining) > 0.0,
+            "Should gain passive XP from Manual aura"
+        );
     }
 
     #[test]
     fn test_manual_degradation() {
         let mut world = World::new();
-        let manual = world.spawn((
-            Manual {
-                skill_type: SkillType::Mining,
-                xp_multiplier: 1.5,
-                durability: 0.05, // Very low durability
-                max_durability: 100.0,
-            },
-            GridPosition { x: 5, y: 5 }
-        )).id();
+        let manual = world
+            .spawn((
+                Manual {
+                    skill_type: SkillType::Mining,
+                    xp_multiplier: 1.5,
+                    durability: 0.05, // Very low durability
+                    max_durability: 100.0,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         // Spawn worker to trigger usage
         world.spawn((
@@ -139,9 +152,9 @@ mod tests {
             MovementTarget {
                 target_entity: Entity::from_raw(0),
                 target_position: GridPosition { x: 6, y: 5 },
-                for_action: ActionType::Work
+                for_action: ActionType::Work,
             },
-            AtTarget
+            AtTarget,
         ));
 
         let mut schedule = Schedule::default();
@@ -150,7 +163,10 @@ mod tests {
 
         // Check if manual is destroyed
         // Assuming decay is > 0.05 per use
-        assert!(world.get_entity(manual).is_err(), "Manual should be destroyed when durability hits 0");
+        assert!(
+            world.get_entity(manual).is_err(),
+            "Manual should be destroyed when durability hits 0"
+        );
     }
 
     #[test]
@@ -158,13 +174,19 @@ mod tests {
         use crate::layer1::designation::{Designation, DesignationType};
 
         let mut world = World::new();
-        world.insert_resource(InstitutionalMemoryConfig { production_chance: 1.0 });
+        world.insert_resource(InstitutionalMemoryConfig {
+            production_chance: 1.0,
+        });
 
         // Spawn Designation
-        let designation = world.spawn((
-            Designation { designation_type: DesignationType::Mine },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let designation = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Mine,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         // Spawn Pop with Mining skill working on designation
         let mut skills = Skills::default();
@@ -176,9 +198,9 @@ mod tests {
             MovementTarget {
                 target_entity: designation,
                 target_position: GridPosition { x: 5, y: 5 },
-                for_action: ActionType::Work
+                for_action: ActionType::Work,
             },
-            AtTarget
+            AtTarget,
         ));
 
         let mut schedule = Schedule::default();
@@ -186,7 +208,10 @@ mod tests {
         schedule.run(&mut world);
 
         let count = world.query::<&Manual>().iter(&world).count();
-        assert_eq!(count, 1, "Should produce manual when working on designation");
+        assert_eq!(
+            count, 1,
+            "Should produce manual when working on designation"
+        );
 
         let manual = world.query::<&Manual>().single(&world);
         assert_eq!(manual.skill_type, SkillType::Mining);
@@ -206,27 +231,33 @@ mod tests {
                 durability: 10.0,
                 max_durability: 10.0,
             },
-            GridPosition { x: 5, y: 5 }
+            GridPosition { x: 5, y: 5 },
         ));
 
         // Designation for Forestry (Mismatch)
-        let forestry_designation = world.spawn((
-            Designation { designation_type: DesignationType::Chop },
-            GridPosition { x: 6, y: 5 },
-        )).id();
+        let forestry_designation = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Chop,
+                },
+                GridPosition { x: 6, y: 5 },
+            ))
+            .id();
 
         // Worker doing Forestry
-        let worker = world.spawn((
-            Pop,
-            Skills::default(),
-            GridPosition { x: 6, y: 5 },
-            MovementTarget {
-                target_entity: forestry_designation,
-                target_position: GridPosition { x: 6, y: 5 },
-                for_action: ActionType::Work
-            },
-            AtTarget
-        )).id();
+        let worker = world
+            .spawn((
+                Pop,
+                Skills::default(),
+                GridPosition { x: 6, y: 5 },
+                MovementTarget {
+                    target_entity: forestry_designation,
+                    target_position: GridPosition { x: 6, y: 5 },
+                    for_action: ActionType::Work,
+                },
+                AtTarget,
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(manual_aura_system);
@@ -234,7 +265,11 @@ mod tests {
 
         // Should NOT gain XP in Mining because task is Forestry
         let skills = world.get::<Skills>(worker).unwrap();
-        assert_eq!(skills.get_xp(SkillType::Mining), 0.0, "Should not gain XP for mismatched task");
+        assert_eq!(
+            skills.get_xp(SkillType::Mining),
+            0.0,
+            "Should not gain XP for mismatched task"
+        );
     }
 
     #[test]
@@ -249,27 +284,33 @@ mod tests {
                 durability: 10.0,
                 max_durability: 10.0,
             },
-            GridPosition { x: 0, y: 0 }
+            GridPosition { x: 0, y: 0 },
         ));
 
         // Worker at 6,0 (Distance 6)
-        let worker = world.spawn((
-            Pop,
-            Skills::default(),
-            GridPosition { x: 6, y: 0 },
-            MovementTarget {
-                target_entity: Entity::from_raw(0),
-                target_position: GridPosition { x: 6, y: 0 },
-                for_action: ActionType::Work
-            },
-            AtTarget
-        )).id();
+        let worker = world
+            .spawn((
+                Pop,
+                Skills::default(),
+                GridPosition { x: 6, y: 0 },
+                MovementTarget {
+                    target_entity: Entity::from_raw(0),
+                    target_position: GridPosition { x: 6, y: 0 },
+                    for_action: ActionType::Work,
+                },
+                AtTarget,
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(manual_aura_system);
         schedule.run(&mut world);
 
         let skills = world.get::<Skills>(worker).unwrap();
-        assert_eq!(skills.get_xp(SkillType::Mining), 0.0, "Should not gain XP if too far");
+        assert_eq!(
+            skills.get_xp(SkillType::Mining),
+            0.0,
+            "Should not gain XP if too far"
+        );
     }
 }

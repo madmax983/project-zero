@@ -81,6 +81,7 @@ Features that have been fully implemented, tested, and merged.
 - [x] `075` Animal Husbandry — `specs/075-animal-husbandry.md` — completed 2026-10-30
 - [x] `163` Vermin Evolution — `specs/163-vermin-evolution.md` — completed 2026-05-31
 - [x] `172` Institutional Memory — `specs/172-institutional-memory.md` — completed 2026-10-27
+- [x] `176` The Gridlock — `specs/176-gridlock-crowding.md` — completed 2026-10-29
 
 ## MVP — Layer 2: System Simulation
 

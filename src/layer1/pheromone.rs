@@ -1,5 +1,5 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::morale::MoodModifier;
+use bevy_ecs::prelude::*;
 
 /// Effect applied by a pheromone.
 #[derive(Clone, Debug, PartialEq)]
@@ -48,7 +48,13 @@ pub struct ReactiveEmitter {
 /// System that applies pheromone effects to pops in range.
 pub fn pheromone_emission_system(
     mut emitters: Query<(&mut PheromoneEmitter, &crate::layer1::map::GridPosition)>,
-    mut pops: Query<(&crate::layer1::map::GridPosition, &mut crate::layer1::morale::Morale), With<crate::layer1::pop::Pop>>,
+    mut pops: Query<
+        (
+            &crate::layer1::map::GridPosition,
+            &mut crate::layer1::morale::Morale,
+        ),
+        With<crate::layer1::pop::Pop>,
+    >,
 ) {
     for (mut emitter, emitter_pos) in &mut emitters {
         if emitter.timer > 0 {
@@ -63,8 +69,10 @@ pub fn pheromone_emission_system(
             let dy = (emitter_pos.y - pop_pos.y).abs();
 
             // Chebyshev distance check
-            if dx <= i32::try_from(emitter.radius).unwrap_or(0) && dy <= i32::try_from(emitter.radius).unwrap_or(0) {
-                 morale.add_modifier(MoodModifier {
+            if dx <= i32::try_from(emitter.radius).unwrap_or(0)
+                && dy <= i32::try_from(emitter.radius).unwrap_or(0)
+            {
+                morale.add_modifier(MoodModifier {
                     label: emitter.effect.label.clone(),
                     value: emitter.effect.value,
                     duration: emitter.effect.duration,
@@ -76,7 +84,11 @@ pub fn pheromone_emission_system(
 
 /// System that updates reactive emitters based on environment.
 pub fn reactive_emitter_system(
-    mut query: Query<(&mut PheromoneEmitter, &crate::layer1::map::GridPosition, &ReactiveEmitter)>,
+    mut query: Query<(
+        &mut PheromoneEmitter,
+        &crate::layer1::map::GridPosition,
+        &ReactiveEmitter,
+    )>,
     pollution: Option<Res<crate::layer1::atmosphere::AtmosphereGrid>>,
 ) {
     let grid = pollution.as_deref();
@@ -85,7 +97,7 @@ pub fn reactive_emitter_system(
         let active = match reactive.trigger {
             TriggerType::HighPollution(threshold) => {
                 grid.is_some_and(|g| g.get(pos.x, pos.y) > threshold)
-            },
+            }
             TriggerType::LowMorale(_) => false,
         };
 
@@ -100,21 +112,19 @@ pub fn reactive_emitter_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::map::GridPosition;
-    use crate::layer1::pop::Pop;
-    use crate::layer1::morale::Morale;
     use crate::layer1::atmosphere::AtmosphereGrid;
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::morale::Morale;
+    use crate::layer1::pop::Pop;
 
     #[test]
     fn test_pheromone_application() {
         let mut world = World::new();
 
         // Spawn Pop at (0,0)
-        let pop = world.spawn((
-            Pop,
-            GridPosition { x: 0, y: 0 },
-            Morale::default(),
-        )).id();
+        let pop = world
+            .spawn((Pop, GridPosition { x: 0, y: 0 }, Morale::default()))
+            .id();
 
         // Spawn Emitter at (0,1) - Range 2
         world.spawn((
@@ -148,11 +158,9 @@ mod tests {
         let mut world = World::new();
 
         // Spawn Pop at (0,0)
-        let pop = world.spawn((
-            Pop,
-            GridPosition { x: 0, y: 0 },
-            Morale::default(),
-        )).id();
+        let pop = world
+            .spawn((Pop, GridPosition { x: 0, y: 0 }, Morale::default()))
+            .id();
 
         // Spawn Emitter at (0,5) - Range 2 (Too far)
         world.spawn((
@@ -174,7 +182,10 @@ mod tests {
         schedule.run(&mut world);
 
         let morale = world.get::<Morale>(pop).unwrap();
-        assert!(morale.modifiers.is_empty(), "Pop outside range should not receive modifier");
+        assert!(
+            morale.modifiers.is_empty(),
+            "Pop outside range should not receive modifier"
+        );
     }
 
     #[test]
@@ -187,32 +198,34 @@ mod tests {
         world.insert_resource(grid);
 
         // Spawn Reactive Emitter
-        let emitter = world.spawn((
-            GridPosition { x: 0, y: 0 },
-            PheromoneEmitter {
-                radius: 2,
-                effect: PheromoneEffect {
-                    label: "Clean Scent".to_string(),
-                    value: 0.1,
-                    duration: 10,
+        let emitter = world
+            .spawn((
+                GridPosition { x: 0, y: 0 },
+                PheromoneEmitter {
+                    radius: 2,
+                    effect: PheromoneEffect {
+                        label: "Clean Scent".to_string(),
+                        value: 0.1,
+                        duration: 10,
+                    },
+                    interval: 1,
+                    timer: 0,
                 },
-                interval: 1,
-                timer: 0,
-            },
-            ReactiveEmitter {
-                trigger: TriggerType::HighPollution(0.5),
-                active_effect: PheromoneEffect {
-                    label: "Toxic Warning".to_string(), // Changes to this
-                    value: -0.2,
-                    duration: 20,
+                ReactiveEmitter {
+                    trigger: TriggerType::HighPollution(0.5),
+                    active_effect: PheromoneEffect {
+                        label: "Toxic Warning".to_string(), // Changes to this
+                        value: -0.2,
+                        duration: 20,
+                    },
+                    base_effect: PheromoneEffect {
+                        label: "Clean Scent".to_string(),
+                        value: 0.1,
+                        duration: 10,
+                    },
                 },
-                base_effect: PheromoneEffect {
-                    label: "Clean Scent".to_string(),
-                    value: 0.1,
-                    duration: 10,
-                },
-            }
-        )).id();
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(reactive_emitter_system);

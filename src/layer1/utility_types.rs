@@ -442,7 +442,6 @@ pub fn calculate_context_score(
     score.clamp(0.0, 1.0)
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -489,7 +488,6 @@ mod tests {
         let score = calculate_context_score(pop_pos, None, 0, 0, &weights);
         assert!((score - 1.0).abs() < f32::EPSILON);
     }
-
 
     #[test]
     fn test_manhattan_distance_extreme() {
@@ -593,7 +591,6 @@ mod tests {
 
         assert!(empty_score > full_score);
     }
-
 
     #[test]
     fn test_manhattan_distance() {

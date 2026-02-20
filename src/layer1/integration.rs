@@ -416,13 +416,18 @@ pub fn amputation_handler_system(
 /// Bridges Building (DroneHub) and Drone system (Agents).
 pub fn drone_spawner_bridge_system(
     mut commands: Commands,
-    hubs: Query<(&GridPosition, &crate::layer1::energy::PowerConsumer), With<crate::layer1::drone::DroneHub>>,
+    hubs: Query<
+        (&GridPosition, &crate::layer1::energy::PowerConsumer),
+        With<crate::layer1::drone::DroneHub>,
+    >,
     drones: Query<&crate::layer1::drone::Drone>,
     _time: Res<SimulationTime>,
 ) {
     // Limit total drones to 3 * Hubs
     let hub_count = hubs.iter().count();
-    if hub_count == 0 { return; }
+    if hub_count == 0 {
+        return;
+    }
 
     let drone_count = drones.iter().count();
     let max_drones = hub_count * 3;
@@ -435,15 +440,22 @@ pub fn drone_spawner_bridge_system(
     for (pos, power) in hubs.iter() {
         if power.active {
             // Spawn drone
-             commands.spawn((
+            commands.spawn((
                 crate::layer1::drone::Drone,
                 *pos,
                 crate::layer1::utility_ai::PopAction::default(),
-                crate::layer1::drone::DroneBattery { current: 100.0, max: 100.0 },
-                crate::layer1::pop::Speed { base: 1.0, current: 1.0, accumulator: 0.0 },
+                crate::layer1::drone::DroneBattery {
+                    current: 100.0,
+                    max: 100.0,
+                },
+                crate::layer1::pop::Speed {
+                    base: 1.0,
+                    current: 1.0,
+                    accumulator: 0.0,
+                },
                 crate::layer1::utility_ai::UtilityWeights::default(),
-             ));
-             break; // Only one per tick
+            ));
+            break; // Only one per tick
         }
     }
 }
@@ -452,7 +464,13 @@ pub fn drone_spawner_bridge_system(
 ///
 /// Bridges Drone system (Idle agents) and Work system (Hauling).
 pub fn drone_work_bridge_system(
-    mut query: Query<(&mut crate::layer1::utility_ai::PopAction, &crate::layer1::drone::DroneBattery), With<crate::layer1::drone::Drone>>,
+    mut query: Query<
+        (
+            &mut crate::layer1::utility_ai::PopAction,
+            &crate::layer1::drone::DroneBattery,
+        ),
+        With<crate::layer1::drone::Drone>,
+    >,
 ) {
     for (mut action, battery) in query.iter_mut() {
         // If idle and battery > 20%, start hauling
