@@ -18,7 +18,8 @@ pub struct CrowdingGrid {
 }
 
 impl CrowdingGrid {
-    /// Creates a new, empty CrowdingGrid.
+    /// Creates a new, empty `CrowdingGrid`.
+    #[must_use]
     pub fn new(width: usize, height: usize) -> Self {
         Self {
             width,
@@ -29,6 +30,7 @@ impl CrowdingGrid {
 
     /// Gets the crowding level at the specified coordinates.
     /// Returns 0 if out of bounds.
+    #[must_use]
     pub fn get(&self, x: usize, y: usize) -> u8 {
         if x < self.width && y < self.height {
             self.cells[y * self.width + x]

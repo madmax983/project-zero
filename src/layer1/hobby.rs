@@ -73,6 +73,7 @@ pub fn assign_hobby_system(
 ///
 /// Driven by stress levels. High stress = high desire to do hobby.
 /// Also slightly boosted if currently Idle.
+#[must_use]
 pub fn evaluate_hobby(data: &PopEvalData, _hobby_type: HobbyType) -> f32 {
     let base_score = 0.1;
     let stress_factor = data.stress * 0.8; // Up to 0.8 from stress
@@ -109,8 +110,8 @@ pub fn execute_hobby_system(
         // Let's use 0.5.
 
         // Chance to produce item (e.g., 1% per tick)
-        if rng.gen_bool(0.01) {
-            if let Some(mut inv) = inventory {
+        if rng.gen_bool(0.01)
+            && let Some(mut inv) = inventory {
                 let item_type = match hobby.hobby_type {
                     HobbyType::Whittling => Some(ItemType::Curio("Wooden Duck".to_string())),
                     HobbyType::Tinkering => Some(ItemType::Curio("Bent Gear".to_string())),
@@ -121,7 +122,6 @@ pub fn execute_hobby_system(
                     inv.add(InventoryItem { item_type: t });
                 }
             }
-        }
     }
 }
 
