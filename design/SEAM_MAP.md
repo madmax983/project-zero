@@ -103,3 +103,11 @@
     - Updated `utility_ai.rs` to evaluate hauling for generic `Item` entities.
     - Updated `src/layer1/items.rs` with `CarryingItem` component.
 - **Tests:** `test_haul_manual_system_lifecycle` in `src/layer1/hauling.rs` (Integration test verified)
+
+### INT-002: Power Grid -> Utility AI (Refining, Farming, Medical)
+- **Date:** 2026-02-xx
+- **Systems connected:** `PowerConsumer` (Energy) -> `utility_ai` (Decision Making)
+- **Glue added:**
+    - Updated `src/layer1/utility_ai.rs` (`populate_refining`, `populate_farms`, `populate_hospitals`) to query `PowerConsumer`.
+    - Added filter to ignore unpowered buildings (active=false) during candidate population.
+- **Tests:** `tests/integration/power_utility.rs` (3 tests verified)
