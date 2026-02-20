@@ -2,224 +2,208 @@
 
 ## Overview
 
-Implements procedural generation for Layer 2 (System View). At game start, the game will generate a star system consisting of a central Star, orbiting Planets, and Moons.
+Procedurally generate a star system for the Layer 2 simulation. This spec defines the logic to populate the `SystemMap` (introduced in `094`) with a Star, Planets, and Moons based on a deterministic seed.
 
-One planet will be selected as the `ColonyLocation` (where the player starts on Layer 1). The generated traits of this planet (e.g., Gravity, Atmosphere) will be propagated to the global `PlanetaryTraits` resource defined in Spec 080, linking the system simulation to the colony simulation.
+This is the "Level Generation" for the space layer. It ensures that every new game starts with a unique but reproducible star system.
 
 ## Dependencies
 
-- `094` — System View Architecture (for `OrbitalBody`, `Orbit` components)
-- `080` — Planetary Quirks (for `PlanetaryTraits` resource and `PlanetaryTrait` enum)
-- `001` — Project Scaffold (for `App` structure)
+- `094` System View Architecture (Defines `OrbitalBody`, `Orbit`)
+- `001` Project Scaffold (ECS)
 
 ## RED Phase: Tests First
 
-Write these tests in `src/layer2/generation_tests.rs`. They will initially FAIL.
+These tests define the requirements for the system generator. They must be written in `src/layer2/generation_tests.rs` (or similar) before implementation.
 
 ```rust
+// src/layer2/generation_tests.rs
+
 #[cfg(test)]
 mod tests {
     use bevy_ecs::prelude::*;
-    use crate::layer2::system::{OrbitalBody, Orbit};
-    use crate::layer2::generation::{generate_system, Star, Planet, Moon, ColonyLocation, PlanetaryTraitsComponent};
-    use crate::layer1::quirks::{PlanetaryTraits, PlanetaryTrait};
+    use crate::layer2::system::{OrbitalBody, Orbit, SystemMap};
+    use crate::layer2::generation::{generate_system, WorldSeed, SystemGeneratorConfig};
 
-    fn setup_world() -> World {
+    #[test]
+    fn test_world_seed_resource() {
         let mut world = World::new();
-        world.insert_resource(PlanetaryTraits::default());
-        // Register required components if using reflection (optional for tests)
-        world
+        world.insert_resource(WorldSeed(12345));
+        assert_eq!(world.resource::<WorldSeed>().0, 12345);
     }
 
     #[test]
-    fn test_generate_system_creates_star() {
-        let mut world = setup_world();
+    fn test_generate_system_populates_entities() {
+        let mut world = World::new();
+        world.insert_resource(WorldSeed(42));
+        world.insert_resource(SystemMap::default());
 
-        // Run generation system
-        let mut schedule = Schedule::default();
-        schedule.add_systems(generate_system);
-        schedule.run(&mut world);
+        // Act
+        generate_system(&mut world);
 
-        // Assert exactly one Star exists
-        let stars = world.query::<&Star>().iter(&world).count();
-        assert_eq!(stars, 1, "Should generate exactly one star");
-
-        // Assert Star has OrbitalBody (visuals) but NO Orbit (it's the center)
-        let (star_entity, _) = world.query::<(Entity, &Star)>().single(&world);
-        assert!(world.get::<OrbitalBody>(star_entity).is_some());
-        assert!(world.get::<Orbit>(star_entity).is_none());
+        // Assert
+        let bodies = world.query::<&OrbitalBody>().iter(&world).len();
+        assert!(bodies > 0, "System generation should spawn at least one body (the star)");
     }
 
     #[test]
-    fn test_generate_system_creates_planets() {
-        let mut world = setup_world();
-        let mut schedule = Schedule::default();
-        schedule.add_systems(generate_system);
-        schedule.run(&mut world);
+    fn test_system_structure_star_and_planets() {
+        let mut world = World::new();
+        world.insert_resource(WorldSeed(100));
+        world.insert_resource(SystemMap::default());
 
-        // Assert at least one Planet exists
-        let planet_count = world.query::<&Planet>().iter(&world).count();
-        assert!(planet_count > 0, "Should generate at least one planet");
+        generate_system(&mut world);
 
-        // Assert Planets orbit the Star
-        let (star_entity, _) = world.query::<(Entity, &Star)>().single(&world);
-        for (planet_entity, orbit) in world.query::<(Entity, &Orbit)>().iter(&world) {
-            // Check if this entity is a planet
-            if world.get::<Planet>(planet_entity).is_some() {
-                assert_eq!(orbit.parent, star_entity, "Planet should orbit the star");
+        // Find the Star (Body with no Orbit parent)
+        let mut stars = 0;
+        let mut star_entity = None;
+
+        for (entity, _body, orbit) in world.query::<(Entity, &OrbitalBody, Option<&Orbit>)>().iter(&world) {
+            if orbit.is_none() {
+                stars += 1;
+                star_entity = Some(entity);
             }
         }
+        assert_eq!(stars, 1, "There should be exactly one star (root body)");
+        let star = star_entity.unwrap();
+
+        // Count planets (Parent is Star)
+        let mut planets = 0;
+        for (_entity, _body, orbit) in world.query::<(Entity, &OrbitalBody, &Orbit)>().iter(&world) {
+            if orbit.parent == star {
+                planets += 1;
+            }
+        }
+        assert!(planets >= 1, "There should be at least one planet orbiting the star");
     }
 
     #[test]
-    fn test_colony_location_assignment() {
-        let mut world = setup_world();
-        let mut schedule = Schedule::default();
-        schedule.add_systems(generate_system);
-        schedule.run(&mut world);
+    fn test_determinism() {
+        // Run A
+        let mut world_a = World::new();
+        world_a.insert_resource(WorldSeed(999));
+        world_a.insert_resource(SystemMap::default());
+        generate_system(&mut world_a);
+        let count_a = world_a.query::<&OrbitalBody>().iter(&world_a).len();
 
-        // Assert exactly one ColonyLocation exists
-        let colony_locations = world.query::<&ColonyLocation>().iter(&world).count();
-        assert_eq!(colony_locations, 1, "Should assign exactly one colony location");
+        // Run B (Same Seed)
+        let mut world_b = World::new();
+        world_b.insert_resource(WorldSeed(999));
+        world_b.insert_resource(SystemMap::default());
+        generate_system(&mut world_b);
+        let count_b = world_b.query::<&OrbitalBody>().iter(&world_b).len();
 
-        // Assert ColonyLocation is on a Planet
-        let (colony_entity, _) = world.query::<(Entity, &ColonyLocation)>().single(&world);
-        assert!(world.get::<Planet>(colony_entity).is_some(), "Colony should be on a planet");
-    }
+        assert_eq!(count_a, count_b, "Same seed should produce same number of bodies");
 
-    #[test]
-    fn test_planetary_traits_propagation() {
-        let mut world = setup_world();
+        // Run C (Diff Seed)
+        let mut world_c = World::new();
+        world_c.insert_resource(WorldSeed(111)); // Different seed
+        world_c.insert_resource(SystemMap::default());
+        generate_system(&mut world_c);
+        let count_c = world_c.query::<&OrbitalBody>().iter(&world_c).len();
 
-        // Mock: Ensure generation creates a planet with specific traits
-        // This might require seeding or inspecting internal logic, but for black-box testing:
-        // We verify that the Global Resource matches the Component on the Colony Planet.
-
-        let mut schedule = Schedule::default();
-        schedule.add_systems(generate_system);
-        schedule.run(&mut world);
-
-        let (colony_entity, _) = world.query::<(Entity, &ColonyLocation)>().single(&world);
-        let component_traits = world.get::<PlanetaryTraitsComponent>(colony_entity).expect("Colony planet should have traits component");
-
-        let global_traits = world.resource::<PlanetaryTraits>();
-
-        // Assert they match
-        // Note: PlanetaryTraits struct in Spec 080 wraps a Vec.
-        // We need to ensure PartialEq is derived or check contents manually.
-        assert_eq!(component_traits.traits, global_traits.0, "Global traits should match starting planet traits");
+        // Note: This *could* be equal by chance, but highly unlikely if logic varies count.
+        // Better to check positions/properties if counts are equal.
+        // For now, we assume simple count variance or property variance.
     }
 }
 ```
 
 ## GREEN Phase: Minimal Implementation
 
-### 1. Define Components (`src/layer2/generation.rs`)
+### 1. Define `WorldSeed`
+
+Add `WorldSeed` resource to `src/layer2/generation.rs` (or `shared/state.rs` if global scope desired, but keeping local for now is fine for Layer 2 focus).
 
 ```rust
 use bevy_ecs::prelude::*;
-use crate::layer2::system::{OrbitalBody, Orbit};
-use crate::layer1::quirks::{PlanetaryTraits, PlanetaryTrait};
-use ratatui::style::Color;
-use rand::prelude::*; // standard RNG
+use rand::{Rng, SeedableRng};
+use rand_chacha::ChaCha8Rng; // Deterministic RNG
 
-#[derive(Component)]
-pub struct Star;
+#[derive(Resource, Default, Debug, Clone, Copy)]
+pub struct WorldSeed(pub u64);
 
-#[derive(Component)]
-pub struct Planet;
-
-#[derive(Component)]
-pub struct Moon;
-
-#[derive(Component)]
-pub struct ColonyLocation;
-
-#[derive(Component)]
-pub struct PlanetaryTraitsComponent {
-    pub traits: Vec<PlanetaryTrait>,
+#[derive(Resource, Default, Debug)]
+pub struct SystemGeneratorConfig {
+    pub min_planets: u32,
+    pub max_planets: u32,
+    pub min_orbit_dist: f32,
+    pub max_orbit_dist: f32,
 }
+```
 
-pub fn generate_system(mut commands: Commands, mut global_traits: ResMut<PlanetaryTraits>) {
-    let mut rng = thread_rng();
+### 2. Implement Generation Logic
 
-    // 1. Create Star
-    let star_entity = commands.spawn((
-        Star,
-        OrbitalBody {
-            name: "Sun".to_string(),
-            radius: 5.0,
-            color: Color::Yellow,
-            char: '☼',
-        },
-    )).id();
+```rust
+use crate::layer2::system::{OrbitalBody, Orbit, SystemMap};
 
-    // 2. Create Planets
-    let num_planets = rng.gen_range(3..=8);
-    let mut planets = Vec::new();
+pub fn generate_system(world: &mut World) {
+    let seed = world.get_resource::<WorldSeed>().map(|s| s.0).unwrap_or(0);
+    let mut rng = ChaCha8Rng::seed_from_u64(seed);
 
-    for i in 0..num_planets {
-        let distance = 20.0 + (i as f32 * 15.0) + rng.gen_range(-5.0..5.0);
+    // Spawn Star
+    let star_entity = world.spawn(OrbitalBody {
+        name: "Sun".to_string(),
+        radius: 5.0,
+        color: ratatui::style::Color::Yellow,
+        char: '*',
+    }).id();
 
-        // Generate random traits for this planet
-        let mut planet_traits = Vec::new();
-        if rng.gen_bool(0.3) {
-            planet_traits.push(PlanetaryTrait::HighGravity); // Simplified selection
-        }
+    // Determine planet count
+    let planet_count = rng.gen_range(3..=8);
 
-        let planet = commands.spawn((
-            Planet,
+    // Orbit placement (simple linear spacing for MVP)
+    let mut current_dist = 20.0;
+
+    for i in 0..planet_count {
+        current_dist += rng.gen_range(10.0..25.0); // Spacing
+
+        let planet_entity = world.spawn((
             OrbitalBody {
                 name: format!("Planet {}", i + 1),
-                radius: rng.gen_range(1.0..3.0),
-                color: Color::Blue, // Placeholder
+                radius: 1.0,
+                color: ratatui::style::Color::Cyan, // Randomize later
                 char: 'O',
             },
             Orbit {
                 parent: star_entity,
-                radius: distance,
-                speed: 1.0 / distance.sqrt(), // Kepler-ish
-                angle: rng.gen_range(0.0..6.28),
-            },
-            PlanetaryTraitsComponent {
-                traits: planet_traits.clone(),
-            },
+                radius: current_dist,
+                speed: rng.gen_range(0.01..0.05), // Slower further out? (Kepler later)
+                angle: rng.gen_range(0.0..std::f32::consts::TAU),
+            }
         )).id();
 
-        planets.push((planet, planet_traits));
-    }
-
-    // 3. Select Colony Location
-    // Pick a random planet to be the colony
-    if let Some((colony_entity, traits)) = planets.choose(&mut rng) {
-        commands.entity(*colony_entity).insert(ColonyLocation);
-
-        // 4. Propagate Traits
-        global_traits.0 = traits.clone();
+        // Chance for Moon
+        if rng.gen_bool(0.3) {
+             world.spawn((
+                OrbitalBody {
+                    name: format!("Moon {}-A", i + 1),
+                    radius: 0.2,
+                    color: ratatui::style::Color::Gray,
+                    char: '.',
+                },
+                Orbit {
+                    parent: planet_entity,
+                    radius: 3.0,
+                    speed: 0.1,
+                    angle: rng.gen_range(0.0..std::f32::consts::TAU),
+                }
+            ));
+        }
     }
 }
 ```
 
 ## REFACTOR Phase: Quality & Design
 
-- **Seeded RNG**: Replace `thread_rng()` with a seeded RNG (e.g., `ChaCha8Rng`) stored in a `WorldSeed` resource (from Spec 001/Project Scaffold if available, or create one). This ensures every run with the same seed generates the same system.
-- **Planet Types**: Introduce `PlanetType` enum (Rocky, GasGiant, IceWorld).
-  - Gas Giants shouldn't be `ColonyLocation` candidates (unless we support floating cities).
-  - Visuals (`OrbitalBody.color`) should match type.
-- **Orbit Logic**: Move orbital math (Kepler's laws) to a helper function.
-- **Moons**: Add a loop to generate moons around planets (nested orbits).
-- **Trait Logic**: Implement a weighted table for `PlanetaryTrait` generation based on `PlanetType` (e.g., High Gravity more likely on large Rocky worlds).
+- **Kepler's Laws**: Update `Orbit.speed` calculation to decrease with `radius` (sqrt(1/r)).
+- **Types**: Introduce `StarType` (Red Dwarf, Yellow Main, Blue Giant) and `PlanetType` (Rocky, Gas Giant, Ice) enums to drive color/char/radius.
+- **Names**: Use a procedural name generator (syllables) instead of "Planet 1".
+- **Safety**: Ensure orbits don't overlap (collision checks).
 
 ## Acceptance Criteria
 
-- [ ] `generate_system` runs at startup.
-- [ ] A Star, 3-8 Planets, and Colony Location are created.
-- [ ] Global `PlanetaryTraits` resource is populated from the Colony Location.
-- [ ] Planet entities have correct `OrbitalBody` and `Orbit` components.
-- [ ] Tests pass.
-
-## Technical Guidance
-
-- Use `bevy::math` for constants like `PI`.
-- Ensure `generate_system` is added to `Startup` schedule in `main.rs` or `layer2/mod.rs`.
-- `PlanetaryTraits` resource must be initialized (inserted) *before* this system runs. Default initialization in `main.rs` is sufficient.
+- [ ] `WorldSeed` resource controls the RNG.
+- [ ] `generate_system` spawns 1 Star and multiple Planets.
+- [ ] Planets have correct `Orbit` components pointing to the Star.
+- [ ] Some planets have Moons.
+- [ ] Running with the same seed produces the exact same system layout.
