@@ -117,7 +117,9 @@ fn handle_pickup(world: &mut World, pop_entity: Entity, pos: GridPosition) {
 
         if let Some(item_entity) = generic_item_to_pickup {
             // Pickup Item
-            world.entity_mut(pop_entity).insert(CarryingItem(item_entity));
+            world
+                .entity_mut(pop_entity)
+                .insert(CarryingItem(item_entity));
             world.entity_mut(item_entity).remove::<GridPosition>();
         }
     }
@@ -633,17 +635,25 @@ mod tests {
         let resources = ColonyResources::default();
 
         // Spawn Manual
-        let manual_entity = world.spawn((
-            Item { item_type: ItemType::Manual },
-            GridPosition { x: 5, y: 0 },
-        )).id();
+        let manual_entity = world
+            .spawn((
+                Item {
+                    item_type: ItemType::Manual,
+                },
+                GridPosition { x: 5, y: 0 },
+            ))
+            .id();
 
         // Spawn Stockpile
-        let stockpile_entity = world.spawn((
-            Building { building_type: BuildingType::Stockpile },
-            Stockpile::default(),
-            GridPosition { x: 10, y: 0 },
-        )).id();
+        let stockpile_entity = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Stockpile,
+                },
+                Stockpile::default(),
+                GridPosition { x: 10, y: 0 },
+            ))
+            .id();
 
         let item_entities = vec![ItemEntityProxy {
             entity: manual_entity,
@@ -674,52 +684,75 @@ mod tests {
 
     #[test]
     fn test_haul_manual_system_lifecycle() {
-         let mut world = World::new();
-         world.insert_resource(SimulationTime::default());
-         world.insert_resource(crate::layer1::factions::Factions::default());
-         world.insert_resource(ColonyResources::default());
+        let mut world = World::new();
+        world.insert_resource(SimulationTime::default());
+        world.insert_resource(crate::layer1::factions::Factions::default());
+        world.insert_resource(ColonyResources::default());
 
-         // 1. Setup
-         let pop = world.spawn((
-             Pop,
-             GridPosition { x: 2, y: 0 }, // At Item location
-             PopAction { current: ActionType::Haul, ..Default::default() },
-         )).id();
+        // 1. Setup
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 2, y: 0 }, // At Item location
+                PopAction {
+                    current: ActionType::Haul,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
-         let manual = world.spawn((
-             Item { item_type: ItemType::Manual },
-             GridPosition { x: 2, y: 0 },
-         )).id();
+        let manual = world
+            .spawn((
+                Item {
+                    item_type: ItemType::Manual,
+                },
+                GridPosition { x: 2, y: 0 },
+            ))
+            .id();
 
-         let _stockpile = world.spawn((
-             Building { building_type: BuildingType::Stockpile },
-             Stockpile::default(),
-             GridPosition { x: 10, y: 0 },
-         )).id();
+        let _stockpile = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Stockpile,
+                },
+                Stockpile::default(),
+                GridPosition { x: 10, y: 0 },
+            ))
+            .id();
 
-         // 2. Pickup
-         world.entity_mut(pop).insert(crate::layer1::execution::AtTarget);
-         haul_system(&mut world);
+        // 2. Pickup
+        world
+            .entity_mut(pop)
+            .insert(crate::layer1::execution::AtTarget);
+        haul_system(&mut world);
 
-         assert!(world.get::<CarryingItem>(pop).is_some());
-         assert_eq!(world.get::<CarryingItem>(pop).unwrap().0, manual);
-         assert!(world.get::<GridPosition>(manual).is_none()); // Picked up
+        assert!(world.get::<CarryingItem>(pop).is_some());
+        assert_eq!(world.get::<CarryingItem>(pop).unwrap().0, manual);
+        assert!(world.get::<GridPosition>(manual).is_none()); // Picked up
 
-         // 3. Find Dropoff Target
-         haul_system(&mut world);
+        // 3. Find Dropoff Target
+        haul_system(&mut world);
 
-         let target = world.get::<crate::layer1::execution::MovementTarget>(pop);
-         assert!(target.is_some());
-         assert_eq!(target.unwrap().target_position, GridPosition { x: 10, y: 0 });
+        let target = world.get::<crate::layer1::execution::MovementTarget>(pop);
+        assert!(target.is_some());
+        assert_eq!(
+            target.unwrap().target_position,
+            GridPosition { x: 10, y: 0 }
+        );
 
-         // 4. Dropoff
-         *world.get_mut::<GridPosition>(pop).unwrap() = GridPosition { x: 10, y: 0 };
-         world.entity_mut(pop).insert(crate::layer1::execution::AtTarget);
+        // 4. Dropoff
+        *world.get_mut::<GridPosition>(pop).unwrap() = GridPosition { x: 10, y: 0 };
+        world
+            .entity_mut(pop)
+            .insert(crate::layer1::execution::AtTarget);
 
-         haul_system(&mut world);
+        haul_system(&mut world);
 
-         assert!(world.get::<CarryingItem>(pop).is_none());
-         assert!(world.get::<GridPosition>(manual).is_some());
-         assert_eq!(*world.get::<GridPosition>(manual).unwrap(), GridPosition { x: 10, y: 0 });
+        assert!(world.get::<CarryingItem>(pop).is_none());
+        assert!(world.get::<GridPosition>(manual).is_some());
+        assert_eq!(
+            *world.get::<GridPosition>(manual).unwrap(),
+            GridPosition { x: 10, y: 0 }
+        );
     }
 }
