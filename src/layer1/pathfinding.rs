@@ -278,6 +278,7 @@ fn find_path_internal(
 ///
 /// This heuristic is admissible for 4-connected grids, guaranteeing the shortest path
 /// if edge weights are >= 1.
+#[must_use]
 pub const fn manhattan_distance(a: (i32, i32), b: (i32, i32)) -> i32 {
     (a.0 - b.0).abs() + (a.1 - b.1).abs()
 }

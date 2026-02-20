@@ -23,6 +23,7 @@ use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
 use rand::Rng;
+use std::ops::Mul;
 
 /// Types of resources in the game.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -207,6 +208,48 @@ impl Default for ColonyResources {
             max_fuel: 20.0,
             water: 0.0,
             max_water: 50.0,
+        }
+    }
+}
+
+impl Mul<f32> for ColonyResources {
+    type Output = Self;
+
+    fn mul(self, rhs: f32) -> Self::Output {
+        Self {
+            food: (self.food * rhs).ceil(),
+            wood: (self.wood * rhs).ceil(),
+            stone: (self.stone * rhs).ceil(),
+            planks: (self.planks * rhs).ceil(),
+            blocks: (self.blocks * rhs).ceil(),
+            ore: (self.ore * rhs).ceil(),
+            metal: (self.metal * rhs).ceil(),
+            tools: (self.tools * rhs).ceil(),
+            knowledge: (self.knowledge * rhs).ceil(),
+            fiber: (self.fiber * rhs).ceil(),
+            cloth: (self.cloth * rhs).ceil(),
+            clothing: (self.clothing * rhs).ceil(),
+            waste: (self.waste * rhs).ceil(),
+            rations: (self.rations * rhs).ceil(),
+            fuel: (self.fuel * rhs).ceil(),
+            water: (self.water * rhs).ceil(),
+            // Capacities should NOT change when multiplying cost
+            max_food: self.max_food,
+            max_wood: self.max_wood,
+            max_stone: self.max_stone,
+            max_planks: self.max_planks,
+            max_blocks: self.max_blocks,
+            max_ore: self.max_ore,
+            max_metal: self.max_metal,
+            max_tools: self.max_tools,
+            max_knowledge: self.max_knowledge,
+            max_fiber: self.max_fiber,
+            max_cloth: self.max_cloth,
+            max_clothing: self.max_clothing,
+            max_waste: self.max_waste,
+            max_rations: self.max_rations,
+            max_fuel: self.max_fuel,
+            max_water: self.max_water,
         }
     }
 }

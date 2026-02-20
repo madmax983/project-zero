@@ -82,6 +82,7 @@ Features that have been fully implemented, tested, and merged.
 - [x] `163` Vermin Evolution — `specs/163-vermin-evolution.md` — completed 2026-05-31
 - [x] `172` Institutional Memory — `specs/172-institutional-memory.md` — completed 2026-10-27
 - [x] `176` The Gridlock — `specs/176-gridlock-crowding.md` — completed 2026-10-29
+- [x] `178` Scrapcode — `specs/178-scrapcode.md` — completed 2026-10-31
 
 ## MVP — Layer 2: System Simulation
 

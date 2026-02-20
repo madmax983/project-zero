@@ -15,9 +15,7 @@ pub fn evaluate_scrawl_memetic_sigil(
     world: &mut World,
 ) -> Option<(ActionType, f32, Option<Entity>)> {
     // 1. Am I a carrier?
-    if world.get::<MemeticCarrier>(data.entity).is_none() {
-        return None;
-    }
+    world.get::<MemeticCarrier>(data.entity)?;
 
     // 2. Find a wall to deface
     let mut rng = rand::thread_rng();

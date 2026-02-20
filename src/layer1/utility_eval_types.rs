@@ -156,7 +156,7 @@ pub struct ScorableCandidate {
 
 impl ScorableCandidate {
     /// Creates a simple position-based candidate.
-    pub fn new(entity: Entity, pos: GridPosition) -> Self {
+    pub const fn new(entity: Entity, pos: GridPosition) -> Self {
         Self {
             entity,
             pos,
@@ -169,7 +169,7 @@ impl ScorableCandidate {
     }
 
     /// Creates a candidate with capacity.
-    pub fn with_capacity(
+    pub const fn with_capacity(
         entity: Entity,
         pos: GridPosition,
         capacity: usize,

@@ -411,9 +411,9 @@ pub fn amputation_handler_system(
     }
 }
 
-/// Spawns drones at active DroneHubs if the population is low.
+/// Spawns drones at active `DroneHubs` if the population is low.
 ///
-/// Bridges Building (DroneHub) and Drone system (Agents).
+/// Bridges Building (`DroneHub`) and Drone system (Agents).
 pub fn drone_spawner_bridge_system(
     mut commands: Commands,
     hubs: Query<
@@ -472,7 +472,7 @@ pub fn drone_work_bridge_system(
         With<crate::layer1::drone::Drone>,
     >,
 ) {
-    for (mut action, battery) in query.iter_mut() {
+    for (mut action, battery) in &mut query {
         // If idle and battery > 20%, start hauling
         // Drones handle charging logic in evaluate_drone_actions_system which sets action to Charge.
         // We only override Idle.

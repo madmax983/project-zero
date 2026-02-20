@@ -510,3 +510,6 @@ mod institutional_memory_tests;
 pub mod memetic;
 pub mod seismic;
 pub use seismic::*;
+/// Scrapcode virus system (Spec 178).
+pub mod scrapcode;
+pub use scrapcode::*;

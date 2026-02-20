@@ -68,8 +68,8 @@ pub fn handle_socialize(
 /// `Recovery = Base * (1.0 + ZoneBonus + SocialBonus)`
 ///
 /// *   **Base**: 0.05 per tick.
-/// *   **ZoneBonus**: From [`crate::layer1::zone::ZoneType`] (e.g. Dining zone).
-/// *   **SocialBonus**: `(VisitorCount - 1) * 0.1`. More people = more fun.
+/// *   **`ZoneBonus`**: From [`crate::layer1::zone::ZoneType`] (e.g. Dining zone).
+/// *   **`SocialBonus`**: `(VisitorCount - 1) * 0.1`. More people = more fun.
 pub fn restore_leisure_system(
     mut needs_query: Query<&mut Needs>,
     tavern_query: Query<(&Tavern, &crate::layer1::building::Building, &GridPosition)>,
