@@ -79,7 +79,7 @@ pub fn trend_spread_system(
 
         // If near the trend source (let's say 20 tiles is "gossip range")
         if dist < 20 {
-            mimicry.desired_item = trend.current_item.clone();
+            mimicry.desired_item.clone_from(&trend.current_item);
         }
     }
 }

@@ -28,12 +28,13 @@ pub struct DroneBattery {
 /// Evaluates drone actions.
 /// Prioritizes Charging if battery is low (< 20%).
 /// Otherwise Idles (Placeholder for Hauling).
+#[allow(clippy::type_complexity)]
 pub fn evaluate_drone_actions_system(
     mut commands: Commands,
     mut drone_query: Query<(Entity, &DroneBattery, &mut PopAction, &GridPosition), With<Drone>>,
     hub_query: Query<(Entity, &GridPosition, &PowerConsumer), (With<DroneHub>, With<Building>)>,
 ) {
-    for (entity, battery, mut action, pos) in drone_query.iter_mut() {
+    for (entity, battery, mut action, pos) in &mut drone_query {
         let battery_pct = battery.current / battery.max;
 
         // 1. Charge if low
@@ -82,12 +83,12 @@ pub fn evaluate_drone_actions_system(
     }
 }
 
-/// Charges drones when they are at a Hub and performing ActionType::Charge.
+/// Charges drones when they are at a Hub and performing `ActionType::Charge`.
 pub fn process_charge_system(
     mut drone_query: Query<(Entity, &mut DroneBattery, &PopAction, &GridPosition), With<Drone>>,
     hub_query: Query<(&GridPosition, &PowerConsumer), With<DroneHub>>,
 ) {
-    for (_entity, mut battery, action, pos) in drone_query.iter_mut() {
+    for (_entity, mut battery, action, pos) in &mut drone_query {
         if action.current == ActionType::Charge {
             // Check if at any ACTIVE hub location
             let at_active_hub = hub_query.iter().any(|(hub_pos, power)| hub_pos == pos && power.active);
@@ -103,7 +104,7 @@ pub fn process_charge_system(
 pub fn drone_battery_system(
     mut query: Query<(&mut DroneBattery, &PopAction), With<Drone>>,
 ) {
-    for (mut battery, action) in query.iter_mut() {
+    for (mut battery, action) in &mut query {
         let drain = match action.current {
             ActionType::Idle => 0.05,
             ActionType::Charge => 0.0, // Don't drain while charging logic runs (it net gains)

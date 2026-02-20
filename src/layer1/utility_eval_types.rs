@@ -52,7 +52,7 @@ pub struct PopEvalData {
     pub breakdown: Option<Breakdown>,
     /// Personality traits, if any.
     pub traits: Option<Traits>,
-    /// Accumulated stress (normalized 0.0-1.0), derived from StressTracker.
+    /// Accumulated stress (normalized 0.0-1.0), derived from `StressTracker`.
     pub stress: f32,
     /// Assigned hobby type, if any.
     pub hobby_type: Option<HobbyType>,

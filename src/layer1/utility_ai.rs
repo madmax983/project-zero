@@ -385,6 +385,13 @@ pub(crate) fn evaluate_single_pop(
         return (action, utility, target);
     }
 
+    // 1b. Check for Memetic Compulsion (Returns early, overrides drafted)
+    if let Some((action, utility, target)) =
+        crate::layer1::actions::scrawl_sigil::evaluate_scrawl_memetic_sigil(data, world)
+    {
+        return (action, utility, target);
+    }
+
     // 2. Check for Drafted (Returns early)
     if let Some((action, utility, target)) = evaluate_drafted_behavior(data, world) {
         return (action, utility, target);
@@ -404,6 +411,7 @@ pub(crate) fn evaluate_single_pop(
     evaluator.result()
 }
 
+#[allow(clippy::too_many_lines)]
 fn populate_buffer_buildings(
     world: &mut World,
     buffer: &mut UtilityAIBuffer,
@@ -658,7 +666,11 @@ fn populate_ai_buffer(world: &mut World, buffer: &mut UtilityAIBuffer, context: 
 ///
 /// # Performance Note
 /// This system avoids per-Pop query iteration by collecting candidates once per frame.
-#[allow(clippy::too_many_lines, clippy::collapsible_if)]
+#[allow(
+    clippy::too_many_lines,
+    clippy::collapsible_if,
+    clippy::type_complexity
+)]
 pub fn evaluate_actions_system(world: &mut World) {
     let config = world.resource::<UtilityConfig>().clone();
 

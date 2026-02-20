@@ -504,3 +504,4 @@ pub mod systems;
 mod drone_tests;
 #[cfg(test)]
 mod institutional_memory_tests;
+pub mod memetic;
