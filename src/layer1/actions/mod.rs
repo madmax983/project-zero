@@ -99,6 +99,8 @@ pub mod social;
 
 /// Mental break action logic.
 pub mod mental_break;
+/// Memetic sigil scrawling action logic.
+pub mod scrawl_sigil;
 
 #[cfg(test)]
 mod work_building_tests;

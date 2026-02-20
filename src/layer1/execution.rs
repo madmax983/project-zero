@@ -253,7 +253,6 @@ pub fn cleanup_previous_assignment_system(
             | AssignmentType::Scientist
             | AssignmentType::Artist
             | AssignmentType::Governor
-            | AssignmentType::Administrator
             | AssignmentType::Chef
             | AssignmentType::Surgery => {}
         }
@@ -469,7 +468,10 @@ fn check_work_adjacency(
     pop_entity: Entity,
     pop_role: Option<Role>,
 ) -> bool {
-    if action != ActionType::Work && action != ActionType::Repair {
+    if action != ActionType::Work
+        && action != ActionType::Repair
+        && action != ActionType::ScrawlMemeticSigil
+    {
         return false;
     }
 
@@ -509,6 +511,7 @@ pub fn arrival_handler_system(
     mut memories: Query<&mut Memories>,
     mut resources: ResMut<ColonyResources>,
     mut log: Option<ResMut<MessageLog>>,
+    mut graffiti_map: Option<ResMut<crate::layer1::graffiti::GraffitiMap>>,
     time: Res<SimulationTime>,
     mut commands: Commands,
 ) {
@@ -518,10 +521,12 @@ pub fn arrival_handler_system(
             pop_entity,
             mt.target_entity,
             *pop_pos,
+            mt.target_position,
             &mut equipment_opt,
             &mut commands,
             &mut resources,
             log.as_deref_mut(),
+            graffiti_map.as_deref_mut(),
             &mut farms,
             &mut housing_q,
             &mut taverns,
@@ -543,10 +548,12 @@ fn process_arrival(
     pop_entity: Entity,
     target_entity: Entity,
     pop_pos: GridPosition,
+    target_pos: GridPosition,
     equipment_opt: &mut Option<Mut<Equipment>>,
     commands: &mut Commands,
     resources: &mut ColonyResources,
     log: Option<&mut MessageLog>,
+    graffiti_map: Option<&mut crate::layer1::graffiti::GraffitiMap>,
     farms: &mut Query<&mut Farm>,
     housing_q: &mut Query<&mut Housing>,
     taverns: &mut Query<&mut Tavern>,
@@ -557,6 +564,23 @@ fn process_arrival(
     time: &Res<SimulationTime>,
 ) -> bool {
     match action {
+        ActionType::ScrawlMemeticSigil => {
+            if let Some(map) = graffiti_map {
+                use crate::layer1::graffiti::{Graffiti, GraffitiType};
+                map.markings.insert(
+                    (target_pos.x, target_pos.y),
+                    Graffiti {
+                        graffiti_type: GraffitiType::MemeticSigil,
+                        decay: 500.0,
+                        modifier: -0.2, // Strong debuff
+                    },
+                );
+                if let Some(log) = log {
+                    log.add_colored("A Memetic Sigil has been scrawled on a wall!", Color::Red);
+                }
+            }
+            true
+        }
         ActionType::Binge => {
             handle_binge_arrival(resources, log);
             true

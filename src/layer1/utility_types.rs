@@ -121,6 +121,10 @@ pub enum ActionType {
     ///
     /// See [`crate::layer1::actions::admin::evaluate_admin`].
     Admin,
+    /// Scrawl memetic sigils on walls (Memetic Hazard).
+    ///
+    /// See [`crate::layer1::actions::scrawl_sigil::evaluate_scrawl_memetic_sigil`].
+    ScrawlMemeticSigil,
 }
 
 /// Types of hobbies.
@@ -140,7 +144,7 @@ pub enum HobbyType {
 
 impl ActionType {
     /// Total number of action types. Used for array sizing.
-    pub const COUNT: usize = 29;
+    pub const COUNT: usize = 30;
 
     /// Converts action type to a unique array index (0..COUNT-1).
     #[must_use]
@@ -175,6 +179,7 @@ impl ActionType {
             Self::Charge => 26,
             Self::Hobby => 27,
             Self::Admin => 28,
+            Self::ScrawlMemeticSigil => 29,
         }
     }
 

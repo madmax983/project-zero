@@ -21,6 +21,8 @@ pub enum GraffitiType {
     Mural,
     /// Faction propaganda (requires Rebel trait or Faction Leader).
     Propaganda,
+    /// Memetic hazard that infects observers.
+    MemeticSigil,
 }
 
 /// A graffiti marking on a tile.
@@ -126,12 +128,17 @@ pub fn graffiti_placement_system(
 
 /// System to apply mood modifiers when observing graffiti.
 pub fn graffiti_observation_system(
+    mut commands: Commands,
     graffiti_map: Res<GraffitiMap>,
-    mut pops: Query<(&GridPosition, &mut Morale)>,
+    mut pops: Query<(Entity, &GridPosition, &mut Morale, Option<&crate::layer1::memetic::MemeticCarrier>)>,
+    config: Option<Res<crate::layer1::memetic::MemeticConfig>>,
 ) {
-    for (pos, mut morale) in &mut pops {
+    use rand::Rng;
+    let mut rng = rand::thread_rng();
+    let infection_chance = config.map_or(0.1, |c| c.infection_chance);
+
+    for (entity, pos, mut morale, carrier) in &mut pops {
         // Check adjacent tiles for graffiti
-        // Similar neighbor check
         let neighbors = [
             (pos.x, pos.y - 1),
             (pos.x + 1, pos.y),
@@ -141,17 +148,21 @@ pub fn graffiti_observation_system(
 
         for target in neighbors {
             if let Some(graffiti) = graffiti_map.markings.get(&target) {
-                // Apply modifier
-                // We should check if we already have this specific modifier to avoid stacking infinitely?
-                // MoodModifier doesn't have a unique ID, just label.
-                // We can check if we have a modifier with this label recently?
-                // Or just add it with a short duration.
+                // Handle Memetic Infection
+                if graffiti.graffiti_type == GraffitiType::MemeticSigil && carrier.is_none() {
+                    if rng.gen_bool(infection_chance) {
+                        commands
+                            .entity(entity)
+                            .insert(crate::layer1::memetic::MemeticCarrier);
+                    }
+                }
 
                 let label = match graffiti.graffiti_type {
                     GraffitiType::Vandalism => "Saw Vandalism",
                     GraffitiType::Inspiration => "Saw Inspiration",
                     GraffitiType::Mural => "Saw Mural",
                     GraffitiType::Propaganda => "Saw Propaganda",
+                    GraffitiType::MemeticSigil => "Saw Strange Sigil",
                 };
 
                 // Check if already affected

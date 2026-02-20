@@ -68,6 +68,7 @@ const fn format_action_type(action: ActionType) -> (&'static str, &'static str, 
         ActionType::Charge => ("⚡", "Charging", Color::Cyan),
         ActionType::Hobby => ("🎨", "Hobby", Color::Magenta),
         ActionType::Admin => ("📝", "Administering", Color::Blue),
+        ActionType::ScrawlMemeticSigil => ("👁", "Scrawling Sigil", Color::Red),
     }
 }
 
@@ -583,7 +584,7 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
 
     // 9. Personality
     if let Some(weights) = world.get::<UtilityWeights>(entity) {
-        render_personality(frame, layout[9], weights);
+        render_personality(frame, layout[9], *weights);
     }
 
     // 10. Last Dream
@@ -815,7 +816,7 @@ fn render_biography(frame: &mut Frame, area: Rect, bio: &Biography, world: &Worl
     frame.render_widget(list, area);
 }
 
-fn render_personality(frame: &mut Frame, area: Rect, weights: &UtilityWeights) {
+fn render_personality(frame: &mut Frame, area: Rect, weights: UtilityWeights) {
     if area.height < 2 {
         return;
     }

@@ -21,9 +21,17 @@ pub enum Tech {
     Hydroponics,
     /// Allows active defense (Trash Cannon, Militia).
     Militia,
+    /// Unlocks dangerous forbidden knowledge (Memetic Hazards).
+    VoidWhispers,
 }
 
 impl Tech {
+    /// Returns true if this technology carries a Memetic Hazard risk.
+    #[must_use]
+    pub const fn is_hazardous(&self) -> bool {
+        matches!(self, Self::VoidWhispers)
+    }
+
     /// Returns the Knowledge cost to unlock this technology.
     #[must_use]
     pub const fn cost(&self) -> f32 {
@@ -34,6 +42,7 @@ impl Tech {
             Self::Astronomy => 50.0,
             Self::Hydroponics => 30.0,
             Self::Militia => 25.0,
+            Self::VoidWhispers => 100.0,
         }
     }
 
@@ -47,6 +56,7 @@ impl Tech {
             Self::Astronomy => "Astronomy",
             Self::Hydroponics => "Hydroponics",
             Self::Militia => "Militia",
+            Self::VoidWhispers => "Void Whispers",
         }
     }
 
@@ -58,6 +68,7 @@ impl Tech {
             Self::MetalWorking | Self::Militia => 10.0,
             Self::SocialStructures | Self::Hydroponics => 15.0,
             Self::Astronomy => 20.0,
+            Self::VoidWhispers => 50.0,
         }
     }
 }
@@ -246,6 +257,32 @@ pub fn unlock_tech(world: &mut World, tech: Tech) -> bool {
         if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
             log.add(format!("Researched: {}", tech.label()));
         }
+
+        // Handle Memetic Hazards
+        if tech.is_hazardous() {
+            // Find a researcher to infect
+            use crate::layer1::memetic::MemeticCarrier;
+            use rand::seq::IteratorRandom;
+
+            let mut rng = rand::thread_rng();
+
+            // Correction: `query.iter(world)` yields components. I need Entity ID.
+            let mut query = world.query::<(Entity, &AssignedTo)>();
+            let candidates: Vec<Entity> = query
+                .iter(world)
+                .filter(|(_, a)| a.assignment_type == AssignmentType::LibraryWorker)
+                .map(|(e, _)| e)
+                .collect();
+
+            if let Some(victim) = candidates.into_iter().choose(&mut rng) {
+                world.entity_mut(victim).insert(MemeticCarrier);
+                if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+                    log
+                        .add("WARNING: A researcher has been infected by Memetic Hazards!".to_string());
+                }
+            }
+        }
+
         true
     } else {
         if let Some(mut log) = world.get_resource_mut::<MessageLog>() {

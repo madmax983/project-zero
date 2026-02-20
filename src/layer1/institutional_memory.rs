@@ -53,9 +53,11 @@ pub fn produce_manual_system(
                 DesignationType::Mine => Some(SkillType::Mining),
                 DesignationType::Chop => Some(SkillType::Forestry),
                 DesignationType::ClearFlora => Some(SkillType::Farming), // Farming/Foraging
-                DesignationType::Demolish | DesignationType::Repair | DesignationType::JuryRig => Some(SkillType::Construction),
+                DesignationType::Demolish
+                | DesignationType::Repair
+                | DesignationType::JuryRig
+                | DesignationType::SetZone(_) => Some(SkillType::Construction),
                 DesignationType::Tame => Some(SkillType::Husbandry),
-                DesignationType::SetZone(_) => Some(SkillType::Construction),
                 DesignationType::Cannibalize => None,
             }
         } else {
@@ -131,9 +133,12 @@ pub fn manual_aura_system(
                     DesignationType::Mine => Some(SkillType::Mining),
                     DesignationType::Chop => Some(SkillType::Forestry),
                     DesignationType::ClearFlora => Some(SkillType::Farming),
-                    DesignationType::Demolish | DesignationType::Repair | DesignationType::JuryRig | DesignationType::SetZone(_) => Some(SkillType::Construction),
+                    DesignationType::Demolish
+                    | DesignationType::Repair
+                    | DesignationType::JuryRig
+                    | DesignationType::SetZone(_) => Some(SkillType::Construction),
                     DesignationType::Tame => Some(SkillType::Husbandry),
-                    _ => None,
+                    DesignationType::Cannibalize => None,
                 };
                 skill_opt == Some(manual.skill_type)
             } else {
