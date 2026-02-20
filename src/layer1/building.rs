@@ -22,7 +22,7 @@
 
 use super::GridPosition;
 use super::beauty::BeautySource;
-use super::farm::Farm;
+use super::farm::{Crop, Farm};
 use super::fire::Flammable;
 use super::housing::Housing;
 use super::social::Tavern;
@@ -34,6 +34,7 @@ use crate::layer1::control::DoorControl;
 use crate::layer1::drone::DroneHub;
 use crate::layer1::energy::{Conduit, FuelConsumer, PowerConsumer, PowerSource};
 use crate::layer1::heirloom::AncientStructure;
+use crate::layer1::items::ItemType;
 use crate::layer1::lighting::LightSource;
 use crate::layer1::prototyping::{BuildingMastery, Prototype};
 use crate::layer1::resources::{ColonyResources, RefiningProgress};
@@ -45,6 +46,7 @@ use crate::layer1::water::{MAX_HYDRATION, WaterSource};
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
 use bevy_ecs::world::EntityWorldMut;
+use rand::seq::SliceRandom;
 use std::collections::{HashMap, HashSet};
 use strum::IntoEnumIterator;
 use strum_macros::EnumIter;
@@ -1010,7 +1012,7 @@ fn spawn_building(
             ));
         }
         BuildingType::Housing | BuildingType::Lander => {
-            configure_housing(&mut entity, building_type)
+            configure_housing(&mut entity, building_type);
         }
         BuildingType::Farm
         | BuildingType::Plantation
@@ -1112,12 +1114,32 @@ fn configure_housing(entity: &mut EntityWorldMut, building_type: BuildingType) {
 #[allow(clippy::too_many_lines)]
 fn configure_production(entity: &mut EntityWorldMut, building_type: BuildingType) {
     match building_type {
-        BuildingType::Farm | BuildingType::Plantation | BuildingType::Greenhouse => {
+        BuildingType::Farm | BuildingType::Greenhouse => {
+            let mut rng = rand::thread_rng();
+            let crops = [
+                ItemType::Potato,
+                ItemType::Wheat,
+                ItemType::Rice,
+                ItemType::Corn,
+                ItemType::Soy,
+            ];
+            let crop_type = crops.choose(&mut rng).cloned().unwrap_or(ItemType::Potato);
+            entity.insert((
+                Farm::default(),
+                Crop { crop_type },
+                ShiftSchedule::default(),
+            ));
+        }
+        BuildingType::Plantation => {
             entity.insert((Farm::default(), ShiftSchedule::default()));
         }
         BuildingType::HydroponicsBay => {
+            let mut rng = rand::thread_rng();
+            let crops = [ItemType::Rice, ItemType::Soy];
+            let crop_type = crops.choose(&mut rng).cloned().unwrap_or(ItemType::Rice);
             entity.insert((
                 Farm::default(),
+                Crop { crop_type },
                 PowerConsumer {
                     demand: 5.0,
                     active: false,

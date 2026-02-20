@@ -1,18 +1,10 @@
 use bevy_ecs::prelude::*;
 
 /// Marker component for an item entity.
-#[derive(Component, Debug, Clone, PartialEq, Eq)]
+#[derive(Component, Default, Debug, Clone, PartialEq, Eq)]
 pub struct Item {
     /// The specific type of the item.
     pub item_type: ItemType,
-}
-
-impl Default for Item {
-    fn default() -> Self {
-        Self {
-            item_type: ItemType::default(),
-        }
-    }
 }
 
 /// Type of tool.
@@ -94,6 +86,12 @@ pub enum ItemType {
     Potato,
     /// Grain crop.
     Wheat,
+    /// Rice crop.
+    Rice,
+    /// Corn crop.
+    Corn,
+    /// Soy crop.
+    Soy,
     /// Protein from animals.
     Meat,
     /// Protein from water.

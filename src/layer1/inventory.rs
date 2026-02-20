@@ -2,18 +2,10 @@ use crate::layer1::items::ItemType;
 use bevy_ecs::prelude::*;
 
 /// An item in an inventory.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Default, Debug, Clone, PartialEq, Eq)]
 pub struct InventoryItem {
     /// The specific type of the item (e.g., Potato, Curio).
     pub item_type: ItemType,
-}
-
-impl Default for InventoryItem {
-    fn default() -> Self {
-        Self {
-            item_type: ItemType::default(),
-        }
-    }
 }
 
 /// Component for storing personal items (tools, curios, etc.).
