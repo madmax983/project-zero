@@ -191,6 +191,11 @@ fn main(@builtin(global_invocation_id) global_id: vec3<u32>) {
                     skip = true;
                 }
             }
+            case 13u: {
+                // Suspect -> PreCrimeArrest (action 30)
+                urgency = 0.7; // Lower than actual crime (0.8)
+                action_idx = 30u;
+            }
             default: {
                 skip = true;
             }
