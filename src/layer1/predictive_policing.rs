@@ -45,7 +45,7 @@ pub fn check_prediction_system(
     }
 
     // Check for active predictive model (Algo-Hub)
-    let has_active_model = models.iter().any(|pc| pc.map_or(true, |p| p.active));
+    let has_active_model = models.iter().any(|pc| pc.is_none_or(|p| p.active));
     if !has_active_model {
         return;
     }
@@ -79,7 +79,7 @@ pub fn check_prediction_system(
 
 /// Evaluates the utility of arresting a specific Suspect.
 ///
-/// Returns a tuple of (utility_score, target_entity) if a valid target is found.
+/// Returns a tuple of (`utility_score`, `target_entity`) if a valid target is found.
 pub fn evaluate_pre_crime_arrest(
     world: &mut World,
     warden_pos: &GridPosition,

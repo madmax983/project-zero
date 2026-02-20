@@ -58,16 +58,16 @@ pub fn render_notifications(frame: &mut Frame, area: Rect, world: &World) {
 
             // Fade Out Logic (Ludwig: "Ease-Out")
             // If expiring in < 20 ticks (2s), dim the text.
-            let mut color = match n.severity {
-                NotificationSeverity::Info => Color::Cyan,
-                NotificationSeverity::Success => Color::Green,
-                NotificationSeverity::Warning => Color::Yellow,
-                NotificationSeverity::Error => Color::Red,
+            let color = if time_left < 20 {
+                Color::DarkGray
+            } else {
+                match n.severity {
+                    NotificationSeverity::Info => Color::Cyan,
+                    NotificationSeverity::Success => Color::Green,
+                    NotificationSeverity::Warning => Color::Yellow,
+                    NotificationSeverity::Error => Color::Red,
+                }
             };
-
-            if time_left < 20 {
-                color = Color::DarkGray;
-            }
 
             let display_text = if n.text.len() > max_text_width && max_text_width > 1 {
                 format!(
@@ -84,7 +84,7 @@ pub fn render_notifications(frame: &mut Frame, area: Rect, world: &World) {
             // t=0 -> pad=5
             // t=5 -> pad=0
             let padding = if age < 5 {
-                (5 - age) as usize
+                usize::try_from(5 - age).unwrap_or(0)
             } else {
                 0
             };

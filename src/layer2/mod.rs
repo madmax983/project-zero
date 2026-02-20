@@ -9,3 +9,5 @@ pub mod render;
 pub mod system;
 /// System visibility logic (Command Center).
 pub mod visibility;
+/// Procedural generation for the system.
+pub mod generation;

@@ -1,6 +1,7 @@
 //! Shared world setup used by all entry points (native, headless, WASM).
 
 use bevy_ecs::prelude::*;
+use rand::RngCore;
 
 #[cfg(all(not(target_arch = "wasm32"), not(test)))]
 use crate::gpu::context::GpuContext;
@@ -132,6 +133,16 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(crate::layer2::system::ViewMode::default());
     world.insert_resource(crate::layer2::system::SystemMap);
     world.insert_resource(crate::layer2::visibility::SystemVisibility::default());
+
+    // Initialize System Generation (Layer 2)
+    let mut rng = rand::thread_rng();
+    let seed = crate::layer2::generation::WorldSeed(rng.next_u64());
+    world.insert_resource(seed);
+
+    // Run generation system once
+    let mut system_schedule = Schedule::default();
+    system_schedule.add_systems(crate::layer2::generation::generate_system);
+    system_schedule.run(&mut world);
 
     initialize_visitor_source(&mut world);
     world.insert_resource(crate::layer1::inspector::InspectorSource {
@@ -284,5 +295,17 @@ mod tests {
     fn test_setup_world_creates_factions() {
         let world = setup_world();
         assert!(world.contains_resource::<crate::layer1::factions::Factions>());
+    }
+
+    #[test]
+    fn test_setup_world_generates_system() {
+        use crate::layer2::generation::{Planet, Star};
+        let mut world = setup_world();
+
+        let stars = world.query::<&Star>().iter(&world).count();
+        assert_eq!(stars, 1, "Should generate exactly one star");
+
+        let planets = world.query::<&Planet>().iter(&world).count();
+        assert!(planets >= 3, "Should generate at least 3 planets");
     }
 }
