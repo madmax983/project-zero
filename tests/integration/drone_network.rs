@@ -26,6 +26,7 @@ mod tests {
         world.insert_resource(scale::layer1::day_night::DayNightCycle::default());
         world.insert_resource(scale::layer1::building::OccupiedTiles::default());
         world.insert_resource(scale::layer1::building::BuildingMap::default());
+        world.insert_resource(scale::layer1::crowding::CrowdingGrid::new(10, 10)); // Fixed: Added CrowdingGrid
         world.insert_resource(scale::shared::log::MessageLog::default());
 
         // Event Buffers

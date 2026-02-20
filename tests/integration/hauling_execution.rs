@@ -27,6 +27,8 @@ mod tests {
         world.insert_resource(scale::layer1::day_night::DayNightCycle::default());
         world.insert_resource(scale::layer1::seasons::SeasonState::default());
         world.insert_resource(scale::layer1::building::OccupiedTiles::default());
+        world.insert_resource(scale::layer1::building::BuildingMap::default()); // Fixed: Added BuildingMap
+        world.insert_resource(scale::layer1::crowding::CrowdingGrid::new(10, 10)); // Fixed: Added CrowdingGrid
         world.insert_resource(scale::shared::log::MessageLog::default());
         world.insert_resource(scale::layer1::chronicle::Chronicle::default());
         world.insert_resource(scale::layer1::chronicle::BuildingTracker::default());
@@ -52,6 +54,12 @@ mod tests {
         world.init_resource::<Events<StructureCollapsed>>();
         world.init_resource::<Events<scale::layer1::heirloom::RetrogradeEngineeringEvent>>();
         world.init_resource::<Events<scale::layer1::energy::GridOverloadEvent>>();
+        world.init_resource::<Events<scale::layer1::hazards::AmputationEvent>>();
+        world.init_resource::<Events<scale::layer1::geology::GeologicalEvent>>();
+        world.init_resource::<Events<scale::layer1::society::InvestigationEvent>>();
+        world.init_resource::<Events<scale::layer1::society::SuppressSocietyEvent>>();
+        world.init_resource::<Events<scale::layer1::medical::PatientTreated>>();
+        world.init_resource::<Events<scale::layer1::social::FavorChange>>();
         world.insert_resource(scale::layer1::social_mimicry::Trend::default());
         world.insert_resource(scale::layer1::visitor::VisitorSource::default());
         world.insert_resource(scale::layer1::weather::WeatherState::default());

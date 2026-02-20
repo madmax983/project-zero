@@ -1,4 +1,5 @@
 use crate::layer1::day_night::{DayNightCycle, TimeOfDay};
+use crate::layer1::health::Health;
 use crate::layer1::lighting::LightSource;
 use crate::layer1::map::GridPosition;
 use crate::layer1::structure::Structure;
@@ -133,7 +134,14 @@ pub fn flora_spread_system(
             && !occupied.contains(&(nx, ny))
         {
             // Spawn new
-            commands.spawn((Flora::default(), GridPosition { x: nx, y: ny }));
+            commands.spawn((
+                Flora::default(),
+                GridPosition { x: nx, y: ny },
+                Health {
+                    current: 20.0,
+                    max: 20.0,
+                },
+            ));
         }
     }
 }
@@ -211,6 +219,7 @@ mod tests {
         Bioluminescent, Flora, FloraClearingProgress, FloraType, flora_attack_system,
         flora_spread_system, process_flora_clearing, update_bioluminescence_system,
     };
+    use crate::layer1::health::Health;
     use crate::layer1::map::GridPosition;
     use crate::layer1::structure::Structure;
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
@@ -260,10 +269,14 @@ mod tests {
         assert!(count > 1, "Flora should have spread");
 
         // Verify new position is adjacent
-        let mut query = world.query::<(&Flora, &GridPosition)>();
+        let mut query = world.query::<(&Flora, &GridPosition, Option<&Health>)>();
         let mut positions = query.iter(&world);
-        let (_, p1) = positions.next().unwrap();
-        let (_, p2) = positions.next().unwrap();
+
+        // We expect 2 entities: Original (no health) + New (health)
+        // Or Original (health?) + New (health)
+
+        let (_, p1, h1) = positions.next().unwrap();
+        let (_, p2, h2) = positions.next().unwrap();
 
         let dx = (p1.x - p2.x).abs();
         let dy = (p1.y - p2.y).abs();
@@ -271,6 +284,9 @@ mod tests {
             dx <= 1 && dy <= 1 && (dx + dy) > 0,
             "New flora should be adjacent"
         );
+
+        // One of them should have health (the new one)
+        assert!(h1.is_some() || h2.is_some(), "At least one flora should have health (the new one)");
     }
 
     #[test]

@@ -1,4 +1,5 @@
 use crate::layer1::fauna::Fauna;
+use crate::layer1::flora::Flora;
 use crate::layer1::map::GridPosition;
 use crate::layer1::utility_eval_types::PopEvalData;
 use crate::layer1::utility_types::ActionType;
@@ -52,10 +53,23 @@ pub(crate) fn evaluate_drafted_behavior(
     let mut best_utility = 0.9; // Just stand there ready
     let mut best_target = None;
 
-    let mut fauna_state = world.query::<(Entity, &GridPosition, &Fauna)>();
-    let enemies = fauna_state.iter(world).map(|(e, p, _)| (e, p));
+    // Collect all enemies (Fauna + Flora)
+    // We collect into a Vec to avoid holding multiple query borrows simultaneously
+    let mut enemies = Vec::new();
 
-    if let Some((utility, target)) = evaluate_fight_action(true, data.pos, enemies) {
+    let mut fauna_state = world.query::<(Entity, &GridPosition, &Fauna)>();
+    for (e, p, _) in fauna_state.iter(world) {
+        enemies.push((e, *p));
+    }
+
+    let mut flora_state = world.query::<(Entity, &GridPosition, &Flora)>();
+    for (e, p, _) in flora_state.iter(world) {
+        enemies.push((e, *p));
+    }
+
+    if let Some((utility, target)) =
+        evaluate_fight_action(true, data.pos, enemies.iter().map(|(e, p)| (*e, p)))
+    {
         best_action = ActionType::Fight;
         best_utility = utility;
         best_target = Some(target);
