@@ -1,7 +1,6 @@
 use crate::layer1::map::GridPosition;
-use crate::layer1::utility_eval_types::CapacityProxy;
+use crate::layer1::utility_eval_types::{ScorableCandidate, evaluate_candidates};
 use crate::layer1::utility_types::UtilityWeights;
-use crate::layer1::utility_types::calculate_context_score;
 use bevy_ecs::prelude::*;
 
 /// Evaluates the utility of farming.
@@ -15,22 +14,7 @@ use bevy_ecs::prelude::*;
 pub(crate) fn evaluate_farm(
     pop_pos: GridPosition,
     weights: &UtilityWeights,
-    farms: &[CapacityProxy],
+    farms: &[ScorableCandidate],
 ) -> Option<(f32, Entity)> {
-    let mut best: Option<(f32, Entity)> = None;
-    let base_utility = 0.5;
-
-    for farm in farms {
-        // Pre-filtered for schedule and capacity in evaluate_actions_system
-
-        let context =
-            calculate_context_score(pop_pos, Some(farm.pos), farm.capacity, farm.usage, weights);
-
-        let utility = base_utility * context;
-
-        if best.is_none_or(|(u, _)| utility > u) {
-            best = Some((utility, farm.entity));
-        }
-    }
-    best
+    evaluate_candidates(pop_pos, weights, farms, 0.5)
 }

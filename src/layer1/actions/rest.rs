@@ -1,47 +1,21 @@
 use crate::layer1::housing::Housing;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
-use crate::layer1::utility_eval_types::CapacityProxy;
+use crate::layer1::utility_eval_types::{ScorableCandidate, evaluate_candidates};
 use crate::layer1::utility_types::UtilityWeights;
-use crate::layer1::utility_types::calculate_context_score;
 use bevy_ecs::prelude::*;
 
 /// Evaluates the utility of resting at a house.
-///
-/// Housing restores rest faster than sleeping on the ground.
-///
-/// # Returns
-///
-/// `Some((utility, target_entity))` if a valid house is found, `None` otherwise.
 #[must_use]
 pub(crate) fn evaluate_satisfy_rest(
     pop_pos: GridPosition,
     needs: &Needs,
     weights: &UtilityWeights,
-    housing: &[CapacityProxy],
+    housing: &[ScorableCandidate],
 ) -> Option<(f32, Entity)> {
-    let mut best: Option<(f32, Entity)> = None;
-    let base_utility = 0.5;
-
     // Urgency based on rest level
     let urgency = 1.0 - needs.rest;
-
-    for house in housing {
-        let context = calculate_context_score(
-            pop_pos,
-            Some(house.pos),
-            house.capacity,
-            house.usage,
-            weights,
-        );
-
-        let utility = (base_utility + urgency) * context;
-
-        if best.is_none_or(|(u, _)| utility > u) {
-            best = Some((utility, house.entity));
-        }
-    }
-    best
+    evaluate_candidates(pop_pos, weights, housing, 0.5 + urgency)
 }
 
 /// Handles the arrival of a pop at housing to rest.

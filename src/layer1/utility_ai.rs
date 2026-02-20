@@ -76,8 +76,8 @@ use crate::layer1::structure::{DeferMaintenance, Structure};
 use crate::layer1::tech::Library;
 use crate::layer1::traits::Trait;
 use crate::layer1::utility_eval_types::{
-    CapacityProxy, ItemEntityProxy, ItemProxy, PopEvalData, PopEvaluationQuery, PositionProxy,
-    RefiningProxy, UtilityAIBuffer, WorldContext, evaluate_idle,
+    PopEvalData, PopEvaluationQuery, ScorableCandidate, UtilityAIBuffer, WorldContext,
+    evaluate_idle,
 };
 pub use crate::layer1::utility_types::{
     ActionType, PopAction, StartPlan, UtilityConfig, UtilityWeights, manhattan_distance,
@@ -421,7 +421,7 @@ fn populate_buffer_buildings(
 
 fn populate_farms(
     world: &mut World,
-    buffer: &mut Vec<CapacityProxy>,
+    buffer: &mut Vec<ScorableCandidate>,
     cycle: &crate::layer1::day_night::DayNightCycle,
 ) {
     buffer.clear();
@@ -433,50 +433,50 @@ fn populate_farms(
         if farm.workers.len() >= farm.capacity {
             continue;
         }
-        buffer.push(CapacityProxy {
+        buffer.push(ScorableCandidate::with_capacity(
             entity,
-            pos: *pos,
-            capacity: farm.capacity,
-            usage: farm.workers.len(),
-        });
+            *pos,
+            farm.capacity,
+            farm.workers.len(),
+        ));
     }
 }
 
-fn populate_housing(world: &mut World, buffer: &mut Vec<CapacityProxy>) {
+fn populate_housing(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
     buffer.clear();
     let mut housing_query = world.query::<(Entity, &GridPosition, &Housing)>();
     for (entity, pos, housing) in housing_query.iter(world) {
         if housing.residents.len() >= housing.capacity {
             continue;
         }
-        buffer.push(CapacityProxy {
+        buffer.push(ScorableCandidate::with_capacity(
             entity,
-            pos: *pos,
-            capacity: housing.capacity,
-            usage: housing.residents.len(),
-        });
+            *pos,
+            housing.capacity,
+            housing.residents.len(),
+        ));
     }
 }
 
-fn populate_taverns(world: &mut World, buffer: &mut Vec<CapacityProxy>) {
+fn populate_taverns(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
     buffer.clear();
     let mut tavern_query = world.query::<(Entity, &GridPosition, &Tavern)>();
     for (entity, pos, tavern) in tavern_query.iter(world) {
         if tavern.visitors.len() >= tavern.capacity {
             continue;
         }
-        buffer.push(CapacityProxy {
+        buffer.push(ScorableCandidate::with_capacity(
             entity,
-            pos: *pos,
-            capacity: tavern.capacity,
-            usage: tavern.visitors.len(),
-        });
+            *pos,
+            tavern.capacity,
+            tavern.visitors.len(),
+        ));
     }
 }
 
 fn populate_libraries(
     world: &mut World,
-    buffer: &mut Vec<CapacityProxy>,
+    buffer: &mut Vec<ScorableCandidate>,
     cycle: &crate::layer1::day_night::DayNightCycle,
 ) {
     buffer.clear();
@@ -486,16 +486,15 @@ fn populate_libraries(
         if schedule.is_some_and(|s| !s.is_active(cycle.time_of_day)) {
             continue;
         }
-        buffer.push(CapacityProxy {
-            entity,
-            pos: *pos,
-            capacity: 5,
-            usage: 0,
-        });
+        buffer.push(ScorableCandidate::with_capacity(entity, *pos, 5, 0));
     }
 }
 
-fn populate_refining(world: &mut World, buffer: &mut Vec<RefiningProxy>, context: &WorldContext) {
+fn populate_refining(
+    world: &mut World,
+    buffer: &mut Vec<ScorableCandidate>,
+    context: &WorldContext,
+) {
     buffer.clear();
     let mut refine_query = world.query::<(
         Entity,
@@ -515,30 +514,23 @@ fn populate_refining(world: &mut World, buffer: &mut Vec<RefiningProxy>, context
             continue;
         }
 
-        buffer.push(RefiningProxy {
-            entity,
-            pos: *pos,
-            progress_current: progress.current,
-        });
+        let mut candidate = ScorableCandidate::new(entity, *pos);
+        candidate.score_bonus = if progress.current > 0.0 { 0.1 } else { 0.0 };
+        buffer.push(candidate);
     }
 }
 
-fn populate_hospitals(world: &mut World, buffer: &mut Vec<CapacityProxy>) {
+fn populate_hospitals(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
     buffer.clear();
     let mut hospital_query = world.query::<(Entity, &GridPosition, &Hospital)>();
     for (entity, pos, _) in hospital_query.iter(world) {
-        buffer.push(CapacityProxy {
-            entity,
-            pos: *pos,
-            capacity: 10,
-            usage: 0,
-        });
+        buffer.push(ScorableCandidate::with_capacity(entity, *pos, 10, 0));
     }
 }
 
 fn populate_offices(
     world: &mut World,
-    buffer: &mut Vec<CapacityProxy>,
+    buffer: &mut Vec<ScorableCandidate>,
     cycle: &crate::layer1::day_night::DayNightCycle,
 ) {
     buffer.clear();
@@ -551,12 +543,12 @@ fn populate_offices(
         if office.workers.len() >= office.capacity {
             continue;
         }
-        buffer.push(CapacityProxy {
+        buffer.push(ScorableCandidate::with_capacity(
             entity,
-            pos: *pos,
-            capacity: office.capacity,
-            usage: office.workers.len(),
-        });
+            *pos,
+            office.capacity,
+            office.workers.len(),
+        ));
     }
 }
 
@@ -571,17 +563,17 @@ fn populate_buffer_designations(world: &mut World, buffer: &mut UtilityAIBuffer)
             DesignationType::Repair => {
                 buffer
                     .repair_designations
-                    .push(PositionProxy { entity, pos: *pos });
+                    .push(ScorableCandidate::new(entity, *pos));
             }
             DesignationType::Tame => {
                 buffer
                     .tame_designations
-                    .push(PositionProxy { entity, pos: *pos });
+                    .push(ScorableCandidate::new(entity, *pos));
             }
             _ => {
                 buffer
                     .work_designations
-                    .push(PositionProxy { entity, pos: *pos });
+                    .push(ScorableCandidate::new(entity, *pos));
             }
         }
     }
@@ -598,30 +590,28 @@ fn populate_buffer_items_and_misc(world: &mut World, buffer: &mut UtilityAIBuffe
     populate_wanted_criminals(world, &mut buffer.wanted_criminals);
 }
 
-fn populate_stockpiles(world: &mut World, buffer: &mut Vec<PositionProxy>) {
+fn populate_stockpiles(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
     buffer.clear();
     let mut stock_query = world.query::<(Entity, &GridPosition, &Stockpile)>();
     for (entity, pos, _) in stock_query.iter(world) {
-        buffer.push(PositionProxy { entity, pos: *pos });
+        buffer.push(ScorableCandidate::new(entity, *pos));
     }
 }
 
-fn populate_items(world: &mut World, buffer: &mut Vec<ItemProxy>) {
+fn populate_items(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
     buffer.clear();
     let mut item_query = world.query::<(Entity, &GridPosition, &ResourceItem)>();
     for (entity, pos, item) in item_query.iter(world) {
-        buffer.push(ItemProxy {
-            entity,
-            pos: *pos,
-            resource_type: item.resource_type,
-        });
+        let mut candidate = ScorableCandidate::new(entity, *pos);
+        candidate.resource_type = Some(item.resource_type);
+        buffer.push(candidate);
     }
 }
 
 fn populate_generic_items(
     world: &mut World,
-    stockpiles: &[PositionProxy],
-    buffer: &mut Vec<ItemEntityProxy>,
+    stockpiles: &[ScorableCandidate],
+    buffer: &mut Vec<ScorableCandidate>,
 ) {
     buffer.clear();
     let mut item_entity_query = world.query::<(Entity, &GridPosition, &Item)>();
@@ -632,41 +622,39 @@ fn populate_generic_items(
             continue;
         }
 
-        buffer.push(ItemEntityProxy {
-            entity,
-            pos: *pos,
-            item_type: item.item_type.clone(),
-        });
+        let mut candidate = ScorableCandidate::new(entity, *pos);
+        candidate.item_type = Some(item.item_type.clone());
+        buffer.push(candidate);
     }
 }
 
-fn populate_anomalies(world: &mut World, buffer: &mut Vec<PositionProxy>) {
+fn populate_anomalies(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
     buffer.clear();
     let mut anomaly_query = world.query::<(Entity, &GridPosition, &Anomaly)>();
     for (entity, pos, _) in anomaly_query.iter(world) {
-        buffer.push(PositionProxy { entity, pos: *pos });
+        buffer.push(ScorableCandidate::new(entity, *pos));
     }
 }
 
-fn populate_corpses(world: &mut World, buffer: &mut Vec<PositionProxy>) {
+fn populate_corpses(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
     buffer.clear();
     let mut corpse_query = world.query::<(Entity, &GridPosition, &Corpse)>();
     for (entity, pos, _) in corpse_query.iter(world) {
-        buffer.push(PositionProxy { entity, pos: *pos });
+        buffer.push(ScorableCandidate::new(entity, *pos));
     }
 }
 
-fn populate_graves(world: &mut World, buffer: &mut Vec<PositionProxy>) {
+fn populate_graves(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
     buffer.clear();
     let mut grave_query = world.query::<(Entity, &GridPosition, &Grave)>();
     for (entity, pos, grave) in grave_query.iter(world) {
         if !grave.occupied {
-            buffer.push(PositionProxy { entity, pos: *pos });
+            buffer.push(ScorableCandidate::new(entity, *pos));
         }
     }
 }
 
-fn populate_repair_structures(world: &mut World, buffer: &mut Vec<PositionProxy>) {
+fn populate_repair_structures(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
     buffer.clear();
     let mut struct_query =
         world.query::<(Entity, &GridPosition, &Structure, Option<&DeferMaintenance>)>();
@@ -678,15 +666,15 @@ fn populate_repair_structures(world: &mut World, buffer: &mut Vec<PositionProxy>
             continue;
         }
 
-        buffer.push(PositionProxy { entity, pos: *pos });
+        buffer.push(ScorableCandidate::new(entity, *pos));
     }
 }
 
-fn populate_wanted_criminals(world: &mut World, buffer: &mut Vec<PositionProxy>) {
+fn populate_wanted_criminals(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
     buffer.clear();
     let mut wanted_query = world.query::<(Entity, &GridPosition, &Wanted)>();
     for (entity, pos, _) in wanted_query.iter(world) {
-        buffer.push(PositionProxy { entity, pos: *pos });
+        buffer.push(ScorableCandidate::new(entity, *pos));
     }
 }
 

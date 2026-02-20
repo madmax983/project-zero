@@ -4,7 +4,7 @@ mod tests {
     use crate::layer1::designation::{Designation, DesignationType};
     use crate::layer1::map::GridPosition;
     use crate::layer1::utility_ai::{ActionType, UtilityWeights};
-    use crate::layer1::utility_eval_types::PositionProxy;
+    use crate::layer1::utility_eval_types::ScorableCandidate;
     use bevy_ecs::prelude::*;
 
     #[test]
@@ -29,10 +29,10 @@ mod tests {
             ))
             .id();
 
-        let proxies: Vec<PositionProxy> = world
+        let proxies: Vec<ScorableCandidate> = world
             .query::<(Entity, &GridPosition, &Designation)>()
             .iter(&world)
-            .map(|(e, p, _)| PositionProxy { entity: e, pos: *p })
+            .map(|(e, p, _)| ScorableCandidate::new(e, *p))
             .collect();
 
         let result = evaluate_work(pop_pos, &weights, &proxies);
@@ -70,10 +70,10 @@ mod tests {
             ))
             .id();
 
-        let proxies: Vec<PositionProxy> = world
+        let proxies: Vec<ScorableCandidate> = world
             .query::<(Entity, &GridPosition, &Designation)>()
             .iter(&world)
-            .map(|(e, p, _)| PositionProxy { entity: e, pos: *p })
+            .map(|(e, p, _)| ScorableCandidate::new(e, *p))
             .collect();
 
         let (_, target) = evaluate_work(pop_pos, &weights, &proxies).unwrap();
@@ -86,7 +86,7 @@ mod tests {
         let pop_pos = GridPosition { x: 0, y: 0 };
         let weights = UtilityWeights::default();
 
-        let proxies: Vec<PositionProxy> = vec![];
+        let proxies: Vec<ScorableCandidate> = vec![];
 
         let result = evaluate_work(pop_pos, &weights, &proxies);
         assert!(result.is_none());
@@ -106,10 +106,10 @@ mod tests {
         ];
 
         for (dist, expected_factor) in cases {
-            let proxies = vec![PositionProxy {
-                entity: Entity::PLACEHOLDER,
-                pos: GridPosition { x: dist, y: 0 },
-            }];
+            let proxies = vec![ScorableCandidate::new(
+                Entity::PLACEHOLDER,
+                GridPosition { x: dist, y: 0 },
+            )];
 
             let (u, _) = evaluate_work(pop_pos, &weights, &proxies).unwrap();
             let expected_u = 0.5 * expected_factor; // Base utility * factor
@@ -128,10 +128,10 @@ mod tests {
         let pop_pos = GridPosition { x: 0, y: 0 };
         let weights = UtilityWeights::default();
 
-        let proxies = vec![PositionProxy {
-            entity: Entity::PLACEHOLDER,
-            pos: GridPosition { x: 0, y: 0 },
-        }];
+        let proxies = vec![ScorableCandidate::new(
+            Entity::PLACEHOLDER,
+            GridPosition { x: 0, y: 0 },
+        )];
 
         let (u, _) = evaluate_work(pop_pos, &weights, &proxies).unwrap();
         assert!(

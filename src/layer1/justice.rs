@@ -15,8 +15,8 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::unrest::MentalBreakType;
 use crate::layer1::unrest::MentalState;
 use crate::layer1::utility_ai::{ActionType, PopAction};
-use crate::layer1::utility_eval_types::PositionProxy;
-use crate::layer1::utility_types::manhattan_distance;
+use crate::layer1::utility_eval_types::ScorableCandidate;
+use crate::layer1::utility_types::{UtilityWeights, calculate_context_score};
 use crate::layer1::zone::{ZoneGrid, ZoneType};
 use bevy_ecs::prelude::*;
 
@@ -69,28 +69,28 @@ pub fn check_crime_system(
 #[must_use]
 pub fn evaluate_warden_action(
     guard_pos: &GridPosition,
-    criminals: &[PositionProxy],
+    criminals: &[ScorableCandidate],
     zone_grid: &ZoneGrid,
 ) -> Option<(f32, Entity)> {
     let mut best_target = None;
-    let mut min_dist = i32::MAX;
+    let mut best_score = 0.0;
+    let weights = UtilityWeights::default();
 
     for criminal in criminals {
         if zone_grid.get(criminal.pos.x, criminal.pos.y) == ZoneType::Sanctuary {
             continue;
         }
 
-        let dist = manhattan_distance(guard_pos, &criminal.pos);
-        if dist < min_dist {
-            min_dist = dist;
+        let context = calculate_context_score(*guard_pos, Some(criminal.pos), 1, 0, &weights);
+        let utility = 0.8 * context; // Base utility 0.8
+
+        if utility > best_score {
+            best_score = utility;
             best_target = Some(criminal.entity);
         }
     }
 
-    if let Some(target) = best_target {
-        return Some((0.8, target)); // High priority
-    }
-    None
+    best_target.map(|t| (best_score, t))
 }
 
 /// System to execute arrests when a warden reaches their target.
@@ -200,7 +200,7 @@ mod tests {
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
     use crate::layer1::unrest::{MentalBreakType, MentalState};
-    use crate::layer1::utility_eval_types::PositionProxy;
+    use crate::layer1::utility_eval_types::ScorableCandidate;
     use crate::layer1::utility_types::PopAction;
     use crate::layer1::zone::{ZoneGrid, ZoneType};
     use bevy_ecs::prelude::*;
@@ -244,10 +244,10 @@ mod tests {
             .id();
 
         // Use Proxy manually
-        let criminals = vec![PositionProxy {
-            entity: criminal_entity,
-            pos: GridPosition { x: 5, y: 5 },
-        }];
+        let criminals = vec![ScorableCandidate::new(
+            criminal_entity,
+            GridPosition { x: 5, y: 5 },
+        )];
 
         // Run evaluation logic (simulated)
         let result = evaluate_warden_action(

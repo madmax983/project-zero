@@ -1,8 +1,8 @@
 use crate::layer1::items::{Equipment, Item, Tool, ToolType};
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::ColonyResources;
-use crate::layer1::utility_eval_types::PositionProxy;
-use crate::layer1::utility_types::manhattan_distance;
+use crate::layer1::utility_eval_types::{ScorableCandidate, evaluate_candidates};
+use crate::layer1::utility_types::UtilityWeights;
 use bevy_ecs::prelude::*;
 
 /// Evaluates if a pop should fetch a tool.
@@ -11,7 +11,7 @@ pub(crate) fn evaluate_fetch_tool(
     pop_pos: GridPosition,
     equipment: &Equipment,
     resources: &ColonyResources,
-    stockpiles: &[PositionProxy],
+    stockpiles: &[ScorableCandidate],
 ) -> Option<(f32, Entity)> {
     // If already has a tool, no need to fetch
     if equipment.tool.is_some() {
@@ -23,37 +23,23 @@ pub(crate) fn evaluate_fetch_tool(
         return None;
     }
 
-    // Find nearest stockpile
-    // Note: Stockpiles don't explicitly "contain" tools in the current model,
-    // they just represent storage. We assume tools are at stockpiles.
-    // If no stockpiles exist, we can't fetch.
+    // Use evaluate_candidates with default weights (implicitly handled by calculate_context_score inside)
+    // We construct temporary weights if needed, or assume caller passes weights.
+    // The original code used manhattan distance directly. evaluate_candidates uses weights.
+    // Let's assume we want standard behavior.
+    // But this function signature in the old code didn't take weights!
+    // I need to update the signature to take weights.
+    // utility_ai.rs passes it? No, it didn't!
+    // Let's check utility_ai.rs again.
 
-    let mut best_target = None;
-    let mut min_dist = i32::MAX;
+    // In utility_ai.rs:
+    // evaluate_fetch_tool(pop_pos, &equipment, context.resources, &buffer.stockpiles)
 
-    for stockpile in stockpiles {
-        let dist = manhattan_distance(&pop_pos, &stockpile.pos);
-        if dist < min_dist {
-            min_dist = dist;
-            best_target = Some(stockpile.entity);
-        }
-    }
+    // So I need to update utility_ai.rs to pass weights to evaluate_fetch_tool?
+    // Or I can use Default::default() weights here.
 
-    best_target.map(|target| {
-        // High urgency if no tool, as tools are critical for work efficiency.
-        // But maybe not as critical as hunger/rest?
-        // Let's say 0.9.
-        // Distance penalty?
-        // Similar to other actions: utility = base * distance_factor.
-        // Let's use a simple distance factor for now.
-        // 1.0 / (dist * 0.1 + 1.0)
-
-        #[allow(clippy::cast_precision_loss)]
-        let distance_factor = 1.0 / (min_dist as f32).mul_add(0.1, 1.0);
-        let utility = 0.9 * distance_factor;
-
-        (utility, target)
-    })
+    let weights = UtilityWeights::default();
+    evaluate_candidates(pop_pos, &weights, stockpiles, 0.9)
 }
 
 /// Executes the fetch tool action.

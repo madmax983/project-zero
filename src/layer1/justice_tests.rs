@@ -4,7 +4,7 @@ mod tests {
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
     use crate::layer1::unrest::{MentalBreakType, MentalState};
-    use crate::layer1::utility_eval_types::PositionProxy;
+    use crate::layer1::utility_eval_types::ScorableCandidate;
     use crate::layer1::zone::{ZoneGrid, ZoneType};
     use bevy_ecs::prelude::*;
 
@@ -82,16 +82,16 @@ mod tests {
             ))
             .id();
 
-        let criminals = vec![PositionProxy {
-            entity: fugitive,
-            pos: GridPosition { x: 5, y: 5 },
-        }];
+        let criminals = vec![ScorableCandidate::new(
+            fugitive,
+            GridPosition { x: 5, y: 5 },
+        )];
 
         // Warden outside
         let warden_pos = GridPosition { x: 4, y: 5 };
 
         // Evaluate action
-        let result = evaluate_warden_action(&warden_pos, &criminals, &world.resource::<ZoneGrid>());
+        let result = evaluate_warden_action(&warden_pos, &criminals, world.resource::<ZoneGrid>());
 
         // Assert NO target
         assert!(
@@ -106,19 +106,23 @@ mod tests {
 
         // Wanted criminal outside
         let fugitive = world
-            .spawn((Pop, Wanted { severity: 1.0 }, GridPosition { x: 0, y: 0 }))
+            .spawn((
+                Pop,
+                Wanted { severity: 1.0 },
+                GridPosition { x: 0, y: 0 },
+            ))
             .id();
 
-        let criminals = vec![PositionProxy {
-            entity: fugitive,
-            pos: GridPosition { x: 0, y: 0 },
-        }];
+        let criminals = vec![ScorableCandidate::new(
+            fugitive,
+            GridPosition { x: 0, y: 0 },
+        )];
 
         // Warden outside
         let warden_pos = GridPosition { x: 1, y: 0 };
 
         // Evaluate action
-        let result = evaluate_warden_action(&warden_pos, &criminals, &world.resource::<ZoneGrid>());
+        let result = evaluate_warden_action(&warden_pos, &criminals, world.resource::<ZoneGrid>());
 
         // Assert TARGET found
         assert!(

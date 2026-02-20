@@ -5,8 +5,7 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::resources::{ResourceItem, ResourceType};
 use crate::layer1::skills::{SkillType, Skills};
 use crate::layer1::utility_ai::{ActionType, PopAction, UtilityWeights};
-use crate::layer1::utility_eval_types::PositionProxy;
-use crate::layer1::utility_types::calculate_context_score;
+use crate::layer1::utility_eval_types::{ScorableCandidate, evaluate_candidates};
 use crate::layer1::zone::{ZoneGrid, ZoneType};
 use bevy_ecs::prelude::*;
 
@@ -143,21 +142,9 @@ pub fn husbandry_production_system(world: &mut World) {
 pub fn evaluate_tame(
     pop_pos: &GridPosition,
     weights: &UtilityWeights,
-    designations: &[PositionProxy],
+    designations: &[ScorableCandidate],
 ) -> Option<(f32, Entity)> {
-    let mut best: Option<(f32, Entity)> = None;
-    let base_utility = 0.6;
-
-    for des in designations {
-        // Pre-filtered for Tame type
-        let context = calculate_context_score(*pop_pos, Some(des.pos), 1, 0, weights);
-        let utility = base_utility * context;
-
-        if best.is_none_or(|(best_u, _)| utility > best_u) {
-            best = Some((utility, des.entity));
-        }
-    }
-    best
+    evaluate_candidates(*pop_pos, weights, designations, 0.6)
 }
 
 /// Executes taming when pop is at target with Tame action.

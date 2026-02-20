@@ -7,7 +7,7 @@ mod tests {
 
     use crate::layer1::resources::{ColonyResources, RefiningProgress};
 
-    use crate::layer1::utility_eval_types::{CapacityProxy, RefiningProxy};
+    use crate::layer1::utility_eval_types::ScorableCandidate;
     use crate::layer1::utility_types::UtilityWeights;
     use bevy_ecs::prelude::*;
 
@@ -52,11 +52,7 @@ mod tests {
             .id();
 
         // Create Proxy
-        let proxies = vec![RefiningProxy {
-            entity: mill,
-            pos: GridPosition { x: 2, y: 0 },
-            progress_current: 0.0,
-        }];
+        let proxies = vec![ScorableCandidate::new(mill, GridPosition { x: 2, y: 0 })];
 
         let result = evaluate_refine(pop_pos, &weights, &proxies);
 
@@ -88,12 +84,12 @@ mod tests {
             .id();
 
         // Create Proxy
-        let proxies = vec![CapacityProxy {
-            entity: farm,
-            pos: GridPosition { x: 2, y: 0 },
-            capacity: 1,
-            usage: 0,
-        }];
+        let proxies = vec![ScorableCandidate::with_capacity(
+            farm,
+            GridPosition { x: 2, y: 0 },
+            1,
+            0,
+        )];
 
         let result = evaluate_farm(pop_pos, &weights, &proxies);
 
@@ -102,8 +98,4 @@ mod tests {
         assert_eq!(target, farm);
         assert!(utility > 0.0);
     }
-
-    // Removed tests for shift schedules and capacity checks as those responsibilities
-    // have moved to `evaluate_actions_system` (pre-filtering).
-    // The `evaluate_*` functions now assume they receive valid candidates.
 }
