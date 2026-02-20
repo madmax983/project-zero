@@ -4813,3 +4813,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Expensive adaptable tech (Versatile) vs. Cheap static matter (Reliable).
 
 ---
+
+## Retro-Causality Contracts
+
+**Layer:** 3
+
+**Fantasy:** "I'll pay you yesterday." Time is just another commodity on the galactic market.
+
+**Mechanic:** You receive resources instantly from "The Future" via a temporal rift. You gain a "Paradox Debt". In X cycles, the resources are deducted from your stockpile. If you don't have them, Game Over (Timeline Collapse) or severe "Reality Glitches" (buildings vanish).
+
+**Emergence:** You save the colony from starvation with Future-Wheat. Ten years later, you have to burn your entire harvest to pay the debt, causing a famine *then* to prevent the universe from imploding.
+
+**Tension:** Survival Now vs. Survival Later.
+
+---
+
+## Vacuum Welding
+
+**Layer:** 1
+
+**Fantasy:** Building structures that are meant to last forever in the void.
+
+**Mechanic:** Structures built in Vacuum biomes have 2x HP and 0.5x Build Time (metals cold-weld instantly). However, they cannot be Deconstructed or Repaired (fused solid). To remove them, you must Destroy them (yielding no resources).
+
+**Emergence:** You build a hasty defense wall in vacuum to stop a raid. Later, you need to expand the spaceport, but the wall is fused solid. You have to blow it up with explosives, wasting massive resources and risking hull breach.
+
+**Tension:** Speed/Strength vs. Flexibility/Recyclability.
+
+---
+
+## The Dead Hand
+
+**Layer:** Cross-layer
+
+**Fantasy:** "If I go down, you all go down." Tyranny via suicide pact.
+
+**Mechanic:** A constructible "Doomsday Device". Requires daily "Check-in" from the Leader (Player). If missed (due to Leader death or incapacitation), it detonates (Nuke/Vent Atmosphere). While active, "Revolt Risk" is 0% (Mutineers know they will die if the Leader dies).
+
+**Emergence:** You build it to stop a riot. It works perfectly. Then the Leader falls into a coma from a plague. The countdown starts. You have 24 hours to cure the coma or everyone dies.
+
+**Tension:** Absolute Stability vs. Ultimate Risk.
+
+---
+
+## The Planetary Cortex
+
+**Layer:** 1
+
+**Fantasy:** The planet is thinking. The world is a brain.
+
+**Mechanic:** Deep mines reveal "Crystalline Neurons". You can attach "Interface Spikes" to use the planet's core for Research (Massive Science buff). High usage causes "Seizures" (Earthquakes) or "Fever" (Global Warming).
+
+**Emergence:** You solve the tech tree by lobotomizing the planet. The resulting earthquakes destroy your surface cities, but you upload the population to the cloud just in time.
+
+**Tension:** Science Speed vs. Environmental Stability.
+
+---
+
+## Quantum Stockpiles
+
+**Layer:** Cross-layer
+
+**Fantasy:** Inventory entanglement. Storage that is everywhere and nowhere.
+
+**Mechanic:** "Entangled Chests" share inventory across different Colonies instantly. Expensive to build and consumes Power. If Power fails at *any* connected node, the contents are "Lost to the Void" (Deleted) or scattered across random coordinates.
+
+**Emergence:** Colony A puts food in the box. Colony B takes it out. Colony C loses power, collapsing the waveform. The food vanishes from Colony B's stomach? (The inventory wipes).
+
+**Tension:** Ultimate Logistics vs. Fragility.
+
+---
