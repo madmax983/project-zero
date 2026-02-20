@@ -1558,3 +1558,115 @@ VERMIN_EVOLVED:
     - URGENCY (high)
 ```
 ```
+
+---
+
+## Drone Chaining
+
+```yaml
+DRONE_ACTIVATED:
+  enables:
+    - DRONE_MALFUNCTION (medium, over time)
+    - WORK_EFFICIENCY (high)
+  increases:
+    - TECH_DEPENDENCE (medium)
+
+DRONE_MALFUNCTION:
+  enables:
+    - LOGISTICS_JAM (high)
+    - RETROGRADE_SACRIFICE (low, for parts)
+  increases:
+    - FRUSTRATION (medium)
+```
+
+## Graffiti Chaining
+
+```yaml
+GRAFFITI_SPOTTED:
+  enables:
+    - INSPECTOR_JUDGMENT (medium, negative)
+    - FACTION_FORMED (low, if message resonates)
+    - CLEANUP_EFFORT (high)
+  increases:
+    - UNREST (medium)
+    - CURIOSITY (low)
+```
+
+## Cannibalization Chaining
+
+```yaml
+SHIP_PART_SALVAGED:
+  enables:
+    - RESOURCE_GAIN (high)
+    - SHIP_GONE (eventually)
+    - MEMORY_FORMATION (high, sadness)
+  increases:
+    - SURVIVAL_CHANCE (high)
+    - NOSTALGIA (medium)
+
+SHIP_GONE:
+  enables:
+    - FULL_ACCEPTANCE (medium, "we are here now")
+  increases:
+    - ATTACHMENT_TO_COLONY (high)
+```
+
+## Geological Chaining
+
+```yaml
+SEISMIC_TREMOR:
+  enables:
+    - STRUCTURE_COLLAPSE (medium)
+    - PANIC_SPREAD (high)
+    - CAVERN_DISCOVERY (low)
+  increases:
+    - FEAR (high)
+    - CAUTION (high)
+```
+
+## Thermal Chaining
+
+```yaml
+HEAT_SPIKE:
+  enables:
+    - FIRE_OUTBREAK (high)
+    - MACHINE_MALFUNCTION (medium)
+    - WORK_STOPPAGE (high)
+  increases:
+    - STRESS (high)
+    - THIRST (high)
+
+FREEZE_EVENT:
+  enables:
+    - CROP_FAILURE (high)
+    - HYPOTHERMIA_ACCIDENT (high)
+    - POWER_DRAIN (high, heating)
+  increases:
+    - DESPAIR (medium)
+```
+
+## Data Chaining
+
+```yaml
+DATA_FOUND:
+  enables:
+    - TECH_BREAKTHROUGH (medium)
+    - SECRET_REVEALED (high)
+    - RUMOR_SPREAD (high)
+  increases:
+    - KNOWLEDGE (high)
+    - PARANOIA (low)
+```
+
+## Social Debt Chaining
+
+```yaml
+FAVOR_CALLED:
+  enables:
+    - WORK_ASSIST (high)
+    - ITEM_TRANSFER (medium)
+    - REFUSAL (low, creates rivalry)
+  increases:
+    - COHESION (medium)
+    - RESENTMENT (low)
+```
