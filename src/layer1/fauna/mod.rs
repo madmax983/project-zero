@@ -5,6 +5,10 @@ use crate::layer1::pop::Pop;
 use crate::layer1::utility_types::ActionType;
 use bevy_ecs::prelude::*;
 
+/// Modular fauna components (Spec 164).
+pub mod modular;
+pub use modular::*;
+
 /// Type of fauna.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum FaunaType {
@@ -42,8 +46,6 @@ pub struct Fauna {
     pub target: Option<Entity>,
     /// How far this animal can see targets.
     pub detection_range: f32,
-    /// Damage dealt per attack.
-    pub attack_damage: f32,
     /// Ticks remaining until next attack.
     pub attack_cooldown: u32,
 }
@@ -55,7 +57,6 @@ impl Default for Fauna {
             state: FaunaState::Wander,
             target: None,
             detection_range: 8.0,
-            attack_damage: 5.0,
             attack_cooldown: 0,
         }
     }
@@ -81,9 +82,9 @@ pub fn fauna_behavior_system(world: &mut World) {
         .map(|(e, p)| (e, *p))
         .collect();
 
-    let mut query = world.query::<(Entity, &mut Fauna, &GridPosition)>();
+    let mut query = world.query::<(Entity, &mut Fauna, &GridPosition, Option<&FaunaBody>)>();
 
-    for (entity, mut fauna, pos) in query.iter_mut(world) {
+    for (entity, mut fauna, pos, body) in query.iter_mut(world) {
         if fauna.attack_cooldown > 0 {
             fauna.attack_cooldown -= 1;
         }
@@ -116,7 +117,12 @@ pub fn fauna_behavior_system(world: &mut World) {
                         if dist <= 1 {
                             // Adjacent -> Attack
                             if fauna.attack_cooldown == 0 {
-                                attacks.push((target, fauna.attack_damage));
+                                let damage = if let Some(b) = body {
+                                    b.aggregate_stats().attack
+                                } else {
+                                    5.0 // Fallback
+                                };
+                                attacks.push((target, damage));
                                 fauna.attack_cooldown = 10; // Cooldown ticks
                                 fauna.state = FaunaState::Attack;
                             }
@@ -145,7 +151,12 @@ pub fn fauna_behavior_system(world: &mut World) {
                         let dist = pos.distance_chebyshev(*target_pos);
                         if dist <= 1 {
                             if fauna.attack_cooldown == 0 {
-                                attacks.push((target, fauna.attack_damage));
+                                let damage = if let Some(b) = body {
+                                    b.aggregate_stats().attack
+                                } else {
+                                    5.0 // Fallback
+                                };
+                                attacks.push((target, damage));
                                 fauna.attack_cooldown = 10;
                             }
                         } else {
@@ -211,7 +222,7 @@ mod tests {
         };
         assert_eq!(rat.state, FaunaState::Wander);
         assert!(rat.detection_range > 0.0);
-        assert!(rat.attack_damage > 0.0);
+        // assert!(rat.attack_damage > 0.0); // Removed field
     }
 
     #[test]
@@ -275,14 +286,23 @@ mod tests {
     fn test_fauna_attacks_adjacent_target() {
         let mut world = setup_world();
 
+        use crate::layer1::fauna::{FaunaBody, FaunaPart, BodyPartType, FaunaStats};
+        let mut body = FaunaBody::default();
+        body.add_part(FaunaPart {
+            part_type: BodyPartType::Head,
+            stats: FaunaStats { attack: 10.0, ..Default::default() },
+            ..Default::default()
+        });
+
         // Spawn Wolf adjacent to Pop
         let wolf = world
             .spawn((
                 Fauna {
                     fauna_type: FaunaType::Wolf,
-                    attack_damage: 10.0,
+                    // attack_damage: 10.0, // Removed
                     ..Default::default()
                 },
+                body, // Added body
                 GridPosition { x: 0, y: 0 },
                 Health::default(),
             ))
@@ -309,6 +329,7 @@ mod tests {
         // Pop should take damage
         let health = world.get::<Health>(pop).unwrap();
         assert!(health.current < 100.0);
+        assert_eq!(health.current, 90.0); // 100 - 10
         // Wolf should stay in Chase/Attack mode
         let wolf_comp = world.get::<Fauna>(wolf).unwrap();
         assert!(matches!(
