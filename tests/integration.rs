@@ -91,3 +91,6 @@ mod drone_network;
 
 #[path = "integration/drone_sanctuary.rs"]
 mod drone_sanctuary;
+
+#[path = "integration/militia_flora.rs"]
+mod militia_flora;
