@@ -14,7 +14,7 @@ mod tests {
     use scale::layer1::skills::Skills;
     use scale::layer1::tech::{Tech, TechState, TechStatus};
     use scale::layer1::turret::{Turret, turret_fire_system};
-    use scale::layer1::utility_ai::{ActionType, PopAction};
+    use scale::layer1::utility_types::{ActionType, PopAction};
     use scale::shared::time::SimulationTime;
 
     fn setup_world() -> World {

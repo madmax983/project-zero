@@ -6,7 +6,7 @@ use crate::layer1::factions::{FactionMember, FactionState, Factions};
 use crate::layer1::items::{CarryingItem, Item};
 use crate::layer1::resources::{Carrying, ColonyResources, ResourceItem};
 use crate::layer1::stockpile::Stockpile;
-use crate::layer1::utility_ai::{ActionType, PopAction, manhattan_distance};
+use crate::layer1::utility_types::{ActionType, PopAction, manhattan_distance};
 use crate::layer1::zone::{ZoneGrid, ZoneType};
 use bevy_ecs::prelude::*;
 
@@ -397,7 +397,7 @@ mod tests {
     use crate::layer1::items::{CarryingItem, Item, ItemType};
     use crate::layer1::resources::{Carrying, ColonyResources, ResourceItem, ResourceType};
     use crate::layer1::stockpile::Stockpile;
-    use crate::layer1::utility_ai::{ActionType, PopAction, UtilityWeights};
+    use crate::layer1::utility_types::{ActionType, PopAction, UtilityWeights};
     use crate::layer1::utility_eval_types::{ItemEntityProxy, ItemProxy, PositionProxy};
     use crate::layer1::{GridPosition, Pop};
     use crate::shared::time::SimulationTime;

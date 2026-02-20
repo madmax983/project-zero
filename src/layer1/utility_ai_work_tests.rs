@@ -3,7 +3,7 @@ mod tests {
     use crate::layer1::actions::work::evaluate_work;
     use crate::layer1::designation::{Designation, DesignationType};
     use crate::layer1::map::GridPosition;
-    use crate::layer1::utility_ai::{ActionType, UtilityWeights};
+    use crate::layer1::utility_types::{ActionType, UtilityWeights};
     use crate::layer1::utility_eval_types::PositionProxy;
     use bevy_ecs::prelude::*;
 

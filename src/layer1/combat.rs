@@ -7,7 +7,7 @@
 //! # The Combat Flow
 //!
 //! 1.  **Drafting**: A pop is marked with the [`crate::layer1::combat::Drafted`] component. This overrides their
-//!     normal Utility AI logic (eating, working) and forces them to prioritize [`ActionType::Fight`](crate::layer1::utility_ai::ActionType::Fight).
+//!     normal Utility AI logic (eating, working) and forces them to prioritize [`ActionType::Fight`](crate::layer1::utility_types::ActionType::Fight).
 //! 2.  **Targeting**: The [`crate::layer1::utility_ai::evaluate_actions_system`] assigns a target (Hostile Fauna, Invaders)
 //!     if one is in range.
 //! 3.  **Execution**: The [`crate::layer1::combat::execute_attack`] function is called by the execution layer
@@ -252,7 +252,7 @@ mod tests {
     use crate::layer1::items::Equipment;
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
-    use crate::layer1::utility_ai::{ActionType, PopAction};
+    use crate::layer1::utility_types::{ActionType, PopAction};
 
     fn setup_world() -> World {
         let mut world = World::new();

@@ -10,7 +10,7 @@ mod tests {
     use scale::layer1::science::{Anomaly, AnomalyType, ScanProgress, process_scan_system};
     use scale::layer1::skills::{SkillType, Skills};
     use scale::layer1::terrain::{TerrainGrid, TerrainType};
-    use scale::layer1::utility_ai::ActionType; // PopAction unused in this file
+    use scale::layer1::utility_types::ActionType; // PopAction unused in this file
 
     fn setup_world() -> World {
         let mut world = World::new();

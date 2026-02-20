@@ -3,7 +3,8 @@ mod tests {
     use crate::layer1::needs::Needs;
     use crate::layer1::pop::Pop;
     use crate::layer1::unrest::{MentalBreakType, MentalState};
-    use crate::layer1::utility_ai::{ActionType, PopAction, evaluate_actions_system};
+    use crate::layer1::utility_types::{ActionType, PopAction};
+    use crate::layer1::utility_ai::evaluate_actions_system;
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
     // use crate::layer1::unrest::check_mental_break_system; // Not used in these tests directly, but relevant context

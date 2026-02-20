@@ -13,7 +13,7 @@ mod tests {
     use scale::layer1::social::Tavern;
     use scale::layer1::structural_integrity::RoofGrid;
     use scale::layer1::terrain::{TerrainGrid, TerrainType};
-    use scale::layer1::utility_ai::{ActionType, PopAction, UtilityConfig, UtilityWeights};
+    use scale::layer1::utility_types::{ActionType, PopAction, UtilityConfig, UtilityWeights};
     use scale::shared::state::GameState;
     use scale::shared::time::SimulationTime;
     use scale::simulation::run_simulation_tick;

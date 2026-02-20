@@ -79,8 +79,8 @@ use crate::layer1::utility_eval_types::{
     CapacityProxy, ItemEntityProxy, ItemProxy, PopEvalData, PopEvaluationQuery, PositionProxy,
     RefiningProxy, UtilityAIBuffer, WorldContext, evaluate_idle,
 };
-pub use crate::layer1::utility_types::{
-    ActionType, PopAction, StartPlan, UtilityConfig, UtilityWeights, manhattan_distance,
+use crate::layer1::utility_types::{
+    ActionType, PopAction, StartPlan, UtilityConfig,
 };
 use crate::layer1::zone::ZoneGrid;
 use bevy_ecs::prelude::*;
@@ -819,6 +819,7 @@ pub fn evaluate_actions_system(world: &mut World) {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::layer1::utility_types::UtilityWeights;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::needs::Needs;
     use crate::layer1::pop::Pop;

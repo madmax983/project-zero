@@ -16,7 +16,7 @@ use crate::layer1::resources::ColonyResources;
 use crate::layer1::rumor::Knowledge;
 use crate::layer1::skills::Skills;
 use crate::layer1::social::old_guard::Arrival;
-use crate::layer1::utility_ai::{PopAction, UtilityWeights};
+use crate::layer1::utility_types::{PopAction, UtilityWeights};
 use crate::layer1::visitor::Visitor;
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;

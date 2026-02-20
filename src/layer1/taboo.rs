@@ -103,7 +103,7 @@ mod tests {
     use crate::layer1::taboo::{
         TabooState, apply_taboo_stress_system, evaluate_taboo_penalty, taboo_event_system,
     };
-    use crate::layer1::utility_ai::{ActionType, PopAction};
+    use crate::layer1::utility_types::{ActionType, PopAction};
     use crate::shared::time::SimulationTime;
     use bevy_ecs::prelude::*;
 

@@ -11,7 +11,7 @@ mod tests {
     use crate::layer1::pop::Pop;
     use crate::layer1::social::Tavern;
     use crate::layer1::unrest::{MentalBreakType, MentalState};
-    use crate::layer1::utility_ai::{ActionType, PopAction, UtilityConfig};
+    use crate::layer1::utility_types::{ActionType, PopAction, UtilityConfig};
     use crate::layer1::utility_types::UtilityWeights;
     use crate::shared::time::SimulationTime;
     use bevy_ecs::prelude::*;

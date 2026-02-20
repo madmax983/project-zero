@@ -3,7 +3,7 @@ use crate::layer1::execution::{AtTarget, MovementTarget};
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
 use crate::layer1::terrain::TerrainGrid;
-use crate::layer1::utility_ai::{ActionType, PopAction};
+use crate::layer1::utility_types::{ActionType, PopAction};
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
 use rand::Rng;
@@ -279,7 +279,7 @@ mod tests {
         Anomaly, AnomalyType, ScanProgress, process_scan_system, spawn_initial_anomalies,
     };
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
-    use crate::layer1::utility_ai::{ActionType, PopAction, UtilityWeights};
+    use crate::layer1::utility_types::{ActionType, PopAction, UtilityWeights};
     use crate::layer1::utility_eval_types::PositionProxy;
     use crate::shared::log::MessageLog;
     use bevy_ecs::prelude::*;

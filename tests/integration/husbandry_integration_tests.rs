@@ -5,7 +5,7 @@ use scale::layer1::husbandry::{HusbandryConfig, Tame};
 use scale::layer1::map::GridPosition;
 use scale::layer1::pop::Pop;
 use scale::layer1::skills::{SkillType, Skills};
-use scale::layer1::utility_ai::{ActionType, PopAction, UtilityWeights};
+use scale::layer1::utility_types::{ActionType, PopAction, UtilityWeights};
 use scale::layer1::zone::{ZoneGrid, ZoneType};
 use scale::setup::setup_world;
 use scale::shared::state::GameState;

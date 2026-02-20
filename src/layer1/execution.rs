@@ -2496,9 +2496,8 @@ mod tests {
 
     #[test]
     fn test_movement_persists_across_evaluation_cycles() {
-        use crate::layer1::utility_ai::{
-            UtilityConfig, evaluate_actions_system, update_action_timer_system,
-        };
+        use crate::layer1::utility_types::UtilityConfig;
+        use crate::layer1::utility_ai::{evaluate_actions_system, update_action_timer_system};
         use crate::shared::time::SimulationTime;
 
         let mut world = setup_world();

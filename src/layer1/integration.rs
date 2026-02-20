@@ -443,7 +443,7 @@ pub fn drone_spawner_bridge_system(
             commands.spawn((
                 crate::layer1::drone::Drone,
                 *pos,
-                crate::layer1::utility_ai::PopAction::default(),
+                crate::layer1::utility_types::PopAction::default(),
                 crate::layer1::drone::DroneBattery {
                     current: 100.0,
                     max: 100.0,
@@ -453,7 +453,7 @@ pub fn drone_spawner_bridge_system(
                     current: 1.0,
                     accumulator: 0.0,
                 },
-                crate::layer1::utility_ai::UtilityWeights::default(),
+                crate::layer1::utility_types::UtilityWeights::default(),
             ));
             break; // Only one per tick
         }
@@ -466,7 +466,7 @@ pub fn drone_spawner_bridge_system(
 pub fn drone_work_bridge_system(
     mut query: Query<
         (
-            &mut crate::layer1::utility_ai::PopAction,
+            &mut crate::layer1::utility_types::PopAction,
             &crate::layer1::drone::DroneBattery,
         ),
         With<crate::layer1::drone::Drone>,
@@ -476,8 +476,8 @@ pub fn drone_work_bridge_system(
         // If idle and battery > 20%, start hauling
         // Drones handle charging logic in evaluate_drone_actions_system which sets action to Charge.
         // We only override Idle.
-        if action.current == crate::layer1::utility_ai::ActionType::Idle && battery.current > 20.0 {
-            action.current = crate::layer1::utility_ai::ActionType::Haul;
+        if action.current == crate::layer1::utility_types::ActionType::Idle && battery.current > 20.0 {
+            action.current = crate::layer1::utility_types::ActionType::Haul;
             action.current_utility = 0.8; // High utility to persist
             action.ticks_committed = 0;
         }

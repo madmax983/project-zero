@@ -3,7 +3,7 @@ use crate::layer1::execution::{AtTarget, MovementTarget};
 use crate::layer1::items::Item;
 use crate::layer1::map::GridPosition;
 use crate::layer1::skills::{SkillType, Skills};
-use crate::layer1::utility_ai::ActionType;
+use crate::layer1::utility_types::ActionType;
 use bevy_ecs::prelude::*;
 use rand::prelude::*;
 

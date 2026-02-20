@@ -84,7 +84,8 @@ mod tests {
     use crate::layer1::needs::Needs;
     use crate::layer1::pop::Pop;
     use crate::layer1::structure::Structure;
-    use crate::layer1::utility_ai::{ActionType, PopAction, evaluate_actions_system};
+    use crate::layer1::utility_types::{ActionType, PopAction};
+    use crate::layer1::utility_ai::evaluate_actions_system;
     use bevy_ecs::system::RunSystemOnce;
 
     fn setup_world() -> World {
@@ -242,9 +243,8 @@ mod tests {
             AtTarget, MovementTarget, movement_system, process_start_plan_system,
             vandalize_execution_system,
         };
-        use crate::layer1::utility_ai::{
-            PopAction, StartPlan, UtilityWeights, evaluate_actions_system,
-        };
+        use crate::layer1::utility_types::{PopAction, StartPlan, UtilityWeights};
+        use crate::layer1::utility_ai::evaluate_actions_system;
 
         let mut world = setup_world();
         crate::setup::init_task_pools(); // Ensure task pools are initialized

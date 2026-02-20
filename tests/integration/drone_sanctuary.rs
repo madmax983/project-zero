@@ -6,7 +6,7 @@ mod tests {
     use scale::layer1::hauling::haul_system;
     use scale::layer1::map::GridPosition;
     use scale::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
-    use scale::layer1::utility_ai::{ActionType, PopAction};
+    use scale::layer1::utility_types::{ActionType, PopAction};
     use scale::layer1::zone::{ZoneGrid, ZoneType};
 
     #[test]

@@ -8,7 +8,7 @@ mod tests {
     use scale::layer1::pop::Pop;
     use scale::layer1::resources::ColonyResources;
     use scale::layer1::skills::{SkillType, Skills};
-    use scale::layer1::utility_ai::{ActionType, PopAction};
+    use scale::layer1::utility_types::{ActionType, PopAction};
 
     fn setup_world() -> World {
         let mut world = World::new();
@@ -106,7 +106,7 @@ mod tests {
                     rest: 1.0,
                     leisure: 1.0,
                 }, // Fully satisfied needs
-                scale::layer1::utility_ai::UtilityWeights::default(),
+                scale::layer1::utility_types::UtilityWeights::default(),
                 PopAction {
                     ticks_committed: 100, // Ready to evaluate
                     ..Default::default()
@@ -121,7 +121,7 @@ mod tests {
         world.insert_resource(scale::shared::time::SimulationTime::default());
         world.insert_resource(scale::layer1::day_night::DayNightCycle::default());
         world.insert_resource(scale::layer1::taboo::TabooState::default());
-        world.insert_resource(scale::layer1::utility_ai::UtilityConfig::default());
+        world.insert_resource(scale::layer1::utility_types::UtilityConfig::default());
         world.insert_resource(scale::layer1::structural_integrity::RoofGrid::new(10, 10)); // Required by CandidateQueries
 
         let mut schedule = Schedule::default();

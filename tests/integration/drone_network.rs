@@ -6,7 +6,7 @@ mod tests {
     use scale::layer1::drone::{Drone, DroneHub};
     use scale::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
     use scale::layer1::stockpile::Stockpile;
-    use scale::layer1::utility_ai::PopAction;
+    use scale::layer1::utility_types::PopAction;
     use scale::shared::time::SimulationTime;
     use scale::simulation::{SimulationSchedule, build_simulation_schedule};
 
@@ -22,7 +22,7 @@ mod tests {
         });
         world.insert_resource(ColonyResources::default());
         world.insert_resource(SimulationTime::default());
-        world.insert_resource(scale::layer1::utility_ai::UtilityConfig::default());
+        world.insert_resource(scale::layer1::utility_types::UtilityConfig::default());
         world.insert_resource(scale::layer1::day_night::DayNightCycle::default());
         world.insert_resource(scale::layer1::building::OccupiedTiles::default());
         world.insert_resource(scale::layer1::building::BuildingMap::default());
@@ -44,6 +44,7 @@ mod tests {
         world.init_resource::<Events<scale::layer1::social::FavorChange>>();
 
         // Other dependencies for systems
+        world.insert_resource(scale::layer1::crowding::CrowdingGrid::new(10, 10));
         world.insert_resource(scale::layer1::erosion::ErosionGrid::new(10, 10));
         world.insert_resource(scale::layer1::geology::SeismicGrid::new(10, 10));
         world.insert_resource(scale::layer1::water::WaterGrid::new(10, 10));

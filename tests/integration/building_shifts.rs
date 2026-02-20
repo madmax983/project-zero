@@ -10,14 +10,14 @@ mod tests {
     use scale::layer1::resources::{ColonyResources, RefiningProgress};
     use scale::layer1::tech::Library;
     use scale::layer1::utility_ai::evaluate_actions_system;
-    use scale::layer1::utility_ai::{ActionType, PopAction, UtilityWeights};
+    use scale::layer1::utility_types::{ActionType, PopAction, UtilityWeights};
     use scale::shared::time::SimulationTime;
 
     fn setup_world() -> World {
         scale::setup::init_task_pools();
         let mut world = World::new();
         // Insert necessary resources for evaluate_actions_system
-        world.insert_resource(scale::layer1::utility_ai::UtilityConfig::default());
+        world.insert_resource(scale::layer1::utility_types::UtilityConfig::default());
         world.insert_resource(SimulationTime::default());
         world.insert_resource(ColonyResources::default());
         world.insert_resource(DayNightCycle::default());

@@ -5,7 +5,7 @@ mod tests {
     use crate::layer1::refining::process_refining_system;
     use crate::layer1::resources::{ColonyResources, MiningProgress, RefiningProgress, mine_rock};
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
-    use crate::layer1::utility_ai::{ActionType, PopAction};
+    use crate::layer1::utility_types::{ActionType, PopAction};
     use crate::layer1::{Designation, DesignationType, GridPosition};
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;

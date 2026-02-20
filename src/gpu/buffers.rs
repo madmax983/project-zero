@@ -19,7 +19,7 @@ use crate::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
 use crate::layer1::social::Tavern;
 use crate::layer1::stockpile::Stockpile;
 use crate::layer1::tech::Library;
-use crate::layer1::utility_ai::{PopAction, UtilityConfig, UtilityWeights};
+use crate::layer1::utility_types::{PopAction, UtilityConfig, UtilityWeights};
 
 /// Buffer storage for GPU data marshalling.
 ///

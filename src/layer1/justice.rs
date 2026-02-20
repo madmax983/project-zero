@@ -14,7 +14,7 @@ use crate::layer1::execution::{AtTarget, MovementTarget};
 use crate::layer1::map::GridPosition;
 use crate::layer1::unrest::MentalBreakType;
 use crate::layer1::unrest::MentalState;
-use crate::layer1::utility_ai::{ActionType, PopAction};
+use crate::layer1::utility_types::{ActionType, PopAction};
 use crate::layer1::utility_eval_types::PositionProxy;
 use crate::layer1::utility_types::manhattan_distance;
 use crate::layer1::zone::{ZoneGrid, ZoneType};

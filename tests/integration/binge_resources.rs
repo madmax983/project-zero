@@ -9,9 +9,8 @@ mod tests {
     use scale::layer1::resources::ColonyResources;
     use scale::layer1::stockpile::Stockpile;
     use scale::layer1::unrest::{MentalBreakType, MentalState};
-    use scale::layer1::utility_ai::{
-        ActionType, PopAction, StartPlan, UtilityConfig, evaluate_actions_system,
-    };
+    use scale::layer1::utility_types::{ActionType, PopAction, StartPlan, UtilityConfig};
+    use scale::layer1::utility_ai::evaluate_actions_system;
     use scale::shared::log::MessageLog;
     use scale::shared::time::SimulationTime;
 
@@ -47,7 +46,7 @@ mod tests {
                     ticks_committed: 10, // Ready to evaluate
                     ..Default::default()
                 },
-                scale::layer1::utility_ai::UtilityWeights::default(),
+                scale::layer1::utility_types::UtilityWeights::default(),
             ))
             .id();
 

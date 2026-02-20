@@ -10,7 +10,7 @@ use super::buffers::{
 };
 use super::context::GpuContext;
 use crate::layer1::utility_ai::evaluate_actions_system;
-use crate::layer1::utility_ai::{ActionType, PopAction, StartPlan};
+use crate::layer1::utility_types::{ActionType, PopAction, StartPlan};
 
 /// GPU-accelerated action evaluation system.
 ///

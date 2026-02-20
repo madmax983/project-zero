@@ -8,9 +8,8 @@ mod tests {
     use scale::layer1::pop::Pop;
     use scale::layer1::resources::{Carrying, ColonyResources, ResourceItem, ResourceType};
     use scale::layer1::stockpile::Stockpile;
-    use scale::layer1::utility_ai::{
-        ActionType, PopAction, UtilityConfig, UtilityWeights, evaluate_actions_system,
-    };
+    use scale::layer1::utility_types::{ActionType, PopAction, UtilityConfig, UtilityWeights};
+    use scale::layer1::utility_ai::evaluate_actions_system;
     use scale::shared::time::SimulationTime;
 
     fn setup_world() -> World {
@@ -84,7 +83,7 @@ mod tests {
         // Expected behavior (fix): Pop targets stockpile because it is carrying
         assert_eq!(action.current, ActionType::Haul, "Pop should be hauling");
 
-        let start_plan = world.get::<scale::layer1::utility_ai::StartPlan>(pop);
+        let start_plan = world.get::<scale::layer1::utility_types::StartPlan>(pop);
         assert!(start_plan.is_some(), "Should have a start plan");
         let target = start_plan.unwrap().target;
 

@@ -2,7 +2,7 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
 use crate::layer1::terrain::TerrainGrid;
 use crate::layer1::unrest::{MentalBreakType, MentalState};
-use crate::layer1::utility_ai::{ActionType, PopAction, StartPlan};
+use crate::layer1::utility_types::{ActionType, PopAction, StartPlan};
 use bevy_ecs::prelude::*;
 use rand::Rng;
 

@@ -6,7 +6,7 @@ mod tests {
         update_faction_demands_system, update_faction_strikes_system,
     };
     use crate::layer1::unrest::MentalState;
-    use crate::layer1::utility_ai::{ActionType, UtilityWeights};
+    use crate::layer1::utility_types::{ActionType, UtilityWeights};
     use crate::layer1::{GridPosition, Pop};
     use bevy_ecs::prelude::*;
 
@@ -160,7 +160,8 @@ mod tests {
         use crate::layer1::needs::Needs;
         use crate::layer1::resources::ColonyResources;
         use crate::layer1::taboo::TabooState;
-        use crate::layer1::utility_ai::{PopAction, UtilityConfig, evaluate_actions_system};
+        use crate::layer1::utility_types::{PopAction, UtilityConfig};
+        use crate::layer1::utility_ai::evaluate_actions_system;
 
         let mut world = setup_world();
         world.insert_resource(UtilityConfig::default());

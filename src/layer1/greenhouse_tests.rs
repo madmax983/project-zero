@@ -6,7 +6,7 @@ mod tests {
     use crate::layer1::pop::Pop;
     use crate::layer1::resources::ColonyResources;
     use crate::layer1::seasons::{Season, SeasonState};
-    use crate::layer1::utility_ai::{ActionType, PopAction};
+    use crate::layer1::utility_types::{ActionType, PopAction};
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
 

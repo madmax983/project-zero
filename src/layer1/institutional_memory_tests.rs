@@ -8,7 +8,7 @@ mod tests {
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
     use crate::layer1::skills::{SkillType, Skills};
-    use crate::layer1::utility_ai::ActionType;
+    use crate::layer1::utility_types::ActionType;
     use bevy_ecs::prelude::*;
 
     #[test]

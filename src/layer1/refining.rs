@@ -30,7 +30,7 @@ use crate::layer1::factions::{FactionMember, FactionState, Factions};
 use crate::layer1::pop::Pop;
 use crate::layer1::resources::{ColonyResources, RefiningProgress, ResourceItem, ResourceType};
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
-use crate::layer1::utility_ai::{ActionType, PopAction};
+use crate::layer1::utility_types::{ActionType, PopAction};
 use bevy_ecs::prelude::*;
 use rand::Rng;
 
@@ -334,7 +334,7 @@ mod tests {
     use crate::layer1::refining::process_refining_system;
     use crate::layer1::resources::{ColonyResources, RefiningProgress};
     use crate::layer1::skills::{SkillType, Skills};
-    use crate::layer1::utility_ai::{ActionType, PopAction};
+    use crate::layer1::utility_types::{ActionType, PopAction};
     use bevy_ecs::prelude::*;
 
     #[test]

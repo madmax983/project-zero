@@ -8,7 +8,7 @@ use crate::layer1::needs::Needs;
 use crate::layer1::pop::PopName;
 use crate::layer1::social::Tavern;
 use crate::layer1::stowaway::InfiltrationRisk;
-use crate::layer1::utility_ai::{ActionType, StartPlan};
+use crate::layer1::utility_types::{ActionType, StartPlan};
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 use rand::Rng;

@@ -8,7 +8,7 @@ mod tests {
     use scale::layer1::refining::process_refining_system;
     use scale::layer1::resources::{ColonyResources, RefiningProgress};
     use scale::layer1::skills::Skills;
-    use scale::layer1::utility_ai::{ActionType, PopAction};
+    use scale::layer1::utility_types::{ActionType, PopAction};
 
     #[test]
     fn test_smelter_requires_power_to_operate() {

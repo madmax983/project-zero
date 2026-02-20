@@ -7,7 +7,7 @@ mod tests {
     };
     use crate::layer1::energy::PowerConsumer;
     use crate::layer1::map::GridPosition;
-    use crate::layer1::utility_ai::{ActionType, PopAction};
+    use crate::layer1::utility_types::{ActionType, PopAction};
     use bevy_ecs::prelude::*;
 
     #[test]

@@ -4,7 +4,7 @@ use crate::layer1::hazards::handle_workplace_hazards;
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::{ResourceItem, ResourceType};
 use crate::layer1::skills::{SkillType, Skills};
-use crate::layer1::utility_ai::{ActionType, PopAction, UtilityWeights};
+use crate::layer1::utility_types::{ActionType, PopAction, UtilityWeights};
 use crate::layer1::utility_eval_types::PositionProxy;
 use crate::layer1::utility_types::calculate_context_score;
 use crate::layer1::zone::{ZoneGrid, ZoneType};
@@ -213,7 +213,7 @@ mod tests {
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
     use crate::layer1::skills::{SkillType, Skills};
-    use crate::layer1::utility_ai::ActionType;
+    use crate::layer1::utility_types::ActionType;
     use crate::layer1::zone::{ZoneGrid, ZoneType};
 
     // Helper to setup world
