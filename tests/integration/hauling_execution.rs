@@ -68,6 +68,7 @@ mod tests {
         world.insert_resource(scale::layer1::taboo::TabooState::default());
         world.insert_resource(scale::layer1::map::ScreenShake::default());
         world.insert_resource(scale::layer1::inspector::InspectorSource::default());
+        world.insert_resource(scale::layer1::prototyping::BuildingMastery::default());
         world.init_resource::<scale::layer1::social::old_guard::Demographics>();
 
         let generator = scale::shared::narrative::NarrativeGenerator::from_embedded();

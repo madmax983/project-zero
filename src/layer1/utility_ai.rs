@@ -425,9 +425,18 @@ fn populate_farms(
     cycle: &crate::layer1::day_night::DayNightCycle,
 ) {
     buffer.clear();
-    let mut farm_query = world.query::<(Entity, &GridPosition, &Farm, Option<&ShiftSchedule>)>();
-    for (entity, pos, farm, schedule) in farm_query.iter(world) {
+    let mut farm_query = world.query::<(
+        Entity,
+        &GridPosition,
+        &Farm,
+        Option<&ShiftSchedule>,
+        Option<&crate::layer1::energy::PowerConsumer>,
+    )>();
+    for (entity, pos, farm, schedule, power) in farm_query.iter(world) {
         if schedule.is_some_and(|s| !s.is_active(cycle.time_of_day)) {
+            continue;
+        }
+        if power.is_some_and(|p| !p.active) {
             continue;
         }
         if farm.workers.len() >= farm.capacity {
@@ -502,9 +511,13 @@ fn populate_refining(
         &Building,
         &RefiningProgress,
         Option<&ShiftSchedule>,
+        Option<&crate::layer1::energy::PowerConsumer>,
     )>();
-    for (entity, pos, building, progress, schedule) in refine_query.iter(world) {
+    for (entity, pos, building, progress, schedule, power) in refine_query.iter(world) {
         if schedule.is_some_and(|s| !s.is_active(context.cycle.time_of_day)) {
+            continue;
+        }
+        if power.is_some_and(|p| !p.active) {
             continue;
         }
 
@@ -522,8 +535,16 @@ fn populate_refining(
 
 fn populate_hospitals(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
     buffer.clear();
-    let mut hospital_query = world.query::<(Entity, &GridPosition, &Hospital)>();
-    for (entity, pos, _) in hospital_query.iter(world) {
+    let mut hospital_query = world.query::<(
+        Entity,
+        &GridPosition,
+        &Hospital,
+        Option<&crate::layer1::energy::PowerConsumer>,
+    )>();
+    for (entity, pos, _, power) in hospital_query.iter(world) {
+        if power.is_some_and(|p| !p.active) {
+            continue;
+        }
         buffer.push(ScorableCandidate::with_capacity(entity, *pos, 10, 0));
     }
 }
