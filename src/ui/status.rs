@@ -2,6 +2,7 @@ use bevy_ecs::archetype::Archetype;
 use bevy_ecs::prelude::*;
 use ratatui::{prelude::*, widgets::Paragraph};
 
+use crate::layer1::admin::AdminStats;
 use crate::layer1::seasons::{Season, SeasonState};
 use crate::layer1::traits::Traits;
 use crate::layer1::{
@@ -90,6 +91,9 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
         .get_resource::<SeasonState>()
         .map(|s| s.current_season);
 
+    let admin_stats = world.get_resource::<AdminStats>();
+    let efficiency = admin_stats.map_or(1.0, |s| s.efficiency);
+
     let status = get_status_line(
         sim_time.tick,
         sim_time.speed,
@@ -102,6 +106,7 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
         resources.rations,
         resources.tools,
         avg_morale,
+        efficiency,
         season,
     );
 
@@ -148,6 +153,7 @@ pub fn get_status_line<'a>(
     rations: f32,
     tools: f32,
     morale: f32,
+    efficiency: f32,
     season: Option<Season>,
 ) -> Line<'a> {
     let mut spans = Vec::new();
@@ -196,6 +202,21 @@ pub fn get_status_line<'a>(
     spans.push(Span::styled("Morale: ", Style::default().fg(morale_color)));
     spans.push(Span::styled(
         format!("{morale_percent}% │ "),
+        Style::default().fg(Color::White),
+    ));
+
+    // 4b. Admin Efficiency
+    let eff_percent = (efficiency * 100.0).round() as u8;
+    let eff_color = if efficiency < 0.5 {
+        Color::Red
+    } else if efficiency < 0.8 {
+        Color::Yellow
+    } else {
+        Color::Green
+    };
+    spans.push(Span::styled("Admin: ", Style::default().fg(eff_color)));
+    spans.push(Span::styled(
+        format!("{eff_percent}% │ "),
         Style::default().fg(Color::White),
     ));
 
@@ -342,6 +363,7 @@ pub fn get_status_string(
     rations: f32,
     tools: f32,
     morale: f32,
+    efficiency: f32,
     season: Option<Season>,
 ) -> String {
     let line = get_status_line(
@@ -356,6 +378,7 @@ pub fn get_status_string(
         rations,
         tools,
         morale,
+        efficiency,
         season,
     );
 
@@ -418,6 +441,7 @@ mod tests {
             50.0,  // Rations
             10.0,  // Tools
             0.85,  // Morale
+            1.0,   // Efficiency
             None,  // Season
         );
 
@@ -442,6 +466,7 @@ mod tests {
             0.0, // Rations
             0.0,
             0.0,
+            1.0,  // Efficiency
             None, // Season
         );
 
@@ -541,6 +566,7 @@ mod tests {
             0.0,
             10.0,
             0.8,
+            1.0,
             Some(Season::Summer),
         );
         assert!(
@@ -564,6 +590,7 @@ mod tests {
             0.0,
             10.0,
             0.8,
+            1.0,
             None,
         );
         assert!(!status.contains("Spring"));

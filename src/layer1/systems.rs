@@ -145,6 +145,7 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
         hopper_system.after(produce_food_system),
         process_refining_system,
         crate::layer1::tech::update_tech_capacity_system,
+        crate::layer1::admin::calculate_admin_stats,
         process_research_system,
         process_observe_system,
         regrowth_system,

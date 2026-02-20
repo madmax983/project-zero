@@ -32,6 +32,7 @@
 use crate::layer1::access_control::{AccessControl, AccessMode};
 use crate::layer1::actions::fetch_clothing::handle_fetch_clothing;
 use crate::layer1::actions::fetch_tool::handle_fetch_tool;
+use crate::layer1::admin::{AdminProvider, AdminStats, Office};
 use crate::layer1::actions::hunger::handle_arrival as handle_hunger_arrival;
 use crate::layer1::actions::rest::handle_arrival as handle_rest_arrival;
 use crate::layer1::actions::{AssignedTo, AssignmentType};
@@ -209,6 +210,7 @@ pub fn cleanup_previous_assignment_system(
     mut farms: Query<&mut Farm>,
     mut housing: Query<&mut Housing>,
     mut taverns: Query<&mut Tavern>,
+    mut offices: Query<&mut Office>,
     mut commands: Commands,
 ) {
     for (pop_entity, assigned) in &pops_query {
@@ -227,6 +229,13 @@ pub fn cleanup_previous_assignment_system(
             AssignmentType::TavernVisitor => {
                 if let Ok(mut tavern) = taverns.get_mut(assigned_entity) {
                     tavern.visitors.retain(|&v| v != pop_entity);
+                }
+            }
+            AssignmentType::Administrator => {
+                // Remove AdminProvider
+                commands.entity(pop_entity).remove::<AdminProvider>();
+                if let Ok(mut office) = offices.get_mut(assigned_entity) {
+                    office.workers.retain(|&w| w != pop_entity);
                 }
             }
             AssignmentType::LibraryWorker
@@ -494,6 +503,7 @@ pub fn arrival_handler_system(
     mut farms: Query<&mut Farm>,
     mut housing_q: Query<&mut Housing>,
     mut taverns: Query<&mut Tavern>,
+    mut offices: Query<&mut Office>,
     corpses: Query<&Corpse>,
     mut graves: Query<(Entity, &GridPosition, &mut Grave)>,
     mut memories: Query<&mut Memories>,
@@ -515,6 +525,7 @@ pub fn arrival_handler_system(
             &mut farms,
             &mut housing_q,
             &mut taverns,
+            &mut offices,
             &corpses,
             &mut graves,
             &mut memories,
@@ -539,6 +550,7 @@ fn process_arrival(
     farms: &mut Query<&mut Farm>,
     housing_q: &mut Query<&mut Housing>,
     taverns: &mut Query<&mut Tavern>,
+    offices: &mut Query<&mut Office>,
     corpses: &Query<&Corpse>,
     graves: &mut Query<(Entity, &GridPosition, &mut Grave)>,
     memories: &mut Query<&mut Memories>,
@@ -578,6 +590,19 @@ fn process_arrival(
             target_entity,
             AssignmentType::LibraryWorker,
         ),
+        ActionType::Admin => {
+            if let Ok(mut office) = offices.get_mut(target_entity) {
+                if !office.workers.contains(&pop_entity) {
+                    office.workers.push(pop_entity);
+                }
+            }
+            assign_pop(
+                commands,
+                pop_entity,
+                target_entity,
+                AssignmentType::Administrator,
+            )
+        }
         ActionType::BuryCorpse => {
             handle_bury_corpse(
                 commands,
@@ -628,7 +653,6 @@ fn assign_pop(
         | AssignmentType::Scientist
         | AssignmentType::Artist
         | AssignmentType::Governor
-        | AssignmentType::Administrator
         | AssignmentType::Chef => {
             entity_cmds.insert((
                 Job {
@@ -636,6 +660,16 @@ fn assign_pop(
                     job_type: assignment_type,
                 },
                 Prestige::from_job(assignment_type),
+            ));
+        }
+        AssignmentType::Administrator => {
+            entity_cmds.insert((
+                Job {
+                    workplace: target_entity,
+                    job_type: assignment_type,
+                },
+                Prestige::from_job(assignment_type),
+                AdminProvider { amount: 5.0 },
             ));
         }
         AssignmentType::HousingResident
@@ -1125,11 +1159,16 @@ fn calculate_work_amount(
 
     let augmentation_bonus = get_efficiency_bonus(world, pop_entity);
 
+    let admin_efficiency = world
+        .get_resource::<AdminStats>()
+        .map_or(1.0, |stats| stats.efficiency);
+
     WORK_PER_TICK
         * tool_efficiency
         * morale_efficiency
         * skill_efficiency
         * work_speed_mod
+        * admin_efficiency
         * (1.0 + augmentation_bonus)
         * organic_factor
 }

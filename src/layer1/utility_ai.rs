@@ -38,6 +38,7 @@
 //!     iterators for every single Pop, converting an O(N*M) query operation into O(M) query + O(N*M)
 //!     vector iteration (which is much faster due to cache locality and no ECS overhead).
 
+use crate::layer1::actions::admin::evaluate_admin;
 use crate::layer1::actions::explore::evaluate_explore;
 use crate::layer1::actions::farm::evaluate_farm;
 use crate::layer1::actions::fetch_clothing::evaluate_fetch_clothing;
@@ -54,6 +55,7 @@ use crate::layer1::actions::research::evaluate_research;
 use crate::layer1::actions::rest::evaluate_satisfy_rest;
 use crate::layer1::actions::social::evaluate_socialize;
 use crate::layer1::actions::work::evaluate_work;
+use crate::layer1::admin::Office;
 use crate::layer1::building::{Building, ShiftSchedule};
 use crate::layer1::combat::Drafted;
 use crate::layer1::designation::{Designation, DesignationType};
@@ -244,6 +246,13 @@ fn evaluate_group_work(
     if !is_penal {
         if let Some((utility, target)) = evaluate_farm(pop_pos, &weights, &buffer.farms) {
             evaluator.consider(ActionType::Farm, utility, Some(target));
+        }
+    }
+
+    // Evaluate Admin
+    if !is_penal {
+        if let Some((utility, target)) = evaluate_admin(pop_pos, &weights, &buffer.offices) {
+            evaluator.consider(ActionType::Admin, utility, Some(target));
         }
     }
 
@@ -503,6 +512,24 @@ fn populate_buffer_buildings(
             pos: *pos,
             capacity: 10,
             usage: 0,
+        });
+    }
+
+    // Offices
+    buffer.offices.clear();
+    let mut office_query = world.query::<(Entity, &GridPosition, &Office, Option<&ShiftSchedule>)>();
+    for (entity, pos, office, schedule) in office_query.iter(world) {
+        if schedule.is_some_and(|s| !s.is_active(cycle.time_of_day)) {
+            continue;
+        }
+        if office.workers.len() >= office.capacity {
+            continue;
+        }
+        buffer.offices.push(CapacityProxy {
+            entity,
+            pos: *pos,
+            capacity: office.capacity,
+            usage: office.workers.len(),
         });
     }
 }
