@@ -1009,7 +1009,9 @@ fn spawn_building(
                 ShiftSchedule::default(),
             ));
         }
-        BuildingType::Housing | BuildingType::Lander => configure_housing(&mut entity, building_type),
+        BuildingType::Housing | BuildingType::Lander => {
+            configure_housing(&mut entity, building_type)
+        }
         BuildingType::Farm
         | BuildingType::Plantation
         | BuildingType::Greenhouse

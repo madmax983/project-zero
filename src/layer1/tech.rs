@@ -277,8 +277,9 @@ pub fn unlock_tech(world: &mut World, tech: Tech) -> bool {
             if let Some(victim) = candidates.into_iter().choose(&mut rng) {
                 world.entity_mut(victim).insert(MemeticCarrier);
                 if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
-                    log
-                        .add("WARNING: A researcher has been infected by Memetic Hazards!".to_string());
+                    log.add(
+                        "WARNING: A researcher has been infected by Memetic Hazards!".to_string(),
+                    );
                 }
             }
         }

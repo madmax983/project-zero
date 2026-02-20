@@ -710,5 +710,4 @@ mod tests {
         assert_eq!(state.pop_count, 10);
         assert_eq!(state.building_count, 25);
     }
-
 }

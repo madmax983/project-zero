@@ -1,6 +1,6 @@
 use crate::layer1::funeral::Corpse;
-use crate::layer1::memory::{Memories, MemoryType};
 use crate::layer1::map::ScreenShake;
+use crate::layer1::memory::{Memories, MemoryType};
 use crate::layer1::particles::spawn_particle;
 use crate::layer1::pop::{Pop, PopDied, PopName};
 use crate::shared::log::MessageLog;

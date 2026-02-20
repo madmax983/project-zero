@@ -75,14 +75,14 @@ use crate::layer1::resources::{ColonyResources, RefiningProgress, ResourceItem};
 use crate::layer1::science::Anomaly;
 use crate::layer1::social::Tavern;
 use crate::layer1::stockpile::Stockpile;
-use crate::layer1::stress::{Breakdown, StressTracker, BREAKDOWN_TICKS_REQUIRED};
+use crate::layer1::stress::{BREAKDOWN_TICKS_REQUIRED, Breakdown, StressTracker};
 use crate::layer1::structure::{DeferMaintenance, Structure};
 use crate::layer1::tech::Library;
 use crate::layer1::traits::Trait;
 use crate::layer1::unrest::MentalState;
 use crate::layer1::utility_eval_types::{
-    CapacityProxy, ItemProxy, PopEvalData, PositionProxy, RefiningProxy,
-    UtilityAIBuffer, WorldContext, evaluate_idle,
+    CapacityProxy, ItemProxy, PopEvalData, PositionProxy, RefiningProxy, UtilityAIBuffer,
+    WorldContext, evaluate_idle,
 };
 pub use crate::layer1::utility_types::{
     ActionType, PopAction, StartPlan, UtilityConfig, UtilityWeights, manhattan_distance,
@@ -360,10 +360,7 @@ fn evaluate_group_exploration(
     }
 }
 
-fn evaluate_group_leisure(
-    evaluator: &mut CandidateEvaluator,
-    data: &PopEvalData,
-) {
+fn evaluate_group_leisure(evaluator: &mut CandidateEvaluator, data: &PopEvalData) {
     if let Some(hobby_type) = data.hobby_type {
         let utility = evaluate_hobby(data, hobby_type);
         evaluator.consider(ActionType::Hobby, utility, None);
@@ -525,7 +522,8 @@ fn populate_buffer_buildings(
 
     // Offices
     buffer.offices.clear();
-    let mut office_query = world.query::<(Entity, &GridPosition, &Office, Option<&ShiftSchedule>)>();
+    let mut office_query =
+        world.query::<(Entity, &GridPosition, &Office, Option<&ShiftSchedule>)>();
     for (entity, pos, office, schedule) in office_query.iter(world) {
         if schedule.is_some_and(|s| !s.is_active(cycle.time_of_day)) {
             continue;
@@ -840,7 +838,6 @@ pub fn evaluate_actions_system(world: &mut World) {
     }
 }
 
-
 // Re-add tests at the bottom
 #[cfg(test)]
 mod tests {
@@ -968,7 +965,6 @@ mod tests {
             "Should not switch with high threshold"
         );
     }
-
 
     #[test]
     fn test_penal_labor_prioritizes_work() {

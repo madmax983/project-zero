@@ -849,7 +849,12 @@ fn print_bio(world: &mut World, target_id: u32) {
     for (entity, name, bio, dream) in query.iter(world) {
         if entity.index() == target_id {
             found = true;
-            println!("{}", format!("=== Biography for {} ({:?}) ===", name.0, entity).green().bold());
+            println!(
+                "{}",
+                format!("=== Biography for {} ({:?}) ===", name.0, entity)
+                    .green()
+                    .bold()
+            );
 
             if let Some(bio) = bio {
                 if bio.events.is_empty() {
@@ -923,8 +928,8 @@ fn print_log(world: &mut World) {
 }
 
 fn to_comfy_color(c: ratatui::style::Color) -> comfy_table::Color {
-    use ratatui::style::Color as RColor;
     use comfy_table::Color as CColor;
+    use ratatui::style::Color as RColor;
 
     match c {
         RColor::Black => CColor::Black,

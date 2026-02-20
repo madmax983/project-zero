@@ -32,10 +32,10 @@
 use crate::layer1::access_control::{AccessControl, AccessMode};
 use crate::layer1::actions::fetch_clothing::handle_fetch_clothing;
 use crate::layer1::actions::fetch_tool::handle_fetch_tool;
-use crate::layer1::admin::{AdminProvider, AdminStats, Office};
 use crate::layer1::actions::hunger::handle_arrival as handle_hunger_arrival;
 use crate::layer1::actions::rest::handle_arrival as handle_rest_arrival;
 use crate::layer1::actions::{AssignedTo, AssignmentType};
+use crate::layer1::admin::{AdminProvider, AdminStats, Office};
 use crate::layer1::building::{Building, OccupiedTiles};
 use crate::layer1::combat::{HitStop, Weapon};
 use crate::layer1::cybernetics::get_efficiency_bonus;

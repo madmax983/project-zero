@@ -48,7 +48,7 @@ mod tests {
             0.0, // Rations
             0.0, // Tools
             0.8,
-            1.0, // Efficiency
+            1.0,  // Efficiency
             None, // Season
         );
 

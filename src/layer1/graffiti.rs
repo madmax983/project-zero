@@ -130,7 +130,12 @@ pub fn graffiti_placement_system(
 pub fn graffiti_observation_system(
     mut commands: Commands,
     graffiti_map: Res<GraffitiMap>,
-    mut pops: Query<(Entity, &GridPosition, &mut Morale, Option<&crate::layer1::memetic::MemeticCarrier>)>,
+    mut pops: Query<(
+        Entity,
+        &GridPosition,
+        &mut Morale,
+        Option<&crate::layer1::memetic::MemeticCarrier>,
+    )>,
     config: Option<Res<crate::layer1::memetic::MemeticConfig>>,
 ) {
     use rand::Rng;

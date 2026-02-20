@@ -25,7 +25,6 @@
 use super::actions::AssignmentType;
 /// Alias for `AssignmentType` for job-related contexts (Spec 113).
 pub use super::actions::AssignmentType as JobType;
-use crate::layer1::admin::AdminConsumer;
 use super::artifacts::ActiveAuras;
 use super::biocompatibility::Biocompatibility;
 use super::cabin_fever::CabinFever;
@@ -46,6 +45,7 @@ use super::terrain::{TerrainGrid, TerrainType};
 use super::traits::Traits;
 use super::utility_types::{PopAction, UtilityWeights};
 use super::wild_child::WildExposure;
+use crate::layer1::admin::AdminConsumer;
 use bevy_ecs::prelude::*;
 use rand::Rng;
 

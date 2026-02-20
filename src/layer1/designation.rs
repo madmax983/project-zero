@@ -288,12 +288,7 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
 /// assert!(try_designate(&mut world, 5, 5, DesignationType::Mine));
 /// assert!(!try_designate(&mut world, 5, 5, DesignationType::Mine)); // Duplicate
 /// ```
-pub fn try_designate(
-    world: &mut World,
-    x: i32,
-    y: i32,
-    designation_type: DesignationType,
-) -> bool {
+pub fn try_designate(world: &mut World, x: i32, y: i32, designation_type: DesignationType) -> bool {
     if !can_designate(world, x, y, designation_type) {
         return false;
     }

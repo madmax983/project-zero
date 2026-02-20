@@ -97,6 +97,7 @@ fn find_path_internal(
     let terrain = world.resource::<TerrainGrid>();
     let occupied = world.get_resource::<OccupiedTiles>();
     let building_map = world.resource::<BuildingMap>();
+    let crowding = world.get_resource::<crate::layer1::crowding::CrowdingGrid>();
 
     let mut open_set = BinaryHeap::new();
     let mut came_from: HashMap<(i32, i32), (i32, i32)> = HashMap::new();
@@ -146,7 +147,9 @@ fn find_path_internal(
             let tile_cost =
                 if let (Ok(x), Ok(y)) = (usize::try_from(next.0), usize::try_from(next.1)) {
                     #[allow(clippy::cast_possible_truncation)]
-                    terrain.get(x, y).map_or(1, |t| t.movement_cost() as i32)
+                    let t_cost = terrain.get(x, y).map_or(1, |t| t.movement_cost() as i32);
+                    let c_cost = crowding.map_or(0, |c| i32::from(c.get(x, y)));
+                    t_cost + c_cost
                 } else {
                     1
                 };

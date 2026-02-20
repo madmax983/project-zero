@@ -77,6 +77,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(BuildMode::default());
     world.insert_resource(DesignationMode::default());
     world.insert_resource(OccupiedTiles::default());
+    world.insert_resource(crate::layer1::crowding::CrowdingGrid::new(80, 50));
     world.insert_resource(ColonyResources::default());
     world.insert_resource(crate::layer1::purity::PurityMap::default());
     world.insert_resource(ColonyPolicies::default());

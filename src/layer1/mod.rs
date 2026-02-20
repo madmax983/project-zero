@@ -51,6 +51,8 @@ pub mod chronicle;
 pub mod clothing;
 /// Door control system (Spec 134).
 pub mod control;
+/// Crowding system (Spec 176).
+pub mod crowding;
 /// Defensive structures and logic.
 pub mod defense;
 /// Designation system for player tools.
@@ -69,8 +71,6 @@ pub mod farm;
 pub mod fire;
 /// Hauling logic.
 pub mod hauling;
-/// Pop hobbies logic (Spec 137).
-pub mod hobby;
 /// Workplace hazards logic.
 pub mod hazards;
 #[cfg(test)]
@@ -78,10 +78,14 @@ pub mod hazards;
 pub mod hazards_tests;
 /// Pop health and damage.
 pub mod health;
+/// Pop hobbies logic (Spec 137).
+pub mod hobby;
 /// Housing and rest mechanics.
 pub mod housing;
 /// The Inspector system (Spec 091).
 pub mod inspector;
+/// Institutional Memory system (Spec 172).
+pub mod institutional_memory;
 /// Integration systems bridging domains.
 pub mod integration;
 /// Personal inventory system.
@@ -96,8 +100,6 @@ pub mod mascot;
 pub mod medical;
 /// Pop memories and psychological effects.
 pub mod memory;
-/// Institutional Memory system (Spec 172).
-pub mod institutional_memory;
 #[cfg(test)]
 /// Tests for metal industry (Spec 024).
 pub mod metal_industry_tests;
@@ -173,6 +175,7 @@ pub use biography::*;
 pub use building::*;
 pub use chronicle::*;
 pub use control::*;
+pub use crowding::*;
 pub use defense::*;
 pub use designation::*;
 pub use dreams::*;
@@ -184,18 +187,18 @@ pub use fire::*;
 pub use graffiti::*;
 pub use hauling::*;
 pub use hazards::*;
-pub use hobby::*;
-pub use inventory::*;
 pub use health::*;
+pub use hobby::*;
 pub use housing::*;
+pub use institutional_memory::*;
 pub use integration::*;
+pub use inventory::*;
 pub use items::*;
 pub use locations::*;
 pub use map::*;
 pub use mascot::*;
 pub use medical::*;
 pub use memory::*;
-pub use institutional_memory::*;
 pub use needs::*;
 pub use notifications::*;
 pub use pop::*;

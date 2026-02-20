@@ -1,9 +1,9 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::utility_types::ActionType;
-use crate::layer1::utility_eval_types::PopEvalData;
-use crate::layer1::memetic::MemeticCarrier;
 use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::map::GridPosition;
+use crate::layer1::memetic::MemeticCarrier;
+use crate::layer1::utility_eval_types::PopEvalData;
+use crate::layer1::utility_types::ActionType;
+use bevy_ecs::prelude::*;
 use rand::seq::IteratorRandom;
 
 /// Evaluates the desire to scrawl memetic sigils on walls.
@@ -23,7 +23,8 @@ pub fn evaluate_scrawl_memetic_sigil(
     let mut rng = rand::thread_rng();
 
     let mut query = world.query::<(Entity, &GridPosition, &Building)>();
-    let candidates: Vec<(Entity, GridPosition)> = query.iter(world)
+    let candidates: Vec<(Entity, GridPosition)> = query
+        .iter(world)
         .filter(|(_, _, b)| b.building_type == BuildingType::Wall)
         .map(|(e, p, _)| (e, *p))
         .collect();

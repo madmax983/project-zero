@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::building::{BuildingType, MaterialType, OccupiedTiles};
-use crate::layer1::resources::{ResourceType, ResourceItem};
 use crate::layer1::GridPosition;
+use crate::layer1::building::{BuildingType, MaterialType, OccupiedTiles};
+use crate::layer1::resources::{ResourceItem, ResourceType};
+use bevy_ecs::prelude::*;
 
 /// Component representing a destroyed building.
 #[derive(Component, Debug, Clone, Copy)]
@@ -54,7 +54,8 @@ pub fn process_scavenge(world: &mut World, ruin_entity: Entity) -> Vec<ResourceT
 
     if let Some(p) = pos {
         for (res_type, amount) in &loot {
-             if *amount >= 1.0 { // Minimum yield of 1.0 to avoid clutter? Or just spawn fractional.
+            if *amount >= 1.0 {
+                // Minimum yield of 1.0 to avoid clutter? Or just spawn fractional.
                 // ResourceItem supports f32, so let's allow it.
                 world.spawn((
                     ResourceItem {
@@ -63,7 +64,7 @@ pub fn process_scavenge(world: &mut World, ruin_entity: Entity) -> Vec<ResourceT
                     },
                     p,
                 ));
-             }
+            }
         }
 
         if let Some(mut occupied) = world.get_resource_mut::<OccupiedTiles>() {
@@ -77,13 +78,13 @@ pub fn process_scavenge(world: &mut World, ruin_entity: Entity) -> Vec<ResourceT
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::building::{Building, BuildingType, OccupiedTiles, MaterialType, Material};
-    use crate::layer1::structure::{Structure, fire_damage_structure_system};
-    use crate::layer1::ruins::{Ruin, RuinHistory};
-    use crate::layer1::fire::{Fire, Flammable};
     use crate::layer1::GridPosition;
+    use crate::layer1::building::{Building, BuildingType, Material, MaterialType, OccupiedTiles};
+    use crate::layer1::fire::{Fire, Flammable};
+    use crate::layer1::ruins::{Ruin, RuinHistory};
+    use crate::layer1::structure::{Structure, fire_damage_structure_system};
     use crate::shared::time::SimulationTime;
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_destruction_spawns_ruin() {
@@ -94,20 +95,30 @@ mod tests {
 
         // Spawn a building with 1 HP
         let pos = GridPosition { x: 5, y: 5 };
-        let building = world.spawn((
-            Building { building_type: BuildingType::Housing },
-            Material(MaterialType::Wood),
-            Structure { current_hp: 1.0, max_hp: 100.0 },
-            Flammable::default(),
-            pos,
-        )).id();
+        let building = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Housing,
+                },
+                Material(MaterialType::Wood),
+                Structure {
+                    current_hp: 1.0,
+                    max_hp: 100.0,
+                },
+                Flammable::default(),
+                pos,
+            ))
+            .id();
 
         // Register occupation
         world.resource_mut::<OccupiedTiles>().0.insert((5, 5));
 
         // Spawn fire to destroy it
         world.spawn((
-            Fire { intensity: 10.0, lifetime: 10 },
+            Fire {
+                intensity: 10.0,
+                lifetime: 10,
+            },
             pos,
         ));
 
@@ -115,7 +126,10 @@ mod tests {
         fire_damage_structure_system(&mut world);
 
         // Assert Building is gone
-        assert!(world.get_entity(building).is_err(), "Building should be despawned");
+        assert!(
+            world.get_entity(building).is_err(),
+            "Building should be despawned"
+        );
 
         // Assert Ruin exists at same pos
         let mut ruin_query = world.query::<(&Ruin, &GridPosition)>();
@@ -140,13 +154,15 @@ mod tests {
         let pos = GridPosition { x: 2, y: 2 };
 
         // Spawn a Ruin
-        let ruin = world.spawn((
-            Ruin {
-                original_type: BuildingType::Wall,
-                material: MaterialType::Stone,
-            },
-            GridPosition { x: 2, y: 2 },
-        )).id();
+        let ruin = world
+            .spawn((
+                Ruin {
+                    original_type: BuildingType::Wall,
+                    material: MaterialType::Stone,
+                },
+                GridPosition { x: 2, y: 2 },
+            ))
+            .id();
 
         world.resource_mut::<OccupiedTiles>().0.insert((2, 2));
 
