@@ -37,3 +37,4 @@ Tasks currently being implemented. Builders: if a task is here, pick something e
 - [ ] `160` Sanctuary Districts — `specs/160-sanctuary-districts.md` — claimed 2026-05-24
 - [ ] `170` Pheromone Gardening — `specs/170-pheromone-gardening.md` — claimed 2026-02-19
 - [ ] `174` Memetic Hazards — `specs/174-memetic-hazards.md` — claimed 2026-02-20
+- [ ] `171` Seismic Resonance — `specs/171-seismic-resonance.md` — claimed 2026-10-31
