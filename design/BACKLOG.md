@@ -28,6 +28,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `189` Gravity Engineering — `specs/189-gravity-engineering.md`
 - [ ] `191` Radioactive Hearth — `specs/191-radioactive-hearth.md`
 - [ ] `192` Planetary Weather Fronts — `specs/192-planetary-weather-fronts.md`
+- [ ] `193` Biome Aggression — `specs/193-biome-aggression.md`
 
 ## MVP — Layer 2: System Simulation
 
