@@ -5065,3 +5065,100 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Capture/Kill (Science/Resource) vs. Observe (Culture/Mystery).
 
 ---
+## Resonant Architecture
+
+**Layer:** 1
+
+**Fantasy:** A room built with purpose echoes with it. The architecture shapes the mind.
+
+**Mechanic:** Room shapes and materials amplify specific traits. A Library built of "Mind-Stone" doubles Research speed but also doubles Stress gain. A Barracks with "Iron-Plating" makes soldiers fearless but aggressive.
+
+**Emergence:** You build a "War Room" of Red Granite to boost your generals. It works, but they become so aggressive they plot a coup because their "Ambition" trait was amplified too.
+
+**Tension:** Efficiency (standard materials) vs. Specialized Power (risky amplification).
+
+---
+
+## Kinetic Excavation
+
+**Layer:** Cross-Layer
+
+**Fantasy:** Cracking the nut with a sledgehammer from orbit.
+
+**Mechanic:** Instead of digging, you order a "Kinetic Strike" from a Layer 2 ship to expose deep ore veins. It creates a crater, destroys surface buildings/biomes, and exposes the resource instantly.
+
+**Emergence:** You miss the target coordinates slightly. You hit the magma layer instead of the ore vein. Now you have an active volcano in the middle of your base.
+
+**Tension:** Slow, safe mining vs. Fast, destructive terraforming.
+
+---
+
+## Ideological Contraband
+
+**Layer:** Cross-Layer
+
+**Fantasy:** You are what you buy. A carpet from a theocracy carries the weight of its weavers' prayers.
+
+**Mechanic:** Trade goods carry "Cultural Tags". Importing "Luxury Silks" from an Aristocratic empire increases "Elitism" ethics in your colony. "Worker Boots" from a Communist bloc boost "Collectivism".
+
+**Emergence:** You import cheap food from a Hive Mind to feed your starving people. They start demanding you dissolve the government and join the Hive.
+
+**Tension:** Economic necessity vs. Cultural contamination.
+
+---
+
+## Obsessive Optimization
+
+**Layer:** 1
+
+**Fantasy:** If it ain't broke, fix it until it is. The curse of the genius.
+
+**Mechanic:** High-skill Engineers gain a "Tinker" urge. They will dismantle working machines to "improve" them. Success = Permanent efficiency boost. Failure = Machine destroyed/Explosion.
+
+**Emergence:** Your Lead Engineer dismantles the Life Support System to "optimize airflow" right before a sandstorm hits.
+
+**Tension:** Allow the genius to work (potential gain) or forbid unauthorized maintenance (safety).
+
+---
+
+## Nanite Storms
+
+**Layer:** 1
+
+**Fantasy:** The dust is alive and hungry. Or helpful.
+
+**Mechanic:** A weather event where "Smart Dust" sweeps across the map. "Grey Storms" eat metal structures (damage). "Blue Storms" repair them (heal). "Red Storms" consume biomass.
+
+**Emergence:** A "Blue Storm" hits your ruined base and fixes everything for free. You get complacent. A "Red Storm" follows and eats your crops.
+
+**Tension:** Hunker down (safety) or try to capture the nanites (resource).
+
+---
+
+## Superstitious Totems
+
+**Layer:** 1
+
+**Fantasy:** In the face of the void, people cling to small comforts.
+
+**Mechanic:** Pops spontaneously create "Totems" (Lucky Coins, Rabbit feet) that occupy inventory slots. Possession reduces Stress and grants small buffs. Losing them causes a massive "Bad Omen" stress spike.
+
+**Emergence:** A Pop drops their "Lucky Rock" into the crusher. They dive in after it, mangling themselves, rather than face the bad luck.
+
+**Tension:** Efficiency (inventory space) vs. Psychological stability.
+
+---
+
+## Mycelial Tripwires
+
+**Layer:** 1
+
+**Fantasy:** The forest has eyes.
+
+**Mechanic:** Fungal networks connect distant parts of the map. Stepping on a "Sensor Shroom" in one area alerts "Spore Turrets" or Fauna in another area to attack.
+
+**Emergence:** You try to sneak past a sleeping Bear-Tiger. You step on a mushroom 100m away. The Bear-Tiger wakes up instantly and charges.
+
+**Tension:** Clear the fungus (time/noise) vs. Risk the alarm (speed).
+
+---
