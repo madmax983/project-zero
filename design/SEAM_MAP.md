@@ -111,3 +111,13 @@
     - Updated `src/layer1/utility_ai.rs` (`populate_refining`, `populate_farms`, `populate_hospitals`) to query `PowerConsumer`.
     - Added filter to ignore unpowered buildings (active=false) during candidate population.
 - **Tests:** `tests/integration/power_utility.rs` (3 tests verified)
+
+### INT-032: Wind -> Atmosphere Advection
+- **Date:** 2026-05-22
+- **Systems connected:** `WindGrid` -> `AtmosphereGrid` (Pollution Transport)
+- **Glue added:**
+    - Updated `src/layer1/atmosphere.rs` to implement semi-Lagrangian advection.
+    - Updated `update_atmosphere_system` to consume `WindGrid`.
+    - Registered `update_wind_system` in `Layer1SystemSet::Environment` before atmosphere.
+    - Initialized `WindGrid` and `GlobalWind` in `src/setup.rs`.
+- **Tests:** `tests/integration/wind_atmosphere.rs` (Integration test verified), Fixed regressions in `drone_network` and `hauling_execution`.

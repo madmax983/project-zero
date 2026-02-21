@@ -75,6 +75,60 @@ impl AtmosphereGrid {
         self.set(x, y, current + amount);
     }
 
+    /// Get interpolated pollution value at float coordinates.
+    #[must_use]
+    pub fn get_interpolated(&self, x: f32, y: f32) -> f32 {
+        let x0 = x.floor() as i32;
+        let y0 = y.floor() as i32;
+        let x1 = x0 + 1;
+        let y1 = y0 + 1;
+
+        let wx = x - x0 as f32;
+        let wy = y - y0 as f32;
+
+        let v00 = self.get(x0, y0);
+        let v10 = self.get(x1, y0);
+        let v01 = self.get(x0, y1);
+        let v11 = self.get(x1, y1);
+
+        // Bilinear interpolation
+        let top = v00 * (1.0 - wx) + v10 * wx;
+        let bottom = v01 * (1.0 - wx) + v11 * wx;
+
+        top * (1.0 - wy) + bottom * wy
+    }
+
+    /// Advect pollution using the wind grid.
+    pub fn advect(&mut self, wind_grid: &crate::layer1::wind::WindGrid) {
+        if self.width != wind_grid.width || self.height != wind_grid.height {
+            return;
+        }
+
+        // Ensure scratch buffer size
+        if self.scratch.len() != self.values.len() {
+            self.scratch = vec![0.0; self.values.len()];
+        }
+
+        #[allow(clippy::cast_precision_loss)]
+        for y in 0..self.height {
+            for x in 0..self.width {
+                let wind = wind_grid.get_wind(x as i32, y as i32);
+                if wind.length() < f32::EPSILON {
+                    self.scratch[y * self.width + x] = self.values[y * self.width + x];
+                    continue;
+                }
+
+                // Trace back
+                let src_x = x as f32 - wind.x;
+                let src_y = y as f32 - wind.y;
+
+                self.scratch[y * self.width + x] = self.get_interpolated(src_x, src_y);
+            }
+        }
+
+        std::mem::swap(&mut self.values, &mut self.scratch);
+    }
+
     /// Simulate diffusion and natural decay of pollution.
     /// Uses a simple box blur.
     #[allow(
@@ -142,13 +196,21 @@ impl AtmosphereGrid {
 }
 
 /// System to update atmospheric simulation (emission + diffusion).
-pub fn update_atmosphere_system(world: &mut World) {
-    // 1. Identify Blockers & Emitters
+pub fn update_atmosphere_system(
+    mut grid: ResMut<AtmosphereGrid>,
+    wind_grid: Option<Res<crate::layer1::wind::WindGrid>>,
+    query: Query<(&Building, &GridPosition)>,
+) {
+    // 1. Advect with Wind
+    if let Some(wind) = wind_grid {
+        grid.advect(&wind);
+    }
+
+    // 2. Identify Blockers & Emitters
     let mut blockers = HashMap::new();
     let mut emitters = Vec::new();
 
-    let mut query = world.query::<(&Building, &GridPosition)>();
-    for (b, pos) in query.iter(world) {
+    for (b, pos) in query.iter() {
         // Blockers
         if let Some(transmissivity) = b.building_type.flow_transmissivity() {
             blockers.insert((pos.x, pos.y), transmissivity);
@@ -166,13 +228,11 @@ pub fn update_atmosphere_system(world: &mut World) {
         }
     }
 
-    // 2. Apply emissions & Diffuse
-    if let Some(mut grid) = world.get_resource_mut::<AtmosphereGrid>() {
-        for (pos, amount) in emitters {
-            grid.add(pos.x, pos.y, amount);
-        }
-        grid.diffuse(&blockers);
+    // 3. Apply emissions & Diffuse
+    for (pos, amount) in emitters {
+        grid.add(pos.x, pos.y, amount);
     }
+    grid.diffuse(&blockers);
 }
 
 /// System to apply health effects from pollution.
@@ -233,7 +293,9 @@ mod tests {
         ));
 
         // Run update
-        update_atmosphere_system(&mut world);
+        let mut schedule = Schedule::default();
+        schedule.add_systems(update_atmosphere_system);
+        schedule.run(&mut world);
 
         // Check pollution at source
         let grid = world.resource::<AtmosphereGrid>();
@@ -302,8 +364,10 @@ mod tests {
         ));
 
         // Run atmosphere update
+        let mut schedule = Schedule::default();
+        schedule.add_systems(update_atmosphere_system);
         for _ in 0..5 {
-            update_atmosphere_system(&mut world);
+            schedule.run(&mut world);
         }
 
         let grid = world.resource::<AtmosphereGrid>();
@@ -337,10 +401,12 @@ mod tests {
         ));
 
         // Run atmosphere update
+        let mut schedule = Schedule::default();
+        schedule.add_systems(update_atmosphere_system);
         for _ in 0..20 {
             // Manually refill source
             world.resource_mut::<AtmosphereGrid>().set(0, 0, 1.0);
-            update_atmosphere_system(&mut world);
+            schedule.run(&mut world);
         }
 
         let grid = world.resource::<AtmosphereGrid>();

@@ -266,10 +266,13 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
+            crate::layer1::wind::update_wind_system,
             malfunction_system.after(entropy_system),
             apply_noise_effects_system.after(update_noise_system),
             waste_pollution_bridge,
-            crate::layer1::atmosphere::update_atmosphere_system.after(waste_pollution_bridge),
+            crate::layer1::atmosphere::update_atmosphere_system
+                .after(waste_pollution_bridge)
+                .after(crate::layer1::wind::update_wind_system),
             update_pressure_system,
             crate::layer1::temperature::update_temperature_system.after(update_pressure_system),
             crate::layer1::suction::suction_system.after(update_pressure_system),

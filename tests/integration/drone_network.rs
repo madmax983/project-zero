@@ -110,6 +110,11 @@ mod tests {
         // Blackout Protocol (Energy)
         world.insert_resource(scale::layer1::energy::BlackoutProtocol::default());
 
+        world.insert_resource(scale::layer1::predictive_policing::PredictionConfig {
+            threshold: 0.8,
+            enabled: true,
+        });
+
         world.insert_resource(Schedules::default());
 
         // Add schedule
