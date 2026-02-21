@@ -286,11 +286,14 @@ mod tests {
     fn test_fauna_attacks_adjacent_target() {
         let mut world = setup_world();
 
-        use crate::layer1::fauna::{FaunaBody, FaunaPart, BodyPartType, FaunaStats};
+        use crate::layer1::fauna::{BodyPartType, FaunaBody, FaunaPart, FaunaStats};
         let mut body = FaunaBody::default();
         body.add_part(FaunaPart {
             part_type: BodyPartType::Head,
-            stats: FaunaStats { attack: 10.0, ..Default::default() },
+            stats: FaunaStats {
+                attack: 10.0,
+                ..Default::default()
+            },
             ..Default::default()
         });
 

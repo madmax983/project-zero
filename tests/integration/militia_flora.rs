@@ -8,7 +8,9 @@ mod tests {
     use scale::layer1::map::GridPosition;
     use scale::layer1::pop::Pop;
     use scale::layer1::terrain::{TerrainGrid, TerrainType};
-    use scale::layer1::utility_ai::{ActionType, PopAction, UtilityConfig, evaluate_actions_system};
+    use scale::layer1::utility_ai::{
+        ActionType, PopAction, UtilityConfig, evaluate_actions_system,
+    };
     use scale::layer1::utility_types::UtilityWeights;
 
     fn setup_world() -> World {
@@ -121,7 +123,10 @@ mod tests {
             .spawn((
                 Flora::default(),
                 GridPosition { x: 0, y: 0 },
-                Health { current: 20.0, max: 20.0 },
+                Health {
+                    current: 20.0,
+                    max: 20.0,
+                },
             ))
             .id();
 
@@ -195,7 +200,10 @@ mod tests {
                     ..Default::default()
                 },
                 // Place pop near new flora
-                GridPosition { x: new_pos.x, y: new_pos.y },
+                GridPosition {
+                    x: new_pos.x,
+                    y: new_pos.y,
+                },
                 scale::layer1::needs::Needs::default(),
                 UtilityWeights::default(),
                 PopAction {

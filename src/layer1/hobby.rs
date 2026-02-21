@@ -111,17 +111,18 @@ pub fn execute_hobby_system(
 
         // Chance to produce item (e.g., 1% per tick)
         if rng.gen_bool(0.01)
-            && let Some(mut inv) = inventory {
-                let item_type = match hobby.hobby_type {
-                    HobbyType::Whittling => Some(ItemType::Curio("Wooden Duck".to_string())),
-                    HobbyType::Tinkering => Some(ItemType::Curio("Bent Gear".to_string())),
-                    _ => None,
-                };
+            && let Some(mut inv) = inventory
+        {
+            let item_type = match hobby.hobby_type {
+                HobbyType::Whittling => Some(ItemType::Curio("Wooden Duck".to_string())),
+                HobbyType::Tinkering => Some(ItemType::Curio("Bent Gear".to_string())),
+                _ => None,
+            };
 
-                if let Some(t) = item_type {
-                    inv.add(InventoryItem { item_type: t });
-                }
+            if let Some(t) = item_type {
+                inv.add(InventoryItem { item_type: t });
             }
+        }
     }
 }
 
@@ -183,6 +184,7 @@ mod tests {
             traits: None,
             stress: 0.8, // High stress
             hobby_type: Some(HobbyType::CloudWatching),
+            chemical_state: None,
         };
 
         let score = evaluate_hobby(&eval_data, HobbyType::CloudWatching);

@@ -1,10 +1,10 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::justice::Inmate;
 use crate::layer1::map::GridPosition;
 use crate::layer1::stress::StressTracker;
 use crate::layer1::traits::{Trait, Traits};
 use crate::layer1::utility_ai::{ActionType, PopAction};
 use crate::layer1::zone::{ZoneGrid, ZoneType};
+use bevy_ecs::prelude::*;
 
 /// Component marking a Pop as a suspect for pre-crime arrest.
 #[derive(Component, Debug, Clone)]
@@ -110,11 +110,7 @@ pub fn evaluate_pre_crime_arrest(
 /// 2. Adds [`Inmate`] status with a short sentence (Protective Custody).
 /// 3. Resets [`StressTracker`].
 /// 4. Teleports the pop to a Jail zone.
-pub fn execute_pre_crime_arrest(
-    world: &mut World,
-    _warden: Entity,
-    target: Entity,
-) {
+pub fn execute_pre_crime_arrest(world: &mut World, _warden: Entity, target: Entity) {
     // Check if target is still a suspect (avoid race condition)
     if world.get::<Suspect>(target).is_none() {
         return;
@@ -157,7 +153,12 @@ pub fn execute_pre_crime_arrest(
 /// System to execute pre-crime arrests when a warden reaches their target.
 pub fn pre_crime_execution_system(world: &mut World) {
     let mut arrests = Vec::new();
-    let mut query = world.query::<(Entity, &PopAction, &crate::layer1::execution::MovementTarget, Option<&crate::layer1::execution::AtTarget>)>();
+    let mut query = world.query::<(
+        Entity,
+        &PopAction,
+        &crate::layer1::execution::MovementTarget,
+        Option<&crate::layer1::execution::AtTarget>,
+    )>();
     for (entity, action, target, at_target) in query.iter(world) {
         if action.current == ActionType::PreCrimeArrest && at_target.is_some() {
             arrests.push((entity, target.target_entity));
@@ -172,8 +173,12 @@ pub fn pre_crime_execution_system(world: &mut World) {
             action.current = ActionType::Idle;
             action.ticks_committed = 0;
         }
-        world.entity_mut(guard).remove::<crate::layer1::execution::MovementTarget>();
-        world.entity_mut(guard).remove::<crate::layer1::execution::AtTarget>();
+        world
+            .entity_mut(guard)
+            .remove::<crate::layer1::execution::MovementTarget>();
+        world
+            .entity_mut(guard)
+            .remove::<crate::layer1::execution::AtTarget>();
     }
 }
 
@@ -196,16 +201,16 @@ fn find_jail_spot(world: &World) -> Option<GridPosition> {
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
+    use crate::layer1::justice::{Inmate, Wanted};
+    use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
+    use crate::layer1::predictive_policing::{
+        PredictionConfig, PredictiveModel, Suspect, check_prediction_system,
+        evaluate_pre_crime_arrest,
+    };
     use crate::layer1::stress::StressTracker;
     use crate::layer1::traits::{Trait, Traits};
-    use crate::layer1::justice::{Wanted, Inmate};
-    use crate::layer1::predictive_policing::{
-        Suspect, PredictiveModel, PredictionConfig,
-        check_prediction_system, evaluate_pre_crime_arrest
-    };
-    use crate::layer1::map::GridPosition;
+    use bevy_ecs::prelude::*;
 
     fn setup_world() -> World {
         let mut world = World::new();
@@ -229,12 +234,16 @@ mod tests {
         let mut traits = std::collections::HashSet::new();
         traits.insert(Trait::Volatile);
 
-        let pop = world.spawn((
-            Pop,
-            StressTracker { accumulated_stress: 80.0 }, // Near breakdown (threshold is 100)
-            Traits(traits),
-            // No Suspect component yet
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                StressTracker {
+                    accumulated_stress: 80.0,
+                }, // Near breakdown (threshold is 100)
+                Traits(traits),
+                // No Suspect component yet
+            ))
+            .id();
 
         schedule.run(&mut world);
 
@@ -250,11 +259,15 @@ mod tests {
         let mut schedule = Schedule::default();
         schedule.add_systems(check_prediction_system);
 
-        let pop = world.spawn((
-            Pop,
-            StressTracker { accumulated_stress: 10.0 },
-            Traits(std::collections::HashSet::new()),
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                StressTracker {
+                    accumulated_stress: 10.0,
+                },
+                Traits(std::collections::HashSet::new()),
+            ))
+            .id();
 
         schedule.run(&mut world);
 
@@ -266,11 +279,16 @@ mod tests {
     fn test_warden_targets_suspect() {
         let mut world = setup_world();
 
-        let suspect = world.spawn((
-            Pop,
-            Suspect { probability: 0.9, predicted_crime: "Arson".to_string() },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let suspect = world
+            .spawn((
+                Pop,
+                Suspect {
+                    probability: 0.9,
+                    predicted_crime: "Arson".to_string(),
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         let warden_pos = GridPosition { x: 0, y: 0 };
 
@@ -291,17 +309,21 @@ mod tests {
         // Need ZoneGrid
         world.insert_resource(crate::layer1::zone::ZoneGrid::new(10, 10));
 
-        let suspect = world.spawn((
-            Pop,
-            Suspect { probability: 0.95, predicted_crime: "Murder".to_string() },
-            GridPosition { x: 1, y: 1 },
-            StressTracker { accumulated_stress: 90.0 },
-        )).id();
+        let suspect = world
+            .spawn((
+                Pop,
+                Suspect {
+                    probability: 0.95,
+                    predicted_crime: "Murder".to_string(),
+                },
+                GridPosition { x: 1, y: 1 },
+                StressTracker {
+                    accumulated_stress: 90.0,
+                },
+            ))
+            .id();
 
-        let warden = world.spawn((
-            Pop,
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let warden = world.spawn((Pop, GridPosition { x: 0, y: 0 })).id();
 
         // Execute arrest
         crate::layer1::predictive_policing::execute_pre_crime_arrest(&mut world, warden, suspect);
@@ -317,7 +339,9 @@ mod tests {
         assert!(world.get::<Suspect>(suspect).is_none());
 
         // Stress should be reset
-        let tracker = world.get::<StressTracker>(suspect).expect("Should have StressTracker");
+        let tracker = world
+            .get::<StressTracker>(suspect)
+            .expect("Should have StressTracker");
         assert_eq!(tracker.accumulated_stress, 0.0);
     }
 }

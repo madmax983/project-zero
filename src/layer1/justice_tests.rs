@@ -106,11 +106,7 @@ mod tests {
 
         // Wanted criminal outside
         let fugitive = world
-            .spawn((
-                Pop,
-                Wanted { severity: 1.0 },
-                GridPosition { x: 0, y: 0 },
-            ))
+            .spawn((Pop, Wanted { severity: 1.0 }, GridPosition { x: 0, y: 0 }))
             .id();
 
         let criminals = vec![ScorableCandidate::new(

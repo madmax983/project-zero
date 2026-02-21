@@ -1,11 +1,11 @@
 //! Seismic Resonance system (Spec 171).
 
-use bevy_ecs::prelude::*;
-use rand::Rng;
-use crate::layer1::map::GridPosition;
-use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::flora::Flora;
 use crate::layer1::geology::GeologicalEvent;
+use crate::layer1::map::GridPosition;
+use crate::layer1::terrain::{TerrainGrid, TerrainType};
+use bevy_ecs::prelude::*;
+use rand::Rng;
 
 /// Grid tracking seismic stress accumulation (Vibration).
 #[derive(Resource)]
@@ -69,7 +69,11 @@ pub struct SeismicSource {
 }
 
 /// System to update the seismic grid based on sources and terrain.
-#[allow(clippy::cast_possible_truncation, clippy::cast_precision_loss, clippy::cast_sign_loss)]
+#[allow(
+    clippy::cast_possible_truncation,
+    clippy::cast_precision_loss,
+    clippy::cast_sign_loss
+)]
 pub fn update_seismic_system(
     mut grid: ResMut<VibrationGrid>,
     terrain: Res<TerrainGrid>,
@@ -85,7 +89,9 @@ pub fn update_seismic_system(
         for dy in -r..=r {
             for dx in -r..=r {
                 let dist_sq = (dx * dx + dy * dy) as f32;
-                if dist_sq > source.radius * source.radius { continue; }
+                if dist_sq > source.radius * source.radius {
+                    continue;
+                }
 
                 let tx = cx + dx;
                 let ty = cy + dy;
@@ -175,9 +181,9 @@ pub fn seismic_instability_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::terrain::{TerrainGrid, TerrainType};
     use crate::layer1::flora::Flora;
     use crate::layer1::geology::GeologicalEvent;
+    use crate::layer1::terrain::{TerrainGrid, TerrainType};
 
     #[test]
     fn test_vibration_grid_initialization() {
@@ -193,25 +199,39 @@ mod tests {
         let width = 10;
         let height = 10;
         let tiles = vec![TerrainType::Grass; width * height];
-        let mut terrain = TerrainGrid { width, height, tiles };
+        let mut terrain = TerrainGrid {
+            width,
+            height,
+            tiles,
+        };
 
         // Row 0 is Rock (High transmission)
-        for x in 0..10 { terrain.set(x, 0, TerrainType::Rock); }
+        for x in 0..10 {
+            terrain.set(x, 0, TerrainType::Rock);
+        }
         // Row 5 is Dirt (Low transmission)
-        for x in 0..10 { terrain.set(x, 5, TerrainType::Dirt); }
+        for x in 0..10 {
+            terrain.set(x, 5, TerrainType::Dirt);
+        }
 
         world.insert_resource(terrain);
         world.insert_resource(VibrationGrid::new(10, 10));
 
         // Source on Rock
         world.spawn((
-            SeismicSource { intensity: 1.0, radius: 5.0 },
+            SeismicSource {
+                intensity: 1.0,
+                radius: 5.0,
+            },
             GridPosition { x: 0, y: 0 },
         ));
 
         // Source on Dirt
         world.spawn((
-            SeismicSource { intensity: 1.0, radius: 5.0 },
+            SeismicSource {
+                intensity: 1.0,
+                radius: 5.0,
+            },
             GridPosition { x: 0, y: 5 },
         ));
 
@@ -225,7 +245,10 @@ mod tests {
         let rock_val = grid.get(3, 0);
         let dirt_val = grid.get(3, 5);
 
-        assert!(rock_val > dirt_val, "Rock should transmit vibration better than Dirt");
+        assert!(
+            rock_val > dirt_val,
+            "Rock should transmit vibration better than Dirt"
+        );
     }
 
     #[test]
@@ -238,14 +261,16 @@ mod tests {
         world.insert_resource(grid);
 
         // Spawn Flora
-        let flora_entity = world.spawn((
-            Flora {
-                growth_timer: 100,
-                attack_timer: 100,
-                ..Default::default()
-            },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let flora_entity = world
+            .spawn((
+                Flora {
+                    growth_timer: 100,
+                    attack_timer: 100,
+                    ..Default::default()
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         // Run reaction system
         let mut schedule = Schedule::default();
@@ -283,6 +308,9 @@ mod tests {
             }
         }
 
-        assert!(triggered, "Should trigger instability event eventually with high vibration");
+        assert!(
+            triggered,
+            "Should trigger instability event eventually with high vibration"
+        );
     }
 }

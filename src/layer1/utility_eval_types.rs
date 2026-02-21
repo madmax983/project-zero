@@ -1,3 +1,4 @@
+use crate::layer1::chemical::ChemicalState;
 use crate::layer1::combat::Drafted;
 use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::factions::{FactionData, FactionId, FactionMember};
@@ -12,9 +13,7 @@ use crate::layer1::stress::{BREAKDOWN_TICKS_REQUIRED, Breakdown, StressTracker};
 use crate::layer1::taboo::TabooState;
 use crate::layer1::traits::Traits;
 use crate::layer1::unrest::MentalState;
-use crate::layer1::utility_types::{
-    calculate_context_score, HobbyType, PopAction, UtilityWeights,
-};
+use crate::layer1::utility_types::{HobbyType, PopAction, UtilityWeights, calculate_context_score};
 use bevy_ecs::prelude::*;
 use bevy_ecs::query::QueryData;
 use std::collections::HashMap;
@@ -52,6 +51,7 @@ pub struct PopEvaluationQuery {
     pub traits: Option<&'static Traits>,
     pub stress: Option<&'static StressTracker>,
     pub hobby: Option<&'static Hobby>,
+    pub chemical: Option<&'static ChemicalState>,
 }
 
 impl PopEvalData {
@@ -76,6 +76,7 @@ impl PopEvalData {
                 .stress
                 .map_or(0.0, |s| s.accumulated_stress / BREAKDOWN_TICKS_REQUIRED),
             hobby_type: item.hobby.map(|comp| comp.hobby_type),
+            chemical_state: item.chemical.cloned(),
         }
     }
 }
@@ -115,6 +116,8 @@ pub struct PopEvalData {
     pub stress: f32,
     /// Assigned hobby type, if any.
     pub hobby_type: Option<HobbyType>,
+    /// Chemical addiction state, if any.
+    pub chemical_state: Option<ChemicalState>,
 }
 
 /// Context data for utility evaluation (resources, time, etc.)

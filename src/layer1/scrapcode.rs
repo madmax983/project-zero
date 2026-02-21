@@ -29,7 +29,7 @@ pub fn perform_purge(world: &mut World) {
         scrapcode.duration = 0;
 
         if let Some(mut log) = world.get_resource_mut::<crate::shared::log::MessageLog>() {
-             log.add("Scrapcode Purged!");
+            log.add("Scrapcode Purged!");
         }
     }
 }
@@ -48,7 +48,7 @@ pub fn scrapcode_decay_system(mut scrapcode: ResMut<Scrapcode>) {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::building::{BuildingType, try_place_building, MaterialType};
+    use crate::layer1::building::{BuildingType, MaterialType, try_place_building};
     use crate::layer1::resources::ColonyResources;
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
 
@@ -104,13 +104,22 @@ mod tests {
         // With 1.5 severity, cost should be increased
         // Note: Use a tolerance or integer math if needed, but for MVP float check:
         let expected_cost = (normal_cost * 1.5).ceil();
-        assert!((cost_paid - expected_cost).abs() < f32::EPSILON, "Scrapcode should increase cost by 50%. Paid: {}, Expected: {}", cost_paid, expected_cost);
+        assert!(
+            (cost_paid - expected_cost).abs() < f32::EPSILON,
+            "Scrapcode should increase cost by 50%. Paid: {}, Expected: {}",
+            cost_paid,
+            expected_cost
+        );
     }
 
     #[test]
     fn test_purge_action_removes_scrapcode() {
         let mut world = setup_world();
-        world.insert_resource(Scrapcode { active: true, severity: 1.0, duration: 100 });
+        world.insert_resource(Scrapcode {
+            active: true,
+            severity: 1.0,
+            duration: 100,
+        });
 
         // Run Purge System (simulating action completion)
         perform_purge(&mut world);

@@ -286,7 +286,10 @@ mod tests {
         );
 
         // One of them should have health (the new one)
-        assert!(h1.is_some() || h2.is_some(), "At least one flora should have health (the new one)");
+        assert!(
+            h1.is_some() || h2.is_some(),
+            "At least one flora should have health (the new one)"
+        );
     }
 
     #[test]
