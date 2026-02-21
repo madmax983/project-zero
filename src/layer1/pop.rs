@@ -37,6 +37,7 @@ use super::map::GridPosition;
 use super::memory::Memories;
 use super::morale::Morale;
 use super::needs::Needs;
+use super::palette_fatigue::DietaryHistory;
 use super::rumor::Knowledge;
 use super::skills::Skills;
 use super::social::debt::SocialDebt;
@@ -282,6 +283,7 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
                     Biocompatibility::default(),
                     WildExposure::default(),
                     AdminConsumer { demand: 1.0 },
+                    DietaryHistory::default(),
                 ));
             spawned += 1;
         }
@@ -677,5 +679,18 @@ mod tests {
         for (_, exposure) in query.iter(&world) {
             assert_eq!(exposure.current, 0.0);
         }
+    }
+
+    #[test]
+    fn test_spawn_initial_pops_have_dietary_history() {
+        let mut world = World::new();
+        let terrain = generate_terrain(80, 50);
+        world.insert_resource(terrain);
+
+        spawn_initial_pops(&mut world);
+
+        let mut query = world.query::<(&Pop, &super::super::palette_fatigue::DietaryHistory)>();
+        let count = query.iter(&world).count();
+        assert_eq!(count, 5, "All 5 pops should have DietaryHistory component");
     }
 }

@@ -13,7 +13,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 - [ ] `059` Soil Fertility — `specs/059-soil-fertility.md`
 - [ ] `077` Emergent Festivals — `specs/077-emergent-festivals.md`
-- [ ] `114` Palette Fatigue — `specs/114-palette-fatigue.md`
 - [ ] `120` Crop Diversity — `specs/120-crop-diversity.md`
 - [ ] `132` Equipment & Wear — `specs/132-equipment-and-wear.md`
 - [ ] `133` Ventilation Networks — `specs/133-ventilation-networks.md`

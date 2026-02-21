@@ -28,6 +28,7 @@ use crate::layer1::{
     building::Material,
     building::MaterialType,
     needs::Needs,
+    palette_fatigue::DietaryHistory,
     pop::{Pop, PopName},
     resources::RefiningProgress,
     stockpile::Stockpile,
@@ -397,6 +398,8 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
     let personality_height = if has_personality { 2 } else { 0 };
     let has_dream = world.get::<DreamJournal>(entity).is_some();
     let dream_height = u16::from(has_dream);
+    let has_diet = world.get::<DietaryHistory>(entity).is_some();
+    let diet_height = u16::from(has_diet);
     let has_spirit = world.get::<MachineSpirit>(entity).is_some();
     let spirit_height = u16::from(has_spirit);
     let has_quirk = world.get::<Quirk>(entity).is_some();
@@ -416,6 +419,7 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
             Constraint::Length(quirk_height),                         // Quirk
             Constraint::Length(personality_height),                   // Personality + Spacer
             Constraint::Length(dream_height),                         // Last Dream
+            Constraint::Length(diet_height),                          // Dietary History
             Constraint::Min(1),                                       // Biography
         ])
         .split(area);
@@ -594,8 +598,13 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         render_dream_journal(frame, layout[10], journal);
     }
 
-    // 11. Biography
-    let bottom_area = layout[11];
+    // 11. Dietary History
+    if let Some(history) = world.get::<DietaryHistory>(entity) {
+        render_dietary_history(frame, layout[11], history);
+    }
+
+    // 12. Biography
+    let bottom_area = layout[12];
     let bio_opt = world.get::<Biography>(entity);
 
     if let Some(bio) = bio_opt {
@@ -647,6 +656,22 @@ fn render_dream_journal(frame: &mut Frame, area: Rect, journal: &DreamJournal) {
         ]));
         frame.render_widget(p, area);
     }
+}
+
+fn render_dietary_history(frame: &mut Frame, area: Rect, history: &DietaryHistory) {
+    if history.recent_meals.is_empty() {
+        return;
+    }
+    let meals: Vec<String> = history
+        .recent_meals
+        .iter()
+        .map(|i| format!("{i:?}"))
+        .collect();
+    let text = format!("Recent Meals: {}", meals.join(", "));
+    frame.render_widget(
+        Paragraph::new(text).style(Style::default().fg(Color::Gray)),
+        area,
+    );
 }
 
 fn render_housing_details(frame: &mut Frame, area: Rect, housing: &Housing) {
@@ -1233,5 +1258,52 @@ mod tests {
 
         assert!(full_text.contains("Spirit Anger: 80%"));
         assert!(full_text.contains("Glitchy"));
+    }
+
+    #[test]
+    fn test_inspector_render_dietary_history() {
+        use crate::layer1::items::ItemType;
+        use crate::layer1::palette_fatigue::DietaryHistory;
+        use crate::layer1::pop::PopName;
+
+        let mut world = World::new();
+        world.insert_resource(Selection::default());
+
+        let mut history = DietaryHistory::default();
+        history.recent_meals.push_back(ItemType::Potato);
+        history.recent_meals.push_back(ItemType::Meat);
+
+        let entity = world
+            .spawn((
+                Pop,
+                PopName("Gourmand".to_string()),
+                GridPosition { x: 1, y: 1 },
+                history,
+            ))
+            .id();
+
+        world.resource_mut::<Selection>().select_entity(entity);
+
+        let backend = TestBackend::new(40, 20);
+        let mut terminal = Terminal::new(backend).unwrap();
+
+        terminal
+            .draw(|f| {
+                render_inspector(f, f.area(), &world);
+            })
+            .unwrap();
+
+        let buffer = terminal.backend().buffer();
+        let cells: Vec<String> = buffer
+            .content
+            .iter()
+            .map(|c| c.symbol().to_string())
+            .collect();
+        let full_text = cells.join("");
+
+        assert!(full_text.contains("Gourmand"));
+        assert!(full_text.contains("Recent Meals:"));
+        assert!(full_text.contains("Potato"));
+        assert!(full_text.contains("Meat"));
     }
 }
