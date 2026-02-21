@@ -100,11 +100,40 @@ pub fn update_beauty_grid_system(
 
     for (pos, source) in &sources {
         let value = source.value;
-        #[allow(clippy::collapsible_if)]
         if value.abs() > f32::EPSILON {
-            if let (Ok(x), Ok(y)) = (usize::try_from(pos.x), usize::try_from(pos.y)) {
-                let current = grid.get(x, y);
-                grid.set(x, y, current + value);
+            let radius = source.radius;
+            let cx = pos.x;
+            let cy = pos.y;
+
+            // Determine bounds
+            #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
+            let r_int = radius.ceil() as i32;
+            let min_x = (cx - r_int).max(0);
+            let max_x = (cx + r_int).min((grid.width - 1) as i32);
+            let min_y = (cy - r_int).max(0);
+            let max_y = (cy + r_int).min((grid.height - 1) as i32);
+
+            for y in min_y..=max_y {
+                for x in min_x..=max_x {
+                    // Check distance
+                    let dist_sq = (x - cx).pow(2) + (y - cy).pow(2);
+                    #[allow(clippy::cast_precision_loss)]
+                    let dist = (dist_sq as f32).sqrt();
+
+                    if dist <= radius + 0.5 {
+                        let effective_value = if radius > 0.0 {
+                            // Linear falloff
+                            value * (1.0 - dist / (radius + 1.0)).max(0.0)
+                        } else {
+                            value
+                        };
+
+                        if let (Ok(ux), Ok(uy)) = (usize::try_from(x), usize::try_from(y)) {
+                            let current = grid.get(ux, uy);
+                            grid.set(ux, uy, current + effective_value);
+                        }
+                    }
+                }
             }
         }
     }

@@ -130,3 +130,11 @@
     - Added `SeismicSource` component to industrial buildings in `src/layer1/building.rs`.
     - Registered `update_seismic_system`, `seismic_flora_reaction_system`, `seismic_instability_system` in `src/layer1/systems.rs`.
 - **Tests:** `tests/integration/seismic_vibration.rs` (Integration test verified)
+
+### INT-034: Beauty Radius Propagation
+- **Date:** 2026-02-22
+- **Systems connected:** `BeautySource` (Buildings) -> `BeautyGrid` (Environment) -> `apply_beauty_effects_system` (Pop)
+- **Glue added:**
+    - Updated `src/layer1/building.rs` to add `beauty_radius()` to `BuildingType`.
+    - Updated `src/layer1/beauty.rs` to propagate beauty value over the radius with linear falloff.
+- **Tests:** `tests/integration/beauty_radius.rs` (Integration test verified)
