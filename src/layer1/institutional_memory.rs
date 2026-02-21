@@ -62,6 +62,7 @@ pub fn produce_manual_system(
                 DesignationType::Demolish
                 | DesignationType::Repair
                 | DesignationType::JuryRig
+                | DesignationType::Destroy
                 | DesignationType::SetZone(_) => Some(SkillType::Construction),
                 DesignationType::Tame => Some(SkillType::Husbandry),
                 DesignationType::Cannibalize => None,
@@ -148,6 +149,7 @@ pub fn manual_aura_system(
                     DesignationType::Demolish
                     | DesignationType::Repair
                     | DesignationType::JuryRig
+                    | DesignationType::Destroy
                     | DesignationType::SetZone(_) => Some(SkillType::Construction),
                     DesignationType::Tame => Some(SkillType::Husbandry),
                     DesignationType::Cannibalize => None,

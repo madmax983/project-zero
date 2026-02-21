@@ -836,6 +836,7 @@ pub const fn get_designation_char(tool: DesignationType) -> &'static str {
         DesignationType::ClearFlora => "F",
         DesignationType::JuryRig => "J",
         DesignationType::Cannibalize => "C",
+        DesignationType::Destroy => "D",
     }
 }
 

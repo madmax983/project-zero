@@ -26,7 +26,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `175` Bureaucratic Drag — `specs/175-bureaucratic-drag.md`
 - [ ] `179` Magnetic Storms — `specs/179-magnetic-storms.md`
 - [ ] `183` Geodetic Sentience — `specs/183-geodetic-sentience.md`
-- [ ] `185` Vacuum Welding — `specs/185-vacuum-welding.md`
 - [ ] `186` Bio-Architecture — `specs/186-bio-architecture.md`
 - [ ] `187` Adaptive Biology — `specs/187-adaptive-biology.md`
 

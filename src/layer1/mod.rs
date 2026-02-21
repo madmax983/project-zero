@@ -528,3 +528,4 @@ pub use chemical::*;
 /// Urban Canyons (Wind) system (Spec 182).
 pub mod wind;
 pub use wind::*;
+#[cfg(test)] mod vacuum_welding_tests;

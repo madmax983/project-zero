@@ -1200,7 +1200,8 @@ const fn get_skill_for_designation(designation_type: DesignationType) -> Option<
         DesignationType::Repair
         | DesignationType::Demolish
         | DesignationType::JuryRig
-        | DesignationType::Cannibalize => Some(SkillType::Construction),
+        | DesignationType::Cannibalize
+        | DesignationType::Destroy => Some(SkillType::Construction),
         DesignationType::ClearFlora => Some(SkillType::Farming),
         DesignationType::SetZone(_) | DesignationType::Tame => None,
     }
@@ -1374,6 +1375,7 @@ fn execute_work_on_designation(
         }
         DesignationType::JuryRig => execute_jury_rig(world, designation_entity),
         DesignationType::Cannibalize => execute_cannibalize(world, designation_entity),
+        DesignationType::Destroy => execute_destroy(world, designation_entity),
         DesignationType::SetZone(_) | DesignationType::Tame => false,
     }
 }
@@ -3550,4 +3552,49 @@ mod tests {
             work_amount
         );
     }
+}
+
+/// Executes the total destruction of a building (Vacuum Welded or otherwise).
+///
+/// Unlike Demolish, this yields NO resources.
+pub fn execute_destroy(world: &mut World, designation_entity: Entity) -> bool {
+    // Find designation position
+    let designation_pos = if let Some(pos) = world.get::<GridPosition>(designation_entity) {
+        *pos
+    } else {
+        return false;
+    };
+
+    // Find Building at position
+    let building_entity = world
+        .query::<(Entity, &GridPosition, &Building)>()
+        .iter(world)
+        .find(|(_, pos, _)| **pos == designation_pos)
+        .map(|(e, _, _)| e);
+
+    if let Some(entity) = building_entity {
+        // VFX: Red explosion
+        spawn_particle(world, designation_pos, 'X', Color::Red, 20);
+
+        // Trigger Screen Shake
+        if let Some(mut shake) = world.get_resource_mut::<ScreenShake>() {
+            shake.trigger(0.8);
+        }
+
+        // Despawn building
+        world.despawn(entity);
+
+        // Remove from OccupiedTiles
+        if let Some(mut occupied) = world.get_resource_mut::<OccupiedTiles>() {
+            occupied.0.remove(&(designation_pos.x, designation_pos.y));
+        }
+
+        if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+            log.add_colored("Building destroyed (Total Loss).", Color::Red);
+        }
+    }
+
+    // Despawn the designation itself
+    world.despawn(designation_entity);
+    true
 }
