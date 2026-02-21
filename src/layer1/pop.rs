@@ -292,6 +292,7 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
 /// System to reset speed to base value before applying modifiers.
 pub fn reset_speed_system(mut query: Query<&mut Speed>) {
     for mut speed in &mut query {
+        speed.current = speed.base;
     }
 }
 

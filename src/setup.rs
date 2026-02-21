@@ -66,7 +66,9 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
             }
         }
     }
+    let fertility = crate::layer1::fertility::FertilityGrid::from_terrain(&terrain);
     world.insert_resource(terrain);
+    world.insert_resource(fertility);
     world.insert_resource(roof);
 
     world.insert_resource(Viewport::default());

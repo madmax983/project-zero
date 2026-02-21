@@ -15,6 +15,7 @@ use crate::layer1::pop::Pop;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::seasons::SeasonState;
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
+use crate::layer1::fertility::FertilityGrid;
 use crate::layer1::social_mimicry::JustConsumed;
 use crate::layer1::utility_ai::{ActionType, PopAction};
 use bevy_ecs::prelude::*;
@@ -68,6 +69,7 @@ pub fn produce_food_system(
     mut resources: ResMut<ColonyResources>,
     factions: Option<Res<Factions>>,
     tech_state: Option<Res<crate::layer1::tech::TechState>>,
+    fertility_grid: Option<Res<FertilityGrid>>,
 ) {
     let modifier = season.map_or(1.0, |s| s.current_season.food_modifier());
 
@@ -139,6 +141,15 @@ pub fn produce_food_system(
                 _ => (0.0, modifier),
             };
 
+            // Integrate Fertility
+            let fertility_modifier = if *building_type == BuildingType::HydroponicsBay {
+                1.0 // Hydroponics ignores soil fertility
+            } else if let Some(grid) = &fertility_grid {
+                grid.get(pos.x as usize, pos.y as usize)
+            } else {
+                1.0
+            };
+
             // Check water availability
             if water_cost > 0.0 && resources.water < water_cost {
                 continue;
@@ -149,7 +160,7 @@ pub fn produce_food_system(
                 resources.water -= water_cost;
             }
 
-            let production = efficiency * FOOD_PER_WORKER_PER_TICK * effective_modifier;
+            let production = efficiency * FOOD_PER_WORKER_PER_TICK * effective_modifier * fertility_modifier;
 
             if production > 0.0 {
                 match building_type {
