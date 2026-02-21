@@ -97,3 +97,6 @@ mod militia_flora;
 
 #[path = "integration/power_utility.rs"]
 mod power_utility;
+
+#[path = "integration/wind_atmosphere.rs"]
+mod wind_atmosphere;

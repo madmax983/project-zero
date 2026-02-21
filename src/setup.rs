@@ -105,6 +105,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(crate::layer1::zone::ZoneGrid::new(80, 50));
     world.insert_resource(crate::layer1::acoustic::NoiseMap::new(80, 50));
     world.insert_resource(AtmosphereGrid::new(80, 50));
+    world.insert_resource(crate::layer1::wind::WindGrid::new(80, 50));
+    world.insert_resource(crate::layer1::wind::GlobalWind::default());
     world.insert_resource(crate::layer1::pressure::PressureGrid::new(80, 50));
     world.insert_resource(crate::layer1::temperature::TemperatureGrid::new(
         80, 50, 15.0,

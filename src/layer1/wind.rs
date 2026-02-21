@@ -140,11 +140,17 @@ impl Default for GlobalWind {
 
 /// System to update local wind patterns based on terrain and buildings.
 pub fn update_wind_system(
-    mut wind_grid: ResMut<WindGrid>,
+    wind_grid: Option<ResMut<WindGrid>>,
     global_wind: Option<Res<GlobalWind>>,
     terrain_grid: Option<Res<TerrainGrid>>,
     building_query: Query<(&Building, &GridPosition)>,
 ) {
+    let mut wind_grid = if let Some(g) = wind_grid {
+        g
+    } else {
+        return;
+    };
+
     // 1. Gather resources
     let global = if let Some(g) = global_wind {
         (g.direction, g.speed)
