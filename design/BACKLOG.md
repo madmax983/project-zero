@@ -17,7 +17,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `133` Ventilation Networks — `specs/133-ventilation-networks.md`
 - [ ] `148` The 'Helpful' AI — `specs/148-helpful-ai.md`
 - [ ] `165` Gene Banks — `specs/165-gene-banks.md`
-- [ ] `166` Xeno-Gastronomy — `specs/166-xeno-gastronomy.md`
 - [ ] `168` The Mother Lode — `specs/168-the-mother-lode.md`
 - [ ] `174` Memetic Hazards — `specs/174-memetic-hazards.md`
 - [ ] `175` Bureaucratic Drag — `specs/175-bureaucratic-drag.md`

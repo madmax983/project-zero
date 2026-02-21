@@ -47,6 +47,7 @@ use crate::layer1::erosion::{ErosionGrid, MOVEMENT_EROSION_AMOUNT};
 use crate::layer1::farm::Farm;
 use crate::layer1::flora::process_flora_clearing;
 use crate::layer1::funeral::{Corpse, Grave, handle_bury_corpse};
+use crate::layer1::gastronomy::WorkSpeedBuff;
 use crate::layer1::hazards::handle_workplace_hazards;
 use crate::layer1::heirloom::{Heirloom, RetrogradeEngineeringEvent, ToolHistory};
 use crate::layer1::housing::Housing;
@@ -1065,7 +1066,15 @@ pub fn work_execution_system(world: &mut World) {
     // Find pops at their work target and capture their morale
     // Since we need to access Needs which is a component, and we need &mut World later,
     // we should collect Needs data first.
-    let workers_data: Vec<(Entity, Entity, f32, ActionType, Option<Equipment>, f32)> = world
+    let workers_data: Vec<(
+        Entity,
+        Entity,
+        f32,
+        ActionType,
+        Option<Equipment>,
+        f32,
+        f32,
+    )> = world
         .query_filtered::<(
             Entity,
             &MovementTarget,
@@ -1076,9 +1085,10 @@ pub fn work_execution_system(world: &mut World) {
             Option<&Traits>,
             Option<&Morale>,
             Option<&crate::layer1::factions::FactionMember>,
+            Option<&WorkSpeedBuff>,
         ), With<AtTarget>>()
         .iter(world)
-        .filter(|(_, mt, _, _, _, _, _, _, faction_member)| {
+        .filter(|(_, mt, _, _, _, _, _, _, faction_member, _)| {
             let is_work = mt.for_action == ActionType::Work || mt.for_action == ActionType::Repair;
             if !is_work {
                 return false;
@@ -1092,7 +1102,7 @@ pub fn work_execution_system(world: &mut World) {
             !is_striking
         })
         .map(
-            |(e, mt, needs, memories, social_buff, eq, traits, morale_comp, _)| {
+            |(e, mt, needs, memories, social_buff, eq, traits, morale_comp, _, buff)| {
                 let morale = needs.map_or(0.5, |n| {
                     calculate_effective_morale(
                         n,
@@ -1105,6 +1115,7 @@ pub fn work_execution_system(world: &mut World) {
                     )
                 });
                 let trait_work_mod = traits.map_or(1.0, get_trait_work_speed_modifier);
+                let buff_mod = buff.map_or(1.0, |b| b.multiplier);
                 (
                     e,
                     mt.target_entity,
@@ -1112,13 +1123,21 @@ pub fn work_execution_system(world: &mut World) {
                     mt.for_action,
                     eq.copied(),
                     trait_work_mod,
+                    buff_mod,
                 )
             },
         )
         .collect();
 
-    for (pop_entity, designation_entity, morale, action_type, equipment_opt, trait_work_mod) in
-        workers_data
+    for (
+        pop_entity,
+        designation_entity,
+        morale,
+        action_type,
+        equipment_opt,
+        trait_work_mod,
+        buff_mod,
+    ) in workers_data
     {
         process_single_worker(
             world,
@@ -1127,7 +1146,7 @@ pub fn work_execution_system(world: &mut World) {
             morale,
             action_type,
             equipment_opt,
-            work_speed_mod * trait_work_mod,
+            work_speed_mod * trait_work_mod * buff_mod,
         );
     }
 }
