@@ -140,6 +140,7 @@ pub fn apply_lighting_penalties_system(
 
         let light = light_map.get(x, y);
 
+        if light < 0.1 {
             // Darkness penalty
             speed.current *= 0.5;
 

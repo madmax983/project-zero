@@ -116,6 +116,13 @@ impl Default for FactionData {
 ///
 /// This is the primary interface for querying faction status.
 ///
+/// # Note on Balance
+///
+/// Currently, faction satisfaction resets to `1.0` every tick, and penalties from policies
+/// (like `DoubleShifts` -0.2) are not cumulative enough to drop satisfaction below the
+/// "Unhappy" threshold (0.4). This means factions rarely, if ever, go on strike in the
+/// current implementation.
+///
 /// # Examples
 ///
 /// ```
@@ -252,10 +259,18 @@ pub fn update_faction_membership_system(
 
 /// System to update faction satisfaction and member counts.
 ///
+/// This system runs every tick and recalculates satisfaction from scratch.
+///
+/// # Warning: Non-Cumulative Logic
+///
+/// Satisfaction is **reset to 1.0** at the start of every update. This means past events
+/// do not affect current mood. Only *currently active* policies apply penalties.
+///
 /// # Logic
-/// 1.  Resets all faction satisfaction to 1.0 (base).
-/// 2.  Recalculates member counts.
-/// 3.  Applies penalties based on active policies:
+///
+/// 1.  **Reset**: All factions set to 1.0 satisfaction.
+/// 2.  **Census**: Member counts are recalculated.
+/// 3.  **Penalties**:
 ///     *   `DoubleShifts`: -0.2
 ///     *   `Rationing`: -0.1
 pub fn update_faction_satisfaction_system(

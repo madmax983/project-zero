@@ -1,11 +1,35 @@
-//! Bureaucratic Drag system (Spec 175).
+//! # Bureaucratic Drag: The Cost of Growth
 //!
-//! As the colony grows, administration slows down.
-//! Efficiency = Supply (Offices/Admins) / Demand (Buildings/Pops).
+//! This module implements the "Bureaucratic Drag" mechanic (Spec 175), which simulates
+//! the increasing inefficiency of a colony as it grows larger.
+//!
+//! ## The Mechanic
+//!
+//! **Efficiency = Supply / Demand**
+//!
+//! *   **Supply**: Administrative Points provided by [`Office`] buildings and [`JobType::Administrator`](crate::layer1::pop::JobType).
+//! *   **Demand**: Administrative Points consumed by every Building and Pop.
+//!
+//! ## Impact
+//!
+//! When Efficiency drops below 1.0, it acts as a global multiplier for:
+//! *   Work Speed
+//! *   Construction Speed
+//! *   Research Speed
+//!
+//! If you build too fast without expanding your administration, your entire colony slows down.
+//!
+//! ## How to Fix Low Efficiency
+//!
+//! 1.  Build more [`Office`] buildings.
+//! 2.  Assign Pops to work as Administrators.
+//! 3.  Reduce the number of non-essential buildings (reduce demand).
 
 use bevy_ecs::prelude::*;
 
-/// Tracks global administrative efficiency.
+/// Tracks global administrative efficiency for the colony.
+///
+/// This resource is updated every tick by [`calculate_admin_stats`].
 #[derive(Resource, Default, Debug)]
 pub struct AdminStats {
     /// Total Admin points provided by offices and administrators.
@@ -13,30 +37,39 @@ pub struct AdminStats {
     /// Total Admin points consumed by buildings and pops.
     pub demand: f32,
     /// Global efficiency multiplier (0.0 to 1.0).
-    /// Applied to Work Speed and Construction Speed.
+    ///
+    /// *   **1.0**: Perfect efficiency.
+    /// *   **0.5**: Everything takes twice as long.
     pub efficiency: f32,
 }
 
-/// Component for entities that provide Admin points.
+/// Component for entities that provide Administrative Points (Supply).
+///
+/// Usually attached to [`Office`] buildings or Pops with administrative jobs.
 #[derive(Component, Default, Debug)]
 pub struct AdminProvider {
     /// Amount of Admin points provided.
     pub amount: f32,
 }
 
-/// Component for entities that consume Admin points.
+/// Component for entities that consume Administrative Points (Demand).
+///
+/// Attached to almost every entity in the colony (Buildings, Pops).
 #[derive(Component, Default, Debug)]
 pub struct AdminConsumer {
     /// Amount of Admin points consumed.
     pub demand: f32,
 }
 
-/// Component for Office buildings.
+/// Component defining an Office building.
+///
+/// Offices are the primary source of Admin Supply. They provide a base amount
+/// plus additional points per working Administrator.
 #[derive(Component, Debug, Clone)]
 pub struct Office {
-    /// Max number of administrators.
+    /// Max number of administrators that can work here.
     pub capacity: usize,
-    /// Current administrators.
+    /// List of Pops currently working here.
     pub workers: Vec<Entity>,
 }
 
@@ -49,7 +82,37 @@ impl Default for Office {
     }
 }
 
-/// Calculates the global Admin efficiency.
+/// Recalculates the global [`AdminStats`] based on current world state.
+///
+/// Sums up all `AdminProvider` and `AdminConsumer` components to determine
+/// the efficiency ratio.
+///
+/// # Logic
+///
+/// `Efficiency = clamp(Supply / Demand, 0.0, 1.0)`
+///
+/// If `Demand` is 0, Efficiency is 1.0.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::admin::{AdminStats, calculate_admin_stats, AdminProvider, AdminConsumer};
+/// use bevy_ecs::prelude::*;
+///
+/// let mut world = World::new();
+/// world.insert_resource(AdminStats::default());
+///
+/// // Supply: 10
+/// world.spawn(AdminProvider { amount: 10.0 });
+///
+/// // Demand: 20
+/// world.spawn(AdminConsumer { demand: 20.0 });
+///
+/// calculate_admin_stats(&mut world);
+///
+/// let stats = world.resource::<AdminStats>();
+/// assert_eq!(stats.efficiency, 0.5); // 10 / 20
+/// ```
 pub fn calculate_admin_stats(world: &mut World) {
     let mut supply = 0.0;
     let mut demand = 0.0;

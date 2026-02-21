@@ -29,3 +29,15 @@
 ## 2026-02-18 - [Pathfinding Mechanics]
 **Confusion:** The `find_path` functions were poorly documented, leaving the A* implementation, cost heuristics (Manhattan), and walkability logic (Terrain -> Occupied -> Building -> Access Control) implicit.
 **Clarification:** Added module-level documentation to `layer1::pathfinding` explaining the movement model and access control checks, plus examples.
+
+## 2026-02-18 - [Biographies & Life Events]
+**Confusion:** The `biography` module was marked "Experimental" with no explanation of how events were triggered or stored.
+**Clarification:** Documented `layer1::biography`, explaining that it monitors the `AssignedTo` component to generate narrative text. Added examples for `Biography` usage.
+
+## 2026-02-18 - [Bureaucratic Drag]
+**Confusion:** The `admin` module contained the "Bureaucratic Drag" mechanic, but it was undocumented, leaving the "Efficiency = Supply / Demand" formula hidden.
+**Clarification:** Added module-level docs to `layer1::admin` explaining the math and its impact on simulation speed.
+
+## 2026-02-18 - [Faction Satisfaction Logic]
+**Confusion:** Users (and devs) expected Factions to go on strike, but the math in `update_faction_satisfaction_system` resets satisfaction to 1.0 every tick, making it impossible to reach the unhappiness threshold with current penalty values.
+**Clarification:** Added a warning to `layer1::factions` explaining this non-cumulative behavior so future developers know why their strikes aren't firing.
