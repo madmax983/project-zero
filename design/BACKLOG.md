@@ -27,6 +27,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `179` Magnetic Storms — `specs/179-magnetic-storms.md`
 - [ ] `183` Geodetic Sentience — `specs/183-geodetic-sentience.md`
 - [ ] `185` Vacuum Welding — `specs/185-vacuum-welding.md`
+- [ ] `186` Bio-Architecture — `specs/186-bio-architecture.md`
 
 ## MVP — Layer 2: System Simulation
 
