@@ -3308,7 +3308,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Polyglot Confusion
+## Polyglot Confusion [SPECCED]
 
 **Layer:** 1
 
