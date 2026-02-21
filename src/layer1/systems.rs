@@ -354,11 +354,19 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             apply_taboo_stress_system
                 .after(decay_needs_system)
                 .before(mood_lifecycle_system),
+        )
+            .in_set(Layer1SystemSet::Consumption),
+    );
+
+    schedule.add_systems(
+        (
             mood_lifecycle_system.after(decay_needs_system),
             trend_setting_system.after(consume_food_system),
             trend_spread_system.after(trend_setting_system),
             trend_satisfaction_system.after(trend_spread_system),
             clear_just_consumed_system.after(trend_satisfaction_system),
+            crate::layer1::gastronomy::handle_work_speed_buff_decay.after(decay_needs_system),
+            crate::layer1::gastronomy::handle_hallucination_decay.after(decay_needs_system),
         )
             .in_set(Layer1SystemSet::Consumption),
     );

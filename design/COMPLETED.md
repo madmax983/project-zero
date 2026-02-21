@@ -118,3 +118,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `044` Horticulture & Beauty — `specs/044-horticulture-beauty.md` — completed 2026-02-21
 - [x] `INT-034` Integration: Beauty Radius Propagation — completed 2026-02-22
 - [x] `190` Atmospheric Tides — `specs/190-atmospheric-tides.md` — completed 2026-11-04
+- [x] `166` Xeno-Gastronomy — `specs/166-xeno-gastronomy.md` — completed 2026-10-31
