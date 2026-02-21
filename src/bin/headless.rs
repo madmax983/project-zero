@@ -32,8 +32,8 @@ use scale::layer1::dreams::Dream;
 use scale::layer1::pop::PopName;
 use scale::layer1::{
     BuildingType, Chronicle, ColonyResources, Designation, DesignationType, EventImportance, Farm,
-    GridPosition, Housing, MovementTarget, Needs, OccupiedTiles, Pop, PopAction, Stockpile,
-    TerrainGrid, TerrainType, try_designate, try_place_building,
+    GlobalWind, GridPosition, Housing, Morale, MovementTarget, Needs, OccupiedTiles, Pop,
+    PopAction, Stockpile, TerrainGrid, TerrainType, try_designate, try_place_building,
 };
 use scale::setup::{SetupConfig, setup_world_with_config};
 use scale::shared::log::MessageLog;
@@ -71,117 +71,136 @@ fn main() {
             continue;
         }
 
-        let parts: Vec<&str> = input.split_whitespace().collect();
-        let command = parts[0].to_lowercase();
-
-        match command.as_str() {
-            "quit" | "exit" | "q" => {
-                println!("Goodbye!");
-                break;
-            }
-            "help" | "h" | "?" => print_help(),
-            "status" | "s" => print_status(&mut world),
-            "pops" | "p" => print_pops(&mut world),
-            "map" | "m" => {
-                let x = parts.get(1).and_then(|s| s.parse().ok()).unwrap_or(40);
-                let y = parts.get(2).and_then(|s| s.parse().ok()).unwrap_or(25);
-                print_map(&mut world, x, y);
-            }
-            "tick" | "t" => {
-                let n: u64 = parts.get(1).and_then(|s| s.parse().ok()).unwrap_or(1);
-                // Cap tick count to prevent DoS (accidental or malicious infinite loops)
-                let safe_n = n.min(1000);
-                if n > 1000 {
-                    println!("Warning: Capping ticks to 1000 to prevent freeze.");
-                }
-                run_ticks(&mut world, safe_n);
-            }
-            "build" | "b" => {
-                if parts.len() < 4 {
-                    println!("Usage: build <farm|housing|stockpile> <x> <y>");
-                } else {
-                    let building_type = match parts[1].to_lowercase().as_str() {
-                        "farm" | "f" => Some(BuildingType::Farm),
-                        "housing" | "h" => Some(BuildingType::Housing),
-                        "stockpile" | "s" => Some(BuildingType::Stockpile),
-                        _ => None,
-                    };
-                    let x: Option<i32> = parts[2].parse().ok();
-                    let y: Option<i32> = parts[3].parse().ok();
-
-                    match (building_type, x, y) {
-                        (Some(bt), Some(x), Some(y)) => build_at(&mut world, bt, x, y),
-                        _ => println!(
-                            "Invalid arguments. Usage: build <farm|housing|stockpile> <x> <y>"
-                        ),
-                    }
-                }
-            }
-            "mine" => {
-                if parts.len() < 3 {
-                    println!("Usage: mine <x> <y>");
-                } else {
-                    let x: Option<i32> = parts[1].parse().ok();
-                    let y: Option<i32> = parts[2].parse().ok();
-                    match (x, y) {
-                        (Some(x), Some(y)) => designate_at(&mut world, DesignationType::Mine, x, y),
-                        _ => println!("Invalid coordinates"),
-                    }
-                }
-            }
-            "chop" => {
-                if parts.len() < 3 {
-                    println!("Usage: chop <x> <y>");
-                } else {
-                    let x: Option<i32> = parts[1].parse().ok();
-                    let y: Option<i32> = parts[2].parse().ok();
-                    match (x, y) {
-                        (Some(x), Some(y)) => designate_at(&mut world, DesignationType::Chop, x, y),
-                        _ => println!("Invalid coordinates"),
-                    }
-                }
-            }
-            "designations" | "d" => print_designations(&mut world),
-            "find" => {
-                if parts.len() < 2 {
-                    println!("Usage: find <rock|tree|grass> [count]");
-                } else {
-                    let count: usize = parts.get(2).and_then(|s| s.parse().ok()).unwrap_or(10);
-                    find_terrain(&mut world, parts[1], count);
-                }
-            }
-            "scan" => {
-                let x = parts.get(1).and_then(|s| s.parse().ok()).unwrap_or(40);
-                let y = parts.get(2).and_then(|s| s.parse().ok()).unwrap_or(25);
-                let radius = parts.get(3).and_then(|s| s.parse().ok()).unwrap_or(10);
-                scan_terrain(&mut world, x, y, radius);
-            }
-            "terrain" => {
-                if parts.len() < 3 {
-                    println!("Usage: terrain <x> <y>");
-                } else {
-                    let x: Option<i32> = parts[1].parse().ok();
-                    let y: Option<i32> = parts[2].parse().ok();
-                    match (x, y) {
-                        (Some(x), Some(y)) => get_tile_info(&mut world, x, y),
-                        _ => println!("Invalid coordinates"),
-                    }
-                }
-            }
-            "buildings" => print_buildings(&mut world),
-            "bio" => {
-                let id: Option<u32> = parts.get(1).and_then(|s| s.parse().ok());
-                match id {
-                    Some(id) => print_bio(&mut world, id),
-                    None => println!("Usage: bio <id>"),
-                }
-            }
-            "chronicle" | "c" | "history" => print_chronicle(&mut world),
-            "log" | "l" => print_log(&mut world),
-            _ => println!("Unknown command: '{command}'. Type 'help' for commands."),
+        if !handle_command(&mut world, input) {
+            break;
         }
         println!();
     }
+}
+
+fn handle_command(world: &mut World, input: &str) -> bool {
+    let parts: Vec<&str> = input.split_whitespace().collect();
+    let command = parts[0].to_lowercase();
+
+    match command.as_str() {
+        "quit" | "exit" | "q" => {
+            println!("Goodbye!");
+            return false;
+        }
+        "help" | "h" | "?" => print_help(),
+        "status" | "s" => print_status(world),
+        "pops" | "p" => print_pops(world),
+        "map" | "m" => {
+            let x = parts.get(1).and_then(|s| s.parse().ok()).unwrap_or(40);
+            let y = parts.get(2).and_then(|s| s.parse().ok()).unwrap_or(25);
+            print_map(world, x, y);
+        }
+        "tick" | "t" => {
+            let n: u64 = parts.get(1).and_then(|s| s.parse().ok()).unwrap_or(1);
+            // Cap tick count to prevent DoS (accidental or malicious infinite loops)
+            let safe_n = n.min(1000);
+            if n > 1000 {
+                println!("Warning: Capping ticks to 1000 to prevent freeze.");
+            }
+            run_ticks(world, safe_n);
+        }
+        "build" | "b" => {
+            if parts.len() < 4 {
+                println!("Usage: build <farm|housing|stockpile> <x> <y>");
+            } else {
+                let building_type = match parts[1].to_lowercase().as_str() {
+                    "farm" | "f" => Some(BuildingType::Farm),
+                    "housing" | "h" => Some(BuildingType::Housing),
+                    "stockpile" | "s" => Some(BuildingType::Stockpile),
+                    _ => None,
+                };
+                let x: Option<i32> = parts[2].parse().ok();
+                let y: Option<i32> = parts[3].parse().ok();
+
+                match (building_type, x, y) {
+                    (Some(bt), Some(x), Some(y)) => build_at(world, bt, x, y),
+                    _ => println!(
+                        "Invalid arguments. Usage: build <farm|housing|stockpile> <x> <y>"
+                    ),
+                }
+            }
+        }
+        "destroy" => {
+            if parts.len() < 3 {
+                println!("Usage: destroy <x> <y>");
+            } else {
+                let x: Option<i32> = parts[1].parse().ok();
+                let y: Option<i32> = parts[2].parse().ok();
+                match (x, y) {
+                    (Some(x), Some(y)) => designate_at(world, DesignationType::Destroy, x, y),
+                    _ => println!("Invalid coordinates"),
+                }
+            }
+        }
+        "mine" => {
+            if parts.len() < 3 {
+                println!("Usage: mine <x> <y>");
+            } else {
+                let x: Option<i32> = parts[1].parse().ok();
+                let y: Option<i32> = parts[2].parse().ok();
+                match (x, y) {
+                    (Some(x), Some(y)) => designate_at(world, DesignationType::Mine, x, y),
+                    _ => println!("Invalid coordinates"),
+                }
+            }
+        }
+        "chop" => {
+            if parts.len() < 3 {
+                println!("Usage: chop <x> <y>");
+            } else {
+                let x: Option<i32> = parts[1].parse().ok();
+                let y: Option<i32> = parts[2].parse().ok();
+                match (x, y) {
+                    (Some(x), Some(y)) => designate_at(world, DesignationType::Chop, x, y),
+                    _ => println!("Invalid coordinates"),
+                }
+            }
+        }
+        "designations" | "d" => print_designations(world),
+        "find" => {
+            if parts.len() < 2 {
+                println!("Usage: find <rock|tree|grass> [count]");
+            } else {
+                let count: usize = parts.get(2).and_then(|s| s.parse().ok()).unwrap_or(10);
+                find_terrain(world, parts[1], count);
+            }
+        }
+        "scan" => {
+            let x = parts.get(1).and_then(|s| s.parse().ok()).unwrap_or(40);
+            let y = parts.get(2).and_then(|s| s.parse().ok()).unwrap_or(25);
+            let radius = parts.get(3).and_then(|s| s.parse().ok()).unwrap_or(10);
+            scan_terrain(world, x, y, radius);
+        }
+        "terrain" => {
+            if parts.len() < 3 {
+                println!("Usage: terrain <x> <y>");
+            } else {
+                let x: Option<i32> = parts[1].parse().ok();
+                let y: Option<i32> = parts[2].parse().ok();
+                match (x, y) {
+                    (Some(x), Some(y)) => get_tile_info(world, x, y),
+                    _ => println!("Invalid coordinates"),
+                }
+            }
+        }
+        "buildings" => print_buildings(world),
+        "bio" => {
+            let id: Option<u32> = parts.get(1).and_then(|s| s.parse().ok());
+            match id {
+                Some(id) => print_bio(world, id),
+                None => println!("Usage: bio <id>"),
+            }
+        }
+        "chronicle" | "c" | "history" => print_chronicle(world),
+        "log" | "l" => print_log(world),
+        _ => println!("Unknown command: '{command}'. Type 'help' for commands."),
+    }
+    true
 }
 
 fn run_ticks(world: &mut World, n: u64) {
@@ -241,11 +260,29 @@ fn print_status(world: &mut World) {
         let r = world.resource::<ColonyResources>();
         (r.food, r.wood, r.stone)
     };
+    let (wind_dir, wind_speed) = {
+        let w = world.resource::<GlobalWind>();
+        (w.direction, w.speed)
+    };
+
     let tick = world.resource::<SimulationTime>().tick;
     let pop_count = world.query::<&Pop>().iter(world).count();
     let farm_count = world.query::<&Farm>().iter(world).count();
     let housing_count = world.query::<&Housing>().iter(world).count();
     let designation_count = world.query::<&Designation>().iter(world).count();
+
+    // Calculate Average Morale
+    let mut total_morale = 0.0;
+    let mut morale_count = 0;
+    for morale in world.query::<&Morale>().iter(world) {
+        total_morale += morale.value;
+        morale_count += 1;
+    }
+    let avg_morale = if morale_count > 0 {
+        total_morale / morale_count as f32
+    } else {
+        0.0
+    };
 
     println!(
         "{}",
@@ -268,6 +305,37 @@ fn print_status(world: &mut World) {
         Cell::new("Population").fg(Color::Cyan),
         Cell::new("Citizens"),
         Cell::new(pop_count.to_string()),
+    ]);
+
+    let morale_color = if avg_morale > 0.8 {
+        Color::Green
+    } else if avg_morale > 0.4 {
+        Color::Yellow
+    } else {
+        Color::Red
+    };
+    table.add_row(vec![
+        Cell::new("Society").fg(Color::Magenta),
+        Cell::new("Avg Morale"),
+        Cell::new(format!("{:.0}%", avg_morale * 100.0)).fg(morale_color),
+    ]);
+
+    let wind_arrow = if wind_dir.x > 0.0 {
+        "→"
+    } else if wind_dir.x < 0.0 {
+        "←"
+    } else if wind_dir.y > 0.0 {
+        "↑"
+    } else {
+        "↓"
+    };
+    table.add_row(vec![
+        Cell::new("Environment").fg(Color::Blue),
+        Cell::new("Wind"),
+        Cell::new(format!(
+            "{:.1} {} ({:.1}, {:.1})",
+            wind_speed, wind_arrow, wind_dir.x, wind_dir.y
+        )),
     ]);
 
     table.add_row(vec![
@@ -896,7 +964,7 @@ fn print_bio(world: &mut World, target_id: u32) {
     }
 
     if !found {
-        println!("Pop with ID {target_id} not found.");
+        println!("{}", format!("Pop with ID {target_id} not found.").red());
     }
 }
 
@@ -1010,41 +1078,69 @@ fn print_help() {
         .load_preset(UTF8_FULL)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
+            Cell::new("Category").add_attribute(Attribute::Bold),
             Cell::new("Command").add_attribute(Attribute::Bold),
             Cell::new("Alias").add_attribute(Attribute::Bold),
             Cell::new("Description").add_attribute(Attribute::Bold),
         ]);
 
-    let commands = vec![
-        ("tick [N]", "", "Advance N ticks (default 1)"),
-        ("status", "s", "Show colony resources and pop count"),
-        ("pops", "p", "Show detailed pop states"),
-        ("map [x] [y]", "m", "Show visual terrain around position"),
-        ("scan [x] [y] [r]", "", "Semantic terrain scan (parseable)"),
-        ("terrain <x> <y>", "", "Get single tile info"),
-        ("buildings", "", "List all buildings with positions"),
+    let categories = vec![
         (
-            "build <type> <x> <y>",
-            "b",
-            "Build: farm, housing, stockpile",
+            "Simulation",
+            vec![
+                ("tick [N]", "", "Advance N ticks (default 1)"),
+                ("quit", "q, exit", "Exit the simulation"),
+                ("help", "h, ?", "Show this help"),
+            ],
         ),
-        ("mine <x> <y>", "", "Designate rock for mining"),
-        ("chop <x> <y>", "", "Designate tree for chopping"),
-        ("designations", "d", "List all active designations"),
-        ("bio <id>", "", "Show biography and dreams of a pop"),
-        ("chronicle", "c, history", "Show colony history events"),
-        ("log", "l", "Show message log"),
-        ("find <type> [N]", "", "Find N terrain coords (default 10)"),
-        ("help", "h, ?", "Show this help"),
-        ("quit", "q, exit", "Exit"),
+        (
+            "Info",
+            vec![
+                ("status", "s", "Show colony resources, morale, wind"),
+                ("pops", "p", "Show detailed pop states"),
+                ("bio <id>", "", "Show biography and dreams of a pop"),
+                ("map [x] [y]", "m", "Show visual terrain around position"),
+                ("scan [x] [y] [r]", "", "Semantic terrain scan (parseable)"),
+                ("terrain <x> <y>", "", "Get single tile info"),
+                ("buildings", "", "List all buildings with positions"),
+                ("designations", "d", "List all active designations"),
+                ("chronicle", "c, history", "Show colony history events"),
+                ("log", "l", "Show message log"),
+            ],
+        ),
+        (
+            "Actions",
+            vec![
+                (
+                    "build <type> <x> <y>",
+                    "b",
+                    "Build: farm, housing, stockpile",
+                ),
+                ("mine <x> <y>", "", "Designate rock for mining"),
+                ("chop <x> <y>", "", "Designate tree for chopping"),
+                ("destroy <x> <y>", "", "Designate building for destruction"),
+                ("find <type> [N]", "", "Find N terrain coords (default 10)"),
+            ],
+        ),
     ];
 
-    for (cmd, alias, desc) in commands {
-        table.add_row(vec![
-            Cell::new(cmd).fg(Color::Cyan),
-            Cell::new(alias).fg(Color::DarkGrey),
-            Cell::new(desc),
-        ]);
+    for (category, cmds) in categories {
+        for (i, (cmd, alias, desc)) in cmds.iter().enumerate() {
+            let cat_cell = if i == 0 {
+                Cell::new(category)
+                    .fg(Color::Cyan)
+                    .add_attribute(Attribute::Bold)
+            } else {
+                Cell::new("")
+            };
+
+            table.add_row(vec![
+                cat_cell,
+                Cell::new(cmd).fg(Color::Green),
+                Cell::new(alias).fg(Color::DarkGrey),
+                Cell::new(desc),
+            ]);
+        }
     }
 
     println!("{table}");
