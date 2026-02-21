@@ -27,7 +27,7 @@ mod tests {
         };
 
         // 5 Food + 1 Wood -> 5 Rations
-        let (can_refine, input, output) = get_refining_recipe(BuildingType::Smokehouse, &resources);
+        let (can_refine, input, output, _) = get_refining_recipe(BuildingType::Smokehouse, &resources);
 
         assert!(can_refine);
         assert_eq!(input.food, 5.0);

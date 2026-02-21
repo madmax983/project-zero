@@ -535,7 +535,7 @@ fn populate_refining(
         }
 
         // Check recipe affordability (Global check)
-        let (can_afford, _, _) = get_refining_recipe(building.building_type, context.resources);
+        let (can_afford, _, _, _) = get_refining_recipe(building.building_type, context.resources);
         if !can_afford {
             continue;
         }

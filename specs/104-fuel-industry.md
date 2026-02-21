@@ -231,3 +231,13 @@ BuildingType::Refinery => {
 
 - Don't forget to update `ColonyResources::zeroed()`, `deduct()`, and `can_afford()`!
 - `Refinery` cost includes `Metal`, so ensure `024-metal-industry` is fully integrated or use Stone/Wood if Metal is scarce in early game (but Fuel is late game).
+
+## Implementation Notes
+
+- **Refactoring (2026-06-05)**:
+  - `get_refining_recipe` now returns a waste probability tuple element (f64).
+  - `Refinery` has a 80% (0.8) chance of producing Waste per batch.
+  - `Smelter` has a 50% (0.5) chance.
+  - `LumberMill` and `StoneMason` have 20% (0.2).
+  - `Weaver` and `Tailor` have 10% (0.1).
+  - `Smokehouse` has 0% (0.0).

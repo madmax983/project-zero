@@ -85,7 +85,7 @@ pub fn process_refining_system(world: &mut World) {
         .cloned()
         .unwrap_or_default();
 
-    let mut finished_jobs: Vec<(Entity, ColonyResources, ColonyResources, GridPosition)> =
+    let mut finished_jobs: Vec<(Entity, ColonyResources, ColonyResources, GridPosition, f64)> =
         Vec::new();
     let mut xp_gains: Vec<Entity> = Vec::new();
 
@@ -160,14 +160,20 @@ pub fn process_refining_system(world: &mut World) {
             get_skill_efficiency(skills, SkillType::Crafting)
         };
 
-        let (can_refine, input_cost, output_gain) =
+        let (can_refine, input_cost, output_gain, waste_chance) =
             get_refining_recipe(building_type, &resources_snapshot);
 
         if can_refine {
             if let Some(mut progress) = world.get_mut::<RefiningProgress>(building_entity) {
                 progress.current += 1.0 * efficiency * efficiency_mod;
                 if progress.is_complete() {
-                    finished_jobs.push((building_entity, input_cost, output_gain, pos));
+                    finished_jobs.push((
+                        building_entity,
+                        input_cost,
+                        output_gain,
+                        pos,
+                        waste_chance,
+                    ));
                 }
             }
 
@@ -183,7 +189,7 @@ pub fn process_refining_system(world: &mut World) {
     }
 
     // Apply resource updates for finished jobs
-    for (entity, input, output, pos) in finished_jobs {
+    for (entity, input, output, pos, waste_chance) in finished_jobs {
         let success = world
             .get_resource_mut::<ColonyResources>()
             .is_some_and(|mut resources| {
@@ -203,9 +209,9 @@ pub fn process_refining_system(world: &mut World) {
             });
 
         if success {
-            // Spawn Waste (50% chance)
+            // Spawn Waste
             let mut rng = rand::thread_rng();
-            if rng.gen_bool(0.5) {
+            if rng.gen_bool(waste_chance) {
                 world.spawn((
                     ResourceItem {
                         resource_type: ResourceType::Waste,
@@ -225,11 +231,13 @@ pub fn process_refining_system(world: &mut World) {
 }
 
 /// Returns the refining recipe for a building type.
+///
+/// Returns: (`CanRefine`, `InputCost`, `OutputGain`, `WasteChance`)
 #[must_use]
 pub fn get_refining_recipe(
     building_type: BuildingType,
     res: &ColonyResources,
-) -> (bool, ColonyResources, ColonyResources) {
+) -> (bool, ColonyResources, ColonyResources, f64) {
     match building_type {
         BuildingType::Smokehouse => (
             res.food >= 5.0 && res.wood >= 1.0 && res.rations < res.max_rations,
@@ -242,6 +250,7 @@ pub fn get_refining_recipe(
                 rations: 5.0,
                 ..ColonyResources::zeroed()
             },
+            0.0, // Clean
         ),
         BuildingType::LumberMill => (
             res.wood >= 1.0 && res.planks < res.max_planks,
@@ -253,6 +262,7 @@ pub fn get_refining_recipe(
                 planks: 1.0,
                 ..ColonyResources::zeroed()
             },
+            0.2, // Sawdust
         ),
         BuildingType::StoneMason => (
             res.stone >= 1.0 && res.blocks < res.max_blocks,
@@ -264,6 +274,7 @@ pub fn get_refining_recipe(
                 blocks: 1.0,
                 ..ColonyResources::zeroed()
             },
+            0.2, // Dust
         ),
         BuildingType::Smelter => (
             res.ore >= 1.0 && res.wood >= 1.0 && res.metal < res.max_metal,
@@ -276,6 +287,7 @@ pub fn get_refining_recipe(
                 metal: 1.0,
                 ..ColonyResources::zeroed()
             },
+            0.5, // Slag
         ),
         BuildingType::Smithy => (
             res.metal >= 1.0 && res.wood >= 1.0 && res.tools < res.max_tools,
@@ -288,6 +300,7 @@ pub fn get_refining_recipe(
                 tools: 1.0,
                 ..ColonyResources::zeroed()
             },
+            0.2, // Scraps
         ),
         BuildingType::Weaver => (
             res.fiber >= 1.0 && res.cloth < res.max_cloth,
@@ -299,6 +312,7 @@ pub fn get_refining_recipe(
                 cloth: 1.0,
                 ..ColonyResources::zeroed()
             },
+            0.1, // Fiber waste
         ),
         BuildingType::Tailor => (
             res.cloth >= 1.0 && res.clothing < res.max_clothing,
@@ -310,6 +324,7 @@ pub fn get_refining_recipe(
                 clothing: 1.0,
                 ..ColonyResources::zeroed()
             },
+            0.1, // Cloth scraps
         ),
         BuildingType::Refinery => (
             res.ore >= 2.0 && res.fuel < res.max_fuel,
@@ -321,8 +336,14 @@ pub fn get_refining_recipe(
                 fuel: 1.0,
                 ..ColonyResources::zeroed()
             },
+            0.8, // Toxic Sludge
         ),
-        _ => (false, ColonyResources::zeroed(), ColonyResources::zeroed()),
+        _ => (
+            false,
+            ColonyResources::zeroed(),
+            ColonyResources::zeroed(),
+            0.0,
+        ),
     }
 }
 
