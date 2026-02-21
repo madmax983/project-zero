@@ -198,9 +198,9 @@ mod tests {
         // Run production
         world.run_system_once(produce_food_system).unwrap();
 
-        // Expected: Base (0.005) * Fertility (0.5) = 0.0025
+        // Expected: Base (Wheat 0.006) * Fertility (0.5) = 0.003
         let food = world.resource::<ColonyResources>().food;
-        assert!((food - 0.0025).abs() < 0.0001, "Food produced: {}", food);
+        assert!((food - 0.003).abs() < 0.0001, "Food produced: {}", food);
     }
 
     #[test]

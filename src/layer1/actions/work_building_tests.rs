@@ -78,6 +78,7 @@ mod tests {
                 Farm {
                     capacity: 1,
                     workers: vec![],
+                    ..Default::default()
                 },
                 ShiftSchedule::default(),
             ))
