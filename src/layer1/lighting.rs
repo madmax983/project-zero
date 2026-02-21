@@ -140,9 +140,8 @@ pub fn apply_lighting_penalties_system(
 
         let light = light_map.get(x, y);
 
-        if light < 0.2 {
             // Darkness penalty
-            speed.current = speed.base * 0.5;
+            speed.current *= 0.5;
 
             // Morale penalty (reduce leisure)
             let mut stress_factor = 1.0;
@@ -157,9 +156,6 @@ pub fn apply_lighting_penalties_system(
 
             let penalty = 0.005 * stress_factor;
             needs.leisure = (needs.leisure - penalty).max(0.0);
-        } else {
-            // Restore speed
-            speed.current = speed.base;
         }
     }
 }
@@ -315,6 +311,10 @@ mod tests {
             ))
             .id();
 
+        // Run Reset + Lighting
+        world
+            .run_system_once(crate::layer1::pop::reset_speed_system)
+            .unwrap();
         world
             .run_system_once(apply_lighting_penalties_system)
             .unwrap();
@@ -346,6 +346,10 @@ mod tests {
             ))
             .id();
 
+        // Run Reset + Lighting
+        world
+            .run_system_once(crate::layer1::pop::reset_speed_system)
+            .unwrap();
         world
             .run_system_once(apply_lighting_penalties_system)
             .unwrap();
