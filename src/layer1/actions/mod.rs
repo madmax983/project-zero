@@ -59,6 +59,7 @@
 //! | **Surgery** | *Passive / Assigned* | [`crate::layer1::cybernetics::surgery_system`] |
 
 use bevy_ecs::prelude::*;
+pub use crate::layer1::utility_types::AssignmentType;
 
 /// Hunger satisfaction action logic.
 pub mod hunger;
@@ -137,49 +138,3 @@ pub struct AssignedTo {
     pub assignment_type: AssignmentType,
 }
 
-/// Types of assignments a pop can have.
-#[derive(Clone, Copy, PartialEq, Eq, Debug)]
-pub enum AssignmentType {
-    /// Working at a farm.
-    FarmWorker,
-    /// Residing in housing.
-    HousingResident,
-    /// Socializing at a tavern.
-    TavernVisitor,
-    /// Working at a library.
-    LibraryWorker,
-    /// Recovering in a hospital.
-    Patient,
-    /// Burying a corpse.
-    Funeral,
-    /// Working at an observatory.
-    ObservatoryWorker,
-    /// Mining job.
-    Miner,
-    /// Hauling job.
-    Hauler,
-    /// Construction job.
-    Builder,
-    /// Crafting job.
-    Crafter,
-    /// Guard job.
-    Guard,
-    /// Engineering job.
-    Engineer,
-    /// Medical doctor job.
-    Doctor,
-    /// Merchant job.
-    Merchant,
-    /// Scientist job.
-    Scientist,
-    /// Artist job.
-    Artist,
-    /// Governor job.
-    Governor,
-    /// Administrator job.
-    Administrator,
-    /// Chef job.
-    Chef,
-    /// Undergoing surgery.
-    Surgery,
-}

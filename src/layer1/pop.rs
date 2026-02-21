@@ -22,9 +22,9 @@
 //! * [`PopAction`]: Current task state.
 //! * [`UtilityWeights`]: Personality/learning factors.
 
-use super::actions::AssignmentType;
+use super::utility_types::AssignmentType;
 /// Alias for `AssignmentType` for job-related contexts (Spec 113).
-pub use super::actions::AssignmentType as JobType;
+pub use super::utility_types::AssignmentType as JobType;
 use super::artifacts::ActiveAuras;
 use super::biocompatibility::Biocompatibility;
 use super::cabin_fever::CabinFever;
