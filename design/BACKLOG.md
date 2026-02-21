@@ -27,6 +27,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `187` Adaptive Biology — `specs/187-adaptive-biology.md`
 - [ ] `188` The Long Watch — `specs/188-the-long-watch.md`
 - [ ] `189` Gravity Engineering — `specs/189-gravity-engineering.md`
+- [ ] `190` Atmospheric Tides — `specs/190-atmospheric-tides.md`
 
 ## MVP — Layer 2: System Simulation
 
