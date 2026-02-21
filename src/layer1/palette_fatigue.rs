@@ -65,7 +65,7 @@ pub fn apply_palette_fatigue_system(mut query: Query<(&mut Morale, &DietaryHisto
             .modifiers
             .retain(|m| m.label != "Boring Diet" && m.label != "Varied Diet");
 
-        if fatigue >= 0.8 {
+        if fatigue >= 0.75 {
             // High fatigue
             morale.modifiers.push(MoodModifier {
                 label: "Boring Diet".to_string(),
@@ -135,6 +135,46 @@ mod tests {
         // 1 of each. Ratio 0.2. Baseline 0.2. Result 0.0.
         let fatigue = calculate_palette_fatigue(&history);
         assert_eq!(fatigue, 0.0);
+    }
+
+    #[test]
+    fn test_fatigue_calculation_four_same_triggers_penalty() {
+        let mut history = DietaryHistory::default();
+        // 4 Potatoes, 1 Wheat
+        for _ in 0..4 {
+            record_meal(&mut history, ItemType::Potato);
+        }
+        record_meal(&mut history, ItemType::Wheat);
+
+        // Fatigue check
+        // Ratio = 0.8. Baseline = 0.2.
+        // Normalized = (0.8 - 0.2) / 0.8 = 0.75.
+        // Current threshold is >= 0.8. So this test will pass fatigue calculation but fail system application if system expects penalty.
+
+        // Run system
+        let mut world = World::new();
+        let pop = world
+            .spawn((
+                Pop,
+                Morale {
+                    value: 0.8,
+                    modifiers: Vec::new(),
+                },
+                history,
+            ))
+            .id();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(super::apply_palette_fatigue_system);
+        schedule.run(&mut world);
+
+        let morale = world.get::<Morale>(pop).unwrap();
+        // Should have "Boring Diet" modifier
+        let modifier = morale.modifiers.iter().find(|m| m.label == "Boring Diet");
+        assert!(
+            modifier.is_some(),
+            "Should have Boring Diet modifier for 4/5 same meals"
+        );
     }
 
     #[test]

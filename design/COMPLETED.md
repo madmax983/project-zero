@@ -58,6 +58,7 @@ Features that have been fully implemented, tested, and merged.
 - [x] `107` Biocompatibility — `specs/107-biocompatibility.md` — completed 2026-10-27
 - [x] `112` Maintenance Debt — `specs/112-maintenance-debt.md` — completed 2026-10-27
 - [x] `113` Social Stratification — `specs/113-social-stratification.md` — completed 2026-10-27
+- [x] `114` Palette Fatigue — `specs/114-palette-fatigue.md` — completed 2026-11-03
 - [x] `117` Fuel Consumption — `specs/117-fuel-consumption.md` — completed 2026-06-03
 - [x] `119` Airlock and Pressure — `specs/119-airlock-and-pressure.md` — completed 2026-10-25
 - [x] `121` Hydroponics — `specs/121-hydroponics.md` — completed 2026-02-15
