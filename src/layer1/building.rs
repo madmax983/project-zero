@@ -22,7 +22,7 @@
 
 use super::GridPosition;
 use super::beauty::BeautySource;
-use super::farm::{Crop, Farm};
+use super::farm::Farm;
 use super::fire::Flammable;
 use super::housing::Housing;
 use super::social::Tavern;
@@ -1188,8 +1188,10 @@ fn configure_production(entity: &mut EntityWorldMut, building_type: BuildingType
             ];
             let crop_type = crops.choose(&mut rng).cloned().unwrap_or(ItemType::Potato);
             entity.insert((
-                Farm::default(),
-                Crop { crop_type },
+                Farm {
+                    selected_crop: crop_type,
+                    ..Default::default()
+                },
                 ShiftSchedule::default(),
             ));
         }
@@ -1201,8 +1203,10 @@ fn configure_production(entity: &mut EntityWorldMut, building_type: BuildingType
             let crops = [ItemType::Rice, ItemType::Soy];
             let crop_type = crops.choose(&mut rng).cloned().unwrap_or(ItemType::Rice);
             entity.insert((
-                Farm::default(),
-                Crop { crop_type },
+                Farm {
+                    selected_crop: crop_type,
+                    ..Default::default()
+                },
                 PowerConsumer {
                     demand: 5.0,
                     active: false,

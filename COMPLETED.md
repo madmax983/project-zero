@@ -1,1 +1,2 @@
 - [x] `167` Monuments of Failure — `specs/167-monuments-of-failure.md` — completed 2026-05-25
+- [x] `120` Crop Diversity — `specs/120-crop-diversity.md` — completed 2026-10-31

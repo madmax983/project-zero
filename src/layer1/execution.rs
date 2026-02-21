@@ -1989,6 +1989,7 @@ mod tests {
                 Farm {
                     capacity: 1,
                     workers: vec![other_pop], // Already full
+                    ..Default::default()
                 },
             ))
             .id();
@@ -2372,6 +2373,7 @@ mod tests {
                 Farm {
                     capacity: 2,
                     workers: vec![pop],
+                    ..Default::default()
                 },
             ))
             .id();

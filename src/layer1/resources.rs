@@ -109,6 +109,12 @@ pub struct Carrying {
 pub struct ColonyResources {
     /// Total food available in the colony.
     pub food: f32,
+    /// Total wheat available.
+    pub wheat: f32,
+    /// Total potato available.
+    pub potato: f32,
+    /// Total rice available.
+    pub rice: f32,
     /// Total wood available in the colony.
     pub wood: f32,
     /// Total stone available in the colony.
@@ -177,6 +183,9 @@ impl Default for ColonyResources {
     fn default() -> Self {
         Self {
             food: 10.0,
+            wheat: 0.0,
+            potato: 0.0,
+            rice: 0.0,
             wood: 15.0,
             stone: 5.0,
             planks: 0.0,
@@ -218,6 +227,9 @@ impl Mul<f32> for ColonyResources {
     fn mul(self, rhs: f32) -> Self::Output {
         Self {
             food: (self.food * rhs).ceil(),
+            wheat: (self.wheat * rhs).ceil(),
+            potato: (self.potato * rhs).ceil(),
+            rice: (self.rice * rhs).ceil(),
             wood: (self.wood * rhs).ceil(),
             stone: (self.stone * rhs).ceil(),
             planks: (self.planks * rhs).ceil(),
@@ -263,6 +275,9 @@ impl ColonyResources {
     pub const fn zeroed() -> Self {
         Self {
             food: 0.0,
+            wheat: 0.0,
+            potato: 0.0,
+            rice: 0.0,
             wood: 0.0,
             stone: 0.0,
             planks: 0.0,
@@ -327,6 +342,12 @@ impl ColonyResources {
         self.food = (self.food + amount).clamp(0.0, self.max_food);
     }
 
+    /// Returns the total food available (food aggregate + rations).
+    #[must_use]
+    pub fn total_food(&self) -> f32 {
+        self.food + self.rations
+    }
+
     /// Adds planks, clamping to the maximum capacity.
     pub fn add_planks(&mut self, amount: f32) {
         self.planks = (self.planks + amount).clamp(0.0, self.max_planks);
@@ -384,6 +405,9 @@ impl ColonyResources {
     #[must_use]
     pub fn has_negative(&self) -> bool {
         self.food < 0.0
+            || self.wheat < 0.0
+            || self.potato < 0.0
+            || self.rice < 0.0
             || self.wood < 0.0
             || self.stone < 0.0
             || self.planks < 0.0
@@ -418,6 +442,9 @@ impl ColonyResources {
         }
 
         self.food >= cost.food
+            && self.wheat >= cost.wheat
+            && self.potato >= cost.potato
+            && self.rice >= cost.rice
             && self.wood >= cost.wood
             && self.stone >= cost.stone
             && self.planks >= cost.planks
@@ -441,6 +468,9 @@ impl ColonyResources {
     /// * `cost`: The resources to deduct.
     fn deduct(&mut self, cost: &Self) {
         self.food -= cost.food;
+        self.wheat -= cost.wheat;
+        self.potato -= cost.potato;
+        self.rice -= cost.rice;
         self.wood -= cost.wood;
         self.stone -= cost.stone;
         self.planks -= cost.planks;

@@ -49,12 +49,12 @@ mod tests {
         world.run_system_once(produce_food_system).unwrap();
 
         let resources = world.resource::<ColonyResources>();
-        // Normal Farm in Winter: 0.005 * 0.5 = 0.0025
-        // Greenhouse in Winter: 0.005 * 1.0 = 0.005
+        // Normal Farm in Winter: 0.006 * 0.2 = 0.0012 (Wheat)
+        // Greenhouse in Winter: 0.006 * 1.0 = 0.006
         // Food starts at 10.0
-        // Expected: 10.005
+        // Expected: 10.006
         assert!(
-            (resources.food - 10.005).abs() < 0.0001,
+            (resources.food - 10.006).abs() < 0.0001,
             "Greenhouse should ignore winter penalty. Food: {}",
             resources.food
         );

@@ -48,6 +48,7 @@ mod tests {
         // Other dependencies for systems
         world.insert_resource(scale::layer1::erosion::ErosionGrid::new(10, 10));
         world.insert_resource(scale::layer1::geology::SeismicGrid::new(10, 10));
+        world.insert_resource(scale::layer1::seismic::VibrationGrid::new(10, 10));
         world.insert_resource(scale::layer1::water::WaterGrid::new(10, 10));
         world.insert_resource(scale::layer1::tech::TechState::default());
         world.insert_resource(scale::layer1::beauty::BeautyGrid::new(10, 10));

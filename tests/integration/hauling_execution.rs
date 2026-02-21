@@ -75,6 +75,7 @@ mod tests {
         world.insert_resource(scale::layer1::prototyping::BuildingMastery::default());
         world.insert_resource(scale::layer1::graffiti::GraffitiMap::default());
         world.insert_resource(scale::layer1::geology::SeismicGrid::new(10, 10));
+        world.insert_resource(scale::layer1::seismic::VibrationGrid::new(10, 10));
         world.insert_resource(scale::layer1::ecology::EcologyConfig::default());
         world.insert_resource(scale::layer1::society::SecretSocieties::default());
         world.insert_resource(scale::layer1::society::Unrest::default());

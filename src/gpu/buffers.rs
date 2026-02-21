@@ -594,6 +594,7 @@ mod tests {
                 Farm {
                     capacity: 3,
                     workers: vec![],
+                    ..Default::default()
                 },
             ))
             .id();
