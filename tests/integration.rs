@@ -100,3 +100,5 @@ mod power_utility;
 
 #[path = "integration/wind_atmosphere.rs"]
 mod wind_atmosphere;
+#[path = "integration/seismic_vibration.rs"]
+mod seismic_vibration;

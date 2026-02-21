@@ -121,3 +121,12 @@
     - Registered `update_wind_system` in `Layer1SystemSet::Environment` before atmosphere.
     - Initialized `WindGrid` and `GlobalWind` in `src/setup.rs`.
 - **Tests:** `tests/integration/wind_atmosphere.rs` (Integration test verified), Fixed regressions in `drone_network` and `hauling_execution`.
+
+### INT-033: Machine Vibration -> Seismic Activity
+- **Date:** 2026-02-21
+- **Systems connected:** `SeismicSource` (Buildings) -> `VibrationGrid` (Seismic) -> `Flora` (Environment) / `GeologicalEvent` (Geology)
+- **Glue added:**
+    - Initialized `VibrationGrid` in `src/setup.rs`.
+    - Added `SeismicSource` component to industrial buildings in `src/layer1/building.rs`.
+    - Registered `update_seismic_system`, `seismic_flora_reaction_system`, `seismic_instability_system` in `src/layer1/systems.rs`.
+- **Tests:** `tests/integration/seismic_vibration.rs` (Integration test verified)
