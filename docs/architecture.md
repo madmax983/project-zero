@@ -27,6 +27,9 @@ Container_Boundary(Simulation, "Simulation Core (Layer 1)") {
     Component(World, "World Entities", "farm.rs, housing.rs", "Interactable Buildings")
     Component(Resources, "Colony Resources", "resources.rs", "Global Inventory")
     Component(Map, "Map/Terrain", "map.rs", "Spatial Grid")
+
+    Component(Particles, "Particle System", "particles.rs", "Visual Juice & Sub-grid Physics")
+    Component(NovaFeatures, "Nova Features", "constellations.rs, observer.rs", "Experimental Mechanics")
 }
 
 Container(Shared, "Shared Lib", "Utilities", "GameState, Time, Input, Logs")
@@ -56,6 +59,9 @@ Rel(UtilityOrchestrator, World, "Queries Availability")
 Rel(UtilityOrchestrator, Map, "Calculates Distance")
 Rel(UtilityOrchestrator, Pathfinding, "Calculates Path")
 
+Rel(Actions, Particles, "Spawns")
+Rel(DomainActions, Particles, "Spawns")
+
 Rel(Pops, World, "Interacts with")
 Rel(Pops, Factions, "Member Of")
 Rel(Pops, Resources, "Consumes/Produces")
@@ -64,6 +70,7 @@ Rel(Pops, Acoustics, "Reacts to Noise")
 Rel(Pops, SpontaneousArch, "Builds")
 Rel(Pops, Atmosphere, "Takes Damage")
 Rel(Pops, Pressure, "Moved by Force")
+Rel(Pops, NovaFeatures, "Affected By")
 
 Rel(MapRender, Shared, "Reads State")
 Rel(MapRender, Map, "Reads Entities")
@@ -378,3 +385,5 @@ Rel(Shared, Events, "Consumes")
 - [ADR 020: Spontaneous Architecture](./adr/020-spontaneous-architecture.md)
 - [ADR 022: Atmospheric & Ventilation Flow](./adr/022-atmospheric-flow-architecture.md)
 - [ADR 023: Data Physicality & Tech Corruption](./adr/023-data-physicality.md)
+- [ADR 024: Visual Particle System](./adr/024-visual-particle-system.md)
+- [ADR 025: Integrated Feature Flags](./adr/025-integrated-feature-flags.md)
