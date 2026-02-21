@@ -4953,3 +4953,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Stockpile ammo at the gun (Explosion risk) or in the bunker (Supply latency)?
 
 ---
+
+## System Sovereignty
+
+**Layer:** 2
+
+**Fantasy:** Painting the map. "This star system belongs to the Terran Union."
+
+**Mechanic:** Stations and Patrol fleets generate "Influence Radius" on the System Map. Overlapping influence creates "Borders". Neutral ships in your borders pay tolls; enemies trigger alerts.
+
+**Emergence:** You claim a lucrative asteroid belt. A rival faction parks a Destroyer right on the line, daring you to shoot.
+
+**Tension:** Patrol cost (fuel/maintenance) vs. Trade income/Security.
+
+---
+
+## The Rocket Equation
+
+**Layer:** 2
+
+**Fantasy:** Space is big, and fuel is heavy. The tyranny of distance.
+
+**Mechanic:** Ships have a hard "Delta-V" (Range) limit based on fuel capacity/mass. Extending range requires "Tanker" ships or "Refueling Depots". Stranded ships become distress beacons.
+
+**Emergence:** You chase a pirate fleet deep into the void. You win the battle, but burn too much fuel to get home. The victory becomes a funeral.
+
+**Tension:** Range (Safety) vs. Payload (War/Trade).
+
+---
+
+## Pirate Republics
+
+**Layer:** 2
+
+**Fantasy:** Crime evolves into government. The wretched hive of scum and villainy.
+
+**Mechanic:** Pirates aren't just random spawns. They have "Havens" (Hidden Bases). Successful raids upgrade Havens. Eventually, they become a legitimate Faction with diplomacy, demanding tribute or offering protection.
+
+**Emergence:** The pirate you failed to kill in Year 1 is now the "Pirate King" demanding a seat on the Council.
+
+**Tension:** Exterminate (Costly war) vs. Bribe (Easy but strengthens them).
+
+---
+
+## Urban Heat Islands
+
+**Layer:** 1
+
+**Fantasy:** The city sweats.
+
+**Mechanic:** Dense concrete/metal buildings retain heat, raising local temperature significantly. Beneficial in winter, deadly in summer. Green spaces (Parks) cool the area.
+
+**Emergence:** Your efficient, dense city center becomes a heat-stroke trap during a heatwave. You have to bulldoze housing to build parks, or everyone dies.
+
+**Tension:** Density (Efficiency) vs. Temperature Control (Safety).
+
+---
