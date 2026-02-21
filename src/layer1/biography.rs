@@ -1,6 +1,23 @@
-//! Experimental module for Pop biographies.
+//! # Biography: The Life Story of a Pop
 //!
-//! Tracks significant life events for individual pops.
+//! This module implements the "Biography" system, which gives every Pop a persistent history.
+//! It works by monitoring the [`AssignedTo`](crate::layer1::actions::AssignedTo) component
+//! and recording significant changes (like getting a new job or moving house) as text events.
+//!
+//! ## How it Works
+//!
+//! 1.  **Initialization**: When a Pop is spawned, it receives a [`Biography`] component with an "Arrival" event.
+//! 2.  **Monitoring**: The [`biography_monitor_system`] runs every tick.
+//! 3.  **Translation**: It reads the Pop's current [`AssignedTo`] component.
+//! 4.  **Recording**: If the assignment has changed (and isn't just a repeat of the last event),
+//!     a new [`BiographyEvent`] is appended.
+//!
+//! ## Example Output
+//!
+//! > *Tick 105*: Arrived via Cryopod malfunction. Joined the colony.
+//! > *Tick 120*: Started working at Hydroponics Bay.
+//! > *Tick 500*: Moved into Habitation Module A.
+//! > *Tick 600*: Visited The Rusty Sprocket to socialize.
 
 use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::building::Building;
@@ -9,30 +26,57 @@ use crate::shared::narrative::NarrativeGenerator;
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 
-/// A single event in a Pop's life.
+/// A single significant event in a Pop's life.
+///
+/// Events are immutable records of past actions or milestones.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct BiographyEvent {
-    /// The tick when the event occurred.
+    /// The simulation tick when the event occurred.
     pub tick: u64,
-    /// The text description of the event.
+    /// The human-readable description of the event.
     pub text: String,
 }
 
 /// Component storing the history of a Pop.
+///
+/// This component acts as the "memory" of the Pop's life. It can be queried by the UI
+/// to display a timeline of the Pop's existence.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::biography::Biography;
+///
+/// let mut bio = Biography::default();
+/// bio.add_event(100, "Became the colony's first Governor.".to_string());
+///
+/// assert_eq!(bio.events.len(), 1);
+/// assert_eq!(bio.events[0].tick, 100);
+/// ```
 #[derive(Component, Default, Debug, Clone)]
 pub struct Biography {
-    /// List of life events.
+    /// Chronological list of life events.
     pub events: Vec<BiographyEvent>,
 }
 
 impl Biography {
-    /// Add a new event to the biography.
+    /// Appends a new event to the biography.
     pub fn add_event(&mut self, tick: u64, text: String) {
         self.events.push(BiographyEvent { tick, text });
     }
 }
 
-/// System to monitor and record biography events.
+/// System to monitor and record biography events based on assignments.
+///
+/// This system polls all Pops with an [`AssignedTo`] component. It compares the current assignment
+/// description against the last recorded event in the [`Biography`]. If they differ, it records
+/// the new assignment.
+///
+/// # Logic
+///
+/// *   **New Pops**: Assigns a random "Arrival" story via [`NarrativeGenerator`].
+/// *   **Assignments**: Translates [`AssignmentType`] into a sentence (e.g., `FarmWorker` -> "Started working at Farm").
+/// *   **Deduplication**: Prevents spamming the same event every tick by checking `bio.events.last()`.
 pub fn biography_monitor_system(
     time: Res<SimulationTime>,
     new_pops: Query<Entity, (With<Pop>, Without<Biography>)>,
