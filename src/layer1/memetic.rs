@@ -3,7 +3,12 @@
 //! Handles the infection of Pops with memetic viruses from hazardous research,
 //! and the spread of infection via graffiti.
 
+use crate::layer1::building::{Building, BuildingType};
+use crate::layer1::map::GridPosition;
+use crate::layer1::utility_eval_types::PopEvalData;
+use crate::layer1::utility_types::ActionType;
 use bevy_ecs::prelude::*;
+use rand::seq::IteratorRandom;
 
 /// Component marking a Pop as a carrier of a memetic virus.
 ///
@@ -24,6 +29,36 @@ impl Default for MemeticConfig {
             infection_chance: 0.1,
         }
     }
+}
+
+/// Evaluates the desire to scrawl memetic sigils on walls.
+///
+/// This action is available only to Pops infected with [`MemeticCarrier`].
+/// It overrides normal priorities with a high utility score (2.0).
+pub fn evaluate_scrawl_memetic_sigil(
+    data: &PopEvalData,
+    world: &mut World,
+) -> Option<(ActionType, f32, Option<Entity>)> {
+    // 1. Am I a carrier?
+    world.get::<MemeticCarrier>(data.entity)?;
+
+    // 2. Find a wall to deface
+    let mut rng = rand::thread_rng();
+
+    let mut query = world.query::<(Entity, &GridPosition, &Building)>();
+    let candidates: Vec<(Entity, GridPosition)> = query
+        .iter(world)
+        .filter(|(_, _, b)| b.building_type == BuildingType::Wall)
+        .map(|(e, p, _)| (e, *p))
+        .collect();
+
+    // Pick one
+    if let Some((target, _pos)) = candidates.into_iter().choose(&mut rng) {
+        // High utility to override everything else (2.0 vs normal 1.0 max)
+        return Some((ActionType::ScrawlMemeticSigil, 2.0, Some(target)));
+    }
+
+    None
 }
 
 #[cfg(test)]
@@ -58,13 +93,6 @@ mod tests {
         });
         world.insert_resource(crate::shared::log::MessageLog::default());
 
-        // We need to loop this test or ensure infection happens.
-        // Infection is random selection from candidates.
-        // If there is only 1 candidate, it should be selected 100%?
-        // Let's check tech.rs logic.
-        // `candidates.into_iter().choose(&mut rng)`
-        // `choose` from 1 candidate is 100%.
-
         let researcher = world
             .spawn((
                 Pop,
@@ -76,9 +104,7 @@ mod tests {
             ))
             .id();
 
-        // Define a hazardous tech (e.g. VoidWhispers)
-        // Unlock it
-        // Note: Tech::VoidWhispers doesn't exist yet, this will fail compilation (RED phase)
+        // Unlock Tech::VoidWhispers
         let result = unlock_tech(&mut world, Tech::VoidWhispers);
 
         // Assert success
@@ -119,9 +145,6 @@ mod tests {
                     building_type: BuildingType::Wall,
                 },
                 GridPosition { x: 5, y: 6 },
-                // OccupiedTiles is usually a resource, but utility AI might use it for validity checks?
-                // Actually, evaluate_scrawl_memetic_sigil will likely query Buildings directly or use OccupiedTiles.
-                // Let's ensure OccupiedTiles exists and has the wall.
             ))
             .id();
 
@@ -129,14 +152,11 @@ mod tests {
         occupied.0.insert((5, 6));
         world.insert_resource(occupied);
 
-        // Insert necessary resources (UtilityConfig, etc) done above.
-
         // Evaluate actions
         evaluate_actions_system(&mut world);
 
         // Assert Pop chose ScrawlMemeticSigil
         let action = world.get::<PopAction>(pop).unwrap();
-        // ActionType::ScrawlMemeticSigil doesn't exist yet
         assert_eq!(action.current, ActionType::ScrawlMemeticSigil);
     }
 
@@ -153,7 +173,6 @@ mod tests {
         map.markings.insert(
             (5, 6),
             Graffiti {
-                // GraffitiType::MemeticSigil doesn't exist yet
                 graffiti_type: GraffitiType::MemeticSigil,
                 decay: 100.0,
                 modifier: -0.1,

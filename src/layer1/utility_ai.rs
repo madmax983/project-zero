@@ -39,7 +39,6 @@
 //!     vector iteration (which is much faster due to cache locality and no ECS overhead).
 
 use crate::layer1::actions::admin::evaluate_admin;
-use crate::layer1::actions::chemical::evaluate_consume_chemical;
 use crate::layer1::actions::explore::evaluate_explore;
 use crate::layer1::actions::farm::evaluate_farm;
 use crate::layer1::actions::fetch_clothing::evaluate_fetch_clothing;
@@ -58,6 +57,7 @@ use crate::layer1::actions::social::evaluate_socialize;
 use crate::layer1::actions::work::evaluate_work;
 use crate::layer1::admin::Office;
 use crate::layer1::building::{Building, ShiftSchedule};
+use crate::layer1::chemical::evaluate_consume_chemical;
 use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::farm::Farm;
 use crate::layer1::funeral::{Corpse, Grave};
@@ -394,7 +394,7 @@ pub(crate) fn evaluate_single_pop(
 
     // 1b. Check for Memetic Compulsion (Returns early, overrides drafted)
     if let Some((action, utility, target)) =
-        crate::layer1::actions::scrawl_sigil::evaluate_scrawl_memetic_sigil(data, world)
+        crate::layer1::memetic::evaluate_scrawl_memetic_sigil(data, world)
     {
         return (action, utility, target);
     }

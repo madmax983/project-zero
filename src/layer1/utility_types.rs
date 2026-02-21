@@ -123,7 +123,7 @@ pub enum ActionType {
     Admin,
     /// Scrawl memetic sigils on walls (Memetic Hazard).
     ///
-    /// See [`crate::layer1::actions::scrawl_sigil::evaluate_scrawl_memetic_sigil`].
+    /// See [`crate::layer1::memetic::evaluate_scrawl_memetic_sigil`].
     ScrawlMemeticSigil,
     /// Pre-emptive arrest of high-risk Suspects.
     ///
@@ -131,7 +131,7 @@ pub enum ActionType {
     PreCrimeArrest,
     /// Consume a chemical substance (Stim/Sedative).
     ///
-    /// See [`crate::layer1::actions::chemical::evaluate_consume_chemical`].
+    /// See [`crate::layer1::chemical::evaluate_consume_chemical`].
     ConsumeChemical,
 }
 
