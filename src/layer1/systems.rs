@@ -296,7 +296,11 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
-            crate::layer1::wind::update_wind_system,
+            crate::layer1::atmosphere::update_atmospheric_tide_system,
+            crate::layer1::atmosphere::sync_global_wind_system
+                .after(crate::layer1::atmosphere::update_atmospheric_tide_system),
+            crate::layer1::wind::update_wind_system
+                .after(crate::layer1::atmosphere::sync_global_wind_system),
             #[cfg(feature = "nova")]
             crate::layer1::constellations::update_sky_system,
             malfunction_system.after(entropy_system),

@@ -145,9 +145,7 @@ pub fn update_wind_system(
     terrain_grid: Option<Res<TerrainGrid>>,
     building_query: Query<(&Building, &GridPosition)>,
 ) {
-    let mut wind_grid = if let Some(g) = wind_grid {
-        g
-    } else {
+    let Some(mut wind_grid) = wind_grid else {
         return;
     };
 
