@@ -488,6 +488,13 @@ pub use geology::*;
 pub mod oral_tradition;
 #[cfg(feature = "nova")]
 pub use oral_tradition::*;
+
+/// Constellation Mythology system (Nova Feature).
+#[cfg(feature = "nova")]
+pub mod constellations;
+#[cfg(feature = "nova")]
+pub use constellations::*;
+
 /// Xeno-Artifacts system (Spec 156).
 pub mod artifacts;
 #[cfg(test)]
