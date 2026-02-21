@@ -1017,7 +1017,7 @@ fn spawn_building(
     y: i32,
     building_type: BuildingType,
     material: MaterialType,
-) {
+) -> Entity {
     // Prototyping Phase: Check mastery before mutable borrow
     let is_mastered = world
         .get_resource::<BuildingMastery>()
@@ -1122,6 +1122,8 @@ fn spawn_building(
             // Logic handled by components added in system
         }
     }
+
+    entity.id()
 }
 
 fn configure_housing(entity: &mut EntityWorldMut, building_type: BuildingType) {
@@ -1704,7 +1706,20 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
     }
 
     // Spawn building
-    spawn_building(world, x, y, building_type, material);
+    let entity = spawn_building(world, x, y, building_type, material);
+
+    // Vacuum Welding (Spec 185)
+    if world
+        .get_resource::<crate::layer1::pressure::PressureGrid>()
+        .is_some_and(|p| p.get(x, y) < 0.1)
+    {
+        world.entity_mut(entity).insert(VacuumWelded);
+        // Apply HP Bonus
+        if let Some(mut structure) = world.get_mut::<crate::layer1::structure::Structure>(entity) {
+            structure.max_hp *= 2.0;
+            structure.current_hp *= 2.0;
+        }
+    }
 
     // Mark tile occupied
     world.resource_mut::<OccupiedTiles>().0.insert((x, y));
@@ -2552,3 +2567,12 @@ mod shift_tests {
         assert!(schedule.is_active(TimeOfDay::Night));
     }
 }
+
+/// Building component indicating it was constructed in a vacuum.
+///
+/// Vacuum Welded buildings:
+/// - Have +100% Max HP.
+/// - Cannot be Repaired or Demolished.
+/// - Must be Destroyed (yielding 0 resources).
+#[derive(Component, Default)]
+pub struct VacuumWelded;

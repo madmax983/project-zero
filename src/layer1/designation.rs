@@ -39,6 +39,8 @@ pub enum DesignationType {
     JuryRig,
     /// Designate the Lander for cannibalization (destructive resource extraction).
     Cannibalize,
+    /// Designate a Vacuum Welded building for destruction (yields 0 resources).
+    Destroy,
 }
 
 impl DesignationType {
@@ -63,6 +65,7 @@ impl DesignationType {
             Self::ClearFlora => 'F',
             Self::JuryRig => 'J',
             Self::Cannibalize => 'C',
+            Self::Destroy => 'D',
         }
     }
 
@@ -87,6 +90,7 @@ impl DesignationType {
             Self::ClearFlora => "F",
             Self::JuryRig => "J",
             Self::Cannibalize => "C",
+            Self::Destroy => "D",
         }
     }
 
@@ -111,6 +115,7 @@ impl DesignationType {
             Self::ClearFlora => "Clear Flora",
             Self::JuryRig => "Jury-Rig",
             Self::Cannibalize => "Cannibalize",
+            Self::Destroy => "Destroy",
         }
     }
 }
@@ -200,8 +205,16 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
         }
         DesignationType::Demolish => {
             let occupied = world.resource::<OccupiedTiles>();
-            // Only occupied tiles can be demolished
-            occupied.0.contains(&(x, y))
+            if !occupied.0.contains(&(x, y)) {
+                return false;
+            }
+            // Cannot demolish Vacuum Welded buildings
+            !world.iter_entities().any(|e| {
+                if let Some(pos) = e.get::<GridPosition>() {
+                    return pos.x == x && pos.y == y && e.contains::<crate::layer1::building::VacuumWelded>();
+                }
+                false
+            })
         }
         DesignationType::Chop => {
             let terrain = world.resource::<TerrainGrid>();
@@ -210,9 +223,16 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
         }
         DesignationType::Repair => {
             let occupied = world.resource::<OccupiedTiles>();
-            // Only occupied tiles can be repaired (assumes building)
-            // Ideally check if building has Structure and < Max HP, but for MVP check occupancy is enough
-            occupied.0.contains(&(x, y))
+            if !occupied.0.contains(&(x, y)) {
+                return false;
+            }
+            // Cannot repair Vacuum Welded buildings
+            !world.iter_entities().any(|e| {
+                if let Some(pos) = e.get::<GridPosition>() {
+                    return pos.x == x && pos.y == y && e.contains::<crate::layer1::building::VacuumWelded>();
+                }
+                false
+            })
         }
         DesignationType::SetZone(_) => true,
         DesignationType::Tame => {
@@ -257,6 +277,11 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
                 }
                 false
             })
+        }
+        DesignationType::Destroy => {
+            let occupied = world.resource::<OccupiedTiles>();
+            // Only occupied tiles can be destroyed
+            occupied.0.contains(&(x, y))
         }
     }
 }
@@ -444,6 +469,9 @@ pub fn try_designate_area(
                     | DesignationType::Cannibalize => valid_targets
                         .as_ref()
                         .is_some_and(|targets| targets.contains(&(x, y))),
+                    DesignationType::Destroy => {
+                        occupied_tiles.is_some_and(|o| o.0.contains(&(x, y)))
+                    }
                 };
 
                 if is_valid {

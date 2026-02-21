@@ -114,3 +114,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `181` Chemical Regulation — `specs/181-chemical-regulation.md` — completed 2026-02-21
 - [x] `182` Urban Canyons — `specs/182-urban-canyons.md` — completed 2026-11-02
 - [x] `INT-032` Integration: Wind -> Atmosphere — completed 2026-05-22
+- [x] `185` Vacuum Welding — `specs/185-vacuum-welding.md` — completed 2026-02-21

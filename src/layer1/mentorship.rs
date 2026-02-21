@@ -43,7 +43,8 @@ pub fn check_mentorship_system(
                 DesignationType::Repair
                 | DesignationType::Demolish
                 | DesignationType::JuryRig
-                | DesignationType::Cannibalize => Some(SkillType::Construction),
+                | DesignationType::Cannibalize
+                | DesignationType::Destroy => Some(SkillType::Construction),
                 DesignationType::ClearFlora => Some(SkillType::Farming),
                 DesignationType::SetZone(_) => None,
                 DesignationType::Tame => Some(SkillType::Husbandry),
