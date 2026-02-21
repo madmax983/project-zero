@@ -22,9 +22,8 @@
 //! * [`PopAction`]: Current task state.
 //! * [`UtilityWeights`]: Personality/learning factors.
 
-use super::actions::AssignmentType;
 /// Alias for `AssignmentType` for job-related contexts (Spec 113).
-pub use super::actions::AssignmentType as JobType;
+pub use super::jobs::AssignmentType as JobType;
 use super::biocompatibility::Biocompatibility;
 use super::cabin_fever::CabinFever;
 use super::contagion::ContagionCooldown;
@@ -115,15 +114,6 @@ impl PopName {
 /// ```
 #[derive(Component, Default)]
 pub struct Pop;
-
-/// Tracks a pop's persistent employment, even when temporarily reassigned (e.g. to hospital).
-#[derive(Component, Debug, Clone, PartialEq, Eq)]
-pub struct Job {
-    /// The building entity where the pop works.
-    pub workplace: Entity,
-    /// The type of job (e.g. `FarmWorker`, `LibraryWorker`).
-    pub job_type: AssignmentType,
-}
 
 /// Movement speed of a pop.
 ///

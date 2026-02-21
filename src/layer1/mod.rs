@@ -80,6 +80,8 @@ pub mod inspector;
 pub mod integration;
 /// Item definitions (Tools, Equipment).
 pub mod items;
+/// Job and assignment definitions.
+pub mod jobs;
 /// Spatial primitives (GridPosition).
 pub mod map;
 /// Colony Mascot system (Spec 129).
@@ -176,6 +178,7 @@ pub use health::*;
 pub use housing::*;
 pub use integration::*;
 pub use items::*;
+pub use jobs::*;
 pub use locations::*;
 pub use map::*;
 pub use mascot::*;

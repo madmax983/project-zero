@@ -51,7 +51,6 @@ mod tests {
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::energy::PowerConsumer;
     use crate::layer2::system::ViewMode;
-    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_visibility_defaults_to_none() {

@@ -1,5 +1,5 @@
+use crate::layer1::jobs::AssignmentType as JobType;
 use crate::layer1::morale::{MoodModifier, Morale};
-use crate::layer1::pop::JobType;
 use bevy_ecs::prelude::*;
 
 /// Component representing the social standing of a Pop.
@@ -132,9 +132,10 @@ pub fn class_friction_system(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::layer1::jobs::{AssignmentType as JobType, Job};
     use crate::layer1::map::GridPosition;
     use crate::layer1::morale::Morale;
-    use crate::layer1::pop::{Job, JobType, Pop};
+    use crate::layer1::pop::Pop;
 
     #[test]
     fn test_job_prestige_mapping() {

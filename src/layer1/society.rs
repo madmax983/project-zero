@@ -173,7 +173,6 @@ pub fn suppression_handler_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_ecs::prelude::*;
     use crate::layer1::pop::Pop;
     use crate::layer1::traits::{Traits, Trait};
 

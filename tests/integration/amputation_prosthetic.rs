@@ -2,7 +2,8 @@
 
 use bevy_ecs::prelude::*;
 use bevy_ecs::system::RunSystemOnce;
-use scale::layer1::actions::{AssignedTo, AssignmentType};
+use scale::layer1::actions::AssignedTo;
+use scale::layer1::jobs::AssignmentType;
 use scale::layer1::cybernetics::{
     Augmentations, MissingLimb, PendingSurgery, Prosthetic, ProstheticType, get_efficiency_bonus,
     surgery_system,

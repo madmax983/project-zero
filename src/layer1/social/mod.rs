@@ -1,4 +1,5 @@
-use crate::layer1::actions::{AssignedTo, AssignmentType};
+use crate::layer1::actions::AssignedTo;
+use crate::layer1::jobs::AssignmentType;
 use crate::layer1::cybernetics::{Augmentations, Prosthetic};
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;

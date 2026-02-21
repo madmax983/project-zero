@@ -1,4 +1,5 @@
-use crate::layer1::actions::{AssignedTo, AssignmentType};
+use crate::layer1::actions::AssignedTo;
+use crate::layer1::jobs::AssignmentType;
 use crate::layer1::morale::{MoodModifier, Morale};
 use crate::layer1::resources::ColonyResources;
 use bevy_ecs::prelude::*;
@@ -53,8 +54,9 @@ pub fn process_observe_system(
 #[cfg(test)]
 mod tests {
     use super::{Observatory, process_observe_system};
-    use crate::layer1::actions::{AssignedTo, AssignmentType};
+    use crate::layer1::actions::AssignedTo;
     use crate::layer1::building::BuildingType;
+    use crate::layer1::jobs::AssignmentType;
     use crate::layer1::morale::Morale;
     use crate::layer1::pop::Pop;
     use crate::layer1::resources::ColonyResources;

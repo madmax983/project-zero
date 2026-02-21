@@ -3,7 +3,8 @@
 //! Adds narrative depth by giving sleeping pops a chance to dream about the colony's history
 //! and their own memories, affecting their leisure and potentially generating knowledge.
 
-use crate::layer1::actions::{AssignedTo, AssignmentType};
+use crate::layer1::actions::AssignedTo;
+use crate::layer1::jobs::AssignmentType;
 use crate::layer1::chronicle::{Chronicle, EventImportance};
 use crate::layer1::memory::{Memories, MemoryType};
 use crate::layer1::needs::Needs;

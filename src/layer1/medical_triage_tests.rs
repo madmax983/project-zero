@@ -1,10 +1,11 @@
 #[cfg(test)]
 mod tests {
-    use crate::layer1::actions::{AssignedTo, AssignmentType};
+    use crate::layer1::actions::AssignedTo;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::health::Health;
+    use crate::layer1::jobs::{AssignmentType, Job}; // Job is the new component for employment
     use crate::layer1::medical::{Hospital, MedicalPolicy, healing_system};
-    use crate::layer1::pop::{Job, Pop}; // Job is the new component for employment
+    use crate::layer1::pop::Pop;
     use bevy_ecs::prelude::*;
 
     #[test]

@@ -1,5 +1,6 @@
-use crate::layer1::actions::{AssignedTo, AssignmentType};
+use crate::layer1::actions::AssignedTo;
 use crate::layer1::health::Health;
+use crate::layer1::jobs::AssignmentType;
 use bevy_ecs::prelude::*;
 
 /// Policy controlling how medical treatment is prioritized.
@@ -33,7 +34,7 @@ impl Default for Hospital {
     }
 }
 
-use crate::layer1::pop::Job;
+use crate::layer1::jobs::Job;
 use std::collections::HashMap;
 
 /// System to heal pops assigned to a hospital.
@@ -132,9 +133,10 @@ pub fn healing_system(world: &mut World) {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::actions::{AssignedTo, AssignmentType};
+    use crate::layer1::actions::AssignedTo;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::health::Health;
+    use crate::layer1::jobs::AssignmentType;
     use crate::layer1::map::GridPosition;
 
     #[test]

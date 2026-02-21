@@ -1,5 +1,6 @@
 #![allow(clippy::collapsible_if)]
-use crate::layer1::actions::{AssignedTo, AssignmentType};
+use crate::layer1::actions::AssignedTo;
+use crate::layer1::jobs::AssignmentType;
 use crate::layer1::factions::{FactionMember, FactionState, Factions};
 use crate::layer1::resources::ColonyResources;
 use crate::shared::log::MessageLog;

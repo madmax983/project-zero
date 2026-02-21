@@ -1,4 +1,5 @@
-use crate::layer1::actions::{AssignedTo, AssignmentType};
+use crate::layer1::actions::AssignedTo;
+use crate::layer1::jobs::AssignmentType;
 use crate::layer1::map::GridPosition;
 use bevy_ecs::prelude::*;
 
@@ -139,9 +140,10 @@ pub fn get_social_penalty(world: &World, pop: Entity) -> f32 {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::actions::{AssignedTo, AssignmentType};
+    use crate::layer1::actions::AssignedTo;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::items::Item;
+    use crate::layer1::jobs::AssignmentType;
     use crate::layer1::map::GridPosition;
     use crate::layer1::medical::Hospital;
     use crate::layer1::pop::{Pop, Speed};

@@ -1,3 +1,5 @@
+//! Benchmarks for Utility AI calculations.
+
 use criterion::{Criterion, black_box, criterion_group, criterion_main};
 use scale::layer1::map::GridPosition;
 use scale::layer1::utility_types::{UtilityWeights, calculate_context_score};
@@ -17,13 +19,15 @@ fn benchmark_context_score(c: &mut Criterion) {
                 black_box(capacity),
                 black_box(occupied),
                 black_box(&weights),
-            )
-        })
+            );
+        });
     });
 
-    let mut varied_weights = UtilityWeights::default();
-    varied_weights.distance_weight = 1.5;
-    varied_weights.availability_weight = 0.8;
+    let varied_weights = UtilityWeights {
+        distance_weight: 1.5,
+        availability_weight: 0.8,
+        ..Default::default()
+    };
 
     c.bench_function("calculate_context_score_varied", |b| {
         b.iter(|| {
@@ -33,8 +37,8 @@ fn benchmark_context_score(c: &mut Criterion) {
                 black_box(capacity),
                 black_box(occupied),
                 black_box(&varied_weights),
-            )
-        })
+            );
+        });
     });
 }
 

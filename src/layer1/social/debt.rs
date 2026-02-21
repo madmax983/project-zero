@@ -103,7 +103,6 @@ mod tests {
     use super::*;
     use crate::layer1::pop::Pop;
     use crate::layer1::social::{AffinityChange, Relationships};
-    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_social_debt_initialization() {

@@ -1,13 +1,13 @@
 #[cfg(test)]
 mod tests {
     use bevy_ecs::prelude::*;
-    use scale::layer1::actions::{AssignedTo, AssignmentType};
+    use scale::layer1::actions::AssignedTo;
     use scale::layer1::building::{BuildingType, MaterialType, spawn_building_with_material};
     use scale::layer1::energy::{
-        BlackoutProtocol, Conduit, PowerConsumer, PowerSource, power_grid_system,
+        BlackoutProtocol, PowerConsumer, power_grid_system,
     };
     use scale::layer1::health::Health;
-    use scale::layer1::map::GridPosition;
+    use scale::layer1::jobs::AssignmentType;
     use scale::layer1::medical::{Hospital, healing_system};
 
     fn setup_world() -> World {

@@ -2,7 +2,8 @@
 //!
 //! Tracks significant life events for individual pops.
 
-use crate::layer1::actions::{AssignedTo, AssignmentType};
+use crate::layer1::actions::AssignedTo;
+use crate::layer1::jobs::AssignmentType;
 use crate::layer1::building::Building;
 use crate::layer1::pop::Pop;
 use crate::shared::narrative::NarrativeGenerator;
