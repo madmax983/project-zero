@@ -1670,3 +1670,133 @@ FAVOR_CALLED:
     - COHESION (medium)
     - RESENTMENT (low)
 ```
+
+---
+
+## Chemical Regulation Chaining
+
+```yaml
+ADDICTION_CRISIS:
+  enables:
+    - THEFT_REPORT (high, for fix)
+    - OVERDOSE (medium)
+    - CRIME_WAVE (high, if widespread)
+  increases:
+    - DESPERATION (high)
+    - UNREST (medium)
+
+OVERDOSE:
+  enables:
+    - FUNERAL_HELD (high)
+    - EDICT_ISSUED (medium, banning chem)
+  increases:
+    - GRIEF (high)
+    - FEAR_OF_TECH (low)
+```
+
+## Wind & Canyon Chaining
+
+```yaml
+HIGH_WIND_EVENT:
+  enables:
+    - POWER_SURGE (high, wind turbines)
+    - STRUCTURAL_DAMAGE (medium)
+    - MOVEMENT_PENALTY (always)
+  increases:
+    - NOISE_COMPLAINT (high)
+
+CANYON_FORMED:
+  enables:
+    - WIND_TUNNEL_EFFECT (always)
+    - COOLING_BONUS (medium)
+  increases:
+    - WALKING_DIFFICULTY (high)
+```
+
+## Geodetic Sentience Chaining
+
+```yaml
+STONE_MIGRATION:
+  enables:
+    - GOLEM_RISES (high, if unchecked)
+    - MINER_SCARED (medium)
+  increases:
+    - PARANOIA (medium)
+    - MYSTERY (high)
+
+GOLEM_RISES:
+  enables:
+    - MILITIA_MUSTER (high)
+    - STOCKPILE_DESTRUCTION (high)
+    - MINING_HALT (always)
+  increases:
+    - FEAR (high)
+    - AWE (medium)
+```
+
+## Orbital Debris Chaining
+
+```yaml
+LAUNCH_FAILURE_DEBRIS:
+  enables:
+    - ORBITAL_IMPACT (medium)
+    - KESSLER_WARNING (high)
+  increases:
+    - ISOLATION (medium)
+    - LAUNCH_COST (high)
+
+ORBITAL_IMPACT:
+  enables:
+    - STATION_DAMAGE (high)
+    - SHIELD_BREACH (medium)
+  increases:
+    - FEAR_OF_SKY (medium)
+```
+
+## Vacuum Welding Chaining
+
+```yaml
+STRUCTURE_WELDED:
+  enables:
+    - DESTROY_DESIGNATION (only way to remove)
+    - DURABILITY_BONUS (always)
+  increases:
+    - PERMANENCE (high)
+    - REGRET (low, if misplaced)
+
+DESTROY_DESIGNATION:
+  enables:
+    - RESOURCE_LOSS (always, 100%)
+    - EXPLOSION_EVENT (low)
+  increases:
+    - WASTE (high)
+```
+
+## Bio-Architecture Chaining
+
+```yaml
+BIO_STRUCTURE_GROWN:
+  enables:
+    - BIO_STARVATION (medium, if neglected)
+    - PULSE_DOOR_OPEN (high)
+  increases:
+    - WONDER (high)
+    - UPKEEP_DEMAND (high, food)
+
+BIO_STARVATION:
+  enables:
+    - BIO_INFECTION (high)
+    - STRUCTURE_DECAY (high)
+  increases:
+    - GUILT (medium)
+    - DISGUST (low)
+
+BIO_INFECTION:
+  enables:
+    - STRUCTURE_ATTACK (high, hostile building)
+    - QUARANTINE (medium)
+    - FLAMETHROWER_USE (high)
+  increases:
+    - TERROR (high)
+    - SICKNESS (medium)
+```

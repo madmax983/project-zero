@@ -1721,3 +1721,118 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[NAME] calls in a [FAVOR_TYPE]. [YEAR]. It feels [DEBT_FEELING]."
 - "[YEAR]: The debt is due. [NAME] demands payment. [FAVOR_TYPE]."
 - "A [FAVOR_TYPE] is settled. [NAME] collects. [DEBT_FEELING]. [YEAR]."
+
+---
+
+## Chemical Templates (Spec 181)
+
+### ADDICTION_CRISIS
+**Slots:** [COLONY], [YEAR], [NAME], [CHEMICAL_NAME]
+
+- "[NAME] is [ADDICTION_SLANG]. [YEAR]. The need for [CHEMICAL_NAME] takes over."
+- "[YEAR]: Addiction. [NAME] is lost to the [CHEMICAL_NAME]. Signs of [WITHDRAWAL_SYMPTOM]."
+- "We are losing [NAME]. [YEAR]. The [CHEMICAL_NAME] hunger is too strong."
+
+### OVERDOSE
+**Slots:** [COLONY], [YEAR], [NAME], [CHEMICAL_NAME]
+
+- "[NAME] took too much. [YEAR]. The [CHEMICAL_NAME] burned them out."
+- "[YEAR]: Overdose at [COLONY]. [NAME] found with [CHEMICAL_NAME]. Silent."
+- "A bad batch. [NAME] is gone. [YEAR]. The [CHEMICAL_NAME] claimed another."
+
+---
+
+## Wind Templates (Spec 182)
+
+### HIGH_WIND_EVENT
+**Slots:** [COLONY], [YEAR], [WIND_DESCRIPTOR]
+
+- "The wind is [WIND_DESCRIPTOR] today. [YEAR]. It tears at the walls."
+- "[YEAR]: Gale warning. A [WIND_DESCRIPTOR] blast hits the canyon."
+- "No one walks outside. The air is [WIND_DESCRIPTOR]. [YEAR]."
+
+### CANYON_FORMED
+**Slots:** [COLONY], [YEAR], [CANYON_NAME]
+
+- "We built a [CANYON_NAME]. [YEAR]. The wind screams through it."
+- "[YEAR]: New construction creates a draft. We call it [CANYON_NAME]."
+- "The airflow changed. [YEAR]. [CANYON_NAME] is now a wind-tunnel."
+
+---
+
+## Geodetic Sentience Templates (Spec 183)
+
+### STONE_MIGRATION
+**Slots:** [COLONY], [YEAR], [LIVING_STONE_NAME]
+
+- "The [LIVING_STONE_NAME] moved in the night. [YEAR]. Closer to the heat."
+- "[YEAR]: Creep report. [LIVING_STONE_NAME] shifting. It seeks company."
+- "Watch the [LIVING_STONE_NAME]. It is waking. [YEAR]."
+
+### GOLEM_RISES
+**Slots:** [COLONY], [YEAR], [GOLEM_ACTION]
+
+- "They gathered. [YEAR]. The stones [GOLEM_ACTION] as one."
+- "[YEAR]: Golem formation! The rocks fuse and [GOLEM_ACTION]."
+- "A monster of stone. [YEAR]. It [GOLEM_ACTION] through the stockpile."
+
+---
+
+## Orbital Debris Templates (Spec 184)
+
+### LAUNCH_FAILURE_DEBRIS
+**Slots:** [COLONY], [YEAR], [SHIP_NAME], [DEBRIS_TYPE]
+
+- "Launch aborted. [YEAR]. [SHIP_NAME] hit by [DEBRIS_TYPE]."
+- "[YEAR]: The [SHIP_NAME] is lost. Taken by the [ORBITAL_HAZARD]."
+- "Orbit is closed. [DEBRIS_TYPE] strike on [SHIP_NAME]. [YEAR]."
+
+### ORBITAL_IMPACT
+**Slots:** [COLONY], [YEAR], [ORBITAL_HAZARD]
+
+- "Impact warning. [YEAR]. The [ORBITAL_HAZARD] rains down."
+- "[YEAR]: Shield breach. Debris from [ORBITAL_HAZARD] hits the station."
+- "The sky is falling. [ORBITAL_HAZARD] clears the upper atmosphere. [YEAR]."
+
+---
+
+## Vacuum Welding Templates (Spec 185)
+
+### STRUCTURE_WELDED
+**Slots:** [COLONY], [YEAR], [BUILDING_TYPE], [WELDING_TERM]
+
+- "The [BUILDING_TYPE] is set. [YEAR]. It is [WELDING_TERM]."
+- "[YEAR]: Construction complete. The vacuum makes it [PERMANENT_STRUCTURE_ADJECTIVE]."
+- "No taking it back. The [BUILDING_TYPE] is [WELDING_TERM]. [YEAR]."
+
+### DESTROY_DESIGNATION
+**Slots:** [COLONY], [YEAR], [BUILDING_TYPE]
+
+- "We had to destroy the [BUILDING_TYPE]. [YEAR]. It was fused solid."
+- "[YEAR]: Demolition impossible. We blast the [BUILDING_TYPE] to dust."
+- "Clearing the way. [BUILDING_TYPE] removed by force. [YEAR]."
+
+---
+
+## Bio-Architecture Templates (Spec 186)
+
+### BIO_STRUCTURE_GROWN
+**Slots:** [COLONY], [YEAR], [BIO_STRUCTURE_NAME]
+
+- "The [BIO_STRUCTURE_NAME] is fully grown. [YEAR]. It pulses with life."
+- "[YEAR]: We cultivate the [BIO_STRUCTURE_NAME]. A living wall."
+- "Birth of a building. The [BIO_STRUCTURE_NAME] breathes. [YEAR]."
+
+### BIO_STARVATION
+**Slots:** [COLONY], [YEAR], [BIO_STRUCTURE_NAME]
+
+- "The [BIO_STRUCTURE_NAME] is hungry. [YEAR]. It shivers."
+- "[YEAR]: Starvation. The [BIO_STRUCTURE_NAME] begins to wither."
+- "Feed the walls. The [BIO_STRUCTURE_NAME] is dying. [YEAR]."
+
+### BIO_INFECTION
+**Slots:** [COLONY], [YEAR], [BIO_STRUCTURE_NAME], [BIO_SICKNESS_SYMPTOM]
+
+- "Sickness in the [BIO_STRUCTURE_NAME]. [YEAR]. It shows [BIO_SICKNESS_SYMPTOM]."
+- "[YEAR]: Infection spread. The [BIO_STRUCTURE_NAME] turns hostile."
+- "The rot takes the [BIO_STRUCTURE_NAME]. [BIO_SICKNESS_SYMPTOM]. [YEAR]."

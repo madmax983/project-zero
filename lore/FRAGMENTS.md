@@ -2532,3 +2532,170 @@ How it feels to owe someone.
 - shameful
 - necessary
 - dangerous
+
+---
+
+## Chemical Fragments (Spec 181)
+
+### [CHEMICAL_NAME]
+Flavor names for stims/sedatives.
+
+- Red-Eye
+- Blue-Dream
+- Void-Salt
+- Spark
+- Haze
+- The Fix
+- Drift-Dust
+
+### [ADDICTION_SLANG]
+How addiction is described.
+
+- riding the wave
+- chasing the spark
+- burnt-out
+- hollow-eyed
+- hooked
+- chem-bound
+- salt-sick
+
+### [WITHDRAWAL_SYMPTOM]
+What happens when the chems run out.
+
+- the shakes
+- cold-sweats
+- void-staring
+- phantom-pain
+- screaming-nerves
+- the crash
+- grey-out
+
+---
+
+## Wind Fragments (Spec 182)
+
+### [WIND_DESCRIPTOR]
+Adjectives for wind conditions.
+
+- howling
+- tearing
+- breathless
+- sharp
+- cutting
+- channeled
+- screaming
+
+### [CANYON_NAME]
+Names for high-wind urban canyons.
+
+- The Gale-Run
+- Wind-Tunnel
+- The Shrieking Alley
+- Storm-Pass
+- The Draft
+- Whisper-Gap
+- Breath-Hold
+
+---
+
+## Geodetic Sentience Fragments (Spec 183)
+
+### [LIVING_STONE_NAME]
+Flavor names for sentient minerals.
+
+- Waking-Stone
+- Pulse-Rock
+- Heart-Ore
+- Moving-Earth
+- Silent-Watcher
+- Creep-Stone
+- Void-Geode
+
+### [GOLEM_ACTION]
+What the stone golem does.
+
+- lumbers
+- grinds
+- fuses
+- awakens
+- crushes
+- assembles
+- walks
+
+---
+
+## Orbital Debris Fragments (Spec 184)
+
+### [DEBRIS_TYPE]
+Types of space junk.
+
+- spent stages
+- dead sats
+- hull shards
+- frozen waste
+- bolt-clouds
+- reactor cores
+- lost tools
+
+### [ORBITAL_HAZARD]
+Names for the debris field.
+
+- The Cloud
+- Sky-Mine
+- The Shrapnel-Belt
+- Junk-Orbit
+- The Kessler-Ring
+- Iron-Rain
+- The Shredder
+
+---
+
+## Vacuum Welding Fragments (Spec 185)
+
+### [WELDING_TERM]
+Describing the welding process.
+
+- void-locked
+- cold-fused
+- star-jointed
+- dead-ironed
+- vacuum-sealed
+- forever-bonded
+- atom-merged
+
+### [PERMANENT_STRUCTURE_ADJECTIVE]
+Adjectives for welded buildings.
+
+- eternal
+- unbreaking
+- immovable
+- monolithic
+- fused
+- silent
+- tomb-like
+
+---
+
+## Bio-Architecture Fragments (Spec 186)
+
+### [BIO_STRUCTURE_NAME]
+Names for grown buildings.
+
+- Pulse-Door
+- Flesh-Wall
+- Bone-Strut
+- Vein-Pipe
+- Skin-Roof
+- Heart-Chamber
+- Muscle-Frame
+
+### [BIO_SICKNESS_SYMPTOM]
+Signs of a sick building.
+
+- weeping-walls
+- grey-flesh
+- slowing-pulse
+- fever-heat
+- rot-smell
+- brittle-bone
+- silent-heart
