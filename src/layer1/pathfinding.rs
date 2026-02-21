@@ -39,6 +39,7 @@ use crate::layer1::building::{Building, BuildingMap, BuildingType, OccupiedTiles
 use crate::layer1::control::{DoorControl, DoorState};
 use crate::layer1::pop::Role;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
+use crate::layer1::wind::{calculate_wind_movement_penalty, Vec2, WindGrid};
 
 struct AccessCredentials {
     entity: Entity,
@@ -198,6 +199,7 @@ fn find_path_internal(
     let occupied = world.get_resource::<OccupiedTiles>();
     let building_map = world.resource::<BuildingMap>();
     let crowding = world.get_resource::<crate::layer1::crowding::CrowdingGrid>();
+    let wind_grid = world.get_resource::<WindGrid>();
 
     let mut open_set = BinaryHeap::new();
     let mut came_from: HashMap<(i32, i32), (i32, i32)> = HashMap::new();
@@ -244,7 +246,7 @@ fn find_path_internal(
             }
 
             // Movement cost (default 1 + terrain cost)
-            let tile_cost =
+            let base_cost =
                 if let (Ok(x), Ok(y)) = (usize::try_from(next.0), usize::try_from(next.1)) {
                     #[allow(clippy::cast_possible_truncation)]
                     let t_cost = terrain.get(x, y).map_or(1, |t| t.movement_cost() as i32);
@@ -253,6 +255,19 @@ fn find_path_internal(
                 } else {
                     1
                 };
+
+            // Calculate wind penalty
+            let wind_penalty = wind_grid.map_or(1.0, |wg| {
+                let wind = wg.get_wind(next.0, next.1);
+                #[allow(clippy::cast_precision_loss)]
+                let move_dir = Vec2::new(dx as f32, dy as f32);
+                calculate_wind_movement_penalty(wind, move_dir)
+            });
+
+            // Apply wind penalty. Ensure cost is at least 1.
+            #[allow(clippy::cast_precision_loss, clippy::cast_possible_truncation)]
+            let adjusted_cost = (base_cost as f32 * wind_penalty).round() as i32;
+            let tile_cost = adjusted_cost.max(1);
 
             let new_cost = cost + tile_cost;
 

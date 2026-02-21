@@ -377,6 +377,66 @@ impl BuildingType {
         )
     }
 
+    /// Returns true if this building blocks wind flow.
+    #[must_use]
+    pub const fn blocks_wind(&self) -> bool {
+        match self {
+            // Walls and large structures
+            Self::Wall
+            | Self::Gate
+            | Self::Tower
+            | Self::Housing
+            | Self::Office
+            | Self::Lander
+            | Self::CommandCenter
+            | Self::AICore
+            | Self::DroneHub => true,
+
+            // Production buildings (usually enclosed)
+            Self::Smokehouse
+            | Self::LumberMill
+            | Self::StoneMason
+            | Self::Smelter
+            | Self::Smithy
+            | Self::Weaver
+            | Self::Tailor
+            | Self::Refinery
+            | Self::Greenhouse
+            | Self::ServerBank => true,
+
+            // Civic buildings
+            Self::Tavern | Self::Library | Self::Hospital | Self::Observatory => true,
+
+            // Infrastructure
+            Self::Battery | Self::LifeSupport | Self::Airlock => true,
+
+            // Ancient structures
+            Self::AncientReactor | Self::AncientFabricator => true,
+
+            // Small or Open structures
+            Self::Farm
+            | Self::Well
+            | Self::Stockpile
+            | Self::Plantation
+            | Self::FlowerBed
+            | Self::Statue
+            | Self::Landfill
+            | Self::Grave
+            | Self::TradeDepot
+            | Self::Generator
+            | Self::PowerPole
+            | Self::PersonalShed
+            | Self::PersonalGarden
+            | Self::PersonalShrine
+            | Self::ConveyorBelt
+            | Self::Hopper
+            | Self::HydroponicsBay
+            | Self::Vent
+            | Self::TrashCannon
+            | Self::Heater => false,
+        }
+    }
+
     /// Returns the beauty value emitted by this building.
     #[must_use]
     #[allow(clippy::match_same_arms)]
@@ -490,7 +550,7 @@ impl BuildingType {
     pub const fn char(&self) -> char {
         match self {
             Self::Housing => 'H',
-            Self::Office => 'O',
+            Self::Office | Self::Tower | Self::Observatory => 'O',
             Self::Farm | Self::AncientFabricator => 'F',
             Self::HydroponicsBay => 'Y',
             Self::DroneHub => 'D',
@@ -514,7 +574,6 @@ impl BuildingType {
             Self::PowerPole => '|',
             Self::Battery => 'B',
             Self::Wall => '#',
-            Self::Tower | Self::Observatory => 'O',
             Self::AncientReactor | Self::Refinery => 'R',
             Self::PersonalShed => 's',
             Self::PersonalShrine => '☗',
