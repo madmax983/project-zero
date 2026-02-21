@@ -321,6 +321,8 @@ pub fn movement_system(
     mut erosion: ResMut<ErosionGrid>,
     terrain: Res<TerrainGrid>,
     occupied_tiles: Option<Res<OccupiedTiles>>,
+    wind_grid: Option<Res<crate::layer1::wind::WindGrid>>,
+    tide: Option<Res<crate::layer1::atmosphere::AtmosphericTide>>,
     buildings: Query<(
         &GridPosition,
         &Building,
@@ -394,8 +396,8 @@ pub fn movement_system(
             continue;
         };
 
-        // Determine movement cost
-        let movement_cost =
+        // Determine base movement cost
+        let base_cost =
             if let (Ok(x), Ok(y)) = (usize::try_from(new_pos.x), usize::try_from(new_pos.y)) {
                 terrain
                     .get(x, y)
@@ -403,6 +405,25 @@ pub fn movement_system(
             } else {
                 1.0
             };
+
+        // Wind penalty
+        let wind_mod = if let Some(ref w) = wind_grid {
+            let wind_vec = w.get_wind(current_pos.x, current_pos.y);
+            let move_dir = crate::layer1::wind::Vec2::new(
+                (new_pos.x - current_pos.x) as f32,
+                (new_pos.y - current_pos.y) as f32,
+            );
+            crate::layer1::wind::calculate_wind_movement_penalty(wind_vec, move_dir)
+        } else {
+            1.0
+        };
+
+        // Pressure penalty
+        let pressure_mod = tide.as_ref().map_or(1.0, |t| {
+            crate::layer1::atmosphere::calculate_atmospheric_movement_cost(t.pressure)
+        });
+
+        let movement_cost = base_cost * wind_mod * pressure_mod;
 
         // Check if we can move
         let can_move = if let Some(ref mut speed) = speed_opt {
@@ -492,6 +513,7 @@ fn check_work_adjacency(
 }
 
 /// Handles arrival at targets: assigns pops to farms/housing.
+#[allow(clippy::type_complexity)]
 pub fn arrival_handler_system(
     mut arrivals: Query<
         (

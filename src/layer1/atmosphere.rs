@@ -4,8 +4,72 @@ use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::health::Health;
 use crate::layer1::map::GridPosition;
 use crate::layer1::pop::Pop;
+use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
+
+/// Represents the static "base" wind of the map, unaffected by tides.
+#[derive(Resource)]
+pub struct BaseGlobalWind {
+    /// Normalized direction of the base wind.
+    pub direction: crate::layer1::wind::Vec2,
+    /// Base speed of the wind.
+    pub speed: f32,
+}
+
+impl Default for BaseGlobalWind {
+    fn default() -> Self {
+        Self { direction: crate::layer1::wind::Vec2::X, speed: 1.0 }
+    }
+}
+
+/// Tracks the global atmospheric pressure.
+#[derive(Resource)]
+pub struct AtmosphericTide {
+    /// Multiplier centered at 1.0. Range usually 0.5 to 1.5.
+    pub pressure: f32,
+}
+
+impl Default for AtmosphericTide {
+    fn default() -> Self {
+        Self { pressure: 1.0 }
+    }
+}
+
+/// Cycle length in ticks for atmospheric tides.
+const TIDE_CYCLE_TICKS: u64 = 1000;
+
+/// Updates the atmospheric tide pressure based on simulation time.
+pub fn update_atmospheric_tide_system(
+    mut tide: ResMut<AtmosphericTide>,
+    time: Res<SimulationTime>,
+) {
+    // Simple Sine Wave: 1.0 + 0.5 * sin(t)
+    #[allow(clippy::cast_precision_loss)]
+    let phase = (time.tick % TIDE_CYCLE_TICKS) as f32 / TIDE_CYCLE_TICKS as f32;
+    let angle = phase * 2.0 * std::f32::consts::PI;
+    tide.pressure = 0.5f32.mul_add(angle.sin(), 1.0);
+}
+
+/// Syncs the effective global wind based on base wind and atmospheric pressure.
+pub fn sync_global_wind_system(
+    base: Res<BaseGlobalWind>,
+    tide: Res<AtmosphericTide>,
+    mut effective: ResMut<crate::layer1::wind::GlobalWind>,
+) {
+    effective.direction = base.direction;
+    effective.speed = base.speed * tide.pressure;
+}
+
+/// Calculates the movement cost modifier based on atmospheric pressure.
+#[must_use]
+pub fn calculate_atmospheric_movement_cost(pressure: f32) -> f32 {
+    // High pressure = High Drag = High Cost
+    // Low pressure = Low Drag = Low Cost
+    // Mapping: 0.5 -> 0.8 cost, 1.5 -> 1.2 cost
+    // Formula: 0.6 + 0.4 * pressure
+    0.4f32.mul_add(pressure, 0.6)
+}
 
 /// Represents the atmospheric pollution layer.
 /// Values range from 0.0 (Clean) to 1.0 (Toxic).
@@ -77,6 +141,11 @@ impl AtmosphereGrid {
 
     /// Get interpolated pollution value at float coordinates.
     #[must_use]
+    #[allow(
+        clippy::cast_possible_truncation,
+        clippy::cast_precision_loss,
+        clippy::suboptimal_flops
+    )]
     pub fn get_interpolated(&self, x: f32, y: f32) -> f32 {
         let x0 = x.floor() as i32;
         let y0 = y.floor() as i32;
@@ -92,10 +161,10 @@ impl AtmosphereGrid {
         let v11 = self.get(x1, y1);
 
         // Bilinear interpolation
-        let top = v00 * (1.0 - wx) + v10 * wx;
-        let bottom = v01 * (1.0 - wx) + v11 * wx;
+        let top = v00.mul_add(1.0 - wx, v10 * wx);
+        let bottom = v01.mul_add(1.0 - wx, v11 * wx);
 
-        top * (1.0 - wy) + bottom * wy
+        top.mul_add(1.0 - wy, bottom * wy)
     }
 
     /// Advect pollution using the wind grid.
@@ -109,7 +178,11 @@ impl AtmosphereGrid {
             self.scratch = vec![0.0; self.values.len()];
         }
 
-        #[allow(clippy::cast_precision_loss)]
+        #[allow(
+            clippy::cast_precision_loss,
+            clippy::cast_possible_truncation,
+            clippy::cast_possible_wrap
+        )]
         for y in 0..self.height {
             for x in 0..self.width {
                 let wind = wind_grid.get_wind(x as i32, y as i32);
