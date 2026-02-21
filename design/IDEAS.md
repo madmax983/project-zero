@@ -4883,3 +4883,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Ultimate Logistics vs. Fragility.
 
 ---
+
+## The Living Score
+
+**Layer:** Cross-layer (Meta)
+
+**Fantasy:** The colony has a heartbeat. The player "hears" the state of their civilization.
+
+**Mechanic:** Background music is procedurally layered. "Drums" = Industry output. "Strings" = Happiness. "Distortion" = Threat/Radiation. "Silence" = Low population/Isolation.
+
+**Emergence:** You are focused on mining, but the music subtly shifts to a minor key with a dissonant scratching sound. You realize a "Horror" event has started before the UI even alerts you.
+
+**Tension:** None (Immersion).
+
+---
+
+## Heat Death
+
+**Layer:** 1
+
+**Fantasy:** Space is cold, but your machines are hot. Vacuum is the ultimate insulator.
+
+**Mechanic:** In Vacuum biomes, heat does not dissipate passively. It accumulates rapidly in machines/rooms. You *must* build "Radiator Arrays" to vent heat into space. Radiators are fragile, external, and glow on thermal sensors (Layer 2 stealth risk).
+
+**Emergence:** Pirates snipe your radiators. Your fusion reactor isn't damaged, but it SCRAMs (shuts down) due to overheat. You suffocate in the dark because you couldn't sweat.
+
+**Tension:** Protected internal systems vs. Vulnerable external cooling.
+
+---
+
+## Treaty Cruisers
+
+**Layer:** 3 -> 2
+
+**Fantasy:** Malicious compliance. Designing the ultimate warship that is legally a "fishing trawler".
+
+**Mechanic:** Galactic Council sets limits (e.g., "Max Hull Size: 500", "No Antimatter Weapons"). You design ships that *technically* comply (e.g., 499 Hull, "Plasma" weapons that are just reformatted Antimatter) to avoid sanctions while overpowering law-abiding rivals.
+
+**Emergence:** You build a fleet of "Exploration Vessels" packed with missiles. The Council inspects them, finds no "Military Class" engines, and passes them. You conquer the sector with science ships.
+
+**Tension:** Compliance (weak ships) vs. Evasion (strong ships, risk of discovery).
+
+---
+
+## Sub-Glacial Oceans
+
+**Layer:** 1
+
+**Fantasy:** Europa. The sky is ice, the ground is death.
+
+**Mechanic:** A biome where the "Ground" is the roof (Ice Crust). You build *down* into the water via "Suspension cables" or "Buoyant Modules". Gravity pulls down, but Buoyancy pulls up. Breaches cause high-pressure flooding.
+
+**Emergence:** Your "Anchor" snaps. The habitat module floats *up* and crashes into the ice ceiling, crushing everyone.
+
+**Tension:** Verticality (Building down) vs. Pressure depth.
+
+---
+
+## Ammunition Logistics
+
+**Layer:** 1
+
+**Fantasy:** "I need a weapon." "I need a magazine."
+
+**Mechanic:** Turrets and Soldiers consume "Ammo" items when firing. Ammo is heavy and explosive. Requires a "Munitions Plant" and dedicated "Haulers" to keep the frontline fed.
+
+**Emergence:** You have the best turrets in the galaxy. The raid starts. The turrets fire for 10 seconds and go silent. The ammo was in the warehouse, and the haulers were asleep.
+
+**Tension:** Stockpile ammo at the gun (Explosion risk) or in the bunker (Supply latency)?
+
+---
