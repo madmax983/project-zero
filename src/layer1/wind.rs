@@ -6,10 +6,9 @@
     missing_docs
 )]
 use bevy_ecs::prelude::*;
-use crate::layer1::building::{Building, BuildingType};
+use crate::layer1::building::Building;
 use crate::layer1::map::GridPosition;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
-use std::collections::HashSet;
 
 /// Simple 2D vector for wind calculations (avoids external dependencies).
 #[derive(Clone, Copy, Debug, PartialEq, Default)]
@@ -22,14 +21,17 @@ impl Vec2 {
     pub const ZERO: Self = Self { x: 0.0, y: 0.0 };
     pub const X: Self = Self { x: 1.0, y: 0.0 };
 
-    pub fn new(x: f32, y: f32) -> Self {
+    #[must_use]
+    pub const fn new(x: f32, y: f32) -> Self {
         Self { x, y }
     }
 
+    #[must_use]
     pub fn length(self) -> f32 {
-        (self.x * self.x + self.y * self.y).sqrt()
+        self.x.hypot(self.y)
     }
 
+    #[must_use]
     pub fn normalize_or_zero(self) -> Self {
         let len = self.length();
         if len < f32::EPSILON {
@@ -42,8 +44,9 @@ impl Vec2 {
         }
     }
 
+    #[must_use]
     pub fn dot(self, other: Self) -> f32 {
-        self.x * other.x + self.y * other.y
+        self.x.mul_add(other.x, self.y * other.y)
     }
 }
 
@@ -152,14 +155,35 @@ pub fn update_wind_system(
     let base_wind = global.0.normalize_or_zero() * global.1;
 
     // 2. Identify blockers
-    let mut blockers = HashSet::new();
+    // Using a flat Vec<bool> instead of HashSet for O(1) access and better cache locality.
+    // This removes heavy hashing overhead for large maps.
+    let width_usize = wind_grid.width;
+    let height_usize = wind_grid.height;
+    let mut blockers = vec![false; width_usize * height_usize];
 
     // Terrain blockers
     if let Some(terrain) = terrain_grid {
-        for y in 0..terrain.height {
-            for x in 0..terrain.width {
-                if matches!(terrain.get(x, y), Some(TerrainType::Rock)) {
-                    blockers.insert((x as i32, y as i32));
+        // Ensure terrain matches wind grid size, or handle mismatch safely
+        let t_width = terrain.width;
+        let t_height = terrain.height;
+
+        // Use flat iteration if sizes match for speed
+        if t_width == width_usize && t_height == height_usize {
+            for (idx, tile) in terrain.tiles.iter().enumerate() {
+                if matches!(tile, TerrainType::Rock) {
+                    blockers[idx] = true;
+                }
+            }
+        } else {
+            // Fallback for mismatched sizes (shouldn't happen in normal sim)
+            for y in 0..t_height {
+                for x in 0..t_width {
+                    if matches!(terrain.get(x, y), Some(TerrainType::Rock))
+                        && x < width_usize
+                        && y < height_usize
+                    {
+                        blockers[y * width_usize + x] = true;
+                    }
                 }
             }
         }
@@ -168,17 +192,37 @@ pub fn update_wind_system(
     // Building blockers
     for (b, pos) in building_query.iter() {
         if b.building_type.blocks_wind() {
-            blockers.insert((pos.x, pos.y));
+            let x = pos.x;
+            let y = pos.y;
+            if x >= 0 && y >= 0 {
+                let ux = x as usize;
+                let uy = y as usize;
+                if ux < width_usize && uy < height_usize {
+                    blockers[uy * width_usize + ux] = true;
+                }
+            }
         }
     }
 
-    // 3. Update grid
-    let width = wind_grid.width as i32;
-    let height = wind_grid.height as i32;
+    // Helper to check if blocked (safe bounds)
+    let is_blocked = |x: i32, y: i32| -> bool {
+        if x >= 0 && y >= 0 {
+            let ux = x as usize;
+            let uy = y as usize;
+            if ux < width_usize && uy < height_usize {
+                return blockers[uy * width_usize + ux];
+            }
+        }
+        false
+    };
 
-    for y in 0..height {
-        for x in 0..width {
-            if blockers.contains(&(x, y)) {
+    // 3. Update grid
+    let width_i32 = width_usize as i32;
+    let height_i32 = height_usize as i32;
+
+    for y in 0..height_i32 {
+        for x in 0..width_i32 {
+            if is_blocked(x, y) {
                 wind_grid.set_wind(x, y, Vec2::ZERO);
                 continue;
             }
@@ -190,9 +234,10 @@ pub fn update_wind_system(
             // We use round() to snap to the nearest grid cell in the upwind direction.
             let upwind_offset_x = (-base_wind.normalize_or_zero().x).round() as i32;
             let upwind_offset_y = (-base_wind.normalize_or_zero().y).round() as i32;
-            let upwind_pos = (x + upwind_offset_x, y + upwind_offset_y);
+            let upwind_pos_x = x + upwind_offset_x;
+            let upwind_pos_y = y + upwind_offset_y;
 
-            if blockers.contains(&upwind_pos) {
+            if is_blocked(upwind_pos_x, upwind_pos_y) {
                 local_wind = local_wind * 0.2; // Shadow penalty
             } else {
                 // 2. Canyon Check
@@ -203,10 +248,12 @@ pub fn update_wind_system(
                 let perp_x = (-dir.y).round() as i32;
                 let perp_y = (dir.x).round() as i32;
 
-                let side1 = (x + perp_x, y + perp_y);
-                let side2 = (x - perp_x, y - perp_y);
+                let side1_x = x + perp_x;
+                let side1_y = y + perp_y;
+                let side2_x = x - perp_x;
+                let side2_y = y - perp_y;
 
-                if blockers.contains(&side1) && blockers.contains(&side2) {
+                if is_blocked(side1_x, side1_y) && is_blocked(side2_x, side2_y) {
                     local_wind = local_wind * 1.5; // Canyon boost
                 }
             }

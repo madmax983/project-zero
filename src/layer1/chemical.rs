@@ -48,16 +48,19 @@ pub struct ChemicalState {
 
 impl ChemicalState {
     /// Gets a reference to an addiction if it exists.
+    #[must_use]
     pub fn get_addiction(&self, chem: ChemicalType) -> Option<&Addiction> {
         self.addictions.iter().find(|a| a.chemical == chem)
     }
 
     /// Gets a mutable reference to an addiction if it exists.
+    #[must_use]
     pub fn get_addiction_mut(&mut self, chem: ChemicalType) -> Option<&mut Addiction> {
         self.addictions.iter_mut().find(|a| a.chemical == chem)
     }
 
     /// Checks if the pop is in withdrawal for a specific chemical.
+    #[must_use]
     pub fn is_in_withdrawal(&self, chem: ChemicalType) -> bool {
         if let Some(addiction) = self.get_addiction(chem) {
             return addiction.in_withdrawal;
@@ -180,11 +183,9 @@ pub fn addiction_system(world: &mut World) {
                     addiction.in_withdrawal = true;
                     dirty = true;
                 }
-            } else {
-                if addiction.in_withdrawal {
-                    addiction.in_withdrawal = false;
-                    dirty = true;
-                }
+            } else if addiction.in_withdrawal {
+                addiction.in_withdrawal = false;
+                dirty = true;
             }
         }
 
@@ -199,9 +200,10 @@ pub fn get_speed_modifier(world: &World, entity: Entity) -> f32 {
     let mut modifier = 1.0;
     if let Some(state) = world.get::<ChemicalState>(entity) {
         for effect in &state.active_effects {
-            if effect.chemical == ChemicalType::Stim {
-                modifier *= effect.magnitude;
-            } else if effect.chemical == ChemicalType::Sedative {
+            if matches!(
+                effect.chemical,
+                ChemicalType::Stim | ChemicalType::Sedative
+            ) {
                 modifier *= effect.magnitude;
             }
         }

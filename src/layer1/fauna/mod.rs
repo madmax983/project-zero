@@ -117,11 +117,7 @@ pub fn fauna_behavior_system(world: &mut World) {
                         if dist <= 1 {
                             // Adjacent -> Attack
                             if fauna.attack_cooldown == 0 {
-                                let damage = if let Some(b) = body {
-                                    b.aggregate_stats().attack
-                                } else {
-                                    5.0 // Fallback
-                                };
+                                let damage = body.map_or(5.0, |b| b.aggregate_stats().attack);
                                 attacks.push((target, damage));
                                 fauna.attack_cooldown = 10; // Cooldown ticks
                                 fauna.state = FaunaState::Attack;
@@ -151,11 +147,7 @@ pub fn fauna_behavior_system(world: &mut World) {
                         let dist = pos.distance_chebyshev(*target_pos);
                         if dist <= 1 {
                             if fauna.attack_cooldown == 0 {
-                                let damage = if let Some(b) = body {
-                                    b.aggregate_stats().attack
-                                } else {
-                                    5.0 // Fallback
-                                };
+                                let damage = body.map_or(5.0, |b| b.aggregate_stats().attack);
                                 attacks.push((target, damage));
                                 fauna.attack_cooldown = 10;
                             }
