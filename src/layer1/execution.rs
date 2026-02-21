@@ -55,7 +55,7 @@ use crate::layer1::map::{GridPosition, ScreenShake};
 use crate::layer1::memory::{Memories, calculate_effective_morale};
 use crate::layer1::morale::Morale;
 use crate::layer1::needs::{Needs, get_morale_efficiency};
-use crate::layer1::particles::spawn_particle;
+use crate::layer1::particles::{spawn_moving_particle, spawn_particle};
 use crate::layer1::pop::{Job, Role, Speed};
 use crate::layer1::resources::{ColonyResources, process_logging, process_mining};
 use crate::layer1::ruins::Ruin;
@@ -408,8 +408,8 @@ pub fn movement_system(
         let can_move = if let Some(ref mut speed) = speed_opt {
             // Ludwig: "Coyote Speed" - Allow moving if we are *almost* there.
             // This prevents the feeling of "just missing the bus" by 0.01 speed.
-            // Increased to 0.15 for better flow.
-            const COYOTE_THRESHOLD: f32 = 0.15;
+            // Increased to 0.20 for even better flow.
+            const COYOTE_THRESHOLD: f32 = 0.20;
             if speed.accumulator >= (movement_cost - COYOTE_THRESHOLD) {
                 speed.accumulator -= movement_cost;
                 true
@@ -1412,6 +1412,14 @@ fn handle_mining_work(
             // Finished: Big shake + Debris
             trigger_shake(world, 0.5);
             spawn_particle(world, p, '*', Color::White, 10);
+
+            // Ludwig: Explosive Debris
+            let mut rng = rand::thread_rng();
+            for _ in 0..5 {
+                let dx = rng.gen_range(-1.0..1.0);
+                let dy = rng.gen_range(-1.0..1.0);
+                spawn_moving_particle(world, p, '.', Color::DarkGray, 15, dx, dy);
+            }
         } else {
             // Working: Dynamic shake + Dust
             if !is_crit {
@@ -1421,6 +1429,13 @@ fn handle_mining_work(
 
                 trigger_shake(world, intensity);
                 spawn_particle(world, p, '.', Color::DarkGray, 3);
+
+                // Ludwig: Occasional flying chip
+                if rng.gen_bool(0.3) {
+                    let dx = rng.gen_range(-0.5..0.5);
+                    let dy = rng.gen_range(-0.5..0.5);
+                    spawn_moving_particle(world, p, '.', Color::Gray, 10, dx, dy);
+                }
             }
         }
     }
@@ -1455,6 +1470,14 @@ fn handle_chopping_work(
             // Finished
             trigger_shake(world, 0.3);
             spawn_particle(world, p, '^', Color::Green, 10);
+
+            // Ludwig: Wood chips flying
+            let mut rng = rand::thread_rng();
+            for _ in 0..4 {
+                let dx = rng.gen_range(-0.8..0.8);
+                let dy = rng.gen_range(-0.8..0.8);
+                spawn_moving_particle(world, p, '\'', Color::Rgb(139, 69, 19), 15, dx, dy);
+            }
         } else {
             // Working
             if !is_crit {
@@ -1464,6 +1487,13 @@ fn handle_chopping_work(
 
                 trigger_shake(world, intensity);
                 spawn_particle(world, p, '\'', Color::Rgb(139, 69, 19), 3);
+
+                // Ludwig: Occasional flying chip
+                if rng.gen_bool(0.3) {
+                    let dx = rng.gen_range(-0.5..0.5);
+                    let dy = rng.gen_range(-0.5..0.5);
+                    spawn_moving_particle(world, p, '\'', Color::Rgb(160, 82, 45), 10, dx, dy);
+                }
             }
         }
     }
