@@ -258,11 +258,23 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             flora_attack_system,
             ancient_structure_decay_system,
             crate::layer1::graffiti::graffiti_decay_system,
+        )
+            .in_set(Layer1SystemSet::Environment),
+    );
+
+    schedule.add_systems(
+        (
+            crate::layer1::seismic::update_seismic_system,
+            crate::layer1::seismic::seismic_flora_reaction_system
+                .after(crate::layer1::seismic::update_seismic_system),
+            crate::layer1::seismic::seismic_instability_system
+                .after(crate::layer1::seismic::update_seismic_system),
             crate::layer1::geology::seismic_decay_system,
             crate::layer1::geology::check_seismic_events
                 .after(crate::layer1::geology::seismic_decay_system),
             crate::layer1::geology::apply_geological_event_system
-                .after(crate::layer1::geology::check_seismic_events),
+                .after(crate::layer1::geology::check_seismic_events)
+                .after(crate::layer1::seismic::seismic_instability_system),
             spirit_decay_system,
             quirk_generation_system.after(spirit_decay_system),
             entropy_system,

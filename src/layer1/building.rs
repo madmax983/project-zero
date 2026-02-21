@@ -39,6 +39,7 @@ use crate::layer1::lighting::LightSource;
 use crate::layer1::prototyping::{BuildingMastery, Prototype};
 use crate::layer1::resources::{ColonyResources, RefiningProgress};
 use crate::layer1::rituals::MachineSpirit;
+use crate::layer1::seismic::SeismicSource;
 use crate::layer1::tech::{DataStorage, Library, Tech, TechState};
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::trade::TradeDepot;
@@ -1233,6 +1234,10 @@ fn configure_production(entity: &mut EntityWorldMut, building_type: BuildingType
                     intensity: 0.5,
                     color: (200, 180, 100), // Dim Wood light
                 },
+                SeismicSource {
+                    intensity: 0.5,
+                    radius: 3.0,
+                },
                 ShiftSchedule::default(),
             ));
         }
@@ -1246,6 +1251,10 @@ fn configure_production(entity: &mut EntityWorldMut, building_type: BuildingType
                     radius: 5.0,
                     intensity: 0.9,
                     color: (255, 50, 0), // Red/Fire
+                },
+                SeismicSource {
+                    intensity: 0.5,
+                    radius: 3.0,
                 },
                 PowerConsumer {
                     demand: 5.0,
@@ -1264,6 +1273,10 @@ fn configure_production(entity: &mut EntityWorldMut, building_type: BuildingType
                     radius: 4.0,
                     intensity: 0.7,
                     color: (255, 100, 0), // Orange/Fire
+                },
+                SeismicSource {
+                    intensity: 0.5,
+                    radius: 3.0,
                 },
                 PowerConsumer {
                     demand: 2.0,
@@ -1291,6 +1304,10 @@ fn configure_production(entity: &mut EntityWorldMut, building_type: BuildingType
                     radius: 6.0,
                     intensity: 0.8,
                     color: (100, 200, 255), // Chemical blue
+                },
+                SeismicSource {
+                    intensity: 0.8,
+                    radius: 6.0,
                 },
                 ShiftSchedule::default(),
             ));
@@ -1452,6 +1469,10 @@ fn configure_power(entity: &mut EntityWorldMut, building_type: BuildingType) {
                     ..Default::default()
                 },
                 FuelConsumer { amount: 1.0 },
+                SeismicSource {
+                    intensity: 1.0,
+                    radius: 5.0,
+                },
             ));
         }
         BuildingType::PowerPole => {
@@ -1479,6 +1500,10 @@ fn configure_power(entity: &mut EntityWorldMut, building_type: BuildingType) {
                     radius: 8.0,
                     intensity: 1.0,
                     color: (255, 215, 0), // Gold
+                },
+                SeismicSource {
+                    intensity: 3.0,
+                    radius: 10.0,
                 },
             ));
             // Set high HP
@@ -1545,6 +1570,10 @@ fn configure_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
                     ammo_type: crate::layer1::resources::ResourceType::Waste,
                 },
                 crate::layer1::combat::CombatState::default(),
+                SeismicSource {
+                    intensity: 2.0,
+                    radius: 4.0,
+                },
             ));
         }
         BuildingType::ServerBank => {

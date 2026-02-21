@@ -122,6 +122,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(crate::layer1::prototyping::BuildingMastery::default());
     world.insert_resource(crate::layer1::graffiti::GraffitiMap::default());
     world.insert_resource(crate::layer1::geology::SeismicGrid::new(80, 50));
+    world.insert_resource(crate::layer1::seismic::VibrationGrid::new(80, 50));
     world.insert_resource(crate::layer1::ecology::EcologyConfig::default());
     world.insert_resource(crate::layer1::society::SecretSocieties::default());
     world.insert_resource(crate::layer1::society::Unrest::default());
