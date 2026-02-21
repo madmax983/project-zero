@@ -102,3 +102,6 @@ mod power_utility;
 mod wind_atmosphere;
 #[path = "integration/seismic_vibration.rs"]
 mod seismic_vibration;
+
+#[path = "integration/beauty_radius.rs"]
+mod beauty_radius;

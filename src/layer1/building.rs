@@ -457,6 +457,21 @@ impl BuildingType {
         }
     }
 
+    /// Returns the radius of beauty effect.
+    /// Most buildings are 0.0 (single tile).
+    #[must_use]
+    pub const fn beauty_radius(&self) -> f32 {
+        match self {
+            Self::Statue => 5.0,
+            Self::FlowerBed => 3.0,
+            Self::Landfill => 8.0,
+            Self::Grave => 2.0,
+            Self::TradeDepot => 4.0,
+            Self::Well | Self::HydroponicsBay | Self::LifeSupport => 2.0,
+            _ => 0.0,
+        }
+    }
+
     /// Returns the tech required to build this building, if any.
     #[must_use]
     pub const fn required_tech(&self) -> Option<Tech> {
@@ -1052,9 +1067,10 @@ fn spawn_building(
     let base_beauty = building_type.beauty_value();
     let final_beauty = base_beauty + material.beauty_modifier();
     if final_beauty.abs() > f32::EPSILON {
+        let radius = building_type.beauty_radius();
         entity.insert(BeautySource {
             value: final_beauty,
-            radius: 0.0,
+            radius,
         });
     }
 

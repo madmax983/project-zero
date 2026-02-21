@@ -116,3 +116,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `INT-032` Integration: Wind -> Atmosphere — completed 2026-05-22
 - [x] `185` Vacuum Welding — `specs/185-vacuum-welding.md` — completed 2026-02-21
 - [x] `044` Horticulture & Beauty — `specs/044-horticulture-beauty.md` — completed 2026-02-21
+- [x] `INT-034` Integration: Beauty Radius Propagation — completed 2026-02-22
