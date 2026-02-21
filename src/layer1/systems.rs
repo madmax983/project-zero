@@ -85,6 +85,12 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             crate::layer1::husbandry::pasture_confinement_system.after(process_start_plan_system),
             crate::layer1::fauna::fauna_behavior_system.after(process_start_plan_system),
             mascot_behavior_system.after(process_start_plan_system),
+        )
+            .in_set(Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::day_night::update_day_night_cycle_system
                 .after(process_start_plan_system),
             crate::layer1::day_night::update_ambient_light_from_cycle_system
@@ -176,6 +182,8 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
         (
             process_research_system,
             process_observe_system,
+            #[cfg(feature = "nova")]
+            crate::layer1::constellations::observe_constellations_system,
             regrowth_system,
             crate::layer1::ecology::process_ecological_succession,
             flora_spread_system,
@@ -287,6 +295,8 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             crate::layer1::wind::update_wind_system,
+            #[cfg(feature = "nova")]
+            crate::layer1::constellations::update_sky_system,
             malfunction_system.after(entropy_system),
             apply_noise_effects_system.after(update_noise_system),
             waste_pollution_bridge,

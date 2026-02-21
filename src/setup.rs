@@ -188,6 +188,9 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     let generator = NarrativeGenerator::from_embedded();
     let colony_name = generator.generate_star_name();
     world.insert_resource(generator);
+    #[cfg(feature = "nova")]
+    world.init_resource::<crate::layer1::constellations::Sky>();
+
     world.insert_resource(ColonyName { name: colony_name });
     generate_world_history(&mut world);
 
