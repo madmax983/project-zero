@@ -44,7 +44,7 @@ mod tests {
             ..Default::default()
         };
 
-        let (can_refine, input, output) = get_refining_recipe(BuildingType::Smithy, &resources);
+        let (can_refine, input, output, _) = get_refining_recipe(BuildingType::Smithy, &resources);
 
         assert!(can_refine);
         assert_eq!(input.metal, 1.0);
