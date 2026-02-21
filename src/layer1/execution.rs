@@ -499,9 +499,13 @@ pub fn arrival_handler_system(
             &GridPosition,
             &MovementTarget,
             Option<&mut Equipment>,
+            Option<&mut crate::layer1::chemical::ChemicalState>,
+            Option<&mut crate::layer1::health::Health>,
+            Option<&mut crate::layer1::stress::StressTracker>,
         ),
         With<AtTarget>,
     >,
+    items: Query<&crate::layer1::items::Item>,
     mut farms: Query<&mut Farm>,
     mut housing_q: Query<&mut Housing>,
     mut taverns: Query<&mut Tavern>,
@@ -515,7 +519,16 @@ pub fn arrival_handler_system(
     time: Res<SimulationTime>,
     mut commands: Commands,
 ) {
-    for (pop_entity, pop_pos, mt, mut equipment_opt) in &mut arrivals {
+    for (
+        pop_entity,
+        pop_pos,
+        mt,
+        mut equipment_opt,
+        mut chem_opt,
+        mut health_opt,
+        mut stress_opt,
+    ) in &mut arrivals
+    {
         let should_remove = process_arrival(
             mt.for_action,
             pop_entity,
@@ -523,6 +536,10 @@ pub fn arrival_handler_system(
             *pop_pos,
             mt.target_position,
             &mut equipment_opt,
+            &mut chem_opt,
+            &mut health_opt,
+            &mut stress_opt,
+            &items,
             &mut commands,
             &mut resources,
             log.as_deref_mut(),
@@ -550,6 +567,10 @@ fn process_arrival(
     pop_pos: GridPosition,
     target_pos: GridPosition,
     equipment_opt: &mut Option<Mut<Equipment>>,
+    chemical_state_opt: &mut Option<Mut<crate::layer1::chemical::ChemicalState>>,
+    health_opt: &mut Option<Mut<crate::layer1::health::Health>>,
+    stress_opt: &mut Option<Mut<crate::layer1::stress::StressTracker>>,
+    items: &Query<&crate::layer1::items::Item>,
     commands: &mut Commands,
     resources: &mut ColonyResources,
     log: Option<&mut MessageLog>,
@@ -564,6 +585,44 @@ fn process_arrival(
     time: &Res<SimulationTime>,
 ) -> bool {
     match action {
+        ActionType::ConsumeChemical => {
+            if let Ok(item) = items.get(target_entity) {
+                let chem_type = match item.item_type {
+                    crate::layer1::items::ItemType::Stim => {
+                        Some(crate::layer1::chemical::ChemicalType::Stim)
+                    }
+                    crate::layer1::items::ItemType::Sedative => {
+                        Some(crate::layer1::chemical::ChemicalType::Sedative)
+                    }
+                    _ => None,
+                };
+
+                if let Some(ct) = chem_type {
+                    let tick = time.tick;
+                    if let Some(state) = chemical_state_opt {
+                        crate::layer1::chemical::consume_chemical_logic(
+                            state,
+                            ct,
+                            tick,
+                            health_opt.as_deref_mut(),
+                            stress_opt.as_deref_mut(),
+                        );
+                    } else {
+                        let mut state = crate::layer1::chemical::ChemicalState::default();
+                        crate::layer1::chemical::consume_chemical_logic(
+                            &mut state,
+                            ct,
+                            tick,
+                            health_opt.as_deref_mut(),
+                            stress_opt.as_deref_mut(),
+                        );
+                        commands.entity(pop_entity).insert(state);
+                    }
+                    commands.entity(target_entity).despawn();
+                }
+            }
+            true
+        }
         ActionType::ScrawlMemeticSigil => {
             if let Some(map) = graffiti_map {
                 use crate::layer1::graffiti::{Graffiti, GraffitiType};
@@ -1987,10 +2046,12 @@ mod tests {
             ))
             .id();
 
-        world.entity_mut(designation).insert(crate::layer1::resources::MiningProgress {
-            current: 0.0,
-            max: 1000000.0,
-        });
+        world
+            .entity_mut(designation)
+            .insert(crate::layer1::resources::MiningProgress {
+                current: 0.0,
+                max: 1000000.0,
+            });
 
         let pop = world
             .spawn((
@@ -3447,14 +3508,16 @@ mod tests {
         });
 
         let pop = world.spawn(Pop).id();
-        let tool_entity = world.spawn((
-            Item::default(),
-            Tool {
-                tool_type: ToolType::Pickaxe,
-                durability: 100.0,
-                max_durability: 100.0,
-            }
-        )).id();
+        let tool_entity = world
+            .spawn((
+                Item::default(),
+                Tool {
+                    tool_type: ToolType::Pickaxe,
+                    durability: 100.0,
+                    max_durability: 100.0,
+                },
+            ))
+            .id();
 
         // Massive augmentation bonus (10,000x)
         let prosthetic = world
@@ -3481,6 +3544,10 @@ mod tests {
 
         // Raw would be ~10 * 10000 = 100,000.
         // Cap is 1000.0.
-        assert!((work_amount - 1000.0).abs() < 0.001, "Work amount should be capped at 1000.0, got {}", work_amount);
+        assert!(
+            (work_amount - 1000.0).abs() < 0.001,
+            "Work amount should be capped at 1000.0, got {}",
+            work_amount
+        );
     }
 }

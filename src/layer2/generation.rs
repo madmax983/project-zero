@@ -1,9 +1,9 @@
+use crate::layer1::quirks::{PlanetaryTrait, PlanetaryTraits};
+use crate::layer2::system::{Orbit, OrbitalBody};
 use bevy_ecs::prelude::*;
-use crate::layer2::system::{OrbitalBody, Orbit};
-use crate::layer1::quirks::{PlanetaryTraits, PlanetaryTrait};
-use ratatui::style::Color;
 use rand::prelude::*;
 use rand::rngs::StdRng;
+use ratatui::style::Color;
 
 /// The seed used for procedural generation.
 ///
@@ -45,9 +45,9 @@ enum PlanetType {
 impl PlanetType {
     const fn color(self) -> Color {
         match self {
-            Self::Rocky => Color::Red, // Mars-like
+            Self::Rocky => Color::Red,       // Mars-like
             Self::GasGiant => Color::Yellow, // Jupiter-like
-            Self::IceWorld => Color::Cyan, // Neptune-like
+            Self::IceWorld => Color::Cyan,   // Neptune-like
         }
     }
 
@@ -77,15 +77,17 @@ pub fn generate_system(
     let mut rng = StdRng::seed_from_u64(seed.0);
 
     // 1. Create Star
-    let star_entity = commands.spawn((
-        Star,
-        OrbitalBody {
-            name: "Sun".to_string(),
-            radius: 5.0,
-            color: Color::Yellow,
-            char: '☼',
-        },
-    )).id();
+    let star_entity = commands
+        .spawn((
+            Star,
+            OrbitalBody {
+                name: "Sun".to_string(),
+                radius: 5.0,
+                color: Color::Yellow,
+                char: '☼',
+            },
+        ))
+        .id();
 
     // 2. Create Planets
     let num_planets = rng.gen_range(3..=8);
@@ -106,48 +108,56 @@ pub fn generate_system(
         let mut planet_traits = Vec::new();
         match planet_type {
             PlanetType::Rocky => {
-                if rng.gen_bool(0.3) { planet_traits.push(PlanetaryTrait::HighGravity); }
-                if rng.gen_bool(0.3) { planet_traits.push(PlanetaryTrait::ThinAtmosphere); }
-            },
+                if rng.gen_bool(0.3) {
+                    planet_traits.push(PlanetaryTrait::HighGravity);
+                }
+                if rng.gen_bool(0.3) {
+                    planet_traits.push(PlanetaryTrait::ThinAtmosphere);
+                }
+            }
             PlanetType::GasGiant => {
                 planet_traits.push(PlanetaryTrait::HighGravity);
                 planet_traits.push(PlanetaryTrait::DenseAtmosphere);
-            },
+            }
             PlanetType::IceWorld => {
-                if rng.gen_bool(0.3) { planet_traits.push(PlanetaryTrait::LowGravity); }
+                if rng.gen_bool(0.3) {
+                    planet_traits.push(PlanetaryTrait::LowGravity);
+                }
                 planet_traits.push(PlanetaryTrait::SlowOrbit);
-            },
+            }
         }
 
-        let planet = commands.spawn((
-            Planet,
-            OrbitalBody {
-                name: format!("Planet {}", i + 1),
-                radius: rng.gen_range(planet_type.radius_range()),
-                color: planet_type.color(),
-                char: 'O',
-            },
-            Orbit {
-                parent: star_entity,
-                radius: distance,
-                speed: 1.0 / distance.sqrt(), // Kepler-ish
-                angle: rng.gen_range(0.0..std::f32::consts::TAU),
-            },
-            PlanetaryTraitsComponent {
-                traits: planet_traits.clone(),
-            },
-        )).id();
+        let planet = commands
+            .spawn((
+                Planet,
+                OrbitalBody {
+                    name: format!("Planet {}", i + 1),
+                    radius: rng.gen_range(planet_type.radius_range()),
+                    color: planet_type.color(),
+                    char: 'O',
+                },
+                Orbit {
+                    parent: star_entity,
+                    radius: distance,
+                    speed: 1.0 / distance.sqrt(), // Kepler-ish
+                    angle: rng.gen_range(0.0..std::f32::consts::TAU),
+                },
+                PlanetaryTraitsComponent {
+                    traits: planet_traits.clone(),
+                },
+            ))
+            .id();
 
         planets.push((planet, planet_type, planet_traits));
 
         // 3. Create Moons
         if rng.gen_bool(0.4) {
-             let num_moons = rng.gen_range(1..=3);
-             for m in 0..num_moons {
-                 commands.spawn((
+            let num_moons = rng.gen_range(1..=3);
+            for m in 0..num_moons {
+                commands.spawn((
                     Moon,
                     OrbitalBody {
-                        name: format!("Moon {}-{}", i+1, m+1),
+                        name: format!("Moon {}-{}", i + 1, m + 1),
                         radius: 0.3,
                         color: Color::Gray,
                         char: 'o',
@@ -158,15 +168,16 @@ pub fn generate_system(
                         radius: (m as f32).mul_add(1.0, 2.5),
                         speed: 2.0, // Fast orbit
                         angle: rng.gen_range(0.0..std::f32::consts::TAU),
-                    }
-                 ));
-             }
+                    },
+                ));
+            }
         }
     }
 
     // 4. Select Colony Location
     // Filter out Gas Giants
-    let candidates: Vec<_> = planets.iter()
+    let candidates: Vec<_> = planets
+        .iter()
         .filter(|(_, p_type, _)| *p_type != PlanetType::GasGiant)
         .collect();
 
@@ -187,10 +198,12 @@ pub fn generate_system(
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer2::system::{OrbitalBody, Orbit};
-    use crate::layer2::generation::{generate_system, Star, Planet, ColonyLocation, PlanetaryTraitsComponent, WorldSeed};
     use crate::layer1::quirks::PlanetaryTraits;
+    use crate::layer2::generation::{
+        ColonyLocation, Planet, PlanetaryTraitsComponent, Star, WorldSeed, generate_system,
+    };
+    use crate::layer2::system::{Orbit, OrbitalBody};
+    use bevy_ecs::prelude::*;
 
     fn setup_world() -> World {
         let mut world = World::new();
@@ -249,11 +262,17 @@ mod tests {
 
         // Assert exactly one ColonyLocation exists
         let colony_locations = world.query::<&ColonyLocation>().iter(&world).count();
-        assert_eq!(colony_locations, 1, "Should assign exactly one colony location");
+        assert_eq!(
+            colony_locations, 1,
+            "Should assign exactly one colony location"
+        );
 
         // Assert ColonyLocation is on a Planet
         let (colony_entity, _) = world.query::<(Entity, &ColonyLocation)>().single(&world);
-        assert!(world.get::<Planet>(colony_entity).is_some(), "Colony should be on a planet");
+        assert!(
+            world.get::<Planet>(colony_entity).is_some(),
+            "Colony should be on a planet"
+        );
     }
 
     #[test]
@@ -269,14 +288,19 @@ mod tests {
         schedule.run(&mut world);
 
         let (colony_entity, _) = world.query::<(Entity, &ColonyLocation)>().single(&world);
-        let component_traits = world.get::<PlanetaryTraitsComponent>(colony_entity).expect("Colony planet should have traits component");
+        let component_traits = world
+            .get::<PlanetaryTraitsComponent>(colony_entity)
+            .expect("Colony planet should have traits component");
 
         let global_traits = world.resource::<PlanetaryTraits>();
 
         // Assert they match
         // Note: PlanetaryTraits struct in Spec 080 wraps a Vec.
         // We need to ensure PartialEq is derived or check contents manually.
-        assert_eq!(component_traits.traits, global_traits.0, "Global traits should match starting planet traits");
+        assert_eq!(
+            component_traits.traits, global_traits.0,
+            "Global traits should match starting planet traits"
+        );
     }
 
     #[test]
@@ -294,15 +318,29 @@ mod tests {
         // Compare generated planets count
         let planets1 = world1.query::<&Planet>().iter(&world1).count();
         let planets2 = world2.query::<&Planet>().iter(&world2).count();
-        assert_eq!(planets1, planets2, "Determinism failed: Planet count mismatch");
+        assert_eq!(
+            planets1, planets2,
+            "Determinism failed: Planet count mismatch"
+        );
 
         // Compare first planet name
-        let (p1, _) = world1.query::<(Entity, &OrbitalBody)>().iter(&world1).find(|(_, b)| b.name == "Planet 1").unwrap();
-        let (p2, _) = world2.query::<(Entity, &OrbitalBody)>().iter(&world2).find(|(_, b)| b.name == "Planet 1").unwrap();
+        let (p1, _) = world1
+            .query::<(Entity, &OrbitalBody)>()
+            .iter(&world1)
+            .find(|(_, b)| b.name == "Planet 1")
+            .unwrap();
+        let (p2, _) = world2
+            .query::<(Entity, &OrbitalBody)>()
+            .iter(&world2)
+            .find(|(_, b)| b.name == "Planet 1")
+            .unwrap();
 
         // Check if traits match for Planet 1
         let t1 = world1.get::<PlanetaryTraitsComponent>(p1).unwrap();
         let t2 = world2.get::<PlanetaryTraitsComponent>(p2).unwrap();
-        assert_eq!(t1.traits, t2.traits, "Determinism failed: Planet 1 traits mismatch");
+        assert_eq!(
+            t1.traits, t2.traits,
+            "Determinism failed: Planet 1 traits mismatch"
+        );
     }
 }

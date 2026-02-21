@@ -1,5 +1,5 @@
 use crate::layer1::fauna::{BodyPartType, FaunaBody, FaunaPart, FaunaStats};
-use rand::{rngs::StdRng, SeedableRng};
+use rand::{SeedableRng, rngs::StdRng};
 
 /// Seed for generating modular fauna.
 #[derive(Debug, Clone)]

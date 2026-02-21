@@ -154,12 +154,14 @@ pub fn graffiti_observation_system(
         for target in neighbors {
             if let Some(graffiti) = graffiti_map.markings.get(&target) {
                 // Handle Memetic Infection
-                if graffiti.graffiti_type == GraffitiType::MemeticSigil && carrier.is_none()
-                    && rng.gen_bool(infection_chance) {
-                        commands
-                            .entity(entity)
-                            .insert(crate::layer1::memetic::MemeticCarrier);
-                    }
+                if graffiti.graffiti_type == GraffitiType::MemeticSigil
+                    && carrier.is_none()
+                    && rng.gen_bool(infection_chance)
+                {
+                    commands
+                        .entity(entity)
+                        .insert(crate::layer1::memetic::MemeticCarrier);
+                }
 
                 let label = match graffiti.graffiti_type {
                     GraffitiType::Vandalism => "Saw Vandalism",

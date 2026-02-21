@@ -25,7 +25,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `174` Memetic Hazards — `specs/174-memetic-hazards.md`
 - [ ] `175` Bureaucratic Drag — `specs/175-bureaucratic-drag.md`
 - [ ] `179` Magnetic Storms — `specs/179-magnetic-storms.md`
-- [ ] `181` Chemical Regulation — `specs/181-chemical-regulation.md`
 - [ ] `182` Urban Canyons — `specs/182-urban-canyons.md`
 - [ ] `183` Geodetic Sentience — `specs/183-geodetic-sentience.md`
 

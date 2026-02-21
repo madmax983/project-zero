@@ -42,9 +42,7 @@ pub fn render_notifications(frame: &mut Frame, area: Rect, world: &World) {
 
     let max_text_width = inner.width as usize;
 
-    let current_tick = world
-        .get_resource::<SimulationTime>()
-        .map_or(0, |t| t.tick);
+    let current_tick = world.get_resource::<SimulationTime>().map_or(0, |t| t.tick);
 
     // Take the last `display_count` notifications, show newest first
     let items: Vec<ListItem> = queue
@@ -54,7 +52,10 @@ pub fn render_notifications(frame: &mut Frame, area: Rect, world: &World) {
         .take(display_count)
         .map(|n| {
             let age = current_tick.saturating_sub(n.created_at);
-            let time_left = n.expires_at.unwrap_or(u64::MAX).saturating_sub(current_tick);
+            let time_left = n
+                .expires_at
+                .unwrap_or(u64::MAX)
+                .saturating_sub(current_tick);
 
             // Fade Out Logic (Ludwig: "Ease-Out")
             // If expiring in < 20 ticks (2s), dim the text.

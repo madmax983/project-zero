@@ -70,6 +70,7 @@ const fn format_action_type(action: ActionType) -> (&'static str, &'static str, 
         ActionType::Admin => ("📝", "Administering", Color::Blue),
         ActionType::ScrawlMemeticSigil => ("👁", "Scrawling Sigil", Color::Red),
         ActionType::PreCrimeArrest => ("🛡", "Pre-Crime Arrest", Color::Blue),
+        ActionType::ConsumeChemical => ("💊", "Consuming", Color::Magenta),
     }
 }
 

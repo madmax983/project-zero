@@ -284,10 +284,10 @@ pub use ruins::*;
 /// Hostile Fauna (Spec 048).
 pub mod fauna;
 pub use fauna::*;
-/// Procedural Fauna Generation (Spec 164).
-pub mod fauna_gen;
 /// Cultural Artifacts and Statues.
 pub mod art;
+/// Procedural Fauna Generation (Spec 164).
+pub mod fauna_gen;
 pub use art::*;
 /// Combat system and drafting logic.
 pub mod combat;
@@ -520,3 +520,7 @@ pub mod scrapcode;
 pub use scrapcode::*;
 #[cfg(test)]
 mod fauna_modular_tests;
+
+/// Chemical regulation system (Spec 181).
+pub mod chemical;
+pub use chemical::*;

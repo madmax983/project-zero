@@ -53,17 +53,19 @@ pub fn produce_manual_system(
             continue;
         }
 
-        let skill_type_opt = designations.get(target.target_entity).map_or(None, |designation| match designation.designation_type {
-            DesignationType::Mine => Some(SkillType::Mining),
-            DesignationType::Chop => Some(SkillType::Forestry),
-            DesignationType::ClearFlora => Some(SkillType::Farming), // Farming/Foraging
-            DesignationType::Demolish
-            | DesignationType::Repair
-            | DesignationType::JuryRig
-            | DesignationType::SetZone(_) => Some(SkillType::Construction),
-            DesignationType::Tame => Some(SkillType::Husbandry),
-            DesignationType::Cannibalize => None,
-        });
+        let skill_type_opt = designations
+            .get(target.target_entity)
+            .map_or(None, |designation| match designation.designation_type {
+                DesignationType::Mine => Some(SkillType::Mining),
+                DesignationType::Chop => Some(SkillType::Forestry),
+                DesignationType::ClearFlora => Some(SkillType::Farming), // Farming/Foraging
+                DesignationType::Demolish
+                | DesignationType::Repair
+                | DesignationType::JuryRig
+                | DesignationType::SetZone(_) => Some(SkillType::Construction),
+                DesignationType::Tame => Some(SkillType::Husbandry),
+                DesignationType::Cannibalize => None,
+            });
 
         let (chosen_skill, level) = if let Some(s) = skill_type_opt {
             let lvl = skills.get_level(s);

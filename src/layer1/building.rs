@@ -1627,9 +1627,10 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
 
     // Apply Scrapcode (Spec 178)
     if let Some(scrapcode) = world.get_resource::<crate::layer1::scrapcode::Scrapcode>()
-        && scrapcode.active {
-            cost = cost * scrapcode.severity;
-        }
+        && scrapcode.active
+    {
+        cost = cost * scrapcode.severity;
+    }
 
     let can_afford = world.resource_mut::<ColonyResources>().try_deduct(&cost);
 

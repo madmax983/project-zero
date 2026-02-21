@@ -110,6 +110,10 @@ pub enum ItemType {
     MysteryMeal,
     /// A unique item produced by a hobby (e.g., "Wooden Duck").
     Curio(String),
+    /// A chemical stimulant that boosts speed but damages health.
+    Stim,
+    /// A chemical sedative that reduces stress but slows speed.
+    Sedative,
 }
 
 #[cfg(test)]

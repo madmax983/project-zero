@@ -129,6 +129,10 @@ pub enum ActionType {
     ///
     /// See [`crate::layer1::predictive_policing::evaluate_pre_crime_arrest`].
     PreCrimeArrest,
+    /// Consume a chemical substance (Stim/Sedative).
+    ///
+    /// See [`crate::layer1::actions::chemical::evaluate_consume_chemical`].
+    ConsumeChemical,
 }
 
 /// Types of hobbies.
@@ -148,7 +152,7 @@ pub enum HobbyType {
 
 impl ActionType {
     /// Total number of action types. Used for array sizing.
-    pub const COUNT: usize = 31;
+    pub const COUNT: usize = 32;
 
     /// Converts action type to a unique array index (0..COUNT-1).
     #[must_use]
@@ -185,6 +189,7 @@ impl ActionType {
             Self::Admin => 28,
             Self::ScrawlMemeticSigil => 29,
             Self::PreCrimeArrest => 30,
+            Self::ConsumeChemical => 31,
         }
     }
 

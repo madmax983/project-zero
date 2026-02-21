@@ -39,6 +39,7 @@
 //!     vector iteration (which is much faster due to cache locality and no ECS overhead).
 
 use crate::layer1::actions::admin::evaluate_admin;
+use crate::layer1::actions::chemical::evaluate_consume_chemical;
 use crate::layer1::actions::explore::evaluate_explore;
 use crate::layer1::actions::farm::evaluate_farm;
 use crate::layer1::actions::fetch_clothing::evaluate_fetch_clothing;
@@ -175,6 +176,18 @@ fn evaluate_group_survival(
         {
             evaluator.consider(ActionType::SeekMedicalCare, utility, Some(target));
         }
+    }
+
+    // Evaluate ConsumeChemical
+    if let Some((utility, target)) = evaluate_consume_chemical(
+        pop_pos,
+        &needs,
+        &weights,
+        data.chemical_state.as_ref(),
+        data.stress,
+        &buffer.item_entities,
+    ) {
+        evaluator.consider(ActionType::ConsumeChemical, utility, Some(target));
     }
 }
 

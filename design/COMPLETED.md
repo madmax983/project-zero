@@ -110,3 +110,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `INT-002` Integration: Power Grid -> Utility AI (Refining, Farming, Medical) — completed 2026-02-20
 - [x] `173` Predictive Policing — `specs/173-predictive-policing.md` — completed 2026-10-31
 - [x] `164` Modular Fauna — `specs/164-modular-fauna.md` — completed 2026-11-01
+- [x] `181` Chemical Regulation — `specs/181-chemical-regulation.md` — completed 2026-02-21

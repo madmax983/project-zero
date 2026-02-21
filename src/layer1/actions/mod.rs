@@ -97,6 +97,9 @@ pub mod medical;
 /// Social action logic.
 pub mod social;
 
+/// Chemical action logic.
+pub mod chemical;
+
 /// Mental break action logic.
 pub mod mental_break;
 /// Memetic sigil scrawling action logic.

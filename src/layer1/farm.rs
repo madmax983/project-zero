@@ -477,16 +477,23 @@ mod tests {
         // Spawn a Wheat Farm
         world.spawn((
             Farm::default(),
-            Crop { crop_type: ItemType::Wheat },
-            GridPosition { x: 0, y: 0 }
+            Crop {
+                crop_type: ItemType::Wheat,
+            },
+            GridPosition { x: 0, y: 0 },
         ));
 
         // Spawn a Pop
-        let pop = world.spawn((
-            Pop,
-            Needs { hunger: 0.0, ..Default::default() },
-            DietaryHistory::default(),
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Needs {
+                    hunger: 0.0,
+                    ..Default::default()
+                },
+                DietaryHistory::default(),
+            ))
+            .id();
 
         world.run_system_once(consume_food_system).unwrap();
 
@@ -496,7 +503,7 @@ mod tests {
 
     #[test]
     fn test_consume_food_picks_meat_from_animals() {
-        use crate::layer1::fauna::{Fauna, FaunaType, FaunaState};
+        use crate::layer1::fauna::{Fauna, FaunaState, FaunaType};
         use crate::layer1::husbandry::Tame;
 
         let mut world = World::new();
@@ -513,14 +520,19 @@ mod tests {
                 ..Default::default()
             },
             Tame::default(),
-            GridPosition { x: 0, y: 0 }
+            GridPosition { x: 0, y: 0 },
         ));
 
-        let pop = world.spawn((
-            Pop,
-            Needs { hunger: 0.0, ..Default::default() },
-            DietaryHistory::default(),
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Needs {
+                    hunger: 0.0,
+                    ..Default::default()
+                },
+                DietaryHistory::default(),
+            ))
+            .id();
 
         world.run_system_once(consume_food_system).unwrap();
 

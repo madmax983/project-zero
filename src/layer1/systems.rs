@@ -100,6 +100,8 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             apply_quirk_modifiers_system
                 .after(apply_lighting_penalties_system)
                 .after(apply_weather_effects_system),
+            crate::layer1::chemical::apply_chemical_speed_modifiers_system
+                .after(apply_quirk_modifiers_system),
             #[cfg(feature = "nova")]
             crate::layer1::observer::observer_reaction_system
                 .after(apply_lighting_penalties_system),
@@ -123,7 +125,8 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             combat_execution_system.after(arrival_handler_system),
             crate::layer1::turret::turret_fire_system.after(combat_execution_system),
             crate::layer1::justice::warden_execution_system.after(combat_execution_system),
-            crate::layer1::predictive_policing::pre_crime_execution_system.after(combat_execution_system),
+            crate::layer1::predictive_policing::pre_crime_execution_system
+                .after(combat_execution_system),
             crate::layer1::execution::vandalize_execution_system.after(arrival_handler_system),
             crate::layer1::drone::process_charge_system.after(arrival_handler_system),
             update_social_class_system.after(arrival_handler_system),
@@ -301,6 +304,7 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
                 .after(consume_food_system)
                 .before(decay_needs_system),
             decay_needs_system.after(consume_food_system),
+            crate::layer1::chemical::addiction_system.after(decay_needs_system),
             apply_palette_fatigue_system.after(consume_food_system),
             apply_cabin_fever_morale_system
                 .after(decay_needs_system)
