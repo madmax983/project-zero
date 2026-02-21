@@ -12,6 +12,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 ## MVP — Layer 1: Colony Simulation
 
 - [ ] `077` Emergent Festivals — `specs/077-emergent-festivals.md`
+- [ ] `104` Fuel Industry — `specs/104-fuel-industry.md`
 - [ ] `132` Equipment & Wear — `specs/132-equipment-and-wear.md`
 - [ ] `133` Ventilation Networks — `specs/133-ventilation-networks.md`
 - [ ] `139` Cryo-Stasis Vaults — `specs/139-cryo-stasis.md`
@@ -28,6 +29,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `188` The Long Watch — `specs/188-the-long-watch.md`
 - [ ] `189` Gravity Engineering — `specs/189-gravity-engineering.md`
 - [ ] `191` Radioactive Hearth — `specs/191-radioactive-hearth.md`
+- [ ] `192` Planetary Weather Fronts — `specs/192-planetary-weather-fronts.md`
 
 ## MVP — Layer 2: System Simulation
 
