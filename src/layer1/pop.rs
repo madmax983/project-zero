@@ -62,7 +62,6 @@ use rand::Rng;
 ///
 /// let mut rng = thread_rng();
 /// let name = PopName::random(&mut rng);
-/// println!("New Citizen: {}", name.0);
 /// assert!(!name.0.is_empty());
 /// ```
 #[derive(Component, Clone, Debug)]
@@ -287,6 +286,12 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
                 ));
             spawned += 1;
         }
+    }
+}
+
+/// System to reset speed to base value before applying modifiers.
+pub fn reset_speed_system(mut query: Query<&mut Speed>) {
+    for mut speed in &mut query {
     }
 }
 
@@ -692,5 +697,51 @@ mod tests {
         let mut query = world.query::<(&Pop, &super::super::palette_fatigue::DietaryHistory)>();
         let count = query.iter(&world).count();
         assert_eq!(count, 5, "All 5 pops should have DietaryHistory component");
+    }
+}
+
+#[cfg(test)]
+mod security_tests {
+    use super::*;
+    use crate::layer1::chemical::{ActiveEffect, ChemicalState, ChemicalType, apply_chemical_speed_modifiers_system};
+    use bevy_ecs::system::RunSystemOnce;
+
+    #[test]
+    fn test_speed_stable_with_reset() {
+        let mut world = World::new();
+        world.insert_resource(crate::shared::time::SimulationTime::default());
+
+        let pop = world
+            .spawn((
+                Pop,
+                Speed {
+                    base: 1.0,
+                    current: 1.0,
+                    accumulator: 0.0,
+                },
+                ChemicalState {
+                    active_effects: vec![ActiveEffect {
+                        chemical: ChemicalType::Stim,
+                        duration: 100,
+                        magnitude: 1.5, // 1.5x multiplier
+                    }],
+                    addictions: vec![],
+                },
+            ))
+            .id();
+
+        // Run system cycle 1: Reset -> Modify
+        world.run_system_once(reset_speed_system).unwrap();
+        world.run_system_once(apply_chemical_speed_modifiers_system).unwrap();
+        let speed_1 = world.get::<Speed>(pop).unwrap().current;
+        assert!((speed_1 - 1.5).abs() < f32::EPSILON, "First run should be 1.5");
+
+        // Run system cycle 2: Reset -> Modify
+        world.run_system_once(reset_speed_system).unwrap();
+        world.run_system_once(apply_chemical_speed_modifiers_system).unwrap();
+        let speed_2 = world.get::<Speed>(pop).unwrap().current;
+
+        // Should remain 1.5, NOT 2.25
+        assert!((speed_2 - 1.5).abs() < f32::EPSILON, "Speed should remain stable with reset");
     }
 }

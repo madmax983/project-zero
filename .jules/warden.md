@@ -27,3 +27,7 @@
 **2024-05-24 - Integer Overflow in CLI and Uncapped Logic**
 **Threat:** Integer overflow in `headless` CLI map rendering allowed potential DoS via panic. Unbounded multipliers in work calculation could destabilize economy.
 **Defense:** Switched to saturating arithmetic for map bounds. Capped `calculate_work_amount` to 1000.0.
+
+## 2024-05-27 - Speed Modifier Explosion
+**Threat:** Exponential growth of `Speed.current` due to cumulative application of multipliers (Chemicals, Quirks, Weather) without resetting to `Speed.base` each tick.
+**Defense:** Implemented `reset_speed_system` to reset `Speed.current` to `Speed.base` at the start of the execution phase. Refactored `apply_lighting_penalties_system` to use multiplicative logic instead of overwriting the reset. Verified with `test_speed_stable_with_reset`.
