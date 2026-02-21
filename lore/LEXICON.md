@@ -1836,3 +1836,116 @@
 **Replaces:** token of debt
 **Usage:**
 - "Calling in a marker."
+
+---
+
+## Chemical Regulation
+
+### the Fix / Chem-Blood
+**Replaces:** chemical stimulants
+**Code reference:** `ChemicalState`
+**Usage:**
+- "He needs the Fix."
+- "Running on Chem-Blood."
+
+### burning
+**Replaces:** under influence of stims
+**Code reference:** `ActiveEffect::Stim`
+**Usage:**
+- "She is burning hot today."
+- "Eyes wide, burning."
+
+### fade
+**Replaces:** under influence of sedatives
+**Code reference:** `ActiveEffect::Sedative`
+**Usage:**
+- "In the fade."
+- "Let the world fade."
+
+---
+
+## Wind & Atmosphere
+
+### the Draft
+**Replaces:** strong wind current
+**Code reference:** `WindGrid`
+**Usage:**
+- "Caught in the Draft."
+- "Don't build in the Draft."
+
+### Lee-Side
+**Replaces:** wind shadow
+**Code reference:** Low wind area
+**Usage:**
+- "Safe on the Lee-Side."
+- "The air is still in the Lee."
+
+---
+
+## Geodetic Sentience
+
+### Waking-Stone
+**Replaces:** Living Stone resource
+**Code reference:** `ItemType::LivingStone`
+**Usage:**
+- "This ore is Waking-Stone."
+- "Don't pile the Waking-Stone too high."
+
+### The Assembly
+**Replaces:** Golem formation event
+**Code reference:** `GOLEM_RISES`
+**Usage:**
+- "Fear the Assembly."
+- "The rocks are Assembling."
+
+---
+
+## Orbital Debris
+
+### Sky-Mine
+**Replaces:** debris field
+**Code reference:** `OrbitalDebris`
+**Usage:**
+- "Navigating the Sky-Mine."
+- "Hit a Sky-Mine on ascent."
+
+### The Cloud
+**Replaces:** Kessler syndrome / high debris
+**Usage:**
+- "The Cloud is thick today."
+- " trapped under the Cloud."
+
+---
+
+## Vacuum Welding
+
+### Void-Lock
+**Replaces:** vacuum welded state
+**Code reference:** `VacuumWelded`
+**Usage:**
+- "It's in Void-Lock now."
+- "Can't move it—Void-Locked."
+
+### Dead-Iron
+**Replaces:** permanent structure material
+**Usage:**
+- "That wall is Dead-Iron."
+- "Only blast-charges can clear Dead-Iron."
+
+---
+
+## Bio-Architecture
+
+### Pulse-Door
+**Replaces:** grown door
+**Code reference:** Bio-Structure
+**Usage:**
+- "Open the Pulse-Door."
+- "Can't force a Pulse-Door."
+
+### Feeding-Time
+**Replaces:** upkeep cycle
+**Code reference:** `BIO_STARVATION`
+**Usage:**
+- "It is Feeding-Time for the walls."
+- "Don't miss Feeding-Time."
