@@ -624,4 +624,204 @@ mod tests {
             "Open door should allow path even if Lockdown"
         );
     }
+
+    #[test]
+    fn test_pathfinding_avoids_strong_headwind() {
+        let mut world = setup_world();
+        let width = 10;
+        let height = 10;
+        let mut wind_grid = crate::layer1::wind::WindGrid::new(width, height);
+
+        // Scenario:
+        // Start (0, 0), End (5, 0)
+        // Direct path (row 0) has strong Headwind (West wind, pushing East->West).
+        // Sheltered path (row 1) has no wind.
+        // Direct Path: (0,0)->(1,0)->(2,0)->(3,0)->(4,0)->(5,0). Distance 5.
+        // Movement is East (+1, 0). Wind is West (-10, 0). Dot = -1.0. Cost = High.
+
+        let headwind = crate::layer1::wind::Vec2::new(-10.0, 0.0);
+        for x in 0..width {
+            wind_grid.set_wind(x as i32, 0, headwind);
+        }
+
+        // Shelter row 1 (no wind)
+        for x in 0..width {
+            wind_grid.set_wind(x as i32, 1, crate::layer1::wind::Vec2::ZERO);
+        }
+
+        world.insert_resource(wind_grid);
+
+        let path = find_path(&world, (0, 0), (5, 0));
+        assert!(path.is_some());
+        let p = path.unwrap();
+
+        // Path should use row 1 (y=1) to avoid headwind
+        let uses_shelter = p.iter().any(|pos| pos.1 == 1);
+        assert!(
+            uses_shelter,
+            "Path should use sheltered row y=1. Actual path: {:?}",
+            p
+        );
+    }
+
+    #[test]
+    fn test_pathfinding_prefers_tailwind() {
+        let mut world = setup_world();
+        let width = 10;
+        let height = 10;
+        let mut wind_grid = crate::layer1::wind::WindGrid::new(width, height);
+        let mut crowding = crate::layer1::crowding::CrowdingGrid::new(width, height);
+
+        // Scenario:
+        // Increase base cost to 2 so Tailwind (0.6x) can reduce it below base.
+        // Add crowding 1 everywhere.
+        for y in 0..height {
+            for x in 0..width {
+                crowding.add_crowding(x, y, 1);
+            }
+        }
+        world.insert_resource(crowding);
+
+        // Direct path (row 0) has no wind (Cost 2 per tile). Total = 10 (5 steps).
+        // Row 1 has strong Tailwind (East wind).
+        // Movement East (+1, 0). Wind East (10, 0). Dot = 1.0. Cost = 2 * 0.6 = 1.2 -> 1.
+        // Path via Row 1 involves:
+        // (0,0)->(0,1) (1 step, cost 2)
+        // (0,1)->...->(5,1) (5 steps, cost 1 * 5 = 5)
+        // (5,1)->(5,0) (1 step, cost 2)
+        // Total sheltered cost: 2 + 5 + 2 = 9.
+        // 9 < 10.
+        // It should prefer the longer path (7 steps vs 5 steps).
+
+        let tailwind = crate::layer1::wind::Vec2::new(10.0, 0.0);
+        for x in 0..width {
+            wind_grid.set_wind(x as i32, 1, tailwind);
+        }
+
+        world.insert_resource(wind_grid);
+
+        let path = find_path(&world, (0, 0), (5, 0));
+        assert!(path.is_some());
+        let p = path.unwrap();
+
+        // Path should use row 1 (y=1) for tailwind boost
+        let uses_tailwind = p.iter().any(|pos| pos.1 == 1);
+        assert!(
+            uses_tailwind,
+            "Path should use tailwind row y=1. Actual path: {:?}",
+            p
+        );
+    }
+
+    #[test]
+    fn test_role_based_access_control() {
+        use crate::layer1::pop::{Pop, Role};
+        use std::collections::HashSet;
+
+        let mut world = setup_world();
+
+        // Block entire column x=1 with Walls, except at y=1 (Gate).
+        // This forces path through (1, 1).
+        for y in 0..10 {
+            if y == 1 {
+                continue;
+            }
+            world.spawn((
+                Building {
+                    building_type: BuildingType::Wall,
+                },
+                GridPosition { x: 1, y },
+            ));
+            world.resource_mut::<OccupiedTiles>().0.insert((1, y));
+        }
+
+        // Gate at (1, 1)
+        let mut allowed_roles = HashSet::new();
+        allowed_roles.insert(Role::Engineer);
+        world.spawn((
+            Building {
+                building_type: BuildingType::Gate,
+            },
+            GridPosition { x: 1, y: 1 },
+            AccessControl {
+                mode: AccessMode::Restricted,
+                allowed_roles,
+                ..Default::default()
+            },
+        ));
+        world.resource_mut::<OccupiedTiles>().0.insert((1, 1));
+
+        update_map(&mut world);
+
+        let civilian = world.spawn((Pop, Role::Civilian)).id();
+        let engineer = world.spawn((Pop, Role::Engineer)).id();
+
+        // Civilian: Should be blocked
+        let path_civ = find_path_for_pop(&world, (0, 1), (2, 1), civilian);
+        assert!(
+            path_civ.is_none(),
+            "Civilian should be blocked by Restricted Gate"
+        );
+
+        // Engineer: Should pass
+        let path_eng = find_path_for_pop(&world, (0, 1), (2, 1), engineer);
+        assert!(
+            path_eng.is_some(),
+            "Engineer should pass through Restricted Gate"
+        );
+    }
+
+    #[test]
+    fn test_open_door_bypasses_access_control() {
+        use crate::layer1::control::{DoorControl, DoorState};
+        use crate::layer1::pop::{Pop, Role};
+        use std::collections::HashSet;
+
+        let mut world = setup_world();
+
+        // Block column x=1 except y=1
+        for y in 0..10 {
+            if y == 1 {
+                continue;
+            }
+            world.spawn((
+                Building {
+                    building_type: BuildingType::Wall,
+                },
+                GridPosition { x: 1, y },
+            ));
+            world.resource_mut::<OccupiedTiles>().0.insert((1, y));
+        }
+
+        // Restricted Gate at (1, 1), but PHYSICALLY OPEN
+        let mut allowed_roles = HashSet::new();
+        allowed_roles.insert(Role::Engineer);
+
+        world.spawn((
+            Building {
+                building_type: BuildingType::Gate,
+            },
+            GridPosition { x: 1, y: 1 },
+            AccessControl {
+                mode: AccessMode::Restricted,
+                allowed_roles,
+                ..Default::default()
+            },
+            DoorControl {
+                state: DoorState::Open,
+            },
+        ));
+        world.resource_mut::<OccupiedTiles>().0.insert((1, 1));
+
+        update_map(&mut world);
+
+        let civilian = world.spawn((Pop, Role::Civilian)).id();
+
+        // Civilian should pass because the door is stuck open!
+        let path = find_path_for_pop(&world, (0, 1), (2, 1), civilian);
+        assert!(
+            path.is_some(),
+            "Civilian SHOULD pass if Restricted door is physically Open"
+        );
+    }
 }
