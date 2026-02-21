@@ -161,12 +161,19 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             update_taboo_duration_system,
             update_water_system,
             update_weather_system,
-            produce_food_system,
+            crate::layer1::fertility::update_fertility_system,
+            produce_food_system.after(crate::layer1::fertility::update_fertility_system),
             crate::layer1::husbandry::husbandry_production_system.after(produce_food_system),
             hopper_system.after(produce_food_system),
             process_refining_system,
             crate::layer1::tech::update_tech_capacity_system,
             crate::layer1::admin::calculate_admin_stats,
+        )
+            .in_set(Layer1SystemSet::Economy),
+    );
+
+    schedule.add_systems(
+        (
             process_research_system,
             process_observe_system,
             regrowth_system,

@@ -1,5 +1,6 @@
 use crate::layer1::{
-    GridPosition, TerrainGrid, Viewport, building::Building, health::Health, needs::Needs, pop::Pop,
+    GridPosition, TerrainGrid, Viewport, building::Building, fertility::FertilityGrid,
+    health::Health, needs::Needs, pop::Pop,
 };
 use bevy_ecs::prelude::*;
 use std::fmt::Write;
@@ -74,10 +75,19 @@ pub fn inspect_tile(world: &World, x: i32, y: i32) -> String {
     terrain.get(x as usize, y as usize).map_or_else(
         || String::from("Empty space\n(outside map)"),
         |tile| {
-            format!(
+            let mut info = format!(
                 "Tile ({x}, {y})\n\nTerrain: {}\n\n(Click entity for details)",
                 tile.name()
-            )
+            );
+
+            if let Some(fertility) = world.get_resource::<FertilityGrid>() {
+                let val = fertility.get(x as usize, y as usize);
+                if val > 0.0 {
+                    let _ = write!(info, "\nFertility: {:.0}%", val * 100.0);
+                }
+            }
+
+            info
         },
     )
 }

@@ -14,11 +14,13 @@ mod tests {
         let mut world = World::new();
 
         // Essential Resources
-        world.insert_resource(scale::layer1::terrain::TerrainGrid {
+        let terrain = scale::layer1::terrain::TerrainGrid {
             width: 10,
             height: 10,
             tiles: vec![scale::layer1::terrain::TerrainType::Grass; 100],
-        });
+        };
+        world.insert_resource(scale::layer1::fertility::FertilityGrid::from_terrain(&terrain));
+        world.insert_resource(terrain);
         world.insert_resource(ColonyResources::default());
         world.insert_resource(SimulationTime::default());
         world.insert_resource(scale::layer1::utility_ai::UtilityConfig::default());

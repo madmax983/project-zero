@@ -528,4 +528,8 @@ pub use chemical::*;
 /// Urban Canyons (Wind) system (Spec 182).
 pub mod wind;
 pub use wind::*;
+
+/// Soil fertility system (Spec 059).
+pub mod fertility;
+pub use fertility::*;
 #[cfg(test)] mod vacuum_welding_tests;
