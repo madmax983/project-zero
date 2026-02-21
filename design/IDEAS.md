@@ -76,7 +76,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Orbital Debris
+## Orbital Debris [SPECCED]
 
 **Layer:** 2
 
