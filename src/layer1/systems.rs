@@ -152,7 +152,9 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             wild_child_system.after(movement_system),
             update_erosion_system.after(movement_system),
             update_screen_shake_system.after(movement_system),
-            crate::layer1::particles::particle_system.after(movement_system),
+            crate::layer1::particles::particle_physics_system.after(movement_system),
+            crate::layer1::particles::particle_system
+                .after(crate::layer1::particles::particle_physics_system),
             infiltration_system.after(movement_system),
             discovery_system.after(process_scan_system),
         )

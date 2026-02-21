@@ -21,7 +21,7 @@
 //! *   [`crate::layer1::combat::Weapon`]: Defines damage, range, and accuracy.
 
 use crate::layer1::map::ScreenShake;
-use crate::layer1::particles::spawn_particle;
+use crate::layer1::particles::{spawn_moving_particle, spawn_particle};
 use bevy_ecs::prelude::*;
 use rand::Rng;
 use ratatui::style::Color;
@@ -34,7 +34,7 @@ const CRIT_MULTIPLIER: f32 = 2.0;
 const HIT_STOP_CRIT: u32 = 6;
 const HIT_STOP_HEAVY: u32 = 3;
 const HIT_STOP_MEDIUM: u32 = 1;
-const HIT_STOP_LIGHT: u32 = 0;
+const HIT_STOP_LIGHT: u32 = 1;
 
 /// Component marker for pops that have been drafted for military service.
 ///
@@ -240,6 +240,23 @@ pub fn execute_attack(world: &mut World, attacker: Entity, target: Entity) {
                 .copied()
             {
                 spawn_particle(world, pos, particle_char, particle_color, particle_lifetime);
+
+                // Ludwig: Spawn dynamic blood/sparks
+                let mut rng = rand::thread_rng();
+                let count = if is_crit { 4 } else { 2 };
+                for _ in 0..count {
+                    let dx = rng.gen_range(-0.5..0.5);
+                    let dy = rng.gen_range(-0.5..0.5);
+                    spawn_moving_particle(
+                        world,
+                        pos,
+                        '.',
+                        particle_color,
+                        particle_lifetime / 2, // Fade faster
+                        dx,
+                        dy,
+                    );
+                }
             }
         }
     }
@@ -629,17 +646,14 @@ mod tests {
         execute_attack(&mut world, attacker, target);
 
         let hs = world.get::<HitStop>(attacker);
-        if hs.is_some() {
-            // Must have critted (Damage 4 * 2 = 8, but Crit flag overrides to Crit duration)
-            // Implementation: if is_crit { HIT_STOP_CRIT (6) }
-            assert_eq!(
-                hs.unwrap().ticks_remaining,
-                6,
-                "Crit on light weapon should give CRIT ticks (6)"
-            );
+        assert!(hs.is_some(), "Should always have HitStop");
+        let ticks = hs.unwrap().ticks_remaining;
+
+        if ticks == 6 {
+            // Crit (6 ticks)
         } else {
-            // Normal (Damage 4 < 5) -> Light (0 ticks)
-            assert!(hs.is_none(), "Normal light hit should give 0 ticks");
+            // Normal (Damage 4 < 5) -> Light (1 tick)
+            assert_eq!(ticks, 1, "Normal light hit should give 1 tick");
         }
     }
 

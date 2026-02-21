@@ -35,3 +35,15 @@
 ## [Combat Dynamics]
 **Friction:** Combat damage felt predictable and linear. Even with basic Hit Stop, "Heavy" hits didn't feel rare or special enough.
 **Flow:** Introduced Critical Hits (5% chance, 2x Damage). Scaled Hit Stop dynamically (0/2/5/10 ticks) based on damage severity. Crits now trigger a massive 10-tick freeze, yellow particles, and 0.8 screen shake, creating "High Moments" in battle.
+
+## [Physics & Particles 2.0]
+**Friction:** Particles were static and lifeless, disappearing in place. Combat and Mining felt numerical rather than physical.
+**Flow:** Implemented a sub-grid physics system for particles. Debris now scatters from mining rocks, wood chips fly from trees, and "blood" sprays from combat hits.
+
+## [Combat Weight]
+**Friction:** Light attacks (0-5 damage) felt weightless because they had 0 Hit Stop frames. It felt like "swiping at air".
+**Flow:** Increased `HIT_STOP_LIGHT` from 0 to 1 tick. Even the smallest hit now registers a micro-pause, adding subconscious "impact" to every successful attack.
+
+## [Movement Flow]
+**Friction:** Pops sometimes stuttered when movement speed was slightly below 1.0 (e.g. 0.96), causing them to miss a tick essentially for rounding errors.
+**Flow:** Increased "Coyote Time" threshold for movement accumulator from 0.15 to 0.20. This allows pops to "cheat" the movement cost slightly more often, resulting in fluid, continuous motion rather than stop-start lurching.
