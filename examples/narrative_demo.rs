@@ -1,13 +1,19 @@
-//! Demo of the `NarrativeGenerator` system with a TUI interface.
+//! Demo of the Base Narrative Generator.
 //!
-//! This example shows how to browse lore templates and generate stories interactively.
+//! This example demonstrates the `NarrativeGenerator` system (available by default),
+//! which generates procedural text from templates (mad-libs style).
 //!
-//! # Note on "Nova" Feature
+//! # Distinction from "Nova" Feature
 //!
-//! This example demonstrates the base `NarrativeGenerator` which is available by default.
-//! The "Oral Tradition" system (often referred to as the "Nova feature") is a separate
-//! system in `scale::layer1::oral_tradition` that builds upon this generator but requires
-//! the `nova` feature flag (`cargo run --features nova`).
+//! This is **NOT** the "Oral Tradition" system (part of the `nova` feature).
+//!
+//! - **Narrative Generator (This Demo):** Generates static text strings from templates.
+//!   Used for descriptions, flavor text, and history generation.
+//!   Available in `scale::shared::narrative`.
+//!
+//! - **Oral Tradition (Nova Feature):** Simulates living legends that spread and evolve
+//!   in taverns based on simulation events. Requires `cargo run --features nova`.
+//!   See `examples/oral_tradition_demo.rs`.
 
 use crossterm::{
     event::{self, DisableMouseCapture, EnableMouseCapture, Event, KeyCode, KeyEventKind},
