@@ -524,3 +524,7 @@ mod fauna_modular_tests;
 /// Chemical regulation system (Spec 181).
 pub mod chemical;
 pub use chemical::*;
+
+/// Urban Canyons (Wind) system (Spec 182).
+pub mod wind;
+pub use wind::*;

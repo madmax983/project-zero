@@ -111,3 +111,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `173` Predictive Policing — `specs/173-predictive-policing.md` — completed 2026-10-31
 - [x] `164` Modular Fauna — `specs/164-modular-fauna.md` — completed 2026-11-01
 - [x] `181` Chemical Regulation — `specs/181-chemical-regulation.md` — completed 2026-02-21
+- [x] `182` Urban Canyons — `specs/182-urban-canyons.md` — completed 2026-11-02
