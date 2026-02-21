@@ -11,6 +11,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 ## MVP — Layer 1: Colony Simulation
 
+- [ ] `044` Horticulture & Beauty — `specs/044-horticulture-beauty.md`
 - [ ] `059` Soil Fertility — `specs/059-soil-fertility.md`
 - [ ] `077` Emergent Festivals — `specs/077-emergent-festivals.md`
 - [ ] `120` Crop Diversity — `specs/120-crop-diversity.md`
@@ -27,6 +28,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `183` Geodetic Sentience — `specs/183-geodetic-sentience.md`
 - [ ] `185` Vacuum Welding — `specs/185-vacuum-welding.md`
 - [ ] `186` Bio-Architecture — `specs/186-bio-architecture.md`
+- [ ] `187` Adaptive Biology — `specs/187-adaptive-biology.md`
 
 ## MVP — Layer 2: System Simulation
 

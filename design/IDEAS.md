@@ -412,7 +412,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Adaptive Biology
+## Adaptive Biology [SPECCED]
 
 **Layer:** 1
 
