@@ -443,10 +443,11 @@ impl BuildingType {
     #[allow(clippy::match_same_arms)]
     pub const fn beauty_value(&self) -> f32 {
         match self {
-            Self::Statue => 10.0,
+            Self::Statue => super::beauty::STATUE_BEAUTY,
             Self::Landfill => -10.0,
             Self::Grave => -2.0, // Graves are slightly spooky
-            Self::FlowerBed | Self::TradeDepot => 5.0, // Trade brings goods and culture
+            Self::FlowerBed => super::beauty::FLOWER_BED_BEAUTY,
+            Self::TradeDepot => 5.0, // Trade brings goods and culture
             Self::Well | Self::HydroponicsBay | Self::LifeSupport => 1.0,
             Self::Wall | Self::Gate | Self::Tower | Self::Airlock | Self::Vent => 0.0,
             Self::TrashCannon => -2.0, // Industrial machinery is ugly
