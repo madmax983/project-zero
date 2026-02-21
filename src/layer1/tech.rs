@@ -21,6 +21,8 @@ pub enum Tech {
     Hydroponics,
     /// Allows active defense (Trash Cannon, Militia).
     Militia,
+    /// Allows advanced medical facilities (Hospital, `CryoPod`).
+    Medical,
     /// Unlocks dangerous forbidden knowledge (Memetic Hazards).
     VoidWhispers,
 }
@@ -42,6 +44,7 @@ impl Tech {
             Self::Astronomy => 50.0,
             Self::Hydroponics => 30.0,
             Self::Militia => 25.0,
+            Self::Medical => 40.0,
             Self::VoidWhispers => 100.0,
         }
     }
@@ -56,6 +59,7 @@ impl Tech {
             Self::Astronomy => "Astronomy",
             Self::Hydroponics => "Hydroponics",
             Self::Militia => "Militia",
+            Self::Medical => "Medical",
             Self::VoidWhispers => "Void Whispers",
         }
     }
@@ -67,7 +71,7 @@ impl Tech {
             Self::Masonry => 5.0,
             Self::MetalWorking | Self::Militia => 10.0,
             Self::SocialStructures | Self::Hydroponics => 15.0,
-            Self::Astronomy => 20.0,
+            Self::Astronomy | Self::Medical => 20.0,
             Self::VoidWhispers => 50.0,
         }
     }

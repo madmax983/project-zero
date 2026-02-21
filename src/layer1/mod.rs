@@ -530,6 +530,9 @@ mod fauna_modular_tests;
 
 /// Chemical regulation system (Spec 181).
 pub mod chemical;
+/// Cryo-Stasis system (Spec 139).
+pub mod cryo;
+pub use cryo::*;
 pub use chemical::*;
 
 /// Urban Canyons (Wind) system (Spec 182).
@@ -541,3 +544,6 @@ pub mod fertility;
 pub use fertility::*;
 #[cfg(test)] mod vacuum_welding_tests;
 mod atmosphere_tides_tests;
+
+#[cfg(test)]
+mod cryo_tests;

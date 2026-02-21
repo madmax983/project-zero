@@ -294,6 +294,8 @@ pub enum BuildingType {
     AICore,
     /// Hub for spawning and recharging Drones.
     DroneHub,
+    /// Cryo-Stasis Pod.
+    CryoPod,
 }
 
 impl BuildingType {
@@ -316,7 +318,7 @@ impl BuildingType {
             Self::AncientReactor => Some((Category::Power, Tier::HighTech)),
 
             Self::Library => Some((Category::Research, Tier::Basic)),
-            Self::Observatory => Some((Category::Research, Tier::Advanced)),
+            Self::Observatory | Self::CryoPod => Some((Category::Research, Tier::Advanced)),
             Self::AICore => Some((Category::Research, Tier::HighTech)),
 
             _ => None,
@@ -391,10 +393,9 @@ impl BuildingType {
             | Self::Lander
             | Self::CommandCenter
             | Self::AICore
-            | Self::DroneHub => true,
-
-            // Production buildings (usually enclosed)
-            Self::Smokehouse
+            | Self::DroneHub
+            | Self::CryoPod
+            | Self::Smokehouse
             | Self::LumberMill
             | Self::StoneMason
             | Self::Smelter
@@ -403,16 +404,16 @@ impl BuildingType {
             | Self::Tailor
             | Self::Refinery
             | Self::Greenhouse
-            | Self::ServerBank => true,
-
-            // Civic buildings
-            Self::Tavern | Self::Library | Self::Hospital | Self::Observatory => true,
-
-            // Infrastructure
-            Self::Battery | Self::LifeSupport | Self::Airlock => true,
-
-            // Ancient structures
-            Self::AncientReactor | Self::AncientFabricator => true,
+            | Self::ServerBank
+            | Self::Tavern
+            | Self::Library
+            | Self::Hospital
+            | Self::Observatory
+            | Self::Battery
+            | Self::LifeSupport
+            | Self::Airlock
+            | Self::AncientReactor
+            | Self::AncientFabricator => true,
 
             // Small or Open structures
             Self::Farm
@@ -452,7 +453,7 @@ impl BuildingType {
             Self::Wall | Self::Gate | Self::Tower | Self::Airlock | Self::Vent => 0.0,
             Self::TrashCannon => -2.0, // Industrial machinery is ugly
             Self::Heater | Self::ServerBank => 0.0,
-            Self::CommandCenter | Self::AICore => 0.0,
+            Self::CommandCenter | Self::AICore | Self::CryoPod => 0.0,
             _ => 0.0,
         }
     }
@@ -465,9 +466,8 @@ impl BuildingType {
             Self::Statue => 5.0,
             Self::FlowerBed => 3.0,
             Self::Landfill => 8.0,
-            Self::Grave => 2.0,
             Self::TradeDepot => 4.0,
-            Self::Well | Self::HydroponicsBay | Self::LifeSupport => 2.0,
+            Self::Grave | Self::Well | Self::HydroponicsBay | Self::LifeSupport => 2.0,
             _ => 0.0,
         }
     }
@@ -495,6 +495,7 @@ impl BuildingType {
             Self::Observatory => Some(Tech::Astronomy),
             Self::HydroponicsBay => Some(Tech::Hydroponics),
             Self::TrashCannon => Some(Tech::Militia),
+            Self::CryoPod => Some(Tech::Medical),
             _ => None,
         }
     }
@@ -559,6 +560,7 @@ impl BuildingType {
             Self::CommandCenter => "Command Center",
             Self::AICore => "AI Core",
             Self::DroneHub => "Drone Hub",
+            Self::CryoPod => "Cryo Pod",
         }
     }
 
@@ -605,6 +607,7 @@ impl BuildingType {
             Self::Lander => 'Λ',
             Self::CommandCenter => 'C',
             Self::AICore => 'A',
+            Self::CryoPod => '❄',
         }
     }
 
@@ -620,6 +623,11 @@ impl BuildingType {
             },
             Self::DroneHub => ColonyResources {
                 metal: 30.0,
+                stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::CryoPod => ColonyResources {
+                metal: 20.0,
                 stone: 10.0,
                 ..ColonyResources::zeroed()
             },
@@ -1133,7 +1141,8 @@ fn spawn_building(
         | BuildingType::ServerBank
         | BuildingType::CommandCenter
         | BuildingType::AICore
-        | BuildingType::DroneHub => configure_tech(&mut entity, building_type),
+        | BuildingType::DroneHub
+        | BuildingType::CryoPod => configure_tech(&mut entity, building_type),
         BuildingType::PersonalShed
         | BuildingType::PersonalGarden
         | BuildingType::PersonalShrine => {
@@ -1432,6 +1441,20 @@ fn configure_civic(entity: &mut EntityWorldMut, building_type: BuildingType) {
                     intensity: 0.6,
                     color: (220, 220, 100), // Yellowish
                 },
+            ));
+        }
+        BuildingType::CryoPod => {
+            entity.insert((
+                PowerConsumer {
+                    demand: 5.0,
+                    active: false,
+                },
+                LightSource {
+                    radius: 2.0,
+                    intensity: 0.4,
+                    color: (0, 0, 255), // Deep Blue
+                },
+                ShiftSchedule::default(),
             ));
         }
         _ => {}
@@ -1878,7 +1901,8 @@ mod tests {
         assert_eq!(BuildingType::Lander.next(), BuildingType::CommandCenter);
         assert_eq!(BuildingType::CommandCenter.next(), BuildingType::AICore);
         assert_eq!(BuildingType::AICore.next(), BuildingType::DroneHub);
-        assert_eq!(BuildingType::DroneHub.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::DroneHub.next(), BuildingType::CryoPod);
+        assert_eq!(BuildingType::CryoPod.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -2068,6 +2092,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::DroneHub);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::CryoPod);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

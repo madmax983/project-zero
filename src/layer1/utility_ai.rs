@@ -757,7 +757,7 @@ pub fn evaluate_actions_system(world: &mut World) {
     buffer.pop_data.clear();
     buffer.pop_data.extend(
         world
-            .query::<PopEvaluationQuery>()
+            .query_filtered::<PopEvaluationQuery, Without<crate::layer1::cryo::CryoStasis>>()
             .iter(world)
             .filter(|item| {
                 item.action.ticks_committed >= config.evaluation_interval
