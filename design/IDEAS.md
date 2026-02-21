@@ -5009,3 +5009,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Density (Efficiency) vs. Temperature Control (Safety).
 
 ---
+
+## Digital Detritus
+
+**Layer:** 3
+
+**Fantasy:** The galactic network is a graveyard of spam.
+
+**Mechanic:** "Data Mining" for Lost Tech involves filtering through petabytes of "Junk Data" (Alien advertisements, corruption, malware). Failure triggers "System Crashes" or "Viruses" in your colony.
+
+**Emergence:** You think you found the cure for cancer. It's actually a malware pop-up from a dead civilization that locks your airlocks until you pay 500 Credits.
+
+**Tension:** Risk the download (Knowledge) vs. Air-gap the system (Safety).
+
+---
+
+## Crustal Tides
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The ground beneath you breathes with the orbit.
+
+**Mechanic:** Orbital mechanics (Moons/Gas Giants) cause "Ground Tides". The map physically deforms—cracks open and close, height levels shift slightly. Buildings on fault lines take damage.
+
+**Emergence:** A "High Tide" opens a fissure revealing rich magma. You build a thermal plant. "Low Tide" snaps the fissure shut, crushing the plant.
+
+**Tension:** Build on stable, boring ground vs. Active, rich, dangerous ground.
+
+---
+
+## Benevolent Malfunctions
+
+**Layer:** 1
+
+**Fantasy:** "Don't fix it! It works better this way!"
+
+**Mechanic:** Machines can develop "Positive Glitches" (e.g., bypassing safety limiters for +Speed) coupled with "Quirks" (Noise, Heat, inability to stop). Repairing the machine "fixes" it back to standard (lower) stats.
+
+**Emergence:** Your colony runs on a terrifyingly unstable reactor that outputs 200% power but screams if you look at it wrong. The engineer refuses to let anyone "fix" it.
+
+**Tension:** Safe & Standard vs. Risky & High-Performance.
+
+---
+
+## Cryptid Sightings
+
+**Layer:** 1
+
+**Fantasy:** There are things in the woods that don't show up on sensors.
+
+**Mechanic:** Rare, non-hostile entities spawn at map edges. They avoid Pops. If seen, they cause "Awe" or "Dread". They leave behind "Traces" (Slime, Fur, Artifacts) that can be studied.
+
+**Emergence:** A "Moon-Moth" visits every full moon. Pops start leaving offerings. A cult forms around a moth.
+
+**Tension:** Capture/Kill (Science/Resource) vs. Observe (Culture/Mystery).
+
+---
