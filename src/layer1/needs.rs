@@ -158,7 +158,7 @@ const LEISURE_DECAY_PER_TICK: f32 = 0.0015;
 /// # Threading
 /// Uses `par_iter_mut` for parallel processing, as need decay is independent per pop.
 pub fn decay_needs_system(
-    mut query: Query<(&mut Needs, Option<&Traits>)>,
+    mut query: Query<(&mut Needs, Option<&Traits>), Without<crate::layer1::cryo::CryoStasis>>,
     policies: Option<Res<ColonyPolicies>>,
 ) {
     let hunger_mod = policies.map_or(1.0, |p| get_hunger_decay_modifier(&p));

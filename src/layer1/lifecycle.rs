@@ -51,7 +51,10 @@ impl Age {
 
 /// System to increment age and handle life stage transitions.
 pub fn aging_system(
-    mut query: Query<(Entity, &mut Age, Option<&mut Speed>)>,
+    mut query: Query<
+        (Entity, &mut Age, Option<&mut Speed>),
+        Without<crate::layer1::cryo::CryoStasis>,
+    >,
     mut log: Option<ResMut<MessageLog>>,
 ) {
     for (_entity, mut age, mut speed) in &mut query {
