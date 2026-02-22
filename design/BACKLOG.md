@@ -29,6 +29,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `193` Polyglot Confusion — `specs/193-polyglot-confusion.md`
 - [ ] `194` Company Scrip — `specs/194-company-scrip.md`
 - [ ] `195` Cryo-Dreams — `specs/195-cryo-dreams.md`
+- [ ] `196` Eureka Moments — `specs/196-eureka-moments.md`
 
 ## MVP — Layer 2: System Simulation
 
