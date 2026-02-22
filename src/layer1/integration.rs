@@ -483,3 +483,31 @@ pub fn drone_work_bridge_system(
         }
     }
 }
+
+/// Accelerates decay of perishable items based on vermin severity.
+///
+/// Bridges Vermin system (Environment) and Spoilage system (Items).
+pub fn vermin_item_rot_system(
+    vermin: Res<VerminState>,
+    mut query: Query<&mut crate::layer1::spoilage::Perishable>,
+) {
+    let modifier = crate::layer1::vermin::calculate_spoilage_modifier(&vermin);
+    // Base decay (1.0) is handled by spoilage_system. We only add the EXTRA decay.
+    if modifier <= 1.0 + f32::EPSILON {
+        return;
+    }
+
+    let extra_decay = modifier - 1.0;
+    #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
+    let guaranteed_decay = extra_decay.floor() as u32;
+    let chance_decay = extra_decay.fract();
+
+    query.par_iter_mut().for_each(|mut perishable| {
+        let mut rng = rand::thread_rng();
+        let mut decay = guaranteed_decay;
+        if rng.r#gen::<f32>() < chance_decay {
+            decay += 1;
+        }
+        perishable.current_ticks += decay;
+    });
+}
