@@ -20,11 +20,13 @@ Features that have been fully implemented, tested, and merged.
 - [x] `013` Utility AI Actions — `specs/013-utility-ai-actions.md` — completed 2026-02-05
 - [x] `016` Resource Production Loop — `specs/016-resource-production.md` — completed 2026-02-06
 - [x] `017` Structure Decay — `specs/017-structure-decay.md` — completed 2026-02-06
-- [x] `018` Seasonal Cycles — `specs/018-seasonal-cycles.md` — completed 2026-02-08
+- [x] `018` Mining Resources — `specs/018-mining-resources.md` — completed 2026-02-08
 - [x] `019` Pop Thoughts & Mood — `specs/019-pop-thoughts.md` — completed 2026-02-08
 - [x] `020` Death & Burial — `specs/020-death-and-burial.md` — completed 2026-02-10
 - [x] `021` Vermin Infestations — `specs/021-vermin-infestations.md` — completed 2026-02-12
+- [x] `024` Metal Industry — `specs/024-metal-industry.md` — completed 2026-02-15
 - [x] `025` Hauling Logistics — `specs/025-hauling-logistics.md` — completed 2026-10-28
+- [x] `027` Seasonal Rhythms — `specs/027-seasonal-rhythms.md` — completed 2026-02-15
 - [x] `030` Tool Economy — `specs/030-tool-economy.md` — completed 2026-10-29
 - [x] `031` Pop Morale — `specs/031-pop-morale.md` — completed 2026-11-06
 - [x] `032` Entropy and Spoilage — `specs/032-entropy-spoilage.md` — completed 2026-02-14
