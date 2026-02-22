@@ -20,6 +20,9 @@ use crate::layer1::social_mimicry::JustConsumed;
 use crate::layer1::utility_ai::{ActionType, PopAction};
 use bevy_ecs::prelude::*;
 use rand::seq::SliceRandom;
+use crate::layer1::eureka::{check_for_eureka, EurekaConfig};
+use crate::layer1::tech::Tech;
+use crate::shared::log::MessageLog;
 
 /// Water cost per tick per worker for Hydroponics.
 const HYDROPONICS_WATER_COST: f32 = 0.1;
@@ -84,14 +87,18 @@ pub fn produce_food_system(
             &PopAction,
             Option<&mut Skills>,
             Option<&FactionMember>,
+            Option<&crate::layer1::traits::Traits>,
         ),
         With<Pop>,
     >,
     season_state: Option<Res<SeasonState>>,
     mut resources: ResMut<ColonyResources>,
     factions: Option<Res<Factions>>,
-    tech_state: Option<Res<crate::layer1::tech::TechState>>,
+    // We need mut access to TechState for Corruption Check
+    mut tech_state_mut: Option<ResMut<crate::layer1::tech::TechState>>,
     fertility_grid: Option<Res<FertilityGrid>>,
+    eureka_config: Option<Res<EurekaConfig>>,
+    mut eureka_events: EventWriter<crate::layer1::eureka::EurekaEvent>,
 ) {
     let modifier = season_state
         .as_ref()
@@ -117,7 +124,7 @@ pub fn produce_food_system(
             })
             .collect();
 
-    for (_, pos, action, skills_opt, faction_member_opt) in &mut pop_query {
+    for (_, pos, action, skills_opt, faction_member_opt, traits) in &mut pop_query {
         if action.current != ActionType::Farm {
             continue;
         }
@@ -139,7 +146,14 @@ pub fn produce_food_system(
         if let Some((building_type, is_powered, selected_crop)) = farm_map.get(pos) {
             // Tech Corruption Check
             if let Some(tech) = building_type.required_tech() {
-                let tech_active = tech_state.as_ref().is_none_or(|ts| ts.is_active(tech));
+                // Use read-only resource for check to avoid conflict?
+                // Wait, if I have ResMut, I can use it as ref.
+                // But I have Option<ResMut>.
+                // I changed arguments to have both? That might conflict if I request Res and ResMut of same type.
+                // Rust bevy ECS rules: &T and &mut T cannot coexist.
+                // I must request ONLY ResMut if I need mutability.
+                // So I will remove `tech_state_res` and use `tech_state_mut` for reading too.
+                let tech_active = tech_state_mut.as_ref().map_or(true, |ts| ts.is_active(tech));
 
                 if !tech_active {
                     continue;
@@ -241,6 +255,17 @@ pub fn produce_food_system(
                         }
                         _ => resources.add_food(production),
                     },
+                }
+
+                // Eureka Check
+                if let Some(config) = &eureka_config {
+                    check_for_eureka(
+                        &mut eureka_events,
+                        config,
+                        ActionType::Farm,
+                        Some(Tech::Hydroponics), // Related to farming
+                        traits,
+                    );
                 }
             }
         }

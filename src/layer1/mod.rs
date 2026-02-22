@@ -350,6 +350,9 @@ pub use taboo::*;
 /// Erosion system (Spec 093).
 pub mod erosion;
 pub use erosion::*;
+/// Eureka Moments system (Spec 196).
+pub mod eureka;
+pub use eureka::*;
 /// Predictive Policing system (Spec 173).
 pub mod predictive_policing;
 pub use predictive_policing::*;
