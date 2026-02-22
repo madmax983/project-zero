@@ -315,9 +315,13 @@ fn evaluate_group_logistics(
     }
 
     // Evaluate FetchClothing
-    if let Some((utility, target)) =
-        evaluate_fetch_clothing(pop_pos, &equipment, context.resources, &buffer.stockpiles)
-    {
+    if let Some((utility, target)) = evaluate_fetch_clothing(
+        pop_pos,
+        data.insulation,
+        context.resources,
+        &buffer.stockpiles,
+        context.temperature_grid,
+    ) {
         evaluator.consider(ActionType::FetchClothing, utility, Some(target));
     }
 
@@ -756,6 +760,18 @@ fn collect_pop_data(world: &mut World, buffer: &mut UtilityAIBuffer, config: &Ut
             })
             .map(PopEvalData::from_query_item),
     );
+
+    // Populate Insulation from Clothing entities
+    let mut clothing_query = world.query::<&crate::layer1::items::Clothing>();
+    for data in &mut buffer.pop_data {
+        if let Some(eq) = data.equipment {
+            if let Some(body_entity) = eq.body {
+                if let Ok(clothing) = clothing_query.get(world, body_entity) {
+                    data.insulation = clothing.insulation;
+                }
+            }
+        }
+    }
 }
 
 fn run_evaluations(
@@ -879,6 +895,9 @@ pub fn evaluate_actions_system(world: &mut World) {
     let zone_grid_fallback = ZoneGrid::new(1, 1);
     let zone_grid_ref = zone_grid_opt.as_ref().unwrap_or(&zone_grid_fallback);
 
+    let temp_grid_opt =
+        world.remove_resource::<crate::layer1::temperature::TemperatureGrid>();
+
     let factions_res = world.remove_resource::<crate::layer1::factions::Factions>();
     let factions_data = factions_res.as_ref().map(|f| &f.map);
 
@@ -894,6 +913,7 @@ pub fn evaluate_actions_system(world: &mut World) {
         taboo: &taboo,
         factions: factions_data,
         zone_grid: zone_grid_ref,
+        temperature_grid: temp_grid_opt.as_ref(),
     };
 
     // 3. Populate Proxies (The Optimization)
@@ -911,6 +931,9 @@ pub fn evaluate_actions_system(world: &mut World) {
 
     if let Some(zg) = zone_grid_opt {
         world.insert_resource(zg);
+    }
+    if let Some(tg) = temp_grid_opt {
+        world.insert_resource(tg);
     }
     if let Some(f) = factions_res {
         world.insert_resource(f);

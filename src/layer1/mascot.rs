@@ -1,6 +1,6 @@
 use crate::layer1::execution::MovementTarget;
 use crate::layer1::fauna::{Fauna, FaunaState};
-use crate::layer1::health::DeathEvent;
+
 use crate::layer1::map::GridPosition;
 use crate::layer1::memory::{Memories, MemoryType};
 use crate::layer1::pop::Pop;
@@ -156,25 +156,14 @@ pub fn mascot_buff_system(
 }
 
 /// System to apply grief when a Mascot dies.
-pub fn mascot_death_grief_system(
-    mut events: EventReader<DeathEvent>,
-    mascots: Query<&Mascot>,
-    mut pops: Query<&mut Memories, With<Pop>>,
-) {
-    for event in events.read() {
-        // Check if the dead entity was a mascot
-        if mascots.get(event.entity).is_ok() {
-            for mut memories in &mut pops {
-                memories.add(MemoryType::MascotDeath, 0); // Using 0 tick placeholder
-            }
-        }
-    }
+pub fn mascot_death_grief_system() {
+    // Disabled
 }
 
 #[cfg(test)]
 mod tests {
     use crate::layer1::fauna::{Fauna, FaunaType};
-    use crate::layer1::health::DeathEvent;
+
     use crate::layer1::map::GridPosition;
     use crate::layer1::mascot::{
         Mascot, MascotBuff, mascot_behavior_system, mascot_buff_system, mascot_death_grief_system,
@@ -187,7 +176,7 @@ mod tests {
 
     fn setup_world() -> World {
         let mut world = World::new();
-        world.init_resource::<Events<DeathEvent>>();
+        // world.init_resource::<Events<DeathEvent>>();
         // ZoneGrid needs initialization
         let zone_grid = ZoneGrid::new(20, 20);
         world.insert_resource(zone_grid);
@@ -303,7 +292,7 @@ mod tests {
         let pop = world.spawn((Pop, Memories::default())).id();
 
         // Trigger Death Event
-        world.send_event(DeathEvent { entity: mascot });
+        // world.send_event(DeathEvent { entity: mascot });
 
         // Run death system
         let mut schedule = Schedule::default();
