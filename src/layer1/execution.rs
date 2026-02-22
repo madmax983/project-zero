@@ -47,6 +47,7 @@ use crate::layer1::edicts::{ColonyPolicies, get_work_speed_modifier};
 use crate::layer1::erosion::{ErosionGrid, MOVEMENT_EROSION_AMOUNT};
 use crate::layer1::farm::Farm;
 use crate::layer1::flora::process_flora_clearing;
+use crate::layer1::language::{Dialect, Linguistics, calculate_coordination_penalty};
 use crate::layer1::funeral::{Corpse, Grave, handle_bury_corpse};
 use crate::layer1::gastronomy::WorkSpeedBuff;
 use crate::layer1::hazards::handle_workplace_hazards;
@@ -1048,7 +1049,7 @@ pub fn execute_demolish(world: &mut World, designation_entity: Entity) -> bool {
 /// Executes work at designations when pop is at target with Work action.
 pub fn work_execution_system(world: &mut World) {
     let policies = world.get_resource::<ColonyPolicies>().cloned();
-    let work_speed_mod = policies.as_ref().map_or(1.0, get_work_speed_modifier);
+    let global_work_speed_mod = policies.as_ref().map_or(1.0, get_work_speed_modifier);
 
     // Fetch DayNightCycle
     let cycle = world.get_resource::<DayNightCycle>().map(|c| c.time_of_day);
@@ -1066,10 +1067,22 @@ pub fn work_execution_system(world: &mut World) {
         })
         .unwrap_or_default();
 
-    // Find pops at their work target and capture their morale
-    // Since we need to access Needs which is a component, and we need &mut World later,
-    // we should collect Needs data first.
-    let workers_data: Vec<(Entity, Entity, f32, ActionType, Option<Equipment>, f32, f32, Option<Job>)> = world
+    type WorkerTuple = (
+        Entity,
+        f32, // morale
+        ActionType,
+        Option<Equipment>,
+        f32, // speed_mod (traits + buffs)
+        Option<Job>,
+        Dialect,
+        Linguistics,
+    );
+
+    // Collect workers grouped by target
+    let mut workers_by_target: std::collections::HashMap<Entity, Vec<WorkerTuple>> =
+        std::collections::HashMap::new();
+
+    let query_results: Vec<_> = world
         .query_filtered::<(
             Entity,
             &MovementTarget,
@@ -1082,15 +1095,16 @@ pub fn work_execution_system(world: &mut World) {
             Option<&crate::layer1::factions::FactionMember>,
             Option<&WorkSpeedBuff>,
             Option<&Job>,
+            Option<&Dialect>,
+            Option<&Linguistics>,
         ), With<AtTarget>>()
         .iter(world)
-        .filter(|(_, mt, _, _, _, _, _, _, faction_member, _, _)| {
+        .filter(|(_, mt, _, _, _, _, _, _, faction_member, _, _, _, _)| {
             let is_work = mt.for_action == ActionType::Work || mt.for_action == ActionType::Repair;
             if !is_work {
                 return false;
             }
 
-            // Check strike
             let is_striking = faction_member
                 .and_then(|m| m.faction_id)
                 .is_some_and(|fid| striking_factions.contains(&fid));
@@ -1098,7 +1112,21 @@ pub fn work_execution_system(world: &mut World) {
             !is_striking
         })
         .map(
-            |(e, mt, needs, memories, social_buff, eq, traits, morale_comp, _, buff, job)| {
+            |(
+                e,
+                mt,
+                needs,
+                memories,
+                social_buff,
+                eq,
+                traits,
+                morale_comp,
+                _,
+                buff,
+                job,
+                dialect,
+                ling,
+            )| {
                 let morale = needs.map_or(0.5, |n| {
                     calculate_effective_morale(
                         n,
@@ -1112,41 +1140,63 @@ pub fn work_execution_system(world: &mut World) {
                 });
                 let trait_work_mod = traits.map_or(1.0, get_trait_work_speed_modifier);
                 let buff_mod = buff.map_or(1.0, |b| b.multiplier);
+
                 (
-                    e,
                     mt.target_entity,
+                    e,
                     morale,
                     mt.for_action,
                     eq.copied(),
-                    trait_work_mod,
-                    buff_mod,
+                    trait_work_mod * buff_mod,
                     job.copied(),
+                    dialect.copied().unwrap_or_default(),
+                    ling.cloned().unwrap_or_default(),
                 )
             },
         )
         .collect();
 
-    for (
-        pop_entity,
-        designation_entity,
-        morale,
-        action_type,
-        equipment_opt,
-        trait_work_mod,
-        buff_mod,
-        job_opt,
-    ) in workers_data
-    {
-        process_single_worker(
-            world,
-            pop_entity,
-            designation_entity,
-            morale,
-            action_type,
-            equipment_opt,
-            work_speed_mod * trait_work_mod * buff_mod,
-            job_opt,
-        );
+    for (target, e, morale, action, eq, mod_val, job, dialect, ling) in query_results {
+        workers_by_target
+            .entry(target)
+            .or_default()
+            .push((e, morale, action, eq, mod_val, job, dialect, ling));
+    }
+
+    // Process groups
+    for (target_entity, group) in workers_by_target {
+        // Calculate coordination penalties for each worker
+        // We need to check each worker against all others
+        let group_dialects: Vec<Dialect> = group.iter().map(|w| w.6).collect();
+
+        for (
+            i,
+            (pop_entity, morale, action_type, equipment_opt, local_mod, job_opt, my_dialect, my_ling),
+        ) in group.iter().enumerate()
+        {
+            // Calculate coordination penalty
+            let mut coordination_mod = 1.0;
+            for (j, other_dialect) in group_dialects.iter().enumerate() {
+                if i == j {
+                    continue;
+                }
+                let p = calculate_coordination_penalty(my_dialect, my_ling, other_dialect);
+                if p < coordination_mod {
+                    coordination_mod = p;
+                }
+            }
+
+            process_single_worker(
+                world,
+                *pop_entity,
+                target_entity,
+                *morale,
+                *action_type,
+                *equipment_opt,
+                global_work_speed_mod * local_mod * coordination_mod,
+                *job_opt,
+            );
+        }
     }
 }
 
@@ -1221,12 +1271,7 @@ fn process_single_worker(
         cleanup_pop_work_state(world, pop_entity);
 
         // Pay Wage
-        let wage = if let Some(job) = job_opt {
-            get_wage_for_job(job.job_type)
-        } else {
-            // Default manual labor rate if no job
-            1.0
-        };
+        let wage = job_opt.map_or(1.0, |job| get_wage_for_job(job.job_type));
         pay_wage(world, pop_entity, wage);
     }
 

@@ -1,3 +1,4 @@
+#![allow(clippy::option_if_let_else)]
 use crate::layer1::execution::MovementTarget;
 use crate::layer1::fauna::{Fauna, FaunaState, FaunaType};
 use crate::layer1::hazards::handle_workplace_hazards;

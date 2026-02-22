@@ -1,3 +1,4 @@
+#![allow(clippy::trivially_copy_pass_by_ref)]
 use crate::layer1::chemical::ChemicalState;
 use crate::layer1::combat::Drafted;
 use crate::layer1::day_night::DayNightCycle;

@@ -1,3 +1,4 @@
+#![allow(clippy::cast_possible_truncation, clippy::cast_precision_loss)]
 use crate::layer1::map::GridPosition;
 use bevy_ecs::prelude::*;
 use ratatui::style::Color;

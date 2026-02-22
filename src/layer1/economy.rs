@@ -4,14 +4,19 @@ use crate::layer1::actions::AssignmentType;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::needs::Needs;
 
+/// Represents a Pop's personal funds.
 #[derive(Component, Default, Debug, Clone, Copy)]
 pub struct Wallet {
+    /// Current credit balance.
     pub credits: f32,
 }
 
+/// Global price configuration for the colony economy.
 #[derive(Resource, Debug, Clone, Copy)]
 pub struct ColonyPrices {
+    /// Cost of a meal.
     pub food_price: f32,
+    /// Cost of luxury items.
     pub luxury_price: f32,
 }
 
@@ -24,19 +29,20 @@ impl Default for ColonyPrices {
     }
 }
 
-pub fn get_wage_for_job(job_type: AssignmentType) -> f32 {
+/// Returns the standard wage per task for a given job type.
+#[must_use]
+pub const fn get_wage_for_job(job_type: AssignmentType) -> f32 {
     match job_type {
         AssignmentType::Miner => 2.0,
         AssignmentType::FarmWorker => 1.5,
-        AssignmentType::Hauler => 1.0,
-        AssignmentType::LibraryWorker => 3.0, // Research pays well
+        AssignmentType::LibraryWorker | AssignmentType::Doctor => 3.0,
         AssignmentType::Engineer => 2.5,
-        AssignmentType::Doctor => 3.0,
         AssignmentType::Governor => 5.0,
         _ => 1.0,
     }
 }
 
+/// Adds credits to a worker's wallet.
 pub fn pay_wage(world: &mut World, worker: Entity, amount: f32) {
     if let Some(mut wallet) = world.get_mut::<Wallet>(worker) {
         wallet.credits += amount;
