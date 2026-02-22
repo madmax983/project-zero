@@ -5162,3 +5162,157 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Clear the fungus (time/noise) vs. Risk the alarm (speed).
 
 ---
+
+## Ecological Succession
+
+**Layer:** 1
+
+**Fantasy:** A forest isn't just trees; it's a slow-motion explosion of life.
+
+**Mechanic:** Flora has growth stages (e.g., Grass -> Shrub -> Sapling -> Tree). Destroying a biome resets it. Some species only grow in the shade of others (climax community).
+
+**Emergence:** You clear-cut the "Ironwood" forest. It doesn't grow back. Instead, fast-growing "Fire-Weed" takes over, which is useless and flammable. You realize you killed the ecosystem that sustained you.
+
+**Tension:** Sustainable harvesting (selective logging) vs. Clear-cutting (fast resources, ecosystem shift).
+
+---
+
+## Gene-Banks
+
+**Layer:** 1
+
+**Fantasy:** Noah's Ark for DNA. Resurrecting the dead to save the living.
+
+**Mechanic:** Players can store DNA samples of flora/fauna/pops in "Cryo-Banks". If a species goes extinct (due to plague/over-harvesting), it can be cloned back into existence, but with "Genetic Drift" (slight mutations).
+
+**Emergence:** The "Wooly Grox" goes extinct. You clone it back to feed the colony. The new version is carnivorous.
+
+**Tension:** Conservation (save everything) vs. Storage Space (prioritize useful species).
+
+---
+
+## Modular Fauna
+
+**Layer:** 1
+
+**Fantasy:** Evolution doesn't follow a blueprint. The monsters should be weird.
+
+**Mechanic:** Animals are generated from parts (Head, Body, Limbs, Tail) with associated stats/behaviors. A "Wolf-Head" adds bite attack; "Crab-Legs" adds armor.
+
+**Emergence:** You encounter a "Bunny-Headed-Scorpion". It looks cute until it stings your best soldier.
+
+**Tension:** None—pure variety and emergent storytelling.
+
+---
+
+## Asteroid Claims
+
+**Layer:** 2
+
+**Fantasy:** The gold rush in the sky. Selling shovels instead of digging.
+
+**Mechanic:** You can survey asteroids and sell the "Mining Rights" to other factions (Layer 3) or independent miners. You get a % royalty of what they mine, but you lose control of the rock.
+
+**Emergence:** You sell rights to a Uranium asteroid to a "Peaceful Trader". They turn out to be a front for a terrorist group who uses the uranium to build nukes... which they fire at you.
+
+**Tension:** Quick Cash (Royalties) vs. Resource Control (Mining it yourself).
+
+---
+
+## Thermal Inversion
+
+**Layer:** 1
+
+**Fantasy:** The sky presses down on you.
+
+**Mechanic:** Weather event where cold air traps warm air (and pollution) near the ground. Smog/Smoke does not dissipate. Air quality tanks. Visibility drops.
+
+**Emergence:** During a thermal inversion, your industrial district becomes a death trap. Workers start suffocating. You have to shut down the factories or issue oxygen masks to everyone.
+
+**Tension:** Production uptime vs. Worker health during weather events.
+
+---
+
+## Gut Biome
+
+**Layer:** 1
+
+**Fantasy:** You are what you eat.
+
+**Mechanic:** Pops have a "Gut Biome". Eating Alien food adapts the biome. Sudden diet changes cause sickness.
+
+**Emergence:** Your colony eats "Moss-Bread" for years. You finally harvest "Real Wheat". Everyone gets sick because they can't digest it anymore.
+
+**Tension:** Dietary stability vs. Variety.
+
+---
+
+## Pollination Vectors
+
+**Layer:** 1
+
+**Fantasy:** The fragility of closed ecosystems.
+
+**Mechanic:** Crops require pollination (Insects/Wind). Sealed greenhouses need "Pollinator Drones" or "Hand-Pollination" (Labor intensive).
+
+**Emergence:** You kill all the "annoying bugs" with pesticide. The harvest fails.
+
+**Tension:** Open farms (free pollination/pests) vs. Closed farms (labor cost/safety).
+
+---
+
+## Masterwork Legacy
+
+**Layer:** 1
+
+**Fantasy:** A master craftsman leaves a mark.
+
+**Mechanic:** High-skill builders imprint bonuses on structures. "Hargin's Wall" is stronger.
+
+**Emergence:** Hargin dies. His walls are irreplaceable. You build a shrine around the last "Hargin Turret".
+
+**Tension:** Demolish the obsolete masterpiece or keep it for the buff/sentiment?
+
+---
+
+## Thermal Camouflage
+
+**Layer:** 1
+
+**Fantasy:** Holding your breath and cooling your blood.
+
+**Mechanic:** Detection is heat-based. "Running Hot" (Working/Shooting) makes you visible. "Running Cold" (Idle/Cryo) makes you invisible to sensors/fauna.
+
+**Emergence:** A monster is hunting the crew. The only way to survive is to turn off life support and freeze.
+
+**Tension:** Action (Heat) vs. Safety (Cold).
+
+---
+
+## Prohibition & Contraband
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** Forbidden pleasures.
+
+**Mechanic:** Banning items (e.g., "No Alcohol") creates a "Black Market" price premium. Smuggling increases.
+
+**Emergence:** You ban stims to improve health. The miners start brewing "Engine-Coolant Moonshine" which is 10x more toxic.
+
+**Tension:** Legalization (Control/Tax) vs. Prohibition (Health/Crime).
+
+---
+
+## Swarm Intelligence
+
+**Layer:** 1
+
+**Fantasy:** The whole is smarter than the parts.
+
+**Mechanic:** Individual drones are dumb. A group of drones shares CPU power, unlocking complex behaviors (flanking, repair) only when clustered.
+
+**Emergence:** A stray drone gets lost and reverts to "Bump into wall" behavior. You have to herd them like sheep to get them to fix the reactor.
+
+**Tension:** Dispersed coverage (dumb) vs. Concentrated swarm (smart).
+
+---
