@@ -5162,3 +5162,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Clear the fungus (time/noise) vs. Risk the alarm (speed).
 
 ---
+
+## Stellar Engines
+
+**Layer:** 3
+
+**Fantasy:** When the neighborhood goes bad, you don't move house—you move the star. The ultimate refusal to surrender to galactic geography.
+
+**Mechanic:** An endgame megastructure built around the star. It allows the entire solar system to move slowly across the Galaxy Map (Layer 3). Consumes massive energy and reduces the star's lifespan.
+
+**Emergence:** A "Devouring Swarm" is eating the sector. Instead of evacuating your colonies, you ignite the engine. The entire system slowly drifts out of the swarm's path, leaving your static neighbors to their doom.
+
+**Tension:** Stay and defend (Fortress) vs. Flee and isolate (Mobile System).
+
+---
+
+## Nutritional Spectrum
+
+**Layer:** 1
+
+**Fantasy:** You can survive on nutrient paste, but you can't thrive. The slow, silent killer of malnutrition.
+
+**Mechanic:** Food is not just "Hunger Fill". Ingredients provide specific nutrients (e.g., Meat=Protein, Fruit=Vitamins, Bread=Carbs). Deficits cause specific long-term debuffs (Scurvy: Bleeding, Rickets: Slow movement, Weakness: Low carry capacity).
+
+**Emergence:** You have 10,000 units of "fungus-bread" (Carbs). The colony is "full" but bedridden with muscle atrophy (Protein deficiency). You have to trade your high-tech lasers for a crate of frozen beef just to get the soldiers walking again.
+
+**Tension:** Monoculture efficiency (easy farming) vs. Polyculture health (complex logistics).
+
+---
+
+## Thermal Shock
+
+**Layer:** 1
+
+**Fantasy:** Physics is unforgiving. Rapid changes are just as deadly as extremes.
+
+**Mechanic:** Structures and Machines track their temperature. If temperature changes by >X degrees in a single tick (e.g., dousing a fire with liquid nitrogen, or venting a hot lab to vacuum), the structure takes "Shock Damage" or shatters.
+
+**Emergence:** A fire breaks out in the glasshouse. You panic and hit the "Emergency Void Vent". The fire goes out instantly, but the sudden drop to -270C causes every glass panel to explode, destroying the crops you tried to save.
+
+**Tension:** Slow, controlled cooling (Risk of fire spread) vs. Instant, violent cooling (Risk of structural damage).
+
+---
