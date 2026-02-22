@@ -27,9 +27,11 @@ mod app {
 
     pub struct App {
         world: World,
-        state: ListState,
+        state: TableState,
         should_quit: bool,
         last_tick: std::time::Instant,
+        notification: Option<String>,
+        notification_timer: Option<std::time::Instant>,
     }
 
     impl App {
@@ -70,7 +72,7 @@ mod app {
                 EventImportance::Major,
             );
 
-            let mut state = ListState::default();
+            let mut state = TableState::default();
             state.select(Some(0));
 
             Self {
@@ -78,6 +80,8 @@ mod app {
                 state,
                 should_quit: false,
                 last_tick: std::time::Instant::now(),
+                notification: None,
+                notification_timer: None,
             }
         }
 
@@ -131,6 +135,14 @@ mod app {
                     self.last_tick = std::time::Instant::now();
                 }
 
+                // Clear notification after 2 seconds
+                if let Some(timer) = self.notification_timer {
+                    if timer.elapsed() >= Duration::from_secs(2) {
+                        self.notification = None;
+                        self.notification_timer = None;
+                    }
+                }
+
                 if self.should_quit {
                     return Ok(());
                 }
@@ -168,6 +180,9 @@ mod app {
             self.world
                 .resource_mut::<Chronicle>()
                 .add_event(tick, text.to_string(), importance);
+
+            self.notification = Some(format!("Event Added: {}", text));
+            self.notification_timer = Some(std::time::Instant::now());
         }
 
         fn next(&mut self) {
@@ -204,27 +219,7 @@ mod app {
                 ])
                 .split(f.area());
 
-            // Header
-            let time = self.world.resource::<SimulationTime>();
-            let header = Paragraph::new(format!(
-                "Oral Tradition Explorer | Tick: {} | Speed: Auto",
-                time.tick
-            ))
-            .style(
-                Style::default()
-                    .fg(Color::Cyan)
-                    .add_modifier(Modifier::BOLD),
-            )
-            .block(Block::default().borders(Borders::ALL));
-            f.render_widget(header, chunks[0]);
-
-            // Footer
-            let footer = Paragraph::new(
-                "Controls: 'a' Add Event | 'q' Quit | ↑/↓ Select Story | Space: Force Tick",
-            )
-            .style(Style::default().fg(Color::Gray))
-            .block(Block::default().borders(Borders::ALL));
-            f.render_widget(footer, chunks[2]);
+            self.render_header(f, chunks[0]);
 
             // Main Content
             let main_chunks = Layout::default()
@@ -235,62 +230,142 @@ mod app {
                 ])
                 .split(chunks[1]);
 
-            // Left: Stories List
-            let tradition = self.world.resource::<OralTradition>();
-            let items: Vec<ListItem> = tradition
-                .stories
-                .iter()
-                .map(|story| {
-                    let style = match story.genre {
-                        StoryGenre::Heroic => Style::default().fg(Color::Yellow),
-                        StoryGenre::Tragedy => Style::default().fg(Color::Red),
-                        StoryGenre::Cautionary => Style::default().fg(Color::Magenta),
-                        StoryGenre::Trivial => Style::default().fg(Color::Gray),
-                    };
-                    ListItem::new(Line::from(vec![
-                        Span::styled(format!("[{:?}] ", story.genre), style),
-                        Span::raw(&story.text),
-                    ]))
-                })
-                .collect();
+            self.render_table(f, main_chunks[0]);
+            self.render_details(f, main_chunks[1]);
+            self.render_footer(f, chunks[2]);
+        }
 
-            let list = List::new(items)
-                .block(
-                    Block::default()
-                        .borders(Borders::ALL)
-                        .title("Active Legends (Oral Tradition)"),
-                )
-                .highlight_style(
+        fn render_header(&self, f: &mut Frame, area: Rect) {
+            let time = self.world.resource::<SimulationTime>();
+            let header_text = format!(
+                "Oral Tradition Explorer | Tick: {} | Speed: Auto",
+                time.tick
+            );
+
+            let block = Block::default()
+                .borders(Borders::ALL)
+                .border_style(Style::default().fg(Color::Cyan))
+                .title(Span::styled(
+                    " Mosaic UI Polish ",
                     Style::default()
-                        .fg(Color::White)
-                        .bg(Color::DarkGray)
+                        .fg(Color::Yellow)
                         .add_modifier(Modifier::BOLD),
-                );
-            f.render_stateful_widget(list, main_chunks[0], &mut self.state);
+                ));
 
-            // Right: Details
-            let details_block = Block::default()
+            let paragraph = Paragraph::new(header_text)
+                .style(Style::default().fg(Color::White))
+                .block(block)
+                .alignment(Alignment::Center);
+
+            f.render_widget(paragraph, area);
+
+            // Notification Overlay (Right side of header)
+            if let Some(msg) = &self.notification {
+                let layout = Layout::default()
+                    .direction(Direction::Horizontal)
+                    .constraints([Constraint::Min(0), Constraint::Length(60)])
+                    .split(area);
+
+                // Use the right side for notifications
+                // We need to render it on top or just in the corner
+                let notif_area = layout[1];
+                // Manually adjust area to fit inside border?
+                // Actually, just render a paragraph
+                let notif = Paragraph::new(Span::styled(
+                    format!("🔔 {}", msg),
+                    Style::default()
+                        .fg(Color::Green)
+                        .add_modifier(Modifier::BOLD),
+                ))
+                .alignment(Alignment::Right)
+                .block(Block::default().borders(Borders::NONE)); // No border to blend in
+
+                // Render on top of the header content (technically z-index is order of rendering, so this is fine)
+                f.render_widget(notif, notif_area);
+            }
+        }
+
+        fn render_table(&mut self, f: &mut Frame, area: Rect) {
+            let tradition = self.world.resource::<OralTradition>();
+
+            let header_cells = ["Genre", "Origin", "Mutations", "Snippet"]
+                .iter()
+                .map(|h| Cell::from(*h).style(Style::default().fg(Color::Yellow)));
+
+            let header = Row::new(header_cells)
+                .style(Style::default().bg(Color::DarkGray))
+                .height(1)
+                .bottom_margin(1);
+
+            let rows = tradition.stories.iter().map(|story| {
+                let genre_color = match story.genre {
+                    StoryGenre::Heroic => Color::Yellow,
+                    StoryGenre::Tragedy => Color::Red,
+                    StoryGenre::Cautionary => Color::Magenta,
+                    StoryGenre::Trivial => Color::Gray,
+                };
+
+                let snippet = if story.text.chars().count() > 30 {
+                    let truncated: String = story.text.chars().take(27).collect();
+                    format!("{}...", truncated)
+                } else {
+                    story.text.clone()
+                };
+
+                let cells = vec![
+                    Cell::from(format!("{:?}", story.genre))
+                        .style(Style::default().fg(genre_color)),
+                    Cell::from(story.origin_tick.to_string()),
+                    Cell::from(story.mutations.to_string()),
+                    Cell::from(snippet),
+                ];
+
+                Row::new(cells).height(1)
+            });
+
+            let table = Table::new(
+                rows,
+                [
+                    Constraint::Length(12),
+                    Constraint::Length(8),
+                    Constraint::Length(10),
+                    Constraint::Min(10),
+                ],
+            )
+            .header(header)
+            .block(Block::default().borders(Borders::ALL).title("Legends"))
+            .row_highlight_style(Style::default().add_modifier(Modifier::REVERSED));
+
+            f.render_stateful_widget(table, area, &mut self.state);
+        }
+
+        fn render_details(&self, f: &mut Frame, area: Rect) {
+            let block = Block::default()
                 .borders(Borders::ALL)
                 .title("Legend Details");
 
+            let tradition = self.world.resource::<OralTradition>();
+
             if let Some(i) = self.state.selected() {
                 if let Some(story) = tradition.stories.get(i) {
-                    let details_text = vec![
+                    let effect_text = match story.genre {
+                        StoryGenre::Heroic => "Boosts Leisure (Morale)",
+                        StoryGenre::Tragedy => "Provides Catharsis (Small Leisure)",
+                        StoryGenre::Cautionary => "Increases Wakefulness (Fear)",
+                        StoryGenre::Trivial => "No significant effect",
+                    };
+
+                    let text = vec![
                         Line::from(vec![
                             Span::styled("Genre: ", Style::default().fg(Color::Cyan)),
                             Span::raw(format!("{:?}", story.genre)),
-                        ]),
-                        Line::from(vec![
+                            Span::raw("  "),
                             Span::styled("Mutations: ", Style::default().fg(Color::Cyan)),
                             Span::raw(format!("{}", story.mutations)),
                         ]),
-                        Line::from(vec![
-                            Span::styled("Origin Tick: ", Style::default().fg(Color::Cyan)),
-                            Span::raw(format!("{}", story.origin_tick)),
-                        ]),
                         Line::from(""),
                         Line::from(Span::styled(
-                            "Current Text:",
+                            "Full Text:",
                             Style::default().add_modifier(Modifier::UNDERLINED),
                         )),
                         Line::from(Span::styled(&story.text, Style::default().fg(Color::Green))),
@@ -299,30 +374,29 @@ mod app {
                             "Effect:",
                             Style::default().add_modifier(Modifier::UNDERLINED),
                         )),
-                        Line::from(match story.genre {
-                            StoryGenre::Heroic => "Boosts Leisure (Morale)",
-                            StoryGenre::Tragedy => "Provides Catharsis (Small Leisure)",
-                            StoryGenre::Cautionary => "Increases Wakefulness (Fear)",
-                            StoryGenre::Trivial => "No significant effect",
-                        }),
+                        Line::from(Span::styled(
+                            effect_text,
+                            Style::default().fg(Color::Yellow),
+                        )),
                     ];
 
-                    let p = Paragraph::new(details_text)
-                        .block(details_block)
-                        .wrap(Wrap { trim: true });
-                    f.render_widget(p, main_chunks[1]);
+                    let p = Paragraph::new(text).block(block).wrap(Wrap { trim: true });
+                    f.render_widget(p, area);
                 } else {
-                    f.render_widget(
-                        Paragraph::new("Select a story...").block(details_block),
-                        main_chunks[1],
-                    );
+                    f.render_widget(Paragraph::new("Select a legend...").block(block), area);
                 }
             } else {
-                f.render_widget(
-                    Paragraph::new("Select a story...").block(details_block),
-                    main_chunks[1],
-                );
+                f.render_widget(Paragraph::new("Select a legend...").block(block), area);
             }
+        }
+
+        fn render_footer(&self, f: &mut Frame, area: Rect) {
+            let footer_text =
+                "Controls: 'a' Add Event | 'q' Quit | ↑/↓ Select Story | Space: Force Tick";
+            let p = Paragraph::new(footer_text)
+                .style(Style::default().fg(Color::Gray))
+                .block(Block::default().borders(Borders::ALL));
+            f.render_widget(p, area);
         }
     }
 }
