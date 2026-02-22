@@ -1800,3 +1800,142 @@ BIO_INFECTION:
     - TERROR (high)
     - SICKNESS (medium)
 ```
+
+## Cryo-Dreams Chaining
+
+```yaml
+CRYO_WAKE_EPIPHANY:
+  enables:
+    - TECH_BREAKTHROUGH (high)
+    - NEW_TRADITION (medium)
+  increases:
+    - KNOWLEDGE (high)
+    - MORALE (medium)
+
+CRYO_WAKE_NIGHTMARE:
+  enables:
+    - CABIN_FEVER_BREAK (medium)
+    - OMEN_WITNESSED (high, "they brought it back")
+    - WORK_STOPPAGE (low)
+  increases:
+    - FEAR (high)
+    - TRAUMA (high)
+```
+
+## Gastronomy Chaining
+
+```yaml
+MYSTERY_MEAL_COOKED:
+  enables:
+    - FOOD_POISONING (medium, risk)
+    - RECIPE_MASTERED (medium, reward)
+    - XENO_DELICACY (low, critical success)
+  increases:
+    - CURIOSITY (medium)
+    - CAUTION (medium)
+
+RECIPE_MASTERED:
+  enables:
+    - FEAST (high)
+    - TRADE_GOOD_EXPORT (medium)
+  increases:
+    - MORALE (high)
+    - HEALTH (medium)
+
+FOOD_POISONING:
+  enables:
+    - WORK_STOPPAGE (medium)
+    - MEDICAL_EMERGENCY (low)
+  increases:
+    - SICKNESS (high)
+    - DISTRUST_OF_COOK (high)
+```
+
+## Atmospheric Chaining
+
+```yaml
+TIDE_HIGH:
+  enables:
+    - MOVEMENT_PENALTY (always)
+    - WIND_POWER_BOOST (high)
+    - COMPRESSOR_FAILURE (low)
+  increases:
+    - FATIGUE (medium)
+    - NOISE_COMPLAINT (high)
+
+TIDE_LOW:
+  enables:
+    - MOVEMENT_BOOST (always)
+    - WIND_POWER_DROP (high)
+    - VENTILATION_ISSUE (medium)
+  increases:
+    - RELIEF (medium)
+    - DIZZINESS (low)
+```
+
+## Festival Chaining
+
+```yaml
+FESTIVAL_START:
+  enables:
+    - WORK_STOPPAGE (high, intended)
+    - SOCIAL_BONDING (high)
+    - RUMOR_SPREAD (high)
+    - BRAWL (low, too much brew)
+  increases:
+    - MORALE (high)
+    - UNITY (high)
+
+FESTIVAL_END:
+  enables:
+    - CLEANUP_DUTY (high)
+    - POST_FESTIVAL_BLUES (low)
+  increases:
+    - MEMORY_RETENTION (high)
+```
+
+## Radiation Chaining
+
+```yaml
+RADIATION_SICKNESS_DETECTED:
+  enables:
+    - MEDICAL_TREATMENT (high)
+    - EVACUATION (medium)
+    - SHIELDING_CONSTRUCTION (high)
+  increases:
+    - FEAR_OF_INVISIBLE (high)
+    - HEALTH_LOSS (high)
+
+WARM_STONE_REFUGE:
+  enables:
+    - SICKNESS_OUTBREAK (medium, long term)
+    - HYPOTHERMIA_AVOIDED (high, short term)
+  increases:
+    - COMFORT (medium, misleading)
+    - DANGER (high, hidden)
+```
+
+## Crop Chaining
+
+```yaml
+FIRST_HARVEST_WHEAT:
+  enables:
+    - BAKING (high)
+    - ALE_BREWING (medium)
+  increases:
+    - FOOD_STABILITY (medium)
+
+FIRST_HARVEST_POTATO:
+  enables:
+    - WINTER_SURVIVAL (high)
+    - VODKA_BREWING (low)
+  increases:
+    - SECURITY (high)
+
+FIRST_HARVEST_RICE:
+  enables:
+    - SUSHI_PREPARATION (low, xeno-fish)
+    - SAKE_BREWING (medium)
+  increases:
+    - FOOD_STABILITY (high)
+```

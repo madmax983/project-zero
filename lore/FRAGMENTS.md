@@ -2699,3 +2699,249 @@ Signs of a sick building.
 - rot-smell
 - brittle-bone
 - silent-heart
+
+## Cryo-Dream Fragments (Spec 195)
+
+### [DREAM_IMAGE]
+Surreal images from cryo-sleep.
+
+- a city of glass that sings
+- the face of someone never met
+- an ocean of stars
+- walking without gravity
+- a door that opens into void
+- the smell of rain on hot stone
+- a library with infinite books
+- the feeling of falling up
+
+### [NIGHTMARE_IMAGE]
+Disturbing images from cryo-trauma.
+
+- being frozen while awake
+- the silence that has teeth
+- faces melting into ice
+- the ship breaking apart endlessly
+- suffocating in the dark
+- being forgotten by the universe
+- the cold that burns
+- a shadow that moves when you don't
+
+---
+
+## Gastronomy Fragments (Spec 166)
+
+### [ALIEN_INGREDIENT]
+Names for strange food sources.
+
+- void-crab meat
+- glow-shroom caps
+- star-kelp
+- rock-worm fillet
+- nebula-spores
+- beast-flank
+- mystery-slime
+
+### [FLAVOR_PROFILE]
+How alien food tastes.
+
+- metallic
+- impossibly sweet
+- like static electricity
+- earthy and deep
+- sour-burning
+- confusingly warm
+- like old memories
+- sharp as glass
+
+### [MEAL_NAME_PREFIX]
+Prefix for procedural meal names.
+
+- Void
+- Star
+- Deep
+- Colony
+- Miner's
+- Captain's
+- Surprise
+- Mystery
+
+### [MEAL_NAME_SUFFIX]
+Suffix for procedural meal names.
+
+- Stew
+- Roast
+- Hash
+- Delight
+- Surprise
+- Slurry
+- Feast
+- Ration
+
+### [POISON_SYMPTOM]
+Symptoms of bad alien food.
+
+- seeing colors
+- gravity vertigo
+- burning stomach
+- temporary blindness
+- uncontrollable weeping
+- skin turning blue
+- speaking backwards
+
+---
+
+## Atmospheric Fragments (Spec 190)
+
+### [PRESSURE_DESC_HIGH]
+Describing high atmospheric pressure.
+
+- crushing
+- thick as soup
+- heavy
+- pressing down
+- suffocation-heavy
+- slow-moving
+- dense
+
+### [PRESSURE_DESC_LOW]
+Describing low atmospheric pressure.
+
+- thin
+- gasping
+- sharp
+- light-headed
+- dizzying
+- empty
+- breathless
+
+### [TIDE_SOUND]
+Sounds of the changing pressure.
+
+- a deep thrum
+- ears popping
+- wind screaming
+- the walls groaning
+- a high whine
+- sudden silence
+- a rushing roar
+
+---
+
+## Festival Fragments (Spec 077)
+
+### [FESTIVAL_TYPE]
+Types of celebrations.
+
+- Feast
+- Remembrance
+- Dance
+- Wake
+- Jubilee
+- Gathering
+- Rite
+
+### [CELEBRATION_ACTION]
+What pops do during festivals.
+
+- share stories
+- burn effigies
+- dance until dawn
+- sing the old songs
+- share their rations
+- paint the walls
+- forget the cold
+
+### [FESTIVAL_FOOD]
+Special food for festivals.
+
+- sugar-cakes
+- fermented-mash
+- meat-pies
+- sweet-water
+- preserved-fruit
+- double-rations
+- the good stuff
+
+---
+
+## Radiation Fragments (Spec 191)
+
+### [RADIATION_SYMPTOM]
+Signs of radiation sickness.
+
+- hair loss
+- metallic taste
+- skin burns
+- weakness
+- bleeding gums
+- fever
+- seeing flashes
+
+### [GLOW_DESC]
+Description of radioactive glow.
+
+- sick-green
+- pale-blue
+- angry-red
+- ghost-white
+- pulsing-violet
+- unnatural-yellow
+
+### [WARM_STONE_DESC]
+Description of radioactive heat source.
+
+- biting warmth
+- unnatural heat
+- pulsing hot
+- fever-warm
+- dangerously cozy
+- silent fire
+
+---
+
+## Crop Fragments (Spec 120)
+
+### [CROP_DESC_WHEAT]
+- golden-stalks
+- sun-grain
+- earth-grass
+- bread-seed
+- tall-grass
+
+### [CROP_DESC_POTATO]
+- earth-apple
+- dirt-tuber
+- buried-gold
+- winter-root
+- starch-stone
+
+### [CROP_DESC_RICE]
+- water-grain
+- marsh-seed
+- white-pearl
+- river-grass
+- mist-crop
+
+---
+
+## Monument Fragments (Spec 167)
+
+### [RUIN_NAME]
+Names for ruined structures.
+
+- The Fallen Tower
+- [NAME]'s Folly
+- The Old Reactor
+- The Broken Wall
+- Echo Hall
+- The Empty Shell
+- Ghost-Structure
+
+### [RUIN_DESCRIPTION]
+- haunted by the past
+- stripped of value
+- silent and cold
+- a monument to failure
+- mostly rubble
+- holding memories
+- structurally unsound

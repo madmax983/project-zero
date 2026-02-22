@@ -1949,3 +1949,123 @@
 **Usage:**
 - "It is Feeding-Time for the walls."
 - "Don't miss Feeding-Time."
+
+## Cryo-Dreams
+
+### the Long Sleep
+**Replaces:** cryo-stasis
+**Code reference:** `CryoStasis`
+**Usage:**
+- "He went into the Long Sleep."
+- "The Long Sleep changes you."
+
+### dream-walker
+**Replaces:** pop with cryo-dreams
+**Code reference:** `CryoDreamState`
+**Usage:**
+- "She came back a dream-walker."
+- "Dream-walkers know things they shouldn't."
+
+---
+
+## Gastronomy
+
+### mystery-meat
+**Replaces:** unknown alien ingredient
+**Code reference:** `ItemType::MysteryMeat`
+**Usage:**
+- "Don't ask, it's mystery-meat."
+- "Cooking up some mystery-meat."
+
+### The Chef / Flavor-Binder
+**Replaces:** cook job
+**Code reference:** `Job::Chef`
+**Usage:**
+- "The Flavor-Binder calls for salt."
+- "Respect the Chef."
+
+### void-cooking
+**Replaces:** experimental cooking
+**Code reference:** `CookingExperiment`
+**Usage:**
+- "That's void-cooking for you."
+- "Pure void-cooking, 50% chance of poison."
+
+---
+
+## Atmospheric Tides
+
+### The Crush
+**Replaces:** high pressure
+**Code reference:** `AtmosphericTide::High`
+**Usage:**
+- "The Crush is heavy today."
+- "Waiting for the Crush to pass."
+
+### The Gasp
+**Replaces:** low pressure
+**Code reference:** `AtmosphericTide::Low`
+**Usage:**
+- "Work is fast in the Gasp."
+- "Light-headed from the Gasp."
+
+---
+
+## Radiation
+
+### warm-stone
+**Replaces:** radioactive ore/waste used for heat
+**Code reference:** `RadioactiveHearth`
+**Usage:**
+- "Huddling around the warm-stone."
+- "The warm-stone keeps the winter out."
+
+### sick-light
+**Replaces:** radiation glow
+**Usage:**
+- "Don't look at the sick-light."
+- "Bathed in sick-light."
+
+---
+
+## Festivals
+
+### Remembrance
+**Replaces:** memorial festival
+**Code reference:** `FestivalType::Memorial`
+**Usage:**
+- "Today is a day of Remembrance."
+- "Lighting candles for Remembrance."
+
+### The Jubilee
+**Replaces:** celebration festival
+**Code reference:** `FestivalType::Celebration`
+**Usage:**
+- "The Jubilee has started."
+- "Dancing at the Jubilee."
+
+---
+
+## Crops
+
+### sun-grain
+**Replaces:** wheat
+**Code reference:** `ItemType::Wheat`
+**Usage:**
+- "Harvesting the sun-grain."
+- "Grinding sun-grain for bread."
+
+### earth-apple
+**Replaces:** potato
+**Code reference:** `ItemType::Potato`
+**Usage:**
+- "Roasting earth-apples."
+- "Digging for earth-apples."
+
+
+### white-pearl
+**Replaces:** rice
+**Code reference:** `ItemType::Rice`
+**Usage:**
+- "Boiling white-pearl."
+- "The paddies are full of white-pearl."
