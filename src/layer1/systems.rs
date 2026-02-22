@@ -387,17 +387,26 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             crate::layer1::temperature::thermal_damage_system.after(decay_needs_system),
             crate::layer1::radioactive::sickness_damage_system.after(decay_needs_system),
             pressure_damage_system.after(decay_needs_system),
-            starvation_damage_system.after(decay_needs_system),
-            check_death_event_system
-                .after(starvation_damage_system)
+            crate::layer1::needs::starvation_damage_system.after(decay_needs_system),
+            crate::layer1::health::check_health_status_system
+                .after(crate::layer1::needs::starvation_damage_system)
                 .after(crate::layer1::temperature::thermal_damage_system)
                 .after(crate::layer1::radioactive::sickness_damage_system)
                 .after(pressure_damage_system)
                 .after(natural_death_system),
-            mascot_death_grief_system.after(check_death_event_system),
-            death_system.after(mascot_death_grief_system),
-            clean_dead_residents_system.after(death_system),
-            clean_dead_workers_system.after(death_system),
+            crate::layer1::pop::handle_pop_death_system
+                .after(crate::layer1::health::check_health_status_system),
+            crate::layer1::fauna::handle_fauna_death_system
+                .after(crate::layer1::health::check_health_status_system),
+            crate::layer1::pop::handle_witness_death_system
+                .after(crate::layer1::pop::handle_pop_death_system),
+            mascot_death_grief_system.after(crate::layer1::health::check_health_status_system),
+            crate::layer1::health::despawn_dead_entities_system
+                .after(crate::layer1::pop::handle_pop_death_system)
+                .after(crate::layer1::fauna::handle_fauna_death_system)
+                .after(mascot_death_grief_system),
+            clean_dead_residents_system.after(crate::layer1::health::despawn_dead_entities_system),
+            clean_dead_workers_system.after(crate::layer1::health::despawn_dead_entities_system),
         )
             .in_set(Layer1SystemSet::Consumption),
     );
@@ -405,27 +414,27 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
     // --- Observation ---
     schedule.add_systems(
         (
-            biography_monitor_system.after(death_system),
-            crate::layer1::graffiti::graffiti_placement_system.after(death_system),
-            dream_system.after(death_system),
-            crate::layer1::cryo_dreams::cryo_dream_system.after(death_system),
+            biography_monitor_system.after(crate::layer1::health::despawn_dead_entities_system),
+            crate::layer1::graffiti::graffiti_placement_system.after(crate::layer1::health::despawn_dead_entities_system),
+            dream_system.after(crate::layer1::health::despawn_dead_entities_system),
+            crate::layer1::cryo_dreams::cryo_dream_system.after(crate::layer1::health::despawn_dead_entities_system),
             cleanup_dream_marker_system.after(dream_system),
             #[cfg(feature = "nova")]
-            crate::layer1::observer::observer_awareness_system.after(death_system),
+            crate::layer1::observer::observer_awareness_system.after(crate::layer1::health::despawn_dead_entities_system),
         )
             .in_set(Layer1SystemSet::Observation),
     );
 
     schedule.add_systems(
         (
-            check_milestones_system.after(death_system),
-            crate::layer1::rumor::generate_rumor_system.after(death_system),
-            crate::layer1::rumor::exchange_rumors_system.after(death_system),
-            crate::layer1::society::form_societies_system.after(death_system),
-            crate::layer1::society::society_meeting_system.after(death_system),
-            crate::layer1::society::investigation_handler_system.after(death_system),
-            crate::layer1::society::suppression_handler_system.after(death_system),
-            crate::layer1::funeral::grief_system.after(death_system),
+            check_milestones_system.after(crate::layer1::health::despawn_dead_entities_system),
+            crate::layer1::rumor::generate_rumor_system.after(crate::layer1::health::despawn_dead_entities_system),
+            crate::layer1::rumor::exchange_rumors_system.after(crate::layer1::health::despawn_dead_entities_system),
+            crate::layer1::society::form_societies_system.after(crate::layer1::health::despawn_dead_entities_system),
+            crate::layer1::society::society_meeting_system.after(crate::layer1::health::despawn_dead_entities_system),
+            crate::layer1::society::investigation_handler_system.after(crate::layer1::health::despawn_dead_entities_system),
+            crate::layer1::society::suppression_handler_system.after(crate::layer1::health::despawn_dead_entities_system),
+            crate::layer1::funeral::grief_system.after(crate::layer1::health::despawn_dead_entities_system),
             crate::layer1::unrest::check_mental_break_system.after(decay_needs_system),
             check_stress_breakdown_system.after(decay_needs_system),
             update_breakdown_system.after(check_stress_breakdown_system),
@@ -460,10 +469,10 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             #[cfg(feature = "nova")]
             crate::layer1::oral_tradition::storytelling_system
                 .after(crate::layer1::rumor::exchange_rumors_system),
-            pop_death_chronicle_bridge.after(death_system),
+            pop_death_chronicle_bridge.after(crate::layer1::health::despawn_dead_entities_system),
             retrograde_chronicle_bridge.after(work_execution_system), // work_execution_system is in Execution set
             amputation_handler_system.after(work_execution_system),
-            art_observation_system.after(death_system),
+            art_observation_system.after(crate::layer1::health::despawn_dead_entities_system),
             observe_inspector_system.after(art_observation_system),
         )
             .in_set(Layer1SystemSet::Observation),
@@ -473,7 +482,7 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
         (
             inspector_report_system.after(chronicle_event_handler_system),
             inspector_outcome_bridge_system.after(inspector_report_system),
-            taboo_event_system.after(death_system),
+            taboo_event_system.after(crate::layer1::health::despawn_dead_entities_system),
         )
             .in_set(Layer1SystemSet::Observation),
     );

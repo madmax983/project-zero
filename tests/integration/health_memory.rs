@@ -1,16 +1,20 @@
 use bevy_ecs::prelude::*;
-use scale::layer1::health::{Health, death_system, starvation_damage_system};
+use scale::layer1::health::{Health, check_health_status_system, despawn_dead_entities_system, DeathEvent};
+use scale::layer1::needs::starvation_damage_system;
 use scale::layer1::memory::{Memories, MemoryType};
 use scale::layer1::needs::Needs;
-use scale::layer1::pop::Pop;
+use scale::layer1::pop::{Pop, PopDied, handle_pop_death_system, handle_witness_death_system};
 use scale::shared::log::MessageLog;
 use scale::shared::time::SimulationTime;
+use bevy_ecs::system::RunSystemOnce;
 
 fn setup() -> World {
     scale::setup::init_task_pools();
     let mut world = World::new();
     world.insert_resource(MessageLog::default());
     world.insert_resource(SimulationTime::default());
+    world.insert_resource(bevy_ecs::event::Events::<DeathEvent>::default());
+    world.insert_resource(bevy_ecs::event::Events::<PopDied>::default());
     world
 }
 
@@ -35,8 +39,13 @@ fn test_death_causes_witnessed_memory() {
         ))
         .id();
 
-    // Run death system
-    death_system(&mut world);
+    // Run death system chain
+    check_health_status_system(&mut world);
+    world.resource_mut::<bevy_ecs::event::Events<DeathEvent>>().update();
+    world.run_system_once(handle_pop_death_system).unwrap();
+    world.resource_mut::<bevy_ecs::event::Events<PopDied>>().update();
+    world.run_system_once(handle_witness_death_system).unwrap();
+    despawn_dead_entities_system(&mut world);
 
     // Victim should be despawned
     assert!(

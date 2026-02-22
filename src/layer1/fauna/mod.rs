@@ -1,9 +1,11 @@
 use crate::layer1::execution::{AtTarget, MovementTarget};
-use crate::layer1::health::Health;
+use crate::layer1::health::{Dead, Health};
 use crate::layer1::map::GridPosition;
 use crate::layer1::pop::Pop;
 use crate::layer1::utility_types::ActionType;
+use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
+use ratatui::style::Color;
 
 /// Modular fauna components (Spec 164).
 pub mod modular;
@@ -186,6 +188,32 @@ pub fn fauna_behavior_system(world: &mut World) {
             if let Some(mut log) = world.get_resource_mut::<crate::shared::log::MessageLog>() {
                 log.add("DANGER: A wild animal is attacking!");
             }
+        }
+    }
+}
+
+/// Handles death events specific to Fauna.
+pub fn handle_fauna_death_system(
+    query: Query<(Entity, Option<&GridPosition>), (With<Fauna>, Added<Dead>)>,
+    mut commands: Commands,
+    mut log: Option<ResMut<MessageLog>>,
+) {
+    for (_entity, pos_opt) in query.iter() {
+        // 1. Visuals
+        if let Some(pos) = pos_opt {
+            commands.spawn((
+                crate::layer1::particles::Particle {
+                    char: '%',
+                    color: Color::Red,
+                    lifetime: 10,
+                },
+                *pos,
+            ));
+        }
+
+        // 2. Log
+        if let Some(log) = log.as_mut() {
+            log.add_colored("Creature slain!", Color::Red);
         }
     }
 }

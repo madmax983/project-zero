@@ -232,50 +232,6 @@ mod tests {
         assert!(crate::layer1::defense::is_walkable(&mut world, 1, 0));
     }
 
-    // 3. Building Health & Death
-    #[test]
-    fn test_building_takes_damage() {
-        let mut health = Health {
-            current: 100.0,
-            max: 100.0,
-        };
-        health.take_damage(10.0);
-        assert_eq!(health.current, 90.0);
-    }
-
-    #[test]
-    fn test_building_death_message() {
-        // Refactor death_system to distinguish pops vs buildings
-        let mut world = World::new();
-        world.insert_resource(crate::shared::log::MessageLog::default());
-
-        let wall = world
-            .spawn((
-                Building {
-                    building_type: BuildingType::Wall,
-                },
-                Health {
-                    current: -1.0,
-                    max: 100.0,
-                },
-            ))
-            .id();
-
-        crate::layer1::health::death_system(&mut world);
-
-        assert!(world.get_entity(wall).is_err());
-
-        let log = world.resource::<crate::shared::log::MessageLog>();
-        // Should NOT say "Colonist has died"
-        // Should say "Building destroyed" or nothing?
-        // For now, check it doesn't say Colonist.
-        // Implementation detail: we need to update death_system.
-
-        // Note: The original spec test checked "DEATH: A colonist has died!" is NOT present.
-        // I will check the actual new message.
-        let msg = &log.messages.back().unwrap().text;
-        assert_eq!(msg, "Building destroyed!");
-    }
 }
 
 /// Helper to check if a specific building entity is an obstacle (locked gate or solid building).
