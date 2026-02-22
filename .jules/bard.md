@@ -41,3 +41,7 @@
 ## 2026-02-18 - [Faction Satisfaction Logic]
 **Confusion:** Users (and devs) expected Factions to go on strike, but the math in `update_faction_satisfaction_system` resets satisfaction to 1.0 every tick, making it impossible to reach the unhappiness threshold with current penalty values.
 **Clarification:** Added a warning to `layer1::factions` explaining this non-cumulative behavior so future developers know why their strikes aren't firing.
+
+## 2026-02-19 - [Chemical Regulation]
+**Confusion:** The effects of `Stim` and `Sedative` were hidden in code (e.g., immediate health damage vs duration-based speed modifiers), and the addiction loop mechanics were undocumented.
+**Clarification:** Added comprehensive module-level documentation to `layer1::chemical` explaining the trade-offs (Health vs Speed, Stress vs Speed), magic numbers (500 tick duration), and the Panic-inducing nature of withdrawal.
