@@ -122,3 +122,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `166` Xeno-Gastronomy — `specs/166-xeno-gastronomy.md` — completed 2026-10-31
 - [x] `104` Fuel Industry — `specs/104-fuel-industry.md` — completed 2026-02-21
 - [x] `077` Emergent Festivals — `specs/077-emergent-festivals.md` — completed 2026-02-22
+- [x] `191` Radioactive Hearth — `specs/191-radioactive-hearth.md` — completed 2026-02-21
