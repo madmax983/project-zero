@@ -64,6 +64,7 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer1::society::SuppressSocietyEvent>,
             update_event_buffer::<crate::layer1::medical::PatientTreated>,
             update_event_buffer::<crate::layer1::eureka::EurekaEvent>,
+            update_event_buffer::<crate::layer1::items::UnequipEvent>,
         )
             .in_set(Layer1SystemSet::EventCleanup),
     );
@@ -456,10 +457,19 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
                 .after(crate::layer1::health::despawn_dead_entities_system),
             crate::layer1::unrest::check_mental_break_system.after(decay_needs_system),
             check_stress_breakdown_system.after(decay_needs_system),
+            crate::layer1::totems::check_spontaneous_totem_creation
+                .after(check_stress_breakdown_system),
+            crate::layer1::totems::unequip_totem_system.after(decay_needs_system),
             update_breakdown_system.after(check_stress_breakdown_system),
             update_catharsis_duration_system.after(decay_needs_system),
             check_sleepwalking_start_system.after(decay_needs_system),
             sleepwalk_end_system.after(decay_needs_system),
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::justice::check_crime_system
                 .after(crate::layer1::unrest::check_mental_break_system),
             crate::layer1::unrest::recover_mental_break_system.after(decay_needs_system),

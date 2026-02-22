@@ -71,10 +71,21 @@ pub fn check_stress_breakdown_system(
         Option<&Catharsis>,
         Option<&Morale>,
         Option<&ActiveAuras>,
+        Option<&crate::layer1::items::Equipment>,
     )>,
+    totem_query: Query<&crate::layer1::totems::Totem>,
 ) {
-    for (entity, needs, mut tracker, traits, breakdown, catharsis, morale_comp, active_auras) in
-        &mut query
+    for (
+        entity,
+        needs,
+        mut tracker,
+        traits,
+        breakdown,
+        catharsis,
+        morale_comp,
+        active_auras,
+        equipment,
+    ) in &mut query
     {
         // If already broken or has catharsis, skip stress tracking
         if breakdown.is_some() || catharsis.is_some() {
@@ -96,8 +107,16 @@ pub fn check_stress_breakdown_system(
             }
         }
 
+        // Calculate Totem Modifier
+        let mut totem_stress_relief = 0.0;
+        if let Some(eq) = equipment {
+            if let Some(totem) = eq.totem.and_then(|e| totem_query.get(e).ok()) {
+                totem_stress_relief = totem.stress_relief;
+            }
+        }
+
         let base_change = if low_morale { 1.0 } else { -1.0 };
-        let total_change = base_change + aura_stress_mod;
+        let total_change = base_change + aura_stress_mod - totem_stress_relief;
 
         // Accumulate stress, clamped to 0
         tracker.accumulated_stress = (tracker.accumulated_stress + total_change).max(0.0);

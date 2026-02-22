@@ -220,6 +220,10 @@ pub use utility_types::*;
 mod tool_tests;
 pub use clothing::*;
 
+/// Totems and superstition system (Spec 200).
+pub mod totems;
+pub use totems::*;
+
 /// Lighting system.
 pub mod lighting;
 /// Rumor web system (Spec 055).
