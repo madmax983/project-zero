@@ -11,6 +11,10 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 ## MVP — Layer 1: Colony Simulation
 
+- [ ] `083` Building Shifts — `specs/083-building-shifts.md`
+- [ ] `087` Food Preservation — `specs/087-food-preservation.md`
+- [ ] `109` Greenhouses — `specs/109-greenhouses.md`
+- [ ] `126` Blackout Protocol — `specs/126-blackout-protocol.md`
 - [ ] `165` Gene Banks — `specs/165-gene-banks.md`
 - [ ] `168` The Mother Lode — `specs/168-the-mother-lode.md`
 - [ ] `179` Magnetic Storms — `specs/179-magnetic-storms.md`
