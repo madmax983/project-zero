@@ -5162,3 +5162,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Clear the fungus (time/noise) vs. Risk the alarm (speed).
 
 ---
+
+## The Echo Chamber
+
+**Layer:** 1
+
+**Fantasy:** Isolation breeds extremism.
+
+**Mechanic:** If a group of Pops with shared Traits/Ethics work/live in an isolated zone (no contact with other groups for X days), their Trait intensity increases or they gain "Fanatic" modifiers.
+
+**Emergence:** The deep-core mining crew, isolated for months, develops a cult-like obsession with the "Earth Blood" (Magma) and refuses to let non-miners enter the lower levels.
+
+**Tension:** Segregation (Efficiency/Specialization) vs. Integration (Social Moderation).
+
+---
+
+## Sentient Architecture
+
+**Layer:** 1
+
+**Fantasy:** The machine knows your touch.
+
+**Mechanic:** Buildings track "Affinity" with specific Pops who work there. High Affinity grants productivity bonuses. Reassigning the Pop resets Affinity.
+
+**Emergence:** You can't promote your best Engineer to Captain because the Warp Drive *only* starts for her. She is effectively held hostage by the engine.
+
+**Tension:** Reliable "Pet" Machines (High Output) vs. Standardized Crews (Flexibility).
+
+---
+
+## Hard Vacuum Preservation
+
+**Layer:** 1
+
+**Fantasy:** The void is the ultimate freezer.
+
+**Mechanic:** Perishable items (Food, Corpses) stored in Vacuum tiles (outside airlocks) do not decay. However, retrieving them requires a Suited Pop and airlock cycling.
+
+**Emergence:** You store your winter grain supply on the roof. A stray meteor hits the stockpile, scattering the frozen wheat into orbit.
+
+**Tension:** Free Preservation (Vacuum) vs. Safe Access (Indoors/Power cost).
+
+---
+
+## Hull Fouling
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Dirty ships make dirty ports.
+
+**Mechanic:** Ships traveling through Nebulae/Asteroids accumulate "Fouling" (Mass). Landing on Layer 1 deposits "Sludge" tiles around the pad. Sludge is toxic/ugly but may contain harvestable "Xeno-Microbes" (Science).
+
+**Emergence:** Your thriving trade hub becomes a toxic swamp of alien slime. You have to build hazmat walkways just to greet the ambassadors.
+
+**Tension:** Rapid Turnaround (Dirty) vs. Orbital Scrubbing (Slow/Clean).
+
+---
+
+## Biometric Drift
+
+**Layer:** 1
+
+**Fantasy:** The system forgets you if you don't remind it.
+
+**Mechanic:** Biometric security profiles decay over time. Pops must periodically "Update" their credentials at a Security Station. If they drift too far, they are locked out of their own homes/workplaces.
+
+**Emergence:** A hermit researcher comes out of his lab after a year of isolation, only to find the cafeteria doors deny him entry. He starves in the hallway because he forgot to update his badge.
+
+**Tension:** High Security (Drift enabled) vs. Low Maintenance (Open doors).
+
+---
