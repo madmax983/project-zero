@@ -132,15 +132,20 @@ impl CandidateEvaluator {
 }
 
 fn is_pop_striking(data: &PopEvalData, context: &WorldContext) -> bool {
-    context.factions.as_ref().is_some_and(|map| {
-        data.faction_member.as_ref().is_some_and(|member| {
-            member.faction_id.is_some_and(|fid| {
-                map.get(&fid).is_some_and(|data| {
-                    data.state == crate::layer1::factions::FactionState::Striking
-                })
-            })
-        })
-    })
+    let Some(factions) = context.factions.as_ref() else {
+        return false;
+    };
+    let Some(member) = data.faction_member.as_ref() else {
+        return false;
+    };
+    let Some(fid) = member.faction_id else {
+        return false;
+    };
+    let Some(faction_data) = factions.get(&fid) else {
+        return false;
+    };
+
+    faction_data.state == crate::layer1::factions::FactionState::Striking
 }
 
 #[allow(clippy::collapsible_if)]
@@ -739,6 +744,82 @@ fn populate_all_structures(world: &mut World, buffer: &mut Vec<ScorableCandidate
     }
 }
 
+fn collect_pop_data(world: &mut World, buffer: &mut UtilityAIBuffer, config: &UtilityConfig) {
+    buffer.pop_data.clear();
+    buffer.pop_data.extend(
+        world
+            .query_filtered::<PopEvaluationQuery, Without<crate::layer1::cryo::CryoStasis>>()
+            .iter(world)
+            .filter(|item| {
+                item.action.ticks_committed >= config.evaluation_interval
+                    && (item.inmate.is_none() || item.penal_labor.is_some())
+            })
+            .map(PopEvalData::from_query_item),
+    );
+}
+
+fn run_evaluations(
+    buffer: &UtilityAIBuffer,
+    context: &WorldContext,
+) -> Vec<Option<(ActionType, f32, Option<Entity>)>> {
+    let pool = ComputeTaskPool::get();
+    let pop_count = buffer.pop_data.len();
+    let thread_count = pool.thread_num();
+    let chunk_size = (pop_count / thread_count).max(1);
+
+    // Prepare a vector to hold results, sized to match pop_data
+    let mut results = vec![None; pop_count];
+    let mut rest = results.as_mut_slice();
+
+    pool.scope(|scope| {
+        for chunk in buffer.pop_data.chunks(chunk_size) {
+            // Split the results slice to get a mutable chunk for this thread
+            let (result_chunk, remaining) = rest.split_at_mut(chunk.len());
+            rest = remaining;
+
+            scope.spawn(async move {
+                for (i, data) in chunk.iter().enumerate() {
+                    let result = evaluate_single_pop(buffer, data, context);
+                    result_chunk[i] = Some(result);
+                }
+            });
+        }
+    });
+
+    results
+}
+
+fn apply_evaluation_results(
+    world: &mut World,
+    pop_data: &[PopEvalData],
+    results: &[Option<(ActionType, f32, Option<Entity>)>],
+    config: &UtilityConfig,
+) {
+    for (i, data) in pop_data.iter().enumerate() {
+        if let Some((best_action, best_utility, best_target)) = results[i] {
+            // Switch if best exceeds threshold
+            if best_utility > data.action.current_utility + config.switch_threshold {
+                // Update action
+                let mut action = data.action;
+                action.current = best_action;
+                action.current_utility = best_utility;
+                action.ticks_committed = 0;
+
+                // Write back to world
+                if let Some(mut pop_action) = world.get_mut::<PopAction>(data.entity) {
+                    *pop_action = action;
+                }
+
+                // Insert StartPlan marker (for HTN system)
+                world.entity_mut(data.entity).insert(StartPlan {
+                    action: best_action,
+                    target: best_target,
+                });
+            }
+        }
+    }
+}
+
 /// Populates the AI buffer with candidate entities from the world.
 ///
 /// This function queries the world for all relevant entities (buildings, items, designations)
@@ -784,17 +865,7 @@ pub fn evaluate_actions_system(world: &mut World) {
         .unwrap_or_default();
 
     // 1. Collect Pop Data
-    buffer.pop_data.clear();
-    buffer.pop_data.extend(
-        world
-            .query_filtered::<PopEvaluationQuery, Without<crate::layer1::cryo::CryoStasis>>()
-            .iter(world)
-            .filter(|item| {
-                item.action.ticks_committed >= config.evaluation_interval
-                    && (item.inmate.is_none() || item.penal_labor.is_some())
-            })
-            .map(PopEvalData::from_query_item),
-    );
+    collect_pop_data(world, &mut buffer, &config);
 
     // Early exit if no pops need evaluation
     if buffer.pop_data.is_empty() {
@@ -830,62 +901,14 @@ pub fn evaluate_actions_system(world: &mut World) {
     populate_ai_buffer(world, &mut buffer, &context);
 
     // 4. Evaluate each pop (Parallel)
-    let pool = ComputeTaskPool::get();
-    let pop_count = buffer.pop_data.len();
-    let thread_count = pool.thread_num();
-    let chunk_size = (pop_count / thread_count).max(1);
+    let results = run_evaluations(&buffer, &context);
 
-    // Prepare a vector to hold results, sized to match pop_data
-    let mut results = vec![None; pop_count];
-    let mut rest = results.as_mut_slice();
+    // 5. Apply Results
+    apply_evaluation_results(world, &buffer.pop_data, &results, &config);
 
-    pool.scope(|scope| {
-        for chunk in buffer.pop_data.chunks(chunk_size) {
-            // Split the results slice to get a mutable chunk for this thread
-            let (result_chunk, remaining) = rest.split_at_mut(chunk.len());
-            rest = remaining;
-
-            let buffer_ref = &buffer;
-            let context_ref = &context;
-
-            scope.spawn(async move {
-                for (i, data) in chunk.iter().enumerate() {
-                    let result = evaluate_single_pop(buffer_ref, data, context_ref);
-                    result_chunk[i] = Some(result);
-                }
-            });
-        }
-    });
-
-    // Apply results
-    for (i, data) in buffer.pop_data.iter().enumerate() {
-        if let Some((best_action, best_utility, best_target)) = results[i] {
-            // Switch if best exceeds threshold
-            if best_utility > data.action.current_utility + config.switch_threshold {
-                // Update action
-                let mut action = data.action;
-                action.current = best_action;
-                action.current_utility = best_utility;
-                action.ticks_committed = 0;
-
-                // Write back to world
-                if let Some(mut pop_action) = world.get_mut::<PopAction>(data.entity) {
-                    *pop_action = action;
-                }
-
-                // Insert StartPlan marker (for HTN system)
-                world.entity_mut(data.entity).insert(StartPlan {
-                    action: best_action,
-                    target: best_target,
-                });
-            }
-        }
-    }
-
-    // Return the buffer to the world
+    // 6. Restore Resources
     world.insert_resource(buffer);
 
-    // Restore removed resources
     if let Some(zg) = zone_grid_opt {
         world.insert_resource(zg);
     }
