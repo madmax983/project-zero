@@ -5316,3 +5316,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Dispersed coverage (dumb) vs. Concentrated swarm (smart).
 
 ---
+
+## Auroral Harvesting
+
+**Layer:** 1
+
+**Fantasy:** Dancing with the devil in the pale moonlight. Harnessing the storm that kills your computer.
+
+**Mechanic:** "Magnetic Storms" disable most electronics, but "Auroral Collectors" *only* generate power during these events. High risk, high reward specific infrastructure.
+
+**Emergence:** You pray for a storm because your batteries are empty, even though it leaves your turrets offline.
+
+**Tension:** Reliable steady power vs. Opportunistic burst power (with vulnerability).
+
+---
+
+## Gravity Blindspots
+
+**Layer:** 2
+
+**Fantasy:** The sun is the ultimate cover. Submarine warfare in the dark forest.
+
+**Mechanic:** Celestial bodies (Stars, Planets) block Line-of-Sight for sensors on the System Map. Ships "behind" a planet are invisible to the other side.
+
+**Emergence:** You hide your fleet in the "Shadow" of a Gas Giant to ambush a pirate convoy. They never see the blip until you launch missiles.
+
+**Tension:** Position for solar power (Light) vs. Position for stealth (Shadow).
+
+---
+
+## Attention Bandwidth
+
+**Layer:** Cross-layer
+
+**Fantasy:** You are an Emperor, but you are only human. You can't care about everyone.
+
+**Mechanic:** Detailed stats (Thoughts, precise Needs) are only visible for a limited number of "Focus" entities/colonies. Non-focus entities show "Averaged" or "Fuzzy" data.
+
+**Emergence:** You "Un-focus" your stable capital to manage a crisis on the frontier. When you look back, the capital has culturally drifted because you weren't watching the subtle signs.
+
+**Tension:** Deep control of the few vs. Shallow control of the many.
+
+---
