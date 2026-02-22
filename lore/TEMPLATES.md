@@ -1836,3 +1836,138 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "Sickness in the [BIO_STRUCTURE_NAME]. [YEAR]. It shows [BIO_SICKNESS_SYMPTOM]."
 - "[YEAR]: Infection spread. The [BIO_STRUCTURE_NAME] turns hostile."
 - "The rot takes the [BIO_STRUCTURE_NAME]. [BIO_SICKNESS_SYMPTOM]. [YEAR]."
+
+## Cryo-Dream Templates (Spec 195)
+
+### CRYO_WAKE_EPIPHANY
+**Slots:** [COLONY], [YEAR], [NAME], [DREAM_IMAGE], [KNOWLEDGE_TOPIC]
+
+- "[NAME] wakes from cryo with a vision. [YEAR]. Saw [DREAM_IMAGE]. Understood [KNOWLEDGE_TOPIC]."
+- "[YEAR]: Epiphany. [NAME] dreamed of [DREAM_IMAGE] and woke knowing [KNOWLEDGE_TOPIC]."
+- "The ice teaches. [NAME] brings [KNOWLEDGE_TOPIC] from a dream of [DREAM_IMAGE]. [YEAR]."
+
+### CRYO_WAKE_NIGHTMARE
+**Slots:** [COLONY], [YEAR], [NAME], [NIGHTMARE_IMAGE]
+
+- "[NAME] wakes screaming. [YEAR]. Haunted by [NIGHTMARE_IMAGE]."
+- "[YEAR]: Trauma from the freeze. [NAME] cannot forget [NIGHTMARE_IMAGE]."
+- "Something followed [NAME] from the sleep. [NIGHTMARE_IMAGE]. [YEAR]."
+
+---
+
+## Gastronomy Templates (Spec 166)
+
+### MYSTERY_MEAL_COOKED
+**Slots:** [COLONY], [YEAR], [CHEF_NAME], [ALIEN_INGREDIENT], [MEAL_NAME_PREFIX], [MEAL_NAME_SUFFIX]
+
+- "[CHEF_NAME] cooks the unknown. [YEAR]. Used [ALIEN_INGREDIENT] to make [MEAL_NAME_PREFIX] [MEAL_NAME_SUFFIX]."
+- "[YEAR]: Experiment in the kitchen. [CHEF_NAME] serves [ALIEN_INGREDIENT] as [MEAL_NAME_PREFIX] [MEAL_NAME_SUFFIX]."
+- "Dinner roulette. [CHEF_NAME]'s [MEAL_NAME_PREFIX] [MEAL_NAME_SUFFIX] contains [ALIEN_INGREDIENT]. [YEAR]."
+
+### RECIPE_MASTERED
+**Slots:** [COLONY], [YEAR], [CHEF_NAME], [MEAL_NAME_PREFIX], [MEAL_NAME_SUFFIX], [FLAVOR_PROFILE]
+
+- "A breakthrough. [CHEF_NAME] perfects the [MEAL_NAME_PREFIX] [MEAL_NAME_SUFFIX]. [YEAR]. It tastes [FLAVOR_PROFILE]."
+- "[YEAR]: New staple. [CHEF_NAME]'s [MEAL_NAME_PREFIX] [MEAL_NAME_SUFFIX] is [FLAVOR_PROFILE] and safe."
+- "We feast tonight. [CHEF_NAME] has mastered the [FLAVOR_PROFILE] [MEAL_NAME_PREFIX] [MEAL_NAME_SUFFIX]. [YEAR]."
+
+### FOOD_POISONING
+**Slots:** [COLONY], [YEAR], [NAME], [MEAL_NAME_PREFIX], [MEAL_NAME_SUFFIX], [POISON_SYMPTOM]
+
+- "[NAME] ate the [MEAL_NAME_PREFIX] [MEAL_NAME_SUFFIX]. [YEAR]. Now suffering [POISON_SYMPTOM]."
+- "[YEAR]: Bad batch. [NAME] reports [POISON_SYMPTOM] after the [MEAL_NAME_PREFIX] [MEAL_NAME_SUFFIX]."
+- "Kitchen accident. The [MEAL_NAME_PREFIX] [MEAL_NAME_SUFFIX] caused [POISON_SYMPTOM] in [NAME]. [YEAR]."
+
+### XENO_DELICACY
+**Slots:** [COLONY], [YEAR], [NAME], [MEAL_NAME_PREFIX], [MEAL_NAME_SUFFIX], [FLAVOR_PROFILE]
+
+- "[NAME] loves the [MEAL_NAME_PREFIX] [MEAL_NAME_SUFFIX]. [YEAR]. Calls it [FLAVOR_PROFILE]."
+- "[YEAR]: A taste of home? No, [FLAVOR_PROFILE]. But [NAME] enjoys the [MEAL_NAME_PREFIX] [MEAL_NAME_SUFFIX]."
+- "Morale boost. The [MEAL_NAME_PREFIX] [MEAL_NAME_SUFFIX] is [FLAVOR_PROFILE] and filling. [YEAR]."
+
+---
+
+## Atmospheric Tides Templates (Spec 190)
+
+### TIDE_HIGH
+**Slots:** [COLONY], [YEAR], [PRESSURE_DESC_HIGH], [TIDE_SOUND]
+
+- "The pressure rises. [YEAR]. The air is [PRESSURE_DESC_HIGH]. Hear the [TIDE_SOUND]."
+- "[YEAR]: High Tide. Movement slows. The atmosphere is [PRESSURE_DESC_HIGH]."
+- "A [TIDE_SOUND] signals the crush. [YEAR]. Air becomes [PRESSURE_DESC_HIGH]."
+
+### TIDE_LOW
+**Slots:** [COLONY], [YEAR], [PRESSURE_DESC_LOW], [TIDE_SOUND]
+
+- "The pressure drops. [YEAR]. Air feels [PRESSURE_DESC_LOW]. [TIDE_SOUND] in the vents."
+- "[YEAR]: Low Tide. We move fast in the [PRESSURE_DESC_LOW] air."
+- "Gasping. [YEAR]. The atmosphere is [PRESSURE_DESC_LOW]. [TIDE_SOUND]."
+
+---
+
+## Festival Templates (Spec 077)
+
+### FESTIVAL_START
+**Slots:** [COLONY], [YEAR], [FESTIVAL_NAME], [FESTIVAL_TYPE]
+
+- "Today we celebrate [FESTIVAL_NAME]. [YEAR]. A grand [FESTIVAL_TYPE]."
+- "[YEAR]: Work stops for [FESTIVAL_NAME]. Let the [FESTIVAL_TYPE] begin."
+- "Remembrance. [FESTIVAL_NAME] starts at [COLONY]. [YEAR]."
+
+### FESTIVAL_END
+**Slots:** [COLONY], [YEAR], [FESTIVAL_NAME], [CELEBRATION_ACTION]
+
+- "[FESTIVAL_NAME] is over. [YEAR]. We [CELEBRATION_ACTION] and return to work."
+- "[YEAR]: The lights dim on [FESTIVAL_NAME]. Good memories of [CELEBRATION_ACTION]."
+- "Silence after the feast. [FESTIVAL_NAME] ends. [YEAR]."
+
+---
+
+## Radiation Templates (Spec 191)
+
+### RADIATION_SICKNESS_DETECTED
+**Slots:** [COLONY], [YEAR], [NAME], [RADIATION_SYMPTOM]
+
+- "[NAME] is sick. [YEAR]. The glow bites. [RADIATION_SYMPTOM]."
+- "[YEAR]: Radiation alert. [NAME] shows [RADIATION_SYMPTOM]."
+- "Invisible poison. [NAME] has [RADIATION_SYMPTOM]. Check the shielding. [YEAR]."
+
+### WARM_STONE_REFUGE
+**Slots:** [COLONY], [YEAR], [NAME], [WARM_STONE_DESC]
+
+- "We huddle near the waste. [YEAR]. It is [WARM_STONE_DESC]."
+- "[YEAR]: Using the ore for heat. [NAME] calls it [WARM_STONE_DESC]."
+- "Dangerous comfort. The wall is [WARM_STONE_DESC]. [YEAR]."
+
+---
+
+## Crop Diversity Templates (Spec 120)
+
+### FIRST_HARVEST_WHEAT
+**Slots:** [COLONY], [YEAR], [CROP_DESC_WHEAT]
+
+- "First wheat brought in. [YEAR]. Stalks of [CROP_DESC_WHEAT]."
+- "[YEAR]: Bread soon. The [CROP_DESC_WHEAT] is harvested."
+
+### FIRST_HARVEST_POTATO
+**Slots:** [COLONY], [YEAR], [CROP_DESC_POTATO]
+
+- "We dig up the [CROP_DESC_POTATO]. [YEAR]. Winter food."
+- "[YEAR]: Potato harvest. Baskets of [CROP_DESC_POTATO]."
+
+### FIRST_HARVEST_RICE
+**Slots:** [COLONY], [YEAR], [CROP_DESC_RICE]
+
+- "Rice paddies drained. [YEAR]. [CROP_DESC_RICE] for the stores."
+- "[YEAR]: The [CROP_DESC_RICE] is ready. A wet harvest."
+
+---
+
+## Monument Templates (Spec 167)
+
+### RUIN_SCAVENGED
+**Slots:** [COLONY], [YEAR], [RUIN_NAME], [RUIN_DESCRIPTION]
+
+- "We cleared the [RUIN_NAME]. [YEAR]. It was [RUIN_DESCRIPTION]."
+- "[YEAR]: Scavengers pick the [RUIN_NAME] clean. Nothing left."
+- "The [RUIN_NAME] is gone. [YEAR]. We reuse the stone."
