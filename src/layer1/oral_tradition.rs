@@ -38,7 +38,7 @@ pub enum StoryGenre {
 }
 
 /// Resource storing the collective oral tradition of the colony.
-#[derive(Resource, Default)]
+#[derive(Resource, Default, Debug)]
 pub struct OralTradition {
     /// The collection of known stories.
     pub stories: Vec<Story>,
