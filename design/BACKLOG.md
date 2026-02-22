@@ -20,7 +20,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `188` The Long Watch — `specs/188-the-long-watch.md`
 - [ ] `189` Gravity Engineering — `specs/189-gravity-engineering.md`
 - [ ] `192` Planetary Weather Fronts — `specs/192-planetary-weather-fronts.md`
-- [ ] `197` Civic Ideology — `specs/197-civic-ideology.md`
 - [ ] `198` Urban Heat Islands — `specs/198-urban-heat-islands.md`
 - [ ] `199` Obsessive Optimization — `specs/199-obsessive-optimization.md`
 - [ ] `200` Superstitious Totems — `specs/200-superstitious-totems.md`

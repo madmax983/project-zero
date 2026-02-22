@@ -40,7 +40,10 @@ mod demo {
         let tradition = world.resource::<OralTradition>();
         println!("Oral Tradition updated:");
         for story in &tradition.stories {
-            println!("- [{:?}] \"{}\" (Origin: tick {})", story.genre, story.text, story.origin_tick);
+            println!(
+                "- [{:?}] \"{}\" (Origin: tick {})",
+                story.genre, story.text, story.origin_tick
+            );
         }
     }
 }
@@ -50,5 +53,7 @@ fn main() {
     demo::run();
 
     #[cfg(not(feature = "nova"))]
-    println!("This example requires the 'nova' feature.\nRun with: cargo run --features nova --example minimal_nova_demo");
+    println!(
+        "This example requires the 'nova' feature.\nRun with: cargo run --features nova --example minimal_nova_demo"
+    );
 }

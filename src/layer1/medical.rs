@@ -90,10 +90,13 @@ pub fn healing_system(world: &mut World) {
                 };
                 let has_job = job.is_some();
 
-                hospitals
-                    .entry(assigned.entity)
-                    .or_default()
-                    .push((entity, hp_percent, has_job, has_trauma, has_sickness));
+                hospitals.entry(assigned.entity).or_default().push((
+                    entity,
+                    hp_percent,
+                    has_job,
+                    has_trauma,
+                    has_sickness,
+                ));
             }
         }
     }

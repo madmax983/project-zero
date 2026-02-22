@@ -10,8 +10,8 @@ use crate::layer1::pop::{Job, Pop};
 use crate::layer1::traits::{Trait, Traits};
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
-use rand::seq::IteratorRandom;
 use rand::Rng;
+use rand::seq::IteratorRandom;
 
 /// Configuration for Machine Consciousness.
 #[derive(Resource, Debug, Clone)]
@@ -64,7 +64,9 @@ impl MachinePersonality {
     const fn flavor_text(self) -> &'static str {
         match self {
             Self::Stoic => "The machine hums with a steady, reassuring rhythm.",
-            Self::Logician => "Calculations stream across the display faster than the eye can follow.",
+            Self::Logician => {
+                "Calculations stream across the display faster than the eye can follow."
+            }
             Self::Empath => "The interface seems to anticipate your needs before you act.",
             Self::Aggressor => "The machinery growls, demanding more power and input.",
         }
@@ -200,15 +202,18 @@ pub fn machine_personality_system(
     mut log: ResMut<MessageLog>,
 ) {
     let mut rng = rand::thread_rng();
-    if rng.gen_bool(0.01) { // 1% chance per tick global? No, per tick check.
+    if rng.gen_bool(0.01) {
+        // 1% chance per tick global? No, per tick check.
         // Actually, checking every tick for every machine is fine, but we don't want spam.
         // Let's pick ONE machine randomly.
         if let Some(consciousness) = machines.iter().choose(&mut rng)
-            && consciousness.level >= 2 && rng.gen_bool(0.05) {
-                 log.add_colored(
-                    consciousness.personality.flavor_text(),
-                    ratatui::style::Color::DarkGray,
-                );
+            && consciousness.level >= 2
+            && rng.gen_bool(0.05)
+        {
+            log.add_colored(
+                consciousness.personality.flavor_text(),
+                ratatui::style::Color::DarkGray,
+            );
         }
     }
 }
@@ -216,10 +221,10 @@ pub fn machine_personality_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::actions::{AssignedTo, AssignmentType};
+    use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::gastronomy::WorkSpeedBuff;
-    use crate::layer1::pop::{Pop, Job};
+    use crate::layer1::pop::{Job, Pop};
     use bevy_ecs::prelude::*;
 
     #[test]
@@ -232,17 +237,21 @@ mod tests {
         });
         world.insert_resource(MessageLog::default());
 
-        let machine = world.spawn((
-            Building { building_type: BuildingType::AICore },
-            MachineConsciousness::default(),
-        )).id();
+        let machine = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::AICore,
+                },
+                MachineConsciousness::default(),
+            ))
+            .id();
 
         world.spawn((
             Pop,
             Job {
                 workplace: machine,
                 job_type: AssignmentType::Scientist,
-            }
+            },
         ));
 
         let mut schedule = Schedule::default();
@@ -263,18 +272,24 @@ mod tests {
         });
         world.insert_resource(MessageLog::default());
 
-        let machine = world.spawn((
-            Building { building_type: BuildingType::AICore },
-            MachineConsciousness::default(),
-        )).id();
+        let machine = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::AICore,
+                },
+                MachineConsciousness::default(),
+            ))
+            .id();
 
-        let worker = world.spawn((
-            Pop,
-            Job {
-                workplace: machine,
-                job_type: AssignmentType::Scientist,
-            }
-        )).id();
+        let worker = world
+            .spawn((
+                Pop,
+                Job {
+                    workplace: machine,
+                    job_type: AssignmentType::Scientist,
+                },
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(consciousness_growth_system);
@@ -289,17 +304,15 @@ mod tests {
     fn test_buff_application() {
         let mut world = World::new();
 
-        let worker = world.spawn((
-            Pop,
-        )).id();
+        let worker = world.spawn((Pop,)).id();
 
-        let machine = world.spawn((
-            MachineConsciousness {
+        let machine = world
+            .spawn((MachineConsciousness {
                 level: 3,
                 bonded_worker: Some(worker),
                 ..Default::default()
-            },
-        )).id();
+            },))
+            .id();
 
         // Add Job to worker
         world.entity_mut(worker).insert(Job {

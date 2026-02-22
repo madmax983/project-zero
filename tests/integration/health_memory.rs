@@ -1,8 +1,6 @@
 use bevy_ecs::prelude::*;
 use bevy_ecs::system::RunSystemOnce;
-use scale::layer1::health::{
-    Health, check_health_status_system, despawn_dead_entities_system,
-};
+use scale::layer1::health::{Health, check_health_status_system, despawn_dead_entities_system};
 use scale::layer1::memory::{Memories, MemoryType};
 use scale::layer1::needs::Needs;
 use scale::layer1::needs::starvation_damage_system;

@@ -208,6 +208,8 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             restore_rest_in_housing_system.after(update_noise_system),
             restore_leisure_system,
             crate::layer1::tech_envy::tech_envy_system.after(restore_leisure_system),
+            crate::layer1::civic_ideology::evaluate_civic_ideology_system
+                .after(restore_leisure_system),
             apply_mood_modifiers_system.after(restore_leisure_system),
             mascot_buff_system.after(restore_leisure_system),
             crate::layer1::graffiti::graffiti_observation_system.after(apply_mood_modifiers_system),

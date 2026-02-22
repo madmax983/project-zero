@@ -572,3 +572,7 @@ pub mod language;
 pub use language::*;
 #[cfg(test)]
 mod equipment_tests;
+
+/// Civic Ideology system (Spec 197).
+pub mod civic_ideology;
+pub use civic_ideology::*;
