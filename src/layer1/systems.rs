@@ -311,6 +311,8 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
                 .after(crate::layer1::wind::update_wind_system),
             update_pressure_system,
             crate::layer1::temperature::update_temperature_system.after(update_pressure_system),
+            crate::layer1::radioactive::radiation_system
+                .after(crate::layer1::temperature::update_temperature_system),
             crate::layer1::suction::suction_system.after(update_pressure_system),
             crate::layer1::integration::vacuum_clears_pollution_system
                 .after(crate::layer1::atmosphere::update_atmosphere_system)
@@ -380,11 +382,13 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             memory_decay_system.after(decay_needs_system),
             notification_expiration_system.after(decay_needs_system),
             crate::layer1::temperature::thermal_damage_system.after(decay_needs_system),
+            crate::layer1::radioactive::sickness_damage_system.after(decay_needs_system),
             pressure_damage_system.after(decay_needs_system),
             starvation_damage_system.after(decay_needs_system),
             check_death_event_system
                 .after(starvation_damage_system)
                 .after(crate::layer1::temperature::thermal_damage_system)
+                .after(crate::layer1::radioactive::sickness_damage_system)
                 .after(pressure_damage_system)
                 .after(natural_death_system),
             mascot_death_grief_system.after(check_death_event_system),

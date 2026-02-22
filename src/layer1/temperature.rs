@@ -11,6 +11,7 @@ use crate::layer1::health::Health;
 use crate::layer1::items::{Clothing, Equipment};
 use crate::layer1::map::GridPosition;
 use crate::layer1::pop::Pop;
+use crate::layer1::resources::{ResourceItem, ResourceType};
 use crate::layer1::seasons::SeasonState;
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
@@ -144,6 +145,7 @@ pub fn update_temperature_system(
     grid: Option<ResMut<TemperatureGrid>>,
     season: Option<Res<SeasonState>>,
     buildings: Query<(&Building, &GridPosition, Option<&PowerConsumer>)>,
+    items: Query<(&ResourceItem, &GridPosition)>,
 ) {
     let Some(mut grid) = grid else { return };
 
@@ -186,6 +188,18 @@ pub fn update_temperature_system(
             _ => 0.0,
         };
 
+        if heat > 0.0 {
+            grid.add(pos.x, pos.y, heat);
+        }
+    }
+
+    // Apply Item Heat Sources
+    for (item, pos) in &items {
+        let heat = match item.resource_type {
+            ResourceType::Waste => 2.0,
+            ResourceType::Ore => 0.5,
+            _ => 0.0,
+        };
         if heat > 0.0 {
             grid.add(pos.x, pos.y, heat);
         }

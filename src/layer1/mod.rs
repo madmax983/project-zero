@@ -553,3 +553,6 @@ mod cryo_tests;
 /// Emergent Festivals system (Spec 077).
 pub mod festivals;
 pub use festivals::*;
+/// Radioactive system (Spec 191).
+pub mod radioactive;
+pub use radioactive::*;
