@@ -63,6 +63,7 @@ pub fn spoilage_system(
 mod tests {
     use super::*;
     use crate::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
+    use crate::layer1::vermin::VerminState;
     use bevy_ecs::system::RunSystemOnce;
 
     #[test]
@@ -165,5 +166,45 @@ mod tests {
         world.run_system_once(spoilage_system).unwrap();
 
         assert!(world.get_entity(item).is_ok());
+    }
+
+    #[test]
+    fn test_rations_spoilage() {
+        let mut world = World::new();
+        let mut resources = ColonyResources::default();
+        resources.rations = 1000.0;
+        world.insert_resource(resources);
+
+        // Run system
+        world.run_system_once(spoilage_system).unwrap();
+
+        let resources = world.resource::<ColonyResources>();
+        // Rations decay at 10% of global rate (0.0005 * 0.1 = 0.00005)
+        // 1000 * 0.00005 = 0.05
+        assert!(resources.rations < 1000.0);
+        assert!(resources.rations > 999.0);
+    }
+
+    #[test]
+    fn test_spoilage_with_vermin() {
+        let mut world = World::new();
+        let mut resources = ColonyResources::default();
+        resources.food = 1000.0;
+        world.insert_resource(resources);
+
+        let mut vermin = VerminState::default();
+        vermin.severity = 50.0; // Moderate vermin
+        world.insert_resource(vermin);
+
+        // Run system
+        world.run_system_once(spoilage_system).unwrap();
+
+        // Calculate expected decay
+        // modifier = (50/100) * 9 + 1 = 5.5
+        // decay = 1000 * 0.0005 * 5.5 = 2.75
+        // expected = 997.25
+
+        let resources = world.resource::<ColonyResources>();
+        assert!((resources.food - 997.25).abs() < 0.001);
     }
 }

@@ -330,6 +330,7 @@ mod tests {
     use crate::layer1::chemical::{ActiveEffect, Addiction, ChemicalState, ChemicalType};
     use crate::layer1::health::Health;
     use crate::layer1::pop::Pop;
+    use crate::layer1::stress::StressTracker;
     use crate::shared::time::SimulationTime;
     use bevy_ecs::prelude::*;
 
@@ -501,5 +502,81 @@ mod tests {
         assert!(result.is_some());
         let (score, _) = result.unwrap();
         assert!(score > 0.5, "Stressed pop should want Sedative");
+    }
+
+    #[test]
+    fn test_stim_health_damage() {
+        let mut world = World::new();
+        world.insert_resource(SimulationTime::default());
+        let pop = world
+            .spawn((
+                Pop,
+                ChemicalState::default(),
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                    ..Default::default()
+                },
+            ))
+            .id();
+
+        crate::layer1::chemical::consume_chemical(&mut world, pop, ChemicalType::Stim);
+
+        let health = world.get::<Health>(pop).unwrap();
+        assert!(health.current < 100.0);
+        assert!((health.current - 98.0).abs() < f32::EPSILON); // 100 - 2
+    }
+
+    #[test]
+    fn test_sedative_stress_reduction() {
+        let mut world = World::new();
+        world.insert_resource(SimulationTime::default());
+        let pop = world
+            .spawn((
+                Pop,
+                ChemicalState::default(),
+                StressTracker {
+                    accumulated_stress: 50.0,
+                },
+            ))
+            .id();
+
+        crate::layer1::chemical::consume_chemical(&mut world, pop, ChemicalType::Sedative);
+
+        let stress = world.get::<StressTracker>(pop).unwrap();
+        assert!(stress.accumulated_stress < 50.0);
+        assert!((stress.accumulated_stress - 30.0).abs() < f32::EPSILON); // 50 - 20
+    }
+
+    #[test]
+    fn test_active_effect_expiration() {
+        let mut world = World::new();
+        world.insert_resource(SimulationTime::default());
+        let pop = world
+            .spawn((
+                Pop,
+                ChemicalState {
+                    active_effects: vec![ActiveEffect {
+                        chemical: ChemicalType::Stim,
+                        duration: 1, // Will expire after 1 tick
+                        magnitude: 1.0,
+                    }],
+                    addictions: vec![],
+                },
+            ))
+            .id();
+
+        crate::layer1::chemical::addiction_system(&mut world);
+
+        let state = world.get::<ChemicalState>(pop).unwrap();
+        // Duration 1 -> 0, still kept
+        assert_eq!(state.active_effects.len(), 1);
+        assert_eq!(state.active_effects[0].duration, 0);
+
+        crate::layer1::chemical::addiction_system(&mut world);
+
+        let state = world.get::<ChemicalState>(pop).unwrap();
+        // Duration 0 -> removed
+        assert!(state.active_effects.is_empty());
     }
 }
