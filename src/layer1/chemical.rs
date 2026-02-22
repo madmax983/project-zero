@@ -116,26 +116,37 @@ pub fn consume_chemical_logic(
     stress: Option<&mut crate::layer1::stress::StressTracker>,
 ) {
     // 1. Add Effect
+    // Check if effect already exists to prevent stacking (DoS/Explosion)
+    if let Some(existing) = state.active_effects.iter_mut().find(|e| e.chemical == chem) {
+        existing.duration = 500;
+    } else {
+        match chem {
+            ChemicalType::Stim => {
+                state.active_effects.push(ActiveEffect {
+                    chemical: chem,
+                    duration: 500,
+                    magnitude: 1.5, // +50% speed
+                });
+            }
+            ChemicalType::Sedative => {
+                state.active_effects.push(ActiveEffect {
+                    chemical: chem,
+                    duration: 500,
+                    magnitude: 0.5, // -50% speed (slowdown)
+                });
+            }
+        }
+    }
+
+    // Immediate Effects (Apply regardless of stacking, as "overdose" mechanism)
     match chem {
         ChemicalType::Stim => {
-            state.active_effects.push(ActiveEffect {
-                chemical: chem,
-                duration: 500,
-                magnitude: 1.5, // +50% speed
-            });
-
             // Immediate Health Damage (small)
             if let Some(h) = health {
                 h.current = (h.current - 2.0).max(0.0);
             }
         }
         ChemicalType::Sedative => {
-            state.active_effects.push(ActiveEffect {
-                chemical: chem,
-                duration: 500,
-                magnitude: 0.5, // -50% speed (slowdown)
-            });
-
             // Reduce Stress immediately
             if let Some(s) = stress {
                 s.accumulated_stress = (s.accumulated_stress - 20.0).max(0.0);
@@ -218,7 +229,8 @@ pub fn get_speed_modifier(world: &World, entity: Entity) -> f32 {
             }
         }
     }
-    modifier
+    // Clamp modifier to sane limits to prevent physics explosion
+    modifier.clamp(0.1, 5.0)
 }
 
 /// Applies chemical speed modifiers to the pop's speed component.
@@ -437,14 +449,13 @@ mod tests {
         let pop_pos = GridPosition { x: 0, y: 0 };
         let needs = Needs::default();
         let weights = UtilityWeights::default();
-        let mut addictions = Vec::new();
-        addictions.push(Addiction {
+        let addictions = vec![Addiction {
             chemical: ChemicalType::Stim,
             severity: 0.8,
             last_consumed_tick: 0,
             withdrawal_threshold: 100,
             in_withdrawal: true,
-        });
+        }];
 
         let state = ChemicalState {
             active_effects: vec![],
@@ -512,11 +523,7 @@ mod tests {
             .spawn((
                 Pop,
                 ChemicalState::default(),
-                Health {
-                    current: 100.0,
-                    max: 100.0,
-                    ..Default::default()
-                },
+                Health::default(),
             ))
             .id();
 
