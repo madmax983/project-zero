@@ -1,5 +1,6 @@
 use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::edicts::ColonyPolicies;
+use crate::layer1::festivals::{FestivalState, get_festival_morale_modifier};
 use crate::layer1::mascot::MascotBuff;
 use crate::layer1::memory::{Memories, calculate_raw_morale};
 use crate::layer1::needs::Needs;
@@ -69,8 +70,10 @@ pub fn update_morale_cache_system(
     )>,
     policies: Option<Res<ColonyPolicies>>,
     day_night: Option<Res<DayNightCycle>>,
+    festivals: Option<Res<FestivalState>>,
 ) {
     let cycle = day_night.map(|d| d.time_of_day);
+    let festival_bonus = festivals.map_or(0.0, |f| get_festival_morale_modifier(&f));
 
     query.par_iter_mut().for_each(
         |(mut morale, needs, memories, social, traits, mascot_buff)| {
@@ -87,7 +90,8 @@ pub fn update_morale_cache_system(
             let mascot_bonus = mascot_buff.map_or(0.0, |b| b.amount);
             let modifier_sum: f32 = morale.modifiers.iter().map(|m| m.value).sum();
 
-            morale.value = (raw + modifier_sum + mascot_bonus).clamp(0.0, 1.0);
+            morale.value =
+                (raw + modifier_sum + mascot_bonus + festival_bonus).clamp(0.0, 1.0);
         },
     );
 }

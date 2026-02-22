@@ -547,3 +547,7 @@ mod atmosphere_tides_tests;
 
 #[cfg(test)]
 mod cryo_tests;
+
+/// Emergent Festivals system (Spec 077).
+pub mod festivals;
+pub use festivals::*;
