@@ -11,13 +11,8 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 ## MVP — Layer 1: Colony Simulation
 
-- [ ] `132` Equipment & Wear — `specs/132-equipment-and-wear.md`
-- [ ] `133` Ventilation Networks — `specs/133-ventilation-networks.md`
-- [ ] `148` The 'Helpful' AI — `specs/148-helpful-ai.md`
 - [ ] `165` Gene Banks — `specs/165-gene-banks.md`
 - [ ] `168` The Mother Lode — `specs/168-the-mother-lode.md`
-- [ ] `174` Memetic Hazards — `specs/174-memetic-hazards.md`
-- [ ] `175` Bureaucratic Drag — `specs/175-bureaucratic-drag.md`
 - [ ] `179` Magnetic Storms — `specs/179-magnetic-storms.md`
 - [ ] `183` Geodetic Sentience — `specs/183-geodetic-sentience.md`
 - [ ] `186` Bio-Architecture — `specs/186-bio-architecture.md`
@@ -25,7 +20,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `188` The Long Watch — `specs/188-the-long-watch.md`
 - [ ] `189` Gravity Engineering — `specs/189-gravity-engineering.md`
 - [ ] `192` Planetary Weather Fronts — `specs/192-planetary-weather-fronts.md`
-- [ ] `195` Cryo-Dreams — `specs/195-cryo-dreams.md`
 - [ ] `197` Civic Ideology — `specs/197-civic-ideology.md`
 - [ ] `198` Urban Heat Islands — `specs/198-urban-heat-islands.md`
 - [ ] `199` Obsessive Optimization — `specs/199-obsessive-optimization.md`
@@ -47,6 +41,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `169` Subspace Currents — `specs/169-subspace-currents.md`
 - [ ] `180` The Void Between — `specs/180-the-void-between.md`
 - [ ] `184` Orbital Debris — `specs/184-orbital-debris.md`
+- [ ] `201` Space Lanes — `specs/201-space-lanes.md`
 
 ## MVP — Layer 3: Galaxy Simulation
 
