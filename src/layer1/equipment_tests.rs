@@ -1,16 +1,16 @@
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use bevy_ecs::system::RunSystemOnce;
-    use crate::layer1::pop::Pop;
-    use crate::layer1::items::{Item, Clothing, ClothingType, Equipment};
+    use crate::layer1::actions::fetch_clothing::evaluate_fetch_clothing;
+    use crate::layer1::clothing::clothing_wear_system;
     use crate::layer1::health::Health;
+    use crate::layer1::items::{Clothing, ClothingType, Equipment, Item};
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::pop::Pop;
     use crate::layer1::resources::ColonyResources;
     use crate::layer1::temperature::{TemperatureGrid, thermal_damage_system};
-    use crate::layer1::clothing::clothing_wear_system;
-    use crate::layer1::map::GridPosition;
-    use crate::layer1::actions::fetch_clothing::evaluate_fetch_clothing;
     use crate::layer1::utility_eval_types::ScorableCandidate;
+    use bevy_ecs::prelude::*;
+    use bevy_ecs::system::RunSystemOnce;
 
     // 1. Equipment Slots
     #[test]
@@ -28,15 +28,17 @@ mod tests {
     #[test]
     fn test_clothing_component() {
         let mut world = World::new();
-        let tunic = world.spawn((
-            Item::default(),
-            Clothing {
-                clothing_type: ClothingType::Tunic,
-                insulation: 1.0,
-                durability: 100.0,
-                max_durability: 100.0,
-            }
-        )).id();
+        let tunic = world
+            .spawn((
+                Item::default(),
+                Clothing {
+                    clothing_type: ClothingType::Tunic,
+                    insulation: 1.0,
+                    durability: 100.0,
+                    max_durability: 100.0,
+                },
+            ))
+            .id();
 
         let c = world.get::<Clothing>(tunic).unwrap();
         assert_eq!(c.insulation, 1.0);
@@ -54,30 +56,45 @@ mod tests {
 
         // Pop 1: Naked (Should take damage)
         // Base cold tolerance is 10.0. Temp is -20.0. 10.0 > -20.0 -> Cold!
-        let pop1 = world.spawn((
-            Pop,
-            Health { current: 100.0, max: 100.0 },
-            Equipment::default(), // No body
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let pop1 = world
+            .spawn((
+                Pop,
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                },
+                Equipment::default(), // No body
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         // Pop 2: Clothed (Should be safe)
         // Insulation 1.0 -> Tolerance = 10.0 - (1.0 * 30.0) = -20.0.
         // Temp -20.0 is NOT < -20.0 (it is equal). So strictly speaking safe?
         // Logic: if temp < cold_tolerance { damage }. -20 < -20 is false. Safe.
-        let tunic = world.spawn(Clothing {
-            clothing_type: ClothingType::Tunic,
-            insulation: 1.0,
-            durability: 100.0,
-            max_durability: 100.0,
-        }).id();
+        let tunic = world
+            .spawn(Clothing {
+                clothing_type: ClothingType::Tunic,
+                insulation: 1.0,
+                durability: 100.0,
+                max_durability: 100.0,
+            })
+            .id();
 
-        let pop2 = world.spawn((
-            Pop,
-            Health { current: 100.0, max: 100.0 },
-            Equipment { body: Some(tunic), ..Default::default() },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let pop2 = world
+            .spawn((
+                Pop,
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                },
+                Equipment {
+                    body: Some(tunic),
+                    ..Default::default()
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         // Run system
         world.run_system_once(thermal_damage_system).unwrap();
@@ -94,17 +111,24 @@ mod tests {
     fn test_clothing_degrades_on_wearer() {
         let mut world = World::new();
 
-        let tunic = world.spawn(Clothing {
-            clothing_type: ClothingType::Tunic,
-            insulation: 1.0,
-            durability: 10.0,
-            max_durability: 100.0,
-        }).id();
+        let tunic = world
+            .spawn(Clothing {
+                clothing_type: ClothingType::Tunic,
+                insulation: 1.0,
+                durability: 10.0,
+                max_durability: 100.0,
+            })
+            .id();
 
-        let _pop = world.spawn((
-            Pop,
-            Equipment { body: Some(tunic), ..Default::default() },
-        )).id();
+        let _pop = world
+            .spawn((
+                Pop,
+                Equipment {
+                    body: Some(tunic),
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         world.run_system_once(clothing_wear_system).unwrap();
 
@@ -117,17 +141,24 @@ mod tests {
     fn test_clothing_breaks() {
         let mut world = World::new();
 
-        let tunic = world.spawn(Clothing {
-            clothing_type: ClothingType::Tunic,
-            insulation: 1.0,
-            durability: 0.001, // Almost broken
-            max_durability: 100.0,
-        }).id();
+        let tunic = world
+            .spawn(Clothing {
+                clothing_type: ClothingType::Tunic,
+                insulation: 1.0,
+                durability: 0.001, // Almost broken
+                max_durability: 100.0,
+            })
+            .id();
 
-        let pop = world.spawn((
-            Pop,
-            Equipment { body: Some(tunic), ..Default::default() },
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Equipment {
+                    body: Some(tunic),
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         world.run_system_once(clothing_wear_system).unwrap();
 
@@ -181,12 +212,17 @@ mod tests {
         let mut grid = TemperatureGrid::new(10, 10, -50.0);
         grid.set(0, 0, -50.0);
 
-        let result = evaluate_fetch_clothing(pop_pos, insulation, &resources, &stockpiles, Some(&grid));
+        let result =
+            evaluate_fetch_clothing(pop_pos, insulation, &resources, &stockpiles, Some(&grid));
 
         assert!(result.is_some(), "Freezing pop should want upgrade");
         let (utility, target) = result.unwrap();
         assert_eq!(target, stockpile_entity);
-        assert!(utility > 0.9, "Urgency should be high (Utility: {})", utility);
+        assert!(
+            utility > 0.9,
+            "Urgency should be high (Utility: {})",
+            utility
+        );
     }
 
     // 8. Handle Fetch Clothing (Upgrade Logic)
@@ -201,25 +237,38 @@ mod tests {
         };
 
         // Pop with Tunic
-        let tunic = world.spawn(Clothing {
-            clothing_type: ClothingType::Tunic,
-            insulation: 1.0,
-            durability: 100.0,
-            max_durability: 100.0,
-        }).id();
+        let tunic = world
+            .spawn(Clothing {
+                clothing_type: ClothingType::Tunic,
+                insulation: 1.0,
+                durability: 100.0,
+                max_durability: 100.0,
+            })
+            .id();
 
-        let pop = world.spawn((
-            Pop,
-            Equipment { body: Some(tunic), ..Default::default() },
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Equipment {
+                    body: Some(tunic),
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         world.insert_resource(resources);
 
         // Run as system to avoid borrow checker issues with Mut<Equipment> vs Commands
-        world.run_system_once(move |mut commands: Commands, mut res: ResMut<ColonyResources>, mut query: Query<&mut Equipment>| {
-            let mut equipment_opt = query.get_mut(pop).ok();
-            handle_fetch_clothing(&mut commands, &mut res, pop, &mut equipment_opt);
-        }).unwrap();
+        world
+            .run_system_once(
+                move |mut commands: Commands,
+                      mut res: ResMut<ColonyResources>,
+                      mut query: Query<&mut Equipment>| {
+                    let mut equipment_opt = query.get_mut(pop).ok();
+                    handle_fetch_clothing(&mut commands, &mut res, pop, &mut equipment_opt);
+                },
+            )
+            .unwrap();
 
         // Apply commands
         world.flush();
@@ -230,7 +279,11 @@ mod tests {
         assert_ne!(eq.body, Some(tunic), "Should have new item");
 
         let new_clothing = world.get::<Clothing>(eq.body.unwrap()).unwrap();
-        assert_eq!(new_clothing.clothing_type, ClothingType::Parka, "Should upgrade to Parka");
+        assert_eq!(
+            new_clothing.clothing_type,
+            ClothingType::Parka,
+            "Should upgrade to Parka"
+        );
         assert_eq!(new_clothing.insulation, 2.0);
     }
 }

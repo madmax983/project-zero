@@ -526,9 +526,15 @@ pub fn medical_treatment_notification_system(
     for event in events.read() {
         // Only notify for significant healing to reduce spam
         if event.amount >= 1.0 {
-            let name = pops.get(event.patient).map(|n| n.0.as_str()).unwrap_or("Colonist");
+            let name = pops
+                .get(event.patient)
+                .map(|n| n.0.as_str())
+                .unwrap_or("Colonist");
             notifications.add_success(
-                format!("{} received medical treatment (+{:.1} HP).", name, event.amount),
+                format!(
+                    "{} received medical treatment (+{:.1} HP).",
+                    name, event.amount
+                ),
                 time.tick,
             );
         }
@@ -545,10 +551,7 @@ pub fn hospitalization_notification_system(
 ) {
     for (action, name) in query.iter() {
         if action.current == ActionType::SeekMedicalCare {
-             notifications.add_warning(
-                format!("{} has been hospitalized!", name.0),
-                time.tick,
-            );
+            notifications.add_warning(format!("{} has been hospitalized!", name.0), time.tick);
         }
     }
 }

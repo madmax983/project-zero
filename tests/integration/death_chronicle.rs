@@ -1,6 +1,6 @@
 use bevy_ecs::prelude::*;
 use scale::layer1::chronicle::{AddChronicleEvent, Chronicle};
-use scale::layer1::health::{Health, DeathEvent};
+use scale::layer1::health::{DeathEvent, Health};
 use scale::layer1::map::GridPosition;
 use scale::layer1::pop::{Pop, PopDied, PopName};
 use scale::shared::colony::ColonyName;

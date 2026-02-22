@@ -515,6 +515,12 @@ pub mod observer;
 #[cfg(feature = "nova")]
 pub use observer::*;
 
+/// Machine Consciousness (Nova Feature).
+#[cfg(feature = "nova")]
+pub mod machine_consciousness;
+#[cfg(feature = "nova")]
+pub use machine_consciousness::*;
+
 /// System registration and sets (Facade).
 pub mod systems;
 
@@ -564,4 +570,5 @@ pub mod economy;
 /// Language and Dialect system (Spec 193).
 pub mod language;
 pub use language::*;
-#[cfg(test)] mod equipment_tests;
+#[cfg(test)]
+mod equipment_tests;

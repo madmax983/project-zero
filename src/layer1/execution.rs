@@ -45,15 +45,16 @@ use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::economy::{get_wage_for_job, pay_wage};
 use crate::layer1::edicts::{ColonyPolicies, get_work_speed_modifier};
 use crate::layer1::erosion::{ErosionGrid, MOVEMENT_EROSION_AMOUNT};
+use crate::layer1::eureka::check_for_eureka_world;
 use crate::layer1::farm::Farm;
 use crate::layer1::flora::process_flora_clearing;
-use crate::layer1::language::{Dialect, Linguistics, calculate_coordination_penalty};
 use crate::layer1::funeral::{Corpse, Grave, handle_bury_corpse};
 use crate::layer1::gastronomy::WorkSpeedBuff;
 use crate::layer1::hazards::handle_workplace_hazards;
 use crate::layer1::heirloom::{Heirloom, RetrogradeEngineeringEvent, ToolHistory};
 use crate::layer1::housing::Housing;
 use crate::layer1::items::{Equipment, Tool};
+use crate::layer1::language::{Dialect, Linguistics, calculate_coordination_penalty};
 use crate::layer1::map::{GridPosition, ScreenShake};
 use crate::layer1::memory::{Memories, calculate_effective_morale};
 use crate::layer1::morale::Morale;
@@ -65,6 +66,7 @@ use crate::layer1::ruins::Ruin;
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
 use crate::layer1::social::{SocialBuff, Tavern, handle_socialize};
 use crate::layer1::social_stratification::Prestige;
+use crate::layer1::tech::Tech;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::traits::{Traits, get_trait_move_speed_modifier, get_trait_work_speed_modifier};
 use crate::layer1::utility_types::{ActionType, PopAction, StartPlan};
@@ -72,8 +74,6 @@ use crate::shared::log::MessageLog;
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 use rand::Rng;
-use crate::layer1::eureka::check_for_eureka_world;
-use crate::layer1::tech::Tech;
 use ratatui::style::Color;
 
 /// Executes combat when pop is targeting an enemy.
@@ -1171,7 +1171,16 @@ pub fn work_execution_system(world: &mut World) {
 
         for (
             i,
-            (pop_entity, morale, action_type, equipment_opt, local_mod, job_opt, my_dialect, my_ling),
+            (
+                pop_entity,
+                morale,
+                action_type,
+                equipment_opt,
+                local_mod,
+                job_opt,
+                my_dialect,
+                my_ling,
+            ),
         ) in group.iter().enumerate()
         {
             // Calculate coordination penalty

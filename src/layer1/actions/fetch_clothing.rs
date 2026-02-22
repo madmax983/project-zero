@@ -119,7 +119,8 @@ mod tests {
             GridPosition { x: 5, y: 0 },
         )];
 
-        let result = evaluate_fetch_clothing(pop_pos, current_insulation, &resources, &stockpiles, None);
+        let result =
+            evaluate_fetch_clothing(pop_pos, current_insulation, &resources, &stockpiles, None);
         assert!(result.is_some());
         let (utility, target) = result.unwrap();
         assert_eq!(target, stockpile_entity);
@@ -140,7 +141,8 @@ mod tests {
         )];
 
         // With no temperature grid, it should assume safe
-        let result = evaluate_fetch_clothing(pop_pos, current_insulation, &resources, &stockpiles, None);
+        let result =
+            evaluate_fetch_clothing(pop_pos, current_insulation, &resources, &stockpiles, None);
         assert!(result.is_none());
     }
 
@@ -157,7 +159,8 @@ mod tests {
             GridPosition { x: 5, y: 0 },
         )];
 
-        let result = evaluate_fetch_clothing(pop_pos, current_insulation, &resources, &stockpiles, None);
+        let result =
+            evaluate_fetch_clothing(pop_pos, current_insulation, &resources, &stockpiles, None);
         assert!(result.is_none());
     }
 }

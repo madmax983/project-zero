@@ -27,12 +27,10 @@ use super::biocompatibility::Biocompatibility;
 use super::cabin_fever::CabinFever;
 use super::contagion::ContagionCooldown;
 use super::factions::FactionMember;
-use crate::layer1::funeral::Corpse;
-use crate::layer1::health::{Dead, Health};
 use super::items::Equipment;
+use super::language::{Dialect, Linguistics};
 use super::lifecycle::Age;
 use super::map::{GridPosition, ScreenShake};
-use crate::layer1::memory::{Memories, MemoryType};
 use super::morale::Morale;
 use super::needs::Needs;
 use super::palette_fatigue::DietaryHistory;
@@ -43,13 +41,15 @@ use super::social::old_guard::Arrival;
 use super::terrain::{TerrainGrid, TerrainType};
 use super::traits::Traits;
 use super::utility_types::AssignmentType;
-use crate::layer1::economy::Wallet;
-use super::language::{Dialect, Linguistics};
 /// Alias for `AssignmentType` for job-related contexts (Spec 113).
 pub use super::utility_types::AssignmentType as JobType;
 use super::utility_types::{PopAction, UtilityWeights};
 use super::wild_child::WildExposure;
 use crate::layer1::admin::AdminConsumer;
+use crate::layer1::economy::Wallet;
+use crate::layer1::funeral::Corpse;
+use crate::layer1::health::{Dead, Health};
+use crate::layer1::memory::{Memories, MemoryType};
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
 use rand::Rng;
@@ -307,11 +307,7 @@ pub fn reset_speed_system(mut query: Query<&mut Speed>) {
 /// Handles death events specific to Pops.
 pub fn handle_pop_death_system(
     mut pop_died_events: EventWriter<PopDied>,
-    query: Query<(
-        Entity,
-        Option<&GridPosition>,
-        Option<&PopName>,
-    ), (With<Pop>, Added<Dead>)>,
+    query: Query<(Entity, Option<&GridPosition>, Option<&PopName>), (With<Pop>, Added<Dead>)>,
     mut commands: Commands,
     mut log: Option<ResMut<MessageLog>>,
     mut shake: Option<ResMut<ScreenShake>>,
@@ -373,9 +369,9 @@ pub fn handle_witness_death_system(
     for event in events.read() {
         // Parallel iterator could be used if we had Res<TaskPool>, but simplistic loop is fine for MVP
         for (entity, mut memories) in query.iter_mut() {
-             if entity != event.entity {
-                 memories.add(MemoryType::WitnessedDeath, event.tick);
-             }
+            if entity != event.entity {
+                memories.add(MemoryType::WitnessedDeath, event.tick);
+            }
         }
     }
 }

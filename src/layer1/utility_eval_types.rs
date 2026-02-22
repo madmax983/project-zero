@@ -2,13 +2,13 @@
 use crate::layer1::chemical::ChemicalState;
 use crate::layer1::combat::Drafted;
 use crate::layer1::day_night::DayNightCycle;
-use crate::layer1::memetic::MemeticCarrier;
 use crate::layer1::factions::{FactionData, FactionId, FactionMember};
 use crate::layer1::health::Health;
 use crate::layer1::hobby::Hobby;
 use crate::layer1::items::{CarryingItem, Equipment, ItemType};
 use crate::layer1::justice::Inmate;
 use crate::layer1::map::GridPosition;
+use crate::layer1::memetic::MemeticCarrier;
 use crate::layer1::needs::Needs;
 use crate::layer1::penal::PenalLabor;
 use crate::layer1::resources::{Carrying, ColonyResources, ResourceType};

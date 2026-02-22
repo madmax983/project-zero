@@ -1,8 +1,8 @@
-use crate::layer1::tech::{Tech, TechState};
 use crate::layer1::resources::ColonyResources;
+use crate::layer1::tech::{Tech, TechState};
+use crate::layer1::traits::{Trait, Traits};
 use crate::layer1::utility_ai::ActionType;
 use crate::shared::log::MessageLog;
-use crate::layer1::traits::{Traits, Trait};
 use bevy_ecs::prelude::*;
 use rand::Rng;
 
@@ -81,7 +81,10 @@ pub fn check_for_eureka_world(
     traits: Option<Traits>,
 ) -> bool {
     // 1. Get Config
-    let config = world.get_resource::<EurekaConfig>().cloned().unwrap_or_default();
+    let config = world
+        .get_resource::<EurekaConfig>()
+        .cloned()
+        .unwrap_or_default();
 
     // 2. Calculate Chance
     let mut chance = config.base_chance;
@@ -143,9 +146,16 @@ pub fn handle_eureka_events(
 
         if let Some(log) = &mut log {
             if tech_unlocked {
-                log.add(format!("EUREKA! Doing {:?} unlocked {:?}!", event.action, event.related_tech.unwrap().label()));
+                log.add(format!(
+                    "EUREKA! Doing {:?} unlocked {:?}!",
+                    event.action,
+                    event.related_tech.unwrap().label()
+                ));
             } else {
-                log.add(format!("Eureka! Gained insight ({}) while {:?}!", knowledge_gained, event.action));
+                log.add(format!(
+                    "Eureka! Gained insight ({}) while {:?}!",
+                    knowledge_gained, event.action
+                ));
             }
         }
     }
@@ -154,20 +164,24 @@ pub fn handle_eureka_events(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::tech::{Tech, TechState};
     use crate::layer1::resources::ColonyResources;
+    use crate::layer1::tech::{Tech, TechState};
     use crate::layer1::utility_ai::ActionType;
     use std::collections::HashSet;
 
     #[test]
     fn test_check_for_eureka_emits_event() {
         let mut world = World::new();
-        world.insert_resource(EurekaConfig { base_chance: 1.0, ..Default::default() }); // Guaranteed
+        world.insert_resource(EurekaConfig {
+            base_chance: 1.0,
+            ..Default::default()
+        }); // Guaranteed
         world.insert_resource(Events::<EurekaEvent>::default());
 
         // We need an EventWriter. In tests we can use SystemState or just World.
         // Let's use check_for_eureka_world for simplicity in test setup without SystemState boilerplate
-        let occurred = check_for_eureka_world(&mut world, ActionType::Work, Some(Tech::Masonry), None);
+        let occurred =
+            check_for_eureka_world(&mut world, ActionType::Work, Some(Tech::Masonry), None);
 
         assert!(occurred);
 
@@ -211,7 +225,10 @@ mod tests {
         // With Creative (1.5x) -> 0.75.
         // This is hard to test deterministically with RNG.
         // But we can check that it compiles and runs.
-        world.insert_resource(EurekaConfig { base_chance: 0.5, ..Default::default() });
+        world.insert_resource(EurekaConfig {
+            base_chance: 0.5,
+            ..Default::default()
+        });
 
         let traits = Traits(HashSet::from([Trait::Creative]));
 

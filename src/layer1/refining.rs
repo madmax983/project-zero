@@ -26,15 +26,15 @@
 
 use crate::layer1::GridPosition;
 use crate::layer1::building::{Building, BuildingType};
+use crate::layer1::eureka::check_for_eureka_world;
 use crate::layer1::factions::{FactionMember, FactionState, Factions};
 use crate::layer1::pop::Pop;
 use crate::layer1::resources::{ColonyResources, RefiningProgress, ResourceItem, ResourceType};
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
+use crate::layer1::tech::Tech;
 use crate::layer1::utility_ai::{ActionType, PopAction};
 use bevy_ecs::prelude::*;
 use rand::Rng;
-use crate::layer1::eureka::check_for_eureka_world;
-use crate::layer1::tech::Tech;
 
 /// System that processes refining at buildings like Lumber Mills and Stone Masons.
 ///
@@ -188,7 +188,9 @@ pub fn process_refining_system(world: &mut World) {
                 _ => None,
             };
 
-            let traits = world.get::<crate::layer1::traits::Traits>(*worker_entity).cloned();
+            let traits = world
+                .get::<crate::layer1::traits::Traits>(*worker_entity)
+                .cloned();
             check_for_eureka_world(world, ActionType::Refine, related_tech, traits);
         }
     }

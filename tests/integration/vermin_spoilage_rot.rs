@@ -4,7 +4,7 @@ mod tests {
     use bevy_ecs::system::RunSystemOnce;
     use scale::layer1::integration::vermin_item_rot_system;
     use scale::layer1::resources::ColonyResources;
-    use scale::layer1::spoilage::{spoilage_system, Perishable};
+    use scale::layer1::spoilage::{Perishable, spoilage_system};
     use scale::layer1::vermin::VerminState;
 
     #[test]
@@ -20,10 +20,12 @@ mod tests {
         world.insert_resource(ColonyResources::default());
 
         // Spawn perishable item
-        let item = world.spawn(Perishable {
-            current_ticks: 0,
-            max_ticks: 1000,
-        }).id();
+        let item = world
+            .spawn(Perishable {
+                current_ticks: 0,
+                max_ticks: 1000,
+            })
+            .id();
 
         // Run systems
         // Spoilage system handles normal decay (+1)
@@ -35,6 +37,10 @@ mod tests {
 
         // With Stub: +1 (spoilage) + 0 (stub) = 1.
         // With Logic: +1 (spoilage) + ~5 (rot) = ~6.
-        assert!(p.current_ticks > 2, "Vermin should significantly accelerate rot. Current: {}", p.current_ticks);
+        assert!(
+            p.current_ticks > 2,
+            "Vermin should significantly accelerate rot. Current: {}",
+            p.current_ticks
+        );
     }
 }

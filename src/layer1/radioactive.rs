@@ -6,11 +6,11 @@
 )]
 //! Radioactive system handling radiation grid and sickness.
 
-use bevy_ecs::prelude::*;
-use crate::layer1::map::GridPosition;
 use crate::layer1::health::Health;
+use crate::layer1::map::GridPosition;
 use crate::layer1::pop::Pop;
 use crate::layer1::resources::{ResourceItem, ResourceType};
+use bevy_ecs::prelude::*;
 
 /// Grid managing radiation levels.
 #[derive(Resource)]
@@ -37,7 +37,9 @@ impl RadiationGrid {
     /// Get radiation level at coordinates.
     #[must_use]
     pub fn get(&self, x: usize, y: usize) -> f32 {
-        if x >= self.width || y >= self.height { return 0.0; }
+        if x >= self.width || y >= self.height {
+            return 0.0;
+        }
         self.values[y * self.width + x]
     }
 
@@ -58,15 +60,15 @@ impl RadiationGrid {
         let r_int = radius.ceil() as i32;
         for dy in -r_int..=r_int {
             for dx in -r_int..=r_int {
-                let dist = ((dx*dx + dy*dy) as f32).sqrt();
+                let dist = ((dx * dx + dy * dy) as f32).sqrt();
                 if dist <= radius {
                     let falloff = 1.0 - (dist / (radius + 0.1));
                     if falloff > 0.0 {
                         let nx = x + dx;
                         let ny = y + dy;
                         if nx >= 0 && ny >= 0 && nx < self.width as i32 && ny < self.height as i32 {
-                             let idx = (ny as usize) * self.width + (nx as usize);
-                             self.values[idx] += intensity * falloff;
+                            let idx = (ny as usize) * self.width + (nx as usize);
+                            self.values[idx] += intensity * falloff;
                         }
                     }
                 }
@@ -114,7 +116,9 @@ pub fn radiation_system(
                 sick.severity += exposure * 0.1;
                 sick.severity = sick.severity.min(100.0);
             } else {
-                commands.entity(entity).insert(RadiationSickness { severity: exposure * 0.1 });
+                commands.entity(entity).insert(RadiationSickness {
+                    severity: exposure * 0.1,
+                });
             }
         } else if let Some(mut sick) = sickness_opt {
             // Recovery
@@ -140,14 +144,14 @@ pub fn sickness_damage_system(mut query: Query<(&mut Health, &RadiationSickness)
 
 #[cfg(test)]
 mod tests {
+    use crate::layer1::health::Health;
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::pop::Pop;
+    use crate::layer1::radioactive::{RadiationGrid, RadiationSickness, radiation_system};
+    use crate::layer1::resources::{ResourceItem, ResourceType};
+    use crate::layer1::temperature::{TemperatureGrid, update_temperature_system};
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
-    use crate::layer1::temperature::{TemperatureGrid, update_temperature_system};
-    use crate::layer1::map::GridPosition;
-    use crate::layer1::resources::{ResourceItem, ResourceType};
-    use crate::layer1::health::Health;
-    use crate::layer1::pop::Pop;
-    use crate::layer1::radioactive::{RadiationGrid, radiation_system, RadiationSickness};
 
     #[test]
     fn test_waste_emits_heat() {
@@ -158,7 +162,10 @@ mod tests {
 
         // Spawn Waste Item
         world.spawn((
-            ResourceItem { resource_type: ResourceType::Waste, amount: 1.0 },
+            ResourceItem {
+                resource_type: ResourceType::Waste,
+                amount: 1.0,
+            },
             GridPosition { x: 5, y: 5 },
         ));
 
@@ -175,7 +182,10 @@ mod tests {
         world.insert_resource(TemperatureGrid::new(10, 10, 0.0));
 
         world.spawn((
-            ResourceItem { resource_type: ResourceType::Ore, amount: 1.0 },
+            ResourceItem {
+                resource_type: ResourceType::Ore,
+                amount: 1.0,
+            },
             GridPosition { x: 5, y: 5 },
         ));
 
@@ -191,7 +201,10 @@ mod tests {
         world.insert_resource(TemperatureGrid::new(10, 10, 0.0));
 
         world.spawn((
-            ResourceItem { resource_type: ResourceType::Food, amount: 1.0 },
+            ResourceItem {
+                resource_type: ResourceType::Food,
+                amount: 1.0,
+            },
             GridPosition { x: 5, y: 5 },
         ));
 
@@ -208,7 +221,10 @@ mod tests {
 
         // Spawn Waste
         world.spawn((
-            ResourceItem { resource_type: ResourceType::Waste, amount: 1.0 },
+            ResourceItem {
+                resource_type: ResourceType::Waste,
+                amount: 1.0,
+            },
             GridPosition { x: 5, y: 5 },
         ));
 
@@ -227,16 +243,21 @@ mod tests {
 
         // Spawn Waste Source
         world.spawn((
-            ResourceItem { resource_type: ResourceType::Waste, amount: 1.0 },
+            ResourceItem {
+                resource_type: ResourceType::Waste,
+                amount: 1.0,
+            },
             GridPosition { x: 5, y: 5 },
         ));
 
-        let pop = world.spawn((
-            Pop::default(),
-            Health::default(),
-            GridPosition { x: 5, y: 5 },
-            // Sickness component added by system? Or exists with 0 severity?
-        )).id();
+        let pop = world
+            .spawn((
+                Pop::default(),
+                Health::default(),
+                GridPosition { x: 5, y: 5 },
+                // Sickness component added by system? Or exists with 0 severity?
+            ))
+            .id();
 
         world.run_system_once(radiation_system).unwrap();
         // apply deferred commands
@@ -251,14 +272,21 @@ mod tests {
     #[test]
     fn test_sickness_damages_health() {
         let mut world = World::new();
-        let pop = world.spawn((
-            Pop::default(),
-            Health { current: 100.0, max: 100.0 },
-            RadiationSickness { severity: 60.0 }, // Threshold is usually 50
-        )).id();
+        let pop = world
+            .spawn((
+                Pop::default(),
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                },
+                RadiationSickness { severity: 60.0 }, // Threshold is usually 50
+            ))
+            .id();
 
         // Run health/damage system logic for sickness
-        world.run_system_once(crate::layer1::radioactive::sickness_damage_system).unwrap();
+        world
+            .run_system_once(crate::layer1::radioactive::sickness_damage_system)
+            .unwrap();
 
         let health = world.get::<Health>(pop).unwrap();
         assert!(health.current < 100.0);

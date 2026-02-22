@@ -146,11 +146,7 @@ pub fn starvation_damage_system(world: &mut World) {
         .get_resource::<crate::shared::time::SimulationTime>()
         .map_or(0, |t| t.tick);
 
-    let mut query = world.query::<(
-        &Needs,
-        &mut Health,
-        Option<&mut Memories>,
-    )>();
+    let mut query = world.query::<(&Needs, &mut Health, Option<&mut Memories>)>();
     for (needs, mut health, mut memories) in query.iter_mut(world) {
         if needs.hunger <= 0.0 {
             // Ludwig: Grace Period - Starving should feel urgent but not instant death.
