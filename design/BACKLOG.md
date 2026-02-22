@@ -29,6 +29,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `194` Company Scrip — `specs/194-company-scrip.md`
 - [ ] `195` Cryo-Dreams — `specs/195-cryo-dreams.md`
 - [ ] `196` Eureka Moments — `specs/196-eureka-moments.md`
+- [ ] `197` Civic Ideology — `specs/197-civic-ideology.md`
 
 ## MVP — Layer 2: System Simulation
 
