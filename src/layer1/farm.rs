@@ -86,7 +86,13 @@ fn get_crop_stats(crop: &ItemType) -> CropStats {
 
 /// Produces food from all farms with active workers.
 pub fn produce_food_system(
-    farm_query: Query<(&Building, &GridPosition, Option<&PowerConsumer>, &Farm)>,
+    farm_query: Query<(
+        &Building,
+        &GridPosition,
+        Option<&PowerConsumer>,
+        &Farm,
+        Option<&crate::layer1::optimization::Optimized>,
+    )>,
     mut pop_query: Query<
         (
             Entity,
@@ -118,16 +124,18 @@ pub fn produce_food_system(
         .map(|s| s.current_season)
         .unwrap_or(Season::Spring);
 
-    let farm_map: std::collections::HashMap<GridPosition, (BuildingType, bool, ItemType)> =
+    let farm_map: std::collections::HashMap<GridPosition, (BuildingType, bool, ItemType, f32)> =
         farm_query
             .iter()
-            .map(|(b, p, pc, farm)| {
+            .map(|(b, p, pc, farm, optimized)| {
+                let bonus = optimized.map_or(0.0, |o| o.efficiency_bonus);
                 (
                     *p,
                     (
                         b.building_type,
                         pc.is_some_and(|c| c.active),
                         farm.selected_crop.clone(),
+                        bonus,
                     ),
                 )
             })
@@ -154,7 +162,7 @@ pub fn produce_food_system(
             }
         }
 
-        if let Some((building_type, is_powered, selected_crop)) = farm_map.get(pos) {
+        if let Some((building_type, is_powered, selected_crop, optimized_bonus)) = farm_map.get(pos) {
             // Tech Corruption Check
             if let Some(tech) = building_type.required_tech() {
                 // Use read-only resource for check to avoid conflict?
@@ -246,7 +254,11 @@ pub fn produce_food_system(
                 resources.water -= water_cost;
             }
 
-            let production = efficiency * base_production * effective_modifier * fertility_modifier;
+            let production = efficiency
+                * base_production
+                * effective_modifier
+                * fertility_modifier
+                * (1.0 + optimized_bonus);
 
             if production > 0.0 {
                 match building_type {

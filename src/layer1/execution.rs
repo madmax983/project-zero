@@ -59,6 +59,7 @@ use crate::layer1::map::{GridPosition, ScreenShake};
 use crate::layer1::memory::{Memories, calculate_effective_morale};
 use crate::layer1::morale::Morale;
 use crate::layer1::needs::{Needs, get_morale_efficiency};
+use crate::layer1::optimization::{OptimizationResult, perform_optimization};
 use crate::layer1::particles::{spawn_moving_particle, spawn_particle};
 use crate::layer1::pop::{Job, Role, Speed};
 use crate::layer1::resources::{ColonyResources, process_logging, process_mining};
@@ -68,7 +69,7 @@ use crate::layer1::social::{SocialBuff, Tavern, handle_socialize};
 use crate::layer1::social_stratification::Prestige;
 use crate::layer1::tech::Tech;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
-use crate::layer1::traits::{Traits, get_trait_move_speed_modifier, get_trait_work_speed_modifier};
+use crate::layer1::traits::{Trait, Traits, get_trait_move_speed_modifier, get_trait_work_speed_modifier};
 use crate::layer1::utility_types::{ActionType, PopAction, StartPlan};
 use crate::shared::log::MessageLog;
 use crate::shared::time::SimulationTime;
@@ -497,6 +498,7 @@ fn check_work_adjacency(
     if action != ActionType::Work
         && action != ActionType::Repair
         && action != ActionType::ScrawlMemeticSigil
+        && action != ActionType::Tinker
     {
         return false;
     }
@@ -726,8 +728,8 @@ fn process_arrival(
             );
             true
         }
-        ActionType::Work | ActionType::Repair | ActionType::Haul | ActionType::Tame => {
-            // Work/Repair/Haul/Tame is handled by their respective systems
+        ActionType::Work | ActionType::Repair | ActionType::Haul | ActionType::Tame | ActionType::Tinker => {
+            // Work/Repair/Haul/Tame/Tinker is handled by their respective systems
             // Just keep the AtTarget marker for that system
             false
         }
@@ -1100,7 +1102,9 @@ pub fn work_execution_system(world: &mut World) {
         ), With<AtTarget>>()
         .iter(world)
         .filter(|(_, mt, _, _, _, _, _, _, faction_member, _, _, _, _)| {
-            let is_work = mt.for_action == ActionType::Work || mt.for_action == ActionType::Repair;
+            let is_work = mt.for_action == ActionType::Work
+                || mt.for_action == ActionType::Repair
+                || mt.for_action == ActionType::Tinker;
             if !is_work {
                 return false;
             }
@@ -1195,18 +1199,153 @@ pub fn work_execution_system(world: &mut World) {
                 }
             }
 
-            process_single_worker(
-                world,
-                *pop_entity,
-                target_entity,
-                *morale,
-                *action_type,
-                *equipment_opt,
-                global_work_speed_mod * local_mod * coordination_mod,
-                *job_opt,
-            );
+            if *action_type == ActionType::Tinker {
+                process_tinker_worker(world, *pop_entity, target_entity);
+            } else {
+                process_single_worker(
+                    world,
+                    *pop_entity,
+                    target_entity,
+                    *morale,
+                    *action_type,
+                    *equipment_opt,
+                    global_work_speed_mod * local_mod * coordination_mod,
+                    *job_opt,
+                );
+            }
         }
     }
+}
+
+fn process_tinker_worker(world: &mut World, pop_entity: Entity, target_entity: Entity) {
+    if world.get_entity(target_entity).is_err() {
+        cleanup_pop_work_state(world, pop_entity);
+        return;
+    }
+
+    let ticks = if let Some(action) = world.get::<PopAction>(pop_entity) {
+        action.ticks_committed
+    } else {
+        0
+    };
+
+    // Duration: 50 ticks
+    if ticks < 50 {
+        // Visual feedback during tinkering (Sparks)
+        if ticks % 10 == 0 {
+            if let Some(pos) = world.get::<GridPosition>(pop_entity).copied() {
+                spawn_particle(world, pos, '*', ratatui::style::Color::Yellow, 5);
+            }
+        }
+        return;
+    }
+
+    // Complete
+    let (skills, traits) = if let Some((s, t)) =
+        world.query::<(&Skills, &Traits)>().get(world, pop_entity).ok()
+    {
+        (s.clone(), Some(t.clone()))
+    } else if let Some(s) = world.get::<Skills>(pop_entity) {
+        (s.clone(), None)
+    } else {
+        (Skills::default(), None)
+    };
+
+    let construction = skills.get_level(SkillType::Construction);
+    let crafting = skills.get_level(SkillType::Crafting);
+    let skill_level = construction.max(crafting); // Use highest relevant skill
+
+    // Logic:
+    // Base Success: 50% + (Skill - 3) * 10%
+    // Obsessive: +20%
+    // Clumsy: +10% Critical Failure
+    // Lucky: +10% Critical Success
+
+    let mut success_chance = 0.5 + (skill_level as f32 - 3.0) * 0.1;
+    let mut crit_success_chance = 0.05;
+    let mut crit_fail_chance = 0.05;
+
+    if let Some(t) = &traits {
+        if t.has(Trait::Obsessive) {
+            success_chance += 0.2;
+        }
+        if t.has(Trait::Clumsy) {
+            crit_fail_chance += 0.1;
+        }
+        if t.has(Trait::Lucky) {
+            crit_success_chance += 0.1;
+        }
+    }
+
+    let mut rng = rand::thread_rng();
+    let roll = rng.r#gen::<f32>();
+
+    let result = if roll < crit_fail_chance {
+        OptimizationResult::CriticalFailure
+    } else if roll < crit_fail_chance + (1.0 - success_chance) * 0.5 {
+        // Simple failure logic: remaining prob split between fail and success?
+        // Let's simplify:
+        // Roll 0.0-1.0
+        // Check Crit Fail first.
+        // Check Crit Success next (high roll).
+        // Check Success vs Failure in between.
+        OptimizationResult::Failure
+    } else {
+        // Re-roll for success vs crit success?
+        // Let's use standard table.
+        // 0.0 .. CF -> CF
+        // CF .. (CF + FailRate) -> Fail
+        // ... -> Success
+        // Top -> Crit Success
+
+        // Normalized:
+        // CF = crit_fail_chance
+        // CS = crit_success_chance
+        // Normal Fail = (1.0 - CF - CS - SuccessRate)? No.
+        // Let's just do checks.
+        OptimizationResult::Success
+    };
+
+    // Better Logic:
+    let result = {
+        let r = rng.r#gen::<f32>();
+        if r < crit_fail_chance {
+            OptimizationResult::CriticalFailure
+        } else if r > (1.0 - crit_success_chance) {
+            OptimizationResult::CriticalSuccess
+        } else if r < (crit_fail_chance + (1.0 - success_chance).max(0.0)) {
+            OptimizationResult::Failure
+        } else {
+            OptimizationResult::Success
+        }
+    };
+
+    perform_optimization(world, target_entity, result);
+
+    // Notifications and Effects
+    let pos = world.get::<GridPosition>(pop_entity).copied();
+    if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+        match result {
+            OptimizationResult::Success => {
+                log.add_colored("Building Optimized!", ratatui::style::Color::Green);
+                if let Some(p) = pos { spawn_particle(world, p, '^', ratatui::style::Color::Green, 10); }
+            }
+            OptimizationResult::CriticalSuccess => {
+                log.add_colored("Critical Optimization!", ratatui::style::Color::Cyan);
+                if let Some(p) = pos { spawn_particle(world, p, '★', ratatui::style::Color::Cyan, 15); }
+            }
+            OptimizationResult::Failure => {
+                log.add_colored("Optimization Failed (Damage).", ratatui::style::Color::Yellow);
+                if let Some(p) = pos { spawn_particle(world, p, '!', ratatui::style::Color::Yellow, 10); }
+            }
+            OptimizationResult::CriticalFailure => {
+                log.add_colored("Optimization Critical Failure (Broken)!", ratatui::style::Color::Red);
+                if let Some(p) = pos { spawn_particle(world, p, 'X', ratatui::style::Color::Red, 20); }
+            }
+        }
+    }
+
+    cleanup_pop_work_state(world, pop_entity);
 }
 
 fn process_single_worker(

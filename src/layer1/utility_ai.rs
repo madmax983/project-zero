@@ -70,6 +70,7 @@ use crate::layer1::items::Item;
 use crate::layer1::justice::{Wanted, evaluate_warden_action};
 use crate::layer1::map::GridPosition;
 use crate::layer1::medical::Hospital;
+use crate::layer1::optimization::{Optimized, evaluate_tinker};
 use crate::layer1::refining::get_refining_recipe;
 use crate::layer1::resources::{ColonyResources, RefiningProgress, ResourceItem};
 use crate::layer1::science::Anomaly;
@@ -289,6 +290,19 @@ fn evaluate_group_work(
             evaluator.consider(ActionType::Warden, utility, Some(target));
         }
     }
+
+    // Evaluate Tinker (Obsessive Optimization)
+    if let Some(skills) = &data.skills {
+        if let Some((utility, target)) = evaluate_tinker(
+            pop_pos,
+            skills,
+            data.traits.as_ref(),
+            &weights,
+            &buffer.optimizable_buildings,
+        ) {
+            evaluator.consider(ActionType::Tinker, utility, Some(target));
+        }
+    }
 }
 
 fn evaluate_group_logistics(
@@ -436,6 +450,18 @@ fn populate_buffer_buildings(
     populate_refining(world, &mut buffer.refining, context);
     populate_hospitals(world, &mut buffer.hospitals);
     populate_offices(world, &mut buffer.offices, context.cycle);
+    populate_optimizable_buildings(world, &mut buffer.optimizable_buildings);
+}
+
+fn populate_optimizable_buildings(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
+    buffer.clear();
+    // Find buildings that are NOT optimized
+    let mut query = world.query::<(Entity, &GridPosition, &Building, Option<&Optimized>)>();
+    for (entity, pos, _building, optimized) in query.iter(world) {
+        if optimized.is_none() {
+            buffer.push(ScorableCandidate::new(entity, *pos));
+        }
+    }
 }
 
 fn populate_farms(

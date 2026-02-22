@@ -567,6 +567,8 @@ pub mod radioactive;
 pub use radioactive::*;
 /// Company Scrip and Economy system (Spec 194).
 pub mod economy;
+/// Obsessive Optimization system (Spec 199).
+pub mod optimization;
 /// Language and Dialect system (Spec 193).
 pub mod language;
 pub use language::*;

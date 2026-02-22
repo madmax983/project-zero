@@ -137,7 +137,10 @@ fn bfs_grid(
                     let efficiency = world
                         .get::<crate::layer1::prototyping::Prototype>(entity)
                         .map_or(1.0, |p| p.efficiency_modifier);
-                    total_production += source.output * efficiency;
+                    let optimized_bonus = world
+                        .get::<crate::layer1::optimization::Optimized>(entity)
+                        .map_or(0.0, |o| o.efficiency_bonus);
+                    total_production += source.output * (efficiency + optimized_bonus);
                 }
             }
             if let Some(consumer) = world.get::<PowerConsumer>(entity) {

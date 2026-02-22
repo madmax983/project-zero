@@ -133,6 +133,10 @@ pub enum ActionType {
     ///
     /// See [`crate::layer1::chemical::evaluate_consume_chemical`].
     ConsumeChemical,
+    /// Tinker with a building to optimize it (Obsessive trait).
+    ///
+    /// See [`crate::layer1::optimization::evaluate_tinker`].
+    Tinker,
 }
 
 /// Types of hobbies.
@@ -152,7 +156,7 @@ pub enum HobbyType {
 
 impl ActionType {
     /// Total number of action types. Used for array sizing.
-    pub const COUNT: usize = 32;
+    pub const COUNT: usize = 33;
 
     /// Converts action type to a unique array index (0..COUNT-1).
     #[must_use]
@@ -190,6 +194,7 @@ impl ActionType {
             Self::ScrawlMemeticSigil => 29,
             Self::PreCrimeArrest => 30,
             Self::ConsumeChemical => 31,
+            Self::Tinker => 32,
         }
     }
 
