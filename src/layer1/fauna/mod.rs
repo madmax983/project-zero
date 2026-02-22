@@ -193,6 +193,7 @@ pub fn fauna_behavior_system(world: &mut World) {
 }
 
 /// Handles death events specific to Fauna.
+#[allow(clippy::type_complexity)]
 pub fn handle_fauna_death_system(
     query: Query<(Entity, Option<&GridPosition>), (With<Fauna>, Added<Dead>)>,
     mut commands: Commands,

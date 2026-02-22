@@ -59,7 +59,7 @@ pub const BREAKDOWN_DURATION: u32 = 500;
 pub const CATHARSIS_DURATION: u32 = 2000;
 
 /// System to check for stress accumulation and trigger breakdowns.
-#[allow(clippy::type_complexity)]
+#[allow(clippy::type_complexity, clippy::collapsible_if)]
 pub fn check_stress_breakdown_system(
     mut commands: Commands,
     mut query: Query<(

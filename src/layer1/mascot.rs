@@ -155,7 +155,7 @@ pub fn mascot_buff_system(
 }
 
 /// System to apply grief when a Mascot dies.
-pub fn mascot_death_grief_system() {
+pub const fn mascot_death_grief_system() {
     // Disabled
 }
 

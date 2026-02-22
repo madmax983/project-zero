@@ -764,12 +764,11 @@ fn collect_pop_data(world: &mut World, buffer: &mut UtilityAIBuffer, config: &Ut
     // Populate Insulation from Clothing entities
     let mut clothing_query = world.query::<&crate::layer1::items::Clothing>();
     for data in &mut buffer.pop_data {
-        if let Some(eq) = data.equipment {
-            if let Some(body_entity) = eq.body {
-                if let Ok(clothing) = clothing_query.get(world, body_entity) {
-                    data.insulation = clothing.insulation;
-                }
-            }
+        if let Some(eq) = data.equipment
+            && let Some(body_entity) = eq.body
+            && let Ok(clothing) = clothing_query.get(world, body_entity)
+        {
+            data.insulation = clothing.insulation;
         }
     }
 }

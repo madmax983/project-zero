@@ -1,3 +1,4 @@
+#![allow(clippy::too_many_lines, clippy::type_complexity, clippy::doc_markdown)]
 use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::cryo_dreams::CryoTrauma;
 use crate::layer1::health::Health;

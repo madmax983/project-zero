@@ -1,3 +1,4 @@
+#![allow(clippy::useless_let_if_seq)]
 use crate::layer1::map::GridPosition;
 use crate::layer1::utility_eval_types::{PopEvalData, UtilityAIBuffer};
 use crate::layer1::utility_types::ActionType;

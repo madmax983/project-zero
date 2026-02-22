@@ -43,6 +43,7 @@ impl Health {
 }
 
 /// System that checks for entities with zero health and marks them as Dead.
+#[allow(clippy::type_complexity)]
 pub fn check_health_status_system(
     mut commands: Commands,
     query: Query<(Entity, &Health), (Without<Dead>, Changed<Health>)>,

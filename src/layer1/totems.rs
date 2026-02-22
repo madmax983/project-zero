@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::items::{Equipment, Item, UnequipEvent};
 use crate::layer1::stress::StressTracker;
 use crate::shared::log::MessageLog;
+use bevy_ecs::prelude::*;
 use ratatui::style::Color;
 
 /// Component for a Totem item that reduces stress.
@@ -36,17 +36,22 @@ pub fn check_spontaneous_totem_creation(
             let trigger = true;
 
             if trigger {
-                let totem = commands.spawn((
-                    Item::default(),
-                    Totem {
-                        stress_relief: 0.5,
-                        description: "Lucky Rock".to_string()
-                    }
-                )).id();
+                let totem = commands
+                    .spawn((
+                        Item::default(),
+                        Totem {
+                            stress_relief: 0.5,
+                            description: "Lucky Rock".to_string(),
+                        },
+                    ))
+                    .id();
                 eq.totem = Some(totem);
 
                 if let Some(ref mut log) = log {
-                    log.add_colored("A Pop found a Lucky Rock in a moment of stress!", Color::Cyan);
+                    log.add_colored(
+                        "A Pop found a Lucky Rock in a moment of stress!",
+                        Color::Cyan,
+                    );
                 }
             }
         }
@@ -64,14 +69,19 @@ pub fn unequip_totem_system(
     for event in events.read() {
         // Check if the unequipped item was a totem
         if query_totem.get(event.item).is_ok() {
-             // It was a totem
-             commands.entity(event.actor).insert(BadOmen { duration: 1000 });
-             if let Ok(mut stress) = query_stress.get_mut(event.actor) {
-                 stress.accumulated_stress += 50.0;
-             }
-             if let Some(ref mut log) = log {
-                 log.add_colored("A Pop lost their lucky totem! A Bad Omen descends...", Color::Magenta);
-             }
+            // It was a totem
+            commands
+                .entity(event.actor)
+                .insert(BadOmen { duration: 1000 });
+            if let Ok(mut stress) = query_stress.get_mut(event.actor) {
+                stress.accumulated_stress += 50.0;
+            }
+            if let Some(ref mut log) = log {
+                log.add_colored(
+                    "A Pop lost their lucky totem! A Bad Omen descends...",
+                    Color::Magenta,
+                );
+            }
         }
     }
 }
@@ -79,11 +89,11 @@ pub fn unequip_totem_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::pop::Pop;
     use crate::layer1::items::Equipment;
-    use crate::layer1::stress::check_stress_breakdown_system;
-    use crate::layer1::needs::Needs;
     use crate::layer1::morale::Morale;
+    use crate::layer1::needs::Needs;
+    use crate::layer1::pop::Pop;
+    use crate::layer1::stress::check_stress_breakdown_system;
 
     #[test]
     fn test_equipment_has_totem_slot() {
@@ -100,12 +110,16 @@ mod tests {
         schedule.add_systems(check_spontaneous_totem_creation);
 
         // Pop with high stress (but not broken) and empty totem slot
-        let pop = world.spawn((
-            Pop,
-            Equipment::default(),
-            StressTracker { accumulated_stress: 80.0 }, // Near breakdown (100)
-            Needs::default(),
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Equipment::default(),
+                StressTracker {
+                    accumulated_stress: 80.0,
+                }, // Near breakdown (100)
+                Needs::default(),
+            ))
+            .id();
 
         schedule.run(&mut world);
         schedule.add_systems(bevy_ecs::prelude::apply_deferred);
@@ -126,20 +140,37 @@ mod tests {
         schedule.add_systems(check_stress_breakdown_system);
 
         // Spawn Totem
-        let totem = world.spawn((
-            Item::default(),
-            Totem { stress_relief: 0.5, description: "Lucky Rock".to_string() },
-        )).id();
+        let totem = world
+            .spawn((
+                Item::default(),
+                Totem {
+                    stress_relief: 0.5,
+                    description: "Lucky Rock".to_string(),
+                },
+            ))
+            .id();
 
         // Pop with low morale (gains +1.0 stress normally)
-        let pop = world.spawn((
-            Pop,
-            Equipment { totem: Some(totem), ..Default::default() },
-            Needs { hunger: 0.1, rest: 0.1, leisure: 0.1 }, // Morale < 0.15
-            StressTracker::default(),
-            Morale { value: 0.1, ..Default::default() }, // Set morale low explicitly
-            crate::layer1::traits::Traits(std::collections::HashSet::new()),
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Equipment {
+                    totem: Some(totem),
+                    ..Default::default()
+                },
+                Needs {
+                    hunger: 0.1,
+                    rest: 0.1,
+                    leisure: 0.1,
+                }, // Morale < 0.15
+                StressTracker::default(),
+                Morale {
+                    value: 0.1,
+                    ..Default::default()
+                }, // Set morale low explicitly
+                crate::layer1::traits::Traits(std::collections::HashSet::new()),
+            ))
+            .id();
 
         schedule.run(&mut world);
 
@@ -157,18 +188,28 @@ mod tests {
         let events = bevy_ecs::event::Events::<UnequipEvent>::default();
         world.insert_resource(events);
 
-        let totem = world.spawn(Totem { stress_relief: 0.5, description: "Lucky Rock".to_string() }).id();
-        let pop = world.spawn((
-            Pop,
-            Equipment { totem: Some(totem), ..Default::default() },
-            StressTracker::default(),
-        )).id();
+        let totem = world
+            .spawn(Totem {
+                stress_relief: 0.5,
+                description: "Lucky Rock".to_string(),
+            })
+            .id();
+        let pop = world
+            .spawn((
+                Pop,
+                Equipment {
+                    totem: Some(totem),
+                    ..Default::default()
+                },
+                StressTracker::default(),
+            ))
+            .id();
 
         let mut events = world.resource_mut::<bevy_ecs::event::Events<UnequipEvent>>();
         events.send(UnequipEvent {
             actor: pop,
             item: totem,
-            slot: "totem".to_string()
+            slot: "totem".to_string(),
         });
 
         schedule.run(&mut world);
