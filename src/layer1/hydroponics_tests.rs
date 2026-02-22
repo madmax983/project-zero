@@ -11,9 +11,15 @@ mod tests {
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
 
+    fn setup_test_world() -> World {
+        let mut world = World::new();
+        world.init_resource::<Events<crate::layer1::eureka::EurekaEvent>>();
+        world
+    }
+
     #[test]
     fn test_hydroponics_consumes_water_and_power() {
-        let mut world = World::new();
+        let mut world = setup_test_world();
         let mut res = ColonyResources::default();
         res.water = 100.0;
         res.food = 0.0;
@@ -70,7 +76,7 @@ mod tests {
 
     #[test]
     fn test_hydroponics_production_multiplier() {
-        let mut world = World::new();
+        let mut world = setup_test_world();
         let mut res = ColonyResources::default();
         res.water = 100.0;
         res.food = 0.0;
@@ -115,7 +121,7 @@ mod tests {
 
     #[test]
     fn test_hydroponics_fails_without_water() {
-        let mut world = World::new();
+        let mut world = setup_test_world();
         let mut res = ColonyResources::default();
         res.water = 0.0; // No water
         res.food = 0.0;
@@ -153,7 +159,7 @@ mod tests {
 
     #[test]
     fn test_hydroponics_fails_without_power() {
-        let mut world = World::new();
+        let mut world = setup_test_world();
         let mut res = ColonyResources::default();
         res.water = 100.0;
         res.food = 0.0;

@@ -18,6 +18,9 @@ use crate::layer1::seasons::{Season, SeasonState};
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
 use crate::layer1::social_mimicry::JustConsumed;
 use crate::layer1::utility_ai::{ActionType, PopAction};
+use crate::layer1::economy::{Wallet, ColonyPrices, get_wage_for_job};
+use crate::layer1::pop::Job;
+use crate::layer1::actions::AssignmentType;
 use bevy_ecs::prelude::*;
 use rand::seq::SliceRandom;
 use crate::layer1::eureka::{check_for_eureka, EurekaConfig};
@@ -88,6 +91,8 @@ pub fn produce_food_system(
             Option<&mut Skills>,
             Option<&FactionMember>,
             Option<&crate::layer1::traits::Traits>,
+            Option<&mut Wallet>,
+            Option<&Job>,
         ),
         With<Pop>,
     >,
@@ -124,7 +129,7 @@ pub fn produce_food_system(
             })
             .collect();
 
-    for (_, pos, action, skills_opt, faction_member_opt, traits) in &mut pop_query {
+    for (_, pos, action, skills_opt, faction_member_opt, traits, mut wallet_opt, job_opt) in &mut pop_query {
         if action.current != ActionType::Farm {
             continue;
         }
@@ -257,6 +262,15 @@ pub fn produce_food_system(
                     },
                 }
 
+                // Pay Wages
+                if let Some(wallet) = wallet_opt.as_deref_mut() {
+                    let job_type = job_opt.map_or(AssignmentType::FarmWorker, |j| j.job_type);
+                    let base_wage = get_wage_for_job(job_type);
+                    // Pay 1% of base wage per tick of active production
+                    let wage = base_wage * 0.01;
+                    wallet.credits += wage;
+                }
+
                 // Eureka Check
                 if let Some(config) = &eureka_config {
                     check_for_eureka(
@@ -275,16 +289,19 @@ pub fn produce_food_system(
 /// Pops eat food when hungry.
 pub fn consume_food_system(
     mut commands: Commands,
-    mut pop_query: Query<(Entity, &mut Needs, Option<&mut DietaryHistory>), With<Pop>>,
+    mut pop_query: Query<(Entity, &mut Needs, Option<&mut DietaryHistory>, Option<&mut Wallet>), With<Pop>>,
     mut resources: ResMut<ColonyResources>,
     farm_query: Query<&Farm>, // Query Farm instead of Crop
     animal_query: Query<&Fauna, With<Tame>>,
+    prices: Option<Res<ColonyPrices>>,
 ) {
     // Use total_food() logic for check
     let total_food = resources.total_food();
     if total_food < f32::EPSILON {
         return;
     }
+
+    let food_price = prices.map_or(0.0, |p| p.food_price);
 
     // Collect available food types from active sources
     let mut available_items = Vec::new();
@@ -303,8 +320,19 @@ pub fn consume_food_system(
     // Collect hungry pop entities first to avoid borrow issues with mut iteration
     let hungry_pops: Vec<Entity> = pop_query
         .iter()
-        .filter(|(_, needs, _)| needs.hunger < FOOD_HUNGER_THRESHOLD)
-        .map(|(e, _, _)| e)
+        .filter(|(_, needs, _, wallet)| {
+            if needs.hunger >= FOOD_HUNGER_THRESHOLD {
+                return false;
+            }
+            // Check affordability (if wallet exists)
+            if let Some(w) = wallet {
+                if w.credits < food_price {
+                    return false;
+                }
+            }
+            true
+        })
+        .map(|(e, _, _, _)| e)
         .collect();
 
     let mut rng = rand::thread_rng();
@@ -403,8 +431,13 @@ pub fn consume_food_system(
 
         if ate {
             #[allow(clippy::collapsible_if)]
-            if let Ok((_, mut needs, mut history_opt)) = pop_query.get_mut(entity) {
+            if let Ok((_, mut needs, mut history_opt, mut wallet_opt)) = pop_query.get_mut(entity) {
                 needs.hunger = (needs.hunger + HUNGER_PER_MEAL).min(1.0);
+
+                // Deduct Cost
+                if let Some(wallet) = wallet_opt.as_deref_mut() {
+                    wallet.credits -= food_price;
+                }
 
                 // Palette Fatigue Logic
                 // If we ate a specific item, record it.
@@ -461,10 +494,16 @@ mod tests {
         assert_eq!(farm.selected_crop, ItemType::Wheat);
     }
 
-    #[test]
-    fn test_produce_food_system() {
+    fn setup_test_world() -> World {
         let mut world = World::new();
         world.insert_resource(ColonyResources::default());
+        world.init_resource::<Events<crate::layer1::eureka::EurekaEvent>>();
+        world
+    }
+
+    #[test]
+    fn test_produce_food_system() {
+        let mut world = setup_test_world();
 
         world.spawn((
             Farm::default(),
@@ -495,8 +534,7 @@ mod tests {
 
     #[test]
     fn test_produce_food_system_skills_xp() {
-        let mut world = World::new();
-        world.insert_resource(ColonyResources::default());
+        let mut world = setup_test_world();
 
         world.spawn((
             Farm::default(),
@@ -527,8 +565,7 @@ mod tests {
 
     #[test]
     fn test_produce_food_system_skills_efficiency() {
-        let mut world = World::new();
-        world.insert_resource(ColonyResources::default());
+        let mut world = setup_test_world();
 
         // Worker with Level 1 Farming (100 XP) -> 1.1 efficiency
         let mut skills = Skills::default();
@@ -570,8 +607,7 @@ mod tests {
 
     #[test]
     fn test_produce_food_multiple_workers() {
-        let mut world = World::new();
-        world.insert_resource(ColonyResources::default());
+        let mut world = setup_test_world();
 
         world.spawn((
             Farm::default(),
@@ -727,8 +763,7 @@ mod tests {
 
     #[test]
     fn test_produce_food_wheat_yield() {
-        let mut world = World::new();
-        world.insert_resource(ColonyResources::default());
+        let mut world = setup_test_world();
         world.insert_resource(SeasonState {
             current_season: Season::Spring,
         }); // Good weather
@@ -765,8 +800,7 @@ mod tests {
 
     #[test]
     fn test_produce_food_potato_winter_resistance() {
-        let mut world = World::new();
-        world.insert_resource(ColonyResources::default());
+        let mut world = setup_test_world();
         world.insert_resource(SeasonState {
             current_season: Season::Winter,
         });

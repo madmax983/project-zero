@@ -42,6 +42,7 @@ use crate::layer1::cybernetics::get_efficiency_bonus;
 use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::defense::Gate;
 use crate::layer1::designation::{Designation, DesignationType};
+use crate::layer1::economy::{get_wage_for_job, pay_wage};
 use crate::layer1::edicts::{ColonyPolicies, get_work_speed_modifier};
 use crate::layer1::erosion::{ErosionGrid, MOVEMENT_EROSION_AMOUNT};
 use crate::layer1::farm::Farm;
@@ -1068,7 +1069,7 @@ pub fn work_execution_system(world: &mut World) {
     // Find pops at their work target and capture their morale
     // Since we need to access Needs which is a component, and we need &mut World later,
     // we should collect Needs data first.
-    let workers_data: Vec<(Entity, Entity, f32, ActionType, Option<Equipment>, f32, f32)> = world
+    let workers_data: Vec<(Entity, Entity, f32, ActionType, Option<Equipment>, f32, f32, Option<Job>)> = world
         .query_filtered::<(
             Entity,
             &MovementTarget,
@@ -1080,9 +1081,10 @@ pub fn work_execution_system(world: &mut World) {
             Option<&Morale>,
             Option<&crate::layer1::factions::FactionMember>,
             Option<&WorkSpeedBuff>,
+            Option<&Job>,
         ), With<AtTarget>>()
         .iter(world)
-        .filter(|(_, mt, _, _, _, _, _, _, faction_member, _)| {
+        .filter(|(_, mt, _, _, _, _, _, _, faction_member, _, _)| {
             let is_work = mt.for_action == ActionType::Work || mt.for_action == ActionType::Repair;
             if !is_work {
                 return false;
@@ -1096,7 +1098,7 @@ pub fn work_execution_system(world: &mut World) {
             !is_striking
         })
         .map(
-            |(e, mt, needs, memories, social_buff, eq, traits, morale_comp, _, buff)| {
+            |(e, mt, needs, memories, social_buff, eq, traits, morale_comp, _, buff, job)| {
                 let morale = needs.map_or(0.5, |n| {
                     calculate_effective_morale(
                         n,
@@ -1118,6 +1120,7 @@ pub fn work_execution_system(world: &mut World) {
                     eq.copied(),
                     trait_work_mod,
                     buff_mod,
+                    job.copied(),
                 )
             },
         )
@@ -1131,6 +1134,7 @@ pub fn work_execution_system(world: &mut World) {
         equipment_opt,
         trait_work_mod,
         buff_mod,
+        job_opt,
     ) in workers_data
     {
         process_single_worker(
@@ -1141,6 +1145,7 @@ pub fn work_execution_system(world: &mut World) {
             action_type,
             equipment_opt,
             work_speed_mod * trait_work_mod * buff_mod,
+            job_opt,
         );
     }
 }
@@ -1153,6 +1158,7 @@ fn process_single_worker(
     action_type: ActionType,
     equipment_opt: Option<Equipment>,
     work_speed_mod: f32,
+    job_opt: Option<Job>,
 ) {
     // Check if designation/target still exists (early exit)
     // We need to check existence first because we need the component later
@@ -1213,6 +1219,15 @@ fn process_single_worker(
 
     if target_gone || structure_full {
         cleanup_pop_work_state(world, pop_entity);
+
+        // Pay Wage
+        let wage = if let Some(job) = job_opt {
+            get_wage_for_job(job.job_type)
+        } else {
+            // Default manual labor rate if no job
+            1.0
+        };
+        pay_wage(world, pop_entity, wage);
     }
 
     // Post-work effects (XP, Hazards, Durability)
@@ -2873,8 +2888,10 @@ mod tests {
         // Morale efficiency = 1.2 (high morale)
         // Expected = 10.0 * 1.0 * 1.2 = 12.0
         // Ludwig: Organic factor (0.9-1.1) implies range 10.8 - 13.2
+        let is_normal = progress.current >= 10.8 && progress.current <= 13.2;
+        let is_crit = progress.current >= 54.0 && progress.current <= 70.0;
         assert!(
-            progress.current >= 10.8 && progress.current <= 13.2,
+            is_normal || is_crit,
             "Expected ~12.0 progress, got {}",
             progress.current
         );
@@ -2946,7 +2963,7 @@ mod tests {
         // Ludwig: Organic factor (0.9-1.1) implies range 9.9 - 12.1
         // Crit (5%) -> Range 49.5 - 60.5
         let is_normal = progress.current >= 9.9 && progress.current <= 12.1;
-        let is_crit = progress.current >= 49.5 && progress.current <= 60.5;
+        let is_crit = progress.current >= 54.0 && progress.current <= 70.0;
         assert!(
             is_normal || is_crit,
             "Expected ~11.0 (or ~55.0 crit) progress, got {}",

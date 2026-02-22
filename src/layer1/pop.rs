@@ -42,6 +42,7 @@ use super::social::old_guard::Arrival;
 use super::terrain::{TerrainGrid, TerrainType};
 use super::traits::Traits;
 use super::utility_types::AssignmentType;
+use crate::layer1::economy::Wallet;
 /// Alias for `AssignmentType` for job-related contexts (Spec 113).
 pub use super::utility_types::AssignmentType as JobType;
 use super::utility_types::{PopAction, UtilityWeights};
@@ -119,7 +120,7 @@ impl PopName {
 pub struct Pop;
 
 /// Tracks a pop's persistent employment, even when temporarily reassigned (e.g. to hospital).
-#[derive(Component, Debug, Clone, PartialEq, Eq)]
+#[derive(Component, Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Job {
     /// The building entity where the pop works.
     pub workplace: Entity,
@@ -283,6 +284,7 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
                     WildExposure::default(),
                     AdminConsumer { demand: 1.0 },
                     DietaryHistory::default(),
+                    Wallet { credits: 50.0 },
                 ));
             spawned += 1;
         }
