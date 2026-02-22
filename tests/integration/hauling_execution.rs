@@ -46,6 +46,7 @@ mod tests {
         world.insert_resource(scale::layer1::lighting::LightMap::new(10, 10));
         world.insert_resource(scale::layer1::lighting::AmbientLight::default());
         world.insert_resource(scale::layer1::atmosphere::AtmosphereGrid::new(10, 10));
+        world.insert_resource(scale::layer1::atmosphere::AtmosphericTide::default());
         world.insert_resource(scale::layer1::pressure::PressureGrid::new(10, 10));
         world.insert_resource(scale::layer1::notifications::NotificationQueue::default());
         world.insert_resource(scale::layer1::trade::MerchantState::default());
@@ -64,6 +65,7 @@ mod tests {
         world.init_resource::<Events<scale::layer1::society::SuppressSocietyEvent>>();
         world.init_resource::<Events<scale::layer1::medical::PatientTreated>>();
         world.init_resource::<Events<scale::layer1::social::FavorChange>>();
+        world.init_resource::<Events<scale::layer1::eureka::EurekaEvent>>();
         world.insert_resource(scale::layer1::social_mimicry::Trend::default());
         world.insert_resource(scale::layer1::visitor::VisitorSource::default());
         world.insert_resource(scale::layer1::weather::WeatherState::default());

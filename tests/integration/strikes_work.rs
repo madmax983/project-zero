@@ -14,6 +14,7 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(ColonyResources::default());
         world.insert_resource(Factions::default());
+        world.init_resource::<Events<scale::layer1::eureka::EurekaEvent>>();
         // Initialize Factions
         world.resource_mut::<Factions>().initialize();
         world

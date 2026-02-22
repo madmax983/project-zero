@@ -12,9 +12,11 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::medical::PatientTreated;
 use crate::layer1::memory::{Memories, MemoryType};
 use crate::layer1::needs::Needs;
-use crate::layer1::pop::{Pop, PopDied};
+use crate::layer1::notifications::NotificationQueue;
+use crate::layer1::pop::{Pop, PopDied, PopName};
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::rumor::{Knowledge, Rumor, RumorTopic};
+use crate::layer1::utility_types::{ActionType, PopAction};
 use crate::layer1::vermin::VerminState;
 use crate::shared::colony::ColonyName;
 use crate::shared::log::MessageLog;
@@ -510,4 +512,59 @@ pub fn vermin_item_rot_system(
         }
         perishable.current_ticks += decay;
     });
+}
+
+/// Notifies the player when a patient receives significant treatment.
+///
+/// Bridges Medical system (Event) and Notification system (UI).
+pub fn medical_treatment_notification_system(
+    mut events: EventReader<PatientTreated>,
+    mut notifications: ResMut<NotificationQueue>,
+    time: Res<SimulationTime>,
+    pops: Query<&PopName>,
+) {
+    for event in events.read() {
+        // Only notify for significant healing to reduce spam
+        if event.amount >= 1.0 {
+            let name = pops.get(event.patient).map(|n| n.0.as_str()).unwrap_or("Colonist");
+            notifications.add_success(
+                format!("{} received medical treatment (+{:.1} HP).", name, event.amount),
+                time.tick,
+            );
+        }
+    }
+}
+
+/// Notifies the player when a pop is hospitalized.
+///
+/// Bridges Utility AI (Action Change) and Notification system (UI).
+pub fn hospitalization_notification_system(
+    query: Query<(&PopAction, &PopName), Changed<PopAction>>,
+    mut notifications: ResMut<NotificationQueue>,
+    time: Res<SimulationTime>,
+) {
+    for (action, name) in query.iter() {
+        if action.current == ActionType::SeekMedicalCare {
+             notifications.add_warning(
+                format!("{} has been hospitalized!", name.0),
+                time.tick,
+            );
+        }
+    }
+}
+
+/// Notifies the player when a pop dies.
+///
+/// Bridges Pop system (Death Event) and Notification system (UI).
+pub fn pop_death_notification_system(
+    mut events: EventReader<PopDied>,
+    mut notifications: ResMut<NotificationQueue>,
+    time: Res<SimulationTime>,
+) {
+    for event in events.read() {
+        notifications.add_error(
+            format!("{} has died! Cause: {}", event.name, event.reason),
+            time.tick,
+        );
+    }
 }

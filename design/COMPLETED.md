@@ -126,3 +126,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `191` Radioactive Hearth — `specs/191-radioactive-hearth.md` — completed 2026-02-21
 - [x] `INT-035` Integration: Vermin Severity -> Perishable Item Decay — completed 2026-03-31
 - [x] `193` Polyglot Confusion — `specs/193-polyglot-confusion.md` — completed 2026-02-22
+- [x] `INT-003` Medical Notifications — `tests/integration/medical_notifications.rs` — completed 2026-11-06
