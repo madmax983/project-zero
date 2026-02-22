@@ -52,6 +52,10 @@ pub struct SimulationTime {
 #[derive(Resource, Default, Debug, Clone, Copy)]
 pub struct WallTime(pub f32);
 
+/// Tracks the delta time between frames for smooth rendering.
+#[derive(Resource, Default, Debug, Clone, Copy)]
+pub struct FrameTime(pub f32);
+
 /// Defines the speed at which the simulation runs.
 #[derive(Clone, Copy, PartialEq, Eq, Default, Debug)]
 pub enum SimSpeed {

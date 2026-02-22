@@ -1801,6 +1801,14 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
     if let Some(mut shake) = world.get_resource_mut::<crate::layer1::map::ScreenShake>() {
         shake.trigger(0.3);
     }
+    crate::layer1::particles::spawn_burst(
+        world,
+        GridPosition { x, y },
+        '.',
+        ratatui::style::Color::DarkGray,
+        15,
+        1.5,
+    );
     crate::layer1::particles::spawn_particle(
         world,
         GridPosition { x, y },

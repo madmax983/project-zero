@@ -11,7 +11,7 @@ use scale::platform::input::{GameKeyEvent, GameMouseEvent};
 use scale::setup::setup_world;
 use scale::shared::input::{route_input, route_mouse_input};
 use scale::shared::state::GameState;
-use scale::shared::time::{SimSpeed, SimulationTime, WallTime};
+use scale::shared::time::{FrameTime, SimSpeed, SimulationTime, WallTime};
 use scale::simulation::run_simulation_tick;
 use scale::ui::map::update_render_cache;
 use scale::ui::render;
@@ -53,8 +53,14 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
         let now = Instant::now();
         let delta = now.duration_since(last_frame);
         last_frame = now;
+        let delta_seconds = delta.as_secs_f32();
 
-        world.resource_mut::<WallTime>().0 += delta.as_secs_f32();
+        world.resource_mut::<WallTime>().0 += delta_seconds;
+        if world.contains_resource::<FrameTime>() {
+            world.resource_mut::<FrameTime>().0 = delta_seconds;
+        } else {
+            world.insert_resource(FrameTime(delta_seconds));
+        }
 
         // Input
         // event::read() must only be called after event::poll() indicates that an event is available.

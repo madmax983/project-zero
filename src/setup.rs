@@ -77,6 +77,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(ScreenShake::default());
     world.insert_resource(SimulationTime::default());
     world.insert_resource(WallTime::default());
+    world.insert_resource(crate::shared::time::FrameTime::default());
     world.insert_resource(BuildMode::default());
     world.insert_resource(DesignationMode::default());
     world.insert_resource(OccupiedTiles::default());

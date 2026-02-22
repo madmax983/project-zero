@@ -1,6 +1,7 @@
 #![allow(clippy::cast_possible_truncation, clippy::cast_precision_loss)]
 use crate::layer1::map::GridPosition;
 use bevy_ecs::prelude::*;
+use rand::Rng;
 use ratatui::style::Color;
 
 /// Visual particle effect component.
@@ -118,6 +119,26 @@ pub fn spawn_moving_particle(
         ParticleVelocity { dx, dy },
         ParticleAccumulator::default(),
     ));
+}
+
+/// Helper to spawn a burst of moving particles.
+pub fn spawn_burst(
+    world: &mut World,
+    pos: GridPosition,
+    char: char,
+    color: Color,
+    count: u32,
+    max_speed: f32,
+) {
+    let mut rng = rand::thread_rng();
+    for _ in 0..count {
+        let angle = rng.gen_range(0.0..std::f32::consts::TAU);
+        let speed = rng.gen_range(0.5..max_speed);
+        let dx = angle.cos() * speed;
+        let dy = angle.sin() * speed;
+        let lifetime = rng.gen_range(5..15);
+        spawn_moving_particle(world, pos, char, color, lifetime, dx, dy);
+    }
 }
 
 #[cfg(test)]

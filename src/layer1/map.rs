@@ -198,9 +198,15 @@ pub fn update_camera_smooth(world: &mut World) {
         (c.x, c.y)
     };
 
-    // Lerp Factor (Frame independent ideally, but assuming ~60fps for now or rate-limited in main)
-    // 0.2 provides a snappy but smooth feel.
-    let t = 0.2;
+    // Lerp Factor using FrameTime for frame-rate independence.
+    // 0.2 at 60fps ~ 12.0 * dt
+    let dt = world
+        .get_resource::<crate::shared::time::FrameTime>()
+        .map_or(0.016, |ft| ft.0);
+
+    // Damping factor: higher is faster. 15.0 is snappy.
+    let damping = 15.0;
+    let t = 1.0 - (-damping * dt).exp();
 
     cx += (tx - cx) * t;
     cy += (ty - cy) * t;
@@ -323,15 +329,18 @@ mod tests {
         world.insert_resource(crate::layer1::terrain::Viewport { x: 0, y: 0 });
         world.insert_resource(CameraTarget { x: 10.0, y: 0.0 });
         world.insert_resource(CameraCurrent { x: 0.0, y: 0.0 });
+        // Insert fixed FrameTime for deterministic test
+        // t = 1.0 - exp(-15.0 * 0.02) = 1.0 - exp(-0.3) = 1.0 - 0.7408 = 0.2592
+        world.insert_resource(crate::shared::time::FrameTime(0.02));
 
         update_camera_smooth(&mut world);
 
         let current = world.resource::<CameraCurrent>();
-        // Lerp 0 -> 10 with t=0.2 => 0 + (10-0)*0.2 = 2.0
-        assert!((current.x - 2.0).abs() < 0.001);
+        // Expected: 10.0 * 0.2592 = 2.592
+        assert!((current.x - 2.592).abs() < 0.001);
 
         let viewport = world.resource::<crate::layer1::terrain::Viewport>();
-        assert_eq!(viewport.x, 2);
+        assert_eq!(viewport.x, 3); // round(2.592) = 3
     }
 
     #[test]

@@ -1,5 +1,5 @@
 use bevy_ecs::prelude::*;
-use scale::layer1::health::{Health, check_health_status_system, despawn_dead_entities_system, DeathEvent};
+use scale::layer1::health::{Health, check_health_status_system, despawn_dead_entities_system};
 use scale::layer1::needs::starvation_damage_system;
 use scale::layer1::memory::{Memories, MemoryType};
 use scale::layer1::needs::Needs;
@@ -13,7 +13,6 @@ fn setup() -> World {
     let mut world = World::new();
     world.insert_resource(MessageLog::default());
     world.insert_resource(SimulationTime::default());
-    world.insert_resource(bevy_ecs::event::Events::<DeathEvent>::default());
     world.insert_resource(bevy_ecs::event::Events::<PopDied>::default());
     world
 }
@@ -40,12 +39,14 @@ fn test_death_causes_witnessed_memory() {
         .id();
 
     // Run death system chain
-    check_health_status_system(&mut world);
-    world.resource_mut::<bevy_ecs::event::Events<DeathEvent>>().update();
+    world.run_system_once(check_health_status_system).unwrap();
+    // No DeathEvent update needed as it was removed. PopDied is emitted by handle_pop_death_system if it detects Dead marker?
+    // Wait, check_health_status_system adds Dead marker.
+    // handle_pop_death_system reads Dead marker and emits PopDied.
     world.run_system_once(handle_pop_death_system).unwrap();
     world.resource_mut::<bevy_ecs::event::Events<PopDied>>().update();
     world.run_system_once(handle_witness_death_system).unwrap();
-    despawn_dead_entities_system(&mut world);
+    world.run_system_once(despawn_dead_entities_system).unwrap();
 
     // Victim should be despawned
     assert!(
@@ -88,7 +89,7 @@ fn test_starvation_causes_trauma_memory() {
         .id();
 
     // Run starvation system
-    starvation_damage_system(&mut world);
+    world.run_system_once(starvation_damage_system).unwrap();
 
     // Check health decreased
     let health = world.get::<Health>(pop).unwrap();

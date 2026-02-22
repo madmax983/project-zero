@@ -1,6 +1,6 @@
 use bevy_ecs::prelude::*;
 use scale::layer1::chronicle::{AddChronicleEvent, Chronicle};
-use scale::layer1::health::{Health, DeathEvent};
+use scale::layer1::health::Health;
 use scale::layer1::map::GridPosition;
 use scale::layer1::pop::{Pop, PopDied, PopName};
 use scale::shared::colony::ColonyName;
@@ -23,7 +23,6 @@ fn test_pop_death_adds_chronicle_entry() {
 
     world.init_resource::<Events<AddChronicleEvent>>();
     world.init_resource::<Events<PopDied>>();
-    world.init_resource::<Events<DeathEvent>>();
 
     // Register the system that causes the event
     let mut schedule = Schedule::default();
