@@ -339,6 +339,7 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             vermin_growth_system.after(consume_food_system),
             vermin_effect_system.after(vermin_growth_system),
             vermin_morale_system.after(vermin_growth_system),
+            crate::layer1::integration::vermin_item_rot_system.after(vermin_growth_system),
             spoilage_system
                 .after(consume_food_system)
                 .after(vermin_growth_system),

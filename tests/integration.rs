@@ -105,3 +105,6 @@ mod wind_atmosphere;
 
 #[path = "integration/beauty_radius.rs"]
 mod beauty_radius;
+
+#[path = "integration/vermin_spoilage_rot.rs"]
+mod vermin_spoilage_rot;

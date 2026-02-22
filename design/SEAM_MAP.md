@@ -138,3 +138,11 @@
     - Updated `src/layer1/building.rs` to add `beauty_radius()` to `BuildingType`.
     - Updated `src/layer1/beauty.rs` to propagate beauty value over the radius with linear falloff.
 - **Tests:** `tests/integration/beauty_radius.rs` (Integration test verified)
+
+### INT-035: Vermin Severity -> Perishable Item Decay
+- **Date:** 2026-03-31
+- **Systems connected:** `VerminState` (Environment) -> `Perishable` (Items)
+- **Glue added:**
+    - Added `vermin_item_rot_system` to `src/layer1/integration.rs`.
+    - Registered in `src/layer1/systems.rs` (Consumption phase).
+- **Tests:** `tests/integration/vermin_spoilage_rot.rs` (Integration test verified)
