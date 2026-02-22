@@ -25,11 +25,13 @@ Features that have been fully implemented, tested, and merged.
 - [x] `020` Death & Burial — `specs/020-death-and-burial.md` — completed 2026-02-10
 - [x] `021` Vermin Infestations — `specs/021-vermin-infestations.md` — completed 2026-02-12
 - [x] `025` Hauling Logistics — `specs/025-hauling-logistics.md` — completed 2026-10-28
+- [x] `029` Knowledge System — `specs/029-knowledge-system.md` — completed 2026-11-07
 - [x] `030` Tool Economy — `specs/030-tool-economy.md` — completed 2026-10-29
 - [x] `031` Pop Morale — `specs/031-pop-morale.md` — completed 2026-11-06
 - [x] `032` Entropy and Spoilage — `specs/032-entropy-spoilage.md` — completed 2026-02-14
 - [x] `033` Fire Propagation — `specs/033-fire-propagation.md` — completed 2026-10-28
 - [x] `034` Pop Health — `specs/034-pop-health.md` — completed 2026-11-06
+- [x] `035` Workplace Hazards — `specs/035-workplace-hazards.md` — completed 2026-11-07
 - [x] `036` Pop Memory — `specs/036-pop-memory.md` — completed 2026-11-06
 - [x] `038` Medical Care — `specs/038-medical-care.md` — completed 2026-10-28
 - [x] `039` Trade System — `specs/039-trade-system.md` — completed 2026-11-06
@@ -75,10 +77,13 @@ Features that have been fully implemented, tested, and merged.
 - [x] `080` Planetary Quirks — `specs/080-planetary-quirks.md` — completed 2026-06-03
 - [x] `081` Sleepwalking — `specs/081-sleepwalking.md` — completed 2026-11-06
 - [x] `082` Cabin Fever — `specs/082-cabin-fever.md` — completed 2026-11-06
+- [x] `083` Building Shifts — `specs/083-building-shifts.md` — completed 2026-11-07
 - [x] `084` Pop Traits — `specs/084-pop-traits.md` — completed 2026-06-03
 - [x] `085` Faction Demands & Strikes — `specs/085-faction-demands-strikes.md` — completed 2026-11-06
 - [x] `086` The Stowaway — `specs/086-the-stowaway.md` — completed 2026-06-02
+- [x] `087` Food Preservation — `specs/087-food-preservation.md` — completed 2026-11-07
 - [x] `088` Omens & Taboos — `specs/088-omens-and-taboos.md` — completed 2026-11-06
+- [x] `089` Material Provenance — `specs/089-material-provenance.md` — completed 2026-11-07
 - [x] `090` Emotional Contagion — `specs/090-emotional-contagion.md` — completed 2026-11-06
 - [x] `091` The Inspector — `specs/091-the-inspector.md` — completed 2026-10-21
 - [x] `092` Antagonistic Flora — `specs/092-antagonistic-flora.md` — completed 2026-02-09
@@ -91,6 +96,7 @@ Features that have been fully implemented, tested, and merged.
 - [x] `104` Fuel Industry — `specs/104-fuel-industry.md` — completed 2026-02-21
 - [x] `106` Resource Purity — `specs/106-resource-purity.md` — completed 2026-11-06
 - [x] `107` Biocompatibility — `specs/107-biocompatibility.md` — completed 2026-10-27
+- [x] `109` Greenhouses — `specs/109-greenhouses.md` — completed 2026-11-07
 - [x] `110` Spontaneous Architecture — `specs/110-spontaneous-architecture.md` — completed 2026-11-06
 - [x] `111` Conveyor Logistics — `specs/111-conveyor-logistics.md` — completed 2026-11-06
 - [x] `112` Maintenance Debt — `specs/112-maintenance-debt.md` — completed 2026-10-27
@@ -105,6 +111,7 @@ Features that have been fully implemented, tested, and merged.
 - [x] `123` Technological Rituals — `specs/123-technological-rituals.md` — completed 2026-10-27
 - [x] `124` The Wild Child — `specs/124-the-wild-child.md` — completed 2026-02-15
 - [x] `125` Grid Instability — `specs/125-grid-instability.md` — completed 2026-02-15
+- [x] `126` Blackout Protocol — `specs/126-blackout-protocol.md` — completed 2026-11-07
 - [x] `127` Stress Breakdowns — `specs/127-stress-breakdowns.md` — completed 2026-02-15
 - [x] `128` Social Mimicry — `specs/128-social-mimicry.md` — completed 2026-02-15
 - [x] `129` The Colony Mascot — `specs/129-colony-mascot.md` — completed 2026-02-15
