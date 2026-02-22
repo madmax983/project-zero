@@ -35,7 +35,6 @@ mod tests {
         // Event Buffers
         world.init_resource::<Events<scale::layer1::chronicle::AddChronicleEvent>>();
         world.init_resource::<Events<scale::layer1::social::AffinityChange>>();
-        world.init_resource::<Events<scale::layer1::DeathEvent>>();
         world.init_resource::<Events<scale::layer1::pop::PopDied>>();
         world.init_resource::<Events<scale::layer1::structural_integrity::StructureCollapsed>>();
         world.init_resource::<Events<scale::layer1::heirloom::RetrogradeEngineeringEvent>>();

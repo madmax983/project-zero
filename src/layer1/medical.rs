@@ -1,5 +1,7 @@
 use crate::layer1::actions::{AssignedTo, AssignmentType};
+use crate::layer1::cryo_dreams::CryoTrauma;
 use crate::layer1::health::Health;
+use crate::layer1::radioactive::RadiationSickness;
 use bevy_ecs::prelude::*;
 
 /// Policy controlling how medical treatment is prioritized.
@@ -48,6 +50,7 @@ use crate::layer1::pop::Job;
 use std::collections::HashMap;
 
 /// System to heal pops assigned to a hospital.
+/// Handles Health recovery, as well as CryoTrauma and RadiationSickness treatment.
 #[allow(clippy::collapsible_if)]
 pub fn healing_system(world: &mut World) {
     let policy = world
@@ -56,15 +59,30 @@ pub fn healing_system(world: &mut World) {
         .unwrap_or_default();
 
     // Group patients by hospital
-    // Key: Hospital Entity, Value: List of (Patient Entity, HP%, HasJob)
-    let mut hospitals: HashMap<Entity, Vec<(Entity, f32, bool)>> = HashMap::new();
+    // Key: Hospital Entity, Value: List of (Patient Entity, HP%, HasJob, HasTrauma, HasSickness)
+    let mut hospitals: HashMap<Entity, Vec<(Entity, f32, bool, bool, bool)>> = HashMap::new();
 
     {
         // Query for pops assigned as Patient
-        let mut query = world.query::<(Entity, &Health, &AssignedTo, Option<&Job>)>();
+        let mut query = world.query::<(
+            Entity,
+            &Health,
+            &AssignedTo,
+            Option<&Job>,
+            Option<&CryoTrauma>,
+            Option<&RadiationSickness>,
+        )>();
 
-        for (entity, health, assigned, job) in query.iter(world) {
-            if assigned.assignment_type == AssignmentType::Patient && health.current < health.max {
+        for (entity, health, assigned, job, trauma, sickness) in query.iter(world) {
+            if assigned.assignment_type != AssignmentType::Patient {
+                continue;
+            }
+
+            let has_trauma = trauma.is_some();
+            let has_sickness = sickness.is_some_and(|s| s.severity > 0.0);
+            let needs_healing = health.current < health.max;
+
+            if needs_healing || has_trauma || has_sickness {
                 let hp_percent = if health.max > 0.0 {
                     health.current / health.max
                 } else {
@@ -75,12 +93,14 @@ pub fn healing_system(world: &mut World) {
                 hospitals
                     .entry(assigned.entity)
                     .or_default()
-                    .push((entity, hp_percent, has_job));
+                    .push((entity, hp_percent, has_job, has_trauma, has_sickness));
             }
         }
     }
 
-    let mut updates: Vec<(Entity, f32, Entity)> = Vec::new();
+    let mut health_updates: Vec<(Entity, f32, Entity)> = Vec::new();
+    let mut trauma_updates: Vec<Entity> = Vec::new();
+    let mut sickness_updates: Vec<Entity> = Vec::new();
 
     // Process each hospital
     for (hospital_ent, mut patients) in hospitals {
@@ -102,10 +122,8 @@ pub fn healing_system(world: &mut World) {
         // Apply Policy
         match policy {
             MedicalPolicy::WorkersFirst => {
-                // Filter out non-workers if we have workers waiting?
-                // Or strict priority? "Ignores unemployed" implies we don't treat them if policy is active.
-                // Spec says: "WorkersFirst policy ignores unemployed".
-                patients.retain(|(_, _, has_job)| *has_job);
+                // Filter out non-workers
+                patients.retain(|(_, _, has_job, _, _)| *has_job);
             }
             MedicalPolicy::Triage => {
                 // Sort by Health % (Ascending) - sickest first
@@ -116,31 +134,40 @@ pub fn healing_system(world: &mut World) {
             }
         }
 
-        // Distribute Healing
-        for (patient, _, _) in patients {
+        // Distribute Healing / Treatment
+        for (patient, _, _, has_trauma, has_sickness) in patients {
             if capacity <= 0.001 {
                 break;
-            } // Epsilon check
+            }
 
-            // Each patient consumes 'rate' amount of capacity?
-            // Or capacity is total HP dispensed? Spec says "max_healing_per_tick".
-            // If rate is 0.5, we give 0.5.
+            // Treat CryoTrauma (Expensive)
+            if has_trauma && capacity >= 1.0 {
+                trauma_updates.push(patient);
+                capacity -= 1.0;
+            }
 
+            // Treat Radiation Sickness (Moderate)
+            if has_sickness && capacity >= 0.5 {
+                sickness_updates.push(patient);
+                capacity -= 0.5;
+            }
+
+            // Heal Health
             let amount = rate.min(capacity);
-            updates.push((patient, amount, hospital_ent));
-            capacity -= amount;
+            if amount > 0.0 {
+                health_updates.push((patient, amount, hospital_ent));
+                capacity -= amount;
+            }
         }
     }
 
-    // Apply updates
-    for (entity, amount, hospital) in updates {
+    // Apply Health Updates
+    for (entity, amount, hospital) in health_updates {
         if let Some(mut health) = world.get_mut::<Health>(entity) {
             health.current = (health.current + amount).min(health.max);
 
             // Emit event
             if amount > 0.0 {
-                // We use resource_mut because we are in an exclusive system.
-                // We must ensure the resource exists to avoid panic, though it should exist in simulation.
                 if let Some(mut events) = world.get_resource_mut::<Events<PatientTreated>>() {
                     events.send(PatientTreated {
                         patient: entity,
@@ -148,6 +175,26 @@ pub fn healing_system(world: &mut World) {
                         amount,
                     });
                 }
+            }
+        }
+    }
+
+    // Apply Trauma Treatment
+    for entity in trauma_updates {
+        if let Some(mut trauma) = world.get_mut::<CryoTrauma>(entity) {
+            trauma.severity -= 0.1;
+            if trauma.severity <= 0.0 {
+                world.entity_mut(entity).remove::<CryoTrauma>();
+            }
+        }
+    }
+
+    // Apply Sickness Treatment
+    for entity in sickness_updates {
+        if let Some(mut sick) = world.get_mut::<RadiationSickness>(entity) {
+            sick.severity -= 1.0; // Aggressive treatment
+            if sick.severity <= 0.0 {
+                world.entity_mut(entity).remove::<RadiationSickness>();
             }
         }
     }

@@ -1,7 +1,7 @@
 use bevy_ecs::prelude::*;
 use bevy_ecs::system::RunSystemOnce;
 use scale::layer1::health::{
-    DeathEvent, Health, check_health_status_system, despawn_dead_entities_system,
+    Health, check_health_status_system, despawn_dead_entities_system,
 };
 use scale::layer1::memory::{Memories, MemoryType};
 use scale::layer1::needs::Needs;
@@ -15,7 +15,6 @@ fn setup() -> World {
     let mut world = World::new();
     world.insert_resource(MessageLog::default());
     world.insert_resource(SimulationTime::default());
-    world.insert_resource(bevy_ecs::event::Events::<DeathEvent>::default());
     world.insert_resource(bevy_ecs::event::Events::<PopDied>::default());
     world
 }
@@ -42,16 +41,13 @@ fn test_death_causes_witnessed_memory() {
         .id();
 
     // Run death system chain
-    check_health_status_system(&mut world);
-    world
-        .resource_mut::<bevy_ecs::event::Events<DeathEvent>>()
-        .update();
+    world.run_system_once(check_health_status_system).unwrap();
     world.run_system_once(handle_pop_death_system).unwrap();
     world
         .resource_mut::<bevy_ecs::event::Events<PopDied>>()
         .update();
     world.run_system_once(handle_witness_death_system).unwrap();
-    despawn_dead_entities_system(&mut world);
+    world.run_system_once(despawn_dead_entities_system).unwrap();
 
     // Victim should be despawned
     assert!(

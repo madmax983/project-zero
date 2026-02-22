@@ -111,3 +111,6 @@ mod vermin_spoilage_rot;
 
 #[path = "integration/medical_notifications.rs"]
 mod medical_notifications;
+
+#[path = "integration/medical_conditions.rs"]
+mod medical_conditions;

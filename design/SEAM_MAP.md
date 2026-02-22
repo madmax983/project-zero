@@ -156,3 +156,11 @@
 - **Glue added:** Systems in `src/layer1/integration.rs`
 - **Schedule:** `Observation` set
 - **Tests:** `tests/integration/medical_notifications.rs`
+
+### INT-004: Medical System -> Condition Treatment
+- **Date:** 2026-02-22
+- **Systems connected:** `healing_system` (Medical) -> `CryoTrauma` (Dreams) / `RadiationSickness` (Radioactive)
+- **Glue added:**
+    - Updated `src/layer1/medical.rs` to treat `CryoTrauma` and `RadiationSickness` in hospitals.
+    - Consumes hospital capacity to remove/reduce these conditions.
+- **Tests:** `tests/integration/medical_conditions.rs` (2 tests verified)
