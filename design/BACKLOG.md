@@ -28,6 +28,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `202` Swarm Intelligence — `specs/202-swarm-intelligence.md`
 - [ ] `203` Prohibition & Contraband — `specs/203-prohibition-contraband.md`
 - [ ] `204` Thermal Inversion — `specs/204-thermal-inversion.md`
+- [ ] `205` Auroral Harvesting — `specs/205-auroral-harvesting.md`
 
 ## MVP — Layer 2: System Simulation
 
