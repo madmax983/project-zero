@@ -169,13 +169,19 @@ mod tests {
         assert_eq!(fertility.get(1, 1), 0.0); // Water
     }
 
+    fn setup_test_world() -> World {
+        let mut world = World::new();
+        world.init_resource::<Events<crate::layer1::eureka::EurekaEvent>>();
+        world
+    }
+
     #[test]
     fn test_production_scales_with_fertility() {
         use crate::layer1::building::{Building, BuildingType};
         use crate::layer1::pop::Pop;
         use crate::layer1::utility_ai::{ActionType, PopAction};
 
-        let mut world = World::new();
+        let mut world = setup_test_world();
         world.insert_resource(ColonyResources {
             food: 0.0,
             ..Default::default()

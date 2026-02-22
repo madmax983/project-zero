@@ -20,6 +20,7 @@ mod tests {
     #[test]
     fn test_greenhouse_ignores_winter_penalty() {
         let mut world = World::new();
+        world.init_resource::<Events<crate::layer1::eureka::EurekaEvent>>();
         world.insert_resource(ColonyResources::default());
         // Set Season to Winter (0.5 modifier usually)
         world.insert_resource(SeasonState {
