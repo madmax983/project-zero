@@ -1,3 +1,4 @@
+#![allow(clippy::type_complexity)]
 use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::execution::{AtTarget, MovementTarget};
 use crate::layer1::items::Item;

@@ -1,3 +1,4 @@
+#![allow(clippy::cast_sign_loss, clippy::too_many_lines, clippy::unnecessary_map_or)]
 #![allow(clippy::collapsible_if, clippy::type_complexity)]
 use crate::layer1::GridPosition;
 use crate::layer1::balance::{

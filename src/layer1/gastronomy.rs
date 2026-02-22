@@ -1,3 +1,4 @@
+#![allow(clippy::doc_markdown, clippy::option_if_let_else)]
 //! Xeno-Gastronomy system (Spec 166).
 //!
 //! Handles the creation of "Mystery Meals" from alien ingredients, with randomized effects.

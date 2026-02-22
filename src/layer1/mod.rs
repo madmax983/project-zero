@@ -559,4 +559,8 @@ pub use festivals::*;
 /// Radioactive system (Spec 191).
 pub mod radioactive;
 pub use radioactive::*;
+/// Company Scrip and Economy system (Spec 194).
 pub mod economy;
+/// Language and Dialect system (Spec 193).
+pub mod language;
+pub use language::*;

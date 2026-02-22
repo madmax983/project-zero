@@ -25,7 +25,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `188` The Long Watch — `specs/188-the-long-watch.md`
 - [ ] `189` Gravity Engineering — `specs/189-gravity-engineering.md`
 - [ ] `192` Planetary Weather Fronts — `specs/192-planetary-weather-fronts.md`
-- [ ] `193` Polyglot Confusion — `specs/193-polyglot-confusion.md`
 - [ ] `195` Cryo-Dreams — `specs/195-cryo-dreams.md`
 - [ ] `197` Civic Ideology — `specs/197-civic-ideology.md`
 - [ ] `198` Urban Heat Islands — `specs/198-urban-heat-islands.md`

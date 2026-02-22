@@ -1,3 +1,4 @@
+#![allow(clippy::collapsible_if)]
 use crate::layer1::justice::Inmate;
 use crate::layer1::map::GridPosition;
 use crate::layer1::stress::StressTracker;

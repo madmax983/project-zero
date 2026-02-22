@@ -1,3 +1,4 @@
+#![allow(clippy::must_use_candidate)]
 //! Memetic Hazards system (Spec 174).
 //!
 //! Handles the infection of Pops with memetic viruses from hazardous research,
