@@ -211,7 +211,9 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
             // Cannot demolish Vacuum Welded buildings
             !world.iter_entities().any(|e| {
                 if let Some(pos) = e.get::<GridPosition>() {
-                    return pos.x == x && pos.y == y && e.contains::<crate::layer1::building::VacuumWelded>();
+                    return pos.x == x
+                        && pos.y == y
+                        && e.contains::<crate::layer1::building::VacuumWelded>();
                 }
                 false
             })
@@ -229,7 +231,9 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
             // Cannot repair Vacuum Welded buildings
             !world.iter_entities().any(|e| {
                 if let Some(pos) = e.get::<GridPosition>() {
-                    return pos.x == x && pos.y == y && e.contains::<crate::layer1::building::VacuumWelded>();
+                    return pos.x == x
+                        && pos.y == y
+                        && e.contains::<crate::layer1::building::VacuumWelded>();
                 }
                 false
             })

@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::pop::Speed;
 use crate::layer1::map::GridPosition;
+use crate::layer1::pop::Speed;
 use crate::layer1::utility_types::PopAction;
+use bevy_ecs::prelude::*;
 
 /// Component indicating a Pop is in Cryo-Stasis.
 /// Halts need decay and aging.
@@ -44,7 +44,10 @@ pub fn enter_cryo_system(
 ) {
     for (pod_entity, order, pod_pos) in &mut pods {
         if let Ok((mut pop_pos, action)) = pops.get_mut(order.target) {
-            commands.entity(order.target).insert(CryoStasis);
+            commands
+                .entity(order.target)
+                .insert(CryoStasis)
+                .insert(crate::layer1::cryo_dreams::CryoDreamState::default());
             commands.entity(pod_entity).remove::<CryoOrder>();
 
             // Move pop to pod
@@ -65,15 +68,33 @@ type ExitCryoQuery = (With<CryoStasis>, With<ThawOrder>);
 /// Checks for `ThawOrder` on frozen Pops, removes `CryoStasis`, applies `CryoSickness`.
 pub fn exit_cryo_system(
     mut commands: Commands,
-    mut query: Query<(Entity, &mut Speed), ExitCryoQuery>,
+    mut query: Query<
+        (
+            Entity,
+            &mut Speed,
+            Option<&crate::layer1::cryo_dreams::CryoTrauma>,
+        ),
+        ExitCryoQuery,
+    >,
 ) {
-    for (entity, mut speed) in &mut query {
-        commands.entity(entity)
+    for (entity, mut speed, trauma) in &mut query {
+        let mut severity = 0.5;
+        let mut duration = 500;
+
+        if let Some(t) = trauma {
+            severity = (severity + t.severity).min(0.9);
+            duration *= 2;
+        }
+
+        commands
+            .entity(entity)
             .remove::<CryoStasis>()
             .remove::<ThawOrder>()
-            .insert(CryoSickness { duration: 500, severity: 0.5 }); // 50% slow
+            .remove::<crate::layer1::cryo_dreams::CryoDreamState>()
+            .remove::<crate::layer1::cryo_dreams::CryoTrauma>()
+            .insert(CryoSickness { duration, severity });
 
-        speed.current *= 0.5;
+        speed.current *= (1.0 - severity).max(0.1);
     }
 }
 

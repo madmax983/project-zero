@@ -1,14 +1,14 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::TerrainGrid;
+use crate::layer1::map::GridPosition;
+use crate::layer1::pop::Pop;
 use crate::layer1::terrain::TerrainType;
 use crate::layer1::utility_ai::ActionType;
-use crate::layer1::pop::Pop;
 use crate::layer1::utility_ai::PopAction;
-use crate::layer1::map::GridPosition;
+use bevy_ecs::prelude::*;
 use std::collections::HashSet;
 
 const DEPLETION_RATE: f32 = 0.0001; // 1% every 100 ticks
-const REGEN_RATE: f32 = 0.00005;    // 0.5% every 100 ticks
+const REGEN_RATE: f32 = 0.00005; // 0.5% every 100 ticks
 
 /// Grid tracking soil fertility (0.0 to 1.0).
 #[derive(Resource, Default)]
@@ -35,11 +35,15 @@ impl FertilityGrid {
     /// Initialize fertility based on terrain types.
     #[must_use]
     pub fn from_terrain(terrain: &TerrainGrid) -> Self {
-        let values = terrain.tiles.iter().map(|t| match t {
-            TerrainType::Grass | TerrainType::Tree => 1.0,
-            TerrainType::Dirt => 0.8,
-            _ => 0.0,
-        }).collect();
+        let values = terrain
+            .tiles
+            .iter()
+            .map(|t| match t {
+                TerrainType::Grass | TerrainType::Tree => 1.0,
+                TerrainType::Dirt => 0.8,
+                _ => 0.0,
+            })
+            .collect();
 
         Self {
             width: terrain.width,
@@ -83,7 +87,7 @@ pub fn update_fertility_system(
     let mut farmed_tiles = HashSet::new();
     for (action, pos) in &pop_query {
         if action.current == ActionType::Farm {
-             farmed_tiles.insert((pos.x, pos.y));
+            farmed_tiles.insert((pos.x, pos.y));
         }
     }
 
@@ -123,10 +127,10 @@ pub fn update_fertility_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::terrain::{TerrainGrid, TerrainType};
     use crate::layer1::farm::{Farm, produce_food_system};
-    use crate::layer1::resources::ColonyResources;
     use crate::layer1::map::GridPosition;
+    use crate::layer1::resources::ColonyResources;
+    use crate::layer1::terrain::{TerrainGrid, TerrainType};
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
 
@@ -152,7 +156,11 @@ mod tests {
         tiles[2] = TerrainType::Rock;
         tiles[3] = TerrainType::Water;
 
-        let terrain = TerrainGrid { width: 2, height: 2, tiles };
+        let terrain = TerrainGrid {
+            width: 2,
+            height: 2,
+            tiles,
+        };
         let fertility = FertilityGrid::from_terrain(&terrain);
 
         assert!((fertility.get(0, 0) - 1.0).abs() < f32::EPSILON); // Grass
@@ -164,8 +172,8 @@ mod tests {
     #[test]
     fn test_production_scales_with_fertility() {
         use crate::layer1::building::{Building, BuildingType};
-        use crate::layer1::utility_ai::{ActionType, PopAction};
         use crate::layer1::pop::Pop;
+        use crate::layer1::utility_ai::{ActionType, PopAction};
 
         let mut world = World::new();
         world.insert_resource(ColonyResources {
@@ -181,7 +189,9 @@ mod tests {
         // Spawn farm at (0,0)
         world.spawn((
             Farm::default(),
-            Building { building_type: BuildingType::Farm },
+            Building {
+                building_type: BuildingType::Farm,
+            },
             GridPosition { x: 0, y: 0 },
         ));
 
@@ -206,8 +216,8 @@ mod tests {
     #[test]
     fn test_farming_depletes_fertility() {
         use crate::layer1::building::{Building, BuildingType};
-        use crate::layer1::utility_ai::{ActionType, PopAction};
         use crate::layer1::pop::Pop;
+        use crate::layer1::utility_ai::{ActionType, PopAction};
 
         let mut world = World::new();
         let mut fertility = FertilityGrid::new(10, 10);
@@ -217,12 +227,14 @@ mod tests {
         // Spawn active farm
         world.spawn((
             Farm::default(),
-            Building { building_type: BuildingType::Farm },
+            Building {
+                building_type: BuildingType::Farm,
+            },
             GridPosition { x: 0, y: 0 },
         ));
 
         // Spawn worker to make it active
-         world.spawn((
+        world.spawn((
             Pop,
             GridPosition { x: 0, y: 0 },
             PopAction {

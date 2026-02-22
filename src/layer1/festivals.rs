@@ -1,8 +1,8 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::balance::TICKS_PER_YEAR;
 use crate::layer1::chronicle::{Chronicle, EventImportance};
-use crate::shared::time::SimulationTime;
 use crate::shared::log::MessageLog;
+use crate::shared::time::SimulationTime;
+use bevy_ecs::prelude::*;
 
 /// Duration of a festival in ticks.
 pub const FESTIVAL_DURATION: u64 = 100;
@@ -60,7 +60,10 @@ pub fn check_for_festivals_system(
         // AND current_tick > event.tick (it's in the past)
         if current_tick > event.tick && (current_tick - event.tick) % TICKS_PER_YEAR == 0 {
             // Found one!
-            let name = format!("{} Festival", event.text.chars().take(20).collect::<String>().trim());
+            let name = format!(
+                "{} Festival",
+                event.text.chars().take(20).collect::<String>().trim()
+            );
 
             state.active_festival = Some(Festival {
                 name: name.clone(),
@@ -106,11 +109,15 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(FestivalState::default());
         world.insert_resource(Chronicle::default());
-        world.insert_resource(SimulationTime { tick: 100, ..Default::default() });
+        world.insert_resource(SimulationTime {
+            tick: 100,
+            ..Default::default()
+        });
         // Add log resource if needed by system
         world.insert_resource(crate::shared::log::MessageLog::default());
 
-        bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, check_for_festivals_system).unwrap();
+        bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, check_for_festivals_system)
+            .unwrap();
 
         let state = world.resource::<FestivalState>();
         assert!(state.active_festival.is_none());
@@ -133,10 +140,14 @@ mod tests {
             ..Default::default()
         });
 
-        bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, check_for_festivals_system).unwrap();
+        bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, check_for_festivals_system)
+            .unwrap();
 
         let state = world.resource::<FestivalState>();
-        assert!(state.active_festival.is_some(), "Festival should be active on anniversary");
+        assert!(
+            state.active_festival.is_some(),
+            "Festival should be active on anniversary"
+        );
         let festival = state.active_festival.as_ref().unwrap();
         assert!(festival.name.contains("Founding Day"));
         assert_eq!(festival.end_tick, 100 + TICKS_PER_YEAR + FESTIVAL_DURATION);
@@ -157,10 +168,14 @@ mod tests {
             ..Default::default()
         });
 
-        bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, check_for_festivals_system).unwrap();
+        bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, check_for_festivals_system)
+            .unwrap();
 
         let state = world.resource::<FestivalState>();
-        assert!(state.active_festival.is_none(), "Minor events should not trigger festivals");
+        assert!(
+            state.active_festival.is_none(),
+            "Minor events should not trigger festivals"
+        );
     }
 
     #[test]
@@ -179,10 +194,14 @@ mod tests {
         });
 
         // Current time: 201
-        world.insert_resource(SimulationTime { tick: 201, ..Default::default() });
+        world.insert_resource(SimulationTime {
+            tick: 201,
+            ..Default::default()
+        });
         world.insert_resource(crate::shared::log::MessageLog::default());
 
-        bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, festival_lifecycle_system).unwrap();
+        bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, festival_lifecycle_system)
+            .unwrap();
 
         let state = world.resource::<FestivalState>();
         assert!(state.active_festival.is_none());

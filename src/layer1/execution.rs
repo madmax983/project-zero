@@ -1066,15 +1066,7 @@ pub fn work_execution_system(world: &mut World) {
     // Find pops at their work target and capture their morale
     // Since we need to access Needs which is a component, and we need &mut World later,
     // we should collect Needs data first.
-    let workers_data: Vec<(
-        Entity,
-        Entity,
-        f32,
-        ActionType,
-        Option<Equipment>,
-        f32,
-        f32,
-    )> = world
+    let workers_data: Vec<(Entity, Entity, f32, ActionType, Option<Equipment>, f32, f32)> = world
         .query_filtered::<(
             Entity,
             &MovementTarget,

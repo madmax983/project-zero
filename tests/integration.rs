@@ -98,10 +98,10 @@ mod militia_flora;
 #[path = "integration/power_utility.rs"]
 mod power_utility;
 
-#[path = "integration/wind_atmosphere.rs"]
-mod wind_atmosphere;
 #[path = "integration/seismic_vibration.rs"]
 mod seismic_vibration;
+#[path = "integration/wind_atmosphere.rs"]
+mod wind_atmosphere;
 
 #[path = "integration/beauty_radius.rs"]
 mod beauty_radius;

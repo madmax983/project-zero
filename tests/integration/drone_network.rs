@@ -19,7 +19,9 @@ mod tests {
             height: 10,
             tiles: vec![scale::layer1::terrain::TerrainType::Grass; 100],
         };
-        world.insert_resource(scale::layer1::fertility::FertilityGrid::from_terrain(&terrain));
+        world.insert_resource(scale::layer1::fertility::FertilityGrid::from_terrain(
+            &terrain,
+        ));
         world.insert_resource(terrain);
         world.insert_resource(ColonyResources::default());
         world.insert_resource(SimulationTime::default());

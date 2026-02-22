@@ -1,16 +1,18 @@
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::atmosphere::{AtmosphericTide, update_atmospheric_tide_system, BaseGlobalWind, sync_global_wind_system};
-    use crate::layer1::wind::GlobalWind;
-    use crate::shared::time::SimulationTime;
-    use crate::layer1::wind::Vec2; // Using local Vec2 from wind.rs
-    use crate::layer1::execution::{movement_system, MovementTarget};
-    use crate::layer1::pop::{Pop, Speed};
-    use crate::layer1::map::GridPosition;
-    use crate::layer1::terrain::{TerrainGrid, TerrainType};
+    use crate::layer1::atmosphere::{
+        AtmosphericTide, BaseGlobalWind, sync_global_wind_system, update_atmospheric_tide_system,
+    };
     use crate::layer1::erosion::ErosionGrid;
+    use crate::layer1::execution::{MovementTarget, movement_system};
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::pop::{Pop, Speed};
+    use crate::layer1::terrain::{TerrainGrid, TerrainType};
     use crate::layer1::utility_types::ActionType;
+    use crate::layer1::wind::GlobalWind;
+    use crate::layer1::wind::Vec2; // Using local Vec2 from wind.rs
+    use crate::shared::time::SimulationTime;
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_tide_oscillation() {
@@ -48,7 +50,10 @@ mod tests {
     #[test]
     fn test_wind_sync() {
         let mut world = World::new();
-        world.insert_resource(BaseGlobalWind { speed: 10.0, direction: Vec2::X });
+        world.insert_resource(BaseGlobalWind {
+            speed: 10.0,
+            direction: Vec2::X,
+        });
         world.insert_resource(GlobalWind::default());
 
         // High Pressure
@@ -60,7 +65,10 @@ mod tests {
 
         let effective = world.resource::<GlobalWind>();
         // Speed should be Base * Pressure
-        assert!((effective.speed - 15.0).abs() < 0.01, "Wind speed should scale with pressure");
+        assert!(
+            (effective.speed - 15.0).abs() < 0.01,
+            "Wind speed should scale with pressure"
+        );
         assert_eq!(effective.direction, Vec2::X, "Direction should persist");
     }
 
@@ -107,20 +115,22 @@ mod tests {
         // 0.9 >= 1.0 (cost-coyote) -> False. No move.
         // If pressure was 1.0 (Normal), cost 1.0. 0.9 >= 0.8. True. Move.
 
-        let pop = world.spawn((
-            Pop,
-            GridPosition { x: 0, y: 0 },
-            MovementTarget {
-                target_entity: Entity::from_raw(1),
-                target_position: GridPosition { x: 5, y: 0 },
-                for_action: ActionType::Work,
-            },
-            Speed {
-                base: 1.0,
-                current: 0.0, // Don't add speed
-                accumulator: 0.9,
-            },
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 0, y: 0 },
+                MovementTarget {
+                    target_entity: Entity::from_raw(1),
+                    target_position: GridPosition { x: 5, y: 0 },
+                    for_action: ActionType::Work,
+                },
+                Speed {
+                    base: 1.0,
+                    current: 0.0, // Don't add speed
+                    accumulator: 0.9,
+                },
+            ))
+            .id();
 
         // Run system
         // We need to use RunSystemOnce because movement_system has many params
@@ -128,7 +138,10 @@ mod tests {
 
         // Check position
         let pos = world.get::<GridPosition>(pop).unwrap();
-        assert_eq!(pos.x, 0, "High pressure should prevent movement at 0.9 accumulator");
+        assert_eq!(
+            pos.x, 0,
+            "High pressure should prevent movement at 0.9 accumulator"
+        );
 
         // Now lower pressure to 0.5 -> Cost 0.8
         // Coyote threshold: 0.8 - 0.2 = 0.6.
@@ -138,6 +151,9 @@ mod tests {
         bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, movement_system).unwrap();
 
         let pos = world.get::<GridPosition>(pop).unwrap();
-        assert_eq!(pos.x, 1, "Low pressure should allow movement at 0.9 accumulator");
+        assert_eq!(
+            pos.x, 1,
+            "Low pressure should allow movement at 0.9 accumulator"
+        );
     }
 }

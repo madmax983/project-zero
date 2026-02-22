@@ -48,7 +48,11 @@ pub fn particle_system(mut commands: Commands, mut query: Query<(Entity, &mut Pa
 
 /// System to handle sub-grid movement for particles.
 pub fn particle_physics_system(
-    mut query: Query<(&mut GridPosition, &mut ParticleVelocity, &mut ParticleAccumulator)>,
+    mut query: Query<(
+        &mut GridPosition,
+        &mut ParticleVelocity,
+        &mut ParticleAccumulator,
+    )>,
 ) {
     for (mut pos, mut vel, mut acc) in &mut query {
         acc.x += vel.dx;
@@ -124,12 +128,18 @@ mod tests {
     fn test_particle_physics_movement() {
         let mut world = World::new();
 
-        let entity = world.spawn((
-            Particle { char: '.', color: Color::White, lifetime: 10 },
-            GridPosition { x: 0, y: 0 },
-            ParticleVelocity { dx: 1.5, dy: 0.0 }, // Move 1.5 per tick
-            ParticleAccumulator::default(),
-        )).id();
+        let entity = world
+            .spawn((
+                Particle {
+                    char: '.',
+                    color: Color::White,
+                    lifetime: 10,
+                },
+                GridPosition { x: 0, y: 0 },
+                ParticleVelocity { dx: 1.5, dy: 0.0 }, // Move 1.5 per tick
+                ParticleAccumulator::default(),
+            ))
+            .id();
 
         // Tick 1
         // Acc += 1.5 -> 1.5. Pos += 1. Acc -> 0.5. Friction applied.
@@ -147,12 +157,18 @@ mod tests {
     fn test_particle_physics_friction() {
         let mut world = World::new();
 
-        let entity = world.spawn((
-            Particle { char: '.', color: Color::White, lifetime: 10 },
-            GridPosition { x: 0, y: 0 },
-            ParticleVelocity { dx: 1.0, dy: 0.0 },
-            ParticleAccumulator::default(),
-        )).id();
+        let entity = world
+            .spawn((
+                Particle {
+                    char: '.',
+                    color: Color::White,
+                    lifetime: 10,
+                },
+                GridPosition { x: 0, y: 0 },
+                ParticleVelocity { dx: 1.0, dy: 0.0 },
+                ParticleAccumulator::default(),
+            ))
+            .id();
 
         // Tick 1
         // Acc += 1.0 -> 1.0. Pos += 1. Acc -> 0.0. Vel *= 0.9 -> 0.9.

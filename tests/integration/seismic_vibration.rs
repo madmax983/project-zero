@@ -1,10 +1,10 @@
+use bevy_ecs::prelude::*;
 use scale::layer1::building::BuildingType;
 use scale::layer1::flora::Flora;
 use scale::layer1::map::GridPosition;
 use scale::layer1::seismic::VibrationGrid;
-use scale::simulation::run_simulation_tick;
 use scale::setup::setup_world;
-use bevy_ecs::prelude::*;
+use scale::simulation::run_simulation_tick;
 
 #[test]
 fn test_generator_emits_vibration() {
@@ -44,10 +44,16 @@ fn test_generator_emits_vibration() {
 
     let grid = world.resource::<VibrationGrid>();
     let vibration = grid.get(10, 10);
-    assert!(vibration > 0.0, "Generator should emit vibration at its location");
+    assert!(
+        vibration > 0.0,
+        "Generator should emit vibration at its location"
+    );
 
     let vibration_near = grid.get(11, 10);
-    assert!(vibration_near > 0.0, "Vibration should propagate to neighbors");
+    assert!(
+        vibration_near > 0.0,
+        "Vibration should propagate to neighbors"
+    );
 }
 
 #[test]
@@ -64,14 +70,16 @@ fn test_flora_agitation() {
     );
 
     // 2. Spawn Flora nearby
-    let flora_entity = world.spawn((
-        Flora {
-            growth_timer: 1000,
-            attack_timer: 1000,
-            ..Default::default()
-        },
-        GridPosition { x: 21, y: 20 },
-    )).id();
+    let flora_entity = world
+        .spawn((
+            Flora {
+                growth_timer: 1000,
+                attack_timer: 1000,
+                ..Default::default()
+            },
+            GridPosition { x: 21, y: 20 },
+        ))
+        .id();
 
     // 3. Run simulation
     run_simulation_tick(&mut world);
@@ -93,5 +101,9 @@ fn test_flora_agitation() {
     // Generator intensity is 1.0. At distance 1, it's roughly 0.8 * transmission.
     // So reduction should be significant.
 
-    assert!(flora.growth_timer < 999, "Flora growth timer should be reduced by vibration (was {}, expected < 999)", flora.growth_timer);
+    assert!(
+        flora.growth_timer < 999,
+        "Flora growth timer should be reduced by vibration (was {}, expected < 999)",
+        flora.growth_timer
+    );
 }
