@@ -77,6 +77,7 @@ Features that have been fully implemented, tested, and merged.
 - [x] `080` Planetary Quirks — `specs/080-planetary-quirks.md` — completed 2026-06-03
 - [x] `081` Sleepwalking — `specs/081-sleepwalking.md` — completed 2026-11-06
 - [x] `082` Cabin Fever — `specs/082-cabin-fever.md` — completed 2026-11-06
+- [x] `083` Building Shifts — `specs/083-building-shifts.md` — completed 2026-03-10
 - [x] `084` Pop Traits — `specs/084-pop-traits.md` — completed 2026-06-03
 - [x] `085` Faction Demands & Strikes — `specs/085-faction-demands-strikes.md` — completed 2026-11-06
 - [x] `086` The Stowaway — `specs/086-the-stowaway.md` — completed 2026-06-02

@@ -3,7 +3,8 @@
     clippy::too_many_arguments,
     clippy::collapsible_if,
     clippy::missing_panics_doc,
-    clippy::cast_precision_loss
+    clippy::cast_precision_loss,
+    clippy::items_after_statements
 )]
 //! Execution layer bridging utility AI decisions to actual pop actions.
 //!
@@ -679,7 +680,13 @@ fn process_arrival(
             true
         }
         ActionType::FetchClothing => {
-            handle_fetch_clothing(commands, resources, pop_entity, equipment_opt, unequip_events);
+            handle_fetch_clothing(
+                commands,
+                resources,
+                pop_entity,
+                equipment_opt,
+                unequip_events,
+            );
             true
         }
         ActionType::SatisfyHunger => {

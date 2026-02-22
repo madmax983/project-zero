@@ -58,6 +58,7 @@
 //! | **Vandalize** | [`crate::layer1::actions::mental_break::evaluate_mental_break`] | [`crate::layer1::execution::vandalize_execution_system`] |
 //! | **Surgery** | *Passive / Assigned* | [`crate::layer1::cybernetics::surgery_system`] |
 
+#![allow(clippy::trivially_copy_pass_by_ref)]
 pub use crate::layer1::utility_types::AssignmentType;
 use bevy_ecs::prelude::*;
 
@@ -103,6 +104,9 @@ pub mod mental_break;
 
 #[cfg(test)]
 mod work_building_tests;
+
+#[cfg(test)]
+mod shift_integration_tests;
 
 /// Component tracking what a pop is assigned to.
 ///

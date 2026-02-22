@@ -1,4 +1,8 @@
-#![allow(clippy::collapsible_if)]
+#![allow(
+    clippy::collapsible_if,
+    clippy::cast_possible_truncation,
+    clippy::cast_possible_wrap
+)]
 use bevy_ecs::prelude::*;
 
 /// Component indicating an entity emits beauty (positive or negative).

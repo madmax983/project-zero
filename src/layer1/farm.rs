@@ -63,7 +63,7 @@ struct CropStats {
     winter_modifier: f32,
 }
 
-fn get_crop_stats(crop: &ItemType) -> CropStats {
+const fn get_crop_stats(crop: &ItemType) -> CropStats {
     match crop {
         ItemType::Wheat => CropStats {
             base_yield: 0.006,
@@ -85,6 +85,7 @@ fn get_crop_stats(crop: &ItemType) -> CropStats {
 }
 
 /// Produces food from all farms with active workers.
+#[allow(clippy::too_many_arguments)]
 pub fn produce_food_system(
     farm_query: Query<(&Building, &GridPosition, Option<&PowerConsumer>, &Farm)>,
     mut pop_query: Query<
@@ -115,8 +116,7 @@ pub fn produce_food_system(
 
     let current_season = season_state
         .as_ref()
-        .map(|s| s.current_season)
-        .unwrap_or(Season::Spring);
+        .map_or(Season::Spring, |s| s.current_season);
 
     let farm_map: std::collections::HashMap<GridPosition, (BuildingType, bool, ItemType)> =
         farm_query

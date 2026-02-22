@@ -1,5 +1,6 @@
 //! Logic for the "Repair" action.
 
+#![allow(clippy::match_same_arms)]
 use crate::layer1::map::GridPosition;
 use crate::layer1::utility_eval_types::{ScorableCandidate, evaluate_candidates};
 use crate::layer1::utility_types::UtilityWeights;

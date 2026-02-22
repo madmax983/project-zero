@@ -305,6 +305,7 @@ pub fn reset_speed_system(mut query: Query<&mut Speed>) {
 }
 
 /// Handles death events specific to Pops.
+#[allow(clippy::type_complexity)]
 pub fn handle_pop_death_system(
     mut pop_died_events: EventWriter<PopDied>,
     query: Query<(Entity, Option<&GridPosition>, Option<&PopName>), (With<Pop>, Added<Dead>)>,
@@ -346,7 +347,7 @@ pub fn handle_pop_death_system(
 
         // 3. Log
         if let Some(log) = log.as_mut() {
-            log.add_colored(format!("DEATH: {} has died!", name), Color::Red);
+            log.add_colored(format!("DEATH: {name} has died!"), Color::Red);
         }
 
         // 4. Emit PopDied Event
@@ -361,14 +362,14 @@ pub fn handle_pop_death_system(
     }
 }
 
-/// System that adds WitnessedDeath memory to survivors when a Pop dies.
+/// System that adds `WitnessedDeath` memory to survivors when a Pop dies.
 pub fn handle_witness_death_system(
     mut events: EventReader<PopDied>,
     mut query: Query<(Entity, &mut Memories), With<Pop>>,
 ) {
     for event in events.read() {
         // Parallel iterator could be used if we had Res<TaskPool>, but simplistic loop is fine for MVP
-        for (entity, mut memories) in query.iter_mut() {
+        for (entity, mut memories) in &mut query {
             if entity != event.entity {
                 memories.add(MemoryType::WitnessedDeath, event.tick);
             }
