@@ -42,6 +42,10 @@ pub enum Trait {
     Traditionalist,
     /// Prone to violent outbursts (+Risk of breakdown).
     Volatile,
+    /// Creative mindset (+Cryo Dream rate, +Art quality).
+    Creative,
+    /// Intellectual mindset (+Cryo Dream rate, +Research speed).
+    Intellectual,
 }
 
 impl Trait {
@@ -66,6 +70,8 @@ impl Trait {
             Self::Curious => "Curious",
             Self::Traditionalist => "Traditionalist",
             Self::Volatile => "Volatile",
+            Self::Creative => "Creative",
+            Self::Intellectual => "Intellectual",
         }
     }
 }
@@ -75,6 +81,17 @@ impl Trait {
 pub struct Traits(pub HashSet<Trait>);
 
 impl Traits {
+    /// Checks if the pop has the given trait.
+    #[must_use]
+    pub fn has(&self, t: Trait) -> bool {
+        self.0.contains(&t)
+    }
+
+    /// Adds a trait to the set.
+    pub fn add(&mut self, t: Trait) {
+        self.0.insert(t);
+    }
+
     /// Generates a random set of traits.
     pub fn random<R: Rng>(rng: &mut R) -> Self {
         let mut set = HashSet::new();
@@ -103,6 +120,8 @@ impl Traits {
             Trait::Curious,
             Trait::Traditionalist,
             Trait::Volatile,
+            Trait::Creative,
+            Trait::Intellectual,
         ];
 
         while set.len() < count {

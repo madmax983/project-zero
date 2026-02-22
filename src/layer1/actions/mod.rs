@@ -58,8 +58,8 @@
 //! | **Vandalize** | [`crate::layer1::actions::mental_break::evaluate_mental_break`] | [`crate::layer1::execution::vandalize_execution_system`] |
 //! | **Surgery** | *Passive / Assigned* | [`crate::layer1::cybernetics::surgery_system`] |
 
-use bevy_ecs::prelude::*;
 pub use crate::layer1::utility_types::AssignmentType;
+use bevy_ecs::prelude::*;
 
 /// Hunger satisfaction action logic.
 pub mod hunger;
@@ -132,4 +132,3 @@ pub struct AssignedTo {
     /// The type of assignment.
     pub assignment_type: AssignmentType,
 }
-

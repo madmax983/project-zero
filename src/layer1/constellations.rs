@@ -206,14 +206,14 @@ mod tests {
                     name: "A".into(),
                     myth: "".into(),
                     effect: ConstellationEffect::Calm,
-                    stars: vec![]
+                    stars: vec![],
                 },
                 Constellation {
                     name: "B".into(),
                     myth: "".into(),
                     effect: ConstellationEffect::Dread,
-                    stars: vec![]
-                }
+                    stars: vec![],
+                },
             ],
             current_index: 0,
         };
@@ -246,27 +246,27 @@ mod tests {
     fn test_observe_constellation_buff() {
         let mut world = World::new();
         let sky = Sky {
-            constellations: vec![
-                Constellation {
-                    name: "Test Star".into(),
-                    myth: "".into(),
-                    effect: ConstellationEffect::Inspiration,
-                    stars: vec![]
-                }
-            ],
+            constellations: vec![Constellation {
+                name: "Test Star".into(),
+                myth: "".into(),
+                effect: ConstellationEffect::Inspiration,
+                stars: vec![],
+            }],
             current_index: 0,
         };
         world.insert_resource(sky);
 
         let observatory = world.spawn(Observatory).id();
-        let pop = world.spawn((
-            Pop,
-            AssignedTo {
-                entity: observatory,
-                assignment_type: AssignmentType::ObservatoryWorker,
-            },
-            Morale::default(),
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                AssignedTo {
+                    entity: observatory,
+                    assignment_type: AssignmentType::ObservatoryWorker,
+                },
+                Morale::default(),
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(observe_constellations_system);
@@ -279,6 +279,11 @@ mod tests {
         let morale = world.get::<Morale>(pop).unwrap();
         // It's probabilistic, but 100 trials for 5% is ~99.4% chance.
         // Assert at least one modifier exists
-        assert!(morale.modifiers.iter().any(|m| m.label == "Cosmic Inspiration"));
+        assert!(
+            morale
+                .modifiers
+                .iter()
+                .any(|m| m.label == "Cosmic Inspiration")
+        );
     }
 }

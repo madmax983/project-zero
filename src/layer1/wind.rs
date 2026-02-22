@@ -5,10 +5,10 @@
     clippy::cast_sign_loss,
     missing_docs
 )]
-use bevy_ecs::prelude::*;
 use crate::layer1::building::Building;
 use crate::layer1::map::GridPosition;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
+use bevy_ecs::prelude::*;
 
 /// Simple 2D vector for wind calculations (avoids external dependencies).
 #[derive(Clone, Copy, Debug, PartialEq, Default)]
@@ -276,10 +276,15 @@ pub fn update_wind_system(
 #[must_use]
 pub fn calculate_wind_movement_penalty(wind: Vec2, move_dir: Vec2) -> f32 {
     let speed = wind.length();
-    if speed < 0.1 { return 1.0; }
+    if speed < 0.1 {
+        return 1.0;
+    }
 
     let wind_dir = if speed > f32::EPSILON {
-        Vec2 { x: wind.x / speed, y: wind.y / speed }
+        Vec2 {
+            x: wind.x / speed,
+            y: wind.y / speed,
+        }
     } else {
         Vec2::ZERO
     };
@@ -312,10 +317,10 @@ pub fn calculate_wind_movement_penalty(wind: Vec2, move_dir: Vec2) -> f32 {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_ecs::prelude::*;
+    use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::map::GridPosition;
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
-    use crate::layer1::building::{Building, BuildingType};
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_wind_grid_initialization() {
@@ -332,11 +337,14 @@ mod tests {
         let height = 5;
 
         world.insert_resource(WindGrid::new(width, height));
-        world.insert_resource(GlobalWind { direction: Vec2::new(1.0, 0.0), speed: 1.0 }); // East wind
+        world.insert_resource(GlobalWind {
+            direction: Vec2::new(1.0, 0.0),
+            speed: 1.0,
+        }); // East wind
         world.insert_resource(TerrainGrid {
-             width,
-             height,
-             tiles: vec![TerrainType::Grass; width * height],
+            width,
+            height,
+            tiles: vec![TerrainType::Grass; width * height],
         });
 
         // Run system using schedule or directly if signature matches (but it needs params now)
@@ -347,8 +355,16 @@ mod tests {
         let grid = world.resource::<WindGrid>();
         // Center tile should match global wind in open terrain
         let wind = grid.get_wind(2, 2);
-        assert!((wind.x - 1.0).abs() < 0.01, "Wind X should be 1.0, got {}", wind.x);
-        assert!((wind.y - 0.0).abs() < 0.01, "Wind Y should be 0.0, got {}", wind.y);
+        assert!(
+            (wind.x - 1.0).abs() < 0.01,
+            "Wind X should be 1.0, got {}",
+            wind.x
+        );
+        assert!(
+            (wind.y - 0.0).abs() < 0.01,
+            "Wind Y should be 0.0, got {}",
+            wind.y
+        );
     }
 
     #[test]
@@ -357,11 +373,17 @@ mod tests {
         let width = 5;
         let height = 5;
         world.insert_resource(WindGrid::new(width, height));
-        world.insert_resource(GlobalWind { direction: Vec2::new(1.0, 0.0), speed: 1.0 }); // East wind
+        world.insert_resource(GlobalWind {
+            direction: Vec2::new(1.0, 0.0),
+            speed: 1.0,
+        }); // East wind
 
         // Spawn Wall at (1, 2)
         world.spawn((
-            Building { building_type: BuildingType::Wall, ..Default::default() },
+            Building {
+                building_type: BuildingType::Wall,
+                ..Default::default()
+            },
             GridPosition { x: 1, y: 2 },
         ));
 
@@ -379,7 +401,11 @@ mod tests {
         // Tile (2, 2) is directly downwind (East) of the wall at (1, 2).
         // It should be in the "Wind Shadow".
         let wind_shadow = grid.get_wind(2, 2);
-        assert!(wind_shadow.length() < 0.5, "Wind should be reduced in lee of wall. Got length {}", wind_shadow.length());
+        assert!(
+            wind_shadow.length() < 0.5,
+            "Wind should be reduced in lee of wall. Got length {}",
+            wind_shadow.length()
+        );
     }
 
     #[test]
@@ -388,7 +414,10 @@ mod tests {
         let width = 5;
         let height = 5;
         world.insert_resource(WindGrid::new(width, height));
-        world.insert_resource(GlobalWind { direction: Vec2::new(1.0, 0.0), speed: 1.0 }); // East wind
+        world.insert_resource(GlobalWind {
+            direction: Vec2::new(1.0, 0.0),
+            speed: 1.0,
+        }); // East wind
         world.insert_resource(TerrainGrid {
             width,
             height,
@@ -398,12 +427,18 @@ mod tests {
         // Create Canyon: Walls at y=1 and y=3. Wind flows along y=2.
         // Wall at (2, 1)
         world.spawn((
-            Building { building_type: BuildingType::Wall, ..Default::default() },
+            Building {
+                building_type: BuildingType::Wall,
+                ..Default::default()
+            },
             GridPosition { x: 2, y: 1 },
         ));
         // Wall at (2, 3)
         world.spawn((
-            Building { building_type: BuildingType::Wall, ..Default::default() },
+            Building {
+                building_type: BuildingType::Wall,
+                ..Default::default()
+            },
             GridPosition { x: 2, y: 3 },
         ));
 
@@ -413,7 +448,11 @@ mod tests {
 
         // Tile (2, 2) is in the canyon. Wind should be accelerated.
         let canyon_wind = grid.get_wind(2, 2);
-        assert!(canyon_wind.x > 1.1, "Wind should accelerate in canyon (current: {})", canyon_wind.x);
+        assert!(
+            canyon_wind.x > 1.1,
+            "Wind should accelerate in canyon (current: {})",
+            canyon_wind.x
+        );
     }
 
     #[test]
@@ -432,6 +471,9 @@ mod tests {
         // Crosswind
         let move_dir = Vec2::new(0.0, 1.0); // Moving North
         let cost_mod = calculate_wind_movement_penalty(wind, move_dir);
-        assert!((cost_mod - 1.0).abs() < 0.1, "Pure crosswind should have minimal effect");
+        assert!(
+            (cost_mod - 1.0).abs() < 0.1,
+            "Pure crosswind should have minimal effect"
+        );
     }
 }

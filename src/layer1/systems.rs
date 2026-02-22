@@ -401,6 +401,7 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             biography_monitor_system.after(death_system),
             crate::layer1::graffiti::graffiti_placement_system.after(death_system),
             dream_system.after(death_system),
+            crate::layer1::cryo_dreams::cryo_dream_system.after(death_system),
             cleanup_dream_marker_system.after(dream_system),
             #[cfg(feature = "nova")]
             crate::layer1::observer::observer_awareness_system.after(death_system),
@@ -441,8 +442,10 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             crate::layer1::social::proximity_social_system.after(modify_affinity_system),
             // Process chronicle events
             chronicle_event_handler_system.after(check_milestones_system),
-            crate::layer1::festivals::check_for_festivals_system.after(chronicle_event_handler_system),
-            crate::layer1::festivals::festival_lifecycle_system.after(chronicle_event_handler_system),
+            crate::layer1::festivals::check_for_festivals_system
+                .after(chronicle_event_handler_system),
+            crate::layer1::festivals::festival_lifecycle_system
+                .after(chronicle_event_handler_system),
             chronicle_rumor_bridge_system.after(check_milestones_system),
             #[cfg(feature = "nova")]
             crate::layer1::oral_tradition::collect_chronicles_system

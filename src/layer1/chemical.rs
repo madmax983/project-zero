@@ -205,10 +205,7 @@ pub fn get_speed_modifier(world: &World, entity: Entity) -> f32 {
     let mut modifier = 1.0;
     if let Some(state) = world.get::<ChemicalState>(entity) {
         for effect in &state.active_effects {
-            if matches!(
-                effect.chemical,
-                ChemicalType::Stim | ChemicalType::Sedative
-            ) {
+            if matches!(effect.chemical, ChemicalType::Stim | ChemicalType::Sedative) {
                 modifier *= effect.magnitude;
             }
         }

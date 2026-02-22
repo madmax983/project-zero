@@ -90,8 +90,7 @@ pub fn update_morale_cache_system(
             let mascot_bonus = mascot_buff.map_or(0.0, |b| b.amount);
             let modifier_sum: f32 = morale.modifiers.iter().map(|m| m.value).sum();
 
-            morale.value =
-                (raw + modifier_sum + mascot_bonus + festival_bonus).clamp(0.0, 1.0);
+            morale.value = (raw + modifier_sum + mascot_bonus + festival_bonus).clamp(0.0, 1.0);
         },
     );
 }

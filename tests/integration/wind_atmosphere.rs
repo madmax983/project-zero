@@ -1,11 +1,11 @@
 #[cfg(test)]
 mod tests {
-    use scale::layer1::atmosphere::{AtmosphereGrid, update_atmosphere_system};
-    use scale::layer1::wind::{GlobalWind, WindGrid, Vec2, update_wind_system};
     use bevy_ecs::prelude::*;
+    use scale::layer1::atmosphere::{AtmosphereGrid, update_atmosphere_system};
     use scale::layer1::building::{Building, BuildingType};
     use scale::layer1::map::GridPosition;
     use scale::layer1::terrain::{TerrainGrid, TerrainType};
+    use scale::layer1::wind::{GlobalWind, Vec2, WindGrid, update_wind_system};
 
     #[test]
     fn pollution_moves_downwind() {
@@ -18,18 +18,21 @@ mod tests {
         world.insert_resource(WindGrid::new(width, height));
         world.insert_resource(GlobalWind {
             direction: Vec2::new(1.0, 0.0), // East wind
-            speed: 1.0, // Moderate wind
+            speed: 1.0,                     // Moderate wind
         });
         world.insert_resource(TerrainGrid {
-             width,
-             height,
-             tiles: vec![TerrainType::Grass; width * height],
+            width,
+            height,
+            tiles: vec![TerrainType::Grass; width * height],
         });
 
         // Spawn pollution source at (2, 2)
         // Smelter emits 0.05
         world.spawn((
-            Building { building_type: BuildingType::Smelter, ..Default::default() },
+            Building {
+                building_type: BuildingType::Smelter,
+                ..Default::default()
+            },
             GridPosition { x: 2, y: 2 },
         ));
 
@@ -56,11 +59,14 @@ mod tests {
         // Since source is at (2, 2), downwind is +X (East).
         // Let's check a bit further away to see the plume effect.
         let center = atmosphere.get(2, 2);
-        let upwind = atmosphere.get(1, 2);   // West
+        let upwind = atmosphere.get(1, 2); // West
         let downwind = atmosphere.get(3, 2); // East (Immediate downwind)
         let far_downwind = atmosphere.get(4, 2); // Further East
 
-        println!("Center: {}, Upwind: {}, Downwind: {}, Far Downwind: {}", center, upwind, downwind, far_downwind);
+        println!(
+            "Center: {}, Upwind: {}, Downwind: {}, Far Downwind: {}",
+            center, upwind, downwind, far_downwind
+        );
 
         // Current behavior (Symmetric diffusion):
         // Upwind ≈ Downwind
@@ -69,7 +75,11 @@ mod tests {
 
         // We assert that downwind concentration is significantly higher than upwind.
         // With strong wind (5.0), advection should dominate diffusion.
-        assert!(downwind > upwind * 1.5,
-            "Pollution should flow downwind significantly more than upwind. Got Down: {}, Up: {}", downwind, upwind);
+        assert!(
+            downwind > upwind * 1.5,
+            "Pollution should flow downwind significantly more than upwind. Got Down: {}, Up: {}",
+            downwind,
+            upwind
+        );
     }
 }

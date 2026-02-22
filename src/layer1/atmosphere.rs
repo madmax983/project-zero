@@ -19,7 +19,10 @@ pub struct BaseGlobalWind {
 
 impl Default for BaseGlobalWind {
     fn default() -> Self {
-        Self { direction: crate::layer1::wind::Vec2::X, speed: 1.0 }
+        Self {
+            direction: crate::layer1::wind::Vec2::X,
+            speed: 1.0,
+        }
     }
 }
 

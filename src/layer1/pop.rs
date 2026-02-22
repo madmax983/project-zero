@@ -22,9 +22,6 @@
 //! * [`PopAction`]: Current task state.
 //! * [`UtilityWeights`]: Personality/learning factors.
 
-use super::utility_types::AssignmentType;
-/// Alias for `AssignmentType` for job-related contexts (Spec 113).
-pub use super::utility_types::AssignmentType as JobType;
 use super::artifacts::ActiveAuras;
 use super::biocompatibility::Biocompatibility;
 use super::cabin_fever::CabinFever;
@@ -44,6 +41,9 @@ use super::social::debt::SocialDebt;
 use super::social::old_guard::Arrival;
 use super::terrain::{TerrainGrid, TerrainType};
 use super::traits::Traits;
+use super::utility_types::AssignmentType;
+/// Alias for `AssignmentType` for job-related contexts (Spec 113).
+pub use super::utility_types::AssignmentType as JobType;
 use super::utility_types::{PopAction, UtilityWeights};
 use super::wild_child::WildExposure;
 use crate::layer1::admin::AdminConsumer;
@@ -704,7 +704,9 @@ mod tests {
 #[cfg(test)]
 mod security_tests {
     use super::*;
-    use crate::layer1::chemical::{ActiveEffect, ChemicalState, ChemicalType, apply_chemical_speed_modifiers_system};
+    use crate::layer1::chemical::{
+        ActiveEffect, ChemicalState, ChemicalType, apply_chemical_speed_modifiers_system,
+    };
     use bevy_ecs::system::RunSystemOnce;
 
     #[test]
@@ -733,16 +735,26 @@ mod security_tests {
 
         // Run system cycle 1: Reset -> Modify
         world.run_system_once(reset_speed_system).unwrap();
-        world.run_system_once(apply_chemical_speed_modifiers_system).unwrap();
+        world
+            .run_system_once(apply_chemical_speed_modifiers_system)
+            .unwrap();
         let speed_1 = world.get::<Speed>(pop).unwrap().current;
-        assert!((speed_1 - 1.5).abs() < f32::EPSILON, "First run should be 1.5");
+        assert!(
+            (speed_1 - 1.5).abs() < f32::EPSILON,
+            "First run should be 1.5"
+        );
 
         // Run system cycle 2: Reset -> Modify
         world.run_system_once(reset_speed_system).unwrap();
-        world.run_system_once(apply_chemical_speed_modifiers_system).unwrap();
+        world
+            .run_system_once(apply_chemical_speed_modifiers_system)
+            .unwrap();
         let speed_2 = world.get::<Speed>(pop).unwrap().current;
 
         // Should remain 1.5, NOT 2.25
-        assert!((speed_2 - 1.5).abs() < f32::EPSILON, "Speed should remain stable with reset");
+        assert!(
+            (speed_2 - 1.5).abs() < f32::EPSILON,
+            "Speed should remain stable with reset"
+        );
     }
 }

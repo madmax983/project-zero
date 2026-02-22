@@ -114,16 +114,20 @@ pub fn perform_experiment(world: &mut World, chef: Entity, ingredient_entity: En
     // However, Rust types need to be known.
     // Assuming we can access crate::layer2::generation::WorldSeed.
     // If not, we fall back to a hardcoded seed for safety, but we should try to use the resource.
-    let seed = if let Some(world_seed) = world.get_resource::<crate::layer2::generation::WorldSeed>() {
-        world_seed.0
-    } else {
-        12345
-    };
+    let seed =
+        if let Some(world_seed) = world.get_resource::<crate::layer2::generation::WorldSeed>() {
+            world_seed.0
+        } else {
+            12345
+        };
 
     let effect = generate_meal_effect(seed, &item_type);
 
     // 4. Determine Spawn Position (Chef's position)
-    let pos = world.get::<crate::layer1::map::GridPosition>(chef).copied().unwrap_or_default();
+    let pos = world
+        .get::<crate::layer1::map::GridPosition>(chef)
+        .copied()
+        .unwrap_or_default();
 
     // 5. Produce Mystery Meal with Effect Component
     world.spawn((
@@ -182,9 +186,9 @@ pub fn apply_meal_effect(world: &mut World, pop: Entity, effect: MealEffect) {
             }
         }
         MealEffect::Hallucination => {
-            world.entity_mut(pop).insert(Hallucinating {
-                duration: 100,
-            });
+            world
+                .entity_mut(pop)
+                .insert(Hallucinating { duration: 100 });
         }
         MealEffect::None => {}
     }
@@ -228,11 +232,11 @@ pub const fn analyze_ingredient_system() {}
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::layer1::health::Health;
     use crate::layer1::items::{Item, ItemType};
+    use crate::layer1::map::GridPosition;
     use crate::layer1::morale::Morale;
     use crate::layer1::pop::Pop;
-    use crate::layer1::health::Health;
-    use crate::layer1::map::GridPosition;
     use crate::layer2::generation::WorldSeed;
     use bevy_ecs::prelude::*;
 
@@ -363,7 +367,12 @@ mod tests {
     #[test]
     fn test_buff_decay() {
         let mut world = World::new();
-        let pop = world.spawn(WorkSpeedBuff { multiplier: 1.5, duration: 1 }).id();
+        let pop = world
+            .spawn(WorkSpeedBuff {
+                multiplier: 1.5,
+                duration: 1,
+            })
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(handle_work_speed_buff_decay);

@@ -7,6 +7,7 @@ use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::energy::PowerConsumer;
 use crate::layer1::factions::{FactionMember, FactionState, Factions};
 use crate::layer1::fauna::{Fauna, FaunaType};
+use crate::layer1::fertility::FertilityGrid;
 use crate::layer1::husbandry::Tame;
 use crate::layer1::items::ItemType;
 use crate::layer1::needs::Needs;
@@ -15,7 +16,6 @@ use crate::layer1::pop::Pop;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::seasons::{Season, SeasonState};
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
-use crate::layer1::fertility::FertilityGrid;
 use crate::layer1::social_mimicry::JustConsumed;
 use crate::layer1::utility_ai::{ActionType, PopAction};
 use bevy_ecs::prelude::*;
@@ -192,9 +192,9 @@ pub fn produce_food_system(
                         crop_stats.winter_modifier
                     } else {
                         modifier // Use general season modifier (e.g. Autumn harvest bonus?)
-                                 // Actually, modifier from SeasonState is usually 1.0 or less/more.
-                                 // Spec says: "Potato in winter (0.8 modifier)"
-                                 // So we should probably use crop_stats.winter_modifier INSTEAD of generic modifier during winter.
+                        // Actually, modifier from SeasonState is usually 1.0 or less/more.
+                        // Spec says: "Potato in winter (0.8 modifier)"
+                        // So we should probably use crop_stats.winter_modifier INSTEAD of generic modifier during winter.
                     };
                     (crop_stats.base_yield, 0.0, season_mod)
                 }
@@ -226,23 +226,21 @@ pub fn produce_food_system(
                     BuildingType::Plantation => {
                         resources.add_fiber(production);
                     }
-                    _ => {
-                        match selected_crop {
-                            ItemType::Wheat => {
-                                resources.wheat += production;
-                                resources.food += production;
-                            }
-                            ItemType::Potato => {
-                                resources.potato += production;
-                                resources.food += production;
-                            }
-                            ItemType::Rice => {
-                                resources.rice += production;
-                                resources.food += production;
-                            }
-                            _ => resources.add_food(production),
+                    _ => match selected_crop {
+                        ItemType::Wheat => {
+                            resources.wheat += production;
+                            resources.food += production;
                         }
-                    }
+                        ItemType::Potato => {
+                            resources.potato += production;
+                            resources.food += production;
+                        }
+                        ItemType::Rice => {
+                            resources.rice += production;
+                            resources.food += production;
+                        }
+                        _ => resources.add_food(production),
+                    },
                 }
             }
         }
@@ -346,35 +344,37 @@ pub fn consume_food_system(
         // If we have legacy food, `resources.food` > sum.
         let specific_sum = resources.wheat + resources.potato + resources.rice;
         if resources.food > specific_sum + f32::EPSILON && resources.food >= FOOD_PER_MEAL {
-             // We have generic food
-             choices.push(ItemType::None);
+            // We have generic food
+            choices.push(ItemType::None);
         }
 
         if choices.is_empty() {
-             // Try rations
-             if resources.rations >= FOOD_PER_MEAL {
-                 resources.rations -= FOOD_PER_MEAL;
-                 // Rations don't count for food total usually, or they do?
-                 // total_food includes rations.
-                 eaten_item = ItemType::None; // Rations aren't an ItemType in this context usually, or maybe ItemType::Rations?
-                 // ItemType doesn't have Rations.
-                 ate = true;
-             }
+            // Try rations
+            if resources.rations >= FOOD_PER_MEAL {
+                resources.rations -= FOOD_PER_MEAL;
+                // Rations don't count for food total usually, or they do?
+                // total_food includes rations.
+                eaten_item = ItemType::None; // Rations aren't an ItemType in this context usually, or maybe ItemType::Rations?
+                // ItemType doesn't have Rations.
+                ate = true;
+            }
         } else {
-             // Pick one
-             eaten_item = choices.choose(&mut rng).cloned().unwrap_or(ItemType::Potato);
+            // Pick one
+            eaten_item = choices
+                .choose(&mut rng)
+                .cloned()
+                .unwrap_or(ItemType::Potato);
 
-             match eaten_item {
-                 ItemType::Wheat => resources.wheat -= FOOD_PER_MEAL,
-                 ItemType::Potato => resources.potato -= FOOD_PER_MEAL,
-                 ItemType::Rice => resources.rice -= FOOD_PER_MEAL,
-                 _ => {}, // Generic
-             }
-             // Also deduct from main food pile
-             resources.food -= FOOD_PER_MEAL;
-             ate = true;
+            match eaten_item {
+                ItemType::Wheat => resources.wheat -= FOOD_PER_MEAL,
+                ItemType::Potato => resources.potato -= FOOD_PER_MEAL,
+                ItemType::Rice => resources.rice -= FOOD_PER_MEAL,
+                _ => {} // Generic
+            }
+            // Also deduct from main food pile
+            resources.food -= FOOD_PER_MEAL;
+            ate = true;
         }
-
 
         if ate {
             #[allow(clippy::collapsible_if)]
@@ -385,9 +385,9 @@ pub fn consume_food_system(
                 // If we ate a specific item, record it.
                 // If we ate rations (None), record it?
                 let recorded_item = if eaten_item == ItemType::None {
-                     // Try to guess based on available items for "flavor" if we ate generic?
-                     // Or just fallback
-                     available_items
+                    // Try to guess based on available items for "flavor" if we ate generic?
+                    // Or just fallback
+                    available_items
                         .choose(&mut rng)
                         .cloned()
                         .unwrap_or(ItemType::Potato)
@@ -404,9 +404,9 @@ pub fn consume_food_system(
                 }
 
                 // Mimicry Integration
-                commands
-                    .entity(entity)
-                    .insert(JustConsumed { item: recorded_item });
+                commands.entity(entity).insert(JustConsumed {
+                    item: recorded_item,
+                });
             }
         }
     }
@@ -534,8 +534,8 @@ mod tests {
         // With skill = 0.006 * 1.1 = 0.0066
         // Food starts at 10.0
         assert!(
-             (resources.wheat - 0.0066).abs() < 0.0001,
-             "Wheat production should be accurate"
+            (resources.wheat - 0.0066).abs() < 0.0001,
+            "Wheat production should be accurate"
         );
         assert!(
             (resources.food - 10.0066).abs() < 0.0001,
@@ -704,12 +704,19 @@ mod tests {
     fn test_produce_food_wheat_yield() {
         let mut world = World::new();
         world.insert_resource(ColonyResources::default());
-        world.insert_resource(SeasonState { current_season: Season::Spring }); // Good weather
+        world.insert_resource(SeasonState {
+            current_season: Season::Spring,
+        }); // Good weather
 
         // Spawn Farm with Wheat
         world.spawn((
-            Farm { selected_crop: ItemType::Wheat, ..Default::default() },
-            Building { building_type: BuildingType::Farm },
+            Farm {
+                selected_crop: ItemType::Wheat,
+                ..Default::default()
+            },
+            Building {
+                building_type: BuildingType::Farm,
+            },
             GridPosition { x: 5, y: 5 },
         ));
 
@@ -717,7 +724,10 @@ mod tests {
         world.spawn((
             Pop,
             GridPosition { x: 5, y: 5 },
-            PopAction { current: ActionType::Farm, ..Default::default() },
+            PopAction {
+                current: ActionType::Farm,
+                ..Default::default()
+            },
         ));
 
         world.run_system_once(produce_food_system).unwrap();
@@ -732,12 +742,19 @@ mod tests {
     fn test_produce_food_potato_winter_resistance() {
         let mut world = World::new();
         world.insert_resource(ColonyResources::default());
-        world.insert_resource(SeasonState { current_season: Season::Winter });
+        world.insert_resource(SeasonState {
+            current_season: Season::Winter,
+        });
 
         // Spawn Farm with Potato
         world.spawn((
-            Farm { selected_crop: ItemType::Potato, ..Default::default() },
-            Building { building_type: BuildingType::Farm },
+            Farm {
+                selected_crop: ItemType::Potato,
+                ..Default::default()
+            },
+            Building {
+                building_type: BuildingType::Farm,
+            },
             GridPosition { x: 5, y: 5 },
         ));
 
@@ -745,7 +762,10 @@ mod tests {
         world.spawn((
             Pop,
             GridPosition { x: 5, y: 5 },
-            PopAction { current: ActionType::Farm, ..Default::default() },
+            PopAction {
+                current: ActionType::Farm,
+                ..Default::default()
+            },
         ));
 
         world.run_system_once(produce_food_system).unwrap();
