@@ -11,7 +11,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 ## MVP — Layer 1: Colony Simulation
 
-- [ ] `077` Emergent Festivals — `specs/077-emergent-festivals.md`
 - [ ] `132` Equipment & Wear — `specs/132-equipment-and-wear.md`
 - [ ] `133` Ventilation Networks — `specs/133-ventilation-networks.md`
 - [ ] `148` The 'Helpful' AI — `specs/148-helpful-ai.md`
