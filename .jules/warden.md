@@ -31,3 +31,10 @@
 ## 2024-05-27 - Speed Modifier Explosion
 **Threat:** Exponential growth of `Speed.current` due to cumulative application of multipliers (Chemicals, Quirks, Weather) without resetting to `Speed.base` each tick.
 **Defense:** Implemented `reset_speed_system` to reset `Speed.current` to `Speed.base` at the start of the execution phase. Refactored `apply_lighting_penalties_system` to use multiplicative logic instead of overwriting the reset. Verified with `test_speed_stable_with_reset`.
+
+## 2024-05-28 - Chemical Speed Explosion & DoS
+**Threat:** Unbounded allocation in `ChemicalState::active_effects` and exponential speed multiplier growth when consuming multiple chemicals. A malicious or bugged loop could consume 100 Stims, causing `active_effects` to grow to 100 (DoS) and speed to overflow `f32` (Logic Bomb).
+**Defense:**
+- Modified `consume_chemical_logic` to deduplicate active effects by type (refresh duration instead of stack).
+- Clamped `get_speed_modifier` output to `0.1..=5.0` to prevent physics anomalies.
+- Verified with `tests/security_chemical_exploit.rs`.
