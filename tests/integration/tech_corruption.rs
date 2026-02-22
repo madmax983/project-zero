@@ -33,6 +33,7 @@ mod tests {
         world.insert_resource(scale::shared::log::MessageLog::default());
         world.insert_resource(scale::layer1::seasons::SeasonState::default());
         world.insert_resource(scale::layer1::factions::Factions::default());
+        world.init_resource::<Events<scale::layer1::eureka::EurekaEvent>>();
 
         // Needed for turret particle spawn
         world.insert_resource(scale::layer1::beauty::BeautyGrid::new(10, 10)); // For map updates if any

@@ -465,6 +465,9 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             amputation_handler_system.after(work_execution_system),
             art_observation_system.after(death_system),
             observe_inspector_system.after(art_observation_system),
+            crate::layer1::integration::medical_treatment_notification_system.after(healing_system),
+            crate::layer1::integration::hospitalization_notification_system.after(work_execution_system),
+            crate::layer1::integration::pop_death_notification_system.after(death_system),
         )
             .in_set(Layer1SystemSet::Observation),
     );

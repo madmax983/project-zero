@@ -108,3 +108,6 @@ mod beauty_radius;
 
 #[path = "integration/vermin_spoilage_rot.rs"]
 mod vermin_spoilage_rot;
+
+#[path = "integration/medical_notifications.rs"]
+mod medical_notifications;

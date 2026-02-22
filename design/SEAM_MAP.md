@@ -146,3 +146,13 @@
     - Added `vermin_item_rot_system` to `src/layer1/integration.rs`.
     - Registered in `src/layer1/systems.rs` (Consumption phase).
 - **Tests:** `tests/integration/vermin_spoilage_rot.rs` (Integration test verified)
+
+### INT-003: Medical Notifications
+- **Date:** 2026-11-06
+- **Systems connected:**
+    - `healing_system` -> `medical_treatment_notification_system` (Treatment -> Notification)
+    - `evaluate_actions_system` -> `hospitalization_notification_system` (Action Change -> Notification)
+    - `death_system` -> `pop_death_notification_system` (Death -> Notification)
+- **Glue added:** Systems in `src/layer1/integration.rs`
+- **Schedule:** `Observation` set
+- **Tests:** `tests/integration/medical_notifications.rs`
