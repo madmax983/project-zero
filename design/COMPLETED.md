@@ -82,6 +82,7 @@ Features that have been fully implemented, tested, and merged.
 - [x] `153` Geological Instability — `specs/153-geological-instability.md` — completed 2026-03-20
 - [x] `155` Advanced Workplace Hazards — `specs/155-advanced-hazards.md` — completed 2026-03-20
 - [x] `075` Animal Husbandry — `specs/075-animal-husbandry.md` — completed 2026-10-30
+- [x] `076` Heirloom Items — `specs/076-heirloom-items.md` — completed 2026-11-04
 - [x] `163` Vermin Evolution — `specs/163-vermin-evolution.md` — completed 2026-05-31
 - [x] `170` Pheromone Gardening — `specs/170-pheromone-gardening.md` — completed 2026-11-01
 - [x] `172` Institutional Memory — `specs/172-institutional-memory.md` — completed 2026-10-27
