@@ -28,6 +28,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `192` Planetary Weather Fronts — `specs/192-planetary-weather-fronts.md`
 - [ ] `193` Polyglot Confusion — `specs/193-polyglot-confusion.md`
 - [ ] `194` Company Scrip — `specs/194-company-scrip.md`
+- [ ] `195` Cryo-Dreams — `specs/195-cryo-dreams.md`
 
 ## MVP — Layer 2: System Simulation
 

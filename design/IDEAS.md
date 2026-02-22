@@ -3420,7 +3420,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Cryo-Dreams
+## Cryo-Dreams [SPECCED]
 
 **Layer:** 1
 
