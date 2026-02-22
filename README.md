@@ -83,13 +83,49 @@ The "Nova" feature (Oral Tradition) builds upon the base narrative system to cre
 
 > **⚠️ REQUIRES `nova` FEATURE**
 >
-> To use this feature, you must enable the `nova` feature flag:
+> To use this feature, you must enable the `nova` feature flag in `Cargo.toml` or via command line.
 
-```bash
-cargo run --features nova
+**Usage:**
+
+```rust
+// In Cargo.toml: scale = { version = "...", features = ["nova"] }
+
+use scale::layer1::oral_tradition::{OralTradition, collect_chronicles_system};
+use scale::layer1::chronicle::{Chronicle, EventImportance};
+use bevy_ecs::prelude::*;
+
+fn main() {
+    let mut world = World::new();
+    world.insert_resource(OralTradition::default());
+    world.insert_resource(Chronicle::default());
+
+    // Add a historical event
+    world.resource_mut::<Chronicle>().add_event(
+        100,
+        "The colony survived the Great Frost.".to_string(),
+        EventImportance::Legendary,
+    );
+
+    // Run system to process events into stories
+    let mut schedule = Schedule::default();
+    schedule.add_systems(collect_chronicles_system);
+    schedule.run(&mut world);
+
+    // Inspect
+    let tradition = world.resource::<OralTradition>();
+    println!("{:?}", tradition);
+}
 ```
 
-See `examples/oral_tradition_demo.rs` for a complete example.
+**Running the Demos:**
+
+```bash
+# Minimal API usage
+cargo run --features nova --example minimal_nova_demo
+
+# Full Interactive TUI Demo
+cargo run --features nova --example oral_tradition_demo
+```
 
 ### Headless Simulation
 
