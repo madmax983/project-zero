@@ -70,6 +70,8 @@ use crate::shared::log::MessageLog;
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 use rand::Rng;
+use crate::layer1::eureka::check_for_eureka_world;
+use crate::layer1::tech::Tech;
 use ratatui::style::Color;
 
 /// Executes combat when pop is targeting an enemy.
@@ -1223,6 +1225,17 @@ fn process_single_worker(
             action_type,
             tool_entity_opt,
         );
+
+        // Eureka Moment Check
+        let related_tech = match designation_type {
+            DesignationType::Mine => Some(Tech::Masonry),
+            // Add other mappings as appropriate
+            _ => None,
+        };
+
+        // Fetch traits for the pop
+        let traits = world.get::<Traits>(pop_entity).cloned();
+        check_for_eureka_world(world, action_type, related_tech, traits);
     }
 }
 

@@ -64,6 +64,7 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer1::society::InvestigationEvent>,
             update_event_buffer::<crate::layer1::society::SuppressSocietyEvent>,
             update_event_buffer::<crate::layer1::medical::PatientTreated>,
+            update_event_buffer::<crate::layer1::eureka::EurekaEvent>,
         )
             .in_set(Layer1SystemSet::EventCleanup),
     );
@@ -176,6 +177,7 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             process_refining_system,
             crate::layer1::tech::update_tech_capacity_system,
             crate::layer1::admin::calculate_admin_stats,
+            crate::layer1::eureka::handle_eureka_events,
         )
             .in_set(Layer1SystemSet::Economy),
     );

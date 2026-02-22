@@ -89,6 +89,7 @@ Features that have been fully implemented, tested, and merged.
 - [x] `178` Scrapcode — `specs/178-scrapcode.md` — completed 2026-10-31
 
 - [x] `195` Cryo-Dreams — `specs/195-cryo-dreams.md` — completed 2026-02-23
+- [x] `196` Eureka Moments — `specs/196-eureka-moments.md` — completed 2026-02-25
 ## MVP — Layer 2: System Simulation
 
 - [x] `094` System View Architecture — `specs/094-system-view.md` — completed 2026-10-27
