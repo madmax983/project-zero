@@ -187,6 +187,7 @@ mod tests {
             chemical_state: None,
             is_memetic_carrier: false,
             health: None,
+            insulation: 0.0,
         };
 
         let score = evaluate_hobby(&eval_data, HobbyType::CloudWatching);

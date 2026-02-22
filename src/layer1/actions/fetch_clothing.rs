@@ -9,12 +9,31 @@ use bevy_ecs::prelude::*;
 #[must_use]
 pub(crate) fn evaluate_fetch_clothing(
     pop_pos: GridPosition,
-    equipment: &Equipment,
+    current_insulation: f32,
     resources: &ColonyResources,
     stockpiles: &[ScorableCandidate],
+    temperature_grid: Option<&crate::layer1::temperature::TemperatureGrid>,
 ) -> Option<(f32, Entity)> {
-    // If already has clothing, no need to fetch
-    if equipment.body.is_some() {
+    let mut score = 0.0;
+
+    if current_insulation == 0.0 {
+        score = 0.95; // Need clothes!
+    } else if let Some(grid) = temperature_grid {
+        // Check if freezing despite clothes
+        let temp = grid.get(pop_pos.x as usize, pop_pos.y as usize);
+        let safe_temp = 10.0 - (current_insulation * 30.0);
+        if temp < safe_temp {
+            // Check if we are already maxed out (e.g. Parka 2.0)?
+            // If insulation is already high (e.g. >= 2.0), fetching won't help unless we have super-parka.
+            // But currently max is Parka (2.0).
+            // So if insulation < 2.0, try to fetch.
+            if current_insulation < 2.0 {
+                score = 0.99; // Upgrade needed immediately!
+            }
+        }
+    }
+
+    if score == 0.0 {
         return None;
     }
 
@@ -23,9 +42,9 @@ pub(crate) fn evaluate_fetch_clothing(
         return None;
     }
 
-    // Use evaluate_candidates with default weights (implicitly handled by calculate_context_score inside)
+    // Use evaluate_candidates with default weights
     let weights = UtilityWeights::default();
-    evaluate_candidates(pop_pos, &weights, stockpiles, 0.95)
+    evaluate_candidates(pop_pos, &weights, stockpiles, score)
 }
 
 /// Executes the fetch clothing action.
@@ -38,12 +57,31 @@ pub fn handle_fetch_clothing(
     if resources.clothing >= 1.0 {
         resources.clothing -= 1.0;
 
+        // Determine if upgrade is needed (simplistic logic: if already has item, give Parka)
+        let mut is_upgrade = false;
+        if let Some(eq) = equipment_opt {
+            if eq.body.is_some() {
+                is_upgrade = true;
+                // Despawn old item? Or return to stockpile?
+                // For MVP, despawn old item (discarded).
+                if let Some(old_entity) = eq.body {
+                    commands.entity(old_entity).despawn();
+                }
+            }
+        }
+
+        let (clothing_type, insulation) = if is_upgrade {
+            (ClothingType::Parka, 2.0)
+        } else {
+            (ClothingType::Tunic, 1.0)
+        };
+
         let clothing_entity = commands
             .spawn((
                 Item::default(),
                 Clothing {
-                    clothing_type: ClothingType::Tunic, // Generic for now
-                    insulation: 1.0,
+                    clothing_type,
+                    insulation,
                     durability: 100.0,
                     max_durability: 100.0,
                 },
@@ -69,7 +107,7 @@ mod tests {
     #[test]
     fn test_evaluate_fetch_clothing_needs_clothing() {
         let pop_pos = GridPosition { x: 0, y: 0 };
-        let equipment = Equipment::default(); // No body
+        let current_insulation = 0.0;
         let resources = ColonyResources {
             clothing: 1.0,
             ..Default::default()
@@ -81,7 +119,7 @@ mod tests {
             GridPosition { x: 5, y: 0 },
         )];
 
-        let result = evaluate_fetch_clothing(pop_pos, &equipment, &resources, &stockpiles);
+        let result = evaluate_fetch_clothing(pop_pos, current_insulation, &resources, &stockpiles, None);
         assert!(result.is_some());
         let (utility, target) = result.unwrap();
         assert_eq!(target, stockpile_entity);
@@ -91,10 +129,7 @@ mod tests {
     #[test]
     fn test_evaluate_fetch_clothing_has_clothing() {
         let pop_pos = GridPosition { x: 0, y: 0 };
-        let equipment = Equipment {
-            body: Some(Entity::from_raw(2)),
-            ..Default::default()
-        };
+        let current_insulation = 1.0;
         let resources = ColonyResources {
             clothing: 1.0,
             ..Default::default()
@@ -104,14 +139,15 @@ mod tests {
             GridPosition { x: 5, y: 0 },
         )];
 
-        let result = evaluate_fetch_clothing(pop_pos, &equipment, &resources, &stockpiles);
+        // With no temperature grid, it should assume safe
+        let result = evaluate_fetch_clothing(pop_pos, current_insulation, &resources, &stockpiles, None);
         assert!(result.is_none());
     }
 
     #[test]
     fn test_evaluate_fetch_clothing_no_resources() {
         let pop_pos = GridPosition { x: 0, y: 0 };
-        let equipment = Equipment::default();
+        let current_insulation = 0.0;
         let resources = ColonyResources {
             clothing: 0.0,
             ..Default::default()
@@ -121,7 +157,7 @@ mod tests {
             GridPosition { x: 5, y: 0 },
         )];
 
-        let result = evaluate_fetch_clothing(pop_pos, &equipment, &resources, &stockpiles);
+        let result = evaluate_fetch_clothing(pop_pos, current_insulation, &resources, &stockpiles, None);
         assert!(result.is_none());
     }
 }

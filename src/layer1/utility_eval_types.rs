@@ -84,6 +84,7 @@ impl PopEvalData {
             chemical_state: item.chemical.cloned(),
             is_memetic_carrier: item.memetic_carrier.is_some(),
             health: item.health.copied(),
+            insulation: 0.0,
         }
     }
 }
@@ -129,6 +130,8 @@ pub struct PopEvalData {
     pub is_memetic_carrier: bool,
     /// Health of the pop, if any.
     pub health: Option<Health>,
+    /// Current insulation provided by clothing.
+    pub insulation: f32,
 }
 
 /// Context data for utility evaluation (resources, time, etc.)
@@ -144,6 +147,8 @@ pub struct WorldContext<'a> {
     pub factions: Option<&'a HashMap<FactionId, FactionData>>,
     /// Reference to zone grid (for sanctuary checks).
     pub zone_grid: &'a crate::layer1::zone::ZoneGrid,
+    /// Reference to temperature grid (for clothing checks).
+    pub temperature_grid: Option<&'a crate::layer1::temperature::TemperatureGrid>,
 }
 
 // --- UNIFIED PROXY ---
