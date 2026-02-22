@@ -2,7 +2,6 @@ use crate::layer1::execution::MovementTarget;
 use crate::layer1::fauna::{Fauna, FaunaState};
 
 use crate::layer1::map::GridPosition;
-use crate::layer1::memory::{Memories, MemoryType};
 use crate::layer1::pop::Pop;
 use crate::layer1::utility_types::ActionType;
 use crate::layer1::zone::{ZoneGrid, ZoneType};

@@ -1,16 +1,14 @@
-
 use bevy_ecs::prelude::*;
 use bevy_ecs::system::RunSystemOnce;
+use scale::layer1::integration::{
+    hospitalization_notification_system, medical_treatment_notification_system,
+    pop_death_notification_system,
+};
 use scale::layer1::medical::PatientTreated;
 use scale::layer1::notifications::{NotificationQueue, NotificationSeverity};
 use scale::layer1::pop::{Pop, PopDied, PopName};
 use scale::layer1::utility_types::{ActionType, PopAction};
 use scale::shared::time::SimulationTime;
-use scale::layer1::integration::{
-    medical_treatment_notification_system,
-    hospitalization_notification_system,
-    pop_death_notification_system,
-};
 
 fn setup() -> World {
     scale::setup::init_task_pools();
@@ -26,10 +24,7 @@ fn setup() -> World {
 fn test_treatment_triggers_notification() {
     let mut world = setup();
 
-    let patient = world.spawn((
-        Pop,
-        PopName("TestPatient".to_string()),
-    )).id();
+    let patient = world.spawn((Pop, PopName("TestPatient".to_string()))).id();
 
     // Send event
     world.send_event(PatientTreated {
@@ -39,7 +34,9 @@ fn test_treatment_triggers_notification() {
     });
 
     // Run system
-    world.run_system_once(medical_treatment_notification_system).unwrap();
+    world
+        .run_system_once(medical_treatment_notification_system)
+        .unwrap();
 
     // Verify
     let queue = world.resource::<NotificationQueue>();
@@ -56,14 +53,16 @@ fn test_hospitalization_triggers_notification() {
     let mut world = setup();
 
     // Spawn pop with Initial Action
-    let pop = world.spawn((
-        Pop,
-        PopName("SicklySid".to_string()),
-        PopAction {
-            current: ActionType::Idle,
-            ..Default::default()
-        },
-    )).id();
+    let pop = world
+        .spawn((
+            Pop,
+            PopName("SicklySid".to_string()),
+            PopAction {
+                current: ActionType::Idle,
+                ..Default::default()
+            },
+        ))
+        .id();
 
     // Change action to SeekMedicalCare
     if let Some(mut action) = world.get_mut::<PopAction>(pop) {
@@ -74,7 +73,9 @@ fn test_hospitalization_triggers_notification() {
     // RunSystemOnce executes once, effectively handling the change if it happened "recently" enough for query
     // In Bevy `RunSystemOnce`, change detection works if changes happened since last run of THIS system or since creation.
     // Since we just changed it, it should trigger.
-    world.run_system_once(hospitalization_notification_system).unwrap();
+    world
+        .run_system_once(hospitalization_notification_system)
+        .unwrap();
 
     let queue = world.resource::<NotificationQueue>();
     assert_eq!(queue.active.len(), 1, "Should notify on hospitalization");
@@ -88,21 +89,25 @@ fn test_hospitalization_triggers_notification() {
 fn test_hospitalization_ignores_other_actions() {
     let mut world = setup();
 
-    let pop = world.spawn((
-        Pop,
-        PopName("WorkerWill".to_string()),
-        PopAction {
-            current: ActionType::Idle,
-            ..Default::default()
-        },
-    )).id();
+    let pop = world
+        .spawn((
+            Pop,
+            PopName("WorkerWill".to_string()),
+            PopAction {
+                current: ActionType::Idle,
+                ..Default::default()
+            },
+        ))
+        .id();
 
     // Change to Work
     if let Some(mut action) = world.get_mut::<PopAction>(pop) {
         action.current = ActionType::Work;
     }
 
-    world.run_system_once(hospitalization_notification_system).unwrap();
+    world
+        .run_system_once(hospitalization_notification_system)
+        .unwrap();
 
     let queue = world.resource::<NotificationQueue>();
     assert!(queue.active.is_empty(), "Should NOT notify for Work");
@@ -112,10 +117,7 @@ fn test_hospitalization_ignores_other_actions() {
 fn test_death_triggers_notification() {
     let mut world = setup();
 
-    let pop = world.spawn((
-        Pop,
-        PopName("DeadDave".to_string()),
-    )).id();
+    let pop = world.spawn((Pop, PopName("DeadDave".to_string()))).id();
 
     world.send_event(PopDied {
         entity: pop,
@@ -124,7 +126,9 @@ fn test_death_triggers_notification() {
         reason: "Starvation".to_string(),
     });
 
-    world.run_system_once(pop_death_notification_system).unwrap();
+    world
+        .run_system_once(pop_death_notification_system)
+        .unwrap();
 
     let queue = world.resource::<NotificationQueue>();
     assert_eq!(queue.active.len(), 1, "Should notify on death");

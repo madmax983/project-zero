@@ -56,10 +56,7 @@ pub fn check_health_status_system(
 
 /// Generic system to despawn dead entities.
 /// Should run AFTER all specific death handlers have processed the Dead component.
-pub fn despawn_dead_entities_system(
-    mut commands: Commands,
-    query: Query<Entity, With<Dead>>,
-) {
+pub fn despawn_dead_entities_system(mut commands: Commands, query: Query<Entity, With<Dead>>) {
     for entity in query.iter() {
         commands.entity(entity).despawn();
     }

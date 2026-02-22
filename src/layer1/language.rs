@@ -94,7 +94,10 @@ mod tests {
         let ling = world.get::<Linguistics>(pop).unwrap();
         // Should always know their native dialect
         // Ideally, Linguistics::new(native) handles this, but default might just be empty + native from Dialect component
-        assert!(ling.known_dialects.is_empty(), "Default linguistics starts empty (native handled by Dialect)");
+        assert!(
+            ling.known_dialects.is_empty(),
+            "Default linguistics starts empty (native handled by Dialect)"
+        );
     }
 
     #[test]
@@ -107,7 +110,7 @@ mod tests {
         let penalty1 = calculate_coordination_penalty(
             &Dialect::Common,
             &Linguistics::default(),
-            &Dialect::Common
+            &Dialect::Common,
         );
         assert_eq!(penalty1, 1.0);
 
@@ -115,18 +118,14 @@ mod tests {
         let penalty2 = calculate_coordination_penalty(
             &Dialect::Common,
             &Linguistics::default(),
-            &Dialect::Spacer
+            &Dialect::Spacer,
         );
         assert_eq!(penalty2, 0.75);
 
         // Case 3: Different Dialect, Known -> 1.0
         let mut ling = Linguistics::default();
         ling.known_dialects.insert(Dialect::Spacer);
-        let penalty3 = calculate_coordination_penalty(
-            &Dialect::Common,
-            &ling,
-            &Dialect::Spacer
-        );
+        let penalty3 = calculate_coordination_penalty(&Dialect::Common, &ling, &Dialect::Spacer);
         assert_eq!(penalty3, 1.0);
     }
 

@@ -1,11 +1,18 @@
-#![allow(clippy::cast_sign_loss, clippy::too_many_lines, clippy::unnecessary_map_or)]
+#![allow(
+    clippy::cast_sign_loss,
+    clippy::too_many_lines,
+    clippy::unnecessary_map_or
+)]
 #![allow(clippy::collapsible_if, clippy::type_complexity)]
 use crate::layer1::GridPosition;
+use crate::layer1::actions::AssignmentType;
 use crate::layer1::balance::{
     FOOD_HUNGER_THRESHOLD, FOOD_PER_MEAL, FOOD_PER_WORKER_PER_TICK, HUNGER_PER_MEAL,
 };
 use crate::layer1::building::{Building, BuildingType};
+use crate::layer1::economy::{ColonyPrices, Wallet, get_wage_for_job};
 use crate::layer1::energy::PowerConsumer;
+use crate::layer1::eureka::{EurekaConfig, check_for_eureka};
 use crate::layer1::factions::{FactionMember, FactionState, Factions};
 use crate::layer1::fauna::{Fauna, FaunaType};
 use crate::layer1::fertility::FertilityGrid;
@@ -13,20 +20,16 @@ use crate::layer1::husbandry::Tame;
 use crate::layer1::items::ItemType;
 use crate::layer1::needs::Needs;
 use crate::layer1::palette_fatigue::{DietaryHistory, record_meal};
+use crate::layer1::pop::Job;
 use crate::layer1::pop::Pop;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::seasons::{Season, SeasonState};
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
 use crate::layer1::social_mimicry::JustConsumed;
+use crate::layer1::tech::Tech;
 use crate::layer1::utility_ai::{ActionType, PopAction};
-use crate::layer1::economy::{Wallet, ColonyPrices, get_wage_for_job};
-use crate::layer1::pop::Job;
-use crate::layer1::actions::AssignmentType;
 use bevy_ecs::prelude::*;
 use rand::seq::SliceRandom;
-use crate::layer1::eureka::{check_for_eureka, EurekaConfig};
-use crate::layer1::tech::Tech;
-use crate::shared::log::MessageLog;
 
 /// Water cost per tick per worker for Hydroponics.
 const HYDROPONICS_WATER_COST: f32 = 0.1;
@@ -101,7 +104,7 @@ pub fn produce_food_system(
     mut resources: ResMut<ColonyResources>,
     factions: Option<Res<Factions>>,
     // We need mut access to TechState for Corruption Check
-    mut tech_state_mut: Option<ResMut<crate::layer1::tech::TechState>>,
+    tech_state_mut: Option<ResMut<crate::layer1::tech::TechState>>,
     fertility_grid: Option<Res<FertilityGrid>>,
     eureka_config: Option<Res<EurekaConfig>>,
     mut eureka_events: EventWriter<crate::layer1::eureka::EurekaEvent>,
@@ -130,7 +133,9 @@ pub fn produce_food_system(
             })
             .collect();
 
-    for (_, pos, action, skills_opt, faction_member_opt, traits, mut wallet_opt, job_opt) in &mut pop_query {
+    for (_, pos, action, skills_opt, faction_member_opt, traits, mut wallet_opt, job_opt) in
+        &mut pop_query
+    {
         if action.current != ActionType::Farm {
             continue;
         }
@@ -159,7 +164,9 @@ pub fn produce_food_system(
                 // Rust bevy ECS rules: &T and &mut T cannot coexist.
                 // I must request ONLY ResMut if I need mutability.
                 // So I will remove `tech_state_res` and use `tech_state_mut` for reading too.
-                let tech_active = tech_state_mut.as_ref().map_or(true, |ts| ts.is_active(tech));
+                let tech_active = tech_state_mut
+                    .as_ref()
+                    .map_or(true, |ts| ts.is_active(tech));
 
                 if !tech_active {
                     continue;
@@ -290,7 +297,15 @@ pub fn produce_food_system(
 /// Pops eat food when hungry.
 pub fn consume_food_system(
     mut commands: Commands,
-    mut pop_query: Query<(Entity, &mut Needs, Option<&mut DietaryHistory>, Option<&mut Wallet>), With<Pop>>,
+    mut pop_query: Query<
+        (
+            Entity,
+            &mut Needs,
+            Option<&mut DietaryHistory>,
+            Option<&mut Wallet>,
+        ),
+        With<Pop>,
+    >,
     mut resources: ResMut<ColonyResources>,
     farm_query: Query<&Farm>, // Query Farm instead of Crop
     animal_query: Query<&Fauna, With<Tame>>,

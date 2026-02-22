@@ -895,8 +895,7 @@ pub fn evaluate_actions_system(world: &mut World) {
     let zone_grid_fallback = ZoneGrid::new(1, 1);
     let zone_grid_ref = zone_grid_opt.as_ref().unwrap_or(&zone_grid_fallback);
 
-    let temp_grid_opt =
-        world.remove_resource::<crate::layer1::temperature::TemperatureGrid>();
+    let temp_grid_opt = world.remove_resource::<crate::layer1::temperature::TemperatureGrid>();
 
     let factions_res = world.remove_resource::<crate::layer1::factions::Factions>();
     let factions_data = factions_res.as_ref().map(|f| &f.map);

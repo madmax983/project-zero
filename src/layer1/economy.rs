@@ -1,8 +1,5 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::pop::Job;
 use crate::layer1::actions::AssignmentType;
-use crate::layer1::resources::ColonyResources;
-use crate::layer1::needs::Needs;
+use bevy_ecs::prelude::*;
 
 /// Represents a Pop's personal funds.
 #[derive(Component, Default, Debug, Clone, Copy)]
@@ -52,7 +49,9 @@ pub fn pay_wage(world: &mut World, worker: Entity, amount: f32) {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::layer1::needs::Needs;
     use crate::layer1::pop::Pop;
+    use crate::layer1::resources::ColonyResources;
 
     /// Helper system for economy tests.
     fn consume_food_with_payment_system(world: &mut World) {
@@ -110,14 +109,26 @@ mod tests {
     #[test]
     fn test_purchase_food_success() {
         let mut world = World::new();
-        let pop = world.spawn((
-            Pop,
-            Wallet { credits: 10.0 },
-            Needs { hunger: 0.5, rest: 0.5, ..Default::default() }
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Wallet { credits: 10.0 },
+                Needs {
+                    hunger: 0.5,
+                    rest: 0.5,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
-        world.insert_resource(ColonyPrices { food_price: 2.0, ..Default::default() });
-        world.insert_resource(ColonyResources { food: 10.0, ..Default::default() });
+        world.insert_resource(ColonyPrices {
+            food_price: 2.0,
+            ..Default::default()
+        });
+        world.insert_resource(ColonyResources {
+            food: 10.0,
+            ..Default::default()
+        });
 
         // Call modified consumption system
         consume_food_with_payment_system(&mut world);
@@ -132,14 +143,26 @@ mod tests {
     #[test]
     fn test_purchase_food_fail_poverty() {
         let mut world = World::new();
-        let pop = world.spawn((
-            Pop,
-            Wallet { credits: 1.0 }, // Not enough!
-            Needs { hunger: 0.1, rest: 0.5, ..Default::default() } // Starving
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Wallet { credits: 1.0 }, // Not enough!
+                Needs {
+                    hunger: 0.1,
+                    rest: 0.5,
+                    ..Default::default()
+                }, // Starving
+            ))
+            .id();
 
-        world.insert_resource(ColonyPrices { food_price: 2.0, ..Default::default() });
-        world.insert_resource(ColonyResources { food: 10.0, ..Default::default() });
+        world.insert_resource(ColonyPrices {
+            food_price: 2.0,
+            ..Default::default()
+        });
+        world.insert_resource(ColonyResources {
+            food: 10.0,
+            ..Default::default()
+        });
 
         consume_food_with_payment_system(&mut world);
 

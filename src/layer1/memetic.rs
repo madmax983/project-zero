@@ -49,11 +49,7 @@ pub fn evaluate_scrawl_memetic_sigil(
     // Pick one
     if let Some(target) = buffer.walls.choose(&mut rng) {
         // High utility to override everything else (2.0 vs normal 1.0 max)
-        return Some((
-            ActionType::ScrawlMemeticSigil,
-            2.0,
-            Some(target.entity),
-        ));
+        return Some((ActionType::ScrawlMemeticSigil, 2.0, Some(target.entity)));
     }
 
     None

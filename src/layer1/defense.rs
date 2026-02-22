@@ -231,7 +231,6 @@ mod tests {
 
         assert!(crate::layer1::defense::is_walkable(&mut world, 1, 0));
     }
-
 }
 
 /// Helper to check if a specific building entity is an obstacle (locked gate or solid building).

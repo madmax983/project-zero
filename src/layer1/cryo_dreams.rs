@@ -28,7 +28,10 @@ pub struct CryoTrauma {
 /// Generates Knowledge points over time, boosted by traits.
 /// Has a small chance to cause `CryoTrauma`.
 pub fn cryo_dream_system(
-    mut query: Query<(Entity, &mut CryoDreamState, &crate::layer1::traits::Traits), With<crate::layer1::cryo::CryoStasis>>,
+    mut query: Query<
+        (Entity, &mut CryoDreamState, &crate::layer1::traits::Traits),
+        With<crate::layer1::cryo::CryoStasis>,
+    >,
     mut resources: ResMut<crate::layer1::resources::ColonyResources>,
     mut commands: Commands,
 ) {
@@ -72,11 +75,11 @@ pub fn cryo_dream_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_ecs::prelude::*;
-    use crate::layer1::pop::Pop;
     use crate::layer1::cryo::CryoStasis;
+    use crate::layer1::pop::Pop;
     use crate::layer1::resources::ColonyResources;
-    use crate::layer1::traits::{Traits, Trait};
+    use crate::layer1::traits::{Trait, Traits};
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_cryo_pop_generates_knowledge() {
@@ -109,21 +112,20 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(ColonyResources::default());
 
-        let normal = world.spawn((
-            Pop,
-            CryoStasis,
-            CryoDreamState::default(),
-            Traits::default(),
-        )).id();
+        let normal = world
+            .spawn((
+                Pop,
+                CryoStasis,
+                CryoDreamState::default(),
+                Traits::default(),
+            ))
+            .id();
 
         let mut traits = Traits::default();
         traits.add(Trait::Creative);
-        let creative = world.spawn((
-            Pop,
-            CryoStasis,
-            CryoDreamState::default(),
-            traits,
-        )).id();
+        let creative = world
+            .spawn((Pop, CryoStasis, CryoDreamState::default(), traits))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(cryo_dream_system);
@@ -132,7 +134,10 @@ mod tests {
         let normal_state = world.get::<CryoDreamState>(normal).unwrap();
         let creative_state = world.get::<CryoDreamState>(creative).unwrap();
 
-        assert!(creative_state.accumulator > normal_state.accumulator, "Creative pop should dream faster");
+        assert!(
+            creative_state.accumulator > normal_state.accumulator,
+            "Creative pop should dream faster"
+        );
     }
 
     #[test]
@@ -153,12 +158,14 @@ mod tests {
 
         let mut caught_nightmare = false;
         for _ in 0..1000 {
-            let pop = world.spawn((
-                Pop,
-                CryoStasis,
-                CryoDreamState { accumulator: 1.0 },
-                Traits::default(),
-            )).id();
+            let pop = world
+                .spawn((
+                    Pop,
+                    CryoStasis,
+                    CryoDreamState { accumulator: 1.0 },
+                    Traits::default(),
+                ))
+                .id();
 
             schedule.run(&mut world);
 
@@ -175,25 +182,29 @@ mod tests {
 
     #[test]
     fn test_trauma_affects_waking() {
-        use crate::layer1::cryo::{exit_cryo_system, ThawOrder, CryoSickness};
+        use crate::layer1::cryo::{CryoSickness, ThawOrder, exit_cryo_system};
         use crate::layer1::pop::Speed;
 
         let mut world = World::new();
         // Use a valid ID for testing, but ideally we rely on spawn
-        let pop = world.spawn((
-            Pop,
-            CryoStasis,
-            ThawOrder,
-            CryoDreamState::default(),
-            CryoTrauma { severity: 0.8 },
-            Speed::default(),
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                CryoStasis,
+                ThawOrder,
+                CryoDreamState::default(),
+                CryoTrauma { severity: 0.8 },
+                Speed::default(),
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(exit_cryo_system);
         schedule.run(&mut world);
 
-        let sickness = world.get::<CryoSickness>(pop).expect("Should have sickness");
+        let sickness = world
+            .get::<CryoSickness>(pop)
+            .expect("Should have sickness");
         // Base duration 500, doubled to 1000
         assert_eq!(sickness.duration, 1000);
         // Base severity 0.5 + 0.8 = 1.3 -> min(0.9)
