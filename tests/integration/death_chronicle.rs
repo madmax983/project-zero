@@ -1,6 +1,6 @@
 use bevy_ecs::prelude::*;
 use scale::layer1::chronicle::{AddChronicleEvent, Chronicle};
-use scale::layer1::health::{Health, death_system};
+use scale::layer1::health::{Health, DeathEvent};
 use scale::layer1::map::GridPosition;
 use scale::layer1::pop::{Pop, PopDied, PopName};
 use scale::shared::colony::ColonyName;
@@ -23,12 +23,18 @@ fn test_pop_death_adds_chronicle_entry() {
 
     world.init_resource::<Events<AddChronicleEvent>>();
     world.init_resource::<Events<PopDied>>();
+    world.init_resource::<Events<DeathEvent>>();
 
-    // Register the system that causes the event (death_system)
+    // Register the system that causes the event
     let mut schedule = Schedule::default();
     schedule.add_systems((
-        death_system,
-        scale::layer1::integration::pop_death_chronicle_bridge.after(death_system),
+        scale::layer1::health::check_health_status_system,
+        scale::layer1::pop::handle_pop_death_system
+            .after(scale::layer1::health::check_health_status_system),
+        scale::layer1::integration::pop_death_chronicle_bridge
+            .after(scale::layer1::pop::handle_pop_death_system),
+        scale::layer1::health::despawn_dead_entities_system
+            .after(scale::layer1::pop::handle_pop_death_system),
     ));
 
     // Spawn a pop with low health

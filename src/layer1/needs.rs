@@ -36,6 +36,8 @@
 //! leads to mental breaks (tantrums, depression).
 
 use crate::layer1::edicts::{ColonyPolicies, get_hunger_decay_modifier};
+use crate::layer1::health::Health;
+use crate::layer1::memory::{Memories, MemoryType};
 use crate::layer1::traits::{Traits, get_trait_hunger_decay_modifier};
 use bevy_ecs::prelude::*;
 
@@ -135,6 +137,30 @@ pub fn get_morale_efficiency(morale: f32) -> f32 {
         0.5
     } else {
         1.0
+    }
+}
+
+/// Applies damage to pops that are starving (hunger <= 0).
+pub fn starvation_damage_system(world: &mut World) {
+    let tick = world
+        .get_resource::<crate::shared::time::SimulationTime>()
+        .map_or(0, |t| t.tick);
+
+    let mut query = world.query::<(
+        &Needs,
+        &mut Health,
+        Option<&mut Memories>,
+    )>();
+    for (needs, mut health, mut memories) in query.iter_mut(world) {
+        if needs.hunger <= 0.0 {
+            // Ludwig: Grace Period - Starving should feel urgent but not instant death.
+            // 0.2 damage per tick -> 500 ticks (50s) to die.
+            health.take_damage(0.2);
+
+            if let Some(mem) = memories.as_mut() {
+                mem.add(MemoryType::StarvationTrauma, tick);
+            }
+        }
     }
 }
 
