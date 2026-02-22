@@ -1,4 +1,4 @@
-use crate::layer1::items::{Clothing, ClothingType, Equipment, Item};
+use crate::layer1::items::{Clothing, ClothingType, Equipment, Item, UnequipEvent};
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::utility_eval_types::{ScorableCandidate, evaluate_candidates};
@@ -53,6 +53,7 @@ pub fn handle_fetch_clothing(
     resources: &mut ColonyResources,
     pop_entity: Entity,
     equipment_opt: &mut Option<Mut<Equipment>>,
+    unequip_events: &mut EventWriter<UnequipEvent>,
 ) {
     if resources.clothing >= 1.0 {
         resources.clothing -= 1.0;
@@ -65,6 +66,12 @@ pub fn handle_fetch_clothing(
                 // Despawn old item? Or return to stockpile?
                 // For MVP, despawn old item (discarded).
                 if let Some(old_entity) = eq.body {
+                    // Emit UnequipEvent before despawn
+                    unequip_events.send(UnequipEvent {
+                        actor: pop_entity,
+                        item: old_entity,
+                        slot: "body".to_string(),
+                    });
                     commands.entity(old_entity).despawn();
                 }
             }

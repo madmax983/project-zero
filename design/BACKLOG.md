@@ -22,7 +22,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `192` Planetary Weather Fronts — `specs/192-planetary-weather-fronts.md`
 - [ ] `198` Urban Heat Islands — `specs/198-urban-heat-islands.md`
 - [ ] `199` Obsessive Optimization — `specs/199-obsessive-optimization.md`
-- [ ] `200` Superstitious Totems — `specs/200-superstitious-totems.md`
 - [ ] `202` Swarm Intelligence — `specs/202-swarm-intelligence.md`
 - [ ] `203` Prohibition & Contraband — `specs/203-prohibition-contraband.md`
 - [ ] `204` Thermal Inversion — `specs/204-thermal-inversion.md`

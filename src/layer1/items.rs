@@ -40,6 +40,8 @@ pub struct Equipment {
     pub body: Option<Entity>,
     /// The entity ID of the equipped headgear.
     pub head: Option<Entity>,
+    /// The entity ID of the equipped totem.
+    pub totem: Option<Entity>,
 }
 
 /// Types of clothing items.
@@ -67,6 +69,17 @@ pub struct Clothing {
 /// Component representing a generic item being carried by a Pop.
 #[derive(Component, Debug, Clone, Copy)]
 pub struct CarryingItem(pub Entity);
+
+/// Event triggered when an item is unequipped.
+#[derive(Event, Debug, Clone)]
+pub struct UnequipEvent {
+    /// The entity performing the unequip action.
+    pub actor: Entity,
+    /// The item entity being unequipped.
+    pub item: Entity,
+    /// The slot from which the item was removed.
+    pub slot: String,
+}
 
 /// Types of food items Pops can consume.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]

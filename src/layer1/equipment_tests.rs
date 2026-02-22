@@ -257,15 +257,17 @@ mod tests {
             .id();
 
         world.insert_resource(resources);
+        world.init_resource::<bevy_ecs::event::Events<crate::layer1::items::UnequipEvent>>();
 
         // Run as system to avoid borrow checker issues with Mut<Equipment> vs Commands
         world
             .run_system_once(
                 move |mut commands: Commands,
                       mut res: ResMut<ColonyResources>,
-                      mut query: Query<&mut Equipment>| {
+                      mut query: Query<&mut Equipment>,
+                      mut unequip_events: EventWriter<crate::layer1::items::UnequipEvent>| {
                     let mut equipment_opt = query.get_mut(pop).ok();
-                    handle_fetch_clothing(&mut commands, &mut res, pop, &mut equipment_opt);
+                    handle_fetch_clothing(&mut commands, &mut res, pop, &mut equipment_opt, &mut unequip_events);
                 },
             )
             .unwrap();

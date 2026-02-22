@@ -53,7 +53,7 @@ use crate::layer1::gastronomy::WorkSpeedBuff;
 use crate::layer1::hazards::handle_workplace_hazards;
 use crate::layer1::heirloom::{Heirloom, RetrogradeEngineeringEvent, ToolHistory};
 use crate::layer1::housing::Housing;
-use crate::layer1::items::{Equipment, Tool};
+use crate::layer1::items::{Equipment, Tool, UnequipEvent};
 use crate::layer1::language::{Dialect, Linguistics, calculate_coordination_penalty};
 use crate::layer1::map::{GridPosition, ScreenShake};
 use crate::layer1::memory::{Memories, calculate_effective_morale};
@@ -543,6 +543,7 @@ pub fn arrival_handler_system(
     mut resources: ResMut<ColonyResources>,
     mut log: Option<ResMut<MessageLog>>,
     mut graffiti_map: Option<ResMut<crate::layer1::graffiti::GraffitiMap>>,
+    mut unequip_events: EventWriter<UnequipEvent>,
     time: Res<SimulationTime>,
     mut commands: Commands,
 ) {
@@ -571,6 +572,7 @@ pub fn arrival_handler_system(
             &mut resources,
             log.as_deref_mut(),
             graffiti_map.as_deref_mut(),
+            &mut unequip_events,
             &mut farms,
             &mut housing_q,
             &mut taverns,
@@ -602,6 +604,7 @@ fn process_arrival(
     resources: &mut ColonyResources,
     log: Option<&mut MessageLog>,
     graffiti_map: Option<&mut crate::layer1::graffiti::GraffitiMap>,
+    unequip_events: &mut EventWriter<UnequipEvent>,
     farms: &mut Query<&mut Farm>,
     housing_q: &mut Query<&mut Housing>,
     taverns: &mut Query<&mut Tavern>,
@@ -676,7 +679,7 @@ fn process_arrival(
             true
         }
         ActionType::FetchClothing => {
-            handle_fetch_clothing(commands, resources, pop_entity, equipment_opt);
+            handle_fetch_clothing(commands, resources, pop_entity, equipment_opt, unequip_events);
             true
         }
         ActionType::SatisfyHunger => {
@@ -1700,6 +1703,13 @@ fn handle_tool_durability(world: &mut World, pop_entity: Entity, tool_entity: En
     }
 
     if broke {
+        // Emit UnequipEvent
+        world.send_event(UnequipEvent {
+            actor: pop_entity,
+            item: tool_entity,
+            slot: "tool".to_string(),
+        });
+
         // Despawn tool
         world.despawn(tool_entity);
 
@@ -1768,6 +1778,7 @@ mod tests {
         world.insert_resource(crate::layer1::structural_integrity::RoofGrid::new(10, 10));
         world.insert_resource(OccupiedTiles::default());
         world.insert_resource(crate::layer1::taboo::TabooState::default());
+        world.init_resource::<bevy_ecs::event::Events<UnequipEvent>>();
         world
     }
 
