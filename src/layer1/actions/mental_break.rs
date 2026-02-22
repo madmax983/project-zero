@@ -1,17 +1,13 @@
-use crate::layer1::farm::Farm;
-use crate::layer1::map::GridPosition;
-use crate::layer1::stockpile::Stockpile;
 use crate::layer1::stress::BreakdownType;
-use crate::layer1::structure::Structure;
 use crate::layer1::unrest::{MentalBreakType, MentalState};
-use crate::layer1::utility_eval_types::PopEvalData;
+use crate::layer1::utility_eval_types::{PopEvalData, UtilityAIBuffer};
 use crate::layer1::utility_types::{ActionType, manhattan_distance};
 use bevy_ecs::prelude::*;
 
 /// Evaluates actions for a pop undergoing a mental break.
 pub(crate) fn evaluate_mental_break(
     data: &PopEvalData,
-    world: &mut World,
+    buffer: &UtilityAIBuffer,
 ) -> Option<(ActionType, f32, Option<Entity>)> {
     if let Some(breakdown) = data.breakdown {
         let best_utility = 100.0;
@@ -22,11 +18,11 @@ pub(crate) fn evaluate_mental_break(
             BreakdownType::SadWander => ActionType::SadWander,
             BreakdownType::HideInRoom => ActionType::HideInRoom,
             BreakdownType::BingeEating => {
-                find_food_target(data, world, &mut best_target);
+                find_food_target(data, buffer, &mut best_target);
                 ActionType::Binge
             }
             BreakdownType::FireStarting => {
-                find_structure_target(data, world, &mut best_target);
+                find_structure_target(data, buffer, &mut best_target);
                 ActionType::FireStarting
             }
         };
@@ -42,11 +38,11 @@ pub(crate) fn evaluate_mental_break(
 
     let best_action = match break_type {
         MentalBreakType::Vandalize => {
-            find_structure_target(data, world, &mut best_target);
+            find_structure_target(data, buffer, &mut best_target);
             ActionType::Vandalize
         }
         MentalBreakType::Binge => {
-            find_food_target(data, world, &mut best_target);
+            find_food_target(data, buffer, &mut best_target);
             ActionType::Binge
         }
         MentalBreakType::Daze => ActionType::Daze,
@@ -60,49 +56,48 @@ pub(crate) fn evaluate_mental_break(
     Some((best_action, best_utility, best_target))
 }
 
-fn find_structure_target(data: &PopEvalData, world: &mut World, best_target: &mut Option<Entity>) {
+fn find_structure_target(
+    data: &PopEvalData,
+    buffer: &UtilityAIBuffer,
+    best_target: &mut Option<Entity>,
+) {
     let mut closest_dist = i32::MAX;
     let mut closest_target = None;
 
-    let mut structures_state = world.query::<(Entity, &GridPosition, &Structure)>();
-
-    for (target_entity, target_pos, _) in structures_state.iter(world) {
-        if target_entity == data.entity {
+    for structure in &buffer.all_structures {
+        if structure.entity == data.entity {
             continue;
         }
-        let dist = manhattan_distance(&data.pos, target_pos);
+        let dist = manhattan_distance(&data.pos, &structure.pos);
         if dist < closest_dist {
             closest_dist = dist;
-            closest_target = Some(target_entity);
+            closest_target = Some(structure.entity);
         }
     }
     *best_target = closest_target;
 }
 
-fn find_food_target(data: &PopEvalData, world: &mut World, best_target: &mut Option<Entity>) {
+fn find_food_target(
+    data: &PopEvalData,
+    buffer: &UtilityAIBuffer,
+    best_target: &mut Option<Entity>,
+) {
     let mut closest_dist = i32::MAX;
     let mut closest_target = None;
 
-    let mut stockpiles_state = world.query::<(Entity, &GridPosition, &Stockpile)>();
-    for (entity, pos, _) in stockpiles_state.iter(world) {
-        let dist = manhattan_distance(&data.pos, pos);
+    for stockpile in &buffer.stockpiles {
+        let dist = manhattan_distance(&data.pos, &stockpile.pos);
         if dist < closest_dist {
             closest_dist = dist;
-            closest_target = Some(entity);
+            closest_target = Some(stockpile.entity);
         }
     }
 
-    let mut farms_state = world.query::<(
-        Entity,
-        &GridPosition,
-        &Farm,
-        Option<&crate::layer1::building::ShiftSchedule>,
-    )>();
-    for (entity, pos, _, _) in farms_state.iter(world) {
-        let dist = manhattan_distance(&data.pos, pos);
+    for farm in &buffer.farms {
+        let dist = manhattan_distance(&data.pos, &farm.pos);
         if dist < closest_dist {
             closest_dist = dist;
-            closest_target = Some(entity);
+            closest_target = Some(farm.entity);
         }
     }
     *best_target = closest_target;

@@ -1,7 +1,9 @@
 use crate::layer1::chemical::ChemicalState;
 use crate::layer1::combat::Drafted;
 use crate::layer1::day_night::DayNightCycle;
+use crate::layer1::memetic::MemeticCarrier;
 use crate::layer1::factions::{FactionData, FactionId, FactionMember};
+use crate::layer1::health::Health;
 use crate::layer1::hobby::Hobby;
 use crate::layer1::items::{CarryingItem, Equipment, ItemType};
 use crate::layer1::justice::Inmate;
@@ -52,6 +54,8 @@ pub struct PopEvaluationQuery {
     pub stress: Option<&'static StressTracker>,
     pub hobby: Option<&'static Hobby>,
     pub chemical: Option<&'static ChemicalState>,
+    pub memetic_carrier: Option<&'static MemeticCarrier>,
+    pub health: Option<&'static Health>,
 }
 
 impl PopEvalData {
@@ -77,6 +81,8 @@ impl PopEvalData {
                 .map_or(0.0, |s| s.accumulated_stress / BREAKDOWN_TICKS_REQUIRED),
             hobby_type: item.hobby.map(|comp| comp.hobby_type),
             chemical_state: item.chemical.cloned(),
+            is_memetic_carrier: item.memetic_carrier.is_some(),
+            health: item.health.copied(),
         }
     }
 }
@@ -118,6 +124,10 @@ pub struct PopEvalData {
     pub hobby_type: Option<HobbyType>,
     /// Chemical addiction state, if any.
     pub chemical_state: Option<ChemicalState>,
+    /// Whether the pop carries a memetic virus.
+    pub is_memetic_carrier: bool,
+    /// Health of the pop, if any.
+    pub health: Option<Health>,
 }
 
 /// Context data for utility evaluation (resources, time, etc.)
@@ -272,4 +282,10 @@ pub struct UtilityAIBuffer {
     pub wanted_criminals: Vec<ScorableCandidate>,
     /// Buffer for office candidates.
     pub offices: Vec<ScorableCandidate>,
+    /// Buffer for walls (Memetic Sigil targets).
+    pub walls: Vec<ScorableCandidate>,
+    /// Buffer for enemies (Fauna/Flora for drafted pops).
+    pub enemies: Vec<ScorableCandidate>,
+    /// Buffer for all structures (Mental Break targets).
+    pub all_structures: Vec<ScorableCandidate>,
 }

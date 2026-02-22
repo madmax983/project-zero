@@ -56,10 +56,12 @@ use crate::layer1::actions::rest::evaluate_satisfy_rest;
 use crate::layer1::actions::social::evaluate_socialize;
 use crate::layer1::actions::work::evaluate_work;
 use crate::layer1::admin::Office;
-use crate::layer1::building::{Building, ShiftSchedule};
+use crate::layer1::building::{Building, BuildingType, ShiftSchedule};
 use crate::layer1::chemical::evaluate_consume_chemical;
 use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::farm::Farm;
+use crate::layer1::fauna::Fauna;
+use crate::layer1::flora::Flora;
 use crate::layer1::funeral::{Corpse, Grave};
 use crate::layer1::hobby::evaluate_hobby;
 use crate::layer1::housing::Housing;
@@ -85,6 +87,7 @@ pub use crate::layer1::utility_types::{
 };
 use crate::layer1::zone::ZoneGrid;
 use bevy_ecs::prelude::*;
+use bevy_tasks::ComputeTaskPool;
 
 /// System to update commitment timers.
 /// Increments the committed-tick counter for every pop's action.
@@ -145,9 +148,7 @@ fn evaluate_group_survival(
     evaluator: &mut CandidateEvaluator,
     data: &PopEvalData,
     buffer: &UtilityAIBuffer,
-    world: &World,
 ) {
-    let pop_entity = data.entity;
     let pop_pos = data.pos;
     let needs = data.needs;
     let weights = data.weights;
@@ -166,13 +167,10 @@ fn evaluate_group_survival(
         evaluator.consider(ActionType::SatisfyRest, utility, Some(target));
     }
 
-    // Check Health
-    let health = world.get::<crate::layer1::health::Health>(pop_entity);
-
     // Evaluate SeekMedicalCare
-    if let Some(health) = health {
+    if let Some(health) = data.health {
         if let Some((utility, target)) =
-            evaluate_seek_medical_care(pop_pos, &needs, *health, &weights, &buffer.hospitals)
+            evaluate_seek_medical_care(pop_pos, &needs, health, &weights, &buffer.hospitals)
         {
             evaluator.consider(ActionType::SeekMedicalCare, utility, Some(target));
         }
@@ -383,24 +381,23 @@ fn evaluate_group_leisure(evaluator: &mut CandidateEvaluator, data: &PopEvalData
 #[allow(clippy::too_many_lines, clippy::collapsible_if)]
 pub(crate) fn evaluate_single_pop(
     buffer: &UtilityAIBuffer,
-    world: &mut World,
     data: &PopEvalData,
     context: &WorldContext,
 ) -> (ActionType, f32, Option<Entity>) {
     // 1. Check for Mental Break (Returns early)
-    if let Some((action, utility, target)) = evaluate_mental_break(data, world) {
+    if let Some((action, utility, target)) = evaluate_mental_break(data, buffer) {
         return (action, utility, target);
     }
 
     // 1b. Check for Memetic Compulsion (Returns early, overrides drafted)
     if let Some((action, utility, target)) =
-        crate::layer1::memetic::evaluate_scrawl_memetic_sigil(data, world)
+        crate::layer1::memetic::evaluate_scrawl_memetic_sigil(data, buffer)
     {
         return (action, utility, target);
     }
 
     // 2. Check for Drafted (Returns early)
-    if let Some((action, utility, target)) = evaluate_drafted_behavior(data, world) {
+    if let Some((action, utility, target)) = evaluate_drafted_behavior(data, buffer) {
         return (action, utility, target);
     }
 
@@ -408,7 +405,7 @@ pub(crate) fn evaluate_single_pop(
     let mut evaluator = CandidateEvaluator::new(evaluate_idle(&data.needs));
     let is_striking = is_pop_striking(data, context);
 
-    evaluate_group_survival(&mut evaluator, data, buffer, world);
+    evaluate_group_survival(&mut evaluator, data, buffer);
     evaluate_group_social(&mut evaluator, data, buffer);
     evaluate_group_leisure(&mut evaluator, data);
     evaluate_group_work(&mut evaluator, data, buffer, context, is_striking);
@@ -712,6 +709,36 @@ fn populate_wanted_criminals(world: &mut World, buffer: &mut Vec<ScorableCandida
     }
 }
 
+fn populate_walls(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
+    buffer.clear();
+    let mut query = world.query::<(Entity, &GridPosition, &Building)>();
+    for (entity, pos, building) in query.iter(world) {
+        if building.building_type == BuildingType::Wall {
+            buffer.push(ScorableCandidate::new(entity, *pos));
+        }
+    }
+}
+
+fn populate_enemies(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
+    buffer.clear();
+    let mut fauna_query = world.query::<(Entity, &GridPosition, &Fauna)>();
+    for (entity, pos, _) in fauna_query.iter(world) {
+        buffer.push(ScorableCandidate::new(entity, *pos));
+    }
+    let mut flora_query = world.query::<(Entity, &GridPosition, &Flora)>();
+    for (entity, pos, _) in flora_query.iter(world) {
+        buffer.push(ScorableCandidate::new(entity, *pos));
+    }
+}
+
+fn populate_all_structures(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
+    buffer.clear();
+    let mut query = world.query::<(Entity, &GridPosition, &Structure)>();
+    for (entity, pos, _) in query.iter(world) {
+        buffer.push(ScorableCandidate::new(entity, *pos));
+    }
+}
+
 /// Populates the AI buffer with candidate entities from the world.
 ///
 /// This function queries the world for all relevant entities (buildings, items, designations)
@@ -721,6 +748,9 @@ fn populate_ai_buffer(world: &mut World, buffer: &mut UtilityAIBuffer, context: 
     populate_buffer_buildings(world, buffer, context);
     populate_buffer_designations(world, buffer);
     populate_buffer_items_and_misc(world, buffer);
+    populate_walls(world, &mut buffer.walls);
+    populate_enemies(world, &mut buffer.enemies);
+    populate_all_structures(world, &mut buffer.all_structures);
 }
 
 /// The Main Brain Loop: Decides what every Pop should do next.
@@ -799,29 +829,56 @@ pub fn evaluate_actions_system(world: &mut World) {
     // We clear buffers and populate them once, filtering invalid targets early.
     populate_ai_buffer(world, &mut buffer, &context);
 
-    // 4. Evaluate each pop
-    for data in &buffer.pop_data {
-        let (best_action, best_utility, best_target) =
-            evaluate_single_pop(&buffer, world, data, &context);
+    // 4. Evaluate each pop (Parallel)
+    let pool = ComputeTaskPool::get();
+    let pop_count = buffer.pop_data.len();
+    let thread_count = pool.thread_num();
+    let chunk_size = (pop_count / thread_count).max(1);
 
-        // Switch if best exceeds threshold
-        if best_utility > data.action.current_utility + config.switch_threshold {
-            // Update action
-            let mut action = data.action;
-            action.current = best_action;
-            action.current_utility = best_utility;
-            action.ticks_committed = 0;
+    // Prepare a vector to hold results, sized to match pop_data
+    let mut results = vec![None; pop_count];
+    let mut rest = results.as_mut_slice();
 
-            // Write back to world
-            if let Some(mut pop_action) = world.get_mut::<PopAction>(data.entity) {
-                *pop_action = action;
-            }
+    pool.scope(|scope| {
+        for chunk in buffer.pop_data.chunks(chunk_size) {
+            // Split the results slice to get a mutable chunk for this thread
+            let (result_chunk, remaining) = rest.split_at_mut(chunk.len());
+            rest = remaining;
 
-            // Insert StartPlan marker (for HTN system)
-            world.entity_mut(data.entity).insert(StartPlan {
-                action: best_action,
-                target: best_target,
+            let buffer_ref = &buffer;
+            let context_ref = &context;
+
+            scope.spawn(async move {
+                for (i, data) in chunk.iter().enumerate() {
+                    let result = evaluate_single_pop(buffer_ref, data, context_ref);
+                    result_chunk[i] = Some(result);
+                }
             });
+        }
+    });
+
+    // Apply results
+    for (i, data) in buffer.pop_data.iter().enumerate() {
+        if let Some((best_action, best_utility, best_target)) = results[i] {
+            // Switch if best exceeds threshold
+            if best_utility > data.action.current_utility + config.switch_threshold {
+                // Update action
+                let mut action = data.action;
+                action.current = best_action;
+                action.current_utility = best_utility;
+                action.ticks_committed = 0;
+
+                // Write back to world
+                if let Some(mut pop_action) = world.get_mut::<PopAction>(data.entity) {
+                    *pop_action = action;
+                }
+
+                // Insert StartPlan marker (for HTN system)
+                world.entity_mut(data.entity).insert(StartPlan {
+                    action: best_action,
+                    target: best_target,
+                });
+            }
         }
     }
 

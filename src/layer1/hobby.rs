@@ -185,6 +185,8 @@ mod tests {
             stress: 0.8, // High stress
             hobby_type: Some(HobbyType::CloudWatching),
             chemical_state: None,
+            is_memetic_carrier: false,
+            health: None,
         };
 
         let score = evaluate_hobby(&eval_data, HobbyType::CloudWatching);
