@@ -172,10 +172,9 @@ The "Brain" of the simulation. Pops decide what to do based on internal needs an
 sequenceDiagram
     participant System as evaluate_actions_system
     participant GPU as GPU Compute
-    participant Pop as Pop Entity
-    participant Needs as Needs Component
-    participant World as World State
-    participant Memory as Utility Weights
+    participant TaskPool as CPU TaskPool
+    participant Buffer as UtilityAIBuffer
+    participant World as ECS World
 
     loop Every Tick (Staggered)
         alt GPU Enabled
@@ -183,29 +182,21 @@ sequenceDiagram
             System->>GPU: Upload Input Buffers
             GPU->>GPU: Parallel Scoring (Shader)
             GPU-->>System: Return Decisions
-            System->>Pop: Update PopAction (Batch)
-        else CPU Fallback
-            System->>Pop: Check Commitment Timer
-            alt Timer Expired
-                System->>Needs: Read Hunger/Rest
-                Needs-->>System: Urgency Scores
+            System->>World: Apply PopAction Changes
+        else CPU Parallel
+            Note over System: Phase 1: Collection
+            System->>World: Query Ready Pops
+            System->>Buffer: Collect PopEvalData
+            System->>World: Query Candidates (Farms, Items)
+            System->>Buffer: Populate Proxies
 
-                rect rgb(40, 40, 50)
-                    Note right of System: Evaluation Phase
-                    System->>World: Query Entities (Farms, Items, etc.)
+            Note over System: Phase 2: Parallel Evaluation
+            System->>TaskPool: Spawn Async Tasks (Chunks)
+            TaskPool->>TaskPool: evaluate_single_pop(Buffer)
+            TaskPool-->>System: Results Vector
 
-                    System->>System: Call evaluate_satisfy_hunger()
-                    System->>System: Call evaluate_work()
-                    System->>System: Call evaluate_haul()
-
-                    Note over System: Actions typically return Option<(Score, Target)>
-                    System->>System: Select Best Utility
-                end
-
-                System->>Pop: Update PopAction (Best Score)
-            else Timer Active
-                System->>Pop: Continue Current Action
-            end
+            Note over System: Phase 3: Application
+            System->>World: Apply Best Actions
         end
     end
 ```
@@ -387,3 +378,4 @@ Rel(Shared, Events, "Consumes")
 - [ADR 023: Data Physicality & Tech Corruption](./adr/023-data-physicality.md)
 - [ADR 024: Visual Particle System](./adr/024-visual-particle-system.md)
 - [ADR 025: Integrated Feature Flags](./adr/025-integrated-feature-flags.md)
+- [ADR 026: CPU Parallel Utility AI](./adr/026-cpu-parallel-utility-ai.md)
