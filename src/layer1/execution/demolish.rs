@@ -204,6 +204,10 @@ pub fn execute_destroy(world: &mut World, designation_entity: Entity) -> bool {
     true
 }
 
+/// Executes a jury-rigging operation on a structure.
+///
+/// This attempts to temporarily repair or bypass issues in a structure
+/// at the designation's location.
 pub fn execute_jury_rig(world: &mut World, designation_entity: Entity) -> bool {
     // Find designation position
     world

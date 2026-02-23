@@ -23,7 +23,7 @@ use crate::shared::log::MessageLog;
 use crate::shared::time::SimulationTime;
 
 /// Handles arrival at targets: assigns pops to farms/housing.
-#[allow(clippy::type_complexity)]
+#[allow(clippy::type_complexity, clippy::too_many_arguments)]
 pub fn arrival_handler_system(
     mut arrivals: Query<
         (
@@ -94,6 +94,7 @@ pub fn arrival_handler_system(
     }
 }
 
+#[allow(clippy::too_many_arguments, clippy::too_many_lines)]
 fn process_arrival(
     action: ActionType,
     pop_entity: Entity,

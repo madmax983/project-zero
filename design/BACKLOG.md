@@ -7,7 +7,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 ## High Priority / Core Tech
 
 - [ ] `014` Rendering Architecture — `specs/014-rendering-architecture.md`
-- [ ] `037` Tech Tree UI — `specs/037-tech-tree-ui.md`
 
 ## MVP — Layer 1: Colony Simulation
 

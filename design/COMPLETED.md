@@ -141,6 +141,7 @@ Features that have been fully implemented, tested, and merged.
 - [x] `197` Civic Ideology — `specs/197-civic-ideology.md` — completed 2026-03-02
 - [x] `200` Superstitious Totems — `specs/200-superstitious-totems.md` — completed 2026-03-01
 - [x] `087` Food Preservation — `specs/087-food-preservation.md` — completed 2026-06-27
+- [x] `037` Tech Tree UI — `specs/037-tech-tree-ui.md` — completed 2026-10-24
 
 ## MVP — Layer 2: System Simulation
 

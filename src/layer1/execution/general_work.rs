@@ -41,6 +41,7 @@ const TOOL_DURABILITY_LOSS: f32 = 0.1;
 const NO_TOOL_PENALTY: f32 = 0.5;
 
 /// Executes work at designations when pop is at target with Work action.
+#[allow(clippy::too_many_lines, clippy::items_after_statements)]
 pub fn work_execution_system(world: &mut World) {
     let policies = world.get_resource::<ColonyPolicies>().cloned();
     let global_work_speed_mod = policies.as_ref().map_or(1.0, get_work_speed_modifier);
@@ -203,6 +204,7 @@ pub fn work_execution_system(world: &mut World) {
     }
 }
 
+#[allow(clippy::too_many_arguments)]
 fn process_single_worker(
     world: &mut World,
     pop_entity: Entity,
@@ -302,6 +304,7 @@ fn process_single_worker(
     }
 }
 
+/// Returns the skill type associated with a designation type.
 pub(crate) const fn get_skill_for_designation(
     designation_type: DesignationType,
 ) -> Option<SkillType> {
@@ -318,6 +321,7 @@ pub(crate) const fn get_skill_for_designation(
     }
 }
 
+/// Calculates the amount of work a pop can perform in a tick.
 pub fn calculate_work_amount(
     world: &World,
     pop_entity: Entity,

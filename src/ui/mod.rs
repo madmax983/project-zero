@@ -37,6 +37,8 @@ pub mod panels;
 pub mod seasonal_gfx;
 /// Status bar rendering.
 pub mod status;
+/// Tech Tree UI rendering.
+pub mod tech;
 
 #[cfg(test)]
 mod waste_ui_tests;
@@ -55,6 +57,7 @@ use self::menu::render_main_menu;
 use self::notifications::render_notifications;
 use self::panels::render_info_panel;
 use self::status::render_status_bar;
+use self::tech::render_tech_tree;
 
 /// Render the full game UI for one frame.
 ///
@@ -117,4 +120,7 @@ pub fn render(world: &World, frame: &mut Frame) {
 
     // Render chronicle
     render_chronicle(frame, frame.area(), world);
+
+    // Render Tech Tree
+    render_tech_tree(frame, frame.area(), world);
 }

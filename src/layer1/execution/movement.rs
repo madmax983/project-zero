@@ -110,6 +110,7 @@ pub fn process_start_plan_system(
 /// When a pop arrives at its target position (or adjacent for work), this system
 /// marks it with `AtTarget`.
 #[allow(clippy::type_complexity)]
+#[allow(clippy::too_many_lines, clippy::too_many_arguments)]
 pub fn movement_system(
     mut pops: Query<
         (
