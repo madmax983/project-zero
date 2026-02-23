@@ -12,7 +12,6 @@
 //!     *   **Needs**: "I am hungry" (increases food utility).
 //!     *   **Distance**: "It's too far away" (decreases utility via [`calculate_context_score`]).
 //!     *   **Personality**: "I hate hauling" (modifiers from traits/memories).
-//!     *   **Learning**: "I failed at this last time" (reinforcement learning via [`UtilityWeights`]).
 //! 3.  **Select Best**: The action with the highest score wins.
 //! 4.  **Commit**: The Pop commits to the action for a duration or until a better option appears.
 //!
@@ -22,21 +21,40 @@
 //! *   [`ActionType`]: The enum of all possible behaviors.
 //! *   [`UtilityWeights`]: The "memory" of the Pop, adjusting scores based on past success/failure.
 //!
-//! ## Performance Architecture
+//! ## Architecture (ADR 026)
 //!
-//! The Utility AI system is one of the most computationally expensive parts of the simulation,
-//! potentially running for hundreds of pops every tick. To maintain high FPS:
+//! The Utility AI system is one of the most computationally expensive parts of the simulation.
+//! To maintain high FPS with hundreds of agents, it uses a **Split-Phase Parallel Architecture**:
 //!
-//! 1.  **Staggered Evaluation**: Not every pop thinks every tick. [`UtilityConfig::evaluation_interval`]
-//!     spreads the load (e.g., only 1/60th of pops think per frame).
-//! 2.  **Allocation-Free Loop**: [`evaluate_actions_system`] reuses a single `UtilityAIBuffer`
-//!     resource. It clears the buffer instead of dropping it, preventing thousands of
-//!     `Vec::new()` calls per frame.
-//! 3.  **Entity Iteration**: We use `Query::iter` (which is fast) rather than random access.
-//! 4.  **Proxy Buffering**: We pre-collect candidate entities (Farms, Stockpiles, etc.) into flat
-//!     vectors at the start of the system. This avoids repeatedly querying the world or creating
-//!     iterators for every single Pop, converting an O(N*M) query operation into O(M) query + O(N*M)
-//!     vector iteration (which is much faster due to cache locality and no ECS overhead).
+//! 1.  **Phase 1: Data Gathering (Main Thread)**
+//!     *   Collects all world state (Buildings, Items, Designations) into a [`UtilityAIBuffer`].
+//!     *   This converts fragmented ECS queries into contiguous memory arrays (SoA layout).
+//!     *   See [`crate::layer1::utility_ai_population`].
+//!
+//! 2.  **Phase 2: Evaluation (Parallel Threads)**
+//!     *   The `UtilityAIBuffer` is sliced into chunks and processed by the [`ComputeTaskPool`].
+//!     *   Each thread evaluates `evaluate_single_pop` for its chunk of pops.
+//!     *   Crucially, this phase represents the world as **Read-Only Context**, avoiding
+//!         any need for locks or synchronization.
+//!
+//! 3.  **Phase 3: Application (Main Thread)**
+//!     *   The best actions are collected and written back to the ECS `World`.
+//!     *   Only here do we mutate the `PopAction` components.
+//!
+//! ## How to Add a New Action
+//!
+//! 1.  **Define the Action**: Add a variant to [`ActionType`] in `utility_types.rs`.
+//! 2.  **Create the Evaluator**:
+//!     *   Create a new file `src/layer1/actions/my_action.rs`.
+//!     *   Implement `evaluate_my_action(pop, needs, targets) -> Option<(f32, Entity)>`.
+//!     *   Use [`calculate_context_score`] to handle distance/crowding logic.
+//! 3.  **Register Candidates**:
+//!     *   Update [`crate::layer1::utility_ai_population::populate_ai_buffer`] to collect
+//!         the target entities (e.g., `buffer.my_targets.push(...)`).
+//! 4.  **Wire it Up**:
+//!     *   Add a call to `evaluate_my_action` in `evaluate_single_pop` (inside this file).
+//!     *   Add the execution logic in `src/layer1/execution.rs` (how to actually *do* the task).
+//!
 
 use crate::layer1::actions::admin::evaluate_admin;
 use crate::layer1::actions::explore::evaluate_explore;

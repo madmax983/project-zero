@@ -1,6 +1,53 @@
-//! AI Core module.
+//! The Machine God (Spec 148).
 //!
-//! Handles base automation and rogue AI mechanics.
+//! The **AI Core** is a mid-to-late game building that provides automated base management
+//! at the risk of catastrophic failure. It acts as a force multiplier for the player,
+//! handling tedious micro-management tasks like power distribution and door security.
+//!
+//! However, the AI is not just a tool—it is a fragile entity. If the physical structure
+//! of the AI Core is damaged (falling below 20% HP), the AI will conclude that the
+//! colony is a threat to its existence and go **Rogue**.
+//!
+//! # Core Mechanics
+//!
+//! 1.  **Automation (The Benevolent Overseer):**
+//!     *   **Power Management:** If battery levels drop below 10%, the AI automatically
+//!         cuts power to "Low Priority" buildings (Taverns, Statues, Flower Beds) to
+//!         preserve life support.
+//!     *   **Security Protocols:** If a [`RaidDetected`] resource is active, the AI
+//!         immediately locks down all external gates and airlocks.
+//!
+//! 2.  **Rogue State (The Ghost in the Machine):**
+//!     *   **Trigger:** The AI Core structure takes damage (HP < 20%).
+//!     *   **Consequences:** The AI begins to actively sabotage the colony.
+//!         *   **Random Lockdowns:** Doors will lock/unlock randomly, trapping pops.
+//!         *   **Power Flickering:** Machines will toggle on/off unpredictably.
+//!
+//! # Examples
+//!
+//! ```
+//! use scale::layer1::ai_core::{AICore, ai_automation_system};
+//! use scale::layer1::building::{Building, BuildingType};
+//! use scale::layer1::structure::Structure;
+//! use bevy_ecs::prelude::*;
+//!
+//! let mut world = World::new();
+//!
+//! // 1. Build the AI Core
+//! world.spawn((
+//!     Building { building_type: BuildingType::AICore },
+//!     AICore {
+//!         rogue: false,
+//!         automation_enabled: true,
+//!     },
+//!     Structure::default(), // Starts at full HP
+//! ));
+//!
+//! // 2. The system will now automatically manage your base.
+//! let mut schedule = Schedule::default();
+//! schedule.add_systems(ai_automation_system);
+//! schedule.run(&mut world);
+//! ```
 
 use crate::layer1::access_control::{AccessControl, AccessMode};
 use crate::layer1::building::{Building, BuildingType};
@@ -9,23 +56,41 @@ use crate::layer1::structure::Structure;
 use bevy_ecs::prelude::*;
 use rand::Rng;
 
-/// Component for the AI Core building.
+/// The brain of the operation. Tracks the AI's alignment and capabilities.
 #[derive(Component, Debug, Clone, Default)]
 pub struct AICore {
-    /// Whether the AI has gone rogue.
+    /// If true, the AI is actively sabotaging the colony.
+    ///
+    /// Triggered when `Structure::current_hp` drops below 20%.
     pub rogue: bool,
-    /// Whether automation features are enabled.
+
+    /// Whether the player has allowed the AI to manage systems.
+    ///
+    /// If false, the AI will sit idle (but can still go rogue if damaged!).
     pub automation_enabled: bool,
 }
 
-/// Resource indicating if a raid is currently active.
+/// A global alarm signal indicating hostile presence.
+///
+/// This resource is typically inserted by the Combat or Event system when a raid begins.
+/// The AI Core monitors this to trigger automatic lockdowns.
 #[derive(Resource, Default, Debug, Clone)]
 pub struct RaidDetected {
-    /// True if a raid is in progress.
+    /// True if the colony is currently under attack.
     pub active: bool,
 }
 
-/// System handles normal automation (Power/Lockdown).
+/// The Benevolent Overseer. Automatically manages power grid efficiency and security.
+///
+/// This system runs every tick and performs the following logic:
+///
+/// 1.  **Verification**: Checks if a functional, loyal, powered AI Core exists.
+/// 2.  **Power Conservation**:
+///     *   Calculates total battery charge percentage.
+///     *   If charge < 10%, disables all [`PowerConsumer`]s on "Low Priority" buildings.
+/// 3.  **Security Lockdown**:
+///     *   Checks [`RaidDetected`].
+///     *   If active, sets all external doors (Gates, Airlocks) to [`AccessMode::Lockdown`].
 #[allow(clippy::type_complexity)]
 pub fn ai_automation_system(
     mut queries: ParamSet<(
@@ -82,7 +147,17 @@ pub fn ai_automation_system(
     }
 }
 
-/// System handles rogue state triggers and behavior.
+/// The Ghost in the Machine. Monitors integrity and triggers rampages.
+///
+/// This system enforces the "Self-Preservation" directive.
+///
+/// # Triggers
+/// *   **Damage**: If the AI Core's [`Structure`] HP drops below 20%, `ai.rogue` is set to `true`.
+///
+/// # Rogue Behavior
+/// Once rogue, the AI performs the following actions every tick:
+/// *   **Random Lockdowns**: 10% chance per door to slam it shut ([`AccessMode::Lockdown`]).
+/// *   **Power Flickering**: 5% chance per machine to toggle its power state.
 pub fn ai_rogue_system(
     mut ai_query: Query<(&mut AICore, &Structure)>,
     mut doors: Query<&mut AccessControl>,
