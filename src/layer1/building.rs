@@ -30,6 +30,7 @@ use super::social::Tavern;
 use super::stockpile::Stockpile;
 use crate::layer1::access_control::AccessControl;
 use crate::layer1::admin::{AdminConsumer, AdminProvider, Office};
+use crate::layer1::solar::SolarPower;
 use crate::layer1::ai_core::AICore;
 use crate::layer1::control::DoorControl;
 use crate::layer1::drone::DroneHub;
@@ -243,6 +244,8 @@ pub enum BuildingType {
     TradeDepot,
     /// Power generator (Energy).
     Generator,
+    /// Solar Panel power source.
+    SolarPanel,
     /// Power transmission pole (Energy).
     PowerPole,
     /// Battery for energy storage.
@@ -317,7 +320,7 @@ impl BuildingType {
             Self::Smelter | Self::Refinery => Some((Category::Manufacturing, Tier::Advanced)),
             Self::AncientFabricator => Some((Category::Manufacturing, Tier::HighTech)),
 
-            Self::Generator => Some((Category::Power, Tier::Basic)),
+            Self::Generator | Self::SolarPanel => Some((Category::Power, Tier::Basic)),
             Self::AuroralCollector => Some((Category::Power, Tier::Advanced)),
             Self::AncientReactor => Some((Category::Power, Tier::HighTech)),
 
@@ -430,6 +433,7 @@ impl BuildingType {
             | Self::Grave
             | Self::TradeDepot
             | Self::Generator
+            | Self::SolarPanel
             | Self::PowerPole
             | Self::PersonalShed
             | Self::PersonalGarden
@@ -490,6 +494,7 @@ impl BuildingType {
             Self::Smelter
             | Self::Smithy
             | Self::Generator
+            | Self::SolarPanel
             | Self::PowerPole
             | Self::Battery
             | Self::ConveyorBelt
@@ -546,6 +551,7 @@ impl BuildingType {
             Self::Grave => "Grave",
             Self::TradeDepot => "Trade Depot",
             Self::Generator => "Generator",
+            Self::SolarPanel => "Solar Panel",
             Self::PowerPole => "Power Pole",
             Self::Battery => "Battery",
             Self::Wall => "Wall",
@@ -603,6 +609,7 @@ impl BuildingType {
             Self::Grave => '†',
             Self::TradeDepot => '$',
             Self::Generator | Self::Greenhouse => 'G',
+            Self::SolarPanel => '☼',
             Self::PowerPole => '|',
             Self::Battery => 'B',
             Self::Wall => '#',
@@ -856,6 +863,11 @@ impl BuildingType {
             Self::Generator => ColonyResources {
                 stone: 20.0,
                 metal: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::SolarPanel => ColonyResources {
+                metal: 10.0,
+                stone: 5.0,
                 ..ColonyResources::zeroed()
             },
             Self::PowerPole => ColonyResources {
@@ -1150,6 +1162,7 @@ fn spawn_building(
         | BuildingType::Airlock
         | BuildingType::Vent => configure_infrastructure(&mut entity, building_type),
         BuildingType::Generator
+        | BuildingType::SolarPanel
         | BuildingType::PowerPole
         | BuildingType::Battery
         | BuildingType::AncientReactor
@@ -1559,6 +1572,15 @@ fn configure_power(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 },
             ));
         }
+        BuildingType::SolarPanel => {
+            entity.insert((
+                PowerSource {
+                    output: 10.0,
+                    active: true,
+                },
+                SolarPower { base_output: 10.0 },
+            ));
+        }
         BuildingType::PowerPole => {
             entity.insert(Conduit);
         }
@@ -1922,7 +1944,8 @@ mod tests {
         assert_eq!(BuildingType::Landfill.next(), BuildingType::Grave);
         assert_eq!(BuildingType::Grave.next(), BuildingType::TradeDepot);
         assert_eq!(BuildingType::TradeDepot.next(), BuildingType::Generator);
-        assert_eq!(BuildingType::Generator.next(), BuildingType::PowerPole);
+        assert_eq!(BuildingType::Generator.next(), BuildingType::SolarPanel);
+        assert_eq!(BuildingType::SolarPanel.next(), BuildingType::PowerPole);
         assert_eq!(BuildingType::PowerPole.next(), BuildingType::Battery);
         assert_eq!(BuildingType::Battery.next(), BuildingType::Wall);
         assert_eq!(BuildingType::Wall.next(), BuildingType::Gate);
@@ -2080,6 +2103,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Generator);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::SolarPanel);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::PowerPole);

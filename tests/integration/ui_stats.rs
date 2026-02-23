@@ -50,6 +50,7 @@ mod tests {
             0.8,
             1.0,  // Efficiency
             None, // Season
+            None, // Solar Cycle
         );
 
         // 4. Verify Glue

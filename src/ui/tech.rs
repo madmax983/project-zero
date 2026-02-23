@@ -174,7 +174,7 @@ fn render_tech_details(
     } else if current_knowledge >= cost {
         Span::styled("AVAILABLE (Press Enter)", Style::default().fg(Color::Yellow))
     } else {
-        Span::styled(format!("LOCKED (Need {:.0} Knowledge)", cost), Style::default().fg(Color::DarkGray))
+        Span::styled(format!("LOCKED (Need {cost:.0} Knowledge)"), Style::default().fg(Color::DarkGray))
     };
 
     let cost_text = format!("Cost: {:.0} Knowledge | Storage: {:.0} TB", cost, tech.storage_cost());

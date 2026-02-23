@@ -142,6 +142,7 @@ Features that have been fully implemented, tested, and merged.
 - [x] `200` Superstitious Totems — `specs/200-superstitious-totems.md` — completed 2026-03-01
 - [x] `087` Food Preservation — `specs/087-food-preservation.md` — completed 2026-06-27
 - [x] `037` Tech Tree UI — `specs/037-tech-tree-ui.md` — completed 2026-10-24
+- [x] `213` Solar Cycles — `specs/213-solar-cycles.md` — completed 2026-10-27
 
 ## MVP — Layer 2: System Simulation
 

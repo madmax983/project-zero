@@ -4,6 +4,7 @@ use ratatui::{prelude::*, widgets::Paragraph};
 
 use crate::layer1::admin::AdminStats;
 use crate::layer1::seasons::{Season, SeasonState};
+use crate::layer1::solar::{SolarCycle, SolarCycleState};
 use crate::layer1::traits::Traits;
 use crate::layer1::{
     BuildMode, ColonyPolicies, ColonyResources, DesignationMode, NamedLocations, Pop, Viewport,
@@ -91,6 +92,10 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
         .get_resource::<SeasonState>()
         .map(|s| s.current_season);
 
+    let solar_cycle = world
+        .get_resource::<SolarCycleState>()
+        .map(|s| s.current_cycle);
+
     let admin_stats = world.get_resource::<AdminStats>();
     let efficiency = admin_stats.map_or(1.0, |s| s.efficiency);
 
@@ -108,6 +113,7 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
         avg_morale,
         efficiency,
         season,
+        solar_cycle,
     );
 
     let status = truncate_line(status, area.width);
@@ -155,6 +161,7 @@ pub fn get_status_line<'a>(
     morale: f32,
     efficiency: f32,
     season: Option<Season>,
+    solar_cycle: Option<SolarCycle>,
 ) -> Line<'a> {
     let mut spans = Vec::new();
 
@@ -179,6 +186,15 @@ pub fn get_status_line<'a>(
         spans.push(Span::styled(
             format!("{} ", s.name()),
             Style::default().fg(color),
+        ));
+        spans.push(Span::raw("│ "));
+    }
+
+    // 2c. Solar Cycle
+    if let Some(cycle) = solar_cycle {
+        spans.push(Span::styled(
+            format!("{} ", cycle.label()),
+            Style::default().fg(Color::Yellow),
         ));
         spans.push(Span::raw("│ "));
     }
@@ -365,6 +381,7 @@ pub fn get_status_string(
     morale: f32,
     efficiency: f32,
     season: Option<Season>,
+    solar_cycle: Option<SolarCycle>,
 ) -> String {
     let line = get_status_line(
         tick,
@@ -380,6 +397,7 @@ pub fn get_status_string(
         morale,
         efficiency,
         season,
+        solar_cycle,
     );
 
     line.spans
@@ -443,6 +461,7 @@ mod tests {
             0.85,  // Morale
             1.0,   // Efficiency
             None,  // Season
+            None,  // Solar Cycle
         );
 
         assert!(status.contains("Day 100"));
@@ -468,6 +487,7 @@ mod tests {
             0.0,
             1.0,  // Efficiency
             None, // Season
+            None, // Solar Cycle
         );
 
         assert!(status_none.contains("Day 100"));
@@ -568,6 +588,7 @@ mod tests {
             0.8,
             1.0,
             Some(Season::Summer),
+            None,
         );
         assert!(
             status.contains("Summer"),
@@ -592,11 +613,36 @@ mod tests {
             0.8,
             1.0,
             None,
+            None,
         );
         assert!(!status.contains("Spring"));
         assert!(!status.contains("Summer"));
         assert!(!status.contains("Autumn"));
         assert!(!status.contains("Winter"));
+    }
+
+    #[test]
+    fn test_solar_cycle_display_in_status() {
+        let status = get_status_string(
+            50,
+            SimSpeed::Normal,
+            false,
+            &BuildMode::default(),
+            &DesignationMode::default(),
+            None,
+            5,
+            100.0,
+            0.0,
+            10.0,
+            0.8,
+            1.0,
+            None,
+            Some(SolarCycle::Maximum),
+        );
+        assert!(
+            status.contains("Solar Maximum"),
+            "Status should contain solar cycle name"
+        );
     }
 
     #[test]
