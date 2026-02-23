@@ -4940,7 +4940,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Ammunition Logistics
+## Ammunition Logistics [SPECCED]
 
 **Layer:** 1
 
