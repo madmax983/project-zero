@@ -140,6 +140,7 @@ Features that have been fully implemented, tested, and merged.
 - [x] `196` Eureka Moments — `specs/196-eureka-moments.md` — completed 2026-02-25
 - [x] `197` Civic Ideology — `specs/197-civic-ideology.md` — completed 2026-03-02
 - [x] `200` Superstitious Totems — `specs/200-superstitious-totems.md` — completed 2026-03-01
+- [x] `087` Food Preservation — `specs/087-food-preservation.md` — completed 2026-06-27
 
 ## MVP — Layer 2: System Simulation
 
