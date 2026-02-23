@@ -70,5 +70,6 @@ mod tests {
             cost.stone >= 20.0,
             "Greenhouse should require stone/glass equivalent"
         );
+        assert_eq!(cost.wood, 0.0, "Greenhouse should not require wood");
     }
 }

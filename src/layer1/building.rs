@@ -868,7 +868,6 @@ impl BuildingType {
             },
             Self::AncientReactor | Self::AncientFabricator => ColonyResources::zeroed(),
             Self::Greenhouse => ColonyResources {
-                wood: 10.0,
                 stone: 20.0,
                 metal: 10.0,
                 ..ColonyResources::zeroed()
