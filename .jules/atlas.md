@@ -9,3 +9,7 @@
 **Encapsulating Utility AI Internals**
 **Tangle:** `src/layer1/mod.rs` re-exported `utility_eval_types::*`, exposing internal AI implementation details (`PopEvalData`) to the entire codebase. This "Leaky Abstraction" allowed any system to potentially depend on the AI's internal data structures.
 **Blueprint:** Restricted visibility of `utility_eval_types` to `pub(crate)` and stopped re-exporting it from `layer1`. Changed all `evaluate_*` functions in `actions/*.rs` to `pub(crate)` to enforce that only the AI orchestrator can access them.
+
+**Decomposing Execution Monolith**
+**Tangle:** `src/layer1/execution.rs` was a massive "God Module" (121K) handling movement, arrival, work execution, combat, and mining. It violated SRP and had implicit circular dependencies handled via a single file scope.
+**Blueprint:** Split `execution.rs` into a directory module `src/layer1/execution/` containing focused sub-modules: `movement.rs`, `arrival.rs`, `general_work.rs`, `combat.rs`, `mining.rs`, `demolish.rs`, `vandalism.rs`, and `components.rs`. Extracted tests into `tests/` sub-module. This enforces stricter boundaries and makes dependencies explicit.
