@@ -2069,3 +2069,107 @@
 **Usage:**
 - "Boiling white-pearl."
 - "The paddies are full of white-pearl."
+
+---
+
+## Auroral Harvesting
+
+### sky-fire
+**Replaces:** aurora
+**Code reference:** `AuroralGrid`
+**Usage:**
+- "Harvesting the sky-fire."
+- "The sky-fire is bright tonight."
+
+### spark-catching
+**Replaces:** auroral harvesting action
+**Usage:**
+- "He is out spark-catching."
+- "Good night for spark-catching."
+
+---
+
+## Predictive Policing
+
+### The Pattern
+**Replaces:** predictive algorithm
+**Code reference:** `PredictiveModel`
+**Usage:**
+- "The Pattern sees your intent."
+- "You can't hide from the Pattern."
+
+### pre-crime
+**Replaces:** predicted criminal act
+**Code reference:** `CrimePrediction`
+**Usage:**
+- "Arrested for pre-crime."
+- "Stopping it before it's real."
+
+---
+
+## Scrapcode
+
+### rot-code
+**Replaces:** scrapcode virus
+**Code reference:** `Scrapcode`
+**Usage:**
+- "The system has rot-code."
+- "Scrub the rot-code."
+
+### ghost-logic
+**Replaces:** corrupted behavior
+**Usage:**
+- "Running on ghost-logic."
+- "The machine is speaking ghost-logic."
+
+---
+
+## Totems
+
+### luck-charm
+**Replaces:** totem item
+**Code reference:** `Totem`
+**Usage:**
+- "Where is my luck-charm?"
+- "Clutching a luck-charm."
+
+### ward
+**Replaces:** protective totem effect
+**Usage:**
+- "A ward against the dark."
+- "The ward is broken."
+
+---
+
+## Food Preservation
+
+### hard-tack
+**Replaces:** preserved rations
+**Code reference:** `PreservedFood`
+**Usage:**
+- "Gnawing on hard-tack."
+- "Stores full of hard-tack."
+
+### smoke-meat
+**Replaces:** smoked meat
+**Usage:**
+- "The smell of smoke-meat."
+- "Hanging the smoke-meat."
+
+---
+
+## Institutional Memory
+
+### The Deep Record
+**Replaces:** long-term archive
+**Code reference:** `Archive`
+**Usage:**
+- "It is written in the Deep Record."
+- "Consulting the Deep Record."
+
+### Memory-Keepers
+**Replaces:** archivists
+**Code reference:** `Job::Archivist`
+**Usage:**
+- "Ask the Memory-Keepers."
+- "The Memory-Keepers never forget."

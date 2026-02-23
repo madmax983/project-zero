@@ -2945,3 +2945,136 @@ Names for ruined structures.
 - mostly rubble
 - holding memories
 - structurally unsound
+
+---
+
+## Auroral Fragments (Spec 205)
+
+### [AURORA_COLOR]
+Colors of the magnetic storm.
+
+- violent-violet
+- sick-green
+- blood-red
+- burning-white
+- deep-indigo
+- ghost-gold
+- void-blue
+
+### [AURORA_DESCRIPTOR]
+How the aurora looks/moves.
+
+- writhing
+- screaming
+- dancing
+- tearing the sky
+- bleeding light
+- pulsing
+- shivering
+
+---
+
+## Predictive Policing Fragments (Spec 173)
+
+### [PREDICTION_SOURCE]
+What the algorithm uses to predict crime.
+
+- pattern-matching
+- behavioral drift
+- resource hoarding
+- voice-stress analysis
+- genetic predisposition
+- social network density
+- unauthorized movement
+
+### [ALGORITHM_NAME]
+Names for the predictive AI.
+
+- The Pattern
+- Watch-Dog
+- Pre-Crime
+- The Oracle
+- Fate-Weaver
+- Silent-Judge
+- Probable-Cause
+
+---
+
+## Scrapcode Fragments (Spec 178)
+
+### [GLITCH_TEXT]
+Corrupted output from infected machines.
+
+- h3lp_me
+- n0_s1gnal
+- v01d_null
+- r0t_c0de
+- 0xDEADBEEF
+- s1lenc3
+- k1ll_pr0cess
+
+---
+
+## Totem Fragments (Spec 200)
+
+### [TOTEM_MATERIAL]
+What the luck-charm is made of.
+
+- bone
+- scrap-metal
+- twisted wire
+- void-glass
+- meteor-shard
+- dried root
+- braided hair
+
+### [TOTEM_SHAPE]
+What the totem looks like.
+
+- a crude eye
+- a spiral
+- a knot
+- a star
+- a shield
+- a hand
+- a tooth
+
+---
+
+## Preservation Fragments (Spec 087)
+
+### [CURED_FOOD_NAME]
+Names for preserved food.
+
+- hard-tack
+- smoke-meat
+- salt-fish
+- void-jerky
+- ash-bread
+- dried-fruit
+- stone-soup-mix
+
+### [SMOKE_WOOD]
+Wood used for smoking food.
+
+- iron-wood
+- sweet-bark
+- star-pine
+- grey-oak
+- resin-wood
+- void-cedar
+
+---
+
+## Institutional Memory Fragments (Spec 172)
+
+### [ARCHIVE_SECTION]
+Divisions of the Archive.
+
+- The Deep Stacks
+- Restricted Wing
+- The Memory Core
+- Dead-File Storage
+- The Founders' Vault
+- Sector Zero
+- The Lost Index

@@ -1939,3 +1939,107 @@ FIRST_HARVEST_RICE:
   increases:
     - FOOD_STABILITY (high)
 ```
+
+---
+
+## Auroral Chaining
+
+```yaml
+AURORA_SIGHTING:
+  enables:
+    - AURORA_HARVEST (high, if collectors active)
+    - POWER_SURGE (medium)
+  increases:
+    - AWE (high)
+    - ENERGY_STOCKS (high)
+
+AURORA_HARVEST:
+  enables:
+    - BATTERY_OVERLOAD (low)
+    - CELEBRATION (medium)
+  increases:
+    - WEALTH (medium)
+```
+
+## Predictive Policing Chaining
+
+```yaml
+CRIME_PREDICTED:
+  enables:
+    - PREEMPTIVE_ARREST (high)
+    - FALSE_POSITIVE (low, generates unrest)
+  increases:
+    - SECURITY (high)
+    - PARANOIA (medium)
+
+PREEMPTIVE_ARREST:
+  enables:
+    - PROTEST (medium)
+    - WORK_CONTINUATION (high, no crime downtime)
+  increases:
+    - AUTHORITY (high)
+    - RESENTMENT (medium)
+```
+
+## Scrapcode Chaining
+
+```yaml
+SCRAPCODE_INFECTION:
+  enables:
+    - MACHINE_MALFUNCTION (high)
+    - DATA_LOSS (medium)
+    - RETROGRADE_SACRIFICE (high, purge system)
+  increases:
+    - CONFUSION (high)
+    - MAINTENANCE_DEBT (high)
+```
+
+## Totem Chaining
+
+```yaml
+TOTEM_CRAFTED:
+  enables:
+    - TOTEM_LOST (medium, later)
+    - BRAVERY_BOOST (high)
+  increases:
+    - SUPERSTITION (medium)
+    - MORALE (high)
+
+TOTEM_LOST:
+  enables:
+    - OMEN_WITNESSED (high, psychological)
+    - PANIC_ATTACK (medium)
+  increases:
+    - FEAR (high)
+```
+
+## Food Preservation Chaining
+
+```yaml
+RATIONS_PRESERVED:
+  enables:
+    - WINTER_SURVIVAL (high)
+    - TRADE_EXPORT (medium)
+  increases:
+    - FOOD_STABILITY (high)
+    - SPOILAGE_RESISTANCE (high)
+```
+
+## Institutional Memory Chaining
+
+```yaml
+ARCHIVE_DISCOVERY:
+  enables:
+    - LOST_KNOWLEDGE_RECOVERED (high)
+    - MYSTERY_SOLVED (medium)
+  increases:
+    - KNOWLEDGE (high)
+    - CULTURAL_DEPTH (high)
+
+LOST_KNOWLEDGE_RECOVERED:
+  enables:
+    - TECH_BREAKTHROUGH (high)
+    - ANCIENT_RITUAL (medium)
+  increases:
+    - CONFIDENCE (high)
+```
