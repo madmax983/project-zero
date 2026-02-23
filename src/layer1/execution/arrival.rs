@@ -214,6 +214,12 @@ fn process_arrival(
             target_entity,
             AssignmentType::LibraryWorker,
         ),
+        ActionType::Farm => assign_pop(
+            commands,
+            pop_entity,
+            target_entity,
+            AssignmentType::FarmWorker,
+        ),
         ActionType::Admin => {
             if let Ok(mut office) = offices.get_mut(target_entity) {
                 if !office.workers.contains(&pop_entity) {
@@ -265,19 +271,7 @@ fn assign_pop(
     match assignment_type {
         AssignmentType::FarmWorker
         | AssignmentType::LibraryWorker
-        | AssignmentType::ObservatoryWorker
-        | AssignmentType::Miner
-        | AssignmentType::Hauler
-        | AssignmentType::Builder
-        | AssignmentType::Crafter
-        | AssignmentType::Guard
-        | AssignmentType::Engineer
-        | AssignmentType::Doctor
-        | AssignmentType::Merchant
-        | AssignmentType::Scientist
-        | AssignmentType::Artist
-        | AssignmentType::Governor
-        | AssignmentType::Chef => {
+        | AssignmentType::ObservatoryWorker => {
             entity_cmds.insert((
                 Job {
                     workplace: target_entity,

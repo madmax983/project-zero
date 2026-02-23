@@ -108,18 +108,13 @@ pub fn chronicle_rumor_bridge_system(
 pub fn medical_debt_bridge_system(
     mut events: EventReader<PatientTreated>,
     mut social_debt_events: EventWriter<crate::layer1::social::FavorChange>,
-    doctors: Query<(Entity, &crate::layer1::pop::Job)>,
+    _doctors: Query<(Entity, &crate::layer1::pop::Job)>,
 ) {
     for event in events.read() {
         // Find doctors at this hospital
-        let hospital_doctors: Vec<Entity> = doctors
-            .iter()
-            .filter(|(_, job)| {
-                job.workplace == event.hospital
-                    && job.job_type == crate::layer1::actions::AssignmentType::Doctor
-            })
-            .map(|(e, _)| e)
-            .collect();
+        // Razor: Doctor job type removed as dead code.
+        // Logic removed until doctors are implemented properly.
+        let hospital_doctors: Vec<Entity> = Vec::new();
 
         if let Some(&doctor) = hospital_doctors.first() {
             social_debt_events.send(crate::layer1::social::FavorChange {

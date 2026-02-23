@@ -14,14 +14,9 @@ impl Prestige {
     #[must_use]
     pub const fn from_job(job: JobType) -> Self {
         let value = match job {
-            JobType::Builder | JobType::Crafter | JobType::Guard => 3,
-            JobType::Engineer | JobType::Doctor | JobType::Merchant => 5,
-            JobType::Scientist
-            | JobType::Artist
-            | JobType::LibraryWorker
-            | JobType::ObservatoryWorker => 7,
-            JobType::Governor | JobType::Administrator => 10,
-            // Miner, FarmWorker, Hauler, and others (Patient, etc.) default to 1 (Labor)
+            JobType::LibraryWorker | JobType::ObservatoryWorker => 7,
+            JobType::Administrator => 10,
+            // FarmWorker and others (Patient, etc.) default to 1 (Labor)
             _ => 1,
         };
         Self { value }
@@ -139,9 +134,9 @@ mod tests {
     #[test]
     fn test_job_prestige_mapping() {
         // Verify jobs map to correct prestige
-        assert_eq!(Prestige::from_job(JobType::Miner).value, 1); // Low
-        assert_eq!(Prestige::from_job(JobType::Engineer).value, 5); // Medium
-        assert_eq!(Prestige::from_job(JobType::Governor).value, 10); // High
+        assert_eq!(Prestige::from_job(JobType::FarmWorker).value, 1); // Low
+        assert_eq!(Prestige::from_job(JobType::LibraryWorker).value, 7); // Medium/High
+        assert_eq!(Prestige::from_job(JobType::Administrator).value, 10); // High
     }
 
     #[test]
@@ -149,35 +144,35 @@ mod tests {
         let mut world = World::new();
 
         // Low Prestige Pop
-        let miner = world
+        let farmer = world
             .spawn((
                 Pop,
                 Job {
                     workplace: Entity::PLACEHOLDER,
-                    job_type: JobType::Miner,
+                    job_type: JobType::FarmWorker,
                 },
                 Prestige { value: 1 },
             ))
             .id();
 
         // High Prestige Pop
-        let governor = world
+        let admin = world
             .spawn((
                 Pop,
                 Job {
                     workplace: Entity::PLACEHOLDER,
-                    job_type: JobType::Governor,
+                    job_type: JobType::Administrator,
                 },
                 Prestige { value: 10 },
             ))
             .id();
 
         // Run calculation logic (or system)
-        let miner_class = calculate_social_class(&world, miner);
-        let gov_class = calculate_social_class(&world, governor);
+        let farmer_class = calculate_social_class(&world, farmer);
+        let admin_class = calculate_social_class(&world, admin);
 
-        assert_eq!(miner_class, SocialClass::Labor);
-        assert_eq!(gov_class, SocialClass::Elite);
+        assert_eq!(farmer_class, SocialClass::Labor);
+        assert_eq!(admin_class, SocialClass::Elite);
     }
 
     #[test]
