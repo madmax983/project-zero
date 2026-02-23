@@ -202,26 +202,19 @@ pub fn produce_food_system(
                         (0.0, 0.0, 0.0)
                     }
                 }
-                BuildingType::Greenhouse => {
-                    // Greenhouse protects from winter partially or fully?
-                    // Usually greenhouse allows growing in winter.
-                    // For now, let's say it uses base yield but ignores negative season modifiers, or applies 1.0
-                    (crop_stats.base_yield, 0.0, 1.0)
-                }
                 BuildingType::Plantation => {
                     // Plantation produces Fiber, uses generic yield probably
                     (FOOD_PER_WORKER_PER_TICK, 0.0, modifier)
                 }
                 _ => {
-                    // Standard Farm
-                    // Apply crop specific winter modifier if it is winter
-                    let season_mod = if current_season == Season::Winter {
+                    // Standard Farm or Greenhouse
+                    // Check for immunity (Greenhouse)
+                    let season_mod = if building_type.seasonal_immunity() {
+                        1.0
+                    } else if current_season == Season::Winter {
                         crop_stats.winter_modifier
                     } else {
                         modifier // Use general season modifier (e.g. Autumn harvest bonus?)
-                        // Actually, modifier from SeasonState is usually 1.0 or less/more.
-                        // Spec says: "Potato in winter (0.8 modifier)"
-                        // So we should probably use crop_stats.winter_modifier INSTEAD of generic modifier during winter.
                     };
                     (crop_stats.base_yield, 0.0, season_mod)
                 }

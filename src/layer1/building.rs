@@ -443,6 +443,12 @@ impl BuildingType {
         }
     }
 
+    /// Returns true if this building is immune to seasonal penalties (e.g., Winter food penalty).
+    #[must_use]
+    pub const fn seasonal_immunity(&self) -> bool {
+        matches!(self, Self::Greenhouse | Self::HydroponicsBay)
+    }
+
     /// Returns the beauty value emitted by this building.
     #[must_use]
     #[allow(clippy::match_same_arms)]
@@ -2591,6 +2597,20 @@ mod tests {
             .iter(&world)
             .count();
         assert_eq!(spirit_count, 1, "Should have added MachineSpirit component");
+    }
+}
+
+#[cfg(test)]
+mod seasonal_tests {
+    use super::*;
+
+    #[test]
+    fn test_seasonal_immunity() {
+        assert!(BuildingType::Greenhouse.seasonal_immunity());
+        assert!(BuildingType::HydroponicsBay.seasonal_immunity());
+        assert!(!BuildingType::Farm.seasonal_immunity());
+        assert!(!BuildingType::Plantation.seasonal_immunity());
+        assert!(!BuildingType::Housing.seasonal_immunity());
     }
 }
 
