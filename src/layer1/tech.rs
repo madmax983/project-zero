@@ -68,6 +68,22 @@ impl Tech {
         }
     }
 
+    /// Returns the description of the technology.
+    #[must_use]
+    pub const fn description(&self) -> &str {
+        match self {
+            Self::Masonry => "Unlocks advanced stone construction techniques, allowing for sturdier and more impressive structures.",
+            Self::MetalWorking => "Enables the processing of ores into refined metals, a crucial step for industrialization.",
+            Self::SocialStructures => "Develops social gathering places and artistic expression to improve colony morale.",
+            Self::Astronomy => "Unlocks the secrets of the stars, enabling advanced navigation and research.",
+            Self::Hydroponics => "Advanced farming techniques that allow crops to be grown indoors without soil.",
+            Self::Militia => "Organizes colonists into a defense force to protect the colony from threats.",
+            Self::Medical => "Advanced medical knowledge and facilities to treat injuries and diseases.",
+            Self::Electromagnetism => "Harnesses the power of electromagnetic fields for energy generation.",
+            Self::VoidWhispers => "Forbidden knowledge from the void. Offers great power at a terrible cost.",
+        }
+    }
+
     /// Returns the data storage cost (in TB) required to maintain this technology.
     #[must_use]
     pub const fn storage_cost(&self) -> f32 {
