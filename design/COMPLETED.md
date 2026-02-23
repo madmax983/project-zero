@@ -180,3 +180,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `109` Greenhouses — `specs/109-greenhouses.md` — completed 2026-06-25
 - [x] `INT-036` Integration: Magnetic Storm Weather -> Auroral Collector — completed 2026-03-03
 - [x] `INT-005` Integration: Building Operation -> Acoustic Noise — completed 2026-03-31
+- [x] `214` Customs Checkpoint — `specs/214-customs-checkpoint.md` — completed 2026-02-23
