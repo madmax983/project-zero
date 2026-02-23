@@ -5512,3 +5512,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Aesthetic views vs. Psychological safety.
 
 ---
+
+## Safehouse Contracts
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Playing the spy game, but you're just the landlord. The cold war is fought in your spare bedroom.
+
+**Mechanic:** You rent out "Safehouse" zones to Layer 3 Intelligence Agencies. They pay high rent and provide Intel, but generate "Heat". If Heat gets too high, their enemies raid your base to kill the spy.
+
+**Emergence:** You accept a high-paying tenant from the "Cyber-Collective". A week later, a "Black Ops" team breaches your wall. You have to defend a spy you don't even like because you need the rent money.
+
+**Tension:** Passive Income (Rent) vs. Invited Conflict (Raids).
+
+---
+
+## Tectonic Fracking
+
+**Layer:** 1
+
+**Fantasy:** Squeezing the planet until it screams.
+
+**Mechanic:** Injecting "Liquid Waste" into deep crustal faults forces out pockets of "Natural Gas" or "Rare Earths". High efficiency waste disposal + resource gain, but increases "Seismic Instability" rapidly.
+
+**Emergence:** You solve your sewage problem and your fuel shortage in one go. The resulting 8.0 earthquake levels your entire residential district.
+
+**Tension:** Waste Disposal/Resource Gain vs. Structural Safety.
+
+---
+
+## Sonic Suppression
+
+**Layer:** 1
+
+**Fantasy:** The walls are shaking. Non-lethal doesn't mean painless.
+
+**Mechanic:** "Infrasound Turrets" deal no HP damage but inflict massive "Nausea" and "Stun" (slowing enemies). However, the sound waves shatter nearby "Glass" structures (Greenhouses, Windows) and cause Stress to your own pops if not soundproofed.
+
+**Emergence:** You activate the bass cannon to stop a prison riot. It works perfectly, but the vibration shatters the adjacent bio-dome, venting your entire crop yield to vacuum.
+
+**Tension:** Non-lethal Control vs. Collateral Damage.
+
+---
+
+## The Tether Stump
+
+**Layer:** 1
+
+**Fantasy:** Living in the shadow of a broken god.
+
+**Mechanic:** Map generation feature: A massive, indestructible "Space Elevator Base" ruins. It has a tiny footprint but infinite vertical build height. Investigating the upper atmosphere levels yields "Lost Tech".
+
+**Emergence:** You build a vertical city clinging to the stump. The air gets thin at the top, requiring pressure suits just to go to the market. The view is amazing, but a fire at the bottom traps everyone above.
+
+**Tension:** Vertical Density (Efficiency) vs. Fire Safety/Life Support.
+
+---
+
+## Personal Shields
+
+**Layer:** 1
+
+**Fantasy:** The slow blade penetrates the shield.
+
+**Mechanic:** High-tech "Kinetic Barriers" block all high-velocity projectiles (bullets/shrapnel) but allow slow objects (melee weapons) to pass. Consumes battery.
+
+**Emergence:** You equip your elite guards with expensive shields. A primitive tribe attacks with wooden clubs. Your guards, trained for gunfights, are beaten to death because their shields are useless against blunt force.
+
+**Tension:** Ranged Superiority vs. Melee Vulnerability.
+
+---
