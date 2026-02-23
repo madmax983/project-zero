@@ -1971,3 +1971,97 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "We cleared the [RUIN_NAME]. [YEAR]. It was [RUIN_DESCRIPTION]."
 - "[YEAR]: Scavengers pick the [RUIN_NAME] clean. Nothing left."
 - "The [RUIN_NAME] is gone. [YEAR]. We reuse the stone."
+
+---
+
+## Auroral Templates (Spec 205)
+
+### AURORA_SIGHTING
+**Slots:** [COLONY], [YEAR], [AURORA_COLOR], [AURORA_DESCRIPTOR]
+
+- "The sky burns [AURORA_COLOR]. [YEAR]. A [AURORA_DESCRIPTOR] light."
+- "[YEAR]: Magnetic storm. The [AURORA_COLOR] fire is [AURORA_DESCRIPTOR]."
+- "We watch the [AURORA_DESCRIPTOR] dance. [AURORA_COLOR] waves. [YEAR]."
+
+### AURORA_HARVEST
+**Slots:** [COLONY], [YEAR], [AURORA_COLOR], [POWER_AMOUNT]
+
+- "The collectors are singing. [YEAR]. Drinking the [AURORA_COLOR] sky. [POWER_AMOUNT] gained."
+- "[YEAR]: Harvest complete. The [AURORA_COLOR] storm filled the banks. [POWER_AMOUNT]."
+- "Power from the void. [POWER_AMOUNT] harvested from the [AURORA_COLOR] bands. [YEAR]."
+
+---
+
+## Predictive Policing Templates (Spec 173)
+
+### CRIME_PREDICTED
+**Slots:** [COLONY], [YEAR], [NAME], [CRIME], [PREDICTION_SOURCE]
+
+- "[NAME] was flagged by [PREDICTION_SOURCE]. [YEAR]. Intent to commit [CRIME]."
+- "[YEAR]: The algorithm sees all. [NAME] marked for [CRIME] via [PREDICTION_SOURCE]."
+- "Pre-crime alert. [NAME]. [CRIME]. Certainty high. [YEAR]."
+
+### PREEMPTIVE_ARREST
+**Slots:** [COLONY], [YEAR], [NAME], [CRIME]
+
+- "[NAME] taken before the act. [YEAR]. The [CRIME] never happened."
+- "[YEAR]: Arrest made. [NAME] is secure. The [CRIME] was prevented."
+- "Justice is faster than thought. [NAME] detained for future [CRIME]. [YEAR]."
+
+---
+
+## Scrapcode Templates (Spec 178)
+
+### SCRAPCODE_INFECTION
+**Slots:** [COLONY], [YEAR], [GLITCH_TEXT], [BUILDING_TYPE]
+
+- "The [BUILDING_TYPE] is speaking in tongues. [YEAR]. Screens show '[GLITCH_TEXT]'."
+- "[YEAR]: Malware in the core. [BUILDING_TYPE] output corrupted. '[GLITCH_TEXT]'."
+- "Digital rot. The [BUILDING_TYPE] fails. [GLITCH_TEXT]. [YEAR]."
+
+---
+
+## Totem Templates (Spec 200)
+
+### TOTEM_CRAFTED
+**Slots:** [COLONY], [YEAR], [NAME], [TOTEM_MATERIAL], [TOTEM_SHAPE]
+
+- "[NAME] made a charm. [YEAR]. A [TOTEM_SHAPE] of [TOTEM_MATERIAL]."
+- "[YEAR]: Superstition or shield? [NAME] carries a [TOTEM_MATERIAL] [TOTEM_SHAPE]."
+- "Protection forged. [NAME]'s [TOTEM_SHAPE]. [TOTEM_MATERIAL]. [YEAR]."
+
+### TOTEM_LOST
+**Slots:** [COLONY], [YEAR], [NAME], [TOTEM_SHAPE]
+
+- "[NAME] lost their [TOTEM_SHAPE]. [YEAR]. The luck is gone."
+- "[YEAR]: Bad omen. The [TOTEM_SHAPE] is missing. [NAME] is afraid."
+- "Panic. [NAME] cannot find the [TOTEM_SHAPE]. [YEAR]."
+
+---
+
+## Food Preservation Templates (Spec 087)
+
+### RATIONS_PRESERVED
+**Slots:** [COLONY], [YEAR], [CURED_FOOD_NAME], [SMOKE_WOOD]
+
+- "The smokehouse is full. [YEAR]. [CURED_FOOD_NAME] cured with [SMOKE_WOOD]."
+- "[YEAR]: Winter stores ready. [CURED_FOOD_NAME] stacks high. Smells of [SMOKE_WOOD]."
+- "Preserving the kill. [CURED_FOOD_NAME]. [SMOKE_WOOD] smoke. [YEAR]."
+
+---
+
+## Institutional Memory Templates (Spec 172)
+
+### ARCHIVE_DISCOVERY
+**Slots:** [COLONY], [YEAR], [ARCHIVE_SECTION], [KNOWLEDGE_TOPIC]
+
+- "Deep in the [ARCHIVE_SECTION], we found it. [YEAR]. Notes on [KNOWLEDGE_TOPIC]."
+- "[YEAR]: Data recovery. [ARCHIVE_SECTION] yielded [KNOWLEDGE_TOPIC]."
+- "The past speaks. [KNOWLEDGE_TOPIC] found in [ARCHIVE_SECTION]. [YEAR]."
+
+### LOST_KNOWLEDGE_RECOVERED
+**Slots:** [COLONY], [YEAR], [KNOWLEDGE_TOPIC]
+
+- "We remember how. [YEAR]. [KNOWLEDGE_TOPIC] is known again."
+- "[YEAR]: The gap is filled. [KNOWLEDGE_TOPIC] restored to the index."
+- "No longer lost. [KNOWLEDGE_TOPIC]. [YEAR]."
