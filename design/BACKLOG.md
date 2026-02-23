@@ -29,6 +29,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `203` Prohibition & Contraband — `specs/203-prohibition-contraband.md`
 - [ ] `205` Auroral Harvesting — `specs/205-auroral-harvesting.md`
 - [ ] `206` Orbital Crossfire — `specs/206-orbital-crossfire.md`
+- [ ] `207` Atmospheric Processors — `specs/207-atmospheric-processors.md`
 
 ## MVP — Layer 2: System Simulation
 

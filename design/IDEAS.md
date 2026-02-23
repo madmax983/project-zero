@@ -3725,7 +3725,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Atmospheric Processors
+## Atmospheric Processors [SPECCED]
 
 **Layer:** 1 -> 2
 
