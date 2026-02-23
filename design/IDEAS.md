@@ -5358,3 +5358,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Deep control of the few vs. Shallow control of the many.
 
 ---
+
+## Intellectual Property Wars
+
+**Layer:** 3
+
+**Fantasy:** The cold war of patents. You didn't steal the ship; you infringed on its warp-drive copyright.
+
+**Mechanic:** Civilizations "own" specific Techs they discover first. Others must pay "Licensing Fees" to use them. Using them without paying gives "Pirate" status, justifying war/sanctions. Espionage can "Invalidate Patents" (steal the data to make it public domain).
+
+**Emergence:** You win a war using a fleet of stolen tech, only to have the Galactic Court seize your entire economy for copyright infringement.
+
+**Tension:** Pay for legal tech (safe/expensive) or Pirate it (cheap/dangerous)?
+
+---
+
+## Celestial Cemeteries
+
+**Layer:** 1 -> 2
+
+**Fantasy:** The sky is full of ghosts. We send them up so they don't take up land down here.
+
+**Mechanic:** "Orbital Burial" policy sends corpses to Layer 2. High Morale, no land use. However, "Coffin Density" in orbit increases launch risks/collision. Debris fields form.
+
+**Emergence:** You can't evacuate the planet because the debris cloud of 500 years of ancestors blocks the escape ships. You have to "clear" grandma with a laser.
+
+**Tension:** Land use (Graves) vs. Orbital safety (Space Burial).
+
+---
+
+## Photophobic Resources
+
+**Layer:** 1
+
+**Fantasy:** The vampire jewels. Treasures that vanish in the sun.
+
+**Mechanic:** Rare "Shadow-Crystals" decay rapidly if Light > 0. Mining requires working in pitch blackness (Stress/Slow) or expensive "Filtered Light" infrastructure. Transport must be covered.
+
+**Emergence:** A hull breach lets sunlight into the storage bay. Your entire fortune evaporates in seconds.
+
+**Tension:** Work in the dark (danger) vs. Build complex shielding (cost).
+
+---
+
+## Planetary Spin-Up
+
+**Layer:** 2 -> 1
+
+**Fantasy:** "The days are too short. I'm changing them." Engineering on a celestial scale.
+
+**Mechanic:** Massive surface engines or orbital tethers apply torque to the planet. Changes the length of the Day/Night cycle. Can unlock tidally locked worlds or fix them.
+
+**Emergence:** You speed up the planet to get more frequent solar peaks. The centrifugal force reduces effective gravity slightly, but the weather patterns go chaotic (Coriolis effect).
+
+**Tension:** Perfect solar cycles vs. Geologic/Atmospheric stability.
+
+---
