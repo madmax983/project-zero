@@ -10,14 +10,14 @@ use rand::Rng;
 use rand::seq::SliceRandom;
 use std::collections::{HashMap, HashSet, VecDeque};
 
+/// Auroral power generation.
+pub mod auroral;
+#[cfg(test)]
+mod auroral_tests;
 #[cfg(test)]
 mod blackout_tests;
 #[cfg(test)]
 mod instability_tests;
-#[cfg(test)]
-mod auroral_tests;
-/// Auroral power generation.
-pub mod auroral;
 pub use auroral::update_auroral_output_system;
 
 /// Emits power to the grid.

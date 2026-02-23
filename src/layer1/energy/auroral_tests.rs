@@ -1,10 +1,10 @@
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::energy::{PowerSource, update_auroral_output_system};
-    use crate::layer1::weather::{WeatherState, WeatherType};
     use crate::layer1::building::{Building, BuildingType};
+    use crate::layer1::energy::{PowerSource, update_auroral_output_system};
     use crate::layer1::lighting::LightSource;
+    use crate::layer1::weather::{WeatherState, WeatherType};
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_auroral_collector_variant_exists() {
@@ -24,11 +24,18 @@ mod tests {
         });
 
         // Spawn Collector
-        let collector = world.spawn((
-            PowerSource { output: 10.0, active: true }, // Initial dummy value
-            Building { building_type: BuildingType::AuroralCollector },
-            LightSource::default(), // For visual feedback check
-        )).id();
+        let collector = world
+            .spawn((
+                PowerSource {
+                    output: 10.0,
+                    active: true,
+                }, // Initial dummy value
+                Building {
+                    building_type: BuildingType::AuroralCollector,
+                },
+                LightSource::default(), // For visual feedback check
+            ))
+            .id();
 
         // Run system
         let mut schedule = Schedule::default();
@@ -41,7 +48,10 @@ mod tests {
 
         // Verify Light is off
         let light = world.get::<LightSource>(collector).unwrap();
-        assert_eq!(light.intensity, 0.0, "Light intensity should be 0.0 in Clear weather");
+        assert_eq!(
+            light.intensity, 0.0,
+            "Light intensity should be 0.0 in Clear weather"
+        );
     }
 
     #[test]
@@ -55,11 +65,18 @@ mod tests {
         });
 
         // Spawn Collector
-        let collector = world.spawn((
-            PowerSource { output: 0.0, active: true },
-            Building { building_type: BuildingType::AuroralCollector },
-            LightSource::default(),
-        )).id();
+        let collector = world
+            .spawn((
+                PowerSource {
+                    output: 0.0,
+                    active: true,
+                },
+                Building {
+                    building_type: BuildingType::AuroralCollector,
+                },
+                LightSource::default(),
+            ))
+            .id();
 
         // Run system
         let mut schedule = Schedule::default();
@@ -68,11 +85,17 @@ mod tests {
 
         // Verify Output is High (e.g., 50.0)
         let source = world.get::<PowerSource>(collector).unwrap();
-        assert_eq!(source.output, 50.0, "Output should be 50.0 during Magnetic Storm");
+        assert_eq!(
+            source.output, 50.0,
+            "Output should be 50.0 during Magnetic Storm"
+        );
 
         // Verify Light is on
         let light = world.get::<LightSource>(collector).unwrap();
-        assert!(light.intensity > 0.0, "Light intensity should be active during storm");
+        assert!(
+            light.intensity > 0.0,
+            "Light intensity should be active during storm"
+        );
     }
 
     #[test]
@@ -84,11 +107,18 @@ mod tests {
         });
 
         // Normal Generator
-        let generator = world.spawn((
-            PowerSource { output: 10.0, active: true },
-            Building { building_type: BuildingType::Generator },
-            crate::layer1::lighting::LightSource::default(),
-        )).id();
+        let generator = world
+            .spawn((
+                PowerSource {
+                    output: 10.0,
+                    active: true,
+                },
+                Building {
+                    building_type: BuildingType::Generator,
+                },
+                crate::layer1::lighting::LightSource::default(),
+            ))
+            .id();
 
         // Run system
         let mut schedule = Schedule::default();
@@ -97,6 +127,9 @@ mod tests {
 
         // Output should remain unchanged by *this* system
         let source = world.get::<PowerSource>(generator).unwrap();
-        assert_eq!(source.output, 10.0, "Normal Generator should not be modified by Auroral system");
+        assert_eq!(
+            source.output, 10.0,
+            "Normal Generator should not be modified by Auroral system"
+        );
     }
 }

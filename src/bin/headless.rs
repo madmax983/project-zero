@@ -120,7 +120,9 @@ fn handle_command(world: &mut World, input: &str) -> bool {
                 match (building_type, x, y) {
                     (Some(bt), Some(x), Some(y)) => build_at(world, bt, x, y),
                     _ => {
-                        println!("Invalid arguments. Usage: build <farm|housing|stockpile> <x> <y>");
+                        println!(
+                            "Invalid arguments. Usage: build <farm|housing|stockpile> <x> <y>"
+                        );
                     }
                 }
             }

@@ -1,9 +1,9 @@
 //! System for Auroral Collector power generation.
-use bevy_ecs::prelude::*;
-use crate::layer1::weather::{WeatherState, WeatherType};
 use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::energy::PowerSource;
 use crate::layer1::lighting::LightSource;
+use crate::layer1::weather::{WeatherState, WeatherType};
+use bevy_ecs::prelude::*;
 
 /// Updates the power output and light intensity of Auroral Collectors based on weather.
 pub fn update_auroral_output_system(

@@ -74,7 +74,9 @@ mod tests {
         world.insert_resource(scale::layer1::geology::SeismicGrid::new(10, 10));
         world.insert_resource(scale::layer1::seismic::VibrationGrid::new(10, 10));
         world.insert_resource(scale::layer1::radioactive::RadiationGrid::new(10, 10));
-        world.insert_resource(scale::layer1::temperature::TemperatureGrid::new(10, 10, 20.0));
+        world.insert_resource(scale::layer1::temperature::TemperatureGrid::new(
+            10, 10, 20.0,
+        ));
         world.insert_resource(scale::layer1::wind::WindGrid::new(10, 10));
         world.insert_resource(scale::layer1::fertility::FertilityGrid::new(10, 10));
         world.insert_resource(scale::layer1::prototyping::BuildingMastery::default());

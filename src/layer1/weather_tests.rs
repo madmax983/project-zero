@@ -1,12 +1,15 @@
 #[cfg(test)]
 mod tests {
+    use crate::layer1::atmosphere::{
+        AtmosphereGrid, DiffusionConfig, GasType, apply_smog_damage_system,
+        simulate_diffusion_system,
+    };
+    use crate::layer1::health::Health;
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::pop::Pop;
+    use crate::layer1::weather::{WeatherState, WeatherType};
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
-    use crate::layer1::atmosphere::{AtmosphereGrid, DiffusionConfig, simulate_diffusion_system, apply_smog_damage_system, GasType};
-    use crate::layer1::weather::{WeatherState, WeatherType};
-    use crate::layer1::map::GridPosition;
-    use crate::layer1::health::Health;
-    use crate::layer1::pop::Pop;
 
     #[test]
     fn test_inversion_halts_diffusion() {
@@ -21,12 +24,15 @@ mod tests {
         // ensuring the drop is only due to escape (or lack thereof).
         // If we followed the spec literally (rate: 0.1), horizontal diffusion would drop the value below 99.0
         // regardless of vertical escape, making the test fail.
-        world.insert_resource(DiffusionConfig { rate: 0.0, vertical_escape: 0.05 });
+        world.insert_resource(DiffusionConfig {
+            rate: 0.0,
+            vertical_escape: 0.05,
+        });
 
         // Set Weather to Inversion
         world.insert_resource(WeatherState {
             current_weather: WeatherType::ThermalInversion,
-            duration_remaining: 100
+            duration_remaining: 100,
         });
 
         // Run modified diffusion system
@@ -44,11 +50,16 @@ mod tests {
     fn test_smog_damage_during_inversion() {
         let mut world = World::new();
         // Setup Pop in smog
-        let pop = world.spawn((
-            Pop,
-            Health { current: 100.0, max: 100.0 },
-            GridPosition { x: 10, y: 10 },
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                },
+                GridPosition { x: 10, y: 10 },
+            ))
+            .id();
 
         // Setup heavy smog at pos
         let mut grid = AtmosphereGrid::new(20, 20);
