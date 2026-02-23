@@ -114,3 +114,6 @@ mod medical_notifications;
 
 #[path = "integration/medical_conditions.rs"]
 mod medical_conditions;
+
+#[path = "integration/pheromone_integration.rs"]
+mod pheromone_integration;

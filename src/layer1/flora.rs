@@ -2,6 +2,7 @@ use crate::layer1::day_night::{DayNightCycle, TimeOfDay};
 use crate::layer1::health::Health;
 use crate::layer1::lighting::LightSource;
 use crate::layer1::map::GridPosition;
+use crate::layer1::pheromone::{PheromoneEffect, PheromoneEmitter};
 use crate::layer1::structure::Structure;
 use crate::layer1::terrain::TerrainGrid;
 use bevy_ecs::prelude::*;
@@ -134,14 +135,31 @@ pub fn flora_spread_system(
             && !occupied.contains(&(nx, ny))
         {
             // Spawn new
-            commands.spawn((
-                Flora::default(),
+            let new_type = flora.flora_type;
+            let mut entity = commands.spawn((
+                Flora {
+                    flora_type: new_type,
+                    ..Default::default()
+                },
                 GridPosition { x: nx, y: ny },
                 Health {
                     current: 20.0,
                     max: 20.0,
                 },
             ));
+
+            if new_type == FloraType::XenoMoss {
+                entity.insert(PheromoneEmitter {
+                    radius: 2,
+                    interval: 10,
+                    timer: 0,
+                    effect: PheromoneEffect {
+                        label: "Rotten Stench".to_string(),
+                        value: -0.05,
+                        duration: 20,
+                    },
+                });
+            }
         }
     }
 }
