@@ -12,6 +12,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 ## MVP — Layer 1: Colony Simulation
 
 - [ ] `087` Food Preservation — `specs/087-food-preservation.md`
+- [ ] `089` Material Provenance — `specs/089-material-provenance.md`
 - [ ] `109` Greenhouses — `specs/109-greenhouses.md`
 - [ ] `126` Blackout Protocol — `specs/126-blackout-protocol.md`
 - [ ] `165` Gene Banks — `specs/165-gene-banks.md`
@@ -28,6 +29,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `202` Swarm Intelligence — `specs/202-swarm-intelligence.md`
 - [ ] `203` Prohibition & Contraband — `specs/203-prohibition-contraband.md`
 - [ ] `205` Auroral Harvesting — `specs/205-auroral-harvesting.md`
+- [ ] `206` Orbital Crossfire — `specs/206-orbital-crossfire.md`
 
 ## MVP — Layer 2: System Simulation
 
