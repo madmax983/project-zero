@@ -1,11 +1,13 @@
-use scale::layer1::building::{Building, BuildingType};
-use scale::layer1::energy::{PowerConsumer, PowerSource, Battery, power_grid_system, update_auroral_output_system, Conduit};
-use scale::layer1::map::GridPosition;
-use scale::layer1::weather::{WeatherState, WeatherType, update_weather_system};
-use scale::layer1::seasons::{Season, SeasonState};
-use scale::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
+use scale::layer1::building::{Building, BuildingType};
 use scale::layer1::chronicle::Chronicle;
+use scale::layer1::energy::{
+    Battery, Conduit, PowerConsumer, PowerSource, power_grid_system, update_auroral_output_system,
+};
+use scale::layer1::map::GridPosition;
+use scale::layer1::seasons::{Season, SeasonState};
+use scale::layer1::weather::{WeatherState, WeatherType, update_weather_system};
+use scale::shared::time::SimulationTime;
 
 // Helper to setup world
 fn setup_weather_test_world() -> World {
@@ -32,12 +34,19 @@ fn auroral_collector_activates_in_storm() {
     world.resource_mut::<WeatherState>().current_weather = WeatherType::MagneticStorm;
 
     // 2. Spawn Auroral Collector
-    let collector = world.spawn((
-        Building { building_type: BuildingType::AuroralCollector },
-        PowerSource { output: 0.0, active: true },
-        scale::layer1::lighting::LightSource::default(),
-        GridPosition { x: 0, y: 0 },
-    )).id();
+    let collector = world
+        .spawn((
+            Building {
+                building_type: BuildingType::AuroralCollector,
+            },
+            PowerSource {
+                output: 0.0,
+                active: true,
+            },
+            scale::layer1::lighting::LightSource::default(),
+            GridPosition { x: 0, y: 0 },
+        ))
+        .id();
 
     // 3. Run auroral update system
     let mut schedule = Schedule::default();
@@ -46,7 +55,10 @@ fn auroral_collector_activates_in_storm() {
 
     // 4. Verify Output is 50.0
     let output = world.get::<PowerSource>(collector).unwrap().output;
-    assert_eq!(output, 50.0, "Auroral Collector should produce 50.0 power during Magnetic Storm");
+    assert_eq!(
+        output, 50.0,
+        "Auroral Collector should produce 50.0 power during Magnetic Storm"
+    );
 }
 
 #[test]
@@ -62,28 +74,49 @@ fn storm_increases_grid_load() {
 
     // Generator
     world.spawn((
-        Building { building_type: BuildingType::Generator },
-        PowerSource { output: 10.0, active: true },
+        Building {
+            building_type: BuildingType::Generator,
+        },
+        PowerSource {
+            output: 10.0,
+            active: true,
+        },
         GridPosition { x: 0, y: 0 },
         // Health needed for overload damage check internal logic
-        scale::layer1::health::Health { current: 100.0, max: 100.0 },
+        scale::layer1::health::Health {
+            current: 100.0,
+            max: 100.0,
+        },
     ));
 
     // Consumer (8 Demand)
     world.spawn((
-        Building { building_type: BuildingType::Smelter },
-        PowerConsumer { demand: 8.0, active: true },
+        Building {
+            building_type: BuildingType::Smelter,
+        },
+        PowerConsumer {
+            demand: 8.0,
+            active: true,
+        },
         GridPosition { x: 0, y: 1 },
         Conduit,
     ));
 
     // Battery (Full)
-    let battery = world.spawn((
-        Building { building_type: BuildingType::Battery },
-        Battery { capacity: 100.0, charge: 100.0, max_throughput: 10.0 },
-        GridPosition { x: 0, y: 2 },
-        Conduit,
-    )).id();
+    let battery = world
+        .spawn((
+            Building {
+                building_type: BuildingType::Battery,
+            },
+            Battery {
+                capacity: 100.0,
+                charge: 100.0,
+                max_throughput: 10.0,
+            },
+            GridPosition { x: 0, y: 2 },
+            Conduit,
+        ))
+        .id();
 
     // 3. Run grid system
     power_grid_system(&mut world);
@@ -96,8 +129,15 @@ fn storm_increases_grid_load() {
     // For Red Phase, we ASSERT FAILURE if implementation is missing.
     // Wait, tests should assert EXPECTED behavior. If implementation is missing, test FAILS.
 
-    assert!(bat_state.charge < 100.0, "Battery should discharge due to storm usage (1.5x demand)");
-    assert!((bat_state.charge - 98.0).abs() < 0.001, "Expected 98.0, got {}", bat_state.charge);
+    assert!(
+        bat_state.charge < 100.0,
+        "Battery should discharge due to storm usage (1.5x demand)"
+    );
+    assert!(
+        (bat_state.charge - 98.0).abs() < 0.001,
+        "Expected 98.0, got {}",
+        bat_state.charge
+    );
 }
 
 #[test]

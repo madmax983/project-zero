@@ -32,12 +32,10 @@ fn test_work_execution_calls_mine_rock() {
         ))
         .id();
 
-    world
-        .entity_mut(designation)
-        .insert(MiningProgress {
-            current: 0.0,
-            max: 1000000.0,
-        });
+    world.entity_mut(designation).insert(MiningProgress {
+        current: 0.0,
+        max: 1000000.0,
+    });
 
     let pop = world
         .spawn((
@@ -549,12 +547,12 @@ fn test_work_execution_augmentation_bonus() {
             target_entity: designation,
             target_position: GridPosition { x: 5, y: 5 },
             for_action: ActionType::Work,
-            },
-            AtTarget,
-            Augmentations {
-                installed: vec![prosthetic],
-            },
-        ));
+        },
+        AtTarget,
+        Augmentations {
+            installed: vec![prosthetic],
+        },
+    ));
 
     work_execution_system(&mut world);
 

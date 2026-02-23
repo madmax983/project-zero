@@ -17,6 +17,33 @@ use crate::layer1::resources::{ColonyResources, ResourceType};
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 use rand::Rng;
+use std::collections::HashMap;
+
+/// Status of a resource in the market.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub enum MarketStatus {
+    /// Legal to trade and possess.
+    #[default]
+    Legal,
+    /// Banned by edict.
+    Contraband,
+}
+
+/// Market data for a specific resource.
+#[derive(Debug, Clone)]
+pub struct MarketItem {
+    /// Base price (currently unused by dynamic merchant, but tracked).
+    pub base_price: f32,
+    /// Legal status of the item.
+    pub status: MarketStatus,
+}
+
+/// Persistent market state tracking resource status and prices.
+#[derive(Resource, Default, Debug, Clone)]
+pub struct TradeMarket {
+    /// Map of resource types to their market data.
+    pub items: HashMap<ResourceType, MarketItem>,
+}
 
 /// Component marker for the Trade Depot building.
 ///
@@ -74,80 +101,99 @@ pub fn merchant_arrival_system(world: &mut World) {
         .iter(world)
         .any(|(b, _)| b.building_type == BuildingType::TradeDepot);
 
-    // 1. Departure Check
-    // We scope this to release the borrow on MerchantState before logging
+    let (should_depart, should_arrive) = {
+        let state = world.resource::<MerchantState>();
+        let depart = state
+            .active_merchant
+            .as_ref()
+            .is_some_and(|m| current_tick >= m.departure_tick);
+        let arrive =
+            state.active_merchant.is_none() && current_tick >= state.cooldown && depot_exists;
+        (depart, arrive)
+    };
+
     let mut event_to_log: Option<(String, EventImportance)> = None;
 
-    {
+    if should_depart {
         let mut state = world.resource_mut::<MerchantState>();
-
-        let mut should_depart = false;
-        if let Some(merchant) = &state.active_merchant {
-            if current_tick >= merchant.departure_tick {
-                should_depart = true;
-            }
+        if let Some(merchant) = state.active_merchant.take() {
+            let name = merchant.name;
+            event_to_log = Some((
+                format!("Merchant {name} has departed."),
+                EventImportance::Standard,
+            ));
         }
+        state.cooldown = current_tick + 2000;
+    } else if should_arrive {
+        // Collect modifiers from Market (read-only access)
+        let market_items = world.get_resource::<TradeMarket>().map(|m| m.items.clone());
 
-        if should_depart {
-            if let Some(merchant) = state.active_merchant.take() {
-                let name = merchant.name;
-                event_to_log = Some((
-                    format!("Merchant {name} has departed."),
-                    EventImportance::Standard,
-                ));
-            }
-            state.cooldown = current_tick + 2000;
-        } else if state.active_merchant.is_none() && current_tick >= state.cooldown && depot_exists
-        {
-            // Arrival Check
-            let mut rng = rand::thread_rng();
+        let mut rng = rand::thread_rng();
 
-            // Randomize merchant name
-            let names = ["Wanderer", "Caravan", "Trader", "Merchant", "Peddler"];
-            let name = format!(
-                "{} {}",
-                names[rng.gen_range(0..names.len())],
-                rng.gen_range(100..999)
-            );
+        // Randomize merchant name
+        let names = ["Wanderer", "Caravan", "Trader", "Merchant", "Peddler"];
+        let name = format!(
+            "{} {}",
+            names[rng.gen_range(0..names.len())],
+            rng.gen_range(100..999)
+        );
 
-            // Generate deals
-            let mut deals = Vec::new();
-            for _ in 0..rng.gen_range(1..4) {
-                // Determine cost/give types (simplified)
-                // In a real system, we'd check what the colony lacks.
-                let cost_type = match rng.gen_range(0..3) {
-                    0 => ResourceType::Wood,
-                    1 => ResourceType::Stone,
-                    _ => ResourceType::Food,
-                };
-
-                let give_type = match rng.gen_range(0..3) {
-                    0 => ResourceType::Metal,
-                    1 => ResourceType::Planks,
-                    _ => ResourceType::Ore,
-                };
-
-                deals.push(TradeDeal {
-                    cost_resource: cost_type,
-                    cost_amount: rng.gen_range(5.0f32..20.0f32).round(),
-                    give_resource: give_type,
-                    give_amount: rng.gen_range(2.0f32..10.0f32).round(),
-                });
-            }
-
-            let merchant = Merchant {
-                name: name.clone(),
-                arrival_tick: current_tick,
-                departure_tick: current_tick + 500,
-                deals,
+        // Generate deals
+        let mut deals = Vec::new();
+        for _ in 0..rng.gen_range(1..4) {
+            let cost_type = match rng.gen_range(0..3) {
+                0 => ResourceType::Wood,
+                1 => ResourceType::Stone,
+                _ => ResourceType::Food,
             };
 
-            event_to_log = Some((
-                format!("Merchant {name} has arrived."),
-                EventImportance::Major,
-            ));
-            state.active_merchant = Some(merchant);
+            let give_type = match rng.gen_range(0..3) {
+                0 => ResourceType::Metal,
+                1 => ResourceType::Planks,
+                _ => ResourceType::Ore,
+            };
+
+            let mut cost_amount = rng.gen_range(5.0f32..20.0f32).round();
+            let mut give_amount = rng.gen_range(2.0f32..10.0f32).round();
+
+            // Apply Contraband modifiers if Market exists
+            if let Some(items) = &market_items {
+                // Buying Contraband (receiving it) -> Costs more
+                if let Some(item) = items.get(&give_type) {
+                    if item.status == MarketStatus::Contraband {
+                        cost_amount *= 2.0;
+                    }
+                }
+                // Selling Contraband (giving it) -> Earns more (Risk premium)
+                if let Some(item) = items.get(&cost_type) {
+                    if item.status == MarketStatus::Contraband {
+                        give_amount *= 2.0;
+                    }
+                }
+            }
+
+            deals.push(TradeDeal {
+                cost_resource: cost_type,
+                cost_amount,
+                give_resource: give_type,
+                give_amount,
+            });
         }
+
+        let merchant = Merchant {
+            name: name.clone(),
+            arrival_tick: current_tick,
+            departure_tick: current_tick + 500,
+            deals,
+        };
+
+        event_to_log = Some((
+            format!("Merchant {name} has arrived."),
+            EventImportance::Major,
+        ));
+
+        let mut state = world.resource_mut::<MerchantState>();
+        state.active_merchant = Some(merchant);
     }
 
     // Log events if any occurred
@@ -219,6 +265,7 @@ pub fn execute_trade(world: &mut World, deal: &TradeDeal) -> bool {
         ResourceType::Waste => resources.waste >= deal.cost_amount,
         ResourceType::Rations => resources.rations >= deal.cost_amount,
         ResourceType::Fuel => resources.fuel >= deal.cost_amount,
+        ResourceType::Alcohol => resources.alcohol >= deal.cost_amount,
     };
 
     if !affordable {
@@ -237,6 +284,7 @@ pub fn execute_trade(world: &mut World, deal: &TradeDeal) -> bool {
         ResourceType::Waste => resources.waste -= deal.cost_amount,
         ResourceType::Rations => resources.rations -= deal.cost_amount,
         ResourceType::Fuel => resources.fuel -= deal.cost_amount,
+        ResourceType::Alcohol => resources.alcohol -= deal.cost_amount,
     }
 
     // Add
@@ -251,6 +299,7 @@ pub fn execute_trade(world: &mut World, deal: &TradeDeal) -> bool {
         ResourceType::Waste => resources.add_waste(deal.give_amount),
         ResourceType::Rations => resources.add_rations(deal.give_amount),
         ResourceType::Fuel => resources.add_fuel(deal.give_amount),
+        ResourceType::Alcohol => resources.add_alcohol(deal.give_amount),
     }
 
     true

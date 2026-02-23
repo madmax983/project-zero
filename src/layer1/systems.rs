@@ -233,6 +233,7 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
                 .after(crate::layer1::beauty::update_beauty_grid_system),
             check_heirloom_status_system,
             crate::layer1::trade::merchant_arrival_system,
+            crate::layer1::contraband::enforce_prohibition_system,
             crate::layer1::visitor::spawn_visitor_system,
             spawn_inspector_system.after(crate::layer1::visitor::spawn_visitor_system),
             process_fuel_consumption_system,
@@ -479,6 +480,8 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
         (
             crate::layer1::justice::check_crime_system
                 .after(crate::layer1::unrest::check_mental_break_system),
+            crate::layer1::contraband::detect_contraband_system
+                .after(crate::layer1::justice::check_crime_system),
             crate::layer1::unrest::recover_mental_break_system.after(decay_needs_system),
             check_generational_friction_system.after(decay_needs_system),
             crate::layer1::hobby::assign_hobby_system.after(decay_needs_system),

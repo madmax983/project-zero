@@ -26,10 +26,10 @@ pub mod arrival;
 pub mod combat;
 pub mod components;
 pub mod demolish;
+pub mod general_work;
 pub mod mining;
 pub mod movement;
 pub mod vandalism;
-pub mod general_work;
 
 #[cfg(test)]
 mod tests;
@@ -38,7 +38,7 @@ pub use arrival::*;
 pub use combat::*;
 pub use components::*;
 pub use demolish::*;
+pub use general_work::*;
 pub use mining::*;
 pub use movement::*;
 pub use vandalism::*;
-pub use general_work::*;

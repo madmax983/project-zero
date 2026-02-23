@@ -1,3 +1,4 @@
+use crate::layer1::resources::ResourceType;
 use bevy_ecs::prelude::*;
 
 /// Marker component for an item entity.
@@ -127,6 +128,34 @@ pub enum ItemType {
     Stim,
     /// A chemical sedative that reduces stress but slows speed.
     Sedative,
+    /// Alcohol (drink).
+    Alcohol,
+}
+
+impl ItemType {
+    /// Maps the item type to a resource type, if applicable.
+    ///
+    /// Used for checking if an item is contraband (banned resource).
+    #[must_use]
+    pub const fn as_resource_type(&self) -> Option<ResourceType> {
+        match self {
+            Self::Alcohol => Some(ResourceType::Alcohol),
+            Self::Potato
+            | Self::Wheat
+            | Self::Rice
+            | Self::Corn
+            | Self::Soy
+            | Self::Meat
+            | Self::Fish
+            | Self::Fruit
+            | Self::LuxuryMeal
+            | Self::AlienMeatA
+            | Self::AlienMeatB
+            | Self::GlowMushroom
+            | Self::MysteryMeal => Some(ResourceType::Food),
+            _ => None,
+        }
+    }
 }
 
 #[cfg(test)]

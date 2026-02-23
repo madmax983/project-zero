@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::map::GridPosition;
 use crate::layer1::utility_types::ActionType;
+use bevy_ecs::prelude::*;
 
 /// Component indicating a pop is moving toward a target.
 #[derive(Component, Debug)]

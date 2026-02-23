@@ -74,6 +74,9 @@ pub(crate) fn evaluate_haul(
                     resources.rations < resources.max_rations
                 }
                 crate::layer1::resources::ResourceType::Fuel => resources.fuel < resources.max_fuel,
+                crate::layer1::resources::ResourceType::Alcohol => {
+                    resources.alcohol < resources.max_alcohol
+                }
             };
 
             if !has_room {

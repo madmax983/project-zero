@@ -24,7 +24,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `198` Urban Heat Islands — `specs/198-urban-heat-islands.md`
 - [ ] `199` Obsessive Optimization — `specs/199-obsessive-optimization.md`
 - [ ] `202` Swarm Intelligence — `specs/202-swarm-intelligence.md`
-- [ ] `203` Prohibition & Contraband — `specs/203-prohibition-contraband.md`
 - [ ] `206` Orbital Crossfire — `specs/206-orbital-crossfire.md`
 - [ ] `207` Atmospheric Processors — `specs/207-atmospheric-processors.md`
 - [ ] `208` Resonant Architecture — `specs/208-resonant-architecture.md`

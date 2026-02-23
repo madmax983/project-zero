@@ -1,3 +1,4 @@
+use crate::layer1::resources::ResourceType;
 use bevy_ecs::prelude::*;
 use std::collections::HashSet;
 
@@ -17,6 +18,8 @@ pub enum Policy {
     DoubleShifts,
     /// Reduces vermin growth but lowers work speed.
     PestControl,
+    /// Bans a specific resource, making it contraband.
+    Prohibition(ResourceType),
 }
 
 impl ColonyPolicies {

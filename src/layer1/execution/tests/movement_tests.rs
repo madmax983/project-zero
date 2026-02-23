@@ -1,5 +1,7 @@
 use super::setup_world;
+use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::building::{Building, BuildingType, OccupiedTiles};
+use crate::layer1::combat::HitStop;
 use crate::layer1::execution::components::{AtTarget, MovementTarget};
 use crate::layer1::execution::movement::{
     cleanup_previous_assignment_system, movement_system, process_start_plan_system,
@@ -10,10 +12,8 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
 use crate::layer1::pop::{Pop, Speed};
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
-use crate::layer1::utility_types::{ActionType, PopAction, StartPlan, UtilityWeights};
-use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::traits::{Trait, Traits};
-use crate::layer1::combat::HitStop;
+use crate::layer1::utility_types::{ActionType, PopAction, StartPlan, UtilityWeights};
 use bevy_ecs::prelude::*;
 use bevy_ecs::system::RunSystemOnce;
 use std::collections::HashSet;
