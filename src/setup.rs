@@ -125,6 +125,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
     world.insert_resource(crate::layer1::PlanetaryTraits::default());
     world.insert_resource(crate::layer1::weather::WeatherState::default());
+    world.insert_resource(crate::layer1::solar::SolarCycleState::default());
     world.insert_resource(crate::layer1::medical::MedicalPolicy::default());
     world.insert_resource(crate::layer1::prototyping::BuildingMastery::default());
     world.insert_resource(crate::layer1::graffiti::GraffitiMap::default());
