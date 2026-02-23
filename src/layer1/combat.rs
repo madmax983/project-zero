@@ -31,8 +31,8 @@ const CRIT_CHANCE: f64 = 0.05;
 const CRIT_MULTIPLIER: f32 = 2.0;
 
 // Ludwig: Reduced hit stop times for snappier combat (Game Feel)
-const HIT_STOP_CRIT: u32 = 6;
-const HIT_STOP_HEAVY: u32 = 3;
+const HIT_STOP_CRIT: u32 = 8;
+const HIT_STOP_HEAVY: u32 = 4;
 const HIT_STOP_MEDIUM: u32 = 1;
 const HIT_STOP_LIGHT: u32 = 1;
 
@@ -244,9 +244,11 @@ pub fn execute_attack(world: &mut World, attacker: Entity, target: Entity) {
                 // Ludwig: Spawn dynamic blood/sparks
                 let mut rng = rand::thread_rng();
                 let count = if is_crit { 4 } else { 2 };
+                // Ludwig: More explosive crits
+                let spread = if is_crit { 0.8 } else { 0.5 };
                 for _ in 0..count {
-                    let dx = rng.gen_range(-0.5..0.5);
-                    let dy = rng.gen_range(-0.5..0.5);
+                    let dx = rng.gen_range(-spread..spread);
+                    let dy = rng.gen_range(-spread..spread);
                     spawn_moving_particle(
                         world,
                         pos,
@@ -273,6 +275,9 @@ mod tests {
     use crate::layer1::utility_ai::{ActionType, PopAction};
 
     fn setup_world() -> World {
+        // Initialize TaskPool for parallel systems
+        let _ = bevy_tasks::ComputeTaskPool::get_or_init(|| bevy_tasks::TaskPool::new());
+
         let mut world = World::new();
         // Setup standard resources (Time, etc)
         world.insert_resource(crate::shared::time::SimulationTime::default());
@@ -597,15 +602,15 @@ mod tests {
         assert!(attacker_hs.is_some(), "Attacker should have HitStop");
         let ticks = attacker_hs.unwrap().ticks_remaining;
         assert!(
-            ticks == 3 || ticks == 6,
-            "Expected 3 or 6 ticks, got {}",
+            ticks == 4 || ticks == 8,
+            "Expected 4 or 8 ticks, got {}",
             ticks
         );
 
         let target_hs = world.get::<HitStop>(target);
         assert!(target_hs.is_some(), "Target should have HitStop");
         let ticks_target = target_hs.unwrap().ticks_remaining;
-        assert!(ticks_target == 3 || ticks_target == 6);
+        assert!(ticks_target == 4 || ticks_target == 8);
     }
 
     #[test]
@@ -649,8 +654,8 @@ mod tests {
         assert!(hs.is_some(), "Should always have HitStop");
         let ticks = hs.unwrap().ticks_remaining;
 
-        if ticks == 6 {
-            // Crit (6 ticks)
+        if ticks == 8 {
+            // Crit (8 ticks)
         } else {
             // Normal (Damage 4 < 5) -> Light (1 tick)
             assert_eq!(ticks, 1, "Normal light hit should give 1 tick");
@@ -700,8 +705,8 @@ mod tests {
         assert!(hs.is_some());
         let ticks = hs.unwrap().ticks_remaining;
         assert!(
-            ticks == 1 || ticks == 6,
-            "Expected 1 (Normal) or 6 (Crit), got {}",
+            ticks == 1 || ticks == 8,
+            "Expected 1 (Normal) or 8 (Crit), got {}",
             ticks
         );
     }

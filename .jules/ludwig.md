@@ -47,3 +47,15 @@
 ## [Movement Flow]
 **Friction:** Pops sometimes stuttered when movement speed was slightly below 1.0 (e.g. 0.96), causing them to miss a tick essentially for rounding errors.
 **Flow:** Increased "Coyote Time" threshold for movement accumulator from 0.15 to 0.20. This allows pops to "cheat" the movement cost slightly more often, resulting in fluid, continuous motion rather than stop-start lurching.
+
+## [Movement Flow 2.0]
+**Friction:** Grid-based movement still felt slightly "sticky" if a unit has *almost* enough speed to move but falls short by a fraction.
+**Flow:** Increased "Coyote Speed" (thresholding) from 0.20 to 0.25 and added visual "Hustle" particles (dust) when this threshold is used. This visually communicates the effort to overcome inertia.
+
+## [Combat Feedback 2.0]
+**Friction:** Attacks felt "weightless" or like "hitting a spreadsheet" despite previous tweaks.
+**Flow:** Increased "Hit Stop" durations (Heavy: 3->4, Crit: 6->8) and made critical hit particles more explosive (wider velocity spread). This adds more physical "crunch" to high-impact moments.
+
+## [Turrets]
+**Friction:** Turrets firing without visual confirmation at the source makes it hard to track who is shooting.
+**Flow:** Muzzle flashes at the turret origin provide immediate causal links between the shooter and the impact. Added Screen Shake for heavy turret fire (Waste Cannon).

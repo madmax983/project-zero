@@ -155,9 +155,7 @@ fn handle_drop_off(world: &mut World, pop_entity: Entity, carrying: Carrying, po
             }
             crate::layer1::resources::ResourceType::Fuel => resources.add_fuel(carrying.amount),
             crate::layer1::resources::ResourceType::Alcohol => {
-            crate::layer1::resources::ResourceType::Alcohol => {
                 resources.add_alcohol(carrying.amount);
-            }
             }
         }
 
