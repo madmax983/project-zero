@@ -45,6 +45,9 @@ mod tests {
         world.insert_resource(scale::layer1::acoustic::NoiseMap::new(10, 10));
         world.insert_resource(scale::layer1::lighting::LightMap::new(10, 10));
         world.insert_resource(scale::layer1::lighting::AmbientLight::default());
+        world.insert_resource(scale::layer1::wind::WindGrid::new(10, 10));
+        world.insert_resource(scale::layer1::wind::GlobalWind::default());
+        world.insert_resource(scale::layer1::atmosphere::BaseGlobalWind::default());
         world.insert_resource(scale::layer1::atmosphere::AtmosphereGrid::new(10, 10));
         world.insert_resource(scale::layer1::atmosphere::AtmosphericTide::default());
         world.insert_resource(scale::layer1::pressure::PressureGrid::new(10, 10));
@@ -65,6 +68,7 @@ mod tests {
         world.init_resource::<Events<scale::layer1::medical::PatientTreated>>();
         world.init_resource::<Events<scale::layer1::social::FavorChange>>();
         world.init_resource::<Events<scale::layer1::eureka::EurekaEvent>>();
+        world.init_resource::<Events<scale::layer1::items::UnequipEvent>>();
         world.insert_resource(scale::layer1::social_mimicry::Trend::default());
         world.insert_resource(scale::layer1::visitor::VisitorSource::default());
         world.insert_resource(scale::layer1::weather::WeatherState::default());
@@ -75,6 +79,7 @@ mod tests {
         world.insert_resource(scale::layer1::inspector::InspectorSource::default());
         world.insert_resource(scale::layer1::prototyping::BuildingMastery::default());
         world.init_resource::<scale::layer1::social::old_guard::Demographics>();
+        world.init_resource::<scale::layer1::civic_ideology::CivicIdeology>();
         world.insert_resource(scale::layer1::prototyping::BuildingMastery::default());
         world.insert_resource(scale::layer1::graffiti::GraffitiMap::default());
         world.insert_resource(scale::layer1::geology::SeismicGrid::new(10, 10));

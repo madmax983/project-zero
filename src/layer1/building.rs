@@ -1928,7 +1928,8 @@ mod tests {
         assert_eq!(BuildingType::CommandCenter.next(), BuildingType::AICore);
         assert_eq!(BuildingType::AICore.next(), BuildingType::DroneHub);
         assert_eq!(BuildingType::DroneHub.next(), BuildingType::CryoPod);
-        assert_eq!(BuildingType::CryoPod.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::CryoPod.next(), BuildingType::AuroralCollector);
+        assert_eq!(BuildingType::AuroralCollector.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -2121,6 +2122,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::CryoPod);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::AuroralCollector);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);
