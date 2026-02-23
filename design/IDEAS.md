@@ -5414,3 +5414,101 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Perfect solar cycles vs. Geologic/Atmospheric stability.
 
 ---
+
+## Psychoactive Weather
+
+**Layer:** 1
+
+**Fantasy:** The rain makes you dream. Living on a world where the atmosphere is a drug.
+
+**Mechanic:** Rare weather events (Spore Storms, Neon Rain) apply mental status effects instead of physical damage. "Inspired" (Art+), "Paranoid" (Combat+), "Euphorical" (Work Speed -).
+
+**Emergence:** A "Bliss Storm" hits. Everyone stops working to watch the colors. The reactor melts down, but no one cares because it's so pretty.
+
+**Tension:** Force productivity (Gas masks/Indoors) vs. Embrace the mood buffs.
+
+---
+
+## Terminator Habitats
+
+**Layer:** 1
+
+**Fantasy:** Living on the razor's edge between fire and ice.
+
+**Mechanic:** On Tidally Locked planets, the "Day" side is too hot, and the "Night" side is too cold. The only habitable zone is the "Terminator" line. This line might shift slightly (Libration), forcing the colony to migrate or build mobile structures.
+
+**Emergence:** You build too far East to grab solar power. The sun wobbles, and your solar farm melts.
+
+**Tension:** Safety (Twilight zone) vs. Resources (Deep Day/Night).
+
+---
+
+## Astrological Beliefs
+
+**Layer:** Cross-layer
+
+**Fantasy:** "I can't mine today, Saturn is in retrograde."
+
+**Mechanic:** Pops are assigned a "Sign" based on a visible celestial body. When that body is high in the sky (Layer 2 orbit), they get buffs/debuffs.
+
+**Emergence:** You plan a major offensive. The fleet is ready. But "The Red Star" sets, and 40% of your soldiers refuse to fight because it's "bad luck".
+
+**Tension:** Rational planning vs. Pop superstition.
+
+---
+
+## The Rearguard
+
+**Layer:** Cross-layer
+
+**Fantasy:** You are the lifeboat, but the ship is still sinking.
+
+**Mechanic:** The Homeworld (or previous colony) is dying. They send desperate requests for resources. Fulfilling them costs you dearly but grants "Karma" (Meta-currency/Morale). Ignoring them causes "Guilt" (Global Stress).
+
+**Emergence:** You starve your new colony to send a shipment of algae back to Earth. The transmissions stop anyway. The colony mourns.
+
+**Tension:** Altruism vs. Local Survival.
+
+---
+
+## Wormhole Dumping
+
+**Layer:** 1 -> 3
+
+**Fantasy:** Making your garbage someone else's problem.
+
+**Mechanic:** A high-tech "Disposal Gate" voids waste instantly. It goes to a random location in the galaxy (Layer 3). High usage increases "Diplomatic Threat" with random factions who are receiving your trash.
+
+**Emergence:** You dump nuclear waste for years. A war fleet arrives hailing you: "We are the Children of the Garbage. Return to sender."
+
+**Tension:** Easy disposal vs. Unknown diplomatic blowout.
+
+---
+
+## Dead Internet
+
+**Layer:** 3
+
+**Fantasy:** The galaxy is empty, but the lights are still on.
+
+**Mechanic:** You receive trade deals and insults from "Factions". You eventually realize they are ancient, automated scripts from dead civilizations running on loop.
+
+**Emergence:** You spend years trying to appease a warlord neighbor, only to find out it's a server farm in a bunker that's been auto-generating threats for 1000 years.
+
+**Tension:** Invest in diplomacy vs. Investigate reality.
+
+---
+
+## The Void Stare
+
+**Layer:** 1
+
+**Fantasy:** If you gaze long into an abyss, the abyss also gazes into you.
+
+**Mechanic:** Windows/Observatories facing "Empty Space" (away from star/planet) increase Stress/Insanity over time. Views of "Life" (Planets/Stars) reduce it.
+
+**Emergence:** You build the Commander's office with a stunning view of the deep black. He goes mad and orders the airlocks opened to "let the silence in".
+
+**Tension:** Aesthetic views vs. Psychological safety.
+
+---
