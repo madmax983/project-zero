@@ -498,6 +498,12 @@ pub mod oral_tradition;
 #[cfg(feature = "nova")]
 pub use oral_tradition::*;
 
+/// Genius Loci system (Nova Feature).
+#[cfg(feature = "nova")]
+pub mod loci;
+#[cfg(feature = "nova")]
+pub use loci::*;
+
 /// Constellation Mythology system (Nova Feature).
 #[cfg(feature = "nova")]
 pub mod constellations;
