@@ -45,3 +45,11 @@
 ## 2026-02-19 - [Chemical Regulation]
 **Confusion:** The effects of `Stim` and `Sedative` were hidden in code (e.g., immediate health damage vs duration-based speed modifiers), and the addiction loop mechanics were undocumented.
 **Clarification:** Added comprehensive module-level documentation to `layer1::chemical` explaining the trade-offs (Health vs Speed, Stress vs Speed), magic numbers (500 tick duration), and the Panic-inducing nature of withdrawal.
+
+## 2026-05-24 - [AI Core Mechanics]
+**Confusion:** The `AICore` building had undocumented behaviors (Rogue State, Automation) that were only visible in source code. Users didn't know why their doors were locking randomly.
+**Clarification:** Added comprehensive documentation to `layer1::ai_core` explaining the "Benevolent Overseer" (automation) vs "Ghost in the Machine" (rogue) mechanics, including specific triggers (HP < 20%) and consequences.
+
+## 2026-05-24 - [Utility AI Architecture]
+**Confusion:** The `evaluate_actions_system` function was complex and hard to modify because its split-phase parallel architecture (ADR 026) wasn't explained in the code.
+**Clarification:** Added an "Architecture" section to `layer1::utility_ai` explaining the Data Gathering -> Parallel Evaluation -> Application phases, and a "How to Add a New Action" guide for future developers.
