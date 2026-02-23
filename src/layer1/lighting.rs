@@ -68,7 +68,7 @@ impl LightMap {
 }
 
 /// Component for entities that emit light.
-#[derive(Component)]
+#[derive(Component, Default)]
 pub struct LightSource {
     /// Maximum radius of the light in tiles.
     pub radius: f32,

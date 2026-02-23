@@ -29,6 +29,8 @@ pub enum WeatherType {
     Snow,
     /// Thermal Inversion, traps smog.
     ThermalInversion,
+    /// Magnetic Storm, high energy interference.
+    MagneticStorm,
 }
 
 impl WeatherType {
@@ -43,6 +45,7 @@ impl WeatherType {
             Self::Heatwave => "Heatwave",
             Self::Snow => "Snow",
             Self::ThermalInversion => "Thermal Inversion",
+            Self::MagneticStorm => "Magnetic Storm",
         }
     }
 
@@ -53,7 +56,7 @@ impl WeatherType {
             Self::Clear | Self::ThermalInversion => 1.0,
             Self::Rain => 0.8,
             Self::Storm => 0.5,
-            Self::Fog => 0.7,
+            Self::Fog | Self::MagneticStorm => 0.7,
             Self::Heatwave => 0.9,
             Self::Snow => 0.6,
         }
