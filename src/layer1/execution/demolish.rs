@@ -126,24 +126,9 @@ pub fn execute_cannibalize(world: &mut World, designation_entity: Entity) -> boo
 
     if let Some(entity) = building_entity {
         // Spawn Resources
-        spawn_resource_pile(
-            world,
-            designation_pos,
-            ResourceType::Metal,
-            100.0,
-        );
-        spawn_resource_pile(
-            world,
-            designation_pos,
-            ResourceType::Fuel,
-            50.0,
-        );
-        spawn_resource_pile(
-            world,
-            designation_pos,
-            ResourceType::Rations,
-            50.0,
-        );
+        spawn_resource_pile(world, designation_pos, ResourceType::Metal, 100.0);
+        spawn_resource_pile(world, designation_pos, ResourceType::Fuel, 50.0);
+        spawn_resource_pile(world, designation_pos, ResourceType::Rations, 50.0);
 
         if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
             log.add_colored(
@@ -153,22 +138,14 @@ pub fn execute_cannibalize(world: &mut World, designation_entity: Entity) -> boo
         }
 
         // VFX
-        spawn_particle(
-            world,
-            designation_pos,
-            'X',
-            Color::Red,
-            20,
-        );
+        spawn_particle(world, designation_pos, 'X', Color::Red, 20);
         if let Some(mut shake) = world.get_resource_mut::<ScreenShake>() {
             shake.trigger(0.8);
         }
 
         // Cleanup
         world.despawn(entity);
-        if let Some(mut occupied) =
-            world.get_resource_mut::<OccupiedTiles>()
-        {
+        if let Some(mut occupied) = world.get_resource_mut::<OccupiedTiles>() {
             occupied.0.remove(&(designation_pos.x, designation_pos.y));
         }
 
@@ -250,12 +227,7 @@ pub fn execute_jury_rig(world: &mut World, designation_entity: Entity) -> bool {
         })
 }
 
-fn spawn_resource_pile(
-    world: &mut World,
-    pos: GridPosition,
-    res_type: ResourceType,
-    amount: f32,
-) {
+fn spawn_resource_pile(world: &mut World, pos: GridPosition, res_type: ResourceType, amount: f32) {
     world.spawn((
         ResourceItem {
             resource_type: res_type,
@@ -265,9 +237,7 @@ fn spawn_resource_pile(
     ));
 }
 
-const fn calculate_knowledge_reward(
-    building_type: Option<BuildingType>,
-) -> f32 {
+const fn calculate_knowledge_reward(building_type: Option<BuildingType>) -> f32 {
     match building_type {
         Some(BuildingType::AncientReactor) => 500.0,
         Some(BuildingType::AncientFabricator) => 300.0,

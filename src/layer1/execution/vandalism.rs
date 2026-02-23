@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::execution::components::{AtTarget, MovementTarget};
-use crate::layer1::utility_types::ActionType;
 use crate::layer1::unrest::perform_vandalize_logic;
+use crate::layer1::utility_types::ActionType;
+use bevy_ecs::prelude::*;
 
 /// Executes vandalism when pop is at target with Vandalize action.
 pub fn vandalize_execution_system(world: &mut World) {

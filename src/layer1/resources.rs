@@ -48,6 +48,8 @@ pub enum ResourceType {
     Rations,
     /// Fuel for reactors and ships.
     Fuel,
+    /// Alcohol (consumable, potentially contraband).
+    Alcohol,
 }
 
 /// A physical resource item in the world (dropped on the ground).
@@ -145,6 +147,8 @@ pub struct ColonyResources {
     pub fuel: f32,
     /// Total water available in the colony.
     pub water: f32,
+    /// Total alcohol available in the colony.
+    pub alcohol: f32,
     /// Maximum food capacity.
     pub max_food: f32,
     /// Maximum wood capacity.
@@ -177,6 +181,8 @@ pub struct ColonyResources {
     pub max_fuel: f32,
     /// Maximum water capacity.
     pub max_water: f32,
+    /// Maximum alcohol capacity.
+    pub max_alcohol: f32,
 }
 
 impl Default for ColonyResources {
@@ -200,6 +206,7 @@ impl Default for ColonyResources {
             waste: 0.0,
             rations: 0.0,
             fuel: 0.0,
+            alcohol: 0.0,
             max_food: 50.0,
             max_wood: 50.0,
             max_stone: 20.0,
@@ -217,6 +224,7 @@ impl Default for ColonyResources {
             max_fuel: 20.0,
             water: 0.0,
             max_water: 50.0,
+            max_alcohol: 50.0,
         }
     }
 }
@@ -245,6 +253,7 @@ impl Mul<f32> for ColonyResources {
             rations: (self.rations * rhs).ceil(),
             fuel: (self.fuel * rhs).ceil(),
             water: (self.water * rhs).ceil(),
+            alcohol: (self.alcohol * rhs).ceil(),
             // Capacities should NOT change when multiplying cost
             max_food: self.max_food,
             max_wood: self.max_wood,
@@ -262,6 +271,7 @@ impl Mul<f32> for ColonyResources {
             max_rations: self.max_rations,
             max_fuel: self.max_fuel,
             max_water: self.max_water,
+            max_alcohol: self.max_alcohol,
         }
     }
 }
@@ -292,6 +302,7 @@ impl ColonyResources {
             waste: 0.0,
             rations: 0.0,
             fuel: 0.0,
+            alcohol: 0.0,
             max_food: 0.0,
             max_wood: 0.0,
             max_stone: 0.0,
@@ -309,7 +320,13 @@ impl ColonyResources {
             max_fuel: 0.0,
             water: 0.0,
             max_water: 0.0,
+            max_alcohol: 0.0,
         }
+    }
+
+    /// Adds alcohol, clamping to the maximum capacity.
+    pub fn add_alcohol(&mut self, amount: f32) {
+        self.alcohol = (self.alcohol + amount).clamp(0.0, self.max_alcohol);
     }
 
     /// Adds water, clamping to the maximum capacity.
@@ -422,6 +439,7 @@ impl ColonyResources {
             || self.rations < 0.0
             || self.fuel < 0.0
             || self.water < 0.0
+            || self.alcohol < 0.0
     }
 
     /// Checks if the colony can afford the given cost.
@@ -459,6 +477,7 @@ impl ColonyResources {
             && self.rations >= cost.rations
             && self.fuel >= cost.fuel
             && self.water >= cost.water
+            && self.alcohol >= cost.alcohol
     }
 
     /// Deducts the given cost from the colony's resources.
@@ -485,6 +504,7 @@ impl ColonyResources {
         self.rations -= cost.rations;
         self.fuel -= cost.fuel;
         self.water -= cost.water;
+        self.alcohol -= cost.alcohol;
     }
 
     /// Attempts to deduct the given cost from the colony's resources.

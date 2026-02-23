@@ -154,6 +154,11 @@ fn handle_drop_off(world: &mut World, pop_entity: Entity, carrying: Carrying, po
                 resources.add_rations(carrying.amount);
             }
             crate::layer1::resources::ResourceType::Fuel => resources.add_fuel(carrying.amount),
+            crate::layer1::resources::ResourceType::Alcohol => {
+            crate::layer1::resources::ResourceType::Alcohol => {
+                resources.add_alcohol(carrying.amount);
+            }
+            }
         }
 
         // Remove Carrying
@@ -367,6 +372,9 @@ fn find_and_target_item(world: &mut World, pop_entity: Entity, pos: GridPosition
                     resources.rations < resources.max_rations
                 }
                 crate::layer1::resources::ResourceType::Fuel => resources.fuel < resources.max_fuel,
+                crate::layer1::resources::ResourceType::Alcohol => {
+                    resources.alcohol < resources.max_alcohol
+                }
             };
 
             if has_room {

@@ -145,9 +145,9 @@ fn test_combat_execution_blocked_by_hit_stop() {
             target_entity: enemy,
             target_position: GridPosition { x: 1, y: 0 },
             for_action: ActionType::Fight,
-            },
-            HitStop { ticks_remaining: 1 },
-        ));
+        },
+        HitStop { ticks_remaining: 1 },
+    ));
 
     combat_execution_system(&mut world);
 

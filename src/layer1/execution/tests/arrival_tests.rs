@@ -1,4 +1,5 @@
 use super::setup_world;
+use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::execution::arrival::arrival_handler_system;
 use crate::layer1::execution::components::{AtTarget, MovementTarget};
@@ -8,7 +9,6 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
 use crate::layer1::pop::{Job, Pop};
 use crate::layer1::utility_types::ActionType;
-use crate::layer1::actions::{AssignedTo, AssignmentType};
 use bevy_ecs::prelude::*;
 use bevy_ecs::system::RunSystemOnce;
 

@@ -1,4 +1,3 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::access_control::{AccessControl, AccessMode};
 use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::admin::{AdminProvider, Office};
@@ -15,6 +14,7 @@ use crate::layer1::social::Tavern;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::traits::{Traits, get_trait_move_speed_modifier};
 use crate::layer1::utility_types::{ActionType, StartPlan};
+use bevy_ecs::prelude::*;
 
 /// Removes pops from farms/housing when they switch to a different action.
 ///

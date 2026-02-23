@@ -302,7 +302,9 @@ fn process_single_worker(
     }
 }
 
-pub(crate) const fn get_skill_for_designation(designation_type: DesignationType) -> Option<SkillType> {
+pub(crate) const fn get_skill_for_designation(
+    designation_type: DesignationType,
+) -> Option<SkillType> {
     match designation_type {
         DesignationType::Mine => Some(SkillType::Mining),
         DesignationType::Chop => Some(SkillType::Forestry),

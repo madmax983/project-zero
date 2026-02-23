@@ -1,5 +1,5 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::building::OccupiedTiles;
+use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::erosion::ErosionGrid;
 use crate::layer1::items::UnequipEvent;
 use crate::layer1::resources::ColonyResources;
@@ -7,7 +7,7 @@ use crate::layer1::structural_integrity::RoofGrid;
 use crate::layer1::taboo::TabooState;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::shared::time::SimulationTime;
-use crate::layer1::day_night::DayNightCycle;
+use bevy_ecs::prelude::*;
 
 pub fn setup_world() -> World {
     crate::setup::init_task_pools();
@@ -29,7 +29,7 @@ pub fn setup_world() -> World {
     world
 }
 
-pub mod movement_tests;
 pub mod arrival_tests;
-pub mod work_tests;
 pub mod combat_tests;
+pub mod movement_tests;
+pub mod work_tests;

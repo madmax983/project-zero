@@ -102,6 +102,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(NamedLocations::default());
     world.insert_resource(TechState::default());
     world.insert_resource(crate::layer1::trade::MerchantState::default());
+    world.insert_resource(crate::layer1::trade::TradeMarket::default());
     world.insert_resource(crate::layer1::beauty::BeautyGrid::new(80, 50));
     world.insert_resource(crate::layer1::erosion::ErosionGrid::new(80, 50));
     world.insert_resource(crate::layer1::water::WaterGrid::new(80, 50));
