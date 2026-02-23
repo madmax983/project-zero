@@ -21,6 +21,7 @@
 //! *   Specific Logic Components: e.g., [`Housing`], [`Farm`], [`Stockpile`].
 
 use super::GridPosition;
+use super::acoustic::NoiseSource;
 use super::beauty::BeautySource;
 use super::farm::Farm;
 use super::fire::Flammable;
@@ -1287,6 +1288,10 @@ fn configure_production(entity: &mut EntityWorldMut, building_type: BuildingType
                     intensity: 0.5,
                     radius: 3.0,
                 },
+                NoiseSource {
+                    radius: 6.0,
+                    intensity: 0.8,
+                },
                 ShiftSchedule::default(),
             ));
         }
@@ -1304,6 +1309,10 @@ fn configure_production(entity: &mut EntityWorldMut, building_type: BuildingType
                 SeismicSource {
                     intensity: 0.5,
                     radius: 3.0,
+                },
+                NoiseSource {
+                    radius: 8.0,
+                    intensity: 1.0,
                 },
                 PowerConsumer {
                     demand: 5.0,
@@ -1326,6 +1335,10 @@ fn configure_production(entity: &mut EntityWorldMut, building_type: BuildingType
                 SeismicSource {
                     intensity: 0.5,
                     radius: 3.0,
+                },
+                NoiseSource {
+                    radius: 6.0,
+                    intensity: 0.9,
                 },
                 PowerConsumer {
                     demand: 2.0,
@@ -1357,6 +1370,10 @@ fn configure_production(entity: &mut EntityWorldMut, building_type: BuildingType
                 SeismicSource {
                     intensity: 0.8,
                     radius: 6.0,
+                },
+                NoiseSource {
+                    radius: 10.0,
+                    intensity: 1.0,
                 },
                 ShiftSchedule::default(),
             ));
@@ -1536,6 +1553,10 @@ fn configure_power(entity: &mut EntityWorldMut, building_type: BuildingType) {
                     intensity: 1.0,
                     radius: 5.0,
                 },
+                NoiseSource {
+                    radius: 8.0,
+                    intensity: 0.8,
+                },
             ));
         }
         BuildingType::PowerPole => {
@@ -1567,6 +1588,10 @@ fn configure_power(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 SeismicSource {
                     intensity: 3.0,
                     radius: 10.0,
+                },
+                NoiseSource {
+                    radius: 12.0,
+                    intensity: 1.0,
                 },
             ));
             // Set high HP
@@ -1650,6 +1675,10 @@ fn configure_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
                     intensity: 2.0,
                     radius: 4.0,
                 },
+                NoiseSource {
+                    radius: 10.0,
+                    intensity: 1.0,
+                },
             ));
         }
         BuildingType::ServerBank => {
@@ -1709,6 +1738,10 @@ fn configure_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
                     radius: 3.0,
                     intensity: 0.6,
                     color: (0, 255, 255), // Cyan
+                },
+                NoiseSource {
+                    radius: 5.0,
+                    intensity: 0.5,
                 },
             ));
         }

@@ -181,3 +181,10 @@
     - Updated `src/layer1/energy/mod.rs` to increase grid demand by 50% during `MagneticStorm`.
     - `AuroralCollector` in `src/layer1/energy/auroral.rs` already listens to this state.
 - **Tests:** `tests/integration/weather_energy.rs` (3 tests verified)
+
+### INT-005: Building Operation -> Acoustic Noise
+- **Date:** 2026-03-31
+- **Systems connected:** `Building` (Production/Power/Tech) -> `NoiseSource` (Acoustic) -> `update_noise_system` (Simulation)
+- **Glue added:**
+    - Updated `src/layer1/building.rs` to attach `NoiseSource` to industrial buildings.
+- **Tests:** `tests/integration/acoustic_buildings.rs` (Integration test verified)
