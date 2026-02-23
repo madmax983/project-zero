@@ -5415,7 +5415,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Psychoactive Weather
+## Psychoactive Weather [SPECCED]
 
 **Layer:** 1
 
