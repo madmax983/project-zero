@@ -19,15 +19,16 @@ pub struct GpuContext {
 // On native, wgpu types are Send + Sync. On wasm32 they wrap JS objects
 // and are !Send + !Sync, but WASM is single-threaded so this is safe.
 #[cfg(target_arch = "wasm32")]
-// SAFETY: WASM is inherently single-threaded in the current browser environment (main thread).
+// SAFETY: SECURITY: WASM is inherently single-threaded in the current browser environment (main thread).
 // While `wgpu` types wrapping JS objects are `!Send` + `!Sync`, this implementation assumes
 // the `GpuContext` will strictly remain on the thread it was created on (the main thread).
 // If multi-threaded WASM (e.g., via Web Workers + SharedArrayBuffer) is ever enabled,
 // this implementation MUST be revisited to avoid Undefined Behavior.
+// THREAT: Race conditions if WASM threading is enabled without updating this.
 #[allow(unsafe_code)]
 unsafe impl Send for GpuContext {}
 #[cfg(target_arch = "wasm32")]
-// SAFETY: See `Send` implementation above. No concurrent access is possible in single-threaded WASM.
+// SAFETY: SECURITY: See `Send` implementation above. No concurrent access is possible in single-threaded WASM.
 #[allow(unsafe_code)]
 unsafe impl Sync for GpuContext {}
 

@@ -38,3 +38,10 @@
 - Modified `consume_chemical_logic` to deduplicate active effects by type (refresh duration instead of stack).
 - Clamped `get_speed_modifier` output to `0.1..=5.0` to prevent physics anomalies.
 - Verified with `tests/security_chemical_exploit.rs`.
+
+## 2024-05-29 - Dependency Convergence & WASM Safety
+**Threat:** Dependency Mismatch in `crossterm` (0.28 vs 0.29) caused duplication and potential ABI conflicts in `ratatui` integration.
+**Defense:** Updated `Cargo.toml` to align `crossterm` with `ratatui`'s version (0.29). Verified with `cargo tree`.
+
+**Threat:** Unsound `Send/Sync` implementation for `GpuContext` in WASM could lead to UB if multi-threading is enabled in the future.
+**Defense:** Added `// SECURITY:` audit markers and explicit thread-safety constraints to `src/gpu/context.rs`.
