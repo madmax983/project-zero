@@ -24,7 +24,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `199` Obsessive Optimization — `specs/199-obsessive-optimization.md`
 - [ ] `202` Swarm Intelligence — `specs/202-swarm-intelligence.md`
 - [ ] `206` Orbital Crossfire — `specs/206-orbital-crossfire.md`
-- [ ] `207` Atmospheric Processors — `specs/207-atmospheric-processors.md`
 - [ ] `208` Resonant Architecture — `specs/208-resonant-architecture.md`
 - [ ] `210` Ammunition Logistics — `specs/210-ammunition-logistics.md`
 - [ ] `211` Gut Biome — `specs/211-gut-biome.md`

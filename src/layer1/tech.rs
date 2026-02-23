@@ -27,6 +27,8 @@ pub enum Tech {
     Electromagnetism,
     /// Unlocks dangerous forbidden knowledge (Memetic Hazards).
     VoidWhispers,
+    /// Unlocks planetary engineering (`AtmosphericProcessor`).
+    Terraforming,
 }
 
 impl Tech {
@@ -49,6 +51,7 @@ impl Tech {
             Self::Medical => 40.0,
             Self::Electromagnetism => 35.0,
             Self::VoidWhispers => 100.0,
+            Self::Terraforming => 75.0,
         }
     }
 
@@ -65,6 +68,7 @@ impl Tech {
             Self::Medical => "Medical",
             Self::Electromagnetism => "Electromagnetism",
             Self::VoidWhispers => "Void Whispers",
+            Self::Terraforming => "Terraforming",
         }
     }
 
@@ -81,6 +85,7 @@ impl Tech {
             Self::Medical => "Advanced medical knowledge and facilities to treat injuries and diseases.",
             Self::Electromagnetism => "Harnesses the power of electromagnetic fields for energy generation.",
             Self::VoidWhispers => "Forbidden knowledge from the void. Offers great power at a terrible cost.",
+            Self::Terraforming => "Technologies to modify the planetary atmosphere and climate.",
         }
     }
 
@@ -93,6 +98,7 @@ impl Tech {
             Self::SocialStructures | Self::Hydroponics | Self::Electromagnetism => 15.0,
             Self::Astronomy | Self::Medical => 20.0,
             Self::VoidWhispers => 50.0,
+            Self::Terraforming => 30.0,
         }
     }
 }
