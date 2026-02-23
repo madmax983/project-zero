@@ -296,6 +296,8 @@ pub enum BuildingType {
     DroneHub,
     /// Cryo-Stasis Pod.
     CryoPod,
+    /// Harvests energy from magnetic storms.
+    AuroralCollector,
 }
 
 impl BuildingType {
@@ -315,6 +317,7 @@ impl BuildingType {
             Self::AncientFabricator => Some((Category::Manufacturing, Tier::HighTech)),
 
             Self::Generator => Some((Category::Power, Tier::Basic)),
+            Self::AuroralCollector => Some((Category::Power, Tier::Advanced)),
             Self::AncientReactor => Some((Category::Power, Tier::HighTech)),
 
             Self::Library => Some((Category::Research, Tier::Basic)),
@@ -435,7 +438,8 @@ impl BuildingType {
             | Self::HydroponicsBay
             | Self::Vent
             | Self::TrashCannon
-            | Self::Heater => false,
+            | Self::Heater
+            | Self::AuroralCollector => false,
         }
     }
 
@@ -496,6 +500,7 @@ impl BuildingType {
             Self::HydroponicsBay => Some(Tech::Hydroponics),
             Self::TrashCannon => Some(Tech::Militia),
             Self::CryoPod => Some(Tech::Medical),
+            Self::AuroralCollector => Some(Tech::Electromagnetism),
             _ => None,
         }
     }
@@ -561,6 +566,7 @@ impl BuildingType {
             Self::AICore => "AI Core",
             Self::DroneHub => "Drone Hub",
             Self::CryoPod => "Cryo Pod",
+            Self::AuroralCollector => "Auroral Collector",
         }
     }
 
@@ -608,6 +614,7 @@ impl BuildingType {
             Self::CommandCenter => 'C',
             Self::AICore => 'A',
             Self::CryoPod => '❄',
+            Self::AuroralCollector => 'Ψ',
         }
     }
 
@@ -629,6 +636,11 @@ impl BuildingType {
             Self::CryoPod => ColonyResources {
                 metal: 20.0,
                 stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::AuroralCollector => ColonyResources {
+                metal: 50.0,
+                stone: 20.0,
                 ..ColonyResources::zeroed()
             },
             Self::CommandCenter => ColonyResources {
@@ -1134,7 +1146,8 @@ fn spawn_building(
         | BuildingType::PowerPole
         | BuildingType::Battery
         | BuildingType::AncientReactor
-        | BuildingType::Heater => configure_power(&mut entity, building_type),
+        | BuildingType::Heater
+        | BuildingType::AuroralCollector => configure_power(&mut entity, building_type),
         BuildingType::Observatory
         | BuildingType::LifeSupport
         | BuildingType::TrashCannon
@@ -1566,6 +1579,19 @@ fn configure_power(entity: &mut EntityWorldMut, building_type: BuildingType) {
                     radius: 3.0,
                     intensity: 0.5,
                     color: (255, 100, 50), // Warm Orange
+                },
+            ));
+        }
+        BuildingType::AuroralCollector => {
+            entity.insert((
+                PowerSource {
+                    output: 0.0,
+                    active: true,
+                },
+                crate::layer1::lighting::LightSource {
+                    radius: 6.0,
+                    intensity: 0.0,
+                    color: (0, 255, 255), // Cyan
                 },
             ));
         }

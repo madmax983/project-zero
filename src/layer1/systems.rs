@@ -236,7 +236,10 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             crate::layer1::visitor::spawn_visitor_system,
             spawn_inspector_system.after(crate::layer1::visitor::spawn_visitor_system),
             process_fuel_consumption_system,
-            crate::layer1::energy::power_grid_system.after(process_fuel_consumption_system),
+            crate::layer1::energy::update_auroral_output_system,
+            crate::layer1::energy::power_grid_system
+                .after(process_fuel_consumption_system)
+                .after(crate::layer1::energy::update_auroral_output_system),
             ai_automation_system.after(crate::layer1::energy::power_grid_system),
             ai_rogue_system,
         )

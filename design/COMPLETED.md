@@ -173,3 +173,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `INT-035` Integration: Vermin Severity -> Perishable Item Decay — completed 2026-03-31
 - [x] `INT-003` Medical Notifications — `tests/integration/medical_notifications.rs` — completed 2026-11-06
 - [x] `INT-004` Integration: Medical System -> Condition Treatment — completed 2026-02-22
+- [x] `205` Auroral Harvesting — `specs/205-auroral-harvesting.md` — completed 2026-02-23

@@ -23,6 +23,8 @@ pub enum Tech {
     Militia,
     /// Allows advanced medical facilities (Hospital, `CryoPod`).
     Medical,
+    /// Allows harnessing atmospheric energy (`AuroralCollector`).
+    Electromagnetism,
     /// Unlocks dangerous forbidden knowledge (Memetic Hazards).
     VoidWhispers,
 }
@@ -45,6 +47,7 @@ impl Tech {
             Self::Hydroponics => 30.0,
             Self::Militia => 25.0,
             Self::Medical => 40.0,
+            Self::Electromagnetism => 35.0,
             Self::VoidWhispers => 100.0,
         }
     }
@@ -60,6 +63,7 @@ impl Tech {
             Self::Hydroponics => "Hydroponics",
             Self::Militia => "Militia",
             Self::Medical => "Medical",
+            Self::Electromagnetism => "Electromagnetism",
             Self::VoidWhispers => "Void Whispers",
         }
     }
@@ -70,7 +74,7 @@ impl Tech {
         match self {
             Self::Masonry => 5.0,
             Self::MetalWorking | Self::Militia => 10.0,
-            Self::SocialStructures | Self::Hydroponics => 15.0,
+            Self::SocialStructures | Self::Hydroponics | Self::Electromagnetism => 15.0,
             Self::Astronomy | Self::Medical => 20.0,
             Self::VoidWhispers => 50.0,
         }
