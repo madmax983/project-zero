@@ -28,6 +28,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `208` Resonant Architecture — `specs/208-resonant-architecture.md`
 - [ ] `210` Ammunition Logistics — `specs/210-ammunition-logistics.md`
 - [ ] `211` Gut Biome — `specs/211-gut-biome.md`
+- [ ] `212` Planetary Core Tap — `specs/212-planetary-core-tap.md`
 
 ## MVP — Layer 2: System Simulation
 
