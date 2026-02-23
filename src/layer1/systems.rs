@@ -318,6 +318,8 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             crate::layer1::atmosphere::update_atmosphere_system
                 .after(waste_pollution_bridge)
                 .after(crate::layer1::wind::update_wind_system),
+            crate::layer1::atmosphere::simulate_diffusion_system
+                .after(crate::layer1::atmosphere::update_atmosphere_system),
             update_pressure_system,
             crate::layer1::temperature::update_temperature_system.after(update_pressure_system),
             crate::layer1::radioactive::radiation_system
@@ -395,8 +397,10 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             crate::layer1::radioactive::sickness_damage_system.after(decay_needs_system),
             pressure_damage_system.after(decay_needs_system),
             crate::layer1::needs::starvation_damage_system.after(decay_needs_system),
+            crate::layer1::atmosphere::apply_smog_damage_system.after(decay_needs_system),
             crate::layer1::health::check_health_status_system
                 .after(crate::layer1::needs::starvation_damage_system)
+                .after(crate::layer1::atmosphere::apply_smog_damage_system)
                 .after(crate::layer1::temperature::thermal_damage_system)
                 .after(crate::layer1::radioactive::sickness_damage_system)
                 .after(pressure_damage_system)

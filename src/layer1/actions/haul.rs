@@ -8,6 +8,7 @@ use bevy_ecs::prelude::*;
 
 /// Evaluates the utility of hauling loose items to a [`crate::layer1::stockpile::Stockpile`].
 #[must_use]
+#[allow(clippy::too_many_arguments)]
 pub(crate) fn evaluate_haul(
     pop_pos: GridPosition,
     weights: &UtilityWeights,
