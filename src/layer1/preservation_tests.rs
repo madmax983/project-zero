@@ -37,6 +37,34 @@ mod tests {
     }
 
     #[test]
+    fn test_smokehouse_recipe_insufficient_resources() {
+        let resources = ColonyResources {
+            food: 4.0, // Not enough (need 5)
+            wood: 1.0,
+            rations: 0.0,
+            max_rations: 10.0,
+            ..ColonyResources::default()
+        };
+
+        let (can_refine, _, _, _) = get_refining_recipe(BuildingType::Smokehouse, &resources);
+        assert!(!can_refine);
+    }
+
+    #[test]
+    fn test_smokehouse_recipe_full_storage() {
+        let resources = ColonyResources {
+            food: 5.0,
+            wood: 1.0,
+            rations: 10.0,
+            max_rations: 10.0, // Full
+            ..ColonyResources::default()
+        };
+
+        let (can_refine, _, _, _) = get_refining_recipe(BuildingType::Smokehouse, &resources);
+        assert!(!can_refine);
+    }
+
+    #[test]
     fn test_rations_decay_slower_than_food() {
         let mut world = World::new();
         let mut resources = ColonyResources::default();

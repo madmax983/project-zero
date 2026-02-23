@@ -50,6 +50,10 @@ mod tests {
         world.insert_resource(scale::layer1::edicts::ColonyPolicies::default());
         world.insert_resource(scale::layer1::trade::MerchantState::default());
         world.insert_resource(scale::layer1::atmosphere::AtmosphereGrid::new(10, 10));
+        world.insert_resource(scale::layer1::atmosphere::DiffusionConfig::default());
+        world.insert_resource(scale::layer1::atmosphere::AtmosphericTide::default());
+        world.insert_resource(scale::layer1::atmosphere::BaseGlobalWind::default());
+        world.insert_resource(scale::layer1::wind::GlobalWind::default());
         world.insert_resource(scale::layer1::pressure::PressureGrid::new(10, 10));
         world.insert_resource(scale::layer1::day_night::DayNightCycle::default());
         world.insert_resource(scale::layer1::weather::WeatherState::default());
@@ -59,15 +63,39 @@ mod tests {
         world.insert_resource(scale::layer1::map::ScreenShake::default());
         world.insert_resource(scale::layer1::inspector::InspectorSource::default());
         world.insert_resource(scale::layer1::social_mimicry::Trend::default());
+        world.insert_resource(scale::layer1::society::SecretSocieties::default());
+        world.insert_resource(scale::layer1::society::Unrest::default());
+        world.insert_resource(scale::layer1::predictive_policing::PredictionConfig::default());
+        world.insert_resource(scale::layer1::festivals::FestivalState::default());
         world.insert_resource(scale::layer1::tech::TechState::default());
+        world.insert_resource(scale::layer2::visibility::SystemVisibility::default());
+        world.insert_resource(scale::layer2::system::ViewMode::default());
+        world.insert_resource(scale::layer1::crowding::CrowdingGrid::new(10, 10));
+        world.insert_resource(scale::layer1::geology::SeismicGrid::new(10, 10));
+        world.insert_resource(scale::layer1::seismic::VibrationGrid::new(10, 10));
+        world.insert_resource(scale::layer1::radioactive::RadiationGrid::new(10, 10));
+        world.insert_resource(scale::layer1::temperature::TemperatureGrid::new(10, 10, 20.0));
+        world.insert_resource(scale::layer1::wind::WindGrid::new(10, 10));
+        world.insert_resource(scale::layer1::fertility::FertilityGrid::new(10, 10));
+        world.insert_resource(scale::layer1::prototyping::BuildingMastery::default());
+        world.insert_resource(scale::layer1::graffiti::GraffitiMap::default());
+        world.insert_resource(scale::layer1::civic_ideology::CivicIdeology::default());
+        world.insert_resource(scale::layer1::ecology::EcologyConfig::default());
         world.insert_resource(RoofGrid::new(10, 10));
         world.init_resource::<Events<scale::layer1::structural_integrity::StructureCollapsed>>();
         world.init_resource::<Events<scale::layer1::chronicle::AddChronicleEvent>>();
         world.init_resource::<Events<scale::layer1::social::AffinityChange>>();
-        world.init_resource::<Events<scale::layer1::DeathEvent>>();
         world.init_resource::<Events<scale::layer1::pop::PopDied>>();
         world.init_resource::<Events<scale::layer1::heirloom::RetrogradeEngineeringEvent>>();
         world.init_resource::<Events<scale::layer1::energy::GridOverloadEvent>>();
+        world.init_resource::<Events<scale::layer1::items::UnequipEvent>>();
+        world.init_resource::<Events<scale::layer1::eureka::EurekaEvent>>();
+        world.init_resource::<Events<scale::layer1::hazards::AmputationEvent>>();
+        world.init_resource::<Events<scale::layer1::geology::GeologicalEvent>>();
+        world.init_resource::<Events<scale::layer1::society::InvestigationEvent>>();
+        world.init_resource::<Events<scale::layer1::society::SuppressSocietyEvent>>();
+        world.init_resource::<Events<scale::layer1::medical::PatientTreated>>();
+        world.init_resource::<Events<scale::layer1::social::debt::FavorChange>>();
 
         world
     }
