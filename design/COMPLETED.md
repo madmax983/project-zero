@@ -174,3 +174,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `INT-003` Medical Notifications — `tests/integration/medical_notifications.rs` — completed 2026-11-06
 - [x] `INT-004` Integration: Medical System -> Condition Treatment — completed 2026-02-22
 - [x] `205` Auroral Harvesting — `specs/205-auroral-harvesting.md` — completed 2026-02-23
+- [x] `089` Material Provenance — `specs/089-material-provenance.md` — completed 2025-05-23

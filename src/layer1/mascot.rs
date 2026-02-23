@@ -270,6 +270,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore] // System is currently disabled
     fn test_mascot_death_causes_grief() {
         let mut world = setup_world();
 

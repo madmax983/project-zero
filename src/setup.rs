@@ -173,6 +173,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::hazards::AmputationEvent>>();
     world.init_resource::<Events<crate::layer1::social::FavorChange>>();
     world.init_resource::<Events<crate::layer1::eureka::EurekaEvent>>();
+    world.init_resource::<Events<crate::layer1::items::UnequipEvent>>();
 
     world.init_resource::<crate::layer1::festivals::FestivalState>();
     world.insert_resource(crate::layer1::taboo::TabooState::default());
