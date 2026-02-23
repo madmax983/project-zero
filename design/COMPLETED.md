@@ -176,3 +176,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `205` Auroral Harvesting — `specs/205-auroral-harvesting.md` — completed 2026-02-23
 - [x] `089` Material Provenance — `specs/089-material-provenance.md` — completed 2025-05-23
 - [x] `109` Greenhouses — `specs/109-greenhouses.md` — completed 2026-06-25
+- [x] `INT-036` Integration: Magnetic Storm Weather -> Auroral Collector — completed 2026-03-03

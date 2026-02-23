@@ -5,6 +5,7 @@
 
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::ColonyResources;
+use crate::layer1::weather::{WeatherState, WeatherType};
 use bevy_ecs::prelude::*;
 use rand::Rng;
 use rand::seq::SliceRandom;
@@ -196,6 +197,15 @@ pub fn power_grid_system(world: &mut World) {
         return;
     }
 
+    // Check Weather
+    let demand_multiplier = world.get_resource::<WeatherState>().map_or(1.0, |w| {
+        if w.current_weather == WeatherType::MagneticStorm {
+            1.5
+        } else {
+            1.0
+        }
+    });
+
     // 1. Build grid map
     let grid_map = build_grid_map(world);
 
@@ -209,8 +219,10 @@ pub fn power_grid_system(world: &mut World) {
         }
 
         // BFS for this grid
-        let (total_production, total_demand, grid_entities) =
+        let (total_production, base_demand, grid_entities) =
             bfs_grid(start_pos, &grid_map, world, &mut visited);
+
+        let total_demand = base_demand * demand_multiplier;
 
         // 3. Calculate Net & Handle Batteries
         let mut net = total_production - total_demand;

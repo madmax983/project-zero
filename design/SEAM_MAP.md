@@ -172,3 +172,12 @@
     - Updated `spawn_initial_anomalies` in `src/layer1/science.rs` to attach `PheromoneEmitter` to `StrangeFlora`.
     - Updated `flora_spread_system` in `src/layer1/flora.rs` to attach `PheromoneEmitter` to `XenoMoss`.
 - **Tests:** `tests/integration/pheromone_integration.rs` (3 tests verified)
+
+### INT-036: Magnetic Storm Weather -> Auroral Collector
+- **Date:** 2026-03-03
+- **Systems connected:** `WeatherState` (Weather) -> `PowerSource` (Energy)
+- **Glue added:**
+    - Updated `src/layer1/weather.rs` to include `MagneticStorm` in weather generation.
+    - Updated `src/layer1/energy/mod.rs` to increase grid demand by 50% during `MagneticStorm`.
+    - `AuroralCollector` in `src/layer1/energy/auroral.rs` already listens to this state.
+- **Tests:** `tests/integration/weather_energy.rs` (3 tests verified)
