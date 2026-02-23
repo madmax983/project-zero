@@ -339,8 +339,14 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             crate::layer1::atmosphere::update_atmosphere_system
                 .after(waste_pollution_bridge)
                 .after(crate::layer1::wind::update_wind_system),
-            crate::layer1::atmosphere::simulate_diffusion_system
+            crate::layer1::terraforming::update_planetary_atmosphere_system
                 .after(crate::layer1::atmosphere::update_atmosphere_system),
+            crate::layer1::atmosphere::update_weather_diffusion_system
+                .after(crate::layer1::terraforming::update_planetary_atmosphere_system),
+            crate::layer1::terraforming::apply_planetary_effects_system
+                .after(crate::layer1::atmosphere::update_weather_diffusion_system),
+            crate::layer1::atmosphere::simulate_diffusion_system
+                .after(crate::layer1::terraforming::apply_planetary_effects_system),
             update_pressure_system,
             crate::layer1::temperature::update_temperature_system.after(update_pressure_system),
             crate::layer1::radioactive::radiation_system

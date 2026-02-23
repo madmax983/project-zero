@@ -375,12 +375,11 @@ pub fn pollution_effects_system(world: &mut World) {
     }
 }
 
-/// Simulates gas diffusion with weather effects (e.g. Thermal Inversion).
-pub fn simulate_diffusion_system(
+/// Updates diffusion rate based on weather conditions.
+pub fn update_weather_diffusion_system(
     mut grid: ResMut<AtmosphereGrid>,
     config: Res<DiffusionConfig>,
     weather: Res<WeatherState>,
-    query: Query<(&Building, &GridPosition)>,
 ) {
     // 1. Determine effective escape rate
     let vertical_escape = if weather.current_weather == WeatherType::ThermalInversion {
@@ -391,6 +390,15 @@ pub fn simulate_diffusion_system(
 
     // Update grid diffusion rate (retention = 1.0 - escape)
     grid.diffusion_rate = 1.0 - vertical_escape;
+}
+
+/// Simulates gas diffusion with weather effects (e.g. Thermal Inversion).
+pub fn simulate_diffusion_system(
+    mut grid: ResMut<AtmosphereGrid>,
+    config: Res<DiffusionConfig>,
+    query: Query<(&Building, &GridPosition)>,
+) {
+    // Diffusion rate is now set by update_weather_diffusion_system (and potentially modified by terraforming)
 
     // 2. Identify Blockers
     let mut blockers = HashMap::new();

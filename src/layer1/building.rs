@@ -302,6 +302,8 @@ pub enum BuildingType {
     CryoPod,
     /// Harvests energy from magnetic storms.
     AuroralCollector,
+    /// Terraforming: Atmospheric Processor.
+    AtmosphericProcessor,
 }
 
 impl BuildingType {
@@ -326,7 +328,7 @@ impl BuildingType {
 
             Self::Library => Some((Category::Research, Tier::Basic)),
             Self::Observatory | Self::CryoPod => Some((Category::Research, Tier::Advanced)),
-            Self::AICore => Some((Category::Research, Tier::HighTech)),
+            Self::AICore | Self::AtmosphericProcessor => Some((Category::Research, Tier::HighTech)),
 
             _ => None,
         }
@@ -420,7 +422,8 @@ impl BuildingType {
             | Self::LifeSupport
             | Self::Airlock
             | Self::AncientReactor
-            | Self::AncientFabricator => true,
+            | Self::AncientFabricator
+            | Self::AtmosphericProcessor => true,
 
             // Small or Open structures
             Self::Farm
@@ -513,6 +516,7 @@ impl BuildingType {
             Self::TrashCannon => Some(Tech::Militia),
             Self::CryoPod => Some(Tech::Medical),
             Self::AuroralCollector => Some(Tech::Electromagnetism),
+            Self::AtmosphericProcessor => Some(Tech::Terraforming),
             _ => None,
         }
     }
@@ -580,6 +584,7 @@ impl BuildingType {
             Self::DroneHub => "Drone Hub",
             Self::CryoPod => "Cryo Pod",
             Self::AuroralCollector => "Auroral Collector",
+            Self::AtmosphericProcessor => "Atmospheric Processor",
         }
     }
 
@@ -629,6 +634,7 @@ impl BuildingType {
             Self::AICore => 'A',
             Self::CryoPod => '❄',
             Self::AuroralCollector => 'Ψ',
+            Self::AtmosphericProcessor => '@',
         }
     }
 
@@ -655,6 +661,11 @@ impl BuildingType {
             Self::AuroralCollector => ColonyResources {
                 metal: 50.0,
                 stone: 20.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::AtmosphericProcessor => ColonyResources {
+                metal: 200.0,
+                stone: 100.0,
                 ..ColonyResources::zeroed()
             },
             Self::CommandCenter => ColonyResources {
@@ -1175,7 +1186,8 @@ fn spawn_building(
         | BuildingType::CommandCenter
         | BuildingType::AICore
         | BuildingType::DroneHub
-        | BuildingType::CryoPod => configure_tech(&mut entity, building_type),
+        | BuildingType::CryoPod
+        | BuildingType::AtmosphericProcessor => configure_tech(&mut entity, building_type),
         BuildingType::PersonalShed
         | BuildingType::PersonalGarden
         | BuildingType::PersonalShrine => {
@@ -1648,6 +1660,31 @@ fn configure_power(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 },
             ));
         }
+        BuildingType::AtmosphericProcessor => {
+            entity.insert((
+                PowerConsumer {
+                    demand: 500.0,
+                    active: false,
+                },
+                LightSource {
+                    radius: 10.0,
+                    intensity: 1.0,
+                    color: (0, 255, 100), // Green
+                },
+                NoiseSource {
+                    radius: 15.0,
+                    intensity: 1.0,
+                },
+                SeismicSource {
+                    intensity: 2.0,
+                    radius: 8.0,
+                },
+            ));
+            if let Some(mut structure) = entity.get_mut::<crate::layer1::structure::Structure>() {
+                structure.max_hp = 2000.0;
+                structure.current_hp = 2000.0;
+            }
+        }
         _ => {}
     }
 }
@@ -1991,7 +2028,8 @@ mod tests {
         assert_eq!(BuildingType::AICore.next(), BuildingType::DroneHub);
         assert_eq!(BuildingType::DroneHub.next(), BuildingType::CryoPod);
         assert_eq!(BuildingType::CryoPod.next(), BuildingType::AuroralCollector);
-        assert_eq!(BuildingType::AuroralCollector.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::AuroralCollector.next(), BuildingType::AtmosphericProcessor);
+        assert_eq!(BuildingType::AtmosphericProcessor.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -2190,6 +2228,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::AuroralCollector);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::AtmosphericProcessor);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

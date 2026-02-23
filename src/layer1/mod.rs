@@ -271,9 +271,12 @@ pub mod lifecycle;
 pub use lifecycle::*;
 /// Atmospheric simulation (Spec 063).
 pub mod atmosphere;
+/// Terraforming and Planetary Atmosphere (Spec 207).
+pub mod terraforming;
 /// Civil unrest and mental break system.
 pub mod unrest;
 pub use atmosphere::*;
+pub use terraforming::*;
 
 /// Secret Societies system (Spec 147).
 pub mod society;
