@@ -1,3 +1,4 @@
+#![allow(clippy::collapsible_if, clippy::cast_precision_loss)]
 use bevy_ecs::prelude::*;
 
 use crate::layer1::combat::{HitStop, Weapon};

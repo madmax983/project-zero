@@ -91,6 +91,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(MessageLog::default());
     world.insert_resource(Chronicle::default());
     world.insert_resource(ChronicleUiState::default());
+    world.insert_resource(crate::ui::tech::TechUiState::default());
     world.insert_resource(NotificationQueue::default());
     world.insert_resource(BuildingTracker::default());
     world.insert_resource(crate::layer1::vermin::VerminState::default());

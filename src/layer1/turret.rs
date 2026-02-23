@@ -22,6 +22,7 @@ pub struct Turret {
 }
 
 /// System that handles turret targeting, firing, and ammo consumption.
+#[allow(clippy::too_many_lines, clippy::collapsible_if)]
 pub fn turret_fire_system(world: &mut World) {
     // 1. Collect potential targets (Hostiles)
     // Optimization: Spatial query would be better, but O(N*M) is acceptable for MVP count.

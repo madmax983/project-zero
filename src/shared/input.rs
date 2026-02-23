@@ -25,6 +25,8 @@ pub enum InputContext {
     DesignationMode,
     /// Modal overlay.
     Overlay,
+    /// Tech Tree overlay.
+    TechTree,
 }
 
 /// Stack-based input context manager.
@@ -78,6 +80,7 @@ pub fn route_input(world: &mut World, key: GameKeyEvent) {
         InputContext::BuildMode => handle_build_mode(world, key),
         InputContext::DesignationMode => handle_designation_mode(world, key),
         InputContext::Overlay => handle_overlay_mode(world, key),
+        InputContext::TechTree => handle_tech_tree_mode(world, key),
     }
 }
 
@@ -97,6 +100,7 @@ pub fn route_mouse_input(world: &mut World, mouse: GameMouseEvent) {
     }
 }
 
+#[allow(clippy::too_many_lines)]
 fn handle_normal_mode(world: &mut World, key: GameKeyEvent) {
     match key.code {
         GameKeyCode::Char('q') => {
@@ -182,6 +186,13 @@ fn handle_normal_mode(world: &mut World, key: GameKeyEvent) {
             world.resource_mut::<ChronicleUiState>().is_open = true;
             *world.resource_mut::<GameState>() = GameState::Paused;
         }
+        GameKeyCode::Char('t') => {
+            // Open Tech Tree
+            world
+                .resource_mut::<InputContextStack>()
+                .push(InputContext::TechTree);
+            world.resource_mut::<crate::ui::tech::TechUiState>().is_open = true;
+        }
         GameKeyCode::Tab => {
             let visibility = *world.resource::<crate::layer2::visibility::SystemVisibility>();
             let mut view_mode = world.resource_mut::<ViewMode>();
@@ -196,6 +207,32 @@ fn handle_normal_mode(world: &mut World, key: GameKeyEvent) {
                     }
                 }
                 ViewMode::System => *view_mode = ViewMode::Colony,
+            }
+        }
+        _ => {}
+    }
+}
+
+fn handle_tech_tree_mode(world: &mut World, key: GameKeyEvent) {
+    let tech_count = crate::ui::tech::get_tech_list().len();
+
+    match key.code {
+        GameKeyCode::Esc | GameKeyCode::Char('t') => {
+            world.resource_mut::<InputContextStack>().pop();
+            world.resource_mut::<crate::ui::tech::TechUiState>().is_open = false;
+        }
+        GameKeyCode::Up | GameKeyCode::Char('w') => {
+            world.resource_mut::<crate::ui::tech::TechUiState>().prev(tech_count);
+        }
+        GameKeyCode::Down | GameKeyCode::Char('s') => {
+            world.resource_mut::<crate::ui::tech::TechUiState>().next(tech_count);
+        }
+        GameKeyCode::Enter | GameKeyCode::Char(' ') => {
+            let ui_state = world.resource::<crate::ui::tech::TechUiState>();
+            let idx = ui_state.selected_index;
+            let techs = crate::ui::tech::get_tech_list();
+            if idx < techs.len() {
+                crate::layer1::tech::unlock_tech(world, techs[idx]);
             }
         }
         _ => {}
@@ -736,6 +773,41 @@ mod tests {
         assert_eq!(
             world.resource::<BuildMode>().selected_material,
             MaterialType::Stone
+        );
+    }
+
+    #[test]
+    fn test_tech_tree_mode_navigation() {
+        let mut world = World::new();
+        world.insert_resource(GameState::Running);
+        let mut stack = InputContextStack::default();
+        stack.push(InputContext::TechTree);
+        world.insert_resource(stack);
+        world.insert_resource(crate::ui::tech::TechUiState {
+            is_open: true,
+            selected_index: 0,
+        });
+
+        // Down
+        route_input(&mut world, key_event(GameKeyCode::Char('s')));
+        assert_eq!(
+            world.resource::<crate::ui::tech::TechUiState>().selected_index,
+            1
+        );
+
+        // Up
+        route_input(&mut world, key_event(GameKeyCode::Char('w')));
+        assert_eq!(
+            world.resource::<crate::ui::tech::TechUiState>().selected_index,
+            0
+        );
+
+        // Esc
+        route_input(&mut world, key_event(GameKeyCode::Esc));
+        assert!(!world.resource::<crate::ui::tech::TechUiState>().is_open);
+        assert_eq!(
+            world.resource::<InputContextStack>().current(),
+            InputContext::MainMenu
         );
     }
 }

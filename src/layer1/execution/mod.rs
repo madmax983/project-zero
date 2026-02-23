@@ -22,13 +22,23 @@
 //!     ↓ calls mine_rock/chop_tree
 //! ```
 
+#![allow(clippy::collapsible_if, clippy::cast_precision_loss)]
+
+/// Arrival handling logic.
 pub mod arrival;
+/// Combat execution logic.
 pub mod combat;
+/// Shared components for execution.
 pub mod components;
+/// Demolition execution logic.
 pub mod demolish;
+/// General work execution logic.
 pub mod general_work;
+/// Mining and chopping execution logic.
 pub mod mining;
+/// Movement system.
 pub mod movement;
+/// Vandalism execution logic.
 pub mod vandalism;
 
 #[cfg(test)]

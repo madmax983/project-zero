@@ -7,6 +7,9 @@ use crate::layer1::particles::{spawn_moving_particle, spawn_particle};
 use crate::layer1::resources::{process_logging, process_mining};
 use crate::shared::log::MessageLog;
 
+/// Handles mining work at a designation.
+///
+/// Reduces terrain health or mining progress, spawns resources, and removes rock/ore.
 pub fn handle_mining_work(
     world: &mut World,
     entity: Entity,
@@ -69,6 +72,9 @@ pub fn handle_mining_work(
     true
 }
 
+/// Handles wood chopping work at a designation.
+///
+/// Reduces tree HP, spawns wood, and removes the tree entity.
 pub fn handle_chopping_work(
     world: &mut World,
     entity: Entity,
