@@ -4,6 +4,7 @@
 //! and marshal functions that extract ECS data into these structs.
 
 use bevy_ecs::prelude::*;
+use wgpu;
 
 use crate::layer1::combat::Drafted;
 use crate::layer1::designation::Designation;
@@ -729,4 +730,31 @@ mod tests {
         assert_eq!(state.pop_count, 10);
         assert_eq!(state.building_count, 25);
     }
+}
+
+/// Persistent buffers for GPU reuse.
+#[derive(Resource, Default)]
+pub struct GpuPersistentBuffers {
+    /// Persistent storage buffer for pop inputs.
+    pub pop_buffer: Option<wgpu::Buffer>,
+    /// Capacity of the pop buffer in bytes.
+    pub pop_capacity: u64,
+    /// Persistent storage buffer for building inputs.
+    pub building_buffer: Option<wgpu::Buffer>,
+    /// Capacity of the building buffer in bytes.
+    pub building_capacity: u64,
+    /// Persistent uniform buffer for global state.
+    pub global_buffer: Option<wgpu::Buffer>,
+    /// Capacity of the global buffer in bytes.
+    pub global_capacity: u64,
+    /// Persistent storage buffer for decisions.
+    pub decision_buffer: Option<wgpu::Buffer>,
+    /// Capacity of the decision buffer in bytes.
+    pub decision_capacity: u64,
+    /// Persistent staging buffer for readback.
+    pub staging_buffer: Option<wgpu::Buffer>,
+    /// Capacity of the staging buffer in bytes.
+    pub staging_capacity: u64,
+    /// Cached bind group, recreated only when buffers change.
+    pub bind_group: Option<wgpu::BindGroup>,
 }
