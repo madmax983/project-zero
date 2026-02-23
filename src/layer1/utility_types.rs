@@ -687,32 +687,8 @@ pub enum AssignmentType {
     Funeral,
     /// Working at an observatory.
     ObservatoryWorker,
-    /// Mining job.
-    Miner,
-    /// Hauling job.
-    Hauler,
-    /// Construction job.
-    Builder,
-    /// Crafting job.
-    Crafter,
-    /// Guard job.
-    Guard,
-    /// Engineering job.
-    Engineer,
-    /// Medical doctor job.
-    Doctor,
-    /// Merchant job.
-    Merchant,
-    /// Scientist job.
-    Scientist,
-    /// Artist job.
-    Artist,
-    /// Governor job.
-    Governor,
     /// Administrator job.
     Administrator,
-    /// Chef job.
-    Chef,
     /// Undergoing surgery.
     Surgery,
 }

@@ -57,18 +57,6 @@ pub fn cleanup_previous_assignment_system(
             | AssignmentType::Patient
             | AssignmentType::Funeral
             | AssignmentType::ObservatoryWorker
-            | AssignmentType::Miner
-            | AssignmentType::Hauler
-            | AssignmentType::Builder
-            | AssignmentType::Crafter
-            | AssignmentType::Guard
-            | AssignmentType::Engineer
-            | AssignmentType::Doctor
-            | AssignmentType::Merchant
-            | AssignmentType::Scientist
-            | AssignmentType::Artist
-            | AssignmentType::Governor
-            | AssignmentType::Chef
             | AssignmentType::Surgery => {}
         }
 

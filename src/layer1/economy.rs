@@ -30,11 +30,9 @@ impl Default for ColonyPrices {
 #[must_use]
 pub const fn get_wage_for_job(job_type: AssignmentType) -> f32 {
     match job_type {
-        AssignmentType::Miner => 2.0,
         AssignmentType::FarmWorker => 1.5,
-        AssignmentType::LibraryWorker | AssignmentType::Doctor => 3.0,
-        AssignmentType::Engineer => 2.5,
-        AssignmentType::Governor => 5.0,
+        AssignmentType::LibraryWorker => 3.0,
+        AssignmentType::Administrator => 2.5,
         _ => 1.0,
     }
 }
@@ -176,7 +174,7 @@ mod tests {
     #[test]
     fn test_job_wage_configuration() {
         // Ensure jobs have a wage associated
-        let job = AssignmentType::Miner;
+        let job = AssignmentType::FarmWorker;
         assert!(get_wage_for_job(job) > 0.0);
     }
 }
