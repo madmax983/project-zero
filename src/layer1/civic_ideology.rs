@@ -221,4 +221,172 @@ mod tests {
                 .any(|m| m.label == "Ideological Satisfaction")
         );
     }
+
+    #[test]
+    fn test_technocratic_anger_with_low_knowledge() {
+        // Arrange
+        let mut world = World::new();
+        world.insert_resource(CivicIdeology {
+            selected: IdeologyType::Technocratic,
+        });
+        world.insert_resource(ColonyResources {
+            knowledge: 5.0, // Below threshold of 10.0
+            ..ColonyResources::default()
+        });
+
+        for _ in 0..10 {
+            world.spawn((Pop::default(), Morale::default()));
+        }
+
+        // Act
+        let mut schedule = Schedule::default();
+        schedule.add_systems(evaluate_civic_ideology_system);
+        schedule.run(&mut world);
+
+        // Assert
+        let pop_morale = world.query::<&Morale>().iter(&world).next().unwrap();
+        assert!(
+            pop_morale
+                .modifiers
+                .iter()
+                .any(|m| m.label == "Ideological Disappointment" && m.value < 0.0)
+        );
+    }
+
+    #[test]
+    fn test_industrialist_anger_with_low_materials() {
+        // Arrange
+        let mut world = World::new();
+        world.insert_resource(CivicIdeology {
+            selected: IdeologyType::Industrialist,
+        });
+        world.insert_resource(ColonyResources {
+            metal: 2.0,
+            planks: 2.0,
+            blocks: 2.0, // Total 6.0 < 10.0
+            ..ColonyResources::default()
+        });
+
+        for _ in 0..10 {
+            world.spawn((Pop::default(), Morale::default()));
+        }
+
+        // Act
+        let mut schedule = Schedule::default();
+        schedule.add_systems(evaluate_civic_ideology_system);
+        schedule.run(&mut world);
+
+        // Assert
+        let pop_morale = world.query::<&Morale>().iter(&world).next().unwrap();
+        assert!(
+            pop_morale
+                .modifiers
+                .iter()
+                .any(|m| m.label == "Ideological Disappointment" && m.value < 0.0)
+        );
+    }
+
+    #[test]
+    fn test_neutral_state() {
+        // Arrange
+        let mut world = World::new();
+        world.insert_resource(CivicIdeology {
+            selected: IdeologyType::Technocratic,
+        });
+        world.insert_resource(ColonyResources {
+            knowledge: 20.0, // Between 10.0 and 50.0
+            ..ColonyResources::default()
+        });
+
+        for _ in 0..10 {
+            world.spawn((Pop::default(), Morale::default()));
+        }
+
+        // Act
+        let mut schedule = Schedule::default();
+        schedule.add_systems(evaluate_civic_ideology_system);
+        schedule.run(&mut world);
+
+        // Assert
+        let pop_morale = world.query::<&Morale>().iter(&world).next().unwrap();
+        // Should have NO "Ideological" modifiers
+        assert!(
+            !pop_morale
+                .modifiers
+                .iter()
+                .any(|m| m.label.starts_with("Ideological"))
+        );
+    }
+
+    #[test]
+    fn test_zero_population() {
+        // Arrange
+        let mut world = World::new();
+        world.insert_resource(CivicIdeology {
+            selected: IdeologyType::Survivalist,
+        });
+        world.insert_resource(ColonyResources::default());
+
+        // Spawn NO pops
+
+        // Act
+        let mut schedule = Schedule::default();
+        schedule.add_systems(evaluate_civic_ideology_system);
+        schedule.run(&mut world);
+
+        // Assert
+        // No crash means success. We can verify no events or unexpected state if we had more to check.
+        assert_eq!(world.query::<&Morale>().iter(&world).count(), 0);
+    }
+
+    #[test]
+    fn test_modifier_replacement() {
+        // Arrange
+        let mut world = World::new();
+        world.insert_resource(CivicIdeology {
+            selected: IdeologyType::Technocratic,
+        });
+        // Set resources to trigger Disappointment
+        world.insert_resource(ColonyResources {
+            knowledge: 5.0,
+            ..ColonyResources::default()
+        });
+
+        // Spawn pop with EXISTING Satisfaction modifier
+        world.spawn((
+            Pop::default(),
+            Morale {
+                value: 0.5,
+                modifiers: vec![MoodModifier {
+                    label: "Ideological Satisfaction".to_string(),
+                    value: 0.1,
+                    duration: 10,
+                }],
+            },
+        ));
+
+        // Act
+        let mut schedule = Schedule::default();
+        schedule.add_systems(evaluate_civic_ideology_system);
+        schedule.run(&mut world);
+
+        // Assert
+        let pop_morale = world.query::<&Morale>().iter(&world).next().unwrap();
+
+        // Should NOT have Satisfaction anymore
+        assert!(
+            !pop_morale
+                .modifiers
+                .iter()
+                .any(|m| m.label == "Ideological Satisfaction")
+        );
+
+        // Should HAVE Disappointment
+        assert!(
+            pop_morale
+                .modifiers
+                .iter()
+                .any(|m| m.label == "Ideological Disappointment")
+        );
+    }
 }
