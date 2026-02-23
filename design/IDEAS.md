@@ -5582,3 +5582,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Ranged Superiority vs. Melee Vulnerability.
 
 ---
+
+## Improvised Tools
+
+**Layer:** 1
+
+**Fantasy:** The desperation of using a rock when the hammer breaks.
+
+**Mechanic:** When a specific tool is missing, Pops will grab raw materials (Stone, Wood, Scrap) to use as a temporary, low-durability tool. Consumes the material per use. 50% slower work speed.
+
+**Emergence:** Your metal industry collapses. To fix the smelter, the engineer uses a "Stone Hammer". The stone stockpile drains, halting wall construction.
+
+**Tension:** Allow inefficiency (slow work) vs. Halt work (wait for real tools).
+
+---
+
+## Hypno-Learning
+
+**Layer:** 1
+
+**Fantasy:** "I know Kung Fu."
+
+**Mechanic:** Assign Pops to "Learning Pods" during sleep cycles. They gain Skill XP rapidly but wake up with "Mental Fog" (Movement/Work Speed penalty) and increased Hunger.
+
+**Emergence:** You rush-train a squad of soldiers overnight to fight a raid. They have max Gun skill but can barely walk to the battlements.
+
+**Tension:** Skill gain (long term) vs. Immediate readiness (short term).
+
+---
+
+## Diplomatic Fashion
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Dressing the part to survive the court.
+
+**Mechanic:** Alien diplomats have "Preferred Attire" traits (e.g., "Organic Fibers Only", "Full Enviro-Suits"). Interacting with them while wearing the wrong clothes causes massive Relations penalties.
+
+**Emergence:** The Warlord arrives. He respects "Heavy Armor". You have to strip your guards of their energy shields and put them in scrap-plate to impress him.
+
+**Tension:** Optimal gear (stats) vs. Social gear (diplomacy).
+
+---
+
+## Escape Pods
+
+**Layer:** 1 -> 2
+
+**Fantasy:** The ship is sinking. Women and children first.
+
+**Mechanic:** Constructible "Lifeboats". If the colony is overrun, Pops enter pods and launch to Layer 2 orbit as "Distress Signals". Recovering them saves the Pop. Abandoning them kills the Pop.
+
+**Emergence:** The reactor goes critical. You have 100 Pops and 10 Pods. You manually assign the Doctors and Engineers to the pods, leaving the haulers to their fate.
+
+**Tension:** Who is worth saving?
+
+---
+
+## Customs Checkpoint
+
+**Layer:** 1
+
+**Fantasy:** "Papers, please."
+
+**Mechanic:** A "Processing Zone" at the spaceport. New arrivals are held here until "Vetted" (Time/Admin cost). Vetting reveals hidden traits (Spy, Infected, Criminal).
+
+**Emergence:** A refugee ship arrives with 50 starving people. You wave them through without vetting to get them to the hospital. One was a biological terrorist.
+
+**Tension:** Security (slow vetting) vs. Humanitarian speed (risk).
+
+---
