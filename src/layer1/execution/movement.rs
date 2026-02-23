@@ -14,6 +14,8 @@ use crate::layer1::social::Tavern;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::traits::{Traits, get_trait_move_speed_modifier};
 use crate::layer1::utility_types::{ActionType, StartPlan};
+use crate::layer1::particles::Particle;
+use ratatui::style::Color;
 use bevy_ecs::prelude::*;
 
 /// Removes pops from farms/housing when they switch to a different action.
@@ -232,9 +234,21 @@ pub fn movement_system(
         let can_move = if let Some(ref mut speed) = speed_opt {
             // Ludwig: "Coyote Speed" - Allow moving if we are *almost* there.
             // This prevents the feeling of "just missing the bus" by 0.01 speed.
-            // Increased to 0.20 for even better flow.
-            const COYOTE_THRESHOLD: f32 = 0.20;
+            // Increased to 0.25 for even better flow.
+            const COYOTE_THRESHOLD: f32 = 0.25;
             if speed.accumulator >= (movement_cost - COYOTE_THRESHOLD) {
+                // If we are using the threshold to squeeze by...
+                if speed.accumulator < movement_cost {
+                    // Ludwig: "Hustle" particle to show effort
+                    commands.spawn((
+                        Particle {
+                            char: '.',
+                            color: Color::DarkGray,
+                            lifetime: 5,
+                        },
+                        *current_pos,
+                    ));
+                }
                 speed.accumulator -= movement_cost;
                 true
             } else {

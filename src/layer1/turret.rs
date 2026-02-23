@@ -143,6 +143,22 @@ pub fn turret_fire_system(world: &mut World) {
                 ratatui::style::Color::DarkGray,
                 5,
             );
+
+            // Ludwig: Muzzle Flash
+            crate::layer1::particles::spawn_particle(
+                world,
+                turret_pos,
+                '*',
+                ratatui::style::Color::Yellow,
+                5,
+            );
+
+            // Ludwig: Screen Shake for heavy weapons
+            if turret_data.ammo_type == ResourceType::Waste {
+                if let Some(mut shake) = world.get_resource_mut::<crate::layer1::map::ScreenShake>() {
+                    shake.trigger(0.2);
+                }
+            }
         }
     }
 }
