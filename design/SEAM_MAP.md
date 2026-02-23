@@ -164,3 +164,11 @@
     - Updated `src/layer1/medical.rs` to treat `CryoTrauma` and `RadiationSickness` in hospitals.
     - Consumes hospital capacity to remove/reduce these conditions.
 - **Tests:** `tests/integration/medical_conditions.rs` (2 tests verified)
+
+### INT-005: Pheromones -> Morale
+- **Date:** 2026-03-03
+- **Systems connected:** `StrangeFlora` (Anomaly) / `XenoMoss` (Flora) -> `PheromoneEmitter` (Environment) -> `pheromone_emission_system` -> `Morale` (Pop)
+- **Glue added:**
+    - Updated `spawn_initial_anomalies` in `src/layer1/science.rs` to attach `PheromoneEmitter` to `StrangeFlora`.
+    - Updated `flora_spread_system` in `src/layer1/flora.rs` to attach `PheromoneEmitter` to `XenoMoss`.
+- **Tests:** `tests/integration/pheromone_integration.rs` (3 tests verified)

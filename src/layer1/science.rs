@@ -1,6 +1,7 @@
 use crate::layer1::building::OccupiedTiles;
 use crate::layer1::execution::{AtTarget, MovementTarget};
 use crate::layer1::map::GridPosition;
+use crate::layer1::pheromone::{PheromoneEffect, PheromoneEmitter};
 use crate::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
 use crate::layer1::terrain::TerrainGrid;
 use crate::layer1::utility_ai::{ActionType, PopAction};
@@ -99,7 +100,7 @@ pub fn spawn_initial_anomalies(world: &mut World, count: usize) {
             AnomalyType::Geode => (10.0, 120.0), // Rare resource, medium
         };
 
-        world.spawn((
+        let mut entity_cmds = world.spawn((
             Anomaly {
                 anomaly_type,
                 reward_amount: reward,
@@ -113,6 +114,20 @@ pub fn spawn_initial_anomalies(world: &mut World, count: usize) {
                 required: difficulty,
             },
         ));
+
+        if anomaly_type == AnomalyType::StrangeFlora {
+            entity_cmds.insert(PheromoneEmitter {
+                radius: 3,
+                interval: 10,
+                timer: 0,
+                effect: PheromoneEffect {
+                    label: "Strange Scent".to_string(),
+                    value: 0.05,
+                    duration: 20,
+                },
+            });
+        }
+
         spawned += 1;
     }
 }
