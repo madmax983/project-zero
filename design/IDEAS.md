@@ -5513,7 +5513,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Safehouse Contracts
+## Safehouse Contracts [SPECCED]
 
 **Layer:** 3 -> 1
 
