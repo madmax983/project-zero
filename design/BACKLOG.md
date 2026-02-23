@@ -47,6 +47,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `180` The Void Between — `specs/180-the-void-between.md`
 - [ ] `184` Orbital Debris — `specs/184-orbital-debris.md`
 - [ ] `201` Space Lanes — `specs/201-space-lanes.md`
+- [ ] `209` Planetary Governance — `specs/209-planetary-governance.md`
 
 ## MVP — Layer 3: Galaxy Simulation
 
