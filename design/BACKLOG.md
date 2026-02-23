@@ -29,6 +29,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `211` Gut Biome — `specs/211-gut-biome.md`
 - [ ] `212` Planetary Core Tap — `specs/212-planetary-core-tap.md`
 - [ ] `215` Safehouse Contracts — `specs/215-safehouse-contracts.md`
+- [ ] `216` Window Views — `specs/216-window-views.md`
 
 ## MVP — Layer 2: System Simulation
 
