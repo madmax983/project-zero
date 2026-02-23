@@ -5,8 +5,8 @@
 use bevy_ecs::prelude::*;
 
 use super::buffers::{
-    extract_building_inputs, extract_global_state, extract_pop_inputs, GpuBuffers,
-    GpuPersistentBuffers, GpuPopDecision,
+    GpuBuffers, GpuPersistentBuffers, GpuPopDecision, extract_building_inputs,
+    extract_global_state, extract_pop_inputs,
 };
 use super::context::GpuContext;
 use crate::layer1::utility_ai::evaluate_actions_system;

@@ -1,5 +1,6 @@
 #[cfg(test)]
 mod tests {
+    use bevy_ecs::prelude::*;
     use scale::layer1::building::OccupiedTiles;
     use scale::layer1::flora::{Flora, FloraType, flora_spread_system};
     use scale::layer1::map::GridPosition;
@@ -8,7 +9,6 @@ mod tests {
     use scale::layer1::pop::Pop;
     use scale::layer1::science::{Anomaly, AnomalyType, ScanProgress, spawn_initial_anomalies};
     use scale::layer1::terrain::{TerrainGrid, TerrainType};
-    use bevy_ecs::prelude::*;
 
     fn setup_world() -> World {
         let mut world = World::new();
@@ -44,11 +44,17 @@ mod tests {
             .iter(&world)
             .find(|(a, _)| a.anomaly_type == AnomalyType::StrangeFlora);
 
-        assert!(strange_flora.is_some(), "Should have spawned at least one StrangeFlora");
+        assert!(
+            strange_flora.is_some(),
+            "Should have spawned at least one StrangeFlora"
+        );
         let (_, emitter) = strange_flora.unwrap();
 
         // This assertion will FAIL initially
-        assert!(emitter.is_some(), "StrangeFlora should have PheromoneEmitter");
+        assert!(
+            emitter.is_some(),
+            "StrangeFlora should have PheromoneEmitter"
+        );
 
         // Verify Emitter Config
         let emitter = emitter.unwrap();
@@ -103,11 +109,9 @@ mod tests {
         // We manually attach emitter to prove the connection works IF the component is present.
         let mut world = setup_world();
 
-        let pop = world.spawn((
-            Pop,
-            GridPosition { x: 10, y: 10 },
-            Morale::default(),
-        )).id();
+        let pop = world
+            .spawn((Pop, GridPosition { x: 10, y: 10 }, Morale::default()))
+            .id();
 
         world.spawn((
             GridPosition { x: 10, y: 11 }, // Adjacent
