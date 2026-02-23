@@ -142,8 +142,10 @@ fn pick_weather_for_season(season: Season, rng: &mut impl Rng) -> WeatherType {
                 WeatherType::Clear
             } else if roll < 0.85 {
                 WeatherType::Heatwave
-            } else {
+            } else if roll < 0.95 {
                 WeatherType::Storm
+            } else {
+                WeatherType::MagneticStorm
             }
         }
         Season::Autumn => {
@@ -158,12 +160,14 @@ fn pick_weather_for_season(season: Season, rng: &mut impl Rng) -> WeatherType {
         Season::Winter => {
             if roll < 0.4 {
                 WeatherType::Clear
-            } else if roll < 0.85 {
+            } else if roll < 0.8 {
                 WeatherType::Snow
-            } else if roll < 0.95 {
+            } else if roll < 0.9 {
                 WeatherType::ThermalInversion
-            } else {
+            } else if roll < 0.95 {
                 WeatherType::Storm
+            } else {
+                WeatherType::MagneticStorm
             } // Blizzard
         }
     }

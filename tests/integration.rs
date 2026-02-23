@@ -117,3 +117,5 @@ mod medical_conditions;
 
 #[path = "integration/pheromone_integration.rs"]
 mod pheromone_integration;
+#[path = "integration/weather_energy.rs"]
+mod weather_energy;
