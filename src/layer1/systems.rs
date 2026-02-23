@@ -79,7 +79,9 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             assign_sleepwalk_target_system
                 .after(crate::layer1::room_quality::apply_waking_thoughts_system),
             cleanup_previous_assignment_system.after(assign_sleepwalk_target_system),
-            process_start_plan_system.after(cleanup_previous_assignment_system),
+            crate::layer1::customs::immigration_interception_system
+                .after(cleanup_previous_assignment_system),
+            process_start_plan_system.after(crate::layer1::customs::immigration_interception_system),
             crate::layer1::integration::drone_spawner_bridge_system
                 .after(process_start_plan_system),
             crate::layer1::integration::drone_work_bridge_system.after(process_start_plan_system),
@@ -131,6 +133,7 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             crate::layer1::artifacts::aura_system.after(movement_system),
             arrival_handler_system.after(movement_system),
             work_execution_system.after(arrival_handler_system),
+            crate::layer1::customs::vetting_work_system.after(arrival_handler_system),
             crate::layer1::hobby::execute_hobby_system.after(arrival_handler_system),
             crate::layer1::husbandry::tame_execution_system.after(arrival_handler_system),
             combat_execution_system.after(arrival_handler_system),
@@ -138,6 +141,12 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             crate::layer1::justice::warden_execution_system.after(combat_execution_system),
             crate::layer1::predictive_policing::pre_crime_execution_system
                 .after(combat_execution_system),
+        )
+            .in_set(Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::execution::vandalize_execution_system.after(arrival_handler_system),
             crate::layer1::drone::process_charge_system.after(arrival_handler_system),
             update_social_class_system.after(arrival_handler_system),

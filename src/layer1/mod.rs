@@ -595,6 +595,9 @@ pub use civic_ideology::*;
 /// Prohibition and Contraband system (Spec 203).
 pub mod contraband;
 pub use contraband::*;
+/// Customs checkpoint system (Spec 214).
+pub mod customs;
+pub use customs::*;
 /// Solar cycle and power generation (Spec 213).
 pub mod solar;
 pub use solar::*;

@@ -2,6 +2,7 @@
 //!
 //! Handles spawning, lifecycle, and behavior of temporary visitors.
 
+use crate::layer1::customs::ImmigrationStatus;
 use crate::layer1::execution::MovementTarget;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
@@ -88,6 +89,7 @@ pub fn spawn_visitor_system(
             spawn_pos,
             PopName::random(&mut rng),
             Needs::default(), // Needed for rendering (reusing Pop render logic for now)
+            ImmigrationStatus::Pending,
                               // Note: We deliberately do NOT add UtilityWeights to avoid the main AI loop.
         ));
 
