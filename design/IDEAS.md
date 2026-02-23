@@ -5639,7 +5639,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Customs Checkpoint
+## Customs Checkpoint [SPECCED]
 
 **Layer:** 1
 
