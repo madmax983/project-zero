@@ -1,6 +1,6 @@
+use crate::layer1::tech::Tech;
 use bevy_ecs::prelude::*;
 use ratatui::prelude::*;
-use crate::layer1::tech::Tech;
 
 /// State for the Tech Tree UI.
 #[derive(Resource, Default, Debug)]
@@ -76,7 +76,9 @@ pub fn render_tech_tree(frame: &mut Frame, area: Rect, world: &World) {
         .iter()
         .map(|tech| {
             let is_unlocked = tech_state.is_some_and(|ts| ts.is_unlocked(*tech));
-            let is_corrupted = tech_state.is_some_and(|ts| ts.techs.get(tech) == Some(&crate::layer1::tech::TechStatus::Corrupted));
+            let is_corrupted = tech_state.is_some_and(|ts| {
+                ts.techs.get(tech) == Some(&crate::layer1::tech::TechStatus::Corrupted)
+            });
             let cost = tech.cost();
             let affordable = knowledge >= cost;
 
@@ -97,9 +99,11 @@ pub fn render_tech_tree(frame: &mut Frame, area: Rect, world: &World) {
         })
         .collect();
 
-    let list = List::new(items)
-        .block(block)
-        .highlight_style(Style::default().add_modifier(Modifier::BOLD).bg(Color::DarkGray));
+    let list = List::new(items).block(block).highlight_style(
+        Style::default()
+            .add_modifier(Modifier::BOLD)
+            .bg(Color::DarkGray),
+    );
 
     let mut state = ListState::default();
     state.select(Some(ui_state.selected_index));
@@ -129,10 +133,10 @@ fn centered_rect(percent_x: u16, percent_y: u16, r: Rect) -> Rect {
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::tech::{Tech, TechState};
     use crate::layer1::resources::ColonyResources;
+    use crate::layer1::tech::{Tech, TechState};
     use crate::ui::tech::{TechUiState, get_tech_list};
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_tech_ui_state_resource_defaults() {
@@ -172,14 +176,17 @@ mod tests {
         world.insert_resource(crate::shared::log::MessageLog::default());
 
         // Setup UI State selecting first tech
-        let _ui_state = TechUiState { is_open: true, selected_index: 0 };
+        let _ui_state = TechUiState {
+            is_open: true,
+            selected_index: 0,
+        };
 
         let techs = get_tech_list();
         // Assuming get_tech_list returns something for this test to be meaningful
         if techs.is_empty() {
-             // If empty, we can't test unlock logic yet, but the test should fail if list is incomplete anyway
-             // For now, let's force fail if empty to drive implementation
-             assert!(!techs.is_empty(), "Tech list should not be empty");
+            // If empty, we can't test unlock logic yet, but the test should fail if list is incomplete anyway
+            // For now, let's force fail if empty to drive implementation
+            assert!(!techs.is_empty(), "Tech list should not be empty");
         }
         let target_tech = techs[0];
 

@@ -27,6 +27,7 @@ use super::biocompatibility::Biocompatibility;
 use super::cabin_fever::CabinFever;
 use super::contagion::ContagionCooldown;
 use super::factions::FactionMember;
+use super::gut_biome::GutBiome;
 use super::items::Equipment;
 use super::language::{Dialect, Linguistics};
 use super::lifecycle::Age;
@@ -281,6 +282,7 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
                     ActiveAuras::default(),
                     SocialDebt::default(),
                     Morale::default(),
+                    GutBiome::default(),
                     ContagionCooldown::default(),
                     Traits::random(rng),
                     CabinFever::default(),

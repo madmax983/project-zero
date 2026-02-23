@@ -222,10 +222,14 @@ fn handle_tech_tree_mode(world: &mut World, key: GameKeyEvent) {
             world.resource_mut::<crate::ui::tech::TechUiState>().is_open = false;
         }
         GameKeyCode::Up | GameKeyCode::Char('w') => {
-            world.resource_mut::<crate::ui::tech::TechUiState>().prev(tech_count);
+            world
+                .resource_mut::<crate::ui::tech::TechUiState>()
+                .prev(tech_count);
         }
         GameKeyCode::Down | GameKeyCode::Char('s') => {
-            world.resource_mut::<crate::ui::tech::TechUiState>().next(tech_count);
+            world
+                .resource_mut::<crate::ui::tech::TechUiState>()
+                .next(tech_count);
         }
         GameKeyCode::Enter | GameKeyCode::Char(' ') => {
             let ui_state = world.resource::<crate::ui::tech::TechUiState>();
@@ -791,14 +795,18 @@ mod tests {
         // Down
         route_input(&mut world, key_event(GameKeyCode::Char('s')));
         assert_eq!(
-            world.resource::<crate::ui::tech::TechUiState>().selected_index,
+            world
+                .resource::<crate::ui::tech::TechUiState>()
+                .selected_index,
             1
         );
 
         // Up
         route_input(&mut world, key_event(GameKeyCode::Char('w')));
         assert_eq!(
-            world.resource::<crate::ui::tech::TechUiState>().selected_index,
+            world
+                .resource::<crate::ui::tech::TechUiState>()
+                .selected_index,
             0
         );
 

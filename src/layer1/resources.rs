@@ -117,6 +117,8 @@ pub struct ColonyResources {
     pub potato: f32,
     /// Total rice available.
     pub rice: f32,
+    /// Total meat available.
+    pub meat: f32,
     /// Total wood available in the colony.
     pub wood: f32,
     /// Total stone available in the colony.
@@ -181,6 +183,8 @@ pub struct ColonyResources {
     pub max_fuel: f32,
     /// Maximum water capacity.
     pub max_water: f32,
+    /// Maximum meat capacity.
+    pub max_meat: f32,
     /// Maximum alcohol capacity.
     pub max_alcohol: f32,
 }
@@ -192,6 +196,7 @@ impl Default for ColonyResources {
             wheat: 0.0,
             potato: 0.0,
             rice: 0.0,
+            meat: 0.0,
             wood: 15.0,
             stone: 5.0,
             planks: 0.0,
@@ -224,6 +229,7 @@ impl Default for ColonyResources {
             max_fuel: 20.0,
             water: 0.0,
             max_water: 50.0,
+            max_meat: 50.0,
             max_alcohol: 50.0,
         }
     }
@@ -238,6 +244,7 @@ impl Mul<f32> for ColonyResources {
             wheat: (self.wheat * rhs).ceil(),
             potato: (self.potato * rhs).ceil(),
             rice: (self.rice * rhs).ceil(),
+            meat: (self.meat * rhs).ceil(),
             wood: (self.wood * rhs).ceil(),
             stone: (self.stone * rhs).ceil(),
             planks: (self.planks * rhs).ceil(),
@@ -271,6 +278,7 @@ impl Mul<f32> for ColonyResources {
             max_rations: self.max_rations,
             max_fuel: self.max_fuel,
             max_water: self.max_water,
+            max_meat: self.max_meat,
             max_alcohol: self.max_alcohol,
         }
     }
@@ -288,6 +296,7 @@ impl ColonyResources {
             wheat: 0.0,
             potato: 0.0,
             rice: 0.0,
+            meat: 0.0,
             wood: 0.0,
             stone: 0.0,
             planks: 0.0,
@@ -320,8 +329,14 @@ impl ColonyResources {
             max_fuel: 0.0,
             water: 0.0,
             max_water: 0.0,
+            max_meat: 0.0,
             max_alcohol: 0.0,
         }
+    }
+
+    /// Adds meat, clamping to the maximum capacity.
+    pub fn add_meat(&mut self, amount: f32) {
+        self.meat = (self.meat + amount).clamp(0.0, self.max_meat);
     }
 
     /// Adds alcohol, clamping to the maximum capacity.
@@ -425,6 +440,7 @@ impl ColonyResources {
             || self.wheat < 0.0
             || self.potato < 0.0
             || self.rice < 0.0
+            || self.meat < 0.0
             || self.wood < 0.0
             || self.stone < 0.0
             || self.planks < 0.0
@@ -463,6 +479,7 @@ impl ColonyResources {
             && self.wheat >= cost.wheat
             && self.potato >= cost.potato
             && self.rice >= cost.rice
+            && self.meat >= cost.meat
             && self.wood >= cost.wood
             && self.stone >= cost.stone
             && self.planks >= cost.planks
@@ -490,6 +507,7 @@ impl ColonyResources {
         self.wheat -= cost.wheat;
         self.potato -= cost.potato;
         self.rice -= cost.rice;
+        self.meat -= cost.meat;
         self.wood -= cost.wood;
         self.stone -= cost.stone;
         self.planks -= cost.planks;

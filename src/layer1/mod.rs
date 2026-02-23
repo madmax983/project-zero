@@ -595,3 +595,7 @@ pub use civic_ideology::*;
 /// Prohibition and Contraband system (Spec 203).
 pub mod contraband;
 pub use contraband::*;
+
+/// Gut Biome system (Spec 211).
+pub mod gut_biome;
+pub use gut_biome::*;

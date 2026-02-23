@@ -16,8 +16,10 @@ use crate::layer1::eureka::{EurekaConfig, check_for_eureka};
 use crate::layer1::factions::{FactionMember, FactionState, Factions};
 use crate::layer1::fauna::{Fauna, FaunaType};
 use crate::layer1::fertility::FertilityGrid;
+use crate::layer1::gut_biome::{GutBiome, get_biome_category};
 use crate::layer1::husbandry::Tame;
 use crate::layer1::items::ItemType;
+use crate::layer1::morale::{MoodModifier, Morale};
 use crate::layer1::needs::Needs;
 use crate::layer1::palette_fatigue::{DietaryHistory, record_meal};
 use crate::layer1::pop::Job;
@@ -296,6 +298,8 @@ pub fn consume_food_system(
             &mut Needs,
             Option<&mut DietaryHistory>,
             Option<&mut Wallet>,
+            Option<&mut GutBiome>,
+            Option<&mut Morale>,
         ),
         With<Pop>,
     >,
@@ -329,7 +333,7 @@ pub fn consume_food_system(
     // Collect hungry pop entities first to avoid borrow issues with mut iteration
     let hungry_pops: Vec<Entity> = pop_query
         .iter()
-        .filter(|(_, needs, _, wallet)| {
+        .filter(|(_, needs, _, wallet, _, _)| {
             if needs.hunger >= FOOD_HUNGER_THRESHOLD {
                 return false;
             }
@@ -341,7 +345,7 @@ pub fn consume_food_system(
             }
             true
         })
-        .map(|(e, _, _, _)| e)
+        .map(|(e, _, _, _, _, _)| e)
         .collect();
 
     let mut rng = rand::thread_rng();
@@ -366,6 +370,10 @@ pub fn consume_food_system(
         } else if resources.rice >= FOOD_PER_MEAL {
             resources.rice -= FOOD_PER_MEAL;
             eaten_item = ItemType::Rice;
+            ate = true;
+        } else if resources.meat >= FOOD_PER_MEAL {
+            resources.meat -= FOOD_PER_MEAL;
+            eaten_item = ItemType::Meat;
             ate = true;
         } else if resources.food >= FOOD_PER_MEAL {
             // Note: 'food' might double count if we aren't careful, but we are treating 'food' as a bucket here.
@@ -399,12 +407,15 @@ pub fn consume_food_system(
         if resources.rice >= FOOD_PER_MEAL {
             choices.push(ItemType::Rice);
         }
+        if resources.meat >= FOOD_PER_MEAL {
+            choices.push(ItemType::Meat);
+        }
         // Generic food fallback (if food > sum of others, or just treating leftover as generic)
         // Calculating "generic only" is hard if we just sum.
         // But we can check if we have generic food available.
         // If we only have specific crops, `resources.food` should equal sum.
         // If we have legacy food, `resources.food` > sum.
-        let specific_sum = resources.wheat + resources.potato + resources.rice;
+        let specific_sum = resources.wheat + resources.potato + resources.rice + resources.meat;
         if resources.food > specific_sum + f32::EPSILON && resources.food >= FOOD_PER_MEAL {
             // We have generic food
             choices.push(ItemType::None);
@@ -431,6 +442,7 @@ pub fn consume_food_system(
                 ItemType::Wheat => resources.wheat -= FOOD_PER_MEAL,
                 ItemType::Potato => resources.potato -= FOOD_PER_MEAL,
                 ItemType::Rice => resources.rice -= FOOD_PER_MEAL,
+                ItemType::Meat => resources.meat -= FOOD_PER_MEAL,
                 _ => {} // Generic
             }
             // Also deduct from main food pile
@@ -439,9 +451,47 @@ pub fn consume_food_system(
         }
 
         if ate {
+            // Gut Biome Logic
+            let category = get_biome_category(&eaten_item);
+            let mut efficiency = 1.0;
+            let mut mood_effect = None;
+
             #[allow(clippy::collapsible_if)]
-            if let Ok((_, mut needs, mut history_opt, mut wallet_opt)) = pop_query.get_mut(entity) {
-                needs.hunger = (needs.hunger + HUNGER_PER_MEAL).min(1.0);
+            if let Ok((
+                _,
+                mut needs,
+                mut history_opt,
+                mut wallet_opt,
+                mut biome_opt,
+                mut morale_opt,
+            )) = pop_query.get_mut(entity)
+            {
+                if let Some(biome) = biome_opt.as_deref_mut() {
+                    let fam = biome.get_familiarity(category);
+                    biome.adapt(category);
+
+                    if fam > 0.8 {
+                        efficiency = 1.0;
+                        mood_effect = Some("Gut Comfort");
+                    } else if fam < 0.3 {
+                        efficiency = 0.6;
+                        mood_effect = Some("Indigestion");
+                    }
+                }
+
+                needs.hunger = HUNGER_PER_MEAL.mul_add(efficiency, needs.hunger).min(1.0);
+
+                // Apply Mood Effect
+                if let Some(label) = mood_effect {
+                    if let Some(morale) = morale_opt.as_deref_mut() {
+                        let val = if label == "Gut Comfort" { 0.05 } else { -0.1 };
+                        morale.add_modifier(MoodModifier {
+                            label: label.to_string(),
+                            value: val,
+                            duration: 200,
+                        });
+                    }
+                }
 
                 // Deduct Cost
                 if let Some(wallet) = wallet_opt.as_deref_mut() {

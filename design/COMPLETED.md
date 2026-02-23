@@ -178,3 +178,4 @@ Features that have been fully implemented, tested, and merged.
 - [x] `089` Material Provenance — `specs/089-material-provenance.md` — completed 2025-05-23
 - [x] `109` Greenhouses — `specs/109-greenhouses.md` — completed 2026-06-25
 - [x] `INT-036` Integration: Magnetic Storm Weather -> Auroral Collector — completed 2026-03-03
+- [x] `211` Gut Biome — `specs/211-gut-biome.md` — completed 2026-06-25
