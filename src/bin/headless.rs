@@ -120,7 +120,7 @@ fn handle_command(world: &mut World, input: &str) -> bool {
                 match (building_type, x, y) {
                     (Some(bt), Some(x), Some(y)) => build_at(world, bt, x, y),
                     _ => {
-                        println!("Invalid arguments. Usage: build <farm|housing|stockpile> <x> <y>")
+                        println!("Invalid arguments. Usage: build <farm|housing|stockpile> <x> <y>");
                     }
                 }
             }
@@ -279,7 +279,9 @@ fn print_status(world: &mut World) {
         morale_count += 1;
     }
     let avg_morale = if morale_count > 0 {
-        total_morale / morale_count as f32
+        #[allow(clippy::cast_precision_loss)]
+        let count = morale_count as f32;
+        total_morale / count
     } else {
         0.0
     };
@@ -593,7 +595,7 @@ fn designate_at(world: &mut World, designation_type: DesignationType, x: i32, y:
                     println!("Failed: ({x}, {y}) is {tile:?}, need Tree for chopping");
                 }
             }
-            DesignationType::Demolish => {
+            DesignationType::Demolish | DesignationType::Destroy => {
                 println!("Failed: no building at ({x}, {y})");
             }
             DesignationType::Repair => {
@@ -613,9 +615,6 @@ fn designate_at(world: &mut World, designation_type: DesignationType, x: i32, y:
             }
             DesignationType::Cannibalize => {
                 println!("Failed: no Lander at ({x}, {y})");
-            }
-            DesignationType::Destroy => {
-                println!("Failed: no building at ({x}, {y})");
             }
         }
     }
@@ -1045,27 +1044,19 @@ fn print_log(world: &mut World) {
     println!("{table}");
 }
 
-fn to_comfy_color(c: ratatui::style::Color) -> comfy_table::Color {
+const fn to_comfy_color(c: ratatui::style::Color) -> comfy_table::Color {
     use comfy_table::Color as CColor;
     use ratatui::style::Color as RColor;
 
     match c {
         RColor::Black => CColor::Black,
-        RColor::Red => CColor::Red,
-        RColor::Green => CColor::Green,
-        RColor::Yellow => CColor::Yellow,
-        RColor::Blue => CColor::Blue,
-        RColor::Magenta => CColor::Magenta,
-        RColor::Cyan => CColor::Cyan,
-        RColor::Gray => CColor::Grey,
-        RColor::DarkGray => CColor::DarkGrey,
-        RColor::LightRed => CColor::Red,
-        RColor::LightGreen => CColor::Green,
-        RColor::LightYellow => CColor::Yellow,
-        RColor::LightBlue => CColor::Blue,
-        RColor::LightMagenta => CColor::Magenta,
-        RColor::LightCyan => CColor::Cyan,
-        RColor::White => CColor::White,
+        RColor::Red | RColor::LightRed => CColor::Red,
+        RColor::Green | RColor::LightGreen => CColor::Green,
+        RColor::Yellow | RColor::LightYellow => CColor::Yellow,
+        RColor::Blue | RColor::LightBlue => CColor::Blue,
+        RColor::Magenta | RColor::LightMagenta => CColor::Magenta,
+        RColor::Cyan | RColor::LightCyan => CColor::Cyan,
+        RColor::Gray | RColor::DarkGray => CColor::Grey,
         _ => CColor::White,
     }
 }

@@ -27,6 +27,8 @@ pub enum WeatherType {
     Heatwave,
     /// Snow, moderate slowdown.
     Snow,
+    /// Thermal Inversion, traps smog.
+    ThermalInversion,
 }
 
 impl WeatherType {
@@ -40,6 +42,7 @@ impl WeatherType {
             Self::Fog => "Fog",
             Self::Heatwave => "Heatwave",
             Self::Snow => "Snow",
+            Self::ThermalInversion => "Thermal Inversion",
         }
     }
 
@@ -47,7 +50,7 @@ impl WeatherType {
     #[must_use]
     pub const fn speed_modifier(&self) -> f32 {
         match self {
-            Self::Clear => 1.0,
+            Self::Clear | Self::ThermalInversion => 1.0,
             Self::Rain => 0.8,
             Self::Storm => 0.5,
             Self::Fog => 0.7,
@@ -152,8 +155,10 @@ fn pick_weather_for_season(season: Season, rng: &mut impl Rng) -> WeatherType {
         Season::Winter => {
             if roll < 0.4 {
                 WeatherType::Clear
-            } else if roll < 0.9 {
+            } else if roll < 0.85 {
                 WeatherType::Snow
+            } else if roll < 0.95 {
+                WeatherType::ThermalInversion
             } else {
                 WeatherType::Storm
             } // Blizzard

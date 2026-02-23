@@ -4,9 +4,35 @@ use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::health::Health;
 use crate::layer1::map::GridPosition;
 use crate::layer1::pop::Pop;
+use crate::layer1::weather::{WeatherState, WeatherType};
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
+
+/// Types of atmospheric gases.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub enum GasType {
+    /// Industrial pollution.
+    Smog,
+}
+
+/// Configuration for atmospheric diffusion.
+#[derive(Resource, Debug, Clone)]
+pub struct DiffusionConfig {
+    /// Horizontal diffusion rate (0.0 to 1.0).
+    pub rate: f32,
+    /// Vertical escape rate (0.0 to 1.0).
+    pub vertical_escape: f32,
+}
+
+impl Default for DiffusionConfig {
+    fn default() -> Self {
+        Self {
+            rate: 0.1,
+            vertical_escape: 0.05,
+        }
+    }
+}
 
 /// Represents the static "base" wind of the map, unaffected by tides.
 #[derive(Resource)]
@@ -122,7 +148,7 @@ impl AtmosphereGrid {
         self.values[uy * self.width + ux]
     }
 
-    /// Set pollution level at (x, y). Clamped between 0.0 and 1.0.
+    /// Set pollution level at (x, y). Clamped between 0.0 and `f32::MAX`.
     #[allow(clippy::cast_sign_loss)]
     pub fn set(&mut self, x: i32, y: i32, value: f32) {
         if x < 0 || y < 0 {
@@ -133,13 +159,26 @@ impl AtmosphereGrid {
         if ux >= self.width || uy >= self.height {
             return;
         }
-        self.values[uy * self.width + ux] = value.clamp(0.0, 1.0);
+        self.values[uy * self.width + ux] = value.max(0.0);
     }
 
     /// Add pollution at (x, y). Clamped to max 1.0.
     pub fn add(&mut self, x: i32, y: i32, amount: f32) {
         let current = self.get(x, y);
         self.set(x, y, current + amount);
+    }
+
+    /// Get gas level at (x, y) for a specific gas type.
+    /// Currently only supports Smog (maps to base layer).
+    #[must_use]
+    pub fn get_gas(&self, x: i32, y: i32, _gas: GasType) -> f32 {
+        self.get(x, y)
+    }
+
+    /// Set gas level at (x, y) for a specific gas type.
+    /// Currently only supports Smog (maps to base layer).
+    pub fn set_gas(&mut self, x: i32, y: i32, _gas: GasType, value: f32) {
+        self.set(x, y, value);
     }
 
     /// Get interpolated pollution value at float coordinates.
@@ -206,13 +245,13 @@ impl AtmosphereGrid {
     }
 
     /// Simulate diffusion and natural decay of pollution.
-    /// Uses a simple box blur.
+    /// Uses a simple box blur weighted by `horizontal_rate`.
     #[allow(
         clippy::cast_possible_truncation,
         clippy::cast_possible_wrap,
         clippy::cast_sign_loss
     )]
-    pub fn diffuse(&mut self, blockers: &HashMap<(i32, i32), f32>) {
+    pub fn diffuse(&mut self, blockers: &HashMap<(i32, i32), f32>, horizontal_rate: f32) {
         // Ensure scratch buffer size matches (in case of dynamic resizing, though rare)
         if self.scratch.len() != self.values.len() {
             self.scratch = vec![0.0; self.values.len()];
@@ -246,13 +285,18 @@ impl AtmosphereGrid {
                         let neighbor_trans = *blockers.get(&(nx, ny)).unwrap_or(&1.0);
 
                         if neighbor_trans > f32::EPSILON {
-                            sum += neighbor_val * neighbor_trans;
-                            total_weight += neighbor_trans;
+                            let weight = neighbor_trans * horizontal_rate;
+                            sum += neighbor_val * weight;
+                            total_weight += weight;
                         }
                     } else {
                         // Vacuum edge sucks pollution away
+                        // Edge logic: If horizontal_rate is 0.0, vacuum shouldn't apply?
+                        // Or vacuum is a property of the map edge?
+                        // Assuming vacuum is a "neighbor with value 0.0".
+                        let weight = 1.0 * horizontal_rate;
                         sum += 0.0;
-                        total_weight += 1.0;
+                        total_weight += weight;
                     }
                 }
 
@@ -271,7 +315,7 @@ impl AtmosphereGrid {
     }
 }
 
-/// System to update atmospheric simulation (emission + diffusion).
+/// System to update atmospheric advection and emission (Part 1).
 pub fn update_atmosphere_system(
     mut grid: ResMut<AtmosphereGrid>,
     wind_grid: Option<Res<crate::layer1::wind::WindGrid>>,
@@ -282,17 +326,11 @@ pub fn update_atmosphere_system(
         grid.advect(&wind);
     }
 
-    // 2. Identify Blockers & Emitters
-    let mut blockers = HashMap::new();
+    // 2. Emitters
+    // Note: We don't collect blockers here anymore, they are used in diffusion system.
     let mut emitters = Vec::new();
 
     for (b, pos) in query.iter() {
-        // Blockers
-        if let Some(transmissivity) = b.building_type.flow_transmissivity() {
-            blockers.insert((pos.x, pos.y), transmissivity);
-        }
-
-        // Emitters
         let emission = match b.building_type {
             BuildingType::Refinery | BuildingType::AncientReactor => 0.08,
             BuildingType::Smelter | BuildingType::Generator => 0.05,
@@ -304,11 +342,10 @@ pub fn update_atmosphere_system(
         }
     }
 
-    // 3. Apply emissions & Diffuse
+    // 3. Apply emissions
     for (pos, amount) in emitters {
         grid.add(pos.x, pos.y, amount);
     }
-    grid.diffuse(&blockers);
 }
 
 /// System to apply health effects from pollution.
@@ -334,6 +371,49 @@ pub fn pollution_effects_system(world: &mut World) {
     for (entity, damage) in damages {
         if let Some(mut health) = world.get_mut::<Health>(entity) {
             health.take_damage(damage);
+        }
+    }
+}
+
+/// Simulates gas diffusion with weather effects (e.g. Thermal Inversion).
+pub fn simulate_diffusion_system(
+    mut grid: ResMut<AtmosphereGrid>,
+    config: Res<DiffusionConfig>,
+    weather: Res<WeatherState>,
+    query: Query<(&Building, &GridPosition)>,
+) {
+    // 1. Determine effective escape rate
+    let vertical_escape = if weather.current_weather == WeatherType::ThermalInversion {
+        0.0
+    } else {
+        config.vertical_escape
+    };
+
+    // Update grid diffusion rate (retention = 1.0 - escape)
+    grid.diffusion_rate = 1.0 - vertical_escape;
+
+    // 2. Identify Blockers
+    let mut blockers = HashMap::new();
+    for (b, pos) in query.iter() {
+        if let Some(transmissivity) = b.building_type.flow_transmissivity() {
+            blockers.insert((pos.x, pos.y), transmissivity);
+        }
+    }
+
+    // 3. Diffuse
+    grid.diffuse(&blockers, config.rate);
+}
+
+/// Applies damage from high smog levels.
+pub fn apply_smog_damage_system(
+    grid: Res<AtmosphereGrid>,
+    mut query: Query<(&GridPosition, &mut Health), With<Pop>>,
+) {
+    for (pos, mut health) in &mut query {
+        let smog_level = grid.get_gas(pos.x, pos.y, GasType::Smog);
+        if smog_level > 150.0 {
+            // Suffocation / Toxicity
+            health.take_damage(1.0);
         }
     }
 }
@@ -383,8 +463,8 @@ mod tests {
         let mut grid = AtmosphereGrid::new(3, 3);
         grid.set(1, 1, 10.0); // High pollution in center
 
-        // Simulate one step of diffusion
-        grid.diffuse(&HashMap::new());
+        // Simulate one step of diffusion with 1.0 rate (full mix)
+        grid.diffuse(&HashMap::new(), 1.0);
 
         // Center should decrease, neighbors should increase
         assert!(
@@ -427,6 +507,12 @@ mod tests {
     #[test]
     fn test_pollution_blocked_by_wall() {
         let mut world = World::new();
+        world.insert_resource(DiffusionConfig {
+            rate: 1.0,
+            vertical_escape: 0.05,
+        });
+        world.insert_resource(WeatherState::default());
+
         let mut grid = AtmosphereGrid::new(5, 1);
         grid.set(0, 0, 1.0); // Source
         world.insert_resource(grid);
@@ -439,9 +525,9 @@ mod tests {
             GridPosition { x: 1, y: 0 },
         ));
 
-        // Run atmosphere update
+        // Run atmosphere update AND diffusion
         let mut schedule = Schedule::default();
-        schedule.add_systems(update_atmosphere_system);
+        schedule.add_systems((update_atmosphere_system, simulate_diffusion_system).chain());
         for _ in 0..5 {
             schedule.run(&mut world);
         }
@@ -456,6 +542,12 @@ mod tests {
     #[test]
     fn test_pollution_passes_through_vent() {
         let mut world = World::new();
+        world.insert_resource(DiffusionConfig {
+            rate: 1.0,
+            vertical_escape: 0.05,
+        });
+        world.insert_resource(WeatherState::default());
+
         let mut grid = AtmosphereGrid::new(5, 1);
         grid.set(0, 0, 1.0); // Source
         world.insert_resource(grid);
@@ -476,9 +568,9 @@ mod tests {
             GridPosition { x: 1, y: 0 },
         ));
 
-        // Run atmosphere update
+        // Run atmosphere update AND diffusion
         let mut schedule = Schedule::default();
-        schedule.add_systems(update_atmosphere_system);
+        schedule.add_systems((update_atmosphere_system, simulate_diffusion_system).chain());
         for _ in 0..20 {
             // Manually refill source
             world.resource_mut::<AtmosphereGrid>().set(0, 0, 1.0);

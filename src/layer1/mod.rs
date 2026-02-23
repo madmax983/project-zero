@@ -563,6 +563,9 @@ mod vacuum_welding_tests;
 #[cfg(test)]
 mod cryo_tests;
 
+#[cfg(test)]
+mod weather_tests;
+
 /// Emergent Festivals system (Spec 077).
 pub mod festivals;
 pub use festivals::*;

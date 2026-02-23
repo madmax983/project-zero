@@ -20,8 +20,9 @@ pub(crate) fn evaluate_fetch_clothing(
         score = 0.95; // Need clothes!
     } else if let Some(grid) = temperature_grid {
         // Check if freezing despite clothes
+        #[allow(clippy::cast_sign_loss)]
         let temp = grid.get(pop_pos.x as usize, pop_pos.y as usize);
-        let safe_temp = 10.0 - (current_insulation * 30.0);
+        let safe_temp = current_insulation.mul_add(-30.0, 10.0);
         if temp < safe_temp {
             // Check if we are already maxed out (e.g. Parka 2.0)?
             // If insulation is already high (e.g. >= 2.0), fetching won't help unless we have super-parka.
@@ -60,20 +61,20 @@ pub fn handle_fetch_clothing(
 
         // Determine if upgrade is needed (simplistic logic: if already has item, give Parka)
         let mut is_upgrade = false;
-        if let Some(eq) = equipment_opt {
-            if eq.body.is_some() {
-                is_upgrade = true;
-                // Despawn old item? Or return to stockpile?
-                // For MVP, despawn old item (discarded).
-                if let Some(old_entity) = eq.body {
-                    // Emit UnequipEvent before despawn
-                    unequip_events.send(UnequipEvent {
-                        actor: pop_entity,
-                        item: old_entity,
-                        slot: "body".to_string(),
-                    });
-                    commands.entity(old_entity).despawn();
-                }
+        if let Some(eq) = equipment_opt
+            && eq.body.is_some()
+        {
+            is_upgrade = true;
+            // Despawn old item? Or return to stockpile?
+            // For MVP, despawn old item (discarded).
+            if let Some(old_entity) = eq.body {
+                // Emit UnequipEvent before despawn
+                unequip_events.send(UnequipEvent {
+                    actor: pop_entity,
+                    item: old_entity,
+                    slot: "body".to_string(),
+                });
+                commands.entity(old_entity).despawn();
             }
         }
 
