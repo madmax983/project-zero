@@ -250,7 +250,7 @@ mod tests {
             Pop,
             Job {
                 workplace: machine,
-                job_type: AssignmentType::Scientist,
+                job_type: AssignmentType::LibraryWorker,
             },
         ));
 
@@ -286,7 +286,7 @@ mod tests {
                 Pop,
                 Job {
                     workplace: machine,
-                    job_type: AssignmentType::Scientist,
+                    job_type: AssignmentType::LibraryWorker,
                 },
             ))
             .id();
@@ -317,7 +317,7 @@ mod tests {
         // Add Job to worker
         world.entity_mut(worker).insert(Job {
             workplace: machine,
-            job_type: AssignmentType::Scientist,
+            job_type: AssignmentType::LibraryWorker,
         });
 
         let mut schedule = Schedule::default();

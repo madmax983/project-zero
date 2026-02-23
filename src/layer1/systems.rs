@@ -211,6 +211,8 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             crate::layer1::tech_envy::tech_envy_system.after(restore_leisure_system),
             crate::layer1::civic_ideology::evaluate_civic_ideology_system
                 .after(restore_leisure_system),
+            #[cfg(feature = "nova")]
+            crate::layer1::loci::apply_loci_effects_system.after(restore_leisure_system),
             apply_mood_modifiers_system.after(restore_leisure_system),
             mascot_buff_system.after(restore_leisure_system),
             crate::layer1::graffiti::graffiti_observation_system.after(apply_mood_modifiers_system),
@@ -303,6 +305,8 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             entropy_system,
             crate::layer1::structure::fragile_decay_system.after(entropy_system),
             crate::layer1::crowding::crowding_decay_system,
+            #[cfg(feature = "nova")]
+            crate::layer1::loci::update_loci_system,
         )
             .in_set(Layer1SystemSet::Environment),
     );
@@ -416,6 +420,10 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             crate::layer1::pop::handle_witness_death_system
                 .after(crate::layer1::pop::handle_pop_death_system),
             mascot_death_grief_system.after(crate::layer1::health::check_health_status_system),
+            #[cfg(feature = "nova")]
+            crate::layer1::loci::record_death_loci_system
+                .after(crate::layer1::pop::handle_pop_death_system)
+                .before(crate::layer1::health::despawn_dead_entities_system),
             crate::layer1::health::despawn_dead_entities_system
                 .after(crate::layer1::pop::handle_pop_death_system)
                 .after(crate::layer1::fauna::handle_fauna_death_system)
