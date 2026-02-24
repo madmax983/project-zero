@@ -21,12 +21,10 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `189` Gravity Engineering — `specs/189-gravity-engineering.md`
 - [ ] `192` Planetary Weather Fronts — `specs/192-planetary-weather-fronts.md`
 - [ ] `198` Urban Heat Islands — `specs/198-urban-heat-islands.md`
-- [ ] `199` Obsessive Optimization — `specs/199-obsessive-optimization.md`
 - [ ] `202` Swarm Intelligence — `specs/202-swarm-intelligence.md`
 - [ ] `206` Orbital Crossfire — `specs/206-orbital-crossfire.md`
 - [ ] `208` Resonant Architecture — `specs/208-resonant-architecture.md`
 - [ ] `210` Ammunition Logistics — `specs/210-ammunition-logistics.md`
-- [ ] `211` Gut Biome — `specs/211-gut-biome.md`
 - [ ] `212` Planetary Core Tap — `specs/212-planetary-core-tap.md`
 - [ ] `215` Safehouse Contracts — `specs/215-safehouse-contracts.md`
 
