@@ -83,17 +83,26 @@ pub struct WindGrid {
 
 impl WindGrid {
     /// Create a new wind grid.
+    ///
+    /// # Panics
+    /// Panics if `width * height` overflows or exceeds 10,000,000.
     #[must_use]
     pub fn new(width: usize, height: usize) -> Self {
+        let size = width
+            .checked_mul(height)
+            .expect("Grid size overflow or too large");
+        assert!(size <= 10_000_000, "Grid size overflow or too large");
+
         Self {
             width,
             height,
-            vectors: vec![Vec2::ZERO; width * height],
+            vectors: vec![Vec2::ZERO; size],
         }
     }
 
     /// Get the wind vector at the specified coordinates.
     #[must_use]
+    #[allow(clippy::collapsible_if)]
     pub fn get_wind(&self, x: i32, y: i32) -> Vec2 {
         if x < 0 || y < 0 {
             return Vec2::ZERO;
@@ -103,10 +112,16 @@ impl WindGrid {
         if ux >= self.width || uy >= self.height {
             return Vec2::ZERO;
         }
-        self.vectors[uy * self.width + ux]
+        if let Some(idx) = uy.checked_mul(self.width).and_then(|i| i.checked_add(ux)) {
+            if idx < self.vectors.len() {
+                return self.vectors[idx];
+            }
+        }
+        Vec2::ZERO
     }
 
     /// Set the wind vector at the specified coordinates.
+    #[allow(clippy::collapsible_if)]
     pub fn set_wind(&mut self, x: i32, y: i32, wind: Vec2) {
         if x < 0 || y < 0 {
             return;
@@ -116,7 +131,11 @@ impl WindGrid {
         if ux >= self.width || uy >= self.height {
             return;
         }
-        self.vectors[uy * self.width + ux] = wind;
+        if let Some(idx) = uy.checked_mul(self.width).and_then(|i| i.checked_add(ux)) {
+            if idx < self.vectors.len() {
+                self.vectors[idx] = wind;
+            }
+        }
     }
 }
 

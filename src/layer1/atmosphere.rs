@@ -121,9 +121,16 @@ pub struct AtmosphereGrid {
 
 impl AtmosphereGrid {
     /// Create a new empty atmosphere grid.
+    ///
+    /// # Panics
+    /// Panics if `width * height` overflows or exceeds 10,000,000.
     #[must_use]
     pub fn new(width: usize, height: usize) -> Self {
-        let size = width * height;
+        let size = width
+            .checked_mul(height)
+            .expect("Grid size overflow or too large");
+        assert!(size <= 10_000_000, "Grid size overflow or too large");
+
         Self {
             width,
             height,
@@ -135,7 +142,7 @@ impl AtmosphereGrid {
 
     /// Get pollution level at (x, y). Returns 0.0 if out of bounds.
     #[must_use]
-    #[allow(clippy::cast_sign_loss)]
+    #[allow(clippy::cast_sign_loss, clippy::collapsible_if)]
     pub fn get(&self, x: i32, y: i32) -> f32 {
         if x < 0 || y < 0 {
             return 0.0;
@@ -145,11 +152,16 @@ impl AtmosphereGrid {
         if ux >= self.width || uy >= self.height {
             return 0.0;
         }
-        self.values[uy * self.width + ux]
+        if let Some(idx) = uy.checked_mul(self.width).and_then(|i| i.checked_add(ux)) {
+            if idx < self.values.len() {
+                return self.values[idx];
+            }
+        }
+        0.0
     }
 
     /// Set pollution level at (x, y). Clamped between 0.0 and `f32::MAX`.
-    #[allow(clippy::cast_sign_loss)]
+    #[allow(clippy::cast_sign_loss, clippy::collapsible_if)]
     pub fn set(&mut self, x: i32, y: i32, value: f32) {
         if x < 0 || y < 0 {
             return;
@@ -159,7 +171,11 @@ impl AtmosphereGrid {
         if ux >= self.width || uy >= self.height {
             return;
         }
-        self.values[uy * self.width + ux] = value.max(0.0);
+        if let Some(idx) = uy.checked_mul(self.width).and_then(|i| i.checked_add(ux)) {
+            if idx < self.values.len() {
+                self.values[idx] = value.max(0.0);
+            }
+        }
     }
 
     /// Add pollution at (x, y). Clamped to max 1.0.

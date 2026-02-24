@@ -20,18 +20,26 @@ pub struct VibrationGrid {
 
 impl VibrationGrid {
     /// Creates a new vibration grid.
+    ///
+    /// # Panics
+    /// Panics if `width * height` overflows or exceeds 10,000,000.
     #[must_use]
     pub fn new(width: usize, height: usize) -> Self {
+        let size = width
+            .checked_mul(height)
+            .expect("Grid size overflow or too large");
+        assert!(size <= 10_000_000, "Grid size overflow or too large");
+
         Self {
             width,
             height,
-            values: vec![0.0; width * height],
+            values: vec![0.0; size],
         }
     }
 
     /// Gets vibration at coordinates.
     #[must_use]
-    #[allow(clippy::cast_sign_loss)]
+    #[allow(clippy::cast_sign_loss, clippy::collapsible_if)]
     pub fn get(&self, x: i32, y: i32) -> f32 {
         if x < 0 || y < 0 {
             return 0.0;
@@ -41,11 +49,16 @@ impl VibrationGrid {
         if ux >= self.width || uy >= self.height {
             return 0.0;
         }
-        self.values[uy * self.width + ux]
+        if let Some(idx) = uy.checked_mul(self.width).and_then(|i| i.checked_add(ux)) {
+            if idx < self.values.len() {
+                return self.values[idx];
+            }
+        }
+        0.0
     }
 
     /// Sets vibration at coordinates.
-    #[allow(clippy::cast_sign_loss)]
+    #[allow(clippy::cast_sign_loss, clippy::collapsible_if)]
     pub fn set(&mut self, x: i32, y: i32, val: f32) {
         if x < 0 || y < 0 {
             return;
@@ -55,7 +68,11 @@ impl VibrationGrid {
         if ux >= self.width || uy >= self.height {
             return;
         }
-        self.values[uy * self.width + ux] = val;
+        if let Some(idx) = uy.checked_mul(self.width).and_then(|i| i.checked_add(ux)) {
+            if idx < self.values.len() {
+                self.values[idx] = val;
+            }
+        }
     }
 }
 
