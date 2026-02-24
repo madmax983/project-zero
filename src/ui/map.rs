@@ -803,7 +803,9 @@ pub const fn get_building_color(building: BuildingType, material: MaterialType) 
             | BuildingType::Battery
             | BuildingType::DroneHub
             | BuildingType::AuroralCollector => Color::Cyan,
-            BuildingType::AtmosphericProcessor => Color::Rgb(0, 255, 100), // Toxic Green
+            BuildingType::AtmosphericProcessor | BuildingType::ServerBank => {
+                Color::Rgb(0, 255, 100)
+            } // Toxic/Data Green
             BuildingType::Plantation | BuildingType::PersonalGarden => Color::Green,
             BuildingType::Weaver | BuildingType::Statue | BuildingType::Lander => Color::White,
             BuildingType::Hospital => Color::Red,
@@ -815,7 +817,6 @@ pub const fn get_building_color(building: BuildingType, material: MaterialType) 
             BuildingType::Greenhouse | BuildingType::HydroponicsBay => Color::Rgb(200, 255, 255), // Glass/Cyan
             BuildingType::TrashCannon => Color::Rgb(100, 100, 100),
             BuildingType::Heater => Color::Rgb(255, 140, 0), // DarkOrange
-            BuildingType::ServerBank => Color::Rgb(0, 255, 100), // Data Green
             BuildingType::CommandCenter | BuildingType::Office | BuildingType::CryoPod => {
                 Color::Rgb(0, 0, 255)
             } // Blue

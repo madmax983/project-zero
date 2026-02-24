@@ -1,12 +1,12 @@
 #[cfg(test)]
 mod tests {
-    use crate::layer1::energy::{BlackoutProtocol, PowerConsumer, PowerSource, power_grid_system};
-    use crate::layer1::lighting::{AmbientLight, LightMap, LightSource, update_lighting_system};
+    use bevy_ecs::prelude::*;
+    use crate::layer1::energy::{PowerConsumer, PowerSource, power_grid_system, BlackoutProtocol};
+    use crate::layer1::lighting::{LightSource, update_lighting_system, LightMap, AmbientLight};
     use crate::layer1::map::GridPosition;
     use crate::layer1::needs::Needs;
     use crate::layer1::pop::{Pop, Speed};
     use crate::layer1::traits::{Trait, Traits};
-    use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
     use std::collections::HashSet;
 
@@ -17,34 +17,18 @@ mod tests {
 
         // Generator (Output 10)
         world.spawn((
-            PowerSource {
-                output: 10.0,
-                active: true,
-            },
+            PowerSource { output: 10.0, active: true },
             GridPosition { x: 0, y: 0 },
-            crate::layer1::building::Building {
-                building_type: crate::layer1::building::BuildingType::Generator,
-            }, // Needed for grid
         ));
 
         // Consumer (Demand 5)
-        let consumer = world
-            .spawn((
-                PowerConsumer {
-                    demand: 5.0,
-                    active: true,
-                }, // Starts active
-                GridPosition { x: 0, y: 1 },
-                crate::layer1::building::Building {
-                    building_type: crate::layer1::building::BuildingType::Smelter,
-                }, // Needed for grid
-                crate::layer1::energy::Conduit, // Connect
-            ))
-            .id();
+        let consumer = world.spawn((
+            PowerConsumer { demand: 5.0, active: true }, // Starts active
+            GridPosition { x: 0, y: 1 },
+        )).id();
 
         // Run grid system
-        // power_grid_system is a regular function taking &mut World, so we can call it directly
-        power_grid_system(&mut world);
+        world.run_system_once(power_grid_system).unwrap();
 
         let state = world.get::<PowerConsumer>(consumer).unwrap();
         assert!(!state.active, "Consumer should be inactive during blackout");
@@ -59,40 +43,27 @@ mod tests {
         // Light Source WITH PowerConsumer (e.g. Lamp)
         // Should be disabled if PowerConsumer is inactive
         world.spawn((
-            LightSource {
-                radius: 5.0,
-                intensity: 1.0,
-                color: (255, 255, 255),
-            },
-            PowerConsumer {
-                demand: 1.0,
-                active: false,
-            }, // Inactive due to blackout
-            GridPosition { x: 9, y: 9 },
+            LightSource { radius: 5.0, intensity: 1.0, color: (255, 255, 255) },
+            PowerConsumer { demand: 1.0, active: false }, // Inactive due to blackout (simulated here)
+            GridPosition { x: 5, y: 5 },
         ));
 
         // Light Source WITHOUT PowerConsumer (e.g. Torch)
         // Should remain active
+        // NOTE: Must be far enough from Lamp (5,5) to avoid overlapping light causing false failure
+        // Distance (2,2) to (5,5) is ~4.24, which is < 5.0 radius.
+        // Moving to (0,0). Distance to (5,5) is ~7.07 > 5.0.
         world.spawn((
-            LightSource {
-                radius: 5.0,
-                intensity: 1.0,
-                color: (255, 200, 100),
-            },
+            LightSource { radius: 5.0, intensity: 1.0, color: (255, 200, 100) },
             GridPosition { x: 0, y: 0 },
         ));
 
-        // Use RunSystemOnce for system functions requiring queries
-        let _ = world.run_system_once(update_lighting_system);
+        world.run_system_once(update_lighting_system).unwrap();
 
         let map = world.resource::<LightMap>();
 
-        // Lamp at 9,9 should be dark
-        assert!(
-            map.get(9, 9) < 0.1,
-            "Powered light should be off, got {}",
-            map.get(9, 9)
-        );
+        // Lamp at 5,5 should be dark
+        assert!(map.get(5, 5) < 0.1, "Powered light should be off");
 
         // Torch at 0,0 should be lit
         assert!(map.get(0, 0) > 0.5, "Unpowered light (torch) should be on");
@@ -110,49 +81,35 @@ mod tests {
         }
 
         // Anxious Pop (Scared of dark)
-        let anxious = world
-            .spawn((
-                Pop,
-                GridPosition { x: 0, y: 0 },
-                Traits(HashSet::from([Trait::Anxious])),
-                Needs {
-                    leisure: 1.0,
-                    ..Default::default()
-                },
-                Speed::default(),
-            ))
-            .id();
+        let anxious = world.spawn((
+            Pop,
+            GridPosition { x: 0, y: 0 },
+            Speed::default(),
+            Traits(HashSet::from([Trait::Anxious])),
+            Needs { leisure: 1.0, ..Default::default() },
+        )).id();
 
         // NightOwl Pop (Likes dark)
-        let night_owl = world
-            .spawn((
-                Pop,
-                GridPosition { x: 0, y: 0 },
-                Traits(HashSet::from([Trait::NightOwl])),
-                Needs {
-                    leisure: 1.0,
-                    ..Default::default()
-                },
-                Speed::default(),
-            ))
-            .id();
+        let night_owl = world.spawn((
+            Pop,
+            GridPosition { x: 0, y: 0 },
+            Speed::default(),
+            Traits(HashSet::from([Trait::NightOwl])),
+            Needs { leisure: 1.0, ..Default::default() },
+        )).id();
 
         // Normal Pop
-        let normal = world
-            .spawn((
-                Pop,
-                GridPosition { x: 0, y: 0 },
-                Traits(HashSet::new()),
-                Needs {
-                    leisure: 1.0,
-                    ..Default::default()
-                },
-                Speed::default(),
-            ))
-            .id();
+        let normal = world.spawn((
+            Pop,
+            GridPosition { x: 0, y: 0 },
+            Speed::default(),
+            Traits(HashSet::new()),
+            Needs { leisure: 1.0, ..Default::default() },
+        )).id();
 
-        // Run lighting penalties system
-        let _ = world.run_system_once(crate::layer1::lighting::apply_lighting_penalties_system);
+        // Run lighting penalties system (enhanced)
+        // Note: System name matches Spec 053
+        world.run_system_once(crate::layer1::lighting::apply_lighting_penalties_system).unwrap();
 
         let n_anxious = world.get::<Needs>(anxious).unwrap();
         let n_nightowl = world.get::<Needs>(night_owl).unwrap();
@@ -161,17 +118,7 @@ mod tests {
         // Anxious should lose MORE leisure (stress)
         // Normal loses some
         // NightOwl loses LESS or NONE
-        assert!(
-            n_anxious.leisure < n_normal.leisure,
-            "Anxious pop should be more stressed. Anxious: {}, Normal: {}",
-            n_anxious.leisure,
-            n_normal.leisure
-        );
-        assert!(
-            n_normal.leisure < n_nightowl.leisure,
-            "Normal pop should be more stressed than NightOwl. Normal: {}, NightOwl: {}",
-            n_normal.leisure,
-            n_nightowl.leisure
-        );
+        assert!(n_anxious.leisure < n_normal.leisure, "Anxious pop should be more stressed");
+        assert!(n_normal.leisure < n_nightowl.leisure, "Normal pop should be more stressed than NightOwl");
     }
 }

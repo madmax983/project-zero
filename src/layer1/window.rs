@@ -1,3 +1,8 @@
+#![allow(
+    clippy::cast_possible_wrap,
+    clippy::cast_possible_truncation,
+    clippy::cast_sign_loss
+)]
 use bevy_ecs::prelude::*;
 use crate::layer1::building::{Building, BuildingMap, Direction, OccupiedTiles};
 use crate::layer1::beauty::{BeautyGrid, BeautySource};

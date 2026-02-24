@@ -1,7 +1,7 @@
 // src/layer1/terraforming.rs
 
 use bevy_ecs::prelude::*;
-use crate::layer1::atmosphere::{AtmosphereGrid, DiffusionConfig};
+use crate::layer1::atmosphere::AtmosphereGrid;
 use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::energy::PowerConsumer;
 use crate::layer1::health::Health;
@@ -26,6 +26,7 @@ impl Default for PlanetaryAtmosphere {
 }
 
 /// System to update planetary atmosphere based on active processors.
+#[allow(clippy::explicit_iter_loop)]
 pub fn update_planetary_atmosphere_system(
     mut atmosphere: ResMut<PlanetaryAtmosphere>,
     query: Query<(&Building, &PowerConsumer)>,
@@ -35,9 +36,9 @@ pub fn update_planetary_atmosphere_system(
 
     for (building, power) in query.iter() {
         if building.building_type == BuildingType::AtmosphericProcessor && power.active {
-             // Reduce toxicity slowly, raise temperature slowly
-             toxicity_change -= 0.0001;
-             temp_change += 0.001;
+            // Reduce toxicity slowly, raise temperature slowly
+            toxicity_change -= 0.0001;
+            temp_change += 0.001;
         }
     }
 
@@ -46,6 +47,7 @@ pub fn update_planetary_atmosphere_system(
 }
 
 /// System to apply planetary effects (toxicity) to local atmosphere and pops.
+#[allow(clippy::suboptimal_flops, clippy::explicit_iter_loop)]
 pub fn apply_planetary_effects_system(
     atmosphere: Res<PlanetaryAtmosphere>,
     mut grid: ResMut<AtmosphereGrid>,
@@ -71,6 +73,7 @@ pub fn apply_planetary_effects_system(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::layer1::atmosphere::DiffusionConfig;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::energy::PowerConsumer;
     use crate::layer1::map::GridPosition;
