@@ -1,5 +1,6 @@
 //! Rendering logic for Layer 2: System View.
 
+use crate::layer2::fleet::{Fleet, InOrbit, InTransit};
 use crate::layer2::system::{Orbit, OrbitalBody};
 use bevy_ecs::prelude::*;
 use ratatui::{
@@ -22,13 +23,27 @@ pub fn render_system_view(frame: &mut Frame, area: Rect, world: &World) {
     let inner = block.inner(area);
     frame.render_widget(block, area);
 
-    // Simple placeholder for bodies
-    // Iterate OrbitalBodies and draw them based on Orbit.angle/radius
-    // Project polar coordinates to screen (x, y)
-
     // Center is (inner.width/2, inner.height/2)
     let center_x = inner.x + inner.width / 2;
     let center_y = inner.y + inner.height / 2;
+
+    // Helper to calculate orbital position for an entity
+    // Returns (x, y) relative to screen (not relative to parent)
+    let get_position = |entity_id: Entity| -> (f32, f32) {
+        world.get::<Orbit>(entity_id).map_or_else(
+            || (f32::from(center_x), f32::from(center_y)),
+            |orbit| {
+                // Simple polar to cartesian projection
+                // Terminal cells are roughly 1:2 aspect ratio, so multiply X by 2 for circular appearance
+                let radius_x = orbit.radius * 2.0;
+                let radius_y = orbit.radius;
+
+                let x = radius_x.mul_add(orbit.angle.cos(), f32::from(center_x));
+                let y = radius_y.mul_add(orbit.angle.sin(), f32::from(center_y));
+                (x, y)
+            },
+        )
+    };
 
     // Draw the sun (center)
     let sun_pos = (center_x, center_y);
@@ -44,20 +59,30 @@ pub fn render_system_view(frame: &mut Frame, area: Rect, world: &World) {
         );
     }
 
-    // Draw orbital bodies
+    // Draw orbital bodies (Planets, Moons, Fleets)
+    // We iterate over everything that has an OrbitalBody component (which defines char/color)
     for entity in world.iter_entities() {
-        if let Some(body) = entity.get::<OrbitalBody>()
-            && let Some(orbit) = entity.get::<Orbit>()
-        {
-            // Simple polar to cartesian projection
-            // Terminal cells are roughly 1:2 aspect ratio, so multiply X by 2 for circular appearance
-            let radius_x = orbit.radius * 2.0;
-            let radius_y = orbit.radius;
+        if let Some(body) = entity.get::<OrbitalBody>() {
+            let (x, y) = if entity.contains::<Orbit>() {
+                 get_position(entity.id())
+            } else if entity.contains::<Fleet>() {
+                 if let Some(in_orbit) = entity.get::<InOrbit>() {
+                     get_position(in_orbit.parent)
+                 } else if let Some(transit) = entity.get::<InTransit>() {
+                     let start = get_position(transit.origin);
+                     let end = get_position(transit.destination);
+                     // Linear interpolation with mul_add for better precision
+                     let x = (end.0 - start.0).mul_add(transit.progress, start.0);
+                     let y = (end.1 - start.1).mul_add(transit.progress, start.1);
+                     (x, y)
+                 } else {
+                     continue;
+                 }
+            } else {
+                 continue;
+            };
 
-            let x = radius_x.mul_add(orbit.angle.cos(), f32::from(center_x));
-            let y = radius_y.mul_add(orbit.angle.sin(), f32::from(center_y));
-
-            // Cast to i32 for safe comparison before casting to u16
+            // Convert to screen coords
             #[allow(clippy::cast_possible_truncation)]
             let x_i32 = x.round() as i32;
             #[allow(clippy::cast_possible_truncation)]

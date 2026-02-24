@@ -11,3 +11,5 @@ pub mod render;
 pub mod system;
 /// System visibility logic (Command Center).
 pub mod visibility;
+/// Fleet movement and management.
+pub mod fleet;
