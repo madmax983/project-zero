@@ -237,8 +237,10 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(SolarCycleState::default()); // Minimum -> 0.8
 
-        let mut cycle = DayNightCycle::default();
-        cycle.time_of_day = TimeOfDay::Night;
+        let cycle = DayNightCycle {
+            time_of_day: TimeOfDay::Night,
+            ..Default::default()
+        };
         world.insert_resource(cycle);
 
         // Spawn solar panel
@@ -258,6 +260,6 @@ mod tests {
         schedule.run(&mut world);
 
         let power = world.get::<PowerSource>(panel).unwrap();
-        assert_eq!(power.output, 0.0);
+        assert!(power.output.abs() < f32::EPSILON);
     }
 }

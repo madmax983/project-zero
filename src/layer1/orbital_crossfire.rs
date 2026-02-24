@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::{MiningProgress, ResourceItem, ResourceType};
 use crate::shared::log::MessageLog;
+use bevy_ecs::prelude::*;
 
 #[derive(Component, Debug, Clone)]
 pub struct OrbitalEvent {
@@ -38,23 +38,33 @@ pub fn mine_scrap(world: &mut World, designation_entity: Entity, work_amount: f3
         (pos, target)
     };
 
-    let Some(site_entity) = site_entity else { return };
+    let Some(site_entity) = site_entity else {
+        return;
+    };
 
     // 2. Update Progress (on designation)
     // Ensure MiningProgress exists
     if world.get::<MiningProgress>(designation_entity).is_none() {
-        world.entity_mut(designation_entity).insert(MiningProgress { current: 0.0, max: 20.0 }); // 20 work for scrap
+        world.entity_mut(designation_entity).insert(MiningProgress {
+            current: 0.0,
+            max: 20.0,
+        }); // 20 work for scrap
     }
 
-    let completed = if let Some(mut progress) = world.get_mut::<MiningProgress>(designation_entity) {
+    let completed = if let Some(mut progress) = world.get_mut::<MiningProgress>(designation_entity)
+    {
         progress.current += work_amount;
         progress.current >= progress.max
-    } else { false };
+    } else {
+        false
+    };
 
     // 3. Completion
     if completed {
         // Get scrap yield
-        let yield_amount = world.get::<ImpactSite>(site_entity).map_or(1.0, |s| s.scrap_amount);
+        let yield_amount = world
+            .get::<ImpactSite>(site_entity)
+            .map_or(1.0, |s| s.scrap_amount);
 
         // Despawn ImpactSite
         world.despawn(site_entity);
@@ -88,7 +98,11 @@ pub fn impact_system(world: &mut World) {
         // 1. Destroy/Damage Buildings
         let mut destroyed = Vec::new();
         {
-            let mut buildings = world.query::<(Entity, &GridPosition, &mut crate::layer1::structure::Structure)>();
+            let mut buildings = world.query::<(
+                Entity,
+                &GridPosition,
+                &mut crate::layer1::structure::Structure,
+            )>();
             for (b_entity, pos, mut structure) in buildings.iter_mut(world) {
                 if *pos == target {
                     structure.current_hp -= damage;
@@ -107,19 +121,28 @@ pub fn impact_system(world: &mut World) {
             // Need to handle bounds check or assume grid.set does it (it does)
             // But target.x might be negative (GridPosition is i32).
             if target.x >= 0 && target.y >= 0 {
-                 grid.set(target.x as usize, target.y as usize, crate::layer1::terrain::TerrainType::Rock);
+                grid.set(
+                    target.x as usize,
+                    target.y as usize,
+                    crate::layer1::terrain::TerrainType::Rock,
+                );
             }
         }
 
         // 3. Add Heat
-        if let Some(mut temp) = world.get_resource_mut::<crate::layer1::temperature::TemperatureGrid>() {
+        if let Some(mut temp) =
+            world.get_resource_mut::<crate::layer1::temperature::TemperatureGrid>()
+        {
             temp.add(target.x, target.y, heat);
         }
 
         // 4. Spawn Scrap (ImpactSite)
         world.spawn((
-            ImpactSite { scrap_amount: 50.0, harvest_difficulty: 1.0 },
-            target
+            ImpactSite {
+                scrap_amount: 50.0,
+                harvest_difficulty: 1.0,
+            },
+            target,
         ));
 
         // 5. Cleanup event
@@ -129,17 +152,21 @@ pub fn impact_system(world: &mut World) {
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::orbital_crossfire::{OrbitalEvent, ImpactSite, impact_system};
-    use crate::layer1::map::GridPosition;
-    use crate::layer1::structure::Structure;
-    use crate::layer1::terrain::{TerrainGrid, TerrainType};
-    use crate::layer1::temperature::TemperatureGrid;
     use crate::layer1::building::{Building, BuildingType};
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::orbital_crossfire::{ImpactSite, OrbitalEvent, impact_system};
+    use crate::layer1::structure::Structure;
+    use crate::layer1::temperature::TemperatureGrid;
+    use crate::layer1::terrain::{TerrainGrid, TerrainType};
+    use bevy_ecs::prelude::*;
 
     fn setup_world() -> World {
         let mut world = World::new();
-        world.insert_resource(TerrainGrid { width: 10, height: 10, tiles: vec![TerrainType::Grass; 100] });
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        });
         world.insert_resource(TemperatureGrid::new(10, 10, 20.0));
         world
     }
@@ -149,17 +176,24 @@ mod tests {
         let mut world = setup_world();
 
         // Spawn a building at (5,5)
-        let building = world.spawn((
-            Building { building_type: BuildingType::Housing },
-            GridPosition { x: 5, y: 5 },
-            Structure { current_hp: 100.0, max_hp: 100.0 },
-        )).id();
+        let building = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Housing,
+                },
+                GridPosition { x: 5, y: 5 },
+                Structure {
+                    current_hp: 100.0,
+                    max_hp: 100.0,
+                },
+            ))
+            .id();
 
         // Trigger Impact Event at (5,5)
         world.spawn(OrbitalEvent {
             target: GridPosition { x: 5, y: 5 },
             damage: 500.0,
-            heat: 1000.0
+            heat: 1000.0,
         });
 
         // Run system
@@ -179,7 +213,7 @@ mod tests {
         world.spawn(OrbitalEvent {
             target: GridPosition { x: 5, y: 5 },
             damage: 100.0,
-            heat: 100.0
+            heat: 100.0,
         });
 
         impact_system(&mut world);
@@ -196,7 +230,7 @@ mod tests {
         world.spawn(OrbitalEvent {
             target: GridPosition { x: 5, y: 5 },
             damage: 100.0,
-            heat: 500.0
+            heat: 500.0,
         });
 
         impact_system(&mut world);
@@ -212,13 +246,15 @@ mod tests {
         world.spawn(OrbitalEvent {
             target: GridPosition { x: 5, y: 5 },
             damage: 100.0,
-            heat: 100.0
+            heat: 100.0,
         });
 
         impact_system(&mut world);
 
         // Check for ImpactSite entity with Scrap
-        let (_, site, pos) = world.query::<(Entity, &ImpactSite, &GridPosition)>().single(&world);
+        let (_, site, pos) = world
+            .query::<(Entity, &ImpactSite, &GridPosition)>()
+            .single(&world);
 
         assert_eq!(pos.x, 5);
         assert_eq!(pos.y, 5);
@@ -232,15 +268,22 @@ mod tests {
 
         // Spawn Impact Site
         world.spawn((
-            ImpactSite { scrap_amount: 20.0, harvest_difficulty: 1.0 },
-            GridPosition { x: 5, y: 5 }
+            ImpactSite {
+                scrap_amount: 20.0,
+                harvest_difficulty: 1.0,
+            },
+            GridPosition { x: 5, y: 5 },
         ));
 
         // Spawn Designation
-        let designation = world.spawn((
-            crate::layer1::designation::Designation { designation_type: crate::layer1::designation::DesignationType::Mine },
-            GridPosition { x: 5, y: 5 }
-        )).id();
+        let designation = world
+            .spawn((
+                crate::layer1::designation::Designation {
+                    designation_type: crate::layer1::designation::DesignationType::Mine,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         // Mine
         super::mine_scrap(&mut world, designation, 20.0);
@@ -252,7 +295,10 @@ mod tests {
         // Scrap Item should be spawned
         let mut item_query = world.query::<&crate::layer1::resources::ResourceItem>();
         let item = item_query.iter(&world).next().unwrap();
-        assert_eq!(item.resource_type, crate::layer1::resources::ResourceType::Scrap);
+        assert_eq!(
+            item.resource_type,
+            crate::layer1::resources::ResourceType::Scrap
+        );
 
         // Designation should be gone
         assert!(world.get_entity(designation).is_err());

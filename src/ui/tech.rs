@@ -308,20 +308,21 @@ mod tests {
     #[test]
     fn test_unlock_action_via_function() {
         let mut world = World::new();
-        let mut tech_state = TechState::default();
-        tech_state.total_capacity = 100.0;
-        let mut res = ColonyResources::default();
-        res.knowledge = 100.0;
+        let tech_state = TechState {
+            total_capacity: 100.0,
+            ..Default::default()
+        };
+        let res = ColonyResources {
+            knowledge: 100.0,
+            ..Default::default()
+        };
 
         world.insert_resource(tech_state);
         world.insert_resource(res);
         world.insert_resource(crate::shared::log::MessageLog::default());
 
         // Setup UI State selecting first tech
-        let _ui_state = TechUiState {
-            is_open: true,
-            selected_index: 0,
-        };
+        // (UI state is not needed for the unlock function test, only resource state)
 
         let techs = get_tech_list();
         if techs.is_empty() {

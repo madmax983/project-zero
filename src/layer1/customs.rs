@@ -24,10 +24,6 @@ pub enum ImmigrationStatus {
 #[derive(Component, Debug, Clone, Default)]
 pub struct HiddenTraits(pub Vec<String>);
 
-/// Job component for customs officers.
-#[derive(Component, Default)]
-pub struct CustomsOfficer;
-
 /// Directs pending immigrants to the nearest Customs zone.
 pub fn immigration_interception_system(
     zone_grid: Res<ZoneGrid>,
@@ -79,7 +75,6 @@ pub fn immigration_interception_system(
 pub fn vetting_work_system(
     mut query: Query<(&mut ImmigrationStatus, Option<&HiddenTraits>, &GridPosition)>,
     zone_grid: Res<ZoneGrid>,
-    _officers: Query<&GridPosition, With<CustomsOfficer>>,
 ) {
     // In a real system, we'd check if an officer is working on this entity.
     // For GREEN phase, we simulate progress automatically.
@@ -126,9 +121,7 @@ mod tests {
         // Arrange
         let mut world = World::new();
         // Simulate spawning a visitor (usually done by visitor system, but we test the component default)
-        let entity = world
-            .spawn((Pop::default(), ImmigrationStatus::default()))
-            .id();
+        let entity = world.spawn((Pop, ImmigrationStatus::default())).id();
 
         // Assert
         let status = world.get::<ImmigrationStatus>(entity).unwrap();
@@ -144,11 +137,7 @@ mod tests {
         world.insert_resource(zone_grid);
 
         let entity = world
-            .spawn((
-                Pop::default(),
-                ImmigrationStatus::Pending,
-                GridPosition { x: 0, y: 0 },
-            ))
+            .spawn((Pop, ImmigrationStatus::Pending, GridPosition { x: 0, y: 0 }))
             .id();
 
         // Act: Run interception system
@@ -165,26 +154,14 @@ mod tests {
 
     #[test]
     fn test_vetting_process_success() {
-        // Arrange: Officer and Pending entity in Customs Zone
+        // Arrange: Pending entity in Customs Zone
         let mut world = World::new();
         let mut zone_grid = ZoneGrid::new(10, 10);
         zone_grid.set(5, 5, ZoneType::Customs);
         world.insert_resource(zone_grid);
 
         let pending_pop = world
-            .spawn((
-                Pop::default(),
-                ImmigrationStatus::Pending,
-                GridPosition { x: 5, y: 5 },
-            ))
-            .id();
-
-        let _officer = world
-            .spawn((
-                Pop::default(),
-                CustomsOfficer::default(), // Marker for job
-                GridPosition { x: 5, y: 5 },
-            ))
+            .spawn((Pop, ImmigrationStatus::Pending, GridPosition { x: 5, y: 5 }))
             .id();
 
         // Act: Run vetting system (simulate 1 tick of work)
@@ -212,17 +189,9 @@ mod tests {
 
         let pending_pop = world
             .spawn((
-                Pop::default(),
+                Pop,
                 ImmigrationStatus::Pending,
                 HiddenTraits(vec!["Smuggler".to_string()]),
-                GridPosition { x: 5, y: 5 },
-            ))
-            .id();
-
-        let _officer = world
-            .spawn((
-                Pop::default(),
-                CustomsOfficer::default(), // Marker for job
                 GridPosition { x: 5, y: 5 },
             ))
             .id();
@@ -240,7 +209,7 @@ mod tests {
         let status = world.get::<ImmigrationStatus>(pending_pop).unwrap();
         match status {
             ImmigrationStatus::Rejected(reason) => assert_eq!(reason, "Smuggler"),
-            _ => panic!("Should be rejected, got {:?}", status),
+            _ => panic!("Should be rejected, got {status:?}"),
         }
     }
 }
