@@ -1,6 +1,8 @@
 #![allow(clippy::cast_possible_truncation, clippy::cast_precision_loss)]
 use crate::layer1::map::GridPosition;
 use bevy_ecs::prelude::*;
+use rand::prelude::SliceRandom;
+use rand::Rng;
 use ratatui::style::Color;
 
 /// Visual particle effect component.
@@ -118,6 +120,33 @@ pub fn spawn_moving_particle(
         ParticleVelocity { dx, dy },
         ParticleAccumulator::default(),
     ));
+}
+
+/// Helper to spawn confetti particles for celebrations.
+pub fn spawn_confetti(world: &mut World, pos: GridPosition) {
+    let mut rng = rand::thread_rng();
+    let colors = [
+        Color::Red,
+        Color::Green,
+        Color::Blue,
+        Color::Yellow,
+        Color::Magenta,
+        Color::Cyan,
+        Color::White,
+    ];
+    let chars = ['*', '.', '+', 'x', 'o'];
+
+    for _ in 0..30 {
+        let angle = rng.gen_range(0.0..std::f32::consts::TAU);
+        let speed = rng.gen_range(0.5..1.5);
+        let dx = angle.cos() * speed;
+        let dy = angle.sin() * speed;
+        let color = *colors.choose(&mut rng).unwrap();
+        let char = *chars.choose(&mut rng).unwrap();
+        let lifetime = rng.gen_range(20..40);
+
+        spawn_moving_particle(world, pos, char, color, lifetime, dx, dy);
+    }
 }
 
 #[cfg(test)]
