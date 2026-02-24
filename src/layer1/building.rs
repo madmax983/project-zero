@@ -252,6 +252,8 @@ pub enum BuildingType {
     Battery,
     /// Basic wall for enclosure.
     Wall,
+    /// Window that allows viewing outside.
+    Window,
     /// Gate that can be opened/closed.
     Gate,
     /// Defensive tower.
@@ -342,9 +344,9 @@ impl BuildingType {
     pub const fn thermal_conductivity(&self) -> f32 {
         match self {
             Self::Wall => 0.05,
-            Self::Airlock => 0.1, // Closed airlock insulates well but has leakage
-            Self::Gate => 0.5,    // Gates are less insulated than walls
-            _ => 1.0,             // Most buildings don't block heat flow significantly
+            Self::Window | Self::Airlock => 0.1, // Windows/Airlocks insulate well but leak
+            Self::Gate => 0.5,                   // Gates are less insulated than walls
+            _ => 1.0,                            // Most buildings don't block heat flow significantly
         }
     }
 
@@ -362,7 +364,7 @@ impl BuildingType {
     #[must_use]
     pub const fn flow_transmissivity(&self) -> Option<f32> {
         match self {
-            Self::Wall | Self::Airlock => Some(0.0),
+            Self::Wall | Self::Window | Self::Airlock => Some(0.0),
             Self::Gate => Some(0.5),
             Self::Vent => Some(1.0),
             _ => None,
@@ -395,6 +397,7 @@ impl BuildingType {
         match self {
             // Walls and large structures
             Self::Wall
+            | Self::Window
             | Self::Gate
             | Self::Tower
             | Self::Housing
@@ -468,7 +471,12 @@ impl BuildingType {
             Self::FlowerBed => super::beauty::FLOWER_BED_BEAUTY,
             Self::TradeDepot => 5.0, // Trade brings goods and culture
             Self::Well | Self::HydroponicsBay | Self::LifeSupport => 1.0,
-            Self::Wall | Self::Gate | Self::Tower | Self::Airlock | Self::Vent => 0.0,
+            Self::Wall
+            | Self::Window
+            | Self::Gate
+            | Self::Tower
+            | Self::Airlock
+            | Self::Vent => 0.0,
             Self::TrashCannon => -2.0, // Industrial machinery is ugly
             Self::Heater | Self::ServerBank => 0.0,
             Self::CommandCenter | Self::AICore | Self::CryoPod => 0.0,
@@ -559,6 +567,7 @@ impl BuildingType {
             Self::PowerPole => "Power Pole",
             Self::Battery => "Battery",
             Self::Wall => "Wall",
+            Self::Window => "Window",
             Self::Gate => "Gate",
             Self::Tower => "Tower",
             Self::AncientReactor => "Ancient Reactor",
@@ -618,6 +627,7 @@ impl BuildingType {
             Self::PowerPole => '|',
             Self::Battery => 'B',
             Self::Wall => '#',
+            Self::Window => '□',
             Self::AncientReactor | Self::Refinery => 'R',
             Self::PersonalShed => 's',
             Self::PersonalShrine => '☗',
@@ -743,6 +753,10 @@ impl BuildingType {
                     metal: 50.0, // Gold is expensive (approximated as metal for now or free if we don't track gold?)
                     ..ColonyResources::zeroed()
                 },
+            },
+            Self::Window => ColonyResources {
+                wood: 5.0,
+                ..ColonyResources::zeroed()
             },
             Self::Gate => match material {
                 MaterialType::Wood => ColonyResources {
@@ -1165,6 +1179,7 @@ fn spawn_building(
         | BuildingType::Grave
         | BuildingType::TradeDepot => configure_civic(&mut entity, building_type),
         BuildingType::Wall
+        | BuildingType::Window
         | BuildingType::Gate
         | BuildingType::Tower
         | BuildingType::Well
@@ -1524,6 +1539,21 @@ fn configure_civic(entity: &mut EntityWorldMut, building_type: BuildingType) {
 
 fn configure_infrastructure(entity: &mut EntityWorldMut, building_type: BuildingType) {
     match building_type {
+        BuildingType::Window => {
+            entity.insert((
+                crate::layer1::window::Window {
+                    range: 10,
+                    direction: Direction::South, // Default view direction
+                    ..Default::default()
+                },
+                // Explicitly add BeautySource (initialized to 0) so the window system can update it.
+                // Normally spawn_building skips this if beauty_value is 0.
+                BeautySource {
+                    value: 0.0,
+                    radius: 0.0,
+                },
+            ));
+        }
         BuildingType::Gate => {
             entity.insert((
                 crate::layer1::defense::Gate::default(),
@@ -1985,7 +2015,8 @@ mod tests {
         assert_eq!(BuildingType::SolarPanel.next(), BuildingType::PowerPole);
         assert_eq!(BuildingType::PowerPole.next(), BuildingType::Battery);
         assert_eq!(BuildingType::Battery.next(), BuildingType::Wall);
-        assert_eq!(BuildingType::Wall.next(), BuildingType::Gate);
+        assert_eq!(BuildingType::Wall.next(), BuildingType::Window);
+        assert_eq!(BuildingType::Window.next(), BuildingType::Gate);
         assert_eq!(BuildingType::Gate.next(), BuildingType::Tower);
         assert_eq!(BuildingType::Tower.next(), BuildingType::AncientReactor);
         assert_eq!(
@@ -2153,6 +2184,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Wall);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Window);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Gate);

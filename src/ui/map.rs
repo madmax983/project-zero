@@ -729,6 +729,7 @@ pub const fn get_building_char(building: BuildingType) -> &'static str {
         BuildingType::Generator => "⚡",
         BuildingType::PowerPole => "|",
         BuildingType::Wall => "#",
+        BuildingType::Window => "□",
         BuildingType::Tower | BuildingType::Observatory | BuildingType::Office => "O",
         BuildingType::AncientReactor | BuildingType::Refinery => "R",
         BuildingType::AncientFabricator => "F",
@@ -794,6 +795,7 @@ pub const fn get_building_color(building: BuildingType, material: MaterialType) 
             } // Silver
             BuildingType::Tavern | BuildingType::FlowerBed | BuildingType::AICore => Color::Magenta,
             BuildingType::Library
+            | BuildingType::Window
             | BuildingType::AncientFabricator
             | BuildingType::Observatory
             | BuildingType::ConveyorBelt
