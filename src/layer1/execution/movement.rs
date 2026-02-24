@@ -9,14 +9,14 @@ use crate::layer1::execution::components::{AtTarget, MovementTarget};
 use crate::layer1::farm::Farm;
 use crate::layer1::housing::Housing;
 use crate::layer1::map::GridPosition;
+use crate::layer1::particles::Particle;
 use crate::layer1::pop::{Role, Speed};
 use crate::layer1::social::Tavern;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::traits::{Traits, get_trait_move_speed_modifier};
 use crate::layer1::utility_types::{ActionType, StartPlan};
-use crate::layer1::particles::Particle;
-use ratatui::style::Color;
 use bevy_ecs::prelude::*;
+use ratatui::style::Color;
 
 /// Removes pops from farms/housing when they switch to a different action.
 ///

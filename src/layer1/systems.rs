@@ -81,7 +81,8 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             cleanup_previous_assignment_system.after(assign_sleepwalk_target_system),
             crate::layer1::customs::immigration_interception_system
                 .after(cleanup_previous_assignment_system),
-            process_start_plan_system.after(crate::layer1::customs::immigration_interception_system),
+            process_start_plan_system
+                .after(crate::layer1::customs::immigration_interception_system),
             crate::layer1::integration::drone_spawner_bridge_system
                 .after(process_start_plan_system),
             crate::layer1::integration::drone_work_bridge_system.after(process_start_plan_system),

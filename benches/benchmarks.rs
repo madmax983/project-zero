@@ -8,10 +8,10 @@
 
 use criterion::{Criterion, black_box, criterion_group, criterion_main};
 use ratatui::prelude::{Color, Rect};
+use scale::layer1::building::{BuildingMap, OccupiedTiles};
+use scale::layer1::pathfinding::find_path;
 use scale::layer1::water::WaterGrid;
 use scale::layer1::{BuildingType, GridPosition, MaterialType, TerrainGrid, TerrainType, Viewport};
-use scale::layer1::pathfinding::find_path;
-use scale::layer1::building::{BuildingMap, OccupiedTiles};
 use scale::ui::map::{MapRenderContext, RenderEntity, build_map_layer_spans};
 use std::collections::HashMap;
 
@@ -36,14 +36,22 @@ fn benchmark_pathfinding(c: &mut Criterion) {
     let world_small = setup_pathfinding_world(100, 100);
     group.bench_function("path_100x100_short", |b| {
         b.iter(|| {
-            find_path(black_box(&world_small), black_box((0, 0)), black_box((20, 20)))
+            find_path(
+                black_box(&world_small),
+                black_box((0, 0)),
+                black_box((20, 20)),
+            )
         })
     });
 
     // Test case 2: Long path on small map
     group.bench_function("path_100x100_long", |b| {
         b.iter(|| {
-            find_path(black_box(&world_small), black_box((0, 0)), black_box((90, 90)))
+            find_path(
+                black_box(&world_small),
+                black_box((0, 0)),
+                black_box((90, 90)),
+            )
         })
     });
 
@@ -60,7 +68,11 @@ fn benchmark_pathfinding(c: &mut Criterion) {
     // Try to go from (0,0) to (45, 25) - blocked
     group.bench_function("path_50x50_blocked", |b| {
         b.iter(|| {
-            find_path(black_box(&world_blocked), black_box((0, 0)), black_box((45, 25)))
+            find_path(
+                black_box(&world_blocked),
+                black_box((0, 0)),
+                black_box((45, 25)),
+            )
         })
     });
 
@@ -170,12 +182,12 @@ use scale::gpu::evaluate::gpu_evaluate_actions;
 use scale::layer1::designation::{Designation, DesignationType};
 use scale::layer1::farm::Farm;
 use scale::layer1::housing::Housing;
+use scale::layer1::items::ItemType;
 use scale::layer1::needs::Needs;
 use scale::layer1::resources::ColonyResources;
 use scale::layer1::social::Tavern;
 use scale::layer1::utility_ai::evaluate_actions_system;
 use scale::layer1::utility_types::{ActionType, PopAction, UtilityConfig, UtilityWeights};
-use scale::layer1::items::ItemType;
 
 /// Build a minimal world with `n_pops` pops and `n_buildings` buildings.
 fn make_bench_world(n_pops: usize, n_buildings: usize, gpu_ctx: Option<GpuContext>) -> World {

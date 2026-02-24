@@ -1,8 +1,8 @@
+use crate::layer1::building::BuildingType;
+use crate::layer1::tech::Tech;
 use bevy_ecs::prelude::*;
 use ratatui::prelude::*;
-use crate::layer1::tech::Tech;
 use strum::IntoEnumIterator;
-use crate::layer1::building::BuildingType;
 
 /// State for the Tech Tree UI.
 #[derive(Resource, Default, Debug)]
@@ -51,7 +51,9 @@ pub fn get_tech_list() -> Vec<Tech> {
     ]
 }
 
-use ratatui::widgets::{Block, BorderType, Borders, Clear, List, ListItem, ListState, Paragraph, Wrap};
+use ratatui::widgets::{
+    Block, BorderType, Borders, Clear, List, ListItem, ListState, Paragraph, Wrap,
+};
 
 /// Renders the Tech Tree UI.
 pub fn render_tech_tree(frame: &mut Frame, area: Rect, world: &World) {
@@ -94,7 +96,9 @@ pub fn render_tech_tree(frame: &mut Frame, area: Rect, world: &World) {
         .iter()
         .map(|tech| {
             let is_unlocked = tech_state.is_some_and(|ts| ts.is_unlocked(*tech));
-            let is_corrupted = tech_state.is_some_and(|ts| ts.techs.get(tech) == Some(&crate::layer1::tech::TechStatus::Corrupted));
+            let is_corrupted = tech_state.is_some_and(|ts| {
+                ts.techs.get(tech) == Some(&crate::layer1::tech::TechStatus::Corrupted)
+            });
             let cost = tech.cost();
             let affordable = knowledge >= cost;
 
@@ -117,9 +121,11 @@ pub fn render_tech_tree(frame: &mut Frame, area: Rect, world: &World) {
         .borders(Borders::RIGHT)
         .border_style(Style::default().fg(Color::DarkGray));
 
-    let list = List::new(items)
-        .block(list_block)
-        .highlight_style(Style::default().add_modifier(Modifier::BOLD).bg(Color::DarkGray));
+    let list = List::new(items).block(list_block).highlight_style(
+        Style::default()
+            .add_modifier(Modifier::BOLD)
+            .bg(Color::DarkGray),
+    );
 
     let mut state = ListState::default();
     state.select(Some(ui_state.selected_index));
@@ -137,7 +143,7 @@ fn render_tech_details(
     area: Rect,
     tech: Tech,
     tech_state: Option<&crate::layer1::tech::TechState>,
-    current_knowledge: f32
+    current_knowledge: f32,
 ) {
     let layout = Layout::default()
         .direction(Direction::Vertical)
@@ -152,7 +158,11 @@ fn render_tech_details(
 
     // 1. Header
     let title = Paragraph::new(tech.label())
-        .style(Style::default().fg(Color::Cyan).add_modifier(Modifier::BOLD | Modifier::UNDERLINED))
+        .style(
+            Style::default()
+                .fg(Color::Cyan)
+                .add_modifier(Modifier::BOLD | Modifier::UNDERLINED),
+        )
         .alignment(Alignment::Center);
     frame.render_widget(title, layout[0]);
 
@@ -164,29 +174,41 @@ fn render_tech_details(
 
     // 3. Costs & Status
     let is_unlocked = tech_state.is_some_and(|ts| ts.is_unlocked(tech));
-    let is_corrupted = tech_state.is_some_and(|ts| ts.techs.get(&tech) == Some(&crate::layer1::tech::TechStatus::Corrupted));
+    let is_corrupted = tech_state
+        .is_some_and(|ts| ts.techs.get(&tech) == Some(&crate::layer1::tech::TechStatus::Corrupted));
     let cost = tech.cost();
 
     let status_text = if is_unlocked {
         Span::styled("RESEARCHED", Style::default().fg(Color::Green))
     } else if is_corrupted {
-        Span::styled("CORRUPTED (Needs Data Capacity)", Style::default().fg(Color::Red))
+        Span::styled(
+            "CORRUPTED (Needs Data Capacity)",
+            Style::default().fg(Color::Red),
+        )
     } else if current_knowledge >= cost {
-        Span::styled("AVAILABLE (Press Enter)", Style::default().fg(Color::Yellow))
+        Span::styled(
+            "AVAILABLE (Press Enter)",
+            Style::default().fg(Color::Yellow),
+        )
     } else {
-        Span::styled(format!("LOCKED (Need {cost:.0} Knowledge)"), Style::default().fg(Color::DarkGray))
+        Span::styled(
+            format!("LOCKED (Need {cost:.0} Knowledge)"),
+            Style::default().fg(Color::DarkGray),
+        )
     };
 
-    let cost_text = format!("Cost: {:.0} Knowledge | Storage: {:.0} TB", cost, tech.storage_cost());
+    let cost_text = format!(
+        "Cost: {:.0} Knowledge | Storage: {:.0} TB",
+        cost,
+        tech.storage_cost()
+    );
 
     let info_block = Block::default()
         .borders(Borders::TOP | Borders::BOTTOM)
         .border_style(Style::default().fg(Color::DarkGray));
 
-    let info = Paragraph::new(vec![
-        Line::from(status_text),
-        Line::from(cost_text),
-    ]).block(info_block);
+    let info =
+        Paragraph::new(vec![Line::from(status_text), Line::from(cost_text)]).block(info_block);
 
     frame.render_widget(info, layout[2]);
 
@@ -199,9 +221,15 @@ fn render_tech_details(
     }
 
     let unlocks_text: Vec<ListItem> = if unlocks.is_empty() {
-         vec![ListItem::new(Span::raw("Unlocks: Nothing directly (Passive Effect?)").style(Style::default().fg(Color::Gray)))]
+        vec![ListItem::new(
+            Span::raw("Unlocks: Nothing directly (Passive Effect?)")
+                .style(Style::default().fg(Color::Gray)),
+        )]
     } else {
-        let mut list = vec![ListItem::new(Span::styled("Unlocks Building Plans:", Style::default().add_modifier(Modifier::BOLD)))];
+        let mut list = vec![ListItem::new(Span::styled(
+            "Unlocks Building Plans:",
+            Style::default().add_modifier(Modifier::BOLD),
+        ))];
         for b in unlocks {
             list.push(ListItem::new(format!(" - {} ({})", b.label(), b.char())));
         }
@@ -214,7 +242,12 @@ fn render_tech_details(
     // 5. Hazard Warning
     if tech.is_hazardous() {
         let warning = Paragraph::new("⚠ HAZARDOUS TECHNOLOGY ⚠")
-            .style(Style::default().fg(Color::Red).bg(Color::Black).add_modifier(Modifier::BOLD | Modifier::SLOW_BLINK))
+            .style(
+                Style::default()
+                    .fg(Color::Red)
+                    .bg(Color::Black)
+                    .add_modifier(Modifier::BOLD | Modifier::SLOW_BLINK),
+            )
             .alignment(Alignment::Center);
         frame.render_widget(warning, layout[4]);
     }
@@ -242,10 +275,10 @@ fn centered_rect(percent_x: u16, percent_y: u16, r: Rect) -> Rect {
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::tech::{Tech, TechState};
     use crate::layer1::resources::ColonyResources;
+    use crate::layer1::tech::{Tech, TechState};
     use crate::ui::tech::{TechUiState, get_tech_list};
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_tech_ui_state_resource_defaults() {
@@ -285,11 +318,14 @@ mod tests {
         world.insert_resource(crate::shared::log::MessageLog::default());
 
         // Setup UI State selecting first tech
-        let _ui_state = TechUiState { is_open: true, selected_index: 0 };
+        let _ui_state = TechUiState {
+            is_open: true,
+            selected_index: 0,
+        };
 
         let techs = get_tech_list();
         if techs.is_empty() {
-             assert!(!techs.is_empty(), "Tech list should not be empty");
+            assert!(!techs.is_empty(), "Tech list should not be empty");
         }
         let target_tech = techs[0];
 

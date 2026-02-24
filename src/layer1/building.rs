@@ -30,7 +30,6 @@ use super::social::Tavern;
 use super::stockpile::Stockpile;
 use crate::layer1::access_control::AccessControl;
 use crate::layer1::admin::{AdminConsumer, AdminProvider, Office};
-use crate::layer1::solar::SolarPower;
 use crate::layer1::ai_core::AICore;
 use crate::layer1::control::DoorControl;
 use crate::layer1::drone::DroneHub;
@@ -42,6 +41,7 @@ use crate::layer1::prototyping::{BuildingMastery, Prototype};
 use crate::layer1::resources::{ColonyResources, RefiningProgress};
 use crate::layer1::rituals::MachineSpirit;
 use crate::layer1::seismic::SeismicSource;
+use crate::layer1::solar::SolarPower;
 use crate::layer1::tech::{DataStorage, Library, Tech, TechState};
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::trade::TradeDepot;
@@ -346,7 +346,7 @@ impl BuildingType {
             Self::Wall => 0.05,
             Self::Window | Self::Airlock => 0.1, // Windows/Airlocks insulate well but leak
             Self::Gate => 0.5,                   // Gates are less insulated than walls
-            _ => 1.0,                            // Most buildings don't block heat flow significantly
+            _ => 1.0, // Most buildings don't block heat flow significantly
         }
     }
 
@@ -496,12 +496,9 @@ impl BuildingType {
             Self::FlowerBed => super::beauty::FLOWER_BED_BEAUTY,
             Self::TradeDepot => 5.0, // Trade brings goods and culture
             Self::Well | Self::HydroponicsBay | Self::LifeSupport => 1.0,
-            Self::Wall
-            | Self::Window
-            | Self::Gate
-            | Self::Tower
-            | Self::Airlock
-            | Self::Vent => 0.0,
+            Self::Wall | Self::Window | Self::Gate | Self::Tower | Self::Airlock | Self::Vent => {
+                0.0
+            }
             Self::TrashCannon => -2.0, // Industrial machinery is ugly
             Self::Heater | Self::ServerBank => 0.0,
             Self::CommandCenter | Self::AICore | Self::CryoPod => 0.0,
@@ -2085,8 +2082,14 @@ mod tests {
         assert_eq!(BuildingType::AICore.next(), BuildingType::DroneHub);
         assert_eq!(BuildingType::DroneHub.next(), BuildingType::CryoPod);
         assert_eq!(BuildingType::CryoPod.next(), BuildingType::AuroralCollector);
-        assert_eq!(BuildingType::AuroralCollector.next(), BuildingType::AtmosphericProcessor);
-        assert_eq!(BuildingType::AtmosphericProcessor.next(), BuildingType::Housing);
+        assert_eq!(
+            BuildingType::AuroralCollector.next(),
+            BuildingType::AtmosphericProcessor
+        );
+        assert_eq!(
+            BuildingType::AtmosphericProcessor.next(),
+            BuildingType::Housing
+        );
     }
 
     #[test]

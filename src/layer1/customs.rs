@@ -1,8 +1,8 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::zone::{ZoneGrid, ZoneType};
-use crate::layer1::map::GridPosition;
 use crate::layer1::execution::components::MovementTarget;
+use crate::layer1::map::GridPosition;
 use crate::layer1::utility_types::ActionType;
+use crate::layer1::zone::{ZoneGrid, ZoneType};
+use bevy_ecs::prelude::*;
 
 /// Status of an entity entering the colony.
 #[derive(Component, Debug, Clone, PartialEq, Eq, Default)]
@@ -38,19 +38,26 @@ pub fn immigration_interception_system(
         return;
     }
 
-    let customs_zones: Vec<GridPosition> = zone_grid.grid.iter().enumerate()
-        .filter_map(|(i, z)| if *z == ZoneType::Customs {
-            #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
-            Some(GridPosition {
-                x: (i % zone_grid.width) as i32,
-                y: (i / zone_grid.width) as i32
-            })
-        } else {
-            None
+    let customs_zones: Vec<GridPosition> = zone_grid
+        .grid
+        .iter()
+        .enumerate()
+        .filter_map(|(i, z)| {
+            if *z == ZoneType::Customs {
+                #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
+                Some(GridPosition {
+                    x: (i % zone_grid.width) as i32,
+                    y: (i / zone_grid.width) as i32,
+                })
+            } else {
+                None
+            }
         })
         .collect();
 
-    if customs_zones.is_empty() { return; }
+    if customs_zones.is_empty() {
+        return;
+    }
 
     for (entity, status) in &query {
         if *status == ImmigrationStatus::Pending {
@@ -86,21 +93,21 @@ pub fn vetting_work_system(
         match *status {
             ImmigrationStatus::Pending => {
                 *status = ImmigrationStatus::Processing(0);
-            },
+            }
             ImmigrationStatus::Processing(progress) => {
                 if progress >= 100 {
                     // Vetting complete
                     let is_smuggler = hidden.is_some_and(|h| h.0.contains(&"Smuggler".to_string()));
 
                     if is_smuggler {
-                         *status = ImmigrationStatus::Rejected("Smuggler".to_string());
+                        *status = ImmigrationStatus::Rejected("Smuggler".to_string());
                     } else {
                         *status = ImmigrationStatus::Vetted;
                     }
                 } else {
                     *status = ImmigrationStatus::Processing(progress + 10);
                 }
-            },
+            }
             _ => {}
         }
     }
@@ -109,20 +116,19 @@ pub fn vetting_work_system(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::layer1::execution::components::MovementTarget;
+    use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
     use crate::layer1::zone::{ZoneGrid, ZoneType};
-    use crate::layer1::map::GridPosition;
-    use crate::layer1::execution::components::MovementTarget;
 
     #[test]
     fn test_new_visitor_is_pending() {
         // Arrange
         let mut world = World::new();
         // Simulate spawning a visitor (usually done by visitor system, but we test the component default)
-        let entity = world.spawn((
-            Pop::default(),
-            ImmigrationStatus::default(),
-        )).id();
+        let entity = world
+            .spawn((Pop::default(), ImmigrationStatus::default()))
+            .id();
 
         // Assert
         let status = world.get::<ImmigrationStatus>(entity).unwrap();
@@ -137,11 +143,13 @@ mod tests {
         zone_grid.set(5, 5, ZoneType::Customs);
         world.insert_resource(zone_grid);
 
-        let entity = world.spawn((
-            Pop::default(),
-            ImmigrationStatus::Pending,
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let entity = world
+            .spawn((
+                Pop::default(),
+                ImmigrationStatus::Pending,
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
         // Act: Run interception system
         let mut schedule = Schedule::default();
@@ -149,7 +157,9 @@ mod tests {
         schedule.run(&mut world);
 
         // Assert: MovementTarget should be set to Customs Zone (5, 5)
-        let target = world.get::<MovementTarget>(entity).expect("Should have MovementTarget");
+        let target = world
+            .get::<MovementTarget>(entity)
+            .expect("Should have MovementTarget");
         assert_eq!(target.target_position, GridPosition { x: 5, y: 5 });
     }
 
@@ -161,24 +171,29 @@ mod tests {
         zone_grid.set(5, 5, ZoneType::Customs);
         world.insert_resource(zone_grid);
 
-        let pending_pop = world.spawn((
-            Pop::default(),
-            ImmigrationStatus::Pending,
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let pending_pop = world
+            .spawn((
+                Pop::default(),
+                ImmigrationStatus::Pending,
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
-        let _officer = world.spawn((
-            Pop::default(),
-            CustomsOfficer::default(), // Marker for job
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let _officer = world
+            .spawn((
+                Pop::default(),
+                CustomsOfficer::default(), // Marker for job
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         // Act: Run vetting system (simulate 1 tick of work)
         let mut schedule = Schedule::default();
         schedule.add_systems(vetting_work_system);
 
         // Run multiple ticks to complete vetting (assuming 10% per tick)
-        for _ in 0..12 { // 0->Processing(0), +10 each tick... needs 11 ticks to reach 100+
+        for _ in 0..12 {
+            // 0->Processing(0), +10 each tick... needs 11 ticks to reach 100+
             schedule.run(&mut world);
         }
 
@@ -195,18 +210,22 @@ mod tests {
         zone_grid.set(5, 5, ZoneType::Customs);
         world.insert_resource(zone_grid);
 
-        let pending_pop = world.spawn((
-            Pop::default(),
-            ImmigrationStatus::Pending,
-            HiddenTraits(vec!["Smuggler".to_string()]),
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let pending_pop = world
+            .spawn((
+                Pop::default(),
+                ImmigrationStatus::Pending,
+                HiddenTraits(vec!["Smuggler".to_string()]),
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
-         let _officer = world.spawn((
-            Pop::default(),
-            CustomsOfficer::default(), // Marker for job
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let _officer = world
+            .spawn((
+                Pop::default(),
+                CustomsOfficer::default(), // Marker for job
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         // Act: Vet
         let mut schedule = Schedule::default();

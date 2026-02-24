@@ -1,11 +1,11 @@
 #[cfg(test)]
 mod tests {
     use bevy_ecs::prelude::*;
+    use scale::layer1::GridPosition;
     use scale::layer1::acoustic::{NoiseMap, NoiseSource, update_noise_system};
     use scale::layer1::building::{BuildingType, MaterialType, spawn_building_with_material};
-    use scale::layer1::terrain::{TerrainGrid, TerrainType};
-    use scale::layer1::GridPosition;
     use scale::layer1::resources::ColonyResources;
+    use scale::layer1::terrain::{TerrainGrid, TerrainType};
 
     #[test]
     fn test_noisy_buildings_emit_noise() {
@@ -50,11 +50,18 @@ mod tests {
 
         // Ambient is 0.1. LumberMill should add significant noise.
         // Assuming intensity 0.5 or higher.
-        assert!(center_noise > 0.2, "Noise level at LumberMill should be elevated. Got {}", center_noise);
+        assert!(
+            center_noise > 0.2,
+            "Noise level at LumberMill should be elevated. Got {}",
+            center_noise
+        );
 
         // Check falloff
         let distant_noise = noise_map.get(10, 15); // 5 tiles away
-        assert!(distant_noise < center_noise, "Noise should fall off with distance");
+        assert!(
+            distant_noise < center_noise,
+            "Noise should fall off with distance"
+        );
         assert!(distant_noise >= 0.1, "Noise should be at least ambient");
     }
 
@@ -75,13 +82,7 @@ mod tests {
         world.insert_resource(scale::layer1::tech::TechState::default());
         world.insert_resource(scale::shared::log::MessageLog::default());
 
-        spawn_building_with_material(
-            &mut world,
-            5,
-            5,
-            BuildingType::Housing,
-            MaterialType::Wood,
-        );
+        spawn_building_with_material(&mut world, 5, 5, BuildingType::Housing, MaterialType::Wood);
 
         let mut noise_source_query = world.query::<(&NoiseSource, &GridPosition)>();
         let count = noise_source_query.iter(&world).count();
@@ -95,6 +96,10 @@ mod tests {
         let center_noise = noise_map.get(5, 5);
 
         // Should be ambient (0.1)
-        assert!((center_noise - 0.1).abs() < f32::EPSILON, "Noise level at Housing should be ambient. Got {}", center_noise);
+        assert!(
+            (center_noise - 0.1).abs() < f32::EPSILON,
+            "Noise level at Housing should be ambient. Got {}",
+            center_noise
+        );
     }
 }

@@ -3,10 +3,10 @@
     clippy::cast_possible_truncation,
     clippy::cast_sign_loss
 )]
-use bevy_ecs::prelude::*;
-use crate::layer1::building::{Building, BuildingMap, Direction, OccupiedTiles};
 use crate::layer1::beauty::{BeautyGrid, BeautySource};
+use crate::layer1::building::{Building, BuildingMap, Direction, OccupiedTiles};
 use crate::layer1::map::GridPosition;
+use bevy_ecs::prelude::*;
 
 /// Component representing a window that captures view beauty.
 #[derive(Component, Default)]
@@ -60,12 +60,12 @@ pub fn update_window_views_system(
                         // BuildingType::Window returns true for blocks_wind.
                         // So a window looking at a window sees... the window.
                         if building.building_type.blocks_wind() {
-                             // Blocked
-                             break;
+                            // Blocked
+                            break;
                         }
                     } else {
-                         // Entity in map but not in query? Assume blocked.
-                         break;
+                        // Entity in map but not in query? Assume blocked.
+                        break;
                     }
                 }
             }
@@ -90,12 +90,12 @@ pub fn update_window_views_system(
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
+    use super::{Window, update_window_views_system};
+    use crate::layer1::beauty::{BeautyGrid, BeautySource};
+    use crate::layer1::building::{Building, BuildingMap, BuildingType, Direction, OccupiedTiles};
     use crate::layer1::map::GridPosition;
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
-    use crate::layer1::beauty::{BeautyGrid, BeautySource};
-    use crate::layer1::building::{Building, BuildingType, Direction, BuildingMap, OccupiedTiles};
-    use super::{Window, update_window_views_system};
+    use bevy_ecs::prelude::*;
 
     // Helper to setup world
     fn setup_world() -> World {
@@ -106,7 +106,7 @@ mod tests {
         world.insert_resource(TerrainGrid {
             width,
             height,
-            tiles: vec![TerrainType::Grass; width * height]
+            tiles: vec![TerrainType::Grass; width * height],
         });
         world.insert_resource(OccupiedTiles::default());
         world.insert_resource(BuildingMap::default());
@@ -135,14 +135,21 @@ mod tests {
 
         // 1. Place a Statue at (10, 5) with high beauty
         world.spawn((
-            Building { building_type: BuildingType::Statue },
+            Building {
+                building_type: BuildingType::Statue,
+            },
             GridPosition { x: 10, y: 5 },
-            BeautySource { value: 10.0, radius: 2.0 },
+            BeautySource {
+                value: 10.0,
+                radius: 2.0,
+            },
         ));
 
         // 2. Place a Window at (5, 5) facing East (towards Statue)
         world.spawn((
-            Building { building_type: BuildingType::Window },
+            Building {
+                building_type: BuildingType::Window,
+            },
             GridPosition { x: 5, y: 5 },
             Window {
                 direction: Direction::East,
@@ -150,7 +157,10 @@ mod tests {
                 view_cone: 0.0,
             },
             // Window itself has base beauty 0.0, but will gain "View Beauty"
-            BeautySource { value: 0.0, radius: 2.0 },
+            BeautySource {
+                value: 0.0,
+                radius: 2.0,
+            },
         ));
 
         // Update helper map
@@ -169,7 +179,10 @@ mod tests {
         // 10.0 beauty * 0.1 scale = 1.0
         let mut query = world.query::<(&Window, &BeautySource)>();
         let (_, source) = query.single(&world);
-        assert!(source.value > 0.0, "Window should have positive beauty value from view");
+        assert!(
+            source.value > 0.0,
+            "Window should have positive beauty value from view"
+        );
         assert!((source.value - 1.0).abs() < 0.1, "Expected ~1.0 beauty");
     }
 
@@ -183,7 +196,9 @@ mod tests {
 
         // Wall at (8, 5) - Blocking the view
         world.spawn((
-            Building { building_type: BuildingType::Wall },
+            Building {
+                building_type: BuildingType::Wall,
+            },
             GridPosition { x: 8, y: 5 },
         ));
         let mut occupied = world.resource_mut::<OccupiedTiles>();
@@ -191,10 +206,19 @@ mod tests {
 
         // Window at (5, 5) facing East
         world.spawn((
-            Building { building_type: BuildingType::Window },
+            Building {
+                building_type: BuildingType::Window,
+            },
             GridPosition { x: 5, y: 5 },
-            Window { direction: Direction::East, range: 10, view_cone: 0.0 },
-            BeautySource { value: 0.0, radius: 2.0 },
+            Window {
+                direction: Direction::East,
+                range: 10,
+                view_cone: 0.0,
+            },
+            BeautySource {
+                value: 0.0,
+                radius: 2.0,
+            },
         ));
 
         update_building_map(&mut world);
@@ -219,10 +243,19 @@ mod tests {
 
         // Window at (5, 5) facing East
         world.spawn((
-            Building { building_type: BuildingType::Window },
+            Building {
+                building_type: BuildingType::Window,
+            },
             GridPosition { x: 5, y: 5 },
-            Window { direction: Direction::East, range: 10, view_cone: 0.0 },
-            BeautySource { value: 0.0, radius: 2.0 },
+            Window {
+                direction: Direction::East,
+                range: 10,
+                view_cone: 0.0,
+            },
+            BeautySource {
+                value: 0.0,
+                radius: 2.0,
+            },
         ));
 
         update_building_map(&mut world);

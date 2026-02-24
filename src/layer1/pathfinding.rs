@@ -256,7 +256,11 @@ fn find_path_internal(
             return Some(path);
         }
 
-        let current_idx = if let Some(idx) = get_idx(pos) { idx } else { continue; };
+        let current_idx = if let Some(idx) = get_idx(pos) {
+            idx
+        } else {
+            continue;
+        };
 
         // Check if we found a shorter path already (standard A* opt)
         if cost > cost_so_far[current_idx] {
@@ -266,7 +270,11 @@ fn find_path_internal(
         // Check neighbors (Manhattan)
         for (dx, dy) in [(-1, 0), (1, 0), (0, -1), (0, 1)] {
             let next = (pos.0 + dx, pos.1 + dy);
-            let next_idx = if let Some(idx) = get_idx(next) { idx } else { continue; };
+            let next_idx = if let Some(idx) = get_idx(next) {
+                idx
+            } else {
+                continue;
+            };
 
             // Check if walkable
             if !is_walkable(
