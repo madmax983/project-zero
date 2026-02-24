@@ -874,6 +874,7 @@ pub const fn get_resource_char(resource: ResourceType) -> &'static str {
         ResourceType::Rations => "R",
         ResourceType::Fuel => "F",
         ResourceType::Alcohol => "D",
+        ResourceType::Scrap => "S",
     }
 }
 
@@ -902,6 +903,7 @@ pub const fn get_resource_color(resource: ResourceType) -> Color {
         ResourceType::Rations => Color::Rgb(255, 105, 180), // HotPink
         ResourceType::Fuel => Color::Rgb(255, 140, 0),  // DarkOrange
         ResourceType::Alcohol => Color::Rgb(148, 0, 211), // DarkViolet
+        ResourceType::Scrap => Color::Rgb(105, 105, 105), // DimGray
     }
 }
 

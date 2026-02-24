@@ -10,6 +10,7 @@
 //! * **DesignationType**: The kind of request (Mine, Demolish).
 //! * **Validation**: Rules for where designations can be placed (`can_designate`).
 
+use crate::layer1::orbital_crossfire::ImpactSite;
 use crate::layer1::particles::spawn_particle;
 use crate::layer1::zone::ZoneType;
 use crate::layer1::{GridPosition, OccupiedTiles, TerrainGrid, TerrainType};
@@ -201,7 +202,16 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
         DesignationType::Mine => {
             let terrain = world.resource::<TerrainGrid>();
             // Allow casting because we checked for negative above
-            terrain.get(x as usize, y as usize) == Some(TerrainType::Rock)
+            if terrain.get(x as usize, y as usize) == Some(TerrainType::Rock) {
+                return true;
+            }
+            // Check for ImpactSite (Scrap)
+            world.iter_entities().any(|e| {
+                if let Some(pos) = e.get::<GridPosition>() {
+                    return pos.x == x && pos.y == y && e.contains::<ImpactSite>();
+                }
+                false
+            })
         }
         DesignationType::Demolish => {
             let occupied = world.resource::<OccupiedTiles>();

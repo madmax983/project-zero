@@ -310,6 +310,7 @@ pub fn extract_building_inputs(
                 ResourceType::Rations => resources.rations < resources.max_rations,
                 ResourceType::Fuel => resources.fuel < resources.max_fuel,
                 ResourceType::Alcohol => resources.alcohol < resources.max_alcohol,
+                ResourceType::Scrap => resources.scrap < resources.max_scrap,
             };
 
             entities.push(entity);

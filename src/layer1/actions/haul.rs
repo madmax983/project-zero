@@ -77,6 +77,9 @@ pub(crate) fn evaluate_haul(
                 crate::layer1::resources::ResourceType::Alcohol => {
                     resources.alcohol < resources.max_alcohol
                 }
+                crate::layer1::resources::ResourceType::Scrap => {
+                    resources.scrap < resources.max_scrap
+                }
             };
 
             if !has_room {
