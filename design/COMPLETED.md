@@ -133,3 +133,4 @@
 - [x] `214` Customs Checkpoint — `specs/214-customs-checkpoint.md` — verified implemented
 - [x] `216` Window Views — `specs/216-window-views.md` — verified implemented
 - [x] `206` Orbital Crossfire — `specs/206-orbital-crossfire.md` — completed 2026-06-25
+- [x] `217` Escape Pods — `specs/217-escape-pods.md` — verified implemented
