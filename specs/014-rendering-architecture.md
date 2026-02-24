@@ -6,11 +6,11 @@ Establish a formal rendering pipeline with defined z-order layers for terrain, e
 
 ## Dependencies
 
-- `002` — Terrain rendering
-- `003` — UI layout (multi-panel rendering)
-- `004` — Pop rendering
-- `006` — Building placement (cursor)
-- `010` — Chronicle (modal overlay)
+- `002` — Terrain rendering (Implemented)
+- `003` — UI layout (multi-panel rendering) (Implemented)
+- `004` — Pop rendering (Implemented)
+- `006` — Building placement (cursor) (Verified Implemented in `src/layer1/building.rs`)
+- `010` — Chronicle (modal overlay) (Verified Implemented in `src/layer1/chronicle.rs`)
 
 ## RED Phase: Tests First
 
