@@ -70,13 +70,19 @@ pub fn immigration_interception_system(
 
 /// Simulates the vetting process.
 pub fn vetting_work_system(
-    mut query: Query<(&mut ImmigrationStatus, Option<&HiddenTraits>)>,
+    mut query: Query<(&mut ImmigrationStatus, Option<&HiddenTraits>, &GridPosition)>,
+    zone_grid: Res<ZoneGrid>,
     _officers: Query<&GridPosition, With<CustomsOfficer>>,
 ) {
     // In a real system, we'd check if an officer is working on this entity.
     // For GREEN phase, we simulate progress automatically.
 
-    for (mut status, hidden) in &mut query {
+    for (mut status, hidden, pos) in &mut query {
+        // Ensure entity is at a Customs checkpoint
+        if zone_grid.get(pos.x, pos.y) != ZoneType::Customs {
+            continue;
+        }
+
         match *status {
             ImmigrationStatus::Pending => {
                 *status = ImmigrationStatus::Processing(0);
@@ -151,6 +157,10 @@ mod tests {
     fn test_vetting_process_success() {
         // Arrange: Officer and Pending entity in Customs Zone
         let mut world = World::new();
+        let mut zone_grid = ZoneGrid::new(10, 10);
+        zone_grid.set(5, 5, ZoneType::Customs);
+        world.insert_resource(zone_grid);
+
         let pending_pop = world.spawn((
             Pop::default(),
             ImmigrationStatus::Pending,
@@ -181,6 +191,10 @@ mod tests {
     fn test_vetting_reveals_traits() {
         // Arrange: Pending pop with HiddenTraits
         let mut world = World::new();
+        let mut zone_grid = ZoneGrid::new(10, 10);
+        zone_grid.set(5, 5, ZoneType::Customs);
+        world.insert_resource(zone_grid);
+
         let pending_pop = world.spawn((
             Pop::default(),
             ImmigrationStatus::Pending,

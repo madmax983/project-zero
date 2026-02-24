@@ -120,3 +120,5 @@ mod weather_energy;
 
 #[path = "integration/acoustic_buildings.rs"]
 mod acoustic_buildings;
+#[path = "integration/customs_vetting.rs"]
+mod customs_vetting;
