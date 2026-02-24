@@ -12,7 +12,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 - [ ] `165` Gene Banks — `specs/165-gene-banks.md`
 - [ ] `168` The Mother Lode — `specs/168-the-mother-lode.md`
-- [ ] `179` Magnetic Storms — `specs/179-magnetic-storms.md`
 - [ ] `183` Geodetic Sentience — `specs/183-geodetic-sentience.md`
 - [ ] `186` Bio-Architecture — `specs/186-bio-architecture.md`
 - [ ] `187` Adaptive Biology — `specs/187-adaptive-biology.md`

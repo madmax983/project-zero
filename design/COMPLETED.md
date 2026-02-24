@@ -8,3 +8,127 @@
 - [x] `126` Blackout Protocol — `specs/126-blackout-protocol.md` — completed 2026-06-26
 - [x] `198` Urban Heat Islands — `specs/198-urban-heat-islands.md` — completed 2026-06-26
 - [x] `099` Fleet Movement — `specs/099-fleet-movement.md` — completed 2026-06-25
+- [x] `006` Building Placement System — `specs/006-building-placement.md` — verified implemented
+- [x] `007` Housing Building — `specs/007-building-housing.md` — verified implemented
+- [x] `008` Farm Building and Food Production — `specs/008-building-farm.md` — verified implemented
+- [x] `009` Job Assignment System — `specs/009-job-system.md` — verified implemented
+- [x] `010` Chronicle System — `specs/010-chronicle-system.md` — verified implemented
+- [x] `012` Input Architecture and Context Routing — `specs/012-input-architecture.md` — verified implemented
+- [x] `013` Schedule and System Execution Ordering — `specs/013-schedule-system-ordering.md` — verified implemented
+- [x] `015` Selection and Inspection System — `specs/015-selection-system.md` — verified implemented
+- [x] `016` Emergent Utility AI System — `specs/016-utility-ai-system.md` — verified implemented
+- [x] `017` Designation System — `specs/017-designation-system.md` — verified implemented
+- [x] `018` Mining and Resources — `specs/018-mining-resources.md` — verified implemented
+- [x] `020` Construction Costs — `specs/020-construction-costs.md` — verified implemented
+- [x] `024` Metal Industry — `specs/024-metal-industry.md` — verified implemented
+- [x] `025` Hauling Logistics — `specs/025-hauling-logistics.md` — verified implemented
+- [x] `027` Seasonal Rhythms — `specs/027-seasonal-rhythms.md` — verified implemented
+- [x] `030` Tool Economy — `specs/030-tool-economy.md` — verified implemented
+- [x] `032` Entropy and Spoilage — `specs/032-entropy-spoilage.md` — verified implemented
+- [x] `033` Fire Propagation — `specs/033-fire-propagation.md` — verified implemented
+- [x] `035` Workplace Hazards — `specs/035-workplace-hazards.md` — verified implemented
+- [x] `037` Tech Tree UI — `specs/037-tech-tree-ui.md` — verified implemented
+- [x] `038` Medical Care — `specs/038-medical-care.md` — verified implemented
+- [x] `041` Field Science — `specs/041-field-science.md` — verified implemented
+- [x] `042` Energy System — `specs/042-energy-system.md` — verified implemented
+- [x] `044` Horticulture and Beauty — `specs/044-horticulture-beauty.md` — verified implemented
+- [x] `046` Notifications System — `specs/046-notifications-system.md` — verified implemented
+- [x] `047` Pop Relationships — `specs/047-pop-relationships.md` — verified implemented
+- [x] `054` Colony Edicts — `specs/054-colony-edicts.md` — verified implemented
+- [x] `055` The Rumor Web — `specs/055-rumor-web.md` — verified implemented
+- [x] `056` Designated Zones — `specs/056-designated-zones.md` — verified implemented
+- [x] `058` Personal Tools — `specs/058-personal-tools.md` — verified implemented
+- [x] `059` Soil Fertility and Depletion — `specs/059-soil-fertility.md` — verified implemented
+- [x] `060` Acoustic Simulation — `specs/060-acoustic-simulation.md` — verified implemented
+- [x] `061` Cultural Artifacts (Art) — `specs/061-cultural-artifacts.md` — verified implemented
+- [x] `063` Atmospheric Simulation — `specs/063-atmospheric-simulation.md` — verified implemented
+- [x] `065` Day/Night Cycle — `specs/065-day-night-cycle.md` — verified implemented
+- [x] `066` Building Work AI Integration — `specs/066-building-work-ai.md` — verified implemented
+- [x] `067` Militia System — `specs/067-militia-system.md` — verified implemented
+- [x] `068` Pop Factions — `specs/068-pop-factions.md` — verified implemented
+- [x] `072` Justice System — `specs/072-justice-system.md` — verified implemented
+- [x] `075` Animal Husbandry — `specs/075-animal-husbandry.md` — verified implemented
+- [x] `076` Heirloom Items — `specs/076-heirloom-items.md` — verified implemented
+- [x] `077` Emergent Festivals — `specs/077-emergent-festivals.md` — verified implemented
+- [x] `078` The Old Guard — `specs/078-the-old-guard.md` — verified implemented
+- [x] `079` Weather Events — `specs/079-weather-events.md` — verified implemented
+- [x] `080` Planetary Quirks — `specs/080-planetary-quirks.md` — verified implemented
+- [x] `083` Building Shifts — `specs/083-building-shifts.md` — verified implemented
+- [x] `084` Pop Traits — `specs/084-pop-traits.md` — verified implemented
+- [x] `087` Food Preservation — `specs/087-food-preservation.md` — verified implemented
+- [x] `091` The Inspector — `specs/091-the-inspector.md` — verified implemented
+- [x] `092` Antagonistic Flora — `specs/092-antagonistic-flora.md` — verified implemented
+- [x] `093` Desire Paths — `specs/093-desire-paths.md` — verified implemented
+- [x] `094` System View Architecture — `specs/094-system-view.md` — verified implemented
+- [x] `095` System Generation — `specs/095-system-generation.md` — verified implemented
+- [x] `097` Social Need and Tavern — `specs/097-social-tavern.md` — verified implemented
+- [x] `098` Medical Triage Policies — `specs/098-medical-triage.md` — verified implemented
+- [x] `100` Jury-Rigging — `specs/100-jury-rigging.md` — verified implemented
+- [x] `104` Fuel Industry — `specs/104-fuel-industry.md` — verified implemented
+- [x] `107` Biocompatibility — `specs/107-biocompatibility.md` — verified implemented
+- [x] `109` Greenhouses — `specs/109-greenhouses.md` — verified implemented
+- [x] `112` Maintenance Debt — `specs/112-maintenance-debt.md` — verified implemented
+- [x] `113` Social Stratification — `specs/113-social-stratification.md` — verified implemented
+- [x] `114` Palette Fatigue — `specs/114-palette-fatigue.md` — verified implemented
+- [x] `117` Fuel Consumption — `specs/117-fuel-consumption.md` — verified implemented
+- [x] `119` Airlock & Pressure System — `specs/119-airlock-pressure.md` — verified implemented
+- [x] `120` Crop Diversity — `specs/120-crop-diversity.md` — verified implemented
+- [x] `121` Hydroponics — `specs/121-hydroponics.md` — verified implemented
+- [x] `122` Retrograde Engineering — `specs/122-retrograde-engineering.md` — verified implemented
+- [x] `123` Technological Rituals — `specs/123-technological-rituals.md` — verified implemented
+- [x] `124` The Wild Child — `specs/124-the-wild-child.md` — verified implemented
+- [x] `125` Grid Instability — `specs/125-grid-instability.md` — verified implemented
+- [x] `127` Stress Breakdowns — `specs/127-stress-breakdowns.md` — verified implemented
+- [x] `128` Social Mimicry — `specs/128-social-mimicry.md` — verified implemented
+- [x] `129` The Colony Mascot — `specs/129-the-colony-mascot.md` — verified implemented
+- [x] `130` Social Debt — `specs/130-social-debt.md` — verified implemented
+- [x] `131` - Bioluminescent Flora — `specs/131-bioluminescent-flora.md` — verified implemented
+- [x] `132` Equipment & Wear — `specs/132-equipment-and-wear.md` — verified implemented
+- [x] `134` Emergency Venting — `specs/134-emergency-venting.md` — verified implemented
+- [x] `135` Trash Cannon Defense — `specs/135-trash-cannon-defense.md` — verified implemented
+- [x] `136` Explosive Decompression — `specs/136-explosive-decompression.md` — verified implemented
+- [x] `137` Pop Hobbies — `specs/137-pop-hobbies.md` — verified implemented
+- [x] `138` The Blob — `specs/138-the-blob.md` — verified implemented
+- [x] `139` Cryo-Stasis Vaults — `specs/139-cryo-stasis.md` — verified implemented
+- [x] `140` Thermal Management — `specs/140-thermal-management.md` — verified implemented
+- [x] `141` Colony Ship Cannibalization — `specs/141-colony-ship-cannibalization.md` — verified implemented
+- [x] `142` Biometric Lockouts — `specs/142-biometric-lockouts.md` — verified implemented
+- [x] `143` Data Physicality — `specs/143-data-physicality.md` — verified implemented
+- [x] `144` Graffiti and Signage — `specs/144-graffiti-and-signage.md` — verified implemented
+- [x] `145` Prototyping Phase — `specs/145-prototyping-phase.md` — verified implemented
+- [x] `147` Secret Societies — `specs/147-secret-societies.md` — verified implemented
+- [x] `148` The 'Helpful' AI — `specs/148-helpful-ai.md` — verified implemented
+- [x] `151` Cybernetic Augmentation — `specs/151-cybernetic-augmentation.md` — verified implemented
+- [x] `153` Geological Instability — `specs/153-geological-instability.md` — verified implemented
+- [x] `154` Named Locations — `specs/154-named-locations.md` — verified implemented
+- [x] `155` Advanced Workplace Hazards — `specs/155-advanced-hazards.md` — verified implemented
+- [x] `164` Modular Fauna — `specs/164-modular-fauna.md` — verified implemented
+- [x] `166` Xeno-Gastronomy — `specs/166-xeno-gastronomy.md` — verified implemented
+- [x] `170` Pheromone Gardening — `specs/170-pheromone-gardening.md` — verified implemented
+- [x] `171` Seismic Resonance — `specs/171-seismic-resonance.md` — verified implemented
+- [x] `172` Institutional Memory — `specs/172-institutional-memory.md` — verified implemented
+- [x] `173` Predictive Policing — `specs/173-predictive-policing.md` — verified implemented
+- [x] `174` Memetic Hazards — `specs/174-memetic-hazards.md` — verified implemented
+- [x] `175` Bureaucratic Drag — `specs/175-bureaucratic-drag.md` — verified implemented
+- [x] `176` - The Gridlock (Crowding System) — `specs/176-gridlock-crowding.md` — verified implemented
+- [x] `178` Scrapcode — `specs/178-scrapcode.md` — verified implemented
+- [x] `179` Magnetic Storms — `specs/179-magnetic-storms.md` — verified implemented
+- [x] `181` Chemical Regulation — `specs/181-chemical-regulation.md` — verified implemented
+- [x] `182` Urban Canyons — `specs/182-urban-canyons.md` — verified implemented
+- [x] `185` Vacuum Welding — `specs/185-vacuum-welding.md` — verified implemented
+- [x] `190` Atmospheric Tides — `specs/190-atmospheric-tides.md` — verified implemented
+- [x] `191` Radioactive Hearth — `specs/191-radioactive-hearth.md` — verified implemented
+- [x] `193` Polyglot Confusion — `specs/193-polyglot-confusion.md` — verified implemented
+- [x] `194` Company Scrip — `specs/194-company-scrip.md` — verified implemented
+- [x] `195` Cryo-Dreams — `specs/195-cryo-dreams.md` — verified implemented
+- [x] `196` Eureka Moments — `specs/196-eureka-moments.md` — verified implemented
+- [x] `197` Civic Ideology — `specs/197-civic-ideology.md` — verified implemented
+- [x] `199` Obsessive Optimization — `specs/199-obsessive-optimization.md` — verified implemented
+- [x] `200` Superstitious Totems — `specs/200-superstitious-totems.md` — verified implemented
+- [x] `204` Thermal Inversion — `specs/204-thermal-inversion.md` — verified implemented
+- [x] `205` Auroral Harvesting — `specs/205-auroral-harvesting.md` — verified implemented
+- [x] `207` Atmospheric Processors — `specs/207-atmospheric-processors.md` — verified implemented
+- [x] `211` Gut Biome — `specs/211-gut-biome.md` — verified implemented
+- [x] `213` Solar Cycles — `specs/213-solar-cycles.md` — verified implemented
+- [x] `214` Customs Checkpoint — `specs/214-customs-checkpoint.md` — verified implemented
+- [x] `216` Window Views — `specs/216-window-views.md` — verified implemented
