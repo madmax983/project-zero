@@ -5778,3 +5778,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Wait for the safe window (slow) vs. Burn hard to cross the gap (fuel cost).
 
 ---
+
+## The Scapegoat
+
+**Layer:** 1
+
+**Fantasy:** When things go wrong, the mob needs someone to blame. It doesn't matter if it's true.
+
+**Mechanic:** High Unrest generates a "Scapegoat" target (a specific Pop or minority group). Banishing or Punishing them lowers Unrest immediately but adds "Guilt" or "Injustice" traits to others.
+
+**Emergence:** The reactor blows up due to lack of maintenance. The mob blames the "Mutant" janitor. You execute him to save the government, even though you know he was innocent.
+
+**Tension:** Justice (Unrest stays high) vs. Stability (Unrest drops, Guilt rises).
+
+---
+
+## Inflationary Spiral
+
+**Layer:** 3
+
+**Fantasy:** Money becomes worthless. The paper in your wallet is better used as kindling.
+
+**Mechanic:** Galactic Currency value fluctuates relative to goods. If it crashes, your "Credits" stockpile becomes useless for trade. You must revert to Barter (Goods for Goods), which is inefficient and limited.
+
+**Emergence:** You save up 1M credits for a battleship. The market crashes. You are now poor. You trade 1M credits for a sandwich.
+
+**Tension:** Liquid assets (Credits/Flexible) vs. Hard assets (Alloys/Static).
+
+---
+
+## Chromotaxis
+
+**Layer:** 1
+
+**Fantasy:** Aliens see the world differently. Color is a language you don't speak.
+
+**Mechanic:** Flora/Fauna are attracted to or enraged by specific building colors or light spectrums. "Red" might mean "Food" to a herbivore or "Rival" to a predator.
+
+**Emergence:** You paint your base Red for "Cool Factor". The local bulls *hate* Red. They ram your walls down. You have to repaint the entire base Beige to survive.
+
+**Tension:** Aesthetics (Player expression) vs. Survival (Biological triggers).
+
+---
+
+## The Consultant
+
+**Layer:** Cross-layer
+
+**Fantasy:** The corporate overlord sends a fixer who makes everything "better" (worse).
+
+**Mechanic:** An NPC arrives who automatically changes job priorities to "Maximize Profit" (ignoring health/safety) unless bribed or "accidentally" killed. They provide massive efficiency buffs but cause rapid burnout/stress.
+
+**Emergence:** The Consultant overworks the reactor team. The reactor explodes. The Consultant writes a report blaming the dead workers and leaves on the next shuttle.
+
+**Tension:** Efficiency (Consultant's buffs) vs. Safety/Morale (Consultant's cost).
+
+---
+
+## The Doomsday Clock
+
+**Layer:** 1
+
+**Fantasy:** The end is nigh! (It isn't).
+
+**Mechanic:** A false rumor starts a countdown to an "Apocalypse". Productivity spikes (panic working) but then crashes into nihilism when the clock hits zero and nothing happens. Or, the belief is so strong it *causes* the event (e.g., mass suicide).
+
+**Emergence:** A "Prophet" convinces the colony the sun will explode on Tuesday. Everyone works 24/7 to build a shelter. Tuesday comes. The sun is fine. Everyone is furious they worked so hard for nothing.
+
+**Tension:** Reveal the truth (calm but lazy) or ride the panic (productive but stressed)?
+
+---
