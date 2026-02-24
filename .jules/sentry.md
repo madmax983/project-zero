@@ -23,3 +23,7 @@
 ## [Implicit Constants in Utility AI]
 **Learning:** `evaluate_work` uses hardcoded magic numbers (0.5 base, 0.1 distance decay) that were not visible in the function signature, making it fragile to changes.
 **Action:** When testing "utility" functions, always use a "Base Case" test (dist=0, status=neutral) to verify and lock down these magic numbers, ensuring changes are intentional.
+
+**[Combat] Unarmed Infinite Loop Risk**
+**Learning:** Unarmed pops (no weapon equipment) will enter AtTarget state and call execute_attack repeatedly because default range is 1.0. However, execute_attack does 0 damage if no weapon is present. This creates a "slap fight" where nothing happens forever unless AI intervenes.
+**Action:** In future AI refactors, ensure unarmed pops either flee or use a fallback "fist" weapon with >0 damage to resolve combat.
