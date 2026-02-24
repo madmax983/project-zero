@@ -30,7 +30,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `149` Cometary Injection — `specs/149-cometary-injection.md`
 - [ ] `150` Sensor Ambiguity — `specs/150-sensor-ambiguity.md`
 - [ ] `152` Orbital Stations — `specs/152-orbital-stations.md`
-- [ ] `157` Ship Classes & Construction — `specs/157-ship-classes.md`
 - [ ] `158` Fleet Management (Merge & Split) — `specs/158-fleet-management.md`
 - [ ] `159` Fleet Combat Resolution — `specs/159-fleet-combat.md`
 - [ ] `169` Subspace Currents — `specs/169-subspace-currents.md`

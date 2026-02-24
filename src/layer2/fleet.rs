@@ -1,4 +1,5 @@
 use bevy_ecs::prelude::*;
+use crate::layer2::ship::Ship;
 
 /// Component marking an entity as a Fleet.
 ///
@@ -85,6 +86,38 @@ pub fn fleet_movement_system(mut commands: Commands, mut query: Query<(Entity, &
                     parent: destination,
                 });
         }
+    }
+}
+
+/// Component representing the composition of a fleet (ships).
+#[derive(Component, Debug, Clone, Default)]
+pub struct FleetComposition {
+    /// The ships in the fleet.
+    pub ships: Vec<Ship>,
+}
+
+impl FleetComposition {
+    /// Adds a ship to the fleet.
+    pub fn add_ship(&mut self, ship: Ship) {
+        self.ships.push(ship);
+    }
+
+    /// Calculates the total cargo capacity of the fleet.
+    #[must_use]
+    pub fn total_cargo_capacity(&self) -> f32 {
+        self.ships.iter().map(|s| s.ship_type.cargo_capacity()).sum()
+    }
+
+    /// Calculates the speed of the fleet (determined by the slowest ship).
+    #[must_use]
+    pub fn speed(&self) -> f32 {
+        if self.ships.is_empty() {
+            return 0.0;
+        }
+        // Minimal speed of all ships
+        self.ships.iter()
+            .map(|s| s.ship_type.base_speed())
+            .fold(f32::INFINITY, f32::min)
     }
 }
 

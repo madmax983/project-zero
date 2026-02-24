@@ -153,3 +153,4 @@
 - [x] `110` Spontaneous Architecture — `specs/110-spontaneous-architecture.md` — verified implemented
 - [x] `111` Conveyor Logistics — `specs/111-conveyor-logistics.md` — verified implemented
 - [x] `146` Command Center & System Visibility — `specs/146-command-center.md` — verified implemented
+- [x] `157` Ship Classes & Construction — `specs/157-ship-classes.md` — completed 2026-06-25
