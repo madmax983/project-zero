@@ -3078,3 +3078,163 @@ Divisions of the Archive.
 - The Founders' Vault
 - Sector Zero
 - The Lost Index
+
+---
+
+## Escape Pod Fragments (Spec 217)
+
+### [POD_NAME]
+Names for escape pods.
+
+- Life-Boat 7
+- Last-Hope
+- Void-Skipper
+- The Ark-let
+- Seed-Pod
+- Drift-Shell
+- Emergency-1
+
+### [EVACUATION_REASON]
+Why the pod launched.
+
+- structural failure
+- the hunger became too much
+- fear of the dark
+- reactor breach imminent
+- command order
+- sudden panic
+- the silence
+
+---
+
+## Planetary Core Tap Fragments (Spec 212)
+
+### [CORE_ACTIVITY]
+State of the planetary core.
+
+- stable
+- humming
+- angry
+- turbulent
+- singing
+- waking
+- critical
+
+### [CORE_STRESS_LEVEL]
+Level of seismic danger.
+
+- tremors reported
+- plates shifting
+- deep groaning
+- fracture imminent
+- magma rising
+- total instability
+- silence (ominous)
+
+---
+
+## Solar Cycle Fragments (Spec 213)
+
+### [SOLAR_PHASE]
+Current phase of the star.
+
+- Solar Minimum
+- The Rising
+- Solar Maximum
+- The Falling
+- Quiet Sun
+- Angry Sun
+- The Waning
+
+### [SOLAR_INTENSITY]
+Description of solar output.
+
+- weak and cold
+- blindingly bright
+- harsh radiation
+- dim and grey
+- burning white
+- soft yellow
+- unpredictable
+
+---
+
+## Customs Checkpoint Fragments (Spec 214)
+
+### [CONTRABAND_ITEM]
+Illegal items found on visitors.
+
+- unauthorized seeds
+- unshielded cores
+- scrap-code drives
+- weapon parts
+- forbidden texts
+- unmarked chem-vials
+- void-parasites
+
+### [DENIAL_REASON]
+Why entry was refused.
+
+- invalid bio-metrics
+- contagion detected
+- criminal record found
+- refusal to declare
+- carrying contraband
+- suspicious origin
+- insufficient credits
+
+---
+
+## Ammunition Logistics Fragments (Spec 210)
+
+### [AMMO_TYPE]
+Types of turret ammunition.
+
+- kinetic-slugs
+- plasma-cells
+- rail-spikes
+- shredder-rounds
+- void-shot
+- explosive-shells
+- tracer-rounds
+
+---
+
+## Planetary Governance Fragments (Spec 209)
+
+### [GOVERNOR_TITLE]
+Titles for planetary leaders.
+
+- High Administrator
+- Planetary Director
+- The Governor
+- Sector Head
+- Voice of the Board
+- Colony-Prime
+- The Overseer
+
+### [POLICY_NAME]
+Names for government policies.
+
+- Ration Control Act
+- Curfew Mandate
+- Production Quota
+- Defense Protocol
+- Resource Conservation
+- Trade Agreement
+- Citizenship Test
+
+---
+
+## Safehouse Fragments (Spec 215)
+
+### [SAFEHOUSE_NAME]
+Names for safehouse contracts/locations.
+
+- The Bolt-Hole
+- Sanctuary-9
+- Deep-Cover
+- The Blind-Spot
+- Zero-Trace
+- The Quiet Room
+- Ghost-House
