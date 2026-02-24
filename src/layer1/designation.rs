@@ -42,6 +42,8 @@ pub enum DesignationType {
     Cannibalize,
     /// Designate a Vacuum Welded building for destruction (yields 0 resources).
     Destroy,
+    /// Collect genetic sample from flora or fauna.
+    CollectSample,
 }
 
 impl DesignationType {
@@ -67,6 +69,7 @@ impl DesignationType {
             Self::JuryRig => 'J',
             Self::Cannibalize => 'C',
             Self::Destroy => 'D',
+            Self::CollectSample => 'S',
         }
     }
 
@@ -92,6 +95,7 @@ impl DesignationType {
             Self::JuryRig => "J",
             Self::Cannibalize => "C",
             Self::Destroy => "D",
+            Self::CollectSample => "S",
         }
     }
 
@@ -117,6 +121,7 @@ impl DesignationType {
             Self::JuryRig => "Jury-Rig",
             Self::Cannibalize => "Cannibalize",
             Self::Destroy => "Destroy",
+            Self::CollectSample => "Collect Sample",
         }
     }
 }
@@ -297,6 +302,29 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
             // Only occupied tiles can be destroyed
             occupied.0.contains(&(x, y))
         }
+        DesignationType::CollectSample => {
+            // Must have Flora or Fauna
+            let has_flora = world.iter_entities().any(|e| {
+                if let Some(pos) = e.get::<GridPosition>() {
+                    return pos.x == x
+                        && pos.y == y
+                        && e.contains::<crate::layer1::flora::Flora>();
+                }
+                false
+            });
+            if has_flora {
+                return true;
+            }
+            // Check fauna
+            world.iter_entities().any(|e| {
+                if let Some(pos) = e.get::<GridPosition>() {
+                    return pos.x == x
+                        && pos.y == y
+                        && e.contains::<crate::layer1::fauna::Fauna>();
+                }
+                false
+            })
+        }
     }
 }
 
@@ -436,6 +464,23 @@ pub fn try_designate_area(
                 })
                 .collect(),
         ),
+        DesignationType::CollectSample => {
+            // Collect both Flora and Fauna positions
+            let mut targets = HashSet::new();
+            for (pos, _) in world
+                .query::<(&GridPosition, &crate::layer1::flora::Flora)>()
+                .iter(world)
+            {
+                targets.insert((pos.x, pos.y));
+            }
+            for (pos, _) in world
+                .query::<(&GridPosition, &crate::layer1::fauna::Fauna)>()
+                .iter(world)
+            {
+                targets.insert((pos.x, pos.y));
+            }
+            Some(targets)
+        }
         _ => None,
     };
 
@@ -480,7 +525,8 @@ pub fn try_designate_area(
                     DesignationType::SetZone(_) => true,
                     DesignationType::Tame
                     | DesignationType::ClearFlora
-                    | DesignationType::Cannibalize => valid_targets
+                    | DesignationType::Cannibalize
+                    | DesignationType::CollectSample => valid_targets
                         .as_ref()
                         .is_some_and(|targets| targets.contains(&(x, y))),
                     DesignationType::Destroy => {

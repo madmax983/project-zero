@@ -611,3 +611,5 @@ pub mod window;
 
 #[cfg(test)]
 mod urban_heat_tests;
+pub mod gene_bank;
+pub use gene_bank::*;

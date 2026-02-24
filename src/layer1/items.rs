@@ -130,6 +130,8 @@ pub enum ItemType {
     Sedative,
     /// Alcohol (drink).
     Alcohol,
+    /// Genetic sample from flora or fauna.
+    GeneticSample,
 }
 
 impl ItemType {

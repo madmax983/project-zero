@@ -10,7 +10,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 ## MVP — Layer 1: Colony Simulation
 
-- [ ] `165` Gene Banks — `specs/165-gene-banks.md`
 - [ ] `168` The Mother Lode — `specs/168-the-mother-lode.md`
 - [ ] `183` Geodetic Sentience — `specs/183-geodetic-sentience.md`
 - [ ] `186` Bio-Architecture — `specs/186-bio-architecture.md`

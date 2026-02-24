@@ -306,6 +306,8 @@ pub enum BuildingType {
     AuroralCollector,
     /// Terraforming: Atmospheric Processor.
     AtmosphericProcessor,
+    /// Stores genetic samples of flora and fauna.
+    GeneBank,
 }
 
 impl BuildingType {
@@ -330,7 +332,9 @@ impl BuildingType {
 
             Self::Library => Some((Category::Research, Tier::Basic)),
             Self::Observatory | Self::CryoPod => Some((Category::Research, Tier::Advanced)),
-            Self::AICore | Self::AtmosphericProcessor => Some((Category::Research, Tier::HighTech)),
+            Self::AICore | Self::AtmosphericProcessor | Self::GeneBank => {
+                Some((Category::Research, Tier::HighTech))
+            }
 
             _ => None,
         }
@@ -451,7 +455,8 @@ impl BuildingType {
             | Self::Airlock
             | Self::AncientReactor
             | Self::AncientFabricator
-            | Self::AtmosphericProcessor => true,
+            | Self::AtmosphericProcessor
+            | Self::GeneBank => true,
 
             // Small or Open structures
             Self::Farm
@@ -501,7 +506,7 @@ impl BuildingType {
             }
             Self::TrashCannon => -2.0, // Industrial machinery is ugly
             Self::Heater | Self::ServerBank => 0.0,
-            Self::CommandCenter | Self::AICore | Self::CryoPod => 0.0,
+            Self::CommandCenter | Self::AICore | Self::CryoPod | Self::GeneBank => 0.0,
             _ => 0.0,
         }
     }
@@ -547,6 +552,7 @@ impl BuildingType {
             Self::CryoPod => Some(Tech::Medical),
             Self::AuroralCollector => Some(Tech::Electromagnetism),
             Self::AtmosphericProcessor => Some(Tech::Terraforming),
+            Self::GeneBank => Some(Tech::Medical),
             _ => None,
         }
     }
@@ -616,6 +622,7 @@ impl BuildingType {
             Self::CryoPod => "Cryo Pod",
             Self::AuroralCollector => "Auroral Collector",
             Self::AtmosphericProcessor => "Atmospheric Processor",
+            Self::GeneBank => "Gene Bank",
         }
     }
 
@@ -667,6 +674,7 @@ impl BuildingType {
             Self::CryoPod => '❄',
             Self::AuroralCollector => 'Ψ',
             Self::AtmosphericProcessor => '@',
+            Self::GeneBank => '🧬',
         }
     }
 
@@ -698,6 +706,11 @@ impl BuildingType {
             Self::AtmosphericProcessor => ColonyResources {
                 metal: 200.0,
                 stone: 100.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::GeneBank => ColonyResources {
+                metal: 50.0,
+                stone: 20.0,
                 ..ColonyResources::zeroed()
             },
             Self::CommandCenter => ColonyResources {
@@ -1224,7 +1237,8 @@ fn spawn_building(
         | BuildingType::AICore
         | BuildingType::DroneHub
         | BuildingType::CryoPod
-        | BuildingType::AtmosphericProcessor => configure_tech(&mut entity, building_type),
+        | BuildingType::AtmosphericProcessor
+        | BuildingType::GeneBank => configure_tech(&mut entity, building_type),
         BuildingType::PersonalShed
         | BuildingType::PersonalGarden
         | BuildingType::PersonalShrine => {
@@ -1857,6 +1871,21 @@ fn configure_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 },
             ));
         }
+        BuildingType::GeneBank => {
+            entity.insert((
+                crate::layer1::gene_bank::GeneBank::default(),
+                PowerConsumer {
+                    demand: 15.0,
+                    active: false,
+                },
+                LightSource {
+                    radius: 4.0,
+                    intensity: 0.7,
+                    color: (0, 255, 200), // Cyan/Green
+                },
+                ShiftSchedule::default(),
+            ));
+        }
         _ => {}
     }
 }
@@ -2088,8 +2117,9 @@ mod tests {
         );
         assert_eq!(
             BuildingType::AtmosphericProcessor.next(),
-            BuildingType::Housing
+            BuildingType::GeneBank
         );
+        assert_eq!(BuildingType::GeneBank.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -2294,6 +2324,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::AtmosphericProcessor);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::GeneBank);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

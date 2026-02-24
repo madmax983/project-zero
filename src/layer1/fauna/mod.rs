@@ -12,7 +12,7 @@ pub mod modular;
 pub use modular::*;
 
 /// Type of fauna.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Hash)]
 pub enum FaunaType {
     /// A wolf.
     #[default]

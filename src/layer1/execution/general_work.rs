@@ -337,6 +337,7 @@ pub(crate) const fn get_skill_for_designation(
         | DesignationType::Destroy => Some(SkillType::Construction),
         DesignationType::ClearFlora => Some(SkillType::Farming),
         DesignationType::SetZone(_) | DesignationType::Tame => None,
+        DesignationType::CollectSample => Some(SkillType::Farming),
     }
 }
 
@@ -418,6 +419,22 @@ fn execute_work_on_designation(
         DesignationType::JuryRig => execute_jury_rig(world, designation_entity),
         DesignationType::Cannibalize => execute_cannibalize(world, designation_entity),
         DesignationType::Destroy => execute_destroy(world, designation_entity),
+        DesignationType::CollectSample => {
+            if let Some(pos) = world.get::<GridPosition>(designation_entity).copied() {
+                // Actor unused in current implementation
+                let success = crate::layer1::gene_bank::collect_sample_action(
+                    world,
+                    designation_entity,
+                    pos,
+                );
+                if success {
+                    world.despawn(designation_entity);
+                }
+                success
+            } else {
+                false
+            }
+        }
         DesignationType::SetZone(_) | DesignationType::Tame => false,
     }
 }
