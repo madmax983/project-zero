@@ -77,6 +77,19 @@ impl TerrainType {
     pub const fn is_walkable(self) -> bool {
         !matches!(self, Self::Rock | Self::Water)
     }
+
+    /// Returns the thermal retention (0.0 to 1.0) of the terrain (Spec 198).
+    /// - 0.5: Rock (Thermal Mass)
+    /// - 0.2: Water (Specific Heat)
+    /// - 0.1: Grass/Dirt
+    #[must_use]
+    pub const fn heat_retention(self) -> f32 {
+        match self {
+            Self::Rock => 0.5,
+            Self::Water => 0.2,
+            Self::Grass | Self::Dirt | Self::Path | Self::Tree | Self::Shrub | Self::Sapling => 0.1,
+        }
+    }
 }
 
 /// A 2D grid representing the game map's terrain layer.
