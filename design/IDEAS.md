@@ -5722,3 +5722,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Sacrifice a high-level unit to save the colony?
 
 ---
+
+## Organic Recycling
+
+**Layer:** 1
+
+**Fantasy:** In the deep void, carbon is carbon. You don't waste atoms.
+
+**Mechanic:** A "Recycler" building converts biological waste (Corpses, Rot, Sewage) into "Nutrient Paste". Eating it causes "Gloom" unless the Pop has the "Pragmatist" or "Cannibal" trait.
+
+**Emergence:** You survive the famine by eating the raiders. The colony develops a taste for "Long Pork" and starts hunting neighbors not for loot, but for lunch.
+
+**Tension:** Survival (Food) vs. Humanity (Morale/Diplomacy).
+
+---
+
+## Magnetic Reversal
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The planet's shield is rebooting.
+
+**Mechanic:** Periodic "Pole Flip" events. For a duration, the planetary magnetic field collapses. Surface radiation spikes. Compass/Map navigation is scrambled. Birds/Migratory fauna lose their way.
+
+**Emergence:** The poles flip during the harvest. The radiation kills the crops. The migratory "Sky-Whales" crash into your city because they are blind.
+
+**Tension:** Reliance on magnetic tech/Shields vs. Physical hardening.
+
+---
+
+## Chain of Command
+
+**Layer:** 1
+
+**Fantasy:** Orders take time to travel down the line. You are the General, not the Soldier.
+
+**Mechanic:** Combat units have a "Command Radius". Officers relay player orders to nearby troops. Troops out of radius or with dead officers revert to "Instinct" (Flee, Charge, Hunker) based on traits.
+
+**Emergence:** Your Officer takes a stray bullet. The disciplined firing line instantly dissolves into a chaotic rout because no one is shouting orders anymore.
+
+**Tension:** Officer safety (rear line) vs. Command range (front line).
+
+---
+
+## Pulsar Timing
+
+**Layer:** 2
+
+**Fantasy:** The lighthouse of death. Timing is everything.
+
+**Mechanic:** Pulsars emit a rotating beam of radiation. It sweeps across the system map periodically (e.g., every 10 seconds). Ships/Colonies in the beam take damage/interference.
+
+**Emergence:** You launch a trade fleet. They get caught in the beam because you miscalculated the rotation. They arrive cooked.
+
+**Tension:** Wait for the safe window (slow) vs. Burn hard to cross the gap (fuel cost).
+
+---
