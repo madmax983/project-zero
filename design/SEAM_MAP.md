@@ -188,3 +188,10 @@
 - **Glue added:**
     - Updated `src/layer1/building.rs` to attach `NoiseSource` to industrial buildings.
 - **Tests:** `tests/integration/acoustic_buildings.rs` (Integration test verified)
+
+### INT-037: Customs Vetting -> Zone Location
+- **Date:** 2026-10-27
+- **Systems connected:** `ZoneGrid` (Map) -> `vetting_work_system` (Customs)
+- **Glue added:**
+    - Updated `src/layer1/customs.rs` to check if entity is physically at `ZoneType::Customs` before processing.
+- **Tests:** `tests/integration/customs_vetting.rs` (Integration test verified)
