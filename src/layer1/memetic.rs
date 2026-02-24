@@ -1,8 +1,24 @@
 #![allow(clippy::must_use_candidate)]
-//! Memetic Hazards system (Spec 174).
+//! Memetic Hazards System (Spec 174).
 //!
-//! Handles the infection of Pops with memetic viruses from hazardous research,
-//! and the spread of infection via graffiti.
+//! This module implements "Memetic Hazards", viral ideas that infect Pops and compel them to
+//! spread the infection via graffiti (Memetic Sigils).
+//!
+//! # The Infection Cycle
+//!
+//! 1.  **Patient Zero**: A researcher unlocks a hazardous technology (e.g., `VoidWhispers`).
+//!     This triggers an immediate infection (adds [`MemeticCarrier`] component).
+//! 2.  **Compulsion**: Infected Pops have a high-priority action: [`evaluate_scrawl_memetic_sigil`].
+//!     They will ignore work and needs to draw Sigils on walls.
+//! 3.  **Transmission**: Clean Pops who observe these Sigils (via [`crate::layer1::graffiti::graffiti_observation_system`])
+//!     have a chance to become infected (defined in [`MemeticConfig`]).
+//! 4.  **Epidemic**: If unchecked, the colony descends into madness as everyone stops working to draw symbols.
+//!
+//! # Counterplay
+//!
+//! *   **Cleaning**: Janitors can clean graffiti (removing the vector).
+//! *   **Quarantine**: Restricting access to infected areas.
+//! *   **Therapy**: Medical treatment (Future Spec).
 
 use crate::layer1::utility_eval_types::{PopEvalData, UtilityAIBuffer};
 use crate::layer1::utility_types::ActionType;
@@ -12,6 +28,7 @@ use rand::seq::SliceRandom;
 /// Component marking a Pop as a carrier of a memetic virus.
 ///
 /// Carriers prioritize spreading the virus (e.g., scrawling sigils) over normal needs/work.
+/// This condition is persistent until cured (if a cure exists).
 #[derive(Component, Default, Debug)]
 pub struct MemeticCarrier;
 
@@ -19,6 +36,8 @@ pub struct MemeticCarrier;
 #[derive(Resource, Debug, Clone)]
 pub struct MemeticConfig {
     /// Chance (0.0 - 1.0) for a pop to become infected when observing a Memetic Sigil.
+    ///
+    /// Default: 0.1 (10%).
     pub infection_chance: f64,
 }
 
@@ -32,8 +51,11 @@ impl Default for MemeticConfig {
 
 /// Evaluates the desire to scrawl memetic sigils on walls.
 ///
-/// This action is available only to Pops infected with [`MemeticCarrier`].
-/// It overrides normal priorities with a high utility score (2.0).
+/// # Behavior
+/// *   **Condition**: Only runs if the Pop has the [`MemeticCarrier`] component.
+/// *   **Target**: Selects a random wall from the `UtilityAIBuffer`.
+/// *   **Priority**: Returns a utility of **2.0**, which overrides almost all other actions
+///     (normal max utility is 1.0). This represents an irresistible compulsion.
 pub fn evaluate_scrawl_memetic_sigil(
     data: &PopEvalData,
     buffer: &UtilityAIBuffer,
@@ -72,7 +94,7 @@ mod tests {
     use crate::layer1::utility_ai::evaluate_actions_system;
     use crate::layer1::utility_types::{ActionType, PopAction, UtilityConfig, UtilityWeights};
     use crate::shared::time::SimulationTime;
-    use bevy_ecs::prelude::*;
+    // use bevy_ecs::prelude::*; // Already imported via super
 
     #[test]
     fn test_unlocking_hazardous_tech_infects_researcher() {
@@ -109,6 +131,7 @@ mod tests {
 
     #[test]
     fn test_infected_pop_scrawls_sigil() {
+        crate::setup::init_task_pools();
         let mut world = World::new();
         world.insert_resource(UtilityConfig::default());
         world.insert_resource(SimulationTime::default());
@@ -133,7 +156,7 @@ mod tests {
             .id();
 
         // Setup wall at (5,6) to scrawl on
-        let wall = world
+        let _wall = world
             .spawn((
                 Building {
                     building_type: BuildingType::Wall,

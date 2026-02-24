@@ -1,7 +1,21 @@
-//! The Blob: An expanding hazard.
+//! The Blob: An expanding hazard (Spec 138).
 //!
-//! Blobs are semi-indestructible entities that consume resources and damage buildings.
-//! They spread to adjacent tiles over time.
+//! The Blob is a semi-indestructible, creeping hazard that consumes resources and damages buildings.
+//! It serves as a mid-game crisis that requires containment rather than direct combat.
+//!
+//! # Mechanics
+//!
+//! 1.  **Spreading**: Every few ticks, a Blob attempts to replicate into an adjacent tile.
+//!     *   It prioritizes empty space.
+//!     *   It cannot spread into walls/buildings immediately; instead, it damages them.
+//! 2.  **Consumption**: If a Blob occupies a tile with a [`ResourceItem`], it destroys the item.
+//! 3.  **Containment**: Since Blobs damage structures slowly, thick walls or airlocks can slow it down.
+//!     However, it will eventually breach containment if left unchecked.
+//!
+//! # Counterplay
+//!
+//! *   **Fire**: Blobs are highly flammable (Future Spec).
+//! *   **Venting**: Exposure to vacuum (Spec 134) can freeze/kill it.
 
 use crate::layer1::building::Building;
 use crate::layer1::map::GridPosition;
@@ -16,13 +30,19 @@ use std::collections::{HashMap, HashSet};
 #[derive(Component, Default, Debug, Clone)]
 pub struct Blob {
     /// Ticks until next spread attempt.
+    ///
+    /// When this reaches 0, the Blob attempts to spawn a new Blob in an adjacent tile.
     pub spread_timer: u32,
 }
 
 /// System that handles the spread of the Blob.
 ///
-/// Blobs attempt to spread to adjacent tiles periodically.
-/// If a building blocks the path, the Blob damages it.
+/// # Logic
+/// 1.  Decrements `spread_timer`.
+/// 2.  If ready, picks a random adjacent tile (NSEW).
+/// 3.  If the target is a building: Damages the structure (e.g., wall). Does NOT spread yet.
+/// 4.  If the target is empty and valid: Spawns a new [`Blob`] entity.
+/// 5.  Resets `spread_timer` (randomized 10-15 ticks).
 #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
 pub fn blob_spread_system(
     mut commands: Commands,
@@ -100,7 +120,7 @@ pub fn blob_spread_system(
 
 /// System that handles consumption of items by the Blob.
 ///
-/// If a Blob shares a tile with a resource item, the item is destroyed.
+/// If a Blob shares a tile with a [`ResourceItem`], the item is destroyed (despawned).
 pub fn blob_consumption_system(
     mut commands: Commands,
     blobs: Query<&GridPosition, With<Blob>>,

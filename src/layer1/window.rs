@@ -3,27 +3,57 @@
     clippy::cast_possible_truncation,
     clippy::cast_sign_loss
 )]
+//! Window Views System (Spec 216).
+//!
+//! This module implements the "View" mechanic, where [`Window`]s capture beauty from the environment
+//! and project it into the room as a [`BeautySource`].
+//!
+//! # Mechanics
+//!
+//! 1.  **Placement**: Windows are placed on walls. They have a `Direction` facing outwards.
+//! 2.  **Raycasting**: The [`update_window_views_system`] casts a ray from the window in its facing direction.
+//! 3.  **Beauty Capture**: The system sums the beauty values of tiles along the ray (from the [`BeautyGrid`]).
+//! 4.  **Obstruction**: Buildings (like Walls) block the view, terminating the ray.
+//! 5.  **Projection**: The total captured beauty is scaled (currently 10%) and set as the value of the
+//!     window's local [`BeautySource`].
+//!
+//! # Example
+//!
+//! A window facing a garden (High Beauty) will become a source of beauty inside the room.
+//! A window facing a landfill (Negative Beauty) will become a source of ugliness.
+
 use crate::layer1::beauty::{BeautyGrid, BeautySource};
 use crate::layer1::building::{Building, BuildingMap, Direction, OccupiedTiles};
 use crate::layer1::map::GridPosition;
 use bevy_ecs::prelude::*;
 
 /// Component representing a window that captures view beauty.
+///
+/// Windows are typically attached to wall entities. They must also have a [`BeautySource`] component
+/// to emit the captured beauty into the room.
 #[derive(Component, Default)]
 pub struct Window {
-    /// The direction the window faces.
+    /// The direction the window faces (e.g., North, South).
+    /// The ray is cast in this direction.
     pub direction: Direction,
-    /// The range of the view in tiles.
+    /// The maximum distance (in tiles) the window can "see".
     pub range: u32,
-    /// The angle of view (unused in MVP).
+    /// The angle of view (unused in MVP, reserved for future cone-based views).
     pub view_cone: f32,
 }
 
 /// System to update window beauty sources based on their view.
 ///
-/// Iterates through all windows, casts rays in their facing direction,
-/// and aggregates beauty values from the [`BeautyGrid`].
-/// Updates the [`BeautySource`] component on the window entity.
+/// This system performs the following for each window:
+/// 1.  Iterates from `1` to `range` in the window's `direction`.
+/// 2.  Checks for map bounds (adds a small bonus for "Sky View" if hitting edge).
+/// 3.  Checks for obstructions (buildings that block wind/view).
+/// 4.  Sums the beauty value of valid tiles from the [`BeautyGrid`].
+/// 5.  Updates the window's [`BeautySource`] value with a scaled total (10%).
+///
+/// # Performance
+/// This system runs every few ticks (configured in `SystemSet`).
+/// It performs a raycast for every window, so it scales linearly with window count * range.
 pub fn update_window_views_system(
     grid: Res<BeautyGrid>,
     occupied: Res<OccupiedTiles>,

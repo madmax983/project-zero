@@ -53,3 +53,15 @@
 ## 2026-05-24 - [Utility AI Architecture]
 **Confusion:** The `evaluate_actions_system` function was complex and hard to modify because its split-phase parallel architecture (ADR 026) wasn't explained in the code.
 **Clarification:** Added an "Architecture" section to `layer1::utility_ai` explaining the Data Gathering -> Parallel Evaluation -> Application phases, and a "How to Add a New Action" guide for future developers.
+
+## 2026-05-25 - [Window Views]
+**Confusion:** The `window` module was hidden with `allow(missing_docs)` and lacked explanation of how it interacted with `BeautyGrid`.
+**Clarification:** Removed the suppression and documented the raycasting system in `layer1::window`, explaining how windows capture distant beauty and project it into rooms.
+
+## 2026-05-25 - [The Blob Mechanic]
+**Confusion:** The `blob` module was undocumented, leaving the spread mechanics and building damage logic obscure.
+**Clarification:** Added module-level documentation to `layer1::blob` explaining the spread timer, consumption logic, and containment strategies (Spec 138).
+
+## 2026-05-25 - [Memetic Hazards]
+**Confusion:** The infection cycle of Memetic Hazards (Research -> Carrier -> Graffiti -> Infection) was only visible by tracing multiple systems.
+**Clarification:** Added module-level documentation to `layer1::memetic` mapping out the full infection cycle (Spec 174) and explaining the high-utility compulsion to scrawl sigils.
