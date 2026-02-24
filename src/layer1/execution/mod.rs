@@ -40,11 +40,14 @@ pub mod mining;
 pub mod movement;
 /// Vandalism execution logic.
 pub mod vandalism;
+/// Work efficiency calculations (Spec 218).
+pub mod efficiency;
 
 #[cfg(test)]
 mod tests;
 
 pub use arrival::*;
+pub use efficiency::*;
 pub use combat::*;
 pub use components::*;
 pub use demolish::*;

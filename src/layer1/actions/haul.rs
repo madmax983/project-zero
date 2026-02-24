@@ -80,6 +80,9 @@ pub(crate) fn evaluate_haul(
                 crate::layer1::resources::ResourceType::Scrap => {
                     resources.scrap < resources.max_scrap
                 }
+                crate::layer1::resources::ResourceType::Tools => {
+                    resources.tools < resources.max_tools
+                }
             };
 
             if !has_room {

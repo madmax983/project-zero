@@ -22,7 +22,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `210` Ammunition Logistics — `specs/210-ammunition-logistics.md`
 - [ ] `212` Planetary Core Tap — `specs/212-planetary-core-tap.md`
 - [ ] `215` Safehouse Contracts — `specs/215-safehouse-contracts.md`
-- [ ] `218` Improvised Tools — `specs/218-improvised-tools.md`
 
 ## MVP — Layer 2: System Simulation
 
