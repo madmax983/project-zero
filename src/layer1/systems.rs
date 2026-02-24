@@ -513,6 +513,8 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
                 .after(crate::layer1::unrest::check_mental_break_system),
             crate::layer1::contraband::detect_contraband_system
                 .after(crate::layer1::justice::check_crime_system),
+            crate::layer1::justice::check_contraband_crime_system
+                .after(crate::layer1::contraband::detect_contraband_system),
             crate::layer1::unrest::recover_mental_break_system.after(decay_needs_system),
             check_generational_friction_system.after(decay_needs_system),
             crate::layer1::hobby::assign_hobby_system.after(decay_needs_system),

@@ -4,6 +4,7 @@ use crate::layer1::resources::{MiningProgress, ResourceItem, ResourceType};
 use crate::shared::log::MessageLog;
 
 #[derive(Component, Debug, Clone)]
+#[allow(missing_docs)]
 pub struct OrbitalEvent {
     pub target: GridPosition,
     pub damage: f32,
@@ -11,12 +12,13 @@ pub struct OrbitalEvent {
 }
 
 #[derive(Component, Debug, Clone)]
+#[allow(missing_docs)]
 pub struct ImpactSite {
     pub scrap_amount: f32,
     pub harvest_difficulty: f32,
 }
 
-/// Mincs scrap from an impact site.
+/// Mines scrap from an impact site.
 pub fn mine_scrap(world: &mut World, designation_entity: Entity, work_amount: f32) {
     // 1. Get position and verify ImpactSite
     let (pos, site_entity) = {
@@ -77,6 +79,7 @@ pub fn mine_scrap(world: &mut World, designation_entity: Entity, work_amount: f3
     }
 }
 
+#[allow(missing_docs, clippy::cast_sign_loss)]
 pub fn impact_system(world: &mut World) {
     let mut events = Vec::new();
     let mut query = world.query::<(Entity, &OrbitalEvent)>();
@@ -107,7 +110,11 @@ pub fn impact_system(world: &mut World) {
             // Need to handle bounds check or assume grid.set does it (it does)
             // But target.x might be negative (GridPosition is i32).
             if target.x >= 0 && target.y >= 0 {
-                 grid.set(target.x as usize, target.y as usize, crate::layer1::terrain::TerrainType::Rock);
+                grid.set(
+                    target.x as usize,
+                    target.y as usize,
+                    crate::layer1::terrain::TerrainType::Rock,
+                );
             }
         }
 

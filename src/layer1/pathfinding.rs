@@ -188,6 +188,7 @@ pub fn find_path_for_entity<T: Component>(
 ///
 /// Shared logic for all pathfinding variants. It abstracts the "Can I enter this tile?" logic
 /// into the helper `is_walkable`.
+#[allow(clippy::too_many_lines, clippy::cast_sign_loss)]
 fn find_path_internal(
     world: &World,
     start: (i32, i32),
@@ -256,9 +257,7 @@ fn find_path_internal(
             return Some(path);
         }
 
-        let current_idx = if let Some(idx) = get_idx(pos) {
-            idx
-        } else {
+        let Some(current_idx) = get_idx(pos) else {
             continue;
         };
 
@@ -270,9 +269,7 @@ fn find_path_internal(
         // Check neighbors (Manhattan)
         for (dx, dy) in [(-1, 0), (1, 0), (0, -1), (0, 1)] {
             let next = (pos.0 + dx, pos.1 + dy);
-            let next_idx = if let Some(idx) = get_idx(next) {
-                idx
-            } else {
+            let Some(next_idx) = get_idx(next) else {
                 continue;
             };
 

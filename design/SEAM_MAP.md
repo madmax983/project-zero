@@ -195,3 +195,11 @@
 - **Glue added:**
     - Updated `src/layer1/customs.rs` to check if entity is physically at `ZoneType::Customs` before processing.
 - **Tests:** `tests/integration/customs_vetting.rs` (Integration test verified)
+
+### INT-038: Contraband -> Justice System
+- **Date:** 2026-06-27
+- **Systems connected:** `detect_contraband_system` (Trade/Contraband) -> `check_contraband_crime_system` (Justice)
+- **Glue added:**
+    - Added `check_contraband_crime_system` to `src/layer1/justice.rs`.
+    - Registered in `src/layer1/systems.rs` after detection system.
+- **Tests:** `tests/integration/justice_contraband.rs` (3 tests verified)

@@ -36,7 +36,7 @@ pub fn handle_mining_work(
         crate::layer1::geology::add_seismic_stress(world, p, 1.0);
     }
 
-    let is_scrap = if let Some(p) = pos {
+    let is_scrap = pos.is_some_and(|p| {
         let mut found = false;
         let mut query = world.query::<(&GridPosition, &ImpactSite)>();
         for (gp, _) in query.iter(world) {
@@ -46,9 +46,7 @@ pub fn handle_mining_work(
             }
         }
         found
-    } else {
-        false
-    };
+    });
 
     if is_scrap {
         mine_scrap(world, entity, effective_work);

@@ -122,3 +122,6 @@ mod weather_energy;
 mod acoustic_buildings;
 #[path = "integration/customs_vetting.rs"]
 mod customs_vetting;
+
+#[path = "integration/justice_contraband.rs"]
+mod justice_contraband;

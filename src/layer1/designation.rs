@@ -168,6 +168,7 @@ pub struct DesignationMode {
 /// ```
 #[must_use]
 #[allow(clippy::cast_sign_loss)]
+#[allow(clippy::too_many_lines)]
 pub fn can_designate(world: &World, x: i32, y: i32, designation_type: DesignationType) -> bool {
     // Check bounds (basic check, more detailed check in terrain/occupied logic)
     if x < 0 || y < 0 {

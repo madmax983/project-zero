@@ -10,6 +10,7 @@
 //! *   [`warden_execution_system`]: Executes the arrest logic when a warden reaches a criminal.
 //! *   [`update_inmates_system`]: Decays the sentence of incarcerated pops.
 
+use crate::layer1::contraband::ContrabandPossession;
 use crate::layer1::execution::{AtTarget, MovementTarget};
 use crate::layer1::map::GridPosition;
 use crate::layer1::unrest::MentalBreakType;
@@ -58,6 +59,32 @@ pub fn check_crime_system(
         if matches!(state, MentalState::Broken(MentalBreakType::Vandalize)) {
             commands.entity(entity).insert(Wanted { severity: 1.0 });
         }
+    }
+}
+
+/// System to check for contraband possession and mark pops as [`Wanted`].
+///
+/// Bridges the Contraband system (Possession) and Justice system (Crime).
+/// Pops with [`ContrabandPossession`] are marked as [`Wanted`] with severity 0.5.
+/// Inmates and pops in Sanctuary are ignored.
+#[allow(clippy::type_complexity)]
+pub fn check_contraband_crime_system(
+    mut commands: Commands,
+    query: Query<
+        (Entity, &GridPosition),
+        (
+            With<ContrabandPossession>,
+            Without<Wanted>,
+            Without<Inmate>,
+        ),
+    >,
+    zone_grid: Res<ZoneGrid>,
+) {
+    for (entity, pos) in query.iter() {
+        if zone_grid.get(pos.x, pos.y) == ZoneType::Sanctuary {
+            continue;
+        }
+        commands.entity(entity).insert(Wanted { severity: 0.5 });
     }
 }
 
