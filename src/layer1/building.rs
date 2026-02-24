@@ -1595,6 +1595,7 @@ fn configure_infrastructure(entity: &mut EntityWorldMut, building_type: Building
     }
 }
 
+#[allow(clippy::too_many_lines)]
 fn configure_power(entity: &mut EntityWorldMut, building_type: BuildingType) {
     match building_type {
         BuildingType::Generator => {
