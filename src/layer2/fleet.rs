@@ -1,6 +1,17 @@
 use bevy_ecs::prelude::*;
 use crate::layer2::ship::Ship;
 
+/// Factions that can own fleets.
+#[derive(Component, Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub enum FleetFaction {
+    /// The player's faction.
+    Player,
+    /// Hostile pirate faction.
+    Pirate,
+    /// Neutral merchant faction.
+    Merchant,
+}
+
 /// Component marking an entity as a Fleet.
 ///
 /// Fleets are mobile units in the system view that can travel between orbital bodies.
@@ -90,7 +101,7 @@ pub fn fleet_movement_system(mut commands: Commands, mut query: Query<(Entity, &
 }
 
 /// Component representing the composition of a fleet (ships).
-#[derive(Component, Debug, Clone, Default)]
+#[derive(Component, Debug, Clone, Default, PartialEq)]
 pub struct FleetComposition {
     /// The ships in the fleet.
     pub ships: Vec<Ship>,

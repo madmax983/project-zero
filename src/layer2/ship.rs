@@ -1,4 +1,3 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::resources::ResourceType;
 
 /// Defines the class of a ship, determining its stats and capabilities.
@@ -48,10 +47,32 @@ impl ShipType {
             Self::Frigate => vec![(ResourceType::Metal, 150.0), (ResourceType::Fuel, 40.0)],
         }
     }
+
+    /// Returns the attack power of the ship.
+    #[must_use]
+    pub const fn attack_power(&self) -> f32 {
+        match self {
+            Self::Frigate => 50.0,
+            Self::Miner => 10.0,
+            Self::Transport => 5.0,
+            Self::Scout => 2.0,
+        }
+    }
+
+    /// Returns the max health of the ship.
+    #[must_use]
+    pub const fn max_health(&self) -> f32 {
+        match self {
+            Self::Frigate => 100.0,
+            Self::Miner => 40.0,
+            Self::Transport => 50.0,
+            Self::Scout => 20.0,
+        }
+    }
 }
 
 /// Represents an individual ship instance within a fleet.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct Ship {
     /// The class of the ship.
     pub ship_type: ShipType,
@@ -67,15 +88,14 @@ impl Ship {
     pub const fn new(ship_type: ShipType) -> Self {
         Self {
             ship_type,
-            health: 100.0, // Default for now
-            max_health: 100.0,
+            health: ship_type.max_health(),
+            max_health: ship_type.max_health(),
         }
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
     use crate::layer2::fleet::FleetComposition;
     use super::*;
     use crate::layer1::resources::ResourceType;

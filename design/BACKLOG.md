@@ -31,7 +31,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `150` Sensor Ambiguity — `specs/150-sensor-ambiguity.md`
 - [ ] `152` Orbital Stations — `specs/152-orbital-stations.md`
 - [ ] `158` Fleet Management (Merge & Split) — `specs/158-fleet-management.md`
-- [ ] `159` Fleet Combat Resolution — `specs/159-fleet-combat.md`
 - [ ] `169` Subspace Currents — `specs/169-subspace-currents.md`
 - [ ] `180` The Void Between — `specs/180-the-void-between.md`
 - [ ] `184` Orbital Debris — `specs/184-orbital-debris.md`
