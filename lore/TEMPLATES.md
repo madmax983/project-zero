@@ -2065,3 +2065,122 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "We remember how. [YEAR]. [KNOWLEDGE_TOPIC] is known again."
 - "[YEAR]: The gap is filled. [KNOWLEDGE_TOPIC] restored to the index."
 - "No longer lost. [KNOWLEDGE_TOPIC]. [YEAR]."
+
+---
+
+## Escape Pod Templates (Spec 217)
+
+### ESCAPE_POD_LAUNCH
+**Slots:** [COLONY], [YEAR], [POD_NAME], [EVACUATION_REASON], [COUNT]
+
+- "[POD_NAME] away. [YEAR]. Carrying [COUNT] souls. Reason: [EVACUATION_REASON]."
+- "[YEAR]: Evacuation event. [POD_NAME] launches. [COUNT] flee the [EVACUATION_REASON]."
+- "We sent [COUNT] into the dark. [POD_NAME] is gone. [YEAR]. [EVACUATION_REASON]."
+
+### COLONY_EVACUATED
+**Slots:** [COLONY], [YEAR], [EVACUATION_REASON], [SURVIVOR_COUNT]
+
+- "Abandon ship order. [YEAR]. [COLONY] is empty. [SURVIVOR_COUNT] escaped."
+- "[YEAR]: The silence falls on [COLONY]. We fled the [EVACUATION_REASON]."
+- "[COLONY] is a tomb now. [EVACUATION_REASON] took it. [SURVIVOR_COUNT] survivors in pods. [YEAR]."
+
+---
+
+## Planetary Core Tap Templates (Spec 212)
+
+### CORE_TAP_ACTIVATED
+**Slots:** [COLONY], [YEAR], [POWER_SOURCE]
+
+- "The [POWER_SOURCE] is live. [YEAR]. Infinite energy flows."
+- "[YEAR]: We touched the heart. [POWER_SOURCE] active. The ground shakes."
+- "Limitless power. [POWER_SOURCE] online at [COLONY]. [YEAR]."
+
+### CORE_STRESS_WARNING
+**Slots:** [COLONY], [YEAR], [CORE_STRESS_LEVEL], [CORE_ACTIVITY]
+
+- "Seismic alert. [YEAR]. The core is [CORE_ACTIVITY]. [CORE_STRESS_LEVEL]."
+- "[YEAR]: The price of power. [CORE_STRESS_LEVEL]. Core status: [CORE_ACTIVITY]."
+- "Warning from the deep. [CORE_STRESS_LEVEL]. The [POWER_SOURCE] makes the world [CORE_ACTIVITY]. [YEAR]."
+
+---
+
+## Solar Cycle Templates (Spec 213)
+
+### SOLAR_CYCLE_CHANGE
+**Slots:** [COLONY], [YEAR], [SOLAR_PHASE], [SOLAR_INTENSITY]
+
+- "The sun changes face. [YEAR]. Entering [SOLAR_PHASE]. Light is [SOLAR_INTENSITY]."
+- "[YEAR]: Solar cycle shift. It is the time of [SOLAR_PHASE]. [SOLAR_INTENSITY] days ahead."
+- "New phase: [SOLAR_PHASE]. The star burns [SOLAR_INTENSITY]. [YEAR]."
+
+---
+
+## Customs Checkpoint Templates (Spec 214)
+
+### CONTRABAND_SEIZED
+**Slots:** [COLONY], [YEAR], [VISITOR_TYPE], [CONTRABAND_ITEM]
+
+- "[VISITOR_TYPE] stopped at the gate. [YEAR]. Carrying [CONTRABAND_ITEM]."
+- "[YEAR]: Seizure. We found [CONTRABAND_ITEM] on a [VISITOR_TYPE]."
+- "Security intercept. [CONTRABAND_ITEM] confiscated. [YEAR]."
+
+### VISITOR_DENIED
+**Slots:** [COLONY], [YEAR], [VISITOR_TYPE], [DENIAL_REASON]
+
+- "Entry refused. [YEAR]. [VISITOR_TYPE] turned away. Cause: [DENIAL_REASON]."
+- "[YEAR]: Gate closed to [VISITOR_TYPE]. [DENIAL_REASON]."
+- "We sent the [VISITOR_TYPE] back. [DENIAL_REASON]. [YEAR]."
+
+### VISITOR_VETTED
+**Slots:** [COLONY], [YEAR], [VISITOR_TYPE]
+
+- "[VISITOR_TYPE] cleared for entry. [YEAR]. Welcome to [COLONY]."
+- "[YEAR]: Vetting complete. New [VISITOR_TYPE] joins us."
+- "The gate opens. [VISITOR_TYPE] processed. [YEAR]."
+
+---
+
+## Ammunition Logistics Templates (Spec 210)
+
+### AMMO_SHORTAGE
+**Slots:** [COLONY], [YEAR], [AMMO_TYPE], [WEAPON_NAME]
+
+- "Dry click. [YEAR]. No [AMMO_TYPE] for the [WEAPON_NAME]."
+- "[YEAR]: Defense critical. We are out of [AMMO_TYPE]."
+- "The [WEAPON_NAME] is silent. Shortage of [AMMO_TYPE]. [YEAR]."
+
+### TURRET_RELOADED
+**Slots:** [COLONY], [YEAR], [WEAPON_NAME], [AMMO_TYPE]
+
+- "[WEAPON_NAME] fed. [YEAR]. [AMMO_TYPE] loaded."
+- "[YEAR]: Ready to fire. [WEAPON_NAME] topped up with [AMMO_TYPE]."
+- "Defense active. [AMMO_TYPE] in the [WEAPON_NAME]. [YEAR]."
+
+---
+
+## Planetary Governance Templates (Spec 209)
+
+### GOVERNOR_APPOINTED
+**Slots:** [COLONY], [YEAR], [GOVERNOR_TITLE], [NAME]
+
+- "[NAME] takes the chair. [YEAR]. Our new [GOVERNOR_TITLE]."
+- "[YEAR]: Leadership change. [NAME] is [GOVERNOR_TITLE]."
+- "The [GOVERNOR_TITLE] speaks. [NAME] leads [COLONY]. [YEAR]."
+
+### POLICY_ENACTED
+**Slots:** [COLONY], [YEAR], [POLICY_NAME], [GOVERNOR_TITLE]
+
+- "[POLICY_NAME] signed into law. [YEAR]. By order of the [GOVERNOR_TITLE]."
+- "[YEAR]: New rule. [POLICY_NAME] takes effect."
+- "The [GOVERNOR_TITLE] decrees [POLICY_NAME]. [YEAR]."
+
+---
+
+## Safehouse Templates (Spec 215)
+
+### SAFEHOUSE_CONTRACT
+**Slots:** [COLONY], [YEAR], [SAFEHOUSE_NAME], [VISITOR_TYPE]
+
+- "Contract signed. [YEAR]. The [SAFEHOUSE_NAME] shelters a [VISITOR_TYPE]."
+- "[YEAR]: Hidden guest. [VISITOR_TYPE] in the [SAFEHOUSE_NAME]."
+- "Secret deal. The [SAFEHOUSE_NAME] is active. [YEAR]."

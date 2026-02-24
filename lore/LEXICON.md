@@ -2173,3 +2173,129 @@
 **Usage:**
 - "Ask the Memory-Keepers."
 - "The Memory-Keepers never forget."
+
+---
+
+## Escape Pods
+
+### life-boat / drift-shell
+**Replaces:** escape pod
+**Code reference:** `EscapePod`
+**Usage:**
+- "Get to the life-boats."
+- "Sending a drift-shell into the dark."
+
+### the Exit
+**Replaces:** evacuation order
+**Code reference:** `Evacuation`
+**Usage:**
+- "The Exit was sounded."
+- "Running for the Exit."
+
+---
+
+## Planetary Core Tap
+
+### heart-tap
+**Replaces:** core tap building
+**Code reference:** `CoreTap`
+**Usage:**
+- "The heart-tap is drawing deep."
+- "Don't break the heart-tap."
+
+### earth-blood
+**Replaces:** core magma/energy
+**Code reference:** `CoreEnergy`
+**Usage:**
+- "Running on earth-blood."
+- "The veins are full of earth-blood."
+
+---
+
+## Solar Cycles
+
+### sun-breath
+**Replaces:** solar flare / solar cycle activity
+**Code reference:** `SolarCycle`
+**Usage:**
+- "The sun-breath is hot."
+- "Waiting for the sun-breath to pass."
+
+### the Waning
+**Replaces:** solar minimum
+**Code reference:** `SolarCycle::Minimum`
+**Usage:**
+- "The Waning brings the cold."
+- "Storing power for the Waning."
+
+---
+
+## Customs & Entry
+
+### the Gate
+**Replaces:** customs checkpoint
+**Code reference:** `Customs`
+**Usage:**
+- "Stopped at the Gate."
+- "Clear the Gate."
+
+### stamped
+**Replaces:** vetted/approved visitor
+**Code reference:** `VisitorStatus::Vetted`
+**Usage:**
+- "He is stamped and clear."
+- "Get your papers stamped."
+
+---
+
+## Ammunition
+
+### slugs / rounds
+**Replaces:** turret ammunition
+**Code reference:** `Ammo`
+**Usage:**
+- "Out of slugs."
+- "Feed the turret more rounds."
+
+### dry-fire
+**Replaces:** out of ammo
+**Code reference:** `NoAmmo`
+**Usage:**
+- "Turrets are dry-fire."
+- "Don't let us go dry-fire."
+
+---
+
+## Planetary Governance
+
+### the Chair
+**Replaces:** governor role/seat
+**Code reference:** `Governor`
+**Usage:**
+- "Who sits in the Chair?"
+- "The Chair demands order."
+
+### the Ink
+**Replaces:** bureaucracy / policy
+**Code reference:** `Policy`
+**Usage:**
+- "Drowning in the Ink."
+- "It is written in the Ink."
+
+---
+
+## Safehouses
+
+### ghost-room
+**Replaces:** safehouse
+**Code reference:** `Safehouse`
+**Usage:**
+- "Hide him in the ghost-room."
+- "The ghost-room is full."
+
+### off-book
+**Replaces:** secret contract
+**Code reference:** `Contract`
+**Usage:**
+- "This deal is off-book."
+- "Keeping it off-book."

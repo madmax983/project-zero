@@ -2043,3 +2043,130 @@ LOST_KNOWLEDGE_RECOVERED:
   increases:
     - CONFIDENCE (high)
 ```
+
+---
+
+## Escape Pod Chaining
+
+```yaml
+ESCAPE_POD_LAUNCH:
+  enables:
+    - COLONY_EVACUATED (medium, if mass launch)
+    - SHIP_LOST (low, if pod fails)
+    - SURVIVOR_FOUND (medium, later elsewhere)
+  increases:
+    - POP_LOSS (high)
+    - GRIEF (high)
+
+COLONY_EVACUATED:
+  enables:
+    - RUIN_CREATION (always)
+    - LEGEND_BIRTH (medium, "The Lost Colony")
+  increases:
+    - MYSTERY (high)
+```
+
+## Planetary Core Tap Chaining
+
+```yaml
+CORE_TAP_ACTIVATED:
+  enables:
+    - CORE_STRESS_WARNING (high, over time)
+    - SEISMIC_TREMOR (medium)
+    - UNLIMITED_POWER (always)
+  increases:
+    - INDUSTRY_CAPACITY (maximum)
+    - DANGER (high)
+
+CORE_STRESS_WARNING:
+  enables:
+    - SEISMIC_TREMOR (high)
+    - STRUCTURE_COLLAPSE (medium)
+    - EVACUATION_PLANNING (high)
+  increases:
+    - FEAR (high)
+    - URGENCY (high)
+```
+
+## Solar Cycle Chaining
+
+```yaml
+SOLAR_CYCLE_CHANGE:
+  enables:
+    - POWER_FLUCTUATION (high, if solar dependent)
+    - CROP_GROWTH_CHANGE (medium)
+  increases:
+    - SEASONAL_AWARENESS (medium)
+```
+
+## Customs Chaining
+
+```yaml
+CONTRABAND_SEIZED:
+  enables:
+    - ARREST (high)
+    - BLACK_MARKET_DIP (medium)
+    - REVENGE_ATTEMPT (low)
+  increases:
+    - SECURITY (medium)
+    - TENSION (low)
+
+VISITOR_DENIED:
+  enables:
+    - ANGRY_DEPARTURE (always)
+    - RUMOR_SPREAD (low, "they turn people away")
+  increases:
+    - ISOLATION (low)
+    - SAFETY (medium)
+```
+
+## Ammunition Chaining
+
+```yaml
+AMMO_SHORTAGE:
+  enables:
+    - DEFENSE_FAILURE (high, if attacked)
+    - FABRICATION_RUSH (high)
+    - TURRET_SILENCE (always)
+  increases:
+    - VULNERABILITY (high)
+    - FEAR (medium)
+
+TURRET_RELOADED:
+  enables:
+    - DEFENSE_READY (always)
+  increases:
+    - CONFIDENCE (medium)
+```
+
+## Planetary Governance Chaining
+
+```yaml
+GOVERNOR_APPOINTED:
+  enables:
+    - POLICY_ENACTED (high)
+    - FACTION_RESPONSE (medium)
+  increases:
+    - STABILITY (medium)
+    - BUREAUCRACY (medium)
+
+POLICY_ENACTED:
+  enables:
+    - COMPLIANCE (high)
+    - PROTEST (low, if unpopular)
+  increases:
+    - ORDER (medium)
+```
+
+## Safehouse Chaining
+
+```yaml
+SAFEHOUSE_CONTRACT:
+  enables:
+    - VISITOR_HIDDEN (always)
+    - INSPECTOR_SUSPICION (medium)
+    - PAYMENT_RECEIVED (high)
+  increases:
+    - WEALTH (medium)
+    - RISK (medium)
+```
