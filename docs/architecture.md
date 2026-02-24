@@ -35,7 +35,6 @@ Container_Boundary(Simulation, "Simulation Core (Layer 1)") {
 }
 
 Container(Shared, "Shared Lib", "Utilities", "GameState, Time, Input, Logs")
-Container(Storage, "Storage Crate", "Persistence", "Handles Save/Load")
 
 Container_Boundary(SharedLib, "Shared Components") {
     Component(InputStack, "Input Context Stack", "input.rs", "Modal Input Handling")
@@ -49,7 +48,6 @@ Container_Boundary(UI, "UI Layer") {
 }
 
 Rel(Main, Shared, "Uses")
-Rel(Main, Storage, "Uses")
 Rel(Main, UtilityOrchestrator, "Runs Systems")
 Rel(UtilityOrchestrator, GPU, "Dispatches Work")
 Rel(Main, MapRender, "Calls Render")
@@ -79,32 +77,6 @@ Rel(MapRender, Shared, "Reads State")
 Rel(MapRender, Map, "Reads Entities")
 Rel(Inspector, Shared, "Reads Selection")
 Rel(Inspector, Pops, "Reads Components")
-```
-
-## Core Dependencies
-
-```mermaid
-classDiagram
-  class Core
-  class Storage
-  Core --> Storage : Uses (Trait Bound)
-  %% Reflected in ADR 012
-  %% Removed the circular dependency arrow
-```
-
-### Persistence Flow
-
-```mermaid
-sequenceDiagram
-    participant Core
-    participant Storage
-    participant Disk
-
-    %% Reflected in ADR 012
-    Core->>Storage: save_world_state()
-    Storage->>Disk: serialize_to_file()
-    Disk-->>Storage: success
-    Storage-->>Core: Ok()
 ```
 
 ## Layer 2 Bridge
@@ -368,7 +340,6 @@ Rel(Shared, Events, "Consumes")
 - [ADR 005: Adopt Emergent Utility AI](./adr/005-adopt-emergent-utility-ai.md)
 - [ADR 006: WASM Browser Support](./adr/006-wasm-browser-support.md)
 - [ADR 008: Modular Utility AI Structure](./adr/008-modular-utility-ai.md)
-- [ADR 012: Decouple Storage from Core](./adr/012-decouple-storage-from-core.md)
 - [ADR 013: GPU Accelerated Utility AI](./adr/013-gpu-accelerated-utility-ai.md)
 - [ADR 014: Cabin Fever Mechanics](./adr/014-cabin-fever-mechanics.md)
 - [ADR 015: Experimental Feature Flags](./adr/015-experimental-feature-flags.md)
