@@ -5652,3 +5652,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Security (slow vetting) vs. Humanitarian speed (risk).
 
 ---
+
+## Signature Spoofing
+
+**Layer:** 2
+
+**Fantasy:** The art of the bluff. An inflatable tank in space.
+
+**Mechanic:** Build "Decoy Buoys" or equip ships with "Signature Amplifiers". They appear as large fleets on enemy sensors but have no combat power. Consumes energy.
+
+**Emergence:** You bluff a pirate raid into retreating by deploying a cloud of decoys. Or they call your bluff and destroy your undefended mining fleet.
+
+**Tension:** Cheap deception (high risk) vs. Expensive defense (real power).
+
+---
+
+## Volatile Intermediates
+
+**Layer:** 1
+
+**Fantasy:** Handling nitroglycerin. The danger is in the process, not just the enemy.
+
+**Mechanic:** Advanced crafting requires "Unstable" items (e.g., Antimatter Containment Cells, Plasma Gel) that degrade rapidly into "Explosion" or "Hazard" tiles if not used in a recipe within X seconds. Requires "Just-In-Time" logistics.
+
+**Emergence:** A hauler carrying a Plasma Gel canister gets stuck in a crowded hallway. The canister destabilizes and blows a hole in the hull, venting the entire corridor.
+
+**Tension:** Stockpiling (efficiency/danger) vs. On-demand production (safety/latency).
+
+---
+
+## Operational Detritus
+
+**Layer:** 1
+
+**Fantasy:** A lived-in world is messy. The friction of existence.
+
+**Mechanic:** High-activity tiles accumulate "Clutter" (trash, dust, loose wires) over time. Clutter slows movement and lowers beauty but increases "Scavenge" chance for free scrap/components. Requires "Janitor" jobs to clear.
+
+**Emergence:** You run a pristine, spotless ship with high efficiency. During a resource crisis, you have no scrap to fix the life support. A messy ship would have had spare parts lying around.
+
+**Tension:** Cleanliness (speed/morale) vs. Messiness (resilience/resource buffer).
+
+---
+
+## Gravitational Doldrums
+
+**Layer:** 2
+
+**Fantasy:** Stuck in the calm waters of space.
+
+**Mechanic:** Zones of null-gravity/interference where standard reaction drives work at 10% efficiency. Ships must be towed by specialized "Tugs" or use gravity assists to enter/exit.
+
+**Emergence:** A fleeing enemy ship enters the Doldrums to escape your sensors. You follow them. Both fleets get becalmed and have to negotiate a cease-fire to tow each other out before supplies run out.
+
+**Tension:** Shortcut through the calm (risk of sticking) vs. Long route around.
+
+---
+
+## Heroic Acts
+
+**Layer:** 1
+
+**Fantasy:** The ultimate sacrifice. "You shall not pass!"
+
+**Mechanic:** Toggle "Last Stand" mode for a combat unit. Unit gains massive buffs (Fire rate, Damage reduction) but is guaranteed to die or suffer permanent debilitating injury at the end of combat.
+
+**Emergence:** A single "Doomed" marine holds a chokepoint against a hundred bugs, buying time for the civilians to evacuate the sector. A statue is built in his honor.
+
+**Tension:** Sacrifice a high-level unit to save the colony?
+
+---
