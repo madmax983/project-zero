@@ -23,6 +23,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `215` Safehouse Contracts — `specs/215-safehouse-contracts.md`
 - [ ] `220` Hygiene & Squalor — `specs/220-hygiene-squalor.md`
 - [ ] `221` Organic Recycling — `specs/221-organic-recycling.md`
+- [ ] `222` Paperwork Physicality — `specs/222-paperwork-physicality.md`
 
 ## MVP — Layer 2: System Simulation
 
