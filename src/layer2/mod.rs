@@ -15,3 +15,5 @@ pub mod system;
 pub mod visibility;
 /// Ship definitions and stats.
 pub mod ship;
+/// Combat resolution logic.
+pub mod combat;
