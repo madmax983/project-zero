@@ -3,20 +3,27 @@ use crate::layer1::resources::{MiningProgress, ResourceItem, ResourceType};
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
 
+/// Event representing an orbital strike or meteor impact.
 #[derive(Component, Debug, Clone)]
 pub struct OrbitalEvent {
+    /// Target grid position.
     pub target: GridPosition,
+    /// Damage dealt to structures.
     pub damage: f32,
+    /// Heat added to the tile.
     pub heat: f32,
 }
 
+/// Component marking a location with mineable scrap from an impact.
 #[derive(Component, Debug, Clone)]
 pub struct ImpactSite {
+    /// Amount of scrap available.
     pub scrap_amount: f32,
+    /// Difficulty modifier for mining.
     pub harvest_difficulty: f32,
 }
 
-/// Mincs scrap from an impact site.
+/// Mines scrap from an impact site.
 pub fn mine_scrap(world: &mut World, designation_entity: Entity, work_amount: f32) {
     // 1. Get position and verify ImpactSite
     let (pos, site_entity) = {
@@ -87,6 +94,7 @@ pub fn mine_scrap(world: &mut World, designation_entity: Entity, work_amount: f3
     }
 }
 
+/// System that processes `OrbitalEvent` components, damaging buildings and creating `ImpactSite`s.
 pub fn impact_system(world: &mut World) {
     let mut events = Vec::new();
     let mut query = world.query::<(Entity, &OrbitalEvent)>();

@@ -616,5 +616,6 @@ pub mod window;
 mod urban_heat_tests;
 #[cfg(test)]
 mod improvised_tools_tests;
+/// Gene Bank system (Spec 165).
 pub mod gene_bank;
 pub use gene_bank::*;
