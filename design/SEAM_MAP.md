@@ -1,3 +1,11 @@
+### INT-039: Immigration Integration
+- **Date:** 2026-06-26
+- **Systems connected:** `ImmigrationStatus` (Customs) -> `VisitorState` (Visitor)
+- **Glue added:**
+    - Added `immigration_integration_system` in `src/layer1/integration.rs`.
+    - Registered in `src/layer1/systems.rs` (Consumption phase).
+- **Tests:** `tests/integration/immigration_integration.rs` (3 tests verified)
+
 ### INT-021: Faction Strike -> Work Execution
 - **Date:** 2026-03-27
 - **Systems connected:** `is_pop_striking` -> `utility_ai::evaluate_single_pop` / `produce_food_system` / `process_refining_system` / `process_research_system` / `haul_system`

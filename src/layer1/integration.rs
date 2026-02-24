@@ -566,3 +566,43 @@ pub fn pop_death_notification_system(
         );
     }
 }
+
+/// Updates visitor state based on immigration status.
+///
+/// Bridges Customs system (Vetting) and Visitor system (State).
+pub fn immigration_integration_system(
+    mut query: Query<(
+        Entity,
+        &crate::layer1::customs::ImmigrationStatus,
+        &mut crate::layer1::visitor::Visitor,
+        Option<&PopName>,
+    )>,
+    mut notifications: ResMut<NotificationQueue>,
+    time: Res<SimulationTime>,
+) {
+    for (_entity, status, mut visitor, name) in &mut query {
+        let name_str = name.map_or("Visitor", |n| n.0.as_str());
+
+        match status {
+            crate::layer1::customs::ImmigrationStatus::Vetted => {
+                if visitor.state == crate::layer1::visitor::VisitorState::Arriving {
+                    visitor.state = crate::layer1::visitor::VisitorState::Loitering;
+                    notifications.add_success(
+                        format!("{} has been vetted and allowed entry.", name_str),
+                        time.tick,
+                    );
+                }
+            }
+            crate::layer1::customs::ImmigrationStatus::Rejected(reason) => {
+                if visitor.state != crate::layer1::visitor::VisitorState::Departing {
+                    visitor.state = crate::layer1::visitor::VisitorState::Departing;
+                    notifications.add_error(
+                        format!("{} was denied entry: {}", name_str, reason),
+                        time.tick,
+                    );
+                }
+            }
+            _ => {}
+        }
+    }
+}

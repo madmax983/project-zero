@@ -383,7 +383,9 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             spoilage_system
                 .after(consume_food_system)
                 .after(vermin_growth_system),
-            crate::layer1::visitor::visitor_lifecycle_system.after(consume_food_system),
+            crate::layer1::integration::immigration_integration_system.after(consume_food_system),
+            crate::layer1::visitor::visitor_lifecycle_system
+                .after(crate::layer1::integration::immigration_integration_system),
             theft_system
                 .after(consume_food_system)
                 .before(decay_needs_system),
