@@ -51,10 +51,18 @@ pub struct ZoneGrid {
 
 impl ZoneGrid {
     /// Creates a new `ZoneGrid` with the given dimensions.
+    ///
+    /// # Panics
+    /// Panics if `width * height` overflows or exceeds 10,000,000.
     #[must_use]
     pub fn new(width: usize, height: usize) -> Self {
+        let size = width
+            .checked_mul(height)
+            .expect("Grid size overflow or too large");
+        assert!(size <= 10_000_000, "Grid size overflow or too large");
+
         Self {
-            grid: vec![ZoneType::None; width * height],
+            grid: vec![ZoneType::None; size],
             width,
             height,
         }
@@ -62,19 +70,34 @@ impl ZoneGrid {
 
     /// Gets the zone type at the given coordinates.
     #[must_use]
+    #[allow(clippy::collapsible_if)]
     pub fn get(&self, x: i32, y: i32) -> ZoneType {
         if x < 0 || y < 0 || x >= self.width as i32 || y >= self.height as i32 {
             return ZoneType::None;
         }
-        self.grid[(y as usize) * self.width + (x as usize)]
+        let ux = x as usize;
+        let uy = y as usize;
+        if let Some(idx) = uy.checked_mul(self.width).and_then(|i| i.checked_add(ux)) {
+            if idx < self.grid.len() {
+                return self.grid[idx];
+            }
+        }
+        ZoneType::None
     }
 
     /// Sets the zone type at the given coordinates.
+    #[allow(clippy::collapsible_if)]
     pub fn set(&mut self, x: i32, y: i32, zone: ZoneType) {
         if x < 0 || y < 0 || x >= self.width as i32 || y >= self.height as i32 {
             return;
         }
-        self.grid[(y as usize) * self.width + (x as usize)] = zone;
+        let ux = x as usize;
+        let uy = y as usize;
+        if let Some(idx) = uy.checked_mul(self.width).and_then(|i| i.checked_add(ux)) {
+            if idx < self.grid.len() {
+                self.grid[idx] = zone;
+            }
+        }
     }
 }
 

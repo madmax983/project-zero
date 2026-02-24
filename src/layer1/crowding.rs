@@ -19,31 +19,48 @@ pub struct CrowdingGrid {
 
 impl CrowdingGrid {
     /// Creates a new, empty `CrowdingGrid`.
+    ///
+    /// # Panics
+    /// Panics if `width * height` overflows or exceeds 10,000,000.
     #[must_use]
     pub fn new(width: usize, height: usize) -> Self {
+        let size = width
+            .checked_mul(height)
+            .expect("Grid size overflow or too large");
+        assert!(size <= 10_000_000, "Grid size overflow or too large");
+
         Self {
             width,
             height,
-            cells: vec![0; width * height],
+            cells: vec![0; size],
         }
     }
 
     /// Gets the crowding level at the specified coordinates.
     /// Returns 0 if out of bounds.
     #[must_use]
+    #[allow(clippy::collapsible_if)]
     pub fn get(&self, x: usize, y: usize) -> u8 {
         if x < self.width && y < self.height {
-            self.cells[y * self.width + x]
-        } else {
-            0
+            // Safe index calculation
+            if let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x)) {
+                if idx < self.cells.len() {
+                    return self.cells[idx];
+                }
+            }
         }
+        0
     }
 
     /// Adds crowding to a specific tile.
+    #[allow(clippy::collapsible_if)]
     pub fn add_crowding(&mut self, x: usize, y: usize, amount: u8) {
         if x < self.width && y < self.height {
-            let idx = y * self.width + x;
-            self.cells[idx] = self.cells[idx].saturating_add(amount);
+            if let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x)) {
+                if idx < self.cells.len() {
+                    self.cells[idx] = self.cells[idx].saturating_add(amount);
+                }
+            }
         }
     }
 
