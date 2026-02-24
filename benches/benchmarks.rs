@@ -10,8 +10,62 @@ use criterion::{Criterion, black_box, criterion_group, criterion_main};
 use ratatui::prelude::{Color, Rect};
 use scale::layer1::water::WaterGrid;
 use scale::layer1::{BuildingType, GridPosition, MaterialType, TerrainGrid, TerrainType, Viewport};
+use scale::layer1::pathfinding::find_path;
+use scale::layer1::building::{BuildingMap, OccupiedTiles};
 use scale::ui::map::{MapRenderContext, RenderEntity, build_map_layer_spans};
 use std::collections::HashMap;
+
+fn setup_pathfinding_world(width: usize, height: usize) -> bevy_ecs::world::World {
+    let mut world = bevy_ecs::world::World::new();
+    let tiles = vec![TerrainType::Grass; width * height];
+    world.insert_resource(TerrainGrid {
+        width,
+        height,
+        tiles,
+    });
+    world.insert_resource(OccupiedTiles::default());
+    world.insert_resource(BuildingMap::default());
+    // Add wind/crowding if needed, but they are optional in find_path_internal
+    world
+}
+
+fn benchmark_pathfinding(c: &mut Criterion) {
+    let mut group = c.benchmark_group("pathfinding");
+
+    // Test case 1: Short path on small map
+    let world_small = setup_pathfinding_world(100, 100);
+    group.bench_function("path_100x100_short", |b| {
+        b.iter(|| {
+            find_path(black_box(&world_small), black_box((0, 0)), black_box((20, 20)))
+        })
+    });
+
+    // Test case 2: Long path on small map
+    group.bench_function("path_100x100_long", |b| {
+        b.iter(|| {
+            find_path(black_box(&world_small), black_box((0, 0)), black_box((90, 90)))
+        })
+    });
+
+    // Test case 3: Unreachable path (flood fill worst case)
+    // Create a wall
+    let mut world_blocked = setup_pathfinding_world(50, 50);
+    {
+        let mut occ = world_blocked.resource_mut::<OccupiedTiles>();
+        // Wall off (40, 0) to (40, 50)
+        for y in 0..50 {
+            occ.0.insert((40, y));
+        }
+    }
+    // Try to go from (0,0) to (45, 25) - blocked
+    group.bench_function("path_50x50_blocked", |b| {
+        b.iter(|| {
+            find_path(black_box(&world_blocked), black_box((0, 0)), black_box((45, 25)))
+        })
+    });
+
+    group.finish();
+}
 
 fn benchmark_rendering_buildings(c: &mut Criterion) {
     let width = 80;
@@ -121,6 +175,7 @@ use scale::layer1::resources::ColonyResources;
 use scale::layer1::social::Tavern;
 use scale::layer1::utility_ai::evaluate_actions_system;
 use scale::layer1::utility_types::{ActionType, PopAction, UtilityConfig, UtilityWeights};
+use scale::layer1::items::ItemType;
 
 /// Build a minimal world with `n_pops` pops and `n_buildings` buildings.
 fn make_bench_world(n_pops: usize, n_buildings: usize, gpu_ctx: Option<GpuContext>) -> World {
@@ -147,6 +202,7 @@ fn make_bench_world(n_pops: usize, n_buildings: usize, gpu_ctx: Option<GpuContex
                     Farm {
                         capacity: 4,
                         workers: vec![],
+                        selected_crop: ItemType::Wheat,
                     },
                 ));
             }
@@ -261,6 +317,7 @@ fn benchmark_utility_ai(c: &mut Criterion) {
 
 criterion_group!(
     benches,
+    benchmark_pathfinding,
     benchmark_rendering,
     benchmark_rendering_buildings,
     benchmark_utility_ai
