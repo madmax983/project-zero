@@ -152,7 +152,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
 
     // Initialize System Generation (Layer 2)
     let mut rng = rand::thread_rng();
-    let seed = crate::layer2::generation::WorldSeed(rng.next_u64());
+    let seed = crate::shared::random::WorldSeed(rng.next_u64());
     world.insert_resource(seed);
 
     // Run generation system once

@@ -13,3 +13,7 @@
 **Decomposing Execution Monolith**
 **Tangle:** `src/layer1/execution.rs` was a massive "God Module" (121K) handling movement, arrival, work execution, combat, and mining. It violated SRP and had implicit circular dependencies handled via a single file scope.
 **Blueprint:** Split `execution.rs` into a directory module `src/layer1/execution/` containing focused sub-modules: `movement.rs`, `arrival.rs`, `general_work.rs`, `combat.rs`, `mining.rs`, `demolish.rs`, `vandalism.rs`, and `components.rs`. Extracted tests into `tests/` sub-module. This enforces stricter boundaries and makes dependencies explicit.
+
+**Breaking Layer 1/2 Dependency Cycle**
+**Tangle:** `src/layer1/gastronomy.rs` imported `crate::layer2::generation::WorldSeed`, creating a cycle because `layer2` depends on `layer1` (e.g. `PlanetaryTraits`). This "Knot" prevented clean separation of layers.
+**Blueprint:** Extracted `WorldSeed` to a new shared module `src/shared/random.rs`. Both layers now import from `shared`, breaking the cycle and enforcing unidirectional dependency flow.

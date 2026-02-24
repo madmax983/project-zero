@@ -12,6 +12,8 @@ pub mod log;
 pub mod menu;
 /// Narrative generator for procedural lore.
 pub mod narrative;
+/// Random number generation utilities.
+pub mod random;
 /// Selection and inspection system.
 pub mod selection;
 /// Game state definitions.

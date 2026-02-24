@@ -110,13 +110,11 @@ pub fn perform_experiment(world: &mut World, chef: Entity, ingredient_entity: En
 
     // 3. Determine Effect
     // Try to get WorldSeed resource, otherwise fallback to default seed
-    // Using explicit path to WorldSeed if possible, but since it's in layer2 generation,
-    // and we might not have direct access via use depending on visibility, we try to get it by Resource ID if registered.
-    // However, Rust types need to be known.
-    // Assuming we can access crate::layer2::generation::WorldSeed.
+    // Using explicit path to WorldSeed if possible.
+    // Assuming we can access crate::shared::random::WorldSeed.
     // If not, we fall back to a hardcoded seed for safety, but we should try to use the resource.
     let seed =
-        if let Some(world_seed) = world.get_resource::<crate::layer2::generation::WorldSeed>() {
+        if let Some(world_seed) = world.get_resource::<crate::shared::random::WorldSeed>() {
             world_seed.0
         } else {
             12345
@@ -238,7 +236,7 @@ mod tests {
     use crate::layer1::map::GridPosition;
     use crate::layer1::morale::Morale;
     use crate::layer1::pop::Pop;
-    use crate::layer2::generation::WorldSeed;
+    use crate::shared::random::WorldSeed;
     use bevy_ecs::prelude::*;
 
     #[test]

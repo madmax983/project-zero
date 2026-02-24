@@ -1,15 +1,10 @@
 use crate::layer1::quirks::{PlanetaryTrait, PlanetaryTraits};
 use crate::layer2::system::{Orbit, OrbitalBody};
+use crate::shared::random::WorldSeed;
 use bevy_ecs::prelude::*;
 use rand::prelude::*;
 use rand::rngs::StdRng;
 use ratatui::style::Color;
-
-/// The seed used for procedural generation.
-///
-/// This ensures that the galaxy generation is deterministic.
-#[derive(Resource, Default, Debug, Clone, Copy)]
-pub struct WorldSeed(pub u64);
 
 /// Represents a Star in the system view.
 #[derive(Component)]
@@ -200,9 +195,10 @@ pub fn generate_system(
 mod tests {
     use crate::layer1::quirks::PlanetaryTraits;
     use crate::layer2::generation::{
-        ColonyLocation, Planet, PlanetaryTraitsComponent, Star, WorldSeed, generate_system,
+        ColonyLocation, Planet, PlanetaryTraitsComponent, Star, generate_system,
     };
     use crate::layer2::system::{Orbit, OrbitalBody};
+    use crate::shared::random::WorldSeed;
     use bevy_ecs::prelude::*;
 
     fn setup_world() -> World {
