@@ -193,7 +193,7 @@ pub fn tame_execution_system(world: &mut World) {
 
         // Apply Hazards
         let skills = world.get::<Skills>(pop_entity).cloned().unwrap_or_default();
-        handle_workplace_hazards(world, pop_entity, ActionType::Tame, None, &skills);
+        handle_workplace_hazards(world, pop_entity, ActionType::Tame, None, &skills, 1.0);
 
         // Reset pop action
         if let Some(mut action) = world.get_mut::<PopAction>(pop_entity) {

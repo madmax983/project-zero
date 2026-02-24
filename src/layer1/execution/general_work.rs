@@ -17,6 +17,7 @@ use crate::layer1::flora::process_flora_clearing;
 use crate::layer1::gastronomy::WorkSpeedBuff;
 use crate::layer1::hazards::handle_workplace_hazards;
 use crate::layer1::heirloom::{Heirloom, ToolHistory};
+use crate::layer1::mother_lode::MotherLode;
 use crate::layer1::items::{Equipment, Tool, UnequipEvent};
 use crate::layer1::language::{Dialect, Linguistics, calculate_coordination_penalty};
 use crate::layer1::map::GridPosition;
@@ -497,12 +498,20 @@ fn handle_post_work_effects(
     // Fetch skills
     let skills = world.get::<Skills>(pop_entity).cloned().unwrap_or_default();
 
+    // Fetch MotherLode hazard if present
+    let hazard_modifier = if let Some(lode) = world.get::<MotherLode>(designation_entity) {
+        f64::from(lode.current_hazard)
+    } else {
+        1.0
+    };
+
     handle_workplace_hazards(
         world,
         pop_entity,
         action_type,
         structure_opt.as_ref(),
         &skills,
+        hazard_modifier,
     );
 
     // Handle tool durability

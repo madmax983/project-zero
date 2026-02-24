@@ -11,6 +11,7 @@ use crate::layer1::energy::PowerConsumer;
 use crate::layer1::health::Health;
 use crate::layer1::items::{Clothing, Equipment};
 use crate::layer1::map::GridPosition;
+use crate::layer1::mother_lode::MotherLode;
 use crate::layer1::pop::Pop;
 use crate::layer1::resources::{ResourceItem, ResourceType};
 use crate::layer1::seasons::SeasonState;
@@ -160,6 +161,7 @@ pub fn update_temperature_system(
     terrain: Res<TerrainGrid>,
     buildings: Query<(&Building, &GridPosition, Option<&PowerConsumer>)>,
     items: Query<(&ResourceItem, &GridPosition)>,
+    lodes: Query<(&MotherLode, &GridPosition)>,
 ) {
     let Some(mut grid) = grid else { return };
 
@@ -241,6 +243,11 @@ pub fn update_temperature_system(
         if heat > 0.0 {
             grid.add(pos.x, pos.y, heat);
         }
+    }
+
+    // Apply Mother Lode Heat
+    for (lode, pos) in &lodes {
+        grid.add(pos.x, pos.y, lode.heat_output);
     }
 
     // 4. Diffuse (Drift depends on retention)

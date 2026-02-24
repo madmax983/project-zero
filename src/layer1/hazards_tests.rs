@@ -22,6 +22,7 @@ mod tests {
             &skills_0,
             SkillType::Construction,
             &Structure::default(),
+            1.0,
         );
 
         // Level 10 skill (Efficiency 2.0)
@@ -32,6 +33,7 @@ mod tests {
             &skills_10,
             SkillType::Construction,
             &Structure::default(),
+            1.0,
         );
 
         assert!(
@@ -54,7 +56,7 @@ mod tests {
             max_hp: 100.0,
             ..Default::default()
         };
-        let risk_pristine = calculate_risk(base_risk, &skills, SkillType::Construction, &pristine);
+        let risk_pristine = calculate_risk(base_risk, &skills, SkillType::Construction, &pristine, 1.0);
 
         let crumbling = Structure {
             current_hp: 10.0,
@@ -62,7 +64,7 @@ mod tests {
             ..Default::default()
         };
         let risk_crumbling =
-            calculate_risk(base_risk, &skills, SkillType::Construction, &crumbling);
+            calculate_risk(base_risk, &skills, SkillType::Construction, &crumbling, 1.0);
 
         assert!(
             risk_crumbling > risk_pristine,
