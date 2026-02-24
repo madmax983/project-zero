@@ -45,10 +45,9 @@ pub fn check_mentorship_system(
                 | DesignationType::JuryRig
                 | DesignationType::Cannibalize
                 | DesignationType::Destroy => Some(SkillType::Construction),
-                DesignationType::ClearFlora => Some(SkillType::Farming),
+                DesignationType::ClearFlora | DesignationType::CollectSample => Some(SkillType::Farming),
                 DesignationType::SetZone(_) => None,
                 DesignationType::Tame => Some(SkillType::Husbandry),
-                DesignationType::CollectSample => Some(SkillType::Farming),
             };
             if let Some(st) = skill_type {
                 workers.push((entity, *pos, skills, st));

@@ -13,3 +13,5 @@ pub mod render;
 pub mod system;
 /// System visibility logic (Command Center).
 pub mod visibility;
+/// Ship definitions and stats.
+pub mod ship;

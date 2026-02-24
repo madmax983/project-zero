@@ -803,7 +803,8 @@ pub const fn get_building_color(building: BuildingType, material: MaterialType) 
             | BuildingType::LifeSupport
             | BuildingType::Battery
             | BuildingType::DroneHub
-            | BuildingType::AuroralCollector => Color::Cyan,
+            | BuildingType::AuroralCollector
+            | BuildingType::GeneBank => Color::Cyan,
             BuildingType::AtmosphericProcessor | BuildingType::ServerBank => {
                 Color::Rgb(0, 255, 100)
             } // Toxic/Data Green
@@ -821,7 +822,6 @@ pub const fn get_building_color(building: BuildingType, material: MaterialType) 
             BuildingType::CommandCenter | BuildingType::Office | BuildingType::CryoPod => {
                 Color::Rgb(0, 0, 255)
             } // Blue
-            BuildingType::GeneBank => Color::Cyan,
         }
     }
 }

@@ -25,7 +25,7 @@ pub struct GeneticSample {
 pub struct GeneBank {
     /// List of unique samples stored in the bank.
     pub stored_samples: Vec<GeneticData>,
-    /// Currently active cloning job: (Target, TicksRemaining).
+    /// Currently active cloning job: (Target, `TicksRemaining`).
     pub active_cloning_job: Option<(GeneticData, f32)>,
 }
 
@@ -65,12 +65,14 @@ pub fn collect_sample_action(
     // 2. If no fauna, check Flora (Terrain)
     if found_data.is_none() {
         let grid = world.resource::<TerrainGrid>();
-        if let Some(tile) = grid.get(target_pos.x as usize, target_pos.y as usize) {
-            match tile {
-                TerrainType::Tree | TerrainType::Shrub | TerrainType::Sapling | TerrainType::Grass => {
-                    found_data = Some(GeneticData::Flora(tile));
-                },
-                _ => {}
+        if let (Ok(x), Ok(y)) = (usize::try_from(target_pos.x), usize::try_from(target_pos.y)) {
+            if let Some(tile) = grid.get(x, y) {
+                match tile {
+                    TerrainType::Tree | TerrainType::Shrub | TerrainType::Sapling | TerrainType::Grass => {
+                        found_data = Some(GeneticData::Flora(tile));
+                    },
+                    _ => {}
+                }
             }
         }
     }
@@ -100,10 +102,8 @@ pub fn process_cloning_system(world: &mut World) {
     )>();
     for (_entity, mut bank, pos, power) in query.iter_mut(world) {
         // Check power if component exists
-        if let Some(p) = power {
-            if !p.active {
-                continue;
-            }
+        if power.map_or(false, |p| !p.active) {
+            continue;
         }
 
         if let Some((target, time)) = &mut bank.active_cloning_job {
