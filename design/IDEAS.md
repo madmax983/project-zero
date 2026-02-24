@@ -5848,3 +5848,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Reveal the truth (calm but lazy) or ride the panic (productive but stressed)?
 
 ---
+
+## Hygiene & Squalor
+
+**Layer:** 1
+
+**Fantasy:** A clean ship is a happy ship. Space is dirty, and disease breeds in filth.
+
+**Mechanic:** Pops accumulate "Filth" over time from work/sweat. Constructible "Showers" consume Water to remove it. High Filth increases Disease risk and causes a "Repulsive" social debuff (other pops avoid them).
+
+**Emergence:** A water shortage forces you to ration showers. The colony becomes a stinking pit. Social fights break out because the "Clean" faction refuses to eat with the "Dirty" miners.
+
+**Tension:** Water usage (Scarcity) vs. Health/Social Cohesion.
+
+---
+
+## Keystone Species
+
+**Layer:** 1
+
+**Fantasy:** Pulling one thread unravels the sweater. The ecosystem relies on a single pillar.
+
+**Mechanic:** A specific flora/fauna supports the rest of the biome (e.g., "Water-Retaining Cactus" providing moisture for grazers). Killing it causes the biome to collapse into desert/wasteland, killing dependent species.
+
+**Emergence:** You harvest the "useless" cactus for water. The local "Grazer-Beasts" die of thirst. The "Hunter-Beasts" get hungry and attack your livestock. The forest turns to dust.
+
+**Tension:** Resource exploitation vs. Ecological stability.
+
+---
+
+## Ship Personalities
+
+**Layer:** 2
+
+**Fantasy:** "She's got it where it counts, kid." The ship is a character, not just a stat block.
+
+**Mechanic:** Ships gain positive/negative "Quirks" based on their history. Surviving a battle at 1% HP grants "Lucky" (dodge chance). Running out of fuel grants "Fuel Hog" (consumption penalty). Quirks persist through refits.
+
+**Emergence:** You refuse to scrap the "Old Betsy" hauler because she has the "Lucky" trait and survives every pirate raid, even though she costs 2x fuel and leaks radiation.
+
+**Tension:** Efficiency (New ships) vs. Sentiment/Quirks (Old ships).
+
+---
+
+## Pneumatic Tubes
+
+**Layer:** 1
+
+**Fantasy:** The thwump of a canister arriving. Futurama-style logistics.
+
+**Mechanic:** Expensive piping that instantly moves small items (Food, Mail, Samples) between buildings using pressure. Can clog if overused or leak pressure if damaged.
+
+**Emergence:** You use tubes to feed the high-security prison block. A rebel stuffs a homemade bomb in the tube. *Thwump*. Boom. The kitchen explodes.
+
+**Tension:** Instant transport (High Cost/Risk) vs. Haulers (Slow/Reliable).
+
+---
+
+## Corrosive Atmosphere
+
+**Layer:** 1
+
+**Fantasy:** The air hates you. Metal screams when it touches the wind.
+
+**Mechanic:** On certain worlds, the atmosphere deals constant durability damage to external structures and items. Requires "Shielding" (Paint/Energy) or building underground/indoors to mitigate.
+
+**Emergence:** You forget to re-paint the comms tower. It dissolves mid-transmission, cutting off your plea for help right as the storm hits.
+
+**Tension:** Maintenance cost (Paint) vs. Subterranean constraints (Space).
+
+---
