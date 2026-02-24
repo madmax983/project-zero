@@ -40,6 +40,17 @@ const TOOL_DURABILITY_LOSS: f32 = 0.1;
 /// Efficiency multiplier when working without tools.
 const NO_TOOL_PENALTY: f32 = 0.5;
 
+struct WorkerData {
+    entity: Entity,
+    morale: f32,
+    action: ActionType,
+    equipment: Option<Equipment>,
+    speed_modifier: f32,
+    job: Option<Job>,
+    dialect: Dialect,
+    linguistics: Linguistics,
+}
+
 /// Executes work at designations when pop is at target with Work action.
 #[allow(clippy::too_many_lines, clippy::items_after_statements)]
 pub fn work_execution_system(world: &mut World) {
@@ -62,19 +73,34 @@ pub fn work_execution_system(world: &mut World) {
         })
         .unwrap_or_default();
 
-    type WorkerTuple = (
-        Entity,
-        f32, // morale
-        ActionType,
-        Option<Equipment>,
-        f32, // speed_mod (traits + buffs)
-        Option<Job>,
-        Dialect,
-        Linguistics,
-    );
+    let workers_by_target =
+        collect_workers_by_target(world, policies.as_ref(), &striking_factions, cycle);
 
-    // Collect workers grouped by target
-    let mut workers_by_target: std::collections::HashMap<Entity, Vec<WorkerTuple>> =
+    for (target_entity, group) in workers_by_target {
+        for worker in &group {
+            let coordination_mod = calculate_group_coordination(worker, &group);
+
+            process_single_worker(
+                world,
+                worker.entity,
+                target_entity,
+                worker.morale,
+                worker.action,
+                worker.equipment,
+                global_work_speed_mod * worker.speed_modifier * coordination_mod,
+                worker.job,
+            );
+        }
+    }
+}
+
+fn collect_workers_by_target(
+    world: &mut World,
+    policies: Option<&ColonyPolicies>,
+    striking_factions: &std::collections::HashSet<crate::layer1::factions::FactionId>,
+    cycle: Option<crate::layer1::day_night::TimeOfDay>,
+) -> std::collections::HashMap<Entity, Vec<WorkerData>> {
+    let mut workers_by_target: std::collections::HashMap<Entity, Vec<WorkerData>> =
         std::collections::HashMap::new();
 
     let query_results: Vec<_> = world
@@ -127,7 +153,7 @@ pub fn work_execution_system(world: &mut World) {
                         n,
                         memories,
                         social_buff,
-                        policies.as_ref(),
+                        policies,
                         traits,
                         cycle,
                         morale_comp,
@@ -138,70 +164,59 @@ pub fn work_execution_system(world: &mut World) {
 
                 (
                     mt.target_entity,
-                    e,
-                    morale,
-                    mt.for_action,
-                    eq.copied(),
-                    trait_work_mod * buff_mod,
-                    job.copied(),
-                    dialect.copied().unwrap_or_default(),
-                    ling.cloned().unwrap_or_default(),
+                    WorkerData {
+                        entity: e,
+                        morale,
+                        action: mt.for_action,
+                        equipment: eq.copied(),
+                        speed_modifier: trait_work_mod * buff_mod,
+                        job: job.copied(),
+                        dialect: dialect.copied().unwrap_or_default(),
+                        linguistics: ling.cloned().unwrap_or_default(),
+                    },
                 )
             },
         )
         .collect();
 
-    for (target, e, morale, action, eq, mod_val, job, dialect, ling) in query_results {
-        workers_by_target
-            .entry(target)
-            .or_default()
-            .push((e, morale, action, eq, mod_val, job, dialect, ling));
+    for (target, worker) in query_results {
+        workers_by_target.entry(target).or_default().push(worker);
     }
 
-    // Process groups
-    for (target_entity, group) in workers_by_target {
-        // Calculate coordination penalties for each worker
-        // We need to check each worker against all others
-        let group_dialects: Vec<Dialect> = group.iter().map(|w| w.6).collect();
+    workers_by_target
+}
 
-        for (
-            i,
-            (
-                pop_entity,
-                morale,
-                action_type,
-                equipment_opt,
-                local_mod,
-                job_opt,
-                my_dialect,
-                my_ling,
-            ),
-        ) in group.iter().enumerate()
-        {
-            // Calculate coordination penalty
-            let mut coordination_mod = 1.0;
-            for (j, other_dialect) in group_dialects.iter().enumerate() {
-                if i == j {
-                    continue;
-                }
-                let p = calculate_coordination_penalty(my_dialect, my_ling, other_dialect);
-                if p < coordination_mod {
-                    coordination_mod = p;
-                }
-            }
-
-            process_single_worker(
-                world,
-                *pop_entity,
-                target_entity,
-                *morale,
-                *action_type,
-                *equipment_opt,
-                global_work_speed_mod * local_mod * coordination_mod,
-                *job_opt,
-            );
+fn calculate_group_coordination(worker: &WorkerData, group: &[WorkerData]) -> f32 {
+    let mut coordination_mod = 1.0;
+    for other in group {
+        if worker.entity == other.entity {
+            continue;
+        }
+        let p =
+            calculate_coordination_penalty(&worker.dialect, &worker.linguistics, &other.dialect);
+        if p < coordination_mod {
+            coordination_mod = p;
         }
     }
+    coordination_mod
+}
+
+fn get_designation_type(
+    world: &World,
+    entity: Entity,
+    action: ActionType,
+) -> Option<DesignationType> {
+    if let Some(des) = world.get::<Designation>(entity) {
+        return Some(des.designation_type);
+    }
+    if action == ActionType::Repair
+        && world
+            .get::<crate::layer1::structure::Structure>(entity)
+            .is_some()
+    {
+        return Some(DesignationType::Repair);
+    }
+    None
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -216,24 +231,14 @@ fn process_single_worker(
     job_opt: Option<Job>,
 ) {
     // Check if designation/target still exists (early exit)
-    // We need to check existence first because we need the component later
     if world.get_entity(designation_entity).is_err() {
         cleanup_pop_work_state(world, pop_entity);
         return;
     }
 
-    // Get designation type or infer from target
-    let designation_type = if let Some(des) = world.get::<Designation>(designation_entity) {
-        des.designation_type
-    } else if world
-        .get::<crate::layer1::structure::Structure>(designation_entity)
-        .is_some()
-        && action_type == ActionType::Repair
-    {
-        // Implicit repair designation for structures
-        DesignationType::Repair
-    } else {
-        // Invalid target type
+    // Get designation type
+    let Some(designation_type) = get_designation_type(world, designation_entity, action_type)
+    else {
         cleanup_pop_work_state(world, pop_entity);
         return;
     };
@@ -262,17 +267,7 @@ fn process_single_worker(
     let worked =
         execute_work_on_designation(world, designation_entity, designation_type, work_amount);
 
-    // After work: Check if target is "done"
-    let target_gone = world.get_entity(designation_entity).is_err();
-    let structure_full = if !target_gone && designation_type == DesignationType::Repair {
-        world
-            .get::<crate::layer1::structure::Structure>(designation_entity)
-            .is_some_and(|s| (s.current_hp - s.max_hp).abs() < f32::EPSILON)
-    } else {
-        false
-    };
-
-    if target_gone || structure_full {
+    if check_work_completion(world, designation_entity, designation_type) {
         cleanup_pop_work_state(world, pop_entity);
 
         // Pay Wage
@@ -291,17 +286,41 @@ fn process_single_worker(
             tool_entity_opt,
         );
 
-        // Eureka Moment Check
-        let related_tech = match designation_type {
-            DesignationType::Mine => Some(Tech::Masonry),
-            // Add other mappings as appropriate
-            _ => None,
-        };
-
-        // Fetch traits for the pop
-        let traits = world.get::<Traits>(pop_entity).cloned();
-        check_for_eureka_world(world, action_type, related_tech, traits);
+        handle_eureka_moment(world, pop_entity, designation_type, action_type);
     }
+}
+
+fn check_work_completion(
+    world: &World,
+    target_entity: Entity,
+    designation_type: DesignationType,
+) -> bool {
+    if world.get_entity(target_entity).is_err() {
+        return true;
+    }
+    if designation_type == DesignationType::Repair {
+        if let Some(s) = world.get::<crate::layer1::structure::Structure>(target_entity) {
+            return (s.current_hp - s.max_hp).abs() < f32::EPSILON;
+        }
+    }
+    false
+}
+
+fn handle_eureka_moment(
+    world: &mut World,
+    pop_entity: Entity,
+    designation_type: DesignationType,
+    action_type: ActionType,
+) {
+    let related_tech = match designation_type {
+        DesignationType::Mine => Some(Tech::Masonry),
+        // Add other mappings as appropriate
+        _ => None,
+    };
+
+    // Fetch traits for the pop
+    let traits = world.get::<Traits>(pop_entity).cloned();
+    check_for_eureka_world(world, action_type, related_tech, traits);
 }
 
 /// Returns the skill type associated with a designation type.

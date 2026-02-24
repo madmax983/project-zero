@@ -51,7 +51,8 @@ pub fn fleet_order_system(
                     continue;
                 };
 
-                commands.entity(entity)
+                commands
+                    .entity(entity)
                     .remove::<FleetOrder>()
                     .remove::<InOrbit>()
                     .insert(InTransit {
@@ -68,10 +69,7 @@ pub fn fleet_order_system(
 /// System to update fleet positions during transit.
 ///
 /// Increments progress and handles arrival when progress >= 1.0.
-pub fn fleet_movement_system(
-    mut commands: Commands,
-    mut query: Query<(Entity, &mut InTransit)>,
-) {
+pub fn fleet_movement_system(mut commands: Commands, mut query: Query<(Entity, &mut InTransit)>) {
     for (entity, mut transit) in &mut query {
         // Increment progress
         let delta = 1.0 / transit.duration;
@@ -80,18 +78,23 @@ pub fn fleet_movement_system(
         if transit.progress >= 1.0 {
             // Arrive
             let destination = transit.destination;
-            commands.entity(entity)
+            commands
+                .entity(entity)
                 .remove::<InTransit>()
-                .insert(InOrbit { parent: destination });
+                .insert(InOrbit {
+                    parent: destination,
+                });
         }
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
+    use crate::layer2::fleet::{
+        Fleet, FleetOrder, InOrbit, InTransit, fleet_movement_system, fleet_order_system,
+    };
     use crate::layer2::system::OrbitalBody;
-    use crate::layer2::fleet::{Fleet, InOrbit, InTransit, FleetOrder, fleet_movement_system, fleet_order_system};
+    use bevy_ecs::prelude::*;
     use ratatui::style::Color;
 
     fn setup_world() -> World {
@@ -104,18 +107,22 @@ mod tests {
         let mut world = setup_world();
         let planet = world.spawn_empty().id();
 
-        let fleet = world.spawn((
-            Fleet,
-            InOrbit { parent: planet },
-            OrbitalBody {
-                name: "Scout 1".to_string(),
-                radius: 0.0, // Fleets are points usually, or very small
-                color: Color::White,
-                char: '▲',
-            }
-        )).id();
+        let fleet = world
+            .spawn((
+                Fleet,
+                InOrbit { parent: planet },
+                OrbitalBody {
+                    name: "Scout 1".to_string(),
+                    radius: 0.0, // Fleets are points usually, or very small
+                    color: Color::White,
+                    char: '▲',
+                },
+            ))
+            .id();
 
-        let in_orbit = world.get::<InOrbit>(fleet).expect("Fleet should be in orbit");
+        let in_orbit = world
+            .get::<InOrbit>(fleet)
+            .expect("Fleet should be in orbit");
         assert_eq!(in_orbit.parent, planet);
     }
 
@@ -125,10 +132,7 @@ mod tests {
         let planet_a = world.spawn_empty().id();
         let planet_b = world.spawn_empty().id();
 
-        let fleet = world.spawn((
-            Fleet,
-            InOrbit { parent: planet_a },
-        )).id();
+        let fleet = world.spawn((Fleet, InOrbit { parent: planet_a })).id();
 
         // Issue Move Order
         world.entity_mut(fleet).insert(FleetOrder::MoveTo(planet_b));
@@ -139,10 +143,18 @@ mod tests {
         schedule.run(&mut world);
 
         // Verify Fleet is now InTransit
-        assert!(world.get::<InOrbit>(fleet).is_none(), "Fleet should leave orbit");
-        assert!(world.get::<FleetOrder>(fleet).is_none(), "Order should be consumed");
+        assert!(
+            world.get::<InOrbit>(fleet).is_none(),
+            "Fleet should leave orbit"
+        );
+        assert!(
+            world.get::<FleetOrder>(fleet).is_none(),
+            "Order should be consumed"
+        );
 
-        let transit = world.get::<InTransit>(fleet).expect("Fleet should be in transit");
+        let transit = world
+            .get::<InTransit>(fleet)
+            .expect("Fleet should be in transit");
         assert_eq!(transit.origin, planet_a);
         assert_eq!(transit.destination, planet_b);
         assert_eq!(transit.progress, 0.0);
@@ -155,15 +167,17 @@ mod tests {
         let planet_a = world.spawn_empty().id();
         let planet_b = world.spawn_empty().id();
 
-        let fleet = world.spawn((
-            Fleet,
-            InTransit {
-                origin: planet_a,
-                destination: planet_b,
-                progress: 0.5,
-                duration: 10.0, // 10 ticks
-            }
-        )).id();
+        let fleet = world
+            .spawn((
+                Fleet,
+                InTransit {
+                    origin: planet_a,
+                    destination: planet_b,
+                    progress: 0.5,
+                    duration: 10.0, // 10 ticks
+                },
+            ))
+            .id();
 
         // Run Movement System
         let mut schedule = Schedule::default();
@@ -182,15 +196,17 @@ mod tests {
         let planet_a = world.spawn_empty().id();
         let planet_b = world.spawn_empty().id();
 
-        let fleet = world.spawn((
-            Fleet,
-            InTransit {
-                origin: planet_a,
-                destination: planet_b,
-                progress: 0.95,
-                duration: 10.0,
-            }
-        )).id();
+        let fleet = world
+            .spawn((
+                Fleet,
+                InTransit {
+                    origin: planet_a,
+                    destination: planet_b,
+                    progress: 0.95,
+                    duration: 10.0,
+                },
+            ))
+            .id();
 
         // Run Movement System (should complete transit)
         let mut schedule = Schedule::default();
@@ -198,8 +214,13 @@ mod tests {
         schedule.run(&mut world);
 
         // Verify Fleet is InOrbit at destination
-        assert!(world.get::<InTransit>(fleet).is_none(), "Fleet should arrive");
-        let in_orbit = world.get::<InOrbit>(fleet).expect("Fleet should be in orbit");
+        assert!(
+            world.get::<InTransit>(fleet).is_none(),
+            "Fleet should arrive"
+        );
+        let in_orbit = world
+            .get::<InOrbit>(fleet)
+            .expect("Fleet should be in orbit");
         assert_eq!(in_orbit.parent, planet_b);
     }
 }

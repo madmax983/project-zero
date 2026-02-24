@@ -90,7 +90,7 @@ pub fn spawn_visitor_system(
             PopName::random(&mut rng),
             Needs::default(), // Needed for rendering (reusing Pop render logic for now)
             ImmigrationStatus::Pending,
-                              // Note: We deliberately do NOT add UtilityWeights to avoid the main AI loop.
+            // Note: We deliberately do NOT add UtilityWeights to avoid the main AI loop.
         ));
 
         // Occasional risk of infiltration (10% chance)

@@ -1,8 +1,8 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::balance::TICKS_PER_YEAR;
-use crate::shared::time::SimulationTime;
-use crate::layer1::energy::PowerSource;
 use crate::layer1::day_night::{DayNightCycle, TimeOfDay};
+use crate::layer1::energy::PowerSource;
+use crate::shared::time::SimulationTime;
+use bevy_ecs::prelude::*;
 
 /// Phases of the long-term solar cycle affecting global solar power output.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
@@ -112,11 +112,14 @@ pub fn update_solar_output_system(
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::solar::{SolarCycle, SolarCycleState, SolarPower, update_solar_cycle_system, update_solar_output_system};
     use crate::layer1::balance::TICKS_PER_YEAR;
-    use crate::shared::time::SimulationTime;
     use crate::layer1::energy::PowerSource;
+    use crate::layer1::solar::{
+        SolarCycle, SolarCycleState, SolarPower, update_solar_cycle_system,
+        update_solar_output_system,
+    };
+    use crate::shared::time::SimulationTime;
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_solar_cycle_phases() {
@@ -138,51 +141,79 @@ mod tests {
     fn test_cycle_update_system() {
         let mut world = World::new();
         world.insert_resource(SolarCycleState::default()); // Defaults to Minimum
-        world.insert_resource(SimulationTime { tick: 0, ..Default::default() });
+        world.insert_resource(SimulationTime {
+            tick: 0,
+            ..Default::default()
+        });
 
         let mut schedule = Schedule::default();
         schedule.add_systems(update_solar_cycle_system);
 
         // Year 0 (0 to TICKS_PER_YEAR-1) -> Minimum
         schedule.run(&mut world);
-        assert_eq!(world.resource::<SolarCycleState>().current_cycle, SolarCycle::Minimum);
+        assert_eq!(
+            world.resource::<SolarCycleState>().current_cycle,
+            SolarCycle::Minimum
+        );
 
         // Year 1 (TICKS_PER_YEAR to 2*TICKS_PER_YEAR-1) -> Rising
         world.resource_mut::<SimulationTime>().tick = TICKS_PER_YEAR;
         schedule.run(&mut world);
-        assert_eq!(world.resource::<SolarCycleState>().current_cycle, SolarCycle::Rising);
+        assert_eq!(
+            world.resource::<SolarCycleState>().current_cycle,
+            SolarCycle::Rising
+        );
 
         // Year 2 -> Maximum
         world.resource_mut::<SimulationTime>().tick = TICKS_PER_YEAR * 2;
         schedule.run(&mut world);
-        assert_eq!(world.resource::<SolarCycleState>().current_cycle, SolarCycle::Maximum);
+        assert_eq!(
+            world.resource::<SolarCycleState>().current_cycle,
+            SolarCycle::Maximum
+        );
 
         // Year 3 -> Falling
         world.resource_mut::<SimulationTime>().tick = TICKS_PER_YEAR * 3;
         schedule.run(&mut world);
-        assert_eq!(world.resource::<SolarCycleState>().current_cycle, SolarCycle::Falling);
+        assert_eq!(
+            world.resource::<SolarCycleState>().current_cycle,
+            SolarCycle::Falling
+        );
 
         // Year 4 -> Minimum
         world.resource_mut::<SimulationTime>().tick = TICKS_PER_YEAR * 4;
         schedule.run(&mut world);
-        assert_eq!(world.resource::<SolarCycleState>().current_cycle, SolarCycle::Minimum);
+        assert_eq!(
+            world.resource::<SolarCycleState>().current_cycle,
+            SolarCycle::Minimum
+        );
     }
 
     #[test]
     fn test_solar_output_scaling() {
         let mut world = World::new();
-        world.insert_resource(SolarCycleState { current_cycle: SolarCycle::Maximum });
+        world.insert_resource(SolarCycleState {
+            current_cycle: SolarCycle::Maximum,
+        });
 
         // Spawn a solar panel with Base Output 10.0
-        let panel = world.spawn((
-            PowerSource { output: 10.0, ..Default::default() },
-            SolarPower { base_output: 10.0 },
-        )).id();
+        let panel = world
+            .spawn((
+                PowerSource {
+                    output: 10.0,
+                    ..Default::default()
+                },
+                SolarPower { base_output: 10.0 },
+            ))
+            .id();
 
         // Spawn a generator (non-solar)
-        let generator = world.spawn((
-            PowerSource { output: 10.0, ..Default::default() },
-        )).id();
+        let generator = world
+            .spawn((PowerSource {
+                output: 10.0,
+                ..Default::default()
+            },))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(update_solar_output_system);
@@ -211,10 +242,15 @@ mod tests {
         world.insert_resource(cycle);
 
         // Spawn solar panel
-        let panel = world.spawn((
-            PowerSource { output: 10.0, ..Default::default() },
-            SolarPower { base_output: 10.0 },
-        )).id();
+        let panel = world
+            .spawn((
+                PowerSource {
+                    output: 10.0,
+                    ..Default::default()
+                },
+                SolarPower { base_output: 10.0 },
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(update_solar_output_system);

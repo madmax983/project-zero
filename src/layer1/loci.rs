@@ -3,12 +3,12 @@
 //! Stores spatial memories of significant events (Death, Celebration, etc.)
 //! on the map, affecting the mood of pops who pass through.
 
-use bevy_ecs::prelude::*;
 use crate::layer1::health::Dead;
 use crate::layer1::map::GridPosition;
 use crate::layer1::morale::{MoodModifier, Morale};
 use crate::layer1::pop::Pop;
 use crate::shared::time::SimulationTime;
+use bevy_ecs::prelude::*;
 
 /// Types of loci that can form.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -196,16 +196,24 @@ mod tests {
         let mut world = World::new();
         let mut map = LociMap::new(10, 10);
 
-        map.set(0, 0, Locus {
-            locus_type: LocusType::Joy,
-            intensity: 0.00005, // Should decay to 0
-            formed_at_tick: 0,
-        });
-        map.set(1, 1, Locus {
-            locus_type: LocusType::Joy,
-            intensity: 1.0,
-            formed_at_tick: 0,
-        });
+        map.set(
+            0,
+            0,
+            Locus {
+                locus_type: LocusType::Joy,
+                intensity: 0.00005, // Should decay to 0
+                formed_at_tick: 0,
+            },
+        );
+        map.set(
+            1,
+            1,
+            Locus {
+                locus_type: LocusType::Joy,
+                intensity: 1.0,
+                formed_at_tick: 0,
+            },
+        );
 
         world.insert_resource(map);
 
@@ -222,11 +230,15 @@ mod tests {
         let mut world = World::new();
         let mut map = LociMap::new(10, 10);
 
-        map.set(5, 5, Locus {
-            locus_type: LocusType::Tragedy,
-            intensity: 1.0,
-            formed_at_tick: 0,
-        });
+        map.set(
+            5,
+            5,
+            Locus {
+                locus_type: LocusType::Tragedy,
+                intensity: 1.0,
+                formed_at_tick: 0,
+            },
+        );
 
         world.insert_resource(map);
 
@@ -247,11 +259,15 @@ mod tests {
     fn test_apply_loci_effects_refreshes() {
         let mut world = World::new();
         let mut map = LociMap::new(10, 10);
-        map.set(5, 5, Locus {
-            locus_type: LocusType::Tragedy,
-            intensity: 1.0,
-            formed_at_tick: 0,
-        });
+        map.set(
+            5,
+            5,
+            Locus {
+                locus_type: LocusType::Tragedy,
+                intensity: 1.0,
+                formed_at_tick: 0,
+            },
+        );
         world.insert_resource(map);
 
         let mut morale = Morale::default();
@@ -261,9 +277,7 @@ mod tests {
             duration: 1,
         });
 
-        let pop = world
-            .spawn((Pop, GridPosition { x: 5, y: 5 }, morale))
-            .id();
+        let pop = world.spawn((Pop, GridPosition { x: 5, y: 5 }, morale)).id();
 
         world.run_system_once(apply_loci_effects_system).unwrap();
 

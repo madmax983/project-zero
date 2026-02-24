@@ -163,10 +163,7 @@ fn test_combat_cleanup_on_target_despawn() {
 
     // Spawn Enemy
     let enemy = world
-        .spawn((
-            GridPosition { x: 1, y: 0 },
-            Health::default(),
-        ))
+        .spawn((GridPosition { x: 1, y: 0 }, Health::default()))
         .id();
 
     // Spawn Pop targeting Enemy
@@ -197,11 +194,21 @@ fn test_combat_cleanup_on_target_despawn() {
     combat_execution_system(&mut world);
 
     // Verify Cleanup
-    assert!(world.get::<MovementTarget>(pop).is_none(), "MovementTarget should be removed");
-    assert!(world.get::<AtTarget>(pop).is_none(), "AtTarget should be removed");
+    assert!(
+        world.get::<MovementTarget>(pop).is_none(),
+        "MovementTarget should be removed"
+    );
+    assert!(
+        world.get::<AtTarget>(pop).is_none(),
+        "AtTarget should be removed"
+    );
 
     let action = world.get::<PopAction>(pop).unwrap();
-    assert_eq!(action.current, ActionType::Idle, "Action should reset to Idle");
+    assert_eq!(
+        action.current,
+        ActionType::Idle,
+        "Action should reset to Idle"
+    );
     assert!((action.current_utility - 0.0).abs() < f32::EPSILON);
     assert_eq!(action.ticks_committed, 1);
 }
@@ -212,10 +219,7 @@ fn test_combat_updates_target_position() {
 
     // Spawn Enemy at (1, 0)
     let enemy = world
-        .spawn((
-            GridPosition { x: 1, y: 0 },
-            Health::default(),
-        ))
+        .spawn((GridPosition { x: 1, y: 0 }, Health::default()))
         .id();
 
     // Spawn Pop targeting Enemy at (1, 0)
@@ -242,7 +246,11 @@ fn test_combat_updates_target_position() {
 
     // Verify MovementTarget update
     let mt = world.get::<MovementTarget>(pop).unwrap();
-    assert_eq!(mt.target_position, GridPosition { x: 2, y: 0 }, "Target position should update");
+    assert_eq!(
+        mt.target_position,
+        GridPosition { x: 2, y: 0 },
+        "Target position should update"
+    );
 }
 
 #[test]
@@ -253,7 +261,10 @@ fn test_combat_unarmed_defaults() {
     let enemy = world
         .spawn((
             GridPosition { x: 1, y: 0 },
-            Health { current: 100.0, max: 100.0 },
+            Health {
+                current: 100.0,
+                max: 100.0,
+            },
         ))
         .id();
 
@@ -277,11 +288,17 @@ fn test_combat_unarmed_defaults() {
 
     // Verify:
     // 1. Should be AtTarget (because default range 1.0 covers dist 1.0)
-    assert!(world.get::<AtTarget>(pop).is_some(), "Unarmed pop should be in range (default 1.0)");
+    assert!(
+        world.get::<AtTarget>(pop).is_some(),
+        "Unarmed pop should be in range (default 1.0)"
+    );
 
     // 2. Damage should be 0 (current implementation for unarmed)
     let health = world.get::<Health>(enemy).unwrap();
-    assert!((health.current - 100.0).abs() < f32::EPSILON, "Unarmed attack currently does 0 damage");
+    assert!(
+        (health.current - 100.0).abs() < f32::EPSILON,
+        "Unarmed attack currently does 0 damage"
+    );
 }
 
 #[test]
@@ -290,10 +307,7 @@ fn test_combat_removes_at_target_when_out_of_range() {
 
     // Enemy moved far away (5, 0)
     let enemy = world
-        .spawn((
-            GridPosition { x: 5, y: 0 },
-            Health::default(),
-        ))
+        .spawn((GridPosition { x: 5, y: 0 }, Health::default()))
         .id();
 
     // Pop at (0, 0) with AtTarget (simulate previously in range)
@@ -315,5 +329,8 @@ fn test_combat_removes_at_target_when_out_of_range() {
     combat_execution_system(&mut world);
 
     // Verify AtTarget removed
-    assert!(world.get::<AtTarget>(pop).is_none(), "AtTarget should be removed when out of range");
+    assert!(
+        world.get::<AtTarget>(pop).is_none(),
+        "AtTarget should be removed when out of range"
+    );
 }

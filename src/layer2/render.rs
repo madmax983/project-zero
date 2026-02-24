@@ -64,22 +64,22 @@ pub fn render_system_view(frame: &mut Frame, area: Rect, world: &World) {
     for entity in world.iter_entities() {
         if let Some(body) = entity.get::<OrbitalBody>() {
             let (x, y) = if entity.contains::<Orbit>() {
-                 get_position(entity.id())
+                get_position(entity.id())
             } else if entity.contains::<Fleet>() {
-                 if let Some(in_orbit) = entity.get::<InOrbit>() {
-                     get_position(in_orbit.parent)
-                 } else if let Some(transit) = entity.get::<InTransit>() {
-                     let start = get_position(transit.origin);
-                     let end = get_position(transit.destination);
-                     // Linear interpolation with mul_add for better precision
-                     let x = (end.0 - start.0).mul_add(transit.progress, start.0);
-                     let y = (end.1 - start.1).mul_add(transit.progress, start.1);
-                     (x, y)
-                 } else {
-                     continue;
-                 }
+                if let Some(in_orbit) = entity.get::<InOrbit>() {
+                    get_position(in_orbit.parent)
+                } else if let Some(transit) = entity.get::<InTransit>() {
+                    let start = get_position(transit.origin);
+                    let end = get_position(transit.destination);
+                    // Linear interpolation with mul_add for better precision
+                    let x = (end.0 - start.0).mul_add(transit.progress, start.0);
+                    let y = (end.1 - start.1).mul_add(transit.progress, start.1);
+                    (x, y)
+                } else {
+                    continue;
+                }
             } else {
-                 continue;
+                continue;
             };
 
             // Convert to screen coords

@@ -1,11 +1,11 @@
 // src/layer1/terraforming.rs
 
-use bevy_ecs::prelude::*;
 use crate::layer1::atmosphere::AtmosphereGrid;
 use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::energy::PowerConsumer;
 use crate::layer1::health::Health;
 use crate::layer1::pop::Pop;
+use bevy_ecs::prelude::*;
 
 /// Global resource tracking planetary toxicity and temperature.
 #[derive(Resource, Debug, Clone)]
@@ -19,7 +19,7 @@ pub struct PlanetaryAtmosphere {
 impl Default for PlanetaryAtmosphere {
     fn default() -> Self {
         Self {
-            toxicity: 0.8, // Start hostile
+            toxicity: 0.8,      // Start hostile
             temperature: -20.0, // Start cold
         }
     }
@@ -76,8 +76,8 @@ mod tests {
     use crate::layer1::atmosphere::DiffusionConfig;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::energy::PowerConsumer;
-    use crate::layer1::map::GridPosition;
     use crate::layer1::health::Health;
+    use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
 
     #[test]
@@ -91,7 +91,10 @@ mod tests {
     #[test]
     fn test_processor_reduces_toxicity() {
         let mut world = World::new();
-        let atmosphere = PlanetaryAtmosphere { toxicity: 1.0, temperature: 0.0 };
+        let atmosphere = PlanetaryAtmosphere {
+            toxicity: 1.0,
+            temperature: 0.0,
+        };
         world.insert_resource(atmosphere);
 
         // Spawn powered Processor in "Detoxify" mode
@@ -100,7 +103,10 @@ mod tests {
                 building_type: BuildingType::AtmosphericProcessor,
             },
             GridPosition { x: 0, y: 0 },
-            PowerConsumer { demand: 500.0, active: true }, // Fully powered
+            PowerConsumer {
+                demand: 500.0,
+                active: true,
+            }, // Fully powered
         ));
 
         // Run update multiple times to simulate time passing
@@ -108,17 +114,23 @@ mod tests {
         schedule.add_systems(update_planetary_atmosphere_system);
 
         for _ in 0..10 {
-             schedule.run(&mut world);
+            schedule.run(&mut world);
         }
 
         let new_atmosphere = world.resource::<PlanetaryAtmosphere>();
-        assert!(new_atmosphere.toxicity < 1.0, "Toxicity should decrease with active processor");
+        assert!(
+            new_atmosphere.toxicity < 1.0,
+            "Toxicity should decrease with active processor"
+        );
     }
 
     #[test]
     fn test_processor_requires_power() {
         let mut world = World::new();
-        let atmosphere = PlanetaryAtmosphere { toxicity: 1.0, temperature: 0.0 };
+        let atmosphere = PlanetaryAtmosphere {
+            toxicity: 1.0,
+            temperature: 0.0,
+        };
         world.insert_resource(atmosphere);
 
         // Spawn unpowered Processor
@@ -127,7 +139,10 @@ mod tests {
                 building_type: BuildingType::AtmosphericProcessor,
             },
             GridPosition { x: 0, y: 0 },
-            PowerConsumer { demand: 500.0, active: false }, // No power
+            PowerConsumer {
+                demand: 500.0,
+                active: false,
+            }, // No power
         ));
 
         let mut schedule = Schedule::default();
@@ -135,14 +150,20 @@ mod tests {
         schedule.run(&mut world);
 
         let new_atmosphere = world.resource::<PlanetaryAtmosphere>();
-        assert_eq!(new_atmosphere.toxicity, 1.0, "Toxicity should NOT change without power");
+        assert_eq!(
+            new_atmosphere.toxicity, 1.0,
+            "Toxicity should NOT change without power"
+        );
     }
 
     #[test]
     fn test_global_toxicity_affects_local_diffusion() {
         let mut world = World::new();
         // High toxicity planet
-        world.insert_resource(PlanetaryAtmosphere { toxicity: 0.9, temperature: 0.0 });
+        world.insert_resource(PlanetaryAtmosphere {
+            toxicity: 0.9,
+            temperature: 0.0,
+        });
         world.insert_resource(AtmosphereGrid::new(10, 10));
         world.insert_resource(DiffusionConfig::default());
         // Add Pop just to satisfy query
@@ -157,14 +178,21 @@ mod tests {
 
         let grid = world.resource::<AtmosphereGrid>();
         // High global toxicity means local smog stays longer (lower decay/diffusion rate)
-        assert!(grid.diffusion_rate > 0.98, "High toxicity should increase retention (slower decay). Got: {}", grid.diffusion_rate);
+        assert!(
+            grid.diffusion_rate > 0.98,
+            "High toxicity should increase retention (slower decay). Got: {}",
+            grid.diffusion_rate
+        );
     }
 
     #[test]
     fn test_low_toxicity_accelerates_decay() {
         let mut world = World::new();
         // Clean planet
-        world.insert_resource(PlanetaryAtmosphere { toxicity: 0.1, temperature: 0.0 });
+        world.insert_resource(PlanetaryAtmosphere {
+            toxicity: 0.1,
+            temperature: 0.0,
+        });
         world.insert_resource(AtmosphereGrid::new(10, 10));
         world.insert_resource(DiffusionConfig::default());
         world.spawn((Pop, Health::default()));
@@ -179,26 +207,41 @@ mod tests {
         let grid = world.resource::<AtmosphereGrid>();
         // 0.90 + (0.1 * 0.099) = 0.9099.
         // It should be close to 0.91.
-        assert!(grid.diffusion_rate < 0.95, "Low toxicity should decrease retention (faster decay). Got: {}", grid.diffusion_rate);
+        assert!(
+            grid.diffusion_rate < 0.95,
+            "Low toxicity should decrease retention (faster decay). Got: {}",
+            grid.diffusion_rate
+        );
     }
 
     #[test]
     fn test_global_toxicity_damages_pops() {
         let mut world = World::new();
-        world.insert_resource(PlanetaryAtmosphere { toxicity: 1.0, temperature: 0.0 }); // Max toxicity
+        world.insert_resource(PlanetaryAtmosphere {
+            toxicity: 1.0,
+            temperature: 0.0,
+        }); // Max toxicity
         world.insert_resource(AtmosphereGrid::new(10, 10)); // Required by system
 
-        let pop = world.spawn((
-            Pop::default(),
-            Health { current: 100.0, max: 100.0 },
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let pop = world
+            .spawn((
+                Pop::default(),
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(apply_planetary_effects_system);
         schedule.run(&mut world);
 
         let health = world.get::<Health>(pop).unwrap();
-        assert!(health.current < 100.0, "Global toxicity should damage exposed pops");
+        assert!(
+            health.current < 100.0,
+            "Global toxicity should damage exposed pops"
+        );
     }
 }
