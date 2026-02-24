@@ -32,7 +32,7 @@
 
 use bevy_ecs::prelude::*;
 use std::cmp::Ordering;
-use std::collections::{BinaryHeap, HashMap};
+use std::collections::BinaryHeap;
 
 use crate::layer1::access_control::{AccessControl, AccessMode};
 use crate::layer1::building::{Building, BuildingMap, BuildingType, OccupiedTiles};
@@ -201,16 +201,37 @@ fn find_path_internal(
     let crowding = world.get_resource::<crate::layer1::crowding::CrowdingGrid>();
     let wind_grid = world.get_resource::<WindGrid>();
 
-    let mut open_set = BinaryHeap::new();
-    let mut came_from: HashMap<(i32, i32), (i32, i32)> = HashMap::new();
-    let mut cost_so_far: HashMap<(i32, i32), i32> = HashMap::new();
+    let width = terrain.width;
+    let height = terrain.height;
+    let size = width * height;
 
-    open_set.push(Node {
-        pos: start,
-        cost: 0,
-        heuristic: manhattan_distance(start, end),
-    });
-    cost_so_far.insert(start, 0);
+    // Use flat vectors for O(1) access.
+    // u32::MAX serves as "None" for parent index.
+    let mut came_from = vec![u32::MAX; size];
+    let mut cost_so_far = vec![i32::MAX; size];
+    let mut open_set = BinaryHeap::new();
+
+    // Helper to get index from pos
+    let get_idx = |(x, y): (i32, i32)| -> Option<usize> {
+        let ux = usize::try_from(x).ok()?;
+        let uy = usize::try_from(y).ok()?;
+        if ux < width && uy < height {
+            Some(uy * width + ux)
+        } else {
+            None
+        }
+    };
+
+    if let Some(start_idx) = get_idx(start) {
+        cost_so_far[start_idx] = 0;
+        open_set.push(Node {
+            pos: start,
+            cost: 0,
+            heuristic: manhattan_distance(start, end),
+        });
+    } else {
+        return None;
+    }
 
     while let Some(Node { pos, cost, .. }) = open_set.pop() {
         if pos == end {
@@ -219,17 +240,33 @@ fn find_path_internal(
             let mut current = end;
             while current != start {
                 path.push(current);
-                current = *came_from.get(&current)?;
+                let idx = get_idx(current)?;
+                let parent_idx = came_from[idx];
+                if parent_idx == u32::MAX {
+                    return None; // Should not happen if path found
+                }
+                // Convert index back to pos
+                #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
+                let px = (parent_idx as usize % width) as i32;
+                #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
+                let py = (parent_idx as usize / width) as i32;
+                current = (px, py);
             }
-            // Start is usually excluded or implicit in movement logic, but let's see what tests expect.
-            // Tests check p.len() >= 2. Start -> Next -> End. Path should contain steps.
             path.reverse();
             return Some(path);
+        }
+
+        let current_idx = if let Some(idx) = get_idx(pos) { idx } else { continue; };
+
+        // Check if we found a shorter path already (standard A* opt)
+        if cost > cost_so_far[current_idx] {
+            continue;
         }
 
         // Check neighbors (Manhattan)
         for (dx, dy) in [(-1, 0), (1, 0), (0, -1), (0, 1)] {
             let next = (pos.0 + dx, pos.1 + dy);
+            let next_idx = if let Some(idx) = get_idx(next) { idx } else { continue; };
 
             // Check if walkable
             if !is_walkable(
@@ -245,16 +282,12 @@ fn find_path_internal(
                 continue;
             }
 
-            // Movement cost (default 1 + terrain cost)
-            let base_cost =
-                if let (Ok(x), Ok(y)) = (usize::try_from(next.0), usize::try_from(next.1)) {
-                    #[allow(clippy::cast_possible_truncation)]
-                    let t_cost = terrain.get(x, y).map_or(1, |t| t.movement_cost() as i32);
-                    let c_cost = crowding.map_or(0, |c| i32::from(c.get(x, y)));
-                    t_cost + c_cost
-                } else {
-                    1
-                };
+            // Movement cost
+            #[allow(clippy::cast_possible_truncation)]
+            let t_cost = terrain.tiles[next_idx].movement_cost() as i32;
+            #[allow(clippy::cast_possible_truncation)]
+            let c_cost = crowding.map_or(0, |c| i32::from(c.get(next.0 as usize, next.1 as usize)));
+            let base_cost = t_cost + c_cost;
 
             // Calculate wind penalty
             let wind_penalty = wind_grid.map_or(1.0, |wg| {
@@ -271,15 +304,19 @@ fn find_path_internal(
 
             let new_cost = cost + tile_cost;
 
-            if new_cost < *cost_so_far.get(&next).unwrap_or(&i32::MAX) {
-                cost_so_far.insert(next, new_cost);
+            if new_cost < cost_so_far[next_idx] {
+                cost_so_far[next_idx] = new_cost;
                 let priority = new_cost + manhattan_distance(next, end);
                 open_set.push(Node {
                     pos: next,
                     cost: new_cost,
                     heuristic: priority,
                 });
-                came_from.insert(next, pos);
+                // Since 1M tiles fits in u32 (up to 4B), this cast is safe given limits.
+                #[allow(clippy::cast_possible_truncation)]
+                {
+                    came_from[next_idx] = current_idx as u32;
+                }
             }
         }
     }
