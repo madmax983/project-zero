@@ -2,18 +2,21 @@
 
 ## 1. Overview
 
-As fleets begin to explore the system, they will inevitably encounter hostile forces (Pirates, Rivals).
-This feature implements the **Combat Resolution** system for Layer 2.
+**Fantasy:** Space battles are massive, chaotic events observed from a distance. Two fleets merge into a signal blip, flashes of light appear, and only one signal remains—surrounded by debris.
 
-When two fleets from different factions occupy the same orbital location (`InOrbit`), combat is initiated automatically.
-Combat is resolved in turns (ticks), where ships exchange damage based on their class stats.
-Ships that reach 0 HP are destroyed and removed from the fleet.
-If a fleet loses all ships, the fleet entity is destroyed.
+**Mechanic:**
+- **Deterministic Resolution**: Combat occurs automatically when two hostile fleets occupy the same coordinate/node.
+- **Auto-Calc**: Battles are resolved in "Rounds" or instantly (for MVP, instant resolution based on stats).
+- **Casualties**: Ships are damaged or destroyed.
+- **Debris**: Destroyed ships leave `OrbitalDebris` (Spec 184) or `Loot` (Cargo).
+
+**Why:** Layer 2 is currently peaceful. We need conflict to drive the need for `Ship Classes` (Spec 157) and `Defenses`.
 
 ## 2. Dependencies
 
-- `specs/157-ship-classes.md` (Ship, ShipType, FleetComposition)
-- `specs/099-fleet-movement.md` (Fleet, InOrbit)
+- `099` — Fleet Movement (Implemented)
+- `157` — Ship Classes (In Backlog - **MUST BE IMPLEMENTED FIRST**)
+- `104` — Fuel Industry (Implied for resources/loot)
 
 ## 3. RED Phase: Tests First
 
@@ -23,327 +26,159 @@ Write these tests in `src/layer2/combat_tests.rs`. They will initially FAIL.
 #[cfg(test)]
 mod tests {
     use bevy_ecs::prelude::*;
-    use crate::layer2::fleet::{Fleet, FleetComposition, InOrbit};
+    use crate::layer2::fleet::{Fleet, FleetComposition, FleetFaction};
     use crate::layer2::ship::{Ship, ShipType};
-    use crate::layer2::combat::{FactionId, InCombat, fleet_combat_system};
+    use crate::layer2::combat::{resolve_combat, CombatResult};
 
-    fn setup_combat_world() -> World {
-        let mut world = World::new();
-        // Register components
-        world
+    // Helper to create a test fleet
+    fn create_fleet(faction: FleetFaction, ships: Vec<ShipType>) -> FleetComposition {
+        let mut comp = FleetComposition::default();
+        for t in ships {
+            comp.add_ship(Ship::new(t));
+        }
+        comp
     }
 
     #[test]
-    fn test_combat_initiation() {
-        let mut world = setup_combat_world();
-        let planet = world.spawn_empty().id();
+    fn test_combat_resolution_stronger_wins() {
+        // Fleet A: 10 Frigates (High Combat)
+        let fleet_a = create_fleet(FleetFaction::Player, vec![ShipType::Frigate; 10]);
 
-        // Player Fleet
-        let player_fleet = world.spawn((
-            Fleet,
-            InOrbit { parent: planet },
-            FactionId(0), // Player
-            FleetComposition {
-                ships: vec![Ship::new(ShipType::Frigate)],
-            },
-        )).id();
+        // Fleet B: 1 Scout (Low Combat)
+        let fleet_b = create_fleet(FleetFaction::Pirate, vec![ShipType::Scout; 1]);
 
-        // Pirate Fleet
-        let pirate_fleet = world.spawn((
-            Fleet,
-            InOrbit { parent: planet },
-            FactionId(1), // Pirate
-            FleetComposition {
-                ships: vec![Ship::new(ShipType::Frigate)],
-            },
-        )).id();
+        // Resolve
+        let result = resolve_combat(&fleet_a, &fleet_b);
 
-        // Run System
-        let mut schedule = Schedule::default();
-        schedule.add_systems(fleet_combat_system);
-        schedule.run(&mut world);
-
-        // Verify both are InCombat
-        assert!(world.get::<InCombat>(player_fleet).is_some());
-        assert!(world.get::<InCombat>(pirate_fleet).is_some());
+        // A should win
+        assert_eq!(result.winner, FleetFaction::Player);
+        // B should be wiped out
+        assert!(result.loser_survivors.ships.is_empty());
+        // A should take minimal/no damage
+        assert_eq!(result.winner_survivors.ships.len(), 10);
     }
 
     #[test]
-    fn test_combat_damage_exchange() {
-        let mut world = setup_combat_world();
-        let planet = world.spawn_empty().id();
+    fn test_combat_casualties() {
+        // Fleet A: 5 Frigates
+        let fleet_a = create_fleet(FleetFaction::Player, vec![ShipType::Frigate; 5]);
 
-        // Player Frigate (100 HP)
-        let player_fleet = world.spawn((
-            Fleet,
-            InOrbit { parent: planet },
-            FactionId(0),
-            FleetComposition {
-                ships: vec![Ship::new(ShipType::Frigate)],
-            },
-        )).id();
+        // Fleet B: 5 Frigates
+        let fleet_b = create_fleet(FleetFaction::Pirate, vec![ShipType::Frigate; 5]);
 
-        // Pirate Scout (Weak, 50 HP)
-        let pirate_fleet = world.spawn((
-            Fleet,
-            InOrbit { parent: planet },
-            FactionId(1),
-            FleetComposition {
-                ships: vec![Ship::new(ShipType::Scout)],
-            },
-        )).id();
+        // Even fight, both sides should take losses
+        let result = resolve_combat(&fleet_a, &fleet_b);
 
-        // Run System (One Round)
-        let mut schedule = Schedule::default();
-        schedule.add_systems(fleet_combat_system);
-        schedule.run(&mut world);
-
-        // Verify Damage
-        let player_comp = world.get::<FleetComposition>(player_fleet).unwrap();
-        let pirate_comp = world.get::<FleetComposition>(pirate_fleet).unwrap();
-
-        // Frigate (Player) should have taken some damage from Scout
-        assert!(player_comp.ships[0].health < 100.0);
-
-        // Scout (Pirate) should have taken MORE damage from Frigate
-        // Assuming Frigate ATK > Scout ATK
-        assert!(pirate_comp.ships[0].health < 100.0);
+        // We assume deterministic behavior or seeded RNG in implementation
+        // For this test, just ensure *someone* died
+        let total_survivors = result.winner_survivors.ships.len() + result.loser_survivors.ships.len();
+        assert!(total_survivors < 10);
     }
 
     #[test]
-    fn test_ship_destruction() {
-        let mut world = setup_combat_world();
-        let planet = world.spawn_empty().id();
+    fn test_loot_generation() {
+        // Fleet B (Transport) has Cargo. If destroyed, it should drop loot.
+        // This requires FleetCargo component integration, which we mock here or add to resolve_combat args.
+        // For MVP, resolve_combat just returns a "Loot" object.
 
-        // Player Fleet
-        let player_fleet = world.spawn((
-            Fleet,
-            InOrbit { parent: planet },
-            FactionId(0),
-            FleetComposition {
-                ships: vec![Ship::new(ShipType::Frigate)],
-            },
-        )).id();
+        let fleet_a = create_fleet(FleetFaction::Player, vec![ShipType::Frigate; 10]);
+        let fleet_b = create_fleet(FleetFaction::Pirate, vec![ShipType::Transport; 1]); // Transport has high cargo
 
-        // Pirate Fleet with 1 Scout at 1 HP
-        let mut weak_scout = Ship::new(ShipType::Scout);
-        weak_scout.health = 1.0;
+        let result = resolve_combat(&fleet_a, &fleet_b);
 
-        let pirate_fleet = world.spawn((
-            Fleet,
-            InOrbit { parent: planet },
-            FactionId(1),
-            FleetComposition {
-                ships: vec![weak_scout, Ship::new(ShipType::Miner)],
-            },
-        )).id();
-
-        // Run System
-        let mut schedule = Schedule::default();
-        schedule.add_systems(fleet_combat_system);
-        schedule.run(&mut world);
-
-        // Verify Scout is gone
-        let pirate_comp = world.get::<FleetComposition>(pirate_fleet).unwrap();
-        assert_eq!(pirate_comp.ships.len(), 1);
-        assert_eq!(pirate_comp.ships[0].ship_type, ShipType::Miner);
-    }
-
-    #[test]
-    fn test_fleet_destruction() {
-        let mut world = setup_combat_world();
-        let planet = world.spawn_empty().id();
-
-        // Strong Player Fleet
-        let player_fleet = world.spawn((
-            Fleet,
-            InOrbit { parent: planet },
-            FactionId(0),
-            FleetComposition {
-                ships: vec![Ship::new(ShipType::Frigate)],
-            },
-        )).id();
-
-        // Weak Pirate Fleet (1 HP Scout)
-        let mut weak_scout = Ship::new(ShipType::Scout);
-        weak_scout.health = 1.0;
-
-        let pirate_fleet = world.spawn((
-            Fleet,
-            InOrbit { parent: planet },
-            FactionId(1),
-            FleetComposition {
-                ships: vec![weak_scout],
-            },
-        )).id();
-
-        // Run System
-        let mut schedule = Schedule::default();
-        schedule.add_systems(fleet_combat_system);
-        schedule.run(&mut world);
-
-        // Verify Pirate Fleet Entity is Despawned
-        assert!(world.get_entity(pirate_fleet).is_none());
+        // If Transport destroyed, loot generated
+        assert!(result.loot.is_some());
     }
 }
 ```
 
 ## 4. GREEN Phase: Minimal Implementation
 
-### 1. Define Components (`src/layer2/combat.rs`)
+### 1. Define `FleetFaction`
 
+In `src/layer2/fleet.rs`:
 ```rust
-use bevy_ecs::prelude::*;
-use crate::layer2::fleet::{Fleet, InOrbit, FleetComposition};
-use crate::layer2::ship::{Ship, ShipType};
+#[derive(Component, Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub enum FleetFaction {
+    Player,
+    Pirate,
+    Merchant,
+    // ...
+}
+```
 
-#[derive(Component, Debug, Clone, Copy, PartialEq, Eq)]
-pub struct FactionId(pub u32);
+### 2. Define `CombatResult`
 
-#[derive(Component, Debug, Clone, Copy)]
-pub struct InCombat;
+In `src/layer2/combat.rs`:
+```rust
+use crate::layer2::fleet::{FleetComposition, FleetFaction};
+use crate::layer2::ship::ShipType;
 
-impl ShipType {
-    pub fn attack_power(&self) -> f32 {
-        match self {
-            Self::Scout => 5.0,
-            Self::Transport => 2.0,
-            Self::Miner => 3.0,
-            Self::Frigate => 20.0,
-        }
-    }
+pub struct CombatResult {
+    pub winner: FleetFaction,
+    pub winner_survivors: FleetComposition,
+    pub loser_survivors: FleetComposition,
+    pub loot: Option<Vec<(crate::layer1::resources::ResourceType, f32)>>,
+}
 
-    pub fn max_health(&self) -> f32 {
-        match self {
-            Self::Scout => 50.0,
-            Self::Transport => 200.0,
-            Self::Miner => 150.0,
-            Self::Frigate => 300.0,
-        }
+pub fn resolve_combat(attacker: &FleetComposition, defender: &FleetComposition) -> CombatResult {
+    // 1. Calculate Total Attack Power
+    let att_power: f32 = attacker.ships.iter().map(|s| s.ship_type.attack_power()).sum();
+    let def_power: f32 = defender.ships.iter().map(|s| s.ship_type.attack_power()).sum(); // Simplified: Attack = Defense power for MVP?
+
+    // Spec 157 needs `attack_power()` on ShipType. If not there, add it.
+
+    // 2. Determine Winner
+    // Simple logic: Higher power wins.
+    // RNG: power * random(0.8, 1.2)
+
+    // 3. Apply Damage
+    // "Damage" = Losing Power / 2.
+    // Apply damage to ships health. Remove dead ships.
+
+    // 4. Return Result
+    CombatResult {
+        // ...
     }
 }
 ```
 
-### 2. Update `Ship::new` (`src/layer2/ship.rs`)
-
-Ensure `Ship::new` uses `ship_type.max_health()` instead of hardcoded `100.0`.
-
-```rust
-impl Ship {
-    pub fn new(ship_type: ShipType) -> Self {
-        Self {
-            ship_type,
-            health: ship_type.max_health(),
-            max_health: ship_type.max_health(),
-        }
-    }
-}
-```
-
-### 3. Implement Combat System (`src/layer2/combat.rs`)
+### 3. Implement System
 
 ```rust
 pub fn fleet_combat_system(
     mut commands: Commands,
-    mut fleets: Query<(Entity, &InOrbit, &FactionId, &mut FleetComposition, Option<&InCombat>)>,
+    // Query for fleets with position, faction, and composition
+    mut fleets: Query<(Entity, &crate::layer2::fleet::FleetPosition, &FleetFaction, &mut FleetComposition)>,
 ) {
-    // 1. Reset InCombat state for all
-    // In a real system, we might want to keep it if combat persists, but recalculating is safer for MVP.
-    for (entity, _, _, _, in_combat) in fleets.iter() {
-        if in_combat.is_some() {
-            commands.entity(entity).remove::<InCombat>();
-        }
-    }
-
-    // 2. Identify Hostile Pairs and Resolve Combat
-    // We use `iter_combinations_mut` to check every pair of fleets.
-    // This is O(N^2), but acceptable for MVP with low fleet counts.
-    let mut iter = fleets.iter_combinations_mut();
-    while let Some([
-        (e1, orbit1, faction1, mut comp1, _),
-        (e2, orbit2, faction2, mut comp2, _)
-    ]) = iter.fetch_next() {
-        // Must be in same orbit
-        if orbit1.parent != orbit2.parent {
-            continue;
-        }
-        // Must be different factions
-        if faction1 == faction2 {
-            continue;
-        }
-
-        // Combat!
-        commands.entity(e1).insert(InCombat);
-        commands.entity(e2).insert(InCombat);
-
-        // Calculate Total Damage Output
-        let dmg1: f32 = comp1.ships.iter().map(|s| s.ship_type.attack_power()).sum();
-        let dmg2: f32 = comp2.ships.iter().map(|s| s.ship_type.attack_power()).sum();
-
-        // Apply Damage to Fleet 2 (from 1)
-        apply_damage(&mut comp2, dmg1);
-
-        // Apply Damage to Fleet 1 (from 2)
-        apply_damage(&mut comp1, dmg2);
-    }
-}
-
-fn apply_damage(comp: &mut FleetComposition, mut damage: f32) {
-    // Distribute damage to ships
-    // Strategy: Focus fire first living ship.
-
-    for ship in comp.ships.iter_mut() {
-        if damage <= 0.0 { break; }
-
-        if ship.health > damage {
-            ship.health -= damage;
-            damage = 0.0;
-        } else {
-            damage -= ship.health;
-            ship.health = 0.0;
-        }
-    }
-
-    // Remove dead ships
-    comp.ships.retain(|s| s.health > 0.0);
-}
-
-// 4. Cleanup System
-// Separate system to handle fleet destruction.
-// Registered after combat system.
-pub fn fleet_cleanup_system(
-    mut commands: Commands,
-    query: Query<(Entity, &FleetComposition), With<Fleet>>,
-) {
-    for (entity, comp) in query.iter() {
-        if comp.ships.is_empty() {
-            commands.entity(entity).despawn_recursive();
-        }
-    }
+    // 1. Group fleets by location
+    // 2. If multiple factions at same location, trigger combat
+    // 3. Apply results (despawn dead fleets, update survivors, spawn debris)
 }
 ```
 
 ## 5. REFACTOR Phase: Quality & Design
 
-- **Event Log**: Emit `CombatLogEvent` when ships die or damage is dealt.
-- **Fleeing**: Add logic where if `health < 20%`, fleet attempts `FleetOrder::MoveTo(SafeHaven)`.
-- **Targeting**: Implement `TargetingStrategy` (Weakest First, Strongest First, Random).
-- **Damage Mitigation**: Armor/Shields.
-- **Optimization**: `iter_combinations_mut` is O(N^2). If 1000 fleets are in system, this is slow. Use spatial hashing (Grid/Orbit) to limit checks.
+- **Ship Stats**: `ShipType` (Spec 157) needs `attack`, `defense`, `health`.
+- **Combat Logic**: Move from "Total Power" to "Ship vs Ship" targeting rounds for more realism.
+- **Debris**: Spawn `OrbitalDebris` entity (Spec 184) containing the loot.
+- **Notifications**: "Fleet Battle at Sector 4: Victory!"
 
 ## 6. Acceptance Criteria
 
-- [ ] `FactionId` and `InCombat` components defined.
-- [ ] `ShipType` has combat stats.
-- [ ] `Ship::new` uses max health from stats.
-- [ ] System identifies hostile fleets in same orbit.
-- [ ] Damage is exchanged and applied to ships.
-- [ ] Dead ships are removed.
-- [ ] Empty fleets are despawned.
+- [ ] `FleetFaction` component exists.
+- [ ] `resolve_combat` correctly identifies winner based on strength.
+- [ ] Ships are removed from `FleetComposition` if destroyed.
+- [ ] Fleets at the same position automatically fight if hostile.
 - [ ] Tests pass.
 
 ## 7. Technical Guidance
 
-- Use `iter_combinations_mut()` for the pair checks. It is safe and handles the borrowing.
-- Remember to separate the "Damage Logic" from "Cleanup Logic" to avoid despawning an entity while another entity is trying to shoot it in the same frame (though `combinations` handles this via borrowing, logic order matters).
-- Ensure `apply_damage` handles overflow (spillover damage) correctly.
+- Use `IterTools` or a `HashMap` to group fleets by position in the system.
+- Combat should be instantaneous for MVP.
+- Ensure `ShipType` has the necessary stats. If Spec 157 didn't add `attack_power`, you must add it (part of the RED/GREEN cycle for this feature).
+
+## 8. Questions
+
+- *Builder: How do I calculate loot?*
+    - *Architect: Take 50% of the destroyed fleet's cargo.*

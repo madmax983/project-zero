@@ -27,7 +27,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `101` System Mining — `specs/101-system-mining.md`
 - [ ] `102` Orbital Drop Logistics — `specs/102-orbital-drop-logistics.md`
 - [ ] `105` Launch Logistics — `specs/105-launch-logistics.md`
-- [ ] `146` Command Center & System Visibility — `specs/146-command-center.md`
 - [ ] `149` Cometary Injection — `specs/149-cometary-injection.md`
 - [ ] `150` Sensor Ambiguity — `specs/150-sensor-ambiguity.md`
 - [ ] `152` Orbital Stations — `specs/152-orbital-stations.md`

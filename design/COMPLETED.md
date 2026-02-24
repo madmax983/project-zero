@@ -145,3 +145,11 @@
 - [x] `034` Pop Health and Damage — `specs/034-pop-health.md` — verified implemented
 - [x] `103` Private Stashes — `specs/103-private-stashes.md` — verified implemented
 - [x] `168` The Mother Lode — `specs/168-the-mother-lode.md` — completed 2026-06-25
+- [x] `036` Pop Memory — `specs/036-pop-memory.md` — verified implemented
+- [x] `039` Trade System — `specs/039-trade-system.md` — verified implemented
+- [x] `051` Pop Skills and Experience — `specs/051-pop-skills-xp.md` — verified implemented
+- [x] `053` Lighting System — `specs/053-lighting-system.md` — verified implemented
+- [x] `064` Room Quality — `specs/064-room-quality.md` — verified implemented
+- [x] `110` Spontaneous Architecture — `specs/110-spontaneous-architecture.md` — verified implemented
+- [x] `111` Conveyor Logistics — `specs/111-conveyor-logistics.md` — verified implemented
+- [x] `146` Command Center & System Visibility — `specs/146-command-center.md` — verified implemented
