@@ -30,6 +30,7 @@ use crossterm::style::Stylize;
 use scale::layer1::biography::Biography;
 use scale::layer1::dreams::Dream;
 use scale::layer1::pop::PopName;
+use scale::layer1::tech::{Tech, TechState, TechStatus, unlock_tech};
 use scale::layer1::{
     BuildingType, Chronicle, ColonyResources, Designation, DesignationType, EventImportance, Farm,
     GlobalWind, GridPosition, Housing, Morale, MovementTarget, Needs, OccupiedTiles, Pop,
@@ -200,6 +201,56 @@ fn handle_command(world: &mut World, input: &str) -> bool {
         }
         "chronicle" | "c" | "history" => print_chronicle(world),
         "log" | "l" => print_log(world),
+        "tech" | "research_status" => print_tech(world),
+        "research" | "r" => {
+            if parts.len() < 2 {
+                println!("Usage: research <tech_name>");
+            } else {
+                // Join parts in case tech name has spaces (e.g., "Metal Working")
+                let tech_name = parts[1..].join(" ").to_lowercase();
+
+                let tech = match tech_name.as_str() {
+                    "masonry" => Some(Tech::Masonry),
+                    "metal working" | "metalworking" => Some(Tech::MetalWorking),
+                    "social structures" | "social" => Some(Tech::SocialStructures),
+                    "astronomy" => Some(Tech::Astronomy),
+                    "hydroponics" => Some(Tech::Hydroponics),
+                    "militia" => Some(Tech::Militia),
+                    "medical" => Some(Tech::Medical),
+                    "electromagnetism" => Some(Tech::Electromagnetism),
+                    "void whispers" | "void" => Some(Tech::VoidWhispers),
+                    "terraforming" => Some(Tech::Terraforming),
+                    _ => None,
+                };
+
+                if let Some(t) = tech {
+                    if unlock_tech(world, t) {
+                        println!("Success! Researched: {}", t.label());
+                    } else {
+                        // Check why
+                        let res = world.resource::<ColonyResources>();
+                        let ts = world.resource::<TechState>();
+
+                        if res.knowledge < t.cost() {
+                            println!(
+                                "Failed: Insufficient Knowledge ({:.1}/{:.1})",
+                                res.knowledge,
+                                t.cost()
+                            );
+                        } else if ts.used_capacity + t.storage_cost() > ts.total_capacity {
+                            println!(
+                                "Failed: Insufficient Data Storage Capacity ({:.1}/{:.1} TB used)",
+                                ts.used_capacity, ts.total_capacity
+                            );
+                        } else {
+                            println!("Failed: Unknown reason (maybe already researched?)");
+                        }
+                    }
+                } else {
+                    println!("Unknown technology: '{tech_name}'");
+                }
+            }
+        }
         _ => println!("Unknown command: '{command}'. Type 'help' for commands."),
     }
     true
@@ -258,10 +309,7 @@ fn report_events(world: &mut World) {
 
 fn print_status(world: &mut World) {
     // Copy resource values before querying to avoid borrow conflicts
-    let (food, wood, stone) = {
-        let r = world.resource::<ColonyResources>();
-        (r.food, r.wood, r.stone)
-    };
+    let resources = world.resource::<ColonyResources>().clone();
     let (wind_dir, wind_speed) = {
         let w = world.resource::<GlobalWind>();
         (w.direction, w.speed)
@@ -342,10 +390,11 @@ fn print_status(world: &mut World) {
         )),
     ]);
 
+    // Basic Resources
     table.add_row(vec![
-        Cell::new("Resources").fg(Color::Yellow),
+        Cell::new("Basic").fg(Color::Yellow),
         Cell::new("Food"),
-        Cell::new(format!("{food:.1}")).fg(if food < 20.0 {
+        Cell::new(format!("{:.1}", resources.food)).fg(if resources.food < 20.0 {
             Color::Red
         } else {
             Color::Green
@@ -354,12 +403,83 @@ fn print_status(world: &mut World) {
     table.add_row(vec![
         Cell::new(""),
         Cell::new("Wood"),
-        Cell::new(format!("{wood:.1}")),
+        Cell::new(format!("{:.1}", resources.wood)),
     ]);
     table.add_row(vec![
         Cell::new(""),
         Cell::new("Stone"),
-        Cell::new(format!("{stone:.1}")),
+        Cell::new(format!("{:.1}", resources.stone)),
+    ]);
+    table.add_row(vec![
+        Cell::new(""),
+        Cell::new("Water"),
+        Cell::new(format!("{:.1}", resources.water)).fg(Color::Blue),
+    ]);
+
+    // Industrial Resources
+    table.add_row(vec![
+        Cell::new("Industrial").fg(Color::Grey),
+        Cell::new("Ore"),
+        Cell::new(format!("{:.1}", resources.ore)),
+    ]);
+    table.add_row(vec![
+        Cell::new(""),
+        Cell::new("Metal"),
+        Cell::new(format!("{:.1}", resources.metal)),
+    ]);
+    table.add_row(vec![
+        Cell::new(""),
+        Cell::new("Fuel"),
+        Cell::new(format!("{:.1}", resources.fuel)).fg(Color::Red),
+    ]);
+    table.add_row(vec![
+        Cell::new(""),
+        Cell::new("Scrap"),
+        Cell::new(format!("{:.1}", resources.scrap)).fg(Color::DarkGrey),
+    ]);
+    table.add_row(vec![
+        Cell::new(""),
+        Cell::new("Waste"),
+        Cell::new(format!("{:.1}", resources.waste)).fg(Color::DarkGreen),
+    ]);
+
+    // Refined/Crafted
+    table.add_row(vec![
+        Cell::new("Crafted").fg(Color::Cyan),
+        Cell::new("Planks"),
+        Cell::new(format!("{:.1}", resources.planks)),
+    ]);
+    table.add_row(vec![
+        Cell::new(""),
+        Cell::new("Blocks"),
+        Cell::new(format!("{:.1}", resources.blocks)),
+    ]);
+    table.add_row(vec![
+        Cell::new(""),
+        Cell::new("Tools"),
+        Cell::new(format!("{:.1}", resources.tools)),
+    ]);
+    table.add_row(vec![
+        Cell::new(""),
+        Cell::new("Cloth"),
+        Cell::new(format!("{:.1}", resources.cloth)),
+    ]);
+
+    // Advanced
+    table.add_row(vec![
+        Cell::new("Advanced").fg(Color::Magenta),
+        Cell::new("Knowledge"),
+        Cell::new(format!("{:.1}", resources.knowledge)).fg(Color::Cyan),
+    ]);
+    table.add_row(vec![
+        Cell::new(""),
+        Cell::new("Rations"),
+        Cell::new(format!("{:.1}", resources.rations)),
+    ]);
+    table.add_row(vec![
+        Cell::new(""),
+        Cell::new("Alcohol"),
+        Cell::new(format!("{:.1}", resources.alcohol)),
     ]);
 
     table.add_row(vec![
@@ -378,6 +498,67 @@ fn print_status(world: &mut World) {
         Cell::new("Active Designations"),
         Cell::new(designation_count.to_string()),
     ]);
+
+    println!("{table}");
+}
+
+fn print_tech(world: &mut World) {
+    let tech_state = world.resource::<TechState>();
+
+    println!("{}", "=== TECHNOLOGY STATUS ===".green().bold());
+    println!(
+        "Total Capacity: {:.1} TB | Used: {:.1} TB",
+        tech_state.total_capacity, tech_state.used_capacity
+    );
+
+    let mut table = Table::new();
+    table
+        .load_preset(UTF8_FULL)
+        .set_content_arrangement(ContentArrangement::Dynamic)
+        .set_header(vec![
+            Cell::new("Technology").add_attribute(Attribute::Bold),
+            Cell::new("Status").add_attribute(Attribute::Bold),
+            Cell::new("Cost (Know)").add_attribute(Attribute::Bold),
+            Cell::new("Storage (TB)").add_attribute(Attribute::Bold),
+            Cell::new("Description").add_attribute(Attribute::Bold),
+        ]);
+
+    let all_techs = vec![
+        Tech::Masonry,
+        Tech::MetalWorking,
+        Tech::SocialStructures,
+        Tech::Astronomy,
+        Tech::Hydroponics,
+        Tech::Militia,
+        Tech::Medical,
+        Tech::Electromagnetism,
+        Tech::VoidWhispers,
+        Tech::Terraforming,
+    ];
+
+    for tech in all_techs {
+        let status = if tech_state.is_active(tech) {
+            "Active"
+        } else if tech_state.techs.get(&tech) == Some(&TechStatus::Corrupted) {
+            "Corrupted"
+        } else {
+            "Locked"
+        };
+
+        let status_color = match status {
+            "Active" => Color::Green,
+            "Corrupted" => Color::Red,
+            _ => Color::Grey,
+        };
+
+        table.add_row(vec![
+            Cell::new(tech.label()).fg(status_color),
+            Cell::new(status).fg(status_color),
+            Cell::new(format!("{:.0}", tech.cost())),
+            Cell::new(format!("{:.0}", tech.storage_cost())),
+            Cell::new(tech.description()),
+        ]);
+    }
 
     println!("{table}");
 }
@@ -1104,6 +1285,7 @@ fn print_help() {
                 ("designations", "d", "List all active designations"),
                 ("chronicle", "c, history", "Show colony history events"),
                 ("log", "l", "Show message log"),
+                ("tech", "research_status", "Show technology status and capacity"),
             ],
         ),
         (
@@ -1118,6 +1300,7 @@ fn print_help() {
                 ("chop <x> <y>", "", "Designate tree for chopping"),
                 ("destroy <x> <y>", "", "Designate building for destruction"),
                 ("find <type> [N]", "", "Find N terrain coords (default 10)"),
+                ("research <name>", "r", "Research a technology (e.g. Masonry)"),
             ],
         ),
     ];
