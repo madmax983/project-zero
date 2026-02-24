@@ -299,6 +299,7 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             flora_attack_system,
             ancient_structure_decay_system,
             crate::layer1::graffiti::graffiti_decay_system,
+            crate::layer1::orbital_crossfire::impact_system,
         )
             .in_set(Layer1SystemSet::Environment),
     );

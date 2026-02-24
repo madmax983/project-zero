@@ -546,6 +546,9 @@ mod institutional_memory_tests;
 pub mod memetic;
 pub mod seismic;
 pub use seismic::*;
+/// Orbital Crossfire system (Spec 206).
+pub mod orbital_crossfire;
+pub use orbital_crossfire::*;
 /// Scrapcode virus system (Spec 178).
 pub mod scrapcode;
 pub use scrapcode::*;

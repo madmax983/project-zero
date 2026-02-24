@@ -3,6 +3,7 @@ use rand::Rng;
 use ratatui::style::Color;
 
 use crate::layer1::map::{GridPosition, ScreenShake};
+use crate::layer1::orbital_crossfire::{mine_scrap, ImpactSite};
 use crate::layer1::particles::{spawn_moving_particle, spawn_particle};
 use crate::layer1::resources::{process_logging, process_mining};
 use crate::shared::log::MessageLog;
@@ -35,7 +36,25 @@ pub fn handle_mining_work(
         crate::layer1::geology::add_seismic_stress(world, p, 1.0);
     }
 
-    process_mining(world, entity, effective_work);
+    let is_scrap = if let Some(p) = pos {
+        let mut found = false;
+        let mut query = world.query::<(&GridPosition, &ImpactSite)>();
+        for (gp, _) in query.iter(world) {
+            if *gp == p {
+                found = true;
+                break;
+            }
+        }
+        found
+    } else {
+        false
+    };
+
+    if is_scrap {
+        mine_scrap(world, entity, effective_work);
+    } else {
+        process_mining(world, entity, effective_work);
+    }
 
     if let Some(p) = pos {
         if world.get_entity(entity).is_err() {
