@@ -240,8 +240,10 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             healing_system,
             crate::layer1::integration::medical_debt_bridge_system.after(healing_system),
             crate::layer1::beauty::update_beauty_grid_system,
-            crate::layer1::beauty::apply_beauty_effects_system
+            crate::layer1::window::update_window_views_system
                 .after(crate::layer1::beauty::update_beauty_grid_system),
+            crate::layer1::beauty::apply_beauty_effects_system
+                .after(crate::layer1::window::update_window_views_system),
             check_heirloom_status_system,
             crate::layer1::trade::merchant_arrival_system,
             crate::layer1::contraband::enforce_prohibition_system,

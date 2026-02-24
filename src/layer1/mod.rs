@@ -604,3 +604,4 @@ pub use customs::*;
 /// Solar cycle and power generation (Spec 213).
 pub mod solar;
 pub use solar::*;
+pub mod window;
