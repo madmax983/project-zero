@@ -7,7 +7,7 @@ Aggregate individual needs (Hunger, Rest, Leisure) into a single `Morale` score.
 ## Dependencies
 
 - `005` — Needs (Hunger, Rest)
-- `028` — Social Tavern (Leisure)
+- `097` — Social Need and Tavern (Leisure)
 - `030` — Tool Economy (for efficiency calculation hook)
 
 ## RED Phase: Tests First

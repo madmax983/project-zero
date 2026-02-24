@@ -135,3 +135,12 @@
 - [x] `206` Orbital Crossfire — `specs/206-orbital-crossfire.md` — completed 2026-06-25
 - [x] `217` Escape Pods — `specs/217-escape-pods.md` — verified implemented
 - [x] `218` Improvised Tools — `specs/218-improvised-tools.md` — completed 2026-02-24
+- [x] `019` Forestry System — `specs/019-forestry-system.md` — verified implemented
+- [x] `021` Utility AI Work Action — `specs/021-utility-ai-work.md` — verified implemented
+- [x] `022` Resource Stockpiles — `specs/022-resource-stockpiles.md` — verified implemented
+- [x] `023` Refining Industry — `specs/023-refining-industry.md` — verified implemented
+- [x] `026` Main Menu — `specs/026-main-menu.md` — verified implemented
+- [x] `029` Knowledge System — `specs/029-knowledge-system.md` — verified implemented
+- [x] `031` Pop Morale — `specs/031-pop-morale.md` — verified implemented
+- [x] `034` Pop Health and Damage — `specs/034-pop-health.md` — verified implemented
+- [x] `103` Private Stashes — `specs/103-private-stashes.md` — verified implemented
