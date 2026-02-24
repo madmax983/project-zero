@@ -350,6 +350,31 @@ impl BuildingType {
         }
     }
 
+    /// Returns the thermal retention (0.0 to 1.0) of the building (Spec 198).
+    /// Higher values mean the building holds heat/cold longer (Thermal Mass).
+    /// - 0.8: High Mass (Wall, Tower)
+    /// - 0.6: Medium Mass (Housing, Office)
+    /// - 0.1: Low Mass (`FlowerBed`)
+    #[must_use]
+    pub const fn heat_retention(&self) -> f32 {
+        match self {
+            Self::Wall | Self::Tower | Self::AncientReactor | Self::AncientFabricator => 0.8,
+            Self::Housing
+            | Self::Office
+            | Self::Stockpile
+            | Self::LumberMill
+            | Self::StoneMason
+            | Self::Smelter
+            | Self::Smithy
+            | Self::Tavern
+            | Self::Hospital
+            | Self::CommandCenter
+            | Self::AICore => 0.6,
+            Self::FlowerBed | Self::PersonalGarden | Self::Grave => 0.1,
+            _ => 0.5,
+        }
+    }
+
     /// Returns true if this building supports material variants.
     #[must_use]
     pub const fn supports_material(&self) -> bool {

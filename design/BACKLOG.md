@@ -19,7 +19,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `188` The Long Watch — `specs/188-the-long-watch.md`
 - [ ] `189` Gravity Engineering — `specs/189-gravity-engineering.md`
 - [ ] `192` Planetary Weather Fronts — `specs/192-planetary-weather-fronts.md`
-- [ ] `198` Urban Heat Islands — `specs/198-urban-heat-islands.md`
 - [ ] `202` Swarm Intelligence — `specs/202-swarm-intelligence.md`
 - [ ] `206` Orbital Crossfire — `specs/206-orbital-crossfire.md`
 - [ ] `208` Resonant Architecture — `specs/208-resonant-architecture.md`

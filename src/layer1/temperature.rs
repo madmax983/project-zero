@@ -6,6 +6,7 @@
     clippy::collapsible_if
 )]
 use crate::layer1::building::{Building, BuildingType};
+use crate::layer1::day_night::{DayNightCycle, TimeOfDay};
 use crate::layer1::energy::PowerConsumer;
 use crate::layer1::health::Health;
 use crate::layer1::items::{Clothing, Equipment};
@@ -13,6 +14,7 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::pop::Pop;
 use crate::layer1::resources::{ResourceItem, ResourceType};
 use crate::layer1::seasons::SeasonState;
+use crate::layer1::terrain::TerrainGrid;
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
 
@@ -77,10 +79,15 @@ impl TemperatureGrid {
     /// Run one step of diffusion simulation.
     ///
     /// - Diffuses heat between neighbors based on conductivity.
-    /// - Drifts all cells slightly towards ambient temperature.
-    pub fn diffuse(&mut self, conductivity: &HashMap<(i32, i32), f32>) {
+    /// - Drifts all cells slightly towards ambient temperature based on retention (Thermal Mass).
+    pub fn diffuse(
+        &mut self,
+        conductivity: &HashMap<(i32, i32), f32>,
+        terrain: &TerrainGrid,
+        building_retention: &HashMap<(i32, i32), f32>,
+    ) {
         let diffusion_rate = 0.2; // How fast heat spreads
-        let ambient_drift = 0.01; // How fast uninsulated areas return to ambient
+        let base_drift_rate = 0.05; // Base cooling speed (Spec 198)
 
         for y in 0..self.height {
             for x in 0..self.width {
@@ -90,12 +97,6 @@ impl TemperatureGrid {
                 let iy = y as i32;
 
                 // Get local conductivity (default 1.0 for air)
-                // If a wall is HERE, it insulates this tile from others?
-                // Or is conductivity strictly an edge property?
-                // For simplicity, we use the minimum conductivity of the two tiles.
-                // But `conductivity` map usually stores building properties AT a tile.
-                // So if (x,y) has a Wall (0.05), heat flow in/out is restricted.
-
                 let self_k = *conductivity.get(&(ix, iy)).unwrap_or(&1.0);
 
                 // Neighbors: Up, Down, Left, Right
@@ -125,11 +126,22 @@ impl TemperatureGrid {
                     flow_sum += (n_temp - current_temp) * k * diffusion_rate;
                 }
 
-                // Apply drift to ambient (simulating Z-axis loss or general loss)
-                // Insulated tiles drift slower? Or walls themselves drift?
-                // Let's say everything drifts a bit, but walls drift slower?
-                // For now, constant drift.
-                let drift = (self.ambient - current_temp) * ambient_drift;
+                // Determine Retention (Thermal Mass)
+                // Buildings override terrain retention.
+                let retention = building_retention
+                    .get(&(ix, iy))
+                    .copied()
+                    .unwrap_or_else(|| {
+                        terrain
+                            .get(x, y)
+                            .map_or(0.1, crate::layer1::terrain::TerrainType::heat_retention)
+                    });
+
+                // Drift Logic (Spec 198)
+                // High retention (0.8) -> Factor (0.2) -> Slow drift.
+                // Low retention (0.1) -> Factor (0.9) -> Fast drift.
+                let drift_factor = (1.0 - retention).max(0.01);
+                let drift = (self.ambient - current_temp) * base_drift_rate * drift_factor;
 
                 self.scratch[idx] = current_temp + flow_sum + drift;
             }
@@ -144,6 +156,8 @@ impl TemperatureGrid {
 pub fn update_temperature_system(
     grid: Option<ResMut<TemperatureGrid>>,
     season: Option<Res<SeasonState>>,
+    cycle: Option<Res<DayNightCycle>>,
+    terrain: Res<TerrainGrid>,
     buildings: Query<(&Building, &GridPosition, Option<&PowerConsumer>)>,
     items: Query<(&ResourceItem, &GridPosition)>,
 ) {
@@ -154,8 +168,28 @@ pub fn update_temperature_system(
         grid.ambient = season.current_season.base_temperature();
     }
 
-    // 2. Apply Heat Sources & Build Conductivity Map
+    // 2. Solar Heat (Spec 198)
+    let solar_heat = if let Some(cycle) = cycle {
+        match cycle.time_of_day {
+            TimeOfDay::Day => 0.5,
+            TimeOfDay::Dawn | TimeOfDay::Dusk => 0.1,
+            TimeOfDay::Night => 0.0,
+        }
+    } else {
+        0.0
+    };
+
+    if solar_heat > 0.0 {
+        // Apply solar heat to all tiles
+        // Optimization: direct slice mutation would be faster but this is safe
+        for i in 0..grid.values.len() {
+            grid.values[i] += solar_heat;
+        }
+    }
+
+    // 3. Apply Heat Sources & Build Conductivity/Retention Maps
     let mut conductivity_map = HashMap::new();
+    let mut building_retention = HashMap::new();
 
     for (b, pos, power) in &buildings {
         // Conductivity
@@ -163,6 +197,10 @@ pub fn update_temperature_system(
         if (k - 1.0).abs() > f32::EPSILON {
             conductivity_map.insert((pos.x, pos.y), k);
         }
+
+        // Retention
+        let r = b.building_type.heat_retention();
+        building_retention.insert((pos.x, pos.y), r);
 
         // Heat Sources
         let heat = match b.building_type {
@@ -205,8 +243,8 @@ pub fn update_temperature_system(
         }
     }
 
-    // 3. Diffuse
-    grid.diffuse(&conductivity_map);
+    // 4. Diffuse (Drift depends on retention)
+    grid.diffuse(&conductivity_map, &terrain, &building_retention);
 }
 
 /// System to apply thermal damage to pops.
@@ -261,6 +299,7 @@ mod tests {
     use crate::layer1::temperature::{
         TemperatureGrid, thermal_damage_system, update_temperature_system,
     };
+    use crate::layer1::terrain::{TerrainGrid, TerrainType};
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
 
@@ -283,6 +322,11 @@ mod tests {
         let grid = TemperatureGrid::new(10, 10, 0.0);
         world.insert_resource(grid);
         world.insert_resource(SeasonState::default()); // Need season or ambient update might fail/reset
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        });
 
         // Spawn Heater (Active)
         world.spawn((
@@ -310,6 +354,11 @@ mod tests {
         let grid = TemperatureGrid::new(10, 10, 15.0);
         world.insert_resource(grid);
         world.insert_resource(SeasonState::default());
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        });
 
         // Spawn Heater (Inactive)
         world.spawn((
@@ -340,6 +389,11 @@ mod tests {
         grid.set(0, 0, 100.0); // Hot source
         world.insert_resource(grid);
         world.insert_resource(SeasonState::default());
+        world.insert_resource(TerrainGrid {
+            width: 5,
+            height: 1,
+            tiles: vec![TerrainType::Grass; 5],
+        });
 
         // Wall at (2, 0)
         world.spawn((
@@ -404,6 +458,11 @@ mod tests {
         // though system will overwrite it.
         grid.ambient = -5.0;
         world.insert_resource(grid);
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        });
 
         // Run update
         world.run_system_once(update_temperature_system).unwrap();

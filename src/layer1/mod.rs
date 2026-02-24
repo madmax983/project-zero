@@ -606,3 +606,6 @@ pub mod solar;
 pub use solar::*;
 #[allow(missing_docs)]
 pub mod window;
+
+#[cfg(test)]
+mod urban_heat_tests;
