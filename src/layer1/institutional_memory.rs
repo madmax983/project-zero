@@ -67,6 +67,7 @@ pub fn produce_manual_system(
                 | DesignationType::SetZone(_) => Some(SkillType::Construction),
                 DesignationType::Tame => Some(SkillType::Husbandry),
                 DesignationType::Cannibalize => None,
+                DesignationType::CollectSample => Some(SkillType::Farming),
             });
 
         let (chosen_skill, level) = if let Some(s) = skill_type_opt {
@@ -154,6 +155,7 @@ pub fn manual_aura_system(
                     | DesignationType::SetZone(_) => Some(SkillType::Construction),
                     DesignationType::Tame => Some(SkillType::Husbandry),
                     DesignationType::Cannibalize => None,
+                    DesignationType::CollectSample => Some(SkillType::Farming),
                 };
                 skill_opt == Some(manual.skill_type)
             } else {

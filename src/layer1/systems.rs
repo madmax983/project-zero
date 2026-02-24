@@ -188,6 +188,7 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             crate::layer1::husbandry::husbandry_production_system.after(produce_food_system),
             hopper_system.after(produce_food_system),
             process_refining_system,
+            crate::layer1::gene_bank::process_cloning_system,
             crate::layer1::tech::update_tech_capacity_system,
             crate::layer1::admin::calculate_admin_stats,
             crate::layer1::eureka::handle_eureka_events,

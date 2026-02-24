@@ -48,6 +48,7 @@ pub fn check_mentorship_system(
                 DesignationType::ClearFlora => Some(SkillType::Farming),
                 DesignationType::SetZone(_) => None,
                 DesignationType::Tame => Some(SkillType::Husbandry),
+                DesignationType::CollectSample => Some(SkillType::Farming),
             };
             if let Some(st) = skill_type {
                 workers.push((entity, *pos, skills, st));

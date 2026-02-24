@@ -2,7 +2,7 @@ use bevy_ecs::prelude::*;
 use rand::Rng;
 
 /// Represents the type of terrain in a cell.
-#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+#[derive(Clone, Copy, PartialEq, Eq, Debug, Hash)]
 pub enum TerrainType {
     /// Green grass, the default ground.
     Grass,

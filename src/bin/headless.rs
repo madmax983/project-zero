@@ -519,6 +519,7 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
                     DesignationType::JuryRig => 'J',
                     DesignationType::Cannibalize => 'C',
                     DesignationType::Destroy => 'D',
+                    DesignationType::CollectSample => 'S',
                 };
                 print!("{}", format!("{c}").magenta());
                 continue;
@@ -617,6 +618,9 @@ fn designate_at(world: &mut World, designation_type: DesignationType, x: i32, y:
             }
             DesignationType::Cannibalize => {
                 println!("Failed: no Lander at ({x}, {y})");
+            }
+            DesignationType::CollectSample => {
+                println!("Failed: no Flora or Fauna at ({x}, {y})");
             }
         }
     }
@@ -742,6 +746,7 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: i32) {
                 DesignationType::JuryRig => "jury_rig",
                 DesignationType::Cannibalize => "cannibalize",
                 DesignationType::Destroy => "destroy",
+                DesignationType::CollectSample => "collect_sample",
             };
             (p.x, p.y, dt.to_string())
         })
