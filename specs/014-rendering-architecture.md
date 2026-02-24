@@ -473,16 +473,16 @@ pub struct RenderBuffer {
 
 ## Acceptance Criteria (Testable!)
 
-- [x] All tests in RED phase pass
-- [x] `cargo test` returns 0 failures
-- [x] `cargo clippy -- -D warnings` passes
-- [x] Test coverage ≥85% for shared/rendering.rs
-- [x] RenderLayer defines all z-order layers
-- [x] RenderBuffer accumulates items by layer
-- [x] Items render back-to-front (terrain under pops)
-- [x] Position queries return topmost item
-- [x] Overlay layer renders on top of everything
-- [x] No z-fighting (items at same position have defined order)
+- [ ] All tests in RED phase pass
+- [ ] `cargo test` returns 0 failures
+- [ ] `cargo clippy -- -D warnings` passes
+- [ ] Test coverage ≥85% for shared/rendering.rs
+- [ ] RenderLayer defines all z-order layers
+- [ ] RenderBuffer accumulates items by layer
+- [ ] Items render back-to-front (terrain under pops)
+- [ ] Position queries return topmost item
+- [ ] Overlay layer renders on top of everything
+- [ ] No z-fighting (items at same position have defined order)
 
 ## Technical Guidance
 
