@@ -11,9 +11,9 @@ use crate::layer1::pop::PopDied;
 use crate::layer1::social::AffinityChange;
 use crate::layer1::{
     AmbientLight, AtmosphereGrid, BuildMode, BuildingTracker, CameraCurrent, CameraTarget,
-    Chronicle, ChronicleUiState, ColonyPolicies, ColonyResources, DesignationMode, LightMap,
-    NamedLocations, NotificationQueue, OccupiedTiles, ScreenShake, SeasonState, TechState,
-    TerrainType, UtilityConfig, Viewport, generate_terrain, initial_chronicle_event,
+    Chronicle, ChronicleUiState, ColonyPolicies, ColonyResources, DesignationMode, GlobalHitStop,
+    LightMap, NamedLocations, NotificationQueue, OccupiedTiles, ScreenShake, SeasonState,
+    TechState, TerrainType, UtilityConfig, Viewport, generate_terrain, initial_chronicle_event,
     initial_naming_system, spawn_ancient_structures, spawn_initial_anomalies, spawn_initial_pops,
 };
 use crate::shared::colony::ColonyName;
@@ -75,6 +75,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(CameraTarget::default());
     world.insert_resource(CameraCurrent::default());
     world.insert_resource(ScreenShake::default());
+    world.insert_resource(GlobalHitStop::default());
     world.insert_resource(SimulationTime::default());
     world.insert_resource(WallTime::default());
     world.insert_resource(BuildMode::default());

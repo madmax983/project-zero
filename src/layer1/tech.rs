@@ -1,6 +1,9 @@
 #![allow(clippy::collapsible_if)]
+use crate::layer1::GlobalHitStop;
 use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::factions::{FactionMember, FactionState, Factions};
+use crate::layer1::map::{CameraTarget, GridPosition, ScreenShake};
+use crate::layer1::particles::spawn_confetti;
 use crate::layer1::resources::ColonyResources;
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
@@ -305,6 +308,21 @@ pub fn unlock_tech(world: &mut World, tech: Tech) -> bool {
         if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
             log.add(format!("Researched: {}", tech.label()));
         }
+
+        // Ludwig: Juice for Tech Unlock!
+        if let Some(mut shake) = world.get_resource_mut::<ScreenShake>() {
+            shake.trigger(0.5);
+        }
+        if let Some(mut hit_stop) = world.get_resource_mut::<GlobalHitStop>() {
+            hit_stop.trigger(4);
+        }
+        // Spawn confetti at camera center
+        let (cx, cy) = if let Some(target) = world.get_resource::<CameraTarget>() {
+            (target.x as i32, target.y as i32)
+        } else {
+            (10, 10)
+        };
+        spawn_confetti(world, GridPosition { x: cx, y: cy });
 
         // Handle Memetic Hazards
         if tech.is_hazardous() {

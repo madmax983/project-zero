@@ -33,6 +33,7 @@ use super::lifecycle::Age;
 use super::map::{GridPosition, ScreenShake};
 use super::morale::Morale;
 use super::needs::Needs;
+use crate::layer1::GlobalHitStop;
 use super::palette_fatigue::DietaryHistory;
 use super::rumor::Knowledge;
 use super::skills::Skills;
@@ -312,6 +313,7 @@ pub fn handle_pop_death_system(
     mut commands: Commands,
     mut log: Option<ResMut<MessageLog>>,
     mut shake: Option<ResMut<ScreenShake>>,
+    mut hit_stop: Option<ResMut<GlobalHitStop>>,
     time: Option<Res<crate::shared::time::SimulationTime>>,
 ) {
     let tick = time.map_or(0, |t| t.tick);
@@ -340,9 +342,12 @@ pub fn handle_pop_death_system(
             ));
         }
 
-        // 2. Screen Shake
+        // 2. Screen Shake & Hit Stop (Ludwig)
         if let Some(shake) = shake.as_mut() {
-            shake.trigger(0.5);
+            shake.trigger(1.0); // Intense shake
+        }
+        if let Some(hs) = hit_stop.as_mut() {
+            hs.trigger(8); // Freeze for 8 ticks
         }
 
         // 3. Log

@@ -78,6 +78,8 @@ pub mod hazards;
 pub mod hazards_tests;
 /// Pop health and damage.
 pub mod health;
+/// Global hit stop resource (Juice).
+pub mod hit_stop;
 /// Pop hobbies logic (Spec 137).
 pub mod hobby;
 /// Housing and rest mechanics.
@@ -190,6 +192,7 @@ pub use graffiti::*;
 pub use hauling::*;
 pub use hazards::*;
 pub use health::*;
+pub use hit_stop::*;
 pub use hobby::*;
 pub use housing::*;
 pub use institutional_memory::*;

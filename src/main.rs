@@ -5,8 +5,10 @@ use crossterm::{
     execute,
     terminal::{EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode, enable_raw_mode},
 };
+use bevy_ecs::system::RunSystemOnce;
 use ratatui::prelude::*;
-use scale::layer1::map::update_camera_smooth;
+use scale::layer1::map::{update_camera_smooth, update_screen_shake_system};
+use scale::layer1::GlobalHitStop;
 use scale::platform::input::{GameKeyEvent, GameMouseEvent};
 use scale::setup::setup_world;
 use scale::shared::input::{route_input, route_mouse_input};
@@ -83,7 +85,16 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
 
         // Simulation tick
         if last_tick.elapsed() >= tick_rate {
-            if *world.resource::<GameState>() == GameState::Running {
+            // Check Global Hit Stop (Juice Freeze)
+            let mut hit_stop_active = false;
+            if let Some(mut hs) = world.get_resource_mut::<GlobalHitStop>() {
+                if hs.ticks > 0 {
+                    hs.ticks -= 1;
+                    hit_stop_active = true;
+                }
+            }
+
+            if !hit_stop_active && *world.resource::<GameState>() == GameState::Running {
                 let speed = world.resource::<SimulationTime>().speed;
                 if speed != SimSpeed::Paused {
                     run_simulation_tick(&mut world);
@@ -94,6 +105,8 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
         }
 
         // Prepare render data
+        // We run screen shake here to ensure it updates even during hit stop
+        world.run_system_once(update_screen_shake_system).unwrap();
         update_camera_smooth(&mut world);
         update_render_cache(&mut world);
 
