@@ -184,6 +184,8 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             update_weather_system,
             crate::layer1::fertility::update_fertility_system,
             produce_food_system.after(crate::layer1::fertility::update_fertility_system),
+            #[cfg(feature = "nova")]
+            crate::layer1::zodiac::assign_zodiac_sign_system,
             crate::layer1::husbandry::husbandry_production_system.after(produce_food_system),
             hopper_system.after(produce_food_system),
             process_refining_system,
@@ -224,6 +226,8 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             #[cfg(feature = "nova")]
             crate::layer1::loci::apply_loci_effects_system.after(restore_leisure_system),
             apply_mood_modifiers_system.after(restore_leisure_system),
+            #[cfg(feature = "nova")]
+            crate::layer1::zodiac::zodiac_resonance_system.after(restore_leisure_system),
             mascot_buff_system.after(restore_leisure_system),
             crate::layer1::graffiti::graffiti_observation_system.after(apply_mood_modifiers_system),
             apply_catharsis_morale_bonus_system.after(apply_mood_modifiers_system),

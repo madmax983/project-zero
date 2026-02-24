@@ -618,3 +618,9 @@ mod urban_heat_tests;
 mod improvised_tools_tests;
 pub mod gene_bank;
 pub use gene_bank::*;
+
+/// Zodiac Resonance system (Nova Feature).
+#[cfg(feature = "nova")]
+pub mod zodiac;
+#[cfg(feature = "nova")]
+pub use zodiac::*;
