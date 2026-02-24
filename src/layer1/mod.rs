@@ -609,3 +609,7 @@ pub mod window;
 
 #[cfg(test)]
 mod urban_heat_tests;
+
+/// Escape Pod system (Spec 217).
+pub mod escape_pod;
+pub use escape_pod::*;

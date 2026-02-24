@@ -302,6 +302,8 @@ pub enum BuildingType {
     DroneHub,
     /// Cryo-Stasis Pod.
     CryoPod,
+    /// Emergency Escape Pod.
+    EscapePod,
     /// Harvests energy from magnetic storms.
     AuroralCollector,
     /// Terraforming: Atmospheric Processor.
@@ -329,7 +331,9 @@ impl BuildingType {
             Self::AncientReactor => Some((Category::Power, Tier::HighTech)),
 
             Self::Library => Some((Category::Research, Tier::Basic)),
-            Self::Observatory | Self::CryoPod => Some((Category::Research, Tier::Advanced)),
+            Self::Observatory | Self::CryoPod | Self::EscapePod => {
+                Some((Category::Research, Tier::Advanced))
+            }
             Self::AICore | Self::AtmosphericProcessor => Some((Category::Research, Tier::HighTech)),
 
             _ => None,
@@ -432,6 +436,7 @@ impl BuildingType {
             | Self::AICore
             | Self::DroneHub
             | Self::CryoPod
+            | Self::EscapePod
             | Self::Smokehouse
             | Self::LumberMill
             | Self::StoneMason
@@ -504,7 +509,7 @@ impl BuildingType {
             | Self::Vent => 0.0,
             Self::TrashCannon => -2.0, // Industrial machinery is ugly
             Self::Heater | Self::ServerBank => 0.0,
-            Self::CommandCenter | Self::AICore | Self::CryoPod => 0.0,
+            Self::CommandCenter | Self::AICore | Self::CryoPod | Self::EscapePod => 0.0,
             _ => 0.0,
         }
     }
@@ -544,7 +549,7 @@ impl BuildingType {
             | Self::AICore => Some(Tech::MetalWorking),
             Self::Tavern | Self::Statue => Some(Tech::SocialStructures),
             Self::Tower => Some(Tech::Masonry),
-            Self::Observatory => Some(Tech::Astronomy),
+            Self::Observatory | Self::EscapePod => Some(Tech::Astronomy),
             Self::HydroponicsBay => Some(Tech::Hydroponics),
             Self::TrashCannon => Some(Tech::Militia),
             Self::CryoPod => Some(Tech::Medical),
@@ -617,6 +622,7 @@ impl BuildingType {
             Self::AICore => "AI Core",
             Self::DroneHub => "Drone Hub",
             Self::CryoPod => "Cryo Pod",
+            Self::EscapePod => "Escape Pod",
             Self::AuroralCollector => "Auroral Collector",
             Self::AtmosphericProcessor => "Atmospheric Processor",
         }
@@ -668,6 +674,7 @@ impl BuildingType {
             Self::CommandCenter => 'C',
             Self::AICore => 'A',
             Self::CryoPod => '❄',
+            Self::EscapePod => '^',
             Self::AuroralCollector => 'Ψ',
             Self::AtmosphericProcessor => '@',
         }
@@ -691,6 +698,11 @@ impl BuildingType {
             Self::CryoPod => ColonyResources {
                 metal: 20.0,
                 stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::EscapePod => ColonyResources {
+                metal: 50.0,
+                fuel: 20.0,
                 ..ColonyResources::zeroed()
             },
             Self::AuroralCollector => ColonyResources {
@@ -1227,6 +1239,7 @@ fn spawn_building(
         | BuildingType::AICore
         | BuildingType::DroneHub
         | BuildingType::CryoPod
+        | BuildingType::EscapePod
         | BuildingType::AtmosphericProcessor => configure_tech(&mut entity, building_type),
         BuildingType::PersonalShed
         | BuildingType::PersonalGarden
@@ -1557,6 +1570,12 @@ fn configure_civic(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 },
                 ShiftSchedule::default(),
             ));
+        }
+        BuildingType::EscapePod => {
+            entity.insert(crate::layer1::escape_pod::EscapePod {
+                capacity: 3,
+                ..Default::default()
+            });
         }
         _ => {}
     }
@@ -2084,7 +2103,8 @@ mod tests {
         assert_eq!(BuildingType::CommandCenter.next(), BuildingType::AICore);
         assert_eq!(BuildingType::AICore.next(), BuildingType::DroneHub);
         assert_eq!(BuildingType::DroneHub.next(), BuildingType::CryoPod);
-        assert_eq!(BuildingType::CryoPod.next(), BuildingType::AuroralCollector);
+        assert_eq!(BuildingType::CryoPod.next(), BuildingType::EscapePod);
+        assert_eq!(BuildingType::EscapePod.next(), BuildingType::AuroralCollector);
         assert_eq!(BuildingType::AuroralCollector.next(), BuildingType::AtmosphericProcessor);
         assert_eq!(BuildingType::AtmosphericProcessor.next(), BuildingType::Housing);
     }
@@ -2285,6 +2305,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::CryoPod);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::EscapePod);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::AuroralCollector);

@@ -132,3 +132,4 @@
 - [x] `213` Solar Cycles — `specs/213-solar-cycles.md` — verified implemented
 - [x] `214` Customs Checkpoint — `specs/214-customs-checkpoint.md` — verified implemented
 - [x] `216` Window Views — `specs/216-window-views.md` — verified implemented
+- [x] `217` Escape Pods — `specs/217-escape-pods.md` — completed 2026-07-25

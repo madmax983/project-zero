@@ -749,6 +749,7 @@ pub const fn get_building_char(building: BuildingType) -> &'static str {
         BuildingType::AICore => "A",
         BuildingType::DroneHub => "D",
         BuildingType::CryoPod => "❄",
+        BuildingType::EscapePod => "^",
         BuildingType::AuroralCollector => "Ψ",
         BuildingType::AtmosphericProcessor => "@",
     }
@@ -817,7 +818,10 @@ pub const fn get_building_color(building: BuildingType, material: MaterialType) 
             BuildingType::Greenhouse | BuildingType::HydroponicsBay => Color::Rgb(200, 255, 255), // Glass/Cyan
             BuildingType::TrashCannon => Color::Rgb(100, 100, 100),
             BuildingType::Heater => Color::Rgb(255, 140, 0), // DarkOrange
-            BuildingType::CommandCenter | BuildingType::Office | BuildingType::CryoPod => {
+            BuildingType::CommandCenter
+            | BuildingType::Office
+            | BuildingType::CryoPod
+            | BuildingType::EscapePod => {
                 Color::Rgb(0, 0, 255)
             } // Blue
         }

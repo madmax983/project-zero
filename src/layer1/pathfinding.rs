@@ -256,7 +256,7 @@ fn find_path_internal(
             return Some(path);
         }
 
-        let current_idx = if let Some(idx) = get_idx(pos) { idx } else { continue; };
+        let Some(current_idx) = get_idx(pos) else { continue };
 
         // Check if we found a shorter path already (standard A* opt)
         if cost > cost_so_far[current_idx] {
@@ -266,7 +266,7 @@ fn find_path_internal(
         // Check neighbors (Manhattan)
         for (dx, dy) in [(-1, 0), (1, 0), (0, -1), (0, 1)] {
             let next = (pos.0 + dx, pos.1 + dy);
-            let next_idx = if let Some(idx) = get_idx(next) { idx } else { continue; };
+            let Some(next_idx) = get_idx(next) else { continue };
 
             // Check if walkable
             if !is_walkable(
@@ -285,7 +285,7 @@ fn find_path_internal(
             // Movement cost
             #[allow(clippy::cast_possible_truncation)]
             let t_cost = terrain.tiles[next_idx].movement_cost() as i32;
-            #[allow(clippy::cast_possible_truncation)]
+            #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
             let c_cost = crowding.map_or(0, |c| i32::from(c.get(next.0 as usize, next.1 as usize)));
             let base_cost = t_cost + c_cost;
 
