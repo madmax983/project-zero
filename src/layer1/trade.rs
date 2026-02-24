@@ -267,6 +267,7 @@ pub fn execute_trade(world: &mut World, deal: &TradeDeal) -> bool {
         ResourceType::Fuel => resources.fuel >= deal.cost_amount,
         ResourceType::Alcohol => resources.alcohol >= deal.cost_amount,
         ResourceType::Scrap => resources.scrap >= deal.cost_amount,
+        ResourceType::Tools => resources.tools >= deal.cost_amount,
     };
 
     if !affordable {
@@ -287,6 +288,7 @@ pub fn execute_trade(world: &mut World, deal: &TradeDeal) -> bool {
         ResourceType::Fuel => resources.fuel -= deal.cost_amount,
         ResourceType::Alcohol => resources.alcohol -= deal.cost_amount,
         ResourceType::Scrap => resources.scrap -= deal.cost_amount,
+        ResourceType::Tools => resources.tools -= deal.cost_amount,
     }
 
     // Add
@@ -303,6 +305,7 @@ pub fn execute_trade(world: &mut World, deal: &TradeDeal) -> bool {
         ResourceType::Fuel => resources.add_fuel(deal.give_amount),
         ResourceType::Alcohol => resources.add_alcohol(deal.give_amount),
         ResourceType::Scrap => resources.add_scrap(deal.give_amount),
+        ResourceType::Tools => resources.add_tools(deal.give_amount),
     }
 
     true

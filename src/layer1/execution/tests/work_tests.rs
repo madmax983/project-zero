@@ -606,6 +606,7 @@ fn test_calculate_work_amount_cap() {
         Some(tool_entity),
         1.0,
         1.0,
+        0.5,
     );
 
     assert!(

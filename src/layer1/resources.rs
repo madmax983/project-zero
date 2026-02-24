@@ -52,6 +52,8 @@ pub enum ResourceType {
     Alcohol,
     /// High-tech scrap from orbital debris.
     Scrap,
+    /// Standard tools (Pickaxe, Axe, Hammer).
+    Tools,
 }
 
 /// A physical resource item in the world (dropped on the ground).
@@ -541,6 +543,34 @@ impl ColonyResources {
             true
         } else {
             false
+        }
+    }
+
+    /// Consumes a specific amount of a single resource type.
+    ///
+    /// This is a convenience method for simple deductions. It clamps the deduction
+    /// to the available amount (it will not go negative).
+    ///
+    /// # Parameters
+    ///
+    /// * `resource_type`: The type of resource to consume.
+    /// * `amount`: The amount to consume.
+    pub fn consume(&mut self, resource_type: ResourceType, amount: f32) {
+        match resource_type {
+            ResourceType::Food => self.food = (self.food - amount).max(0.0),
+            ResourceType::Wood => self.wood = (self.wood - amount).max(0.0),
+            ResourceType::Stone => self.stone = (self.stone - amount).max(0.0),
+            ResourceType::Ore => self.ore = (self.ore - amount).max(0.0),
+            ResourceType::Metal => self.metal = (self.metal - amount).max(0.0),
+            ResourceType::Planks => self.planks = (self.planks - amount).max(0.0),
+            ResourceType::Blocks => self.blocks = (self.blocks - amount).max(0.0),
+            ResourceType::Tools => self.tools = (self.tools - amount).max(0.0),
+            ResourceType::Scrap => self.scrap = (self.scrap - amount).max(0.0),
+            ResourceType::Fuel => self.fuel = (self.fuel - amount).max(0.0),
+            ResourceType::Rations => self.rations = (self.rations - amount).max(0.0),
+            // ResourceType::Water not in enum
+            ResourceType::Alcohol => self.alcohol = (self.alcohol - amount).max(0.0),
+            ResourceType::Waste => self.waste = (self.waste - amount).max(0.0),
         }
     }
 }

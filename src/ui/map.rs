@@ -878,6 +878,7 @@ pub const fn get_resource_char(resource: ResourceType) -> &'static str {
         ResourceType::Fuel => "F",
         ResourceType::Alcohol => "D",
         ResourceType::Scrap => "S",
+        ResourceType::Tools => "T",
     }
 }
 
@@ -899,7 +900,7 @@ pub const fn get_resource_color(resource: ResourceType) -> Color {
         ResourceType::Wood => Color::Rgb(139, 69, 19), // SaddleBrown
         ResourceType::Stone => Color::Gray,
         ResourceType::Ore => Color::Rgb(165, 42, 42), // Brown
-        ResourceType::Metal => Color::Cyan,
+        ResourceType::Metal | ResourceType::Tools => Color::Cyan,
         ResourceType::Planks => Color::Yellow,
         ResourceType::Blocks => Color::White,
         ResourceType::Waste => Color::Rgb(85, 107, 47), // DarkOliveGreen

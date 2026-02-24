@@ -24,6 +24,7 @@ use crate::layer1::memory::{Memories, calculate_effective_morale};
 use crate::layer1::morale::Morale;
 use crate::layer1::needs::{Needs, get_morale_efficiency};
 use crate::layer1::pop::Job;
+use crate::layer1::resources::{ColonyResources, ResourceType};
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
 use crate::layer1::social::SocialBuff;
 use crate::layer1::tech::Tech;
@@ -36,9 +37,6 @@ const WORK_PER_TICK: f32 = 10.0;
 
 /// Durability loss per tick when working.
 const TOOL_DURABILITY_LOSS: f32 = 0.1;
-
-/// Efficiency multiplier when working without tools.
-const NO_TOOL_PENALTY: f32 = 0.5;
 
 struct WorkerData {
     entity: Entity,
@@ -73,6 +71,13 @@ pub fn work_execution_system(world: &mut World) {
         })
         .unwrap_or_default();
 
+    // Spec 218: Calculate Improvised Efficiency (Global Fallback)
+    let (improvised_efficiency, consumed_resource_type) = world
+        .get_resource::<crate::layer1::resources::ColonyResources>()
+        .map_or((0.5, None), |res| {
+            crate::layer1::execution::efficiency::calculate_work_efficiency(res)
+        });
+
     let workers_by_target =
         collect_workers_by_target(world, policies.as_ref(), &striking_factions, cycle);
 
@@ -89,6 +94,8 @@ pub fn work_execution_system(world: &mut World) {
                 worker.equipment,
                 global_work_speed_mod * worker.speed_modifier * coordination_mod,
                 worker.job,
+                improvised_efficiency,
+                consumed_resource_type,
             );
         }
     }
@@ -229,6 +236,8 @@ fn process_single_worker(
     equipment_opt: Option<Equipment>,
     work_speed_mod: f32,
     job_opt: Option<Job>,
+    improvised_efficiency: f32,
+    consumed_resource_type: Option<ResourceType>,
 ) {
     // Check if designation/target still exists (early exit)
     if world.get_entity(designation_entity).is_err() {
@@ -261,6 +270,7 @@ fn process_single_worker(
         tool_entity_opt,
         morale,
         work_speed_mod,
+        improvised_efficiency,
     );
 
     // Execute Work
@@ -275,7 +285,7 @@ fn process_single_worker(
         pay_wage(world, pop_entity, wage);
     }
 
-    // Post-work effects (XP, Hazards, Durability)
+    // Post-work effects (XP, Hazards, Durability, Improvised Tool Consumption)
     if worked {
         handle_post_work_effects(
             world,
@@ -287,6 +297,22 @@ fn process_single_worker(
         );
 
         handle_eureka_moment(world, pop_entity, designation_type, action_type);
+
+        // Spec 218: Consume improvised materials if no tool was used
+        if tool_entity_opt.is_none() {
+             if let Some(res_type) = consumed_resource_type {
+                 // Probabilistic consumption
+                 let break_chance = match res_type {
+                     ResourceType::Tools => 0.01,
+                     _ => 0.05,
+                 };
+                 if rand::thread_rng().gen_bool(break_chance) {
+                     if let Some(mut resources) = world.get_resource_mut::<ColonyResources>() {
+                         resources.consume(res_type, 1.0);
+                     }
+                 }
+            }
+        }
     }
 }
 
@@ -335,9 +361,8 @@ pub(crate) const fn get_skill_for_designation(
         | DesignationType::JuryRig
         | DesignationType::Cannibalize
         | DesignationType::Destroy => Some(SkillType::Construction),
-        DesignationType::ClearFlora => Some(SkillType::Farming),
+        DesignationType::ClearFlora | DesignationType::CollectSample => Some(SkillType::Farming),
         DesignationType::SetZone(_) | DesignationType::Tame => None,
-        DesignationType::CollectSample => Some(SkillType::Farming),
     }
 }
 
@@ -349,11 +374,12 @@ pub fn calculate_work_amount(
     tool_entity: Option<Entity>,
     morale: f32,
     work_speed_mod: f32,
+    improvised_efficiency: f32,
 ) -> f32 {
     let mut tool_efficiency = if tool_entity.is_some() {
         1.0
     } else {
-        NO_TOOL_PENALTY
+        improvised_efficiency
     };
 
     // Apply Heirloom bonus

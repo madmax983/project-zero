@@ -160,6 +160,9 @@ fn handle_drop_off(world: &mut World, pop_entity: Entity, carrying: Carrying, po
             crate::layer1::resources::ResourceType::Scrap => {
                 resources.add_scrap(carrying.amount);
             }
+            crate::layer1::resources::ResourceType::Tools => {
+                resources.add_tools(carrying.amount);
+            }
         }
 
         // Remove Carrying
@@ -378,6 +381,9 @@ fn find_and_target_item(world: &mut World, pop_entity: Entity, pos: GridPosition
                 }
                 crate::layer1::resources::ResourceType::Scrap => {
                     resources.scrap < resources.max_scrap
+                }
+                crate::layer1::resources::ResourceType::Tools => {
+                    resources.tools < resources.max_tools
                 }
             };
 

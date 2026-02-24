@@ -134,3 +134,4 @@
 - [x] `216` Window Views — `specs/216-window-views.md` — verified implemented
 - [x] `206` Orbital Crossfire — `specs/206-orbital-crossfire.md` — completed 2026-06-25
 - [x] `217` Escape Pods — `specs/217-escape-pods.md` — verified implemented
+- [x] `218` Improvised Tools — `specs/218-improvised-tools.md` — completed 2026-02-24
