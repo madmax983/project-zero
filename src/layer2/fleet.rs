@@ -1,5 +1,6 @@
-use bevy_ecs::prelude::*;
+use crate::layer2::barnacles::{SpaceBarnacles, calculate_speed_modifier};
 use crate::layer2::ship::Ship;
+use bevy_ecs::prelude::*;
 
 /// Factions that can own fleets.
 #[derive(Component, Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -81,10 +82,15 @@ pub fn fleet_order_system(
 /// System to update fleet positions during transit.
 ///
 /// Increments progress and handles arrival when progress >= 1.0.
-pub fn fleet_movement_system(mut commands: Commands, mut query: Query<(Entity, &mut InTransit)>) {
-    for (entity, mut transit) in &mut query {
+pub fn fleet_movement_system(
+    mut commands: Commands,
+    mut query: Query<(Entity, &mut InTransit, Option<&SpaceBarnacles>)>,
+) {
+    for (entity, mut transit, maybe_barnacles) in &mut query {
+        let speed_mod = maybe_barnacles.map_or(1.0, |b| calculate_speed_modifier(b.count));
+
         // Increment progress
-        let delta = 1.0 / transit.duration;
+        let delta = (1.0 / transit.duration) * speed_mod;
         transit.progress += delta;
 
         if transit.progress >= 1.0 {
@@ -116,7 +122,10 @@ impl FleetComposition {
     /// Calculates the total cargo capacity of the fleet.
     #[must_use]
     pub fn total_cargo_capacity(&self) -> f32 {
-        self.ships.iter().map(|s| s.ship_type.cargo_capacity()).sum()
+        self.ships
+            .iter()
+            .map(|s| s.ship_type.cargo_capacity())
+            .sum()
     }
 
     /// Calculates the speed of the fleet (determined by the slowest ship).
@@ -126,7 +135,8 @@ impl FleetComposition {
             return 0.0;
         }
         // Minimal speed of all ships
-        self.ships.iter()
+        self.ships
+            .iter()
             .map(|s| s.ship_type.base_speed())
             .fold(f32::INFINITY, f32::min)
     }

@@ -38,7 +38,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `184` Orbital Debris — `specs/184-orbital-debris.md`
 - [ ] `201` Space Lanes — `specs/201-space-lanes.md`
 - [ ] `209` Planetary Governance — `specs/209-planetary-governance.md`
-- [ ] `219` Space Barnacles — `specs/219-space-barnacles.md`
 
 ## MVP — Layer 3: Galaxy Simulation
 
