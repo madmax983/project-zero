@@ -157,7 +157,7 @@ mod tests {
             .expect("Fleet should be in transit");
         assert_eq!(transit.origin, planet_a);
         assert_eq!(transit.destination, planet_b);
-        assert_eq!(transit.progress, 0.0);
+        assert!(transit.progress.abs() < f32::EPSILON);
         assert!(transit.duration > 0.0);
     }
 

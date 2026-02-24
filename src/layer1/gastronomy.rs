@@ -113,12 +113,11 @@ pub fn perform_experiment(world: &mut World, chef: Entity, ingredient_entity: En
     // Using explicit path to WorldSeed if possible.
     // Assuming we can access crate::shared::random::WorldSeed.
     // If not, we fall back to a hardcoded seed for safety, but we should try to use the resource.
-    let seed =
-        if let Some(world_seed) = world.get_resource::<crate::shared::random::WorldSeed>() {
-            world_seed.0
-        } else {
-            12345
-        };
+    let seed = if let Some(world_seed) = world.get_resource::<crate::shared::random::WorldSeed>() {
+        world_seed.0
+    } else {
+        12345
+    };
 
     let effect = generate_meal_effect(seed, &item_type);
 

@@ -95,7 +95,7 @@ mod tests {
 
         let orbit = world.get::<Orbit>(planet).unwrap();
         assert_eq!(orbit.parent, sun);
-        assert_eq!(orbit.radius, 100.0);
+        assert!((orbit.radius - 100.0).abs() < f32::EPSILON);
     }
 
     #[test]
