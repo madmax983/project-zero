@@ -155,6 +155,10 @@ pub mod utility_types;
 pub mod mining_tests;
 
 #[cfg(test)]
+/// Tests for mother lode logic (Spec 168).
+pub mod mother_lode_tests;
+
+#[cfg(test)]
 mod preservation_tests;
 
 #[cfg(test)]
@@ -619,3 +623,7 @@ mod improvised_tools_tests;
 /// Gene Bank system (Spec 165).
 pub mod gene_bank;
 pub use gene_bank::*;
+
+/// The Mother Lode system (Spec 168).
+pub mod mother_lode;
+pub use mother_lode::*;

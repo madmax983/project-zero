@@ -31,6 +31,7 @@ pub fn handle_workplace_hazards(
     action_type: ActionType,
     structure: Option<&Structure>,
     skills: &Skills,
+    hazard_modifier: f64,
 ) {
     let base_risk = action_type.danger_level();
 
@@ -50,7 +51,7 @@ pub fn handle_workplace_hazards(
         max_hp: 100.0,
     }); // Dummy "Perfect" structure if none
 
-    let risk = calculate_risk(base_risk, skills, skill_type, structure_ref);
+    let risk = calculate_risk(base_risk, skills, skill_type, structure_ref, hazard_modifier);
     let mut rng = rand::thread_rng();
 
     if rng.gen_bool(risk.min(1.0)) {
@@ -73,6 +74,7 @@ pub fn calculate_risk(
     skills: &Skills,
     skill_type: SkillType,
     structure: &Structure,
+    hazard_modifier: f64,
 ) -> f64 {
     // 1. Maintenance Factor
     // 0% HP = 3.0x risk. 100% HP = 1.0x risk.
@@ -85,7 +87,7 @@ pub fn calculate_risk(
     let level = skills.get_level(skill_type);
     let skill_factor = f64::from(level).mul_add(0.1, 1.0);
 
-    base_risk * f64::from(maintenance_factor) / skill_factor
+    (base_risk * f64::from(maintenance_factor) / skill_factor) * hazard_modifier
 }
 
 /// Determines the severity of an accident based on a random roll (0.0 - 1.0).

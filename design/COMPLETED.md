@@ -144,3 +144,4 @@
 - [x] `031` Pop Morale — `specs/031-pop-morale.md` — verified implemented
 - [x] `034` Pop Health and Damage — `specs/034-pop-health.md` — verified implemented
 - [x] `103` Private Stashes — `specs/103-private-stashes.md` — verified implemented
+- [x] `168` The Mother Lode — `specs/168-the-mother-lode.md` — completed 2026-06-25

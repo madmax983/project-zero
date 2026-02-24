@@ -3,6 +3,7 @@ use rand::Rng;
 use ratatui::style::Color;
 
 use crate::layer1::map::{GridPosition, ScreenShake};
+use crate::layer1::mother_lode::MotherLode;
 use crate::layer1::orbital_crossfire::{ImpactSite, mine_scrap};
 use crate::layer1::particles::{spawn_moving_particle, spawn_particle};
 use crate::layer1::resources::{process_logging, process_mining};
@@ -36,24 +37,78 @@ pub fn handle_mining_work(
         crate::layer1::geology::add_seismic_stress(world, p, 1.0);
     }
 
-    let is_scrap = if let Some(p) = pos {
-        let mut found = false;
-        let mut query = world.query::<(&GridPosition, &ImpactSite)>();
-        for (gp, _) in query.iter(world) {
-            if *gp == p {
-                found = true;
-                break;
+    // Check for Mother Lode
+    let is_mother_lode = world.get::<MotherLode>(entity).is_some();
+
+    if is_mother_lode {
+        if let Some(mut lode) = world.get_mut::<MotherLode>(entity) {
+            lode.increment_hazard();
+        }
+
+        // Progress logic for infinite resource
+        if world
+            .get::<crate::layer1::resources::MiningProgress>(entity)
+            .is_none()
+        {
+            world
+                .entity_mut(entity)
+                .insert(crate::layer1::resources::MiningProgress {
+                    current: 0.0,
+                    max: 20.0,
+                });
+        }
+
+        let completed = if let Some(mut progress) =
+            world.get_mut::<crate::layer1::resources::MiningProgress>(entity)
+        {
+            progress.current += effective_work;
+            if progress.current >= progress.max {
+                progress.current = 0.0;
+                true
+            } else {
+                false
+            }
+        } else {
+            false
+        };
+
+        if completed {
+            if let Some(lode) = world.get::<MotherLode>(entity) {
+                let res_type = lode.resource_type;
+                if let Some(p) = pos {
+                    world.spawn((
+                        crate::layer1::resources::ResourceItem {
+                            resource_type: res_type,
+                            amount: 1.0,
+                        },
+                        p,
+                    ));
+                    if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+                        log.add(format!("Mined {:?} from Mother Lode", res_type));
+                    }
+                }
             }
         }
-        found
     } else {
-        false
-    };
+        let is_scrap = if let Some(p) = pos {
+            let mut found = false;
+            let mut query = world.query::<(&GridPosition, &ImpactSite)>();
+            for (gp, _) in query.iter(world) {
+                if *gp == p {
+                    found = true;
+                    break;
+                }
+            }
+            found
+        } else {
+            false
+        };
 
-    if is_scrap {
-        mine_scrap(world, entity, effective_work);
-    } else {
-        process_mining(world, entity, effective_work);
+        if is_scrap {
+            mine_scrap(world, entity, effective_work);
+        } else {
+            process_mining(world, entity, effective_work);
+        }
     }
 
     if let Some(p) = pos {
