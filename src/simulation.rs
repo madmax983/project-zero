@@ -55,6 +55,8 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer2::fleet::fleet_order_system,
         crate::layer2::fleet::fleet_movement_system.after(crate::layer2::fleet::fleet_order_system),
         crate::layer2::combat::fleet_combat_system.after(crate::layer2::fleet::fleet_movement_system),
+        crate::layer2::barnacles::ensure_barnacles_component_system,
+        crate::layer2::barnacles::barnacle_accumulation_system,
 
         crate::layer2::visibility::update_visibility_system.after(Layer1SystemSet::Economy),
         crate::layer2::visibility::enforce_view_mode_system

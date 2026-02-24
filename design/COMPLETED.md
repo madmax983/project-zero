@@ -155,3 +155,4 @@
 - [x] `146` Command Center & System Visibility — `specs/146-command-center.md` — verified implemented
 - [x] `157` Ship Classes & Construction — `specs/157-ship-classes.md` — completed 2026-06-25
 - [x] `159` Fleet Combat Resolution — `specs/159-fleet-combat.md` — completed 2026-06-25
+- [x] `219` Space Barnacles — `specs/219-space-barnacles.md` — completed 2026-06-25
