@@ -46,6 +46,10 @@ pub enum Trait {
     Creative,
     /// Intellectual mindset (+Cryo Dream rate, +Research speed).
     Intellectual,
+    /// Unaffected by eating rations or corpses.
+    Cannibal,
+    /// Accepts survival necessities without complaint (ignore Ration mood penalty).
+    Pragmatist,
 }
 
 impl Trait {
@@ -72,6 +76,8 @@ impl Trait {
             Self::Volatile => "Volatile",
             Self::Creative => "Creative",
             Self::Intellectual => "Intellectual",
+            Self::Cannibal => "Cannibal",
+            Self::Pragmatist => "Pragmatist",
         }
     }
 }
@@ -122,6 +128,8 @@ impl Traits {
             Trait::Volatile,
             Trait::Creative,
             Trait::Intellectual,
+            Trait::Cannibal,
+            Trait::Pragmatist,
         ];
 
         while set.len() < count {

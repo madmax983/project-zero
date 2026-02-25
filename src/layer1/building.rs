@@ -310,6 +310,8 @@ pub enum BuildingType {
     GeneBank,
     /// Facility for pops to clean themselves (consumes Water).
     Shower,
+    /// Converts Waste and Corpses into Rations.
+    Recycler,
 }
 
 impl BuildingType {
@@ -318,7 +320,7 @@ impl BuildingType {
     #[must_use]
     pub const fn tier_info(&self) -> Option<(Category, Tier)> {
         match self {
-            Self::Farm => Some((Category::FoodProduction, Tier::Basic)),
+            Self::Farm | Self::Recycler => Some((Category::FoodProduction, Tier::Basic)),
             Self::Greenhouse => Some((Category::FoodProduction, Tier::Advanced)),
             Self::HydroponicsBay => Some((Category::FoodProduction, Tier::HighTech)),
 
@@ -375,7 +377,8 @@ impl BuildingType {
             | Self::Tavern
             | Self::Hospital
             | Self::CommandCenter
-            | Self::AICore => 0.6,
+            | Self::AICore
+            | Self::Recycler => 0.6,
             Self::FlowerBed | Self::PersonalGarden | Self::Grave => 0.1,
             _ => 0.5,
         }
@@ -484,6 +487,7 @@ impl BuildingType {
             | Self::TrashCannon
             | Self::Heater
             | Self::AuroralCollector => false,
+            Self::Recycler => true,
         }
     }
 
@@ -500,6 +504,7 @@ impl BuildingType {
         match self {
             Self::Statue => super::beauty::STATUE_BEAUTY,
             Self::Landfill => -10.0,
+            Self::Recycler => -5.0, // Grim machinery
             Self::Grave => -2.0, // Graves are slightly spooky
             Self::FlowerBed => super::beauty::FLOWER_BED_BEAUTY,
             Self::TradeDepot => 5.0, // Trade brings goods and culture
@@ -522,6 +527,7 @@ impl BuildingType {
             Self::Statue => 5.0,
             Self::FlowerBed => 3.0,
             Self::Landfill => 8.0,
+            Self::Recycler => 4.0,
             Self::TradeDepot => 4.0,
             Self::Grave | Self::Well | Self::HydroponicsBay | Self::LifeSupport => 2.0,
             _ => 0.0,
@@ -557,6 +563,7 @@ impl BuildingType {
             Self::AtmosphericProcessor => Some(Tech::Terraforming),
             Self::GeneBank => Some(Tech::Medical),
             Self::Shower => Some(Tech::SocialStructures),
+            Self::Recycler => Some(Tech::Medical),
             _ => None,
         }
     }
@@ -628,6 +635,7 @@ impl BuildingType {
             Self::AtmosphericProcessor => "Atmospheric Processor",
             Self::GeneBank => "Gene Bank",
             Self::Shower => "Shower",
+            Self::Recycler => "Recycler",
         }
     }
 
@@ -681,6 +689,7 @@ impl BuildingType {
             Self::AtmosphericProcessor => '@',
             Self::GeneBank => '🧬',
             Self::Shower => '🚿',
+            Self::Recycler => '♻',
         }
     }
 
@@ -722,6 +731,11 @@ impl BuildingType {
             Self::Shower => ColonyResources {
                 metal: 10.0,
                 stone: 5.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Recycler => ColonyResources {
+                metal: 20.0,
+                stone: 10.0,
                 ..ColonyResources::zeroed()
             },
             Self::CommandCenter => ColonyResources {
@@ -1251,6 +1265,18 @@ fn spawn_building(
         | BuildingType::AtmosphericProcessor
         | BuildingType::GeneBank => configure_tech(&mut entity, building_type),
         BuildingType::Shower => configure_civic(&mut entity, building_type),
+        BuildingType::Recycler => {
+            // Recycler configuration
+            entity.insert((
+                crate::layer1::recycling::Recycler::default(),
+                crate::layer1::lighting::LightSource {
+                    radius: 3.0,
+                    intensity: 0.5,
+                    color: (0, 255, 0), // Green glow
+                },
+                ShiftSchedule::default(),
+            ));
+        }
         BuildingType::PersonalShed
         | BuildingType::PersonalGarden
         | BuildingType::PersonalShrine => {

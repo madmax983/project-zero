@@ -21,7 +21,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `210` Ammunition Logistics — `specs/210-ammunition-logistics.md`
 - [ ] `212` Planetary Core Tap — `specs/212-planetary-core-tap.md`
 - [ ] `215` Safehouse Contracts — `specs/215-safehouse-contracts.md`
-- [ ] `221` Organic Recycling — `specs/221-organic-recycling.md`
 - [ ] `222` Paperwork Physicality — `specs/222-paperwork-physicality.md`
 - [ ] `223` Volatile Resources — `specs/223-volatile-resources.md`
 

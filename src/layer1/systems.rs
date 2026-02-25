@@ -192,6 +192,7 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             crate::layer1::tech::update_tech_capacity_system,
             crate::layer1::admin::calculate_admin_stats,
             crate::layer1::eureka::handle_eureka_events,
+            recycle_processing_system,
             #[cfg(feature = "nova")]
             crate::layer1::machine_consciousness::consciousness_growth_system,
         )

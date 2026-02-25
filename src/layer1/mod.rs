@@ -631,3 +631,7 @@ pub use gene_bank::*;
 /// The Mother Lode system (Spec 168).
 pub mod mother_lode;
 pub use mother_lode::*;
+
+/// Organic Recycling system (Spec 221).
+pub mod recycling;
+pub use recycling::*;

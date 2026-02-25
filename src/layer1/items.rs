@@ -132,6 +132,12 @@ pub enum ItemType {
     Alcohol,
     /// Genetic sample from flora or fauna.
     GeneticSample,
+    /// Recycled rations (Nutrient Paste).
+    Rations,
+    /// Industrial waste.
+    Waste,
+    /// A corpse of a Pop.
+    Corpse(Entity),
 }
 
 impl ItemType {
@@ -155,6 +161,8 @@ impl ItemType {
             | Self::AlienMeatB
             | Self::GlowMushroom
             | Self::MysteryMeal => Some(ResourceType::Food),
+            Self::Rations => Some(ResourceType::Rations),
+            Self::Waste => Some(ResourceType::Waste),
             _ => None,
         }
     }
