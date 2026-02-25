@@ -204,3 +204,12 @@
     - Updated `src/layer1/building.rs` to add `Inventory` to `Recycler`.
     - Updated `src/layer1/hauling.rs` to target `Recycler` for `ItemType::Waste` and deposit into inventory.
 - **Tests:** `tests/integration/hygiene_recycling.rs` (3 tests verified)
+
+### INT-012: System Mining -> Colony Resources
+- **Date:** 2026-02-01
+- **Systems connected:** `fleet_movement_system` (Layer 2) -> `fleet_unload_system` (Integration) -> `ColonyResources` (Layer 1)
+- **Glue added:**
+    - Added `fleet_unload_system` to `src/layer1/integration.rs`.
+    - Registered in `src/simulation.rs` after `fleet_movement_system`.
+    - Automatically unloads cargo from fleets orbiting the colony location.
+- **Tests:** `tests/integration/mining_colony.rs` (Integration test verified)

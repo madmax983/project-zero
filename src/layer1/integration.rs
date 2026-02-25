@@ -566,3 +566,55 @@ pub fn pop_death_notification_system(
         );
     }
 }
+
+/// Transfers cargo from fleets orbiting the colony to the colony's resource stockpile.
+///
+/// Bridges System Mining (Layer 2) and Colony Resources (Layer 1).
+pub fn fleet_unload_system(
+    _commands: Commands,
+    mut fleets: Query<(Entity, &crate::layer2::fleet::InOrbit, &mut crate::layer2::mining::FleetCargo), With<crate::layer2::fleet::Fleet>>,
+    colony_locations: Query<(Entity, &crate::layer2::generation::ColonyLocation)>,
+    mut resources: ResMut<ColonyResources>,
+    mut log: Option<ResMut<MessageLog>>,
+) {
+    // 1. Identify Colony Planet(s)
+    let colony_entities: HashSet<Entity> = colony_locations.iter().map(|(e, _)| e).collect();
+
+    for (_fleet_entity, orbit, mut cargo) in &mut fleets {
+        // 2. Check if in orbit of colony
+        if colony_entities.contains(&orbit.parent) {
+            // 3. Unload Cargo
+            let mut unloaded_something = false;
+            let mut summary = Vec::new();
+
+            for stack in cargo.contents.drain(..) {
+                if stack.amount > 0.0 {
+                    unloaded_something = true;
+                    match stack.resource_type {
+                        crate::layer1::resources::ResourceType::Food => resources.add_food(stack.amount),
+                        crate::layer1::resources::ResourceType::Wood => resources.add_wood(stack.amount),
+                        crate::layer1::resources::ResourceType::Stone => resources.add_stone(stack.amount),
+                        crate::layer1::resources::ResourceType::Ore => resources.add_ore(stack.amount),
+                        crate::layer1::resources::ResourceType::Metal => resources.add_metal(stack.amount),
+                        crate::layer1::resources::ResourceType::Planks => resources.add_planks(stack.amount),
+                        crate::layer1::resources::ResourceType::Blocks => resources.add_blocks(stack.amount),
+                        crate::layer1::resources::ResourceType::Tools => resources.add_tools(stack.amount),
+                        crate::layer1::resources::ResourceType::Waste => resources.add_waste(stack.amount),
+                        crate::layer1::resources::ResourceType::Rations => resources.add_rations(stack.amount),
+                        crate::layer1::resources::ResourceType::Fuel => resources.add_fuel(stack.amount),
+                        crate::layer1::resources::ResourceType::Alcohol => resources.add_alcohol(stack.amount),
+                        crate::layer1::resources::ResourceType::Scrap => resources.add_scrap(stack.amount),
+                        crate::layer1::resources::ResourceType::BuildingPermit => resources.add_building_permits(stack.amount),
+                    }
+                    summary.push(format!("{:.1} {:?}", stack.amount, stack.resource_type));
+                }
+            }
+
+            if unloaded_something {
+                if let Some(log) = log.as_mut() {
+                    log.add_colored(format!("Fleet unloaded: {}", summary.join(", ")), Color::Green);
+                }
+            }
+        }
+    }
+}
