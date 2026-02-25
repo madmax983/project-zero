@@ -1280,6 +1280,7 @@ fn spawn_building(
             // Recycler configuration
             entity.insert((
                 crate::layer1::recycling::Recycler::default(),
+                Inventory::default(),
                 crate::layer1::lighting::LightSource {
                     radius: 3.0,
                     intensity: 0.5,

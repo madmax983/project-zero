@@ -2,6 +2,8 @@
 //!
 //! Handles filth accumulation, hygiene decay, and showering.
 
+use crate::layer1::items::{Item, ItemType};
+use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
 use crate::layer1::pop::Job;
 use crate::layer1::resources::ColonyResources;
@@ -97,16 +99,16 @@ pub fn hygiene_decay_system(mut query: Query<(&mut Needs, &Filth)>) {
 
 /// Handles pops using the shower.
 pub fn shower_use_system(
-    _commands: Commands,
+    mut commands: Commands,
     mut resources: ResMut<ColonyResources>,
-    mut query: Query<(Entity, &mut Needs, &mut Filth, &PopAction)>,
+    mut query: Query<(Entity, &mut Needs, &mut Filth, &PopAction, &GridPosition)>,
 ) {
     // Check global water availability first (optimization)
     if resources.water < SHOWER_WATER_COST {
         return;
     }
 
-    for (_entity, mut needs, mut filth, action) in &mut query {
+    for (_entity, mut needs, mut filth, action, pos) in &mut query {
         if action.current == ActionType::UseShower {
             // Double check water per pop (in case we ran out mid-loop, though unlikely with f32)
             if resources.water >= SHOWER_WATER_COST {
@@ -114,6 +116,17 @@ pub fn shower_use_system(
 
                 needs.hygiene = (needs.hygiene + HYGIENE_RESTORE_RATE).min(1.0);
                 filth.current = (filth.current - FILTH_CLEAN_RATE).max(0.0);
+
+                // Produce Waste (Integration with Recycling)
+                // Spawn a waste item every 10 filth cleaned
+                if filth.current > 0.0 && filth.current % 10.0 < FILTH_CLEAN_RATE {
+                    commands.spawn((
+                        Item {
+                            item_type: ItemType::Waste,
+                        },
+                        *pos,
+                    ));
+                }
             }
         }
     }
@@ -283,6 +296,7 @@ mod tests {
                     current: ActionType::UseShower,
                     ..Default::default()
                 },
+                GridPosition { x: 0, y: 0 },
             ))
             .id();
 

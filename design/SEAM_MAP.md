@@ -195,3 +195,12 @@
 - **Glue added:**
     - Updated `src/layer1/customs.rs` to check if entity is physically at `ZoneType::Customs` before processing.
 - **Tests:** `tests/integration/customs_vetting.rs` (Integration test verified)
+
+### INT-011: Hygiene -> Recycling
+- **Date:** 2026-02-01
+- **Systems connected:** `shower_use_system` (Hygiene) -> `haul_system` (Logistics) -> `recycle_processing_system` (Recycling)
+- **Glue added:**
+    - Updated `src/layer1/hygiene.rs` to spawn `ItemType::Waste` when filth is cleaned.
+    - Updated `src/layer1/building.rs` to add `Inventory` to `Recycler`.
+    - Updated `src/layer1/hauling.rs` to target `Recycler` for `ItemType::Waste` and deposit into inventory.
+- **Tests:** `tests/integration/hygiene_recycling.rs` (3 tests verified)

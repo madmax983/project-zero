@@ -1,0 +1,758 @@
+warning: unused import: `crate::layer1::funeral::Corpse`
+ --> src/layer1/recycling.rs:1:5
+  |
+1 | use crate::layer1::funeral::Corpse;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `ResourceType`
+ --> src/layer1/recycling.rs:4:49
+  |
+4 | use crate::layer1::resources::{ColonyResources, ResourceType};
+  |                                                 ^^^^^^^^^^^^
+
+warning: variable does not need to be mutable
+  --> src/layer1/permit.rs:21:33
+   |
+21 |     for (entity, mut inventory, mut power) in &mut query {
+   |                                 ----^^^^^
+   |                                 |
+   |                                 help: remove this `mut`
+   |
+   = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: `scale` (lib) generated 3 warnings (run `cargo fix --lib -p scale` to apply 3 suggestions)
+warning: missing documentation for the crate
+  --> tests/security_render_overflow.rs:1:1
+   |
+ 1 | / #[cfg(test)]
+ 2 | | mod tests {
+ 3 | |     use ratatui::layout::Rect;
+ 4 | |     use scale::layer1::water::WaterGrid;
+...  |
+49 | | }
+   | |_^
+   |
+   = note: requested on the command line with `-W missing-docs`
+
+warning: missing documentation for the crate
+  --> tests/security_resource_exploit.rs:1:1
+   |
+ 1 | / #[cfg(test)]
+ 2 | | mod tests {
+ 3 | |     use scale::layer1::resources::ColonyResources;
+...  |
+25 | | }
+   | |_^
+   |
+   = note: requested on the command line with `-W missing-docs`
+
+   Compiling scale v0.1.0 (/app)
+warning: `scale` (test "security_render_overflow") generated 1 warning
+warning: `scale` (test "security_resource_exploit") generated 1 warning
+warning: missing documentation for the crate
+   --> tests/cannibalization_tests.rs:3:1
+    |
+  3 | / use bevy_ecs::prelude::*;
+  4 | | use scale::layer1::GridPosition;
+  5 | | use scale::layer1::building::{Building, BuildingType};
+  6 | | use scale::layer1::designation::{Designation, DesignationType};
+...   |
+128 | |     assert!(!success, "Should not cannibalize non-Lander");
+129 | | }
+    | |_^
+    |
+    = note: requested on the command line with `-W missing-docs`
+
+warning: missing documentation for the crate
+  --> tests/energy_fire.rs:1:1
+   |
+ 1 | / #[cfg(test)]
+ 2 | | mod tests {
+ 3 | |     use bevy_ecs::prelude::*;
+ 4 | |     use scale::layer1::energy::{GridOverloadEvent, PowerConsumer, PowerSource, power_grid_system};
+...  |
+72 | | }
+   | |_^
+   |
+   = note: requested on the command line with `-W missing-docs`
+
+warning: missing documentation for the crate
+  --> tests/security_access_control.rs:1:1
+   |
+ 1 | / #[cfg(test)]
+ 2 | | mod tests {
+ 3 | |     use bevy_ecs::prelude::*;
+ 4 | |     use scale::layer1::access_control::{AccessControl, AccessMode, check_access};
+...  |
+34 | | }
+   | |_^
+   |
+   = note: requested on the command line with `-W missing-docs`
+
+warning: missing documentation for the crate
+  --> tests/security_crowding_overflow.rs:1:1
+   |
+ 1 | / #[cfg(test)]
+ 2 | | mod tests {
+ 3 | |     use scale::layer1::crowding::CrowdingGrid;
+...  |
+30 | | }
+   | |_^
+   |
+   = note: requested on the command line with `-W missing-docs`
+
+warning: missing documentation for the crate
+  --> tests/security_chemical_exploit.rs:1:1
+   |
+ 1 | / #[cfg(test)]
+ 2 | | mod tests {
+ 3 | |     use bevy_ecs::prelude::*;
+ 4 | |     use scale::layer1::chemical::{
+...  |
+50 | | }
+   | |_^
+   |
+   = note: requested on the command line with `-W missing-docs`
+
+warning: `scale` (test "cannibalization_tests") generated 1 warning
+warning: `scale` (test "energy_fire") generated 1 warning
+warning: `scale` (test "security_access_control") generated 1 warning
+warning: `scale` (test "security_crowding_overflow") generated 1 warning
+warning: `scale` (test "security_chemical_exploit") generated 1 warning
+error[E0433]: failed to resolve: unresolved import
+ --> tests/integration/hygiene_recycling.rs:3:16
+  |
+3 |     use crate::layer1::building::{Building, BuildingType};
+  |                ^^^^^^
+  |                |
+  |                unresolved import
+  |                help: a similar path exists: `scale::layer1`
+
+error[E0433]: failed to resolve: unresolved import
+ --> tests/integration/hygiene_recycling.rs:4:16
+  |
+4 |     use crate::layer1::hygiene::{Filth, filth_accumulation_system, shower_use_system};
+  |                ^^^^^^
+  |                |
+  |                unresolved import
+  |                help: a similar path exists: `scale::layer1`
+
+error[E0433]: failed to resolve: unresolved import
+ --> tests/integration/hygiene_recycling.rs:5:16
+  |
+5 |     use crate::layer1::inventory::Inventory;
+  |                ^^^^^^
+  |                |
+  |                unresolved import
+  |                help: a similar path exists: `scale::layer1`
+
+error[E0433]: failed to resolve: unresolved import
+ --> tests/integration/hygiene_recycling.rs:6:16
+  |
+6 |     use crate::layer1::items::{Item, ItemType, CarryingItem};
+  |                ^^^^^^
+  |                |
+  |                unresolved import
+  |                help: a similar path exists: `scale::layer1`
+
+error[E0433]: failed to resolve: unresolved import
+ --> tests/integration/hygiene_recycling.rs:7:16
+  |
+7 |     use crate::layer1::needs::Needs;
+  |                ^^^^^^
+  |                |
+  |                unresolved import
+  |                help: a similar path exists: `scale::layer1`
+
+error[E0433]: failed to resolve: unresolved import
+ --> tests/integration/hygiene_recycling.rs:8:16
+  |
+8 |     use crate::layer1::pop::Pop;
+  |                ^^^^^^
+  |                |
+  |                unresolved import
+  |                help: a similar path exists: `scale::layer1`
+
+error[E0433]: failed to resolve: unresolved import
+ --> tests/integration/hygiene_recycling.rs:9:16
+  |
+9 |     use crate::layer1::recycling::{Recycler, recycle_processing_system};
+  |                ^^^^^^
+  |                |
+  |                unresolved import
+  |                help: a similar path exists: `scale::layer1`
+
+error[E0433]: failed to resolve: unresolved import
+  --> tests/integration/hygiene_recycling.rs:10:16
+   |
+10 |     use crate::layer1::resources::ColonyResources;
+   |                ^^^^^^
+   |                |
+   |                unresolved import
+   |                help: a similar path exists: `scale::layer1`
+
+error[E0433]: failed to resolve: unresolved import
+  --> tests/integration/hygiene_recycling.rs:11:16
+   |
+11 |     use crate::layer1::utility_types::{ActionType, PopAction};
+   |                ^^^^^^
+   |                |
+   |                unresolved import
+   |                help: a similar path exists: `scale::layer1`
+
+error[E0433]: failed to resolve: unresolved import
+  --> tests/integration/hygiene_recycling.rs:12:16
+   |
+12 |     use crate::layer1::hauling::haul_system;
+   |                ^^^^^^
+   |                |
+   |                unresolved import
+   |                help: a similar path exists: `scale::layer1`
+
+error[E0432]: unresolved import `crate::layer1`
+  --> tests/integration/hygiene_recycling.rs:13:16
+   |
+13 |     use crate::layer1::GridPosition;
+   |                ^^^^^^
+   |                |
+   |                unresolved import
+   |                help: a similar path exists: `scale::layer1`
+
+error[E0433]: failed to resolve: unresolved import
+  --> tests/integration/hygiene_recycling.rs:18:16
+   |
+18 |         crate::setup::init_task_pools();
+   |                ^^^^^ unresolved import
+   |
+help: a similar path exists
+   |
+18 |         crate::scale::setup::init_task_pools();
+   |                 +++++++
+help: consider importing this module
+   |
+ 3 +     use scale::setup;
+   |
+help: if you import `setup`, refer to it directly
+   |
+18 -         crate::setup::init_task_pools();
+18 +         setup::init_task_pools();
+   |
+
+error[E0433]: failed to resolve: unresolved import
+  --> tests/integration/hygiene_recycling.rs:24:38
+   |
+24 |         world.insert_resource(crate::layer1::factions::Factions::default());
+   |                                      ^^^^^^ unresolved import
+   |
+help: a similar path exists
+   |
+24 |         world.insert_resource(crate::scale::layer1::factions::Factions::default());
+   |                                      +++++++
+help: consider importing this struct
+   |
+ 3 +     use scale::layer1::Factions;
+   |
+help: if you import `Factions`, refer to it directly
+   |
+24 -         world.insert_resource(crate::layer1::factions::Factions::default());
+24 +         world.insert_resource(Factions::default());
+   |
+
+error[E0433]: failed to resolve: unresolved import
+  --> tests/integration/hygiene_recycling.rs:25:38
+   |
+25 |         world.insert_resource(crate::layer1::zone::ZoneGrid {
+   |                                      ^^^^^^ unresolved import
+   |
+help: a similar path exists
+   |
+25 |         world.insert_resource(crate::scale::layer1::zone::ZoneGrid {
+   |                                      +++++++
+help: consider importing this module
+   |
+ 3 +     use scale::layer1::zone;
+   |
+help: if you import `zone`, refer to it directly
+   |
+25 -         world.insert_resource(crate::layer1::zone::ZoneGrid {
+25 +         world.insert_resource(zone::ZoneGrid {
+   |
+
+error[E0433]: failed to resolve: unresolved import
+  --> tests/integration/hygiene_recycling.rs:28:32
+   |
+28 |             zones: vec![crate::layer1::zone::ZoneType::None; 100],
+   |                                ^^^^^^ unresolved import
+   |
+help: a similar path exists
+   |
+28 |             zones: vec![crate::scale::layer1::zone::ZoneType::None; 100],
+   |                                +++++++
+help: consider importing this enum
+   |
+ 3 +     use scale::layer1::ZoneType;
+   |
+help: if you import `ZoneType`, refer to it directly
+   |
+28 -             zones: vec![crate::layer1::zone::ZoneType::None; 100],
+28 +             zones: vec![ZoneType::None; 100],
+   |
+
+error[E0433]: failed to resolve: unresolved import
+   --> tests/integration/hygiene_recycling.rs:105:48
+    |
+105 |         world.entity_mut(hauler).insert(crate::layer1::execution::AtTarget);
+    |                                                ^^^^^^ unresolved import
+    |
+help: a similar path exists
+    |
+105 |         world.entity_mut(hauler).insert(crate::scale::layer1::execution::AtTarget);
+    |                                                +++++++
+help: consider importing this module
+    |
+  3 +     use scale::layer1::execution;
+    |
+help: if you import `execution`, refer to it directly
+    |
+105 -         world.entity_mut(hauler).insert(crate::layer1::execution::AtTarget);
+105 +         world.entity_mut(hauler).insert(execution::AtTarget);
+    |
+
+error[E0433]: failed to resolve: unresolved import
+   --> tests/integration/hygiene_recycling.rs:114:41
+    |
+114 |         let target = world.get::<crate::layer1::execution::MovementTarget>(hauler);
+    |                                         ^^^^^^ unresolved import
+    |
+help: a similar path exists
+    |
+114 |         let target = world.get::<crate::scale::layer1::execution::MovementTarget>(hauler);
+    |                                         +++++++
+help: consider importing this module
+    |
+  3 +     use scale::layer1::execution;
+    |
+help: if you import `execution`, refer to it directly
+    |
+114 -         let target = world.get::<crate::layer1::execution::MovementTarget>(hauler);
+114 +         let target = world.get::<execution::MovementTarget>(hauler);
+    |
+
+error[E0433]: failed to resolve: unresolved import
+   --> tests/integration/hygiene_recycling.rs:121:48
+    |
+121 |         world.entity_mut(hauler).insert(crate::layer1::execution::AtTarget);
+    |                                                ^^^^^^ unresolved import
+    |
+help: a similar path exists
+    |
+121 |         world.entity_mut(hauler).insert(crate::scale::layer1::execution::AtTarget);
+    |                                                +++++++
+help: consider importing this module
+    |
+  3 +     use scale::layer1::execution;
+    |
+help: if you import `execution`, refer to it directly
+    |
+121 -         world.entity_mut(hauler).insert(crate::layer1::execution::AtTarget);
+121 +         world.entity_mut(hauler).insert(execution::AtTarget);
+    |
+
+error[E0433]: failed to resolve: unresolved import
+   --> tests/integration/hygiene_recycling.rs:136:38
+    |
+136 |         world.insert_resource(crate::layer1::building::BuildMode::default());
+    |                                      ^^^^^^ unresolved import
+    |
+help: a similar path exists
+    |
+136 |         world.insert_resource(crate::scale::layer1::building::BuildMode::default());
+    |                                      +++++++
+help: consider importing this struct
+    |
+  3 +     use scale::layer1::BuildMode;
+    |
+help: if you import `BuildMode`, refer to it directly
+    |
+136 -         world.insert_resource(crate::layer1::building::BuildMode::default());
+136 +         world.insert_resource(BuildMode::default());
+    |
+
+error[E0433]: failed to resolve: unresolved import
+   --> tests/integration/hygiene_recycling.rs:137:38
+    |
+137 |         world.insert_resource(crate::layer1::building::OccupiedTiles::default());
+    |                                      ^^^^^^ unresolved import
+    |
+help: a similar path exists
+    |
+137 |         world.insert_resource(crate::scale::layer1::building::OccupiedTiles::default());
+    |                                      +++++++
+help: consider importing this struct
+    |
+  3 +     use scale::layer1::OccupiedTiles;
+    |
+help: if you import `OccupiedTiles`, refer to it directly
+    |
+137 -         world.insert_resource(crate::layer1::building::OccupiedTiles::default());
+137 +         world.insert_resource(OccupiedTiles::default());
+    |
+
+error[E0433]: failed to resolve: unresolved import
+   --> tests/integration/hygiene_recycling.rs:138:38
+    |
+138 |         world.insert_resource(crate::layer1::terrain::TerrainGrid {
+    |                                      ^^^^^^ unresolved import
+    |
+help: a similar path exists
+    |
+138 |         world.insert_resource(crate::scale::layer1::terrain::TerrainGrid {
+    |                                      +++++++
+help: consider importing this module
+    |
+  3 +     use scale::layer1::terrain;
+    |
+help: if you import `terrain`, refer to it directly
+    |
+138 -         world.insert_resource(crate::layer1::terrain::TerrainGrid {
+138 +         world.insert_resource(terrain::TerrainGrid {
+    |
+
+error[E0433]: failed to resolve: unresolved import
+   --> tests/integration/hygiene_recycling.rs:141:32
+    |
+141 |             tiles: vec![crate::layer1::terrain::TerrainType::Grass; 400],
+    |                                ^^^^^^ unresolved import
+    |
+help: a similar path exists
+    |
+141 |             tiles: vec![crate::scale::layer1::terrain::TerrainType::Grass; 400],
+    |                                +++++++
+help: consider importing this enum
+    |
+  3 +     use scale::layer1::TerrainType;
+    |
+help: if you import `TerrainType`, refer to it directly
+    |
+141 -             tiles: vec![crate::layer1::terrain::TerrainType::Grass; 400],
+141 +             tiles: vec![TerrainType::Grass; 400],
+    |
+
+error[E0433]: failed to resolve: unresolved import
+   --> tests/integration/hygiene_recycling.rs:146:16
+    |
+146 |         crate::layer1::building::spawn_building_with_material(
+    |                ^^^^^^ unresolved import
+    |
+help: a similar path exists
+    |
+146 |         crate::scale::layer1::building::spawn_building_with_material(
+    |                +++++++
+help: consider importing this module
+    |
+  3 +     use scale::layer1::building;
+    |
+help: if you import `building`, refer to it directly
+    |
+146 -         crate::layer1::building::spawn_building_with_material(
+146 +         building::spawn_building_with_material(
+    |
+
+error[E0433]: failed to resolve: unresolved import
+   --> tests/integration/hygiene_recycling.rs:151:20
+    |
+151 |             crate::layer1::building::MaterialType::default()
+    |                    ^^^^^^ unresolved import
+    |
+help: a similar path exists
+    |
+151 |             crate::scale::layer1::building::MaterialType::default()
+    |                    +++++++
+help: consider importing this enum
+    |
+  3 +     use scale::layer1::MaterialType;
+    |
+help: if you import `MaterialType`, refer to it directly
+    |
+151 -             crate::layer1::building::MaterialType::default()
+151 +             MaterialType::default()
+    |
+
+warning: unused import: `bevy_ecs::prelude::*`
+ --> tests/integration/seismic_vibration.rs:1:5
+  |
+1 | use bevy_ecs::prelude::*;
+  |     ^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `ScanProgress`
+  --> tests/integration/pheromone_integration.rs:10:56
+   |
+10 |     use scale::layer1::science::{Anomaly, AnomalyType, ScanProgress, spawn_initial_anomalies};
+   |                                                        ^^^^^^^^^^^^
+
+warning: unused import: `bevy_ecs::prelude::*`
+  --> src/layer1/execution/tests/arrival_tests.rs:12:5
+   |
+12 | use bevy_ecs::prelude::*;
+   |     ^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `OccupiedTiles`
+ --> src/layer1/execution/tests/movement_tests.rs:3:55
+  |
+3 | use crate::layer1::building::{Building, BuildingType, OccupiedTiles};
+  |                                                       ^^^^^^^^^^^^^
+
+warning: unused imports: `Trait` and `Traits`
+  --> src/layer1/execution/tests/work_tests.rs:13:29
+   |
+13 | use crate::layer1::traits::{Trait, Traits};
+   |                             ^^^^^  ^^^^^^
+
+warning: unused import: `std::collections::HashSet`
+  --> src/layer1/execution/tests/work_tests.rs:16:5
+   |
+16 | use std::collections::HashSet;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `bevy_ecs::prelude::*`
+   --> src/layer1/hobby.rs:143:9
+    |
+143 |     use bevy_ecs::prelude::*;
+    |         ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `bevy_ecs::prelude::*`
+   --> src/layer1/social/debt.rs:148:9
+    |
+148 |     use bevy_ecs::prelude::*;
+    |         ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `bevy_ecs::prelude::*`
+   --> src/layer1/graffiti.rs:221:9
+    |
+221 |     use bevy_ecs::prelude::*;
+    |         ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused imports: `Health`, `check_health_status_system`, and `despawn_dead_entities_system`
+   --> src/layer1/funeral.rs:151:33
+    |
+151 |     use crate::layer1::health::{Health, check_health_status_system, despawn_dead_entities_system};
+    |                                 ^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ScreenShake`
+   --> src/layer1/funeral.rs:152:44
+    |
+152 |     use crate::layer1::map::{GridPosition, ScreenShake};
+    |                                            ^^^^^^^^^^^
+
+warning: unused imports: `PopDied`, `PopName`, and `handle_pop_death_system`
+   --> src/layer1/funeral.rs:155:35
+    |
+155 |     use crate::layer1::pop::{Pop, PopDied, PopName, handle_pop_death_system};
+    |                                   ^^^^^^^  ^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `crate::shared::log::MessageLog`
+   --> src/layer1/funeral.rs:156:9
+    |
+156 |     use crate::shared::log::MessageLog;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `bevy_ecs::system::RunSystemOnce`
+   --> src/layer1/funeral.rs:157:9
+    |
+157 |     use bevy_ecs::system::RunSystemOnce;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `bevy_ecs::prelude::*`
+   --> src/layer1/society.rs:179:9
+    |
+179 |     use bevy_ecs::prelude::*;
+    |         ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `RuinHistory`
+  --> src/layer1/ruins.rs:84:38
+   |
+84 |     use crate::layer1::ruins::{Ruin, RuinHistory};
+   |                                      ^^^^^^^^^^^
+
+warning: unused import: `bevy_ecs::prelude::*`
+   --> src/layer1/gastronomy.rs:239:9
+    |
+239 |     use bevy_ecs::prelude::*;
+    |         ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `bevy_ecs::prelude::*`
+  --> src/layer1/cryo_dreams.rs:82:9
+   |
+82 |     use bevy_ecs::prelude::*;
+   |         ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `bevy_ecs::prelude::*`
+   --> src/layer1/wind.rs:342:9
+    |
+342 |     use bevy_ecs::prelude::*;
+    |         ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `bevy_ecs::prelude::*`
+   --> src/layer1/fertility.rs:134:9
+    |
+134 |     use bevy_ecs::prelude::*;
+    |         ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `bevy_ecs::prelude::*`
+ --> src/layer1/cryo_tests.rs:8:5
+  |
+8 | use bevy_ecs::prelude::*;
+  |     ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `bevy_ecs::prelude::*`
+  --> src/layer1/language.rs:77:9
+   |
+77 |     use bevy_ecs::prelude::*;
+   |         ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `bevy_ecs::prelude::*`
+   --> src/layer1/gene_bank.rs:159:9
+    |
+159 |     use bevy_ecs::prelude::*;
+    |         ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `bevy_ecs::prelude::*`
+ --> src/layer1/improvised_tools_tests.rs:4:9
+  |
+4 |     use bevy_ecs::prelude::*;
+  |         ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused imports: `BuildingType` and `Building`
+  --> src/layer1/recycling.rs:64:35
+   |
+64 |     use crate::layer1::building::{Building, BuildingType};
+   |                                   ^^^^^^^^  ^^^^^^^^^^^^
+
+warning: unused import: `crate::layer1::morale::Morale`
+  --> src/layer1/recycling.rs:66:9
+   |
+66 |     use crate::layer1::morale::Morale;
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `crate::layer1::needs::Needs`
+  --> src/layer1/recycling.rs:67:9
+   |
+67 |     use crate::layer1::needs::Needs;
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `crate::layer1::pop::Pop`
+  --> src/layer1/recycling.rs:68:9
+   |
+68 |     use crate::layer1::pop::Pop;
+   |         ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused imports: `Trait` and `Traits`
+  --> src/layer1/recycling.rs:69:33
+   |
+69 |     use crate::layer1::traits::{Trait, Traits};
+   |                                 ^^^^^  ^^^^^^
+
+warning: unused import: `ResourceType`
+  --> src/layer1/permit.rs:59:53
+   |
+59 |     use crate::layer1::resources::{ColonyResources, ResourceType};
+   |                                                     ^^^^^^^^^^^^
+
+warning: unused import: `bevy_ecs::prelude::*`
+  --> src/layer1/permit.rs:60:9
+   |
+60 |     use bevy_ecs::prelude::*;
+   |         ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `bevy_ecs::prelude::*`
+  --> src/layer2/barnacles.rs:59:9
+   |
+59 |     use bevy_ecs::prelude::*;
+   |         ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused variable: `new_flora`
+  --> tests/integration/pheromone_integration.rs:86:13
+   |
+86 |         let new_flora = world
+   |             ^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_new_flora`
+   |
+   = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+Some errors have detailed explanations: E0432, E0433.
+For more information about an error, try `rustc --explain E0432`.
+warning: `scale` (test "integration") generated 3 warnings
+error: could not compile `scale` (test "integration") due to 24 previous errors; 3 warnings emitted
+warning: build failed, waiting for other jobs to finish...
+warning: use of deprecated method `bevy_ecs::event::Events::<E>::get_reader`: `get_reader` has been deprecated. Please use `get_cursor` instead.
+   --> src/layer2/debris_tests.rs:146:33
+    |
+146 |         let mut reader = events.get_reader();
+    |                                 ^^^^^^^^^^
+    |
+    = note: `#[warn(deprecated)]` on by default
+
+warning: unused variable: `permit_item`
+   --> src/layer1/hauling.rs:789:13
+    |
+789 |         let permit_item = world
+    |             ^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_permit_item`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `mascot`
+   --> src/layer1/mascot.rs:278:13
+    |
+278 |         let mascot = world
+    |             ^^^^^^ help: if this is intentional, prefix it with an underscore: `_mascot`
+
+warning: unused variable: `pos`
+   --> src/layer1/ruins.rs:154:13
+    |
+154 |         let pos = GridPosition { x: 2, y: 2 };
+    |             ^^^ help: if this is intentional, prefix it with an underscore: `_pos`
+
+warning: unused variable: `equipment`
+   --> src/layer1/equipment_tests.rs:177:13
+    |
+177 |         let equipment = Equipment::default(); // No body
+    |             ^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_equipment`
+
+warning: variable does not need to be mutable
+   --> src/layer1/equipment_tests.rs:234:13
+    |
+234 |         let mut resources = ColonyResources {
+    |             ----^^^^^^^^^
+    |             |
+    |             help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `shower`
+   --> src/layer1/hygiene.rs:289:13
+    |
+289 |         let shower = world
+    |             ^^^^^^ help: if this is intentional, prefix it with an underscore: `_shower`
+
+warning: variable does not need to be mutable
+  --> src/layer1/permit.rs:21:33
+   |
+21 |     for (entity, mut inventory, mut power) in &mut query {
+   |                                 ----^^^^^
+   |                                 |
+   |                                 help: remove this `mut`
+
+warning: variable does not need to be mutable
+ --> src/layer2/mining_tests.rs:9:13
+  |
+9 |         let mut world = World::new();
+  |             ----^^^^^
+  |             |
+  |             help: remove this `mut`
+
+warning: `scale` (lib test) generated 40 warnings (1 duplicate) (run `cargo fix --lib -p scale --tests` to apply 38 suggestions)

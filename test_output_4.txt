@@ -1,0 +1,478 @@
+warning: unused import: `crate::layer1::funeral::Corpse`
+ --> src/layer1/recycling.rs:1:5
+  |
+1 | use crate::layer1::funeral::Corpse;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `ResourceType`
+ --> src/layer1/recycling.rs:4:49
+  |
+4 | use crate::layer1::resources::{ColonyResources, ResourceType};
+  |                                                 ^^^^^^^^^^^^
+
+warning: variable does not need to be mutable
+  --> src/layer1/permit.rs:21:33
+   |
+21 |     for (entity, mut inventory, mut power) in &mut query {
+   |                                 ----^^^^^
+   |                                 |
+   |                                 help: remove this `mut`
+   |
+   = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: `scale` (lib) generated 3 warnings (run `cargo fix --lib -p scale` to apply 3 suggestions)
+warning: missing documentation for the crate
+   --> tests/cannibalization_tests.rs:3:1
+    |
+  3 | / use bevy_ecs::prelude::*;
+  4 | | use scale::layer1::GridPosition;
+  5 | | use scale::layer1::building::{Building, BuildingType};
+  6 | | use scale::layer1::designation::{Designation, DesignationType};
+...   |
+128 | |     assert!(!success, "Should not cannibalize non-Lander");
+129 | | }
+    | |_^
+    |
+    = note: requested on the command line with `-W missing-docs`
+
+warning: missing documentation for the crate
+  --> tests/security_crowding_overflow.rs:1:1
+   |
+ 1 | / #[cfg(test)]
+ 2 | | mod tests {
+ 3 | |     use scale::layer1::crowding::CrowdingGrid;
+...  |
+30 | | }
+   | |_^
+   |
+   = note: requested on the command line with `-W missing-docs`
+
+warning: missing documentation for the crate
+  --> tests/security_render_overflow.rs:1:1
+   |
+ 1 | / #[cfg(test)]
+ 2 | | mod tests {
+ 3 | |     use ratatui::layout::Rect;
+ 4 | |     use scale::layer1::water::WaterGrid;
+...  |
+49 | | }
+   | |_^
+   |
+   = note: requested on the command line with `-W missing-docs`
+
+warning: missing documentation for the crate
+  --> tests/energy_fire.rs:1:1
+   |
+ 1 | / #[cfg(test)]
+ 2 | | mod tests {
+ 3 | |     use bevy_ecs::prelude::*;
+ 4 | |     use scale::layer1::energy::{GridOverloadEvent, PowerConsumer, PowerSource, power_grid_system};
+...  |
+72 | | }
+   | |_^
+   |
+   = note: requested on the command line with `-W missing-docs`
+
+warning: unused import: `bevy_ecs::prelude::*`
+  --> src/layer1/execution/tests/arrival_tests.rs:12:5
+   |
+12 | use bevy_ecs::prelude::*;
+   |     ^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `OccupiedTiles`
+ --> src/layer1/execution/tests/movement_tests.rs:3:55
+  |
+3 | use crate::layer1::building::{Building, BuildingType, OccupiedTiles};
+  |                                                       ^^^^^^^^^^^^^
+
+warning: unused imports: `Trait` and `Traits`
+  --> src/layer1/execution/tests/work_tests.rs:13:29
+   |
+13 | use crate::layer1::traits::{Trait, Traits};
+   |                             ^^^^^  ^^^^^^
+
+warning: unused import: `std::collections::HashSet`
+  --> src/layer1/execution/tests/work_tests.rs:16:5
+   |
+16 | use std::collections::HashSet;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `bevy_ecs::prelude::*`
+   --> src/layer1/hobby.rs:143:9
+    |
+143 |     use bevy_ecs::prelude::*;
+    |         ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `bevy_ecs::prelude::*`
+   --> src/layer1/social/debt.rs:148:9
+    |
+148 |     use bevy_ecs::prelude::*;
+    |         ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `bevy_ecs::prelude::*`
+   --> src/layer1/graffiti.rs:221:9
+    |
+221 |     use bevy_ecs::prelude::*;
+    |         ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused imports: `Health`, `check_health_status_system`, and `despawn_dead_entities_system`
+   --> src/layer1/funeral.rs:151:33
+    |
+151 |     use crate::layer1::health::{Health, check_health_status_system, despawn_dead_entities_system};
+    |                                 ^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ScreenShake`
+   --> src/layer1/funeral.rs:152:44
+    |
+152 |     use crate::layer1::map::{GridPosition, ScreenShake};
+    |                                            ^^^^^^^^^^^
+
+warning: unused imports: `PopDied`, `PopName`, and `handle_pop_death_system`
+   --> src/layer1/funeral.rs:155:35
+    |
+155 |     use crate::layer1::pop::{Pop, PopDied, PopName, handle_pop_death_system};
+    |                                   ^^^^^^^  ^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `crate::shared::log::MessageLog`
+   --> src/layer1/funeral.rs:156:9
+    |
+156 |     use crate::shared::log::MessageLog;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `bevy_ecs::system::RunSystemOnce`
+   --> src/layer1/funeral.rs:157:9
+    |
+157 |     use bevy_ecs::system::RunSystemOnce;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `bevy_ecs::prelude::*`
+   --> src/layer1/society.rs:179:9
+    |
+179 |     use bevy_ecs::prelude::*;
+    |         ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `RuinHistory`
+  --> src/layer1/ruins.rs:84:38
+   |
+84 |     use crate::layer1::ruins::{Ruin, RuinHistory};
+   |                                      ^^^^^^^^^^^
+
+warning: unused import: `bevy_ecs::prelude::*`
+   --> src/layer1/gastronomy.rs:239:9
+    |
+239 |     use bevy_ecs::prelude::*;
+    |         ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `bevy_ecs::prelude::*`
+  --> src/layer1/cryo_dreams.rs:82:9
+   |
+82 |     use bevy_ecs::prelude::*;
+   |         ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `bevy_ecs::prelude::*`
+   --> src/layer1/wind.rs:342:9
+    |
+342 |     use bevy_ecs::prelude::*;
+    |         ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `bevy_ecs::prelude::*`
+   --> src/layer1/fertility.rs:134:9
+    |
+134 |     use bevy_ecs::prelude::*;
+    |         ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `bevy_ecs::prelude::*`
+ --> src/layer1/cryo_tests.rs:8:5
+  |
+8 | use bevy_ecs::prelude::*;
+  |     ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `bevy_ecs::prelude::*`
+  --> src/layer1/language.rs:77:9
+   |
+77 |     use bevy_ecs::prelude::*;
+   |         ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `bevy_ecs::prelude::*`
+   --> src/layer1/gene_bank.rs:159:9
+    |
+159 |     use bevy_ecs::prelude::*;
+    |         ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `bevy_ecs::prelude::*`
+ --> src/layer1/improvised_tools_tests.rs:4:9
+  |
+4 |     use bevy_ecs::prelude::*;
+  |         ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused imports: `BuildingType` and `Building`
+  --> src/layer1/recycling.rs:64:35
+   |
+64 |     use crate::layer1::building::{Building, BuildingType};
+   |                                   ^^^^^^^^  ^^^^^^^^^^^^
+
+warning: unused import: `crate::layer1::morale::Morale`
+  --> src/layer1/recycling.rs:66:9
+   |
+66 |     use crate::layer1::morale::Morale;
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `crate::layer1::needs::Needs`
+  --> src/layer1/recycling.rs:67:9
+   |
+67 |     use crate::layer1::needs::Needs;
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `crate::layer1::pop::Pop`
+  --> src/layer1/recycling.rs:68:9
+   |
+68 |     use crate::layer1::pop::Pop;
+   |         ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused imports: `Trait` and `Traits`
+  --> src/layer1/recycling.rs:69:33
+   |
+69 |     use crate::layer1::traits::{Trait, Traits};
+   |                                 ^^^^^  ^^^^^^
+
+warning: unused import: `ResourceType`
+  --> src/layer1/permit.rs:59:53
+   |
+59 |     use crate::layer1::resources::{ColonyResources, ResourceType};
+   |                                                     ^^^^^^^^^^^^
+
+warning: unused import: `bevy_ecs::prelude::*`
+  --> src/layer1/permit.rs:60:9
+   |
+60 |     use bevy_ecs::prelude::*;
+   |         ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `bevy_ecs::prelude::*`
+  --> src/layer2/barnacles.rs:59:9
+   |
+59 |     use bevy_ecs::prelude::*;
+   |         ^^^^^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `bevy_ecs::event::Events::<E>::get_reader`: `get_reader` has been deprecated. Please use `get_cursor` instead.
+   --> src/layer2/debris_tests.rs:146:33
+    |
+146 |         let mut reader = events.get_reader();
+    |                                 ^^^^^^^^^^
+    |
+    = note: `#[warn(deprecated)]` on by default
+
+warning: unused variable: `permit_item`
+   --> src/layer1/hauling.rs:789:13
+    |
+789 |         let permit_item = world
+    |             ^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_permit_item`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `mascot`
+   --> src/layer1/mascot.rs:278:13
+    |
+278 |         let mascot = world
+    |             ^^^^^^ help: if this is intentional, prefix it with an underscore: `_mascot`
+
+warning: unused variable: `pos`
+   --> src/layer1/ruins.rs:154:13
+    |
+154 |         let pos = GridPosition { x: 2, y: 2 };
+    |             ^^^ help: if this is intentional, prefix it with an underscore: `_pos`
+
+warning: unused variable: `equipment`
+   --> src/layer1/equipment_tests.rs:177:13
+    |
+177 |         let equipment = Equipment::default(); // No body
+    |             ^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_equipment`
+
+warning: variable does not need to be mutable
+   --> src/layer1/equipment_tests.rs:234:13
+    |
+234 |         let mut resources = ColonyResources {
+    |             ----^^^^^^^^^
+    |             |
+    |             help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `shower`
+   --> src/layer1/hygiene.rs:289:13
+    |
+289 |         let shower = world
+    |             ^^^^^^ help: if this is intentional, prefix it with an underscore: `_shower`
+
+warning: variable does not need to be mutable
+  --> src/layer1/permit.rs:21:33
+   |
+21 |     for (entity, mut inventory, mut power) in &mut query {
+   |                                 ----^^^^^
+   |                                 |
+   |                                 help: remove this `mut`
+
+warning: variable does not need to be mutable
+ --> src/layer2/mining_tests.rs:9:13
+  |
+9 |         let mut world = World::new();
+  |             ----^^^^^
+  |             |
+  |             help: remove this `mut`
+
+warning: `scale` (test "cannibalization_tests") generated 1 warning
+warning: `scale` (test "security_crowding_overflow") generated 1 warning
+warning: `scale` (test "security_render_overflow") generated 1 warning
+warning: `scale` (test "energy_fire") generated 1 warning
+warning: `scale` (lib test) generated 40 warnings (1 duplicate) (run `cargo fix --lib -p scale --tests` to apply 38 suggestions)
+   Compiling scale v0.1.0 (/app)
+warning: missing documentation for the crate
+  --> tests/security_access_control.rs:1:1
+   |
+ 1 | / #[cfg(test)]
+ 2 | | mod tests {
+ 3 | |     use bevy_ecs::prelude::*;
+ 4 | |     use scale::layer1::access_control::{AccessControl, AccessMode, check_access};
+...  |
+34 | | }
+   | |_^
+   |
+   = note: requested on the command line with `-W missing-docs`
+
+warning: missing documentation for the crate
+  --> tests/security_chemical_exploit.rs:1:1
+   |
+ 1 | / #[cfg(test)]
+ 2 | | mod tests {
+ 3 | |     use bevy_ecs::prelude::*;
+ 4 | |     use scale::layer1::chemical::{
+...  |
+50 | | }
+   | |_^
+   |
+   = note: requested on the command line with `-W missing-docs`
+
+warning: missing documentation for the crate
+  --> tests/security_resource_exploit.rs:1:1
+   |
+ 1 | / #[cfg(test)]
+ 2 | | mod tests {
+ 3 | |     use scale::layer1::resources::ColonyResources;
+...  |
+25 | | }
+   | |_^
+   |
+   = note: requested on the command line with `-W missing-docs`
+
+warning: `scale` (test "security_access_control") generated 1 warning
+warning: `scale` (test "security_chemical_exploit") generated 1 warning
+warning: `scale` (test "security_resource_exploit") generated 1 warning
+warning: unused import: `bevy_ecs::prelude::*`
+ --> tests/integration/seismic_vibration.rs:1:5
+  |
+1 | use bevy_ecs::prelude::*;
+  |     ^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `ScanProgress`
+  --> tests/integration/pheromone_integration.rs:10:56
+   |
+10 |     use scale::layer1::science::{Anomaly, AnomalyType, ScanProgress, spawn_initial_anomalies};
+   |                                                        ^^^^^^^^^^^^
+
+warning: unused import: `filth_accumulation_system`
+ --> tests/integration/hygiene_recycling.rs:4:41
+  |
+4 |     use scale::layer1::hygiene::{Filth, filth_accumulation_system, shower_use_system};
+  |                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `recycle_processing_system`
+ --> tests/integration/hygiene_recycling.rs:9:46
+  |
+9 |     use scale::layer1::recycling::{Recycler, recycle_processing_system};
+  |                                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused variable: `new_flora`
+  --> tests/integration/pheromone_integration.rs:86:13
+   |
+86 |         let new_flora = world
+   |             ^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_new_flora`
+   |
+   = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: `scale` (test "integration") generated 5 warnings (run `cargo fix --test "integration" -p scale` to apply 5 suggestions)
+    Finished `test` profile [optimized + debuginfo] target(s) in 19.31s
+     Running unittests src/lib.rs (target/debug/deps/scale-d0da514f5ba31b30)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1279 filtered out; finished in 0.00s
+
+     Running unittests src/bin/headless.rs (target/debug/deps/headless-81b76dd8c2fb8ff8)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/debug/deps/scale-656825c27d51497f)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running tests/cannibalization_tests.rs (target/debug/deps/cannibalization_tests-7ed40fa7e5fb0062)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.00s
+
+     Running tests/energy_fire.rs (target/debug/deps/energy_fire-41d3c8789326aa7f)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running tests/health_validation.rs (target/debug/deps/health_validation-39a9c88a7fa550bd)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+
+     Running tests/integration.rs (target/debug/deps/integration-a8d09f059ddccc5b)
+
+running 3 tests
+test hygiene_recycling::tests::test_hauler_delivers_waste_to_recycler ... FAILED
+test hygiene_recycling::tests::test_recycler_building_has_inventory ... FAILED
+test hygiene_recycling::tests::test_shower_produces_waste_item ... FAILED
+
+failures:
+
+---- hygiene_recycling::tests::test_hauler_delivers_waste_to_recycler stdout ----
+
+thread 'hygiene_recycling::tests::test_hauler_delivers_waste_to_recycler' (8913) panicked at tests/integration/hygiene_recycling.rs:110:9:
+Waste item entity on ground should be despawned (held by hauler)
+
+---- hygiene_recycling::tests::test_recycler_building_has_inventory stdout ----
+
+thread 'hygiene_recycling::tests::test_recycler_building_has_inventory' (8914) panicked at tests/integration/hygiene_recycling.rs:155:9:
+Recycler should spawn with Inventory
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- hygiene_recycling::tests::test_shower_produces_waste_item stdout ----
+
+thread 'hygiene_recycling::tests::test_shower_produces_waste_item' (8915) panicked at tests/integration/hygiene_recycling.rs:70:9:
+Shower should spawn Waste Item on use
+
+
+failures:
+    hygiene_recycling::tests::test_hauler_delivers_waste_to_recycler
+    hygiene_recycling::tests::test_recycler_building_has_inventory
+    hygiene_recycling::tests::test_shower_produces_waste_item
+
+test result: FAILED. 0 passed; 3 failed; 0 ignored; 0 measured; 86 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `--test integration`
