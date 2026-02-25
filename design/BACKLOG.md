@@ -24,6 +24,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `222` Paperwork Physicality — `specs/222-paperwork-physicality.md`
 - [ ] `223` Volatile Resources — `specs/223-volatile-resources.md`
 - [ ] `224` The Scapegoat — `specs/224-the-scapegoat.md`
+- [ ] `225` Keystone Species — `specs/225-keystone-species.md`
 
 ## MVP — Layer 2: System Simulation
 
@@ -39,6 +40,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `184` Orbital Debris — `specs/184-orbital-debris.md`
 - [ ] `201` Space Lanes — `specs/201-space-lanes.md`
 - [ ] `209` Planetary Governance — `specs/209-planetary-governance.md`
+- [ ] `226` Ship Personalities — `specs/226-ship-personalities.md`
 
 ## MVP — Layer 3: Galaxy Simulation
 
