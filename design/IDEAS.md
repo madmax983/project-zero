@@ -6030,3 +6030,72 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Secure loose items (Storage time) vs. Emergency venting (Speed).
 
 ---
+## Use It Or Lose It
+
+**Layer:** 3 -> 1
+
+**Fantasy:** The absurdity of corporate budgeting. Spending money on useless things just to keep your funding.
+
+**Mechanic:** You receive a yearly "Operating Budget" from the Layer 3 Faction. Any unspent Credits at year-end are deducted from *next year's* budget allocation ("Surplus Reduction"). You are forced to buy "statues" or "expensive carpets" to hit the zero-balance target.
+
+**Emergence:** You pave the streets with gold during a famine, not because you are rich, but because if you don't spend the grant money now, you won't get it next year when the famine might be worse.
+
+**Tension:** Efficient saving (Fiscal Responsibility) vs. Bureaucratic spending (Funding Security).
+
+---
+
+## The Direct Link
+
+**Layer:** 1 (Meta)
+
+**Fantasy:** "Fine, I'll do it myself." The Commander steps onto the field.
+
+**Mechanic:** Player can "Possess" a specific Pop or Unit to take direct control (WASD movement, manual aiming). Possessed units get massive stat buffs but the global UI (Build menus, Alerts, Macro-orders) is disabled while active.
+
+**Emergence:** You possess a sniper to make a critical shot against a raid boss. You nail it. But while zoomed in, you miss the notification that the oxygen scrubber failed. You win the fight but suffocate the colony.
+
+**Tension:** Micro-tactical power (Heroism) vs. Macro-strategic awareness (Command).
+
+---
+
+## Phantom Infrastructure
+
+**Layer:** 1
+
+**Fantasy:** The base has a history you've forgotten. The spaghetti code of city planning.
+
+**Mechanic:** Pipes and Cables built in the early game become "Occluded" (invisible) under floors and walls over time. Deconstructing a wall has a risk of severing a forgotten "pass-through" line powering a distant sector.
+
+**Emergence:** You renovate the cafeteria for better aesthetics. You accidentally cut the main power line to the Cryo-Bay on the other side of the base. 50 sleepers thaw out angry and confused.
+
+**Tension:** Renovation (Clean layout) vs. Inertia (Fear of breaking legacy systems).
+
+---
+
+## Kinetic Storage
+
+**Layer:** 1
+
+**Fantasy:** Storing power in gravity. The sword of Damocles hanging over your head.
+
+**Mechanic:** "Gravity Battery" towers use excess energy to lift massive weights up Z-levels. Dropping the weight releases energy. If the tower is damaged, the weight falls, crushing anything below it instantly.
+
+**Emergence:** You build the battery array above your housing district for efficiency. A stray shot snaps the cable. The weight flattens the Mayor's house.
+
+**Tension:** Energy storage capacity vs. Catastrophic risk zone.
+
+---
+
+## Contractor Fleets
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Outsourcing the apocalypse.
+
+**Mechanic:** Hire neutral AI fleets to perform specific tasks (Mining, Building, Defense) for Credits. They are fast and self-sufficient but have zero loyalty. If a payment fails (e.g., due to a hacks or shortage), they immediately "Repo" their work (deconstruct/steal) and leave.
+
+**Emergence:** You hire mercs to defend against a raid. The payment transfer fails due to a solar flare cutting comms. The mercs turn around and join the raid to get their money's worth.
+
+**Tension:** Speed/Ease (Outsourcing) vs. Control/Reliability (Doing it yourself).
+
+---
