@@ -6099,3 +6099,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Speed/Ease (Outsourcing) vs. Control/Reliability (Doing it yourself).
 
 ---
+
+## Public Grievances
+
+**Layer:** 1
+
+**Fantasy:** Airing dirty laundry. A village square where reputation is currency.
+
+**Mechanic:** Buildable "Bulletin Board". Pops post "Grievances" (insults/complaints) or "Praise". Visible to player. Targets gain/lose Social Standing.
+
+**Emergence:** A "Witch Hunt" begins against a specific Pop because they snored. They are ostracized and starve because no one will trade/serve them.
+
+**Tension:** Allow free speech (Catharsis) vs. Censorship (Social Stability).
+
+---
+
+## Protest Crowds
+
+**Layer:** 1
+
+**Fantasy:** The physical weight of dissent.
+
+**Mechanic:** Unhappy Factions don't just complain; they physically gather in "Mobs" that block tiles (Halls, Airlocks, Power Plants). They refuse to move until demands are met or force is used.
+
+**Emergence:** A mob blocks the main airlock during a shift change, causing a "Gridlock" that halts the mine. Then a fire starts, and the mob blocks the firefighters.
+
+**Tension:** Negotiate (Costly) vs. Disperse (Violent/Injuries).
+
+---
+
+## Planetary Curvature
+
+**Layer:** 1
+
+**Fantasy:** Standing on a marble.
+
+**Mechanic:** On small worlds (Moons/Asteroids), the Horizon is close. Line-of-Sight is limited by distance unless the observer is elevated (High Z-level).
+
+**Emergence:** Your ground-level turrets are useless against long-range snipers. You must build "Watchtowers" or "Skyscrapers" to push the horizon back.
+
+**Tension:** Height/Structural Cost vs. Visual Range.
+
+---
+
+## The Echo
+
+**Layer:** 1
+
+**Fantasy:** The past bleeds into the present.
+
+**Mechanic:** Locations with high "History" (Deaths, Triumphs) spawn visual "Echoes" (ghostly loops of the event). Echoes distract Pops (Stun/Observe) or reveal hidden details (e.g., where a lost item was dropped).
+
+**Emergence:** An Echo of a murder plays out in the mess hall every Tuesday. Pops avoid the room on Tuesdays, disrupting the meal schedule.
+
+**Tension:** Erase history (Deconstruct/Exorcise) vs. Learn from it (Intel/Flavor).
+
+---
+
+## The Visitor
+
+**Layer:** 1
+
+**Fantasy:** A god walks among ants.
+
+**Mechanic:** A massive, indestructible entity (Titan/construct) lands and wanders the map. It ignores walls (smashes them) and eats from stockpiles. It is not hostile, just indifferent. It leaves behind rare byproducts.
+
+**Emergence:** You redesign your entire city layout to create a "Path" for the Visitor so it doesn't smash your reactor on its way to the food stockpile.
+
+**Tension:** Adaptation (Rebuilding around it) vs. Futile resistance.
+
+---
