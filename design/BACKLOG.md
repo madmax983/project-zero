@@ -27,6 +27,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `225` Keystone Species — `specs/225-keystone-species.md`
 - [ ] `227` Corrosive Atmosphere — `specs/227-corrosive-atmosphere.md`
 - [ ] `228` Pneumatic Tubes — `specs/228-pneumatic-tubes.md`
+- [ ] `231` Memorial Forests — `specs/231-memorial-forests.md`
 
 ## MVP — Layer 2: System Simulation
 
