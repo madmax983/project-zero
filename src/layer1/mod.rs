@@ -620,12 +620,12 @@ pub mod window;
 pub mod hygiene;
 pub use hygiene::*;
 
-#[cfg(test)]
-mod urban_heat_tests;
-#[cfg(test)]
-mod improvised_tools_tests;
 /// Gene Bank system (Spec 165).
 pub mod gene_bank;
+#[cfg(test)]
+mod improvised_tools_tests;
+#[cfg(test)]
+mod urban_heat_tests;
 pub use gene_bank::*;
 
 /// The Mother Lode system (Spec 168).

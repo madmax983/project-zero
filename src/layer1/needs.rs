@@ -109,11 +109,7 @@ impl Needs {
         } else {
             self.hygiene
         };
-        if min_hr < min_lh {
-            min_hr
-        } else {
-            min_lh
-        }
+        if min_hr < min_lh { min_hr } else { min_lh }
     }
 
     /// Calculates aggregate morale score (0.0 to 1.0).

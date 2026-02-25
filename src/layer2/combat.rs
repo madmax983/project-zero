@@ -1,7 +1,7 @@
+use crate::layer1::resources::ResourceType;
 use crate::layer2::events::ShipDestroyedEvent;
 use crate::layer2::fleet::{FleetComposition, FleetFaction, InOrbit};
 use crate::layer2::ship::ShipType;
-use crate::layer1::resources::ResourceType;
 use bevy_ecs::prelude::*;
 
 /// Result of a fleet combat engagement.
@@ -31,8 +31,16 @@ pub fn resolve_combat(
     def_faction: FleetFaction,
     defender: &FleetComposition,
 ) -> CombatResult {
-    let att_power: f32 = attacker.ships.iter().map(|s| s.ship_type.attack_power()).sum();
-    let def_power: f32 = defender.ships.iter().map(|s| s.ship_type.attack_power()).sum();
+    let att_power: f32 = attacker
+        .ships
+        .iter()
+        .map(|s| s.ship_type.attack_power())
+        .sum();
+    let def_power: f32 = defender
+        .ships
+        .iter()
+        .map(|s| s.ship_type.attack_power())
+        .sum();
 
     // Attacker wins ties
     let attacker_wins = att_power >= def_power;
@@ -69,7 +77,7 @@ pub fn resolve_combat(
 
         // Bonus for Transports
         if *ship_type == ShipType::Transport {
-             scrap_amount += 100.0; // Cargo loot
+            scrap_amount += 100.0; // Cargo loot
         }
     }
 
@@ -100,7 +108,10 @@ pub fn fleet_combat_system(
     // Given low N of fleets, sorting/grouping is fine.
 
     // Vector of (Entity, Parent, Faction, Composition)
-    let mut fleets: Vec<_> = query.iter_mut().map(|(e, o, f, c)| (e, o.parent, *f, c.clone())).collect();
+    let mut fleets: Vec<_> = query
+        .iter_mut()
+        .map(|(e, o, f, c)| (e, o.parent, *f, c.clone()))
+        .collect();
 
     // Group by location
     fleets.sort_by_key(|k| k.1);
@@ -122,13 +133,15 @@ pub fn fleet_combat_system(
             // Pick first two different factions to fight
             let mut combat_pair = None;
             for j in 0..location_fleets.len() {
-                for k in j+1..location_fleets.len() {
+                for k in j + 1..location_fleets.len() {
                     if location_fleets[j].2 != location_fleets[k].2 {
                         combat_pair = Some((j, k));
                         break;
                     }
                 }
-                if combat_pair.is_some() { break; }
+                if combat_pair.is_some() {
+                    break;
+                }
             }
 
             if let Some((idx1, idx2)) = combat_pair {
@@ -140,7 +153,11 @@ pub fn fleet_combat_system(
                 let result = resolve_combat(*f1, c1, *f2, c2);
 
                 // Apply results
-                let (winner_entity, loser_entity) = if result.winner == *f1 { (*e1, *e2) } else { (*e2, *e1) };
+                let (winner_entity, loser_entity) = if result.winner == *f1 {
+                    (*e1, *e2)
+                } else {
+                    (*e2, *e1)
+                };
 
                 // Emit destroyed events
                 for ship in &result.destroyed_ships {
@@ -154,7 +171,9 @@ pub fn fleet_combat_system(
                 if result.winner_survivors.ships.is_empty() {
                     commands.entity(winner_entity).despawn(); // Mutual destruction?
                 } else {
-                    commands.entity(winner_entity).insert(result.winner_survivors);
+                    commands
+                        .entity(winner_entity)
+                        .insert(result.winner_survivors);
                 }
 
                 // Update Loser
@@ -171,10 +190,13 @@ pub fn fleet_combat_system(
                         // "Debris: Spawn OrbitalDebris entity (Spec 184) containing the loot."
                     }
                 } else {
-                     commands.entity(loser_entity).insert(result.loser_survivors);
+                    commands.entity(loser_entity).insert(result.loser_survivors);
                 }
 
-                println!("Combat at {:?}! Winner: {:?}, Loser Survivors: {}", current_location, result.winner, loser_survivor_count);
+                println!(
+                    "Combat at {:?}! Winner: {:?}, Loser Survivors: {}",
+                    current_location, result.winner, loser_survivor_count
+                );
             }
         }
 
@@ -184,9 +206,9 @@ pub fn fleet_combat_system(
 
 #[cfg(test)]
 mod tests {
+    use crate::layer2::combat::resolve_combat;
     use crate::layer2::fleet::{FleetComposition, FleetFaction};
     use crate::layer2::ship::{Ship, ShipType};
-    use crate::layer2::combat::resolve_combat;
 
     // Helper to create a test fleet
     fn create_fleet(_faction: FleetFaction, ships: Vec<ShipType>) -> FleetComposition {
@@ -206,16 +228,28 @@ mod tests {
         let fleet_b = create_fleet(FleetFaction::Pirate, vec![ShipType::Scout; 1]);
 
         // Resolve
-        let result = resolve_combat(FleetFaction::Player, &fleet_a, FleetFaction::Pirate, &fleet_b);
+        let result = resolve_combat(
+            FleetFaction::Player,
+            &fleet_a,
+            FleetFaction::Pirate,
+            &fleet_b,
+        );
 
         // A should win
         assert_eq!(result.winner, FleetFaction::Player);
         // B should be wiped out (empty list of survivors)
-        assert!(result.loser_survivors.ships.is_empty(), "Loser should have 0 survivors");
+        assert!(
+            result.loser_survivors.ships.is_empty(),
+            "Loser should have 0 survivors"
+        );
         // A should take minimal/no damage (just checking count for now)
         // 10 Frigates vs 1 Scout. Scout power = 2. Frigate power = 50. Total A=500, B=2.
         // Winner damage = 2 * 0.5 = 1.0. Frigate HP = 100. No ships lost.
-        assert_eq!(result.winner_survivors.ships.len(), 10, "Winner should keep ships");
+        assert_eq!(
+            result.winner_survivors.ships.len(),
+            10,
+            "Winner should keep ships"
+        );
     }
 
     #[test]
@@ -227,14 +261,23 @@ mod tests {
         let fleet_b = create_fleet(FleetFaction::Pirate, vec![ShipType::Frigate; 5]);
 
         // Even fight, both sides should take losses
-        let result = resolve_combat(FleetFaction::Player, &fleet_a, FleetFaction::Pirate, &fleet_b);
+        let result = resolve_combat(
+            FleetFaction::Player,
+            &fleet_a,
+            FleetFaction::Pirate,
+            &fleet_b,
+        );
 
         // Winner Power: 250. Loser Power: 250.
         // Winner Damage: 125. (1.25 Frigates lost) -> 4 survivors (1 damaged).
         // Loser Damage: 375. (3.75 Frigates lost) -> 2 survivors (1 damaged).
 
-        let total_survivors = result.winner_survivors.ships.len() + result.loser_survivors.ships.len();
-        assert!(total_survivors < 10, "Casualties should occur in even fight");
+        let total_survivors =
+            result.winner_survivors.ships.len() + result.loser_survivors.ships.len();
+        assert!(
+            total_survivors < 10,
+            "Casualties should occur in even fight"
+        );
     }
 
     #[test]
@@ -242,10 +285,18 @@ mod tests {
         let fleet_a = create_fleet(FleetFaction::Player, vec![ShipType::Frigate; 10]);
         let fleet_b = create_fleet(FleetFaction::Pirate, vec![ShipType::Transport; 1]); // Transport has high cargo
 
-        let result = resolve_combat(FleetFaction::Player, &fleet_a, FleetFaction::Pirate, &fleet_b);
+        let result = resolve_combat(
+            FleetFaction::Player,
+            &fleet_a,
+            FleetFaction::Pirate,
+            &fleet_b,
+        );
 
         // If Transport destroyed, loot generated
-        assert!(result.loot.is_some(), "Loot should be generated when transport is destroyed");
+        assert!(
+            result.loot.is_some(),
+            "Loot should be generated when transport is destroyed"
+        );
     }
 
     #[test]
@@ -253,10 +304,21 @@ mod tests {
         let fleet_a = create_fleet(FleetFaction::Player, vec![ShipType::Frigate; 10]);
         let fleet_b = create_fleet(FleetFaction::Pirate, vec![ShipType::Scout; 1]);
 
-        let result = resolve_combat(FleetFaction::Player, &fleet_a, FleetFaction::Pirate, &fleet_b);
+        let result = resolve_combat(
+            FleetFaction::Player,
+            &fleet_a,
+            FleetFaction::Pirate,
+            &fleet_b,
+        );
 
         // B's scout should be in destroyed list
-        assert!(!result.destroyed_ships.is_empty(), "Destroyed ships should be tracked");
-        assert!(result.destroyed_ships.contains(&ShipType::Scout), "Scout should be destroyed");
+        assert!(
+            !result.destroyed_ships.is_empty(),
+            "Destroyed ships should be tracked"
+        );
+        assert!(
+            result.destroyed_ships.contains(&ShipType::Scout),
+            "Scout should be destroyed"
+        );
     }
 }

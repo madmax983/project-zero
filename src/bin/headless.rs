@@ -1285,7 +1285,11 @@ fn print_help() {
                 ("designations", "d", "List all active designations"),
                 ("chronicle", "c, history", "Show colony history events"),
                 ("log", "l", "Show message log"),
-                ("tech", "research_status", "Show technology status and capacity"),
+                (
+                    "tech",
+                    "research_status",
+                    "Show technology status and capacity",
+                ),
             ],
         ),
         (
@@ -1300,7 +1304,11 @@ fn print_help() {
                 ("chop <x> <y>", "", "Designate tree for chopping"),
                 ("destroy <x> <y>", "", "Designate building for destruction"),
                 ("find <type> [N]", "", "Find N terrain coords (default 10)"),
-                ("research <name>", "r", "Research a technology (e.g. Masonry)"),
+                (
+                    "research <name>",
+                    "r",
+                    "Research a technology (e.g. Masonry)",
+                ),
             ],
         ),
     ];

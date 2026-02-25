@@ -3,9 +3,9 @@
 //! Handles the accumulation of debris from launches and combat,
 //! and the risks it poses to ships and future launches.
 
-use bevy_ecs::prelude::*;
 use crate::layer2::events::{LaunchEvent, ShipDestroyedEvent};
-use crate::layer2::fleet::{Fleet, InOrbit, FleetHealth, FleetComposition};
+use crate::layer2::fleet::{Fleet, FleetComposition, FleetHealth, InOrbit};
+use bevy_ecs::prelude::*;
 
 /// Component tracking the amount of debris in orbit around a body.
 #[derive(Component, Default, Debug)]
@@ -26,11 +26,11 @@ pub fn debris_accumulation_system(
 ) {
     for event in events_launch.read() {
         if let Ok(mut debris) = query.get_mut(event.planet) {
-             if event.success {
-                 debris.amount += 0.05;
-             } else {
-                 debris.amount += 0.10;
-             }
+            if event.success {
+                debris.amount += 0.05;
+            } else {
+                debris.amount += 0.10;
+            }
         }
     }
 
@@ -45,7 +45,15 @@ pub fn debris_accumulation_system(
 pub fn debris_attrition_system(
     mut commands: Commands,
     planet_query: Query<&OrbitalDebris>,
-    mut fleet_query: Query<(Entity, &InOrbit, &mut FleetHealth, Option<&mut FleetComposition>), With<Fleet>>,
+    mut fleet_query: Query<
+        (
+            Entity,
+            &InOrbit,
+            &mut FleetHealth,
+            Option<&mut FleetComposition>,
+        ),
+        With<Fleet>,
+    >,
     mut event_writer: EventWriter<ShipDestroyedEvent>,
 ) {
     for (entity, orbit, mut health, mut maybe_comp) in &mut fleet_query {
@@ -61,10 +69,10 @@ pub fn debris_attrition_system(
                 // Concrete fleet with ships
                 let destroyed = comp.take_damage(damage);
                 for ship_type in destroyed {
-                     event_writer.send(ShipDestroyedEvent {
-                         planet: orbit.parent,
-                         ship_class: format!("{ship_type:?}"),
-                     });
+                    event_writer.send(ShipDestroyedEvent {
+                        planet: orbit.parent,
+                        ship_class: format!("{ship_type:?}"),
+                    });
                 }
 
                 // Recalculate health from comp
@@ -80,11 +88,11 @@ pub fn debris_attrition_system(
                 // Abstract fleet
                 health.current = (health.current - damage).max(0.0);
                 if health.current <= 0.001 {
-                     commands.entity(entity).despawn();
-                     event_writer.send(ShipDestroyedEvent {
-                         planet: orbit.parent,
-                         ship_class: "Unknown Fleet".to_string(),
-                     });
+                    commands.entity(entity).despawn();
+                    event_writer.send(ShipDestroyedEvent {
+                        planet: orbit.parent,
+                        ship_class: "Unknown Fleet".to_string(),
+                    });
                 }
             }
         }

@@ -2,11 +2,11 @@
 //!
 //! Handles filth accumulation, hygiene decay, and showering.
 
-use bevy_ecs::prelude::*;
-use crate::layer1::pop::Job;
 use crate::layer1::needs::Needs;
+use crate::layer1::pop::Job;
 use crate::layer1::resources::ColonyResources;
-use crate::layer1::utility_types::{PopAction, ActionType, AssignmentType};
+use crate::layer1::utility_types::{ActionType, AssignmentType, PopAction};
+use bevy_ecs::prelude::*;
 
 /// Tracks physical filth on a Pop.
 ///
@@ -54,7 +54,9 @@ pub fn filth_accumulation_system(mut query: Query<(&mut Filth, &PopAction, Optio
                     AssignmentType::FarmWorker | AssignmentType::Funeral => {
                         rate *= DIRTY_JOB_MULTIPLIER;
                     }
-                    AssignmentType::LibraryWorker | AssignmentType::Administrator | AssignmentType::ObservatoryWorker => {
+                    AssignmentType::LibraryWorker
+                    | AssignmentType::Administrator
+                    | AssignmentType::ObservatoryWorker => {
                         rate *= CLEAN_JOB_MULTIPLIER;
                     }
                     _ => {
@@ -120,12 +122,12 @@ pub fn shower_use_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::pop::Pop;
+    use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::needs::Needs;
     use crate::layer1::pop::Job;
+    use crate::layer1::pop::Pop;
     use crate::layer1::resources::ColonyResources;
-    use crate::layer1::building::{Building, BuildingType};
-    use crate::layer1::utility_types::{PopAction, ActionType, AssignmentType};
+    use crate::layer1::utility_types::{ActionType, AssignmentType, PopAction};
 
     fn setup_world() -> World {
         let mut world = World::new();
@@ -140,11 +142,19 @@ mod tests {
     #[test]
     fn test_filth_accumulation_idle() {
         let mut world = setup_world();
-        let pop = world.spawn((
-            Pop::default(),
-            PopAction { current: ActionType::Idle, ..Default::default() },
-            Filth { current: 0.0, max: 100.0 },
-        )).id();
+        let pop = world
+            .spawn((
+                Pop::default(),
+                PopAction {
+                    current: ActionType::Idle,
+                    ..Default::default()
+                },
+                Filth {
+                    current: 0.0,
+                    max: 100.0,
+                },
+            ))
+            .id();
 
         // Run system
         let mut schedule = Schedule::default();
@@ -152,7 +162,10 @@ mod tests {
         schedule.run(&mut world);
 
         let filth = world.get::<Filth>(pop).unwrap();
-        assert!(filth.current > 0.0, "Filth should accumulate slowly even when idle");
+        assert!(
+            filth.current > 0.0,
+            "Filth should accumulate slowly even when idle"
+        );
     }
 
     #[test]
@@ -161,19 +174,41 @@ mod tests {
         let mine = world.spawn_empty().id();
         let lab = world.spawn_empty().id();
 
-        let miner = world.spawn((
-            Pop::default(),
-            PopAction { current: ActionType::Work, ..Default::default() },
-            Job { workplace: mine, job_type: AssignmentType::FarmWorker }, // Dirty
-            Filth { current: 0.0, max: 100.0 },
-        )).id();
+        let miner = world
+            .spawn((
+                Pop::default(),
+                PopAction {
+                    current: ActionType::Work,
+                    ..Default::default()
+                },
+                Job {
+                    workplace: mine,
+                    job_type: AssignmentType::FarmWorker,
+                }, // Dirty
+                Filth {
+                    current: 0.0,
+                    max: 100.0,
+                },
+            ))
+            .id();
 
-        let researcher = world.spawn((
-            Pop::default(),
-            PopAction { current: ActionType::Work, ..Default::default() },
-            Job { workplace: lab, job_type: AssignmentType::LibraryWorker }, // Clean
-            Filth { current: 0.0, max: 100.0 },
-        )).id();
+        let researcher = world
+            .spawn((
+                Pop::default(),
+                PopAction {
+                    current: ActionType::Work,
+                    ..Default::default()
+                },
+                Job {
+                    workplace: lab,
+                    job_type: AssignmentType::LibraryWorker,
+                }, // Clean
+                Filth {
+                    current: 0.0,
+                    max: 100.0,
+                },
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(filth_accumulation_system);
@@ -182,21 +217,40 @@ mod tests {
         let miner_filth = world.get::<Filth>(miner).unwrap().current;
         let researcher_filth = world.get::<Filth>(researcher).unwrap().current;
 
-        assert!(miner_filth > researcher_filth, "FarmWorkers should get dirtier than Researchers");
+        assert!(
+            miner_filth > researcher_filth,
+            "FarmWorkers should get dirtier than Researchers"
+        );
     }
 
     #[test]
     fn test_hygiene_decay_from_filth() {
         let mut world = setup_world();
-        let clean_pop = world.spawn((
-            Needs { hygiene: 1.0, ..Default::default() },
-            Filth { current: 0.0, ..Default::default() },
-        )).id();
+        let clean_pop = world
+            .spawn((
+                Needs {
+                    hygiene: 1.0,
+                    ..Default::default()
+                },
+                Filth {
+                    current: 0.0,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
-        let dirty_pop = world.spawn((
-            Needs { hygiene: 1.0, ..Default::default() },
-            Filth { current: 100.0, ..Default::default() },
-        )).id();
+        let dirty_pop = world
+            .spawn((
+                Needs {
+                    hygiene: 1.0,
+                    ..Default::default()
+                },
+                Filth {
+                    current: 100.0,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(hygiene_decay_system);
@@ -205,25 +259,38 @@ mod tests {
         let clean_hygiene = world.get::<Needs>(clean_pop).unwrap().hygiene;
         let dirty_hygiene = world.get::<Needs>(dirty_pop).unwrap().hygiene;
 
-        assert!(dirty_hygiene < clean_hygiene, "High filth should accelerate hygiene decay");
+        assert!(
+            dirty_hygiene < clean_hygiene,
+            "High filth should accelerate hygiene decay"
+        );
     }
 
     #[test]
     fn test_shower_usage() {
         let mut world = setup_world();
 
-        let pop = world.spawn((
-            Needs { hygiene: 0.1, ..Default::default() },
-            Filth { current: 80.0, ..Default::default() },
-            PopAction {
-                current: ActionType::UseShower,
-                ..Default::default()
-            },
-        )).id();
+        let pop = world
+            .spawn((
+                Needs {
+                    hygiene: 0.1,
+                    ..Default::default()
+                },
+                Filth {
+                    current: 80.0,
+                    ..Default::default()
+                },
+                PopAction {
+                    current: ActionType::UseShower,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
-        let shower = world.spawn((
-            Building { building_type: BuildingType::Shower },
-        )).id();
+        let shower = world
+            .spawn((Building {
+                building_type: BuildingType::Shower,
+            },))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(shower_use_system);

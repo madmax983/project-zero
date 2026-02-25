@@ -222,14 +222,11 @@ fn populate_offices(
 fn populate_showers(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
     buffer.clear();
     let mut query = world.query::<(Entity, &GridPosition, &Building)>();
-    let mut count = 0;
     for (entity, pos, building) in query.iter(world) {
         if building.building_type == BuildingType::Shower {
             buffer.push(ScorableCandidate::with_capacity(entity, *pos, 1, 0));
-            count += 1;
         }
     }
-    // println!("Populated {} showers", count);
 }
 
 fn populate_buffer_designations(world: &mut World, buffer: &mut UtilityAIBuffer) {
@@ -472,5 +469,282 @@ mod tests {
         // 5. Verify
         assert_eq!(buffer.len(), 1);
         assert_eq!(buffer[0].entity, item_out);
+    }
+
+    #[test]
+    fn test_populate_farms_filters_inactive_schedule() {
+        use crate::layer1::building::ShiftSchedule;
+        use crate::layer1::day_night::{DayNightCycle, TimeOfDay};
+        use crate::layer1::farm::Farm;
+
+        let mut world = World::new();
+        let cycle = DayNightCycle {
+            time_of_day: TimeOfDay::Night, // Currently Night
+            ..Default::default()
+        };
+
+        // Farm active only during Day
+        world.spawn((
+            Farm::default(),
+            GridPosition { x: 0, y: 0 },
+            ShiftSchedule {
+                day_shift: true,
+                night_shift: false,
+            },
+        ));
+
+        let mut buffer = Vec::new();
+        populate_farms(&mut world, &mut buffer, &cycle);
+
+        assert!(
+            buffer.is_empty(),
+            "Should filter out farm inactive at night"
+        );
+
+        // Change cycle to Day
+        let cycle_day = DayNightCycle {
+            time_of_day: TimeOfDay::Day,
+            ..Default::default()
+        };
+        populate_farms(&mut world, &mut buffer, &cycle_day);
+        assert_eq!(buffer.len(), 1, "Should include farm active during day");
+    }
+
+    #[test]
+    fn test_populate_farms_filters_unpowered() {
+        use crate::layer1::day_night::DayNightCycle;
+        use crate::layer1::energy::PowerConsumer;
+        use crate::layer1::farm::Farm;
+
+        let mut world = World::new();
+        let cycle = DayNightCycle::default(); // Default is Day
+
+        // Unpowered Farm
+        world.spawn((
+            Farm::default(),
+            GridPosition { x: 0, y: 0 },
+            PowerConsumer {
+                active: false,
+                ..Default::default()
+            },
+        ));
+
+        let mut buffer = Vec::new();
+        populate_farms(&mut world, &mut buffer, &cycle);
+
+        assert!(buffer.is_empty(), "Should filter out unpowered farm");
+
+        // Powered Farm
+        world.spawn((
+            Farm::default(),
+            GridPosition { x: 1, y: 0 },
+            PowerConsumer {
+                active: true,
+                ..Default::default()
+            },
+        ));
+        populate_farms(&mut world, &mut buffer, &cycle);
+        assert_eq!(buffer.len(), 1, "Should include powered farm");
+    }
+
+    #[test]
+    fn test_populate_farms_filters_full_capacity() {
+        use crate::layer1::day_night::DayNightCycle;
+        use crate::layer1::farm::Farm;
+
+        let mut world = World::new();
+        let cycle = DayNightCycle::default();
+
+        // Full Farm
+        let mut full_farm = Farm::default();
+        full_farm.capacity = 1;
+        full_farm.workers.push(Entity::from_raw(123)); // Mock worker
+
+        world.spawn((full_farm, GridPosition { x: 0, y: 0 }));
+
+        let mut buffer = Vec::new();
+        populate_farms(&mut world, &mut buffer, &cycle);
+
+        assert!(buffer.is_empty(), "Should filter out full farm");
+
+        // Empty Farm
+        let empty_farm = Farm {
+            capacity: 1,
+            ..Default::default()
+        };
+        world.spawn((empty_farm, GridPosition { x: 1, y: 0 }));
+        populate_farms(&mut world, &mut buffer, &cycle);
+        assert_eq!(buffer.len(), 1, "Should include empty farm");
+    }
+
+    #[test]
+    fn test_populate_refining_filters_unaffordable() {
+        use crate::layer1::building::{Building, BuildingType};
+        use crate::layer1::day_night::DayNightCycle;
+        use crate::layer1::resources::{ColonyResources, RefiningProgress};
+        use crate::layer1::taboo::TabooState;
+        use crate::layer1::utility_eval_types::WorldContext;
+        use crate::layer1::zone::ZoneGrid;
+
+        let mut world = World::new();
+        // LumberMill requires 1 Wood.
+        let mut resources = ColonyResources::default();
+        resources.wood = 0.0; // Cannot afford
+
+        let cycle = DayNightCycle::default();
+        let taboo = TabooState::default();
+        let zone_grid = ZoneGrid::new(10, 10);
+
+        let context = WorldContext {
+            resources: &resources,
+            cycle: &cycle,
+            taboo: &taboo,
+            factions: None,
+            zone_grid: &zone_grid,
+            temperature_grid: None,
+        };
+
+        world.spawn((
+            Building {
+                building_type: BuildingType::LumberMill,
+            },
+            GridPosition { x: 0, y: 0 },
+            RefiningProgress::default(),
+        ));
+
+        let mut buffer = Vec::new();
+        populate_refining(&mut world, &mut buffer, &context);
+
+        assert!(buffer.is_empty(), "Should filter out unaffordable recipe");
+
+        // Now afford
+        resources.wood = 1.0;
+        let context_valid = WorldContext {
+            resources: &resources,
+            cycle: &cycle,
+            taboo: &taboo,
+            factions: None,
+            zone_grid: &zone_grid,
+            temperature_grid: None,
+        };
+        populate_refining(&mut world, &mut buffer, &context_valid);
+        assert_eq!(buffer.len(), 1, "Should include affordable recipe");
+    }
+
+    #[test]
+    fn test_populate_refining_filters_inactive_schedule() {
+        use crate::layer1::building::{Building, BuildingType, ShiftSchedule};
+        use crate::layer1::day_night::{DayNightCycle, TimeOfDay};
+        use crate::layer1::resources::{ColonyResources, RefiningProgress};
+        use crate::layer1::taboo::TabooState;
+        use crate::layer1::utility_eval_types::WorldContext;
+        use crate::layer1::zone::ZoneGrid;
+
+        let mut world = World::new();
+        let mut resources = ColonyResources::default();
+        resources.wood = 1.0;
+
+        let cycle = DayNightCycle {
+            time_of_day: TimeOfDay::Night,
+            ..Default::default()
+        };
+        let taboo = TabooState::default();
+        let zone_grid = ZoneGrid::new(10, 10);
+
+        let context = WorldContext {
+            resources: &resources,
+            cycle: &cycle,
+            taboo: &taboo,
+            factions: None,
+            zone_grid: &zone_grid,
+            temperature_grid: None,
+        };
+
+        world.spawn((
+            Building {
+                building_type: BuildingType::LumberMill,
+            },
+            GridPosition { x: 0, y: 0 },
+            RefiningProgress::default(),
+            ShiftSchedule {
+                day_shift: true,
+                night_shift: false,
+            },
+        ));
+
+        let mut buffer = Vec::new();
+        populate_refining(&mut world, &mut buffer, &context);
+
+        assert!(buffer.is_empty(), "Should filter out inactive shift");
+    }
+
+    #[test]
+    fn test_populate_refining_filters_unpowered() {
+        use crate::layer1::building::{Building, BuildingType};
+        use crate::layer1::day_night::DayNightCycle;
+        use crate::layer1::energy::PowerConsumer;
+        use crate::layer1::resources::{ColonyResources, RefiningProgress};
+        use crate::layer1::taboo::TabooState;
+        use crate::layer1::utility_eval_types::WorldContext;
+        use crate::layer1::zone::ZoneGrid;
+
+        let mut world = World::new();
+        let mut resources = ColonyResources::default();
+        resources.wood = 1.0;
+
+        let cycle = DayNightCycle::default();
+        let taboo = TabooState::default();
+        let zone_grid = ZoneGrid::new(10, 10);
+
+        let context = WorldContext {
+            resources: &resources,
+            cycle: &cycle,
+            taboo: &taboo,
+            factions: None,
+            zone_grid: &zone_grid,
+            temperature_grid: None,
+        };
+
+        world.spawn((
+            Building {
+                building_type: BuildingType::LumberMill,
+            },
+            GridPosition { x: 0, y: 0 },
+            RefiningProgress::default(),
+            PowerConsumer {
+                active: false,
+                ..Default::default()
+            },
+        ));
+
+        let mut buffer = Vec::new();
+        populate_refining(&mut world, &mut buffer, &context);
+
+        assert!(buffer.is_empty(), "Should filter out unpowered building");
+    }
+
+    #[test]
+    fn test_populate_housing_filters_full() {
+        use crate::layer1::housing::Housing;
+
+        let mut world = World::new();
+
+        // Full Housing
+        let mut housing = Housing::default();
+        housing.capacity = 1;
+        housing.residents.push(Entity::from_raw(123)); // Occupied
+
+        world.spawn((housing, GridPosition { x: 0, y: 0 }));
+
+        let mut buffer = Vec::new();
+        populate_housing(&mut world, &mut buffer);
+
+        assert!(buffer.is_empty(), "Should filter out full housing");
+
+        // Available Housing
+        let housing_empty = Housing::default();
+        world.spawn((housing_empty, GridPosition { x: 1, y: 0 }));
+        populate_housing(&mut world, &mut buffer);
+        assert_eq!(buffer.len(), 1, "Should include available housing");
     }
 }

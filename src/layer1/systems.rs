@@ -394,7 +394,8 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
                 .before(decay_needs_system),
             decay_needs_system.after(consume_food_system),
             crate::layer1::hygiene::filth_accumulation_system.after(decay_needs_system),
-            crate::layer1::hygiene::hygiene_decay_system.after(crate::layer1::hygiene::filth_accumulation_system),
+            crate::layer1::hygiene::hygiene_decay_system
+                .after(crate::layer1::hygiene::filth_accumulation_system),
             crate::layer1::chemical::addiction_system.after(decay_needs_system),
             apply_palette_fatigue_system.after(consume_food_system),
             apply_cabin_fever_morale_system

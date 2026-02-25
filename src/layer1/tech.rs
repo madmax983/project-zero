@@ -317,10 +317,12 @@ pub fn unlock_tech(world: &mut World, tech: Tech) -> bool {
             hit_stop.trigger(4);
         }
         // Spawn confetti at camera center
-        let (cx, cy) = world.get_resource::<CameraTarget>().map_or((10, 10), |target| {
-            #[allow(clippy::cast_possible_truncation)]
-            (target.x as i32, target.y as i32)
-        });
+        let (cx, cy) = world
+            .get_resource::<CameraTarget>()
+            .map_or((10, 10), |target| {
+                #[allow(clippy::cast_possible_truncation)]
+                (target.x as i32, target.y as i32)
+            });
         spawn_confetti(world, GridPosition { x: cx, y: cy });
 
         // Handle Memetic Hazards

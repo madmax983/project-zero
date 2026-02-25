@@ -120,7 +120,8 @@ mod tests {
                 Needs {
                     hunger: 0.1,
                     rest: 0.1,
-                    leisure: 0.1, hygiene: 0.8,
+                    leisure: 0.1,
+                    hygiene: 0.8,
                 }, // Very low morale (~0.1)
                 MentalState::Normal,
             ))
@@ -218,7 +219,8 @@ mod tests {
                 Needs {
                     hunger: 0.1,
                     rest: 0.1,
-                    leisure: 0.1, hygiene: 0.8,
+                    leisure: 0.1,
+                    hygiene: 0.8,
                 },
                 MentalState::Broken(MentalBreakType::Vandalize),
             ))

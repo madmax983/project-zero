@@ -967,7 +967,8 @@ mod tests {
                 Needs {
                     hunger: 0.8,
                     rest: 0.9,
-                    leisure: 0.6, hygiene: 0.8,
+                    leisure: 0.6,
+                    hygiene: 0.8,
                 },
             ))
             .id();

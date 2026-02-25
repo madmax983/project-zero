@@ -66,7 +66,8 @@ mod tests {
                 scale::layer1::needs::Needs {
                     hunger: 1.0,
                     rest: 1.0,
-                    leisure: 1.0, hygiene: 0.8,
+                    leisure: 1.0,
+                    hygiene: 0.8,
                 },
                 UtilityWeights::default(),
                 PopAction {
@@ -158,7 +159,8 @@ mod tests {
                 scale::layer1::needs::Needs {
                     hunger: 1.0,
                     rest: 1.0,
-                    leisure: 1.0, hygiene: 0.8,
+                    leisure: 1.0,
+                    hygiene: 0.8,
                 },
                 UtilityWeights::default(),
                 PopAction {

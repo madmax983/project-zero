@@ -12,8 +12,8 @@ use crate::gpu::evaluate::gpu_evaluate_actions;
 use crate::layer1::building::{BuildingMap, update_building_map_system};
 use crate::layer1::systems::{Layer1SystemSet, register_layer1_systems, update_event_buffer};
 use crate::layer1::update_action_timer_system;
-use crate::shared::time::SimulationTime;
 use crate::layer2::events::{LaunchEvent, ShipDestroyedEvent};
+use crate::shared::time::SimulationTime;
 
 /// Schedule label for the main simulation tick.
 #[derive(ScheduleLabel, Debug, Clone, PartialEq, Eq, Hash)]
@@ -56,14 +56,13 @@ pub fn build_simulation_schedule() -> Schedule {
         // Cleanup Layer 2 events
         update_event_buffer::<LaunchEvent>,
         update_event_buffer::<ShipDestroyedEvent>,
-
         crate::layer2::fleet::fleet_order_system,
         crate::layer2::fleet::fleet_movement_system.after(crate::layer2::fleet::fleet_order_system),
         crate::layer2::fleet::ensure_fleet_health_system,
-        crate::layer2::combat::fleet_combat_system.after(crate::layer2::fleet::fleet_movement_system),
+        crate::layer2::combat::fleet_combat_system
+            .after(crate::layer2::fleet::fleet_movement_system),
         crate::layer2::barnacles::ensure_barnacles_component_system,
         crate::layer2::barnacles::barnacle_accumulation_system,
-
         // Debris Systems
         crate::layer2::debris::debris_accumulation_system
             .after(crate::layer2::combat::fleet_combat_system),
@@ -71,7 +70,6 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer2::debris::debris_accumulation_system),
         crate::layer2::debris::debris_decay_system
             .after(crate::layer2::debris::debris_attrition_system),
-
         crate::layer2::visibility::update_visibility_system.after(Layer1SystemSet::Economy),
         crate::layer2::visibility::enforce_view_mode_system
             .after(crate::layer2::visibility::update_visibility_system),

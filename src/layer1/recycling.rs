@@ -73,10 +73,12 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(ColonyResources::default());
 
-        let corpse = world.spawn(Corpse {
-            name: "Bob".to_string(),
-            decay: 0.0,
-        }).id();
+        let corpse = world
+            .spawn(Corpse {
+                name: "Bob".to_string(),
+                decay: 0.0,
+            })
+            .id();
 
         // Spawn Recycler with Corpse in Inventory
         world.spawn((
@@ -116,8 +118,12 @@ mod tests {
             Recycler::default(),
             Inventory {
                 items: vec![
-                    InventoryItem { item_type: ItemType::Waste },
-                    InventoryItem { item_type: ItemType::Waste },
+                    InventoryItem {
+                        item_type: ItemType::Waste,
+                    },
+                    InventoryItem {
+                        item_type: ItemType::Waste,
+                    },
                 ],
             },
         ));
