@@ -18,7 +18,7 @@ pub fn permit_activation_system(
         With<PermitRequired>,
     >,
 ) {
-    for (entity, mut inventory, mut power) in &mut query {
+    for (entity, mut inventory, power) in &mut query {
         // Check for permit
         if let Some(index) = inventory.items.iter().position(|item| {
             item.item_type.as_resource_type() == Some(ResourceType::BuildingPermit)
@@ -56,7 +56,7 @@ mod tests {
     use crate::layer1::energy::PowerConsumer;
     use crate::layer1::inventory::{Inventory, InventoryItem};
     use crate::layer1::items::ItemType;
-    use crate::layer1::resources::{ColonyResources, ResourceType};
+    use crate::layer1::resources::ColonyResources;
     use bevy_ecs::prelude::*;
 
     // Helper to setup world
