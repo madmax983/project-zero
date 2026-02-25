@@ -637,3 +637,9 @@ pub mod recycling;
 pub use recycling::*;
 /// Permit system for advanced construction.
 pub mod permit;
+
+/// Void Signals (Nova Feature).
+#[cfg(feature = "nova")]
+pub mod void_signals;
+#[cfg(feature = "nova")]
+pub use void_signals::*;
