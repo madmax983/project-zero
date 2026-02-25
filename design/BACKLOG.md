@@ -23,6 +23,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `215` Safehouse Contracts — `specs/215-safehouse-contracts.md`
 - [ ] `222` Paperwork Physicality — `specs/222-paperwork-physicality.md`
 - [ ] `223` Volatile Resources — `specs/223-volatile-resources.md`
+- [ ] `224` The Scapegoat — `specs/224-the-scapegoat.md`
 
 ## MVP — Layer 2: System Simulation
 
