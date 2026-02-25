@@ -481,9 +481,21 @@ mod tests {
 
         // Spawn pops with varying morale
         // Pop 1: High morale (1.0)
-        world.spawn((Pop, Morale { value: 1.0, ..Default::default() }));
+        world.spawn((
+            Pop,
+            Morale {
+                value: 1.0,
+                ..Default::default()
+            },
+        ));
         // Pop 2: Low morale (0.0)
-        world.spawn((Pop, Morale { value: 0.0, ..Default::default() }));
+        world.spawn((
+            Pop,
+            Morale {
+                value: 0.0,
+                ..Default::default()
+            },
+        ));
 
         // Run system
         world.run_system_once(calculate_unrest_system).unwrap();
@@ -491,7 +503,10 @@ mod tests {
         let unrest = world.resource::<Unrest>();
         // Avg Morale = 0.5. Unrest = 1.0 - 0.5 = 0.5.
         // Fails if system is empty
-        assert!((unrest.level - 0.5).abs() < f32::EPSILON, "Unrest should be 0.5");
+        assert!(
+            (unrest.level - 0.5).abs() < f32::EPSILON,
+            "Unrest should be 0.5"
+        );
     }
 
     #[test]
@@ -514,8 +529,14 @@ mod tests {
         world.run_system_once(identify_scapegoat_system).unwrap();
 
         // Check if Outsider was tagged
-        assert!(world.get::<ScapegoatTarget>(outsider).is_some(), "Outsider should be targeted");
-        assert!(world.get::<ScapegoatTarget>(normal).is_none(), "Normal pop should not be targeted");
+        assert!(
+            world.get::<ScapegoatTarget>(outsider).is_some(),
+            "Outsider should be targeted"
+        );
+        assert!(
+            world.get::<ScapegoatTarget>(normal).is_none(),
+            "Normal pop should not be targeted"
+        );
     }
 
     #[test]
@@ -527,12 +548,9 @@ mod tests {
         });
         world.init_resource::<Events<DenounceEvent>>();
 
-        let target = world.spawn((
-            Pop,
-            Traits::default(),
-            ScapegoatTarget,
-            MentalState::Normal,
-        )).id();
+        let target = world
+            .spawn((Pop, Traits::default(), ScapegoatTarget, MentalState::Normal))
+            .id();
 
         // Send Denounce event (Exile)
         world.send_event(DenounceEvent {
@@ -546,10 +564,16 @@ mod tests {
         // Verify Modifier added
         let unrest = world.resource::<Unrest>();
         assert!(!unrest.modifiers.is_empty(), "Should add a modifier");
-        assert!(unrest.modifiers[0].value < -0.4, "Modifier should be significant");
+        assert!(
+            unrest.modifiers[0].value < -0.4,
+            "Modifier should be significant"
+        );
 
         // Verify Target is gone (Exiled/Despawned)
-        assert!(world.get_entity(target).is_err(), "Target should be despawned");
+        assert!(
+            world.get_entity(target).is_err(),
+            "Target should be despawned"
+        );
     }
 
     #[test]
@@ -561,12 +585,9 @@ mod tests {
         });
         world.init_resource::<Events<DenounceEvent>>();
 
-        let target = world.spawn((
-            Pop,
-            Traits::default(),
-            ScapegoatTarget,
-            MentalState::Normal,
-        )).id();
+        let target = world
+            .spawn((Pop, Traits::default(), ScapegoatTarget, MentalState::Normal))
+            .id();
 
         // Send Denounce event (Shame)
         world.send_event(DenounceEvent {
@@ -580,11 +601,17 @@ mod tests {
         // Verify Modifier added
         let unrest = world.resource::<Unrest>();
         assert!(!unrest.modifiers.is_empty(), "Should add a modifier");
-        assert!(unrest.modifiers[0].value < 0.0, "Modifier should be negative");
+        assert!(
+            unrest.modifiers[0].value < 0.0,
+            "Modifier should be negative"
+        );
 
         // Verify Target gained Traumatized trait or breakdown
         let state = world.get::<MentalState>(target).unwrap();
         // Assuming we use Breakdown::Daze as per my plan
-        assert!(matches!(state, MentalState::Broken(MentalBreakType::Daze)), "Target should be broken");
+        assert!(
+            matches!(state, MentalState::Broken(MentalBreakType::Daze)),
+            "Target should be broken"
+        );
     }
 }

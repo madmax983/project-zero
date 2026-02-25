@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::map::GridPosition;
 use crate::layer1::structure::Structure;
+use bevy_ecs::prelude::*;
 
 /// Component representing a volatile item that degrades over time.
 #[derive(Component, Debug, Clone)]
@@ -72,10 +72,10 @@ pub fn handle_explosion_system(
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::map::GridPosition;
     use super::*;
+    use crate::layer1::map::GridPosition;
     use crate::shared::time::SimulationTime;
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_volatile_component_initialization() {
@@ -97,16 +97,18 @@ mod tests {
         // Need to register Events<ExplosionEvent> because system uses EventWriter
         world.init_resource::<Events<ExplosionEvent>>();
 
-        let entity = world.spawn((
-            Volatile {
-                stability: 100.0,
-                decay_rate: 10.0,
-                explosion_power: 10.0,
-                explosion_radius: 1,
-                paused: false,
-            },
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let entity = world
+            .spawn((
+                Volatile {
+                    stability: 100.0,
+                    decay_rate: 10.0,
+                    explosion_power: 10.0,
+                    explosion_radius: 1,
+                    paused: false,
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
         // Run system
         let mut schedule = Schedule::default();
@@ -123,16 +125,18 @@ mod tests {
         world.insert_resource(SimulationTime::default());
         world.init_resource::<Events<ExplosionEvent>>();
 
-        let entity = world.spawn((
-            Volatile {
-                stability: 100.0,
-                decay_rate: 10.0,
-                explosion_power: 10.0,
-                explosion_radius: 1,
-                paused: true,
-            },
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let entity = world
+            .spawn((
+                Volatile {
+                    stability: 100.0,
+                    decay_rate: 10.0,
+                    explosion_power: 10.0,
+                    explosion_radius: 1,
+                    paused: true,
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(volatile_decay_system);
@@ -150,16 +154,18 @@ mod tests {
         world.init_resource::<Events<ExplosionEvent>>();
 
         let pos = GridPosition { x: 5, y: 5 };
-        let entity = world.spawn((
-            Volatile {
-                stability: 5.0, // Low stability
-                decay_rate: 10.0, // Should reach 0 in one tick
-                explosion_power: 50.0,
-                explosion_radius: 2,
-                paused: false,
-            },
-            pos,
-        )).id();
+        let entity = world
+            .spawn((
+                Volatile {
+                    stability: 5.0,   // Low stability
+                    decay_rate: 10.0, // Should reach 0 in one tick
+                    explosion_power: 50.0,
+                    explosion_radius: 2,
+                    paused: false,
+                },
+                pos,
+            ))
+            .id();
 
         // Run system
         let mut schedule = Schedule::default();
@@ -189,13 +195,15 @@ mod tests {
         let target_pos = GridPosition { x: 6, y: 5 }; // Distance 1
 
         // Spawn Structure
-        let structure = world.spawn((
-            Structure {
-                current_hp: 100.0,
-                max_hp: 100.0,
-            },
-            target_pos,
-        )).id();
+        let structure = world
+            .spawn((
+                Structure {
+                    current_hp: 100.0,
+                    max_hp: 100.0,
+                },
+                target_pos,
+            ))
+            .id();
 
         // Send Event manually
         let mut events = world.resource_mut::<Events<ExplosionEvent>>();
@@ -222,13 +230,15 @@ mod tests {
         let center = GridPosition { x: 5, y: 5 };
         let target_pos = GridPosition { x: 8, y: 5 }; // Distance 3
 
-        let structure = world.spawn((
-            Structure {
-                current_hp: 100.0,
-                max_hp: 100.0,
-            },
-            target_pos,
-        )).id();
+        let structure = world
+            .spawn((
+                Structure {
+                    current_hp: 100.0,
+                    max_hp: 100.0,
+                },
+                target_pos,
+            ))
+            .id();
 
         let mut events = world.resource_mut::<Events<ExplosionEvent>>();
         events.send(ExplosionEvent {

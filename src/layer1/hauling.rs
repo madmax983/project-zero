@@ -401,7 +401,9 @@ fn find_and_target_stockpile_item(
     let is_drone = world.get::<Drone>(pop_entity).is_some();
 
     // Check item type
-    let item_type = world.get::<Item>(carrying_item.0).map(|i| i.item_type.clone());
+    let item_type = world
+        .get::<Item>(carrying_item.0)
+        .map(|i| i.item_type.clone());
 
     // Strategy: Determine target based on ItemType
     // Waste -> Recycler

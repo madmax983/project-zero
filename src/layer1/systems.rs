@@ -320,6 +320,7 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             crate::layer1::volatile::handle_explosion_system
                 .after(crate::layer1::volatile::volatile_decay_system),
             crate::layer1::logistics::pneumatic::tube_clog_system,
+            crate::layer1::ecology::biome_collapse_system,
         )
             .in_set(Layer1SystemSet::Environment),
     );
@@ -466,6 +467,9 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             crate::layer1::pop::handle_witness_death_system
                 .after(crate::layer1::pop::handle_pop_death_system),
             mascot_death_grief_system.after(crate::layer1::health::check_health_status_system),
+            crate::layer1::ecology::handle_keystone_death
+                .after(crate::layer1::health::check_health_status_system)
+                .before(crate::layer1::health::despawn_dead_entities_system),
             #[cfg(feature = "nova")]
             crate::layer1::loci::record_death_loci_system
                 .after(crate::layer1::pop::handle_pop_death_system)
@@ -473,7 +477,8 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             crate::layer1::health::despawn_dead_entities_system
                 .after(crate::layer1::pop::handle_pop_death_system)
                 .after(crate::layer1::fauna::handle_fauna_death_system)
-                .after(mascot_death_grief_system),
+                .after(mascot_death_grief_system)
+                .after(crate::layer1::ecology::handle_keystone_death),
             clean_dead_residents_system.after(crate::layer1::health::despawn_dead_entities_system),
             clean_dead_workers_system.after(crate::layer1::health::despawn_dead_entities_system),
         )

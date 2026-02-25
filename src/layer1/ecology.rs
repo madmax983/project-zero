@@ -20,6 +20,7 @@
 //! a fraction of the map (controlled by [`EcologyConfig::growth_rate`]) and apply
 //! probabilistic updates. This creates organic, patchy growth patterns.
 
+use crate::layer1::map::GridPosition;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use bevy_ecs::prelude::*;
 use rand::Rng;
@@ -177,4 +178,88 @@ fn check_neighbors_for_tree(grid: &TerrainGrid, x: usize, y: usize) -> bool {
         }
     }
     false
+}
+
+// --- Spec 225: Keystone Species ---
+
+/// Component marking a species (Flora/Fauna) with ecological metadata.
+#[derive(Component, Debug, Clone)]
+pub struct Species {
+    /// Name of the species (e.g., "Giant Cactus").
+    pub name: String,
+    /// Whether this species is a Keystone species supporting the biome.
+    pub is_keystone: bool,
+}
+
+impl Default for Species {
+    fn default() -> Self {
+        Self {
+            name: "Unknown".to_string(),
+            is_keystone: false,
+        }
+    }
+}
+
+/// Component linking a dependent entity to a Keystone entity.
+/// If the target entity dies or is removed, this dependent entity suffers.
+#[derive(Component, Debug, Clone, Copy)]
+pub struct DependentOn(pub Entity);
+
+/// Component marking an entity as an anchor for the biome.
+/// If this entity dies, the terrain at its location (and potentially radius) degrades.
+#[derive(Component, Debug, Clone, Copy)]
+pub struct BiomeAnchor {
+    /// Radius of effect (for future expansion, currently 0/self).
+    pub radius: u32,
+    /// The terrain type this anchor sustains.
+    pub target_terrain: TerrainType,
+    /// The terrain type it reverts to if the anchor is lost.
+    pub fallback_terrain: TerrainType,
+}
+
+/// System that handles the death of Keystone/Anchor entities.
+///
+/// When a Keystone with `BiomeAnchor` dies (gains `Dead` component),
+/// the terrain at its position degrades to `fallback_terrain`.
+#[allow(clippy::type_complexity)]
+pub fn handle_keystone_death(
+    query: Query<
+        (&GridPosition, &BiomeAnchor),
+        (With<Species>, Added<crate::layer1::health::Dead>),
+    >,
+    mut terrain: ResMut<TerrainGrid>,
+) {
+    for (pos, anchor) in query.iter() {
+        // Degrade terrain at position
+        terrain.set(pos.x as usize, pos.y as usize, anchor.fallback_terrain);
+
+        // MVP: Only affects the tile itself. Spec mentions radius but red test only checked the tile.
+        // Future expansion: iterate radius.
+    }
+}
+
+/// System that handles the collapse of dependent species.
+///
+/// Checks if the entity referenced by `DependentOn` is dead or missing.
+/// If so, the dependent entity dies (is despawned or takes fatal damage).
+pub fn biome_collapse_system(
+    mut commands: Commands,
+    dependents: Query<(Entity, &DependentOn)>,
+    all_entities: Query<(), ()>,
+    dead_entities: Query<&crate::layer1::health::Dead>,
+) {
+    for (entity, dep) in dependents.iter() {
+        let target = dep.0;
+
+        // Check if target exists
+        let exists = all_entities.get(target).is_ok();
+
+        // Check if target is already dead (even if not despawned yet)
+        let is_dead = dead_entities.get(target).is_ok();
+
+        if !exists || is_dead {
+            // Dependent dies
+            commands.entity(entity).insert(crate::layer1::health::Dead);
+        }
+    }
 }

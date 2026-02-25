@@ -171,13 +171,12 @@ fn render_colony_stats(frame: &mut Frame, area: Rect, world: &World) {
         ]),
         Row::new(vec![
             Cell::from("😃 Morale").style(Style::default().fg(Color::Cyan)),
-            Cell::from(format!("{:.0}%", avg_morale * 100.0)).style(Style::default().fg(morale_color)),
+            Cell::from(format!("{:.0}%", avg_morale * 100.0))
+                .style(Style::default().fg(morale_color)),
         ]),
         Row::new(vec![
             Cell::from("🏠 Housing").style(Style::default().fg(Color::Cyan)),
-            Cell::from(format!(
-                "{housing_used}/{housing_capacity}"
-            )),
+            Cell::from(format!("{housing_used}/{housing_capacity}")),
         ]),
     ];
 
@@ -198,23 +197,46 @@ fn render_colony_stats(frame: &mut Frame, area: Rect, world: &World) {
     let survival_rows = vec![
         Row::new(vec![
             Cell::from("🍖 Food").style(Style::default().fg(Color::Green)),
-            Cell::from(format!("{:.0}/{:.0}", resources.total_food(), resources.max_food))
-                .style(Style::default().fg(get_resource_color(resources.total_food(), resources.max_food, false))),
+            Cell::from(format!(
+                "{:.0}/{:.0}",
+                resources.total_food(),
+                resources.max_food
+            ))
+            .style(Style::default().fg(get_resource_color(
+                resources.total_food(),
+                resources.max_food,
+                false,
+            ))),
         ]),
         Row::new(vec![
             Cell::from("💧 Water").style(Style::default().fg(Color::Blue)),
-            Cell::from(format!("{:.0}/{:.0}", resources.water, resources.max_water))
-                .style(Style::default().fg(get_resource_color(resources.water, resources.max_water, false))),
+            Cell::from(format!("{:.0}/{:.0}", resources.water, resources.max_water)).style(
+                Style::default().fg(get_resource_color(
+                    resources.water,
+                    resources.max_water,
+                    false,
+                )),
+            ),
         ]),
         Row::new(vec![
             Cell::from("⛽ Fuel").style(Style::default().fg(Color::Yellow)),
-            Cell::from(format!("{:.0}/{:.0}", resources.fuel, resources.max_fuel))
-                .style(Style::default().fg(get_resource_color(resources.fuel, resources.max_fuel, false))),
+            Cell::from(format!("{:.0}/{:.0}", resources.fuel, resources.max_fuel)).style(
+                Style::default().fg(get_resource_color(
+                    resources.fuel,
+                    resources.max_fuel,
+                    false,
+                )),
+            ),
         ]),
         Row::new(vec![
             Cell::from("🗑 Waste").style(Style::default().fg(Color::DarkGray)),
-            Cell::from(format!("{:.0}/{:.0}", resources.waste, resources.max_waste))
-                .style(Style::default().fg(get_resource_color(resources.waste, resources.max_waste, true))),
+            Cell::from(format!("{:.0}/{:.0}", resources.waste, resources.max_waste)).style(
+                Style::default().fg(get_resource_color(
+                    resources.waste,
+                    resources.max_waste,
+                    true,
+                )),
+            ),
         ]),
     ];
 
@@ -235,23 +257,43 @@ fn render_colony_stats(frame: &mut Frame, area: Rect, world: &World) {
     let industry_rows = vec![
         Row::new(vec![
             Cell::from("🌲 Wood").style(Style::default().fg(Color::White)),
-            Cell::from(format!("{:.0}/{:.0}", resources.wood, resources.max_wood))
-                .style(Style::default().fg(get_resource_color(resources.wood, resources.max_wood, false))),
+            Cell::from(format!("{:.0}/{:.0}", resources.wood, resources.max_wood)).style(
+                Style::default().fg(get_resource_color(
+                    resources.wood,
+                    resources.max_wood,
+                    false,
+                )),
+            ),
         ]),
         Row::new(vec![
             Cell::from("🪨 Stone").style(Style::default().fg(Color::Gray)),
-            Cell::from(format!("{:.0}/{:.0}", resources.stone, resources.max_stone))
-                .style(Style::default().fg(get_resource_color(resources.stone, resources.max_stone, false))),
+            Cell::from(format!("{:.0}/{:.0}", resources.stone, resources.max_stone)).style(
+                Style::default().fg(get_resource_color(
+                    resources.stone,
+                    resources.max_stone,
+                    false,
+                )),
+            ),
         ]),
         Row::new(vec![
             Cell::from("⚙ Metal").style(Style::default().fg(Color::LightBlue)),
-            Cell::from(format!("{:.0}/{:.0}", resources.metal, resources.max_metal))
-                .style(Style::default().fg(get_resource_color(resources.metal, resources.max_metal, false))),
+            Cell::from(format!("{:.0}/{:.0}", resources.metal, resources.max_metal)).style(
+                Style::default().fg(get_resource_color(
+                    resources.metal,
+                    resources.max_metal,
+                    false,
+                )),
+            ),
         ]),
         Row::new(vec![
             Cell::from("🔧 Tools").style(Style::default().fg(Color::Cyan)),
-            Cell::from(format!("{:.0}/{:.0}", resources.tools, resources.max_tools))
-                .style(Style::default().fg(get_resource_color(resources.tools, resources.max_tools, false))),
+            Cell::from(format!("{:.0}/{:.0}", resources.tools, resources.max_tools)).style(
+                Style::default().fg(get_resource_color(
+                    resources.tools,
+                    resources.max_tools,
+                    false,
+                )),
+            ),
         ]),
     ];
 
@@ -272,18 +314,39 @@ fn render_colony_stats(frame: &mut Frame, area: Rect, world: &World) {
     let economy_rows = vec![
         Row::new(vec![
             Cell::from("🔬 Tech").style(Style::default().fg(Color::Magenta)),
-            Cell::from(format!("{:.0}/{:.0}", resources.knowledge, resources.max_knowledge))
-                .style(Style::default().fg(get_resource_color(resources.knowledge, resources.max_knowledge, false))),
+            Cell::from(format!(
+                "{:.0}/{:.0}",
+                resources.knowledge, resources.max_knowledge
+            ))
+            .style(Style::default().fg(get_resource_color(
+                resources.knowledge,
+                resources.max_knowledge,
+                false,
+            ))),
         ]),
         Row::new(vec![
             Cell::from("👕 Clothes").style(Style::default().fg(Color::LightMagenta)),
-            Cell::from(format!("{:.0}/{:.0}", resources.clothing, resources.max_clothing))
-                .style(Style::default().fg(get_resource_color(resources.clothing, resources.max_clothing, false))),
+            Cell::from(format!(
+                "{:.0}/{:.0}",
+                resources.clothing, resources.max_clothing
+            ))
+            .style(Style::default().fg(get_resource_color(
+                resources.clothing,
+                resources.max_clothing,
+                false,
+            ))),
         ]),
         Row::new(vec![
             Cell::from("🍺 Alcohol").style(Style::default().fg(Color::Yellow)),
-            Cell::from(format!("{:.0}/{:.0}", resources.alcohol, resources.max_alcohol))
-                .style(Style::default().fg(get_resource_color(resources.alcohol, resources.max_alcohol, false))),
+            Cell::from(format!(
+                "{:.0}/{:.0}",
+                resources.alcohol, resources.max_alcohol
+            ))
+            .style(Style::default().fg(get_resource_color(
+                resources.alcohol,
+                resources.max_alcohol,
+                false,
+            ))),
         ]),
         Row::new(vec![
             Cell::from("📜 Permits").style(Style::default().fg(Color::White)),
@@ -499,7 +562,11 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
     let has_quirk = world.get::<Quirk>(entity).is_some();
     let show_diagnostics = has_spirit || has_quirk;
     let diag_content_height = u16::from(has_spirit) + u16::from(has_quirk);
-    let diag_height = if show_diagnostics { 2 + diag_content_height } else { 0 };
+    let diag_height = if show_diagnostics {
+        2 + diag_content_height
+    } else {
+        0
+    };
 
     let layout = Layout::default()
         .direction(Direction::Vertical)
@@ -511,11 +578,11 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
             Constraint::Length(1),                                    // Spacer
             Constraint::Length(details_height),                       // Needs or Details
             Constraint::Length(u16::from(has_structure)),             // Structure HP
-            Constraint::Length(diag_height),                          // Diagnostics (Spirit + Quirk)
-            Constraint::Length(personality_height),                   // Personality + Spacer
-            Constraint::Length(dream_height),                         // Last Dream
-            Constraint::Length(diet_height),                          // Dietary History
-            Constraint::Min(1),                                       // Biography
+            Constraint::Length(diag_height), // Diagnostics (Spirit + Quirk)
+            Constraint::Length(personality_height), // Personality + Spacer
+            Constraint::Length(dream_height), // Last Dream
+            Constraint::Length(diet_height), // Dietary History
+            Constraint::Min(1),              // Biography
         ])
         .split(area);
 
@@ -583,8 +650,16 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         let hunger_percent = (needs.hunger * 100.0) as u16;
         let rest_percent = (needs.rest * 100.0) as u16;
 
-        let hunger_color = if needs.hunger < 0.3 { Color::Red } else { Color::Green };
-        let rest_color = if needs.rest < 0.3 { Color::Red } else { Color::Cyan };
+        let hunger_color = if needs.hunger < 0.3 {
+            Color::Red
+        } else {
+            Color::Green
+        };
+        let rest_color = if needs.rest < 0.3 {
+            Color::Red
+        } else {
+            Color::Cyan
+        };
 
         // Compact Gauges
         let hunger_gauge = Gauge::default()
@@ -603,7 +678,13 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         // Row 2: Morale
         let morale = needs.morale();
         let morale_percent = (morale * 100.0) as u16;
-        let morale_color = if morale < 0.3 { Color::Red } else if morale < 0.7 { Color::Yellow } else { Color::Green };
+        let morale_color = if morale < 0.3 {
+            Color::Red
+        } else if morale < 0.7 {
+            Color::Yellow
+        } else {
+            Color::Green
+        };
 
         let morale_gauge = Gauge::default()
             .gauge_style(Style::default().fg(morale_color))
@@ -615,7 +696,13 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         // Row 3: Bio-Comp
         if let Some(bio) = world.get::<Biocompatibility>(entity) {
             let bio_percent = (bio.value * 100.0) as u16;
-            let bio_color = if bio.value < 0.4 { Color::Red } else if bio.value < 0.7 { Color::Yellow } else { Color::Green };
+            let bio_color = if bio.value < 0.4 {
+                Color::Red
+            } else if bio.value < 0.7 {
+                Color::Yellow
+            } else {
+                Color::Green
+            };
 
             let bio_gauge = Gauge::default()
                 .gauge_style(Style::default().fg(bio_color))

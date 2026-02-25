@@ -433,6 +433,8 @@ pub mod biocompatibility;
 pub use biocompatibility::*;
 
 #[cfg(test)]
+mod ecology_keystone_tests;
+#[cfg(test)]
 mod ecology_tests;
 #[cfg(test)]
 mod fuel_consumption_tests;

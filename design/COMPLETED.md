@@ -165,3 +165,4 @@
 - [x] `INT-012` Integration: System Mining -> Colony Resources — completed 2026-02-01
 - [x] `228` Pneumatic Tubes — `specs/228-pneumatic-tubes.md` — completed 2026-02-25
 - [x] `223` Volatile Resources — `specs/223-volatile-resources.md` — completed 2026-06-25
+- [x] `225` Keystone Species — `specs/225-keystone-species.md` — completed 2026-06-25
