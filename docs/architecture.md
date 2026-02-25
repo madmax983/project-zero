@@ -28,6 +28,7 @@ Container_Boundary(Simulation, "Simulation Core (Layer 1)") {
     Component(Pathfinding, "Pathfinding", "pathfinding.rs", "A* with Capabilities")
     Component(World, "World Entities", "farm.rs, housing.rs", "Interactable Buildings")
     Component(Resources, "Colony Resources", "resources.rs", "Global Inventory")
+    Component(Logistics, "Logistics System", "logistics/*.rs", "Conveyors & Pneumatics")
     Component(Map, "Map/Terrain", "map.rs", "Spatial Grid")
 
     Component(Particles, "Particle System", "particles.rs", "Visual Juice & Sub-grid Physics")
@@ -72,6 +73,10 @@ Rel(Pops, SpontaneousArch, "Builds")
 Rel(Pops, Atmosphere, "Takes Damage")
 Rel(Pops, Pressure, "Moved by Force")
 Rel(Pops, NovaFeatures, "Affected By")
+
+Rel(Logistics, Map, "Reads/Writes")
+Rel(Logistics, Resources, "Moves Items")
+Rel(Logistics, World, "Connects Buildings")
 
 Rel(MapRender, Shared, "Reads State")
 Rel(MapRender, Map, "Reads Entities")
@@ -355,3 +360,4 @@ Rel(Shared, Events, "Consumes")
 - [ADR 026: CPU Parallel Utility AI](./adr/026-cpu-parallel-utility-ai.md)
 - [ADR 027: Job System Simplification](./adr/027-job-system-simplification.md)
 - [ADR 028: Seismic System Split](./adr/028-seismic-system-split.md)
+- [ADR 029: Refactor Logistics into Submodules](./adr/029-refactor-logistics-into-submodules.md)

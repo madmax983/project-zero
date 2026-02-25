@@ -4,11 +4,13 @@ Date: 2024-05-20
 
 ## Status
 
-Accepted
+Withdrawn
 
 ## Context
 
 Circular dependencies were causing build failures when the core simulation logic attempted to persist state. The persistence layer was tightly coupled with the core simulation, leading to a tangled dependency graph where `Core` depended on `Storage` (for saving) and `Storage` depended on `Core` (for types).
+
+**Update (Current):** This decision was not implemented as described. The `storage` module does not exist in the codebase, and the architectural separation was likely achieved through other means or reverted to simplify the build process. References to `Storage` have been removed from the main architecture documentation.
 
 ## Decision
 
