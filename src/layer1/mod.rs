@@ -643,3 +643,5 @@ pub mod permit;
 pub mod void_signals;
 #[cfg(feature = "nova")]
 pub use void_signals::*;
+/// Volatile Resources system (Spec 223).
+pub mod volatile;

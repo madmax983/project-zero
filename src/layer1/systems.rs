@@ -66,6 +66,7 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer1::eureka::EurekaEvent>,
             update_event_buffer::<crate::layer1::items::UnequipEvent>,
             update_event_buffer::<crate::layer1::unrest::DenounceEvent>,
+            update_event_buffer::<crate::layer1::volatile::ExplosionEvent>,
         )
             .in_set(Layer1SystemSet::EventCleanup),
     );
@@ -315,6 +316,9 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             ancient_structure_decay_system,
             crate::layer1::graffiti::graffiti_decay_system,
             crate::layer1::orbital_crossfire::impact_system,
+            crate::layer1::volatile::volatile_decay_system,
+            crate::layer1::volatile::handle_explosion_system
+                .after(crate::layer1::volatile::volatile_decay_system),
             crate::layer1::logistics::pneumatic::tube_clog_system,
         )
             .in_set(Layer1SystemSet::Environment),
