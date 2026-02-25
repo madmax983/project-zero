@@ -59,3 +59,11 @@
 ## [Turrets]
 **Friction:** Turrets firing without visual confirmation at the source makes it hard to track who is shooting.
 **Flow:** Muzzle flashes at the turret origin provide immediate causal links between the shooter and the impact. Added Screen Shake for heavy turret fire (Waste Cannon).
+
+## [Combat Feedback 3.0]
+**Friction:** Medium hits (5-15 damage) felt identical to Light hits (0-4 damage) visually, lacking appropriate weight.
+**Flow:** Introduced distinct feedback for Medium hits: `LightRed` color, `+` particle, and increased Hit Stop from 1 to 2 ticks. This bridges the gap between "scratch" and "slam".
+
+## [Movement Clarity]
+**Friction:** The "Hustle" particle (DarkGray `.`) was too subtle against most terrain, making the "Coyote Speed" mechanic feel invisible.
+**Flow:** Changed the particle to a White `~` (tilde) to clearly visualize the extra effort/wind of pushing past the movement threshold.

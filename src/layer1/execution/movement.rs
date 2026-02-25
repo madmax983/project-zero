@@ -243,8 +243,8 @@ pub fn movement_system(
                     // Ludwig: "Hustle" particle to show effort
                     commands.spawn((
                         Particle {
-                            char: '.',
-                            color: Color::DarkGray,
+                            char: '~',
+                            color: Color::White,
                             lifetime: 5,
                         },
                         *current_pos,

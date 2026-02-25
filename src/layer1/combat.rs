@@ -33,7 +33,7 @@ const CRIT_MULTIPLIER: f32 = 2.0;
 // Ludwig: Reduced hit stop times for snappier combat (Game Feel)
 const HIT_STOP_CRIT: u32 = 8;
 const HIT_STOP_HEAVY: u32 = 4;
-const HIT_STOP_MEDIUM: u32 = 1;
+const HIT_STOP_MEDIUM: u32 = 2;
 const HIT_STOP_LIGHT: u32 = 1;
 
 /// Component marker for pops that have been drafted for military service.
@@ -225,6 +225,8 @@ pub fn execute_attack(world: &mut World, attacker: Entity, target: Entity) {
                 (0.8, '!', Color::Yellow, 20)
             } else if damage >= 15.0 {
                 (0.4, 'X', Color::Magenta, 12)
+            } else if damage >= 5.0 {
+                (0.25, '+', Color::LightRed, 8)
             } else {
                 (0.15, '*', Color::Red, 5)
             };
@@ -705,8 +707,8 @@ mod tests {
         assert!(hs.is_some());
         let ticks = hs.unwrap().ticks_remaining;
         assert!(
-            ticks == 1 || ticks == 8,
-            "Expected 1 (Normal) or 8 (Crit), got {}",
+            ticks == 2 || ticks == 8,
+            "Expected 2 (Normal) or 8 (Crit), got {}",
             ticks
         );
     }
