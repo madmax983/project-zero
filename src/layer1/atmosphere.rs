@@ -442,6 +442,62 @@ pub fn apply_smog_damage_system(
     }
 }
 
+/// Global resource representing the corrosiveness of the planet's atmosphere.
+///
+/// This applies damage to any structure that is exposed (not under a roof).
+#[derive(Resource, Default)]
+pub struct CorrosiveAtmosphere {
+    /// Intensity multiplier (0.0 to 1.0).
+    /// - 0.0: No corrosion.
+    /// - 1.0: Full corrosion (e.g. 1.0 HP/tick).
+    pub intensity: f32,
+}
+
+/// Component that reduces corrosive damage taken by a structure.
+#[derive(Component, Default)]
+pub struct CorrosionResistant {
+    /// Resistance factor (0.0 = no resistance, 1.0 = immunity).
+    pub factor: f32,
+}
+
+/// Marker component indicating an entity is protected from atmospheric effects
+/// (e.g. inside a building or under a natural roof).
+///
+/// This is a temporary solution until a full `Roof` system is implemented.
+#[derive(Component)]
+pub struct ProtectedFromAtmosphere;
+
+/// System that applies corrosive damage to exposed structures.
+pub fn corrosion_damage_system(world: &mut World) {
+    let intensity = world
+        .get_resource::<CorrosiveAtmosphere>()
+        .map_or(0.0, |a| a.intensity);
+
+    if intensity <= f32::EPSILON {
+        return;
+    }
+
+    let damage_per_tick = 1.0 * intensity; // Base damage
+
+    // Query for exposed structures
+    let mut query = world.query::<(
+        &mut crate::layer1::structure::Structure,
+        Option<&CorrosionResistant>,
+        Option<&ProtectedFromAtmosphere>,
+    )>();
+
+    for (mut structure, resistance, protected) in query.iter_mut(world) {
+        if protected.is_some() {
+            continue; // Safe
+        }
+
+        let resist = resistance.map_or(0.0, |r| r.factor);
+        let actual_damage = damage_per_tick * (1.0 - resist).max(0.0);
+
+        structure.current_hp = (structure.current_hp - actual_damage).max(0.0);
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

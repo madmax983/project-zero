@@ -326,6 +326,8 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             quirk_generation_system.after(spirit_decay_system),
             entropy_system,
             crate::layer1::structure::fragile_decay_system.after(entropy_system),
+            crate::layer1::atmosphere::corrosion_damage_system
+                .after(crate::layer1::structure::fragile_decay_system),
             crate::layer1::crowding::crowding_decay_system,
             #[cfg(feature = "nova")]
             crate::layer1::loci::update_loci_system,

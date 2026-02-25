@@ -162,3 +162,4 @@
 - [x] `152` Orbital Stations — `specs/152-orbital-stations.md` — completed 2026-06-25
 - [x] `101` System Mining — `specs/101-system-mining.md` — completed 2026-02-25
 - [x] `INT-011` Integration: hygiene -> recycling (waste items) — completed 2026-02-01
+- [x] `227` Corrosive Atmosphere — `specs/227-corrosive-atmosphere.md` — completed 2026-07-25

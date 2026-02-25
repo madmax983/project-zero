@@ -637,3 +637,6 @@ pub mod recycling;
 pub use recycling::*;
 /// Permit system for advanced construction.
 pub mod permit;
+
+#[cfg(test)]
+mod atmosphere_corrosion_tests;
