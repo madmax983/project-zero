@@ -248,21 +248,9 @@ pub fn produce_food_system(
                     BuildingType::Plantation => {
                         resources.add_fiber(production);
                     }
-                    _ => match selected_crop {
-                        ItemType::Wheat => {
-                            resources.wheat += production;
-                            resources.food += production;
-                        }
-                        ItemType::Potato => {
-                            resources.potato += production;
-                            resources.food += production;
-                        }
-                        ItemType::Rice => {
-                            resources.rice += production;
-                            resources.food += production;
-                        }
-                        _ => resources.add_food(production),
-                    },
+                    _ => {
+                        resources.add_food(production);
+                    }
                 }
 
                 // Pay Wages
@@ -351,91 +339,29 @@ pub fn consume_food_system(
     let mut rng = rand::thread_rng();
 
     for entity in hungry_pops {
-        // Try to eat from specific stocks first, then generic food, then rations
+        // Try to eat from food pool first, then rations
         let mut eaten_item = ItemType::None;
         let mut ate = false;
 
-        // Simple consumption priority: Wheat -> Potato -> Rice -> Generic Food -> Rations
-        // Or random? Spec says "consume from largest pile first ... OR random weighted".
-        // For MVP, simple priority is fine, or simple check.
-
-        if resources.wheat >= FOOD_PER_MEAL {
-            resources.wheat -= FOOD_PER_MEAL;
-            eaten_item = ItemType::Wheat;
-            ate = true;
-        } else if resources.potato >= FOOD_PER_MEAL {
-            resources.potato -= FOOD_PER_MEAL;
-            eaten_item = ItemType::Potato;
-            ate = true;
-        } else if resources.rice >= FOOD_PER_MEAL {
-            resources.rice -= FOOD_PER_MEAL;
-            eaten_item = ItemType::Rice;
-            ate = true;
-        } else if resources.food >= FOOD_PER_MEAL {
-            // Note: 'food' might double count if we aren't careful, but we are treating 'food' as a bucket here.
-            // But wait, if we increment 'food' when we produce wheat, then 'food' IS the total.
-            // If we deduct wheat, we should also deduct food?
-            // Yes, to keep them in sync.
-            // But wait, if 'food' is just a cache, we should use it as such.
-            // Actually, if 'food' is the aggregate, we should just check 'food'.
-            // But we want to track specific consumption for Palette Fatigue.
-            //
-            // Let's assume:
-            // 1. Production adds to specific (wheat) AND generic (food).
-            // 2. Consumption deducts from specific (wheat) AND generic (food).
-
-            // However, this logic above `if resources.wheat >= ...` tries to deduct from wheat.
-            // If successful, we MUST also deduct from food.
-        }
-
-        // Let's restart consumption logic to be safe and consistent.
-        // We need to pick WHAT to eat.
-        // Available: wheat, potato, rice, (generic) food, rations.
-
-        // Filter valid choices
-        let mut choices = Vec::new();
-        if resources.wheat >= FOOD_PER_MEAL {
-            choices.push(ItemType::Wheat);
-        }
-        if resources.potato >= FOOD_PER_MEAL {
-            choices.push(ItemType::Potato);
-        }
-        if resources.rice >= FOOD_PER_MEAL {
-            choices.push(ItemType::Rice);
-        }
-        // Generic food fallback (if food > sum of others, or just treating leftover as generic)
-        // Calculating "generic only" is hard if we just sum.
-        // But we can check if we have generic food available.
-        // If we only have specific crops, `resources.food` should equal sum.
-        // If we have legacy food, `resources.food` > sum.
-        let specific_sum = resources.wheat + resources.potato + resources.rice;
-        if resources.food > specific_sum + f32::EPSILON && resources.food >= FOOD_PER_MEAL {
-            // We have generic food
-            choices.push(ItemType::None);
-        }
-
-        if choices.is_empty() {
-            // Try rations
-            if resources.rations >= FOOD_PER_MEAL {
-                resources.rations -= FOOD_PER_MEAL;
-                eaten_item = ItemType::Rations;
-                ate = true;
-            }
-        } else {
-            // Pick one
-            eaten_item = choices
-                .choose(&mut rng)
-                .cloned()
-                .unwrap_or(ItemType::Potato);
-
-            match eaten_item {
-                ItemType::Wheat => resources.wheat -= FOOD_PER_MEAL,
-                ItemType::Potato => resources.potato -= FOOD_PER_MEAL,
-                ItemType::Rice => resources.rice -= FOOD_PER_MEAL,
-                _ => {} // Generic
-            }
-            // Also deduct from main food pile
+        // Simplify consumption: Just check food pool
+        if resources.food >= FOOD_PER_MEAL {
             resources.food -= FOOD_PER_MEAL;
+            ate = true;
+
+            // Determine flavor for Palette Fatigue
+            // Prefer picking from active production
+            if !available_items.is_empty() {
+                eaten_item = available_items
+                    .choose(&mut rng)
+                    .cloned()
+                    .unwrap_or(ItemType::Potato);
+            } else {
+                // If no farms active, default to Potato (The Universal Tuber)
+                eaten_item = ItemType::Potato;
+            }
+        } else if resources.rations >= FOOD_PER_MEAL {
+            resources.rations -= FOOD_PER_MEAL;
+            eaten_item = ItemType::Rations;
             ate = true;
         }
 
@@ -468,31 +394,16 @@ pub fn consume_food_system(
                 }
 
                 // Palette Fatigue Logic
-                // If we ate a specific item, record it.
-                // If we ate rations (None), record it?
-                let recorded_item = if eaten_item == ItemType::None {
-                    // Try to guess based on available items for "flavor" if we ate generic?
-                    // Or just fallback
-                    available_items
-                        .choose(&mut rng)
-                        .cloned()
-                        .unwrap_or(ItemType::Potato)
-                } else {
-                    eaten_item
-                };
-
                 if let Some(ref mut history) = history_opt {
-                    record_meal(history, recorded_item.clone());
+                    record_meal(history, eaten_item.clone());
                 } else {
                     let mut history = DietaryHistory::default();
-                    record_meal(&mut history, recorded_item.clone());
+                    record_meal(&mut history, eaten_item.clone());
                     commands.entity(entity).insert(history);
                 }
 
                 // Mimicry Integration
-                commands.entity(entity).insert(JustConsumed {
-                    item: recorded_item,
-                });
+                commands.entity(entity).insert(JustConsumed { item: eaten_item });
             }
         }
     }
@@ -554,8 +465,6 @@ mod tests {
         world.run_system_once(produce_food_system).unwrap();
 
         let resources = world.resource::<ColonyResources>();
-        // Check wheat (default crop)
-        assert!(resources.wheat > 0.0, "Wheat should be produced");
         // Check total food
         assert!(resources.food > 0.0, "Total food should be updated");
     }
@@ -624,10 +533,6 @@ mod tests {
         // With skill = 0.006 * 1.1 = 0.0066
         // Food starts at 10.0
         assert!(
-            (resources.wheat - 0.0066).abs() < 0.0001,
-            "Wheat production should be accurate"
-        );
-        assert!(
             (resources.food - 10.0066).abs() < 0.0001,
             "Food production should reflect skill efficiency"
         );
@@ -666,9 +571,9 @@ mod tests {
         world.run_system_once(produce_food_system).unwrap();
 
         let resources = world.resource::<ColonyResources>();
-        // 2 * 0.006 = 0.012
+        // 2 * 0.006 = 0.012. Initial 10.0.
         assert!(
-            (resources.wheat - 0.012).abs() < 0.0001,
+            (resources.food - 10.012).abs() < 0.0001,
             "Two workers should produce more food"
         );
     }
@@ -678,7 +583,6 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(ColonyResources {
             food: 1.0,
-            potato: 1.0, // Give some potato so they can eat
             ..Default::default()
         });
         world.insert_resource(crate::shared::time::SimulationTime::default());
@@ -697,8 +601,6 @@ mod tests {
         let food_after = world.resource::<ColonyResources>().food;
 
         assert!(food_after < food_before, "Food should be consumed");
-        // Potato should decrease
-        assert!(world.resource::<ColonyResources>().potato < 1.0);
     }
 
     #[test]
@@ -706,7 +608,6 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(ColonyResources {
             food: 1.0,
-            potato: 1.0,
             ..Default::default()
         });
         world.insert_resource(crate::shared::time::SimulationTime::default());
@@ -730,6 +631,7 @@ mod tests {
             "DietaryHistory should be added when eating"
         );
         assert_eq!(history.unwrap().recent_meals.len(), 1);
+        // Default fallback is Potato
         assert_eq!(history.unwrap().recent_meals[0], ItemType::Potato);
     }
 
@@ -738,7 +640,6 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(ColonyResources {
             food: 10.0,
-            wheat: 10.0,
             ..Default::default()
         });
 
@@ -777,19 +678,6 @@ mod tests {
     }
 
     #[test]
-    fn test_colony_resources_has_specific_crops() {
-        let mut res = ColonyResources::default();
-        // These fields should exist
-        res.wheat = 10.0;
-        res.potato = 5.0;
-        res.rice = 2.0;
-
-        assert_eq!(res.wheat, 10.0);
-        assert_eq!(res.potato, 5.0);
-        assert_eq!(res.rice, 2.0);
-    }
-
-    #[test]
     fn test_produce_food_wheat_yield() {
         let mut world = setup_test_world();
         world.insert_resource(SeasonState {
@@ -822,8 +710,8 @@ mod tests {
 
         let res = world.resource::<ColonyResources>();
         // Wheat base yield is high (e.g. 0.006 vs standard 0.005)
-        assert!(res.wheat > 0.005);
-        assert_eq!(res.potato, 0.0);
+        // Initial 10.0. Yield > 0.005. Total > 10.005
+        assert!(res.food > 10.005);
     }
 
     #[test]
@@ -862,8 +750,8 @@ mod tests {
         // Potato in winter (0.8 modifier) vs Wheat in winter (0.2 modifier)
         // Potato base (0.004) * 0.8 = 0.0032
         // Wheat base (0.006) * 0.2 = 0.0012
-
-        assert!(res.potato > 0.003);
+        // Total should increase by at least 0.003
+        assert!(res.food > 10.003);
     }
 
     #[test]
@@ -881,9 +769,6 @@ mod tests {
         world.insert_resource(ColonyResources {
             rations: 10.0,
             food: 0.0, // Ensure no other food
-            wheat: 0.0,
-            potato: 0.0,
-            rice: 0.0,
             ..Default::default()
         });
         world.insert_resource(crate::shared::time::SimulationTime::default());
@@ -914,9 +799,6 @@ mod tests {
         world.insert_resource(ColonyResources {
             rations: 10.0,
             food: 0.0,
-            wheat: 0.0,
-            potato: 0.0,
-            rice: 0.0,
             ..Default::default()
         });
         world.insert_resource(crate::shared::time::SimulationTime::default());
