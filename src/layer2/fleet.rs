@@ -1,5 +1,6 @@
 use crate::layer2::barnacles::{SpaceBarnacles, calculate_speed_modifier};
 use crate::layer2::ship::Ship;
+use crate::layer2::station::StationType;
 use bevy_ecs::prelude::*;
 
 /// Factions that can own fleets.
@@ -53,6 +54,8 @@ pub struct InTransit {
 pub enum FleetOrder {
     /// Order to move to a specific entity.
     MoveTo(Entity),
+    /// Order to build a station.
+    BuildStation(StationType),
 }
 
 /// System to process `FleetOrder`s.
@@ -62,46 +65,42 @@ pub fn fleet_order_system(
     mut commands: Commands,
     query: Query<(Entity, &FleetOrder, Option<&InOrbit>), With<Fleet>>,
 ) {
-    for (entity, order, maybe_orbit) in query.iter() {
-        match order {
-            FleetOrder::MoveTo(target) => {
-                // Determine origin
-                let origin = if let Some(orbit) = maybe_orbit {
-                    orbit.parent
-                } else {
-                    // For MVP, if not in orbit, we ignore.
-                    continue;
-                };
+    for (entity, order, maybe_orbit) in &query {
+        if let FleetOrder::MoveTo(target) = order {
+            // Determine origin
+            let origin = if let Some(orbit) = maybe_orbit {
+                orbit.parent
+            } else {
+                // For MVP, if not in orbit, we ignore.
+                continue;
+            };
 
-                commands
-                    .entity(entity)
-                    .remove::<FleetOrder>()
-                    .remove::<InOrbit>()
-                    .insert(InTransit {
-                        origin,
-                        destination: *target,
-                        progress: 0.0,
-                        duration: 100.0, // Fixed duration for MVP
-                    });
-            }
+            commands
+                .entity(entity)
+                .remove::<FleetOrder>()
+                .remove::<InOrbit>()
+                .insert(InTransit {
+                    origin,
+                    destination: *target,
+                    progress: 0.0,
+                    duration: 100.0, // Fixed duration for MVP
+                });
         }
     }
 }
 
 /// System to ensure all fleets have the `FleetHealth` component.
+#[allow(clippy::type_complexity)]
 pub fn ensure_fleet_health_system(
     mut commands: Commands,
     query: Query<(Entity, Option<&FleetComposition>), (With<Fleet>, Without<FleetHealth>)>,
 ) {
     for (entity, composition) in &query {
-        let (current, max) = if let Some(comp) = composition {
+        let (current, max) = composition.map_or((100.0, 100.0), |comp| {
             let total_health: f32 = comp.ships.iter().map(|s| s.health).sum();
             let max_health: f32 = comp.ships.iter().map(|s| s.max_health).sum();
             (total_health, max_health)
-        } else {
-            // Default health for abstract fleets without ships
-            (100.0, 100.0)
-        };
+        });
 
         commands.entity(entity).insert(FleetHealth { current, max });
     }
