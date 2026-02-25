@@ -59,7 +59,7 @@ pub fn produce_manual_system(
             .map_or(None, |designation| match designation.designation_type {
                 DesignationType::Mine => Some(SkillType::Mining),
                 DesignationType::Chop => Some(SkillType::Forestry),
-                DesignationType::ClearFlora => Some(SkillType::Farming), // Farming/Foraging
+                DesignationType::ClearFlora | DesignationType::CollectSample => Some(SkillType::Farming), // Farming/Foraging
                 DesignationType::Demolish
                 | DesignationType::Repair
                 | DesignationType::JuryRig
@@ -67,7 +67,6 @@ pub fn produce_manual_system(
                 | DesignationType::SetZone(_) => Some(SkillType::Construction),
                 DesignationType::Tame => Some(SkillType::Husbandry),
                 DesignationType::Cannibalize => None,
-                DesignationType::CollectSample => Some(SkillType::Farming),
             });
 
         let (chosen_skill, level) = if let Some(s) = skill_type_opt {
@@ -147,7 +146,7 @@ pub fn manual_aura_system(
                 let skill_opt = match designation.designation_type {
                     DesignationType::Mine => Some(SkillType::Mining),
                     DesignationType::Chop => Some(SkillType::Forestry),
-                    DesignationType::ClearFlora => Some(SkillType::Farming),
+                    DesignationType::ClearFlora | DesignationType::CollectSample => Some(SkillType::Farming),
                     DesignationType::Demolish
                     | DesignationType::Repair
                     | DesignationType::JuryRig
@@ -155,7 +154,6 @@ pub fn manual_aura_system(
                     | DesignationType::SetZone(_) => Some(SkillType::Construction),
                     DesignationType::Tame => Some(SkillType::Husbandry),
                     DesignationType::Cannibalize => None,
-                    DesignationType::CollectSample => Some(SkillType::Farming),
                 };
                 skill_opt == Some(manual.skill_type)
             } else {

@@ -235,6 +235,17 @@ pub fn process_refining_system(world: &mut World) {
                 ));
             }
 
+            // Paperwork Physicality: Spawn BuildingPermit as item instead of adding to global storage
+            if output.building_permits > 0.0 {
+                world.spawn((
+                    ResourceItem {
+                        resource_type: ResourceType::BuildingPermit,
+                        amount: output.building_permits,
+                    },
+                    pos,
+                ));
+            }
+
             if let Some(mut progress) = world.get_mut::<RefiningProgress>(entity) {
                 progress.current = 0.0;
             }
@@ -351,6 +362,18 @@ pub fn get_refining_recipe(
                 ..ColonyResources::zeroed()
             },
             0.8, // Toxic Sludge
+        ),
+        BuildingType::Office => (
+            res.wood >= 1.0 && res.building_permits < res.max_building_permits,
+            ColonyResources {
+                wood: 1.0,
+                ..ColonyResources::zeroed()
+            },
+            ColonyResources {
+                building_permits: 1.0,
+                ..ColonyResources::zeroed()
+            },
+            0.1, // Shredded paper / waste
         ),
         _ => (
             false,
@@ -564,6 +587,60 @@ mod tests {
 
         let progress = world.query::<&RefiningProgress>().single(&world);
         assert!((progress.current - 0.0).abs() < f32::EPSILON);
+    }
+
+    #[test]
+    fn test_office_produces_physical_permit() {
+        use crate::layer1::resources::{ResourceType, ResourceItem};
+        let mut world = World::new();
+
+        let resources = ColonyResources {
+            wood: 10.0,
+            building_permits: 0.0,
+            ..Default::default()
+        };
+        world.insert_resource(resources);
+
+        // Office
+        world.spawn((
+            Building {
+                building_type: BuildingType::Office,
+            },
+            GridPosition { x: 5, y: 5 },
+            RefiningProgress {
+                current: 9.9, // Almost done
+                max: 10.0,
+            },
+        ));
+
+        // Worker
+        world.spawn((
+            Pop,
+            GridPosition { x: 5, y: 5 },
+            PopAction {
+                current: ActionType::Refine,
+                current_utility: 0.5,
+                ticks_committed: 1,
+            },
+        ));
+
+        process_refining_system(&mut world);
+
+        // Verify Permit Entity Spawned
+        let item = world
+            .query::<(&ResourceItem, &GridPosition)>()
+            .iter(&world)
+            .find(|(i, _)| i.resource_type == ResourceType::BuildingPermit);
+
+        assert!(item.is_some(), "Should spawn BuildingPermit item");
+        let (item_data, pos) = item.unwrap();
+        assert_eq!(item_data.amount, 1.0);
+        assert_eq!(pos.x, 5);
+
+        // Verify NOT added to global resources
+        let res = world.resource::<ColonyResources>();
+        assert_eq!(res.building_permits, 0.0, "Permit should be physical, not global");
+        assert!((res.wood - 9.0).abs() < f32::EPSILON, "Wood should be consumed");
     }
 
     #[test]

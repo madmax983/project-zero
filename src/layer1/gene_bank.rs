@@ -102,7 +102,7 @@ pub fn process_cloning_system(world: &mut World) {
     )>();
     for (_entity, mut bank, pos, power) in query.iter_mut(world) {
         // Check power if component exists
-        if power.map_or(false, |p| !p.active) {
+        if power.is_some_and(|p| !p.active) {
             continue;
         }
 
