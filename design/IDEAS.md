@@ -5918,3 +5918,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Maintenance cost (Paint) vs. Subterranean constraints (Space).
 
 ---
+
+## Memorial Forests
+
+**Layer:** 1
+
+**Fantasy:** A graveyard that breathes. Your ancestors are not stone; they are the shade you sit under.
+
+**Mechanic:** Instead of graves, dead Pops can be "Planted" with a sapling. The tree grows faster if "Tended" by relatives. The tree retains the Pop's name and a snippet of their history (e.g., "Here grows Miner Bob, who found the Iron Vein"). Cutting it down causes massive "Desecration" stress.
+
+**Emergence:** A fire sweeps through the Memorial Grove. Pops rush into the flames to save their "parents", dying in the process, creating more trees.
+
+**Tension:** Sustainable lumber (harvest the dead) vs. Sacred memory (preserve the grove).
+
+---
+
+## Geological Porosity
+
+**Layer:** 1
+
+**Fantasy:** The ground is not a solid box. It leaks.
+
+**Mechanic:** Terrain types have a "Porosity" value. Liquids (Water, Fuel, Waste) stored on or flowing over porous terrain (Sand, Gravel) slowly leak into the "Groundwater" layer or adjacent lower tiles. Non-porous rock (Granite) holds fluids.
+
+**Emergence:** You build a Fuel Depot on cheap sandstone. It leaks into the aquifer. A week later, the town well pumps up jet fuel instead of water, poisoning the crop irrigation.
+
+**Tension:** Cheap construction (anywhere) vs. Geological safety (specific bedrock).
+
+---
+
+## Signal Decay
+
+**Layer:** Cross-layer
+
+**Fantasy:** Space is noisy. You have to shout to be heard, and sometimes you mishear the reply.
+
+**Mechanic:** Comms messages (Trade Offers, Threats, Quests) have a "Corruption" % based on distance and interference (Nebulae/Storms). Key words are scrambled (e.g., "Demand 500 [CORRUPTED]"). Players must guess the context or boost signal power to clarify.
+
+**Emergence:** You receive a message: "We are [CORRUPTED]! Send help!" You think it's an ally and send a rescue fleet. It was a pirate trap saying "We are boarding!"
+
+**Tension:** Risk a guess (Speed) vs. Wait for clarity (Safety/Cost).
+
+---
