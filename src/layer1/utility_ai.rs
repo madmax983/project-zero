@@ -626,6 +626,7 @@ mod tests {
                     hunger: 0.1,
                     rest: 0.8,
                     leisure: 0.8,
+                    hygiene: 0.8,
                 }, // Very hungry!
                 UtilityWeights::default(),
                 PopAction {
@@ -678,6 +679,7 @@ mod tests {
                     hunger: 0.6,
                     rest: 0.6,
                     leisure: 0.6,
+                    hygiene: 0.6,
                 }, // Moderate needs
                 UtilityWeights::default(),
                 PopAction {

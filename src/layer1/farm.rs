@@ -18,6 +18,7 @@ use crate::layer1::fauna::{Fauna, FaunaType};
 use crate::layer1::fertility::FertilityGrid;
 use crate::layer1::husbandry::Tame;
 use crate::layer1::items::ItemType;
+use crate::layer1::morale::{MoodModifier, Morale};
 use crate::layer1::needs::Needs;
 use crate::layer1::palette_fatigue::{DietaryHistory, record_meal};
 use crate::layer1::pop::Job;
@@ -27,6 +28,7 @@ use crate::layer1::seasons::{Season, SeasonState};
 use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
 use crate::layer1::social_mimicry::JustConsumed;
 use crate::layer1::tech::Tech;
+use crate::layer1::traits::Trait;
 use crate::layer1::utility_ai::{ActionType, PopAction};
 use bevy_ecs::prelude::*;
 use rand::seq::SliceRandom;
@@ -296,6 +298,8 @@ pub fn consume_food_system(
             &mut Needs,
             Option<&mut DietaryHistory>,
             Option<&mut Wallet>,
+            Option<&mut Morale>,
+            Option<&crate::layer1::traits::Traits>,
         ),
         With<Pop>,
     >,
@@ -329,7 +333,7 @@ pub fn consume_food_system(
     // Collect hungry pop entities first to avoid borrow issues with mut iteration
     let hungry_pops: Vec<Entity> = pop_query
         .iter()
-        .filter(|(_, needs, _, wallet)| {
+        .filter(|(_, needs, _, wallet, _, _)| {
             if needs.hunger >= FOOD_HUNGER_THRESHOLD {
                 return false;
             }
@@ -341,7 +345,7 @@ pub fn consume_food_system(
             }
             true
         })
-        .map(|(e, _, _, _)| e)
+        .map(|(e, _, _, _, _, _)| e)
         .collect();
 
     let mut rng = rand::thread_rng();
@@ -414,10 +418,7 @@ pub fn consume_food_system(
             // Try rations
             if resources.rations >= FOOD_PER_MEAL {
                 resources.rations -= FOOD_PER_MEAL;
-                // Rations don't count for food total usually, or they do?
-                // total_food includes rations.
-                eaten_item = ItemType::None; // Rations aren't an ItemType in this context usually, or maybe ItemType::Rations?
-                // ItemType doesn't have Rations.
+                eaten_item = ItemType::Rations;
                 ate = true;
             }
         } else {
@@ -440,12 +441,31 @@ pub fn consume_food_system(
 
         if ate {
             #[allow(clippy::collapsible_if)]
-            if let Ok((_, mut needs, mut history_opt, mut wallet_opt)) = pop_query.get_mut(entity) {
+            if let Ok((_, mut needs, mut history_opt, mut wallet_opt, mut morale_opt, traits_opt)) =
+                pop_query.get_mut(entity)
+            {
                 needs.hunger = (needs.hunger + HUNGER_PER_MEAL).min(1.0);
 
                 // Deduct Cost
                 if let Some(wallet) = wallet_opt.as_deref_mut() {
                     wallet.credits -= food_price;
+                }
+
+                // Rations Mood Logic
+                if eaten_item == ItemType::Rations {
+                    let is_immune = traits_opt.is_some_and(|t| {
+                        t.has(Trait::Cannibal) || t.has(Trait::Pragmatist)
+                    });
+
+                    if !is_immune {
+                        if let Some(morale) = morale_opt.as_deref_mut() {
+                            morale.add_modifier(MoodModifier {
+                                label: "Ate Slop".to_string(),
+                                value: -0.1, // -10% mood (0.1 in 0.0-1.0 scale, spec said -10 but scale is usually 0-1 or 0-100? Morale struct says value 0.0-1.0. Modifier sum added to value. MoodModifier value is f32. Let's assume 0.1 means 10%)
+                                duration: 250, // 24h
+                            });
+                        }
+                    }
                 }
 
                 // Palette Fatigue Logic
@@ -854,5 +874,71 @@ mod tests {
 
         farm.selected_crop = ItemType::Rice;
         assert_eq!(farm.selected_crop, ItemType::Rice);
+    }
+
+    #[test]
+    fn test_consume_food_rations_mood_penalty() {
+        let mut world = World::new();
+        world.insert_resource(ColonyResources {
+            rations: 10.0,
+            food: 0.0, // Ensure no other food
+            wheat: 0.0,
+            potato: 0.0,
+            rice: 0.0,
+            ..Default::default()
+        });
+        world.insert_resource(crate::shared::time::SimulationTime::default());
+
+        let pop = world
+            .spawn((
+                Pop,
+                Needs {
+                    hunger: 0.0,
+                    ..Default::default()
+                },
+                Morale::default(),
+            ))
+            .id();
+
+        world.run_system_once(consume_food_system).unwrap();
+
+        let morale = world.get::<Morale>(pop).unwrap();
+        let modifier = morale.modifiers.iter().find(|m| m.label == "Ate Slop");
+        assert!(modifier.is_some(), "Should apply Ate Slop modifier");
+        assert_eq!(modifier.unwrap().value, -0.1);
+    }
+
+    #[test]
+    fn test_consume_food_rations_immunity() {
+        use std::collections::HashSet;
+        let mut world = World::new();
+        world.insert_resource(ColonyResources {
+            rations: 10.0,
+            food: 0.0,
+            wheat: 0.0,
+            potato: 0.0,
+            rice: 0.0,
+            ..Default::default()
+        });
+        world.insert_resource(crate::shared::time::SimulationTime::default());
+
+        // Cannibal Pop
+        let pop = world
+            .spawn((
+                Pop,
+                Needs {
+                    hunger: 0.0,
+                    ..Default::default()
+                },
+                Morale::default(),
+                crate::layer1::traits::Traits(HashSet::from([crate::layer1::traits::Trait::Cannibal])),
+            ))
+            .id();
+
+        world.run_system_once(consume_food_system).unwrap();
+
+        let morale = world.get::<Morale>(pop).unwrap();
+        let modifier = morale.modifiers.iter().find(|m| m.label == "Ate Slop");
+        assert!(modifier.is_none(), "Cannibal should be immune to Ate Slop");
     }
 }
