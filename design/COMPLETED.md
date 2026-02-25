@@ -158,3 +158,4 @@
 - [x] `219` Space Barnacles — `specs/219-space-barnacles.md` — completed 2026-06-25
 - [x] `220` Hygiene & Squalor — `specs/220-hygiene-squalor.md` — completed 2026-07-25
 - [x] `221` Organic Recycling — `specs/221-organic-recycling.md` — completed 2026-07-25
+- [x] `184` Orbital Debris — `specs/184-orbital-debris.md` — completed 2026-06-25

@@ -26,6 +26,15 @@ pub struct InOrbit {
     pub parent: Entity,
 }
 
+/// Component tracking fleet health.
+#[derive(Component, Debug, Clone, Copy, Default)]
+pub struct FleetHealth {
+    /// Current health.
+    pub current: f32,
+    /// Maximum health.
+    pub max: f32,
+}
+
 /// Component indicating a fleet is moving between two locations.
 #[derive(Component, Debug, Clone, Copy)]
 pub struct InTransit {
@@ -76,6 +85,25 @@ pub fn fleet_order_system(
                     });
             }
         }
+    }
+}
+
+/// System to ensure all fleets have the `FleetHealth` component.
+pub fn ensure_fleet_health_system(
+    mut commands: Commands,
+    query: Query<(Entity, Option<&FleetComposition>), (With<Fleet>, Without<FleetHealth>)>,
+) {
+    for (entity, composition) in &query {
+        let (current, max) = if let Some(comp) = composition {
+            let total_health: f32 = comp.ships.iter().map(|s| s.health).sum();
+            let max_health: f32 = comp.ships.iter().map(|s| s.max_health).sum();
+            (total_health, max_health)
+        } else {
+            // Default health for abstract fleets without ships
+            (100.0, 100.0)
+        };
+
+        commands.entity(entity).insert(FleetHealth { current, max });
     }
 }
 
@@ -139,6 +167,26 @@ impl FleetComposition {
             .iter()
             .map(|s| s.ship_type.base_speed())
             .fold(f32::INFINITY, f32::min)
+    }
+
+    /// Applies damage to the fleet, destroying ships if necessary.
+    /// Returns a list of destroyed ship types.
+    pub fn take_damage(&mut self, mut damage: f32) -> Vec<crate::layer2::ship::ShipType> {
+        let mut destroyed = Vec::new();
+        let mut survivors = Vec::new();
+
+        for mut ship in self.ships.drain(..) {
+            if damage >= ship.health {
+                damage -= ship.health;
+                destroyed.push(ship.ship_type);
+            } else {
+                ship.health -= damage;
+                survivors.push(ship);
+                damage = 0.0;
+            }
+        }
+        self.ships = survivors;
+        destroyed
     }
 }
 

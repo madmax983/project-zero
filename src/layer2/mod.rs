@@ -7,6 +7,10 @@
 pub mod barnacles;
 /// Combat resolution logic.
 pub mod combat;
+/// Orbital debris mechanics.
+pub mod debris;
+/// Layer 2 events.
+pub mod events;
 /// Fleet movement and management.
 pub mod fleet;
 /// Procedural generation for the system.
@@ -19,3 +23,6 @@ pub mod ship;
 pub mod system;
 /// System visibility logic (Command Center).
 pub mod visibility;
+
+#[cfg(test)]
+mod debris_tests;
