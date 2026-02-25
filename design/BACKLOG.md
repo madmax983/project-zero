@@ -27,6 +27,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `231` Memorial Forests — `specs/231-memorial-forests.md`
 - [ ] `232` Protest Crowds — `specs/232-protest-crowds.md`
 - [ ] `233` Public Grievances — `specs/233-public-grievances.md`
+- [ ] `234` The Visitor — `specs/234-the-visitor.md`
 
 ## MVP — Layer 2: System Simulation
 
