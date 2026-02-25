@@ -65,6 +65,7 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer1::medical::PatientTreated>,
             update_event_buffer::<crate::layer1::eureka::EurekaEvent>,
             update_event_buffer::<crate::layer1::items::UnequipEvent>,
+            update_event_buffer::<crate::layer1::unrest::DenounceEvent>,
         )
             .in_set(Layer1SystemSet::EventCleanup),
     );
@@ -512,6 +513,11 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
                 .after(crate::layer1::health::despawn_dead_entities_system),
             crate::layer1::funeral::grief_system
                 .after(crate::layer1::health::despawn_dead_entities_system),
+            crate::layer1::unrest::calculate_unrest_system.after(decay_needs_system),
+            crate::layer1::unrest::identify_scapegoat_system
+                .after(crate::layer1::unrest::calculate_unrest_system),
+            crate::layer1::unrest::handle_denounce_event_system
+                .after(crate::layer1::unrest::calculate_unrest_system),
             crate::layer1::unrest::check_mental_break_system.after(decay_needs_system),
             check_stress_breakdown_system.after(decay_needs_system),
             crate::layer1::totems::check_spontaneous_totem_creation
