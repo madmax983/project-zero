@@ -108,6 +108,13 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world.contains_resource::<Events<ShipDestroyedEvent>>() {
         world.init_resource::<Events<ShipDestroyedEvent>>();
     }
+    if !world.contains_resource::<Events<crate::layer1::unrest::DenounceEvent>>() {
+        world.init_resource::<Events<crate::layer1::unrest::DenounceEvent>>();
+    }
+
+    if !world.contains_resource::<crate::layer1::unrest::Unrest>() {
+        world.init_resource::<crate::layer1::unrest::Unrest>();
+    }
 
     // Add our schedule if not yet added
     {

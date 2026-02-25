@@ -50,6 +50,12 @@ pub enum Trait {
     Cannibal,
     /// Accepts survival necessities without complaint (ignore Ration mood penalty).
     Pragmatist,
+    /// Socially isolated and often blamed.
+    Outsider,
+    /// Genetically deviant and mistrusted.
+    Mutant,
+    /// Highly empathetic and prone to guilt.
+    Compassionate,
 }
 
 impl Trait {
@@ -78,6 +84,9 @@ impl Trait {
             Self::Intellectual => "Intellectual",
             Self::Cannibal => "Cannibal",
             Self::Pragmatist => "Pragmatist",
+            Self::Outsider => "Outsider",
+            Self::Mutant => "Mutant",
+            Self::Compassionate => "Compassionate",
         }
     }
 }
@@ -130,6 +139,9 @@ impl Traits {
             Trait::Intellectual,
             Trait::Cannibal,
             Trait::Pragmatist,
+            Trait::Outsider,
+            Trait::Mutant,
+            Trait::Compassionate,
         ];
 
         while set.len() < count {
