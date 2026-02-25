@@ -204,6 +204,106 @@ pub enum Role {
     Militia,
 }
 
+/// Bundle defining a complete Pop entity.
+#[derive(Bundle)]
+pub struct PopBundle {
+    /// Marker component.
+    pub pop: Pop,
+    /// Name of the pop.
+    pub name: PopName,
+    /// Position in the world.
+    pub pos: GridPosition,
+    /// Health status.
+    pub health: Health,
+    /// Physiological needs.
+    pub needs: Needs,
+    /// Memories and trauma.
+    pub memories: Memories,
+    /// Skill levels.
+    pub skills: Skills,
+    /// Movement speed.
+    pub speed: Speed,
+    /// Current action.
+    pub action: PopAction,
+    /// Equipped items.
+    pub equipment: Equipment,
+    /// AI decision weights.
+    pub weights: UtilityWeights,
+    /// Known rumors and topics.
+    pub knowledge: Knowledge,
+    /// Biological age.
+    pub age: Age,
+    /// Faction membership.
+    pub faction: FactionMember,
+    /// Arrival time.
+    pub arrival: Arrival,
+    /// Hygiene filth level.
+    pub filth: Filth,
+    /// Active status effects.
+    pub auras: ActiveAuras,
+    /// Social debts owed.
+    pub social_debt: SocialDebt,
+    /// Overall morale.
+    pub morale: Morale,
+    /// Disease cooldown.
+    pub contagion: ContagionCooldown,
+    /// Personality traits.
+    pub traits: Traits,
+    /// Cabin fever status.
+    pub cabin_fever: CabinFever,
+    /// Biocompatibility with environment.
+    pub biocompatibility: Biocompatibility,
+    /// Exposure to the wild.
+    pub wild_exposure: WildExposure,
+    /// Bureaucracy demand.
+    pub admin_consumer: AdminConsumer,
+    /// Food variety history.
+    pub dietary_history: DietaryHistory,
+    /// Personal currency.
+    pub wallet: Wallet,
+    /// Spoken dialect.
+    pub dialect: Dialect,
+    /// Linguistic knowledge.
+    pub linguistics: Linguistics,
+}
+
+impl PopBundle {
+    /// Creates a new random PopBundle at the given position.
+    pub fn random<R: Rng>(x: i32, y: i32, rng: &mut R) -> Self {
+        Self {
+            pop: Pop,
+            name: generate_name(rng),
+            pos: GridPosition { x, y },
+            health: Health::default(),
+            needs: Needs::default(),
+            memories: Memories::default(),
+            skills: Skills::default(),
+            speed: Speed::default(),
+            action: PopAction::default(),
+            equipment: Equipment::default(),
+            weights: UtilityWeights::default(),
+            knowledge: Knowledge::default(),
+            age: Age::new(rng.gen_range(20..40)),
+            faction: FactionMember::default(),
+            arrival: Arrival { tick: 0 },
+            filth: Filth::default(),
+            auras: ActiveAuras::default(),
+            social_debt: SocialDebt::default(),
+            morale: Morale::default(),
+            contagion: ContagionCooldown::default(),
+            traits: Traits::random(rng),
+            cabin_fever: CabinFever::default(),
+            biocompatibility: Biocompatibility::default(),
+            wild_exposure: WildExposure::default(),
+            admin_consumer: AdminConsumer { demand: 1.0 },
+            dietary_history: DietaryHistory::default(),
+            wallet: Wallet { credits: 50.0 },
+            dialect: Dialect::default(),
+            linguistics: Linguistics::default(),
+        }
+    }
+}
+
 /// Spawn 5 initial pops at random walkable positions.
 ///
 /// This function attempts to find valid starting locations for the initial colony.
@@ -261,40 +361,7 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
         };
 
         if is_walkable {
-            world
-                .spawn((
-                    Pop,
-                    generate_name(rng),
-                    GridPosition { x, y },
-                    Health::default(),
-                    Needs::default(),
-                    Memories::default(),
-                    Skills::default(),
-                    Speed::default(),
-                    PopAction::default(),
-                    Equipment::default(),
-                    UtilityWeights::default(),
-                    Knowledge::default(),
-                    Age::new(rng.gen_range(20..40)),
-                    FactionMember::default(),
-                    Arrival { tick: 0 },
-                ))
-                .insert((
-                    Filth::default(),
-                    ActiveAuras::default(),
-                    SocialDebt::default(),
-                    Morale::default(),
-                    ContagionCooldown::default(),
-                    Traits::random(rng),
-                    CabinFever::default(),
-                    Biocompatibility::default(),
-                    WildExposure::default(),
-                    AdminConsumer { demand: 1.0 },
-                    DietaryHistory::default(),
-                    Wallet { credits: 50.0 },
-                    Dialect::default(),
-                    Linguistics::default(),
-                ));
+            world.spawn(PopBundle::random(x, y, rng));
             spawned += 1;
         }
     }
