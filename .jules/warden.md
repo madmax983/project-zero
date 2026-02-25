@@ -45,3 +45,9 @@
 
 **Threat:** Unsound `Send/Sync` implementation for `GpuContext` in WASM could lead to UB if multi-threading is enabled in the future.
 **Defense:** Added `// SECURITY:` audit markers and explicit thread-safety constraints to `src/gpu/context.rs`.
+
+## 2024-05-29 - Atmosphere Grid Unbounded Values
+**Threat:** The `AtmosphereGrid` allows `f32::INFINITY` values to be set and propagated. While `NaN` is implicitly sanitized by `f32::max(0.0)`, `INFINITY` is not. Infinite pollution levels can cause logic errors, state corruption, and denial of service.
+**Defense:**
+- Hardened `AtmosphereGrid::set` to clamp values to `1_000_000.0` and ensure they are finite. This implicitly hardens `add` and `set_gas` as well.
+- Verified with regression test `tests/security_atmosphere_nan.rs` (which tests `INFINITY` injection).
