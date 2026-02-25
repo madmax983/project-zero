@@ -41,6 +41,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `209` Planetary Governance — `specs/209-planetary-governance.md`
 - [ ] `226` Ship Personalities — `specs/226-ship-personalities.md`
 - [ ] `229` Station Keeping — `specs/229-station-keeping.md`
+- [ ] `230` Zero-G Industry — `specs/230-zero-g-industry.md`
 
 ## MVP — Layer 3: Galaxy Simulation
 

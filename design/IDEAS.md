@@ -2442,7 +2442,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Zero-G Industry
+## Zero-G Industry [SPECCED]
 
 **Layer:** 2
 
