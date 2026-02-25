@@ -51,7 +51,13 @@ pub fn handle_workplace_hazards(
         max_hp: 100.0,
     }); // Dummy "Perfect" structure if none
 
-    let risk = calculate_risk(base_risk, skills, skill_type, structure_ref, hazard_modifier);
+    let risk = calculate_risk(
+        base_risk,
+        skills,
+        skill_type,
+        structure_ref,
+        hazard_modifier,
+    );
     let mut rng = rand::thread_rng();
 
     if rng.gen_bool(risk.min(1.0)) {

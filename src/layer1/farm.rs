@@ -453,9 +453,8 @@ pub fn consume_food_system(
 
                 // Rations Mood Logic
                 if eaten_item == ItemType::Rations {
-                    let is_immune = traits_opt.is_some_and(|t| {
-                        t.has(Trait::Cannibal) || t.has(Trait::Pragmatist)
-                    });
+                    let is_immune = traits_opt
+                        .is_some_and(|t| t.has(Trait::Cannibal) || t.has(Trait::Pragmatist));
 
                     if !is_immune {
                         if let Some(morale) = morale_opt.as_deref_mut() {
@@ -931,7 +930,9 @@ mod tests {
                     ..Default::default()
                 },
                 Morale::default(),
-                crate::layer1::traits::Traits(HashSet::from([crate::layer1::traits::Trait::Cannibal])),
+                crate::layer1::traits::Traits(HashSet::from([
+                    crate::layer1::traits::Trait::Cannibal,
+                ])),
             ))
             .id();
 

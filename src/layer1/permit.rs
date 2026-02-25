@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::resources::ResourceType;
 use crate::layer1::inventory::Inventory;
+use crate::layer1::resources::ResourceType;
+use bevy_ecs::prelude::*;
 
 /// Component indicating a building requires a permit to function.
 #[derive(Component, Default, Debug, Clone, Copy)]
@@ -9,13 +9,20 @@ pub struct PermitRequired;
 /// Consumes a permit from the building's inventory to activate it.
 pub fn permit_activation_system(
     mut commands: Commands,
-    mut query: Query<(Entity, &mut Inventory, Option<&mut crate::layer1::energy::PowerConsumer>), With<PermitRequired>>,
+    mut query: Query<
+        (
+            Entity,
+            &mut Inventory,
+            Option<&mut crate::layer1::energy::PowerConsumer>,
+        ),
+        With<PermitRequired>,
+    >,
 ) {
     for (entity, mut inventory, mut power) in &mut query {
         // Check for permit
-        if let Some(index) = inventory.items.iter().position(|item|
+        if let Some(index) = inventory.items.iter().position(|item| {
             item.item_type.as_resource_type() == Some(ResourceType::BuildingPermit)
-        ) {
+        }) {
             // Remove permit
             inventory.items.remove(index);
             // Remove requirement
@@ -43,11 +50,13 @@ pub fn enforce_permit_restrictions_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::building::{Building, BuildingType, MaterialType, spawn_building_with_material};
+    use crate::layer1::building::{
+        Building, BuildingType, MaterialType, spawn_building_with_material,
+    };
+    use crate::layer1::energy::PowerConsumer;
     use crate::layer1::inventory::{Inventory, InventoryItem};
     use crate::layer1::items::ItemType;
-    use crate::layer1::resources::{ResourceType, ColonyResources};
-    use crate::layer1::energy::PowerConsumer;
+    use crate::layer1::resources::{ColonyResources, ResourceType};
     use bevy_ecs::prelude::*;
 
     // Helper to setup world
@@ -74,13 +83,25 @@ mod tests {
 
         // Act
         // Smelter is Tier 2 (Advanced), should require permit
-        spawn_building_with_material(&mut world, 0, 0, BuildingType::Smelter, MaterialType::default());
+        spawn_building_with_material(
+            &mut world,
+            0,
+            0,
+            BuildingType::Smelter,
+            MaterialType::default(),
+        );
 
         let (entity, _) = world.query::<(Entity, &Building)>().single(&world);
 
         // Assert
-        assert!(world.get::<PermitRequired>(entity).is_some(), "Smelter should require a permit");
-        assert!(world.get::<Inventory>(entity).is_some(), "Smelter should have inventory for permit");
+        assert!(
+            world.get::<PermitRequired>(entity).is_some(),
+            "Smelter should require a permit"
+        );
+        assert!(
+            world.get::<Inventory>(entity).is_some(),
+            "Smelter should have inventory for permit"
+        );
     }
 
     #[test]
@@ -90,23 +111,39 @@ mod tests {
 
         // Act
         // Farm is Tier 1 (Basic), should NOT require permit
-        spawn_building_with_material(&mut world, 0, 0, BuildingType::Farm, MaterialType::default());
+        spawn_building_with_material(
+            &mut world,
+            0,
+            0,
+            BuildingType::Farm,
+            MaterialType::default(),
+        );
 
         let (entity, _) = world.query::<(Entity, &Building)>().single(&world);
 
         // Assert
-        assert!(world.get::<PermitRequired>(entity).is_none(), "Farm should not require a permit");
+        assert!(
+            world.get::<PermitRequired>(entity).is_none(),
+            "Farm should not require a permit"
+        );
     }
 
     #[test]
     fn test_permit_blocks_functionality() {
         // Arrange
         let mut world = World::new();
-        let id = world.spawn((
-            Building { building_type: BuildingType::Smelter },
-            PermitRequired,
-            PowerConsumer { active: true, ..Default::default() } // Normally active
-        )).id();
+        let id = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Smelter,
+                },
+                PermitRequired,
+                PowerConsumer {
+                    active: true,
+                    ..Default::default()
+                }, // Normally active
+            ))
+            .id();
 
         // Act
         // Run a system that enforces permit restrictions
@@ -116,24 +153,36 @@ mod tests {
 
         // Assert
         let consumer = world.get::<PowerConsumer>(id).unwrap();
-        assert!(!consumer.active, "PowerConsumer should be disabled by PermitRequired");
+        assert!(
+            !consumer.active,
+            "PowerConsumer should be disabled by PermitRequired"
+        );
     }
 
     #[test]
     fn test_delivering_permit_activates_building() {
         // Arrange
         let mut world = World::new();
-        let id = world.spawn((
-            Building { building_type: BuildingType::Smelter },
-            PermitRequired,
-            Inventory::default(), // Inventory to receive the permit
-            PowerConsumer { active: false, ..Default::default() }, // Disabled initially
-        )).id();
+        let id = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Smelter,
+                },
+                PermitRequired,
+                Inventory::default(), // Inventory to receive the permit
+                PowerConsumer {
+                    active: false,
+                    ..Default::default()
+                }, // Disabled initially
+            ))
+            .id();
 
         // Simulate Hauler delivering the permit
         // We use ItemType::BuildingPermit which maps to ResourceType::BuildingPermit
         let mut inventory = world.get_mut::<Inventory>(id).unwrap();
-        inventory.add(InventoryItem { item_type: ItemType::BuildingPermit });
+        inventory.add(InventoryItem {
+            item_type: ItemType::BuildingPermit,
+        });
 
         // Act
         let mut schedule = Schedule::default();
@@ -141,7 +190,10 @@ mod tests {
         schedule.run(&mut world);
 
         // Assert
-        assert!(world.get::<PermitRequired>(id).is_none(), "PermitRequired should be removed");
+        assert!(
+            world.get::<PermitRequired>(id).is_none(),
+            "PermitRequired should be removed"
+        );
 
         let inventory = world.get::<Inventory>(id).unwrap();
         assert!(inventory.items.is_empty(), "Permit should be consumed");

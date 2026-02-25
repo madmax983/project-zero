@@ -17,12 +17,12 @@ use crate::layer1::flora::process_flora_clearing;
 use crate::layer1::gastronomy::WorkSpeedBuff;
 use crate::layer1::hazards::handle_workplace_hazards;
 use crate::layer1::heirloom::{Heirloom, ToolHistory};
-use crate::layer1::mother_lode::MotherLode;
 use crate::layer1::items::{Equipment, Tool, UnequipEvent};
 use crate::layer1::language::{Dialect, Linguistics, calculate_coordination_penalty};
 use crate::layer1::map::GridPosition;
 use crate::layer1::memory::{Memories, calculate_effective_morale};
 use crate::layer1::morale::Morale;
+use crate::layer1::mother_lode::MotherLode;
 use crate::layer1::needs::{Needs, get_morale_efficiency};
 use crate::layer1::pop::Job;
 use crate::layer1::resources::{ColonyResources, ResourceType};
@@ -301,17 +301,17 @@ fn process_single_worker(
 
         // Spec 218: Consume improvised materials if no tool was used
         if tool_entity_opt.is_none() {
-             if let Some(res_type) = consumed_resource_type {
-                 // Probabilistic consumption
-                 let break_chance = match res_type {
-                     ResourceType::Tools => 0.01,
-                     _ => 0.05,
-                 };
-                 if rand::thread_rng().gen_bool(break_chance) {
-                     if let Some(mut resources) = world.get_resource_mut::<ColonyResources>() {
-                         resources.consume(res_type, 1.0);
-                     }
-                 }
+            if let Some(res_type) = consumed_resource_type {
+                // Probabilistic consumption
+                let break_chance = match res_type {
+                    ResourceType::Tools => 0.01,
+                    _ => 0.05,
+                };
+                if rand::thread_rng().gen_bool(break_chance) {
+                    if let Some(mut resources) = world.get_resource_mut::<ColonyResources>() {
+                        resources.consume(res_type, 1.0);
+                    }
+                }
             }
         }
     }
@@ -449,11 +449,8 @@ fn execute_work_on_designation(
         DesignationType::CollectSample => {
             if let Some(pos) = world.get::<GridPosition>(designation_entity).copied() {
                 // Actor unused in current implementation
-                let success = crate::layer1::gene_bank::collect_sample_action(
-                    world,
-                    designation_entity,
-                    pos,
-                );
+                let success =
+                    crate::layer1::gene_bank::collect_sample_action(world, designation_entity, pos);
                 if success {
                     world.despawn(designation_entity);
                 }

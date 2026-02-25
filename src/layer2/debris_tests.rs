@@ -1,16 +1,20 @@
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer2::system::SystemBody;
     use crate::layer2::debris::OrbitalDebris;
+    use crate::layer2::debris::{
+        debris_accumulation_system, debris_attrition_system, debris_decay_system,
+    };
     use crate::layer2::events::{LaunchEvent, ShipDestroyedEvent};
-    use crate::layer2::fleet::{Fleet, InOrbit, FleetHealth};
-    use crate::layer2::debris::{debris_accumulation_system, debris_attrition_system, debris_decay_system};
+    use crate::layer2::fleet::{Fleet, FleetHealth, InOrbit};
+    use crate::layer2::system::SystemBody;
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_debris_decay() {
         let mut world = World::new();
-        let planet = world.spawn((SystemBody, OrbitalDebris { amount: 1.0 })).id();
+        let planet = world
+            .spawn((SystemBody, OrbitalDebris { amount: 1.0 }))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(debris_decay_system);
@@ -28,10 +32,15 @@ mod tests {
         world.init_resource::<Events<LaunchEvent>>();
         world.init_resource::<Events<ShipDestroyedEvent>>();
 
-        let planet = world.spawn((SystemBody, OrbitalDebris { amount: 0.0 })).id();
+        let planet = world
+            .spawn((SystemBody, OrbitalDebris { amount: 0.0 }))
+            .id();
 
         // Trigger Launch Event
-        world.send_event(LaunchEvent { planet, success: true });
+        world.send_event(LaunchEvent {
+            planet,
+            success: true,
+        });
 
         // Run System
         let mut schedule = Schedule::default();
@@ -49,10 +58,15 @@ mod tests {
         world.init_resource::<Events<LaunchEvent>>();
         world.init_resource::<Events<ShipDestroyedEvent>>();
 
-        let planet = world.spawn((SystemBody, OrbitalDebris { amount: 0.0 })).id();
+        let planet = world
+            .spawn((SystemBody, OrbitalDebris { amount: 0.0 }))
+            .id();
 
         // Trigger Destruction Event
-        world.send_event(ShipDestroyedEvent { planet, ship_class: "Frigate".to_string() });
+        world.send_event(ShipDestroyedEvent {
+            planet,
+            ship_class: "Frigate".to_string(),
+        });
 
         let mut schedule = Schedule::default();
         schedule.add_systems(debris_accumulation_system);
@@ -60,7 +74,10 @@ mod tests {
 
         let debris = world.get::<OrbitalDebris>(planet).unwrap();
         // Should be higher than launch debris (0.05 vs 0.20 roughly)
-        assert!(debris.amount >= 0.1, "Debris should increase significantly after ship destruction");
+        assert!(
+            debris.amount >= 0.1,
+            "Debris should increase significantly after ship destruction"
+        );
     }
 
     #[test]
@@ -69,20 +86,30 @@ mod tests {
         // Register events required by system
         world.init_resource::<Events<ShipDestroyedEvent>>();
 
-        let planet = world.spawn((SystemBody, OrbitalDebris { amount: 0.5 })).id(); // High debris
+        let planet = world
+            .spawn((SystemBody, OrbitalDebris { amount: 0.5 }))
+            .id(); // High debris
 
-        let fleet = world.spawn((
-            Fleet,
-            InOrbit { parent: planet },
-            FleetHealth { current: 100.0, max: 100.0 }
-        )).id();
+        let fleet = world
+            .spawn((
+                Fleet,
+                InOrbit { parent: planet },
+                FleetHealth {
+                    current: 100.0,
+                    max: 100.0,
+                },
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(debris_attrition_system);
         schedule.run(&mut world);
 
         let health = world.get::<FleetHealth>(fleet).unwrap();
-        assert!(health.current < 100.0, "Fleet should take damage from debris");
+        assert!(
+            health.current < 100.0,
+            "Fleet should take damage from debris"
+        );
     }
 
     #[test]
@@ -90,24 +117,37 @@ mod tests {
         let mut world = World::new();
         world.init_resource::<Events<ShipDestroyedEvent>>();
 
-        let planet = world.spawn((SystemBody, OrbitalDebris { amount: 10.0 })).id(); // Extreme debris
+        let planet = world
+            .spawn((SystemBody, OrbitalDebris { amount: 10.0 }))
+            .id(); // Extreme debris
 
-        let fleet = world.spawn((
-            Fleet,
-            InOrbit { parent: planet },
-            FleetHealth { current: 1.0, max: 100.0 }
-        )).id();
+        let fleet = world
+            .spawn((
+                Fleet,
+                InOrbit { parent: planet },
+                FleetHealth {
+                    current: 1.0,
+                    max: 100.0,
+                },
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems((debris_attrition_system, apply_deferred));
         schedule.run(&mut world);
 
-        assert!(world.get::<Fleet>(fleet).is_none(), "Fleet should be destroyed by debris");
+        assert!(
+            world.get::<Fleet>(fleet).is_none(),
+            "Fleet should be destroyed by debris"
+        );
 
         // Verify event emitted
         let events = world.resource::<Events<ShipDestroyedEvent>>();
         let mut reader = events.get_reader();
-        assert!(reader.read(events).count() > 0, "Should emit destruction event");
+        assert!(
+            reader.read(events).count() > 0,
+            "Should emit destruction event"
+        );
     }
 
     #[test]
@@ -123,12 +163,17 @@ mod tests {
     #[test]
     fn test_debris_cleanup_action() {
         let mut world = World::new();
-        let planet = world.spawn((SystemBody, OrbitalDebris { amount: 0.5 })).id();
+        let planet = world
+            .spawn((SystemBody, OrbitalDebris { amount: 0.5 }))
+            .id();
 
         // Assume a Cleanup Action system exists or simulate it
         crate::layer2::debris::perform_cleanup(&mut world, planet, 0.2);
 
         let debris = world.get::<OrbitalDebris>(planet).unwrap();
-        assert!((debris.amount - 0.3).abs() < 0.001, "Cleanup should reduce debris");
+        assert!(
+            (debris.amount - 0.3).abs() < 0.001,
+            "Cleanup should reduce debris"
+        );
     }
 }

@@ -81,7 +81,8 @@ fn test_starvation_causes_trauma_memory() {
             Needs {
                 hunger: 0.0,
                 rest: 1.0,
-                leisure: 1.0, hygiene: 0.8,
+                leisure: 1.0,
+                hygiene: 0.8,
             }, // Starving
             Memories::default(),
         ))

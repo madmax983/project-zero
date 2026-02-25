@@ -1,7 +1,7 @@
+use crate::layer1::hygiene::SHOWER_WATER_COST;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
 use crate::layer1::resources::ColonyResources;
-use crate::layer1::hygiene::SHOWER_WATER_COST;
 use crate::layer1::utility_eval_types::{ScorableCandidate, evaluate_candidates};
 use crate::layer1::utility_types::{UtilityWeights, need_response_curve};
 use bevy_ecs::prelude::*;
@@ -48,10 +48,19 @@ mod tests {
     #[test]
     fn test_evaluate_shower_score() {
         let pos = GridPosition { x: 0, y: 0 };
-        let needs = Needs { hygiene: 0.1, ..Default::default() };
+        let needs = Needs {
+            hygiene: 0.1,
+            ..Default::default()
+        };
         let weights = UtilityWeights::default();
-        let resources = ColonyResources { water: 10.0, ..Default::default() };
-        let candidates = vec![ScorableCandidate::new(Entity::from_raw(1), GridPosition { x: 1, y: 0 })];
+        let resources = ColonyResources {
+            water: 10.0,
+            ..Default::default()
+        };
+        let candidates = vec![ScorableCandidate::new(
+            Entity::from_raw(1),
+            GridPosition { x: 1, y: 0 },
+        )];
 
         let result = evaluate_shower(pos, &needs, &weights, &resources, &candidates);
 
@@ -63,10 +72,19 @@ mod tests {
     #[test]
     fn test_evaluate_shower_no_water() {
         let pos = GridPosition { x: 0, y: 0 };
-        let needs = Needs { hygiene: 0.1, ..Default::default() };
+        let needs = Needs {
+            hygiene: 0.1,
+            ..Default::default()
+        };
         let weights = UtilityWeights::default();
-        let resources = ColonyResources { water: 0.0, ..Default::default() };
-        let candidates = vec![ScorableCandidate::new(Entity::from_raw(1), GridPosition { x: 1, y: 0 })];
+        let resources = ColonyResources {
+            water: 0.0,
+            ..Default::default()
+        };
+        let candidates = vec![ScorableCandidate::new(
+            Entity::from_raw(1),
+            GridPosition { x: 1, y: 0 },
+        )];
 
         let result = evaluate_shower(pos, &needs, &weights, &resources, &candidates);
 

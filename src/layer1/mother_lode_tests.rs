@@ -1,15 +1,15 @@
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::mother_lode::MotherLode;
-    use crate::layer1::resources::{ResourceType, ColonyResources};
-    use crate::layer1::temperature::{TemperatureGrid, update_temperature_system};
     use crate::layer1::hazards::calculate_risk;
-    use crate::layer1::skills::{Skills, SkillType};
-    use crate::layer1::structure::Structure;
     use crate::layer1::map::GridPosition;
-    use crate::layer1::terrain::{TerrainGrid, TerrainType};
+    use crate::layer1::mother_lode::MotherLode;
+    use crate::layer1::resources::{ColonyResources, ResourceType};
     use crate::layer1::seasons::SeasonState;
+    use crate::layer1::skills::{SkillType, Skills};
+    use crate::layer1::structure::Structure;
+    use crate::layer1::temperature::{TemperatureGrid, update_temperature_system};
+    use crate::layer1::terrain::{TerrainGrid, TerrainType};
+    use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
 
     #[test]
@@ -27,14 +27,16 @@ mod tests {
     fn test_mining_increases_hazard_and_heat() {
         let mut world = World::new();
         // Setup Mother Lode entity
-        let lode_entity = world.spawn((
-            MotherLode {
-                resource_type: ResourceType::Metal,
-                current_hazard: 1.0,
-                heat_output: 10.0,
-            },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let lode_entity = world
+            .spawn((
+                MotherLode {
+                    resource_type: ResourceType::Metal,
+                    current_hazard: 1.0,
+                    heat_output: 10.0,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         // Setup resources
         world.insert_resource(ColonyResources::default());
@@ -75,7 +77,11 @@ mod tests {
         let grid = world.resource::<TemperatureGrid>();
         // Heat is added, then diffused. So it will be slightly less than 50.0.
         // Ambient is 0.0.
-        assert!(grid.get(5, 5) > 5.0, "Grid should receive heat from Lode. Got: {}", grid.get(5, 5));
+        assert!(
+            grid.get(5, 5) > 5.0,
+            "Grid should receive heat from Lode. Got: {}",
+            grid.get(5, 5)
+        );
     }
 
     #[test]
@@ -85,8 +91,14 @@ mod tests {
         let base_risk = 0.001;
 
         let risk_normal = calculate_risk(base_risk, &skills, SkillType::Mining, &structure, 1.0);
-        let risk_mother_lode = calculate_risk(base_risk, &skills, SkillType::Mining, &structure, 10.0); // 10x hazard
+        let risk_mother_lode =
+            calculate_risk(base_risk, &skills, SkillType::Mining, &structure, 10.0); // 10x hazard
 
-        assert!(risk_mother_lode > risk_normal * 5.0, "High hazard should significantly increase risk. Normal: {}, Mother Lode: {}", risk_normal, risk_mother_lode);
+        assert!(
+            risk_mother_lode > risk_normal * 5.0,
+            "High hazard should significantly increase risk. Normal: {}, Mother Lode: {}",
+            risk_normal,
+            risk_mother_lode
+        );
     }
 }

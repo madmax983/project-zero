@@ -1,8 +1,8 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::terrain::{TerrainType, TerrainGrid};
 use crate::layer1::fauna::{Fauna, FaunaType};
-use crate::layer1::map::GridPosition;
 use crate::layer1::items::{Item, ItemType};
+use crate::layer1::map::GridPosition;
+use crate::layer1::terrain::{TerrainGrid, TerrainType};
+use bevy_ecs::prelude::*;
 
 /// Type of genetic data stored in a sample or bank.
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -46,11 +46,7 @@ impl GeneBank {
 
 /// System to attempt collecting a sample at the target position.
 /// Returns true if successful (item spawned).
-pub fn collect_sample_action(
-    world: &mut World,
-    _actor: Entity,
-    target_pos: GridPosition,
-) -> bool {
+pub fn collect_sample_action(world: &mut World, _actor: Entity, target_pos: GridPosition) -> bool {
     let mut found_data = None;
 
     // 1. Check Fauna
@@ -68,9 +64,12 @@ pub fn collect_sample_action(
         if let (Ok(x), Ok(y)) = (usize::try_from(target_pos.x), usize::try_from(target_pos.y)) {
             if let Some(tile) = grid.get(x, y) {
                 match tile {
-                    TerrainType::Tree | TerrainType::Shrub | TerrainType::Sapling | TerrainType::Grass => {
+                    TerrainType::Tree
+                    | TerrainType::Shrub
+                    | TerrainType::Sapling
+                    | TerrainType::Grass => {
                         found_data = Some(GeneticData::Flora(tile));
-                    },
+                    }
                     _ => {}
                 }
             }
@@ -80,9 +79,11 @@ pub fn collect_sample_action(
     // 3. Spawn Item
     if let Some(data) = found_data {
         world.spawn((
-            Item { item_type: ItemType::GeneticSample },
+            Item {
+                item_type: ItemType::GeneticSample,
+            },
             GeneticSample { data },
-            target_pos
+            target_pos,
         ));
         return true;
     }
@@ -122,14 +123,21 @@ pub fn process_cloning_system(world: &mut World) {
         match data {
             GeneticData::Flora(t) => {
                 world.spawn((
-                    Item { item_type: ItemType::GeneticSample }, // Placeholder for Seed/Sapling
-                    GeneticSample { data: GeneticData::Flora(t) },
-                    pos
+                    Item {
+                        item_type: ItemType::GeneticSample,
+                    }, // Placeholder for Seed/Sapling
+                    GeneticSample {
+                        data: GeneticData::Flora(t),
+                    },
+                    pos,
                 ));
-            },
+            }
             GeneticData::Fauna(f) => {
                 world.spawn((
-                    Fauna { fauna_type: f, ..Default::default() },
+                    Fauna {
+                        fauna_type: f,
+                        ..Default::default()
+                    },
                     pos,
                     crate::layer1::health::Health::default(),
                 ));
@@ -140,22 +148,26 @@ pub fn process_cloning_system(world: &mut World) {
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
     use super::*;
-    use crate::layer1::items::{Item, ItemType};
-    use crate::layer1::fauna::{Fauna, FaunaType};
-    use crate::layer1::terrain::{TerrainType, TerrainGrid};
     use crate::layer1::building::{Building, BuildingType};
-    use crate::layer1::pop::Pop;
+    use crate::layer1::fauna::{Fauna, FaunaType};
+    use crate::layer1::items::{Item, ItemType};
     use crate::layer1::map::GridPosition;
+    use crate::layer1::pop::Pop;
     use crate::layer1::resources::ColonyResources;
+    use crate::layer1::terrain::{TerrainGrid, TerrainType};
+    use bevy_ecs::prelude::*;
 
     // Helper setup
     fn setup_world() -> World {
         let mut world = World::new();
         // world.insert_resource(crate::shared::time::SimulationTime::default());
         world.insert_resource(ColonyResources::default());
-        world.insert_resource(TerrainGrid { width: 10, height: 10, tiles: vec![TerrainType::Grass; 100] });
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        });
         world
     }
 
@@ -193,14 +205,15 @@ mod tests {
 
         // Spawn Pop and Animal
         let pop = world.spawn((Pop, GridPosition { x: 0, y: 0 })).id();
-        let _animal = world.spawn((
-            Fauna {
-                fauna_type: FaunaType::SpaceRat,
-                ..Default::default()
-            },
-            GridPosition { x: 0, y: 1 },
-        ))
-        .id();
+        let _animal = world
+            .spawn((
+                Fauna {
+                    fauna_type: FaunaType::SpaceRat,
+                    ..Default::default()
+                },
+                GridPosition { x: 0, y: 1 },
+            ))
+            .id();
 
         // Perform collection (target entity)
         let success = collect_sample_action(&mut world, pop, GridPosition { x: 0, y: 1 }); // Target pos
@@ -222,14 +235,15 @@ mod tests {
         let mut world = setup_world();
 
         // Spawn GeneBank building
-        let bank = world.spawn((
-            Building {
-                building_type: BuildingType::GeneBank,
-            },
-            GeneBank::default(),
-            GridPosition { x: 5, y: 5 },
-        ))
-        .id();
+        let bank = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::GeneBank,
+                },
+                GeneBank::default(),
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         // Add a sample to its storage manually
         let mut bank_comp = world.get_mut::<GeneBank>(bank).unwrap();
@@ -243,18 +257,19 @@ mod tests {
         let mut world = setup_world();
 
         // Setup GeneBank with a sample and resources
-        let bank = world.spawn((
-            Building {
-                building_type: BuildingType::GeneBank,
-            },
-            GeneBank {
-                stored_samples: vec![GeneticData::Flora(TerrainType::Tree)],
-                active_cloning_job: Some((GeneticData::Flora(TerrainType::Tree), 10.0)), // 10 ticks remaining
-                ..Default::default()
-            },
-            GridPosition { x: 5, y: 5 },
-        ))
-        .id();
+        let bank = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::GeneBank,
+                },
+                GeneBank {
+                    stored_samples: vec![GeneticData::Flora(TerrainType::Tree)],
+                    active_cloning_job: Some((GeneticData::Flora(TerrainType::Tree), 10.0)), // 10 ticks remaining
+                    ..Default::default()
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         // Run system for 11 ticks (to ensure completion if logic waits for 0.0)
         for _ in 0..11 {
@@ -278,18 +293,19 @@ mod tests {
     fn test_cloning_process_fauna() {
         let mut world = setup_world();
 
-        let _bank = world.spawn((
-            Building {
-                building_type: BuildingType::GeneBank,
-            },
-            GeneBank {
-                stored_samples: vec![GeneticData::Fauna(FaunaType::Wolf)],
-                active_cloning_job: Some((GeneticData::Fauna(FaunaType::Wolf), 0.0)), // Finished
-                ..Default::default()
-            },
-            GridPosition { x: 5, y: 5 },
-        ))
-        .id();
+        let _bank = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::GeneBank,
+                },
+                GeneBank {
+                    stored_samples: vec![GeneticData::Fauna(FaunaType::Wolf)],
+                    active_cloning_job: Some((GeneticData::Fauna(FaunaType::Wolf), 0.0)), // Finished
+                    ..Default::default()
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         process_cloning_system(&mut world);
 

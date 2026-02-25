@@ -810,9 +810,7 @@ pub const fn get_building_color(building: BuildingType, material: MaterialType) 
             | BuildingType::Shower => Color::Cyan,
             BuildingType::AtmosphericProcessor
             | BuildingType::Recycler
-            | BuildingType::ServerBank => {
-                Color::Rgb(0, 255, 100)
-            } // Toxic/Data Green
+            | BuildingType::ServerBank => Color::Rgb(0, 255, 100), // Toxic/Data Green
             BuildingType::Plantation | BuildingType::PersonalGarden => Color::Green,
             BuildingType::Weaver | BuildingType::Statue | BuildingType::Lander => Color::White,
             BuildingType::Hospital => Color::Red,

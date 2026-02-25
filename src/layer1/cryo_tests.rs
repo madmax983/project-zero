@@ -18,7 +18,8 @@ fn test_cryo_stasis_halts_need_decay() {
             Needs {
                 hunger: 1.0,
                 rest: 1.0,
-                leisure: 1.0, hygiene: 0.8,
+                leisure: 1.0,
+                hygiene: 0.8,
             },
         ))
         .id();
@@ -29,7 +30,8 @@ fn test_cryo_stasis_halts_need_decay() {
             Needs {
                 hunger: 1.0,
                 rest: 1.0,
-                leisure: 1.0, hygiene: 0.8,
+                leisure: 1.0,
+                hygiene: 0.8,
             },
             CryoStasis,
         ))

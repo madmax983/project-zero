@@ -32,6 +32,8 @@ pub mod combat;
 pub mod components;
 /// Demolition execution logic.
 pub mod demolish;
+/// Work efficiency calculations (Spec 218).
+pub mod efficiency;
 /// General work execution logic.
 pub mod general_work;
 /// Mining and chopping execution logic.
@@ -40,17 +42,15 @@ pub mod mining;
 pub mod movement;
 /// Vandalism execution logic.
 pub mod vandalism;
-/// Work efficiency calculations (Spec 218).
-pub mod efficiency;
 
 #[cfg(test)]
 mod tests;
 
 pub use arrival::*;
-pub use efficiency::*;
 pub use combat::*;
 pub use components::*;
 pub use demolish::*;
+pub use efficiency::*;
 pub use general_work::*;
 pub use mining::*;
 pub use movement::*;

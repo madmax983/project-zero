@@ -357,7 +357,8 @@ impl ColonyResources {
 
     /// Adds building permits, clamping to the maximum capacity.
     pub fn add_building_permits(&mut self, amount: f32) {
-        self.building_permits = (self.building_permits + amount).clamp(0.0, self.max_building_permits);
+        self.building_permits =
+            (self.building_permits + amount).clamp(0.0, self.max_building_permits);
     }
 
     /// Adds alcohol, clamping to the maximum capacity.
@@ -591,7 +592,9 @@ impl ColonyResources {
             // ResourceType::Water not in enum
             ResourceType::Alcohol => self.alcohol = (self.alcohol - amount).max(0.0),
             ResourceType::Waste => self.waste = (self.waste - amount).max(0.0),
-            ResourceType::BuildingPermit => self.building_permits = (self.building_permits - amount).max(0.0),
+            ResourceType::BuildingPermit => {
+                self.building_permits = (self.building_permits - amount).max(0.0)
+            }
         }
     }
 }

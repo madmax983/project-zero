@@ -522,7 +522,8 @@ mod tests {
             Needs {
                 hunger: 1.0,
                 rest: 1.0,
-                leisure: 1.0, hygiene: 0.8,
+                leisure: 1.0,
+                hygiene: 0.8,
             },
         )); // Morale 1.0
 
@@ -531,7 +532,8 @@ mod tests {
             Needs {
                 hunger: 0.0,
                 rest: 0.0,
-                leisure: 0.0, hygiene: 0.8,
+                leisure: 0.0,
+                hygiene: 0.8,
             },
         )); // Morale 0.0
 
@@ -544,7 +546,8 @@ mod tests {
             Needs {
                 hunger: 1.0,
                 rest: 1.0,
-                leisure: 1.0, hygiene: 0.8,
+                leisure: 1.0,
+                hygiene: 0.8,
             },
             memories,
         ));

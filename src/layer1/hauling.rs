@@ -137,7 +137,8 @@ fn handle_drop_off(world: &mut World, pop_entity: Entity, carrying: Carrying, po
     // Check for Permit delivery first
     if carrying.resource_type == crate::layer1::resources::ResourceType::BuildingPermit {
         let permit_target = {
-            let mut query = world.query::<(Entity, &GridPosition, &PermitRequired, &mut Inventory)>();
+            let mut query =
+                world.query::<(Entity, &GridPosition, &PermitRequired, &mut Inventory)>();
             let mut target = None;
             for (e, p, _, _) in query.iter_mut(world) {
                 if *p == pos {
@@ -151,12 +152,17 @@ fn handle_drop_off(world: &mut World, pop_entity: Entity, carrying: Carrying, po
         if let Some(target) = permit_target {
             // Deliver Permit to Inventory
             if let Some(mut inventory) = world.get_mut::<Inventory>(target) {
-                inventory.add(InventoryItem { item_type: ItemType::BuildingPermit });
+                inventory.add(InventoryItem {
+                    item_type: ItemType::BuildingPermit,
+                });
             }
             world.entity_mut(pop_entity).remove::<Carrying>();
 
             // Clear movement state
-            world.entity_mut(pop_entity).remove::<AtTarget>().remove::<MovementTarget>();
+            world
+                .entity_mut(pop_entity)
+                .remove::<AtTarget>()
+                .remove::<MovementTarget>();
             return;
         }
     }
@@ -225,7 +231,10 @@ fn find_and_target_stockpile(
 
         for (e, p, _, inv) in query.iter(world) {
             // Check if inventory has space/needs permit (assume needs if empty of permits)
-            let has_permit = inv.items.iter().any(|i| i.item_type == ItemType::BuildingPermit);
+            let has_permit = inv
+                .items
+                .iter()
+                .any(|i| i.item_type == ItemType::BuildingPermit);
             if !has_permit {
                 let dist = manhattan_distance(&pos, p);
                 if dist < min_dist {
@@ -769,49 +778,61 @@ mod tests {
 
     #[test]
     fn test_haul_permit_to_required_building() {
-        use crate::layer1::permit::PermitRequired;
         use crate::layer1::inventory::Inventory;
+        use crate::layer1::permit::PermitRequired;
 
         let mut world = World::new();
         world.insert_resource(SimulationTime::default());
         world.insert_resource(ColonyResources::default());
 
         // Permit Item
-        let permit_item = world.spawn((
-            ResourceItem {
-                resource_type: ResourceType::BuildingPermit,
-                amount: 1.0,
-            },
-            GridPosition { x: 2, y: 0 },
-        )).id();
+        let permit_item = world
+            .spawn((
+                ResourceItem {
+                    resource_type: ResourceType::BuildingPermit,
+                    amount: 1.0,
+                },
+                GridPosition { x: 2, y: 0 },
+            ))
+            .id();
 
         // PermitRequired Building
-        let building = world.spawn((
-            Building { building_type: BuildingType::Smelter },
-            PermitRequired,
-            Inventory::default(),
-            GridPosition { x: 10, y: 0 },
-        )).id();
+        let building = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Smelter,
+                },
+                PermitRequired,
+                Inventory::default(),
+                GridPosition { x: 10, y: 0 },
+            ))
+            .id();
 
         // Stockpile (Distraction)
         world.spawn((
-            Building { building_type: BuildingType::Stockpile },
+            Building {
+                building_type: BuildingType::Stockpile,
+            },
             Stockpile::default(),
             GridPosition { x: 5, y: 0 }, // Closer than building
         ));
 
         // Hauler
-        let pop = world.spawn((
-            Pop,
-            GridPosition { x: 2, y: 0 },
-            PopAction {
-                current: ActionType::Haul,
-                ..Default::default()
-            },
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 2, y: 0 },
+                PopAction {
+                    current: ActionType::Haul,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         // 1. Pickup
-        world.entity_mut(pop).insert(crate::layer1::execution::AtTarget);
+        world
+            .entity_mut(pop)
+            .insert(crate::layer1::execution::AtTarget);
         haul_system(&mut world);
 
         // Verify carrying permit
@@ -821,12 +842,19 @@ mod tests {
         // 2. Find Target (Should pick Building over Stockpile despite distance)
         haul_system(&mut world);
 
-        let target = world.get::<crate::layer1::execution::MovementTarget>(pop).unwrap();
-        assert_eq!(target.target_entity, building, "Should target PermitRequired building");
+        let target = world
+            .get::<crate::layer1::execution::MovementTarget>(pop)
+            .unwrap();
+        assert_eq!(
+            target.target_entity, building,
+            "Should target PermitRequired building"
+        );
 
         // 3. Dropoff
         *world.get_mut::<GridPosition>(pop).unwrap() = GridPosition { x: 10, y: 0 };
-        world.entity_mut(pop).insert(crate::layer1::execution::AtTarget);
+        world
+            .entity_mut(pop)
+            .insert(crate::layer1::execution::AtTarget);
         haul_system(&mut world);
 
         // Verify dropped in inventory

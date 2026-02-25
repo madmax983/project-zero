@@ -96,9 +96,9 @@ impl Ship {
 
 #[cfg(test)]
 mod tests {
-    use crate::layer2::fleet::FleetComposition;
     use super::*;
     use crate::layer1::resources::ResourceType;
+    use crate::layer2::fleet::FleetComposition;
 
     #[test]
     fn test_ship_type_stats() {
@@ -121,7 +121,7 @@ mod tests {
     #[test]
     fn test_fleet_composition_calculates_total_cargo() {
         let mut comp = FleetComposition::default();
-        comp.add_ship(Ship::new(ShipType::Scout));     // 10
+        comp.add_ship(Ship::new(ShipType::Scout)); // 10
         comp.add_ship(Ship::new(ShipType::Transport)); // 1000
 
         assert_eq!(comp.total_cargo_capacity(), 1010.0);
@@ -130,7 +130,7 @@ mod tests {
     #[test]
     fn test_fleet_composition_calculates_min_speed() {
         let mut comp = FleetComposition::default();
-        comp.add_ship(Ship::new(ShipType::Scout));     // 2.0
+        comp.add_ship(Ship::new(ShipType::Scout)); // 2.0
         comp.add_ship(Ship::new(ShipType::Transport)); // 0.5
 
         // Fleet moves at speed of slowest ship

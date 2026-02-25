@@ -591,7 +591,7 @@ mod tests {
 
     #[test]
     fn test_office_produces_physical_permit() {
-        use crate::layer1::resources::{ResourceType, ResourceItem};
+        use crate::layer1::resources::{ResourceItem, ResourceType};
         let mut world = World::new();
 
         let resources = ColonyResources {
@@ -639,8 +639,14 @@ mod tests {
 
         // Verify NOT added to global resources
         let res = world.resource::<ColonyResources>();
-        assert_eq!(res.building_permits, 0.0, "Permit should be physical, not global");
-        assert!((res.wood - 9.0).abs() < f32::EPSILON, "Wood should be consumed");
+        assert_eq!(
+            res.building_permits, 0.0,
+            "Permit should be physical, not global"
+        );
+        assert!(
+            (res.wood - 9.0).abs() < f32::EPSILON,
+            "Wood should be consumed"
+        );
     }
 
     #[test]

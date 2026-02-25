@@ -315,7 +315,9 @@ pub fn extract_building_inputs(
                 ResourceType::Alcohol => resources.alcohol < resources.max_alcohol,
                 ResourceType::Scrap => resources.scrap < resources.max_scrap,
                 ResourceType::Tools => resources.tools < resources.max_tools,
-                ResourceType::BuildingPermit => resources.building_permits < resources.max_building_permits,
+                ResourceType::BuildingPermit => {
+                    resources.building_permits < resources.max_building_permits
+                }
             };
 
             entities.push(entity);
@@ -542,7 +544,8 @@ mod tests {
                 Needs {
                     hunger: 0.7,
                     rest: 0.5,
-                    leisure: 0.9, hygiene: 0.8,
+                    leisure: 0.9,
+                    hygiene: 0.8,
                 },
                 UtilityWeights {
                     distance_weight: 1.2,

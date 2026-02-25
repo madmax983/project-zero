@@ -38,12 +38,12 @@ use crate::layer1::heirloom::AncientStructure;
 use crate::layer1::inventory::Inventory;
 use crate::layer1::items::ItemType;
 use crate::layer1::lighting::LightSource;
+use crate::layer1::permit::PermitRequired;
 use crate::layer1::prototyping::{BuildingMastery, Prototype};
 use crate::layer1::resources::{ColonyResources, RefiningProgress};
 use crate::layer1::rituals::MachineSpirit;
 use crate::layer1::seismic::SeismicSource;
 use crate::layer1::solar::SolarPower;
-use crate::layer1::permit::PermitRequired;
 use crate::layer1::tech::{DataStorage, Library, Tech, TechState};
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::trade::TradeDepot;
@@ -507,7 +507,7 @@ impl BuildingType {
             Self::Statue => super::beauty::STATUE_BEAUTY,
             Self::Landfill => -10.0,
             Self::Recycler => -5.0, // Grim machinery
-            Self::Grave => -2.0, // Graves are slightly spooky
+            Self::Grave => -2.0,    // Graves are slightly spooky
             Self::FlowerBed => super::beauty::FLOWER_BED_BEAUTY,
             Self::TradeDepot => 5.0, // Trade brings goods and culture
             Self::Well | Self::HydroponicsBay | Self::LifeSupport => 1.0,

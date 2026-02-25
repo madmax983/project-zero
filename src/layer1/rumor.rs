@@ -177,7 +177,8 @@ mod tests {
                 Needs {
                     hunger: 0.1,
                     rest: 0.1,
-                    leisure: 0.1, hygiene: 0.8,
+                    leisure: 0.1,
+                    hygiene: 0.8,
                 },
                 Knowledge::default(),
             ))
@@ -287,7 +288,8 @@ mod tests {
             .spawn((
                 Pop,
                 Needs {
-                    leisure: 0.5, hygiene: 0.8,
+                    leisure: 0.5,
+                    hygiene: 0.8,
                     ..Default::default()
                 },
                 Knowledge::default(),
@@ -314,7 +316,8 @@ mod tests {
             .spawn((
                 Pop,
                 Needs {
-                    leisure: 0.5, hygiene: 0.8,
+                    leisure: 0.5,
+                    hygiene: 0.8,
                     ..Default::default()
                 },
                 Knowledge::default(),

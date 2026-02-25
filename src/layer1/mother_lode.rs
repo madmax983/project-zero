@@ -1,5 +1,5 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::resources::ResourceType;
+use bevy_ecs::prelude::*;
 
 /// Component representing a Mother Lode - a rare, infinite, but dangerous resource node.
 #[derive(Component, Debug, Clone)]

@@ -123,7 +123,8 @@ mod tests {
                 Pop,
                 GridPosition { x: 0, y: 0 },
                 Needs {
-                    leisure: 0.1, hygiene: 0.8, // Very bored
+                    leisure: 0.1,
+                    hygiene: 0.8, // Very bored
                     hunger: 0.8,
                     rest: 0.8,
                 },
