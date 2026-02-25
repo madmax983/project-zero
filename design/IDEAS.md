@@ -5960,3 +5960,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Risk a guess (Speed) vs. Wait for clarity (Safety/Cost).
 
 ---
+
+## Static Charge
+
+**Layer:** 1
+
+**Fantasy:** The sterile, dry air of a space station is hostile. Walking on plastic carpet is a hazard.
+
+**Mechanic:** Moving on certain floor types (Plastic, Carpet) builds "Charge". Touching sensitive electronics without "Grounding" (touching metal/wearing suit) discharges it, causing damage or glitches.
+
+**Emergence:** A technician rushes to fix the reactor control panel. They build up charge running down the hall. They touch the panel and fry it, causing a meltdown.
+
+**Tension:** Speed (running) vs. Safety (grounding). Cheap floors (plastic) vs. Safe floors (metal).
+
+---
+
+## The Hum
+
+**Layer:** 1
+
+**Fantasy:** The station speaks. A low-frequency vibration that some find maddening, others divine.
+
+**Mechanic:** A global "Resonance" variable. Pops with the "Sensitive" trait can hear it. It gives them "Urges" to go to specific high-resonance zones or perform strange tasks. Ignoring it causes Stress.
+
+**Emergence:** A "Cult of the Hum" forms, gathering in the generator room to "listen". They start sabotaging soundproofing because it "muffles the voice".
+
+**Tension:** Treat the "crazy" pops (medication) or listen to them (they might find hidden faults/resources)?
+
+---
+
+## Heirloom Recipes
+
+**Layer:** 1
+
+**Fantasy:** Grandma's space-lasagna is the only thing keeping us sane.
+
+**Mechanic:** When a Pop eats a specific combination of ingredients and has a "Great Meal" event, that recipe becomes a "Colony Tradition". Pops demand it for festivals. Providing it gives massive buffs.
+
+**Emergence:** The colony becomes obsessed with "Rat-and-Moss Stew" because it saved them during the first winter. You have to farm rats specifically to keep morale up, even though you have high-tech nutrient paste available.
+
+**Tension:** Efficient food (Nutrient Paste) vs. Cultural comfort (Inefficient traditional food).
+
+---
+
+## Trophy Hunting
+
+**Layer:** 1
+
+**Fantasy:** Proving dominance over the alien world.
+
+**Mechanic:** Killing unique mega-fauna yields "Trophies" (Heads, Claws) that can be mounted. They provide a "Courage" aura to nearby troops but increase "Aggression" in local fauna (revenge spawns).
+
+**Emergence:** You mount the head of a Hive Queen in the mess hall. The soldiers love it. The Hive swarms the mess hall specifically to retrieve it.
+
+**Tension:** Morale boost (Trophy) vs. Ecological retaliation (Aggro).
+
+---
+
+## Rapid Decompression Projectiles
+
+**Layer:** 1
+
+**Fantasy:** The wind is a weapon. A hull breach turns a screwdriver into a bullet.
+
+**Mechanic:** When a room decompresses violently, unsecured items (Tools, Debris) become projectiles traveling towards the breach. They deal damage to Pops and fragile buildings (Glass, Screens) in their path.
+
+**Emergence:** You open the airlock to vent a fire. A wrench flies out, shattering the control panel for the *inner* door, locking you in the vacuum with the fire.
+
+**Tension:** Secure loose items (Storage time) vs. Emergency venting (Speed).
+
+---
