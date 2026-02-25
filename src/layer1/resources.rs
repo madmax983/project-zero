@@ -593,7 +593,7 @@ impl ColonyResources {
             ResourceType::Alcohol => self.alcohol = (self.alcohol - amount).max(0.0),
             ResourceType::Waste => self.waste = (self.waste - amount).max(0.0),
             ResourceType::BuildingPermit => {
-                self.building_permits = (self.building_permits - amount).max(0.0)
+                self.building_permits = (self.building_permits - amount).max(0.0);
             }
         }
     }

@@ -42,7 +42,7 @@ pub fn clean_barnacles(world: &mut World, fleet_entity: Entity) {
     }
 }
 
-/// System to ensure all fleets have the SpaceBarnacles component.
+/// System to ensure all fleets have the `SpaceBarnacles` component.
 pub fn ensure_barnacles_component_system(
     mut commands: Commands,
     query: Query<Entity, (With<Fleet>, Without<SpaceBarnacles>)>,

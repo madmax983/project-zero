@@ -31,4 +31,6 @@ pub mod visibility;
 #[cfg(test)]
 mod debris_tests;
 #[cfg(test)]
+mod mining_tests;
+#[cfg(test)]
 mod station_tests;

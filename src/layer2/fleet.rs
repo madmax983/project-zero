@@ -56,6 +56,8 @@ pub enum FleetOrder {
     MoveTo(Entity),
     /// Order to build a station.
     BuildStation(StationType),
+    /// Order to mine a target entity.
+    Mine(Entity),
 }
 
 /// System to process `FleetOrder`s.
