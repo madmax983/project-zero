@@ -208,6 +208,12 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             process_observe_system,
             #[cfg(feature = "nova")]
             crate::layer1::constellations::observe_constellations_system,
+            #[cfg(feature = "nova")]
+            crate::layer1::void_signals::scan_for_signals_system,
+            #[cfg(feature = "nova")]
+            crate::layer1::void_signals::auto_tune_system,
+            #[cfg(feature = "nova")]
+            crate::layer1::void_signals::decrypt_signals_system,
             regrowth_system,
             crate::layer1::ecology::process_ecological_succession,
             flora_spread_system,

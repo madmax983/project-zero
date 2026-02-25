@@ -207,6 +207,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(generator);
     #[cfg(feature = "nova")]
     world.init_resource::<crate::layer1::constellations::Sky>();
+    #[cfg(feature = "nova")]
+    world.init_resource::<crate::layer1::void_signals::SignalNetwork>();
 
     world.insert_resource(ColonyName { name: colony_name });
     generate_world_history(&mut world);
