@@ -268,7 +268,7 @@ mod tests {
         let needs = Needs {
             hunger: 0.5,
             rest: 0.5,
-            leisure: 0.5,
+            leisure: 0.5, hygiene: 0.8,
         };
         let mut memories = Memories::default();
 
@@ -290,7 +290,7 @@ mod tests {
         let needs = Needs {
             hunger: 0.5,
             rest: 0.5,
-            leisure: 0.5,
+            leisure: 0.5, hygiene: 0.8,
         };
         let mut memories = Memories::default();
 
@@ -309,7 +309,7 @@ mod tests {
         let needs = Needs {
             hunger: 1.0,
             rest: 1.0,
-            leisure: 1.0,
+            leisure: 1.0, hygiene: 0.8,
         }; // Base 1.0
         let mut memories = Memories::default();
         memories.add(MemoryType::AteFineMeal, 0); // +0.1
@@ -324,7 +324,7 @@ mod tests {
         let needs = Needs {
             hunger: 0.5,
             rest: 0.5,
-            leisure: 0.5,
+            leisure: 0.5, hygiene: 0.8,
         }; // Base 0.5
         let buff = crate::layer1::social::SocialBuff { value: 0.1 };
 
@@ -351,7 +351,7 @@ mod tests {
         let needs = Needs {
             hunger: 0.5,
             rest: 0.5,
-            leisure: 0.5,
+            leisure: 0.5, hygiene: 0.8,
         };
         let night_owl = Traits(HashSet::from([Trait::NightOwl]));
 

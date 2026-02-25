@@ -52,6 +52,8 @@ pub struct GpuPopInput {
     pub rest: f32,
     /// Current leisure need level.
     pub leisure: f32,
+    /// Current hygiene need level.
+    pub hygiene: f32,
     /// Learned distance weight.
     pub distance_weight: f32,
     /// Learned availability weight.
@@ -160,6 +162,7 @@ pub fn extract_pop_inputs(
             hunger: needs.hunger,
             rest: needs.rest,
             leisure: needs.leisure,
+            hygiene: needs.hygiene,
             distance_weight: weights.distance_weight,
             availability_weight: weights.availability_weight,
             current_utility: action.current_utility,
@@ -502,9 +505,9 @@ mod tests {
 
     #[test]
     fn test_gpu_pop_input_size() {
-        // 2*i32 + 3*f32 + 2*f32 + 1*f32 + 1*u32
-        // = 8 + 12 + 8 + 4 + 4 = 36 bytes
-        assert_eq!(std::mem::size_of::<GpuPopInput>(), 36);
+        // 2*i32 + 3*f32 + 3*f32 + 1*f32 + 1*u32
+        // = 8 + 12 + 12 + 4 + 4 = 40 bytes
+        assert_eq!(std::mem::size_of::<GpuPopInput>(), 40);
     }
 
     #[test]
@@ -538,7 +541,7 @@ mod tests {
                 Needs {
                     hunger: 0.7,
                     rest: 0.5,
-                    leisure: 0.9,
+                    leisure: 0.9, hygiene: 0.8,
                 },
                 UtilityWeights {
                     distance_weight: 1.2,

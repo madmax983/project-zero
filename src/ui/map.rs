@@ -752,6 +752,7 @@ pub const fn get_building_char(building: BuildingType) -> &'static str {
         BuildingType::AuroralCollector => "Ψ",
         BuildingType::AtmosphericProcessor => "@",
         BuildingType::GeneBank => "🧬",
+        BuildingType::Shower => "🚿",
     }
 }
 
@@ -804,7 +805,8 @@ pub const fn get_building_color(building: BuildingType, material: MaterialType) 
             | BuildingType::Battery
             | BuildingType::DroneHub
             | BuildingType::AuroralCollector
-            | BuildingType::GeneBank => Color::Cyan,
+            | BuildingType::GeneBank
+            | BuildingType::Shower => Color::Cyan,
             BuildingType::AtmosphericProcessor | BuildingType::ServerBank => {
                 Color::Rgb(0, 255, 100)
             } // Toxic/Data Green

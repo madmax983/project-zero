@@ -99,6 +99,9 @@ pub mod medical;
 /// Social action logic.
 pub mod social;
 
+/// Hygiene action logic.
+pub mod shower;
+
 /// Mental break action logic.
 pub mod mental_break;
 

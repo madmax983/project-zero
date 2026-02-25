@@ -135,6 +135,8 @@ pub enum ActionType {
     ConsumeChemical,
     /// Collect genetic sample from flora or fauna.
     CollectSample,
+    /// Use a shower to clean filth and restore hygiene.
+    UseShower,
 }
 
 /// Types of hobbies.
@@ -154,7 +156,7 @@ pub enum HobbyType {
 
 impl ActionType {
     /// Total number of action types. Used for array sizing.
-    pub const COUNT: usize = 33;
+    pub const COUNT: usize = 34;
 
     /// Converts action type to a unique array index (0..COUNT-1).
     #[must_use]
@@ -193,6 +195,7 @@ impl ActionType {
             Self::PreCrimeArrest => 30,
             Self::ConsumeChemical => 31,
             Self::CollectSample => 32,
+            Self::UseShower => 33,
         }
     }
 

@@ -61,6 +61,7 @@ fn populate_buffer_buildings(
     populate_refining(world, &mut buffer.refining, context);
     populate_hospitals(world, &mut buffer.hospitals);
     populate_offices(world, &mut buffer.offices, context.cycle);
+    populate_showers(world, &mut buffer.showers);
 }
 
 fn populate_farms(
@@ -215,6 +216,19 @@ fn populate_offices(
             office.workers.len(),
         ));
     }
+}
+
+fn populate_showers(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
+    buffer.clear();
+    let mut query = world.query::<(Entity, &GridPosition, &Building)>();
+    let mut count = 0;
+    for (entity, pos, building) in query.iter(world) {
+        if building.building_type == BuildingType::Shower {
+            buffer.push(ScorableCandidate::with_capacity(entity, *pos, 1, 0));
+            count += 1;
+        }
+    }
+    // println!("Populated {} showers", count);
 }
 
 fn populate_buffer_designations(world: &mut World, buffer: &mut UtilityAIBuffer) {

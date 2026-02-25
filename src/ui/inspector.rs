@@ -73,6 +73,7 @@ const fn format_action_type(action: ActionType) -> (&'static str, &'static str, 
         ActionType::PreCrimeArrest => ("🛡", "Pre-Crime Arrest", Color::Blue),
         ActionType::ConsumeChemical => ("💊", "Consuming", Color::Magenta),
         ActionType::CollectSample => ("🧬", "Collecting", Color::Cyan),
+        ActionType::UseShower => ("🚿", "Showering", Color::Cyan),
     }
 }
 
@@ -966,7 +967,7 @@ mod tests {
                 Needs {
                     hunger: 0.8,
                     rest: 0.9,
-                    leisure: 0.6,
+                    leisure: 0.6, hygiene: 0.8,
                 },
             ))
             .id();
