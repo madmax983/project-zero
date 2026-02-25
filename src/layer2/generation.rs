@@ -1,4 +1,5 @@
 use crate::layer1::quirks::{PlanetaryTrait, PlanetaryTraits};
+use crate::layer2::debris::OrbitalDebris;
 use crate::layer2::system::{Orbit, OrbitalBody};
 use crate::shared::random::WorldSeed;
 use bevy_ecs::prelude::*;
@@ -140,6 +141,7 @@ pub fn generate_system(
                 PlanetaryTraitsComponent {
                     traits: planet_traits.clone(),
                 },
+                OrbitalDebris { amount: 0.0 },
             ))
             .id();
 

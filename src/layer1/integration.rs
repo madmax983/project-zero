@@ -566,3 +566,56 @@ pub fn pop_death_notification_system(
         );
     }
 }
+
+/// Bridges Layer 2 Orbital Debris to Layer 1 Orbital Impacts.
+///
+/// If the colony planet has high orbital debris, there is a chance for
+/// debris to de-orbit and strike the colony map as an `OrbitalEvent`.
+pub fn debris_impact_bridge_system(
+    mut commands: Commands,
+    debris_query: Query<(&crate::layer2::debris::OrbitalDebris, &crate::layer2::generation::ColonyLocation)>,
+    terrain: Res<crate::layer1::terrain::TerrainGrid>,
+    mut log: Option<ResMut<MessageLog>>,
+    _time: Res<SimulationTime>,
+) {
+    let mut rng = rand::thread_rng();
+
+    for (debris, _) in &debris_query {
+        if debris.amount <= 0.0 {
+            continue;
+        }
+
+        // Chance to impact per tick scales with debris amount
+        // 0.1 amount -> 0.1% chance per tick (1 in 1000)
+        // 1.0 amount -> 1.0% chance per tick (1 in 100)
+        // This seems frequent enough for gameplay but not overwhelming.
+        let chance = debris.amount * 0.01;
+
+        if rng.r#gen::<f32>() < chance {
+            // Pick a random target
+            let x = rng.gen_range(0..terrain.width) as i32;
+            let y = rng.gen_range(0..terrain.height) as i32;
+
+            // Calculate severity
+            // Higher debris density = more damage/heat
+            let severity = debris.amount.max(0.1);
+            let damage = 50.0 * severity;
+            let heat = 100.0 * severity;
+
+            // Spawn Impact Event
+            commands.spawn(crate::layer1::orbital_crossfire::OrbitalEvent {
+                target: GridPosition { x, y },
+                damage,
+                heat,
+            });
+
+            // Log warning
+            if let Some(ref mut l) = log {
+                l.add_colored(
+                    &format!("WARNING: Orbital debris impact detected at ({}, {})!", x, y),
+                    Color::Red,
+                );
+            }
+        }
+    }
+}

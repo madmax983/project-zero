@@ -72,6 +72,9 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer2::debris::debris_decay_system
             .after(crate::layer2::debris::debris_attrition_system),
 
+        crate::layer1::integration::debris_impact_bridge_system
+            .after(crate::layer2::debris::debris_decay_system),
+
         crate::layer2::visibility::update_visibility_system.after(Layer1SystemSet::Economy),
         crate::layer2::visibility::enforce_view_mode_system
             .after(crate::layer2::visibility::update_visibility_system),
