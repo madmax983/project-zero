@@ -22,3 +22,8 @@
 **Bloat:** Strict float equality checks (`assert_eq!(x, 0.0)`) in tests.
 **Cut:** Replaced with epsilon checks (`x.abs() < f32::EPSILON`).
 **Saved:** Potential flakiness and clippy warnings.
+
+## [Simplify]
+**Bloat:** `ColonyResources` tracked `wheat`, `potato`, and `rice` as separate float fields, even though 90% of the game treated them as generic `Food`. Logic in `produce_food_system` and `consume_food_system` had complex branching to sync them.
+**Cut:** Removed the fields. Farms now output directly to `resources.food`. Consumption draws from `resources.food`. `DietaryHistory` infers flavor from active farms rather than silo contents.
+**Saved:** 3 resource fields, ~30 lines of redundant branching logic, and inconsistent "some crops are real, some are flavor" design.
