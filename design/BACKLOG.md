@@ -26,6 +26,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `224` The Scapegoat — `specs/224-the-scapegoat.md`
 - [ ] `225` Keystone Species — `specs/225-keystone-species.md`
 - [ ] `227` Corrosive Atmosphere — `specs/227-corrosive-atmosphere.md`
+- [ ] `231` Memorial Forests — `specs/231-memorial-forests.md`
 
 ## MVP — Layer 2: System Simulation
 
