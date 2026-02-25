@@ -60,6 +60,8 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer2::station::build_station_system
             .after(crate::layer2::fleet::fleet_order_system),
         crate::layer2::fleet::fleet_movement_system.after(crate::layer2::fleet::fleet_order_system),
+        crate::layer1::integration::fleet_unload_system
+            .after(crate::layer2::fleet::fleet_movement_system),
         crate::layer2::fleet::ensure_fleet_health_system,
         crate::layer2::combat::fleet_combat_system
             .after(crate::layer2::fleet::fleet_movement_system),

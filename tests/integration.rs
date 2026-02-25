@@ -124,3 +124,5 @@ mod acoustic_buildings;
 mod customs_vetting;
 #[path = "integration/hygiene_recycling.rs"]
 mod hygiene_recycling;
+#[path = "integration/mining_colony.rs"]
+mod mining_colony;
