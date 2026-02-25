@@ -50,7 +50,11 @@ impl FleetCargo {
         }
 
         // Check if stack exists
-        if let Some(stack) = self.contents.iter_mut().find(|s| s.resource_type == resource_type) {
+        if let Some(stack) = self
+            .contents
+            .iter_mut()
+            .find(|s| s.resource_type == resource_type)
+        {
             stack.amount += to_add;
         } else {
             self.contents.push(CargoStack {

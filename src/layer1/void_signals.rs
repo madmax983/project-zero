@@ -220,7 +220,13 @@ pub fn decrypt_signals_system(
         // Juice!
         if let Some(target) = camera_target {
             #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
-            spawn_confetti(&mut commands, GridPosition { x: target.x as i32, y: target.y as i32 });
+            spawn_confetti(
+                &mut commands,
+                GridPosition {
+                    x: target.x as i32,
+                    y: target.y as i32,
+                },
+            );
         }
 
         // Remove from list
@@ -309,9 +315,11 @@ mod tests {
         world.insert_resource(MessageLog::default());
 
         // Add signal
-        world
-            .resource_mut::<SignalNetwork>()
-            .add_signal("Test".into(), "".into(), SignalReward::Knowledge(100.0));
+        world.resource_mut::<SignalNetwork>().add_signal(
+            "Test".into(),
+            "".into(),
+            SignalReward::Knowledge(100.0),
+        );
         world.resource_mut::<SignalNetwork>().active_signal_id = Some(0);
 
         // Spawn Observatory & Worker
@@ -347,9 +355,11 @@ mod tests {
         world.insert_resource(MessageLog::default());
 
         // Add easy signal
-        world
-            .resource_mut::<SignalNetwork>()
-            .add_signal("Easy".into(), "".into(), SignalReward::Knowledge(50.0));
+        world.resource_mut::<SignalNetwork>().add_signal(
+            "Easy".into(),
+            "".into(),
+            SignalReward::Knowledge(50.0),
+        );
         world.resource_mut::<SignalNetwork>().active_signal_id = Some(0);
 
         // Set progress to 99.95 (0.05 step will complete it)

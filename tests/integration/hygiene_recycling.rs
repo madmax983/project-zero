@@ -1,17 +1,17 @@
 #[cfg(test)]
 mod tests {
+    use bevy_ecs::prelude::*;
+    use scale::layer1::GridPosition;
     use scale::layer1::building::{Building, BuildingType};
+    use scale::layer1::hauling::haul_system;
     use scale::layer1::hygiene::{Filth, filth_accumulation_system, shower_use_system};
     use scale::layer1::inventory::Inventory;
-    use scale::layer1::items::{Item, ItemType, CarryingItem};
+    use scale::layer1::items::{CarryingItem, Item, ItemType};
     use scale::layer1::needs::Needs;
     use scale::layer1::pop::Pop;
     use scale::layer1::recycling::{Recycler, recycle_processing_system};
     use scale::layer1::resources::ColonyResources;
     use scale::layer1::utility_types::{ActionType, PopAction};
-    use scale::layer1::hauling::haul_system;
-    use scale::layer1::GridPosition;
-    use bevy_ecs::prelude::*;
 
     fn setup_world() -> World {
         let mut world = World::new();
@@ -35,17 +35,30 @@ mod tests {
         let mut world = setup_world();
 
         // Spawn Pop with Filth and UseShower action
-        let pop = world.spawn((
-            Pop,
-            Needs { hygiene: 0.1, ..Default::default() },
-            Filth { current: 80.0, ..Default::default() },
-            PopAction { current: ActionType::UseShower, ..Default::default() },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Needs {
+                    hygiene: 0.1,
+                    ..Default::default()
+                },
+                Filth {
+                    current: 80.0,
+                    ..Default::default()
+                },
+                PopAction {
+                    current: ActionType::UseShower,
+                    ..Default::default()
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         // Spawn Shower
         world.spawn((
-            Building { building_type: BuildingType::Shower },
+            Building {
+                building_type: BuildingType::Shower,
+            },
             GridPosition { x: 5, y: 5 },
         ));
 
@@ -62,7 +75,10 @@ mod tests {
 
         // Assert: Filth reduced significantly
         let filth = world.get::<Filth>(pop).unwrap();
-        assert!(filth.current < 70.0, "Filth should be cleaned significantly");
+        assert!(
+            filth.current < 70.0,
+            "Filth should be cleaned significantly"
+        );
 
         // Assert: Waste Item spawned at shower location
         let mut item_query = world.query::<(&Item, &GridPosition)>();
@@ -81,62 +97,102 @@ mod tests {
         let mut world = setup_world();
 
         // Spawn Recycler (Needs Inventory!)
-        let recycler = world.spawn((
-            Building { building_type: BuildingType::Recycler },
-            Recycler::default(),
-            Inventory::default(), // If building code doesn't add it, this test manually adds it to ensure hauling works if it *was* there.
-            // But ideally we rely on spawn_building. For unit/integration test, manual setup is safer if we test hauling specifically.
-            // However, we want to test that the BUILDING spawns correctly too.
-            // Let's rely on spawn_building for the recycler if we can, but we need to mock it here if we don't import the full spawn logic.
-            // Since we import BuildingType, we assume components are manually added unless we use spawn_building helper.
-            // For this test, manual addition is fine, we will verify spawn_building in another test or just assume it.
-            // Actually, let's manually add Inventory here because we are testing HAULING logic, not building spawning logic (yet).
-            GridPosition { x: 10, y: 0 },
-        )).id();
+        let recycler = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Recycler,
+                },
+                Recycler::default(),
+                Inventory::default(), // If building code doesn't add it, this test manually adds it to ensure hauling works if it *was* there.
+                // But ideally we rely on spawn_building. For unit/integration test, manual setup is safer if we test hauling specifically.
+                // However, we want to test that the BUILDING spawns correctly too.
+                // Let's rely on spawn_building for the recycler if we can, but we need to mock it here if we don't import the full spawn logic.
+                // Since we import BuildingType, we assume components are manually added unless we use spawn_building helper.
+                // For this test, manual addition is fine, we will verify spawn_building in another test or just assume it.
+                // Actually, let's manually add Inventory here because we are testing HAULING logic, not building spawning logic (yet).
+                GridPosition { x: 10, y: 0 },
+            ))
+            .id();
 
         // Spawn Waste Item
-        let waste_item = world.spawn((
-            Item { item_type: ItemType::Waste },
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let waste_item = world
+            .spawn((
+                Item {
+                    item_type: ItemType::Waste,
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
         // Spawn Hauler at Item
-        let hauler = world.spawn((
-            Pop,
-            GridPosition { x: 0, y: 0 },
-            PopAction { current: ActionType::Haul, ..Default::default() },
-        )).id();
+        let hauler = world
+            .spawn((
+                Pop,
+                GridPosition { x: 0, y: 0 },
+                PopAction {
+                    current: ActionType::Haul,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         // 1. Pickup Phase
-        world.entity_mut(hauler).insert(scale::layer1::execution::AtTarget);
+        world
+            .entity_mut(hauler)
+            .insert(scale::layer1::execution::AtTarget);
         haul_system(&mut world);
 
         // Verify pickup
-        assert!(world.get::<CarryingItem>(hauler).is_some(), "Hauler should pick up waste");
+        assert!(
+            world.get::<CarryingItem>(hauler).is_some(),
+            "Hauler should pick up waste"
+        );
         // Item entity should still exist but lose GridPosition
-        assert!(world.get_entity(waste_item).is_ok(), "Waste item entity should exist");
-        assert!(world.get::<GridPosition>(waste_item).is_none(), "Waste item should not be on grid");
+        assert!(
+            world.get_entity(waste_item).is_ok(),
+            "Waste item entity should exist"
+        );
+        assert!(
+            world.get::<GridPosition>(waste_item).is_none(),
+            "Waste item should not be on grid"
+        );
 
         // 2. Find Target Phase
         haul_system(&mut world);
         let target = world.get::<scale::layer1::execution::MovementTarget>(hauler);
         assert!(target.is_some(), "Hauler should find a target");
-        assert_eq!(target.unwrap().target_entity, recycler, "Hauler should target Recycler for Waste");
+        assert_eq!(
+            target.unwrap().target_entity,
+            recycler,
+            "Hauler should target Recycler for Waste"
+        );
 
         // 3. Dropoff Phase
         // Move hauler to recycler
         *world.get_mut::<GridPosition>(hauler).unwrap() = GridPosition { x: 10, y: 0 };
-        world.entity_mut(hauler).insert(scale::layer1::execution::AtTarget);
+        world
+            .entity_mut(hauler)
+            .insert(scale::layer1::execution::AtTarget);
 
         haul_system(&mut world);
 
         // Verify dropoff into inventory
         let inv = world.get::<Inventory>(recycler).unwrap();
         assert_eq!(inv.items.len(), 1, "Recycler inventory should have 1 item");
-        assert_eq!(inv.items[0].item_type, ItemType::Waste, "Item in recycler should be Waste");
-        assert!(world.get::<CarryingItem>(hauler).is_none(), "Hauler should be empty");
+        assert_eq!(
+            inv.items[0].item_type,
+            ItemType::Waste,
+            "Item in recycler should be Waste"
+        );
+        assert!(
+            world.get::<CarryingItem>(hauler).is_none(),
+            "Hauler should be empty"
+        );
         // NOW the item entity should be despawned (converted to InventoryItem struct)
-        assert!(world.get_entity(waste_item).is_err(), "Waste item entity should be despawned after inventory deposit");
+        assert!(
+            world.get_entity(waste_item).is_err(),
+            "Waste item entity should be despawned after inventory deposit"
+        );
     }
 
     #[test]
@@ -158,10 +214,13 @@ mod tests {
             5,
             5,
             BuildingType::Recycler,
-            scale::layer1::building::MaterialType::default()
+            scale::layer1::building::MaterialType::default(),
         );
 
         let (recycler_entity, _) = world.query::<(Entity, &Recycler)>().single(&world);
-        assert!(world.get::<Inventory>(recycler_entity).is_some(), "Recycler should spawn with Inventory");
+        assert!(
+            world.get::<Inventory>(recycler_entity).is_some(),
+            "Recycler should spawn with Inventory"
+        );
     }
 }

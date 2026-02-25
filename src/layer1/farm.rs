@@ -403,7 +403,9 @@ pub fn consume_food_system(
                 }
 
                 // Mimicry Integration
-                commands.entity(entity).insert(JustConsumed { item: eaten_item });
+                commands
+                    .entity(entity)
+                    .insert(JustConsumed { item: eaten_item });
             }
         }
     }

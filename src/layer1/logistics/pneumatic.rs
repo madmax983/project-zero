@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::map::GridPosition;
 use crate::layer1::inventory::{Inventory, InventoryItem};
-use std::collections::{HashMap, VecDeque, HashSet};
+use crate::layer1::map::GridPosition;
+use bevy_ecs::prelude::*;
+use std::collections::{HashMap, HashSet, VecDeque};
 
 /// Component for a Pneumatic Tube Terminal.
 ///
@@ -95,7 +95,7 @@ pub fn tube_transport_system(
         if carrier.path.is_none() {
             if let Some(target_pos) = term_id_to_pos.get(&carrier.target_terminal_id) {
                 if let Some(path) = find_path(*pos, *target_pos, &tube_map) {
-                     carrier.path = Some(path);
+                    carrier.path = Some(path);
                 } else {
                     continue;
                 }
@@ -108,21 +108,21 @@ pub fn tube_transport_system(
 
         if let Some(mut path) = carrier.path.take() {
             if !path.is_empty() {
-                 let next_step = path[0];
+                let next_step = path[0];
 
-                 let is_clogged = *tube_map.get(&next_step).unwrap_or(&false);
-                 if is_clogged {
-                     // Stuck, restore path
-                     carrier.path = Some(path);
-                     continue;
-                 }
+                let is_clogged = *tube_map.get(&next_step).unwrap_or(&false);
+                if is_clogged {
+                    // Stuck, restore path
+                    carrier.path = Some(path);
+                    continue;
+                }
 
-                 carrier.progress += carrier.speed;
-                 if carrier.progress >= 1.0 {
-                     *pos = next_step;
-                     path.remove(0);
-                     carrier.progress = 0.0;
-                 }
+                carrier.progress += carrier.speed;
+                if carrier.progress >= 1.0 {
+                    *pos = next_step;
+                    path.remove(0);
+                    carrier.progress = 0.0;
+                }
             }
 
             if path.is_empty() {
@@ -145,7 +145,11 @@ pub fn tube_transport_system(
     }
 }
 
-fn find_path(start: GridPosition, end: GridPosition, tube_map: &HashMap<GridPosition, bool>) -> Option<Vec<GridPosition>> {
+fn find_path(
+    start: GridPosition,
+    end: GridPosition,
+    tube_map: &HashMap<GridPosition, bool>,
+) -> Option<Vec<GridPosition>> {
     let mut queue = VecDeque::new();
     queue.push_back((start, vec![]));
     let mut visited = HashSet::new();
@@ -156,9 +160,7 @@ fn find_path(start: GridPosition, end: GridPosition, tube_map: &HashMap<GridPosi
             return Some(path);
         }
 
-        let neighbors = [
-            (0, 1), (0, -1), (1, 0), (-1, 0)
-        ];
+        let neighbors = [(0, 1), (0, -1), (1, 0), (-1, 0)];
 
         for (dx, dy) in neighbors {
             let next = GridPosition {
@@ -201,7 +203,7 @@ pub fn tube_network_system(
 fn find_reachable_terminals(
     start: GridPosition,
     tube_set: &HashSet<GridPosition>,
-    terminal_positions: &HashMap<GridPosition, u32>
+    terminal_positions: &HashMap<GridPosition, u32>,
 ) -> Vec<u32> {
     let mut results = Vec::new();
     let mut queue = VecDeque::new();
@@ -216,12 +218,10 @@ fn find_reachable_terminals(
             }
         }
 
-        let neighbors = [
-            (0, 1), (0, -1), (1, 0), (-1, 0)
-        ];
+        let neighbors = [(0, 1), (0, -1), (1, 0), (-1, 0)];
 
         for (dx, dy) in neighbors {
-             let next = GridPosition {
+            let next = GridPosition {
                 x: current.x + dx,
                 y: current.y + dy,
             };
@@ -238,9 +238,7 @@ fn find_reachable_terminals(
 /// System that manages tube clogging.
 ///
 /// Currently a placeholder for future mechanics.
-pub fn tube_clog_system(
-    mut _tubes: Query<&mut Clogged>,
-) {
+pub fn tube_clog_system(mut _tubes: Query<&mut Clogged>) {
     // Empty for MVP
 }
 
@@ -255,17 +253,33 @@ mod tests {
     #[test]
     fn test_tube_network_connection() {
         let mut world = World::new();
-        let term_a = world.spawn((
-            PneumaticTerminal { id: 1, connected_to: vec![] },
-            GridPosition { x: 0, y: 0 },
-            PowerConsumer { active: true, ..Default::default() },
-        )).id();
+        let term_a = world
+            .spawn((
+                PneumaticTerminal {
+                    id: 1,
+                    connected_to: vec![],
+                },
+                GridPosition { x: 0, y: 0 },
+                PowerConsumer {
+                    active: true,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
-        let _term_b = world.spawn((
-            PneumaticTerminal { id: 2, connected_to: vec![] },
-            GridPosition { x: 2, y: 0 },
-            PowerConsumer { active: true, ..Default::default() },
-        )).id();
+        let _term_b = world
+            .spawn((
+                PneumaticTerminal {
+                    id: 2,
+                    connected_to: vec![],
+                },
+                GridPosition { x: 2, y: 0 },
+                PowerConsumer {
+                    active: true,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         world.spawn((PneumaticTube, GridPosition { x: 0, y: 0 }));
         world.spawn((PneumaticTube, GridPosition { x: 1, y: 0 }));
@@ -282,22 +296,43 @@ mod tests {
     #[test]
     fn test_tube_sends_item() {
         let mut world = World::new();
-        let term_a = world.spawn((
-            PneumaticTerminal { id: 1, connected_to: vec![2] },
-            GridPosition { x: 0, y: 0 },
-            Inventory::default(),
-            PowerConsumer { active: true, ..Default::default() },
-        )).id();
+        let term_a = world
+            .spawn((
+                PneumaticTerminal {
+                    id: 1,
+                    connected_to: vec![2],
+                },
+                GridPosition { x: 0, y: 0 },
+                Inventory::default(),
+                PowerConsumer {
+                    active: true,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
-        let term_b = world.spawn((
-            PneumaticTerminal { id: 2, connected_to: vec![1] },
-            GridPosition { x: 2, y: 0 },
-            Inventory::default(),
-            PowerConsumer { active: true, ..Default::default() },
-        )).id();
+        let term_b = world
+            .spawn((
+                PneumaticTerminal {
+                    id: 2,
+                    connected_to: vec![1],
+                },
+                GridPosition { x: 2, y: 0 },
+                Inventory::default(),
+                PowerConsumer {
+                    active: true,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
-        let permit = InventoryItem { item_type: ItemType::BuildingPermit };
-        world.get_mut::<Inventory>(term_a).unwrap().add(permit.clone());
+        let permit = InventoryItem {
+            item_type: ItemType::BuildingPermit,
+        };
+        world
+            .get_mut::<Inventory>(term_a)
+            .unwrap()
+            .add(permit.clone());
         world.get_mut::<Inventory>(term_a).unwrap().items.clear();
 
         // Manual insert simulates user/logic triggering send
@@ -328,32 +363,48 @@ mod tests {
     #[test]
     fn test_tube_clogging() {
         let mut world = World::new();
-        let term_a = world.spawn((
-            PneumaticTerminal { id: 1, connected_to: vec![2] },
-            GridPosition { x: 0, y: 0 },
-            TubeCarrier {
-                target_terminal_id: 2,
-                payload: InventoryItem { item_type: ItemType::None },
-                progress: 0.0,
-                speed: 1.0,
-                path: None,
-            },
-            Inventory::default(),
-            PowerConsumer { active: true, ..Default::default() },
-        )).id();
+        let term_a = world
+            .spawn((
+                PneumaticTerminal {
+                    id: 1,
+                    connected_to: vec![2],
+                },
+                GridPosition { x: 0, y: 0 },
+                TubeCarrier {
+                    target_terminal_id: 2,
+                    payload: InventoryItem {
+                        item_type: ItemType::None,
+                    },
+                    progress: 0.0,
+                    speed: 1.0,
+                    path: None,
+                },
+                Inventory::default(),
+                PowerConsumer {
+                    active: true,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         world.spawn((
-            PneumaticTerminal { id: 2, connected_to: vec![] },
+            PneumaticTerminal {
+                id: 2,
+                connected_to: vec![],
+            },
             GridPosition { x: 2, y: 0 },
             Inventory::default(),
-            PowerConsumer { active: true, ..Default::default() },
+            PowerConsumer {
+                active: true,
+                ..Default::default()
+            },
         ));
 
         world.spawn((PneumaticTube, GridPosition { x: 0, y: 0 }));
         world.spawn((
             PneumaticTube,
             GridPosition { x: 1, y: 0 },
-            Clogged { severity: 1.0 }
+            Clogged { severity: 1.0 },
         ));
         world.spawn((PneumaticTube, GridPosition { x: 2, y: 0 }));
 

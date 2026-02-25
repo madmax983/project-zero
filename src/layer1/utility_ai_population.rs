@@ -222,12 +222,7 @@ fn populate_hospitals(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
     buffer.clear();
     buffer.extend(
         world
-            .query::<(
-                Entity,
-                &GridPosition,
-                &Hospital,
-                Option<&PowerConsumer>,
-            )>()
+            .query::<(Entity, &GridPosition, &Hospital, Option<&PowerConsumer>)>()
             .iter(world)
             .filter(|(_, _, _, power)| is_powered(*power))
             .map(|(entity, pos, _, _)| ScorableCandidate::with_capacity(entity, *pos, 10, 0)),
@@ -360,16 +355,10 @@ fn populate_repair_structures(world: &mut World, buffer: &mut Vec<ScorableCandid
     buffer.clear();
     buffer.extend(
         world
-            .query::<(
-                Entity,
-                &GridPosition,
-                &Structure,
-                Option<&DeferMaintenance>,
-            )>()
+            .query::<(Entity, &GridPosition, &Structure, Option<&DeferMaintenance>)>()
             .iter(world)
             .filter(|(_, _, structure, defer)| {
-                defer.is_none()
-                    && (structure.current_hp - structure.max_hp).abs() >= f32::EPSILON
+                defer.is_none() && (structure.current_hp - structure.max_hp).abs() >= f32::EPSILON
             })
             .map(|(entity, pos, _, _)| ScorableCandidate::new(entity, *pos)),
     );
