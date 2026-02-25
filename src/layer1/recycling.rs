@@ -1,7 +1,6 @@
-use crate::layer1::funeral::Corpse;
 use crate::layer1::inventory::Inventory;
 use crate::layer1::items::ItemType;
-use crate::layer1::resources::{ColonyResources, ResourceType};
+use crate::layer1::resources::ColonyResources;
 use bevy_ecs::prelude::*;
 
 /// Component for the Recycler building.
@@ -61,12 +60,8 @@ pub fn recycle_processing_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::building::{Building, BuildingType};
+    use crate::layer1::funeral::Corpse;
     use crate::layer1::inventory::InventoryItem;
-    use crate::layer1::morale::Morale;
-    use crate::layer1::needs::Needs;
-    use crate::layer1::pop::Pop;
-    use crate::layer1::traits::{Trait, Traits};
 
     #[test]
     fn test_recycler_processes_corpse() {
