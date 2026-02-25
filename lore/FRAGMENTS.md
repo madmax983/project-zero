@@ -3238,3 +3238,174 @@ Names for safehouse contracts/locations.
 - Zero-Trace
 - The Quiet Room
 - Ghost-House
+
+---
+
+## Hygiene Fragments (Spec 220)
+
+### [FILTH_DESCRIPTOR]
+Adjectives for squalor conditions.
+
+- grimy
+- slick
+- foul-smelling
+- dust-caked
+- weeping
+- stale
+- rancid
+
+### [SHOWER_NAME]
+Names for hygiene facilities.
+
+- The Wash-Block
+- Clean-Skin Station
+- The Scrub
+- Decon-Unit
+- Water-Closet
+- The Rinse
+- Purity-Pod
+
+---
+
+## Recycling Fragments (Spec 221)
+
+### [RECYCLER_NAME]
+Names for organic recycling facilities.
+
+- The Vat
+- Biomass-Converter
+- The Render
+- Flesh-Press
+- Organ-Mill
+- The Soup-Kitchen (grim irony)
+- Life-Cycler
+
+### [CORPSE_PRODUCT]
+What bodies are turned into.
+
+- corpse-starch
+- bio-fuel
+- grey-slurry
+- nutrient-paste
+- bone-meal
+- life-water
+- protein-block
+
+---
+
+## Fleet Fragments (Spec 157/159)
+
+### [SHIP_CLASS]
+Types of ships.
+
+- Frigate
+- Hauler
+- Void-Skiff
+- Star-Barge
+- Dreadnought
+- Scout-Wing
+- Colony-Ark
+
+### [FLEET_NAME]
+Names for fleets.
+
+- The Iron Wing
+- Void-Wolves
+- The Silent Flotilla
+- Star-Guard
+- The Red Armada
+- Merchant-Convoy 7
+- The Lost Fleet
+
+### [COMBAT_RESULT]
+Outcomes of space battles.
+
+- total hull loss
+- reactor breach
+- engine cripple
+- void-scatter
+- surrender
+- retreat
+- pyrrhic victory
+
+---
+
+## Barnacle Fragments (Spec 219)
+
+### [BARNACLE_NAME]
+Names for space barnacles.
+
+- void-leech
+- hull-rot
+- star-sucker
+- metal-mite
+- drift-crab
+- silence-eater
+- anchor-worm
+
+### [BARNACLE_ACTION]
+What barnacles do.
+
+- latches
+- grinds
+- sucks
+- burrows
+- clings
+- drags
+- feeds
+
+---
+
+## Crossfire Fragments (Spec 206)
+
+### [CROSSFIRE_SOURCE]
+Where the orbital fire comes from.
+
+- a stray rail-slug
+- debris-rain
+- laser-scatter
+- missile-error
+- hull-shrapnel
+- reactor-bloom
+- void-war fallout
+
+### [IMPACT_DESCRIPTOR]
+Adjectives for orbital strikes.
+
+- thunderous
+- blinding
+- earth-shattering
+- sudden
+- merciless
+- precise (ironic)
+- random
+
+---
+
+## Mother Lode Fragments (Spec 168)
+
+### [MOTHER_LODE_NAME]
+Names for the massive resource node.
+
+- The Heart
+- Deep-Vein
+- The Mother
+- Core-Seed
+- The Mountain
+- Endless-Ore
+- The Titan
+
+---
+
+## Heat Island Fragments (Spec 198)
+
+### [HEAT_ISLAND_DESCRIPTOR]
+Adjectives for urban heat accumulation.
+
+- stifling
+- breathless
+- cooking
+- sweating
+- oven-hot
+- radiating
+- feverish

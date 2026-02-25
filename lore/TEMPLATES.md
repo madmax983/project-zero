@@ -2184,3 +2184,122 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "Contract signed. [YEAR]. The [SAFEHOUSE_NAME] shelters a [VISITOR_TYPE]."
 - "[YEAR]: Hidden guest. [VISITOR_TYPE] in the [SAFEHOUSE_NAME]."
 - "Secret deal. The [SAFEHOUSE_NAME] is active. [YEAR]."
+
+---
+
+## Hygiene Templates (Spec 220)
+
+### FILTH_OUTBREAK
+**Slots:** [COLONY], [YEAR], [FILTH_DESCRIPTOR], [VERMIN_NAME]
+
+- "The Grime is winning. [YEAR]. Walls are [FILTH_DESCRIPTOR]. [VERMIN_NAME] thriving."
+- "[YEAR]: Hygiene collapse. Everything is [FILTH_DESCRIPTOR]. We need water."
+- "Squalor report. [COLONY] is [FILTH_DESCRIPTOR]. [VERMIN_NAME] breed in the dirt. [YEAR]."
+
+### SHOWER_BUILT
+**Slots:** [COLONY], [YEAR], [SHOWER_NAME]
+
+- "[SHOWER_NAME] is open. [YEAR]. The water runs clean."
+- "[YEAR]: We wash away the grime. [SHOWER_NAME] installed."
+- "Purity restored. [SHOWER_NAME] operational at [COLONY]. [YEAR]."
+
+---
+
+## Recycling Templates (Spec 221)
+
+### RECYCLER_OPERATIONAL
+**Slots:** [COLONY], [YEAR], [RECYCLER_NAME]
+
+- "The [RECYCLER_NAME] hums. [YEAR]. Nothing wasted."
+- "[YEAR]: Green cycle started. [RECYCLER_NAME] takes the refuse."
+- "New law: all waste to the [RECYCLER_NAME]. [YEAR]."
+
+### CORPSE_RECYCLED
+**Slots:** [COLONY], [YEAR], [NAME], [RECYCLER_NAME], [CORPSE_PRODUCT]
+
+- "[NAME] returns to the cycle. [YEAR]. The [RECYCLER_NAME] yields [CORPSE_PRODUCT]."
+- "[YEAR]: Pragmatism. We processed [NAME] into [CORPSE_PRODUCT]."
+- "The dead feed the living. [NAME] is now [CORPSE_PRODUCT]. [YEAR]."
+
+---
+
+## Fleet Templates (Spec 157/159)
+
+### SHIP_CONSTRUCTED
+**Slots:** [COLONY], [YEAR], [SHIP_CLASS], [SHIP_NAME]
+
+- "New [SHIP_CLASS] launched. [YEAR]. Christened [SHIP_NAME]."
+- "[YEAR]: The shipyard births [SHIP_NAME]. A proud [SHIP_CLASS]."
+- "Void-ready. [SHIP_NAME] ([SHIP_CLASS]) joins the fleet. [YEAR]."
+
+### FLEET_ENGAGEMENT
+**Slots:** [COLONY], [YEAR], [FLEET_NAME], [COMBAT_RESULT]
+
+- "Battle in the dark. [YEAR]. [FLEET_NAME] reports [COMBAT_RESULT]."
+- "[YEAR]: Combat logs from [FLEET_NAME]. It ended in [COMBAT_RESULT]."
+- "War comes to the void. [FLEET_NAME] engagement. [COMBAT_RESULT]. [YEAR]."
+
+---
+
+## Barnacle Templates (Spec 219)
+
+### BARNACLE_INFESTATION
+**Slots:** [COLONY], [YEAR], [SHIP_NAME], [BARNACLE_NAME]
+
+- "[SHIP_NAME] is dragging. [YEAR]. Hull covered in [BARNACLE_NAME]."
+- "[YEAR]: Parasites detected. [BARNACLE_NAME] on the [SHIP_NAME]."
+- "Scrub the hull! [BARNACLE_NAME] infestation on [SHIP_NAME]. [YEAR]."
+
+### DRAG_WARNING
+**Slots:** [COLONY], [YEAR], [SHIP_NAME], [BARNACLE_ACTION]
+
+- "Efficiency drops. [YEAR]. The barnacles [BARNACLE_ACTION] the [SHIP_NAME]."
+- "[YEAR]: [SHIP_NAME] slowed by the infestation. They [BARNACLE_ACTION] deep."
+- "Fuel usage critical. The parasites [BARNACLE_ACTION]. [YEAR]."
+
+---
+
+## Crossfire Templates (Spec 206)
+
+### ORBITAL_BOMBARDMENT
+**Slots:** [COLONY], [YEAR], [CROSSFIRE_SOURCE], [IMPACT_DESCRIPTOR]
+
+- "Sky-fire! [YEAR]. [CROSSFIRE_SOURCE] hits the surface. [IMPACT_DESCRIPTOR]."
+- "[YEAR]: We are under fire. [CROSSFIRE_SOURCE]. A [IMPACT_DESCRIPTOR] rain."
+- "Shields failing. [CROSSFIRE_SOURCE] bombardment. [IMPACT_DESCRIPTOR]. [YEAR]."
+
+### CROSSFIRE_HIT
+**Slots:** [COLONY], [YEAR], [BUILDING_TYPE], [CROSSFIRE_SOURCE]
+
+- "Direct hit on [BUILDING_TYPE]. [YEAR]. [CROSSFIRE_SOURCE] took it out."
+- "[YEAR]: The [BUILDING_TYPE] is gone. Victim of [CROSSFIRE_SOURCE]."
+- "Collateral damage. [CROSSFIRE_SOURCE] destroyed the [BUILDING_TYPE]. [YEAR]."
+
+---
+
+## Mother Lode Templates (Spec 168)
+
+### MOTHER_LODE_FOUND
+**Slots:** [COLONY], [YEAR], [MOTHER_LODE_NAME]
+
+- "We found the big one. [YEAR]. [MOTHER_LODE_NAME]."
+- "[YEAR]: Infinite wealth. The [MOTHER_LODE_NAME] is real."
+- "Strike! [MOTHER_LODE_NAME] discovered at [COLONY]. [YEAR]."
+
+### MOTHER_LODE_DEPLETED
+**Slots:** [COLONY], [YEAR], [MOTHER_LODE_NAME]
+
+- "The [MOTHER_LODE_NAME] is dry. [YEAR]. Impossible."
+- "[YEAR]: End of an era. [MOTHER_LODE_NAME] exhausted."
+- "Silence in the deep mines. [MOTHER_LODE_NAME] gives no more. [YEAR]."
+
+---
+
+## Heat Island Templates (Spec 198)
+
+### HEAT_ISLAND_WARNING
+**Slots:** [COLONY], [YEAR], [HEAT_ISLAND_DESCRIPTOR]
+
+- "The city is [HEAT_ISLAND_DESCRIPTOR]. [YEAR]. Heat trapped in the streets."
+- "[YEAR]: Thermal warning. Urban core is [HEAT_ISLAND_DESCRIPTOR]."
+- "We are cooking ourselves. [HEAT_ISLAND_DESCRIPTOR] temperatures in [COLONY]. [YEAR]."
