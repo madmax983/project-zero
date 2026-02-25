@@ -160,3 +160,4 @@
 - [x] `221` Organic Recycling — `specs/221-organic-recycling.md` — completed 2026-07-25
 - [x] `184` Orbital Debris — `specs/184-orbital-debris.md` — completed 2026-06-25
 - [x] `152` Orbital Stations — `specs/152-orbital-stations.md` — completed 2026-06-25
+- [x] `101` System Mining — `specs/101-system-mining.md` — completed 2026-02-25

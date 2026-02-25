@@ -37,14 +37,14 @@ use std::collections::HashSet;
 // --- Helpers ---
 
 fn is_active_shift(schedule: Option<&ShiftSchedule>, time: TimeOfDay) -> bool {
-    schedule.map(|s| s.is_active(time)).unwrap_or(true)
+    schedule.map_or(true, |s| s.is_active(time))
 }
 
 fn is_powered(power: Option<&PowerConsumer>) -> bool {
-    power.map(|p| p.active).unwrap_or(true)
+    power.map_or(true, |p| p.active)
 }
 
-fn is_at_capacity(current: usize, max: usize) -> bool {
+const fn is_at_capacity(current: usize, max: usize) -> bool {
     current >= max
 }
 
