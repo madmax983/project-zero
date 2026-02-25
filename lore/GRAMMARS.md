@@ -92,6 +92,18 @@ KEY      → Key, Gate, Path, Opening
 ENGINE   → Engine, Heart, Core, Pulse
 ```
 
+### Ship Names
+
+**Structure:** `[ADJECTIVE] [NOUN]` OR `[CIV_VALUE]`
+
+**Patterns:**
+```
+VOID_THEMED   → Void-Walker, Star-Treader, Deep-Diver
+AGGRESSIVE    → Iron-Will, Hammer of [Star], Retribution
+PEACEFUL      → Silent-Running, Hope's Carrier, The Promise
+ABSTRACT      → The [Color] [Noun] (e.g. The Red Echo)
+```
+
 ---
 
 ## Event Chaining
@@ -2169,4 +2181,144 @@ SAFEHOUSE_CONTRACT:
   increases:
     - WEALTH (medium)
     - RISK (medium)
+```
+
+---
+
+## Hygiene Chaining
+
+```yaml
+FILTH_OUTBREAK:
+  enables:
+    - SICKNESS_OUTBREAK (high)
+    - VERMIN_OUTBREAK (high)
+    - SHOWER_BUILT (medium)
+  increases:
+    - DISGUST (high)
+    - UNREST (medium)
+
+SHOWER_BUILT:
+  enables:
+    - HYGIENE_BOOST (high)
+    - WATER_CONSUMPTION_SPIKE (always)
+  increases:
+    - MORALE (medium)
+    - HEALTH (medium)
+```
+
+## Recycling Chaining
+
+```yaml
+RECYCLER_OPERATIONAL:
+  enables:
+    - CORPSE_RECYCLED (high, if deaths)
+    - WASTE_REDUCTION (high)
+  increases:
+    - EFFICIENCY (high)
+    - DISCOMFORT (low, smell)
+
+CORPSE_RECYCLED:
+  enables:
+    - RATION_BOOST (medium)
+    - FUNERAL_SKIPPED (always)
+  increases:
+    - PRAGMATISM (high)
+    - HORROR (medium, for non-pragmatists)
+```
+
+## Fleet Chaining
+
+```yaml
+SHIP_CONSTRUCTED:
+  enables:
+    - FLEET_ASSIGNMENT (high)
+    - SHIP_LAUNCH (always)
+  increases:
+    - MILITARY_POWER (high)
+    - PRIDE (medium)
+
+FLEET_ENGAGEMENT:
+  enables:
+    - SHIP_LOST (medium)
+    - HERO_BIRTH (low)
+    - REPAIR_RUSH (high, if survivors)
+  increases:
+    - TENSION (high)
+    - LEGEND_GENERATION (medium)
+```
+
+## Barnacle Chaining
+
+```yaml
+BARNACLE_INFESTATION:
+  enables:
+    - DRAG_WARNING (high)
+    - HULL_DAMAGE (medium)
+    - CLEANING_DUTY (high)
+  increases:
+    - FUEL_CONSUMPTION (high)
+    - FRUSTRATION (medium)
+
+DRAG_WARNING:
+  enables:
+    - SHIP_DELAYED (high)
+    - FUEL_CRISIS (medium)
+  increases:
+    - URGENCY (high)
+```
+
+## Crossfire Chaining
+
+```yaml
+ORBITAL_BOMBARDMENT:
+  enables:
+    - CROSSFIRE_HIT (high)
+    - SHIELD_FAILURE (medium)
+    - PANIC_SPREAD (high)
+  increases:
+    - FEAR_OF_SKY (high)
+    - DESTRUCTION (high)
+
+CROSSFIRE_HIT:
+  enables:
+    - STRUCTURE_COLLAPSE (always)
+    - FIRE_OUTBREAK (high)
+    - REBUILDING_EFFORT (medium)
+  increases:
+    - ANGER (high)
+    - TRAUMA (high)
+```
+
+## Mother Lode Chaining
+
+```yaml
+MOTHER_LODE_FOUND:
+  enables:
+    - INDUSTRIAL_BOOM (high)
+    - MINE_EXPANSION (always)
+    - GREED (medium)
+  increases:
+    - WEALTH (high)
+    - ACCIDENT_RISK (medium, deep mining)
+
+MOTHER_LODE_DEPLETED:
+  enables:
+    - ECONOMIC_CRASH (medium)
+    - MIGRATION (low)
+  increases:
+    - DESPAIR (medium)
+    - NOSTALGIA (high)
+```
+
+## Heat Island Chaining
+
+```yaml
+HEAT_ISLAND_WARNING:
+  enables:
+    - SICKNESS_OUTBREAK (medium, heatstroke)
+    - WORK_STOPPAGE (low)
+    - COOLING_DEMAND (high)
+  increases:
+    - DISCOMFORT (high)
+    - ENERGY_USE (high, cooling)
 ```

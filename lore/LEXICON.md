@@ -2299,3 +2299,120 @@
 **Usage:**
 - "This deal is off-book."
 - "Keeping it off-book."
+
+---
+
+## Hygiene
+
+### the Grime
+**Replaces:** squalor/filth
+**Code reference:** `Filth`
+**Usage:**
+- "The Grime gets everywhere."
+- "Scrub the Grime away."
+
+### wash-block
+**Replaces:** shower/hygiene building
+**Code reference:** `Shower`
+**Usage:**
+- "Hit the wash-block."
+- "The wash-block is out of water."
+
+---
+
+## Organic Recycling
+
+### the Vat
+**Replaces:** recycler building
+**Code reference:** `Recycler`
+**Usage:**
+- "Into the Vat with it."
+- "The Vat is hungry."
+
+### corpse-starch
+**Replaces:** food made from bodies
+**Code reference:** Recycled `Rations`
+**Usage:**
+- "Tastes like corpse-starch."
+- "Eating corpse-starch again."
+
+---
+
+## Fleets & Combat
+
+### void-war
+**Replaces:** space combat
+**Code reference:** `FleetCombat`
+**Usage:**
+- "Veterans of the void-war."
+- "Void-war leaves no bodies."
+
+### hull-burner
+**Replaces:** anti-ship weapon
+**Code reference:** Heavy weapon
+**Usage:**
+- "That ship packs a hull-burner."
+- "Scars from a hull-burner."
+
+---
+
+## Space Barnacles
+
+### void-leech
+**Replaces:** space barnacle
+**Code reference:** `SpaceBarnacles`
+**Usage:**
+- "Scrape the void-leeches off."
+- "Dragging a void-leech colony."
+
+### hull-rot
+**Replaces:** damage from barnacles
+**Usage:**
+- "The ship has hull-rot."
+- "Barnacles cause hull-rot."
+
+---
+
+## Orbital Crossfire
+
+### sky-fire
+**Replaces:** orbital bombardment
+**Code reference:** `OrbitalEvent`
+**Usage:**
+- "Running from the sky-fire."
+- "Sky-fire took the west wing."
+
+### void-rain
+**Replaces:** debris bombardment
+**Code reference:** Impact event
+**Usage:**
+- "Hard void-rain tonight."
+- "Shelter from the void-rain."
+
+---
+
+## The Mother Lode
+
+### the Heart / the Mother
+**Replaces:** Mother Lode entity
+**Code reference:** `MotherLode`
+**Usage:**
+- "We found the Heart of the world."
+- "Mining the Mother directly."
+
+### deep-vein
+**Replaces:** rich ore deposit
+**Usage:**
+- "Tapping a deep-vein."
+- "Deep-vein fever."
+
+---
+
+## Heat Islands
+
+### heat-trap
+**Replaces:** urban heat island effect
+**Code reference:** `UrbanHeatIsland`
+**Usage:**
+- "The city is a heat-trap."
+- "Can't breathe in this heat-trap."
