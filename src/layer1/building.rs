@@ -308,6 +308,8 @@ pub enum BuildingType {
     AtmosphericProcessor,
     /// Stores genetic samples of flora and fauna.
     GeneBank,
+    /// Facility for pops to clean themselves (consumes Water).
+    Shower,
 }
 
 impl BuildingType {
@@ -456,7 +458,8 @@ impl BuildingType {
             | Self::AncientReactor
             | Self::AncientFabricator
             | Self::AtmosphericProcessor
-            | Self::GeneBank => true,
+            | Self::GeneBank
+            | Self::Shower => true,
 
             // Small or Open structures
             Self::Farm
@@ -553,6 +556,7 @@ impl BuildingType {
             Self::AuroralCollector => Some(Tech::Electromagnetism),
             Self::AtmosphericProcessor => Some(Tech::Terraforming),
             Self::GeneBank => Some(Tech::Medical),
+            Self::Shower => Some(Tech::SocialStructures),
             _ => None,
         }
     }
@@ -623,6 +627,7 @@ impl BuildingType {
             Self::AuroralCollector => "Auroral Collector",
             Self::AtmosphericProcessor => "Atmospheric Processor",
             Self::GeneBank => "Gene Bank",
+            Self::Shower => "Shower",
         }
     }
 
@@ -675,6 +680,7 @@ impl BuildingType {
             Self::AuroralCollector => 'Ψ',
             Self::AtmosphericProcessor => '@',
             Self::GeneBank => '🧬',
+            Self::Shower => '🚿',
         }
     }
 
@@ -711,6 +717,11 @@ impl BuildingType {
             Self::GeneBank => ColonyResources {
                 metal: 50.0,
                 stone: 20.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Shower => ColonyResources {
+                metal: 10.0,
+                stone: 5.0,
                 ..ColonyResources::zeroed()
             },
             Self::CommandCenter => ColonyResources {
@@ -1239,6 +1250,7 @@ fn spawn_building(
         | BuildingType::CryoPod
         | BuildingType::AtmosphericProcessor
         | BuildingType::GeneBank => configure_tech(&mut entity, building_type),
+        BuildingType::Shower => configure_civic(&mut entity, building_type),
         BuildingType::PersonalShed
         | BuildingType::PersonalGarden
         | BuildingType::PersonalShrine => {
@@ -1568,6 +1580,12 @@ fn configure_civic(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 },
                 ShiftSchedule::default(),
             ));
+        }
+        BuildingType::Shower => {
+            // Has power consumer for water heater? Spec says "Use Water", not power.
+            // But usually showers have lights or pumps.
+            // I'll leave it basic for now.
+            // Spec says: "Builder: Should Showers require Power? For now, no (gravity fed)."
         }
         _ => {}
     }
@@ -2119,7 +2137,8 @@ mod tests {
             BuildingType::AtmosphericProcessor.next(),
             BuildingType::GeneBank
         );
-        assert_eq!(BuildingType::GeneBank.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::GeneBank.next(), BuildingType::Shower);
+        assert_eq!(BuildingType::Shower.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -2327,6 +2346,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::GeneBank);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Shower);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

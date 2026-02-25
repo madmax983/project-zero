@@ -28,6 +28,7 @@ use super::cabin_fever::CabinFever;
 use super::contagion::ContagionCooldown;
 use super::factions::FactionMember;
 use super::items::Equipment;
+use super::hygiene::Filth;
 use super::language::{Dialect, Linguistics};
 use super::lifecycle::Age;
 use super::map::{GridPosition, ScreenShake};
@@ -279,6 +280,7 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
                     Arrival { tick: 0 },
                 ))
                 .insert((
+                    Filth::default(),
                     ActiveAuras::default(),
                     SocialDebt::default(),
                     Morale::default(),

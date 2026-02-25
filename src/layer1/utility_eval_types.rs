@@ -294,4 +294,6 @@ pub struct UtilityAIBuffer {
     pub enemies: Vec<ScorableCandidate>,
     /// Buffer for all structures (Mental Break targets).
     pub all_structures: Vec<ScorableCandidate>,
+    /// Buffer for shower candidates.
+    pub showers: Vec<ScorableCandidate>,
 }

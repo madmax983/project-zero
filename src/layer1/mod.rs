@@ -616,6 +616,10 @@ pub mod solar;
 pub use solar::*;
 pub mod window;
 
+/// Hygiene system (Spec 220).
+pub mod hygiene;
+pub use hygiene::*;
+
 #[cfg(test)]
 mod urban_heat_tests;
 #[cfg(test)]

@@ -66,6 +66,11 @@ pub struct Needs {
     /// *   **1.0**: Entertained.
     /// *   **< 0.2**: Bored/Stressed.
     pub leisure: f32,
+
+    /// Hygiene level.
+    /// *   **1.0**: Clean.
+    /// *   **< 0.2**: Dirty/Unhappy.
+    pub hygiene: f32,
 }
 
 impl Default for Needs {
@@ -74,6 +79,7 @@ impl Default for Needs {
             hunger: 0.8,
             rest: 0.8,
             leisure: 0.8,
+            hygiene: 0.8,
         }
     }
 }
@@ -98,10 +104,15 @@ impl Needs {
         } else {
             self.rest
         };
-        if min_hr < self.leisure {
+        let min_lh = if self.leisure < self.hygiene {
+            self.leisure
+        } else {
+            self.hygiene
+        };
+        if min_hr < min_lh {
             min_hr
         } else {
-            self.leisure
+            min_lh
         }
     }
 
@@ -114,13 +125,13 @@ impl Needs {
     /// ```
     /// use scale::layer1::needs::Needs;
     ///
-    /// let needs = Needs { hunger: 1.0, rest: 0.5, leisure: 0.0 };
-    /// // (1.0 + 0.5 + 0.0) / 3.0 = 0.5
+    /// let needs = Needs { hunger: 1.0, rest: 0.5, leisure: 0.0, hygiene: 0.5 };
+    /// // (1.0 + 0.5 + 0.0 + 0.5) / 4.0 = 0.5
     /// assert_eq!(needs.morale(), 0.5);
     /// ```
     #[must_use]
     pub fn morale(&self) -> f32 {
-        (self.hunger + self.rest + self.leisure) / 3.0
+        (self.hunger + self.rest + self.leisure + self.hygiene) / 4.0
     }
 }
 
@@ -193,6 +204,7 @@ pub fn decay_needs_system(
         needs.hunger = (needs.hunger - hunger_decay).max(0.0);
         needs.rest = (needs.rest - REST_DECAY_PER_TICK).max(0.0);
         needs.leisure = (needs.leisure - LEISURE_DECAY_PER_TICK).max(0.0);
+        // Hygiene is decayed separately in hygiene.rs
     });
 }
 
@@ -212,6 +224,7 @@ mod tests {
         let needs = Needs::default();
         assert!((needs.hunger - 0.8).abs() < f32::EPSILON);
         assert!((needs.rest - 0.8).abs() < f32::EPSILON);
+        assert!((needs.hygiene - 0.8).abs() < f32::EPSILON);
     }
 
     #[test]
@@ -220,6 +233,7 @@ mod tests {
             hunger: 0.5,
             rest: 0.7,
             leisure: 0.8,
+            hygiene: 0.9,
         };
         assert!((needs1.worst() - 0.5).abs() < f32::EPSILON);
 
@@ -227,6 +241,7 @@ mod tests {
             hunger: 0.9,
             rest: 0.3,
             leisure: 0.8,
+            hygiene: 0.9,
         };
         assert!((needs2.worst() - 0.3).abs() < f32::EPSILON);
 
@@ -234,8 +249,9 @@ mod tests {
             hunger: 0.5,
             rest: 0.5,
             leisure: 0.5,
+            hygiene: 0.1,
         };
-        assert!((needs3.worst() - 0.5).abs() < f32::EPSILON);
+        assert!((needs3.worst() - 0.1).abs() < f32::EPSILON);
     }
 
     #[test]
@@ -247,6 +263,7 @@ mod tests {
                 hunger: 0.0001,
                 rest: 0.0001,
                 leisure: 0.0001,
+                hygiene: 0.8,
             },
         ));
 
@@ -292,6 +309,7 @@ mod tests {
             hunger: 1.0,
             rest: 1.0,
             leisure: 1.0,
+            hygiene: 1.0,
         };
         assert!((needs.morale() - 1.0).abs() < f32::EPSILON);
 
@@ -299,6 +317,7 @@ mod tests {
             hunger: 0.5,
             rest: 0.5,
             leisure: 0.5,
+            hygiene: 0.5,
         };
         assert!((needs_mixed.morale() - 0.5).abs() < f32::EPSILON);
 
@@ -306,6 +325,7 @@ mod tests {
             hunger: 0.0,
             rest: 0.0,
             leisure: 0.0,
+            hygiene: 0.0,
         };
         assert!((needs_bad.morale() - 0.0).abs() < f32::EPSILON);
 
@@ -314,7 +334,9 @@ mod tests {
             hunger: 1.0,
             rest: 0.0,
             leisure: 0.5,
+            hygiene: 0.5,
         };
+        // (1+0+0.5+0.5)/4 = 2.0/4 = 0.5
         assert!((needs_uneven.morale() - 0.5).abs() < f32::EPSILON);
     }
 

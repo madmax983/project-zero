@@ -41,7 +41,7 @@ mod tests {
                 Needs {
                     hunger: 0.1, // Starving!
                     rest: 0.8,
-                    leisure: 0.8,
+                    leisure: 0.8, hygiene: 0.8,
                 },
                 UtilityWeights::default(),
                 PopAction {
@@ -139,7 +139,7 @@ mod tests {
                 Needs {
                     hunger: 0.8,
                     rest: 0.8,
-                    leisure: 0.1, // Very bored
+                    leisure: 0.1, hygiene: 0.8, // Very bored
                 },
                 UtilityWeights::default(),
                 PopAction {
@@ -232,7 +232,7 @@ mod tests {
                 Needs {
                     hunger: 0.1, // Starving
                     rest: 0.8,
-                    leisure: 0.8,
+                    leisure: 0.8, hygiene: 0.8,
                 },
                 UtilityWeights::default(),
                 PopAction {
@@ -285,7 +285,7 @@ mod tests {
                 Needs {
                     hunger: 0.1,
                     rest: 0.8,
-                    leisure: 0.8,
+                    leisure: 0.8, hygiene: 0.8,
                 },
                 UtilityWeights::default(),
                 PopAction {
