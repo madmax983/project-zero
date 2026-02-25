@@ -30,6 +30,7 @@ use crate::layer1::utility_eval_types::{
 };
 use crate::layer1::utility_types::UtilityConfig;
 use bevy_ecs::prelude::*;
+use std::collections::HashSet;
 
 /// Populates the `UtilityAIBuffer` with all candidate entities from the world.
 ///
@@ -260,8 +261,13 @@ fn populate_buffer_designations(world: &mut World, buffer: &mut UtilityAIBuffer)
 
 fn populate_buffer_items_and_misc(world: &mut World, buffer: &mut UtilityAIBuffer) {
     populate_stockpiles(world, &mut buffer.stockpiles);
+
+    // Create lookup set for stockpiles (Optimization: O(1) lookup instead of O(N))
+    let stockpile_positions: HashSet<GridPosition> =
+        buffer.stockpiles.iter().map(|s| s.pos).collect();
+
     populate_items(world, &mut buffer.items);
-    populate_generic_items(world, &buffer.stockpiles, &mut buffer.item_entities);
+    populate_generic_items(world, &stockpile_positions, &mut buffer.item_entities);
     populate_anomalies(world, &mut buffer.anomalies);
     populate_corpses(world, &mut buffer.corpses);
     populate_graves(world, &mut buffer.graves);
@@ -287,17 +293,21 @@ fn populate_items(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
     }
 }
 
+/// Populates loose items (Tools, Clothing, etc.), filtering out those already in stockpiles.
+///
+/// # Optimization
+/// Uses a `HashSet` for stockpile lookup to avoid O(N*M) complexity where N=Items and M=Stockpiles.
+/// This reduces the check to O(1) per item.
 fn populate_generic_items(
     world: &mut World,
-    stockpiles: &[ScorableCandidate],
+    stockpiles: &HashSet<GridPosition>,
     buffer: &mut Vec<ScorableCandidate>,
 ) {
     buffer.clear();
     let mut item_entity_query = world.query::<(Entity, &GridPosition, &Item)>();
     for (entity, pos, item) in item_entity_query.iter(world) {
         // Optimization: Don't haul items that are already at a stockpile
-        let at_stockpile = stockpiles.iter().any(|s| s.pos == *pos);
-        if at_stockpile {
+        if stockpiles.contains(pos) {
             continue;
         }
 
@@ -418,5 +428,49 @@ pub fn collect_pop_data(world: &mut World, buffer: &mut UtilityAIBuffer, config:
         {
             data.insulation = clothing.insulation;
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::layer1::items::{Item, ItemType};
+    use crate::layer1::map::GridPosition;
+
+    #[test]
+    fn test_populate_generic_items_filtering() {
+        let mut world = World::new();
+
+        // 1. Create Stockpile Positions Set
+        let mut stockpiles = std::collections::HashSet::new();
+        stockpiles.insert(GridPosition { x: 10, y: 0 });
+
+        // 2. Spawn Item inside stockpile (Should be filtered)
+        let _item_in = world
+            .spawn((
+                Item {
+                    item_type: ItemType::Manual,
+                },
+                GridPosition { x: 10, y: 0 },
+            ))
+            .id();
+
+        // 3. Spawn Item outside stockpile (Should be included)
+        let item_out = world
+            .spawn((
+                Item {
+                    item_type: ItemType::Manual,
+                },
+                GridPosition { x: 5, y: 0 },
+            ))
+            .id();
+
+        // 4. Run population
+        let mut buffer = Vec::new();
+        populate_generic_items(&mut world, &stockpiles, &mut buffer);
+
+        // 5. Verify
+        assert_eq!(buffer.len(), 1);
+        assert_eq!(buffer[0].entity, item_out);
     }
 }
