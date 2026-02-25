@@ -1,3 +1,4 @@
+use crate::layer2::events::ShipDestroyedEvent;
 use crate::layer2::fleet::{FleetComposition, FleetFaction, InOrbit};
 use crate::layer2::ship::ShipType;
 use crate::layer1::resources::ResourceType;
@@ -12,29 +13,10 @@ pub struct CombatResult {
     pub winner_survivors: FleetComposition,
     /// The composition of the losing fleet after combat (if any survived).
     pub loser_survivors: FleetComposition,
+    /// List of ships destroyed during combat (from both sides).
+    pub destroyed_ships: Vec<ShipType>,
     /// Loot generated from the engagement (e.g. from destroyed transport ships).
     pub loot: Option<Vec<(ResourceType, f32)>>,
-}
-
-/// Applies damage to a fleet and returns the survivors and list of destroyed ship types.
-fn apply_damage(fleet: &FleetComposition, damage: f32) -> (FleetComposition, Vec<ShipType>) {
-    let mut survivors = FleetComposition::default();
-    let mut destroyed = Vec::new();
-    let mut remaining_damage = damage;
-
-    for ship in &fleet.ships {
-        if remaining_damage >= ship.health {
-            remaining_damage -= ship.health;
-            destroyed.push(ship.ship_type);
-        } else {
-            let mut damaged_ship = ship.clone();
-            damaged_ship.health -= remaining_damage;
-            survivors.add_ship(damaged_ship);
-            remaining_damage = 0.0;
-        }
-    }
-
-    (survivors, destroyed)
 }
 
 /// Resolves a combat encounter between two fleets.
@@ -42,6 +24,7 @@ fn apply_damage(fleet: &FleetComposition, damage: f32) -> (FleetComposition, Vec
 /// Determines the winner based on total attack power.
 /// Applies damage to both sides based on the opponent's power.
 /// Generates loot if valuable ships are destroyed.
+#[must_use]
 pub fn resolve_combat(
     att_faction: FleetFaction,
     attacker: &FleetComposition,
@@ -66,15 +49,18 @@ pub fn resolve_combat(
     let winner_damage = loser_power * 0.5;
     let loser_damage = winner_power * 1.5;
 
-    let (winner_survivors, _) = apply_damage(winner_comp, winner_damage);
-    let (loser_survivors, destroyed_loser_ships) = apply_damage(loser_comp, loser_damage);
+    let mut winner_survivors = winner_comp.clone();
+    let winner_destroyed = winner_survivors.take_damage(winner_damage);
+
+    let mut loser_survivors = loser_comp.clone();
+    let loser_destroyed = loser_survivors.take_damage(loser_damage);
 
     // Loot Generation
     // If any Transport ships were destroyed, generate loot.
     let mut loot = Vec::new();
     let mut scrap_amount = 0.0;
 
-    for ship_type in destroyed_loser_ships {
+    for ship_type in &loser_destroyed {
         // Scavenge raw materials
         let cost = ship_type.construction_cost();
         for (_, amount) in cost {
@@ -82,7 +68,7 @@ pub fn resolve_combat(
         }
 
         // Bonus for Transports
-        if ship_type == ShipType::Transport {
+        if *ship_type == ShipType::Transport {
              scrap_amount += 100.0; // Cargo loot
         }
     }
@@ -91,10 +77,15 @@ pub fn resolve_combat(
         loot.push((ResourceType::Scrap, scrap_amount));
     }
 
+    // Collect all destroyed ships
+    let mut destroyed_ships = winner_destroyed;
+    destroyed_ships.extend(loser_destroyed);
+
     CombatResult {
         winner: winner_faction,
         winner_survivors,
         loser_survivors,
+        destroyed_ships,
         loot: if loot.is_empty() { None } else { Some(loot) },
     }
 }
@@ -103,6 +94,7 @@ pub fn resolve_combat(
 pub fn fleet_combat_system(
     mut commands: Commands,
     mut query: Query<(Entity, &InOrbit, &FleetFaction, &mut FleetComposition)>,
+    mut event_writer: EventWriter<ShipDestroyedEvent>,
 ) {
     // Naive O(N^2) check for MVP. Optimized: Sort by location or use HashMap.
     // Given low N of fleets, sorting/grouping is fine.
@@ -149,6 +141,14 @@ pub fn fleet_combat_system(
 
                 // Apply results
                 let (winner_entity, loser_entity) = if result.winner == *f1 { (*e1, *e2) } else { (*e2, *e1) };
+
+                // Emit destroyed events
+                for ship in &result.destroyed_ships {
+                    event_writer.send(ShipDestroyedEvent {
+                        planet: current_location,
+                        ship_class: format!("{ship:?}"),
+                    });
+                }
 
                 // Update Winner
                 if result.winner_survivors.ships.is_empty() {
@@ -246,5 +246,17 @@ mod tests {
 
         // If Transport destroyed, loot generated
         assert!(result.loot.is_some(), "Loot should be generated when transport is destroyed");
+    }
+
+    #[test]
+    fn test_destroyed_ships_tracking() {
+        let fleet_a = create_fleet(FleetFaction::Player, vec![ShipType::Frigate; 10]);
+        let fleet_b = create_fleet(FleetFaction::Pirate, vec![ShipType::Scout; 1]);
+
+        let result = resolve_combat(FleetFaction::Player, &fleet_a, FleetFaction::Pirate, &fleet_b);
+
+        // B's scout should be in destroyed list
+        assert!(!result.destroyed_ships.is_empty(), "Destroyed ships should be tracked");
+        assert!(result.destroyed_ships.contains(&ShipType::Scout), "Scout should be destroyed");
     }
 }

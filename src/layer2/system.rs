@@ -11,6 +11,10 @@ pub enum ViewMode {
     System,
 }
 
+/// Marker component for a celestial body in the system.
+#[derive(Component, Debug, Clone, Copy, Default)]
+pub struct SystemBody;
+
 /// Represents a celestial body in the system view (e.g., Planet, Moon).
 #[derive(Component, Debug, Clone)]
 pub struct OrbitalBody {

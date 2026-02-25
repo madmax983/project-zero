@@ -10,9 +10,10 @@ use bevy_ecs::schedule::{IntoSystemConfigs, Schedule, ScheduleLabel};
 
 use crate::gpu::evaluate::gpu_evaluate_actions;
 use crate::layer1::building::{BuildingMap, update_building_map_system};
-use crate::layer1::systems::{Layer1SystemSet, register_layer1_systems};
+use crate::layer1::systems::{Layer1SystemSet, register_layer1_systems, update_event_buffer};
 use crate::layer1::update_action_timer_system;
 use crate::shared::time::SimulationTime;
+use crate::layer2::events::{LaunchEvent, ShipDestroyedEvent};
 
 /// Schedule label for the main simulation tick.
 #[derive(ScheduleLabel, Debug, Clone, PartialEq, Eq, Hash)]
@@ -52,11 +53,24 @@ pub fn build_simulation_schedule() -> Schedule {
 
     // --- Layer 2 Integration ---
     schedule.add_systems((
+        // Cleanup Layer 2 events
+        update_event_buffer::<LaunchEvent>,
+        update_event_buffer::<ShipDestroyedEvent>,
+
         crate::layer2::fleet::fleet_order_system,
         crate::layer2::fleet::fleet_movement_system.after(crate::layer2::fleet::fleet_order_system),
+        crate::layer2::fleet::ensure_fleet_health_system,
         crate::layer2::combat::fleet_combat_system.after(crate::layer2::fleet::fleet_movement_system),
         crate::layer2::barnacles::ensure_barnacles_component_system,
         crate::layer2::barnacles::barnacle_accumulation_system,
+
+        // Debris Systems
+        crate::layer2::debris::debris_accumulation_system
+            .after(crate::layer2::combat::fleet_combat_system),
+        crate::layer2::debris::debris_attrition_system
+            .after(crate::layer2::debris::debris_accumulation_system),
+        crate::layer2::debris::debris_decay_system
+            .after(crate::layer2::debris::debris_attrition_system),
 
         crate::layer2::visibility::update_visibility_system.after(Layer1SystemSet::Economy),
         crate::layer2::visibility::enforce_view_mode_system
@@ -83,6 +97,14 @@ pub fn run_simulation_tick(world: &mut World) {
 
     if !world.contains_resource::<crate::layer1::tech_envy::TechEnvyConfig>() {
         world.init_resource::<crate::layer1::tech_envy::TechEnvyConfig>();
+    }
+
+    // Initialize Layer 2 Events
+    if !world.contains_resource::<Events<LaunchEvent>>() {
+        world.init_resource::<Events<LaunchEvent>>();
+    }
+    if !world.contains_resource::<Events<ShipDestroyedEvent>>() {
+        world.init_resource::<Events<ShipDestroyedEvent>>();
     }
 
     // Add our schedule if not yet added
