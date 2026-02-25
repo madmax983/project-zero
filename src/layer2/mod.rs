@@ -15,10 +15,14 @@ pub mod events;
 pub mod fleet;
 /// Procedural generation for the system.
 pub mod generation;
+/// Mining and resource extraction.
+pub mod mining;
 /// Rendering logic for the system view.
 pub mod render;
 /// Ship definitions and stats.
 pub mod ship;
+/// Orbital stations.
+pub mod station;
 /// Core system simulation components and resources.
 pub mod system;
 /// System visibility logic (Command Center).
@@ -26,3 +30,5 @@ pub mod visibility;
 
 #[cfg(test)]
 mod debris_tests;
+#[cfg(test)]
+mod station_tests;
