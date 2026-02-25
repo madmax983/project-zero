@@ -163,3 +163,4 @@
 - [x] `101` System Mining — `specs/101-system-mining.md` — completed 2026-02-25
 - [x] `INT-011` Integration: hygiene -> recycling (waste items) — completed 2026-02-01
 - [x] `INT-012` Integration: System Mining -> Colony Resources — completed 2026-02-01
+- [x] `228` Pneumatic Tubes — `specs/228-pneumatic-tubes.md` — completed 2026-02-25
