@@ -635,3 +635,5 @@ pub use mother_lode::*;
 /// Organic Recycling system (Spec 221).
 pub mod recycling;
 pub use recycling::*;
+/// Permit system for advanced construction.
+pub mod permit;

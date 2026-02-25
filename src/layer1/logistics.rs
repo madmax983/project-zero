@@ -128,6 +128,7 @@ pub fn hopper_system(
                 ResourceType::Alcohol => (resources.alcohol, resources.max_alcohol),
                 ResourceType::Scrap => (resources.scrap, resources.max_scrap),
                 ResourceType::Tools => (resources.tools, resources.max_tools),
+                ResourceType::BuildingPermit => (resources.building_permits, resources.max_building_permits),
             };
 
             let space = (max - current).max(0.0);
@@ -148,6 +149,7 @@ pub fn hopper_system(
                     ResourceType::Alcohol => resources.add_alcohol(added),
                     ResourceType::Scrap => resources.add_scrap(added),
                     ResourceType::Tools => resources.add_tools(added),
+                    ResourceType::BuildingPermit => resources.add_building_permits(added),
                 }
 
                 item.amount -= added;

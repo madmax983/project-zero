@@ -138,6 +138,8 @@ pub enum ItemType {
     Waste,
     /// A corpse of a Pop.
     Corpse(Entity),
+    /// A building permit document.
+    BuildingPermit,
 }
 
 impl ItemType {
@@ -163,6 +165,7 @@ impl ItemType {
             | Self::MysteryMeal => Some(ResourceType::Food),
             Self::Rations => Some(ResourceType::Rations),
             Self::Waste => Some(ResourceType::Waste),
+            Self::BuildingPermit => Some(ResourceType::BuildingPermit),
             _ => None,
         }
     }

@@ -3,7 +3,9 @@ use crate::layer1::GridPosition;
 use crate::layer1::drone::Drone;
 use crate::layer1::execution::{AtTarget, MovementTarget};
 use crate::layer1::factions::{FactionMember, FactionState, Factions};
-use crate::layer1::items::{CarryingItem, Item};
+use crate::layer1::inventory::{Inventory, InventoryItem};
+use crate::layer1::items::{CarryingItem, Item, ItemType};
+use crate::layer1::permit::PermitRequired;
 use crate::layer1::resources::{Carrying, ColonyResources, ResourceItem};
 use crate::layer1::stockpile::Stockpile;
 use crate::layer1::utility_ai::{ActionType, PopAction, manhattan_distance};
@@ -132,6 +134,33 @@ fn handle_pickup(world: &mut World, pop_entity: Entity, pos: GridPosition) {
 }
 
 fn handle_drop_off(world: &mut World, pop_entity: Entity, carrying: Carrying, pos: GridPosition) {
+    // Check for Permit delivery first
+    if carrying.resource_type == crate::layer1::resources::ResourceType::BuildingPermit {
+        let permit_target = {
+            let mut query = world.query::<(Entity, &GridPosition, &PermitRequired, &mut Inventory)>();
+            let mut target = None;
+            for (e, p, _, _) in query.iter_mut(world) {
+                if *p == pos {
+                    target = Some(e);
+                    break;
+                }
+            }
+            target
+        };
+
+        if let Some(target) = permit_target {
+            // Deliver Permit to Inventory
+            if let Some(mut inventory) = world.get_mut::<Inventory>(target) {
+                inventory.add(InventoryItem { item_type: ItemType::BuildingPermit });
+            }
+            world.entity_mut(pop_entity).remove::<Carrying>();
+
+            // Clear movement state
+            world.entity_mut(pop_entity).remove::<AtTarget>().remove::<MovementTarget>();
+            return;
+        }
+    }
+
     // Verify we are at a stockpile (optional validation, but good practice)
     let is_stockpile = {
         let mut query = world.query::<(&GridPosition, &Stockpile)>();
@@ -163,6 +192,9 @@ fn handle_drop_off(world: &mut World, pop_entity: Entity, carrying: Carrying, po
             crate::layer1::resources::ResourceType::Tools => {
                 resources.add_tools(carrying.amount);
             }
+            crate::layer1::resources::ResourceType::BuildingPermit => {
+                resources.add_building_permits(carrying.amount);
+            }
         }
 
         // Remove Carrying
@@ -180,10 +212,42 @@ fn find_and_target_stockpile(
     world: &mut World,
     pop_entity: Entity,
     pos: GridPosition,
-    _carrying: Carrying,
+    carrying: Carrying,
 ) {
     // Check if drone
     let is_drone = world.get::<Drone>(pop_entity).is_some();
+
+    // Permit Logic: Prioritize PermitRequired buildings
+    if carrying.resource_type == crate::layer1::resources::ResourceType::BuildingPermit {
+        let mut query = world.query::<(Entity, &GridPosition, &PermitRequired, &Inventory)>();
+        let mut best_permit = None;
+        let mut min_dist = i32::MAX;
+
+        for (e, p, _, inv) in query.iter(world) {
+            // Check if inventory has space/needs permit (assume needs if empty of permits)
+            let has_permit = inv.items.iter().any(|i| i.item_type == ItemType::BuildingPermit);
+            if !has_permit {
+                let dist = manhattan_distance(&pos, p);
+                if dist < min_dist {
+                    min_dist = dist;
+                    best_permit = Some((e, *p));
+                }
+            }
+        }
+
+        if let Some((target_entity, target_pos)) = best_permit {
+            world.entity_mut(pop_entity).insert(MovementTarget {
+                target_entity,
+                target_position: target_pos,
+                for_action: ActionType::Haul,
+            });
+            return;
+        } else {
+            // If we have a permit but no target building, do NOT haul to stockpile.
+            // This prevents permits from disappearing into the global resource void.
+            return;
+        }
+    }
 
     // 1. Create query state first (requires &mut World temporarily)
     let mut query = world.query::<(Entity, &GridPosition, &Stockpile)>();
@@ -384,6 +448,9 @@ fn find_and_target_item(world: &mut World, pop_entity: Entity, pos: GridPosition
                 }
                 crate::layer1::resources::ResourceType::Tools => {
                     resources.tools < resources.max_tools
+                }
+                crate::layer1::resources::ResourceType::BuildingPermit => {
+                    resources.building_permits < resources.max_building_permits
                 }
             };
 
@@ -698,6 +765,77 @@ mod tests {
         assert!(result.is_some());
         let (_, target) = result.unwrap();
         assert_eq!(target, manual_entity);
+    }
+
+    #[test]
+    fn test_haul_permit_to_required_building() {
+        use crate::layer1::permit::PermitRequired;
+        use crate::layer1::inventory::Inventory;
+
+        let mut world = World::new();
+        world.insert_resource(SimulationTime::default());
+        world.insert_resource(ColonyResources::default());
+
+        // Permit Item
+        let permit_item = world.spawn((
+            ResourceItem {
+                resource_type: ResourceType::BuildingPermit,
+                amount: 1.0,
+            },
+            GridPosition { x: 2, y: 0 },
+        )).id();
+
+        // PermitRequired Building
+        let building = world.spawn((
+            Building { building_type: BuildingType::Smelter },
+            PermitRequired,
+            Inventory::default(),
+            GridPosition { x: 10, y: 0 },
+        )).id();
+
+        // Stockpile (Distraction)
+        world.spawn((
+            Building { building_type: BuildingType::Stockpile },
+            Stockpile::default(),
+            GridPosition { x: 5, y: 0 }, // Closer than building
+        ));
+
+        // Hauler
+        let pop = world.spawn((
+            Pop,
+            GridPosition { x: 2, y: 0 },
+            PopAction {
+                current: ActionType::Haul,
+                ..Default::default()
+            },
+        )).id();
+
+        // 1. Pickup
+        world.entity_mut(pop).insert(crate::layer1::execution::AtTarget);
+        haul_system(&mut world);
+
+        // Verify carrying permit
+        let carrying = world.get::<Carrying>(pop).unwrap();
+        assert_eq!(carrying.resource_type, ResourceType::BuildingPermit);
+
+        // 2. Find Target (Should pick Building over Stockpile despite distance)
+        haul_system(&mut world);
+
+        let target = world.get::<crate::layer1::execution::MovementTarget>(pop).unwrap();
+        assert_eq!(target.target_entity, building, "Should target PermitRequired building");
+
+        // 3. Dropoff
+        *world.get_mut::<GridPosition>(pop).unwrap() = GridPosition { x: 10, y: 0 };
+        world.entity_mut(pop).insert(crate::layer1::execution::AtTarget);
+        haul_system(&mut world);
+
+        // Verify dropped in inventory
+        let inv = world.get::<Inventory>(building).unwrap();
+        assert_eq!(inv.items.len(), 1);
+        assert_eq!(inv.items[0].item_type, ItemType::BuildingPermit);
+
+        // Verify pop empty
+        assert!(world.get::<Carrying>(pop).is_none());
     }
 
     #[test]

@@ -104,7 +104,7 @@ pub fn shower_use_system(
         return;
     }
 
-    for (_entity, mut needs, mut filth, action) in query.iter_mut() {
+    for (_entity, mut needs, mut filth, action) in &mut query {
         if action.current == ActionType::UseShower {
             // Double check water per pop (in case we ran out mid-loop, though unlikely with f32)
             if resources.water >= SHOWER_WATER_COST {

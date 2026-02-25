@@ -35,6 +35,7 @@ use crate::layer1::control::DoorControl;
 use crate::layer1::drone::DroneHub;
 use crate::layer1::energy::{Conduit, FuelConsumer, PowerConsumer, PowerSource};
 use crate::layer1::heirloom::AncientStructure;
+use crate::layer1::inventory::Inventory;
 use crate::layer1::items::ItemType;
 use crate::layer1::lighting::LightSource;
 use crate::layer1::prototyping::{BuildingMastery, Prototype};
@@ -42,6 +43,7 @@ use crate::layer1::resources::{ColonyResources, RefiningProgress};
 use crate::layer1::rituals::MachineSpirit;
 use crate::layer1::seismic::SeismicSource;
 use crate::layer1::solar::SolarPower;
+use crate::layer1::permit::PermitRequired;
 use crate::layer1::tech::{DataStorage, Library, Tech, TechState};
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::trade::TradeDepot;
@@ -1182,6 +1184,15 @@ fn spawn_building(
         current_hp: max_hp,
     });
 
+    // Permit System: Advanced buildings require a permit
+    if let Some((_, tier)) = building_type.tier_info() {
+        if tier >= Tier::Advanced {
+            entity.insert(PermitRequired);
+            // Ensure inventory exists to accept permit
+            entity.insert(Inventory::default());
+        }
+    }
+
     // Flammability
     if material.flammability() {
         entity.insert(Flammable::default());
@@ -2164,7 +2175,8 @@ mod tests {
             BuildingType::GeneBank
         );
         assert_eq!(BuildingType::GeneBank.next(), BuildingType::Shower);
-        assert_eq!(BuildingType::Shower.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::Shower.next(), BuildingType::Recycler);
+        assert_eq!(BuildingType::Recycler.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -2375,6 +2387,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Shower);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Recycler);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

@@ -54,6 +54,8 @@ pub enum ResourceType {
     Scrap,
     /// Standard tools (Pickaxe, Axe, Hammer).
     Tools,
+    /// Permit required to construct advanced buildings.
+    BuildingPermit,
 }
 
 /// A physical resource item in the world (dropped on the ground).
@@ -155,6 +157,8 @@ pub struct ColonyResources {
     pub alcohol: f32,
     /// Total scrap available in the colony.
     pub scrap: f32,
+    /// Total building permits available in the colony.
+    pub building_permits: f32,
     /// Maximum food capacity.
     pub max_food: f32,
     /// Maximum wood capacity.
@@ -191,6 +195,8 @@ pub struct ColonyResources {
     pub max_alcohol: f32,
     /// Maximum scrap capacity.
     pub max_scrap: f32,
+    /// Maximum building permits capacity (usually infinite or high).
+    pub max_building_permits: f32,
 }
 
 impl Default for ColonyResources {
@@ -235,6 +241,8 @@ impl Default for ColonyResources {
             max_water: 50.0,
             max_alcohol: 50.0,
             max_scrap: 20.0,
+            building_permits: 0.0,
+            max_building_permits: 100.0,
         }
     }
 }
@@ -284,6 +292,8 @@ impl Mul<f32> for ColonyResources {
             max_water: self.max_water,
             max_alcohol: self.max_alcohol,
             max_scrap: self.max_scrap,
+            building_permits: (self.building_permits * rhs).ceil(),
+            max_building_permits: self.max_building_permits,
         }
     }
 }
@@ -335,12 +345,19 @@ impl ColonyResources {
             max_water: 0.0,
             max_alcohol: 0.0,
             max_scrap: 0.0,
+            building_permits: 0.0,
+            max_building_permits: 0.0,
         }
     }
 
     /// Adds scrap, clamping to the maximum capacity.
     pub fn add_scrap(&mut self, amount: f32) {
         self.scrap = (self.scrap + amount).clamp(0.0, self.max_scrap);
+    }
+
+    /// Adds building permits, clamping to the maximum capacity.
+    pub fn add_building_permits(&mut self, amount: f32) {
+        self.building_permits = (self.building_permits + amount).clamp(0.0, self.max_building_permits);
     }
 
     /// Adds alcohol, clamping to the maximum capacity.
@@ -460,6 +477,7 @@ impl ColonyResources {
             || self.water < 0.0
             || self.alcohol < 0.0
             || self.scrap < 0.0
+            || self.building_permits < 0.0
     }
 
     /// Checks if the colony can afford the given cost.
@@ -499,6 +517,7 @@ impl ColonyResources {
             && self.water >= cost.water
             && self.alcohol >= cost.alcohol
             && self.scrap >= cost.scrap
+            && self.building_permits >= cost.building_permits
     }
 
     /// Deducts the given cost from the colony's resources.
@@ -527,6 +546,7 @@ impl ColonyResources {
         self.water -= cost.water;
         self.alcohol -= cost.alcohol;
         self.scrap -= cost.scrap;
+        self.building_permits -= cost.building_permits;
     }
 
     /// Attempts to deduct the given cost from the colony's resources.
@@ -571,6 +591,7 @@ impl ColonyResources {
             // ResourceType::Water not in enum
             ResourceType::Alcohol => self.alcohol = (self.alcohol - amount).max(0.0),
             ResourceType::Waste => self.waste = (self.waste - amount).max(0.0),
+            ResourceType::BuildingPermit => self.building_permits = (self.building_permits - amount).max(0.0),
         }
     }
 }
