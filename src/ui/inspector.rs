@@ -93,123 +93,216 @@ pub fn render_inspector(frame: &mut Frame, area: Rect, world: &World) {
     }
 }
 
+fn get_resource_color(current: f32, max: f32, inverse: bool) -> Color {
+    if max <= f32::EPSILON {
+        return Color::Gray;
+    }
+    let pct = current / max;
+    if inverse {
+        if pct < 0.2 {
+            Color::Green
+        } else if pct < 0.8 {
+            Color::Yellow
+        } else {
+            Color::Red
+        }
+    } else if pct < 0.2 {
+        Color::Red
+    } else if pct < 0.5 {
+        Color::Yellow
+    } else {
+        Color::Green
+    }
+}
+
 #[allow(clippy::too_many_lines)]
 fn render_colony_stats(frame: &mut Frame, area: Rect, world: &World) {
     let resources = world.resource::<ColonyResources>();
 
     // Calculate population stats
-    let pop_count = world
+    let (pop_count, total_morale) = world
         .iter_entities()
-        .filter(bevy_ecs::world::EntityRef::contains::<Pop>)
-        .count();
+        .filter_map(|e| e.get::<Needs>())
+        .fold((0, 0.0), |(count, sum), needs| {
+            (count + 1, sum + needs.morale())
+        });
 
-    let (housing_count, housing_capacity, housing_used) = world
+    let avg_morale = if pop_count > 0 {
+        total_morale / pop_count as f32
+    } else {
+        0.0
+    };
+
+    let (_housing_count, housing_capacity, housing_used) = world
         .iter_entities()
         .filter_map(|e| e.get::<Housing>())
         .fold((0, 0, 0), |(count, cap, used), h| {
             (count + 1, cap + h.capacity, used + h.residents.len())
         });
 
-    let (farm_count, farm_capacity, farm_used) = world
-        .iter_entities()
-        .filter_map(|e| e.get::<Farm>())
-        .fold((0, 0, 0), |(count, cap, used), f| {
-            (count + 1, cap + f.capacity, used + f.workers.len())
-        });
-
-    // Split layout into two sections
+    // Dashboard Layout
+    // 1. Status (Top)
+    // 2. Survival
+    // 3. Industry
+    // 4. Economy
     let chunks = Layout::default()
         .direction(Direction::Vertical)
         .constraints([
-            Constraint::Length(6), // Demographics
-            Constraint::Min(9),    // Resources
+            Constraint::Length(5), // Status (Pop + Morale)
+            Constraint::Length(6), // Survival
+            Constraint::Length(6), // Industry
+            Constraint::Min(6),    // Economy
         ])
         .split(area);
 
-    // --- Demographics Table ---
-    let demo_rows = vec![
+    // --- 1. Status Module ---
+    let morale_color = if avg_morale > 0.7 {
+        Color::Green
+    } else if avg_morale > 0.4 {
+        Color::Yellow
+    } else {
+        Color::Red
+    };
+
+    let status_rows = vec![
         Row::new(vec![
-            Cell::from("👥 Population").style(Style::default().fg(Color::Cyan)),
-            Cell::from(pop_count.to_string()),
+            Cell::from("👥 Pop").style(Style::default().fg(Color::Cyan)),
+            Cell::from(format!("{pop_count}")),
+        ]),
+        Row::new(vec![
+            Cell::from("😃 Morale").style(Style::default().fg(Color::Cyan)),
+            Cell::from(format!("{:.0}%", avg_morale * 100.0)).style(Style::default().fg(morale_color)),
         ]),
         Row::new(vec![
             Cell::from("🏠 Housing").style(Style::default().fg(Color::Cyan)),
             Cell::from(format!(
-                "{housing_used}/{housing_capacity} ({housing_count})"
+                "{housing_used}/{housing_capacity}"
             )),
-        ]),
-        Row::new(vec![
-            Cell::from("⚒  Workers").style(Style::default().fg(Color::Cyan)),
-            Cell::from(format!("{farm_used}/{farm_capacity} ({farm_count})")),
         ]),
     ];
 
-    let demo_table = Table::new(
-        demo_rows,
+    let status_table = Table::new(
+        status_rows,
         [Constraint::Percentage(50), Constraint::Percentage(50)],
     )
     .block(
         Block::default()
-            .title(" Demographics ")
+            .title(" Status ")
             .borders(Borders::ALL)
             .border_type(BorderType::Rounded)
             .border_style(Style::default().fg(Color::Cyan)),
     );
+    frame.render_widget(status_table, chunks[0]);
 
-    frame.render_widget(demo_table, chunks[0]);
-
-    // --- Resources Table ---
-    let resource_rows = vec![
+    // --- 2. Survival Module ---
+    let survival_rows = vec![
         Row::new(vec![
-            Cell::from("🍖 Food").style(Style::default().fg(Color::Yellow)),
-            Cell::from(format!("{:.1}/{:.0}", resources.food, resources.max_food)),
+            Cell::from("🍖 Food").style(Style::default().fg(Color::Green)),
+            Cell::from(format!("{:.0}/{:.0}", resources.total_food(), resources.max_food))
+                .style(Style::default().fg(get_resource_color(resources.total_food(), resources.max_food, false))),
         ]),
         Row::new(vec![
-            Cell::from("🌲 Wood").style(Style::default().fg(Color::Green)),
-            Cell::from(format!("{:.1}/{:.0}", resources.wood, resources.max_wood)),
+            Cell::from("💧 Water").style(Style::default().fg(Color::Blue)),
+            Cell::from(format!("{:.0}/{:.0}", resources.water, resources.max_water))
+                .style(Style::default().fg(get_resource_color(resources.water, resources.max_water, false))),
         ]),
         Row::new(vec![
-            Cell::from("🪨 Stone").style(Style::default().fg(Color::Gray)),
-            Cell::from(format!("{:.1}/{:.0}", resources.stone, resources.max_stone)),
+            Cell::from("⛽ Fuel").style(Style::default().fg(Color::Yellow)),
+            Cell::from(format!("{:.0}/{:.0}", resources.fuel, resources.max_fuel))
+                .style(Style::default().fg(get_resource_color(resources.fuel, resources.max_fuel, false))),
         ]),
         Row::new(vec![
-            Cell::from("🔧 Tools").style(Style::default().fg(Color::Cyan)),
-            Cell::from(format!("{:.1}/{:.0}", resources.tools, resources.max_tools)),
-        ]),
-        Row::new(vec![
-            Cell::from("Fb Fiber").style(Style::default().fg(Color::Green)),
-            Cell::from(format!("{:.1}/{:.0}", resources.fiber, resources.max_fiber)),
-        ]),
-        Row::new(vec![
-            Cell::from("Cl Cloth").style(Style::default().fg(Color::Magenta)),
-            Cell::from(format!("{:.1}/{:.0}", resources.cloth, resources.max_cloth)),
-        ]),
-        Row::new(vec![
-            Cell::from("Cg Clothing").style(Style::default().fg(Color::LightMagenta)),
-            Cell::from(format!(
-                "{:.1}/{:.0}",
-                resources.clothing, resources.max_clothing
-            )),
-        ]),
-        Row::new(vec![
-            Cell::from("🗑 Waste").style(Style::default().fg(Color::Rgb(85, 107, 47))),
-            Cell::from(format!("{:.1}/{:.0}", resources.waste, resources.max_waste)),
+            Cell::from("🗑 Waste").style(Style::default().fg(Color::DarkGray)),
+            Cell::from(format!("{:.0}/{:.0}", resources.waste, resources.max_waste))
+                .style(Style::default().fg(get_resource_color(resources.waste, resources.max_waste, true))),
         ]),
     ];
 
-    let resource_table = Table::new(
-        resource_rows,
+    let survival_table = Table::new(
+        survival_rows,
         [Constraint::Percentage(50), Constraint::Percentage(50)],
     )
     .block(
         Block::default()
-            .title(" Resources ")
+            .title(" Survival ")
             .borders(Borders::ALL)
             .border_type(BorderType::Rounded)
-            .border_style(Style::default().fg(Color::Yellow)),
+            .border_style(Style::default().fg(Color::Green)),
     );
+    frame.render_widget(survival_table, chunks[1]);
 
-    frame.render_widget(resource_table, chunks[1]);
+    // --- 3. Construction & Industry Module ---
+    let industry_rows = vec![
+        Row::new(vec![
+            Cell::from("🌲 Wood").style(Style::default().fg(Color::White)),
+            Cell::from(format!("{:.0}/{:.0}", resources.wood, resources.max_wood))
+                .style(Style::default().fg(get_resource_color(resources.wood, resources.max_wood, false))),
+        ]),
+        Row::new(vec![
+            Cell::from("🪨 Stone").style(Style::default().fg(Color::Gray)),
+            Cell::from(format!("{:.0}/{:.0}", resources.stone, resources.max_stone))
+                .style(Style::default().fg(get_resource_color(resources.stone, resources.max_stone, false))),
+        ]),
+        Row::new(vec![
+            Cell::from("⚙ Metal").style(Style::default().fg(Color::LightBlue)),
+            Cell::from(format!("{:.0}/{:.0}", resources.metal, resources.max_metal))
+                .style(Style::default().fg(get_resource_color(resources.metal, resources.max_metal, false))),
+        ]),
+        Row::new(vec![
+            Cell::from("🔧 Tools").style(Style::default().fg(Color::Cyan)),
+            Cell::from(format!("{:.0}/{:.0}", resources.tools, resources.max_tools))
+                .style(Style::default().fg(get_resource_color(resources.tools, resources.max_tools, false))),
+        ]),
+    ];
+
+    let industry_table = Table::new(
+        industry_rows,
+        [Constraint::Percentage(50), Constraint::Percentage(50)],
+    )
+    .block(
+        Block::default()
+            .title(" Industry ")
+            .borders(Borders::ALL)
+            .border_type(BorderType::Rounded)
+            .border_style(Style::default().fg(Color::Gray)),
+    );
+    frame.render_widget(industry_table, chunks[2]);
+
+    // --- 4. Economy & Science Module ---
+    let economy_rows = vec![
+        Row::new(vec![
+            Cell::from("🔬 Tech").style(Style::default().fg(Color::Magenta)),
+            Cell::from(format!("{:.0}/{:.0}", resources.knowledge, resources.max_knowledge))
+                .style(Style::default().fg(get_resource_color(resources.knowledge, resources.max_knowledge, false))),
+        ]),
+        Row::new(vec![
+            Cell::from("👕 Clothes").style(Style::default().fg(Color::LightMagenta)),
+            Cell::from(format!("{:.0}/{:.0}", resources.clothing, resources.max_clothing))
+                .style(Style::default().fg(get_resource_color(resources.clothing, resources.max_clothing, false))),
+        ]),
+        Row::new(vec![
+            Cell::from("🍺 Alcohol").style(Style::default().fg(Color::Yellow)),
+            Cell::from(format!("{:.0}/{:.0}", resources.alcohol, resources.max_alcohol))
+                .style(Style::default().fg(get_resource_color(resources.alcohol, resources.max_alcohol, false))),
+        ]),
+        Row::new(vec![
+            Cell::from("📜 Permits").style(Style::default().fg(Color::White)),
+            Cell::from(format!("{:.0}", resources.building_permits)),
+        ]),
+    ];
+
+    let economy_table = Table::new(
+        economy_rows,
+        [Constraint::Percentage(50), Constraint::Percentage(50)],
+    )
+    .block(
+        Block::default()
+            .title(" Economy ")
+            .borders(Borders::ALL)
+            .border_type(BorderType::Rounded)
+            .border_style(Style::default().fg(Color::Magenta)),
+    );
+    frame.render_widget(economy_table, chunks[3]);
 }
 
 #[allow(clippy::too_many_lines)]
@@ -403,9 +496,10 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
     let has_diet = world.get::<DietaryHistory>(entity).is_some();
     let diet_height = u16::from(has_diet);
     let has_spirit = world.get::<MachineSpirit>(entity).is_some();
-    let spirit_height = u16::from(has_spirit);
     let has_quirk = world.get::<Quirk>(entity).is_some();
-    let quirk_height = u16::from(has_quirk);
+    let show_diagnostics = has_spirit || has_quirk;
+    let diag_content_height = u16::from(has_spirit) + u16::from(has_quirk);
+    let diag_height = if show_diagnostics { 2 + diag_content_height } else { 0 };
 
     let layout = Layout::default()
         .direction(Direction::Vertical)
@@ -417,8 +511,7 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
             Constraint::Length(1),                                    // Spacer
             Constraint::Length(details_height),                       // Needs or Details
             Constraint::Length(u16::from(has_structure)),             // Structure HP
-            Constraint::Length(spirit_height),                        // Machine Spirit
-            Constraint::Length(quirk_height),                         // Quirk
+            Constraint::Length(diag_height),                          // Diagnostics (Spirit + Quirk)
             Constraint::Length(personality_height),                   // Personality + Spacer
             Constraint::Length(dream_height),                         // Last Dream
             Constraint::Length(diet_height),                          // Dietary History
@@ -457,21 +550,32 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
     // 5. Needs or Building Details
     let details_area = layout[5];
     if let Some(needs) = world.get::<Needs>(entity) {
-        // Split into three rows: gauges on top, morale below, bio below
+        // Bio-Monitor Block
+        let bio_block = Block::default()
+            .title(" Bio-Monitor ")
+            .borders(Borders::ALL)
+            .border_type(BorderType::Rounded)
+            .border_style(Style::default().fg(Color::Green));
+
+        let bio_inner = bio_block.inner(details_area);
+        frame.render_widget(bio_block, details_area);
+
+        // Split inner area
         let rows = Layout::default()
             .direction(Direction::Vertical)
             .constraints([
-                Constraint::Length(3),
-                Constraint::Length(1),
-                Constraint::Length(1),
+                Constraint::Length(1), // Hunger/Rest
+                Constraint::Length(1), // Morale
+                Constraint::Length(1), // Bio-Comp
             ])
-            .split(details_area);
+            .split(bio_inner);
 
+        // Row 1: Hunger & Rest
         let needs_layout = Layout::default()
             .direction(Direction::Horizontal)
             .constraints([
                 Constraint::Percentage(50),
-                Constraint::Length(1),
+                Constraint::Length(1), // Gap
                 Constraint::Percentage(50),
             ])
             .split(rows[0]);
@@ -479,25 +583,16 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         let hunger_percent = (needs.hunger * 100.0) as u16;
         let rest_percent = (needs.rest * 100.0) as u16;
 
-        let hunger_color = if needs.hunger < 0.3 {
-            Color::Red
-        } else {
-            Color::Green
-        };
-        let rest_color = if needs.rest < 0.3 {
-            Color::Red
-        } else {
-            Color::Cyan
-        };
+        let hunger_color = if needs.hunger < 0.3 { Color::Red } else { Color::Green };
+        let rest_color = if needs.rest < 0.3 { Color::Red } else { Color::Cyan };
 
+        // Compact Gauges
         let hunger_gauge = Gauge::default()
-            .block(Block::default().title("Hunger").borders(Borders::NONE))
             .gauge_style(Style::default().fg(hunger_color))
             .label(format!("🍖 {hunger_percent}%"))
             .percent(hunger_percent);
 
         let rest_gauge = Gauge::default()
-            .block(Block::default().title("Rest").borders(Borders::NONE))
             .gauge_style(Style::default().fg(rest_color))
             .label(format!("💤 {rest_percent}%"))
             .percent(rest_percent);
@@ -505,44 +600,29 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         frame.render_widget(hunger_gauge, needs_layout[0]);
         frame.render_widget(rest_gauge, needs_layout[2]);
 
-        // Morale row
+        // Row 2: Morale
         let morale = needs.morale();
         let morale_percent = (morale * 100.0) as u16;
-        let morale_color = if morale < 0.3 {
-            Color::Red
-        } else if morale < 0.7 {
-            Color::Yellow
-        } else {
-            Color::Green
-        };
-        frame.render_widget(
-            Paragraph::new(Line::from(vec![
-                Span::raw("Morale: "),
-                Span::styled(
-                    format!("{morale_percent}%"),
-                    Style::default().fg(morale_color),
-                ),
-            ])),
-            rows[1],
-        );
+        let morale_color = if morale < 0.3 { Color::Red } else if morale < 0.7 { Color::Yellow } else { Color::Green };
 
-        // Bio-Comp row
+        let morale_gauge = Gauge::default()
+            .gauge_style(Style::default().fg(morale_color))
+            .label(format!("😃 Morale: {morale_percent}%"))
+            .percent(morale_percent);
+
+        frame.render_widget(morale_gauge, rows[1]);
+
+        // Row 3: Bio-Comp
         if let Some(bio) = world.get::<Biocompatibility>(entity) {
             let bio_percent = (bio.value * 100.0) as u16;
-            let bio_color = if bio.value < 0.4 {
-                Color::Red
-            } else if bio.value < 0.7 {
-                Color::Yellow
-            } else {
-                Color::Green
-            };
-            frame.render_widget(
-                Paragraph::new(Line::from(vec![
-                    Span::raw("Bio-Comp: "),
-                    Span::styled(format!("{bio_percent}%"), Style::default().fg(bio_color)),
-                ])),
-                rows[2],
-            );
+            let bio_color = if bio.value < 0.4 { Color::Red } else if bio.value < 0.7 { Color::Yellow } else { Color::Green };
+
+            let bio_gauge = Gauge::default()
+                .gauge_style(Style::default().fg(bio_color))
+                .label(format!("🧬 Bio-Comp: {bio_percent}%"))
+                .percent(bio_percent);
+
+            frame.render_widget(bio_gauge, rows[2]);
         }
     } else if let Some(housing) = world.get::<Housing>(entity) {
         render_housing_details(frame, details_area, housing);
@@ -580,33 +660,56 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         );
     }
 
-    // 7. Machine Spirit
-    if let Some(spirit) = world.get::<MachineSpirit>(entity) {
-        render_machine_spirit(frame, layout[7], spirit);
+    // 7. Diagnostics (Spirit + Quirk)
+    if show_diagnostics {
+        let diag_area = layout[7];
+        let block = Block::default()
+            .title(" Diagnostics ")
+            .borders(Borders::ALL)
+            .border_type(BorderType::Rounded)
+            .border_style(Style::default().fg(Color::Yellow));
+
+        let inner = block.inner(diag_area);
+        frame.render_widget(block, diag_area);
+
+        let constraints = if has_spirit && has_quirk {
+            vec![Constraint::Length(1), Constraint::Length(1)]
+        } else {
+            vec![Constraint::Length(1)]
+        };
+
+        let chunks = Layout::default()
+            .direction(Direction::Vertical)
+            .constraints(constraints)
+            .split(inner);
+
+        let mut current_chunk = 0;
+        if let Some(spirit) = world.get::<MachineSpirit>(entity) {
+            render_machine_spirit(frame, chunks[current_chunk], spirit);
+            current_chunk += 1;
+        }
+        if let Some(quirk) = world.get::<Quirk>(entity) {
+            render_quirk(frame, chunks[current_chunk], quirk);
+        }
     }
 
-    // 8. Quirk
-    if let Some(quirk) = world.get::<Quirk>(entity) {
-        render_quirk(frame, layout[8], quirk);
-    }
-
-    // 9. Personality
+    // 8. Personality
     if let Some(weights) = world.get::<UtilityWeights>(entity) {
-        render_personality(frame, layout[9], *weights);
+        render_personality(frame, layout[8], *weights);
     }
 
-    // 10. Last Dream
+    // 9. Last Dream
     if let Some(journal) = world.get::<DreamJournal>(entity) {
-        render_dream_journal(frame, layout[10], journal);
+        render_dream_journal(frame, layout[9], journal);
     }
 
-    // 11. Dietary History
+    // 10. Dietary History
     if let Some(history) = world.get::<DietaryHistory>(entity) {
-        render_dietary_history(frame, layout[11], history);
+        render_dietary_history(frame, layout[10], history);
     }
 
-    // 12. Biography
-    let bottom_area = layout[12];
+    // 11. Biography
+    let bottom_area = layout[11];
     let bio_opt = world.get::<Biography>(entity);
 
     if let Some(bio) = bio_opt {
@@ -949,8 +1052,7 @@ mod tests {
 
         // Check pop name appears instead of generic "Colonist"
         assert!(full_text.contains("Ada"));
-        assert!(full_text.contains("Hunger"));
-        assert!(full_text.contains("Rest"));
+        assert!(full_text.contains("Bio-Monitor"));
     }
 
     #[test]
