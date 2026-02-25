@@ -8,7 +8,9 @@
 
 use crate::layer1::admin::Office;
 use crate::layer1::building::{Building, BuildingType, ShiftSchedule};
+use crate::layer1::day_night::TimeOfDay;
 use crate::layer1::designation::{Designation, DesignationType};
+use crate::layer1::energy::PowerConsumer;
 use crate::layer1::farm::Farm;
 use crate::layer1::fauna::Fauna;
 use crate::layer1::flora::Flora;
@@ -31,6 +33,49 @@ use crate::layer1::utility_eval_types::{
 use crate::layer1::utility_types::UtilityConfig;
 use bevy_ecs::prelude::*;
 use std::collections::HashSet;
+
+// --- Helpers ---
+
+fn is_active_shift(schedule: Option<&ShiftSchedule>, time: TimeOfDay) -> bool {
+    schedule.map(|s| s.is_active(time)).unwrap_or(true)
+}
+
+fn is_powered(power: Option<&PowerConsumer>) -> bool {
+    power.map(|p| p.active).unwrap_or(true)
+}
+
+fn is_at_capacity(current: usize, max: usize) -> bool {
+    current >= max
+}
+
+fn extend_simple<T: Component>(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
+    buffer.extend(
+        world
+            .query_filtered::<(Entity, &GridPosition), With<T>>()
+            .iter(world)
+            .map(|(e, pos)| ScorableCandidate::new(e, *pos)),
+    );
+}
+
+fn populate_simple<T: Component>(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
+    buffer.clear();
+    extend_simple::<T>(world, buffer);
+}
+
+fn populate_building_type(
+    world: &mut World,
+    buffer: &mut Vec<ScorableCandidate>,
+    b_type: BuildingType,
+) {
+    buffer.clear();
+    buffer.extend(
+        world
+            .query::<(Entity, &GridPosition, &Building)>()
+            .iter(world)
+            .filter(|(_, _, b)| b.building_type == b_type)
+            .map(|(e, pos, _)| ScorableCandidate::new(e, *pos)),
+    );
+}
 
 /// Populates the `UtilityAIBuffer` with all candidate entities from the world.
 ///
@@ -71,62 +116,61 @@ fn populate_farms(
     cycle: &crate::layer1::day_night::DayNightCycle,
 ) {
     buffer.clear();
-    let mut farm_query = world.query::<(
-        Entity,
-        &GridPosition,
-        &Farm,
-        Option<&ShiftSchedule>,
-        Option<&crate::layer1::energy::PowerConsumer>,
-    )>();
-    for (entity, pos, farm, schedule, power) in farm_query.iter(world) {
-        if schedule.is_some_and(|s| !s.is_active(cycle.time_of_day)) {
-            continue;
-        }
-        if power.is_some_and(|p| !p.active) {
-            continue;
-        }
-        if farm.workers.len() >= farm.capacity {
-            continue;
-        }
-        buffer.push(ScorableCandidate::with_capacity(
-            entity,
-            *pos,
-            farm.capacity,
-            farm.workers.len(),
-        ));
-    }
+    buffer.extend(
+        world
+            .query::<(
+                Entity,
+                &GridPosition,
+                &Farm,
+                Option<&ShiftSchedule>,
+                Option<&PowerConsumer>,
+            )>()
+            .iter(world)
+            .filter(|(_, _, farm, schedule, power)| {
+                is_active_shift(*schedule, cycle.time_of_day)
+                    && is_powered(*power)
+                    && !is_at_capacity(farm.workers.len(), farm.capacity)
+            })
+            .map(|(entity, pos, farm, _, _)| {
+                ScorableCandidate::with_capacity(entity, *pos, farm.capacity, farm.workers.len())
+            }),
+    );
 }
 
 fn populate_housing(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
     buffer.clear();
-    let mut housing_query = world.query::<(Entity, &GridPosition, &Housing)>();
-    for (entity, pos, housing) in housing_query.iter(world) {
-        if housing.residents.len() >= housing.capacity {
-            continue;
-        }
-        buffer.push(ScorableCandidate::with_capacity(
-            entity,
-            *pos,
-            housing.capacity,
-            housing.residents.len(),
-        ));
-    }
+    buffer.extend(
+        world
+            .query::<(Entity, &GridPosition, &Housing)>()
+            .iter(world)
+            .filter(|(_, _, housing)| !is_at_capacity(housing.residents.len(), housing.capacity))
+            .map(|(entity, pos, housing)| {
+                ScorableCandidate::with_capacity(
+                    entity,
+                    *pos,
+                    housing.capacity,
+                    housing.residents.len(),
+                )
+            }),
+    );
 }
 
 fn populate_taverns(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
     buffer.clear();
-    let mut tavern_query = world.query::<(Entity, &GridPosition, &Tavern)>();
-    for (entity, pos, tavern) in tavern_query.iter(world) {
-        if tavern.visitors.len() >= tavern.capacity {
-            continue;
-        }
-        buffer.push(ScorableCandidate::with_capacity(
-            entity,
-            *pos,
-            tavern.capacity,
-            tavern.visitors.len(),
-        ));
-    }
+    buffer.extend(
+        world
+            .query::<(Entity, &GridPosition, &Tavern)>()
+            .iter(world)
+            .filter(|(_, _, tavern)| !is_at_capacity(tavern.visitors.len(), tavern.capacity))
+            .map(|(entity, pos, tavern)| {
+                ScorableCandidate::with_capacity(
+                    entity,
+                    *pos,
+                    tavern.capacity,
+                    tavern.visitors.len(),
+                )
+            }),
+    );
 }
 
 fn populate_libraries(
@@ -135,14 +179,13 @@ fn populate_libraries(
     cycle: &crate::layer1::day_night::DayNightCycle,
 ) {
     buffer.clear();
-    let mut library_query =
-        world.query::<(Entity, &GridPosition, &Library, Option<&ShiftSchedule>)>();
-    for (entity, pos, _library, schedule) in library_query.iter(world) {
-        if schedule.is_some_and(|s| !s.is_active(cycle.time_of_day)) {
-            continue;
-        }
-        buffer.push(ScorableCandidate::with_capacity(entity, *pos, 5, 0));
-    }
+    buffer.extend(
+        world
+            .query::<(Entity, &GridPosition, &Library, Option<&ShiftSchedule>)>()
+            .iter(world)
+            .filter(|(_, _, _, schedule)| is_active_shift(*schedule, cycle.time_of_day))
+            .map(|(entity, pos, _, _)| ScorableCandidate::with_capacity(entity, *pos, 5, 0)),
+    );
 }
 
 fn populate_refining(
@@ -151,48 +194,44 @@ fn populate_refining(
     context: &WorldContext,
 ) {
     buffer.clear();
-    let mut refine_query = world.query::<(
-        Entity,
-        &GridPosition,
-        &Building,
-        &RefiningProgress,
-        Option<&ShiftSchedule>,
-        Option<&crate::layer1::energy::PowerConsumer>,
-    )>();
-    for (entity, pos, building, progress, schedule, power) in refine_query.iter(world) {
-        if schedule.is_some_and(|s| !s.is_active(context.cycle.time_of_day)) {
-            continue;
-        }
-        if power.is_some_and(|p| !p.active) {
-            continue;
-        }
-
-        // Check recipe affordability (Global check)
-        let (can_afford, _, _, _) = get_refining_recipe(building.building_type, context.resources);
-        if !can_afford {
-            continue;
-        }
-
-        let mut candidate = ScorableCandidate::new(entity, *pos);
-        candidate.score_bonus = if progress.current > 0.0 { 0.1 } else { 0.0 };
-        buffer.push(candidate);
-    }
+    buffer.extend(
+        world
+            .query::<(
+                Entity,
+                &GridPosition,
+                &Building,
+                &RefiningProgress,
+                Option<&ShiftSchedule>,
+                Option<&PowerConsumer>,
+            )>()
+            .iter(world)
+            .filter(|(_, _, building, _, schedule, power)| {
+                is_active_shift(*schedule, context.cycle.time_of_day)
+                    && is_powered(*power)
+                    && get_refining_recipe(building.building_type, context.resources).0
+            })
+            .map(|(entity, pos, _, progress, _, _)| {
+                let mut candidate = ScorableCandidate::new(entity, *pos);
+                candidate.score_bonus = if progress.current > 0.0 { 0.1 } else { 0.0 };
+                candidate
+            }),
+    );
 }
 
 fn populate_hospitals(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
     buffer.clear();
-    let mut hospital_query = world.query::<(
-        Entity,
-        &GridPosition,
-        &Hospital,
-        Option<&crate::layer1::energy::PowerConsumer>,
-    )>();
-    for (entity, pos, _, power) in hospital_query.iter(world) {
-        if power.is_some_and(|p| !p.active) {
-            continue;
-        }
-        buffer.push(ScorableCandidate::with_capacity(entity, *pos, 10, 0));
-    }
+    buffer.extend(
+        world
+            .query::<(
+                Entity,
+                &GridPosition,
+                &Hospital,
+                Option<&PowerConsumer>,
+            )>()
+            .iter(world)
+            .filter(|(_, _, _, power)| is_powered(*power))
+            .map(|(entity, pos, _, _)| ScorableCandidate::with_capacity(entity, *pos, 10, 0)),
+    );
 }
 
 fn populate_offices(
@@ -201,32 +240,27 @@ fn populate_offices(
     cycle: &crate::layer1::day_night::DayNightCycle,
 ) {
     buffer.clear();
-    let mut office_query =
-        world.query::<(Entity, &GridPosition, &Office, Option<&ShiftSchedule>)>();
-    for (entity, pos, office, schedule) in office_query.iter(world) {
-        if schedule.is_some_and(|s| !s.is_active(cycle.time_of_day)) {
-            continue;
-        }
-        if office.workers.len() >= office.capacity {
-            continue;
-        }
-        buffer.push(ScorableCandidate::with_capacity(
-            entity,
-            *pos,
-            office.capacity,
-            office.workers.len(),
-        ));
-    }
+    buffer.extend(
+        world
+            .query::<(Entity, &GridPosition, &Office, Option<&ShiftSchedule>)>()
+            .iter(world)
+            .filter(|(_, _, office, schedule)| {
+                is_active_shift(*schedule, cycle.time_of_day)
+                    && !is_at_capacity(office.workers.len(), office.capacity)
+            })
+            .map(|(entity, pos, office, _)| {
+                ScorableCandidate::with_capacity(
+                    entity,
+                    *pos,
+                    office.capacity,
+                    office.workers.len(),
+                )
+            }),
+    );
 }
 
 fn populate_showers(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
-    buffer.clear();
-    let mut query = world.query::<(Entity, &GridPosition, &Building)>();
-    for (entity, pos, building) in query.iter(world) {
-        if building.building_type == BuildingType::Shower {
-            buffer.push(ScorableCandidate::with_capacity(entity, *pos, 1, 0));
-        }
-    }
+    populate_building_type(world, buffer, BuildingType::Shower);
 }
 
 fn populate_buffer_designations(world: &mut World, buffer: &mut UtilityAIBuffer) {
@@ -236,22 +270,11 @@ fn populate_buffer_designations(world: &mut World, buffer: &mut UtilityAIBuffer)
     buffer.tame_designations.clear();
     let mut des_query = world.query::<(Entity, &GridPosition, &Designation)>();
     for (entity, pos, des) in des_query.iter(world) {
+        let candidate = ScorableCandidate::new(entity, *pos);
         match des.designation_type {
-            DesignationType::Repair => {
-                buffer
-                    .repair_designations
-                    .push(ScorableCandidate::new(entity, *pos));
-            }
-            DesignationType::Tame => {
-                buffer
-                    .tame_designations
-                    .push(ScorableCandidate::new(entity, *pos));
-            }
-            _ => {
-                buffer
-                    .work_designations
-                    .push(ScorableCandidate::new(entity, *pos));
-            }
+            DesignationType::Repair => buffer.repair_designations.push(candidate),
+            DesignationType::Tame => buffer.tame_designations.push(candidate),
+            _ => buffer.work_designations.push(candidate),
         }
     }
 }
@@ -273,21 +296,21 @@ fn populate_buffer_items_and_misc(world: &mut World, buffer: &mut UtilityAIBuffe
 }
 
 fn populate_stockpiles(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
-    buffer.clear();
-    let mut stock_query = world.query::<(Entity, &GridPosition, &Stockpile)>();
-    for (entity, pos, _) in stock_query.iter(world) {
-        buffer.push(ScorableCandidate::new(entity, *pos));
-    }
+    populate_simple::<Stockpile>(world, buffer);
 }
 
 fn populate_items(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
     buffer.clear();
-    let mut item_query = world.query::<(Entity, &GridPosition, &ResourceItem)>();
-    for (entity, pos, item) in item_query.iter(world) {
-        let mut candidate = ScorableCandidate::new(entity, *pos);
-        candidate.resource_type = Some(item.resource_type);
-        buffer.push(candidate);
-    }
+    buffer.extend(
+        world
+            .query::<(Entity, &GridPosition, &ResourceItem)>()
+            .iter(world)
+            .map(|(entity, pos, item)| {
+                let mut c = ScorableCandidate::new(entity, *pos);
+                c.resource_type = Some(item.resource_type);
+                c
+            }),
+    );
 }
 
 /// Populates loose items (Tools, Clothing, etc.), filtering out those already in stockpiles.
@@ -301,97 +324,73 @@ fn populate_generic_items(
     buffer: &mut Vec<ScorableCandidate>,
 ) {
     buffer.clear();
-    let mut item_entity_query = world.query::<(Entity, &GridPosition, &Item)>();
-    for (entity, pos, item) in item_entity_query.iter(world) {
-        // Optimization: Don't haul items that are already at a stockpile
-        if stockpiles.contains(pos) {
-            continue;
-        }
-
-        let mut candidate = ScorableCandidate::new(entity, *pos);
-        candidate.item_type = Some(item.item_type.clone());
-        buffer.push(candidate);
-    }
+    buffer.extend(
+        world
+            .query::<(Entity, &GridPosition, &Item)>()
+            .iter(world)
+            .filter(|(_, pos, _)| !stockpiles.contains(pos))
+            .map(|(entity, pos, item)| {
+                let mut c = ScorableCandidate::new(entity, *pos);
+                c.item_type = Some(item.item_type.clone());
+                c
+            }),
+    );
 }
 
 fn populate_anomalies(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
-    buffer.clear();
-    let mut anomaly_query = world.query::<(Entity, &GridPosition, &Anomaly)>();
-    for (entity, pos, _) in anomaly_query.iter(world) {
-        buffer.push(ScorableCandidate::new(entity, *pos));
-    }
+    populate_simple::<Anomaly>(world, buffer);
 }
 
 fn populate_corpses(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
-    buffer.clear();
-    let mut corpse_query = world.query::<(Entity, &GridPosition, &Corpse)>();
-    for (entity, pos, _) in corpse_query.iter(world) {
-        buffer.push(ScorableCandidate::new(entity, *pos));
-    }
+    populate_simple::<Corpse>(world, buffer);
 }
 
 fn populate_graves(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
     buffer.clear();
-    let mut grave_query = world.query::<(Entity, &GridPosition, &Grave)>();
-    for (entity, pos, grave) in grave_query.iter(world) {
-        if !grave.occupied {
-            buffer.push(ScorableCandidate::new(entity, *pos));
-        }
-    }
+    buffer.extend(
+        world
+            .query::<(Entity, &GridPosition, &Grave)>()
+            .iter(world)
+            .filter(|(_, _, grave)| !grave.occupied)
+            .map(|(entity, pos, _)| ScorableCandidate::new(entity, *pos)),
+    );
 }
 
 fn populate_repair_structures(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
     buffer.clear();
-    let mut struct_query =
-        world.query::<(Entity, &GridPosition, &Structure, Option<&DeferMaintenance>)>();
-    for (entity, pos, structure, defer) in struct_query.iter(world) {
-        if defer.is_some() {
-            continue;
-        }
-        if (structure.current_hp - structure.max_hp).abs() < f32::EPSILON {
-            continue;
-        }
-
-        buffer.push(ScorableCandidate::new(entity, *pos));
-    }
+    buffer.extend(
+        world
+            .query::<(
+                Entity,
+                &GridPosition,
+                &Structure,
+                Option<&DeferMaintenance>,
+            )>()
+            .iter(world)
+            .filter(|(_, _, structure, defer)| {
+                defer.is_none()
+                    && (structure.current_hp - structure.max_hp).abs() >= f32::EPSILON
+            })
+            .map(|(entity, pos, _, _)| ScorableCandidate::new(entity, *pos)),
+    );
 }
 
 fn populate_wanted_criminals(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
-    buffer.clear();
-    let mut wanted_query = world.query::<(Entity, &GridPosition, &Wanted)>();
-    for (entity, pos, _) in wanted_query.iter(world) {
-        buffer.push(ScorableCandidate::new(entity, *pos));
-    }
+    populate_simple::<Wanted>(world, buffer);
 }
 
 fn populate_walls(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
-    buffer.clear();
-    let mut query = world.query::<(Entity, &GridPosition, &Building)>();
-    for (entity, pos, building) in query.iter(world) {
-        if building.building_type == BuildingType::Wall {
-            buffer.push(ScorableCandidate::new(entity, *pos));
-        }
-    }
+    populate_building_type(world, buffer, BuildingType::Wall);
 }
 
 fn populate_enemies(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
     buffer.clear();
-    let mut fauna_query = world.query::<(Entity, &GridPosition, &Fauna)>();
-    for (entity, pos, _) in fauna_query.iter(world) {
-        buffer.push(ScorableCandidate::new(entity, *pos));
-    }
-    let mut flora_query = world.query::<(Entity, &GridPosition, &Flora)>();
-    for (entity, pos, _) in flora_query.iter(world) {
-        buffer.push(ScorableCandidate::new(entity, *pos));
-    }
+    extend_simple::<Fauna>(world, buffer);
+    extend_simple::<Flora>(world, buffer);
 }
 
 fn populate_all_structures(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
-    buffer.clear();
-    let mut query = world.query::<(Entity, &GridPosition, &Structure)>();
-    for (entity, pos, _) in query.iter(world) {
-        buffer.push(ScorableCandidate::new(entity, *pos));
-    }
+    populate_simple::<Structure>(world, buffer);
 }
 
 /// Collects data for all Pops that need to be evaluated this tick.
@@ -556,9 +555,11 @@ mod tests {
         let cycle = DayNightCycle::default();
 
         // Full Farm
-        let mut full_farm = Farm::default();
-        full_farm.capacity = 1;
-        full_farm.workers.push(Entity::from_raw(123)); // Mock worker
+        let full_farm = Farm {
+            capacity: 1,
+            workers: vec![Entity::from_raw(123)],
+            ..Default::default()
+        };
 
         world.spawn((full_farm, GridPosition { x: 0, y: 0 }));
 
@@ -618,7 +619,10 @@ mod tests {
         assert!(buffer.is_empty(), "Should filter out unaffordable recipe");
 
         // Now afford
-        resources.wood = 1.0;
+        let resources = ColonyResources {
+            wood: 1.0,
+            ..Default::default()
+        };
         let context_valid = WorldContext {
             resources: &resources,
             cycle: &cycle,
@@ -641,8 +645,10 @@ mod tests {
         use crate::layer1::zone::ZoneGrid;
 
         let mut world = World::new();
-        let mut resources = ColonyResources::default();
-        resources.wood = 1.0;
+        let resources = ColonyResources {
+            wood: 1.0,
+            ..Default::default()
+        };
 
         let cycle = DayNightCycle {
             time_of_day: TimeOfDay::Night,
@@ -689,8 +695,10 @@ mod tests {
         use crate::layer1::zone::ZoneGrid;
 
         let mut world = World::new();
-        let mut resources = ColonyResources::default();
-        resources.wood = 1.0;
+        let resources = ColonyResources {
+            wood: 1.0,
+            ..Default::default()
+        };
 
         let cycle = DayNightCycle::default();
         let taboo = TabooState::default();
@@ -730,9 +738,11 @@ mod tests {
         let mut world = World::new();
 
         // Full Housing
-        let mut housing = Housing::default();
-        housing.capacity = 1;
-        housing.residents.push(Entity::from_raw(123)); // Occupied
+        let housing = Housing {
+            capacity: 1,
+            residents: vec![Entity::from_raw(123)],
+            ..Default::default()
+        };
 
         world.spawn((housing, GridPosition { x: 0, y: 0 }));
 
