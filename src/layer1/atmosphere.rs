@@ -160,7 +160,8 @@ impl AtmosphereGrid {
         0.0
     }
 
-    /// Set pollution level at (x, y). Clamped between 0.0 and `f32::MAX`.
+    /// Set pollution level at (x, y). Clamped between 0.0 and `1_000_000.0`.
+    /// Also sanitizes NaN and Infinity to prevent logic errors.
     #[allow(clippy::cast_sign_loss, clippy::collapsible_if)]
     pub fn set(&mut self, x: i32, y: i32, value: f32) {
         if x < 0 || y < 0 {
@@ -173,7 +174,15 @@ impl AtmosphereGrid {
         }
         if let Some(idx) = uy.checked_mul(self.width).and_then(|i| i.checked_add(ux)) {
             if idx < self.values.len() {
-                self.values[idx] = value.max(0.0);
+                // Sanitize input: NaN -> 0.0, Inf -> Max, Negative -> 0.0
+                let safe_value = if value.is_finite() {
+                    value.clamp(0.0, 1_000_000.0)
+                } else if value.is_infinite() && value.is_sign_positive() {
+                    1_000_000.0
+                } else {
+                    0.0
+                };
+                self.values[idx] = safe_value;
             }
         }
     }
