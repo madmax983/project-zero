@@ -6,6 +6,7 @@ use crate::layer1::factions::{FactionMember, FactionState, Factions};
 use crate::layer1::inventory::{Inventory, InventoryItem};
 use crate::layer1::items::{CarryingItem, Item, ItemType};
 use crate::layer1::permit::PermitRequired;
+use crate::layer1::recycling::Recycler;
 use crate::layer1::resources::{Carrying, ColonyResources, ResourceItem};
 use crate::layer1::stockpile::Stockpile;
 use crate::layer1::utility_ai::{ActionType, PopAction, manhattan_distance};
@@ -351,8 +352,37 @@ fn handle_drop_off_item(
     item_entity: CarryingItem,
     pos: GridPosition,
 ) {
-    // Drop item at position
-    world.entity_mut(item_entity.0).insert(pos);
+    // Check if we are dropping off at a container (Inventory)
+    // Find entity at pos with Inventory (Recycler, etc)
+    let container = {
+        let mut query = world.query::<(Entity, &GridPosition, &mut Inventory)>();
+        let mut target = None;
+        for (e, p, _) in query.iter(world) {
+            if *p == pos {
+                target = Some(e);
+                break;
+            }
+        }
+        target
+    };
+
+    if let Some(container_entity) = container {
+        // Convert Item Entity to InventoryItem struct
+        if let Some(item) = world.get::<Item>(item_entity.0) {
+            let inv_item = InventoryItem {
+                item_type: item.item_type.clone(),
+            };
+            if let Some(mut inv) = world.get_mut::<Inventory>(container_entity) {
+                inv.add(inv_item);
+            }
+        }
+        // Despawn the carried item entity as it is now inside the inventory
+        world.despawn(item_entity.0);
+    } else {
+        // Drop item on ground
+        world.entity_mut(item_entity.0).insert(pos);
+    }
+
     world.entity_mut(pop_entity).remove::<CarryingItem>();
 
     // Clear movement
@@ -366,29 +396,50 @@ fn find_and_target_stockpile_item(
     world: &mut World,
     pop_entity: Entity,
     pos: GridPosition,
-    _carrying_item: CarryingItem,
+    carrying_item: CarryingItem,
 ) {
     let is_drone = world.get::<Drone>(pop_entity).is_some();
 
-    let mut query = world.query::<(Entity, &GridPosition, &Stockpile)>();
-    let zone_grid = world.get_resource::<ZoneGrid>();
+    // Check item type
+    let item_type = world.get::<Item>(carrying_item.0).map(|i| i.item_type.clone());
+
+    // Strategy: Determine target based on ItemType
+    // Waste -> Recycler
+    // Default -> Stockpile
 
     let mut best = None;
     let mut min_dist = i32::MAX;
 
-    for (e, p, _) in query.iter(world) {
-        if is_drone {
-            if let Some(grid) = zone_grid {
-                if grid.get(p.x, p.y) == ZoneType::Sanctuary {
-                    continue;
-                }
+    if matches!(item_type, Some(ItemType::Waste)) {
+        let mut query = world.query::<(Entity, &GridPosition, &Recycler)>();
+        for (e, p, _) in query.iter(world) {
+            let dist = manhattan_distance(&pos, p);
+            if dist < min_dist {
+                min_dist = dist;
+                best = Some((e, *p));
             }
         }
+    }
 
-        let dist = manhattan_distance(&pos, p);
-        if dist < min_dist {
-            min_dist = dist;
-            best = Some((e, *p));
+    // Fallback to Stockpile if no specific target found (or generic item)
+    if best.is_none() {
+        let mut query = world.query::<(Entity, &GridPosition, &Stockpile)>();
+        let zone_grid = world.get_resource::<ZoneGrid>();
+
+        for (e, p, _) in query.iter(world) {
+            if is_drone {
+                if let Some(grid) = zone_grid {
+                    if grid.get(p.x, p.y) == ZoneType::Sanctuary {
+                        continue;
+                    }
+                }
+            }
+
+            let dist = manhattan_distance(&pos, p);
+            if dist < min_dist {
+                min_dist = dist;
+                best = Some((e, *p));
+            }
         }
     }
 
