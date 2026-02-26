@@ -2416,3 +2416,114 @@
 **Usage:**
 - "The city is a heat-trap."
 - "Can't breathe in this heat-trap."
+
+## Pneumatics
+
+### the veins
+**Replaces:** pneumatic tubes
+**Code reference:** `PneumaticTube`
+**Usage:**
+- "Sending it through the veins."
+- "The veins are clogged."
+
+### capsule
+**Replaces:** pneumatic carrier
+**Code reference:** `TubeCarrier`
+**Usage:**
+- "Load the capsule."
+- "Capsule arriving."
+
+### thump
+**Replaces:** arrival sound
+**Usage:**
+- "Waiting for the thump."
+
+---
+
+## Keystone Species
+
+### pillar-beast
+**Replaces:** keystone species
+**Code reference:** `Keystone` component
+**Usage:**
+- "Do not hunt the pillar-beast."
+- "If the pillar-beast dies, the forest dies."
+
+### anchor-life
+**Replaces:** dependent species ecosystem
+**Usage:**
+- "The anchor-life is fading."
+
+---
+
+## Gene Banks
+
+### seed-vault
+**Replaces:** gene bank building
+**Code reference:** `GeneBank`
+**Usage:**
+- "Stored in the seed-vault."
+- "The seed-vault is our future."
+
+### blood-library
+**Replaces:** DNA storage
+**Usage:**
+- "Reading the blood-library."
+- "A withdrawal from the blood-library."
+
+---
+
+## Paperwork
+
+### the Stack
+**Replaces:** bureaucracy / pending forms
+**Code reference:** `Paperwork`
+**Usage:**
+- "Buried under the Stack."
+- "Add it to the Stack."
+
+### red-tape
+**Replaces:** bureaucratic delay
+**Usage:**
+- "Cut through the red-tape."
+- "Drowning in red-tape."
+
+### hard-copy
+**Replaces:** physical form item
+**Code reference:** `Form` item
+**Usage:**
+- "I need a hard-copy of that order."
+
+---
+
+## Volatile Resources
+
+### angry-rock
+**Replaces:** volatile ore
+**Code reference:** `Volatile` component
+**Usage:**
+- "Mining angry-rock."
+- "Don't drop the angry-rock."
+
+### boom-dust
+**Replaces:** explosive powder/residue
+**Usage:**
+- "Covered in boom-dust."
+
+---
+
+## Corrosive Atmosphere
+
+### the Burn
+**Replaces:** corrosion effect
+**Code reference:** `Corrosion`
+**Usage:**
+- " The Burn took the antenna."
+- "Shielded against the Burn."
+
+### sky-acid
+**Replaces:** corrosive rain/atmosphere
+**Code reference:** `CorrosiveAtmosphere`
+**Usage:**
+- "Sky-acid is falling."
+- "Don't breathe the sky-acid."
