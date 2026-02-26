@@ -102,6 +102,9 @@ pub mod social;
 /// Hygiene action logic.
 pub mod shower;
 
+/// The Hum action logic.
+pub mod hum;
+
 /// Mental break action logic.
 pub mod mental_break;
 

@@ -56,6 +56,8 @@ pub enum Trait {
     Mutant,
     /// Highly empathetic and prone to guilt.
     Compassionate,
+    /// Sensitive to The Hum (Spec 238).
+    Sensitive,
 }
 
 impl Trait {
@@ -87,6 +89,7 @@ impl Trait {
             Self::Outsider => "Outsider",
             Self::Mutant => "Mutant",
             Self::Compassionate => "Compassionate",
+            Self::Sensitive => "Sensitive",
         }
     }
 }
