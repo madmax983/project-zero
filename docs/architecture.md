@@ -11,6 +11,7 @@ title Component Diagram - SCALE System Architecture
 Container(Main, "Main Entry", "Rust/Crossterm", "Initializes World, runs Game Loop")
 
 Container_Boundary(Simulation, "Simulation Core (Layer 1)") {
+    Component(SystemOrchestrator, "System Orchestrator", "layer1/systems/*", "Registers & Orders Systems")
     Component(UtilityOrchestrator, "Utility Orchestrator", "utility_ai.rs", "Coordinates Decision Cycle")
     Component(GPU, "GPU Compute", "gpu/evaluate.rs", "Parallel Scoring")
     Component(Actions, "Action Modules", "layer1/actions/*.rs", "Generic Actions")
@@ -49,7 +50,8 @@ Container_Boundary(UI, "UI Layer") {
 }
 
 Rel(Main, Shared, "Uses")
-Rel(Main, UtilityOrchestrator, "Runs Systems")
+Rel(Main, SystemOrchestrator, "Registers Systems")
+Rel(SystemOrchestrator, UtilityOrchestrator, "Schedules")
 Rel(UtilityOrchestrator, GPU, "Dispatches Work")
 Rel(Main, MapRender, "Calls Render")
 
@@ -112,6 +114,50 @@ graph LR
 ## The Game Loop
 
 SCALE uses a hybrid architecture: `bevy_ecs` for logic and `ratatui` for rendering, managed by a custom loop.
+
+### Layer 1 Execution Flow
+
+The simulation frame is divided into strict phases using `Layer1SystemSet` to ensure causality (e.g., Production happens before Consumption).
+
+```mermaid
+sequenceDiagram
+    participant Main
+    participant Schedule
+
+    rect rgb(30, 30, 30)
+        note right of Main: Layer 1 Frame Start
+        Main->>Schedule: Layer1SystemSet::EventCleanup
+        Schedule->>Schedule: clear_events, handle_input
+    end
+
+    rect rgb(40, 40, 50)
+        note right of Main: Execution Phase
+        Main->>Schedule: Layer1SystemSet::Execution
+        Schedule->>Schedule: movement, work, pathfinding
+    end
+
+    rect rgb(50, 50, 40)
+        note right of Main: Simulation Phase
+        Main->>Schedule: Layer1SystemSet::Economy
+        Schedule->>Schedule: production, resources
+
+        par Environment & Consumption
+            Main->>Schedule: Layer1SystemSet::Environment
+            Schedule->>Schedule: weather, fire, decay
+        and
+            Main->>Schedule: Layer1SystemSet::Consumption
+            Schedule->>Schedule: needs, spoilage, death
+        end
+    end
+
+    rect rgb(40, 30, 40)
+        note right of Main: Observation Phase
+        Main->>Schedule: Layer1SystemSet::Observation
+        Schedule->>Schedule: history, social, dreams
+    end
+```
+
+### Frame Sequence
 
 ```mermaid
 sequenceDiagram
@@ -361,3 +407,4 @@ Rel(Shared, Events, "Consumes")
 - [ADR 027: Job System Simplification](./adr/027-job-system-simplification.md)
 - [ADR 028: Seismic System Split](./adr/028-seismic-system-split.md)
 - [ADR 029: Refactor Logistics into Submodules](./adr/029-refactor-logistics-into-submodules.md)
+- [ADR 030: Layer 1 System Architecture Refactor](./adr/030-layer-1-system-architecture.md)
