@@ -51,3 +51,11 @@
 **Defense:**
 - Hardened `AtmosphereGrid::set` to clamp values to `1_000_000.0` and ensure they are finite. This implicitly hardens `add` and `set_gas` as well.
 - Verified with regression test `tests/security_atmosphere_nan.rs` (which tests `INFINITY` injection).
+
+## 2024-05-30 - Spatial Distance Logic Overflow
+**Threat:** Integer overflow in manual Manhattan/Chebyshev distance calculations (e.g. `(x1-x2).abs()`) allowed logic errors and potential DoS when entities were placed at extreme coordinates (e.g., `i32::MAX` vs `i32::MIN`).
+**Defense:**
+- Implemented `GridPosition::distance_manhattan` returning `u64` to prevent sum overflow.
+- Implemented `GridPosition::direction_to` using `cmp` to avoid subtraction overflow.
+- Refactored `handle_explosion_system`, `check_stability`, `movement_system`, `trend_spread_system`, `pheromone_emission_system`, and `art_observation_system` to use safe `distance_chebyshev` or `distance_manhattan` methods.
+- Verified with `tests/security_explosion_overflow.rs`.

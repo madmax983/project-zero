@@ -326,7 +326,7 @@ pub(crate) fn check_work_adjacency(
         return false;
     }
 
-    let distance = (current_pos.x - target_pos.x).abs() + (current_pos.y - target_pos.y).abs();
+    let distance = current_pos.distance_manhattan(target_pos);
     distance == 1
 }
 
@@ -431,8 +431,7 @@ pub(crate) fn calculate_next_positions(
     target: GridPosition,
 ) -> (Option<GridPosition>, Option<GridPosition>) {
     // Calculate movement direction (Manhattan)
-    let dx = (target.x - current.x).signum();
-    let dy = (target.y - current.y).signum();
+    let (dx, dy) = current.direction_to(target);
 
     let move_x = if dx != 0 {
         Some(GridPosition {

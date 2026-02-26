@@ -75,7 +75,7 @@ pub fn trend_spread_system(
         }
 
         // Manhattan distance check
-        let dist = (pos.x - trend.setter_pos.x).abs() + (pos.y - trend.setter_pos.y).abs();
+        let dist = pos.distance_manhattan(trend.setter_pos);
 
         // If near the trend source (let's say 20 tiles is "gossip range")
         if dist < 20 {

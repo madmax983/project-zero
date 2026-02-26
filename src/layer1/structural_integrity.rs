@@ -99,7 +99,8 @@ pub fn check_stability(world: &mut World, pos: GridPosition) -> bool {
     for y in min_y..=max_y {
         for x in min_x..=max_x {
             // Chebyshev Distance <= 5
-            if (x - pos.x).abs().max((y - pos.y).abs()) > MAX_SUPPORT_DIST {
+            let check_pos = GridPosition { x, y };
+            if check_pos.distance_chebyshev(pos) > MAX_SUPPORT_DIST as u32 {
                 continue;
             }
 
@@ -114,7 +115,7 @@ pub fn check_stability(world: &mut World, pos: GridPosition) -> bool {
     // Optimization: Add spatial index for buildings if needed later.
     let mut query = world.query::<(&Building, &GridPosition)>();
     for (building, b_pos) in query.iter(world) {
-        if (b_pos.x - pos.x).abs().max((b_pos.y - pos.y).abs()) <= MAX_SUPPORT_DIST
+        if b_pos.distance_chebyshev(pos) <= MAX_SUPPORT_DIST as u32
             && matches!(building.building_type, BuildingType::Wall)
         {
             return true;

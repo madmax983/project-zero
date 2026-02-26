@@ -63,19 +63,14 @@ pub fn handle_explosion_system(
     for event in events.read() {
         // Damage Structures
         for (pos, mut structure) in &mut structures {
-            let dx = (event.center.x - pos.x).abs();
-            let dy = (event.center.y - pos.y).abs();
-            // dx and dy are abs(), so they are non-negative.
-            if (dx.max(dy) as u32) <= event.radius {
+            if event.center.distance_chebyshev(*pos) <= event.radius {
                 structure.current_hp -= event.damage;
             }
         }
 
         // Damage Living Entities (Pops, Fauna, etc.)
         for (pos, mut health) in &mut healths {
-            let dx = (event.center.x - pos.x).abs();
-            let dy = (event.center.y - pos.y).abs();
-            if (dx.max(dy) as u32) <= event.radius {
+            if event.center.distance_chebyshev(*pos) <= event.radius {
                 health.take_damage(event.damage);
             }
         }

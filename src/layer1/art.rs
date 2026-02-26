@@ -52,11 +52,7 @@ pub fn art_observation_system(
     for (pop_pos, mut memories) in &mut pop_query {
         for (art_pos, _) in &art_query {
             // Chebyshev distance
-            let dx = (pop_pos.x - art_pos.x).abs();
-            let dy = (pop_pos.y - art_pos.y).abs();
-
-            // Range: 2 tiles
-            if dx <= 2 && dy <= 2 {
+            if pop_pos.distance_chebyshev(*art_pos) <= 2 {
                 // Check if already has memory to avoid spamming
                 let has_memory = memories
                     .items

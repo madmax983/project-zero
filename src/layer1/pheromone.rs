@@ -65,13 +65,8 @@ pub fn pheromone_emission_system(
 
         // Apply to Pops in range
         for (pop_pos, mut morale) in &mut pops {
-            let dx = (emitter_pos.x - pop_pos.x).abs();
-            let dy = (emitter_pos.y - pop_pos.y).abs();
-
             // Chebyshev distance check
-            if dx <= i32::try_from(emitter.radius).unwrap_or(0)
-                && dy <= i32::try_from(emitter.radius).unwrap_or(0)
-            {
+            if emitter_pos.distance_chebyshev(*pop_pos) <= emitter.radius {
                 morale.add_modifier(MoodModifier {
                     label: emitter.effect.label.clone(),
                     value: emitter.effect.value,
