@@ -6170,7 +6170,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Campaign Season
+## Campaign Season [SPECCED]
 
 **Layer:** 1
 
