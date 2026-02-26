@@ -6295,3 +6295,101 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Free Market (Profit) vs. Economic Weaponization (War).
 
 ---
+
+## Biometric Drift
+
+**Layer:** 1
+
+**Fantasy:** The machine remembers who you *were*, not who you *are*. The veteran is a stranger to his own home.
+
+**Mechanic:** Pops' biometric data (used for locks/terminals) degrades as they Age or gain Scars/Trauma. Must be "Recalibrated" (Admin action). If ignored, they get "Access Denied" errors.
+
+**Emergence:** Your scarred war hero runs for the armory during a raid, but the door rejects him because his face doesn't match the file. He dies banging on the door.
+
+**Tension:** High security (Biometrics) vs. Maintenance (Drift).
+
+---
+
+## The "Empty" Room
+
+**Layer:** 1
+
+**Fantasy:** In a crowded station, space is the ultimate luxury. The silence of a cathedral.
+
+**Mechanic:** Designating a "Sanctuary" zone requires it to be *empty* (no furniture/machines). Pops visit to reduce Stress. If it becomes cluttered (even by a single item), the bonus vanishes.
+
+**Emergence:** Pops start leaving "offerings" (flowers, rocks) in the Sanctuary, accidentally ruining its feng shui. You have to be the janitor of the void.
+
+**Tension:** Utility (Storage/Housing) vs. Negative Space (Mental Health).
+
+---
+
+## Cultural Vandalism
+
+**Layer:** 1
+
+**Fantasy:** The streets speak back to the palace.
+
+**Mechanic:** High Unrest causes Pops to deface "Official" structures (Statues, Banners, Propaganda Screens). Defaced items invert their buffs (e.g., "Loyalty" banner becomes "Rebellion" symbol).
+
+**Emergence:** You build a massive statue of the Governor to boost morale. Rebels spray-paint it overnight. Now it's a rallying point for the mutiny.
+
+**Tension:** Projection of Power (Statues) vs. Vulnerability to Subversion.
+
+---
+
+## Quantum Twins
+
+**Layer:** 1
+
+**Fantasy:** Two souls linked across the void. "I felt that."
+
+**Mechanic:** Rare event/trait where two Pops become "Entangled". They share XP gain, Mood trends, and Damage. If one dies, the other suffers "Severance" (Catatonic state).
+
+**Emergence:** You keep one twin safe in the lab and send the other to war. The soldier takes a hit, and the scientist collapses in the middle of a delicate experiment, causing an explosion.
+
+**Tension:** Distribute the risk (separate them) or concentrate it (keep them together)?
+
+---
+
+## Sartorial Rebellion
+
+**Layer:** 1
+
+**Fantasy:** The uniform is the first casualty of war.
+
+**Mechanic:** Factions develop "Visual Signifiers" (e.g., rolled sleeves, backwards caps, specific colors). Pops modify their appearance to signal allegiance. Banning these mods increases Unrest but restores "Order".
+
+**Emergence:** You notice the engineers are all wearing red sashes. It's not a fashion statement; it's a strike warning.
+
+**Tension:** Discipline (Uniforms) vs. Expression (Morale/Intel).
+
+---
+
+## Acoustic Shadows
+
+**Layer:** 1
+
+**Fantasy:** In space, no one can hear you scream. Silence as a construction material.
+
+**Mechanic:** Vacuum tiles block all sound transmission. Building "Vacuum Gaps" between rooms creates perfect soundproofing (0 Noise), but requires Airlocks/Suits to cross.
+
+**Emergence:** You isolate the nursery with a vacuum moat. It's peaceful. Then the life support fails inside, and the alarms can't be heard outside.
+
+**Tension:** Comfort (Silence) vs. Safety (Communication/Access).
+
+---
+
+## The Lost Treaty
+
+**Layer:** 3
+
+**Fantasy:** Bureaucracy from the grave. A piece of paper that stops a fleet.
+
+**Mechanic:** You discover an ancient legal claim to a sector. Enforcing it gives you "Legitimacy" (Diplomacy buff) but angers the current occupants. Ignoring it looks weak.
+
+**Emergence:** You find a deed to the Warlord's home system. Do you evict him with a lawyer?
+
+**Tension:** Law (Legitimacy) vs. Reality (War).
+
+---
