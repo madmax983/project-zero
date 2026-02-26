@@ -140,6 +140,8 @@ pub enum ItemType {
     Corpse(Entity),
     /// A building permit document.
     BuildingPermit,
+    /// A crystal that decays in light.
+    ShadowCrystal,
 }
 
 impl ItemType {

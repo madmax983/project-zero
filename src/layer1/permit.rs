@@ -182,6 +182,7 @@ mod tests {
         let mut inventory = world.get_mut::<Inventory>(id).unwrap();
         inventory.add(InventoryItem {
             item_type: ItemType::BuildingPermit,
+            entity: None,
         });
 
         // Act
