@@ -180,3 +180,4 @@
 - [x] `234` The Visitor — `specs/234-the-visitor.md` — completed 2026-02-26
 - [x] `INT-015` Integration: Genetic Sample -> Gene Bank Logistics — completed 2026-03-27
 - [x] `240` Clone Vats — `specs/240-clone-vats.md` — completed 2026-02-26
+- [x] `246` Legacy Code — `specs/246-legacy-code.md` — completed 2026-02-26
