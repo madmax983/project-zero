@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
     use crate::layer1::GridPosition;
-    use crate::layer1::actions::repair::evaluate_repair;
+    use crate::layer1::actions::evaluate_simple_action;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::structure::{
         DeferMaintenance, Structure, calculate_malfunction_risk, entropy_system,
@@ -139,7 +139,7 @@ mod tests {
             proxies.push(ScorableCandidate::new(entity, *pos));
         }
 
-        let result = evaluate_repair(pop_pos, &weights, &designations, &proxies);
+        let result = evaluate_simple_action(pop_pos, &weights, &proxies, 0.6);
 
         assert!(result.is_some());
         assert_eq!(

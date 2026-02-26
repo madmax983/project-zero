@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use crate::layer1::actions::fetch_clothing::evaluate_fetch_clothing;
+    use crate::layer1::actions::evaluate_fetch_clothing;
     use crate::layer1::clothing::clothing_wear_system;
     use crate::layer1::health::Health;
     use crate::layer1::items::{Clothing, ClothingType, Equipment, Item};
@@ -228,7 +228,7 @@ mod tests {
     // 8. Handle Fetch Clothing (Upgrade Logic)
     #[test]
     fn test_handle_fetch_clothing_upgrades_to_parka() {
-        use crate::layer1::actions::fetch_clothing::handle_fetch_clothing;
+        use crate::layer1::execution::arrival::handle_fetch_clothing;
 
         let mut world = World::new();
         let mut resources = ColonyResources {

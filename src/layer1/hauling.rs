@@ -539,7 +539,7 @@ fn find_and_target_item(world: &mut World, pop_entity: Entity, pos: GridPosition
 #[cfg(test)]
 mod tests {
     use super::haul_system;
-    use crate::layer1::actions::haul::evaluate_haul;
+    use crate::layer1::actions::evaluate_haul;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::items::{CarryingItem, Item, ItemType};
     use crate::layer1::resources::{Carrying, ColonyResources, ResourceItem, ResourceType};

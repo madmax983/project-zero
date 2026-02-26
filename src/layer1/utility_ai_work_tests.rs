@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use crate::layer1::actions::work::evaluate_work;
+    use crate::layer1::actions::evaluate_simple_action;
     use crate::layer1::designation::{Designation, DesignationType};
     use crate::layer1::map::GridPosition;
     use crate::layer1::utility_ai::{ActionType, UtilityWeights};
@@ -35,7 +35,7 @@ mod tests {
             .map(|(e, p, _)| ScorableCandidate::new(e, *p))
             .collect();
 
-        let result = evaluate_work(pop_pos, &weights, &proxies);
+        let result = evaluate_simple_action(pop_pos, &weights, &proxies, 0.5);
 
         assert!(result.is_some());
         let (utility, target) = result.unwrap();
@@ -76,7 +76,7 @@ mod tests {
             .map(|(e, p, _)| ScorableCandidate::new(e, *p))
             .collect();
 
-        let (_, target) = evaluate_work(pop_pos, &weights, &proxies).unwrap();
+        let (_, target) = evaluate_simple_action(pop_pos, &weights, &proxies, 0.5).unwrap();
         assert_eq!(target, close);
     }
 
@@ -88,7 +88,7 @@ mod tests {
 
         let proxies: Vec<ScorableCandidate> = vec![];
 
-        let result = evaluate_work(pop_pos, &weights, &proxies);
+        let result = evaluate_simple_action(pop_pos, &weights, &proxies, 0.5);
         assert!(result.is_none());
     }
 
@@ -111,7 +111,7 @@ mod tests {
                 GridPosition { x: dist, y: 0 },
             )];
 
-            let (u, _) = evaluate_work(pop_pos, &weights, &proxies).unwrap();
+            let (u, _) = evaluate_simple_action(pop_pos, &weights, &proxies, 0.5).unwrap();
             let expected_u = 0.5 * expected_factor; // Base utility * factor
             assert!(
                 (u - expected_u).abs() < 0.01,
@@ -133,7 +133,7 @@ mod tests {
             GridPosition { x: 0, y: 0 },
         )];
 
-        let (u, _) = evaluate_work(pop_pos, &weights, &proxies).unwrap();
+        let (u, _) = evaluate_simple_action(pop_pos, &weights, &proxies, 0.5).unwrap();
         assert!(
             (u - 0.5).abs() < f32::EPSILON,
             "Base utility MUST be exactly 0.5 at distance 0 with neutral weights"

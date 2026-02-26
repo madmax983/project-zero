@@ -53,10 +53,7 @@ fn test_arrival_assigns_to_farm() {
     );
 
     let job = world.get::<Job>(pop);
-    assert!(job.is_some());
-    let job = job.unwrap();
-    assert_eq!(job.workplace, farm);
-    assert_eq!(job.job_type, AssignmentType::FarmWorker);
+    assert!(job.is_none(), "Eating should not assign a Job");
 }
 
 #[test]
