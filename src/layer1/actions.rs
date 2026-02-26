@@ -126,16 +126,34 @@ pub fn evaluate_haul(
     items: &[ScorableCandidate],
     item_entities: &[ScorableCandidate],
     stockpiles: &[ScorableCandidate],
+    gene_banks: &[ScorableCandidate],
     resources: &ColonyResources,
     carrying: Option<crate::layer1::resources::Carrying>,
     carrying_item: Option<Entity>,
+    carrying_item_type: Option<crate::layer1::items::ItemType>,
 ) -> Option<(f32, Entity)> {
-    // 1. Check if any stockpile exists
+    // 1. If carrying GeneticSample, target GeneBank
+    if carrying_item.is_some()
+        && matches!(
+            carrying_item_type,
+            Some(crate::layer1::items::ItemType::GeneticSample)
+        )
+    {
+        if !gene_banks.is_empty() {
+            return evaluate_candidates(pop_pos, weights, gene_banks, 0.95);
+        }
+        // If no gene banks, might fall through or fail.
+        // For now, let it fall through to stockpiles if any (though unlikely to accept it if filtering implemented)
+    }
+
+    // 2. Check if any stockpile exists (Standard Hauling)
     if stockpiles.is_empty() {
+        // If we are carrying something but no stockpile exists, and it wasn't a genetic sample for a gene bank,
+        // we are stuck.
         return None;
     }
 
-    // 2. If already carrying, go to stockpile (high priority)
+    // 3. If already carrying, go to stockpile (high priority)
     if carrying.is_some() || carrying_item.is_some() {
         return evaluate_candidates(pop_pos, weights, stockpiles, 0.9);
     }

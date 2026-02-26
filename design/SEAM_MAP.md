@@ -229,3 +229,13 @@
     - Updated `src/layer1/social/grievances.rs` to check for Sensitive trait and high stress.
     - Overrides generic grievance content with Hum-specific messages.
 - **Tests:** `tests/integration/hum_grievances.rs` (Integration test verified)
+
+### INT-015: Genetic Sample -> Gene Bank Logistics
+- **Date:** 2026-03-27
+- **Systems connected:** `collect_sample_action` (Gene Bank) -> `haul_system` (Logistics) -> `GeneBank` (Building)
+- **Glue added:**
+    - Updated `src/layer1/utility_eval_types.rs` to track `carrying_item_type`.
+    - Updated `src/layer1/utility_ai_population.rs` to populate `gene_banks` and `carrying_item_type`.
+    - Updated `evaluate_haul` in `src/layer1/actions.rs` to prioritize Gene Bank destinations for genetic samples.
+    - Updated `haul_system` in `src/layer1/hauling.rs` to detect Gene Bank targets and use `store_sample`.
+- **Tests:** `tests/integration/gene_bank_logistics.rs` (Integration test verified)
