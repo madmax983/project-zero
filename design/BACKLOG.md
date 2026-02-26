@@ -27,7 +27,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `234` The Visitor — `specs/234-the-visitor.md`
 - [ ] `236` The Direct Link — `specs/236-direct-link.md`
 - [ ] `237` Photophobic Resources — `specs/237-photophobic-resources.md`
-- [ ] `238` The Hum — `specs/238-the-hum.md`
 
 ## MVP — Layer 2: System Simulation
 

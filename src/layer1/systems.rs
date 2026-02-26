@@ -155,6 +155,7 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             crate::layer1::predictive_policing::pre_crime_execution_system
                 .after(combat_execution_system),
             crate::layer1::hygiene::shower_use_system.after(work_execution_system),
+            crate::layer1::hum::execute_listen_to_hum_system.after(arrival_handler_system),
         )
             .in_set(Layer1SystemSet::Execution),
     );
@@ -332,6 +333,7 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             crate::layer1::logistics::pneumatic::tube_clog_system,
             crate::layer1::ecology::biome_collapse_system,
             crate::layer1::social::grievances::decay_notes_system,
+            crate::layer1::hum::update_hum_system,
         )
             .in_set(Layer1SystemSet::Environment),
     );

@@ -655,3 +655,7 @@ pub mod kinetic_storage;
 /// Volatile Resources system (Spec 223).
 pub mod volatile;
 pub use kinetic_storage::*;
+
+/// The Hum system (Spec 238).
+pub mod hum;
+pub use hum::*;

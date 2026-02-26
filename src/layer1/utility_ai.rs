@@ -64,6 +64,7 @@ use crate::layer1::actions::fetch_tool::evaluate_fetch_tool;
 use crate::layer1::actions::fight::evaluate_drafted_behavior;
 use crate::layer1::actions::funeral::evaluate_bury_corpse;
 use crate::layer1::actions::haul::evaluate_haul;
+use crate::layer1::actions::hum::evaluate_listen_to_hum;
 use crate::layer1::actions::hunger::evaluate_satisfy_hunger;
 use crate::layer1::actions::medical::evaluate_seek_medical_care;
 use crate::layer1::actions::mental_break::evaluate_mental_break;
@@ -548,6 +549,7 @@ fn evaluate_group_exploration(
 fn evaluate_group_leisure(
     evaluator: &mut CandidateEvaluator,
     data: &PopEvalData,
+    buffer: &UtilityAIBuffer,
     context: &WorldContext,
 ) {
     if let Some(hobby_type) = data.hobby_type {
@@ -555,6 +557,17 @@ fn evaluate_group_leisure(
         let penalty =
             crate::layer1::taboo::evaluate_taboo_penalty(ActionType::Hobby, context.taboo);
         evaluator.consider(ActionType::Hobby, utility + penalty, None);
+    }
+
+    // Evaluate ListenToTheHum
+    let (_, score, target) = evaluate_listen_to_hum(data, buffer);
+    if let Some(target_entity) = target {
+        evaluator.evaluate_and_consider(
+            Some((score, target_entity)),
+            ActionType::ListenToTheHum,
+            context,
+            0.0,
+        );
     }
 }
 
@@ -590,7 +603,7 @@ pub(crate) fn evaluate_single_pop(
 
     evaluate_group_survival(&mut evaluator, data, buffer, context);
     evaluate_group_social(&mut evaluator, data, buffer, context);
-    evaluate_group_leisure(&mut evaluator, data, context);
+    evaluate_group_leisure(&mut evaluator, data, buffer, context);
     evaluate_group_work(&mut evaluator, data, buffer, context, is_striking);
     evaluate_group_logistics(&mut evaluator, data, buffer, context, is_striking);
     evaluate_group_exploration(&mut evaluator, data, buffer, context, is_striking);

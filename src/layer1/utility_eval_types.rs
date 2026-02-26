@@ -302,4 +302,6 @@ pub struct UtilityAIBuffer {
     pub all_structures: Vec<ScorableCandidate>,
     /// Buffer for shower candidates.
     pub showers: Vec<ScorableCandidate>,
+    /// Buffer for hum source candidates.
+    pub hum_sources: Vec<ScorableCandidate>,
 }

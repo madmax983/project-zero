@@ -17,6 +17,7 @@ use crate::layer1::fauna::Fauna;
 use crate::layer1::flora::Flora;
 use crate::layer1::funeral::{Corpse, Grave};
 use crate::layer1::housing::Housing;
+use crate::layer1::hum::HumSource;
 use crate::layer1::items::Item;
 use crate::layer1::justice::Wanted;
 use crate::layer1::map::GridPosition;
@@ -289,6 +290,21 @@ fn populate_buffer_items_and_misc(world: &mut World, buffer: &mut UtilityAIBuffe
     populate_graves(world, &mut buffer.graves);
     populate_repair_structures(world, &mut buffer.repair_structures);
     populate_wanted_criminals(world, &mut buffer.wanted_criminals);
+    populate_hum_sources(world, &mut buffer.hum_sources);
+}
+
+fn populate_hum_sources(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
+    buffer.clear();
+    buffer.extend(
+        world
+            .query::<(Entity, &GridPosition, &HumSource)>()
+            .iter(world)
+            .map(|(entity, pos, source)| {
+                let mut c = ScorableCandidate::new(entity, *pos);
+                c.score_bonus = source.intensity;
+                c
+            }),
+    );
 }
 
 fn populate_stockpiles(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
