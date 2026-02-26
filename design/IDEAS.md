@@ -1154,7 +1154,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Clone Vats
+## Clone Vats [SPECCED]
 
 **Layer:** 1
 
