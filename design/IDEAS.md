@@ -6239,3 +6239,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Soft Power (culture victory) vs. Hostage risk (your pops are there).
 
 ---
+
+## Holographic Facades
+
+**Layer:** 1
+
+**Fantasy:** Living in a concrete bunker that looks like a palace. The illusion of luxury.
+
+**Mechanic:** "Holo-Projectors" cover ugly walls/machinery with high-beauty illusions (Forests, Marble, Windows). Consumes Power. If Power fails, the illusion drops, causing massive "Disillusionment" mood shock.
+
+**Emergence:** You build a windowless, grim underground hab but project a "Beach" view. The reactor fails during a storm. The beach vanishes, revealing the dripping rock walls. Morale collapses instantly.
+
+**Tension:** Real luxury (expensive/permanent) vs. Fake luxury (cheap/fragile).
+
+---
+
+## Tectonic Stress
+
+**Layer:** 1
+
+**Fantasy:** The ground remembers every bomb you dropped.
+
+**Mechanic:** A global "Stress" meter for the crust. Mining, Explosions, and Heavy Industry increase it. It naturally dissipates slowly. If it hits 100%, a "Mega-Quake" occurs. Players can intentionally trigger small "Relief Quakes" to lower the meter safely.
+
+**Emergence:** The meter is at 90%. A raid starts. You want to use grenades, but that will trigger the Mega-Quake. You have to fight hand-to-hand to save the city.
+
+**Tension:** Controlled damage (Relief Quakes) vs. Uncontrolled catastrophe (The Big One).
+
+---
+
+## The Galactic Games
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Proving your civilization's superiority in the arena, not the battlefield.
+
+**Mechanic:** Periodic galactic event. Factions send "Champions" (Pops with high Physical/Skill stats) to compete. Winning grants Influence/Peace. Losing causes National Shame.
+
+**Emergence:** You train a "Super-Athlete" for years. Just before the games, he gets the "Flu". You send a random miner instead. He wins the "Rock Drilling" event, becoming a folk hero.
+
+**Tension:** Invest in non-productive athletes (Prestige) vs. Productive workers (Economy).
+
+---
+
+## Trade Embargoes
+
+**Layer:** 3
+
+**Fantasy:** Economic warfare. Starving the enemy without firing a shot.
+
+**Mechanic:** You can convince the Galactic Council (or use Influence) to "Embargo" a resource. That resource cannot be traded on the Galactic Market.
+
+**Emergence:** You have a monopoly on "Durasteel". You embargo it. Your enemy's fleet construction halts. They are forced to attack you to break the blockade.
+
+**Tension:** Free Market (Profit) vs. Economic Weaponization (War).
+
+---
