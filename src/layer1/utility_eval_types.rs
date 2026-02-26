@@ -87,6 +87,7 @@ impl PopEvalData {
             is_memetic_carrier: item.memetic_carrier.is_some(),
             health: item.health.copied(),
             insulation: 0.0,
+            carrying_item_type: None,
         }
     }
 }
@@ -110,6 +111,8 @@ pub struct PopEvalData {
     pub carrying: Option<Carrying>,
     /// Item currently carried by the pop (as a physical entity), if any.
     pub carrying_item: Option<Entity>,
+    /// The ItemType of the carried item, if any.
+    pub carrying_item_type: Option<ItemType>,
     /// Current mental state (e.g., Broken, Dazed), if any.
     pub mental_state: Option<MentalState>,
     /// Draft status (combat mode), if any.
@@ -304,4 +307,6 @@ pub struct UtilityAIBuffer {
     pub showers: Vec<ScorableCandidate>,
     /// Buffer for hum source candidates.
     pub hum_sources: Vec<ScorableCandidate>,
+    /// Buffer for Gene Banks.
+    pub gene_banks: Vec<ScorableCandidate>,
 }

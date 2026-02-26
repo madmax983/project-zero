@@ -16,6 +16,7 @@ use crate::layer1::farm::Farm;
 use crate::layer1::fauna::Fauna;
 use crate::layer1::flora::Flora;
 use crate::layer1::funeral::{Corpse, Grave};
+use crate::layer1::gene_bank::GeneBank;
 use crate::layer1::housing::Housing;
 use crate::layer1::hum::HumSource;
 use crate::layer1::items::Item;
@@ -110,6 +111,30 @@ fn populate_buffer_buildings(
     populate_hospitals(world, &mut buffer.hospitals);
     populate_offices(world, &mut buffer.offices, context.cycle);
     populate_showers(world, &mut buffer.showers);
+    populate_gene_banks(world, &mut buffer.gene_banks, context.cycle);
+}
+
+fn populate_gene_banks(
+    world: &mut World,
+    buffer: &mut Vec<ScorableCandidate>,
+    cycle: &crate::layer1::day_night::DayNightCycle,
+) {
+    buffer.clear();
+    buffer.extend(
+        world
+            .query::<(
+                Entity,
+                &GridPosition,
+                &GeneBank,
+                Option<&ShiftSchedule>,
+                Option<&PowerConsumer>,
+            )>()
+            .iter(world)
+            .filter(|(_, _, _, schedule, power)| {
+                is_active_shift(*schedule, cycle.time_of_day) && is_powered(*power)
+            })
+            .map(|(entity, pos, _, _, _)| ScorableCandidate::new(entity, *pos)),
+    );
 }
 
 fn populate_farms(
@@ -423,12 +448,21 @@ pub fn collect_pop_data(world: &mut World, buffer: &mut UtilityAIBuffer, config:
 
     // Populate Insulation from Clothing entities
     let mut clothing_query = world.query::<&crate::layer1::items::Clothing>();
+    // Populate Carrying Item Type
+    let mut item_query = world.query::<&crate::layer1::items::Item>();
+
     for data in &mut buffer.pop_data {
         if let Some(eq) = data.equipment
             && let Some(body_entity) = eq.body
             && let Ok(clothing) = clothing_query.get(world, body_entity)
         {
             data.insulation = clothing.insulation;
+        }
+
+        if let Some(item_entity) = data.carrying_item {
+            if let Ok(item) = item_query.get(world, item_entity) {
+                data.carrying_item_type = Some(item.item_type.clone());
+            }
         }
     }
 }

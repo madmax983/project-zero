@@ -1,4 +1,5 @@
 #![allow(clippy::collapsible_if)]
+use crate::layer1::gene_bank::GeneBank;
 use crate::layer1::GridPosition;
 use crate::layer1::drone::Drone;
 use crate::layer1::execution::{AtTarget, MovementTarget};
@@ -353,6 +354,39 @@ fn handle_drop_off_item(
     item_entity: CarryingItem,
     pos: GridPosition,
 ) {
+    // Check for GeneBank Dropoff
+    let gene_bank_target = {
+        let mut query = world.query::<(Entity, &GridPosition, &mut GeneBank)>();
+        let mut target = None;
+        for (e, p, _) in query.iter_mut(world) {
+            if *p == pos {
+                target = Some(e);
+                break;
+            }
+        }
+        target
+    };
+
+    if let Some(gene_bank_entity) = gene_bank_target {
+        // We are at a Gene Bank.
+        // Check if we have GeneticSample
+        if let Some(sample) = world.get::<crate::layer1::gene_bank::GeneticSample>(item_entity.0) {
+            let data = sample.data.clone();
+            // Store it
+            if let Some(mut bank) = world.get_mut::<GeneBank>(gene_bank_entity) {
+                bank.store_sample(data);
+            }
+            // Despawn Item
+            world.despawn(item_entity.0);
+            world.entity_mut(pop_entity).remove::<CarryingItem>();
+            world
+                .entity_mut(pop_entity)
+                .remove::<AtTarget>()
+                .remove::<MovementTarget>();
+            return;
+        }
+    }
+
     // Check if we are dropping off at a container (Inventory)
     // Find entity at pos with Inventory (Recycler, etc)
     let container = {
@@ -445,6 +479,15 @@ fn find_and_target_stockpile_item(
 
     if matches!(item_type, Some(ItemType::Waste)) {
         let mut query = world.query::<(Entity, &GridPosition, &Recycler)>();
+        for (e, p, _) in query.iter(world) {
+            let dist = manhattan_distance(&pos, p);
+            if dist < min_dist {
+                min_dist = dist;
+                best = Some((e, *p));
+            }
+        }
+    } else if matches!(item_type, Some(ItemType::GeneticSample)) {
+        let mut query = world.query::<(Entity, &GridPosition, &GeneBank)>();
         for (e, p, _) in query.iter(world) {
             let dist = manhattan_distance(&pos, p);
             if dist < min_dist {
@@ -644,7 +687,9 @@ mod tests {
             &items,
             &[],
             &stockpiles,
+            &[],
             resources,
+            None,
             None,
             None,
         );
@@ -708,7 +753,9 @@ mod tests {
             &items,
             &[],
             &stockpiles,
+            &[],
             resources,
+            None,
             None,
             None,
         );
@@ -850,7 +897,9 @@ mod tests {
             &[],
             &item_entities,
             &stockpiles,
+            &[],
             &resources,
+            None,
             None,
             None,
         );

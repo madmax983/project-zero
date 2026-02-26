@@ -132,3 +132,6 @@ mod volatile_health;
 
 #[path = "integration/hum_grievances.rs"]
 mod hum_grievances;
+
+#[path = "integration/gene_bank_logistics.rs"]
+mod gene_bank_logistics;
