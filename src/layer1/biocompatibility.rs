@@ -52,7 +52,8 @@ pub fn biocompatibility_system(world: &mut World) {
 
             // Check threshold
             // Tolerance buffer: damage only if hazard significantly exceeds bio
-            if hazard_level > effective_bio {
+            // Ensure hazard is non-trivial (> EPSILON) to prevent damage in clean air for negative bio
+            if hazard_level > f32::EPSILON && hazard_level > effective_bio {
                 let delta = hazard_level - effective_bio;
                 let damage = delta * 5.0; // Scaling factor
                 damages.push((entity, damage));
@@ -168,5 +169,35 @@ mod tests {
 
         let health = world.get::<Health>(pop).unwrap();
         assert_eq!(health.current, 100.0, "NativeBorn should resist hazard");
+    }
+
+    #[test]
+    fn test_weak_immunity_safe_in_clean_air() {
+        let mut world = World::new();
+        // Setup clean atmosphere (default 0.0)
+        let grid = AtmosphereGrid::new(10, 10);
+        world.insert_resource(grid);
+
+        // Spawn Pop with very low base bio (0.1) and WeakImmunity (-0.2).
+        // Net effective bio = -0.1.
+        let pop = world
+            .spawn((
+                Pop,
+                Biocompatibility { value: 0.1 },
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                },
+                GridPosition { x: 0, y: 0 },
+                Traits(HashSet::from([Trait::WeakImmunity])),
+            ))
+            .id();
+
+        // Run system
+        biocompatibility_system(&mut world);
+
+        // Assert: No damage should be taken in clean air, even with negative immunity.
+        let health = world.get::<Health>(pop).unwrap();
+        assert_eq!(health.current, 100.0, "Should be safe in clean air");
     }
 }
