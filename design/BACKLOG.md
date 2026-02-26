@@ -41,6 +41,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `226` Ship Personalities — `specs/226-ship-personalities.md`
 - [ ] `229` Station Keeping — `specs/229-station-keeping.md`
 - [ ] `230` Zero-G Industry — `specs/230-zero-g-industry.md`
+- [ ] `243` Thermal Bloom — `specs/243-thermal-bloom.md`
 
 ## MVP — Layer 3: Galaxy Simulation
 
