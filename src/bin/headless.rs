@@ -31,6 +31,8 @@ use scale::layer1::biography::Biography;
 use scale::layer1::dreams::Dream;
 use scale::layer1::pop::PopName;
 use scale::layer1::tech::{Tech, TechState, TechStatus, unlock_tech};
+use scale::layer1::unrest::Unrest;
+use scale::layer1::volatile::Volatile;
 use scale::layer1::{
     BuildingType, Chronicle, ColonyResources, Designation, DesignationType, EventImportance, Farm,
     GlobalWind, GridPosition, Housing, Morale, MovementTarget, Needs, OccupiedTiles, Pop,
@@ -202,6 +204,8 @@ fn handle_command(world: &mut World, input: &str) -> bool {
         "chronicle" | "c" | "history" => print_chronicle(world),
         "log" | "l" => print_log(world),
         "tech" | "research_status" => print_tech(world),
+        "unrest" | "u" => print_unrest(world),
+        "volatiles" | "v" => print_volatiles(world),
         "research" | "r" => {
             if parts.len() < 2 {
                 println!("Usage: research <tech_name>");
@@ -1290,6 +1294,8 @@ fn print_help() {
                     "research_status",
                     "Show technology status and capacity",
                 ),
+                ("unrest", "u", "Show social unrest and modifiers"),
+                ("volatiles", "v", "Show volatile items stability"),
             ],
         ),
         (
@@ -1333,6 +1339,107 @@ fn print_help() {
     }
 
     println!("{table}");
+}
+
+fn print_unrest(world: &mut World) {
+    if let Some(unrest) = world.get_resource::<Unrest>() {
+        println!("{}", "=== SOCIAL UNREST ===".green().bold());
+
+        let level_str = format!("{:.0}%", unrest.level * 100.0);
+        let level_colored = if unrest.level < 0.3 {
+            level_str.green()
+        } else if unrest.level < 0.7 {
+            level_str.yellow()
+        } else {
+            level_str.red()
+        };
+
+        println!("Global Unrest Level: {}", level_colored);
+
+        if unrest.modifiers.is_empty() {
+            println!("  (No active modifiers)");
+        } else {
+            let mut table = Table::new();
+            table.load_preset(UTF8_FULL);
+            table.set_header(vec![
+                Cell::new("Modifier").add_attribute(Attribute::Bold),
+                Cell::new("Duration (Ticks)").add_attribute(Attribute::Bold),
+            ]);
+
+            for modifier in &unrest.modifiers {
+                let val_str = if modifier.value > 0.0 {
+                    format!("+{}", modifier.value)
+                } else {
+                    format!("{}", modifier.value)
+                };
+
+                // Positive unrest is bad (Red), Negative is good (Green)
+                let color = if modifier.value > 0.0 {
+                    Color::Red
+                } else {
+                    Color::Green
+                };
+
+                table.add_row(vec![
+                    Cell::new(val_str).fg(color),
+                    Cell::new(modifier.duration.to_string()),
+                ]);
+            }
+            println!("{table}");
+        }
+    } else {
+        println!("Unrest system not initialized.");
+    }
+}
+
+fn print_volatiles(world: &mut World) {
+    println!("{}", "=== VOLATILE RESOURCES ===".green().bold());
+
+    let mut table = Table::new();
+    table.load_preset(UTF8_FULL);
+    table.set_header(vec![
+        Cell::new("ID").add_attribute(Attribute::Bold),
+        Cell::new("Pos").add_attribute(Attribute::Bold),
+        Cell::new("Stability").add_attribute(Attribute::Bold),
+        Cell::new("Decay").add_attribute(Attribute::Bold),
+        Cell::new("Status").add_attribute(Attribute::Bold),
+    ]);
+
+    let mut count = 0;
+    for (entity, volatile, pos) in world
+        .query::<(Entity, &Volatile, &GridPosition)>()
+        .iter(world)
+    {
+        let stability_color = if volatile.stability < 20.0 {
+            Color::Red
+        } else if volatile.stability < 50.0 {
+            Color::Yellow
+        } else {
+            Color::Green
+        };
+
+        let status = if volatile.paused { "PAUSED" } else { "ACTIVE" };
+        let status_color = if volatile.paused {
+            Color::Cyan
+        } else {
+            Color::White
+        };
+
+        table.add_row(vec![
+            Cell::new(entity.index().to_string()),
+            Cell::new(format!("{},{}", pos.x, pos.y)),
+            Cell::new(format!("{:.1}", volatile.stability)).fg(stability_color),
+            Cell::new(format!("{:.2}/tick", volatile.decay_rate)),
+            Cell::new(status).fg(status_color),
+        ]);
+        count += 1;
+    }
+
+    if count == 0 {
+        println!("  (No volatile items found)");
+    } else {
+        println!("{table}");
+    }
 }
 
 #[cfg(test)]

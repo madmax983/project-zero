@@ -5,7 +5,9 @@ mod tests {
     };
     use crate::layer1::health::{Dead, Health};
     use crate::layer1::map::GridPosition;
+    use crate::layer1::notifications::{NotificationQueue, NotificationSeverity};
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
+    use crate::shared::time::SimulationTime;
     use bevy_ecs::prelude::*;
 
     #[test]
@@ -82,6 +84,8 @@ mod tests {
             height: 10,
             tiles,
         });
+        world.insert_resource(NotificationQueue::default());
+        world.insert_resource(SimulationTime::default());
 
         let keystone = world
             .spawn((
@@ -110,6 +114,54 @@ mod tests {
         // Verify terrain changed to fallback (Dirt)
         let terrain = world.resource::<TerrainGrid>();
         assert_eq!(terrain.get(5, 5).unwrap(), TerrainType::Dirt);
+    }
+
+    #[test]
+    fn test_keystone_death_notification() {
+        let mut world = World::new();
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        });
+        world.insert_resource(NotificationQueue::default());
+        world.insert_resource(SimulationTime {
+            tick: 123,
+            ..Default::default()
+        });
+
+        let keystone = world
+            .spawn((
+                Species {
+                    name: "Sacred Oak".to_string(),
+                    is_keystone: true,
+                },
+                BiomeAnchor {
+                    radius: 0,
+                    target_terrain: TerrainType::Tree,
+                    fallback_terrain: TerrainType::Dirt,
+                },
+                GridPosition { x: 5, y: 5 },
+                Health::default(),
+            ))
+            .id();
+
+        // Kill keystone
+        world.entity_mut(keystone).insert(Dead);
+
+        // Run system
+        let mut schedule = Schedule::default();
+        schedule.add_systems(handle_keystone_death);
+        schedule.run(&mut world);
+
+        // Verify notification
+        let queue = world.resource::<NotificationQueue>();
+        assert!(!queue.active.is_empty(), "Should have notification");
+        let notification = &queue.active[0];
+        assert!(notification.text.contains("Sacred Oak"));
+        assert!(notification.text.contains("Biome Collapse"));
+        assert_eq!(notification.severity, NotificationSeverity::Error);
+        assert_eq!(notification.created_at, 123);
     }
 
     #[test]

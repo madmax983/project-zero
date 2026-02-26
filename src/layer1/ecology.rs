@@ -21,7 +21,9 @@
 //! probabilistic updates. This creates organic, patchy growth patterns.
 
 use crate::layer1::map::GridPosition;
+use crate::layer1::notifications::{NotificationQueue, NotificationSeverity};
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
+use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 use rand::Rng;
 
@@ -224,17 +226,28 @@ pub struct BiomeAnchor {
 #[allow(clippy::type_complexity)]
 pub fn handle_keystone_death(
     query: Query<
-        (&GridPosition, &BiomeAnchor),
+        (&GridPosition, &BiomeAnchor, &Species),
         (With<Species>, Added<crate::layer1::health::Dead>),
     >,
     mut terrain: ResMut<TerrainGrid>,
+    mut notifications: ResMut<NotificationQueue>,
+    time: Res<SimulationTime>,
 ) {
-    for (pos, anchor) in query.iter() {
+    for (pos, anchor, species) in query.iter() {
         // Degrade terrain at position
         terrain.set(pos.x as usize, pos.y as usize, anchor.fallback_terrain);
 
         // MVP: Only affects the tile itself. Spec mentions radius but red test only checked the tile.
         // Future expansion: iterate radius.
+
+        // NOTIFY PLAYER (Mosaic Polish)
+        notifications.add_error(
+            format!(
+                "Biome Collapse: Keystone Species '{}' has died! Terrain degrading.",
+                species.name
+            ),
+            time.tick,
+        );
     }
 }
 
