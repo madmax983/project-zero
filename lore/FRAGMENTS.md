@@ -3409,3 +3409,147 @@ Adjectives for urban heat accumulation.
 - oven-hot
 - radiating
 - feverish
+
+## Pneumatic Fragments
+
+### [TUBE_SOUND]
+Sounds of the pneumatic system.
+
+- thwump
+- hiss
+- clatter
+- whoosh
+- rattle
+- pressurized-sigh
+- pneumatic-cough
+
+### [CLOG_REASON]
+Why the tube is jammed.
+
+- stuck cartridge
+- illegal item
+- vermin nest
+- pressure leak
+- frozen valve
+- overloaded canister
+- sabotage
+
+## Keystone Fragments
+
+### [KEYSTONE_NAME]
+Flavor names for keystone species.
+
+- pillar-beast
+- anchor-root
+- web-weaver
+- sun-drinker
+- deep-tiller
+- hive-queen
+- coral-king
+
+### [COLLAPSE_SIGN]
+Signs of ecosystem collapse.
+
+- silence in the woods
+- grey-wither
+- dust-bowl
+- starving predators
+- dry riverbeds
+- pest explosion
+- phantom forest
+
+## Gene Bank Fragments
+
+### [GENE_SAMPLE_TYPE]
+Types of genetic material.
+
+- frozen embryo
+- seed-packet
+- blood-vial
+- tissue-culture
+- spore-print
+- bone-marrow
+- DNA-helix
+
+### [PRESERVATION_METHOD]
+How the sample is stored.
+
+- cryo-frozen
+- amber-encased
+- digital-sequence
+- vacuum-sealed
+- salt-cured
+- liquid-nitrogen
+- time-locked
+
+## Paperwork Fragments
+
+### [FORM_TYPE]
+Names of bureaucratic forms.
+
+- Requisition 27B
+- Permit A-1
+- Death Certificate
+- Birth Record
+- Work Order
+- Transfer Request
+- Incident Report
+
+### [BUREAUCRATIC_ACTION]
+What happens to the form.
+
+- stamped
+- filed
+- lost
+- rejected
+- shredded
+- redacted
+- pending
+
+## Volatile Fragments
+
+### [VOLATILE_NAME]
+Flavor names for unstable resources.
+
+- angry-rock
+- boom-dust
+- unstable-isotope
+- fire-salt
+- plasma-gel
+- shock-crystal
+- void-fuel
+
+### [EXPLOSION_COLOR]
+Color of the blast.
+
+- blinding white
+- sick green
+- violet flash
+- searing orange
+- cold blue
+- dirty grey
+- invisible heat
+
+## Corrosion Fragments
+
+### [CORROSION_SOUND]
+Sound of acid eating metal.
+
+- hiss
+- sizzle
+- bubble
+- snap
+- groan
+- wet-crunch
+- melting-slurp
+
+### [MELTING_OBJECT]
+Things being destroyed by corrosion.
+
+- hull plating
+- airlock seal
+- support strut
+- visor glass
+- tool handle
+- exposed wiring
+- statue face

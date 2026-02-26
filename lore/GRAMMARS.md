@@ -2322,3 +2322,117 @@ HEAT_ISLAND_WARNING:
     - DISCOMFORT (high)
     - ENERGY_USE (high, cooling)
 ```
+
+## Pneumatic Chaining
+
+```yaml
+TUBE_JAM:
+  enables:
+    - LOGISTICS_JAM (high)
+    - WORK_STOPPAGE (medium)
+    - EXPLOSION_EVENT (low, if pressure builds)
+  increases:
+    - FRUSTRATION (high)
+    - EFFICIENCY_LOSS (high)
+```
+
+## Keystone Chaining
+
+```yaml
+KEYSTONE_DEATH:
+  enables:
+    - ECOSYSTEM_COLLAPSE (always)
+    - FAMINE (high)
+    - PREDATOR_ATTACK (medium, desperate animals)
+  increases:
+    - DESPAIR (high)
+    - RESOURCE_SCARCITY (high)
+
+ECOSYSTEM_COLLAPSE:
+  enables:
+    - MIGRATION (high, animals leave)
+    - DUST_BOWL (medium)
+  increases:
+    - SURVIVAL_DIFFICULTY (high)
+```
+
+## Gene Bank Chaining
+
+```yaml
+SAMPLE_DEGRADED:
+  enables:
+    - EXTINCTION_EVENT (high, if last sample)
+    - RESEARCH_SETBACK (medium)
+  increases:
+    - REGRET (medium)
+
+ANCIENT_DNA_FOUND:
+  enables:
+    - CLONING_PROJECT (high)
+    - MYSTERY_MEAL_COOKED (low, if edible)
+  increases:
+    - HOPE (high)
+    - SCIENCE_XP (high)
+```
+
+## Paperwork Chaining
+
+```yaml
+PAPERWORK_LOST:
+  enables:
+    - WORK_STOPPAGE (high)
+    - FORM_REJECTED (medium)
+    - UNREST (low)
+  increases:
+    - BUREAUCRACY (high)
+    - ANGER (medium)
+
+FORM_REJECTED:
+  enables:
+    - APPEAL_FILED (high)
+    - BRIBERY_ATTEMPT (medium)
+    - RAGE_QUIT (low)
+  increases:
+    - FRUSTRATION (high)
+```
+
+## Volatile Chaining
+
+```yaml
+VOLATILE_DECAY:
+  enables:
+    - EXPLOSION_EVENT (high, if unchecked)
+    - EVACUATION (medium)
+  increases:
+    - FEAR (high)
+    - URGENCY (high)
+
+EXPLOSION_EVENT:
+  enables:
+    - FIRE_OUTBREAK (always)
+    - INJURY_ACCIDENT (high)
+    - STRUCTURAL_COLLAPSE (medium)
+  increases:
+    - TRAUMA (high)
+    - DAMAGE (high)
+```
+
+## Corrosive Chaining
+
+```yaml
+ACID_RAIN_EVENT:
+  enables:
+    - STRUCTURAL_DISSOLUTION (high)
+    - CROP_FAILURE (medium)
+    - INDOOR_CONFINEMENT (high)
+  increases:
+    - MAINTENANCE_DEBT (high)
+    - FEAR_OF_OUTSIDE (medium)
+
+STRUCTURAL_DISSOLUTION:
+  enables:
+    - HULL_BREACH (medium)
+    - REPAINTING_TASK (high)
+  increases:
+    - EXPOSURE (medium)
+```

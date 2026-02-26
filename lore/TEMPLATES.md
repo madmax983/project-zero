@@ -2303,3 +2303,102 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "The city is [HEAT_ISLAND_DESCRIPTOR]. [YEAR]. Heat trapped in the streets."
 - "[YEAR]: Thermal warning. Urban core is [HEAT_ISLAND_DESCRIPTOR]."
 - "We are cooking ourselves. [HEAT_ISLAND_DESCRIPTOR] temperatures in [COLONY]. [YEAR]."
+
+## Pneumatic Templates (Spec 228)
+
+### TUBE_JAM
+**Slots:** [COLONY], [YEAR], [CLOG_REASON], [TUBE_SOUND]
+
+- "The system stops. [YEAR]. A [TUBE_SOUND] and then silence. [CLOG_REASON]."
+- "[YEAR]: Logistics halt. The tubes are blocked by [CLOG_REASON]."
+- "Pressure warning. [CLOG_REASON] detected in the line. Hear the [TUBE_SOUND]. [YEAR]."
+
+---
+
+## Keystone Templates (Spec 225)
+
+### KEYSTONE_DEATH
+**Slots:** [COLONY], [YEAR], [KEYSTONE_NAME], [COLLAPSE_SIGN]
+
+- "The [KEYSTONE_NAME] is dead. [YEAR]. Now we see [COLLAPSE_SIGN]."
+- "[YEAR]: Ecological failure. We lost the [KEYSTONE_NAME]. [COLLAPSE_SIGN] begins."
+- "A pillar falls. [KEYSTONE_NAME]. [YEAR]. The land shows [COLLAPSE_SIGN]."
+
+### ECOSYSTEM_COLLAPSE
+**Slots:** [COLONY], [YEAR], [COLLAPSE_SIGN]
+
+- "The web unravels. [YEAR]. [COLLAPSE_SIGN] everywhere."
+- "[YEAR]: Total failure. The biome is dying. [COLLAPSE_SIGN]."
+- "We broke the world. [COLLAPSE_SIGN]. [YEAR]."
+
+---
+
+## Gene Bank Templates (Spec 165)
+
+### SAMPLE_DEGRADED
+**Slots:** [COLONY], [YEAR], [GENE_SAMPLE_TYPE], [PRESERVATION_METHOD]
+
+- "Loss in the vault. [YEAR]. [GENE_SAMPLE_TYPE] ruined. It was [PRESERVATION_METHOD]."
+- "[YEAR]: Genetic drift. The [PRESERVATION_METHOD] [GENE_SAMPLE_TYPE] is viable no longer."
+- "Memory fades. [GENE_SAMPLE_TYPE] lost to time. [YEAR]."
+
+### ANCIENT_DNA_FOUND
+**Slots:** [COLONY], [YEAR], [GENE_SAMPLE_TYPE], [PRESERVATION_METHOD]
+
+- "Discovery. [YEAR]. [PRESERVATION_METHOD] [GENE_SAMPLE_TYPE] found."
+- "[YEAR]: A seed from the past. [GENE_SAMPLE_TYPE]. We can rebuild."
+- "Life finds a way. [GENE_SAMPLE_TYPE] recovered at [COLONY]. [YEAR]."
+
+---
+
+## Paperwork Templates (Spec 222)
+
+### PAPERWORK_LOST
+**Slots:** [COLONY], [YEAR], [FORM_TYPE], [BUREAUCRATIC_ACTION]
+
+- "Administration failure. [YEAR]. [FORM_TYPE] was [BUREAUCRATIC_ACTION]."
+- "[YEAR]: The work stops. We cannot find the [FORM_TYPE]. It is [BUREAUCRATIC_ACTION]."
+- "Red tape. [FORM_TYPE] [BUREAUCRATIC_ACTION]. Delays expected. [YEAR]."
+
+### FORM_REJECTED
+**Slots:** [COLONY], [YEAR], [FORM_TYPE], [NAME]
+
+- "[NAME]'s [FORM_TYPE] is denied. [YEAR]. Incorrect stamp."
+- "[YEAR]: Bureaucracy strikes. [NAME] failed to file the [FORM_TYPE]."
+- "Permission refused. [FORM_TYPE] required. [NAME] is frustrated. [YEAR]."
+
+---
+
+## Volatile Templates (Spec 223)
+
+### VOLATILE_DECAY
+**Slots:** [COLONY], [YEAR], [VOLATILE_NAME], [EXPLOSION_COLOR]
+
+- "The [VOLATILE_NAME] is sweating. [YEAR]. Glowing [EXPLOSION_COLOR]."
+- "[YEAR]: Stability critical. [VOLATILE_NAME] degrading."
+- "Danger. [VOLATILE_NAME] emits [EXPLOSION_COLOR] light. Run. [YEAR]."
+
+### EXPLOSION_EVENT
+**Slots:** [COLONY], [YEAR], [VOLATILE_NAME], [EXPLOSION_COLOR]
+
+- "Boom. [YEAR]. [VOLATILE_NAME] goes critical. A [EXPLOSION_COLOR] flash."
+- "[YEAR]: Detonation. The [VOLATILE_NAME] took the lab. [EXPLOSION_COLOR] smoke."
+- "We lost containment. [VOLATILE_NAME]. [EXPLOSION_COLOR] fire everywhere. [YEAR]."
+
+---
+
+## Corrosive Atmosphere Templates (Spec 227)
+
+### STRUCTURAL_DISSOLUTION
+**Slots:** [COLONY], [YEAR], [MELTING_OBJECT], [CORROSION_SOUND]
+
+- "The [MELTING_OBJECT] is gone. [YEAR]. Dissolved with a [CORROSION_SOUND]."
+- "[YEAR]: Acid rain damage. [MELTING_OBJECT] melted away."
+- "Structural integrity failing. [MELTING_OBJECT] eaten by the air. [CORROSION_SOUND]. [YEAR]."
+
+### ACID_RAIN_EVENT
+**Slots:** [COLONY], [YEAR], [CORROSION_SOUND]
+
+- "Sky burn. [YEAR]. The rain makes a [CORROSION_SOUND]."
+- "[YEAR]: Take cover. Acid storm. Everything sizzles."
+- "The clouds weep acid. [CORROSION_SOUND] on the roof. [YEAR]."
