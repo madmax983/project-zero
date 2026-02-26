@@ -6169,3 +6169,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Adaptation (Rebuilding around it) vs. Futile resistance.
 
 ---
+
+## Campaign Season
+
+**Layer:** 1
+
+**Fantasy:** The chaos of democracy. Elections are a disruption, not just a UI menu.
+
+**Mechanic:** Periodic elections for Colony Governor. Faction leaders run with specific "Campaign Promises" (e.g., "Build 10 Turrets", "Free Food"). The winner's promise becomes a mandatory "Quest". Failure to fulfill it causes massive Unrest or immediate impeachment.
+
+**Emergence:** The "Miners' Candidate" wins on a platform of "More Beer". You have to convert your fuel refinery into a brewery to meet the quota, grounding your fleet but keeping the peace.
+
+**Tension:** Support the competent candidate (boring) or the populist (dangerous promises)?
+
+---
+
+## Red Tape Defense
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Weaponizing bureaucracy against an empire.
+
+**Mechanic:** When a hostile Layer 3 faction demands tribute or inspection, you can use "Bureaucracy" (Admin resource) to stall them. You send them forms, cite obscure regulations, and delay their landing permissions.
+
+**Emergence:** An invasion fleet arrives. You invoke "Port Safety Protocol 99", forcing them to orbit for 3 weeks filling out paperwork. This buys you time to build the defense grid.
+
+**Tension:** Fight with guns (fast/bloody) or forms (slow/annoying)?
+
+---
+
+## Ghost Code
+
+**Layer:** 1
+
+**Fantasy:** Machines have souls, or at least memory leaks.
+
+**Mechanic:** Deconstructed buildings leave "Data Residue" on the tile. Rebuilding a different machine there might inherit "Ghost Behaviors" from the previous one.
+
+**Emergence:** You demolish a Turret to build a Medical Bay. The Med-Bay inherits "Targeting Protocols" and starts trying to "shoot" patients with syringes at 300 rounds per minute.
+
+**Tension:** Wipe the drive (slow) or build over it (risky)?
+
+---
+
+## Asteroid Hollowing
+
+**Layer:** 1
+
+**Fantasy:** Living inside the rock. The ultimate bunker.
+
+**Mechanic:** On Asteroid maps, you don't build *on* the surface; you mine *into* it. The asteroid shell provides massive Armor and Radiation shielding. However, mining too close to the edge weakens the "Hull Integrity".
+
+**Emergence:** You get greedy and mine a thin wall for gold. A stray meteor punches through the weakened shell, venting the atmosphere.
+
+**Tension:** Resources (mining the walls) vs. Safety (thick walls).
+
+---
+
+## Weaponized Tourism
+
+**Layer:** Cross-layer
+
+**Fantasy:** Killing them with kindness.
+
+**Mechanic:** You send your own "Tourist" pops to rival colonies. They pay well but are programmed to be "Difficult" (complain, break things, spread contrary Ethics). If the rival harms them, you get a Casus Belli.
+
+**Emergence:** You send a wave of "Food Critics" to a starving enemy colony. They eat the reserve rations and complain about the texture, causing a riot that topples the enemy government.
+
+**Tension:** Soft Power (culture victory) vs. Hostage risk (your pops are there).
+
+---
