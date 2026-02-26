@@ -1,4 +1,5 @@
 use crate::layer1::traits::{Trait, Traits};
+pub use crate::layer1::unrest::Unrest;
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
 
@@ -67,13 +68,6 @@ pub struct SocietyMember {
     pub society_id: String,
     /// Whether the player knows about this membership.
     pub known: bool,
-}
-
-/// Resource tracking global civil unrest.
-#[derive(Resource, Default, Debug)]
-pub struct Unrest {
-    /// Current unrest level (0.0+).
-    pub level: f32,
 }
 
 /// Event triggered when a Sheriff investigates a Pop.
