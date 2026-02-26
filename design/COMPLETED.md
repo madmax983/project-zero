@@ -171,6 +171,7 @@
 - [x] `165` Gene Banks — `specs/165-gene-banks.md` — completed 2026-06-25
 - [x] `222` Paperwork Physicality — `specs/222-paperwork-physicality.md` — completed 2026-06-25
 - [x] `235` Kinetic Storage — `specs/235-kinetic-storage.md` — completed 2026-02-01
+- [x] `236` The Direct Link — `specs/236-direct-link.md` — verified implemented
 - [x] `INT-013` Integration: Volatile Explosion -> Pop Health — completed 2026-02-26
 - [x] `233` Public Grievances — `specs/233-public-grievances.md` — completed 2026-02-26
 - [x] `238` The Hum — `specs/238-the-hum.md` — completed 2026-02-26
