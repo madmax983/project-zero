@@ -162,6 +162,7 @@ mod tests {
             equipment: None,
             carrying: None,
             carrying_item: None,
+            carrying_item_type: None, // Verified
             mental_state: None,
             drafted: None,
             faction_member: None,
@@ -209,6 +210,7 @@ mod tests {
             equipment: None,
             carrying: None,
             carrying_item: None,
+            carrying_item_type: None, // Verified
             mental_state: None,
             drafted: None,
             faction_member: None,
