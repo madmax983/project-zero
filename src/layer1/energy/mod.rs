@@ -237,7 +237,11 @@ pub fn power_grid_system(world: &mut World) {
 
         let kinetic_batteries: Vec<Entity> = grid_entities
             .iter()
-            .filter(|e| world.get::<crate::layer1::kinetic_storage::KineticBattery>(**e).is_some())
+            .filter(|e| {
+                world
+                    .get::<crate::layer1::kinetic_storage::KineticBattery>(**e)
+                    .is_some()
+            })
             .copied()
             .collect();
 
@@ -253,7 +257,9 @@ pub fn power_grid_system(world: &mut World) {
                     }
                 }
                 for bat_entity in &kinetic_batteries {
-                    if let Some(mut bat) = world.get_mut::<crate::layer1::kinetic_storage::KineticBattery>(*bat_entity) {
+                    if let Some(mut bat) =
+                        world.get_mut::<crate::layer1::kinetic_storage::KineticBattery>(*bat_entity)
+                    {
                         let input = charge_per_battery.min(bat.charge_rate);
                         // Efficiency loss on input
                         let stored = input * bat.efficiency;
@@ -281,7 +287,9 @@ pub fn power_grid_system(world: &mut World) {
             // Discharge kinetic batteries if needed
             if needed > 0.0 {
                 for bat_entity in &kinetic_batteries {
-                    if let Some(mut bat) = world.get_mut::<crate::layer1::kinetic_storage::KineticBattery>(*bat_entity) {
+                    if let Some(mut bat) =
+                        world.get_mut::<crate::layer1::kinetic_storage::KineticBattery>(*bat_entity)
+                    {
                         let available = bat.charge;
                         let discharge = needed.min(available).min(bat.charge_rate);
                         bat.charge -= discharge;

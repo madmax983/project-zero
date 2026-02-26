@@ -1,6 +1,6 @@
+use crate::layer1::health::Health;
 use crate::layer1::map::GridPosition;
 use crate::layer1::structure::Structure;
-use crate::layer1::health::Health;
 use bevy_ecs::prelude::*;
 
 /// Component representing a volatile item that degrades over time.

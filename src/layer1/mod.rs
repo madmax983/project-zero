@@ -639,10 +639,10 @@ pub use mother_lode::*;
 /// Organic Recycling system (Spec 221).
 pub mod recycling;
 pub use recycling::*;
-/// Permit system for advanced construction.
-pub mod permit;
 /// Direct Link (Possession) system (Spec 236).
 pub mod direct_link;
+/// Permit system for advanced construction.
+pub mod permit;
 pub use direct_link::*;
 
 /// Void Signals (Nova Feature).
@@ -650,8 +650,8 @@ pub use direct_link::*;
 pub mod void_signals;
 #[cfg(feature = "nova")]
 pub use void_signals::*;
-/// Volatile Resources system (Spec 223).
-pub mod volatile;
 /// Kinetic Storage system (Spec 235).
 pub mod kinetic_storage;
+/// Volatile Resources system (Spec 223).
+pub mod volatile;
 pub use kinetic_storage::*;

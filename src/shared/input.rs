@@ -36,10 +36,24 @@ pub enum InputContext {
 /// A Bevy-like KeyCode enum for input handling.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
 pub enum KeyCode {
-    W, A, S, D,
-    Q, E, R, F,
-    Up, Down, Left, Right,
-    Space, Esc, Return, Tab, Back, Delete,
+    W,
+    A,
+    S,
+    D,
+    Q,
+    E,
+    R,
+    F,
+    Up,
+    Down,
+    Left,
+    Right,
+    Space,
+    Esc,
+    Return,
+    Tab,
+    Back,
+    Delete,
     #[default]
     Unidentified,
 }

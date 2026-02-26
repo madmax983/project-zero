@@ -1,16 +1,16 @@
-use bevy_ecs::prelude::*;
-use crate::shared::input::{Input, KeyCode, InputContext, InputContextStack};
-use crate::ui::state::UiState;
-use crate::layer1::map::GridPosition;
-use crate::layer1::pop::{Speed, Role};
-use crate::layer1::utility_types::StartPlan;
-use crate::layer1::execution::components::{MovementTarget, AtTarget};
-use crate::layer1::actions::AssignedTo;
-use crate::layer1::execution::movement::is_tile_walkable;
-use crate::layer1::terrain::TerrainGrid;
-use crate::layer1::building::{OccupiedTiles, Building};
-use crate::layer1::defense::Gate;
 use crate::layer1::access_control::AccessControl;
+use crate::layer1::actions::AssignedTo;
+use crate::layer1::building::{Building, OccupiedTiles};
+use crate::layer1::defense::Gate;
+use crate::layer1::execution::components::{AtTarget, MovementTarget};
+use crate::layer1::execution::movement::is_tile_walkable;
+use crate::layer1::map::GridPosition;
+use crate::layer1::pop::{Role, Speed};
+use crate::layer1::terrain::TerrainGrid;
+use crate::layer1::utility_types::StartPlan;
+use crate::shared::input::{Input, InputContext, InputContextStack, KeyCode};
+use crate::ui::state::UiState;
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct Possessed;
@@ -60,7 +60,8 @@ pub fn handle_possession(
         commands.entity(entity).insert(Possessed);
 
         // Clear AI components
-        commands.entity(entity)
+        commands
+            .entity(entity)
             .remove::<StartPlan>()
             .remove::<MovementTarget>()
             .remove::<AtTarget>()
@@ -78,7 +79,10 @@ pub fn handle_possession(
 
 pub fn handle_direct_movement(
     input: Res<Input<KeyCode>>,
-    mut query: Query<(Entity, &mut GridPosition, Option<&Role>), (With<Possessed>, Without<Building>)>,
+    mut query: Query<
+        (Entity, &mut GridPosition, Option<&Role>),
+        (With<Possessed>, Without<Building>),
+    >,
     terrain: Res<TerrainGrid>,
     occupied_tiles: Option<Res<OccupiedTiles>>,
     buildings: Query<(
@@ -117,7 +121,7 @@ pub fn handle_direct_movement(
             new_x,
             new_y,
             entity,
-            role.copied()
+            role.copied(),
         ) {
             pos.x = new_x;
             pos.y = new_y;
@@ -127,10 +131,7 @@ pub fn handle_direct_movement(
 
 pub fn apply_buffs(
     mut removed: RemovedComponents<Possessed>,
-    mut queries: ParamSet<(
-        Query<&mut Speed, Added<Possessed>>,
-        Query<&mut Speed>,
-    )>,
+    mut queries: ParamSet<(Query<&mut Speed, Added<Possessed>>, Query<&mut Speed>)>,
 ) {
     for mut speed in queries.p0().iter_mut() {
         speed.base *= 2.0;
@@ -161,13 +162,13 @@ pub fn handle_direct_input_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::pop::{PopBundle, Pop};
+    use crate::layer1::execution::components::MovementTarget;
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Speed;
-    use crate::layer1::execution::components::MovementTarget;
+    use crate::layer1::pop::{Pop, PopBundle};
+    use crate::layer1::terrain::generate_terrain;
     use crate::layer1::utility_types::ActionType;
     use bevy_ecs::schedule::Schedule;
-    use crate::layer1::terrain::generate_terrain;
 
     fn setup_world() -> World {
         let mut world = World::new();
@@ -190,10 +191,14 @@ mod tests {
     #[test]
     fn test_possession_toggle() {
         let mut world = setup_world();
-        let pop = world.spawn(PopBundle::random(0, 0, &mut rand::thread_rng())).id();
+        let pop = world
+            .spawn(PopBundle::random(0, 0, &mut rand::thread_rng()))
+            .id();
 
         // Act: Trigger possession command
-        world.resource_mut::<Events<PossessEntityEvent>>().send(PossessEntityEvent(pop));
+        world
+            .resource_mut::<Events<PossessEntityEvent>>()
+            .send(PossessEntityEvent(pop));
 
         // Run system
         let mut schedule = Schedule::default();
@@ -204,13 +209,18 @@ mod tests {
         assert!(world.entity(pop).contains::<Possessed>());
 
         // Assert: Input context is DirectControl
-        assert_eq!(world.resource::<InputContextStack>().current(), InputContext::DirectControl);
+        assert_eq!(
+            world.resource::<InputContextStack>().current(),
+            InputContext::DirectControl
+        );
 
         // Assert: UI suppressed
         assert!(world.resource::<UiState>().suppress_global_ui);
 
         // Act: Trigger unpossess
-        world.resource_mut::<Events<UnpossessEvent>>().send(UnpossessEvent);
+        world
+            .resource_mut::<Events<UnpossessEvent>>()
+            .send(UnpossessEvent);
         schedule.run(&mut world);
 
         // Assert: Pop no longer has Possessed
@@ -220,7 +230,10 @@ mod tests {
         assert!(!world.resource::<UiState>().suppress_global_ui);
 
         // Assert: Input context popped (back to MainMenu default)
-        assert_eq!(world.resource::<InputContextStack>().current(), InputContext::MainMenu);
+        assert_eq!(
+            world.resource::<InputContextStack>().current(),
+            InputContext::MainMenu
+        );
     }
 
     #[test]
@@ -229,23 +242,25 @@ mod tests {
 
         // Ensure path is walkable
         if let Some(mut terrain) = world.get_resource_mut::<TerrainGrid>() {
-             let width = terrain.width;
-             // Set path to Grass
-             if let Some(tile) = terrain.tiles.get_mut(10 * width + 10) {
-                 *tile = crate::layer1::terrain::TerrainType::Grass;
-             }
-             if let Some(tile) = terrain.tiles.get_mut(9 * width + 10) {
-                 *tile = crate::layer1::terrain::TerrainType::Grass;
-             }
-             if let Some(tile) = terrain.tiles.get_mut(8 * width + 10) {
-                 *tile = crate::layer1::terrain::TerrainType::Grass;
-             }
+            let width = terrain.width;
+            // Set path to Grass
+            if let Some(tile) = terrain.tiles.get_mut(10 * width + 10) {
+                *tile = crate::layer1::terrain::TerrainType::Grass;
+            }
+            if let Some(tile) = terrain.tiles.get_mut(9 * width + 10) {
+                *tile = crate::layer1::terrain::TerrainType::Grass;
+            }
+            if let Some(tile) = terrain.tiles.get_mut(8 * width + 10) {
+                *tile = crate::layer1::terrain::TerrainType::Grass;
+            }
         }
 
-        let pop = world.spawn((
-            PopBundle::random(10, 10, &mut rand::thread_rng()),
-            Possessed
-        )).id();
+        let pop = world
+            .spawn((
+                PopBundle::random(10, 10, &mut rand::thread_rng()),
+                Possessed,
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(handle_direct_movement);
@@ -270,17 +285,21 @@ mod tests {
     #[test]
     fn test_ai_components_cleared_on_possession() {
         let mut world = setup_world();
-        let pop = world.spawn((
-            PopBundle::random(0, 0, &mut rand::thread_rng()),
-            MovementTarget {
-                target_entity: Entity::from_raw(999),
-                target_position: GridPosition { x: 5, y: 5 },
-                for_action: ActionType::Idle,
-            }
-        )).id();
+        let pop = world
+            .spawn((
+                PopBundle::random(0, 0, &mut rand::thread_rng()),
+                MovementTarget {
+                    target_entity: Entity::from_raw(999),
+                    target_position: GridPosition { x: 5, y: 5 },
+                    for_action: ActionType::Idle,
+                },
+            ))
+            .id();
 
         // Possess
-        world.resource_mut::<Events<PossessEntityEvent>>().send(PossessEntityEvent(pop));
+        world
+            .resource_mut::<Events<PossessEntityEvent>>()
+            .send(PossessEntityEvent(pop));
 
         let mut schedule = Schedule::default();
         schedule.add_systems(handle_possession);
@@ -295,11 +314,15 @@ mod tests {
     #[test]
     fn test_possession_buffs() {
         let mut world = setup_world();
-        let pop = world.spawn(PopBundle::random(0, 0, &mut rand::thread_rng())).id();
+        let pop = world
+            .spawn(PopBundle::random(0, 0, &mut rand::thread_rng()))
+            .id();
         let initial_speed = world.entity(pop).get::<Speed>().unwrap().base;
 
         // Possess
-        world.resource_mut::<Events<PossessEntityEvent>>().send(PossessEntityEvent(pop));
+        world
+            .resource_mut::<Events<PossessEntityEvent>>()
+            .send(PossessEntityEvent(pop));
 
         let mut schedule = Schedule::default();
         schedule.add_systems((handle_possession, apply_buffs.after(handle_possession)));
@@ -309,7 +332,9 @@ mod tests {
         assert!(new_speed > initial_speed, "Speed should increase");
 
         // Unpossess
-        world.resource_mut::<Events<UnpossessEvent>>().send(UnpossessEvent);
+        world
+            .resource_mut::<Events<UnpossessEvent>>()
+            .send(UnpossessEvent);
         schedule.run(&mut world);
 
         let restored_speed = world.entity(pop).get::<Speed>().unwrap().base;

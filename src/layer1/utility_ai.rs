@@ -74,10 +74,12 @@ use crate::layer1::actions::rest::evaluate_satisfy_rest;
 use crate::layer1::actions::social::evaluate_socialize;
 use crate::layer1::actions::work::evaluate_work;
 use crate::layer1::chemical::evaluate_consume_chemical;
+use crate::layer1::factions::Factions;
 use crate::layer1::hobby::evaluate_hobby;
 use crate::layer1::husbandry::evaluate_tame;
 use crate::layer1::justice::evaluate_warden_action;
 use crate::layer1::resources::ColonyResources;
+use crate::layer1::temperature::TemperatureGrid;
 use crate::layer1::traits::Trait;
 use crate::layer1::utility_ai_population::{collect_pop_data, populate_ai_buffer};
 use crate::layer1::utility_eval_types::{
@@ -89,6 +91,120 @@ pub use crate::layer1::utility_types::{
 use crate::layer1::zone::ZoneGrid;
 use bevy_ecs::prelude::*;
 use bevy_tasks::ComputeTaskPool;
+
+/// Helper struct to manage the lifecycle of resources during utility evaluation.
+struct ScopedEvaluationContext {
+    buffer: UtilityAIBuffer,
+    zone_grid: Option<ZoneGrid>,
+    temperature_grid: Option<TemperatureGrid>,
+    factions: Option<Factions>,
+
+    // Cloned resources for context
+    resources: ColonyResources,
+    cycle: crate::layer1::day_night::DayNightCycle,
+    taboo: crate::layer1::taboo::TabooState,
+
+    // Config needed for collection/application
+    config: UtilityConfig,
+}
+
+impl ScopedEvaluationContext {
+    fn new(world: &mut World) -> Self {
+        let config = world.resource::<UtilityConfig>().clone();
+
+        // 1. Buffer (must be removed before collection if we want to mutate it while world is mutable)
+        let mut buffer = world
+            .remove_resource::<UtilityAIBuffer>()
+            .unwrap_or_default();
+
+        collect_pop_data(world, &mut buffer, &config);
+
+        // 2. Remove other resources
+        let zone_grid = world.remove_resource::<ZoneGrid>();
+        let temperature_grid = world.remove_resource::<TemperatureGrid>();
+        let factions = world.remove_resource::<Factions>();
+
+        // 3. Clone others
+        let resources = world.resource::<ColonyResources>().clone();
+        let cycle = world
+            .resource::<crate::layer1::day_night::DayNightCycle>()
+            .clone();
+        let taboo = world.resource::<crate::layer1::taboo::TabooState>().clone();
+
+        Self {
+            buffer,
+            zone_grid,
+            temperature_grid,
+            factions,
+            resources,
+            cycle,
+            taboo,
+            config,
+        }
+    }
+
+    fn restore(self, world: &mut World) {
+        world.insert_resource(self.buffer);
+        if let Some(zg) = self.zone_grid {
+            world.insert_resource(zg);
+        }
+        if let Some(tg) = self.temperature_grid {
+            world.insert_resource(tg);
+        }
+        if let Some(f) = self.factions {
+            world.insert_resource(f);
+        }
+    }
+
+    fn populate(&mut self, world: &mut World) {
+        // Construct temporary context
+        // ZoneGrid fallback logic
+        let zone_grid_fallback = ZoneGrid::new(1, 1);
+        let zone_grid_ref = self.zone_grid.as_ref().unwrap_or(&zone_grid_fallback);
+
+        let context = WorldContext {
+            resources: &self.resources,
+            cycle: &self.cycle,
+            taboo: &self.taboo,
+            factions: self.factions.as_ref().map(|f| &f.map),
+            zone_grid: zone_grid_ref,
+            temperature_grid: self.temperature_grid.as_ref(),
+        };
+
+        populate_ai_buffer(world, &mut self.buffer, &context);
+    }
+
+    fn run(&mut self) {
+        let zone_grid_fallback = ZoneGrid::new(1, 1);
+        let zone_grid_ref = self.zone_grid.as_ref().unwrap_or(&zone_grid_fallback);
+
+        let context = WorldContext {
+            resources: &self.resources,
+            cycle: &self.cycle,
+            taboo: &self.taboo,
+            factions: self.factions.as_ref().map(|f| &f.map),
+            zone_grid: zone_grid_ref,
+            temperature_grid: self.temperature_grid.as_ref(),
+        };
+
+        let mut results = std::mem::take(&mut self.buffer.results);
+        results.resize(self.buffer.pop_data.len(), None);
+
+        run_evaluations(&self.buffer, &context, &mut results);
+
+        self.buffer.results = results;
+    }
+
+    fn apply(self, world: &mut World) {
+        apply_evaluation_results(
+            world,
+            &self.buffer.pop_data,
+            &self.buffer.results,
+            &self.config,
+        );
+        self.restore(world);
+    }
+}
 
 /// System to update commitment timers.
 /// Increments the committed-tick counter for every pop's action.
@@ -130,6 +246,20 @@ impl CandidateEvaluator {
     const fn result(self) -> (ActionType, f32, Option<Entity>) {
         (self.action, self.utility, self.target)
     }
+
+    /// Helper to evaluate a result and consider it with penalties/bonuses.
+    fn evaluate_and_consider(
+        &mut self,
+        evaluation: Option<(f32, Entity)>,
+        action: ActionType,
+        context: &WorldContext,
+        bonus: f32,
+    ) {
+        if let Some((utility, target)) = evaluation {
+            let penalty = crate::layer1::taboo::evaluate_taboo_penalty(action, context.taboo);
+            self.consider(action, utility + penalty + bonus, Some(target));
+        }
+    }
 }
 
 fn is_pop_striking(data: &PopEvalData, context: &WorldContext) -> bool {
@@ -154,51 +284,59 @@ fn evaluate_group_survival(
     evaluator: &mut CandidateEvaluator,
     data: &PopEvalData,
     buffer: &UtilityAIBuffer,
+    context: &WorldContext,
 ) {
     let pop_pos = data.pos;
     let needs = data.needs;
     let weights = data.weights;
 
     // Evaluate Hunger
-    if let Some((utility, target)) =
-        evaluate_satisfy_hunger(pop_pos, &needs, &weights, &buffer.farms)
-    {
-        evaluator.consider(ActionType::SatisfyHunger, utility, Some(target));
-    }
+    evaluator.evaluate_and_consider(
+        evaluate_satisfy_hunger(pop_pos, &needs, &weights, &buffer.farms),
+        ActionType::SatisfyHunger,
+        context,
+        0.0,
+    );
 
     // Evaluate SatisfyRest
-    if let Some((utility, target)) =
-        evaluate_satisfy_rest(pop_pos, &needs, &weights, &buffer.housing)
-    {
-        evaluator.consider(ActionType::SatisfyRest, utility, Some(target));
-    }
+    evaluator.evaluate_and_consider(
+        evaluate_satisfy_rest(pop_pos, &needs, &weights, &buffer.housing),
+        ActionType::SatisfyRest,
+        context,
+        0.0,
+    );
 
     // Evaluate SeekMedicalCare
     if let Some(health) = data.health {
-        if let Some((utility, target)) =
-            evaluate_seek_medical_care(pop_pos, &needs, health, &weights, &buffer.hospitals)
-        {
-            evaluator.consider(ActionType::SeekMedicalCare, utility, Some(target));
-        }
+        evaluator.evaluate_and_consider(
+            evaluate_seek_medical_care(pop_pos, &needs, health, &weights, &buffer.hospitals),
+            ActionType::SeekMedicalCare,
+            context,
+            0.0,
+        );
     }
 
     // Evaluate ConsumeChemical
-    if let Some((utility, target)) = evaluate_consume_chemical(
-        pop_pos,
-        &needs,
-        &weights,
-        data.chemical_state.as_ref(),
-        data.stress,
-        &buffer.item_entities,
-    ) {
-        evaluator.consider(ActionType::ConsumeChemical, utility, Some(target));
-    }
+    evaluator.evaluate_and_consider(
+        evaluate_consume_chemical(
+            pop_pos,
+            &needs,
+            &weights,
+            data.chemical_state.as_ref(),
+            data.stress,
+            &buffer.item_entities,
+        ),
+        ActionType::ConsumeChemical,
+        context,
+        0.0,
+    );
 }
 
 fn evaluate_group_social(
     evaluator: &mut CandidateEvaluator,
     data: &PopEvalData,
     buffer: &UtilityAIBuffer,
+    context: &WorldContext,
 ) {
     let pop_pos = data.pos;
     let needs = data.needs;
@@ -210,10 +348,12 @@ fn evaluate_group_social(
     }
 
     // Evaluate Socialize
-    if let Some((utility, target)) = evaluate_socialize(pop_pos, &needs, &weights, &buffer.taverns)
-    {
-        evaluator.consider(ActionType::Socialize, utility, Some(target));
-    }
+    evaluator.evaluate_and_consider(
+        evaluate_socialize(pop_pos, &needs, &weights, &buffer.taverns),
+        ActionType::Socialize,
+        context,
+        0.0,
+    );
 }
 
 #[allow(clippy::collapsible_if)]
@@ -237,58 +377,70 @@ fn evaluate_group_work(
     }
 
     // Evaluate Work
-    if let Some((utility, target)) = evaluate_work(pop_pos, &weights, &buffer.work_designations) {
-        let penalty = crate::layer1::taboo::evaluate_taboo_penalty(ActionType::Work, context.taboo);
-        let bonus = if is_penal {
-            1.0 // High priority for penal labor
-        } else {
-            0.0
-        };
-        evaluator.consider(ActionType::Work, utility + penalty + bonus, Some(target));
-    }
+    let work_bonus = if is_penal { 1.0 } else { 0.0 };
+    evaluator.evaluate_and_consider(
+        evaluate_work(pop_pos, &weights, &buffer.work_designations),
+        ActionType::Work,
+        context,
+        work_bonus,
+    );
 
     // Evaluate Refine
     if !is_penal {
-        if let Some((utility, target)) = evaluate_refine(pop_pos, &weights, &buffer.refining) {
-            evaluator.consider(ActionType::Refine, utility, Some(target));
-        }
+        evaluator.evaluate_and_consider(
+            evaluate_refine(pop_pos, &weights, &buffer.refining),
+            ActionType::Refine,
+            context,
+            0.0,
+        );
     }
 
     // Evaluate Farm
     if !is_penal {
-        if let Some((utility, target)) = evaluate_farm(pop_pos, &weights, &buffer.farms) {
-            evaluator.consider(ActionType::Farm, utility, Some(target));
-        }
+        evaluator.evaluate_and_consider(
+            evaluate_farm(pop_pos, &weights, &buffer.farms),
+            ActionType::Farm,
+            context,
+            0.0,
+        );
     }
 
     // Evaluate Admin
     if !is_penal {
-        if let Some((utility, target)) = evaluate_admin(pop_pos, &weights, &buffer.offices) {
-            evaluator.consider(ActionType::Admin, utility, Some(target));
-        }
+        evaluator.evaluate_and_consider(
+            evaluate_admin(pop_pos, &weights, &buffer.offices),
+            ActionType::Admin,
+            context,
+            0.0,
+        );
     }
 
     // Evaluate Research
     if !is_penal && !is_feral {
-        if let Some((utility, target)) =
-            evaluate_research(pop_pos, &weights, context.resources, &buffer.libraries)
-        {
-            evaluator.consider(ActionType::Research, utility, Some(target));
-        }
+        evaluator.evaluate_and_consider(
+            evaluate_research(pop_pos, &weights, context.resources, &buffer.libraries),
+            ActionType::Research,
+            context,
+            0.0,
+        );
     }
 
     // Evaluate Tame
-    if let Some((utility, target)) = evaluate_tame(&pop_pos, &weights, &buffer.tame_designations) {
-        evaluator.consider(ActionType::Tame, utility, Some(target));
-    }
+    evaluator.evaluate_and_consider(
+        evaluate_tame(&pop_pos, &weights, &buffer.tame_designations),
+        ActionType::Tame,
+        context,
+        0.0,
+    );
 
     // Evaluate Warden
     if !is_penal {
-        if let Some((utility, target)) =
-            evaluate_warden_action(&pop_pos, &buffer.wanted_criminals, context.zone_grid)
-        {
-            evaluator.consider(ActionType::Warden, utility, Some(target));
-        }
+        evaluator.evaluate_and_consider(
+            evaluate_warden_action(&pop_pos, &buffer.wanted_criminals, context.zone_grid),
+            ActionType::Warden,
+            context,
+            0.0,
+        );
     }
 }
 
@@ -309,59 +461,71 @@ fn evaluate_group_logistics(
 
     // Evaluate FetchTool
     let equipment = equipment_opt.unwrap_or_default();
-    if let Some((utility, target)) =
-        evaluate_fetch_tool(pop_pos, &equipment, context.resources, &buffer.stockpiles)
-    {
-        evaluator.consider(ActionType::FetchTool, utility, Some(target));
-    }
+    evaluator.evaluate_and_consider(
+        evaluate_fetch_tool(pop_pos, &equipment, context.resources, &buffer.stockpiles),
+        ActionType::FetchTool,
+        context,
+        0.0,
+    );
 
     // Evaluate FetchClothing
-    if let Some((utility, target)) = evaluate_fetch_clothing(
-        pop_pos,
-        data.insulation,
-        context.resources,
-        &buffer.stockpiles,
-        context.temperature_grid,
-    ) {
-        evaluator.consider(ActionType::FetchClothing, utility, Some(target));
-    }
+    evaluator.evaluate_and_consider(
+        evaluate_fetch_clothing(
+            pop_pos,
+            data.insulation,
+            context.resources,
+            &buffer.stockpiles,
+            context.temperature_grid,
+        ),
+        ActionType::FetchClothing,
+        context,
+        0.0,
+    );
 
     // Evaluate Repair
-    if let Some((utility, target)) = evaluate_repair(
-        pop_pos,
-        &weights,
-        &buffer.repair_designations,
-        &buffer.repair_structures,
-    ) {
-        evaluator.consider(ActionType::Repair, utility, Some(target));
-    }
+    evaluator.evaluate_and_consider(
+        evaluate_repair(
+            pop_pos,
+            &weights,
+            &buffer.repair_designations,
+            &buffer.repair_structures,
+        ),
+        ActionType::Repair,
+        context,
+        0.0,
+    );
 
     // Evaluate Haul
-    if let Some((utility, target)) = evaluate_haul(
-        pop_pos,
-        &weights,
-        &buffer.items,
-        &buffer.item_entities,
-        &buffer.stockpiles,
-        context.resources,
-        data.carrying,
-        data.carrying_item,
-    ) {
-        evaluator.consider(ActionType::Haul, utility, Some(target));
-    }
+    evaluator.evaluate_and_consider(
+        evaluate_haul(
+            pop_pos,
+            &weights,
+            &buffer.items,
+            &buffer.item_entities,
+            &buffer.stockpiles,
+            context.resources,
+            data.carrying,
+            data.carrying_item,
+        ),
+        ActionType::Haul,
+        context,
+        0.0,
+    );
 
     // Evaluate BuryCorpse
-    if let Some((utility, target)) =
-        evaluate_bury_corpse(pop_pos, &buffer.corpses, &buffer.graves, &weights)
-    {
-        evaluator.consider(ActionType::BuryCorpse, utility, Some(target));
-    }
+    evaluator.evaluate_and_consider(
+        evaluate_bury_corpse(pop_pos, &buffer.corpses, &buffer.graves, &weights),
+        ActionType::BuryCorpse,
+        context,
+        0.0,
+    );
 }
 
 fn evaluate_group_exploration(
     evaluator: &mut CandidateEvaluator,
     data: &PopEvalData,
     buffer: &UtilityAIBuffer,
+    context: &WorldContext,
     is_striking: bool,
 ) {
     let pop_pos = data.pos;
@@ -373,15 +537,24 @@ fn evaluate_group_exploration(
     }
 
     // Evaluate Explore
-    if let Some((utility, target)) = evaluate_explore(pop_pos, &weights, &buffer.anomalies) {
-        evaluator.consider(ActionType::Explore, utility, Some(target));
-    }
+    evaluator.evaluate_and_consider(
+        evaluate_explore(pop_pos, &weights, &buffer.anomalies),
+        ActionType::Explore,
+        context,
+        0.0,
+    );
 }
 
-fn evaluate_group_leisure(evaluator: &mut CandidateEvaluator, data: &PopEvalData) {
+fn evaluate_group_leisure(
+    evaluator: &mut CandidateEvaluator,
+    data: &PopEvalData,
+    context: &WorldContext,
+) {
     if let Some(hobby_type) = data.hobby_type {
         let utility = evaluate_hobby(data, hobby_type);
-        evaluator.consider(ActionType::Hobby, utility, None);
+        let penalty =
+            crate::layer1::taboo::evaluate_taboo_penalty(ActionType::Hobby, context.taboo);
+        evaluator.consider(ActionType::Hobby, utility + penalty, None);
     }
 }
 
@@ -415,12 +588,12 @@ pub(crate) fn evaluate_single_pop(
     let mut evaluator = CandidateEvaluator::new(evaluate_idle(&data.needs));
     let is_striking = is_pop_striking(data, context);
 
-    evaluate_group_survival(&mut evaluator, data, buffer);
-    evaluate_group_social(&mut evaluator, data, buffer);
-    evaluate_group_leisure(&mut evaluator, data);
+    evaluate_group_survival(&mut evaluator, data, buffer, context);
+    evaluate_group_social(&mut evaluator, data, buffer, context);
+    evaluate_group_leisure(&mut evaluator, data, context);
     evaluate_group_work(&mut evaluator, data, buffer, context, is_striking);
     evaluate_group_logistics(&mut evaluator, data, buffer, context, is_striking);
-    evaluate_group_exploration(&mut evaluator, data, buffer, is_striking);
+    evaluate_group_exploration(&mut evaluator, data, buffer, context, is_striking);
 
     evaluator.result()
 }
@@ -508,76 +681,16 @@ fn apply_evaluation_results(
     clippy::type_complexity
 )]
 pub fn evaluate_actions_system(world: &mut World) {
-    let config = world.resource::<UtilityConfig>().clone();
+    let mut ctx = ScopedEvaluationContext::new(world);
 
-    // Use reusable buffer to avoid repeated heap allocations
-    let mut buffer = world
-        .remove_resource::<UtilityAIBuffer>()
-        .unwrap_or_default();
-
-    // 1. Collect Pop Data
-    collect_pop_data(world, &mut buffer, &config);
-
-    // Early exit if no pops need evaluation
-    if buffer.pop_data.is_empty() {
-        world.insert_resource(buffer);
+    if ctx.buffer.pop_data.is_empty() {
+        ctx.restore(world);
         return;
     }
 
-    // 2. Initialize Context
-    // Optimization: Temporarily remove large resources to avoid cloning them
-    let zone_grid_opt = world.remove_resource::<ZoneGrid>();
-    let zone_grid_fallback = ZoneGrid::new(1, 1);
-    let zone_grid_ref = zone_grid_opt.as_ref().unwrap_or(&zone_grid_fallback);
-
-    let temp_grid_opt = world.remove_resource::<crate::layer1::temperature::TemperatureGrid>();
-
-    let factions_res = world.remove_resource::<crate::layer1::factions::Factions>();
-    let factions_data = factions_res.as_ref().map(|f| &f.map);
-
-    let resources = world.resource::<ColonyResources>().clone();
-    let cycle = world
-        .resource::<crate::layer1::day_night::DayNightCycle>()
-        .clone();
-    let taboo = world.resource::<crate::layer1::taboo::TabooState>().clone();
-
-    let context = WorldContext {
-        resources: &resources,
-        cycle: &cycle,
-        taboo: &taboo,
-        factions: factions_data,
-        zone_grid: zone_grid_ref,
-        temperature_grid: temp_grid_opt.as_ref(),
-    };
-
-    // 3. Populate Proxies (The Optimization)
-    // We clear buffers and populate them once, filtering invalid targets early.
-    populate_ai_buffer(world, &mut buffer, &context);
-
-    // 4. Evaluate each pop (Parallel)
-    // Borrow Split Pattern:
-    // Extract results vector to bypass borrow checker (buffer immutably borrowed while results mutably borrowed)
-    let mut results = std::mem::take(&mut buffer.results);
-    results.resize(buffer.pop_data.len(), None);
-
-    run_evaluations(&buffer, &context, &mut results);
-
-    // 5. Apply Results
-    apply_evaluation_results(world, &buffer.pop_data, &results, &config);
-
-    // 6. Restore Resources
-    buffer.results = results; // Put it back
-    world.insert_resource(buffer);
-
-    if let Some(zg) = zone_grid_opt {
-        world.insert_resource(zg);
-    }
-    if let Some(tg) = temp_grid_opt {
-        world.insert_resource(tg);
-    }
-    if let Some(f) = factions_res {
-        world.insert_resource(f);
-    }
+    ctx.populate(world);
+    ctx.run();
+    ctx.apply(world);
 }
 
 // Re-add tests at the bottom
