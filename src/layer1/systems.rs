@@ -472,6 +472,12 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
                 .after(crate::layer1::radioactive::sickness_damage_system)
                 .after(pressure_damage_system)
                 .after(natural_death_system),
+        )
+            .in_set(Layer1SystemSet::Consumption),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::pop::handle_pop_death_system
                 .after(crate::layer1::health::check_health_status_system),
             crate::layer1::fauna::handle_fauna_death_system
@@ -480,6 +486,9 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
                 .after(crate::layer1::pop::handle_pop_death_system),
             mascot_death_grief_system.after(crate::layer1::health::check_health_status_system),
             crate::layer1::ecology::handle_keystone_death
+                .after(crate::layer1::health::check_health_status_system)
+                .before(crate::layer1::health::despawn_dead_entities_system),
+            crate::layer1::kinetic_storage::handle_battery_destruction_system
                 .after(crate::layer1::health::check_health_status_system)
                 .before(crate::layer1::health::despawn_dead_entities_system),
             #[cfg(feature = "nova")]
