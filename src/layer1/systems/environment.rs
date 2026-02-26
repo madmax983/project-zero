@@ -81,6 +81,12 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::atmosphere::update_weather_diffusion_system),
             crate::layer1::atmosphere::simulate_diffusion_system
                 .after(crate::layer1::terraforming::apply_planetary_effects_system),
+        )
+            .in_set(Layer1SystemSet::Environment),
+    );
+
+    schedule.add_systems(
+        (
             update_pressure_system,
             crate::layer1::temperature::update_temperature_system.after(update_pressure_system),
             crate::layer1::radioactive::radiation_system
