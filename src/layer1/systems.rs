@@ -331,6 +331,7 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
                 .after(crate::layer1::volatile::volatile_decay_system),
             crate::layer1::logistics::pneumatic::tube_clog_system,
             crate::layer1::ecology::biome_collapse_system,
+            crate::layer1::social::grievances::decay_notes_system,
         )
             .in_set(Layer1SystemSet::Environment),
     );
@@ -571,6 +572,8 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             check_generational_friction_system.after(decay_needs_system),
             crate::layer1::hobby::assign_hobby_system.after(decay_needs_system),
             crate::layer1::predictive_policing::check_prediction_system.after(decay_needs_system),
+            crate::layer1::social::grievances::post_grievance_system.after(decay_needs_system),
+            crate::layer1::social::grievances::read_board_system.after(decay_needs_system),
         )
             .in_set(Layer1SystemSet::Observation),
     );

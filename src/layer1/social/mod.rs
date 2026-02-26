@@ -515,4 +515,8 @@ pub mod debt;
 pub mod old_guard;
 #[cfg(test)]
 mod old_guard_tests;
+/// Public Grievances system (Spec 233).
+pub mod grievances;
+
 pub use debt::*;
+pub use grievances::*;
