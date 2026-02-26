@@ -428,15 +428,15 @@ pub(crate) fn evaluate_single_pop(
 fn run_evaluations(
     buffer: &UtilityAIBuffer,
     context: &WorldContext,
-) -> Vec<Option<(ActionType, f32, Option<Entity>)>> {
+    results: &mut [Option<(ActionType, f32, Option<Entity>)>],
+) {
     let pool = ComputeTaskPool::get();
     let pop_count = buffer.pop_data.len();
     let thread_count = pool.thread_num();
     let chunk_size = (pop_count / thread_count).max(1);
 
-    // Prepare a vector to hold results, sized to match pop_data
-    let mut results = vec![None; pop_count];
-    let mut rest = results.as_mut_slice();
+    // Results slice is already provided and resized
+    let mut rest = results;
 
     pool.scope(|scope| {
         for chunk in buffer.pop_data.chunks(chunk_size) {
@@ -452,8 +452,6 @@ fn run_evaluations(
             });
         }
     });
-
-    results
 }
 
 fn apply_evaluation_results(
@@ -557,12 +555,18 @@ pub fn evaluate_actions_system(world: &mut World) {
     populate_ai_buffer(world, &mut buffer, &context);
 
     // 4. Evaluate each pop (Parallel)
-    let results = run_evaluations(&buffer, &context);
+    // Borrow Split Pattern:
+    // Extract results vector to bypass borrow checker (buffer immutably borrowed while results mutably borrowed)
+    let mut results = std::mem::take(&mut buffer.results);
+    results.resize(buffer.pop_data.len(), None);
+
+    run_evaluations(&buffer, &context, &mut results);
 
     // 5. Apply Results
     apply_evaluation_results(world, &buffer.pop_data, &results, &config);
 
     // 6. Restore Resources
+    buffer.results = results; // Put it back
     world.insert_resource(buffer);
 
     if let Some(zg) = zone_grid_opt {
@@ -609,6 +613,7 @@ mod tests {
 
     #[test]
     fn test_evaluate_actions_switches_when_threshold_exceeded() {
+        crate::setup::init_task_pools();
         let mut world = World::new();
         world.insert_resource(UtilityConfig::default());
         world.insert_resource(SimulationTime::default());
@@ -660,6 +665,7 @@ mod tests {
 
     #[test]
     fn test_evaluate_actions_respects_threshold() {
+        crate::setup::init_task_pools();
         let mut world = World::new();
         world.insert_resource(UtilityConfig {
             switch_threshold: 0.5, // High threshold
@@ -715,6 +721,7 @@ mod tests {
         use crate::layer1::justice::Inmate;
         use crate::layer1::penal::PenalLabor;
 
+        crate::setup::init_task_pools();
         let mut world = World::new();
         world.insert_resource(UtilityConfig::default());
         world.insert_resource(SimulationTime::default());

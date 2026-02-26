@@ -16,7 +16,9 @@ use crate::layer1::stress::{BREAKDOWN_TICKS_REQUIRED, Breakdown, StressTracker};
 use crate::layer1::taboo::TabooState;
 use crate::layer1::traits::Traits;
 use crate::layer1::unrest::MentalState;
-use crate::layer1::utility_types::{HobbyType, PopAction, UtilityWeights, calculate_context_score};
+use crate::layer1::utility_types::{
+    ActionType, HobbyType, PopAction, UtilityWeights, calculate_context_score,
+};
 use bevy_ecs::prelude::*;
 use bevy_ecs::query::QueryData;
 use std::collections::HashMap;
@@ -250,6 +252,10 @@ pub fn evaluate_candidates(
 pub struct UtilityAIBuffer {
     /// Buffer for pop data.
     pub pop_data: Vec<PopEvalData>,
+
+    /// Buffer for evaluation results (Actions decided).
+    /// Used to avoid re-allocating the results vector every frame.
+    pub results: Vec<Option<(ActionType, f32, Option<Entity>)>>,
 
     // Candidate Buffers
     /// Buffer for farm candidates.
