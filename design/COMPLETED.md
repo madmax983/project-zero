@@ -167,3 +167,6 @@
 - [x] `223` Volatile Resources — `specs/223-volatile-resources.md` — completed 2026-06-25
 - [x] `225` Keystone Species — `specs/225-keystone-species.md` — completed 2026-06-25
 - [x] `227` Corrosive Atmosphere — `specs/227-corrosive-atmosphere.md` — completed 2026-02-26
+- [x] `203` Prohibition & Contraband — `specs/203-prohibition-contraband.md` — completed 2026-06-25
+- [x] `165` Gene Banks — `specs/165-gene-banks.md` — completed 2026-06-25
+- [x] `222` Paperwork Physicality — `specs/222-paperwork-physicality.md` — completed 2026-06-25
