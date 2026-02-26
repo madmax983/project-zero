@@ -17,7 +17,7 @@ use crate::layer1::{
     initial_naming_system, spawn_ancient_structures, spawn_initial_anomalies, spawn_initial_pops,
 };
 use crate::shared::colony::ColonyName;
-use crate::shared::input::InputContextStack;
+use crate::shared::input::{Input, InputContextStack, KeyCode};
 use crate::shared::log::MessageLog;
 use crate::shared::narrative::NarrativeGenerator;
 use crate::shared::selection::Selection;
@@ -25,6 +25,7 @@ use crate::shared::state::GameState;
 use crate::shared::time::{SimulationTime, WallTime};
 use crate::shared::world_history::generate_world_history;
 use crate::ui::map::RenderCache;
+use crate::ui::state::UiState;
 
 /// Ensures the Bevy task pools are initialized (required for `par_iter_mut`).
 ///
@@ -93,6 +94,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(Chronicle::default());
     world.insert_resource(ChronicleUiState::default());
     world.insert_resource(crate::ui::tech::TechUiState::default());
+    world.insert_resource(UiState::default());
+    world.init_resource::<Input<KeyCode>>();
     world.insert_resource(NotificationQueue::default());
     world.insert_resource(BuildingTracker::default());
     world.insert_resource(crate::layer1::vermin::VerminState::default());

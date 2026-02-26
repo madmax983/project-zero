@@ -39,10 +39,13 @@ pub mod seasonal_gfx;
 pub mod status;
 /// Tech Tree UI rendering.
 pub mod tech;
+/// UI State resource.
+pub mod state;
 
 #[cfg(test)]
 mod waste_ui_tests;
 
+pub use state::*;
 use bevy_ecs::prelude::*;
 use ratatui::prelude::*;
 
@@ -81,6 +84,17 @@ pub fn render(world: &World, frame: &mut Frame) {
 
     if *view_mode == ViewMode::System {
         render_system_view(frame, frame.area(), world);
+        return;
+    }
+
+    // Check Global UI suppression (Cinematic/Possession mode)
+    let ui_state = world.get_resource::<UiState>();
+    let suppress_ui = ui_state.map_or(false, |s| s.suppress_global_ui);
+
+    if suppress_ui {
+        // Full screen map
+        render_map(frame, frame.area(), world);
+        render_notifications(frame, frame.area(), world);
         return;
     }
 
