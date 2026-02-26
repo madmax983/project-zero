@@ -1,4 +1,6 @@
 use bevy_ecs::prelude::*;
+use std::collections::HashSet;
+use std::hash::Hash;
 
 use crate::layer1::{
     BuildMode, CameraTarget, ChronicleUiState, DesignationMode, DesignationType, GridPosition,
@@ -27,6 +29,64 @@ pub enum InputContext {
     Overlay,
     /// Tech Tree overlay.
     TechTree,
+    /// Direct control mode (Possession).
+    DirectControl,
+}
+
+/// A Bevy-like KeyCode enum for input handling.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
+pub enum KeyCode {
+    W, A, S, D,
+    Q, E, R, F,
+    Up, Down, Left, Right,
+    Space, Esc, Return, Tab, Back, Delete,
+    #[default]
+    Unidentified,
+}
+
+/// A Bevy-like Input resource for handling key states.
+#[derive(Resource, Default, Debug, Clone)]
+pub struct Input<T> {
+    pressed: HashSet<T>,
+    just_pressed: HashSet<T>,
+    just_released: HashSet<T>,
+}
+
+impl<T: Copy + Eq + Hash> Input<T> {
+    pub fn press(&mut self, input: T) {
+        if !self.pressed.contains(&input) {
+            self.just_pressed.insert(input);
+        }
+        self.pressed.insert(input);
+    }
+
+    pub fn release(&mut self, input: T) {
+        if self.pressed.contains(&input) {
+            self.pressed.remove(&input);
+            self.just_released.insert(input);
+        }
+    }
+
+    pub fn pressed(&self, input: T) -> bool {
+        self.pressed.contains(&input)
+    }
+
+    pub fn just_pressed(&self, input: T) -> bool {
+        self.just_pressed.contains(&input)
+    }
+
+    pub fn just_released(&self, input: T) -> bool {
+        self.just_released.contains(&input)
+    }
+
+    pub fn clear(&mut self) {
+        self.just_pressed.clear();
+        self.just_released.clear();
+        // Since the underlying platform (crossterm) does not reliably send release events
+        // or we filter them out, we treat all inputs as transient triggers.
+        // We must clear 'pressed' so that the next frame's press is registered as a new press.
+        self.pressed.clear();
+    }
 }
 
 /// Stack-based input context manager.
@@ -81,6 +141,7 @@ pub fn route_input(world: &mut World, key: GameKeyEvent) {
         InputContext::DesignationMode => handle_designation_mode(world, key),
         InputContext::Overlay => handle_overlay_mode(world, key),
         InputContext::TechTree => handle_tech_tree_mode(world, key),
+        InputContext::DirectControl => handle_direct_control_mode(world, key),
     }
 }
 
@@ -97,6 +158,41 @@ pub fn route_mouse_input(world: &mut World, mouse: GameMouseEvent) {
             handle_designation_mouse(world, mouse);
         }
         _ => {}
+    }
+}
+
+fn handle_direct_control_mode(world: &mut World, key: GameKeyEvent) {
+    // Map to KeyCode and update Input resource
+    let bevy_key = map_game_key_to_bevy_key(key.code);
+    if let Some(mut input) = world.get_resource_mut::<Input<KeyCode>>() {
+        input.press(bevy_key);
+    }
+}
+
+pub fn map_game_key_to_bevy_key(key: GameKeyCode) -> KeyCode {
+    match key {
+        GameKeyCode::Char(c) => match c {
+            'w' | 'W' => KeyCode::W,
+            'a' | 'A' => KeyCode::A,
+            's' | 'S' => KeyCode::S,
+            'd' | 'D' => KeyCode::D,
+            'q' | 'Q' => KeyCode::Q,
+            'e' | 'E' => KeyCode::E,
+            'r' | 'R' => KeyCode::R,
+            'f' | 'F' => KeyCode::F,
+            ' ' => KeyCode::Space,
+            _ => KeyCode::Unidentified,
+        },
+        GameKeyCode::Up => KeyCode::Up,
+        GameKeyCode::Down => KeyCode::Down,
+        GameKeyCode::Left => KeyCode::Left,
+        GameKeyCode::Right => KeyCode::Right,
+        GameKeyCode::Enter => KeyCode::Return,
+        GameKeyCode::Esc => KeyCode::Esc,
+        GameKeyCode::Tab => KeyCode::Tab,
+        GameKeyCode::Backspace => KeyCode::Back,
+        GameKeyCode::Delete => KeyCode::Delete,
+        GameKeyCode::BackTab => KeyCode::Tab,
     }
 }
 

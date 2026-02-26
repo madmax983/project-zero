@@ -641,6 +641,9 @@ pub mod recycling;
 pub use recycling::*;
 /// Permit system for advanced construction.
 pub mod permit;
+/// Direct Link (Possession) system (Spec 236).
+pub mod direct_link;
+pub use direct_link::*;
 
 /// Void Signals (Nova Feature).
 #[cfg(feature = "nova")]

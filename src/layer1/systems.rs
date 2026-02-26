@@ -3,6 +3,10 @@ use super::*;
 use bevy_ecs::prelude::*;
 
 use crate::layer1::blob::{blob_consumption_system, blob_spread_system};
+use crate::layer1::direct_link::{
+    apply_buffs, clear_input_system, handle_direct_input_system, handle_direct_movement,
+    handle_possession, PossessEntityEvent, UnpossessEvent,
+};
 use crate::layer1::inspector::{
     inspector_report_system, observe_inspector_system, spawn_inspector_system,
 };
@@ -67,6 +71,9 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer1::items::UnequipEvent>,
             update_event_buffer::<crate::layer1::unrest::DenounceEvent>,
             update_event_buffer::<crate::layer1::volatile::ExplosionEvent>,
+            update_event_buffer::<PossessEntityEvent>,
+            update_event_buffer::<UnpossessEvent>,
+            handle_direct_input_system,
         )
             .in_set(Layer1SystemSet::EventCleanup),
     );
@@ -83,6 +90,8 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             cleanup_previous_assignment_system.after(assign_sleepwalk_target_system),
             crate::layer1::customs::immigration_interception_system
                 .after(cleanup_previous_assignment_system),
+            handle_possession.before(process_start_plan_system),
+            apply_buffs.after(handle_possession),
             process_start_plan_system
                 .after(crate::layer1::customs::immigration_interception_system),
             crate::layer1::integration::drone_spawner_bridge_system
@@ -132,6 +141,7 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
                 .after(apply_quirk_modifiers_system)
                 .after(crate::layer1::fauna::fauna_behavior_system)
                 .after(crate::layer1::combat::hit_stop_system),
+            handle_direct_movement.after(crate::layer1::combat::hit_stop_system),
             crate::layer1::crowding::crowding_accumulation_system.after(movement_system),
             crate::layer1::artifacts::aura_system.after(movement_system),
             arrival_handler_system.after(movement_system),
@@ -595,4 +605,6 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
         )
             .in_set(Layer1SystemSet::Observation),
     );
+
+    schedule.add_systems(clear_input_system.after(Layer1SystemSet::Observation));
 }
