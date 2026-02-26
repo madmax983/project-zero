@@ -1,0 +1,119 @@
+use super::Layer1SystemSet;
+use crate::layer1::*;
+use crate::layer1::direct_link::{
+    apply_buffs, handle_direct_movement, handle_possession,
+};
+use bevy_ecs::prelude::*;
+
+pub fn register(schedule: &mut Schedule) {
+    schedule.add_systems(
+        (
+            crate::layer1::zone::apply_zone_designation_system,
+            crate::layer1::room_quality::apply_waking_thoughts_system
+                .after(crate::layer1::zone::apply_zone_designation_system),
+            assign_sleepwalk_target_system
+                .after(crate::layer1::room_quality::apply_waking_thoughts_system),
+            cleanup_previous_assignment_system.after(assign_sleepwalk_target_system),
+            crate::layer1::customs::immigration_interception_system
+                .after(cleanup_previous_assignment_system),
+            handle_possession.before(process_start_plan_system),
+            apply_buffs.after(handle_possession),
+            process_start_plan_system
+                .after(crate::layer1::customs::immigration_interception_system),
+            crate::layer1::integration::drone_spawner_bridge_system
+                .after(process_start_plan_system),
+            crate::layer1::integration::drone_work_bridge_system.after(process_start_plan_system),
+            crate::layer1::husbandry::pasture_confinement_system.after(process_start_plan_system),
+            crate::layer1::fauna::fauna_behavior_system.after(process_start_plan_system),
+            mascot_behavior_system.after(process_start_plan_system),
+        )
+            .in_set(Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
+        (
+            crate::layer1::day_night::update_day_night_cycle_system
+                .after(process_start_plan_system),
+            crate::layer1::day_night::update_ambient_light_from_cycle_system
+                .after(crate::layer1::day_night::update_day_night_cycle_system),
+            update_bioluminescence_system
+                .after(crate::layer1::day_night::update_day_night_cycle_system),
+            crate::layer1::pop::reset_speed_system.before(apply_lighting_penalties_system),
+            update_lighting_system
+                .after(process_start_plan_system)
+                .after(crate::layer1::day_night::update_ambient_light_from_cycle_system)
+                .after(update_bioluminescence_system),
+            apply_lighting_penalties_system.after(update_lighting_system),
+            apply_weather_effects_system.after(apply_lighting_penalties_system),
+            apply_quirk_modifiers_system
+                .after(apply_lighting_penalties_system)
+                .after(apply_weather_effects_system),
+            crate::layer1::chemical::apply_chemical_speed_modifiers_system
+                .after(apply_quirk_modifiers_system),
+            #[cfg(feature = "nova")]
+            crate::layer1::observer::observer_reaction_system
+                .after(apply_lighting_penalties_system),
+            #[cfg(feature = "nova")]
+            crate::layer1::machine_consciousness::consciousness_effect_system
+                .after(crate::layer1::pop::reset_speed_system),
+            crate::layer1::combat::hit_stop_system.after(process_start_plan_system),
+        )
+            .in_set(Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
+        (
+            movement_system
+                .after(apply_quirk_modifiers_system)
+                .after(crate::layer1::fauna::fauna_behavior_system)
+                .after(crate::layer1::combat::hit_stop_system),
+            handle_direct_movement.after(crate::layer1::combat::hit_stop_system),
+            crate::layer1::crowding::crowding_accumulation_system.after(movement_system),
+            crate::layer1::artifacts::aura_system.after(movement_system),
+            arrival_handler_system.after(movement_system),
+            work_execution_system.after(arrival_handler_system),
+            crate::layer1::customs::vetting_work_system.after(arrival_handler_system),
+            crate::layer1::hobby::execute_hobby_system.after(arrival_handler_system),
+            crate::layer1::husbandry::tame_execution_system.after(arrival_handler_system),
+            combat_execution_system.after(arrival_handler_system),
+            crate::layer1::turret::turret_fire_system.after(combat_execution_system),
+            crate::layer1::justice::warden_execution_system.after(combat_execution_system),
+            crate::layer1::predictive_policing::pre_crime_execution_system
+                .after(combat_execution_system),
+            crate::layer1::hygiene::shower_use_system.after(work_execution_system),
+            crate::layer1::hum::execute_listen_to_hum_system.after(arrival_handler_system),
+        )
+            .in_set(Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
+        (
+            crate::layer1::execution::vandalize_execution_system.after(arrival_handler_system),
+            crate::layer1::drone::process_charge_system.after(arrival_handler_system),
+            update_social_class_system.after(arrival_handler_system),
+            class_friction_system.after(update_social_class_system),
+            haul_system.after(arrival_handler_system),
+            conveyor_system.after(haul_system),
+            crate::layer1::logistics::pneumatic::tube_network_system.after(haul_system),
+            crate::layer1::logistics::pneumatic::tube_transport_system
+                .after(crate::layer1::logistics::pneumatic::tube_network_system),
+            process_scan_system.after(arrival_handler_system),
+            update_cabin_fever_system.after(movement_system),
+            update_noise_system.after(work_execution_system),
+        )
+            .in_set(Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
+        (
+            wild_child_system.after(movement_system),
+            update_erosion_system.after(movement_system),
+            crate::layer1::particles::particle_physics_system.after(movement_system),
+            crate::layer1::particles::particle_system
+                .after(crate::layer1::particles::particle_physics_system),
+            infiltration_system.after(movement_system),
+            discovery_system.after(process_scan_system),
+        )
+            .in_set(Layer1SystemSet::Execution),
+    );
+}

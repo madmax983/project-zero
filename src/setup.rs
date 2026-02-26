@@ -113,12 +113,14 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(crate::layer1::water::WaterGrid::new(80, 50));
     world.insert_resource(crate::layer1::zone::ZoneGrid::new(80, 50));
     world.insert_resource(crate::layer1::acoustic::NoiseMap::new(80, 50));
+    world.insert_resource(crate::layer1::hum::HumMap::new(80, 50));
     world.insert_resource(AtmosphereGrid::new(80, 50));
     world.insert_resource(crate::layer1::wind::WindGrid::new(80, 50));
     world.insert_resource(crate::layer1::wind::GlobalWind::default());
     world.insert_resource(crate::layer1::atmosphere::BaseGlobalWind::default());
     world.insert_resource(crate::layer1::atmosphere::AtmosphericTide::default());
     world.insert_resource(crate::layer1::atmosphere::DiffusionConfig::default());
+    world.init_resource::<crate::layer1::atmosphere::CorrosiveAtmosphere>();
     world.insert_resource(crate::layer1::pressure::PressureGrid::new(80, 50));
     world.insert_resource(crate::layer1::temperature::TemperatureGrid::new(
         80, 50, 15.0,
@@ -138,7 +140,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(crate::layer1::seismic::VibrationGrid::new(80, 50));
     world.insert_resource(crate::layer1::ecology::EcologyConfig::default());
     world.insert_resource(crate::layer1::society::SecretSocieties::default());
-    world.insert_resource(crate::layer1::society::Unrest::default());
+    world.insert_resource(crate::layer1::unrest::Unrest::default());
     world.insert_resource(crate::layer1::tech_envy::TechEnvyConfig::default());
     world.insert_resource(crate::layer1::building::BuildingMap::default());
     world.insert_resource(crate::layer1::predictive_policing::PredictionConfig {
@@ -186,6 +188,10 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::items::UnequipEvent>>();
     world.init_resource::<Events<crate::layer2::events::LaunchEvent>>();
     world.init_resource::<Events<crate::layer2::events::ShipDestroyedEvent>>();
+    world.init_resource::<Events<crate::layer1::direct_link::PossessEntityEvent>>();
+    world.init_resource::<Events<crate::layer1::direct_link::UnpossessEvent>>();
+    world.init_resource::<Events<crate::layer1::volatile::ExplosionEvent>>();
+    world.init_resource::<Events<crate::layer1::unrest::DenounceEvent>>();
 
     world.init_resource::<crate::layer1::festivals::FestivalState>();
     world.insert_resource(crate::layer1::taboo::TabooState::default());
