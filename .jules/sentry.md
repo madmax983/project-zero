@@ -27,3 +27,7 @@
 **[Combat] Unarmed Infinite Loop Risk**
 **Learning:** Unarmed pops (no weapon equipment) will enter AtTarget state and call execute_attack repeatedly because default range is 1.0. However, execute_attack does 0 damage if no weapon is present. This creates a "slap fight" where nothing happens forever unless AI intervenes.
 **Action:** In future AI refactors, ensure unarmed pops either flee or use a fallback "fist" weapon with >0 damage to resolve combat.
+
+## [Logic Flaw] Clean Air Toxicity
+**Learning:** `biocompatibility_system` allowed negative effective biocompatibility (e.g. `WeakImmunity` + low base stats) to cause damage even when the `AtmosphereGrid` returned 0.0 (Clean). This meant pops could die from "exposure" to perfectly safe air.
+**Action:** Always validate that "hazard" levels are non-trivial (`> EPSILON`) before applying penalty logic, especially when subtraction is involved (`hazard - resistance`).
