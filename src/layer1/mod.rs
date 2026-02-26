@@ -34,10 +34,6 @@
 pub mod access_control;
 /// Pop actions logic.
 pub mod actions;
-#[cfg(test)]
-mod shift_integration_tests;
-#[cfg(test)]
-mod work_building_tests;
 /// Bureaucratic Drag system (Spec 175).
 pub mod admin;
 /// AI Core system (Spec 148).
@@ -125,6 +121,8 @@ pub mod resources;
 pub mod science;
 /// Seasonal rhythms (Spring, Summer, Autumn, Winter).
 pub mod seasons;
+#[cfg(test)]
+mod shift_integration_tests;
 /// Social needs and tavern.
 pub mod social;
 /// Spoilage and decay mechanics.
@@ -153,6 +151,8 @@ pub mod utility_ai_work_tests;
 pub(crate) mod utility_eval_types;
 /// Shared types for utility AI state (`ActionType`, `UtilityWeights`).
 pub mod utility_types;
+#[cfg(test)]
+mod work_building_tests;
 
 #[cfg(test)]
 /// Tests for mining logic (Spec 052).
@@ -314,6 +314,10 @@ pub mod combat;
 /// Visitor system (Spec 074).
 pub mod visitor;
 pub use visitor::*;
+
+/// The Visitor (Mega-Fauna) system (Spec 234).
+pub mod the_visitor;
+pub use the_visitor::*;
 
 /// Day/Night cycle system (Spec 065).
 pub mod day_night;

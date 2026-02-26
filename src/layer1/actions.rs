@@ -3,20 +3,22 @@
 //! Consolidated action evaluation logic. Replaces the old `src/layer1/actions/` directory.
 
 #![allow(clippy::trivially_copy_pass_by_ref, clippy::too_many_arguments)]
-pub use crate::layer1::utility_types::AssignmentType;
-use bevy_ecs::prelude::*;
-use crate::layer1::map::GridPosition;
-use crate::layer1::utility_eval_types::{ScorableCandidate, evaluate_candidates, PopEvalData, UtilityAIBuffer};
-use crate::layer1::utility_types::{UtilityWeights, ActionType, calculate_context_score};
-use crate::layer1::resources::ColonyResources;
-use crate::layer1::items::{Equipment, Item, Clothing, ClothingType, Tool, ToolType, UnequipEvent};
-use crate::layer1::traits::Trait;
-use crate::layer1::stress::BreakdownType;
-use crate::layer1::unrest::{MentalBreakType, MentalState};
-use crate::layer1::utility_types::manhattan_distance;
 use crate::layer1::hygiene::SHOWER_WATER_COST;
-use crate::layer1::utility_types::need_response_curve;
+use crate::layer1::items::{Clothing, ClothingType, Equipment, Item, Tool, ToolType, UnequipEvent};
+use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
+use crate::layer1::resources::ColonyResources;
+use crate::layer1::stress::BreakdownType;
+use crate::layer1::traits::Trait;
+use crate::layer1::unrest::{MentalBreakType, MentalState};
+use crate::layer1::utility_eval_types::{
+    PopEvalData, ScorableCandidate, UtilityAIBuffer, evaluate_candidates,
+};
+pub use crate::layer1::utility_types::AssignmentType;
+use crate::layer1::utility_types::manhattan_distance;
+use crate::layer1::utility_types::need_response_curve;
+use crate::layer1::utility_types::{ActionType, UtilityWeights, calculate_context_score};
+use bevy_ecs::prelude::*;
 
 /// Component tracking what a pop is assigned to.
 #[derive(Component, Debug)]
@@ -219,7 +221,11 @@ pub fn evaluate_listen_to_hum(
     buffer: &UtilityAIBuffer,
 ) -> (ActionType, f32, Option<Entity>) {
     // 1. Check Trait (Early Exit)
-    if !data.traits.as_ref().map_or(false, |t| t.0.contains(&Trait::Sensitive)) {
+    if !data
+        .traits
+        .as_ref()
+        .map_or(false, |t| t.0.contains(&Trait::Sensitive))
+    {
         return (ActionType::ListenToTheHum, 0.0, None);
     }
 
@@ -267,7 +273,7 @@ pub fn evaluate_drafted_behavior(
         let mut min_dist = f32::MAX;
 
         for candidate in &buffer.enemies {
-             #[allow(clippy::cast_precision_loss)]
+            #[allow(clippy::cast_precision_loss)]
             let dist = data.pos.distance_chebyshev(candidate.pos) as f32;
             if dist < min_dist {
                 min_dist = dist;

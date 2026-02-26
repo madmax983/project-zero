@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::LightMap;
-use crate::layer1::map::GridPosition;
 use crate::layer1::inventory::Inventory;
+use crate::layer1::map::GridPosition;
+use bevy_ecs::prelude::*;
 
 /// Component for items that decay when exposed to light.
 #[derive(Component, Debug, Clone)]
@@ -27,7 +27,12 @@ pub struct Parent(pub Entity);
 pub fn photophobic_decay_system(
     mut commands: Commands,
     light_map: Res<LightMap>,
-    mut query: Query<(Entity, &mut Photophobic, Option<&GridPosition>, Option<&Parent>)>,
+    mut query: Query<(
+        Entity,
+        &mut Photophobic,
+        Option<&GridPosition>,
+        Option<&Parent>,
+    )>,
     mut parents: Query<(&GridPosition, Option<&mut Inventory>), Without<Photophobic>>,
 ) {
     for (entity, mut photo, pos, parent) in query.iter_mut() {
@@ -44,38 +49,40 @@ pub fn photophobic_decay_system(
         }
 
         if let Some(pos) = target_pos {
-             // Cast GridPosition (i32) to u32 for LightMap
-             if pos.x >= 0 && pos.y >= 0 {
-                 let light = light_map.get(pos.x as u32, pos.y as u32);
-                 if light > 0.0 {
-                     let decay = photo.decay_rate * light;
-                     photo.current_hp -= decay;
+            // Cast GridPosition (i32) to u32 for LightMap
+            if pos.x >= 0 && pos.y >= 0 {
+                let light = light_map.get(pos.x as u32, pos.y as u32);
+                if light > 0.0 {
+                    let decay = photo.decay_rate * light;
+                    photo.current_hp -= decay;
 
-                     if photo.current_hp <= 0.0 {
-                         // Cleanup
-                         if let Some(mut inv) = parent_inventory {
-                             // Remove from inventory
-                             // InventoryItem has optional entity field.
-                             if let Some(idx) = inv.items.iter().position(|i| i.entity == Some(entity)) {
-                                 inv.items.remove(idx);
-                             }
-                         }
-                         commands.entity(entity).despawn();
-                     }
-                 }
-             }
+                    if photo.current_hp <= 0.0 {
+                        // Cleanup
+                        if let Some(mut inv) = parent_inventory {
+                            // Remove from inventory
+                            // InventoryItem has optional entity field.
+                            if let Some(idx) =
+                                inv.items.iter().position(|i| i.entity == Some(entity))
+                            {
+                                inv.items.remove(idx);
+                            }
+                        }
+                        commands.entity(entity).despawn();
+                    }
+                }
+            }
         }
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
+    use crate::layer1::LightMap;
+    use crate::layer1::inventory::{Inventory, InventoryItem};
     use crate::layer1::items::{Item, ItemType};
     use crate::layer1::map::GridPosition;
-    use crate::layer1::LightMap;
-    use crate::layer1::photophobic::{Photophobic, photophobic_decay_system, Parent};
-    use crate::layer1::inventory::{Inventory, InventoryItem};
+    use crate::layer1::photophobic::{Parent, Photophobic, photophobic_decay_system};
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_photophobic_component_initialization() {
@@ -94,15 +101,19 @@ mod tests {
         light_map.set(5, 5, 1.0); // Full light
         world.insert_resource(light_map);
 
-        let item = world.spawn((
-            Item { item_type: ItemType::ShadowCrystal },
-            Photophobic {
-                decay_rate: 10.0,
-                current_hp: 100.0,
-                max_hp: 100.0,
-            },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let item = world
+            .spawn((
+                Item {
+                    item_type: ItemType::ShadowCrystal,
+                },
+                Photophobic {
+                    decay_rate: 10.0,
+                    current_hp: 100.0,
+                    max_hp: 100.0,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(photophobic_decay_system);
@@ -121,15 +132,19 @@ mod tests {
         light_map.set(5, 5, 0.0); // Darkness
         world.insert_resource(light_map);
 
-        let item = world.spawn((
-            Item { item_type: ItemType::ShadowCrystal },
-            Photophobic {
-                decay_rate: 10.0,
-                current_hp: 100.0,
-                max_hp: 100.0,
-            },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let item = world
+            .spawn((
+                Item {
+                    item_type: ItemType::ShadowCrystal,
+                },
+                Photophobic {
+                    decay_rate: 10.0,
+                    current_hp: 100.0,
+                    max_hp: 100.0,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(photophobic_decay_system);
@@ -147,21 +162,27 @@ mod tests {
         world.insert_resource(light_map);
 
         // Storage Building (e.g. Stockpile)
-        let storage = world.spawn((
-            GridPosition { x: 5, y: 5 },
-            Inventory::default(), // Needs Inventory for cleanup check, though not strictly required for decay
-        )).id();
+        let storage = world
+            .spawn((
+                GridPosition { x: 5, y: 5 },
+                Inventory::default(), // Needs Inventory for cleanup check, though not strictly required for decay
+            ))
+            .id();
 
         // Item inside inventory (child)
-        let item = world.spawn((
-            Item { item_type: ItemType::ShadowCrystal },
-            Photophobic {
-                decay_rate: 10.0,
-                current_hp: 100.0,
-                max_hp: 100.0,
-            },
-            Parent(storage),
-        )).id();
+        let item = world
+            .spawn((
+                Item {
+                    item_type: ItemType::ShadowCrystal,
+                },
+                Photophobic {
+                    decay_rate: 10.0,
+                    current_hp: 100.0,
+                    max_hp: 100.0,
+                },
+                Parent(storage),
+            ))
+            .id();
 
         // We also need to add it to Inventory for consistency,
         // though the system checks Parent for position regardless.
@@ -183,15 +204,19 @@ mod tests {
         light_map.set(5, 5, 1.0);
         world.insert_resource(light_map);
 
-        let item = world.spawn((
-            Item { item_type: ItemType::ShadowCrystal },
-            Photophobic {
-                decay_rate: 100.0, // Instant kill
-                current_hp: 10.0,
-                max_hp: 100.0,
-            },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let item = world
+            .spawn((
+                Item {
+                    item_type: ItemType::ShadowCrystal,
+                },
+                Photophobic {
+                    decay_rate: 100.0, // Instant kill
+                    current_hp: 10.0,
+                    max_hp: 100.0,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(photophobic_decay_system);
@@ -208,27 +233,33 @@ mod tests {
         world.insert_resource(light_map);
 
         // Storage
-        let storage = world.spawn((
-            GridPosition { x: 5, y: 5 },
-            Inventory::default(),
-        )).id();
+        let storage = world
+            .spawn((GridPosition { x: 5, y: 5 }, Inventory::default()))
+            .id();
 
         // Item
-        let item = world.spawn((
-            Item { item_type: ItemType::ShadowCrystal },
-            Photophobic {
-                decay_rate: 100.0,
-                current_hp: 10.0,
-                max_hp: 100.0,
-            },
-            Parent(storage),
-        )).id();
+        let item = world
+            .spawn((
+                Item {
+                    item_type: ItemType::ShadowCrystal,
+                },
+                Photophobic {
+                    decay_rate: 100.0,
+                    current_hp: 10.0,
+                    max_hp: 100.0,
+                },
+                Parent(storage),
+            ))
+            .id();
 
         // Add to inventory
-        world.get_mut::<Inventory>(storage).unwrap().add(InventoryItem {
-            item_type: ItemType::ShadowCrystal,
-            entity: Some(item),
-        });
+        world
+            .get_mut::<Inventory>(storage)
+            .unwrap()
+            .add(InventoryItem {
+                item_type: ItemType::ShadowCrystal,
+                entity: Some(item),
+            });
 
         let mut schedule = Schedule::default();
         schedule.add_systems(photophobic_decay_system);
@@ -243,9 +274,9 @@ mod tests {
     #[test]
     fn test_hauling_preserves_photophobic() {
         use crate::layer1::hauling::haul_system;
+        use crate::layer1::items::CarryingItem;
         use crate::layer1::pop::Pop;
         use crate::layer1::utility_ai::{ActionType, PopAction};
-        use crate::layer1::items::CarryingItem;
 
         let mut world = World::new();
         // Setup Resources needed for hauling
@@ -256,53 +287,74 @@ mod tests {
         world.insert_resource(crate::layer1::zone::ZoneGrid::new(10, 10));
 
         // Pop
-        let pop = world.spawn((
-            Pop,
-            GridPosition { x: 0, y: 0 },
-            PopAction {
-                current: ActionType::Haul,
-                ..Default::default()
-            },
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 0, y: 0 },
+                PopAction {
+                    current: ActionType::Haul,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         // Photophobic Item
-        let item = world.spawn((
-            Item { item_type: ItemType::ShadowCrystal },
-            Photophobic {
-                decay_rate: 10.0,
-                current_hp: 100.0,
-                max_hp: 100.0,
-            },
-            GridPosition { x: 0, y: 0 }, // At pop location
-        )).id();
+        let item = world
+            .spawn((
+                Item {
+                    item_type: ItemType::ShadowCrystal,
+                },
+                Photophobic {
+                    decay_rate: 10.0,
+                    current_hp: 100.0,
+                    max_hp: 100.0,
+                },
+                GridPosition { x: 0, y: 0 }, // At pop location
+            ))
+            .id();
 
         // Stockpile
-        let stockpile = world.spawn((
-            crate::layer1::stockpile::Stockpile::default(),
-            Inventory::default(),
-            GridPosition { x: 5, y: 0 },
-        )).id();
+        let stockpile = world
+            .spawn((
+                crate::layer1::stockpile::Stockpile::default(),
+                Inventory::default(),
+                GridPosition { x: 5, y: 0 },
+            ))
+            .id();
 
         // 1. Pickup (simulate arrival)
-        world.entity_mut(pop).insert(crate::layer1::execution::AtTarget);
+        world
+            .entity_mut(pop)
+            .insert(crate::layer1::execution::AtTarget);
         // haul_system will try to find item at current pos
         haul_system(&mut world);
 
         // Verify pickup
-        assert!(world.get::<CarryingItem>(pop).is_some(), "Pop should pick up item");
+        assert!(
+            world.get::<CarryingItem>(pop).is_some(),
+            "Pop should pick up item"
+        );
         assert_eq!(world.get::<CarryingItem>(pop).unwrap().0, item);
-        assert!(world.get_entity(item).is_ok(), "Item should exist while carried");
+        assert!(
+            world.get_entity(item).is_ok(),
+            "Item should exist while carried"
+        );
 
         // 2. Dropoff
         // Move pop to stockpile
         *world.get_mut::<GridPosition>(pop).unwrap() = GridPosition { x: 5, y: 0 };
-        world.entity_mut(pop).insert(crate::layer1::execution::AtTarget);
+        world
+            .entity_mut(pop)
+            .insert(crate::layer1::execution::AtTarget);
 
         haul_system(&mut world);
 
         // Verify dropoff
         // Item entity should STILL exist
-        assert!(world.get_entity(item).is_ok(), "Item should be preserved after dropoff");
+        assert!(
+            world.get_entity(item).is_ok(),
+            "Item should be preserved after dropoff"
+        );
 
         // Item should have Parent(stockpile)
         let parent = world.get::<Parent>(item).expect("Item should have Parent");

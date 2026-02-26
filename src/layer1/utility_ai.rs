@@ -17,11 +17,11 @@ use crate::layer1::temperature::TemperatureGrid;
 use crate::layer1::traits::Trait;
 use crate::layer1::utility_ai_population::{collect_pop_data, populate_ai_buffer};
 use crate::layer1::utility_eval_types::{
-    evaluate_idle, PopEvalData, UtilityAIBuffer, WorldContext,
+    PopEvalData, UtilityAIBuffer, WorldContext, evaluate_idle,
 };
 pub use crate::layer1::utility_types::{
-    calculate_context_score, manhattan_distance, need_response_curve, ActionType, PopAction,
-    StartPlan, UtilityConfig, UtilityWeights,
+    ActionType, PopAction, StartPlan, UtilityConfig, UtilityWeights, calculate_context_score,
+    manhattan_distance, need_response_curve,
 };
 use crate::layer1::zone::ZoneGrid;
 use bevy_ecs::prelude::*;
@@ -257,8 +257,8 @@ fn evaluate_group_survival(
         // I'll stick to what I can implement safely.
         // If I assume simple candidate evaluation:
         if health.current < health.max {
-             let urgency = (1.0 - (health.current / health.max)) * 2.0;
-             evaluator.evaluate_and_consider(
+            let urgency = (1.0 - (health.current / health.max)) * 2.0;
+            evaluator.evaluate_and_consider(
                 evaluate_simple_action(pop_pos, &weights, &buffer.hospitals, urgency),
                 ActionType::SeekMedicalCare,
                 context,
@@ -460,7 +460,6 @@ fn evaluate_group_logistics(
         0.0,
     );
 
-
     // Evaluate Haul
     evaluator.evaluate_and_consider(
         evaluate_haul(
@@ -480,7 +479,7 @@ fn evaluate_group_logistics(
 
     // Evaluate BuryCorpse
     if !buffer.graves.is_empty() {
-         evaluator.evaluate_and_consider(
+        evaluator.evaluate_and_consider(
             evaluate_simple_action(pop_pos, &weights, &buffer.corpses, 0.8),
             ActionType::BuryCorpse,
             context,

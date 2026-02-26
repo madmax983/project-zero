@@ -1,8 +1,6 @@
 use super::Layer1SystemSet;
+use crate::layer1::direct_link::{apply_buffs, handle_direct_movement, handle_possession};
 use crate::layer1::*;
-use crate::layer1::direct_link::{
-    apply_buffs, handle_direct_movement, handle_possession,
-};
 use bevy_ecs::prelude::*;
 
 pub fn register(schedule: &mut Schedule) {
@@ -26,6 +24,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::husbandry::pasture_confinement_system.after(process_start_plan_system),
             crate::layer1::fauna::fauna_behavior_system.after(process_start_plan_system),
             mascot_behavior_system.after(process_start_plan_system),
+            crate::layer1::the_visitor::the_visitor_behavior_system
+                .after(process_start_plan_system),
         )
             .in_set(Layer1SystemSet::Execution),
     );

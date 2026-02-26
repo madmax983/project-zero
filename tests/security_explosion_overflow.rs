@@ -1,10 +1,9 @@
-
 #[cfg(test)]
 mod tests {
-    use scale::layer1::map::GridPosition;
-    use scale::layer1::volatile::{ExplosionEvent, handle_explosion_system};
-    use scale::layer1::structure::Structure;
     use bevy_ecs::prelude::*;
+    use scale::layer1::map::GridPosition;
+    use scale::layer1::structure::Structure;
+    use scale::layer1::volatile::{ExplosionEvent, handle_explosion_system};
 
     #[test]
     fn test_explosion_overflow_exploit() {
@@ -29,7 +28,10 @@ mod tests {
         // abs(-11) = 11.
         // So distance is calculated as 11.
 
-        let target_pos = GridPosition { x: i32::MIN + 10, y: 0 };
+        let target_pos = GridPosition {
+            x: i32::MIN + 10,
+            y: 0,
+        };
 
         // Spawn Structure
         let structure = world
@@ -60,6 +62,10 @@ mod tests {
         // If vulnerable, the distance calculation overflowed and wrapped to 11,
         // causing the structure to take damage despite being billions of units away.
         // If secure, distance should be huge, so no damage.
-        assert_eq!(s.current_hp, 100.0, "Structure took damage despite being at extreme distance! Integer overflow detected. HP: {}", s.current_hp);
+        assert_eq!(
+            s.current_hp, 100.0,
+            "Structure took damage despite being at extreme distance! Integer overflow detected. HP: {}",
+            s.current_hp
+        );
     }
 }
