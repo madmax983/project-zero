@@ -1,6 +1,8 @@
 use bevy_ecs::prelude::*;
 use crate::layer1::needs::Needs;
 use crate::layer1::social::{AffinityChange, Relationships};
+use crate::layer1::stress::StressTracker;
+use crate::layer1::traits::{Trait, Traits};
 use crate::shared::time::SimulationTime;
 use rand::seq::{IteratorRandom, SliceRandom};
 use rand::thread_rng;
@@ -49,14 +51,21 @@ const POST_COOLDOWN: u64 = 1440;
 pub fn post_grievance_system(
     mut commands: Commands,
     mut boards: Query<&mut BulletinBoard>,
-    mut pops: Query<(Entity, &Needs, Option<&Relationships>, Option<&mut GrievanceCooldown>)>,
+    mut pops: Query<(
+        Entity,
+        &Needs,
+        Option<&Relationships>,
+        Option<&mut GrievanceCooldown>,
+        Option<&Traits>,
+        Option<&StressTracker>,
+    )>,
     time: Option<Res<SimulationTime>>,
 ) {
     let timestamp = time.map_or(0, |t| t.tick);
     let mut rng = thread_rng();
 
     // Iterate pops
-    for (entity, needs, relationships, mut cooldown) in pops.iter_mut() {
+    for (entity, needs, relationships, mut cooldown, traits, stress) in pops.iter_mut() {
         // Check cooldown
         if let Some(ref cd) = cooldown {
             if timestamp < cd.last_post_tick + POST_COOLDOWN {
@@ -107,6 +116,22 @@ pub fn post_grievance_system(
                                 };
                             }
                         }
+                    }
+
+                    // Integration: The Hum (INT-014)
+                    // Sensitive pops with high stress will post about the Hum
+                    let is_sensitive = traits.map_or(false, |t| t.has(Trait::Sensitive));
+                    let high_stress = stress.map_or(false, |s| s.accumulated_stress > 50.0);
+
+                    if is_sensitive && high_stress && s == Sentiment::Negative {
+                        target = None; // The target is the void
+                        let hum_messages = [
+                            "The Hum won't stop.",
+                            "Can anyone else hear the singing?",
+                            "The vibration is in my teeth.",
+                            "It is too loud today.",
+                        ];
+                        content = hum_messages.choose(&mut rng).unwrap().to_string();
                     }
 
                     let note = BulletinNote {
