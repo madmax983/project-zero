@@ -134,6 +134,34 @@ impl GridPosition {
     pub fn distance_chebyshev(&self, other: Self) -> u32 {
         self.x.abs_diff(other.x).max(self.y.abs_diff(other.y))
     }
+
+    /// Returns the Manhattan distance (taxicab distance) between two positions.
+    /// This is `|x1 - x2| + |y1 - y2|`.
+    ///
+    /// Returns `u64` because the sum of two max `u32` diffs can exceed `u32::MAX`.
+    #[must_use]
+    pub fn distance_manhattan(&self, other: Self) -> u64 {
+        u64::from(self.x.abs_diff(other.x)) + u64::from(self.y.abs_diff(other.y))
+    }
+
+    /// Returns the direction vector (dx, dy) to another position.
+    /// Values are -1, 0, or 1.
+    /// Uses `cmp` to avoid overflow from `other.x - self.x`.
+    #[must_use]
+    pub fn direction_to(&self, other: Self) -> (i32, i32) {
+        (
+            match other.x.cmp(&self.x) {
+                std::cmp::Ordering::Less => -1,
+                std::cmp::Ordering::Equal => 0,
+                std::cmp::Ordering::Greater => 1,
+            },
+            match other.y.cmp(&self.y) {
+                std::cmp::Ordering::Less => -1,
+                std::cmp::Ordering::Equal => 0,
+                std::cmp::Ordering::Greater => 1,
+            },
+        )
+    }
 }
 
 /// Target position for smooth camera movement (The "Destination").
