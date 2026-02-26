@@ -221,3 +221,11 @@
     - Updated `src/layer1/volatile.rs` to query `Health` components.
     - `handle_explosion_system` now iterates through health entities and applies damage.
 - **Tests:** `tests/integration/volatile_health.rs` (Integration test verified)
+
+### INT-014: The Hum -> Public Grievances
+- **Date:** 2026-02-26
+- **Systems connected:** `HumSource` (Environment) / `Trait::Sensitive` (Pop) -> `post_grievance_system` (Social)
+- **Glue added:**
+    - Updated `src/layer1/social/grievances.rs` to check for Sensitive trait and high stress.
+    - Overrides generic grievance content with Hum-specific messages.
+- **Tests:** `tests/integration/hum_grievances.rs` (Integration test verified)

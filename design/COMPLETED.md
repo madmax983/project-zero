@@ -174,3 +174,4 @@
 - [x] `INT-013` Integration: Volatile Explosion -> Pop Health — completed 2026-02-26
 - [x] `233` Public Grievances — `specs/233-public-grievances.md` — completed 2026-02-26
 - [x] `238` The Hum — `specs/238-the-hum.md` — completed 2026-02-26
+- [x] `INT-014` Integration: The Hum -> Public Grievances — completed 2026-02-26

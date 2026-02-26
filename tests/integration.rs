@@ -129,3 +129,6 @@ mod mining_colony;
 
 #[path = "integration/volatile_health.rs"]
 mod volatile_health;
+
+#[path = "integration/hum_grievances.rs"]
+mod hum_grievances;
