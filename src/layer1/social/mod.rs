@@ -511,12 +511,12 @@ mod tests {
 }
 /// Social debt system (Spec 130).
 pub mod debt;
+/// Public Grievances system (Spec 233).
+pub mod grievances;
 /// Old Guard logic: Generational friction between Founders and Immigrants (Spec 078).
 pub mod old_guard;
 #[cfg(test)]
 mod old_guard_tests;
-/// Public Grievances system (Spec 233).
-pub mod grievances;
 
 pub use debt::*;
 pub use grievances::*;

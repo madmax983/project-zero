@@ -1,10 +1,8 @@
 use super::Layer1SystemSet;
-use crate::layer1::*;
-use crate::layer1::social::old_guard::check_generational_friction_system;
 use crate::layer1::direct_link::clear_input_system;
-use crate::layer1::inspector::{
-    inspector_report_system, observe_inspector_system,
-};
+use crate::layer1::inspector::{inspector_report_system, observe_inspector_system};
+use crate::layer1::social::old_guard::check_generational_friction_system;
+use crate::layer1::*;
 use bevy_ecs::prelude::*;
 
 pub fn register(schedule: &mut Schedule) {

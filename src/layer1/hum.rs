@@ -109,7 +109,10 @@ mod tests {
 
         // Spawn a Hum Source at (5, 5)
         world.spawn((
-            HumSource { radius: 3.0, intensity: 1.0 },
+            HumSource {
+                radius: 3.0,
+                intensity: 1.0,
+            },
             GridPosition { x: 5, y: 5 },
         ));
 
@@ -179,7 +182,8 @@ mod tests {
 
         // This function must be implemented in the Green phase
         // We use the direct path once the module is created
-        let (action, score, target) = crate::layer1::actions::evaluate_listen_to_hum(&data, &buffer);
+        let (action, score, target) =
+            crate::layer1::actions::evaluate_listen_to_hum(&data, &buffer);
 
         assert_eq!(action, ActionType::ListenToTheHum);
         assert!(score > 0.0);

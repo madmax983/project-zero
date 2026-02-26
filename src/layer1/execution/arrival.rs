@@ -7,7 +7,7 @@ use crate::layer1::execution::components::{AtTarget, MovementTarget};
 use crate::layer1::farm::Farm;
 use crate::layer1::funeral::{Corpse, Grave, handle_bury_corpse};
 use crate::layer1::housing::Housing;
-use crate::layer1::items::{Equipment, UnequipEvent, Tool, ToolType, Clothing, ClothingType, Item};
+use crate::layer1::items::{Clothing, ClothingType, Equipment, Item, Tool, ToolType, UnequipEvent};
 use crate::layer1::map::GridPosition;
 use crate::layer1::memory::Memories;
 use crate::layer1::pop::Job;
@@ -441,12 +441,10 @@ fn handle_rest_arrival(
     if let Ok(mut house) = housing.get_mut(target_entity) {
         if house.residents.len() < house.capacity {
             house.residents.push(pop_entity);
-            commands
-                .entity(pop_entity)
-                .insert(AssignedTo {
-                    entity: target_entity,
-                    assignment_type: AssignmentType::HousingResident,
-                });
+            commands.entity(pop_entity).insert(AssignedTo {
+                entity: target_entity,
+                assignment_type: AssignmentType::HousingResident,
+            });
         }
     }
 }

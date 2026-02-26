@@ -1,6 +1,6 @@
 use super::Layer1SystemSet;
-use crate::layer1::*;
 use crate::layer1::blob::{blob_consumption_system, blob_spread_system};
+use crate::layer1::*;
 use bevy_ecs::prelude::*;
 
 pub fn register(schedule: &mut Schedule) {

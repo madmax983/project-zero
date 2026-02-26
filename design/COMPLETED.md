@@ -176,3 +176,4 @@
 - [x] `238` The Hum — `specs/238-the-hum.md` — completed 2026-02-26
 - [x] `INT-014` Integration: The Hum -> Public Grievances — completed 2026-02-26
 - [x] `237` Photophobic Resources — `specs/237-photophobic-resources.md` — completed 2026-02-26
+- [x] `234` The Visitor — `specs/234-the-visitor.md` — completed 2026-02-26

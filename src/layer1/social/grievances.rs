@@ -1,12 +1,12 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::needs::Needs;
 use crate::layer1::social::{AffinityChange, Relationships};
 use crate::layer1::stress::StressTracker;
 use crate::layer1::traits::{Trait, Traits};
 use crate::shared::time::SimulationTime;
+use bevy_ecs::prelude::*;
+use rand::Rng;
 use rand::seq::{IteratorRandom, SliceRandom};
 use rand::thread_rng;
-use rand::Rng;
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum Sentiment {
@@ -96,9 +96,8 @@ pub fn post_grievance_system(
 
                     // Attempt to find a target based on relationships
                     if let Some(rel) = relationships {
-                        let candidates: Vec<(Entity, f32)> = rel.affinities.iter()
-                            .map(|(&e, &val)| (e, val))
-                            .collect();
+                        let candidates: Vec<(Entity, f32)> =
+                            rel.affinities.iter().map(|(&e, &val)| (e, val)).collect();
 
                         if let Some((t_entity, t_val)) = candidates.choose(&mut rng) {
                             let matches_sentiment = match s {
@@ -153,7 +152,9 @@ pub fn post_grievance_system(
                     if let Some(ref mut cd) = cooldown {
                         cd.last_post_tick = timestamp;
                     } else {
-                        commands.entity(entity).insert(GrievanceCooldown { last_post_tick: timestamp });
+                        commands.entity(entity).insert(GrievanceCooldown {
+                            last_post_tick: timestamp,
+                        });
                     }
                 }
             }
@@ -173,11 +174,14 @@ pub fn read_board_system(
             let count = board.notes.len().min(3);
 
             if count > 0 {
-                let notes: Vec<&BulletinNote> = board.notes.choose_multiple(&mut rng, count).collect();
+                let notes: Vec<&BulletinNote> =
+                    board.notes.choose_multiple(&mut rng, count).collect();
 
                 for note in notes {
                     if let Some(target) = note.target {
-                        if target == reader { continue; }
+                        if target == reader {
+                            continue;
+                        }
 
                         let amount: f32 = match note.sentiment {
                             Sentiment::Positive => 5.0,
@@ -220,12 +224,12 @@ pub fn decay_notes_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_ecs::prelude::*;
-    use crate::layer1::pop::Pop;
-    use crate::layer1::needs::Needs;
-    use crate::layer1::social::{AffinityChange, Relationships};
     use crate::layer1::map::GridPosition;
+    use crate::layer1::needs::Needs;
+    use crate::layer1::pop::Pop;
+    use crate::layer1::social::{AffinityChange, Relationships};
     use crate::shared::time::SimulationTime;
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_bulletin_board_component() {
@@ -237,21 +241,22 @@ mod tests {
     fn test_post_grievance_low_morale() {
         let mut world = World::new();
 
-        let board_ent = world.spawn((
-            BulletinBoard::default(),
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let board_ent = world
+            .spawn((BulletinBoard::default(), GridPosition { x: 0, y: 0 }))
+            .id();
 
-        let pop = world.spawn((
-            Pop,
-            Needs {
-                hunger: 0.1,
-                rest: 0.1,
-                leisure: 0.1,
-                hygiene: 0.1,
-            },
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Needs {
+                    hunger: 0.1,
+                    rest: 0.1,
+                    leisure: 0.1,
+                    hygiene: 0.1,
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(post_grievance_system);
@@ -280,25 +285,31 @@ mod tests {
     #[test]
     fn test_cooldown_prevents_spam() {
         let mut world = World::new();
-        world.insert_resource(SimulationTime { tick: 1000, ..Default::default() });
+        world.insert_resource(SimulationTime {
+            tick: 1000,
+            ..Default::default()
+        });
 
-        let board_ent = world.spawn((
-            BulletinBoard::default(),
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let board_ent = world
+            .spawn((BulletinBoard::default(), GridPosition { x: 0, y: 0 }))
+            .id();
 
         // Pop with cooldown
-        let pop = world.spawn((
-            Pop,
-            Needs {
-                hunger: 0.1,
-                rest: 0.1,
-                leisure: 0.1,
-                hygiene: 0.1,
-            },
-            GridPosition { x: 0, y: 0 },
-            GrievanceCooldown { last_post_tick: 900 }, // Posted 100 ticks ago (Cooldown is 1440)
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Needs {
+                    hunger: 0.1,
+                    rest: 0.1,
+                    leisure: 0.1,
+                    hygiene: 0.1,
+                },
+                GridPosition { x: 0, y: 0 },
+                GrievanceCooldown {
+                    last_post_tick: 900,
+                }, // Posted 100 ticks ago (Cooldown is 1440)
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(post_grievance_system);
@@ -328,16 +339,22 @@ mod tests {
             timestamp: 0,
         };
 
-        let board_ent = world.spawn((
-            BulletinBoard { notes: vec![note] },
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let board_ent = world
+            .spawn((
+                BulletinBoard { notes: vec![note] },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
-        let reader_pop = world.spawn((
-            Pop,
-            GridPosition { x: 0, y: 0 },
-            crate::layer1::social::grievances::ReadingBoard { board_entity: board_ent },
-        )).id();
+        let reader_pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 0, y: 0 },
+                crate::layer1::social::grievances::ReadingBoard {
+                    board_entity: board_ent,
+                },
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(read_board_system);
@@ -356,29 +373,34 @@ mod tests {
     #[test]
     fn test_note_decay() {
         let mut world = World::new();
-        world.insert_resource(SimulationTime { tick: 5000, ..Default::default() });
+        world.insert_resource(SimulationTime {
+            tick: 5000,
+            ..Default::default()
+        });
 
-        let board_ent = world.spawn((
-            BulletinBoard {
-                notes: vec![
-                    BulletinNote {
-                        author: Entity::PLACEHOLDER,
-                        target: None,
-                        sentiment: Sentiment::Neutral,
-                        content: "Old".to_string(),
-                        timestamp: 100, // 5000 - 100 = 4900 > 4320. Should decay.
-                    },
-                    BulletinNote {
-                        author: Entity::PLACEHOLDER,
-                        target: None,
-                        sentiment: Sentiment::Neutral,
-                        content: "New".to_string(),
-                        timestamp: 4000, // 5000 - 4000 = 1000 < 4320. Should keep.
-                    },
-                ],
-            },
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let board_ent = world
+            .spawn((
+                BulletinBoard {
+                    notes: vec![
+                        BulletinNote {
+                            author: Entity::PLACEHOLDER,
+                            target: None,
+                            sentiment: Sentiment::Neutral,
+                            content: "Old".to_string(),
+                            timestamp: 100, // 5000 - 100 = 4900 > 4320. Should decay.
+                        },
+                        BulletinNote {
+                            author: Entity::PLACEHOLDER,
+                            target: None,
+                            sentiment: Sentiment::Neutral,
+                            content: "New".to_string(),
+                            timestamp: 4000, // 5000 - 4000 = 1000 < 4320. Should keep.
+                        },
+                    ],
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(decay_notes_system);

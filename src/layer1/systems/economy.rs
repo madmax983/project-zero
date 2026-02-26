@@ -1,7 +1,9 @@
 use super::Layer1SystemSet;
-use crate::layer1::*;
-use crate::layer1::social::old_guard::{apply_founder_benefits_system, apply_mood_modifiers_system};
 use crate::layer1::inspector::spawn_inspector_system;
+use crate::layer1::social::old_guard::{
+    apply_founder_benefits_system, apply_mood_modifiers_system,
+};
+use crate::layer1::*;
 use bevy_ecs::prelude::*;
 
 pub fn register(schedule: &mut Schedule) {
