@@ -118,6 +118,9 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world.contains_resource::<crate::layer1::unrest::Unrest>() {
         world.init_resource::<crate::layer1::unrest::Unrest>();
     }
+    if !world.contains_resource::<crate::layer1::atmosphere::CorrosiveAtmosphere>() {
+        world.init_resource::<crate::layer1::atmosphere::CorrosiveAtmosphere>();
+    }
 
     // Add our schedule if not yet added
     {

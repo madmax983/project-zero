@@ -31,6 +31,7 @@ use super::stockpile::Stockpile;
 use crate::layer1::access_control::AccessControl;
 use crate::layer1::admin::{AdminConsumer, AdminProvider, Office};
 use crate::layer1::ai_core::AICore;
+use crate::layer1::atmosphere::CorrosionResistant;
 use crate::layer1::control::DoorControl;
 use crate::layer1::drone::DroneHub;
 use crate::layer1::energy::{Conduit, FuelConsumer, PowerConsumer, PowerSource};
@@ -1212,6 +1213,22 @@ fn spawn_building(
     // Admin Consumer (All buildings consume admin)
     // Default 1.0, maybe scale by tier later?
     entity.insert(AdminConsumer { demand: 1.0 });
+
+    // Corrosion Resistance based on Material
+    match material {
+        MaterialType::Stone => {
+            entity.insert(CorrosionResistant { factor: 0.5 });
+        }
+        MaterialType::Metal => {
+            entity.insert(CorrosionResistant { factor: 0.5 });
+        }
+        MaterialType::Gold => {
+            entity.insert(CorrosionResistant { factor: 1.0 });
+        }
+        MaterialType::Wood => {
+            // Wood rots, so no resistance (0.0)
+        }
+    }
 
     match building_type {
         BuildingType::Office => {

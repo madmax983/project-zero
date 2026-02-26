@@ -364,6 +364,8 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
             crate::layer1::atmosphere::update_atmosphere_system
                 .after(waste_pollution_bridge)
                 .after(crate::layer1::wind::update_wind_system),
+            crate::layer1::atmosphere::corrosion_damage_system
+                .after(crate::layer1::atmosphere::update_atmosphere_system),
             crate::layer1::terraforming::update_planetary_atmosphere_system
                 .after(crate::layer1::atmosphere::update_atmosphere_system),
             crate::layer1::atmosphere::update_weather_diffusion_system
