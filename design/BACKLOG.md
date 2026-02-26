@@ -1,48 +1,189 @@
-# Backlog
+# 246: Legacy Code
 
-Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, implement.
+## Overview
 
----
+"The colony's central computer is getting slow, bloated, and 'haunted' by old protocols."
 
-## High Priority / Core Tech
+As the colony grows and researches new tech, the **Central Mainframe** accumulates **Bloat**.
+- **Bloat**: Increases latency for automated tasks (Research speed, Turret targeting speed, Auto-Door response time).
+- **Reformat**: A maintenance action to clear Bloat. It restores speed but requires a **System Shutdown** (0 Power/Control) for a duration.
+- **Risk**: Deferring reformat leads to critical failures (e.g., "Turret Lag" causes misses during raids). Doing it risks vulnerability during the reboot.
 
-- [ ] `014` Rendering Architecture — `specs/014-rendering-architecture.md`
+## Dependencies
 
-## MVP — Layer 1: Colony Simulation
+- `029` — Knowledge System (Research speed)
+- `146` — Command Center (Mainframe entity)
+- `043` — Defensive Structures (Turret impact)
 
-- [ ] `186` Bio-Architecture — `specs/186-bio-architecture.md`
-- [ ] `187` Adaptive Biology — `specs/187-adaptive-biology.md`
-- [ ] `188` The Long Watch — `specs/188-the-long-watch.md`
-- [ ] `189` Gravity Engineering — `specs/189-gravity-engineering.md`
-- [ ] `192` Planetary Weather Fronts — `specs/192-planetary-weather-fronts.md`
-- [ ] `202` Swarm Intelligence — `specs/202-swarm-intelligence.md`
-- [ ] `208` Resonant Architecture — `specs/208-resonant-architecture.md`
-- [ ] `210` Ammunition Logistics — `specs/210-ammunition-logistics.md`
-- [ ] `212` Planetary Core Tap — `specs/212-planetary-core-tap.md`
-- [ ] `215` Safehouse Contracts — `specs/215-safehouse-contracts.md`
-- [ ] `224` The Scapegoat — `specs/224-the-scapegoat.md`
-- [ ] `231` Memorial Forests — `specs/231-memorial-forests.md`
-- [ ] `232` Protest Crowds — `specs/232-protest-crowds.md`
-- [ ] `239` Operational Detritus — `specs/239-operational-detritus.md`
-- [ ] `241` Campaign Season — `specs/241-campaign-season.md`
-- [ ] `242` The Echo — `specs/242-the-echo.md`
+## RED Phase: Tests First
 
-## MVP — Layer 2: System Simulation
+Write these tests in `src/layer1/tech/legacy_code_tests.rs`. They will initially FAIL.
 
-- [ ] `102` Orbital Drop Logistics — `specs/102-orbital-drop-logistics.md`
-- [ ] `105` Launch Logistics — `specs/105-launch-logistics.md`
-- [ ] `149` Cometary Injection — `specs/149-cometary-injection.md`
-- [ ] `150` Sensor Ambiguity — `specs/150-sensor-ambiguity.md`
-- [ ] `158` Fleet Management (Merge & Split) — `specs/158-fleet-management.md`
-- [ ] `169` Subspace Currents — `specs/169-subspace-currents.md`
-- [ ] `180` The Void Between — `specs/180-the-void-between.md`
-- [ ] `201` Space Lanes — `specs/201-space-lanes.md`
-- [ ] `209` Planetary Governance — `specs/209-planetary-governance.md`
-- [ ] `226` Ship Personalities — `specs/226-ship-personalities.md`
-- [ ] `229` Station Keeping — `specs/229-station-keeping.md`
-- [ ] `230` Zero-G Industry — `specs/230-zero-g-industry.md`
-- [ ] `243` Thermal Bloom — `specs/243-thermal-bloom.md`
+```rust
+#[cfg(test)]
+mod tests {
+    use bevy_ecs::prelude::*;
+    use crate::layer1::tech::legacy_code::{Mainframe, Bloat, update_bloat_system, reformat_system, SystemStatus};
+    use crate::layer1::research::ResearchRate;
+    use crate::shared::time::SimulationTime;
 
-## MVP — Layer 3: Galaxy Simulation
+    #[test]
+    fn test_bloat_accumulation() {
+        let mut world = World::new();
+        world.insert_resource(SimulationTime { tick: 100 });
 
-- [ ] `177` Stellar Cartography — `specs/177-stellar-cartography.md`
+        let mainframe = world.spawn((
+            Mainframe,
+            Bloat { current: 0.0, rate: 0.1 },
+            SystemStatus::Online,
+        )).id();
+
+        // Run system
+        let mut schedule = Schedule::default();
+        schedule.add_systems(update_bloat_system);
+        schedule.run(&mut world);
+
+        let bloat = world.get::<Bloat>(mainframe).unwrap();
+        assert!(bloat.current > 0.0);
+    }
+
+    #[test]
+    fn test_bloat_slows_research() {
+        // This test assumes a system modifies ResearchRate based on Bloat
+        // or we test the helper function `calculate_efficiency`
+
+        let bloat_low = Bloat { current: 10.0, rate: 0.0 };
+        assert!(bloat_low.efficiency() > 0.9);
+
+        let bloat_high = Bloat { current: 90.0, rate: 0.0 };
+        assert!(bloat_high.efficiency() < 0.2);
+    }
+
+    #[test]
+    fn test_reformat_clears_bloat_but_disables_system() {
+        let mut world = World::new();
+        let mainframe = world.spawn((
+            Mainframe,
+            Bloat { current: 100.0, rate: 0.1 },
+            SystemStatus::Online,
+        )).id();
+
+        // Trigger Reformat
+        // Assume event or component trigger
+        crate::layer1::tech::legacy_code::start_reformat(&mut world, mainframe);
+
+        let status = world.get::<SystemStatus>(mainframe).unwrap();
+        assert_eq!(*status, SystemStatus::Rebooting(100)); // 100 ticks duration
+
+        // Advance time to finish
+        // (Mocking system update for reboot logic)
+        crate::layer1::tech::legacy_code::finish_reformat(&mut world, mainframe);
+
+        let bloat = world.get::<Bloat>(mainframe).unwrap();
+        assert_eq!(bloat.current, 0.0);
+
+        let status = world.get::<SystemStatus>(mainframe).unwrap();
+        assert_eq!(*status, SystemStatus::Online);
+    }
+}
+```
+
+## GREEN Phase: Minimal Implementation
+
+### 1. Components
+
+```rust
+// src/layer1/tech/legacy_code.rs
+
+use bevy_ecs::prelude::*;
+
+#[derive(Component)]
+pub struct Mainframe;
+
+#[derive(Component, Default, Debug)]
+pub struct Bloat {
+    pub current: f32, // 0-100
+    pub rate: f32,    // e.g. 0.01 per tick
+}
+
+impl Bloat {
+    pub fn efficiency(&self) -> f32 {
+        // Non-linear decay? Or simple linear?
+        // 0 bloat = 1.0
+        // 100 bloat = 0.1 (min efficiency)
+        (1.0 - (self.current / 110.0)).max(0.1)
+    }
+}
+
+#[derive(Component, Debug, PartialEq, Eq)]
+pub enum SystemStatus {
+    Online,
+    Rebooting(u32), // Ticks remaining
+    Offline,
+}
+```
+
+### 2. Systems
+
+```rust
+pub fn update_bloat_system(
+    mut query: Query<(&mut Bloat, &mut SystemStatus)>,
+) {
+    for (mut bloat, mut status) in query.iter_mut() {
+        match *status {
+            SystemStatus::Online => {
+                bloat.current = (bloat.current + bloat.rate).min(100.0);
+            }
+            SystemStatus::Rebooting(ref mut ticks) => {
+                if *ticks > 0 {
+                    *ticks -= 1;
+                } else {
+                    // Done
+                    bloat.current = 0.0;
+                    *status = SystemStatus::Online;
+                }
+            }
+            _ => {}
+        }
+    }
+}
+
+pub fn start_reformat(world: &mut World, entity: Entity) {
+    if let Some(mut status) = world.get_mut::<SystemStatus>(entity) {
+        *status = SystemStatus::Rebooting(500); // Constant for now
+    }
+}
+
+pub fn finish_reformat(world: &mut World, entity: Entity) {
+    // Helper for testing
+    if let Some(mut status) = world.get_mut::<SystemStatus>(entity) {
+        if let SystemStatus::Rebooting(_) = *status {
+             *status = SystemStatus::Rebooting(0);
+             // Let system handle the switch next tick
+        }
+    }
+}
+```
+
+## REFACTOR Phase: Quality & Design
+
+- **Integration**: `ResearchSystem` must query `Mainframe` bloat to apply efficiency penalty.
+- **Integration**: `Turret` system must check `Mainframe` status. If `Rebooting`, turrets default to `Manual` (low accuracy) or `Offline`.
+- **UI**: Show "System Efficiency: 85%" and a "Reformat Now" button with warning text.
+
+## Acceptance Criteria
+
+- [ ] `Bloat` accumulates.
+- [ ] Efficiency calculation exists.
+- [ ] `Reformat` action resets Bloat but imposes `Rebooting` state.
+- [ ] Tests pass.
+
+## Technical Guidance
+
+- Ensure `Mainframe` entity is unique (singleton).
+- Reboot duration should scale with how much bloat was cleared (longer delay for worse neglect).
+
+## Questions
+
+*Builder: Does bloat affect life support?*
+*Architect: No, critical systems are hardwired (analog). Only "Smart" systems lag.*
