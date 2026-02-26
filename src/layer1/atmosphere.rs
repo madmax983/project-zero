@@ -4,10 +4,58 @@ use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::health::Health;
 use crate::layer1::map::GridPosition;
 use crate::layer1::pop::Pop;
+use crate::layer1::structure::Structure;
 use crate::layer1::weather::{WeatherState, WeatherType};
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
+
+/// Global corrosive atmosphere settings.
+#[derive(Resource, Default, Debug)]
+pub struct CorrosiveAtmosphere {
+    /// Intensity of corrosion (0.0 to 1.0 multiplier).
+    pub intensity: f32,
+}
+
+/// Component that mitigates corrosion damage.
+#[derive(Component, Default, Debug)]
+pub struct CorrosionResistant {
+    /// Resistance factor (0.0 = no resistance, 1.0 = immunity).
+    pub factor: f32,
+}
+
+/// Marker component for entities protected from atmospheric effects (indoors).
+#[derive(Component, Default, Debug)]
+pub struct ProtectedFromAtmosphere;
+
+/// System to apply corrosion damage to exposed structures.
+pub fn corrosion_damage_system(
+    atmosphere: Res<CorrosiveAtmosphere>,
+    mut query: Query<(
+        &mut Structure,
+        Option<&CorrosionResistant>,
+        Option<&ProtectedFromAtmosphere>,
+    )>,
+) {
+    if atmosphere.intensity <= f32::EPSILON {
+        return;
+    }
+
+    let base_damage = 1.0 * atmosphere.intensity;
+
+    for (mut structure, resistance, protected) in &mut query {
+        if protected.is_some() {
+            continue;
+        }
+
+        let resist_factor = resistance.map_or(0.0, |r| r.factor);
+        let effective_damage = base_damage * (1.0 - resist_factor).max(0.0);
+
+        if effective_damage > 0.0 {
+            structure.current_hp = (structure.current_hp - effective_damage).max(0.0);
+        }
+    }
+}
 
 /// Types of atmospheric gases.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]

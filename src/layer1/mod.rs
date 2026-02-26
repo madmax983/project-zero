@@ -579,6 +579,8 @@ pub use wind::*;
 /// Soil fertility system (Spec 059).
 pub mod fertility;
 pub use fertility::*;
+#[cfg(test)]
+mod atmosphere_corrosion_tests;
 mod atmosphere_tides_tests;
 #[cfg(test)]
 mod vacuum_welding_tests;
