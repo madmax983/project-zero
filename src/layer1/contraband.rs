@@ -118,6 +118,7 @@ mod tests {
                 Inventory {
                     items: vec![InventoryItem {
                         item_type: ItemType::Alcohol,
+                        entity: None,
                     }],
                 },
             ))

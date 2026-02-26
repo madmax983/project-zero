@@ -328,6 +328,7 @@ mod tests {
 
         let permit = InventoryItem {
             item_type: ItemType::BuildingPermit,
+            entity: None,
         };
         world
             .get_mut::<Inventory>(term_a)
@@ -374,6 +375,7 @@ mod tests {
                     target_terminal_id: 2,
                     payload: InventoryItem {
                         item_type: ItemType::None,
+                        entity: None,
                     },
                     progress: 0.0,
                     speed: 1.0,

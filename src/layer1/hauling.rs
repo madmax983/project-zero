@@ -155,6 +155,7 @@ fn handle_drop_off(world: &mut World, pop_entity: Entity, carrying: Carrying, po
             if let Some(mut inventory) = world.get_mut::<Inventory>(target) {
                 inventory.add(InventoryItem {
                     item_type: ItemType::BuildingPermit,
+                    entity: None,
                 });
             }
             world.entity_mut(pop_entity).remove::<Carrying>();
@@ -367,20 +368,50 @@ fn handle_drop_off_item(
     };
 
     if let Some(container_entity) = container {
+        // Check for Photophobic component to preserve entity
+        let is_photophobic = world
+            .entity(item_entity.0)
+            .contains::<crate::layer1::photophobic::Photophobic>();
+
         // Convert Item Entity to InventoryItem struct
         if let Some(item) = world.get::<Item>(item_entity.0) {
-            let inv_item = InventoryItem {
-                item_type: item.item_type.clone(),
-            };
-            if let Some(mut inv) = world.get_mut::<Inventory>(container_entity) {
-                inv.add(inv_item);
+            let item_type = item.item_type.clone();
+
+            if is_photophobic {
+                // Preserve Entity: Parent to container
+                world.entity_mut(item_entity.0).remove::<GridPosition>();
+                world
+                    .entity_mut(item_entity.0)
+                    .insert(crate::layer1::photophobic::Parent(container_entity));
+
+                let inv_item = InventoryItem {
+                    item_type,
+                    entity: Some(item_entity.0),
+                };
+                if let Some(mut inv) = world.get_mut::<Inventory>(container_entity) {
+                    inv.add(inv_item);
+                }
+                // Do NOT despawn
+            } else {
+                // Standard Logic: Convert to data and despawn
+                let inv_item = InventoryItem {
+                    item_type,
+                    entity: None,
+                };
+                if let Some(mut inv) = world.get_mut::<Inventory>(container_entity) {
+                    inv.add(inv_item);
+                }
+                // Despawn the carried item entity as it is now inside the inventory
+                world.despawn(item_entity.0);
             }
         }
-        // Despawn the carried item entity as it is now inside the inventory
-        world.despawn(item_entity.0);
     } else {
         // Drop item on ground
         world.entity_mut(item_entity.0).insert(pos);
+        // Remove Parent if present (e.g. if we support pickup from inventory in future)
+        world
+            .entity_mut(item_entity.0)
+            .remove::<crate::layer1::photophobic::Parent>();
     }
 
     world.entity_mut(pop_entity).remove::<CarryingItem>();

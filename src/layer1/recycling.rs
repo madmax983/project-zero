@@ -81,6 +81,7 @@ mod tests {
             Inventory {
                 items: vec![InventoryItem {
                     item_type: ItemType::Corpse(corpse),
+                    entity: None,
                 }],
             },
         ));
@@ -115,9 +116,11 @@ mod tests {
                 items: vec![
                     InventoryItem {
                         item_type: ItemType::Waste,
+                        entity: None,
                     },
                     InventoryItem {
                         item_type: ItemType::Waste,
+                        entity: None,
                     },
                 ],
             },

@@ -659,3 +659,7 @@ pub use kinetic_storage::*;
 /// The Hum system (Spec 238).
 pub mod hum;
 pub use hum::*;
+
+/// Photophobic resources system (Spec 237).
+pub mod photophobic;
+pub use photophobic::*;

@@ -6,6 +6,8 @@ use bevy_ecs::prelude::*;
 pub struct InventoryItem {
     /// The specific type of the item (e.g., Potato, Curio).
     pub item_type: ItemType,
+    /// The optional entity associated with this item (if preserved).
+    pub entity: Option<Entity>,
 }
 
 /// Component for storing personal items (tools, curios, etc.).
@@ -32,6 +34,7 @@ mod tests {
         let mut inventory = Inventory::default();
         let item = InventoryItem {
             item_type: ItemType::Potato,
+            entity: None,
         };
         inventory.add(item.clone());
         assert_eq!(inventory.items.len(), 1);

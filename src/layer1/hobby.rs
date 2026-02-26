@@ -120,7 +120,10 @@ pub fn execute_hobby_system(
             };
 
             if let Some(t) = item_type {
-                inv.add(InventoryItem { item_type: t });
+                inv.add(InventoryItem {
+                    item_type: t,
+                    entity: None,
+                });
             }
         }
     }
