@@ -58,6 +58,10 @@ pub enum Trait {
     Compassionate,
     /// Sensitive to The Hum (Spec 238).
     Sensitive,
+    /// Manufactured in a Clone Vat.
+    Clone,
+    /// Reduced social needs.
+    Soulless,
 }
 
 impl Trait {
@@ -90,6 +94,8 @@ impl Trait {
             Self::Mutant => "Mutant",
             Self::Compassionate => "Compassionate",
             Self::Sensitive => "Sensitive",
+            Self::Clone => "Clone",
+            Self::Soulless => "Soulless",
         }
     }
 }

@@ -671,3 +671,7 @@ pub use hum::*;
 /// Photophobic resources system (Spec 237).
 pub mod photophobic;
 pub use photophobic::*;
+
+/// Clone Vat system (Spec 240).
+pub mod clone_vat;
+pub use clone_vat::*;

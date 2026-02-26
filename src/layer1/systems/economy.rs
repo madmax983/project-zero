@@ -20,6 +20,7 @@ pub fn register(schedule: &mut Schedule) {
             hopper_system.after(produce_food_system),
             process_refining_system,
             crate::layer1::gene_bank::process_cloning_system,
+            crate::layer1::clone_vat::process_clone_vats_system,
             crate::layer1::permit::permit_activation_system,
             crate::layer1::permit::enforce_permit_restrictions_system
                 .before(crate::layer1::energy::power_grid_system),

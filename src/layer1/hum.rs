@@ -173,6 +173,7 @@ mod tests {
             is_memetic_carrier: false,
             health: None,
             insulation: 0.0,
+            carrying_item_type: None,
         };
 
         // Add a Hum Source candidate
@@ -220,6 +221,7 @@ mod tests {
             is_memetic_carrier: false,
             health: None,
             insulation: 0.0,
+            carrying_item_type: None,
         };
 
         let (action, score, _) = crate::layer1::actions::evaluate_listen_to_hum(&data, &buffer);
