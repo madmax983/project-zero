@@ -1,5 +1,6 @@
 use crate::layer1::map::GridPosition;
 use crate::layer1::structure::Structure;
+use crate::layer1::health::Health;
 use bevy_ecs::prelude::*;
 
 /// Component representing a volatile item that degrades over time.
@@ -57,14 +58,25 @@ pub fn volatile_decay_system(
 pub fn handle_explosion_system(
     mut events: EventReader<ExplosionEvent>,
     mut structures: Query<(&GridPosition, &mut Structure)>,
+    mut healths: Query<(&GridPosition, &mut Health)>,
 ) {
     for event in events.read() {
+        // Damage Structures
         for (pos, mut structure) in &mut structures {
             let dx = (event.center.x - pos.x).abs();
             let dy = (event.center.y - pos.y).abs();
             // dx and dy are abs(), so they are non-negative.
             if (dx.max(dy) as u32) <= event.radius {
                 structure.current_hp -= event.damage;
+            }
+        }
+
+        // Damage Living Entities (Pops, Fauna, etc.)
+        for (pos, mut health) in &mut healths {
+            let dx = (event.center.x - pos.x).abs();
+            let dy = (event.center.y - pos.y).abs();
+            if (dx.max(dy) as u32) <= event.radius {
+                health.take_damage(event.damage);
             }
         }
     }

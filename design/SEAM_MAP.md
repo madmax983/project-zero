@@ -213,3 +213,11 @@
     - Registered in `src/simulation.rs` after `fleet_movement_system`.
     - Automatically unloads cargo from fleets orbiting the colony location.
 - **Tests:** `tests/integration/mining_colony.rs` (Integration test verified)
+
+### INT-013: Volatile Explosion -> Pop Health
+- **Date:** 2026-02-26
+- **Systems connected:** `handle_explosion_system` (Volatile) -> `Health` (Pop/Fauna)
+- **Glue added:**
+    - Updated `src/layer1/volatile.rs` to query `Health` components.
+    - `handle_explosion_system` now iterates through health entities and applies damage.
+- **Tests:** `tests/integration/volatile_health.rs` (Integration test verified)

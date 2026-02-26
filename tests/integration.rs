@@ -126,3 +126,6 @@ mod customs_vetting;
 mod hygiene_recycling;
 #[path = "integration/mining_colony.rs"]
 mod mining_colony;
+
+#[path = "integration/volatile_health.rs"]
+mod volatile_health;
