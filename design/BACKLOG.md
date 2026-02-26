@@ -25,6 +25,7 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `232` Protest Crowds — `specs/232-protest-crowds.md`
 - [ ] `239` Operational Detritus — `specs/239-operational-detritus.md`
 - [ ] `241` Campaign Season — `specs/241-campaign-season.md`
+- [ ] `242` The Echo — `specs/242-the-echo.md`
 
 ## MVP — Layer 2: System Simulation
 
