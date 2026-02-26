@@ -331,6 +331,9 @@ pub fn clutter_cleaning_system(
 -   **Balance**: Tune accumulation vs cleaning rates. If 1 pop generates 0.01/tick, it takes 10,000 ticks to fill. Cleaning removes 5.0/tick (500x faster). This means 1 Janitor can maintain ~500 Pops? Maybe tune accumulation up or cleaning down.
 -   **Visualization**: (Future) Clutter level should render as decals or particles.
 
-## 8. Questions
+## 8. Design Clarifications
 
--   Should "Clean" be a specific job or a general task for idle pops? (Spec assumes Janitor Job).
+### Job vs Task
+-   "Clean" is primarily a **Janitor Job** (Job ID: `Janitor`).
+-   However, if Clutter > 80.0 (Critical), **Idle Pops** (no job assigned) may perform `Clean` actions at low priority as a "Community Service" task to prevent total degradation.
+-   Janitors gain XP in `Maintenance`. Idle cleaners gain no XP.

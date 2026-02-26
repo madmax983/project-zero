@@ -114,6 +114,42 @@ mod tests {
         let stone_count = world.query::<&LivingStone>().iter(&world).len();
         assert_eq!(stone_count, 0, "Stones should be consumed");
     }
+
+    #[test]
+    fn test_living_stone_in_inventory_merge() {
+        let mut world = World::new();
+        let mut schedule = Schedule::default();
+        schedule.add_systems(form_golem_system);
+
+        // Spawn a Stockpile building at (5, 5) with Inventory containing 5 Living Stones
+        // Note: This assumes Inventory system stores items as entities or data we can query.
+        // For this test, we assume the system can "see" stones inside inventory at the building's location.
+
+        let stockpile = world.spawn((
+            GridPosition { x: 5, y: 5 },
+            // Inventory component with 5 LivingStone items
+            // ... (Mock inventory setup)
+        )).id();
+
+        // If items are entities parented to stockpile:
+        for _ in 0..5 {
+            world.spawn((
+                Item { item_type: ItemType::LivingStone, ..Default::default() },
+                LivingStone { last_move_tick: 0 },
+                bevy_ecs::hierarchy::Parent(stockpile), // Parented to building
+                // Note: No GridPosition on item itself, system must resolve parent position
+            ));
+        }
+
+        // Run system
+        schedule.run(&mut world);
+
+        // Expect Golem at (5, 5)
+        let golem_count = world.query::<(&StoneGolem, &GridPosition)>().iter(&world)
+            .filter(|(_, pos)| pos.x == 5 && pos.y == 5)
+            .count();
+        assert_eq!(golem_count, 1, "Stones in inventory should fuse into Golem at building location");
+    }
 }
 ```
 
