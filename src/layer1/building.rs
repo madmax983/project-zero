@@ -311,6 +311,8 @@ pub enum BuildingType {
     AtmosphericProcessor,
     /// Stores genetic samples of flora and fauna.
     GeneBank,
+    /// Produces Pops from Rations and Energy.
+    CloneVat,
     /// Facility for pops to clean themselves (consumes Water).
     Shower,
     /// Converts Waste and Corpses into Rations.
@@ -341,9 +343,10 @@ impl BuildingType {
 
             Self::Library | Self::BulletinBoard => Some((Category::Research, Tier::Basic)),
             Self::Observatory | Self::CryoPod => Some((Category::Research, Tier::Advanced)),
-            Self::AICore | Self::AtmosphericProcessor | Self::GeneBank => {
-                Some((Category::Research, Tier::HighTech))
-            }
+            Self::AICore
+            | Self::AtmosphericProcessor
+            | Self::GeneBank
+            | Self::CloneVat => Some((Category::Research, Tier::HighTech)),
 
             _ => None,
         }
@@ -467,6 +470,7 @@ impl BuildingType {
             | Self::AncientFabricator
             | Self::AtmosphericProcessor
             | Self::GeneBank
+            | Self::CloneVat
             | Self::Shower => true,
 
             // Small or Open structures
@@ -521,6 +525,7 @@ impl BuildingType {
             Self::TrashCannon => -2.0, // Industrial machinery is ugly
             Self::Heater | Self::ServerBank => 0.0,
             Self::CommandCenter | Self::AICore | Self::CryoPod | Self::GeneBank => 0.0,
+            Self::CloneVat => -5.0, // Unsettling
             _ => 0.0,
         }
     }
@@ -536,6 +541,7 @@ impl BuildingType {
             Self::Recycler => 4.0,
             Self::TradeDepot => 4.0,
             Self::Grave | Self::Well | Self::HydroponicsBay | Self::LifeSupport => 2.0,
+            Self::CloneVat => 3.0,
             _ => 0.0,
         }
     }
@@ -567,7 +573,7 @@ impl BuildingType {
             Self::CryoPod => Some(Tech::Medical),
             Self::AuroralCollector => Some(Tech::Electromagnetism),
             Self::AtmosphericProcessor => Some(Tech::Terraforming),
-            Self::GeneBank => Some(Tech::Medical),
+            Self::GeneBank | Self::CloneVat => Some(Tech::Medical),
             Self::Shower => Some(Tech::SocialStructures),
             Self::Recycler => Some(Tech::Medical),
             Self::BulletinBoard => Some(Tech::SocialStructures),
@@ -641,6 +647,7 @@ impl BuildingType {
             Self::AuroralCollector => "Auroral Collector",
             Self::AtmosphericProcessor => "Atmospheric Processor",
             Self::GeneBank => "Gene Bank",
+            Self::CloneVat => "Clone Vat",
             Self::Shower => "Shower",
             Self::Recycler => "Recycler",
             Self::BulletinBoard => "Bulletin Board",
@@ -696,6 +703,7 @@ impl BuildingType {
             Self::AuroralCollector => 'Ψ',
             Self::AtmosphericProcessor => '@',
             Self::GeneBank => '🧬',
+            Self::CloneVat => '⚗',
             Self::Shower => '🚿',
             Self::Recycler => '♻',
             Self::BulletinBoard => 'B',
@@ -733,6 +741,11 @@ impl BuildingType {
                 ..ColonyResources::zeroed()
             },
             Self::GeneBank => ColonyResources {
+                metal: 50.0,
+                stone: 20.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::CloneVat => ColonyResources {
                 metal: 50.0,
                 stone: 20.0,
                 ..ColonyResources::zeroed()
@@ -1301,7 +1314,8 @@ fn spawn_building(
         | BuildingType::DroneHub
         | BuildingType::CryoPod
         | BuildingType::AtmosphericProcessor
-        | BuildingType::GeneBank => configure_tech(&mut entity, building_type),
+        | BuildingType::GeneBank
+        | BuildingType::CloneVat => configure_tech(&mut entity, building_type),
         BuildingType::Shower => configure_civic(&mut entity, building_type),
         BuildingType::Recycler => {
             // Recycler configuration
@@ -1975,6 +1989,21 @@ fn configure_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 ShiftSchedule::default(),
             ));
         }
+        BuildingType::CloneVat => {
+            entity.insert((
+                crate::layer1::clone_vat::CloneVat::default(),
+                PowerConsumer {
+                    demand: 20.0, // High power demand
+                    active: false,
+                },
+                LightSource {
+                    radius: 4.0,
+                    intensity: 0.6,
+                    color: (0, 255, 100), // Greenish bio-light
+                },
+                ShiftSchedule::default(),
+            ));
+        }
         _ => {}
     }
 }
@@ -2208,7 +2237,8 @@ mod tests {
             BuildingType::AtmosphericProcessor.next(),
             BuildingType::GeneBank
         );
-        assert_eq!(BuildingType::GeneBank.next(), BuildingType::Shower);
+        assert_eq!(BuildingType::GeneBank.next(), BuildingType::CloneVat);
+        assert_eq!(BuildingType::CloneVat.next(), BuildingType::Shower);
         assert_eq!(BuildingType::Shower.next(), BuildingType::Recycler);
         assert_eq!(BuildingType::Recycler.next(), BuildingType::BulletinBoard);
         assert_eq!(BuildingType::BulletinBoard.next(), BuildingType::Housing);
@@ -2419,6 +2449,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::GeneBank);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::CloneVat);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Shower);

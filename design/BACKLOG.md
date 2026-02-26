@@ -26,7 +26,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `232` Protest Crowds — `specs/232-protest-crowds.md`
 - [ ] `236` The Direct Link — `specs/236-direct-link.md`
 - [ ] `239` Operational Detritus — `specs/239-operational-detritus.md`
-- [ ] `240` Clone Vats — `specs/240-clone-vats.md`
 
 ## MVP — Layer 2: System Simulation
 
