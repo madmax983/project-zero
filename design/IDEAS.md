@@ -6393,3 +6393,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Law (Legitimacy) vs. Reality (War).
 
 ---
+
+## Localized Gravity Vectors
+
+**Layer:** 1
+
+**Fantasy:** Walking on the ceiling. The station is a Escher painting.
+
+**Mechanic:** "Gravity Plates" define "Down" for adjacent tiles. You can build rooms on walls or ceilings. Pops transition orientation when walking over curved plates. Zero-G zones allow floating.
+
+**Emergence:** You build a high-density housing block on the ceiling of the hangar to save floor space. A power failure kills the gravity plates, and 500 people fall into the parked starships below.
+
+**Tension:** Density (use all surfaces) vs. Complexity/Disorientation risk.
+
+---
+
+## Surgical Addiction
+
+**Layer:** 1
+
+**Fantasy:** The flesh is boring. I want chrome.
+
+**Mechanic:** Pops with "Transhumanist" traits get a mood boost from cybernetics but develop an "Addiction" to surgery. They demand more and more upgrades (Eyes, Legs, Skin). If denied, they perform "Self-Surgery" (high injury risk).
+
+**Emergence:** Your workforce starts dismantling the base walls to get scrap metal to build themselves new arms. You have an army of super-soldiers who are slowly eating the station they defend.
+
+**Tension:** Power (Augmentation) vs. Stability (Body Dysmorphia).
+
+---
+
+## Emergency Beacon Bait
+
+**Layer:** 2
+
+**Fantasy:** The spider in the web.
+
+**Mechanic:** You can deploy a fake "Distress Beacon" in deep space. It attracts "Heroes" (Friendly/Neutral ships) and "Scavengers" (Pirates). You can ambush the pirates for bounty, or ambush the heroes for loot.
+
+**Emergence:** You set a trap for pirates. A "Hospital Ship" answers the beacon instead. Do you let them go and waste the trap, or...
+
+**Tension:** Altruism (saving real distress) vs. Predation (faking it).
+
+---
+
+## The 'Good' War
+
+**Layer:** 3 -> 1
+
+**Fantasy:** War is good for business.
+
+**Mechanic:** Your economy relies on "War Profiteering". Factories get bonuses when the galaxy is at war. If peace breaks out, your economy crashes ("Recession"). You must conduct "False Flag" operations to keep the war going.
+
+**Emergence:** You sabotage peace talks between two rival empires just to keep your ammunition factory running at 100% efficiency.
+
+**Tension:** Perpetual Conflict (Profit) vs. Stagnant Peace (Safety).
+
+---
+
+## The Infinite Archive
+
+**Layer:** 1
+
+**Fantasy:** Knowledge is infinite, but hard drives are not.
+
+**Mechanic:** Research generates "Data". Data takes up physical space (Server Racks). As archives grow, "Search Time" increases (tech unlocks slower). You must "Delete" old data (forgetting lower-tier tech) to learn new things efficiently.
+
+**Emergence:** To learn "Anti-Matter Physics", you have to delete the knowledge of "Steam Engines". Later, a magnetic storm kills your high-tech grid, and you realize you forgot how to build a steam boiler.
+
+**Tension:** Volume of Knowledge vs. Accessibility of Knowledge.
+
+---
