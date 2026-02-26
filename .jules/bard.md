@@ -65,3 +65,7 @@
 ## 2026-05-25 - [Memetic Hazards]
 **Confusion:** The infection cycle of Memetic Hazards (Research -> Carrier -> Graffiti -> Infection) was only visible by tracing multiple systems.
 **Clarification:** Added module-level documentation to `layer1::memetic` mapping out the full infection cycle (Spec 174) and explaining the high-utility compulsion to scrawl sigils.
+
+## 2026-05-26 - [Layer 2 Coordinate System]
+**Confusion:** The `render_system_view` function calculates positions relative to the screen center, ignoring the hierarchical nature of the `Orbit` component (Moons orbiting Planets).
+**Clarification:** Documented `layer2::system` to explain the intended Polar Coordinate System. Future developers should note that the current renderer simplifies this to a single-level orbit model for visual clarity (or due to a bug).

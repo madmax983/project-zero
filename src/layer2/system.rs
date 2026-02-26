@@ -1,39 +1,94 @@
+//! Layer 2: System View.
+//!
+//! This module defines the core components and resources for the **Planetary System View** (Layer 2).
+//! In this layer, the player manages fleets, orbital stations, and system-level resources.
+//!
+//! # Coordinate System
+//!
+//! The System View uses a **Polar Coordinate System** relative to the parent body.
+//! *   **Star**: Fixed at (0, 0) in world space (conceptually).
+//! *   **Planets**: Orbit the Star. Position is determined by `radius` and `angle`.
+//! *   **Moons**: Orbit a Planet. Position is relative to the Planet.
+//!
+//! ## Rendering
+//! The [`crate::layer2::system::OrbitalBody`] component provides visual data (char, color, size), while the [`crate::layer2::system::Orbit`] component
+//! handles the mechanics of movement.
+
 use bevy_ecs::prelude::*;
 use ratatui::style::Color;
 
 /// Defines the current view mode of the game.
+///
+/// The game loop switches between these modes to determine which systems to run
+/// and which UI to render.
 #[derive(Resource, Default, Debug, PartialEq, Eq, Clone, Copy)]
 pub enum ViewMode {
     /// The Colony View (Layer 1).
+    /// Focuses on tile-based management of the colony surface.
     #[default]
     Colony,
     /// The System View (Layer 2).
+    /// Focuses on orbital mechanics, fleet movement, and system resources.
     System,
 }
 
 /// Marker component for a celestial body in the system.
+///
+/// This tag is used to query all "physical" objects in the system (Stars, Planets, Moons),
+/// distinguishing them from abstract entities like Fleets or Stations.
 #[derive(Component, Debug, Clone, Copy, Default)]
 pub struct SystemBody;
 
-/// Represents a celestial body in the system view (e.g., Planet, Moon).
+/// Represents the visual properties of a celestial body.
+///
+/// Used by the rendering system to draw the entity on the system map.
 #[derive(Component, Debug, Clone)]
 pub struct OrbitalBody {
-    /// The display name of the body.
+    /// The display name of the body (e.g., "Proxima Centauri", "Earth").
     pub name: String,
     /// The radius of the body (affects rendering size).
+    /// *   Stars: ~5.0
+    /// *   Gas Giants: ~3.0
+    /// *   Rocky Planets: ~1.0
+    /// *   Moons: ~0.3
     pub radius: f32,
     /// The color of the body.
     pub color: Color,
-    /// The character used to represent the body.
+    /// The character used to represent the body (e.g., 'O', 'o', '☼').
     pub char: char,
 }
 
 /// Defines the orbit of a celestial body.
+///
+/// Entities with this component will move around their `parent` entity.
+///
+/// # Logic
+///
+/// *   **Position**: Calculated as `(radius * cos(angle), radius * sin(angle))` relative to parent.
+/// *   **Movement**: Every tick, `angle` is incremented by `speed`.
+///
+/// # Examples
+///
+/// Creating a planet that orbits a star:
+/// ```
+/// use scale::layer2::system::Orbit;
+/// use bevy_ecs::prelude::*;
+///
+/// let mut world = World::new();
+/// let star = world.spawn_empty().id();
+///
+/// let planet = world.spawn(Orbit {
+///     parent: star,
+///     radius: 10.0,
+///     speed: 0.01,
+///     angle: 0.0,
+/// }).id();
+/// ```
 #[derive(Component, Debug, Clone)]
 pub struct Orbit {
     /// The parent entity this body orbits around.
     pub parent: Entity,
-    /// The radius of the orbit.
+    /// The radius of the orbit (distance from parent).
     pub radius: f32,
     /// The orbital speed (radians per tick).
     pub speed: f32,
@@ -42,6 +97,9 @@ pub struct Orbit {
 }
 
 /// Resource holding system-level map data.
+///
+/// Currently a placeholder for potential future features like fog of war,
+/// discovered anomalies, or sector ownership maps.
 #[derive(Resource, Default)]
 pub struct SystemMap;
 
