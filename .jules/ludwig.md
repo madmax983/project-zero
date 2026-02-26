@@ -59,3 +59,7 @@
 ## [Turrets]
 **Friction:** Turrets firing without visual confirmation at the source makes it hard to track who is shooting.
 **Flow:** Muzzle flashes at the turret origin provide immediate causal links between the shooter and the impact. Added Screen Shake for heavy turret fire (Waste Cannon).
+
+## [Direct Control]
+**Friction:** Possessing a unit felt clunky because movement was tied to key-repeat rate or required mashing, and felt disconnected from the unit's stats (Speed).
+**Flow:** Implemented "Virtual Joystick" with Input Buffering and Speed-based Cooldowns. High Speed stats now grant responsive, low-cooldown movement. Added "Juice" (dust particles on move, screen shake on collision) to make control feel tactile.

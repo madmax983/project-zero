@@ -4,13 +4,16 @@ use crate::layer1::building::{Building, OccupiedTiles};
 use crate::layer1::defense::Gate;
 use crate::layer1::execution::components::{AtTarget, MovementTarget};
 use crate::layer1::execution::movement::is_tile_walkable;
-use crate::layer1::map::GridPosition;
+use crate::layer1::map::{GridPosition, ScreenShake};
+use crate::layer1::particles::{spawn_particle, Particle};
 use crate::layer1::pop::{Role, Speed};
 use crate::layer1::terrain::TerrainGrid;
 use crate::layer1::utility_types::StartPlan;
 use crate::shared::input::{Input, InputContext, InputContextStack, KeyCode};
+use crate::shared::time::WallTime;
 use crate::ui::state::UiState;
 use bevy_ecs::prelude::*;
+use ratatui::style::Color;
 
 #[derive(Component)]
 pub struct Possessed;
@@ -20,6 +23,16 @@ pub struct PossessEntityEvent(pub Entity);
 
 #[derive(Event)]
 pub struct UnpossessEvent;
+
+/// Tracks the "virtual joystick" state for direct control.
+/// Stores buffered inputs and cooldowns to ensure responsive but fair movement.
+#[derive(Component, Default)]
+pub struct DirectControlState {
+    /// Timestamp (WallTime) of the last successful move.
+    pub last_move_time: f32,
+    /// Buffered input key that was pressed during cooldown.
+    pub buffered_input: Option<KeyCode>,
+}
 
 pub struct DirectLinkPlugin;
 
@@ -35,7 +48,7 @@ pub fn handle_possession(
     if !unpossess.is_empty() {
         unpossess.clear(); // Consume all events
         for entity in possessed_query.iter() {
-            commands.entity(entity).remove::<Possessed>();
+            commands.entity(entity).remove::<Possessed>().remove::<DirectControlState>();
         }
         // Restore UI
         ui_state.suppress_global_ui = false;
@@ -52,12 +65,12 @@ pub fn handle_possession(
         // Remove Possessed from existing
         for existing in possessed_query.iter() {
             if existing != entity {
-                commands.entity(existing).remove::<Possessed>();
+                commands.entity(existing).remove::<Possessed>().remove::<DirectControlState>();
             }
         }
 
-        // Add Possessed to new target
-        commands.entity(entity).insert(Possessed);
+        // Add Possessed and DirectControlState to new target
+        commands.entity(entity).insert((Possessed, DirectControlState::default()));
 
         // Clear AI components
         commands
@@ -80,7 +93,7 @@ pub fn handle_possession(
 pub fn handle_direct_movement(
     input: Res<Input<KeyCode>>,
     mut query: Query<
-        (Entity, &mut GridPosition, Option<&Role>),
+        (Entity, &mut GridPosition, &Speed, &mut DirectControlState, Option<&Role>),
         (With<Possessed>, Without<Building>),
     >,
     terrain: Res<TerrainGrid>,
@@ -91,30 +104,80 @@ pub fn handle_direct_movement(
         Option<&Gate>,
         Option<&AccessControl>,
     )>,
+    wall_time: Option<Res<WallTime>>,
+    mut shake: Option<ResMut<ScreenShake>>,
+    mut commands: Commands,
 ) {
-    for (entity, mut pos, role) in &mut query {
-        let mut dx = 0;
-        let mut dy = 0;
+    for (entity, mut pos, speed, mut state, role) in &mut query {
+        let now = wall_time.as_ref().map_or(0.0, |t| t.0);
 
-        if input.just_pressed(KeyCode::W) || input.just_pressed(KeyCode::Up) {
-            dy -= 1;
-        } else if input.just_pressed(KeyCode::S) || input.just_pressed(KeyCode::Down) {
-            dy += 1;
-        } else if input.just_pressed(KeyCode::A) || input.just_pressed(KeyCode::Left) {
-            dx -= 1;
-        } else if input.just_pressed(KeyCode::D) || input.just_pressed(KeyCode::Right) {
-            dx += 1;
+        // Calculate cooldown based on speed (responsive but limited)
+        // Speed 1.0 (10 ticks/sec) -> Cooldown 0.1s
+        // Speed 2.0 (20 ticks/sec) -> Cooldown 0.05s
+        let cooldown = (0.1 / speed.current).max(0.01);
+
+        // If WallTime is missing, we allow movement always (graceful degradation)
+        let time_since_move = wall_time.as_ref().map_or(f32::MAX, |t| t.0 - state.last_move_time);
+
+        // 1. Gather Input
+        // Separate X and Y to check for diagonal intent or buffering
+        let mut intended_dx = 0;
+        let mut intended_dy = 0;
+
+        // Check buffers first
+        if let Some(key) = state.buffered_input {
+             match key {
+                 KeyCode::W | KeyCode::Up => intended_dy -= 1,
+                 KeyCode::S | KeyCode::Down => intended_dy += 1,
+                 KeyCode::A | KeyCode::Left => intended_dx -= 1,
+                 KeyCode::D | KeyCode::Right => intended_dx += 1,
+                 _ => {}
+             }
         }
 
-        if dx == 0 && dy == 0 {
+        // Check fresh inputs (override buffer if present, or combine?)
+        // Combine for responsiveness (if I buffer W, then press D, I want to go diagonal)
+        if input.just_pressed(KeyCode::W) || input.just_pressed(KeyCode::Up) {
+            intended_dy -= 1;
+        }
+        if input.just_pressed(KeyCode::S) || input.just_pressed(KeyCode::Down) {
+            intended_dy += 1;
+        }
+        if input.just_pressed(KeyCode::A) || input.just_pressed(KeyCode::Left) {
+            intended_dx -= 1;
+        }
+        if input.just_pressed(KeyCode::D) || input.just_pressed(KeyCode::Right) {
+            intended_dx += 1;
+        }
+
+        // CLAMP to avoid stacking inputs (e.g. buffer W + press W = -2)
+        intended_dx = intended_dx.clamp(-1, 1);
+        intended_dy = intended_dy.clamp(-1, 1);
+
+        // If no input, skip
+        if intended_dx == 0 && intended_dy == 0 {
             continue;
         }
 
-        let new_x = pos.x + dx;
-        let new_y = pos.y + dy;
+        // 2. Check Cooldown / Buffering
+        if time_since_move < cooldown {
+            // Buffer the input
+            // We store the "strongest" input direction if multiple pressed?
+            // Just store the last pressed one for simplicity of struct
+            if input.just_pressed(KeyCode::W) { state.buffered_input = Some(KeyCode::W); }
+            else if input.just_pressed(KeyCode::S) { state.buffered_input = Some(KeyCode::S); }
+            else if input.just_pressed(KeyCode::A) { state.buffered_input = Some(KeyCode::A); }
+            else if input.just_pressed(KeyCode::D) { state.buffered_input = Some(KeyCode::D); }
+
+            continue;
+        }
+
+        // 3. Execution (Off Cooldown)
+        let new_x = pos.x + intended_dx;
+        let new_y = pos.y + intended_dy;
 
         // Check collision
-        if is_tile_walkable(
+        let walkable = is_tile_walkable(
             &terrain,
             occupied_tiles.as_deref(),
             &buildings,
@@ -122,9 +185,35 @@ pub fn handle_direct_movement(
             new_y,
             entity,
             role.copied(),
-        ) {
+        );
+
+        if walkable {
+            // Success!
+
+            // Juice: Spawn particle at OLD position (Dust kick)
+            commands.spawn((
+                Particle {
+                    char: '.',
+                    color: Color::DarkGray,
+                    lifetime: 5,
+                },
+                *pos,
+            ));
+
             pos.x = new_x;
             pos.y = new_y;
+            state.last_move_time = now;
+            state.buffered_input = None;
+        } else {
+            // Blocked!
+            // Juice: Screen Shake (minor bonk)
+            if let Some(shake) = shake.as_mut() {
+                shake.trigger(0.1);
+            }
+
+            // If diagonal failed, try sliding? (Optional polish, skipping for now)
+            // Just clear buffer to prevent "stuck" inputs
+            state.buffered_input = None;
         }
     }
 }
@@ -165,7 +254,7 @@ mod tests {
     use crate::layer1::execution::components::MovementTarget;
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Speed;
-    use crate::layer1::pop::{Pop, PopBundle};
+    use crate::layer1::pop::PopBundle;
     use crate::layer1::terrain::generate_terrain;
     use crate::layer1::utility_types::ActionType;
     use bevy_ecs::schedule::Schedule;
@@ -179,6 +268,8 @@ mod tests {
         world.insert_resource(InputContextStack::default());
         world.insert_resource(UiState::default());
         world.init_resource::<Input<KeyCode>>();
+        world.insert_resource(WallTime(0.0));
+        world.insert_resource(ScreenShake::default());
 
         // Needed for movement
         let terrain = generate_terrain(20, 20);
@@ -205,8 +296,9 @@ mod tests {
         schedule.add_systems(handle_possession);
         schedule.run(&mut world);
 
-        // Assert: Pop has Possessed component
+        // Assert: Pop has Possessed component AND DirectControlState
         assert!(world.entity(pop).contains::<Possessed>());
+        assert!(world.entity(pop).contains::<DirectControlState>());
 
         // Assert: Input context is DirectControl
         assert_eq!(
@@ -259,6 +351,7 @@ mod tests {
             .spawn((
                 PopBundle::random(10, 10, &mut rand::thread_rng()),
                 Possessed,
+                DirectControlState::default(),
             ))
             .id();
 
@@ -269,6 +362,8 @@ mod tests {
 
         // Step 1: Press W
         world.resource_mut::<Input<KeyCode>>().press(KeyCode::W);
+        // Advance time to allow movement (initial last_move_time is 0, so should move immediately)
+        world.resource_mut::<WallTime>().0 = 10.0;
         schedule.run(&mut world);
 
         let pos1 = world.entity(pop).get::<GridPosition>().unwrap();
@@ -276,10 +371,118 @@ mod tests {
 
         // Step 2: Press W again (Input should have been cleared and re-pressed)
         world.resource_mut::<Input<KeyCode>>().press(KeyCode::W);
+        // Advance time enough to clear cooldown
+        world.resource_mut::<WallTime>().0 = 20.0;
         schedule.run(&mut world);
 
         let pos2 = world.entity(pop).get::<GridPosition>().unwrap();
         assert_eq!(pos2.y, 8, "Should move a second time");
+    }
+
+    #[test]
+    fn test_direct_movement_cooldown_blocks_spam() {
+        let mut world = setup_world();
+        // Setup walkable
+        if let Some(mut terrain) = world.get_resource_mut::<TerrainGrid>() {
+            terrain.tiles.fill(crate::layer1::terrain::TerrainType::Grass);
+        }
+
+        let pop = world
+            .spawn((
+                PopBundle::random(10, 10, &mut rand::thread_rng()),
+                Possessed,
+                DirectControlState::default(),
+                // Normal speed = 1.0 -> cooldown 0.1s
+            ))
+            .id();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(handle_direct_movement);
+        schedule.add_systems(clear_input_system.after(handle_direct_movement));
+
+        // 1. First move (ok)
+        world.resource_mut::<Input<KeyCode>>().press(KeyCode::W);
+        world.resource_mut::<WallTime>().0 = 10.0;
+        schedule.run(&mut world);
+
+        let pos1 = world.entity(pop).get::<GridPosition>().unwrap();
+        assert_eq!(pos1.y, 9);
+
+        // 2. Second move IMMEDIATELY (should be blocked by cooldown)
+        world.resource_mut::<Input<KeyCode>>().press(KeyCode::W);
+        // Time only advanced 0.01s (cooldown is ~0.1s)
+        world.resource_mut::<WallTime>().0 = 10.01;
+        schedule.run(&mut world);
+
+        let pos2 = world.entity(pop).get::<GridPosition>().unwrap();
+        assert_eq!(pos2.y, 9, "Should NOT move due to cooldown");
+
+        // 3. Verify Buffering: The input was buffered in step 2.
+        // If we run again without new input but AFTER cooldown...
+        world.resource_mut::<WallTime>().0 = 10.2; // > 0.1s later
+        schedule.run(&mut world); // No new input press here!
+
+        let pos3 = world.entity(pop).get::<GridPosition>().unwrap();
+        assert_eq!(pos3.y, 8, "Should move from BUFFERED input");
+    }
+
+    #[test]
+    fn test_direct_movement_juice_collision() {
+        let mut world = setup_world();
+        // Wall at (10, 9)
+        if let Some(mut terrain) = world.get_resource_mut::<TerrainGrid>() {
+            let idx = 9 * terrain.width + 10;
+            terrain.tiles[idx] = crate::layer1::terrain::TerrainType::Rock;
+        }
+
+        let pop = world
+            .spawn((
+                PopBundle::random(10, 10, &mut rand::thread_rng()),
+                Possessed,
+                DirectControlState::default(),
+            ))
+            .id();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(handle_direct_movement);
+
+        world.resource_mut::<Input<KeyCode>>().press(KeyCode::W);
+        world.resource_mut::<WallTime>().0 = 10.0;
+        schedule.run(&mut world);
+
+        let shake = world.resource::<ScreenShake>();
+        assert!(shake.intensity > 0.0, "Screen shake should trigger on collision");
+
+        let pos = world.entity(pop).get::<GridPosition>().unwrap();
+        assert_eq!(pos.y, 10, "Should not move into rock");
+    }
+
+    #[test]
+    fn test_direct_movement_juice_particles() {
+         let mut world = setup_world();
+         // All grass
+        if let Some(mut terrain) = world.get_resource_mut::<TerrainGrid>() {
+            terrain.tiles.fill(crate::layer1::terrain::TerrainType::Grass);
+        }
+
+        let _pop = world
+            .spawn((
+                PopBundle::random(10, 10, &mut rand::thread_rng()),
+                Possessed,
+                DirectControlState::default(),
+            ))
+            .id();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(handle_direct_movement);
+
+        world.resource_mut::<Input<KeyCode>>().press(KeyCode::W);
+        world.resource_mut::<WallTime>().0 = 10.0;
+        schedule.run(&mut world);
+
+        // Check for particle at OLD position (10, 10)
+        let particle_count = world.query::<&Particle>().iter(&world).count();
+        assert!(particle_count > 0, "Should spawn particle on move");
     }
 
     #[test]
