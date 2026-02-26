@@ -286,7 +286,7 @@ fn cleanup_pop_explore_state(world: &mut World, pop_entity: Entity) {
 
 #[cfg(test)]
 mod tests {
-    use crate::layer1::actions::explore::evaluate_explore;
+    use crate::layer1::actions::evaluate_simple_action;
     use crate::layer1::execution::{AtTarget, MovementTarget};
     use crate::layer1::map::GridPosition;
     use crate::layer1::resources::ColonyResources;
@@ -341,7 +341,7 @@ mod tests {
             .map(|(e, p, _)| ScorableCandidate::new(e, *p))
             .collect();
 
-        let result = evaluate_explore(pop_pos, &weights, &anomalies);
+        let result = evaluate_simple_action(pop_pos, &weights, &anomalies, 0.3);
 
         assert!(result.is_some());
         let (_, target) = result.unwrap();

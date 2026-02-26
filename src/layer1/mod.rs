@@ -34,6 +34,10 @@
 pub mod access_control;
 /// Pop actions logic.
 pub mod actions;
+#[cfg(test)]
+mod shift_integration_tests;
+#[cfg(test)]
+mod work_building_tests;
 /// Bureaucratic Drag system (Spec 175).
 pub mod admin;
 /// AI Core system (Spec 148).

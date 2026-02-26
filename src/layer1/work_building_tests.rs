@@ -12,10 +12,7 @@ mod tests {
     use bevy_ecs::prelude::*;
 
     // Helper to evaluate refine
-    use crate::layer1::actions::refine::evaluate_refine;
-    // Helper to evaluate farm
-    use crate::layer1::actions::farm::evaluate_farm;
-    // Helper to evaluate research
+    use crate::layer1::actions::evaluate_simple_action;
 
     fn setup_world() -> World {
         let mut world = World::new();
@@ -54,7 +51,7 @@ mod tests {
         // Create Proxy
         let proxies = vec![ScorableCandidate::new(mill, GridPosition { x: 2, y: 0 })];
 
-        let result = evaluate_refine(pop_pos, &weights, &proxies);
+        let result = evaluate_simple_action(pop_pos, &weights, &proxies, 0.5);
 
         assert!(result.is_some());
         let (utility, target) = result.unwrap();
@@ -92,7 +89,7 @@ mod tests {
             0,
         )];
 
-        let result = evaluate_farm(pop_pos, &weights, &proxies);
+        let result = evaluate_simple_action(pop_pos, &weights, &proxies, 0.5);
 
         assert!(result.is_some());
         let (utility, target) = result.unwrap();

@@ -1,17 +1,13 @@
 use bevy_ecs::prelude::*;
 use ratatui::style::Color;
 
-use crate::layer1::actions::fetch_clothing::handle_fetch_clothing;
-use crate::layer1::actions::fetch_tool::handle_fetch_tool;
-use crate::layer1::actions::hunger::handle_arrival as handle_hunger_arrival;
-use crate::layer1::actions::rest::handle_arrival as handle_rest_arrival;
 use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::admin::{AdminProvider, Office};
 use crate::layer1::execution::components::{AtTarget, MovementTarget};
 use crate::layer1::farm::Farm;
 use crate::layer1::funeral::{Corpse, Grave, handle_bury_corpse};
 use crate::layer1::housing::Housing;
-use crate::layer1::items::{Equipment, UnequipEvent};
+use crate::layer1::items::{Equipment, UnequipEvent, Tool, ToolType, Clothing, ClothingType, Item};
 use crate::layer1::map::GridPosition;
 use crate::layer1::memory::Memories;
 use crate::layer1::pop::Job;
@@ -327,5 +323,130 @@ fn handle_binge_arrival(resources: &mut ColonyResources, log: Option<&mut Messag
 
     if let Some(log) = log {
         log.add("Pop is binge eating!");
+    }
+}
+
+// --- Consolidated Handler Functions ---
+
+pub fn handle_fetch_tool(
+    commands: &mut Commands,
+    resources: &mut ColonyResources,
+    pop_entity: Entity,
+    equipment_opt: &mut Option<Mut<Equipment>>,
+) {
+    if resources.tools >= 1.0 {
+        resources.tools -= 1.0;
+        let tool_history = crate::layer1::heirloom::ToolHistory::default();
+        let tool_entity = commands
+            .spawn((
+                Item::default(),
+                Tool {
+                    tool_type: ToolType::Pickaxe, // Generic for now
+                    durability: 100.0,
+                    max_durability: 100.0,
+                },
+                tool_history,
+            ))
+            .id();
+
+        if let Some(eq) = equipment_opt {
+            eq.tool = Some(tool_entity);
+        } else {
+            commands.entity(pop_entity).insert(Equipment {
+                tool: Some(tool_entity),
+                ..Default::default()
+            });
+        }
+    }
+}
+
+pub fn handle_fetch_clothing(
+    commands: &mut Commands,
+    resources: &mut ColonyResources,
+    pop_entity: Entity,
+    equipment_opt: &mut Option<Mut<Equipment>>,
+    unequip_events: &mut EventWriter<UnequipEvent>,
+) {
+    if resources.clothing >= 1.0 {
+        resources.clothing -= 1.0;
+
+        let mut is_upgrade = false;
+        if let Some(eq) = equipment_opt
+            && eq.body.is_some()
+        {
+            is_upgrade = true;
+            if let Some(old_entity) = eq.body {
+                unequip_events.send(UnequipEvent {
+                    actor: pop_entity,
+                    item: old_entity,
+                    slot: "body".to_string(),
+                });
+                commands.entity(old_entity).despawn();
+            }
+        }
+
+        let (clothing_type, insulation) = if is_upgrade {
+            (ClothingType::Parka, 2.0)
+        } else {
+            (ClothingType::Tunic, 1.0)
+        };
+
+        let clothing_entity = commands
+            .spawn((
+                Item::default(),
+                Clothing {
+                    clothing_type,
+                    insulation,
+                    durability: 100.0,
+                    max_durability: 100.0,
+                },
+            ))
+            .id();
+
+        if let Some(eq) = equipment_opt {
+            eq.body = Some(clothing_entity);
+        } else {
+            commands.entity(pop_entity).insert(Equipment {
+                body: Some(clothing_entity),
+                ..Default::default()
+            });
+        }
+    }
+}
+
+fn handle_hunger_arrival(
+    pop_entity: Entity,
+    target_entity: Entity,
+    farms: &mut Query<&mut Farm>,
+    commands: &mut Commands,
+) {
+    #[allow(clippy::collapsible_if)]
+    if let Ok(mut farm) = farms.get_mut(target_entity) {
+        if farm.workers.len() < farm.capacity {
+            farm.workers.push(pop_entity);
+            commands.entity(pop_entity).insert(AssignedTo {
+                entity: target_entity,
+                assignment_type: AssignmentType::FarmWorker,
+            });
+        }
+    }
+}
+
+fn handle_rest_arrival(
+    pop_entity: Entity,
+    target_entity: Entity,
+    housing: &mut Query<&mut Housing>,
+    commands: &mut Commands,
+) {
+    if let Ok(mut house) = housing.get_mut(target_entity) {
+        if house.residents.len() < house.capacity {
+            house.residents.push(pop_entity);
+            commands
+                .entity(pop_entity)
+                .insert(AssignedTo {
+                    entity: target_entity,
+                    assignment_type: AssignmentType::HousingResident,
+                });
+        }
     }
 }

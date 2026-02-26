@@ -179,7 +179,7 @@ mod tests {
 
         // This function must be implemented in the Green phase
         // We use the direct path once the module is created
-        let (action, score, target) = crate::layer1::actions::hum::evaluate_listen_to_hum(&data, &buffer);
+        let (action, score, target) = crate::layer1::actions::evaluate_listen_to_hum(&data, &buffer);
 
         assert_eq!(action, ActionType::ListenToTheHum);
         assert!(score > 0.0);
@@ -218,7 +218,7 @@ mod tests {
             insulation: 0.0,
         };
 
-        let (action, score, _) = crate::layer1::actions::hum::evaluate_listen_to_hum(&data, &buffer);
+        let (action, score, _) = crate::layer1::actions::evaluate_listen_to_hum(&data, &buffer);
 
         // Should return Idle/None or very low score (0.0)
         if action == ActionType::ListenToTheHum {
