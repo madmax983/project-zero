@@ -449,6 +449,7 @@ pub fn process_research_system(
     libraries: Query<Entity, With<Library>>,
     mut resources: ResMut<ColonyResources>,
     factions: Option<Res<Factions>>,
+    bloat_query: Query<&self::legacy_code::Bloat>,
 ) {
     let mut library_workers = std::collections::HashMap::<Entity, u32>::new();
 
@@ -479,6 +480,11 @@ pub fn process_research_system(
             let knowledge_gain = 0.01 * workers as f32;
             total_knowledge_gained += knowledge_gain;
         }
+    }
+
+    // Apply Legacy Code Bloat Efficiency
+    if let Ok(bloat) = bloat_query.get_single() {
+        total_knowledge_gained *= bloat.efficiency();
     }
 
     if total_knowledge_gained > 0.0 {
@@ -646,3 +652,5 @@ mod tests {
         assert!(success);
     }
 }
+pub mod legacy_code;
+#[cfg(test)] mod legacy_code_tests;
