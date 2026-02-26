@@ -28,6 +28,9 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::social::grievances::decay_notes_system,
             crate::layer1::hum::update_hum_system,
             crate::layer1::photophobic::photophobic_decay_system,
+            crate::layer1::geodetic::update_living_stone_system,
+            crate::layer1::geodetic::form_golem_system
+                .after(crate::layer1::geodetic::update_living_stone_system),
         )
             .in_set(Layer1SystemSet::Environment),
     );
