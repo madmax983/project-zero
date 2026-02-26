@@ -10,7 +10,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 
 ## MVP — Layer 1: Colony Simulation
 
-- [ ] `183` Geodetic Sentience — `specs/183-geodetic-sentience.md`
 - [ ] `186` Bio-Architecture — `specs/186-bio-architecture.md`
 - [ ] `187` Adaptive Biology — `specs/187-adaptive-biology.md`
 - [ ] `188` The Long Watch — `specs/188-the-long-watch.md`

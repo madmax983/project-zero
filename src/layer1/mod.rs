@@ -634,11 +634,13 @@ pub use hygiene::*;
 
 /// Gene Bank system (Spec 165).
 pub mod gene_bank;
+pub mod geodetic;
 #[cfg(test)]
 mod improvised_tools_tests;
 #[cfg(test)]
 mod urban_heat_tests;
 pub use gene_bank::*;
+pub use geodetic::*;
 
 /// The Mother Lode system (Spec 168).
 pub mod mother_lode;
@@ -675,3 +677,6 @@ pub use photophobic::*;
 /// Clone Vat system (Spec 240).
 pub mod clone_vat;
 pub use clone_vat::*;
+
+#[cfg(test)]
+mod geodetic_tests;

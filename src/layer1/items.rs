@@ -142,6 +142,8 @@ pub enum ItemType {
     BuildingPermit,
     /// A crystal that decays in light.
     ShadowCrystal,
+    /// A living stone that moves.
+    LivingStone,
 }
 
 impl ItemType {
