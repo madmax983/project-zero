@@ -24,7 +24,6 @@ Tasks ready for implementation. Builders: pick one, move to IN_PROGRESS.md, impl
 - [ ] `224` The Scapegoat — `specs/224-the-scapegoat.md`
 - [ ] `231` Memorial Forests — `specs/231-memorial-forests.md`
 - [ ] `232` Protest Crowds — `specs/232-protest-crowds.md`
-- [ ] `233` Public Grievances — `specs/233-public-grievances.md`
 - [ ] `234` The Visitor — `specs/234-the-visitor.md`
 - [ ] `236` The Direct Link — `specs/236-direct-link.md`
 - [ ] `237` Photophobic Resources — `specs/237-photophobic-resources.md`

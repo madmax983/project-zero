@@ -315,6 +315,8 @@ pub enum BuildingType {
     Shower,
     /// Converts Waste and Corpses into Rations.
     Recycler,
+    /// A place for pops to post grievances and commendations.
+    BulletinBoard,
 }
 
 impl BuildingType {
@@ -337,7 +339,7 @@ impl BuildingType {
             Self::AuroralCollector => Some((Category::Power, Tier::Advanced)),
             Self::AncientReactor => Some((Category::Power, Tier::HighTech)),
 
-            Self::Library => Some((Category::Research, Tier::Basic)),
+            Self::Library | Self::BulletinBoard => Some((Category::Research, Tier::Basic)),
             Self::Observatory | Self::CryoPod => Some((Category::Research, Tier::Advanced)),
             Self::AICore | Self::AtmosphericProcessor | Self::GeneBank => {
                 Some((Category::Research, Tier::HighTech))
@@ -382,7 +384,7 @@ impl BuildingType {
             | Self::CommandCenter
             | Self::AICore
             | Self::Recycler => 0.6,
-            Self::FlowerBed | Self::PersonalGarden | Self::Grave => 0.1,
+            Self::FlowerBed | Self::PersonalGarden | Self::Grave | Self::BulletinBoard => 0.1,
             _ => 0.5,
         }
     }
@@ -491,6 +493,7 @@ impl BuildingType {
             | Self::Heater
             | Self::AuroralCollector => false,
             Self::Recycler => true,
+            Self::BulletinBoard => false,
         }
     }
 
@@ -567,6 +570,7 @@ impl BuildingType {
             Self::GeneBank => Some(Tech::Medical),
             Self::Shower => Some(Tech::SocialStructures),
             Self::Recycler => Some(Tech::Medical),
+            Self::BulletinBoard => Some(Tech::SocialStructures),
             _ => None,
         }
     }
@@ -639,6 +643,7 @@ impl BuildingType {
             Self::GeneBank => "Gene Bank",
             Self::Shower => "Shower",
             Self::Recycler => "Recycler",
+            Self::BulletinBoard => "Bulletin Board",
         }
     }
 
@@ -693,6 +698,7 @@ impl BuildingType {
             Self::GeneBank => '🧬',
             Self::Shower => '🚿',
             Self::Recycler => '♻',
+            Self::BulletinBoard => 'B',
         }
     }
 
@@ -739,6 +745,10 @@ impl BuildingType {
             Self::Recycler => ColonyResources {
                 metal: 20.0,
                 stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::BulletinBoard => ColonyResources {
+                wood: 20.0,
                 ..ColonyResources::zeroed()
             },
             Self::CommandCenter => ColonyResources {
@@ -1303,6 +1313,12 @@ fn spawn_building(
                     intensity: 0.5,
                     color: (0, 255, 0), // Green glow
                 },
+                ShiftSchedule::default(),
+            ));
+        }
+        BuildingType::BulletinBoard => {
+            entity.insert((
+                crate::layer1::social::grievances::BulletinBoard::default(),
                 ShiftSchedule::default(),
             ));
         }
@@ -2194,7 +2210,8 @@ mod tests {
         );
         assert_eq!(BuildingType::GeneBank.next(), BuildingType::Shower);
         assert_eq!(BuildingType::Shower.next(), BuildingType::Recycler);
-        assert_eq!(BuildingType::Recycler.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::Recycler.next(), BuildingType::BulletinBoard);
+        assert_eq!(BuildingType::BulletinBoard.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -2408,6 +2425,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Recycler);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::BulletinBoard);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

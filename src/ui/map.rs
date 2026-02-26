@@ -754,6 +754,7 @@ pub const fn get_building_char(building: BuildingType) -> &'static str {
         BuildingType::GeneBank => "🧬",
         BuildingType::Shower => "🚿",
         BuildingType::Recycler => "♻",
+        BuildingType::BulletinBoard => "B",
     }
 }
 
@@ -825,6 +826,7 @@ pub const fn get_building_color(building: BuildingType, material: MaterialType) 
             BuildingType::CommandCenter | BuildingType::Office | BuildingType::CryoPod => {
                 Color::Rgb(0, 0, 255)
             } // Blue
+            BuildingType::BulletinBoard => Color::Rgb(210, 180, 140), // Tan
         }
     }
 }
