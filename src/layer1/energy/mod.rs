@@ -105,6 +105,7 @@ fn build_grid_map(world: &mut World) -> HashMap<(i32, i32), Entity> {
         With<PowerConsumer>,
         With<Conduit>,
         With<Battery>,
+        With<crate::layer1::kinetic_storage::KineticBattery>,
     )>>();
 
     for (entity, pos) in query.iter(world) {
@@ -234,19 +235,38 @@ pub fn power_grid_system(world: &mut World) {
             .copied()
             .collect();
 
+        let kinetic_batteries: Vec<Entity> = grid_entities
+            .iter()
+            .filter(|e| world.get::<crate::layer1::kinetic_storage::KineticBattery>(**e).is_some())
+            .copied()
+            .collect();
+
         if net > 0.0 {
             // Surplus: Charge batteries
             #[allow(clippy::cast_precision_loss)]
-            let charge_per_battery = net / (batteries.len().max(1) as f32);
-            for bat_entity in &batteries {
-                if let Some(mut bat) = world.get_mut::<Battery>(*bat_entity) {
-                    bat.charge(charge_per_battery);
+            let total_batteries = (batteries.len() + kinetic_batteries.len()) as f32;
+            if total_batteries > 0.0 {
+                let charge_per_battery = net / total_batteries;
+                for bat_entity in &batteries {
+                    if let Some(mut bat) = world.get_mut::<Battery>(*bat_entity) {
+                        bat.charge(charge_per_battery);
+                    }
+                }
+                for bat_entity in &kinetic_batteries {
+                    if let Some(mut bat) = world.get_mut::<crate::layer1::kinetic_storage::KineticBattery>(*bat_entity) {
+                        let input = charge_per_battery.min(bat.charge_rate);
+                        // Efficiency loss on input
+                        let stored = input * bat.efficiency;
+                        bat.charge = (bat.charge + stored).min(bat.capacity);
+                    }
                 }
             }
         } else if net < 0.0 {
             // Deficit: Discharge batteries
             let mut needed = -net;
             let mut provided = 0.0;
+
+            // Discharge normal batteries
             for bat_entity in &batteries {
                 if let Some(mut bat) = world.get_mut::<Battery>(*bat_entity) {
                     let amount = bat.discharge(needed);
@@ -257,6 +277,23 @@ pub fn power_grid_system(world: &mut World) {
                     }
                 }
             }
+
+            // Discharge kinetic batteries if needed
+            if needed > 0.0 {
+                for bat_entity in &kinetic_batteries {
+                    if let Some(mut bat) = world.get_mut::<crate::layer1::kinetic_storage::KineticBattery>(*bat_entity) {
+                        let available = bat.charge;
+                        let discharge = needed.min(available).min(bat.charge_rate);
+                        bat.charge -= discharge;
+                        provided += discharge;
+                        needed -= discharge;
+                        if needed <= 0.0 {
+                            break;
+                        }
+                    }
+                }
+            }
+
             // Update net after battery discharge (effectively increasing production availability)
             // net = (production + provided) - demand
             // original net = production - demand

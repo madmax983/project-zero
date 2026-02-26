@@ -170,3 +170,4 @@
 - [x] `203` Prohibition & Contraband — `specs/203-prohibition-contraband.md` — completed 2026-06-25
 - [x] `165` Gene Banks — `specs/165-gene-banks.md` — completed 2026-06-25
 - [x] `222` Paperwork Physicality — `specs/222-paperwork-physicality.md` — completed 2026-06-25
+- [x] `235` Kinetic Storage — `specs/235-kinetic-storage.md` — completed 2026-02-01

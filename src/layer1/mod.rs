@@ -652,3 +652,6 @@ pub mod void_signals;
 pub use void_signals::*;
 /// Volatile Resources system (Spec 223).
 pub mod volatile;
+/// Kinetic Storage system (Spec 235).
+pub mod kinetic_storage;
+pub use kinetic_storage::*;
