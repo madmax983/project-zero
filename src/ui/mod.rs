@@ -35,19 +35,19 @@ pub mod notifications;
 pub mod panels;
 /// Seasonal graphics helpers.
 pub mod seasonal_gfx;
+/// UI State resource.
+pub mod state;
 /// Status bar rendering.
 pub mod status;
 /// Tech Tree UI rendering.
 pub mod tech;
-/// UI State resource.
-pub mod state;
 
 #[cfg(test)]
 mod waste_ui_tests;
 
-pub use state::*;
 use bevy_ecs::prelude::*;
 use ratatui::prelude::*;
+pub use state::*;
 
 use crate::layer2::render::render_system_view;
 use crate::layer2::system::ViewMode;

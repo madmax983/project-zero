@@ -1,8 +1,8 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::energy::{PowerConsumer, PowerSource};
-use crate::layer1::map::GridPosition;
 use crate::layer1::health::Health;
+use crate::layer1::map::GridPosition;
 use crate::layer1::volatile::ExplosionEvent;
+use bevy_ecs::prelude::*;
 
 #[derive(Component, Default, Debug, Clone)]
 pub struct KineticBattery {
@@ -29,7 +29,8 @@ pub fn handle_battery_destruction_system(
     mut events: EventWriter<ExplosionEvent>,
 ) {
     for (battery, pos) in query.iter() {
-        if battery.charge > 10.0 { // Safety threshold, empty batteries don't explode
+        if battery.charge > 10.0 {
+            // Safety threshold, empty batteries don't explode
             // Calculate explosion parameters based on potential energy (charge)
             let radius = (battery.charge / 50.0).ceil().max(1.0) as u32;
 
@@ -45,26 +46,34 @@ pub fn handle_battery_destruction_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::energy::{PowerSource, PowerConsumer, Conduit, power_grid_system};
     use crate::layer1::building::{Building, BuildingType};
-    use crate::layer1::map::GridPosition;
+    use crate::layer1::energy::{Conduit, PowerConsumer, PowerSource, power_grid_system};
     use crate::layer1::health::Health;
+    use crate::layer1::map::GridPosition;
 
     #[test]
     fn test_battery_charging() {
         // Arrange: Grid with Surplus Power (Gen 20, Cons 0)
         let mut world = World::new();
-        let _battery = world.spawn((
-            KineticBattery {
-                charge: 0.0,
-                capacity: 100.0,
-                charge_rate: 5.0,
-                efficiency: 0.9
-            },
-            PowerConsumer { demand: 5.0, active: true }, // Input mode
-            PowerSource { output: 0.0, active: false }, // Output mode (inactive)
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let _battery = world
+            .spawn((
+                KineticBattery {
+                    charge: 0.0,
+                    capacity: 100.0,
+                    charge_rate: 5.0,
+                    efficiency: 0.9,
+                },
+                PowerConsumer {
+                    demand: 5.0,
+                    active: true,
+                }, // Input mode
+                PowerSource {
+                    output: 0.0,
+                    active: false,
+                }, // Output mode (inactive)
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
         // Simulate surplus power in grid context (mocked or via energy system state)
         // For unit test, we can manually set the "Grid State" or mock the energy distribution.
@@ -76,7 +85,8 @@ mod tests {
         // This test simulates the logic inside the system:
         // if grid_surplus > 0 { battery.charge += min(surplus, rate) }
 
-        let mut query = world.query::<(&mut KineticBattery, &mut PowerConsumer, &mut PowerSource)>();
+        let mut query =
+            world.query::<(&mut KineticBattery, &mut PowerConsumer, &mut PowerSource)>();
         let (mut bat, _cons, _src) = query.get_single_mut(&mut world).unwrap();
 
         // Logic simulation for test
@@ -91,17 +101,25 @@ mod tests {
     fn test_battery_discharging() {
         // Arrange: Battery full, Grid in deficit
         let mut world = World::new();
-        let _battery = world.spawn((
-            KineticBattery {
-                charge: 50.0,
-                capacity: 100.0,
-                charge_rate: 5.0,
-                efficiency: 1.0
-            },
-            PowerConsumer { demand: 0.0, active: false }, // Not consuming
-            PowerSource { output: 0.0, active: true }, // Ready to output
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let _battery = world
+            .spawn((
+                KineticBattery {
+                    charge: 50.0,
+                    capacity: 100.0,
+                    charge_rate: 5.0,
+                    efficiency: 1.0,
+                },
+                PowerConsumer {
+                    demand: 0.0,
+                    active: false,
+                }, // Not consuming
+                PowerSource {
+                    output: 0.0,
+                    active: true,
+                }, // Ready to output
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
         let grid_deficit = 10.0; // Needed power
 
@@ -123,16 +141,30 @@ mod tests {
     fn test_battery_destruction_hazard() {
         // Arrange: Charged battery and adjacent victim
         let mut world = World::new();
-        let _battery = world.spawn((
-            KineticBattery { charge: 100.0, capacity: 100.0, ..Default::default() },
-            GridPosition { x: 5, y: 5 },
-            Health { current: 0.0, max: 100.0 }, // Destroyed
-        )).id();
+        let _battery = world
+            .spawn((
+                KineticBattery {
+                    charge: 100.0,
+                    capacity: 100.0,
+                    ..Default::default()
+                },
+                GridPosition { x: 5, y: 5 },
+                Health {
+                    current: 0.0,
+                    max: 100.0,
+                }, // Destroyed
+            ))
+            .id();
 
-        let _victim = world.spawn((
-            GridPosition { x: 5, y: 6 }, // Adjacent
-            Health { current: 50.0, max: 50.0 },
-        )).id();
+        let _victim = world
+            .spawn((
+                GridPosition { x: 5, y: 6 }, // Adjacent
+                Health {
+                    current: 50.0,
+                    max: 50.0,
+                },
+            ))
+            .id();
 
         // Event for destruction
         // Act: Run destruction handler
@@ -165,30 +197,43 @@ mod tests {
         // Generator (Output 20) -> Conduit -> KineticBattery (Charge Rate 5)
         // No other consumers, so Net = +20. Battery should charge 5 * efficiency.
 
-        let _generator = world.spawn((
-            PowerSource { output: 20.0, active: true },
-            GridPosition { x: 0, y: 0 },
-            Building { building_type: BuildingType::Generator },
-        )).id();
+        let _generator = world
+            .spawn((
+                PowerSource {
+                    output: 20.0,
+                    active: true,
+                },
+                GridPosition { x: 0, y: 0 },
+                Building {
+                    building_type: BuildingType::Generator,
+                },
+            ))
+            .id();
 
         world.spawn((
             Conduit,
             GridPosition { x: 0, y: 1 },
-            Building { building_type: BuildingType::PowerPole },
+            Building {
+                building_type: BuildingType::PowerPole,
+            },
         ));
 
-        let bat_id = world.spawn((
-            KineticBattery {
-                charge: 0.0,
-                capacity: 100.0,
-                charge_rate: 5.0,
-                efficiency: 0.8, // 80% efficiency
-            },
-            GridPosition { x: 0, y: 2 },
-            Building { building_type: BuildingType::Battery }, // Assuming Battery type exists or just placeholder
-            // Note: We don't necessarily need PowerConsumer/PowerSource on it if power_grid_system handles KineticBattery directly
-            // But spec implied it. I will rely on KineticBattery component integration.
-        )).id();
+        let bat_id = world
+            .spawn((
+                KineticBattery {
+                    charge: 0.0,
+                    capacity: 100.0,
+                    charge_rate: 5.0,
+                    efficiency: 0.8, // 80% efficiency
+                },
+                GridPosition { x: 0, y: 2 },
+                Building {
+                    building_type: BuildingType::Battery,
+                }, // Assuming Battery type exists or just placeholder
+                   // Note: We don't necessarily need PowerConsumer/PowerSource on it if power_grid_system handles KineticBattery directly
+                   // But spec implied it. I will rely on KineticBattery component integration.
+            ))
+            .id();
 
         // Run power_grid_system
         // This requires registering KineticBattery handling in power_grid_system, which is NOT done yet.
@@ -204,7 +249,13 @@ mod tests {
         // If system implemented: charge should be 5.0 * 0.8 = 4.0
         // If not implemented: charge should be 0.0
 
-        assert!(bat.charge > 0.0, "KineticBattery should have charged from grid surplus");
-        assert_eq!(bat.charge, 4.0, "KineticBattery should charge with efficiency applied");
+        assert!(
+            bat.charge > 0.0,
+            "KineticBattery should have charged from grid surplus"
+        );
+        assert_eq!(
+            bat.charge, 4.0,
+            "KineticBattery should charge with efficiency applied"
+        );
     }
 }

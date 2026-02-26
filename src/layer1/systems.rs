@@ -4,8 +4,8 @@ use bevy_ecs::prelude::*;
 
 use crate::layer1::blob::{blob_consumption_system, blob_spread_system};
 use crate::layer1::direct_link::{
-    apply_buffs, clear_input_system, handle_direct_input_system, handle_direct_movement,
-    handle_possession, PossessEntityEvent, UnpossessEvent,
+    PossessEntityEvent, UnpossessEvent, apply_buffs, clear_input_system,
+    handle_direct_input_system, handle_direct_movement, handle_possession,
 };
 use crate::layer1::inspector::{
     inspector_report_system, observe_inspector_system, spawn_inspector_system,

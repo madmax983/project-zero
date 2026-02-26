@@ -1,8 +1,10 @@
 use bevy_ecs::prelude::*;
-use scale::layer1::map::GridPosition;
 use scale::layer1::health::Health;
+use scale::layer1::map::GridPosition;
 use scale::layer1::pop::Pop;
-use scale::layer1::volatile::{Volatile, volatile_decay_system, handle_explosion_system, ExplosionEvent};
+use scale::layer1::volatile::{
+    ExplosionEvent, Volatile, handle_explosion_system, volatile_decay_system,
+};
 use scale::shared::time::SimulationTime;
 
 #[test]
@@ -26,11 +28,16 @@ fn test_explosion_damages_pops() {
 
     // Spawn Pop (Victim)
     let pop_pos = GridPosition { x: 6, y: 5 }; // Distance 1
-    let pop = world.spawn((
-        Pop,
-        Health { current: 100.0, max: 100.0 },
-        pop_pos,
-    )).id();
+    let pop = world
+        .spawn((
+            Pop,
+            Health {
+                current: 100.0,
+                max: 100.0,
+            },
+            pop_pos,
+        ))
+        .id();
 
     // Run Systems
     let mut schedule = Schedule::default();
@@ -48,7 +55,13 @@ fn test_explosion_damages_pops() {
     schedule.run(&mut world);
 
     // Verify Damage
-    let health = world.get::<Health>(pop).expect("Pop should still exist (health > 0)");
-    assert!(health.current < 100.0, "Pop should take damage from explosion. Current: {}", health.current);
+    let health = world
+        .get::<Health>(pop)
+        .expect("Pop should still exist (health > 0)");
+    assert!(
+        health.current < 100.0,
+        "Pop should take damage from explosion. Current: {}",
+        health.current
+    );
     assert_eq!(health.current, 80.0, "Damage should be 20.0");
 }

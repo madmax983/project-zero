@@ -10,6 +10,7 @@ use crate::layer1::admin::Office;
 use crate::layer1::building::{Building, BuildingType, ShiftSchedule};
 use crate::layer1::day_night::TimeOfDay;
 use crate::layer1::designation::{Designation, DesignationType};
+use crate::layer1::direct_link::Possessed;
 use crate::layer1::energy::PowerConsumer;
 use crate::layer1::farm::Farm;
 use crate::layer1::fauna::Fauna;
@@ -27,7 +28,6 @@ use crate::layer1::social::Tavern;
 use crate::layer1::stockpile::Stockpile;
 use crate::layer1::structure::{DeferMaintenance, Structure};
 use crate::layer1::tech::Library;
-use crate::layer1::direct_link::Possessed;
 use crate::layer1::utility_eval_types::{
     PopEvalData, PopEvaluationQuery, ScorableCandidate, UtilityAIBuffer, WorldContext,
 };
