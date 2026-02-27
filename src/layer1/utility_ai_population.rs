@@ -30,6 +30,7 @@ use crate::layer1::social::Tavern;
 use crate::layer1::stockpile::Stockpile;
 use crate::layer1::structure::{DeferMaintenance, Structure};
 use crate::layer1::tech::Library;
+use crate::layer1::tech::ghost_code::DataResidue;
 use crate::layer1::utility_eval_types::{
     PopEvalData, PopEvaluationQuery, ScorableCandidate, UtilityAIBuffer, WorldContext,
 };
@@ -316,6 +317,7 @@ fn populate_buffer_items_and_misc(world: &mut World, buffer: &mut UtilityAIBuffe
     populate_repair_structures(world, &mut buffer.repair_structures);
     populate_wanted_criminals(world, &mut buffer.wanted_criminals);
     populate_hum_sources(world, &mut buffer.hum_sources);
+    populate_residues(world, &mut buffer.residues);
 }
 
 fn populate_hum_sources(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
@@ -330,6 +332,10 @@ fn populate_hum_sources(world: &mut World, buffer: &mut Vec<ScorableCandidate>) 
                 c
             }),
     );
+}
+
+fn populate_residues(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
+    populate_simple::<DataResidue>(world, buffer);
 }
 
 fn populate_stockpiles(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {

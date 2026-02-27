@@ -2,6 +2,9 @@ use bevy_ecs::prelude::*;
 use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::map::GridPosition;
 use crate::layer1::events::{BuildingCompletedEvent, BuildingRemovedEvent};
+use crate::layer1::energy::PowerConsumer;
+use crate::layer1::utility_types::{ActionType, PopAction};
+use crate::layer1::utility_eval_types::StartPlan;
 
 /// Component representing digital residue left behind after a building is deconstructed.
 ///
@@ -20,6 +23,11 @@ pub struct GhostCode {
     pub traits: Vec<GhostTrait>,
 }
 
+/// Marker component indicating that ghost traits have been applied to this entity.
+/// Prevents compounding effects every tick.
+#[derive(Component)]
+pub struct GhostEffectApplied;
+
 /// Specific behaviors inherited from ghost code.
 #[derive(Debug, Clone, PartialEq)]
 pub enum GhostTrait {
@@ -29,6 +37,10 @@ pub enum GhostTrait {
     LegacyTargeting,
     /// The building has a corrupted protocol string (Flavor/Lore).
     GhostProtocol(String),
+    /// Consumes power for no reason (Spec 247).
+    PowerDrain,
+    /// Turret tries to heal / Medbay tries to shoot (Spec 247).
+    TargetingGlitch,
 }
 
 impl DataResidue {
@@ -83,9 +95,86 @@ pub fn ghost_infection_system(
     }
 }
 
+/// System that applies active effects of `GhostTrait`s.
+pub fn apply_ghost_traits_system(
+    mut commands: Commands,
+    mut query: Query<(Entity, &GhostCode, Option<&mut PowerConsumer>), Without<GhostEffectApplied>>,
+) {
+    for (entity, ghost_code, mut power_opt) in query.iter_mut() {
+        let mut applied = false;
+        for trait_val in &ghost_code.traits {
+            match trait_val {
+                GhostTrait::PowerDrain => {
+                    if let Some(ref mut power) = power_opt {
+                        // Increase power demand by 10%
+                        power.demand *= 1.1;
+                        applied = true;
+                    }
+                }
+                GhostTrait::TargetingGlitch => {
+                    // Placeholder: Combat logic updates would check this trait
+                    // For now, we just acknowledge it exists
+                    applied = true;
+                }
+                _ => {}
+            }
+        }
+
+        if applied {
+            commands.entity(entity).insert(GhostEffectApplied);
+        }
+    }
+}
+
 /// Helper function to manually purge residue (e.g., via a Purge job).
 pub fn perform_purge(world: &mut World, residue_entity: Entity) {
     if world.get::<DataResidue>(residue_entity).is_some() {
         world.despawn(residue_entity);
+    }
+}
+
+/// System to execute PurgeResidue actions.
+pub fn purge_execution_system(
+    mut commands: Commands,
+    mut query: Query<(Entity, &mut PopAction, &GridPosition, Option<&StartPlan>)>,
+    residue_query: Query<&GridPosition, With<DataResidue>>,
+) {
+    for (pop_entity, mut action, pop_pos, plan_opt) in query.iter_mut() {
+        if action.current != ActionType::PurgeResidue {
+            continue;
+        }
+
+        // If we don't have a plan (target lost?), stop
+        let Some(plan) = plan_opt else {
+             action.current = ActionType::Idle;
+             continue;
+        };
+
+        if let Some(target_entity) = plan.target {
+            if let Ok(target_pos) = residue_query.get(target_entity) {
+                if pop_pos == target_pos {
+                    // At location, perform purge (instant for now, could be duration based)
+                    commands.entity(target_entity).despawn();
+
+                    // Reset pop action
+                    action.current = ActionType::Idle;
+                    commands.entity(pop_entity).remove::<StartPlan>();
+                } else {
+                    // Move towards target handled by movement system,
+                    // but we need to ensure the pop is moving.
+                    // The utility AI assigns StartPlan, and HTN or movement system picks it up.
+                    // If we rely on simple movement logic, we might need to set a destination.
+                    // For now, assume movement system handles StartPlan target approach.
+                }
+            } else {
+                // Target gone
+                action.current = ActionType::Idle;
+                commands.entity(pop_entity).remove::<StartPlan>();
+            }
+        } else {
+            // No target
+            action.current = ActionType::Idle;
+            commands.entity(pop_entity).remove::<StartPlan>();
+        }
     }
 }

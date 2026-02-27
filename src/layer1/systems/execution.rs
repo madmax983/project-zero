@@ -83,6 +83,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::hygiene::shower_use_system.after(work_execution_system),
             crate::layer1::hum::execute_listen_to_hum_system.after(arrival_handler_system),
             crate::layer1::clutter::clutter_cleaning_system.after(arrival_handler_system),
+            crate::layer1::tech::ghost_code::purge_execution_system.after(arrival_handler_system),
         )
             .in_set(Layer1SystemSet::Execution),
     );
