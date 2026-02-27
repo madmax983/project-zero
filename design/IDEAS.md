@@ -6463,3 +6463,128 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Volume of Knowledge vs. Accessibility of Knowledge.
 
 ---
+## Harmonic Mining
+
+**Layer:** 1
+
+**Fantasy:** Mining without pickaxes. Singing the stone to dust.
+
+**Mechanic:** "Sonic Drills" disintegrate ore instantly in a radius. However, they vibrate at specific frequencies. If the frequency matches other materials (Glass, Crystal, Bone), those shatter too.
+
+**Emergence:** You tune the drill to mine "Iron". It works great. But your "Glass Greenhouses" vibrate and shatter, venting your crops to vacuum.
+
+**Tension:** Fast, area-of-effect mining vs. Collateral damage risk.
+
+---
+
+## The Industrial Rhythm
+
+**Layer:** 1
+
+**Fantasy:** The factory is a symphony.
+
+**Mechanic:** Machines have "Cycle Times". If adjacent machines are synchronized (finishing at the same time), they create "Rhythm". High Rhythm boosts worker Morale. Discordant noise increases Stress.
+
+**Emergence:** You build a factory that sounds like a drum circle. Workers love it. Then you upgrade one machine, breaking the beat, and everyone gets a headache.
+
+**Tension:** Upgrade individual machines (Efficiency) vs. Maintain the beat (Morale).
+
+---
+
+## Shadow Markets
+
+**Layer:** 1
+
+**Fantasy:** Deals done in the dark.
+
+**Mechanic:** "Black Market" traders only spawn on Unlit tiles. They sell forbidden tech/goods. Lighting up the map improves safety but kills the market.
+
+**Emergence:** You intentionally leave the "slums" dark so you can buy illegal "Stim-Packs" to keep your miners working.
+
+**Tension:** Safety (Light) vs. Access (Darkness).
+
+---
+
+## Thermal Gliders
+
+**Layer:** 1
+
+**Fantasy:** Riding the heat of industry.
+
+**Mechanic:** "Glider Haulers" consume no fuel but require "Updrafts" from Heat sources (Furnaces, Vents) to gain altitude/speed. Cold zones ground them.
+
+**Emergence:** Your logistics network relies on the heat from the smelters. When the smelters shut down for maintenance, the gliders are grounded, and the supply chain collapses.
+
+**Tension:** Centralized heat (Glider highways) vs. Dispersed cooling (Safety).
+
+---
+
+## Selective Amnesia
+
+**Layer:** 1
+
+**Fantasy:** Eternal Sunshine of the Spotless Mind.
+
+**Mechanic:** "Memory Wiping" medical procedure. Removes "Trauma" traits/memories. However, it also deletes linked Skills or Relationships.
+
+**Emergence:** You wipe the PTSD of your best soldier so he can fight again. He forgets his wife (also a soldier), and she leaves him, causing a depression spiral.
+
+**Tension:** Mental Health vs. Identity/Skills.
+
+---
+
+## The Slippery Slope
+
+**Layer:** Cross-layer
+
+**Fantasy:** We did what we had to do.
+
+**Mechanic:** "Desensitization" tracker. Committing atrocities (Cannibalism, Purges) reduces the Stress penalty for future atrocities. But it also raises the threshold for positive Mood buffs. The colony becomes numb.
+
+**Emergence:** You survive the winter by eating the dead. Next winter, no one complains about eating the dead. But they also don't care when you build a statue. They are hollow.
+
+**Tension:** Survival resilience vs. Loss of humanity.
+
+---
+
+## Hard-Light Architecture
+
+**Layer:** 1
+
+**Fantasy:** Walls made of light.
+
+**Mechanic:** Projectors create physical walls/bridges. They are instant to toggle on/off. They consume power. Zero HP (pass-through) if power fails.
+
+**Emergence:** You use Hard-Light dams to hold back a lava flow. A brownout flickers the dam for 0.1 seconds. The lava gets through.
+
+**Tension:** Flexibility/Speed vs. Fragility (Power dependence).
+
+---
+
+## Title Inflation
+
+**Layer:** 1
+
+**Fantasy:** Everyone wants to be a Manager.
+
+**Mechanic:** Middle-class Pops demand "Promotions". You can give them fancy titles ("Senior Executive Miner") that cost Admin but give no authority, just Mood.
+
+**Emergence:** You have 50 "Vice Presidents of Hauling" and only 1 actual Hauler. The Vice Presidents refuse to carry rocks.
+
+**Tension:** Ego stroking (Mood) vs. Organizational efficiency.
+
+---
+
+## The Cadet Branch
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Babysitting the Emperor's nephew.
+
+**Mechanic:** You accept "Noble Scions" from the Homeworld. They have terrible stats and "Snob" traits but come with a monthly "Allowance" (Funding) from their rich families. If they die, funding stops and relations tank.
+
+**Emergence:** You build a luxurious, safe playground for the idiots just to keep the funding flowing, while the real workers live in squalor.
+
+**Tension:** Free money vs. Incompetent/High-maintenance population.
+
+---
