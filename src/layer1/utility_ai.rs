@@ -2,6 +2,43 @@
 //!
 //! This module implements a **Utility-based AI** system (sometimes called "Need-based AI")
 //! that drives the behavior of every Pop in the colony.
+//!
+//! # Architecture
+//!
+//! The system operates in a "Gather-Think-Act" cycle designed for parallelism:
+//!
+//! 1.  **Gather (`ScopedEvaluationContext`):**
+//!     We extract or clone necessary data (Pops, Needs, Buildings, Items) from the ECS World.
+//!     This avoids borrowing conflicts during the parallel phase.
+//!
+//! 2.  **Think (`PopDecider`):**
+//!     Each Pop is evaluated independently in a `ComputeTaskPool`.
+//!     The `PopDecider` walks through a hierarchy of needs (Survival > Social > Work)
+//!     and scores every possible candidate (e.g., every apple, every bed).
+//!
+//! 3.  **Act (`apply_evaluation_results`):**
+//!     The best action (highest utility) is written back to the `PopAction` component.
+//!     If the new utility is significantly higher than the current action's utility
+//!     (plus a hysteresis threshold), the Pop switches tasks.
+//!
+//! # Examples
+//!
+//! Conceptually, the loop looks like this:
+//!
+//! ```no_run
+//! // 1. System runs in the schedule
+//! // evaluate_actions_system(&mut world);
+//!
+//! // Inside the system:
+//! // a. Snapshot world state into ScopedEvaluationContext.
+//! // b. Populate UtilityAIBuffer with all candidates (Food, Beds, Jobs).
+//! // c. Run parallel evaluation:
+//! //    for pop in pops {
+//! //        let decision = PopDecider::new(pop, context).run();
+//! //    }
+//! // d. Apply results:
+//! //    pop.action = decision.best_action;
+//! ```
 
 use crate::layer1::actions::{
     evaluate_clean, evaluate_drafted_behavior, evaluate_fetch_clothing, evaluate_fetch_tool,
@@ -28,8 +65,17 @@ use crate::layer1::zone::ZoneGrid;
 use bevy_ecs::prelude::*;
 use bevy_tasks::ComputeTaskPool;
 
-/// Helper struct to manage the lifecycle of resources during utility evaluation.
+/// A thread-safe snapshot of the world state for parallel evaluation.
+///
+/// This struct works around Bevy's `World` mutability rules. Since we need to
+/// evaluate thousands of Pops in parallel (read-only access to most resources)
+/// but eventually mutate the `PopAction` components, we:
+///
+/// 1.  **Extract**: Move resources out of the World or clone them.
+/// 2.  **Evaluate**: Run read-only logic in a `ComputeTaskPool`.
+/// 3.  **Apply**: Write the results back to the World.
 struct ScopedEvaluationContext {
+    /// Buffer containing both the Pop data (input) and Evaluation results (output).
     buffer: UtilityAIBuffer,
     zone_grid: Option<ZoneGrid>,
     temperature_grid: Option<TemperatureGrid>,
@@ -143,14 +189,24 @@ impl ScopedEvaluationContext {
 }
 
 /// System to update commitment timers.
+///
+/// Increments `ticks_committed` for every pop. This is used to prevent
+/// "jitter" (rapidly switching tasks) by enforcing a minimum commitment time.
 pub fn update_action_timer_system(mut query: Query<&mut PopAction>) {
     query.par_iter_mut().for_each(|mut action| {
         action.ticks_committed = action.ticks_committed.saturating_add(1);
     });
 }
 
+/// The "Conscience" of a Pop.
+///
+/// This struct holds the transient state for a single Pop's decision-making process.
+/// It iterates through the **Hierarchy of Needs** (Survival -> Social -> Work)
+/// and scores potential actions using the [`CandidateEvaluator`].
 struct PopDecider<'a> {
+    /// The evaluator that tracks the best action found so far.
     evaluator: CandidateEvaluator,
+    /// The read-only data for this specific Pop.
     data: &'a PopEvalData,
     buffer: &'a UtilityAIBuffer,
     context: &'a WorldContext<'a>,
@@ -194,6 +250,15 @@ impl<'a> PopDecider<'a> {
         faction_data.state == crate::layer1::factions::FactionState::Striking
     }
 
+    /// **Priority 1: Survival**
+    ///
+    /// Evaluates immediate physiological threats. These usually generate high utility
+    /// (0.8 - 1.0+) when needs are critical.
+    ///
+    /// *   **Hunger**: Seeks food if hungry.
+    /// *   **Rest**: Seeks a bed if tired.
+    /// *   **Health**: Seeks a hospital if injured.
+    /// *   **Addiction**: Seeks chemicals if withdrawing.
     #[allow(clippy::collapsible_if)]
     fn evaluate_group_survival(&mut self) {
         let pop_pos = self.data.pos;
@@ -247,6 +312,11 @@ impl<'a> PopDecider<'a> {
         );
     }
 
+    /// **Priority 2: Social & Mental Health**
+    ///
+    /// Evaluates psychological needs. Ignored by penal laborers.
+    ///
+    /// *   **Socialize**: Visits a tavern if lonely.
     fn evaluate_group_social(&mut self) {
         if self.is_penal {
             return;
@@ -266,6 +336,17 @@ impl<'a> PopDecider<'a> {
         );
     }
 
+    /// **Priority 3: Work & Production**
+    ///
+    /// The core economic driver. Ignored if striking.
+    ///
+    /// *   **Work**: General labor (Mining, Building).
+    /// *   **Refine**: Manufacturing jobs.
+    /// *   **Farm**: Food production.
+    /// *   **Admin**: Bureaucracy.
+    /// *   **Research**: Science.
+    /// *   **Tame**: Animal husbandry.
+    /// *   **Warden**: Policing.
     #[allow(clippy::collapsible_if)]
     fn evaluate_group_work(&mut self) {
         if self.is_striking {
@@ -357,6 +438,14 @@ impl<'a> PopDecider<'a> {
         }
     }
 
+    /// **Priority 4: Logistics & Maintenance**
+    ///
+    /// Keeping the colony running.
+    ///
+    /// *   **FetchTool/Clothing**: Upgrading personal equipment.
+    /// *   **Repair**: Fixing damaged buildings.
+    /// *   **Haul**: Moving items to stockpiles.
+    /// *   **BuryCorpse**: Sanitation.
     fn evaluate_group_logistics(&mut self) {
         if self.is_striking {
             return;
@@ -444,6 +533,11 @@ impl<'a> PopDecider<'a> {
         }
     }
 
+    /// **Priority 5: Exploration**
+    ///
+    /// Investigating the unknown.
+    ///
+    /// *   **Explore**: Investigating anomalies.
     fn evaluate_group_exploration(&mut self) {
         if self.is_striking || self.is_penal {
             return;
@@ -461,6 +555,10 @@ impl<'a> PopDecider<'a> {
         );
     }
 
+    /// **Priority 6: Cleanliness**
+    ///
+    /// *   **PurgeResidue**: Removing tech bloat.
+    /// *   **Clean**: Removing clutter/filth.
     fn evaluate_group_maintenance(&mut self) {
         if self.is_striking || self.is_penal {
             return;
@@ -486,6 +584,12 @@ impl<'a> PopDecider<'a> {
         );
     }
 
+    /// **Priority 7: Leisure**
+    ///
+    /// Optional activities when everything else is satisfied.
+    ///
+    /// *   **Hobby**: Personal projects.
+    /// *   **The Hum**: Tuning in to the void.
     fn evaluate_group_leisure(&mut self) {
         if let Some(hobby_type) = self.data.hobby_type {
             let utility = evaluate_hobby(self.data, hobby_type);

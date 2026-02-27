@@ -120,6 +120,7 @@ mod tests {
                         item_type: ItemType::Alcohol,
                         entity: None,
                     }],
+                    capacity: 10,
                 },
             ))
             .id();

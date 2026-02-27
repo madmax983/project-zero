@@ -83,6 +83,7 @@ mod tests {
                     item_type: ItemType::Corpse(corpse),
                     entity: None,
                 }],
+                capacity: 10,
             },
         ));
 
@@ -123,6 +124,7 @@ mod tests {
                         entity: None,
                     },
                 ],
+                capacity: 10,
             },
         ));
 
