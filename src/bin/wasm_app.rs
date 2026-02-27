@@ -3,8 +3,11 @@
 use std::cell::RefCell;
 use std::rc::Rc;
 
+#[cfg(target_arch = "wasm32")]
 use ratzilla::backend::dom::DomBackend;
+#[cfg(target_arch = "wasm32")]
 use ratzilla::ratatui::Terminal;
+#[cfg(target_arch = "wasm32")]
 use ratzilla::WebRenderer;
 
 use scale::layer1::map::update_camera_smooth;
@@ -17,6 +20,12 @@ use scale::simulation::run_simulation_tick;
 use scale::ui::map::update_render_cache;
 use scale::ui::render;
 
+#[cfg(not(target_arch = "wasm32"))]
+fn main() {
+    println!("This binary is for WASM only.");
+}
+
+#[cfg(target_arch = "wasm32")]
 fn main() -> std::io::Result<()> {
     let world = Rc::new(RefCell::new(setup_world()));
 

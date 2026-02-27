@@ -206,14 +206,13 @@ pub fn machine_personality_system(
         // 1% chance per tick global? No, per tick check.
         // Actually, checking every tick for every machine is fine, but we don't want spam.
         // Let's pick ONE machine randomly.
-        if let Some(consciousness) = machines.iter().choose(&mut rng)
-            && consciousness.level >= 2
-            && rng.gen_bool(0.05)
-        {
-            log.add_colored(
-                consciousness.personality.flavor_text(),
-                ratatui::style::Color::DarkGray,
-            );
+        if let Some(consciousness) = machines.iter().choose(&mut rng) {
+            if consciousness.level >= 2 && rng.gen_bool(0.05) {
+                log.add_colored(
+                    consciousness.personality.flavor_text(),
+                    ratatui::style::Color::DarkGray,
+                );
+            }
         }
     }
 }
@@ -221,7 +220,7 @@ pub fn machine_personality_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::actions::{AssignedTo, AssignmentType};
+    use crate::layer1::actions::AssignmentType;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::gastronomy::WorkSpeedBuff;
     use crate::layer1::pop::{Job, Pop};

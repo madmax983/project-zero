@@ -47,5 +47,7 @@ lto = true
 strip = true
 
 [features]
-default = []
+default = ["native"]
 nova = [] # Feature flag for Nova (Expansion 1) content
+native = []
+wasm = []
