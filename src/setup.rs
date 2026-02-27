@@ -116,6 +116,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(crate::layer1::zone::ZoneGrid::new(80, 50));
     world.insert_resource(crate::layer1::acoustic::NoiseMap::new(80, 50));
     world.insert_resource(crate::layer1::hum::HumMap::new(80, 50));
+    world.insert_resource(crate::layer1::void_stare::VoidGrid::new(80, 50));
+    world.insert_resource(crate::layer1::clutter::ClutterGrid::new(80, 50));
     world.insert_resource(AtmosphereGrid::new(80, 50));
     world.insert_resource(crate::layer1::wind::WindGrid::new(80, 50));
     world.insert_resource(crate::layer1::wind::GlobalWind::default());
@@ -178,6 +180,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     // world.init_resource::<Events<crate::layer1::DeathEvent>>();
     world.init_resource::<Events<PopDied>>();
     world.init_resource::<Events<PopBorn>>();
+    world.init_resource::<Events<crate::layer1::events::BuildingCompletedEvent>>();
+    world.init_resource::<Events<crate::layer1::events::BuildingRemovedEvent>>();
     world.init_resource::<Events<crate::layer1::structural_integrity::StructureCollapsed>>();
     world.init_resource::<Events<RetrogradeEngineeringEvent>>();
     world.init_resource::<Events<crate::layer1::energy::GridOverloadEvent>>();
