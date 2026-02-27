@@ -11,3 +11,4 @@
 ## Future / Ideas
 
 See `design/IDEAS.md` for unspecced concepts.
+- [ ] `248` The Infinite Archive — `specs/248-infinite-archive.md`
