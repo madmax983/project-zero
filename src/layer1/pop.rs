@@ -87,6 +87,19 @@ pub struct PopDied {
     pub reason: String,
 }
 
+/// Event triggered when a pop is born/spawned (e.g. from Clone Vat).
+#[derive(Event, Debug, Clone)]
+pub struct PopBorn {
+    /// The entity that was born.
+    pub entity: Entity,
+    /// The name of the pop.
+    pub name: String,
+    /// The tick when birth occurred.
+    pub tick: u64,
+    /// The source of the spawn (e.g., "Clone Vat", "Immigrant").
+    pub source: String,
+}
+
 const POP_NAMES: &[&str] = &[
     "Ada", "Bryn", "Cole", "Dara", "Eli", "Fern", "Gale", "Hana", "Iris", "Joss", "Kael", "Luna",
     "Milo", "Neva", "Orin", "Pax", "Quinn", "Rhea", "Sable", "Tarn", "Uma", "Vale", "Wren", "Xia",

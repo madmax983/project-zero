@@ -103,6 +103,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::integration::hospitalization_notification_system
                 .after(work_execution_system),
             crate::layer1::integration::pop_death_notification_system.after(natural_death_system),
+            crate::layer1::integration::pop_born_notification_system.after(Layer1SystemSet::Economy),
         )
             .in_set(Layer1SystemSet::Observation),
     );

@@ -13,7 +13,7 @@ use crate::layer1::medical::PatientTreated;
 use crate::layer1::memory::{Memories, MemoryType};
 use crate::layer1::needs::Needs;
 use crate::layer1::notifications::NotificationQueue;
-use crate::layer1::pop::{Pop, PopDied, PopName};
+use crate::layer1::pop::{Pop, PopBorn, PopDied, PopName};
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::rumor::{Knowledge, Rumor, RumorTopic};
 use crate::layer1::utility_types::{ActionType, PopAction};
@@ -562,6 +562,25 @@ pub fn pop_death_notification_system(
     for event in events.read() {
         notifications.add_error(
             format!("{} has died! Cause: {}", event.name, event.reason),
+            time.tick,
+        );
+    }
+}
+
+/// Notifies the player when a pop is born.
+///
+/// Bridges Pop system (Birth Event) and Notification system (UI).
+pub fn pop_born_notification_system(
+    mut events: EventReader<PopBorn>,
+    mut notifications: ResMut<NotificationQueue>,
+    time: Res<SimulationTime>,
+) {
+    for event in events.read() {
+        notifications.add_info(
+            format!(
+                "{} has been born. Source: {}",
+                event.name, event.source
+            ),
             time.tick,
         );
     }

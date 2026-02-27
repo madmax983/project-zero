@@ -138,3 +138,6 @@ mod gene_bank_logistics;
 
 #[path = "integration/resources_robustness.rs"]
 mod resources_robustness;
+
+#[path = "integration/clone_integration.rs"]
+mod clone_integration;

@@ -227,6 +227,16 @@ pub fn get_trait_hunger_decay_modifier(traits: &Traits) -> f32 {
     modifier
 }
 
+/// Returns the leisure decay modifier from traits.
+#[must_use]
+pub fn get_trait_leisure_decay_modifier(traits: &Traits) -> f32 {
+    let mut modifier = 1.0;
+    if traits.0.contains(&Trait::Soulless) {
+        modifier -= 0.5;
+    }
+    modifier
+}
+
 /// Returns the movement speed modifier from traits.
 #[must_use]
 pub fn get_trait_move_speed_modifier(traits: &Traits) -> f32 {
@@ -311,6 +321,21 @@ mod tests {
         assert!(
             (get_trait_hunger_decay_modifier(&normal) - 1.0).abs() < f32::EPSILON,
             "Normal should eat normally"
+        );
+    }
+
+    #[test]
+    fn test_leisure_decay_modifiers() {
+        let soulless = Traits(HashSet::from([Trait::Soulless]));
+        let normal = Traits(HashSet::new());
+
+        assert!(
+            get_trait_leisure_decay_modifier(&soulless) < 1.0,
+            "Soulless should have reduced leisure decay"
+        );
+        assert!(
+            (get_trait_leisure_decay_modifier(&normal) - 1.0).abs() < f32::EPSILON,
+            "Normal should decay normally"
         );
     }
 
