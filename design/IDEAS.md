@@ -6240,7 +6240,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Holographic Facades
+## Holographic Facades [SPECCED]
 
 **Layer:** 1
 
@@ -6408,7 +6408,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Surgical Addiction
+## Surgical Addiction [SPECCED]
 
 **Layer:** 1
 
