@@ -32,8 +32,8 @@ use scale::layer1::dreams::Dream;
 use scale::layer1::pop::PopName;
 use scale::layer1::tech::{unlock_tech, Tech, TechState, TechStatus};
 use scale::layer1::{
-    try_designate, try_place_building, BuildingType, Chronicle, ColonyResources, Designation,
-    DesignationType, EventImportance, Farm, GlobalWind, GridPosition, Housing, Morale,
+    try_designate, try_place_building, Building, BuildingType, Chronicle, ColonyResources,
+    Designation, DesignationType, EventImportance, Farm, GlobalWind, GridPosition, Housing, Morale,
     MovementTarget, Needs, OccupiedTiles, Pop, PopAction, Stockpile, TerrainGrid, TerrainType,
 };
 use scale::setup::{setup_world_with_config, SetupConfig};
@@ -660,12 +660,31 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
         .map(|p| (p.x, p.y))
         .collect();
 
+    // Collect building positions and types
+    let building_map: std::collections::HashMap<(i32, i32), BuildingType> = world
+        .query::<(&GridPosition, &Building)>()
+        .iter(world)
+        .map(|(p, b)| ((p.x, p.y), b.building_type))
+        .collect();
+
     // Collect designation positions
     let designation_positions: Vec<(i32, i32, DesignationType)> = world
         .query::<(&GridPosition, &Designation)>()
         .iter(world)
         .map(|(p, d)| (p.x, p.y, d.designation_type))
         .collect();
+
+    // Print Header Row
+    print!("    "); // Offset for Y coords
+    for x in center_x.saturating_sub(radius)..=center_x.saturating_add(radius) {
+        if x < 0 || x >= width {
+            print!(" ");
+        } else {
+            // Print last digit of X coord to save space
+            print!("{}", (x.abs() % 10));
+        }
+    }
+    println!();
 
     for y in center_y.saturating_sub(radius)..=center_y.saturating_add(radius) {
         print!("{y:3} ");
@@ -675,9 +694,22 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
                 continue;
             }
 
+            // Priority: Pop > Building > Designation > Terrain
+
             // Check for pop
             if pop_positions.iter().any(|&(px, py)| px == x && py == y) {
-                print!("{}", "@".cyan().bold());
+                // Cyan Smile
+                print!("{}", "☺".cyan().bold());
+                continue;
+            }
+
+            // Check for building
+            if let Some(bt) = building_map.get(&(x, y)) {
+                let s = match bt {
+                    BuildingType::Wall => "█".white(),
+                    _ => "□".yellow(),
+                };
+                print!("{s}");
                 continue;
             }
 
@@ -709,11 +741,11 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
                 .copied()
                 .unwrap_or(TerrainType::Grass);
             let s = match tile {
-                TerrainType::Grass => ".".green(),
+                TerrainType::Grass => "·".green().dim(),
                 TerrainType::Dirt => ",".yellow(),
-                TerrainType::Rock => "#".white().dim(),
-                TerrainType::Water => "~".blue(),
-                TerrainType::Tree => "T".dark_green(),
+                TerrainType::Rock => "▲".white().dim(),
+                TerrainType::Water => "≈".blue(),
+                TerrainType::Tree => "♣".green().bold(),
                 TerrainType::Path => "=".white(),
                 TerrainType::Shrub => "\"".green().dim(),
                 TerrainType::Sapling => "t".green().dim(),
@@ -722,7 +754,7 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
         }
         println!();
     }
-    println!("Legend: @=pop .=grass ,=dirt #=rock ~=water T=tree %=mine /=chop");
+    println!("Legend: ☺=pop ·=grass ,=dirt ▲=rock ≈=water ♣=tree %=mine /=chop");
 }
 
 fn build_at(world: &mut World, building_type: BuildingType, x: i32, y: i32) {
