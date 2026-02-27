@@ -6,7 +6,7 @@ use rand::RngCore;
 #[cfg(all(not(target_arch = "wasm32"), not(test)))]
 use crate::layer1::chronicle::AddChronicleEvent;
 use crate::layer1::heirloom::RetrogradeEngineeringEvent;
-use crate::layer1::pop::PopDied;
+use crate::layer1::pop::{PopBorn, PopDied};
 use crate::layer1::social::AffinityChange;
 use crate::layer1::{
     AmbientLight, AtmosphereGrid, BuildMode, BuildingTracker, CameraCurrent, CameraTarget,
@@ -174,6 +174,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<AffinityChange>>();
     // world.init_resource::<Events<crate::layer1::DeathEvent>>();
     world.init_resource::<Events<PopDied>>();
+    world.init_resource::<Events<PopBorn>>();
     world.init_resource::<Events<crate::layer1::structural_integrity::StructureCollapsed>>();
     world.init_resource::<Events<RetrogradeEngineeringEvent>>();
     world.init_resource::<Events<crate::layer1::energy::GridOverloadEvent>>();

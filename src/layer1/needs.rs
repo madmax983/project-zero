@@ -38,7 +38,7 @@
 use crate::layer1::edicts::{ColonyPolicies, get_hunger_decay_modifier};
 use crate::layer1::health::Health;
 use crate::layer1::memory::{Memories, MemoryType};
-use crate::layer1::traits::{Traits, get_trait_hunger_decay_modifier};
+use crate::layer1::traits::{Traits, get_trait_hunger_decay_modifier, get_trait_leisure_decay_modifier};
 use bevy_ecs::prelude::*;
 
 /// Pop survival needs.
@@ -194,12 +194,15 @@ pub fn decay_needs_system(
     let base_hunger_decay = HUNGER_DECAY_PER_TICK * hunger_mod;
 
     query.par_iter_mut().for_each(|(mut needs, traits)| {
-        let trait_mod = traits.map_or(1.0, get_trait_hunger_decay_modifier);
-        let hunger_decay = base_hunger_decay * trait_mod;
+        let hunger_trait_mod = traits.map_or(1.0, get_trait_hunger_decay_modifier);
+        let hunger_decay = base_hunger_decay * hunger_trait_mod;
+
+        let leisure_trait_mod = traits.map_or(1.0, get_trait_leisure_decay_modifier);
+        let leisure_decay = LEISURE_DECAY_PER_TICK * leisure_trait_mod;
 
         needs.hunger = (needs.hunger - hunger_decay).max(0.0);
         needs.rest = (needs.rest - REST_DECAY_PER_TICK).max(0.0);
-        needs.leisure = (needs.leisure - LEISURE_DECAY_PER_TICK).max(0.0);
+        needs.leisure = (needs.leisure - leisure_decay).max(0.0);
         // Hygiene is decayed separately in hygiene.rs
     });
 }

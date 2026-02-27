@@ -1,6 +1,6 @@
 use super::{Layer1SystemSet, update_event_buffer};
 use crate::layer1::direct_link::{PossessEntityEvent, UnpossessEvent, handle_direct_input_system};
-use crate::layer1::pop::PopDied;
+use crate::layer1::pop::{PopBorn, PopDied};
 use crate::layer1::*;
 use bevy_ecs::prelude::*;
 
@@ -10,6 +10,7 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<AddChronicleEvent>,
             update_event_buffer::<AffinityChange>,
             update_event_buffer::<PopDied>,
+            update_event_buffer::<PopBorn>,
             update_event_buffer::<crate::layer1::structural_integrity::StructureCollapsed>,
             update_event_buffer::<crate::layer1::heirloom::RetrogradeEngineeringEvent>,
             update_event_buffer::<crate::layer1::energy::GridOverloadEvent>,

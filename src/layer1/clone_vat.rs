@@ -2,10 +2,13 @@
 //!
 //! Handles the production of Pops from Rations and Energy using Clone Vats.
 
+use crate::layer1::actions::{AssignedTo, AssignmentType};
+use crate::layer1::housing::Housing;
 use crate::layer1::map::GridPosition;
-use crate::layer1::pop::PopBundle;
+use crate::layer1::pop::{PopBorn, PopBundle};
 use crate::layer1::resources::{ColonyResources, ResourceType};
 use crate::layer1::traits::{Trait, Traits};
+use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 use rand::Rng; // For thread_rng? No, PopBundle::random takes &mut R
 
@@ -42,6 +45,9 @@ pub fn process_clone_vats_system(
         Option<&crate::layer1::energy::PowerConsumer>,
     )>,
     mut resources: ResMut<ColonyResources>,
+    mut events: EventWriter<PopBorn>,
+    mut housing_query: Query<(Entity, &mut Housing)>,
+    time: Res<SimulationTime>,
 ) {
     for (mut vat, pos, power) in query.iter_mut() {
         // Check power status if component exists
@@ -59,7 +65,30 @@ pub fn process_clone_vats_system(
                 let mut bundle = PopBundle::random(pos.x, pos.y, &mut rng);
                 bundle.traits.add(Trait::Clone);
                 bundle.traits.add(Trait::Soulless);
-                commands.spawn(bundle);
+
+                // Capture name for event
+                let name = bundle.name.0.clone();
+                let entity = commands.spawn(bundle).id();
+
+                // 1. Emit Event
+                events.send(PopBorn {
+                    entity,
+                    name,
+                    tick: time.tick,
+                    source: "Clone Vat".to_string(),
+                });
+
+                // 2. Auto-assign Housing (if available)
+                for (house_entity, mut house) in &mut housing_query {
+                    if house.residents.len() < house.capacity {
+                        house.residents.push(entity);
+                        commands.entity(entity).insert(AssignedTo {
+                            entity: house_entity,
+                            assignment_type: AssignmentType::HousingResident,
+                        });
+                        break; // Found a home
+                    }
+                }
 
                 vat.is_growing = false;
             }
@@ -85,6 +114,7 @@ mod tests {
     fn setup_world() -> World {
         let mut world = World::new();
         world.insert_resource(crate::shared::time::SimulationTime::default());
+        world.init_resource::<Events<PopBorn>>();
         world.insert_resource(ColonyResources::default());
         world.insert_resource(crate::layer1::terrain::TerrainGrid {
             width: 10,
