@@ -678,5 +678,9 @@ pub use photophobic::*;
 pub mod clone_vat;
 pub use clone_vat::*;
 
+/// Operational Detritus system (Spec 239).
+pub mod clutter;
+pub use clutter::*;
+
 #[cfg(test)]
 mod geodetic_tests;

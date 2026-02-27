@@ -144,6 +144,8 @@ pub enum ItemType {
     ShadowCrystal,
     /// A living stone that moves.
     LivingStone,
+    /// Scrap metal recovered from clutter.
+    Scrap,
 }
 
 impl ItemType {

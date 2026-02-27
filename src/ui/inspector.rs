@@ -75,6 +75,7 @@ const fn format_action_type(action: ActionType) -> (&'static str, &'static str, 
         ActionType::CollectSample => ("🧬", "Collecting", Color::Cyan),
         ActionType::UseShower => ("🚿", "Showering", Color::Cyan),
         ActionType::ListenToTheHum => ("🌀", "Listening", Color::Magenta),
+        ActionType::Clean => ("🧹", "Cleaning", Color::Yellow),
     }
 }
 

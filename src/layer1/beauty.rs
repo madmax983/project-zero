@@ -76,6 +76,7 @@ impl BeautyGrid {
 pub fn update_beauty_grid_system(
     mut grid: ResMut<BeautyGrid>,
     terrain: Res<crate::layer1::TerrainGrid>,
+    clutter: Option<Res<crate::layer1::clutter::ClutterGrid>>,
     sources: Query<(&crate::layer1::GridPosition, &BeautySource)>,
     items: Query<(
         &crate::layer1::GridPosition,
@@ -97,6 +98,20 @@ pub fn update_beauty_grid_system(
                 if mod_val.abs() > f32::EPSILON {
                     let current = grid.get(x, y);
                     grid.set(x, y, current + mod_val);
+                }
+            }
+        }
+    }
+
+    // Apply Clutter Penalty
+    if let Some(clutter_grid) = clutter {
+        for y in 0..grid.height {
+            for x in 0..grid.width {
+                let c = clutter_grid.get(x, y);
+                if c > 0.0 {
+                    let penalty = (c / 10.0) * -1.0; // -1 beauty per 10 clutter
+                    let current = grid.get(x, y);
+                    grid.set(x, y, current + penalty);
                 }
             }
         }
