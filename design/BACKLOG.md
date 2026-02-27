@@ -14,3 +14,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `253` Cultural Vandalism — `specs/253-cultural-vandalism.md`
 - [ ] `254` Doppelgangers — `specs/254-doppelgangers.md`
 - [ ] `255` Hypno-Learning — `specs/255-hypno-learning.md`
+- [ ] `256` Placebo Protocols — `specs/256-placebo-protocols.md`
+- [ ] `257` Subspace Pen Pals — `specs/257-subspace-pen-pals.md`
+- [ ] `258` Acoustic Shadows — `specs/258-acoustic-shadows.md`

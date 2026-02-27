@@ -4772,7 +4772,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Subspace Pen Pals
+## Subspace Pen Pals [SPECCED]
 
 **Layer:** 1 -> 3
 
@@ -4786,7 +4786,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Placebo Protocols
+## Placebo Protocols [SPECCED]
 
 **Layer:** 1
 
@@ -6366,7 +6366,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Acoustic Shadows
+## Acoustic Shadows [SPECCED]
 
 **Layer:** 1
 
