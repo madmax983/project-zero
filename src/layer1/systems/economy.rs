@@ -53,6 +53,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::cybernetics::surgery_system,
             crate::layer1::institutional_memory::produce_manual_system,
             crate::layer1::institutional_memory::manual_aura_system,
+            crate::layer1::tech::ghost_code::residue_system,
+            crate::layer1::tech::ghost_code::ghost_infection_system,
         )
             .in_set(Layer1SystemSet::Economy),
     );

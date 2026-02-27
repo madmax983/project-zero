@@ -2137,6 +2137,8 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
         log.add(format!("Construction started: {}", building_type.label()));
     }
 
+    world.send_event(crate::layer1::events::BuildingCompletedEvent { entity });
+
     true
 }
 

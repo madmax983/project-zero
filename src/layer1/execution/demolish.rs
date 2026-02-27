@@ -97,6 +97,15 @@ pub fn execute_demolish(world: &mut World, designation_entity: Entity) -> bool {
                 if let Some(mut occupied) = world.get_resource_mut::<OccupiedTiles>() {
                     occupied.0.remove(&(designation_pos.x, designation_pos.y));
                 }
+
+                // Send removal event (for Ghost Code, etc)
+                if let Some(btype) = building_type {
+                    world.send_event(crate::layer1::events::BuildingRemovedEvent {
+                        entity,
+                        position: designation_pos,
+                        building_type: btype,
+                    });
+                }
             }
 
             // Despawn the designation itself

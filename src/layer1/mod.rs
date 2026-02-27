@@ -177,6 +177,9 @@ pub mod locations;
 /// Graffiti and Signage system (Spec 144).
 pub mod graffiti;
 
+/// Event definitions.
+pub mod events;
+
 pub use access_control::*;
 pub use actions::*;
 pub use admin::*;
@@ -228,6 +231,7 @@ pub use tech::*;
 pub use terrain::*;
 pub use utility_ai::*;
 pub use utility_types::*;
+pub use events::*;
 
 #[cfg(test)]
 mod tool_tests;
