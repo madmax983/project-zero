@@ -135,3 +135,6 @@ mod hum_grievances;
 
 #[path = "integration/gene_bank_logistics.rs"]
 mod gene_bank_logistics;
+
+#[path = "integration/resources_robustness.rs"]
+mod resources_robustness;

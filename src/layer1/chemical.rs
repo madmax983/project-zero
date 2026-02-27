@@ -387,23 +387,27 @@ pub fn evaluate_consume_chemical(
     let mut best_target = None;
 
     // Check Stims
-    if desire_stim > 0.1
-        && let Some((score, target)) =
+    if desire_stim > 0.1 {
+        if let Some((score, target)) =
             evaluate_candidates(pop_pos, weights, &candidates_stim, desire_stim)
-        && score > best_score
-    {
-        best_score = score;
-        best_target = Some(target);
+        {
+            if score > best_score {
+                best_score = score;
+                best_target = Some(target);
+            }
+        }
     }
 
     // Check Sedatives
-    if desire_sedative > 0.1
-        && let Some((score, target)) =
+    if desire_sedative > 0.1 {
+        if let Some((score, target)) =
             evaluate_candidates(pop_pos, weights, &candidates_sedative, desire_sedative)
-        && score > best_score
-    {
-        best_score = score;
-        best_target = Some(target);
+        {
+            if score > best_score {
+                best_score = score;
+                best_target = Some(target);
+            }
+        }
     }
 
     best_target.map(|target| (best_score, target))

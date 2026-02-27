@@ -371,20 +371,19 @@ pub fn handle_fetch_clothing(
         resources.clothing -= 1.0;
 
         let mut is_upgrade = false;
-        if let Some(eq) = equipment_opt
-            && eq.body.is_some()
-        {
-            is_upgrade = true;
-            if let Some(old_entity) = eq.body {
-                unequip_events.send(UnequipEvent {
-                    actor: pop_entity,
-                    item: old_entity,
-                    slot: "body".to_string(),
-                });
-                commands.entity(old_entity).despawn();
+        if let Some(eq) = equipment_opt {
+            if eq.body.is_some() {
+                is_upgrade = true;
+                if let Some(old_entity) = eq.body {
+                    unequip_events.send(UnequipEvent {
+                        actor: pop_entity,
+                        item: old_entity,
+                        slot: "body".to_string(),
+                    });
+                    commands.entity(old_entity).despawn();
+                }
             }
         }
-
         let (clothing_type, insulation) = if is_upgrade {
             (ClothingType::Parka, 2.0)
         } else {

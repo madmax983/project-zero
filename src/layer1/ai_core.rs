@@ -136,12 +136,12 @@ pub fn ai_automation_system(
     }
 
     // 3. Auto-Lockdown Logic
-    if let Some(raid) = raid
-        && raid.active
-    {
-        for (b, mut access) in &mut doors {
-            if is_external_door(b.building_type) && access.mode != AccessMode::Lockdown {
-                access.mode = AccessMode::Lockdown;
+    if let Some(raid) = raid {
+        if raid.active {
+            for (b, mut access) in &mut doors {
+                if is_external_door(b.building_type) && access.mode != AccessMode::Lockdown {
+                    access.mode = AccessMode::Lockdown;
+                }
             }
         }
     }

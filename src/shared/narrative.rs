@@ -203,16 +203,16 @@ impl NarrativeGenerator {
             // Detect Template Header: "### TEMPLATE_NAME"
             if let Some(id_part) = trimmed.strip_prefix("### ") {
                 // If we were parsing a previous template, save it
-                if let Some(id) = current_id.take()
-                    && !current_patterns.is_empty()
-                {
-                    self.templates.insert(
-                        id.clone(),
-                        Template {
-                            id,
-                            patterns: current_patterns.clone(),
-                        },
-                    );
+                if let Some(id) = current_id.take() {
+                    if !current_patterns.is_empty() {
+                        self.templates.insert(
+                            id.clone(),
+                            Template {
+                                id,
+                                patterns: current_patterns.clone(),
+                            },
+                        );
+                    }
                 }
 
                 // Start new template
@@ -248,16 +248,16 @@ impl NarrativeGenerator {
         }
 
         // Save the last one
-        if let Some(id) = current_id
-            && !current_patterns.is_empty()
-        {
-            self.templates.insert(
-                id.clone(),
-                Template {
-                    id,
-                    patterns: current_patterns,
-                },
-            );
+        if let Some(id) = current_id {
+            if !current_patterns.is_empty() {
+                self.templates.insert(
+                    id.clone(),
+                    Template {
+                        id,
+                        patterns: current_patterns,
+                    },
+                );
+            }
         }
     }
 
@@ -272,25 +272,25 @@ impl NarrativeGenerator {
 
             // Detect Fragment Header: "### [FRAGMENT_NAME]"
             if let Some(header) = trimmed.strip_prefix("### ") {
-                if let Some(id) = current_id.take()
-                    && !current_options.is_empty()
-                {
-                    self.fragments.insert(
-                        id.clone(),
-                        FragmentType {
-                            id,
-                            options: current_options.clone(),
-                        },
-                    );
+                if let Some(id) = current_id.take() {
+                    if !current_options.is_empty() {
+                        self.fragments.insert(
+                            id.clone(),
+                            FragmentType {
+                                id,
+                                options: current_options.clone(),
+                            },
+                        );
+                    }
                 }
 
                 // Extract name between brackets
-                if let Some(start) = header.find('[')
-                    && let Some(end) = header.find(']')
-                {
-                    current_id = Some(header[start + 1..end].to_string());
-                    current_options = Vec::new();
-                    capturing_code_block = false;
+                if let Some(start) = header.find('[') {
+                    if let Some(end) = header.find(']') {
+                        current_id = Some(header[start + 1..end].to_string());
+                        current_options = Vec::new();
+                        capturing_code_block = false;
+                    }
                 }
                 continue;
             }
@@ -310,16 +310,16 @@ impl NarrativeGenerator {
         }
 
         // Save last
-        if let Some(id) = current_id
-            && !current_options.is_empty()
-        {
-            self.fragments.insert(
-                id.clone(),
-                FragmentType {
-                    id,
-                    options: current_options,
-                },
-            );
+        if let Some(id) = current_id {
+            if !current_options.is_empty() {
+                self.fragments.insert(
+                    id.clone(),
+                    FragmentType {
+                        id,
+                        options: current_options,
+                    },
+                );
+            }
         }
     }
 

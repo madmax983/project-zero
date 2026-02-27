@@ -83,13 +83,13 @@ pub fn surgery_system(world: &mut World) {
         }
 
         // Check if we fixed a missing limb
-        if let Some(prosthetic) = world.get::<Prosthetic>(item_entity)
-            && matches!(
+        if let Some(prosthetic) = world.get::<Prosthetic>(item_entity) {
+            if matches!(
                 prosthetic.prosthetic_type,
                 ProstheticType::BionicArm | ProstheticType::BionicLeg
-            )
-        {
-            world.entity_mut(pop_entity).remove::<MissingLimb>();
+            ) {
+                world.entity_mut(pop_entity).remove::<MissingLimb>();
+            }
         }
 
         // Remove PendingSurgery component

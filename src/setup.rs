@@ -4,7 +4,6 @@ use bevy_ecs::prelude::*;
 use rand::RngCore;
 
 #[cfg(all(not(target_arch = "wasm32"), not(test)))]
-use crate::gpu::context::GpuContext;
 use crate::layer1::chronicle::AddChronicleEvent;
 use crate::layer1::heirloom::RetrogradeEngineeringEvent;
 use crate::layer1::pop::PopDied;
@@ -201,7 +200,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     // Skip if headless mode is requested
     #[cfg(all(not(target_arch = "wasm32"), not(test)))]
     if !config.headless {
-        match pollster::block_on(GpuContext::new()) {
+        match pollster::block_on(crate::gpu::context::GpuContext::new()) {
             Ok(ctx) => {
                 world.insert_resource(ctx);
             }

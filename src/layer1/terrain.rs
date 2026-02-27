@@ -135,12 +135,12 @@ impl TerrainGrid {
 
     /// Sets the terrain type at the specified coordinates.
     pub fn set(&mut self, x: usize, y: usize, tile: TerrainType) {
-        if x < self.width
-            && y < self.height
-            && let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x))
-            && idx < self.tiles.len()
-        {
-            self.tiles[idx] = tile;
+        if x < self.width && y < self.height {
+            if let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x)) {
+                if idx < self.tiles.len() {
+                    self.tiles[idx] = tile;
+                }
+            }
         }
     }
 }
