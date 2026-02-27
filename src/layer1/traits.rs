@@ -62,6 +62,10 @@ pub enum Trait {
     Clone,
     /// Reduced social needs.
     Soulless,
+    /// Resistant to Void Stare effects (Spec 216).
+    VoidTouched,
+    /// Highly susceptible to Void Stare effects (Spec 216).
+    Agoraphobic,
 }
 
 impl Trait {
@@ -96,6 +100,8 @@ impl Trait {
             Self::Sensitive => "Sensitive",
             Self::Clone => "Clone",
             Self::Soulless => "Soulless",
+            Self::VoidTouched => "Void Touched",
+            Self::Agoraphobic => "Agoraphobic",
         }
     }
 }
