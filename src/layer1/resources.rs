@@ -337,48 +337,66 @@ impl ColonyResources {
 
     /// Adds scrap, clamping to the maximum capacity.
     pub fn add_scrap(&mut self, amount: f32) {
-        self.scrap = (self.scrap + amount).clamp(0.0, self.max_scrap);
+        if amount.is_finite() {
+            self.scrap = (self.scrap + amount).clamp(0.0, self.max_scrap);
+        }
     }
 
     /// Adds building permits, clamping to the maximum capacity.
     pub fn add_building_permits(&mut self, amount: f32) {
-        self.building_permits =
-            (self.building_permits + amount).clamp(0.0, self.max_building_permits);
+        if amount.is_finite() {
+            self.building_permits =
+                (self.building_permits + amount).clamp(0.0, self.max_building_permits);
+        }
     }
 
     /// Adds alcohol, clamping to the maximum capacity.
     pub fn add_alcohol(&mut self, amount: f32) {
-        self.alcohol = (self.alcohol + amount).clamp(0.0, self.max_alcohol);
+        if amount.is_finite() {
+            self.alcohol = (self.alcohol + amount).clamp(0.0, self.max_alcohol);
+        }
     }
 
     /// Adds water, clamping to the maximum capacity.
     pub fn add_water(&mut self, amount: f32) {
-        self.water = (self.water + amount).clamp(0.0, self.max_water);
+        if amount.is_finite() {
+            self.water = (self.water + amount).clamp(0.0, self.max_water);
+        }
     }
 
     /// Adds rations, clamping to the maximum capacity.
     pub fn add_rations(&mut self, amount: f32) {
-        self.rations = (self.rations + amount).clamp(0.0, self.max_rations);
+        if amount.is_finite() {
+            self.rations = (self.rations + amount).clamp(0.0, self.max_rations);
+        }
     }
 
     /// Adds fuel, clamping to the maximum capacity.
     pub fn add_fuel(&mut self, amount: f32) {
-        self.fuel = (self.fuel + amount).clamp(0.0, self.max_fuel);
+        if amount.is_finite() {
+            self.fuel = (self.fuel + amount).clamp(0.0, self.max_fuel);
+        }
     }
 
     /// Adds wood, clamping to the maximum capacity.
     pub fn add_wood(&mut self, amount: f32) {
-        self.wood = (self.wood + amount).clamp(0.0, self.max_wood);
+        if amount.is_finite() {
+            self.wood = (self.wood + amount).clamp(0.0, self.max_wood);
+        }
     }
 
     /// Adds stone, clamping to the maximum capacity.
     pub fn add_stone(&mut self, amount: f32) {
-        self.stone = (self.stone + amount).clamp(0.0, self.max_stone);
+        if amount.is_finite() {
+            self.stone = (self.stone + amount).clamp(0.0, self.max_stone);
+        }
     }
 
     /// Adds food, clamping to the maximum capacity.
     pub fn add_food(&mut self, amount: f32) {
-        self.food = (self.food + amount).clamp(0.0, self.max_food);
+        if amount.is_finite() {
+            self.food = (self.food + amount).clamp(0.0, self.max_food);
+        }
     }
 
     /// Returns the total food available (food aggregate + rations).
@@ -389,52 +407,72 @@ impl ColonyResources {
 
     /// Adds planks, clamping to the maximum capacity.
     pub fn add_planks(&mut self, amount: f32) {
-        self.planks = (self.planks + amount).clamp(0.0, self.max_planks);
+        if amount.is_finite() {
+            self.planks = (self.planks + amount).clamp(0.0, self.max_planks);
+        }
     }
 
     /// Adds blocks, clamping to the maximum capacity.
     pub fn add_blocks(&mut self, amount: f32) {
-        self.blocks = (self.blocks + amount).clamp(0.0, self.max_blocks);
+        if amount.is_finite() {
+            self.blocks = (self.blocks + amount).clamp(0.0, self.max_blocks);
+        }
     }
 
     /// Adds ore, clamping to the maximum capacity.
     pub fn add_ore(&mut self, amount: f32) {
-        self.ore = (self.ore + amount).clamp(0.0, self.max_ore);
+        if amount.is_finite() {
+            self.ore = (self.ore + amount).clamp(0.0, self.max_ore);
+        }
     }
 
     /// Adds metal, clamping to the maximum capacity.
     pub fn add_metal(&mut self, amount: f32) {
-        self.metal = (self.metal + amount).clamp(0.0, self.max_metal);
+        if amount.is_finite() {
+            self.metal = (self.metal + amount).clamp(0.0, self.max_metal);
+        }
     }
 
     /// Adds tools, clamping to the maximum capacity.
     pub fn add_tools(&mut self, amount: f32) {
-        self.tools = (self.tools + amount).clamp(0.0, self.max_tools);
+        if amount.is_finite() {
+            self.tools = (self.tools + amount).clamp(0.0, self.max_tools);
+        }
     }
 
     /// Adds knowledge, clamping to the maximum capacity.
     pub fn add_knowledge(&mut self, amount: f32) {
-        self.knowledge = (self.knowledge + amount).clamp(0.0, self.max_knowledge);
+        if amount.is_finite() {
+            self.knowledge = (self.knowledge + amount).clamp(0.0, self.max_knowledge);
+        }
     }
 
     /// Adds fiber, clamping to the maximum capacity.
     pub fn add_fiber(&mut self, amount: f32) {
-        self.fiber = (self.fiber + amount).clamp(0.0, self.max_fiber);
+        if amount.is_finite() {
+            self.fiber = (self.fiber + amount).clamp(0.0, self.max_fiber);
+        }
     }
 
     /// Adds cloth, clamping to the maximum capacity.
     pub fn add_cloth(&mut self, amount: f32) {
-        self.cloth = (self.cloth + amount).clamp(0.0, self.max_cloth);
+        if amount.is_finite() {
+            self.cloth = (self.cloth + amount).clamp(0.0, self.max_cloth);
+        }
     }
 
     /// Adds clothing, clamping to the maximum capacity.
     pub fn add_clothing(&mut self, amount: f32) {
-        self.clothing = (self.clothing + amount).clamp(0.0, self.max_clothing);
+        if amount.is_finite() {
+            self.clothing = (self.clothing + amount).clamp(0.0, self.max_clothing);
+        }
     }
 
     /// Adds waste, clamping to the maximum capacity.
     pub fn add_waste(&mut self, amount: f32) {
-        self.waste = (self.waste + amount).clamp(0.0, self.max_waste);
+        if amount.is_finite() {
+            self.waste = (self.waste + amount).clamp(0.0, self.max_waste);
+        }
     }
 
     /// Checks if any resource value is negative.
@@ -463,6 +501,29 @@ impl ColonyResources {
             || self.building_permits < 0.0
     }
 
+    /// Checks if all resource values are finite (not NaN or Infinity).
+    #[must_use]
+    pub fn is_finite(&self) -> bool {
+        self.food.is_finite()
+            && self.wood.is_finite()
+            && self.stone.is_finite()
+            && self.planks.is_finite()
+            && self.blocks.is_finite()
+            && self.ore.is_finite()
+            && self.metal.is_finite()
+            && self.tools.is_finite()
+            && self.knowledge.is_finite()
+            && self.fiber.is_finite()
+            && self.cloth.is_finite()
+            && self.clothing.is_finite()
+            && self.rations.is_finite()
+            && self.fuel.is_finite()
+            && self.water.is_finite()
+            && self.alcohol.is_finite()
+            && self.scrap.is_finite()
+            && self.building_permits.is_finite()
+    }
+
     /// Checks if the colony can afford the given cost.
     ///
     /// Also validates that the cost is non-negative to prevent exploits.
@@ -476,7 +537,7 @@ impl ColonyResources {
     /// True if all resources are sufficient and cost is valid.
     #[must_use]
     pub fn can_afford(&self, cost: &Self) -> bool {
-        if cost.has_negative() {
+        if cost.has_negative() || !cost.is_finite() {
             return false;
         }
 
@@ -553,6 +614,9 @@ impl ColonyResources {
     /// * `resource_type`: The type of resource to consume.
     /// * `amount`: The amount to consume.
     pub fn consume(&mut self, resource_type: ResourceType, amount: f32) {
+        if !amount.is_finite() {
+            return;
+        }
         match resource_type {
             ResourceType::Food => self.food = (self.food - amount).max(0.0),
             ResourceType::Wood => self.wood = (self.wood - amount).max(0.0),

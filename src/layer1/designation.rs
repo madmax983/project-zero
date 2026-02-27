@@ -194,8 +194,12 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
     let existing = world
         .iter_entities()
         .filter_map(|e| {
-            e.get::<GridPosition>()
-                .and_then(|p| e.get::<Designation>().map(|_| p))
+            if let Some(pos) = e.get::<GridPosition>() {
+                if e.get::<Designation>().is_some() {
+                    return Some(pos);
+                }
+            }
+            None
         })
         .any(|pos| pos.x == x && pos.y == y);
 
@@ -258,12 +262,13 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
             // Must target a wild animal (Fauna without Tame component)
             // This is O(N) over all entities if we don't have spatial index, but okay for MVP
             world.iter_entities().any(|entity_ref| {
-                if let Some(pos) = entity_ref.get::<GridPosition>()
-                    && pos.x == x
-                    && pos.y == y
-                    && entity_ref.contains::<crate::layer1::fauna::Fauna>()
-                {
-                    return !entity_ref.contains::<crate::layer1::husbandry::Tame>();
+                if let Some(pos) = entity_ref.get::<GridPosition>() {
+                    if pos.x == x
+                        && pos.y == y
+                        && entity_ref.contains::<crate::layer1::fauna::Fauna>()
+                    {
+                        return !entity_ref.contains::<crate::layer1::husbandry::Tame>();
+                    }
                 }
                 false
             })
@@ -287,12 +292,13 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
         DesignationType::Cannibalize => {
             // Must target the Lander
             world.iter_entities().any(|entity_ref| {
-                if let Some(pos) = entity_ref.get::<GridPosition>()
-                    && pos.x == x
-                    && pos.y == y
-                    && let Some(b) = entity_ref.get::<crate::layer1::building::Building>()
-                {
-                    return b.building_type == crate::layer1::building::BuildingType::Lander;
+                if let Some(pos) = entity_ref.get::<GridPosition>() {
+                    if pos.x == x && pos.y == y {
+                        if let Some(b) = entity_ref.get::<crate::layer1::building::Building>() {
+                            return b.building_type
+                                == crate::layer1::building::BuildingType::Lander;
+                        }
+                    }
                 }
                 false
             })

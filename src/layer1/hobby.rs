@@ -110,20 +110,20 @@ pub fn execute_hobby_system(
         // Let's use 0.5.
 
         // Chance to produce item (e.g., 1% per tick)
-        if rng.gen_bool(0.01)
-            && let Some(mut inv) = inventory
-        {
-            let item_type = match hobby.hobby_type {
+        if rng.gen_bool(0.01) {
+            if let Some(mut inv) = inventory {
+                let item_type = match hobby.hobby_type {
                 HobbyType::Whittling => Some(ItemType::Curio("Wooden Duck".to_string())),
                 HobbyType::Tinkering => Some(ItemType::Curio("Bent Gear".to_string())),
                 _ => None,
             };
 
-            if let Some(t) = item_type {
-                inv.add(InventoryItem {
-                    item_type: t,
-                    entity: None,
-                });
+                if let Some(t) = item_type {
+                    inv.add(InventoryItem {
+                        item_type: t,
+                        entity: None,
+                    });
+                }
             }
         }
     }

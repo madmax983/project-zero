@@ -124,10 +124,10 @@ pub fn biography_monitor_system(
         };
 
         // Avoid duplicate consecutive events
-        if let Some(last) = bio.events.last()
-            && last.text == event_text
-        {
-            continue;
+        if let Some(last) = bio.events.last() {
+            if last.text == event_text {
+                continue;
+            }
         }
 
         bio.add_event(current_tick, event_text);

@@ -48,14 +48,14 @@ pub fn handle_socialize(
     target_entity: Entity,
     pop_entity: Entity,
 ) {
-    if let Ok(mut tavern) = taverns.get_mut(target_entity)
-        && tavern.visitors.len() < tavern.capacity
-    {
-        tavern.visitors.push(pop_entity);
-        commands.entity(pop_entity).insert(AssignedTo {
-            entity: target_entity,
-            assignment_type: AssignmentType::TavernVisitor,
-        });
+    if let Ok(mut tavern) = taverns.get_mut(target_entity) {
+        if tavern.visitors.len() < tavern.capacity {
+            tavern.visitors.push(pop_entity);
+            commands.entity(pop_entity).insert(AssignedTo {
+                entity: target_entity,
+                assignment_type: AssignmentType::TavernVisitor,
+            });
+        }
     }
 }
 

@@ -458,11 +458,12 @@ pub fn collect_pop_data(world: &mut World, buffer: &mut UtilityAIBuffer, config:
     let mut item_query = world.query::<&crate::layer1::items::Item>();
 
     for data in &mut buffer.pop_data {
-        if let Some(eq) = data.equipment
-            && let Some(body_entity) = eq.body
-            && let Ok(clothing) = clothing_query.get(world, body_entity)
-        {
-            data.insulation = clothing.insulation;
+        if let Some(eq) = data.equipment {
+            if let Some(body_entity) = eq.body {
+                if let Ok(clothing) = clothing_query.get(world, body_entity) {
+                    data.insulation = clothing.insulation;
+                }
+            }
         }
 
         if let Some(item_entity) = data.carrying_item {

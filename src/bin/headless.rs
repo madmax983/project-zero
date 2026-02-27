@@ -641,13 +641,10 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
         let mut tiles = std::collections::HashMap::new();
         for y in center_y.saturating_sub(radius)..=center_y.saturating_add(radius) {
             for x in center_x.saturating_sub(radius)..=center_x.saturating_add(radius) {
-                if x >= 0
-                    && y >= 0
-                    && x < max_x
-                    && y < max_y
-                    && let Some(t) = terrain.get(x as usize, y as usize)
-                {
-                    tiles.insert((x, y), t);
+                if x >= 0 && y >= 0 && x < max_x && y < max_y {
+                    if let Some(t) = terrain.get(x as usize, y as usize) {
+                        tiles.insert((x, y), t);
+                    }
                 }
             }
         }
@@ -877,13 +874,10 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: i32) {
         let mut tiles = std::collections::HashMap::new();
         for y in center_y.saturating_sub(radius)..=center_y.saturating_add(radius) {
             for x in center_x.saturating_sub(radius)..=center_x.saturating_add(radius) {
-                if x >= 0
-                    && y >= 0
-                    && x < max_x
-                    && y < max_y
-                    && let Some(t) = terrain.get(x as usize, y as usize)
-                {
-                    tiles.insert((x, y), t);
+                if x >= 0 && y >= 0 && x < max_x && y < max_y {
+                    if let Some(t) = terrain.get(x as usize, y as usize) {
+                        tiles.insert((x, y), t);
+                    }
                 }
             }
         }
