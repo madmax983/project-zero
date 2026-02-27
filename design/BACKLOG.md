@@ -6,7 +6,6 @@
 ## Future / Ideas
 
 See `design/IDEAS.md` for unspecced concepts.
-- [ ] `249` Holographic Facades — `specs/249-holographic-facades.md`
 - [ ] `250` Surgical Addiction — `specs/250-surgical-addiction.md`
 - [ ] `251` The "Empty" Room — `specs/251-the-empty-room.md`
 - [ ] `252` Tectonic Stress — `specs/252-tectonic-stress.md`
