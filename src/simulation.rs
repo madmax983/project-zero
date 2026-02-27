@@ -79,6 +79,8 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer2::thermal::update_thermal_bloom_system.after(Layer1SystemSet::Economy),
         crate::layer2::thermal::detection_risk_system
             .after(crate::layer2::thermal::update_thermal_bloom_system),
+        crate::layer2::integration::thermal_detection_handler_system
+            .after(crate::layer2::thermal::detection_risk_system),
         crate::layer2::visibility::update_visibility_system.after(Layer1SystemSet::Economy),
         crate::layer2::visibility::enforce_view_mode_system
             .after(crate::layer2::visibility::update_visibility_system),

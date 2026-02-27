@@ -1,15 +1,64 @@
-use super::VoidExposure;
-use super::VoidGrid;
+use bevy_ecs::prelude::*;
 use crate::layer1::building::Building;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
 use crate::layer1::pop::Pop;
 use crate::layer1::structure::Structure;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
-use crate::layer1::void_stare::VoidAnchor;
 use crate::layer1::utility_types::{ActionType, PopAction};
 use crate::shared::log::MessageLog;
-use bevy_ecs::prelude::*;
+
+/// Tracks a pop's psychological exposure to the Void.
+#[derive(Component, Debug, Clone, Default)]
+pub struct VoidExposure {
+    /// Current exposure level (0.0 - 100.0).
+    pub current: f32,
+    /// Multiplier for exposure gain (based on traits).
+    pub susceptibility: f32,
+    /// Timer for periodic manifestation checks.
+    pub check_timer: u32,
+}
+
+/// A component that "anchors" pops against the Void (e.g. Hearth, Totem).
+#[derive(Component, Debug, Clone)]
+pub struct VoidAnchor {
+    /// Strength of protection.
+    pub strength: f32,
+    /// Radius of effect.
+    pub radius: f32,
+}
+
+/// A grid tracking "Void Intensity" across the map.
+#[derive(Resource)]
+pub struct VoidGrid {
+    pub width: usize,
+    pub height: usize,
+    pub values: Vec<f32>,
+}
+
+impl VoidGrid {
+    pub fn new(width: usize, height: usize) -> Self {
+        Self {
+            width,
+            height,
+            values: vec![0.0; width * height],
+        }
+    }
+
+    pub fn set(&mut self, x: i32, y: i32, value: f32) {
+        if x >= 0 && y >= 0 && (x as usize) < self.width && (y as usize) < self.height {
+            self.values[(y as usize) * self.width + (x as usize)] = value;
+        }
+    }
+
+    pub fn get(&self, x: i32, y: i32) -> f32 {
+        if x >= 0 && y >= 0 && (x as usize) < self.width && (y as usize) < self.height {
+            self.values[(y as usize) * self.width + (x as usize)]
+        } else {
+            1.0 // Outside is Void
+        }
+    }
+}
 
 /// System to update void exposure for pops.
 pub fn update_void_exposure_system(
@@ -18,25 +67,6 @@ pub fn update_void_exposure_system(
     terrain: Res<TerrainGrid>,
     buildings: Query<(&GridPosition, Option<&VoidAnchor>, Option<&Building>, Option<&Structure>)>,
 ) {
-    // Collect occluders (Structures) for fast lookup if needed
-    // But for "Stare" logic, occlusion usually implies "Cannot see Void".
-    // If a pop is surrounded by walls, they shouldn't see void outside.
-    // However, VoidGrid is "Static Intensity".
-    // Let's refine the logic:
-    // If a pop is ON a tile with a Building/Structure, Void gain is reduced (Safe inside).
-    // Or check line of sight?
-    // Simplified: Check if current tile is occupied by a structure.
-
-    // Build a quick set of structural positions for occlusion check?
-    // Since `buildings` query iterates all, we can build a HashSet.
-    // Optimization: Use `OccupiedTiles` resource if available? But that doesn't distinguish Walls from Floors.
-    // Let's iterate `buildings` once to find anchors and occlusion near pops?
-    // Or just do O(N*M) since N (Pops) is small (5-50) and M (Buildings) is moderate (100-1000).
-    // Better: Only check buildings close to pop.
-
-    // Let's assume VoidGrid handles the "External View".
-    // We modify the gain based on local occlusion.
-
     for (pos, mut exposure, mut needs) in &mut pops {
         // 1. Check current tile "Void Intensity" (Static map data)
         let void_intensity = void_grid.get(pos.x, pos.y);
@@ -76,11 +106,7 @@ pub fn update_void_exposure_system(
                 }
             }
 
-            // Occlusion (Being near/inside structures reduces void gain)
-            // E0282 Fix: Explicitly specify type of structure by pattern matching or annotation if needed.
-            // Actually, the loop variable `structure` is `Option<&Structure>`.
-            // The compiler fails because `structure` is not fully constrained?
-            // Let's rewrite the condition to be more explicit.
+            // Occlusion
             if dist <= 1 {
                 if let Some(_s) = structure {
                     occlusion += 0.5;
@@ -89,8 +115,6 @@ pub fn update_void_exposure_system(
         }
 
         // 4. Calculate Delta
-        // Occlusion dampens the Void Intensity.
-        // If occlusion > 1.0 (surrounded by walls), effective void is 0.
         let effective_void = (void_intensity - occlusion * 0.5).max(0.0);
 
         let gain = effective_void * 0.1;
@@ -102,8 +126,7 @@ pub fn update_void_exposure_system(
 
         // 5. Apply Stress
         if exposure.current > 50.0 {
-            // Add stress proportional to exposure above 50%
-            let stress_factor = (exposure.current - 50.0) / 5000.0; // Small increment
+            let stress_factor = (exposure.current - 50.0) / 5000.0;
             needs.leisure = (needs.leisure - stress_factor).max(0.0);
         }
     }
