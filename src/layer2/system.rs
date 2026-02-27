@@ -58,6 +58,17 @@ pub struct OrbitalBody {
     pub char: char,
 }
 
+impl Default for OrbitalBody {
+    fn default() -> Self {
+        Self {
+            name: "Unknown Body".to_string(),
+            radius: 1.0,
+            color: Color::Gray,
+            char: 'o',
+        }
+    }
+}
+
 /// Defines the orbit of a celestial body.
 ///
 /// Entities with this component will move around their `parent` entity.

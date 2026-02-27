@@ -94,7 +94,7 @@ mod tests {
     /// Skip gracefully if unavailable or if shader validation fails.
     #[test]
     fn test_create_compute_pipeline() {
-        let instance = wgpu::Instance::new(&wgpu::InstanceDescriptor::default());
+        let instance = wgpu::Instance::new(wgpu::InstanceDescriptor::default());
 
         let adapter =
             match pollster::block_on(instance.request_adapter(&wgpu::RequestAdapterOptions {
