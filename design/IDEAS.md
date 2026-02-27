@@ -6672,3 +6672,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Crisis management (Speed) vs. The human cost of time.
 
 ---
+
+## The Mother Culture
+
+**Layer:** 1
+
+**Fantasy:** We are not self-sufficient. We are tethered to biology we cannot replicate.
+
+**Mechanic:** High-tech medicine/food requires "Live Cultures" (Yeast, Bacteria, Stem Cells) that must be kept alive in "Vats". If the Vats die (power loss/contamination), you cannot produce the resource until you get a new sample from off-world.
+
+**Emergence:** The power fails. You have 1 hour of battery. You cut power to the hospital (letting patients die) to keep the "Yeast Mother" alive, because if she dies, everyone starves next month.
+
+**Tension:** Protect the source (fragile biologicals) or the stock (finished goods)?
+
+---
+
+## Potemkin Architecture
+
+**Layer:** 1
+
+**Fantasy:** Deception as defense. Looking stronger than you are.
+
+**Mechanic:** Cheap "Fake Buildings" (Inflatable Turrets, Facade Walls) that look real to enemies/inspectors but have 1 HP and zero function. Reduces Raid probability (Intimidation) but fails instantly in combat.
+
+**Emergence:** You surround your base with hundreds of fake turrets. The Pirate Dreadnought scans you, decides you are "Heavily Defended", and leaves. You saved the colony with balloons.
+
+**Tension:** Invest in real defense (expensive) or bluff (cheap but risky)?
+
+---
+
+## Warp Wake
+
+**Layer:** 2
+
+**Fantasy:** Traffic in space. The faster they go, the harder it is for you.
+
+**Mechanic:** FTL ships leave a "Wake" of distorted space that slows down other ships traveling the same lane for a duration. High traffic lanes become "Muddy", forcing slower travel or alternate routes.
+
+**Emergence:** The trade route to the Hub is so busy it's actually faster to fly the "Long Way" around the nebula than to slog through the wake of a thousand freighters.
+
+**Tension:** Centralized highways (congestion) vs. Distributed paths (inefficiency).
+
+---
+
+## The World-Shell
+
+**Layer:** Cross-layer
+
+**Fantasy:** Turning the planet into a turtle.
+
+**Mechanic:** Endgame project. Building a physical shield grid around the entire planet. Blocks ALL orbital bombardment, drop pods, and solar radiation. But also blocks ALL solar power and trade (ships can't land). Must be toggled off to trade.
+
+**Emergence:** You turtle up to survive a fleet bombardment. You survive, but you forgot to turn the shield off for the food shipment. The freighters turn around, and you starve inside your indestructible shell.
+
+**Tension:** Ultimate Defense vs. Isolation.
+
+---
+
+## Vacuum Agriculture
+
+**Layer:** 1
+
+**Fantasy:** Life finds a way, even in the void.
+
+**Mechanic:** Genetically modified "Void-Crops" that grow only in vacuum and feed on radiation. They die if exposed to atmosphere/oxygen. Allows farming on hull exteriors.
+
+**Emergence:** You convert your air-filled greenhouses to vacuum farms to save atmosphere. A meteor cracks the dome, letting air *in*. The oxygen kills your entire harvest.
+
+**Tension:** Farming in safety (indoors) vs. Farming in the wild (hull/vacuum).
+
+---
