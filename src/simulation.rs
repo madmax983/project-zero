@@ -135,6 +135,11 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<crate::layer2::thermal::ThermalSignature>();
     }
 
+    // Initialize Infinite Archive Resource (Spec 248)
+    if !world.contains_resource::<crate::layer1::tech::infinite_archive::Archive>() {
+        world.init_resource::<crate::layer1::tech::infinite_archive::Archive>();
+    }
+
     // Add our schedule if not yet added
     {
         let schedules = world.resource::<Schedules>();

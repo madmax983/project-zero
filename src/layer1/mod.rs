@@ -696,3 +696,7 @@ pub use security::*;
 
 #[cfg(test)]
 mod geodetic_tests;
+
+/// Void Stare (Spec 242).
+pub mod void_stare;
+pub use void_stare::*;

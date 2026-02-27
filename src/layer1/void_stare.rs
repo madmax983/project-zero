@@ -77,8 +77,14 @@ pub fn update_void_exposure_system(
             }
 
             // Occlusion (Being near/inside structures reduces void gain)
-            if dist <= 1 && structure.is_some() {
-                occlusion += 0.5;
+            // E0282 Fix: Explicitly specify type of structure by pattern matching or annotation if needed.
+            // Actually, the loop variable `structure` is `Option<&Structure>`.
+            // The compiler fails because `structure` is not fully constrained?
+            // Let's rewrite the condition to be more explicit.
+            if dist <= 1 {
+                if let Some(_s) = structure {
+                    occlusion += 0.5;
+                }
             }
         }
 
@@ -124,7 +130,7 @@ pub fn void_manifestation_system(
             if let Some(ref mut log) = log {
                 // Rate limit logs
                 if exposure.check_timer == 100 { // Only once per check cycle
-                     log.add(format!("Pop {} stares into the abyss...", entity.index()));
+                     log.add(format!("Pop {:?} stares into the abyss...", entity));
                 }
             }
         }
