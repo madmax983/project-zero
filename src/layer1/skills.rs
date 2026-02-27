@@ -26,8 +26,33 @@ pub struct Skills {
     pub xp: HashMap<SkillType, f32>,
 }
 
+/// Event triggered when a Pop gains XP.
+#[derive(Event, Debug, Clone)]
+pub struct XpGainEvent {
+    /// The entity gaining XP.
+    pub entity: Entity,
+    /// The skill type.
+    pub skill: SkillType,
+    /// The amount gained.
+    pub amount: f32,
+    /// The source of the XP gain (to prevent loops).
+    pub source: XpSource,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum XpSource {
+    /// Standard action (mining, farming, etc.).
+    Action,
+    /// Quantum entanglement sharing.
+    Entanglement,
+}
+
 impl Skills {
     /// Adds XP to a specific skill.
+    ///
+    /// Note: This method does NOT emit `XpGainEvent` automatically to avoid
+    /// circular dependencies with `EventWriter`. Systems should emit the event manually
+    /// if they want to trigger side effects (like Quantum Twins).
     pub fn add_xp(&mut self, skill: SkillType, amount: f32) {
         let current = self.xp.entry(skill).or_insert(0.0);
         *current += amount;

@@ -3,8 +3,11 @@
 use bevy_ecs::prelude::*;
 use rand::RngCore;
 
-#[cfg(all(not(target_arch = "wasm32"), not(test)))]
+// Fix: Unconditional import of AddChronicleEvent because init_resource usage is unconditional below
 use crate::layer1::chronicle::AddChronicleEvent;
+
+#[cfg(all(not(target_arch = "wasm32"), not(test)))]
+// use crate::layer1::chronicle::AddChronicleEvent; // Removed conditional import
 use crate::layer1::heirloom::RetrogradeEngineeringEvent;
 use crate::layer1::pop::{PopBorn, PopDied};
 use crate::layer1::social::AffinityChange;
@@ -192,6 +195,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::direct_link::UnpossessEvent>>();
     world.init_resource::<Events<crate::layer1::volatile::ExplosionEvent>>();
     world.init_resource::<Events<crate::layer1::unrest::DenounceEvent>>();
+    world.init_resource::<Events<crate::layer1::skills::XpGainEvent>>();
 
     world.init_resource::<crate::layer1::festivals::FestivalState>();
     world.insert_resource(crate::layer1::taboo::TabooState::default());

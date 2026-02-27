@@ -184,3 +184,4 @@
 - [x] `247` Ghost Code — `specs/247-ghost-code.md` — completed 2026-02-27
 - [x] `243` Thermal Bloom — `specs/243-thermal-bloom.md` — completed 2026-02-27
 - [x] `248` The Infinite Archive — `specs/248-infinite-archive.md` — completed 2026-02-28
+- [x] `245` Quantum Twins — `specs/245-quantum-twins.md` — completed 2026-02-28
