@@ -102,14 +102,15 @@ pub fn render_tech_tree(frame: &mut Frame, area: Rect, world: &World) {
             let cost = tech.cost();
             let affordable = knowledge >= cost;
 
+            // Updated Icons
             let (symbol, color) = if is_unlocked {
-                ("[X]", Color::Green)
+                ("✔", Color::Green) // Researched
             } else if is_corrupted {
-                ("[!]", Color::Red)
+                ("⚠", Color::Red) // Corrupted
             } else if affordable {
-                ("[ ]", Color::Yellow)
+                ("🔓", Color::Yellow) // Affordable/Available
             } else {
-                ("[ ]", Color::DarkGray)
+                ("🔒", Color::DarkGray) // Locked
             };
 
             let label = format!("{symbol} {}", tech.label());
@@ -179,20 +180,20 @@ fn render_tech_details(
     let cost = tech.cost();
 
     let status_text = if is_unlocked {
-        Span::styled("RESEARCHED", Style::default().fg(Color::Green))
+        Span::styled("RESEARCHED ✔", Style::default().fg(Color::Green))
     } else if is_corrupted {
         Span::styled(
-            "CORRUPTED (Needs Data Capacity)",
+            "CORRUPTED ⚠ (Needs Data Capacity)",
             Style::default().fg(Color::Red),
         )
     } else if current_knowledge >= cost {
         Span::styled(
-            "AVAILABLE (Press Enter)",
+            "AVAILABLE 🔓 (Press Enter)",
             Style::default().fg(Color::Yellow),
         )
     } else {
         Span::styled(
-            format!("LOCKED (Need {cost:.0} Knowledge)"),
+            format!("LOCKED 🔒 (Need {cost:.0} Knowledge)"),
             Style::default().fg(Color::DarkGray),
         )
     };
