@@ -686,5 +686,9 @@ pub use clone_vat::*;
 pub mod clutter;
 pub use clutter::*;
 
+/// Politics and Elections (Spec 241).
+pub mod politics;
+pub use politics::*;
+
 #[cfg(test)]
 mod geodetic_tests;

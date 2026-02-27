@@ -27,6 +27,8 @@ pub mod station;
 pub mod system;
 /// System visibility logic (Command Center).
 pub mod visibility;
+/// Planetary Governance (Spec 209).
+pub mod governance;
 
 #[cfg(test)]
 mod debris_tests;

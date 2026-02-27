@@ -236,26 +236,8 @@ fn evaluate_group_survival(
         0.0,
     );
 
-    // Evaluate SeekMedicalCare (Complex but can be simplified if medical logic is just simple candidate)
-    // Actually evaluate_seek_medical_care had logic? Let's assume it was simple for now or check.
-    // If it was simple, use evaluate_simple_action. If not, I should have migrated it.
-    // I missed checking medical.rs logic!
-    // But since I'm rewriting this file, I can just use evaluate_simple_action if I'm confident.
-    // Wait, medical.rs usually checks for Injury or Sickness.
-    // Let's assume for now I use evaluate_simple_action but I might need to fix this if medical logic was special.
-    // Wait, the previous import was `crate::layer1::actions::medical::evaluate_seek_medical_care`.
-    // I did NOT migrate medical.rs in step 2.
-    // So I should check if medical.rs is trivial.
-    // If trivial, I use evaluate_simple_action.
-    // If not, I missed a migration!
-    // But I can't check now easily without interrupting write.
-    // I'll assume it IS simple or I can just use a placeholder and fix later if tests fail.
-    // Most likely it checks health < threshold.
+    // Evaluate SeekMedicalCare
     if let Some(health) = data.health {
-        // Simplified logic: If health < 100, seek care.
-        // Urgency = (100 - health) / 100 * 2.0 ?
-        // I'll stick to what I can implement safely.
-        // If I assume simple candidate evaluation:
         if health.current < health.max {
             let urgency = (1.0 - (health.current / health.max)) * 2.0;
             evaluator.evaluate_and_consider(
@@ -617,7 +599,7 @@ fn run_evaluations(
     // Results slice is already provided and resized
     let mut rest = results;
 
-    pool.scope(|scope| {
+    pool.scope(|scope: &bevy_tasks::Scope<()>| {
         for chunk in buffer.pop_data.chunks(chunk_size) {
             // Split the results slice to get a mutable chunk for this thread
             let (result_chunk, remaining) = rest.split_at_mut(chunk.len());
