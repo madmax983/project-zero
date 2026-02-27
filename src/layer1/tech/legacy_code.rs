@@ -25,9 +25,7 @@ pub enum SystemStatus {
     Offline,
 }
 
-pub fn update_bloat_system(
-    mut query: Query<(&mut Bloat, &mut SystemStatus)>,
-) {
+pub fn update_bloat_system(mut query: Query<(&mut Bloat, &mut SystemStatus)>) {
     for (mut bloat, mut status) in query.iter_mut() {
         match *status {
             SystemStatus::Online => {
@@ -57,8 +55,8 @@ pub fn finish_reformat(world: &mut World, entity: Entity) {
     // Helper for testing
     if let Some(mut status) = world.get_mut::<SystemStatus>(entity) {
         if let SystemStatus::Rebooting(_) = *status {
-             *status = SystemStatus::Rebooting(0);
-             // Let system handle the switch next tick
+            *status = SystemStatus::Rebooting(0);
+            // Let system handle the switch next tick
         }
     }
 }

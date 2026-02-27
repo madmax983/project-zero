@@ -1,9 +1,9 @@
 #![allow(clippy::collapsible_if)]
-use crate::layer1::gene_bank::GeneBank;
 use crate::layer1::GridPosition;
 use crate::layer1::drone::Drone;
 use crate::layer1::execution::{AtTarget, MovementTarget};
 use crate::layer1::factions::{FactionMember, FactionState, Factions};
+use crate::layer1::gene_bank::GeneBank;
 use crate::layer1::inventory::{Inventory, InventoryItem};
 use crate::layer1::items::{CarryingItem, Item, ItemType};
 use crate::layer1::permit::PermitRequired;

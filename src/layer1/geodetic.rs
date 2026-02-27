@@ -1,9 +1,9 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::map::GridPosition;
-use crate::layer1::items::{Item, ItemType};
-use crate::shared::time::SimulationTime;
-use crate::layer1::temperature::TemperatureGrid;
 use crate::layer1::inventory::Inventory;
+use crate::layer1::items::{Item, ItemType};
+use crate::layer1::map::GridPosition;
+use crate::layer1::temperature::TemperatureGrid;
+use crate::shared::time::SimulationTime;
+use bevy_ecs::prelude::*;
 use std::collections::HashMap;
 
 /// Component for stones that have geodetic sentience.
@@ -35,12 +35,13 @@ pub fn update_living_stone_system(
     time: Res<SimulationTime>,
     mut queries: ParamSet<(
         Query<(Entity, &GridPosition), (With<LivingStone>, With<Item>)>,
-        Query<(Entity, &mut GridPosition, &mut LivingStone, &Item)>
+        Query<(Entity, &mut GridPosition, &mut LivingStone, &Item)>,
     )>,
     temp_grid: Res<TemperatureGrid>,
 ) {
     // 1. Collect other stone positions to avoid borrow issues
-    let stone_positions: Vec<(Entity, GridPosition)> = queries.p0().iter().map(|(e, p)| (e, *p)).collect();
+    let stone_positions: Vec<(Entity, GridPosition)> =
+        queries.p0().iter().map(|(e, p)| (e, *p)).collect();
 
     // 2. Iterate and Update
     for (entity, mut pos, mut living, item) in queries.p1().iter_mut() {
@@ -63,23 +64,33 @@ pub fn update_living_stone_system(
         // Check neighbors
         for dx in -1..=1 {
             for dy in -1..=1 {
-                if dx == 0 && dy == 0 { continue; }
+                if dx == 0 && dy == 0 {
+                    continue;
+                }
                 let nx = pos.x + dx;
                 let ny = pos.y + dy;
 
-                if nx < 0 || ny < 0 { continue; } // Basic bounds check, assuming infinite + for now or clamped by grid
+                if nx < 0 || ny < 0 {
+                    continue;
+                } // Basic bounds check, assuming infinite + for now or clamped by grid
 
                 // Score based on Heat
                 let t = temp_grid.get(nx as usize, ny as usize);
-                let heat_score = if t > current_temp { t - current_temp } else { 0.0 };
+                let heat_score = if t > current_temp {
+                    t - current_temp
+                } else {
+                    0.0
+                };
 
                 // Score based on Attraction (Distance to nearest other stone)
                 let mut min_dist = 1000.0;
                 for (other_e, other_pos) in &stone_positions {
-                    if *other_e == entity { continue; }
+                    if *other_e == entity {
+                        continue;
+                    }
                     let dist = ((nx - other_pos.x).abs() + (ny - other_pos.y).abs()) as f32;
                     if dist < min_dist {
-                         min_dist = dist;
+                        min_dist = dist;
                     }
                 }
 
@@ -105,23 +116,25 @@ pub fn update_living_stone_system(
         // If current position (dx=0, dy=0) is better than any neighbor, we stay.
         // Current score calculation:
         {
-             let mut min_dist = 1000.0;
-             for (other_e, other_pos) in &stone_positions {
-                if *other_e == entity { continue; }
+            let mut min_dist = 1000.0;
+            for (other_e, other_pos) in &stone_positions {
+                if *other_e == entity {
+                    continue;
+                }
                 let dist = ((pos.x - other_pos.x).abs() + (pos.y - other_pos.y).abs()) as f32;
                 if dist < min_dist {
-                        min_dist = dist;
+                    min_dist = dist;
                 }
-             }
-             let current_score = -min_dist * 2.0; // heat diff is 0
-             if current_score >= best_score {
-                 best_move = None;
-             }
+            }
+            let current_score = -min_dist * 2.0; // heat diff is 0
+            if current_score >= best_score {
+                best_move = None;
+            }
         }
 
         if let Some((nx, ny)) = best_move {
-             pos.x = nx;
-             pos.y = ny;
+            pos.x = nx;
+            pos.y = ny;
         }
     }
 }
@@ -150,7 +163,13 @@ pub fn form_golem_system(
     // 1. Check Ground Items
     for (e, pos, item) in query.iter() {
         if item.item_type == ItemType::LivingStone {
-            map.entry((pos.x, pos.y)).or_insert(StoneLocation { ground_entities: Vec::new(), inventory_entries: Vec::new() }).ground_entities.push(e);
+            map.entry((pos.x, pos.y))
+                .or_insert(StoneLocation {
+                    ground_entities: Vec::new(),
+                    inventory_entries: Vec::new(),
+                })
+                .ground_entities
+                .push(e);
         }
     }
 
@@ -158,7 +177,13 @@ pub fn form_golem_system(
     for (inv_entity, pos, inventory) in inventories.iter() {
         for (i, item) in inventory.items.iter().enumerate() {
             if item.item_type == ItemType::LivingStone {
-                 map.entry((pos.x, pos.y)).or_insert(StoneLocation { ground_entities: Vec::new(), inventory_entries: Vec::new() }).inventory_entries.push((inv_entity, i));
+                map.entry((pos.x, pos.y))
+                    .or_insert(StoneLocation {
+                        ground_entities: Vec::new(),
+                        inventory_entries: Vec::new(),
+                    })
+                    .inventory_entries
+                    .push((inv_entity, i));
             }
         }
     }
@@ -186,18 +211,21 @@ pub fn form_golem_system(
                 if let Ok((_, _, mut inventory)) = inventories.get_mut(inv_e) {
                     for idx in indices {
                         if idx < inventory.items.len() {
-                             inventory.items.remove(idx);
+                            inventory.items.remove(idx);
                         }
                     }
                 }
             }
 
             // Spawn Golem
-            use crate::layer1::fauna::{Fauna, FaunaType, FaunaState};
+            use crate::layer1::fauna::{Fauna, FaunaState, FaunaType};
             use crate::layer1::health::Health;
 
             commands.spawn((
-                StoneGolem { hp: 100, max_hp: 100 },
+                StoneGolem {
+                    hp: 100,
+                    max_hp: 100,
+                },
                 GridPosition { x, y },
                 Fauna {
                     fauna_type: FaunaType::Wolf, // Placeholder, maybe add StoneGolem type to FaunaType later
@@ -206,7 +234,10 @@ pub fn form_golem_system(
                     attack_cooldown: 0,
                     target: None,
                 },
-                Health { current: 100.0, max: 100.0 },
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                },
                 // Visuals
                 crate::layer1::particles::Particle {
                     char: 'G',

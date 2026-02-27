@@ -294,7 +294,9 @@ fn find_path_internal(
             let c_cost = crowding.map_or(0, |c| i32::from(c.get(next.0 as usize, next.1 as usize)));
             // Clutter penalty: Each 20.0 clutter adds 1 cost
             #[allow(clippy::cast_possible_truncation)]
-            let clutter_cost = clutter.map_or(0, |c| (c.get(next.0 as usize, next.1 as usize) / 20.0) as i32);
+            let clutter_cost = clutter.map_or(0, |c| {
+                (c.get(next.0 as usize, next.1 as usize) / 20.0) as i32
+            });
             let base_cost = t_cost + c_cost + clutter_cost;
 
             // Calculate wind penalty

@@ -196,6 +196,7 @@ pub use designation::*;
 pub use dreams::*;
 pub use ecology::*;
 pub use edicts::*;
+pub use events::*;
 pub use execution::*;
 pub use farm::*;
 pub use fire::*;
@@ -231,7 +232,6 @@ pub use tech::*;
 pub use terrain::*;
 pub use utility_ai::*;
 pub use utility_types::*;
-pub use events::*;
 
 #[cfg(test)]
 mod tool_tests;

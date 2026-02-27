@@ -1,7 +1,9 @@
 #[cfg(test)]
 mod tests {
+    use crate::layer1::tech::legacy_code::{
+        Bloat, Mainframe, SystemStatus, reformat_system, update_bloat_system,
+    };
     use bevy_ecs::prelude::*;
-    use crate::layer1::tech::legacy_code::{Mainframe, Bloat, update_bloat_system, reformat_system, SystemStatus};
     // use crate::layer1::research::ResearchRate; // Not yet implemented
     use crate::shared::time::SimulationTime;
 
@@ -10,13 +12,21 @@ mod tests {
     #[test]
     fn test_bloat_accumulation() {
         let mut world = World::new();
-        world.insert_resource(SimulationTime { tick: 100, speed: SimSpeed::Normal });
+        world.insert_resource(SimulationTime {
+            tick: 100,
+            speed: SimSpeed::Normal,
+        });
 
-        let mainframe = world.spawn((
-            Mainframe,
-            Bloat { current: 0.0, rate: 0.1 },
-            SystemStatus::Online,
-        )).id();
+        let mainframe = world
+            .spawn((
+                Mainframe,
+                Bloat {
+                    current: 0.0,
+                    rate: 0.1,
+                },
+                SystemStatus::Online,
+            ))
+            .id();
 
         // Run system
         let mut schedule = Schedule::default();
@@ -32,21 +42,32 @@ mod tests {
         // This test assumes a system modifies ResearchRate based on Bloat
         // or we test the helper function `calculate_efficiency`
 
-        let bloat_low = Bloat { current: 10.0, rate: 0.0 };
+        let bloat_low = Bloat {
+            current: 10.0,
+            rate: 0.0,
+        };
         assert!(bloat_low.efficiency() > 0.9);
 
-        let bloat_high = Bloat { current: 90.0, rate: 0.0 };
+        let bloat_high = Bloat {
+            current: 90.0,
+            rate: 0.0,
+        };
         assert!(bloat_high.efficiency() < 0.2);
     }
 
     #[test]
     fn test_reformat_clears_bloat_but_disables_system() {
         let mut world = World::new();
-        let mainframe = world.spawn((
-            Mainframe,
-            Bloat { current: 100.0, rate: 0.1 },
-            SystemStatus::Online,
-        )).id();
+        let mainframe = world
+            .spawn((
+                Mainframe,
+                Bloat {
+                    current: 100.0,
+                    rate: 0.1,
+                },
+                SystemStatus::Online,
+            ))
+            .id();
 
         // Trigger Reformat
         // Assume event or component trigger
