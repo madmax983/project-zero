@@ -143,6 +143,8 @@ pub enum ActionType {
     Clean,
     /// Purge Ghost Code residue from a tile.
     PurgeResidue,
+    /// Staring into the abyss (Void Stare manifestation).
+    VoidStare,
 }
 
 /// Types of hobbies.
@@ -205,6 +207,7 @@ impl ActionType {
             Self::ListenToTheHum => 34,
             Self::Clean => 35,
             Self::PurgeResidue => 36,
+            Self::VoidStare => 37,
         }
     }
 
