@@ -6588,3 +6588,87 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Free money vs. Incompetent/High-maintenance population.
 
 ---
+
+## Hyper-Specialized Evolution
+
+**Layer:** 1
+
+**Fantasy:** The body adapts to the task. "He was born to be a hauler."
+
+**Mechanic:** Pops who work the same job for years (or generations) physically mutate to become better at it but worse at everything else. Miners develop night vision and hunchbacks; Diplomats lose muscle mass but gain pheromone control.
+
+**Emergence:** Your colony becomes a caste system of "Mole People" (Miners) and "Tower Elites" (Admins) who can no longer physically interact without discomfort.
+
+**Tension:** Extreme efficiency (Specialization) vs. Flexibility (Generalist workforce).
+
+---
+
+## Shadow Ecosystems
+
+**Layer:** 1
+
+**Fantasy:** Technology creates its own nature.
+
+**Mechanic:** High-tech zones spawn invisible "Data-Fauna" or "EM-Spectres" that feed on radiation/wifi. They are harmless until they "Overfeed" and short-circuit the grid. Only visible with specific sensors.
+
+**Emergence:** You ignore the "Static Mites" living in your server room because they are cute. They multiply until they eat the AI Core's consciousness.
+
+**Tension:** Coexistence (harmless pets) vs. Clean signals (extermination).
+
+---
+
+## Corporate Rebranding
+
+**Layer:** 3 -> 1
+
+**Fantasy:** The whims of the boardroom affect the frontier.
+
+**Mechanic:** The parent corporation changes its logo/color scheme. You are mandated to repaint all buildings to "Synergy Blue" within 30 days. Failure causes funding cuts. Success costs massive resources (Paint/Labor) for zero functional gain.
+
+**Emergence:** You pause construction of the defense grid to repaint the cafeteria because the CEO thinks "Red is aggressive". The raiders attack the half-painted wall.
+
+**Tension:** Compliance (Funding) vs. Practicality (Survival).
+
+---
+
+## Ablative Logistics
+
+**Layer:** 2 -> 1
+
+**Fantasy:** It's cheaper to throw rocks than to land ships.
+
+**Mechanic:** Supply drops are encased in cheap "Ablative Foam" and fired from orbit. They crash-land, destroying the tile they hit but delivering goods instantly. The foam must be mined away to get the loot.
+
+**Emergence:** You order emergency food. It lands on the hospital. You get the food, but you lose the doctor.
+
+**Tension:** Fast/Cheap delivery vs. Precision/Safety.
+
+---
+
+## Luxury Gravity
+
+**Layer:** 1
+
+**Fantasy:** Gravity is for the rich.
+
+**Mechanic:** Artificial Gravity Generators have a limited radius. The rich live in 1G comfort. The poor float in 0G slums (slower movement, bone density loss, sickness).
+
+**Emergence:** The "Floaters" evolve to prefer Zero-G. When you finally upgrade the generator to cover the slums, they riot because "Heavy World" hurts them.
+
+**Tension:** Equality (Universal Gravity) vs. Power Cost (Selective Gravity).
+
+---
+
+## Temporal Overclocking
+
+**Layer:** 1
+
+**Fantasy:** Borrowing time from tomorrow.
+
+**Mechanic:** "Chronal Fields" accelerate time in a specific room (Work speed x2). However, Pops inside age x2 faster and machines degrade x2 faster.
+
+**Emergence:** You put your best researcher in the Chronal Lab to cure the plague. He finds the cure in a week (to you), but he emerges as an old man who missed his children growing up.
+
+**Tension:** Crisis management (Speed) vs. The human cost of time.
+
+---
