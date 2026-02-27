@@ -2,11 +2,11 @@
 //!
 //! Handles the production of Pops from Rations and Energy using Clone Vats.
 
-use bevy_ecs::prelude::*;
 use crate::layer1::map::GridPosition;
-use crate::layer1::resources::{ColonyResources, ResourceType};
 use crate::layer1::pop::PopBundle;
+use crate::layer1::resources::{ColonyResources, ResourceType};
 use crate::layer1::traits::{Trait, Traits};
+use bevy_ecs::prelude::*;
 use rand::Rng; // For thread_rng? No, PopBundle::random takes &mut R
 
 /// Component for the Clone Vat building.
@@ -74,19 +74,23 @@ pub fn process_clone_vats_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_ecs::prelude::*;
     use crate::layer1::building::{Building, BuildingType};
-    use crate::layer1::resources::{ColonyResources, ResourceType};
-    use crate::layer1::pop::Pop;
-    use crate::layer1::traits::{Trait, Traits};
     use crate::layer1::map::GridPosition;
+    use crate::layer1::pop::Pop;
+    use crate::layer1::resources::{ColonyResources, ResourceType};
+    use crate::layer1::traits::{Trait, Traits};
+    use bevy_ecs::prelude::*;
 
     // Helper setup
     fn setup_world() -> World {
         let mut world = World::new();
         world.insert_resource(crate::shared::time::SimulationTime::default());
         world.insert_resource(ColonyResources::default());
-        world.insert_resource(crate::layer1::terrain::TerrainGrid { width: 10, height: 10, tiles: vec![crate::layer1::terrain::TerrainType::Grass; 100] });
+        world.insert_resource(crate::layer1::terrain::TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![crate::layer1::terrain::TerrainType::Grass; 100],
+        });
         world
     }
 
@@ -98,11 +102,15 @@ mod tests {
 
         // Spawn empty vat (PowerConsumer defaults to inactive if added, but Building::spawn adds it. Here we spawn manually without it, or mock it active)
         // If we don't add PowerConsumer, it should work (Option allows None).
-        let vat = world.spawn((
-            Building { building_type: BuildingType::CloneVat },
-            CloneVat::default(),
-            GridPosition { x: 5, y: 5 }
-        )).id();
+        let vat = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::CloneVat,
+                },
+                CloneVat::default(),
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         // Run system
         // Note: System parameters need to be invoked correctly.
@@ -121,27 +129,37 @@ mod tests {
         // Check vat state
         let vat_comp = world.get::<CloneVat>(vat).unwrap();
         assert!(vat_comp.is_growing, "Vat should be growing a clone");
-        assert!(vat_comp.ticks_remaining == vat_comp.total_duration, "Progress should start reset");
+        assert!(
+            vat_comp.ticks_remaining == vat_comp.total_duration,
+            "Progress should start reset"
+        );
     }
 
     #[test]
     fn test_clone_vat_needs_rations() {
-         let mut world = setup_world();
+        let mut world = setup_world();
         let mut resources = world.resource_mut::<ColonyResources>();
         resources.rations = 0.0; // Not enough
 
-        let vat = world.spawn((
-            Building { building_type: BuildingType::CloneVat },
-            CloneVat::default(),
-            GridPosition { x: 5, y: 5 }
-        )).id();
+        let vat = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::CloneVat,
+                },
+                CloneVat::default(),
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(process_clone_vats_system);
         schedule.run(&mut world);
 
         let vat_comp = world.get::<CloneVat>(vat).unwrap();
-        assert!(!vat_comp.is_growing, "Vat should NOT start growing without rations");
+        assert!(
+            !vat_comp.is_growing,
+            "Vat should NOT start growing without rations"
+        );
     }
 
     #[test]
@@ -149,16 +167,20 @@ mod tests {
         let mut world = setup_world();
 
         // Spawn vat that is 1 tick away from completion
-        let vat = world.spawn((
-            Building { building_type: BuildingType::CloneVat },
-            CloneVat {
-                is_growing: true,
-                ticks_remaining: 1,
-                total_duration: 100,
-                ..Default::default()
-            },
-            GridPosition { x: 5, y: 5 }
-        )).id();
+        let vat = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::CloneVat,
+                },
+                CloneVat {
+                    is_growing: true,
+                    ticks_remaining: 1,
+                    total_duration: 100,
+                    ..Default::default()
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(process_clone_vats_system);
@@ -170,7 +192,10 @@ mod tests {
         for (_, pos, traits) in pop_query.iter(&world) {
             if pos.x == 5 && pos.y == 5 {
                 found = true;
-                assert!(traits.has(Trait::Clone), "Spawned pop should have Clone trait");
+                assert!(
+                    traits.has(Trait::Clone),
+                    "Spawned pop should have Clone trait"
+                );
             }
         }
         assert!(found, "Should spawn a pop at vat location");
@@ -184,15 +209,17 @@ mod tests {
     fn test_progress_decrement() {
         let mut world = setup_world();
 
-        let vat = world.spawn((
-            CloneVat {
-                is_growing: true,
-                ticks_remaining: 100,
-                total_duration: 100,
-                ..Default::default()
-            },
-            GridPosition { x: 5, y: 5 }
-        )).id();
+        let vat = world
+            .spawn((
+                CloneVat {
+                    is_growing: true,
+                    ticks_remaining: 100,
+                    total_duration: 100,
+                    ..Default::default()
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(process_clone_vats_system);
@@ -217,18 +244,19 @@ mod tests {
         resources.add_rations(100.0);
 
         // Spawn vat with INACTIVE power
-        let vat = world.spawn((
-            Building {
-                building_type: BuildingType::CloneVat,
-            },
-            CloneVat::default(),
-            GridPosition { x: 5, y: 5 },
-            PowerConsumer {
-                demand: 20.0,
-                active: false,
-            },
-        ))
-        .id();
+        let vat = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::CloneVat,
+                },
+                CloneVat::default(),
+                GridPosition { x: 5, y: 5 },
+                PowerConsumer {
+                    demand: 20.0,
+                    active: false,
+                },
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(process_clone_vats_system);

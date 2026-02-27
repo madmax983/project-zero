@@ -70,7 +70,7 @@ pub fn clutter_accumulation_system(
         };
 
         if let (Ok(x), Ok(y)) = (usize::try_from(pos.x), usize::try_from(pos.y)) {
-             grid.add_clutter(x, y, amount);
+            grid.add_clutter(x, y, amount);
         }
     }
 }
@@ -90,9 +90,9 @@ pub fn clutter_cleaning_system(
                 if rand::thread_rng().gen_bool(0.01) {
                     commands.spawn((
                         crate::layer1::items::Item {
-                            item_type: crate::layer1::items::ItemType::Scrap
+                            item_type: crate::layer1::items::ItemType::Scrap,
                         },
-                        *pos
+                        *pos,
                     ));
                 }
             }
@@ -105,10 +105,10 @@ mod tests {
     use super::*;
     use crate::layer1::beauty::BeautyGrid;
     use crate::layer1::clutter::ClutterGrid;
-    use crate::layer1::map::GridPosition;
-    use crate::layer1::pop::{Pop, Job};
-    use crate::layer1::utility_types::{ActionType, AssignmentType, PopAction};
     use crate::layer1::items::{Item, ItemType};
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::pop::{Job, Pop};
+    use crate::layer1::utility_types::{ActionType, AssignmentType, PopAction};
     use bevy_ecs::prelude::*;
 
     // Helper to setup world
@@ -152,7 +152,10 @@ mod tests {
         schedule.run(&mut world);
 
         let grid = world.resource::<ClutterGrid>();
-        assert!(grid.get(5, 5) > 0.0, "Movement (Explore) should generate clutter");
+        assert!(
+            grid.get(5, 5) > 0.0,
+            "Movement (Explore) should generate clutter"
+        );
     }
 
     #[test]
@@ -194,7 +197,10 @@ mod tests {
 
         let idle_clutter = world2.resource::<ClutterGrid>().get(5, 5);
 
-        assert!(work_clutter > idle_clutter, "Work should be messier than Idle");
+        assert!(
+            work_clutter > idle_clutter,
+            "Work should be messier than Idle"
+        );
     }
 
     #[test]
@@ -233,7 +239,10 @@ mod tests {
         let path = crate::layer1::pathfinding::find_path(&world, (0, 0), (2, 0));
 
         if let Some(p) = path {
-             assert!(!p.contains(&(1, 0)), "Path should avoid high clutter at (1,0)");
+            assert!(
+                !p.contains(&(1, 0)),
+                "Path should avoid high clutter at (1,0)"
+            );
         }
     }
 
@@ -289,12 +298,14 @@ mod tests {
             // Check for Scrap item
             let mut query = world.query::<(&Item, &GridPosition)>();
             for (item, pos) in query.iter(&world) {
-                 if item.item_type == ItemType::Scrap && pos.x == 5 && pos.y == 5 {
-                     found_scrap = true;
-                     break;
-                 }
+                if item.item_type == ItemType::Scrap && pos.x == 5 && pos.y == 5 {
+                    found_scrap = true;
+                    break;
+                }
             }
-            if found_scrap { break; }
+            if found_scrap {
+                break;
+            }
         }
 
         assert!(found_scrap, "Cleaning should eventually spawn Scrap");

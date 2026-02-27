@@ -1,11 +1,11 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::building::{Building, BuildingType};
-use crate::layer1::map::GridPosition;
-use crate::layer1::events::{BuildingCompletedEvent, BuildingRemovedEvent};
 use crate::layer1::energy::PowerConsumer;
-use crate::layer1::utility_types::{ActionType, PopAction};
-use crate::layer1::utility_types::StartPlan; // Fixed import path
+use crate::layer1::events::{BuildingCompletedEvent, BuildingRemovedEvent};
+use crate::layer1::map::GridPosition;
 use crate::layer1::turret::Turret;
+use crate::layer1::utility_types::StartPlan; // Fixed import path
+use crate::layer1::utility_types::{ActionType, PopAction};
+use bevy_ecs::prelude::*;
 
 /// Component representing digital residue left behind after a building is deconstructed.
 ///
@@ -48,20 +48,21 @@ impl DataResidue {
     pub fn get_ghost_trait(&self) -> GhostTrait {
         match self.source_type {
             BuildingType::Tower | BuildingType::TrashCannon => GhostTrait::LegacyTargeting,
-            BuildingType::Hospital | BuildingType::CryoPod => GhostTrait::GhostProtocol("Triage".into()),
+            BuildingType::Hospital | BuildingType::CryoPod => {
+                GhostTrait::GhostProtocol("Triage".into())
+            }
             _ => GhostTrait::PhantomPower,
         }
     }
 }
 
 /// System that spawns [`DataResidue`] when a building is removed.
-pub fn residue_system(
-    mut commands: Commands,
-    mut events: EventReader<BuildingRemovedEvent>,
-) {
+pub fn residue_system(mut commands: Commands, mut events: EventReader<BuildingRemovedEvent>) {
     for event in events.read() {
         commands.spawn((
-            DataResidue { source_type: event.building_type },
+            DataResidue {
+                source_type: event.building_type,
+            },
             event.position,
             // Name it for debug
             // Name::new("Data Residue"),
@@ -97,7 +98,15 @@ pub fn ghost_infection_system(
 /// System that applies active effects of `GhostTrait`s.
 pub fn apply_ghost_traits_system(
     mut commands: Commands,
-    mut query: Query<(Entity, &GhostCode, Option<&mut PowerConsumer>, Option<&mut Turret>), Without<GhostEffectApplied>>,
+    mut query: Query<
+        (
+            Entity,
+            &GhostCode,
+            Option<&mut PowerConsumer>,
+            Option<&mut Turret>,
+        ),
+        Without<GhostEffectApplied>,
+    >,
 ) {
     for (entity, ghost_code, mut power_opt, mut turret_opt) in query.iter_mut() {
         let mut applied = false;
@@ -148,8 +157,8 @@ pub fn purge_execution_system(
 
         // If we don't have a plan (target lost?), stop
         let Some(plan) = plan_opt else {
-             action.current = ActionType::Idle;
-             continue;
+            action.current = ActionType::Idle;
+            continue;
         };
 
         if let Some(target_entity) = plan.target {

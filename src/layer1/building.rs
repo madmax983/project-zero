@@ -343,10 +343,9 @@ impl BuildingType {
 
             Self::Library | Self::BulletinBoard => Some((Category::Research, Tier::Basic)),
             Self::Observatory | Self::CryoPod => Some((Category::Research, Tier::Advanced)),
-            Self::AICore
-            | Self::AtmosphericProcessor
-            | Self::GeneBank
-            | Self::CloneVat => Some((Category::Research, Tier::HighTech)),
+            Self::AICore | Self::AtmosphericProcessor | Self::GeneBank | Self::CloneVat => {
+                Some((Category::Research, Tier::HighTech))
+            }
 
             _ => None,
         }

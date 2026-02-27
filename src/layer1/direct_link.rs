@@ -5,7 +5,7 @@ use crate::layer1::defense::Gate;
 use crate::layer1::execution::components::{AtTarget, MovementTarget};
 use crate::layer1::execution::movement::is_tile_walkable;
 use crate::layer1::map::{GridPosition, ScreenShake};
-use crate::layer1::particles::{spawn_particle, Particle};
+use crate::layer1::particles::{Particle, spawn_particle};
 use crate::layer1::pop::{Role, Speed};
 use crate::layer1::terrain::TerrainGrid;
 use crate::layer1::utility_types::StartPlan;
@@ -48,7 +48,10 @@ pub fn handle_possession(
     if !unpossess.is_empty() {
         unpossess.clear(); // Consume all events
         for entity in possessed_query.iter() {
-            commands.entity(entity).remove::<Possessed>().remove::<DirectControlState>();
+            commands
+                .entity(entity)
+                .remove::<Possessed>()
+                .remove::<DirectControlState>();
         }
         // Restore UI
         ui_state.suppress_global_ui = false;
@@ -65,12 +68,17 @@ pub fn handle_possession(
         // Remove Possessed from existing
         for existing in possessed_query.iter() {
             if existing != entity {
-                commands.entity(existing).remove::<Possessed>().remove::<DirectControlState>();
+                commands
+                    .entity(existing)
+                    .remove::<Possessed>()
+                    .remove::<DirectControlState>();
             }
         }
 
         // Add Possessed and DirectControlState to new target
-        commands.entity(entity).insert((Possessed, DirectControlState::default()));
+        commands
+            .entity(entity)
+            .insert((Possessed, DirectControlState::default()));
 
         // Clear AI components
         commands
@@ -93,7 +101,13 @@ pub fn handle_possession(
 pub fn handle_direct_movement(
     input: Res<Input<KeyCode>>,
     mut query: Query<
-        (Entity, &mut GridPosition, &Speed, &mut DirectControlState, Option<&Role>),
+        (
+            Entity,
+            &mut GridPosition,
+            &Speed,
+            &mut DirectControlState,
+            Option<&Role>,
+        ),
         (With<Possessed>, Without<Building>),
     >,
     terrain: Res<TerrainGrid>,
@@ -117,7 +131,9 @@ pub fn handle_direct_movement(
         let cooldown = (0.1 / speed.current).max(0.01);
 
         // If WallTime is missing, we allow movement always (graceful degradation)
-        let time_since_move = wall_time.as_ref().map_or(f32::MAX, |t| t.0 - state.last_move_time);
+        let time_since_move = wall_time
+            .as_ref()
+            .map_or(f32::MAX, |t| t.0 - state.last_move_time);
 
         // 1. Gather Input
         // Separate X and Y to check for diagonal intent or buffering
@@ -126,13 +142,13 @@ pub fn handle_direct_movement(
 
         // Check buffers first
         if let Some(key) = state.buffered_input {
-             match key {
-                 KeyCode::W | KeyCode::Up => intended_dy -= 1,
-                 KeyCode::S | KeyCode::Down => intended_dy += 1,
-                 KeyCode::A | KeyCode::Left => intended_dx -= 1,
-                 KeyCode::D | KeyCode::Right => intended_dx += 1,
-                 _ => {}
-             }
+            match key {
+                KeyCode::W | KeyCode::Up => intended_dy -= 1,
+                KeyCode::S | KeyCode::Down => intended_dy += 1,
+                KeyCode::A | KeyCode::Left => intended_dx -= 1,
+                KeyCode::D | KeyCode::Right => intended_dx += 1,
+                _ => {}
+            }
         }
 
         // Check fresh inputs (override buffer if present, or combine?)
@@ -164,10 +180,15 @@ pub fn handle_direct_movement(
             // Buffer the input
             // We store the "strongest" input direction if multiple pressed?
             // Just store the last pressed one for simplicity of struct
-            if input.just_pressed(KeyCode::W) { state.buffered_input = Some(KeyCode::W); }
-            else if input.just_pressed(KeyCode::S) { state.buffered_input = Some(KeyCode::S); }
-            else if input.just_pressed(KeyCode::A) { state.buffered_input = Some(KeyCode::A); }
-            else if input.just_pressed(KeyCode::D) { state.buffered_input = Some(KeyCode::D); }
+            if input.just_pressed(KeyCode::W) {
+                state.buffered_input = Some(KeyCode::W);
+            } else if input.just_pressed(KeyCode::S) {
+                state.buffered_input = Some(KeyCode::S);
+            } else if input.just_pressed(KeyCode::A) {
+                state.buffered_input = Some(KeyCode::A);
+            } else if input.just_pressed(KeyCode::D) {
+                state.buffered_input = Some(KeyCode::D);
+            }
 
             continue;
         }
@@ -253,8 +274,8 @@ mod tests {
     use super::*;
     use crate::layer1::execution::components::MovementTarget;
     use crate::layer1::map::GridPosition;
-    use crate::layer1::pop::Speed;
     use crate::layer1::pop::PopBundle;
+    use crate::layer1::pop::Speed;
     use crate::layer1::terrain::generate_terrain;
     use crate::layer1::utility_types::ActionType;
     use bevy_ecs::schedule::Schedule;
@@ -384,7 +405,9 @@ mod tests {
         let mut world = setup_world();
         // Setup walkable
         if let Some(mut terrain) = world.get_resource_mut::<TerrainGrid>() {
-            terrain.tiles.fill(crate::layer1::terrain::TerrainType::Grass);
+            terrain
+                .tiles
+                .fill(crate::layer1::terrain::TerrainType::Grass);
         }
 
         let pop = world
@@ -451,7 +474,10 @@ mod tests {
         schedule.run(&mut world);
 
         let shake = world.resource::<ScreenShake>();
-        assert!(shake.intensity > 0.0, "Screen shake should trigger on collision");
+        assert!(
+            shake.intensity > 0.0,
+            "Screen shake should trigger on collision"
+        );
 
         let pos = world.entity(pop).get::<GridPosition>().unwrap();
         assert_eq!(pos.y, 10, "Should not move into rock");
@@ -459,10 +485,12 @@ mod tests {
 
     #[test]
     fn test_direct_movement_juice_particles() {
-         let mut world = setup_world();
-         // All grass
+        let mut world = setup_world();
+        // All grass
         if let Some(mut terrain) = world.get_resource_mut::<TerrainGrid>() {
-            terrain.tiles.fill(crate::layer1::terrain::TerrainType::Grass);
+            terrain
+                .tiles
+                .fill(crate::layer1::terrain::TerrainType::Grass);
         }
 
         let _pop = world

@@ -1,0 +1,882 @@
+   Compiling scale v0.1.0 (/app)
+warning: unused imports: `ClothingType`, `Clothing`, `Item`, `ToolType`, `Tool`, and `UnequipEvent`
+ --> src/layer1/actions.rs:7:28
+  |
+7 | use crate::layer1::items::{Clothing, ClothingType, Equipment, Item, Tool, ToolType, UnequipEvent};
+  |                            ^^^^^^^^  ^^^^^^^^^^^^             ^^^^  ^^^^  ^^^^^^^^  ^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `spawn_particle`
+ --> src/layer1/direct_link.rs:8:32
+  |
+8 | use crate::layer1::particles::{spawn_particle, Particle};
+  |                                ^^^^^^^^^^^^^^
+
+warning: unused import: `crate::layer1::health::Health`
+ --> src/layer1/kinetic_storage.rs:2:5
+  |
+2 | use crate::layer1::health::Health;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `Traits`
+ --> src/layer1/clone_vat.rs:9:36
+  |
+9 | use crate::layer1::traits::{Trait, Traits};
+  |                                    ^^^^^^
+
+warning: unused import: `rand::Rng`
+  --> src/layer1/clone_vat.rs:10:5
+   |
+10 | use rand::Rng; // For thread_rng? No, PopBundle::random takes &mut R
+   |     ^^^^^^^^^
+
+warning: value assigned to `remaining_hunger` is never read
+   --> src/layer1/the_visitor.rs:139:21
+    |
+139 |                     remaining_hunger -= eat;
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: maybe it is overwritten before being read?
+    = note: `#[warn(unused_assignments)]` (part of `#[warn(unused)]`) on by default
+
+warning: missing documentation for a module
+   --> src/layer1/mod.rs:641:1
+    |
+641 | pub mod geodetic;
+    | ^^^^^^^^^^^^^^^^
+    |
+    = note: requested on the command line with `-W missing-docs`
+
+warning: missing documentation for a function
+   --> src/layer1/execution/arrival.rs:331:1
+    |
+331 | / pub fn handle_fetch_tool(
+332 | |     commands: &mut Commands,
+333 | |     resources: &mut ColonyResources,
+334 | |     pop_entity: Entity,
+335 | |     equipment_opt: &mut Option<Mut<Equipment>>,
+336 | | ) {
+    | |_^
+
+warning: missing documentation for a function
+   --> src/layer1/execution/arrival.rs:363:1
+    |
+363 | / pub fn handle_fetch_clothing(
+364 | |     commands: &mut Commands,
+365 | |     resources: &mut ColonyResources,
+366 | |     pop_entity: Entity,
+367 | |     equipment_opt: &mut Option<Mut<Equipment>>,
+368 | |     unequip_events: &mut EventWriter<UnequipEvent>,
+369 | | ) {
+    | |_^
+
+warning: missing documentation for an enum
+  --> src/layer1/social/grievances.rs:12:1
+   |
+12 | pub enum Sentiment {
+   | ^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a variant
+  --> src/layer1/social/grievances.rs:13:5
+   |
+13 |     Positive,
+   |     ^^^^^^^^
+
+warning: missing documentation for a variant
+  --> src/layer1/social/grievances.rs:14:5
+   |
+14 |     Negative,
+   |     ^^^^^^^^
+
+warning: missing documentation for a variant
+  --> src/layer1/social/grievances.rs:15:5
+   |
+15 |     Neutral,
+   |     ^^^^^^^
+
+warning: missing documentation for a struct
+  --> src/layer1/social/grievances.rs:19:1
+   |
+19 | pub struct BulletinNote {
+   | ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/layer1/social/grievances.rs:20:5
+   |
+20 |     pub author: Entity,
+   |     ^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/layer1/social/grievances.rs:21:5
+   |
+21 |     pub target: Option<Entity>, // Subject of the note
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/layer1/social/grievances.rs:22:5
+   |
+22 |     pub sentiment: Sentiment,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/layer1/social/grievances.rs:23:5
+   |
+23 |     pub content: String,
+   |     ^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/layer1/social/grievances.rs:24:5
+   |
+24 |     pub timestamp: u64,
+   |     ^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct
+  --> src/layer1/social/grievances.rs:28:1
+   |
+28 | pub struct BulletinBoard {
+   | ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/layer1/social/grievances.rs:29:5
+   |
+29 |     pub notes: Vec<BulletinNote>,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct
+  --> src/layer1/social/grievances.rs:34:1
+   |
+34 | pub struct ReadingBoard {
+   | ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/layer1/social/grievances.rs:35:5
+   |
+35 |     pub board_entity: Entity,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/layer1/social/grievances.rs:41:5
+   |
+41 |     pub last_post_tick: u64,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a function
+  --> src/layer1/social/grievances.rs:51:1
+   |
+51 | / pub fn post_grievance_system(
+52 | |     mut commands: Commands,
+53 | |     mut boards: Query<&mut BulletinBoard>,
+54 | |     mut pops: Query<(
+...  |
+62 | |     time: Option<Res<SimulationTime>>,
+63 | | ) {
+   | |_^
+
+warning: missing documentation for a function
+   --> src/layer1/social/grievances.rs:165:1
+    |
+165 | / pub fn read_board_system(
+166 | |     mut commands: Commands,
+167 | |     mut events: EventWriter<AffinityChange>,
+168 | |     boards: Query<&BulletinBoard>,
+169 | |     readers: Query<(Entity, &ReadingBoard)>,
+170 | | ) {
+    | |_^
+
+warning: missing documentation for a function
+   --> src/layer1/social/grievances.rs:207:1
+    |
+207 | / pub fn decay_notes_system(
+208 | |     mut boards: Query<&mut BulletinBoard>,
+209 | |     time: Option<Res<SimulationTime>>,
+210 | | ) {
+    | |_^
+
+warning: missing documentation for a module
+   --> src/layer1/tech/mod.rs:655:1
+    |
+655 | pub mod legacy_code;
+    | ^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a module
+   --> src/layer1/tech/mod.rs:656:1
+    |
+656 | pub mod ghost_code;
+    | ^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct
+ --> src/layer1/tech/legacy_code.rs:4:1
+  |
+4 | pub struct Mainframe;
+  | ^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct
+ --> src/layer1/tech/legacy_code.rs:7:1
+  |
+7 | pub struct Bloat {
+  | ^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+ --> src/layer1/tech/legacy_code.rs:8:5
+  |
+8 |     pub current: f32, // 0-100
+  |     ^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+ --> src/layer1/tech/legacy_code.rs:9:5
+  |
+9 |     pub rate: f32,    // e.g. 0.01 per tick
+  |     ^^^^^^^^^^^^^
+
+warning: missing documentation for a method
+  --> src/layer1/tech/legacy_code.rs:13:5
+   |
+13 |     pub fn efficiency(&self) -> f32 {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for an enum
+  --> src/layer1/tech/legacy_code.rs:22:1
+   |
+22 | pub enum SystemStatus {
+   | ^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a variant
+  --> src/layer1/tech/legacy_code.rs:23:5
+   |
+23 |     Online,
+   |     ^^^^^^
+
+warning: missing documentation for a variant
+  --> src/layer1/tech/legacy_code.rs:24:5
+   |
+24 |     Rebooting(u32), // Ticks remaining
+   |     ^^^^^^^^^
+
+warning: missing documentation for a variant
+  --> src/layer1/tech/legacy_code.rs:25:5
+   |
+25 |     Offline,
+   |     ^^^^^^^
+
+warning: missing documentation for a function
+  --> src/layer1/tech/legacy_code.rs:28:1
+   |
+28 | / pub fn update_bloat_system(
+29 | |     mut query: Query<(&mut Bloat, &mut SystemStatus)>,
+30 | | ) {
+   | |_^
+
+warning: missing documentation for a function
+  --> src/layer1/tech/legacy_code.rs:50:1
+   |
+50 | pub fn start_reformat(world: &mut World, entity: Entity) {
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a function
+  --> src/layer1/tech/legacy_code.rs:56:1
+   |
+56 | pub fn finish_reformat(world: &mut World, entity: Entity) {
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a function
+  --> src/layer1/tech/legacy_code.rs:67:1
+   |
+67 | pub fn reformat_system() {}
+   | ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a function
+   --> src/layer1/utility_ai.rs:667:1
+    |
+667 | pub fn evaluate_actions_system(world: &mut World) {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a variant
+  --> src/layer1/the_visitor.rs:11:5
+   |
+11 |     Wander,
+   |     ^^^^^^
+
+warning: missing documentation for a variant
+  --> src/layer1/the_visitor.rs:12:5
+   |
+12 |     DetectTarget,
+   |     ^^^^^^^^^^^^
+
+warning: missing documentation for a variant
+  --> src/layer1/the_visitor.rs:13:5
+   |
+13 |     MoveToTarget,
+   |     ^^^^^^^^^^^^
+
+warning: missing documentation for a variant
+  --> src/layer1/the_visitor.rs:14:5
+   |
+14 |     Eat,
+   |     ^^^
+
+warning: missing documentation for a variant
+  --> src/layer1/the_visitor.rs:15:5
+   |
+15 |     Leave,
+   |     ^^^^^
+
+warning: missing documentation for a struct field
+  --> src/layer1/the_visitor.rs:21:5
+   |
+21 |     pub state: TheVisitorState,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/layer1/the_visitor.rs:22:5
+   |
+22 |     pub target_stockpile: Option<Entity>,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/layer1/the_visitor.rs:23:5
+   |
+23 |     pub target_position: Option<GridPosition>,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/layer1/the_visitor.rs:26:5
+   |
+26 |     pub health: f32,
+   |     ^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/layer1/the_visitor.rs:27:5
+   |
+27 |     pub trample_damage: f32,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a module
+ --> src/layer1/logistics/mod.rs:2:1
+  |
+2 | pub mod pneumatic;
+  | ^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a module
+  --> src/layer1/systems/mod.rs:16:1
+   |
+16 | pub mod cleanup;
+   | ^^^^^^^^^^^^^^^
+
+warning: missing documentation for a module
+  --> src/layer1/systems/mod.rs:17:1
+   |
+17 | pub mod consumption;
+   | ^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a module
+  --> src/layer1/systems/mod.rs:18:1
+   |
+18 | pub mod economy;
+   | ^^^^^^^^^^^^^^^
+
+warning: missing documentation for a module
+  --> src/layer1/systems/mod.rs:19:1
+   |
+19 | pub mod environment;
+   | ^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a module
+  --> src/layer1/systems/mod.rs:20:1
+   |
+20 | pub mod execution;
+   | ^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a module
+  --> src/layer1/systems/mod.rs:21:1
+   |
+21 | pub mod observation;
+   | ^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a function
+ --> src/layer1/systems/cleanup.rs:7:1
+  |
+7 | pub fn register(schedule: &mut Schedule) {
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a function
+ --> src/layer1/systems/consumption.rs:6:1
+  |
+6 | pub fn register(schedule: &mut Schedule) {
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a function
+ --> src/layer1/systems/economy.rs:9:1
+  |
+9 | pub fn register(schedule: &mut Schedule) {
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a function
+ --> src/layer1/systems/environment.rs:6:1
+  |
+6 | pub fn register(schedule: &mut Schedule) {
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a function
+ --> src/layer1/systems/execution.rs:6:1
+  |
+6 | pub fn register(schedule: &mut Schedule) {
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a function
+ --> src/layer1/systems/observation.rs:8:1
+  |
+8 | pub fn register(schedule: &mut Schedule) {
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct
+  --> src/layer1/direct_link.rs:19:1
+   |
+19 | pub struct Possessed;
+   | ^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct
+  --> src/layer1/direct_link.rs:22:1
+   |
+22 | pub struct PossessEntityEvent(pub Entity);
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct
+  --> src/layer1/direct_link.rs:25:1
+   |
+25 | pub struct UnpossessEvent;
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct
+  --> src/layer1/direct_link.rs:37:1
+   |
+37 | pub struct DirectLinkPlugin;
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a function
+  --> src/layer1/direct_link.rs:39:1
+   |
+39 | / pub fn handle_possession(
+40 | |     mut commands: Commands,
+41 | |     mut events: EventReader<PossessEntityEvent>,
+42 | |     mut unpossess: EventReader<UnpossessEvent>,
+...  |
+45 | |     possessed_query: Query<Entity, With<Possessed>>,
+46 | | ) {
+   | |_^
+
+warning: missing documentation for a function
+   --> src/layer1/direct_link.rs:93:1
+    |
+ 93 | / pub fn handle_direct_movement(
+ 94 | |     input: Res<Input<KeyCode>>,
+ 95 | |     mut query: Query<
+ 96 | |         (Entity, &mut GridPosition, &Speed, &mut DirectControlState, Option<&Role>),
+...   |
+109 | |     mut commands: Commands,
+110 | | ) {
+    | |_^
+
+warning: missing documentation for a function
+   --> src/layer1/direct_link.rs:221:1
+    |
+221 | / pub fn apply_buffs(
+222 | |     mut removed: RemovedComponents<Possessed>,
+223 | |     mut queries: ParamSet<(Query<&mut Speed, Added<Possessed>>, Query<&mut Speed>)>,
+224 | | ) {
+    | |_^
+
+warning: missing documentation for a function
+   --> src/layer1/direct_link.rs:238:1
+    |
+238 | pub fn clear_input_system(mut input: ResMut<Input<KeyCode>>) {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a function
+   --> src/layer1/direct_link.rs:242:1
+    |
+242 | / pub fn handle_direct_input_system(
+243 | |     input: Res<Input<KeyCode>>,
+244 | |     mut unpossess_events: EventWriter<UnpossessEvent>,
+245 | | ) {
+    | |_^
+
+warning: missing documentation for a struct
+ --> src/layer1/kinetic_storage.rs:8:1
+  |
+8 | pub struct KineticBattery {
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+ --> src/layer1/kinetic_storage.rs:9:5
+  |
+9 |     pub charge: f32,
+  |     ^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/layer1/kinetic_storage.rs:10:5
+   |
+10 |     pub capacity: f32,
+   |     ^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/layer1/kinetic_storage.rs:11:5
+   |
+11 |     pub charge_rate: f32,
+   |     ^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/layer1/kinetic_storage.rs:12:5
+   |
+12 |     pub efficiency: f32, // e.g. 0.9 means 10 input = 9 stored
+   |     ^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct
+ --> src/layer1/hum.rs:8:1
+  |
+8 | pub struct HumMap {
+  | ^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+ --> src/layer1/hum.rs:9:5
+  |
+9 |     pub width: usize,
+  |     ^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/layer1/hum.rs:10:5
+   |
+10 |     pub height: usize,
+   |     ^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/layer1/hum.rs:11:5
+   |
+11 |     pub values: Vec<f32>,
+   |     ^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for an associated function
+  --> src/layer1/hum.rs:15:5
+   |
+15 |     pub fn new(width: usize, height: usize) -> Self {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a method
+  --> src/layer1/hum.rs:23:5
+   |
+23 |     pub fn get(&self, x: i32, y: i32) -> f32 {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a method
+  --> src/layer1/hum.rs:30:5
+   |
+30 |     pub fn set(&mut self, x: i32, y: i32, value: f32) {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct
+  --> src/layer1/hum.rs:39:1
+   |
+39 | pub struct HumSource {
+   | ^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/layer1/hum.rs:40:5
+   |
+40 |     pub radius: f32,
+   |     ^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/layer1/hum.rs:41:5
+   |
+41 |     pub intensity: f32,
+   |     ^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a function
+  --> src/layer1/hum.rs:44:1
+   |
+44 | pub fn update_hum_system(mut hum_map: ResMut<HumMap>, sources: Query<(&HumSource, &GridPosition)>) {
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a function
+  --> src/layer1/hum.rs:75:1
+   |
+75 | / pub fn execute_listen_to_hum_system(
+76 | |     mut query: Query<(&mut Needs, &mut StressTracker, &PopAction)>,
+77 | | ) {
+   | |_^
+
+warning: missing documentation for a struct
+ --> src/layer1/clutter.rs:5:1
+  |
+5 | pub struct ClutterGrid {
+  | ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+ --> src/layer1/clutter.rs:6:5
+  |
+6 |     pub width: usize,
+  |     ^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+ --> src/layer1/clutter.rs:7:5
+  |
+7 |     pub height: usize,
+  |     ^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+ --> src/layer1/clutter.rs:8:5
+  |
+8 |     pub values: Vec<f32>,
+  |     ^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for an associated function
+  --> src/layer1/clutter.rs:12:5
+   |
+12 |     pub fn new(width: usize, height: usize) -> Self {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a method
+  --> src/layer1/clutter.rs:20:5
+   |
+20 |     pub fn get(&self, x: usize, y: usize) -> f32 {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a method
+  --> src/layer1/clutter.rs:27:5
+   |
+27 |     pub fn set(&mut self, x: usize, y: usize, val: f32) {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a method
+  --> src/layer1/clutter.rs:34:5
+   |
+34 |     pub fn add_clutter(&mut self, x: usize, y: usize, amount: f32) {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a method
+  --> src/layer1/clutter.rs:39:5
+   |
+39 |     pub fn remove_clutter(&mut self, x: usize, y: usize, amount: f32) {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a function
+  --> src/layer1/clutter.rs:45:1
+   |
+45 | / pub fn clutter_accumulation_system(
+46 | |     mut grid: ResMut<ClutterGrid>,
+47 | |     pops: Query<(&crate::layer1::GridPosition, &crate::layer1::PopAction)>,
+48 | | ) {
+   | |_^
+
+warning: missing documentation for a function
+  --> src/layer1/clutter.rs:78:1
+   |
+78 | / pub fn clutter_cleaning_system(
+79 | |     mut commands: Commands,
+80 | |     mut grid: ResMut<ClutterGrid>,
+81 | |     pops: Query<(&crate::layer1::GridPosition, &crate::layer1::PopAction)>,
+82 | | ) {
+   | |_^
+
+warning: missing documentation for a variant
+  --> src/shared/input.rs:39:5
+   |
+39 |     W,
+   |     ^
+
+warning: missing documentation for a variant
+  --> src/shared/input.rs:40:5
+   |
+40 |     A,
+   |     ^
+
+warning: missing documentation for a variant
+  --> src/shared/input.rs:41:5
+   |
+41 |     S,
+   |     ^
+
+warning: missing documentation for a variant
+  --> src/shared/input.rs:42:5
+   |
+42 |     D,
+   |     ^
+
+warning: missing documentation for a variant
+  --> src/shared/input.rs:43:5
+   |
+43 |     Q,
+   |     ^
+
+warning: missing documentation for a variant
+  --> src/shared/input.rs:44:5
+   |
+44 |     E,
+   |     ^
+
+warning: missing documentation for a variant
+  --> src/shared/input.rs:45:5
+   |
+45 |     R,
+   |     ^
+
+warning: missing documentation for a variant
+  --> src/shared/input.rs:46:5
+   |
+46 |     F,
+   |     ^
+
+warning: missing documentation for a variant
+  --> src/shared/input.rs:47:5
+   |
+47 |     Up,
+   |     ^^
+
+warning: missing documentation for a variant
+  --> src/shared/input.rs:48:5
+   |
+48 |     Down,
+   |     ^^^^
+
+warning: missing documentation for a variant
+  --> src/shared/input.rs:49:5
+   |
+49 |     Left,
+   |     ^^^^
+
+warning: missing documentation for a variant
+  --> src/shared/input.rs:50:5
+   |
+50 |     Right,
+   |     ^^^^^
+
+warning: missing documentation for a variant
+  --> src/shared/input.rs:51:5
+   |
+51 |     Space,
+   |     ^^^^^
+
+warning: missing documentation for a variant
+  --> src/shared/input.rs:52:5
+   |
+52 |     Esc,
+   |     ^^^
+
+warning: missing documentation for a variant
+  --> src/shared/input.rs:53:5
+   |
+53 |     Return,
+   |     ^^^^^^
+
+warning: missing documentation for a variant
+  --> src/shared/input.rs:54:5
+   |
+54 |     Tab,
+   |     ^^^
+
+warning: missing documentation for a variant
+  --> src/shared/input.rs:55:5
+   |
+55 |     Back,
+   |     ^^^^
+
+warning: missing documentation for a variant
+  --> src/shared/input.rs:56:5
+   |
+56 |     Delete,
+   |     ^^^^^^
+
+warning: missing documentation for a variant
+  --> src/shared/input.rs:58:5
+   |
+58 |     Unidentified,
+   |     ^^^^^^^^^^^^
+
+warning: missing documentation for a method
+  --> src/shared/input.rs:70:5
+   |
+70 |     pub fn press(&mut self, input: T) {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a method
+  --> src/shared/input.rs:77:5
+   |
+77 |     pub fn release(&mut self, input: T) {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a method
+  --> src/shared/input.rs:84:5
+   |
+84 |     pub fn pressed(&self, input: T) -> bool {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a method
+  --> src/shared/input.rs:88:5
+   |
+88 |     pub fn just_pressed(&self, input: T) -> bool {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a method
+  --> src/shared/input.rs:92:5
+   |
+92 |     pub fn just_released(&self, input: T) -> bool {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a method
+  --> src/shared/input.rs:96:5
+   |
+96 |     pub fn clear(&mut self) {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a function
+   --> src/shared/input.rs:186:1
+    |
+186 | pub fn map_game_key_to_bevy_key(key: GameKeyCode) -> KeyCode {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `scale` (lib) generated 129 warnings (run `cargo fix --lib -p scale` to apply 5 suggestions)
+warning: missing documentation for the crate
+  --> benches/utility_ai_bench.rs:1:1
+   |
+ 1 | / use criterion::{Criterion, black_box, criterion_group, criterion_main};
+ 2 | | use scale::layer1::map::GridPosition;
+ 3 | | use scale::layer1::utility_types::{UtilityWeights, calculate_context_score};
+...  |
+41 | | criterion_group!(benches, benchmark_context_score);
+42 | | criterion_main!(benches);
+   | |_________________________^
+   |
+   = note: requested on the command line with `-W missing-docs`
+
+warning: missing documentation for a function
+  --> benches/utility_ai_bench.rs:41:1
+   |
+41 | criterion_group!(benches, benchmark_context_score);
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: this warning originates in the macro `$crate::criterion_group` which comes from the expansion of the macro `criterion_group` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: `scale` (bench "utility_ai_bench") generated 2 warnings
+    Finished `bench` profile [optimized] target(s) in 4m 46s
+     Running benches/utility_ai_bench.rs (target/release/deps/utility_ai_bench-c5e51be6c57147e0)
+Gnuplot not found, using plotters backend
+Benchmarking calculate_context_score_default
+Benchmarking calculate_context_score_default: Warming up for 3.0000 s
+Benchmarking calculate_context_score_default: Collecting 100 samples in estimated 5.0000 s (481M iterations)
+Benchmarking calculate_context_score_default: Analyzing
+calculate_context_score_default
+                        time:   [10.213 ns 10.229 ns 10.248 ns]
+                        change: [-23.004% -20.505% -18.140%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Found 9 outliers among 100 measurements (9.00%)
+  3 (3.00%) high mild
+  6 (6.00%) high severe
+
+Benchmarking calculate_context_score_varied
+Benchmarking calculate_context_score_varied: Warming up for 3.0000 s
+Benchmarking calculate_context_score_varied: Collecting 100 samples in estimated 5.0002 s (131M iterations)
+Benchmarking calculate_context_score_varied: Analyzing
+calculate_context_score_varied
+                        time:   [55.222 ns 58.488 ns 61.760 ns]
+                        change: [+0.4576% +8.0137% +15.954%] (p = 0.03 < 0.05)
+                        Change within noise threshold.

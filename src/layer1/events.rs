@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::building::BuildingType;
 use crate::layer1::map::GridPosition;
+use bevy_ecs::prelude::*;
 
 /// Event triggered when a building is removed (demolished or destroyed).
 #[derive(Event, Debug, Clone)]

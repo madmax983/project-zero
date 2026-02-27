@@ -367,16 +367,13 @@ pub fn need_response_curve(need_value: f32) -> f32 {
 /// ```
 #[must_use]
 pub const fn manhattan_distance(pos1: &GridPosition, pos2: &GridPosition) -> i32 {
-    let dx = (pos1.x as i64 - pos2.x as i64).abs();
-    let dy = (pos1.y as i64 - pos2.y as i64).abs();
-    let sum = dx + dy;
-    if sum > i32::MAX as i64 {
+    let dx = pos1.x.abs_diff(pos2.x);
+    let dy = pos1.y.abs_diff(pos2.y);
+    let sum = dx.saturating_add(dy);
+    if sum > i32::MAX as u32 {
         i32::MAX
     } else {
-        #[allow(clippy::cast_possible_truncation)]
-        {
-            sum as i32
-        }
+        sum as i32
     }
 }
 
@@ -444,6 +441,7 @@ pub fn calculate_context_score(
             #[allow(clippy::cast_precision_loss)]
             let distance_factor = 1.0 / (distance as f32).mul_add(0.1, 1.0);
 
+            // OPTIMIZATION: Avoid powf if weight is 1.0 (very common)
             if (weights.distance_weight - 1.0).abs() < f32::EPSILON {
                 score *= distance_factor;
             } else {
@@ -457,6 +455,7 @@ pub fn calculate_context_score(
         #[allow(clippy::cast_precision_loss)]
         let availability = (1.0 - (building_occupied as f32 / building_capacity as f32)).max(0.0);
 
+        // OPTIMIZATION: Avoid powf if weight is 1.0 (very common)
         if (weights.availability_weight - 1.0).abs() < f32::EPSILON {
             score *= availability;
         } else {
@@ -464,7 +463,8 @@ pub fn calculate_context_score(
         }
     }
 
-    score.clamp(0.0, 1.0)
+    // OPTIMIZATION: Removed redundant clamp. Inputs are strictly within [0.0, 1.0].
+    score
 }
 
 #[cfg(test)]
