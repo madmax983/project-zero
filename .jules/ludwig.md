@@ -63,3 +63,19 @@
 ## [Direct Control]
 **Friction:** Possessing a unit felt clunky because movement was tied to key-repeat rate or required mashing, and felt disconnected from the unit's stats (Speed).
 **Flow:** Implemented "Virtual Joystick" with Input Buffering and Speed-based Cooldowns. High Speed stats now grant responsive, low-cooldown movement. Added "Juice" (dust particles on move, screen shake on collision) to make control feel tactile.
+
+## [Movement Flow 3.0]
+**Friction:** Even with previous coyote speed tweaks, some pops still felt slightly sluggish when turning corners or starting movement.
+**Flow:** Increased "Coyote Threshold" from 0.25 to 0.30. This small 5% bump makes the "grace period" for movement accumulator even more forgiving, resulting in buttery smooth pathfinding execution.
+
+## [Combat Rhythm]
+**Friction:** "Hit Stop" (Freeze Frames) felt too long (8 ticks = 800ms for crits). It broke the flow of battle, feeling more like lag than impact.
+**Flow:** Halved Hit Stop durations (Crit: 8->4, Heavy: 4->2). This restores the fast-paced rhythm of combat while keeping the "crunch" of heavy hits.
+
+## [Resource Crunch]
+**Friction:** Critical success in mining/chopping was just a numbers game (5x yield). It lacked visceral feedback.
+**Flow:** Added a 2-tick global "Hit Stop" (freeze) on critical resource gathering. Now, when a miner strikes a mother lode, the whole game pauses for a split second to acknowledge the massive payout.
+
+## [Destruction Juice]
+**Friction:** Demolishing a building just played a static 'X' particle. It felt like deleting a file, not destroying a structure.
+**Flow:** Added dynamic debris physics to demolition. Now, when a building is destroyed, 3-5 debris particles explode outward with velocity and drag, making destruction feel messy and satisfying.

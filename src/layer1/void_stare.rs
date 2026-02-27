@@ -124,7 +124,8 @@ pub fn void_manifestation_system(
             if let Some(ref mut log) = log {
                 // Rate limit logs
                 if exposure.check_timer == 100 { // Only once per check cycle
-                     log.add(format!("Pop {} stares into the abyss...", entity.index()));
+                     let index = entity.index();
+                     log.add(format!("Pop {} stares into the abyss...", index));
                 }
             }
         }

@@ -2,6 +2,7 @@ use bevy_ecs::prelude::*;
 use rand::Rng;
 use ratatui::style::Color;
 
+use crate::layer1::GlobalHitStop;
 use crate::layer1::map::{GridPosition, ScreenShake};
 use crate::layer1::mother_lode::MotherLode;
 use crate::layer1::orbital_crossfire::{ImpactSite, mine_scrap};
@@ -27,6 +28,9 @@ pub fn handle_mining_work(
         if let Some(p) = pos {
             spawn_particle(world, p, '*', Color::Yellow, 10);
             trigger_shake(world, 0.3);
+            if let Some(mut hs) = world.get_resource_mut::<GlobalHitStop>() {
+                hs.trigger(2);
+            }
         }
         if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
             log.add_colored("Critical Mine!", Color::Yellow);
@@ -164,6 +168,9 @@ pub fn handle_chopping_work(
         if let Some(p) = pos {
             spawn_particle(world, p, '^', Color::LightGreen, 10);
             trigger_shake(world, 0.3);
+            if let Some(mut hs) = world.get_resource_mut::<GlobalHitStop>() {
+                hs.trigger(2);
+            }
         }
         if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
             log.add_colored("Critical Chop!", Color::LightGreen);

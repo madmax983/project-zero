@@ -4,7 +4,7 @@ use ratatui::style::Color;
 use crate::layer1::building::{Building, BuildingType, OccupiedTiles};
 use crate::layer1::heirloom::{AncientStructure, RetrogradeEngineeringEvent};
 use crate::layer1::map::{GridPosition, ScreenShake};
-use crate::layer1::particles::spawn_particle;
+use crate::layer1::particles::{spawn_moving_particle, spawn_particle};
 use crate::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
 use crate::layer1::ruins::{Ruin, process_scavenge};
 use crate::layer1::structure::{Structure, process_jury_rig};
@@ -82,8 +82,25 @@ pub fn execute_demolish(world: &mut World, designation_entity: Entity) -> bool {
                     // Cyan 'data' sparks
                     spawn_particle(world, designation_pos, '?', Color::Cyan, 15);
                 } else {
-                    // Normal Debris
+                    // Normal Debris - Static
                     spawn_particle(world, designation_pos, 'X', Color::Red, 10);
+
+                    // Normal Debris - Dynamic (Ludwig: Make destruction messy!)
+                    let mut rng = rand::thread_rng();
+                    use rand::Rng;
+                    for _ in 0..4 {
+                        let dx = rng.gen_range(-1.0..1.0);
+                        let dy = rng.gen_range(-1.0..1.0);
+                        spawn_moving_particle(
+                            world,
+                            designation_pos,
+                            '.',
+                            Color::DarkGray,
+                            15,
+                            dx,
+                            dy
+                        );
+                    }
                 }
 
                 world.despawn(entity);

@@ -31,8 +31,8 @@ const CRIT_CHANCE: f64 = 0.05;
 const CRIT_MULTIPLIER: f32 = 2.0;
 
 // Ludwig: Reduced hit stop times for snappier combat (Game Feel)
-const HIT_STOP_CRIT: u32 = 8;
-const HIT_STOP_HEAVY: u32 = 4;
+const HIT_STOP_CRIT: u32 = 4;
+const HIT_STOP_HEAVY: u32 = 2;
 const HIT_STOP_MEDIUM: u32 = 1;
 const HIT_STOP_LIGHT: u32 = 1;
 
@@ -602,15 +602,15 @@ mod tests {
         assert!(attacker_hs.is_some(), "Attacker should have HitStop");
         let ticks = attacker_hs.unwrap().ticks_remaining;
         assert!(
-            ticks == 4 || ticks == 8,
-            "Expected 4 or 8 ticks, got {}",
+            ticks == 2 || ticks == 4,
+            "Expected 2 or 4 ticks, got {}",
             ticks
         );
 
         let target_hs = world.get::<HitStop>(target);
         assert!(target_hs.is_some(), "Target should have HitStop");
         let ticks_target = target_hs.unwrap().ticks_remaining;
-        assert!(ticks_target == 4 || ticks_target == 8);
+        assert!(ticks_target == 2 || ticks_target == 4);
     }
 
     #[test]
@@ -654,8 +654,8 @@ mod tests {
         assert!(hs.is_some(), "Should always have HitStop");
         let ticks = hs.unwrap().ticks_remaining;
 
-        if ticks == 8 {
-            // Crit (8 ticks)
+        if ticks == 4 {
+            // Crit (4 ticks)
         } else {
             // Normal (Damage 4 < 5) -> Light (1 tick)
             assert_eq!(ticks, 1, "Normal light hit should give 1 tick");
@@ -667,10 +667,8 @@ mod tests {
         let mut world = setup_world();
 
         // Medium Weapon (Damage 10)
-        // Normal: 10 dmg -> Medium (2 ticks)
-        // Crit: 20 dmg -> Crit (10 ticks) - because 20 >= 15 is Heavy, but Crit flag overrides to Crit duration?
-        // Wait, implementation: if is_crit { 10 } else if dmg >= 15 { 5 } ...
-        // So yes, Crit -> 10 ticks.
+        // Normal: 10 dmg -> Medium (1 tick)
+        // Crit: 20 dmg -> Crit (4 ticks)
         let weapon = world
             .spawn(Weapon {
                 properties: AttackProperties {
@@ -705,8 +703,8 @@ mod tests {
         assert!(hs.is_some());
         let ticks = hs.unwrap().ticks_remaining;
         assert!(
-            ticks == 1 || ticks == 8,
-            "Expected 1 (Normal) or 8 (Crit), got {}",
+            ticks == 1 || ticks == 4,
+            "Expected 1 (Normal) or 4 (Crit), got {}",
             ticks
         );
     }
