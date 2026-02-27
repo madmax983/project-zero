@@ -16,6 +16,14 @@ pub struct Health {
 #[derive(Component, Default, Debug, Clone, Copy)]
 pub struct Dead;
 
+/// Tracks physical trauma that affects biometric identification.
+///
+/// Scars accumulate over time due to damage or surgery and contribute to biometric drift.
+#[derive(Component, Debug, Clone, Copy, Default)]
+pub struct Scars {
+    pub count: u32,
+}
+
 impl Default for Health {
     fn default() -> Self {
         Self {

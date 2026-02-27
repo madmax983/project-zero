@@ -2,7 +2,6 @@
 
 ## High Priority
 
-- [ ] `244` Biometric Drift — `specs/244-biometric-drift.md`
 
 ## Future / Ideas
 
