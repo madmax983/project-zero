@@ -21,3 +21,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `263` The Cadet Branch — `specs/263-the-cadet-branch.md`
 - [ ] `264` Hyper-Specialized Evolution — `specs/264-hyper-specialized-evolution.md`
 - [ ] `265` Shadow Ecosystems — `specs/265-shadow-ecosystems.md`
+- [ ] `266` Ancestral Graves — `specs/266-ancestral-graves.md`

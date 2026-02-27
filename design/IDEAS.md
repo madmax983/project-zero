@@ -230,7 +230,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Ancestral Graves
+## Ancestral Graves [SPECCED]
 
 **Layer:** 1
 
