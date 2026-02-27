@@ -2,7 +2,7 @@
 //!
 //! Demonstrates how to run the simulation without a window or GPU context.
 
-use scale::setup::{SetupConfig, setup_world_with_config};
+use scale::setup::{setup_world_with_config, SetupConfig};
 use scale::shared::time::SimulationTime;
 use scale::simulation::run_simulation_tick;
 

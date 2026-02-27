@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
     use bevy_ecs::prelude::*;
-    use scale::layer1::access_control::{AccessControl, AccessMode, check_access};
+    use scale::layer1::access_control::{check_access, AccessControl, AccessMode};
     use scale::layer1::pop::Pop;
     use std::collections::HashSet;
 

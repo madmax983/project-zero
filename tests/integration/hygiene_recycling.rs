@@ -1,17 +1,17 @@
 #[cfg(test)]
 mod tests {
     use bevy_ecs::prelude::*;
-    use scale::layer1::GridPosition;
     use scale::layer1::building::{Building, BuildingType};
     use scale::layer1::hauling::haul_system;
-    use scale::layer1::hygiene::{Filth, filth_accumulation_system, shower_use_system};
+    use scale::layer1::hygiene::{filth_accumulation_system, shower_use_system, Filth};
     use scale::layer1::inventory::Inventory;
     use scale::layer1::items::{CarryingItem, Item, ItemType};
     use scale::layer1::needs::Needs;
     use scale::layer1::pop::Pop;
-    use scale::layer1::recycling::{Recycler, recycle_processing_system};
+    use scale::layer1::recycling::{recycle_processing_system, Recycler};
     use scale::layer1::resources::ColonyResources;
     use scale::layer1::utility_types::{ActionType, PopAction};
+    use scale::layer1::GridPosition;
 
     fn setup_world() -> World {
         let mut world = World::new();

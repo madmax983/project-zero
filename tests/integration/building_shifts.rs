@@ -2,7 +2,6 @@
 mod tests {
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
-    use scale::layer1::GridPosition;
     use scale::layer1::building::{Building, BuildingType, ShiftSchedule};
     use scale::layer1::day_night::{DayNightCycle, TimeOfDay};
     use scale::layer1::farm::Farm;
@@ -11,6 +10,7 @@ mod tests {
     use scale::layer1::tech::Library;
     use scale::layer1::utility_ai::evaluate_actions_system;
     use scale::layer1::utility_ai::{ActionType, PopAction, UtilityWeights};
+    use scale::layer1::GridPosition;
     use scale::shared::time::SimulationTime;
 
     fn setup_world() -> World {

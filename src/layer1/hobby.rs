@@ -133,14 +133,11 @@ pub fn execute_hobby_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::inventory::Inventory;
+    use crate::layer1::inventory::{Inventory, InventoryItem};
     use crate::layer1::items::ItemType;
-    use crate::layer1::map::GridPosition;
-    use crate::layer1::needs::Needs;
     use crate::layer1::pop::Pop;
     use crate::layer1::stress::StressTracker;
     use crate::layer1::traits::{Trait, Traits};
-    use crate::layer1::utility_ai::UtilityWeights;
     use crate::layer1::utility_ai::{ActionType, PopAction};
     use crate::layer1::utility_eval_types::PopEvalData;
     use bevy_ecs::prelude::*;
@@ -167,32 +164,9 @@ mod tests {
 
     #[test]
     fn test_evaluate_hobby_high_when_stressed() {
-        let eval_data = PopEvalData {
-            entity: Entity::from_raw(0),
-            pos: GridPosition { x: 0, y: 0 },
-            needs: Needs::default(),
-            weights: UtilityWeights::default(),
-            action: PopAction {
-                current: ActionType::Idle,
-                ..Default::default()
-            }, // Idle
-            equipment: None,
-            carrying: None,
-            carrying_item: None,
-            mental_state: None,
-            drafted: None,
-            faction_member: None,
-            penal_labor: None,
-            breakdown: None,
-            traits: None,
-            stress: 0.8, // High stress
-            hobby_type: Some(HobbyType::CloudWatching),
-            chemical_state: None,
-            is_memetic_carrier: false,
-            health: None,
-            insulation: 0.0,
-            carrying_item_type: None,
-        };
+        let mut eval_data = PopEvalData::test_instance();
+        eval_data.stress = 0.8; // High stress
+        eval_data.hobby_type = Some(HobbyType::CloudWatching);
 
         let score = evaluate_hobby(&eval_data, HobbyType::CloudWatching);
         assert!(score > 0.6, "Stressed pop should want to do hobby");

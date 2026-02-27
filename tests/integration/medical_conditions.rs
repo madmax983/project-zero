@@ -6,7 +6,7 @@ mod tests {
     use scale::layer1::cryo_dreams::CryoTrauma;
     use scale::layer1::health::Health;
     use scale::layer1::map::GridPosition;
-    use scale::layer1::medical::{Hospital, healing_system};
+    use scale::layer1::medical::{healing_system, Hospital};
     use scale::layer1::radioactive::RadiationSickness;
 
     #[test]

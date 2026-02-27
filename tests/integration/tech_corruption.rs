@@ -4,7 +4,7 @@ mod tests {
     use bevy_ecs::system::RunSystemOnce;
     use scale::layer1::building::{Building, BuildingType};
     use scale::layer1::combat::{AttackProperties, CombatState};
-    use scale::layer1::farm::{Farm, produce_food_system};
+    use scale::layer1::farm::{produce_food_system, Farm};
     use scale::layer1::fauna::{Fauna, FaunaType};
     use scale::layer1::health::Health;
     use scale::layer1::map::GridPosition;
@@ -13,7 +13,7 @@ mod tests {
     use scale::layer1::resources::{ColonyResources, RefiningProgress, ResourceType};
     use scale::layer1::skills::Skills;
     use scale::layer1::tech::{Tech, TechState, TechStatus};
-    use scale::layer1::turret::{Turret, turret_fire_system};
+    use scale::layer1::turret::{turret_fire_system, Turret};
     use scale::layer1::utility_ai::{ActionType, PopAction};
     use scale::shared::time::SimulationTime;
 

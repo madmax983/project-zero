@@ -5,7 +5,7 @@ mod tests {
     use scale::layer1::edicts::ColonyPolicies;
     use scale::layer1::map::GridPosition;
     use scale::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
-    use scale::layer1::vermin::{VerminState, vermin_growth_system};
+    use scale::layer1::vermin::{vermin_growth_system, VerminState};
 
     fn setup_world() -> World {
         let mut world = World::new();

@@ -1,10 +1,10 @@
 // tests/layer1/cannibalization_tests.rs
 
 use bevy_ecs::prelude::*;
-use scale::layer1::GridPosition;
 use scale::layer1::building::{Building, BuildingType};
 use scale::layer1::designation::{Designation, DesignationType};
 use scale::layer1::resources::{ResourceItem, ResourceType};
+use scale::layer1::GridPosition;
 
 #[test]
 fn test_lander_building_exists() {

@@ -3,9 +3,9 @@
 use std::cell::RefCell;
 use std::rc::Rc;
 
-use ratzilla::WebRenderer;
 use ratzilla::backend::dom::DomBackend;
 use ratzilla::ratatui::Terminal;
+use ratzilla::WebRenderer;
 
 use scale::layer1::map::update_camera_smooth;
 use scale::platform::input::{GameKeyEvent, GameMouseEvent};

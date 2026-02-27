@@ -3,13 +3,13 @@ mod tests {
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
     use scale::layer1::{
-        GridPosition,
-        acoustic::{NoiseMap, NoiseSource, update_noise_system},
+        acoustic::{update_noise_system, NoiseMap, NoiseSource},
         building::{Building, BuildingType},
-        housing::{Housing, restore_rest_in_housing_system},
+        housing::{restore_rest_in_housing_system, Housing},
         needs::Needs,
         pop::Pop,
         terrain::generate_terrain,
+        GridPosition,
     };
 
     #[test]

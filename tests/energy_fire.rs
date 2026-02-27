@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
     use bevy_ecs::prelude::*;
-    use scale::layer1::energy::{GridOverloadEvent, PowerConsumer, PowerSource, power_grid_system};
+    use scale::layer1::energy::{power_grid_system, GridOverloadEvent, PowerConsumer, PowerSource};
     use scale::layer1::fire::Fire;
     use scale::layer1::health::Health;
     use scale::layer1::integration::grid_overload_fire_bridge;

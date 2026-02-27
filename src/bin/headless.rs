@@ -25,18 +25,18 @@
 #![allow(clippy::too_many_lines)]
 
 use bevy_ecs::prelude::*;
-use comfy_table::{Attribute, Cell, Color, ContentArrangement, Table, presets::UTF8_FULL};
+use comfy_table::{presets::UTF8_FULL, Attribute, Cell, Color, ContentArrangement, Table};
 use crossterm::style::Stylize;
 use scale::layer1::biography::Biography;
 use scale::layer1::dreams::Dream;
 use scale::layer1::pop::PopName;
-use scale::layer1::tech::{Tech, TechState, TechStatus, unlock_tech};
+use scale::layer1::tech::{unlock_tech, Tech, TechState, TechStatus};
 use scale::layer1::{
-    BuildingType, Chronicle, ColonyResources, Designation, DesignationType, EventImportance, Farm,
-    GlobalWind, GridPosition, Housing, Morale, MovementTarget, Needs, OccupiedTiles, Pop,
-    PopAction, Stockpile, TerrainGrid, TerrainType, try_designate, try_place_building,
+    try_designate, try_place_building, BuildingType, Chronicle, ColonyResources, Designation,
+    DesignationType, EventImportance, Farm, GlobalWind, GridPosition, Housing, Morale,
+    MovementTarget, Needs, OccupiedTiles, Pop, PopAction, Stockpile, TerrainGrid, TerrainType,
 };
-use scale::setup::{SetupConfig, setup_world_with_config};
+use scale::setup::{setup_world_with_config, SetupConfig};
 use scale::shared::log::MessageLog;
 use scale::shared::state::GameState;
 use scale::shared::time::SimulationTime;

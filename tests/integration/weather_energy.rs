@@ -2,11 +2,11 @@ use bevy_ecs::prelude::*;
 use scale::layer1::building::{Building, BuildingType};
 use scale::layer1::chronicle::Chronicle;
 use scale::layer1::energy::{
-    Battery, Conduit, PowerConsumer, PowerSource, power_grid_system, update_auroral_output_system,
+    power_grid_system, update_auroral_output_system, Battery, Conduit, PowerConsumer, PowerSource,
 };
 use scale::layer1::map::GridPosition;
 use scale::layer1::seasons::{Season, SeasonState};
-use scale::layer1::weather::{WeatherState, WeatherType, update_weather_system};
+use scale::layer1::weather::{update_weather_system, WeatherState, WeatherType};
 use scale::shared::time::SimulationTime;
 
 // Helper to setup world

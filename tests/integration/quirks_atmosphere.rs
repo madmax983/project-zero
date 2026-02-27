@@ -1,8 +1,8 @@
 use bevy_ecs::prelude::*;
-use scale::layer1::atmosphere::{AtmosphereGrid, update_atmosphere_system};
+use scale::layer1::atmosphere::{update_atmosphere_system, AtmosphereGrid};
 use scale::layer1::day_night::DayNightCycle;
 use scale::layer1::pop::{Pop, Speed};
-use scale::layer1::quirks::{PlanetaryTrait, PlanetaryTraits, apply_quirk_modifiers_system}; // Required by quirk system
+use scale::layer1::quirks::{apply_quirk_modifiers_system, PlanetaryTrait, PlanetaryTraits}; // Required by quirk system
 
 // Helper to setup world with required resources for quirk system
 fn setup_world() -> World {

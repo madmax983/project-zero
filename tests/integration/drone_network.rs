@@ -1,13 +1,13 @@
 #[cfg(test)]
 mod tests {
     use bevy_ecs::prelude::*;
-    use scale::layer1::GridPosition;
     use scale::layer1::building::{Building, BuildingType};
     use scale::layer1::drone::{Drone, DroneHub};
     use scale::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
     use scale::layer1::stockpile::Stockpile;
+    use scale::layer1::GridPosition;
     use scale::shared::time::SimulationTime;
-    use scale::simulation::{SimulationSchedule, build_simulation_schedule};
+    use scale::simulation::{build_simulation_schedule, SimulationSchedule};
 
     fn setup_world() -> World {
         scale::setup::init_task_pools();

@@ -2,7 +2,7 @@ use bevy_ecs::prelude::*;
 use scale::layer1::map::GridPosition;
 use scale::layer1::needs::Needs;
 use scale::layer1::pop::Pop;
-use scale::layer1::social::grievances::{BulletinBoard, post_grievance_system};
+use scale::layer1::social::grievances::{post_grievance_system, BulletinBoard};
 use scale::layer1::stress::StressTracker;
 use scale::layer1::traits::{Trait, Traits};
 use std::collections::HashSet;

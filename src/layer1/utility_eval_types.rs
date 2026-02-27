@@ -144,6 +144,38 @@ pub struct PopEvalData {
     pub insulation: f32,
 }
 
+#[cfg(test)]
+impl PopEvalData {
+    /// Helper to create a default `PopEvalData` for testing.
+    /// This prevents tests from breaking every time we add a field.
+    pub fn test_instance() -> Self {
+        Self {
+            entity: Entity::from_raw(0),
+            pos: GridPosition::default(),
+            needs: Needs::default(),
+            weights: UtilityWeights::default(),
+            action: PopAction::default(),
+            equipment: None,
+            carrying: None,
+            carrying_item: None,
+            carrying_item_type: None,
+            mental_state: None,
+            drafted: None,
+            faction_member: None,
+            penal_labor: None,
+            breakdown: None,
+            traits: None,
+            stress: 0.0,
+            hobby_type: None,
+            chemical_state: None,
+            is_memetic_carrier: false,
+            health: None,
+            job: None,
+            insulation: 0.0,
+        }
+    }
+}
+
 /// Context data for utility evaluation (resources, time, etc.)
 pub struct WorldContext<'a> {
     /// Reference to global colony resources (food, wood, etc.).
@@ -318,4 +350,46 @@ pub struct UtilityAIBuffer {
     pub residues: Vec<ScorableCandidate>,
     /// Buffer for clutter cleaning targets.
     pub cleaning_targets: Vec<ScorableCandidate>,
+}
+
+/// Helper struct to track the best action found so far.
+pub(crate) struct CandidateEvaluator {
+    pub(crate) action: ActionType,
+    pub(crate) utility: f32,
+    pub(crate) target: Option<Entity>,
+}
+
+impl CandidateEvaluator {
+    pub(crate) const fn new(initial_utility: f32) -> Self {
+        Self {
+            action: ActionType::Idle,
+            utility: initial_utility,
+            target: None,
+        }
+    }
+
+    pub(crate) fn consider(&mut self, action: ActionType, utility: f32, target: Option<Entity>) {
+        if utility > self.utility {
+            self.action = action;
+            self.utility = utility;
+            self.target = target;
+        }
+    }
+
+    pub(crate) const fn result(self) -> (ActionType, f32, Option<Entity>) {
+        (self.action, self.utility, self.target)
+    }
+
+    pub(crate) fn evaluate_and_consider(
+        &mut self,
+        evaluation: Option<(f32, Entity)>,
+        action: ActionType,
+        context: &WorldContext,
+        bonus: f32,
+    ) {
+        if let Some((utility, target)) = evaluation {
+            let penalty = crate::layer1::taboo::evaluate_taboo_penalty(action, context.taboo);
+            self.consider(action, utility + penalty + bonus, Some(target));
+        }
+    }
 }

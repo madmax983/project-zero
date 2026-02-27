@@ -1,6 +1,6 @@
-use criterion::{Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use scale::layer1::map::GridPosition;
-use scale::layer1::utility_types::{UtilityWeights, calculate_context_score};
+use scale::layer1::utility_types::{calculate_context_score, UtilityWeights};
 
 fn benchmark_context_score(c: &mut Criterion) {
     let weights = UtilityWeights::default();

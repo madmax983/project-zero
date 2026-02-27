@@ -1,5 +1,5 @@
 use bevy_ecs::prelude::*;
-use scale::layer1::inspector::{Inspector, inspector_report_system};
+use scale::layer1::inspector::{inspector_report_system, Inspector};
 use scale::layer1::integration::inspector_outcome_bridge_system;
 use scale::layer1::map::GridPosition;
 use scale::layer1::memory::Memories;

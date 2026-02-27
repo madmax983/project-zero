@@ -4,11 +4,11 @@ use bevy_ecs::system::RunSystemOnce;
 use crossterm::{
     event::{self, DisableMouseCapture, EnableMouseCapture, Event},
     execute,
-    terminal::{EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode, enable_raw_mode},
+    terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
 };
 use ratatui::prelude::*;
-use scale::layer1::GlobalHitStop;
 use scale::layer1::map::{update_camera_smooth, update_screen_shake_system};
+use scale::layer1::GlobalHitStop;
 use scale::platform::input::{GameKeyEvent, GameMouseEvent};
 use scale::setup::setup_world;
 use scale::shared::input::{route_input, route_mouse_input};

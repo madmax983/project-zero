@@ -2,7 +2,7 @@
 mod tests {
     use bevy_ecs::prelude::*;
     use scale::layer1::building::{Building, BuildingType};
-    use scale::layer1::execution::{AtTarget, MovementTarget, arrival_handler_system};
+    use scale::layer1::execution::{arrival_handler_system, AtTarget, MovementTarget};
     use scale::layer1::map::GridPosition;
     use scale::layer1::needs::Needs;
     use scale::layer1::pop::Pop;
@@ -10,7 +10,7 @@ mod tests {
     use scale::layer1::stockpile::Stockpile;
     use scale::layer1::unrest::{MentalBreakType, MentalState};
     use scale::layer1::utility_ai::{
-        ActionType, PopAction, StartPlan, UtilityConfig, evaluate_actions_system,
+        evaluate_actions_system, ActionType, PopAction, StartPlan, UtilityConfig,
     };
     use scale::shared::log::MessageLog;
     use scale::shared::time::SimulationTime;

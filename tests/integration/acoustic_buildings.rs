@@ -1,11 +1,11 @@
 #[cfg(test)]
 mod tests {
     use bevy_ecs::prelude::*;
-    use scale::layer1::GridPosition;
-    use scale::layer1::acoustic::{NoiseMap, NoiseSource, update_noise_system};
-    use scale::layer1::building::{BuildingType, MaterialType, spawn_building_with_material};
+    use scale::layer1::acoustic::{update_noise_system, NoiseMap, NoiseSource};
+    use scale::layer1::building::{spawn_building_with_material, BuildingType, MaterialType};
     use scale::layer1::resources::ColonyResources;
     use scale::layer1::terrain::{TerrainGrid, TerrainType};
+    use scale::layer1::GridPosition;
 
     #[test]
     fn test_noisy_buildings_emit_noise() {

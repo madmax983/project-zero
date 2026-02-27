@@ -1,7 +1,7 @@
 use bevy_ecs::system::RunSystemOnce;
 use scale::layer1::{
-    AmbientLight, BuildingType, ColonyResources, GridPosition, LightMap, Pop, Speed, Tech,
-    TechState, TerrainGrid, TerrainType, try_place_building,
+    try_place_building, AmbientLight, BuildingType, ColonyResources, GridPosition, LightMap, Pop,
+    Speed, Tech, TechState, TerrainGrid, TerrainType,
 };
 use scale::setup::setup_world;
 

@@ -6,13 +6,13 @@
     clippy::unnecessary_cast
 )]
 
-use criterion::{Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use ratatui::prelude::{Color, Rect};
 use scale::layer1::building::{BuildingMap, OccupiedTiles};
 use scale::layer1::pathfinding::find_path;
 use scale::layer1::water::WaterGrid;
 use scale::layer1::{BuildingType, GridPosition, MaterialType, TerrainGrid, TerrainType, Viewport};
-use scale::ui::map::{MapRenderContext, RenderEntity, build_map_layer_spans};
+use scale::ui::map::{build_map_layer_spans, MapRenderContext, RenderEntity};
 use std::collections::HashMap;
 
 fn setup_pathfinding_world(width: usize, height: usize) -> bevy_ecs::world::World {

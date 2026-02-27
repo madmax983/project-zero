@@ -3,7 +3,7 @@ mod tests {
     use bevy_ecs::prelude::*;
     use scale::layer1::building::{Building, BuildingType};
     use scale::layer1::factions::{FactionId, FactionMember, FactionState, Factions};
-    use scale::layer1::farm::{Farm, produce_food_system};
+    use scale::layer1::farm::{produce_food_system, Farm};
     use scale::layer1::map::GridPosition;
     use scale::layer1::pop::Pop;
     use scale::layer1::resources::ColonyResources;
