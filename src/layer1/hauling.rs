@@ -154,12 +154,35 @@ fn handle_drop_off(world: &mut World, pop_entity: Entity, carrying: Carrying, po
         if let Some(target) = permit_target {
             // Deliver Permit to Inventory
             if let Some(mut inventory) = world.get_mut::<Inventory>(target) {
-                inventory.add(InventoryItem {
+                // Try to add safely
+                if inventory.try_add(InventoryItem {
                     item_type: ItemType::BuildingPermit,
                     entity: None,
-                });
+                }) {
+                    // Success: Remove Carrying
+                    world.entity_mut(pop_entity).remove::<Carrying>();
+                } else {
+                    // Full: Drop on ground at target position to avoid loss
+                    world.spawn((
+                        ResourceItem {
+                            resource_type: carrying.resource_type,
+                            amount: carrying.amount,
+                        },
+                        pos,
+                    ));
+                    world.entity_mut(pop_entity).remove::<Carrying>();
+                }
+            } else {
+                // No inventory (shouldn't happen due to query): Drop on ground
+                world.spawn((
+                    ResourceItem {
+                        resource_type: carrying.resource_type,
+                        amount: carrying.amount,
+                    },
+                    pos,
+                ));
+                world.entity_mut(pop_entity).remove::<Carrying>();
             }
-            world.entity_mut(pop_entity).remove::<Carrying>();
 
             // Clear movement state
             world
@@ -238,7 +261,10 @@ fn find_and_target_stockpile(
                 .items
                 .iter()
                 .any(|i| i.item_type == ItemType::BuildingPermit);
-            if !has_permit {
+            // Also check capacity
+            let has_space = inv.items.len() < inv.capacity;
+
+            if !has_permit && has_space {
                 let dist = manhattan_distance(&pos, p);
                 if dist < min_dist {
                     min_dist = dist;
@@ -423,9 +449,16 @@ fn handle_drop_off_item(
                     entity: Some(item_entity.0),
                 };
                 if let Some(mut inv) = world.get_mut::<Inventory>(container_entity) {
-                    inv.add(inv_item);
+                    if inv.try_add(inv_item) {
+                        // Success: Do nothing (entity preserved in inventory)
+                    } else {
+                        // Full: Drop back on ground at target position
+                        world.entity_mut(item_entity.0).insert(pos);
+                        world
+                            .entity_mut(item_entity.0)
+                            .remove::<crate::layer1::photophobic::Parent>();
+                    }
                 }
-                // Do NOT despawn
             } else {
                 // Standard Logic: Convert to data and despawn
                 let inv_item = InventoryItem {
@@ -433,14 +466,18 @@ fn handle_drop_off_item(
                     entity: None,
                 };
                 if let Some(mut inv) = world.get_mut::<Inventory>(container_entity) {
-                    inv.add(inv_item);
+                    if inv.try_add(inv_item) {
+                        // Success: Despawn the carried item entity as it is now inside the inventory
+                        world.despawn(item_entity.0);
+                    } else {
+                        // Full: Drop item on ground at target position
+                        world.entity_mut(item_entity.0).insert(pos);
+                    }
                 }
-                // Despawn the carried item entity as it is now inside the inventory
-                world.despawn(item_entity.0);
             }
         }
     } else {
-        // Drop item on ground
+        // Drop item on ground (No container found)
         world.entity_mut(item_entity.0).insert(pos);
         // Remove Parent if present (e.g. if we support pickup from inventory in future)
         world
@@ -478,12 +515,15 @@ fn find_and_target_stockpile_item(
     let mut min_dist = i32::MAX;
 
     if matches!(item_type, Some(ItemType::Waste)) {
-        let mut query = world.query::<(Entity, &GridPosition, &Recycler)>();
-        for (e, p, _) in query.iter(world) {
-            let dist = manhattan_distance(&pos, p);
-            if dist < min_dist {
-                min_dist = dist;
-                best = Some((e, *p));
+        let mut query = world.query::<(Entity, &GridPosition, &Recycler, &Inventory)>();
+        for (e, p, _, inv) in query.iter(world) {
+            // Check Capacity
+            if inv.items.len() < inv.capacity {
+                let dist = manhattan_distance(&pos, p);
+                if dist < min_dist {
+                    min_dist = dist;
+                    best = Some((e, *p));
+                }
             }
         }
     } else if matches!(item_type, Some(ItemType::GeneticSample)) {

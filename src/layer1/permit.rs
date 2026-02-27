@@ -1,4 +1,4 @@
-use crate::layer1::inventory::Inventory;
+use crate::layer1::inventory::{Inventory, InventoryItem};
 use crate::layer1::resources::ResourceType;
 use bevy_ecs::prelude::*;
 
@@ -180,7 +180,7 @@ mod tests {
         // Simulate Hauler delivering the permit
         // We use ItemType::BuildingPermit which maps to ResourceType::BuildingPermit
         let mut inventory = world.get_mut::<Inventory>(id).unwrap();
-        inventory.add(InventoryItem {
+        inventory.try_add(InventoryItem {
             item_type: ItemType::BuildingPermit,
             entity: None,
         });
