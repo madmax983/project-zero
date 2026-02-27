@@ -276,7 +276,7 @@ fn process_single_worker(
 
     // Execute Work
     let worked =
-        execute_work_on_designation(world, designation_entity, designation_type, work_amount);
+        execute_work_on_designation(world, pop_entity, designation_entity, designation_type, work_amount);
 
     if check_work_completion(world, designation_entity, designation_type) {
         cleanup_pop_work_state(world, pop_entity);
@@ -424,6 +424,7 @@ pub fn calculate_work_amount(
 
 fn execute_work_on_designation(
     world: &mut World,
+    pop_entity: Entity, // Added pop_entity for XP attribution
     designation_entity: Entity,
     designation_type: DesignationType,
     work_amount: f32,
@@ -432,8 +433,8 @@ fn execute_work_on_designation(
     let pos = world.get::<GridPosition>(designation_entity).copied();
 
     match designation_type {
-        DesignationType::Mine => handle_mining_work(world, designation_entity, work_amount, pos),
-        DesignationType::Chop => handle_chopping_work(world, designation_entity, work_amount, pos),
+        DesignationType::Mine => handle_mining_work(world, designation_entity, pop_entity, work_amount, pos),
+        DesignationType::Chop => handle_chopping_work(world, designation_entity, pop_entity, work_amount, pos),
         DesignationType::Demolish => execute_demolish(world, designation_entity),
         DesignationType::Repair => {
             crate::layer1::structure::process_repair(world, designation_entity, work_amount);

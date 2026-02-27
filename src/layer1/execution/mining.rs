@@ -7,6 +7,7 @@ use crate::layer1::mother_lode::MotherLode;
 use crate::layer1::orbital_crossfire::{ImpactSite, mine_scrap};
 use crate::layer1::particles::{spawn_moving_particle, spawn_particle};
 use crate::layer1::resources::{process_logging, process_mining};
+use crate::layer1::skills::{SkillType, XpGainEvent, XpSource};
 use crate::shared::log::MessageLog;
 
 /// Handles mining work at a designation.
@@ -15,6 +16,7 @@ use crate::shared::log::MessageLog;
 pub fn handle_mining_work(
     world: &mut World,
     entity: Entity,
+    worker_entity: Entity, // Added worker entity to attribute XP
     work_amount: f32,
     pos: Option<GridPosition>,
 ) -> bool {
@@ -31,6 +33,16 @@ pub fn handle_mining_work(
         if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
             log.add_colored("Critical Mine!", Color::Yellow);
         }
+    }
+
+    // Emit XP event for mining
+    if let Some(mut events) = world.get_resource_mut::<Events<XpGainEvent>>() {
+        events.send(XpGainEvent {
+            entity: worker_entity,
+            skill: SkillType::Mining,
+            amount: 5.0, // Base amount per tick of work
+            source: XpSource::Action,
+        });
     }
 
     if let Some(p) = pos {
@@ -152,6 +164,7 @@ pub fn handle_mining_work(
 pub fn handle_chopping_work(
     world: &mut World,
     entity: Entity,
+    worker_entity: Entity, // Added worker entity
     work_amount: f32,
     pos: Option<GridPosition>,
 ) -> bool {
@@ -168,6 +181,16 @@ pub fn handle_chopping_work(
         if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
             log.add_colored("Critical Chop!", Color::LightGreen);
         }
+    }
+
+    // Emit XP event for forestry
+    if let Some(mut events) = world.get_resource_mut::<Events<XpGainEvent>>() {
+        events.send(XpGainEvent {
+            entity: worker_entity,
+            skill: SkillType::Forestry,
+            amount: 5.0,
+            source: XpSource::Action,
+        });
     }
 
     process_logging(world, entity, effective_work);

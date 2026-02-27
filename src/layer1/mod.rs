@@ -700,3 +700,7 @@ mod geodetic_tests;
 /// Void Stare (Spec 242).
 pub mod void_stare;
 pub use void_stare::*;
+
+/// Quantum Twins (Spec 245).
+pub mod quantum_twins;
+pub use quantum_twins::*;
