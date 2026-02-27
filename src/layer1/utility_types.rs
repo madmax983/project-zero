@@ -141,6 +141,8 @@ pub enum ActionType {
     ListenToTheHum,
     /// Clean clutter from the environment.
     Clean,
+    /// Purge Ghost Code residue from a tile.
+    PurgeResidue,
 }
 
 /// Types of hobbies.
@@ -160,7 +162,7 @@ pub enum HobbyType {
 
 impl ActionType {
     /// Total number of action types. Used for array sizing.
-    pub const COUNT: usize = 36;
+    pub const COUNT: usize = 37;
 
     /// Converts action type to a unique array index (0..COUNT-1).
     #[must_use]
@@ -202,6 +204,7 @@ impl ActionType {
             Self::UseShower => 33,
             Self::ListenToTheHum => 34,
             Self::Clean => 35,
+            Self::PurgeResidue => 36,
         }
     }
 

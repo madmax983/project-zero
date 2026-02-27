@@ -1,10 +1,13 @@
 #[cfg(test)]
 mod tests {
     use bevy_ecs::prelude::*;
-    use crate::layer1::tech::ghost_code::{DataResidue, GhostCode, GhostTrait, residue_system, ghost_infection_system};
+    use crate::layer1::tech::ghost_code::{DataResidue, GhostCode, GhostTrait, residue_system, ghost_infection_system, apply_ghost_traits_system, purge_execution_system, GhostEffectApplied};
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::map::GridPosition;
     use crate::layer1::events::{BuildingCompletedEvent, BuildingRemovedEvent};
+    use crate::layer1::energy::PowerConsumer;
+    use crate::layer1::utility_types::{ActionType, PopAction};
+    use crate::layer1::pop::Pop;
 
     #[test]
     fn test_deconstruction_leaves_residue() {
@@ -91,5 +94,91 @@ mod tests {
         crate::layer1::tech::ghost_code::perform_purge(&mut world, residue_entity);
 
         assert!(!world.entities().contains(residue_entity), "Residue should be despawned after purge");
+    }
+
+    #[test]
+    fn test_ghost_trait_power_drain_once() {
+        let mut world = World::new();
+
+        // Spawn a building with PowerDrain ghost trait
+        let building = world.spawn((
+            GhostCode { traits: vec![GhostTrait::PowerDrain] },
+            PowerConsumer {
+                active: true,
+                demand: 10.0,
+                ..Default::default()
+            }
+        )).id();
+
+        // Run apply_ghost_traits_system MULTIPLE TIMES
+        let mut schedule = Schedule::default();
+        schedule.add_systems(apply_ghost_traits_system);
+
+        // First Run
+        schedule.run(&mut world);
+        let power = world.get::<PowerConsumer>(building).unwrap();
+        assert!((power.demand - 11.0).abs() < f32::EPSILON, "First run should apply 10% drain (10.0 -> 11.0)");
+        assert!(world.get::<GhostEffectApplied>(building).is_some(), "Should have Applied marker");
+
+        // Second Run
+        schedule.run(&mut world);
+        let power_after = world.get::<PowerConsumer>(building).unwrap();
+        assert!((power_after.demand - 11.0).abs() < f32::EPSILON, "Second run should NOT apply drain again");
+    }
+
+    #[test]
+    fn test_ghost_trait_targeting_glitch_tag() {
+        let mut world = World::new();
+
+        let building = world.spawn((
+            GhostCode { traits: vec![GhostTrait::TargetingGlitch] },
+        )).id();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(apply_ghost_traits_system);
+        schedule.run(&mut world);
+
+        assert!(world.get::<GhostEffectApplied>(building).is_some(), "TargetingGlitch should also mark as Applied");
+    }
+
+    #[test]
+    fn test_purge_execution_system() {
+        let mut world = World::new();
+        let pos = GridPosition { x: 2, y: 2 };
+
+        // Spawn Residue
+        let residue = world.spawn((
+            DataResidue { source_type: BuildingType::Wall },
+            pos
+        )).id();
+
+        // Spawn Pop assigned to Purge
+        let pop = world.spawn((
+            Pop,
+            GridPosition { x: 2, y: 2 }, // At location
+            PopAction {
+                current: ActionType::PurgeResidue,
+                current_utility: 0.8,
+                ticks_committed: 10,
+            },
+            crate::layer1::utility_eval_types::StartPlan {
+                action: ActionType::PurgeResidue,
+                target: Some(residue),
+            },
+        )).id();
+
+        // Run purge execution system
+        let mut schedule = Schedule::default();
+        schedule.add_systems(purge_execution_system);
+        schedule.run(&mut world);
+
+        // Assert Residue is gone
+        assert!(!world.entities().contains(residue), "Residue should be purged by pop");
+
+        // Assert Pop is back to Idle (or at least action completed)
+        let action = world.get::<PopAction>(pop).unwrap();
+        // The system might reset action to Idle or just finish the task.
+        // Usually systems reset to Idle when done.
+        assert_eq!(action.current, ActionType::Idle, "Pop should be idle after purge");
     }
 }

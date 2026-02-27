@@ -76,6 +76,7 @@ const fn format_action_type(action: ActionType) -> (&'static str, &'static str, 
         ActionType::UseShower => ("🚿", "Showering", Color::Cyan),
         ActionType::ListenToTheHum => ("🌀", "Listening", Color::Magenta),
         ActionType::Clean => ("🧹", "Cleaning", Color::Yellow),
+        ActionType::PurgeResidue => ("🧹", "Purging Ghost Code", Color::Red),
     }
 }
 

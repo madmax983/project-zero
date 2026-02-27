@@ -514,6 +514,30 @@ fn evaluate_group_exploration(
     );
 }
 
+fn evaluate_group_maintenance(
+    evaluator: &mut CandidateEvaluator,
+    data: &PopEvalData,
+    buffer: &UtilityAIBuffer,
+    context: &WorldContext,
+    is_striking: bool,
+) {
+    let pop_pos = data.pos;
+    let weights = data.weights;
+    let is_penal = data.penal_labor.is_some();
+
+    if is_striking || is_penal {
+        return;
+    }
+
+    // Evaluate PurgeResidue
+    evaluator.evaluate_and_consider(
+        evaluate_simple_action(pop_pos, &weights, &buffer.residues, 0.4),
+        ActionType::PurgeResidue,
+        context,
+        0.0,
+    );
+}
+
 fn evaluate_group_leisure(
     evaluator: &mut CandidateEvaluator,
     data: &PopEvalData,
@@ -575,6 +599,7 @@ pub(crate) fn evaluate_single_pop(
     evaluate_group_work(&mut evaluator, data, buffer, context, is_striking);
     evaluate_group_logistics(&mut evaluator, data, buffer, context, is_striking);
     evaluate_group_exploration(&mut evaluator, data, buffer, context, is_striking);
+    evaluate_group_maintenance(&mut evaluator, data, buffer, context, is_striking);
 
     evaluator.result()
 }

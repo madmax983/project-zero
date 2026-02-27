@@ -309,4 +309,6 @@ pub struct UtilityAIBuffer {
     pub hum_sources: Vec<ScorableCandidate>,
     /// Buffer for Gene Banks.
     pub gene_banks: Vec<ScorableCandidate>,
+    /// Buffer for ghost code residue candidates (Purge job).
+    pub residues: Vec<ScorableCandidate>,
 }
