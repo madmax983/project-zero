@@ -2,7 +2,6 @@
 
 ## High Priority
 
-- [ ] `243` Thermal Bloom — `specs/243-thermal-bloom.md`
 - [ ] `244` Biometric Drift — `specs/244-biometric-drift.md`
 
 ## Future / Ideas

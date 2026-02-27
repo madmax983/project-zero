@@ -29,6 +29,8 @@ pub mod system;
 pub mod visibility;
 /// Planetary Governance (Spec 209).
 pub mod governance;
+/// Thermal bloom logic (Spec 243).
+pub mod thermal;
 
 #[cfg(test)]
 mod debris_tests;
@@ -36,3 +38,5 @@ mod debris_tests;
 mod mining_tests;
 #[cfg(test)]
 mod station_tests;
+#[cfg(test)]
+mod thermal_bloom_tests;

@@ -12,7 +12,7 @@ use crate::gpu::evaluate::gpu_evaluate_actions;
 use crate::layer1::building::{BuildingMap, update_building_map_system};
 use crate::layer1::systems::{Layer1SystemSet, register_layer1_systems, update_event_buffer};
 use crate::layer1::update_action_timer_system;
-use crate::layer2::events::{LaunchEvent, ShipDestroyedEvent};
+use crate::layer2::events::{DetectionEvent, LaunchEvent, ShipDestroyedEvent};
 use crate::shared::time::SimulationTime;
 
 /// Schedule label for the main simulation tick.
@@ -56,6 +56,7 @@ pub fn build_simulation_schedule() -> Schedule {
         // Cleanup Layer 2 events
         update_event_buffer::<LaunchEvent>,
         update_event_buffer::<ShipDestroyedEvent>,
+        update_event_buffer::<DetectionEvent>,
         crate::layer2::fleet::fleet_order_system,
         crate::layer2::station::build_station_system
             .after(crate::layer2::fleet::fleet_order_system),
@@ -74,6 +75,10 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer2::debris::debris_accumulation_system),
         crate::layer2::debris::debris_decay_system
             .after(crate::layer2::debris::debris_attrition_system),
+        // Thermal Bloom Systems
+        crate::layer2::thermal::update_thermal_bloom_system.after(Layer1SystemSet::Economy),
+        crate::layer2::thermal::detection_risk_system
+            .after(crate::layer2::thermal::update_thermal_bloom_system),
         crate::layer2::visibility::update_visibility_system.after(Layer1SystemSet::Economy),
         crate::layer2::visibility::enforce_view_mode_system
             .after(crate::layer2::visibility::update_visibility_system),
@@ -108,6 +113,9 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world.contains_resource::<Events<ShipDestroyedEvent>>() {
         world.init_resource::<Events<ShipDestroyedEvent>>();
     }
+    if !world.contains_resource::<Events<DetectionEvent>>() {
+        world.init_resource::<Events<DetectionEvent>>();
+    }
     if !world.contains_resource::<Events<crate::layer1::unrest::DenounceEvent>>() {
         world.init_resource::<Events<crate::layer1::unrest::DenounceEvent>>();
     }
@@ -120,6 +128,11 @@ pub fn run_simulation_tick(world: &mut World) {
     }
     if !world.contains_resource::<crate::layer1::atmosphere::CorrosiveAtmosphere>() {
         world.init_resource::<crate::layer1::atmosphere::CorrosiveAtmosphere>();
+    }
+
+    // Initialize Thermal Bloom Resource
+    if !world.contains_resource::<crate::layer2::thermal::ThermalSignature>() {
+        world.init_resource::<crate::layer2::thermal::ThermalSignature>();
     }
 
     // Add our schedule if not yet added
