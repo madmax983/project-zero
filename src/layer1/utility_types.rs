@@ -139,6 +139,8 @@ pub enum ActionType {
     UseShower,
     /// Listen to The Hum (Spec 238).
     ListenToTheHum,
+    /// Clean clutter from the environment.
+    Clean,
 }
 
 /// Types of hobbies.
@@ -158,7 +160,7 @@ pub enum HobbyType {
 
 impl ActionType {
     /// Total number of action types. Used for array sizing.
-    pub const COUNT: usize = 35;
+    pub const COUNT: usize = 36;
 
     /// Converts action type to a unique array index (0..COUNT-1).
     #[must_use]
@@ -199,6 +201,7 @@ impl ActionType {
             Self::CollectSample => 32,
             Self::UseShower => 33,
             Self::ListenToTheHum => 34,
+            Self::Clean => 35,
         }
     }
 

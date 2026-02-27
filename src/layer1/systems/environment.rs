@@ -36,6 +36,10 @@ pub fn register(schedule: &mut Schedule) {
     );
 
     schedule.add_systems(
+        (crate::layer1::clutter::clutter_accumulation_system,).in_set(Layer1SystemSet::Environment),
+    );
+
+    schedule.add_systems(
         (
             crate::layer1::seismic::update_seismic_system,
             crate::layer1::seismic::seismic_flora_reaction_system

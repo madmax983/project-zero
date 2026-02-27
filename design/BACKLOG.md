@@ -2,7 +2,6 @@
 
 ## High Priority
 
-- [ ] `239` Operational Detritus — `specs/239-operational-detritus.md`
 - [ ] `241` Campaign Season — `specs/241-campaign-season.md`
 - [ ] `242` The Echo — `specs/242-the-echo.md`
 - [ ] `243` Thermal Bloom — `specs/243-thermal-bloom.md`
