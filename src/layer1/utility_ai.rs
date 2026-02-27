@@ -50,6 +50,7 @@ use crate::layer1::factions::Factions;
 use crate::layer1::hobby::evaluate_hobby;
 use crate::layer1::husbandry::evaluate_tame;
 use crate::layer1::justice::evaluate_warden_action;
+use crate::layer1::predictive_policing::evaluate_pre_crime_arrest;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::temperature::TemperatureGrid;
 use crate::layer1::traits::Trait;
@@ -347,6 +348,7 @@ impl<'a> PopDecider<'a> {
     /// *   **Research**: Science.
     /// *   **Tame**: Animal husbandry.
     /// *   **Warden**: Policing.
+    /// *   **PreCrimeArrest**: Predictive policing.
     #[allow(clippy::collapsible_if)]
     fn evaluate_group_work(&mut self) {
         if self.is_striking {
@@ -423,8 +425,9 @@ impl<'a> PopDecider<'a> {
             0.0,
         );
 
-        // Evaluate Warden
+        // Evaluate Policing (Warden & PreCrime)
         if !self.is_penal {
+            // Warden (Arrest Wanted)
             self.evaluator.evaluate_and_consider(
                 evaluate_warden_action(
                     &pop_pos,
@@ -432,6 +435,14 @@ impl<'a> PopDecider<'a> {
                     self.context.zone_grid,
                 ),
                 ActionType::Warden,
+                self.context,
+                0.0,
+            );
+
+            // PreCrime (Arrest Suspects)
+            self.evaluator.evaluate_and_consider(
+                evaluate_pre_crime_arrest(&pop_pos, &weights, &self.buffer.suspects),
+                ActionType::PreCrimeArrest,
                 self.context,
                 0.0,
             );

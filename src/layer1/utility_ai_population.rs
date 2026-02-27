@@ -24,6 +24,7 @@ use crate::layer1::items::Item;
 use crate::layer1::justice::Wanted;
 use crate::layer1::map::GridPosition;
 use crate::layer1::medical::Hospital;
+use crate::layer1::predictive_policing::Suspect;
 use crate::layer1::refining::get_refining_recipe;
 use crate::layer1::resources::{RefiningProgress, ResourceItem};
 use crate::layer1::science::Anomaly;
@@ -318,6 +319,7 @@ fn populate_buffer_items_and_misc(world: &mut World, buffer: &mut UtilityAIBuffe
     populate_graves(world, &mut buffer.graves);
     populate_repair_structures(world, &mut buffer.repair_structures);
     populate_wanted_criminals(world, &mut buffer.wanted_criminals);
+    populate_suspects(world, &mut buffer.suspects);
     populate_hum_sources(world, &mut buffer.hum_sources);
     populate_residues(world, &mut buffer.residues);
 }
@@ -416,6 +418,10 @@ fn populate_repair_structures(world: &mut World, buffer: &mut Vec<ScorableCandid
 
 fn populate_wanted_criminals(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
     populate_simple::<Wanted>(world, buffer);
+}
+
+fn populate_suspects(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
+    populate_simple::<Suspect>(world, buffer);
 }
 
 fn populate_walls(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {

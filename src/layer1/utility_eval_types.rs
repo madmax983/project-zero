@@ -369,6 +369,8 @@ pub struct UtilityAIBuffer {
     pub repair_structures: Vec<ScorableCandidate>,
     /// Buffer for wanted criminals.
     pub wanted_criminals: Vec<ScorableCandidate>,
+    /// Buffer for suspects (predictive policing).
+    pub suspects: Vec<ScorableCandidate>,
     /// Buffer for office candidates.
     pub offices: Vec<ScorableCandidate>,
     /// Buffer for walls (Memetic Sigil targets).

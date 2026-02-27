@@ -4,6 +4,8 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::stress::StressTracker;
 use crate::layer1::traits::{Trait, Traits};
 use crate::layer1::utility_ai::{ActionType, PopAction};
+use crate::layer1::utility_eval_types::{ScorableCandidate, evaluate_candidates};
+use crate::layer1::utility_types::UtilityWeights;
 use crate::layer1::zone::{ZoneGrid, ZoneType};
 use bevy_ecs::prelude::*;
 
@@ -81,28 +83,24 @@ pub fn check_prediction_system(
 /// Evaluates the utility of arresting a specific Suspect.
 ///
 /// Returns a tuple of (`utility_score`, `target_entity`) if a valid target is found.
+///
+/// # Arguments
+///
+/// * `warden_pos`: The position of the pop evaluating the action.
+/// * `weights`: Utility weights of the pop.
+/// * `suspects`: List of `ScorableCandidate`s representing [`Suspect`]s.
 pub fn evaluate_pre_crime_arrest(
-    world: &mut World,
     warden_pos: &GridPosition,
+    weights: &UtilityWeights,
+    suspects: &[ScorableCandidate],
 ) -> Option<(f32, Entity)> {
-    let mut best_target = None;
-    let mut min_dist = i32::MAX;
-
-    let mut query = world.query::<(Entity, &GridPosition, &Suspect)>();
-    for (entity, pos, _suspect) in query.iter(world) {
-        let dist = crate::layer1::utility_types::manhattan_distance(warden_pos, pos);
-        if dist < min_dist {
-            min_dist = dist;
-            best_target = Some(entity);
-        }
+    if suspects.is_empty() {
+        return None;
     }
 
-    if let Some(target) = best_target {
-        // Score slightly lower than actual crime arrest (0.8 vs 0.9)
-        // But higher than idle.
-        return Some((0.7, target));
-    }
-    None
+    // Score slightly lower than actual crime arrest (0.8 vs 0.9 for Warden)
+    // But higher than idle.
+    evaluate_candidates(*warden_pos, weights, suspects, 0.7)
 }
 
 /// Executes the arrest of a Suspect.
@@ -211,6 +209,8 @@ mod tests {
     };
     use crate::layer1::stress::StressTracker;
     use crate::layer1::traits::{Trait, Traits};
+    use crate::layer1::utility_eval_types::ScorableCandidate;
+    use crate::layer1::utility_types::UtilityWeights;
     use bevy_ecs::prelude::*;
 
     fn setup_world() -> World {
@@ -292,9 +292,13 @@ mod tests {
             .id();
 
         let warden_pos = GridPosition { x: 0, y: 0 };
+        let weights = UtilityWeights::default();
+
+        // Create proxy manually for test
+        let suspects = vec![ScorableCandidate::new(suspect, GridPosition { x: 5, y: 5 })];
 
         // Evaluate action
-        let result = evaluate_pre_crime_arrest(&mut world, &warden_pos);
+        let result = evaluate_pre_crime_arrest(&warden_pos, &weights, &suspects);
 
         assert!(result.is_some());
         let (score, target) = result.unwrap();
