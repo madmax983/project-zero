@@ -107,8 +107,8 @@ mod tests {
     use crate::layer1::clutter::ClutterGrid;
     use crate::layer1::items::{Item, ItemType};
     use crate::layer1::map::GridPosition;
-    use crate::layer1::pop::{Job, Pop};
-    use crate::layer1::utility_types::{ActionType, AssignmentType, PopAction};
+    use crate::layer1::pop::Pop;
+    use crate::layer1::utility_types::{ActionType, PopAction};
     use bevy_ecs::prelude::*;
 
     // Helper to setup world

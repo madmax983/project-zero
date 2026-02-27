@@ -8,6 +8,7 @@
 
 use crate::layer1::admin::Office;
 use crate::layer1::building::{Building, BuildingType, ShiftSchedule};
+use crate::layer1::clutter::ClutterGrid;
 use crate::layer1::day_night::TimeOfDay;
 use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::direct_link::Possessed;
@@ -97,6 +98,7 @@ pub fn populate_ai_buffer(world: &mut World, buffer: &mut UtilityAIBuffer, conte
     populate_walls(world, &mut buffer.walls);
     populate_enemies(world, &mut buffer.enemies);
     populate_all_structures(world, &mut buffer.all_structures);
+    populate_cleaning_targets(world, buffer);
 }
 
 fn populate_buffer_buildings(
@@ -430,6 +432,27 @@ fn populate_all_structures(world: &mut World, buffer: &mut Vec<ScorableCandidate
     populate_simple::<Structure>(world, buffer);
 }
 
+fn populate_cleaning_targets(world: &mut World, buffer: &mut UtilityAIBuffer) {
+    buffer.cleaning_targets.clear();
+    if let Some(grid) = world.get_resource::<ClutterGrid>() {
+        for y in 0..grid.height {
+            for x in 0..grid.width {
+                let clutter = grid.get(x, y);
+                if clutter > 50.0 {
+                    // Only add cleaning targets if a building is present, to ensure valid entity targeting.
+                    // TODO: Support cleaning empty tiles if architecture allows Position targets or ephemeral entities.
+                    // This is a known limitation: clutter in empty hallways/roads is currently ignored.
+                    if let Some(building_entity) = world.resource::<crate::layer1::building::BuildingMap>().0.get(&(x as i32, y as i32)) {
+                         let mut c = ScorableCandidate::new(*building_entity, GridPosition { x: x as i32, y: y as i32 });
+                         c.score_bonus = clutter / 100.0; // Higher clutter = higher score bonus
+                         buffer.cleaning_targets.push(c);
+                    }
+                }
+            }
+        }
+    }
+}
+
 /// Collects data for all Pops that need to be evaluated this tick.
 ///
 /// Filters pops based on `ticks_committed` and `UtilityConfig::evaluation_interval`.
@@ -458,11 +481,12 @@ pub fn collect_pop_data(world: &mut World, buffer: &mut UtilityAIBuffer, config:
     let mut item_query = world.query::<&crate::layer1::items::Item>();
 
     for data in &mut buffer.pop_data {
-        if let Some(eq) = data.equipment
-            && let Some(body_entity) = eq.body
-            && let Ok(clothing) = clothing_query.get(world, body_entity)
-        {
-            data.insulation = clothing.insulation;
+        if let Some(eq) = data.equipment {
+            if let Some(body_entity) = eq.body {
+                if let Ok(clothing) = clothing_query.get(world, body_entity) {
+                    data.insulation = clothing.insulation;
+                }
+            }
         }
 
         if let Some(item_entity) = data.carrying_item {
