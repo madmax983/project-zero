@@ -1,15 +1,15 @@
 #[cfg(test)]
 mod tests {
     use bevy_ecs::prelude::*;
-    use scale::layer1::combat::{AttackProperties, CombatState, Drafted, Weapon, execute_attack};
-    use scale::layer1::flora::{Flora, FloraType, flora_spread_system};
+    use scale::layer1::combat::{execute_attack, AttackProperties, CombatState, Drafted, Weapon};
+    use scale::layer1::flora::{flora_spread_system, Flora, FloraType};
     use scale::layer1::health::Health;
     use scale::layer1::items::Equipment;
     use scale::layer1::map::GridPosition;
     use scale::layer1::pop::Pop;
     use scale::layer1::terrain::{TerrainGrid, TerrainType};
     use scale::layer1::utility_ai::{
-        ActionType, PopAction, UtilityConfig, evaluate_actions_system,
+        evaluate_actions_system, ActionType, PopAction, UtilityConfig,
     };
     use scale::layer1::utility_types::UtilityWeights;
 

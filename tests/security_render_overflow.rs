@@ -3,7 +3,7 @@ mod tests {
     use ratatui::layout::Rect;
     use scale::layer1::water::WaterGrid;
     use scale::layer1::{TerrainGrid, TerrainType, Viewport};
-    use scale::ui::map::{MapRenderContext, build_map_layer_spans};
+    use scale::ui::map::{build_map_layer_spans, MapRenderContext};
     use std::collections::HashMap;
 
     #[test]

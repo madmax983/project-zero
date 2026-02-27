@@ -11,13 +11,13 @@ mod app {
     use crossterm::{
         event::{self, DisableMouseCapture, EnableMouseCapture, Event, KeyCode, KeyEventKind},
         execute,
-        terminal::{EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode, enable_raw_mode},
+        terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
     };
     use ratatui::{prelude::*, widgets::*};
     use scale::layer1::chronicle::{Chronicle, EventImportance};
     use scale::layer1::needs::Needs;
     use scale::layer1::oral_tradition::{
-        OralTradition, StoryGenre, collect_chronicles_system, storytelling_system,
+        collect_chronicles_system, storytelling_system, OralTradition, StoryGenre,
     };
     use scale::layer1::social::Tavern;
     use scale::shared::log::MessageLog;

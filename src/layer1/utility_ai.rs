@@ -18,7 +18,7 @@ use crate::layer1::temperature::TemperatureGrid;
 use crate::layer1::traits::Trait;
 use crate::layer1::utility_ai_population::{collect_pop_data, populate_ai_buffer};
 use crate::layer1::utility_eval_types::{
-    PopEvalData, UtilityAIBuffer, WorldContext, evaluate_idle,
+    CandidateEvaluator, PopEvalData, UtilityAIBuffer, WorldContext, evaluate_idle,
 };
 pub use crate::layer1::utility_types::{
     ActionType, PopAction, StartPlan, UtilityConfig, UtilityWeights, calculate_context_score,
@@ -149,425 +149,376 @@ pub fn update_action_timer_system(mut query: Query<&mut PopAction>) {
     });
 }
 
-/// Helper struct to track the best action found so far.
-struct CandidateEvaluator {
-    action: ActionType,
-    utility: f32,
-    target: Option<Entity>,
+struct PopDecider<'a> {
+    evaluator: CandidateEvaluator,
+    data: &'a PopEvalData,
+    buffer: &'a UtilityAIBuffer,
+    context: &'a WorldContext<'a>,
+    is_striking: bool,
+    is_penal: bool,
 }
 
-impl CandidateEvaluator {
-    const fn new(initial_utility: f32) -> Self {
+impl<'a> PopDecider<'a> {
+    fn new(
+        data: &'a PopEvalData,
+        buffer: &'a UtilityAIBuffer,
+        context: &'a WorldContext<'a>,
+    ) -> Self {
+        let is_striking = Self::check_striking(data, context);
+        let is_penal = data.penal_labor.is_some();
+
         Self {
-            action: ActionType::Idle,
-            utility: initial_utility,
-            target: None,
+            evaluator: CandidateEvaluator::new(evaluate_idle(&data.needs)),
+            data,
+            buffer,
+            context,
+            is_striking,
+            is_penal,
         }
     }
 
-    fn consider(&mut self, action: ActionType, utility: f32, target: Option<Entity>) {
-        if utility > self.utility {
-            self.action = action;
-            self.utility = utility;
-            self.target = target;
+    fn check_striking(data: &PopEvalData, context: &WorldContext) -> bool {
+        let Some(factions) = context.factions.as_ref() else {
+            return false;
+        };
+        let Some(member) = data.faction_member.as_ref() else {
+            return false;
+        };
+        let Some(fid) = member.faction_id else {
+            return false;
+        };
+        let Some(faction_data) = factions.get(&fid) else {
+            return false;
+        };
+
+        faction_data.state == crate::layer1::factions::FactionState::Striking
+    }
+
+    #[allow(clippy::collapsible_if)]
+    fn evaluate_group_survival(&mut self) {
+        let pop_pos = self.data.pos;
+        let needs = self.data.needs;
+        let weights = self.data.weights;
+
+        // Evaluate Hunger
+        let urgency = need_response_curve(needs.hunger);
+        self.evaluator.evaluate_and_consider(
+            evaluate_simple_action(pop_pos, &weights, &self.buffer.farms, urgency),
+            ActionType::SatisfyHunger,
+            self.context,
+            0.0,
+        );
+
+        // Evaluate SatisfyRest
+        let rest_urgency = (1.0 - needs.rest) + 0.5;
+        self.evaluator.evaluate_and_consider(
+            evaluate_simple_action(pop_pos, &weights, &self.buffer.housing, rest_urgency),
+            ActionType::SatisfyRest,
+            self.context,
+            0.0,
+        );
+
+        // Evaluate SeekMedicalCare
+        if let Some(health) = self.data.health {
+            if health.current < health.max {
+                let urgency = (1.0 - (health.current / health.max)) * 2.0;
+                self.evaluator.evaluate_and_consider(
+                    evaluate_simple_action(pop_pos, &weights, &self.buffer.hospitals, urgency),
+                    ActionType::SeekMedicalCare,
+                    self.context,
+                    0.0,
+                );
+            }
         }
+
+        // Evaluate ConsumeChemical
+        self.evaluator.evaluate_and_consider(
+            evaluate_consume_chemical(
+                pop_pos,
+                &needs,
+                &weights,
+                self.data.chemical_state.as_ref(),
+                self.data.stress,
+                &self.buffer.item_entities,
+            ),
+            ActionType::ConsumeChemical,
+            self.context,
+            0.0,
+        );
     }
 
-    const fn result(self) -> (ActionType, f32, Option<Entity>) {
-        (self.action, self.utility, self.target)
-    }
-
-    fn evaluate_and_consider(
-        &mut self,
-        evaluation: Option<(f32, Entity)>,
-        action: ActionType,
-        context: &WorldContext,
-        bonus: f32,
-    ) {
-        if let Some((utility, target)) = evaluation {
-            let penalty = crate::layer1::taboo::evaluate_taboo_penalty(action, context.taboo);
-            self.consider(action, utility + penalty + bonus, Some(target));
+    fn evaluate_group_social(&mut self) {
+        if self.is_penal {
+            return;
         }
+
+        let pop_pos = self.data.pos;
+        let needs = self.data.needs;
+        let weights = self.data.weights;
+
+        // Evaluate Socialize
+        let urgency = (1.0 - needs.leisure) * 1.5;
+        self.evaluator.evaluate_and_consider(
+            evaluate_simple_action(pop_pos, &weights, &self.buffer.taverns, urgency),
+            ActionType::Socialize,
+            self.context,
+            0.0,
+        );
     }
-}
 
-fn is_pop_striking(data: &PopEvalData, context: &WorldContext) -> bool {
-    let Some(factions) = context.factions.as_ref() else {
-        return false;
-    };
-    let Some(member) = data.faction_member.as_ref() else {
-        return false;
-    };
-    let Some(fid) = member.faction_id else {
-        return false;
-    };
-    let Some(faction_data) = factions.get(&fid) else {
-        return false;
-    };
+    #[allow(clippy::collapsible_if)]
+    fn evaluate_group_work(&mut self) {
+        if self.is_striking {
+            return;
+        }
 
-    faction_data.state == crate::layer1::factions::FactionState::Striking
-}
+        let pop_pos = self.data.pos;
+        let weights = self.data.weights;
+        let is_feral = self
+            .data
+            .traits
+            .as_ref()
+            .is_some_and(|t| t.0.contains(&Trait::Feral));
 
-#[allow(clippy::collapsible_if)]
-fn evaluate_group_survival(
-    evaluator: &mut CandidateEvaluator,
-    data: &PopEvalData,
-    buffer: &UtilityAIBuffer,
-    context: &WorldContext,
-) {
-    let pop_pos = data.pos;
-    let needs = data.needs;
-    let weights = data.weights;
+        // Evaluate Work
+        let work_bonus = if self.is_penal { 1.0 } else { 0.0 };
+        self.evaluator.evaluate_and_consider(
+            evaluate_simple_action(pop_pos, &weights, &self.buffer.work_designations, 0.5),
+            ActionType::Work,
+            self.context,
+            work_bonus,
+        );
 
-    // Evaluate Hunger
-    let urgency = need_response_curve(needs.hunger);
-    evaluator.evaluate_and_consider(
-        evaluate_simple_action(pop_pos, &weights, &buffer.farms, urgency),
-        ActionType::SatisfyHunger,
-        context,
-        0.0,
-    );
+        // Evaluate Refine
+        if !self.is_penal {
+            self.evaluator.evaluate_and_consider(
+                evaluate_simple_action(pop_pos, &weights, &self.buffer.refining, 0.5),
+                ActionType::Refine,
+                self.context,
+                0.0,
+            );
+        }
 
-    // Evaluate SatisfyRest
-    let rest_urgency = (1.0 - needs.rest) + 0.5;
-    evaluator.evaluate_and_consider(
-        evaluate_simple_action(pop_pos, &weights, &buffer.housing, rest_urgency),
-        ActionType::SatisfyRest,
-        context,
-        0.0,
-    );
+        // Evaluate Farm
+        if !self.is_penal {
+            self.evaluator.evaluate_and_consider(
+                evaluate_simple_action(pop_pos, &weights, &self.buffer.farms, 0.5),
+                ActionType::Farm,
+                self.context,
+                0.0,
+            );
+        }
 
-    // Evaluate SeekMedicalCare
-    if let Some(health) = data.health {
-        if health.current < health.max {
-            let urgency = (1.0 - (health.current / health.max)) * 2.0;
-            evaluator.evaluate_and_consider(
-                evaluate_simple_action(pop_pos, &weights, &buffer.hospitals, urgency),
-                ActionType::SeekMedicalCare,
-                context,
+        // Evaluate Admin
+        if !self.is_penal {
+            self.evaluator.evaluate_and_consider(
+                evaluate_simple_action(pop_pos, &weights, &self.buffer.offices, 0.5),
+                ActionType::Admin,
+                self.context,
+                0.0,
+            );
+        }
+
+        // Evaluate Research
+        if !self.is_penal && !is_feral {
+            self.evaluator.evaluate_and_consider(
+                evaluate_research(
+                    pop_pos,
+                    &weights,
+                    self.context.resources,
+                    &self.buffer.libraries,
+                ),
+                ActionType::Research,
+                self.context,
+                0.0,
+            );
+        }
+
+        // Evaluate Tame
+        self.evaluator.evaluate_and_consider(
+            evaluate_tame(&pop_pos, &weights, &self.buffer.tame_designations),
+            ActionType::Tame,
+            self.context,
+            0.0,
+        );
+
+        // Evaluate Warden
+        if !self.is_penal {
+            self.evaluator.evaluate_and_consider(
+                evaluate_warden_action(
+                    &pop_pos,
+                    &self.buffer.wanted_criminals,
+                    self.context.zone_grid,
+                ),
+                ActionType::Warden,
+                self.context,
                 0.0,
             );
         }
     }
 
-    // Evaluate ConsumeChemical
-    evaluator.evaluate_and_consider(
-        evaluate_consume_chemical(
-            pop_pos,
-            &needs,
-            &weights,
-            data.chemical_state.as_ref(),
-            data.stress,
-            &buffer.item_entities,
-        ),
-        ActionType::ConsumeChemical,
-        context,
-        0.0,
-    );
-}
+    fn evaluate_group_logistics(&mut self) {
+        if self.is_striking {
+            return;
+        }
 
-fn evaluate_group_social(
-    evaluator: &mut CandidateEvaluator,
-    data: &PopEvalData,
-    buffer: &UtilityAIBuffer,
-    context: &WorldContext,
-) {
-    let pop_pos = data.pos;
-    let needs = data.needs;
-    let weights = data.weights;
-    let is_penal = data.penal_labor.is_some();
+        let pop_pos = self.data.pos;
+        let weights = self.data.weights;
+        let equipment_opt = self.data.equipment;
 
-    if is_penal {
-        return;
+        // Evaluate FetchTool
+        let equipment = equipment_opt.unwrap_or_default();
+        self.evaluator.evaluate_and_consider(
+            evaluate_fetch_tool(
+                pop_pos,
+                &equipment,
+                self.context.resources,
+                &self.buffer.stockpiles,
+            ),
+            ActionType::FetchTool,
+            self.context,
+            0.0,
+        );
+
+        // Evaluate FetchClothing
+        self.evaluator.evaluate_and_consider(
+            evaluate_fetch_clothing(
+                pop_pos,
+                self.data.insulation,
+                self.context.resources,
+                &self.buffer.stockpiles,
+                self.context.temperature_grid,
+            ),
+            ActionType::FetchClothing,
+            self.context,
+            0.0,
+        );
+
+        // Evaluate Repair
+        self.evaluator.evaluate_and_consider(
+            evaluate_simple_action(
+                pop_pos,
+                &weights,
+                &self.buffer.repair_structures,
+                0.6,
+            ),
+            ActionType::Repair,
+            self.context,
+            0.0,
+        );
+        // Also check designations
+        self.evaluator.evaluate_and_consider(
+            evaluate_simple_action(pop_pos, &weights, &self.buffer.repair_designations, 0.6),
+            ActionType::Repair,
+            self.context,
+            0.0,
+        );
+
+        // Evaluate Haul
+        self.evaluator.evaluate_and_consider(
+            evaluate_haul(
+                pop_pos,
+                &weights,
+                &self.buffer.items,
+                &self.buffer.item_entities,
+                &self.buffer.stockpiles,
+                &self.buffer.gene_banks,
+                self.context.resources,
+                self.data.carrying,
+                self.data.carrying_item,
+                self.data.carrying_item_type.clone(),
+            ),
+            ActionType::Haul,
+            self.context,
+            0.0,
+        );
+
+        // Evaluate BuryCorpse
+        if !self.buffer.graves.is_empty() {
+            self.evaluator.evaluate_and_consider(
+                evaluate_simple_action(pop_pos, &weights, &self.buffer.corpses, 0.8),
+                ActionType::BuryCorpse,
+                self.context,
+                0.0,
+            );
+        }
     }
 
-    // Evaluate Socialize
-    let urgency = (1.0 - needs.leisure) * 1.5;
-    evaluator.evaluate_and_consider(
-        evaluate_simple_action(pop_pos, &weights, &buffer.taverns, urgency),
-        ActionType::Socialize,
-        context,
-        0.0,
-    );
-}
+    fn evaluate_group_exploration(&mut self) {
+        if self.is_striking || self.is_penal {
+            return;
+        }
 
-#[allow(clippy::collapsible_if)]
-fn evaluate_group_work(
-    evaluator: &mut CandidateEvaluator,
-    data: &PopEvalData,
-    buffer: &UtilityAIBuffer,
-    context: &WorldContext,
-    is_striking: bool,
-) {
-    let pop_pos = data.pos;
-    let weights = data.weights;
-    let is_penal = data.penal_labor.is_some();
-    let is_feral = data
-        .traits
-        .as_ref()
-        .is_some_and(|t| t.0.contains(&Trait::Feral));
+        let pop_pos = self.data.pos;
+        let weights = self.data.weights;
 
-    if is_striking {
-        return;
-    }
-
-    // Evaluate Work
-    let work_bonus = if is_penal { 1.0 } else { 0.0 };
-    evaluator.evaluate_and_consider(
-        evaluate_simple_action(pop_pos, &weights, &buffer.work_designations, 0.5),
-        ActionType::Work,
-        context,
-        work_bonus,
-    );
-
-    // Evaluate Refine
-    if !is_penal {
-        evaluator.evaluate_and_consider(
-            evaluate_simple_action(pop_pos, &weights, &buffer.refining, 0.5),
-            ActionType::Refine,
-            context,
+        // Evaluate Explore
+        self.evaluator.evaluate_and_consider(
+            evaluate_simple_action(pop_pos, &weights, &self.buffer.anomalies, 0.3),
+            ActionType::Explore,
+            self.context,
             0.0,
         );
     }
 
-    // Evaluate Farm
-    if !is_penal {
-        evaluator.evaluate_and_consider(
-            evaluate_simple_action(pop_pos, &weights, &buffer.farms, 0.5),
-            ActionType::Farm,
-            context,
+    fn evaluate_group_maintenance(&mut self) {
+        if self.is_striking || self.is_penal {
+            return;
+        }
+
+        let pop_pos = self.data.pos;
+        let weights = self.data.weights;
+
+        // Evaluate PurgeResidue
+        self.evaluator.evaluate_and_consider(
+            evaluate_simple_action(pop_pos, &weights, &self.buffer.residues, 0.4),
+            ActionType::PurgeResidue,
+            self.context,
+            0.0,
+        );
+
+        // Evaluate Clean
+        self.evaluator.evaluate_and_consider(
+            evaluate_clean(pop_pos, &weights, &self.buffer.cleaning_targets, false),
+            ActionType::Clean,
+            self.context,
             0.0,
         );
     }
 
-    // Evaluate Admin
-    if !is_penal {
-        evaluator.evaluate_and_consider(
-            evaluate_simple_action(pop_pos, &weights, &buffer.offices, 0.5),
-            ActionType::Admin,
-            context,
-            0.0,
-        );
+    fn evaluate_group_leisure(&mut self) {
+        if let Some(hobby_type) = self.data.hobby_type {
+            let utility = evaluate_hobby(self.data, hobby_type);
+            let penalty = crate::layer1::taboo::evaluate_taboo_penalty(
+                ActionType::Hobby,
+                self.context.taboo,
+            );
+            self.evaluator
+                .consider(ActionType::Hobby, utility + penalty, None);
+        }
+
+        // Evaluate ListenToTheHum
+        let (_, score, target) = evaluate_listen_to_hum(self.data, self.buffer);
+        if let Some(target_entity) = target {
+            self.evaluator.evaluate_and_consider(
+                Some((score, target_entity)),
+                ActionType::ListenToTheHum,
+                self.context,
+                0.0,
+            );
+        }
     }
 
-    // Evaluate Research
-    if !is_penal && !is_feral {
-        evaluator.evaluate_and_consider(
-            evaluate_research(pop_pos, &weights, context.resources, &buffer.libraries),
-            ActionType::Research,
-            context,
-            0.0,
-        );
-    }
+    fn run(mut self) -> (ActionType, f32, Option<Entity>) {
+        self.evaluate_group_survival();
+        self.evaluate_group_social();
+        self.evaluate_group_leisure();
+        self.evaluate_group_work();
+        self.evaluate_group_logistics();
+        self.evaluate_group_exploration();
+        self.evaluate_group_maintenance();
 
-    // Evaluate Tame
-    evaluator.evaluate_and_consider(
-        evaluate_tame(&pop_pos, &weights, &buffer.tame_designations),
-        ActionType::Tame,
-        context,
-        0.0,
-    );
-
-    // Evaluate Warden
-    if !is_penal {
-        evaluator.evaluate_and_consider(
-            evaluate_warden_action(&pop_pos, &buffer.wanted_criminals, context.zone_grid),
-            ActionType::Warden,
-            context,
-            0.0,
-        );
-    }
-}
-
-fn evaluate_group_logistics(
-    evaluator: &mut CandidateEvaluator,
-    data: &PopEvalData,
-    buffer: &UtilityAIBuffer,
-    context: &WorldContext,
-    is_striking: bool,
-) {
-    let pop_pos = data.pos;
-    let weights = data.weights;
-    let equipment_opt = data.equipment;
-
-    if is_striking {
-        return;
-    }
-
-    // Evaluate FetchTool
-    let equipment = equipment_opt.unwrap_or_default();
-    evaluator.evaluate_and_consider(
-        evaluate_fetch_tool(pop_pos, &equipment, context.resources, &buffer.stockpiles),
-        ActionType::FetchTool,
-        context,
-        0.0,
-    );
-
-    // Evaluate FetchClothing
-    evaluator.evaluate_and_consider(
-        evaluate_fetch_clothing(
-            pop_pos,
-            data.insulation,
-            context.resources,
-            &buffer.stockpiles,
-            context.temperature_grid,
-        ),
-        ActionType::FetchClothing,
-        context,
-        0.0,
-    );
-
-    // Evaluate Repair
-    evaluator.evaluate_and_consider(
-        evaluate_simple_action(
-            pop_pos,
-            &weights,
-            &buffer.repair_structures, // Was repair_designations AND repair_structures?
-            // Actually repair action uses both? Old code: evaluate_repair(..., designations, structures).
-            // This implies repair logic is complex (checks designation OR structure directly?).
-            // If I simplified it to simple_action, I can only pass one list.
-            // Let's assume repair_structures contains candidates.
-            // But if designations exist, they are candidates too.
-            // I might need to combine them or call simple_action twice.
-            0.6,
-        ),
-        ActionType::Repair,
-        context,
-        0.0,
-    );
-    // Also check designations
-    evaluator.evaluate_and_consider(
-        evaluate_simple_action(pop_pos, &weights, &buffer.repair_designations, 0.6),
-        ActionType::Repair,
-        context,
-        0.0,
-    );
-
-    // Evaluate Haul
-    evaluator.evaluate_and_consider(
-        evaluate_haul(
-            pop_pos,
-            &weights,
-            &buffer.items,
-            &buffer.item_entities,
-            &buffer.stockpiles,
-            &buffer.gene_banks,
-            context.resources,
-            data.carrying,
-            data.carrying_item,
-            data.carrying_item_type.clone(),
-        ),
-        ActionType::Haul,
-        context,
-        0.0,
-    );
-
-    // Evaluate BuryCorpse
-    if !buffer.graves.is_empty() {
-        evaluator.evaluate_and_consider(
-            evaluate_simple_action(pop_pos, &weights, &buffer.corpses, 0.8),
-            ActionType::BuryCorpse,
-            context,
-            0.0,
-        );
-    }
-}
-
-fn evaluate_group_exploration(
-    evaluator: &mut CandidateEvaluator,
-    data: &PopEvalData,
-    buffer: &UtilityAIBuffer,
-    context: &WorldContext,
-    is_striking: bool,
-) {
-    let pop_pos = data.pos;
-    let weights = data.weights;
-    let is_penal = data.penal_labor.is_some();
-
-    if is_striking || is_penal {
-        return;
-    }
-
-    // Evaluate Explore
-    evaluator.evaluate_and_consider(
-        evaluate_simple_action(pop_pos, &weights, &buffer.anomalies, 0.3),
-        ActionType::Explore,
-        context,
-        0.0,
-    );
-}
-
-fn evaluate_group_maintenance(
-    evaluator: &mut CandidateEvaluator,
-    data: &PopEvalData,
-    buffer: &UtilityAIBuffer,
-    context: &WorldContext,
-    is_striking: bool,
-) {
-    let pop_pos = data.pos;
-    let weights = data.weights;
-    let is_penal = data.penal_labor.is_some();
-
-    if is_striking || is_penal {
-        return;
-    }
-
-    // Evaluate PurgeResidue
-    evaluator.evaluate_and_consider(
-        evaluate_simple_action(pop_pos, &weights, &buffer.residues, 0.4),
-        ActionType::PurgeResidue,
-        context,
-        0.0,
-    );
-
-    // Evaluate Clean
-    // Need to know if pop is Janitor. Since `PopEvalData` doesn't strictly carry `Job` component,
-    // we would need to query it or add it.
-    // For now, let's assume `Job` is not in `PopEvalData`.
-    // Wait, we need it. Let's assume everyone is NOT a janitor unless we add Job to PopEvalData.
-    // BUT, we can't easily change PopEvalData structure without modifying `utility_eval_types.rs`.
-    // Let's assume everyone is a "volunteer" cleaner for now (only cleans critical mess).
-    // To support Janitors properly, we should add `job` to `PopEvalData`.
-    //
-    // However, `PopEvalData` struct is defined in `utility_eval_types.rs` which we just modified.
-    // We didn't add `job` field.
-    //
-    // Workaround: We can't check job. So we treat everyone as volunteers (only clean if clutter > 0.8).
-    // This satisfies the spec "Idle Pops perform it as a low-priority task if Clutter > 80.0".
-    // Janitors are missing out, but that requires deeper refactor.
-    //
-    // Or... we can check if `data.equipment` implies janitor? No.
-    // Let's stick to the "Community Service" part of the spec for this integration.
-    evaluator.evaluate_and_consider(
-        evaluate_clean(pop_pos, &weights, &buffer.cleaning_targets, false),
-        ActionType::Clean,
-        context,
-        0.0,
-    );
-}
-
-fn evaluate_group_leisure(
-    evaluator: &mut CandidateEvaluator,
-    data: &PopEvalData,
-    buffer: &UtilityAIBuffer,
-    context: &WorldContext,
-) {
-    if let Some(hobby_type) = data.hobby_type {
-        let utility = evaluate_hobby(data, hobby_type);
-        let penalty =
-            crate::layer1::taboo::evaluate_taboo_penalty(ActionType::Hobby, context.taboo);
-        evaluator.consider(ActionType::Hobby, utility + penalty, None);
-    }
-
-    // Evaluate ListenToTheHum
-    let (_, score, target) = evaluate_listen_to_hum(data, buffer);
-    if let Some(target_entity) = target {
-        evaluator.evaluate_and_consider(
-            Some((score, target_entity)),
-            ActionType::ListenToTheHum,
-            context,
-            0.0,
-        );
+        self.evaluator.result()
     }
 }
 
@@ -598,18 +549,8 @@ pub(crate) fn evaluate_single_pop(
     }
 
     // 3. Normal evaluation (undrafted, sane)
-    let mut evaluator = CandidateEvaluator::new(evaluate_idle(&data.needs));
-    let is_striking = is_pop_striking(data, context);
-
-    evaluate_group_survival(&mut evaluator, data, buffer, context);
-    evaluate_group_social(&mut evaluator, data, buffer, context);
-    evaluate_group_leisure(&mut evaluator, data, buffer, context);
-    evaluate_group_work(&mut evaluator, data, buffer, context, is_striking);
-    evaluate_group_logistics(&mut evaluator, data, buffer, context, is_striking);
-    evaluate_group_exploration(&mut evaluator, data, buffer, context, is_striking);
-    evaluate_group_maintenance(&mut evaluator, data, buffer, context, is_striking);
-
-    evaluator.result()
+    let decider = PopDecider::new(data, buffer, context);
+    decider.run()
 }
 
 fn run_evaluations(

@@ -71,10 +71,8 @@ mod tests {
             1,
             "Glue should produce Chronicle event"
         );
-        assert!(
-            chronicle_emitted[0]
-                .text
-                .contains("Sacrificed Ancient Reactor")
-        );
+        assert!(chronicle_emitted[0]
+            .text
+            .contains("Sacrificed Ancient Reactor"));
     }
 }

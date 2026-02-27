@@ -152,29 +152,9 @@ mod tests {
         let mut traits = Traits::default();
         traits.add(Trait::Sensitive);
 
-        let data = PopEvalData {
-            entity: Entity::from_raw(0),
-            pos: pop_pos,
-            needs: Needs::default(), // Not stressed yet
-            traits: Some(traits),
-            weights: UtilityWeights::default(),
-            action: Default::default(),
-            equipment: None,
-            carrying: None,
-            carrying_item: None,
-            carrying_item_type: None, // Verified
-            mental_state: None,
-            drafted: None,
-            faction_member: None,
-            penal_labor: None,
-            breakdown: None,
-            stress: 0.0,
-            hobby_type: None,
-            chemical_state: None,
-            is_memetic_carrier: false,
-            health: None,
-            insulation: 0.0,
-        };
+        let mut data = PopEvalData::test_instance();
+        data.pos = pop_pos;
+        data.traits = Some(traits);
 
         // Add a Hum Source candidate
         let mut candidate = ScorableCandidate::new(Entity::from_raw(1), hum_pos);
@@ -200,29 +180,8 @@ mod tests {
         candidate.score_bonus = 1.0;
         buffer.hum_sources.push(candidate);
 
-        let data = PopEvalData {
-            entity: Entity::from_raw(0),
-            pos: GridPosition { x: 0, y: 0 },
-            needs: Needs::default(),
-            weights: UtilityWeights::default(),
-            traits: Some(Traits::default()), // Normal pop
-            action: Default::default(),
-            equipment: None,
-            carrying: None,
-            carrying_item: None,
-            carrying_item_type: None, // Verified
-            mental_state: None,
-            drafted: None,
-            faction_member: None,
-            penal_labor: None,
-            breakdown: None,
-            stress: 0.0,
-            hobby_type: None,
-            chemical_state: None,
-            is_memetic_carrier: false,
-            health: None,
-            insulation: 0.0,
-        };
+        let mut data = PopEvalData::test_instance();
+        data.traits = Some(Traits::default());
 
         let (action, score, _) = crate::layer1::actions::evaluate_listen_to_hum(&data, &buffer);
 

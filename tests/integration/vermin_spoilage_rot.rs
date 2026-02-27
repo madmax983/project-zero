@@ -4,7 +4,7 @@ mod tests {
     use bevy_ecs::system::RunSystemOnce;
     use scale::layer1::integration::vermin_item_rot_system;
     use scale::layer1::resources::ColonyResources;
-    use scale::layer1::spoilage::{Perishable, spoilage_system};
+    use scale::layer1::spoilage::{spoilage_system, Perishable};
     use scale::layer1::vermin::VerminState;
 
     #[test]

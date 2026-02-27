@@ -9,7 +9,7 @@
 mod demo {
     use bevy_ecs::prelude::*;
     use scale::layer1::chronicle::{Chronicle, EventImportance};
-    use scale::layer1::oral_tradition::{OralTradition, collect_chronicles_system};
+    use scale::layer1::oral_tradition::{collect_chronicles_system, OralTradition};
 
     pub fn run() {
         let mut world = World::new();

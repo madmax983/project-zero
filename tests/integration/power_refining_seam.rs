@@ -1,7 +1,6 @@
 #[cfg(test)]
 mod tests {
     use bevy_ecs::prelude::*;
-    use scale::layer1::GridPosition;
     use scale::layer1::building::{Building, BuildingType};
     use scale::layer1::energy::PowerConsumer;
     use scale::layer1::pop::Pop;
@@ -9,6 +8,7 @@ mod tests {
     use scale::layer1::resources::{ColonyResources, RefiningProgress};
     use scale::layer1::skills::Skills;
     use scale::layer1::utility_ai::{ActionType, PopAction};
+    use scale::layer1::GridPosition;
 
     #[test]
     fn test_smelter_requires_power_to_operate() {

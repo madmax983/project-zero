@@ -2,10 +2,10 @@
 mod tests {
     use bevy_ecs::prelude::*;
     use scale::layer1::beauty::{
-        BeautyGrid, BeautySource, apply_beauty_effects_system, update_beauty_grid_system,
+        apply_beauty_effects_system, update_beauty_grid_system, BeautyGrid, BeautySource,
     };
     use scale::layer1::building::{
-        Building, BuildingType, MaterialType, spawn_building_with_material,
+        spawn_building_with_material, Building, BuildingType, MaterialType,
     };
     use scale::layer1::map::GridPosition;
     use scale::layer1::needs::Needs;

@@ -11,8 +11,8 @@ mod tests {
     use scale::layer1::pop::Pop;
     use scale::layer1::resources::{ColonyResources, RefiningProgress};
     use scale::layer1::utility_ai::{
-        ActionType, PopAction, UtilityConfig, UtilityWeights, evaluate_actions_system,
-        update_action_timer_system,
+        evaluate_actions_system, update_action_timer_system, ActionType, PopAction, UtilityConfig,
+        UtilityWeights,
     };
     use scale::shared::time::SimulationTime;
 

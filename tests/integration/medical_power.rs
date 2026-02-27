@@ -2,10 +2,10 @@
 mod tests {
     use bevy_ecs::prelude::*;
     use scale::layer1::actions::{AssignedTo, AssignmentType};
-    use scale::layer1::building::{BuildingType, MaterialType, spawn_building_with_material};
-    use scale::layer1::energy::{BlackoutProtocol, PowerConsumer, power_grid_system};
+    use scale::layer1::building::{spawn_building_with_material, BuildingType, MaterialType};
+    use scale::layer1::energy::{power_grid_system, BlackoutProtocol, PowerConsumer};
     use scale::layer1::health::Health;
-    use scale::layer1::medical::{Hospital, healing_system};
+    use scale::layer1::medical::{healing_system, Hospital};
 
     fn setup_world() -> World {
         let mut world = World::new();

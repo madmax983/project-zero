@@ -1,10 +1,10 @@
 use bevy_ecs::prelude::*;
 use bevy_ecs::system::RunSystemOnce;
-use scale::layer1::health::{Health, check_health_status_system, despawn_dead_entities_system};
+use scale::layer1::health::{check_health_status_system, despawn_dead_entities_system, Health};
 use scale::layer1::memory::{Memories, MemoryType};
-use scale::layer1::needs::Needs;
 use scale::layer1::needs::starvation_damage_system;
-use scale::layer1::pop::{Pop, PopDied, handle_pop_death_system, handle_witness_death_system};
+use scale::layer1::needs::Needs;
+use scale::layer1::pop::{handle_pop_death_system, handle_witness_death_system, Pop, PopDied};
 use scale::shared::log::MessageLog;
 use scale::shared::time::SimulationTime;
 

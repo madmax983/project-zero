@@ -2,16 +2,16 @@
 mod tests {
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
-    use scale::layer1::GridPosition;
     use scale::layer1::building::{Building, BuildingType};
-    use scale::layer1::execution::{AtTarget, MovementTarget, arrival_handler_system};
+    use scale::layer1::execution::{arrival_handler_system, AtTarget, MovementTarget};
     use scale::layer1::pop::Pop;
     use scale::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
     use scale::layer1::stockpile::Stockpile;
     use scale::layer1::structural_integrity::StructureCollapsed;
     use scale::layer1::utility_ai::{ActionType, PopAction};
+    use scale::layer1::GridPosition;
     use scale::shared::time::SimulationTime;
-    use scale::simulation::{SimulationSchedule, build_simulation_schedule};
+    use scale::simulation::{build_simulation_schedule, SimulationSchedule};
 
     fn setup_world() -> World {
         scale::setup::init_task_pools();

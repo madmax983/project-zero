@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
     use bevy_ecs::prelude::*;
-    use scale::layer1::customs::{ImmigrationStatus, vetting_work_system};
+    use scale::layer1::customs::{vetting_work_system, ImmigrationStatus};
     use scale::layer1::map::GridPosition;
     use scale::layer1::pop::Pop;
     use scale::layer1::zone::{ZoneGrid, ZoneType};

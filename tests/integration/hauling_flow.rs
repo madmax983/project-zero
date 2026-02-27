@@ -9,7 +9,7 @@ mod tests {
     use scale::layer1::resources::{Carrying, ColonyResources, ResourceItem, ResourceType};
     use scale::layer1::stockpile::Stockpile;
     use scale::layer1::utility_ai::{
-        ActionType, PopAction, UtilityConfig, UtilityWeights, evaluate_actions_system,
+        evaluate_actions_system, ActionType, PopAction, UtilityConfig, UtilityWeights,
     };
     use scale::shared::time::SimulationTime;
 

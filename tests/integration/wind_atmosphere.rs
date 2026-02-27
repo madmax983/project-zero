@@ -1,11 +1,11 @@
 #[cfg(test)]
 mod tests {
     use bevy_ecs::prelude::*;
-    use scale::layer1::atmosphere::{AtmosphereGrid, update_atmosphere_system};
+    use scale::layer1::atmosphere::{update_atmosphere_system, AtmosphereGrid};
     use scale::layer1::building::{Building, BuildingType};
     use scale::layer1::map::GridPosition;
     use scale::layer1::terrain::{TerrainGrid, TerrainType};
-    use scale::layer1::wind::{GlobalWind, Vec2, WindGrid, update_wind_system};
+    use scale::layer1::wind::{update_wind_system, GlobalWind, Vec2, WindGrid};
 
     #[test]
     fn pollution_moves_downwind() {

@@ -4,8 +4,8 @@ use bevy_ecs::prelude::*;
 use bevy_ecs::system::RunSystemOnce;
 use scale::layer1::actions::{AssignedTo, AssignmentType};
 use scale::layer1::cybernetics::{
-    Augmentations, MissingLimb, PendingSurgery, Prosthetic, ProstheticType, get_efficiency_bonus,
-    surgery_system,
+    get_efficiency_bonus, surgery_system, Augmentations, MissingLimb, PendingSurgery, Prosthetic,
+    ProstheticType,
 };
 use scale::layer1::hazards::AmputationEvent;
 use scale::layer1::integration::amputation_handler_system;
