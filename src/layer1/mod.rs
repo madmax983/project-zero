@@ -690,5 +690,9 @@ pub use clutter::*;
 pub mod politics;
 pub use politics::*;
 
+/// Biometric Security system (Spec 244).
+pub mod security;
+pub use security::*;
+
 #[cfg(test)]
 mod geodetic_tests;
