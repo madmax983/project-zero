@@ -19,6 +19,13 @@ use crate::layer1::terrain::TerrainGrid;
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
 
+/// Emits heat into the temperature grid.
+#[derive(Component, Debug, Clone, Default)]
+pub struct HeatSource {
+    /// Amount of heat produced per tick (Celsius).
+    pub output: f32,
+}
+
 /// Grid managing temperature simulation.
 #[derive(Resource)]
 pub struct TemperatureGrid {
@@ -160,6 +167,7 @@ pub fn update_temperature_system(
     cycle: Option<Res<DayNightCycle>>,
     terrain: Res<TerrainGrid>,
     buildings: Query<(&Building, &GridPosition, Option<&PowerConsumer>)>,
+    heat_sources: Query<(&HeatSource, &GridPosition)>,
     items: Query<(&ResourceItem, &GridPosition)>,
     lodes: Query<(&MotherLode, &GridPosition)>,
 ) {
@@ -204,7 +212,9 @@ pub fn update_temperature_system(
         let r = b.building_type.heat_retention();
         building_retention.insert((pos.x, pos.y), r);
 
-        // Heat Sources
+        // Heat Sources (Legacy / Implicit)
+        // If we transition fully to HeatSource component, we can remove this,
+        // but for now we keep it for backward compatibility with existing entities.
         let heat = match b.building_type {
             BuildingType::Heater => {
                 if power.is_some_and(|p| !p.active) {
@@ -231,6 +241,11 @@ pub fn update_temperature_system(
         if heat > 0.0 {
             grid.add(pos.x, pos.y, heat);
         }
+    }
+
+    // Apply Explicit HeatSource Components
+    for (source, pos) in &heat_sources {
+        grid.add(pos.x, pos.y, source.output);
     }
 
     // Apply Item Heat Sources
@@ -304,7 +319,7 @@ mod tests {
     use crate::layer1::pop::Pop;
     use crate::layer1::seasons::{Season, SeasonState};
     use crate::layer1::temperature::{
-        TemperatureGrid, thermal_damage_system, update_temperature_system,
+        HeatSource, TemperatureGrid, thermal_damage_system, update_temperature_system,
     };
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
     use bevy_ecs::prelude::*;
@@ -352,6 +367,31 @@ mod tests {
 
         let grid = world.resource::<TemperatureGrid>();
         assert!(grid.get(5, 5) > 0.0, "Heater should raise temperature");
+    }
+
+    #[test]
+    fn test_explicit_heat_source_emission() {
+        let mut world = World::new();
+        let grid = TemperatureGrid::new(10, 10, 0.0);
+        world.insert_resource(grid);
+        world.insert_resource(SeasonState::default());
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        });
+
+        // Spawn Explicit HeatSource
+        world.spawn((
+            HeatSource { output: 25.0 },
+            GridPosition { x: 5, y: 5 },
+        ));
+
+        // Run update
+        world.run_system_once(update_temperature_system).unwrap();
+
+        let grid = world.resource::<TemperatureGrid>();
+        assert_eq!(grid.get(5, 5), 25.0, "HeatSource should set temperature (additive to 0.0 ambient)");
     }
 
     #[test]

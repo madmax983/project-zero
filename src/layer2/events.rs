@@ -17,3 +17,7 @@ pub struct ShipDestroyedEvent {
     /// The class of the destroyed ship.
     pub ship_class: String,
 }
+
+/// Event triggered when the colony's thermal signature is detected by hostile forces.
+#[derive(Event, Debug, Clone, Default)]
+pub struct DetectionEvent;
