@@ -704,3 +704,9 @@ pub use void_stare::*;
 /// Quantum Twins (Spec 245).
 pub mod quantum_twins;
 pub use quantum_twins::*;
+
+/// Holographic Facades (Spec 249).
+pub mod hologram;
+#[cfg(test)]
+mod hologram_tests;
+pub use hologram::*;

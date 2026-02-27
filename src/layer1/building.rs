@@ -319,6 +319,8 @@ pub enum BuildingType {
     Recycler,
     /// A place for pops to post grievances and commendations.
     BulletinBoard,
+    /// Holographic projector that emits Beauty when powered.
+    HoloProjector,
 }
 
 impl BuildingType {
@@ -343,7 +345,7 @@ impl BuildingType {
 
             Self::Library | Self::BulletinBoard => Some((Category::Research, Tier::Basic)),
             Self::Observatory | Self::CryoPod => Some((Category::Research, Tier::Advanced)),
-            Self::AICore | Self::AtmosphericProcessor | Self::GeneBank | Self::CloneVat => {
+            Self::AICore | Self::AtmosphericProcessor | Self::GeneBank | Self::CloneVat | Self::HoloProjector => {
                 Some((Category::Research, Tier::HighTech))
             }
 
@@ -497,6 +499,7 @@ impl BuildingType {
             | Self::AuroralCollector => false,
             Self::Recycler => true,
             Self::BulletinBoard => false,
+            Self::HoloProjector => false,
         }
     }
 
@@ -516,6 +519,7 @@ impl BuildingType {
             Self::Recycler => -5.0, // Grim machinery
             Self::Grave => -2.0,    // Graves are slightly spooky
             Self::FlowerBed => super::beauty::FLOWER_BED_BEAUTY,
+            Self::HoloProjector => 50.0, // Massive beauty boost
             Self::TradeDepot => 5.0, // Trade brings goods and culture
             Self::Well | Self::HydroponicsBay | Self::LifeSupport => 1.0,
             Self::Wall | Self::Window | Self::Gate | Self::Tower | Self::Airlock | Self::Vent => {
@@ -541,6 +545,7 @@ impl BuildingType {
             Self::TradeDepot => 4.0,
             Self::Grave | Self::Well | Self::HydroponicsBay | Self::LifeSupport => 2.0,
             Self::CloneVat => 3.0,
+            Self::HoloProjector => 8.0,
             _ => 0.0,
         }
     }
@@ -576,6 +581,7 @@ impl BuildingType {
             Self::Shower => Some(Tech::SocialStructures),
             Self::Recycler => Some(Tech::Medical),
             Self::BulletinBoard => Some(Tech::SocialStructures),
+            Self::HoloProjector => Some(Tech::Electromagnetism), // Assumed tech
             _ => None,
         }
     }
@@ -650,6 +656,7 @@ impl BuildingType {
             Self::Shower => "Shower",
             Self::Recycler => "Recycler",
             Self::BulletinBoard => "Bulletin Board",
+            Self::HoloProjector => "Holo Projector",
         }
     }
 
@@ -658,7 +665,7 @@ impl BuildingType {
     pub const fn char(&self) -> char {
         match self {
             Self::Housing => 'H',
-            Self::Office | Self::Tower | Self::Observatory => 'O',
+            Self::Office | Self::Tower | Self::Observatory | Self::HoloProjector => 'O',
             Self::Farm | Self::AncientFabricator => 'F',
             Self::HydroponicsBay => 'Y',
             Self::DroneHub => 'D',
@@ -761,6 +768,11 @@ impl BuildingType {
             },
             Self::BulletinBoard => ColonyResources {
                 wood: 20.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::HoloProjector => ColonyResources {
+                metal: 20.0,
+                stone: 10.0,
                 ..ColonyResources::zeroed()
             },
             Self::CommandCenter => ColonyResources {
@@ -1314,7 +1326,8 @@ fn spawn_building(
         | BuildingType::CryoPod
         | BuildingType::AtmosphericProcessor
         | BuildingType::GeneBank
-        | BuildingType::CloneVat => configure_tech(&mut entity, building_type),
+        | BuildingType::CloneVat
+        | BuildingType::HoloProjector => configure_tech(&mut entity, building_type),
         BuildingType::Shower => configure_civic(&mut entity, building_type),
         BuildingType::Recycler => {
             // Recycler configuration
@@ -2001,6 +2014,36 @@ fn configure_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
                     color: (0, 255, 100), // Greenish bio-light
                 },
                 ShiftSchedule::default(),
+            ));
+        }
+        BuildingType::HoloProjector => {
+            entity.insert((
+                crate::layer1::hologram::HoloProjector {
+                    active_beauty: 50.0,
+                    radius: 8.0,
+                    is_active: false,
+                },
+                PowerConsumer {
+                    demand: 10.0,
+                    active: false,
+                },
+                LightSource {
+                    radius: 5.0,
+                    intensity: 0.8,
+                    color: (200, 200, 255), // Holographic Blue
+                },
+                // BeautySource added automatically by spawn_building based on BuildingType::beauty_value()
+                // But HoloProjector toggles it.
+                // spawn_building adds BeautySource { value: 50.0, radius: 8.0 } because beauty_value() returns 50.0.
+                // We need to ensure it starts effectively "off" or let the system handle it.
+                // The update_holograms_system will see is_active=false and set BeautySource.value=0.0 on first run if unpowered.
+                // If powered, it sets it to active_beauty.
+                ShiftSchedule::default(),
+                // Explicitly initialize BeautySource to 0.0 so it starts off (overriding spawn_building default)
+                BeautySource {
+                    value: 0.0,
+                    radius: 8.0,
+                },
             ));
         }
         _ => {}
