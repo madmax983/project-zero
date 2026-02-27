@@ -36,6 +36,19 @@ Container_Boundary(Simulation, "Simulation Core (Layer 1)") {
     Component(NovaFeatures, "Nova Features", "constellations.rs, observer.rs", "Experimental Mechanics")
 }
 
+Container_Boundary(SystemSim, "System Simulation (Layer 2)") {
+    Component(Fleets, "Fleets", "fleet.rs, ship.rs", "Mobile Units & Travel")
+    Component(Orbits, "Orbital System", "system.rs", "Planets & Stations")
+    Component(Debris, "Orbital Debris", "debris.rs", "Hazard & Risk")
+    Component(Mining, "Mining Ops", "mining.rs", "Resource Extraction")
+    Component(Stations, "Stations", "station.rs", "Static Orbital Structures")
+
+    Rel(Fleets, Orbits, "Orbits/Transit")
+    Rel(Fleets, Debris, "Takes Damage")
+    Rel(Fleets, Mining, "Extracts Resources")
+    Rel(Mining, Orbits, "Target")
+}
+
 Container(Shared, "Shared Lib", "Utilities", "GameState, Time, Input, Logs")
 
 Container_Boundary(SharedLib, "Shared Components") {
@@ -109,6 +122,51 @@ graph LR
     LP -->|Spawns| Fleet
     Fleet -->|Has Component| Orbit
     Orbit -->|References| Planet
+```
+
+## Layer 2: Orbital Simulation
+
+Layer 2 uses abstract, timer-based simulation instead of grid physics.
+
+```mermaid
+classDiagram
+    class OrbitalBody {
+        +String name
+        +Color color
+        +f32 radius
+    }
+    class Orbit {
+        +Entity parent
+        +f32 angle
+        +f32 speed
+    }
+    class Fleet {
+        <<Component>>
+    }
+    class FleetComposition {
+        +Vec~Ship~ ships
+        +total_cargo()
+        +speed()
+    }
+    class Ship {
+        +ShipType type
+        +f32 health
+    }
+    class OrbitalDebris {
+        +f32 amount
+        +calculate_risk()
+    }
+    class MiningTarget {
+        +ResourceType resource
+        +f32 amount
+    }
+
+    Fleet --> FleetComposition : Has
+    FleetComposition *-- Ship : Contains
+    Fleet ..> Orbit : Positioned By
+    Orbit --> OrbitalBody : References
+    OrbitalBody -- OrbitalDebris : Has Environment
+    OrbitalBody -- MiningTarget : Has Resources
 ```
 
 ## The Game Loop
@@ -408,3 +466,4 @@ Rel(Shared, Events, "Consumes")
 - [ADR 028: Seismic System Split](./adr/028-seismic-system-split.md)
 - [ADR 029: Refactor Logistics into Submodules](./adr/029-refactor-logistics-into-submodules.md)
 - [ADR 030: Layer 1 System Architecture Refactor](./adr/030-layer-1-system-architecture.md)
+- [ADR 031: Layer 2 Revival & Lightweight Simulation](./adr/031-layer-2-revival.md)
