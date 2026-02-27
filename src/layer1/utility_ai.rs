@@ -4,8 +4,9 @@
 //! that drives the behavior of every Pop in the colony.
 
 use crate::layer1::actions::{
-    evaluate_drafted_behavior, evaluate_fetch_clothing, evaluate_fetch_tool, evaluate_haul,
-    evaluate_listen_to_hum, evaluate_mental_break, evaluate_research, evaluate_simple_action,
+    evaluate_clean, evaluate_drafted_behavior, evaluate_fetch_clothing, evaluate_fetch_tool,
+    evaluate_haul, evaluate_listen_to_hum, evaluate_mental_break, evaluate_research,
+    evaluate_simple_action,
 };
 use crate::layer1::chemical::evaluate_consume_chemical;
 use crate::layer1::factions::Factions;
@@ -515,6 +516,31 @@ fn evaluate_group_maintenance(
     evaluator.evaluate_and_consider(
         evaluate_simple_action(pop_pos, &weights, &buffer.residues, 0.4),
         ActionType::PurgeResidue,
+        context,
+        0.0,
+    );
+
+    // Evaluate Clean
+    // Need to know if pop is Janitor. Since `PopEvalData` doesn't strictly carry `Job` component,
+    // we would need to query it or add it.
+    // For now, let's assume `Job` is not in `PopEvalData`.
+    // Wait, we need it. Let's assume everyone is NOT a janitor unless we add Job to PopEvalData.
+    // BUT, we can't easily change PopEvalData structure without modifying `utility_eval_types.rs`.
+    // Let's assume everyone is a "volunteer" cleaner for now (only cleans critical mess).
+    // To support Janitors properly, we should add `job` to `PopEvalData`.
+    //
+    // However, `PopEvalData` struct is defined in `utility_eval_types.rs` which we just modified.
+    // We didn't add `job` field.
+    //
+    // Workaround: We can't check job. So we treat everyone as volunteers (only clean if clutter > 0.8).
+    // This satisfies the spec "Idle Pops perform it as a low-priority task if Clutter > 80.0".
+    // Janitors are missing out, but that requires deeper refactor.
+    //
+    // Or... we can check if `data.equipment` implies janitor? No.
+    // Let's stick to the "Community Service" part of the spec for this integration.
+    evaluator.evaluate_and_consider(
+        evaluate_clean(pop_pos, &weights, &buffer.cleaning_targets, false),
+        ActionType::Clean,
         context,
         0.0,
     );

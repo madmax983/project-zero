@@ -11,6 +11,7 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::memetic::MemeticCarrier;
 use crate::layer1::needs::Needs;
 use crate::layer1::penal::PenalLabor;
+use crate::layer1::pop::Job;
 use crate::layer1::resources::{Carrying, ColonyResources, ResourceType};
 use crate::layer1::stress::{BREAKDOWN_TICKS_REQUIRED, Breakdown, StressTracker};
 use crate::layer1::taboo::TabooState;
@@ -59,6 +60,7 @@ pub struct PopEvaluationQuery {
     pub chemical: Option<&'static ChemicalState>,
     pub memetic_carrier: Option<&'static MemeticCarrier>,
     pub health: Option<&'static Health>,
+    pub job: Option<&'static Job>,
 }
 
 impl PopEvalData {
@@ -86,6 +88,7 @@ impl PopEvalData {
             chemical_state: item.chemical.cloned(),
             is_memetic_carrier: item.memetic_carrier.is_some(),
             health: item.health.copied(),
+            job: item.job.copied(),
             insulation: 0.0,
             carrying_item_type: None,
         }
@@ -135,6 +138,8 @@ pub struct PopEvalData {
     pub is_memetic_carrier: bool,
     /// Health of the pop, if any.
     pub health: Option<Health>,
+    /// The pop's assigned job.
+    pub job: Option<Job>,
     /// Current insulation provided by clothing.
     pub insulation: f32,
 }
@@ -311,4 +316,6 @@ pub struct UtilityAIBuffer {
     pub gene_banks: Vec<ScorableCandidate>,
     /// Buffer for ghost code residue candidates (Purge job).
     pub residues: Vec<ScorableCandidate>,
+    /// Buffer for clutter cleaning targets.
+    pub cleaning_targets: Vec<ScorableCandidate>,
 }

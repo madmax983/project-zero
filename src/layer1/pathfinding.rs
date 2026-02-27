@@ -23,10 +23,11 @@
 //! ## 3. Cost Function
 //! The cost to enter a tile `C` is calculated as:
 //!
-//! $$ C = C_{terrain} + C_{crowding} $$
+//! $$ C = C_{terrain} + C_{crowding} + C_{clutter} $$
 //!
 //! *   $C_{terrain}$: Base cost from `TerrainType` (e.g., Dirt=1, Rock=2).
 //! *   $C_{crowding}$: Dynamic penalty from `CrowdingGrid` (high traffic = slower movement).
+//! *   $C_{clutter}$: Dynamic penalty from `ClutterGrid` (high clutter = slower movement).
 //!
 //! This encourages agents to use "Desire Paths" (paved roads) and avoid congested hallways.
 
