@@ -6742,3 +6742,87 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Farming in safety (indoors) vs. Farming in the wild (hull/vacuum).
 
 ---
+
+## Civilizational Compost
+
+**Layer:** 1
+
+**Fantasy:** We stand on the shoulders of giants, quite literally.
+
+**Mechanic:** Dead Pops and destroyed buildings decompose into "Nutrient-Rich Soil" or "Scrap Heaps" over time. Farming on a graveyard yields higher crop output but causes "Haunted" moods.
+
+**Emergence:** You fight a desperate battle in your cornfield. The dead soldiers fertilize the next harvest. The colony unknowingly eats the dead to survive the winter.
+
+**Tension:** Respect the dead (burial) vs. Use the dead (fertilizer).
+
+---
+
+## Panic Spirals
+
+**Layer:** 1
+
+**Fantasy:** Fear is contagious.
+
+**Mechanic:** Pops witnessing a "Terrifying Event" (Monster, Fire, Corpse) flee in a random direction. If they collide with other Pops, they pass on the "Panic" state. Panicked pops drop items and cannot work.
+
+**Emergence:** A single rat scares a cook. The cook runs into the hallway, scaring the haulers. The haulers drop their explosive payload, causing a fire, which scares the soldiers. The base collapses from a rat.
+
+**Tension:** Crowd control (wide halls) vs. Efficiency (tight spaces).
+
+---
+
+## Gravity-Fed Logistics
+
+**Layer:** 1
+
+**Fantasy:** Water flows downhill.
+
+**Mechanic:** Liquids and items move automatically "Down" Z-levels without power. Pumping them "Up" requires energy. Designing your base vertically allows for zero-energy transport chains.
+
+**Emergence:** You build your reservoir at the top of the mountain. A sabotage blows the dam. The entire base is washed away because you put everything downhill for efficiency.
+
+**Tension:** Free transport (Gravity) vs. Risk of cascading failure (Flooding).
+
+---
+
+## The 'Recalled' Product
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Corporate negligence on a galactic scale.
+
+**Mechanic:** A product you rely on (e.g., "Standard Rations", "Fusion Cells") is issued a "Recall Notice" by the manufacturer due to defects. Using it has a 5% chance of critical failure/poisoning. Returning it grants Credits but leaves you without stock.
+
+**Emergence:** You get the recall notice for your ammo during a siege. You have to choose: shoot the defective rounds (gun might explode) or fight with knives.
+
+**Tension:** Safety (Recall) vs. Necessity (Use it anyway).
+
+---
+
+## Atmospheric Resonance
+
+**Layer:** 1
+
+**Fantasy:** The air sings.
+
+**Mechanic:** High wind speeds on specific map geometries create "Howling". The noise causes Stress but can be harnessed by "Resonance Crystals" to generate power.
+
+**Emergence:** You build a canyon city to shelter from the wind. The wind hits the canyon just right and creates a sonic boom that deafens everyone.
+
+**Tension:** Power generation vs. Noise pollution.
+
+---
+
+## The 'Ship of Fools'
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Not every ship is a threat; some are just tragedies.
+
+**Mechanic:** A ship arrives with no crew, only passengers who have no skills (e.g., "Tourists", "Bureaucrats"). They demand luxury but produce nothing. They are refugees from a pleasure-cruiser accident.
+
+**Emergence:** You save them. They complain about the food. They start a faction demanded "Better Curtains". You realize they are more dangerous than the pirates because they are eating your surplus and doing nothing.
+
+**Tension:** Altruism vs. Parasitism.
+
+---
