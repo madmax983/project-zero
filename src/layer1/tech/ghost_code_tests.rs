@@ -7,7 +7,9 @@ mod tests {
     use crate::layer1::events::{BuildingCompletedEvent, BuildingRemovedEvent};
     use crate::layer1::energy::PowerConsumer;
     use crate::layer1::utility_types::{ActionType, PopAction};
+    use crate::layer1::utility_types::StartPlan;
     use crate::layer1::pop::Pop;
+    use crate::layer1::turret::Turret; // Needed to add Turret component for LegacyTargeting test
 
     #[test]
     fn test_deconstruction_leaves_residue() {
@@ -127,18 +129,29 @@ mod tests {
     }
 
     #[test]
-    fn test_ghost_trait_targeting_glitch_tag() {
+    fn test_ghost_trait_legacy_targeting_tag() {
         let mut world = World::new();
 
         let building = world.spawn((
-            GhostCode { traits: vec![GhostTrait::TargetingGlitch] },
+            GhostCode { traits: vec![GhostTrait::LegacyTargeting] },
+            // Need Turret component for this to be applied, based on logic
+            Turret {
+                attack: crate::layer1::combat::AttackProperties {
+                    damage: 10.0,
+                    range: 10.0,
+                    cooldown: 10,
+                    accuracy: 1.0,
+                },
+                ammo_cost: 1.0,
+                ammo_type: crate::layer1::resources::ResourceType::Waste,
+            },
         )).id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(apply_ghost_traits_system);
         schedule.run(&mut world);
 
-        assert!(world.get::<GhostEffectApplied>(building).is_some(), "TargetingGlitch should also mark as Applied");
+        assert!(world.get::<GhostEffectApplied>(building).is_some(), "LegacyTargeting should also mark as Applied");
     }
 
     #[test]
@@ -161,7 +174,7 @@ mod tests {
                 current_utility: 0.8,
                 ticks_committed: 10,
             },
-            crate::layer1::utility_eval_types::StartPlan {
+            crate::layer1::utility_types::StartPlan {
                 action: ActionType::PurgeResidue,
                 target: Some(residue),
             },

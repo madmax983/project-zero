@@ -4,7 +4,8 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::events::{BuildingCompletedEvent, BuildingRemovedEvent};
 use crate::layer1::energy::PowerConsumer;
 use crate::layer1::utility_types::{ActionType, PopAction};
-use crate::layer1::utility_eval_types::StartPlan;
+use crate::layer1::utility_types::StartPlan; // Fixed import path
+use crate::layer1::turret::Turret;
 
 /// Component representing digital residue left behind after a building is deconstructed.
 ///
@@ -39,8 +40,6 @@ pub enum GhostTrait {
     GhostProtocol(String),
     /// Consumes power for no reason (Spec 247).
     PowerDrain,
-    /// Turret tries to heal / Medbay tries to shoot (Spec 247).
-    TargetingGlitch,
 }
 
 impl DataResidue {
@@ -98,9 +97,9 @@ pub fn ghost_infection_system(
 /// System that applies active effects of `GhostTrait`s.
 pub fn apply_ghost_traits_system(
     mut commands: Commands,
-    mut query: Query<(Entity, &GhostCode, Option<&mut PowerConsumer>), Without<GhostEffectApplied>>,
+    mut query: Query<(Entity, &GhostCode, Option<&mut PowerConsumer>, Option<&mut Turret>), Without<GhostEffectApplied>>,
 ) {
-    for (entity, ghost_code, mut power_opt) in query.iter_mut() {
+    for (entity, ghost_code, mut power_opt, mut turret_opt) in query.iter_mut() {
         let mut applied = false;
         for trait_val in &ghost_code.traits {
             match trait_val {
@@ -111,10 +110,13 @@ pub fn apply_ghost_traits_system(
                         applied = true;
                     }
                 }
-                GhostTrait::TargetingGlitch => {
-                    // Placeholder: Combat logic updates would check this trait
-                    // For now, we just acknowledge it exists
-                    applied = true;
+                GhostTrait::LegacyTargeting => {
+                    if let Some(ref mut turret) = turret_opt {
+                        // Increase range by 50% and damage by 20%
+                        turret.attack.range *= 1.5;
+                        turret.attack.damage *= 1.2;
+                        applied = true;
+                    }
                 }
                 _ => {}
             }
