@@ -20,3 +20,5 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `261` Shadow Markets — `specs/261-shadow-markets.md`
 - [ ] `262` Thermal Gliders — `specs/262-thermal-gliders.md`
 - [ ] `263` The Cadet Branch — `specs/263-the-cadet-branch.md`
+- [ ] `264` Hyper-Specialized Evolution — `specs/264-hyper-specialized-evolution.md`
+- [ ] `265` Shadow Ecosystems — `specs/265-shadow-ecosystems.md`
