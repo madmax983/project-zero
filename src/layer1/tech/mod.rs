@@ -38,11 +38,13 @@ use crate::layer1::resources::ColonyResources;
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
+use strum::IntoEnumIterator;
+use strum_macros::EnumIter;
 
 /// Available technologies in the tech tree.
 ///
 /// Technologies are flat (no hard dependencies) but tiered by cost.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, EnumIter)]
 pub enum Tech {
     /// Allows construction of advanced stone buildings.
     Masonry,
@@ -450,6 +452,7 @@ pub fn process_research_system(
     mut resources: ResMut<ColonyResources>,
     factions: Option<Res<Factions>>,
     bloat_query: Query<&self::legacy_code::Bloat>,
+    archive: Option<Res<self::infinite_archive::Archive>>,
 ) {
     let mut library_workers = std::collections::HashMap::<Entity, u32>::new();
 
@@ -485,6 +488,11 @@ pub fn process_research_system(
     // Apply Legacy Code Bloat Efficiency
     if let Ok(bloat) = bloat_query.get_single() {
         total_knowledge_gained *= bloat.efficiency();
+    }
+
+    // Apply Infinite Archive Efficiency (Spec 248)
+    if let Some(archive) = archive {
+        total_knowledge_gained *= archive.efficiency_multiplier;
     }
 
     if total_knowledge_gained > 0.0 {
@@ -660,3 +668,6 @@ mod ghost_code_tests;
 pub mod legacy_code;
 #[cfg(test)]
 mod legacy_code_tests;
+pub mod infinite_archive;
+#[cfg(test)]
+mod infinite_archive_tests;

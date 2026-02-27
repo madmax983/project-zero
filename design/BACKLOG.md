@@ -6,7 +6,6 @@
 ## Future / Ideas
 
 See `design/IDEAS.md` for unspecced concepts.
-- [ ] `248` The Infinite Archive — `specs/248-infinite-archive.md`
 - [ ] `249` Holographic Facades — `specs/249-holographic-facades.md`
 - [ ] `250` Surgical Addiction — `specs/250-surgical-addiction.md`
 - [ ] `245` Quantum Twins — `specs/245-quantum-twins.md`
