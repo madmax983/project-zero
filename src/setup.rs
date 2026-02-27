@@ -6,7 +6,6 @@ use rand::RngCore;
 // Fix: Unconditional import of AddChronicleEvent because init_resource usage is unconditional below
 use crate::layer1::chronicle::AddChronicleEvent;
 
-#[cfg(all(not(target_arch = "wasm32"), not(test)))]
 // use crate::layer1::chronicle::AddChronicleEvent; // Removed conditional import
 use crate::layer1::heirloom::RetrogradeEngineeringEvent;
 use crate::layer1::pop::{PopBorn, PopDied};

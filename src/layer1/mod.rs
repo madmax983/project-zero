@@ -710,3 +710,7 @@ pub mod hologram;
 #[cfg(test)]
 mod hologram_tests;
 pub use hologram::*;
+
+/// Surgical Addiction system (Spec 250).
+pub mod addiction;
+pub use addiction::*;

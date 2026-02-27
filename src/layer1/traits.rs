@@ -66,6 +66,8 @@ pub enum Trait {
     VoidTouched,
     /// Highly susceptible to Void Stare effects (Spec 216).
     Agoraphobic,
+    /// (Spec 250) Obsessed with augmenting their body.
+    Transhumanist,
 }
 
 impl Trait {
@@ -102,6 +104,7 @@ impl Trait {
             Self::Soulless => "Soulless",
             Self::VoidTouched => "Void Touched",
             Self::Agoraphobic => "Agoraphobic",
+            Self::Transhumanist => "Transhumanist",
         }
     }
 }
