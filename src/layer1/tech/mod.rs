@@ -653,4 +653,6 @@ mod tests {
     }
 }
 pub mod legacy_code;
+pub mod ghost_code;
 #[cfg(test)] mod legacy_code_tests;
+#[cfg(test)] mod ghost_code_tests;
