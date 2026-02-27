@@ -41,6 +41,16 @@ pub fn evaluate_simple_action(
 }
 
 /// Evaluates if a pop should fetch clothing.
+///
+/// # The "Shiver Factor"
+///
+/// Pops don't just upgrade clothes for fashion; they do it to survive.
+/// This evaluator checks:
+///
+/// 1.  **Nakedness:** If `insulation == 0.0`, urgency is high (0.95).
+/// 2.  **Hypothermia Risk:** If the local temperature is below what the current
+///     clothes can handle (`insulation * -30 + 10`), urgency becomes critical (0.99),
+///     prompting an immediate upgrade even if they are already dressed.
 #[must_use]
 pub fn evaluate_fetch_clothing(
     pop_pos: GridPosition,
@@ -119,6 +129,16 @@ pub fn evaluate_research(
 }
 
 /// Evaluates the utility of hauling loose items.
+///
+/// # Logistics Priority
+///
+/// Not all items are created equal. The AI prioritizes destinations:
+///
+/// 1.  **Gene Banks (Critical):** If carrying a `GeneticSample`, finding a Gene Bank
+///     is Priority #1 (0.95 utility). We don't want rare DNA rotting in a pocket.
+/// 2.  **Stockpiles (Standard):** If carrying anything else, find a Stockpile (0.90).
+/// 3.  **Pickup (Idle):** If empty-handed, find the nearest loose item (0.60 base).
+///     This is a lower priority than "real work" (Mining/Building).
 #[must_use]
 pub fn evaluate_haul(
     pop_pos: GridPosition,

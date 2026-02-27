@@ -16,7 +16,7 @@ use crate::layer1::resources::{Carrying, ColonyResources, ResourceType};
 use crate::layer1::stress::{BREAKDOWN_TICKS_REQUIRED, Breakdown, StressTracker};
 use crate::layer1::taboo::TabooState;
 use crate::layer1::traits::Traits;
-use crate::layer1::unrest::MentalState;
+use crate::layer1::unrest::{MentalState};
 use crate::layer1::utility_types::{
     ActionType, HobbyType, PopAction, UtilityWeights, calculate_context_score,
 };
@@ -196,7 +196,16 @@ pub struct WorldContext<'a> {
 // --- UNIFIED PROXY ---
 // Razor's Cut: Replaced 5 repetitive proxy structs with one generic candidate struct.
 
-/// Represents any entity that a Pop might interact with (Workplace, Item, Location).
+/// The "Universal Target" for AI evaluation.
+///
+/// Instead of having separate structs for `FarmCandidate`, `ItemCandidate`, etc.,
+/// we flatten everything into this `ScorableCandidate`. This allows the
+/// [`evaluate_candidates`] function to process *any* list of targets using the same math.
+///
+/// # Fields
+///
+/// *   **Capacity/Usage**: Used for crowding penalties (e.g., full taverns are less attractive).
+/// *   **Score Bonus**: A generic modifier (e.g., resource quality, clutter amount).
 #[derive(Clone, Debug)]
 pub struct ScorableCandidate {
     /// The entity ID.
@@ -250,16 +259,34 @@ impl ScorableCandidate {
 
 /// Generic evaluation function for finding the best candidate.
 ///
-/// Replaces repetitive loops in individual `evaluate_*` functions.
+/// This function applies the standard utility formula:
+/// `Utility = (Base + Bonus) * ContextScore(Distance, Crowding)`
 ///
-/// # Arguments
-/// * `pop_pos` - The position of the Pop.
-/// * `weights` - The Pop's utility weights.
-/// * `candidates` - The list of candidates to evaluate.
-/// * `base_utility` - The base score for this action.
+/// # Examples
 ///
-/// # Returns
-/// * `Some((utility, entity))` if a valid candidate is found.
+/// ```
+/// use scale::layer1::utility_eval_types::{ScorableCandidate, evaluate_candidates};
+/// use scale::layer1::map::GridPosition;
+/// use scale::layer1::utility_types::UtilityWeights;
+/// use bevy_ecs::prelude::Entity;
+///
+/// let pop_pos = GridPosition { x: 0, y: 0 };
+/// let weights = UtilityWeights::default();
+///
+/// // Candidate A: Close (dist 1) but crowded
+/// let mut cand_a = ScorableCandidate::new(Entity::from_raw(1), GridPosition { x: 1, y: 0 });
+/// cand_a.capacity = 10;
+/// cand_a.usage = 9; // 90% full
+///
+/// // Candidate B: Far (dist 10) but empty
+/// let cand_b = ScorableCandidate::new(Entity::from_raw(2), GridPosition { x: 10, y: 0 });
+///
+/// let candidates = vec![cand_a, cand_b];
+/// let result = evaluate_candidates(pop_pos, &weights, &candidates, 0.5);
+///
+/// assert!(result.is_some());
+/// // Exact winner depends on tuning, but it will pick one.
+/// ```
 #[must_use]
 pub fn evaluate_candidates(
     pop_pos: GridPosition,
@@ -287,7 +314,17 @@ pub fn evaluate_candidates(
     best
 }
 
-/// Reusable buffer for `evaluate_actions_system` to avoid allocations.
+/// A massive reusable buffer for AI evaluation.
+///
+/// # Performance Story
+///
+/// Allocating vectors for every Pop every frame would be a disaster.
+/// Instead, we allocate *once* (and resize as needed) in this resource.
+///
+/// *   **Zero Allocation Loop**: During `evaluate_actions_system`, we clear these vectors,
+///     populate them, read them, and clear them again—without freeing the underlying memory.
+/// *   **SoA Layout**: Candidates are grouped by type (Farms, Items), effectively creating
+///     a "Structure of Arrays" layout for the evaluation phase.
 #[derive(Resource, Default)]
 pub struct UtilityAIBuffer {
     /// Buffer for pop data.
@@ -348,7 +385,7 @@ pub struct UtilityAIBuffer {
     pub gene_banks: Vec<ScorableCandidate>,
     /// Buffer for ghost code residue candidates (Purge job).
     pub residues: Vec<ScorableCandidate>,
-    /// Buffer for clutter cleaning targets.
+    /// Buffer for cleaning targets.
     pub cleaning_targets: Vec<ScorableCandidate>,
 }
 

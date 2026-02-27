@@ -146,7 +146,13 @@ mod tests {
         }
 
         let stockpile = world
-            .spawn((GridPosition { x: 5, y: 5 }, Inventory { items }))
+            .spawn((
+                GridPosition { x: 5, y: 5 },
+                Inventory {
+                    items,
+                    capacity: 10,
+                },
+            ))
             .id();
 
         // Run system
