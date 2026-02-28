@@ -26,6 +26,14 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<PossessEntityEvent>,
             update_event_buffer::<UnpossessEvent>,
             update_event_buffer::<crate::layer1::skills::XpGainEvent>,
+            update_event_buffer::<crate::layer1::resources::MiningEvent>,
+        )
+            .in_set(Layer1SystemSet::EventCleanup),
+    );
+
+    schedule.add_systems(
+        (
+            update_event_buffer::<crate::layer1::geology::tectonic::MegaQuakeEvent>,
             handle_direct_input_system,
         )
             .in_set(Layer1SystemSet::EventCleanup),
