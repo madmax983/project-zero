@@ -257,4 +257,4 @@ pub fn art_observation_system(
 ## Questions
 
 *Builder: Should Art also emit Beauty?*
-Answer: The `Statue` building already emits Beauty via Spec `044`. This `Art` component adds the specific historical flavor and mood memory on top.
+*Architect: The `Statue` building already emits Beauty via Spec `044`. This `Art` component adds the specific historical flavor and mood memory on top.*

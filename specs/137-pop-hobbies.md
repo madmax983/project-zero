@@ -250,4 +250,4 @@ pub fn execute_hobby_system(
 ## Questions
 
 *Builder: How do we handle "Gossip" hobby mechanically?*
-Answer: For MVP, treat it as a solo action "Looking for gossip" that reduces stress. Full social interaction is covered by `047` Pop Relationships and `097` Tavern.
+*Architect: For MVP, treat it as a solo action "Looking for gossip" that reduces stress. Full social interaction is covered by `047` Pop Relationships and `097` Tavern.*

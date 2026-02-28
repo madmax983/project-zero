@@ -21,3 +21,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `264` Hyper-Specialized Evolution — `specs/264-hyper-specialized-evolution.md`
 - [ ] `265` Shadow Ecosystems — `specs/265-shadow-ecosystems.md`
 - [ ] `266` Emotional Contagion — `specs/266-emotional-contagion.md`
+- [ ] `267` Ancestral Graves — `specs/267-ancestral-graves.md`
