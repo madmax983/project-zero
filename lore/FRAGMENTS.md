@@ -3553,3 +3553,27 @@ Things being destroyed by corrosion.
 - tool handle
 - exposed wiring
 - statue face
+
+## Atmospheric Processor Fragments (Spec 207)
+
+### [PROCESSOR_NAME]
+Names for atmospheric processors.
+
+- The Lung
+- Air-Forge
+- The Breather
+- Sky-Cleaner
+- The Great Filter
+- Wind-Catcher
+- Toxin-Scrubber
+
+### [AIR_QUALITY]
+Descriptions of the changing atmosphere.
+
+- less bitter
+- breathable
+- clear
+- sweet
+- free of ash
+- settling
+- returning to normal

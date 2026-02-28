@@ -2527,3 +2527,28 @@
 **Usage:**
 - "Sky-acid is falling."
 - "Don't breathe the sky-acid."
+
+---
+
+## Atmospheric Processors
+
+### sky-forge / the Lung
+**Replaces:** atmospheric processor
+**Code reference:** `BuildingType::AtmosphericProcessor`
+**Usage:**
+- "The Lung is pulling the poison."
+- "Keep the sky-forge running."
+
+### sweet-air
+**Replaces:** low toxicity atmosphere
+**Code reference:** `PlanetaryAtmosphere.toxicity` (low)
+**Usage:**
+- "Breathing sweet-air today."
+- "The Lung brings sweet-air."
+
+### bitter-wind
+**Replaces:** toxic atmosphere
+**Code reference:** `PlanetaryAtmosphere.toxicity` (high)
+**Usage:**
+- "The bitter-wind bites."
+- "Close the vents against the bitter-wind."
