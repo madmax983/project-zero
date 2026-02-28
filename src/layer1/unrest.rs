@@ -2,7 +2,7 @@ use crate::layer1::cabin_fever::CabinFever;
 use crate::layer1::morale::Morale;
 use crate::layer1::needs::Needs;
 use crate::layer1::pop::Pop;
-use crate::layer1::structure::{FRAGILITY_DAMAGE_MULTIPLIER, Fragile, Structure};
+use crate::layer1::structure::{Fragile, Structure, FRAGILITY_DAMAGE_MULTIPLIER};
 use crate::layer1::traits::{Trait, Traits};
 use bevy_ecs::prelude::*;
 
@@ -237,7 +237,7 @@ mod tests {
     use crate::layer1::needs::Needs;
     use crate::layer1::pop::Pop;
     use crate::layer1::structure::Structure;
-    use crate::layer1::utility_ai::{ActionType, PopAction, evaluate_actions_system};
+    use crate::layer1::utility_ai::{evaluate_actions_system, ActionType, PopAction};
     use bevy_ecs::system::RunSystemOnce;
 
     fn setup_world() -> World {
@@ -394,11 +394,11 @@ mod tests {
     #[test]
     fn test_vandalize_integration_damages_building() {
         use crate::layer1::execution::{
-            AtTarget, MovementTarget, movement_system, process_start_plan_system,
-            vandalize_execution_system,
+            movement_system, process_start_plan_system, vandalize_execution_system, AtTarget,
+            MovementTarget,
         };
         use crate::layer1::utility_ai::{
-            PopAction, StartPlan, UtilityWeights, evaluate_actions_system,
+            evaluate_actions_system, PopAction, StartPlan, UtilityWeights,
         };
 
         let mut world = setup_world();

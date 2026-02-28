@@ -1,13 +1,15 @@
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::beauty::{BeautyGrid, BeautySource, update_beauty_grid_system};
+    use crate::layer1::beauty::{update_beauty_grid_system, BeautyGrid, BeautySource};
     use crate::layer1::energy::PowerConsumer;
-    use crate::layer1::hologram::{HoloProjector, update_holograms_system, apply_disillusionment_system, HologramFailureEvent};
+    use crate::layer1::hologram::{
+        apply_disillusionment_system, update_holograms_system, HoloProjector, HologramFailureEvent,
+    };
+    use crate::layer1::map::GridPosition;
     use crate::layer1::morale::Morale;
     use crate::layer1::pop::Pop;
-    use crate::layer1::map::GridPosition;
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
+    use bevy_ecs::prelude::*;
 
     fn setup_world() -> World {
         let mut world = World::new();
@@ -67,7 +69,10 @@ mod tests {
                 radius: 5.0,
                 is_active: true, // Was active
             },
-            BeautySource { value: 50.0, radius: 5.0 }, // Currently active
+            BeautySource {
+                value: 50.0,
+                radius: 5.0,
+            }, // Currently active
             PowerConsumer {
                 demand: 10.0,
                 active: false, // Power cut
@@ -94,18 +99,34 @@ mod tests {
 
         // Spawn HoloProjector losing power
         world.spawn((
-            HoloProjector { active_beauty: 50.0, radius: 5.0, is_active: true },
-            BeautySource { value: 50.0, radius: 5.0 },
-            PowerConsumer { demand: 10.0, active: false, ..Default::default() },
+            HoloProjector {
+                active_beauty: 50.0,
+                radius: 5.0,
+                is_active: true,
+            },
+            BeautySource {
+                value: 50.0,
+                radius: 5.0,
+            },
+            PowerConsumer {
+                demand: 10.0,
+                active: false,
+                ..Default::default()
+            },
             GridPosition { x: 5, y: 5 },
         ));
 
         // Spawn Pop nearby
-        let pop_id = world.spawn((
-            Pop,
-            GridPosition { x: 5, y: 5 },
-            Morale { value: 0.8, ..Default::default() },
-        )).id();
+        let pop_id = world
+            .spawn((
+                Pop,
+                GridPosition { x: 5, y: 5 },
+                Morale {
+                    value: 0.8,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         // Run system
         let mut schedule = Schedule::default();
@@ -116,7 +137,10 @@ mod tests {
 
         let morale = world.get::<Morale>(pop_id).unwrap();
         // Check modifiers
-        let found = morale.modifiers.iter().any(|m| m.label == "Disillusionment" && m.value == -0.2);
+        let found = morale
+            .modifiers
+            .iter()
+            .any(|m| m.label == "Disillusionment" && m.value == -0.2);
         assert!(found, "Disillusionment modifier not found");
     }
 }

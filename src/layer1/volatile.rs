@@ -101,7 +101,7 @@ mod tests {
     fn test_decay_system_reduces_stability() {
         let mut world = World::new();
         world.insert_resource(SimulationTime::default()); // Time resource
-        // Need to register Events<ExplosionEvent> because system uses EventWriter
+                                                          // Need to register Events<ExplosionEvent> because system uses EventWriter
         world.init_resource::<Events<ExplosionEvent>>();
 
         let entity = world

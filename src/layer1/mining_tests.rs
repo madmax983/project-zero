@@ -2,7 +2,7 @@
 mod tests {
     use crate::layer1::designation::{Designation, DesignationType};
     use crate::layer1::map::GridPosition;
-    use crate::layer1::resources::{ColonyResources, MiningProgress, mine_rock};
+    use crate::layer1::resources::{mine_rock, ColonyResources, MiningProgress};
     use crate::layer1::science::{Anomaly, AnomalyType};
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
     use bevy_ecs::prelude::*;

@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
     use crate::layer1::building::{Building, BuildingType};
-    use crate::layer1::farm::{Farm, produce_food_system};
+    use crate::layer1::farm::{produce_food_system, Farm};
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
     use crate::layer1::resources::ColonyResources;

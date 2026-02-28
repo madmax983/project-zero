@@ -3,7 +3,7 @@ mod tests {
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::pop::Pop;
     use crate::layer1::refining::process_refining_system;
-    use crate::layer1::resources::{ColonyResources, MiningProgress, RefiningProgress, mine_rock};
+    use crate::layer1::resources::{mine_rock, ColonyResources, MiningProgress, RefiningProgress};
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
     use crate::layer1::utility_ai::{ActionType, PopAction};
     use crate::layer1::{Designation, DesignationType, GridPosition};

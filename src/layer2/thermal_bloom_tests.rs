@@ -1,9 +1,11 @@
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
     use crate::layer1::temperature::HeatSource;
-    use crate::layer2::thermal::{ThermalSignature, update_thermal_bloom_system, detection_risk_system};
     use crate::layer2::events::DetectionEvent;
+    use crate::layer2::thermal::{
+        detection_risk_system, update_thermal_bloom_system, ThermalSignature,
+    };
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_thermal_signature_aggregation() {
@@ -57,7 +59,7 @@ mod tests {
         world.insert_resource(ThermalSignature {
             current_value: 1000.0,
             detection_threshold: 500.0,
-            decay_rate: 0.1
+            decay_rate: 0.1,
         });
 
         // Run detection system
@@ -84,7 +86,7 @@ mod tests {
         world.insert_resource(ThermalSignature {
             current_value: 10.0,
             detection_threshold: 500.0,
-            decay_rate: 0.1
+            decay_rate: 0.1,
         });
 
         // Run detection system
@@ -94,6 +96,10 @@ mod tests {
 
         let events = world.resource::<Events<DetectionEvent>>();
         let reader = events.get_reader();
-        assert_eq!(reader.len(&events), 0, "Low thermal signature should NOT trigger detection");
+        assert_eq!(
+            reader.len(&events),
+            0,
+            "Low thermal signature should NOT trigger detection"
+        );
     }
 }

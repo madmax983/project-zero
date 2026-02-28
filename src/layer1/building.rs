@@ -20,7 +20,6 @@
 //! *   [`crate::layer1::structure::Structure`]: Health and durability.
 //! *   Specific Logic Components: e.g., [`Housing`], [`Farm`], [`Stockpile`].
 
-use super::GridPosition;
 use super::acoustic::NoiseSource;
 use super::beauty::BeautySource;
 use super::farm::Farm;
@@ -28,6 +27,7 @@ use super::fire::Flammable;
 use super::housing::Housing;
 use super::social::Tavern;
 use super::stockpile::Stockpile;
+use super::GridPosition;
 use crate::layer1::access_control::AccessControl;
 use crate::layer1::admin::{AdminConsumer, AdminProvider, Office};
 use crate::layer1::ai_core::AICore;
@@ -48,7 +48,7 @@ use crate::layer1::solar::SolarPower;
 use crate::layer1::tech::{DataStorage, Library, Tech, TechState};
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::trade::TradeDepot;
-use crate::layer1::water::{MAX_HYDRATION, WaterSource};
+use crate::layer1::water::{WaterSource, MAX_HYDRATION};
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
 use bevy_ecs::world::EntityWorldMut;
@@ -345,9 +345,11 @@ impl BuildingType {
 
             Self::Library | Self::BulletinBoard => Some((Category::Research, Tier::Basic)),
             Self::Observatory | Self::CryoPod => Some((Category::Research, Tier::Advanced)),
-            Self::AICore | Self::AtmosphericProcessor | Self::GeneBank | Self::CloneVat | Self::HoloProjector => {
-                Some((Category::Research, Tier::HighTech))
-            }
+            Self::AICore
+            | Self::AtmosphericProcessor
+            | Self::GeneBank
+            | Self::CloneVat
+            | Self::HoloProjector => Some((Category::Research, Tier::HighTech)),
 
             _ => None,
         }
@@ -520,7 +522,7 @@ impl BuildingType {
             Self::Grave => -2.0,    // Graves are slightly spooky
             Self::FlowerBed => super::beauty::FLOWER_BED_BEAUTY,
             Self::HoloProjector => 50.0, // Massive beauty boost
-            Self::TradeDepot => 5.0, // Trade brings goods and culture
+            Self::TradeDepot => 5.0,     // Trade brings goods and culture
             Self::Well | Self::HydroponicsBay | Self::LifeSupport => 1.0,
             Self::Wall | Self::Window | Self::Gate | Self::Tower | Self::Airlock | Self::Vent => {
                 0.0
@@ -2187,8 +2189,8 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::GridPosition;
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
+    use crate::layer1::GridPosition;
 
     #[test]
     fn test_building_type_default() {

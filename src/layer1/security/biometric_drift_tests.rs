@@ -1,7 +1,7 @@
 use super::*;
 use crate::layer1::health::Scars;
-use crate::layer1::pop::Pop;
 use crate::layer1::lifecycle::Age;
+use crate::layer1::pop::Pop;
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 
@@ -80,7 +80,11 @@ fn test_scars_increase_drift() {
 
     let profile = world.get::<BiometricProfile>(pop).unwrap();
     // 2 scars * 0.1 drift per scar = 0.2
-    assert!((profile.drift - 0.2).abs() < f32::EPSILON, "Drift should be 0.2 from 2 scars, got {}", profile.drift);
+    assert!(
+        (profile.drift - 0.2).abs() < f32::EPSILON,
+        "Drift should be 0.2 from 2 scars, got {}",
+        profile.drift
+    );
 }
 
 #[test]

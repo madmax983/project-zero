@@ -173,7 +173,7 @@ mod tests {
     use crate::layer1::health::Health;
     use crate::layer1::map::GridPosition;
     use crate::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
-    use crate::layer1::turret::{Turret, turret_fire_system};
+    use crate::layer1::turret::{turret_fire_system, Turret};
     use bevy_ecs::prelude::*;
 
     fn setup_world() -> World {

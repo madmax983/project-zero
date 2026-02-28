@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use crate::layer1::justice::{Wanted, check_crime_system, evaluate_warden_action};
+    use crate::layer1::justice::{check_crime_system, evaluate_warden_action, Wanted};
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
     use crate::layer1::unrest::{MentalBreakType, MentalState};

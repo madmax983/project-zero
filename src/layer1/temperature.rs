@@ -319,7 +319,7 @@ mod tests {
     use crate::layer1::pop::Pop;
     use crate::layer1::seasons::{Season, SeasonState};
     use crate::layer1::temperature::{
-        HeatSource, TemperatureGrid, thermal_damage_system, update_temperature_system,
+        thermal_damage_system, update_temperature_system, HeatSource, TemperatureGrid,
     };
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
     use bevy_ecs::prelude::*;
@@ -382,16 +382,17 @@ mod tests {
         });
 
         // Spawn Explicit HeatSource
-        world.spawn((
-            HeatSource { output: 25.0 },
-            GridPosition { x: 5, y: 5 },
-        ));
+        world.spawn((HeatSource { output: 25.0 }, GridPosition { x: 5, y: 5 }));
 
         // Run update
         world.run_system_once(update_temperature_system).unwrap();
 
         let grid = world.resource::<TemperatureGrid>();
-        assert_eq!(grid.get(5, 5), 25.0, "HeatSource should set temperature (additive to 0.0 ambient)");
+        assert_eq!(
+            grid.get(5, 5),
+            25.0,
+            "HeatSource should set temperature (additive to 0.0 ambient)"
+        );
     }
 
     #[test]
@@ -501,8 +502,8 @@ mod tests {
             current_season: Season::Winter,
         }); // Assume Winter = -5.0
         let mut grid = TemperatureGrid::new(10, 10, 20.0); // Start warm (20 C)
-        // Set explicit ambient on grid to match season for test clarity,
-        // though system will overwrite it.
+                                                           // Set explicit ambient on grid to match season for test clarity,
+                                                           // though system will overwrite it.
         grid.ambient = -5.0;
         world.insert_resource(grid);
         world.insert_resource(TerrainGrid {

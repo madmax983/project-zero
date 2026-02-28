@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
+    use crate::layer1::structure::{fragile_decay_system, Fragile, Structure};
     use crate::layer1::GridPosition;
-    use crate::layer1::structure::{Fragile, Structure, fragile_decay_system};
     use bevy_ecs::prelude::*;
 
     fn setup_world() -> World {

@@ -234,8 +234,8 @@ pub fn process_flora_clearing(world: &mut World, designation_entity: Entity, wor
 mod tests {
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::flora::{
-        Bioluminescent, Flora, FloraClearingProgress, FloraType, flora_attack_system,
-        flora_spread_system, process_flora_clearing, update_bioluminescence_system,
+        flora_attack_system, flora_spread_system, process_flora_clearing,
+        update_bioluminescence_system, Bioluminescent, Flora, FloraClearingProgress, FloraType,
     };
     use crate::layer1::health::Health;
     use crate::layer1::map::GridPosition;

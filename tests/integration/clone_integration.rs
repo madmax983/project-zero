@@ -1,16 +1,16 @@
+use bevy_ecs::prelude::*;
+use bevy_ecs::system::RunSystemOnce;
 use scale::layer1::actions::{AssignedTo, AssignmentType};
 use scale::layer1::building::{Building, BuildingType};
-use scale::layer1::clone_vat::{CloneVat, process_clone_vats_system};
+use scale::layer1::clone_vat::{process_clone_vats_system, CloneVat};
 use scale::layer1::housing::Housing;
 use scale::layer1::map::GridPosition;
-use scale::layer1::needs::{Needs, decay_needs_system};
+use scale::layer1::needs::{decay_needs_system, Needs};
 use scale::layer1::notifications::NotificationQueue;
 use scale::layer1::pop::{Pop, PopBorn};
 use scale::layer1::resources::ColonyResources;
 use scale::layer1::traits::{Trait, Traits};
 use scale::shared::time::SimulationTime;
-use bevy_ecs::prelude::*;
-use bevy_ecs::system::RunSystemOnce;
 
 fn setup_world() -> World {
     scale::setup::init_task_pools();
@@ -33,11 +33,16 @@ fn setup_world() -> World {
 #[test]
 fn test_clone_vat_emits_event_and_notification() {
     let mut world = setup_world();
-    world.insert_resource(SimulationTime { tick: 100, ..Default::default() });
+    world.insert_resource(SimulationTime {
+        tick: 100,
+        ..Default::default()
+    });
 
     // Spawn Clone Vat ready to finish
     world.spawn((
-        Building { building_type: BuildingType::CloneVat },
+        Building {
+            building_type: BuildingType::CloneVat,
+        },
         CloneVat {
             is_growing: true,
             ticks_remaining: 1,
@@ -49,10 +54,13 @@ fn test_clone_vat_emits_event_and_notification() {
 
     // Run system
     let mut schedule = Schedule::default();
-    schedule.add_systems((
-        process_clone_vats_system,
-        scale::layer1::integration::pop_born_notification_system,
-    ).chain());
+    schedule.add_systems(
+        (
+            process_clone_vats_system,
+            scale::layer1::integration::pop_born_notification_system,
+        )
+            .chain(),
+    );
 
     schedule.run(&mut world);
 
@@ -77,15 +85,24 @@ fn test_clone_auto_assigns_housing() {
     let mut world = setup_world();
 
     // Spawn Housing with capacity
-    let housing_entity = world.spawn((
-        Building { building_type: BuildingType::Housing },
-        Housing { capacity: 2, residents: vec![] },
-        GridPosition { x: 0, y: 0 },
-    )).id();
+    let housing_entity = world
+        .spawn((
+            Building {
+                building_type: BuildingType::Housing,
+            },
+            Housing {
+                capacity: 2,
+                residents: vec![],
+            },
+            GridPosition { x: 0, y: 0 },
+        ))
+        .id();
 
     // Spawn Clone Vat ready to finish
     world.spawn((
-        Building { building_type: BuildingType::CloneVat },
+        Building {
+            building_type: BuildingType::CloneVat,
+        },
         CloneVat {
             is_growing: true,
             ticks_remaining: 1,
@@ -117,18 +134,16 @@ fn test_soulless_trait_reduces_leisure_decay() {
     let mut world = setup_world();
 
     // Spawn Soulless Pop
-    let soulless_pop = world.spawn((
-        Pop,
-        Needs::default(),
-        Traits(std::collections::HashSet::from([Trait::Soulless])),
-    )).id();
+    let soulless_pop = world
+        .spawn((
+            Pop,
+            Needs::default(),
+            Traits(std::collections::HashSet::from([Trait::Soulless])),
+        ))
+        .id();
 
     // Spawn Normal Pop
-    let normal_pop = world.spawn((
-        Pop,
-        Needs::default(),
-        Traits::default(),
-    )).id();
+    let normal_pop = world.spawn((Pop, Needs::default(), Traits::default())).id();
 
     // Run decay system
     world.run_system_once(decay_needs_system).unwrap();
@@ -143,6 +158,12 @@ fn test_soulless_trait_reduces_leisure_decay() {
     let normal_loss = 0.8 - normal_needs.leisure;
     let soulless_loss = 0.8 - soulless_needs.leisure;
 
-    assert!(soulless_loss < normal_loss, "Soulless should lose less leisure");
-    assert!((soulless_loss - (normal_loss * 0.5)).abs() < 0.0001, "Should be roughly half decay");
+    assert!(
+        soulless_loss < normal_loss,
+        "Soulless should lose less leisure"
+    );
+    assert!(
+        (soulless_loss - (normal_loss * 0.5)).abs() < 0.0001,
+        "Should be roughly half decay"
+    );
 }

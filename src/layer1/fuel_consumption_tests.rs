@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
     use crate::layer1::building::{Building, BuildingType};
-    use crate::layer1::energy::{FuelConsumer, PowerSource, process_fuel_consumption_system};
+    use crate::layer1::energy::{process_fuel_consumption_system, FuelConsumer, PowerSource};
     use crate::layer1::map::GridPosition;
     use crate::layer1::resources::ColonyResources;
     use bevy_ecs::prelude::*;

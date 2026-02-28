@@ -3,7 +3,7 @@ mod tests {
     use crate::layer1::actions::{AssignedTo, AssignmentType};
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::health::Health;
-    use crate::layer1::medical::{Hospital, MedicalPolicy, healing_system};
+    use crate::layer1::medical::{healing_system, Hospital, MedicalPolicy};
     use crate::layer1::pop::{Job, Pop}; // Job is the new component for employment
     use bevy_ecs::prelude::*;
 

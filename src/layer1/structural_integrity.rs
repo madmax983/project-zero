@@ -1,8 +1,8 @@
 #![allow(clippy::cast_sign_loss)]
-use crate::layer1::GridPosition;
 use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::health::Health;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
+use crate::layer1::GridPosition;
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
 
@@ -190,10 +190,10 @@ pub struct StructureCollapsed {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::GridPosition;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::health::Health;
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
+    use crate::layer1::GridPosition;
 
     #[test]
     fn test_roof_initialization() {

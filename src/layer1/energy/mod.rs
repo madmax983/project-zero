@@ -7,8 +7,8 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::weather::{WeatherState, WeatherType};
 use bevy_ecs::prelude::*;
-use rand::Rng;
 use rand::seq::SliceRandom;
+use rand::Rng;
 use std::collections::{HashMap, HashSet, VecDeque};
 
 /// Auroral power generation.
@@ -408,7 +408,7 @@ pub fn process_fuel_consumption_system(
 
 #[cfg(test)]
 mod tests {
-    use super::{Conduit, PowerConsumer, PowerSource, calculate_grid_stats};
+    use super::{calculate_grid_stats, Conduit, PowerConsumer, PowerSource};
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::map::GridPosition;
     use bevy_ecs::prelude::*;

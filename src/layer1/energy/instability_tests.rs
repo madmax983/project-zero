@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use crate::layer1::energy::{Battery, Conduit, PowerConsumer, PowerSource, power_grid_system};
+    use crate::layer1::energy::{power_grid_system, Battery, Conduit, PowerConsumer, PowerSource};
     use crate::layer1::health::Health;
     use crate::layer1::map::GridPosition;
     use bevy_ecs::prelude::*; // From Spec 034/071

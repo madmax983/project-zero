@@ -4,9 +4,9 @@ use crate::layer1::stress::StressTracker;
 use crate::layer1::traits::{Trait, Traits};
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
-use rand::Rng;
 use rand::seq::{IteratorRandom, SliceRandom};
 use rand::thread_rng;
+use rand::Rng;
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum Sentiment {

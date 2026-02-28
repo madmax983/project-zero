@@ -5,7 +5,7 @@
 
 use crate::layer1::items::ItemType;
 use bevy_ecs::prelude::*;
-use rand::{Rng, SeedableRng, rngs::StdRng};
+use rand::{rngs::StdRng, Rng, SeedableRng};
 use std::hash::{Hash, Hasher};
 
 /// Possible effects of consuming a Mystery Meal.

@@ -89,11 +89,11 @@ fn lerp(a: f32, b: f32, t: f32) -> f32 {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::GridPosition;
     use crate::layer1::resources::{
-        ColonyResources, MiningProgress, ResourceItem, ResourceType, mine_rock,
+        mine_rock, ColonyResources, MiningProgress, ResourceItem, ResourceType,
     };
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
+    use crate::layer1::GridPosition;
 
     #[test]
     fn test_purity_map_resource_exists() {

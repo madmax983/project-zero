@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
     use crate::layer1::hazards::{
-        AccidentSeverity, AmputationEvent, calculate_risk, determine_severity, trigger_accident,
+        calculate_risk, determine_severity, trigger_accident, AccidentSeverity, AmputationEvent,
     };
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;

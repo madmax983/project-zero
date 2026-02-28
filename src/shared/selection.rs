@@ -1,6 +1,6 @@
 use crate::layer1::{
-    GridPosition, TerrainGrid, Viewport, building::Building, fertility::FertilityGrid,
-    health::Health, needs::Needs, pop::Pop,
+    building::Building, fertility::FertilityGrid, health::Health, needs::Needs, pop::Pop,
+    GridPosition, TerrainGrid, Viewport,
 };
 use bevy_ecs::prelude::*;
 use std::fmt::Write;

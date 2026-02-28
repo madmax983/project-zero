@@ -13,12 +13,12 @@ use crate::layer1::needs::Needs;
 use crate::layer1::penal::PenalLabor;
 use crate::layer1::pop::Job;
 use crate::layer1::resources::{Carrying, ColonyResources, ResourceType};
-use crate::layer1::stress::{BREAKDOWN_TICKS_REQUIRED, Breakdown, StressTracker};
+use crate::layer1::stress::{Breakdown, StressTracker, BREAKDOWN_TICKS_REQUIRED};
 use crate::layer1::taboo::TabooState;
 use crate::layer1::traits::Traits;
-use crate::layer1::unrest::{MentalState};
+use crate::layer1::unrest::MentalState;
 use crate::layer1::utility_types::{
-    ActionType, HobbyType, PopAction, UtilityWeights, calculate_context_score,
+    calculate_context_score, ActionType, HobbyType, PopAction, UtilityWeights,
 };
 use bevy_ecs::prelude::*;
 use bevy_ecs::query::QueryData;

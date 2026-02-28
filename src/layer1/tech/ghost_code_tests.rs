@@ -6,8 +6,8 @@ mod tests {
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
     use crate::layer1::tech::ghost_code::{
-        DataResidue, GhostCode, GhostEffectApplied, GhostTrait, apply_ghost_traits_system,
-        ghost_infection_system, purge_execution_system, residue_system,
+        apply_ghost_traits_system, ghost_infection_system, purge_execution_system, residue_system,
+        DataResidue, GhostCode, GhostEffectApplied, GhostTrait,
     };
     use crate::layer1::turret::Turret;
     use crate::layer1::utility_types::StartPlan;

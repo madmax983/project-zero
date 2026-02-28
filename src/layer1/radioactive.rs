@@ -147,9 +147,9 @@ mod tests {
     use crate::layer1::health::Health;
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
-    use crate::layer1::radioactive::{RadiationGrid, RadiationSickness, radiation_system};
+    use crate::layer1::radioactive::{radiation_system, RadiationGrid, RadiationSickness};
     use crate::layer1::resources::{ResourceItem, ResourceType};
-    use crate::layer1::temperature::{TemperatureGrid, update_temperature_system};
+    use crate::layer1::temperature::{update_temperature_system, TemperatureGrid};
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
 

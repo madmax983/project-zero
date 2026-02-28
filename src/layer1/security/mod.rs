@@ -27,10 +27,7 @@ pub enum AccessResult {
 }
 
 pub fn drift_accumulation_system(
-    mut query: Query<(
-        &mut BiometricProfile,
-        Option<&crate::layer1::health::Scars>,
-    )>,
+    mut query: Query<(&mut BiometricProfile, Option<&crate::layer1::health::Scars>)>,
     time: Res<crate::shared::time::SimulationTime>,
 ) {
     for (mut profile, scars) in query.iter_mut() {
@@ -72,9 +69,7 @@ pub fn check_access(world: &World, pop: Entity, terminal: Entity) -> AccessResul
 }
 
 pub fn recalibrate_profile(world: &mut World, pop: Entity) {
-    let current_tick = world
-        .resource::<crate::shared::time::SimulationTime>()
-        .tick;
+    let current_tick = world.resource::<crate::shared::time::SimulationTime>().tick;
     // Get current scars to sync
     let current_scars = world
         .get::<crate::layer1::health::Scars>(pop)

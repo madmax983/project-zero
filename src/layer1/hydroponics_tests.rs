@@ -2,7 +2,7 @@
 mod tests {
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::energy::PowerConsumer;
-    use crate::layer1::farm::{Farm, produce_food_system};
+    use crate::layer1::farm::{produce_food_system, Farm};
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
     use crate::layer1::resources::ColonyResources;
@@ -201,7 +201,7 @@ mod tests {
     fn test_spawn_hydroponics_components() {
         let mut world = World::new();
 
-        use crate::layer1::building::{OccupiedTiles, try_place_building};
+        use crate::layer1::building::{try_place_building, OccupiedTiles};
         use crate::layer1::tech::{Tech, TechState};
         use crate::layer1::terrain::{TerrainGrid, TerrainType};
 

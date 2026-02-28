@@ -105,7 +105,7 @@ pub fn regrowth_system(mut terrain: ResMut<TerrainGrid>, mut erosion: ResMut<Ero
 
 #[cfg(test)]
 mod tests {
-    use crate::layer1::erosion::{ErosionGrid, update_erosion_system};
+    use crate::layer1::erosion::{update_erosion_system, ErosionGrid};
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;

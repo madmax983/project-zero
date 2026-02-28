@@ -6,7 +6,7 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::resources::{ResourceItem, ResourceType};
 use crate::layer1::skills::{SkillType, Skills};
 use crate::layer1::utility_ai::{ActionType, PopAction, UtilityWeights};
-use crate::layer1::utility_eval_types::{ScorableCandidate, evaluate_candidates};
+use crate::layer1::utility_eval_types::{evaluate_candidates, ScorableCandidate};
 use crate::layer1::zone::{ZoneGrid, ZoneType};
 use bevy_ecs::prelude::*;
 

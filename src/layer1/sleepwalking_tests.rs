@@ -3,7 +3,7 @@ mod tests {
     use crate::layer1::needs::Needs;
     use crate::layer1::pop::Pop;
     use crate::layer1::unrest::{MentalBreakType, MentalState};
-    use crate::layer1::utility_ai::{ActionType, PopAction, evaluate_actions_system};
+    use crate::layer1::utility_ai::{evaluate_actions_system, ActionType, PopAction};
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
     // use crate::layer1::unrest::check_mental_break_system; // Not used in these tests directly, but relevant context
@@ -151,10 +151,8 @@ mod tests {
 
         let state = world.get::<MentalState>(pop).unwrap();
         assert_eq!(*state, MentalState::Normal);
-        assert!(
-            world
-                .get::<crate::layer1::sleepwalking::SleepwalkTimer>(pop)
-                .is_none()
-        );
+        assert!(world
+            .get::<crate::layer1::sleepwalking::SleepwalkTimer>(pop)
+            .is_none());
     }
 }

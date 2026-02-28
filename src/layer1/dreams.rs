@@ -14,8 +14,8 @@ use crate::shared::log::MessageLog;
 use crate::shared::narrative::NarrativeGenerator;
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
-use rand::Rng;
 use rand::seq::SliceRandom;
+use rand::Rng;
 
 /// A dream experienced by a Pop.
 #[derive(Component, Debug, Clone)]

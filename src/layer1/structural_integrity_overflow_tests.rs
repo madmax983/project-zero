@@ -1,5 +1,5 @@
 use crate::layer1::map::GridPosition;
-use crate::layer1::structural_integrity::{RoofGrid, apply_collapse, check_stability};
+use crate::layer1::structural_integrity::{apply_collapse, check_stability, RoofGrid};
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use bevy_ecs::prelude::*;
 

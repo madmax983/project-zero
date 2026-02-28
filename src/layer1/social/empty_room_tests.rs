@@ -1,15 +1,17 @@
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::zone::{ZoneGrid, ZoneType};
-    use crate::layer1::map::GridPosition;
-    use crate::layer1::stress::StressTracker;
     use crate::layer1::building::{Building, BuildingType};
-    use crate::layer1::items::Item;
     use crate::layer1::clutter::ClutterGrid;
-    use crate::layer1::social::empty_room::{SanctuaryManager, update_sanctuary_system, visit_sanctuary_system};
-    use rand::SeedableRng;
+    use crate::layer1::items::Item;
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::social::empty_room::{
+        update_sanctuary_system, visit_sanctuary_system, SanctuaryManager,
+    };
+    use crate::layer1::stress::StressTracker;
+    use crate::layer1::zone::{ZoneGrid, ZoneType};
+    use bevy_ecs::prelude::*;
     use rand::rngs::StdRng;
+    use rand::SeedableRng;
 
     fn setup_world() -> World {
         let mut world = World::new();
@@ -43,7 +45,9 @@ mod tests {
 
         // Spawn a building in the zone
         world.spawn((
-            Building { building_type: BuildingType::Housing },
+            Building {
+                building_type: BuildingType::Housing,
+            },
             GridPosition { x: 0, y: 0 },
         ));
 
@@ -62,13 +66,21 @@ mod tests {
     fn test_visit_reduces_stress() {
         let mut world = setup_world();
 
-        let pop = world.spawn((
-            GridPosition { x: 0, y: 0 }, // Inside zone
-            StressTracker { accumulated_stress: 50.0, ..Default::default() },
-        )).id();
+        let pop = world
+            .spawn((
+                GridPosition { x: 0, y: 0 }, // Inside zone
+                StressTracker {
+                    accumulated_stress: 50.0,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
-        schedule.add_systems((update_sanctuary_system, visit_sanctuary_system.after(update_sanctuary_system)));
+        schedule.add_systems((
+            update_sanctuary_system,
+            visit_sanctuary_system.after(update_sanctuary_system),
+        ));
         schedule.run(&mut world);
     }
 
@@ -76,14 +88,22 @@ mod tests {
     fn test_visit_can_spawn_clutter() {
         let mut world = setup_world();
 
-        let _pop = world.spawn((
-            GridPosition { x: 0, y: 0 }, // Inside zone
-            StressTracker { accumulated_stress: 50.0, ..Default::default() },
-        )).id();
+        let _pop = world
+            .spawn((
+                GridPosition { x: 0, y: 0 }, // Inside zone
+                StressTracker {
+                    accumulated_stress: 50.0,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         // Seed random to ensure the 1% chance hits (or we can just mock it, but simplest is to run it enough times or use a controlled random. Actually, we can't easily inject a seeded RNG into the system because it uses thread_rng. We can just run it many times).
         let mut schedule = Schedule::default();
-        schedule.add_systems((update_sanctuary_system, visit_sanctuary_system.after(update_sanctuary_system)));
+        schedule.add_systems((
+            update_sanctuary_system,
+            visit_sanctuary_system.after(update_sanctuary_system),
+        ));
 
         // Run it 1000 times, the chance of not spawning clutter is (0.99)^1000 = 0.000043.
         for _ in 0..1000 {

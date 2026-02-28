@@ -2,7 +2,7 @@
 mod tests {
     use crate::layer1::building::{Building, BuildingType, OccupiedTiles};
     use crate::layer1::designation::{Designation, DesignationType};
-    use crate::layer1::execution::{AtTarget, MovementTarget, work_execution_system};
+    use crate::layer1::execution::{work_execution_system, AtTarget, MovementTarget};
     use crate::layer1::housing::Housing;
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;

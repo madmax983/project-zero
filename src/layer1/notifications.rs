@@ -125,7 +125,7 @@ pub fn notification_expiration_system(
 #[cfg(test)]
 mod tests {
     use crate::layer1::notifications::{
-        NotificationQueue, NotificationSeverity, notification_expiration_system,
+        notification_expiration_system, NotificationQueue, NotificationSeverity,
     };
     use crate::shared::time::SimulationTime;
     use bevy_ecs::prelude::*;

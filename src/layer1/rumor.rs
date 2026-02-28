@@ -145,7 +145,7 @@ pub fn exchange_rumors_system(world: &mut World) {
 mod tests {
     use crate::layer1::needs::Needs;
     use crate::layer1::pop::Pop;
-    use crate::layer1::rumor::{Knowledge, Rumor, RumorTopic, generate_rumor_system};
+    use crate::layer1::rumor::{generate_rumor_system, Knowledge, Rumor, RumorTopic};
     use crate::layer1::social::{AffinityChange, Relationships};
     use bevy_ecs::prelude::*;
 

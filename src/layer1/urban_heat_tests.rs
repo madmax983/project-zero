@@ -4,7 +4,7 @@ mod tests {
     use crate::layer1::day_night::{DayNightCycle, TimeOfDay};
     use crate::layer1::map::GridPosition;
     use crate::layer1::seasons::{Season, SeasonState};
-    use crate::layer1::temperature::{TemperatureGrid, update_temperature_system};
+    use crate::layer1::temperature::{update_temperature_system, TemperatureGrid};
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;

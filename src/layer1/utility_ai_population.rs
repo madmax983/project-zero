@@ -31,8 +31,8 @@ use crate::layer1::science::Anomaly;
 use crate::layer1::social::Tavern;
 use crate::layer1::stockpile::Stockpile;
 use crate::layer1::structure::{DeferMaintenance, Structure};
-use crate::layer1::tech::Library;
 use crate::layer1::tech::ghost_code::DataResidue;
+use crate::layer1::tech::Library;
 use crate::layer1::utility_eval_types::{
     PopEvalData, PopEvaluationQuery, ScorableCandidate, UtilityAIBuffer, WorldContext,
 };
@@ -448,10 +448,20 @@ fn populate_cleaning_targets(world: &mut World, buffer: &mut UtilityAIBuffer) {
                     // Only add cleaning targets if a building is present, to ensure valid entity targeting.
                     // TODO: Support cleaning empty tiles if architecture allows Position targets or ephemeral entities.
                     // This is a known limitation: clutter in empty hallways/roads is currently ignored.
-                    if let Some(building_entity) = world.resource::<crate::layer1::building::BuildingMap>().0.get(&(x as i32, y as i32)) {
-                         let mut c = ScorableCandidate::new(*building_entity, GridPosition { x: x as i32, y: y as i32 });
-                         c.score_bonus = clutter / 100.0; // Higher clutter = higher score bonus
-                         buffer.cleaning_targets.push(c);
+                    if let Some(building_entity) = world
+                        .resource::<crate::layer1::building::BuildingMap>()
+                        .0
+                        .get(&(x as i32, y as i32))
+                    {
+                        let mut c = ScorableCandidate::new(
+                            *building_entity,
+                            GridPosition {
+                                x: x as i32,
+                                y: y as i32,
+                            },
+                        );
+                        c.score_bonus = clutter / 100.0; // Higher clutter = higher score bonus
+                        buffer.cleaning_targets.push(c);
                     }
                 }
             }

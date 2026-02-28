@@ -166,7 +166,7 @@ mod tests {
     #[test]
     fn test_windows_press_release_does_not_double_toggle_pause() {
         use crate::layer1::{BuildMode, DesignationMode, Viewport};
-        use crate::shared::input::{InputContext, InputContextStack, route_input};
+        use crate::shared::input::{route_input, InputContext, InputContextStack};
         use crate::shared::menu::MenuState;
         use crate::shared::selection::Selection;
         use crate::shared::state::GameState;

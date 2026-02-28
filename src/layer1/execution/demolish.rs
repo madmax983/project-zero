@@ -6,8 +6,8 @@ use crate::layer1::heirloom::{AncientStructure, RetrogradeEngineeringEvent};
 use crate::layer1::map::{GridPosition, ScreenShake};
 use crate::layer1::particles::spawn_particle;
 use crate::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
-use crate::layer1::ruins::{Ruin, process_scavenge};
-use crate::layer1::structure::{Structure, process_jury_rig};
+use crate::layer1::ruins::{process_scavenge, Ruin};
+use crate::layer1::structure::{process_jury_rig, Structure};
 use crate::shared::log::MessageLog;
 
 /// Executes the demolition of a building at the designation's location.

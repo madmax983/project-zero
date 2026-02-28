@@ -46,7 +46,7 @@ pub fn handle_battery_destruction_system(
 mod tests {
     use super::*;
     use crate::layer1::building::{Building, BuildingType};
-    use crate::layer1::energy::{Conduit, PowerConsumer, PowerSource, power_grid_system};
+    use crate::layer1::energy::{power_grid_system, Conduit, PowerConsumer, PowerSource};
     use crate::layer1::health::Health;
     use crate::layer1::map::GridPosition;
 

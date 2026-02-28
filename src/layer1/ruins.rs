@@ -1,6 +1,6 @@
-use crate::layer1::GridPosition;
 use crate::layer1::building::{BuildingType, MaterialType, OccupiedTiles};
 use crate::layer1::resources::{ResourceItem, ResourceType};
+use crate::layer1::GridPosition;
 use bevy_ecs::prelude::*;
 
 /// Component representing a destroyed building.
@@ -78,11 +78,11 @@ pub fn process_scavenge(world: &mut World, ruin_entity: Entity) -> Vec<ResourceT
 
 #[cfg(test)]
 mod tests {
-    use crate::layer1::GridPosition;
     use crate::layer1::building::{Building, BuildingType, Material, MaterialType, OccupiedTiles};
     use crate::layer1::fire::{Fire, Flammable};
     use crate::layer1::ruins::{Ruin, RuinHistory};
-    use crate::layer1::structure::{Structure, fire_damage_structure_system};
+    use crate::layer1::structure::{fire_damage_structure_system, Structure};
+    use crate::layer1::GridPosition;
     use crate::shared::time::SimulationTime;
     use bevy_ecs::prelude::*;
 

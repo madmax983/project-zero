@@ -1,4 +1,3 @@
-pub mod integration;
 pub mod barnacles;
 pub mod combat;
 pub mod debris;
@@ -8,6 +7,7 @@ pub mod events;
 pub mod fleet;
 pub mod generation;
 pub mod governance;
+pub mod integration;
 pub mod mining;
 #[cfg(test)]
 mod mining_tests;

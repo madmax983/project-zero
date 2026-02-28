@@ -1,11 +1,11 @@
 #[cfg(test)]
 mod tests {
-    use crate::layer1::GridPosition;
     use crate::layer1::designation::DesignationType;
     use crate::layer1::fire::Fire;
     use crate::layer1::structure::{
-        Fragile, Structure, fire_damage_structure_system, process_jury_rig,
+        fire_damage_structure_system, process_jury_rig, Fragile, Structure,
     };
+    use crate::layer1::GridPosition;
     use bevy_ecs::prelude::*;
 
     fn setup_world() -> World {

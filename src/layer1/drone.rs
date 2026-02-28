@@ -1,7 +1,7 @@
 use crate::layer1::building::Building;
 use crate::layer1::energy::PowerConsumer;
 use crate::layer1::map::GridPosition;
-use crate::layer1::utility_ai::{ActionType, PopAction, StartPlan, manhattan_distance};
+use crate::layer1::utility_ai::{manhattan_distance, ActionType, PopAction, StartPlan};
 use bevy_ecs::prelude::*;
 
 /// Marker component for Drone entities.

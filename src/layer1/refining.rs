@@ -24,15 +24,15 @@
 //!     *   Waste (Pollution) may be generated.
 //!     *   Worker gains experience.
 
-use crate::layer1::GridPosition;
 use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::eureka::check_for_eureka_world;
 use crate::layer1::factions::{FactionMember, FactionState, Factions};
 use crate::layer1::pop::Pop;
 use crate::layer1::resources::{ColonyResources, RefiningProgress, ResourceItem, ResourceType};
-use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
+use crate::layer1::skills::{get_skill_efficiency, SkillType, Skills};
 use crate::layer1::tech::Tech;
 use crate::layer1::utility_ai::{ActionType, PopAction};
+use crate::layer1::GridPosition;
 use bevy_ecs::prelude::*;
 use rand::Rng;
 
@@ -386,13 +386,13 @@ pub fn get_refining_recipe(
 
 #[cfg(test)]
 mod tests {
-    use crate::layer1::GridPosition;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::pop::Pop;
     use crate::layer1::refining::process_refining_system;
     use crate::layer1::resources::{ColonyResources, RefiningProgress};
     use crate::layer1::skills::{SkillType, Skills};
     use crate::layer1::utility_ai::{ActionType, PopAction};
+    use crate::layer1::GridPosition;
     use bevy_ecs::prelude::*;
 
     #[test]

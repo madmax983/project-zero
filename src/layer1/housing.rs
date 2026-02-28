@@ -155,10 +155,10 @@ pub fn clean_dead_residents_system(mut housing_query: Query<&mut Housing>, pop_q
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::GridPosition;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::needs::Needs;
     use crate::layer1::pop::Pop;
+    use crate::layer1::GridPosition;
     use bevy_ecs::system::RunSystemOnce;
 
     #[test]
@@ -184,7 +184,7 @@ mod tests {
     fn test_housing_capacity_limit() {
         let housing = Housing::default();
         assert!(housing.residents.len() < housing.capacity + 1); // Check against logic, here just ensures < capacity if filled
-        // Spec test:
+                                                                 // Spec test:
         assert!(housing.residents.len() < housing.capacity); // 0 < 2
     }
 

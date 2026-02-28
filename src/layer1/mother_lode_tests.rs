@@ -7,7 +7,7 @@ mod tests {
     use crate::layer1::seasons::SeasonState;
     use crate::layer1::skills::{SkillType, Skills};
     use crate::layer1::structure::Structure;
-    use crate::layer1::temperature::{TemperatureGrid, update_temperature_system};
+    use crate::layer1::temperature::{update_temperature_system, TemperatureGrid};
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;

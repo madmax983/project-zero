@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
     use crate::layer1::geodetic::{
-        LivingStone, StoneGolem, form_golem_system, update_living_stone_system,
+        form_golem_system, update_living_stone_system, LivingStone, StoneGolem,
     };
     use crate::layer1::items::{Item, ItemType};
     use crate::layer1::map::GridPosition;

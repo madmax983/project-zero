@@ -1,4 +1,4 @@
-use crate::layer1::resources::{BASE_MAX_FOOD, BASE_MAX_STONE, BASE_MAX_WOOD, ColonyResources};
+use crate::layer1::resources::{ColonyResources, BASE_MAX_FOOD, BASE_MAX_STONE, BASE_MAX_WOOD};
 use bevy_ecs::prelude::*;
 
 /// Component that increases the maximum resource capacity of the colony.
@@ -58,7 +58,7 @@ pub fn update_resource_caps_system(
 mod tests {
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::resources::ColonyResources;
-    use crate::layer1::stockpile::{Stockpile, update_resource_caps_system};
+    use crate::layer1::stockpile::{update_resource_caps_system, Stockpile};
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
 

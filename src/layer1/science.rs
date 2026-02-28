@@ -291,7 +291,7 @@ mod tests {
     use crate::layer1::map::GridPosition;
     use crate::layer1::resources::ColonyResources;
     use crate::layer1::science::{
-        Anomaly, AnomalyType, ScanProgress, process_scan_system, spawn_initial_anomalies,
+        process_scan_system, spawn_initial_anomalies, Anomaly, AnomalyType, ScanProgress,
     };
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
     use crate::layer1::utility_ai::{ActionType, PopAction, UtilityWeights};

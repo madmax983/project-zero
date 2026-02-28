@@ -7,15 +7,15 @@
 //! Entropy fights back. Pops may leave "offerings" (flowers, rocks) or clutter in the Sanctuary,
 //! breaking the "Empty" condition and disabling the bonus until cleaned.
 
-use bevy_ecs::prelude::*;
-use crate::layer1::zone::{ZoneGrid, ZoneType};
-use crate::layer1::map::GridPosition;
 use crate::layer1::building::Building;
+use crate::layer1::clutter::ClutterGrid;
 use crate::layer1::items::Item;
-use crate::layer1::clutter::{ClutterGrid};
+use crate::layer1::map::GridPosition;
 use crate::layer1::stress::StressTracker;
-use std::collections::HashSet;
+use crate::layer1::zone::{ZoneGrid, ZoneType};
+use bevy_ecs::prelude::*;
 use rand::Rng;
+use std::collections::HashSet;
 
 /// Represents a contiguous Sanctuary zone.
 #[derive(Component, Default)]
@@ -67,12 +67,23 @@ pub fn update_sanctuary_system(
                         continue;
                     }
                     visited[cidx] = true;
-                    tiles.push(GridPosition { x: cx as i32, y: cy as i32 });
+                    tiles.push(GridPosition {
+                        x: cx as i32,
+                        y: cy as i32,
+                    });
 
-                    if cx > 0 { stack.push((cx - 1, cy)); }
-                    if cx < zone_grid.width - 1 { stack.push((cx + 1, cy)); }
-                    if cy > 0 { stack.push((cx, cy - 1)); }
-                    if cy < zone_grid.height - 1 { stack.push((cx, cy + 1)); }
+                    if cx > 0 {
+                        stack.push((cx - 1, cy));
+                    }
+                    if cx < zone_grid.width - 1 {
+                        stack.push((cx + 1, cy));
+                    }
+                    if cy > 0 {
+                        stack.push((cx, cy - 1));
+                    }
+                    if cy < zone_grid.height - 1 {
+                        stack.push((cx, cy + 1));
+                    }
                 }
                 regions.push(tiles);
             }
@@ -130,7 +141,8 @@ pub fn visit_sanctuary_system(
         // Find if pop is in a valid sanctuary
         for sanctuary in &manager.sanctuaries {
             if sanctuary.is_valid && sanctuary.tiles.contains(pop_pos) {
-                mood.accumulated_stress = (mood.accumulated_stress - (sanctuary.effectiveness * 0.1)).max(0.0);
+                mood.accumulated_stress =
+                    (mood.accumulated_stress - (sanctuary.effectiveness * 0.1)).max(0.0);
 
                 // Offerings: 1% chance to spawn Clutter (e.g. Flower/Rock)
                 if rng.gen_bool(0.01) {

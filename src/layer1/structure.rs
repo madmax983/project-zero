@@ -1,11 +1,11 @@
 #![allow(clippy::float_cmp)]
-use crate::layer1::GridPosition;
 use crate::layer1::building::Building;
 use crate::layer1::building::BuildingType;
 use crate::layer1::building::Material;
 use crate::layer1::building::OccupiedTiles;
 use crate::layer1::fire::Fire;
 use crate::layer1::ruins::{Ruin, RuinHistory};
+use crate::layer1::GridPosition;
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 
@@ -321,11 +321,11 @@ pub fn fragile_decay_system(world: &mut World) {
 
 #[cfg(test)]
 mod tests {
-    use crate::layer1::GridPosition;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::designation::{Designation, DesignationType};
     use crate::layer1::fire::{Fire, Flammable};
-    use crate::layer1::structure::{Structure, fire_damage_structure_system};
+    use crate::layer1::structure::{fire_damage_structure_system, Structure};
+    use crate::layer1::GridPosition;
     use bevy_ecs::prelude::*;
     // use crate::layer1::utility_types::ActionType;
 

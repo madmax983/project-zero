@@ -4,15 +4,14 @@
     clippy::unnecessary_map_or
 )]
 #![allow(clippy::collapsible_if, clippy::type_complexity)]
-use crate::layer1::GridPosition;
 use crate::layer1::actions::AssignmentType;
 use crate::layer1::balance::{
     FOOD_HUNGER_THRESHOLD, FOOD_PER_MEAL, FOOD_PER_WORKER_PER_TICK, HUNGER_PER_MEAL,
 };
 use crate::layer1::building::{Building, BuildingType};
-use crate::layer1::economy::{ColonyPrices, Wallet, get_wage_for_job};
+use crate::layer1::economy::{get_wage_for_job, ColonyPrices, Wallet};
 use crate::layer1::energy::PowerConsumer;
-use crate::layer1::eureka::{EurekaConfig, check_for_eureka};
+use crate::layer1::eureka::{check_for_eureka, EurekaConfig};
 use crate::layer1::factions::{FactionMember, FactionState, Factions};
 use crate::layer1::fauna::{Fauna, FaunaType};
 use crate::layer1::fertility::FertilityGrid;
@@ -20,16 +19,17 @@ use crate::layer1::husbandry::Tame;
 use crate::layer1::items::ItemType;
 use crate::layer1::morale::{MoodModifier, Morale};
 use crate::layer1::needs::Needs;
-use crate::layer1::palette_fatigue::{DietaryHistory, record_meal};
+use crate::layer1::palette_fatigue::{record_meal, DietaryHistory};
 use crate::layer1::pop::Job;
 use crate::layer1::pop::Pop;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::seasons::{Season, SeasonState};
-use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
+use crate::layer1::skills::{get_skill_efficiency, SkillType, Skills};
 use crate::layer1::social_mimicry::JustConsumed;
 use crate::layer1::tech::Tech;
 use crate::layer1::traits::Trait;
 use crate::layer1::utility_ai::{ActionType, PopAction};
+use crate::layer1::GridPosition;
 use bevy_ecs::prelude::*;
 use rand::seq::SliceRandom;
 
@@ -421,10 +421,10 @@ pub fn clean_dead_workers_system(mut farm_query: Query<&mut Farm>, pop_query: Qu
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::GridPosition;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::needs::Needs;
     use crate::layer1::pop::Pop;
+    use crate::layer1::GridPosition;
     use bevy_ecs::system::RunSystemOnce;
 
     #[test]

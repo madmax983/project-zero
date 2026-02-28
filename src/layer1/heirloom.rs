@@ -1,5 +1,5 @@
 use crate::layer1::building::{
-    BuildingType, MaterialType, OccupiedTiles, can_place_building, spawn_building_with_material,
+    can_place_building, spawn_building_with_material, BuildingType, MaterialType, OccupiedTiles,
 };
 use crate::layer1::structure::Structure;
 use crate::layer1::terrain::TerrainGrid;

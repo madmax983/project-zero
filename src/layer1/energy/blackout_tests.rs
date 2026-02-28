@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
-    use crate::layer1::energy::{BlackoutProtocol, PowerConsumer, PowerSource, power_grid_system};
-    use crate::layer1::lighting::{AmbientLight, LightMap, LightSource, update_lighting_system};
+    use crate::layer1::energy::{power_grid_system, BlackoutProtocol, PowerConsumer, PowerSource};
+    use crate::layer1::lighting::{update_lighting_system, AmbientLight, LightMap, LightSource};
     use crate::layer1::map::GridPosition;
     use crate::layer1::needs::Needs;
     use crate::layer1::pop::{Pop, Speed};

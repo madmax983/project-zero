@@ -48,7 +48,7 @@ use crate::layer1::health::Health;
 use crate::layer1::items::ItemType;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
-use crate::layer1::utility_eval_types::{ScorableCandidate, evaluate_candidates};
+use crate::layer1::utility_eval_types::{evaluate_candidates, ScorableCandidate};
 use crate::layer1::utility_types::UtilityWeights;
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
@@ -440,12 +440,10 @@ mod tests {
         crate::layer1::chemical::consume_chemical(&mut world, pop, ChemicalType::Stim);
 
         let state = world.get::<ChemicalState>(pop).unwrap();
-        assert!(
-            state
-                .active_effects
-                .iter()
-                .any(|e| e.chemical == ChemicalType::Stim)
-        );
+        assert!(state
+            .active_effects
+            .iter()
+            .any(|e| e.chemical == ChemicalType::Stim));
     }
 
     #[test]

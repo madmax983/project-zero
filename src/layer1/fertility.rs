@@ -1,9 +1,9 @@
-use crate::layer1::TerrainGrid;
 use crate::layer1::map::GridPosition;
 use crate::layer1::pop::Pop;
 use crate::layer1::terrain::TerrainType;
 use crate::layer1::utility_ai::ActionType;
 use crate::layer1::utility_ai::PopAction;
+use crate::layer1::TerrainGrid;
 use bevy_ecs::prelude::*;
 use std::collections::HashSet;
 
@@ -127,7 +127,7 @@ pub fn update_fertility_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::farm::{Farm, produce_food_system};
+    use crate::layer1::farm::{produce_food_system, Farm};
     use crate::layer1::map::GridPosition;
     use crate::layer1::resources::ColonyResources;
     use crate::layer1::terrain::{TerrainGrid, TerrainType};

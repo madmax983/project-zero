@@ -86,7 +86,7 @@ pub fn apply_palette_fatigue_system(mut query: Query<(&mut Morale, &DietaryHisto
 mod tests {
     use crate::layer1::items::ItemType;
     use crate::layer1::morale::Morale;
-    use crate::layer1::palette_fatigue::{DietaryHistory, calculate_palette_fatigue, record_meal};
+    use crate::layer1::palette_fatigue::{calculate_palette_fatigue, record_meal, DietaryHistory};
     use crate::layer1::pop::Pop;
     use bevy_ecs::prelude::*;
 

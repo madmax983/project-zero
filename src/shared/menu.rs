@@ -40,7 +40,7 @@ impl MenuState {
 mod tests {
     use super::*;
     use crate::platform::input::{GameKeyCode, GameKeyEvent};
-    use crate::shared::input::{InputContext, InputContextStack, route_input};
+    use crate::shared::input::{route_input, InputContext, InputContextStack};
     use crate::shared::state::GameState;
 
     fn key_event(code: GameKeyCode) -> GameKeyEvent {

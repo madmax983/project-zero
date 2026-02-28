@@ -101,7 +101,7 @@ mod tests {
     use crate::layer1::pop::Pop;
     use crate::layer1::structural_integrity::StructureCollapsed;
     use crate::layer1::taboo::{
-        TabooState, apply_taboo_stress_system, evaluate_taboo_penalty, taboo_event_system,
+        apply_taboo_stress_system, evaluate_taboo_penalty, taboo_event_system, TabooState,
     };
     use crate::layer1::utility_ai::{ActionType, PopAction};
     use crate::shared::time::SimulationTime;

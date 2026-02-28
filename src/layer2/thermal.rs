@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::temperature::HeatSource;
 use crate::layer2::events::DetectionEvent;
+use bevy_ecs::prelude::*;
 use rand::Rng;
 
 /// Resource tracking the aggregate heat signature of the colony.

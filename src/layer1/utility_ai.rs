@@ -56,11 +56,11 @@ use crate::layer1::temperature::TemperatureGrid;
 use crate::layer1::traits::Trait;
 use crate::layer1::utility_ai_population::{collect_pop_data, populate_ai_buffer};
 use crate::layer1::utility_eval_types::{
-    CandidateEvaluator, PopEvalData, UtilityAIBuffer, WorldContext, evaluate_idle,
+    evaluate_idle, CandidateEvaluator, PopEvalData, UtilityAIBuffer, WorldContext,
 };
 pub use crate::layer1::utility_types::{
-    ActionType, PopAction, StartPlan, UtilityConfig, UtilityWeights, calculate_context_score,
-    manhattan_distance, need_response_curve,
+    calculate_context_score, manhattan_distance, need_response_curve, ActionType, PopAction,
+    StartPlan, UtilityConfig, UtilityWeights,
 };
 use crate::layer1::zone::ZoneGrid;
 use bevy_ecs::prelude::*;
@@ -496,12 +496,7 @@ impl<'a> PopDecider<'a> {
 
         // Evaluate Repair
         self.evaluator.evaluate_and_consider(
-            evaluate_simple_action(
-                pop_pos,
-                &weights,
-                &self.buffer.repair_structures,
-                0.6,
-            ),
+            evaluate_simple_action(pop_pos, &weights, &self.buffer.repair_structures, 0.6),
             ActionType::Repair,
             self.context,
             0.0,
@@ -604,10 +599,8 @@ impl<'a> PopDecider<'a> {
     fn evaluate_group_leisure(&mut self) {
         if let Some(hobby_type) = self.data.hobby_type {
             let utility = evaluate_hobby(self.data, hobby_type);
-            let penalty = crate::layer1::taboo::evaluate_taboo_penalty(
-                ActionType::Hobby,
-                self.context.taboo,
-            );
+            let penalty =
+                crate::layer1::taboo::evaluate_taboo_penalty(ActionType::Hobby, self.context.taboo);
             self.evaluator
                 .consider(ActionType::Hobby, utility + penalty, None);
         }

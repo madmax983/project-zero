@@ -80,7 +80,7 @@ pub fn apply_cabin_fever_morale_system(mut query: Query<(&CabinFever, &mut Needs
 #[cfg(test)]
 mod tests {
     use crate::layer1::cabin_fever::{
-        CabinFever, apply_cabin_fever_morale_system, update_cabin_fever_system,
+        apply_cabin_fever_morale_system, update_cabin_fever_system, CabinFever,
     };
     use crate::layer1::map::GridPosition;
     use crate::layer1::needs::Needs;

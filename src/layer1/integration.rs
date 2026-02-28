@@ -577,10 +577,7 @@ pub fn pop_born_notification_system(
 ) {
     for event in events.read() {
         notifications.add_info(
-            format!(
-                "{} has been born. Source: {}",
-                event.name, event.source
-            ),
+            format!("{} has been born. Source: {}", event.name, event.source),
             time.tick,
         );
     }

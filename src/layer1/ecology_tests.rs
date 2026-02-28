@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use crate::layer1::ecology::{EcologyConfig, process_ecological_succession};
+    use crate::layer1::ecology::{process_ecological_succession, EcologyConfig};
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
     use bevy_ecs::prelude::*;
 

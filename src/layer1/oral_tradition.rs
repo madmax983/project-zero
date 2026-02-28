@@ -8,8 +8,8 @@ use crate::layer1::needs::Needs;
 use crate::layer1::social::Tavern;
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
-use rand::Rng;
 use rand::seq::SliceRandom;
+use rand::Rng;
 
 /// A story that has evolved from a historical event.
 #[derive(Debug, Clone)]

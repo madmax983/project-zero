@@ -4,7 +4,7 @@ use ratatui::{
     widgets::{Block, BorderType, Borders, Clear, Row, Table},
 };
 
-use crate::layer1::{Chronicle, ChronicleUiState, EventImportance, format_event_prefix};
+use crate::layer1::{format_event_prefix, Chronicle, ChronicleUiState, EventImportance};
 
 /// Renders the chronicle overlay if active.
 ///

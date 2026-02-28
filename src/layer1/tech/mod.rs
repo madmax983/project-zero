@@ -29,12 +29,12 @@
 //! *   This represents the danger of uncovering "Forbidden Knowledge".
 
 #![allow(clippy::collapsible_if)]
-use crate::layer1::GlobalHitStop;
 use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::factions::{FactionMember, FactionState, Factions};
 use crate::layer1::map::{CameraTarget, GridPosition, ScreenShake};
 use crate::layer1::particles::spawn_confetti;
 use crate::layer1::resources::ColonyResources;
+use crate::layer1::GlobalHitStop;
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
@@ -523,7 +523,7 @@ pub fn update_tech_capacity_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::building::{BuildingType, try_place_building};
+    use crate::layer1::building::{try_place_building, BuildingType};
     use crate::layer1::resources::ColonyResources;
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
 
@@ -665,9 +665,9 @@ pub mod ghost_code;
 mod ghost_code_integration_tests;
 #[cfg(test)]
 mod ghost_code_tests;
-pub mod legacy_code;
-#[cfg(test)]
-mod legacy_code_tests;
 pub mod infinite_archive;
 #[cfg(test)]
 mod infinite_archive_tests;
+pub mod legacy_code;
+#[cfg(test)]
+mod legacy_code_tests;

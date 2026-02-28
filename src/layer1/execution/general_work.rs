@@ -6,7 +6,7 @@ use crate::layer1::cybernetics::get_efficiency_bonus;
 use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::economy::{get_wage_for_job, pay_wage};
-use crate::layer1::edicts::{ColonyPolicies, get_work_speed_modifier};
+use crate::layer1::edicts::{get_work_speed_modifier, ColonyPolicies};
 use crate::layer1::eureka::check_for_eureka_world;
 use crate::layer1::execution::components::{AtTarget, MovementTarget};
 use crate::layer1::execution::demolish::{
@@ -18,18 +18,18 @@ use crate::layer1::gastronomy::WorkSpeedBuff;
 use crate::layer1::hazards::handle_workplace_hazards;
 use crate::layer1::heirloom::{Heirloom, ToolHistory};
 use crate::layer1::items::{Equipment, Tool, UnequipEvent};
-use crate::layer1::language::{Dialect, Linguistics, calculate_coordination_penalty};
+use crate::layer1::language::{calculate_coordination_penalty, Dialect, Linguistics};
 use crate::layer1::map::GridPosition;
-use crate::layer1::memory::{Memories, calculate_effective_morale};
+use crate::layer1::memory::{calculate_effective_morale, Memories};
 use crate::layer1::morale::Morale;
 use crate::layer1::mother_lode::MotherLode;
-use crate::layer1::needs::{Needs, get_morale_efficiency};
+use crate::layer1::needs::{get_morale_efficiency, Needs};
 use crate::layer1::pop::Job;
 use crate::layer1::resources::{ColonyResources, ResourceType};
-use crate::layer1::skills::{SkillType, Skills, get_skill_efficiency};
+use crate::layer1::skills::{get_skill_efficiency, SkillType, Skills};
 use crate::layer1::social::SocialBuff;
 use crate::layer1::tech::Tech;
-use crate::layer1::traits::{Traits, get_trait_work_speed_modifier};
+use crate::layer1::traits::{get_trait_work_speed_modifier, Traits};
 use crate::layer1::utility_types::{ActionType, PopAction};
 use crate::shared::log::MessageLog;
 
@@ -275,8 +275,13 @@ fn process_single_worker(
     );
 
     // Execute Work
-    let worked =
-        execute_work_on_designation(world, pop_entity, designation_entity, designation_type, work_amount);
+    let worked = execute_work_on_designation(
+        world,
+        pop_entity,
+        designation_entity,
+        designation_type,
+        work_amount,
+    );
 
     if check_work_completion(world, designation_entity, designation_type) {
         cleanup_pop_work_state(world, pop_entity);
@@ -433,8 +438,12 @@ fn execute_work_on_designation(
     let pos = world.get::<GridPosition>(designation_entity).copied();
 
     match designation_type {
-        DesignationType::Mine => handle_mining_work(world, designation_entity, pop_entity, work_amount, pos),
-        DesignationType::Chop => handle_chopping_work(world, designation_entity, pop_entity, work_amount, pos),
+        DesignationType::Mine => {
+            handle_mining_work(world, designation_entity, pop_entity, work_amount, pos)
+        }
+        DesignationType::Chop => {
+            handle_chopping_work(world, designation_entity, pop_entity, work_amount, pos)
+        }
         DesignationType::Demolish => execute_demolish(world, designation_entity),
         DesignationType::Repair => {
             crate::layer1::structure::process_repair(world, designation_entity, work_amount);

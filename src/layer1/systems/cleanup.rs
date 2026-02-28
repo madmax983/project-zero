@@ -1,5 +1,5 @@
-use super::{Layer1SystemSet, update_event_buffer};
-use crate::layer1::direct_link::{PossessEntityEvent, UnpossessEvent, handle_direct_input_system};
+use super::{update_event_buffer, Layer1SystemSet};
+use crate::layer1::direct_link::{handle_direct_input_system, PossessEntityEvent, UnpossessEvent};
 use crate::layer1::pop::{PopBorn, PopDied};
 use crate::layer1::*;
 use bevy_ecs::prelude::*;

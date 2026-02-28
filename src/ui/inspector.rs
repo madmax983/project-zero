@@ -22,8 +22,6 @@ use crate::layer1::rituals::{MachineSpirit, Quirk, QuirkType};
 use crate::layer1::social::old_guard::{Arrival, Generation};
 use crate::layer1::utility_types::UtilityWeights;
 use crate::layer1::{
-    ActionType, Biocompatibility, ColonyResources, Farm, GridPosition, Housing, PopAction,
-    TerrainGrid,
     building::Building,
     building::Material,
     building::MaterialType,
@@ -33,6 +31,8 @@ use crate::layer1::{
     resources::RefiningProgress,
     stockpile::Stockpile,
     structure::Structure,
+    ActionType, Biocompatibility, ColonyResources, Farm, GridPosition, Housing, PopAction,
+    TerrainGrid,
 };
 use crate::shared::selection::{Selection, SelectionTarget};
 use crate::ui::map::{get_building_color, get_terrain_char, get_terrain_color};
