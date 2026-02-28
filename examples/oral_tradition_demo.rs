@@ -342,7 +342,10 @@ mod app {
         fn render_details(&self, f: &mut Frame, area: Rect) {
             let block = Block::default()
                 .borders(Borders::ALL)
-                .title("Legend Details");
+                .title(Span::styled(" Legend Details ", Style::default().fg(Color::Cyan).add_modifier(Modifier::BOLD)));
+
+            let inner_area = block.inner(area);
+            f.render_widget(block, area);
 
             let tradition = self.world.resource::<OralTradition>();
 
@@ -355,38 +358,67 @@ mod app {
                         StoryGenre::Trivial => "No significant effect",
                     };
 
-                    let text = vec![
-                        Line::from(vec![
-                            Span::styled("Genre: ", Style::default().fg(Color::Cyan)),
-                            Span::raw(format!("{:?}", story.genre)),
-                            Span::raw("  "),
-                            Span::styled("Mutations: ", Style::default().fg(Color::Cyan)),
-                            Span::raw(format!("{}", story.mutations)),
-                        ]),
-                        Line::from(""),
-                        Line::from(Span::styled(
-                            "Full Text:",
-                            Style::default().add_modifier(Modifier::UNDERLINED),
-                        )),
-                        Line::from(Span::styled(&story.text, Style::default().fg(Color::Green))),
-                        Line::from(""),
-                        Line::from(Span::styled(
-                            "Effect:",
-                            Style::default().add_modifier(Modifier::UNDERLINED),
-                        )),
-                        Line::from(Span::styled(
-                            effect_text,
-                            Style::default().fg(Color::Yellow),
-                        )),
-                    ];
+                    let genre_color = match story.genre {
+                        StoryGenre::Heroic => Color::Yellow,
+                        StoryGenre::Tragedy => Color::Red,
+                        StoryGenre::Cautionary => Color::Magenta,
+                        StoryGenre::Trivial => Color::Gray,
+                    };
 
-                    let p = Paragraph::new(text).block(block).wrap(Wrap { trim: true });
-                    f.render_widget(p, area);
+                    // Split layout:
+                    // 1. Metadata (Genre + Mutations Gauge)
+                    // 2. Story Text
+                    // 3. Effect
+                    let chunks = Layout::default()
+                        .direction(Direction::Vertical)
+                        .constraints([
+                            Constraint::Length(2), // Genre
+                            Constraint::Length(2), // Mutations Gauge
+                            Constraint::Length(1), // Spacer
+                            Constraint::Min(4),    // Text
+                            Constraint::Length(1), // Spacer
+                            Constraint::Length(2), // Effect
+                        ])
+                        .split(inner_area);
+
+                    // 1. Genre
+                    let genre_line = Line::from(vec![
+                        Span::styled("Genre: ", Style::default().add_modifier(Modifier::BOLD)),
+                        Span::styled(format!("{:?}", story.genre), Style::default().fg(genre_color)),
+                    ]);
+                    f.render_widget(Paragraph::new(genre_line), chunks[0]);
+
+                    // 2. Mutations Gauge
+                    let mutation_pct = (story.mutations * 10).clamp(0, 100) as u16;
+                    let mutation_color = if story.mutations > 5 { Color::Red } else if story.mutations > 2 { Color::Yellow } else { Color::Green };
+                    let gauge = Gauge::default()
+                        .block(Block::default())
+                        .gauge_style(Style::default().fg(mutation_color))
+                        .label(format!("Mutations: {}", story.mutations))
+                        .percent(mutation_pct);
+                    f.render_widget(gauge, chunks[1]);
+
+                    // 3. Story Text
+                    let text_block = Block::default()
+                        .borders(Borders::TOP)
+                        .title(Span::styled(" Full Text ", Style::default().fg(Color::DarkGray)));
+                    let p_text = Paragraph::new(Span::styled(&story.text, Style::default().fg(Color::Green)))
+                        .block(text_block)
+                        .wrap(Wrap { trim: true });
+                    f.render_widget(p_text, chunks[3]);
+
+                    // 4. Effect
+                    let effect_line = Line::from(vec![
+                        Span::styled("Effect: ", Style::default().add_modifier(Modifier::UNDERLINED)),
+                        Span::styled(effect_text, Style::default().fg(Color::Yellow)),
+                    ]);
+                    f.render_widget(Paragraph::new(effect_line), chunks[5]);
+
                 } else {
-                    f.render_widget(Paragraph::new("Select a legend...").block(block), area);
+                    f.render_widget(Paragraph::new("Select a legend..."), inner_area);
                 }
             } else {
-                f.render_widget(Paragraph::new("Select a legend...").block(block), area);
+                f.render_widget(Paragraph::new("Select a legend..."), inner_area);
             }
         }
 
