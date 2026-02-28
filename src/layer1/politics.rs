@@ -4,7 +4,7 @@
 
 use bevy_app::{App, Plugin, Update};
 use bevy_ecs::prelude::*;
-use crate::layer1::factions::{FactionMember, FactionId};
+use crate::layer1::factions::FactionMember;
 use crate::layer1::pop::Pop;
 use crate::layer2::governance::assign_governor;
 use crate::layer2::system::OrbitalBody;

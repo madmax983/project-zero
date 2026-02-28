@@ -119,8 +119,8 @@ pub fn post_grievance_system(
 
                     // Integration: The Hum (INT-014)
                     // Sensitive pops with high stress will post about the Hum
-                    let is_sensitive = traits.map_or(false, |t| t.has(Trait::Sensitive));
-                    let high_stress = stress.map_or(false, |s| s.accumulated_stress > 50.0);
+                    let is_sensitive = traits.is_some_and(|t| t.has(Trait::Sensitive));
+                    let high_stress = stress.is_some_and(|s| s.accumulated_stress > 50.0);
 
                     if is_sensitive && high_stress && s == Sentiment::Negative {
                         target = None; // The target is the void

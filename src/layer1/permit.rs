@@ -1,4 +1,4 @@
-use crate::layer1::inventory::{Inventory, InventoryItem};
+use crate::layer1::inventory::Inventory;
 use crate::layer1::resources::ResourceType;
 use bevy_ecs::prelude::*;
 

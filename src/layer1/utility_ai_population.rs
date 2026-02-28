@@ -43,11 +43,11 @@ use std::collections::HashSet;
 // --- Helpers ---
 
 fn is_active_shift(schedule: Option<&ShiftSchedule>, time: TimeOfDay) -> bool {
-    schedule.map_or(true, |s| s.is_active(time))
+    schedule.is_none_or(|s| s.is_active(time))
 }
 
 fn is_powered(power: Option<&PowerConsumer>) -> bool {
-    power.map_or(true, |p| p.active)
+    power.is_none_or(|p| p.active)
 }
 
 const fn is_at_capacity(current: usize, max: usize) -> bool {

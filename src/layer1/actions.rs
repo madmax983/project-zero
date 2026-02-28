@@ -158,13 +158,11 @@ pub fn evaluate_haul(
             carrying_item_type,
             Some(crate::layer1::items::ItemType::GeneticSample)
         )
-    {
-        if !gene_banks.is_empty() {
+        && !gene_banks.is_empty() {
             return evaluate_candidates(pop_pos, weights, gene_banks, 0.95);
         }
         // If no gene banks, might fall through or fail.
         // For now, let it fall through to stockpiles if any (though unlikely to accept it if filtering implemented)
-    }
 
     // 2. Check if any stockpile exists (Standard Hauling)
     if stockpiles.is_empty() {
@@ -262,7 +260,7 @@ pub fn evaluate_listen_to_hum(
     if !data
         .traits
         .as_ref()
-        .map_or(false, |t| t.0.contains(&Trait::Sensitive))
+        .is_some_and(|t| t.0.contains(&Trait::Sensitive))
     {
         return (ActionType::ListenToTheHum, 0.0, None);
     }
@@ -319,12 +317,7 @@ pub fn evaluate_drafted_behavior(
             }
         }
 
-        if let Some(target) = best_fight_target {
-            // High score for combat when drafted
-            Some((0.95 - (min_dist * 0.01).min(0.5), target))
-        } else {
-            None
-        }
+        best_fight_target.map(|target| (0.95 - (min_dist * 0.01).min(0.5), target))
     };
 
     if let Some((utility, target)) = evaluate_fight() {

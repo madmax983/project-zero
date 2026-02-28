@@ -89,7 +89,7 @@ pub fn render(world: &World, frame: &mut Frame) {
 
     // Check Global UI suppression (Cinematic/Possession mode)
     let ui_state = world.get_resource::<UiState>();
-    let suppress_ui = ui_state.map_or(false, |s| s.suppress_global_ui);
+    let suppress_ui = ui_state.is_some_and(|s| s.suppress_global_ui);
 
     if suppress_ui {
         // Full screen map

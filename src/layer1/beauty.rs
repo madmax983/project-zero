@@ -109,7 +109,7 @@ pub fn update_beauty_grid_system(
             for x in 0..grid.width {
                 let c = clutter_grid.get(x, y);
                 if c > 0.0 {
-                    let penalty = (c / 10.0) * -1.0; // -1 beauty per 10 clutter
+                    let penalty = -(c / 10.0); // -1 beauty per 10 clutter
                     let current = grid.get(x, y);
                     grid.set(x, y, current + penalty);
                 }

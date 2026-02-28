@@ -15,6 +15,7 @@ use crate::layer1::items::Item;
 use crate::layer1::clutter::{ClutterGrid};
 use crate::layer1::stress::StressTracker;
 use std::collections::HashSet;
+use rand::Rng;
 
 /// Represents a contiguous Sanctuary zone.
 #[derive(Component, Default)]
@@ -119,15 +120,26 @@ pub fn update_sanctuary_system(
 pub fn visit_sanctuary_system(
     mut pops: Query<(&GridPosition, &mut StressTracker)>,
     manager: Option<Res<SanctuaryManager>>,
+    mut clutter_grid: Option<ResMut<ClutterGrid>>,
 ) {
     let Some(manager) = manager else { return };
+
+    let mut rng = rand::thread_rng();
 
     for (pop_pos, mut mood) in pops.iter_mut() {
         // Find if pop is in a valid sanctuary
         for sanctuary in &manager.sanctuaries {
             if sanctuary.is_valid && sanctuary.tiles.contains(pop_pos) {
-                // Spec says mood.stress = (mood.stress - (sanctuary.effectiveness * 0.1)).max(0.0);
                 mood.accumulated_stress = (mood.accumulated_stress - (sanctuary.effectiveness * 0.1)).max(0.0);
+
+                // Offerings: 1% chance to spawn Clutter (e.g. Flower/Rock)
+                if rng.gen_bool(0.01) {
+                    if let Some(ref mut clutter) = clutter_grid {
+                        if pop_pos.x >= 0 && pop_pos.y >= 0 {
+                            clutter.add_clutter(pop_pos.x as usize, pop_pos.y as usize, 1.0);
+                        }
+                    }
+                }
                 break; // A pop can only be in one sanctuary at a time
             }
         }

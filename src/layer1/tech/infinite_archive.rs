@@ -1,5 +1,5 @@
 use bevy_ecs::prelude::*;
-use crate::layer1::tech::{Tech, TechState, TechStatus};
+use crate::layer1::tech::{Tech, TechState};
 use crate::shared::log::MessageLog;
 use strum::IntoEnumIterator;
 

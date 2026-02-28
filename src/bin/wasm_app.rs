@@ -1,7 +1,5 @@
 //! SCALE WASM entry point — runs the game in a browser via Ratzilla.
 
-use std::cell::RefCell;
-use std::rc::Rc;
 
 #[cfg(target_arch = "wasm32")]
 use ratzilla::backend::dom::DomBackend;
@@ -10,15 +8,6 @@ use ratzilla::ratatui::Terminal;
 #[cfg(target_arch = "wasm32")]
 use ratzilla::WebRenderer;
 
-use scale::layer1::map::update_camera_smooth;
-use scale::platform::input::{GameKeyEvent, GameMouseEvent};
-use scale::setup::setup_world;
-use scale::shared::input::{route_input, route_mouse_input};
-use scale::shared::state::GameState;
-use scale::shared::time::{SimSpeed, SimulationTime, WallTime};
-use scale::simulation::run_simulation_tick;
-use scale::ui::map::update_render_cache;
-use scale::ui::render;
 
 #[cfg(not(target_arch = "wasm32"))]
 fn main() {
