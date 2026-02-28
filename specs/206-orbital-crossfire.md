@@ -263,4 +263,5 @@ pub fn impact_system(world: &mut World) {
 ## Questions
 
 *Builder: Should impact destroy Pops?*
+*Architect: Yes, direct hits from orbital debris or crossfire are lethal to unshielded pops.*
 *Architect: Yes, instant death if direct hit. High damage if adjacent.*

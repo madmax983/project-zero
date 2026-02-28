@@ -243,6 +243,8 @@ pub fn aura_system(
 ## 8. Questions
 
 -   *Builder: Do artifacts block movement?*
+*Architect: Yes, artifacts act as solid obstacles similar to walls or large machines.*
     -   *Architect:* Yes, they occupy the tile like a Wall, unless specified otherwise (e.g. `Passable`).
 -   *Builder: Can we move artifacts?*
+*Architect: No, artifacts are permanent fixtures of the map. You must build around them.*
     -   *Architect:* No. That's the strategic constraint. You must build around them.

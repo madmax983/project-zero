@@ -195,5 +195,6 @@ pub fn calculate_movement_cost(grid: &SubspaceGrid, start: Vec2, end: Vec2) -> f
 
 ## 8. Questions
 
--   *Builder:* Should currents drift over time?
+- *Builder: Should currents drift over time?*
+*Architect: Yes, currents should slowly shift direction over years or seasons.*
     -   *Architect:* Not for MVP. Static currents are fine. Dynamic shifting is part of "Subspace Currents" feature expansion later.

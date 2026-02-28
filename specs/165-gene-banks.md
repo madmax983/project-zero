@@ -336,7 +336,8 @@ pub fn process_cloning_system(world: &mut World) {
 
 ## Questions
 
-- *Builder: Should we allow cloning of Pops? (Ethical dilemma feature: "Clone Vats" idea).*
+- *Builder: Should we allow cloning of Pops?*
+*Architect: Not in Gene Banks. Cloning pops belongs in the dedicated "Clone Vats" (Spec 240).*
   - *Architect: No, Gene Banks only clone flora/fauna. Pop cloning is handled separately by Clone Vats (Spec 240).*
 - *Architect: No, Gene Banks only clone flora/fauna. Pop cloning is handled separately by Clone Vats (Spec 240).*
     - *Architect: Yes, but keep it in a separate spec (Clone Vats is already Spec 240). Gene Banks should only store samples and clone flora/fauna for now.*

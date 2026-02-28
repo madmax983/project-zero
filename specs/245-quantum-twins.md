@@ -238,4 +238,5 @@ pub fn handle_severance_system(
 ## Questions
 
 *Builder: Can twins be separated by Layer?*
+*Architect: Yes, the entanglement ignores physical distance and simulation layers.*
 *Architect: Yes, that's the point. One on planet, one in orbit.*

@@ -242,7 +242,8 @@ pub fn apply_meal_effect(world: &mut World, pop: Entity, effect: MealEffect) {
 
 ## Questions
 
-- *Builder: Should "Mystery Meals" stack? (No, because they might have different effects if we allow mixing. For Green phase, single ingredient = stackable by ingredient type).*
+- *Builder: Should "Mystery Meals" stack?*
+*Architect: No, because they might have different effects if we allow mixing. For the MVP, single ingredient = stackable only by exact ingredient type.*
   - *Architect: Mystery Meals stack only by exact ingredient (Spec 166). Mixed ingredient meals do not stack.*
 - *Architect: Mystery Meals stack only by exact ingredient (Spec 166). Mixed ingredient meals do not stack.*
     - *Architect: Agreed. For the GREEN phase, only stack Mystery Meals if they are made from the exact same alien ingredient.*
