@@ -7,7 +7,7 @@ mod tests {
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
     use crate::layer1::resources::ColonyResources;
-    use crate::layer1::temperature::{TemperatureGrid, thermal_damage_system};
+    use crate::layer1::temperature::{thermal_damage_system, TemperatureGrid};
     use crate::layer1::utility_eval_types::ScorableCandidate;
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;

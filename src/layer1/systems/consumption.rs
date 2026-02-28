@@ -45,8 +45,10 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             crate::layer1::addiction::init_addiction_system.after(decay_needs_system),
-            crate::layer1::addiction::update_addiction_system.after(crate::layer1::addiction::init_addiction_system),
-            crate::layer1::addiction::check_self_surgery_system.after(crate::layer1::addiction::update_addiction_system),
+            crate::layer1::addiction::update_addiction_system
+                .after(crate::layer1::addiction::init_addiction_system),
+            crate::layer1::addiction::check_self_surgery_system
+                .after(crate::layer1::addiction::update_addiction_system),
         )
             .in_set(Layer1SystemSet::Consumption),
     );

@@ -86,8 +86,8 @@ pub fn get_morale_modifier(policies: &ColonyPolicies) -> f32 {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::GridPosition;
     use crate::layer1::needs::Needs;
+    use crate::layer1::GridPosition;
 
     #[test]
     fn test_policies_resource_defaults() {

@@ -32,8 +32,14 @@ pub fn thermal_detection_handler_system(
 
         let (x, y) = match edge {
             0 => (rng.gen_range(0..terrain.width as i32), 0),
-            1 => (terrain.width as i32 - 1, rng.gen_range(0..terrain.height as i32)),
-            2 => (rng.gen_range(0..terrain.width as i32), terrain.height as i32 - 1),
+            1 => (
+                terrain.width as i32 - 1,
+                rng.gen_range(0..terrain.height as i32),
+            ),
+            2 => (
+                rng.gen_range(0..terrain.width as i32),
+                terrain.height as i32 - 1,
+            ),
             3 => (0, rng.gen_range(0..terrain.height as i32)),
             _ => (0, 0),
         };

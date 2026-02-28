@@ -10,8 +10,8 @@ use crate::layer1::pop::{Job, Pop};
 use crate::layer1::traits::{Trait, Traits};
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
-use rand::Rng;
 use rand::seq::IteratorRandom;
+use rand::Rng;
 
 /// Configuration for Machine Consciousness.
 #[derive(Resource, Debug, Clone)]

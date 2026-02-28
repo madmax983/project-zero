@@ -2,7 +2,7 @@
 mod tests {
     use crate::layer1::execution::{AtTarget, MovementTarget};
     use crate::layer1::institutional_memory::{
-        InstitutionalMemoryConfig, Manual, manual_aura_system, produce_manual_system,
+        manual_aura_system, produce_manual_system, InstitutionalMemoryConfig, Manual,
     };
     use crate::layer1::items::Item;
     use crate::layer1::map::GridPosition;

@@ -97,7 +97,7 @@ pub fn inspect_pop(world: &mut World, pop_entity: Entity) {
 
 #[cfg(test)]
 mod tests {
-    use super::{PrivateStash, hoarding_system, inspect_pop};
+    use super::{hoarding_system, inspect_pop, PrivateStash};
     use crate::layer1::pop::Pop;
     use crate::layer1::resources::{ColonyResources, ResourceType};
     use crate::layer1::traits::{Trait, Traits};

@@ -148,11 +148,11 @@ pub fn handle_bury_corpse(
 mod tests {
     use super::*;
     use crate::layer1::building::{Building, BuildingType};
-    use crate::layer1::health::{Health, check_health_status_system, despawn_dead_entities_system};
+    use crate::layer1::health::{check_health_status_system, despawn_dead_entities_system, Health};
     use crate::layer1::map::{GridPosition, ScreenShake};
     use crate::layer1::memory::{Memories, MemoryType};
     use crate::layer1::needs::Needs;
-    use crate::layer1::pop::{Pop, PopDied, PopName, handle_pop_death_system};
+    use crate::layer1::pop::{handle_pop_death_system, Pop, PopDied, PopName};
     use crate::shared::log::MessageLog;
     use bevy_ecs::system::RunSystemOnce;
 
@@ -190,12 +190,10 @@ mod tests {
 
         // Check if witness has negative memory
         let memories = world.get::<Memories>(witness).unwrap();
-        assert!(
-            memories
-                .items
-                .iter()
-                .any(|m| m.memory_type == MemoryType::SawCorpse)
-        );
+        assert!(memories
+            .items
+            .iter()
+            .any(|m| m.memory_type == MemoryType::SawCorpse));
     }
 
     #[test]
@@ -245,11 +243,9 @@ mod tests {
 
         let memories = world.get::<Memories>(pop).unwrap();
         // Should have 'AttendedFuneral'
-        assert!(
-            memories
-                .items
-                .iter()
-                .any(|m| m.memory_type == MemoryType::AttendedFuneral)
-        );
+        assert!(memories
+            .items
+            .iter()
+            .any(|m| m.memory_type == MemoryType::AttendedFuneral));
     }
 }

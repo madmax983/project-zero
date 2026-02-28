@@ -165,7 +165,7 @@ mod tests {
 
     use crate::layer1::map::GridPosition;
     use crate::layer1::mascot::{
-        Mascot, MascotBuff, mascot_behavior_system, mascot_buff_system, mascot_death_grief_system,
+        mascot_behavior_system, mascot_buff_system, mascot_death_grief_system, Mascot, MascotBuff,
     };
     use crate::layer1::memory::{Memories, MemoryType};
     use crate::layer1::needs::Needs;

@@ -61,7 +61,7 @@ pub fn wild_child_system(
 
 #[cfg(test)]
 mod tests {
-    use super::{FERAL_THRESHOLD, WildExposure, wild_child_system};
+    use super::{wild_child_system, WildExposure, FERAL_THRESHOLD};
     use crate::layer1::building::OccupiedTiles;
     use crate::layer1::lifecycle::{Age, LifeStage};
     use crate::layer1::map::GridPosition;

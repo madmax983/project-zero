@@ -2,13 +2,13 @@
 //!
 //! This module handles the election cycle, candidate generation, and voting.
 
-use bevy_app::{App, Plugin, Update};
-use bevy_ecs::prelude::*;
 use crate::layer1::factions::FactionMember;
 use crate::layer1::pop::Pop;
 use crate::layer2::governance::assign_governor;
 use crate::layer2::system::OrbitalBody;
 use crate::shared::time::SimulationTime;
+use bevy_app::{App, Plugin, Update};
+use bevy_ecs::prelude::*;
 
 /// FactionLeader struct (Stub/Refactor Needed)
 ///
@@ -86,21 +86,20 @@ pub struct PoliticsPlugin;
 
 impl Plugin for PoliticsPlugin {
     fn build(&self, app: &mut App) {
-        app.insert_resource(ElectionManager::default())
-            .add_systems(Update, (
+        app.insert_resource(ElectionManager::default()).add_systems(
+            Update,
+            (
                 election_cycle_system,
                 generate_candidates_system,
                 voting_system,
                 inauguration_system,
-            ));
+            ),
+        );
     }
 }
 
 /// Manages the transitions between election states based on time.
-pub fn election_cycle_system(
-    mut manager: ResMut<ElectionManager>,
-    time: Res<SimulationTime>,
-) {
+pub fn election_cycle_system(mut manager: ResMut<ElectionManager>, time: Res<SimulationTime>) {
     if manager.state == ElectionState::Idle && time.tick >= manager.next_election_tick {
         manager.state = ElectionState::Campaigning;
         manager.campaign_end_tick = time.tick + 1000; // Campaign lasts 1000 ticks
@@ -122,7 +121,9 @@ pub fn generate_candidates_system(
             manager.candidates.push(Campaign {
                 pop_entity: entity,
                 platform: Platform {
-                    promises: vec![Promise { description: "Free Lunch".to_string() }] // Placeholder
+                    promises: vec![Promise {
+                        description: "Free Lunch".to_string(),
+                    }], // Placeholder
                 },
                 votes: 0,
             });
@@ -159,13 +160,13 @@ pub fn voting_system(
         }
 
         for (_pop_entity, _, faction_member) in pop_query.iter() {
-             if let Some(member) = faction_member {
-                 if let Some(faction_id) = member.faction_id {
-                     if let Some(&candidate_idx) = faction_candidate_map.get(&faction_id) {
-                         manager.candidates[candidate_idx].votes += 1;
-                     }
-                 }
-             }
+            if let Some(member) = faction_member {
+                if let Some(faction_id) = member.faction_id {
+                    if let Some(&candidate_idx) = faction_candidate_map.get(&faction_id) {
+                        manager.candidates[candidate_idx].votes += 1;
+                    }
+                }
+            }
         }
 
         // Determine winner
@@ -175,7 +176,7 @@ pub fn voting_system(
         } else if manager.winner.is_none() && !manager.candidates.is_empty() {
             // Tie-breaking or fallback if no votes cast but candidates exist?
             // If candidates exist but no votes (e.g. no pops), just pick first.
-             manager.winner = Some(manager.candidates[0].pop_entity);
+            manager.winner = Some(manager.candidates[0].pop_entity);
         }
 
         manager.state = ElectionState::Finished;
@@ -183,9 +184,7 @@ pub fn voting_system(
 }
 
 /// Inaugurates the winner as Governor.
-pub fn inauguration_system(
-    world: &mut World,
-) {
+pub fn inauguration_system(world: &mut World) {
     let (winner, state) = {
         let manager = world.resource::<ElectionManager>();
         (manager.winner, manager.state)
@@ -204,7 +203,7 @@ pub fn inauguration_system(
 
         if let Some(planet) = planet_entity {
             if let Some(pop) = winner {
-                 assign_governor(world, planet, pop);
+                assign_governor(world, planet, pop);
             }
         }
 
@@ -222,13 +221,13 @@ pub fn inauguration_system(
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
     use super::*;
-    use crate::layer1::factions::{FactionMember, FactionId};
     use crate::layer1::factions::Factions; // To satisfy tests relying on Factions resource existing
-    use crate::layer1::pop::{Pop};
+    use crate::layer1::factions::{FactionId, FactionMember};
+    use crate::layer1::pop::Pop;
     use crate::layer2::governance::Governor;
     use crate::shared::time::SimulationTime;
+    use bevy_ecs::prelude::*;
 
     // Helper component to mock Faction for testing logic if needed,
     // though the system uses `FactionLeader` component directly.
@@ -272,10 +271,12 @@ mod tests {
         let leader = world.spawn((Pop, FactionLeader)).id();
 
         // Mock Faction entity just to satisfy mental model, but system queries (Entity, &FactionLeader)
-        let _faction = world.spawn(MockFaction {
-            name: "Miners Guild".to_string(),
-            leader: Some(leader),
-        }).id();
+        let _faction = world
+            .spawn(MockFaction {
+                name: "Miners Guild".to_string(),
+                leader: Some(leader),
+            })
+            .id();
 
         // Trigger election manually
         let mut manager = world.resource_mut::<ElectionManager>();
@@ -295,19 +296,46 @@ mod tests {
         let mut world = setup_world();
 
         // Candidate A (Miners)
-        let candidate_a = world.spawn((Pop, FactionMember { faction_id: Some(FactionId::MinersGuild) })).id();
+        let candidate_a = world
+            .spawn((
+                Pop,
+                FactionMember {
+                    faction_id: Some(FactionId::MinersGuild),
+                },
+            ))
+            .id();
         // Candidate B (Scientists) - Map to Artisans for test
-        let candidate_b = world.spawn((Pop, FactionMember { faction_id: Some(FactionId::ArtisansGuild) })).id();
+        let candidate_b = world
+            .spawn((
+                Pop,
+                FactionMember {
+                    faction_id: Some(FactionId::ArtisansGuild),
+                },
+            ))
+            .id();
 
         let mut manager = world.resource_mut::<ElectionManager>();
         manager.state = ElectionState::Voting;
         manager.candidates = vec![
-            Campaign { pop_entity: candidate_a, votes: 0, ..Default::default() },
-            Campaign { pop_entity: candidate_b, votes: 0, ..Default::default() }
+            Campaign {
+                pop_entity: candidate_a,
+                votes: 0,
+                ..Default::default()
+            },
+            Campaign {
+                pop_entity: candidate_b,
+                votes: 0,
+                ..Default::default()
+            },
         ];
 
         // Voter 1 (Miner Faction)
-        world.spawn((Pop, FactionMember { faction_id: Some(FactionId::MinersGuild) }));
+        world.spawn((
+            Pop,
+            FactionMember {
+                faction_id: Some(FactionId::MinersGuild),
+            },
+        ));
 
         // Run voting
         bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, voting_system);

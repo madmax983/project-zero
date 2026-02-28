@@ -1,8 +1,8 @@
 #[cfg(test)]
 mod tests {
+    use bevy_ecs::prelude::*;
     use scale::layer1::inventory::{Inventory, InventoryItem};
     use scale::layer1::items::ItemType;
-    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_exploit_unbounded_allocation() {
@@ -19,7 +19,11 @@ mod tests {
         }
 
         // POST-FIX: This should now fail the exploit test (len should be capped at default 20)
-        assert!(inventory.items.len() <= 20, "Inventory should be capped (Exploit Prevented). Actual: {}", inventory.items.len());
+        assert!(
+            inventory.items.len() <= 20,
+            "Inventory should be capped (Exploit Prevented). Actual: {}",
+            inventory.items.len()
+        );
         assert_eq!(inventory.items.len(), 20);
     }
 }

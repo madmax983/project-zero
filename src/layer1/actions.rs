@@ -12,12 +12,12 @@ use crate::layer1::stress::BreakdownType;
 use crate::layer1::traits::Trait;
 use crate::layer1::unrest::{MentalBreakType, MentalState};
 use crate::layer1::utility_eval_types::{
-    PopEvalData, ScorableCandidate, UtilityAIBuffer, evaluate_candidates,
+    evaluate_candidates, PopEvalData, ScorableCandidate, UtilityAIBuffer,
 };
-pub use crate::layer1::utility_types::AssignmentType;
 use crate::layer1::utility_types::manhattan_distance;
 use crate::layer1::utility_types::need_response_curve;
-use crate::layer1::utility_types::{ActionType, UtilityWeights, calculate_context_score};
+pub use crate::layer1::utility_types::AssignmentType;
+use crate::layer1::utility_types::{calculate_context_score, ActionType, UtilityWeights};
 use bevy_ecs::prelude::*;
 
 /// Component tracking what a pop is assigned to.
@@ -158,11 +158,12 @@ pub fn evaluate_haul(
             carrying_item_type,
             Some(crate::layer1::items::ItemType::GeneticSample)
         )
-        && !gene_banks.is_empty() {
-            return evaluate_candidates(pop_pos, weights, gene_banks, 0.95);
-        }
-        // If no gene banks, might fall through or fail.
-        // For now, let it fall through to stockpiles if any (though unlikely to accept it if filtering implemented)
+        && !gene_banks.is_empty()
+    {
+        return evaluate_candidates(pop_pos, weights, gene_banks, 0.95);
+    }
+    // If no gene banks, might fall through or fail.
+    // For now, let it fall through to stockpiles if any (though unlikely to accept it if filtering implemented)
 
     // 2. Check if any stockpile exists (Standard Hauling)
     if stockpiles.is_empty() {

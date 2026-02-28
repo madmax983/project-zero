@@ -189,11 +189,10 @@ mod tests {
         world.run_system_once(biography_monitor_system).unwrap();
 
         let bio = world.get::<Biography>(pop).unwrap();
-        assert!(
-            bio.events
-                .iter()
-                .any(|e| e.text.contains("Started working at Farm"))
-        );
+        assert!(bio
+            .events
+            .iter()
+            .any(|e| e.text.contains("Started working at Farm")));
     }
 
     #[test]

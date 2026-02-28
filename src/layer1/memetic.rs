@@ -83,14 +83,14 @@ mod tests {
     use crate::layer1::actions::{AssignedTo, AssignmentType};
     use crate::layer1::building::{Building, BuildingType, OccupiedTiles};
     use crate::layer1::graffiti::{
-        Graffiti, GraffitiMap, GraffitiType, graffiti_observation_system,
+        graffiti_observation_system, Graffiti, GraffitiMap, GraffitiType,
     };
     use crate::layer1::map::GridPosition;
     use crate::layer1::morale::Morale;
     use crate::layer1::needs::Needs;
     use crate::layer1::pop::Pop;
     use crate::layer1::resources::ColonyResources;
-    use crate::layer1::tech::{Tech, TechState, unlock_tech};
+    use crate::layer1::tech::{unlock_tech, Tech, TechState};
     use crate::layer1::utility_ai::evaluate_actions_system;
     use crate::layer1::utility_types::{ActionType, PopAction, UtilityConfig, UtilityWeights};
     use crate::shared::time::SimulationTime;

@@ -1,9 +1,9 @@
 use crate::layer1::day_night::TimeOfDay;
-use crate::layer1::edicts::{ColonyPolicies, get_morale_modifier};
+use crate::layer1::edicts::{get_morale_modifier, ColonyPolicies};
 use crate::layer1::morale::Morale;
 use crate::layer1::needs::Needs;
 use crate::layer1::social::SocialBuff;
-use crate::layer1::traits::{Traits, get_trait_mood_modifier};
+use crate::layer1::traits::{get_trait_mood_modifier, Traits};
 use bevy_ecs::prelude::*;
 
 /// Types of memories a pop can acquire.

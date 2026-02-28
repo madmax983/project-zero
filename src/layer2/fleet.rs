@@ -1,4 +1,4 @@
-use crate::layer2::barnacles::{SpaceBarnacles, calculate_speed_modifier};
+use crate::layer2::barnacles::{calculate_speed_modifier, SpaceBarnacles};
 use crate::layer2::ship::Ship;
 use crate::layer2::station::StationType;
 use bevy_ecs::prelude::*;
@@ -194,7 +194,7 @@ impl FleetComposition {
 #[cfg(test)]
 mod tests {
     use crate::layer2::fleet::{
-        Fleet, FleetOrder, InOrbit, InTransit, fleet_movement_system, fleet_order_system,
+        fleet_movement_system, fleet_order_system, Fleet, FleetOrder, InOrbit, InTransit,
     };
     use crate::layer2::system::OrbitalBody;
     use bevy_ecs::prelude::*;

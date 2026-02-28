@@ -3,7 +3,7 @@ mod tests {
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::fire::Fire;
     use crate::layer1::map::GridPosition;
-    use crate::layer1::pressure::{PressureGrid, update_pressure_system};
+    use crate::layer1::pressure::{update_pressure_system, PressureGrid};
     use crate::layer1::structure::Structure;
     use bevy_ecs::prelude::*;
 

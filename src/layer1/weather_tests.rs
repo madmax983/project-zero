@@ -1,8 +1,8 @@
 #[cfg(test)]
 mod tests {
     use crate::layer1::atmosphere::{
-        AtmosphereGrid, DiffusionConfig, GasType, apply_smog_damage_system,
-        simulate_diffusion_system,
+        apply_smog_damage_system, simulate_diffusion_system, AtmosphereGrid, DiffusionConfig,
+        GasType,
     };
     use crate::layer1::health::Health;
     use crate::layer1::map::GridPosition;

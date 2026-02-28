@@ -194,12 +194,11 @@ mod tests {
         execute_demolish(&mut world, designation);
 
         let log = world.resource::<MessageLog>();
-        assert!(
-            log.messages
-                .back()
-                .unwrap()
-                .text
-                .contains("Retrograde Engineering")
-        );
+        assert!(log
+            .messages
+            .back()
+            .unwrap()
+            .text
+            .contains("Retrograde Engineering"));
     }
 }

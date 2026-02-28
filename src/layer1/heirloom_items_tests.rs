@@ -2,7 +2,7 @@
 mod tests {
     use crate::layer1::designation::{Designation, DesignationType};
     use crate::layer1::execution::work_execution_system; // Integration point
-    use crate::layer1::heirloom::{Heirloom, ToolHistory, check_heirloom_status_system};
+    use crate::layer1::heirloom::{check_heirloom_status_system, Heirloom, ToolHistory};
     use crate::layer1::items::Equipment;
     use crate::layer1::items::{Item, Tool, ToolType};
     use crate::layer1::map::GridPosition;

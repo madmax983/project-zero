@@ -2,8 +2,8 @@
 mod tests {
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::drone::{
-        Drone, DroneBattery, DroneHub, drone_battery_system, evaluate_drone_actions_system,
-        process_charge_system,
+        drone_battery_system, evaluate_drone_actions_system, process_charge_system, Drone,
+        DroneBattery, DroneHub,
     };
     use crate::layer1::energy::PowerConsumer;
     use crate::layer1::map::GridPosition;

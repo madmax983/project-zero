@@ -1,10 +1,10 @@
-use crate::layer1::building::{BuildingType, try_place_building};
+use crate::layer1::building::{try_place_building, BuildingType};
 use crate::layer1::housing::Housing;
 use crate::layer1::map::GridPosition;
 use crate::layer1::morale::{MoodModifier, Morale};
 use crate::layer1::pop::Pop;
 use bevy_ecs::prelude::*;
-use rand::{Rng, seq::SliceRandom};
+use rand::{seq::SliceRandom, Rng};
 
 /// Types of personal structures that Pops can build.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -197,8 +197,8 @@ mod tests {
     use crate::layer1::pop::Pop;
     use crate::layer1::resources::ColonyResources;
     use crate::layer1::spontaneous_architecture::{
-        OwnsStructure, PersonalStructure, PersonalStructureType, check_spontaneous_build_system,
-        demolish_personal_structure_system,
+        check_spontaneous_build_system, demolish_personal_structure_system, OwnsStructure,
+        PersonalStructure, PersonalStructureType,
     };
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
     use bevy_ecs::prelude::*;

@@ -120,7 +120,7 @@ pub fn update_window_views_system(
 
 #[cfg(test)]
 mod tests {
-    use super::{Window, update_window_views_system};
+    use super::{update_window_views_system, Window};
     use crate::layer1::beauty::{BeautyGrid, BeautySource};
     use crate::layer1::building::{Building, BuildingMap, BuildingType, Direction, OccupiedTiles};
     use crate::layer1::map::GridPosition;

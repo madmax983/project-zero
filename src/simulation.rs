@@ -9,8 +9,8 @@ use bevy_ecs::prelude::*;
 use bevy_ecs::schedule::{IntoSystemConfigs, Schedule, ScheduleLabel};
 
 use crate::gpu::evaluate::gpu_evaluate_actions;
-use crate::layer1::building::{BuildingMap, update_building_map_system};
-use crate::layer1::systems::{Layer1SystemSet, register_layer1_systems, update_event_buffer};
+use crate::layer1::building::{update_building_map_system, BuildingMap};
+use crate::layer1::systems::{register_layer1_systems, update_event_buffer, Layer1SystemSet};
 use crate::layer1::update_action_timer_system;
 use crate::layer2::events::{DetectionEvent, LaunchEvent, ShipDestroyedEvent};
 use crate::shared::time::SimulationTime;

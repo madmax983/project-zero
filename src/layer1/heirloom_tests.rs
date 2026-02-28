@@ -1,10 +1,10 @@
 #[cfg(test)]
 mod tests {
-    use crate::layer1::GridPosition;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::energy::PowerSource;
-    use crate::layer1::heirloom::{AncientStructure, ancient_structure_decay_system};
-    use crate::layer1::structure::{Structure, process_repair};
+    use crate::layer1::heirloom::{ancient_structure_decay_system, AncientStructure};
+    use crate::layer1::structure::{process_repair, Structure};
+    use crate::layer1::GridPosition;
     use bevy_ecs::prelude::*;
 
     #[test]

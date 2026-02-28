@@ -107,7 +107,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::integration::hospitalization_notification_system
                 .after(work_execution_system),
             crate::layer1::integration::pop_death_notification_system.after(natural_death_system),
-            crate::layer1::integration::pop_born_notification_system.after(Layer1SystemSet::Economy),
+            crate::layer1::integration::pop_born_notification_system
+                .after(Layer1SystemSet::Economy),
         )
             .in_set(Layer1SystemSet::Observation),
     );
@@ -118,10 +119,12 @@ pub fn register(schedule: &mut Schedule) {
             inspector_outcome_bridge_system.after(inspector_report_system),
             taboo_event_system.after(crate::layer1::health::despawn_dead_entities_system),
             crate::layer1::quantum_twins::update_twin_sync_system.after(Layer1SystemSet::Economy),
-            crate::layer1::quantum_twins::update_twin_mood_system.after(Layer1SystemSet::Consumption),
+            crate::layer1::quantum_twins::update_twin_mood_system
+                .after(Layer1SystemSet::Consumption),
             // Fix: handle_pop_death_system is re-exported in layer1/mod.rs or located in layer1/pop.rs
             // The previous error was referencing crate::layer1::health::handle_pop_death_system
-            crate::layer1::quantum_twins::handle_severance_system.after(crate::layer1::pop::handle_pop_death_system),
+            crate::layer1::quantum_twins::handle_severance_system
+                .after(crate::layer1::pop::handle_pop_death_system),
         )
             .in_set(Layer1SystemSet::Observation),
     );

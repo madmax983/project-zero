@@ -208,7 +208,7 @@ const fn is_external_door(b: BuildingType) -> bool {
 #[cfg(test)]
 mod tests {
     use crate::layer1::access_control::{AccessControl, AccessMode};
-    use crate::layer1::ai_core::{AICore, RaidDetected, ai_automation_system, ai_rogue_system};
+    use crate::layer1::ai_core::{ai_automation_system, ai_rogue_system, AICore, RaidDetected};
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::energy::{Battery, PowerConsumer};
     use crate::layer1::structure::Structure;

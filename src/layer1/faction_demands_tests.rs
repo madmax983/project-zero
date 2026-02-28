@@ -2,8 +2,8 @@
 mod tests {
     use crate::layer1::edicts::{ColonyPolicies, Policy};
     use crate::layer1::factions::{
-        FactionDemand, FactionId, FactionMember, FactionState, Factions, is_pop_striking,
-        update_faction_demands_system, update_faction_strikes_system,
+        is_pop_striking, update_faction_demands_system, update_faction_strikes_system,
+        FactionDemand, FactionId, FactionMember, FactionState, Factions,
     };
     use crate::layer1::unrest::MentalState;
     use crate::layer1::utility_ai::{ActionType, UtilityWeights};
@@ -160,7 +160,7 @@ mod tests {
         use crate::layer1::needs::Needs;
         use crate::layer1::resources::ColonyResources;
         use crate::layer1::taboo::TabooState;
-        use crate::layer1::utility_ai::{PopAction, UtilityConfig, evaluate_actions_system};
+        use crate::layer1::utility_ai::{evaluate_actions_system, PopAction, UtilityConfig};
 
         let mut world = setup_world();
         world.insert_resource(UtilityConfig::default());

@@ -4,7 +4,7 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::stress::StressTracker;
 use crate::layer1::traits::{Trait, Traits};
 use crate::layer1::utility_ai::{ActionType, PopAction};
-use crate::layer1::utility_eval_types::{ScorableCandidate, evaluate_candidates};
+use crate::layer1::utility_eval_types::{evaluate_candidates, ScorableCandidate};
 use crate::layer1::utility_types::UtilityWeights;
 use crate::layer1::zone::{ZoneGrid, ZoneType};
 use bevy_ecs::prelude::*;
@@ -204,8 +204,8 @@ mod tests {
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
     use crate::layer1::predictive_policing::{
-        PredictionConfig, PredictiveModel, Suspect, check_prediction_system,
-        evaluate_pre_crime_arrest,
+        check_prediction_system, evaluate_pre_crime_arrest, PredictionConfig, PredictiveModel,
+        Suspect,
     };
     use crate::layer1::stress::StressTracker;
     use crate::layer1::traits::{Trait, Traits};

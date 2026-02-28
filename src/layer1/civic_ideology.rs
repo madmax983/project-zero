@@ -119,12 +119,10 @@ mod tests {
 
         // Assert
         let pop_morale = world.query::<&Morale>().iter(&world).next().unwrap();
-        assert!(
-            pop_morale
-                .modifiers
-                .iter()
-                .any(|m| m.label == "Ideological Satisfaction" && m.value > 0.0)
-        );
+        assert!(pop_morale
+            .modifiers
+            .iter()
+            .any(|m| m.label == "Ideological Satisfaction" && m.value > 0.0));
     }
 
     #[test]
@@ -150,12 +148,10 @@ mod tests {
 
         // Assert
         let pop_morale = world.query::<&Morale>().iter(&world).next().unwrap();
-        assert!(
-            pop_morale
-                .modifiers
-                .iter()
-                .any(|m| m.label == "Ideological Disappointment" && m.value < 0.0)
-        );
+        assert!(pop_morale
+            .modifiers
+            .iter()
+            .any(|m| m.label == "Ideological Disappointment" && m.value < 0.0));
     }
 
     #[test]
@@ -181,12 +177,10 @@ mod tests {
 
         // Assert
         let pop_morale = world.query::<&Morale>().iter(&world).next().unwrap();
-        assert!(
-            pop_morale
-                .modifiers
-                .iter()
-                .any(|m| m.label == "Ideological Satisfaction")
-        );
+        assert!(pop_morale
+            .modifiers
+            .iter()
+            .any(|m| m.label == "Ideological Satisfaction"));
     }
 
     #[test]
@@ -214,11 +208,9 @@ mod tests {
 
         // Assert
         let pop_morale = world.query::<&Morale>().iter(&world).next().unwrap();
-        assert!(
-            pop_morale
-                .modifiers
-                .iter()
-                .any(|m| m.label == "Ideological Satisfaction")
-        );
+        assert!(pop_morale
+            .modifiers
+            .iter()
+            .any(|m| m.label == "Ideological Satisfaction"));
     }
 }

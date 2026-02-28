@@ -4,7 +4,7 @@ mod tests {
     use crate::layer1::fire::Fire;
     use crate::layer1::map::GridPosition;
     use crate::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
-    use crate::layer1::vermin::{VerminState, VerminTrait, vermin_growth_system};
+    use crate::layer1::vermin::{vermin_growth_system, VerminState, VerminTrait};
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
 

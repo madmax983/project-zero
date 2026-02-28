@@ -95,7 +95,7 @@ pub fn trend_satisfaction_system(
             if &consumed.item == desired {
                 if let Some(mut morale) = morale_opt {
                     morale.add_modifier(MoodModifier {
-                    label: "Feeling Trendy".to_string(),
+                        label: "Feeling Trendy".to_string(),
                         value: 0.1,   // +10% morale
                         duration: 50, // Lasts for 50 ticks (short-ish)
                     });

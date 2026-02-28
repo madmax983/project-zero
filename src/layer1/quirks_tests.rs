@@ -2,7 +2,7 @@ use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::energy::PowerSource;
 use crate::layer1::pop::{Pop, Speed};
-use crate::layer1::quirks::{PlanetaryTrait, PlanetaryTraits, apply_quirk_modifiers_system};
+use crate::layer1::quirks::{apply_quirk_modifiers_system, PlanetaryTrait, PlanetaryTraits};
 use bevy_ecs::prelude::*;
 use bevy_ecs::system::RunSystemOnce;
 

@@ -1,9 +1,9 @@
 #[cfg(test)]
 mod tests {
     use crate::layer1::atmosphere::{
-        CorrosionResistant, CorrosiveAtmosphere, ProtectedFromAtmosphere, corrosion_damage_system,
+        corrosion_damage_system, CorrosionResistant, CorrosiveAtmosphere, ProtectedFromAtmosphere,
     };
-    use crate::layer1::building::{BuildingType, MaterialType, spawn_building_with_material};
+    use crate::layer1::building::{spawn_building_with_material, BuildingType, MaterialType};
     use crate::layer1::map::GridPosition;
     use crate::layer1::structure::Structure;
     use bevy_ecs::prelude::*;

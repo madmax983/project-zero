@@ -1,11 +1,11 @@
 #[cfg(test)]
 mod tests {
-    use crate::layer1::GridPosition;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::pop::Pop;
     use crate::layer1::refining::process_refining_system;
     use crate::layer1::resources::{ColonyResources, RefiningProgress};
     use crate::layer1::utility_ai::{ActionType, PopAction};
+    use crate::layer1::GridPosition;
     use bevy_ecs::prelude::*;
 
     #[test]

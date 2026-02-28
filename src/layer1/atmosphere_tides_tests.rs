@@ -1,10 +1,10 @@
 #[cfg(test)]
 mod tests {
     use crate::layer1::atmosphere::{
-        AtmosphericTide, BaseGlobalWind, sync_global_wind_system, update_atmospheric_tide_system,
+        sync_global_wind_system, update_atmospheric_tide_system, AtmosphericTide, BaseGlobalWind,
     };
     use crate::layer1::erosion::ErosionGrid;
-    use crate::layer1::execution::{MovementTarget, movement_system};
+    use crate::layer1::execution::{movement_system, MovementTarget};
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::{Pop, Speed};
     use crate::layer1::terrain::{TerrainGrid, TerrainType};

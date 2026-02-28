@@ -48,7 +48,7 @@ pub fn scrapcode_decay_system(mut scrapcode: ResMut<Scrapcode>) {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::building::{BuildingType, MaterialType, try_place_building};
+    use crate::layer1::building::{try_place_building, BuildingType, MaterialType};
     use crate::layer1::resources::ColonyResources;
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
 

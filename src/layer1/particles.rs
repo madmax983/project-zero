@@ -1,8 +1,8 @@
 #![allow(clippy::cast_possible_truncation, clippy::cast_precision_loss)]
 use crate::layer1::map::GridPosition;
 use bevy_ecs::prelude::*;
-use rand::Rng;
 use rand::prelude::SliceRandom;
+use rand::Rng;
 use ratatui::style::Color;
 
 /// Visual particle effect component.

@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
     use crate::layer1::ecology::{
-        BiomeAnchor, DependentOn, Species, biome_collapse_system, handle_keystone_death,
+        biome_collapse_system, handle_keystone_death, BiomeAnchor, DependentOn, Species,
     };
     use crate::layer1::health::{Dead, Health};
     use crate::layer1::map::GridPosition;

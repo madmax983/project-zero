@@ -3,8 +3,8 @@ mod tests {
     use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
     use crate::layer1::pop::Pop;
     use crate::layer1::social::old_guard::{
-        Arrival, Demographics, FOUNDER_CUTOFF_YEAR, FounderBuff, Generation, MoodModifiers,
-        apply_founder_benefits_system, check_generational_friction_system,
+        apply_founder_benefits_system, check_generational_friction_system, Arrival, Demographics,
+        FounderBuff, Generation, MoodModifiers, FOUNDER_CUTOFF_YEAR,
     };
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
@@ -56,13 +56,11 @@ mod tests {
         // Check for mood modifier
         let modifiers = world.get::<MoodModifiers>(founder);
         assert!(modifiers.is_some());
-        assert!(
-            modifiers
-                .unwrap()
-                .entries
-                .iter()
-                .any(|m| m.value == 5.0 && m.source == "Legacy of the First")
-        );
+        assert!(modifiers
+            .unwrap()
+            .entries
+            .iter()
+            .any(|m| m.value == 5.0 && m.source == "Legacy of the First"));
     }
 
     #[test]

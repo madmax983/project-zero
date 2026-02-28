@@ -502,8 +502,8 @@ mod tests {
         };
         use crate::shared::state::GameState;
         use crate::shared::time::SimulationTime;
-        use ratatui::Terminal;
         use ratatui::backend::TestBackend;
+        use ratatui::Terminal;
 
         let mut world = World::new();
         // Setup resources needed by render_status_bar

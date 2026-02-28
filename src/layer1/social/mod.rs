@@ -241,7 +241,7 @@ mod tests {
     use super::*;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::map::GridPosition;
-    use crate::layer1::needs::{Needs, decay_needs_system};
+    use crate::layer1::needs::{decay_needs_system, Needs};
     use crate::layer1::pop::Pop;
     use bevy_ecs::system::RunSystemOnce;
 

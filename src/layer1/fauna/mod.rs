@@ -222,7 +222,7 @@ pub fn handle_fauna_death_system(
 #[cfg(test)]
 mod tests {
     use crate::layer1::execution::MovementTarget;
-    use crate::layer1::fauna::{Fauna, FaunaState, FaunaType, fauna_behavior_system};
+    use crate::layer1::fauna::{fauna_behavior_system, Fauna, FaunaState, FaunaType};
     use crate::layer1::health::Health;
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
@@ -354,7 +354,7 @@ mod tests {
         let health = world.get::<Health>(pop).unwrap();
         assert!(health.current < 100.0);
         assert_eq!(health.current, 90.0); // 100 - 10
-        // Wolf should stay in Chase/Attack mode
+                                          // Wolf should stay in Chase/Attack mode
         let wolf_comp = world.get::<Fauna>(wolf).unwrap();
         assert!(matches!(
             wolf_comp.state,

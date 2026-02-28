@@ -182,7 +182,7 @@ mod tests {
 
     #[test]
     fn test_trauma_affects_waking() {
-        use crate::layer1::cryo::{CryoSickness, ThawOrder, exit_cryo_system};
+        use crate::layer1::cryo::{exit_cryo_system, CryoSickness, ThawOrder};
         use crate::layer1::pop::Speed;
 
         let mut world = World::new();

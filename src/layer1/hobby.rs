@@ -105,18 +105,18 @@ pub fn execute_hobby_system(
 
         // Reduce stress
         stress.accumulated_stress = (stress.accumulated_stress - 0.5).max(0.0); // 0.5 per tick is fast? Spec said 0.005.
-        // Spec: `stress.value = (stress.value - 0.005).max(0.0);` where stress was 0-1.
-        // `StressTracker` is 0-100. So 0.5 is 0.5%.
-        // Let's use 0.5.
+                                                                                // Spec: `stress.value = (stress.value - 0.005).max(0.0);` where stress was 0-1.
+                                                                                // `StressTracker` is 0-100. So 0.5 is 0.5%.
+                                                                                // Let's use 0.5.
 
         // Chance to produce item (e.g., 1% per tick)
         if rng.gen_bool(0.01) {
             if let Some(mut inv) = inventory {
                 let item_type = match hobby.hobby_type {
-                HobbyType::Whittling => Some(ItemType::Curio("Wooden Duck".to_string())),
-                HobbyType::Tinkering => Some(ItemType::Curio("Bent Gear".to_string())),
-                _ => None,
-            };
+                    HobbyType::Whittling => Some(ItemType::Curio("Wooden Duck".to_string())),
+                    HobbyType::Tinkering => Some(ItemType::Curio("Bent Gear".to_string())),
+                    _ => None,
+                };
 
                 if let Some(t) = item_type {
                     inv.add(InventoryItem {

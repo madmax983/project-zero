@@ -51,7 +51,7 @@ pub fn enforce_permit_restrictions_system(
 mod tests {
     use super::*;
     use crate::layer1::building::{
-        Building, BuildingType, MaterialType, spawn_building_with_material,
+        spawn_building_with_material, Building, BuildingType, MaterialType,
     };
     use crate::layer1::energy::PowerConsumer;
     use crate::layer1::inventory::{Inventory, InventoryItem};

@@ -1,9 +1,9 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::morale::Morale;
-use crate::layer1::traits::Trait;
 use crate::layer1::cybernetics::Augmentations;
 use crate::layer1::health::Health;
 use crate::layer1::inventory::Inventory;
+use crate::layer1::morale::Morale;
+use crate::layer1::traits::Trait;
+use bevy_ecs::prelude::*;
 // use crate::layer1::items::ItemType; // Not needed directly here if just doing a simplified check
 
 #[derive(Component, Debug, Default)]
@@ -14,7 +14,14 @@ pub struct SurgicalAddiction {
 
 pub fn init_addiction_system(
     mut commands: Commands,
-    query: Query<(Entity, &Augmentations, Option<&crate::layer1::traits::Traits>), Without<SurgicalAddiction>>,
+    query: Query<
+        (
+            Entity,
+            &Augmentations,
+            Option<&crate::layer1::traits::Traits>,
+        ),
+        Without<SurgicalAddiction>,
+    >,
 ) {
     for (entity, augs, traits) in query.iter() {
         let is_transhumanist = traits.is_some_and(|t| t.has(Trait::Transhumanist));
@@ -29,9 +36,7 @@ pub fn init_addiction_system(
     }
 }
 
-pub fn update_addiction_system(
-    mut query: Query<(&mut SurgicalAddiction, &mut Morale)>,
-) {
+pub fn update_addiction_system(mut query: Query<(&mut SurgicalAddiction, &mut Morale)>) {
     for (mut addiction, mut morale) in query.iter_mut() {
         addiction.craving = (addiction.craving - addiction.decay_rate).max(0.0);
 
@@ -47,7 +52,10 @@ pub fn check_self_surgery_system(
 ) {
     for (mut addiction, mut health, mut inventory) in query.iter_mut() {
         if addiction.craving <= 0.0 {
-            let scrap_index = inventory.items.iter().position(|i| i.item_type == crate::layer1::items::ItemType::Scrap);
+            let scrap_index = inventory
+                .items
+                .iter()
+                .position(|i| i.item_type == crate::layer1::items::ItemType::Scrap);
             if let Some(index) = scrap_index {
                 // Consume the item
                 inventory.items.remove(index);
@@ -63,13 +71,13 @@ pub fn check_self_surgery_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::pop::Pop;
-    use crate::layer1::morale::Morale;
-    use crate::layer1::traits::Trait;
     use crate::layer1::cybernetics::Augmentations;
     use crate::layer1::health::Health;
     use crate::layer1::inventory::Inventory;
     use crate::layer1::items::ItemType;
+    use crate::layer1::morale::Morale;
+    use crate::layer1::pop::Pop;
+    use crate::layer1::traits::Trait;
 
     #[test]
     fn test_addiction_starts_after_surgery_if_transhumanist() {
@@ -77,11 +85,15 @@ mod tests {
 
         let mut traits = crate::layer1::traits::Traits::default();
         traits.add(Trait::Transhumanist);
-        let pop = world.spawn((
-            Pop,
-            Augmentations { installed: vec![Entity::from_raw(1)] }, // 1 aug
-            traits,
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Augmentations {
+                    installed: vec![Entity::from_raw(1)],
+                }, // 1 aug
+                traits,
+            ))
+            .id();
 
         // Run system that initializes addiction
         let mut schedule = Schedule::default();
@@ -96,10 +108,19 @@ mod tests {
         let mut world = World::new();
 
         // No traits, but 4 augs
-        let pop = world.spawn((
-            Pop,
-            Augmentations { installed: vec![Entity::from_raw(1), Entity::from_raw(2), Entity::from_raw(3), Entity::from_raw(4)] },
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Augmentations {
+                    installed: vec![
+                        Entity::from_raw(1),
+                        Entity::from_raw(2),
+                        Entity::from_raw(3),
+                        Entity::from_raw(4),
+                    ],
+                },
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(init_addiction_system);
@@ -111,11 +132,19 @@ mod tests {
     #[test]
     fn test_addiction_decay_lowers_mood() {
         let mut world = World::new();
-        let pop = world.spawn((
-            Pop,
-            Morale { value: 100.0, ..Default::default() },
-            SurgicalAddiction { craving: 100.0, decay_rate: 1.0 },
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Morale {
+                    value: 100.0,
+                    ..Default::default()
+                },
+                SurgicalAddiction {
+                    craving: 100.0,
+                    decay_rate: 1.0,
+                },
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(update_addiction_system);
@@ -143,12 +172,20 @@ mod tests {
             item_type: ItemType::Scrap,
             entity: None,
         });
-        let pop = world.spawn((
-            Pop,
-            SurgicalAddiction { craving: 0.0, decay_rate: 1.0 },
-            Health { current: 100.0, max: 100.0 },
-            inventory,
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                SurgicalAddiction {
+                    craving: 0.0,
+                    decay_rate: 1.0,
+                },
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                },
+                inventory,
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(check_self_surgery_system);

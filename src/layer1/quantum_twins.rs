@@ -1,8 +1,8 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::skills::{Skills, XpGainEvent};
-use crate::layer1::pop::PopDied;
 use crate::layer1::morale::Morale;
+use crate::layer1::pop::PopDied;
+use crate::layer1::skills::{Skills, XpGainEvent};
 use crate::layer1::stress::StressTracker;
+use bevy_ecs::prelude::*;
 
 #[derive(Component, Debug, Clone, Copy)]
 pub struct QuantumTwin {
@@ -35,9 +35,7 @@ pub fn update_twin_sync_system(
 }
 
 /// Equalizes mood between twins over time.
-pub fn update_twin_mood_system(
-    mut twins: Query<(Entity, &QuantumTwin, &mut Morale)>,
-) {
+pub fn update_twin_mood_system(mut twins: Query<(Entity, &QuantumTwin, &mut Morale)>) {
     // Collect all morale values first to avoid borrow issues
     let mut morale_map = std::collections::HashMap::new();
     for (entity, _, morale) in twins.iter() {
@@ -61,7 +59,12 @@ pub fn update_twin_mood_system(
 pub fn handle_severance_system(
     mut commands: Commands,
     mut events: EventReader<PopDied>,
-    mut query: Query<(Entity, &QuantumTwin, Option<&mut Morale>, Option<&mut StressTracker>)>,
+    mut query: Query<(
+        Entity,
+        &QuantumTwin,
+        Option<&mut Morale>,
+        Option<&mut StressTracker>,
+    )>,
 ) {
     for event in events.read() {
         // Find who was partnered with the dead entity
@@ -79,7 +82,7 @@ pub fn handle_severance_system(
                     morale.value = 0.0;
                     morale.add_modifier(crate::layer1::morale::MoodModifier {
                         label: "Severance".to_string(),
-                        value: -1.0, // Crushing depression
+                        value: -1.0,    // Crushing depression
                         duration: 1000, // Long lasting
                     });
                 }
@@ -94,28 +97,38 @@ pub fn handle_severance_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::pop::{Pop, PopName};
-    use crate::layer1::skills::{SkillType, Skills, XpGainEvent, XpSource};
-    use crate::layer1::health::{Health, Dead};
+    use crate::layer1::health::{Dead, Health};
     use crate::layer1::morale::Morale;
     use crate::layer1::pop::PopDied;
+    use crate::layer1::pop::{Pop, PopName};
+    use crate::layer1::skills::{SkillType, Skills, XpGainEvent, XpSource};
 
     #[test]
     fn test_xp_sharing() {
         let mut world = World::new();
         // Spawn Twin A
-        let twin_a = world.spawn((
-            Pop,
-            QuantumTwin { partner: Entity::PLACEHOLDER, link_strength: 0.5 },
-            Skills::default(),
-        )).id();
+        let twin_a = world
+            .spawn((
+                Pop,
+                QuantumTwin {
+                    partner: Entity::PLACEHOLDER,
+                    link_strength: 0.5,
+                },
+                Skills::default(),
+            ))
+            .id();
 
         // Spawn Twin B
-        let twin_b = world.spawn((
-            Pop,
-            QuantumTwin { partner: twin_a, link_strength: 0.5 },
-            Skills::default(),
-        )).id();
+        let twin_b = world
+            .spawn((
+                Pop,
+                QuantumTwin {
+                    partner: twin_a,
+                    link_strength: 0.5,
+                },
+                Skills::default(),
+            ))
+            .id();
 
         // Fix circular ref for Twin A
         world.get_mut::<QuantumTwin>(twin_a).unwrap().partner = twin_b;
@@ -143,17 +156,33 @@ mod tests {
     #[test]
     fn test_mood_equalization() {
         let mut world = World::new();
-        let twin_a = world.spawn((
-            Pop,
-            QuantumTwin { partner: Entity::PLACEHOLDER, link_strength: 0.1 },
-            Morale { value: 1.0, ..Default::default() },
-        )).id();
+        let twin_a = world
+            .spawn((
+                Pop,
+                QuantumTwin {
+                    partner: Entity::PLACEHOLDER,
+                    link_strength: 0.1,
+                },
+                Morale {
+                    value: 1.0,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
-        let twin_b = world.spawn((
-            Pop,
-            QuantumTwin { partner: twin_a, link_strength: 0.1 },
-            Morale { value: 0.0, ..Default::default() },
-        )).id();
+        let twin_b = world
+            .spawn((
+                Pop,
+                QuantumTwin {
+                    partner: twin_a,
+                    link_strength: 0.1,
+                },
+                Morale {
+                    value: 0.0,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         world.get_mut::<QuantumTwin>(twin_a).unwrap().partner = twin_b;
 
@@ -176,21 +205,37 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(Events::<PopDied>::default());
 
-        let twin_a = world.spawn((
-            Pop,
-            QuantumTwin { partner: Entity::PLACEHOLDER, link_strength: 1.0 },
-            Health { current: 0.0, max: 100.0 },
-            PopName("Twin A".to_string()),
-        )).id();
+        let twin_a = world
+            .spawn((
+                Pop,
+                QuantumTwin {
+                    partner: Entity::PLACEHOLDER,
+                    link_strength: 1.0,
+                },
+                Health {
+                    current: 0.0,
+                    max: 100.0,
+                },
+                PopName("Twin A".to_string()),
+            ))
+            .id();
         // We need Dead component for some systems but our trigger is PopDied event
         world.entity_mut(twin_a).insert(Dead);
 
-        let twin_b = world.spawn((
-            Pop,
-            QuantumTwin { partner: twin_a, link_strength: 1.0 },
-            Morale { value: 0.5, ..Default::default() },
-            crate::layer1::stress::StressTracker::default(),
-        )).id();
+        let twin_b = world
+            .spawn((
+                Pop,
+                QuantumTwin {
+                    partner: twin_a,
+                    link_strength: 1.0,
+                },
+                Morale {
+                    value: 0.5,
+                    ..Default::default()
+                },
+                crate::layer1::stress::StressTracker::default(),
+            ))
+            .id();
 
         world.get_mut::<QuantumTwin>(twin_a).unwrap().partner = twin_b;
 
@@ -208,7 +253,9 @@ mod tests {
         schedule.run(&mut world);
 
         let mood_b = world.get::<Morale>(twin_b).unwrap();
-        let stress_b = world.get::<crate::layer1::stress::StressTracker>(twin_b).unwrap();
+        let stress_b = world
+            .get::<crate::layer1::stress::StressTracker>(twin_b)
+            .unwrap();
 
         // Should have "Catatonic" or massive stress
         assert!(stress_b.accumulated_stress > 0.9);

@@ -13,7 +13,7 @@ use crate::layer1::particles::Particle;
 use crate::layer1::pop::{Role, Speed};
 use crate::layer1::social::Tavern;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
-use crate::layer1::traits::{Traits, get_trait_move_speed_modifier};
+use crate::layer1::traits::{get_trait_move_speed_modifier, Traits};
 use crate::layer1::utility_types::{ActionType, StartPlan};
 use bevy_ecs::prelude::*;
 use ratatui::style::Color;

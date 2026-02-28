@@ -1,4 +1,3 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::building::Building;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
@@ -7,6 +6,7 @@ use crate::layer1::structure::Structure;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::utility_types::{ActionType, PopAction};
 use crate::shared::log::MessageLog;
+use bevy_ecs::prelude::*;
 
 /// Tracks a pop's psychological exposure to the Void.
 #[derive(Component, Debug, Clone, Default)]
@@ -65,7 +65,12 @@ pub fn update_void_exposure_system(
     mut pops: Query<(&GridPosition, &mut VoidExposure, &mut Needs), With<Pop>>,
     void_grid: Res<VoidGrid>,
     terrain: Res<TerrainGrid>,
-    buildings: Query<(&GridPosition, Option<&VoidAnchor>, Option<&Building>, Option<&Structure>)>,
+    buildings: Query<(
+        &GridPosition,
+        Option<&VoidAnchor>,
+        Option<&Building>,
+        Option<&Structure>,
+    )>,
 ) {
     for (pos, mut exposure, mut needs) in &mut pops {
         // 1. Check current tile "Void Intensity" (Static map data)
@@ -152,8 +157,9 @@ pub fn void_manifestation_system(
 
             if let Some(ref mut log) = log {
                 // Rate limit logs
-                if exposure.check_timer == 100 { // Only once per check cycle
-                     log.add(format!("Pop {:?} stares into the abyss...", entity));
+                if exposure.check_timer == 100 {
+                    // Only once per check cycle
+                    log.add(format!("Pop {:?} stares into the abyss...", entity));
                 }
             }
         }
@@ -178,19 +184,25 @@ mod tests {
         world.insert_resource(void_grid);
 
         let tiles = vec![TerrainType::Grass; 100];
-        world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
 
         // Spawn Pop
-        let pop = world.spawn((
-            Pop,
-            GridPosition { x: 5, y: 5 },
-            VoidExposure {
-                current: 0.0,
-                susceptibility: 1.0,
-                check_timer: 0,
-            },
-            Needs::default(),
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 5, y: 5 },
+                VoidExposure {
+                    current: 0.0,
+                    susceptibility: 1.0,
+                    check_timer: 0,
+                },
+                Needs::default(),
+            ))
+            .id();
 
         // Run Update
         let mut schedule = Schedule::default();
@@ -199,7 +211,10 @@ mod tests {
 
         // Check gain
         let exposure = world.get::<VoidExposure>(pop).unwrap();
-        assert!(exposure.current > 0.0, "Pop should gain exposure from void grid");
+        assert!(
+            exposure.current > 0.0,
+            "Pop should gain exposure from void grid"
+        );
     }
 
     #[test]
@@ -207,18 +222,20 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(MessageLog::default());
 
-        let pop = world.spawn((
-            Pop,
-            VoidExposure {
-                current: 85.0, // High exposure
-                susceptibility: 1.0,
-                check_timer: 0, // Ready
-            },
-            PopAction {
-                current: ActionType::Work, // Doing something
-                ..Default::default()
-            },
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                VoidExposure {
+                    current: 85.0, // High exposure
+                    susceptibility: 1.0,
+                    check_timer: 0, // Ready
+                },
+                PopAction {
+                    current: ActionType::Work, // Doing something
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(void_manifestation_system);
@@ -226,10 +243,19 @@ mod tests {
 
         // Check Action Override
         let action = world.get::<PopAction>(pop).unwrap();
-        assert_eq!(action.current, ActionType::VoidStare, "Pop should be forced to VoidStare");
+        assert_eq!(
+            action.current,
+            ActionType::VoidStare,
+            "Pop should be forced to VoidStare"
+        );
 
         // Check Log
         let log = world.resource::<MessageLog>();
-        assert!(log.messages.iter().any(|m| m.text.contains("stares into the abyss")), "Log should record manifestation");
+        assert!(
+            log.messages
+                .iter()
+                .any(|m| m.text.contains("stares into the abyss")),
+            "Log should record manifestation"
+        );
     }
 }

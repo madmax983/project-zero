@@ -16,7 +16,7 @@ use crate::layer1::unrest::MentalBreakType;
 use crate::layer1::unrest::MentalState;
 use crate::layer1::utility_ai::{ActionType, PopAction};
 use crate::layer1::utility_eval_types::ScorableCandidate;
-use crate::layer1::utility_types::{UtilityWeights, calculate_context_score};
+use crate::layer1::utility_types::{calculate_context_score, UtilityWeights};
 use crate::layer1::zone::{ZoneGrid, ZoneType};
 use bevy_ecs::prelude::*;
 
@@ -194,8 +194,8 @@ pub fn update_inmates_system(mut commands: Commands, mut query: Query<(Entity, &
 #[cfg(test)]
 mod tests {
     use crate::layer1::justice::{
-        Inmate, Wanted, check_crime_system, evaluate_warden_action, execute_arrest_system,
-        update_inmates_system,
+        check_crime_system, evaluate_warden_action, execute_arrest_system, update_inmates_system,
+        Inmate, Wanted,
     };
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;

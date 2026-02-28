@@ -115,8 +115,8 @@ mod tests {
     use crate::layer1::balance::TICKS_PER_YEAR;
     use crate::layer1::energy::PowerSource;
     use crate::layer1::solar::{
-        SolarCycle, SolarCycleState, SolarPower, update_solar_cycle_system,
-        update_solar_output_system,
+        update_solar_cycle_system, update_solar_output_system, SolarCycle, SolarCycleState,
+        SolarPower,
     };
     use crate::shared::time::SimulationTime;
     use bevy_ecs::prelude::*;

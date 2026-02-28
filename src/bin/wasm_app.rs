@@ -1,13 +1,11 @@
 //! SCALE WASM entry point — runs the game in a browser via Ratzilla.
 
-
 #[cfg(target_arch = "wasm32")]
 use ratzilla::backend::dom::DomBackend;
 #[cfg(target_arch = "wasm32")]
 use ratzilla::ratatui::Terminal;
 #[cfg(target_arch = "wasm32")]
 use ratzilla::WebRenderer;
-
 
 #[cfg(not(target_arch = "wasm32"))]
 fn main() {

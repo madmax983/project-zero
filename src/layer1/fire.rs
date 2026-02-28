@@ -5,9 +5,9 @@
     clippy::collapsible_if
 )]
 
-use crate::layer1::GridPosition;
 use crate::layer1::structure::Structure;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
+use crate::layer1::GridPosition;
 use bevy_ecs::prelude::*;
 use rand::Rng;
 use std::collections::HashSet;
@@ -244,9 +244,9 @@ pub fn fire_pressure_check_system(world: &mut World) {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::GridPosition;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
+    use crate::layer1::GridPosition;
 
     #[test]
     fn test_flammable_component_defaults() {

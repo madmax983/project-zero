@@ -123,7 +123,7 @@ pub fn apply_mentorship_xp_system(
 
 #[cfg(test)]
 mod tests {
-    use super::{Mentorship, apply_mentorship_xp_system, check_mentorship_system};
+    use super::{apply_mentorship_xp_system, check_mentorship_system, Mentorship};
     use crate::layer1::designation::{Designation, DesignationType};
     use crate::layer1::execution::{AtTarget, MovementTarget};
     use crate::layer1::map::GridPosition;

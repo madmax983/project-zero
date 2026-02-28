@@ -1,13 +1,13 @@
 #[cfg(test)]
 mod tests {
-    use crate::layer1::GridPosition;
     use crate::layer1::building::OccupiedTiles;
-    use crate::layer1::building::{Building, BuildingType, VacuumWelded, try_place_building};
-    use crate::layer1::designation::{DesignationType, can_designate};
+    use crate::layer1::building::{try_place_building, Building, BuildingType, VacuumWelded};
+    use crate::layer1::designation::{can_designate, DesignationType};
     use crate::layer1::pressure::PressureGrid;
     use crate::layer1::resources::ColonyResources;
     use crate::layer1::structure::Structure;
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
+    use crate::layer1::GridPosition;
     use bevy_ecs::prelude::*;
 
     // Helper to setup world with specific pressure

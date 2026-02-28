@@ -1,7 +1,7 @@
-use crate::layer1::GridPosition;
 use crate::layer1::edicts::{ColonyPolicies, Policy};
 use crate::layer1::fire::Fire;
 use crate::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
+use crate::layer1::GridPosition;
 use bevy_ecs::prelude::*;
 use rand::Rng;
 use std::collections::HashSet;
@@ -146,7 +146,7 @@ pub fn calculate_spoilage_modifier(vermin: &VerminState) -> f32 {
 
 #[cfg(test)]
 mod tests {
-    use super::{VerminState, calculate_spoilage_modifier, vermin_growth_system};
+    use super::{calculate_spoilage_modifier, vermin_growth_system, VerminState};
     use crate::layer1::edicts::{ColonyPolicies, Policy};
     use crate::layer1::resources::ColonyResources;
     use bevy_ecs::prelude::*;

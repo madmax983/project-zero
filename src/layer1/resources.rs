@@ -17,9 +17,9 @@
 //! 4. `MiningProgress` accumulates.
 //! 5. Upon completion, the tile changes and resources are awarded.
 
-use crate::layer1::GridPosition;
 use crate::layer1::science::{Anomaly, AnomalyType, ScanProgress};
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
+use crate::layer1::GridPosition;
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
 use rand::Rng;
@@ -1021,9 +1021,9 @@ fn try_spawn_anomaly(world: &mut World, pos: GridPosition) {
 #[allow(clippy::float_cmp)]
 mod tests {
     use super::*;
-    use crate::layer1::GridPosition;
     use crate::layer1::designation::{Designation, DesignationType};
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
+    use crate::layer1::GridPosition;
 
     #[test]
     fn test_colony_resources_fields() {

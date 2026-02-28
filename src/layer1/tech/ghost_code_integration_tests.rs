@@ -3,7 +3,7 @@ mod tests {
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::combat::AttackProperties;
     use crate::layer1::resources::ResourceType;
-    use crate::layer1::tech::ghost_code::{GhostCode, GhostTrait, apply_ghost_traits_system};
+    use crate::layer1::tech::ghost_code::{apply_ghost_traits_system, GhostCode, GhostTrait};
     use crate::layer1::turret::Turret;
     use bevy_ecs::prelude::*;
 

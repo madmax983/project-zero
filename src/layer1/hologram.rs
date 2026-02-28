@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::map::GridPosition;
-use crate::layer1::energy::PowerConsumer;
 use crate::layer1::beauty::BeautySource;
+use crate::layer1::energy::PowerConsumer;
+use crate::layer1::map::GridPosition;
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct HoloProjector {
@@ -17,7 +17,12 @@ pub struct HologramFailureEvent {
 }
 
 pub fn update_holograms_system(
-    mut query: Query<(&mut HoloProjector, &mut BeautySource, &PowerConsumer, &GridPosition)>,
+    mut query: Query<(
+        &mut HoloProjector,
+        &mut BeautySource,
+        &PowerConsumer,
+        &GridPosition,
+    )>,
     mut events: EventWriter<HologramFailureEvent>,
 ) {
     for (mut holo, mut beauty_source, power, pos) in query.iter_mut() {

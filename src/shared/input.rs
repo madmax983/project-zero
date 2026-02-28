@@ -3,13 +3,13 @@ use std::collections::HashSet;
 use std::hash::Hash;
 
 use crate::layer1::{
-    BuildMode, CameraTarget, ChronicleUiState, DesignationMode, DesignationType, GridPosition,
-    Viewport, try_cancel_designation, try_designate_area, try_place_building,
+    try_cancel_designation, try_designate_area, try_place_building, BuildMode, CameraTarget,
+    ChronicleUiState, DesignationMode, DesignationType, GridPosition, Viewport,
 };
 use crate::layer2::system::ViewMode;
 use crate::platform::input::{GameKeyCode, GameKeyEvent, GameMouseEvent};
 use crate::shared::menu::MenuState;
-use crate::shared::selection::{Selection, handle_selection_click, screen_to_world};
+use crate::shared::selection::{handle_selection_click, screen_to_world, Selection};
 use crate::shared::state::GameState;
 use crate::shared::time::{SimSpeed, SimulationTime};
 

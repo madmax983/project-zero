@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
     use crate::layer1::building::{Building, BuildingType};
-    use crate::layer1::energy::{PowerSource, update_auroral_output_system};
+    use crate::layer1::energy::{update_auroral_output_system, PowerSource};
     use crate::layer1::lighting::LightSource;
     use crate::layer1::weather::{WeatherState, WeatherType};
     use bevy_ecs::prelude::*;

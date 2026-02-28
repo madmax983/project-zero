@@ -46,12 +46,12 @@ use super::utility_types::AssignmentType;
 pub use super::utility_types::AssignmentType as JobType;
 use super::utility_types::{PopAction, UtilityWeights};
 use super::wild_child::WildExposure;
-use crate::layer1::GlobalHitStop;
 use crate::layer1::admin::AdminConsumer;
 use crate::layer1::economy::Wallet;
 use crate::layer1::funeral::Corpse;
 use crate::layer1::health::{Dead, Health};
 use crate::layer1::memory::{Memories, MemoryType};
+use crate::layer1::GlobalHitStop;
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
 use rand::Rng;
@@ -467,7 +467,7 @@ pub fn handle_witness_death_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::terrain::{TerrainGrid, TerrainType, generate_terrain};
+    use crate::layer1::terrain::{generate_terrain, TerrainGrid, TerrainType};
 
     #[test]
     fn test_pop_component_exists() {
@@ -566,8 +566,8 @@ mod tests {
 
     #[test]
     fn test_spawn_initial_pops_retries() {
-        use rand::SeedableRng;
         use rand::rngs::StdRng;
+        use rand::SeedableRng;
 
         let mut world = World::new();
         let width = 10;
@@ -600,8 +600,8 @@ mod tests {
 
     #[test]
     fn test_spawn_initial_pops_internal_with_custom_rng() {
-        use rand::SeedableRng;
         use rand::rngs::StdRng;
+        use rand::SeedableRng;
 
         let mut world = World::new();
         let terrain = generate_terrain(80, 50);
@@ -655,8 +655,8 @@ mod tests {
 
     #[test]
     fn test_spawn_internal_multiple_attempts() {
-        use rand::SeedableRng;
         use rand::rngs::StdRng;
+        use rand::SeedableRng;
 
         let mut world = World::new();
         let width = 20;
@@ -873,7 +873,7 @@ mod tests {
 mod security_tests {
     use super::*;
     use crate::layer1::chemical::{
-        ActiveEffect, ChemicalState, ChemicalType, apply_chemical_speed_modifiers_system,
+        apply_chemical_speed_modifiers_system, ActiveEffect, ChemicalState, ChemicalType,
     };
     use bevy_ecs::system::RunSystemOnce;
 

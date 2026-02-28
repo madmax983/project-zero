@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::tech::{Tech, TechState};
 use crate::shared::log::MessageLog;
+use bevy_ecs::prelude::*;
 use strum::IntoEnumIterator;
 
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -13,10 +13,7 @@ pub struct Archive {
     pub efficiency_multiplier: f32,
 }
 
-pub fn update_efficiency_system(
-    mut archive: ResMut<Archive>,
-    tech_state: Res<TechState>,
-) {
+pub fn update_efficiency_system(mut archive: ResMut<Archive>, tech_state: Res<TechState>) {
     archive.capacity = tech_state.total_capacity;
     archive.used = tech_state.used_capacity;
 

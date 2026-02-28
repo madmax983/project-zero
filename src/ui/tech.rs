@@ -278,7 +278,7 @@ fn centered_rect(percent_x: u16, percent_y: u16, r: Rect) -> Rect {
 mod tests {
     use crate::layer1::resources::ColonyResources;
     use crate::layer1::tech::{Tech, TechState};
-    use crate::ui::tech::{TechUiState, get_tech_list};
+    use crate::ui::tech::{get_tech_list, TechUiState};
     use bevy_ecs::prelude::*;
 
     #[test]

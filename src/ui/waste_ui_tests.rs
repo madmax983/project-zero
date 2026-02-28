@@ -4,8 +4,8 @@ use crate::layer1::resources::ColonyResources;
 use crate::shared::selection::Selection;
 use crate::ui::inspector::render_inspector;
 use bevy_ecs::prelude::*;
-use ratatui::Terminal;
 use ratatui::backend::TestBackend;
+use ratatui::Terminal;
 
 #[test]
 fn test_inspector_shows_waste_stats() {

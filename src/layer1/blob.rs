@@ -141,7 +141,7 @@ pub fn blob_consumption_system(
 
 #[cfg(test)]
 mod tests {
-    use crate::layer1::blob::{Blob, blob_consumption_system, blob_spread_system};
+    use crate::layer1::blob::{blob_consumption_system, blob_spread_system, Blob};
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::map::GridPosition;
     use crate::layer1::resources::{ResourceItem, ResourceType};

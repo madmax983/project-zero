@@ -4,7 +4,7 @@ use crate::layer1::morale::{MoodModifier, Morale};
 use crate::layer1::observatory::Observatory;
 use crate::shared::narrative::NarrativeGenerator;
 use bevy_ecs::prelude::*;
-use rand::{Rng, thread_rng};
+use rand::{thread_rng, Rng};
 
 /// The effect a constellation has on those who observe it.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -279,11 +279,9 @@ mod tests {
         let morale = world.get::<Morale>(pop).unwrap();
         // It's probabilistic, but 100 trials for 5% is ~99.4% chance.
         // Assert at least one modifier exists
-        assert!(
-            morale
-                .modifiers
-                .iter()
-                .any(|m| m.label == "Cosmic Inspiration")
-        );
+        assert!(morale
+            .modifiers
+            .iter()
+            .any(|m| m.label == "Cosmic Inspiration"));
     }
 }

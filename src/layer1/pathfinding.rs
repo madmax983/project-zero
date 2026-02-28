@@ -40,7 +40,7 @@ use crate::layer1::building::{Building, BuildingMap, BuildingType, OccupiedTiles
 use crate::layer1::control::{DoorControl, DoorState};
 use crate::layer1::pop::Role;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
-use crate::layer1::wind::{Vec2, WindGrid, calculate_wind_movement_penalty};
+use crate::layer1::wind::{calculate_wind_movement_penalty, Vec2, WindGrid};
 
 struct AccessCredentials {
     entity: Entity,

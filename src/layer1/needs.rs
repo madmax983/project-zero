@@ -35,10 +35,12 @@
 //! "Morale" is the aggregate score of all needs. High morale grants efficiency bonuses, while low morale
 //! leads to mental breaks (tantrums, depression).
 
-use crate::layer1::edicts::{ColonyPolicies, get_hunger_decay_modifier};
+use crate::layer1::edicts::{get_hunger_decay_modifier, ColonyPolicies};
 use crate::layer1::health::Health;
 use crate::layer1::memory::{Memories, MemoryType};
-use crate::layer1::traits::{Traits, get_trait_hunger_decay_modifier, get_trait_leisure_decay_modifier};
+use crate::layer1::traits::{
+    get_trait_hunger_decay_modifier, get_trait_leisure_decay_modifier, Traits,
+};
 use bevy_ecs::prelude::*;
 
 /// Pop survival needs.
@@ -109,7 +111,11 @@ impl Needs {
         } else {
             self.hygiene
         };
-        if min_hr < min_lh { min_hr } else { min_lh }
+        if min_hr < min_lh {
+            min_hr
+        } else {
+            min_lh
+        }
     }
 
     /// Calculates aggregate morale score (0.0 to 1.0).

@@ -11,11 +11,11 @@ use crate::layer1::heirloom::RetrogradeEngineeringEvent;
 use crate::layer1::pop::{PopBorn, PopDied};
 use crate::layer1::social::AffinityChange;
 use crate::layer1::{
-    AmbientLight, AtmosphereGrid, BuildMode, BuildingTracker, CameraCurrent, CameraTarget,
-    Chronicle, ChronicleUiState, ColonyPolicies, ColonyResources, DesignationMode, GlobalHitStop,
-    LightMap, NamedLocations, NotificationQueue, OccupiedTiles, ScreenShake, SeasonState,
-    TechState, TerrainType, UtilityConfig, Viewport, generate_terrain, initial_chronicle_event,
-    initial_naming_system, spawn_ancient_structures, spawn_initial_anomalies, spawn_initial_pops,
+    generate_terrain, initial_chronicle_event, initial_naming_system, spawn_ancient_structures,
+    spawn_initial_anomalies, spawn_initial_pops, AmbientLight, AtmosphereGrid, BuildMode,
+    BuildingTracker, CameraCurrent, CameraTarget, Chronicle, ChronicleUiState, ColonyPolicies,
+    ColonyResources, DesignationMode, GlobalHitStop, LightMap, NamedLocations, NotificationQueue,
+    OccupiedTiles, ScreenShake, SeasonState, TechState, TerrainType, UtilityConfig, Viewport,
 };
 use crate::shared::colony::ColonyName;
 use crate::shared::input::{Input, InputContextStack, KeyCode};

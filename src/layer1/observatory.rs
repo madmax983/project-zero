@@ -76,7 +76,7 @@ pub fn process_observe_system(
 
 #[cfg(test)]
 mod tests {
-    use super::{Observatory, process_observe_system};
+    use super::{process_observe_system, Observatory};
     use crate::layer1::actions::{AssignedTo, AssignmentType};
     use crate::layer1::building::BuildingType;
     use crate::layer1::morale::Morale;

@@ -195,7 +195,7 @@ pub fn generate_system(
 mod tests {
     use crate::layer1::quirks::PlanetaryTraits;
     use crate::layer2::generation::{
-        ColonyLocation, Planet, PlanetaryTraitsComponent, Star, generate_system,
+        generate_system, ColonyLocation, Planet, PlanetaryTraitsComponent, Star,
     };
     use crate::layer2::system::{Orbit, OrbitalBody};
     use crate::shared::random::WorldSeed;
@@ -205,7 +205,7 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(PlanetaryTraits::default());
         world.insert_resource(WorldSeed(42)); // Deterministic seed
-        // Register required components if using reflection (optional for tests)
+                                              // Register required components if using reflection (optional for tests)
         world
     }
 

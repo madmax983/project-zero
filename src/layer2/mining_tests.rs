@@ -3,7 +3,7 @@ mod tests {
     use crate::layer1::resources::ResourceType;
     use crate::layer2::fleet::{Fleet, FleetOrder, InOrbit};
     use crate::layer2::mining::{
-        FleetCargo, FleetMining, MiningTarget, fleet_mine_order_system, mining_system,
+        fleet_mine_order_system, mining_system, FleetCargo, FleetMining, MiningTarget,
     };
     use bevy_ecs::prelude::*;
 

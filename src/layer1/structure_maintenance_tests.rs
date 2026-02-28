@@ -1,13 +1,13 @@
 #[cfg(test)]
 mod tests {
-    use crate::layer1::GridPosition;
     use crate::layer1::actions::evaluate_simple_action;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::structure::{
-        DeferMaintenance, Structure, calculate_malfunction_risk, entropy_system,
+        calculate_malfunction_risk, entropy_system, DeferMaintenance, Structure,
     };
     use crate::layer1::utility_eval_types::ScorableCandidate;
     use crate::layer1::utility_types::UtilityWeights;
+    use crate::layer1::GridPosition;
     use bevy_ecs::prelude::*;
 
     fn setup_world() -> World {

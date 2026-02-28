@@ -2,8 +2,8 @@
 //!
 //! Tracks seismic stress and triggers earthquakes.
 
-use crate::layer1::GridPosition;
 use crate::layer1::map::ScreenShake;
+use crate::layer1::GridPosition;
 use bevy_ecs::prelude::*;
 use ratatui::style::Color;
 
@@ -153,12 +153,12 @@ pub fn apply_geological_event_system(
 
 #[cfg(test)]
 mod tests {
-    use crate::layer1::GridPosition;
     use crate::layer1::geology::{
-        GeologicalEvent, SeismicGrid, add_seismic_stress, apply_geological_event_system,
-        check_seismic_events,
+        add_seismic_stress, apply_geological_event_system, check_seismic_events, GeologicalEvent,
+        SeismicGrid,
     };
     use crate::layer1::health::Health;
+    use crate::layer1::GridPosition;
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
 
