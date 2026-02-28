@@ -7,10 +7,10 @@ use crate::layer1::housing::Housing;
 use crate::layer1::map::GridPosition;
 use crate::layer1::pop::{PopBorn, PopBundle};
 use crate::layer1::resources::{ColonyResources, ResourceType};
-use crate::layer1::traits::{Trait, Traits};
+use crate::layer1::traits::Trait;
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
-use rand::Rng; // For thread_rng? No, PopBundle::random takes &mut R
+ // For thread_rng? No, PopBundle::random takes &mut R
 
 /// Component for the Clone Vat building.
 #[derive(Component, Debug, Clone)]

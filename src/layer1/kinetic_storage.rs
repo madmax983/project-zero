@@ -1,5 +1,4 @@
 use crate::layer1::energy::{PowerConsumer, PowerSource};
-use crate::layer1::health::Health;
 use crate::layer1::map::GridPosition;
 use crate::layer1::volatile::ExplosionEvent;
 use bevy_ecs::prelude::*;

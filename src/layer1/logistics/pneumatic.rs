@@ -78,7 +78,7 @@ pub fn tube_transport_system(
     // 2. Move Logic
     let mut tube_map: HashMap<GridPosition, bool> = HashMap::new();
     for (pos, clogged) in &tubes {
-        let is_clogged = clogged.map_or(false, |c| c.severity > 0.0);
+        let is_clogged = clogged.is_some_and(|c| c.severity > 0.0);
         tube_map.insert(*pos, is_clogged);
     }
 

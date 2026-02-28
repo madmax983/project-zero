@@ -5,7 +5,7 @@ use crate::layer1::defense::Gate;
 use crate::layer1::execution::components::{AtTarget, MovementTarget};
 use crate::layer1::execution::movement::is_tile_walkable;
 use crate::layer1::map::{GridPosition, ScreenShake};
-use crate::layer1::particles::{Particle, spawn_particle};
+use crate::layer1::particles::Particle;
 use crate::layer1::pop::{Role, Speed};
 use crate::layer1::terrain::TerrainGrid;
 use crate::layer1::utility_types::StartPlan;
