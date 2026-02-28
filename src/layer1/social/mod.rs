@@ -520,3 +520,11 @@ mod old_guard_tests;
 
 pub use debt::*;
 pub use grievances::*;
+
+/// Empty Room logic (Spec 251).
+pub mod empty_room;
+
+#[cfg(test)]
+mod empty_room_tests;
+
+pub use empty_room::*;
