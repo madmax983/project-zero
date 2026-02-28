@@ -2402,3 +2402,28 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "Sky burn. [YEAR]. The rain makes a [CORROSION_SOUND]."
 - "[YEAR]: Take cover. Acid storm. Everything sizzles."
 - "The clouds weep acid. [CORROSION_SOUND] on the roof. [YEAR]."
+
+---
+
+## Atmospheric Processor Templates (Spec 207)
+
+### PROCESSOR_ONLINE
+**Slots:** [COLONY], [YEAR], [PROCESSOR_NAME]
+
+- "The [PROCESSOR_NAME] roars to life. [YEAR]. The long work begins."
+- "[YEAR]: Ignition. The [PROCESSOR_NAME] starts pulling the poison."
+- "A deep thrum across the colony. The [PROCESSOR_NAME] is online. [YEAR]."
+
+### ATMOSPHERE_IMPROVED
+**Slots:** [COLONY], [YEAR], [PROCESSOR_NAME], [AIR_QUALITY]
+
+- "A change in the wind. [YEAR]. The air is [AIR_QUALITY], thanks to the [PROCESSOR_NAME]."
+- "[YEAR]: The sky lightens. The [PROCESSOR_NAME] makes breathing [AIR_QUALITY]."
+- "We can step outside. The [PROCESSOR_NAME] is working. The air is [AIR_QUALITY]. [YEAR]."
+
+### PROCESSOR_STARVED
+**Slots:** [COLONY], [YEAR], [PROCESSOR_NAME], [POWER_SOURCE]
+
+- "The [PROCESSOR_NAME] falls silent. [YEAR]. No energy from the [POWER_SOURCE]."
+- "[YEAR]: Power failure. The [PROCESSOR_NAME] stops spinning. The poison returns."
+- "Silence from the [PROCESSOR_NAME]. [YEAR]. We lack the [POWER_SOURCE] to run it."
