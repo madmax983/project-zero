@@ -38,7 +38,7 @@ use crate::layer1::utility_eval_types::{
 };
 use crate::layer1::utility_types::UtilityConfig;
 use bevy_ecs::prelude::*;
-use std::collections::HashSet;
+use bevy_utils::HashSet;
 
 // --- Helpers ---
 
@@ -375,7 +375,7 @@ fn populate_generic_items(
         world
             .query::<(Entity, &GridPosition, &Item)>()
             .iter(world)
-            .filter(|(_, pos, _)| !stockpiles.contains(pos))
+            .filter(|(_, pos, _)| !stockpiles.contains(*pos))
             .map(|(entity, pos, item)| {
                 let mut c = ScorableCandidate::new(entity, *pos);
                 c.item_type = Some(item.item_type.clone());
@@ -514,7 +514,7 @@ mod tests {
         let mut world = World::new();
 
         // 1. Create Stockpile Positions Set
-        let mut stockpiles = std::collections::HashSet::new();
+        let mut stockpiles = bevy_utils::HashSet::new();
         stockpiles.insert(GridPosition { x: 10, y: 0 });
 
         // 2. Spawn Item inside stockpile (Should be filtered)
