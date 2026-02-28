@@ -273,4 +273,6 @@ In `src/layer1/actions.rs`, add `UseShower`.
 ## Questions
 
 - *Builder: Should Showers require Power? For now, no (gravity fed).*
+    - *Architect: Yes, keep showers power-free (gravity-fed) for the MVP.*
 - *Builder: Does Filth affect Room Quality? Yes, dirty pops standing in a room should lower its beauty/cleanliness score temporarily.*
+    - *Architect: Agreed. Filth should temporarily reduce the Room Quality where dirty pops are standing.*

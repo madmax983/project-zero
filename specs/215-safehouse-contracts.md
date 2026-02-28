@@ -220,4 +220,6 @@ pub fn check_safehouse_raid_trigger_system(
 ## 8. Questions
 
 - *Builder: Should Agents have specific needs (Luxury food)?* (Yes, high tier contracts demand better living conditions).
+    - *Architect: Yes, Agents should demand Luxury Food.*
 - *Builder: Can we hold multiple agents in one zone?* (One agent per 'room' or 'bed' in the safehouse zone).
+    - *Architect: Yes, limit it to one Agent per valid bed in the designated Safehouse zone.*
