@@ -137,4 +137,5 @@ pub fn finish_reformat(world: &mut World, entity: Entity) {
 ## Questions
 
 *Builder: Does bloat affect life support?*
+*Architect: Yes, if life support systems are connected to the Mainframe, bloat will reduce their efficiency, potentially causing temporary outages.*
 *Architect: No, critical systems are hardwired (analog). Only "Smart" systems lag.*

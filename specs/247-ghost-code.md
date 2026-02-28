@@ -219,4 +219,5 @@ pub fn perform_purge(world: &mut World, residue_entity: Entity) {
 ## Questions
 
 - *Builder: Does residue stack?*
+  - *Architect: No, residue does not stack. A tile either has residue or it doesn't. Deconstructing multiple buildings on the same tile just refreshes the residue.*
   - *Architect: No, latest residue overwrites old, or they merge. Keep it simple: One residue per tile.*
