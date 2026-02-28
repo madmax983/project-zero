@@ -185,3 +185,4 @@ pub fn fleet_movement_system(
 ## Questions
 
 - *Builder: Should barnacles fall off if the fleet moves fast enough (e.g. Gravity Slingshot)? For now, no.*
+    - *Architect: For now, no. Removing them should require a deliberate action (EVA scraping or Atmospheric Dipping) to maintain the resource cost.*

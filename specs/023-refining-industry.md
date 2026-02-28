@@ -350,3 +350,4 @@ pub fn process_refining_system(world: &mut World) {
 ## Questions
 
 *Builder: Should the "10 tile range" be a constant shared with Mining?*
+*Architect: Yes, use a shared constant in `layer1::constants` to keep range checks consistent across industry buildings.*

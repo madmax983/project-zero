@@ -228,4 +228,6 @@ pub fn process_clone_vats_system(
 ## Questions
 
 - *Builder: Should clones be born as adults? (Yes, "Vat Grown" usually implies ready-to-work).*
+    - *Architect: Yes, clones spawn as fully-grown adults with a "Vat Grown" trait.*
 - *Builder: Do they have parents? (No, Family tree should be empty).*
+    - *Architect: Correct, their family tree should be empty.*

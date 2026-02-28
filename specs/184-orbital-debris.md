@@ -197,4 +197,6 @@ pub fn perform_cleanup(world: &mut World, planet: Entity, amount: f32) {
 ## Questions
 
 - *Builder: Should debris eventually form a ring system if it gets high enough?* (Visual flavor)
+    - *Architect: Yes. A visual ring system at extreme density is a great touch.*
 - *Builder: Does debris affect incoming trade ships?* (Yes, they should take damage too)
+    - *Architect: Yes, trade ships must take damage from debris, potentially destroying their cargo.*
