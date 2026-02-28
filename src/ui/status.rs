@@ -517,45 +517,45 @@ mod tests {
         world.insert_resource(ColonyPolicies::default());
 
         world.spawn((
-        Pop,
-        Needs {
-            hunger: 1.0,
-            rest: 1.0,
-            leisure: 1.0,
-            hygiene: 0.8,
-        },
-        scale::layer1::morale::Morale::default(),
-        crate::layer1::traits::Traits::default(),
-    )); // Morale 1.0
+            Pop,
+            Needs {
+                hunger: 1.0,
+                rest: 1.0,
+                leisure: 1.0,
+                hygiene: 0.8,
+            },
+            scale::layer1::morale::Morale::default(),
+            crate::layer1::traits::Traits::default(),
+        )); // Morale 1.0
 
-    world.spawn((
-        Pop,
-        Needs {
-            hunger: 0.0,
-            rest: 0.0,
-            leisure: 0.0,
-            hygiene: 0.8,
-        },
-        scale::layer1::morale::Morale::default(),
-        crate::layer1::traits::Traits::default(),
-    )); // Morale 0.0
+        world.spawn((
+            Pop,
+            Needs {
+                hunger: 0.0,
+                rest: 0.0,
+                leisure: 0.0,
+                hygiene: 0.8,
+            },
+            scale::layer1::morale::Morale::default(),
+            crate::layer1::traits::Traits::default(),
+        )); // Morale 0.0
 
-    // Spawn pop with memory
-    // Base 1.0 + (-0.2 witness death) = 0.8
-    let mut memories = Memories::default();
-    memories.add(MemoryType::WitnessedDeath, 0);
-    world.spawn((
-        Pop,
-        Needs {
-            hunger: 1.0,
-            rest: 1.0,
-            leisure: 1.0,
-            hygiene: 0.8,
-        },
-        memories,
-        scale::layer1::morale::Morale::default(),
-        crate::layer1::traits::Traits::default(),
-    ));
+        // Spawn pop with memory
+        // Base 1.0 + (-0.2 witness death) = 0.8
+        let mut memories = Memories::default();
+        memories.add(MemoryType::WitnessedDeath, 0);
+        world.spawn((
+            Pop,
+            Needs {
+                hunger: 1.0,
+                rest: 1.0,
+                leisure: 1.0,
+                hygiene: 0.8,
+            },
+            memories,
+            scale::layer1::morale::Morale::default(),
+            crate::layer1::traits::Traits::default(),
+        ));
 
         // Avg = (1.0 + 0.0 + 0.8) / 3 = 1.8 / 3 = 0.6
 

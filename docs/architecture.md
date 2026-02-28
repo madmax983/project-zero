@@ -10,6 +10,10 @@ title Component Diagram - SCALE System Architecture
 
 Container(Main, "Main Entry", "Rust/Crossterm", "Initializes World, runs Game Loop")
 
+Container_Boundary(StorageBox, "Storage Crate") {
+    Component(Storage, "Storage Module", "storage/*", "Implements Persistence Traits")
+}
+
 Container_Boundary(Simulation, "Simulation Core (Layer 1)") {
     Component(SystemOrchestrator, "System Orchestrator", "layer1/systems/*", "Registers & Orders Systems")
     Component(UtilityOrchestrator, "Utility Orchestrator", "utility_ai.rs", "Coordinates Decision Cycle")
@@ -31,6 +35,8 @@ Container_Boundary(Simulation, "Simulation Core (Layer 1)") {
     Component(Resources, "Colony Resources", "resources.rs", "Global Inventory")
     Component(Logistics, "Logistics System", "logistics/*.rs", "Conveyors & Pneumatics")
     Component(Map, "Map/Terrain", "map.rs", "Spatial Grid")
+
+    Component(CoreTraits, "Core Traits", "core/traits.rs", "Defines Storage Bounds")
 
     Component(Particles, "Particle System", "particles.rs", "Visual Juice & Sub-grid Physics")
     Component(NovaFeatures, "Nova Features", "constellations.rs, observer.rs", "Experimental Mechanics")
@@ -74,6 +80,8 @@ Rel(UtilityOrchestrator, Pops, "Reads/Writes")
 Rel(UtilityOrchestrator, World, "Queries Availability")
 Rel(UtilityOrchestrator, Map, "Calculates Distance")
 Rel(UtilityOrchestrator, Pathfinding, "Calculates Path")
+
+Rel(CoreTraits, Storage, "Uses (Trait Bound)")
 
 Rel(Actions, Particles, "Spawns")
 Rel(DomainActions, Particles, "Spawns")
@@ -246,6 +254,43 @@ sequenceDiagram
             UI-->>User: Draw Widgets
         end
     end
+```
+
+## Core to Storage Relationship
+
+```mermaid
+classDiagram
+  class Core {
+      +run_simulation()
+      +trigger_save()
+  }
+  class Storage {
+      +save_state(data: GameState)
+      +load_state() : GameState
+  }
+
+  Core --> Storage : Uses (Trait Bound)
+  %% The circular dependency back to Core has been removed
+```
+
+## Storage Serialization Flow
+
+The new storage module handles serializing the core state without circular dependencies.
+
+```mermaid
+sequenceDiagram
+    participant Main
+    participant Core as Core (Simulation)
+    participant Storage as Storage Crate
+    participant Disk as File System
+
+    Main->>Core: trigger_save()
+    Core->>Core: Collect GameState
+    Core->>Storage: save_state(GameState)
+    Storage->>Storage: Serialize to Binary/JSON
+    Storage->>Disk: write()
+    Storage-->>Core: Result<Success>
+    Core-->>Main: Save Complete
 ```
 
 ## Utility AI Decision Loop
