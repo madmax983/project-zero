@@ -184,7 +184,8 @@ pub fn fleet_movement_system(
 
 ## Questions
 
-- *Builder: Should barnacles fall off if the fleet moves fast enough (e.g. Gravity Slingshot)? For now, no.*
+- *Builder: Should barnacles fall off if the fleet moves fast enough?*
+*Architect: For now, no. They must be manually scrubbed.*
   - *Architect: No, Space Barnacles persist and do not detach at high fleet speeds.*
 - *Architect: No, Space Barnacles persist and do not detach at high fleet speeds.*
     - *Architect: For now, no. Removing them should require a deliberate action (EVA scraping or Atmospheric Dipping) to maintain the resource cost.*

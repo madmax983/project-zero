@@ -301,4 +301,5 @@ pub fn get_social_penalty(world: &World, pop: Entity) -> f32 {
 ## Questions
 
 *Builder: Should surgery require a Doctor pop to be present?*
+*Architect: Yes, applying augmentations requires a pop with the Medical skill to perform the action.*
 *Architect: For MVP, no. The Hospital building provides the "service". Future updates can require a Doctor job.*

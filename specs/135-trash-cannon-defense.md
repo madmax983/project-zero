@@ -383,4 +383,5 @@ pub fn turret_fire_system(world: &mut World) {
 ## Questions
 
 *Builder: How much waste creates a "mess"?*
+*Architect: Each shot should spawn 1 "Clutter" item at the impact tile, requiring a Janitor task to clear.*
 *Architect: 0.1 amount. Enough to be annoying (negative beauty) but small enough to not flood the economy.*

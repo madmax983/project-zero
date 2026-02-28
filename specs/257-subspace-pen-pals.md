@@ -163,4 +163,5 @@ pub fn update_pen_pals_system(
 ## Questions
 
 *Builder: Can I date a Hive Mind?*
+*Architect: Yes, but it results in profound psychological changes (large Ethics shifts towards Collectivism) rather than typical romance.*
 *Architect: Yes, but your 'Collective' needs will increase.*
