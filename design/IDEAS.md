@@ -7020,3 +7020,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Enforce strict hygiene (safe but boring) vs. Let the accidents happen (risky morale boost).
 
 ---
+
+## Subliminal Advertising
+
+**Layer:** 1
+
+**Fantasy:** Monetizing the very walls of your colony at the cost of your citizens' desires.
+
+**Mechanic:** "Ad-Screens" can be built in high-traffic areas. They generate Credits over time based on the number of Pops who walk past them. However, they artificially inflate the decay rate of "Luxury" and "Leisure" needs for those Pops.
+
+**Emergence:** You blanket the colony in ads to pay for an emergency defense grid. The grid is built, but your entire population is now deeply unhappy because they desperately crave consumer goods you cannot manufacture.
+
+**Tension:** Passive income vs. Unmanageable citizen expectations.
+
+---
+
+## The Lotus Simulation
+
+**Layer:** 1
+
+**Fantasy:** Plugging the starving into paradise so they don't revolt.
+
+**Mechanic:** "VR Pods" provide 100% Morale and zero Stress while occupied. However, Pops inside do not work, and their Hunger/Health still decay. If left unmanaged, they will happily starve to death in the simulation.
+
+**Emergence:** A famine hits, and unrest skyrockets. You order everyone into the VR pods. The colony is technically "Stable", but the remaining skeleton crew of robots and non-VR users must frantically harvest food before the dreamers literally waste away.
+
+**Tension:** Perfect immediate stability vs. Long-term demographic collapse.
+
+---
+
+## The Organ Market
+
+**Layer:** Cross-layer
+
+**Fantasy:** The darkest possible logistics chain. Your people are just spare parts.
+
+**Mechanic:** A "Biomass Extractor" allows you to harvest organs from dead (or living, but arrested) Pops. These organs can be sold on Layer 2/3 for massive profits, or used to instantly cure critical injuries. Harvesting generates massive "Paranoia" and "Horror" across the colony.
+
+**Emergence:** You start harvesting executed criminals to buy steel. Then you start arresting innocent people on trumped-up charges just to meet the organ quota for the Galactic Market. The colony devolves into a terrifying police state.
+
+**Tension:** Extreme economic/medical value vs. Complete moral and social collapse.
+
+---
+
+## Subcontractor Factions
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** Selling off pieces of your sovereignty.
+
+**Mechanic:** You can "Lease" specific Zones (e.g., a mining district) to external Megacorporations (Layer 3). They instantly build high-tech infrastructure there for free and extract resources. You get a cut of the profits, but *their* laws apply in that zone (e.g., no safety regulations, brutal security).
+
+**Emergence:** The Megacorp security forces start shooting your striking workers in the leased zone. If you intervene, you breach the contract and the Megacorp's orbital fleet blockades you. You are no longer the master of your own house.
+
+**Tension:** Massive free infrastructure/income vs. Loss of control and internal conflict.
+
+---
+
+## The Martyrdom Effect
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** A single death can ignite a holy war.
+
+**Mechanic:** If a Pop with high "Prestige" or "Leadership" is killed by an enemy (Raid, Bombardment) in a highly visible area, it generates "Martyrdom." This temporarily zeroes out Unrest, maximizes Work Speed, and grants an "Ideological Casus Belli" against the offending faction on Layer 3, rallying neutral civs to your side.
+
+**Emergence:** You are losing a war. You intentionally place your beloved pacifist leader on the frontline. They are killed. The entire galaxy is so outraged that a coalition forms to destroy your enemy for you.
+
+**Tension:** Sacrificing your best people intentionally vs. Protecting them at all costs.
+
+---
