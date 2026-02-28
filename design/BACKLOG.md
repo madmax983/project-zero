@@ -6,7 +6,6 @@
 ## Future / Ideas
 
 See `design/IDEAS.md` for unspecced concepts.
-- [ ] `252` Tectonic Stress — `specs/252-tectonic-stress.md`
 - [ ] `253` Cultural Vandalism — `specs/253-cultural-vandalism.md`
 - [ ] `254` Doppelgangers — `specs/254-doppelgangers.md`
 - [ ] `255` Hypno-Learning — `specs/255-hypno-learning.md`

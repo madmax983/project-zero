@@ -52,6 +52,9 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::geology::apply_geological_event_system
                 .after(crate::layer1::geology::check_seismic_events)
                 .after(crate::layer1::seismic::seismic_instability_system),
+            crate::layer1::geology::tectonic::update_stress_system,
+            crate::layer1::geology::tectonic::check_quake_system
+                .after(crate::layer1::geology::tectonic::update_stress_system),
             spirit_decay_system,
             quirk_generation_system.after(spirit_decay_system),
             entropy_system,

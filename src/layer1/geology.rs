@@ -116,6 +116,8 @@ pub fn check_seismic_events(
 }
 
 /// System that applies effects of geological events (damage, visuals).
+pub mod tectonic;
+
 pub fn apply_geological_event_system(
     mut events: EventReader<GeologicalEvent>,
     mut commands: Commands,
