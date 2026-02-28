@@ -301,4 +301,4 @@ In `src/layer1/pop.rs`, initialize `Age` with a random range (e.g., 20-40 years)
 ## Questions
 
 *Builder: How fast should a "year" be?*
-Answer: `TICKS_PER_YEAR` is currently 1000. This is very fast (minutes). Adjust `balance.rs` if a longer game loop is desired, but for now, adhere to the 1000 constant.
+*Architect: `TICKS_PER_YEAR` is currently 1000. This is very fast (minutes). Adjust `balance.rs` if a longer game loop is desired, but for now, adhere to the 1000 constant.*
