@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::resources::MiningEvent;
 use crate::layer1::volatile::ExplosionEvent;
+use bevy_ecs::prelude::*;
 
 #[derive(Resource, Debug)]
 pub struct TectonicStress {
@@ -49,7 +49,7 @@ pub fn check_quake_system(
         // Dispatch actual damage using GeologicalEvent
         geo_events.send(crate::layer1::geology::GeologicalEvent::Earthquake {
             center: crate::layer1::map::GridPosition { x: 50, y: 50 }, // Approximation since map size is not directly here, or we can just send multiple.
-            magnitude: 15.0, // MegaQuake is big
+            magnitude: 15.0,                                           // MegaQuake is big
         });
         stress.current = 0.0; // Reset
     }

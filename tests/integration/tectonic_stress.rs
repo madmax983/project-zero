@@ -1,9 +1,11 @@
 use bevy_ecs::prelude::*;
-use scale::layer1::geology::tectonic::{TectonicStress, update_stress_system, check_quake_system, MegaQuakeEvent};
+use scale::layer1::geology::tectonic::{
+    check_quake_system, update_stress_system, MegaQuakeEvent, TectonicStress,
+};
 use scale::layer1::geology::GeologicalEvent;
+use scale::layer1::map::GridPosition;
 use scale::layer1::resources::MiningEvent;
 use scale::layer1::volatile::ExplosionEvent;
-use scale::layer1::map::GridPosition;
 
 #[test]
 fn test_mining_and_explosions_cause_mega_quake() {
@@ -16,10 +18,13 @@ fn test_mining_and_explosions_cause_mega_quake() {
     app.add_event::<MegaQuakeEvent>();
     app.add_event::<GeologicalEvent>();
 
-    app.add_systems(bevy_app::Update, (
-        update_stress_system,
-        check_quake_system.after(update_stress_system)
-    ));
+    app.add_systems(
+        bevy_app::Update,
+        (
+            update_stress_system,
+            check_quake_system.after(update_stress_system),
+        ),
+    );
 
     app.update(); // Initialize
 
