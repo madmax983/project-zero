@@ -6881,3 +6881,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Assimilating to external demands for safety and profit vs. nurturing a unique, homegrown culture at great risk.
 
 ---
+
+## The Sleep-Deprived Savant
+
+**Layer:** 1
+
+**Fantasy:** The mad genius who burns the candle at both ends. Brilliance fueled by exhaustion.
+
+**Mechanic:** Pops with high intelligence who reach critical Sleep Deprivation (instead of collapsing) enter a "Fever Dream" state. Their work speed and tech discovery rates triple, but they take constant health damage and hallucinate.
+
+**Emergence:** Your colony is saved from a reactor meltdown because the lead engineer stayed up for three days straight to invent a new cooling valve, only to die of a heart attack immediately after installing it.
+
+**Tension:** Do you force your best minds to rest for their own safety, or push them to the brink for a crucial breakthrough?
+
+---
+
+## Contagious Superstition
+
+**Layer:** 1
+
+**Fantasy:** A single rumor can turn a thriving colony into a paranoid cult.
+
+**Mechanic:** A Pop experiencing a string of bad luck (failing tasks, minor injuries) may develop a "Superstition" (e.g., "The color green is cursed"). This trait spreads via the Rumor Web to other stressed Pops, causing them to actively avoid or destroy related items.
+
+**Emergence:** A miner drops his pickaxe, blames his green tunic, and burns it. Within a month, the entire colony is refusing to eat green vegetables or enter the hydroponics bay, leading to a bizarre famine.
+
+**Tension:** Allow the superstition to persist (harmless at first) or actively combat it by destroying the Rumor Web (lowering morale)?
+
+---
+
+## Gravity Wells and Waste
+
+**Layer:** Cross-layer
+
+**Fantasy:** Throwing your garbage into the sun is the ultimate disposal method.
+
+**Mechanic:** You can launch waste or hazardous materials from Layer 1 into Layer 2 orbits. If directed into a Star or Gas Giant, it is permanently destroyed. If it misses or the orbit decays, it becomes a high-speed kinetic hazard for your ships or other colonies.
+
+**Emergence:** To deal with a massive toxic waste spill, you launch it all towards the sun. A solar flare knocks the payload off course, and fifty years later, it crashes into your newly founded agricultural world.
+
+**Tension:** Cheap, permanent disposal (if it works) vs. catastrophic long-term consequences.
+
+---
+
+## Scrap Fleet Scavengers
+
+**Layer:** 2
+
+**Fantasy:** Following in the wake of war, picking the bones clean.
+
+**Mechanic:** When a major battle occurs between Layer 3 factions, it leaves massive debris fields on Layer 2. Independent "Scavenger" fleets swarm these fields. You can harvest the debris, but you must compete with the scavengers, who might turn hostile if you take "their" scrap.
+
+**Emergence:** You intentionally let a pirate fleet attack an empire patrol near your system just so you can swoop in and harvest the high-tech scrap left behind, angering both sides.
+
+**Tension:** Easy resources (scavenging) vs. Diplomatic incidents and scavenger aggression.
+
+---
+
+## The Orphaned Tech
+
+**Layer:** Cross-layer
+
+**Fantasy:** You found the keys to a Ferrari, but you only know how to drive a tractor.
+
+**Mechanic:** You discover an intact, highly advanced Layer 3 structure (e.g., a Warp Gate or Mega-Shield) on your Layer 1 map. You can turn it on, but you lack the tech to understand its controls or maintenance. Operating it has random, potentially catastrophic side effects.
+
+**Emergence:** You activate the ancient "Weather Controller" to stop a drought. It works, but the machine's cooling cycle freezes the oceans because you don't know how to turn it off.
+
+**Tension:** Use the overwhelming power blindly (risk) or leave it dormant (safety but missed opportunity)?
+
+---
