@@ -516,6 +516,7 @@ pub use cybernetics::*;
 pub mod geology;
 pub use geology::*;
 
+
 /// Oral Tradition system (Nova Feature).
 #[cfg(feature = "nova")]
 pub mod oral_tradition;
@@ -714,3 +715,8 @@ pub use hologram::*;
 /// Surgical Addiction system (Spec 250).
 pub mod addiction;
 pub use addiction::*;
+
+pub mod geology_tests {
+    #[cfg(test)]
+    include!("geology/tectonic_tests.rs");
+}

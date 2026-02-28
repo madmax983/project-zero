@@ -25,6 +25,13 @@ use bevy_ecs::prelude::*;
 use rand::Rng;
 use std::ops::Mul;
 
+/// Event emitted when mining occurs.
+#[derive(Event, Debug, Clone)]
+pub struct MiningEvent {
+    /// The amount of work done.
+    pub amount: f32,
+}
+
 /// Types of resources in the game.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum ResourceType {
@@ -878,6 +885,10 @@ pub fn mine_rock(world: &mut World, designation_entity: Entity, work_amount: f32
 
         // Probabilistic Anomaly Spawn (5%)
         try_spawn_anomaly(world, pos);
+
+        world.send_event(MiningEvent {
+            amount: work_amount,
+        });
 
         // Remove designation
         world.despawn(designation_entity);
