@@ -141,3 +141,5 @@ mod resources_robustness;
 
 #[path = "integration/clone_integration.rs"]
 mod clone_integration;
+#[path = "integration/tectonic_stress.rs"]
+mod tectonic_stress;
