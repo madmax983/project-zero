@@ -6826,3 +6826,58 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Altruism vs. Parasitism.
 
 ---
+## Generational Grudges
+
+**Layer:** 1
+
+**Fantasy:** Feuds that outlast the people who started them.
+
+**Mechanic:** When a Pop is wronged by another (e.g., assault, theft, taking credit for work), they form a "Grudge". If the Grudge is not resolved before death, it is inherited by their descendants. Pops with active Grudges will refuse to work in the same room and may sabotage the other family's efforts.
+
+**Emergence:** You put two highly skilled Pops in the same workshop, only to realize their grandfathers fought over a ration bar forty years ago. Now your entire production line is halted because one refuses to pass a wrench to the other.
+
+**Tension:** Do you separate skilled workers to maintain peace, or try to force reconciliation at the risk of escalating the feud?
+
+---
+
+## The Artifact Market
+
+**Layer:** Cross-layer (1 -> 2)
+
+**Fantasy:** One colony's trash is an empire's treasure.
+
+**Mechanic:** Everyday items from early colony days (e.g., the first pickaxe, a handwritten diary) gain "Historical Artifact" status over time. They can be sold on the inter-colony trade network for exorbitant prices to wealthy collectors on core worlds.
+
+**Emergence:** You are starving and need credits to buy food shipments. You realize the only thing of value is the founder's original spacesuit, currently displayed in the town square. Selling it saves the colony but permanently tanks local morale and erases a piece of your history.
+
+**Tension:** Preserving cultural heritage vs. immediate survival.
+
+---
+
+## Stowaways and Quarantines
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Uninvited guests bring unseen consequences.
+
+**Mechanic:** Trade ships and supply drops have a small chance of carrying "Stowaways" (unregistered Pops or exotic pests). They slip into the colony undetected and consume resources. If they carry a pathogen, it spreads before you even know they are there.
+
+**Emergence:** You notice your food stocks dropping slightly faster than expected. Weeks later, a mysterious illness sweeps through the lower decks. You lock down the colony, only to find a family of refugees hiding in the ventilation shafts, patient zero of the outbreak.
+
+**Tension:** Do you implement strict, time-consuming quarantine protocols for every shipment, slowing down logistics, or risk the occasional outbreak for efficiency?
+
+---
+
+## Bureaucratic Schism
+
+**Layer:** Cross-layer (1 -> 3)
+
+**Fantasy:** The paperwork is more dangerous than the pirates.
+
+**Mechanic:** As a colony grows, it must align with a Galactic Faction to access advanced tech and trade. However, factions demand ideological adherence (e.g., strict quotas, specific laws). If the local colony culture diverges too far from the parent faction's ideology, a "Schism" occurs, cutting off support and potentially triggering a punitive expedition.
+
+**Emergence:** Your colony develops a deeply communal culture focused on art and leisure, directly violating the aggressive production quotas of your parent empire. You receive an ultimatum: destroy your art installations and double shifts, or face orbital bombardment.
+
+**Tension:** Assimilating to external demands for safety and profit vs. nurturing a unique, homegrown culture at great risk.
+
+---
