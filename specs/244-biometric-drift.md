@@ -252,4 +252,5 @@ pub fn apply_trauma_drift(world: &mut World, pop: Entity, amount: f32) {
 ## Questions
 
 *Builder: Does drift affect non-security interactions?*
+*Architect: No, for MVP Biometric Drift only affects interactions that require security clearance (e.g., doors, locked chests, restricted terminals).*
 *Architect: No, friends still recognize you. This is purely machine vision failure.*

@@ -269,6 +269,6 @@ fn determine_type(event: &ChronicleEvent) -> EchoType {
 ## 8. Questions
 
 - *Builder: Should Echoes block movement?*
-    - *Architect: No, they are non-physical.*
+  - *Architect: No, Echoes are incorporeal and do not block movement.*
 - *Builder: Can we harvest Echoes?*
-    - *Architect: Not yet. Future "Parapsychology" tech.*
+  - *Architect: Not directly, but Pops with certain traits (like 'Sensitive') might gain a temporary mood or research buff from being near one.*
