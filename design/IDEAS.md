@@ -6951,3 +6951,72 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Use the overwhelming power blindly (risk) or leave it dormant (safety but missed opportunity)?
 
 ---
+## The Feral Outpost
+
+**Layer:** 1
+
+**Fantasy:** The untamed frontier reclaims its own. Pops separated from the colony's heart forge their own miniature society.
+
+**Mechanic:** Pops assigned to work/live far from the colony core (Command Center or high-value Social Zones) slowly accumulate a "Fringe" cultural tag. If a cluster of Fringe pops is isolated for too long, they form a "Feral Outpost" sub-faction. They still work, but refuse certain orders (like moving back, or giving up their stockpiles) and may develop unique, primitive traits.
+
+**Emergence:** You build an automated mining outpost and staff it with cheap labor. Ten years later, you need those miners to defend the capital, but they refuse to leave their "True Home" and threaten to secede if you force them.
+
+**Tension:** Expansion speed (leaving outposts isolated) vs. Control (spending resources on infrastructure/culture to keep them tethered).
+
+---
+
+## Debris Shadows
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The ghosts of past battles haunt the world below. A permanent eclipse born of your own hubris.
+
+**Mechanic:** Massive space battles or Kessler syndrome events on Layer 2 create dense "Debris Clouds". These clouds cast semi-permanent, moving "Debris Shadows" on the Layer 1 planet surface. Tiles in the shadow suffer severe penalties to Solar Power and crop growth, but gain a bonus to stealth/detection evasion.
+
+**Emergence:** You win a desperate orbital defense above your primary agricultural zone. The resulting debris cloud plunges the farms into eternal twilight, causing the starvation you just fought to prevent.
+
+**Tension:** Fighting in high orbit (safe from ground damage but risks debris shadows) vs. Fighting in low orbit/ground (direct damage risk).
+
+---
+
+## The Long Sleepers
+
+**Layer:** 3 -> 2
+
+**Fantasy:** Waking the sleeping giants. You are traversing roads built by gods who demand a toll.
+
+**Mechanic:** Ancient, automated fleets drift through the galaxy (Layer 3) and occasionally pass through your systems (Layer 2). They ignore borders and diplomacy. They broadcast a simple demand for a specific, often rare, resource as a "Toll" for their passage. Paying the toll grants a temporary system-wide buff or ancient tech. Refusing or failing to pay triggers an immediate, devastating orbital bombardment.
+
+**Emergence:** The Sleepers demand 500 units of "Glow-Moss". You don't have it. You frantically declare war on your peaceful neighbor just to steal their Glow-Moss before the Sleepers vaporize your capital.
+
+**Tension:** Stockpiling useless rare resources "just in case" vs. Optimizing for current needs.
+
+---
+
+## Diplomatic Immunity
+
+**Layer:** Cross-layer
+
+**Fantasy:** The frustrating reality of realpolitik. Some people are above the law.
+
+**Mechanic:** High-ranking dignitaries from powerful Layer 3 empires visit your Layer 1 colony. They possess "Diplomatic Immunity." If they commit a crime (e.g., assault, theft, vandalism due to low mood), your local Justice System cannot arrest them without triggering a massive diplomatic incident or war.
+
+**Emergence:** An alien ambassador gets drunk in your tavern and starts a brawl, injuring your chief engineer. Your pops demand justice (high Unrest), but arresting the ambassador means war with an empire 10 times your size. You have to quietly bribe the engineer to drop the charges.
+
+**Tension:** Local justice and pop morale vs. Interstellar diplomacy and survival.
+
+---
+
+## Spontaneous Fermentation
+
+**Layer:** 1
+
+**Fantasy:** Finding joy in the accidents. The oldest trick in the human playbook.
+
+**Mechanic:** Food stockpiles that are exposed to specific environmental conditions (slightly warm and slightly wet, e.g., due to a broken cooler or leaky roof) don't turn into "Rot" immediately. Instead, they have a chance to turn into "Improvised Alcohol". This item provides a massive Morale boost but inflicts an "Inebriated" debuff (slow movement, high accident risk).
+
+**Emergence:** A power outage ruins the winter food supply. You think the colony will starve, but instead, they throw a massive, drunken festival. They are happy, but no work gets done for a week, and someone accidentally sets the medical bay on fire.
+
+**Tension:** Enforce strict hygiene (safe but boring) vs. Let the accidents happen (risky morale boost).
+
+---
