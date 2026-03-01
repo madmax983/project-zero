@@ -26,3 +26,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `270` The Organ Market — `specs/270-organ-market.md`
 - [ ] `271` Subcontractor Factions — `specs/271-subcontractor-factions.md`
 - [ ] `272` The Martyrdom Effect — `specs/272-martyrdom-effect.md`
+- [ ] `273` The Feral Outpost — `specs/273-feral-outpost.md`
