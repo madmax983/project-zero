@@ -7021,7 +7021,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Subliminal Advertising
+## Subliminal Advertising [SPECCED]
 
 **Layer:** 1
 
@@ -7035,7 +7035,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Lotus Simulation
+## The Lotus Simulation [SPECCED]
 
 **Layer:** 1
 
@@ -7049,7 +7049,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Organ Market
+## The Organ Market [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -7063,7 +7063,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Subcontractor Factions
+## Subcontractor Factions [SPECCED]
 
 **Layer:** 1 -> Cross-layer
 
@@ -7077,7 +7077,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Martyrdom Effect
+## The Martyrdom Effect [SPECCED]
 
 **Layer:** 1 -> Cross-layer
 
