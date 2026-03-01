@@ -630,3 +630,80 @@ fn test_generate_structured() {
     let full_text = generator.generate("STRUCT", &ctx).unwrap();
     assert_eq!(full_text, "Hello Mosaic, welcome to Codebase.");
 }
+
+#[test]
+fn test_generate_missing_template() {
+    let generator = NarrativeGenerator::default();
+    let ctx = NarrativeContext::new();
+    let result = generator.generate_structured("NON_EXISTENT", &ctx);
+    assert!(result.is_err());
+    assert_eq!(result.unwrap_err().to_string(), "Template not found: NON_EXISTENT");
+}
+
+#[test]
+fn test_generate_empty_patterns() {
+    let mut generator = NarrativeGenerator::default();
+    generator.templates.insert(
+        "EMPTY".to_string(),
+        Template {
+            id: "EMPTY".to_string(),
+            patterns: vec![],
+        },
+    );
+    let ctx = NarrativeContext::new();
+    let result = generator.generate_structured("EMPTY", &ctx);
+    assert!(result.is_err());
+    assert_eq!(result.unwrap_err().to_string(), "Template EMPTY has no patterns");
+}
+
+#[test]
+fn test_generate_unclosed_slot() {
+    let mut generator = NarrativeGenerator::default();
+    generator.add_template("UNCLOSED".to_string(), vec!["Hello [NAME".to_string()]);
+    let ctx = NarrativeContext::new();
+    let segments = generator.generate_structured("UNCLOSED", &ctx).unwrap();
+    assert_eq!(segments.len(), 1);
+    assert_eq!(segments[0], NarrativeSegment::Text("Hello [NAME".to_string()));
+}
+
+#[test]
+fn test_generate_missing_fragment_options() {
+    let mut generator = NarrativeGenerator::default();
+    generator.add_template("EMPTY_FRAG".to_string(), vec!["[FRAG]".to_string()]);
+    generator.fragments.insert(
+        "FRAG".to_string(),
+        FragmentType {
+            id: "FRAG".to_string(),
+            options: vec![],
+        },
+    );
+    let ctx = NarrativeContext::new();
+    let segments = generator.generate_structured("EMPTY_FRAG", &ctx).unwrap();
+    assert_eq!(segments.len(), 1);
+    assert_eq!(
+        segments[0],
+        NarrativeSegment::Error("MISSING_FRAGMENT_OPTIONS:FRAG".to_string())
+    );
+}
+
+#[test]
+fn test_generate_missing_key() {
+    let mut generator = NarrativeGenerator::default();
+    generator.add_template("MISSING".to_string(), vec!["[UNKNOWN]".to_string()]);
+    let ctx = NarrativeContext::new();
+    let segments = generator.generate_structured("MISSING", &ctx).unwrap();
+    assert_eq!(segments.len(), 1);
+    assert_eq!(
+        segments[0],
+        NarrativeSegment::Error("UNKNOWN".to_string())
+    );
+}
+
+#[test]
+fn test_generate_optional_key_missing() {
+    let mut generator = NarrativeGenerator::default();
+    generator.add_template("OPTIONAL".to_string(), vec!["[UNKNOWN?]".to_string()]);
+    let ctx = NarrativeContext::new();
+    let segments = generator.generate_structured("OPTIONAL", &ctx).unwrap();
+    assert_eq!(segments.len(), 0); // Should be empty, not an error
+}

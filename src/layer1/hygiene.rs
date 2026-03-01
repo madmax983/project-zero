@@ -300,7 +300,7 @@ mod tests {
             ))
             .id();
 
-        let shower = world
+        let _shower = world
             .spawn((Building {
                 building_type: BuildingType::Shower,
             },))

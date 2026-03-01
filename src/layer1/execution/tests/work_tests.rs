@@ -10,10 +10,8 @@ use crate::layer1::pop::Pop;
 use crate::layer1::resources::{ForestryProgress, MiningProgress};
 use crate::layer1::skills::{SkillType, Skills};
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
-use crate::layer1::traits::{Trait, Traits};
 use crate::layer1::utility_types::{ActionType, PopAction};
 use bevy_ecs::prelude::*;
-use std::collections::HashSet;
 
 #[test]
 fn test_work_execution_calls_mine_rock() {

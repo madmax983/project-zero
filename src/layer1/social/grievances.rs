@@ -227,9 +227,9 @@ mod tests {
     use crate::layer1::map::GridPosition;
     use crate::layer1::needs::Needs;
     use crate::layer1::pop::Pop;
-    use crate::layer1::social::{AffinityChange, Relationships};
+    use crate::layer1::social::AffinityChange;
     use crate::shared::time::SimulationTime;
-    use bevy_ecs::prelude::*;
+
 
     #[test]
     fn test_bulletin_board_component() {
@@ -295,7 +295,7 @@ mod tests {
             .id();
 
         // Pop with cooldown
-        let pop = world
+        let _pop = world
             .spawn((
                 Pop,
                 Needs {

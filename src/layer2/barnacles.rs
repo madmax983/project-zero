@@ -56,7 +56,7 @@ pub fn ensure_barnacles_component_system(
 mod tests {
     use super::*;
     use crate::layer2::fleet::{Fleet, InOrbit, InTransit};
-    use bevy_ecs::prelude::*;
+
 
     // 1. Test Barnacle Accumulation
     #[test]

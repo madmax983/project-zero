@@ -1,4 +1,3 @@
-use bevy_ecs::prelude::*;
 use scale::layer1::building::BuildingType;
 use scale::layer1::flora::Flora;
 use scale::layer1::map::GridPosition;

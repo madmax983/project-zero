@@ -170,7 +170,7 @@ mod tests {
     use super::*;
     use crate::layer1::pop::Pop;
     use crate::layer1::traits::{Trait, Traits};
-    use bevy_ecs::prelude::*;
+
 
     #[test]
     fn test_society_formation_based_on_traits() {

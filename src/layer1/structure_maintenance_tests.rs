@@ -122,7 +122,7 @@ mod tests {
 
         let pop_pos = GridPosition { x: 0, y: 0 };
         let weights = UtilityWeights::default();
-        let designations: Vec<ScorableCandidate> = vec![];
+        let _designations: Vec<ScorableCandidate> = vec![];
 
         // Simulate evaluate_actions_system filtering logic
         let mut proxies = Vec::new();

@@ -10,7 +10,7 @@ mod tests {
         DataResidue, GhostCode, GhostEffectApplied, GhostTrait,
     };
     use crate::layer1::turret::Turret;
-    use crate::layer1::utility_types::StartPlan;
+
     use crate::layer1::utility_types::{ActionType, PopAction};
     use bevy_ecs::prelude::*; // Needed to add Turret component for LegacyTargeting test
 

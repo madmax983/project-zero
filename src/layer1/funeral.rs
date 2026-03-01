@@ -148,13 +148,13 @@ pub fn handle_bury_corpse(
 mod tests {
     use super::*;
     use crate::layer1::building::{Building, BuildingType};
-    use crate::layer1::health::{check_health_status_system, despawn_dead_entities_system, Health};
-    use crate::layer1::map::{GridPosition, ScreenShake};
+
+    use crate::layer1::map::GridPosition;
     use crate::layer1::memory::{Memories, MemoryType};
     use crate::layer1::needs::Needs;
-    use crate::layer1::pop::{handle_pop_death_system, Pop, PopDied, PopName};
-    use crate::shared::log::MessageLog;
-    use bevy_ecs::system::RunSystemOnce;
+    use crate::layer1::pop::Pop;
+
+
 
     #[test]
     fn test_death_spawns_corpse() {

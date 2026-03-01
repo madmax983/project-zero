@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
     use crate::layer1::resources::ColonyResources;
-    use bevy_ecs::prelude::*;
+
     // We will need to import calculate_work_efficiency once we stub it.
     // For now, let's assume it will be available in crate::layer1::execution
     use crate::layer1::execution::efficiency::calculate_work_efficiency;

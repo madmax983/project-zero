@@ -1,6 +1,6 @@
 use super::setup_world;
 use crate::layer1::actions::{AssignedTo, AssignmentType};
-use crate::layer1::building::{Building, BuildingType, OccupiedTiles};
+use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::combat::HitStop;
 use crate::layer1::execution::components::{AtTarget, MovementTarget};
 use crate::layer1::execution::movement::{
