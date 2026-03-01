@@ -80,7 +80,6 @@ mod tests {
     use crate::layer1::resources::ColonyResources;
     use crate::layer1::traits::{Trait, Traits};
 
-
     #[test]
     fn test_cryo_pop_generates_knowledge() {
         let mut world = World::new();

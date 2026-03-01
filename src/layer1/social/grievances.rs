@@ -230,7 +230,6 @@ mod tests {
     use crate::layer1::social::AffinityChange;
     use crate::shared::time::SimulationTime;
 
-
     #[test]
     fn test_bulletin_board_component() {
         let board = BulletinBoard::default();

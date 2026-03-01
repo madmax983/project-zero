@@ -219,7 +219,6 @@ mod tests {
     use crate::layer1::morale::Morale;
     use crate::layer1::pop::Pop;
 
-
     #[test]
     fn test_graffiti_map_starts_empty() {
         let map = GraffitiMap::default();

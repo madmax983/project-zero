@@ -11,8 +11,6 @@ mod tests {
     use crate::layer1::zone::{ZoneGrid, ZoneType};
     use bevy_ecs::prelude::*;
 
-
-
     fn setup_world() -> World {
         let mut world = World::new();
         let mut zone_grid = ZoneGrid::new(10, 10);

@@ -637,7 +637,10 @@ fn test_generate_missing_template() {
     let ctx = NarrativeContext::new();
     let result = generator.generate_structured("NON_EXISTENT", &ctx);
     assert!(result.is_err());
-    assert_eq!(result.unwrap_err().to_string(), "Template not found: NON_EXISTENT");
+    assert_eq!(
+        result.unwrap_err().to_string(),
+        "Template not found: NON_EXISTENT"
+    );
 }
 
 #[test]
@@ -653,7 +656,10 @@ fn test_generate_empty_patterns() {
     let ctx = NarrativeContext::new();
     let result = generator.generate_structured("EMPTY", &ctx);
     assert!(result.is_err());
-    assert_eq!(result.unwrap_err().to_string(), "Template EMPTY has no patterns");
+    assert_eq!(
+        result.unwrap_err().to_string(),
+        "Template EMPTY has no patterns"
+    );
 }
 
 #[test]
@@ -663,7 +669,10 @@ fn test_generate_unclosed_slot() {
     let ctx = NarrativeContext::new();
     let segments = generator.generate_structured("UNCLOSED", &ctx).unwrap();
     assert_eq!(segments.len(), 1);
-    assert_eq!(segments[0], NarrativeSegment::Text("Hello [NAME".to_string()));
+    assert_eq!(
+        segments[0],
+        NarrativeSegment::Text("Hello [NAME".to_string())
+    );
 }
 
 #[test]
@@ -693,10 +702,7 @@ fn test_generate_missing_key() {
     let ctx = NarrativeContext::new();
     let segments = generator.generate_structured("MISSING", &ctx).unwrap();
     assert_eq!(segments.len(), 1);
-    assert_eq!(
-        segments[0],
-        NarrativeSegment::Error("UNKNOWN".to_string())
-    );
+    assert_eq!(segments[0], NarrativeSegment::Error("UNKNOWN".to_string()));
 }
 
 #[test]

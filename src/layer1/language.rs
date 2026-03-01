@@ -75,7 +75,6 @@ mod tests {
     use super::*;
     use crate::layer1::pop::Pop;
 
-
     #[test]
     fn test_pop_has_dialect_component() {
         let mut world = World::new();

@@ -83,7 +83,6 @@ mod tests {
     use crate::layer1::map::GridPosition;
     use crate::shared::time::SimulationTime;
 
-
     #[test]
     fn test_volatile_component_initialization() {
         let volatile = Volatile {

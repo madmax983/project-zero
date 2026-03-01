@@ -274,6 +274,9 @@ pub use funeral::*;
 pub mod acoustic;
 pub use acoustic::*;
 
+#[cfg(test)]
+mod acoustic_shadow_tests;
+
 /// Trade system.
 pub mod trade;
 pub use trade::*;

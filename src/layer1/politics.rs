@@ -228,7 +228,6 @@ mod tests {
     use crate::layer2::governance::Governor;
     use crate::shared::time::SimulationTime;
 
-
     // Helper component to mock Faction for testing logic if needed,
     // though the system uses `FactionLeader` component directly.
     #[derive(Component)]

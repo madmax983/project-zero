@@ -171,7 +171,6 @@ mod tests {
     use crate::layer1::pop::Pop;
     use crate::layer1::traits::{Trait, Traits};
 
-
     #[test]
     fn test_society_formation_based_on_traits() {
         let mut world = World::new();

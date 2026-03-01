@@ -154,8 +154,6 @@ mod tests {
     use crate::layer1::needs::Needs;
     use crate::layer1::pop::Pop;
 
-
-
     #[test]
     fn test_death_spawns_corpse() {
         // Disabled
