@@ -340,7 +340,6 @@ mod tests {
     use crate::layer1::map::GridPosition;
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
 
-
     #[test]
     fn test_wind_grid_initialization() {
         let grid = WindGrid::new(10, 10);

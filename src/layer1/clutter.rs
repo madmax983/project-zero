@@ -110,7 +110,6 @@ mod tests {
     use crate::layer1::pop::Pop;
     use crate::layer1::utility_types::{ActionType, PopAction};
 
-
     // Helper to setup world
     fn setup_world() -> World {
         let mut world = World::new();

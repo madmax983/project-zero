@@ -146,7 +146,6 @@ mod tests {
     use crate::layer1::pop::Pop;
     use crate::layer1::social::{AffinityChange, Relationships};
 
-
     #[test]
     fn test_social_debt_initialization() {
         let debt = SocialDebt::default();

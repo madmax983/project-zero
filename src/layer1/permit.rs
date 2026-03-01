@@ -58,7 +58,6 @@ mod tests {
     use crate::layer1::items::ItemType;
     use crate::layer1::resources::ColonyResources;
 
-
     // Helper to setup world
     fn setup() -> World {
         let mut world = World::new();

@@ -1,8 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use crate::layer1::tech::legacy_code::{
-        update_bloat_system, Bloat, Mainframe, SystemStatus,
-    };
+    use crate::layer1::tech::legacy_code::{update_bloat_system, Bloat, Mainframe, SystemStatus};
     use bevy_ecs::prelude::*;
     // use crate::layer1::research::ResearchRate; // Not yet implemented
     use crate::shared::time::SimulationTime;

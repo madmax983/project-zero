@@ -157,7 +157,6 @@ mod tests {
     use crate::layer1::resources::ColonyResources;
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
 
-
     // Helper setup
     fn setup_world() -> World {
         let mut world = World::new();

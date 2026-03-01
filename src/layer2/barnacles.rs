@@ -57,7 +57,6 @@ mod tests {
     use super::*;
     use crate::layer2::fleet::{Fleet, InOrbit, InTransit};
 
-
     // 1. Test Barnacle Accumulation
     #[test]
     fn test_barnacle_accumulation() {

@@ -69,75 +69,78 @@ pub struct NoiseSource {
 pub fn update_noise_system(
     mut noise_map: ResMut<NoiseMap>,
     terrain: Res<TerrainGrid>,
+    pressure: Option<Res<crate::layer1::pressure::PressureGrid>>,
     sources: Query<(&NoiseSource, &GridPosition)>,
 ) {
     // Reset to ambient noise
     noise_map.values.fill(0.1);
 
     for (source, pos) in &sources {
-        let r = source.radius.ceil() as i32;
-        let cx = pos.x;
-        let cy = pos.y;
-        let r_sq = source.radius * source.radius;
+        let mut queue = std::collections::VecDeque::new();
+        // Item: (x, y, distance, damping_accumulator)
+        queue.push_back((pos.x, pos.y, 0.0_f32, 1.0_f32));
 
-        for dy in -r..=r {
-            for dx in -r..=r {
-                let dist_sq = (dx * dx + dy * dy) as f32;
-                if dist_sq > r_sq {
+        let mut visited = std::collections::HashSet::new();
+        visited.insert((pos.x, pos.y));
+
+        while let Some((px, py, dist, damping)) = queue.pop_front() {
+            if dist > source.radius {
+                continue;
+            }
+
+            // Check vacuum condition
+            if let Some(ref press) = pressure {
+                if press.get(px, py) < 0.1 {
+                    // Sound dies instantly in vacuum
                     continue;
                 }
+            }
 
-                let tx = cx + dx;
-                let ty = cy + dy;
+            // Apply noise to current cell
+            let falloff = (1.0 - (dist / source.radius)).max(0.0);
+            let final_strength = source.intensity * falloff * damping;
 
-                if tx < 0 || ty < 0 || tx >= noise_map.width as i32 || ty >= noise_map.height as i32
+            if final_strength > 0.0 {
+                let current = noise_map.get(px, py);
+                let new_val = (current + final_strength).min(1.0);
+                noise_map.set(px, py, new_val);
+            }
+
+            // Spread to neighbors
+            let neighbors = [
+                (px - 1, py, 1.0),
+                (px + 1, py, 1.0),
+                (px, py - 1, 1.0),
+                (px, py + 1, 1.0),
+                // Diagonals
+                (px - 1, py - 1, 1.414),
+                (px + 1, py - 1, 1.414),
+                (px - 1, py + 1, 1.414),
+                (px + 1, py + 1, 1.414),
+            ];
+
+            for (nx, ny, cost) in neighbors {
+                if nx < 0 || ny < 0 || nx >= noise_map.width as i32 || ny >= noise_map.height as i32
                 {
                     continue;
                 }
 
-                // Calculate damping via raycast
-                let mut damping = 1.0;
-                let steps = dist_sq.sqrt().ceil() as i32;
+                if !visited.insert((nx, ny)) {
+                    continue; // Already visited
+                }
 
-                if steps > 0 {
-                    let step_x = dx as f32 / steps as f32;
-                    let step_y = dy as f32 / steps as f32;
-
-                    // Trace from source to target (exclusive of source, inclusive of target)
-                    for s in 1..=steps {
-                        let ix = (cx as f32 + step_x * s as f32).round() as i32;
-                        let iy = (cy as f32 + step_y * s as f32).round() as i32;
-
-                        // Bounds check for terrain access
-                        if ix >= 0
-                            && iy >= 0
-                            && ix < terrain.width as i32
-                            && iy < terrain.height as i32
-                        {
-                            if let Some(tile) = terrain.get(ix as usize, iy as usize) {
-                                match tile {
-                                    TerrainType::Rock => damping *= 0.2,
-                                    TerrainType::Tree => damping *= 0.8,
-                                    _ => {}
-                                }
-                            }
-                        }
+                let mut next_damping = damping;
+                if let Some(tile) = terrain.get(nx as usize, ny as usize) {
+                    match tile {
+                        TerrainType::Rock => next_damping *= 0.2,
+                        TerrainType::Tree => next_damping *= 0.8,
+                        _ => {}
                     }
                 }
 
-                let dist = dist_sq.sqrt();
-                // Linear falloff: 1.0 at center, 0.0 at radius
-                let falloff = (1.0 - (dist / source.radius)).max(0.0);
-                let final_strength = source.intensity * falloff * damping;
-
-                if final_strength > 0.0 {
-                    let current = noise_map.get(tx, ty);
-                    // Add noise, but clamp. Simple additive model with diminishing returns?
-                    // Spec said: "new_val = (current + final_strength * 0.5).min(1.0)"
-                    // Let's stick to spec or simple max/add.
-                    // Additive is better for multiple sources.
-                    let new_val = (current + final_strength).min(1.0);
-                    noise_map.set(tx, ty, new_val);
+                let next_dist = dist + cost;
+                if next_dist <= source.radius {
+                    queue.push_back((nx, ny, next_dist, next_damping));
                 }
             }
         }
@@ -337,9 +340,9 @@ mod tests {
         assert!(needs.leisure < 0.8);
 
         // And thus morale should be lower
-        // Base morale (0.8+0.5+0.8)/3 = 0.7
-        // New morale (0.8+0.5+0.791)/3 = 0.697
-        assert!(needs.morale() < 0.7);
+        // Base morale (0.8 + 0.5 + 0.8 + 1.0(default hygiene)) / 4 = 0.775
+        // New morale (0.8 + 0.5 + 0.791 + 1.0) / 4 = 0.77275
+        assert!(needs.morale() < 0.775);
         // Also satisfies spec assertion
         assert!(needs.morale() < 1.0);
     }

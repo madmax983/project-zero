@@ -237,7 +237,6 @@ mod tests {
     use crate::layer1::pop::Pop;
     use crate::shared::random::WorldSeed;
 
-
     #[test]
     fn test_generate_consistent_effect() {
         // Effect should be deterministic based on seed + item type
