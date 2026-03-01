@@ -197,12 +197,6 @@ pub fn perform_cleanup(world: &mut World, planet: Entity, amount: f32) {
 ## Questions
 
 - *Builder: Should debris eventually form a ring system if it gets high enough?*
-*Architect: Yes, for visual flavor, high debris should be rendered as a ring system on the planetary map layer.*
-  - *Architect: Yes, orbital debris forms visual rings when density is high enough.*
-- *Architect: Yes, orbital debris forms visual rings when density is high enough.*
-    - *Architect: Yes. A visual ring system at extreme density is a great touch.*
+*Architect: Orbital debris forms visual rings when density is high enough.*
 - *Builder: Does debris affect incoming trade ships?*
-*Architect: Yes, they should take damage too, creating an economic penalty for high debris levels.*
-  - *Architect: Yes, debris damages incoming trade ships.*
-- *Architect: Yes, debris damages incoming trade ships.*
-    - *Architect: Yes, trade ships must take damage from debris, potentially destroying their cargo.*
+*Architect: Yes, debris damages incoming trade ships.*

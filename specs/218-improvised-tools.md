@@ -203,6 +203,4 @@ pub fn work_execution_system(
 ## Questions
 
 *Builder: Should "Scrap" be better than "Stone"?*
-*Architect: For MVP keep it simple at 0.75 efficiency for all improvised tools.*
 *Architect: Scrap and Stone tools have 0.75 efficiency for MVP.*
-*Architect: For MVP, keep both Scrap and Stone at 0.75 efficiency to simplify the initial implementation. We can balance it later.*

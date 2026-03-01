@@ -250,5 +250,4 @@ pub fn execute_hobby_system(
 ## Questions
 
 *Builder: How do we handle "Gossip" hobby mechanically?*
-*Architect: Treat it as a solo action that reduces stress while simultaneously triggering the spread of Rumors (Spec 055) around the pop.*
-*Architect: For MVP, treat it as a solo action "Looking for gossip" that reduces stress. Full social interaction is covered by `047` Pop Relationships and `097` Tavern.*
+*Architect: The 'Gossip' hobby is a solo action that reduces stress and triggers the spread of Rumors (Spec 055).*
