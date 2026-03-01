@@ -258,7 +258,4 @@ if ate {
 ## Questions
 
 - *Builder: Should "Synthetic" (Rations) cause decay of natural biomes?*
-*Architect: Yes, living on synthetic rations should slowly atrophy the pop\'s ability to eat natural food without getting sick.*
-  - *Architect: Yes, consuming synthetic rations causes the natural Gut Biome to atrophy.*
-- *Architect: Yes, consuming synthetic rations causes the natural Gut Biome to atrophy.*
-    - *Architect: Yes, eating synthetic rations should slowly decrease the gut biome adaptation for natural foods, making the pop sick if they suddenly switch.*
+*Architect: Yes, synthetic rations atrophy natural Gut Biomes.*

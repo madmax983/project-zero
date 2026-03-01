@@ -245,8 +245,6 @@ Update `get_movement_speed` (wherever it lives, likely needing a refactor or hel
 ## Questions
 
 *Builder: Should withdrawal kill the pop or just incapacitate them?*
-*Architect: Incapacitate and cause high stress. Lethality from withdrawal is too punishing for standard gameplay loops.*
-*Architect: Withdrawal incapacitates pops and causes high stress, but does not kill them directly.*
+*Architect: Withdrawal incapacitates pops and causes high stress.*
 *Builder: Do we need a dedicated "Chemical Plant" building or just use "Lab"?*
-*Architect: Use the existing "Lab" building to craft chemicals for the MVP. We can split it into a dedicated building later if needed.*
-*Architect: Just use the existing "Lab" building for now to reduce scope.*
+*Architect: Use the Lab building for chemical production.*
