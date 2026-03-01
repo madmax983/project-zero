@@ -7159,3 +7159,71 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Easy, free sustenance/morale vs. Dangerous physical dependency and vulnerability to ecological shifts.
 
 ---
+
+## Trauma as a Service
+
+**Layer:** 1 -> 3
+
+**Fantasy:** Memory is a commodity, and pain sells best on the core worlds.
+
+**Mechanic:** "Memory Extractors" allow you to harvest "Trauma" from highly stressed Pops. The Pop loses the Stress (and the associated bad memories), but also suffers severe skill loss or minor brain damage. The resulting "Trauma Crystal" is highly valuable on the Galactic Market.
+
+**Emergence:** Your colony is bankrupt. You intentionally cause a panic (e.g., venting atmosphere briefly) just to harvest the terror to pay your bills. You become a factory for nightmares.
+
+**Tension:** Fast, lucrative cash flow vs. Destroying your workforce's skills and minds.
+
+---
+
+## Weaponized Terraforming
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The enemy doesn't bomb you; they just change the weather until you leave.
+
+**Mechanic:** Hostile Layer 2 fleets or stations deploy "Terra-Bombs" or "Climate Spires" that slowly alter your Layer 1 biome. They might turn your temperate forest into a freezing tundra or a toxic swamp over several years.
+
+**Emergence:** You spend years fortifying against a military invasion, but the enemy just drops "Spore Seeds" that convert your farmland into an alien jungle that is incompatible with your biology, starving you out.
+
+**Tension:** Direct military defense vs. Investing in expensive climate-stabilization tech.
+
+---
+
+## The Trojan Wardrobe
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Beware of Megacorps bearing gifts. The clothes are spying on you.
+
+**Mechanic:** You import cheap, high-quality "Luxury Clothes" from a Megacorp. They provide massive Morale boosts. However, the clothes contain micro-sensors. As long as your Pops wear them, the Megacorp gains full Intel on your base layout and resources, and exerts massive Ideological Pressure.
+
+**Emergence:** Your colony is completely addicted to the imported fashion. When you try to ban the clothes because the Megacorp is selling your intel to pirates, the Pops riot because their homespun tunics are "itchy."
+
+**Tension:** Cheap Morale (Importing) vs. Autonomy and Security (Domestic crafting).
+
+---
+
+## Indentured Colonization
+
+**Layer:** Cross-layer
+
+**Fantasy:** You didn't discover this world; you mortgaged it. The repo man is coming.
+
+**Mechanic:** You start the game with a massive "Colony Debt" to a Layer 3 Bank. You must make periodic, increasingly large payments. If you default, they don't attack with armies; they send "Repo Fleets" that legally deconstruct your high-value buildings and take them.
+
+**Emergence:** You miss a payment by one day. The Repo ship lands, flashes a legal writ, and dismantles your only Fusion Reactor. You spend the next year trying to survive the winter with campfires while still owing the Bank.
+
+**Tension:** Slow, steady growth vs. Frantic expansion to outpace the debt interest.
+
+---
+
+## The Reality Show Dome
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Your suffering is their entertainment. The Truman Show in space.
+
+**Mechanic:** An advanced Alien species encloses your colony in an invisible "Observer Dome." They occasionally trigger localized disasters (fires, meteor strikes, predator spawns) and reward you with high-tech "Prizes" based on how dramatically your Pops survive.
+
+**Emergence:** A fire breaks out in the nursery. Instead of putting it out immediately, you delay the fire brigade by 30 seconds to increase the "Drama Rating," earning enough Alien Tech to build a planetary shield, but losing a Pop in the process.
+
+**Tension:** Efficient, boring survival (no rewards) vs. Intentional chaos and risk (high rewards).
