@@ -6951,7 +6951,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Use the overwhelming power blindly (risk) or leave it dormant (safety but missed opportunity)?
 
 ---
-## The Feral Outpost
+## The Feral Outpost [SPECCED]
 
 **Layer:** 1
 

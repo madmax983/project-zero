@@ -1,15 +1,13 @@
 import glob
-import re
 
 for filepath in glob.glob('specs/*.md'):
     with open(filepath, 'r', encoding='utf-8') as f:
         lines = f.readlines()
 
     for i, line in enumerate(lines):
-        if 'Builder:' in line and 'add questions here' not in line:
-            # Check the next few lines for Architect's answer
+        if 'Builder:' in line and 'add questions here' not in line.lower() and 'ScheduleBuilder' not in line:
             answered = False
-            for j in range(1, 4):
+            for j in range(1, 6):
                 if i + j < len(lines) and 'Architect:' in lines[i+j]:
                     answered = True
                     break
