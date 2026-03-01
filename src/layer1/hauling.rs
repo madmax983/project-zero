@@ -959,7 +959,7 @@ mod tests {
         world.insert_resource(ColonyResources::default());
 
         // Permit Item
-        let permit_item = world
+        let _permit_item = world
             .spawn((
                 ResourceItem {
                     resource_type: ResourceType::BuildingPermit,

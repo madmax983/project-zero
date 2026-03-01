@@ -3,7 +3,6 @@ use crate::layer1::health::Scars;
 use crate::layer1::lifecycle::Age;
 use crate::layer1::pop::Pop;
 use crate::shared::time::SimulationTime;
-use bevy_ecs::prelude::*;
 
 #[test]
 fn test_drift_accumulation_over_time() {

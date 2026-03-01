@@ -7,7 +7,7 @@ mod tests {
     use scale::layer1::morale::Morale;
     use scale::layer1::pheromone::{pheromone_emission_system, PheromoneEmitter};
     use scale::layer1::pop::Pop;
-    use scale::layer1::science::{spawn_initial_anomalies, Anomaly, AnomalyType, ScanProgress};
+    use scale::layer1::science::{spawn_initial_anomalies, Anomaly, AnomalyType};
     use scale::layer1::terrain::{TerrainGrid, TerrainType};
 
     fn setup_world() -> World {
@@ -83,7 +83,7 @@ mod tests {
         schedule.run(&mut world);
 
         // Find the new Flora
-        let new_flora = world
+        let _new_flora = world
             .query::<(Entity, &Flora, Option<&PheromoneEmitter>)>()
             .iter(&world)
             .find(|(_, f, _)| f.flora_type == FloraType::XenoMoss);

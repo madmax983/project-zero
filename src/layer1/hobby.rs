@@ -133,14 +133,14 @@ pub fn execute_hobby_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::inventory::{Inventory, InventoryItem};
+    use crate::layer1::inventory::Inventory;
     use crate::layer1::items::ItemType;
     use crate::layer1::pop::Pop;
     use crate::layer1::stress::StressTracker;
     use crate::layer1::traits::{Trait, Traits};
     use crate::layer1::utility_ai::{ActionType, PopAction};
     use crate::layer1::utility_eval_types::PopEvalData;
-    use bevy_ecs::prelude::*;
+
     use std::collections::HashSet;
 
     #[test]

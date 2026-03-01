@@ -174,7 +174,7 @@ mod tests {
     #[test]
     fn test_naked_pop_wants_clothing() {
         let pop_pos = GridPosition { x: 0, y: 0 };
-        let equipment = Equipment::default(); // No body
+        let _equipment = Equipment::default(); // No body
         let resources = ColonyResources {
             clothing: 1.0,
             ..Default::default()
@@ -231,7 +231,7 @@ mod tests {
         use crate::layer1::execution::arrival::handle_fetch_clothing;
 
         let mut world = World::new();
-        let mut resources = ColonyResources {
+        let resources = ColonyResources {
             clothing: 1.0,
             ..Default::default()
         };

@@ -20,7 +20,7 @@ fn test_sensitive_pop_posts_hum_grievance() {
     let mut traits = HashSet::new();
     traits.insert(Trait::Sensitive);
 
-    let pop = world
+    let _pop = world
         .spawn((
             Pop,
             Needs {

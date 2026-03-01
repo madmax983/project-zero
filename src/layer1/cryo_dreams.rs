@@ -79,7 +79,7 @@ mod tests {
     use crate::layer1::pop::Pop;
     use crate::layer1::resources::ColonyResources;
     use crate::layer1::traits::{Trait, Traits};
-    use bevy_ecs::prelude::*;
+
 
     #[test]
     fn test_cryo_pop_generates_knowledge() {
