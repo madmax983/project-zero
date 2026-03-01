@@ -7090,3 +7090,72 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Sacrificing your best people intentionally vs. Protecting them at all costs.
 
 ---
+## Blacksite Penal Colonies
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Out of sight, out of mind. Becoming the dumping ground for the galaxy's worst.
+
+**Mechanic:** You can accept a contract from a Layer 3 empire to host their most dangerous political prisoners on your Layer 1 world. You get massive regular payouts, but the prisoners have high "Instability" and will constantly attempt to radicalize your own pops or escape.
+
+**Emergence:** You build a secure blacksite to fund your economic boom. The prisoners manage to convert your warden to their ideology, leading a massive prison break that arms hundreds of hardened criminals with your own advanced security weapons.
+
+**Tension:** Massive passive income vs. Constant existential security threat.
+
+---
+
+## Architectural Sabotage
+
+**Layer:** 1
+
+**Fantasy:** The very walls are built to betray you.
+
+**Mechanic:** When relations with a faction are low, their contracted workers or spies might intentionally use flawed materials or insert "Sabotage Points" into buildings during construction. These buildings function normally but will critically fail (explode, collapse, leak radiation) when triggered by a specific event or after a set time.
+
+**Emergence:** You proudly unveil a new fusion reactor built by a rival faction's engineers. Years later, during a crucial defensive battle, the reactor inexplicably goes critical, destroying your command center from within.
+
+**Tension:** Cheaper/faster external construction vs. Paranoid internal vetting and delays.
+
+---
+
+## The Flesh Famine
+
+**Layer:** 1 -> 2
+
+**Fantasy:** When the soil dies, the colony must eat itself to survive.
+
+**Mechanic:** A specific planetary blight or weather event destroys all plant-based agriculture. The only viable food source becomes meat. If you lack livestock, Pops will begin "Harvesting" local dangerous fauna, or in extreme cases, each other, generating massive "Taboo" and "Trauma" markers.
+
+**Emergence:** Your agricultural utopia is hit by a solar flare that sterilized the soil. Within a month, your peaceful farmers have formed hunting bands, worshiping the local apex predators they now eat, completely abandoning their original civic ideology.
+
+**Tension:** Starvation vs. Fundamental, horrifying cultural shift.
+
+---
+
+## Orbital Megastructure Deorbiting
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The sky is falling, literally. Catching a dying star.
+
+**Mechanic:** Massive Layer 2 structures (like ruined stations or enemy dreadnoughts) can have their orbits destabilized. You can try to "Catch" them by constructing massive tether arrays and dampeners on Layer 1, allowing you to salvage the entire structure. If you fail, it impacts like a meteor, wiping out a huge portion of the map.
+
+**Emergence:** You decide to catch a falling enemy carrier to steal its technology. Your dampeners fail at the last second, and the carrier annihilates your industrial sector, but the surviving wreckage still gives you the tech, leaving you technologically advanced but in the stone age industrially.
+
+**Tension:** Unprecedented salvage reward vs. Colony-ending risk.
+
+---
+
+## Xenoflora Addiction
+
+**Layer:** 1
+
+**Fantasy:** The planet provides, but it demands your mind in return.
+
+**Mechanic:** A beautiful, rapidly growing native plant produces a fruit that functions as both a perfect food and a potent stress-reliever. However, consuming it creates a physical dependency. If the plant goes extinct or the supply drops, addicted Pops enter a state of violent withdrawal.
+
+**Emergence:** You pave over your hydroponics because this native plant is so efficient. Years later, an invasive pest destroys the native plants. Your entire colony, now starving and in withdrawal, begins tearing down the colony to find more of the fruit.
+
+**Tension:** Easy, free sustenance/morale vs. Dangerous physical dependency and vulnerability to ecological shifts.
+
+---
