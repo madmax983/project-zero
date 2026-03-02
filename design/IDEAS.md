@@ -7297,3 +7297,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Massive economic/cultural benefits vs. Constant, high-tier military threat.
 
 ---
+
+## The Fossil Fuel Trap
+
+**Layer:** 1 -> 2
+
+**Fantasy:** Getting addicted to a cheap, dirty resource and destroying your own planet to fuel your space program.
+
+**Mechanic:** Ancient, incredibly energy-dense "Fossil Fuels" are discovered. They provide massive, cheap energy but generate extreme "Smog" and "Temperature" increases.
+
+**Emergence:** You burn fossils to build a fleet quickly, but the smog causes a global winter, starving your colony while your massive fleet orbits helplessly.
+
+**Tension:** Fast, dirty industrialization vs. slow, sustainable growth.
+
+---
+
+## Cult of the Fallen Ship
+
+**Layer:** 1
+
+**Fantasy:** Worshiping the technology that saved us, even as we forget how it works.
+
+**Mechanic:** A crashed escape pod or old colony ship becomes a "Shrine." Pops with high Stress interact with it, gaining "Faith" but slowly converting to a "Techno-Cult."
+
+**Emergence:** The cult decides the reactor is a sacred relic and violently prevents engineers from repairing it, believing the warning alarms are the machine "singing."
+
+**Tension:** Free morale boost from faith vs. loss of control over critical infrastructure.
+
+---
+
+## Sub-Orbital Artillery
+
+**Layer:** 1 -> 2
+
+**Fantasy:** Using mass drivers not for trade, but for war. The poor man's orbital strike.
+
+**Mechanic:** "Mass Drivers" built on Layer 1 can be repurposed to fire solid slugs at Layer 2 targets. They are cheap but inaccurate and cause massive "Recoil" damage to surrounding tiles.
+
+**Emergence:** You try to shoot down a pirate frigate. You miss, and the slug impacts a neutral trade station, sparking a war. You hit the frigate, but the recoil collapses your own mining district.
+
+**Tension:** Cheap, desperate defense vs. massive collateral damage and inaccuracy.
+
+---
+
+## The Stolen Identity
+
+**Layer:** Cross-layer
+
+**Fantasy:** The spy isn't just listening; they are living your life.
+
+**Mechanic:** A highly skilled "Spy" from a rival faction infiltrates the colony by assassinating and replacing a Pop. They perfectly mimic the Pop's routine but slowly siphon resources or alter tech research toward dead ends.
+
+**Emergence:** Your master architect starts designing buildings with intentional structural flaws. You only realize it when a raid causes half the base to crumble instantly.
+
+**Tension:** Paranoia and constant security sweeps vs. trusting your highly skilled workers.
+
+---
+
+## The Orphaned Terraformer
+
+**Layer:** 2 -> 1
+
+**Fantasy:** A machine that doesn't know the war is over, still trying to make the world perfect for masters who are long dead.
+
+**Mechanic:** A massive, automated "Terraforming Spire" from a precursor race activates on the planet. It aggressively changes the biome (e.g., turning desert to jungle) regardless of your existing infrastructure.
+
+**Emergence:** The Spire starts converting your carefully balanced temperate farm zone into a searing magma vent because it thinks the planet is "too cold." You have to fight a war against a machine that thinks it's helping.
+
+**Tension:** Exploit the terraforming (if it aligns with your goals) vs. destroy the priceless ancient tech to save your base.
+
+---
