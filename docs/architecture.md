@@ -107,6 +107,62 @@ Rel(Inspector, Shared, "Reads Selection")
 Rel(Inspector, Pops, "Reads Components")
 ```
 
+## Layer 1 Security & Access Architecture
+
+The simulation distinguishes between physical movement restrictions and biometric clearances.
+
+```mermaid
+classDiagram
+    class AccessControl {
+        +AccessMode mode
+        +HashSet~Entity~ allowed_pops
+        +HashSet~Role~ allowed_roles
+        +check_access(World, door, pop) bool
+    }
+    class Building {
+        <<Component>>
+    }
+    class Pop {
+        <<Component>>
+    }
+    class Role {
+        <<Component>>
+    }
+
+    class SecurityTerminal {
+        +u8 required_clearance
+        +f32 strictness
+    }
+    class BiometricProfile {
+        +u64 last_update_tick
+        +f32 drift
+        +u32 recorded_scars
+    }
+    class AccessResult {
+        <<Enumeration>>
+        Granted
+        Delayed
+        DeniedDrift
+        DeniedClearance
+    }
+    class SecurityModule {
+        <<Module>>
+        +check_security_clearance(World, pop, terminal) AccessResult
+    }
+
+    Building *-- AccessControl : "Physical Doors/Gates"
+    Pop *-- Role : Has
+    Pop *-- BiometricProfile : Has
+    Building *-- SecurityTerminal : "Logic Locks"
+
+    AccessControl ..> Pop : Verifies
+    AccessControl ..> Role : Verifies
+
+    SecurityModule ..> BiometricProfile : Evaluates Drift
+    SecurityModule ..> SecurityTerminal : Checks Requirements
+    SecurityModule --> AccessResult : Returns
+```
+
 ## Layer 2 Bridge
 
 The interface between the Colony Simulation (Layer 1) and the Orbital/System Data (Layer 2).
@@ -512,3 +568,4 @@ Rel(Shared, Events, "Consumes")
 - [ADR 029: Refactor Logistics into Submodules](./adr/029-refactor-logistics-into-submodules.md)
 - [ADR 030: Layer 1 System Architecture Refactor](./adr/030-layer-1-system-architecture.md)
 - [ADR 031: Layer 2 Revival & Lightweight Simulation](./adr/031-layer-2-revival.md)
+- [ADR 032: Rename check_access to check_security_clearance](./adr/032-rename-check-access-to-check-security-clearance.md)
