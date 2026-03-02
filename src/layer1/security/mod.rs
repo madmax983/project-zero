@@ -48,7 +48,7 @@ pub fn drift_accumulation_system(
     }
 }
 
-pub fn check_access(world: &World, pop: Entity, terminal: Entity) -> AccessResult {
+pub fn check_security_clearance(world: &World, pop: Entity, terminal: Entity) -> AccessResult {
     let Some(profile) = world.get::<BiometricProfile>(pop) else {
         return AccessResult::Granted; // No profile? Assume granted or irrelevant.
     };

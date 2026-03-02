@@ -18,7 +18,10 @@ fn test_mega_quake_adds_chronicle_event() {
     schedule.run(&mut world);
 
     let chronicle_events = world.resource::<Events<AddChronicleEvent>>();
-    assert!(!chronicle_events.is_empty(), "MegaQuakeEvent should trigger an AddChronicleEvent");
+    assert!(
+        !chronicle_events.is_empty(),
+        "MegaQuakeEvent should trigger an AddChronicleEvent"
+    );
 
     let mut reader = chronicle_events.get_cursor();
     let events: Vec<_> = reader.read(chronicle_events).collect();

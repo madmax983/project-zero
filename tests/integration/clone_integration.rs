@@ -66,7 +66,7 @@ fn test_clone_vat_emits_event_and_notification() {
 
     // Verify Event
     let events = world.resource::<Events<PopBorn>>();
-    let mut reader = events.get_reader();
+    let mut reader = events.get_cursor();
     let events: Vec<_> = reader.read(events).collect();
     assert_eq!(events.len(), 1);
     assert_eq!(events[0].source, "Clone Vat");

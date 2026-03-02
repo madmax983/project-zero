@@ -9,7 +9,7 @@ use crate::layer1::gastronomy::WorkSpeedBuff;
 use crate::layer1::pop::{Job, Pop};
 use crate::layer1::traits::{Trait, Traits};
 use crate::shared::log::MessageLog;
-use bevy_ecs::prelude::*;
+
 use rand::seq::IteratorRandom;
 use rand::Rng;
 
@@ -224,7 +224,6 @@ mod tests {
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::gastronomy::WorkSpeedBuff;
     use crate::layer1::pop::{Job, Pop};
-    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_consciousness_xp_growth() {
