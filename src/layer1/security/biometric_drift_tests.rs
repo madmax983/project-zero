@@ -107,7 +107,7 @@ fn test_access_denied_high_drift() {
         .id();
 
     // Check Access
-    let result = check_access(&world, pop, terminal);
+    let result = check_security_clearance(&world, pop, terminal);
     assert_eq!(result, AccessResult::DeniedDrift);
 }
 
@@ -131,7 +131,7 @@ fn test_access_slow_medium_drift() {
         })
         .id();
 
-    let result = check_access(&world, pop, terminal);
+    let result = check_security_clearance(&world, pop, terminal);
     // Note: Delay duration is float, using assert matches pattern in AccessResult
     if let AccessResult::Delayed(duration) = result {
         assert!(duration > 0.0);

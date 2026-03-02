@@ -95,7 +95,7 @@ mod tests {
         schedule.run(&mut world);
 
         let events = world.resource::<Events<DetectionEvent>>();
-        let reader = events.get_reader();
+        let reader = events.get_cursor();
         assert_eq!(
             reader.len(&events),
             0,
