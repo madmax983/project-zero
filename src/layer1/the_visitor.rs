@@ -136,7 +136,7 @@ pub fn the_visitor_behavior_system(
                 if remaining_hunger > 0.0 && resources.fuel > 0.0 {
                     let eat = resources.fuel.min(remaining_hunger);
                     resources.fuel -= eat;
-                    remaining_hunger -= eat;
+                    // remaining_hunger -= eat;
                 }
 
                 // If we ate anything (or even if we didn't but tried), leave

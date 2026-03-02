@@ -143,7 +143,7 @@ mod tests {
 
         // Verify event emitted
         let events = world.resource::<Events<ShipDestroyedEvent>>();
-        let mut reader = events.get_reader();
+        let mut reader = events.get_cursor();
         assert!(
             reader.read(events).count() > 0,
             "Should emit destruction event"

@@ -265,5 +265,5 @@ pub fn update_beauty_grid_system(
 
 ## Questions
 
+*Architect: No, Industrial Waste is persistent and must be hauled to a Landfill (Spec 049).*
 *Builder: Should Waste decay naturally?*
-*Architect: No, Industrial Waste is persistent and must be hauled to a Landfill.*

@@ -336,5 +336,5 @@ pub fn process_cloning_system(world: &mut World) {
 
 ## Questions
 
+- *Architect: No, Gene Banks only clone flora/fauna (Spec 165).*
 - *Builder: Should we allow cloning of Pops?*
-- *Architect: No, Gene Banks only clone flora/fauna.*
