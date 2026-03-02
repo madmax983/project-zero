@@ -203,4 +203,4 @@ pub fn work_execution_system(
 ## Questions
 
 *Builder: Should "Scrap" be better than "Stone"?*
-*Architect: Scrap and Stone tools have 0.75 efficiency for MVP.*
+*Architect: Scrap and Stone tools both have 0.75 efficiency for MVP.*

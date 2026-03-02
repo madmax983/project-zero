@@ -220,6 +220,6 @@ pub fn check_safehouse_raid_trigger_system(
 ## 8. Questions
 
 - *Builder: Should Agents have specific needs (Luxury food)?*
-*Architect: Yes, Safehouse Agents need Luxury Food.*
+- *Architect: Yes, Safehouse Agents need Luxury Food.*
 - *Builder: Can we hold multiple agents in one zone?*
-*Architect: Maximum 1 Agent per valid bed.*
+- *Architect: Max 1 Agent per valid bed.*

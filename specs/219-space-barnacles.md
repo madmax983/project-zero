@@ -185,4 +185,4 @@ pub fn fleet_movement_system(
 ## Questions
 
 - *Builder: Should barnacles fall off if the fleet moves fast enough?*
-*Architect: Space Barnacles persist and do not detach at high fleet speeds.*
+- *Architect: No, Space Barnacles persist and do not detach at high fleet speeds.*

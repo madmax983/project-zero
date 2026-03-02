@@ -275,4 +275,4 @@ In `src/layer1/actions.rs`, add `UseShower`.
 - *Builder: Should Showers require Power?*
 *Architect: Keep showers power-free (gravity-fed) for the MVP.*
 - *Builder: Does Filth affect Room Quality?*
-*Architect: Yes, filth temporarily reduces Room Quality.*
+- *Architect: Yes, Filth temporarily reduces Room Quality.*

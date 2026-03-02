@@ -197,6 +197,6 @@ pub fn perform_cleanup(world: &mut World, planet: Entity, amount: f32) {
 ## Questions
 
 - *Builder: Should debris eventually form a ring system if it gets high enough?*
-*Architect: Orbital debris forms visual rings when density is high enough.*
+- *Architect: Yes, Orbital Debris forms visual rings.*
 - *Builder: Does debris affect incoming trade ships?*
-*Architect: Yes, debris damages incoming trade ships.*
+- *Architect: Yes, Orbital Debris damages trade ships.*

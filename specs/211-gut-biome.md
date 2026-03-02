@@ -258,4 +258,4 @@ if ate {
 ## Questions
 
 - *Builder: Should "Synthetic" (Rations) cause decay of natural biomes?*
-*Architect: Yes, synthetic rations atrophy natural Gut Biomes.*
+- *Architect: Yes, Synthetic rations atrophy natural Gut Biomes.*
