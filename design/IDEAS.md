@@ -7227,3 +7227,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** A fire breaks out in the nursery. Instead of putting it out immediately, you delay the fire brigade by 30 seconds to increase the "Drama Rating," earning enough Alien Tech to build a planetary shield, but losing a Pop in the process.
 
 **Tension:** Efficient, boring survival (no rewards) vs. Intentional chaos and risk (high rewards).
+
+## The Bio-Acoustic Chorus
+
+**Layer:** 1
+
+**Fantasy:** The forest sings your colony's health.
+
+**Mechanic:** A specific type of native flora emits a low hum that harmonizes with the overall Mood of the colony. High mood creates a beautiful, relaxing symphony that further buffs morale. Low mood creates a dissonant, stressful screech.
+
+**Emergence:** Your colony is starving. The forest starts screaming, creating a feedback loop of stress that drives the colonists insane before the hunger does.
+
+**Tension:** Do you clear-cut the forest for silence, or try to fix the colony's problems to restore the song?
+
+---
+
+## Ephemeral Architecture
+
+**Layer:** 1
+
+**Fantasy:** Building castles of ice and salt. Temporary solutions for permanent problems.
+
+**Mechanic:** Certain cheap, abundant building materials (Ice, Salt, Packed Mud) slowly decay based on weather or temperature. A "Salt Wall" dissolves in the rain; an "Ice Wall" melts in the summer.
+
+**Emergence:** You build a massive, cheap Ice Fortress during the winter to survive a raid. You win, but forget to replace the walls with stone. Summer comes, the fortress melts, and the prisoners escape.
+
+**Tension:** Speed and cost vs. Permanence and environmental vulnerability.
+
+---
+
+## The Pirate Emissary
+
+**Layer:** Cross-layer
+
+**Fantasy:** Hiring the wolves to guard the sheep.
+
+**Mechanic:** You can hire a powerful Layer 2 Pirate Fleet to act as "Privateers" for your system. They defend your trade routes and attack rivals, but they demand a "Tribute" of resources or Pops. If you fail to pay, they turn their guns on your capital.
+
+**Emergence:** The Privateers are so effective that your economy booms. But their tribute demands scale with your wealth. Eventually, you realize you're just a farm for the pirates, and you have to build a secret navy to destroy your own protectors.
+
+**Tension:** Unmatched early security vs. A ticking time bomb of extortion.
+
+---
+
+## Reverse Terraforming
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Poisoning the well to get to the gold.
+
+**Mechanic:** You deploy "Atmo-Strippers" from orbit to intentionally degrade a planet's habitability. This removes annoying flora/fauna and exposes deep crustal resources, but turns the world into a toxic, irradiated wasteland that requires expensive sealed habitats to survive.
+
+**Emergence:** You strip the atmosphere to mine rare "Core-Gems" faster. The ensuing toxic storms destroy your fragile bio-domes, killing your expert miners. You have the gems, but no one left to spend them.
+
+**Tension:** Safe, slow surface extraction vs. Fast, destructive deep extraction.
+
+---
+
+## Exiled Royals
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Hosting the deposed king. High society meets the frontier.
+
+**Mechanic:** You accept a high-value "Exile" Pop from a Layer 3 Empire. They provide massive passive bonuses to Culture and Diplomacy, and a massive credit payout. However, they are constantly targeted by "Assassination Squad" raids from the empire that overthrew them.
+
+**Emergence:** The Exile demands a luxury suite and caviar while your colony eats moss. You provide it because the Assassins drop high-tech gear when you kill them, turning your colony into a specialized mercenary camp farming the assassins for loot.
+
+**Tension:** Massive economic/cultural benefits vs. Constant, high-tier military threat.
+
+---
