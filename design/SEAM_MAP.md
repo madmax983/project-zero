@@ -239,3 +239,12 @@
     - Updated `evaluate_haul` in `src/layer1/actions.rs` to prioritize Gene Bank destinations for genetic samples.
     - Updated `haul_system` in `src/layer1/hauling.rs` to detect Gene Bank targets and use `store_sample`.
 - **Tests:** `tests/integration/gene_bank_logistics.rs` (Integration test verified)
+
+### INT-038: MegaQuakeEvent -> Chronicle System
+- **Date:** 2026-03-03
+- **Systems connected:** `MegaQuakeEvent` (Geology) -> `mega_quake_chronicle_bridge` (Integration) -> `AddChronicleEvent` (Chronicle)
+- **Glue added:**
+    - Added `mega_quake_chronicle_bridge` in `src/layer1/integration.rs` to convert `MegaQuakeEvent` to `AddChronicleEvent`.
+    - Registered in `src/layer1/systems/observation.rs`.
+    - Initialized `MegaQuakeEvent` resource in `setup.rs`.
+- **Tests:** `tests/integration/mega_quake_chronicle.rs` (Integration test verified)

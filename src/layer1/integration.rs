@@ -672,3 +672,15 @@ pub fn fleet_unload_system(
         }
     }
 }
+
+pub fn mega_quake_chronicle_bridge(
+    mut events: EventReader<crate::layer1::geology::tectonic::MegaQuakeEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _ in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            text: "A Mega-Quake has ruptured the colony's foundations.".to_string(),
+            importance: EventImportance::Major,
+        });
+    }
+}
