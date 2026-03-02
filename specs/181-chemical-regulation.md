@@ -245,6 +245,6 @@ Update `get_movement_speed` (wherever it lives, likely needing a refactor or hel
 ## Questions
 
 *Builder: Should withdrawal kill the pop or just incapacitate them?*
-*Architect: Withdrawal incapacitates pops and causes high stress.*
+*Architect: Chemical withdrawal incapacitates pops and causes high stress.*
 *Builder: Do we need a dedicated "Chemical Plant" building or just use "Lab"?*
-*Architect: Use the Lab building for chemical production.*
+*Architect: Use the existing Lab building.*

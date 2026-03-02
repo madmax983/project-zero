@@ -254,4 +254,4 @@ Ensure `Waste` resource items can be hauled to a `Landfill` or `Stockpile`. (Alr
 ## Questions
 
 *Builder: Should Purity also affect the amount of Stone?*
-*Architect: Resource Purity affects the Ore/Waste ratio, not overall Stone amount.*
+*Architect: No, Resource Purity affects the Ore/Waste ratio, not overall Stone amount.*
