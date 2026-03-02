@@ -99,6 +99,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::oral_tradition::storytelling_system
                 .after(crate::layer1::rumor::exchange_rumors_system),
             pop_death_chronicle_bridge.after(crate::layer1::health::despawn_dead_entities_system),
+            mega_quake_chronicle_bridge.after(crate::layer1::geology::tectonic::check_quake_system),
             retrograde_chronicle_bridge.after(work_execution_system), // work_execution_system is in Execution set
             amputation_handler_system.after(work_execution_system),
             art_observation_system.after(crate::layer1::health::despawn_dead_entities_system),
