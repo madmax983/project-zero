@@ -222,5 +222,6 @@ Add `energy::update_auroral_output_system` to `SimulationUpdate` schedule, prefe
 ## Questions
 
 - *Builder: Should the collector take damage during the storm?*
+  *Architect: No, Auroral Collectors are specifically designed to safely harvest this energy, unlike standard electronics.*
 *Architect: No, the Auroral Collector is purpose-built to withstand magnetic storms. However, surrounding normal electronics will still suffer damage.*
 - *Architect: No, it is designed for it. Other buildings take damage (Spec 179).*

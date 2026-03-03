@@ -185,4 +185,5 @@ pub fn fleet_movement_system(
 ## Questions
 
 - *Builder: Should barnacles fall off if the fleet moves fast enough?*
+  *Architect: No, they are tenaciously attached and must be manually cleared by a scrubbing job or in a drydock.*
 - *Architect: No, Space Barnacles persist and do not detach at high fleet speeds.*

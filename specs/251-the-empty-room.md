@@ -185,5 +185,6 @@ pub fn visit_sanctuary_system(
 ## Questions
 
 *Builder: Does a person standing in the room count as "not empty"?*
+*Architect: No, only built structures and dropped items count against the "empty" status; Pops are transient and do not break it.*
 *Architect: Pops themselves do not count as clutter. The room is considered empty as long as no items, furniture, or structures are present.*
 *Architect: No, people are fine. Only permanent objects (furniture, clutter).*

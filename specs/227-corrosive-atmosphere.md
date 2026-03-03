@@ -183,5 +183,6 @@ pub fn corrosion_damage_system(world: &mut World) {
 ## 8. Questions
 
 - *Builder: Does corrosion affect units (Pops)?*
+  *Architect: Yes, unshielded Pops outdoors in a corrosive atmosphere take constant health damage and equipment degradation.*
 *Architect: Only if they are unarmored or outdoors without protective gear. It should act as a slow health drain over time.*
     - *Architect:* Not in this spec. That would be "Health/Biocompatibility". This spec focuses on *Structure*.

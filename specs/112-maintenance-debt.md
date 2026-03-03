@@ -209,5 +209,6 @@ pub fn malfunction_system(world: &mut World) {
 ## 8. Questions
 
 - *Builder: Does `DeferMaintenance` stop manual repairs?*
+  *Architect: Yes, deferring maintenance prevents Pops from automatically performing routine repairs until the deferral is lifted.*
 *Architect: Yes, while deferred, the building ignores repair designations until the debt resolves or fails.*
     - *Architect:* No. Player can still manually designate a repair (Designation tool). `DeferMaintenance` stops *automatic* utility AI repair jobs.

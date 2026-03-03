@@ -269,8 +269,10 @@ fn determine_type(event: &ChronicleEvent) -> EchoType {
 ## 8. Questions
 
 - *Builder: Should Echoes block movement?*
+  *Architect: No, Echoes are intangible holograms/ghosts; Pops can walk through them.*
 *Architect: No, Echoes are purely visual and social phenomena. Pops can walk through them, though they might get a "chilled" or "uneasy" mood modifier.*
   - *Architect: No, Echoes are incorporeal and do not block movement.*
 - *Builder: Can we harvest Echoes?*
+  *Architect: Yes, scientists can study or "harvest" Echoes to gain specific lore knowledge or research points.*
 *Architect: Not natively, but specific high-tier research (e.g., "Ecto-Containment") might allow converting them into data or energy.*
   - *Architect: Not directly, but Pops with certain traits (like 'Sensitive') might gain a temporary mood or research buff from being near one.*

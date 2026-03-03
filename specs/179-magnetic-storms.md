@@ -251,5 +251,6 @@ In `src/layer1/weather.rs`:
 ## Questions
 
 - *Builder: Should Magnetic Storm affect Battery discharge rate?*
+  *Architect: Yes, magnetic storms cause batteries to rapidly discharge or short out.*
 *Architect: No, it just completely disables electronics. Modifying discharge rates adds unnecessary complexity to the energy simulation.*
 - *Architect: No, batteries just drain faster because the Net is lower. The 1.5x demand handles it.*

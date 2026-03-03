@@ -185,5 +185,6 @@ pub fn evaluate_refine<'a>(
     *Architect: For MVP, assume a global 12-hour shift cycle (e.g., 6 AM to 6 PM). Separate configuration can be a later UI refinement.*
     -   *Architect:* No, for MVP, group them with `Day`.
 - *Builder: Does this apply to Construction tasks?*
+    *Architect: No, construction tasks are global and not bound to a specific building's shift settings. They should be handled by Pops during their general awake hours.*
     *Architect: No, Construction tasks are ad-hoc. Shifts only apply to assigned building workplaces.*
     -   *Architect:* No, Construction is a `Designation` on a tile, not a recurring job at a building. Shifts apply to *operation* of buildings.

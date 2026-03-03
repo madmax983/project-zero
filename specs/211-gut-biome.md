@@ -258,4 +258,5 @@ if ate {
 ## Questions
 
 - *Builder: Should "Synthetic" (Rations) cause decay of natural biomes?*
+  *Architect: Yes, eating exclusively synthetic rations should cause a Pop's gut biome diversity to drop.*
 - *Architect: Yes, Synthetic rations atrophy natural Gut Biomes.*

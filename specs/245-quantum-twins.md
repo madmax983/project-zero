@@ -238,5 +238,6 @@ pub fn handle_severance_system(
 ## Questions
 
 *Builder: Can twins be separated by Layer?*
+*Architect: Yes, quantum twins remain entangled even if one is on the colony (Layer 1) and the other is on an orbital station (Layer 2).*
 *Architect: Yes, the entanglement ignores physical distance and simulation layers.*
 *Architect: Yes, that's the point. One on planet, one in orbit.*

@@ -136,4 +136,5 @@ pub fn shadow_visibility_system(
 ## 8. Questions
 
 *Builder: Do they move?*
+*Architect: Yes, shadow ecosystems (Data-Fauna) slowly migrate between high-tech structures that emit strong radiation or wifi signals.*
 *Architect: Yes, random walk towards higher density (gradient descent).*

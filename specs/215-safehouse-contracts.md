@@ -220,6 +220,8 @@ pub fn check_safehouse_raid_trigger_system(
 ## 8. Questions
 
 - *Builder: Should Agents have specific needs (Luxury food)?*
+  *Architect: Yes, high-profile safehouse guests should demand higher room quality and luxury food to remain satisfied.*
 - *Architect: Yes, Safehouse Agents need Luxury Food.*
 - *Builder: Can we hold multiple agents in one zone?*
+  *Architect: No, each safehouse contract should correspond to a discrete, dedicated safehouse zone.*
 - *Architect: Max 1 Agent per valid bed.*

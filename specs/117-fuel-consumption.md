@@ -238,5 +238,6 @@ BuildingType::Generator => {
 ## 8. Questions
 
 - *Builder: How much fuel does a generator consume?*
+  *Architect: Fuel consumption should be a property defined on the generator building type, scaling with power output.*
 *Architect: Balance it so a standard generator uses 1 fuel unit per 100 ticks of operation.*
     -   *Architect:* Start with `0.05` per tick. A refinery produces `1.0` fuel from `2.0` ore. If refining takes ~10 ticks, one refinery can support maybe 2 generators. Tune `RefiningProgress.max` and consumption rate to balance.
