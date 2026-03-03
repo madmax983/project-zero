@@ -233,8 +233,10 @@ GameKeyCode::Tab => {
 ## 8. Questions
 
 -   *Builder: Should multiple Command Centers provide redundancy?*
+    *Architect: Yes, as long as at least one Command Center is powered and staffed, global visibility is maintained.*
 *Architect: Yes, as long as one is powered and staffed, global UI elements remain active.*
     -   *Architect:* Yes. The logic `has_active_cc` implicitly supports this (OR logic).
 -   *Builder: Does the Command Center need to be staffed?*
+    *Architect: Yes, a Command Center requires at least one Pop working an Administrator/Officer job to function.*
 *Architect: Yes, it requires Admin pops to function, adding a labor cost to the global view.*
     -   *Architect:* For MVP, no. Just Power. Future versions may require `JobType::Operator`.

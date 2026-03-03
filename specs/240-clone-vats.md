@@ -228,6 +228,8 @@ pub fn process_clone_vats_system(
 ## Questions
 
 - *Builder: Should clones be born as adults?*
+  *Architect: Yes, clones are decanted as fully mature, working-age adults.*
 - *Architect: Yes, Clone Vats spawn adult clones.*
 - *Builder: Do they have parents?*
+  *Architect: No, clones lack parents and do not inherit familial relationships, giving them the "Soulless" or similar trait.*
 - *Architect: No, they have empty family trees.*

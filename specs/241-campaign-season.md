@@ -255,5 +255,6 @@ Register `ElectionManager` and systems in `src/layer1/mod.rs`.
 ## Questions
 
 - *Builder: What happens if there are no factions?*
+  *Architect: If no factions exist, standard administrative candidates (or the current governor) run unopposed without special campaign promises.*
 *Architect: If no factions exist, standard independent pops will nominate themselves based on high Charisma or Social standing. If the population is too small (e.g., under 10), campaigns do not trigger.*
   - *Architect: The current Governor stays, or a random "Independent" runs.*

@@ -182,5 +182,6 @@ pub fn purge_tech(world: &mut World, tech_id: &str) {
 ## Questions
 
 - *Builder: Does deleting a prerequisite tech lock the advanced tech?*
+  *Architect: No, once an advanced tech is unlocked, it remains unlocked even if its prerequisite is deleted to save space.*
 *Architect: No, you retain the advanced tech, but you cannot build the prerequisite tech anymore. This creates a "black box" situation where you use tech you no longer fully understand.*
   - *Architect: No, you keep the advanced tech, but you can't build the basic components anymore (unless the advanced tech supersedes them).*

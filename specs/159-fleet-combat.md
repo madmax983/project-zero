@@ -181,5 +181,6 @@ pub fn fleet_combat_system(
 ## 8. Questions
 
 - *Builder: How do I calculate loot?*
+  *Architect: Loot should be a percentage of the destroyed ship's construction cost, plus any cargo it was carrying.*
 *Architect: For now, grant a percentage (e.g. 10-20%) of the destroyed ship\'s construction cost in raw materials, plus a small chance for a "Salvage Data" item.*
     - *Architect: Take 50% of the destroyed fleet's cargo.*

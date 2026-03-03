@@ -219,6 +219,7 @@ pub fn perform_purge(world: &mut World, residue_entity: Entity) {
 ## Questions
 
 - *Builder: Does residue stack?*
+  *Architect: No, only the ghost behavior of the most recently demolished building on that tile is retained.*
 *Architect: No, the most recent building demolished on that tile overwrites previous residue to prevent excessive memory usage.*
   - *Architect: No, residue does not stack. A tile either has residue or it doesn't. Deconstructing multiple buildings on the same tile just refreshes the residue.*
   - *Architect: No, latest residue overwrites old, or they merge. Keep it simple: One residue per tile.*

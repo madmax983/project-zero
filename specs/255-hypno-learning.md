@@ -242,8 +242,10 @@ pub fn update_mental_fog_system(
 ## Questions
 
 - *Builder: Does the pod require power?*
+  *Architect: Yes, Hypno-Learning pods require a constant supply of power to function during a Pop's rest cycle.*
 *Architect: Yes, it is a high-power building. If power fails mid-sleep, the pop wakes up with no XP gain and severe "Mental Fog".*
   - *Architect: Yes, it should be a `PowerConsumer` (Spec 042).*
 - *Builder: Can children use it?*
+  *Architect: No, the intense neurological load of the pod requires a mature brain, making it restricted to adults.*
 *Architect: No, only adults can use the HypnoPod. Attempting to use it on children causes irreversible brain damage (creates a trauma trait).*
   - *Architect: Yes, "Indoctrination" is a valid strategy.*

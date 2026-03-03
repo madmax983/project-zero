@@ -174,5 +174,6 @@ pub fn reveal_betrayal_system(
 ## Questions
 
 *Builder: Can you stack placebos?*
+*Architect: No, a Pop can only be under the effect of one Placebo Protocol at a time.*
 *Architect: No, a pop can only have one active Placebo effect at a time. Issuing another resets the timer but increases the risk of the "Betrayal" event triggering.*
 *Architect: Yes, but if multiple fail at once, the colony essentially implodes.*

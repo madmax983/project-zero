@@ -301,5 +301,6 @@ Update `src/layer1/building.rs`:
 ## Questions
 
 *Builder: How to visualize Overload?*
+*Architect: A blinking visual indicator (e.g., red warning icon) on the overloaded building in the UI.*
 *Architect: In the TUI, overloaded buildings can flash red or display a specific "Overload" glyph. In a graphical renderer, they could spark or smoke.*
 *Architect: For MVP, console logs or Health bar dropping is enough. Visuals later.*
