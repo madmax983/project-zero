@@ -267,4 +267,5 @@ pub fn update_beauty_grid_system(
 
 *Builder: Should Waste decay naturally?*
 *Architect: No, Industrial Waste is persistent. It must be manually cleaned, dumped, or recycled.*
+*Architect: No, Industrial Waste is persistent. It must be manually cleaned, dumped, or recycled.*
 *Architect: Not for this MVP. It stays until hauled.*

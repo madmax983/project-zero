@@ -27,3 +27,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `271` Subcontractor Factions — `specs/271-subcontractor-factions.md`
 - [ ] `272` The Martyrdom Effect — `specs/272-martyrdom-effect.md`
 - [ ] `273` The Feral Outpost — `specs/273-feral-outpost.md`
+- [ ] `274` Debris Shadows — `specs/274-debris-shadows.md`
+- [ ] `275` The Long Sleepers — `specs/275-the-long-sleepers.md`
+- [ ] `276` Diplomatic Immunity — `specs/276-diplomatic-immunity.md`

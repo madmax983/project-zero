@@ -164,5 +164,6 @@ pub fn check_quake_system(
 ## Questions
 
 *Builder: Does digging a hole reduce stress?*
+*Architect: No, digging *causes* stress. Only "Relief Quakes" (controlled explosions) or Time reduce it.*
 *Architect: Normal mining increases stress slightly. You need specialized "Relief Drilling" designations to lower it.*
 *Architect: No, digging *causes* stress. Only "Relief Quakes" (controlled explosions) or Time reduce it.*

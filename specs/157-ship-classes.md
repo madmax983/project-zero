@@ -230,8 +230,10 @@ The `launch_system` will then:
 ## 8. Questions
 
 -   *Builder: Do ships have individual fuel?*
+*Architect: Yes, each ship has its own fuel capacity and consumption rate based on class and modules.*
     *Architect: Yes, each ship has its own fuel capacity and consumption rate based on class and modules.*
     -   *Architect:* No, `Fleet` has a shared fuel tank (`FleetCargo` containing `Fuel`).
 -   *Builder: Can I split a fleet?*
+*Architect: Yes, fleets can be split or merged at any friendly node or in deep space if they meet.*
     *Architect: Yes, fleets can be split or merged at any friendly node or in deep space if they meet.*
     -   *Architect:* Not yet (Spec 158: Fleet Management).

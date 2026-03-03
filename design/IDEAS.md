@@ -6965,7 +6965,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Debris Shadows
+## Debris Shadows [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -6979,7 +6979,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Long Sleepers
+## The Long Sleepers [SPECCED]
 
 **Layer:** 3 -> 2
 
@@ -6993,7 +6993,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Diplomatic Immunity
+## Diplomatic Immunity [SPECCED]
 
 **Layer:** Cross-layer
 
