@@ -7436,3 +7436,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Explosive early-game growth via predatory loans vs. slow, painful, but independent development.
 
 ---
+
+## Gravity Siphons
+
+**Layer:** 1 -> 2
+
+**Fantasy:** Drinking from the comet's tail. High-stakes orbital interception.
+
+**Mechanic:** Build "Gravity Siphons" on Layer 1 that fire tethered collector drones into Layer 2 comets passing overhead. Grants massive raw resources (Water, Exotic Minerals) quickly, but the physical tether risks dragging comet debris down to the surface, causing localized meteor strikes.
+
+**Emergence:** You are desperate for water, so you siphon a fast-moving ice comet. The tether snaps under the tension, and a chunk of ice the size of a building crashes into your agricultural zone, solving the water crisis by drowning it.
+
+**Tension:** Rapid, massive resource injection vs. Significant collateral damage risk.
+
+---
+
+## Symbiotic Architecture
+
+**Layer:** 1
+
+**Fantasy:** Your house is alive, and it's hungry.
+
+**Mechanic:** Buildings constructed from "Bio-Mass" have auto-repairing capabilities and provide passive mood buffs, but they require a steady supply of "Nutrient Paste" fed into their structural nodes. If a Bio-Building starves, it begins to "Digest" its contents—first items, then Pops.
+
+**Emergence:** A logistics failure stops the nutrient feed to the Bio-Hospital. The walls slowly start secreting digestive enzymes, and you have to evacuate the patients before the hospital eats them to survive.
+
+**Tension:** Zero-maintenance infrastructure vs. The terrifying upkeep of living structures.
+
+---
+
+## The Silent Strike
+
+**Layer:** 1
+
+**Fantasy:** They aren't rioting. They're just following the rules *exactly*.
+
+**Mechanic:** Instead of violent protests, highly educated or bureaucratic factions initiate "Work-to-Rule" strikes. They move at 50% speed, require full safety checks before every action, and refuse to work outside designated shifts. Unrest stays low (no arrests possible), but productivity grinds to an agonizing halt.
+
+**Emergence:** You try to push out a massive quota of fuel. The engineers strike. They don't break the refinery; they just spend 4 hours inspecting every pipe before turning it on. You fail the quota because they were "too safe."
+
+**Tension:** Navigating bureaucratic warfare (negotiation) vs. The inability to use brute force to solve the problem.
+
+---
+
+## Temporal Scars
+
+**Layer:** 1
+
+**Fantasy:** The universe is bruised here. Time stutters.
+
+**Mechanic:** Rare, anomalous tiles where localized time is distorted. Walking through a "Fast Scar" ages a Pop by years and instantly drains their needs, but they cross the tile instantly. A "Slow Scar" freezes them in place for days while the world moves on.
+
+**Emergence:** You build a shortcut path through a Fast Scar to speed up hauling. A week later, your entire hauling workforce dies of old age because they've been commuting through a localized century.
+
+**Tension:** Exploiting the anomaly for speed/storage vs. The horrific biological cost.
+
+---
+
+## Panic Architecture
+
+**Layer:** 1
+
+**Fantasy:** The city curls into a ball to protect itself.
+
+**Mechanic:** Buildings equipped with "Panic Protocols" can transform from wide, efficient civilian structures into compact, heavily armored bunkers at the push of a button. However, the violent transformation crushes any civilian items or furniture inside and risks trapping Pops who don't evacuate the moving sections in time.
+
+**Emergence:** A surprise raid drops right into your market square. You hit the Panic button. The market stalls fold into titanium pillboxes, saving the colony but crushing your entire stockpile of luxury goods and trapping the Mayor inside a sealed wall segment.
+
+**Tension:** Instant, overwhelming defense vs. Complete destruction of civilian infrastructure and internal chaos.
+
+---
