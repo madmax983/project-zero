@@ -25,7 +25,7 @@
 //!
 //! Conceptually, the loop looks like this:
 //!
-//! ```no_run
+//! ```text
 //! // 1. System runs in the schedule
 //! // evaluate_actions_system(&mut world);
 //!
