@@ -239,3 +239,4 @@
     - Updated `evaluate_haul` in `src/layer1/actions.rs` to prioritize Gene Bank destinations for genetic samples.
     - Updated `haul_system` in `src/layer1/hauling.rs` to detect Gene Bank targets and use `store_sample`.
 - **Tests:** `tests/integration/gene_bank_logistics.rs` (Integration test verified)
+\n### INT-038: Visit Sanctuary Action\n- **Date:** 2026-03-03\n- **Systems connected:** `SanctuaryManager` -> `evaluate_simple_action` -> `ActionType::VisitSanctuary`\n- **Glue added:**\n    - Updated `src/layer1/utility_ai_population.rs` to populate sanctuary zones as candidates.\n    - Updated `src/layer1/utility_ai.rs` to have highly stressed pops evaluate `VisitSanctuary`.\n- **Tests:** `tests/integration/sanctuary_utility.rs`

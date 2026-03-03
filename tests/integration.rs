@@ -143,3 +143,6 @@ mod resources_robustness;
 mod clone_integration;
 #[path = "integration/tectonic_stress.rs"]
 mod tectonic_stress;
+
+#[path = "integration/sanctuary_utility.rs"]
+mod sanctuary_utility;
