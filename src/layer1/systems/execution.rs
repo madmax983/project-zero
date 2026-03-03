@@ -50,6 +50,8 @@ pub fn register(schedule: &mut Schedule) {
                 .after(apply_weather_effects_system),
             crate::layer1::chemical::apply_chemical_speed_modifiers_system
                 .after(apply_quirk_modifiers_system),
+            crate::layer1::tech::hypno_learning::apply_mental_fog_speed_system
+                .after(crate::layer1::chemical::apply_chemical_speed_modifiers_system),
             #[cfg(feature = "nova")]
             crate::layer1::observer::observer_reaction_system
                 .after(apply_lighting_penalties_system),
@@ -64,6 +66,7 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             movement_system
+                .after(crate::layer1::tech::hypno_learning::apply_mental_fog_speed_system)
                 .after(apply_quirk_modifiers_system)
                 .after(crate::layer1::fauna::fauna_behavior_system)
                 .after(crate::layer1::combat::hit_stop_system),
@@ -102,6 +105,12 @@ pub fn register(schedule: &mut Schedule) {
             process_scan_system.after(arrival_handler_system),
             update_cabin_fever_system.after(movement_system),
             update_noise_system.after(work_execution_system),
+            crate::layer1::tech::hypno_learning::hypno_sleep_system
+                .after(process_start_plan_system),
+            crate::layer1::tech::hypno_learning::wake_up_hypno_system
+                .after(process_start_plan_system),
+            crate::layer1::tech::hypno_learning::update_mental_fog_system
+                .after(process_start_plan_system),
             crate::layer1::social::empty_room::visit_sanctuary_system.after(movement_system),
         )
             .in_set(Layer1SystemSet::Execution),
