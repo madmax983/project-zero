@@ -161,6 +161,7 @@ pub fn update_noise_system(
 ## Questions
 
 *Builder: Does glass block sound?*
+*Architect:* Yes, glass (or any fully enclosed structural tile) blocks sound propagation in the same manner as a solid wall for the acoustic simulation logic.
 *Architect: No, standard glass windows do not block sound; only vacuum tiles completely halt acoustic propagation (Spec 258).*
 *Architect: Glass attenuates sound significantly but is not a perfect vacuum seal against noise like a Vacuum Gap is. It reduces noise by ~80%.*
 *Architect: Yes, it blocks AirBorne sound but transmits StructureBorne.*

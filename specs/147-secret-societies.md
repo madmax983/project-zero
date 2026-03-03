@@ -277,10 +277,12 @@ pub fn society_meeting_system(
 ## 8. Questions
 
 -   *Builder: Should societies compete with each other?*
+*Architect:* Not directly in V1. They simply compete for Pop membership. If a Pop is drawn to multiple societies, they choose the one matching their highest trait affinity.
     *Architect: Yes, opposing secret societies should generate negative social standing and conflicts between members.*
 *Architect: Yes, members of rival societies should experience friction (negative relationship modifiers) and potentially sabotage each other.*
     -   *Architect:* Yes, but for MVP, they are independent.
 -   *Builder: Can a Pop belong to multiple societies?*
+*Architect:* No, society membership is mutually exclusive to ensure distinct factional blocks form within the colony.
     *Architect: For MVP, limit Pops to one secret society at a time to keep membership tracking simple.*
 *Architect: No, exclusivity forces harder choices and cleaner faction boundaries.*
     -   *Architect:* No. One secret allegiance per Pop for simplicity.

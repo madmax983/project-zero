@@ -337,5 +337,6 @@ pub fn process_cloning_system(world: &mut World) {
 ## Questions
 
 - *Builder: Should we allow cloning of Pops?*
+*Architect:* In this specific spec, no. Gene Banks only store traits and biological templates to improve medical or agricultural outcomes, not literal Pop cloning (which is covered by Clone Vats).
   *Architect: No, Gene Banks are for storing and cloning flora and fauna DNA (Spec 165). Pop cloning is handled by Clone Vats (Spec 240).*
 - *Architect: No, Gene Banks only clone flora/fauna.*

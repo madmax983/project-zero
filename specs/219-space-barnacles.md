@@ -185,5 +185,6 @@ pub fn fleet_movement_system(
 ## Questions
 
 - *Builder: Should barnacles fall off if the fleet moves fast enough?*
+*Architect:* Yes, sustaining max speed (using full fuel burn) for 2 consecutive sectors should have a 50% chance to strip attached barnacles, acting as a tactical cleansing option.
   *Architect: No, they are tenaciously attached and must be manually cleared by a scrubbing job or in a drydock.*
 - *Architect: No, Space Barnacles persist and do not detach at high fleet speeds.*

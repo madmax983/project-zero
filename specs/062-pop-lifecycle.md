@@ -301,4 +301,5 @@ In `src/layer1/pop.rs`, initialize `Age` with a random range (e.g., 20-40 years)
 ## Questions
 
 *Builder: How fast should a "year" be?*
+*Architect:* A "year" should be relatively fast for gameplay purposes, around 12 in-game days (each day being one cycle of work/rest), allowing Pops to progress through lifecycle stages visibly during a standard playthrough.
 *Architect: `TICKS_PER_YEAR` is set to 1000 for aging.*

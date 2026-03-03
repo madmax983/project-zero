@@ -173,6 +173,7 @@ Update `src/layer1/pop/traits.rs`:
 ## 8. Questions
 
 *Builder: Should tenure degrade if they stop working the job?*
+*Architect:* Yes, tenure/specialization should decay by 1% per cycle if the Pop is unassigned from the specialized job, eventually removing the trait.
 *Architect: Yes, if a Pop with hyper-specialization stops performing their core task, their specialization modifiers (and penalties) should slowly decay back toward baseline.*
 *Architect: For MVP, no. It is cumulative. Future refactors could add atrophy.*
 *Architect: For MVP, no. It's cumulative. Future refactor could add atrophy.*

@@ -203,5 +203,6 @@ pub fn work_execution_system(
 ## Questions
 
 *Builder: Should "Scrap" be better than "Stone"?*
+*Architect:* Yes, Scrap-based tools should offer a 10% efficiency boost over Stone-based tools, but break slightly faster to reflect their jury-rigged nature.
 *Architect: No. Scrap and Stone tools have 0.75 efficiency for MVP (Spec 218).*
 *Architect: Scrap and Stone tools both have 0.75 efficiency for MVP.*

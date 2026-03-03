@@ -243,10 +243,12 @@ pub fn aura_system(
 ## 8. Questions
 
 -   *Builder: Do artifacts block movement?*
+*Architect:* Small artifacts are cluttter and do not block movement; large artifacts act as 1x1 or 2x2 obstacles that must be navigated around until cleared or studied.
     *Architect: Yes, Xeno-Artifacts are impassable structures that must be built around.*
 *Architect: Yes, artifacts act as solid obstacles similar to walls or large machines.*
     -   *Architect:* Yes, they occupy the tile like a Wall, unless specified otherwise (e.g. `Passable`).
 -   *Builder: Can we move artifacts?*
+*Architect:* Only small artifacts can be hauled. Large artifacts are fixed structural features and must be studied in place or destructively harvested.
     *Architect: No, Xeno-Artifacts are permanent fixtures on the map and cannot be relocated.*
 *Architect: No, artifacts are permanent fixtures of the map. You must build around them.*
     -   *Architect:* No. That's the strategic constraint. You must build around them.
