@@ -88,6 +88,8 @@ pub mod refine;
 pub mod admin;
 /// Farm action logic.
 pub mod farm;
+/// Tinker action logic (Obsessive Optimization).
+pub mod tinker;
 
 /// Fight action logic.
 pub mod fight;
@@ -132,3 +134,4 @@ pub struct AssignedTo {
     /// The type of assignment.
     pub assignment_type: AssignmentType,
 }
+pub use tinker::*;

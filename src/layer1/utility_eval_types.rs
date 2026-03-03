@@ -12,6 +12,7 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
 use crate::layer1::penal::PenalLabor;
 use crate::layer1::resources::{Carrying, ColonyResources, ResourceType};
+use crate::layer1::skills::Skills;
 use crate::layer1::stress::{BREAKDOWN_TICKS_REQUIRED, Breakdown, StressTracker};
 use crate::layer1::taboo::TabooState;
 use crate::layer1::traits::Traits;
@@ -57,6 +58,7 @@ pub struct PopEvaluationQuery {
     pub chemical: Option<&'static ChemicalState>,
     pub memetic_carrier: Option<&'static MemeticCarrier>,
     pub health: Option<&'static Health>,
+    pub skills: Option<&'static Skills>,
 }
 
 impl PopEvalData {
@@ -85,6 +87,7 @@ impl PopEvalData {
             is_memetic_carrier: item.memetic_carrier.is_some(),
             health: item.health.copied(),
             insulation: 0.0,
+            skills: item.skills.cloned(),
         }
     }
 }
@@ -132,6 +135,8 @@ pub struct PopEvalData {
     pub health: Option<Health>,
     /// Current insulation provided by clothing.
     pub insulation: f32,
+    /// Pop's skills.
+    pub skills: Option<Skills>,
 }
 
 /// Context data for utility evaluation (resources, time, etc.)
@@ -294,4 +299,6 @@ pub struct UtilityAIBuffer {
     pub enemies: Vec<ScorableCandidate>,
     /// Buffer for all structures (Mental Break targets).
     pub all_structures: Vec<ScorableCandidate>,
+    /// Buffer for optimizable buildings.
+    pub optimizable_buildings: Vec<ScorableCandidate>,
 }

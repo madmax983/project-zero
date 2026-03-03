@@ -46,6 +46,8 @@ pub enum Trait {
     Creative,
     /// Intellectual mindset (+Cryo Dream rate, +Research speed).
     Intellectual,
+    /// Obsessive mindset (+Obsessive Optimization).
+    Obsessive,
 }
 
 impl Trait {
@@ -72,6 +74,7 @@ impl Trait {
             Self::Volatile => "Volatile",
             Self::Creative => "Creative",
             Self::Intellectual => "Intellectual",
+            Self::Obsessive => "Obsessive",
         }
     }
 }
@@ -122,6 +125,7 @@ impl Traits {
             Trait::Volatile,
             Trait::Creative,
             Trait::Intellectual,
+            Trait::Obsessive,
         ];
 
         while set.len() < count {
