@@ -57,7 +57,7 @@ mod tests {
     use crate::layer1::inventory::{Inventory, InventoryItem};
     use crate::layer1::items::ItemType;
     use crate::layer1::resources::ColonyResources;
-    use bevy_ecs::prelude::*;
+
 
     // Helper to setup world
     fn setup() -> World {

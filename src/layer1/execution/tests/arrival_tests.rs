@@ -9,7 +9,6 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
 use crate::layer1::pop::{Job, Pop};
 use crate::layer1::utility_types::ActionType;
-use bevy_ecs::prelude::*;
 use bevy_ecs::system::RunSystemOnce;
 
 #[test]

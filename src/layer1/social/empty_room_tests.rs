@@ -2,7 +2,7 @@
 mod tests {
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::clutter::ClutterGrid;
-    use crate::layer1::items::Item;
+
     use crate::layer1::map::GridPosition;
     use crate::layer1::social::empty_room::{
         update_sanctuary_system, visit_sanctuary_system, SanctuaryManager,
@@ -10,8 +10,8 @@ mod tests {
     use crate::layer1::stress::StressTracker;
     use crate::layer1::zone::{ZoneGrid, ZoneType};
     use bevy_ecs::prelude::*;
-    use rand::rngs::StdRng;
-    use rand::SeedableRng;
+
+
 
     fn setup_world() -> World {
         let mut world = World::new();
@@ -66,7 +66,7 @@ mod tests {
     fn test_visit_reduces_stress() {
         let mut world = setup_world();
 
-        let pop = world
+        let _pop = world
             .spawn((
                 GridPosition { x: 0, y: 0 }, // Inside zone
                 StressTracker {

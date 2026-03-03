@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
+
     use scale::layer1::inventory::{Inventory, InventoryItem};
     use scale::layer1::items::ItemType;
 

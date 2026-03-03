@@ -227,7 +227,7 @@ mod tests {
     use crate::layer1::pop::Pop;
     use crate::layer2::governance::Governor;
     use crate::shared::time::SimulationTime;
-    use bevy_ecs::prelude::*;
+
 
     // Helper component to mock Faction for testing logic if needed,
     // though the system uses `FactionLeader` component directly.

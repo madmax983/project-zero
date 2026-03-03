@@ -106,9 +106,9 @@ mod tests {
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
-    use crate::layer1::resources::{ColonyResources, ResourceType};
+    use crate::layer1::resources::ColonyResources;
     use crate::layer1::traits::{Trait, Traits};
-    use bevy_ecs::prelude::*;
+
 
     // Helper setup
     fn setup_world() -> World {

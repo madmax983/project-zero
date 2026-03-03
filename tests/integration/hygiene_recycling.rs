@@ -3,12 +3,12 @@ mod tests {
     use bevy_ecs::prelude::*;
     use scale::layer1::building::{Building, BuildingType};
     use scale::layer1::hauling::haul_system;
-    use scale::layer1::hygiene::{filth_accumulation_system, shower_use_system, Filth};
+    use scale::layer1::hygiene::{shower_use_system, Filth};
     use scale::layer1::inventory::Inventory;
     use scale::layer1::items::{CarryingItem, Item, ItemType};
     use scale::layer1::needs::Needs;
     use scale::layer1::pop::Pop;
-    use scale::layer1::recycling::{recycle_processing_system, Recycler};
+    use scale::layer1::recycling::Recycler;
     use scale::layer1::resources::ColonyResources;
     use scale::layer1::utility_types::{ActionType, PopAction};
     use scale::layer1::GridPosition;

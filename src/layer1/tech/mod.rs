@@ -38,7 +38,7 @@ use crate::layer1::GlobalHitStop;
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
-use strum::IntoEnumIterator;
+// use strum::IntoEnumIterator;
 use strum_macros::EnumIter;
 
 /// Available technologies in the tech tree.
@@ -671,3 +671,4 @@ mod infinite_archive_tests;
 pub mod legacy_code;
 #[cfg(test)]
 mod legacy_code_tests;
+pub mod hypno_learning;

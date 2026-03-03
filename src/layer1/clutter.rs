@@ -109,7 +109,7 @@ mod tests {
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
     use crate::layer1::utility_types::{ActionType, PopAction};
-    use bevy_ecs::prelude::*;
+
 
     // Helper to setup world
     fn setup_world() -> World {

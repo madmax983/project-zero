@@ -275,7 +275,7 @@ mod tests {
         let mut world = setup_world();
 
         // Spawn Mascot
-        let mascot = world
+        let _mascot = world
             .spawn((
                 Fauna {
                     fauna_type: FaunaType::Mascot,

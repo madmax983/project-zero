@@ -28,6 +28,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::hygiene::hygiene_decay_system
                 .after(crate::layer1::hygiene::filth_accumulation_system),
             crate::layer1::chemical::addiction_system.after(decay_needs_system),
+            crate::layer1::tech::hypno_learning::hypno_sleep_system.after(decay_needs_system),
             apply_palette_fatigue_system.after(consume_food_system),
             apply_cabin_fever_morale_system
                 .after(decay_needs_system)

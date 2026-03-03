@@ -5,7 +5,6 @@ use crate::layer1::cryo::{
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::{decay_needs_system, Needs};
 use crate::layer1::pop::{Pop, Speed};
-use bevy_ecs::prelude::*;
 use bevy_ecs::system::RunSystemOnce;
 
 #[test]

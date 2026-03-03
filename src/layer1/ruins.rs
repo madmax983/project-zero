@@ -80,7 +80,7 @@ pub fn process_scavenge(world: &mut World, ruin_entity: Entity) -> Vec<ResourceT
 mod tests {
     use crate::layer1::building::{Building, BuildingType, Material, MaterialType, OccupiedTiles};
     use crate::layer1::fire::{Fire, Flammable};
-    use crate::layer1::ruins::{Ruin, RuinHistory};
+    use crate::layer1::ruins::Ruin;
     use crate::layer1::structure::{fire_damage_structure_system, Structure};
     use crate::layer1::GridPosition;
     use crate::shared::time::SimulationTime;
@@ -151,7 +151,7 @@ mod tests {
     fn test_scavenge_ruin_yields_resources() {
         let mut world = World::new();
         world.insert_resource(OccupiedTiles::default());
-        let pos = GridPosition { x: 2, y: 2 };
+        let _pos = GridPosition { x: 2, y: 2 };
 
         // Spawn a Ruin
         let ruin = world

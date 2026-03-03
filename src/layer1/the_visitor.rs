@@ -185,7 +185,7 @@ mod tests {
     use crate::layer1::stockpile::Stockpile;
     use crate::layer1::structure::Structure;
     use crate::layer1::terrain::generate_terrain;
-    use bevy_ecs::prelude::*;
+
     use bevy_ecs::system::RunSystemOnce;
 
     fn setup_world() -> World {
