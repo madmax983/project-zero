@@ -13,45 +13,47 @@ use crate::layer1::utility_ai::{manhattan_distance, ActionType, PopAction};
 use crate::layer1::zone::{ZoneGrid, ZoneType};
 use crate::layer1::GridPosition;
 use bevy_ecs::prelude::*;
+use bevy_ecs::query::QueryData;
 
 /// Moves resources from the world to stockpiles.
+
+#[derive(QueryData)]
+pub struct HaulerQuery {
+    entity: Entity,
+    action: &'static PopAction,
+    pos: &'static GridPosition,
+    carrying: Option<&'static Carrying>,
+    carrying_item: Option<&'static CarryingItem>,
+    at_target: Option<&'static AtTarget>,
+    member: Option<&'static FactionMember>,
+}
+
 pub fn haul_system(world: &mut World) {
     let factions_data = world.get_resource::<Factions>().map(|f| f.map.clone());
 
     // Collect hauling pops
     let mut haulers = Vec::new();
-    let mut query = world.query::<(
-        Entity,
-        &PopAction,
-        &GridPosition,
-        Option<&Carrying>,
-        Option<&CarryingItem>,
-        Option<&AtTarget>,
-        Option<&FactionMember>,
-    )>();
-    for (entity, action, pos, carrying, carrying_item, at_target, member) in query.iter(world) {
-        if action.current == ActionType::Haul {
+    let mut query = world.query::<HaulerQuery>();
+    for hauler in query.iter(world) {
+        if hauler.action.current != ActionType::Haul {
+            continue;
+        }
+
+        if let Some(fid) = hauler.member.and_then(|m| m.faction_id) {
             if let Some(map) = &factions_data {
-                if let Some(m) = member {
-                    if let Some(fid) = m.faction_id {
-                        if map
-                            .get(&fid)
-                            .is_some_and(|d| d.state == FactionState::Striking)
-                        {
-                            continue;
-                        }
-                    }
+                if map.get(&fid).is_some_and(|d| d.state == FactionState::Striking) {
+                    continue;
                 }
             }
-
-            haulers.push((
-                entity,
-                *pos,
-                carrying.copied(),
-                carrying_item.copied(),
-                at_target.is_some(),
-            ));
         }
+
+        haulers.push((
+            hauler.entity,
+            *hauler.pos,
+            hauler.carrying.copied(),
+            hauler.carrying_item.copied(),
+            hauler.at_target.is_some(),
+        ));
     }
 
     // Process each hauler
@@ -88,14 +90,7 @@ fn handle_pickup(world: &mut World, pop_entity: Entity, pos: GridPosition) {
     // 1. Try to find ResourceItem
     let item_to_pickup = {
         let mut query = world.query::<(Entity, &GridPosition, &ResourceItem)>();
-        let mut target = None;
-        for (e, p, item) in query.iter(world) {
-            if *p == pos {
-                target = Some((e, *item));
-                break;
-            }
-        }
-        target
+        query.iter(world).find(|(_, p, _)| **p == pos).map(|(e, _, i)| (e, *i))
     };
 
     if let Some((item_entity, item_data)) = item_to_pickup {
@@ -109,14 +104,7 @@ fn handle_pickup(world: &mut World, pop_entity: Entity, pos: GridPosition) {
         // 2. Try to find Generic Item
         let generic_item_to_pickup = {
             let mut query = world.query::<(Entity, &GridPosition, &Item)>();
-            let mut target = None;
-            for (e, p, _) in query.iter(world) {
-                if *p == pos {
-                    target = Some(e);
-                    break;
-                }
-            }
-            target
+            query.iter(world).find(|(_, p, _)| **p == pos).map(|(e, _, _)| e)
         };
 
         if let Some(item_entity) = generic_item_to_pickup {
@@ -663,6 +651,7 @@ mod tests {
     use crate::layer1::{GridPosition, Pop};
     use crate::shared::time::SimulationTime;
     use bevy_ecs::prelude::*;
+use bevy_ecs::query::QueryData;
 
     #[test]
     fn test_resource_item_component() {
