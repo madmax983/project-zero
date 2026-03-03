@@ -1,3 +1,0 @@
-**Use fast hashing for internal data lookups**
-**Learning:** `std::collections::HashSet` uses SipHash by default, which is cryptographically secure but unnecessarily slow for simple struct keys like integer coordinates (`GridPosition`).
-**Action:** Use `bevy_utils::HashSet` (which uses `AHash` under the hood) instead of `std::collections::HashSet` for high-frequency runtime operations in game engine systems. This provides a zero-cost abstraction for a significant O(1) performance boost in lookups without adding new dependencies since `bevy_utils` is already in the tree.
