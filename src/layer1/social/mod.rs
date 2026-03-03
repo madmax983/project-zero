@@ -528,3 +528,7 @@ pub mod empty_room;
 mod empty_room_tests;
 
 pub use empty_room::*;
+
+/// Cultural Vandalism (Spec 253).
+pub mod cultural_vandalism;
+pub use cultural_vandalism::*;
