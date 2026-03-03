@@ -100,6 +100,7 @@ pub fn produce_food_system(
             Option<&crate::layer1::traits::Traits>,
             Option<&mut Wallet>,
             Option<&Job>,
+            Option<&crate::layer1::tech::hypno_learning::MentalFog>,
         ),
         With<Pop>,
     >,
@@ -135,7 +136,7 @@ pub fn produce_food_system(
             })
             .collect();
 
-    for (_, pos, action, skills_opt, faction_member_opt, traits, mut wallet_opt, job_opt) in
+    for (_, pos, action, skills_opt, faction_member_opt, traits, mut wallet_opt, job_opt, fog) in
         &mut pop_query
     {
         if action.current != ActionType::Farm {
@@ -178,7 +179,8 @@ pub fn produce_food_system(
             let skill_type = SkillType::Farming;
 
             // Calculate efficiency
-            let efficiency = get_skill_efficiency(skills_opt.as_deref(), skill_type);
+            let fog_efficiency = fog.map_or(1.0, |f| f.work_speed_penalty);
+            let efficiency = get_skill_efficiency(skills_opt.as_deref(), skill_type) * fog_efficiency;
 
             // Add XP
             if let Some(mut skills) = skills_opt {

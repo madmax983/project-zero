@@ -161,6 +161,9 @@ pub fn process_refining_system(world: &mut World) {
             let skills = world.get::<Skills>(*worker_entity);
             get_skill_efficiency(skills, SkillType::Crafting)
         };
+        let fog_mult = world.get::<crate::layer1::tech::hypno_learning::MentalFog>(*worker_entity)
+            .map_or(1.0, |f| f.work_speed_penalty);
+        let efficiency_mod = efficiency_mod * fog_mult;
 
         let (can_refine, input_cost, output_gain, waste_chance) =
             get_refining_recipe(building_type, &resources_snapshot);

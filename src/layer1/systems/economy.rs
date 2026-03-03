@@ -67,6 +67,9 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             restore_rest_in_housing_system.after(update_noise_system),
+            crate::layer1::tech::hypno_learning::hypno_sleep_system.after(restore_rest_in_housing_system),
+            crate::layer1::tech::hypno_learning::wake_up_hypno_system.after(restore_rest_in_housing_system),
+            crate::layer1::tech::hypno_learning::update_mental_fog_system.after(restore_rest_in_housing_system),
             restore_leisure_system,
             crate::layer1::tech_envy::tech_envy_system.after(restore_leisure_system),
             crate::layer1::civic_ideology::evaluate_civic_ideology_system

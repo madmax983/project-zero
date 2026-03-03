@@ -187,3 +187,4 @@
 - [x] `245` Quantum Twins — `specs/245-quantum-twins.md` — completed 2026-02-28
 - [x] `251` The "Empty" Room — `specs/251-the-empty-room.md` — completed 2026-03-03
 - [x] `252` Tectonic Stress — `specs/252-tectonic-stress.md` — completed 2026-03-03
+- [x] `255` Hypno-Learning — `specs/255-hypno-learning.md` — completed 2026-03-03
