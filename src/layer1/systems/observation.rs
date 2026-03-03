@@ -76,6 +76,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::predictive_policing::check_prediction_system.after(decay_needs_system),
             crate::layer1::social::grievances::post_grievance_system.after(decay_needs_system),
             crate::layer1::social::grievances::read_board_system.after(decay_needs_system),
+            crate::layer1::social::placebo::placebo_tick_system.after(decay_needs_system),
+            crate::layer1::social::placebo::reveal_betrayal_system.after(crate::layer1::social::placebo::placebo_tick_system),
         )
             .in_set(Layer1SystemSet::Observation),
     );

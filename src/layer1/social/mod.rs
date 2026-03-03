@@ -528,3 +528,11 @@ pub mod empty_room;
 mod empty_room_tests;
 
 pub use empty_room::*;
+
+/// Placebo Protocols (Spec 256).
+pub mod placebo;
+
+#[cfg(test)]
+mod placebo_tests;
+
+pub use placebo::*;

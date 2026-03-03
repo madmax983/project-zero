@@ -68,6 +68,8 @@ pub enum Trait {
     Agoraphobic,
     /// (Spec 250) Obsessed with augmenting their body.
     Transhumanist,
+    /// (Spec 256) Distrustful.
+    Distrustful,
 }
 
 impl Trait {
@@ -105,6 +107,7 @@ impl Trait {
             Self::VoidTouched => "Void Touched",
             Self::Agoraphobic => "Agoraphobic",
             Self::Transhumanist => "Transhumanist",
+            Self::Distrustful => "Distrustful",
         }
     }
 }
