@@ -239,3 +239,12 @@
     - Updated `evaluate_haul` in `src/layer1/actions.rs` to prioritize Gene Bank destinations for genetic samples.
     - Updated `haul_system` in `src/layer1/hauling.rs` to detect Gene Bank targets and use `store_sample`.
 - **Tests:** `tests/integration/gene_bank_logistics.rs` (Integration test verified)
+
+### INT-038: MegaQuakeEvent -> Global Structural Damage and Notification
+- **Date:** 2026-03-03
+- **Systems connected:** `check_quake_system` (Geology/Tectonic) -> `mega_quake_integration_system` (Integration) -> `Health` (Buildings) / `NotificationQueue` (UI)
+- **Glue added:**
+    - Added `mega_quake_integration_system` to `src/layer1/integration.rs`.
+    - Registered in `src/layer1/systems/environment.rs` directly after `check_quake_system`.
+    - Reduces `Health` of all `Building` entities by 50.0 and pushes a high-severity `Notification`.
+- **Tests:** `tests/integration/tectonic_damage.rs`

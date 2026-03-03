@@ -672,3 +672,23 @@ pub fn fleet_unload_system(
         }
     }
 }
+
+/// Applies map-wide damage when a Mega-Quake occurs and triggers a notification.
+///
+/// Bridges the Tectonic Stress system (`MegaQuakeEvent`) with Health and Notification systems.
+pub fn mega_quake_integration_system(
+    mut events: EventReader<crate::layer1::geology::tectonic::MegaQuakeEvent>,
+    mut buildings: Query<&mut Health, With<crate::layer1::building::Building>>,
+    mut notifications: ResMut<NotificationQueue>,
+    time: Res<SimulationTime>,
+) {
+    for _ in events.read() {
+        for mut health in &mut buildings {
+            health.current = (health.current - 50.0).max(0.0);
+        }
+        notifications.add_error(
+            "Mega-Quake detected! Widespread structural damage!".to_string(),
+            time.tick,
+        );
+    }
+}
