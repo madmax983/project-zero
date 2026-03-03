@@ -7367,3 +7367,72 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Exploit the terraforming (if it aligns with your goals) vs. destroy the priceless ancient tech to save your base.
 
 ---
+## Generational Hoarders
+
+**Layer:** 1
+
+**Fantasy:** Grandparents refuse to throw away scrap, eventually clogging the colony's logistics.
+
+**Mechanic:** Older Pops develop a "Hoarder" trait, claiming random low-value items (scrap, waste, obsolete tools) and storing them in their quarters. These items are removed from the colony's usable inventory but provide a small mood buff to the Hoarder.
+
+**Emergence:** You desperately need scrap metal to repair a critical life support failure, but the colony's entire supply is locked away in the bedrooms of retirees who refuse to give up their "keepsakes." You have to either let the colony suffocate or forcibly evict the elders, causing a massive morale drop.
+
+**Tension:** Respecting elder privileges for stability vs. repossessing critical resources in emergencies.
+
+---
+
+## Localized Gravity Inversions
+
+**Layer:** 1
+
+**Fantasy:** A broken machine turns the ceiling into the floor, chaos ensues.
+
+**Mechanic:** Advanced gravity plating or orbital tethers can malfunction, creating "Gravity Inversion Zones." In these zones, Pops fall to the ceiling, items float upwards, and movement paths are completely rewritten.
+
+**Emergence:** A pirate raid hits your gravity generator. Half your security force falls "up" to the ceiling and gets stuck, while the pirates use magnetic boots. But then an engineer vents the ceiling hatch, flushing the pirates out into space because "down" is now "out."
+
+**Tension:** Using high-tech efficiency tools that become deadly hazards when damaged vs. sticking to simple, robust architecture.
+
+---
+
+## Back-Alley Augmentations
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** Desperate colonists installing grey-market cybernetics that have hidden spyware.
+
+**Mechanic:** Pops with high ambition but low skills might seek out "Back-Alley Ripperdocs" (if contraband is high). They gain massive skill boosts from illegal augments, but these augments require rare black-market upkeep and occasionally "glitch," forcing the Pop to perform a random, uncontrollable action.
+
+**Emergence:** Your best surgeon suddenly stops mid-operation to furiously broadcast a coded signal to an unknown Layer 2 ship because their cybernetic arm was hacked. The patient dies, and you realize half your workforce has similar ticking time bombs in their heads.
+
+**Tension:** Tolerating a highly productive but uncontrollable underclass vs. enforcing strict biological purity at the cost of efficiency.
+
+---
+
+## The Nostalgia Epidemic
+
+**Layer:** Cross-layer
+
+**Fantasy:** The colony is so miserable that people retreat entirely into idealized memories of Earth.
+
+**Mechanic:** When long-term morale is low, Pops can contract "Nostalgia." They stop working to build rudimentary replicas of Earth objects (e.g., carving pine trees out of toxic fungus) and refuse to interact with "alien" technology or food.
+
+**Emergence:** A critical crop failure causes starvation. Instead of helping harvest the emergency hydroponics, half the colony forms a cult that spends its time weaving fake grass out of wire and staring at old photographs. They die of starvation, but they die perfectly happy.
+
+**Tension:** Pushing colonists to adapt to the harsh new reality vs. indulging their comforting but unproductive delusions.
+
+---
+
+## The Parasitic Economy
+
+**Layer:** 2 -> 1
+
+**Fantasy:** A "helpful" megacorp builds your infrastructure for free, but owns all your output.
+
+**Mechanic:** You can sign a contract with a Layer 3 Megacorp to instantly build advanced Layer 1 structures (e.g., Fusion Reactors, Deep Mines) at zero upfront cost. However, the Megacorp automatically siphons 80% of the output. The structures are heavily DRM-locked; attempting to dismantle or hack them triggers a corporate security response.
+
+**Emergence:** You get a free top-tier mine and your economy booms. But years later, you realize you are producing massive amounts of wealth but keeping none of it. When you try to rebel and blow up the mine, the automated turrets you allowed them to install turn on your own Pops.
+
+**Tension:** Explosive early-game growth via predatory loans vs. slow, painful, but independent development.
+
+---
