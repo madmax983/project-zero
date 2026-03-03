@@ -172,6 +172,7 @@ mod execution_demolish_test;
 mod medical_triage_tests;
 
 /// Named locations on the map.
+pub mod doppelganger;
 pub mod locations;
 
 /// Graffiti and Signage system (Spec 144).
@@ -211,6 +212,7 @@ pub use institutional_memory::*;
 pub use integration::*;
 pub use inventory::*;
 pub use items::*;
+pub use doppelganger::*;
 pub use locations::*;
 pub use map::*;
 pub use mascot::*;

@@ -73,6 +73,7 @@ pub fn register(schedule: &mut Schedule) {
             arrival_handler_system.after(movement_system),
             work_execution_system.after(arrival_handler_system),
             crate::layer1::customs::vetting_work_system.after(arrival_handler_system),
+            crate::layer1::doppelganger::sabotage_system.after(work_execution_system),
             crate::layer1::hobby::execute_hobby_system.after(arrival_handler_system),
             crate::layer1::husbandry::tame_execution_system.after(arrival_handler_system),
             combat_execution_system.after(arrival_handler_system),
