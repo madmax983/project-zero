@@ -60,6 +60,10 @@ pub enum ActionType {
     ///
     /// See [`crate::layer1::actions::mental_break::evaluate_mental_break`].
     Vandalize,
+    /// Visit a Sanctuary room to reduce stress.
+    ///
+    /// See [`crate::layer1::utility_eval_types::evaluate_visit_sanctuary`].
+    VisitSanctuary,
     /// Consume resources uncontrollably due to mental break.
     ///
     /// See [`crate::layer1::actions::mental_break::evaluate_mental_break`].
@@ -207,7 +211,8 @@ impl ActionType {
             Self::ListenToTheHum => 34,
             Self::Clean => 35,
             Self::PurgeResidue => 36,
-            Self::VoidStare => 37,
+            Self::VisitSanctuary => 38,
+            Self::VoidStare => 39,
         }
     }
 
