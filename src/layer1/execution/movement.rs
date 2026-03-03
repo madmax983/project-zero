@@ -13,6 +13,7 @@ use crate::layer1::particles::Particle;
 use crate::layer1::pop::{Role, Speed};
 use crate::layer1::social::Tavern;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
+use crate::layer1::tech::hypno_learning::MentalFog;
 use crate::layer1::traits::{get_trait_move_speed_modifier, Traits};
 use crate::layer1::utility_types::{ActionType, StartPlan};
 use bevy_ecs::prelude::*;
@@ -28,6 +29,8 @@ pub fn cleanup_previous_assignment_system(
     mut housing: Query<&mut Housing>,
     mut taverns: Query<&mut Tavern>,
     mut offices: Query<&mut Office>,
+    pods: Query<&crate::layer1::tech::hypno_learning::HypnoPod>,
+    mut wake_up_events: EventWriter<crate::layer1::tech::hypno_learning::HypnoWakeUpEvent>,
     mut commands: Commands,
 ) {
     for (pop_entity, assigned) in &pops_query {
@@ -41,6 +44,13 @@ pub fn cleanup_previous_assignment_system(
             AssignmentType::HousingResident => {
                 if let Ok(mut h) = housing.get_mut(assigned_entity) {
                     h.residents.retain(|&r| r != pop_entity);
+                }
+
+                // If the housing was a HypnoPod, trigger WakeUp event
+                if pods.get(assigned_entity).is_ok() {
+                    wake_up_events.send(crate::layer1::tech::hypno_learning::HypnoWakeUpEvent {
+                        entity: pop_entity,
+                    });
                 }
             }
             AssignmentType::TavernVisitor => {
@@ -121,6 +131,7 @@ pub fn movement_system(
             Option<&Traits>,
             Option<&HitStop>,
             Option<&Role>,
+            Option<&MentalFog>,
         ),
         (Without<AtTarget>, Without<Building>),
     >,
@@ -137,7 +148,7 @@ pub fn movement_system(
     )>,
     mut commands: Commands,
 ) {
-    for (pop_entity, mut current_pos, mt, mut speed_opt, traits, hit_stop, role) in &mut pops {
+    for (pop_entity, mut current_pos, mt, mut speed_opt, traits, hit_stop, role, fog) in &mut pops {
         // Ludwig: Check Hit Stop
         if let Some(hs) = hit_stop {
             if hs.ticks_remaining > 0 {
@@ -146,10 +157,11 @@ pub fn movement_system(
         }
 
         let trait_mod = traits.map_or(1.0, get_trait_move_speed_modifier);
+        let fog_mod = fog.map_or(1.0, |f| f.movement_penalty);
 
         // Accumulate speed
         if let Some(ref mut speed) = speed_opt {
-            speed.accumulator += speed.current * trait_mod;
+            speed.accumulator += speed.current * trait_mod * fog_mod;
         }
 
         let target_pos = mt.target_position;

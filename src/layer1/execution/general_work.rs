@@ -29,6 +29,7 @@ use crate::layer1::resources::{ColonyResources, ResourceType};
 use crate::layer1::skills::{get_skill_efficiency, SkillType, Skills};
 use crate::layer1::social::SocialBuff;
 use crate::layer1::tech::Tech;
+use crate::layer1::tech::hypno_learning::MentalFog;
 use crate::layer1::traits::{get_trait_work_speed_modifier, Traits};
 use crate::layer1::utility_types::{ActionType, PopAction};
 use crate::shared::log::MessageLog;
@@ -382,6 +383,11 @@ pub fn calculate_work_amount(
     work_speed_mod: f32,
     improvised_efficiency: f32,
 ) -> f32 {
+    let mut mental_fog_penalty = 1.0;
+    if let Some(fog) = world.get::<MentalFog>(pop_entity) {
+        mental_fog_penalty = fog.work_speed_penalty;
+    }
+
     let mut tool_efficiency = if tool_entity.is_some() {
         1.0
     } else {
@@ -421,6 +427,7 @@ pub fn calculate_work_amount(
         * work_speed_mod
         * admin_efficiency
         * (1.0 + augmentation_bonus)
+        * mental_fog_penalty
         * organic_factor;
 
     // Cap work amount to prevent logic bugs / economy exploits

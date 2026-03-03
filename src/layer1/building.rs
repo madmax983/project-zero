@@ -202,6 +202,8 @@ pub enum Category {
 /// ```
 #[derive(Clone, Copy, PartialEq, Eq, Hash, Default, Debug, EnumIter)]
 pub enum BuildingType {
+    /// High-tech sleep pod for rapid learning.
+    HypnoPod,
     /// Basic shelter for pops.
     #[default]
     Housing,
@@ -349,7 +351,8 @@ impl BuildingType {
             | Self::AtmosphericProcessor
             | Self::GeneBank
             | Self::CloneVat
-            | Self::HoloProjector => Some((Category::Research, Tier::HighTech)),
+            | Self::HoloProjector
+            | Self::HypnoPod => Some((Category::Research, Tier::HighTech)),
 
             _ => None,
         }
@@ -502,6 +505,7 @@ impl BuildingType {
             Self::Recycler => true,
             Self::BulletinBoard => false,
             Self::HoloProjector => false,
+            Self::HypnoPod => true, // Assuming it's a solid building
         }
     }
 
@@ -659,6 +663,7 @@ impl BuildingType {
             Self::Recycler => "Recycler",
             Self::BulletinBoard => "Bulletin Board",
             Self::HoloProjector => "Holo Projector",
+            Self::HypnoPod => "Hypno Pod",
         }
     }
 
@@ -667,7 +672,7 @@ impl BuildingType {
     pub const fn char(&self) -> char {
         match self {
             Self::Housing => 'H',
-            Self::Office | Self::Tower | Self::Observatory | Self::HoloProjector => 'O',
+            Self::Office | Self::Tower | Self::Observatory | Self::HoloProjector | Self::HypnoPod => 'O',
             Self::Farm | Self::AncientFabricator => 'F',
             Self::HydroponicsBay => 'Y',
             Self::DroneHub => 'D',
@@ -731,6 +736,10 @@ impl BuildingType {
             Self::DroneHub => ColonyResources {
                 metal: 30.0,
                 stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::HypnoPod => ColonyResources {
+                metal: 10.0,
                 ..ColonyResources::zeroed()
             },
             Self::CryoPod => ColonyResources {
@@ -1329,7 +1338,8 @@ fn spawn_building(
         | BuildingType::AtmosphericProcessor
         | BuildingType::GeneBank
         | BuildingType::CloneVat
-        | BuildingType::HoloProjector => configure_tech(&mut entity, building_type),
+        | BuildingType::HoloProjector
+        | BuildingType::HypnoPod => configure_tech(&mut entity, building_type),
         BuildingType::Shower => configure_civic(&mut entity, building_type),
         BuildingType::Recycler => {
             // Recycler configuration

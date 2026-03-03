@@ -60,6 +60,9 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::tech::ghost_code::apply_ghost_traits_system,
             crate::layer1::hologram::update_holograms_system,
             crate::layer1::hologram::apply_disillusionment_system,
+            crate::layer1::tech::hypno_learning::hypno_sleep_system,
+            crate::layer1::tech::hypno_learning::wake_up_hypno_system,
+            crate::layer1::tech::hypno_learning::update_mental_fog_system,
         )
             .in_set(Layer1SystemSet::Economy),
     );
