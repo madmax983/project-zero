@@ -7090,7 +7090,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Sacrificing your best people intentionally vs. Protecting them at all costs.
 
 ---
-## Blacksite Penal Colonies
+## Blacksite Penal Colonies [SPECCED]
 
 **Layer:** 3 -> 1
 
@@ -7104,7 +7104,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Architectural Sabotage
+## Architectural Sabotage [SPECCED]
 
 **Layer:** 1
 
@@ -7118,7 +7118,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Flesh Famine
+## The Flesh Famine [SPECCED]
 
 **Layer:** 1 -> 2
 
@@ -7132,7 +7132,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Orbital Megastructure Deorbiting
+## Orbital Megastructure Deorbiting [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -7146,7 +7146,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Xenoflora Addiction
+## Xenoflora Addiction [SPECCED]
 
 **Layer:** 1
 
