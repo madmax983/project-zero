@@ -112,6 +112,7 @@ pub fn process_start_plan_system(
 #[allow(clippy::type_complexity)]
 #[allow(clippy::too_many_lines, clippy::too_many_arguments)]
 pub fn movement_system(
+    world: &World,
     mut pops: Query<
         (
             Entity,
@@ -147,9 +148,16 @@ pub fn movement_system(
 
         let trait_mod = traits.map_or(1.0, get_trait_move_speed_modifier);
 
+        // Mental Fog modifier
+        let mental_fog_mod = if let Ok(fog_opt) = world.query::<Option<&crate::layer1::tech::hypno_learning::MentalFog>>().get(world, pop_entity) {
+            fog_opt.map_or(1.0, |f| f.movement_penalty)
+        } else {
+            1.0
+        };
+
         // Accumulate speed
         if let Some(ref mut speed) = speed_opt {
-            speed.accumulator += speed.current * trait_mod;
+            speed.accumulator += speed.current * trait_mod * mental_fog_mod;
         }
 
         let target_pos = mt.target_position;

@@ -68,6 +68,8 @@ pub enum Trait {
     Agoraphobic,
     /// (Spec 250) Obsessed with augmenting their body.
     Transhumanist,
+    /// Suffered irreversible brain damage from childhood hypno-learning.
+    Traumatized,
 }
 
 impl Trait {
@@ -105,6 +107,7 @@ impl Trait {
             Self::VoidTouched => "Void Touched",
             Self::Agoraphobic => "Agoraphobic",
             Self::Transhumanist => "Transhumanist",
+            Self::Traumatized => "Traumatized",
         }
     }
 }
@@ -160,6 +163,7 @@ impl Traits {
             Trait::Outsider,
             Trait::Mutant,
             Trait::Compassionate,
+            Trait::Traumatized,
         ];
 
         while set.len() < count {

@@ -660,6 +660,7 @@ mod tests {
         assert!(success);
     }
 }
+pub mod hypno_learning;
 pub mod ghost_code;
 #[cfg(test)]
 mod ghost_code_integration_tests;
