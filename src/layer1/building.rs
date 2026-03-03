@@ -313,6 +313,8 @@ pub enum BuildingType {
     GeneBank,
     /// Produces Pops from Rations and Energy.
     CloneVat,
+    /// Hypno-Learning Pod (Spec 255).
+    HypnoPod,
     /// Facility for pops to clean themselves (consumes Water).
     Shower,
     /// Converts Waste and Corpses into Rations.
@@ -349,6 +351,7 @@ impl BuildingType {
             | Self::AtmosphericProcessor
             | Self::GeneBank
             | Self::CloneVat
+            | Self::HypnoPod
             | Self::HoloProjector => Some((Category::Research, Tier::HighTech)),
 
             _ => None,
@@ -474,6 +477,7 @@ impl BuildingType {
             | Self::AtmosphericProcessor
             | Self::GeneBank
             | Self::CloneVat
+            | Self::HypnoPod
             | Self::Shower => true,
 
             // Small or Open structures
@@ -531,6 +535,7 @@ impl BuildingType {
             Self::Heater | Self::ServerBank => 0.0,
             Self::CommandCenter | Self::AICore | Self::CryoPod | Self::GeneBank => 0.0,
             Self::CloneVat => -5.0, // Unsettling
+            Self::HypnoPod => -2.0, // Unsettling
             _ => 0.0,
         }
     }
@@ -547,6 +552,7 @@ impl BuildingType {
             Self::TradeDepot => 4.0,
             Self::Grave | Self::Well | Self::HydroponicsBay | Self::LifeSupport => 2.0,
             Self::CloneVat => 3.0,
+            Self::HypnoPod => 2.0,
             Self::HoloProjector => 8.0,
             _ => 0.0,
         }
@@ -579,7 +585,7 @@ impl BuildingType {
             Self::CryoPod => Some(Tech::Medical),
             Self::AuroralCollector => Some(Tech::Electromagnetism),
             Self::AtmosphericProcessor => Some(Tech::Terraforming),
-            Self::GeneBank | Self::CloneVat => Some(Tech::Medical),
+            Self::GeneBank | Self::CloneVat | Self::HypnoPod => Some(Tech::Medical),
             Self::Shower => Some(Tech::SocialStructures),
             Self::Recycler => Some(Tech::Medical),
             Self::BulletinBoard => Some(Tech::SocialStructures),
@@ -655,6 +661,7 @@ impl BuildingType {
             Self::AtmosphericProcessor => "Atmospheric Processor",
             Self::GeneBank => "Gene Bank",
             Self::CloneVat => "Clone Vat",
+            Self::HypnoPod => "Hypno-Pod",
             Self::Shower => "Shower",
             Self::Recycler => "Recycler",
             Self::BulletinBoard => "Bulletin Board",
@@ -712,6 +719,7 @@ impl BuildingType {
             Self::AtmosphericProcessor => '@',
             Self::GeneBank => '🧬',
             Self::CloneVat => '⚗',
+            Self::HypnoPod => 'H',
             Self::Shower => '🚿',
             Self::Recycler => '♻',
             Self::BulletinBoard => 'B',
@@ -756,6 +764,11 @@ impl BuildingType {
             Self::CloneVat => ColonyResources {
                 metal: 50.0,
                 stone: 20.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::HypnoPod => ColonyResources {
+                metal: 100.0,
+                tools: 5.0,
                 ..ColonyResources::zeroed()
             },
             Self::Shower => ColonyResources {
@@ -1329,6 +1342,7 @@ fn spawn_building(
         | BuildingType::AtmosphericProcessor
         | BuildingType::GeneBank
         | BuildingType::CloneVat
+        | BuildingType::HypnoPod
         | BuildingType::HoloProjector => configure_tech(&mut entity, building_type),
         BuildingType::Shower => configure_civic(&mut entity, building_type),
         BuildingType::Recycler => {
@@ -2018,6 +2032,20 @@ fn configure_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 ShiftSchedule::default(),
             ));
         }
+        BuildingType::HypnoPod => {
+            entity.insert((
+                crate::layer1::tech::hypno_learning::HypnoPod::default(),
+                crate::layer1::housing::Housing {
+                    capacity: 1,
+                    residents: Vec::new(),
+                },
+                PowerConsumer {
+                    demand: 15.0, // High power demand
+                    active: false,
+                },
+                ShiftSchedule::default(),
+            ));
+        }
         BuildingType::HoloProjector => {
             entity.insert((
                 crate::layer1::hologram::HoloProjector {
@@ -2284,10 +2312,15 @@ mod tests {
             BuildingType::GeneBank
         );
         assert_eq!(BuildingType::GeneBank.next(), BuildingType::CloneVat);
-        assert_eq!(BuildingType::CloneVat.next(), BuildingType::Shower);
+        assert_eq!(BuildingType::CloneVat.next(), BuildingType::HypnoPod);
+        assert_eq!(BuildingType::HypnoPod.next(), BuildingType::Shower);
         assert_eq!(BuildingType::Shower.next(), BuildingType::Recycler);
         assert_eq!(BuildingType::Recycler.next(), BuildingType::BulletinBoard);
-        assert_eq!(BuildingType::BulletinBoard.next(), BuildingType::Housing);
+        assert_eq!(
+            BuildingType::BulletinBoard.next(),
+            BuildingType::HoloProjector
+        );
+        assert_eq!(BuildingType::HoloProjector.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -2500,6 +2533,9 @@ mod tests {
         assert_eq!(mode.selected, BuildingType::CloneVat);
 
         mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::HypnoPod);
+
+        mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Shower);
 
         mode.selected = mode.selected.next();
@@ -2507,6 +2543,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::BulletinBoard);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::HoloProjector);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

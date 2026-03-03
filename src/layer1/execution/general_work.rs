@@ -29,6 +29,7 @@ use crate::layer1::resources::{ColonyResources, ResourceType};
 use crate::layer1::skills::{get_skill_efficiency, SkillType, Skills};
 use crate::layer1::social::SocialBuff;
 use crate::layer1::tech::Tech;
+use crate::layer1::tech::hypno_learning::MentalFog;
 use crate::layer1::traits::{get_trait_work_speed_modifier, Traits};
 use crate::layer1::utility_types::{ActionType, PopAction};
 use crate::shared::log::MessageLog;
@@ -126,9 +127,10 @@ fn collect_workers_by_target(
             Option<&Job>,
             Option<&Dialect>,
             Option<&Linguistics>,
+            Option<&MentalFog>,
         ), With<AtTarget>>()
         .iter(world)
-        .filter(|(_, mt, _, _, _, _, _, _, faction_member, _, _, _, _)| {
+        .filter(|(_, mt, _, _, _, _, _, _, faction_member, _, _, _, _, _)| {
             let is_work = mt.for_action == ActionType::Work || mt.for_action == ActionType::Repair;
             if !is_work {
                 return false;
@@ -155,6 +157,7 @@ fn collect_workers_by_target(
                 job,
                 dialect,
                 ling,
+                fog,
             )| {
                 let morale = needs.map_or(0.5, |n| {
                     calculate_effective_morale(
@@ -169,6 +172,7 @@ fn collect_workers_by_target(
                 });
                 let trait_work_mod = traits.map_or(1.0, get_trait_work_speed_modifier);
                 let buff_mod = buff.map_or(1.0, |b| b.multiplier);
+                let fog_mod = fog.map_or(1.0, |f| f.work_speed_penalty);
 
                 (
                     mt.target_entity,
@@ -177,7 +181,7 @@ fn collect_workers_by_target(
                         morale,
                         action: mt.for_action,
                         equipment: eq.copied(),
-                        speed_modifier: trait_work_mod * buff_mod,
+                        speed_modifier: trait_work_mod * buff_mod * fog_mod,
                         job: job.copied(),
                         dialect: dialect.copied().unwrap_or_default(),
                         linguistics: ling.cloned().unwrap_or_default(),
