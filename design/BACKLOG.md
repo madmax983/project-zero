@@ -27,3 +27,8 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `271` Subcontractor Factions — `specs/271-subcontractor-factions.md`
 - [ ] `272` The Martyrdom Effect — `specs/272-martyrdom-effect.md`
 - [ ] `273` The Feral Outpost — `specs/273-feral-outpost.md`
+- [ ] `274` Signal Latency — `specs/274-signal-latency.md`
+- [ ] `275` Archaeological Layers — `specs/275-archaeological-layers.md`
+- [ ] `276` Atmospheric Feedback — `specs/276-atmospheric-feedback.md`
+- [ ] `277` Cultural Drift — `specs/277-cultural-drift.md`
+- [ ] `278` Acoustic Zones — `specs/278-acoustic-zones.md`
