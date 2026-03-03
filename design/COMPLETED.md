@@ -188,3 +188,4 @@
 - [x] `251` The "Empty" Room — `specs/251-the-empty-room.md` — completed 2026-03-03
 - [x] `252` Tectonic Stress — `specs/252-tectonic-stress.md` — completed 2026-03-03
 - [x] `INT-038` Integration: MegaQuakeEvent -> Chronicle System — completed 2026-03-03
+- [x] `INT-039` Integration: Infinite Archive -> Research Efficiency — completed 2026-06-25

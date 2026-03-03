@@ -248,3 +248,11 @@
     - Registered in `src/layer1/systems/observation.rs`.
     - Initialized `MegaQuakeEvent` resource in `setup.rs`.
 - **Tests:** `tests/integration/mega_quake_chronicle.rs` (Integration test verified)
+
+### INT-039: Infinite Archive -> Research Efficiency
+- **Date:** 2026-06-25
+- **Systems connected:** `update_efficiency_system` (Archive) -> `Archive` resource -> `process_research_system` (Research)
+- **Glue added:**
+    - `process_research_system` consumes `Option<Res<Archive>>` and multiplies `total_knowledge_gained` by `archive.efficiency_multiplier`.
+    - Corrected execution schedule order in `src/layer1/systems/economy.rs` to guarantee efficiency is updated before knowledge is produced.
+- **Tests:** `tests/integration/infinite_archive_research.rs`

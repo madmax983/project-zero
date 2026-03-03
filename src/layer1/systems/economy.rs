@@ -38,7 +38,8 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
-            process_research_system,
+            process_research_system
+                .after(crate::layer1::tech::infinite_archive::update_efficiency_system),
             process_observe_system,
             #[cfg(feature = "nova")]
             crate::layer1::constellations::observe_constellations_system,
