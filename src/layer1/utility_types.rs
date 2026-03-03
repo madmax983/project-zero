@@ -10,75 +10,75 @@ use strum_macros::EnumIter;
 pub enum ActionType {
     /// Eat food to reduce hunger.
     ///
-    /// See [`crate::layer1::actions::hunger::evaluate_satisfy_hunger`].
+    /// See [`crate::layer1::actions::evaluate_simple_action`].
     SatisfyHunger,
     /// Sleep to reduce fatigue.
     ///
-    /// See [`crate::layer1::actions::rest::evaluate_satisfy_rest`].
+    /// See [`crate::layer1::actions::evaluate_simple_action`].
     SatisfyRest,
     /// Interact with other pops to fulfill social needs.
     ///
-    /// See [`crate::layer1::actions::social::evaluate_socialize`].
+    /// See [`crate::layer1::actions::evaluate_simple_action`].
     Socialize,
     /// Wander to uncover the fog of war or investigate points of interest.
     ///
-    /// See [`crate::layer1::actions::explore::evaluate_explore`].
+    /// See [`crate::layer1::actions::evaluate_simple_action`].
     Explore,
     /// Perform designated physical labor (Mine, Build, Chop).
     ///
-    /// See [`crate::layer1::actions::work::evaluate_work`].
+    /// See [`crate::layer1::actions::evaluate_simple_action`].
     Work,
     /// Repair damaged structures to prevent collapse.
     ///
-    /// See [`crate::layer1::actions::repair::evaluate_repair`].
+    /// See [`crate::layer1::actions::evaluate_simple_action`].
     Repair,
     /// Research new technologies at a library.
     ///
-    /// See [`crate::layer1::actions::research::evaluate_research`].
+    /// See [`crate::layer1::actions::evaluate_research`].
     Research,
     /// Haul loose resources to a stockpile.
     ///
-    /// See [`crate::layer1::actions::haul::evaluate_haul`].
+    /// See [`crate::layer1::actions::evaluate_haul`].
     Haul,
     /// Seek medical care at a hospital.
     ///
-    /// See [`crate::layer1::actions::medical::evaluate_seek_medical_care`].
+    /// See [`crate::layer1::actions::evaluate_simple_action`].
     SeekMedicalCare,
     /// Bury a corpse in a grave.
     ///
-    /// See [`crate::layer1::actions::funeral::evaluate_bury_corpse`].
+    /// See [`crate::layer1::actions::evaluate_simple_action`].
     BuryCorpse,
     /// Fetch a tool from a stockpile.
     ///
-    /// See [`crate::layer1::actions::fetch_tool::evaluate_fetch_tool`].
+    /// See [`crate::layer1::actions::evaluate_fetch_tool`].
     FetchTool,
     /// Do nothing.
     ///
-    /// See [`crate::layer1::utility_eval_types::evaluate_idle`].
+    /// See `crate::layer1::utility_eval_types::evaluate_idle`.
     Idle,
     /// Destroy structures due to mental break.
     ///
-    /// See [`crate::layer1::actions::mental_break::evaluate_mental_break`].
+    /// See [`crate::layer1::actions::evaluate_mental_break`].
     Vandalize,
     /// Consume resources uncontrollably due to mental break.
     ///
-    /// See [`crate::layer1::actions::mental_break::evaluate_mental_break`].
+    /// See [`crate::layer1::actions::evaluate_mental_break`].
     Binge,
     /// Wander aimlessly in a catatonic state due to mental break.
     ///
-    /// See [`crate::layer1::actions::mental_break::evaluate_mental_break`].
+    /// See [`crate::layer1::actions::evaluate_mental_break`].
     Daze,
     /// Engage in combat with hostile entities.
     ///
-    /// See [`crate::layer1::actions::fight::evaluate_drafted_behavior`].
+    /// See [`crate::layer1::actions::evaluate_drafted_behavior`].
     Fight,
     /// Refine resources at a building (e.g., Lumber Mill).
     ///
-    /// See [`crate::layer1::actions::refine::evaluate_refine`].
+    /// See [`crate::layer1::actions::evaluate_simple_action`].
     Refine,
     /// Work at a farm to produce food.
     ///
-    /// See [`crate::layer1::actions::farm::evaluate_farm`].
+    /// See [`crate::layer1::actions::evaluate_simple_action`].
     Farm,
     /// Arrest Wanted criminals and escort them to jail.
     ///
@@ -86,7 +86,7 @@ pub enum ActionType {
     Warden,
     /// Sleepwalk (Mental Break).
     ///
-    /// See [`crate::layer1::actions::mental_break::evaluate_mental_break`].
+    /// See [`crate::layer1::actions::evaluate_mental_break`].
     Sleepwalking,
     /// Tame a wild animal.
     ///
@@ -94,19 +94,19 @@ pub enum ActionType {
     Tame,
     /// Starts fires (Mental Break).
     ///
-    /// See [`crate::layer1::actions::mental_break::evaluate_mental_break`].
+    /// See [`crate::layer1::actions::evaluate_mental_break`].
     FireStarting,
     /// Hides in room (Mental Break).
     ///
-    /// See [`crate::layer1::actions::mental_break::evaluate_mental_break`].
+    /// See [`crate::layer1::actions::evaluate_mental_break`].
     HideInRoom,
     /// Wanders sadly (Mental Break).
     ///
-    /// See [`crate::layer1::actions::mental_break::evaluate_mental_break`].
+    /// See [`crate::layer1::actions::evaluate_mental_break`].
     SadWander,
     /// Fetch clothing from a stockpile.
     ///
-    /// See [`crate::layer1::actions::fetch_clothing::evaluate_fetch_clothing`].
+    /// See [`crate::layer1::actions::evaluate_fetch_clothing`].
     FetchClothing,
     /// Undergoing surgery at a hospital.
     ///
@@ -119,7 +119,7 @@ pub enum ActionType {
     Hobby,
     /// Work as an Administrator in an Office.
     ///
-    /// See [`crate::layer1::actions::admin::evaluate_admin`].
+    /// See [`crate::layer1::actions::evaluate_simple_action`].
     Admin,
     /// Scrawl memetic sigils on walls (Memetic Hazard).
     ///

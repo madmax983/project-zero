@@ -26,18 +26,18 @@
 //! Conceptually, the loop looks like this:
 //!
 //! ```no_run
-//! // 1. System runs in the schedule
-//! // evaluate_actions_system(&mut world);
+//! 1. System runs in the schedule
+//! evaluate_actions_system(&mut world);
 //!
-//! // Inside the system:
-//! // a. Snapshot world state into ScopedEvaluationContext.
-//! // b. Populate UtilityAIBuffer with all candidates (Food, Beds, Jobs).
-//! // c. Run parallel evaluation:
-//! //    for pop in pops {
-//! //        let decision = PopDecider::new(pop, context).run();
-//! //    }
-//! // d. Apply results:
-//! //    pop.action = decision.best_action;
+//! Inside the system:
+//! a. Snapshot world state into ScopedEvaluationContext.
+//! b. Populate UtilityAIBuffer with all candidates (Food, Beds, Jobs).
+//! c. Run parallel evaluation:
+//!    for pop in pops {
+//!        let decision = PopDecider::new(pop, context).run();
+//!    }
+//! d. Apply results:
+//!    pop.action = decision.best_action;
 //! ```
 
 use crate::layer1::actions::{

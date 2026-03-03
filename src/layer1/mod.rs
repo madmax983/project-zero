@@ -38,7 +38,7 @@ pub mod actions;
 pub mod admin;
 /// AI Core system (Spec 148).
 pub mod ai_core;
-/// Game balance constants.
+
 pub mod balance;
 /// Beauty and decoration system.
 pub mod beauty;
@@ -137,7 +137,7 @@ pub mod structure;
 pub mod tech;
 /// Terrain generation and grid management.
 pub mod terrain;
-/// Emergent utility AI system.
+
 pub mod utility_ai;
 #[cfg(test)]
 /// Tests for utility AI hierarchy logic.

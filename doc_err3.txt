@@ -1,0 +1,874 @@
+    Updating crates.io index
+     Locking 446 packages to latest compatible versions
+      Adding bevy v0.15.3 (available: v0.18.0)
+      Adding bevy_app v0.15.3 (available: v0.18.0)
+      Adding bevy_ecs v0.15.4 (available: v0.18.0)
+      Adding bevy_reflect v0.15.3 (available: v0.18.0)
+      Adding bevy_tasks v0.15.3 (available: v0.18.0)
+      Adding bevy_time v0.15.3 (available: v0.18.0)
+      Adding bevy_utils v0.15.3 (available: v0.18.0)
+      Adding crossterm v0.28.1 (available: v0.29.0)
+      Adding mockall v0.13.1 (available: v0.14.0)
+      Adding petgraph v0.6.5 (available: v0.8.3)
+      Adding pollster v0.3.0 (available: v0.4.0)
+      Adding rand v0.8.5 (available: v0.10.0)
+      Adding rand_distr v0.4.3 (available: v0.6.0)
+      Adding ratatui v0.29.0 (available: v0.30.0)
+      Adding strum v0.26.3 (available: v0.28.0)
+      Adding strum_macros v0.26.4 (available: v0.28.0)
+      Adding unicode-width v0.2.0 (available: v0.2.2)
+      Adding uuid v1.12.1 (available: v1.21.0)
+      Adding wgpu v23.0.1 (available: v28.0.0)
+ Downloading crates ...
+  Downloaded adler2 v2.0.1
+  Downloaded aligned v0.4.3
+  Downloaded as-slice v0.2.1
+  Downloaded aligned-vec v0.6.4
+  Downloaded ctrlc v3.5.2
+  Downloaded crossbeam-utils v0.8.21
+  Downloaded crunchy v0.2.4
+  Downloaded constgebra v0.1.4
+  Downloaded document-features v0.2.12
+  Downloaded num-derive v0.4.2
+  Downloaded nu-ansi-term v0.50.3
+  Downloaded parking_lot_core v0.9.12
+  Downloaded quote v1.0.44
+  Downloaded sharded-slab v0.1.7
+  Downloaded tinyvec_macros v0.1.1
+  Downloaded wasm-bindgen-macro v0.2.114
+  Downloaded utf8parse v0.2.2
+  Downloaded tracing-log v0.2.0
+  Downloaded y4m v0.8.0
+  Downloaded wgpu-types v23.0.0
+  Downloaded zune-core v0.5.1
+  Downloaded zune-core v0.4.12
+  Downloaded rustix v0.38.44
+  Downloaded weezl v0.1.12
+  Downloaded regex-automata v0.4.14
+  Downloaded glam v0.29.3
+  Downloaded wasm-bindgen-macro-support v0.2.114
+  Downloaded rav1e v0.8.1
+  Downloaded jiff v0.2.22
+  Downloaded rustix v1.1.4
+  Downloaded syn v2.0.117
+  Downloaded tiny-keccak v2.0.2
+  Downloaded wgpu-core v23.0.1
+  Downloaded unicode-segmentation v1.12.0
+  Downloaded unicode-width v0.1.14
+  Downloaded toml_edit v0.22.27
+  Downloaded zune-inflate v0.2.54
+  Downloaded winnow v0.7.14
+  Downloaded typewit v1.14.2
+  Downloaded tracing-subscriber v0.3.22
+  Downloaded thiserror-impl v1.0.69
+  Downloaded tracing v0.1.44
+  Downloaded zmij v1.0.21
+  Downloaded thread_local v1.1.9
+  Downloaded libc v0.2.182
+  Downloaded unicode-width v0.2.0
+  Downloaded wgpu-hal v23.0.1
+  Downloaded linux-raw-sys v0.4.15
+  Downloaded naga v23.1.0
+  Downloaded wasm-bindgen v0.2.114
+  Downloaded uuid v1.12.1
+  Downloaded tracing-core v0.1.36
+  Downloaded wgpu v23.0.1
+  Downloaded nix v0.31.2
+  Downloaded image v0.25.9
+  Downloaded exr v1.74.0
+  Downloaded regex-syntax v0.8.10
+  Downloaded wasm-bindgen-shared v0.2.114
+  Downloaded version_check v0.9.5
+  Downloaded tiff v0.10.3
+  Downloaded v_frame v0.3.9
+  Downloaded unicode-xid v0.2.6
+  Downloaded serde_json v1.0.149
+  Downloaded regex v1.12.3
+  Downloaded ratatui v0.29.0
+  Downloaded zune-jpeg v0.4.21
+  Downloaded zerocopy-derive v0.8.40
+  Downloaded linux-raw-sys v0.12.1
+  Downloaded hashbrown v0.14.5
+  Downloaded zerocopy v0.8.40
+  Downloaded zune-jpeg v0.5.12
+  Downloaded flate2 v1.1.9
+  Downloaded tracing-attributes v0.1.31
+  Downloaded serde v1.0.228
+  Downloaded nom v8.0.0
+  Downloaded moxcms v0.7.11
+  Downloaded hashbrown v0.16.1
+  Downloaded rayon v1.11.0
+  Downloaded unicode-truncate v1.1.0
+  Downloaded unicode-ident v1.0.24
+  Downloaded toml_datetime v0.6.11
+  Downloaded tinyvec v1.10.0
+  Downloaded rand v0.8.5
+  Downloaded pxfm v0.1.28
+  Downloaded num-bigint v0.4.6
+  Downloaded libm v0.2.16
+  Downloaded itertools v0.14.0
+  Downloaded itertools v0.13.0
+  Downloaded hashbrown v0.15.5
+  Downloaded glow v0.14.2
+  Downloaded crossterm v0.29.0
+  Downloaded typeid v1.0.3
+  Downloaded thiserror v2.0.18
+  Downloaded signal-hook-mio v0.2.5
+  Downloaded shlex v1.3.0
+  Downloaded rayon-core v1.13.0
+  Downloaded raw-window-handle v0.6.2
+  Downloaded qoi v0.4.1
+  Downloaded pkg-config v0.3.32
+  Downloaded naga_oil v0.16.0
+  Downloaded mio v1.1.1
+  Downloaded indexmap v2.13.0
+  Downloaded crossterm v0.28.1
+  Downloaded thiserror-impl v2.0.18
+  Downloaded thiserror v1.0.69
+  Downloaded termcolor v1.4.1
+  Downloaded strum_macros v0.26.4
+  Downloaded strum v0.26.3
+  Downloaded strsim v0.11.1
+  Downloaded static_assertions v1.1.0
+  Downloaded stackfuture v0.3.1
+  Downloaded stable_deref_trait v1.2.1
+  Downloaded spirv v0.3.0+sdk-1.3.268.0
+  Downloaded smol_str v0.2.2
+  Downloaded smallvec v1.15.1
+  Downloaded slab v0.4.12
+  Downloaded simd_helpers v0.1.0
+  Downloaded simd-adler32 v0.3.8
+  Downloaded signal-hook-registry v1.4.8
+  Downloaded signal-hook v0.3.18
+  Downloaded ron v0.8.1
+  Downloaded renderdoc-sys v1.1.0
+  Downloaded png v0.18.1
+  Downloaded petgraph v0.6.5
+  Downloaded noise v0.9.0
+  Downloaded miniz_oxide v0.8.9
+  Downloaded memchr v2.8.0
+  Downloaded khronos-egl v6.0.0
+  Downloaded imgref v1.12.0
+  Downloaded image-webp v0.2.4
+  Downloaded getrandom v0.3.4
+  Downloaded derive_more-impl v1.0.0
+  Downloaded crossbeam-channel v0.5.15
+  Downloaded serde_derive v1.0.228
+  Downloaded serde_core v1.0.228
+  Downloaded scopeguard v1.2.0
+  Downloaded ryu v1.0.23
+  Downloaded rustversion v1.0.22
+  Downloaded rustc-hash v1.1.0
+  Downloaded rgb v0.8.53
+  Downloaded ravif v0.12.0
+  Downloaded rand_xorshift v0.3.0
+  Downloaded rand_distr v0.4.3
+  Downloaded rand_core v0.6.4
+  Downloaded rand_chacha v0.3.1
+  Downloaded quick-error v2.0.1
+  Downloaded profiling-procmacros v1.0.17
+  Downloaded profiling v1.0.17
+  Downloaded ppv-lite86 v0.2.21
+  Downloaded pollster v0.3.0
+  Downloaded num-integer v0.1.46
+  Downloaded log v0.4.29
+  Downloaded litrs v1.0.0
+  Downloaded jobserver v0.1.34
+  Downloaded indoc v2.0.7
+  Downloaded half v2.7.1
+  Downloaded gpu-alloc v0.6.0
+  Downloaded gif v0.14.1
+  Downloaded getrandom v0.2.17
+  Downloaded futures-lite v2.6.1
+  Downloaded event-listener v5.4.1
+  Downloaded event-listener v2.5.3
+  Downloaded errno v0.3.14
+  Downloaded erased-serde v0.4.10
+  Downloaded env_logger v0.11.9
+  Downloaded encase v0.10.0
+  Downloaded either v1.15.0
+  Downloaded derive_more v1.0.0
+  Downloaded darling_core v0.23.0
+  Downloaded crossbeam-epoch v0.9.18
+  Downloaded core2 v0.4.0
+  Downloaded bevy_ecs v0.15.4
+  Downloaded bevy v0.15.3
+  Downloaded av-scenechange v0.14.1
+  Downloaded ash v0.38.0+1.3.281
+  Downloaded proc-macro2 v1.0.106
+  Downloaded pp-rs v0.2.1
+  Downloaded piper v0.2.5
+  Downloaded pin-project-lite v0.2.17
+  Downloaded pastey v0.1.1
+  Downloaded paste v1.0.15
+  Downloaded parking v2.2.1
+  Downloaded nonmax v0.5.5
+  Downloaded matchers v0.2.0
+  Downloaded lru v0.12.5
+  Downloaded loop9 v0.1.5
+  Downloaded lock_api v0.4.14
+  Downloaded libloading v0.8.9
+  Downloaded instability v0.3.11
+  Downloaded ident_case v1.0.1
+  Downloaded hexasphere v15.1.0
+  Downloaded futures-core v0.3.32
+  Downloaded foldhash v0.1.5
+  Downloaded fixedbitset v0.5.7
+  Downloaded find-msvc-tools v0.1.9
+  Downloaded fdeflate v0.3.7
+  Downloaded equivalent v1.0.2
+  Downloaded env_filter v1.0.0
+  Downloaded encase_derive_impl v0.10.0
+  Downloaded encase_derive v0.10.0
+  Downloaded data-encoding v2.10.0
+  Downloaded darling v0.23.0
+  Downloaded crossbeam-deque v0.8.6
+  Downloaded clap_builder v4.5.60
+  Downloaded blake3 v1.8.3
+  Downloaded bevy_render v0.15.3
+  Downloaded bevy_reflect v0.15.3
+  Downloaded bevy_math v0.15.3
+  Downloaded bevy_asset v0.15.3
+  Downloaded aho-corasick v1.1.4
+  Downloaded parking_lot v0.12.5
+  Downloaded once_cell v1.21.3
+  Downloaded offset-allocator v0.2.0
+  Downloaded num-traits v0.2.19
+  Downloaded num-rational v0.4.2
+  Downloaded new_debug_unreachable v1.0.6
+  Downloaded lebe v0.5.3
+  Downloaded lazy_static v1.5.0
+  Downloaded itoa v1.0.17
+  Downloaded hexf-parse v0.2.1
+  Downloaded gpu-descriptor-types v0.2.0
+  Downloaded gpu-descriptor v0.3.2
+  Downloaded futures-io v0.3.32
+  Downloaded fixedbitset v0.4.2
+  Downloaded event-listener-strategy v0.5.4
+  Downloaded const_soft_float v0.1.4
+  Downloaded const_panic v0.2.15
+  Downloaded compact_str v0.8.1
+  Downloaded comfy-table v7.2.2
+  Downloaded codespan-reporting v0.11.1
+  Downloaded clap v4.5.60
+  Downloaded cc v1.2.56
+  Downloaded bytemuck v1.25.0
+  Downloaded bumpalo v3.20.2
+  Downloaded bitstream-io v4.9.0
+  Downloaded bevy_window v0.15.3
+  Downloaded bevy_reflect_derive v0.15.3
+  Downloaded bevy_mesh v0.15.3
+  Downloaded bevy_internal v0.15.3
+  Downloaded bevy_input v0.15.3
+  Downloaded bevy_image v0.15.3
+  Downloaded bevy_color v0.15.4
+  Downloaded base64 v0.21.7
+  Downloaded av1-grain v0.2.5
+  Downloaded async-task v4.7.1
+  Downloaded async-lock v3.4.2
+  Downloaded allocator-api2 v0.2.21
+  Downloaded accesskit v0.17.1
+  Downloaded maybe-rayon v0.1.1
+  Downloaded is_terminal_polyfill v1.70.2
+  Downloaded heck v0.5.0
+  Downloaded gpu-alloc-types v0.3.0
+  Downloaded fax_derive v0.2.0
+  Downloaded fax v0.2.6
+  Downloaded fastrand v2.3.0
+  Downloaded equator-macro v0.4.2
+  Downloaded equator v0.4.2
+  Downloaded crc32fast v1.5.0
+  Downloaded clap_derive v4.5.55
+  Downloaded cassowary v0.3.0
+  Downloaded bytemuck_derive v1.10.2
+  Downloaded built v0.8.0
+  Downloaded bitflags v2.11.0
+  Downloaded bit-vec v0.6.3
+  Downloaded bevy_hierarchy v0.15.3
+  Downloaded bevy_diagnostic v0.15.3
+  Downloaded bevy_core v0.15.3
+  Downloaded bevy_app v0.15.3
+  Downloaded autocfg v1.5.0
+  Downloaded async-executor v1.14.0
+  Downloaded anyhow v1.0.102
+  Downloaded anstyle-parse v0.2.7
+  Downloaded anstyle v1.0.13
+  Downloaded ahash v0.8.12
+  Downloaded noop_proc_macro v0.3.0
+  Downloaded downcast-rs v1.2.1
+  Downloaded constant_time_eq v0.4.2
+  Downloaded const-random-macro v0.1.16
+  Downloaded concurrent-queue v2.5.0
+  Downloaded colorchoice v1.0.4
+  Downloaded blocking v1.6.2
+  Downloaded bit-vec v0.8.0
+  Downloaded bevy_utils v0.15.3
+  Downloaded bevy_transform v0.15.3
+  Downloaded bevy_time v0.15.3
+  Downloaded bevy_tasks v0.15.3
+  Downloaded bevy_mikktspace v0.15.3
+  Downloaded bevy_log v0.15.3
+  Downloaded bevy_ecs_macros v0.15.3
+  Downloaded async-channel v2.5.0
+  Downloaded assert_type_match v0.1.1
+  Downloaded disqualified v1.0.0
+  Downloaded darling_macro v0.23.0
+  Downloaded cpufeatures v0.2.17
+  Downloaded color_quant v1.1.0
+  Downloaded clap_lex v1.0.0
+  Downloaded cfg-if v1.0.4
+  Downloaded bevy_encase_derive v0.15.3
+  Downloaded bevy_derive v0.15.3
+  Downloaded const-random v0.1.18
+  Downloaded cfg_aliases v0.1.1
+  Downloaded castaway v0.2.4
+  Downloaded byteorder-lite v0.1.0
+  Downloaded bit-set v0.5.3
+  Downloaded bevy_render_macros v0.15.3
+  Downloaded bevy_ptr v0.15.3
+  Downloaded bevy_asset_macros v0.15.3
+  Downloaded bevy_a11y v0.15.3
+  Downloaded avif-serialize v0.8.8
+  Downloaded atomicow v1.1.0
+  Downloaded anstream v0.6.21
+  Downloaded const-fnv1a-hash v1.1.0
+  Downloaded cfg_aliases v0.2.1
+  Downloaded bit_field v0.10.3
+  Downloaded bit-set v0.8.0
+  Downloaded bevy_utils_proc_macros v0.15.3
+  Downloaded bevy_macro_utils v0.15.3
+  Downloaded atomic-waker v1.1.2
+  Downloaded async-fs v2.2.0
+  Downloaded async-broadcast v0.5.1
+  Downloaded arrayvec v0.7.6
+  Downloaded arrayref v0.3.9
+  Downloaded anstyle-query v1.1.5
+  Downloaded arg_enum_proc_macro v0.3.4
+   Compiling proc-macro2 v1.0.106
+   Compiling unicode-ident v1.0.24
+   Compiling quote v1.0.44
+    Checking cfg-if v1.0.4
+   Compiling libc v0.2.182
+    Checking bitflags v2.11.0
+   Compiling crossbeam-utils v0.8.21
+   Compiling zerocopy v0.8.40
+    Checking smallvec v1.15.1
+    Checking once_cell v1.21.3
+   Compiling serde_core v1.0.228
+    Checking allocator-api2 v0.2.21
+    Checking pin-project-lite v0.2.17
+   Compiling crunchy v0.2.4
+    Checking arrayvec v0.7.6
+    Checking equivalent v1.0.2
+   Compiling autocfg v1.5.0
+   Compiling tiny-keccak v2.0.2
+   Compiling libm v0.2.16
+    Checking log v0.4.29
+   Compiling hashbrown v0.16.1
+   Compiling serde v1.0.228
+   Compiling num-traits v0.2.19
+   Compiling toml_datetime v0.6.11
+   Compiling indexmap v2.13.0
+    Checking memchr v2.8.0
+   Compiling winnow v0.7.14
+   Compiling syn v2.0.117
+   Compiling getrandom v0.2.17
+   Compiling getrandom v0.3.4
+   Compiling version_check v0.9.5
+    Checking rand_core v0.6.4
+   Compiling const-random-macro v0.1.16
+   Compiling ahash v0.8.12
+    Checking tracing-core v0.1.36
+    Checking parking v2.2.1
+    Checking const-random v0.1.18
+    Checking concurrent-queue v2.5.0
+   Compiling typeid v1.0.3
+    Checking tracing v0.1.44
+    Checking thread_local v1.1.9
+   Compiling unicode-xid v0.2.6
+    Checking either v1.15.0
+   Compiling erased-serde v0.4.10
+    Checking futures-core v0.3.32
+    Checking event-listener v5.4.1
+   Compiling uuid v1.12.1
+   Compiling cfg_aliases v0.2.1
+    Checking fastrand v2.3.0
+    Checking futures-io v0.3.32
+   Compiling nix v0.31.2
+    Checking futures-lite v2.6.1
+    Checking event-listener-strategy v0.5.4
+    Checking slab v0.4.12
+    Checking async-task v4.7.1
+    Checking disqualified v1.0.0
+    Checking bevy_ptr v0.15.3
+   Compiling toml_edit v0.22.27
+    Checking downcast-rs v1.2.1
+    Checking async-channel v2.5.0
+    Checking fixedbitset v0.4.2
+   Compiling cfg_aliases v0.1.1
+    Checking fixedbitset v0.5.7
+    Checking nonmax v0.5.5
+   Compiling parking_lot_core v0.9.12
+    Checking petgraph v0.6.5
+    Checking async-executor v1.14.0
+    Checking aho-corasick v1.1.4
+    Checking crossbeam-epoch v0.9.18
+    Checking regex-syntax v0.8.10
+    Checking bevy_tasks v0.15.3
+   Compiling rayon-core v1.13.0
+    Checking ctrlc v3.5.2
+    Checking scopeguard v1.2.0
+    Checking crossbeam-deque v0.8.6
+    Checking lock_api v0.4.14
+    Checking simd-adler32 v0.3.8
+    Checking parking_lot v0.12.5
+    Checking itertools v0.13.0
+    Checking num-integer v0.1.46
+    Checking foldhash v0.1.5
+   Compiling rustversion v1.0.22
+    Checking regex-automata v0.4.14
+   Compiling anyhow v1.0.102
+    Checking unicode-width v0.1.14
+    Checking num-bigint v0.4.6
+    Checking hashbrown v0.15.5
+   Compiling crc32fast v1.5.0
+    Checking stable_deref_trait v1.2.1
+   Compiling thiserror v2.0.18
+   Compiling bevy_macro_utils v0.15.3
+   Compiling thiserror v1.0.69
+   Compiling paste v1.0.15
+    Checking adler2 v2.0.1
+    Checking miniz_oxide v0.8.9
+    Checking as-slice v0.2.1
+    Checking rayon v1.11.0
+   Compiling naga v23.1.0
+    Checking errno v0.3.14
+    Checking libloading v0.8.9
+   Compiling strsim v0.11.1
+   Compiling signal-hook v0.3.18
+    Checking lazy_static v1.5.0
+    Checking num-rational v0.4.2
+    Checking utf8parse v0.2.2
+   Compiling heck v0.5.0
+    Checking termcolor v1.4.1
+   Compiling av-scenechange v0.14.1
+   Compiling khronos-egl v6.0.0
+   Compiling ash v0.38.0+1.3.281
+   Compiling ident_case v1.0.1
+   Compiling litrs v1.0.0
+    Checking bit-vec v0.8.0
+   Compiling built v0.8.0
+   Compiling darling_core v0.23.0
+    Checking codespan-reporting v0.11.1
+    Checking bit-set v0.8.0
+    Checking anstyle-parse v0.2.7
+    Checking sharded-slab v0.1.7
+    Checking signal-hook-registry v1.4.8
+   Compiling zerocopy-derive v0.8.40
+   Compiling bytemuck_derive v1.10.2
+   Compiling serde_derive v1.0.228
+   Compiling derive_more-impl v1.0.0
+   Compiling bevy_utils_proc_macros v0.15.3
+   Compiling bevy_reflect_derive v0.15.3
+   Compiling assert_type_match v0.1.1
+   Compiling bevy_ecs_macros v0.15.3
+    Checking bytemuck v1.25.0
+   Compiling bevy_derive v0.15.3
+   Compiling equator-macro v0.4.2
+   Compiling profiling-procmacros v1.0.17
+    Checking profiling v1.0.17
+   Compiling thiserror-impl v1.0.69
+    Checking equator v0.4.2
+    Checking aligned-vec v0.6.4
+   Compiling thiserror-impl v2.0.18
+    Checking matchers v0.2.0
+    Checking v_frame v0.3.9
+   Compiling rav1e v0.8.1
+   Compiling document-features v0.2.12
+   Compiling arg_enum_proc_macro v0.3.4
+    Checking aligned v0.4.3
+   Compiling wgpu-hal v23.0.1
+    Checking tracing-log v0.2.0
+    Checking core2 v0.4.0
+    Checking nom v8.0.0
+    Checking crossbeam-channel v0.5.15
+    Checking spirv v0.3.0+sdk-1.3.268.0
+    Checking gpu-alloc-types v0.3.0
+    Checking gpu-descriptor-types v0.2.0
+    Checking derive_more v1.0.0
+    Checking is_terminal_polyfill v1.70.2
+    Checking hexf-parse v0.2.1
+    Checking y4m v0.8.0
+    Checking rustc-hash v1.1.0
+    Checking nu-ansi-term v0.50.3
+    Checking anstyle v1.0.13
+    Checking anstyle-query v1.1.5
+   Compiling pastey v0.1.1
+    Checking quick-error v2.0.1
+   Compiling rustix v1.1.4
+   Compiling rustix v0.38.44
+    Checking colorchoice v1.0.4
+    Checking tracing-subscriber v0.3.22
+    Checking smol_str v0.2.2
+    Checking anstream v0.6.21
+    Checking gpu-descriptor v0.3.2
+    Checking gpu-alloc v0.6.0
+    Checking bitstream-io v4.9.0
+    Checking flate2 v1.1.9
+   Compiling darling_macro v0.23.0
+    Checking maybe-rayon v0.1.1
+   Compiling fax_derive v0.2.0
+   Compiling num-derive v0.4.2
+   Compiling wgpu-core v23.0.1
+    Checking itertools v0.14.0
+    Checking mio v1.1.1
+   Compiling simd_helpers v0.1.0
+    Checking wgpu-types v23.0.0
+    Checking imgref v1.12.0
+    Checking glow v0.14.2
+    Checking renderdoc-sys v1.1.0
+    Checking unicode-segmentation v1.12.0
+    Checking av1-grain v0.2.5
+    Checking ppv-lite86 v0.2.21
+    Checking half v2.7.1
+    Checking raw-window-handle v0.6.2
+    Checking rand_chacha v0.3.1
+    Checking hashbrown v0.14.5
+    Checking rand v0.8.5
+    Checking weezl v0.1.12
+    Checking static_assertions v1.1.0
+    Checking new_debug_unreachable v1.0.6
+   Compiling zmij v1.0.21
+    Checking zune-core v0.4.12
+    Checking glam v0.29.3
+    Checking rand_distr v0.4.3
+    Checking itoa v1.0.17
+   Compiling noop_proc_macro v0.3.0
+   Compiling instability v0.3.11
+    Checking bevy_utils v0.15.3
+    Checking const-fnv1a-hash v1.1.0
+    Checking linux-raw-sys v0.12.1
+    Checking linux-raw-sys v0.4.15
+    Checking zune-jpeg v0.4.21
+    Checking loop9 v0.1.5
+    Checking signal-hook-mio v0.2.5
+    Checking fax v0.2.6
+   Compiling darling v0.23.0
+    Checking regex v1.12.3
+   Compiling strum_macros v0.26.4
+    Checking castaway v0.2.4
+    Checking fdeflate v0.3.7
+    Checking zune-inflate v0.2.54
+   Compiling wgpu v23.0.1
+    Checking avif-serialize v0.8.8
+    Checking ryu v1.0.23
+    Checking bit_field v0.10.3
+    Checking pxfm v0.1.28
+   Compiling indoc v2.0.7
+    Checking rgb v0.8.53
+   Compiling serde_json v1.0.149
+    Checking byteorder-lite v0.1.0
+    Checking clap_lex v1.0.0
+    Checking lebe v0.5.3
+    Checking color_quant v1.1.0
+    Checking zune-core v0.5.1
+    Checking unicode-width v0.2.0
+    Checking exr v1.74.0
+    Checking zune-jpeg v0.5.12
+    Checking gif v0.14.1
+    Checking image-webp v0.2.4
+    Checking strum v0.26.3
+    Checking clap_builder v4.5.60
+    Checking compact_str v0.8.1
+    Checking png v0.18.1
+    Checking crossterm v0.29.0
+    Checking moxcms v0.7.11
+    Checking bevy_reflect v0.15.3
+    Checking crossterm v0.28.1
+    Checking ravif v0.12.0
+    Checking env_filter v1.0.0
+    Checking tiff v0.10.3
+    Checking unicode-truncate v1.1.0
+    Checking qoi v0.4.1
+   Compiling clap_derive v4.5.55
+    Checking lru v0.12.5
+    Checking rand_xorshift v0.3.0
+    Checking cassowary v0.3.0
+    Checking jiff v0.2.22
+    Checking noise v0.9.0
+    Checking ratatui v0.29.0
+    Checking comfy-table v7.2.2
+    Checking pollster v0.3.0
+    Checking clap v4.5.60
+    Checking image v0.25.9
+    Checking env_logger v0.11.9
+    Checking bevy_ecs v0.15.4
+    Checking bevy_math v0.15.3
+    Checking bevy_app v0.15.3
+    Checking bevy_core v0.15.3
+    Checking bevy_time v0.15.3
+    Checking bevy_log v0.15.3
+    Checking bevy_hierarchy v0.15.3
+    Checking bevy_input v0.15.3
+    Checking bevy_diagnostic v0.15.3
+    Checking bevy_transform v0.15.3
+    Checking bevy_internal v0.15.3
+    Checking bevy v0.15.3
+    Checking scale v0.1.0 (/app)
+ Documenting scale v0.1.0 (/app)
+warning: ambiguous glob re-exports
+   --> src/layer1/mod.rs:183:9
+    |
+183 | pub use access_control::*;
+    |         ^^^^^^^^^^^^^^^^^ the name `check_access` in the value namespace is first re-exported here
+...
+695 | pub use security::*;
+    |         ----------- but the name `check_access` in the value namespace is also re-exported here
+    |
+    = note: `#[warn(ambiguous_glob_reexports)]` on by default
+
+warning: unused import: `strum::IntoEnumIterator`
+  --> src/layer1/tech/mod.rs:41:5
+   |
+41 | use strum::IntoEnumIterator;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: value assigned to `remaining_hunger` is never read
+   --> src/layer1/the_visitor.rs:139:21
+    |
+139 |                     remaining_hunger -= eat;
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: maybe it is overwritten before being read?
+    = note: `#[warn(unused_assignments)]` (part of `#[warn(unused)]`) on by default
+
+warning: unresolved link to `crate::layer1::actions::hunger::evaluate_satisfy_hunger`
+  --> src/layer1/utility_types.rs:13:15
+   |
+13 |     /// See [`crate::layer1::actions::hunger::evaluate_satisfy_hunger`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `hunger` in module `actions`
+   |
+   = note: `#[warn(rustdoc::broken_intra_doc_links)]` on by default
+
+warning: unresolved link to `crate::layer1::actions::rest::evaluate_satisfy_rest`
+  --> src/layer1/utility_types.rs:17:15
+   |
+17 |     /// See [`crate::layer1::actions::rest::evaluate_satisfy_rest`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `rest` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::social::evaluate_socialize`
+  --> src/layer1/utility_types.rs:21:15
+   |
+21 |     /// See [`crate::layer1::actions::social::evaluate_socialize`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `social` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::explore::evaluate_explore`
+  --> src/layer1/utility_types.rs:25:15
+   |
+25 |     /// See [`crate::layer1::actions::explore::evaluate_explore`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `explore` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::work::evaluate_work`
+  --> src/layer1/utility_types.rs:29:15
+   |
+29 |     /// See [`crate::layer1::actions::work::evaluate_work`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `work` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::repair::evaluate_repair`
+  --> src/layer1/utility_types.rs:33:15
+   |
+33 |     /// See [`crate::layer1::actions::repair::evaluate_repair`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `repair` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::research::evaluate_research`
+  --> src/layer1/utility_types.rs:37:15
+   |
+37 |     /// See [`crate::layer1::actions::research::evaluate_research`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `research` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::haul::evaluate_haul`
+  --> src/layer1/utility_types.rs:41:15
+   |
+41 |     /// See [`crate::layer1::actions::haul::evaluate_haul`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `haul` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::medical::evaluate_seek_medical_care`
+  --> src/layer1/utility_types.rs:45:15
+   |
+45 |     /// See [`crate::layer1::actions::medical::evaluate_seek_medical_care`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `medical` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::funeral::evaluate_bury_corpse`
+  --> src/layer1/utility_types.rs:49:15
+   |
+49 |     /// See [`crate::layer1::actions::funeral::evaluate_bury_corpse`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `funeral` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::fetch_tool::evaluate_fetch_tool`
+  --> src/layer1/utility_types.rs:53:15
+   |
+53 |     /// See [`crate::layer1::actions::fetch_tool::evaluate_fetch_tool`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `fetch_tool` in module `actions`
+
+warning: public documentation for `Idle` links to private item `crate::layer1::utility_eval_types::evaluate_idle`
+  --> src/layer1/utility_types.rs:57:15
+   |
+57 |     /// See [`crate::layer1::utility_eval_types::evaluate_idle`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this item is private
+   |
+   = note: this link resolves only because you passed `--document-private-items`, but will break without
+   = note: `#[warn(rustdoc::private_intra_doc_links)]` on by default
+
+warning: unresolved link to `crate::layer1::actions::mental_break::evaluate_mental_break`
+  --> src/layer1/utility_types.rs:61:15
+   |
+61 |     /// See [`crate::layer1::actions::mental_break::evaluate_mental_break`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `mental_break` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::mental_break::evaluate_mental_break`
+  --> src/layer1/utility_types.rs:65:15
+   |
+65 |     /// See [`crate::layer1::actions::mental_break::evaluate_mental_break`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `mental_break` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::mental_break::evaluate_mental_break`
+  --> src/layer1/utility_types.rs:69:15
+   |
+69 |     /// See [`crate::layer1::actions::mental_break::evaluate_mental_break`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `mental_break` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::fight::evaluate_drafted_behavior`
+  --> src/layer1/utility_types.rs:73:15
+   |
+73 |     /// See [`crate::layer1::actions::fight::evaluate_drafted_behavior`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `fight` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::refine::evaluate_refine`
+  --> src/layer1/utility_types.rs:77:15
+   |
+77 |     /// See [`crate::layer1::actions::refine::evaluate_refine`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `refine` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::farm::evaluate_farm`
+  --> src/layer1/utility_types.rs:81:15
+   |
+81 |     /// See [`crate::layer1::actions::farm::evaluate_farm`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `farm` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::mental_break::evaluate_mental_break`
+  --> src/layer1/utility_types.rs:89:15
+   |
+89 |     /// See [`crate::layer1::actions::mental_break::evaluate_mental_break`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `mental_break` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::mental_break::evaluate_mental_break`
+  --> src/layer1/utility_types.rs:97:15
+   |
+97 |     /// See [`crate::layer1::actions::mental_break::evaluate_mental_break`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `mental_break` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::mental_break::evaluate_mental_break`
+   --> src/layer1/utility_types.rs:101:15
+    |
+101 |     /// See [`crate::layer1::actions::mental_break::evaluate_mental_break`].
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `mental_break` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::mental_break::evaluate_mental_break`
+   --> src/layer1/utility_types.rs:105:15
+    |
+105 |     /// See [`crate::layer1::actions::mental_break::evaluate_mental_break`].
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `mental_break` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::fetch_clothing::evaluate_fetch_clothing`
+   --> src/layer1/utility_types.rs:109:15
+    |
+109 |     /// See [`crate::layer1::actions::fetch_clothing::evaluate_fetch_clothing`].
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `fetch_clothing` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::admin::evaluate_admin`
+   --> src/layer1/utility_types.rs:122:15
+    |
+122 |     /// See [`crate::layer1::actions::admin::evaluate_admin`].
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `admin` in module `actions`
+
+warning: unresolved link to `cleanup`
+  --> src/layer1/mod.rs:560:1
+   |
+12 | | //! - **Building:** Constructed structures (Housing, Farm, Walls). See [`crate::layer1::building`].
+   | |___________________________________________________^
+...
+560| / /// System registration and sets (Facade).
+   |
+   = note: the link appears in this line:
+
+           * [`cleanup`]: Event cleanup and input handling.
+              ^^^^^^^^^
+   = note: no item named `cleanup` in scope
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `environment`
+  --> src/layer1/mod.rs:560:1
+   |
+12 | | //! - **Building:** Constructed structures (Housing, Farm, Walls). See [`crate::layer1::building`].
+   | |___________________________________________________^
+...
+560| / /// System registration and sets (Facade).
+   |
+   = note: the link appears in this line:
+
+           * [`environment`]: Fire, weather, and decay.
+              ^^^^^^^^^^^^^
+   = note: no item named `environment` in scope
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `consumption`
+  --> src/layer1/mod.rs:560:1
+   |
+12 | | //! - **Building:** Constructed structures (Housing, Farm, Walls). See [`crate::layer1::building`].
+   | |___________________________________________________^
+...
+560| / /// System registration and sets (Facade).
+   |
+   = note: the link appears in this line:
+
+           * [`consumption`]: Needs decay, spoilage, and death.
+              ^^^^^^^^^^^^^
+   = note: no item named `consumption` in scope
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `observation`
+  --> src/layer1/mod.rs:560:1
+   |
+12 | | //! - **Building:** Constructed structures (Housing, Farm, Walls). See [`crate::layer1::building`].
+   | |___________________________________________________^
+...
+560| / /// System registration and sets (Facade).
+   |
+   = note: the link appears in this line:
+
+           * [`observation`]: History, social, and dreams.
+              ^^^^^^^^^^^^^
+   = note: no item named `observation` in scope
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: Rust code block is empty
+  --> src/layer1/utility_ai.rs:28:5
+   |
+28 |   //! ```no_run
+   |  _____^
+29 | | //! // 1. System runs in the schedule
+30 | | //! // evaluate_actions_system(&mut world);
+31 | | //!
+...  |
+40 | | //! //    pop.action = decision.best_action;
+41 | | //! ```
+   | |_______^
+   |
+   = note: `#[warn(rustdoc::invalid_rust_codeblocks)]` on by default
+
+warning: `scale` (lib) generated 3 warnings
+warning: `scale` (lib doc) generated 29 warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1m 43s
+   Generated /app/target/doc/scale/index.html and 2 other files

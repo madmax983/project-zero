@@ -69,3 +69,10 @@
 ## 2026-05-26 - [Layer 2 Coordinate System]
 **Confusion:** The `render_system_view` function calculates positions relative to the screen center, ignoring the hierarchical nature of the `Orbit` component (Moons orbiting Planets).
 **Clarification:** Documented `layer2::system` to explain the intended Polar Coordinate System. Future developers should note that the current renderer simplifies this to a single-level orbit model for visual clarity (or due to a bug).
+## 2026-10-31 - [Doc Code Block Confusion]
+**Confusion:** The rustdoc generator will try to parse indented text in a `///` docstring as an indented code block (equivalent to wrapping it in backticks). However, when two multiline module docs are split by simple modules and the file formatting causes a specific parsing structure, rustdoc might throw an invalid codeblocks warning that points incorrectly to the end of the file or attribute it across multiple lines.
+**Clarification:** I removed the blank empty spaces and reformatted the `/// Game balance constants.` and `/// Emergent utility AI system.` so they aren't parsed incorrectly.
+
+## 2026-10-31 - [Utility Types Broken Links]
+**Confusion:** `utility_types.rs` references actions inside `actions::` (e.g. `work`, `farm`, `fetch_clothing`), but they were using nonexistent function names (e.g. `evaluate_socialize` or `evaluate_farm`) or hidden modules.
+**Clarification:** Fixed links to map accurately to their actual `layer1::actions::` equivalents (mostly `evaluate_simple_action` and other actual evaluation functions in `actions.rs`).

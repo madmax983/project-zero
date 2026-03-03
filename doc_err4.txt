@@ -1,0 +1,243 @@
+ Documenting scale v0.1.0 (/app)
+    Checking scale v0.1.0 (/app)
+warning: ambiguous glob re-exports
+   --> src/layer1/mod.rs:183:9
+    |
+183 | pub use access_control::*;
+    |         ^^^^^^^^^^^^^^^^^ the name `check_access` in the value namespace is first re-exported here
+...
+695 | pub use security::*;
+    |         ----------- but the name `check_access` in the value namespace is also re-exported here
+    |
+    = note: `#[warn(ambiguous_glob_reexports)]` on by default
+
+warning: unused import: `strum::IntoEnumIterator`
+  --> src/layer1/tech/mod.rs:41:5
+   |
+41 | use strum::IntoEnumIterator;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: value assigned to `remaining_hunger` is never read
+   --> src/layer1/the_visitor.rs:139:21
+    |
+139 |                     remaining_hunger -= eat;
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: maybe it is overwritten before being read?
+    = note: `#[warn(unused_assignments)]` (part of `#[warn(unused)]`) on by default
+
+warning: `scale` (lib) generated 3 warnings
+warning: unresolved link to `crate::layer1::actions::hunger::evaluate_satisfy_hunger`
+  --> src/layer1/utility_types.rs:13:15
+   |
+13 |     /// See [`crate::layer1::actions::hunger::evaluate_satisfy_hunger`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `hunger` in module `actions`
+   |
+   = note: `#[warn(rustdoc::broken_intra_doc_links)]` on by default
+
+warning: unresolved link to `crate::layer1::actions::rest::evaluate_satisfy_rest`
+  --> src/layer1/utility_types.rs:17:15
+   |
+17 |     /// See [`crate::layer1::actions::rest::evaluate_satisfy_rest`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `rest` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::social::evaluate_socialize`
+  --> src/layer1/utility_types.rs:21:15
+   |
+21 |     /// See [`crate::layer1::actions::social::evaluate_socialize`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `social` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::explore::evaluate_explore`
+  --> src/layer1/utility_types.rs:25:15
+   |
+25 |     /// See [`crate::layer1::actions::explore::evaluate_explore`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `explore` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::work::evaluate_work`
+  --> src/layer1/utility_types.rs:29:15
+   |
+29 |     /// See [`crate::layer1::actions::work::evaluate_work`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `work` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::repair::evaluate_repair`
+  --> src/layer1/utility_types.rs:33:15
+   |
+33 |     /// See [`crate::layer1::actions::repair::evaluate_repair`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `repair` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::research::evaluate_research`
+  --> src/layer1/utility_types.rs:37:15
+   |
+37 |     /// See [`crate::layer1::actions::research::evaluate_research`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `research` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::haul::evaluate_haul`
+  --> src/layer1/utility_types.rs:41:15
+   |
+41 |     /// See [`crate::layer1::actions::haul::evaluate_haul`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `haul` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::medical::evaluate_seek_medical_care`
+  --> src/layer1/utility_types.rs:45:15
+   |
+45 |     /// See [`crate::layer1::actions::medical::evaluate_seek_medical_care`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `medical` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::funeral::evaluate_bury_corpse`
+  --> src/layer1/utility_types.rs:49:15
+   |
+49 |     /// See [`crate::layer1::actions::funeral::evaluate_bury_corpse`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `funeral` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::fetch_tool::evaluate_fetch_tool`
+  --> src/layer1/utility_types.rs:53:15
+   |
+53 |     /// See [`crate::layer1::actions::fetch_tool::evaluate_fetch_tool`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `fetch_tool` in module `actions`
+
+warning: public documentation for `Idle` links to private item `crate::layer1::utility_eval_types::evaluate_idle`
+  --> src/layer1/utility_types.rs:57:15
+   |
+57 |     /// See [`crate::layer1::utility_eval_types::evaluate_idle`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this item is private
+   |
+   = note: this link resolves only because you passed `--document-private-items`, but will break without
+   = note: `#[warn(rustdoc::private_intra_doc_links)]` on by default
+
+warning: unresolved link to `crate::layer1::actions::mental_break::evaluate_mental_break`
+  --> src/layer1/utility_types.rs:61:15
+   |
+61 |     /// See [`crate::layer1::actions::mental_break::evaluate_mental_break`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `mental_break` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::mental_break::evaluate_mental_break`
+  --> src/layer1/utility_types.rs:65:15
+   |
+65 |     /// See [`crate::layer1::actions::mental_break::evaluate_mental_break`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `mental_break` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::mental_break::evaluate_mental_break`
+  --> src/layer1/utility_types.rs:69:15
+   |
+69 |     /// See [`crate::layer1::actions::mental_break::evaluate_mental_break`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `mental_break` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::fight::evaluate_drafted_behavior`
+  --> src/layer1/utility_types.rs:73:15
+   |
+73 |     /// See [`crate::layer1::actions::fight::evaluate_drafted_behavior`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `fight` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::refine::evaluate_refine`
+  --> src/layer1/utility_types.rs:77:15
+   |
+77 |     /// See [`crate::layer1::actions::refine::evaluate_refine`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `refine` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::farm::evaluate_farm`
+  --> src/layer1/utility_types.rs:81:15
+   |
+81 |     /// See [`crate::layer1::actions::farm::evaluate_farm`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `farm` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::mental_break::evaluate_mental_break`
+  --> src/layer1/utility_types.rs:89:15
+   |
+89 |     /// See [`crate::layer1::actions::mental_break::evaluate_mental_break`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `mental_break` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::mental_break::evaluate_mental_break`
+  --> src/layer1/utility_types.rs:97:15
+   |
+97 |     /// See [`crate::layer1::actions::mental_break::evaluate_mental_break`].
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `mental_break` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::mental_break::evaluate_mental_break`
+   --> src/layer1/utility_types.rs:101:15
+    |
+101 |     /// See [`crate::layer1::actions::mental_break::evaluate_mental_break`].
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `mental_break` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::mental_break::evaluate_mental_break`
+   --> src/layer1/utility_types.rs:105:15
+    |
+105 |     /// See [`crate::layer1::actions::mental_break::evaluate_mental_break`].
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `mental_break` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::fetch_clothing::evaluate_fetch_clothing`
+   --> src/layer1/utility_types.rs:109:15
+    |
+109 |     /// See [`crate::layer1::actions::fetch_clothing::evaluate_fetch_clothing`].
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `fetch_clothing` in module `actions`
+
+warning: unresolved link to `crate::layer1::actions::admin::evaluate_admin`
+   --> src/layer1/utility_types.rs:122:15
+    |
+122 |     /// See [`crate::layer1::actions::admin::evaluate_admin`].
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `admin` in module `actions`
+
+warning: unresolved link to `cleanup`
+  --> src/layer1/mod.rs:560:1
+   |
+12 | | //! - **Building:** Constructed structures (Housing, Farm, Walls). See [`crate::layer1::building`].
+   | |___________________________________________________^
+...
+560| / /// System registration and sets (Facade).
+   |
+   = note: the link appears in this line:
+
+           * [`cleanup`]: Event cleanup and input handling.
+              ^^^^^^^^^
+   = note: no item named `cleanup` in scope
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `environment`
+  --> src/layer1/mod.rs:560:1
+   |
+12 | | //! - **Building:** Constructed structures (Housing, Farm, Walls). See [`crate::layer1::building`].
+   | |___________________________________________________^
+...
+560| / /// System registration and sets (Facade).
+   |
+   = note: the link appears in this line:
+
+           * [`environment`]: Fire, weather, and decay.
+              ^^^^^^^^^^^^^
+   = note: no item named `environment` in scope
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `consumption`
+  --> src/layer1/mod.rs:560:1
+   |
+12 | | //! - **Building:** Constructed structures (Housing, Farm, Walls). See [`crate::layer1::building`].
+   | |___________________________________________________^
+...
+560| / /// System registration and sets (Facade).
+   |
+   = note: the link appears in this line:
+
+           * [`consumption`]: Needs decay, spoilage, and death.
+              ^^^^^^^^^^^^^
+   = note: no item named `consumption` in scope
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `observation`
+  --> src/layer1/mod.rs:560:1
+   |
+12 | | //! - **Building:** Constructed structures (Housing, Farm, Walls). See [`crate::layer1::building`].
+   | |___________________________________________________^
+...
+560| / /// System registration and sets (Facade).
+   |
+   = note: the link appears in this line:
+
+           * [`observation`]: History, social, and dreams.
+              ^^^^^^^^^^^^^
+   = note: no item named `observation` in scope
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: `scale` (lib doc) generated 28 warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 12.95s
+   Generated /app/target/doc/scale/index.html and 2 other files
