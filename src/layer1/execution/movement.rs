@@ -13,6 +13,7 @@ use crate::layer1::particles::Particle;
 use crate::layer1::pop::{Role, Speed};
 use crate::layer1::social::Tavern;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
+use crate::layer1::tech::hypno_learning::MentalFog;
 use crate::layer1::traits::{get_trait_move_speed_modifier, Traits};
 use crate::layer1::utility_types::{ActionType, StartPlan};
 use bevy_ecs::prelude::*;
@@ -121,6 +122,7 @@ pub fn movement_system(
             Option<&Traits>,
             Option<&HitStop>,
             Option<&Role>,
+            Option<&MentalFog>,
         ),
         (Without<AtTarget>, Without<Building>),
     >,
@@ -137,7 +139,7 @@ pub fn movement_system(
     )>,
     mut commands: Commands,
 ) {
-    for (pop_entity, mut current_pos, mt, mut speed_opt, traits, hit_stop, role) in &mut pops {
+    for (pop_entity, mut current_pos, mt, mut speed_opt, traits, hit_stop, role, fog) in &mut pops {
         // Ludwig: Check Hit Stop
         if let Some(hs) = hit_stop {
             if hs.ticks_remaining > 0 {
@@ -146,10 +148,11 @@ pub fn movement_system(
         }
 
         let trait_mod = traits.map_or(1.0, get_trait_move_speed_modifier);
+        let fog_mod = fog.map_or(1.0, |f| f.movement_penalty);
 
         // Accumulate speed
         if let Some(ref mut speed) = speed_opt {
-            speed.accumulator += speed.current * trait_mod;
+            speed.accumulator += speed.current * trait_mod * fog_mod;
         }
 
         let target_pos = mt.target_position;

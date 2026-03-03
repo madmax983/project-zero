@@ -753,6 +753,7 @@ pub const fn get_building_char(building: BuildingType) -> &'static str {
         BuildingType::AtmosphericProcessor => "@",
         BuildingType::GeneBank => "🧬",
         BuildingType::CloneVat => "⚗",
+        BuildingType::HypnoPod => "H",
         BuildingType::Shower => "🚿",
         BuildingType::Recycler => "♻",
         BuildingType::BulletinBoard => "B",
@@ -814,7 +815,8 @@ pub const fn get_building_color(building: BuildingType, material: MaterialType) 
             BuildingType::AtmosphericProcessor
             | BuildingType::Recycler
             | BuildingType::ServerBank
-            | BuildingType::CloneVat => Color::Rgb(0, 255, 100), // Toxic/Data Green
+            | BuildingType::CloneVat
+            | BuildingType::HypnoPod => Color::Rgb(0, 255, 100), // Toxic/Data Green
             BuildingType::Plantation | BuildingType::PersonalGarden => Color::Green,
             BuildingType::Weaver | BuildingType::Statue | BuildingType::Lander => Color::White,
             BuildingType::Hospital => Color::Red,
