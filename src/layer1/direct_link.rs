@@ -178,15 +178,13 @@ pub fn handle_direct_movement(
         // 2. Check Cooldown / Buffering
         if time_since_move < cooldown {
             // Buffer the input
-            // We store the "strongest" input direction if multiple pressed?
-            // Just store the last pressed one for simplicity of struct
-            if input.just_pressed(KeyCode::W) {
+            if input.just_pressed(KeyCode::W) || input.just_pressed(KeyCode::Up) {
                 state.buffered_input = Some(KeyCode::W);
-            } else if input.just_pressed(KeyCode::S) {
+            } else if input.just_pressed(KeyCode::S) || input.just_pressed(KeyCode::Down) {
                 state.buffered_input = Some(KeyCode::S);
-            } else if input.just_pressed(KeyCode::A) {
+            } else if input.just_pressed(KeyCode::A) || input.just_pressed(KeyCode::Left) {
                 state.buffered_input = Some(KeyCode::A);
-            } else if input.just_pressed(KeyCode::D) {
+            } else if input.just_pressed(KeyCode::D) || input.just_pressed(KeyCode::Right) {
                 state.buffered_input = Some(KeyCode::D);
             }
 
@@ -232,8 +230,34 @@ pub fn handle_direct_movement(
                 shake.trigger(0.1);
             }
 
-            // If diagonal failed, try sliding? (Optional polish, skipping for now)
-            // Just clear buffer to prevent "stuck" inputs
+            // If diagonal failed, try sliding along walls
+            if intended_dx != 0 && intended_dy != 0 {
+                let walkable_x = is_tile_walkable(
+                    &terrain,
+                    occupied_tiles.as_deref(),
+                    &buildings,
+                    pos.x + intended_dx,
+                    pos.y,
+                    entity,
+                    role.copied(),
+                );
+                let walkable_y = is_tile_walkable(
+                    &terrain,
+                    occupied_tiles.as_deref(),
+                    &buildings,
+                    pos.x,
+                    pos.y + intended_dy,
+                    entity,
+                    role.copied(),
+                );
+                if walkable_x {
+                    pos.x += intended_dx;
+                    state.last_move_time = now;
+                } else if walkable_y {
+                    pos.y += intended_dy;
+                    state.last_move_time = now;
+                }
+            }
             state.buffered_input = None;
         }
     }
