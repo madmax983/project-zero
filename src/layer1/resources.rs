@@ -76,6 +76,13 @@ pub struct Carrying {
     pub amount: f32,
 }
 
+/// Event triggered when a mining action adds stress.
+#[derive(Event, Debug, Clone)]
+pub struct MiningEvent {
+    /// Amount of work/stress done.
+    pub amount: f32,
+}
+
 /// Tracks the resources available to the colony.
 ///
 /// This resource serves as the "bank" for the simulation.
@@ -839,6 +846,8 @@ pub fn mine_rock(world: &mut World, designation_entity: Entity, work_amount: f32
         if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
             log.add("Mined Stone (Needs Hauling)");
         }
+
+        world.send_event(MiningEvent { amount: work_amount });
 
         // Purity Logic: Ore (High Purity) vs Waste (Low Purity)
         let purity = world

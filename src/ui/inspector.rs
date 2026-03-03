@@ -78,6 +78,7 @@ const fn format_action_type(action: ActionType) -> (&'static str, &'static str, 
         ActionType::Clean => ("🧹", "Cleaning", Color::Yellow),
         ActionType::PurgeResidue => ("🧹", "Purging Ghost Code", Color::Red),
         ActionType::VoidStare => ("👁", "Staring into Abyss", Color::Black),
+        ActionType::ReliefQuake => ("💣", "Relief Quake", Color::Red),
     }
 }
 

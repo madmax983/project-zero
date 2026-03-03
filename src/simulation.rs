@@ -124,6 +124,15 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world.contains_resource::<Events<crate::layer1::volatile::ExplosionEvent>>() {
         world.init_resource::<Events<crate::layer1::volatile::ExplosionEvent>>();
     }
+    if !world.contains_resource::<Events<crate::layer1::resources::MiningEvent>>() {
+        world.init_resource::<Events<crate::layer1::resources::MiningEvent>>();
+    }
+    if !world.contains_resource::<Events<crate::layer1::geology::tectonic::MegaQuakeEvent>>() {
+        world.init_resource::<Events<crate::layer1::geology::tectonic::MegaQuakeEvent>>();
+    }
+    if !world.contains_resource::<Events<crate::layer1::geology::tectonic::LocalQuakeEvent>>() {
+        world.init_resource::<Events<crate::layer1::geology::tectonic::LocalQuakeEvent>>();
+    }
 
     if !world.contains_resource::<crate::layer1::unrest::Unrest>() {
         world.init_resource::<crate::layer1::unrest::Unrest>();
@@ -140,6 +149,10 @@ pub fn run_simulation_tick(world: &mut World) {
     // Initialize Infinite Archive Resource (Spec 248)
     if !world.contains_resource::<crate::layer1::tech::infinite_archive::Archive>() {
         world.init_resource::<crate::layer1::tech::infinite_archive::Archive>();
+    }
+
+    if !world.contains_resource::<crate::layer1::geology::tectonic::TectonicStress>() {
+        world.init_resource::<crate::layer1::geology::tectonic::TectonicStress>();
     }
 
     // Add our schedule if not yet added

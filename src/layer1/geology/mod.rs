@@ -255,3 +255,5 @@ mod tests {
         assert!(health.current < 100.0);
     }
 }
+pub mod tectonic;
+#[cfg(test)] pub mod tectonic_tests;

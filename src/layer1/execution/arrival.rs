@@ -45,6 +45,7 @@ pub fn arrival_handler_system(
     mut log: Option<ResMut<MessageLog>>,
     mut graffiti_map: Option<ResMut<crate::layer1::graffiti::GraffitiMap>>,
     mut unequip_events: EventWriter<UnequipEvent>,
+    mut local_quake_events: EventWriter<crate::layer1::geology::tectonic::LocalQuakeEvent>,
     time: Res<SimulationTime>,
     mut commands: Commands,
 ) {
@@ -74,6 +75,7 @@ pub fn arrival_handler_system(
             log.as_deref_mut(),
             graffiti_map.as_deref_mut(),
             &mut unequip_events,
+            &mut local_quake_events,
             &mut farms,
             &mut housing_q,
             &mut taverns,
@@ -107,6 +109,7 @@ fn process_arrival(
     log: Option<&mut MessageLog>,
     graffiti_map: Option<&mut crate::layer1::graffiti::GraffitiMap>,
     unequip_events: &mut EventWriter<UnequipEvent>,
+    local_quake_events: &mut EventWriter<crate::layer1::geology::tectonic::LocalQuakeEvent>,
     farms: &mut Query<&mut Farm>,
     housing_q: &mut Query<&mut Housing>,
     taverns: &mut Query<&mut Tavern>,
@@ -229,6 +232,16 @@ fn process_arrival(
                 target_entity,
                 AssignmentType::Administrator,
             )
+        }
+        ActionType::ReliefQuake => {
+            // ReliefQuake action sends a LocalQuakeEvent and cleans up
+            local_quake_events.send(crate::layer1::geology::tectonic::LocalQuakeEvent {
+                center: target_pos,
+            });
+            if let Some(log) = log {
+                log.add_colored("Controlled relief quake triggered!", ratatui::style::Color::Yellow);
+            }
+            true
         }
         ActionType::BuryCorpse => {
             handle_bury_corpse(
