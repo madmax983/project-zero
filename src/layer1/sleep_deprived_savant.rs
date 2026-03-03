@@ -28,8 +28,6 @@ impl Default for FeverDream {
 }
 
 /// Evaluates Pops to see if they should enter or exit the Fever Dream state,
-/// and applies the relevant buffs and damage.
-
 pub fn fever_dream_system(
     mut commands: Commands,
     mut query: Query<

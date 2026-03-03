@@ -149,3 +149,5 @@ mod mega_quake_chronicle;
 mod sanctuary_ai;
 #[path = "integration/tectonic_stress.rs"]
 mod tectonic_stress;
+#[path = "integration/quantum_twins.rs"]
+mod quantum_twins;

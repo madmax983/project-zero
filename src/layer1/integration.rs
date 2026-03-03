@@ -684,3 +684,54 @@ pub fn mega_quake_chronicle_bridge(
         });
     }
 }
+
+/// Holds the last unpaired clone entity to pair it with the next one.
+#[derive(Resource, Default)]
+pub struct UnpairedClone {
+    pub entity: Option<Entity>,
+}
+
+/// Bridges PopBorn events from the Clone Vat to create Quantum Twins.
+pub fn quantum_twin_clone_bridge(
+    mut commands: Commands,
+    mut events: EventReader<PopBorn>,
+    mut unpaired: ResMut<UnpairedClone>,
+) {
+    for event in events.read() {
+        if event.source == "Clone Vat" {
+            if let Some(partner) = unpaired.entity {
+                if partner != event.entity {
+                    // Pair them
+                    commands.entity(event.entity).insert(crate::layer1::quantum_twins::QuantumTwin {
+                        partner,
+                        link_strength: 0.5,
+                    });
+                    commands.entity(partner).insert(crate::layer1::quantum_twins::QuantumTwin {
+                        partner: event.entity,
+                        link_strength: 0.5,
+                    });
+                    unpaired.entity = None;
+                }
+            } else {
+                unpaired.entity = Some(event.entity);
+            }
+        }
+    }
+}
+
+/// Emits an AddChronicleEvent when a Quantum Twin dies (Severance).
+pub fn quantum_twin_severance_chronicle_bridge(
+    mut events: EventReader<PopDied>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+    query: Query<&crate::layer1::quantum_twins::QuantumTwin>,
+) {
+    for event in events.read() {
+        if query.get(event.entity).is_ok() {
+            let text = format!("Severance: The quantum bond with {} has been broken by death. The surviving twin suffers greatly.", event.name);
+            chronicle_events.send(AddChronicleEvent {
+                text,
+                importance: EventImportance::Major,
+            });
+        }
+    }
+}

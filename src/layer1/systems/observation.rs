@@ -129,6 +129,9 @@ pub fn register(schedule: &mut Schedule) {
             // The previous error was referencing crate::layer1::health::handle_pop_death_system
             crate::layer1::quantum_twins::handle_severance_system
                 .after(crate::layer1::pop::handle_pop_death_system),
+            crate::layer1::integration::quantum_twin_clone_bridge,
+            crate::layer1::integration::quantum_twin_severance_chronicle_bridge
+                .after(crate::layer1::quantum_twins::handle_severance_system),
         )
             .in_set(Layer1SystemSet::Observation),
     );
