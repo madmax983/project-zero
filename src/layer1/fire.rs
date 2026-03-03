@@ -155,7 +155,8 @@ pub fn fire_damage_system(world: &mut World) {
     }
 
     // Apply destruction for burnt-out fires
-    let mut entities_to_despawn = Vec::new();
+    // ⚡ Bolt: Pre-allocating vector size to avoid multiple dynamic allocations in the inner loop during destruction.
+    let mut entities_to_despawn = Vec::with_capacity(fires_to_remove.len());
     {
         let terrain = world.resource::<TerrainGrid>();
 
