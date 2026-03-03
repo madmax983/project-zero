@@ -18,11 +18,19 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer1::geology::GeologicalEvent>,
             update_event_buffer::<crate::layer1::society::InvestigationEvent>,
             update_event_buffer::<crate::layer1::society::SuppressSocietyEvent>,
+        )
+            .in_set(Layer1SystemSet::EventCleanup),
+    );
+
+    schedule.add_systems(
+        (
             update_event_buffer::<crate::layer1::medical::PatientTreated>,
             update_event_buffer::<crate::layer1::eureka::EurekaEvent>,
             update_event_buffer::<crate::layer1::items::UnequipEvent>,
             update_event_buffer::<crate::layer1::unrest::DenounceEvent>,
             update_event_buffer::<crate::layer1::volatile::ExplosionEvent>,
+            update_event_buffer::<crate::layer1::geology::tectonic::MiningEvent>,
+            update_event_buffer::<crate::layer1::geology::tectonic::MegaQuakeEvent>,
             update_event_buffer::<PossessEntityEvent>,
             update_event_buffer::<UnpossessEvent>,
             update_event_buffer::<crate::layer1::skills::XpGainEvent>,

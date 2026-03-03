@@ -255,3 +255,21 @@ mod tests {
         assert!(health.current < 100.0);
     }
 }
+pub fn apply_mega_quake_system(
+    mut events: EventReader<MegaQuakeEvent>,
+    mut geo_events: EventWriter<GeologicalEvent>,
+) {
+    for _ in events.read() {
+        // Send a massive map-wide earthquake event, using a dummy center, since MegaQuake affects the whole map or a large area.
+        // Or we could trigger multiple GeologicalEvents across the map.
+        // For simplicity, we just trigger a massive magnitude event at the center of the map.
+        geo_events.send(GeologicalEvent::Earthquake {
+            center: crate::layer1::map::GridPosition { x: 50, y: 50 }, // Assuming roughly center
+            magnitude: 50.0, // Mega Quake magnitude
+        });
+    }
+}
+
+pub mod tectonic;
+pub use tectonic::*;
+pub mod tectonic_tests;
