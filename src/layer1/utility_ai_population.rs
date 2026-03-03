@@ -100,6 +100,7 @@ pub fn populate_ai_buffer(world: &mut World, buffer: &mut UtilityAIBuffer, conte
     populate_enemies(world, &mut buffer.enemies);
     populate_all_structures(world, &mut buffer.all_structures);
     populate_cleaning_targets(world, buffer);
+    populate_sanctuaries(world, &mut buffer.sanctuaries);
 }
 
 fn populate_buffer_buildings(
@@ -842,5 +843,24 @@ mod tests {
         world.spawn((housing_empty, GridPosition { x: 1, y: 0 }));
         populate_housing(&mut world, &mut buffer);
         assert_eq!(buffer.len(), 1, "Should include available housing");
+    }
+}
+
+fn populate_sanctuaries(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
+    buffer.clear();
+    let manager = world.get_resource::<crate::layer1::social::empty_room::SanctuaryManager>();
+    if let Some(mgr) = manager {
+        for (i, sanctuary) in mgr.sanctuaries.iter().enumerate() {
+            if sanctuary.is_valid && !sanctuary.tiles.is_empty() {
+                // Determine a pseudo-entity ID for the target.
+                // We use a dummy entity to allow evaluation targets to not panic.
+                // Alternatively, since it's a zone, the UtilityAI may just need the position.
+                let mut candidate = ScorableCandidate::new(Entity::from_raw(u32::MAX - i as u32), sanctuary.tiles[0]);
+                candidate.score_bonus = sanctuary.effectiveness;
+                // capacity is number of tiles
+                candidate.capacity = sanctuary.tiles.len();
+                buffer.push(candidate);
+            }
+        }
     }
 }

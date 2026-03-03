@@ -248,6 +248,15 @@ fn process_arrival(
             // Just keep the AtTarget marker for that system
             false
         }
+        ActionType::VisitSanctuary => {
+            // The `visit_sanctuary_system` automatically handles the stress reduction effect
+            // when the pop is standing in the sanctuary zone, so we just idle here.
+            true
+        }
+        ActionType::VoidStare => {
+            // Wait silently
+            true
+        }
         _ => true,
     }
 }

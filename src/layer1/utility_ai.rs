@@ -335,6 +335,18 @@ impl<'a> PopDecider<'a> {
             self.context,
             0.0,
         );
+
+        // Evaluate VisitSanctuary
+        if self.data.stress > 0.2 {
+            // Urgency scales with stress (maxes out when highly stressed)
+            let sanctuary_urgency = (self.data.stress * 1.5).min(1.0);
+            self.evaluator.evaluate_and_consider(
+                evaluate_simple_action(pop_pos, &weights, &self.buffer.sanctuaries, sanctuary_urgency),
+                ActionType::VisitSanctuary,
+                self.context,
+                0.0,
+            );
+        }
     }
 
     /// **Priority 3: Work & Production**
