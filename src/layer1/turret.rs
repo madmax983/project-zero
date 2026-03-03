@@ -22,25 +22,33 @@ pub struct Turret {
 }
 
 /// System that handles turret targeting, firing, and ammo consumption.
-#[allow(clippy::too_many_lines, clippy::collapsible_if)]
 pub fn turret_fire_system(world: &mut World) {
-    // 1. Collect potential targets (Hostiles)
-    // Optimization: Spatial query would be better, but O(N*M) is acceptable for MVP count.
-    let mut targets = Vec::new();
-    let mut query = world.query::<(Entity, &GridPosition, &Health)>();
-    // Filter for Hostile Fauna or Raiders (check components)
-    // For now, assume Fauna with Health > 0 are valid targets
-    for (entity, pos, health) in query.iter(world) {
-        if health.current > 0.0 {
-            // Check if it's hostile? (Fauna usually is, or check specific component)
-            if world.get::<Fauna>(entity).is_some() {
-                targets.push((entity, *pos));
-            }
+    let targets = collect_valid_targets(world);
+    let turrets = get_ready_turrets(world);
+
+    for (turret_entity, turret_pos, turret_data) in turrets {
+        if !can_turret_fire(&turret_data, world) {
+            continue;
+        }
+
+        if let Some((target_entity, target_pos)) = find_best_target(&turret_data, &turret_pos, &targets) {
+            fire_turret(world, turret_entity, &turret_data, turret_pos, target_entity, target_pos);
         }
     }
+}
 
-    // 2. Iterate Turrets
-    // Extract tech state for validation
+fn collect_valid_targets(world: &mut World) -> Vec<(Entity, GridPosition)> {
+    let mut targets = Vec::new();
+    let mut query = world.query::<(Entity, &GridPosition, &Health)>();
+    for (entity, pos, health) in query.iter(world) {
+        if health.current > 0.0 && world.get::<Fauna>(entity).is_some() {
+            targets.push((entity, *pos));
+        }
+    }
+    targets
+}
+
+fn get_ready_turrets(world: &mut World) -> Vec<(Entity, GridPosition, Turret)> {
     let tech_state_exists = world.contains_resource::<crate::layer1::tech::TechState>();
     let tech_map = world
         .get_resource::<crate::layer1::tech::TechState>()
@@ -55,13 +63,10 @@ pub fn turret_fire_system(world: &mut World) {
         &mut CombatState,
         &crate::layer1::building::Building,
     )>();
+
     for (entity, pos, turret, mut state, building) in query.iter_mut(world) {
-        // Check Tech Corruption
         if let Some(tech) = building.building_type.required_tech() {
-            // Only check if TechState system is initialized (backward compat for tests)
-            if tech_state_exists
-                && tech_map.get(&tech) != Some(&crate::layer1::tech::TechStatus::Active)
-            {
+            if tech_state_exists && tech_map.get(&tech) != Some(&crate::layer1::tech::TechStatus::Active) {
                 continue;
             }
         }
@@ -72,95 +77,84 @@ pub fn turret_fire_system(world: &mut World) {
             state.cooldown -= 1;
         }
     }
+    turrets
+}
 
-    // 3. Fire Logic (Mutable World Access needed)
-    for (turret_entity, turret_pos, turret_data) in turrets {
-        // Validate ammo cost (Harden Input)
-        if turret_data.ammo_cost < 0.0 || !turret_data.ammo_cost.is_finite() {
-            continue;
+fn can_turret_fire(turret_data: &Turret, world: &World) -> bool {
+    if turret_data.ammo_cost < 0.0 || !turret_data.ammo_cost.is_finite() {
+        return false;
+    }
+
+    let resources = world.resource::<ColonyResources>();
+    match turret_data.ammo_type {
+        ResourceType::Waste => resources.waste >= turret_data.ammo_cost,
+        _ => false, // Only Waste supported for now
+    }
+}
+
+fn find_best_target(turret_data: &Turret, turret_pos: &GridPosition, targets: &[(Entity, GridPosition)]) -> Option<(Entity, GridPosition)> {
+    let mut best_target = None;
+    let mut min_dist = f32::MAX;
+
+    for (target_entity, target_pos) in targets {
+        #[allow(clippy::cast_precision_loss)]
+        let dist = ((turret_pos.x - target_pos.x).pow(2) as f32
+            + (turret_pos.y - target_pos.y).pow(2) as f32)
+            .sqrt();
+
+        if dist <= turret_data.attack.range && dist < min_dist {
+            min_dist = dist;
+            best_target = Some((*target_entity, *target_pos));
         }
+    }
+    best_target
+}
 
-        // Check Ammo
-        let has_ammo = {
-            let resources = world.resource::<ColonyResources>();
-            match turret_data.ammo_type {
-                ResourceType::Waste => resources.waste >= turret_data.ammo_cost,
-                _ => false, // Only Waste supported for now
-            }
-        };
-
-        if !has_ammo {
-            continue;
+fn fire_turret(
+    world: &mut World,
+    turret_entity: Entity,
+    turret_data: &Turret,
+    turret_pos: GridPosition,
+    target_entity: Entity,
+    target_pos: GridPosition,
+) {
+    // Deduct Ammo
+    {
+        let mut resources = world.resource_mut::<ColonyResources>();
+        if turret_data.ammo_type == ResourceType::Waste {
+            resources.waste -= turret_data.ammo_cost;
         }
+    }
 
-        // Find Target in Range
-        let mut best_target = None;
-        let mut min_dist = f32::MAX;
+    // Deal Damage
+    if let Some(mut health) = world.get_mut::<Health>(target_entity) {
+        health.take_damage(turret_data.attack.damage);
+    }
 
-        for (target_entity, target_pos) in &targets {
-            // Euclidean distance
-            #[allow(clippy::cast_precision_loss)]
-            let dist = ((turret_pos.x - target_pos.x).pow(2) as f32
-                + (turret_pos.y - target_pos.y).pow(2) as f32)
-                .sqrt();
+    // Set Cooldown
+    if let Some(mut state) = world.get_mut::<CombatState>(turret_entity) {
+        state.cooldown = turret_data.attack.cooldown;
+    }
 
-            if dist <= turret_data.attack.range && dist < min_dist {
-                min_dist = dist;
-                best_target = Some((*target_entity, *target_pos));
-            }
-        }
+    // Spawn Impact Mess (Waste Item)
+    world.spawn((
+        ResourceItem {
+            resource_type: ResourceType::Waste,
+            amount: 0.1, // Small amount
+        },
+        target_pos,
+    ));
 
-        if let Some((target_entity, target_pos)) = best_target {
-            // Deduct Ammo
-            let mut resources = world.resource_mut::<ColonyResources>();
-            if turret_data.ammo_type == ResourceType::Waste {
-                resources.waste -= turret_data.ammo_cost;
-            }
+    // Visuals
+    crate::layer1::particles::spawn_particle(world, target_pos, 'x', ratatui::style::Color::DarkGray, 5);
 
-            // Deal Damage
-            if let Some(mut health) = world.get_mut::<Health>(target_entity) {
-                health.take_damage(turret_data.attack.damage);
-            }
+    // Ludwig: Muzzle Flash
+    crate::layer1::particles::spawn_particle(world, turret_pos, '*', ratatui::style::Color::Yellow, 5);
 
-            // Set Cooldown
-            if let Some(mut state) = world.get_mut::<CombatState>(turret_entity) {
-                state.cooldown = turret_data.attack.cooldown;
-            }
-
-            // Spawn Impact Mess (Waste Item)
-            world.spawn((
-                ResourceItem {
-                    resource_type: ResourceType::Waste,
-                    amount: 0.1, // Small amount
-                },
-                target_pos,
-            ));
-
-            // Visuals
-            crate::layer1::particles::spawn_particle(
-                world,
-                target_pos,
-                'x',
-                ratatui::style::Color::DarkGray,
-                5,
-            );
-
-            // Ludwig: Muzzle Flash
-            crate::layer1::particles::spawn_particle(
-                world,
-                turret_pos,
-                '*',
-                ratatui::style::Color::Yellow,
-                5,
-            );
-
-            // Ludwig: Screen Shake for heavy weapons
-            if turret_data.ammo_type == ResourceType::Waste {
-                if let Some(mut shake) = world.get_resource_mut::<crate::layer1::map::ScreenShake>()
-                {
-                    shake.trigger(0.2);
-                }
-            }
+    // Ludwig: Screen Shake for heavy weapons
+    if turret_data.ammo_type == ResourceType::Waste {
+        if let Some(mut shake) = world.get_resource_mut::<crate::layer1::map::ScreenShake>() {
+            shake.trigger(0.2);
         }
     }
 }

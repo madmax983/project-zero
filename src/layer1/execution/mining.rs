@@ -20,12 +20,10 @@ pub fn handle_mining_work(
     work_amount: f32,
     pos: Option<GridPosition>,
 ) -> bool {
-    let mut rng = rand::thread_rng();
-    let is_crit = rng.gen_bool(0.05);
+    let is_crit = rand::thread_rng().gen_bool(0.05);
 
-    let mut effective_work = work_amount;
-    if is_crit {
-        effective_work *= 5.0;
+    let effective_work = if is_crit {
+        let work = work_amount * 5.0;
         if let Some(p) = pos {
             spawn_particle(world, p, '*', Color::Yellow, 10);
             trigger_shake(world, 0.3);
@@ -33,7 +31,10 @@ pub fn handle_mining_work(
         if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
             log.add_colored("Critical Mine!", Color::Yellow);
         }
-    }
+        work
+    } else {
+        work_amount
+    };
 
     // Emit XP event for mining
     if let Some(mut events) = world.get_resource_mut::<Events<XpGainEvent>>() {
@@ -49,113 +50,112 @@ pub fn handle_mining_work(
         crate::layer1::geology::add_seismic_stress(world, p, 1.0);
     }
 
-    // Check for Mother Lode
     let is_mother_lode = world.get::<MotherLode>(entity).is_some();
-
     if is_mother_lode {
-        if let Some(mut lode) = world.get_mut::<MotherLode>(entity) {
-            lode.increment_hazard();
-        }
-
-        // Progress logic for infinite resource
-        if world
-            .get::<crate::layer1::resources::MiningProgress>(entity)
-            .is_none()
-        {
-            world
-                .entity_mut(entity)
-                .insert(crate::layer1::resources::MiningProgress {
-                    current: 0.0,
-                    max: 20.0,
-                });
-        }
-
-        let completed = if let Some(mut progress) =
-            world.get_mut::<crate::layer1::resources::MiningProgress>(entity)
-        {
-            progress.current += effective_work;
-            if progress.current >= progress.max {
-                progress.current = 0.0;
-                true
-            } else {
-                false
-            }
-        } else {
-            false
-        };
-
-        if completed {
-            if let Some(lode) = world.get::<MotherLode>(entity) {
-                let res_type = lode.resource_type;
-                if let Some(p) = pos {
-                    world.spawn((
-                        crate::layer1::resources::ResourceItem {
-                            resource_type: res_type,
-                            amount: 1.0,
-                        },
-                        p,
-                    ));
-                    if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
-                        log.add(format!("Mined {:?} from Mother Lode", res_type));
-                    }
-                }
-            }
-        }
+        process_mother_lode(world, entity, effective_work, pos);
     } else {
-        let is_scrap = if let Some(p) = pos {
-            let mut found = false;
-            let mut query = world.query::<(&GridPosition, &ImpactSite)>();
-            for (gp, _) in query.iter(world) {
-                if *gp == p {
-                    found = true;
-                    break;
-                }
-            }
-            found
-        } else {
-            false
-        };
-
-        if is_scrap {
-            mine_scrap(world, entity, effective_work);
-        } else {
-            process_mining(world, entity, effective_work);
-        }
+        process_normal_mining(world, entity, effective_work, pos);
     }
 
     if let Some(p) = pos {
-        if world.get_entity(entity).is_err() {
-            // Finished: Big shake + Debris
-            trigger_shake(world, 0.5);
-            spawn_particle(world, p, '*', Color::White, 10);
+        handle_mining_visuals(world, entity, p, is_crit);
+    }
 
-            // Ludwig: Explosive Debris
-            let mut rng = rand::thread_rng();
-            for _ in 0..5 {
-                let dx = rng.gen_range(-1.0..1.0);
-                let dy = rng.gen_range(-1.0..1.0);
-                spawn_moving_particle(world, p, '.', Color::DarkGray, 15, dx, dy);
-            }
+    true
+}
+
+fn process_mother_lode(world: &mut World, entity: Entity, effective_work: f32, pos: Option<GridPosition>) {
+    if let Some(mut lode) = world.get_mut::<MotherLode>(entity) {
+        lode.increment_hazard();
+    }
+
+    if world.get::<crate::layer1::resources::MiningProgress>(entity).is_none() {
+        world.entity_mut(entity).insert(crate::layer1::resources::MiningProgress {
+            current: 0.0,
+            max: 20.0,
+        });
+    }
+
+    let completed = if let Some(mut progress) = world.get_mut::<crate::layer1::resources::MiningProgress>(entity) {
+        progress.current += effective_work;
+        if progress.current >= progress.max {
+            progress.current = 0.0;
+            true
         } else {
-            // Working: Dynamic shake + Dust
-            if !is_crit {
-                let intensity = world
-                    .get::<crate::layer1::resources::MiningProgress>(entity)
-                    .map_or(0.05, |prog| (prog.current / prog.max).mul_add(0.15, 0.05));
+            false
+        }
+    } else {
+        false
+    };
 
-                trigger_shake(world, intensity);
-                spawn_particle(world, p, '.', Color::DarkGray, 3);
-
-                // Ludwig: Occasional flying chip
-                if rng.gen_bool(0.3) {
-                    let dx = rng.gen_range(-0.5..0.5);
-                    let dy = rng.gen_range(-0.5..0.5);
-                    spawn_moving_particle(world, p, '.', Color::Gray, 10, dx, dy);
+    if completed {
+        if let Some(lode) = world.get::<MotherLode>(entity) {
+            let res_type = lode.resource_type;
+            if let Some(p) = pos {
+                world.spawn((
+                    crate::layer1::resources::ResourceItem {
+                        resource_type: res_type,
+                        amount: 1.0,
+                    },
+                    p,
+                ));
+                if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+                    log.add(format!("Mined {:?} from Mother Lode", res_type));
                 }
             }
         }
     }
-    true
+}
+
+fn process_normal_mining(world: &mut World, entity: Entity, effective_work: f32, pos: Option<GridPosition>) {
+    let is_scrap = if let Some(p) = pos {
+        let mut found = false;
+        let mut query = world.query::<(&GridPosition, &ImpactSite)>();
+        for (gp, _) in query.iter(world) {
+            if *gp == p {
+                found = true;
+                break;
+            }
+        }
+        found
+    } else {
+        false
+    };
+
+    if is_scrap {
+        mine_scrap(world, entity, effective_work);
+    } else {
+        process_mining(world, entity, effective_work);
+    }
+}
+
+fn handle_mining_visuals(world: &mut World, entity: Entity, pos: GridPosition, is_crit: bool) {
+    let mut rng = rand::thread_rng();
+    if world.get_entity(entity).is_err() {
+        // Finished: Big shake + Debris
+        trigger_shake(world, 0.5);
+        spawn_particle(world, pos, '*', Color::White, 10);
+
+        for _ in 0..5 {
+            let dx = rng.gen_range(-1.0..1.0);
+            let dy = rng.gen_range(-1.0..1.0);
+            spawn_moving_particle(world, pos, '.', Color::DarkGray, 15, dx, dy);
+        }
+    } else if !is_crit {
+        // Working: Dynamic shake + Dust
+        let intensity = world
+            .get::<crate::layer1::resources::MiningProgress>(entity)
+            .map_or(0.05, |prog| (prog.current / prog.max).mul_add(0.15, 0.05));
+
+        trigger_shake(world, intensity);
+        spawn_particle(world, pos, '.', Color::DarkGray, 3);
+
+        if rng.gen_bool(0.3) {
+            let dx = rng.gen_range(-0.5..0.5);
+            let dy = rng.gen_range(-0.5..0.5);
+            spawn_moving_particle(world, pos, '.', Color::Gray, 10, dx, dy);
+        }
+    }
 }
 
 /// Handles wood chopping work at a designation.
@@ -183,7 +183,16 @@ pub fn handle_chopping_work(
         }
     }
 
-    // Emit XP event for forestry
+    emit_forestry_xp(world, worker_entity);
+    process_logging(world, entity, effective_work);
+
+    if let Some(p) = pos {
+        handle_chopping_visuals(world, entity, p, is_crit);
+    }
+    true
+}
+
+fn emit_forestry_xp(world: &mut World, worker_entity: Entity) {
     if let Some(mut events) = world.get_resource_mut::<Events<XpGainEvent>>() {
         events.send(XpGainEvent {
             entity: worker_entity,
@@ -192,42 +201,37 @@ pub fn handle_chopping_work(
             source: XpSource::Action,
         });
     }
+}
 
-    process_logging(world, entity, effective_work);
+fn handle_chopping_visuals(world: &mut World, entity: Entity, pos: GridPosition, is_crit: bool) {
+    let mut rng = rand::thread_rng();
+    if world.get_entity(entity).is_err() {
+        // Finished
+        trigger_shake(world, 0.3);
+        spawn_particle(world, pos, '^', Color::Green, 10);
 
-    if let Some(p) = pos {
-        if world.get_entity(entity).is_err() {
-            // Finished
-            trigger_shake(world, 0.3);
-            spawn_particle(world, p, '^', Color::Green, 10);
+        // Ludwig: Wood chips flying
+        for _ in 0..4 {
+            let dx = rng.gen_range(-0.8..0.8);
+            let dy = rng.gen_range(-0.8..0.8);
+            spawn_moving_particle(world, pos, '\'', Color::Rgb(139, 69, 19), 15, dx, dy);
+        }
+    } else if !is_crit {
+        // Working
+        let intensity = world
+            .get::<crate::layer1::resources::ForestryProgress>(entity)
+            .map_or(0.02, |prog| (prog.current / prog.max).mul_add(0.1, 0.02));
 
-            // Ludwig: Wood chips flying
-            let mut rng = rand::thread_rng();
-            for _ in 0..4 {
-                let dx = rng.gen_range(-0.8..0.8);
-                let dy = rng.gen_range(-0.8..0.8);
-                spawn_moving_particle(world, p, '\'', Color::Rgb(139, 69, 19), 15, dx, dy);
-            }
-        } else {
-            // Working
-            if !is_crit {
-                let intensity = world
-                    .get::<crate::layer1::resources::ForestryProgress>(entity)
-                    .map_or(0.02, |prog| (prog.current / prog.max).mul_add(0.1, 0.02));
+        trigger_shake(world, intensity);
+        spawn_particle(world, pos, '\'', Color::Rgb(139, 69, 19), 3);
 
-                trigger_shake(world, intensity);
-                spawn_particle(world, p, '\'', Color::Rgb(139, 69, 19), 3);
-
-                // Ludwig: Occasional flying chip
-                if rng.gen_bool(0.3) {
-                    let dx = rng.gen_range(-0.5..0.5);
-                    let dy = rng.gen_range(-0.5..0.5);
-                    spawn_moving_particle(world, p, '\'', Color::Rgb(160, 82, 45), 10, dx, dy);
-                }
-            }
+        // Ludwig: Occasional flying chip
+        if rng.gen_bool(0.3) {
+            let dx = rng.gen_range(-0.5..0.5);
+            let dy = rng.gen_range(-0.5..0.5);
+            spawn_moving_particle(world, pos, '\'', Color::Rgb(160, 82, 45), 10, dx, dy);
         }
     }
-    true
 }
 
 fn trigger_shake(world: &mut World, intensity: f32) {
