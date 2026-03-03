@@ -240,6 +240,21 @@
     - Updated `haul_system` in `src/layer1/hauling.rs` to detect Gene Bank targets and use `store_sample`.
 - **Tests:** `tests/integration/gene_bank_logistics.rs` (Integration test verified)
 
+### INT-039: Infinite Archive -> Chronicle
+- **Date:** 2026-03-03
+- **Systems connected:** `purge_tech` -> `AddChronicleEvent`
+- **Glue added:**
+    - Emits an `AddChronicleEvent` when a tech is purged to note that the secrets have been forgotten.
+- **Tests:** `tests/integration/infinite_archive_chronicle.rs`
+
+### INT-040: Sanctuary -> Utility AI
+- **Date:** 2026-03-03
+- **Systems connected:** `SanctuaryManager` -> `UtilityAI`
+- **Glue added:**
+    - Populated valid `Sanctuary` locations in AI buffer.
+    - `evaluate_visit_sanctuary` triggers `ActionType::VisitSanctuary` when pop stress > 40%.
+- **Tests:** `tests/integration/sanctuary_ai.rs`
+
 ### INT-038: MegaQuakeEvent -> Chronicle System
 - **Date:** 2026-03-03
 - **Systems connected:** `MegaQuakeEvent` (Geology) -> `mega_quake_chronicle_bridge` (Integration) -> `AddChronicleEvent` (Chronicle)

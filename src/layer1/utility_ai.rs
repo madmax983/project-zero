@@ -266,6 +266,19 @@ impl<'a> PopDecider<'a> {
         let needs = self.data.needs;
         let weights = self.data.weights;
 
+        // Evaluate VisitSanctuary
+        self.evaluator.evaluate_and_consider(
+            crate::layer1::utility_eval_types::evaluate_visit_sanctuary(
+                pop_pos,
+                &weights,
+                self.data.stress,
+                &self.buffer.sanctuaries,
+            ),
+            ActionType::VisitSanctuary,
+            self.context,
+            0.0,
+        );
+
         // Evaluate Hunger
         let urgency = need_response_curve(needs.hunger);
         self.evaluator.evaluate_and_consider(
@@ -615,6 +628,7 @@ impl<'a> PopDecider<'a> {
                 0.0,
             );
         }
+
     }
 
     fn run(mut self) -> (ActionType, f32, Option<Entity>) {

@@ -145,3 +145,7 @@ mod clone_integration;
 mod mega_quake_chronicle;
 #[path = "integration/tectonic_stress.rs"]
 mod tectonic_stress;
+#[path = "integration/infinite_archive_chronicle.rs"]
+mod infinite_archive_chronicle;
+#[path = "integration/sanctuary_ai.rs"]
+mod sanctuary_ai;

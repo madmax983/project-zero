@@ -95,6 +95,32 @@ impl PopEvalData {
     }
 }
 
+/// Evaluates visiting a Sanctuary to reduce stress.
+pub fn evaluate_visit_sanctuary(
+    pop_pos: GridPosition,
+    weights: &UtilityWeights,
+    stress: f32,
+    candidates: &[ScorableCandidate],
+) -> Option<(f32, Entity)> {
+    if candidates.is_empty() {
+        return None;
+    }
+
+    let stress_factor = stress / 100.0;
+
+    // Only consider visiting if stress is high enough
+    if stress_factor < 0.4 {
+        return None;
+    }
+
+    // Since weights don't have a `social` field, we will just use a constant
+    // or maybe weights.distance_weight, but it's more of a general survival need.
+    // We want a very high base score so it overrides idle/wander/hum when stress is high.
+    let base_score = 1.0 * stress_factor * 2.0;
+
+    evaluate_candidates(pop_pos, weights, candidates, base_score)
+}
+
 /// Data bundle for pop evaluation, optimized for copy.
 #[derive(Clone, Debug)]
 pub struct PopEvalData {
@@ -389,6 +415,8 @@ pub struct UtilityAIBuffer {
     pub residues: Vec<ScorableCandidate>,
     /// Buffer for cleaning targets.
     pub cleaning_targets: Vec<ScorableCandidate>,
+    /// Buffer for Sanctuary candidates.
+    pub sanctuaries: Vec<ScorableCandidate>,
 }
 
 /// Helper struct to track the best action found so far.

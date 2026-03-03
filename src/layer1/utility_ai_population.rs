@@ -28,6 +28,7 @@ use crate::layer1::predictive_policing::Suspect;
 use crate::layer1::refining::get_refining_recipe;
 use crate::layer1::resources::{RefiningProgress, ResourceItem};
 use crate::layer1::science::Anomaly;
+use crate::layer1::social::empty_room::SanctuaryManager;
 use crate::layer1::social::Tavern;
 use crate::layer1::stockpile::Stockpile;
 use crate::layer1::structure::{DeferMaintenance, Structure};
@@ -100,6 +101,29 @@ pub fn populate_ai_buffer(world: &mut World, buffer: &mut UtilityAIBuffer, conte
     populate_enemies(world, &mut buffer.enemies);
     populate_all_structures(world, &mut buffer.all_structures);
     populate_cleaning_targets(world, buffer);
+    populate_sanctuaries(world, &mut buffer.sanctuaries);
+}
+
+fn populate_sanctuaries(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
+    buffer.clear();
+    let Some(manager) = world.get_resource::<SanctuaryManager>() else {
+        return;
+    };
+    for sanctuary in &manager.sanctuaries {
+        if sanctuary.is_valid && !sanctuary.tiles.is_empty() {
+            // Pick the first tile as the target position
+            let pos = sanctuary.tiles[0];
+            buffer.push(ScorableCandidate {
+                entity: Entity::PLACEHOLDER, // Doesn't need a specific entity
+                pos,
+                score_bonus: sanctuary.effectiveness,
+                capacity: 1,
+                usage: 0,
+                item_type: None,
+                resource_type: None,
+            });
+        }
+    }
 }
 
 fn populate_buffer_buildings(

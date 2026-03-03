@@ -1,3 +1,4 @@
+use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer1::tech::{Tech, TechState};
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
@@ -47,6 +48,14 @@ pub fn purge_tech(world: &mut World, tech_label: &str) {
             if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
                 log.add(format!("Tech Purged: {}", tech_label));
             }
+
+            world.send_event(AddChronicleEvent {
+                text: format!(
+                    "We have forgotten the secrets of {} to make room for new knowledge.",
+                    tech_label
+                ),
+                importance: EventImportance::Standard,
+            });
         }
     }
 }
