@@ -141,11 +141,11 @@ mod resources_robustness;
 
 #[path = "integration/clone_integration.rs"]
 mod clone_integration;
-#[path = "integration/mega_quake_chronicle.rs"]
-mod mega_quake_chronicle;
-#[path = "integration/tectonic_stress.rs"]
-mod tectonic_stress;
 #[path = "integration/infinite_archive_chronicle.rs"]
 mod infinite_archive_chronicle;
+#[path = "integration/mega_quake_chronicle.rs"]
+mod mega_quake_chronicle;
 #[path = "integration/sanctuary_ai.rs"]
 mod sanctuary_ai;
+#[path = "integration/tectonic_stress.rs"]
+mod tectonic_stress;

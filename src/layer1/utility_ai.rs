@@ -628,7 +628,6 @@ impl<'a> PopDecider<'a> {
                 0.0,
             );
         }
-
     }
 
     fn run(mut self) -> (ActionType, f32, Option<Entity>) {

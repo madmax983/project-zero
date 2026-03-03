@@ -1,14 +1,14 @@
-#![allow(clippy::cast_precision_loss, clippy::cast_possible_truncation)]
-//! Machine Consciousness system (Nova Feature).
-//!
-//! Implements the "Ghost in the Machine" mechanics where advanced buildings
-//! gain XP, level up, and develop personalities.
+// Machine Consciousness system (Nova Feature).
+// Implements the "Ghost in the Machine" mechanics where advanced buildings
+// gain XP, level up, and develop personalities.
 
 use crate::layer1::building::Building;
 use crate::layer1::gastronomy::WorkSpeedBuff;
 use crate::layer1::pop::{Job, Pop};
 use crate::layer1::traits::{Trait, Traits};
 use crate::shared::log::MessageLog;
+#[allow(unused_imports)]
+use bevy_ecs::prelude::*;
 
 use rand::seq::IteratorRandom;
 use rand::Rng;
@@ -93,8 +93,6 @@ pub fn consciousness_growth_system(
     config: Res<ConsciousnessConfig>,
     mut log: ResMut<MessageLog>,
 ) {
-    // Map building entity -> list of workers working there
-    // We iterate workers to find who is working where
     let mut workers_by_building: std::collections::HashMap<Entity, Vec<(Entity, Option<&Traits>)>> =
         std::collections::HashMap::new();
 
@@ -108,7 +106,6 @@ pub fn consciousness_growth_system(
     for (machine_entity, mut consciousness, _building) in &mut machines {
         if let Some(worker_list) = workers_by_building.get(&machine_entity) {
             for (worker_entity, traits) in worker_list {
-                // Calculate XP gain
                 let mut xp_gain = config.base_xp_rate;
 
                 if let Some(t) = traits {
@@ -125,7 +122,6 @@ pub fn consciousness_growth_system(
 
                 consciousness.xp += xp_gain;
 
-                // Check Level Up
                 let old_level = consciousness.level;
                 let new_level = if consciousness.xp >= config.xp_level_3 {
                     3
@@ -145,7 +141,6 @@ pub fn consciousness_growth_system(
                         ratatui::style::Color::Cyan,
                     );
 
-                    // Bond if not bonded
                     if consciousness.bonded_worker.is_none() && new_level >= 1 {
                         consciousness.bonded_worker = Some(*worker_entity);
                         log.add_colored(
@@ -153,7 +148,6 @@ pub fn consciousness_growth_system(
                             ratatui::style::Color::Magenta,
                         );
 
-                        // Assign personality if default
                         if consciousness.personality == MachinePersonality::Stoic {
                             let mut rng = rand::thread_rng();
                             consciousness.personality = MachinePersonality::random(&mut rng);
@@ -173,7 +167,6 @@ pub fn consciousness_effect_system(
 ) {
     for (worker_entity, job) in &workers {
         if let Ok(consciousness) = machines.get(job.workplace) {
-            // Is this the bonded worker?
             if consciousness.bonded_worker == Some(worker_entity) {
                 let multiplier = match consciousness.level {
                     2 => 1.1,
@@ -184,13 +177,9 @@ pub fn consciousness_effect_system(
                 if multiplier > 1.0 {
                     commands.entity(worker_entity).insert(WorkSpeedBuff {
                         multiplier,
-                        duration: 5, // Short duration, refreshed every tick while working
+                        duration: 5,
                     });
                 }
-            } else if consciousness.level >= 2 {
-                // Non-bonded worker on high-level machine
-                // Maybe feel uneasy?
-                // For now, no penalty to avoid annoyance, just lack of buff.
             }
         }
     }
@@ -203,9 +192,6 @@ pub fn machine_personality_system(
 ) {
     let mut rng = rand::thread_rng();
     if rng.gen_bool(0.01) {
-        // 1% chance per tick global? No, per tick check.
-        // Actually, checking every tick for every machine is fine, but we don't want spam.
-        // Let's pick ONE machine randomly.
         if let Some(consciousness) = machines.iter().choose(&mut rng) {
             if consciousness.level >= 2 && rng.gen_bool(0.05) {
                 log.add_colored(
@@ -264,7 +250,7 @@ mod tests {
     fn test_level_up_and_bonding() {
         let mut world = World::new();
         world.insert_resource(ConsciousnessConfig {
-            base_xp_rate: 100.0, // Instant level up
+            base_xp_rate: 100.0,
             xp_level_1: 50.0,
             ..Default::default()
         });
@@ -312,7 +298,6 @@ mod tests {
             },))
             .id();
 
-        // Add Job to worker
         world.entity_mut(worker).insert(Job {
             workplace: machine,
             job_type: AssignmentType::LibraryWorker,
