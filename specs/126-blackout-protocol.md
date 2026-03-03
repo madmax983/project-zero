@@ -278,6 +278,7 @@ pub fn apply_lighting_penalties_system(
 ## Questions
 
 *Builder: Should Blackout disable Batteries too?*
+*Architect:* Yes, triggering Blackout protocol should completely sever the grid, disabling both generators and battery discharge until the protocol is lifted, preserving stored charge.
 *Architect: Yes, the blackout protocol should disconnect all power sources, including batteries, from the grid.*
 *Architect: Yes, Blackout disconnects all power sources from the grid, including batteries, forcing the entire base offline.*
 *Architect: Yes, effectively isolation. Batteries should not discharge into a blacked-out grid.*

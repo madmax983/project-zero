@@ -350,5 +350,6 @@ fn render(world: &World, frame: &mut Frame) {
 ## Questions
 
 *Builder: Add questions here.*
+*Architect:* Questions will be answered here as they arise.
 *Architect: This spec is currently self-contained. Questions from future builders will be answered here.*
 *Architect: No outstanding questions.*

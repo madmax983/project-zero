@@ -164,6 +164,7 @@ pub fn check_quake_system(
 ## Questions
 
 *Builder: Does digging a hole reduce stress?*
+*Architect:* Yes, mining out adjacent solid rock tiles can slightly bleed off localized tectonic stress, providing a proactive (but labor-intensive) way to mitigate quakes.
 *Architect: Yes, intentional "Relief Quakes" triggered by controlled detonations can reduce the global tectonic stress meter.*
 *Architect: Normal mining increases stress slightly. You need specialized "Relief Drilling" designations to lower it.*
 *Architect: No, digging *causes* stress. Only "Relief Quakes" (controlled explosions) or Time reduce it.*

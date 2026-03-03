@@ -197,8 +197,10 @@ pub fn perform_cleanup(world: &mut World, planet: Entity, amount: f32) {
 ## Questions
 
 - *Builder: Should debris eventually form a ring system if it gets high enough?*
+*Architect:* While visually cool, for now just treat high debris as a generalized "Kessler Syndrome" hazard multiplier for Layer 2 travel rather than a physical ring entity.
   *Architect: No, for MVP keep it as a discrete orbital hazard layer without generating a new permanent celestial ring.*
 - *Architect: Yes, Orbital Debris forms visual rings.*
 - *Builder: Does debris affect incoming trade ships?*
+*Architect:* Yes, high debris density adds a flat percentage chance for incoming Layer 2 trade ships to be delayed or arrive damaged.
   *Architect: Yes, high debris levels risk damaging or destroying incoming trade ships, discouraging merchants.*
 - *Architect: Yes, Orbital Debris damages trade ships.*

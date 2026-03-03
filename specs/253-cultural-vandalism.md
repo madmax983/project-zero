@@ -145,6 +145,7 @@ pub fn update_structure_buffs(
 ## Questions
 
 *Builder: Does vandalism destroy the building?*
+*Architect:* No, vandalism merely adds the `Vandalized` component, which flips the building's aura from positive to negative. The building continues functioning otherwise.
 *Architect: No, it simply adds the `Vandalized` component, inverting its aura until cleaned.*
 *Architect: No, it simply adds a `Vandalized` component that negates or inverts its beauty/morale effects. It requires a janitorial or repair task to clean.*
 *Architect: No, it just makes it ugly/subversive. It requires "Cleaning" (Repair logic), not rebuilding.*

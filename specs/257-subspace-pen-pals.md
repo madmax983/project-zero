@@ -163,6 +163,7 @@ pub fn update_pen_pals_system(
 ## Questions
 
 *Builder: Can I date a Hive Mind?*
+*Architect:* Yes, but the Hive Mind's responses will be generalized, and the relationship will mechanically function as a diplomatic buff with the Layer 3 entity rather than a personal romance.
 *Architect: Yes, Pops can form remote bonds with Hive Mind drones, causing unique ethical shifts and diplomatic effects.*
 *Architect: Yes, but it results in profound psychological changes (large Ethics shifts towards Collectivism) rather than typical romance.*
 *Architect: Yes, but your 'Collective' needs will increase.*

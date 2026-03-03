@@ -243,10 +243,12 @@ pub fn inspect_pop(world: &mut World, pop_entity: Entity) {
 ## Questions
 
 - *Builder: Should pops consume their stash?*
+*Architect:* Yes, Pops should consume items from their stash when their needs cross critical thresholds, bypassing the standard colony distribution network.
   *Architect: Yes, Pops should prioritize consuming from their private stash to fulfill needs before fetching from global storage.*
 *Architect: Yes, if a pop is hungry and normal food is unavailable, they should eat from their stash first.*
     - *Architect:* For now, no. They just hoard it. Future iteration could allow them to eat from it if starving.
 - *Builder: Does this affect "Total" counts in UI?*
+*Architect:* Stashed items should be subtracted from the colony's "Available" count but still appear in a "Total Owned" tooltip to prevent player confusion over missing resources.
   *Architect: No, items in private stashes are hidden from the colony's global inventory counts.*
 *Architect: No, stashed items are hidden from the global inventory count to simulate the "lost" resources.*
     - *Architect:* Yes, because `ColonyResources` decreases. The UI shows "Available", not "Total Existing".

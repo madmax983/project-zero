@@ -383,6 +383,7 @@ pub fn turret_fire_system(world: &mut World) {
 ## Questions
 
 *Builder: How much waste creates a "mess"?*
+*Architect:* A "mess" should be generated if the tile accumulates >5 units of waste. Below that, it's just visually scattered but doesn't trigger negative morale effects.
 *Architect: Any impact from a trash cannon projectile creates a mess tile that needs to be cleaned by a janitor job.*
 *Architect: Each shot should spawn 1 "Clutter" item at the impact tile, requiring a Janitor task to clear.*
 *Architect: 0.1 amount. Enough to be annoying (negative beauty) but small enough to not flood the economy.*

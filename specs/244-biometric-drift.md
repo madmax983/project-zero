@@ -252,6 +252,7 @@ pub fn apply_trauma_drift(world: &mut World, pop: Entity, amount: f32) {
 ## Questions
 
 *Builder: Does drift affect non-security interactions?*
+*Architect:* No, biometric drift specifically targets interactions requiring authentication (doors, restricted zones, specific jobs), leaving basic actions like resting or eating unaffected.
 *Architect: Yes, it can slowly alter their social identity, meaning other Pops might stop recognizing them over time.*
 *Architect: Not initially. For MVP, it strictly applies to locks and access terminals.*
 *Architect: No, for MVP Biometric Drift only affects interactions that require security clearance (e.g., doors, locked chests, restricted terminals).*

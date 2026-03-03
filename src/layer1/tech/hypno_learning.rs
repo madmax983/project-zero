@@ -1,15 +1,15 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::skills::{SkillType, Skills};
-use crate::layer1::needs::Needs;
-use crate::layer1::utility_types::{ActionType, PopAction};
 use crate::layer1::actions::AssignedTo;
-use crate::layer1::pop::Pop;
 use crate::layer1::energy::PowerConsumer;
+use crate::layer1::needs::Needs;
+use crate::layer1::pop::Pop;
+use crate::layer1::skills::{SkillType, Skills};
+use crate::layer1::utility_types::{ActionType, PopAction};
+use bevy_ecs::prelude::*;
 
 #[derive(Component, Debug, Clone)]
 pub struct HypnoPod {
     pub target_skill: SkillType, // Default to something or allow "General" learning
-    pub xp_rate: f32, // XP per tick
+    pub xp_rate: f32,            // XP per tick
 }
 
 impl Default for HypnoPod {
@@ -23,14 +23,13 @@ impl Default for HypnoPod {
 
 #[derive(Component, Debug, Clone, Default)]
 pub struct MentalFog {
-    pub duration: f32, // Ticks or Seconds
+    pub duration: f32,         // Ticks or Seconds
     pub movement_penalty: f32, // 0.0 to 1.0 (multiplier)
     pub work_speed_penalty: f32,
 }
 
 #[derive(Component, Default)]
 pub struct SleepingInHypnoPod;
-
 
 pub fn hypno_sleep_system(
     mut commands: Commands,
@@ -54,7 +53,6 @@ pub fn hypno_sleep_system(
     }
 }
 
-
 pub fn wake_up_hypno_system(
     mut commands: Commands,
     mut query: Query<(Entity, &PopAction), With<SleepingInHypnoPod>>,
@@ -63,7 +61,7 @@ pub fn wake_up_hypno_system(
         if action.current != ActionType::SatisfyRest {
             // Apply Fog
             commands.entity(entity).insert(MentalFog {
-                duration: 1000.0, // Long duration
+                duration: 1000.0,      // Long duration
                 movement_penalty: 0.5, // Half speed
                 work_speed_penalty: 0.5,
             });

@@ -104,7 +104,8 @@ pub fn register(schedule: &mut Schedule) {
             update_noise_system.after(work_execution_system),
             crate::layer1::social::empty_room::visit_sanctuary_system.after(movement_system),
             crate::layer1::tech::hypno_learning::hypno_sleep_system.after(arrival_handler_system),
-            crate::layer1::tech::hypno_learning::wake_up_hypno_system.after(process_start_plan_system),
+            crate::layer1::tech::hypno_learning::wake_up_hypno_system
+                .after(process_start_plan_system),
             crate::layer1::tech::hypno_learning::update_mental_fog_system.after(movement_system),
         )
             .in_set(Layer1SystemSet::Execution),
