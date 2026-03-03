@@ -321,6 +321,8 @@ pub enum BuildingType {
     BulletinBoard,
     /// Holographic projector that emits Beauty when powered.
     HoloProjector,
+    /// Hypno-Learning Pod.
+    HypnoPod,
 }
 
 impl BuildingType {
@@ -349,7 +351,8 @@ impl BuildingType {
             | Self::AtmosphericProcessor
             | Self::GeneBank
             | Self::CloneVat
-            | Self::HoloProjector => Some((Category::Research, Tier::HighTech)),
+            | Self::HoloProjector
+            | Self::HypnoPod => Some((Category::Research, Tier::HighTech)),
 
             _ => None,
         }
@@ -502,6 +505,7 @@ impl BuildingType {
             Self::Recycler => true,
             Self::BulletinBoard => false,
             Self::HoloProjector => false,
+            Self::HypnoPod => true,
         }
     }
 
@@ -584,6 +588,7 @@ impl BuildingType {
             Self::Recycler => Some(Tech::Medical),
             Self::BulletinBoard => Some(Tech::SocialStructures),
             Self::HoloProjector => Some(Tech::Electromagnetism), // Assumed tech
+            Self::HypnoPod => Some(Tech::Medical),
             _ => None,
         }
     }
@@ -659,6 +664,7 @@ impl BuildingType {
             Self::Recycler => "Recycler",
             Self::BulletinBoard => "Bulletin Board",
             Self::HoloProjector => "Holo Projector",
+            Self::HypnoPod => "Hypno Pod",
         }
     }
 
@@ -715,6 +721,7 @@ impl BuildingType {
             Self::Shower => '🚿',
             Self::Recycler => '♻',
             Self::BulletinBoard => 'B',
+            Self::HypnoPod => '🧠',
         }
     }
 
@@ -948,6 +955,11 @@ impl BuildingType {
                 ..ColonyResources::zeroed()
             },
             Self::Library => ColonyResources::zeroed(),
+            Self::HypnoPod => ColonyResources {
+                metal: 15.0,
+                stone: 5.0,
+                ..ColonyResources::zeroed()
+            },
             Self::Plantation => ColonyResources {
                 wood: 20.0,
                 ..ColonyResources::zeroed()
@@ -1276,7 +1288,7 @@ fn spawn_building(
                 ShiftSchedule::default(),
             ));
         }
-        BuildingType::Housing | BuildingType::Lander => {
+        BuildingType::Housing | BuildingType::Lander | BuildingType::HypnoPod => {
             configure_housing(&mut entity, building_type);
         }
         BuildingType::Farm
@@ -1369,6 +1381,24 @@ fn configure_housing(entity: &mut EntityWorldMut, building_type: BuildingType) {
                     radius: 3.0,
                     intensity: 0.5,
                     color: (255, 255, 100), // Yellow
+                },
+            ));
+        }
+        BuildingType::HypnoPod => {
+            entity.insert((
+                crate::layer1::tech::hypno_learning::HypnoPod::default(),
+                Housing {
+                    capacity: 1,
+                    ..Default::default()
+                },
+                crate::layer1::energy::PowerConsumer {
+                    demand: 15.0,
+                    active: false,
+                },
+                LightSource {
+                    radius: 2.0,
+                    intensity: 0.5,
+                    color: (0, 255, 128), // Cybernetic Green
                 },
             ));
         }
@@ -2287,7 +2317,15 @@ mod tests {
         assert_eq!(BuildingType::CloneVat.next(), BuildingType::Shower);
         assert_eq!(BuildingType::Shower.next(), BuildingType::Recycler);
         assert_eq!(BuildingType::Recycler.next(), BuildingType::BulletinBoard);
-        assert_eq!(BuildingType::BulletinBoard.next(), BuildingType::Housing);
+        assert_eq!(
+            BuildingType::BulletinBoard.next(),
+            BuildingType::HoloProjector
+        );
+        assert_eq!(
+            BuildingType::HoloProjector.next(),
+            BuildingType::HypnoPod
+        );
+        assert_eq!(BuildingType::HypnoPod.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -2507,6 +2545,12 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::BulletinBoard);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::HoloProjector);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::HypnoPod);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);
