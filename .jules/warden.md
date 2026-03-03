@@ -59,3 +59,20 @@
 - Implemented `GridPosition::direction_to` using `cmp` to avoid subtraction overflow.
 - Refactored `handle_explosion_system`, `check_stability`, `movement_system`, `trend_spread_system`, `pheromone_emission_system`, and `art_observation_system` to use safe `distance_chebyshev` or `distance_manhattan` methods.
 - Verified with `tests/security_explosion_overflow.rs`.
+
+## 2026-02-28 - Unsafe Code Prevention
+**Threat:** Introduction of  blocks allowing Undefined Behavior (UB).
+**Defense:** Verified there is currently no `unsafe` code in the repository and added `#![deny(unsafe_code)]` to `src/lib.rs` and `src/main.rs` to enforce safety proactively at the compiler level.
+
+## 2024-05-31 - Unsafe Code Prevention
+**Threat:** Introduction of `unsafe` blocks allowing Undefined Behavior (UB).
+**Defense:** Verified there is currently no `unsafe` code in the repository and added `#![deny(unsafe_code)]` to `src/lib.rs` and `src/main.rs` to enforce safety proactively at the compiler level.
+
+## 2024-05-31 - Unsafe Code Prevention
+**Threat:** Introduction of `unsafe` blocks allowing Undefined Behavior (UB).
+**Defense:** Verified there is currently no `unsafe` code in the repository and added `#![deny(unsafe_code)]` to `src/lib.rs` and `src/main.rs` to enforce safety proactively at the compiler level.
+
+
+## 2024-05-31 - Unsafe Code Prevention
+**Threat:** Introduction of `unsafe` blocks allowing Undefined Behavior (UB).
+**Defense:** Verified there is currently no `unsafe` code in the repository and added `#![deny(unsafe_code)]` to `src/lib.rs` and `src/main.rs` to enforce safety proactively at the compiler level.

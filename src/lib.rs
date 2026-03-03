@@ -1,3 +1,4 @@
+#![deny(unsafe_code)]
 //! The core library for SCALE.
 //!
 //! This library exposes the simulation layers, shared utilities, and UI components of the game.

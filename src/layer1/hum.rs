@@ -93,7 +93,7 @@ mod tests {
     use crate::layer1::stress::StressTracker;
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
     use crate::layer1::traits::{Trait, Traits};
-    use crate::layer1::utility_ai::ActionType;
+    use crate::layer1::utility_types::ActionType;
     use crate::layer1::utility_eval_types::{PopEvalData, ScorableCandidate, UtilityAIBuffer};
     use crate::layer1::utility_types::{PopAction, UtilityWeights};
 

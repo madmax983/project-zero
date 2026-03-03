@@ -1,3 +1,4 @@
+#![deny(unsafe_code)]
 //! SCALE native terminal entry point.
 
 use bevy_ecs::system::RunSystemOnce;

@@ -1,7 +1,7 @@
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::tech::{Tech, TechState};
 use crate::layer1::traits::{Trait, Traits};
-use crate::layer1::utility_ai::ActionType;
+use crate::layer1::utility_types::ActionType;
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
 use rand::Rng;
@@ -166,7 +166,7 @@ mod tests {
     use super::*;
     use crate::layer1::resources::ColonyResources;
     use crate::layer1::tech::{Tech, TechState};
-    use crate::layer1::utility_ai::ActionType;
+    use crate::layer1::utility_types::ActionType;
     use std::collections::HashSet;
 
     #[test]

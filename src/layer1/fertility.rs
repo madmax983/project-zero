@@ -2,8 +2,8 @@ use crate::layer1::TerrainGrid;
 use crate::layer1::map::GridPosition;
 use crate::layer1::pop::Pop;
 use crate::layer1::terrain::TerrainType;
-use crate::layer1::utility_ai::ActionType;
-use crate::layer1::utility_ai::PopAction;
+use crate::layer1::utility_types::ActionType;
+use crate::layer1::utility_types::PopAction;
 use bevy_ecs::prelude::*;
 use std::collections::HashSet;
 
