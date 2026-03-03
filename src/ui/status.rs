@@ -524,7 +524,7 @@ mod tests {
                 leisure: 1.0,
                 hygiene: 0.8,
             },
-            scale::layer1::morale::Morale::default(),
+            crate::layer1::morale::Morale::default(),
             crate::layer1::traits::Traits::default(),
         )); // Morale 1.0
 
@@ -536,7 +536,7 @@ mod tests {
                 leisure: 0.0,
                 hygiene: 0.8,
             },
-            scale::layer1::morale::Morale::default(),
+            crate::layer1::morale::Morale::default(),
             crate::layer1::traits::Traits::default(),
         )); // Morale 0.0
 
@@ -553,7 +553,7 @@ mod tests {
                 hygiene: 0.8,
             },
             memories,
-            scale::layer1::morale::Morale::default(),
+            crate::layer1::morale::Morale::default(),
             crate::layer1::traits::Traits::default(),
         ));
 
