@@ -231,6 +231,24 @@ mod tests {
 
         assert!(crate::layer1::defense::is_walkable(&mut world, 1, 0));
     }
+
+    #[test]
+    fn test_is_walkable_out_of_bounds() {
+        let mut world = setup_world();
+        assert!(
+            !crate::layer1::defense::is_walkable(&mut world, -1, 0),
+            "Negative coordinates should not be walkable"
+        );
+    }
+
+    #[test]
+    fn test_is_walkable_out_of_bounds_positive() {
+        let mut world = setup_world();
+        assert!(
+            !crate::layer1::defense::is_walkable(&mut world, 100, 100),
+            "Coordinates larger than the map should not be walkable"
+        );
+    }
 }
 
 /// Helper to check if a specific building entity is an obstacle (locked gate or solid building).
