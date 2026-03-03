@@ -560,6 +560,12 @@ pub mod machine_consciousness;
 #[cfg(feature = "nova")]
 pub use machine_consciousness::*;
 
+/// The Sleep-Deprived Savant system (Nova Feature).
+#[cfg(feature = "nova")]
+pub mod sleep_deprived_savant;
+#[cfg(feature = "nova")]
+pub use sleep_deprived_savant::*;
+
 /// System registration and sets (Facade).
 pub mod systems;
 

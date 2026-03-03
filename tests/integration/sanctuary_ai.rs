@@ -5,12 +5,12 @@ use scale::layer1::utility_types::{ActionType, UtilityWeights};
 // utility_eval_types is private to scale::layer1, so we test evaluate_visit_sanctuary indirectly
 // or by re-exporting it for tests. Wait, if it's private, we can't import it in integration tests.
 // Let's test the full AI loop by setting up a World and running evaluate_actions_system.
+use scale::layer1::needs::Needs;
+use scale::layer1::pop::Pop;
 use scale::layer1::social::empty_room::{Sanctuary, SanctuaryManager};
 use scale::layer1::stress::StressTracker;
 use scale::layer1::utility_ai::evaluate_actions_system;
 use scale::layer1::utility_types::{PopAction, UtilityConfig};
-use scale::layer1::needs::Needs;
-use scale::layer1::pop::Pop;
 use scale::setup::init_task_pools;
 
 #[test]
@@ -32,49 +32,51 @@ fn test_sanctuary_evaluated_by_ai() {
     });
     world.insert_resource(sm);
 
-
     // Case 1: Pop with low stress -> Should NOT evaluate VisitSanctuary
-    let low_stress_pop = world.spawn((
-        Pop,
-        GridPosition { x: 0, y: 0 },
-        Needs::default(),
-        UtilityWeights {
-            distance_weight: 1.0,
-            availability_weight: 1.0,
-        },
-        StressTracker {
-            accumulated_stress: 20.0, // < 40
-            ..Default::default()
-        },
-        PopAction::default(),
-    )).id();
+    let low_stress_pop = world
+        .spawn((
+            Pop,
+            GridPosition { x: 0, y: 0 },
+            Needs::default(),
+            UtilityWeights {
+                distance_weight: 1.0,
+                availability_weight: 1.0,
+            },
+            StressTracker {
+                accumulated_stress: 20.0, // < 40
+                ..Default::default()
+            },
+            PopAction::default(),
+        ))
+        .id();
 
     // Case 2: Pop with high stress -> Should evaluate VisitSanctuary
-    let high_stress_pop = world.spawn((
-        Pop,
-        GridPosition { x: 5, y: 4 }, // Closer to the sanctuary
-        Needs {
-            hunger: 1.0, // Fully fed so they don't eat
-            rest: 1.0,   // Fully rested
-            leisure: 1.0,
-            hygiene: 1.0,
-        },
-        UtilityWeights {
-            distance_weight: 1.0,
-            availability_weight: 1.0,
-        },
-        StressTracker {
-            accumulated_stress: 100.0, // >= 40
-            ..Default::default()
-        },
-        scale::layer1::pop::PopName("Tester".to_string()),
-        PopAction {
-            current: ActionType::Idle,
-            current_utility: 0.0,
-            ticks_committed: 0,
-        },
-    )).id();
-
+    let high_stress_pop = world
+        .spawn((
+            Pop,
+            GridPosition { x: 5, y: 4 }, // Closer to the sanctuary
+            Needs {
+                hunger: 1.0, // Fully fed so they don't eat
+                rest: 1.0,   // Fully rested
+                leisure: 1.0,
+                hygiene: 1.0,
+            },
+            UtilityWeights {
+                distance_weight: 1.0,
+                availability_weight: 1.0,
+            },
+            StressTracker {
+                accumulated_stress: 100.0, // >= 40
+                ..Default::default()
+            },
+            scale::layer1::pop::PopName("Tester".to_string()),
+            PopAction {
+                current: ActionType::Idle,
+                current_utility: 0.0,
+                ticks_committed: 0,
+            },
+        ))
+        .id();
 
     let mut schedule = Schedule::default();
     schedule.add_systems(evaluate_actions_system);

@@ -58,6 +58,9 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::totems::unequip_totem_system.after(decay_needs_system),
             update_breakdown_system.after(check_stress_breakdown_system),
             update_catharsis_duration_system.after(decay_needs_system),
+            #[cfg(feature = "nova")]
+            crate::layer1::sleep_deprived_savant::fever_dream_system
+                .after(crate::layer1::needs::decay_needs_system),
             check_sleepwalking_start_system.after(decay_needs_system),
             sleepwalk_end_system.after(decay_needs_system),
         )
