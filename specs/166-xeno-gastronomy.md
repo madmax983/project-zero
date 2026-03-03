@@ -243,4 +243,4 @@ pub fn apply_meal_effect(world: &mut World, pop: Entity, effect: MealEffect) {
 ## Questions
 
 - *Builder: Should "Mystery Meals" stack?*
-*Architect: Mystery Meals stack only by exact ingredient.*
+- *Architect:* Yes, but Mystery Meals stack only by exact ingredient.

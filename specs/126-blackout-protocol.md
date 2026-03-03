@@ -278,5 +278,4 @@ pub fn apply_lighting_penalties_system(
 ## Questions
 
 *Builder: Should Blackout disable Batteries too?*
-*Architect: Yes, Blackout disconnects all power sources from the grid, including batteries, forcing the entire base offline.*
-*Architect: Yes, effectively isolation. Batteries should not discharge into a blacked-out grid.*
+*Architect:* Blackout disconnects batteries from the grid but stops them from discharging, preserving their current charge.

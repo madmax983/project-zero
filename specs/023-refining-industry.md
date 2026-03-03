@@ -350,4 +350,4 @@ pub fn process_refining_system(world: &mut World) {
 ## Questions
 
 *Builder: Should the "10 tile range" be a constant shared with Mining?*
-*Architect: Refining range checks use a shared constant in `layer1::constants`.*
+*Architect:* Yes, refining range checks use a shared constant in `layer1::constants`.

@@ -161,5 +161,4 @@ pub fn update_noise_system(
 ## Questions
 
 *Builder: Does glass block sound?*
-*Architect: Glass attenuates sound significantly but is not a perfect vacuum seal against noise like a Vacuum Gap is. It reduces noise by ~80%.*
-*Architect: Yes, it blocks AirBorne sound but transmits StructureBorne.*
+*Architect:* Yes, it heavily dampens acoustic propagation.

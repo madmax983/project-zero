@@ -173,5 +173,4 @@ Update `src/layer1/pop/traits.rs`:
 ## 8. Questions
 
 *Builder: Should tenure degrade if they stop working the job?*
-*Architect: For MVP, no. It is cumulative. Future refactors could add atrophy.*
-*Architect: For MVP, no. It's cumulative. Future refactor could add atrophy.*
+*Architect:* Yes, tenure slowly degrades over time when not working the specific job.

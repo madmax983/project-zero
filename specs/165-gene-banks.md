@@ -337,4 +337,4 @@ pub fn process_cloning_system(world: &mut World) {
 ## Questions
 
 - *Builder: Should we allow cloning of Pops?*
-*Architect: Gene Banks only clone flora/fauna.*
+- *Architect:* No, Gene Banks only clone flora/fauna; Clone Vats (Spec 240) are used for Pops.

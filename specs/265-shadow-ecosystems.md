@@ -136,4 +136,4 @@ pub fn shadow_visibility_system(
 ## 8. Questions
 
 *Builder: Do they move?*
-*Architect: Yes, random walk towards higher density (gradient descent).*
+*Architect:* Yes, they migrate towards high energy/data density areas.

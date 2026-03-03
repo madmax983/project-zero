@@ -137,6 +137,4 @@ pub fn finish_reformat(world: &mut World, entity: Entity) {
 ## Questions
 
 *Builder: Does bloat affect life support?*
-*Architect: Yes, it introduces latency in automated life support systems (e.g. slower venting, delayed oxygen generation), but it does not completely disable them unless a system shutdown is forced.*
-*Architect: Yes, if life support systems are connected to the Mainframe, bloat will reduce their efficiency, potentially causing temporary outages.*
-*Architect: No, critical systems are hardwired (analog). Only "Smart" systems lag.*
+*Architect:* No, it only affects automated machine efficiency and research speed.

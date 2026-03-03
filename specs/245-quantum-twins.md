@@ -238,5 +238,4 @@ pub fn handle_severance_system(
 ## Questions
 
 *Builder: Can twins be separated by Layer?*
-*Architect: Yes, the entanglement ignores physical distance and simulation layers.*
-*Architect: Yes, that's the point. One on planet, one in orbit.*
+*Architect:* Yes, one can be on a ship (Layer 2) and the other on the colony (Layer 1).

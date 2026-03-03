@@ -243,8 +243,6 @@ pub fn inspect_pop(world: &mut World, pop_entity: Entity) {
 ## Questions
 
 - *Builder: Should pops consume their stash?*
-*Architect: Yes, if a pop is hungry and normal food is unavailable, they should eat from their stash first.*
-    - *Architect:* For now, no. They just hoard it. Future iteration could allow them to eat from it if starving.
+- *Architect:* Yes, pops should consume from their stash first before fulfilling needs from global storage.
 - *Builder: Does this affect "Total" counts in UI?*
-*Architect: No, stashed items are hidden from the global inventory count to simulate the "lost" resources.*
-    - *Architect:* Yes, because `ColonyResources` decreases. The UI shows "Available", not "Total Existing".
+- *Architect:* No, stashed items are hidden from global totals.

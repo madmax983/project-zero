@@ -169,7 +169,7 @@ mod tests {
 
 **Test Coverage Requirements:**
 - SystemStage: enum ordering, all stages defined
-- ScheduleBuilder: system registration, stage ordering
+- ScheduleBuilder: system registration, stage ordering. *Architect: Make sure stages are strictly ordered.*
 - System execution: stages run in order, systems within stage ordered
 - Layer1 ordering: critical simulation order verified
 - Determinism: same inputs → same outputs

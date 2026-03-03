@@ -191,5 +191,4 @@ pub fn reveal_mimic(world: &mut World, target: Entity) -> bool {
 ## Questions
 
 - *Builder: How does the Mimic spawn?*
-*Architect: A Mimic replaces an existing pop when they are alone in a dark or remote area. The original pop is quietly "absorbed" and the Mimic takes their identity.*
-  - *Architect: Random event during "High Strangeness" or after a "Meteor" event. For now, just the mechanic, spawn logic is an Event.*
+- *Architect:* Safely transforms pops by inserting the Mimic component into existing entities rather than despawning.

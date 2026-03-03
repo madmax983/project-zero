@@ -228,5 +228,6 @@ pub fn process_clone_vats_system(
 ## Questions
 
 - *Builder: Should clones be born as adults?*
+- *Architect:* Yes, clones spawn as adults.
 - *Builder: Do they have parents?*
-*Architect: Clone Vats spawn adult clones with empty family trees.*
+- *Architect:* No, they have empty family trees.

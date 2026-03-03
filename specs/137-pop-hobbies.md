@@ -250,4 +250,4 @@ pub fn execute_hobby_system(
 ## Questions
 
 *Builder: How do we handle "Gossip" hobby mechanically?*
-*Architect: The 'Gossip' hobby is a solo action that reduces stress and triggers the spread of Rumors (Spec 055).*
+*Architect:* The "Gossip" hobby is a solo action that reduces stress and triggers the spread of Rumors (Spec 055).

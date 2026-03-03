@@ -349,5 +349,5 @@ fn render(world: &World, frame: &mut Frame) {
 
 ## Questions
 
-*Builder: Add questions here.*
+*Architect: No current questions.*
 *Architect: No outstanding questions.*
