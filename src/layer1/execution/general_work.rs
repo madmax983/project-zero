@@ -414,6 +414,10 @@ pub fn calculate_work_amount(
         .get_resource::<AdminStats>()
         .map_or(1.0, |stats| stats.efficiency);
 
+    let fog_penalty = world
+        .get::<crate::layer1::tech::hypno_learning::MentalFog>(pop_entity)
+        .map_or(1.0, |fog| fog.work_speed_penalty);
+
     let amount = WORK_PER_TICK
         * tool_efficiency
         * morale_efficiency
@@ -421,7 +425,8 @@ pub fn calculate_work_amount(
         * work_speed_mod
         * admin_efficiency
         * (1.0 + augmentation_bonus)
-        * organic_factor;
+        * organic_factor
+        * fog_penalty;
 
     // Cap work amount to prevent logic bugs / economy exploits
     amount.min(1000.0)

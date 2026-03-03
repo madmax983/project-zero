@@ -321,6 +321,8 @@ pub enum BuildingType {
     BulletinBoard,
     /// Holographic projector that emits Beauty when powered.
     HoloProjector,
+    /// High-tech bed that trains skills while sleeping (Spec 255).
+    HypnoPod,
 }
 
 impl BuildingType {
@@ -502,6 +504,7 @@ impl BuildingType {
             Self::Recycler => true,
             Self::BulletinBoard => false,
             Self::HoloProjector => false,
+            Self::HypnoPod => true,
         }
     }
 
@@ -659,6 +662,7 @@ impl BuildingType {
             Self::Recycler => "Recycler",
             Self::BulletinBoard => "Bulletin Board",
             Self::HoloProjector => "Holo Projector",
+            Self::HypnoPod => "Hypno-Pod",
         }
     }
 
@@ -715,6 +719,7 @@ impl BuildingType {
             Self::Shower => '🚿',
             Self::Recycler => '♻',
             Self::BulletinBoard => 'B',
+            Self::HypnoPod => 'Z',
         }
     }
 
@@ -1035,6 +1040,11 @@ impl BuildingType {
                 ..ColonyResources::zeroed()
             },
             Self::Lander => ColonyResources::zeroed(),
+            Self::HypnoPod => ColonyResources {
+                metal: 10.0,
+                stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
         }
     }
 
@@ -1276,7 +1286,7 @@ fn spawn_building(
                 ShiftSchedule::default(),
             ));
         }
-        BuildingType::Housing | BuildingType::Lander => {
+        BuildingType::Housing | BuildingType::Lander | BuildingType::HypnoPod => {
             configure_housing(&mut entity, building_type);
         }
         BuildingType::Farm
@@ -1369,6 +1379,27 @@ fn configure_housing(entity: &mut EntityWorldMut, building_type: BuildingType) {
                     radius: 3.0,
                     intensity: 0.5,
                     color: (255, 255, 100), // Yellow
+                },
+            ));
+        }
+        BuildingType::HypnoPod => {
+            entity.insert((
+                Housing {
+                    capacity: 1,
+                    ..Default::default()
+                },
+                crate::layer1::tech::hypno_learning::HypnoPod {
+                    target_skill: crate::layer1::skills::SkillType::Mining,
+                    xp_rate: 1.0,
+                },
+                crate::layer1::energy::PowerConsumer {
+                    demand: 50.0,
+                    active: false,
+                },
+                LightSource {
+                    radius: 2.0,
+                    intensity: 0.5,
+                    color: (200, 100, 255), // Purple
                 },
             ));
         }
@@ -2287,7 +2318,12 @@ mod tests {
         assert_eq!(BuildingType::CloneVat.next(), BuildingType::Shower);
         assert_eq!(BuildingType::Shower.next(), BuildingType::Recycler);
         assert_eq!(BuildingType::Recycler.next(), BuildingType::BulletinBoard);
-        assert_eq!(BuildingType::BulletinBoard.next(), BuildingType::Housing);
+        assert_eq!(
+            BuildingType::BulletinBoard.next(),
+            BuildingType::HoloProjector
+        );
+        assert_eq!(BuildingType::HoloProjector.next(), BuildingType::HypnoPod);
+        assert_eq!(BuildingType::HypnoPod.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -2507,6 +2543,12 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::BulletinBoard);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::HoloProjector);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::HypnoPod);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

@@ -50,6 +50,11 @@ pub fn register(schedule: &mut Schedule) {
                 .after(apply_weather_effects_system),
             crate::layer1::chemical::apply_chemical_speed_modifiers_system
                 .after(apply_quirk_modifiers_system),
+            crate::layer1::tech::hypno_learning::apply_mental_fog_modifiers_system
+                .after(crate::layer1::chemical::apply_chemical_speed_modifiers_system),
+            crate::layer1::tech::hypno_learning::hypno_sleep_system,
+            crate::layer1::tech::hypno_learning::wake_up_hypno_system,
+            crate::layer1::tech::hypno_learning::update_mental_fog_system,
             #[cfg(feature = "nova")]
             crate::layer1::observer::observer_reaction_system
                 .after(apply_lighting_penalties_system),
