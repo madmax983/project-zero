@@ -23,14 +23,15 @@ use ratatui::style::Color;
 /// This system runs before `process_start_plan_system` to ensure pops are
 /// properly removed from their previous assignment before moving to a new one.
 pub fn cleanup_previous_assignment_system(
-    pops_query: Query<(Entity, &AssignedTo), With<StartPlan>>,
+    pops_query: Query<(Entity, &AssignedTo, Option<&crate::layer1::utility_types::PopAction>), With<StartPlan>>,
     mut farms: Query<&mut Farm>,
     mut housing: Query<&mut Housing>,
     mut taverns: Query<&mut Tavern>,
     mut offices: Query<&mut Office>,
     mut commands: Commands,
+    mut wakeup_events: EventWriter<crate::layer1::tech::hypno_learning::WakeUpHypnoEvent>,
 ) {
-    for (pop_entity, assigned) in &pops_query {
+    for (pop_entity, assigned, action_opt) in &pops_query {
         let assigned_entity = assigned.entity;
         match assigned.assignment_type {
             AssignmentType::FarmWorker => {
@@ -41,6 +42,16 @@ pub fn cleanup_previous_assignment_system(
             AssignmentType::HousingResident => {
                 if let Ok(mut h) = housing.get_mut(assigned_entity) {
                     h.residents.retain(|&r| r != pop_entity);
+                }
+
+                // If they were satisfying rest (sleeping), they are waking up
+                if let Some(action) = action_opt {
+                    if action.current == ActionType::SatisfyRest {
+                        wakeup_events.send(crate::layer1::tech::hypno_learning::WakeUpHypnoEvent {
+                            entity: pop_entity,
+                            bed_entity: assigned_entity,
+                        });
+                    }
                 }
             }
             AssignmentType::TavernVisitor => {

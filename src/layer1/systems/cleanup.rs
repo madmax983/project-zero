@@ -33,6 +33,7 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
+            update_event_buffer::<crate::layer1::tech::hypno_learning::WakeUpHypnoEvent>,
             update_event_buffer::<crate::layer1::geology::tectonic::MegaQuakeEvent>,
             handle_direct_input_system,
         )

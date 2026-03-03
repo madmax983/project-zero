@@ -321,6 +321,8 @@ pub enum BuildingType {
     BulletinBoard,
     /// Holographic projector that emits Beauty when powered.
     HoloProjector,
+    /// HypnoPod for rapid skill learning while sleeping.
+    HypnoPod,
 }
 
 impl BuildingType {
@@ -349,7 +351,8 @@ impl BuildingType {
             | Self::AtmosphericProcessor
             | Self::GeneBank
             | Self::CloneVat
-            | Self::HoloProjector => Some((Category::Research, Tier::HighTech)),
+            | Self::HoloProjector
+            | Self::HypnoPod => Some((Category::Research, Tier::HighTech)),
 
             _ => None,
         }
@@ -501,7 +504,8 @@ impl BuildingType {
             | Self::AuroralCollector => false,
             Self::Recycler => true,
             Self::BulletinBoard => false,
-            Self::HoloProjector => false,
+            | Self::HoloProjector
+            | Self::HypnoPod => false,
         }
     }
 
@@ -659,6 +663,7 @@ impl BuildingType {
             Self::Recycler => "Recycler",
             Self::BulletinBoard => "Bulletin Board",
             Self::HoloProjector => "Holo Projector",
+            Self::HypnoPod => "HypnoPod",
         }
     }
 
@@ -668,6 +673,7 @@ impl BuildingType {
         match self {
             Self::Housing => 'H',
             Self::Office | Self::Tower | Self::Observatory | Self::HoloProjector => 'O',
+            Self::HypnoPod => 'Y',
             Self::Farm | Self::AncientFabricator => 'F',
             Self::HydroponicsBay => 'Y',
             Self::DroneHub => 'D',
@@ -775,6 +781,11 @@ impl BuildingType {
             Self::HoloProjector => ColonyResources {
                 metal: 20.0,
                 stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::HypnoPod => ColonyResources {
+                metal: 50.0,
+                knowledge: 10.0,
                 ..ColonyResources::zeroed()
             },
             Self::CommandCenter => ColonyResources {
@@ -1329,6 +1340,7 @@ fn spawn_building(
         | BuildingType::AtmosphericProcessor
         | BuildingType::GeneBank
         | BuildingType::CloneVat
+        | BuildingType::HypnoPod
         | BuildingType::HoloProjector => configure_tech(&mut entity, building_type),
         BuildingType::Shower => configure_civic(&mut entity, building_type),
         BuildingType::Recycler => {
@@ -2045,6 +2057,22 @@ fn configure_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 BeautySource {
                     value: 0.0,
                     radius: 8.0,
+                },
+            ));
+        }
+        BuildingType::HypnoPod => {
+            entity.insert((
+                crate::layer1::tech::hypno_learning::HypnoPod {
+                    target_skill: crate::layer1::skills::SkillType::Mining,
+                    xp_rate: 10.0,
+                },
+                crate::layer1::energy::PowerConsumer {
+                    demand: 20.0,
+                    active: false,
+                },
+                crate::layer1::housing::Housing {
+                    capacity: 1, // HypnoPods are single-occupancy
+                    residents: Vec::new(),
                 },
             ));
         }
