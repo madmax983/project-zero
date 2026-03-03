@@ -7436,3 +7436,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Explosive early-game growth via predatory loans vs. slow, painful, but independent development.
 
 ---
+
+## Symbiotic Shipyards
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Growing a fleet instead of building it.
+
+**Mechanic:** You construct a "Spawning Pool" instead of a shipyard. It requires massive amounts of Food, Water, and "Biomass" instead of Metal or Fuel. The ships produced are biological entities that heal over time but require constant food upkeep.
+
+**Emergence:** You try to build a dreadnought, but it consumes so much biomass that you have to clear-cut your entire agricultural sector and start feeding your own dead pops to the pool just to finish gestation.
+
+**Tension:** Fast, cheap construction (if you have food) vs. massive, permanent food upkeep requirements.
+
+---
+
+## Echoes of the Past
+
+**Layer:** 1
+
+**Fantasy:** A colony haunted by its predecessors.
+
+**Mechanic:** When settling on ruins or ancient battlefields, "Echoes" of past inhabitants occasionally manifest as holographic ghosts. They provide huge XP bonuses to Pops studying them but rapidly increase Stress due to the eerie environment.
+
+**Emergence:** Your researchers discover incredible lost tech by following the ghosts, but the prolonged exposure drives them mad, leading to a faction that worships the dead and demands you stop all new construction.
+
+**Tension:** Massive knowledge gains vs. severe psychological deterioration.
+
+---
+
+## Orbital Tethers as Weapons
+
+**Layer:** Cross-layer
+
+**Fantasy:** The ultimate kinetic strike.
+
+**Mechanic:** You can intentionally sever a massive orbital tether. The entire structure collapses, becoming a colossal "whip" that strikes the planet. It obliterates everything in a line across Layer 1 but permanently destroys your orbital logistics capacity.
+
+**Emergence:** A rival empire lands a massive invasion force. In a desperate move, you cut the tether to your main spaceport, wiping out the invaders but trapping your colony on the surface forever.
+
+**Tension:** Unmatched destructive power in a desperate situation vs. sacrificing your connection to the stars.
+
+---
+
+## The Empathy Plague
+
+**Layer:** 1
+
+**Fantasy:** True understanding is a curse.
+
+**Mechanic:** A rare pathogen that doesn't cause physical damage but links the neural networks of infected Pops. Any Stress or Pain experienced by one infected Pop is instantly shared with all others.
+
+**Emergence:** A single infected miner breaks their leg in the deep tunnels, and suddenly twenty people in the cafeteria collapse in agony.
+
+**Tension:** Unprecedented social unity and coordination (if everyone is happy) vs. catastrophic cascading breakdowns.
+
+---
+
+## Counterfeit Reality
+
+**Layer:** 2
+
+**Fantasy:** Winning a war without firing a single shot by pretending you are a god.
+
+**Mechanic:** You build "Holo-Emitters" on your ships or stations. They can project massive fleets or impenetrable shields on enemy sensors. The projections have no combat stats and vanish if fired upon.
+
+**Emergence:** You project a massive armada to scare off a pirate raid, but a stray micrometeorite disrupts a projector, revealing your deception. The pirates realize you are defenseless and call in their entire clan.
+
+**Tension:** Cheap deterrence and psychological warfare vs. catastrophic vulnerability if the bluff is called.
+
+---
