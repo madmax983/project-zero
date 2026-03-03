@@ -4,8 +4,10 @@
 //! Implements the "Ghost in the Machine" mechanics where advanced buildings
 //! gain XP, level up, and develop personalities.
 
+use bevy_ecs::prelude::*;
 use crate::layer1::building::Building;
 use crate::layer1::gastronomy::WorkSpeedBuff;
+
 use crate::layer1::pop::{Job, Pop};
 use crate::layer1::traits::{Trait, Traits};
 use crate::shared::log::MessageLog;
@@ -223,6 +225,7 @@ mod tests {
     use crate::layer1::actions::AssignmentType;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::gastronomy::WorkSpeedBuff;
+
     use crate::layer1::pop::{Job, Pop};
 
     #[test]

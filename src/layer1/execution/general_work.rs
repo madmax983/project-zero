@@ -123,12 +123,13 @@ fn collect_workers_by_target(
             Option<&Morale>,
             Option<&crate::layer1::factions::FactionMember>,
             Option<&WorkSpeedBuff>,
+            Option<&crate::layer1::tech::hypno_learning::MentalFog>,
             Option<&Job>,
             Option<&Dialect>,
             Option<&Linguistics>,
         ), With<AtTarget>>()
         .iter(world)
-        .filter(|(_, mt, _, _, _, _, _, _, faction_member, _, _, _, _)| {
+        .filter(|(_, mt, _, _, _, _, _, _, faction_member, _, _, _, _, _): &(Entity, &MovementTarget, Option<&Needs>, Option<&Memories>, Option<&SocialBuff>, Option<&Equipment>, Option<&Traits>, Option<&Morale>, Option<&crate::layer1::factions::FactionMember>, Option<&WorkSpeedBuff>, Option<&crate::layer1::tech::hypno_learning::MentalFog>, Option<&Job>, Option<&Dialect>, Option<&Linguistics>)| {
             let is_work = mt.for_action == ActionType::Work || mt.for_action == ActionType::Repair;
             if !is_work {
                 return false;
@@ -152,10 +153,11 @@ fn collect_workers_by_target(
                 morale_comp,
                 _,
                 buff,
+                mental_fog,
                 job,
                 dialect,
                 ling,
-            )| {
+            ): (Entity, &MovementTarget, Option<&Needs>, Option<&Memories>, Option<&SocialBuff>, Option<&Equipment>, Option<&Traits>, Option<&Morale>, Option<&crate::layer1::factions::FactionMember>, Option<&WorkSpeedBuff>, Option<&crate::layer1::tech::hypno_learning::MentalFog>, Option<&Job>, Option<&Dialect>, Option<&Linguistics>)| {
                 let morale = needs.map_or(0.5, |n| {
                     calculate_effective_morale(
                         n,
@@ -169,6 +171,7 @@ fn collect_workers_by_target(
                 });
                 let trait_work_mod = traits.map_or(1.0, get_trait_work_speed_modifier);
                 let buff_mod = buff.map_or(1.0, |b| b.multiplier);
+                let fog_mod = mental_fog.map_or(1.0, |f| f.work_speed_penalty);
 
                 (
                     mt.target_entity,
@@ -177,7 +180,7 @@ fn collect_workers_by_target(
                         morale,
                         action: mt.for_action,
                         equipment: eq.copied(),
-                        speed_modifier: trait_work_mod * buff_mod,
+                        speed_modifier: trait_work_mod * buff_mod * fog_mod,
                         job: job.copied(),
                         dialect: dialect.copied().unwrap_or_default(),
                         linguistics: ling.cloned().unwrap_or_default(),
