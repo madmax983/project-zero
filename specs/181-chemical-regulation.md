@@ -245,4 +245,6 @@ Update `get_movement_speed` (wherever it lives, likely needing a refactor or hel
 ## Questions
 
 *Builder: Should withdrawal kill the pop or just incapacitate them?*
+- *Architect: For MVP, it should just incapacitate them (severe movement/work penalty).*
 *Builder: Do we need a dedicated "Chemical Plant" building or just use "Lab"?*
+- *Architect: Just use the existing "Lab" for now to keep the scope contained.*

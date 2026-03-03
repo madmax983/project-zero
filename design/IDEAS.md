@@ -300,7 +300,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Stowaway
+## The Stowaway [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -328,7 +328,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Technological Regression
+## Technological Regression [SPECCED]
 
 **Layer:** 1
 
