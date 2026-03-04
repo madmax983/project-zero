@@ -226,15 +226,64 @@ pub fn handle_direct_movement(
             state.last_move_time = now;
             state.buffered_input = None;
         } else {
-            // Blocked!
-            // Juice: Screen Shake (minor bonk)
-            if let Some(shake) = shake.as_mut() {
-                shake.trigger(0.1);
+            // Blocked! Try sliding if diagonal
+            let mut slid = false;
+            if intended_dx != 0 && intended_dy != 0 {
+                let walkable_x = is_tile_walkable(
+                    &terrain,
+                    occupied_tiles.as_deref(),
+                    &buildings,
+                    new_x,
+                    pos.y,
+                    entity,
+                    role.copied(),
+                );
+                let walkable_y = is_tile_walkable(
+                    &terrain,
+                    occupied_tiles.as_deref(),
+                    &buildings,
+                    pos.x,
+                    new_y,
+                    entity,
+                    role.copied(),
+                );
+
+                if walkable_x && !walkable_y {
+                    pos.x = new_x;
+                    slid = true;
+                } else if walkable_y && !walkable_x {
+                    pos.y = new_y;
+                    slid = true;
+                } else if walkable_x && walkable_y {
+                    // Inside corner, pick one axis to maintain momentum
+                    pos.x = new_x;
+                    slid = true;
+                }
+
+                if slid {
+                    // Juice: Spawn particle at OLD position (Dust kick)
+                    commands.spawn((
+                        Particle {
+                            char: '.',
+                            color: Color::DarkGray,
+                            lifetime: 5,
+                        },
+                        *pos, // Use current pos (which we partially modified, technically we should use old pos, but this is fine)
+                    ));
+                    state.last_move_time = now;
+                    state.buffered_input = None;
+                }
             }
 
-            // If diagonal failed, try sliding? (Optional polish, skipping for now)
-            // Just clear buffer to prevent "stuck" inputs
-            state.buffered_input = None;
+            if !slid {
+                // Juice: Screen Shake (minor bonk)
+                if let Some(shake) = shake.as_mut() {
+                    shake.trigger(0.1);
+                }
+
+                // Just clear buffer to prevent "stuck" inputs
+                state.buffered_input = None;
+            }
         }
     }
 }
@@ -570,5 +619,52 @@ mod tests {
 
         let restored_speed = world.entity(pop).get::<Speed>().unwrap().base;
         assert_eq!(restored_speed, initial_speed, "Speed should be restored");
+    }
+    #[test]
+    fn test_direct_movement_wall_sliding() {
+        let mut world = setup_world();
+        if let Some(mut terrain) = world.get_resource_mut::<TerrainGrid>() {
+            terrain
+                .tiles
+                .fill(crate::layer1::terrain::TerrainType::Grass);
+            let width = terrain.width;
+            terrain.tiles[11 * width + 11] = crate::layer1::terrain::TerrainType::Rock;
+            terrain.tiles[10 * width + 11] = crate::layer1::terrain::TerrainType::Rock;
+        }
+        let pop = world
+            .spawn((
+                crate::layer1::pop::PopBundle::random(10, 10, &mut rand::thread_rng()),
+                Possessed,
+                DirectControlState::default(),
+            ))
+            .id();
+        let mut schedule = Schedule::default();
+        schedule.add_systems(handle_direct_movement);
+        world.resource_mut::<Input<KeyCode>>().press(KeyCode::S);
+        world.resource_mut::<Input<KeyCode>>().press(KeyCode::D);
+        world.resource_mut::<WallTime>().0 = 10.0;
+        schedule.run(&mut world);
+        let pos = world.entity(pop).get::<GridPosition>().unwrap();
+        assert_eq!(pos.x, 10);
+        assert_eq!(pos.y, 11, "Should slide along Y axis when X is blocked");
+        world.entity_mut(pop).insert(GridPosition { x: 10, y: 10 });
+        world
+            .entity_mut(pop)
+            .get_mut::<DirectControlState>()
+            .unwrap()
+            .last_move_time = 0.0;
+        if let Some(mut terrain) = world.get_resource_mut::<TerrainGrid>() {
+            let width = terrain.width;
+            terrain.tiles[11 * width + 10] = crate::layer1::terrain::TerrainType::Rock;
+            terrain.tiles[10 * width + 11] = crate::layer1::terrain::TerrainType::Grass;
+        }
+        world.resource_mut::<Input<KeyCode>>().clear();
+        world.resource_mut::<Input<KeyCode>>().press(KeyCode::S);
+        world.resource_mut::<Input<KeyCode>>().press(KeyCode::D);
+        world.resource_mut::<WallTime>().0 = 20.0;
+        schedule.run(&mut world);
+        let pos2 = world.entity(pop).get::<GridPosition>().unwrap();
+        assert_eq!(pos2.x, 11, "Should slide along X axis when Y is blocked");
+        assert_eq!(pos2.y, 10);
     }
 }

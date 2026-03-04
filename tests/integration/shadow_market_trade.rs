@@ -1,8 +1,8 @@
 use bevy_ecs::prelude::*;
-use scale::layer1::shadow_market::ShadowTrader;
-use scale::layer1::trade::{TradeDeal, execute_trade};
-use scale::layer1::resources::{ColonyResources, ResourceType};
 use scale::layer1::map::GridPosition;
+use scale::layer1::resources::{ColonyResources, ResourceType};
+use scale::layer1::shadow_market::ShadowTrader;
+use scale::layer1::trade::{execute_trade, TradeDeal};
 
 #[test]
 fn shadow_market_trade_success() {
@@ -27,9 +27,9 @@ fn shadow_market_trade_success() {
                 arrival_tick: 0,
                 departure_tick: 500,
                 deals: vec![deal.clone()],
-            }
+            },
         },
-        GridPosition { x: 5, y: 5 }
+        GridPosition { x: 5, y: 5 },
     ));
 
     // Player selects the shadow trader entity and executes the trade.
