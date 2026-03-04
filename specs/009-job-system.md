@@ -718,6 +718,7 @@ With specs 001-009 complete:
 ## Questions
 
 *Builder: add questions here if spec is unclear.*
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
 
 ## Forward Compatibility Note
 
