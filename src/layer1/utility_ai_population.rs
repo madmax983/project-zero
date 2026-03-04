@@ -464,31 +464,37 @@ fn populate_all_structures(world: &mut World, buffer: &mut Vec<ScorableCandidate
 
 fn populate_cleaning_targets(world: &mut World, buffer: &mut UtilityAIBuffer) {
     buffer.cleaning_targets.clear();
-    if let Some(grid) = world.get_resource::<ClutterGrid>() {
-        for y in 0..grid.height {
-            for x in 0..grid.width {
-                let clutter = grid.get(x, y);
-                if clutter > 50.0 {
-                    // Only add cleaning targets if a building is present, to ensure valid entity targeting.
-                    // TODO: Support cleaning empty tiles if architecture allows Position targets or ephemeral entities.
-                    // This is a known limitation: clutter in empty hallways/roads is currently ignored.
-                    if let Some(building_entity) = world
-                        .resource::<crate::layer1::building::BuildingMap>()
-                        .0
-                        .get(&(x as i32, y as i32))
-                    {
-                        let mut c = ScorableCandidate::new(
-                            *building_entity,
-                            GridPosition {
-                                x: x as i32,
-                                y: y as i32,
-                            },
-                        );
-                        c.score_bonus = clutter / 100.0; // Higher clutter = higher score bonus
-                        buffer.cleaning_targets.push(c);
-                    }
-                }
+    let Some(grid) = world.get_resource::<ClutterGrid>() else {
+        return;
+    };
+
+    for y in 0..grid.height {
+        for x in 0..grid.width {
+            let clutter = grid.get(x, y);
+            if clutter <= 50.0 {
+                continue;
             }
+
+            // Only add cleaning targets if a building is present, to ensure valid entity targeting.
+            // TODO: Support cleaning empty tiles if architecture allows Position targets or ephemeral entities.
+            // This is a known limitation: clutter in empty hallways/roads is currently ignored.
+            let Some(building_entity) = world
+                .resource::<crate::layer1::building::BuildingMap>()
+                .0
+                .get(&(x as i32, y as i32))
+            else {
+                continue;
+            };
+
+            let mut c = ScorableCandidate::new(
+                *building_entity,
+                GridPosition {
+                    x: x as i32,
+                    y: y as i32,
+                },
+            );
+            c.score_bonus = clutter / 100.0; // Higher clutter = higher score bonus
+            buffer.cleaning_targets.push(c);
         }
     }
 }
@@ -521,11 +527,9 @@ pub fn collect_pop_data(world: &mut World, buffer: &mut UtilityAIBuffer, config:
     let mut item_query = world.query::<&crate::layer1::items::Item>();
 
     for data in &mut buffer.pop_data {
-        if let Some(eq) = data.equipment {
-            if let Some(body_entity) = eq.body {
-                if let Ok(clothing) = clothing_query.get(world, body_entity) {
-                    data.insulation = clothing.insulation;
-                }
+        if let Some(body_entity) = data.equipment.and_then(|eq| eq.body) {
+            if let Ok(clothing) = clothing_query.get(world, body_entity) {
+                data.insulation = clothing.insulation;
             }
         }
 

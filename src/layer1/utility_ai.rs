@@ -137,36 +137,51 @@ impl ScopedEvaluationContext {
         }
     }
 
-    fn populate(&mut self, world: &mut World) {
-        // Construct temporary context
-        // ZoneGrid fallback logic
-        let zone_grid_fallback = ZoneGrid::new(1, 1);
-        let zone_grid_ref = self.zone_grid.as_ref().unwrap_or(&zone_grid_fallback);
+    fn build_context<'a>(
+        resources: &'a ColonyResources,
+        cycle: &'a crate::layer1::day_night::DayNightCycle,
+        taboo: &'a crate::layer1::taboo::TabooState,
+        factions: Option<&'a Factions>,
+        zone_grid: Option<&'a ZoneGrid>,
+        temperature_grid: Option<&'a TemperatureGrid>,
+        fallback: &'a ZoneGrid,
+    ) -> WorldContext<'a> {
+        WorldContext {
+            resources,
+            cycle,
+            taboo,
+            factions: factions.as_ref().map(|f| &f.map),
+            zone_grid: zone_grid.unwrap_or(fallback),
+            temperature_grid,
+        }
+    }
 
-        let context = WorldContext {
-            resources: &self.resources,
-            cycle: &self.cycle,
-            taboo: &self.taboo,
-            factions: self.factions.as_ref().map(|f| &f.map),
-            zone_grid: zone_grid_ref,
-            temperature_grid: self.temperature_grid.as_ref(),
-        };
+    fn populate(&mut self, world: &mut World) {
+        let zone_grid_fallback = ZoneGrid::new(1, 1);
+        let context = Self::build_context(
+            &self.resources,
+            &self.cycle,
+            &self.taboo,
+            self.factions.as_ref(),
+            self.zone_grid.as_ref(),
+            self.temperature_grid.as_ref(),
+            &zone_grid_fallback,
+        );
 
         populate_ai_buffer(world, &mut self.buffer, &context);
     }
 
     fn run(&mut self) {
         let zone_grid_fallback = ZoneGrid::new(1, 1);
-        let zone_grid_ref = self.zone_grid.as_ref().unwrap_or(&zone_grid_fallback);
-
-        let context = WorldContext {
-            resources: &self.resources,
-            cycle: &self.cycle,
-            taboo: &self.taboo,
-            factions: self.factions.as_ref().map(|f| &f.map),
-            zone_grid: zone_grid_ref,
-            temperature_grid: self.temperature_grid.as_ref(),
-        };
+        let context = Self::build_context(
+            &self.resources,
+            &self.cycle,
+            &self.taboo,
+            self.factions.as_ref(),
+            self.zone_grid.as_ref(),
+            self.temperature_grid.as_ref(),
+            &zone_grid_fallback,
+        );
 
         let mut results = std::mem::take(&mut self.buffer.results);
         results.resize(self.buffer.pop_data.len(), None);
@@ -233,20 +248,13 @@ impl<'a> PopDecider<'a> {
     }
 
     fn check_striking(data: &PopEvalData, context: &WorldContext) -> bool {
-        let Some(factions) = context.factions.as_ref() else {
-            return false;
-        };
-        let Some(member) = data.faction_member.as_ref() else {
-            return false;
-        };
-        let Some(fid) = member.faction_id else {
-            return false;
-        };
-        let Some(faction_data) = factions.get(&fid) else {
-            return false;
-        };
-
-        faction_data.state == crate::layer1::factions::FactionState::Striking
+        data.faction_member
+            .as_ref()
+            .and_then(|member| member.faction_id)
+            .and_then(|fid| context.factions.and_then(|factions| factions.get(&fid)))
+            .is_some_and(|faction_data| {
+                faction_data.state == crate::layer1::factions::FactionState::Striking
+            })
     }
 
     /// **Priority 1: Survival**
@@ -383,38 +391,44 @@ impl<'a> PopDecider<'a> {
             work_bonus,
         );
 
-        // Evaluate Refine
-        if !self.is_penal {
-            self.evaluator.evaluate_and_consider(
-                evaluate_simple_action(pop_pos, &weights, &self.buffer.refining, 0.5),
-                ActionType::Refine,
-                self.context,
-                0.0,
-            );
+        // Evaluate Tame
+        self.evaluator.evaluate_and_consider(
+            evaluate_tame(&pop_pos, &weights, &self.buffer.tame_designations),
+            ActionType::Tame,
+            self.context,
+            0.0,
+        );
+
+        if self.is_penal {
+            return;
         }
+
+        // Evaluate Refine
+        self.evaluator.evaluate_and_consider(
+            evaluate_simple_action(pop_pos, &weights, &self.buffer.refining, 0.5),
+            ActionType::Refine,
+            self.context,
+            0.0,
+        );
 
         // Evaluate Farm
-        if !self.is_penal {
-            self.evaluator.evaluate_and_consider(
-                evaluate_simple_action(pop_pos, &weights, &self.buffer.farms, 0.5),
-                ActionType::Farm,
-                self.context,
-                0.0,
-            );
-        }
+        self.evaluator.evaluate_and_consider(
+            evaluate_simple_action(pop_pos, &weights, &self.buffer.farms, 0.5),
+            ActionType::Farm,
+            self.context,
+            0.0,
+        );
 
         // Evaluate Admin
-        if !self.is_penal {
-            self.evaluator.evaluate_and_consider(
-                evaluate_simple_action(pop_pos, &weights, &self.buffer.offices, 0.5),
-                ActionType::Admin,
-                self.context,
-                0.0,
-            );
-        }
+        self.evaluator.evaluate_and_consider(
+            evaluate_simple_action(pop_pos, &weights, &self.buffer.offices, 0.5),
+            ActionType::Admin,
+            self.context,
+            0.0,
+        );
 
         // Evaluate Research
-        if !self.is_penal && !is_feral {
+        if !is_feral {
             self.evaluator.evaluate_and_consider(
                 evaluate_research(
                     pop_pos,
@@ -428,36 +442,26 @@ impl<'a> PopDecider<'a> {
             );
         }
 
-        // Evaluate Tame
+        // Evaluate Policing (Warden & PreCrime)
+        // Warden (Arrest Wanted)
         self.evaluator.evaluate_and_consider(
-            evaluate_tame(&pop_pos, &weights, &self.buffer.tame_designations),
-            ActionType::Tame,
+            evaluate_warden_action(
+                &pop_pos,
+                &self.buffer.wanted_criminals,
+                self.context.zone_grid,
+            ),
+            ActionType::Warden,
             self.context,
             0.0,
         );
 
-        // Evaluate Policing (Warden & PreCrime)
-        if !self.is_penal {
-            // Warden (Arrest Wanted)
-            self.evaluator.evaluate_and_consider(
-                evaluate_warden_action(
-                    &pop_pos,
-                    &self.buffer.wanted_criminals,
-                    self.context.zone_grid,
-                ),
-                ActionType::Warden,
-                self.context,
-                0.0,
-            );
-
-            // PreCrime (Arrest Suspects)
-            self.evaluator.evaluate_and_consider(
-                evaluate_pre_crime_arrest(&pop_pos, &weights, &self.buffer.suspects),
-                ActionType::PreCrimeArrest,
-                self.context,
-                0.0,
-            );
-        }
+        // PreCrime (Arrest Suspects)
+        self.evaluator.evaluate_and_consider(
+            evaluate_pre_crime_arrest(&pop_pos, &weights, &self.buffer.suspects),
+            ActionType::PreCrimeArrest,
+            self.context,
+            0.0,
+        );
     }
 
     /// **Priority 4: Logistics & Maintenance**
@@ -708,27 +712,31 @@ fn apply_evaluation_results(
     config: &UtilityConfig,
 ) {
     for (i, data) in pop_data.iter().enumerate() {
-        if let Some((best_action, best_utility, best_target)) = results[i] {
-            // Switch if best exceeds threshold
-            if best_utility > data.action.current_utility + config.switch_threshold {
-                // Update action
-                let mut action = data.action;
-                action.current = best_action;
-                action.current_utility = best_utility;
-                action.ticks_committed = 0;
+        let Some((best_action, best_utility, best_target)) = results[i] else {
+            continue;
+        };
 
-                // Write back to world
-                if let Some(mut pop_action) = world.get_mut::<PopAction>(data.entity) {
-                    *pop_action = action;
-                }
-
-                // Insert StartPlan marker (for HTN system)
-                world.entity_mut(data.entity).insert(StartPlan {
-                    action: best_action,
-                    target: best_target,
-                });
-            }
+        // Switch if best exceeds threshold
+        if best_utility <= data.action.current_utility + config.switch_threshold {
+            continue;
         }
+
+        // Update action
+        let mut action = data.action;
+        action.current = best_action;
+        action.current_utility = best_utility;
+        action.ticks_committed = 0;
+
+        // Write back to world
+        if let Some(mut pop_action) = world.get_mut::<PopAction>(data.entity) {
+            *pop_action = action;
+        }
+
+        // Insert StartPlan marker (for HTN system)
+        world.entity_mut(data.entity).insert(StartPlan {
+            action: best_action,
+            target: best_target,
+        });
     }
 }
 
