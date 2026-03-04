@@ -7506,3 +7506,72 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Cheap deterrence and psychological warfare vs. catastrophic vulnerability if the bluff is called.
 
 ---
+## The Event Horizon Tap
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Playing with cosmic fire to power your colony, at the risk of localized time dilation.
+
+**Mechanic:** You can tether an experimental power station to a microscopic black hole or gravitational anomaly in the system (Layer 2) to beam infinite energy down to Layer 1. However, the connection occasionally wavers, causing "Time Dilation Zones" on the colony map where Pops and machines move at 10% speed but age normally.
+
+**Emergence:** You put your heavy industry in the dilation zone to save power, but a pirate raid hits while the zone is active. Your security forces take weeks of "local time" just to cross the street to respond, while the pirates outside the zone loot everything at normal speed.
+
+**Tension:** Infinite, free energy vs. unpredictable loss of local control and responsiveness.
+
+---
+
+## The Sleepwalker's Guild
+
+**Layer:** 1
+
+**Fantasy:** The colony never sleeps, even when the colonists do.
+
+**Mechanic:** Extreme chronic Stress and overuse of Hypno-Learning or Stimulants can cause Pops to develop "Productive Somnambulism." They continue working while their `Rest` need is technically regenerating, but they have zero awareness of their surroundings, ignore hazards, and drop items randomly.
+
+**Emergence:** A sleepwalking miner continues drilling through a sealed bulkhead because they are acting out their daily routine, inadvertently flooding the lower levels with toxic gas while they "sleep."
+
+**Tension:** Effectively doubling your workforce efficiency vs. complete unpredictability and massive safety hazards.
+
+---
+
+## The Memory Black Market
+
+**Layer:** Cross-layer
+
+**Fantasy:** Stealing the experiences of the dead to shortcut education.
+
+**Mechanic:** When a highly skilled Pop dies, a shady faction might harvest their "Memory Core" (Layer 1 item). This item can be traded on the black market (Layer 2) or forcefully implanted into a rookie Pop, granting them max skills instantly but overwriting their personality and causing severe "Identity Rejection" stress.
+
+**Emergence:** You lose your best pilot. You buy a black-market memory core to train a replacement. The new pilot gains the skills but also inherits the dead pilot's deep-seated hatred for the faction you just allied with, immediately taking a ship and going rogue to bomb their station.
+
+**Tension:** Instant replacement of irreplaceable talent vs. severe psychological instability and loss of control.
+
+---
+
+## The Phantom Shift
+
+**Layer:** 1
+
+**Fantasy:** A shadow workforce that only exists when you aren't looking.
+
+**Mechanic:** Under conditions of extreme systemic inefficiency (e.g., massive job backlogs, neglected infrastructure), a "Phantom Shift" emerges. Pops with the "Fringe" cultural tag or high desperation secretly work during the night cycle. They fix things and complete jobs but use up colony resources without logging them and slowly build an invisible, untaxable shadow economy.
+
+**Emergence:** You notice your building projects are finishing faster than mathematically possible, but your resource stockpiles are mysteriously draining. When you finally send inspectors to the lower levels, you discover an entire parallel city built from "missing" materials that refuses to recognize your authority.
+
+**Tension:** Free labor and auto-maintenance vs. complete loss of economic transparency and the rise of a powerful sub-faction.
+
+---
+
+## The Neural Leech
+
+**Layer:** 1
+
+**Fantasy:** Sacrificing one mind to elevate many.
+
+**Mechanic:** A piece of forbidden tech that allows you to designate one Pop as a "Neural Hub." This Pop is permanently confined to a tank, their `Rest` and `Social` needs flatline, and their `Stress` maxes out. In exchange, all Pops within a radius gain a massive cognitive buff, working faster and learning instantly as the Hub processes their mental load.
+
+**Emergence:** The Hub finally breaks under the stress and dies. The sudden removal of the cognitive crutch causes every linked Pop to experience an immediate mental breakdown simultaneously, crashing the entire sector's economy in a single tick.
+
+**Tension:** Massive, immediate efficiency gains for the many vs. the inevitable, catastrophic burnout of the one.
+
+---
