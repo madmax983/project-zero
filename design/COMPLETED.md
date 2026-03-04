@@ -193,3 +193,4 @@
 - [x] `INT-038` Integration: MegaQuakeEvent -> Chronicle System — completed 2026-03-03
 - [x] `255` Hypno-Learning — `specs/255-hypno-learning.md` — completed 2026-03-03
 - [x] `261` Shadow Markets — `specs/261-shadow-markets.md` — completed 2026-03-04
+- [x] `INT-261` Integration: Shadow Markets -> Trade Execution — completed 2026-03-04

@@ -263,3 +263,11 @@
     - Registered in `src/layer1/systems/observation.rs`.
     - Initialized `MegaQuakeEvent` resource in `setup.rs`.
 - **Tests:** `tests/integration/mega_quake_chronicle.rs` (Integration test verified)
+
+### INT-261: Shadow Markets -> Trade Execution
+- **Date:** 2026-03-04
+- **Systems connected:** `execute_trade` -> `ShadowTrader`
+- **Glue added:**
+    - Validated `ShadowTrader` properties.
+    - Verified `TradeDeal` exchanges resources successfully.
+- **Tests:** `tests/integration/shadow_market_trade.rs`
