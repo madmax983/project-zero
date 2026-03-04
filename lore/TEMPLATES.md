@@ -2427,3 +2427,111 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "The [PROCESSOR_NAME] falls silent. [YEAR]. No energy from the [POWER_SOURCE]."
 - "[YEAR]: Power failure. The [PROCESSOR_NAME] stops spinning. The poison returns."
 - "Silence from the [PROCESSOR_NAME]. [YEAR]. We lack the [POWER_SOURCE] to run it."
+
+---
+
+## Generational Hoarders Templates (Spec 284)
+
+### HOARD_DISCOVERED
+**Slots:** [COLONY], [YEAR], [NAME], [HOARDED_ITEM], [HOARDER_JUSTIFICATION]
+
+- "We opened [NAME]'s quarters. [YEAR]. Piles of [HOARDED_ITEM]. They said [HOARDER_JUSTIFICATION]."
+- "[YEAR]: The space is gone. [NAME] filled it with [HOARDED_ITEM]. Claimed [HOARDER_JUSTIFICATION]."
+- "Logistics failure. [NAME] hid the [HOARDED_ITEM]. Their excuse: [HOARDER_JUSTIFICATION]. [YEAR]."
+
+### HOARD_CONFISCATED
+**Slots:** [COLONY], [YEAR], [NAME], [HOARDED_ITEM]
+
+- "We took the [HOARDED_ITEM] from [NAME]. [YEAR]. They wept."
+- "[YEAR]: Confiscation order. [NAME] loses their [HOARDED_ITEM]. Morale drops."
+- "The stash is cleared. [NAME] stares at the empty wall, missing their [HOARDED_ITEM]. [YEAR]."
+
+---
+
+## Echoes of the Past Templates (Spec 285)
+
+### GHOST_SIGHTING
+**Slots:** [COLONY], [YEAR], [GHOST_APPEARANCE]
+
+- "They saw it again. [YEAR]. A figure, [GHOST_APPEARANCE]."
+- "[YEAR]: The ruins are restless. A projection, [GHOST_APPEARANCE], walks the halls."
+- "Echoes in the dark. A shape [GHOST_APPEARANCE]. We are not alone. [YEAR]."
+
+### ANCIENT_SECRET_REVEALED
+**Slots:** [COLONY], [YEAR], [ANCIENT_SECRET], [GHOST_APPEARANCE]
+
+- "The phantom showed us. [YEAR]. [ANCIENT_SECRET], revealed by a figure [GHOST_APPEARANCE]."
+- "[YEAR]: A truth from the dead. We found [ANCIENT_SECRET] following the one [GHOST_APPEARANCE]."
+- "The past speaks. [ANCIENT_SECRET] uncovered. [YEAR]."
+
+---
+
+## Symbiotic Shipyards Templates
+
+### LIVING_SHIP_BORN
+**Slots:** [COLONY], [YEAR], [LIVING_SHIP_NAME], [GESTATION_STAGE]
+
+- "The [LIVING_SHIP_NAME] reaches [GESTATION_STAGE]. [YEAR]. It breathes."
+- "[YEAR]: Gestation complete. Our [LIVING_SHIP_NAME] is born into the void."
+- "Flesh and star-metal. The [LIVING_SHIP_NAME] is at [GESTATION_STAGE]. [YEAR]."
+
+### SHIP_STARVATION
+**Slots:** [COLONY], [YEAR], [LIVING_SHIP_NAME]
+
+- "The [LIVING_SHIP_NAME] is hungry. [YEAR]. It groans in the dock."
+- "[YEAR]: Biomass shortage. The [LIVING_SHIP_NAME] feeds on its own hull."
+- "We cannot feed the fleet. The [LIVING_SHIP_NAME] weakens. [YEAR]."
+
+---
+
+## Orbital Tethers as Weapons Templates
+
+### TETHER_SNAPPED
+**Slots:** [COLONY], [YEAR], [TETHER_NAME], [DESTRUCTION_SCALE]
+
+- "The [TETHER_NAME] falls! [YEAR]. A [DESTRUCTION_SCALE] impact across the equator."
+- "[YEAR]: The line is cut. The [TETHER_NAME] whips the surface. [DESTRUCTION_SCALE] ruin."
+- "We lost the sky. The [TETHER_NAME] collapses. It was [DESTRUCTION_SCALE]. [YEAR]."
+
+### TETHER_SACRIFICE
+**Slots:** [COLONY], [YEAR], [TETHER_NAME], [ENEMY]
+
+- "We dropped the [TETHER_NAME] on the [ENEMY]. [YEAR]. We are grounded, but safe."
+- "[YEAR]: Desperate measures. The [TETHER_NAME] weaponized against [ENEMY]."
+- "The ultimate strike. [TETHER_NAME] severed to crush the [ENEMY]. [YEAR]."
+
+---
+
+## The Empathy Plague Templates
+
+### EMPATHY_PLAGUE_START
+**Slots:** [COLONY], [YEAR], [SHARED_EMOTION], [MIND_LINK_SYMPTOM]
+
+- "The sickness links us. [YEAR]. We all feel [SHARED_EMOTION]. People are [MIND_LINK_SYMPTOM]."
+- "[YEAR]: One mind. The colony shares [SHARED_EMOTION]. We are [MIND_LINK_SYMPTOM]."
+- "No secrets anymore. The plague brings [SHARED_EMOTION]. [MIND_LINK_SYMPTOM]. [YEAR]."
+
+### CASCADE_BREAKDOWN
+**Slots:** [COLONY], [YEAR], [SHARED_EMOTION]
+
+- "One broke, and we all fell. [YEAR]. A wave of [SHARED_EMOTION] took the colony."
+- "[YEAR]: Neural cascade. [SHARED_EMOTION] paralyzes the workforce."
+- "Shared agony. [SHARED_EMOTION] sweeps the link. [YEAR]."
+
+---
+
+## Counterfeit Reality Templates
+
+### HOLO_FLEET_PROJECTED
+**Slots:** [COLONY], [YEAR], [HOLO_ILLUSION]
+
+- "The projectors hum. [YEAR]. The sky is filled with [HOLO_ILLUSION]."
+- "[YEAR]: Deception active. We broadcast [HOLO_ILLUSION] to the void."
+- "Hiding behind light. A [HOLO_ILLUSION] shields [COLONY]. [YEAR]."
+
+### BLUFF_CALLED
+**Slots:** [COLONY], [YEAR], [HOLO_ILLUSION], [BLUFF_OUTCOME]
+
+- "The enemy saw the [HOLO_ILLUSION]. [YEAR]. And [BLUFF_OUTCOME]."
+- "[YEAR]: The illusion of [HOLO_ILLUSION] is tested. Result: [BLUFF_OUTCOME]."
+- "They looked at our [HOLO_ILLUSION]. [BLUFF_OUTCOME]. [YEAR]."

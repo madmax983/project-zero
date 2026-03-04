@@ -3577,3 +3577,148 @@ Descriptions of the changing atmosphere.
 - free of ash
 - settling
 - returning to normal
+
+---
+
+## Hoarder Fragments
+
+### [HOARDED_ITEM]
+Items obsessively collected by older pops.
+
+- rusted gears
+- void-glass shards
+- empty ration tins
+- bent wire
+- dull pickaxes
+- torn filter-cloths
+- broken seals
+
+### [HOARDER_JUSTIFICATION]
+Why the pop says they need the junk.
+
+- for a rainy day
+- they don't make them like this anymore
+- memory of the hunger
+- to fix the old pump
+- it still has uses
+- the young waste everything
+
+---
+
+## Echoes of the Past Fragments
+
+### [GHOST_APPEARANCE]
+How the holographic ghosts look.
+
+- shimmering and blue
+- glitching out of focus
+- repeating a three-second loop
+- screaming silently
+- pointing to the dark
+- tracing an old map
+- fading in the light
+
+### [ANCIENT_SECRET]
+What the ghosts try to show.
+
+- a buried reactor
+- the fault line
+- a hidden door
+- the poison in the water
+- a forgotten name
+- the way out
+
+---
+
+## Symbiotic Shipyard Fragments
+
+### [LIVING_SHIP_NAME]
+Flavor names for biological vessels.
+
+- Bone-Cruiser
+- Shell-Hauler
+- Pulse-Frigate
+- Flesh-Barge
+- Vein-Skiff
+- Marrow-Ship
+
+### [GESTATION_STAGE]
+Phases of a biological ship growing.
+
+- embryo-bud
+- heart-forming
+- shell-hardening
+- lung-inflation
+- first-pulse
+- void-ready
+
+---
+
+## Orbital Tether Fragments
+
+### [TETHER_NAME]
+Names for the massive space elevator.
+
+- The String
+- Sky-Hook
+- The Needle
+- Heaven's Anchor
+- The Long Climb
+- Star-Bridge
+
+### [DESTRUCTION_SCALE]
+Adjectives for the damage when a tether falls.
+
+- continent-cracking
+- apocalyptic
+- merciless
+- absolute
+- blinding
+- earth-shattering
+- final
+
+---
+
+## Empathy Plague Fragments
+
+### [SHARED_EMOTION]
+What everyone suddenly feels.
+
+- a crushing despair
+- phantom pain in the left arm
+- a sudden, inexplicable joy
+- the fear of falling
+- the memory of cold
+- an overwhelming exhaustion
+
+### [MIND_LINK_SYMPTOM]
+How the neural link manifests.
+
+- finishing each other's sentences
+- waking at the same second
+- weeping without reason
+- moving in unison
+- silent communication
+
+---
+
+## Counterfeit Reality Fragments
+
+### [HOLO_ILLUSION]
+What the counterfeit projectors show.
+
+- a dreadnought armada
+- an impenetrable energy shield
+- a bustling metropolis
+- a fully armed garrison
+- pristine, untouched nature
+- a burning wasteland (as a deterrent)
+
+### [BLUFF_OUTCOME]
+What happens when the illusion is tested.
+
+- they turned and ran
+- a single shot popped the bubble
+- the static gave us away
+- they believed the lie
+- the mirage held

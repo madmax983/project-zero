@@ -2435,4 +2435,121 @@ STRUCTURAL_DISSOLUTION:
     - REPAINTING_TASK (high)
   increases:
     - EXPOSURE (medium)
+
+## Generational Hoarders Chaining
+
+```yaml
+HOARD_DISCOVERED:
+  enables:
+    - HOARD_CONFISCATED (high)
+    - JURY_RIG_EVENT (medium, if hoarder forced to use it)
+  increases:
+    - LOGISTICS_JAM (high)
+    - FRUSTRATION (medium)
+
+HOARD_CONFISCATED:
+  enables:
+    - STRIKE (low, from elders)
+    - BRAWL (medium)
+  increases:
+    - UNREST (medium)
+    - RESOURCE_GAIN (high)
+```
+
+## Echoes of the Past Chaining
+
+```yaml
+GHOST_SIGHTING:
+  enables:
+    - ANCIENT_SECRET_REVEALED (medium)
+    - PANIC_SPREAD (high)
+  increases:
+    - FEAR (high)
+    - MYSTERY (high)
+
+ANCIENT_SECRET_REVEALED:
+  enables:
+    - TECH_BREAKTHROUGH (high)
+    - ARTIFACT_DISCOVERED (high)
+  increases:
+    - KNOWLEDGE (high)
+```
+
+## Symbiotic Shipyards Chaining
+
+```yaml
+LIVING_SHIP_BORN:
+  enables:
+    - SHIP_STARVATION (high, ongoing risk)
+    - FLEET_ENGAGEMENT (medium)
+  increases:
+    - MILITARY_POWER (high)
+    - FOOD_CONSUMPTION (maximum)
+
+SHIP_STARVATION:
+  enables:
+    - MUTINY (low, ship turns hostile)
+    - FAMINE (high, if ship eats reserves)
+  increases:
+    - TENSION (high)
+```
+
+## Orbital Tethers as Weapons Chaining
+
+```yaml
+TETHER_SNAPPED:
+  enables:
+    - ISOLATION_EVENT (always)
+    - REBUILDING_EFFORT (low, unlikely)
+  increases:
+    - DESTRUCTION (maximum)
+    - DESPAIR (high)
+
+TETHER_SACRIFICE:
+  enables:
+    - THREAT_DESTROYED (always)
+    - ISOLATION_EVENT (always)
+  increases:
+    - REGRET (medium)
+    - SAFETY (high, temporary)
+```
+
+## The Empathy Plague Chaining
+
+```yaml
+EMPATHY_PLAGUE_START:
+  enables:
+    - CASCADE_BREAKDOWN (high)
+    - SYNCHRONIZED_WORK (low, if happy)
+  increases:
+    - COHESION (maximum)
+    - VULNERABILITY (high)
+
+CASCADE_BREAKDOWN:
+  enables:
+    - WORK_STOPPAGE (always)
+    - MEDICAL_EMERGENCY (high)
+  increases:
+    - STRESS (maximum)
+```
+
+## Counterfeit Reality Chaining
+
+```yaml
+HOLO_FLEET_PROJECTED:
+  enables:
+    - BLUFF_CALLED (medium)
+    - THREAT_IGNORED (high, enemy flees)
+  increases:
+    - POWER_DRAIN (high)
+    - FALSE_SECURITY (high)
+
+BLUFF_CALLED:
+  enables:
+    - ORBITAL_BOMBARDMENT (high)
+    - PANIC_SPREAD (always)
+  increases:
+    - VULNERABILITY (maximum)
+    - DESTRUCTION (high)
+```
 ```
