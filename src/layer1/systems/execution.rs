@@ -107,6 +107,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::tech::hypno_learning::wake_up_hypno_system
                 .after(process_start_plan_system),
             crate::layer1::tech::hypno_learning::update_mental_fog_system.after(movement_system),
+            crate::layer1::tech::harmonic_mining::process_harmonic_mining.after(movement_system),
         )
             .in_set(Layer1SystemSet::Execution),
     );

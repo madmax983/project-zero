@@ -1,12 +1,13 @@
 //! WASM platform adapter (ratzilla → `GameKeyEvent` / `GameMouseEvent`).
 
+#[cfg(target_arch = "wasm32")]
 use ratzilla::event::{KeyCode, KeyEvent, MouseEvent, MouseEventKind};
-
 use super::input::{GameKeyCode, GameKeyEvent, GameMouseEvent};
 
 /// Convert a ratzilla `KeyEvent` to a platform-agnostic `GameKeyEvent`.
 ///
 /// Returns `Err(())` for keys we don't handle.
+#[cfg(target_arch = "wasm32")]
 impl TryFrom<KeyEvent> for GameKeyEvent {
     type Error = ();
 
@@ -33,6 +34,7 @@ impl TryFrom<KeyEvent> for GameKeyEvent {
 ///
 /// Only `Pressed` events are translated. Ratzilla uses `u32` for coordinates;
 /// we saturate-cast to `u16` (terminal grids don't exceed 65535 columns).
+#[cfg(target_arch = "wasm32")]
 impl TryFrom<MouseEvent> for GameMouseEvent {
     type Error = ();
 

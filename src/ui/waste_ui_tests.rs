@@ -1,5 +1,3 @@
-#![cfg(test)]
-
 use crate::layer1::resources::ColonyResources;
 use crate::shared::selection::Selection;
 use crate::ui::inspector::render_inspector;
