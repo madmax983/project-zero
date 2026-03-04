@@ -139,3 +139,4 @@ pub fn shadow_visibility_system(
 *Architect:* Shadow flora does not move, but it "creeps" by spawning new adjacent instances in unlit tiles over time, much like standard mold or fire propagation.
 *Architect: Yes, shadow ecosystems (Data-Fauna) slowly migrate between high-tech structures that emit strong radiation or wifi signals.*
 *Architect: Yes, random walk towards higher density (gradient descent).*
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.

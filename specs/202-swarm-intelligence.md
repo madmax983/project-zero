@@ -209,3 +209,4 @@ Register `update_swarm_proximity_system` in `Layer1SystemSet::Simulation`.
 ## Questions
 
 *Builder: add questions here if spec is unclear.*
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.

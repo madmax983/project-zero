@@ -358,3 +358,4 @@ In `src/layer1/building.rs`, when spawning `Housing` (or other wooden structures
 ## Questions
 
 *Builder: add questions here if spec is unclear.*
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.

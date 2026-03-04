@@ -60,3 +60,4 @@ fn test_cannibalism_generates_taboo_and_trauma() {
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear.*
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.

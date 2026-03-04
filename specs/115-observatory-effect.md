@@ -242,3 +242,4 @@ Add `process_observe_system` to the main simulation loop in `lib.rs` or `main.rs
 ## 8. Questions
 
 *Builder: add questions here if spec is unclear.*
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.

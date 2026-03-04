@@ -303,3 +303,4 @@ For now, `exchange_rumors_system` can just run occasionally (every 100 ticks) on
 ## Questions
 
 *Builder: add questions here if spec is unclear.*
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.

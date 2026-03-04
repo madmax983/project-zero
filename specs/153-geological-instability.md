@@ -258,3 +258,4 @@ pub fn apply_geological_event(world: &mut World, event: &GeologicalEvent) {
 ## Questions
 
 *Builder: add questions here if spec is unclear.*
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.

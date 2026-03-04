@@ -576,3 +576,4 @@ This spec intentionally leaves unimplemented:
 - **Dynamic scheduling** - Add/remove systems at runtime
 - **System profiling** - Measure individual system performance
 - **Conditional systems** - Run only if certain conditions met
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.

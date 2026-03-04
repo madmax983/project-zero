@@ -320,3 +320,4 @@ In `src/layer1/mod.rs` and `main.rs`, register `MerchantState` resource and `mer
 ## Questions
 
 *Builder: add questions here if spec is unclear.*
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
