@@ -234,6 +234,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<crate::layer1::constellations::Sky>();
     #[cfg(feature = "nova")]
     world.init_resource::<crate::layer1::void_signals::SignalNetwork>();
+    #[cfg(feature = "nova")]
+    world.init_resource::<crate::layer1::machine_consciousness::ConsciousnessConfig>();
 
     world.insert_resource(ColonyName { name: colony_name });
     generate_world_history(&mut world);

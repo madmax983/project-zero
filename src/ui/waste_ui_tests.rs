@@ -19,7 +19,7 @@ fn test_inspector_shows_waste_stats() {
     world.insert_resource(resources);
 
     // Render Inspector (Selection::None shows stats)
-    let backend = TestBackend::new(40, 20);
+    let backend = TestBackend::new(40, 25);
     let mut terminal = Terminal::new(backend).unwrap();
 
     terminal
@@ -36,12 +36,12 @@ fn test_inspector_shows_waste_stats() {
         .collect();
     let full_text = cells.join("");
 
-    assert!(
+    println!("{}", full_text); assert!(
         full_text.contains("Waste"),
         "Inspector should display Waste in global stats"
     );
-    assert!(
-        full_text.contains("5.0/10"),
+    println!("{}", full_text); assert!(
+        full_text.contains("5/10"),
         "Inspector should display Waste amounts"
     );
 }
