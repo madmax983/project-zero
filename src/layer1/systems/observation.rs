@@ -82,6 +82,10 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::social::cultural_vandalism::vandalism_system.after(decay_needs_system),
             crate::layer1::social::cultural_vandalism::update_structure_buffs
                 .after(crate::layer1::social::cultural_vandalism::vandalism_system),
+            #[cfg(feature = "nova")]
+            crate::experimental::echo_chamber::detect_echo_chamber_system.after(crate::layer1::needs::decay_needs_system),
+            #[cfg(feature = "nova")]
+            crate::experimental::echo_chamber::apply_echo_chamber_system.after(crate::experimental::echo_chamber::detect_echo_chamber_system),
         )
             .in_set(Layer1SystemSet::Observation),
     );
