@@ -90,7 +90,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Signal Latency
+## Signal Latency [SPECCED]
 
 **Layer:** Cross-Layer
 
@@ -104,7 +104,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Archaeological Layers
+## Archaeological Layers [SPECCED]
 
 **Layer:** 1
 
@@ -118,7 +118,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Atmospheric Feedback
+## Atmospheric Feedback [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -132,7 +132,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Cultural Drift
+## Cultural Drift [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -160,7 +160,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Acoustic Zones
+## Acoustic Zones [SPECCED]
 
 **Layer:** 1
 
