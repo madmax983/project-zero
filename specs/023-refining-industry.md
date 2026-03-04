@@ -350,5 +350,4 @@ pub fn process_refining_system(world: &mut World) {
 ## Questions
 
 *Builder: Should the "10 tile range" be a constant shared with Mining?*
-*Architect:* Yes, use a shared constant `INDUSTRY_PROCESSING_RANGE` in a common constants module to ensure consistency across both systems.
-*Architect: Yes, refining range checks should use a shared constant in `layer1::constants`.*
+*Architect:* Yes, use a shared constant `INDUSTRY_PROCESSING_RANGE` in `crate::layer1::balance` to ensure consistency across both systems.
