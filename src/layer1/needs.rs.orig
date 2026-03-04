@@ -96,7 +96,7 @@ impl Needs {
     /// ```
     /// use scale::layer1::needs::Needs;
     ///
-    /// let needs = Needs { hunger: 0.9, rest: 0.2, leisure: 0.5, hygiene: 1.0 };
+    /// let needs = Needs { hunger: 0.9, rest: 0.2, leisure: 0.5 };
     /// assert_eq!(needs.worst(), 0.2); // Rest is the lowest
     /// ```
     #[must_use]

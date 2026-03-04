@@ -358,7 +358,9 @@ pub fn get_status_line<'a>(
 ///     0.0,                // rations
 ///     10.0,               // tools
 ///     0.8,                // morale
+///     1.0,                // stability
 ///     None,               // season
+///     None,               // solar_cycle
 /// );
 ///
 /// assert!(status.contains("Day 10"));
