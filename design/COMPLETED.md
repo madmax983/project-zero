@@ -185,6 +185,7 @@
 - [x] `246` Legacy Code — `specs/246-legacy-code.md` — completed 2026-02-26
 - [x] `247` Ghost Code — `specs/247-ghost-code.md` — completed 2026-02-27
 - [x] `243` Thermal Bloom — `specs/243-thermal-bloom.md` — completed 2026-02-27
+- [x] `263` The Cadet Branch — `specs/263-the-cadet-branch.md` — completed 2026-03-01
 - [x] `253` Cultural Vandalism — `specs/253-cultural-vandalism.md` — completed 2026-03-02
 - [x] `248` The Infinite Archive — `specs/248-infinite-archive.md` — completed 2026-02-28
 - [x] `245` Quantum Twins — `specs/245-quantum-twins.md` — completed 2026-02-28

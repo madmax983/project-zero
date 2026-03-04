@@ -160,6 +160,8 @@ pub struct ColonyResources {
     pub scrap: f32,
     /// Total building permits available in the colony.
     pub building_permits: f32,
+    /// Total credits available in the colony.
+    pub credits: f32,
     /// Maximum food capacity.
     pub max_food: f32,
     /// Maximum wood capacity.
@@ -198,6 +200,8 @@ pub struct ColonyResources {
     pub max_scrap: f32,
     /// Maximum building permits capacity (usually infinite or high).
     pub max_building_permits: f32,
+    /// Maximum credits capacity (usually infinite or high).
+    pub max_credits: f32,
 }
 
 impl Default for ColonyResources {
@@ -241,6 +245,8 @@ impl Default for ColonyResources {
             max_scrap: 20.0,
             building_permits: 0.0,
             max_building_permits: 100.0,
+            credits: 0.0,
+            max_credits: 1000000.0,
         }
     }
 }
@@ -289,6 +295,8 @@ impl Mul<f32> for ColonyResources {
             max_scrap: self.max_scrap,
             building_permits: (self.building_permits * rhs).ceil(),
             max_building_permits: self.max_building_permits,
+            credits: (self.credits * rhs).ceil(),
+            max_credits: self.max_credits,
         }
     }
 }
@@ -339,6 +347,15 @@ impl ColonyResources {
             max_scrap: 0.0,
             building_permits: 0.0,
             max_building_permits: 0.0,
+            credits: 0.0,
+            max_credits: 0.0,
+        }
+    }
+
+    /// Adds credits, clamping to the maximum capacity.
+    pub fn add_credits(&mut self, amount: f32) {
+        if amount.is_finite() {
+            self.credits = (self.credits + amount).clamp(0.0, self.max_credits);
         }
     }
 
@@ -506,6 +523,7 @@ impl ColonyResources {
             || self.alcohol < 0.0
             || self.scrap < 0.0
             || self.building_permits < 0.0
+            || self.credits < 0.0
     }
 
     /// Checks if all resource values are finite (not NaN or Infinity).
@@ -529,6 +547,7 @@ impl ColonyResources {
             && self.alcohol.is_finite()
             && self.scrap.is_finite()
             && self.building_permits.is_finite()
+            && self.credits.is_finite()
     }
 
     /// Checks if the colony can afford the given cost.
@@ -566,6 +585,7 @@ impl ColonyResources {
             && self.alcohol >= cost.alcohol
             && self.scrap >= cost.scrap
             && self.building_permits >= cost.building_permits
+            && self.credits >= cost.credits
     }
 
     /// Deducts the given cost from the colony's resources.
@@ -592,6 +612,7 @@ impl ColonyResources {
         self.alcohol -= cost.alcohol;
         self.scrap -= cost.scrap;
         self.building_permits -= cost.building_permits;
+        self.credits -= cost.credits;
     }
 
     /// Attempts to deduct the given cost from the colony's resources.
