@@ -7534,7 +7534,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Memory Black Market
+## The Memory Black Market [SPECCED]
 
 **Layer:** Cross-layer
 
