@@ -93,7 +93,7 @@ struct ScopedEvaluationContext {
 
 impl ScopedEvaluationContext {
     fn new(world: &mut World) -> Self {
-        let config = world.resource::<UtilityConfig>().clone();
+        let config = *world.resource::<UtilityConfig>();
 
         // 1. Buffer (must be removed before collection if we want to mutate it while world is mutable)
         let mut buffer = world
@@ -108,10 +108,8 @@ impl ScopedEvaluationContext {
         let factions = world.remove_resource::<Factions>();
 
         // 3. Clone others
-        let resources = world.resource::<ColonyResources>().clone();
-        let cycle = world
-            .resource::<crate::layer1::day_night::DayNightCycle>()
-            .clone();
+        let resources = *world.resource::<ColonyResources>();
+        let cycle = *world.resource::<crate::layer1::day_night::DayNightCycle>();
         let taboo = world.resource::<crate::layer1::taboo::TabooState>().clone();
 
         Self {

@@ -296,7 +296,7 @@ impl Default for UtilityWeights {
 }
 
 /// Global tuning configuration for the Utility AI system.
-#[derive(Resource, Clone)]
+#[derive(Resource, Clone, Copy)]
 pub struct UtilityConfig {
     /// Hysteresis factor to prevent "dithering" (rapidly switching tasks).
     /// A new action must be `current_utility + switch_threshold` better to swap.
