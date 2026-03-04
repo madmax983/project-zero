@@ -7714,3 +7714,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Severe brain drain (loss of skilled labor) vs. Annihilation (failing to pay the tribute).
 
 ---
+
+## The Factional Diet
+
+**Layer:** 1
+
+**Fantasy:** Food isn't just sustenance; it's a political statement. You are what your faction eats.
+
+**Mechanic:** Pops belonging to specific Factions develop strong dietary preferences. "Traditionalists" demand Earth-crops; "Transhumanists" prefer optimized Nutrient Paste. Forcing them to eat the opposing diet causes severe Unrest, but feeding them their preferred diet reinforces their Faction loyalty.
+
+**Emergence:** A famine forces you to feed the Traditionalists with Nutrient Paste. They riot, destroying the paste dispensers, which starves the Transhumanists, plunging the colony into a civil war over lunch.
+
+**Tension:** Monoculture efficiency (one food type) vs. Political stability (catering to diverse diets).
+
+---
+
+## The Solar Sail Migration
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The majestic, slow transit of ancient technology across the sky, bringing both wonder and danger.
+
+**Mechanic:** Massive "Solar Sail" nomad fleets slowly drift through the system (Layer 2). As they pass close to your planet, their colossal sails reflect intense, focused sunlight down to Layer 1, causing temporary extreme heatwaves but massive boosts to Solar Power.
+
+**Emergence:** The nomadic fleet passes during winter, miraculously saving your freezing colony with a sudden burst of warmth. But when they pass during summer, they accidentally ignite your forests with concentrated solar reflection.
+
+**Tension:** Do you try to alter their course (military/diplomacy) to avoid the heat, or embrace the free energy?
+
+---
+
+## The Chrono-Vault
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** Burying a time capsule for your future self, hoping you survive long enough to open it.
+
+**Mechanic:** An expensive, heavily armored vault that can be sealed with resources or tech inside. It requires a set real-time or in-game duration to open (e.g., "Locks for 50 in-game years"). When it opens, the contents have multiplied in value, yielded unique aged variants, or generated "Ancient" tech bonuses.
+
+**Emergence:** Your colony is on the brink of collapse, and your only salvation is the Chrono-Vault you sealed 40 years ago. You frantically try to survive the last 3 days of the lock timer while raiders batter down your doors, just to get the advanced weapons inside.
+
+**Tension:** Current resource deprivation vs. Massive future payoff.
+
+---
+
+## The Bio-Loom
+
+**Layer:** 1
+
+**Fantasy:** Clothing grown from the flesh of the planet.
+
+**Mechanic:** You discover a fast-growing, fleshy xenoflora that can be woven into incredibly durable "Bio-Suits". These suits provide massive armor and environmental protection, but they are technically alive and feed on the Pop's sweat/blood. If a Pop wears one too long, they suffer health drain and the suit may resist being taken off.
+
+**Emergence:** Your elite soldiers are invincible in their Bio-Suits, but during a prolonged siege, the suits get too hungry. The soldiers start collapsing from anemia on the front lines, literally being eaten by their own armor.
+
+**Tension:** Unmatched protection and efficiency vs. Parasitic health drain and required downtime.
+
+---
+
+## The Empathy Broadcast
+
+**Layer:** 3 -> 1
+
+**Fantasy:** You can't ignore the suffering of your neighbors if it's beamed directly into your brain.
+
+**Mechanic:** A neighboring Layer 3 empire is losing a devastating war. In desperation, they use a massive psychic or hyper-wave transmitter to broadcast their population's terror and suffering across the sector. Your Layer 1 Pops receive this broadcast, suffering massive, unavoidable Stress and demanding you intervene.
+
+**Emergence:** You are comfortably neutral in a war between giants. Suddenly, your own population starts rioting and shutting down production, demanding you send your defense fleet to save a colony you don't even like, entirely because of the Empathy Broadcast.
+
+**Tension:** Cold geopolitical strategy vs. Managing the raw emotional demands of your own people.
+
+---
