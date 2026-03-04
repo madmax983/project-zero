@@ -154,7 +154,7 @@ fn render_colony_stats(frame: &mut Frame, area: Rect, world: &World) {
         .direction(Direction::Vertical)
         .constraints([
             Constraint::Length(5), // Status (Pop + Morale)
-            Constraint::Length(6), // Survival
+            Constraint::Length(7), // Survival
             Constraint::Length(6), // Industry
             Constraint::Min(6),    // Economy
         ])

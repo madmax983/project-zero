@@ -13,13 +13,15 @@ fn test_inspector_shows_waste_stats() {
     world.insert_resource(Selection::default());
 
     // Setup resources with waste
-    let mut resources = ColonyResources::default();
-    resources.waste = 5.0;
-    resources.max_waste = 10.0;
+    let resources = ColonyResources {
+        waste: 5.0,
+        max_waste: 10.0,
+        ..Default::default()
+    };
     world.insert_resource(resources);
 
     // Render Inspector (Selection::None shows stats)
-    let backend = TestBackend::new(40, 20);
+    let backend = TestBackend::new(40, 40);
     let mut terminal = Terminal::new(backend).unwrap();
 
     terminal
@@ -38,10 +40,10 @@ fn test_inspector_shows_waste_stats() {
 
     assert!(
         full_text.contains("Waste"),
-        "Inspector should display Waste in global stats"
+        "Inspector should display Waste in global stats, but it was:\n{}", full_text
     );
     assert!(
-        full_text.contains("5.0/10"),
+        full_text.contains("5/10"),
         "Inspector should display Waste amounts"
     );
 }

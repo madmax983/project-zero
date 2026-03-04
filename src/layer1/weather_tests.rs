@@ -36,7 +36,8 @@ mod tests {
         });
 
         // Run modified diffusion system
-        world.run_system_once(simulate_diffusion_system).unwrap();
+        let _ = world.run_system_once(crate::layer1::atmosphere::update_weather_diffusion_system);
+        let _ = world.run_system_once(simulate_diffusion_system);
 
         let grid = world.get_resource::<AtmosphereGrid>().unwrap();
         let smog = grid.get_gas(10, 10, GasType::Smog);

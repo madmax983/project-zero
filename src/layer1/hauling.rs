@@ -573,7 +573,7 @@ fn find_and_target_item(world: &mut World, pop_entity: Entity, pos: GridPosition
     let mut query = world.query::<(Entity, &GridPosition, &ResourceItem)>();
 
     // 2. Get resources
-    let resources = world.resource::<ColonyResources>().clone(); // Clone small struct
+    let resources = *world.resource::<ColonyResources>(); // Clone small struct
     let zone_grid = world.get_resource::<ZoneGrid>();
 
     let target = {
@@ -660,8 +660,6 @@ mod tests {
     use crate::layer1::{GridPosition, Pop};
     use crate::shared::time::SimulationTime;
     use bevy_ecs::prelude::*;
-    use bevy_ecs::query::QueryData;
-
     #[test]
     fn test_resource_item_component() {
         let item = ResourceItem {

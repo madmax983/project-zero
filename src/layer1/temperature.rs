@@ -477,7 +477,7 @@ mod tests {
 
         let pop = world
             .spawn((
-                Pop::default(),
+                Pop,
                 Health {
                     current: 100.0,
                     max: 100.0,
@@ -538,7 +538,7 @@ mod tests {
 
         let pop = world
             .spawn((
-                Pop::default(),
+                Pop,
                 Health {
                     current: 100.0,
                     max: 100.0,

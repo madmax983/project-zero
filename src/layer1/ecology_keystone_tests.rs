@@ -63,7 +63,7 @@ mod tests {
             let is_dead = e.contains::<Dead>();
             let health_zero = world
                 .get::<Health>(dependent)
-                .map_or(false, |h| h.current <= 0.0);
+                .is_some_and(|h| h.current <= 0.0);
             assert!(is_dead || health_zero, "Dependent should be dead");
         }
         // If it's Err, it was despawned, which is also valid success.

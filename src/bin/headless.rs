@@ -309,7 +309,7 @@ fn report_events(world: &mut World) {
 
 fn print_status(world: &mut World) {
     // Copy resource values before querying to avoid borrow conflicts
-    let resources = world.resource::<ColonyResources>().clone();
+    let resources = *world.resource::<ColonyResources>();
     let (wind_dir, wind_speed) = {
         let w = world.resource::<GlobalWind>();
         (w.direction, w.speed)

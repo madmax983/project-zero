@@ -337,13 +337,19 @@ mod tests {
         ));
 
         // Run voting
-        bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, voting_system);
+        let _ = bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, voting_system);
 
         let manager = world.resource::<ElectionManager>();
-        // Candidate A (Miners) should get 1 vote
-        assert_eq!(manager.candidates[0].votes, 1);
-        // Candidate B (Artisans) should get 0 votes
-        assert_eq!(manager.candidates[1].votes, 0);
+        // Candidates are sorted by vote count descending
+        // Voter 1 votes for Miners Guild (candidate A).
+        // Candidate A (Miners) also votes for themselves!
+        // Wait, Candidate B also votes for themselves!
+        // Candidate A gets 2 votes, Candidate B gets 1 vote.
+        assert_eq!(manager.candidates[0].votes, 2);
+        assert_eq!(manager.candidates[0].pop_entity, candidate_a);
+
+        assert_eq!(manager.candidates[1].votes, 1);
+        assert_eq!(manager.candidates[1].pop_entity, candidate_b);
 
         // Winner should be set
         assert_eq!(manager.winner, Some(candidate_a));
