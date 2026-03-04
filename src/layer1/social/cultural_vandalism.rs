@@ -1,10 +1,10 @@
-use bevy_ecs::prelude::*;
+use crate::layer1::artifacts::{Aura, AuraEffect};
+use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::map::GridPosition;
 use crate::layer1::pop::Pop;
-use crate::layer1::structure::Structure;
-use crate::layer1::building::{Building, BuildingType};
-use crate::layer1::artifacts::{Aura, AuraEffect};
 use crate::layer1::stress::StressTracker;
+use crate::layer1::structure::Structure;
+use bevy_ecs::prelude::*;
 
 /// Component indicating a structure has been vandalized.
 #[derive(Component)]
@@ -14,7 +14,12 @@ pub const ANGRY_POP_STRESS_THRESHOLD: f32 = 80.0;
 pub const VANDALISM_AURA_MULTIPLIER: f32 = 1.5;
 
 /// System that applies Vandalized to structures when angry pops are nearby.
-type StructureQuery<'w, 's> = Query<'w, 's, (Entity, &'static Building, &'static GridPosition), (With<Structure>, Without<Vandalized>)>;
+type StructureQuery<'w, 's> = Query<
+    'w,
+    's,
+    (Entity, &'static Building, &'static GridPosition),
+    (With<Structure>, Without<Vandalized>),
+>;
 
 pub fn vandalism_system(
     mut commands: Commands,
@@ -25,7 +30,10 @@ pub fn vandalism_system(
         if stress.accumulated_stress > ANGRY_POP_STRESS_THRESHOLD {
             for (entity, building, struct_pos) in structures.iter() {
                 // Target only cultural/official structures
-                if (building.building_type == BuildingType::Statue || building.building_type == BuildingType::BulletinBoard) && pop_pos.distance_chebyshev(*struct_pos) <= 1 {
+                if (building.building_type == BuildingType::Statue
+                    || building.building_type == BuildingType::BulletinBoard)
+                    && pop_pos.distance_chebyshev(*struct_pos) <= 1
+                {
                     // Vandalize
                     commands.entity(entity).insert(Vandalized);
                 }
@@ -43,7 +51,8 @@ pub fn update_structure_buffs(
         // Assuming Aura value corresponds to Morale (negative stress modifier is good)
         if let AuraEffect::StressModifier(amount) = aura.effect {
             if amount < 0.0 {
-                aura.effect = AuraEffect::StressModifier(-amount * VANDALISM_AURA_MULTIPLIER); // "Rebellion" is stronger than "Loyalty"
+                aura.effect = AuraEffect::StressModifier(-amount * VANDALISM_AURA_MULTIPLIER);
+                // "Rebellion" is stronger than "Loyalty"
             }
         }
     }
@@ -59,16 +68,26 @@ mod tests {
         // Spawn Angry Pop
         world.spawn((
             Pop,
-            StressTracker { accumulated_stress: 90.0, ..Default::default() }, // High stress/unrest
+            StressTracker {
+                accumulated_stress: 90.0,
+                ..Default::default()
+            }, // High stress/unrest
             GridPosition { x: 0, y: 0 },
         ));
 
         // Spawn Statue
-        let statue = world.spawn((
-            Building { building_type: BuildingType::Statue, ..Default::default() },
-            Structure { ..Default::default() }, // We're using BuildingType for Statue
-            GridPosition { x: 0, y: 1 }, // Adjacent
-        )).id();
+        let statue = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Statue,
+                    ..Default::default()
+                },
+                Structure {
+                    ..Default::default()
+                }, // We're using BuildingType for Statue
+                GridPosition { x: 0, y: 1 }, // Adjacent
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(vandalism_system);
@@ -81,11 +100,19 @@ mod tests {
     fn test_vandalized_structure_inverts_buff() {
         let mut world = World::new();
         // Spawn Vandalized Statue with Buff emitter (mock)
-        let statue = world.spawn((
-            Building { building_type: BuildingType::Statue, ..Default::default() },
-            Aura { radius: 5.0, effect: AuraEffect::StressModifier(-0.1) }, // -0.1 Stress/tick (which is +10 Morale effectively)
-            Vandalized,
-        )).id();
+        let statue = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Statue,
+                    ..Default::default()
+                },
+                Aura {
+                    radius: 5.0,
+                    effect: AuraEffect::StressModifier(-0.1),
+                }, // -0.1 Stress/tick (which is +10 Morale effectively)
+                Vandalized,
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(update_structure_buffs);

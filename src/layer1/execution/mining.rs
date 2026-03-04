@@ -64,19 +64,31 @@ pub fn handle_mining_work(
     true
 }
 
-fn process_mother_lode(world: &mut World, entity: Entity, effective_work: f32, pos: Option<GridPosition>) {
+fn process_mother_lode(
+    world: &mut World,
+    entity: Entity,
+    effective_work: f32,
+    pos: Option<GridPosition>,
+) {
     if let Some(mut lode) = world.get_mut::<MotherLode>(entity) {
         lode.increment_hazard();
     }
 
-    if world.get::<crate::layer1::resources::MiningProgress>(entity).is_none() {
-        world.entity_mut(entity).insert(crate::layer1::resources::MiningProgress {
-            current: 0.0,
-            max: 20.0,
-        });
+    if world
+        .get::<crate::layer1::resources::MiningProgress>(entity)
+        .is_none()
+    {
+        world
+            .entity_mut(entity)
+            .insert(crate::layer1::resources::MiningProgress {
+                current: 0.0,
+                max: 20.0,
+            });
     }
 
-    let completed = if let Some(mut progress) = world.get_mut::<crate::layer1::resources::MiningProgress>(entity) {
+    let completed = if let Some(mut progress) =
+        world.get_mut::<crate::layer1::resources::MiningProgress>(entity)
+    {
         progress.current += effective_work;
         if progress.current >= progress.max {
             progress.current = 0.0;
@@ -107,7 +119,12 @@ fn process_mother_lode(world: &mut World, entity: Entity, effective_work: f32, p
     }
 }
 
-fn process_normal_mining(world: &mut World, entity: Entity, effective_work: f32, pos: Option<GridPosition>) {
+fn process_normal_mining(
+    world: &mut World,
+    entity: Entity,
+    effective_work: f32,
+    pos: Option<GridPosition>,
+) {
     let is_scrap = if let Some(p) = pos {
         let mut found = false;
         let mut query = world.query::<(&GridPosition, &ImpactSite)>();

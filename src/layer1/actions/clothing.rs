@@ -1,8 +1,8 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::utility_eval_types::*;
 use crate::layer1::utility_types::UtilityWeights;
+use bevy_ecs::prelude::*;
 
 /// Evaluates if a pop should fetch clothing.
 ///

@@ -20,6 +20,8 @@ pub enum Policy {
     PestControl,
     /// Bans a specific resource, making it contraband.
     Prohibition(ResourceType),
+    /// Blocks Remote Bonds and Intel gain from Subspace Pen Pals.
+    FirewallComms,
 }
 
 impl ColonyPolicies {

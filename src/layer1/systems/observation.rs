@@ -80,7 +80,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::social::grievances::post_grievance_system.after(decay_needs_system),
             crate::layer1::social::grievances::read_board_system.after(decay_needs_system),
             crate::layer1::social::cultural_vandalism::vandalism_system.after(decay_needs_system),
-            crate::layer1::social::cultural_vandalism::update_structure_buffs.after(crate::layer1::social::cultural_vandalism::vandalism_system),
+            crate::layer1::social::cultural_vandalism::update_structure_buffs
+                .after(crate::layer1::social::cultural_vandalism::vandalism_system),
         )
             .in_set(Layer1SystemSet::Observation),
     );
@@ -90,6 +91,7 @@ pub fn register(schedule: &mut Schedule) {
             // Process new rumors and affinity changes
             modify_affinity_system.after(crate::layer1::rumor::exchange_rumors_system),
             crate::layer1::social::proximity_social_system.after(modify_affinity_system),
+            crate::layer1::social::pen_pals::update_pen_pals_system.after(modify_affinity_system),
             // Process chronicle events
             chronicle_event_handler_system.after(check_milestones_system),
             crate::layer1::festivals::check_for_festivals_system

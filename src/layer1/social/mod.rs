@@ -532,3 +532,7 @@ pub use empty_room::*;
 /// Cultural Vandalism (Spec 253).
 pub mod cultural_vandalism;
 pub use cultural_vandalism::*;
+
+/// Subspace Pen Pals (Spec 257).
+pub mod pen_pals;
+pub use pen_pals::*;

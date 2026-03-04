@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::traits::Trait;
 use crate::layer1::utility_eval_types::*;
 use crate::layer1::utility_types::{calculate_context_score, ActionType};
+use bevy_ecs::prelude::*;
 
 /// Evaluates the desire to listen to "The Hum".
 #[must_use]

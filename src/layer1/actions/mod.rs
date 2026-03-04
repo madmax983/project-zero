@@ -19,7 +19,6 @@ pub(crate) mod shower;
 pub(crate) mod clean;
 pub(crate) use clean::*;
 
-
 pub use crate::layer1::utility_types::AssignmentType;
 use bevy_ecs::prelude::*;
 

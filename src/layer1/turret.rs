@@ -31,8 +31,17 @@ pub fn turret_fire_system(world: &mut World) {
             continue;
         }
 
-        if let Some((target_entity, target_pos)) = find_best_target(&turret_data, &turret_pos, &targets) {
-            fire_turret(world, turret_entity, &turret_data, turret_pos, target_entity, target_pos);
+        if let Some((target_entity, target_pos)) =
+            find_best_target(&turret_data, &turret_pos, &targets)
+        {
+            fire_turret(
+                world,
+                turret_entity,
+                &turret_data,
+                turret_pos,
+                target_entity,
+                target_pos,
+            );
         }
     }
 }
@@ -66,7 +75,9 @@ fn get_ready_turrets(world: &mut World) -> Vec<(Entity, GridPosition, Turret)> {
 
     for (entity, pos, turret, mut state, building) in query.iter_mut(world) {
         if let Some(tech) = building.building_type.required_tech() {
-            if tech_state_exists && tech_map.get(&tech) != Some(&crate::layer1::tech::TechStatus::Active) {
+            if tech_state_exists
+                && tech_map.get(&tech) != Some(&crate::layer1::tech::TechStatus::Active)
+            {
                 continue;
             }
         }
@@ -92,7 +103,11 @@ fn can_turret_fire(turret_data: &Turret, world: &World) -> bool {
     }
 }
 
-fn find_best_target(turret_data: &Turret, turret_pos: &GridPosition, targets: &[(Entity, GridPosition)]) -> Option<(Entity, GridPosition)> {
+fn find_best_target(
+    turret_data: &Turret,
+    turret_pos: &GridPosition,
+    targets: &[(Entity, GridPosition)],
+) -> Option<(Entity, GridPosition)> {
     let mut best_target = None;
     let mut min_dist = f32::MAX;
 
@@ -146,10 +161,22 @@ fn fire_turret(
     ));
 
     // Visuals
-    crate::layer1::particles::spawn_particle(world, target_pos, 'x', ratatui::style::Color::DarkGray, 5);
+    crate::layer1::particles::spawn_particle(
+        world,
+        target_pos,
+        'x',
+        ratatui::style::Color::DarkGray,
+        5,
+    );
 
     // Ludwig: Muzzle Flash
-    crate::layer1::particles::spawn_particle(world, turret_pos, '*', ratatui::style::Color::Yellow, 5);
+    crate::layer1::particles::spawn_particle(
+        world,
+        turret_pos,
+        '*',
+        ratatui::style::Color::Yellow,
+        5,
+    );
 
     // Ludwig: Screen Shake for heavy weapons
     if turret_data.ammo_type == ResourceType::Waste {
