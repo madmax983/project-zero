@@ -57,6 +57,8 @@ pub mod gpu;
 pub mod layer1;
 /// Layer 2: System Simulation (Orbital Bodies, Fleets).
 pub mod layer2;
+/// Layer 3: Galaxy Simulation (The Silence, Threats).
+pub mod layer3;
 /// Platform abstraction for native/WASM backends.
 pub mod platform;
 /// Shared world setup.
