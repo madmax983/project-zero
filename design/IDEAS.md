@@ -7575,3 +7575,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Massive, immediate efficiency gains for the many vs. the inevitable, catastrophic burnout of the one.
 
 ---
+
+## The Biosphere Empathy Link
+
+**Layer:** 1
+
+**Fantasy:** The planet is alive, and your people are becoming a part of its nervous system.
+
+**Mechanic:** Pops living in close proximity to native "Empathic Flora" slowly gain a shared "Hive-Mind" trait. Their needs and moods synchronize, and they gain massive efficiency bonuses when working together. However, damaging the flora globally injures them.
+
+**Emergence:** You pave over a forest on the other side of the map to build a spaceport, and suddenly half your colony drops dead from psychic shock. The survivors form a terrifyingly efficient, nature-worshipping cult.
+
+**Tension:** Unmatched workforce efficiency vs. extreme vulnerability to ecological damage.
+
+---
+
+## The Chrono-Stutter
+
+**Layer:** 1
+
+**Fantasy:** Time is broken, and you have to work around the shards.
+
+**Mechanic:** A localized "Time Anomaly" slowly moves across the map. Tiles inside the anomaly run at 10x speed, affecting movement, aging, crop growth, and machine wear.
+
+**Emergence:** Your farmers learn to chase the anomaly, planting crops and harvesting them in minutes. But if a worker gets stuck in the anomaly while you're not looking, they die of old age before their shift ends.
+
+**Tension:** Exploiting the time acceleration for massive gains vs. the risk of catastrophic rapid aging and machine degradation.
+
+---
+
+## The Martyr's Engine
+
+**Layer:** Cross-layer
+
+**Fantasy:** The ultimate sacrifice powers the ultimate machine. A dark, desperate energy source.
+
+**Mechanic:** An ancient precursor reactor that requires no fuel, but must be periodically "Attuned" by a Pop. The Pop is permanently consumed by the machine, but the reactor generates infinite, clean energy and massive Layer 2 shielding for a year.
+
+**Emergence:** A raid is imminent, and you have no power for the defenses. You select your most beloved, highly-skilled founder to enter the engine. The colony survives, but the morale hit from their sacrifice cripples production for months.
+
+**Tension:** Infinite, free defense/power vs. the permanent loss of a valuable colonist and the associated morale penalty.
+
+---
+
+## The Mimetic Plague
+
+**Layer:** 1
+
+**Fantasy:** You are fighting an enemy that uses your own thoughts against you.
+
+**Mechanic:** A "Memetic Hazard" that spreads not by physical contact, but by line of sight and conversation. Infected Pops don't get sick; they become obsessed with a specific, useless task (e.g., digging holes, stacking chairs) and try to convince others to join them.
+
+**Emergence:** You ignore the first infected Pop because they're just moving rocks around. A week later, your entire defense force has abandoned their posts to build a massive, perfectly spherical monument out of your food supply.
+
+**Tension:** Quarantine by isolation/blindfolds (destroying productivity) vs. risking the entire colony succumbing to a useless obsession.
+
+---
+
+## The Sentient Standard
+
+**Layer:** 3 -> 1
+
+**Fantasy:** The galactic economy decides your colony's culture. Keeping up with the cosmic Joneses.
+
+**Mechanic:** The Galactic Council establishes a "Sentient Standard" index based on the highest-performing civs. If your colony falls below this standard in specific metrics (e.g., Luxury, Education), your Pops gain a stacking "Left Behind" stress debuff, demanding you catch up.
+
+**Emergence:** Your rugged, survivalist mining outpost was perfectly happy eating nutrient paste until a "Glitterworld" broadcast reached them. Now they are rioting because they don't have personal holodecks, completely paralyzing the iron extraction.
+
+**Tension:** Spending resources on useless luxuries to appease the "Standard" vs. suffering massive unrest to maintain your specialized, utilitarian economy.
+
+---
