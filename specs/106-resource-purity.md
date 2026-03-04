@@ -255,4 +255,3 @@ Ensure `Waste` resource items can be hauled to a `Landfill` or `Stockpile`. (Alr
 
 *Builder: Should Purity also affect the amount of Stone?*
 *Architect:* Yes, lower Purity veins should yield proportionally more Stone and less target ore per mining action to accurately reflect the extraction inefficiency.
-*Architect: No, Resource Purity affects the Ore/Waste ratio, not overall Stone amount.*
