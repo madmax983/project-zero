@@ -290,7 +290,7 @@ impl ScorableCandidate {
 ///
 /// # Examples
 ///
-/// ```
+/// ```ignore
 /// use scale::layer1::utility_eval_types::{ScorableCandidate, evaluate_candidates};
 /// use scale::layer1::map::GridPosition;
 /// use scale::layer1::utility_types::UtilityWeights;

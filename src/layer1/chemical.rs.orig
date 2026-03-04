@@ -39,7 +39,6 @@
 //! # use scale::layer1::chemical::{consume_chemical, ChemicalType};
 //! # // Setup world (assume setup code omitted)
 //! # let mut world = World::new();
-//! # world.insert_resource(scale::shared::time::SimulationTime::default());
 //! # let pop = world.spawn_empty().id();
 //! // Administer a stimulant to a pop
 //! consume_chemical(&mut world, pop, ChemicalType::Stim);
@@ -143,7 +142,6 @@ impl ChemicalState {
 /// # use bevy_ecs::prelude::*;
 /// # use scale::layer1::chemical::{consume_chemical, ChemicalType};
 /// # let mut world = World::new();
-/// # world.insert_resource(scale::shared::time::SimulationTime::default());
 /// # let pop = world.spawn_empty().id();
 /// consume_chemical(&mut world, pop, ChemicalType::Stim);
 /// ```
