@@ -39,3 +39,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `286` Great Works — `specs/286-great-works.md`
 - [ ] `287` The Silence — `specs/287-the-silence.md`
 - [ ] `288` The Memory Black Market — `specs/288-memory-black-market.md`
+- [ ] `289` The Mimetic Plague — `specs/289-mimetic-plague.md`
