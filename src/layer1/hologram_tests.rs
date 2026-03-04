@@ -22,6 +22,8 @@ mod tests {
         world.insert_resource(terrain);
         world.insert_resource(BeautyGrid::new(10, 10));
         world.insert_resource(Events::<HologramFailureEvent>::default());
+        // need to also insert events for apply_disillusionment
+        world.init_resource::<Events<HologramFailureEvent>>();
         world
     }
 
@@ -45,17 +47,24 @@ mod tests {
             GridPosition { x: 5, y: 5 },
         ));
 
+        // We also need to spawn the query that is matched in update_beauty_grid_system
+        // The query is `items: Query<(&GridPosition, &ResourceItem)>` which will be empty.
+        // The issue is likely that we need a larger `Schedule` or more robust setup.
+
         // Run system
         let mut schedule = Schedule::default();
-        schedule.add_systems(update_holograms_system);
-        schedule.add_systems(update_beauty_grid_system); // Run beauty update
+        schedule.add_systems((update_holograms_system, update_beauty_grid_system).chain());
         schedule.run(&mut world);
 
         let beauty = world.resource::<BeautyGrid>();
         // Base beauty for Grass is 1.0. Hologram adds 50.0.
         // update_beauty_grid_system handles adding.
         // We check center point.
-        assert!(beauty.get(5, 5) >= 51.0);
+        assert!(
+            beauty.get(5, 5) >= 51.0,
+            "Expected beauty >= 51.0, got {}",
+            beauty.get(5, 5)
+        );
     }
 
     #[test]
@@ -83,14 +92,17 @@ mod tests {
 
         // Run system
         let mut schedule = Schedule::default();
-        schedule.add_systems(update_holograms_system);
-        schedule.add_systems(update_beauty_grid_system);
+        schedule.add_systems((update_holograms_system, update_beauty_grid_system).chain());
         schedule.run(&mut world);
 
         let beauty = world.resource::<BeautyGrid>();
         // Should drop to ambient (1.0 for Grass)
         // because update_holograms_system should set BeautySource.value to 0.0
-        assert!(beauty.get(5, 5) <= 1.0 + f32::EPSILON);
+        assert!(
+            beauty.get(5, 5) <= 1.0 + f32::EPSILON,
+            "Expected beauty <= 1.0 + EPSILON, got {}",
+            beauty.get(5, 5)
+        );
     }
 
     #[test]
@@ -133,6 +145,7 @@ mod tests {
         schedule.add_systems(update_holograms_system);
         // Add shock system
         schedule.add_systems(apply_disillusionment_system);
+        schedule.run(&mut world);
         schedule.run(&mut world);
 
         let morale = world.get::<Morale>(pop_id).unwrap();

@@ -152,3 +152,6 @@ mod tectonic_stress;
 
 #[path = "integration/shadow_market_trade.rs"]
 mod shadow_market_trade;
+
+#[path = "integration/hologram_failure.rs"]
+mod hologram_failure;
