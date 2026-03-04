@@ -149,3 +149,6 @@ mod mega_quake_chronicle;
 mod sanctuary_ai;
 #[path = "integration/tectonic_stress.rs"]
 mod tectonic_stress;
+
+#[path = "integration/shadow_market_trade.rs"]
+mod shadow_market_trade;

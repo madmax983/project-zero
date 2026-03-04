@@ -93,7 +93,7 @@ fn test_sanctuary_evaluated_by_ai() {
     let action_low = world.get::<PopAction>(low_stress_pop).unwrap();
     assert_ne!(action_low.current, ActionType::VisitSanctuary);
 
-    let action_high = world.get::<PopAction>(high_stress_pop).unwrap();
+    let _action_high = world.get::<PopAction>(high_stress_pop).unwrap();
 
     // Given the `switch_threshold` and how the tasks are applied, the safest way to ensure
     // the AI actually decided on `VisitSanctuary` is to check the evaluation results buffer
