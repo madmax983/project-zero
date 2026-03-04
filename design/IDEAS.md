@@ -7645,3 +7645,72 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Spending resources on useless luxuries to appease the "Standard" vs. suffering massive unrest to maintain your specialized, utilitarian economy.
 
 ---
+## The Bone Economy
+
+**Layer:** 1
+
+**Fantasy:** The dead are your most precious resource, not out of desperation, but out of utility.
+
+**Mechanic:** Advanced construction materials require "Calcium-Alloys" derived from Pop corpses or mega-fauna bones. "Grave-Robber" jobs extract this resource but generate massive Unrest.
+
+**Emergence:** You intentionally build weak defenses on one side of your base so raiders attack there, turning it into an automated "bone-harvesting" kill box to fuel your spaceport construction.
+
+**Tension:** Ethical burial (Morale/Stability) vs. Structural necessity (Advanced Tech/Expansion).
+
+---
+
+## The Nostalgia Engine
+
+**Layer:** Cross-layer
+
+**Fantasy:** Selling the feeling of Earth to a galaxy that has lost its way.
+
+**Mechanic:** Construct a massive broadcast dish that transmits "Earth-Normal" frequencies and pre-collapse media. It drains enormous power but attracts wealthy "Pilgrim" ships from Layer 3 who pay exorbitant fees just to park in orbit and listen.
+
+**Emergence:** The Pilgrims bring their own escorts. You accidentally create a massive, neutral fleet in your orbit that defends you from pirates, but their sheer mass causes a severe "Debris Shadow" over your solar farms.
+
+**Tension:** Passive income and free defense vs. Massive power drain and orbital congestion.
+
+---
+
+## Temporal Smuggling
+
+**Layer:** Cross-layer
+
+**Fantasy:** Buying tomorrow with the collateral of yesterday. Time is just another loan shark.
+
+**Mechanic:** A rare "Rift" anomaly allows receiving a cargo pod from the future. You get the resources *now*, but gain a "Temporal Debt". In exactly one year, you must place the exact same resources into the Rift to close the loop.
+
+**Emergence:** You receive advanced medicine to survive a plague. A year later, you are healthy but must sacrifice your entire medical stockpile to the Rift to prevent a "Paradox" event (which deletes random buildings). You become a slave to the timeline.
+
+**Tension:** Immediate survival (Free resources) vs. Inevitable, inflexible future debt.
+
+---
+
+## The Whisper Trade
+
+**Layer:** 1 -> 3
+
+**Fantasy:** Secrets are the only currency that never suffers inflation.
+
+**Mechanic:** Pops working in Taverns or Comms Centers occasionally discover "Secrets" (about neighbors, the planet, or alien civs). A "Broker" building can sell these to Layer 3 empires for unique tech, but doing so increases global "Paranoia" in the colony as everyone wonders who is listening.
+
+**Emergence:** You sell a secret about a Warlord's failing health to a rival Democracy. The Democracy attacks the Warlord, creating a massive refugee crisis that floods your own borders, overwhelming your food supply.
+
+**Tension:** Access to powerful, unique tech vs. Local paranoia and unpredictable geopolitical instability.
+
+---
+
+## The Memory Tithe
+
+**Layer:** 3 -> 1
+
+**Fantasy:** You pay your taxes not in gold or steel, but in human experience.
+
+**Mechanic:** A terrifyingly advanced Layer 3 empire demands "Memory Cores" as tribute. You must extract memories from your highest-skilled Pops using a "Siphon Box", reverting their job XP to zero, in order to pay the toll.
+
+**Emergence:** You create a specialized caste of "Sacrificial Scholars" who do nothing but read manuals and practice skills all day, only to have their minds wiped every month when the tribute ship arrives. Your colony becomes a factory of amnesiacs.
+
+**Tension:** Severe brain drain (loss of skilled labor) vs. Annihilation (failing to pay the tribute).
+
+---
