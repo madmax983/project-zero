@@ -19,7 +19,7 @@ pub enum TimeOfDay {
 }
 
 /// Tracks the progress of the day.
-#[derive(Resource, Clone)]
+#[derive(Resource, Clone, Copy)]
 pub struct DayNightCycle {
     /// Current phase of the day.
     pub time_of_day: TimeOfDay,
