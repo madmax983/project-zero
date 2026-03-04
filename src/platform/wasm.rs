@@ -1,6 +1,6 @@
 //! WASM platform adapter (ratzilla → `GameKeyEvent` / `GameMouseEvent`).
 
-use ratzilla::event::{KeyCode, KeyEvent, MouseEvent, MouseEventKind};
+use crossterm::event::{KeyCode, KeyEvent, MouseEvent, MouseEventKind};
 
 use super::input::{GameKeyCode, GameKeyEvent, GameMouseEvent};
 

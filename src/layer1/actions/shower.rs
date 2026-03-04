@@ -9,6 +9,7 @@ use bevy_ecs::prelude::*;
 
 /// Evaluates the utility of using a shower.
 #[must_use]
+#[allow(dead_code)]
 pub(crate) fn evaluate_shower(
     pop_pos: GridPosition,
     needs: &Needs,

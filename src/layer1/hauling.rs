@@ -660,7 +660,6 @@ mod tests {
     use crate::layer1::{GridPosition, Pop};
     use crate::shared::time::SimulationTime;
     use bevy_ecs::prelude::*;
-    use bevy_ecs::query::QueryData;
 
     #[test]
     fn test_resource_item_component() {
