@@ -223,3 +223,4 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
 ## Questions
 
 *Builder: add questions here if spec is unclear.*
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.

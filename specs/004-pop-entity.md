@@ -414,3 +414,4 @@ Future specs may change this (e.g., Rock becomes walkable with tech, Water with 
 ## Questions
 
 *Builder: add questions here if spec is unclear.*
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.

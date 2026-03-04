@@ -638,3 +638,4 @@ This spec intentionally leaves unimplemented:
 - **Hover preview** - Show info on hover before clicking
 - **Selection history** - Undo/redo selection changes
 - **Selection persistence** - Save/load selected entities
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.

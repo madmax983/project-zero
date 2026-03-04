@@ -537,3 +537,4 @@ This spec intentionally leaves unimplemented:
 - **Selection System** - Populate info panel with entity/tile details
 - **SimSpeed::Paused key binding** - Currently unused, could bind to 'P' key
 - **Responsive layout** - Adjust panel sizes based on terminal width
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.

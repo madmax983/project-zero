@@ -126,3 +126,4 @@ pub fn update_vr_pods_system(
 ## 8. Questions
 
 *Builder: add questions here if spec is unclear. Architect will address.*
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.

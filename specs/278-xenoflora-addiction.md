@@ -60,3 +60,4 @@ fn test_withdrawal_causes_violence() {
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear.*
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.

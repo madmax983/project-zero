@@ -145,3 +145,4 @@ pub fn apply_quirks(quirks: &Quirks, stats: &mut ShipStats) {
 ## Questions
 
 *Builder: add questions here if spec is unclear.*
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.

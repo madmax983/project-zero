@@ -310,3 +310,4 @@ let center_y = viewport.y + (area.height as i32 / 2);
 ## Questions
 
 *Builder: add questions here if spec is unclear.*
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.

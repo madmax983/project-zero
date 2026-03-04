@@ -247,3 +247,4 @@ When a Pop is assigned a job, update their `Prestige` component.
 ## Questions
 
 *Builder: add questions here if spec is unclear.*
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.

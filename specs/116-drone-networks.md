@@ -198,3 +198,4 @@ Implement `process_charge_system` that increases `Battery.current` when at a Hub
 ## Questions
 
 *Builder: add questions here if spec is unclear.*
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.

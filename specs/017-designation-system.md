@@ -442,3 +442,4 @@ if let Some((_, dtype)) = designations_data.iter().find(|(pos, _)| pos.x == worl
 ## Questions
 
 *Builder: add questions here if spec is unclear.*
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.

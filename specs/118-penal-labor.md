@@ -258,3 +258,4 @@ If `PenalLabor` is present, allow logic to proceed.
 ## Questions
 
 *Builder: add questions here if spec is unclear.*
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.

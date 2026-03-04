@@ -183,3 +183,4 @@ pub fn megacorp_security_sweep_system(
 ## 8. Questions
 
 *Builder: add questions here if spec is unclear. Architect will address.*
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.

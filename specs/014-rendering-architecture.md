@@ -538,3 +538,4 @@ This spec intentionally leaves unimplemented:
 - **Render batching** - Group items by style for efficiency
 - **Animation support** - Frame-based character cycling
 - **Sprite/image rendering** - Beyond ASCII characters
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
