@@ -9,6 +9,8 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             biography_monitor_system.after(crate::layer1::health::despawn_dead_entities_system),
+            crate::layer1::social::cadet::death_consequence_system
+                .before(crate::layer1::health::despawn_dead_entities_system),
             crate::layer1::graffiti::graffiti_placement_system
                 .after(crate::layer1::health::despawn_dead_entities_system),
             dream_system.after(crate::layer1::health::despawn_dead_entities_system),

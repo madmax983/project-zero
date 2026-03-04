@@ -536,3 +536,7 @@ pub use cultural_vandalism::*;
 /// Subspace Pen Pals (Spec 257).
 pub mod pen_pals;
 pub use pen_pals::*;
+
+/// The Cadet Branch (Spec 263).
+pub mod cadet;
+pub use cadet::*;
