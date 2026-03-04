@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::utility_eval_types::*;
 use crate::layer1::utility_types::ActionType;
+use bevy_ecs::prelude::*;
 
 /// Evaluates actions for a drafted pop (combat).
 pub(crate) fn evaluate_drafted_behavior(

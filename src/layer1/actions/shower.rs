@@ -1,4 +1,3 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::hygiene::SHOWER_WATER_COST;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
@@ -6,6 +5,7 @@ use crate::layer1::resources::ColonyResources;
 use crate::layer1::utility_eval_types::*;
 use crate::layer1::utility_types::need_response_curve;
 use crate::layer1::utility_types::UtilityWeights;
+use bevy_ecs::prelude::*;
 
 /// Evaluates the utility of using a shower.
 #[must_use]

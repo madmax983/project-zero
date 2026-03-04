@@ -1,8 +1,8 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::utility_eval_types::*;
 use crate::layer1::utility_types::{calculate_context_score, UtilityWeights};
+use bevy_ecs::prelude::*;
 
 /// Evaluates the utility of hauling loose items.
 ///

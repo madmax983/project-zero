@@ -1,9 +1,9 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::stress::BreakdownType;
 use crate::layer1::unrest::{MentalBreakType, MentalState};
 use crate::layer1::utility_eval_types::*;
 use crate::layer1::utility_types::manhattan_distance;
 use crate::layer1::utility_types::ActionType;
+use bevy_ecs::prelude::*;
 
 /// Evaluates actions for a pop undergoing a mental break.
 pub(crate) fn evaluate_mental_break(
