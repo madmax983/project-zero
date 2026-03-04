@@ -6,6 +6,7 @@ use crate::layer1::admin::AdminStats;
 use crate::layer1::seasons::{Season, SeasonState};
 use crate::layer1::solar::{SolarCycle, SolarCycleState};
 use crate::layer1::traits::Traits;
+use crate::layer3::silence::DetectionRisk;
 use crate::layer1::{
     BuildMode, ColonyPolicies, ColonyResources, DesignationMode, NamedLocations, Pop, Viewport,
 };
@@ -97,6 +98,14 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
         .map(|s| s.current_cycle);
 
     let admin_stats = world.get_resource::<AdminStats>();
+    let detection_risk = world.get_resource::<DetectionRisk>();
+    let risk_pct = detection_risk.map_or(0.0, |r| {
+        if r.threshold > 0.0 {
+            (r.current_risk / r.threshold) * 100.0
+        } else {
+            0.0
+        }
+    });
     let efficiency = admin_stats.map_or(1.0, |s| s.efficiency);
 
     let status = get_status_line(
@@ -114,6 +123,7 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
         efficiency,
         season,
         solar_cycle,
+        risk_pct,
     );
 
     let status = truncate_line(status, area.width);
@@ -162,6 +172,7 @@ pub fn get_status_line<'a>(
     efficiency: f32,
     season: Option<Season>,
     solar_cycle: Option<SolarCycle>,
+    risk_pct: f32,
 ) -> Line<'a> {
     let mut spans = Vec::new();
 
@@ -253,6 +264,20 @@ pub fn get_status_line<'a>(
     spans.push(Span::styled("Tools: ", Style::default().fg(Color::Yellow)));
     spans.push(Span::styled(
         format!("{tools:.0} │ "),
+        Style::default().fg(Color::White),
+    ));
+
+    // 6.5 Detection Risk
+    let risk_color = if risk_pct > 80.0 {
+        Color::Red
+    } else if risk_pct > 50.0 {
+        Color::Yellow
+    } else {
+        Color::DarkGray
+    };
+    spans.push(Span::styled("Risk: ", Style::default().fg(risk_color)));
+    spans.push(Span::styled(
+        format!("{risk_pct:.0}% │ "),
         Style::default().fg(Color::White),
     ));
 
@@ -384,6 +409,7 @@ pub fn get_status_string(
     efficiency: f32,
     season: Option<Season>,
     solar_cycle: Option<SolarCycle>,
+    risk_pct: f32,
 ) -> String {
     let line = get_status_line(
         tick,
@@ -400,6 +426,7 @@ pub fn get_status_string(
         efficiency,
         season,
         solar_cycle,
+        risk_pct,
     );
 
     line.spans
@@ -464,6 +491,7 @@ mod tests {
             1.0,   // Efficiency
             None,  // Season
             None,  // Solar Cycle
+            0.0,   // risk_pct
         );
 
         assert!(status.contains("Day 100"));
@@ -490,6 +518,7 @@ mod tests {
             1.0,  // Efficiency
             None, // Season
             None, // Solar Cycle
+            0.0,   // risk_pct
         );
 
         assert!(status_none.contains("Day 100"));
@@ -599,6 +628,7 @@ mod tests {
             1.0,
             Some(Season::Summer),
             None,
+            0.0,   // risk_pct
         );
         assert!(
             status.contains("Summer"),
@@ -624,6 +654,7 @@ mod tests {
             1.0,
             None,
             None,
+            0.0,   // risk_pct
         );
         assert!(!status.contains("Spring"));
         assert!(!status.contains("Summer"));
@@ -648,6 +679,7 @@ mod tests {
             1.0,
             None,
             Some(SolarCycle::Maximum),
+            0.0,   // risk_pct
         );
         assert!(
             status.contains("Solar Maximum"),

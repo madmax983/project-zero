@@ -13,6 +13,7 @@ use crate::layer1::building::{update_building_map_system, BuildingMap};
 use crate::layer1::systems::{register_layer1_systems, update_event_buffer, Layer1SystemSet};
 use crate::layer1::update_action_timer_system;
 use crate::layer2::events::{DetectionEvent, LaunchEvent, ShipDestroyedEvent};
+use crate::layer3::silence::{check_hostile_spawn_system, update_detection_risk_system, DetectionRisk, HostileSpawnEvent};
 use crate::shared::time::SimulationTime;
 
 /// Schedule label for the main simulation tick.
@@ -49,6 +50,13 @@ pub fn build_simulation_schedule() -> Schedule {
         update_action_timer_system
             .after(gpu_evaluate_actions)
             .before(Layer1SystemSet::Execution),
+    ));
+
+
+    // --- Layer 3 Integration ---
+    schedule.add_systems((
+        update_detection_risk_system.after(Layer1SystemSet::Economy),
+        check_hostile_spawn_system.after(update_detection_risk_system),
     ));
 
     // --- Layer 2 Integration ---
@@ -122,6 +130,12 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world.contains_resource::<Events<DetectionEvent>>() {
         world.init_resource::<Events<DetectionEvent>>();
     }
+    if !world.contains_resource::<Events<HostileSpawnEvent>>() {
+        world.init_resource::<Events<HostileSpawnEvent>>();
+    }
+    if !world.contains_resource::<DetectionRisk>() {
+        world.init_resource::<DetectionRisk>();
+    }
     if !world.contains_resource::<Events<crate::layer1::unrest::DenounceEvent>>() {
         world.init_resource::<Events<crate::layer1::unrest::DenounceEvent>>();
     }
@@ -150,9 +164,18 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<crate::layer2::thermal::ThermalSignature>();
     }
 
+    // Initialize Detection Risk
+    if !world.contains_resource::<DetectionRisk>() {
+        world.init_resource::<DetectionRisk>();
+    }
+
     // Initialize Infinite Archive Resource (Spec 248)
     if !world.contains_resource::<crate::layer1::tech::infinite_archive::Archive>() {
         world.init_resource::<crate::layer1::tech::infinite_archive::Archive>();
+    }
+
+    if !world.contains_resource::<Events<HostileSpawnEvent>>() {
+        world.init_resource::<Events<HostileSpawnEvent>>();
     }
 
     // Add our schedule if not yet added
@@ -207,6 +230,10 @@ mod tests {
     fn test_schedule_runs_on_fresh_world() {
         let mut world = setup_world();
         *world.resource_mut::<GameState>() = GameState::Running;
+
+        // Initialize Detection Risk for test
+        world.init_resource::<crate::layer3::silence::DetectionRisk>();
+        world.init_resource::<Events<crate::layer3::silence::HostileSpawnEvent>>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);

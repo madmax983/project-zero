@@ -51,6 +51,7 @@ mod tests {
             1.0,  // Efficiency
             None, // Season
             None, // Solar Cycle
+            0.0, // risk_pct
         );
 
         // 4. Verify Glue
