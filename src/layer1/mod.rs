@@ -715,6 +715,7 @@ pub mod quantum_twins;
 pub use quantum_twins::*;
 
 /// Holographic Facades (Spec 249).
+pub mod construction;
 pub mod hologram;
 #[cfg(test)]
 mod hologram_tests;
