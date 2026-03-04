@@ -7367,7 +7367,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Exploit the terraforming (if it aligns with your goals) vs. destroy the priceless ancient tech to save your base.
 
 ---
-## Generational Hoarders
+## Generational Hoarders [SPECCED]
 
 **Layer:** 1
 
@@ -7451,7 +7451,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Echoes of the Past
+## Echoes of the Past [SPECCED]
 
 **Layer:** 1
 

@@ -35,3 +35,5 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `281` Atmospheric Feedback — `specs/281-atmospheric-feedback.md`
 - [ ] `282` Cultural Drift — `specs/282-cultural-drift.md`
 - [ ] `283` Acoustic Zones — `specs/283-acoustic-zones.md`
+- [ ] `284` Generational Hoarders — `specs/284-generational-hoarders.md`
+- [ ] `285` Echoes of the Past — `specs/285-echoes-of-the-past.md`
