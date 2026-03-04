@@ -2552,3 +2552,100 @@
 **Usage:**
 - "The bitter-wind bites."
 - "Close the vents against the bitter-wind."
+
+---
+
+## Generational Hoarders
+
+### keep-sake
+**Replaces:** hoarded item, junk
+**Code reference:** `HoardedItem`
+**Usage:**
+- "Don't touch my keep-sakes."
+- "The room is full of keep-sakes."
+
+### pile-madness
+**Replaces:** hoarder trait behavior
+**Usage:**
+- "He has the pile-madness."
+
+---
+
+## Echoes of the Past
+
+### past-walkers / echoes
+**Replaces:** ghosts, holograms
+**Code reference:** `GhostEntity`
+**Usage:**
+- "The past-walkers are active tonight."
+- "Follow the echoes."
+
+### time-stutter
+**Replaces:** holographic glitch / loop
+**Usage:**
+- "Caught in a time-stutter."
+
+---
+
+## Symbiotic Shipyards
+
+### flesh-ship / void-beast
+**Replaces:** biological ship
+**Code reference:** `LivingShip`
+**Usage:**
+- "Feed the flesh-ship."
+- "Riding a void-beast."
+
+### gestation-dock
+**Replaces:** shipyard / spawning pool
+**Code reference:** `SpawningPool`
+**Usage:**
+- "The gestation-dock is hungry."
+
+---
+
+## Orbital Tethers
+
+### the Whip / sky-fall
+**Replaces:** tether snap / destruction
+**Code reference:** `TETHER_SNAPPED`
+**Usage:**
+- "Beware the Whip."
+- "The sky-fall took everything."
+
+### the Line
+**Replaces:** orbital tether
+**Usage:**
+- "Riding the Line to orbit."
+
+---
+
+## The Empathy Plague
+
+### mind-link / the Share
+**Replaces:** neural network connection
+**Code reference:** `EmpathyLink`
+**Usage:**
+- "Trapped in the mind-link."
+- "We all feel the Share."
+
+### echo-pain
+**Replaces:** sympathetic damage / stress
+**Usage:**
+- "I felt his echo-pain."
+
+---
+
+## Counterfeit Reality
+
+### ghost-fleet / mirage
+**Replaces:** holographic projection
+**Code reference:** `HoloProjection`
+**Usage:**
+- "Hiding behind a ghost-fleet."
+- "The mirage held them off."
+
+### hard-light lie
+**Replaces:** active deception
+**Usage:**
+- "We sold them a hard-light lie."
