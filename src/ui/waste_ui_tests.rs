@@ -1,4 +1,4 @@
-#![cfg(test)]
+
 
 use crate::layer1::resources::ColonyResources;
 use crate::shared::selection::Selection;
