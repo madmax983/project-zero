@@ -271,3 +271,10 @@
     - Validated `ShadowTrader` properties.
     - Verified `TradeDeal` exchanges resources successfully.
 - **Tests:** `tests/integration/shadow_market_trade.rs`
+
+### INT-249: Hologram Failure -> Chronicle
+- **Date:** 2026-03-04
+- **Systems connected:** `update_holograms_system` -> `AddChronicleEvent`
+- **Glue added:**
+    - `hologram_failure_chronicle_bridge` converts `HologramFailureEvent` to `AddChronicleEvent`
+- **Tests:** `tests/integration/hologram_failure.rs`

@@ -57,6 +57,21 @@ pub fn pop_death_chronicle_bridge(
     }
 }
 
+pub fn hologram_failure_chronicle_bridge(
+    mut events: EventReader<crate::layer1::hologram::HologramFailureEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for event in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            text: format!(
+                "A holographic facade failed at ({}, {}). The hard-light lie shattered.",
+                event.position.x, event.position.y
+            ),
+            importance: EventImportance::Major,
+        });
+    }
+}
+
 /// Creates rumors from significant chronicle events.
 ///
 /// Bridges the Chronicle system (History) and Rumor system (Social).
