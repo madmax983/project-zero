@@ -31,6 +31,7 @@ use scale::layer1::biography::Biography;
 use scale::layer1::dreams::Dream;
 use scale::layer1::pop::PopName;
 use scale::layer1::tech::{unlock_tech, Tech, TechState, TechStatus};
+use scale::layer1::construction::{ConstructionProgress, GreatWork, OperationalGreatWork};
 use scale::layer1::{
     try_designate, try_place_building, Building, BuildingType, Chronicle, ColonyResources,
     Designation, DesignationType, EventImportance, Farm, GlobalWind, GridPosition, Housing, Morale,
@@ -192,6 +193,7 @@ fn handle_command(world: &mut World, input: &str) -> bool {
             }
         }
         "buildings" => print_buildings(world),
+        "great_works" | "gw" => print_great_works(world),
         "bio" => {
             let id: Option<u32> = parts.get(1).and_then(|s| s.parse().ok());
             match id {
@@ -1069,6 +1071,83 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
     );
 }
 
+fn print_great_works(world: &mut World) {
+    println!("{}", "=== Great Works ===".green().bold());
+
+    let mut count = 0;
+    let mut table = Table::new();
+    table
+        .load_preset(UTF8_FULL)
+        .set_content_arrangement(ContentArrangement::Dynamic)
+        .set_header(vec![
+            Cell::new("ID").add_attribute(Attribute::Bold),
+            Cell::new("Name").add_attribute(Attribute::Bold),
+            Cell::new("Phase").add_attribute(Attribute::Bold),
+            Cell::new("Progress").add_attribute(Attribute::Bold),
+            Cell::new("Status").add_attribute(Attribute::Bold),
+        ]);
+
+    for (entity, work, progress, operational) in world
+        .query::<(
+            Entity,
+            &GreatWork,
+            Option<&ConstructionProgress>,
+            Option<&OperationalGreatWork>,
+        )>()
+        .iter(world)
+    {
+        let is_operational = operational.is_some() || work.is_completed();
+        let phase_str = if is_operational {
+            "Completed".to_string()
+        } else {
+            format!("{} / {}", work.current_phase + 1, work.phase_costs.len())
+        };
+
+        let progress_str = if is_operational {
+            "Operational".to_string()
+        } else if let Some(prog) = progress {
+            let pct = if prog.total_work_required > 0.0 {
+                (prog.current_work / prog.total_work_required) * 100.0
+            } else {
+                0.0
+            };
+            format!(
+                "{:.1} / {:.1} ({:.0}%)",
+                prog.current_work, prog.total_work_required, pct
+            )
+        } else {
+            "Waiting".to_string()
+        };
+
+        let status_cell = if is_operational {
+            Cell::new("Online").fg(Color::Green)
+        } else {
+            Cell::new("Building").fg(Color::Yellow)
+        };
+
+        let name_color = if is_operational {
+            Color::Green
+        } else {
+            Color::Yellow
+        };
+
+        table.add_row(vec![
+            Cell::new(entity.index().to_string()),
+            Cell::new(&work.name).fg(name_color),
+            Cell::new(phase_str),
+            Cell::new(progress_str),
+            status_cell,
+        ]);
+        count += 1;
+    }
+
+    if count == 0 {
+        println!("  (No great works found)");
+    } else {
+        println!("{table}");
+    }
+}
+
 /// List all buildings with positions
 fn print_buildings(world: &mut World) {
     println!("{}", "=== Buildings ===".green().bold());
@@ -1309,6 +1388,7 @@ fn print_help() {
                 ("terrain <x> <y>", "", "Get single tile info"),
                 ("buildings", "", "List all buildings with positions"),
                 ("designations", "d", "List all active designations"),
+                ("great_works", "gw", "List all Great Works projects"),
                 ("chronicle", "c, history", "Show colony history events"),
                 ("log", "l", "Show message log"),
                 (
