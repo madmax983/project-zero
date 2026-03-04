@@ -1,11 +1,11 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::map::GridPosition;
 use crate::layer1::lighting::LightMap;
+use crate::layer1::map::GridPosition;
 use crate::layer1::trade::{Merchant, TradeDeal};
+use bevy_ecs::prelude::*;
 
 use crate::layer1::resources::ResourceType;
-use crate::shared::time::SimulationTime;
 use crate::layer1::terrain::TerrainGrid;
+use crate::shared::time::SimulationTime;
 use rand::Rng;
 
 #[derive(Component)]
@@ -45,7 +45,11 @@ pub fn can_spawn_trader(world: &World, pos: GridPosition) -> bool {
     true
 }
 
-pub fn check_spawn_conditions(pos: GridPosition, light_map: &LightMap, terrain: &TerrainGrid) -> bool {
+pub fn check_spawn_conditions(
+    pos: GridPosition,
+    light_map: &LightMap,
+    terrain: &TerrainGrid,
+) -> bool {
     if pos.x < 0 || pos.y < 0 {
         return false;
     }
@@ -104,7 +108,10 @@ pub fn spawn_shadow_trader_system(
         let rx = rng.gen_range(0..light_map.width);
         let ry = rng.gen_range(0..light_map.height);
 
-        let pos = GridPosition { x: rx as i32, y: ry as i32 };
+        let pos = GridPosition {
+            x: rx as i32,
+            y: ry as i32,
+        };
         if check_spawn_conditions(pos, &light_map, &terrain) {
             let mut deals = vec![];
             deals.push(TradeDeal {
@@ -121,7 +128,7 @@ pub fn spawn_shadow_trader_system(
                         arrival_tick: time.tick,
                         departure_tick: time.tick + 500,
                         deals,
-                    }
+                    },
                 },
                 pos,
             ));
@@ -161,7 +168,11 @@ mod tests {
     fn test_spawn_only_in_darkness() {
         let mut world = World::new();
         let mut light_map = LightMap::new(10, 10);
-        let mut terrain = TerrainGrid { width: 10, height: 10, tiles: vec![TerrainType::Grass; 100] };
+        let mut terrain = TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        };
 
         // (5,5) is Lit
         light_map.set(5, 5, 1.0);
@@ -174,9 +185,18 @@ mod tests {
         world.insert_resource(light_map);
         world.insert_resource(terrain);
 
-        assert!(!can_spawn_trader(&world, GridPosition { x: 5, y: 5 }), "Should not spawn in light");
-        assert!(can_spawn_trader(&world, GridPosition { x: 0, y: 0 }), "Should spawn in darkness on grass");
-        assert!(!can_spawn_trader(&world, GridPosition { x: 1, y: 1 }), "Should not spawn on unwalkable tile");
+        assert!(
+            !can_spawn_trader(&world, GridPosition { x: 5, y: 5 }),
+            "Should not spawn in light"
+        );
+        assert!(
+            can_spawn_trader(&world, GridPosition { x: 0, y: 0 }),
+            "Should spawn in darkness on grass"
+        );
+        assert!(
+            !can_spawn_trader(&world, GridPosition { x: 1, y: 1 }),
+            "Should not spawn on unwalkable tile"
+        );
     }
 
     #[test]
@@ -186,10 +206,19 @@ mod tests {
         world.insert_resource(light_map);
 
         // Spawn trader in dark
-        let trader = world.spawn((
-            ShadowTrader { merchant: Merchant { name: "".to_string(), arrival_tick: 0, departure_tick: 0, deals: vec![] } },
-            GridPosition { x: 5, y: 5 }
-        )).id();
+        let trader = world
+            .spawn((
+                ShadowTrader {
+                    merchant: Merchant {
+                        name: "".to_string(),
+                        arrival_tick: 0,
+                        departure_tick: 0,
+                        deals: vec![],
+                    },
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         // 1. Verify safe in dark
         let mut schedule = Schedule::default();
@@ -205,7 +234,10 @@ mod tests {
         schedule.run(&mut world);
 
         // 4. Verify despawn
-        assert!(world.get_entity(trader).is_err(), "Trader should flee light");
+        assert!(
+            world.get_entity(trader).is_err(),
+            "Trader should flee light"
+        );
     }
 
     #[test]
@@ -214,11 +246,18 @@ mod tests {
         let mut light_map = LightMap::new(10, 10);
         // Map is fully dark
         light_map.tiles.fill(0.0);
-        let terrain = TerrainGrid { width: 10, height: 10, tiles: vec![TerrainType::Grass; 100] };
+        let terrain = TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        };
 
         world.insert_resource(light_map);
         world.insert_resource(terrain);
-        world.insert_resource(SimulationTime { tick: 100, ..Default::default() });
+        world.insert_resource(SimulationTime {
+            tick: 100,
+            ..Default::default()
+        });
         world.insert_resource(ShadowMarketManager { cooldown: 0 });
 
         let mut schedule = Schedule::default();
