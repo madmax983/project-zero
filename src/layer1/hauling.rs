@@ -15,6 +15,8 @@ use crate::layer1::GridPosition;
 use bevy_ecs::prelude::*;
 use bevy_ecs::query::QueryData;
 
+
+
 /// Moves resources from the world to stockpiles.
 
 #[derive(QueryData)]
@@ -660,7 +662,9 @@ mod tests {
     use crate::layer1::{GridPosition, Pop};
     use crate::shared::time::SimulationTime;
     use bevy_ecs::prelude::*;
-    use bevy_ecs::query::QueryData;
+use bevy_ecs::query::QueryData;
+
+
 
     #[test]
     fn test_resource_item_component() {
