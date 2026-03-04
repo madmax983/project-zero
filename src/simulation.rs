@@ -108,6 +108,10 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<crate::layer1::tech_envy::TechEnvyConfig>();
     }
 
+    if !world.contains_resource::<crate::layer1::shadow_market::ShadowMarketManager>() {
+        world.init_resource::<crate::layer1::shadow_market::ShadowMarketManager>();
+    }
+
     // Initialize Layer 2 Events
     if !world.contains_resource::<Events<LaunchEvent>>() {
         world.init_resource::<Events<LaunchEvent>>();
