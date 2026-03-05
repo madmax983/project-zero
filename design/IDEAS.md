@@ -7548,7 +7548,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Phantom Shift
+## The Phantom Shift [SPECCED]
 
 **Layer:** 1
 
@@ -7562,7 +7562,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Neural Leech
+## The Neural Leech [SPECCED]
 
 **Layer:** 1
 
@@ -7576,7 +7576,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Biosphere Empathy Link
+## The Biosphere Empathy Link [SPECCED]
 
 **Layer:** 1
 
@@ -7590,7 +7590,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Chrono-Stutter
+## The Chrono-Stutter [SPECCED]
 
 **Layer:** 1
 
