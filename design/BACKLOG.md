@@ -43,3 +43,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `291` The Neural Leech — `specs/291-neural-leech.md`
 - [ ] `292` The Chrono-Stutter — `specs/292-chrono-stutter.md`
 - [ ] `293` The Biosphere Empathy Link — `specs/293-biosphere-empathy-link.md`
+- [ ] `294` The Bone Economy — `specs/294-bone-economy.md`
