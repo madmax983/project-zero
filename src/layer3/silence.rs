@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::energy::PowerSource;
 use crate::layer1::pop::Pop;
+use bevy_ecs::prelude::*;
 
 #[derive(Resource)]
 pub struct DetectionRisk {
@@ -10,7 +10,10 @@ pub struct DetectionRisk {
 
 impl Default for DetectionRisk {
     fn default() -> Self {
-        Self { current_risk: 0.0, threshold: 100.0 }
+        Self {
+            current_risk: 0.0,
+            threshold: 100.0,
+        }
     }
 }
 
@@ -51,22 +54,31 @@ pub fn check_hostile_spawn_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_ecs::prelude::*;
     use crate::layer1::energy::PowerSource;
     use crate::layer1::pop::Pop;
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_detection_risk_increases_with_power_and_pops() {
         let mut world = World::new();
-        world.insert_resource(DetectionRisk { current_risk: 0.0, threshold: 100.0 });
+        world.insert_resource(DetectionRisk {
+            current_risk: 0.0,
+            threshold: 100.0,
+        });
 
         // Spawn 10 Pops
         for _ in 0..10 {
             world.spawn(Pop);
         }
         // Spawn Power Generators
-        world.spawn(PowerSource { output: 50.0, active: true });
-        world.spawn(PowerSource { output: 30.0, active: true });
+        world.spawn(PowerSource {
+            output: 50.0,
+            active: true,
+        });
+        world.spawn(PowerSource {
+            output: 30.0,
+            active: true,
+        });
 
         let mut schedule = Schedule::default();
         schedule.add_systems(update_detection_risk_system);
@@ -80,7 +92,10 @@ mod tests {
     #[test]
     fn test_hostile_spawn_triggered_when_threshold_exceeded() {
         let mut world = World::new();
-        world.insert_resource(DetectionRisk { current_risk: 105.0, threshold: 100.0 });
+        world.insert_resource(DetectionRisk {
+            current_risk: 105.0,
+            threshold: 100.0,
+        });
         world.insert_resource(Events::<HostileSpawnEvent>::default());
 
         let mut schedule = Schedule::default();
@@ -89,10 +104,16 @@ mod tests {
 
         let events = world.resource::<Events<HostileSpawnEvent>>();
         let mut reader = events.get_reader();
-        assert!(reader.read(events).next().is_some(), "HostileSpawnEvent should have been emitted.");
+        assert!(
+            reader.read(events).next().is_some(),
+            "HostileSpawnEvent should have been emitted."
+        );
 
         // Ensure risk resets or threshold increases
         let risk = world.resource::<DetectionRisk>();
-        assert!(risk.threshold > 100.0, "Threshold should increase after a spawn.");
+        assert!(
+            risk.threshold > 100.0,
+            "Threshold should increase after a spawn."
+        );
     }
 }

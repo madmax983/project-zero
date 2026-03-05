@@ -38,7 +38,9 @@ pub fn detect_echo_chamber_system(
                 is_positive: true,
                 ticks_remaining: ECHO_DURATION,
             });
-        } else if morale.value <= ECHO_THRESHOLD_LOW || stress.accumulated_stress >= STRESS_ECHO_THRESHOLD {
+        } else if morale.value <= ECHO_THRESHOLD_LOW
+            || stress.accumulated_stress >= STRESS_ECHO_THRESHOLD
+        {
             // Low morale / high stress echo
             commands.entity(entity).insert(EchoingState {
                 is_positive: false,
@@ -103,25 +105,49 @@ mod tests {
         let mut world = World::new();
 
         // High morale pop
-        let p1 = world.spawn((
-            Pop,
-            Morale { value: 0.95, ..Default::default() },
-            StressTracker { accumulated_stress: 0.0, ..Default::default() },
-        )).id();
+        let p1 = world
+            .spawn((
+                Pop,
+                Morale {
+                    value: 0.95,
+                    ..Default::default()
+                },
+                StressTracker {
+                    accumulated_stress: 0.0,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         // High stress pop
-        let p2 = world.spawn((
-            Pop,
-            Morale { value: 0.5, ..Default::default() },
-            StressTracker { accumulated_stress: 95.0, ..Default::default() },
-        )).id();
+        let p2 = world
+            .spawn((
+                Pop,
+                Morale {
+                    value: 0.5,
+                    ..Default::default()
+                },
+                StressTracker {
+                    accumulated_stress: 95.0,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         // Normal pop
-        let p3 = world.spawn((
-            Pop,
-            Morale { value: 0.5, ..Default::default() },
-            StressTracker { accumulated_stress: 0.0, ..Default::default() },
-        )).id();
+        let p3 = world
+            .spawn((
+                Pop,
+                Morale {
+                    value: 0.5,
+                    ..Default::default()
+                },
+                StressTracker {
+                    accumulated_stress: 0.0,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         world.run_system_once(detect_echo_chamber_system).unwrap();
 
@@ -142,34 +168,59 @@ mod tests {
         world.spawn((
             Pop,
             GridPosition { x: 0, y: 0 },
-            EchoingState { is_positive: true, ticks_remaining: 10 },
+            EchoingState {
+                is_positive: true,
+                ticks_remaining: 10,
+            },
         ));
 
         // Target pop in range
-        let target = world.spawn((
-            Pop,
-            GridPosition { x: 1, y: 1 }, // Distance 1 (<= 3)
-            Morale { value: 0.5, ..Default::default() },
-            StressTracker { accumulated_stress: 50.0, ..Default::default() },
-        )).id();
+        let target = world
+            .spawn((
+                Pop,
+                GridPosition { x: 1, y: 1 }, // Distance 1 (<= 3)
+                Morale {
+                    value: 0.5,
+                    ..Default::default()
+                },
+                StressTracker {
+                    accumulated_stress: 50.0,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         // Target pop out of range
-        let far_target = world.spawn((
-            Pop,
-            GridPosition { x: 5, y: 5 }, // Distance 5 (> 3)
-            Morale { value: 0.5, ..Default::default() },
-            StressTracker { accumulated_stress: 50.0, ..Default::default() },
-        )).id();
+        let far_target = world
+            .spawn((
+                Pop,
+                GridPosition { x: 5, y: 5 }, // Distance 5 (> 3)
+                Morale {
+                    value: 0.5,
+                    ..Default::default()
+                },
+                StressTracker {
+                    accumulated_stress: 50.0,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         world.run_system_once(apply_echo_chamber_system).unwrap();
 
         let t_morale = world.get::<Morale>(target).unwrap().value;
-        let t_stress = world.get::<StressTracker>(target).unwrap().accumulated_stress;
+        let t_stress = world
+            .get::<StressTracker>(target)
+            .unwrap()
+            .accumulated_stress;
         assert!(t_morale > 0.5);
         assert!(t_stress < 50.0);
 
         let ft_morale = world.get::<Morale>(far_target).unwrap().value;
-        let ft_stress = world.get::<StressTracker>(far_target).unwrap().accumulated_stress;
+        let ft_stress = world
+            .get::<StressTracker>(far_target)
+            .unwrap()
+            .accumulated_stress;
         // Strict clippy settings prohibit direct float comparisons
         assert!((ft_morale - 0.5).abs() < f32::EPSILON);
         assert!((ft_stress - 50.0).abs() < f32::EPSILON);

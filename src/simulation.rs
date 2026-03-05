@@ -13,7 +13,9 @@ use crate::layer1::building::{update_building_map_system, BuildingMap};
 use crate::layer1::systems::{register_layer1_systems, update_event_buffer, Layer1SystemSet};
 use crate::layer1::update_action_timer_system;
 use crate::layer2::events::{DetectionEvent, LaunchEvent, ShipDestroyedEvent};
-use crate::layer3::silence::{check_hostile_spawn_system, update_detection_risk_system, DetectionRisk, HostileSpawnEvent};
+use crate::layer3::silence::{
+    check_hostile_spawn_system, update_detection_risk_system, DetectionRisk, HostileSpawnEvent,
+};
 use crate::shared::time::SimulationTime;
 
 /// Schedule label for the main simulation tick.
@@ -51,7 +53,6 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(gpu_evaluate_actions)
             .before(Layer1SystemSet::Execution),
     ));
-
 
     // --- Layer 3 Integration ---
     schedule.add_systems((

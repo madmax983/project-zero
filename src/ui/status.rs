@@ -6,10 +6,10 @@ use crate::layer1::admin::AdminStats;
 use crate::layer1::seasons::{Season, SeasonState};
 use crate::layer1::solar::{SolarCycle, SolarCycleState};
 use crate::layer1::traits::Traits;
-use crate::layer3::silence::DetectionRisk;
 use crate::layer1::{
     BuildMode, ColonyPolicies, ColonyResources, DesignationMode, NamedLocations, Pop, Viewport,
 };
+use crate::layer3::silence::DetectionRisk;
 use crate::shared::state::GameState;
 use crate::shared::time::{SimSpeed, SimulationTime};
 
@@ -518,7 +518,7 @@ mod tests {
             1.0,  // Efficiency
             None, // Season
             None, // Solar Cycle
-            0.0,   // risk_pct
+            0.0,  // risk_pct
         );
 
         assert!(status_none.contains("Day 100"));
@@ -608,7 +608,8 @@ mod tests {
             .collect();
         let full_text = cells.join("");
 
-        println!("text: {}", full_text); assert!(full_text.contains("Morale: 63%"));
+        println!("text: {}", full_text);
+        assert!(full_text.contains("Morale: 63%"));
     }
 
     #[test]
@@ -628,7 +629,7 @@ mod tests {
             1.0,
             Some(Season::Summer),
             None,
-            0.0,   // risk_pct
+            0.0, // risk_pct
         );
         assert!(
             status.contains("Summer"),
@@ -654,7 +655,7 @@ mod tests {
             1.0,
             None,
             None,
-            0.0,   // risk_pct
+            0.0, // risk_pct
         );
         assert!(!status.contains("Spring"));
         assert!(!status.contains("Summer"));
@@ -679,7 +680,7 @@ mod tests {
             1.0,
             None,
             Some(SolarCycle::Maximum),
-            0.0,   // risk_pct
+            0.0, // risk_pct
         );
         assert!(
             status.contains("Solar Maximum"),
