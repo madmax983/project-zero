@@ -155,3 +155,5 @@ mod shadow_market_trade;
 
 #[path = "integration/hologram_failure.rs"]
 mod hologram_failure;
+#[path = "integration/placebo_edicts.rs"]
+mod placebo_edicts;

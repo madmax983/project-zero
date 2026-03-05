@@ -83,6 +83,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::social::cultural_vandalism::vandalism_system.after(decay_needs_system),
             crate::layer1::social::cultural_vandalism::update_structure_buffs
                 .after(crate::layer1::social::cultural_vandalism::vandalism_system),
+            crate::layer1::integration::issue_placebo_from_edict_system.after(decay_needs_system),
             crate::layer1::social::placebo::placebo_tick_system.after(decay_needs_system),
             crate::layer1::social::placebo::reveal_betrayal_system.after(decay_needs_system),
             #[cfg(feature = "nova")]

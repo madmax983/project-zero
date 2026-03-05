@@ -1,4 +1,5 @@
 use crate::layer1::resources::ResourceType;
+use crate::layer1::social::placebo::PlaceboProtocol;
 use bevy_ecs::prelude::*;
 use std::collections::HashSet;
 
@@ -22,6 +23,8 @@ pub enum Policy {
     Prohibition(ResourceType),
     /// Blocks Remote Bonds and Intel gain from Subspace Pen Pals.
     FirewallComms,
+    /// Issues a Placebo Protocol to temporarily reduce stress.
+    Placebo(PlaceboProtocol),
 }
 
 impl ColonyPolicies {
