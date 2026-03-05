@@ -7841,7 +7841,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Celestial Library
+## The Celestial Library [SPECCED]
 
 **Layer:** Cross-layer (3 -> 1)
 
@@ -7855,7 +7855,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Orbital Ring
+## The Orbital Ring [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -7869,7 +7869,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Cryo-Mutiny
+## The Cryo-Mutiny [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -7883,7 +7883,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Fungal Network
+## The Fungal Network [SPECCED]
 
 **Layer:** 1
 
@@ -7897,7 +7897,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Void Leviathan
+## The Void Leviathan [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -7911,7 +7911,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Propaganda Engine
+## The Propaganda Engine [SPECCED]
 
 **Layer:** 3 -> 1
 
