@@ -51,3 +51,8 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `302` The Solar Sail Migration — `specs/302-solar-sail-migration.md`
 - [ ] `303` The Chrono-Vault — `specs/303-chrono-vault.md`
 - [ ] `304` The Bio-Loom — `specs/304-bio-loom.md`
+- [ ] `305` The Empathy Broadcast — `specs/305-empathy-broadcast.md`
+- [ ] `306` The Debt Collector — `specs/306-debt-collector.md`
+- [ ] `307` Xenological Pets — `specs/307-xenological-pets.md`
+- [ ] `308` Black Market Genemods — `specs/308-black-market-genemods.md`
+- [ ] `309` The Bureaucratic Strike — `specs/309-bureaucratic-strike.md`
