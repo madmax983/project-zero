@@ -7687,7 +7687,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Whisper Trade
+## The Whisper Trade [SPECCED]
 
 **Layer:** 1 -> 3
 
@@ -7701,7 +7701,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Memory Tithe
+## The Memory Tithe [SPECCED]
 
 **Layer:** 3 -> 1
 
@@ -7729,7 +7729,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Solar Sail Migration
+## The Solar Sail Migration [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -7743,7 +7743,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Chrono-Vault
+## The Chrono-Vault [SPECCED]
 
 **Layer:** 1 -> Cross-layer
 
@@ -7757,7 +7757,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Bio-Loom
+## The Bio-Loom [SPECCED]
 
 **Layer:** 1
 
