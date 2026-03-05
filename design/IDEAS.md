@@ -7645,7 +7645,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Spending resources on useless luxuries to appease the "Standard" vs. suffering massive unrest to maintain your specialized, utilitarian economy.
 
 ---
-## The Bone Economy
+## The Bone Economy [SPECCED]
 
 **Layer:** 1
 
