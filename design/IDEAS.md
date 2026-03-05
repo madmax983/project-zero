@@ -7659,7 +7659,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Nostalgia Engine
+## The Nostalgia Engine [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -7673,7 +7673,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Temporal Smuggling
+## Temporal Smuggling [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -7715,7 +7715,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Factional Diet
+## The Factional Diet [SPECCED]
 
 **Layer:** 1
 
