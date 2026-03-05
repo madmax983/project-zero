@@ -58,6 +58,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::machine_consciousness::consciousness_effect_system
                 .after(crate::layer1::pop::reset_speed_system),
             crate::layer1::combat::hit_stop_system.after(process_start_plan_system),
+            crate::layer1::combat::combat_cooldown_system.after(process_start_plan_system),
             crate::layer1::logistics::glider::update_glider_movement_system
                 .after(crate::layer1::pop::reset_speed_system),
         )

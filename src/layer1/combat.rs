@@ -99,6 +99,16 @@ pub fn hit_stop_system(mut commands: Commands, mut query: Query<(Entity, &mut Hi
     }
 }
 
+/// System to process Combat Cooldown durations.
+/// Decrements the counter so entities can attack again.
+pub fn combat_cooldown_system(mut query: Query<&mut CombatState>) {
+    for mut state in &mut query {
+        if state.cooldown > 0 {
+            state.cooldown -= 1;
+        }
+    }
+}
+
 /// Resolves an attack from one entity to another.
 ///
 /// This function:
@@ -537,6 +547,33 @@ mod tests {
     }
 
     // Re-implement test with proper system runner for Commands
+
+    #[test]
+    fn test_combat_cooldown_system() {
+        use bevy_ecs::system::RunSystemOnce;
+        let mut world = setup_world();
+
+        let entity = world.spawn(CombatState {
+            cooldown: 2,
+            ..Default::default()
+        }).id();
+
+        // Tick 1
+        world.run_system_once(crate::layer1::combat::combat_cooldown_system).unwrap();
+        let state = world.get::<CombatState>(entity).unwrap();
+        assert_eq!(state.cooldown, 1);
+
+        // Tick 2
+        world.run_system_once(crate::layer1::combat::combat_cooldown_system).unwrap();
+        let state = world.get::<CombatState>(entity).unwrap();
+        assert_eq!(state.cooldown, 0);
+
+        // Tick 3 (Should not underflow)
+        world.run_system_once(crate::layer1::combat::combat_cooldown_system).unwrap();
+        let state = world.get::<CombatState>(entity).unwrap();
+        assert_eq!(state.cooldown, 0);
+    }
+
     #[test]
     fn test_hit_stop_system_flow() {
         use bevy_ecs::system::RunSystemOnce;
