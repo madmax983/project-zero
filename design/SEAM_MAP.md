@@ -278,3 +278,13 @@
 - **Glue added:**
     - `hologram_failure_chronicle_bridge` converts `HologramFailureEvent` to `AddChronicleEvent`
 - **Tests:** `tests/integration/hologram_failure.rs`
+
+### INT-257: Subspace Pen Pals
+- **Date:** 2026-03-05
+- **Systems connected:** `update_pen_pals_system` -> `ColonyResources`, `FactionMember`
+- **Glue added:**
+    - Modified `update_pen_pals_system` to correctly modify `ColonyResources` knowledge pool.
+    - Handled Espionage chance to reduce knowledge.
+    - Handled Policy checking (`FirewallComms`).
+    - Handled Ethics shift mapping to `FactionMember` component.
+- **Tests:** `tests/integration/subspace_pen_pals.rs` (Integration test verified)
