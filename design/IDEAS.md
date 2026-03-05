@@ -7854,3 +7854,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The ethical cost of supreme knowledge vs. immediate survival.
 
 ---
+
+## The Orbital Ring
+
+**Layer:** 2 -> 1
+
+**Fantasy:** A halo of industry encircling your world, casting a long, dark shadow.
+
+**Mechanic:** A massive orbital structure (Layer 2) that provides global buffs to logistics and energy on Layer 1. However, it physically blocks the sun, creating a permanent, slowly moving "Shadow Band" across the planetary surface where temperature drops and solar power fails.
+
+**Emergence:** You build the Ring to solve an energy crisis. It works, but the Shadow Band crosses your main agricultural zone during the harvest season, instantly freezing your crops and causing a famine. You have to constantly migrate your farms to stay in the light.
+
+**Tension:** Global efficiency and power vs. localized, moving environmental devastation.
+
+---
+
+## The Cryo-Mutiny
+
+**Layer:** Cross-layer
+
+**Fantasy:** The people who built this world wake up to find it unrecognizable.
+
+**Mechanic:** A failing Cryo-Ship (Layer 2) is forced to land on your advanced Layer 1 colony. The pops inside are from an era centuries past. They possess obsolete traits and primitive ethics. Upon seeing your advanced, potentially alien-integrated society, they suffer massive "Culture Shock" and immediately form a hostile faction to "reclaim" the colony for humanity.
+
+**Emergence:** You mercifully thaw a ship of ancient pioneers. They look at your genetically modified, psychic colonists and declare them abominations. A civil war starts in the medical bay before the ice has even melted off the new arrivals.
+
+**Tension:** Humanitarian rescue vs. importing an immediate, ideologically opposed rebellion.
+
+---
+
+## The Fungal Network
+
+**Layer:** 1
+
+**Fantasy:** Tapping into the planet's nervous system.
+
+**Mechanic:** You discover a planet-wide mycelial network. Building "Spore Taps" allows instant, zero-cost communication and resource transfer between distant outposts. However, the network is semi-sentient. Extended connection slowly alters the ethics of connected pops towards "Collectivism" and occasionally sends "Urges" (mandatory quests to protect the forest or attack industry).
+
+**Emergence:** You rely on the network to supply your remote mining base. The network decides it doesn't like your new heavy smelter. It stops transmitting food to the miners, holding them hostage until you demolish the factory.
+
+**Tension:** Unmatched logistical power vs. surrendering sovereignty to an alien ecosystem.
+
+---
+
+## The Void Leviathan
+
+**Layer:** 2 -> 1
+
+**Fantasy:** An eclipse that eats ships.
+
+**Mechanic:** A colossal space-dwelling creature (Layer 2) occasionally enters the system to feed on solar radiation. Its sheer size causes a temporary global eclipse on Layer 1. It ignores colonies but aggressively hunts passing trade fleets. Destroying it yields unique "Bio-Alloys", but it is incredibly durable.
+
+**Emergence:** The Leviathan parks itself over your sun during a harsh winter. Your colony is freezing in the dark. You are forced to scramble your entire defense fleet to attack a god-like creature just to turn the lights back on, resulting in massive casualties.
+
+**Tension:** Endure the environmental hardship (eclipse) vs. risk total military annihilation.
+
+---
+
+## The Propaganda Engine
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Faking it until you make it, on a galactic scale.
+
+**Mechanic:** A massive communications array that broadcasts fake intel (e.g., exaggerating your fleet size, fabricating economic data) to Layer 3 empires. It increases your diplomatic weight and deters attacks. However, if an empire sends an "Inspector" ship (Layer 2) and discovers the lie, you suffer a catastrophic "Loss of Face," immediately turning neutral factions hostile.
+
+**Emergence:** You avoid a war with a Devouring Swarm by projecting the illusion of a massive armada. You are safe. Then, a random merchant ship breaks down in your system, sees you only have two rusty corvettes, and sells that information to the Swarm. The invasion begins immediately.
+
+**Tension:** Cheap diplomatic leverage vs. the constant, terrifying risk of discovery.
+
+---
