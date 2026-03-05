@@ -32,8 +32,8 @@ pub fn haul_system(world: &mut World) {
     let factions_data = world.get_resource::<Factions>().map(|f| f.map.clone());
 
     // Collect hauling pops
-    let mut haulers = Vec::new();
     let mut query = world.query::<HaulerQuery>();
+    let mut haulers = Vec::with_capacity(query.iter(world).len());
     for hauler in query.iter(world) {
         if hauler.action.current != ActionType::Haul {
             continue;
@@ -660,7 +660,6 @@ mod tests {
     use crate::layer1::{GridPosition, Pop};
     use crate::shared::time::SimulationTime;
     use bevy_ecs::prelude::*;
-    use bevy_ecs::query::QueryData;
 
     #[test]
     fn test_resource_item_component() {

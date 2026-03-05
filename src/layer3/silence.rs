@@ -56,7 +56,6 @@ mod tests {
     use super::*;
     use crate::layer1::energy::PowerSource;
     use crate::layer1::pop::Pop;
-    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_detection_risk_increases_with_power_and_pops() {
@@ -103,7 +102,7 @@ mod tests {
         schedule.run(&mut world);
 
         let events = world.resource::<Events<HostileSpawnEvent>>();
-        let mut reader = events.get_reader();
+        let mut reader = events.get_cursor();
         assert!(
             reader.read(events).next().is_some(),
             "HostileSpawnEvent should have been emitted."
