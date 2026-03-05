@@ -1,4 +1,9 @@
-## [Echo Chamber]
-**Concept:** A system that amplifies the current state of a Pop's primary Need or Stress by spreading an aura around them. Similar to rumors, but affecting base needs and causing cascading localized morale effects.
-**Fate:** Merged
-**Lesson:** Added new experimental system to create emergent behavioral cascades. Integrated nicely with morale and stress components without breaking core simulation.
+## [Psychic Resonance]
+**Concept:** A new pop trait 'Psychic' that allows a pop to passively 'sense' unseen items, boosting utility of finding distant things.
+**Fate:** Conceptual
+**Lesson:** Distance modifier manipulation.
+
+## [Synesthesia Simulation]
+**Concept:** A system that connects colors to sounds. Pops with the 'Synesthete' trait experience specific colors (from nearby light sources) as sounds, affecting their mood and work efficiency.
+**Fate:** Conceptual
+**Lesson:** Tying visual components to sensory perception.
