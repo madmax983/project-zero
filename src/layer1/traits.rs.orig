@@ -70,8 +70,6 @@ pub enum Trait {
     Transhumanist,
     /// Noble scion, refuses manual labor but pays allowance (Spec 263).
     Noble,
-    /// Distrusts colony authorities, ignores placebos (Spec 256).
-    Distrustful,
 }
 
 impl Trait {
@@ -110,7 +108,6 @@ impl Trait {
             Self::Agoraphobic => "Agoraphobic",
             Self::Transhumanist => "Transhumanist",
             Self::Noble => "Noble",
-            Self::Distrustful => "Distrustful",
         }
     }
 }
