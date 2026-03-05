@@ -43,7 +43,7 @@
 use crate::layer1::actions::{
     evaluate_clean, evaluate_drafted_behavior, evaluate_fetch_clothing, evaluate_fetch_tool,
     evaluate_haul, evaluate_listen_to_hum, evaluate_mental_break, evaluate_research,
-    evaluate_simple_action,
+    evaluate_shower, evaluate_simple_action,
 };
 use crate::layer1::chemical::evaluate_consume_chemical;
 use crate::layer1::factions::Factions;
@@ -327,6 +327,20 @@ impl<'a> PopDecider<'a> {
                 &self.buffer.item_entities,
             ),
             ActionType::ConsumeChemical,
+            self.context,
+            0.0,
+        );
+
+        // Evaluate UseShower
+        self.evaluator.evaluate_and_consider(
+            evaluate_shower(
+                pop_pos,
+                &needs,
+                &weights,
+                self.context.resources,
+                &self.buffer.showers,
+            ),
+            ActionType::UseShower,
             self.context,
             0.0,
         );

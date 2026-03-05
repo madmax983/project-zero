@@ -264,6 +264,90 @@ mod tests {
     }
 
     #[test]
+    fn test_evaluate_actions_chooses_shower_when_dirty_and_has_water() {
+        let mut world = setup_world();
+        world
+            .resource_mut::<crate::layer1::resources::ColonyResources>()
+            .water = 10.0;
+
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 0, y: 0 },
+                Needs {
+                    hunger: 0.8,
+                    rest: 0.8,
+                    leisure: 0.8,
+                    hygiene: 0.1, // Dirty!
+                },
+                UtilityWeights::default(),
+                PopAction {
+                    current: ActionType::Idle,
+                    ticks_committed: 10,
+                    ..Default::default()
+                },
+            ))
+            .id();
+
+        world.spawn((
+            Building {
+                building_type: BuildingType::Shower,
+            },
+            GridPosition { x: 1, y: 0 },
+        ));
+
+        crate::layer1::utility_ai::evaluate_actions_system(&mut world);
+
+        let action = world.get::<PopAction>(pop).unwrap();
+        assert_eq!(
+            action.current,
+            ActionType::UseShower,
+            "Pop should choose to shower when dirty and water is available"
+        );
+    }
+
+    #[test]
+    fn test_evaluate_actions_ignores_shower_when_no_water() {
+        let mut world = setup_world();
+        // default water is 0.0
+
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 0, y: 0 },
+                Needs {
+                    hunger: 0.8,
+                    rest: 0.8,
+                    leisure: 0.8,
+                    hygiene: 0.1, // Dirty!
+                },
+                UtilityWeights::default(),
+                PopAction {
+                    current: ActionType::Idle,
+                    ticks_committed: 10,
+                    ..Default::default()
+                },
+            ))
+            .id();
+
+        world.spawn((
+            Building {
+                building_type: BuildingType::Shower,
+            },
+            GridPosition { x: 1, y: 0 },
+        ));
+
+        crate::layer1::utility_ai::evaluate_actions_system(&mut world);
+
+        let action = world.get::<PopAction>(pop).unwrap();
+        assert_eq!(
+            action.current,
+            ActionType::Idle,
+            "Pop should not choose to shower when there is no water"
+        );
+    }
+
+    #[test]
     fn test_striking_pop_eats() {
         let mut world = setup_world();
 

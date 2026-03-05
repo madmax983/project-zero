@@ -168,7 +168,7 @@ pub enum HobbyType {
 
 impl ActionType {
     /// Total number of action types. Used for array sizing.
-    pub const COUNT: usize = 38;
+    pub const COUNT: usize = 39;
 
     /// Converts action type to a unique array index (0..COUNT-1).
     #[must_use]
@@ -211,8 +211,8 @@ impl ActionType {
             Self::ListenToTheHum => 34,
             Self::Clean => 35,
             Self::PurgeResidue => 36,
-            Self::VisitSanctuary => 38,
-            Self::VoidStare => 39,
+            Self::VisitSanctuary => 37,
+            Self::VoidStare => 38,
         }
     }
 
