@@ -7995,7 +7995,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Ego Machine
+## The Ego Machine [SPECCED]
 
 **Layer:** 1
 
@@ -8009,7 +8009,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Pirate's Pension
+## The Pirate's Pension [SPECCED]
 
 **Layer:** Cross-layer (2 -> 1)
 
@@ -8023,7 +8023,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Informant's Dilemma
+## The Informant's Dilemma [SPECCED]
 
 **Layer:** 1
 
@@ -8037,7 +8037,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Kinetic Harpoons
+## Kinetic Harpoons [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -8051,7 +8051,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Orbital Strike Blackmail
+## Orbital Strike Blackmail [SPECCED]
 
 **Layer:** 3 -> 1
 
