@@ -7994,3 +7994,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The risk of catastrophic flooding and unknown horrors vs. Access to a completely new biome and valuable resources.
 
 ---
+
+## The Ego Machine
+
+**Layer:** 1
+
+**Fantasy:** A machine that feeds on vanity and produces genius, until it demands too much.
+
+**Mechanic:** A high-tech "Mirror Chamber" that grants massive skill XP and inspiration buffs to Pops, but artificially inflates their "Ego" hidden stat. High-Ego Pops refuse to do "menial" tasks, demand luxury accommodations, and constantly insult lower-Ego Pops, driving up Unrest.
+
+**Emergence:** You put your lead scientist in the Ego Machine to crack a crucial tech before a raid hits. They succeed brilliantly, but immediately afterward refuse to leave their newly demanded luxury suite to actually implement the tech, instead writing a manifesto about their own brilliance while the colony burns.
+
+**Tension:** Rapid, crucial skill advancement vs. creating an unmanageable, toxic elite class.
+
+---
+
+## The Pirate's Pension
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** Retiring the wolves to watch the sheep, hoping they don't get hungry.
+
+**Mechanic:** You can offer amnesty and a "Pension" (high credit/resource upkeep) to a defeated or bribed Pirate Fleet (Layer 2). They land on your colony and become "Veteran" Pops. They are incredible fighters and haulers, but they retain the "Pirate" trait, giving them a high chance to ignore laws, steal from stockpiles, and start brawls.
+
+**Emergence:** You survive an invasion by hiring the pirates as your militia. They win the war, but a month later, they get bored, hijack your only trade shuttle, and fly back into space, taking half your treasury with them.
+
+**Tension:** Instant access to elite combat/labor pops vs. the constant, high risk of internal sabotage and theft.
+
+---
+
+## The Informant's Dilemma
+
+**Layer:** 1
+
+**Fantasy:** A society where everyone is watching everyone else, and trust is the rarest resource.
+
+**Mechanic:** You can enact a "Citizen Informant" edict. Pops gain a tiny amount of Credits or Morale for reporting "Crimes" or "Dissent" (low morale/unrest) in their neighbors. This massively increases your intel and reduces global Unrest initially, but creates a hidden "Paranoia" stat. High Paranoia causes Pops to stop socializing entirely and randomly accuse each other of treason.
+
+**Emergence:** The edict successfully roots out a genuine saboteur. However, the reward system incentivizes your farmers to accuse the only doctor of treason just to get the bounty. The doctor is jailed, and the colony succumbs to a minor flu.
+
+**Tension:** Perfect internal security and intel vs. the complete destruction of social cohesion and trust.
+
+---
+
+## Kinetic Harpoons
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Reeling in the heavens, one rock at a time.
+
+**Mechanic:** You can launch massive "Harpoon Tethers" from Layer 1 to snag passing Comets or small Asteroids in Layer 2, forcefully pulling them into a stable orbit or dragging them directly down to the surface for immediate, massive resource extraction. Pulling them down causes a localized impact event (damage).
+
+**Emergence:** You harpoon a rich ice-comet to solve a water crisis. You underestimate its mass. The winch fails halfway down, and the comet crashes into your command center, vaporizing the leadership but creating a massive, permanent crater lake.
+
+**Tension:** High-risk, immediate massive resource injection vs. the catastrophic danger of orbital mechanics failures.
+
+---
+
+## Orbital Strike Blackmail
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Holding a gun to your own head to negotiate.
+
+**Mechanic:** You can rig your own colony's primary reactor to overload, broadcasting the countdown to the Galactic Network (Layer 3). Threatening to blow up your own highly valuable strategic position (e.g., a chokepoint or unique resource node) forces invading or blockading empires to negotiate or back off to prevent the loss of the asset.
+
+**Emergence:** A massive invasion fleet is in orbit. You start the reactor overload sequence and demand they leave. They call your bluff and stay. You have 60 seconds to either defuse your own bomb and surrender, or let it blow, taking the fleet and your colony to hell together.
+
+**Tension:** The ultimate diplomatic leverage vs. the literal destruction of everything you've built.
+
+---
