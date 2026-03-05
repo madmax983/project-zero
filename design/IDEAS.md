@@ -7771,7 +7771,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Empathy Broadcast
+## The Empathy Broadcast [SPECCED]
 
 **Layer:** 3 -> 1
 
@@ -7785,7 +7785,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Debt Collector
+## The Debt Collector [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -7799,7 +7799,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Xenological Pets
+## Xenological Pets [SPECCED]
 
 **Layer:** 1
 
@@ -7813,7 +7813,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Black Market Genemods
+## Black Market Genemods [SPECCED]
 
 **Layer:** 1
 
@@ -7827,7 +7827,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Bureaucratic Strike
+## The Bureaucratic Strike [SPECCED]
 
 **Layer:** 1
 
