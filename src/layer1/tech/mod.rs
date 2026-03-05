@@ -682,3 +682,7 @@ mod legacy_code_tests;
 pub mod rhythm;
 #[cfg(test)]
 mod rhythm_tests;
+
+/// Temporal Smuggling system (Spec 299)
+pub mod temporal_smuggling;
+pub use temporal_smuggling::{TemporalDebt, TemporalRift, ParadoxEvent, OpenRiftEvent};

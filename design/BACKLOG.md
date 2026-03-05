@@ -46,4 +46,3 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `296` The Martyr's Engine — `specs/296-martyrs-engine.md`
 - [ ] `297` The Factional Diet — `specs/297-factional-diet.md`
 - [ ] `298` The Nostalgia Engine — `specs/298-nostalgia-engine.md`
-- [ ] `299` Temporal Smuggling — `specs/299-temporal-smuggling.md`
