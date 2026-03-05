@@ -62,3 +62,8 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `313` The Fungal Network — `specs/313-fungal-network.md`
 - [ ] `314` The Void Leviathan — `specs/314-void-leviathan.md`
 - [ ] `315` The Propaganda Engine — `specs/315-propaganda-engine.md`
+- [ ] `316` The Geothermal Heartbeat — `specs/316-geothermal-heartbeat.md`
+- [ ] `317` The Orbital Junkyard — `specs/317-orbital-junkyard.md`
+- [ ] `318` The Stolen Fleet — `specs/318-stolen-fleet.md`
+- [ ] `319` The Gravity Well Forge — `specs/319-gravity-well-forge.md`
+- [ ] `320` The Subterranean Ocean — `specs/320-subterranean-ocean.md`

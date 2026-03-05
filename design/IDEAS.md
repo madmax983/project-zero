@@ -7925,7 +7925,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Geothermal Heartbeat
+## The Geothermal Heartbeat [SPECCED]
 
 **Layer:** 1
 
@@ -7939,7 +7939,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Orbital Junkyard
+## The Orbital Junkyard [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -7953,7 +7953,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Stolen Fleet
+## The Stolen Fleet [SPECCED]
 
 **Layer:** 3 -> 2
 
@@ -7967,7 +7967,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Gravity Well Forge
+## The Gravity Well Forge [SPECCED]
 
 **Layer:** 2
 
@@ -7981,7 +7981,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Subterranean Ocean
+## The Subterranean Ocean [SPECCED]
 
 **Layer:** 1
 
