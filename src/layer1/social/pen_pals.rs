@@ -31,7 +31,7 @@ pub fn update_pen_pals_system(
     for bond in bonds.iter() {
         if let Ok((mut member, job)) = pops.get_mut(bond.local_pop) {
             // Must be working at Library or Observatory (representing Comms/Research)
-            let is_at_comms = job.map_or(false, |w| {
+            let is_at_comms = job.is_some_and(|w| {
                 w.job_type == AssignmentType::LibraryWorker
                     || w.job_type == AssignmentType::ObservatoryWorker
             });

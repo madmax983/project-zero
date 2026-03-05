@@ -7,7 +7,6 @@
 
 See `design/IDEAS.md` for unspecced concepts.
 - [ ] `255` Hypno-Learning — `specs/255-hypno-learning.md`
-- [ ] `257` Subspace Pen Pals — `specs/257-subspace-pen-pals.md`
 - [ ] `259` Harmonic Mining — `specs/259-harmonic-mining.md`
 - [ ] `260` The Industrial Rhythm — `specs/260-industrial-rhythm.md`
 - [ ] `262` Thermal Gliders — `specs/262-thermal-gliders.md`
