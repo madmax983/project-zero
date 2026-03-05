@@ -72,6 +72,8 @@ pub enum Trait {
     Noble,
     /// Distrusts colony authorities, ignores placebos (Spec 256).
     Distrustful,
+    /// Experiences light colors as emotional sounds.
+    Synesthete,
 }
 
 impl Trait {
@@ -111,6 +113,8 @@ impl Trait {
             Self::Transhumanist => "Transhumanist",
             Self::Noble => "Noble",
             Self::Distrustful => "Distrustful",
+
+            Self::Synesthete => "Synesthete",
         }
     }
 }
@@ -166,6 +170,7 @@ impl Traits {
             Trait::Outsider,
             Trait::Mutant,
             Trait::Compassionate,
+            Trait::Synesthete,
         ];
 
         while set.len() < count {
