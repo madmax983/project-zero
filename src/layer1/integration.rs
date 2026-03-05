@@ -3,6 +3,7 @@
 use crate::layer1::balance::TICKS_PER_YEAR;
 use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer1::cybernetics::MissingLimb;
+use crate::layer1::edicts::{ColonyPolicies, Policy};
 use crate::layer1::factions::Factions;
 use crate::layer1::fire::Fire;
 use crate::layer1::hazards::AmputationEvent;
@@ -16,6 +17,7 @@ use crate::layer1::notifications::NotificationQueue;
 use crate::layer1::pop::{Pop, PopBorn, PopDied, PopName};
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::rumor::{Knowledge, Rumor, RumorTopic};
+use crate::layer1::social::placebo::{ActivePlacebo, PlaceboProtocol};
 use crate::layer1::utility_types::{ActionType, PopAction};
 use crate::layer1::vermin::VerminState;
 use crate::shared::colony::ColonyName;
@@ -112,6 +114,45 @@ pub fn chronicle_rumor_bridge_system(
                 if let Ok((_, mut knowledge)) = query.get_mut(witness) {
                     knowledge.add_rumor(rumor.clone());
                 }
+            }
+        }
+    }
+}
+
+/// Issues `ActivePlacebo` entities for active `Policy::Placebo` edicts if they don't already exist.
+/// Runs in `Observation` phase.
+pub fn issue_placebo_from_edict_system(
+    mut commands: Commands,
+    policies: Option<Res<ColonyPolicies>>,
+    existing_placebos: Query<&ActivePlacebo>,
+) {
+    let Some(policies) = policies else { return };
+
+    // Find which Placebos are currently active in the ECS world
+    let mut active_protocols = std::collections::HashSet::new();
+    for placebo in existing_placebos.iter() {
+        active_protocols.insert(placebo.protocol);
+    }
+
+    // Iterate over active policies to find placebos
+    for policy in policies.active_policies.iter() {
+        if let Policy::Placebo(protocol) = policy {
+            // If the policy is active but the placebo entity doesn't exist, spawn it
+            if !active_protocols.contains(protocol) {
+                // Determine relief values based on protocol (could be configurable)
+                let (duration, stress_relief) = match protocol {
+                    PlaceboProtocol::FakeReinforcements => (100.0, 20.0),
+                    PlaceboProtocol::VitaminX => (100.0, 15.0),
+                    PlaceboProtocol::SafetyInspection => (100.0, 25.0),
+                };
+
+                commands.spawn(ActivePlacebo {
+                    protocol: *protocol,
+                    duration,
+                    stress_relief,
+                    revealed: false,
+                    applied: false,
+                });
             }
         }
     }

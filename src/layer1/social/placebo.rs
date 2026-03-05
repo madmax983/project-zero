@@ -9,7 +9,7 @@ use crate::layer1::traits::{Trait, Traits};
 use bevy_ecs::prelude::*;
 
 /// Type of Placebo Protocol.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum PlaceboProtocol {
     /// Reduces Panic
     FakeReinforcements,
