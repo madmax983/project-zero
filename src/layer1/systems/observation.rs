@@ -86,6 +86,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::integration::issue_placebo_from_edict_system.after(decay_needs_system),
             crate::layer1::social::placebo::placebo_tick_system.after(decay_needs_system),
             crate::layer1::social::placebo::reveal_betrayal_system.after(decay_needs_system),
+            crate::layer1::specialization::update_tenure_system.after(work_execution_system),
+            crate::layer1::specialization::check_mutation_system.after(crate::layer1::specialization::update_tenure_system),
             #[cfg(feature = "nova")]
             crate::experimental::echo_chamber::detect_echo_chamber_system
                 .after(crate::layer1::needs::decay_needs_system),

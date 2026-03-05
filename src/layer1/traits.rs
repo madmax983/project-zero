@@ -74,6 +74,12 @@ pub enum Trait {
     Distrustful,
     /// Experiences light colors as emotional sounds.
     Synesthete,
+
+    /// Specialized traits (Spec 264)
+    MoleEyes,
+    Hunchback,
+    StaticSkin,
+    SilverTongue,
 }
 
 impl Trait {
@@ -115,6 +121,10 @@ impl Trait {
             Self::Distrustful => "Distrustful",
 
             Self::Synesthete => "Synesthete",
+            Self::MoleEyes => "Mole Eyes",
+            Self::Hunchback => "Hunchback",
+            Self::StaticSkin => "Static Skin",
+            Self::SilverTongue => "Silver Tongue",
         }
     }
 }
@@ -221,6 +231,8 @@ impl Traits {
     }
 }
 
+use crate::layer1::pop::JobType;
+
 /// Returns the work speed modifier from traits.
 #[must_use]
 pub fn get_trait_work_speed_modifier(traits: &Traits) -> f32 {
@@ -231,6 +243,46 @@ pub fn get_trait_work_speed_modifier(traits: &Traits) -> f32 {
     if traits.0.contains(&Trait::Lazy) {
         modifier -= 0.2;
     }
+    modifier
+}
+
+/// Returns the job efficiency modifier based on specialist traits (Spec 264).
+#[must_use]
+pub fn get_job_efficiency_modifier(traits: &Traits, job_type: JobType) -> f32 {
+    let mut modifier = 1.0;
+
+    if traits.has(Trait::MoleEyes) {
+        if job_type == JobType::LibraryWorker {
+            modifier += 0.2;
+        } else {
+            modifier -= 0.2;
+        }
+    }
+
+    if traits.has(Trait::Hunchback) {
+        if job_type == JobType::FarmWorker {
+            modifier += 0.2;
+        } else {
+            modifier -= 0.2;
+        }
+    }
+
+    if traits.has(Trait::StaticSkin) {
+        if job_type == JobType::ObservatoryWorker {
+            modifier += 0.2;
+        } else {
+            modifier -= 0.2;
+        }
+    }
+
+    if traits.has(Trait::SilverTongue) {
+        if job_type == JobType::Administrator {
+            modifier += 0.2;
+        } else {
+            modifier -= 0.2;
+        }
+    }
+
     modifier
 }
 

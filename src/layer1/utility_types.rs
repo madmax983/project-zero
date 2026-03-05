@@ -694,7 +694,7 @@ mod tests {
 }
 
 /// Types of assignments a pop can have.
-#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
 pub enum AssignmentType {
     /// Working at a farm.
     FarmWorker,

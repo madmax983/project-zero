@@ -98,6 +98,8 @@ pub mod items;
 pub mod map;
 /// Colony Mascot system (Spec 129).
 pub mod mascot;
+pub mod specialization;
+pub use specialization::*;
 /// Medical care and hospital logic.
 pub mod medical;
 /// Pop memories and psychological effects.
