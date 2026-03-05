@@ -3722,3 +3722,195 @@ What happens when the illusion is tested.
 - the static gave us away
 - they believed the lie
 - the mirage held
+
+---
+
+## Doppelganger Fragments (Spec 254)
+
+### [MIMIC_SUSPICION]
+Why someone was suspected of being a mimic.
+
+- ate raw ore
+- smiled at the dark
+- didn't remember the Founder
+- walked without sound
+- worked backward
+- stared at the wall for hours
+- bled clear fluid
+
+### [MIMIC_REVEAL]
+How the mimic was discovered.
+
+- caught in the scanner
+- melted in the light
+- shed its skin
+- spoke in two voices
+- panicked at the mirror
+- attacked the foreman
+
+---
+
+## Hypno-Learning Fragments (Spec 255)
+
+### [HYPNO_SUBJECT]
+What was learned in the pod.
+
+- the calculus of engines
+- structural flow
+- zero-g combat
+- advanced botany
+- void-navigation
+- the history of the [CIV_NAME]
+
+### [FOG_SYMPTOM]
+Side effects of hypno-learning.
+
+- speaking in equations
+- memory bleed
+- moving like a sleepwalker
+- forgetting how to eat
+- phantom headaches
+- knowing things you shouldn't
+
+---
+
+## Placebo Protocol Fragments (Spec 256)
+
+### [PLACEBO_NAME]
+Flavor names for fake treatments.
+
+- Sugar-Pills
+- The Blank File
+- False-Hope
+- Synthetic Comfort
+- Dummy-Stim
+- The Governor's Cure
+
+### [PLACEBO_EFFECT]
+How pops react to the placebo.
+
+- believed the lie
+- felt suddenly better
+- thanked the doctor
+- realized the trick
+- lost the fear
+- returned to work
+
+---
+
+## Cultural Vandalism Fragments (Spec 253)
+
+### [VANDALISM_ACT]
+How the monument was defaced.
+
+- painted red
+- eyes scratched out
+- covered in soot
+- broken at the base
+- draped in rags
+- turned upside down
+
+### [VANDAL_MESSAGE]
+What the vandalism means.
+
+- we are not safe
+- the hunger is coming
+- lies in stone
+- tear it down
+- remember the forgotten
+- empty promises
+
+---
+
+## Shadow Market Fragments (Spec 261)
+
+### [SHADOW_GOODS]
+Illegal or untaxed items sold in the dark.
+
+- unlogged stims
+- stolen tech
+- fake credentials
+- xeno-spores
+- untaxed fuel
+- the good rations
+
+### [SHADOW_MERCHANT]
+Titles for shadow traders.
+
+- The Whisper-Broker
+- Dark-Dealer
+- The Faceless
+- Void-Smuggler
+- Corner-Man
+- The Silent Trader
+
+---
+
+## Great Works Fragments (Spec 286)
+
+### [GREAT_WORK_NAME]
+Names for massive construction projects.
+
+- The Sky-Piercer
+- The Grand Vault
+- The Eternal Forge
+- The Star-Shield
+- The Deep Core
+- The Pillar of [COLONY]
+
+### [WORK_PHASE_DESC]
+Descriptions of the construction scale.
+
+- moving mountains
+- draining the sky
+- bleeding the stores
+- a generation's labor
+- endless scaffolding
+- blocking the sun
+
+---
+
+## Harmonic Mining Fragments (Spec 259)
+
+### [FREQUENCY_DESC]
+How the harmonic drill sounds.
+
+- bone-rattling
+- silent but heavy
+- a high shriek
+- the deep hum
+- teeth-aching
+- glass-shattering
+
+### [RESONANCE_TARGET]
+What the drill destroys.
+
+- crystal-veins
+- deep bedrock
+- ancient glass
+- fragile struts
+- the living stone
+
+---
+
+## Thermal Glider Fragments (Spec 262)
+
+### [GLIDER_NAME]
+Flavor names for thermal gliders.
+
+- Heat-Rider
+- Updraft-Skiff
+- Thermal-Kite
+- Smoke-Surfer
+- Ash-Wing
+- Vent-Skipper
+
+### [GLIDER_MANEUVER]
+How the glider moves.
+
+- caught the updraft
+- rode the vent
+- soared on the heat
+- stalled in the cold
+- drifted down
+- spiraled up
