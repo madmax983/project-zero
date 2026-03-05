@@ -43,3 +43,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `293` The Biosphere Empathy Link — `specs/293-biosphere-empathy-link.md`
 - [ ] `294` The Bone Economy — `specs/294-bone-economy.md`
 - [ ] `295` The Sentient Standard — `specs/295-sentient-standard.md`
+- [ ] `296` The Martyr's Engine — `specs/296-martyrs-engine.md`
