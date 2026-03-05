@@ -7604,7 +7604,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Martyr's Engine
+## The Martyr's Engine [SPECCED]
 
 **Layer:** Cross-layer
 
