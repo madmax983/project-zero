@@ -176,6 +176,17 @@ pub fn process_refining_system(world: &mut World) {
                         pos,
                         waste_chance,
                     ));
+
+                    // Rhythm update
+                    let tick = world
+                        .get_resource::<crate::shared::time::SimulationTime>()
+                        .map(|t| t.tick)
+                        .unwrap_or(0);
+                    if let Some(mut rhythm) =
+                        world.get_mut::<crate::layer1::tech::rhythm::MachineRhythm>(building_entity)
+                    {
+                        rhythm.cycle_end_tick = tick;
+                    }
                 }
             }
 

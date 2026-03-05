@@ -17,22 +17,25 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::fertility::update_fertility_system,
             produce_food_system.after(crate::layer1::fertility::update_fertility_system),
             crate::layer1::husbandry::husbandry_production_system.after(produce_food_system),
-            hopper_system.after(produce_food_system),
-            process_refining_system,
-            crate::layer1::social::cadet::income_system,
-            crate::layer1::gene_bank::process_cloning_system,
-            crate::layer1::clone_vat::process_clone_vats_system,
-            crate::layer1::permit::permit_activation_system,
-            crate::layer1::permit::enforce_permit_restrictions_system
-                .before(crate::layer1::energy::power_grid_system),
-            crate::layer1::tech::update_tech_capacity_system,
-            crate::layer1::tech::infinite_archive::update_efficiency_system
-                .after(crate::layer1::tech::update_tech_capacity_system),
-            crate::layer1::admin::calculate_admin_stats,
-            crate::layer1::eureka::handle_eureka_events,
-            recycle_processing_system,
-            #[cfg(feature = "nova")]
-            crate::layer1::machine_consciousness::consciousness_growth_system,
+            (
+                hopper_system.after(produce_food_system),
+                process_refining_system,
+                crate::layer1::tech::rhythm::update_rhythm_system.after(process_refining_system),
+                crate::layer1::social::cadet::income_system,
+                crate::layer1::gene_bank::process_cloning_system,
+                crate::layer1::clone_vat::process_clone_vats_system,
+                crate::layer1::permit::permit_activation_system,
+                crate::layer1::permit::enforce_permit_restrictions_system
+                    .before(crate::layer1::energy::power_grid_system),
+                crate::layer1::tech::update_tech_capacity_system,
+                crate::layer1::tech::infinite_archive::update_efficiency_system
+                    .after(crate::layer1::tech::update_tech_capacity_system),
+                crate::layer1::admin::calculate_admin_stats,
+                crate::layer1::eureka::handle_eureka_events,
+                recycle_processing_system,
+                #[cfg(feature = "nova")]
+                crate::layer1::machine_consciousness::consciousness_growth_system,
+            ),
         )
             .in_set(Layer1SystemSet::Economy),
     );

@@ -1,8 +1,8 @@
 // Implementation block to make tests compilable (but fail).
-use bevy_ecs::prelude::*;
 use crate::layer1::map::GridPosition;
-use crate::layer1::temperature::TemperatureGrid;
 use crate::layer1::pop::Speed;
+use crate::layer1::temperature::TemperatureGrid;
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct ThermalGlider;
@@ -31,11 +31,11 @@ pub fn update_glider_movement_system(
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
+    use crate::layer1::logistics::glider::{update_glider_movement_system, ThermalGlider};
     use crate::layer1::map::GridPosition;
-    use crate::layer1::temperature::TemperatureGrid;
-    use crate::layer1::logistics::glider::{ThermalGlider, update_glider_movement_system};
     use crate::layer1::pop::Speed;
+    use crate::layer1::temperature::TemperatureGrid;
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_glider_speed_boost_in_heat() {
@@ -50,15 +50,17 @@ mod tests {
         world.insert_resource(temp_grid);
 
         // Spawn Glider
-        let glider = world.spawn((
-            ThermalGlider,
-            Speed {
-                base: 1.0,
-                current: 0.0, // Base speed 0? Or just modified.
-                accumulator: 0.0,
-            },
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let glider = world
+            .spawn((
+                ThermalGlider,
+                Speed {
+                    base: 1.0,
+                    current: 0.0, // Base speed 0? Or just modified.
+                    accumulator: 0.0,
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
         // Run system
         let mut schedule = Schedule::default();
@@ -75,15 +77,17 @@ mod tests {
         let temp_grid = TemperatureGrid::new(10, 10, 0.0); // Default 0
         world.insert_resource(temp_grid);
 
-        let glider = world.spawn((
-            ThermalGlider,
-            Speed {
-                base: 1.0,
-                current: 1.0,
-                accumulator: 0.0,
-            },
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let glider = world
+            .spawn((
+                ThermalGlider,
+                Speed {
+                    base: 1.0,
+                    current: 1.0,
+                    accumulator: 0.0,
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(update_glider_movement_system);

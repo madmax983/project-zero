@@ -1,5 +1,3 @@
-
-
 use crate::layer1::resources::ColonyResources;
 use crate::shared::selection::Selection;
 use crate::ui::inspector::render_inspector;
@@ -36,11 +34,13 @@ fn test_inspector_shows_waste_stats() {
         .collect();
     let full_text = cells.join("");
 
-    println!("{}", full_text); assert!(
+    println!("{}", full_text);
+    assert!(
         full_text.contains("Waste"),
         "Inspector should display Waste in global stats"
     );
-    println!("{}", full_text); assert!(
+    println!("{}", full_text);
+    assert!(
         full_text.contains("5/10"),
         "Inspector should display Waste amounts"
     );
