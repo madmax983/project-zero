@@ -729,4 +729,6 @@ pub mod geology_tests {
     #[cfg(test)]
     include!("geology/tectonic_tests.rs");
 }
+pub mod pop_doppelganger;
 pub mod shadow_market;
+pub use pop_doppelganger::*;

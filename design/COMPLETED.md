@@ -196,3 +196,4 @@
 - [x] `261` Shadow Markets — `specs/261-shadow-markets.md` — completed 2026-03-04
 - [x] `INT-261` Integration: Shadow Markets -> Trade Execution — completed 2026-03-04
 - [x] `286` Great Works — `specs/286-great-works.md` — completed 2026-03-01
+- [x] `254` Doppelgangers — `specs/254-doppelgangers.md` — completed 2026-03-05

@@ -94,6 +94,7 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             crate::layer1::execution::vandalize_execution_system.after(arrival_handler_system),
+            crate::layer1::pop_doppelganger::sabotage_system.after(work_execution_system),
             crate::layer1::drone::process_charge_system.after(arrival_handler_system),
             update_social_class_system.after(arrival_handler_system),
             class_friction_system.after(update_social_class_system),
