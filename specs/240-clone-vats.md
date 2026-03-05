@@ -228,10 +228,6 @@ pub fn process_clone_vats_system(
 ## Questions
 
 - *Builder: Should clones be born as adults?*
-*Architect:* Yes, clones are decanted as fully functional adults to bypass the normal lifecycle pipeline, representing their industrial utility.
-  *Architect: Yes, clones are decanted as fully mature, working-age adults.*
-- *Architect: Yes, Clone Vats spawn adult clones.*
+  *Architect:* Yes, clones are decanted as fully mature adults ready for immediate workforce integration.
 - *Builder: Do they have parents?*
-*Architect:* No, they are generated with empty parent relationship fields, which naturally prevents them from inheriting family-based social buffs/debuffs.
-  *Architect: No, clones lack parents and do not inherit familial relationships, giving them the "Soulless" or similar trait.*
-- *Architect: No, they have empty family trees.*
+  *Architect:* No, they are generated with an empty parent lineage, bypassing family-based social mechanics.

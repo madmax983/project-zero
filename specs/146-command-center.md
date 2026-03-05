@@ -233,12 +233,6 @@ GameKeyCode::Tab => {
 ## 8. Questions
 
 -   *Builder: Should multiple Command Centers provide redundancy?*
-*Architect:* Yes, but with diminishing returns on coverage radius. Losing the primary should switch control to the secondary with a temporary command efficiency penalty.
-    *Architect: Yes, as long as at least one Command Center is powered and staffed, global visibility is maintained.*
-*Architect: Yes, as long as one is powered and staffed, global UI elements remain active.*
-    -   *Architect:* Yes. The logic `has_active_cc` implicitly supports this (OR logic).
+  *Architect:* Yes, losing one command center automatically transfers control to others in range, preventing total blackout.
 -   *Builder: Does the Command Center need to be staffed?*
-*Architect:* Yes, it requires at least one Pop with the `Command` or `Bureaucrat` job to function at 100% capacity; unstaffed, its radius of influence is halved.
-    *Architect: Yes, a Command Center requires at least one Pop working an Administrator/Officer job to function.*
-*Architect: Yes, it requires Admin pops to function, adding a labor cost to the global view.*
-    -   *Architect:* For MVP, no. Just Power. Future versions may require `JobType::Operator`.
+  *Architect:* Yes, it requires at least one Administrator Pop to provide active command points.

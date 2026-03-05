@@ -243,5 +243,4 @@ pub fn apply_meal_effect(world: &mut World, pop: Entity, effect: MealEffect) {
 ## Questions
 
 - *Builder: Should "Mystery Meals" stack?*
-*Architect:* No, the "Mystery Meal" buff/debuff should refresh its duration rather than stacking in magnitude to prevent extreme stat padding.
-- *Architect: Mystery Meals stack only by exact ingredient.*
+  *Architect:* No, consuming multiple mystery meals resets the duration rather than stacking the effects.

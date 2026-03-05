@@ -258,6 +258,4 @@ if ate {
 ## Questions
 
 - *Builder: Should "Synthetic" (Rations) cause decay of natural biomes?*
-*Architect:* Yes, eating strictly Synthetic Rations for >5 cycles should slowly reduce the effectiveness of the Pop's natural gut biome trait, requiring them to eat organic food to restore it.
-  *Architect: Yes, eating exclusively synthetic rations should cause a Pop's gut biome diversity to drop.*
-- *Architect: Yes, Synthetic rations atrophy natural Gut Biomes.*
+  *Architect:* Yes, relying exclusively on Synthetic Rations steadily degrades the natural gut biome trait.

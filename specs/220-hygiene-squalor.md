@@ -273,10 +273,6 @@ In `src/layer1/actions.rs`, add `UseShower`.
 ## Questions
 
 - *Builder: Should Showers require Power?*
-*Architect:* Showers require Water but do not strictly require Power. If unpowered, they provide a "Cold Shower" which cleans the Pop but gives a slight morale penalty instead of a bonus.
-  *Architect: Yes, showers require both water and power (for pumping/heating) to function.*
-*Architect: Keep showers power-free (gravity-fed) for the MVP.*
+  *Architect:* Showers require Water. Without power, they provide a "Cold Shower" giving cleanliness but slightly reducing morale.
 - *Builder: Does Filth affect Room Quality?*
-*Architect:* Yes, any tile with a Filth level > 0 inside a defined room subtracts directly from that room's overall Quality score.
-  *Architect: Yes, accumulated filth in a room drastically lowers its Room Quality score.*
-- *Architect: Yes, Filth temporarily reduces Room Quality.*
+  *Architect:* Yes, every unit of Filth inside a room subtracts a flat amount from the Room Quality score.

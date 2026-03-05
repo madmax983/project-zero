@@ -251,7 +251,4 @@ In `src/layer1/weather.rs`:
 ## Questions
 
 - *Builder: Should Magnetic Storm affect Battery discharge rate?*
-*Architect:* Yes, batteries exposed to the storm (unshielded/outdoor) should suffer a 2x passive discharge penalty while the event is active.
-  *Architect: Yes, magnetic storms cause batteries to rapidly discharge or short out.*
-*Architect: No, it just completely disables electronics. Modifying discharge rates adds unnecessary complexity to the energy simulation.*
-- *Architect: No, batteries just drain faster because the Net is lower. The 1.5x demand handles it.*
+  *Architect:* Yes, exposed batteries discharge at 200% the normal rate during a magnetic storm.

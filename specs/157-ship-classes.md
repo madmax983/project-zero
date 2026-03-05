@@ -230,12 +230,6 @@ The `launch_system` will then:
 ## 8. Questions
 
 -   *Builder: Do ships have individual fuel?*
-*Architect:* Yes, each ship tracks its own `FuelStorage` component. Fleet movement speed and range are bottlenecked by the ship with the lowest current fuel capacity.
-    *Architect: Yes, each ship should track its own fuel reserves, though fleets can share fuel internally when grouped.*
-    *Architect: Yes, each ship has its own fuel capacity and consumption rate based on class and modules.*
-    -   *Architect:* No, `Fleet` has a shared fuel tank (`FleetCargo` containing `Fuel`).
+  *Architect:* Yes, each ship maintains its own internal fuel storage tank.
 -   *Builder: Can I split a fleet?*
-*Architect:* Yes, you can split a fleet into two distinct entities at any non-combat orbital node, dividing ships and cargo accordingly.
-    *Architect: Yes, fleets can be split into smaller task forces on the system map.*
-    *Architect: Yes, fleets can be split or merged at any friendly node or in deep space if they meet.*
-    -   *Architect:* Not yet (Spec 158: Fleet Management).
+  *Architect:* Yes, fleets can be manually split into sub-fleets during non-combat phases.
