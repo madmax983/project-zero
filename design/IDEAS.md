@@ -7632,7 +7632,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Sentient Standard
+## The Sentient Standard [SPECCED]
 
 **Layer:** 3 -> 1
 
