@@ -753,8 +753,12 @@ pub fn scapegoat_chronicle_bridge(
     for event in events_in.read() {
         let text = match event.action {
             ScapegoatAction::Exile => "A scapegoat was exiled to appease the mob.".to_string(),
-            ScapegoatAction::PublicShame => "A scapegoat was publicly shamed to reduce unrest.".to_string(),
-            ScapegoatAction::Execute => "A scapegoat was executed to quell the uprising.".to_string(),
+            ScapegoatAction::PublicShame => {
+                "A scapegoat was publicly shamed to reduce unrest.".to_string()
+            }
+            ScapegoatAction::Execute => {
+                "A scapegoat was executed to quell the uprising.".to_string()
+            }
         };
 
         events_out.send(AddChronicleEvent {

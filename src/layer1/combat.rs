@@ -553,23 +553,31 @@ mod tests {
         use bevy_ecs::system::RunSystemOnce;
         let mut world = setup_world();
 
-        let entity = world.spawn(CombatState {
-            cooldown: 2,
-            ..Default::default()
-        }).id();
+        let entity = world
+            .spawn(CombatState {
+                cooldown: 2,
+                ..Default::default()
+            })
+            .id();
 
         // Tick 1
-        world.run_system_once(crate::layer1::combat::combat_cooldown_system).unwrap();
+        world
+            .run_system_once(crate::layer1::combat::combat_cooldown_system)
+            .unwrap();
         let state = world.get::<CombatState>(entity).unwrap();
         assert_eq!(state.cooldown, 1);
 
         // Tick 2
-        world.run_system_once(crate::layer1::combat::combat_cooldown_system).unwrap();
+        world
+            .run_system_once(crate::layer1::combat::combat_cooldown_system)
+            .unwrap();
         let state = world.get::<CombatState>(entity).unwrap();
         assert_eq!(state.cooldown, 0);
 
         // Tick 3 (Should not underflow)
-        world.run_system_once(crate::layer1::combat::combat_cooldown_system).unwrap();
+        world
+            .run_system_once(crate::layer1::combat::combat_cooldown_system)
+            .unwrap();
         let state = world.get::<CombatState>(entity).unwrap();
         assert_eq!(state.cooldown, 0);
     }
