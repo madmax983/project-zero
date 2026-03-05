@@ -7784,3 +7784,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Cold geopolitical strategy vs. Managing the raw emotional demands of your own people.
 
 ---
+
+## The Debt Collector
+
+**Layer:** Cross-layer
+
+**Fantasy:** The bill comes due. You thought you escaped the core worlds, but they haven't forgotten what you owe.
+
+**Mechanic:** A powerful Layer 3 faction occasionally sends a heavily armed "Auditor" ship to orbit. They demand a massive sum of credits or a specific rare resource as "back taxes." If you refuse, they don't attack your military; they precision-strike your luxury and social buildings, destroying morale and economy, or they abduct highly skilled pops as "collateral."
+
+**Emergence:** You are on the verge of a cultural golden age, but the Auditor arrives. You must choose between giving up your entire treasury or watching your beautiful art museums and taverns get vaporized from orbit, plunging the colony into a dark age of depression.
+
+**Tension:** Hoard wealth to pay the inevitable tax vs. invest it in defenses you might not be able to use against them.
+
+---
+
+## Xenological Pets
+
+**Layer:** 1
+
+**Fantasy:** Man's best friend, but with six legs and acid spit.
+
+**Mechanic:** Pops can tame small, non-hostile alien fauna to keep as "Pets". Pets follow the pop, providing a constant mood buff and occasionally fetching small items or warding off pests. However, pets have their own needs (specialized food) and lifespans. If a pet dies, the owner suffers a severe, long-lasting "Grief" penalty.
+
+**Emergence:** A beloved "Glow-Hound" dies of old age during a harsh winter. Its owner, your chief engineer, goes into a catatonic state of grief, leading to a cascade of maintenance failures that almost destroys the colony.
+
+**Tension:** The high baseline morale of pet ownership vs. the devastating risk of their inevitable death.
+
+---
+
+## Black Market Genemods
+
+**Layer:** 1
+
+**Fantasy:** Splicing your DNA in a dark alley to meet the quota.
+
+**Mechanic:** If medical facilities are low quality but demand for high-tier labor is high, a "Ripperdoc" might set up shop in a dark corner of the colony. Pops will secretly visit to get illegal, unstable genetic modifications (e.g., "Muscle Graft", "Wakefulness"). These grant massive temporary work speed buffs but eventually trigger horrifying "Mutational Meltdowns," turning the pop into a hostile, grotesque anomaly.
+
+**Emergence:** You turn a blind eye to the Ripperdoc because your mining output has tripled. But one day, a meltdown occurs in the middle of the crowded mess hall, and your best miner turns into a rampaging flesh-beast, slaughtering the very people they were working to feed.
+
+**Tension:** Short-term, incredible productivity vs. the ticking time bomb of horrific biological consequences.
+
+---
+
+## The Bureaucratic Strike
+
+**Layer:** 1
+
+**Fantasy:** The pen is mightier than the sword, and much more annoying.
+
+**Mechanic:** "Admin" pops (Clerks, Managers) don't riot by breaking things; they riot by maliciously complying with regulations. When their morale drops, they trigger a "Red Tape" event. All building designations, job reassignments, and trade deals take 10x longer to process. The colony doesn't burn; it grinds to a suffocating halt.
+
+**Emergence:** A pirate raid is inbound. You desperately try to reassign miners to the militia and designate new turrets. But the clerks are on a "work-to-rule" strike because you cut their coffee rations. The orders don't go through in time, and the pirates walk right in.
+
+**Tension:** Pandering to the non-productive administrative class vs. keeping the actual laborers happy.
+
+---
+
+## The Celestial Library
+
+**Layer:** Cross-layer (3 -> 1)
+
+**Fantasy:** A beacon of knowledge surrounded by the dark, dead void. A monastery for the universe.
+
+**Mechanic:** A massive, neutral orbital structure (Layer 2) that randomly appears in a star system. It offers profound, unique technological blueprints or ancient lore in exchange for massive "Donations" of specific Layer 1 resources or highly educated Pops (who never return).
+
+**Emergence:** You are losing a desperate war against a hive mind. The Library appears and demands half your population in exchange for a weapon blueprint that could save you. You give them up, get the blueprint, and win the war, but the colony is an empty ghost town of survivors who sacrificed their families for survival.
+
+**Tension:** The ethical cost of supreme knowledge vs. immediate survival.
+
+---
