@@ -201,3 +201,4 @@
 - [x] `257` Subspace Pen Pals — `specs/257-subspace-pen-pals.md` — completed 2025-02-12
 - [x] `INT-257` Integration: Subspace Pen Pals -> Factions & Resources — completed 2026-03-05
 - [x] `INT-224` Integration: DenounceEvent -> Chronicle — completed 2026-03-07
+- [x] `268` Subliminal Advertising — `specs/268-subliminal-advertising.md` — completed 2026-03-06
