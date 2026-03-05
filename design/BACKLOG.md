@@ -40,3 +40,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `287` The Silence — `specs/287-the-silence.md`
 - [ ] `288` The Memory Black Market — `specs/288-memory-black-market.md`
 - [ ] `289` The Mimetic Plague — `specs/289-mimetic-plague.md`
+- [ ] `290` The Phantom Shift — `specs/290-phantom-shift.md`
+- [ ] `291` The Neural Leech — `specs/291-neural-leech.md`
+- [ ] `292` The Chrono-Stutter — `specs/292-chrono-stutter.md`
+- [ ] `293` The Biosphere Empathy Link — `specs/293-biosphere-empathy-link.md`
