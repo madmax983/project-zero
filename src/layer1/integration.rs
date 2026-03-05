@@ -740,3 +740,26 @@ pub fn mega_quake_chronicle_bridge(
         });
     }
 }
+
+use crate::layer1::unrest::{DenounceEvent, ScapegoatAction};
+
+/// Bridges `DenounceEvent` to the `Chronicle` system.
+///
+/// Records the outcome of denouncing a scapegoat in the colony's history.
+pub fn scapegoat_chronicle_bridge(
+    mut events_in: EventReader<DenounceEvent>,
+    mut events_out: EventWriter<AddChronicleEvent>,
+) {
+    for event in events_in.read() {
+        let text = match event.action {
+            ScapegoatAction::Exile => "A scapegoat was exiled to appease the mob.".to_string(),
+            ScapegoatAction::PublicShame => "A scapegoat was publicly shamed to reduce unrest.".to_string(),
+            ScapegoatAction::Execute => "A scapegoat was executed to quell the uprising.".to_string(),
+        };
+
+        events_out.send(AddChronicleEvent {
+            text,
+            importance: EventImportance::Major,
+        });
+    }
+}
