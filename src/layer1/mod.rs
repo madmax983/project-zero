@@ -34,6 +34,7 @@
 pub mod access_control;
 /// Pop actions logic.
 pub mod actions;
+pub mod ad_screen;
 /// Bureaucratic Drag system (Spec 175).
 pub mod admin;
 /// AI Core system (Spec 148).
