@@ -2553,3 +2553,124 @@ BLUFF_CALLED:
     - DESTRUCTION (high)
 ```
 ```
+
+## Doppelganger Chaining
+
+```yaml
+DOPPELGANGER_SUSPECTED:
+  enables:
+    - INVESTIGATION_STARTED (high)
+    - PARANOIA_WAVE (high)
+  increases:
+    - UNREST (medium)
+    - ACCIDENT_RISK (low, distracted)
+
+DOPPELGANGER_REVEALED:
+  enables:
+    - FUNERAL_HELD (low, mixed feelings)
+    - SECURITY_SWEEP (high)
+  increases:
+    - FEAR (high)
+    - CAUTION (high)
+```
+
+## Hypno-Learning Chaining
+
+```yaml
+HYPNO_SESSION_COMPLETE:
+  enables:
+    - HYPNO_FOG_ONSET (always)
+    - MASTERY_ACHIEVED (high)
+  increases:
+    - KNOWLEDGE (high)
+    - FATIGUE (high)
+
+HYPNO_FOG_ONSET:
+  enables:
+    - MEDICAL_EMERGENCY (low, if severe)
+    - WORK_STOPPAGE (medium)
+  increases:
+    - CONFUSION (high)
+    - SLOW_WORK (high)
+```
+
+## Placebo Protocol Chaining
+
+```yaml
+PLACEBO_ADMINISTERED:
+  enables:
+    - MOOD_WAVE (high, temporary relief)
+    - DISTRUST_DISCOVERED (low, if trick fails)
+  increases:
+    - HOPE (medium)
+    - SUSPICION (low)
+```
+
+## Cultural Vandalism Chaining
+
+```yaml
+MONUMENT_DEFACED:
+  enables:
+    - PROTEST (high)
+    - CLEANUP_EFFORT (high)
+    - REPRISAL (medium)
+  increases:
+    - DIVISION (high)
+    - UNREST (maximum)
+```
+
+## Shadow Market Chaining
+
+```yaml
+SHADOW_TRADE_MADE:
+  enables:
+    - CONTRABAND_SEIZED (medium, if caught)
+    - ADDICTION_CRISIS (low, bad stims)
+  increases:
+    - WEALTH (medium)
+    - CORRUPTION (high)
+```
+
+## Great Works Chaining
+
+```yaml
+GREAT_WORK_STARTED:
+  enables:
+    - GREAT_WORK_FINISHED (eventually)
+    - RESOURCE_SHORTAGE (high)
+  increases:
+    - AMBITION (high)
+    - STRESS (medium)
+
+GREAT_WORK_FINISHED:
+  enables:
+    - CELEBRATION (always)
+    - LEGEND_BIRTH (high)
+  increases:
+    - MORALE (maximum)
+    - PRESTIGE (high)
+```
+
+## Harmonic Mining Chaining
+
+```yaml
+HARMONIC_DRILL_USED:
+  enables:
+    - NOISE_COMPLAINT (high)
+    - STRUCTURE_COLLAPSE (medium, if resonance hits glass)
+  increases:
+    - RESOURCE_YIELD (high)
+    - DANGER (medium)
+```
+
+## Thermal Glider Chaining
+
+```yaml
+GLIDER_FLIGHT:
+  enables:
+    - FAST_DELIVERY (high)
+    - STALL_CRASH (low, in cold zones)
+  increases:
+    - EFFICIENCY (medium)
+    - AWE (low)
+```

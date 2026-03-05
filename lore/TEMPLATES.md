@@ -2535,3 +2535,129 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "The enemy saw the [HOLO_ILLUSION]. [YEAR]. And [BLUFF_OUTCOME]."
 - "[YEAR]: The illusion of [HOLO_ILLUSION] is tested. Result: [BLUFF_OUTCOME]."
 - "They looked at our [HOLO_ILLUSION]. [BLUFF_OUTCOME]. [YEAR]."
+
+---
+
+## Template: DOPPELGANGER_SUSPECTED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME], [MIMIC_SUSPICION]
+
+**Patterns:**
+- "Whispers about [NAME]. [YEAR]. Someone said they [MIMIC_SUSPICION]."
+- "[YEAR]: Paranoia. [NAME] is acting strange. Last night they [MIMIC_SUSPICION]."
+- "We are watching [NAME]. [YEAR]. They [MIMIC_SUSPICION]. Are they still human?"
+
+## Template: DOPPELGANGER_REVEALED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME], [MIMIC_REVEAL]
+
+**Patterns:**
+- "It wasn't [NAME]. [YEAR]. The mimic was [MIMIC_REVEAL]."
+- "[YEAR]: The imposter is dead. [NAME] was a fake. It [MIMIC_REVEAL]."
+- "We killed the thing wearing [NAME]'s face. [YEAR]. It [MIMIC_REVEAL]."
+
+---
+
+## Template: HYPNO_SESSION_COMPLETE
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME], [HYPNO_SUBJECT]
+
+**Patterns:**
+- "[NAME] wakes from the pod. [YEAR]. They now know [HYPNO_SUBJECT]."
+- "[YEAR]: Instant mastery. [NAME] learned [HYPNO_SUBJECT] in a single sleep."
+- "The machine taught [NAME] [HYPNO_SUBJECT]. [YEAR]. Knowledge without time."
+
+## Template: HYPNO_FOG_ONSET
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME], [FOG_SYMPTOM]
+
+**Patterns:**
+- "[NAME] is wandering the halls. [YEAR]. A victim of the fog, [FOG_SYMPTOM]."
+- "[YEAR]: The price of quick learning. [NAME] is [FOG_SYMPTOM]."
+- "The pod took a toll. [NAME] is [FOG_SYMPTOM] today. [YEAR]."
+
+---
+
+## Template: PLACEBO_ADMINISTERED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME], [PLACEBO_NAME], [PLACEBO_EFFECT]
+
+**Patterns:**
+- "The doctor gave [NAME] [PLACEBO_NAME]. [YEAR]. They [PLACEBO_EFFECT]."
+- "[YEAR]: A trick of the mind. [NAME] took [PLACEBO_NAME] and [PLACEBO_EFFECT]."
+- "We cured the stress with a lie. [NAME] [PLACEBO_EFFECT] after the [PLACEBO_NAME]. [YEAR]."
+
+---
+
+## Template: MONUMENT_DEFACED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [ART_TYPE], [VANDALISM_ACT], [VANDAL_MESSAGE]
+
+**Patterns:**
+- "The [ART_TYPE] was [VANDALISM_ACT]. [YEAR]. The message: [VANDAL_MESSAGE]."
+- "[YEAR]: Anger in the streets. The [ART_TYPE] is [VANDALISM_ACT]. They say [VANDAL_MESSAGE]."
+- "Disrespect for the past. The [ART_TYPE] was [VANDALISM_ACT] tonight. [VANDAL_MESSAGE]. [YEAR]."
+
+---
+
+## Template: SHADOW_TRADE_MADE
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SHADOW_MERCHANT], [SHADOW_GOODS]
+
+**Patterns:**
+- "A deal in the dark. [YEAR]. [SHADOW_MERCHANT] sold us [SHADOW_GOODS]."
+- "[YEAR]: The lights were out. We bought [SHADOW_GOODS] from [SHADOW_MERCHANT]."
+- "Taxes avoided. The [SHADOW_MERCHANT] provided [SHADOW_GOODS]. [YEAR]."
+
+---
+
+## Template: GREAT_WORK_STARTED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [GREAT_WORK_NAME], [WORK_PHASE_DESC]
+
+**Patterns:**
+- "We lay the foundation for [GREAT_WORK_NAME]. [YEAR]. It will be [WORK_PHASE_DESC]."
+- "[YEAR]: The massive project begins. [GREAT_WORK_NAME]. [WORK_PHASE_DESC]."
+- "Ambition takes form. [GREAT_WORK_NAME] started at [COLONY]. [YEAR]."
+
+## Template: GREAT_WORK_FINISHED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [GREAT_WORK_NAME]
+
+**Patterns:**
+- "It is done. [GREAT_WORK_NAME] stands complete. [YEAR]."
+- "[YEAR]: A monumental achievement. The [GREAT_WORK_NAME] is operational."
+- "We have left our mark. [GREAT_WORK_NAME] is finished. [YEAR]."
+
+---
+
+## Template: HARMONIC_DRILL_USED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [FREQUENCY_DESC], [RESONANCE_TARGET]
+
+**Patterns:**
+- "The drill sings. [YEAR]. A [FREQUENCY_DESC] sound shatters the [RESONANCE_TARGET]."
+- "[YEAR]: Acoustic mining. The [FREQUENCY_DESC] wave turns [RESONANCE_TARGET] to dust."
+- "Breaking [RESONANCE_TARGET] with pure sound. [FREQUENCY_DESC]. [YEAR]."
+
+---
+
+## Template: GLIDER_FLIGHT
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [GLIDER_NAME], [GLIDER_MANEUVER]
+
+**Patterns:**
+- "The [GLIDER_NAME] takes to the air. [YEAR]. It [GLIDER_MANEUVER]."
+- "[YEAR]: Fast logistics. A [GLIDER_NAME] [GLIDER_MANEUVER] over the colony."
+- "Watching the [GLIDER_NAME] fly. [YEAR]. It [GLIDER_MANEUVER] perfectly."

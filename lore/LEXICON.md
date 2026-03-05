@@ -2649,3 +2649,145 @@
 **Replaces:** active deception
 **Usage:**
 - "We sold them a hard-light lie."
+
+---
+
+## Doppelgangers
+
+### the mimic / false-face
+**Replaces:** Doppelganger, shape-shifter
+**Code reference:** `Mimic` component
+**Usage:**
+- "A false-face in the mine."
+- "The mimic took his shape."
+
+### skin-shed
+**Replaces:** Reveal, discovery of mimic
+**Code reference:** `MimicState`
+**Usage:**
+- "Waiting for the skin-shed."
+
+---
+
+## Hypno-Learning
+
+### the pod / dream-school
+**Replaces:** Hypno-Learning Pod
+**Code reference:** `HypnoPod` building
+**Usage:**
+- "He is in the dream-school."
+- "The pod hums softly."
+
+### the fog / sleep-drunk
+**Replaces:** Mental Fog debuff
+**Code reference:** `MentalFog` component
+**Usage:**
+- "Waking up sleep-drunk."
+- "The fog makes him slow."
+
+---
+
+## Placebo Protocols
+
+### sugar-cure / fake-stim
+**Replaces:** Placebo treatment
+**Code reference:** `PlaceboProtocol`
+**Usage:**
+- "Prescribed the sugar-cure."
+- "A fake-stim for the panic."
+
+### the trick
+**Replaces:** Administering placebo
+**Code reference:** `ActivePlacebo`
+**Usage:**
+- "The trick worked."
+- "Don't tell them it's a trick."
+
+---
+
+## Cultural Vandalism
+
+### defaced / broken-stone
+**Replaces:** Vandalized status
+**Code reference:** `Vandalized` component
+**Usage:**
+- "The broken-stone tells a story."
+- "The statue was defaced overnight."
+
+### the smear
+**Replaces:** Act of vandalism
+**Usage:**
+- "Washing off the smear."
+- "The smear on our history."
+
+---
+
+## Shadow Markets
+
+### dark-trader / whisper-broker
+**Replaces:** Shadow Trader, black market merchant
+**Code reference:** `ShadowTrader` component
+**Usage:**
+- "The dark-trader is in the alley."
+- "Prices set by the whisper-broker."
+
+### the dark-exchange
+**Replaces:** Shadow trade deal
+**Code reference:** Trade executed under Light Level 0
+**Usage:**
+- "Making the dark-exchange."
+- "No taxes on the dark-exchange."
+
+---
+
+## Great Works
+
+### the Monument / the Sky-Piercer
+**Replaces:** Great Work building
+**Code reference:** `GreatWork` component
+**Usage:**
+- "The Monument takes shape."
+- "Building the Sky-Piercer."
+
+### the long-build
+**Replaces:** Construction phases
+**Code reference:** `ConstructionProgress` for Great Works
+**Usage:**
+- "We are in the long-build."
+- "Phase three of the long-build."
+
+---
+
+## Harmonic Mining
+
+### the singer / sonic-drill
+**Replaces:** Harmonic Drill
+**Code reference:** `HarmonicDrill` component
+**Usage:**
+- "The singer shatters the stone."
+- "Start the sonic-drill."
+
+### resonance
+**Replaces:** Frequency matching
+**Code reference:** `Frequency` comparison
+**Usage:**
+- "Finding the right resonance."
+- "The resonance is dangerous."
+
+---
+
+## Thermal Gliders
+
+### updraft-skiff / heat-rider
+**Replaces:** Thermal Glider
+**Code reference:** `ThermalGlider` component
+**Usage:**
+- "The heat-rider catches the wind."
+- "Loading the updraft-skiff."
+
+### the stall
+**Replaces:** Glider losing speed in cold
+**Code reference:** Glider movement penalty
+**Usage:**
+- "Caught in a cold stall."
+- "Avoid the shadow to prevent the stall."
