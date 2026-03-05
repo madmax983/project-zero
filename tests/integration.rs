@@ -159,3 +159,5 @@ mod hologram_failure;
 mod placebo_edicts;
 #[path = "integration/subspace_pen_pals.rs"]
 mod subspace_pen_pals;
+#[path = "integration/scapegoat_chronicle.rs"]
+mod scapegoat_chronicle;

@@ -288,3 +288,10 @@
     - Handled Policy checking (`FirewallComms`).
     - Handled Ethics shift mapping to `FactionMember` component.
 - **Tests:** `tests/integration/subspace_pen_pals.rs` (Integration test verified)
+
+### INT-224: Scapegoat Denouncement -> Chronicle
+- **Date:** 2026-03-07
+- **Systems connected:** `denounce_scapegoat_system` (Unrest) -> `AddChronicleEvent` (Chronicle)
+- **Glue added:**
+    - `scapegoat_chronicle_bridge` converts `DenounceEvent` to `AddChronicleEvent`.
+- **Tests:** `tests/integration/scapegoat_chronicle.rs` (Integration test verified)

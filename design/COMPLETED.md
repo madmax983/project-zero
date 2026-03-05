@@ -200,3 +200,4 @@
 - [x] `256` Placebo Protocols — `specs/256-placebo-protocols.md` — completed 2026-03-06
 - [x] `257` Subspace Pen Pals — `specs/257-subspace-pen-pals.md` — completed 2025-02-12
 - [x] `INT-257` Integration: Subspace Pen Pals -> Factions & Resources — completed 2026-03-05
+- [x] `INT-224` Integration: DenounceEvent -> Chronicle — completed 2026-03-07
