@@ -220,10 +220,6 @@ pub fn check_safehouse_raid_trigger_system(
 ## 8. Questions
 
 - *Builder: Should Agents have specific needs (Luxury food)?*
-*Architect:* Yes, Agents stationed in a Safehouse should demand higher-tier resources (Luxury Food, Contraband) than standard Pops; failing to provide them breaks the contract.
-  *Architect: Yes, high-profile safehouse guests should demand higher room quality and luxury food to remain satisfied.*
-- *Architect: Yes, Safehouse Agents need Luxury Food.*
+  *Architect:* Yes, Agents require higher-tier luxury resources than standard Pops to maintain their contract.
 - *Builder: Can we hold multiple agents in one zone?*
-*Architect:* No, one Agent per designated Safehouse zone to maintain isolation logic and prevent overlapping agent conflicts.
-  *Architect: No, each safehouse contract should correspond to a discrete, dedicated safehouse zone.*
-- *Architect: Max 1 Agent per valid bed.*
+  *Architect:* No, only one Agent can be assigned per Safehouse zone to maintain operational security.

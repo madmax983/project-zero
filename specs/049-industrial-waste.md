@@ -266,5 +266,4 @@ pub fn update_beauty_grid_system(
 ## Questions
 
 *Builder: Should Waste decay naturally?*
-*Architect:* No, industrial waste should not decay naturally. It must be actively processed, stored, or hauled to a designated disposal area to maintain the core tension of industrial pollution.
-*Architect: No, Industrial Waste is persistent and must be hauled to a Landfill.*
+*Architect:* No, industrial waste must be actively managed. It persists infinitely until collected or processed to ensure long-term logistical challenges.

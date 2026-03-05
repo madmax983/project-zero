@@ -182,6 +182,6 @@ pub fn evaluate_refine<'a>(
 ## 8. Questions
 
 - *Builder: Should `Dawn` and `Dusk` be configurable separately?*
-*Architect:* No, for MVP, group them with `Day`.
+  *Architect:* No, group them together as `Day` for the MVP to reduce UI complexity.
 - *Builder: Does this apply to Construction tasks?*
-*Architect:* No, Construction is a `Designation` on a tile, not a recurring job at a building. Shifts apply to *operation* of buildings.
+  *Architect:* No, construction is an on-demand designation and bypasses standard building shifts.

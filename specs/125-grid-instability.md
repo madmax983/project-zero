@@ -301,7 +301,4 @@ Update `src/layer1/building.rs`:
 ## Questions
 
 *Builder: How to visualize Overload?*
-*Architect:* Visualize overload through particle effects (sparks) on connected buildings and a red tint on the power overlay, plus an emergent `Warning` notification in the Chronicle if sustained.
-*Architect: A blinking visual indicator (e.g., red warning icon) on the overloaded building in the UI.*
-*Architect: In the TUI, overloaded buildings can flash red or display a specific "Overload" glyph. In a graphical renderer, they could spark or smoke.*
-*Architect: For MVP, console logs or Health bar dropping is enough. Visuals later.*
+*Architect:* Visualized with a pulsing red overlay on the building tile and an alert icon in the UI.

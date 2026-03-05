@@ -301,7 +301,4 @@ pub fn get_social_penalty(world: &World, pop: Entity) -> f32 {
 ## Questions
 
 *Builder: Should surgery require a Doctor pop to be present?*
-*Architect:* Yes, installing augmentations should use the Medical system, requiring a valid medical bed, a Doctor Pop, and carrying a risk of failure based on the Doctor's skill.
-*Architect: Yes, cybernetic installation is a complex medical procedure requiring a Pop with a high Medical skill to perform the surgery.*
-*Architect: Yes, applying augmentations requires a pop with the Medical skill to perform the action.*
-*Architect: For MVP, no. The Hospital building provides the "service". Future updates can require a Doctor job.*
+*Architect:* Yes, augmenting a Pop requires an active medical job to be fulfilled at the surgery station.

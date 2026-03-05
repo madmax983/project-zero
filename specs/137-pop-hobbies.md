@@ -250,5 +250,4 @@ pub fn execute_hobby_system(
 ## Questions
 
 *Builder: How do we handle "Gossip" hobby mechanically?*
-*Architect:* "Gossip" should function as a low-intensity social interaction during rest periods that slightly equalizes the morale between the two Pops and has a small chance to spawn a `Rumor` notification.
-*Architect: The 'Gossip' hobby is a solo action that reduces stress and triggers the spread of Rumors (Spec 055).*
+*Architect:* Pops engaged in Gossip form temporary social links and exchange small amounts of their highest/lowest trait values.

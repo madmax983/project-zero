@@ -243,6 +243,6 @@ pub fn inspect_pop(world: &mut World, pop_entity: Entity) {
 ## Questions
 
 - *Builder: Should pops consume their stash?*
-*Architect:* For now, no. They just hoard it. Future iteration could allow them to eat from it if starving.
+  *Architect:* No, private stashes represent hoarded wealth and are not actively consumed.
 - *Builder: Does this affect "Total" counts in UI?*
-*Architect:* Yes, because `ColonyResources` decreases. The UI shows "Available", not "Total Existing".
+  *Architect:* Yes, items in private stashes are subtracted from 'Available' but still appear in 'Total Owned'.

@@ -255,7 +255,4 @@ Register `ElectionManager` and systems in `src/layer1/mod.rs`.
 ## Questions
 
 - *Builder: What happens if there are no factions?*
-*Architect:* If no factions have formed yet, the Campaign Season event should simply fail to trigger or silently pass until the social criteria are met.
-  *Architect: If no factions exist, standard administrative candidates (or the current governor) run unopposed without special campaign promises.*
-*Architect: If no factions exist, standard independent pops will nominate themselves based on high Charisma or Social standing. If the population is too small (e.g., under 10), campaigns do not trigger.*
-  - *Architect: The current Governor stays, or a random "Independent" runs.*
+  *Architect:* The event silently passes or does not trigger until the colony has formed distinct political factions.

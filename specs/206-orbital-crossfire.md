@@ -263,7 +263,4 @@ pub fn impact_system(world: &mut World) {
 ## Questions
 
 *Builder: Should impact destroy Pops?*
-*Architect:* Yes, a direct impact on a tile containing a Pop should instantly kill them, appending a specific `OrbitalCasualty` event to the Chronicle.
-*Architect: Yes, a direct hit from orbital crossfire should instantly kill any Pops caught in the blast radius.*
-*Architect: Yes, direct hits from orbital debris or crossfire are lethal to unshielded pops.*
-*Architect: Yes, instant death if direct hit. High damage if adjacent.*
+*Architect:* Yes, any Pop caught directly in the impact zone of orbital crossfire should be instantly killed, ignoring standard health and injury checks.
