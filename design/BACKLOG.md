@@ -47,3 +47,8 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `297` The Factional Diet — `specs/297-factional-diet.md`
 - [ ] `298` The Nostalgia Engine — `specs/298-nostalgia-engine.md`
 - [ ] `299` Temporal Smuggling — `specs/299-temporal-smuggling.md`
+- [ ] `300` The Whisper Trade — `specs/300-whisper-trade.md`
+- [ ] `301` The Memory Tithe — `specs/301-memory-tithe.md`
+- [ ] `302` The Solar Sail Migration — `specs/302-solar-sail-migration.md`
+- [ ] `303` The Chrono-Vault — `specs/303-chrono-vault.md`
+- [ ] `304` The Bio-Loom — `specs/304-bio-loom.md`
