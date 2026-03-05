@@ -7,7 +7,6 @@
 
 See `design/IDEAS.md` for unspecced concepts.
 - [ ] `255` Hypno-Learning — `specs/255-hypno-learning.md`
-- [ ] `256` Placebo Protocols — `specs/256-placebo-protocols.md`
 - [ ] `257` Subspace Pen Pals — `specs/257-subspace-pen-pals.md`
 - [ ] `259` Harmonic Mining — `specs/259-harmonic-mining.md`
 - [ ] `260` The Industrial Rhythm — `specs/260-industrial-rhythm.md`

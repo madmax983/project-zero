@@ -1,0 +1,19 @@
+--- src/layer1/traits.rs
++++ src/layer1/traits.rs
+@@ -48,6 +48,8 @@
+     Transhumanist,
+     /// Noble scion, refuses manual labor but pays allowance (Spec 263).
+     Noble,
++    /// Distrusts colony authorities, ignores placebos (Spec 256).
++    Distrustful,
+ }
+
+ impl Trait {
+@@ -83,6 +85,7 @@
+             Self::Agoraphobic => "Agoraphobic",
+             Self::Transhumanist => "Transhumanist",
+             Self::Noble => "Noble",
++            Self::Distrustful => "Distrustful",
+         }
+     }
+ }

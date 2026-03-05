@@ -540,3 +540,4 @@ pub use pen_pals::*;
 /// The Cadet Branch (Spec 263).
 pub mod cadet;
 pub use cadet::*;
+pub mod placebo;
