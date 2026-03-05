@@ -386,6 +386,7 @@ pub fn get_status_line<'a>(
 ///     1.0,                // stability
 ///     None,               // season
 ///     None,               // solar_cycle
+///     0.0,                // risk pct
 /// );
 ///
 /// assert!(status.contains("Day 10"));
