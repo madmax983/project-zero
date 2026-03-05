@@ -157,7 +157,7 @@ mod shadow_market_trade;
 mod hologram_failure;
 #[path = "integration/placebo_edicts.rs"]
 mod placebo_edicts;
-#[path = "integration/subspace_pen_pals.rs"]
-mod subspace_pen_pals;
 #[path = "integration/scapegoat_chronicle.rs"]
 mod scapegoat_chronicle;
+#[path = "integration/subspace_pen_pals.rs"]
+mod subspace_pen_pals;

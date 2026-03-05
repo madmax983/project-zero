@@ -839,19 +839,42 @@ fn designate_at(world: &mut World, designation_type: DesignationType, x: i32, y:
 }
 
 fn print_designations(world: &mut World) {
-    println!("=== Active Designations ===");
+    println!("{}", "=== Active Designations ===".green().bold());
 
     let mut count = 0;
+    let mut table = Table::new();
+    table
+        .load_preset(UTF8_FULL)
+        .set_content_arrangement(ContentArrangement::Dynamic)
+        .set_header(vec![
+            Cell::new("Type").add_attribute(Attribute::Bold),
+            Cell::new("Pos").add_attribute(Attribute::Bold),
+        ]);
+
     for (pos, designation) in world.query::<(&GridPosition, &Designation)>().iter(world) {
-        println!(
-            "  {:?} at ({}, {})",
-            designation.designation_type, pos.x, pos.y
-        );
+        let type_str = format!("{:?}", designation.designation_type);
+        let type_cell = match designation.designation_type {
+            DesignationType::Mine => Cell::new(type_str).fg(Color::Yellow),
+            DesignationType::Demolish => Cell::new(type_str).fg(Color::Red),
+            DesignationType::Chop => Cell::new(type_str).fg(Color::Green),
+            DesignationType::Repair => Cell::new(type_str).fg(Color::Blue),
+            DesignationType::SetZone(_) => Cell::new(type_str).fg(Color::Magenta),
+            DesignationType::Tame => Cell::new(type_str).fg(Color::Cyan),
+            DesignationType::ClearFlora => Cell::new(type_str).fg(Color::Green),
+            DesignationType::JuryRig => Cell::new(type_str).fg(Color::Yellow),
+            DesignationType::Cannibalize => Cell::new(type_str).fg(Color::Red),
+            DesignationType::Destroy => Cell::new(type_str).fg(Color::Red),
+            DesignationType::CollectSample => Cell::new(type_str).fg(Color::Cyan),
+        };
+
+        table.add_row(vec![type_cell, Cell::new(format!("{},{}", pos.x, pos.y))]);
         count += 1;
     }
 
     if count == 0 {
         println!("  (none)");
+    } else {
+        println!("{table}");
     }
 }
 

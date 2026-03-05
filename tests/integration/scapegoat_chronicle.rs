@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 use scale::layer1::chronicle::{AddChronicleEvent, EventImportance};
-use scale::layer1::unrest::{DenounceEvent, ScapegoatAction};
 use scale::layer1::integration::scapegoat_chronicle_bridge;
+use scale::layer1::unrest::{DenounceEvent, ScapegoatAction};
 
 #[test]
 fn test_scapegoat_chronicle_bridge() {
@@ -28,9 +28,21 @@ fn test_scapegoat_chronicle_bridge() {
 
     let chronicle_events: Vec<&AddChronicleEvent> = reader.read(events).collect();
 
-    assert_eq!(chronicle_events.len(), 1, "Should have produced exactly one AddChronicleEvent");
+    assert_eq!(
+        chronicle_events.len(),
+        1,
+        "Should have produced exactly one AddChronicleEvent"
+    );
 
     let ev = chronicle_events[0];
-    assert_eq!(ev.importance, EventImportance::Major, "Event importance should be Major");
-    assert!(ev.text.contains("exiled"), "Text should mention exile. Got: {}", ev.text);
+    assert_eq!(
+        ev.importance,
+        EventImportance::Major,
+        "Event importance should be Major"
+    );
+    assert!(
+        ev.text.contains("exiled"),
+        "Text should mention exile. Got: {}",
+        ev.text
+    );
 }
