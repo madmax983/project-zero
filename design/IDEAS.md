@@ -7924,3 +7924,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Cheap diplomatic leverage vs. the constant, terrifying risk of discovery.
 
 ---
+
+## The Geothermal Heartbeat
+
+**Layer:** 1
+
+**Fantasy:** Building your colony around the unpredictable pulse of the planet's core.
+
+**Mechanic:** Geothermal vents provide massive, clean energy, but their output isn't constant; it "beats" on a slow cycle (e.g., high power for 3 days, low power for 2 days). Building near them risks "Lava Surges" during the high-power phase.
+
+**Emergence:** You hook your entire defense grid up to a geothermal vent. A raid hits during the "low power" phase, and the turrets barely function. You learn to sync your colony's heavy industry (like smelting) to the heartbeat.
+
+**Tension:** Consistent but low-yield solar/wind vs. Massive but cyclical and dangerous geothermal power.
+
+---
+
+## The Orbital Junkyard
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Living in the shadow of a forgotten interstellar war, dodging falling debris.
+
+**Mechanic:** A dense debris field orbits the planet. It periodically rains scrap onto Layer 1. The scrap can be harvested for advanced alloys, but larger chunks can crush buildings. The field also acts as a natural shield, damaging any Layer 2 ships that try to pass through it.
+
+**Emergence:** You intentionally build your base under the thickest part of the junkyard. It's a hazardous existence, constantly repairing roofs crushed by falling ship parts, but the advanced alloys let you build late-game tech early. You are also immune to orbital bombardment because the attackers' ships get shredded by the debris.
+
+**Tension:** High risk of random damage vs. Free advanced resources and natural orbital defense.
+
+---
+
+## The Stolen Fleet
+
+**Layer:** 3 -> 2
+
+**Fantasy:** A desperate mutiny that gifts you an armada, and a massive target on your back.
+
+**Mechanic:** A massive, advanced fleet from a neighboring Layer 3 empire mutinies and defects to your system (Layer 2). They pledge loyalty to you but demand a staggering amount of Food and Fuel to maintain the ships. Their former empire immediately declares a "Punitive War" against you.
+
+**Emergence:** You gladly accept the defectors. The fleet is incredibly powerful, but you realize your agricultural sector cannot feed fifty thousand new sailors. You have to strip-mine your own planet to buy food on the galactic market, starving your original colonists to keep the fleet operational to fight off the impending invasion.
+
+**Tension:** Unmatched instant military power vs. Crushing logistical upkeep and a guaranteed war.
+
+---
+
+## The Gravity Well Forge
+
+**Layer:** 2
+
+**Fantasy:** Forging the strongest metals in the universe using the crushing gravity of a gas giant.
+
+**Mechanic:** You can build specialized "Deep Forges" in the lower atmosphere of a Gas Giant. These forges use the extreme pressure to create "Hyper-Alloys", necessary for endgame ships and megastructures. However, operating them is incredibly dangerous; any maintenance failure or structural damage causes the forge (and its crew) to be instantly crushed by gravity.
+
+**Emergence:** You invest everything into a Deep Forge. It produces the Hyper-Alloys, but a minor cooling system failure isn't repaired in time. The forge implodes, taking your best engineers and your entire supply of the rare alloy with it.
+
+**Tension:** Access to endgame materials vs. The constant, catastrophic risk of operating in extreme gravity.
+
+---
+
+## The Subterranean Ocean
+
+**Layer:** 1
+
+**Fantasy:** Digging too deep and finding a world beneath the world, teeming with blind life.
+
+**Mechanic:** Beneath the rock layers lies a massive, pressurized ocean. Breaching it floods the lower levels of your mine with water. The ocean contains unique, blind flora and fauna (some hostile) and rare "Deep Pearls" (high-value trade goods).
+
+**Emergence:** You accidentally breach the ocean ceiling. The water rushes in, drowning your mining crew. Once the water level stabilizes, you realize the new "lake" in your basement is full of bioluminescent squid that your colonists find delicious, entirely shifting your colony's diet and culture from farming to deep-cave fishing.
+
+**Tension:** The risk of catastrophic flooding and unknown horrors vs. Access to a completely new biome and valuable resources.
+
+---
