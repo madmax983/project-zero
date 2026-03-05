@@ -15,6 +15,7 @@ pub(crate) use drafted::*;
 pub(crate) mod mental_break;
 pub(crate) use mental_break::*;
 pub(crate) mod shower;
+pub(crate) use shower::*;
 
 pub(crate) mod clean;
 pub(crate) use clean::*;
