@@ -87,6 +87,8 @@ The "Nova" feature (Oral Tradition) builds upon the base narrative system to cre
 
 **Usage:**
 
+> **Run with:** `cargo run --features nova`
+
 ```rust
 // In Cargo.toml: scale = { version = "...", features = ["nova"] }
 

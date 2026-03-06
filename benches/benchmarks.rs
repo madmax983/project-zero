@@ -6,7 +6,8 @@
     clippy::unnecessary_cast
 )]
 
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use std::hint::black_box;
+use criterion::{ criterion_group, criterion_main, Criterion};
 use ratatui::prelude::{Color, Rect};
 use scale::layer1::building::{BuildingMap, OccupiedTiles};
 use scale::layer1::pathfinding::find_path;
@@ -34,7 +35,7 @@ fn benchmark_pathfinding(c: &mut Criterion) {
 
     // Test case 1: Short path on small map
     let world_small = setup_pathfinding_world(100, 100);
-    group.bench_function("path_100x100_short", |b| {
+    group.bench_function("path_100x100_short", |b: &mut criterion::Bencher| {
         b.iter(|| {
             find_path(
                 black_box(&world_small),
@@ -45,7 +46,7 @@ fn benchmark_pathfinding(c: &mut Criterion) {
     });
 
     // Test case 2: Long path on small map
-    group.bench_function("path_100x100_long", |b| {
+    group.bench_function("path_100x100_long", |b: &mut criterion::Bencher| {
         b.iter(|| {
             find_path(
                 black_box(&world_small),
@@ -66,7 +67,7 @@ fn benchmark_pathfinding(c: &mut Criterion) {
         }
     }
     // Try to go from (0,0) to (45, 25) - blocked
-    group.bench_function("path_50x50_blocked", |b| {
+    group.bench_function("path_50x50_blocked", |b: &mut criterion::Bencher| {
         b.iter(|| {
             find_path(
                 black_box(&world_blocked),
@@ -107,7 +108,7 @@ fn benchmark_rendering_buildings(c: &mut Criterion) {
         );
     }
 
-    c.bench_function("render_map_layer_1000_buildings", |b| {
+    c.bench_function("render_map_layer_1000_buildings", |b: &mut criterion::Bencher| {
         b.iter(|| {
             let ctx = MapRenderContext {
                 area: black_box(area),
@@ -154,7 +155,7 @@ fn benchmark_rendering(c: &mut Criterion) {
         );
     }
 
-    c.bench_function("render_map_layer_1000_pops", |b| {
+    c.bench_function("render_map_layer_1000_pops", |b: &mut criterion::Bencher| {
         b.iter(|| {
             let ctx = MapRenderContext {
                 area: black_box(area),
@@ -259,7 +260,7 @@ fn make_bench_world(n_pops: usize, n_buildings: usize, gpu_ctx: Option<GpuContex
             Needs {
                 hunger,
                 rest,
-                leisure,
+                leisure, hygiene: 50.0,
             },
             UtilityWeights::default(),
             PopAction {
@@ -301,7 +302,7 @@ fn benchmark_utility_ai(c: &mut Criterion) {
         };
 
         // CPU benchmark
-        group.bench_function(format!("cpu_{label}_pops"), |b| {
+        group.bench_function(format!("cpu_{label}_pops"), |b: &mut criterion::Bencher| {
             let mut world = make_bench_world(n_pops, n_buildings, None);
             b.iter(|| {
                 evaluate_actions_system(black_box(&mut world));
@@ -310,7 +311,7 @@ fn benchmark_utility_ai(c: &mut Criterion) {
 
         // GPU benchmark (only if GPU is available)
         if gpu_available {
-            group.bench_function(format!("gpu_{label}_pops"), |b| {
+            group.bench_function(format!("gpu_{label}_pops"), |b: &mut criterion::Bencher| {
                 let ctx = pollster::block_on(GpuContext::new()).unwrap();
                 let mut world = make_bench_world(n_pops, n_buildings, Some(ctx));
                 b.iter(|| {
