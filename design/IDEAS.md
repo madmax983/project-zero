@@ -1000,7 +1000,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Schism
+## The Schism [SPECCED]
 
 **Layer:** 1
 
@@ -1014,7 +1014,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Heirloom Seeds
+## Heirloom Seeds [SPECCED]
 
 **Layer:** 1
 
@@ -1028,7 +1028,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Comms Relay
+## Comms Relay [SPECCED]
 
 **Layer:** 2
 
@@ -1042,7 +1042,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Launch Windows
+## Launch Windows [SPECCED]
 
 **Layer:** 2
 
@@ -1056,7 +1056,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Great Filter
+## The Great Filter [SPECCED]
 
 **Layer:** 3
 
