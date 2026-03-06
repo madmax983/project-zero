@@ -15,6 +15,8 @@ pub fn register(schedule: &mut Schedule) {
             cleanup_previous_assignment_system.after(assign_sleepwalk_target_system),
             crate::layer1::customs::immigration_interception_system
                 .after(cleanup_previous_assignment_system),
+            crate::layer1::tech::rhythm::update_rhythm_system
+                .after(cleanup_previous_assignment_system),
             handle_possession.before(process_start_plan_system),
             apply_buffs.after(handle_possession),
             process_start_plan_system
