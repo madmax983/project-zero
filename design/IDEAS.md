@@ -8134,3 +8134,72 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Unmatched technological leaps vs. unpredictable, devastating automated reprisals.
 
 ---
+## The Hive Mind Resurgence
+
+**Layer:** Cross-layer (3 -> 1)
+
+**Fantasy:** A forgotten biological weapon wakes up.
+
+**Mechanic:** A dormant hive mind spore (Layer 3 anomaly) infects a colony via trade or exploration. Infected Pops act normally but secretly spread the spore and sabotage defenses. Once critical mass is reached, they rebel and mutate into a coordinated, horrifying sub-faction.
+
+**Emergence:** You notice your industrial output rising mysteriously (infected work harder), only to realize it's because they are building breeding pits in the lower levels. You try to purge them, but they've already infected the militia commander.
+
+**Tension:** The immediate efficiency of the infected vs. the inevitable, devastating rebellion.
+
+---
+
+## Stellar Megastructure Decay
+
+**Layer:** 2
+
+**Fantasy:** Living in the ruins of gods.
+
+**Mechanic:** You find an ancient Dyson Sphere or Ringworld. It provides immense resources but is structurally failing. "Decay Events" happen randomly—massive sections collapse, venting atmosphere or dropping debris onto your Layer 1 colonies beneath it.
+
+**Emergence:** You build your capital inside a Ringworld segment for the incredible energy output. A solar flare triggers a decay event, collapsing the ceiling of your capital and crushing half your population.
+
+**Tension:** Utilizing god-like technology vs. the unpredictable, apocalyptic maintenance failures.
+
+---
+
+## The Void Nomad Fleet
+
+**Layer:** 2 -> 1
+
+**Fantasy:** A city that never stops moving.
+
+**Mechanic:** A massive, self-sustaining fleet of ancient ships travels through the galaxy. They are peaceful but strip-mine asteroids and moons in their path. You can trade with them, but if they enter your system, they might consume resources you needed.
+
+**Emergence:** The Nomad Fleet enters your system during a crucial war. You try to attack them to protect your asteroid mines, only to discover their seemingly ramshackle ships possess overwhelming, ancient weaponry.
+
+**Tension:** Beneficial trade opportunities vs. inevitable resource depletion.
+
+---
+
+## Psionic Awakening
+
+**Layer:** 1
+
+**Fantasy:** Mind over matter, with terrible consequences.
+
+**Mechanic:** Random Pops develop "Psionic Potential." They can perform tasks from a distance or soothe angry Pops. However, using these powers strains their "Sanity." Low sanity causes them to manifest psychic anomalies (fires, telekinetic outbursts) or go violently insane.
+
+**Emergence:** Your best doctor awakens as a psion and heals the entire colony during a plague without leaving their room. The strain breaks their mind, and they start setting the hospital on fire with their thoughts.
+
+**Tension:** Powerful, unique abilities vs. managing the fragile mental state of the gifted.
+
+---
+
+## Planetary Core Tapping
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Infinite energy at the cost of the world.
+
+**Mechanic:** You build a massive "Core Drill" that taps into the planet's mantle for limitless geothermal energy. This slowly destabilizes the planet's core, increasing the frequency of earthquakes, volcanic eruptions, and eventually, planetary destruction.
+
+**Emergence:** You tap the core to power your orbital defenses and win a decisive battle. The resulting tectonic shift destroys your primary agricultural zone, trading a military victory for slow starvation.
+
+**Tension:** Absolute energy supremacy vs. the literal ticking clock of the planet's lifespan.
+
+---
