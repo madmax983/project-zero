@@ -82,3 +82,8 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `333` The Old Guard — `specs/333-the-old-guard.md`
 - [ ] `334` The Curio Trade — `specs/334-the-curio-trade.md`
 - [ ] `335` Orbital Shadow — `specs/335-orbital-shadow.md`
+- [ ] `336` Material Provenance — `specs/336-material-provenance.md`
+- [ ] `337` Symbiotic Pests — `specs/337-symbiotic-pests.md`
+- [ ] `338` Structural Integrity — `specs/338-structural-integrity.md`
+- [ ] `339` Mentorship — `specs/339-mentorship.md`
+- [ ] `340` Light & Darkness — `specs/340-light-and-darkness.md`
