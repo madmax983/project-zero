@@ -1,5 +1,5 @@
 use crate::layer1::map::GridPosition;
-use crate::layer1::morale::{MoodModifier, Morale};
+use crate::layer1::needs::Needs;
 use bevy_ecs::prelude::*;
 
 /// Component to prevent contagion spam from a single source.
@@ -12,26 +12,27 @@ pub struct ContagionCooldown {
 const CONTAGION_RANGE: i32 = 5;
 const CONTAGION_COOLDOWN: u32 = 200;
 const LOW_MORALE_THRESHOLD: f32 = 0.2;
-const HIGH_MORALE_THRESHOLD: f32 = 0.9;
+const HIGH_MORALE_THRESHOLD: f32 = 0.8;
 
-/// System to spread strong emotions (Joy/Breakdown) to nearby pops.
+/// System to spread strong emotions (Joy/Terror) to nearby pops.
 pub fn emotional_contagion_system(
-    mut _commands: Commands,
-    mut pops: Query<(Entity, &GridPosition, &mut Morale, &mut ContagionCooldown)>,
+    mut pops: Query<(Entity, &GridPosition, &mut Needs, &mut ContagionCooldown)>,
 ) {
     // 1. Identify Sources
     let mut sources = Vec::new();
-    for (entity, pos, morale, mut cooldown) in &mut pops {
+    for (entity, pos, needs, mut cooldown) in &mut pops {
         if cooldown.timer > 0 {
             cooldown.timer -= 1;
             continue;
         }
 
-        if morale.value <= LOW_MORALE_THRESHOLD {
-            sources.push((entity, *pos, "Witnessed Breakdown", -0.05));
+        let morale = needs.morale();
+
+        if morale <= LOW_MORALE_THRESHOLD {
+            sources.push((entity, *pos, -0.05));
             cooldown.timer = CONTAGION_COOLDOWN;
-        } else if morale.value >= HIGH_MORALE_THRESHOLD {
-            sources.push((entity, *pos, "Witnessed Joy", 0.05));
+        } else if morale >= HIGH_MORALE_THRESHOLD {
+            sources.push((entity, *pos, 0.05));
             cooldown.timer = CONTAGION_COOLDOWN;
         }
     }
@@ -41,8 +42,8 @@ pub fn emotional_contagion_system(
     }
 
     // 2. Apply to Targets
-    for (target_entity, target_pos, mut morale, _) in &mut pops {
-        for (source_entity, source_pos, label, value) in &sources {
+    for (target_entity, target_pos, mut needs, _) in &mut pops {
+        for (source_entity, source_pos, value) in &sources {
             if *source_entity == target_entity {
                 continue;
             }
@@ -53,11 +54,7 @@ pub fn emotional_contagion_system(
                 .max((target_pos.y - source_pos.y).abs());
 
             if dist <= CONTAGION_RANGE {
-                morale.modifiers.push(MoodModifier {
-                    label: label.to_string(),
-                    value: *value,
-                    duration: 100, // Short duration
-                });
+                needs.leisure = (needs.leisure + *value).clamp(0.0, 1.0);
             }
         }
     }
@@ -65,153 +62,150 @@ pub fn emotional_contagion_system(
 
 #[cfg(test)]
 mod tests {
-    use crate::layer1::contagion::{emotional_contagion_system, ContagionCooldown};
+    use super::*;
     use crate::layer1::map::GridPosition;
-    use crate::layer1::morale::Morale;
-    use bevy_ecs::schedule::Schedule;
-    use bevy_ecs::world::World;
+    use crate::layer1::needs::Needs;
+    use crate::layer1::pop::Pop;
+    use bevy_ecs::system::RunSystemOnce;
 
     #[test]
-    fn test_contagion_spreads_negative_mood() {
+    fn test_emotional_contagion_spreads_joy() {
+        // Arrange
         let mut world = World::new();
-
-        // 1. Create Source Pop (Low Morale)
-        let _source = world
+        let _happy_pop = world
             .spawn((
-                GridPosition { x: 10, y: 10 },
-                Morale {
-                    value: 0.1,
-                    modifiers: vec![],
-                }, // Very Low
+                Pop,
+                Needs {
+                    leisure: 1.0,
+                    rest: 1.0,
+                    hunger: 1.0,
+                    hygiene: 1.0,
+                },
+                GridPosition { x: 0, y: 0 },
+                ContagionCooldown::default(),
+            ))
+            .id();
+        let neutral_pop = world
+            .spawn((
+                Pop,
+                Needs {
+                    leisure: 0.5,
+                    rest: 0.5,
+                    hunger: 0.5,
+                    hygiene: 0.5,
+                },
+                GridPosition { x: 1, y: 0 },
                 ContagionCooldown::default(),
             ))
             .id();
 
-        // 2. Create Target Pop (Neutral Morale, nearby)
-        let target = world
-            .spawn((
-                GridPosition { x: 11, y: 10 }, // Adjacent
-                Morale {
-                    value: 0.5,
-                    modifiers: vec![],
-                }, // Neutral
-                ContagionCooldown::default(),
-            ))
-            .id();
+        // Act
+        world.run_system_once(emotional_contagion_system).unwrap();
 
-        // 3. Run System
-        let mut schedule = Schedule::default();
-        schedule.add_systems(emotional_contagion_system);
-        schedule.run(&mut world);
-
-        // 4. Assert Target received negative modifier
-        let target_morale = world.get::<Morale>(target).unwrap();
+        // Assert
+        let needs = world.get::<Needs>(neutral_pop).unwrap();
         assert!(
-            target_morale
-                .modifiers
-                .iter()
-                .any(|m| m.label == "Witnessed Breakdown"),
-            "Target should have 'Witnessed Breakdown' modifier"
+            needs.leisure > 0.5,
+            "Neutral pop should gain leisure from nearby happy pop"
         );
     }
 
     #[test]
-    fn test_contagion_spreads_positive_mood() {
+    fn test_emotional_contagion_spreads_terror() {
+        // Arrange
         let mut world = World::new();
-
-        // 1. Create Source Pop (High Morale)
-        let _source = world
+        let _terrified_pop = world
             .spawn((
-                GridPosition { x: 10, y: 10 },
-                Morale {
-                    value: 0.95,
-                    modifiers: vec![],
-                }, // Very High
-                ContagionCooldown::default(),
-            ))
-            .id();
-
-        // 2. Create Target Pop (Neutral Morale, nearby)
-        let target = world
-            .spawn((
-                GridPosition { x: 11, y: 11 }, // Diagonal
-                Morale {
-                    value: 0.5,
-                    modifiers: vec![],
+                Pop,
+                Needs {
+                    rest: 0.1,
+                    leisure: 0.1,
+                    hunger: 0.1,
+                    hygiene: 0.1,
                 },
+                GridPosition { x: 0, y: 0 },
+                ContagionCooldown::default(),
+            ))
+            .id();
+        let neutral_pop = world
+            .spawn((
+                Pop,
+                Needs {
+                    rest: 0.8,
+                    leisure: 0.8,
+                    hunger: 0.8,
+                    hygiene: 0.8,
+                },
+                GridPosition { x: 1, y: 0 },
                 ContagionCooldown::default(),
             ))
             .id();
 
-        // 3. Run System
-        let mut schedule = Schedule::default();
-        schedule.add_systems(emotional_contagion_system);
-        schedule.run(&mut world);
+        // Act
+        world.run_system_once(emotional_contagion_system).unwrap();
 
-        // 4. Assert Target received positive modifier
-        let target_morale = world.get::<Morale>(target).unwrap();
+        // Assert
+        let needs = world.get::<Needs>(neutral_pop).unwrap();
         assert!(
-            target_morale
-                .modifiers
-                .iter()
-                .any(|m| m.label == "Witnessed Joy"),
-            "Target should have 'Witnessed Joy' modifier"
+            needs.leisure < 0.8,
+            "Neutral pop should lose leisure from nearby terrified pop"
         );
     }
 
     #[test]
-    fn test_contagion_range_limit() {
+    fn test_emotional_contagion_range_limit() {
+        // Arrange
         let mut world = World::new();
-
-        // Source
-        let _source = world
+        let _happy_pop = world
             .spawn((
+                Pop,
+                Needs {
+                    leisure: 1.0,
+                    rest: 1.0,
+                    hunger: 1.0,
+                    hygiene: 1.0,
+                },
+                GridPosition { x: 0, y: 0 },
+                ContagionCooldown::default(),
+            ))
+            .id();
+        let far_pop = world
+            .spawn((
+                Pop,
+                Needs {
+                    leisure: 0.5,
+                    rest: 0.5,
+                    hunger: 0.5,
+                    hygiene: 0.5,
+                },
                 GridPosition { x: 10, y: 10 },
-                Morale {
-                    value: 0.05,
-                    modifiers: vec![],
-                },
                 ContagionCooldown::default(),
             ))
             .id();
 
-        // Distant Target (Outside range, e.g., range is 5)
-        let distant_target = world
-            .spawn((
-                GridPosition { x: 20, y: 20 },
-                Morale {
-                    value: 0.5,
-                    modifiers: vec![],
-                },
-                ContagionCooldown::default(),
-            ))
-            .id();
+        // Act
+        world.run_system_once(emotional_contagion_system).unwrap();
 
-        // Run System
-        let mut schedule = Schedule::default();
-        schedule.add_systems(emotional_contagion_system);
-        schedule.run(&mut world);
-
-        // Assert NO modifier
-        let target_morale = world.get::<Morale>(distant_target).unwrap();
-        assert!(
-            target_morale.modifiers.is_empty(),
-            "Distant target should not be affected"
-        );
+        // Assert
+        let needs = world.get::<Needs>(far_pop).unwrap();
+        assert_eq!(needs.leisure, 0.5, "Far pop should be unaffected");
     }
 
     #[test]
     fn test_contagion_cooldown() {
         let mut world = World::new();
 
-        // Source
+        // Source pop on cooldown
         let _source = world
             .spawn((
-                GridPosition { x: 10, y: 10 },
-                Morale {
-                    value: 0.05,
-                    modifiers: vec![],
+                Pop,
+                Needs {
+                    leisure: 0.1,
+                    rest: 0.1,
+                    hunger: 0.1,
+                    hygiene: 0.1,
                 },
+                GridPosition { x: 0, y: 0 },
                 ContagionCooldown { timer: 100 }, // Recently triggered
             ))
             .id();
@@ -219,24 +213,25 @@ mod tests {
         // Target
         let target = world
             .spawn((
-                GridPosition { x: 11, y: 10 },
-                Morale {
-                    value: 0.5,
-                    modifiers: vec![],
+                Pop,
+                Needs {
+                    leisure: 0.5,
+                    rest: 0.5,
+                    hunger: 0.5,
+                    hygiene: 0.5,
                 },
+                GridPosition { x: 1, y: 0 },
                 ContagionCooldown::default(),
             ))
             .id();
 
-        // Run System
-        let mut schedule = Schedule::default();
-        schedule.add_systems(emotional_contagion_system);
-        schedule.run(&mut world);
+        // Act
+        world.run_system_once(emotional_contagion_system).unwrap();
 
         // Assert NO modifier (Source on cooldown)
-        let target_morale = world.get::<Morale>(target).unwrap();
-        assert!(
-            target_morale.modifiers.is_empty(),
+        let needs = world.get::<Needs>(target).unwrap();
+        assert_eq!(
+            needs.leisure, 0.5,
             "Source on cooldown should not spread emotion"
         );
     }
