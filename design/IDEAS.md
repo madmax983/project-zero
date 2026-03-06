@@ -454,7 +454,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Material Provenance
+## Material Provenance [SPECCED]
 
 **Layer:** 1
 
@@ -482,7 +482,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Symbiotic Pests
+## Symbiotic Pests [SPECCED]
 
 **Layer:** 1
 
@@ -566,7 +566,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Structural Integrity
+## Structural Integrity [SPECCED]
 
 **Layer:** 1
 
@@ -580,7 +580,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Mentorship
+## Mentorship [SPECCED]
 
 **Layer:** 1
 
@@ -594,7 +594,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Light & Darkness
+## Light & Darkness [SPECCED]
 
 **Layer:** 1
 
