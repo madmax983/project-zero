@@ -99,3 +99,8 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `353` Alien Domestication — `specs/353-alien-domestication.md`
 - [ ] `354` Industrial Byproducts — `specs/354-industrial-byproducts.md`
 - [ ] `355` Generational Knowledge — `specs/355-generational-knowledge.md`
+- [ ] `356` Orbital Crossfire — `specs/356-orbital-crossfire.md`
+- [ ] `357` Graffiti & Signage — `specs/357-graffiti-and-signage.md`
+- [ ] `358` Stress Breakdowns — `specs/358-stress-breakdowns.md`
+- [ ] `359` Shift Work — `specs/359-shift-work.md`
+- [ ] `360` Resource Capacities — `specs/360-resource-capacities.md`
