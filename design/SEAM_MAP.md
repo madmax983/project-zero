@@ -295,3 +295,10 @@
 - **Glue added:**
     - `scapegoat_chronicle_bridge` converts `DenounceEvent` to `AddChronicleEvent`.
 - **Tests:** `tests/integration/scapegoat_chronicle.rs` (Integration test verified)
+
+### INT-260: Industrial Rhythm -> Pop Morale
+- **Date:** 2026-03-08
+- **Systems connected:** `update_rhythm_system` (Industrial Rhythm) -> `industrial_rhythm_morale_bridge` (Integration) -> `Morale` (Pop)
+- **Glue added:**
+    - `industrial_rhythm_morale_bridge` converts `MachineRhythm` with sync bonus to a `MoodModifier` applied to nearby `Pop`s' `Morale`.
+- **Tests:** `tests/integration/industrial_rhythm.rs`

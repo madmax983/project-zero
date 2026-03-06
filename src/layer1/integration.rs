@@ -767,3 +767,60 @@ pub fn scapegoat_chronicle_bridge(
         });
     }
 }
+
+/// INT-260: Bridges Industrial Rhythm system (Spec 260) to Pop Morale system (Spec 031).
+///
+/// When adjacent machines finish their cycles synchronously, they generate a `last_sync_bonus`.
+/// This system queries machines with an active bonus and applies a `MoodModifier` to nearby Pops
+/// to represent the satisfying "thrum of efficiency", boosting their morale.
+pub fn industrial_rhythm_morale_bridge(
+    machines: Query<(
+        &crate::layer1::tech::rhythm::MachineRhythm,
+        &crate::layer1::map::GridPosition,
+    )>,
+    mut pops: Query<
+        (
+            &mut crate::layer1::morale::Morale,
+            &crate::layer1::map::GridPosition,
+        ),
+        With<crate::layer1::pop::Pop>,
+    >,
+) {
+    // Collect active rhythms and their positions
+    let active_rhythms: Vec<(f32, crate::layer1::map::GridPosition)> = machines
+        .iter()
+        .filter_map(|(rhythm, pos)| {
+            if rhythm.last_sync_bonus > 0.0 {
+                Some((rhythm.last_sync_bonus, *pos))
+            } else {
+                None
+            }
+        })
+        .collect();
+
+    if active_rhythms.is_empty() {
+        return;
+    }
+
+    // Apply mood modifier to nearby pops
+    for (mut morale, pop_pos) in pops.iter_mut() {
+        for (bonus, machine_pos) in &active_rhythms {
+            if pop_pos.distance_chebyshev(*machine_pos) <= 3 {
+                // Determine a scaled bonus value for morale (max around +0.1 for 10.0 bonus)
+                let morale_bonus = (*bonus * 0.01).clamp(0.01, 0.15);
+
+                // Add the modifier
+                morale.add_modifier(crate::layer1::morale::MoodModifier {
+                    label: "Industrial Rhythm".to_string(),
+                    value: morale_bonus,
+                    duration: 100, // Lingers for 100 ticks
+                });
+
+                // Once applied for one machine in range, we can break to avoid
+                // stacking multiple identical bonuses from a large cluster in a single tick.
+                // Or we could let it stack. Breaking here to be safe and match a single "thrum" experience.
+                break;
+            }
+        }
+    }
+}

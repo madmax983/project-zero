@@ -151,6 +151,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::quantum_twins::handle_severance_system
                 .after(crate::layer1::pop::handle_pop_death_system),
             crate::layer1::ad_screen::update_ad_screens_system,
+            crate::layer1::integration::industrial_rhythm_morale_bridge,
         )
             .in_set(Layer1SystemSet::Observation),
     );

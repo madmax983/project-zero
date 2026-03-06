@@ -161,3 +161,6 @@ mod placebo_edicts;
 mod scapegoat_chronicle;
 #[path = "integration/subspace_pen_pals.rs"]
 mod subspace_pen_pals;
+
+#[path = "integration/industrial_rhythm.rs"]
+mod industrial_rhythm;
