@@ -314,7 +314,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Orbital Crossfire
+## Orbital Crossfire [SPECCED]
 
 **Layer:** 3 -> 1
 
@@ -468,7 +468,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Graffiti & Signage
+## Graffiti & Signage [SPECCED]
 
 **Layer:** 1
 
@@ -496,7 +496,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Stress Breakdowns
+## Stress Breakdowns [SPECCED]
 
 **Layer:** 1
 
@@ -524,7 +524,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Shift Work
+## Shift Work [SPECCED]
 
 **Layer:** 1
 
@@ -552,7 +552,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Resource Capacities
+## Resource Capacities [SPECCED]
 
 **Layer:** 1
 
