@@ -124,4 +124,58 @@ mod tests {
 
         assert_eq!(fog.movement_penalty, 0.5);
     }
+
+    #[test]
+    fn test_hypno_sleep_children_gain_volatile_not_xp() {
+        use crate::layer1::lifecycle::{Age, LifeStage};
+        use crate::layer1::traits::{Trait, Traits};
+
+        let mut world = World::new();
+        // Spawn HypnoPod
+        let pod = world
+            .spawn(HypnoPod {
+                target_skill: SkillType::Mining,
+                xp_rate: 10.0,
+            })
+            .id();
+
+        // Spawn Child Pop sleeping in the pod
+        let pop = world
+            .spawn((
+                Pop,
+                Skills::default(),
+                Needs::default(),
+                Age {
+                    ticks_alive: 10,
+                    stage: LifeStage::Child,
+                },
+                PopAction {
+                    current: ActionType::SatisfyRest,
+                    ..Default::default()
+                },
+                AssignedTo {
+                    entity: pod,
+                    assignment_type: AssignmentType::HousingResident,
+                },
+            ))
+            .id();
+
+        // Run system
+        let mut schedule = Schedule::default();
+        schedule.add_systems(hypno_sleep_system);
+        schedule.run(&mut world);
+
+        // Verify NO XP gain
+        let skills = world.get::<Skills>(pop).unwrap();
+        let mining_xp = skills.get_xp(SkillType::Mining);
+        assert_eq!(mining_xp, 0.0, "Child should not gain XP in HypnoPod");
+
+        // Verify Trait::Volatile is added
+        let traits = world.get::<Traits>(pop);
+        assert!(traits.is_some(), "Child should have Traits component added");
+        assert!(
+            traits.unwrap().0.contains(&Trait::Volatile),
+            "Child should gain Volatile trait"
+        );
+    }
 }

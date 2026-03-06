@@ -33,15 +33,43 @@ pub struct SleepingInHypnoPod;
 
 pub fn hypno_sleep_system(
     mut commands: Commands,
-    mut pops: Query<(Entity, &mut Skills, &mut Needs, &AssignedTo, &PopAction), With<Pop>>,
+    mut pops: Query<
+        (
+            Entity,
+            &mut Skills,
+            &mut Needs,
+            &AssignedTo,
+            &PopAction,
+            Option<&crate::layer1::lifecycle::Age>,
+            Option<&mut crate::layer1::traits::Traits>,
+        ),
+        With<Pop>,
+    >,
     pods: Query<(&HypnoPod, Option<&PowerConsumer>)>,
 ) {
-    for (entity, mut skills, mut needs, assigned, action) in &mut pops {
+    for (entity, mut skills, mut needs, assigned, action, age_opt, mut traits_opt) in &mut pops {
         if action.current == ActionType::SatisfyRest {
             if let Ok((pod, power_opt)) = pods.get(assigned.entity) {
                 if power_opt.is_none_or(|p| p.active) {
-                    // Grant XP
-                    skills.add_xp(pod.target_skill, pod.xp_rate);
+                    let is_child = age_opt
+                        .is_some_and(|age| age.stage == crate::layer1::lifecycle::LifeStage::Child);
+
+                    if is_child {
+                        if let Some(ref mut traits) = traits_opt {
+                            traits.0.insert(crate::layer1::traits::Trait::Volatile);
+                        } else {
+                            commands
+                                .entity(entity)
+                                .insert(crate::layer1::traits::Traits(
+                                    std::collections::HashSet::from([
+                                        crate::layer1::traits::Trait::Volatile,
+                                    ]),
+                                ));
+                        }
+                    } else {
+                        // Grant XP
+                        skills.add_xp(pod.target_skill, pod.xp_rate);
+                    }
 
                     // Drain Hunger extra
                     needs.hunger = (needs.hunger - 0.5).max(0.0); // Arbitrary drain rate
