@@ -72,3 +72,8 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `323` The Informant's Dilemma — `specs/323-informants-dilemma.md`
 - [ ] `324` Kinetic Harpoons — `specs/324-kinetic-harpoons.md`
 - [ ] `325` Orbital Strike Blackmail — `specs/325-orbital-strike-blackmail.md`
+- [ ] `326` Invasive Biology — `specs/326-invasive-biology.md`
+- [ ] `327` The Stowaway — `specs/327-the-stowaway.md`
+- [ ] `328` Technological Regression — `specs/328-technological-regression.md`
+- [ ] `329` Leader Ascension — `specs/329-leader-ascension.md`
+- [ ] `330` Biome Aggression — `specs/330-biome-aggression.md`

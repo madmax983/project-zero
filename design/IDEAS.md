@@ -244,7 +244,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Invasive Biology
+## Invasive Biology [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -300,7 +300,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Stowaway
+## The Stowaway [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -328,7 +328,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Technological Regression
+## Technological Regression [SPECCED]
 
 **Layer:** 1
 
@@ -342,7 +342,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Leader Ascension
+## Leader Ascension [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -356,7 +356,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Biome Aggression
+## Biome Aggression [SPECCED]
 
 **Layer:** 1
 
