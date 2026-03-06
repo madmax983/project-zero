@@ -18,6 +18,12 @@ impl GreatWork {
 #[derive(Component)]
 pub struct OperationalGreatWork;
 
+#[derive(Event, Debug, Clone)]
+pub struct GreatWorkCompletedEvent {
+    pub entity: Entity,
+    pub name: String,
+}
+
 pub fn spawn_great_work(
     world: &mut World,
     name: &str,
@@ -45,6 +51,7 @@ pub fn spawn_great_work(
 pub fn process_great_work_phases(
     mut commands: Commands,
     mut query: Query<(Entity, &mut GreatWork, &mut ConstructionProgress)>,
+    mut events: EventWriter<GreatWorkCompletedEvent>,
 ) {
     for (entity, mut work, mut progress) in query.iter_mut() {
         if work.is_completed() {
@@ -57,6 +64,10 @@ pub fn process_great_work_phases(
             if work.is_completed() {
                 commands.entity(entity).insert(OperationalGreatWork);
                 commands.entity(entity).remove::<ConstructionProgress>();
+                events.send(GreatWorkCompletedEvent {
+                    entity,
+                    name: work.name.clone(),
+                });
             } else {
                 // Setup next phase
                 let next_cost = &work.phase_costs[work.current_phase];
@@ -113,6 +124,8 @@ mod tests {
             ],
         );
 
+        world.init_resource::<Events<GreatWorkCompletedEvent>>();
+
         // Manually complete phase 0
         let mut progress = world.get_mut::<ConstructionProgress>(work_id).unwrap();
         progress.current_work = progress.total_work_required;
@@ -138,6 +151,8 @@ mod tests {
             }],
         );
 
+        world.init_resource::<Events<GreatWorkCompletedEvent>>();
+
         // Complete the only phase
         let mut progress = world.get_mut::<ConstructionProgress>(work_id).unwrap();
         progress.current_work = progress.total_work_required;
@@ -150,6 +165,37 @@ mod tests {
         assert!(work.is_completed(), "Should be completed.");
         // Verify the component changed state or emitted an event
         assert!(world.get::<OperationalGreatWork>(work_id).is_some());
+    }
+
+    #[test]
+    fn test_great_work_completion_emits_event() {
+        let mut world = World::new();
+        let work_id = spawn_great_work(
+            &mut world,
+            "Monument",
+            vec![ConstructionCost {
+                item_type: crate::layer1::items::ItemType::None,
+                amount: 10,
+            }],
+        );
+
+        world.init_resource::<Events<GreatWorkCompletedEvent>>();
+
+        let mut progress = world.get_mut::<ConstructionProgress>(work_id).unwrap();
+        progress.current_work = progress.total_work_required;
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(process_great_work_phases);
+        schedule.run(&mut world);
+
+        let events = world.resource::<Events<GreatWorkCompletedEvent>>();
+        let mut cursor = events.get_cursor();
+        let iter = cursor.read(events);
+        assert_eq!(
+            iter.count(),
+            1,
+            "Should have emitted exactly one completion event"
+        );
     }
 
     #[test]
@@ -169,6 +215,8 @@ mod tests {
                 }, // Phase 1
             ],
         );
+
+        world.init_resource::<Events<GreatWorkCompletedEvent>>();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(process_great_work_phases);
