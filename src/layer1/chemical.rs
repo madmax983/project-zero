@@ -49,8 +49,8 @@ use crate::layer1::health::Health;
 use crate::layer1::items::ItemType;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
-use crate::layer1::utility_eval_types::{evaluate_candidates, ScorableCandidate};
-use crate::layer1::utility_types::UtilityWeights;
+use crate::layer1::utility_eval_types::ScorableCandidate;
+use crate::layer1::utility_types::{calculate_context_score, UtilityWeights};
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 
@@ -371,43 +371,36 @@ pub fn evaluate_consume_chemical(
         desire_sedative += 0.5;
     }
 
-    // Filter candidates by type
-    let mut candidates_stim = Vec::new();
-    let mut candidates_sedative = Vec::new();
-
-    for candidate in item_entities {
-        if let Some(item_type) = &candidate.item_type {
-            match item_type {
-                ItemType::Stim => candidates_stim.push(candidate.clone()),
-                ItemType::Sedative => candidates_sedative.push(candidate.clone()),
-                _ => {}
-            }
-        }
-    }
-
+    // ⚡ Bolt Optimization:
+    // Previously, this function collected candidates into two separate `Vec`s
+    // (`candidates_stim` and `candidates_sedative`) using `.clone()` on each item.
+    // By evaluating candidates inline during a single pass, we eliminate 2 heap
+    // allocations and O(N) clones per pop, per evaluation tick, significantly
+    // reducing memory pressure on the hot path of the Utility AI.
     let mut best_score = 0.0;
     let mut best_target = None;
 
-    // Check Stims
-    if desire_stim > 0.1 {
-        if let Some((score, target)) =
-            evaluate_candidates(pop_pos, weights, &candidates_stim, desire_stim)
-        {
-            if score > best_score {
-                best_score = score;
-                best_target = Some(target);
-            }
-        }
-    }
+    for candidate in item_entities {
+        if let Some(item_type) = &candidate.item_type {
+            let base_desire = match item_type {
+                ItemType::Stim if desire_stim > 0.1 => desire_stim,
+                ItemType::Sedative if desire_sedative > 0.1 => desire_sedative,
+                _ => continue,
+            };
 
-    // Check Sedatives
-    if desire_sedative > 0.1 {
-        if let Some((score, target)) =
-            evaluate_candidates(pop_pos, weights, &candidates_sedative, desire_sedative)
-        {
-            if score > best_score {
-                best_score = score;
-                best_target = Some(target);
+            let context = calculate_context_score(
+                pop_pos,
+                Some(candidate.pos),
+                candidate.capacity,
+                candidate.usage,
+                weights,
+            );
+
+            let utility = (base_desire + candidate.score_bonus) * context;
+
+            if utility > best_score {
+                best_score = utility;
+                best_target = Some(candidate.entity);
             }
         }
     }
