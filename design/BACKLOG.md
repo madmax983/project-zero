@@ -104,3 +104,8 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `358` Stress Breakdowns — `specs/358-stress-breakdowns.md`
 - [ ] `359` Shift Work — `specs/359-shift-work.md`
 - [ ] `360` Resource Capacities — `specs/360-resource-capacities.md`
+- [ ] `361` The Posthumous Work Shift — `specs/361-the-posthumous-work-shift.md`
+- [ ] `362` The Nostalgia Plague — `specs/362-the-nostalgia-plague.md`
+- [ ] `363` Architectural Spite — `specs/363-architectural-spite.md`
+- [ ] `364` Galactic Insurance Fraud — `specs/364-galactic-insurance-fraud.md`
+- [ ] `365` The Mundane Cult — `specs/365-the-mundane-cult.md`
