@@ -8,7 +8,6 @@
 See `design/IDEAS.md` for unspecced concepts.
 - [x] `255` Hypno-Learning — `specs/255-hypno-learning.md` — completed 2026-03-01
 
-- [ ] `260` The Industrial Rhythm — `specs/260-industrial-rhythm.md`
 - [ ] `262` Thermal Gliders — `specs/262-thermal-gliders.md`
 - [ ] `263` The Cadet Branch — `specs/263-the-cadet-branch.md`
 - [ ] `264` Hyper-Specialized Evolution — `specs/264-hyper-specialized-evolution.md`
