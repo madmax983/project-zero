@@ -188,7 +188,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Emotional Contagion
+## Emotional Contagion [SPECCED]
 
 **Layer:** 1
 
@@ -202,7 +202,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Great Works
+## Great Works [SPECCED]
 
 **Layer:** 1 -> 2
 
@@ -216,7 +216,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Black Market
+## The Black Market [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -230,7 +230,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Ancestral Graves
+## Ancestral Graves [SPECCED]
 
 **Layer:** 1
 
@@ -272,7 +272,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Private Stashes
+## Private Stashes [SPECCED]
 
 **Layer:** 1
 
