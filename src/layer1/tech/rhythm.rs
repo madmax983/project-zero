@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::map::GridPosition;
 use crate::shared::time::SimulationTime;
+use bevy_ecs::prelude::*;
 
 #[derive(Component, Default)]
 pub struct MachineRhythm {
@@ -18,9 +18,8 @@ pub fn update_rhythm_system(
     mut query: Query<(&mut MachineRhythm, &GridPosition)>,
 ) {
     // Collect data first to avoid borrow issues
-    let machines: Vec<(u64, GridPosition)> = query.iter()
-        .map(|(r, p)| (r.cycle_end_tick, *p))
-        .collect();
+    let machines: Vec<(u64, GridPosition)> =
+        query.iter().map(|(r, p)| (r.cycle_end_tick, *p)).collect();
 
     for (mut rhythm, pos) in query.iter_mut() {
         // Only trigger on completion frame
@@ -31,7 +30,9 @@ pub fn update_rhythm_system(
         let mut sync_count = 0;
 
         for (other_tick, other_pos) in &machines {
-            if *other_pos == *pos { continue; } // Skip self
+            if *other_pos == *pos {
+                continue;
+            } // Skip self
 
             // Check adjacency
             if pos.distance_chebyshev(*other_pos) <= 1 {

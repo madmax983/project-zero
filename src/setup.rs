@@ -18,7 +18,7 @@ use crate::layer1::{
     OccupiedTiles, ScreenShake, SeasonState, TechState, TerrainType, UtilityConfig, Viewport,
 };
 use crate::shared::colony::ColonyName;
-use crate::shared::input::{Input, InputContextStack, KeyCode};
+use crate::shared::input::{Input, InputContextStack};
 use crate::shared::log::MessageLog;
 use crate::shared::narrative::NarrativeGenerator;
 use crate::shared::selection::Selection;
@@ -96,7 +96,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(ChronicleUiState::default());
     world.insert_resource(crate::ui::tech::TechUiState::default());
     world.insert_resource(UiState::default());
-    world.init_resource::<Input<KeyCode>>();
+    world.init_resource::<Input>();
     world.insert_resource(NotificationQueue::default());
     world.insert_resource(BuildingTracker::default());
     world.insert_resource(crate::layer1::vermin::VerminState::default());

@@ -99,7 +99,7 @@ pub fn handle_possession(
 }
 
 pub fn handle_direct_movement(
-    input: Res<Input<KeyCode>>,
+    input: Res<Input>,
     mut query: Query<
         (
             Entity,
@@ -305,12 +305,12 @@ pub fn apply_buffs(
     }
 }
 
-pub fn clear_input_system(mut input: ResMut<Input<KeyCode>>) {
+pub fn clear_input_system(mut input: ResMut<Input>) {
     input.clear();
 }
 
 pub fn handle_direct_input_system(
-    input: Res<Input<KeyCode>>,
+    input: Res<Input>,
     mut unpossess_events: EventWriter<UnpossessEvent>,
 ) {
     if input.just_pressed(KeyCode::Esc) {
@@ -337,7 +337,7 @@ mod tests {
         // Register resources
         world.insert_resource(InputContextStack::default());
         world.insert_resource(UiState::default());
-        world.init_resource::<Input<KeyCode>>();
+        world.init_resource::<Input>();
         world.insert_resource(WallTime(0.0));
         world.insert_resource(ScreenShake::default());
 
@@ -431,7 +431,7 @@ mod tests {
         schedule.add_systems(clear_input_system.after(handle_direct_movement));
 
         // Step 1: Press W
-        world.resource_mut::<Input<KeyCode>>().press(KeyCode::W);
+        world.resource_mut::<Input>().press(KeyCode::W);
         // Advance time to allow movement (initial last_move_time is 0, so should move immediately)
         world.resource_mut::<WallTime>().0 = 10.0;
         schedule.run(&mut world);
@@ -440,7 +440,7 @@ mod tests {
         assert_eq!(pos1.y, 9);
 
         // Step 2: Press W again (Input should have been cleared and re-pressed)
-        world.resource_mut::<Input<KeyCode>>().press(KeyCode::W);
+        world.resource_mut::<Input>().press(KeyCode::W);
         // Advance time enough to clear cooldown
         world.resource_mut::<WallTime>().0 = 20.0;
         schedule.run(&mut world);
@@ -473,7 +473,7 @@ mod tests {
         schedule.add_systems(clear_input_system.after(handle_direct_movement));
 
         // 1. First move (ok)
-        world.resource_mut::<Input<KeyCode>>().press(KeyCode::W);
+        world.resource_mut::<Input>().press(KeyCode::W);
         world.resource_mut::<WallTime>().0 = 10.0;
         schedule.run(&mut world);
 
@@ -481,7 +481,7 @@ mod tests {
         assert_eq!(pos1.y, 9);
 
         // 2. Second move IMMEDIATELY (should be blocked by cooldown)
-        world.resource_mut::<Input<KeyCode>>().press(KeyCode::W);
+        world.resource_mut::<Input>().press(KeyCode::W);
         // Time only advanced 0.01s (cooldown is ~0.1s)
         world.resource_mut::<WallTime>().0 = 10.01;
         schedule.run(&mut world);
@@ -518,7 +518,7 @@ mod tests {
         let mut schedule = Schedule::default();
         schedule.add_systems(handle_direct_movement);
 
-        world.resource_mut::<Input<KeyCode>>().press(KeyCode::W);
+        world.resource_mut::<Input>().press(KeyCode::W);
         world.resource_mut::<WallTime>().0 = 10.0;
         schedule.run(&mut world);
 
@@ -553,7 +553,7 @@ mod tests {
         let mut schedule = Schedule::default();
         schedule.add_systems(handle_direct_movement);
 
-        world.resource_mut::<Input<KeyCode>>().press(KeyCode::W);
+        world.resource_mut::<Input>().press(KeyCode::W);
         world.resource_mut::<WallTime>().0 = 10.0;
         schedule.run(&mut world);
 
@@ -640,8 +640,8 @@ mod tests {
             .id();
         let mut schedule = Schedule::default();
         schedule.add_systems(handle_direct_movement);
-        world.resource_mut::<Input<KeyCode>>().press(KeyCode::S);
-        world.resource_mut::<Input<KeyCode>>().press(KeyCode::D);
+        world.resource_mut::<Input>().press(KeyCode::S);
+        world.resource_mut::<Input>().press(KeyCode::D);
         world.resource_mut::<WallTime>().0 = 10.0;
         schedule.run(&mut world);
         let pos = world.entity(pop).get::<GridPosition>().unwrap();
@@ -658,9 +658,9 @@ mod tests {
             terrain.tiles[11 * width + 10] = crate::layer1::terrain::TerrainType::Rock;
             terrain.tiles[10 * width + 11] = crate::layer1::terrain::TerrainType::Grass;
         }
-        world.resource_mut::<Input<KeyCode>>().clear();
-        world.resource_mut::<Input<KeyCode>>().press(KeyCode::S);
-        world.resource_mut::<Input<KeyCode>>().press(KeyCode::D);
+        world.resource_mut::<Input>().clear();
+        world.resource_mut::<Input>().press(KeyCode::S);
+        world.resource_mut::<Input>().press(KeyCode::D);
         world.resource_mut::<WallTime>().0 = 20.0;
         schedule.run(&mut world);
         let pos2 = world.entity(pop).get::<GridPosition>().unwrap();

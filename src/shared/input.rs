@@ -60,36 +60,36 @@ pub enum KeyCode {
 
 /// A Bevy-like Input resource for handling key states.
 #[derive(Resource, Default, Debug, Clone)]
-pub struct Input<T> {
-    pressed: HashSet<T>,
-    just_pressed: HashSet<T>,
-    just_released: HashSet<T>,
+pub struct Input {
+    pressed: HashSet<KeyCode>,
+    just_pressed: HashSet<KeyCode>,
+    just_released: HashSet<KeyCode>,
 }
 
-impl<T: Copy + Eq + Hash> Input<T> {
-    pub fn press(&mut self, input: T) {
+impl Input {
+    pub fn press(&mut self, input: KeyCode) {
         if !self.pressed.contains(&input) {
             self.just_pressed.insert(input);
         }
         self.pressed.insert(input);
     }
 
-    pub fn release(&mut self, input: T) {
+    pub fn release(&mut self, input: KeyCode) {
         if self.pressed.contains(&input) {
             self.pressed.remove(&input);
             self.just_released.insert(input);
         }
     }
 
-    pub fn pressed(&self, input: T) -> bool {
+    pub fn pressed(&self, input: KeyCode) -> bool {
         self.pressed.contains(&input)
     }
 
-    pub fn just_pressed(&self, input: T) -> bool {
+    pub fn just_pressed(&self, input: KeyCode) -> bool {
         self.just_pressed.contains(&input)
     }
 
-    pub fn just_released(&self, input: T) -> bool {
+    pub fn just_released(&self, input: KeyCode) -> bool {
         self.just_released.contains(&input)
     }
 
@@ -178,7 +178,7 @@ pub fn route_mouse_input(world: &mut World, mouse: GameMouseEvent) {
 fn handle_direct_control_mode(world: &mut World, key: GameKeyEvent) {
     // Map to KeyCode and update Input resource
     let bevy_key = map_game_key_to_bevy_key(key.code);
-    if let Some(mut input) = world.get_resource_mut::<Input<KeyCode>>() {
+    if let Some(mut input) = world.get_resource_mut::<Input>() {
         input.press(bevy_key);
     }
 }
