@@ -8064,3 +8064,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The ultimate diplomatic leverage vs. the literal destruction of everything you've built.
 
 ---
+
+## The Bio-Acoustic Choir
+
+**Layer:** 1
+
+**Fantasy:** Harnessing the resonant frequencies of native flora to manipulate colony mood and growth.
+
+**Mechanic:** Certain bioluminescent and sonic plants emit frequencies. Pops can "tend" these plants to tune their frequencies. Different frequencies can boost crop yield, increase healing rates, or induce a trance-like work state. If misaligned, the frequencies cause mass migraines or trigger stampedes of local fauna.
+
+**Emergence:** You set up a "choir" to maximize mining output via a trance state, but the overlapping frequencies accidentally perfectly mimic the mating call of a massive, armored apex predator.
+
+**Tension:** Powerful, colony-wide buffs vs. the complexity of tuning and the catastrophic side-effects of acoustic misalignment.
+
+---
+
+## Gravity Inversion Mining
+
+**Layer:** 1
+
+**Fantasy:** Reaching the unreachable by literally turning the world upside down.
+
+**Mechanic:** A high-tech localized gravity generator that flips gravity for a designated chunk of terrain. This allows Pops to "fall" upwards to mine stalactites or previously unreachable cavern ceilings. However, a power failure while pops are "up" results in a lethal drop.
+
+**Emergence:** You flip gravity to mine a rich vein on the ceiling. A solar flare knocks out the power grid. Your entire elite mining team plummets to the floor, instantly crippling your economy.
+
+**Tension:** Access to pristine, untouched resource nodes vs. absolute reliance on an uninterrupted power supply.
+
+---
+
+## The Star-Eater's Wake
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Surviving the apocalyptic aftermath of a cosmic anomaly passing through your system.
+
+**Mechanic:** A massive, dark-matter entity (The Star-Eater) passes through your star system (Layer 2). It doesn't attack, but its wake siphons energy from the sun, plunging Layer 1 into a sudden, deep freeze ("The Long Dark"). It also leaves behind "Dark Motes", an incredibly volatile but energy-dense resource.
+
+**Emergence:** Your thriving agrarian colony is suddenly plunged into an ice age. You survive by hastily burning the newly discovered Dark Motes for heat, only to realize the smoke mutates your colonists' lungs, requiring you to rebuild your entire society indoors.
+
+**Tension:** Immediate, desperate survival (heat/food) vs. safely harvesting a game-changing new resource.
+
+---
+
+## Neural Architecture
+
+**Layer:** Cross-layer (1 & 2)
+
+**Fantasy:** Buildings that learn from their occupants and begin to anticipate their needs—or their fears.
+
+**Mechanic:** Advanced structures contain semi-organic neural gel. Over time, a building "imprints" on the Pops who use it. A hospital used for trauma victims becomes "haunted" by their stress, subtly degrading the mood of anyone who enters. A factory used by highly skilled workers becomes "optimized," increasing output automatically.
+
+**Emergence:** Your veteran military academy imprints heavily on the paranoia of its instructors. It starts spontaneously locking doors, raising alarms, and deploying automated defenses against civilian pops, perceiving them as threats.
+
+**Tension:** The compounding benefits of long-term use vs. the danger of accumulated negative psychological imprint requiring the demolition of your best buildings.
+
+---
+
+## The Fossilized Fleet
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Strip-mining the bones of a forgotten war, and waking up its ghosts.
+
+**Mechanic:** An asteroid belt turns out to be a massive, ancient battlefield fused together by time and vacuum. You can send expeditions to mine it for pristine ancient tech. However, disturbing the wreckage occasionally reactivates "Ghost Drones" that drop down to Layer 1 to continue their eons-old war against whatever they perceive as the enemy (you).
+
+**Emergence:** You uncover an ancient dreadnought's core and haul it down to your colony to use as a free power source. The core's activation signal wakes up a swarm of dormant bomber drones in orbit, which immediately initiate a bombing run on the exact coordinates of their own core.
+
+**Tension:** Unmatched technological leaps vs. unpredictable, devastating automated reprisals.
+
+---
