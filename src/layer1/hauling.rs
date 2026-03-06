@@ -199,32 +199,7 @@ fn handle_drop_off(world: &mut World, pop_entity: Entity, carrying: Carrying, po
     if is_stockpile {
         // Add to colony resources
         let mut resources = world.resource_mut::<ColonyResources>();
-        match carrying.resource_type {
-            crate::layer1::resources::ResourceType::Food => resources.add_food(carrying.amount),
-            crate::layer1::resources::ResourceType::Wood => resources.add_wood(carrying.amount),
-            crate::layer1::resources::ResourceType::Stone => resources.add_stone(carrying.amount),
-            crate::layer1::resources::ResourceType::Ore => resources.add_ore(carrying.amount),
-            crate::layer1::resources::ResourceType::Metal => resources.add_metal(carrying.amount),
-            crate::layer1::resources::ResourceType::Planks => resources.add_planks(carrying.amount),
-            crate::layer1::resources::ResourceType::Blocks => resources.add_blocks(carrying.amount),
-            crate::layer1::resources::ResourceType::Waste => resources.add_waste(carrying.amount),
-            crate::layer1::resources::ResourceType::Rations => {
-                resources.add_rations(carrying.amount);
-            }
-            crate::layer1::resources::ResourceType::Fuel => resources.add_fuel(carrying.amount),
-            crate::layer1::resources::ResourceType::Alcohol => {
-                resources.add_alcohol(carrying.amount);
-            }
-            crate::layer1::resources::ResourceType::Scrap => {
-                resources.add_scrap(carrying.amount);
-            }
-            crate::layer1::resources::ResourceType::Tools => {
-                resources.add_tools(carrying.amount);
-            }
-            crate::layer1::resources::ResourceType::BuildingPermit => {
-                resources.add_building_permits(carrying.amount);
-            }
-        }
+        resources.add_resource(&carrying.resource_type, carrying.amount);
 
         // Remove Carrying
         world.entity_mut(pop_entity).remove::<Carrying>();
@@ -424,59 +399,54 @@ fn handle_drop_off_item(
         target
     };
 
-    if let Some(container_entity) = container {
-        // Check for Photophobic component to preserve entity
-        let is_photophobic = world
-            .entity(item_entity.0)
-            .contains::<crate::layer1::photophobic::Photophobic>();
-
-        // Convert Item Entity to InventoryItem struct
-        if let Some(item) = world.get::<Item>(item_entity.0) {
-            let item_type = item.item_type.clone();
-
-            if is_photophobic {
-                // Preserve Entity: Parent to container
-                world.entity_mut(item_entity.0).remove::<GridPosition>();
-                world
-                    .entity_mut(item_entity.0)
-                    .insert(crate::layer1::photophobic::Parent(container_entity));
-
-                let inv_item = InventoryItem {
-                    item_type,
-                    entity: Some(item_entity.0),
-                };
-                if let Some(mut inv) = world.get_mut::<Inventory>(container_entity) {
-                    if inv.try_add(inv_item) {
-                        // Success: Do nothing (entity preserved in inventory)
-                    } else {
-                        // Full: Drop back on ground at target position
-                        world.entity_mut(item_entity.0).insert(pos);
-                        world
-                            .entity_mut(item_entity.0)
-                            .remove::<crate::layer1::photophobic::Parent>();
-                    }
-                }
-            } else {
-                // Standard Logic: Convert to data and despawn
-                let inv_item = InventoryItem {
-                    item_type,
-                    entity: None,
-                };
-                if let Some(mut inv) = world.get_mut::<Inventory>(container_entity) {
-                    if inv.try_add(inv_item) {
-                        // Success: Despawn the carried item entity as it is now inside the inventory
-                        world.despawn(item_entity.0);
-                    } else {
-                        // Full: Drop item on ground at target position
-                        world.entity_mut(item_entity.0).insert(pos);
-                    }
-                }
-            }
-        }
-    } else {
+    let Some(container_entity) = container else {
         // Drop item on ground (No container found)
         world.entity_mut(item_entity.0).insert(pos);
         // Remove Parent if present (e.g. if we support pickup from inventory in future)
+        world
+            .entity_mut(item_entity.0)
+            .remove::<crate::layer1::photophobic::Parent>();
+
+        world.entity_mut(pop_entity).remove::<CarryingItem>();
+        world.entity_mut(pop_entity).remove::<AtTarget>().remove::<MovementTarget>();
+        return;
+    };
+
+    let Some(item) = world.get::<Item>(item_entity.0) else {
+        world.entity_mut(pop_entity).remove::<CarryingItem>();
+        world.entity_mut(pop_entity).remove::<AtTarget>().remove::<MovementTarget>();
+        return;
+    };
+
+    let item_type = item.item_type.clone();
+    let is_photophobic = world
+        .entity(item_entity.0)
+        .contains::<crate::layer1::photophobic::Photophobic>();
+
+    let inv_item = InventoryItem {
+        item_type,
+        entity: if is_photophobic { Some(item_entity.0) } else { None },
+    };
+
+    let mut success = false;
+    if let Some(mut inv) = world.get_mut::<Inventory>(container_entity) {
+        success = inv.try_add(inv_item);
+    }
+
+    if success {
+        if is_photophobic {
+            // Preserve Entity: Parent to container
+            world.entity_mut(item_entity.0).remove::<GridPosition>();
+            world
+                .entity_mut(item_entity.0)
+                .insert(crate::layer1::photophobic::Parent(container_entity));
+        } else {
+            // Standard Logic: Despawn the carried item entity
+            world.despawn(item_entity.0);
+        }
+    } else {
+        // Full: Drop back on ground at target position
+        world.entity_mut(item_entity.0).insert(pos);
         world
             .entity_mut(item_entity.0)
             .remove::<crate::layer1::photophobic::Parent>();
@@ -590,42 +560,7 @@ fn find_and_target_item(world: &mut World, pop_entity: Entity, pos: GridPosition
                 }
             }
 
-            let has_room = match item.resource_type {
-                crate::layer1::resources::ResourceType::Food => resources.food < resources.max_food,
-                crate::layer1::resources::ResourceType::Wood => resources.wood < resources.max_wood,
-                crate::layer1::resources::ResourceType::Stone => {
-                    resources.stone < resources.max_stone
-                }
-                crate::layer1::resources::ResourceType::Ore => resources.ore < resources.max_ore,
-                crate::layer1::resources::ResourceType::Metal => {
-                    resources.metal < resources.max_metal
-                }
-                crate::layer1::resources::ResourceType::Planks => {
-                    resources.planks < resources.max_planks
-                }
-                crate::layer1::resources::ResourceType::Blocks => {
-                    resources.blocks < resources.max_blocks
-                }
-                crate::layer1::resources::ResourceType::Waste => {
-                    resources.waste < resources.max_waste
-                }
-                crate::layer1::resources::ResourceType::Rations => {
-                    resources.rations < resources.max_rations
-                }
-                crate::layer1::resources::ResourceType::Fuel => resources.fuel < resources.max_fuel,
-                crate::layer1::resources::ResourceType::Alcohol => {
-                    resources.alcohol < resources.max_alcohol
-                }
-                crate::layer1::resources::ResourceType::Scrap => {
-                    resources.scrap < resources.max_scrap
-                }
-                crate::layer1::resources::ResourceType::Tools => {
-                    resources.tools < resources.max_tools
-                }
-                crate::layer1::resources::ResourceType::BuildingPermit => {
-                    resources.building_permits < resources.max_building_permits
-                }
-            };
+            let has_room = resources.has_room_for(&item.resource_type);
 
             if has_room {
                 let dist = manhattan_distance(&pos, p);
