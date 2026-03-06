@@ -6,7 +6,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Pop Memory
+## Pop Memory [SPECCED]
 
 **Layer:** 1
 
@@ -34,7 +34,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Void Between
+## The Void Between [SPECCED]
 
 **Layer:** 2 → 3
 
@@ -48,7 +48,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Rumor Web
+## The Rumor Web [SPECCED]
 
 **Layer:** 1
 
@@ -146,7 +146,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Seasonal Rhythms
+## Seasonal Rhythms [SPECCED]
 
 **Layer:** 1
 
@@ -174,7 +174,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Planetary Quirks
+## Planetary Quirks [SPECCED]
 
 **Layer:** 2
 
