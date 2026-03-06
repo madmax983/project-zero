@@ -87,3 +87,8 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `338` Structural Integrity — `specs/338-structural-integrity.md`
 - [ ] `339` Mentorship — `specs/339-mentorship.md`
 - [ ] `340` Light & Darkness — `specs/340-light-and-darkness.md`
+- [ ] `341` Pop Memory — `specs/341-pop-memory.md`
+- [ ] `342` The Void Between — `specs/342-the-void-between.md`
+- [ ] `343` The Rumor Web — `specs/343-the-rumor-web.md`
+- [ ] `344` Seasonal Rhythms — `specs/344-seasonal-rhythms.md`
+- [ ] `345` Planetary Quirks — `specs/345-planetary-quirks.md`
