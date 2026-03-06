@@ -206,3 +206,4 @@
 - [x] `268` Subliminal Advertising — `specs/268-subliminal-advertising.md` — completed 2026-03-06
 - [x] `255` Hypno-Learning — `specs/255-hypno-learning.md` — completed 2026-03-01
 - [x] `260` The Industrial Rhythm — `specs/260-industrial-rhythm.md` — completed 2026-03-06
+- [x] `348` The Black Market — `specs/348-the-black-market.md` — completed 2026-03-06
