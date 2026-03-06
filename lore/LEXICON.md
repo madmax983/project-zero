@@ -2791,3 +2791,89 @@
 **Usage:**
 - "Caught in a cold stall."
 - "Avoid the shadow to prevent the stall."
+
+---
+
+## Subliminal Advertising
+
+### the Broadcast / the Sell
+**Replaces:** AdScreen
+**Code reference:** `AdScreen` component
+**Usage:**
+- "The Broadcast tells us what we need."
+- "Don't listen to the Sell."
+
+### false-hunger
+**Replaces:** artificially increased needs
+**Code reference:** Accelerated leisure decay
+**Usage:**
+- "He has the false-hunger for luxuries."
+- "The screens give them false-hunger."
+
+---
+
+## Subspace Pen Pals
+
+### whisper-friend / far-kin
+**Replaces:** Subspace Pen Pal
+**Code reference:** `PenPal` component
+**Usage:**
+- "Waiting for word from a whisper-friend."
+- "My far-kin says the Core is burning."
+
+### signal-debt
+**Replaces:** cost of sending messages
+**Code reference:** Credit cost for `SendSubspaceMessage`
+**Usage:**
+- "He spent his rations on signal-debt."
+
+---
+
+## The Scapegoat
+
+### the Blame
+**Replaces:** Denunciation target
+**Code reference:** `DenounceEvent`
+**Usage:**
+- "They pinned the Blame on her."
+- "Looking for someone to hold the Blame."
+
+### exiled / cast-out
+**Replaces:** Result of denunciation
+**Usage:**
+- "He was cast-out for the reactor failure."
+
+---
+
+## Temporal Smuggling
+
+### the tear / paradox-door
+**Replaces:** Temporal Rift
+**Code reference:** `TemporalRift`
+**Usage:**
+- "A paradox-door opened in sector 4."
+- "Don't step too close to the tear."
+
+### time-loan
+**Replaces:** Temporal Debt
+**Code reference:** `TemporalDebt`
+**Usage:**
+- "We survived on a time-loan."
+- "The time-loan is due tomorrow."
+
+---
+
+## The Cadet Branch
+
+### silk-blood / core-dregs
+**Replaces:** Exiled noble pop
+**Code reference:** `NobleExile`
+**Usage:**
+- "The silk-blood wants better food."
+- "Just another core-dreg sent to die."
+
+### the allowance
+**Replaces:** Funding provided by noble's family
+**Code reference:** Monthly credit influx
+**Usage:**
+- "We only keep them for the allowance."

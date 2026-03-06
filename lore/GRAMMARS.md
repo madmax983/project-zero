@@ -2674,3 +2674,63 @@ GLIDER_FLIGHT:
     - EFFICIENCY (medium)
     - AWE (low)
 ```
+
+## Subliminal Advertising Chaining
+
+```yaml
+AD_CAMPAIGN_STARTED:
+  enables:
+    - RESOURCE_SHORTAGE (high, due to artificial demand)
+    - TREND_STARTED (medium, forced mimicry)
+  increases:
+    - CONSUMPTION (maximum)
+    - DISSATISFACTION (high)
+```
+
+## Subspace Pen Pal Chaining
+
+```yaml
+SUBSPACE_MESSAGE_RECEIVED:
+  enables:
+    - RUMOR_SPREAD (high, off-world news)
+    - KNOWLEDGE_BREAKTHROUGH (low, shared tech)
+  increases:
+    - MORALE (medium)
+    - ALIENATION (low, longing for elsewhere)
+```
+
+## Scapegoat Chaining
+
+```yaml
+POP_DENOUNCED:
+  enables:
+    - SCAPEGOAT_EXILED (high)
+    - FACTION_FORMED (medium, sympathizers)
+  increases:
+    - DIVISION (maximum)
+    - FEAR (high)
+```
+
+## Temporal Smuggling Chaining
+
+```yaml
+TEMPORAL_RIFT_OPENED:
+  enables:
+    - TEMPORAL_DEBT_DUE (always)
+    - TECH_BREAKTHROUGH (low, future tools)
+  increases:
+    - SURVIVAL_CHANCE (high, immediate)
+    - EXISTENTIAL_DREAD (high)
+```
+
+## Cadet Branch Chaining
+
+```yaml
+NOBLE_ARRIVAL:
+  enables:
+    - LUXURY_DEMAND_ISSUED (high)
+    - CLASS_FRICTION_EVENT (high)
+  increases:
+    - WEALTH (medium, funding)
+    - RESENTMENT (high)
+```

@@ -2661,6 +2661,66 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "The [GLIDER_NAME] takes to the air. [YEAR]. It [GLIDER_MANEUVER]."
 - "[YEAR]: Fast logistics. A [GLIDER_NAME] [GLIDER_MANEUVER] over the colony."
 - "Watching the [GLIDER_NAME] fly. [YEAR]. It [GLIDER_MANEUVER] perfectly."
+
+---
+
+## Template: AD_CAMPAIGN_STARTED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [AD_SLOGAN], [AD_IMPACT]
+
+**Patterns:**
+- "The screens light up. [YEAR]. They say '[AD_SLOGAN]'. The result: [AD_IMPACT]."
+- "[YEAR]: A new broadcast begins. '[AD_SLOGAN]'. It brings [AD_IMPACT]."
+- "We are told to '[AD_SLOGAN]'. The screens never sleep. [YEAR]. They leave us with [AD_IMPACT]."
+
+---
+
+## Template: SUBSPACE_MESSAGE_RECEIVED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME], [PEN_PAL_NAME], [PEN_PAL_TOPIC]
+
+**Patterns:**
+- "A signal cuts through the static. [YEAR]. [NAME] speaks with [PEN_PAL_NAME] about [PEN_PAL_TOPIC]."
+- "[YEAR]: The void is less lonely. [PEN_PAL_NAME] reaches out to talk of [PEN_PAL_TOPIC]."
+- "[NAME] finds a friend in the dark. [YEAR]. [PEN_PAL_NAME]. They discuss [PEN_PAL_TOPIC]."
+
+---
+
+## Template: POP_DENOUNCED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME], [DENUNCIATION_REASON], [SCAPEGOAT_FATE]
+
+**Patterns:**
+- "The mob turns on [NAME]. [YEAR]. Accused of [DENUNCIATION_REASON]. They were [SCAPEGOAT_FATE]."
+- "[YEAR]: Someone must pay. [NAME] is blamed for [DENUNCIATION_REASON]. The result: [SCAPEGOAT_FATE]."
+- "Anger finds a target. [NAME] is accused of [DENUNCIATION_REASON] and [SCAPEGOAT_FATE]. [YEAR]."
+
+---
+
+## Template: TEMPORAL_RIFT_OPENED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [RIFT_APPEARANCE], [RESOURCE], [TEMPORAL_DEBT]
+
+**Patterns:**
+- "[RIFT_APPEARANCE] in the lower decks. [YEAR]. It gave us [RESOURCE], but we owe [TEMPORAL_DEBT]."
+- "[YEAR]: We borrow from tomorrow. [RIFT_APPEARANCE] yields [RESOURCE]. Now we bear [TEMPORAL_DEBT]."
+- "A gift from the future. [RIFT_APPEARANCE]. [RESOURCE] gained, but [TEMPORAL_DEBT] looms. [YEAR]."
+
+---
+
+## Template: NOBLE_ARRIVAL
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME], [NOBLE_TITLE], [NOBLE_DEMAND]
+
+**Patterns:**
+- "A shuttle lands. [YEAR]. [NAME], a [NOBLE_TITLE], arrives demanding [NOBLE_DEMAND]."
+- "[YEAR]: The core worlds send their dregs. [NAME], the [NOBLE_TITLE], expects [NOBLE_DEMAND]."
+- "We must host [NAME], a [NOBLE_TITLE] from the core. [YEAR]. Their first order: [NOBLE_DEMAND]."
 ## Template: SPORE_OUTBREAK
 
 **Generates:** Play event

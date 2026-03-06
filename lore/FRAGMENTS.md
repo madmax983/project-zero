@@ -3914,3 +3914,127 @@ How the glider moves.
 - stalled in the cold
 - drifted down
 - spiraled up
+
+---
+
+## Advertising Fragments (Spec 268)
+
+### [AD_SLOGAN]
+What the screens broadcast to the colony.
+
+- "Consume and Be Happy"
+- "Your Needs are our Priority"
+- "Work Harder, Buy More"
+- "Luxury Awaits You"
+- "Do Your Part, Buy the Spark"
+- "Upgrade Your Life Today"
+- "The Core Worlds Envy You"
+
+### [AD_IMPACT]
+How the subliminal advertising affects pops.
+
+- empty pockets
+- hollow smiles
+- artificial joy
+- manufactured desire
+- restless greed
+- bright distraction
+
+---
+
+## Subspace Pen Pal Fragments (Spec 257)
+
+### [PEN_PAL_NAME]
+Names or handles for distant correspondents.
+
+- Voice-in-the-Dark
+- Echo-7
+- Distant-Kin
+- The Listener
+- Friend-at-the-Edge
+- Signal-Ghost
+- Whisper-Brother
+
+### [PEN_PAL_TOPIC]
+What the pen pals talk about.
+
+- the weather on Kepler
+- ancient poetry
+- rumors of the Core
+- the taste of real fruit
+- the quiet of the void
+- the shape of the Wound
+
+---
+
+## Scapegoat Fragments (Spec 224)
+
+### [DENUNCIATION_REASON]
+Why someone was blamed for the colony's problems.
+
+- hoarding rations
+- whispering dissent
+- breaking the pump
+- bringing bad luck
+- serving the enemy
+- speaking to the dark
+- being different
+
+### [SCAPEGOAT_FATE]
+What happens to the blamed pop.
+
+- cast out
+- silenced
+- put to the wall
+- stripped of rank
+- made an example
+- left in the cold
+
+---
+
+## Temporal Smuggling Fragments (Spec 299)
+
+### [RIFT_APPEARANCE]
+How the temporal anomaly looks.
+
+- a tear in the air
+- folding light
+- a shimmering scar
+- a cold mirror
+- a localized storm
+- a weeping shadow
+
+### [TEMPORAL_DEBT]
+The burden of borrowing from tomorrow.
+
+- the time-loan
+- the borrowed hour
+- the future's price
+- the impending loop
+- the inescapable return
+- the paradox weight
+
+---
+
+## Cadet Branch Fragments (Spec 263)
+
+### [NOBLE_TITLE]
+Titles of exiled or disgraced core world nobility.
+
+- Scion
+- The High-Born Exile
+- Silk-Blood
+- Lord-of-Nothing
+- The Disgraced Heir
+- Core-Prince
+- The Idle Lord
+
+### [NOBLE_DEMAND]
+What the noble demands from the frontier colony.
+
+- proper respect
+- clean water
+- a larger room
+- exotic foods
+- absolute silence
+- constant entertainment
