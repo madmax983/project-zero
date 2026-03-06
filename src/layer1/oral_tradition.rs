@@ -59,6 +59,24 @@ impl OralTradition {
     }
 }
 
+impl std::fmt::Display for OralTradition {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        if self.stories.is_empty() {
+            writeln!(f, "Oral Tradition: (No legends yet, last processed tick: {})", self.last_processed_tick)?;
+        } else {
+            writeln!(f, "Oral Tradition ({} legends, last processed tick: {}):", self.stories.len(), self.last_processed_tick)?;
+            for story in &self.stories {
+                writeln!(
+                    f,
+                    "  - [{:?}] \"{}\" (Origin: tick {}, Mutations: {})",
+                    story.genre, story.text, story.origin_tick, story.mutations
+                )?;
+            }
+        }
+        Ok(())
+    }
+}
+
 /// System to convert new Chronicle events into Stories.
 pub fn collect_chronicles_system(mut tradition: ResMut<OralTradition>, chronicle: Res<Chronicle>) {
     // Only look at events since last check

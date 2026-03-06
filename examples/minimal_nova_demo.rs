@@ -19,7 +19,7 @@ mod demo {
         world.insert_resource(Chronicle::default());
 
         println!("--- Initial State ---");
-        println!("{:?}", world.resource::<OralTradition>());
+        print!("{}", world.resource::<OralTradition>());
 
         // 2. Add a historical event
         println!("\n--- Adding Event ---");
@@ -39,12 +39,7 @@ mod demo {
         // 4. Inspect the result
         let tradition = world.resource::<OralTradition>();
         println!("Oral Tradition updated:");
-        for story in &tradition.stories {
-            println!(
-                "- [{:?}] \"{}\" (Origin: tick {})",
-                story.genre, story.text, story.origin_tick
-            );
-        }
+        print!("{tradition}");
     }
 }
 
