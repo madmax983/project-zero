@@ -8204,7 +8204,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Posthumous Work Shift
+## The Posthumous Work Shift [SPECCED]
 
 **Layer:** 1
 
@@ -8218,7 +8218,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Nostalgia Plague
+## The Nostalgia Plague [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -8232,7 +8232,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Architectural Spite
+## Architectural Spite [SPECCED]
 
 **Layer:** 1
 
@@ -8246,7 +8246,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Galactic Insurance Fraud
+## Galactic Insurance Fraud [SPECCED]
 
 **Layer:** 2
 
@@ -8260,7 +8260,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Mundane Cult
+## The Mundane Cult [SPECCED]
 
 **Layer:** 1
 
