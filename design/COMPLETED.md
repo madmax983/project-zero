@@ -1,5 +1,6 @@
 # Completed Specs
 
+- [x] `346` Emotional Contagion — `specs/346-emotional-contagion.md` — completed 2026-03-06
 - [x] `001` Architecture Setup — `specs/001-architecture-setup.md` — completed 2026-06-01
 - [x] `002` Basic Map — `specs/002-basic-map.md` — completed 2026-06-02
 - [x] `003` Population Basics — `specs/003-population-basics.md` — completed 2026-06-03

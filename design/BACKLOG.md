@@ -1,7 +1,6 @@
 # Backlog
 
 ## High Priority
-- [ ] `346` Emotional Contagion — `specs/346-emotional-contagion.md`
 - [ ] `347` Great Works — `specs/347-great-works.md`
 - [ ] `348` The Black Market — `specs/348-the-black-market.md`
 - [ ] `349` Ancestral Graves — `specs/349-ancestral-graves.md`
