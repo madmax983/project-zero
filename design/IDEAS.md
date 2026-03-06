@@ -636,7 +636,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Long-Haulers
+## The Long-Haulers [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -650,7 +650,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Stellar Drift
+## Stellar Drift [SPECCED]
 
 **Layer:** 3
 
@@ -678,7 +678,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Alien Domestication
+## Alien Domestication [SPECCED]
 
 **Layer:** 1
 
@@ -706,7 +706,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Industrial Byproducts
+## Industrial Byproducts [SPECCED]
 
 **Layer:** 1
 
@@ -916,7 +916,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Generational Knowledge
+## Generational Knowledge [SPECCED]
 
 **Layer:** 1
 
