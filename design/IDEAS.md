@@ -8065,7 +8065,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Bio-Acoustic Choir
+## The Bio-Acoustic Choir [SPECCED]
 
 **Layer:** 1
 
@@ -8079,7 +8079,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Gravity Inversion Mining
+## Gravity Inversion Mining [SPECCED]
 
 **Layer:** 1
 
@@ -8093,7 +8093,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Star-Eater's Wake
+## The Star-Eater's Wake [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -8107,7 +8107,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Neural Architecture
+## Neural Architecture [SPECCED]
 
 **Layer:** Cross-layer (1 & 2)
 
@@ -8121,7 +8121,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Fossilized Fleet
+## The Fossilized Fleet [SPECCED]
 
 **Layer:** 2 -> 1
 

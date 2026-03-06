@@ -109,3 +109,8 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `363` Architectural Spite — `specs/363-architectural-spite.md`
 - [ ] `364` Galactic Insurance Fraud — `specs/364-galactic-insurance-fraud.md`
 - [ ] `365` The Mundane Cult — `specs/365-the-mundane-cult.md`
+- [ ] `366` The Bio-Acoustic Choir — `specs/366-the-bio-acoustic-choir.md`
+- [ ] `367` Gravity Inversion Mining — `specs/367-gravity-inversion-mining.md`
+- [ ] `368` The Star-Eater's Wake — `specs/368-the-star-eaters-wake.md`
+- [ ] `369` Neural Architecture — `specs/369-neural-architecture.md`
+- [ ] `370` The Fossilized Fleet — `specs/370-the-fossilized-fleet.md`
