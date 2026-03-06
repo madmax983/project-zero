@@ -665,6 +665,46 @@ impl ColonyResources {
             }
         }
     }
+
+    /// Checks if there is capacity for a specific resource type.
+    pub fn has_room_for(&self, resource_type: &ResourceType) -> bool {
+        match resource_type {
+            ResourceType::Food => self.food < self.max_food,
+            ResourceType::Wood => self.wood < self.max_wood,
+            ResourceType::Stone => self.stone < self.max_stone,
+            ResourceType::Ore => self.ore < self.max_ore,
+            ResourceType::Metal => self.metal < self.max_metal,
+            ResourceType::Planks => self.planks < self.max_planks,
+            ResourceType::Blocks => self.blocks < self.max_blocks,
+            ResourceType::Waste => self.waste < self.max_waste,
+            ResourceType::Rations => self.rations < self.max_rations,
+            ResourceType::Fuel => self.fuel < self.max_fuel,
+            ResourceType::Alcohol => self.alcohol < self.max_alcohol,
+            ResourceType::Scrap => self.scrap < self.max_scrap,
+            ResourceType::Tools => self.tools < self.max_tools,
+            ResourceType::BuildingPermit => self.building_permits < self.max_building_permits,
+        }
+    }
+
+    /// Adds a specific amount of a given resource type, clamping to capacity.
+    pub fn add_resource(&mut self, resource_type: &ResourceType, amount: f32) {
+        match resource_type {
+            ResourceType::Food => self.add_food(amount),
+            ResourceType::Wood => self.add_wood(amount),
+            ResourceType::Stone => self.add_stone(amount),
+            ResourceType::Ore => self.add_ore(amount),
+            ResourceType::Metal => self.add_metal(amount),
+            ResourceType::Planks => self.add_planks(amount),
+            ResourceType::Blocks => self.add_blocks(amount),
+            ResourceType::Waste => self.add_waste(amount),
+            ResourceType::Rations => self.add_rations(amount),
+            ResourceType::Fuel => self.add_fuel(amount),
+            ResourceType::Alcohol => self.add_alcohol(amount),
+            ResourceType::Scrap => self.add_scrap(amount),
+            ResourceType::Tools => self.add_tools(amount),
+            ResourceType::BuildingPermit => self.add_building_permits(amount),
+        }
+    }
 }
 
 /// Component tracking the progress of a mining designation.
