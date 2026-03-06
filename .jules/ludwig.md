@@ -5,3 +5,7 @@
 ## [Combat Cooldown]
 **Friction:** Characters were only able to attack once because their `CombatState::cooldown` was set but never decremented. After the first attack, they stood still and never attacked again, feeling broken and unresponsive.
 **Flow:** Implemented `combat_cooldown_system` to decrement `CombatState::cooldown` every tick, allowing characters to attack repeatedly and making combat functional and responsive again.
+
+## [Critical Hits]
+**Friction:** Combat felt unrewarding and predictable due to low critical hit chance (5%) and a standard multiplier (2x), making encounters feel like a slow grind against spongy enemies.
+**Flow:** Increased critical hit chance to 15% and multiplier to 3x. This injects more excitement and "Juice" into combat, allowing for sudden, impactful bursts of damage that keep the player engaged and make hits feel significantly more powerful.
