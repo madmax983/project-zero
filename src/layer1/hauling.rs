@@ -408,13 +408,19 @@ fn handle_drop_off_item(
             .remove::<crate::layer1::photophobic::Parent>();
 
         world.entity_mut(pop_entity).remove::<CarryingItem>();
-        world.entity_mut(pop_entity).remove::<AtTarget>().remove::<MovementTarget>();
+        world
+            .entity_mut(pop_entity)
+            .remove::<AtTarget>()
+            .remove::<MovementTarget>();
         return;
     };
 
     let Some(item) = world.get::<Item>(item_entity.0) else {
         world.entity_mut(pop_entity).remove::<CarryingItem>();
-        world.entity_mut(pop_entity).remove::<AtTarget>().remove::<MovementTarget>();
+        world
+            .entity_mut(pop_entity)
+            .remove::<AtTarget>()
+            .remove::<MovementTarget>();
         return;
     };
 
@@ -425,7 +431,11 @@ fn handle_drop_off_item(
 
     let inv_item = InventoryItem {
         item_type,
-        entity: if is_photophobic { Some(item_entity.0) } else { None },
+        entity: if is_photophobic {
+            Some(item_entity.0)
+        } else {
+            None
+        },
     };
 
     let mut success = false;
