@@ -119,3 +119,8 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `373` The Void Nomad Fleet — `specs/373-the-void-nomad-fleet.md`
 - [ ] `374` Psionic Awakening — `specs/374-psionic-awakening.md`
 - [ ] `375` Planetary Core Tapping — `specs/375-planetary-core-tapping.md`
+- [ ] `376` The Schism — `specs/376-the-schism.md`
+- [ ] `377` Heirloom Seeds — `specs/377-heirloom-seeds.md`
+- [ ] `378` Comms Relay — `specs/378-comms-relay.md`
+- [ ] `379` Launch Windows — `specs/379-launch-windows.md`
+- [ ] `380` The Great Filter — `specs/380-the-great-filter.md`
