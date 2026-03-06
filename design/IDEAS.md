@@ -8134,7 +8134,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Unmatched technological leaps vs. unpredictable, devastating automated reprisals.
 
 ---
-## The Hive Mind Resurgence
+## The Hive Mind Resurgence [SPECCED]
 
 **Layer:** Cross-layer (3 -> 1)
 
@@ -8148,7 +8148,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Stellar Megastructure Decay
+## Stellar Megastructure Decay [SPECCED]
 
 **Layer:** 2
 
@@ -8162,7 +8162,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Void Nomad Fleet
+## The Void Nomad Fleet [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -8176,7 +8176,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Psionic Awakening
+## Psionic Awakening [SPECCED]
 
 **Layer:** 1
 
@@ -8190,7 +8190,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Planetary Core Tapping
+## Planetary Core Tapping [SPECCED]
 
 **Layer:** 2 -> 1
 
