@@ -33,6 +33,7 @@ pub const MOVE_INTERVAL: u64 = 100; // Ticks
 pub fn update_living_stone_system(
     _commands: Commands,
     time: Res<SimulationTime>,
+    #[allow(clippy::type_complexity)]
     mut queries: ParamSet<(
         Query<(Entity, &GridPosition), (With<LivingStone>, With<Item>)>,
         Query<(Entity, &mut GridPosition, &mut LivingStone, &Item)>,
