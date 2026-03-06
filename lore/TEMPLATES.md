@@ -2661,3 +2661,62 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "The [GLIDER_NAME] takes to the air. [YEAR]. It [GLIDER_MANEUVER]."
 - "[YEAR]: Fast logistics. A [GLIDER_NAME] [GLIDER_MANEUVER] over the colony."
 - "Watching the [GLIDER_NAME] fly. [YEAR]. It [GLIDER_MANEUVER] perfectly."
+## Template: SPORE_OUTBREAK
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SPORE_NAME], [INFECTION_SPEED]
+
+**Patterns:**
+- "The [SPORE_NAME] came with the last shipment. [YEAR]. It spreads [INFECTION_SPEED]."
+- "[YEAR]: Quarantine failed. We found [SPORE_NAME] in the vents. It moves [INFECTION_SPEED]."
+- "They didn't check the cargo. Now [SPORE_NAME] is here. Growth is [INFECTION_SPEED]. [YEAR]."
+
+## Template: QUARANTINE_BURN
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SPORE_NAME], [ZONE_NAME]
+
+**Patterns:**
+- "We had to burn [ZONE_NAME]. [YEAR]. The only way to stop the [SPORE_NAME]."
+- "[YEAR]: Fire is the only cure. [ZONE_NAME] was lost to the [SPORE_NAME]."
+- "The ashes of [ZONE_NAME] smell like [SPORE_NAME]. [YEAR]. We saved the rest."
+
+## Template: STOWAWAY_DISCOVERED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME], [HIDING_SPOT]
+
+**Patterns:**
+- "We found [NAME] in the [HIDING_SPOT]. [YEAR]. They aren't on the manifest."
+- "[YEAR]: An extra mouth. [NAME] fell out of the [HIDING_SPOT]."
+- "Security breach. [NAME] survived the journey hidden in the [HIDING_SPOT]. [YEAR]."
+
+## Template: KNOWLEDGE_LOST
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [TECH_FIELD], [OLD_EXPERT]
+
+**Patterns:**
+- "The old ways die. [YEAR]. Without [OLD_EXPERT], nobody understands [TECH_FIELD] anymore."
+- "[YEAR]: Regression. The [TECH_FIELD] manuals look like gibberish to the new generation."
+- "We stare at the machines. [OLD_EXPERT] took the secrets of [TECH_FIELD] to the grave. [YEAR]."
+
+## Template: LEADER_PROMOTED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME], [NEW_ROLE]
+
+**Patterns:**
+- "From the dirt to the stars. [YEAR]. [NAME] is our new [NEW_ROLE]."
+- "[YEAR]: Ascension. [NAME] leaves the colony behind to become a [NEW_ROLE]."
+- "We lose a worker, but gain a [NEW_ROLE]. [NAME] looks to the sky. [YEAR]."
+
+## Template: BIOME_ENCROACHMENT
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [PLANT_NAME], [LOST_BUILDING]
+
+**Patterns:**
+- "The forest takes it back. [YEAR]. The [LOST_BUILDING] is covered in [PLANT_NAME]."
+- "[YEAR]: Maintenance failure. [PLANT_NAME] roots destroyed the [LOST_BUILDING]."
+- "Green creeping death. The [LOST_BUILDING] belongs to the [PLANT_NAME] now. [YEAR]."
