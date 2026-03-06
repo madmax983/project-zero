@@ -370,7 +370,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Xenolinguistics
+## Xenolinguistics [SPECCED]
 
 **Layer:** 3
 
@@ -384,7 +384,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Architectural Eras
+## Architectural Eras [SPECCED]
 
 **Layer:** 1
 
@@ -398,7 +398,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Old Guard
+## The Old Guard [SPECCED]
 
 **Layer:** 1
 
@@ -426,7 +426,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Curio Trade
+## The Curio Trade [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -440,7 +440,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Orbital Shadow
+## Orbital Shadow [SPECCED]
 
 **Layer:** 2 -> 1
 
