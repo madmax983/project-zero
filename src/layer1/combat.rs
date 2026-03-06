@@ -27,8 +27,8 @@ use rand::Rng;
 use ratatui::style::Color;
 
 // Ludwig's Tuning Constants
-const CRIT_CHANCE: f64 = 0.05;
-const CRIT_MULTIPLIER: f32 = 2.0;
+const CRIT_CHANCE: f64 = 0.15;
+const CRIT_MULTIPLIER: f32 = 3.0;
 
 // Ludwig: Reduced hit stop times for snappier combat (Game Feel)
 const HIT_STOP_CRIT: u32 = 12;
@@ -440,7 +440,7 @@ mod tests {
         // Check Enemy Health
         let health = world.get::<Health>(enemy).unwrap();
         let expected_normal = 80.0; // 100 - 20
-        let expected_crit = 60.0; // 100 - 40
+        let expected_crit = 40.0; // 100 - (20 * 3)
         assert!(
             (health.current - expected_normal).abs() < f32::EPSILON
                 || (health.current - expected_crit).abs() < f32::EPSILON,
@@ -517,7 +517,7 @@ mod tests {
         // Check Damage
         let health = world.get::<Health>(target).unwrap();
         let expected_normal = 90.0;
-        let expected_crit = 80.0;
+        let expected_crit = 70.0;
         assert!(
             (health.current - expected_normal).abs() < f32::EPSILON
                 || (health.current - expected_crit).abs() < f32::EPSILON,
