@@ -93,6 +93,9 @@ pub fn register(schedule: &mut Schedule) {
             #[cfg(feature = "nova")]
             crate::experimental::echo_chamber::apply_echo_chamber_system
                 .after(crate::experimental::echo_chamber::detect_echo_chamber_system),
+            #[cfg(feature = "nova")]
+            crate::experimental::emotional_weather::emotional_weather_system
+                .after(crate::layer1::needs::decay_needs_system),
         )
             .in_set(Layer1SystemSet::Observation),
     );
