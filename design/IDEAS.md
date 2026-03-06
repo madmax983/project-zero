@@ -8203,3 +8203,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Absolute energy supremacy vs. the literal ticking clock of the planet's lifespan.
 
 ---
+
+## The Posthumous Work Shift
+
+**Layer:** 1
+
+**Fantasy:** Watching the colony run so efficiently that even death is just a temporary delay in the shift schedule.
+
+**Mechanic:** When a pop dies at work, their "digital ghost" (brain scan backup) can be temporarily mapped onto automated chassis or station systems to complete their shift or project before fully decaying.
+
+**Emergence:** You might end up relying on dead pops to finish a crucial mega-project, deliberately delaying their final burial, leading to a haunted, unhappy, but highly productive factory.
+
+**Tension:** Do you let the dead rest to preserve the sanity and morale of the living pops, or do you squeeze out those last few hours of productivity to meet quotas?
+
+---
+
+## The Nostalgia Plague
+
+**Layer:** Cross-layer
+
+**Fantasy:** Dealing with a civilization-wide crisis not of biology, but of collective melancholia and obsession with the "good old days."
+
+**Mechanic:** Pops can contract "Nostalgia" from viewing ancient relics, listening to old chronologies, or interacting with pops from older, core worlds. Infected pops suffer severe productivity drops in modern tasks, but gain immense bonuses when doing primitive jobs (like manual farming or low-tech crafting) and will actively try to dismantle advanced tech.
+
+**Emergence:** An advanced sector might completely shut down its fusion reactors and start setting up dirt farms and singing old shanties, forcing you to treat an ideological trend like a biological quarantine.
+
+**Tension:** Do you violently suppress this regression, or do you carve out "primitive reservation" zones to let them let out their fantasy and slowly cure themselves without sparking rebellion?
+
+---
+
+## Architectural Spite
+
+**Layer:** 1
+
+**Fantasy:** Seeing pops express their social grievances not through riots, but through petty, inefficient modifications to the colony's layout and buildings.
+
+**Mechanic:** Pops with low social relationships to their neighbors or the administration will occasionally build "spite walls", alter pathfinding routing to block a neighbor's window, or sabotage specific amenity access points targeting individuals they hate.
+
+**Emergence:** A simple housing block might gradually morph into a labyrinthine nightmare of locked doors, walled-off corridors, and private hoarding, destroying overall logistical efficiency.
+
+**Tension:** Do you tear down the spiteful architecture to restore efficiency (causing immediate anger and possible violence), or do you work around it, resulting in a hilariously convoluted base?
+
+---
+
+## Galactic Insurance Fraud
+
+**Layer:** 2
+
+**Fantasy:** Balancing the books by intentionally crashing your own ships or sabotaging outposts to collect massive payouts from the core world bureaucracies.
+
+**Mechanic:** The player can purchase expensive insurance policies on fleets and orbital structures. Once insured, if the asset is "accidentally" destroyed by space hazards or pirates (but not clearly scuttled by the player), a massive credit payout is generated. However, "Insurance Investigators" will periodically arrive to audit suspicious destruction.
+
+**Emergence:** You might deliberately route an obsolete fleet into a known pirate system, pretending it was a tragic loss, then use the insurance money to fund a new flagship, while trying to bribe or assassinate the investigator.
+
+**Tension:** Do you risk the wrath of the investigators (which could lead to massive fines or trade blockades) to secure quick capital, or do you play it safe and struggle financially?
+
+---
+
+## The Mundane Cult
+
+**Layer:** 1
+
+**Fantasy:** Watching a religion form not around gods or space anomalies, but around the most boring, repetitive aspects of colony life.
+
+**Mechanic:** Pops performing the same low-tier job (e.g., hauling dirt, cleaning filters) for extended periods have a chance to form a cult venerating that specific action. They will demand dedicated shrines (e.g., "The Holy Air Filter") and refuse to do any other task, treating their mundane job as a sacred duty.
+
+**Emergence:** You might suddenly find that you have a fiercely loyal, highly efficient cult of janitors, but they will riot if you try to upgrade the colony to automated cleaning drones.
+
+**Tension:** Do you embrace the cult for the massive efficiency boost in a single menial task, or do you break them up to maintain workforce flexibility and technological progress?
+
+---
