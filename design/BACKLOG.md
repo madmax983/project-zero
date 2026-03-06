@@ -114,3 +114,8 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `368` The Star-Eater's Wake — `specs/368-the-star-eaters-wake.md`
 - [ ] `369` Neural Architecture — `specs/369-neural-architecture.md`
 - [ ] `370` The Fossilized Fleet — `specs/370-the-fossilized-fleet.md`
+- [ ] `371` The Hive Mind Resurgence — `specs/371-the-hive-mind-resurgence.md`
+- [ ] `372` Stellar Megastructure Decay — `specs/372-stellar-megastructure-decay.md`
+- [ ] `373` The Void Nomad Fleet — `specs/373-the-void-nomad-fleet.md`
+- [ ] `374` Psionic Awakening — `specs/374-psionic-awakening.md`
+- [ ] `375` Planetary Core Tapping — `specs/375-planetary-core-tapping.md`
