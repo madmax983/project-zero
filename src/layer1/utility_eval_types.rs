@@ -60,6 +60,7 @@ pub struct PopEvaluationQuery {
     pub chemical: Option<&'static ChemicalState>,
     pub memetic_carrier: Option<&'static MemeticCarrier>,
     pub health: Option<&'static Health>,
+    pub age: Option<&'static crate::layer1::lifecycle::Age>,
     pub job: Option<&'static Job>,
 }
 
@@ -78,6 +79,7 @@ impl PopEvalData {
             mental_state: item.mental_state.copied(),
             drafted: item.drafted.copied(),
             faction_member: item.faction_member.cloned(),
+            age: item.age.cloned(),
             penal_labor: item.penal_labor.copied(),
             breakdown: item.breakdown.copied(),
             traits: item.traits.cloned(),
@@ -148,6 +150,8 @@ pub struct PopEvalData {
     pub drafted: Option<Drafted>,
     /// Faction membership details, if any.
     pub faction_member: Option<FactionMember>,
+    /// Age and life stage.
+    pub age: Option<crate::layer1::lifecycle::Age>,
     /// Penal labor status, if any.
     pub penal_labor: Option<PenalLabor>,
     /// Breakdown status, if any.
@@ -188,6 +192,7 @@ impl PopEvalData {
             mental_state: None,
             drafted: None,
             faction_member: None,
+            age: None,
             penal_labor: None,
             breakdown: None,
             traits: None,

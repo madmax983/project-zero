@@ -84,6 +84,7 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::justice::check_crime_system),
             crate::layer1::unrest::recover_mental_break_system.after(decay_needs_system),
             check_generational_friction_system.after(decay_needs_system),
+            crate::layer1::lifecycle::wisdom_aura_system.after(decay_needs_system),
             crate::layer1::hobby::assign_hobby_system.after(decay_needs_system),
             crate::layer1::predictive_policing::check_prediction_system.after(decay_needs_system),
             crate::layer1::social::grievances::post_grievance_system.after(decay_needs_system),

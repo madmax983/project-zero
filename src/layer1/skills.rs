@@ -97,6 +97,19 @@ pub fn get_skill_efficiency(skills: Option<&Skills>, skill: SkillType) -> f32 {
     skills.map_or(1.0, |s| s.get_efficiency(skill))
 }
 
+/// A multiplier applied to all XP gained by a Pop.
+#[derive(Component, Debug, Clone, Copy, PartialEq)]
+pub struct XpMultiplier {
+    /// The multiplier value (e.g., 1.0 is normal, 1.2 is 20% bonus).
+    pub value: f32,
+}
+
+impl Default for XpMultiplier {
+    fn default() -> Self {
+        Self { value: 1.0 }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

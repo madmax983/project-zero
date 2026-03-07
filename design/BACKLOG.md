@@ -161,4 +161,3 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `415` Company Scrip — `specs/415-company-scrip.md`
 - [ ] `416` Cognitive Hazards — `specs/416-cognitive-hazards.md`
 - [ ] `417` Chemical Regulation — `specs/417-chemical-regulation.md`
-- [ ] `418` Lifecycle & Retirement — `specs/418-lifecycle-retirement.md`

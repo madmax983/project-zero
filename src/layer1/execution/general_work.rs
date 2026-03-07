@@ -489,8 +489,11 @@ fn handle_post_work_effects(
 
     // Add XP
     if let Some(st) = skill_type {
+        let xp_mult = world
+            .get::<crate::layer1::skills::XpMultiplier>(pop_entity)
+            .map_or(1.0, |m| m.value);
         if let Some(mut skills) = world.get_mut::<Skills>(pop_entity) {
-            skills.add_xp(st, 1.0);
+            skills.add_xp(st, 1.0 * xp_mult);
         }
     }
 

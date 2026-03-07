@@ -6,6 +6,7 @@
 use crate::layer1::balance::{AGE_ADULT, AGE_ELDER, TICKS_PER_YEAR};
 use crate::layer1::pop::Speed;
 use crate::shared::log::MessageLog;
+use bevy::prelude::Transform;
 use bevy_ecs::prelude::*;
 use rand::Rng;
 
@@ -83,6 +84,35 @@ pub fn aging_system(
     }
 }
 
+/// System to apply wisdom aura buff to workers near Elders.
+pub fn wisdom_aura_system(
+    elder_query: Query<(Entity, &Transform, &Age)>,
+    mut worker_query: Query<(Entity, &Transform, &mut crate::layer1::skills::XpMultiplier)>,
+) {
+    let aura_radius = 5.0;
+    let buff_amount = 0.2;
+
+    for (worker_entity, worker_tf, mut xp_mult) in &mut worker_query {
+        // Reset base multiplier
+        xp_mult.value = 1.0;
+
+        // Check distance to any elder
+        for (elder_entity, elder_tf, elder_age) in &elder_query {
+            if elder_age.stage == LifeStage::Elder {
+                // Ignore self if elder
+                if worker_entity == elder_entity {
+                    continue;
+                }
+
+                if worker_tf.translation.distance(elder_tf.translation) < aura_radius {
+                    xp_mult.value += buff_amount;
+                    break; // One buff is enough
+                }
+            }
+        }
+    }
+}
+
 /// System to handle natural death from old age.
 ///
 /// Probability of death increases with age for Elders.
@@ -116,6 +146,7 @@ mod tests {
     use crate::layer1::health::Health;
     use crate::layer1::pop::{Pop, Speed};
     use crate::shared::time::SimulationTime;
+    use bevy::prelude::Vec3;
 
     #[test]
     fn test_pop_has_age_component() {
@@ -287,5 +318,108 @@ mod tests {
 
         let age = world.get::<Age>(entity).unwrap();
         assert_eq!(age.ticks_alive, 101);
+    }
+
+    #[test]
+    fn test_elder_cannot_do_heavy_labor() {
+        use crate::layer1::utility_eval_types::{PopEvalData, UtilityAIBuffer, ScorableCandidate, WorldContext};
+        use crate::layer1::utility_ai::evaluate_single_pop;
+        use crate::layer1::utility_types::{ActionType, UtilityWeights, PopAction};
+        use crate::layer1::needs::Needs;
+
+        // Setup buffer with ONLY heavy labor
+        let mut buffer = UtilityAIBuffer::default();
+        buffer.work_designations.push(ScorableCandidate::new(Entity::from_raw(2), crate::layer1::map::GridPosition { x: 1, y: 1 }));
+
+        let tg = crate::layer1::temperature::TemperatureGrid::new(10, 10, 20.0);
+        let cycle = crate::layer1::day_night::DayNightCycle::default();
+        let factions = crate::layer1::factions::Factions::default();
+        let taboo = crate::layer1::taboo::TabooState::default();
+        let zone_grid = crate::layer1::zone::ZoneGrid { width: 10, height: 10, grid: vec![] };
+        let context = WorldContext {
+            resources: &crate::layer1::resources::ColonyResources::default(),
+            cycle: &cycle,
+            taboo: &taboo,
+            factions: Some(&factions.map),
+            zone_grid: &zone_grid,
+            temperature_grid: Some(&tg),
+        };
+
+        // Setup elder data
+        let mut data = PopEvalData {
+            entity: Entity::from_raw(1),
+            pos: crate::layer1::map::GridPosition { x: 0, y: 0 },
+            needs: Needs::default(),
+            weights: UtilityWeights::default(),
+            action: PopAction::default(),
+            equipment: None,
+            carrying: None,
+            carrying_item: None,
+            carrying_item_type: None,
+            mental_state: None,
+            drafted: None,
+            faction_member: None,
+            age: Some(Age { ticks_alive: AGE_ELDER, stage: LifeStage::Elder }),
+            penal_labor: None,
+            breakdown: None,
+            traits: None,
+            stress: 0.0,
+            hobby_type: None,
+            insulation: 0.0,
+            chemical_state: None,
+            is_memetic_carrier: false,
+            health: None,
+            job: None,
+        };
+
+        // Evaluate
+        let (action, _, _) = evaluate_single_pop(&buffer, &mut data, &context);
+
+        // Should fall back to Idle, NOT Work
+        assert_ne!(action, ActionType::Work);
+        assert_eq!(action, ActionType::Idle);
+    }
+
+    #[test]
+    fn test_elder_wisdom_aura_buffs_workers() {
+        // Arrange
+        let mut world = World::new();
+        world.insert_resource(SimulationTime::default());
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(super::wisdom_aura_system);
+
+        // Spawn Elder
+        world.spawn((
+            Pop,
+            Age {
+                ticks_alive: AGE_ELDER,
+                stage: LifeStage::Elder,
+            },
+            Transform::from_translation(Vec3::new(0.0, 0.0, 0.0)),
+        ));
+
+        // Spawn Worker nearby
+        let worker_id = world
+            .spawn((
+                Pop,
+                Age {
+                    ticks_alive: AGE_ADULT,
+                    stage: LifeStage::Adult,
+                },
+                Transform::from_translation(Vec3::new(2.0, 0.0, 0.0)), // Close
+                crate::layer1::skills::Skills::default(),
+                crate::layer1::skills::XpMultiplier { value: 1.0 },
+            ))
+            .id();
+
+        // Act
+        schedule.run(&mut world);
+
+        // Assert: Worker's XP multiplier increased due to proximity to Elder
+        let multiplier = world
+            .get::<crate::layer1::skills::XpMultiplier>(worker_id)
+            .unwrap();
+        assert!(multiplier.value > 1.0);
     }
 }

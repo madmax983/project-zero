@@ -244,6 +244,8 @@ pub struct PopBundle {
     pub weights: UtilityWeights,
     /// Known rumors and topics.
     pub knowledge: Knowledge,
+    /// XP multiplier.
+    pub xp_multiplier: crate::layer1::skills::XpMultiplier,
     /// Biological age.
     pub age: Age,
     /// Faction membership.
@@ -296,6 +298,7 @@ impl PopBundle {
             equipment: Equipment::default(),
             weights: UtilityWeights::default(),
             knowledge: Knowledge::default(),
+            xp_multiplier: crate::layer1::skills::XpMultiplier::default(),
             age: Age::new(rng.gen_range(20..40)),
             faction: FactionMember::default(),
             arrival: Arrival { tick: 0 },

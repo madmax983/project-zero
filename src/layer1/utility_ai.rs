@@ -395,15 +395,18 @@ impl<'a> PopDecider<'a> {
             .traits
             .as_ref()
             .is_some_and(|t| t.0.contains(&Trait::Feral));
+        let is_elder = self.data.age.as_ref().is_some_and(|age| age.stage == crate::layer1::lifecycle::LifeStage::Elder);
 
-        // Evaluate Work
-        let work_bonus = if self.is_penal { 1.0 } else { 0.0 };
-        self.evaluator.evaluate_and_consider(
-            evaluate_simple_action(pop_pos, &weights, &self.buffer.work_designations, 0.5),
-            ActionType::Work,
-            self.context,
-            work_bonus,
-        );
+        // Evaluate Work (Elders cannot do heavy labor/work designations)
+        if !is_elder {
+            let work_bonus = if self.is_penal { 1.0 } else { 0.0 };
+            self.evaluator.evaluate_and_consider(
+                evaluate_simple_action(pop_pos, &weights, &self.buffer.work_designations, 0.5),
+                ActionType::Work,
+                self.context,
+                work_bonus,
+            );
+        }
 
         // Evaluate Tame
         self.evaluator.evaluate_and_consider(
@@ -417,21 +420,23 @@ impl<'a> PopDecider<'a> {
             return;
         }
 
-        // Evaluate Refine
-        self.evaluator.evaluate_and_consider(
-            evaluate_simple_action(pop_pos, &weights, &self.buffer.refining, 0.5),
-            ActionType::Refine,
-            self.context,
-            0.0,
-        );
+        // Evaluate Refine (Elders cannot do heavy labor/refining)
+        if !is_elder {
+            self.evaluator.evaluate_and_consider(
+                evaluate_simple_action(pop_pos, &weights, &self.buffer.refining, 0.5),
+                ActionType::Refine,
+                self.context,
+                0.0,
+            );
 
-        // Evaluate Farm
-        self.evaluator.evaluate_and_consider(
-            evaluate_simple_action(pop_pos, &weights, &self.buffer.farms, 0.5),
-            ActionType::Farm,
-            self.context,
-            0.0,
-        );
+            // Evaluate Farm (Elders cannot do heavy labor/farming)
+            self.evaluator.evaluate_and_consider(
+                evaluate_simple_action(pop_pos, &weights, &self.buffer.farms, 0.5),
+                ActionType::Farm,
+                self.context,
+                0.0,
+            );
+        }
 
         // Evaluate Admin
         self.evaluator.evaluate_and_consider(
@@ -523,20 +528,24 @@ impl<'a> PopDecider<'a> {
             0.0,
         );
 
-        // Evaluate Repair
-        self.evaluator.evaluate_and_consider(
-            evaluate_simple_action(pop_pos, &weights, &self.buffer.repair_structures, 0.6),
-            ActionType::Repair,
-            self.context,
-            0.0,
-        );
-        // Also check designations
-        self.evaluator.evaluate_and_consider(
-            evaluate_simple_action(pop_pos, &weights, &self.buffer.repair_designations, 0.6),
-            ActionType::Repair,
-            self.context,
-            0.0,
-        );
+        let is_elder = self.data.age.as_ref().is_some_and(|age| age.stage == crate::layer1::lifecycle::LifeStage::Elder);
+
+        if !is_elder {
+            // Evaluate Repair
+            self.evaluator.evaluate_and_consider(
+                evaluate_simple_action(pop_pos, &weights, &self.buffer.repair_structures, 0.6),
+                ActionType::Repair,
+                self.context,
+                0.0,
+            );
+            // Also check designations
+            self.evaluator.evaluate_and_consider(
+                evaluate_simple_action(pop_pos, &weights, &self.buffer.repair_designations, 0.6),
+                ActionType::Repair,
+                self.context,
+                0.0,
+            );
+        }
 
         // Evaluate Haul
         self.evaluator.evaluate_and_consider(
