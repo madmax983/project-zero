@@ -8343,3 +8343,71 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Allowing the black market to relieve deep-seated stress vs. maintaining absolute ideological control and stability.
 
 ---
+
+## The Whispering Gallery
+
+**Layer:** 1
+
+**Fantasy:** A building so perfect in its acoustics that it accidentally becomes a panopticon, amplifying paranoia.
+
+**Mechanic:** A beautifully constructed "Grand Dome" or "Atrium" provides massive Morale but unintentionally functions as a perfect acoustic reflector. All Rumors (from the Rumor Web) spoken within it are broadcast to the entire colony, instantly accelerating the spread of both positive news and terrifying false panics.
+
+**Emergence:** You build the Grand Dome to celebrate a victory. But a single stressed pop whispers a rumor about a food shortage inside it. The entire colony hears it simultaneously, causing a mass stampede to the granary that collapses the food distribution network in minutes.
+
+**Tension:** High Morale (Aesthetics) vs. High Volatility (Information spread).
+
+---
+
+## Gravitational Tides
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The planet itself is being pulled and squeezed by a massive neighbor, creating cyclical hazards.
+
+**Mechanic:** If a colony orbits a Gas Giant or Black Hole, the Layer 2 orbital position creates "High Tide" and "Low Tide" for planetary gravity on Layer 1. High Gravity periods drastically slow movement and increase energy consumption. Low Gravity periods allow fast movement but increase the risk of pops taking fall damage or items floating away if unsealed.
+
+**Emergence:** You rely on Low Gravity days to quickly haul massive stones for construction. But a pirate raid hits during a High Gravity day. Your militia is too heavy to reach the breach in time, forced to fight a slow, grinding defense in the corridors.
+
+**Tension:** Explosive bursts of productivity during Low Tide vs. Enduring the slow, grinding High Tide.
+
+---
+
+## The Void-Weed Smugglers
+
+**Layer:** Cross-layer
+
+**Fantasy:** A harmless coping mechanism turns into a system-wide narcotic crisis.
+
+**Mechanic:** A harmless, slightly relaxing native plant ("Void-Weed") is discovered on Layer 1. Pops cultivate it privately for a tiny mood boost. However, passing Layer 2 merchants discover it's highly addictive to alien species. They start paying exorbitant Credits for it, turning your colony into an accidental cartel.
+
+**Emergence:** Your harmless farming colony becomes incredibly wealthy from smuggling Void-Weed. But the profits attract pirate syndicates who demand a cut, and the Galactic Council threatens to blockade you for dealing narcotics. You are forced to build a massive defense fleet funded entirely by the drug trade.
+
+**Tension:** Massive, easy wealth (Smuggling) vs. Extreme diplomatic and security risks.
+
+---
+
+## Quantum Entanglement Commute
+
+**Layer:** 1
+
+**Fantasy:** Instant travel across the colony, at the cost of your sanity.
+
+**Mechanic:** "Quantum Pads" allow instant teleportation between any two linked points. However, the process causes severe "Disorientation" stress. If used too frequently, Pops develop "Temporal Dissociation," wandering aimlessly and hallucinating that they are in two places at once.
+
+**Emergence:** You link the deep mines to the cafeteria for maximum efficiency. The miners teleport up for lunch every day. Within a month, the entire mining crew is suffering from dissociation, trying to mine the cafeteria tables because their brains think they are still underground.
+
+**Tension:** Ultimate logistical efficiency (Instant travel) vs. Psychological degradation (Stress).
+
+---
+
+## The Phantom Debt
+
+**Layer:** 3 -> 1
+
+**Fantasy:** The sins of the father are visited upon the son. A bill from a civilization that no longer exists.
+
+**Mechanic:** A heavily armed, automated Layer 3 "Collection Fleet" arrives in your system. They claim your colony world was purchased by a defunct precursor empire thousands of years ago, and they are here to collect the accumulated interest. They demand an impossible amount of resources or they will foreclose on the planet.
+
+**Emergence:** You cannot possibly pay the debt. You try to fight them, but their shields are impenetrable. You survive by intentionally plunging your colony into a dark age, shutting off all power and tech signatures so the automated fleet thinks the planet is dead and leaves, resetting your progress by decades.
+
+**Tension:** Face an impossible enemy (Combat) vs. Play dead and lose your technology (Survival).
