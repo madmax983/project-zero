@@ -586,6 +586,10 @@ pub use scrapcode::*;
 #[cfg(test)]
 mod fauna_modular_tests;
 
+/// Bio-Acoustic Chorus (Spec 419).
+pub mod bio_acoustic;
+pub use bio_acoustic::*;
+
 /// Chemical regulation system (Spec 181).
 pub mod chemical;
 /// Cryo-Stasis system (Spec 139).
