@@ -7520,7 +7520,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Sleepwalker's Guild
+## [SPECCED] The Sleepwalker's Guild
 
 **Layer:** 1
 
@@ -7618,7 +7618,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Mimetic Plague
+## [SPECCED] The Mimetic Plague
 
 **Layer:** 1
 
@@ -8508,7 +8508,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Bureaucratic Schism
+## [SPECCED] The Bureaucratic Schism
 
 **Layer:** 3 -> 1
 
@@ -8522,7 +8522,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Orbital Kessler Rings
+## [SPECCED] Orbital Kessler Rings
 
 **Layer:** 2
 
@@ -8536,7 +8536,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Heirloom Virus
+## [SPECCED] The Heirloom Virus
 
 **Layer:** Cross-layer
 
