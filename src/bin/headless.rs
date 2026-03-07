@@ -48,7 +48,9 @@ fn main() {
     let mut world = setup_world_with_config(SetupConfig { headless: true });
     *world.resource_mut::<GameState>() = GameState::Running;
 
-    println!("=== SCALE Headless Mode ===");
+    println!("=======================================================");
+    println!("             SCALE Headless Dashboard");
+    println!("=======================================================");
     println!("Type 'help' for commands, 'quit' to exit.\n");
     print_status(&mut world);
     println!();
@@ -340,14 +342,14 @@ fn print_status(world: &mut World) {
 
     println!(
         "{}",
-        format!("=== COLONY STATUS (Tick {tick}) ===")
+        format!("================== COLONY STATUS (Tick {tick}) ==================")
             .green()
             .bold()
     );
 
     let mut table = Table::new();
     table
-        .load_preset(UTF8_FULL)
+        .load_preset(comfy_table::presets::UTF8_FULL_CONDENSED)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("Category").add_attribute(Attribute::Bold),
@@ -507,15 +509,15 @@ fn print_status(world: &mut World) {
 fn print_tech(world: &mut World) {
     let tech_state = world.resource::<TechState>();
 
-    println!("{}", "=== TECHNOLOGY STATUS ===".green().bold());
+    println!("{}", "================== TECHNOLOGY STATUS ==================".green().bold());
     println!(
-        "Total Capacity: {:.1} TB | Used: {:.1} TB",
+        "💾 Total Capacity: {:.1} TB | Used: {:.1} TB",
         tech_state.total_capacity, tech_state.used_capacity
     );
 
     let mut table = Table::new();
     table
-        .load_preset(UTF8_FULL)
+        .load_preset(comfy_table::presets::UTF8_FULL_CONDENSED)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("Technology").add_attribute(Attribute::Bold),
@@ -566,11 +568,11 @@ fn print_tech(world: &mut World) {
 }
 
 fn print_pops(world: &mut World) {
-    println!("{}", "=== Pop Details ===".green().bold());
+    println!("{}", "================== POPULATION DETAILS ==================".green().bold());
 
     let mut table = Table::new();
     table
-        .load_preset(UTF8_FULL)
+        .load_preset(comfy_table::presets::UTF8_FULL_CONDENSED)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("ID").add_attribute(Attribute::Bold),
@@ -1173,11 +1175,11 @@ fn print_great_works(world: &mut World) {
 
 /// List all buildings with positions
 fn print_buildings(world: &mut World) {
-    println!("{}", "=== Buildings ===".green().bold());
+    println!("{}", "================== BUILDINGS ==================".green().bold());
 
     let mut table = Table::new();
     table
-        .load_preset(UTF8_FULL)
+        .load_preset(comfy_table::presets::UTF8_FULL_CONDENSED)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("ID").add_attribute(Attribute::Bold),
@@ -1286,7 +1288,7 @@ fn print_bio(world: &mut World, target_id: u32) {
 fn print_chronicle(world: &mut World) {
     let chronicle = world.resource::<Chronicle>();
 
-    println!("{}", "=== Colony Chronicle ===".green().bold());
+    println!("{}", "================== COLONY CHRONICLE ==================".green().bold());
 
     if chronicle.events.is_empty() {
         println!("  (No history recorded)");
@@ -1295,7 +1297,7 @@ fn print_chronicle(world: &mut World) {
 
     let mut table = Table::new();
     table
-        .load_preset(UTF8_FULL)
+        .load_preset(comfy_table::presets::UTF8_FULL_CONDENSED)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("Year").add_attribute(Attribute::Bold),
@@ -1330,7 +1332,7 @@ fn print_chronicle(world: &mut World) {
 fn print_log(world: &mut World) {
     let log = world.resource::<MessageLog>();
 
-    println!("{}", "=== Message Log ===".green().bold());
+    println!("{}", "================== MESSAGE LOG ==================".green().bold());
 
     if log.messages.is_empty() {
         println!("  (No messages)");

@@ -178,13 +178,14 @@ pub fn get_status_line<'a>(
 
     // 1. Play/Pause
     if paused {
-        spans.push(Span::styled(" ⏸ ", Style::default().fg(Color::Red)));
+        spans.push(Span::styled(" ⏸ ", Style::default().fg(Color::Red).add_modifier(Modifier::BOLD)));
     } else {
-        spans.push(Span::styled(" ▶ ", Style::default().fg(Color::Green)));
+        spans.push(Span::styled(" ▶ ", Style::default().fg(Color::Green).add_modifier(Modifier::BOLD)));
     }
 
     // 2. Day
-    spans.push(Span::raw(format!("Day {tick} │ ")));
+    spans.push(Span::styled(format!("Day {} ", tick), Style::default().add_modifier(Modifier::BOLD)));
+    spans.push(Span::styled("│ ", Style::default().fg(Color::DarkGray)));
 
     // 2b. Season
     if let Some(s) = season {
@@ -198,7 +199,7 @@ pub fn get_status_line<'a>(
             format!("{} ", s.name()),
             Style::default().fg(color),
         ));
-        spans.push(Span::raw("│ "));
+        spans.push(Span::styled("│ ", Style::default().fg(Color::DarkGray)));
     }
 
     // 2c. Solar Cycle
@@ -207,15 +208,16 @@ pub fn get_status_line<'a>(
             format!("{} ", cycle.label()),
             Style::default().fg(Color::Yellow),
         ));
-        spans.push(Span::raw("│ "));
+        spans.push(Span::styled("│ ", Style::default().fg(Color::DarkGray)));
     }
 
     // 3. Souls
-    spans.push(Span::styled("Souls: ", Style::default().fg(Color::Cyan)));
+    spans.push(Span::styled("👨 Souls: ", Style::default().fg(Color::Cyan)));
     spans.push(Span::styled(
-        format!("{pop_count} │ "),
-        Style::default().fg(Color::White),
+        format!("{} ", pop_count),
+        Style::default().fg(Color::White).add_modifier(Modifier::BOLD),
     ));
+    spans.push(Span::styled("│ ", Style::default().fg(Color::DarkGray)));
 
     // 4. Morale
     let morale_percent = (morale * 100.0).round() as u8;
@@ -226,11 +228,12 @@ pub fn get_status_line<'a>(
     } else {
         Color::Green
     };
-    spans.push(Span::styled("Morale: ", Style::default().fg(morale_color)));
+    spans.push(Span::styled("😊 Morale: ", Style::default().fg(morale_color)));
     spans.push(Span::styled(
-        format!("{morale_percent}% │ "),
-        Style::default().fg(Color::White),
+        format!("{}% ", morale_percent),
+        Style::default().fg(Color::White).add_modifier(Modifier::BOLD),
     ));
+    spans.push(Span::styled("│ ", Style::default().fg(Color::DarkGray)));
 
     // 4b. Admin Efficiency
     let eff_percent = (efficiency * 100.0).round() as u8;
@@ -241,11 +244,12 @@ pub fn get_status_line<'a>(
     } else {
         Color::Green
     };
-    spans.push(Span::styled("Admin: ", Style::default().fg(eff_color)));
+    spans.push(Span::styled("⚙ Admin: ", Style::default().fg(eff_color)));
     spans.push(Span::styled(
-        format!("{eff_percent}% │ "),
-        Style::default().fg(Color::White),
+        format!("{}% ", eff_percent),
+        Style::default().fg(Color::White).add_modifier(Modifier::BOLD),
     ));
+    spans.push(Span::styled("│ ", Style::default().fg(Color::DarkGray)));
 
     // 5. Yield (Food)
     let total_food = food_yield + rations;
@@ -254,18 +258,20 @@ pub fn get_status_line<'a>(
     } else {
         Color::Green
     };
-    spans.push(Span::styled("Food: ", Style::default().fg(food_color)));
+    spans.push(Span::styled("🌾 Food: ", Style::default().fg(food_color)));
     spans.push(Span::styled(
-        format!("{food_yield:.0}+{rations:.0} │ "),
-        Style::default().fg(Color::White),
+        format!("{:.0}+{:.0} ", food_yield, rations),
+        Style::default().fg(Color::White).add_modifier(Modifier::BOLD),
     ));
+    spans.push(Span::styled("│ ", Style::default().fg(Color::DarkGray)));
 
     // 6. Tools
-    spans.push(Span::styled("Tools: ", Style::default().fg(Color::Yellow)));
+    spans.push(Span::styled("🔨 Tools: ", Style::default().fg(Color::Yellow)));
     spans.push(Span::styled(
-        format!("{tools:.0} │ "),
-        Style::default().fg(Color::White),
+        format!("{:.0} ", tools),
+        Style::default().fg(Color::White).add_modifier(Modifier::BOLD),
     ));
+    spans.push(Span::styled("│ ", Style::default().fg(Color::DarkGray)));
 
     // 6.5 Detection Risk
     let risk_color = if risk_pct > 80.0 {
@@ -275,24 +281,26 @@ pub fn get_status_line<'a>(
     } else {
         Color::DarkGray
     };
-    spans.push(Span::styled("Risk: ", Style::default().fg(risk_color)));
+    spans.push(Span::styled("👁 Risk: ", Style::default().fg(risk_color)));
     spans.push(Span::styled(
-        format!("{risk_pct:.0}% │ "),
-        Style::default().fg(Color::White),
+        format!("{:.0}% ", risk_pct),
+        Style::default().fg(Color::White).add_modifier(Modifier::BOLD),
     ));
+    spans.push(Span::styled("│ ", Style::default().fg(Color::DarkGray)));
 
     // 7. Speed
     spans.push(Span::styled(
         format!("{} ", speed.label()),
-        Style::default().fg(Color::DarkGray),
+        Style::default().fg(Color::Gray).add_modifier(Modifier::ITALIC),
     ));
 
     // 8. Location
     if let Some(name) = location_name {
-        spans.push(Span::raw("│ 📍 "));
+        spans.push(Span::styled("│ ", Style::default().fg(Color::DarkGray)));
+        spans.push(Span::styled("📍 ", Style::default().fg(Color::Red)));
         spans.push(Span::styled(
-            format!("{name} "),
-            Style::default().fg(Color::Magenta),
+            format!("{} ", name),
+            Style::default().fg(Color::Magenta).add_modifier(Modifier::BOLD),
         ));
     }
 
