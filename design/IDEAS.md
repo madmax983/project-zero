@@ -8479,3 +8479,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** A severe hurricane on Layer 1 snaps a tether. The recoiling cable whips through your industrial sector, causing massive damage, while the severed atmospheric collector crashes into a passing trade fleet in Layer 2, sparking a diplomatic crisis.
 
 **Tension:** Do you risk the catastrophic physical danger of the tethers for cheap, abundant rare gases, or rely on expensive, safe orbital extraction ships?
+
+## The Subterranean Sea
+
+**Layer:** 1
+
+**Fantasy:** Mining deep enough breaches an underground ocean, revealing new resources and terrors.
+
+**Mechanic:** Digging past a certain depth layer reveals a massive cavern filled with a dark, bioluminescent sea. It provides limitless water and unique aquatic food sources, but risks massive colony flooding if breached incorrectly, and occasionally spawns abyssal predators.
+
+**Emergence:** You accidentally breach the sea directly under your main generator room, causing a catastrophic steam explosion and drowning half the engineering team, forcing an emergency relocation to the surface.
+
+**Tension:** The immense, limitless resources of the deep vs. the constant, existential threat of drowning your entire colony.
+
+---
+
+## Solar Sail Catapults
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Riding the star's fury to fling cargo across the system.
+
+**Mechanic:** You build massive catchers in orbit that utilize solar flares to launch or receive cargo pods from other planets for free, skipping normal fuel costs. However, a sudden spike in solar weather can cause the pods to miss the catchers and strike the colony on Layer 1 as kinetic bombardments.
+
+**Emergence:** You use the catapult to send emergency food to a starving sister-colony. A solar flare hits during transit, accelerating the pod to a fraction of light speed, accidentally nuking the colony you were trying to save.
+
+**Tension:** Free, instantaneous interplanetary logistics vs. the risk of accidental kinetic strikes.
+
+---
+
+## The Bureaucratic Schism
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Drowning in contradictory paperwork from a distant, out-of-touch capital.
+
+**Mechanic:** The central galactic government issues random, contradictory edicts. One edict mandates 12-hour work shifts, another mandates mandatory 4-hour leisure periods. Loyal pops who try to follow both enter "Bureaucratic Paralysis," standing still and suffering massive stress.
+
+**Emergence:** Your most loyal, rule-abiding citizens become completely useless as they try to mathematically balance contradictory laws, while the rebellious, law-breaking pops become the only ones keeping the colony alive.
+
+**Tension:** Maintaining high loyalty to the central government for trade bonuses vs. ignoring them to actually get work done.
+
+---
+
+## Orbital Kessler Rings
+
+**Layer:** 2
+
+**Fantasy:** A graveyard of ships that chokes the sky.
+
+**Mechanic:** Every ship destroyed in orbit around your planet adds debris. Over time, this forms a Kessler ring. The ring provides excellent scavenging opportunities, but blocks sunlight to Layer 1 (reducing solar power and crop yields) and makes launching new ships extremely dangerous.
+
+**Emergence:** You fight off a massive pirate invasion in orbit. You win, but the wreckage creates a ring so dense that it blocks the sun, plunging your agricultural colony into an artificial ice age and trapping you on the planet.
+
+**Tension:** The wealth of salvaging the dead vs. the slow strangulation of your planet.
+
+---
+
+## The Heirloom Virus
+
+**Layer:** Cross-layer
+
+**Fantasy:** A curse written into the very blood of your founders, waiting to wake up.
+
+**Mechanic:** A dormant cyber-biological virus is encoded into the DNA or cybernetics of a specific bloodline or faction of Pops. It does nothing for generations. Then, a specific trigger (building a certain structure, reaching a population size, or a signal from Layer 3) awakens it, causing them to sabotage critical systems simultaneously.
+
+**Emergence:** Your oldest, most trusted family line of engineers—who have run the main reactor for three generations—suddenly all walk into the core and initiate a meltdown because a hostile Layer 3 empire finally pressed the "activate" button.
+
+**Tension:** Trusting highly skilled, deeply entrenched Pop families vs. the paranoia that they might be carrying a generational time bomb.
+
+---
