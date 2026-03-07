@@ -8344,7 +8344,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Whispering Gallery
+## The Whispering Gallery [SPECCED]
 
 **Layer:** 1
 
@@ -8358,7 +8358,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Gravitational Tides
+## Gravitational Tides [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -8372,7 +8372,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Void-Weed Smugglers
+## The Void-Weed Smugglers [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -8386,7 +8386,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Quantum Entanglement Commute
+## Quantum Entanglement Commute [SPECCED]
 
 **Layer:** 1
 
@@ -8400,7 +8400,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Phantom Debt
+## The Phantom Debt [SPECCED]
 
 **Layer:** 3 -> 1
 
@@ -8412,7 +8412,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Tension:** Face an impossible enemy (Combat) vs. Play dead and lose your technology (Survival).
 
-## The Parasitic Habitation Block
+## The Parasitic Habitation Block [SPECCED]
 
 **Layer:** 1
 
@@ -8426,7 +8426,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Orbital Solar Mirrors
+## Orbital Solar Mirrors [SPECCED]
 
 **Layer:** 2 -> 1
 
