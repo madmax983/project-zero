@@ -4038,3 +4038,523 @@ What the noble demands from the frontier colony.
 - exotic foods
 - absolute silence
 - constant entertainment
+
+## Clone Vat Fragments (Spec 240)
+
+### [CLONE_DESIGNATION]
+How vat-grown pops are referred to.
+
+- Vat-Born
+- Decanted
+- Replicant
+- Tube-Child
+- Synthetic
+- The Grown
+- Ink-Blood
+
+### [VAT_DEFECT]
+Signs of genetic instability.
+
+- soulless eyes
+- rapid-aging
+- genetic drift
+- pale skin
+- muted emotions
+- perfect symmetry (unnerving)
+- synthetic twitch
+
+## Ghost Code Fragments (Spec 246/247)
+
+### [GHOST_BEHAVIOR]
+What the corrupted machine is doing.
+
+- running backward
+- dispensing poison
+- locking doors randomly
+- repeating old warnings
+- venting air
+- whispering from the console
+
+### [OLD_CODE_SOURCE]
+Where the legacy logic came from.
+
+- Founder's OS
+- Precursor logic
+- dead-architect's save state
+- archaic sub-routines
+- forbidden archives
+
+## Infinite Archive Fragments (Spec 248)
+
+### [FORGOTTEN_TECH]
+What had to be deleted.
+
+- steam power
+- basic agriculture
+- old-world medicine
+- the wheel
+- ancient poetry
+- how to make glass
+
+### [ARCHIVE_STATE]
+The condition of the data banks.
+
+- overflowing
+- disorganized
+- dusty
+- hot to the touch
+- screaming with data
+- fragmented
+
+## Quantum Twins Fragments (Spec 245)
+
+### [TWIN_SENSATION]
+What the entangled pop feels.
+
+- an echo-pain
+- a phantom joy
+- a cold shiver
+- a sudden exhaustion
+- someone else's fear
+- a shared breath
+
+### [SEVERANCE_EFFECT]
+The trauma of a twin dying.
+
+- catatonia
+- hollow-eyed staring
+- screaming at the void
+- a sudden, permanent silence
+- a severed soul
+
+## The "Empty" Room Fragments (Spec 251)
+
+### [SANCTUARY_FEELING]
+How the empty space feels.
+
+- absolute silence
+- perfect stillness
+- breathing space
+- a void of demands
+- heavy with peace
+- clean
+
+### [CLUTTER_ITEM]
+What ruins the sanctuary.
+
+- a dropped tool
+- a stray ration
+- a speck of dirt
+- an unfiled form
+- a forgotten boot
+
+## Tectonic Stress Fragments (Spec 252)
+
+### [FAULT_LINE_NAME]
+Names for local geological fractures.
+
+- The Deep Crack
+- Founder's Fault
+- The Jitters
+- The Under-Roar
+- The Break
+- Core-Seam
+
+### [RELIEF_QUAKE_RESULT]
+How the controlled quake feels.
+
+- a gentle sigh of the earth
+- a controlled drop
+- a rattling release
+- a settling of the dust
+- a necessary violent shudder
+
+## Industrial Rhythm Fragments (Spec 260)
+
+### [RHYTHM_SOUND]
+The sound of synchronized machines.
+
+- a perfect heartbeat
+- a synchronous thrum
+- iron music
+- the colony's pulse
+- a hammering song
+- unified breathing
+
+### [DISSONANCE]
+The sound of the rhythm breaking.
+
+- a stuttering clash
+- an off-beat grind
+- jarring static
+- a broken clockwork
+- a missed step
+
+## Black Market Fragments (Spec 348)
+
+### [CONTRABAND_GOODS]
+What the smugglers bring.
+
+- synthetic pleasure-chips
+- stolen military stims
+- untaxed water
+- xeno-cigars
+- unlogged meat
+- blank identification cards
+
+### [SMUGGLER_SHIP]
+How the layer 2 smuggler ship is described.
+
+- an unmarked skiff
+- a silent runner
+- a heavily-modified hauler
+- a ghost-ship
+- a core-world drop-ship with scratched serials
+
+## Thermal Bloom Fragments (Spec 243)
+
+### [HEAT_WAVE_DESC]
+How the industrial heat is described.
+
+- a shimmering wall of heat
+- blindingly bright
+- oppressive and thick
+- melting the paint
+- warping the air
+
+## Kinetic Storage Fragments (Spec 235)
+
+### [KINETIC_TOWER_NAME]
+Names for the massive gravity battery towers.
+
+- The Drop-Tower
+- The Weight
+- Gravity's Bank
+- The Plumb
+- High-Mass Storage
+- The Loom
+
+### [KINETIC_DISASTER]
+How a kinetic storage failure is described.
+
+- a crushing freefall
+- a thunderous drop
+- a shattered foundation
+- a sudden release of mass
+
+## Direct Link Fragments (Spec 236)
+
+### [DIRECT_CONTROL_SENSATION]
+How pops describe being manually controlled by the player/Substrate.
+
+- a cold clarity
+- an undeniable urge
+- a puppet's grace
+- the absolute mandate
+- moving without thinking
+
+## Public Grievances Fragments (Spec 233)
+
+### [GRIEVANCE_TOPIC]
+What pops complain about on the public board.
+
+- stolen rations
+- unfair shifts
+- loud snoring
+- suspicious behavior
+- hoarding
+- terrible cooking
+
+### [PUBLIC_BOARD_NAME]
+Names for the grievance board.
+
+- The Wailing Wall
+- The Open Ledger
+- The Complaint Post
+- Truth-Board
+- The airing of dirt
+
+## The Hum Fragments (Spec 238)
+
+### [HUM_REACTION]
+How sensitive pops react to the global resonance.
+
+- teeth aching
+- tracing spirals
+- sleepless staring
+- finding hidden faults
+- whispering to the walls
+
+### [HUM_DESCRIPTOR]
+Adjectives for the station's vibration.
+
+- bone-deep
+- maddening
+- perfectly rhythmic
+- discordant
+- a low, heavy song
+
+## Photophobic Resources Fragments (Spec 237)
+
+### [DARK_RESOURCE_NAME]
+Flavor names for light-sensitive materials.
+
+- shadow-silk
+- night-bloom
+- void-pearl
+- dark-matter weave
+- gloom-root
+
+### [LIGHT_DAMAGE_SENSATION]
+How the resource degrades in light.
+
+- dissolving into ash
+- screaming (if biological)
+- turning to glass
+- melting away
+- evaporating
+
+## The Visitor Fragments (Spec 234)
+
+### [VISITOR_ENTITY_NAME]
+Names given to the wandering titan.
+
+- The Wanderer
+- The Great Ignorer
+- The Footstep
+- The Indifferent God
+- The Blind Giant
+
+### [VISITOR_DESTRUCTION]
+How the titan damages the colony.
+
+- stepped through the wall
+- crushed the reactor
+- grazed the greenhouse
+- ignored our defenses
+
+## Invasive Biology Fragments (Spec 326)
+
+### [SPORE_NAME]
+Flavor names for alien invasive flora.
+
+- xenofungus
+- void-mold
+- rust-spores
+- terran kudzu
+- ghost-moss
+- the red creep
+
+### [INFECTION_SPEED]
+How fast the spores are spreading.
+
+- silently
+- overnight
+- in hours
+- relentlessly
+- choking the air
+
+### [ZONE_NAME]
+Areas of the colony that get quarantined.
+
+- Sector 4
+- the lower decks
+- the hydroponics bay
+- the east wing
+- the old storage
+
+## Technological Regression Fragments (Spec 328)
+
+### [TECH_FIELD]
+Fields of knowledge that can be forgotten.
+
+- medical rites
+- fusion protocols
+- hydroponic balancing
+- void-navigation
+- advanced masonry
+- the code of iron
+
+### [OLD_EXPERT]
+Titles for the last person who knew the tech.
+
+- the last engineer
+- the old doctor
+- the memory-keeper
+- the final master
+
+## Leader Ascension Fragments (Spec 329)
+
+### [NEW_ROLE]
+What a pop becomes when promoted.
+
+- Planetary Governor
+- Fleet Admiral
+- The High Envoy
+- Sector Overseer
+- Voice of the Substrate
+
+## Biome Aggression Fragments (Spec 330)
+
+### [PLANT_NAME]
+The flora that reclaims the buildings.
+
+- iron-wood roots
+- razor-vines
+- the deep moss
+- shadow-ferns
+- choke-weed
+
+### [LOST_BUILDING]
+The type of building claimed by nature.
+
+- the old pump
+- the border wall
+- the automated drill
+- the observation post
+- the quiet hab
+
+## The Whisper Trade Fragments (Spec 300)
+
+### [SECRET_TYPE]
+The kind of secret discovered.
+
+- a rival's weakness
+- hidden trade routes
+- the location of a pre-history cache
+- a governor's true identity
+- the real cause of the famine
+
+### [BROKER_TITLE]
+Names for the information broker.
+
+- The Whisper-Merchant
+- The Ear
+- The Shadow-Broker
+- The Silent Partner
+
+## The Memory Tithe Fragments (Spec 301)
+
+### [SACRIFICED_MEMORY]
+What the pop gave up.
+
+- their mastery of the forge
+- all knowledge of the old ways
+- their name
+- the faces of their children
+- their fear of the dark
+
+## The Solar Sail Migration Fragments (Spec 302)
+
+### [NOMAD_FLEET_NAME]
+Names for the migrating fleets.
+
+- The Golden Host
+- The Light-Riders
+- The Star-Skimmers
+- The Ancient Migration
+
+### [SOLAR_FOCUS_EFFECT]
+How the massive sails affect the colony.
+
+- blinding, searing heat
+- a miraculous thaw
+- sudden fire
+- an overwhelming dawn
+
+## The Chrono-Vault Fragments (Spec 303)
+
+### [VAULT_CONTENTS]
+What was found inside.
+
+- aged void-wine
+- pristine pre-collapse tech
+- seeds from Earth
+- nothing but dust
+- an echoing warning
+
+## The Bio-Loom Fragments (Spec 304)
+
+### [BIO_SUIT_NAME]
+Flavor names for the living armor.
+
+- flesh-weave
+- symbiote-carapace
+- living-plate
+- the second skin
+- root-armor
+
+### [SUIT_HUNGER_SYMPTOM]
+How the suit reacts when hungry.
+
+- tightening around the ribs
+- phantom pains
+- drawing blood
+- refusing to unlatch
+- whispering
+
+## Pop Relationships Fragments (Spec 047)
+
+### [RELATIONSHIP_EVENT]
+What caused a change in pop affinity.
+
+- sharing a meal
+- surviving the cave-in together
+- a stolen tool
+- a dispute over rations
+- working the same shift
+
+## Tool Economy Fragments (Spec 030)
+
+### [TOOL_FAILURE]
+How a tool breaks.
+
+- snapping cleanly
+- rusting to dust
+- melting in the heat
+- shattering
+- bending uselessly
+
+## Colony Edicts Fragments (Spec 054)
+
+### [EDICT_REACTION]
+How the colony responds to a new law.
+
+- grumbling compliance
+- silent fury
+- cheers in the mess hall
+- a brief riot
+- quiet relief
+
+## Hauling Logistics Fragments (Spec 025)
+
+### [HAULING_COMPLAINT]
+What the haulers complain about.
+
+- the weight of the stone
+- the endless walking
+- the smell of the rot
+- not enough hands
+- broken boots
+
+## Planetary Weather Fronts Fragments (Spec 192)
+
+### [WEATHER_FRONT_NAME]
+Names for massive migrating storm systems.
+
+- The Great Grey
+- The Rolling Dark
+- The Endless Howl
+- The Eye
+- The Sky-Crusher
+
+## Stowaway Fragments (Spec 327)
+
+### [HIDING_SPOT]
+Where the stowaway is discovered.
+
+- the ventilation shaft
+- under the floorboards
+- an empty cargo crate
+- the old maintenance tunnel
+- the dark corner of the warehouse

@@ -1,0 +1,5 @@
+lore: add missing templates for specific completed specs
+
+Adds the missing TEMPLATES for Invasive Biology (326), The Stowaway (327),
+Technological Regression (328), Leader Ascension (329), and Biome Aggression (330).
+Also adds missing FRAGMENTS and LEXICON entries for The Stowaway (327).

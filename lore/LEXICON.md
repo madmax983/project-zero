@@ -2877,3 +2877,318 @@
 **Code reference:** Monthly credit influx
 **Usage:**
 - "We only keep them for the allowance."
+
+## Clone Vats
+
+### tube-born / decanted
+**Replaces:** clone, vat-grown pop
+**Code reference:** `Trait::Clone`
+**Usage:**
+- "A fresh batch of tube-born."
+- "He's just a decanted worker."
+
+### vat-sickness / the drift
+**Replaces:** genetic instability, clone defects
+**Code reference:** `CloneDefect`
+**Usage:**
+- "She has the drift."
+- "Vat-sickness took him early."
+
+## Ghost Code
+
+### ghost in the machine / the whisper
+**Replaces:** legacy code executing, AI glitch
+**Code reference:** `GhostCode` component
+**Usage:**
+- "There's a ghost in the machine today."
+- "Don't listen to the whisper from the console."
+
+## Infinite Archive
+
+### the deep stacks / forgotten memory
+**Replaces:** deleted or archived tech
+**Code reference:** `ArchiveState`
+**Usage:**
+- "Lost to the deep stacks."
+- "We had to purge the forgotten memory."
+
+## Quantum Twins
+
+### echo-soul / entangled
+**Replaces:** quantum twin pop
+**Code reference:** `QuantumTwin` component
+**Usage:**
+- "He is her echo-soul."
+- "They are entangled."
+
+### the severance
+**Replaces:** death of a twin
+**Code reference:** `SeveranceEvent`
+**Usage:**
+- "He didn't survive the severance."
+
+## The "Empty" Room
+
+### the still-place / the sanctuary
+**Replaces:** designated empty room for stress relief
+**Code reference:** `ZoneType::Sanctuary`
+**Usage:**
+- "I need an hour in the still-place."
+- "Keep the sanctuary clean."
+
+## Tectonic Stress
+
+### the pressure / earth-tension
+**Replaces:** tectonic stress level
+**Code reference:** `TectonicStress`
+**Usage:**
+- "The pressure is building."
+- "Release the earth-tension."
+
+### relief-crack
+**Replaces:** triggered minor earthquake
+**Code reference:** `ReliefQuake`
+**Usage:**
+- "Set the charges for a relief-crack."
+
+## Industrial Rhythm
+
+### the heartbeat / the synchronization
+**Replaces:** machine sync bonus
+**Code reference:** `RhythmBonus`
+**Usage:**
+- "The factory has found its heartbeat."
+- "Working in perfect synchronization."
+
+### out of step
+**Replaces:** broken rhythm, dissonant noise
+**Usage:**
+- "The new drill is out of step."
+
+## Black Market
+
+### the dark-exchange / under-the-table
+**Replaces:** black market trade
+**Code reference:** `BlackMarketTrade`
+**Usage:**
+- "Bought it on the dark-exchange."
+- "Strictly under-the-table."
+
+## Thermal Bloom
+
+### heat-bloom / the shimmer
+**Replaces:** industrial heat wave
+**Code reference:** `ThermalBloomEvent`
+**Usage:**
+- "A heat-bloom from the reactor."
+- "Walking through the shimmer."
+
+## Kinetic Storage
+
+### gravity-bank / drop-tower
+**Replaces:** Kinetic storage building
+**Code reference:** `KineticStorage`
+**Usage:**
+- "Storing power in the gravity-bank."
+- "The drop-tower is fully loaded."
+
+### the plummet
+**Replaces:** Kinetic storage failure/collapse
+**Usage:**
+- "Did you hear the plummet?"
+- "Crushed in the plummet."
+
+## Direct Link
+
+### the mandate / cold-will
+**Replaces:** Direct control state
+**Code reference:** `DirectlyControlled`
+**Usage:**
+- "He has the mandate today."
+- "Moving with cold-will."
+
+## Public Grievances
+
+### the wailing wall / dirt-board
+**Replaces:** Public grievance board
+**Code reference:** `GrievanceBoard`
+**Usage:**
+- "Post it on the wailing wall."
+- "He's all over the dirt-board today."
+
+## The Hum
+
+### the sing / station-song
+**Replaces:** Global vibration/resonance
+**Code reference:** `GlobalResonance`
+**Usage:**
+- "Can you feel the sing?"
+- "The station-song is loud tonight."
+
+### sensitive / hum-touched
+**Replaces:** Pops who react to the hum
+**Code reference:** `Trait::Sensitive`
+**Usage:**
+- "She's a sensitive."
+- "The hum-touched aren't sleeping."
+
+## Photophobic Resources
+
+### dark-matter / gloom-root
+**Replaces:** Light-sensitive items
+**Code reference:** `Photophobic` component
+**Usage:**
+- "Keep the dark-matter in the shade."
+- "Harvesting gloom-root."
+
+### sun-burned
+**Replaces:** Degraded by light
+**Usage:**
+- "The crop is sun-burned."
+
+## The Visitor
+
+### the Wanderer / the Titan
+**Replaces:** Indestructible wandering entity
+**Code reference:** `VisitorEntity`
+**Usage:**
+- "The Wanderer is passing through."
+- "Don't build in the Titan's path."
+
+## Invasive Biology
+
+### the creep / void-mold
+**Replaces:** Invasive spore spread
+**Code reference:** `Spore` component
+**Usage:**
+- "Burn the void-mold before it spreads."
+- "The creep is in sector 4."
+
+### the purge
+**Replaces:** Quarantine burn designation
+**Code reference:** `DesignationType::Burn`
+**Usage:**
+- "Order the purge on the east wing."
+
+## Technological Regression
+
+### the forgetting / black-box
+**Replaces:** Tech regression event, disabled building
+**Code reference:** `DisabledState` due to `TechRequirement`
+**Usage:**
+- "We are suffering the forgetting."
+- "The MRI is just a black-box now."
+
+## Leader Ascension
+
+### The Climb / elevated
+**Replaces:** Promoted pop
+**Code reference:** `PromotePopEvent`
+**Usage:**
+- "He made The Climb to Governor."
+- "She was elevated to the fleet."
+
+## Biome Aggression
+
+### the reclaim / green-choke
+**Replaces:** Biome destroying buildings
+**Code reference:** `biome_encroachment_system`
+**Usage:**
+- "The reclaim took the border wall."
+- "Fight back the green-choke."
+
+## The Whisper Trade
+
+### whisper-broker
+**Replaces:** Information broker, spy
+**Code reference:** `WhisperBroker` job
+**Usage:**
+- "Talk to the whisper-broker."
+
+## The Memory Tithe
+
+### empty-head / the blank
+**Replaces:** Pop who has been memory wiped
+**Code reference:** `Trait::MemoryWiped`
+**Usage:**
+- "He came back from the siphon an empty-head."
+
+## The Solar Sail Migration
+
+### the great mirror
+**Replaces:** Nomad fleet passing
+**Code reference:** `SolarMigrationEvent`
+**Usage:**
+- "The great mirror is passing over."
+
+## The Chrono-Vault
+
+### time-capsule
+**Replaces:** Chrono-Vault building
+**Code reference:** `ChronoVault`
+**Usage:**
+- "Sealing the time-capsule."
+
+## The Bio-Loom
+
+### flesh-weave / second-skin
+**Replaces:** Bio-Loom armor
+**Code reference:** `BioSuit` item
+**Usage:**
+- "Suit up in the flesh-weave."
+
+## Pop Relationships
+
+### blood-kin / shield-mate
+**Replaces:** High affinity friend
+**Code reference:** `Relationship::Friend`
+**Usage:**
+- "He is my shield-mate."
+
+### shadow / bad-blood
+**Replaces:** Low affinity rival
+**Code reference:** `Relationship::Rival`
+**Usage:**
+- "There is bad-blood between them."
+
+## Tool Economy
+
+### dead-iron
+**Replaces:** Broken tool
+**Code reference:** `ToolState::Broken`
+**Usage:**
+- "This drill is dead-iron."
+
+## Colony Edicts
+
+### the Mandate
+**Replaces:** Active global edict
+**Code reference:** `ActiveEdict`
+**Usage:**
+- "Follow the Mandate."
+
+## Hauling Logistics
+
+### the line / mule-work
+**Replaces:** Hauling job
+**Code reference:** `JobType::Hauler`
+**Usage:**
+- "Put him on the line."
+- "Nobody wants mule-work."
+
+## Planetary Weather Fronts
+
+### sky-wall
+**Replaces:** Approaching weather front
+**Code reference:** `WeatherFront`
+**Usage:**
+- "Look at the sky-wall coming in."
+
+## The Stowaway
+
+### the Uninvited / ghost-eater
+**Replaces:** Stowaway pop
+**Code reference:** `Stowaway` component
+**Usage:**
+- "We have an Uninvited guest."
+- "A ghost-eater is in the stores."

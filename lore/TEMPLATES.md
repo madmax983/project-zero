@@ -2780,3 +2780,383 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "The forest takes it back. [YEAR]. The [LOST_BUILDING] is covered in [PLANT_NAME]."
 - "[YEAR]: Maintenance failure. [PLANT_NAME] roots destroyed the [LOST_BUILDING]."
 - "Green creeping death. The [LOST_BUILDING] belongs to the [PLANT_NAME] now. [YEAR]."
+
+## Template: CLONE_DECANTED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME], [CLONE_DESIGNATION]
+
+**Patterns:**
+- "A new [CLONE_DESIGNATION] steps from the vat. [YEAR]. We call them [NAME]."
+- "[YEAR]: Decanting complete. [NAME], a [CLONE_DESIGNATION], joins the line."
+- "Flesh from the machine. [NAME] is born. A [CLONE_DESIGNATION]. [YEAR]."
+
+## Template: CLONE_DEFECT_NOTICED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME], [VAT_DEFECT]
+
+**Patterns:**
+- "[NAME] is showing signs of the vat. [YEAR]. They have [VAT_DEFECT]."
+- "[YEAR]: Genetic instability in [NAME]. The [VAT_DEFECT] is obvious."
+- "The vats aren't perfect. [NAME] suffers from [VAT_DEFECT]. [YEAR]."
+
+## Template: GHOST_CODE_ACTIVATED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [BUILDING_TYPE], [GHOST_BEHAVIOR], [OLD_CODE_SOURCE]
+
+**Patterns:**
+- "The [BUILDING_TYPE] is [GHOST_BEHAVIOR]. [YEAR]. It must be running [OLD_CODE_SOURCE]."
+- "[YEAR]: Logic error. The [BUILDING_TYPE] inherited [OLD_CODE_SOURCE]. Now it's [GHOST_BEHAVIOR]."
+- "Machine possession. A [BUILDING_TYPE] starts [GHOST_BEHAVIOR] due to [OLD_CODE_SOURCE]. [YEAR]."
+
+## Template: ARCHIVE_DELETION
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [FORGOTTEN_TECH], [ARCHIVE_STATE]
+
+**Patterns:**
+- "The data banks are [ARCHIVE_STATE]. [YEAR]. We had to delete [FORGOTTEN_TECH] to make room."
+- "[YEAR]: We forget [FORGOTTEN_TECH]. The core is too [ARCHIVE_STATE]."
+- "Sacrificing the past. Knowledge of [FORGOTTEN_TECH] purged from the [ARCHIVE_STATE] drives. [YEAR]."
+
+## Template: TWIN_ENTANGLED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME_A], [NAME_B], [TWIN_SENSATION]
+
+**Patterns:**
+- "[NAME_A] and [NAME_B] are linked. [YEAR]. They share [TWIN_SENSATION]."
+- "[YEAR]: Quantum entanglement confirmed between [NAME_A] and [NAME_B]. A bond of [TWIN_SENSATION]."
+- "Two minds, one feeling. [NAME_A] reports [TWIN_SENSATION] from [NAME_B]. [YEAR]."
+
+## Template: TWIN_SEVERED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SURVIVOR_NAME], [SEVERANCE_EFFECT]
+
+**Patterns:**
+- "The link is broken. [YEAR]. [SURVIVOR_NAME] falls into [SEVERANCE_EFFECT]."
+- "[YEAR]: Half a soul remains. [SURVIVOR_NAME] suffers [SEVERANCE_EFFECT] after the severance."
+- "Death echoes across the void. [SURVIVOR_NAME] is left with [SEVERANCE_EFFECT]. [YEAR]."
+
+## Template: SANCTUARY_VIOLATED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [CLUTTER_ITEM]
+
+**Patterns:**
+- "The empty room is ruined. [YEAR]. Someone left [CLUTTER_ITEM]."
+- "[YEAR]: The peace is broken by [CLUTTER_ITEM] on the floor."
+- "A violation of the silence. [CLUTTER_ITEM] found in the sanctuary. [YEAR]."
+
+## Template: TECTONIC_STRESS_WARNING
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [FAULT_LINE_NAME]
+
+**Patterns:**
+- "Pressure building in [FAULT_LINE_NAME]. [YEAR]. The ground is tight."
+- "[YEAR]: Stress critical at [FAULT_LINE_NAME]. We need to vent it."
+- "The crust groans. [FAULT_LINE_NAME] is ready to snap. [YEAR]."
+
+## Template: RELIEF_QUAKE_TRIGGERED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [FAULT_LINE_NAME], [RELIEF_QUAKE_RESULT]
+
+**Patterns:**
+- "We triggered a slip at [FAULT_LINE_NAME]. [YEAR]. It was [RELIEF_QUAKE_RESULT]."
+- "[YEAR]: Pressure vented safely from [FAULT_LINE_NAME]. Just [RELIEF_QUAKE_RESULT]."
+- "[RELIEF_QUAKE_RESULT] along the [FAULT_LINE_NAME]. The big one is averted. [YEAR]."
+
+## Template: INDUSTRIAL_RHYTHM_SYNC
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [RHYTHM_SOUND]
+
+**Patterns:**
+- "The machines align. [YEAR]. A [RHYTHM_SOUND] echoes through the sector."
+- "[YEAR]: Perfect synchronization. The factory makes [RHYTHM_SOUND]."
+- "Morale rises to the [RHYTHM_SOUND] of the works. [YEAR]."
+
+## Template: INDUSTRIAL_RHYTHM_BROKEN
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DISSONANCE]
+
+**Patterns:**
+- "The beat drops. [YEAR]. We hear [DISSONANCE]."
+- "[YEAR]: Synchronization lost. The noise is [DISSONANCE]."
+- "The [DISSONANCE] of broken rhythm. Stress levels rising. [YEAR]."
+
+## Template: SMUGGLER_ARRIVAL
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SMUGGLER_SHIP]
+
+**Patterns:**
+- "[SMUGGLER_SHIP] detected at the edge of sensor range. [YEAR]."
+- "[YEAR]: The black market is open. [SMUGGLER_SHIP] makes a dark landing."
+- "Unregistered arrival. Looks like [SMUGGLER_SHIP]. [YEAR]."
+
+## Template: ILLEGAL_GOODS_BOUGHT
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [CONTRABAND_GOODS]
+
+**Patterns:**
+- "Credits spent in the dark. [YEAR]. We secured [CONTRABAND_GOODS]."
+- "[YEAR]: Off-book logistics. A crate of [CONTRABAND_GOODS] enters circulation."
+- "Needs must. We bought [CONTRABAND_GOODS] from the shadow market. [YEAR]."
+
+## Template: THERMAL_BLOOM_EVENT
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [HEAT_WAVE_DESC]
+
+**Patterns:**
+- "The core vents. [YEAR]. A [HEAT_WAVE_DESC] washes over the industrial zone."
+- "[YEAR]: Massive thermal output. We are trapped in [HEAT_WAVE_DESC]."
+- "Production creates [HEAT_WAVE_DESC]. Cooling systems failing. [YEAR]."
+
+## Template: KINETIC_TOWER_BUILT
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [KINETIC_TOWER_NAME]
+
+**Patterns:**
+- "[KINETIC_TOWER_NAME] raised. [YEAR]. Storing power in gravity."
+- "[YEAR]: We lift the mass. [KINETIC_TOWER_NAME] is operational."
+- "Energy secured. The [KINETIC_TOWER_NAME] stands ready at [COLONY]. [YEAR]."
+
+## Template: KINETIC_DISASTER_EVENT
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [KINETIC_TOWER_NAME], [KINETIC_DISASTER]
+
+**Patterns:**
+- "The cable snapped on [KINETIC_TOWER_NAME]. [YEAR]. It was [KINETIC_DISASTER]."
+- "[YEAR]: Gravity claims its due. [KINETIC_TOWER_NAME] falls in [KINETIC_DISASTER]."
+- "Total collapse of [KINETIC_TOWER_NAME]. A [KINETIC_DISASTER] at [COLONY]. [YEAR]."
+
+## Template: DIRECT_LINK_ESTABLISHED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME], [DIRECT_CONTROL_SENSATION]
+
+**Patterns:**
+- "The Substrate moved [NAME] today. [YEAR]. They reported [DIRECT_CONTROL_SENSATION]."
+- "[YEAR]: Direct intervention. [NAME] acted with [DIRECT_CONTROL_SENSATION]."
+- "[NAME] felt the mandate. [DIRECT_CONTROL_SENSATION]. The work is done. [YEAR]."
+
+## Template: GRIEVANCE_POSTED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME], [PUBLIC_BOARD_NAME], [GRIEVANCE_TOPIC]
+
+**Patterns:**
+- "[NAME] took to [PUBLIC_BOARD_NAME]. [YEAR]. Complaining of [GRIEVANCE_TOPIC]."
+- "[YEAR]: Unrest on the [PUBLIC_BOARD_NAME]. [NAME] is angry about [GRIEVANCE_TOPIC]."
+- "Words on the [PUBLIC_BOARD_NAME]. [NAME] accuses someone of [GRIEVANCE_TOPIC]. [YEAR]."
+
+## Template: THE_HUM_FELT
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME], [HUM_DESCRIPTOR], [HUM_REACTION]
+
+**Patterns:**
+- "The station sings. [YEAR]. A [HUM_DESCRIPTOR] sound. [NAME] is [HUM_REACTION]."
+- "[YEAR]: Resonance detected. It is [HUM_DESCRIPTOR]. [NAME] reacts by [HUM_REACTION]."
+- "[NAME] hears the [HUM_DESCRIPTOR] hum. They are [HUM_REACTION]. [YEAR]."
+
+## Template: PHOTOPHOBIC_DEGRADATION
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DARK_RESOURCE_NAME], [LIGHT_DAMAGE_SENSATION]
+
+**Patterns:**
+- "We left the [DARK_RESOURCE_NAME] in the light. [YEAR]. It is [LIGHT_DAMAGE_SENSATION]."
+- "[YEAR]: Light exposure. The [DARK_RESOURCE_NAME] is ruined, [LIGHT_DAMAGE_SENSATION]."
+- "The [DARK_RESOURCE_NAME] cannot bear the sun. [LIGHT_DAMAGE_SENSATION]. [YEAR]."
+
+## Template: VISITOR_ARRIVAL_EVENT
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [VISITOR_ENTITY_NAME]
+
+**Patterns:**
+- "The [VISITOR_ENTITY_NAME] walks the surface. [YEAR]. We are ants to it."
+- "[YEAR]: Tremors. The [VISITOR_ENTITY_NAME] has arrived."
+- "A titan on the horizon. The [VISITOR_ENTITY_NAME] approaches [COLONY]. [YEAR]."
+
+## Template: VISITOR_DAMAGE_EVENT
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [VISITOR_ENTITY_NAME], [VISITOR_DESTRUCTION]
+
+**Patterns:**
+- "The [VISITOR_ENTITY_NAME] just [VISITOR_DESTRUCTION]. [YEAR]."
+- "[YEAR]: Collateral damage. The [VISITOR_ENTITY_NAME] [VISITOR_DESTRUCTION]."
+- "We couldn't stop it. The [VISITOR_ENTITY_NAME] [VISITOR_DESTRUCTION]. [YEAR]."
+
+## Template: SECRET_SOLD
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [BROKER_TITLE], [SECRET_TYPE]
+
+**Patterns:**
+- "[BROKER_TITLE] found a buyer. [YEAR]. They sold [SECRET_TYPE]."
+- "[YEAR]: A deal in the dark. We traded [SECRET_TYPE] for tech."
+- "The galaxy listens. [BROKER_TITLE] sold [SECRET_TYPE]. [YEAR]."
+
+## Template: MEMORY_TITHED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME], [SACRIFICED_MEMORY]
+
+**Patterns:**
+- "[NAME] stepped into the siphon. [YEAR]. They lost [SACRIFICED_MEMORY]."
+- "[YEAR]: The tithe is paid. [NAME] gave up [SACRIFICED_MEMORY]."
+- "A blank stare from [NAME]. [SACRIFICED_MEMORY] taken by the Empire. [YEAR]."
+
+## Template: SOLAR_SAILS_PASS
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NOMAD_FLEET_NAME], [SOLAR_FOCUS_EFFECT]
+
+**Patterns:**
+- "[NOMAD_FLEET_NAME] fills the sky. [YEAR]. The light brings [SOLAR_FOCUS_EFFECT]."
+- "[YEAR]: The migration passes. Mirrors in the void cause [SOLAR_FOCUS_EFFECT]."
+- "Watching [NOMAD_FLEET_NAME] fly over. [SOLAR_FOCUS_EFFECT] on the surface. [YEAR]."
+
+## Template: VAULT_OPENED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [VAULT_CONTENTS]
+
+**Patterns:**
+- "The timer hits zero. [YEAR]. The vault opens to reveal [VAULT_CONTENTS]."
+- "[YEAR]: Patience rewarded. Inside the chrono-vault: [VAULT_CONTENTS]."
+- "We survived long enough to open it. Found [VAULT_CONTENTS]. [YEAR]."
+
+## Template: BIO_SUIT_STARVING
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME], [BIO_SUIT_NAME], [SUIT_HUNGER_SYMPTOM]
+
+**Patterns:**
+- "[NAME]'s [BIO_SUIT_NAME] is hungry. [YEAR]. It is [SUIT_HUNGER_SYMPTOM]."
+- "[YEAR]: The armor demands a toll. [NAME] reports [SUIT_HUNGER_SYMPTOM] from their [BIO_SUIT_NAME]."
+- "Trapped in the [BIO_SUIT_NAME]. [NAME] is suffering from [SUIT_HUNGER_SYMPTOM]. [YEAR]."
+
+## Template: RELATIONSHIP_CHANGED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME_A], [NAME_B], [RELATIONSHIP_EVENT]
+
+**Patterns:**
+- "[NAME_A] and [NAME_B] are closer now. [YEAR]. [RELATIONSHIP_EVENT]."
+- "[YEAR]: Blood boiling between [NAME_A] and [NAME_B]. Cause: [RELATIONSHIP_EVENT]."
+- "A bond broken by [RELATIONSHIP_EVENT]. [NAME_A] and [NAME_B]. [YEAR]."
+
+## Template: TOOL_BROKEN
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME], [TOOL_NAME], [TOOL_FAILURE]
+
+**Patterns:**
+- "[NAME]'s [TOOL_NAME] gave way. [YEAR]. [TOOL_FAILURE]."
+- "[YEAR]: Work stops. [NAME] is holding a [TOOL_NAME], [TOOL_FAILURE]."
+- "The [TOOL_NAME] couldn't take it. [TOOL_FAILURE]. [NAME] needs a replacement. [YEAR]."
+
+## Template: EDICT_ANNOUNCED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [EDICT_NAME], [EDICT_REACTION]
+
+**Patterns:**
+- "The mandate is given: [EDICT_NAME]. [YEAR]. The response: [EDICT_REACTION]."
+- "[YEAR]: [EDICT_NAME] is now law. It is met with [EDICT_REACTION]."
+- "A new rule at [COLONY]. [EDICT_NAME]. [EDICT_REACTION]. [YEAR]."
+
+## Template: LOGISTICS_BOTTLENECK
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [HAULING_COMPLAINT]
+
+**Patterns:**
+- "Nothing is moving. [YEAR]. The haulers complain of [HAULING_COMPLAINT]."
+- "[YEAR]: Gridlock in the stores. They cite [HAULING_COMPLAINT]."
+- "The line is broken. [HAULING_COMPLAINT]. Need more backs to carry it. [YEAR]."
+
+## Template: WEATHER_FRONT_ARRIVAL
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [WEATHER_FRONT_NAME], [WEATHER_INTENSITY]
+
+**Patterns:**
+- "[WEATHER_FRONT_NAME] covers the sky. [YEAR]. It brings [WEATHER_INTENSITY] wind."
+- "[YEAR]: The planet turns on us. [WEATHER_FRONT_NAME] is here. [WEATHER_INTENSITY]."
+- "We are swallowed by [WEATHER_FRONT_NAME]. [WEATHER_INTENSITY] conditions outside. [YEAR]."
+
+## Template: SPORE_OUTBREAK
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SPORE_NAME], [INFECTION_SPEED]
+
+**Patterns:**
+- "The [SPORE_NAME] came with the last shipment. [YEAR]. It spreads [INFECTION_SPEED]."
+- "[YEAR]: Quarantine failed. We found [SPORE_NAME] in the vents. It moves [INFECTION_SPEED]."
+- "They didn't check the cargo. Now [SPORE_NAME] is here. Growth is [INFECTION_SPEED]. [YEAR]."
+
+## Template: QUARANTINE_BURN
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SPORE_NAME], [ZONE_NAME]
+
+**Patterns:**
+- "We had to burn [ZONE_NAME]. [YEAR]. The only way to stop the [SPORE_NAME]."
+- "[YEAR]: Fire is the only cure. [ZONE_NAME] was lost to the [SPORE_NAME]."
+- "The ashes of [ZONE_NAME] smell like [SPORE_NAME]. [YEAR]. We saved the rest."
+
+## Template: STOWAWAY_DISCOVERED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME], [HIDING_SPOT]
+
+**Patterns:**
+- "We found [NAME] in the [HIDING_SPOT]. [YEAR]. They aren't on the manifest."
+- "[YEAR]: An extra mouth. [NAME] fell out of the [HIDING_SPOT]."
+- "Security breach. [NAME] survived the journey hidden in the [HIDING_SPOT]. [YEAR]."
+
+## Template: KNOWLEDGE_LOST
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [TECH_FIELD], [OLD_EXPERT]
+
+**Patterns:**
+- "The old ways die. [YEAR]. Without [OLD_EXPERT], nobody understands [TECH_FIELD] anymore."
+- "[YEAR]: Regression. The [TECH_FIELD] manuals look like gibberish to the new generation."
+- "We stare at the machines. [OLD_EXPERT] took the secrets of [TECH_FIELD] to the grave. [YEAR]."
+
+## Template: LEADER_PROMOTED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME], [NEW_ROLE]
+
+**Patterns:**
+- "From the dirt to the stars. [YEAR]. [NAME] is our new [NEW_ROLE]."
+- "[YEAR]: Ascension. [NAME] leaves the colony behind to become a [NEW_ROLE]."
+- "We lose a worker, but gain a [NEW_ROLE]. [NAME] looks to the sky. [YEAR]."
+
+## Template: BIOME_ENCROACHMENT
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [PLANT_NAME], [LOST_BUILDING]
+
+**Patterns:**
+- "The forest takes it back. [YEAR]. The [LOST_BUILDING] is covered in [PLANT_NAME]."
+- "[YEAR]: Maintenance failure. [PLANT_NAME] roots destroyed the [LOST_BUILDING]."
+- "Green creeping death. The [LOST_BUILDING] belongs to the [PLANT_NAME] now. [YEAR]."

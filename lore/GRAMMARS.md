@@ -2734,3 +2734,420 @@ NOBLE_ARRIVAL:
     - WEALTH (medium, funding)
     - RESENTMENT (high)
 ```
+
+## Clone Vats Chaining
+
+```yaml
+CLONE_DECANTED:
+  enables:
+    - CLONE_DEFECT_NOTICED (medium, over time)
+    - RAPID_WORKFORCE_EXPANSION (always)
+  increases:
+    - FOOD_CONSUMPTION (high)
+    - ENERGY_CONSUMPTION (high)
+
+CLONE_DEFECT_NOTICED:
+  enables:
+    - MEDICAL_EMERGENCY (medium)
+    - SOCIAL_OSTRACIZATION (high)
+  increases:
+    - UNREST (medium)
+```
+
+## Ghost Code Chaining
+
+```yaml
+GHOST_CODE_ACTIVATED:
+  enables:
+    - ACCIDENT (high)
+    - INVESTIGATION (medium)
+    - RETROGRADE_SACRIFICE (low, to wipe the code)
+  increases:
+    - PARANOIA (high)
+    - EFFICIENCY_LOSS (high)
+```
+
+## Infinite Archive Chaining
+
+```yaml
+ARCHIVE_DELETION:
+  enables:
+    - KNOWLEDGE_BREAKTHROUGH (high, new tech replaces old)
+    - CRISIS_DUE_TO_FORGOTTEN_TECH (medium, later)
+  increases:
+    - REGRET (low)
+```
+
+## Quantum Twins Chaining
+
+```yaml
+TWIN_ENTANGLED:
+  enables:
+    - TWIN_SEVERED (if one dies)
+    - SYNCHRONIZED_WORK (high)
+  increases:
+    - COHESION (medium)
+
+TWIN_SEVERED:
+  enables:
+    - FUNERAL_HELD (always)
+    - MEDICAL_EMERGENCY (high, mental break)
+  increases:
+    - GRIEF (maximum)
+```
+
+## The "Empty" Room Chaining
+
+```yaml
+SANCTUARY_VIOLATED:
+  enables:
+    - CLEANUP_DUTY (high)
+    - BRAWL (low, over who messed it up)
+  increases:
+    - STRESS (high)
+    - ANGER (medium)
+```
+
+## Tectonic Stress Chaining
+
+```yaml
+TECTONIC_STRESS_WARNING:
+  enables:
+    - RELIEF_QUAKE_TRIGGERED (high, player action)
+    - SEISMIC_TREMOR (high, if ignored)
+  increases:
+    - FEAR (high)
+    - CAUTION (high)
+
+RELIEF_QUAKE_TRIGGERED:
+  enables:
+    - MINOR_STRUCTURAL_DAMAGE (medium)
+    - DUST_STORM (low)
+  increases:
+    - RELIEF (high)
+```
+
+## Industrial Rhythm Chaining
+
+```yaml
+INDUSTRIAL_RHYTHM_SYNC:
+  enables:
+    - PRODUCTIVITY_BOOST (always)
+    - INDUSTRIAL_RHYTHM_BROKEN (if disrupted)
+  increases:
+    - MORALE (high)
+
+INDUSTRIAL_RHYTHM_BROKEN:
+  enables:
+    - WORK_SLOWDOWN (high)
+    - MAINTENANCE_REQUEST (medium)
+  increases:
+    - STRESS (high)
+```
+
+## Black Market Chaining
+
+```yaml
+SMUGGLER_ARRIVAL:
+  enables:
+    - ILLEGAL_GOODS_BOUGHT (high)
+    - SECURITY_SWEEP (medium)
+  increases:
+    - CORRUPTION (medium)
+    - OPPORTUNITY (high)
+
+ILLEGAL_GOODS_BOUGHT:
+  enables:
+    - ADDICTION_CRISIS (medium, if stims)
+    - SUDDEN_WEALTH (low)
+  increases:
+    - MORALE (medium, short term)
+    - RISK (high)
+```
+
+## Thermal Bloom Chaining
+
+```yaml
+THERMAL_BLOOM_EVENT:
+  enables:
+    - HEAT_STROKE (high)
+    - COOLING_SYSTEM_FAILURE (medium)
+  increases:
+    - DISCOMFORT (maximum)
+    - ENERGY_DRAIN (high)
+```
+
+## Kinetic Storage Chaining
+
+```yaml
+KINETIC_TOWER_BUILT:
+  enables:
+    - ENERGY_SURPLUS (high)
+    - KINETIC_DISASTER_EVENT (low, persistent risk)
+  increases:
+    - INDUSTRIAL_CAPACITY (high)
+    - ANXIETY (low, for nearby pops)
+
+KINETIC_DISASTER_EVENT:
+  enables:
+    - STRUCTURE_COLLAPSE (always)
+    - EMERGENCY_REBUILD (high)
+  increases:
+    - DESTRUCTION (maximum)
+    - TRAUMA (high)
+```
+
+## Direct Link Chaining
+
+```yaml
+DIRECT_LINK_ESTABLISHED:
+  enables:
+    - HEROIC_SUCCESS (high)
+    - NEGLECTED_INFRASTRUCTURE (medium, player focused elsewhere)
+  increases:
+    - EFFICIENCY (maximum, for that pop)
+    - EXISTENTIAL_DREAD (low, for that pop)
+```
+
+## Public Grievances Chaining
+
+```yaml
+GRIEVANCE_POSTED:
+  enables:
+    - SOCIAL_OSTRACIZATION (high, for the accused)
+    - BRAWL (medium, if confronted)
+    - INVESTIGATION (low)
+  increases:
+    - UNREST (medium)
+    - PARANOIA (low)
+```
+
+## The Hum Chaining
+
+```yaml
+THE_HUM_FELT:
+  enables:
+    - SLEEP_DEPRIVATION (high)
+    - CULT_FORMATION (low, "Cult of the Hum")
+    - HIDDEN_RESOURCE_DISCOVERED (medium, sensitive pop finds it)
+  increases:
+    - STRESS (high, for sensitive pops)
+```
+
+## Photophobic Resources Chaining
+
+```yaml
+PHOTOPHOBIC_DEGRADATION:
+  enables:
+    - RESOURCE_SHORTAGE (high)
+    - LOGISTICS_REDESIGN (medium, need dark paths)
+  increases:
+    - FRUSTRATION (medium)
+    - WASTE (high)
+```
+
+## The Visitor Chaining
+
+```yaml
+VISITOR_ARRIVAL_EVENT:
+  enables:
+    - VISITOR_DAMAGE_EVENT (high risk)
+    - AWE_STRUCK (medium, morale buff/stun)
+    - RARE_RESOURCE_DROP (high, when it leaves)
+  increases:
+    - FEAR (high)
+    - URGENCY (high)
+
+VISITOR_DAMAGE_EVENT:
+  enables:
+    - REBUILDING_EFFORT (always)
+    - BASE_REDESIGN (high, to avoid its path)
+  increases:
+    - DESTRUCTION (high)
+    - HELPLESSNESS (medium)
+```
+
+## Invasive Biology Chaining
+
+```yaml
+SPORE_OUTBREAK:
+  enables:
+    - QUARANTINE_BURN (high)
+    - SICKNESS_OUTBREAK (high, if not contained)
+  increases:
+    - FEAR (medium)
+    - RESOURCE_WASTE (high, due to purging)
+
+QUARANTINE_BURN:
+  enables:
+    - REBUILDING_EFFORT (always)
+  increases:
+    - RELIEF (medium)
+    - ANGER (low, if important things burned)
+```
+
+## The Stowaway Chaining
+
+```yaml
+STOWAWAY_DISCOVERED:
+  enables:
+    - ARREST (high, if hostile)
+    - RECRUITMENT (medium, if useful)
+    - THEFT_REPORT (low, solving the mystery)
+  increases:
+    - PARANOIA (medium)
+    - SECURITY_AWARENESS (high)
+```
+
+## Technological Regression Chaining
+
+```yaml
+KNOWLEDGE_LOST:
+  enables:
+    - MACHINE_MALFUNCTION (high)
+    - RESEARCH_INITIATIVE (medium, trying to relearn)
+  increases:
+    - INEFFICIENCY (high)
+    - REGRET (medium)
+```
+
+## Leader Ascension Chaining
+
+```yaml
+LEADER_PROMOTED:
+  enables:
+    - CELEBRATION (low)
+    - JOB_VACANCY (always, L1 pop removed)
+  increases:
+    - PRIDE (high)
+    - INFLUENCE (medium, on L2/L3)
+```
+
+## Biome Aggression Chaining
+
+```yaml
+BIOME_ENCROACHMENT:
+  enables:
+    - REPAIR_RUSH (high)
+    - WEEDING_TASK_CREATED (always)
+  increases:
+    - MAINTENANCE_DEBT (high)
+    - NATURE_FEAR (low)
+```
+
+## The Whisper Trade Chaining
+
+```yaml
+SECRET_SOLD:
+  enables:
+    - NEW_TECH_AVAILABLE (high)
+    - INVESTIGATION (high, from the victims)
+  increases:
+    - PARANOIA (medium)
+    - WEALTH (high)
+```
+
+## The Memory Tithe Chaining
+
+```yaml
+MEMORY_TITHED:
+  enables:
+    - DIPLOMATIC_GRACE (high, empire is pleased)
+    - ACCIDENT (medium, due to forgotten skills)
+  increases:
+    - DEPRESSION (high)
+    - SAFETY (high, from invasion)
+```
+
+## The Solar Sail Migration Chaining
+
+```yaml
+SOLAR_SAILS_PASS:
+  enables:
+    - HARVEST_BOOM (medium, if timed right)
+    - FIRE_OUTBREAK (high, if summer)
+  increases:
+    - WONDER (high)
+    - SOLAR_POWER (maximum)
+```
+
+## The Chrono-Vault Chaining
+
+```yaml
+VAULT_OPENED:
+  enables:
+    - CELEBRATION (high, if good contents)
+    - TECH_BREAKTHROUGH (medium)
+  increases:
+    - MORALE (high)
+```
+
+## The Bio-Loom Chaining
+
+```yaml
+BIO_SUIT_STARVING:
+  enables:
+    - MEDICAL_EMERGENCY (high, anemia)
+    - BRAWL (low, pop is irritable)
+  increases:
+    - FATIGUE (high)
+    - FEAR_OF_TECH (medium)
+```
+
+## Pop Relationships Chaining
+
+```yaml
+RELATIONSHIP_CHANGED:
+  enables:
+    - BRAWL (medium, if negative change)
+    - MARRIAGE (low, if positive change)
+  increases:
+    - COHESION (if positive)
+    - STRESS (if negative)
+```
+
+## Tool Economy Chaining
+
+```yaml
+TOOL_BROKEN:
+  enables:
+    - WORK_STOPPAGE (high)
+    - INJURY_ACCIDENT (low, tool snapped back)
+  increases:
+    - RESOURCE_DEMAND (high, for replacements)
+```
+
+## Colony Edicts Chaining
+
+```yaml
+EDICT_ANNOUNCED:
+  enables:
+    - COMPLIANCE_CHECK (always)
+    - PROTEST_CROWD (medium, if unpopular)
+  increases:
+    - AUTHORITY (high)
+    - UNREST (variable)
+```
+
+## Hauling Logistics Chaining
+
+```yaml
+LOGISTICS_BOTTLENECK:
+  enables:
+    - SPOILAGE_EVENT (high, food not moved)
+    - PRODUCTION_HALT (high, outputs full)
+  increases:
+    - FRUSTRATION (high)
+```
+
+## Planetary Weather Fronts Chaining
+
+```yaml
+WEATHER_FRONT_ARRIVAL:
+  enables:
+    - POWER_OUTAGE (medium)
+    - INDOOR_CONFINEMENT (high)
+  increases:
+    - FEAR (medium)
+    - WEATHER_DAMAGE (high)
+```
