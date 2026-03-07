@@ -65,7 +65,7 @@ pub fn dream_system(
     generator: Res<NarrativeGenerator>,
 ) {
     let current_tick = time.tick;
-    let chronicle_events: Vec<_> = chronicle.events.clone();
+    let chronicle_events = &chronicle.events;
     let mut rng = rand::thread_rng();
 
     for (entity, assigned, action, mut needs, memories_opt, journal_opt) in &mut sleeping_pops {
@@ -85,7 +85,7 @@ pub fn dream_system(
         commands.entity(entity).insert(DreamtThisSleep);
 
         let (dream_content, impact, is_nightmare) =
-            generate_dream_content(&mut rng, &chronicle_events, &generator, memories_opt);
+            generate_dream_content(&mut rng, chronicle_events, &generator, memories_opt);
 
         // Apply dream impact
         // Nightmares reduce leisure (stress), Good dreams increase it
