@@ -124,3 +124,8 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `378` Comms Relay — `specs/378-comms-relay.md`
 - [ ] `379` Launch Windows — `specs/379-launch-windows.md`
 - [ ] `380` The Great Filter — `specs/380-the-great-filter.md`
+- [ ] `381` Room Zones — `specs/381-room-zones.md`
+- [ ] `382` Merchant Landings — `specs/382-merchant-landings.md`
+- [ ] `383` Diplomatic Marriage — `specs/383-diplomatic-marriage.md`
+- [ ] `384` Orbital Synch — `specs/384-orbital-synch.md`
+- [ ] `385` Terraforming Backlash — `specs/385-terraforming-backlash.md`

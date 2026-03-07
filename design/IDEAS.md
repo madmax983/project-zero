@@ -734,7 +734,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Room Zones
+## Room Zones [SPECCED]
 
 **Layer:** 1
 
@@ -818,7 +818,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Merchant Landings
+## Merchant Landings [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -930,7 +930,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Diplomatic Marriage
+## Diplomatic Marriage [SPECCED]
 
 **Layer:** 3 -> 1
 
@@ -944,7 +944,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Orbital Synch
+## Orbital Synch [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -958,7 +958,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Terraforming Backlash
+## Terraforming Backlash [SPECCED]
 
 **Layer:** 2
 
