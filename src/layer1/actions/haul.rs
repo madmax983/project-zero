@@ -16,6 +16,7 @@ use bevy_ecs::prelude::*;
 /// 3.  **Pickup (Idle):** If empty-handed, find the nearest loose item (0.60 base).
 ///     This is a lower priority than "real work" (Mining/Building).
 #[must_use]
+#[allow(clippy::too_many_arguments)]
 pub(crate) fn evaluate_haul(
     pop_pos: GridPosition,
     weights: &UtilityWeights,

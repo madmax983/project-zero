@@ -72,12 +72,10 @@ pub fn check_spawn_conditions(
 }
 
 /// A resource to track the cooldown between shadow trader spawns
-#[derive(Resource)]
-#[derive(Default)]
+#[derive(Resource, Default)]
 pub struct ShadowMarketManager {
     pub cooldown: u64,
 }
-
 
 pub fn spawn_shadow_trader_system(
     mut commands: Commands,
@@ -109,13 +107,12 @@ pub fn spawn_shadow_trader_system(
             y: ry as i32,
         };
         if check_spawn_conditions(pos, &light_map, &terrain) {
-            let mut deals = vec![];
-            deals.push(TradeDeal {
+            let deals = vec![TradeDeal {
                 cost_resource: ResourceType::Food,
                 cost_amount: 10.0,
                 give_resource: ResourceType::Alcohol, // Contraband
                 give_amount: 5.0,
-            });
+            }];
 
             commands.spawn((
                 ShadowTrader {

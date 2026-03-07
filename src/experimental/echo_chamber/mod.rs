@@ -78,7 +78,7 @@ pub fn apply_echo_chamber_system(
     for (_, pos, mut morale, mut stress) in all_pops.iter_mut() {
         // Find if this pop is influenced by any echo
         for (echo_pos, is_positive) in &echo_sources {
-            if pos.distance_chebyshev(*echo_pos) <= ECHO_RADIUS.try_into().unwrap_or(0) {
+            if pos.distance_chebyshev(*echo_pos) <= ECHO_RADIUS {
                 if *is_positive {
                     morale.value = (morale.value + 0.01).min(1.0);
                     stress.accumulated_stress = (stress.accumulated_stress - 0.5).max(0.0);
