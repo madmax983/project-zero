@@ -2120,9 +2120,22 @@ pub fn spawn_building_with_material(
 /// assert!(placed);
 /// ```
 pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: BuildingType) -> bool {
+    // Check for Grave before validation
+    let mut grave_entity = None;
+    if let Some(map) = world.get_resource::<BuildingMap>() {
+        if let Some(&entity) = map.0.get(&(x, y)) {
+            if world.get::<crate::layer1::funeral::Grave>(entity).is_some() {
+                grave_entity = Some(entity);
+            }
+        }
+    }
+
     if let Err(e) = validate_building_placement(world, x, y) {
-        handle_placement_error(world, e);
-        return false;
+        let allow_override = e == PlacementError::Occupied && grave_entity.is_some();
+        if !allow_override {
+            handle_placement_error(world, e);
+            return false;
+        }
     }
 
     // Check Tech requirements
@@ -2172,6 +2185,17 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
             ));
         }
         return false;
+    }
+
+    // --- All validation passed, commit to placing the building ---
+
+    // If we are overwriting a grave, handle the sacrilege and destruction now
+    if let Some(ge) = grave_entity {
+        world.send_event(crate::layer1::events::SacrilegeEvent {
+            pos: GridPosition { x, y },
+        });
+        // Remove grave synchronously
+        world.despawn(ge);
     }
 
     // Spawn building
@@ -3012,6 +3036,88 @@ mod tests {
             .iter(&world)
             .count();
         assert_eq!(spirit_count, 1, "Should have added MachineSpirit component");
+    }
+
+    #[test]
+    fn test_building_over_grave_causes_sacrilege() {
+        let mut world = World::new();
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        });
+        world.insert_resource(OccupiedTiles::default());
+        world.insert_resource(BuildingMap::default());
+        world.init_resource::<Events<crate::layer1::events::SacrilegeEvent>>();
+        world.init_resource::<Events<crate::layer1::events::BuildingRemovedEvent>>();
+        world.init_resource::<Events<crate::layer1::events::BuildingCompletedEvent>>();
+        world.insert_resource(ColonyResources {
+            wood: 100.0,
+            stone: 100.0,
+            ..Default::default()
+        });
+
+        let grave_pos = GridPosition { x: 5, y: 5 };
+
+        let grave_entity = world.spawn((
+            Building { building_type: BuildingType::Grave },
+            crate::layer1::funeral::Grave::default(),
+            grave_pos,
+        )).id();
+
+        world.resource_mut::<OccupiedTiles>().0.insert((5, 5));
+        world.resource_mut::<BuildingMap>().0.insert((5, 5), grave_entity);
+
+        // Act
+        let placed = try_place_building(&mut world, 5, 5, BuildingType::Wall);
+
+        assert!(placed, "Building should succeed after destroying grave");
+
+        let events = world.get_resource::<Events<crate::layer1::events::SacrilegeEvent>>().unwrap();
+        let mut reader = events.get_cursor();
+        assert_eq!(reader.read(events).count(), 1, "Building over a grave should trigger sacrilege");
+    }
+
+    #[test]
+    fn test_building_over_grave_fails_if_cannot_afford() {
+        let mut world = World::new();
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        });
+        world.insert_resource(OccupiedTiles::default());
+        world.insert_resource(BuildingMap::default());
+        world.init_resource::<Events<crate::layer1::events::SacrilegeEvent>>();
+        world.init_resource::<Events<crate::layer1::events::BuildingRemovedEvent>>();
+        world.init_resource::<Events<crate::layer1::events::BuildingCompletedEvent>>();
+        world.insert_resource(ColonyResources {
+            wood: 0.0,
+            stone: 0.0,
+            ..Default::default()
+        });
+
+        let grave_pos = GridPosition { x: 5, y: 5 };
+
+        let grave_entity = world.spawn((
+            Building { building_type: BuildingType::Grave },
+            crate::layer1::funeral::Grave::default(),
+            grave_pos,
+        )).id();
+
+        world.resource_mut::<OccupiedTiles>().0.insert((5, 5));
+        world.resource_mut::<BuildingMap>().0.insert((5, 5), grave_entity);
+
+        // Act - Try to place expensive Wall (needs wood/stone/metal) but have none
+        let placed = try_place_building(&mut world, 5, 5, BuildingType::Wall);
+
+        assert!(!placed, "Building should fail if cannot afford");
+
+        let events = world.get_resource::<Events<crate::layer1::events::SacrilegeEvent>>().unwrap();
+        let mut reader = events.get_cursor();
+        assert_eq!(reader.read(events).count(), 0, "Should not trigger sacrilege if build fails");
+
+        assert!(world.get_entity(grave_entity).is_ok(), "Grave should not be destroyed if build fails");
     }
 }
 
