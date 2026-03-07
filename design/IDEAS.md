@@ -8440,7 +8440,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Debt Collector's Blockade
+## The Debt Collector's Blockade [SPECCED]
 
 **Layer:** 3 -> 2
 
@@ -8454,7 +8454,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Memory Plague
+## The Memory Plague [SPECCED]
 
 **Layer:** 1
 
@@ -8468,7 +8468,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Atmospheric Harvesting Tethers
+## Atmospheric Harvesting Tethers [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -8480,7 +8480,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Tension:** Do you risk the catastrophic physical danger of the tethers for cheap, abundant rare gases, or rely on expensive, safe orbital extraction ships?
 
-## The Subterranean Sea
+## The Subterranean Sea [SPECCED]
 
 **Layer:** 1
 
@@ -8494,7 +8494,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Solar Sail Catapults
+## Solar Sail Catapults [SPECCED]
 
 **Layer:** 2 -> 1
 

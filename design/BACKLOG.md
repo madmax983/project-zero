@@ -178,3 +178,8 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `433` The Phantom Debt — `specs/433-the-phantom-debt.md`
 - [ ] `434` The Parasitic Habitation Block — `specs/434-parasitic-habitation-block.md`
 - [ ] `435` Orbital Solar Mirrors — `specs/435-orbital-solar-mirrors.md`
+- [ ] `436` The Debt Collector's Blockade — `specs/436-the-debt-collectors-blockade.md`
+- [ ] `437` The Memory Plague — `specs/437-the-memory-plague.md`
+- [ ] `438` Atmospheric Harvesting Tethers — `specs/438-atmospheric-harvesting-tethers.md`
+- [ ] `439` The Subterranean Sea — `specs/439-the-subterranean-sea.md`
+- [ ] `440` Solar Sail Catapults — `specs/440-solar-sail-catapults.md`
