@@ -66,7 +66,6 @@ mod tests {
                 Needs::default(),
                 StressTracker {
                     accumulated_stress: 0.0,
-                    ..Default::default()
                 },
                 traits,
             ))
@@ -102,7 +101,6 @@ mod tests {
                 },
                 StressTracker {
                     accumulated_stress: 0.0,
-                    ..Default::default()
                 },
                 traits,
             ))
@@ -135,7 +133,6 @@ mod tests {
                 Needs::default(),
                 StressTracker {
                     accumulated_stress: 0.0,
-                    ..Default::default()
                 },
                 traits,
             ))
@@ -169,7 +166,6 @@ mod tests {
                 Needs::default(),
                 StressTracker {
                     accumulated_stress: 0.0,
-                    ..Default::default()
                 },
                 traits,
             ))
