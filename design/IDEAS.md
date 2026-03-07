@@ -8411,3 +8411,71 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** You cannot possibly pay the debt. You try to fight them, but their shields are impenetrable. You survive by intentionally plunging your colony into a dark age, shutting off all power and tech signatures so the automated fleet thinks the planet is dead and leaves, resetting your progress by decades.
 
 **Tension:** Face an impossible enemy (Combat) vs. Play dead and lose your technology (Survival).
+
+## The Parasitic Habitation Block
+
+**Layer:** 1
+
+**Fantasy:** A ghost town within your own city, where people go to disappear and plot.
+
+**Mechanic:** If housing quality drops too low while population density is high, a "Phantom Block" forms. It's a physical slum that doesn't appear on your official registry. Pops living there consume no colony resources but produce nothing and slowly accumulate extreme radical ideologies.
+
+**Emergence:** You ignore the housing crisis to focus on industrial expansion. Ten years later, a massive, heavily armed rebellion erupts from the "empty" sector of your base, led by a generation of colonists who were born off the grid and hate you.
+
+**Tension:** Ignoring the poor for short-term economic gain vs. the slow, inevitable buildup of a violent, untrackable underclass.
+
+---
+
+## Orbital Solar Mirrors
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Playing god with the sun, banishing the night to fuel the machine.
+
+**Mechanic:** You build massive mirror arrays in Layer 2 orbit to reflect sunlight onto specific Layer 1 tiles, providing 24/7 solar power and heat. However, misaligning them or a hacking event can focus the beam too intensely, turning the mirror into a devastating orbital laser that scorches the colony.
+
+**Emergence:** You rely on the mirrors to survive a decades-long volcanic winter. A rogue AI or rebel faction hacks the mirror controls, intentionally focusing the beam on your main agricultural dome, incinerating your only food source.
+
+**Tension:** Uninterrupted, massive clean energy vs. the constant existential threat of the mirrors being weaponized against you.
+
+---
+
+## The Debt Collector's Blockade
+
+**Layer:** 3 -> 2
+
+**Fantasy:** The repo men don't just take your ship; they take your sky.
+
+**Mechanic:** If you accumulate too much debt with a Layer 3 megacorp, they deploy a massive, indestructible "Collection Sphere" that envelops your entire Layer 2 system. It intercepts all incoming trade and migrant ships, siphoning their cargo to pay your debt, effectively isolating you from the galaxy.
+
+**Emergence:** You take out a massive loan to build a defense fleet to survive a war. You win, but the collection sphere arrives. You are safe from enemies but slowly starving because you can no longer import food, forcing you to dismantle your new fleet just to pay the interest.
+
+**Tension:** The immediate salvation of massive loans vs. the suffocating, inescapable grip of a total economic blockade.
+
+---
+
+## The Memory Plague
+
+**Layer:** 1
+
+**Fantasy:** A disease that doesn't kill you, it just makes you forget who you are.
+
+**Mechanic:** A pathogen spreads through the colony. It does no physical damage, but slowly erases a Pop's "Memory" and "XP". Highly skilled veterans regress to novices. Curing it requires a complete quarantine, halting production.
+
+**Emergence:** Your master surgeon contracts the plague during an outbreak. By the time you notice, they've forgotten how to perform surgery, leaving the colony without advanced medical care just as the physical symptoms of the plague's secondary infections begin.
+
+**Tension:** Immediate, harsh quarantine (halting the economy) vs. letting it spread and losing decades of accumulated skills.
+
+---
+
+## Atmospheric Harvesting Tethers
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Skimming the sky for profit, tethering the heavens to the earth.
+
+**Mechanic:** You construct massive tethers that reach from Layer 1 into the upper atmosphere or low orbit to harvest rare gases. These tethers are incredibly efficient but physically obstruct Layer 2 low-orbit traffic and are vulnerable to extreme weather on Layer 1.
+
+**Emergence:** A severe hurricane on Layer 1 snaps a tether. The recoiling cable whips through your industrial sector, causing massive damage, while the severed atmospheric collector crashes into a passing trade fleet in Layer 2, sparking a diplomatic crisis.
+
+**Tension:** Do you risk the catastrophic physical danger of the tethers for cheap, abundant rare gases, or rely on expensive, safe orbital extraction ships?
