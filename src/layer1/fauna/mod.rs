@@ -1,4 +1,7 @@
 use crate::layer1::execution::{AtTarget, MovementTarget};
+use crate::layer1::combat::HitStop;
+use crate::layer1::map::ScreenShake;
+use crate::layer1::particles::spawn_particle;
 use crate::layer1::health::{Dead, Health};
 use crate::layer1::map::GridPosition;
 use crate::layer1::pop::Pop;
@@ -120,7 +123,7 @@ pub fn fauna_behavior_system(world: &mut World) {
                             // Adjacent -> Attack
                             if fauna.attack_cooldown == 0 {
                                 let damage = body.map_or(5.0, |b| b.aggregate_stats().attack);
-                                attacks.push((target, damage));
+                                attacks.push((entity, target, damage));
                                 fauna.attack_cooldown = 10; // Cooldown ticks
                                 fauna.state = FaunaState::Attack;
                             }
@@ -150,7 +153,7 @@ pub fn fauna_behavior_system(world: &mut World) {
                         if dist <= 1 {
                             if fauna.attack_cooldown == 0 {
                                 let damage = body.map_or(5.0, |b| b.aggregate_stats().attack);
-                                attacks.push((target, damage));
+                                attacks.push((entity, target, damage));
                                 fauna.attack_cooldown = 10;
                             }
                         } else {
@@ -181,9 +184,32 @@ pub fn fauna_behavior_system(world: &mut World) {
     }
 
     // Apply damage
-    for (target, damage) in attacks {
+    for (attacker, target, damage) in attacks {
         if let Some(mut health) = world.get_mut::<Health>(target) {
             health.take_damage(damage);
+
+            // Ludwig: "Juice" logic for Fauna attacks
+            let hit_stop_ticks = if damage >= 10.0 { 6 } else if damage >= 5.0 { 2 } else { 1 };
+
+            // Apply HitStop to both attacker and target
+            if hit_stop_ticks > 0 {
+                if let Ok(mut entity_mut) = world.get_entity_mut(attacker) {
+                    entity_mut.insert(HitStop { ticks_remaining: hit_stop_ticks });
+                }
+                if let Ok(mut entity_mut) = world.get_entity_mut(target) {
+                    entity_mut.insert(HitStop { ticks_remaining: hit_stop_ticks });
+                }
+            }
+
+            let shake_intensity = if damage >= 10.0 { 0.4 } else { 0.15 };
+            if let Some(mut shake) = world.get_resource_mut::<ScreenShake>() {
+                shake.trigger(shake_intensity);
+            }
+
+            if let Some(pos) = world.get::<GridPosition>(target).copied() {
+                spawn_particle(world, pos, '*', Color::Red, 5);
+            }
+
             // Log damage
             if let Some(mut log) = world.get_resource_mut::<crate::shared::log::MessageLog>() {
                 log.add("DANGER: A wild animal is attacking!");
