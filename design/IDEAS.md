@@ -7228,7 +7228,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Tension:** Efficient, boring survival (no rewards) vs. Intentional chaos and risk (high rewards).
 
-## The Bio-Acoustic Chorus
+## The Bio-Acoustic Chorus [SPECCED]
 
 **Layer:** 1
 
@@ -7242,7 +7242,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Ephemeral Architecture
+## Ephemeral Architecture [SPECCED]
 
 **Layer:** 1
 
@@ -7256,7 +7256,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Pirate Emissary
+## The Pirate Emissary [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -7270,7 +7270,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Reverse Terraforming
+## Reverse Terraforming [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -7284,7 +7284,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Exiled Royals
+## Exiled Royals [SPECCED]
 
 **Layer:** 3 -> 1
 
