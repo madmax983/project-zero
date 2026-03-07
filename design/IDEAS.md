@@ -1392,7 +1392,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Olfactory Map
+## Olfactory Map [SPECCED]
 
 **Layer:** 1
 
@@ -1406,7 +1406,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Orbital Drop Logistics
+## Orbital Drop Logistics [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -1420,7 +1420,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Grid Instability
+## Grid Instability [SPECCED]
 
 **Layer:** 1
 
@@ -1434,7 +1434,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Overview Effect
+## The Overview Effect [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -1448,7 +1448,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Light Pollution
+## Light Pollution [SPECCED]
 
 **Layer:** 1
 
