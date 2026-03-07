@@ -19,3 +19,10 @@ pub struct BuildingCompletedEvent {
     /// The entity ID of the new building.
     pub entity: Entity,
 }
+
+/// Event triggered when a grave is built over.
+#[derive(Event, Debug, Clone)]
+pub struct SacrilegeEvent {
+    /// The position where the sacrilege occurred.
+    pub position: GridPosition,
+}
