@@ -8273,3 +8273,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you embrace the cult for the massive efficiency boost in a single menial task, or do you break them up to maintain workforce flexibility and technological progress?
 
 ---
+
+## Subterranean Megafauna Migration
+
+**Layer:** 1
+
+**Fantasy:** The ground beneath your feet is a living, breathing highway. Your colony is just a bump in the road.
+
+**Mechanic:** Periodic "migration events" where colossal, blind creatures tunnel through the deep Z-levels of the map. They ignore buildings but leave massive, temporary "Tunnels" (empty space) and cause localized "Tremors" (building damage).
+
+**Emergence:** You learn to track their migration routes. Instead of fighting them, you use their newly dug tunnels as free, instant subway systems for your haulers, until the tunnels naturally collapse.
+
+**Tension:** Do you build deep for rich ores (risking destruction from migrations) or stay near the surface (safe but poor)?
+
+---
+
+## Stellar Wind Surfing
+
+**Layer:** 2
+
+**Fantasy:** Riding the fury of the sun to travel without fuel, catching the cosmic waves.
+
+**Mechanic:** During "Solar Flare" events, ships equipped with "Solar Sails" can travel between system nodes instantly and without fuel cost. However, navigating the flare risks massive radiation damage to the crew and hull if the ship isn't heavily shielded.
+
+**Emergence:** You intentionally wait for a solar flare to launch an invasion fleet, catching your enemy completely off-guard with an instant arrival, but half your marines are sick with radiation poisoning when they land.
+
+**Tension:** High-risk, instant, free travel vs. slow, safe, expensive conventional drives.
+
+---
+
+## The Archive of Regret
+
+**Layer:** Cross-layer
+
+**Fantasy:** Facing the moral cost of your civilization's rise to power. A ledger of sins.
+
+**Mechanic:** A unique, un-demolishable building that automatically records every "Atrocity" (executing prisoners, starving pops, orbital bombardments). As the Archive fills, it provides massive Research points (learning from mistakes) but exerts a heavy, permanent "Guilt" aura on the entire colony.
+
+**Emergence:** You try to play a "clean" game, but a desperate winter forces you to cannibalize raiders. The Archive records it. Ten years later, your utopian society is constantly depressed because the Archive won't let them forget the winter that saved them.
+
+**Tension:** Free, powerful research boosts vs. permanent, compounding morale penalties.
+
+---
+
+## Mutagenic Rain
+
+**Layer:** 1
+
+**Fantasy:** The weather changes you. The environment forces evolution, ready or not.
+
+**Mechanic:** A rare weather event where glowing, toxic rain falls. Unshielded biological Pops caught outside have a high chance to gain random "Mutant" traits. Some are beneficial (photosynthesis, thick skin), but most are harmful (brittle bones, extreme hunger).
+
+**Emergence:** A sudden downpour catches your militia during a firefight. They survive the raid, but one grows a second heart (becoming a super-soldier) while another loses their sight. You start intentionally exposing "expendable" pops to the rain, hoping for good rolls.
+
+**Tension:** Strict quarantine and lost productivity during storms vs. the chaotic gamble of forced evolution.
+
+---
+
+## The Propaganda Black Market
+
+**Layer:** Cross-layer
+
+**Fantasy:** In a dystopian regime, truth is the most illegal contraband.
+
+**Mechanic:** If your colony has high Ideological Control (censorship, state media), "Truth-Dealers" will spawn in the shadows. They sell smuggled "Uncensored Data" from Layer 3 empires. Pops who buy it gain massive Morale but lose their State Ideology, increasing Unrest.
+
+**Emergence:** You run a perfect, loyal totalitarian mining camp. A smuggler lands, and suddenly your miners are reading poetry from a pacifist democracy. They refuse to work the night shift and demand voting rights, crippling your economy.
+
+**Tension:** Allowing the black market to relieve deep-seated stress vs. maintaining absolute ideological control and stability.
+
+---
