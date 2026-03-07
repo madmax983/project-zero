@@ -8274,7 +8274,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Subterranean Megafauna Migration
+## Subterranean Megafauna Migration [SPECCED]
 
 **Layer:** 1
 
@@ -8288,7 +8288,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Stellar Wind Surfing
+## Stellar Wind Surfing [SPECCED]
 
 **Layer:** 2
 
@@ -8302,7 +8302,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Archive of Regret
+## The Archive of Regret [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -8316,7 +8316,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Mutagenic Rain
+## Mutagenic Rain [SPECCED]
 
 **Layer:** 1
 
@@ -8330,7 +8330,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Propaganda Black Market
+## The Propaganda Black Market [SPECCED]
 
 **Layer:** Cross-layer
 
