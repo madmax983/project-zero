@@ -152,3 +152,8 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `406` Quarantine Protocols — `specs/406-quarantine-protocols.md`
 - [ ] `407` Planetary Rings — `specs/407-planetary-rings.md`
 - [ ] `408` Galactic Tourism — `specs/408-galactic-tourism.md`
+- [ ] `409` Shipbreaking — `specs/409-shipbreaking.md`
+- [ ] `410` The Inspector — `specs/410-the-inspector.md`
+- [ ] `411` Machine Awakening — `specs/411-machine-awakening.md`
+- [ ] `412` Fluid Simulation — `specs/412-fluid-simulation.md`
+- [ ] `413` Cryo-Shock — `specs/413-cryo-shock.md`

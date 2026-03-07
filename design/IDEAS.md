@@ -1252,7 +1252,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Shipbreaking
+## Shipbreaking [SPECCED]
 
 **Layer:** 1
 
@@ -1266,7 +1266,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Inspector
+## The Inspector [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -1280,7 +1280,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Machine Awakening
+## Machine Awakening [SPECCED]
 
 **Layer:** 1
 
@@ -1294,7 +1294,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Fluid Simulation
+## Fluid Simulation [SPECCED]
 
 **Layer:** 1
 
@@ -1308,7 +1308,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Cryo-Shock
+## Cryo-Shock [SPECCED]
 
 **Layer:** 1
 
