@@ -220,7 +220,7 @@ mod tests {
             }),
         });
 
-        let bonus = get_festival_morale_modifier(&world.resource::<FestivalState>());
+        let bonus = get_festival_morale_modifier(world.resource::<FestivalState>());
         assert!(bonus > 0.0);
     }
 }

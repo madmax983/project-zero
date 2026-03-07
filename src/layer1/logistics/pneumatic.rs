@@ -50,14 +50,16 @@ pub struct Clogged {
 /// 2. Pathfinding to the target terminal.
 /// 3. Moving carriers along the path.
 /// 4. Delivering items to the target terminal's inventory.
+type CarrierQuery<'a> = (Entity, &'a mut TubeCarrier, &'a mut GridPosition);
+type CarrierFilter = (Without<PneumaticTerminal>, Without<PneumaticTube>);
+type TubeQuery<'a> = (&'a GridPosition, Option<&'a Clogged>);
+type TubeFilter = (With<PneumaticTube>, Without<TubeCarrier>);
+
 pub fn tube_transport_system(
     mut commands: Commands,
     launch_query: Query<(Entity, &TubeCarrier, &GridPosition), With<PneumaticTerminal>>,
-    mut carriers: Query<
-        (Entity, &mut TubeCarrier, &mut GridPosition),
-        (Without<PneumaticTerminal>, Without<PneumaticTube>),
-    >,
-    tubes: Query<(&GridPosition, Option<&Clogged>), (With<PneumaticTube>, Without<TubeCarrier>)>,
+    mut carriers: Query<CarrierQuery, CarrierFilter>,
+    tubes: Query<TubeQuery, TubeFilter>,
     mut terminals: Query<(Entity, &GridPosition, &PneumaticTerminal, &mut Inventory)>,
 ) {
     // 1. Launch Logic

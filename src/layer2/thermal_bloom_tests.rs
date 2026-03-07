@@ -97,7 +97,7 @@ mod tests {
         let events = world.resource::<Events<DetectionEvent>>();
         let reader = events.get_cursor();
         assert_eq!(
-            reader.len(&events),
+            reader.len(events),
             0,
             "Low thermal signature should NOT trigger detection"
         );

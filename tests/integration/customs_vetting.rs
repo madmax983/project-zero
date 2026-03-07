@@ -17,7 +17,7 @@ mod tests {
         // Spawn visitor at (0, 0) - NOT at Customs
         let visitor = world
             .spawn((
-                Pop::default(),
+                Pop,
                 ImmigrationStatus::Pending,
                 GridPosition { x: 0, y: 0 },
             ))

@@ -16,30 +16,25 @@ use crate::shared::log::MessageLog;
 
 /// Component added to Pops experiencing a Fever Dream due to sleep deprivation.
 #[derive(Component, Debug, Clone, Copy)]
+#[derive(Default)]
 pub struct FeverDream {
     /// Tracks the duration the pop has been in the fever dream state.
     pub duration: u32,
 }
 
-impl Default for FeverDream {
-    fn default() -> Self {
-        Self { duration: 0 }
-    }
-}
 
 /// Evaluates Pops to see if they should enter or exit the Fever Dream state,
+type FeverDreamQuery<'a> = (
+    Entity,
+    &'a Needs,
+    &'a Traits,
+    &'a mut Health,
+    Option<&'a mut FeverDream>,
+);
+
 pub fn fever_dream_system(
     mut commands: Commands,
-    mut query: Query<
-        (
-            Entity,
-            &Needs,
-            &Traits,
-            &mut Health,
-            Option<&mut FeverDream>,
-        ),
-        With<Pop>,
-    >,
+    mut query: Query<FeverDreamQuery, With<Pop>>,
     mut log: Option<ResMut<MessageLog>>,
 ) {
     for (entity, needs, traits, mut health, fever_dream_opt) in query.iter_mut() {

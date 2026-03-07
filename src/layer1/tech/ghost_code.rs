@@ -96,17 +96,16 @@ pub fn ghost_infection_system(
 }
 
 /// System that applies active effects of `GhostTrait`s.
+type GhostEffectQuery<'a> = (
+    Entity,
+    &'a GhostCode,
+    Option<&'a mut PowerConsumer>,
+    Option<&'a mut Turret>,
+);
+
 pub fn apply_ghost_traits_system(
     mut commands: Commands,
-    mut query: Query<
-        (
-            Entity,
-            &GhostCode,
-            Option<&mut PowerConsumer>,
-            Option<&mut Turret>,
-        ),
-        Without<GhostEffectApplied>,
-    >,
+    mut query: Query<GhostEffectQuery, Without<GhostEffectApplied>>,
 ) {
     for (entity, ghost_code, mut power_opt, mut turret_opt) in query.iter_mut() {
         let mut applied = false;

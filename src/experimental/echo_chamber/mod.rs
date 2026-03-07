@@ -27,9 +27,12 @@ const ECHO_DURATION: u32 = 100;
 const ECHO_RADIUS: u32 = 3;
 
 /// System to detect extreme emotional states and turn Pops into Echo Chambers
+type EchoPopsQuery<'a> = (Entity, &'a Morale, &'a StressTracker);
+type EchoPopsFilter = (With<Pop>, Without<EchoingState>);
+
 pub fn detect_echo_chamber_system(
     mut commands: Commands,
-    pops: Query<(Entity, &Morale, &StressTracker), (With<Pop>, Without<EchoingState>)>,
+    pops: Query<EchoPopsQuery, EchoPopsFilter>,
 ) {
     for (entity, morale, stress) in pops.iter() {
         if morale.value >= ECHO_THRESHOLD_HIGH {

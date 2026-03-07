@@ -48,17 +48,19 @@ const NOTE_LIFETIME: u64 = 4320;
 /// Minimum ticks between posts for a single pop (1 day).
 const POST_COOLDOWN: u64 = 1440;
 
+type GrievancePopQuery<'a> = (
+    Entity,
+    &'a Needs,
+    Option<&'a Relationships>,
+    Option<&'a mut GrievanceCooldown>,
+    Option<&'a Traits>,
+    Option<&'a StressTracker>,
+);
+
 pub fn post_grievance_system(
     mut commands: Commands,
     mut boards: Query<&mut BulletinBoard>,
-    mut pops: Query<(
-        Entity,
-        &Needs,
-        Option<&Relationships>,
-        Option<&mut GrievanceCooldown>,
-        Option<&Traits>,
-        Option<&StressTracker>,
-    )>,
+    mut pops: Query<GrievancePopQuery>,
     time: Option<Res<SimulationTime>>,
 ) {
     let timestamp = time.map_or(0, |t| t.tick);

@@ -61,16 +61,18 @@ impl VoidGrid {
 }
 
 /// System to update void exposure for pops.
+type VoidBuildingQuery<'a> = (
+    &'a GridPosition,
+    Option<&'a VoidAnchor>,
+    Option<&'a Building>,
+    Option<&'a Structure>,
+);
+
 pub fn update_void_exposure_system(
     mut pops: Query<(&GridPosition, &mut VoidExposure, &mut Needs), With<Pop>>,
     void_grid: Res<VoidGrid>,
     terrain: Res<TerrainGrid>,
-    buildings: Query<(
-        &GridPosition,
-        Option<&VoidAnchor>,
-        Option<&Building>,
-        Option<&Structure>,
-    )>,
+    buildings: Query<VoidBuildingQuery>,
 ) {
     for (pos, mut exposure, mut needs) in &mut pops {
         // 1. Check current tile "Void Intensity" (Static map data)

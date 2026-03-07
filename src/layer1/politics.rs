@@ -256,7 +256,7 @@ mod tests {
 
         // Run system
         // Note: Function systems can be run with `run`.
-        bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, election_cycle_system);
+        let _ = bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, election_cycle_system);
 
         let manager = world.resource::<ElectionManager>();
         assert_eq!(manager.state, ElectionState::Campaigning);
@@ -282,7 +282,7 @@ mod tests {
         manager.state = ElectionState::Campaigning;
 
         // Run candidate generation logic
-        bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, generate_candidates_system);
+        let _ = bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, generate_candidates_system);
 
         let manager = world.resource::<ElectionManager>();
         assert!(!manager.candidates.is_empty());
@@ -337,7 +337,7 @@ mod tests {
         ));
 
         // Run voting
-        bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, voting_system);
+        let _ = bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, voting_system);
 
         let manager = world.resource::<ElectionManager>();
         // Candidate A (Miners) should get 1 vote

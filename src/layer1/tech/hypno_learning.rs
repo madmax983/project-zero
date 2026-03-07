@@ -31,20 +31,19 @@ pub struct MentalFog {
 #[derive(Component, Default)]
 pub struct SleepingInHypnoPod;
 
+type HypnoPopQuery<'a> = (
+    Entity,
+    &'a mut Skills,
+    &'a mut Needs,
+    &'a AssignedTo,
+    &'a PopAction,
+    Option<&'a crate::layer1::lifecycle::Age>,
+    Option<&'a mut crate::layer1::traits::Traits>,
+);
+
 pub fn hypno_sleep_system(
     mut commands: Commands,
-    mut pops: Query<
-        (
-            Entity,
-            &mut Skills,
-            &mut Needs,
-            &AssignedTo,
-            &PopAction,
-            Option<&crate::layer1::lifecycle::Age>,
-            Option<&mut crate::layer1::traits::Traits>,
-        ),
-        With<Pop>,
-    >,
+    mut pops: Query<HypnoPopQuery, With<Pop>>,
     pods: Query<(&HypnoPod, Option<&PowerConsumer>)>,
 ) {
     for (entity, mut skills, mut needs, assigned, action, age_opt, mut traits_opt) in &mut pops {
