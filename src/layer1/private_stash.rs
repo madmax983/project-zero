@@ -33,6 +33,39 @@ impl PrivateStash {
     }
 }
 
+/// Component representing a stash created by a pop during a shortage.
+#[derive(Component, Debug, Clone)]
+pub struct PrivateStashEntity {
+    pub food: f32,
+    pub owner: Option<Entity>,
+}
+
+/// System to create a stash if resources are low and pop is Anxious.
+pub fn stash_creation_system(
+    mut commands: Commands,
+    resources: Res<ColonyResources>,
+    mut query: Query<(Entity, &Traits, &mut crate::layer1::inventory::Inventory), With<crate::layer1::pop::Pop>>,
+) {
+    if resources.food < 10.0 {
+        for (entity, traits, mut inventory) in &mut query {
+            if traits.0.contains(&Trait::Anxious) && !inventory.items.is_empty() {
+                // Remove an item and spawn a stash
+                inventory.items.pop();
+                commands.spawn(PrivateStashEntity {
+                    food: 1.0,
+                    owner: Some(entity),
+                });
+            }
+        }
+    }
+}
+
+/// Helper to calculate visible food.
+pub fn calculate_visible_food(world: &World) -> f32 {
+    let resources = world.resource::<ColonyResources>();
+    resources.food
+}
+
 /// System where Pops with specific traits steal resources.
 pub fn hoarding_system(
     mut resources: ResMut<ColonyResources>,
@@ -279,5 +312,97 @@ mod tests {
         assert!((res.wood - 18.0).abs() < f32::EPSILON);
         // Ore: 0 + 0 = 0 (because Ore isn't in the match arm in inspect_pop yet!)
         assert!((res.ore - 0.0).abs() < f32::EPSILON);
+    }
+
+    #[test]
+    fn test_anxious_pop_creates_stash() {
+        // Arrange
+        let mut world = World::new();
+        // Pop has Anxious trait and there is a global food shortage
+        world.insert_resource(ColonyResources { food: 5.0, ..Default::default() });
+        use crate::layer1::pop::Pop;
+        use std::collections::HashSet;
+        use bevy_ecs::system::RunSystemOnce;
+        let mut inventory = crate::layer1::inventory::Inventory::default();
+        inventory.try_add(crate::layer1::inventory::InventoryItem {
+            item_type: crate::layer1::items::ItemType::Rations,
+            entity: None,
+        });
+
+        world.spawn((Pop, Traits(HashSet::from([Trait::Anxious])), crate::layer1::GridPosition { x: 0, y: 0 }, inventory));
+
+        // Act
+        world.run_system_once(super::stash_creation_system).unwrap();
+
+        // Assert
+        let stashes = world.query::<&super::PrivateStashEntity>().iter(&world).count();
+        assert_eq!(stashes, 1, "Anxious pop should create a stash during a shortage");
+    }
+
+    #[test]
+    fn test_stash_hides_from_global_inventory() {
+        // Arrange
+        let mut world = World::new();
+        world.spawn(super::PrivateStashEntity { food: 10.0, owner: None });
+        world.spawn(crate::layer1::stockpile::Stockpile { food_bonus: 20.0, ..Default::default() });
+        world.insert_resource(ColonyResources { food: 20.0, ..Default::default() });
+
+        // Act
+        let total_visible_food = super::calculate_visible_food(&world);
+
+        // Assert
+        assert_eq!(total_visible_food, 20.0, "Stashed food should not be visible to the colony");
+    }
+}
+
+/// Event to trigger "Search Rooms" action.
+#[derive(Event, Debug, Clone)]
+pub struct SearchRoomsEvent;
+
+/// Action or interaction logic to access own stash.
+pub fn consume_from_own_stash_system(
+    mut query: Query<(Entity, &mut crate::layer1::needs::Needs)>,
+    mut stashes: Query<(Entity, &mut PrivateStashEntity)>,
+    mut commands: Commands,
+) {
+    for (pop_entity, mut needs) in &mut query {
+        if needs.hunger <= 10.0 {
+            // Find a stash owned by this pop
+            for (stash_entity, mut stash) in &mut stashes {
+                if stash.owner == Some(pop_entity) && stash.food > 0.0 {
+                    // Consume food
+                    stash.food -= 1.0;
+                    needs.hunger = (needs.hunger + 20.0).min(100.0);
+                    if stash.food <= 0.0 {
+                        commands.entity(stash_entity).despawn();
+                    }
+                    break;
+                }
+            }
+        }
+    }
+}
+
+/// Action to "Search Rooms" that converts Stashes back into Stockpiles at a massive morale penalty.
+pub fn search_rooms_system(
+    mut commands: Commands,
+    mut resources: ResMut<ColonyResources>,
+    mut stashes: Query<(Entity, &PrivateStashEntity)>,
+    mut morale_query: Query<(Entity, &mut crate::layer1::morale::Morale)>,
+    mut events: EventReader<SearchRoomsEvent>,
+) {
+    if events.read().next().is_some() {
+        for (entity, stash) in &mut stashes {
+            resources.add_food(stash.food);
+            commands.entity(entity).despawn();
+        }
+        for (_, mut morale) in &mut morale_query {
+            // Massive morale penalty
+            morale.add_modifier(crate::layer1::morale::MoodModifier {
+                label: "Searched Rooms".to_string(),
+                value: -20.0,
+                duration: 50,
+            });
+        }
     }
 }
