@@ -164,3 +164,5 @@ mod subspace_pen_pals;
 
 #[path = "integration/industrial_rhythm.rs"]
 mod industrial_rhythm;
+#[path="integration/black_market.rs"]
+mod black_market;

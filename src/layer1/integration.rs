@@ -824,3 +824,19 @@ pub fn industrial_rhythm_morale_bridge(
         }
     }
 }
+
+/// INT-348: Bridges Pop Needs system (Spec 002) to Black Market system (Spec 348).
+///
+/// Calculates `unmet_luxury` by counting the number of Pops whose `leisure` need is critically low (< 0.2).
+pub fn update_unmet_luxury_system(
+    pops: Query<&crate::layer1::needs::Needs, With<crate::layer1::pop::Pop>>,
+    mut stats: ResMut<crate::layer1::black_market::ColonyStats>,
+) {
+    let mut unmet = 0;
+    for needs in pops.iter() {
+        if needs.leisure < 0.2 {
+            unmet += 1;
+        }
+    }
+    stats.unmet_luxury = unmet;
+}

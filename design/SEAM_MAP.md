@@ -302,3 +302,12 @@
 - **Glue added:**
     - `industrial_rhythm_morale_bridge` converts `MachineRhythm` with sync bonus to a `MoodModifier` applied to nearby `Pop`s' `Morale`.
 - **Tests:** `tests/integration/industrial_rhythm.rs`
+
+### INT-348: Black Market Integration
+- **Date:** 2026-03-07
+- **Systems connected:** `Needs` (Pop) -> `update_unmet_luxury_system` -> `black_market_spawn_system` -> `smuggler_trade_system` -> `calculate_admin_stats` (AdminStats)
+- **Glue added:**
+    - `update_unmet_luxury_system` added to `src/layer1/integration.rs`.
+    - `calculate_admin_stats` in `src/layer1/admin.rs` modified to consume `corruption` and reduce administrative efficiency.
+    - Registered all related systems in `Layer1SystemSet::Economy` in `src/layer1/systems/economy.rs`.
+- **Tests:** `tests/integration/black_market.rs` (2 tests verified)

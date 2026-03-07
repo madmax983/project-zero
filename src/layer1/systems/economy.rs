@@ -30,7 +30,13 @@ pub fn register(schedule: &mut Schedule) {
                 crate::layer1::tech::update_tech_capacity_system,
                 crate::layer1::tech::infinite_archive::update_efficiency_system
                     .after(crate::layer1::tech::update_tech_capacity_system),
-                crate::layer1::admin::calculate_admin_stats,
+                crate::layer1::integration::update_unmet_luxury_system,
+                crate::layer1::black_market::black_market_spawn_system
+                    .after(crate::layer1::integration::update_unmet_luxury_system),
+                crate::layer1::black_market::smuggler_trade_system
+                    .after(crate::layer1::black_market::black_market_spawn_system),
+                crate::layer1::admin::calculate_admin_stats
+                    .after(crate::layer1::black_market::smuggler_trade_system),
                 crate::layer1::eureka::handle_eureka_events,
                 recycle_processing_system,
                 #[cfg(feature = "nova")]

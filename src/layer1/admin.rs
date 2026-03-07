@@ -116,6 +116,9 @@ impl Default for Office {
 pub fn calculate_admin_stats(world: &mut World) {
     let mut supply = 0.0;
     let mut demand = 0.0;
+    let corruption = world
+        .get_resource::<crate::layer1::black_market::ColonyStats>()
+        .map_or(0.0, |stats| stats.corruption);
 
     // Sum Providers
     let mut providers = world.query::<&AdminProvider>();
@@ -130,11 +133,14 @@ pub fn calculate_admin_stats(world: &mut World) {
     }
 
     // Default to 1.0 efficiency if no demand
-    let efficiency = if demand <= f32::EPSILON {
+    let mut efficiency = if demand <= f32::EPSILON {
         1.0
     } else {
         (supply / demand).clamp(0.0, 1.0)
     };
+
+    // Apply corruption penalty (Spec 348)
+    efficiency = (efficiency - (corruption * 0.05)).clamp(0.0, 1.0);
 
     world.insert_resource(AdminStats {
         supply,
