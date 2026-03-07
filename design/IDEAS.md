@@ -608,7 +608,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Social Mimicry
+## Social Mimicry [SPECCED]
 
 **Layer:** 1
 
@@ -664,7 +664,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Workplace Hazards
+## Workplace Hazards [SPECCED]
 
 **Layer:** 1
 
@@ -692,7 +692,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Social Stratification
+## Social Stratification [SPECCED]
 
 **Layer:** 1
 
@@ -720,7 +720,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Geological Instability
+## Geological Instability [SPECCED]
 
 **Layer:** 1
 
@@ -762,7 +762,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Eureka Moments
+## Eureka Moments [SPECCED]
 
 **Layer:** 1 -> 3
 

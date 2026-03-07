@@ -129,3 +129,8 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `383` Diplomatic Marriage — `specs/383-diplomatic-marriage.md`
 - [ ] `384` Orbital Synch — `specs/384-orbital-synch.md`
 - [ ] `385` Terraforming Backlash — `specs/385-terraforming-backlash.md`
+- [ ] `386` Social Mimicry — `specs/386-social-mimicry.md`
+- [ ] `387` Workplace Hazards — `specs/387-workplace-hazards.md`
+- [ ] `388` Social Stratification — `specs/388-social-stratification.md`
+- [ ] `389` Geological Instability — `specs/389-geological-instability.md`
+- [ ] `390` Eureka Moments — `specs/390-eureka-moments.md`
