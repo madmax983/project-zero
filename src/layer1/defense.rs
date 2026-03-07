@@ -74,6 +74,24 @@ pub fn is_walkable(world: &mut World, x: i32, y: i32) -> bool {
     true
 }
 
+/// Helper to check if a specific building entity is an obstacle (locked gate or solid building).
+pub fn is_obstacle(world: &World, entity: Entity) -> bool {
+    if let Some(access) = world.get::<AccessControl>(entity) {
+        return match access.mode {
+            AccessMode::Public => false,
+            _ => true, // Restricted/Lockdown are generic obstacles
+        };
+    }
+
+    if let Some(gate) = world.get::<Gate>(entity) {
+        return gate.is_locked;
+    }
+    if let Some(building) = world.get::<Building>(entity) {
+        return building.building_type.is_obstacle();
+    }
+    false
+}
+
 #[cfg(test)]
 mod tests {
     use crate::layer1::access_control::{AccessControl, AccessMode};
@@ -249,22 +267,4 @@ mod tests {
             "Coordinates larger than the map should not be walkable"
         );
     }
-}
-
-/// Helper to check if a specific building entity is an obstacle (locked gate or solid building).
-pub fn is_obstacle(world: &World, entity: Entity) -> bool {
-    if let Some(access) = world.get::<AccessControl>(entity) {
-        return match access.mode {
-            AccessMode::Public => false,
-            _ => true, // Restricted/Lockdown are generic obstacles
-        };
-    }
-
-    if let Some(gate) = world.get::<Gate>(entity) {
-        return gate.is_locked;
-    }
-    if let Some(building) = world.get::<Building>(entity) {
-        return building.building_type.is_obstacle();
-    }
-    false
 }

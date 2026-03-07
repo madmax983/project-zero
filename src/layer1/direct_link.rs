@@ -98,26 +98,28 @@ pub fn handle_possession(
     }
 }
 
+type DirectMovementQuery<'a> = (
+    Entity,
+    &'a mut GridPosition,
+    &'a Speed,
+    &'a mut DirectControlState,
+    Option<&'a Role>,
+);
+type DirectMovementFilter = (With<Possessed>, Without<Building>);
+type BuildingsQuery<'a> = (
+    &'a GridPosition,
+    &'a Building,
+    Option<&'a Gate>,
+    Option<&'a AccessControl>,
+);
+
+#[allow(clippy::too_many_arguments)]
 pub fn handle_direct_movement(
     input: Res<Input>,
-    mut query: Query<
-        (
-            Entity,
-            &mut GridPosition,
-            &Speed,
-            &mut DirectControlState,
-            Option<&Role>,
-        ),
-        (With<Possessed>, Without<Building>),
-    >,
+    mut query: Query<DirectMovementQuery, DirectMovementFilter>,
     terrain: Res<TerrainGrid>,
     occupied_tiles: Option<Res<OccupiedTiles>>,
-    buildings: Query<(
-        &GridPosition,
-        &Building,
-        Option<&Gate>,
-        Option<&AccessControl>,
-    )>,
+    buildings: Query<BuildingsQuery>,
     wall_time: Option<Res<WallTime>>,
     mut shake: Option<ResMut<ScreenShake>>,
     mut commands: Commands,
@@ -288,9 +290,12 @@ pub fn handle_direct_movement(
     }
 }
 
+type PossessedSpeedQuery<'w, 's> = Query<'w, 's, &'static mut Speed, Added<Possessed>>;
+type SpeedQuery<'w, 's> = Query<'w, 's, &'static mut Speed>;
+
 pub fn apply_buffs(
     mut removed: RemovedComponents<Possessed>,
-    mut queries: ParamSet<(Query<&mut Speed, Added<Possessed>>, Query<&mut Speed>)>,
+    mut queries: ParamSet<(PossessedSpeedQuery, SpeedQuery)>,
 ) {
     for mut speed in queries.p0().iter_mut() {
         speed.base *= 2.0;

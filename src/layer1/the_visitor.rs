@@ -41,14 +41,18 @@ impl Default for TheVisitor {
 }
 
 /// System for "The Visitor" behavior.
+type VisitorQuery<'a> = (Entity, &'a mut TheVisitor, &'a mut GridPosition);
+type VisitorFilter = (Without<Stockpile>, Without<Structure>);
+type StockpileQuery<'a> = (Entity, &'a GridPosition);
+type StockpileFilter = (With<Stockpile>, Without<TheVisitor>);
+type StructureQuery<'a> = (Entity, &'a GridPosition);
+type StructureFilter = (With<Structure>, Without<TheVisitor>);
+
 pub fn the_visitor_behavior_system(
     mut commands: Commands,
-    mut visitors: Query<
-        (Entity, &mut TheVisitor, &mut GridPosition),
-        (Without<Stockpile>, Without<Structure>),
-    >,
-    stockpiles: Query<(Entity, &GridPosition), (With<Stockpile>, Without<TheVisitor>)>,
-    structures: Query<(Entity, &GridPosition), (With<Structure>, Without<TheVisitor>)>,
+    mut visitors: Query<VisitorQuery, VisitorFilter>,
+    stockpiles: Query<StockpileQuery, StockpileFilter>,
+    structures: Query<StructureQuery, StructureFilter>,
     mut resources: ResMut<ColonyResources>,
 ) {
     for (visitor_ent, mut visitor, mut pos) in visitors.iter_mut() {

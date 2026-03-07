@@ -13,7 +13,7 @@ mod tests {
         let mut resources = ColonyResources::default();
         resources.tools = 10.0;
 
-        let (efficiency, consumed) = calculate_work_efficiency(&mut resources);
+        let (efficiency, consumed) = calculate_work_efficiency(&resources);
 
         assert_eq!(efficiency, 1.0);
         assert_eq!(consumed, Some(ResourceType::Tools)); // Tools degrade slowly
@@ -26,7 +26,7 @@ mod tests {
         resources.tools = 0.0;
         resources.stone = 10.0;
 
-        let (efficiency, consumed) = calculate_work_efficiency(&mut resources);
+        let (efficiency, consumed) = calculate_work_efficiency(&resources);
 
         assert_eq!(efficiency, 0.75);
         assert_eq!(consumed, Some(ResourceType::Stone));
@@ -40,7 +40,7 @@ mod tests {
         resources.stone = 0.0;
         resources.wood = 10.0;
 
-        let (efficiency, consumed) = calculate_work_efficiency(&mut resources);
+        let (efficiency, consumed) = calculate_work_efficiency(&resources);
 
         assert_eq!(efficiency, 0.75);
         assert_eq!(consumed, Some(ResourceType::Wood));
@@ -55,7 +55,7 @@ mod tests {
         resources.wood = 0.0;
         resources.scrap = 10.0;
 
-        let (efficiency, consumed) = calculate_work_efficiency(&mut resources);
+        let (efficiency, consumed) = calculate_work_efficiency(&resources);
 
         assert_eq!(efficiency, 0.75);
         assert_eq!(consumed, Some(ResourceType::Scrap));
@@ -70,7 +70,7 @@ mod tests {
         resources.wood = 0.0;
         resources.scrap = 0.0;
 
-        let (efficiency, consumed) = calculate_work_efficiency(&mut resources);
+        let (efficiency, consumed) = calculate_work_efficiency(&resources);
 
         assert_eq!(efficiency, 0.5);
         assert_eq!(consumed, None);

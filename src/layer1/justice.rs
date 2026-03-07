@@ -253,7 +253,7 @@ mod tests {
         let result = evaluate_warden_action(
             &GridPosition { x: 0, y: 0 },
             &criminals,
-            &world.resource::<ZoneGrid>(),
+            world.resource::<ZoneGrid>(),
         );
 
         // Assert result

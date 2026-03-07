@@ -252,7 +252,7 @@ mod tests {
 
         let pop = world
             .spawn((
-                Pop::default(),
+                Pop,
                 Health::default(),
                 GridPosition { x: 5, y: 5 },
                 // Sickness component added by system? Or exists with 0 severity?
@@ -274,7 +274,7 @@ mod tests {
         let mut world = World::new();
         let pop = world
             .spawn((
-                Pop::default(),
+                Pop,
                 Health {
                     current: 100.0,
                     max: 100.0,

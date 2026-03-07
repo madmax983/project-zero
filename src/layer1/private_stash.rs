@@ -242,7 +242,7 @@ mod tests {
     fn test_inspect_pop_empty_stash() {
         let mut world = World::new();
         let res_before = ColonyResources::default();
-        world.insert_resource(res_before.clone());
+        world.insert_resource(res_before);
 
         let pop = world
             .spawn((Pop, PrivateStash::default(), Traits(HashSet::new())))

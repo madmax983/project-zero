@@ -226,7 +226,7 @@ mod tests {
         let events = world.resource::<Events<AffinityChange>>();
         let mut reader = events.get_cursor();
         let mut found = false;
-        for evt in reader.read(&events) {
+        for evt in reader.read(events) {
             if evt.target == pop_a && evt.source == pop_b && evt.amount > 0.0 {
                 found = true;
             }
