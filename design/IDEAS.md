@@ -1322,7 +1322,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Black Box
+## The Black Box [SPECCED]
 
 **Layer:** Cross-layer (Meta)
 
@@ -1336,7 +1336,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Company Scrip
+## Company Scrip [SPECCED]
 
 **Layer:** 1
 
@@ -1350,7 +1350,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Cognitive Hazards
+## Cognitive Hazards [SPECCED]
 
 **Layer:** 1
 
@@ -1364,7 +1364,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Chemical Regulation
+## Chemical Regulation [SPECCED]
 
 **Layer:** 1
 
@@ -1378,7 +1378,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Lifecycle & Retirement
+## Lifecycle & Retirement [SPECCED]
 
 **Layer:** 1
 
