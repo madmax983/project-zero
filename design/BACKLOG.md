@@ -139,3 +139,16 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `393` Colony Edicts — `specs/393-colony-edicts.md`
 - [ ] `394` Hauling Logistics — `specs/394-hauling-logistics.md`
 - [ ] `395` Planetary Weather Fronts — `specs/395-planetary-weather-fronts.md`
+- [ ] `396` Trade Contracts — `specs/396-trade-contracts.md`
+- [ ] `397` Nomadic Fleets — `specs/397-nomadic-fleets.md`
+- [ ] `398` Planetary Migrations — `specs/398-planetary-migrations.md`
+- [ ] `399` Prison Labor — `specs/399-prison-labor.md`
+- [ ] `400` Lagrange Point Hubs — `specs/400-lagrange-point-hubs.md`
+- [ ] `401` Asteroid Redirect — `specs/401-asteroid-redirect.md`
+- [ ] `402` Ideological Pressure — `specs/402-ideological-pressure.md`
+- [ ] `403` Dysonian Swarms — `specs/403-dysonian-swarms.md`
+- [ ] `404` Thermal Management — `specs/404-thermal-management.md`
+- [ ] `405` Cybernetic Augmentation — `specs/405-cybernetic-augmentation.md`
+- [ ] `406` Quarantine Protocols — `specs/406-quarantine-protocols.md`
+- [ ] `407` Planetary Rings — `specs/407-planetary-rings.md`
+- [ ] `408` Galactic Tourism — `specs/408-galactic-tourism.md`

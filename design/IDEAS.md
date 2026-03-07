@@ -986,7 +986,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Trade Contracts
+## Trade Contracts [SPECCED]
 
 **Layer:** 3 -> 1
 
@@ -1070,7 +1070,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Nomadic Fleets
+## Nomadic Fleets [SPECCED]
 
 **Layer:** 3
 
@@ -1084,7 +1084,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Prison Labor
+## Prison Labor [SPECCED]
 
 **Layer:** 1
 
@@ -1098,7 +1098,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Planetary Migrations
+## Planetary Migrations [SPECCED]
 
 **Layer:** 2
 
@@ -1112,7 +1112,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Lagrange Point Hubs
+## Lagrange Point Hubs [SPECCED]
 
 **Layer:** 2
 
@@ -1126,7 +1126,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Asteroid Redirect
+## Asteroid Redirect [SPECCED]
 
 **Layer:** 2
 
@@ -1140,7 +1140,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Ideological Pressure
+## Ideological Pressure [SPECCED]
 
 **Layer:** 3 -> 1
 
@@ -1168,7 +1168,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Dysonian Swarms
+## Dysonian Swarms [SPECCED]
 
 **Layer:** 2
 
@@ -1182,7 +1182,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Thermal Management
+## Thermal Management [SPECCED]
 
 **Layer:** 1
 
@@ -1196,7 +1196,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Cybernetic Augmentation
+## Cybernetic Augmentation [SPECCED]
 
 **Layer:** 1
 
@@ -1210,7 +1210,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Quarantine Protocols
+## Quarantine Protocols [SPECCED]
 
 **Layer:** 1
 
@@ -1224,7 +1224,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Planetary Rings
+## Planetary Rings [SPECCED]
 
 **Layer:** 2
 
@@ -1238,7 +1238,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Galactic Tourism
+## Galactic Tourism [SPECCED]
 
 **Layer:** Cross-layer
 
