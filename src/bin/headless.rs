@@ -509,7 +509,12 @@ fn print_status(world: &mut World) {
 fn print_tech(world: &mut World) {
     let tech_state = world.resource::<TechState>();
 
-    println!("{}", "================== TECHNOLOGY STATUS ==================".green().bold());
+    println!(
+        "{}",
+        "================== TECHNOLOGY STATUS =================="
+            .green()
+            .bold()
+    );
     println!(
         "💾 Total Capacity: {:.1} TB | Used: {:.1} TB",
         tech_state.total_capacity, tech_state.used_capacity
@@ -568,7 +573,12 @@ fn print_tech(world: &mut World) {
 }
 
 fn print_pops(world: &mut World) {
-    println!("{}", "================== POPULATION DETAILS ==================".green().bold());
+    println!(
+        "{}",
+        "================== POPULATION DETAILS =================="
+            .green()
+            .bold()
+    );
 
     let mut table = Table::new();
     table
@@ -1175,7 +1185,12 @@ fn print_great_works(world: &mut World) {
 
 /// List all buildings with positions
 fn print_buildings(world: &mut World) {
-    println!("{}", "================== BUILDINGS ==================".green().bold());
+    println!(
+        "{}",
+        "================== BUILDINGS =================="
+            .green()
+            .bold()
+    );
 
     let mut table = Table::new();
     table
@@ -1288,7 +1303,12 @@ fn print_bio(world: &mut World, target_id: u32) {
 fn print_chronicle(world: &mut World) {
     let chronicle = world.resource::<Chronicle>();
 
-    println!("{}", "================== COLONY CHRONICLE ==================".green().bold());
+    println!(
+        "{}",
+        "================== COLONY CHRONICLE =================="
+            .green()
+            .bold()
+    );
 
     if chronicle.events.is_empty() {
         println!("  (No history recorded)");
@@ -1332,7 +1352,12 @@ fn print_chronicle(world: &mut World) {
 fn print_log(world: &mut World) {
     let log = world.resource::<MessageLog>();
 
-    println!("{}", "================== MESSAGE LOG ==================".green().bold());
+    println!(
+        "{}",
+        "================== MESSAGE LOG =================="
+            .green()
+            .bold()
+    );
 
     if log.messages.is_empty() {
         println!("  (No messages)");

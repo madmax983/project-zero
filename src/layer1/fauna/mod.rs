@@ -1,9 +1,9 @@
-use crate::layer1::execution::{AtTarget, MovementTarget};
 use crate::layer1::combat::HitStop;
-use crate::layer1::map::ScreenShake;
-use crate::layer1::particles::spawn_particle;
+use crate::layer1::execution::{AtTarget, MovementTarget};
 use crate::layer1::health::{Dead, Health};
 use crate::layer1::map::GridPosition;
+use crate::layer1::map::ScreenShake;
+use crate::layer1::particles::spawn_particle;
 use crate::layer1::pop::Pop;
 use crate::layer1::utility_types::ActionType;
 use crate::shared::log::MessageLog;
@@ -189,15 +189,25 @@ pub fn fauna_behavior_system(world: &mut World) {
             health.take_damage(damage);
 
             // Ludwig: "Juice" logic for Fauna attacks
-            let hit_stop_ticks = if damage >= 10.0 { 6 } else if damage >= 5.0 { 2 } else { 1 };
+            let hit_stop_ticks = if damage >= 10.0 {
+                6
+            } else if damage >= 5.0 {
+                2
+            } else {
+                1
+            };
 
             // Apply HitStop to both attacker and target
             if hit_stop_ticks > 0 {
                 if let Ok(mut entity_mut) = world.get_entity_mut(attacker) {
-                    entity_mut.insert(HitStop { ticks_remaining: hit_stop_ticks });
+                    entity_mut.insert(HitStop {
+                        ticks_remaining: hit_stop_ticks,
+                    });
                 }
                 if let Ok(mut entity_mut) = world.get_entity_mut(target) {
-                    entity_mut.insert(HitStop { ticks_remaining: hit_stop_ticks });
+                    entity_mut.insert(HitStop {
+                        ticks_remaining: hit_stop_ticks,
+                    });
                 }
             }
 

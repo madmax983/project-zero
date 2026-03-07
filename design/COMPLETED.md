@@ -211,3 +211,4 @@
 - [x] `INT-347` Integration: Great Works -> Chronicle — completed 2026-03-08
 - [x] `INT-348` Integration: Needs -> Black Market — completed 2026-03-08
 - [x] `INT-349` Integration: Ancestral Graves -> Sacrilege -> Unrest — completed 2026-03-08
+- [x] `419` The Bio-Acoustic Chorus — `specs/419-bio-acoustic-chorus.md` — completed 2026-03-09

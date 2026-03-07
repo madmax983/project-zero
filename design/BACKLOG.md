@@ -162,7 +162,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `416` Cognitive Hazards — `specs/416-cognitive-hazards.md`
 - [ ] `417` Chemical Regulation — `specs/417-chemical-regulation.md`
 - [ ] `418` Lifecycle & Retirement — `specs/418-lifecycle-retirement.md`
-- [ ] `419` The Bio-Acoustic Chorus — `specs/419-bio-acoustic-chorus.md`
 - [ ] `420` Ephemeral Architecture — `specs/420-ephemeral-architecture.md`
 - [ ] `421` The Pirate Emissary — `specs/421-the-pirate-emissary.md`
 - [ ] `422` Reverse Terraforming — `specs/422-reverse-terraforming.md`
