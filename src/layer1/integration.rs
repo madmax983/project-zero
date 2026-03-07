@@ -119,6 +119,54 @@ pub fn chronicle_rumor_bridge_system(
     }
 }
 
+/// Bridges `Needs` system to `BlackMarket` system.
+///
+/// Updates `ColonyStats.unmet_luxury` by counting pops with low leisure needs.
+pub fn update_unmet_luxury_system(
+    mut stats: ResMut<crate::layer1::black_market::ColonyStats>,
+    pops: Query<&crate::layer1::needs::Needs, With<crate::layer1::pop::Pop>>,
+) {
+    let unmet_count = pops.iter().filter(|needs| needs.leisure < 30.0).count();
+    #[allow(clippy::cast_possible_truncation)]
+    {
+        stats.unmet_luxury = unmet_count as u32;
+    }
+}
+
+/// Bridges `SacrilegeEvent` to `Unrest` and `Chronicle`.
+///
+/// Increases global unrest and logs a major event when a grave is built over.
+pub fn sacrilege_unrest_bridge(
+    mut events_in: EventReader<crate::layer1::events::SacrilegeEvent>,
+    mut events_out: EventWriter<AddChronicleEvent>,
+    mut unrest: ResMut<crate::layer1::unrest::Unrest>,
+) {
+    for _event in events_in.read() {
+        unrest.level += 10.0;
+        unrest.level = unrest.level.min(100.0);
+
+        events_out.send(AddChronicleEvent {
+            text: "A grave was desecrated. The colony is in uproar.".to_string(),
+            importance: EventImportance::Major,
+        });
+    }
+}
+
+/// Bridges `GreatWorkCompletedEvent` to the `Chronicle` system.
+///
+/// Records the completion of a Great Work as a Legendary event.
+pub fn great_work_chronicle_bridge(
+    mut events_in: EventReader<crate::layer1::construction::GreatWorkCompletedEvent>,
+    mut events_out: EventWriter<AddChronicleEvent>,
+) {
+    for event in events_in.read() {
+        events_out.send(AddChronicleEvent {
+            text: format!("The colony has completed a Great Work: {}.", event.name),
+            importance: EventImportance::Legendary,
+        });
+    }
+}
+
 /// Issues `ActivePlacebo` entities for active `Policy::Placebo` edicts if they don't already exist.
 /// Runs in `Observation` phase.
 pub fn issue_placebo_from_edict_system(

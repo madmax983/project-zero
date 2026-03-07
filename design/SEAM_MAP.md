@@ -302,3 +302,24 @@
 - **Glue added:**
     - `industrial_rhythm_morale_bridge` converts `MachineRhythm` with sync bonus to a `MoodModifier` applied to nearby `Pop`s' `Morale`.
 - **Tests:** `tests/integration/industrial_rhythm.rs`
+
+### INT-347: Great Works -> Chronicle
+- **Date:** 2026-03-08
+- **Systems connected:** `GreatWorkCompletedEvent` (Construction) -> `great_work_chronicle_bridge` (Integration) -> `AddChronicleEvent` (Chronicle)
+- **Glue added:**
+    - `great_work_chronicle_bridge` to convert `GreatWorkCompletedEvent` to `AddChronicleEvent` (Legendary)
+- **Tests:** `tests/integration/great_work_chronicle.rs`
+
+### INT-348: Needs -> Black Market
+- **Date:** 2026-03-08
+- **Systems connected:** `Needs` (Pop) -> `update_unmet_luxury_system` (Integration) -> `ColonyStats.unmet_luxury` (Black Market)
+- **Glue added:**
+    - `update_unmet_luxury_system` to update stats based on pop leisure levels
+- **Tests:** `tests/integration/unmet_needs_black_market.rs`
+
+### INT-349: Ancestral Graves -> Sacrilege -> Unrest
+- **Date:** 2026-03-08
+- **Systems connected:** `SacrilegeEvent` (Building) -> `sacrilege_unrest_bridge` (Integration) -> `Unrest` (Unrest) & `AddChronicleEvent` (Chronicle)
+- **Glue added:**
+    - `sacrilege_unrest_bridge` to increase unrest and log a chronicle event
+- **Tests:** `tests/integration/sacrilege_effects.rs`

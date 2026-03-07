@@ -162,5 +162,11 @@ mod scapegoat_chronicle;
 #[path = "integration/subspace_pen_pals.rs"]
 mod subspace_pen_pals;
 
+#[path = "integration/great_work_chronicle.rs"]
+mod great_work_chronicle;
 #[path = "integration/industrial_rhythm.rs"]
 mod industrial_rhythm;
+#[path = "integration/sacrilege_effects.rs"]
+mod sacrilege_effects;
+#[path = "integration/unmet_needs_black_market.rs"]
+mod unmet_needs_black_market;
