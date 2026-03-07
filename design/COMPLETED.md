@@ -208,3 +208,6 @@
 - [x] `260` The Industrial Rhythm — `specs/260-industrial-rhythm.md` — completed 2026-03-06
 - [x] `348` The Black Market — `specs/348-the-black-market.md` — completed 2026-03-06
 - [x] `349` Ancestral Graves — `specs/349-ancestral-graves.md` — completed 2026-03-01
+- [x] `INT-347` Integration: Great Works -> Chronicle — completed 2026-03-08
+- [x] `INT-348` Integration: Needs -> Black Market — completed 2026-03-08
+- [x] `INT-349` Integration: Ancestral Graves -> Sacrilege -> Unrest — completed 2026-03-08

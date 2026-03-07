@@ -189,6 +189,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::society::InvestigationEvent>>();
     world.init_resource::<Events<crate::layer1::society::SuppressSocietyEvent>>();
     world.init_resource::<Events<crate::layer1::geology::tectonic::MegaQuakeEvent>>();
+    world.init_resource::<Events<crate::layer1::events::SacrilegeEvent>>();
     world.init_resource::<Events<crate::layer1::resources::MiningEvent>>();
     world.init_resource::<crate::layer1::geology::tectonic::TectonicStress>();
     world.init_resource::<crate::layer1::tech::infinite_archive::Archive>();
@@ -235,6 +236,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<crate::layer1::constellations::Sky>();
     #[cfg(feature = "nova")]
     world.init_resource::<crate::layer1::void_signals::SignalNetwork>();
+    world.init_resource::<crate::layer1::black_market::ColonyStats>();
+    world.init_resource::<crate::layer1::unrest::Unrest>();
     #[cfg(feature = "nova")]
     world.init_resource::<crate::layer1::machine_consciousness::ConsciousnessConfig>();
 

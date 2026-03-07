@@ -91,6 +91,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::social::cultural_vandalism::vandalism_system.after(decay_needs_system),
             crate::layer1::social::cultural_vandalism::update_structure_buffs
                 .after(crate::layer1::social::cultural_vandalism::vandalism_system),
+            crate::layer1::integration::update_unmet_luxury_system.after(decay_needs_system),
+            crate::layer1::integration::sacrilege_unrest_bridge.after(decay_needs_system),
             crate::layer1::integration::issue_placebo_from_edict_system.after(decay_needs_system),
             crate::layer1::social::placebo::placebo_tick_system.after(decay_needs_system),
             crate::layer1::social::placebo::reveal_betrayal_system.after(decay_needs_system),
@@ -165,6 +167,7 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::pop::handle_pop_death_system),
             crate::layer1::ad_screen::update_ad_screens_system,
             crate::layer1::integration::industrial_rhythm_morale_bridge,
+            crate::layer1::integration::great_work_chronicle_bridge,
         )
             .in_set(Layer1SystemSet::Observation),
     );
