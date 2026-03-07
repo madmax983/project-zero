@@ -790,7 +790,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Pop Relationships
+## Pop Relationships [SPECCED]
 
 **Layer:** 1
 
@@ -832,7 +832,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Tool Economy
+## Tool Economy [SPECCED]
 
 **Layer:** 1
 
@@ -888,7 +888,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Colony Edicts
+## Colony Edicts [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -902,7 +902,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Hauling Logistics
+## Hauling Logistics [SPECCED]
 
 **Layer:** 1
 
@@ -972,7 +972,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Planetary Weather Fronts
+## Planetary Weather Fronts [SPECCED]
 
 **Layer:** 2 -> 1
 

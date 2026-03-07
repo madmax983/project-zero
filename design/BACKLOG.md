@@ -134,3 +134,8 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `388` Social Stratification — `specs/388-social-stratification.md`
 - [ ] `389` Geological Instability — `specs/389-geological-instability.md`
 - [ ] `390` Eureka Moments — `specs/390-eureka-moments.md`
+- [ ] `391` Pop Relationships — `specs/391-pop-relationships.md`
+- [ ] `392` Tool Economy — `specs/392-tool-economy.md`
+- [ ] `393` Colony Edicts — `specs/393-colony-edicts.md`
+- [ ] `394` Hauling Logistics — `specs/394-hauling-logistics.md`
+- [ ] `395` Planetary Weather Fronts — `specs/395-planetary-weather-fronts.md`
