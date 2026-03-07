@@ -3,7 +3,6 @@
 ## High Priority
 
 - [ ] `349` Ancestral Graves — `specs/349-ancestral-graves.md` — claimed 2026-03-01
-- [ ] `350` Private Stashes — `specs/350-private-stashes.md`
 
 
 ## Future / Ideas

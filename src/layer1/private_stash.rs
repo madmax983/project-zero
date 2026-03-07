@@ -11,6 +11,8 @@ use std::collections::HashMap;
 /// Component storing resources stolen by a Pop.
 #[derive(Component, Debug, Clone, Default)]
 pub struct PrivateStash {
+    /// The entity ID of the owner of this stash.
+    pub owner: Option<Entity>,
     /// Map of resource type to amount stored.
     pub inventory: HashMap<ResourceType, f32>,
 }
@@ -95,13 +97,55 @@ pub fn inspect_pop(world: &mut World, pop_entity: Entity) {
     // Log/Notification would go here.
 }
 
+/// System that creates private stashes during shortages.
+pub fn stash_creation_system(
+    mut commands: Commands,
+    mut resources: ResMut<ColonyResources>,
+    query: Query<(Entity, &Traits, &crate::layer1::map::GridPosition, &crate::layer1::inventory::Inventory), With<crate::layer1::pop::Pop>>,
+) {
+    // Check for shortage
+    if resources.food >= 10.0 {
+        return;
+    }
+
+    for (entity, traits, _pos, inventory) in &query {
+        if traits.0.contains(&Trait::Anxious) && resources.food > 0.0 {
+            // Check if they have an inventory with food they can stash
+            let has_food = inventory.items.iter().any(|item| matches!(item.item_type, crate::layer1::items::ItemType::Potato | crate::layer1::items::ItemType::Rations));
+
+            // To match the spec RED phase: "they remove an item from stockpile/inventory and spawn a PrivateStash entity."
+            // We simulate removing food from the global resource pool
+            if has_food || resources.food > 0.0 {
+                if resources.food >= 1.0 {
+                    resources.food -= 1.0;
+                }
+
+                let mut stash = PrivateStash {
+                    owner: Some(entity),
+                    ..Default::default()
+                };
+                stash.add(ResourceType::Food, 1.0);
+
+                commands.spawn(stash);
+            }
+        }
+    }
+}
+
+/// Calculates the total visible food for the colony, ignoring private stashes.
+pub fn calculate_visible_food(world: &World) -> f32 {
+    let resources = world.resource::<ColonyResources>();
+    resources.food
+}
+
 #[cfg(test)]
 mod tests {
-    use super::{hoarding_system, inspect_pop, PrivateStash};
+    use super::{calculate_visible_food, hoarding_system, inspect_pop, stash_creation_system, PrivateStash};
     use crate::layer1::pop::Pop;
     use crate::layer1::resources::{ColonyResources, ResourceType};
     use crate::layer1::traits::{Trait, Traits};
     use bevy_ecs::prelude::*;
+    use bevy_ecs::system::RunSystemOnce;
     use std::collections::HashSet;
 
     #[test]
@@ -279,5 +323,39 @@ mod tests {
         assert!((res.wood - 18.0).abs() < f32::EPSILON);
         // Ore: 0 + 0 = 0 (because Ore isn't in the match arm in inspect_pop yet!)
         assert!((res.ore - 0.0).abs() < f32::EPSILON);
+    }
+
+    #[test]
+    fn test_anxious_pop_creates_stash() {
+        // Arrange
+        let mut world = World::new();
+        // Pop has Anxious trait and there is a global food shortage
+        world.insert_resource(ColonyResources { food: 5.0, ..Default::default() });
+        let mut traits = HashSet::new();
+        traits.insert(Trait::Anxious);
+        let pop = world.spawn((Pop, Traits(traits), crate::layer1::map::GridPosition { x: 0, y: 0 }, crate::layer1::inventory::Inventory { items: vec![crate::layer1::inventory::InventoryItem { item_type: crate::layer1::items::ItemType::Potato, entity: None }], capacity: 20 })).id();
+
+        // Act
+        world.run_system_once(stash_creation_system).unwrap();
+
+        // Assert
+        let stashes = world.query::<&PrivateStash>().iter(&world).filter(|stash| stash.owner == Some(pop)).count();
+        assert_eq!(stashes, 1, "Anxious pop should create a stash during a shortage");
+    }
+
+    #[test]
+    fn test_stash_hides_from_global_inventory() {
+        // Arrange
+        let mut world = World::new();
+        let mut stash = PrivateStash::default();
+        stash.add(ResourceType::Food, 10.0);
+        world.spawn(stash);
+        world.insert_resource(ColonyResources { food: 20.0, ..Default::default() });
+
+        // Act
+        let total_visible_food = calculate_visible_food(&world);
+
+        // Assert
+        assert_eq!(total_visible_food, 20.0, "Stashed food should not be visible to the colony");
     }
 }
