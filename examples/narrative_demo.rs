@@ -45,10 +45,7 @@ impl App {
             generator = NarrativeGenerator::from_embedded();
         }
 
-        let template_ids: Vec<String> = generator
-            .get_template_ids()
-            .into_iter().cloned()
-            .collect();
+        let template_ids: Vec<String> = generator.get_template_ids().into_iter().cloned().collect();
 
         let mut context = NarrativeContext::default();
         context.insert("CIV_NAME", "Terran Dominion");

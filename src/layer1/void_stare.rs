@@ -91,13 +91,8 @@ pub fn update_void_exposure_system(
                 let nx = pos.x + dx;
                 let ny = pos.y + dy;
 
-                if let Some(tile) = terrain.get(nx as usize, ny as usize) {
-                    match tile {
-                        TerrainType::Tree | TerrainType::Grass | TerrainType::Water => {
-                            visible_life += 0.5;
-                        }
-                        _ => {}
-                    }
+                if let Some(TerrainType::Tree | TerrainType::Grass | TerrainType::Water) = terrain.get(nx as usize, ny as usize) {
+                    visible_life += 0.5;
                 }
             }
         }

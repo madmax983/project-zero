@@ -15,13 +15,11 @@ use crate::layer1::traits::{Trait, Traits};
 use crate::shared::log::MessageLog;
 
 /// Component added to Pops experiencing a Fever Dream due to sleep deprivation.
-#[derive(Component, Debug, Clone, Copy)]
-#[derive(Default)]
+#[derive(Component, Debug, Clone, Copy, Default)]
 pub struct FeverDream {
     /// Tracks the duration the pop has been in the fever dream state.
     pub duration: u32,
 }
-
 
 /// Evaluates Pops to see if they should enter or exit the Fever Dream state,
 type FeverDreamQuery<'a> = (

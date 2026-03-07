@@ -161,6 +161,7 @@ impl TemperatureGrid {
 }
 
 /// System to update the temperature grid.
+#[allow(clippy::too_many_arguments)]
 pub fn update_temperature_system(
     grid: Option<ResMut<TemperatureGrid>>,
     season: Option<Res<SeasonState>>,

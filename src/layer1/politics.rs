@@ -282,7 +282,10 @@ mod tests {
         manager.state = ElectionState::Campaigning;
 
         // Run candidate generation logic
-        let _ = bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, generate_candidates_system);
+        let _ = bevy_ecs::system::RunSystemOnce::run_system_once(
+            &mut world,
+            generate_candidates_system,
+        );
 
         let manager = world.resource::<ElectionManager>();
         assert!(!manager.candidates.is_empty());

@@ -51,20 +51,12 @@ mod integration_tests {
 
         // Spawn a Pop nearby (dist <= 3)
         let pop_near = world
-            .spawn((
-                Pop,
-                GridPosition { x: 5, y: 6 },
-                Morale::default(),
-            ))
+            .spawn((Pop, GridPosition { x: 5, y: 6 }, Morale::default()))
             .id();
 
         // Spawn a Pop far away
         let pop_far = world
-            .spawn((
-                Pop,
-                GridPosition { x: 20, y: 20 },
-                Morale::default(),
-            ))
+            .spawn((Pop, GridPosition { x: 20, y: 20 }, Morale::default()))
             .id();
 
         // Run systems

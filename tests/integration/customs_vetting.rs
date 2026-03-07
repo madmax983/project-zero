@@ -16,11 +16,7 @@ mod tests {
 
         // Spawn visitor at (0, 0) - NOT at Customs
         let visitor = world
-            .spawn((
-                Pop,
-                ImmigrationStatus::Pending,
-                GridPosition { x: 0, y: 0 },
-            ))
+            .spawn((Pop, ImmigrationStatus::Pending, GridPosition { x: 0, y: 0 }))
             .id();
 
         // Run system twice to ensure any "initialization" frame is passed and progress would happen

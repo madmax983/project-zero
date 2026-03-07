@@ -51,6 +51,12 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::funeral::grave_visit_system
                 .after(crate::layer1::funeral::grief_system),
             crate::layer1::unrest::calculate_unrest_system.after(decay_needs_system),
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::unrest::identify_scapegoat_system
                 .after(crate::layer1::unrest::calculate_unrest_system),
             crate::layer1::unrest::handle_denounce_event_system
