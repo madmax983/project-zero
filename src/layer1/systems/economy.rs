@@ -113,6 +113,8 @@ pub fn register(schedule: &mut Schedule) {
                 .after(process_fuel_consumption_system)
                 .after(crate::layer1::energy::update_auroral_output_system)
                 .after(crate::layer1::solar::update_solar_output_system),
+            crate::layer1::energy::load_limits::evaluate_grid_load_system
+                .after(crate::layer1::energy::power_grid_system),
             ai_automation_system.after(crate::layer1::energy::power_grid_system),
             ai_rogue_system,
         )
