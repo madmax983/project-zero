@@ -18,6 +18,9 @@ use crate::layer1::biography::Biography;
 use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::dreams::DreamJournal;
 use crate::layer1::purity::PurityMap;
+use crate::layer1::energy::load_limits::PowerCable;
+use crate::layer1::energy::{Battery, PowerConsumer, PowerSource};
+use crate::layer1::olfactory::{ScentEmitter, ScentMap};
 use crate::layer1::rituals::{MachineSpirit, Quirk, QuirkType};
 use crate::layer1::social::old_guard::{Arrival, Generation};
 use crate::layer1::utility_types::UtilityWeights;
@@ -414,6 +417,29 @@ fn render_tile_inspector(frame: &mut Frame, area: Rect, world: &World, x: i32, y
 
     let echo_line: Option<Line> = None;
 
+    // Scent Logic
+    let scent_line = if let Some(scent_map) = world.get_resource::<ScentMap>() {
+        let tile_scent = scent_map.get_scent(GridPosition { x, y });
+        if tile_scent.pleasant > 0.0 || tile_scent.foul > 0.0 {
+            Some(Line::from(vec![
+                Span::raw("Scent: "),
+                Span::styled(
+                    format!("🌸 {:.1}", tile_scent.pleasant),
+                    Style::default().fg(Color::LightMagenta),
+                ),
+                Span::raw(" / "),
+                Span::styled(
+                    format!("🤢 {:.1}", tile_scent.foul),
+                    Style::default().fg(Color::Rgb(150, 200, 50)),
+                ),
+            ]))
+        } else {
+            None
+        }
+    } else {
+        None
+    };
+
     let mut constraints = vec![
         Constraint::Length(1), // Header
         Constraint::Length(1), // Coords
@@ -424,6 +450,10 @@ fn render_tile_inspector(frame: &mut Frame, area: Rect, world: &World, x: i32, y
     }
 
     if echo_line.is_some() {
+        constraints.push(Constraint::Length(1));
+    }
+
+    if scent_line.is_some() {
         constraints.push(Constraint::Length(1));
     }
 
@@ -457,6 +487,11 @@ fn render_tile_inspector(frame: &mut Frame, area: Rect, world: &World, x: i32, y
     }
 
     if let Some(line) = echo_line {
+        frame.render_widget(Paragraph::new(line), layout[current_idx]);
+        current_idx += 1;
+    }
+
+    if let Some(line) = scent_line {
         frame.render_widget(Paragraph::new(line), layout[current_idx]);
         current_idx += 1;
     }
@@ -573,6 +608,14 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         0
     };
 
+    let has_cable = world.get::<PowerCable>(entity).is_some();
+    let has_battery = world.get::<Battery>(entity).is_some();
+    let has_consumer = world.get::<PowerConsumer>(entity).is_some();
+    let has_source = world.get::<PowerSource>(entity).is_some();
+    let has_emitter = world.get::<ScentEmitter>(entity).is_some();
+
+    let extra_height = u16::from(has_cable) + u16::from(has_battery) + u16::from(has_consumer) + u16::from(has_source) + u16::from(has_emitter);
+
     let layout = Layout::default()
         .direction(Direction::Vertical)
         .constraints([
@@ -584,6 +627,7 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
             Constraint::Length(details_height),                       // Needs or Details
             Constraint::Length(u16::from(has_structure)),             // Structure HP
             Constraint::Length(diag_height), // Diagnostics (Spirit + Quirk)
+            Constraint::Length(extra_height), // Power / Scent Extra Info
             Constraint::Length(personality_height), // Personality + Spacer
             Constraint::Length(dream_height), // Last Dream
             Constraint::Length(diet_height), // Dietary History
@@ -785,24 +829,100 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         }
     }
 
+    // Extra Grid & Scent Info
+    if extra_height > 0 {
+        let mut extra_idx = 0;
+        let extra_chunks = Layout::default()
+            .direction(Direction::Vertical)
+            .constraints(vec![Constraint::Length(1); extra_height as usize])
+            .split(layout[8]);
+
+        if let Some(cable) = world.get::<PowerCable>(entity) {
+            let load_color = if cable.current_load > cable.capacity { Color::Red } else { Color::Cyan };
+            let load_pct = if cable.capacity > 0.0 { (cable.current_load / cable.capacity) * 100.0 } else { 0.0 };
+            frame.render_widget(
+                Paragraph::new(Line::from(vec![
+                    Span::raw("⚡ Cable Load: "),
+                    Span::styled(format!("{:.0}/{:.0} ({:.0}%)", cable.current_load, cable.capacity, load_pct), Style::default().fg(load_color)),
+                ])),
+                extra_chunks[extra_idx]
+            );
+            extra_idx += 1;
+        }
+
+        if let Some(battery) = world.get::<Battery>(entity) {
+            let charge_pct = if battery.capacity > 0.0 { (battery.charge / battery.capacity) * 100.0 } else { 0.0 };
+            let charge_color = if charge_pct < 20.0 { Color::Red } else if charge_pct < 80.0 { Color::Yellow } else { Color::Green };
+            frame.render_widget(
+                Paragraph::new(Line::from(vec![
+                    Span::raw("🔋 Battery Charge: "),
+                    Span::styled(format!("{:.0}/{:.0} ({:.0}%)", battery.charge, battery.capacity, charge_pct), Style::default().fg(charge_color)),
+                ])),
+                extra_chunks[extra_idx]
+            );
+            extra_idx += 1;
+        }
+
+        if let Some(consumer) = world.get::<PowerConsumer>(entity) {
+            let status = if consumer.active { "Active" } else { "Inactive" };
+            let color = if consumer.active { Color::Green } else { Color::Red };
+            frame.render_widget(
+                Paragraph::new(Line::from(vec![
+                    Span::raw("🔌 Consumer Demand: "),
+                    Span::styled(format!("{:.0} ({})", consumer.demand, status), Style::default().fg(color)),
+                ])),
+                extra_chunks[extra_idx]
+            );
+            extra_idx += 1;
+        }
+
+        if let Some(source) = world.get::<PowerSource>(entity) {
+            let status = if source.active { "Active" } else { "Inactive" };
+            let color = if source.active { Color::Green } else { Color::Red };
+            frame.render_widget(
+                Paragraph::new(Line::from(vec![
+                    Span::raw("🏭 Source Output: "),
+                    Span::styled(format!("{:.0} ({})", source.output, status), Style::default().fg(color)),
+                ])),
+                extra_chunks[extra_idx]
+            );
+            extra_idx += 1;
+        }
+
+        if let Some(emitter) = world.get::<ScentEmitter>(entity) {
+            let color = match emitter.scent_type {
+                crate::layer1::olfactory::ScentType::Pleasant => Color::LightMagenta,
+                crate::layer1::olfactory::ScentType::Foul => Color::Rgb(150, 200, 50),
+            };
+            frame.render_widget(
+                Paragraph::new(Line::from(vec![
+                    Span::raw("💨 Emits Scent: "),
+                    Span::styled(format!("{:?} ({:.1})", emitter.scent_type, emitter.strength), Style::default().fg(color)),
+                ])),
+                extra_chunks[extra_idx]
+            );
+        }
+    }
+
     // 8. Personality
     if let Some(weights) = world.get::<UtilityWeights>(entity) {
-        render_personality(frame, layout[8], *weights);
+        render_personality(frame, layout[9], *weights);
     }
 
     // 9. Last Dream
     if let Some(journal) = world.get::<DreamJournal>(entity) {
-        render_dream_journal(frame, layout[9], journal);
+        render_dream_journal(frame, layout[10], journal);
     }
 
     // 10. Dietary History
     if let Some(history) = world.get::<DietaryHistory>(entity) {
-        render_dietary_history(frame, layout[10], history);
+        render_dietary_history(frame, layout[11], history);
     }
 
     // 11. Biography
-    let bottom_area = layout[11];
+    let bottom_area = layout[12];
     let bio_opt = world.get::<Biography>(entity);
+
 
     if let Some(bio) = bio_opt {
         render_biography(frame, bottom_area, bio, world);
