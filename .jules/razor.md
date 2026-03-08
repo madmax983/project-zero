@@ -7,3 +7,8 @@
 **Bloat:** Bevy system tuple size exceeding 20 elements.
 **Cut:** Split the large tuple into two separate `schedule.add_systems(...)` calls.
 **Saved:** 1 compilation error.
+
+## [Reduction]
+**Bloat:** `clippy::complexity` warnings related to large tuples and unused generic structure in tests and systems.
+**Cut:** Split the large 20+ elements tuple inside `src/layer1/systems/observation.rs` and ran `cargo clippy --fix` on `src/layer1/` tests and source code to eliminate redundant `.default()` assignments and unused variables.
+**Saved:** Multiple compilation errors related to `IntoSystemConfigs` macro boundaries limit and numerous warnings cluttering output.

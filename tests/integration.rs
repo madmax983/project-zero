@@ -166,9 +166,9 @@ mod subspace_pen_pals;
 mod great_work_chronicle;
 #[path = "integration/industrial_rhythm.rs"]
 mod industrial_rhythm;
+#[path = "integration/orbital_drop_chronicle.rs"]
+mod orbital_drop_chronicle;
 #[path = "integration/sacrilege_effects.rs"]
 mod sacrilege_effects;
 #[path = "integration/unmet_needs_black_market.rs"]
 mod unmet_needs_black_market;
-#[path = "integration/orbital_drop_chronicle.rs"]
-mod orbital_drop_chronicle;
