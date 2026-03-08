@@ -743,3 +743,7 @@ pub use pop_doppelganger::*;
 /// Olfactory map and scent system (Spec 446).
 pub mod olfactory;
 pub use olfactory::*;
+
+/// The Overview Effect system (Spec 449).
+pub mod overview_effect;
+pub use overview_effect::*;

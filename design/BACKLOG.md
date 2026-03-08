@@ -191,5 +191,5 @@ See `design/IDEAS.md` for unspecced concepts.
 - [x] `446` Olfactory Map — `specs/446-olfactory-map.md`
 
 
-- [ ] `449` The Overview Effect — `specs/449-the-overview-effect.md`
+
 - [ ] `450` Light Pollution — `specs/450-light-pollution.md`
