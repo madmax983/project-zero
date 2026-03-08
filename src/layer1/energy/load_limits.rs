@@ -75,7 +75,7 @@ mod tests {
     use crate::layer1::fire::Fire;
     use crate::layer1::map::GridPosition;
     use crate::layer1::temperature::TemperatureGrid;
-    use bevy_ecs::prelude::*;
+
     use bevy_ecs::system::RunSystemOnce;
 
     #[test]
