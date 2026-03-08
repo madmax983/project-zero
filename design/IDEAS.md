@@ -8549,3 +8549,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Trusting highly skilled, deeply entrenched Pop families vs. the paranoia that they might be carrying a generational time bomb.
 
 ---
+
+## The Orphaned AI Broker
+
+**Layer:** 3 -> 1
+
+**Fantasy:** A long-dead civilization's automated AI broker resurfaces, offering incredible tech or resources in exchange for seemingly mundane things, but eventually demands things that disrupt the colony's stability.
+
+**Mechanic:** A Layer 3 entity (an ancient AI trader) arrives and opens trade. It asks for bizarre, low-value items in massive quantities (e.g., 10,000 units of basic wood, or 500 left shoes). If fulfilled, it rewards you with extremely advanced, irreplaceable Layer 3 tech. However, its requests escalate in strange ways, eventually asking for living Pops with specific traits or the dismantling of your main power grid.
+
+**Emergence:** You restructure your entire Layer 1 economy to overproduce a worthless item just to appease the AI, causing a famine because no one is farming anymore. You get the super-reactor, but you have no food.
+
+**Tension:** The lure of overpowered precursor technology vs. the destabilization of your core economy to fulfill absurd, escalating demands.
+
+---
+
+## Atmospheric Harpoon Logistics
+
+**Layer:** 2 -> 1
+
+**Fantasy:** An extremely cheap but risky way to transport goods between orbital stations and the colony surface. Massive harpoons with cargo pods are fired into the atmosphere.
+
+**Mechanic:** Instead of building expensive, safe shuttleports, you can build a massive kinetic harpoon catcher on Layer 1. Layer 2 stations drop unguided, heavy cargo pods directly at the catcher. It's virtually free logistics, but requires precise orbital timing. Misses result in devastating kinetic strikes on the colony.
+
+**Emergence:** A magnetic storm throws off the harpoon's targeting by just a few degrees. Instead of hitting the catcher in the industrial zone, a 50-ton pod of raw iron ore obliterates your primary hospital during a medical emergency.
+
+**Tension:** Essentially free interplanetary shipping vs. the constant, literal sword of Damocles hanging over your colony's head.
+
+---
+
+## Debt-Prison Colonies
+
+**Layer:** Cross-layer
+
+**Fantasy:** A neighboring empire offers to pay off your immense debts if you accept their worst criminals, radically shifting the culture and crime rates of your colony.
+
+**Mechanic:** When your colony is on the verge of bankruptcy, a powerful Layer 3 faction offers a bailout. The catch: they drop thousands of their most dangerous, highly-skilled criminal Pops onto your Layer 1 colony. These Pops have incredible stats but permanently high Unrest and dangerous traits.
+
+**Emergence:** You accept the bailout to save the colony. The criminals immediately take over the mining sector because of their high skills, but form a powerful cartel that starts demanding protection money from the rest of the colony, effectively turning your base into a penal state.
+
+**Tension:** Immediate financial salvation vs. importing a massive, highly-competent hostile faction into your own home.
+
+---
+
+## The Petrification Plague
+
+**Layer:** 1
+
+**Fantasy:** A strange, slow-acting disease that slowly turns pops into literal stone statues. The statues provide a massive "Great Work" / aesthetic bonus, but you lose the pop.
+
+**Mechanic:** A disease spreads through the colony. Infected Pops slowly lose mobility over months. Eventually, they freeze permanently into beautiful, indestructible statues of strange materials. These statues emit a massive Morale and Beauty aura, acting like a masterpiece Great Work.
+
+**Emergence:** A beloved elder contracts the plague. As they slowly turn to crystal, they continue to give advice. When they finally freeze in the town square, the colony's morale skyrockets from the beauty of the statue, masking the tragic loss of their best leader.
+
+**Tension:** Trying to cure a fatal disease vs. intentionally letting it spread to a few Pops to create incredible, permanent Morale-boosting monuments.
+
+---
+
+## Constellation Graffiti
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Rebel factions or bored engineers hack orbital laser arrays to draw massive, visible symbols on the planet's surface or in the atmosphere, affecting morale or diplomacy depending on the message.
+
+**Mechanic:** If Unrest is high, dissident Pops with high Tech skills might hack your Layer 2 orbital defense lasers. Instead of shooting pirates, the lasers fire non-lethally into the atmosphere or onto mountains, burning massive anti-government slogans or symbols visible from the ground. This massively boosts Rebel morale but pisses off Layer 3 authorities.
+
+**Emergence:** You are trying to impress a visiting Layer 3 diplomat. The night before they arrive, your unhappy engineers hack the orbital mirrors to project a massive, glowing obscenity in the sky right above the spaceport, causing the diplomat to turn their ship around and declare an embargo.
+
+**Tension:** Do you lock down the orbital grid (reducing your defense capabilities) or leave it open and risk public, humiliating vandalism that damages diplomacy?
+
+---
