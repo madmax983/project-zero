@@ -8759,3 +8759,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Perfect stealth from enemies vs. severe logistical penalties for allies and trade.
 
 ---
+
+## The Geothermal Heartbeat
+
+**Layer:** 1
+
+**Fantasy:** The planet itself is alive, or at least its geology is rhythmic, and the colony must sync its industry to the planet's pulse.
+
+**Mechanic:** Geothermal vents erupt on a strict, predictable planetary rhythm. Building extractors on them provides massive power, but only during the "beat." Between beats, power drops to zero.
+
+**Emergence:** The entire colony's work shifts naturally align with the planetary heartbeat. Pops sleep when the planet is quiet and work frantically during the eruption phase. A sudden "arrhythmia" event throws the entire societal schedule into chaos.
+
+**Tension:** Smooth, reliable, low-yield solar/wind power vs. massive, pulsating, schedule-dictating geothermal power.
+
+---
+
+## The Ghost Fleet Protocol
+
+**Layer:** Cross-layer
+
+**Fantasy:** Faking a massive military presence to deter invasion without actually building ships.
+
+**Mechanic:** Using high-tech communication arrays on Layer 1, you broadcast the sensor signatures of a massive Layer 2 fleet. This tricks Layer 3 empires into thinking your system is heavily defended, deterring attacks and improving trade deals. However, it consumes massive amounts of Layer 1 power and computing resources.
+
+**Emergence:** A Layer 3 ally asks your "Ghost Fleet" for assistance against a pirate armada. You have to either admit you lied (destroying your diplomatic reputation) or send your one actual, tiny patrol boat and hope it survives long enough to keep up the charade.
+
+**Tension:** Spending actual resources on real defense vs. spending resources on a bluff that could be called at any moment.
+
+---
+
+## Orbital Shadow Casting
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Controlling the climate and agriculture of the colony by physically blocking the sun with Layer 2 mega-structures.
+
+**Mechanic:** Building massive shipyards or solar arrays in orbit casts a permanent physical shadow on the Layer 1 map. The shadowed tiles drop in temperature, changing the biome from temperate to tundra, killing traditional crops but allowing cold-weather flora or preventing overheating in industrial zones.
+
+**Emergence:** You expand your orbital defense ring directly over your primary agricultural zone. The shadow freezes the crops, causing a famine. You have to either deconstruct your defenses or invent cold-resistant hydroponics.
+
+**Tension:** Optimal orbital placement for Layer 2 logistics vs. the devastating environmental impact of plunging your own colony into eternal darkness.
+
+---
+
+## The Symbiotic Parasite
+
+**Layer:** 1
+
+**Fantasy:** A horrifying infection that actually makes your colonists vastly superior, forcing a moral dilemma.
+
+**Mechanic:** A localized brain-parasite infects a few Pops. Infected Pops no longer need sleep or leisure, and their work speed doubles. However, their lifespan is cut in half, and they periodically try to infect others through the colony's water supply.
+
+**Emergence:** You isolate the infected to a dedicated, highly productive "leper colony" mining camp. It works perfectly until the camp's water filtration fails, and the parasite leaks into the main colony. Suddenly, your entire population is hyper-productive but dying rapidly.
+
+**Tension:** Quarantining and curing the "disease" vs. secretly encouraging it to create a short-lived, hyper-efficient slave workforce to finish a Great Work.
+
+---
+
+## The Spiteful Will
+
+**Layer:** 1
+
+**Fantasy:** Death is not the end of a grudge. Inheritances cause societal rifts.
+
+**Mechanic:** When a wealthy or high-status Pop dies, their belongings (high-quality tools, private stashes, housing rights) are distributed. However, Pops with the "Spiteful" trait can leave a Will that explicitly denies their rivals or gives everything to the colony pet, or requires ridiculous conditions to inherit.
+
+**Emergence:** Your best engineer dies and leaves their masterwork welding torch to a literal space-cat because they hated the backup engineer. The backup engineer's morale tanks from the insult, and they refuse to work until the cat is "dealt with."
+
+**Tension:** Respecting the final wishes of Pops (boosting tradition/morale) vs. confiscating the loot for the good of the colony and causing massive unrest among the deceased's friends.
+
+---
