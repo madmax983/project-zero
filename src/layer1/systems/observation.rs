@@ -128,6 +128,13 @@ pub fn register(schedule: &mut Schedule) {
             #[cfg(feature = "nova")]
             crate::experimental::fungal_death::fungal_death_system
                 .after(crate::layer1::health::despawn_dead_entities_system),
+            #[cfg(feature = "nova")]
+            crate::experimental::bioluminescent_trails::spawn_bioluminescent_trails_system
+                .after(crate::layer1::needs::decay_needs_system),
+            #[cfg(feature = "nova")]
+            crate::experimental::bioluminescent_trails::fade_bioluminescent_trails_system.after(
+                crate::experimental::bioluminescent_trails::spawn_bioluminescent_trails_system,
+            ),
         )
             .in_set(Layer1SystemSet::Observation),
     );

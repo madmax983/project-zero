@@ -8,3 +8,6 @@ pub mod synesthesia;
 
 #[cfg(feature = "nova")]
 pub mod fungal_death;
+
+#[cfg(feature = "nova")]
+pub mod bioluminescent_trails;
