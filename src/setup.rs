@@ -114,6 +114,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(crate::layer1::water::WaterGrid::new(80, 50));
     world.insert_resource(crate::layer1::zone::ZoneGrid::new(80, 50));
     world.insert_resource(crate::layer1::acoustic::NoiseMap::new(80, 50));
+    world.init_resource::<crate::layer1::olfactory::ScentMap>();
     world.insert_resource(crate::layer1::hum::HumMap::new(80, 50));
     world.insert_resource(crate::layer1::void_stare::VoidGrid::new(80, 50));
     world.insert_resource(crate::layer1::clutter::ClutterGrid::new(80, 50));

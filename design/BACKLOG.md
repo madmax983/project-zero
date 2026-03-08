@@ -188,7 +188,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `443` The Bureaucratic Schism — `specs/443-the-bureaucratic-schism.md`
 - [ ] `444` Orbital Kessler Rings — `specs/444-orbital-kessler-rings.md`
 - [ ] `445` The Heirloom Virus — `specs/445-the-heirloom-virus.md`
-- [ ] `446` Olfactory Map — `specs/446-olfactory-map.md`
+- [x] `446` Olfactory Map — `specs/446-olfactory-map.md`
 - [ ] `447` Orbital Drop Logistics — `specs/447-orbital-drop-logistics.md`
 - [ ] `448` Grid Instability — `specs/448-grid-instability.md`
 - [ ] `449` The Overview Effect — `specs/449-the-overview-effect.md`
