@@ -323,3 +323,11 @@
 - **Glue added:**
     - `sacrilege_unrest_bridge` to increase unrest and log a chronicle event
 - **Tests:** `tests/integration/sacrilege_effects.rs`
+
+### INT-447: Orbital Drop Logistics -> Chronicle
+- **Date:** 2026-03-08
+- **Systems connected:** `process_orbital_drops` (Logistics) -> `orbital_drop_chronicle_bridge` (Integration) -> `AddChronicleEvent` (Chronicle)
+- **Glue added:**
+    - Added `orbital_drop_chronicle_bridge` in `src/layer1/integration.rs` to convert `OrbitalDropEvent` to `AddChronicleEvent` with `EventImportance::Major`.
+    - Registered in `src/layer1/systems/observation.rs` under `Layer1SystemSet::Observation`.
+- **Tests:** `tests/integration/orbital_drop_chronicle.rs` (Integration test verified)

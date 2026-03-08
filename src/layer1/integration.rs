@@ -29,6 +29,27 @@ use rand::prelude::*;
 use ratatui::style::Color;
 use std::collections::HashSet;
 
+use crate::layer1::logistics::orbital_drop::OrbitalDropEvent;
+
+/// Bridges OrbitalDropEvent (Logistics) to AddChronicleEvent (Chronicle).
+pub fn orbital_drop_chronicle_bridge(
+    mut drop_events: EventReader<OrbitalDropEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for event in drop_events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            text: format!(
+                "Orbital Drop at ({}, {}): {} items scattered within {} tiles.",
+                event.target.x,
+                event.target.y,
+                event.items.len(),
+                event.scatter_radius
+            ),
+            importance: EventImportance::Major,
+        });
+    }
+}
+
 /// Creates chronicle entries from [`PopDied`] events.
 ///
 /// Bridges the Pop system (Death) and Chronicle system (History).

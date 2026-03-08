@@ -147,6 +147,8 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::rumor::exchange_rumors_system),
             pop_death_chronicle_bridge.after(crate::layer1::health::despawn_dead_entities_system),
             mega_quake_chronicle_bridge.after(crate::layer1::geology::tectonic::check_quake_system),
+            crate::layer1::integration::orbital_drop_chronicle_bridge
+                .after(crate::layer1::logistics::orbital_drop::process_orbital_drops),
             crate::layer1::integration::hologram_failure_chronicle_bridge
                 .after(crate::layer1::hologram::update_holograms_system),
             retrograde_chronicle_bridge.after(work_execution_system), // work_execution_system is in Execution set
