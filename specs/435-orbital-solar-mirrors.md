@@ -126,3 +126,4 @@ pub fn process_solar_mirrors_system(
 
 ## 8. Questions
 - How easily can a hacked mirror be shut down or realigned? Does it require a spacewalk?
+*Architect:* Hacked mirrors can be disabled from the Command Center if the player has sufficient `Admin` resources, or by manually launching a spacewalk repair mission which costs time and fuel.
