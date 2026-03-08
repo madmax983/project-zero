@@ -47,9 +47,9 @@ mod tests {
     use super::*;
 
     use crate::layer1::morale::Morale;
+    use crate::layer1::pop::Pop;
     use crate::layer1::skills::{SkillType, Skills};
     use crate::layer1::traits::{Trait, Traits};
-    use crate::layer1::pop::Pop;
 
     fn setup_app() -> World {
         let mut world = World::new();
@@ -102,7 +102,10 @@ mod tests {
 
         let morale = world.get::<Morale>(pop_entity).unwrap();
         assert!(
-            morale.modifiers.iter().any(|m| m.label == "Existential Dread"),
+            morale
+                .modifiers
+                .iter()
+                .any(|m| m.label == "Existential Dread"),
             "Anxious pop should feel Dread when looking at the stars"
         );
     }
@@ -132,7 +135,10 @@ mod tests {
 
         let morale = world.get::<Morale>(pop_entity).unwrap();
         assert!(
-            morale.modifiers.iter().any(|m| m.label == "Existential Dread"),
+            morale
+                .modifiers
+                .iter()
+                .any(|m| m.label == "Existential Dread"),
             "Seeing a hostile fleet must cause Dread"
         );
     }

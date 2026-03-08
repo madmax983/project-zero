@@ -86,6 +86,7 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::graffiti::graffiti_observation_system)
                 .after(mascot_buff_system),
             morale_decay_system.after(update_morale_cache_system),
+            crate::layer1::private_stash::stash_creation_system,
         )
             .in_set(Layer1SystemSet::Economy),
     );
