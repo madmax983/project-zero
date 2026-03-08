@@ -132,3 +132,4 @@ pub fn process_seismic_events_system(
 
 ## 8. Questions
 - How frequently should seismic events occur, and are they purely random or triggered by excessive mining?
+- *Architect:* Purely random for the MVP based on the planetary quirk, but we will add a tension mechanic tied to over-mining in a future iteration.

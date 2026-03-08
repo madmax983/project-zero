@@ -203,5 +203,7 @@ pub fn get_group_coordination_modifier(
 
 -   **Q**: Should "Common" be learnable?
     -   **A**: Yes, if a Pop starts with *only* MinerCant (e.g., a rescue pod survivor), they need to learn Common to work efficiently with the main colony.
+    -   *Architect:* Correct.
 -   **Q**: Does the penalty stack?
     -   **A**: No. It's a flat "Coordination Penalty". Being confused by 1 person is the same state as being confused by 5. Simplicity first.
+    -   *Architect:* Confirmed, no stacking.

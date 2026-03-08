@@ -136,3 +136,4 @@ pub fn whispering_gallery_system(
 
 ## 8. Questions
 - Should the Grand Dome amplify positive rumors more than negative ones, or is it strictly neutral?
+- *Architect:* The Grand Dome is strictly neutral for MVP. It simply increases the propagation radius of any rumor generated within it, regardless of sentiment.

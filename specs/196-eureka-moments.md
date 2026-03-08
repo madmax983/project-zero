@@ -216,3 +216,4 @@ Identify where to call this function. Builders should integrate it into existing
 ## Questions
 
 - Should "Eureka" unlock the tech fully, or just provide a massive discount to its research cost? (Spec currently assumes full unlock for simplicity, but consider balance).
+- *Architect:* Full unlock for simplicity in the MVP. The rarity of the event itself provides the balance.

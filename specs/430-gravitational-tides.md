@@ -135,3 +135,4 @@ pub fn apply_gravity_modifiers_system(
 
 ## 8. Questions
 - Should Low Gravity provide a Morale buff for pops who enjoy floating?
+- *Architect:* Yes, Pops with the "Zero-G Native" or similar trait should get a small Morale buff, otherwise it is strictly neutral for Morale.

@@ -129,3 +129,4 @@ pub fn check_dissociation_system(
 
 ## 8. Questions
 - How long does `TemporalDissociation` last? Can it be cured by medical care?
+- *Architect:* It lasts for 12 in-game hours and clears naturally with rest. Medical care cannot speed this up in the MVP.

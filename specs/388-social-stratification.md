@@ -126,3 +126,4 @@ pub fn apply_class_friction_system(
 
 ## 8. Questions
 - How is a Job's "Prestige" defined? Statically per JobType, or dynamically based on colony priorities?
+- *Architect:* Statically defined per `JobType` for the MVP (e.g., Doctors/Engineers have higher prestige than Haulers).
