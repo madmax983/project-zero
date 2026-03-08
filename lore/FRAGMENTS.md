@@ -4038,3 +4038,67 @@ What the noble demands from the frontier colony.
 - exotic foods
 - absolute silence
 - constant entertainment
+
+---
+
+## Bio-Acoustic Chorus Fragments (Spec 419)
+
+### [CHORUS_TUNE]
+The song of the flora.
+
+- soothing hum
+- chaotic screech
+- rhythmic thrum
+- haunting melody
+- gentle whisper
+- dissonant shriek
+
+---
+
+## Olfactory Map Fragments (Spec 446)
+
+### [SCENT_DESCRIPTOR]
+Adjectives for intense smells.
+
+- nauseating
+- sweet
+- rotting
+- metallic
+- sharp
+- burning
+- earthy
+- rancid
+
+### [SMELL_SOURCE]
+Where the smell comes from.
+
+- the vents
+- a dead beast
+- a broken pipe
+- a blooming flower
+- a ruptured tank
+- unknown origin
+
+---
+
+## Orbital Drop Logistics Fragments (Spec 447)
+
+### [DROP_PAYLOAD]
+What was in the drop pod.
+
+- emergency rations
+- vital medicine
+- heavy machinery parts
+- communication relays
+- raw fuel
+- a classified container
+
+### [SCATTER_DISTANCE]
+How far off the pod landed.
+
+- miles
+- just over the ridge
+- a day's walk
+- across the river
+- in the deep woods
+- far beyond the perimeter

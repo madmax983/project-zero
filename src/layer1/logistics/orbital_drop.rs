@@ -1,8 +1,8 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::map::{GridPosition as GridPos};
-use crate::layer1::terrain::{TerrainType, TerrainGrid as GridMap};
 use crate::layer1::items::ItemType as Item;
+use crate::layer1::map::GridPosition as GridPos;
 use crate::layer1::spoilage::Perishable as Spoilage;
+use crate::layer1::terrain::{TerrainGrid as GridMap, TerrainType};
+use bevy_ecs::prelude::*;
 use rand::Rng;
 
 #[derive(Event)]
@@ -32,10 +32,15 @@ pub fn process_orbital_drops(
 
             let final_x = (drop.target.x + dx).clamp(0, grid.width as i32 - 1);
             let final_y = (drop.target.y + dy).clamp(0, grid.height as i32 - 1);
-            let final_pos = GridPos { x: final_x, y: final_y };
+            let final_pos = GridPos {
+                x: final_x,
+                y: final_y,
+            };
 
             // Ensure items do not drop onto impenetrable terrain like solid rock walls
-            let terrain = grid.get(final_x as usize, final_y as usize).unwrap_or(TerrainType::Grass);
+            let terrain = grid
+                .get(final_x as usize, final_y as usize)
+                .unwrap_or(TerrainType::Grass);
             if matches!(terrain, TerrainType::Rock) {
                 continue; // Cannot drop on solid rock walls, skip
             }
@@ -43,17 +48,38 @@ pub fn process_orbital_drops(
             let mut entity = commands.spawn((
                 DroppedCrate { item: item.clone() },
                 final_pos,
-                crate::layer1::items::Item { item_type: item.clone() },
+                crate::layer1::items::Item {
+                    item_type: item.clone(),
+                },
             ));
 
             // Apply spoilage if perishable
-            if matches!(item, Item::Potato | Item::Wheat | Item::Rice | Item::Corn | Item::Soy | Item::Meat | Item::Fish | Item::Fruit | Item::LuxuryMeal | Item::AlienMeatA | Item::AlienMeatB | Item::GlowMushroom | Item::MysteryMeal) {
-                entity.insert(Spoilage { max_ticks: 100, current_ticks: 0 }); // Use proper initialization
+            if matches!(
+                item,
+                Item::Potato
+                    | Item::Wheat
+                    | Item::Rice
+                    | Item::Corn
+                    | Item::Soy
+                    | Item::Meat
+                    | Item::Fish
+                    | Item::Fruit
+                    | Item::LuxuryMeal
+                    | Item::AlienMeatA
+                    | Item::AlienMeatB
+                    | Item::GlowMushroom
+                    | Item::MysteryMeal
+            ) {
+                entity.insert(Spoilage {
+                    max_ticks: 100,
+                    current_ticks: 0,
+                }); // Use proper initialization
             }
 
             // Damage terrain if item is heavy (assuming heavy is Scrap metal)
             if matches!(item, Item::Scrap) {
-                 grid.set(final_x as usize, final_y as usize, TerrainType::Dirt); // Assuming Dirt is closest to Crater we have right now
+                grid.set(final_x as usize, final_y as usize, TerrainType::Dirt);
+                // Assuming Dirt is closest to Crater we have right now
             }
         }
     }
@@ -62,18 +88,22 @@ pub fn process_orbital_drops(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy::prelude::*;
-    use crate::layer1::map::GridPosition as GridPos;
-    use crate::layer1::terrain::TerrainGrid as GridMap;
     use crate::layer1::items::ItemType as Item;
+    use crate::layer1::map::GridPosition as GridPos;
     use crate::layer1::spoilage::Perishable as Spoilage;
+    use crate::layer1::terrain::TerrainGrid as GridMap;
+    use bevy::prelude::*;
 
     #[test]
     fn test_orbital_drop_spawns_scattered_items() {
         let mut app = App::new();
         app.add_event::<OrbitalDropEvent>();
         app.add_systems(Update, process_orbital_drops);
-        app.world_mut().insert_resource(GridMap { width: 50, height: 50, tiles: vec![TerrainType::Grass; 2500] });
+        app.world_mut().insert_resource(GridMap {
+            width: 50,
+            height: 50,
+            tiles: vec![TerrainType::Grass; 2500],
+        });
 
         let target_pos = GridPos { x: 25, y: 25 };
         let drop_event = OrbitalDropEvent {
@@ -85,13 +115,24 @@ mod tests {
         app.world_mut().send_event(drop_event);
         app.update();
 
-        let dropped_items = app.world_mut().query::<(&DroppedCrate, &GridPos)>().iter(app.world()).count();
+        let dropped_items = app
+            .world_mut()
+            .query::<(&DroppedCrate, &GridPos)>()
+            .iter(app.world())
+            .count();
         assert_eq!(dropped_items, 2, "Both items should spawn");
 
-        for (_item, pos) in app.world_mut().query::<(&DroppedCrate, &GridPos)>().iter(app.world()) {
+        for (_item, pos) in app
+            .world_mut()
+            .query::<(&DroppedCrate, &GridPos)>()
+            .iter(app.world())
+        {
             let distance_x = (pos.x as i32 - target_pos.x as i32).abs();
             let distance_y = (pos.y as i32 - target_pos.y as i32).abs();
-            assert!(distance_x <= 5 && distance_y <= 5, "Items must land within scatter radius");
+            assert!(
+                distance_x <= 5 && distance_y <= 5,
+                "Items must land within scatter radius"
+            );
         }
     }
 
@@ -100,7 +141,11 @@ mod tests {
         let mut app = App::new();
         app.add_event::<OrbitalDropEvent>();
         app.add_systems(Update, process_orbital_drops);
-        app.world_mut().insert_resource(GridMap { width: 10, height: 10, tiles: vec![TerrainType::Grass; 100] });
+        app.world_mut().insert_resource(GridMap {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        });
 
         let drop_event = OrbitalDropEvent {
             target: GridPos { x: 5, y: 5 },
@@ -111,8 +156,16 @@ mod tests {
         app.world_mut().send_event(drop_event);
         app.update();
 
-        let has_spoilage = app.world_mut().query::<&Spoilage>().iter(app.world()).count() > 0;
-        assert!(has_spoilage, "Dropped perishable items must start degrading");
+        let has_spoilage = app
+            .world_mut()
+            .query::<&Spoilage>()
+            .iter(app.world())
+            .count()
+            > 0;
+        assert!(
+            has_spoilage,
+            "Dropped perishable items must start degrading"
+        );
     }
 
     #[test]
@@ -120,21 +173,36 @@ mod tests {
         let mut app = App::new();
         app.add_event::<OrbitalDropEvent>();
         app.add_systems(Update, process_orbital_drops);
-        let mut grid = GridMap { width: 10, height: 10, tiles: vec![TerrainType::Grass; 100] };
+        let mut grid = GridMap {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        };
         let target_pos = GridPos { x: 5, y: 5 };
-        grid.set(target_pos.x as usize, target_pos.y as usize, TerrainType::Grass);
+        grid.set(
+            target_pos.x as usize,
+            target_pos.y as usize,
+            TerrainType::Grass,
+        );
         app.world_mut().insert_resource(grid);
 
         let drop_event = OrbitalDropEvent {
             target: target_pos,
             items: vec![Item::Scrap], // Heavy drop
-            scatter_radius: 0, // Direct hit
+            scatter_radius: 0,        // Direct hit
         };
 
         app.world_mut().send_event(drop_event);
         app.update();
 
         let grid = app.world().resource::<GridMap>();
-        assert!(matches!(grid.get(target_pos.x as usize, target_pos.y as usize).unwrap(), TerrainType::Dirt), "Heavy drop should crater the terrain");
+        assert!(
+            matches!(
+                grid.get(target_pos.x as usize, target_pos.y as usize)
+                    .unwrap(),
+                TerrainType::Dirt
+            ),
+            "Heavy drop should crater the terrain"
+        );
     }
 }

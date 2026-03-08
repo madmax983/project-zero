@@ -2877,3 +2877,49 @@
 **Code reference:** Monthly credit influx
 **Usage:**
 - "We only keep them for the allowance."
+
+---
+
+## Bio-Acoustic Chorus
+
+### the hum / the song
+**Replaces:** Acoustic emissions from flora
+**Code reference:** `BioAcousticFlora`
+**Usage:**
+- "The hum is peaceful today."
+- "The song is driving them mad."
+
+---
+
+## Olfactory Map
+
+### the Stink / the rot-smell
+**Replaces:** Negative scent values
+**Code reference:** `ScentMap` (negative)
+**Usage:**
+- "Avoid the Stink near the processors."
+- "The rot-smell is clinging to my clothes."
+
+### the bouquet
+**Replaces:** Positive scent values
+**Code reference:** `ScentMap` (positive)
+**Usage:**
+- "Enjoying the bouquet of the gardens."
+
+---
+
+## Orbital Drop Logistics
+
+### the scatter
+**Replaces:** Dropped crates spreading out from target
+**Code reference:** `OrbitalDropEvent`
+**Usage:**
+- "The scatter was wide today, prep the haulers."
+- "We lost a crate in the scatter."
+
+### drop-pod / sky-crate
+**Replaces:** Orbital drop package
+**Code reference:** `DroppedCrate`
+**Usage:**
+- "A drop-pod is coming in."
+- "Pop the sky-crate open."
