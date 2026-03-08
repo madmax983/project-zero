@@ -170,3 +170,5 @@ mod industrial_rhythm;
 mod sacrilege_effects;
 #[path = "integration/unmet_needs_black_market.rs"]
 mod unmet_needs_black_market;
+#[path = "integration/orbital_drop_chronicle.rs"]
+mod orbital_drop_chronicle;
