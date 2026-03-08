@@ -8,6 +8,14 @@ use bevy_ecs::prelude::*;
 pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
+            crate::layer1::olfactory::scent_diffusion_system,
+            crate::layer1::olfactory::scent_mood_system
+                .after(crate::layer1::olfactory::scent_diffusion_system),
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+    schedule.add_systems(
+        (
             biography_monitor_system.after(crate::layer1::health::despawn_dead_entities_system),
             crate::layer1::social::cadet::death_consequence_system,
             crate::layer1::graffiti::graffiti_placement_system
