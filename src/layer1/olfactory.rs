@@ -56,10 +56,22 @@ pub fn scent_diffusion_system(
 
         // Simple diffusion to neighbors (safely avoiding underflow/overflow)
         let neighbors = [
-            GridPosition { x: pos.x.saturating_add(1), y: pos.y },
-            GridPosition { x: pos.x.saturating_sub(1), y: pos.y },
-            GridPosition { x: pos.x, y: pos.y.saturating_add(1) },
-            GridPosition { x: pos.x, y: pos.y.saturating_sub(1) },
+            GridPosition {
+                x: pos.x.saturating_add(1),
+                y: pos.y,
+            },
+            GridPosition {
+                x: pos.x.saturating_sub(1),
+                y: pos.y,
+            },
+            GridPosition {
+                x: pos.x,
+                y: pos.y.saturating_add(1),
+            },
+            GridPosition {
+                x: pos.x,
+                y: pos.y.saturating_sub(1),
+            },
         ];
 
         let diffused_strength = emitter.strength * 0.5;

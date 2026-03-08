@@ -2780,3 +2780,35 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "The forest takes it back. [YEAR]. The [LOST_BUILDING] is covered in [PLANT_NAME]."
 - "[YEAR]: Maintenance failure. [PLANT_NAME] roots destroyed the [LOST_BUILDING]."
 - "Green creeping death. The [LOST_BUILDING] belongs to the [PLANT_NAME] now. [YEAR]."
+
+---
+
+## Template: BIO_ACOUSTIC_CHORUS_HEARD
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [CHORUS_TUNE]
+
+**Patterns:**
+- "The flora sings to us. [YEAR]. A [CHORUS_TUNE] sweeps the colony."
+- "[YEAR]: We hear the voice of the forest. The tone is [CHORUS_TUNE]."
+- "A [CHORUS_TUNE] resonates through the walls. The plants are humming. [YEAR]."
+
+## Template: SCENT_OVERWHELM
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SCENT_DESCRIPTOR], [SMELL_SOURCE]
+
+**Patterns:**
+- "The air is heavy. [YEAR]. A [SCENT_DESCRIPTOR] smell from the [SMELL_SOURCE]."
+- "[YEAR]: We cannot breathe. The [SMELL_SOURCE] emits a [SCENT_DESCRIPTOR] odor."
+- "A [SCENT_DESCRIPTOR] stench grips [COLONY]. The culprit: [SMELL_SOURCE]. [YEAR]."
+
+## Template: DROP_POD_SCATTERED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DROP_PAYLOAD], [SCATTER_DISTANCE]
+
+**Patterns:**
+- "Supplies arrived. [YEAR]. But the [DROP_PAYLOAD] scattered [SCATTER_DISTANCE] away."
+- "[YEAR]: Orbital drop failure. The [DROP_PAYLOAD] landed [SCATTER_DISTANCE] off target."
+- "We have the [DROP_PAYLOAD]. But it's [SCATTER_DISTANCE] deep in the wild. [YEAR]."

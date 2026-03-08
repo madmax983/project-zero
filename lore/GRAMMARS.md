@@ -2734,3 +2734,39 @@ NOBLE_ARRIVAL:
     - WEALTH (medium, funding)
     - RESENTMENT (high)
 ```
+
+## Bio-Acoustic Chorus Chaining
+
+```yaml
+BIO_ACOUSTIC_CHORUS_HEARD:
+  enables:
+    - MOOD_WAVE (high)
+    - ARTISTIC_INSPIRATION (medium)
+  increases:
+    - COHESION (high)
+    - WONDER (low)
+```
+
+## Olfactory Map Chaining
+
+```yaml
+SCENT_OVERWHELM:
+  enables:
+    - SICKNESS_OUTBREAK (medium, if toxic)
+    - CLEANUP_EFFORT (high)
+  increases:
+    - DISGUST (high)
+    - STRESS (medium)
+```
+
+## Orbital Drop Logistics Chaining
+
+```yaml
+DROP_POD_SCATTERED:
+  enables:
+    - EXPEDITION (high)
+    - ITEM_LOSS (medium, if not recovered fast)
+  increases:
+    - RISK (high)
+    - HOPE (medium, supplies arrived)
+```
