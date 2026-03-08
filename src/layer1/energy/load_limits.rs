@@ -71,11 +71,11 @@ pub fn evaluate_grid_load_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_ecs::prelude::*;
-    use crate::layer1::map::GridPosition;
-    use crate::layer1::energy::{PowerConsumer, Battery};
-    use crate::layer1::temperature::TemperatureGrid;
+    use crate::layer1::energy::{Battery, PowerConsumer};
     use crate::layer1::fire::Fire;
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::temperature::TemperatureGrid;
+    use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
 
     #[test]
@@ -85,14 +85,22 @@ mod tests {
 
         // Spawn a cable with max capacity 100
         let cable_pos = GridPosition { x: 5, y: 5 };
-        let cable_entity = world.spawn((
-            PowerCable { capacity: 100.0, current_load: 0.0 },
-            cable_pos,
-        )).id();
+        let cable_entity = world
+            .spawn((
+                PowerCable {
+                    capacity: 100.0,
+                    current_load: 0.0,
+                },
+                cable_pos,
+            ))
+            .id();
 
         // Connect a consumer drawing 150 power
         world.spawn((
-            PowerConsumer { demand: 150.0, active: true },
+            PowerConsumer {
+                demand: 150.0,
+                active: true,
+            },
             cable_pos,
         ));
 
@@ -104,7 +112,10 @@ mod tests {
 
         // Assert: Cable is overloaded
         let cable = world.get::<PowerCable>(cable_entity).unwrap();
-        assert!(cable.current_load > cable.capacity, "Cable load should exceed capacity");
+        assert!(
+            cable.current_load > cable.capacity,
+            "Cable load should exceed capacity"
+        );
 
         // Assert: Heat is generated on the tile
         let temperature_grid = world.resource::<TemperatureGrid>();
@@ -117,14 +128,22 @@ mod tests {
         let mut world = World::new();
 
         let pos = GridPosition { x: 3, y: 3 };
-        let _cable = world.spawn((
-            PowerCable { capacity: 50.0, current_load: 0.0 },
-            pos,
-        )).id();
+        let _cable = world
+            .spawn((
+                PowerCable {
+                    capacity: 50.0,
+                    current_load: 0.0,
+                },
+                pos,
+            ))
+            .id();
 
         // Draw 300 power (massive overload)
         world.spawn((
-            PowerConsumer { demand: 300.0, active: true },
+            PowerConsumer {
+                demand: 300.0,
+                active: true,
+            },
             pos,
         ));
 
@@ -144,18 +163,28 @@ mod tests {
 
         let pos = GridPosition { x: 2, y: 2 };
         world.spawn((
-            PowerCable { capacity: 100.0, current_load: 0.0 },
+            PowerCable {
+                capacity: 100.0,
+                current_load: 0.0,
+            },
             pos,
         ));
 
         // Add a battery that can absorb the surge
         world.spawn((
-            Battery { capacity: 500.0, charge: 500.0, max_throughput: 100.0 },
+            Battery {
+                capacity: 500.0,
+                charge: 500.0,
+                max_throughput: 100.0,
+            },
             pos,
         ));
 
         world.spawn((
-            PowerConsumer { demand: 150.0, active: true },
+            PowerConsumer {
+                demand: 150.0,
+                active: true,
+            },
             pos,
         ));
 
@@ -166,6 +195,9 @@ mod tests {
         // Assert: Cable is not overloaded because battery handles the local draw
         let temperature_grid = world.resource::<TemperatureGrid>();
         let tile_heat = temperature_grid.get(pos.x as usize, pos.y as usize);
-        assert_eq!(tile_heat, 0.0, "Battery should buffer surge and prevent heat");
+        assert_eq!(
+            tile_heat, 0.0,
+            "Battery should buffer surge and prevent heat"
+        );
     }
 }
