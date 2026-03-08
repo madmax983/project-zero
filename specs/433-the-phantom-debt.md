@@ -104,3 +104,4 @@ pub fn evaluate_dark_age_survival_system(
 
 ## 8. Questions
 - How long does the colony have to stay "dark" before the fleet is fully convinced and leaves?
+- *Architect:* The colony must remain below the energy threshold for 3 in-game days to fully drain the fleet's patience and trigger their departure.

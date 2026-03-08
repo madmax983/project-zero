@@ -364,4 +364,6 @@ match fauna.fauna_type {
 ## Questions
 
 - Should Fauna attack buildings? (Maybe walls, eventually. For now, Pops only).
+- *Architect:* Correct, for MVP they only attack Pops.
 - Do Fauna eat crops? (Space Rats should eat crops. Future expansion).
+- *Architect:* Yes, but that is deferred to a future feature specification.

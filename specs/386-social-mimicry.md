@@ -149,3 +149,4 @@ pub fn social_mimicry_system(
 
 ## 8. Questions
 - Should mimicry apply to clothing/equipment as well, or just food preferences?
+- *Architect:* Just Consumables (Food/Drinks) for the MVP. We will expand to equipment in a future iteration.

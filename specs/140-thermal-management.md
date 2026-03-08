@@ -254,3 +254,4 @@ pub fn thermal_damage_system(
 ## Questions
 
 - Should "Vacuum" tiles (outside hull) always be at ambient temp? Yes, effectively infinite heat sink.
+- *Architect:* Confirmed, Vacuum tiles act as an infinite heat sink locked to ambient temperature.

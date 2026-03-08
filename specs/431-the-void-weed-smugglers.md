@@ -140,3 +140,4 @@ pub fn evaluate_smuggling_heat_system(
 
 ## 8. Questions
 - Can the player actively crack down on Void-Weed cultivation, or is it an inevitable weed?
+- *Architect:* The player can actively crack down by assigning security jobs to raid the stashes, but this creates significant localized unrest.

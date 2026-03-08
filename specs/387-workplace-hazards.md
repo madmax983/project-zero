@@ -118,3 +118,4 @@ pub fn process_workplace_hazards_system(
 
 ## 8. Questions
 - How should the "Safety Protocols" policy be implemented? A global resource multiplier or a local building toggle?
+- *Architect:* Global policy (edict) for the MVP that applies a colony-wide modifier, reducing both work speed and hazard frequency.

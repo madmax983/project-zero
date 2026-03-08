@@ -96,3 +96,4 @@ pub fn eureka_moment_system(
 
 ## 8. Questions
 - Do "Breakthroughs" grant full techs, or just research points towards the next tech in that tree branch?
+- *Architect:* They grant a large chunk of flat research points towards the active tech, rather than instantly completing it.
