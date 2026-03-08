@@ -8619,3 +8619,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you lock down the orbital grid (reducing your defense capabilities) or leave it open and risk public, humiliating vandalism that damages diplomacy?
 
 ---
+
+## The Feral Infrastructure
+
+**Layer:** 1
+
+**Fantasy:** Watching your neglected systems develop a life of their own.
+
+**Mechanic:** Highly advanced robotic maintenance systems, if left without central command connection or sufficient power for long periods, go "feral." They start building bizarre, inefficient, but strangely beautiful structures using scraped colony materials, essentially creating a mechanical jungle.
+
+**Emergence:** Your forgotten mining outpost gets taken over by feral drones that build a massive, sprawling labyrinth. Pops might start venturing in to scavenge, or even form a strange cult worshipping the machines.
+
+**Tension:** Destroying the feral infrastructure to reclaim materials vs. letting it grow to harvest unique, un-replicable "feral tech" artifacts.
+
+---
+
+## Memory Bleed Syndrome
+
+**Layer:** 1
+
+**Fantasy:** Pops experiencing lives they never lived, causing societal shifts.
+
+**Mechanic:** High-stress environments or specific atmospheric anomalies can cause "Memory Bleed" among Pops. A Pop might suddenly inherit the skills, grudges, and relationships of a recently deceased Pop, believing they are them.
+
+**Emergence:** A lowly janitor suddenly gains the memories and skills of your top engineer who died in a reactor fire. They can fix the reactor, but they also carry the dead engineer's burning hatred for the colony manager, sparking an unexpected rebellion.
+
+**Tension:** Utilizing the free skill transfers vs. managing the resulting identity crises and inherited vendettas that tear social circles apart.
+
+---
+
+## The Interstellar Scrap Economy
+
+**Layer:** Cross-layer
+
+**Fantasy:** Building your empire from the literal trash of greater civilizations.
+
+**Mechanic:** Layer 3 empires periodically dump massive amounts of "scrap" (obsolete tech, toxic waste, ruined ships) into the orbits of fringe Layer 2 systems. On Layer 1, you can set up specialized drop zones to catch this trash, providing rare materials but causing localized pollution and unhappiness.
+
+**Emergence:** You catch a massive load of scrap hoping for rare metals, but accidentally import a dormant Layer 3 biological weapon that was improperly disposed of, forcing a desperate quarantine.
+
+**Tension:** Easy access to late-game materials early on vs. the massive environmental and health hazards of dealing with galactic garbage.
+
+---
+
+## Gravity Well Siphoning
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Stealing the very gravity of your planet to fuel high-tech engines.
+
+**Mechanic:** You build massive siphon stations in orbit that harvest the planet's gravitational energy to power extremely fast Layer 2 ships. However, this weakens gravity on Layer 1 over time, changing fall damage, increasing carrying capacity, but causing severe health issues (bone density loss) for Pops.
+
+**Emergence:** You run the siphon too hard to power your war fleet, and Layer 1 gravity drops so low that simple jumps send Pops flying into the atmosphere, requiring you to urgently retrofit the colony with magnetic boots to keep everyone grounded.
+
+**Tension:** Unmatched fleet speed and logistical power on Layer 2 vs. the slow, literal untethering of your colony on Layer 1.
+
+---
+
+## The Whisper Network
+
+**Layer:** Cross-layer
+
+**Fantasy:** An invisible, faster-than-light communication network built on gossip.
+
+**Mechanic:** Instead of relying on expensive Comm Arrays, Pops with high Social stats can transmit messages to other colonies via merchant ships and smugglers. This "Whisper Network" is free and impossible for enemies to intercept, but messages can mutate (game of telephone) or be entirely fabricated.
+
+**Emergence:** You use the Whisper Network to warn a sister colony of an incoming pirate fleet. The message mutates along the way, and the colony thinks *you* are invading, so they launch a preemptive strike against your defenses.
+
+**Tension:** Secure, free, unjammable communication vs. the high risk of catastrophic misinformation.
+
+---
