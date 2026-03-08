@@ -210,6 +210,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::skills::XpGainEvent>>();
     world.init_resource::<Events<crate::layer1::hologram::HologramFailureEvent>>();
     world.init_resource::<Events<crate::layer2::events::DetectionEvent>>();
+    world.init_resource::<Events<crate::layer1::logistics::orbital_drop::OrbitalDropEvent>>();
 
     world.init_resource::<crate::layer1::festivals::FestivalState>();
     world.init_resource::<crate::layer1::shadow_market::ShadowMarketManager>();
