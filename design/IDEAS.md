@@ -8689,3 +8689,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Secure, free, unjammable communication vs. the high risk of catastrophic misinformation.
 
 ---
+
+## The Sub-Crustal Tides
+
+**Layer:** 1
+
+**Fantasy:** The land beneath your feet is an ocean that breathes. The ground level shifts cyclically, creating temporary bridges and drowning permanent structures.
+
+**Mechanic:** Deep Z-levels of the map cyclically rise and fall, replacing solid rock with magma or water. Areas become accessible or inaccessible based on the "tide".
+
+**Emergence:** You build a secure vault during low tide. High tide hits, and the vault is submerged in magma, cooking your treasures.
+
+**Tension:** Exploit the rich, temporary depths, or build safe but resource-poor on the high ground?
+
+---
+
+## The Diplomatic Hostage
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Keeping the peace means keeping your worst enemy's child alive and happy in your house.
+
+**Mechanic:** A peace treaty with a hostile Layer 3 faction requires hosting a "VIP Hostage" on Layer 1. If the VIP's mood drops below a threshold, or if they die, the treaty is broken and an invasion begins immediately.
+
+**Emergence:** Your colony hates the VIP because of the war. They keep trying to assassinate them or sabotage their food. You have to assign your best security and chefs to pamper the person who bombed your homeworld.
+
+**Tension:** Lavish resources on your enemy to prevent war, angering your own people, or treat them like a prisoner and risk annihilation?
+
+---
+
+## The Empathy Amplifier
+
+**Layer:** Cross-layer
+
+**Fantasy:** Weaponizing the collective mood of your society. Making your joy a beacon, or your despair a shield.
+
+**Mechanic:** An endgame structure that broadcasts the colony's average Morale into Layer 2/3. Extreme Joy attracts massive immigration, trade, and cultural victory points. Extreme Despair creates a "Psychic Hazard" that damages enemy fleets and deters raids.
+
+**Emergence:** You are being invaded. To power the "Despair Shield," you intentionally shut down life support, cancel all entertainment, and starve your people to weaponize their misery and break the enemy fleet.
+
+**Tension:** Build a utopia to attract the galaxy, or a dystopia to defend against it?
+
+---
+
+## The Cargo Cult Automation
+
+**Layer:** 1
+
+**Fantasy:** When the manual is lost, faith becomes the operating system.
+
+**Mechanic:** Advanced "Relic" machines can no longer be repaired with standard tools. Instead, Pops with the "Superstitious" trait can perform "Rituals" (burning incense, chanting, offering scrap) to temporarily restore their function.
+
+**Emergence:** The fusion reactor only runs if the High Priest of the Engine dances around it every Tuesday. When the priest dies of old age, the colony is plunged into darkness because no one else knows the dance.
+
+**Tension:** Reliable, low-tech industry vs. powerful, faith-dependent relic machinery.
+
+---
+
+## The Mimetic Architecture
+
+**Layer:** 1
+
+**Fantasy:** Hiding in plain sight. A colony that looks like a forest from orbit.
+
+**Mechanic:** Buildings can be constructed with "Mimetic Materials." From Layer 2, the colony appears as natural terrain (Forest, Mountain), completely evading Pirate or hostile empire detection.
+
+**Emergence:** You hide your colony so well that your own allied trade ships can't find the landing pad. An allied supply drop "misses" and crushes your hidden hospital because the orbital trajectory calculated it as an empty field.
+
+**Tension:** Perfect stealth from enemies vs. severe logistical penalties for allies and trade.
+
+---
