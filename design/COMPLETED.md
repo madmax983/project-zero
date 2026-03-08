@@ -213,3 +213,4 @@
 - [x] `INT-349` Integration: Ancestral Graves -> Sacrilege -> Unrest — completed 2026-03-08
 - [x] `419` The Bio-Acoustic Chorus — `specs/419-bio-acoustic-chorus.md` — completed 2026-03-09
 - [x] `446` Olfactory Map — `specs/446-olfactory-map.md` — completed 2026-02-01
+- [x] `447` Orbital Drop Logistics — `specs/447-orbital-drop-logistics.md` — completed 2026-03-08

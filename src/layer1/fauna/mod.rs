@@ -218,7 +218,7 @@ pub fn fauna_behavior_system(world: &mut World) {
                 // shake when many fauna are fighting off-screen.
                 let near_camera = world
                     .get_resource::<crate::layer1::map::CameraTarget>()
-                    .map_or(true, |cam| {
+                    .is_none_or(|cam| {
                         let dx = (pos.x as f32 - cam.x).abs();
                         let dy = (pos.y as f32 - cam.y).abs();
                         dx <= 30.0 && dy <= 30.0
