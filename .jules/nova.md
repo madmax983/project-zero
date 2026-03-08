@@ -17,3 +17,8 @@
 **Concept:** A system that turns heavily decayed Corpses directly into Saplings or Shrubs, ensuring the cycle of life continues organically on the grid.
 **Fate:** Merged
 **Lesson:** Tying the end of an entity's lifecycle (Corpse decay) directly into environmental generation (TerrainGrid mutation) creates a strong narrative connection between Pops and the Planet.
+
+## [Bioluminescent Trails]
+**Concept:** Extreme joy is physically radiant. Pops with extremely high morale (> 0.9) leave behind glowing footprints that function as a temporary `LightSource`. This brings their happiness to life visually, pushing back darkness penalties and charting paths of joy through the colony.
+**Fate:** Merged
+**Lesson:** Visualizing an internal state (`Morale`) as a physical world alteration (`LightMap` via `LightSource`) makes an abstract number feel real and interconnected with the environment.
