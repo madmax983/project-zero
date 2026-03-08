@@ -15,11 +15,11 @@ use std::collections::{HashMap, HashSet, VecDeque};
 pub mod auroral;
 #[cfg(test)]
 mod auroral_tests;
-pub mod load_limits;
 #[cfg(test)]
 mod blackout_tests;
 #[cfg(test)]
 mod instability_tests;
+pub mod load_limits;
 pub use auroral::update_auroral_output_system;
 
 /// Emits power to the grid.

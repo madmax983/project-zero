@@ -101,6 +101,12 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::social::cultural_vandalism::vandalism_system.after(decay_needs_system),
             crate::layer1::social::cultural_vandalism::update_structure_buffs
                 .after(crate::layer1::social::cultural_vandalism::vandalism_system),
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::integration::update_unmet_luxury_system.after(decay_needs_system),
             crate::layer1::integration::sacrilege_unrest_bridge.after(decay_needs_system),
             crate::layer1::integration::issue_placebo_from_edict_system.after(decay_needs_system),
