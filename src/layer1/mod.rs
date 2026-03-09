@@ -61,7 +61,6 @@ pub mod designation;
 /// Pop dreams system.
 pub mod dreams;
 /// Ecological succession system (Spec 161).
-pub mod ecology;
 /// Colony policies and edicts.
 pub mod edicts;
 /// Execution layer bridging utility AI to actions.
@@ -69,7 +68,6 @@ pub mod execution;
 /// Farm building and food production.
 pub mod farm;
 /// Fire propagation and damage.
-pub mod fire;
 /// Hauling logic.
 pub mod hauling;
 /// Workplace hazards logic.
@@ -121,7 +119,6 @@ pub mod resources;
 /// Field science and anomalies.
 pub mod science;
 /// Seasonal rhythms (Spring, Summer, Autumn, Winter).
-pub mod seasons;
 #[cfg(test)]
 mod shift_integration_tests;
 /// Social needs and tavern.
@@ -137,7 +134,6 @@ pub mod structure;
 /// Technology and research system.
 pub mod tech;
 /// Terrain generation and grid management.
-pub mod terrain;
 /// Emergent utility AI system.
 pub mod utility_ai;
 #[cfg(test)]
@@ -195,12 +191,10 @@ pub use crowding::*;
 pub use defense::*;
 pub use designation::*;
 pub use dreams::*;
-pub use ecology::*;
 pub use edicts::*;
 pub use events::*;
 pub use execution::*;
 pub use farm::*;
-pub use fire::*;
 pub use graffiti::*;
 pub use hauling::*;
 pub use hazards::*;
@@ -223,14 +217,12 @@ pub use pop::*;
 pub use refining::*;
 pub use resources::*;
 pub use science::*;
-pub use seasons::*;
 pub use social::*;
 pub use spoilage::*;
 pub use stockpile::*;
 pub use structural_integrity::*;
 pub use structure::*;
 pub use tech::*;
-pub use terrain::*;
 pub use utility_ai::*;
 pub use utility_types::*;
 
@@ -289,12 +281,10 @@ pub use energy::*;
 pub mod lifecycle;
 pub use lifecycle::*;
 /// Atmospheric simulation (Spec 063).
-pub mod atmosphere;
 /// Terraforming and Planetary Atmosphere (Spec 207).
 pub mod terraforming;
 /// Civil unrest and mental break system.
 pub mod unrest;
-pub use atmosphere::*;
 pub use terraforming::*;
 
 /// Secret Societies system (Spec 147).
@@ -360,8 +350,6 @@ pub mod factions;
 pub use factions::*;
 
 /// Weather system (Spec 079).
-pub mod weather;
-pub use weather::*;
 
 /// Cabin Fever mechanics (Spec 082).
 pub mod cabin_fever;
@@ -380,8 +368,6 @@ pub use traits::*;
 pub mod taboo;
 pub use taboo::*;
 /// Erosion system (Spec 093).
-pub mod erosion;
-pub use erosion::*;
 /// Eureka Moments system (Spec 196).
 pub mod eureka;
 pub use eureka::*;
@@ -416,8 +402,6 @@ pub mod husbandry;
 pub use husbandry::*;
 
 /// Water simulation (Spec 096).
-pub mod water;
-pub use water::*;
 
 /// Gastronomy system (Spec 166).
 pub mod gastronomy;
@@ -449,9 +433,7 @@ pub mod biocompatibility;
 pub use biocompatibility::*;
 
 #[cfg(test)]
-mod ecology_keystone_tests;
 #[cfg(test)]
-mod ecology_tests;
 #[cfg(test)]
 mod fuel_consumption_tests;
 #[cfg(test)]
@@ -502,8 +484,6 @@ pub use social_mimicry::*;
 pub mod turret;
 pub use turret::*;
 /// Temperature simulation (Spec 140).
-pub mod temperature;
-pub use temperature::*;
 
 /// Wild Child system (Spec 124).
 pub mod wild_child;
@@ -599,30 +579,19 @@ pub use chemical::*;
 pub use cryo::*;
 
 /// Urban Canyons (Wind) system (Spec 182).
-pub mod wind;
-pub use wind::*;
 
 /// Soil fertility system (Spec 059).
-pub mod fertility;
-pub use fertility::*;
 #[cfg(test)]
-mod atmosphere_corrosion_tests;
-mod atmosphere_tides_tests;
 #[cfg(test)]
 mod vacuum_welding_tests;
 
 #[cfg(test)]
 mod cryo_tests;
 
-#[cfg(test)]
-mod weather_tests;
-
 /// Emergent Festivals system (Spec 077).
 pub mod festivals;
 pub use festivals::*;
 /// Radioactive system (Spec 191).
-pub mod radioactive;
-pub use radioactive::*;
 pub mod black_market;
 /// Company Scrip and Economy system (Spec 194).
 pub mod economy;
@@ -644,8 +613,6 @@ pub use contraband::*;
 pub mod customs;
 pub use customs::*;
 /// Solar cycle and power generation (Spec 213).
-pub mod solar;
-pub use solar::*;
 pub mod window;
 
 /// Hygiene system (Spec 220).
@@ -751,3 +718,6 @@ pub use overview_effect::*;
 /// Light Pollution system (Spec 450).
 pub mod light_pollution;
 pub use light_pollution::*;
+
+pub mod nature;
+pub use nature::*;
