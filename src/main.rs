@@ -106,7 +106,9 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
 
         // Prepare render data
         // We run screen shake here to ensure it updates even during hit stop
-        world.run_system_once(update_screen_shake_system).unwrap();
+        if let Err(e) = world.run_system_once(update_screen_shake_system) {
+            log::error!("Screen shake system failed: {}", e);
+        }
         update_camera_smooth(&mut world);
         update_render_cache(&mut world);
 

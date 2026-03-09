@@ -147,8 +147,17 @@ fn dispatch_and_readback(
     ) {
         bind_group_dirty = true;
     }
+
+    let pop_buffer = match cache.pop_buffer.as_ref() {
+        Some(b) => b,
+        None => {
+            log::error!("Missing pop buffer");
+            return None;
+        }
+    };
+
     gpu.queue.write_buffer(
-        cache.pop_buffer.as_ref().unwrap(),
+        pop_buffer,
         0,
         bytemuck::cast_slice(pop_inputs),
     );
@@ -171,9 +180,17 @@ fn dispatch_and_readback(
         bind_group_dirty = true;
     }
 
+    let building_buffer = match cache.building_buffer.as_ref() {
+        Some(b) => b,
+        None => {
+            log::error!("Missing building buffer");
+            return None;
+        }
+    };
+
     if !building_inputs.is_empty() {
         gpu.queue.write_buffer(
-            cache.building_buffer.as_ref().unwrap(),
+            building_buffer,
             0,
             bytemuck::cast_slice(building_inputs),
         );
@@ -191,8 +208,17 @@ fn dispatch_and_readback(
     ) {
         bind_group_dirty = true;
     }
+
+    let global_buffer = match cache.global_buffer.as_ref() {
+        Some(b) => b,
+        None => {
+            log::error!("Missing global buffer");
+            return None;
+        }
+    };
+
     gpu.queue.write_buffer(
-        cache.global_buffer.as_ref().unwrap(),
+        global_buffer,
         0,
         bytemuck::bytes_of(global_state),
     );
@@ -211,6 +237,14 @@ fn dispatch_and_readback(
         bind_group_dirty = true;
     }
 
+    let decision_buffer = match cache.decision_buffer.as_ref() {
+        Some(b) => b,
+        None => {
+            log::error!("Missing decision buffer");
+            return None;
+        }
+    };
+
     // 5. Staging Buffer
     ensure_buffer(
         &gpu.device,
@@ -221,6 +255,14 @@ fn dispatch_and_readback(
         "decision-staging-buffer",
     );
 
+    let staging_buffer = match cache.staging_buffer.as_ref() {
+        Some(b) => b,
+        None => {
+            log::error!("Missing staging buffer");
+            return None;
+        }
+    };
+
     // 6. Bind Group
     if bind_group_dirty || cache.bind_group.is_none() {
         let bg = gpu.device.create_bind_group(&wgpu::BindGroupDescriptor {
@@ -229,24 +271,32 @@ fn dispatch_and_readback(
             entries: &[
                 wgpu::BindGroupEntry {
                     binding: 0,
-                    resource: cache.pop_buffer.as_ref().unwrap().as_entire_binding(),
+                    resource: pop_buffer.as_entire_binding(),
                 },
                 wgpu::BindGroupEntry {
                     binding: 1,
-                    resource: cache.building_buffer.as_ref().unwrap().as_entire_binding(),
+                    resource: building_buffer.as_entire_binding(),
                 },
                 wgpu::BindGroupEntry {
                     binding: 2,
-                    resource: cache.global_buffer.as_ref().unwrap().as_entire_binding(),
+                    resource: global_buffer.as_entire_binding(),
                 },
                 wgpu::BindGroupEntry {
                     binding: 3,
-                    resource: cache.decision_buffer.as_ref().unwrap().as_entire_binding(),
+                    resource: decision_buffer.as_entire_binding(),
                 },
             ],
         });
         cache.bind_group = Some(bg);
     }
+
+    let bind_group = match cache.bind_group.as_ref() {
+        Some(bg) => bg,
+        None => {
+            log::error!("Missing bind group");
+            return None;
+        }
+    };
 
     // 7. Dispatch
     let workgroup_count = (pop_inputs.len() as u32).div_ceil(64);
@@ -262,25 +312,24 @@ fn dispatch_and_readback(
             timestamp_writes: None,
         });
         pass.set_pipeline(&gpu.pipeline);
-        pass.set_bind_group(0, cache.bind_group.as_ref().unwrap(), &[]);
+        pass.set_bind_group(0, bind_group, &[]);
         pass.dispatch_workgroups(workgroup_count, 1, 1);
     }
 
     // Copy to staging
-    let staging = cache.staging_buffer.as_ref().unwrap();
     encoder.copy_buffer_to_buffer(
-        cache.decision_buffer.as_ref().unwrap(),
+        decision_buffer,
         0,
-        staging,
+        staging_buffer,
         0,
         decision_size,
     );
     gpu.queue.submit(std::iter::once(encoder.finish()));
 
     // 8. Blocking Readback
-    let buffer_slice = staging.slice(..decision_size); // Slice only what we need
+    let buffer_slice = staging_buffer.slice(..decision_size); // Slice only what we need
     let (tx, rx) = std::sync::mpsc::channel();
-    buffer_slice.map_async(wgpu::MapMode::Read, move |result| {
+    buffer_slice.map_async(wgpu::MapMode::Read, move |result: Result<(), wgpu::BufferAsyncError>| {
         let _ = tx.send(result);
     });
     gpu.device.poll(wgpu::Maintain::Wait);
@@ -293,7 +342,7 @@ fn dispatch_and_readback(
     let data = buffer_slice.get_mapped_range();
     let decisions: Vec<GpuPopDecision> = bytemuck::cast_slice(&data).to_vec();
     drop(data);
-    staging.unmap();
+    staging_buffer.unmap();
 
     Some(decisions)
 }
