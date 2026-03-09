@@ -233,3 +233,4 @@ pub fn consume_food_system(world: &mut World) {
 ## Questions
 
 - Should Rations give different mood? (No, for MVP keep it simple. Survival first).
+  - *Architect:* No, all preserved rations should provide the same baseline mood modifier for the MVP.

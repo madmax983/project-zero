@@ -328,3 +328,4 @@ In `src/main.rs` (and `layer1/mod.rs`):
 
 - Should Fiber rot like Food? (Deferred to Entropy spec).
 - Should Clothing have different tiers? (No, keep simple).
+  - *Architect:* No, keep clothing temperature effects simple and uniform for the MVP.

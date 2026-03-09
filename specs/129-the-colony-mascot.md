@@ -317,3 +317,4 @@ if let Some(buff) = world.get::<MascotBuff>(entity) {
 
 - Can we have multiple mascots? (Yes, buff should probably not stack infinitely, maybe cap at 1 instance).
 - Do mascots trigger "Hostile Fauna" traps? (They should trigger traps but traps should ideally filter... or not. Tragedy is emergent).
+  - *Architect:* Yes, mascots will trigger traps. Emergent tragedy is intended.
