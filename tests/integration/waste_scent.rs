@@ -2,11 +2,11 @@
 mod tests {
     use bevy_app::App;
     use bevy_ecs::schedule::IntoSystemConfigs;
-    use scale::layer1::map::GridPosition;
-    use scale::layer1::olfactory::{ScentMap, scent_diffusion_system, ScentPlugin};
-    use scale::layer1::resources::{ResourceItem, ResourceType};
     use scale::layer1::building::{Building, BuildingType};
     use scale::layer1::integration::waste_scent_bridge;
+    use scale::layer1::map::GridPosition;
+    use scale::layer1::olfactory::{scent_diffusion_system, ScentMap, ScentPlugin};
+    use scale::layer1::resources::{ResourceItem, ResourceType};
 
     #[test]
     fn test_waste_item_emits_foul_scent() {

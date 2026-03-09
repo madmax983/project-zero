@@ -1,9 +1,9 @@
-use bevy_ecs::prelude::*;
+use crate::layer1::health::Dead;
 use crate::layer1::inventory::Inventory;
+use crate::layer1::morale::{MoodModifier, Morale};
 use crate::layer1::pop::Pop;
 use crate::layer1::traits::{Trait, Traits};
-use crate::layer1::morale::{Morale, MoodModifier};
-use crate::layer1::health::Dead;
+use bevy_ecs::prelude::*;
 
 #[derive(Event)]
 pub struct InheritanceEvent {
@@ -51,20 +51,23 @@ pub fn process_override_will_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy::prelude::*;
-    use crate::layer1::pop::Pop;
-    use crate::layer1::traits::{Trait, Traits};
+    use crate::layer1::health::Dead;
     use crate::layer1::inventory::{Inventory, InventoryItem};
     use crate::layer1::items::ItemType;
     use crate::layer1::morale::Morale;
-    use crate::layer1::health::Dead;
+    use crate::layer1::pop::Pop;
+    use crate::layer1::traits::{Trait, Traits};
+    use bevy::prelude::*;
     use std::collections::HashSet;
 
     fn setup_app() -> App {
         let mut app = App::new();
         app.add_event::<InheritanceEvent>();
         app.add_event::<OverrideWillEvent>();
-        app.add_systems(Update, (process_spiteful_will_system, process_override_will_system));
+        app.add_systems(
+            Update,
+            (process_spiteful_will_system, process_override_will_system),
+        );
         app
     }
 
@@ -73,11 +76,20 @@ mod tests {
         let mut app = setup_app();
 
         // Simulate dying by adding Dead component in an already spawned entity, to trigger Added<Dead> correctly.
-        let dead_pop = app.world_mut().spawn((
-            Pop,
-            Traits(HashSet::from([Trait::Spiteful])),
-            Inventory { items: vec![InventoryItem { item_type: ItemType::Tool, entity: None }], capacity: 20 },
-        )).id();
+        let dead_pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Traits(HashSet::from([Trait::Spiteful])),
+                Inventory {
+                    items: vec![InventoryItem {
+                        item_type: ItemType::Tool,
+                        entity: None,
+                    }],
+                    capacity: 20,
+                },
+            ))
+            .id();
 
         // Add Dead component to trigger the event
         app.world_mut().entity_mut(dead_pop).insert(Dead);
@@ -86,26 +98,34 @@ mod tests {
 
         let events = app.world().resource::<Events<InheritanceEvent>>();
         let mut reader = events.get_cursor();
-        assert!(reader.read(events).len() > 0, "Inheritance event should be triggered for spiteful pop");
+        assert!(
+            reader.read(events).len() > 0,
+            "Inheritance event should be triggered for spiteful pop"
+        );
     }
 
     #[test]
     fn test_confiscating_loot_causes_unrest() {
         let mut app = setup_app();
 
-        let heir = app.world_mut().spawn((
-            Pop,
-            Morale::default()
-        )).id();
+        let heir = app.world_mut().spawn((Pop, Morale::default())).id();
 
         // Simulate the player overriding the will
-        app.world_mut().resource_mut::<Events<OverrideWillEvent>>().send(OverrideWillEvent {
-            affected_pops: vec![heir]
-        });
+        app.world_mut()
+            .resource_mut::<Events<OverrideWillEvent>>()
+            .send(OverrideWillEvent {
+                affected_pops: vec![heir],
+            });
 
         app.update();
 
         let morale = app.world().get::<Morale>(heir).unwrap();
-        assert!(morale.modifiers.iter().any(|m| m.label == "Will Overridden"), "Heir should be upset by override");
+        assert!(
+            morale
+                .modifiers
+                .iter()
+                .any(|m| m.label == "Will Overridden"),
+            "Heir should be upset by override"
+        );
     }
 }

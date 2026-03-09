@@ -349,7 +349,6 @@ mod material_provenance_tests;
 pub mod factions;
 pub use factions::*;
 
-
 /// Cabin Fever mechanics (Spec 082).
 pub mod cabin_fever;
 pub use cabin_fever::*;
@@ -399,7 +398,6 @@ mod structure_jury_rig_tests;
 /// Animal Husbandry system (Spec 075).
 pub mod husbandry;
 pub use husbandry::*;
-
 
 /// Gastronomy system (Spec 166).
 pub mod gastronomy;

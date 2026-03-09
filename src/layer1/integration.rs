@@ -381,26 +381,39 @@ pub fn waste_pollution_bridge(
 /// Adds a `ScentEmitter` with `Foul` scent to them.
 pub fn waste_scent_bridge(
     mut commands: bevy_ecs::system::Commands,
-    items: Query<(bevy_ecs::entity::Entity, &crate::layer1::resources::ResourceItem), Without<crate::layer1::olfactory::ScentEmitter>>,
-    buildings: Query<(bevy_ecs::entity::Entity, &crate::layer1::building::Building), Without<crate::layer1::olfactory::ScentEmitter>>,
+    items: Query<
+        (
+            bevy_ecs::entity::Entity,
+            &crate::layer1::resources::ResourceItem,
+        ),
+        Without<crate::layer1::olfactory::ScentEmitter>,
+    >,
+    buildings: Query<
+        (bevy_ecs::entity::Entity, &crate::layer1::building::Building),
+        Without<crate::layer1::olfactory::ScentEmitter>,
+    >,
 ) {
     // 1. Waste Items
     for (entity, item) in &items {
         if item.resource_type == crate::layer1::resources::ResourceType::Waste {
-            commands.entity(entity).insert(crate::layer1::olfactory::ScentEmitter {
-                scent_type: crate::layer1::olfactory::ScentType::Foul,
-                strength: item.amount.max(1.0),
-            });
+            commands
+                .entity(entity)
+                .insert(crate::layer1::olfactory::ScentEmitter {
+                    scent_type: crate::layer1::olfactory::ScentType::Foul,
+                    strength: item.amount.max(1.0),
+                });
         }
     }
 
     // 2. Landfills
     for (entity, building) in &buildings {
         if building.building_type == crate::layer1::building::BuildingType::Landfill {
-            commands.entity(entity).insert(crate::layer1::olfactory::ScentEmitter {
-                scent_type: crate::layer1::olfactory::ScentType::Foul,
-                strength: 10.0,
-            });
+            commands
+                .entity(entity)
+                .insert(crate::layer1::olfactory::ScentEmitter {
+                    scent_type: crate::layer1::olfactory::ScentType::Foul,
+                    strength: 10.0,
+                });
         }
     }
 }

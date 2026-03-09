@@ -365,7 +365,12 @@ fn render_colony_stats(frame: &mut Frame, area: Rect, world: &World) {
         ]),
         Row::new(vec![
             Cell::from("✨ Sky Glow").style(Style::default().fg(Color::Cyan)),
-            Cell::from(format!("{:.1}", world.get_resource::<crate::layer1::light_pollution::SkyGlow>().map_or(0.0, |g| g.global_level))),
+            Cell::from(format!(
+                "{:.1}",
+                world
+                    .get_resource::<crate::layer1::light_pollution::SkyGlow>()
+                    .map_or(0.0, |g| g.global_level)
+            )),
         ]),
     ];
 
@@ -1048,7 +1053,12 @@ fn render_observatory_details(frame: &mut Frame, area: Rect, obs: &Observatory, 
     frame.render_widget(gauge, area);
 }
 
-fn render_nocturnal_fauna_details(frame: &mut Frame, area: Rect, fauna: &NocturnalFauna, world: &World) {
+fn render_nocturnal_fauna_details(
+    frame: &mut Frame,
+    area: Rect,
+    fauna: &NocturnalFauna,
+    world: &World,
+) {
     let max_aggression = 10.0; // Assume a reasonable max for UI display purposes
     let pct = ((fauna.aggression / max_aggression) * 100.0).clamp(0.0, 100.0) as u16;
     let color = if pct > 70 {
