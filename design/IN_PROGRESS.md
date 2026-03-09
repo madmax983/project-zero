@@ -10,3 +10,4 @@ Tasks currently being implemented by Builders.
 - [ ] `244` Biometric Drift — `specs/244-biometric-drift.md` — claimed 2026-02-28
 - [ ] `249` Holographic Facades — `specs/249-holographic-facades.md` — claimed 2026-02-28
 - [ ] `250` Surgical Addiction — `specs/250-surgical-addiction.md` — claimed 2026-03-01
+- [ ] `262` Thermal Gliders — `specs/262-thermal-gliders.md` — claimed 2026-03-09

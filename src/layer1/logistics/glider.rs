@@ -1,12 +1,14 @@
-// Implementation block to make tests compilable (but fail).
 use crate::layer1::map::GridPosition;
+use crate::layer1::nature::temperature::TemperatureGrid;
 use crate::layer1::pop::Speed;
-use crate::layer1::temperature::TemperatureGrid;
 use bevy_ecs::prelude::*;
 
+/// A specialized hauling drone that rides thermal updrafts.
 #[derive(Component)]
 pub struct ThermalGlider;
 
+/// Updates the movement speed of `ThermalGlider`s based on the local temperature.
+/// Higher temperatures provide more lift, increasing speed. Cold areas ground the glider.
 pub fn update_glider_movement_system(
     mut query: Query<(&ThermalGlider, &GridPosition, &mut Speed)>,
     temp_grid: Res<TemperatureGrid>,
@@ -33,8 +35,8 @@ pub fn update_glider_movement_system(
 mod tests {
     use crate::layer1::logistics::glider::{update_glider_movement_system, ThermalGlider};
     use crate::layer1::map::GridPosition;
+    use crate::layer1::nature::temperature::TemperatureGrid;
     use crate::layer1::pop::Speed;
-    use crate::layer1::temperature::TemperatureGrid;
     use bevy_ecs::prelude::*;
 
     #[test]

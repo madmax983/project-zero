@@ -114,7 +114,7 @@ impl PartialOrd for Node {
 /// assert_eq!(p.last(), Some(&(2, 0)));
 /// ```
 pub fn find_path(world: &World, start: (i32, i32), end: (i32, i32)) -> Option<Vec<(i32, i32)>> {
-    find_path_internal(world, start, end, false, None)
+    find_path_internal(world, start, end, false, None, None)
 }
 
 /// Finds a path for a specific Pop, considering their access rights.
@@ -161,7 +161,7 @@ pub fn find_path_for_pop(
 ) -> Option<Vec<(i32, i32)>> {
     let role = world.get::<Role>(pop).copied();
     let credentials = Some(AccessCredentials { entity: pop, role });
-    find_path_internal(world, start, end, false, credentials.as_ref())
+    find_path_internal(world, start, end, false, credentials.as_ref(), None)
 }
 
 /// Finds a path for a specific entity type, considering unique capabilities.
@@ -182,7 +182,34 @@ pub fn find_path_for_entity<T: Component>(
 ) -> Option<Vec<(i32, i32)>> {
     let can_use_vents =
         std::any::TypeId::of::<T>() == std::any::TypeId::of::<crate::layer1::vermin::Vermin>();
-    find_path_internal(world, start, end, can_use_vents, None)
+    find_path_internal(world, start, end, can_use_vents, None, None)
+}
+
+/// Finds a path for a Thermal Glider, using a temperature-aware cost function.
+/// (Placeholder to make tests compile but fail in RED phase).
+pub fn find_path_for_glider(
+    world: &World,
+    start: (i32, i32),
+    end: (i32, i32),
+) -> Option<Vec<(i32, i32)>> {
+    let temp_grid = world.get_resource::<crate::layer1::nature::temperature::TemperatureGrid>();
+
+    let cost_fn = |pos: (i32, i32)| -> i32 {
+        if let Some(tg) = temp_grid {
+            if let (Ok(x), Ok(y)) = (usize::try_from(pos.0), usize::try_from(pos.1)) {
+                let temp = tg.get(x, y);
+                // Cost = 100 - temperature. Minimum cost is 1.
+                // At temp=90, cost is 10. At temp=0, cost is 100.
+                #[allow(clippy::cast_possible_truncation)]
+                let cost = (100.0 - temp) as i32;
+                return cost.max(1);
+            }
+        }
+        // Default cost if no temperature grid or out of bounds.
+        100
+    };
+
+    find_path_internal(world, start, end, false, None, Some(&cost_fn))
 }
 
 /// Internal A* implementation.
@@ -195,6 +222,7 @@ fn find_path_internal(
     end: (i32, i32),
     can_use_vents: bool,
     credentials: Option<&AccessCredentials>,
+    cost_fn: Option<&dyn Fn((i32, i32)) -> i32>,
 ) -> Option<Vec<(i32, i32)>> {
     let terrain = world.resource::<TerrainGrid>();
     let occupied = world.get_resource::<OccupiedTiles>();
@@ -298,7 +326,11 @@ fn find_path_internal(
             let clutter_cost = clutter.map_or(0, |c| {
                 (c.get(next.0 as usize, next.1 as usize) / 20.0) as i32
             });
-            let base_cost = t_cost + c_cost + clutter_cost;
+            let base_cost = if let Some(custom_cost) = cost_fn {
+                custom_cost(next) + c_cost + clutter_cost
+            } else {
+                t_cost + c_cost + clutter_cost
+            };
 
             // Calculate wind penalty
             let wind_penalty = wind_grid.map_or(1.0, |wg| {
@@ -574,6 +606,36 @@ mod tests {
         // Check pathfinding with Vermin capability
         let path = find_path_for_entity(&world, (0, 1), (2, 1), &Vermin);
         assert!(path.is_some(), "Vermin SHOULD path through Vent");
+    }
+
+    #[test]
+    fn test_glider_pathfinding_prefers_heat() {
+        let mut world = setup_world();
+
+        let mut temp_grid = crate::layer1::nature::temperature::TemperatureGrid::new(10, 10, 0.0);
+
+        // Map is 10x10.
+        // Start: (0, 0), End: (0, 3)
+        // Direct cold path: (0, 0) -> (0, 1) -> (0, 2) -> (0, 3). Length: 3 steps.
+        // Indirect hot path: (0, 0) -> (1, 0) -> (1, 1) -> (1, 2) -> (1, 3) -> (0, 3).
+        // Setting heat to 90.0 on indirect path.
+
+        temp_grid.set(1, 0, 90.0);
+        temp_grid.set(1, 1, 90.0);
+        temp_grid.set(1, 2, 90.0);
+        temp_grid.set(1, 3, 90.0);
+
+        world.insert_resource(temp_grid);
+
+        let path = super::find_path_for_glider(&world, (0, 0), (0, 3));
+        assert!(path.is_some(), "Should find path");
+        let p = path.unwrap();
+
+        // Since cost = max(1, 100 - temp), hot tiles have cost 10, cold tiles have cost 100.
+        // Direct path cost: 3 * 100 = 300.
+        // Indirect path cost: 5 * 10 = 50.
+        // It should prefer the indirect hot path.
+        assert!(p.contains(&(1, 1)), "Glider should prefer longer hot path over shorter cold path");
     }
 
     #[test]

@@ -349,8 +349,6 @@ mod material_provenance_tests;
 pub mod factions;
 pub use factions::*;
 
-/// Weather system (Spec 079).
-
 /// Cabin Fever mechanics (Spec 082).
 pub mod cabin_fever;
 pub use cabin_fever::*;
@@ -400,8 +398,6 @@ mod structure_jury_rig_tests;
 /// Animal Husbandry system (Spec 075).
 pub mod husbandry;
 pub use husbandry::*;
-
-/// Water simulation (Spec 096).
 
 /// Gastronomy system (Spec 166).
 pub mod gastronomy;
@@ -483,8 +479,6 @@ pub use social_mimicry::*;
 /// Turret system (Spec 135).
 pub mod turret;
 pub use turret::*;
-/// Temperature simulation (Spec 140).
-
 /// Wild Child system (Spec 124).
 pub mod wild_child;
 pub use wild_child::*;
