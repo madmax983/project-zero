@@ -30,8 +30,10 @@ pub struct UnpossessEvent;
 pub struct DirectControlState {
     /// Timestamp (WallTime) of the last successful move.
     pub last_move_time: f32,
-    /// Buffered input key that was pressed during cooldown.
-    pub buffered_input: Option<KeyCode>,
+    /// Buffered X-axis movement intent.
+    pub buffered_dx: i32,
+    /// Buffered Y-axis movement intent.
+    pub buffered_dy: i32,
 }
 
 pub struct DirectLinkPlugin;
@@ -139,21 +141,9 @@ pub fn handle_direct_movement(
 
         // 1. Gather Input
         // Separate X and Y to check for diagonal intent or buffering
-        let mut intended_dx = 0;
-        let mut intended_dy = 0;
+        let mut intended_dx = state.buffered_dx;
+        let mut intended_dy = state.buffered_dy;
 
-        // Check buffers first
-        if let Some(key) = state.buffered_input {
-            match key {
-                KeyCode::W | KeyCode::Up => intended_dy -= 1,
-                KeyCode::S | KeyCode::Down => intended_dy += 1,
-                KeyCode::A | KeyCode::Left => intended_dx -= 1,
-                KeyCode::D | KeyCode::Right => intended_dx += 1,
-                _ => {}
-            }
-        }
-
-        // Check fresh inputs (override buffer if present, or combine?)
         // Combine for responsiveness (if I buffer W, then press D, I want to go diagonal)
         if input.just_pressed(KeyCode::W) || input.just_pressed(KeyCode::Up) {
             intended_dy -= 1;
@@ -180,17 +170,9 @@ pub fn handle_direct_movement(
         // 2. Check Cooldown / Buffering
         if time_since_move < cooldown {
             // Buffer the input
-            // We store the "strongest" input direction if multiple pressed?
-            // Just store the last pressed one for simplicity of struct
-            if input.just_pressed(KeyCode::W) {
-                state.buffered_input = Some(KeyCode::W);
-            } else if input.just_pressed(KeyCode::S) {
-                state.buffered_input = Some(KeyCode::S);
-            } else if input.just_pressed(KeyCode::A) {
-                state.buffered_input = Some(KeyCode::A);
-            } else if input.just_pressed(KeyCode::D) {
-                state.buffered_input = Some(KeyCode::D);
-            }
+            // Accumulate into the buffer so we can store diagonal intents
+            state.buffered_dx = intended_dx;
+            state.buffered_dy = intended_dy;
 
             continue;
         }
@@ -226,7 +208,8 @@ pub fn handle_direct_movement(
             pos.x = new_x;
             pos.y = new_y;
             state.last_move_time = now;
-            state.buffered_input = None;
+            state.buffered_dx = 0;
+            state.buffered_dy = 0;
         } else {
             // Blocked! Try sliding if diagonal
             let mut slid = false;
@@ -273,7 +256,8 @@ pub fn handle_direct_movement(
                         *pos, // Use current pos (which we partially modified, technically we should use old pos, but this is fine)
                     ));
                     state.last_move_time = now;
-                    state.buffered_input = None;
+                    state.buffered_dx = 0;
+                    state.buffered_dy = 0;
                 }
             }
 
@@ -284,7 +268,8 @@ pub fn handle_direct_movement(
                 }
 
                 // Just clear buffer to prevent "stuck" inputs
-                state.buffered_input = None;
+                state.buffered_dx = 0;
+                state.buffered_dy = 0;
             }
         }
     }
@@ -501,6 +486,63 @@ mod tests {
 
         let pos3 = world.entity(pop).get::<GridPosition>().unwrap();
         assert_eq!(pos3.y, 8, "Should move from BUFFERED input");
+    }
+
+    #[test]
+    fn test_direct_movement_diagonal_buffering() {
+        let mut world = setup_world();
+        // Setup walkable
+        if let Some(mut terrain) = world.get_resource_mut::<TerrainGrid>() {
+            terrain
+                .tiles
+                .fill(crate::layer1::terrain::TerrainType::Grass);
+        }
+
+        let pop = world
+            .spawn((
+                PopBundle::random(10, 10, &mut rand::thread_rng()),
+                Possessed,
+                DirectControlState::default(),
+            ))
+            .id();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(handle_direct_movement);
+        schedule.add_systems(clear_input_system.after(handle_direct_movement));
+
+        // 1. First move (ok)
+        world.resource_mut::<Input>().press(KeyCode::W);
+        world.resource_mut::<WallTime>().0 = 10.0;
+        schedule.run(&mut world);
+
+        let pos1 = world.entity(pop).get::<GridPosition>().unwrap();
+        assert_eq!(pos1.y, 9);
+        assert_eq!(pos1.x, 10);
+
+        // 2. Second move IMMEDIATELY (should be blocked by cooldown)
+        // Player tries to buffer a diagonal move (W + D)
+        world.resource_mut::<Input>().press(KeyCode::W);
+        world.resource_mut::<WallTime>().0 = 10.01;
+        schedule.run(&mut world); // Buffers W
+
+        world.resource_mut::<Input>().press(KeyCode::D);
+        world.resource_mut::<WallTime>().0 = 10.02;
+        schedule.run(&mut world); // Buffers D (combines with W!)
+
+        let pos2 = world.entity(pop).get::<GridPosition>().unwrap();
+        assert_eq!(pos2.y, 9, "Should NOT move due to cooldown");
+        assert_eq!(pos2.x, 10, "Should NOT move due to cooldown");
+
+        // 3. Verify Diagonal Buffering
+        world.resource_mut::<WallTime>().0 = 10.2; // > 0.1s later
+        schedule.run(&mut world); // No new input press here!
+
+        let pos3 = world.entity(pop).get::<GridPosition>().unwrap();
+        assert_eq!(pos3.y, 8, "Should move up from BUFFERED input");
+        assert_eq!(
+            pos3.x, 11,
+            "Should move right from BUFFERED input (diagonal)"
+        );
     }
 
     #[test]

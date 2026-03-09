@@ -9,3 +9,7 @@
 ## [Critical Hits]
 **Friction:** Combat felt unrewarding and predictable due to low critical hit chance (5%) and a standard multiplier (2x), making encounters feel like a slow grind against spongy enemies.
 **Flow:** Increased critical hit chance to 15% and multiplier to 3x. This injects more excitement and "Juice" into combat, allowing for sudden, impactful bursts of damage that keep the player engaged and make hits feel significantly more powerful.
+
+## [Direct Link Diagonal Buffering]
+**Friction:** Players trying to move diagonally right as the movement cooldown ends often only moved in one direction. This happened because the input buffer only stored a single `KeyCode`, discarding the other key press and making quick diagonal movements feel dropped or rigid.
+**Flow:** Changed the input buffer from a single `Option<KeyCode>` to `buffered_dx` and `buffered_dy` to store movement intent across both axes. This allows diagonal inputs to be perfectly buffered and executed seamlessly, maintaining "Flow" and responsiveness.
