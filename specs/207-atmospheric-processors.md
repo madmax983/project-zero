@@ -249,3 +249,4 @@ pub fn apply_planetary_effects_system(
 
 - Should terraforming be reversible? (Yes, if machines stop, planet might drift back or stay stable. For now, stable).
 - Should there be "seasons" for terraforming? (No, linear progress for now).
+  - *Architect:* No, terraforming progress is linear for the MVP.

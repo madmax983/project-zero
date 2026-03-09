@@ -291,3 +291,4 @@ Add `LivingStone` to `ItemType` enum.
 
 - Do they move if carried by a Pop? (No, Pop movement overrides).
 - Can they fuse inside a Pop's inventory? (Fun, but maybe too complex for MVP. Stick to Ground/Stockpile).
+  - *Architect:* No, fusion should only occur on the ground or in stockpiles for the MVP.

@@ -246,3 +246,4 @@ pub fn trend_satisfaction_system(
 ## Questions
 
 - *Do trends apply to clothing/activities too?* (Yes, but start with Consumables for MVP).
+  - *Architect:* Yes, but limit the MVP to consumables only.

@@ -335,3 +335,4 @@ pub fn visitor_behavior_system(
 - **A**: Yes, but has massive health. If killed, drops massive loot.
 - **Q**: Do turrets shoot it?
 - **A**: Yes, if it is tagged `Hostile` (maybe only after it eats?). For MVP, treat as Neutral until attacked.
+  - *Architect:* Correct, treat visitors as neutral until provoked or explicitly tagged hostile.

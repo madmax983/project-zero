@@ -306,3 +306,4 @@ Call `apply_room_quality_thoughts` in:
 
 - Should "Barracks" (multiple beds in one room) have a penalty? (Not in MVP, maybe implicitly via space sharing if we divide space score by occupant count later).
 - Does "Enclosure" require a roof? (Layer 1 is 2D top-down, roof is implied by "Indoors" logic if we have it. For now, Walls are enough).
+  - *Architect:* Correct, for MVP walls are sufficient to enclose a room.

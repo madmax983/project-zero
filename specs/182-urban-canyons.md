@@ -305,3 +305,4 @@ pub fn calculate_wind_movement_penalty(wind: Vec2, move_dir: Vec2) -> f32 {
 
 - Should wind affect fire spread? (Yes, `033` Fire Propagation should eventually read `WindGrid`).
 - Should high wind damage weak structures? (Future feature).
+  - *Architect:* This should be deferred to a future specification.

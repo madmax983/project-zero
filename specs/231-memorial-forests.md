@@ -228,3 +228,4 @@ Implement `visit_memorial_action`:
 ## Questions
 
 -   Should Memorial Trees spread seeds? (Yes, treat as normal trees for biology).
+    - *Architect:* Yes, they behave identically to normal trees biologically.

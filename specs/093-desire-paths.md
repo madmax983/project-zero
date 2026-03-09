@@ -292,3 +292,4 @@ Update `src/layer1/beauty.rs` to consider `TerrainType`.
 ## Questions
 
 - Should paved roads (Constructed) be immune to erosion? (Yes, `BuildingType::Road` overlay or separate TerrainType? For now, assume Constructed Roads are Buildings that sit *on top* of terrain, preventing erosion updates).
+  - *Architect:* Yes, paved roads are immune to erosion.

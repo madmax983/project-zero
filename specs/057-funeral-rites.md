@@ -261,3 +261,4 @@ Pops should prioritize burying corpses if a `Grave` (unoccupied) exists.
 ## Questions
 
 - Should enemies (Raiders) leave corpses? (Yes, treat same as colonists for hygiene, but maybe different morale effect).
+  - *Architect:* Yes, they leave corpses and cause hygiene/morale debuffs if left unburied.

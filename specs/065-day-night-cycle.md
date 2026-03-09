@@ -273,3 +273,4 @@ pub fn circadian_rhythm_system(
 
 - Should we visualize the sun/moon position? (Not for MVP).
 - Does artificial light stop the "Circadian Rhythm" penalty? (Future feature: "Artificial Lights" trait or logic).
+  - *Architect:* No, artificial lights do not stop the penalty in the MVP.
