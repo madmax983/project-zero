@@ -172,3 +172,6 @@ mod orbital_drop_chronicle;
 mod sacrilege_effects;
 #[path = "integration/unmet_needs_black_market.rs"]
 mod unmet_needs_black_market;
+
+#[path = "integration/light_pollution_fauna.rs"]
+mod light_pollution_fauna;

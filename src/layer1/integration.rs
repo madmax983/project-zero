@@ -893,3 +893,41 @@ pub fn industrial_rhythm_morale_bridge(
         }
     }
 }
+
+/// Increases `Fauna` detection range based on `NocturnalFauna` aggression (INT-450).
+/// Links `LightPollution` to actual `Fauna` behavior.
+pub fn nocturnal_aggression_bridge_system(
+    mut query: bevy_ecs::prelude::Query<(&crate::layer1::fauna::NocturnalFauna, &mut crate::layer1::fauna::Fauna)>,
+) {
+    for (nocturnal, mut fauna) in query.iter_mut() {
+        // Base detection range is typically ~8.0.
+        // We calculate a bonus instead of overwriting the base range.
+        // This makes sure we don't accidentally shrink alien fauna that have huge ranges.
+        // However, we can't easily track the "base" range on the fly without a new component.
+        // The simplest, safest fix is to add a small amount of range per tick it's aggressive,
+        // or just apply a temporary bump if it's not already boosted.
+        // Since `apply_light_pollution_system` increases `animal.aggression += 0.01` every tick
+        // we can just increase `detection_range` slightly as aggression grows.
+
+        // Wait, aggression grows continuously! We just need to ensure the detection range
+        // is bumped up as well. Let's just bump it proportionally, but clamp it so it
+        // doesn't go to infinity.
+
+        if nocturnal.aggression > 0.0 {
+            let max_bonus = 15.0; // The max extra range they can get
+
+            // To prevent infinitely growing ranges, let's calculate the target range
+            // based on a fixed base rather than the current range.
+            // We assume a base of 8.0, but if the current range is already larger, we use that.
+            // Wait, we can't store the original base.
+            // The simplest approach is to just calculate a derived value based on aggression
+            // and apply it. If we want a slow increase, we should target a static upper bound.
+            // Let's define the absolute maximum detection range for *any* fauna due to pollution as 25.0
+
+            let target_range = 8.0 + (nocturnal.aggression * 20.0).min(max_bonus);
+            if fauna.detection_range < target_range {
+               fauna.detection_range += 0.1; // slow increase
+            }
+        }
+    }
+}

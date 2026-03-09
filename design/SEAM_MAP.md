@@ -331,3 +331,10 @@
     - Added `orbital_drop_chronicle_bridge` in `src/layer1/integration.rs` to convert `OrbitalDropEvent` to `AddChronicleEvent` with `EventImportance::Major`.
     - Registered in `src/layer1/systems/observation.rs` under `Layer1SystemSet::Observation`.
 - **Tests:** `tests/integration/orbital_drop_chronicle.rs` (Integration test verified)
+
+### INT-450: Light Pollution -> Fauna Aggression
+- **Date:** 2026-03-09
+- **Systems connected:** `NocturnalFauna` (Light Pollution) -> `nocturnal_aggression_bridge_system` (Integration) -> `Fauna` (Fauna Behavior)
+- **Glue added:**
+    - `nocturnal_aggression_bridge_system` connects the two by calculating an actual detection_range bonus from `aggression`.
+- **Tests:** `tests/integration/light_pollution_fauna.rs`
