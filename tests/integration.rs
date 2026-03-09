@@ -175,3 +175,5 @@ mod unmet_needs_black_market;
 
 #[path = "integration/light_pollution_fauna.rs"]
 mod light_pollution_fauna;
+#[path = "integration/waste_scent.rs"]
+mod waste_scent;
