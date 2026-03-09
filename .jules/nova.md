@@ -22,3 +22,8 @@
 **Concept:** Extreme joy is physically radiant. Pops with extremely high morale (> 0.9) leave behind glowing footprints that function as a temporary `LightSource`. This brings their happiness to life visually, pushing back darkness penalties and charting paths of joy through the colony.
 **Fate:** Merged
 **Lesson:** Visualizing an internal state (`Morale`) as a physical world alteration (`LightMap` via `LightSource`) makes an abstract number feel real and interconnected with the environment.
+
+## [Sympathetic Architecture]
+**Concept:** A system that damages nearby Buildings when a Pop dies violently near them, simulating the structure "feeling" the emotional trauma of the inhabitants.
+**Fate:** Merged
+**Lesson:** Tying an intense entity event (`Added<Dead>`) to an environmental consequence (`Health` of `Building`s) reinforces the thematic connection between the Pops and their constructed environment, making the base itself feel alive and responsive to tragedy.

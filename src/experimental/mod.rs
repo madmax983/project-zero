@@ -11,3 +11,6 @@ pub mod fungal_death;
 
 #[cfg(feature = "nova")]
 pub mod bioluminescent_trails;
+
+#[cfg(feature = "nova")]
+pub mod sympathetic_architecture;

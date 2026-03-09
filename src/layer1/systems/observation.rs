@@ -135,6 +135,9 @@ pub fn register(schedule: &mut Schedule) {
             crate::experimental::bioluminescent_trails::fade_bioluminescent_trails_system.after(
                 crate::experimental::bioluminescent_trails::spawn_bioluminescent_trails_system,
             ),
+            #[cfg(feature = "nova")]
+            crate::experimental::sympathetic_architecture::sympathetic_architecture_system
+                .after(crate::layer1::health::despawn_dead_entities_system),
         )
             .in_set(Layer1SystemSet::Observation),
     );
