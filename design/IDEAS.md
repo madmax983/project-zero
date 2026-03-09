@@ -8940,3 +8940,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** High beauty/status building materials vs. the terrifying risk of permanent, unerasable information leaks.
 
 ---
+
+## The Commuter Tax
+
+**Layer:** 1
+
+**Fantasy:** Taxing your workers for simply moving through your colony's infrastructure.
+
+**Mechanic:** Paved roads and advanced transit lines (like pneumatic tubes or moving walkways) can have a "Toll" assigned to them. Pops who use them pay a tiny fraction of their personal Credits or Morale. High tolls speed up travel but drain citizen wealth, while free roads lead to congestion.
+
+**Emergence:** You build a highly efficient, beautiful transit network but set the tolls too high. Your poorest pops, unable to afford the commute to the industrial district, are forced to walk through the dangerous, unpaved "Wild" zones, leading to a massive spike in workplace injuries before they even clock in.
+
+**Tension:** Fast, efficient logistics funded by user fees vs. accessible transit that avoids creating a two-tiered society.
+
+---
+
+## The Empathy Sickness
+
+**Layer:** 1
+
+**Fantasy:** A disease of the heart, where suffering becomes physically contagious.
+
+**Mechanic:** A viral pathogen that doesn't cause physical damage but hyper-sensitizes a Pop's mirror neurons. If an infected Pop witnesses another Pop experiencing high Stress or physical pain, the infected Pop suffers the exact same penalty, even if they were perfectly healthy.
+
+**Emergence:** Your colony is running perfectly until an industrial accident injures one miner. The infected Pops nearby instantly collapse in sympathetic agony, causing a cascade of dropped tools and further accidents that paralyze the entire sector.
+
+**Tension:** Ruthless quarantine of the hyper-empathetic vs. utilizing their heightened sensitivity for advanced diplomatic or artistic roles before the colony's stress breaks them.
+
+---
+
+## Biological Computing
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** Building the ultimate supercomputer out of spare parts—human spare parts.
+
+**Mechanic:** Instead of building traditional AI Cores, you can construct "Neural Vats" that use the biological brains of deceased (or voluntarily donated) Pops. These vats generate massive Research and Admin points but require constant, complex nutrient upkeep and generate intense "Horror" penalties for any Pop that works near them.
+
+**Emergence:** You convert your most brilliant, dying scientist into a Neural Vat to save their intellect. The vat works flawlessly, but decades later, it starts exhibiting the deceased scientist's eccentricities, overriding your commands to run endless simulations on poetry instead of defense algorithms.
+
+**Tension:** Unmatched, self-improving computational power vs. the ethical nightmare and psychological toll on the living workforce.
+
+---
+
+## The Bureaucratic Language
+
+**Layer:** Cross-layer
+
+**Fantasy:** A language designed not to communicate, but to obfuscate and control.
+
+**Mechanic:** As your empire's Admin level rises, your administration begins using a constructed "High Speech" for all official edicts and tech documentation. Pops without sufficient Education or the "Bureaucrat" trait suffer massive delays and error rates when trying to follow orders or build advanced structures because they literally cannot understand the instructions.
+
+**Emergence:** You issue a critical emergency evacuation order during a raid. The order is encrypted in High Speech. The uneducated mining class ignores the order, thinking it's another tax mandate, and is slaughtered, while the administrative elite safely evacuate.
+
+**Tension:** The absolute security and efficiency of an elite-only operational language vs. the catastrophic disconnect and inefficiency it causes among the general populace.
+
+---
+
+## Kinetic Bombardment Mining
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Striking the earth with the wrath of gods, just to see what's underneath.
+
+**Mechanic:** Using massive mass drivers in Layer 2 orbit, you intentionally drop dense kinetic slugs onto your Layer 1 colony map. The impact obliterates anything on the surface but instantly exposes deep-crust resources (like magma or precursor ruins) that would normally take years to dig to.
+
+**Emergence:** You try to crack open a rich underground vault by dropping a kinetic slug. You miscalculate the density of the slug; it penetrates too deep, shattering the tectonic plate and permanently turning your fertile valley into an unstable, volcanic wasteland.
+
+**Tension:** Instant access to endgame subterranean resources vs. the uncontrollable, permanent destruction of the surface biome.
+
+---
