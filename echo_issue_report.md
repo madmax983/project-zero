@@ -10,3 +10,16 @@ Turns out I actually need to add the `bevy_ecs` dependency to my own `Cargo.toml
 
 💡 **The Fix:**
 Add a comment directly to the example code's `Cargo.toml` configuration snippet in the `README.md` to explicitly state `bevy_ecs = "0.15"`.
+
+---
+
+## Description
+
+🤦 **The Confusion:**
+I copied the first example for "Procedural Generation (Narrative)" and ran it. It generated a sentence with a literal missing variable tag in it: `Year 2150. The Terran Dominion arise from Sol Prime. They will come to be called [ERROR: CIV_EPITHET].`. If I'm copying an example verbatim, I expect it to work without me having to debug missing context variables!
+
+🕵️ **The Reality:**
+The `CIVILIZATION_RISE` template expects a `CIV_EPITHET` variable, but the example code doesn't insert it into the `NarrativeContext` before generating the story.
+
+💡 **The Fix:**
+Add `context.insert("CIV_EPITHET", "The First Ones");` to the example in `README.md`.
