@@ -138,6 +138,7 @@ pub mod structure;
 pub mod tech;
 /// Terrain generation and grid management.
 pub mod terrain;
+
 /// Emergent utility AI system.
 pub mod utility_ai;
 #[cfg(test)]
