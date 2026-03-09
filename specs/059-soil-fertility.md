@@ -322,3 +322,4 @@ pub fn inspect_tile(world: &World, x: i32, y: i32) -> String {
 
 - Should fertilizer items exist? (Future feature)
 - Should crop rotation (different crops) matter? (Future feature)
+  - *Architect:* See related specifications for design details. MVP implementation should follow standard conventions.

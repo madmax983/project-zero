@@ -289,3 +289,4 @@ pub fn husbandry_production_system(world: &mut World) {
 
 - Should wolves be tameable? (Yes, becoming dogs/defense).
 - Do we need a "Lasso" tool? (No, abstract it as "Taming Kit" or just hands for MVP).
+  - *Architect:* See related specifications for design details. MVP implementation should follow standard conventions.

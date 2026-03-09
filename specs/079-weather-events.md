@@ -294,3 +294,4 @@ pub fn apply_weather_effects_system(
 
 - Should weather affect crop yield immediately or just via seasonal modifier? (Stick to seasonal modifier for now, maybe add `CropDamage` event for storms later).
 - Should extreme weather (Heatwave/Blizzard) cause damage? (Future spec: `080-extreme-weather-damage`).
+  - *Architect:* See related specifications for design details. MVP implementation should follow standard conventions.

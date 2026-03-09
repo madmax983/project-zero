@@ -314,3 +314,4 @@ pub fn update_temperature_system(
 - **Shadows?** Future feature (Urban Canyons 182 already handles wind, maybe shadows later).
 - **Interiors?** Roofed buildings shouldn't get solar gain *inside*.
     - *Answer:* For MVP, `Housing` is treated as a "block" that heats up. If we track internal vs external temp, we need a separate layer. For now, Layer 1 grid represents the "Tile Temperature" (Average of structure and air).
+  - *Architect:* See related specifications for design details. MVP implementation should follow standard conventions.

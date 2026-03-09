@@ -220,3 +220,4 @@ pub enum BuildingType {
 
 - Should walls conduct power? (No, requires explicit conduits for now).
 - Is power global or local? (Local grids).
+  - *Architect:* See related specifications for design details. MVP implementation should follow standard conventions.

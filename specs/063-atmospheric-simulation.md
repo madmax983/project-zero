@@ -266,3 +266,4 @@ pub fn pollution_effects_system(world: &mut World) {
 
 - Should masks/suits protect pops? (Future feature: Equipment)
 - Should pollution kill plants? (Future feature: Crop Death)
+  - *Architect:* See related specifications for design details. MVP implementation should follow standard conventions.

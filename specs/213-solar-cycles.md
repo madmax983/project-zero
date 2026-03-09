@@ -251,3 +251,4 @@ Add `update_solar_cycle_system` and `update_solar_output_system` to the schedule
   - **A:** Not in this spec. Handled by `045` Structure Durability generally.
 - **Q:** Does `SolarCycle` affect temperature?
   - **A:** Yes, ideally it should feed into `063` Atmospheric Simulation, but let's keep it scoped to power for MVP.
+  - *Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
