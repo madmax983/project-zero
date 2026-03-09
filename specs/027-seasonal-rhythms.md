@@ -306,3 +306,4 @@ pub fn produce_food_system(world: &mut World) {
 
 - Should seasons affect movement speed? (Deferred to future spec)
 - Should seasons affect temperature/needs? (Deferred to future spec)
+  - *Architect:* See related specifications for design details. MVP implementation should follow standard conventions.

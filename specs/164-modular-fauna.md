@@ -263,3 +263,4 @@ impl FaunaGenerator {
 ## Questions
 
 - Should we store DNA strings? (Yes, for Spec 165 Gene-Banks, `FaunaSeed` value IS the DNA).
+  - *Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
