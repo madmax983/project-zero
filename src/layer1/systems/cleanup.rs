@@ -36,6 +36,8 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer1::events::SacrilegeEvent>,
             update_event_buffer::<crate::layer1::geology::tectonic::MegaQuakeEvent>,
             update_event_buffer::<crate::layer1::logistics::orbital_drop::OrbitalDropEvent>,
+            update_event_buffer::<crate::layer1::spiteful_will::InheritanceEvent>,
+            update_event_buffer::<crate::layer1::spiteful_will::OverrideWillEvent>,
             handle_direct_input_system,
         )
             .in_set(Layer1SystemSet::EventCleanup),

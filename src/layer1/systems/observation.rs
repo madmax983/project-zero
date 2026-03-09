@@ -206,7 +206,11 @@ pub fn register(schedule: &mut Schedule) {
     );
 
     schedule.add_systems(
-        (crate::layer1::overview_effect::overview_effect_system,)
+        (
+            crate::layer1::overview_effect::overview_effect_system,
+            crate::layer1::spiteful_will::process_spiteful_will_system,
+            crate::layer1::spiteful_will::process_override_will_system,
+        )
             .in_set(Layer1SystemSet::Observation),
     );
 
