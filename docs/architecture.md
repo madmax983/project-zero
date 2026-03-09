@@ -547,6 +547,35 @@ Rel(Wasm, Shared, "Runs")
 Rel(Shared, Events, "Consumes")
 ```
 
+## Nature Sub-module Extraction
+
+The simulation separated environmental physics and foundational logic out of the massive `layer1::mod` into a distinct `layer1::nature` module.
+
+```mermaid
+classDiagram
+    namespace Layer1 {
+        class Systems
+        class Economy
+        class Pop
+    }
+
+    namespace Nature {
+        class Atmosphere
+        class Weather
+        class Fire
+        class Terrain
+        class Water
+        class Ecology
+    }
+
+    Systems --> Weather : registers
+    Systems --> Ecology : registers
+    Pop ..> Atmosphere : breathes
+    Pop ..> Terrain : moves on
+    Economy ..> Water : consumes
+    Economy ..> Terrain : mines
+```
+
 ## Related Decisions
 
 - [ADR 001: Layered Architecture](./adr/001-layered-architecture.md)
@@ -575,3 +604,6 @@ Rel(Shared, Events, "Consumes")
 - [ADR 030: Layer 1 System Architecture Refactor](./adr/030-layer-1-system-architecture.md)
 - [ADR 031: Layer 2 Revival & Lightweight Simulation](./adr/031-layer-2-revival.md)
 - [ADR 032: Rename check_access to check_security_clearance](./adr/032-rename-check-access-to-check-security-clearance.md)
+- [ADR 033: Extract Actions to Submodule](./adr/033-extract-actions-to-submodule.md)
+- [ADR 034: Decouple Pop/Execution from UtilityAI](./adr/034-decouple-pop-execution-from-utility-ai.md)
+- [ADR 035: Extract Nature Sub-module](./adr/035-extract-nature-submodule.md)
