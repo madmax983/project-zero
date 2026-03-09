@@ -8829,3 +8829,72 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Respecting the final wishes of Pops (boosting tradition/morale) vs. confiscating the loot for the good of the colony and causing massive unrest among the deceased's friends.
 
 ---
+## The Biomass Battery
+
+**Layer:** 1
+
+**Fantasy:** Burning anything and anyone in desperation to keep the lights on.
+
+**Mechanic:** When power runs low, a specialized emergency building allows Pops to burn organic materials (food, wood, and even corpses) to generate massive, dirty power at a huge morale cost.
+
+**Emergence:** A long winter causes a catastrophic power shortage. To keep the life support running in the hospital, the colony is forced to burn their own dead, creating a cascade of grief that almost tears the society apart.
+
+**Tension:** Surviving the immediate crisis by sacrificing critical long-term resources and the psychological well-being of the colony.
+
+---
+
+## Orbital Tether Snap
+
+**Layer:** Cross-layer
+
+**Fantasy:** The apocalyptic collapse of a mega-structure raining down on the colony.
+
+**Mechanic:** A space elevator provides unmatched trade and transport efficiency between Layer 1 and 2. However, if the orbital anchor is destroyed by an enemy fleet or poor maintenance on Layer 2, the massive physical tether falls across the Layer 1 map, instantly obliterating everything in a straight line and leaving a permanent, un-minable scar.
+
+**Emergence:** You build your hyper-efficient industrial core directly beneath the tether. A pirate fleet manages to snipe the orbital anchor, and the resulting snap cuts your city perfectly in half, severing power lines and permanently dividing the colony.
+
+**Tension:** The extreme economic benefit of clustering infrastructure near the tether vs. the catastrophic risk of it falling.
+
+---
+
+## Cultural Contamination
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Your citizens consuming alien media and adopting a rival empire's values.
+
+**Mechanic:** If a rival Layer 3 empire has high cultural output or proximity, their media reaches your colony. Pops slowly acquire traits aligned with the rival empire (e.g., pacifist traits from a pacifist empire). If your colony's laws or actions contradict these new traits, unrest skyrockets.
+
+**Emergence:** You are gearing up for a massive war of conquest, but your Pops have been obsessively watching rival pacifist soap operas. Half your munitions factories go on strike because the workers now believe violence is morally wrong.
+
+**Tension:** Benefiting from open borders and free trade vs. losing ideological control over your own population.
+
+---
+
+## Asteroid Herding
+
+**Layer:** 2
+
+**Fantasy:** Capturing mountains of gold, or dropping kinetic extinction events on your enemies.
+
+**Mechanic:** Specialized Layer 2 ships can attach thrusters to wandering asteroids to slowly alter their orbits. You can herd them into safe, stable orbits around your planet for easy Layer 1 mining, or calculate a collision course to wipe out a rival's orbital station.
+
+**Emergence:** You try to herd a massive, resource-rich asteroid into a low orbit for quick extraction. A sudden solar flare disables the thrusters midway through the maneuver, causing the asteroid's trajectory to decay directly into your capital city.
+
+**Tension:** The immense economic and military power of controlling celestial bodies vs. the catastrophic, colony-ending danger of orbital mechanics errors.
+
+---
+
+## Terraforming Psychosis
+
+**Layer:** 1
+
+**Fantasy:** Homesick populations sabotaging your perfect environment to make it feel like their hellish homeworld.
+
+**Mechanic:** Immigrant Pops from extreme biomes (e.g., Ice Worlds) slowly accumulate stress in standard Temperate colonies. If they reach a breaking point, they form underground factions that secretly sabotage local climate controls (breaking heaters, venting atmosphere) to replicate their home environment.
+
+**Emergence:** You notice your vital agricultural domes keep mysteriously dropping below freezing. You discover your highly skilled Ice World immigrant engineers have been systematically destroying the thermal regulators because they "miss the snow," inadvertently starving the rest of the colony.
+
+**Tension:** Accepting diverse populations for their unique skills vs. the immense difficulty of managing their conflicting and potentially destructive environmental needs.
+
+---
