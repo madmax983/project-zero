@@ -8898,3 +8898,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Accepting diverse populations for their unique skills vs. the immense difficulty of managing their conflicting and potentially destructive environmental needs.
 
 ---
+
+## The Generational Debt
+
+**Layer:** 1
+
+**Fantasy:** The sins of the father are paid by the son. The weight of early colony struggles creates an inescapable underclass.
+
+**Mechanic:** Pops can accumulate negative "Credits" if they consume more resources than they produce or if they are assigned to expensive medical treatments. When they die, this "Debt" is inherited by their children. Debtors are forced into the lowest-tier, highest-risk jobs (e.g., deep mining, waste disposal) until it is paid off.
+
+**Emergence:** Your colony's founding families become insanely wealthy, while the descendants of the first sick colonists form a permanent, impoverished labor force. The debtors eventually unionize and refuse to work the dangerous jobs, paralyzing the colony's raw resource extraction unless their ancient debts are forgiven.
+
+**Tension:** The cheap labor of the debtor class vs. the massive, simmering unrest of a permanent underclass.
+
+---
+
+## The Accidental Deity
+
+**Layer:** 3 -> 1
+
+**Fantasy:** A primitive world mistakes your automated mining operation for divine intervention, and now you have worshippers you didn't ask for.
+
+**Mechanic:** Deploying automated extractors on a pre-FTL world (Layer 2) generates "Faith" among the locals. Instead of fighting you, they start launching crude, solid-fuel rockets filled with "Tribute" (useless trinkets, raw food, or even live sacrifices) at your Layer 1 colony.
+
+**Emergence:** The tribute ships clutter your airspace and occasionally crash into your pristine solar arrays. When you finally try to shoot them down or turn off the extractors to stop the influx, they declare a holy war and attack you with sheer, overwhelming numbers of garbage ships, clogging your orbital defenses with debris.
+
+**Tension:** Free (but mostly useless) resources and influence vs. the escalating physical danger and diplomatic nightmare of fanatic worshippers.
+
+---
+
+## The Resonance Archives
+
+**Layer:** 1
+
+**Fantasy:** The walls literally have ears, and they remember what you said in the dark.
+
+**Mechanic:** Certain alien building materials (e.g., "Whisper-Wood" or "Echo-Stone") record ambient noise and conversations (Rumors). Years later, under specific environmental conditions (high humidity or a specific frequency of machine noise), they slowly play these Rumors back to anyone nearby.
+
+**Emergence:** You build the Governor's office out of the most beautiful, expensive Whisper-Wood. Decades later, during a tense political crisis, the walls start replaying the Governor's secret, paranoid conversations from years ago, broadcasting the conspiracy to the entire colony and causing an instant revolt.
+
+**Tension:** High beauty/status building materials vs. the terrifying risk of permanent, unerasable information leaks.
+
+---
