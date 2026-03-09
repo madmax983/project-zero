@@ -40,6 +40,13 @@ pub enum FaunaState {
     Flee,
 }
 
+/// Component representing nocturnal fauna behavior.
+#[derive(Component, Default)]
+pub struct NocturnalFauna {
+    /// How aggressive the fauna is.
+    pub aggression: f32,
+}
+
 /// Component representing a hostile animal.
 #[derive(Component)]
 pub struct Fauna {

@@ -132,6 +132,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     ));
     world.insert_resource(crate::layer1::radioactive::RadiationGrid::new(80, 50));
     world.insert_resource(LightMap::new(80, 50));
+    world.insert_resource(crate::layer1::light_pollution::SkyGlow::default());
     world.insert_resource(AmbientLight::default());
     world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
     world.insert_resource(crate::layer1::PlanetaryTraits::default());
