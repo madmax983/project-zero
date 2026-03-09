@@ -240,4 +240,6 @@ Make sure to update the query to include `Option<&Fragile>`.
 ## Questions
 
 - *Builder*: Should Jury-Rigging consume *any* time? (Yes, assumed small amount).
+- *Architect:* Yes, assumed small amount.
 - *Builder*: Does Fragility ever go away? (Only with "Proper Repair" - future feature).
+- *Architect:* Only with "Proper Repair" - future feature.
