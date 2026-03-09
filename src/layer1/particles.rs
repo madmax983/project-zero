@@ -141,8 +141,8 @@ pub fn spawn_confetti(world: &mut World, pos: GridPosition) {
         let speed = rng.gen_range(0.5..1.5);
         let dx = angle.cos() * speed;
         let dy = angle.sin() * speed;
-        let color = *colors.choose(&mut rng).unwrap();
-        let char = *chars.choose(&mut rng).unwrap();
+        let color = *colors.choose(&mut rng).unwrap_or(&Color::White);
+        let char = *chars.choose(&mut rng).unwrap_or(&'*');
         let lifetime = rng.gen_range(20..40);
 
         spawn_moving_particle(world, pos, char, color, lifetime, dx, dy);
@@ -181,6 +181,46 @@ mod tests {
 
         let acc = world.get::<ParticleAccumulator>(entity).unwrap();
         assert!((acc.x - 0.5).abs() < 0.001);
+    }
+
+    #[test]
+    fn test_particle_system_despawns_expired_particles() {
+        let mut world = World::new();
+
+        let entity = world
+            .spawn((
+                Particle {
+                    char: '.',
+                    color: Color::White,
+                    lifetime: 1,
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
+
+        // Tick 1: lifetime 1 -> 0
+        world.run_system_once(particle_system).unwrap();
+
+        let particle = world.get::<Particle>(entity).unwrap();
+        assert_eq!(particle.lifetime, 0);
+
+        // Tick 2: lifetime 0 -> despawn
+        world.run_system_once(particle_system).unwrap();
+
+        assert!(world.get::<Particle>(entity).is_none());
+    }
+
+    #[test]
+    fn test_spawn_confetti_no_panic() {
+        let mut world = World::new();
+        let pos = GridPosition { x: 5, y: 5 };
+
+        spawn_confetti(&mut world, pos);
+
+        let mut query = world.query::<&Particle>();
+        let particle_count = query.iter(&world).count();
+
+        assert_eq!(particle_count, 30);
     }
 
     #[test]

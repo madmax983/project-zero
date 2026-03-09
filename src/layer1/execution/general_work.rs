@@ -130,10 +130,10 @@ fn collect_workers_by_target(
             Option<&MentalFog>,
         ), With<AtTarget>>();
 
-    /// ⚡ Bolt Optimization:
-    /// We iterate over `query.iter(world)` and stream directly into the `HashMap`.
-    /// This removes an intermediate `.collect::<Vec<_>>()` allocation that was previously used,
-    /// significantly reducing heap allocations per frame when evaluating large worker populations.
+    // ⚡ Bolt Optimization:
+    // We iterate over `query.iter(world)` and stream directly into the `HashMap`.
+    // This removes an intermediate `.collect::<Vec<_>>()` allocation that was previously used,
+    // significantly reducing heap allocations per frame when evaluating large worker populations.
     for (target, worker) in query
         .iter(world)
         .filter(|(_, mt, _, _, _, _, _, _, faction_member, _, _, _, _, _)| {
