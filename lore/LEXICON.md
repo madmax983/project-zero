@@ -2923,3 +2923,227 @@
 **Usage:**
 - "A drop-pod is coming in."
 - "Pop the sky-crate open."
+
+---
+
+## Gut Biome
+
+### gut-rot
+**Replaces:** Indigestion, dietary sickness
+**Code reference:** `Indigestion` mood modifier
+**Usage:**
+- "He's down with gut-rot."
+- "The new rations give me gut-rot."
+
+### iron-stomach
+**Replaces:** Adapted to diet
+**Code reference:** `Gut Comfort` buff
+**Usage:**
+- "She has an iron-stomach for this alien moss."
+
+---
+
+## Kinetic Storage
+
+### the weight / the anvil
+**Replaces:** Gravity battery
+**Code reference:** `KineticBattery`
+**Usage:**
+- "Hoist the weight, we need power."
+- "Don't stand under the anvil."
+
+---
+
+## The Direct Link
+
+### the Commander's Hand
+**Replaces:** Direct player control, possession
+**Code reference:** `Possessed` component
+**Usage:**
+- "The Commander's Hand guided her strike."
+- "Moving with the Commander's certainty."
+
+---
+
+## Public Grievances
+
+### the Board
+**Replaces:** Bulletin board, grievance system
+**Code reference:** `BulletinBoard`
+**Usage:**
+- "Did you read the Board today?"
+- "Post it on the Board if you're angry."
+
+### a black mark
+**Replaces:** Negative note, public complaint
+**Code reference:** Negative `BulletinNote`
+**Usage:**
+- "He has a black mark on the Board."
+
+---
+
+## Clone Vats
+
+### vat-born / decant
+**Replaces:** Clone, artificially grown pop
+**Code reference:** `Trait::Clone`
+**Usage:**
+- "Just another vat-born worker."
+- "When is the next decant?"
+
+---
+
+## Legacy Code
+
+### the Bloat / code-rot
+**Replaces:** System inefficiency from old data
+**Code reference:** `Bloat` component
+**Usage:**
+- "The mainframe is suffering from the Bloat."
+- "Clean out the code-rot."
+
+### the Wipe
+**Replaces:** System reformat
+**Code reference:** `SystemStatus::Rebooting`
+**Usage:**
+- "Time for the Wipe."
+- "The base goes dark during the Wipe."
+
+---
+
+## Ghost Code
+
+### data-ghosts / echoes
+**Replaces:** Ghost Code, residual programming
+**Code reference:** `GhostCode`
+**Usage:**
+- "The new turret has data-ghosts from the old medbay."
+- "Clear the echoes before building."
+
+---
+
+## Thermal Bloom
+
+### the Glow / heat-flare
+**Replaces:** Thermal signature
+**Code reference:** `ThermalSignature`
+**Usage:**
+- "Our Glow is too bright, they'll see us."
+- "Mask the heat-flare."
+
+---
+
+## The Infinite Archive
+
+### the Stacks / deep-memory
+**Replaces:** Server racks, Archive capacity
+**Code reference:** `Archive`
+**Usage:**
+- "The Stacks are full."
+- "Deleting the deep-memory."
+
+---
+
+## Quantum Twins
+
+### soul-linked / paired
+**Replaces:** Quantum entangled
+**Code reference:** `QuantumTwin`
+**Usage:**
+- "They are soul-linked."
+- "The paired miner learned fast."
+
+### the Severance
+**Replaces:** Trauma from twin death
+**Code reference:** `handle_severance_system`
+**Usage:**
+- "He couldn't survive the Severance."
+
+---
+
+## The Empty Room
+
+### Sanctuary
+**Replaces:** Empty room zone
+**Code reference:** `Sanctuary` component
+**Usage:**
+- "Finding peace in the Sanctuary."
+- "Keep the Sanctuary clean."
+
+---
+
+## Tectonic Stress
+
+### crust-anger / the groaning
+**Replaces:** Tectonic stress build-up
+**Code reference:** `TectonicStress`
+**Usage:**
+- "The crust-anger is high today."
+- "Listen to the groaning."
+
+### the Big Shake
+**Replaces:** MegaQuakeEvent
+**Code reference:** `MegaQuakeEvent`
+**Usage:**
+- "Pray we don't trigger the Big Shake."
+
+---
+
+## The Industrial Rhythm
+
+### the Thrum / the Beat
+**Replaces:** Machine synchronization, Rhythm bonus
+**Code reference:** `MachineRhythm`
+**Usage:**
+- "Working to the Thrum."
+- "The factory has a good Beat today."
+
+---
+
+## The Black Market
+
+### shadow-trader / whisper-broker
+**Replaces:** Smuggler
+**Code reference:** `Smuggler` entity
+**Usage:**
+- "Bought it from a shadow-trader."
+
+### the Rot
+**Replaces:** Corruption
+**Code reference:** `ColonyStats.corruption`
+**Usage:**
+- "The Rot is spreading in the administration."
+
+---
+
+## Ancestral Graves
+
+### the Ancestors / stone-sleepers
+**Replaces:** Graves, dead pops' resting place
+**Code reference:** `Grave` entity
+**Usage:**
+- "Visiting the Ancestors."
+- "Don't disturb the stone-sleepers."
+
+### the Curse
+**Replaces:** Sacrilege penalty
+**Code reference:** `SacrilegeEvent`
+**Usage:**
+- "Building there brings the Curse."
+
+---
+
+## The Overview Effect
+
+### the Overview / the Cosmic View
+**Replaces:** Using the observatory, seeing Layer 2
+**Code reference:** `ObserveEvent`
+**Usage:**
+- "He's struggling with the Overview."
+- "The Cosmic View changes a man."
+
+### void-dread
+**Replaces:** Existential dread modifier
+**Code reference:** `MoodModifier::ExistentialDread`
+**Usage:**
+- "Suffering from void-dread after looking at the stars."
