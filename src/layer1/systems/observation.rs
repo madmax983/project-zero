@@ -204,7 +204,12 @@ pub fn register(schedule: &mut Schedule) {
     );
 
     schedule.add_systems(
-        (crate::layer1::overview_effect::overview_effect_system,)
+        (
+            crate::layer1::integration::observatory_overview_bridge_system
+                .after(Layer1SystemSet::Economy),
+            crate::layer1::overview_effect::overview_effect_system
+                .after(crate::layer1::integration::observatory_overview_bridge_system),
+        )
             .in_set(Layer1SystemSet::Observation),
     );
 

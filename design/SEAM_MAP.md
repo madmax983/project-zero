@@ -338,3 +338,12 @@
 - **Glue added:**
     - `nocturnal_aggression_bridge_system` connects the two by calculating an actual detection_range bonus from `aggression`.
 - **Tests:** `tests/integration/light_pollution_fauna.rs`
+
+### INT-449: Overview Effect -> Observatory
+- **Date:** 2026-03-09
+- **Systems connected:** `process_observe_system` (Observatory) -> `observatory_overview_bridge_system` (Integration) -> `overview_effect_system` (Overview Effect)
+- **Glue added:**
+    - `observatory_overview_bridge_system` emits `ObserveEvent` with a 1% chance for pops working at an `Observatory`.
+    - Registered in `src/layer1/systems/observation.rs` before `overview_effect_system`.
+    - Removed old mood calculation from `process_observe_system`.
+- **Tests:** `tests/overview_effect.rs`

@@ -931,3 +931,32 @@ pub fn nocturnal_aggression_bridge_system(
         }
     }
 }
+
+
+
+
+
+/// Bridge system that connects Pops working at an Observatory to the Overview Effect.
+/// Spec 449 requires Pops using the Observatory to gain Existential Dread or Inspiration.
+/// This system checks Pops assigned to the Observatory and randomly emits `ObserveEvent`s.
+pub fn observatory_overview_bridge_system(
+    mut events: bevy_ecs::prelude::EventWriter<crate::layer1::overview_effect::ObserveEvent>,
+    pops: bevy_ecs::prelude::Query<(bevy_ecs::prelude::Entity, &crate::layer1::actions::AssignedTo), bevy_ecs::prelude::With<crate::layer1::pop::Pop>>,
+    observatories: bevy_ecs::prelude::Query<&crate::layer1::observatory::Observatory>,
+) {
+    let mut rng = rand::thread_rng();
+    use rand::Rng;
+
+    for (pop_entity, assigned) in &pops {
+        if assigned.assignment_type == crate::layer1::actions::AssignmentType::ObservatoryWorker
+            && observatories.get(assigned.entity).is_ok()
+        {
+            // 1% chance per tick to trigger the overview effect
+            if rng.gen_bool(0.01) {
+                events.send(crate::layer1::overview_effect::ObserveEvent {
+                    pop: pop_entity,
+                });
+            }
+        }
+    }
+}
