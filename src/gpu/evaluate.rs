@@ -156,11 +156,8 @@ fn dispatch_and_readback(
         }
     };
 
-    gpu.queue.write_buffer(
-        pop_buffer,
-        0,
-        bytemuck::cast_slice(pop_inputs),
-    );
+    gpu.queue
+        .write_buffer(pop_buffer, 0, bytemuck::cast_slice(pop_inputs));
 
     // 2. Building Buffer
     let building_size = if building_inputs.is_empty() {
@@ -189,11 +186,8 @@ fn dispatch_and_readback(
     };
 
     if !building_inputs.is_empty() {
-        gpu.queue.write_buffer(
-            building_buffer,
-            0,
-            bytemuck::cast_slice(building_inputs),
-        );
+        gpu.queue
+            .write_buffer(building_buffer, 0, bytemuck::cast_slice(building_inputs));
     }
 
     // 3. Global Buffer
@@ -217,11 +211,8 @@ fn dispatch_and_readback(
         }
     };
 
-    gpu.queue.write_buffer(
-        global_buffer,
-        0,
-        bytemuck::bytes_of(global_state),
-    );
+    gpu.queue
+        .write_buffer(global_buffer, 0, bytemuck::bytes_of(global_state));
 
     // 4. Decision Buffer (Output)
     let decision_size =
@@ -317,21 +308,18 @@ fn dispatch_and_readback(
     }
 
     // Copy to staging
-    encoder.copy_buffer_to_buffer(
-        decision_buffer,
-        0,
-        staging_buffer,
-        0,
-        decision_size,
-    );
+    encoder.copy_buffer_to_buffer(decision_buffer, 0, staging_buffer, 0, decision_size);
     gpu.queue.submit(std::iter::once(encoder.finish()));
 
     // 8. Blocking Readback
     let buffer_slice = staging_buffer.slice(..decision_size); // Slice only what we need
     let (tx, rx) = std::sync::mpsc::channel();
-    buffer_slice.map_async(wgpu::MapMode::Read, move |result: Result<(), wgpu::BufferAsyncError>| {
-        let _ = tx.send(result);
-    });
+    buffer_slice.map_async(
+        wgpu::MapMode::Read,
+        move |result: Result<(), wgpu::BufferAsyncError>| {
+            let _ = tx.send(result);
+        },
+    );
     gpu.device.poll(wgpu::Maintain::Wait);
 
     if rx.recv().ok()?.is_err() {
