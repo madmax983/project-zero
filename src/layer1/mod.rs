@@ -716,5 +716,9 @@ pub use overview_effect::*;
 pub mod light_pollution;
 pub use light_pollution::*;
 
+/// The Spiteful Will (Spec 451).
+pub mod spiteful_will;
+pub use spiteful_will::*;
+
 pub mod nature;
 pub use nature::*;

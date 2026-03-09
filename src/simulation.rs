@@ -149,6 +149,12 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world.contains_resource::<Events<crate::layer1::resources::MiningEvent>>() {
         world.init_resource::<Events<crate::layer1::resources::MiningEvent>>();
     }
+    if !world.contains_resource::<Events<crate::layer1::spiteful_will::InheritanceEvent>>() {
+        world.init_resource::<Events<crate::layer1::spiteful_will::InheritanceEvent>>();
+    }
+    if !world.contains_resource::<Events<crate::layer1::spiteful_will::OverrideWillEvent>>() {
+        world.init_resource::<Events<crate::layer1::spiteful_will::OverrideWillEvent>>();
+    }
     if !world.contains_resource::<crate::layer1::geology::tectonic::TectonicStress>() {
         world.init_resource::<crate::layer1::geology::tectonic::TectonicStress>();
     }
@@ -235,6 +241,9 @@ mod tests {
         // Initialize Detection Risk for test
         world.init_resource::<crate::layer3::silence::DetectionRisk>();
         world.init_resource::<Events<crate::layer3::silence::HostileSpawnEvent>>();
+
+        world.init_resource::<Events<crate::layer1::spiteful_will::InheritanceEvent>>();
+        world.init_resource::<Events<crate::layer1::spiteful_will::OverrideWillEvent>>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);

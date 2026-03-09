@@ -74,6 +74,8 @@ pub enum Trait {
     Distrustful,
     /// Experiences light colors as emotional sounds.
     Synesthete,
+    /// Leaves a spiteful will upon death, giving belongings to rivals or pets.
+    Spiteful,
 }
 
 impl Trait {
@@ -115,6 +117,7 @@ impl Trait {
             Self::Distrustful => "Distrustful",
 
             Self::Synesthete => "Synesthete",
+            Self::Spiteful => "Spiteful",
         }
     }
 }
@@ -171,6 +174,7 @@ impl Traits {
             Trait::Mutant,
             Trait::Compassionate,
             Trait::Synesthete,
+            Trait::Spiteful,
         ];
 
         while set.len() < count {
@@ -211,6 +215,12 @@ impl Traits {
                 continue;
             }
             if t == Trait::Traditionalist && set.contains(&Trait::Curious) {
+                continue;
+            }
+            if t == Trait::Spiteful && set.contains(&Trait::Compassionate) {
+                continue;
+            }
+            if t == Trait::Compassionate && set.contains(&Trait::Spiteful) {
                 continue;
             }
 
