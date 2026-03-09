@@ -897,7 +897,10 @@ pub fn industrial_rhythm_morale_bridge(
 /// Increases `Fauna` detection range based on `NocturnalFauna` aggression (INT-450).
 /// Links `LightPollution` to actual `Fauna` behavior.
 pub fn nocturnal_aggression_bridge_system(
-    mut query: bevy_ecs::prelude::Query<(&crate::layer1::fauna::NocturnalFauna, &mut crate::layer1::fauna::Fauna)>,
+    mut query: bevy_ecs::prelude::Query<(
+        &crate::layer1::fauna::NocturnalFauna,
+        &mut crate::layer1::fauna::Fauna,
+    )>,
 ) {
     for (nocturnal, mut fauna) in query.iter_mut() {
         // Base detection range is typically ~8.0.
@@ -926,7 +929,7 @@ pub fn nocturnal_aggression_bridge_system(
 
             let target_range = 8.0 + (nocturnal.aggression * 20.0).min(max_bonus);
             if fauna.detection_range < target_range {
-               fauna.detection_range += 0.1; // slow increase
+                fauna.detection_range += 0.1; // slow increase
             }
         }
     }

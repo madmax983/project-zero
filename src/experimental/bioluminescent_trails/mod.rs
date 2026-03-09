@@ -59,7 +59,8 @@ pub fn spawn_bioluminescent_trails_system(
                 lifetime: TRAIL_LIFETIME,
                 max_lifetime: TRAIL_LIFETIME,
             },
-            LightSource { is_outdoor: true,
+            LightSource {
+                is_outdoor: true,
                 radius: 2.0, // Soft, local glow
                 intensity: 0.5,
                 color: (50, 255, 100), // Bioluminescent green/blue
@@ -155,7 +156,8 @@ mod tests {
                     lifetime: 1,
                     max_lifetime: 100,
                 },
-                LightSource { is_outdoor: true,
+                LightSource {
+                    is_outdoor: true,
                     radius: 2.0,
                     intensity: 0.5,
                     color: (50, 255, 100),
