@@ -149,6 +149,7 @@ Modify `pathfinding.rs`:
 
 ## 8. Questions
 
-- Should stationary pops cause crowding? (Yes, standing in a hallway blocks it).
+- Should stationary pops cause crowding?
+- *Architect:* Yes, standing in a hallway blocks it.
 - Should crowding affect movement *speed* directly (slow down) or just pathfinding *cost* (avoidance)?
-  - **Decision**: Both. Pathfinding avoids it, but if you *must* walk through, you pay the movement cost (slower).
+- *Architect:* Both. Pathfinding avoids it, but if you *must* walk through, you pay the movement cost (slower).

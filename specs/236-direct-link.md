@@ -228,6 +228,6 @@ fn apply_buffs(
 ## 8. Questions
 
 - *Should the player be able to build/interact while possessed?*
-  - **Answer**: For MVP, only Movement and basic "Bump" interaction (e.g., bump enemy to attack). Complex interactions (Building) require UI, which is disabled.
+- *Architect:* For MVP, only Movement and basic "Bump" interaction (e.g., bump enemy to attack). Complex interactions (Building) require UI, which is disabled.
 - *What happens if the possessed pop dies?*
-  - **Answer**: Immediate `Unpossess`, Game Over screen or respawn at Command Center (if implemented), or just return to "Ghost" camera mode.
+- *Architect:* Immediate `Unpossess`, Game Over screen or respawn at Command Center (if implemented), or just return to "Ghost" camera mode.

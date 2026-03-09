@@ -204,6 +204,6 @@ Logic:
 ## 8. Questions
 
 - Should Fleets consume fuel while in orbit?
-  - *Yes, "Station Keeping" applies to anything maintaining a specific geostationary or parking orbit.*
+- *Architect:* Yes, "Station Keeping" applies to anything maintaining a specific geostationary or parking orbit.
 - How do we refuel?
-  - *For MVP, assume manual transfer or abstract "docking" logic. Future spec will handle automated tankers.*
+- *Architect:* For MVP, assume manual transfer or abstract "docking" logic. Future spec will handle automated tankers.

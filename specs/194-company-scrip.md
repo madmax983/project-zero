@@ -216,7 +216,7 @@ pub fn consume_food_with_payment_system(world: &mut World) {
 
 ## 8. Questions
 
--   **Q**: What about "Free" resources like air?
-    -   **A**: Air is free. Water might not be.
--   **Q**: Do children earn wages?
-    -   **A**: Only if they work (Child Labor). Otherwise, they need a "Dependent" allowance system (future spec).
+- **Q**: What about "Free" resources like air?
+- *Architect:* Air is free. Water might not be.
+- **Q**: Do children earn wages?
+- *Architect:* Only if they work (Child Labor). Otherwise, they need a "Dependent" allowance system (future spec).
