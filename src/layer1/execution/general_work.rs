@@ -112,7 +112,7 @@ fn collect_workers_by_target(
     let mut workers_by_target: std::collections::HashMap<Entity, Vec<WorkerData>> =
         std::collections::HashMap::new();
 
-    let query_results: Vec<_> = world
+    let mut query = world
         .query_filtered::<(
             Entity,
             &MovementTarget,
@@ -128,7 +128,13 @@ fn collect_workers_by_target(
             Option<&Dialect>,
             Option<&Linguistics>,
             Option<&MentalFog>,
-        ), With<AtTarget>>()
+        ), With<AtTarget>>();
+
+    /// ⚡ Bolt Optimization:
+    /// We iterate over `query.iter(world)` and stream directly into the `HashMap`.
+    /// This removes an intermediate `.collect::<Vec<_>>()` allocation that was previously used,
+    /// significantly reducing heap allocations per frame when evaluating large worker populations.
+    for (target, worker) in query
         .iter(world)
         .filter(|(_, mt, _, _, _, _, _, _, faction_member, _, _, _, _, _)| {
             let is_work = mt.for_action == ActionType::Work || mt.for_action == ActionType::Repair;
@@ -189,9 +195,7 @@ fn collect_workers_by_target(
                 )
             },
         )
-        .collect();
-
-    for (target, worker) in query_results {
+    {
         workers_by_target.entry(target).or_default().push(worker);
     }
 
