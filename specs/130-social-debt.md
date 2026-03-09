@@ -247,4 +247,6 @@ pub fn debt_impact_system(
 ## Questions
 
 - *Builder*: Should debt be capped? (Yes, 100.0).
+- *Architect:* Yes, 100.0.
 - *Builder*: Does debt persist through death? (No, clear on death).
+- *Architect:* No, clear on death.

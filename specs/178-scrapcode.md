@@ -207,4 +207,6 @@ Update `ActionType` enum (requires padding for GPU alignment if used there, chec
 ## Questions
 
 -   *Builder*: Should Scrapcode affect *existing* buildings (e.g., upkeep)? (No, just construction for now).
+-   *Architect:* No, just construction for now.
 -   *Builder*: Can I build anyway if I have the resources? (Yes, you just pay the tax).
+-   *Architect:* Yes, you just pay the tax.
