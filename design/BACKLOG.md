@@ -192,3 +192,4 @@ See `design/IDEAS.md` for unspecced concepts.
 
 
 
+- [ ] `451` The Spiteful Will — `specs/451-the-spiteful-will.md`

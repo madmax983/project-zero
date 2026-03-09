@@ -102,4 +102,4 @@ pub fn phantom_block_radicalization_system(
 
 ## 8. Questions
 - Can the player actively demolish a `PhantomBlock`, or does doing so instantly trigger the radicalized pops to riot?
-*Architect:* Yes, you can demolish a `PhantomBlock` by deconstructing the underlying terrain or rooms, but doing so instantly triggers a `RadicalRiotEvent` spawning hostile pops.
+- *Architect:* Yes, you can demolish a `PhantomBlock` by deconstructing the underlying terrain or rooms, but doing so instantly triggers a `RadicalRiotEvent` spawning hostile pops.

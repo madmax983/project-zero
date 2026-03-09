@@ -215,6 +215,6 @@ pub fn hopper_system(world: &mut World) {
 ## 8. Questions
 
 - *Builder*: Should belts move Pops?
-    - *Architect*: No, only `ResourceItem` entities for now.
+- *Architect:* No, only `ResourceItem` entities for now.
 - *Builder*: Do items fall off the end?
-    - *Architect*: No, they stay on the last tile if no valid move exists.
+- *Architect:* No, they stay on the last tile if no valid move exists.

@@ -232,8 +232,8 @@ pub fn tube_clog_system(
 ## 8. Questions
 
 - *Builder*: Can tubes go through walls?
-    - *Architect*: Yes, they are utilities like pipes.
+- *Architect:* Yes, they are utilities like pipes.
 - *Builder*: Can players intercept tubes?
-    - *Architect*: No, items are secure inside.
+- *Architect:* No, items are secure inside.
 - *Builder*: Do clogs clear automatically?
-    - *Architect*: No, requires a "Maintenance" job (future) or "Purge" action (power cost). For now, just make them persist until fixed (or minimal decay).
+- *Architect:* No, requires a "Maintenance" job (future) or "Purge" action (power cost). For now, just make them persist until fixed (or minimal decay).

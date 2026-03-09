@@ -252,7 +252,7 @@ pub struct BioRegenRate(pub f32); // HP per tick
 
 ## 8. Questions
 
-*   **Q:** Should Bio-Structures produce resources (e.g. Oxygen, specialized items)?
-    *   **A:** Not in this spec. Keep it to the "Building Type" mechanic first. Specific bio-buildings (e.g. "Living Quarters") can be added later.
-*   **Q:** How do we build them?
-    *   **A:** Standard construction for now, but costing `Biomass` (or Wood/Food). Future spec can handle "Growth" construction phase.
+- **Q:** Should Bio-Structures produce resources (e.g. Oxygen, specialized items)?
+- *Architect:* Not in this spec. Keep it to the "Building Type" mechanic first. Specific bio-buildings (e.g. "Living Quarters") can be added later.
+- **Q:** How do we build them?
+- *Architect:* Standard construction for now, but costing `Biomass` (or Wood/Food). Future spec can handle "Growth" construction phase.

@@ -8816,7 +8816,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Spiteful Will
+## [SPECCED] The Spiteful Will
 
 **Layer:** 1
 
