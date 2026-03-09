@@ -6,7 +6,7 @@
 
 ## Civilization Fragments
 
-### [CIV_EPITHET]
+## Fragment Type: [CIV_EPITHET]
 How a civilization is remembered. Used after their name or alone.
 
 ```
@@ -32,7 +32,7 @@ the Singing
 the Unnamed
 ```
 
-### [CIV_FATE]
+## Fragment Type: [CIV_FATE]
 How a civilization ended (or transitioned).
 
 ```
@@ -53,7 +53,7 @@ were unmade
 forgot themselves
 ```
 
-### [CIV_ACHIEVEMENT]
+## Fragment Type: [CIV_ACHIEVEMENT]
 What a civilization is known for accomplishing.
 
 ```
@@ -76,7 +76,7 @@ closed the [PLACE]
 
 ## Place Fragments
 
-### [STAR_PREFIX]
+## Fragment Type: [STAR_PREFIX]
 Prefix for procedural star names.
 
 ```
@@ -102,7 +102,7 @@ Veil
 Scar
 ```
 
-### [STAR_SUFFIX]
+## Fragment Type: [STAR_SUFFIX]
 Suffix/designation for stars.
 
 ```
@@ -127,7 +127,7 @@ Burning
 Dim
 ```
 
-### [REGION_NAME]
+## Fragment Type: [REGION_NAME]
 Names for galactic regions.
 
 ```
@@ -150,7 +150,7 @@ the Rim
 the Shelf
 ```
 
-### [PLACE_DESCRIPTOR]
+## Fragment Type: [PLACE_DESCRIPTOR]
 Adjectives for places in history.
 
 ```
@@ -172,7 +172,7 @@ blessed
 cursed
 ```
 
-### [LANDING_NAME]
+## Fragment Type: [LANDING_NAME]
 Name given to the initial landing site.
 
 ```
@@ -194,7 +194,7 @@ Foundation
 
 ## Time Fragments
 
-### [ERA_NAME]
+## Fragment Type: [ERA_NAME]
 Names for historical periods.
 
 ```
@@ -216,7 +216,7 @@ the [CATASTROPHE] Years
 the Rebuilding
 ```
 
-### [DURATION_PHRASE]
+## Fragment Type: [DURATION_PHRASE]
 How long something lasted.
 
 ```
@@ -237,7 +237,7 @@ until they forgot why
 
 ## Event Fragments
 
-### [CATASTROPHE_TYPE]
+## Fragment Type: [CATASTROPHE_TYPE]
 Types of galaxy-scale disasters.
 
 ```
@@ -254,7 +254,7 @@ the Hungry Years
 the Long Dark
 ```
 
-### [WAR_NAME]
+## Fragment Type: [WAR_NAME]
 Names for conflicts.
 
 ```
@@ -270,7 +270,7 @@ the Brother-War
 the Silence War (fought with information denial)
 ```
 
-### [CAUSE_OF_CONFLICT]
+## Fragment Type: [CAUSE_OF_CONFLICT]
 What wars are fought over.
 
 ```
@@ -294,7 +294,7 @@ Artifacts
 
 ## Person Fragments
 
-### [ROLE]
+## Fragment Type: [ROLE]
 What notable individuals did.
 
 ```
@@ -314,7 +314,7 @@ forgetter
 witness
 ```
 
-### [LEGACY_PHRASE]
+## Fragment Type: [LEGACY_PHRASE]
 How individuals are remembered.
 
 ```
@@ -336,7 +336,7 @@ became a warning
 
 ## Artifact Fragments
 
-### [ARTIFACT_TYPE]
+## Fragment Type: [ARTIFACT_TYPE]
 What the object is.
 
 ```
@@ -358,7 +358,7 @@ message
 warning
 ```
 
-### [ARTIFACT_QUALITY]
+## Fragment Type: [ARTIFACT_QUALITY]
 Condition or nature.
 
 ```
@@ -378,7 +378,7 @@ fake (discovered later)
 real (disputed)
 ```
 
-### [ARTIFACT_ORIGIN_PHRASE]
+## Fragment Type: [ARTIFACT_ORIGIN_PHRASE]
 How it came to be.
 
 ```
@@ -401,7 +401,7 @@ accident
 
 ## Tone Modifiers
 
-### [UNCERTAINTY]
+## Fragment Type: [UNCERTAINTY]
 Ways to express incomplete knowledge.
 
 ```
@@ -418,7 +418,7 @@ Ways to express incomplete knowledge.
 (corrupted data)
 ```
 
-### [EMOTIONAL_WEIGHT]
+## Fragment Type: [EMOTIONAL_WEIGHT]
 Phrases that add gravity.
 
 ```
@@ -440,7 +440,7 @@ Phrases that add gravity.
 
 ## Memory Fragments
 
-### [MEMORY_DESCRIPTOR]
+## Fragment Type: [MEMORY_DESCRIPTOR]
 How a pop remembers an event.
 
 - haunting
@@ -454,7 +454,7 @@ How a pop remembers an event.
 - unspoken
 - shared
 
-### [MEMORY_TOPIC]
+## Fragment Type: [MEMORY_TOPIC]
 What the memory is about.
 
 - the hunger
@@ -475,7 +475,7 @@ What the memory is about.
 
 ## Designation Fragments
 
-### [DESIGNATION_PHRASE]
+## Fragment Type: [DESIGNATION_PHRASE]
 How pops describe receiving orders.
 
 - the order given
@@ -489,7 +489,7 @@ How pops describe receiving orders.
 
 ## Location Fragments
 
-### [LOCATION_SUFFIX]
+## Fragment Type: [LOCATION_SUFFIX]
 Suffixes for named tiles/areas.
 
 - Field
@@ -512,7 +512,7 @@ Suffixes for named tiles/areas.
 
 ## Void Fragments
 
-### [VOID_ANOMALY]
+## Fragment Type: [VOID_ANOMALY]
 Strange phenomena in the void.
 
 - time dilation
@@ -530,7 +530,7 @@ Strange phenomena in the void.
 
 ## Building Fragments
 
-### [SHELTER_DESCRIPTOR]
+## Fragment Type: [SHELTER_DESCRIPTOR]
 Adjectives for housing.
 
 - humble
@@ -544,7 +544,7 @@ Adjectives for housing.
 - quiet
 - solid
 
-### [FARM_DESCRIPTOR]
+## Fragment Type: [FARM_DESCRIPTOR]
 Adjectives for fields/farms.
 
 - fertile
@@ -562,7 +562,7 @@ Adjectives for fields/farms.
 
 ## Mining Fragments
 
-### [MINING_DESCRIPTOR]
+## Fragment Type: [MINING_DESCRIPTOR]
 Adjectives for mining/underground work.
 
 - dark
@@ -576,7 +576,7 @@ Adjectives for mining/underground work.
 - yielding
 - ancient
 
-### [ROCK_NAME]
+## Fragment Type: [ROCK_NAME]
 Flavor names for stone/ore.
 
 - bedrock
@@ -591,7 +591,7 @@ Flavor names for stone/ore.
 
 ## Forestry Fragments
 
-### [WOOD_NAME]
+## Fragment Type: [WOOD_NAME]
 Flavor names for harvested wood.
 
 - timber
@@ -602,7 +602,7 @@ Flavor names for harvested wood.
 - star-bough
 - void-oak
 
-### [FOREST_NAME]
+## Fragment Type: [FOREST_NAME]
 Names for forest areas.
 
 - The Whispering Weald
@@ -613,7 +613,7 @@ Names for forest areas.
 - Old Root
 - The Canopy
 
-### [FOREST_DESCRIPTOR]
+## Fragment Type: [FOREST_DESCRIPTOR]
 Adjectives for forests/harvesting.
 
 - ancient
@@ -629,7 +629,7 @@ Adjectives for forests/harvesting.
 
 ## Stockpile Fragments
 
-### [STORE_NAME]
+## Fragment Type: [STORE_NAME]
 Names for storage areas/buildings.
 
 - The Hoard
@@ -640,7 +640,7 @@ Names for storage areas/buildings.
 - The Vault
 - The Keep
 
-### [STOCKPILE_ADJECTIVE]
+## Fragment Type: [STOCKPILE_ADJECTIVE]
 Status of storage.
 
 - full
@@ -656,7 +656,7 @@ Status of storage.
 
 ## Pop Fragments
 
-### [POP_ARRIVAL_METHOD]
+## Fragment Type: [POP_ARRIVAL_METHOD]
 How new pops arrive.
 
 - via pod
@@ -666,7 +666,7 @@ How new pops arrive.
 - found in ruins
 - survivor of a crash
 
-### [POP_DEATH_REASON]
+## Fragment Type: [POP_DEATH_REASON]
 Causes of death.
 
 - hunger
@@ -680,7 +680,7 @@ Causes of death.
 
 ## Crisis Fragments
 
-### [RESOURCE_CRISIS]
+## Fragment Type: [RESOURCE_CRISIS]
 Types of resource emergencies.
 
 - shortage
@@ -695,7 +695,7 @@ Types of resource emergencies.
 
 ## Seasonal Fragments
 
-### [SEASON_NAME]
+## Fragment Type: [SEASON_NAME]
 Names for the turning of the year.
 
 - Spring
@@ -711,7 +711,7 @@ Names for the turning of the year.
 - The Rust-Time
 - The Dark-Time
 
-### [SEASON_ADJECTIVE]
+## Fragment Type: [SEASON_ADJECTIVE]
 Describing the weather/mood of the season.
 
 - biting
@@ -729,7 +729,7 @@ Describing the weather/mood of the season.
 
 ## Industrial Fragments
 
-### [METAL_NAME]
+## Fragment Type: [METAL_NAME]
 Flavor names for refined metals.
 
 - iron-blood
@@ -740,7 +740,7 @@ Flavor names for refined metals.
 - refined-ore
 - grey-bar
 
-### [REFINERY_NAME]
+## Fragment Type: [REFINERY_NAME]
 Names for smelting/refining buildings.
 
 - The Great Furnace
@@ -751,7 +751,7 @@ Names for smelting/refining buildings.
 - The Crucible
 - The Kiln
 
-### [REFINERY_ACTION]
+## Fragment Type: [REFINERY_ACTION]
 Verbs for the refining process.
 
 - pours
@@ -765,7 +765,7 @@ Verbs for the refining process.
 
 ## Social Fragments
 
-### [TAVERN_NAME]
+## Fragment Type: [TAVERN_NAME]
 Names for drinking establishments.
 
 - The Rusty Bucket
@@ -778,7 +778,7 @@ Names for drinking establishments.
 - The Broken Seal
 - The Mess
 
-### [DRINK_NAME]
+## Fragment Type: [DRINK_NAME]
 Alcoholic or recreational beverages.
 
 - rot-gut
@@ -790,7 +790,7 @@ Alcoholic or recreational beverages.
 - pure-water (rare)
 - nectar
 
-### [SOCIAL_ACTION]
+## Fragment Type: [SOCIAL_ACTION]
 What happens in the tavern.
 
 - raises a glass
@@ -806,7 +806,7 @@ What happens in the tavern.
 
 ## Knowledge Fragments
 
-### [KNOWLEDGE_TOPIC]
+## Fragment Type: [KNOWLEDGE_TOPIC]
 What is being researched or learned.
 
 - the old ways
@@ -819,7 +819,7 @@ What is being researched or learned.
 - architectural secrets
 - the path of iron
 
-### [BOOK_NAME]
+## Fragment Type: [BOOK_NAME]
 Names for books or data crystals.
 
 - The Manual of [NAME]
@@ -830,7 +830,7 @@ Names for books or data crystals.
 - Notes on [TOPIC]
 - The Grey Codex
 
-### [TECH_FLAVOR]
+## Fragment Type: [TECH_FLAVOR]
 How technology is described.
 
 - remembered
@@ -846,7 +846,7 @@ How technology is described.
 
 ## Fire Fragments
 
-### [FIRE_NAME]
+## Fragment Type: [FIRE_NAME]
 Names for fire events.
 
 - The Red Hunger
@@ -856,7 +856,7 @@ Names for fire events.
 - The Hearth-Breaker
 - The Unbound
 
-### [FIRE_DESCRIPTOR]
+## Fragment Type: [FIRE_DESCRIPTOR]
 Adjectives for fire.
 
 - hungry
@@ -871,7 +871,7 @@ Adjectives for fire.
 
 ## Spoilage Fragments
 
-### [ROT_DESCRIPTOR]
+## Fragment Type: [ROT_DESCRIPTOR]
 Describing decay.
 
 - grey
@@ -887,7 +887,7 @@ Describing decay.
 
 ## Health Fragments
 
-### [INJURY_TYPE]
+## Fragment Type: [INJURY_TYPE]
 Types of injuries.
 
 - crushed limb
@@ -898,7 +898,7 @@ Types of injuries.
 - exhaustion
 - frozen skin
 
-### [HEALING_METHOD]
+## Fragment Type: [HEALING_METHOD]
 How they are treated.
 
 - with splints and hope
@@ -912,7 +912,7 @@ How they are treated.
 
 ## Tool Fragments
 
-### [TOOL_NAME]
+## Fragment Type: [TOOL_NAME]
 Flavor names for tools.
 
 - iron-hands
@@ -930,7 +930,7 @@ Flavor names for tools.
 
 ## Beauty Fragments
 
-### [BEAUTY_DESCRIPTOR]
+## Fragment Type: [BEAUTY_DESCRIPTOR]
 Adjectives for beautiful places.
 
 - serene
@@ -944,7 +944,7 @@ Adjectives for beautiful places.
 - gentle
 - still
 
-### [ART_TYPE]
+## Fragment Type: [ART_TYPE]
 Types of artistic creations.
 
 - statue
@@ -962,7 +962,7 @@ Types of artistic creations.
 
 ## Waste Fragments
 
-### [WASTE_NAME]
+## Fragment Type: [WASTE_NAME]
 Flavor names for pollution/waste.
 
 - slag
@@ -974,7 +974,7 @@ Flavor names for pollution/waste.
 - foul-air
 - weeping-rust
 
-### [POLLUTION_DESCRIPTOR]
+## Fragment Type: [POLLUTION_DESCRIPTOR]
 Adjectives for polluted areas.
 
 - choking
@@ -992,7 +992,7 @@ Adjectives for polluted areas.
 
 ## Skill Fragments
 
-### [SKILL_TITLE]
+## Fragment Type: [SKILL_TITLE]
 Titles for high-skill pops.
 
 - Master
@@ -1004,7 +1004,7 @@ Titles for high-skill pops.
 - The Voice
 - High-Artisan
 
-### [MASTERWORK_ADJECTIVE]
+## Fragment Type: [MASTERWORK_ADJECTIVE]
 Describing a masterwork item.
 
 - flawless
@@ -1020,7 +1020,7 @@ Describing a masterwork item.
 
 ## Relationship Fragments
 
-### [BOND_TYPE]
+## Fragment Type: [BOND_TYPE]
 Types of positive relationships.
 
 - blood-kin
@@ -1031,7 +1031,7 @@ Types of positive relationships.
 - silent-partners
 - hearth-sharers
 
-### [RIVALRY_REASON]
+## Fragment Type: [RIVALRY_REASON]
 Why two pops hate each other.
 
 - old grudge
@@ -1047,7 +1047,7 @@ Why two pops hate each other.
 
 ## Science Fragments
 
-### [ANOMALY_TYPE]
+## Fragment Type: [ANOMALY_TYPE]
 Types of scientific discoveries.
 
 - precursor ruin
@@ -1059,7 +1059,7 @@ Types of scientific discoveries.
 - machine-mind fragment
 - foldspace scar
 
-### [SCIENCE_ACTION]
+## Fragment Type: [SCIENCE_ACTION]
 Verbs for scientific study.
 
 - measured
@@ -1121,7 +1121,7 @@ Verbs for scientific study.
 
 ## Vermin Fragments
 
-### [VERMIN_NAME]
+## Fragment Type: [VERMIN_NAME]
 Name for pest infestations.
 
 - rust-rats
@@ -1132,7 +1132,7 @@ Name for pest infestations.
 - cable-biters
 - dust-spiders
 
-### [VERMIN_ACTION]
+## Fragment Type: [VERMIN_ACTION]
 What vermin do.
 
 - gnaws
@@ -1157,7 +1157,7 @@ Types of evolved vermin.
 
 ## Militia Fragments
 
-### [MILITIA_NAME]
+## Fragment Type: [MILITIA_NAME]
 Names for the colony defense force.
 
 - The Watch
@@ -1168,7 +1168,7 @@ Names for the colony defense force.
 - First Response
 - The Shield
 
-### [WEAPON_NAME]
+## Fragment Type: [WEAPON_NAME]
 Flavor names for militia weapons.
 
 - coil-gun
@@ -1183,7 +1183,7 @@ Flavor names for militia weapons.
 
 ## Fauna Fragments
 
-### [BEAST_NAME]
+## Fragment Type: [BEAST_NAME]
 Names for hostile local life.
 
 - rock-maws
@@ -1194,7 +1194,7 @@ Names for hostile local life.
 - night-wings
 - ash-crawlers
 
-### [BEAST_ACTION]
+## Fragment Type: [BEAST_ACTION]
 Behaviors of wild beasts.
 
 - howls
@@ -1209,7 +1209,7 @@ Behaviors of wild beasts.
 
 ## Structural Fragments
 
-### [COLLAPSE_SOUND]
+## Fragment Type: [COLLAPSE_SOUND]
 Sound of a building failing.
 
 - thunderous
@@ -1220,7 +1220,7 @@ Sound of a building failing.
 - hollow
 - final
 
-### [RUIN_STATE]
+## Fragment Type: [RUIN_STATE]
 Condition of discovered ruins.
 
 - crumbled
@@ -1236,7 +1236,7 @@ Condition of discovered ruins.
 
 ## Energy Fragments
 
-### [POWER_SOURCE]
+## Fragment Type: [POWER_SOURCE]
 Names for power generating structures or systems.
 
 - the reactor
@@ -1251,7 +1251,7 @@ Names for power generating structures or systems.
 
 ## Visitor Fragments
 
-### [VISITOR_TYPE]
+## Fragment Type: [VISITOR_TYPE]
 Types of visitors arriving at the colony.
 
 - pilgrim
@@ -1266,7 +1266,7 @@ Types of visitors arriving at the colony.
 
 ## Faction Fragments
 
-### [FACTION_NAME]
+## Fragment Type: [FACTION_NAME]
 Names for political/social groups.
 
 - The Iron Circle
@@ -1281,7 +1281,7 @@ Names for political/social groups.
 
 ## Atmosphere Fragments
 
-### [ATMOSPHERE_DESCRIPTOR]
+## Fragment Type: [ATMOSPHERE_DESCRIPTOR]
 Adjectives for air quality or atmospheric conditions.
 
 - thin
@@ -1297,7 +1297,7 @@ Adjectives for air quality or atmospheric conditions.
 
 ## Cabin Fever Fragments
 
-### [CABIN_FEVER_SYMPTOM]
+## Fragment Type: [CABIN_FEVER_SYMPTOM]
 Manifestations of stress from confinement.
 
 - staring at walls
@@ -1308,7 +1308,7 @@ Manifestations of stress from confinement.
 - seeing shapes
 - forgetting names
 
-### [CONFINEMENT_DESCRIPTOR]
+## Fragment Type: [CONFINEMENT_DESCRIPTOR]
 How the feeling of being trapped is described.
 
 - crushing
@@ -1323,7 +1323,7 @@ How the feeling of being trapped is described.
 
 ## Shift Work Fragments
 
-### [SHIFT_NAME]
+## Fragment Type: [SHIFT_NAME]
 Names for work shifts.
 
 - Day-Watch
@@ -1334,7 +1334,7 @@ Names for work shifts.
 - Void-Shift
 - The Owl's Hour
 
-### [SHIFT_COMPLAINT]
+## Fragment Type: [SHIFT_COMPLAINT]
 Complaints about shift work.
 
 - eyes hurt
@@ -1349,7 +1349,7 @@ Complaints about shift work.
 
 ## Weather Fragments
 
-### [WEATHER_TYPE]
+## Fragment Type: [WEATHER_TYPE]
 Types of weather events.
 
 - Dust Storm
@@ -1360,7 +1360,7 @@ Types of weather events.
 - Void-Fog
 - Meteor Shower
 
-### [WEATHER_INTENSITY]
+## Fragment Type: [WEATHER_INTENSITY]
 Severity of weather.
 
 - blinding
@@ -1371,7 +1371,7 @@ Severity of weather.
 - passing
 - endless
 
-### [STORM_NAME]
+## Fragment Type: [STORM_NAME]
 Flavor names for named storms.
 
 - The Scourge
@@ -1386,7 +1386,7 @@ Flavor names for named storms.
 
 ## Omen & Taboo Fragments
 
-### [OMEN_TYPE]
+## Fragment Type: [OMEN_TYPE]
 Signs of bad luck.
 
 - a bird hitting the dome
@@ -1397,7 +1397,7 @@ Signs of bad luck.
 - a missing tool
 - a double moon
 
-### [TABOO_ACTION]
+## Fragment Type: [TABOO_ACTION]
 Forbidden or unlucky actions.
 
 - whistling at night
@@ -1412,7 +1412,7 @@ Forbidden or unlucky actions.
 
 ## Inspector Fragments
 
-### [INSPECTOR_TITLE]
+## Fragment Type: [INSPECTOR_TITLE]
 Titles for the visiting inspector.
 
 - The Eye
@@ -1423,7 +1423,7 @@ Titles for the visiting inspector.
 - The Evaluator
 - The Silent Guest
 
-### [VERDICT]
+## Fragment Type: [VERDICT]
 The result of an inspection.
 
 - exemplary
@@ -1438,7 +1438,7 @@ The result of an inspection.
 
 ## Stowaway Fragments
 
-### [STOWAWAY_HIDING_SPOT]
+## Fragment Type: [STOWAWAY_HIDING_SPOT]
 Where stowaways hide.
 
 - in the ventilation
@@ -1453,7 +1453,7 @@ Where stowaways hide.
 
 ## Mood Fragments
 
-### [MOOD_WAVE]
+## Fragment Type: [MOOD_WAVE]
 How emotional contagion spreads.
 
 - a ripple of fear
@@ -1466,7 +1466,7 @@ How emotional contagion spreads.
 
 ## Water Fragments
 
-### [WATER_SOURCE_NAME]
+## Fragment Type: [WATER_SOURCE_NAME]
 Names for water bodies.
 
 - The Deep Well
@@ -1477,7 +1477,7 @@ Names for water bodies.
 - Life-Blood
 - The Tears
 
-### [RIVER_DESCRIPTOR]
+## Fragment Type: [RIVER_DESCRIPTOR]
 Adjectives for flowing water.
 
 - rushing
@@ -1491,7 +1491,7 @@ Adjectives for flowing water.
 
 ## Husbandry Fragments
 
-### [ANIMAL_NAME]
+## Fragment Type: [ANIMAL_NAME]
 Flavor names for domesticated animals.
 
 - wool-beast
@@ -1502,7 +1502,7 @@ Flavor names for domesticated animals.
 - herd-kin
 - fleece-bearer
 
-### [TAME_ACTION]
+## Fragment Type: [TAME_ACTION]
 How animals are tamed/handled.
 
 - gentled
@@ -1515,7 +1515,7 @@ How animals are tamed/handled.
 
 ## Aging Fragments
 
-### [ELDER_TITLE]
+## Fragment Type: [ELDER_TITLE]
 Titles for old pops.
 
 - The Grey
@@ -1526,7 +1526,7 @@ Titles for old pops.
 - Time-Keeper
 - Grand-Sire/Dame
 
-### [YOUTH_TITLE]
+## Fragment Type: [YOUTH_TITLE]
 Titles for young pops.
 
 - New-Blood
@@ -1539,7 +1539,7 @@ Titles for young pops.
 
 ## Sleepwalking Fragments
 
-### [DREAM_TYPE]
+## Fragment Type: [DREAM_TYPE]
 What sleepwalkers are chasing.
 
 - a phantom sound
@@ -1552,7 +1552,7 @@ What sleepwalkers are chasing.
 
 ## Planetary Quirk Fragments
 
-### [QUIRK_NAME]
+## Fragment Type: [QUIRK_NAME]
 Names for planetary anomalies.
 
 - The Heavy Step (High Gravity)
@@ -1566,7 +1566,7 @@ Names for planetary anomalies.
 
 ## Stash Fragments
 
-### [STASH_LOCATION]
+## Fragment Type: [STASH_LOCATION]
 Where hidden items are found.
 
 - under the floorboards
@@ -1577,7 +1577,7 @@ Where hidden items are found.
 - within the mattress
 - under a loose stone
 
-### [STASH_CONTAINER]
+## Fragment Type: [STASH_CONTAINER]
 What items are hidden in.
 
 - a rusted box
@@ -1591,7 +1591,7 @@ What items are hidden in.
 
 ## Fuel Fragments
 
-### [FUEL_TYPE]
+## Fragment Type: [FUEL_TYPE]
 Names for fuel resources.
 
 - liquid-fire
@@ -1601,7 +1601,7 @@ Names for fuel resources.
 - volatile-mix
 - heavy-oil
 
-### [FUEL_SOURCE]
+## Fragment Type: [FUEL_SOURCE]
 Where fuel comes from.
 
 - the deep press
@@ -1614,7 +1614,7 @@ Where fuel comes from.
 
 ## Purity Fragments
 
-### [PURITY_LEVEL]
+## Fragment Type: [PURITY_LEVEL]
 Descriptors for resource purity.
 
 - pristine
@@ -1626,7 +1626,7 @@ Descriptors for resource purity.
 - pure
 - corrupted
 
-### [IMPURITY_TYPE]
+## Fragment Type: [IMPURITY_TYPE]
 What contaminates the resource.
 
 - sulfur-veins
@@ -1640,7 +1640,7 @@ What contaminates the resource.
 
 ## Jury-Rigging Fragments
 
-### [JURY_RIG_METHOD]
+## Fragment Type: [JURY_RIG_METHOD]
 How things are temporarily fixed.
 
 - percussive maintenance
@@ -1650,7 +1650,7 @@ How things are temporarily fixed.
 - borrowed parts
 - brute force
 
-### [JURY_RIG_MATERIAL]
+## Fragment Type: [JURY_RIG_MATERIAL]
 What is used to fix it.
 
 - scrap-metal
@@ -1664,7 +1664,7 @@ What is used to fix it.
 
 ## Greenhouse Fragments
 
-### [GREENHOUSE_NAME]
+## Fragment Type: [GREENHOUSE_NAME]
 Names for greenhouse buildings.
 
 - The Glass Garden
@@ -1675,7 +1675,7 @@ Names for greenhouse buildings.
 - Eden-Block
 - The Leaf-Hold
 
-### [GREENHOUSE_DESCRIPTOR]
+## Fragment Type: [GREENHOUSE_DESCRIPTOR]
 Adjectives for the greenhouse environment.
 
 - humid
@@ -1690,7 +1690,7 @@ Adjectives for the greenhouse environment.
 
 ## Provenance Fragments
 
-### [PROVENANCE_DESCRIPTOR]
+## Fragment Type: [PROVENANCE_DESCRIPTOR]
 How the origin of materials is described.
 
 - blood-iron (from a battlefield)
@@ -1703,7 +1703,7 @@ How the origin of materials is described.
 
 ## Antagonistic Flora Fragments
 
-### [FLORA_NAME]
+## Fragment Type: [FLORA_NAME]
 Flavor names for hostile plants.
 
 - Creep
@@ -1714,7 +1714,7 @@ Flavor names for hostile plants.
 - Rust-Root
 - Shadow-Bloom
 
-### [FLORA_ACTION]
+## Fragment Type: [FLORA_ACTION]
 What the flora does.
 
 - strangles
@@ -1725,7 +1725,7 @@ What the flora does.
 - grows
 - tightens
 
-### [FLORA_DESCRIPTOR]
+## Fragment Type: [FLORA_DESCRIPTOR]
 Adjectives for the infestation.
 
 - thick
@@ -1740,7 +1740,7 @@ Adjectives for the infestation.
 
 ## Logistics Fragments
 
-### [CONVEYOR_NAME]
+## Fragment Type: [CONVEYOR_NAME]
 Flavor names for logistics systems.
 
 - Stream
@@ -1750,7 +1750,7 @@ Flavor names for logistics systems.
 - Vein
 - Feed
 
-### [JAM_DESCRIPTOR]
+## Fragment Type: [JAM_DESCRIPTOR]
 Describing a logistics failure.
 
 - clogged
@@ -1765,7 +1765,7 @@ Describing a logistics failure.
 
 ## Observatory Fragments
 
-### [COSMIC_SIGHT]
+## Fragment Type: [COSMIC_SIGHT]
 What is seen in the telescope.
 
 - a dying star
@@ -1776,7 +1776,7 @@ What is seen in the telescope.
 - a ship that shouldn't be
 - the edge of the map
 
-### [OBSERVATORY_NAME]
+## Fragment Type: [OBSERVATORY_NAME]
 Names for observatory buildings.
 
 - The Eye
@@ -1787,7 +1787,7 @@ Names for observatory buildings.
 - Far-Sight
 - The Zenith
 
-### [VOID_EMOTION]
+## Fragment Type: [VOID_EMOTION]
 Feelings inspired by the cosmos.
 
 - dread
@@ -1802,7 +1802,7 @@ Feelings inspired by the cosmos.
 
 ## Mentorship Fragments
 
-### [MENTOR_TITLE]
+## Fragment Type: [MENTOR_TITLE]
 Titles for mentors.
 
 - Guide
@@ -1812,7 +1812,7 @@ Titles for mentors.
 - Path-Shower
 - Old-Soul
 
-### [LEARNER_TITLE]
+## Fragment Type: [LEARNER_TITLE]
 Titles for apprentices.
 
 - Soft-Hand
@@ -1822,7 +1822,7 @@ Titles for apprentices.
 - The Promise
 - Empty-Cup
 
-### [LESSON_TOPIC]
+## Fragment Type: [LESSON_TOPIC]
 What is being taught.
 
 - the way of iron
@@ -1837,7 +1837,7 @@ What is being taught.
 
 ## Spontaneous Architecture Fragments
 
-### [FOLLY_NAME]
+## Fragment Type: [FOLLY_NAME]
 Names for spontaneous structures.
 
 - Shed
@@ -1848,7 +1848,7 @@ Names for spontaneous structures.
 - Folly
 - Heart-Place
 
-### [FOLLY_PURPOSE]
+## Fragment Type: [FOLLY_PURPOSE]
 Why it was built.
 
 - for prayer
@@ -1859,7 +1859,7 @@ Why it was built.
 - for secret meetings
 - for nothing
 
-### [FOLLY_DESCRIPTOR]
+## Fragment Type: [FOLLY_DESCRIPTOR]
 Adjectives for spontaneous buildings.
 
 - ramshackle
@@ -1874,7 +1874,7 @@ Adjectives for spontaneous buildings.
 
 ## Lighting Fragments
 
-### [LIGHT_SOURCE_NAME]
+## Fragment Type: [LIGHT_SOURCE_NAME]
 Flavor names for lights.
 
 - Sun-Spark
@@ -1884,7 +1884,7 @@ Flavor names for lights.
 - Beacon
 - Warmth-Point
 
-### [SHADOW_DESCRIPTOR]
+## Fragment Type: [SHADOW_DESCRIPTOR]
 Adjectives for darkness/shadows.
 
 - heavy
@@ -1899,7 +1899,7 @@ Adjectives for darkness/shadows.
 
 ## Retrograde Engineering Fragments
 
-### [RETROGRADE_ACTION]
+## Fragment Type: [RETROGRADE_ACTION]
 Verbs for taking tech apart.
 
 - stripped
@@ -1910,7 +1910,7 @@ Verbs for taking tech apart.
 - salvaged
 - broke down
 
-### [TECH_FLAW]
+## Fragment Type: [TECH_FLAW]
 Why the tech failed or was discarded.
 
 - micro-fractures
@@ -1925,7 +1925,7 @@ Why the tech failed or was discarded.
 
 ## Penal Labor Fragments
 
-### [PRISONER_TITLE]
+## Fragment Type: [PRISONER_TITLE]
 How prisoners are referred to.
 
 - The Indentured
@@ -1936,7 +1936,7 @@ How prisoners are referred to.
 - The Owed
 - Chain-Gang
 
-### [CRIME]
+## Fragment Type: [CRIME]
 Why they are here.
 
 - theft of rations
@@ -1951,7 +1951,7 @@ Why they are here.
 
 ## Technological Ritual Fragments
 
-### [RITUAL_NAME]
+## Fragment Type: [RITUAL_NAME]
 Names for machine appeasement rites.
 
 - The Anointing
@@ -1962,7 +1962,7 @@ Names for machine appeasement rites.
 - Void-Cleansing
 - The Hum-Chant
 
-### [MACHINE_SPIRIT_MOOD]
+## Fragment Type: [MACHINE_SPIRIT_MOOD]
 The perceived temper of the machine.
 
 - angry
@@ -1977,7 +1977,7 @@ The perceived temper of the machine.
 
 ## Social Mimicry Fragments
 
-### [TREND_NAME]
+## Fragment Type: [TREND_NAME]
 Names for social trends.
 
 - The Blue-Shift
@@ -1988,7 +1988,7 @@ Names for social trends.
 - Soft-Step
 - Night-Shift-Chic
 
-### [FASHION_ITEM]
+## Fragment Type: [FASHION_ITEM]
 Items that become trendy.
 
 - copper-rings
@@ -2003,7 +2003,7 @@ Items that become trendy.
 
 ## Colony Mascot Fragments
 
-### [MASCOT_TITLE]
+## Fragment Type: [MASCOT_TITLE]
 Titles for the colony pet.
 
 - The Good Boy/Girl
@@ -2014,7 +2014,7 @@ Titles for the colony pet.
 - Void-Chaser
 - The Mascot
 
-### [MASCOT_ACTION]
+## Fragment Type: [MASCOT_ACTION]
 What the mascot does.
 
 - barks at the dark
@@ -2174,7 +2174,7 @@ What the mascot does.
 
 ## Wild Child Fragments
 
-### [FERAL_NAME]
+## Fragment Type: [FERAL_NAME]
 Names given to children found in the wild.
 
 - Wolf-Kin
@@ -2185,7 +2185,7 @@ Names given to children found in the wild.
 - Wild-Seed
 - The Foundling
 
-### [WILD_ACTION]
+## Fragment Type: [WILD_ACTION]
 Behaviors of feral children.
 
 - hisses
@@ -2200,7 +2200,7 @@ Behaviors of feral children.
 
 ## Blob Fragments
 
-### [BLOB_NAME]
+## Fragment Type: [BLOB_NAME]
 Names for the Blob entity.
 
 - The Grey-Sludge
@@ -2211,7 +2211,7 @@ Names for the Blob entity.
 - The Amorphous
 - Living-Oil
 
-### [BLOB_ACTION]
+## Fragment Type: [BLOB_ACTION]
 What the Blob does.
 
 - surges
@@ -2222,7 +2222,7 @@ What the Blob does.
 - consumes
 - pulses
 
-### [BLOB_DESCRIPTOR]
+## Fragment Type: [BLOB_DESCRIPTOR]
 Adjectives for the Blob.
 
 - hungry
@@ -2237,7 +2237,7 @@ Adjectives for the Blob.
 
 ## Cybernetics Fragments
 
-### [PROSTHETIC_NAME]
+## Fragment Type: [PROSTHETIC_NAME]
 Flavor names for augmentations.
 
 - Iron-Arm
@@ -2248,7 +2248,7 @@ Flavor names for augmentations.
 - Steel-Heart
 - Logic-Core
 
-### [SURGERY_OUTCOME]
+## Fragment Type: [SURGERY_OUTCOME]
 Results of cybernetic surgery.
 
 - integrated
@@ -2262,7 +2262,7 @@ Results of cybernetic surgery.
 
 ## Heirloom Fragments
 
-### [ANCIENT_STRUCTURE]
+## Fragment Type: [ANCIENT_STRUCTURE]
 Names for ancient tech buildings.
 
 - The Reactor
@@ -2272,7 +2272,7 @@ Names for ancient tech buildings.
 - The Void-Lens
 - The Old Engine
 
-### [LEGENDARY_TOOL]
+## Fragment Type: [LEGENDARY_TOOL]
 Names for heirloom tools.
 
 - Stone-Biter
@@ -2286,7 +2286,7 @@ Names for heirloom tools.
 
 ## Social Stratification Fragments
 
-### [CLASS_NAME]
+## Fragment Type: [CLASS_NAME]
 Names for social classes.
 
 - The High-Born
@@ -2297,7 +2297,7 @@ Names for social classes.
 - The Core-Circle
 - The Rim-Dwellers
 
-### [FRICTION_SOURCE]
+## Fragment Type: [FRICTION_SOURCE]
 Reasons for class conflict.
 
 - better rations
@@ -2311,7 +2311,7 @@ Reasons for class conflict.
 
 ## Drone Fragments
 
-### [DRONE_NAME]
+## Fragment Type: [DRONE_NAME]
 Flavor names for robotic workers.
 
 - Unit-734
@@ -2322,7 +2322,7 @@ Flavor names for robotic workers.
 - Gear-Kin
 - Servo-Scout
 
-### [DRONE_ACTION]
+## Fragment Type: [DRONE_ACTION]
 What drones do.
 
 - hums
@@ -2333,7 +2333,7 @@ What drones do.
 - obeys
 - waits
 
-### [DRONE_DESCRIPTOR]
+## Fragment Type: [DRONE_DESCRIPTOR]
 Adjectives for drones.
 
 - tireless
@@ -2348,7 +2348,7 @@ Adjectives for drones.
 
 ## Graffiti Fragments
 
-### [GRAFFITI_TEXT]
+## Fragment Type: [GRAFFITI_TEXT]
 Messages scrawled on walls.
 
 - "We are watching"
@@ -2359,7 +2359,7 @@ Messages scrawled on walls.
 - "Do not trust the [ROLE]"
 - "The Void knows"
 
-### [GRAFFITI_STYLE]
+## Fragment Type: [GRAFFITI_STYLE]
 How the graffiti looks.
 
 - jagged
@@ -2370,7 +2370,7 @@ How the graffiti looks.
 - hidden
 - clumsy
 
-### [GRAFFITI_MEDIUM]
+## Fragment Type: [GRAFFITI_MEDIUM]
 What was used to write it.
 
 - chalk
@@ -2385,7 +2385,7 @@ What was used to write it.
 
 ## Cannibalization Fragments
 
-### [SHIP_COMPONENT]
+## Fragment Type: [SHIP_COMPONENT]
 Parts of the colony ship being dismantled.
 
 - engine bell
@@ -2396,7 +2396,7 @@ Parts of the colony ship being dismantled.
 - life-support duct
 - landing strut
 
-### [CANNIBALIZE_ACTION]
+## Fragment Type: [CANNIBALIZE_ACTION]
 Verbs for taking the ship apart.
 
 - stripped
@@ -2407,7 +2407,7 @@ Verbs for taking the ship apart.
 - tore
 - rendered
 
-### [SHIP_EMOTION]
+## Fragment Type: [SHIP_EMOTION]
 Feelings about destroying the ship.
 
 - regret
@@ -2422,7 +2422,7 @@ Feelings about destroying the ship.
 
 ## Geological Fragments
 
-### [QUAKE_DESCRIPTOR]
+## Fragment Type: [QUAKE_DESCRIPTOR]
 Adjectives for seismic events.
 
 - deep
@@ -2433,7 +2433,7 @@ Adjectives for seismic events.
 - bone-shaking
 - heavy
 
-### [GROUND_SOUND]
+## Fragment Type: [GROUND_SOUND]
 Sounds of the earth moving.
 
 - groan
@@ -2448,7 +2448,7 @@ Sounds of the earth moving.
 
 ## Thermal Fragments
 
-### [HEAT_SOURCE]
+## Fragment Type: [HEAT_SOURCE]
 Things that generate heat.
 
 - the core
@@ -2459,7 +2459,7 @@ Things that generate heat.
 - the overload
 - the magma-tap
 
-### [COLD_SOURCE]
+## Fragment Type: [COLD_SOURCE]
 Things that bring cold.
 
 - the void-wind
@@ -2470,7 +2470,7 @@ Things that bring cold.
 - the stone
 - the silence
 
-### [THERMAL_STATE]
+## Fragment Type: [THERMAL_STATE]
 Conditions of temperature.
 
 - freezing
@@ -2485,7 +2485,7 @@ Conditions of temperature.
 
 ## Data Fragments
 
-### [DATA_CARRIER]
+## Fragment Type: [DATA_CARRIER]
 Physical objects holding data.
 
 - memory-shard
@@ -2496,7 +2496,7 @@ Physical objects holding data.
 - bio-knot
 - hard-drive
 
-### [DATA_TYPE]
+## Fragment Type: [DATA_TYPE]
 Kinds of information found.
 
 - star-charts
@@ -2511,7 +2511,7 @@ Kinds of information found.
 
 ## Social Debt Fragments
 
-### [FAVOR_TYPE]
+## Fragment Type: [FAVOR_TYPE]
 Kinds of social debts.
 
 - a life-debt
@@ -2522,7 +2522,7 @@ Kinds of social debts.
 - a promise
 - an oath
 
-### [DEBT_FEELING]
+## Fragment Type: [DEBT_FEELING]
 How it feels to owe someone.
 
 - heavy
@@ -2537,7 +2537,7 @@ How it feels to owe someone.
 
 ## Chemical Fragments (Spec 181)
 
-### [CHEMICAL_NAME]
+## Fragment Type: [CHEMICAL_NAME]
 Flavor names for stims/sedatives.
 
 - Red-Eye
@@ -2548,7 +2548,7 @@ Flavor names for stims/sedatives.
 - The Fix
 - Drift-Dust
 
-### [ADDICTION_SLANG]
+## Fragment Type: [ADDICTION_SLANG]
 How addiction is described.
 
 - riding the wave
@@ -2559,7 +2559,7 @@ How addiction is described.
 - chem-bound
 - salt-sick
 
-### [WITHDRAWAL_SYMPTOM]
+## Fragment Type: [WITHDRAWAL_SYMPTOM]
 What happens when the chems run out.
 
 - the shakes
@@ -2574,7 +2574,7 @@ What happens when the chems run out.
 
 ## Wind Fragments (Spec 182)
 
-### [WIND_DESCRIPTOR]
+## Fragment Type: [WIND_DESCRIPTOR]
 Adjectives for wind conditions.
 
 - howling
@@ -2585,7 +2585,7 @@ Adjectives for wind conditions.
 - channeled
 - screaming
 
-### [CANYON_NAME]
+## Fragment Type: [CANYON_NAME]
 Names for high-wind urban canyons.
 
 - The Gale-Run
@@ -2600,7 +2600,7 @@ Names for high-wind urban canyons.
 
 ## Geodetic Sentience Fragments (Spec 183)
 
-### [LIVING_STONE_NAME]
+## Fragment Type: [LIVING_STONE_NAME]
 Flavor names for sentient minerals.
 
 - Waking-Stone
@@ -2611,7 +2611,7 @@ Flavor names for sentient minerals.
 - Creep-Stone
 - Void-Geode
 
-### [GOLEM_ACTION]
+## Fragment Type: [GOLEM_ACTION]
 What the stone golem does.
 
 - lumbers
@@ -2626,7 +2626,7 @@ What the stone golem does.
 
 ## Orbital Debris Fragments (Spec 184)
 
-### [DEBRIS_TYPE]
+## Fragment Type: [DEBRIS_TYPE]
 Types of space junk.
 
 - spent stages
@@ -2637,7 +2637,7 @@ Types of space junk.
 - reactor cores
 - lost tools
 
-### [ORBITAL_HAZARD]
+## Fragment Type: [ORBITAL_HAZARD]
 Names for the debris field.
 
 - The Cloud
@@ -2652,7 +2652,7 @@ Names for the debris field.
 
 ## Vacuum Welding Fragments (Spec 185)
 
-### [WELDING_TERM]
+## Fragment Type: [WELDING_TERM]
 Describing the welding process.
 
 - void-locked
@@ -2663,7 +2663,7 @@ Describing the welding process.
 - forever-bonded
 - atom-merged
 
-### [PERMANENT_STRUCTURE_ADJECTIVE]
+## Fragment Type: [PERMANENT_STRUCTURE_ADJECTIVE]
 Adjectives for welded buildings.
 
 - eternal
@@ -2678,7 +2678,7 @@ Adjectives for welded buildings.
 
 ## Bio-Architecture Fragments (Spec 186)
 
-### [BIO_STRUCTURE_NAME]
+## Fragment Type: [BIO_STRUCTURE_NAME]
 Names for grown buildings.
 
 - Pulse-Door
@@ -2689,7 +2689,7 @@ Names for grown buildings.
 - Heart-Chamber
 - Muscle-Frame
 
-### [BIO_SICKNESS_SYMPTOM]
+## Fragment Type: [BIO_SICKNESS_SYMPTOM]
 Signs of a sick building.
 
 - weeping-walls
@@ -2702,7 +2702,7 @@ Signs of a sick building.
 
 ## Cryo-Dream Fragments (Spec 195)
 
-### [DREAM_IMAGE]
+## Fragment Type: [DREAM_IMAGE]
 Surreal images from cryo-sleep.
 
 - a city of glass that sings
@@ -2714,7 +2714,7 @@ Surreal images from cryo-sleep.
 - a library with infinite books
 - the feeling of falling up
 
-### [NIGHTMARE_IMAGE]
+## Fragment Type: [NIGHTMARE_IMAGE]
 Disturbing images from cryo-trauma.
 
 - being frozen while awake
@@ -2730,7 +2730,7 @@ Disturbing images from cryo-trauma.
 
 ## Gastronomy Fragments (Spec 166)
 
-### [ALIEN_INGREDIENT]
+## Fragment Type: [ALIEN_INGREDIENT]
 Names for strange food sources.
 
 - void-crab meat
@@ -2741,7 +2741,7 @@ Names for strange food sources.
 - beast-flank
 - mystery-slime
 
-### [FLAVOR_PROFILE]
+## Fragment Type: [FLAVOR_PROFILE]
 How alien food tastes.
 
 - metallic
@@ -2753,7 +2753,7 @@ How alien food tastes.
 - like old memories
 - sharp as glass
 
-### [MEAL_NAME_PREFIX]
+## Fragment Type: [MEAL_NAME_PREFIX]
 Prefix for procedural meal names.
 
 - Void
@@ -2765,7 +2765,7 @@ Prefix for procedural meal names.
 - Surprise
 - Mystery
 
-### [MEAL_NAME_SUFFIX]
+## Fragment Type: [MEAL_NAME_SUFFIX]
 Suffix for procedural meal names.
 
 - Stew
@@ -2777,7 +2777,7 @@ Suffix for procedural meal names.
 - Feast
 - Ration
 
-### [POISON_SYMPTOM]
+## Fragment Type: [POISON_SYMPTOM]
 Symptoms of bad alien food.
 
 - seeing colors
@@ -2792,7 +2792,7 @@ Symptoms of bad alien food.
 
 ## Atmospheric Fragments (Spec 190)
 
-### [PRESSURE_DESC_HIGH]
+## Fragment Type: [PRESSURE_DESC_HIGH]
 Describing high atmospheric pressure.
 
 - crushing
@@ -2803,7 +2803,7 @@ Describing high atmospheric pressure.
 - slow-moving
 - dense
 
-### [PRESSURE_DESC_LOW]
+## Fragment Type: [PRESSURE_DESC_LOW]
 Describing low atmospheric pressure.
 
 - thin
@@ -2814,7 +2814,7 @@ Describing low atmospheric pressure.
 - empty
 - breathless
 
-### [TIDE_SOUND]
+## Fragment Type: [TIDE_SOUND]
 Sounds of the changing pressure.
 
 - a deep thrum
@@ -2829,7 +2829,7 @@ Sounds of the changing pressure.
 
 ## Festival Fragments (Spec 077)
 
-### [FESTIVAL_TYPE]
+## Fragment Type: [FESTIVAL_TYPE]
 Types of celebrations.
 
 - Feast
@@ -2840,7 +2840,7 @@ Types of celebrations.
 - Gathering
 - Rite
 
-### [CELEBRATION_ACTION]
+## Fragment Type: [CELEBRATION_ACTION]
 What pops do during festivals.
 
 - share stories
@@ -2851,7 +2851,7 @@ What pops do during festivals.
 - paint the walls
 - forget the cold
 
-### [FESTIVAL_FOOD]
+## Fragment Type: [FESTIVAL_FOOD]
 Special food for festivals.
 
 - sugar-cakes
@@ -2866,7 +2866,7 @@ Special food for festivals.
 
 ## Radiation Fragments (Spec 191)
 
-### [RADIATION_SYMPTOM]
+## Fragment Type: [RADIATION_SYMPTOM]
 Signs of radiation sickness.
 
 - hair loss
@@ -2877,7 +2877,7 @@ Signs of radiation sickness.
 - fever
 - seeing flashes
 
-### [GLOW_DESC]
+## Fragment Type: [GLOW_DESC]
 Description of radioactive glow.
 
 - sick-green
@@ -2887,7 +2887,7 @@ Description of radioactive glow.
 - pulsing-violet
 - unnatural-yellow
 
-### [WARM_STONE_DESC]
+## Fragment Type: [WARM_STONE_DESC]
 Description of radioactive heat source.
 
 - biting warmth
@@ -2901,21 +2901,21 @@ Description of radioactive heat source.
 
 ## Crop Fragments (Spec 120)
 
-### [CROP_DESC_WHEAT]
+## Fragment Type: [CROP_DESC_WHEAT]
 - golden-stalks
 - sun-grain
 - earth-grass
 - bread-seed
 - tall-grass
 
-### [CROP_DESC_POTATO]
+## Fragment Type: [CROP_DESC_POTATO]
 - earth-apple
 - dirt-tuber
 - buried-gold
 - winter-root
 - starch-stone
 
-### [CROP_DESC_RICE]
+## Fragment Type: [CROP_DESC_RICE]
 - water-grain
 - marsh-seed
 - white-pearl
@@ -2926,7 +2926,7 @@ Description of radioactive heat source.
 
 ## Monument Fragments (Spec 167)
 
-### [RUIN_NAME]
+## Fragment Type: [RUIN_NAME]
 Names for ruined structures.
 
 - The Fallen Tower
@@ -2937,7 +2937,7 @@ Names for ruined structures.
 - The Empty Shell
 - Ghost-Structure
 
-### [RUIN_DESCRIPTION]
+## Fragment Type: [RUIN_DESCRIPTION]
 - haunted by the past
 - stripped of value
 - silent and cold
@@ -2950,7 +2950,7 @@ Names for ruined structures.
 
 ## Auroral Fragments (Spec 205)
 
-### [AURORA_COLOR]
+## Fragment Type: [AURORA_COLOR]
 Colors of the magnetic storm.
 
 - violent-violet
@@ -2961,7 +2961,7 @@ Colors of the magnetic storm.
 - ghost-gold
 - void-blue
 
-### [AURORA_DESCRIPTOR]
+## Fragment Type: [AURORA_DESCRIPTOR]
 How the aurora looks/moves.
 
 - writhing
@@ -2976,7 +2976,7 @@ How the aurora looks/moves.
 
 ## Predictive Policing Fragments (Spec 173)
 
-### [PREDICTION_SOURCE]
+## Fragment Type: [PREDICTION_SOURCE]
 What the algorithm uses to predict crime.
 
 - pattern-matching
@@ -2987,7 +2987,7 @@ What the algorithm uses to predict crime.
 - social network density
 - unauthorized movement
 
-### [ALGORITHM_NAME]
+## Fragment Type: [ALGORITHM_NAME]
 Names for the predictive AI.
 
 - The Pattern
@@ -3002,7 +3002,7 @@ Names for the predictive AI.
 
 ## Scrapcode Fragments (Spec 178)
 
-### [GLITCH_TEXT]
+## Fragment Type: [GLITCH_TEXT]
 Corrupted output from infected machines.
 
 - h3lp_me
@@ -3017,7 +3017,7 @@ Corrupted output from infected machines.
 
 ## Totem Fragments (Spec 200)
 
-### [TOTEM_MATERIAL]
+## Fragment Type: [TOTEM_MATERIAL]
 What the luck-charm is made of.
 
 - bone
@@ -3028,7 +3028,7 @@ What the luck-charm is made of.
 - dried root
 - braided hair
 
-### [TOTEM_SHAPE]
+## Fragment Type: [TOTEM_SHAPE]
 What the totem looks like.
 
 - a crude eye
@@ -3043,7 +3043,7 @@ What the totem looks like.
 
 ## Preservation Fragments (Spec 087)
 
-### [CURED_FOOD_NAME]
+## Fragment Type: [CURED_FOOD_NAME]
 Names for preserved food.
 
 - hard-tack
@@ -3054,7 +3054,7 @@ Names for preserved food.
 - dried-fruit
 - stone-soup-mix
 
-### [SMOKE_WOOD]
+## Fragment Type: [SMOKE_WOOD]
 Wood used for smoking food.
 
 - iron-wood
@@ -3068,7 +3068,7 @@ Wood used for smoking food.
 
 ## Institutional Memory Fragments (Spec 172)
 
-### [ARCHIVE_SECTION]
+## Fragment Type: [ARCHIVE_SECTION]
 Divisions of the Archive.
 
 - The Deep Stacks
@@ -3083,7 +3083,7 @@ Divisions of the Archive.
 
 ## Escape Pod Fragments (Spec 217)
 
-### [POD_NAME]
+## Fragment Type: [POD_NAME]
 Names for escape pods.
 
 - Life-Boat 7
@@ -3094,7 +3094,7 @@ Names for escape pods.
 - Drift-Shell
 - Emergency-1
 
-### [EVACUATION_REASON]
+## Fragment Type: [EVACUATION_REASON]
 Why the pod launched.
 
 - structural failure
@@ -3109,7 +3109,7 @@ Why the pod launched.
 
 ## Planetary Core Tap Fragments (Spec 212)
 
-### [CORE_ACTIVITY]
+## Fragment Type: [CORE_ACTIVITY]
 State of the planetary core.
 
 - stable
@@ -3120,7 +3120,7 @@ State of the planetary core.
 - waking
 - critical
 
-### [CORE_STRESS_LEVEL]
+## Fragment Type: [CORE_STRESS_LEVEL]
 Level of seismic danger.
 
 - tremors reported
@@ -3135,7 +3135,7 @@ Level of seismic danger.
 
 ## Solar Cycle Fragments (Spec 213)
 
-### [SOLAR_PHASE]
+## Fragment Type: [SOLAR_PHASE]
 Current phase of the star.
 
 - Solar Minimum
@@ -3146,7 +3146,7 @@ Current phase of the star.
 - Angry Sun
 - The Waning
 
-### [SOLAR_INTENSITY]
+## Fragment Type: [SOLAR_INTENSITY]
 Description of solar output.
 
 - weak and cold
@@ -3161,7 +3161,7 @@ Description of solar output.
 
 ## Customs Checkpoint Fragments (Spec 214)
 
-### [CONTRABAND_ITEM]
+## Fragment Type: [CONTRABAND_ITEM]
 Illegal items found on visitors.
 
 - unauthorized seeds
@@ -3172,7 +3172,7 @@ Illegal items found on visitors.
 - unmarked chem-vials
 - void-parasites
 
-### [DENIAL_REASON]
+## Fragment Type: [DENIAL_REASON]
 Why entry was refused.
 
 - invalid bio-metrics
@@ -3187,7 +3187,7 @@ Why entry was refused.
 
 ## Ammunition Logistics Fragments (Spec 210)
 
-### [AMMO_TYPE]
+## Fragment Type: [AMMO_TYPE]
 Types of turret ammunition.
 
 - kinetic-slugs
@@ -3202,7 +3202,7 @@ Types of turret ammunition.
 
 ## Planetary Governance Fragments (Spec 209)
 
-### [GOVERNOR_TITLE]
+## Fragment Type: [GOVERNOR_TITLE]
 Titles for planetary leaders.
 
 - High Administrator
@@ -3213,7 +3213,7 @@ Titles for planetary leaders.
 - Colony-Prime
 - The Overseer
 
-### [POLICY_NAME]
+## Fragment Type: [POLICY_NAME]
 Names for government policies.
 
 - Ration Control Act
@@ -3228,7 +3228,7 @@ Names for government policies.
 
 ## Safehouse Fragments (Spec 215)
 
-### [SAFEHOUSE_NAME]
+## Fragment Type: [SAFEHOUSE_NAME]
 Names for safehouse contracts/locations.
 
 - The Bolt-Hole
@@ -3243,7 +3243,7 @@ Names for safehouse contracts/locations.
 
 ## Hygiene Fragments (Spec 220)
 
-### [FILTH_DESCRIPTOR]
+## Fragment Type: [FILTH_DESCRIPTOR]
 Adjectives for squalor conditions.
 
 - grimy
@@ -3254,7 +3254,7 @@ Adjectives for squalor conditions.
 - stale
 - rancid
 
-### [SHOWER_NAME]
+## Fragment Type: [SHOWER_NAME]
 Names for hygiene facilities.
 
 - The Wash-Block
@@ -3269,7 +3269,7 @@ Names for hygiene facilities.
 
 ## Recycling Fragments (Spec 221)
 
-### [RECYCLER_NAME]
+## Fragment Type: [RECYCLER_NAME]
 Names for organic recycling facilities.
 
 - The Vat
@@ -3280,7 +3280,7 @@ Names for organic recycling facilities.
 - The Soup-Kitchen (grim irony)
 - Life-Cycler
 
-### [CORPSE_PRODUCT]
+## Fragment Type: [CORPSE_PRODUCT]
 What bodies are turned into.
 
 - corpse-starch
@@ -3295,7 +3295,7 @@ What bodies are turned into.
 
 ## Fleet Fragments (Spec 157/159)
 
-### [SHIP_CLASS]
+## Fragment Type: [SHIP_CLASS]
 Types of ships.
 
 - Frigate
@@ -3306,7 +3306,7 @@ Types of ships.
 - Scout-Wing
 - Colony-Ark
 
-### [FLEET_NAME]
+## Fragment Type: [FLEET_NAME]
 Names for fleets.
 
 - The Iron Wing
@@ -3317,7 +3317,7 @@ Names for fleets.
 - Merchant-Convoy 7
 - The Lost Fleet
 
-### [COMBAT_RESULT]
+## Fragment Type: [COMBAT_RESULT]
 Outcomes of space battles.
 
 - total hull loss
@@ -3332,7 +3332,7 @@ Outcomes of space battles.
 
 ## Barnacle Fragments (Spec 219)
 
-### [BARNACLE_NAME]
+## Fragment Type: [BARNACLE_NAME]
 Names for space barnacles.
 
 - void-leech
@@ -3343,7 +3343,7 @@ Names for space barnacles.
 - silence-eater
 - anchor-worm
 
-### [BARNACLE_ACTION]
+## Fragment Type: [BARNACLE_ACTION]
 What barnacles do.
 
 - latches
@@ -3358,7 +3358,7 @@ What barnacles do.
 
 ## Crossfire Fragments (Spec 206)
 
-### [CROSSFIRE_SOURCE]
+## Fragment Type: [CROSSFIRE_SOURCE]
 Where the orbital fire comes from.
 
 - a stray rail-slug
@@ -3369,7 +3369,7 @@ Where the orbital fire comes from.
 - reactor-bloom
 - void-war fallout
 
-### [IMPACT_DESCRIPTOR]
+## Fragment Type: [IMPACT_DESCRIPTOR]
 Adjectives for orbital strikes.
 
 - thunderous
@@ -3384,7 +3384,7 @@ Adjectives for orbital strikes.
 
 ## Mother Lode Fragments (Spec 168)
 
-### [MOTHER_LODE_NAME]
+## Fragment Type: [MOTHER_LODE_NAME]
 Names for the massive resource node.
 
 - The Heart
@@ -3399,7 +3399,7 @@ Names for the massive resource node.
 
 ## Heat Island Fragments (Spec 198)
 
-### [HEAT_ISLAND_DESCRIPTOR]
+## Fragment Type: [HEAT_ISLAND_DESCRIPTOR]
 Adjectives for urban heat accumulation.
 
 - stifling
@@ -3412,7 +3412,7 @@ Adjectives for urban heat accumulation.
 
 ## Pneumatic Fragments
 
-### [TUBE_SOUND]
+## Fragment Type: [TUBE_SOUND]
 Sounds of the pneumatic system.
 
 - thwump
@@ -3423,7 +3423,7 @@ Sounds of the pneumatic system.
 - pressurized-sigh
 - pneumatic-cough
 
-### [CLOG_REASON]
+## Fragment Type: [CLOG_REASON]
 Why the tube is jammed.
 
 - stuck cartridge
@@ -3436,7 +3436,7 @@ Why the tube is jammed.
 
 ## Keystone Fragments
 
-### [KEYSTONE_NAME]
+## Fragment Type: [KEYSTONE_NAME]
 Flavor names for keystone species.
 
 - pillar-beast
@@ -3447,7 +3447,7 @@ Flavor names for keystone species.
 - hive-queen
 - coral-king
 
-### [COLLAPSE_SIGN]
+## Fragment Type: [COLLAPSE_SIGN]
 Signs of ecosystem collapse.
 
 - silence in the woods
@@ -3460,7 +3460,7 @@ Signs of ecosystem collapse.
 
 ## Gene Bank Fragments
 
-### [GENE_SAMPLE_TYPE]
+## Fragment Type: [GENE_SAMPLE_TYPE]
 Types of genetic material.
 
 - frozen embryo
@@ -3471,7 +3471,7 @@ Types of genetic material.
 - bone-marrow
 - DNA-helix
 
-### [PRESERVATION_METHOD]
+## Fragment Type: [PRESERVATION_METHOD]
 How the sample is stored.
 
 - cryo-frozen
@@ -3484,7 +3484,7 @@ How the sample is stored.
 
 ## Paperwork Fragments
 
-### [FORM_TYPE]
+## Fragment Type: [FORM_TYPE]
 Names of bureaucratic forms.
 
 - Requisition 27B
@@ -3495,7 +3495,7 @@ Names of bureaucratic forms.
 - Transfer Request
 - Incident Report
 
-### [BUREAUCRATIC_ACTION]
+## Fragment Type: [BUREAUCRATIC_ACTION]
 What happens to the form.
 
 - stamped
@@ -3508,7 +3508,7 @@ What happens to the form.
 
 ## Volatile Fragments
 
-### [VOLATILE_NAME]
+## Fragment Type: [VOLATILE_NAME]
 Flavor names for unstable resources.
 
 - angry-rock
@@ -3519,7 +3519,7 @@ Flavor names for unstable resources.
 - shock-crystal
 - void-fuel
 
-### [EXPLOSION_COLOR]
+## Fragment Type: [EXPLOSION_COLOR]
 Color of the blast.
 
 - blinding white
@@ -3532,7 +3532,7 @@ Color of the blast.
 
 ## Corrosion Fragments
 
-### [CORROSION_SOUND]
+## Fragment Type: [CORROSION_SOUND]
 Sound of acid eating metal.
 
 - hiss
@@ -3543,7 +3543,7 @@ Sound of acid eating metal.
 - wet-crunch
 - melting-slurp
 
-### [MELTING_OBJECT]
+## Fragment Type: [MELTING_OBJECT]
 Things being destroyed by corrosion.
 
 - hull plating
@@ -3556,7 +3556,7 @@ Things being destroyed by corrosion.
 
 ## Atmospheric Processor Fragments (Spec 207)
 
-### [PROCESSOR_NAME]
+## Fragment Type: [PROCESSOR_NAME]
 Names for atmospheric processors.
 
 - The Lung
@@ -3567,7 +3567,7 @@ Names for atmospheric processors.
 - Wind-Catcher
 - Toxin-Scrubber
 
-### [AIR_QUALITY]
+## Fragment Type: [AIR_QUALITY]
 Descriptions of the changing atmosphere.
 
 - less bitter
@@ -3582,7 +3582,7 @@ Descriptions of the changing atmosphere.
 
 ## Hoarder Fragments
 
-### [HOARDED_ITEM]
+## Fragment Type: [HOARDED_ITEM]
 Items obsessively collected by older pops.
 
 - rusted gears
@@ -3593,7 +3593,7 @@ Items obsessively collected by older pops.
 - torn filter-cloths
 - broken seals
 
-### [HOARDER_JUSTIFICATION]
+## Fragment Type: [HOARDER_JUSTIFICATION]
 Why the pop says they need the junk.
 
 - for a rainy day
@@ -3607,7 +3607,7 @@ Why the pop says they need the junk.
 
 ## Echoes of the Past Fragments
 
-### [GHOST_APPEARANCE]
+## Fragment Type: [GHOST_APPEARANCE]
 How the holographic ghosts look.
 
 - shimmering and blue
@@ -3618,7 +3618,7 @@ How the holographic ghosts look.
 - tracing an old map
 - fading in the light
 
-### [ANCIENT_SECRET]
+## Fragment Type: [ANCIENT_SECRET]
 What the ghosts try to show.
 
 - a buried reactor
@@ -3632,7 +3632,7 @@ What the ghosts try to show.
 
 ## Symbiotic Shipyard Fragments
 
-### [LIVING_SHIP_NAME]
+## Fragment Type: [LIVING_SHIP_NAME]
 Flavor names for biological vessels.
 
 - Bone-Cruiser
@@ -3642,7 +3642,7 @@ Flavor names for biological vessels.
 - Vein-Skiff
 - Marrow-Ship
 
-### [GESTATION_STAGE]
+## Fragment Type: [GESTATION_STAGE]
 Phases of a biological ship growing.
 
 - embryo-bud
@@ -3656,7 +3656,7 @@ Phases of a biological ship growing.
 
 ## Orbital Tether Fragments
 
-### [TETHER_NAME]
+## Fragment Type: [TETHER_NAME]
 Names for the massive space elevator.
 
 - The String
@@ -3666,7 +3666,7 @@ Names for the massive space elevator.
 - The Long Climb
 - Star-Bridge
 
-### [DESTRUCTION_SCALE]
+## Fragment Type: [DESTRUCTION_SCALE]
 Adjectives for the damage when a tether falls.
 
 - continent-cracking
@@ -3681,7 +3681,7 @@ Adjectives for the damage when a tether falls.
 
 ## Empathy Plague Fragments
 
-### [SHARED_EMOTION]
+## Fragment Type: [SHARED_EMOTION]
 What everyone suddenly feels.
 
 - a crushing despair
@@ -3691,7 +3691,7 @@ What everyone suddenly feels.
 - the memory of cold
 - an overwhelming exhaustion
 
-### [MIND_LINK_SYMPTOM]
+## Fragment Type: [MIND_LINK_SYMPTOM]
 How the neural link manifests.
 
 - finishing each other's sentences
@@ -3704,7 +3704,7 @@ How the neural link manifests.
 
 ## Counterfeit Reality Fragments
 
-### [HOLO_ILLUSION]
+## Fragment Type: [HOLO_ILLUSION]
 What the counterfeit projectors show.
 
 - a dreadnought armada
@@ -3714,7 +3714,7 @@ What the counterfeit projectors show.
 - pristine, untouched nature
 - a burning wasteland (as a deterrent)
 
-### [BLUFF_OUTCOME]
+## Fragment Type: [BLUFF_OUTCOME]
 What happens when the illusion is tested.
 
 - they turned and ran
@@ -3727,7 +3727,7 @@ What happens when the illusion is tested.
 
 ## Doppelganger Fragments (Spec 254)
 
-### [MIMIC_SUSPICION]
+## Fragment Type: [MIMIC_SUSPICION]
 Why someone was suspected of being a mimic.
 
 - ate raw ore
@@ -3738,7 +3738,7 @@ Why someone was suspected of being a mimic.
 - stared at the wall for hours
 - bled clear fluid
 
-### [MIMIC_REVEAL]
+## Fragment Type: [MIMIC_REVEAL]
 How the mimic was discovered.
 
 - caught in the scanner
@@ -3752,7 +3752,7 @@ How the mimic was discovered.
 
 ## Hypno-Learning Fragments (Spec 255)
 
-### [HYPNO_SUBJECT]
+## Fragment Type: [HYPNO_SUBJECT]
 What was learned in the pod.
 
 - the calculus of engines
@@ -3762,7 +3762,7 @@ What was learned in the pod.
 - void-navigation
 - the history of the [CIV_NAME]
 
-### [FOG_SYMPTOM]
+## Fragment Type: [FOG_SYMPTOM]
 Side effects of hypno-learning.
 
 - speaking in equations
@@ -3776,7 +3776,7 @@ Side effects of hypno-learning.
 
 ## Placebo Protocol Fragments (Spec 256)
 
-### [PLACEBO_NAME]
+## Fragment Type: [PLACEBO_NAME]
 Flavor names for fake treatments.
 
 - Sugar-Pills
@@ -3786,7 +3786,7 @@ Flavor names for fake treatments.
 - Dummy-Stim
 - The Governor's Cure
 
-### [PLACEBO_EFFECT]
+## Fragment Type: [PLACEBO_EFFECT]
 How pops react to the placebo.
 
 - believed the lie
@@ -3800,7 +3800,7 @@ How pops react to the placebo.
 
 ## Cultural Vandalism Fragments (Spec 253)
 
-### [VANDALISM_ACT]
+## Fragment Type: [VANDALISM_ACT]
 How the monument was defaced.
 
 - painted red
@@ -3810,7 +3810,7 @@ How the monument was defaced.
 - draped in rags
 - turned upside down
 
-### [VANDAL_MESSAGE]
+## Fragment Type: [VANDAL_MESSAGE]
 What the vandalism means.
 
 - we are not safe
@@ -3824,7 +3824,7 @@ What the vandalism means.
 
 ## Shadow Market Fragments (Spec 261)
 
-### [SHADOW_GOODS]
+## Fragment Type: [SHADOW_GOODS]
 Illegal or untaxed items sold in the dark.
 
 - unlogged stims
@@ -3834,7 +3834,7 @@ Illegal or untaxed items sold in the dark.
 - untaxed fuel
 - the good rations
 
-### [SHADOW_MERCHANT]
+## Fragment Type: [SHADOW_MERCHANT]
 Titles for shadow traders.
 
 - The Whisper-Broker
@@ -3848,7 +3848,7 @@ Titles for shadow traders.
 
 ## Great Works Fragments (Spec 286)
 
-### [GREAT_WORK_NAME]
+## Fragment Type: [GREAT_WORK_NAME]
 Names for massive construction projects.
 
 - The Sky-Piercer
@@ -3858,7 +3858,7 @@ Names for massive construction projects.
 - The Deep Core
 - The Pillar of [COLONY]
 
-### [WORK_PHASE_DESC]
+## Fragment Type: [WORK_PHASE_DESC]
 Descriptions of the construction scale.
 
 - moving mountains
@@ -3872,7 +3872,7 @@ Descriptions of the construction scale.
 
 ## Harmonic Mining Fragments (Spec 259)
 
-### [FREQUENCY_DESC]
+## Fragment Type: [FREQUENCY_DESC]
 How the harmonic drill sounds.
 
 - bone-rattling
@@ -3882,7 +3882,7 @@ How the harmonic drill sounds.
 - teeth-aching
 - glass-shattering
 
-### [RESONANCE_TARGET]
+## Fragment Type: [RESONANCE_TARGET]
 What the drill destroys.
 
 - crystal-veins
@@ -3895,7 +3895,7 @@ What the drill destroys.
 
 ## Thermal Glider Fragments (Spec 262)
 
-### [GLIDER_NAME]
+## Fragment Type: [GLIDER_NAME]
 Flavor names for thermal gliders.
 
 - Heat-Rider
@@ -3905,7 +3905,7 @@ Flavor names for thermal gliders.
 - Ash-Wing
 - Vent-Skipper
 
-### [GLIDER_MANEUVER]
+## Fragment Type: [GLIDER_MANEUVER]
 How the glider moves.
 
 - caught the updraft
@@ -3919,7 +3919,7 @@ How the glider moves.
 
 ## Advertising Fragments (Spec 268)
 
-### [AD_SLOGAN]
+## Fragment Type: [AD_SLOGAN]
 What the screens broadcast to the colony.
 
 - "Consume and Be Happy"
@@ -3930,7 +3930,7 @@ What the screens broadcast to the colony.
 - "Upgrade Your Life Today"
 - "The Core Worlds Envy You"
 
-### [AD_IMPACT]
+## Fragment Type: [AD_IMPACT]
 How the subliminal advertising affects pops.
 
 - empty pockets
@@ -3944,7 +3944,7 @@ How the subliminal advertising affects pops.
 
 ## Subspace Pen Pal Fragments (Spec 257)
 
-### [PEN_PAL_NAME]
+## Fragment Type: [PEN_PAL_NAME]
 Names or handles for distant correspondents.
 
 - Voice-in-the-Dark
@@ -3955,7 +3955,7 @@ Names or handles for distant correspondents.
 - Signal-Ghost
 - Whisper-Brother
 
-### [PEN_PAL_TOPIC]
+## Fragment Type: [PEN_PAL_TOPIC]
 What the pen pals talk about.
 
 - the weather on Kepler
@@ -3969,7 +3969,7 @@ What the pen pals talk about.
 
 ## Scapegoat Fragments (Spec 224)
 
-### [DENUNCIATION_REASON]
+## Fragment Type: [DENUNCIATION_REASON]
 Why someone was blamed for the colony's problems.
 
 - hoarding rations
@@ -3980,7 +3980,7 @@ Why someone was blamed for the colony's problems.
 - speaking to the dark
 - being different
 
-### [SCAPEGOAT_FATE]
+## Fragment Type: [SCAPEGOAT_FATE]
 What happens to the blamed pop.
 
 - cast out
@@ -3994,7 +3994,7 @@ What happens to the blamed pop.
 
 ## Temporal Smuggling Fragments (Spec 299)
 
-### [RIFT_APPEARANCE]
+## Fragment Type: [RIFT_APPEARANCE]
 How the temporal anomaly looks.
 
 - a tear in the air
@@ -4004,7 +4004,7 @@ How the temporal anomaly looks.
 - a localized storm
 - a weeping shadow
 
-### [TEMPORAL_DEBT]
+## Fragment Type: [TEMPORAL_DEBT]
 The burden of borrowing from tomorrow.
 
 - the time-loan
@@ -4018,7 +4018,7 @@ The burden of borrowing from tomorrow.
 
 ## Cadet Branch Fragments (Spec 263)
 
-### [NOBLE_TITLE]
+## Fragment Type: [NOBLE_TITLE]
 Titles of exiled or disgraced core world nobility.
 
 - Scion
@@ -4029,7 +4029,7 @@ Titles of exiled or disgraced core world nobility.
 - Core-Prince
 - The Idle Lord
 
-### [NOBLE_DEMAND]
+## Fragment Type: [NOBLE_DEMAND]
 What the noble demands from the frontier colony.
 
 - proper respect
@@ -4043,7 +4043,7 @@ What the noble demands from the frontier colony.
 
 ## Bio-Acoustic Chorus Fragments (Spec 419)
 
-### [CHORUS_TUNE]
+## Fragment Type: [CHORUS_TUNE]
 The song of the flora.
 
 - soothing hum
@@ -4057,7 +4057,7 @@ The song of the flora.
 
 ## Olfactory Map Fragments (Spec 446)
 
-### [SCENT_DESCRIPTOR]
+## Fragment Type: [SCENT_DESCRIPTOR]
 Adjectives for intense smells.
 
 - nauseating
@@ -4069,7 +4069,7 @@ Adjectives for intense smells.
 - earthy
 - rancid
 
-### [SMELL_SOURCE]
+## Fragment Type: [SMELL_SOURCE]
 Where the smell comes from.
 
 - the vents
@@ -4083,7 +4083,7 @@ Where the smell comes from.
 
 ## Orbital Drop Logistics Fragments (Spec 447)
 
-### [DROP_PAYLOAD]
+## Fragment Type: [DROP_PAYLOAD]
 What was in the drop pod.
 
 - emergency rations
@@ -4093,7 +4093,7 @@ What was in the drop pod.
 - raw fuel
 - a classified container
 
-### [SCATTER_DISTANCE]
+## Fragment Type: [SCATTER_DISTANCE]
 How far off the pod landed.
 
 - miles
@@ -4102,3 +4102,368 @@ How far off the pod landed.
 - across the river
 - in the deep woods
 - far beyond the perimeter
+
+---
+
+## Gut Biome Fragments (Spec 211)
+
+## Fragment Type: [DIET_TYPE]
+Types of specialized diets.
+
+- moss-bread
+- xeno-meat
+- nutrient-paste
+- pure-earth-grain
+- raw-fungus
+- synthetic-gruel
+- star-kelp
+
+## Fragment Type: [INDIGESTION_SYMPTOM]
+How the body rejects new food.
+
+- gut-rot
+- the heavy stomach
+- void-sickness
+- bile-cramps
+- the sudden purge
+- acid-reflux
+- burning-hunger
+
+---
+
+## Kinetic Storage Fragments (Spec 235)
+
+## Fragment Type: [KINETIC_BATTERY_NAME]
+Names for the massive gravity batteries.
+
+- The Drop-Weight
+- The Anvil
+- Gravity-Store
+- The Pendulum
+- Core-Weight
+- The Heavy Bank
+
+## Fragment Type: [KINETIC_IMPACT]
+The sound/feel of a battery discharging or collapsing.
+
+- a deep shudder
+- a grinding descent
+- a catastrophic drop
+- an earth-cracking thud
+- the slow crawl downward
+- an unstoppable momentum
+
+---
+
+## The Direct Link Fragments (Spec 236)
+
+## Fragment Type: [DIRECT_LINK_FEELING]
+How the possessed unit feels the Commander.
+
+- a sudden, chilling clarity
+- a hand behind the eyes
+- moving without thought
+- the voice that takes over
+- absolute certainty
+- the loss of self
+
+## Fragment Type: [LINK_ACTION]
+What the unit is seen doing under direct control.
+
+- moving with impossible speed
+- ignoring all hazards
+- performing a flawless maneuver
+- staring blankly before sprinting
+- executing the perfect strike
+
+---
+
+## Public Grievances Fragments (Spec 233)
+
+## Fragment Type: [GRIEVANCE_TOPIC]
+What the notes complain about.
+
+- the taste of the water
+- the noise from the stamping press
+- the Governor's latest edict
+- a specific neighbor's habits
+- the lack of real meat
+- the endless shifts
+- the cold
+
+## Fragment Type: [NOTE_STYLE]
+How the grievance is presented.
+
+- scrawled in angry charcoal
+- meticulously typed and pinned
+- written in blood (or red paint?)
+- hastily scratched into the metal
+- a series of crude drawings
+- an elegant, passive-aggressive letter
+
+---
+
+## Clone Vats Fragments (Spec 240)
+
+## Fragment Type: [CLONE_NAME_PREFIX]
+How clones are designated.
+
+- Batch-7
+- Vat-Born
+- Decant
+- Series-A
+- Replica
+- Echo
+
+## Fragment Type: [CLONE_STIGMA]
+How natural-born pops view clones.
+
+- soulless
+- too perfect
+- glass-eyed
+- factory-made
+- lacking the spark
+- identical strangers
+
+---
+
+## Legacy Code Fragments (Spec 246)
+
+## Fragment Type: [LEGACY_ERROR]
+Errors generated by bloated systems.
+
+- out of memory exception
+- protocol mismatch
+- infinite loop detected
+- core dump imminent
+- unhandled generic exception
+- null pointer reference
+
+## Fragment Type: [SYSTEM_SLOWNESS]
+How the bloat manifests.
+
+- the screens took a minute to refresh
+- the doors open a second too late
+- automated requests are queued indefinitely
+- the lights flicker in rhythm with the processor
+- the mainframes run white-hot doing nothing
+
+---
+
+## Ghost Code Fragments (Spec 247)
+
+## Fragment Type: [GHOST_CODE_GLITCH]
+Weird behaviors from building on data residue.
+
+- the turret tried to dispense medicine
+- the door locked itself to keep out the cold
+- the fabricator kept printing tiny toy figures
+- the lights strobed in an ancient SOS code
+- the pump sang a synthesized lullaby
+
+## Fragment Type: [RESIDUE_TYPE]
+The source of the data ghost.
+
+- an old med-bay
+- a forgotten defense grid
+- a dismantled life-support unit
+- a previous governor's personal terminal
+- a corrupted entertainment archive
+
+---
+
+## Thermal Bloom Fragments (Spec 243)
+
+## Fragment Type: [THERMAL_WARNING]
+How the heat buildup is detected.
+
+- sensors show a massive heat spike
+- the infrared cameras are blinding white
+- the ice caps are visibly melting from orbit
+- we are glowing like a beacon in the dark
+- the heat-sinks are overflowing
+
+## Fragment Type: [HOSTILE_INTERCEPT]
+Who sees the thermal signature.
+
+- a passing pirate scout
+- a predatory void-swarm
+- an automated orbital defense platform
+- a rival empire's listening post
+- a swarm of heat-seeking parasites
+
+---
+
+## The Infinite Archive Fragments (Spec 248)
+
+## Fragment Type: [ARCHIVE_BLOAT]
+The physical manifestation of too much data.
+
+- aisles of humming server racks
+- stacks of hot, glowing memory drives
+- the data-vaults are completely full
+- physical storage overflowing into the halls
+- the index is too large to query
+
+## Fragment Type: [DELETED_KNOWLEDGE]
+What was purged to make room.
+
+- the schematics for early steam engines
+- an entire library of pre-collapse poetry
+- the geological surveys of the starting zone
+- the medical records of the founders
+- the original colony charter
+
+---
+
+## Quantum Twins Fragments (Spec 245)
+
+## Fragment Type: [TWIN_SENSATION]
+How the entanglement feels.
+
+- a phantom pain in a missing limb
+- a sudden rush of someone else's joy
+- knowing exactly what to do without learning it
+- a hollow ache when the other is sad
+- an instinctual pull in a specific direction
+
+## Fragment Type: [SEVERANCE_TRAUMA]
+The result of the twin dying.
+
+- a piece of the mind snapping off
+- catastrophic mental collapse
+- weeping for a death they didn't see
+- the sudden, deafening silence in the head
+- a catatonic shock
+
+---
+
+## The Empty Room Fragments (Spec 251)
+
+## Fragment Type: [SANCTUARY_VIBE]
+The feeling of the designated empty space.
+
+- a perfect, unbroken silence
+- the luxury of absolute nothingness
+- a clean, echoing void
+- a space free from the machine hum
+- a blessed expanse of clear flooring
+
+## Fragment Type: [CLUTTER_ITEM]
+What ruins the sanctuary.
+
+- a discarded wrench
+- a pile of dirty uniforms
+- a spontaneous offering of local flowers
+- a stack of unfiled requisition forms
+- a sleeping worker who couldn't find a bed
+
+---
+
+## Tectonic Stress Fragments (Spec 252)
+
+## Fragment Type: [STRESS_INDICATOR]
+Signs that the mega-quake is coming.
+
+- micro-fractures in the bedrock
+- the water in the glasses constantly vibrating
+- deep, continuous groaning from the crust
+- geysers spitting sudden bursts of steam
+- the seismographs pegging in the red
+
+## Fragment Type: [RELIEF_QUAKE]
+The controlled explosion to lower stress.
+
+- a precise detonation in the fault line
+- a controlled collapse of the lower tunnels
+- venting the tectonic pressure
+- a small rumble to prevent the big one
+- bleeding the earth's tension
+
+---
+
+## The Industrial Rhythm Fragments (Spec 260)
+
+## Fragment Type: [RHYTHM_SOUND]
+The sound of synchronized machines.
+
+- a perfect, pulsing thrum
+- the heartbeat of the factory
+- a unified, metallic clack
+- the steady breathing of the pistons
+- a synchronized hum that rattles the teeth
+
+## Fragment Type: [DISCORD_EFFECT]
+The stress of out-of-sync machines.
+
+- a jarring, chaotic clatter
+- machines fighting each other's pace
+- a headache-inducing cacophony
+- a broken, stuttering beat
+- an unpredictable mechanical scream
+
+---
+
+## The Black Market Fragments (Spec 348)
+
+## Fragment Type: [SMUGGLER_GOODS]
+What the black market provides.
+
+- untaxed luxury stims
+- restricted entertainment chips
+- off-world exotic meats
+- forged transit passes
+- unregulated genetic mods
+
+## Fragment Type: [CORRUPTION_SIGN]
+Evidence of the smuggler's influence.
+
+- guards looking the other way
+- missing inventory from the secure vault
+- sudden, unexplained wealth among the laborers
+- unmarked shuttles landing in the fog
+- a culture of bribes and whispers
+
+---
+
+## Ancestral Graves Fragments (Spec 349)
+
+## Fragment Type: [GRAVE_MARKER]
+What the graves look like.
+
+- a simple cairn of local stones
+- a metal plaque riveted to the bedrock
+- a small, carefully tended patch of moss
+- a towering, monolithic slab
+- a quiet alcove in the deep tunnels
+
+## Fragment Type: [SACRILEGE_ACT]
+Disrespecting the dead.
+
+- paving a road over the founders' rest
+- building a generator on top of the graves
+- tearing up the markers for scrap metal
+- ignoring the resting place of the heroes
+- pouring waste onto the ancestral stones
+
+---
+
+## The Overview Effect Fragments (Spec 449)
+
+## Fragment Type: [COSMIC_REALIZATION]
+What they feel looking at the system.
+
+- how small and fragile the colony is
+- the terrifying emptiness of the dark
+- the breathtaking scale of the star-clouds
+- an overwhelming sense of insignificance
+- a sudden, unifying clarity
+
+## Fragment Type: [ORBITAL_THREAT_SEEN]
+What causes the existential dread.
+
+- a massive, silent fleet blocking the stars
+- the slow, inevitable approach of a debris field
+- the flickering drive-plumes of pirate raiders
+- a leviathan shadow passing over the moon
+- the chaotic flashes of an orbital war
