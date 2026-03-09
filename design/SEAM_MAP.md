@@ -1,3 +1,12 @@
+### INT-446: Waste / Landfills -> Olfactory Map (Scent)
+- **Date:** 2026-03-09
+- **Systems connected:** `ResourceItem` (Waste) / `Building` (Landfill) -> `waste_scent_bridge` (Integration) -> `ScentEmitter` (Olfactory)
+- **Glue added:**
+    - Added `waste_scent_bridge` in `src/layer1/integration.rs` which queries for `ResourceItem`s with type `Waste` and `Building`s with type `Landfill` that lack a `ScentEmitter`.
+    - It then inserts a `ScentEmitter` with `Foul` scent and strength scaled dynamically or set to a static high value for buildings.
+    - Registered `waste_scent_bridge` in `src/layer1/systems/observation.rs` before `scent_diffusion_system`.
+- **Tests:** `tests/integration/waste_scent.rs` (2 tests verified)
+
 ### INT-021: Faction Strike -> Work Execution
 - **Date:** 2026-03-27
 - **Systems connected:** `is_pop_striking` -> `utility_ai::evaluate_single_pop` / `produce_food_system` / `process_refining_system` / `process_research_system` / `haul_system`
