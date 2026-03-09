@@ -7,8 +7,17 @@ use bevy_ecs::prelude::*;
 use rand::Rng;
 
 /// Component marker for Observatory buildings.
-#[derive(Component, Default)]
-pub struct Observatory;
+#[derive(Component)]
+pub struct Observatory {
+    /// Efficiency of the observatory (e.g., 100.0 is normal).
+    pub efficiency: f32,
+}
+
+impl Default for Observatory {
+    fn default() -> Self {
+        Self { efficiency: 100.0 }
+    }
+}
 
 /// Processes logic for Pops assigned to Observatories.
 ///
@@ -25,48 +34,50 @@ pub fn process_observe_system(
     let mut rng = rand::thread_rng();
 
     for (_entity, assignment, mut morale, traits) in &mut pops {
-        if assignment.assignment_type == AssignmentType::ObservatoryWorker
-            && observatories.get(assignment.entity).is_ok()
-        {
-            // 1. Generate Knowledge
-            resources.knowledge += 0.02;
-            resources.knowledge = resources.knowledge.clamp(0.0, resources.max_knowledge);
+        if assignment.assignment_type == AssignmentType::ObservatoryWorker {
+            if let Ok(observatory) = observatories.get(assignment.entity) {
+                // 1. Generate Knowledge
+                let gain = 0.02 * (observatory.efficiency / 100.0);
+                resources.knowledge += gain;
+                resources.knowledge = resources.knowledge.clamp(0.0, resources.max_knowledge);
 
-            // 2. Chance for Overview Effect (1% per tick)
-            if rng.gen_bool(0.01) {
-                let mut inspiration_chance: f64 = 0.5;
+                // 2. Chance for Overview Effect (1% per tick)
+                if rng.gen_bool(0.01) {
+                    let mut inspiration_chance: f64 = 0.5;
 
-                if let Some(traits) = traits {
-                    if traits.0.contains(&Trait::Optimist) || traits.0.contains(&Trait::Curious) {
-                        inspiration_chance += 0.3;
+                    if let Some(traits) = traits {
+                        if traits.0.contains(&Trait::Optimist) || traits.0.contains(&Trait::Curious)
+                        {
+                            inspiration_chance += 0.3;
+                        }
+                        if traits.0.contains(&Trait::Anxious)
+                            || traits.0.contains(&Trait::Traditionalist)
+                        {
+                            inspiration_chance -= 0.3;
+                        }
                     }
-                    if traits.0.contains(&Trait::Anxious)
-                        || traits.0.contains(&Trait::Traditionalist)
-                    {
-                        inspiration_chance -= 0.3;
-                    }
-                }
 
-                // Clamp just in case (0.2 to 0.8 range typically)
-                inspiration_chance = inspiration_chance.clamp(0.1, 0.9);
+                    // Clamp just in case (0.2 to 0.8 range typically)
+                    inspiration_chance = inspiration_chance.clamp(0.1, 0.9);
 
-                if rng.gen_bool(inspiration_chance) {
-                    morale.add_modifier(MoodModifier {
-                        label: "Cosmic Inspiration".to_string(),
-                        value: 0.15,
-                        duration: 500,
-                    });
-                    if let Some(log) = &mut log {
-                        log.add("A colonist was inspired by the cosmos!");
-                    }
-                } else {
-                    morale.add_modifier(MoodModifier {
-                        label: "Existential Dread".to_string(),
-                        value: -0.10,
-                        duration: 500,
-                    });
-                    if let Some(log) = &mut log {
-                        log.add("A colonist stared into the void...");
+                    if rng.gen_bool(inspiration_chance) {
+                        morale.add_modifier(MoodModifier {
+                            label: "Cosmic Inspiration".to_string(),
+                            value: 0.15,
+                            duration: 500,
+                        });
+                        if let Some(log) = &mut log {
+                            log.add("A colonist was inspired by the cosmos!");
+                        }
+                    } else {
+                        morale.add_modifier(MoodModifier {
+                            label: "Existential Dread".to_string(),
+                            value: -0.10,
+                            duration: 500,
+                        });
+                        if let Some(log) = &mut log {
+                            log.add("A colonist stared into the void...");
+                        }
                     }
                 }
             }
@@ -113,7 +124,7 @@ mod tests {
         world.insert_resource(res);
 
         // Setup Observatory
-        let observatory = world.spawn(Observatory).id();
+        let observatory = world.spawn(Observatory::default()).id();
 
         // Setup Pop working there
         world.spawn((
@@ -140,7 +151,7 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(ColonyResources::default());
 
-        let observatory = world.spawn(Observatory).id();
+        let observatory = world.spawn(Observatory::default()).id();
         let pop = world
             .spawn((
                 Pop,
@@ -182,7 +193,7 @@ mod tests {
     fn test_optimist_gets_more_inspiration() {
         let mut world = World::new();
         world.insert_resource(ColonyResources::default());
-        let observatory = world.spawn(Observatory).id();
+        let observatory = world.spawn(Observatory::default()).id();
 
         // Spawn many pops to get statistical significance faster
         let pop_count = 100;
@@ -237,7 +248,7 @@ mod tests {
     fn test_anxious_gets_more_dread() {
         let mut world = World::new();
         world.insert_resource(ColonyResources::default());
-        let observatory = world.spawn(Observatory).id();
+        let observatory = world.spawn(Observatory::default()).id();
 
         // Spawn many pops
         let pop_count = 100;
@@ -292,7 +303,7 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(ColonyResources::default());
         world.insert_resource(MessageLog::default()); // Add MessageLog
-        let observatory = world.spawn(Observatory).id();
+        let observatory = world.spawn(Observatory::default()).id();
 
         world.spawn((
             Pop,

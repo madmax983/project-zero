@@ -46,6 +46,9 @@ pub fn register(schedule: &mut Schedule) {
                 .after(process_start_plan_system)
                 .after(crate::layer1::day_night::update_ambient_light_from_cycle_system)
                 .after(update_bioluminescence_system),
+            crate::layer1::light_pollution::calculate_sky_glow_system.after(update_lighting_system),
+            crate::layer1::light_pollution::apply_light_pollution_system
+                .after(crate::layer1::light_pollution::calculate_sky_glow_system),
             apply_lighting_penalties_system.after(update_lighting_system),
             apply_weather_effects_system.after(apply_lighting_penalties_system),
             apply_quirk_modifiers_system

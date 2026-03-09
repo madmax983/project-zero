@@ -192,4 +192,3 @@ See `design/IDEAS.md` for unspecced concepts.
 
 
 
-- [ ] `450` Light Pollution — `specs/450-light-pollution.md`
