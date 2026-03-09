@@ -19,6 +19,9 @@ use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::dreams::DreamJournal;
 use crate::layer1::energy::load_limits::PowerCable;
 use crate::layer1::energy::{Battery, PowerConsumer, PowerSource};
+use crate::layer1::fauna::NocturnalFauna;
+use crate::layer1::light_pollution::SkyGlow;
+use crate::layer1::observatory::Observatory;
 use crate::layer1::olfactory::{ScentEmitter, ScentMap};
 use crate::layer1::purity::PurityMap;
 use crate::layer1::rituals::{MachineSpirit, Quirk, QuirkType};
@@ -359,6 +362,10 @@ fn render_colony_stats(frame: &mut Frame, area: Rect, world: &World) {
         Row::new(vec![
             Cell::from("📜 Permits").style(Style::default().fg(Color::White)),
             Cell::from(format!("{:.0}", resources.building_permits)),
+        ]),
+        Row::new(vec![
+            Cell::from("✨ Sky Glow").style(Style::default().fg(Color::Cyan)),
+            Cell::from(format!("{:.1}", world.get_resource::<crate::layer1::light_pollution::SkyGlow>().map_or(0.0, |g| g.global_level))),
         ]),
     ];
 
@@ -772,6 +779,10 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         render_stockpile_details(frame, details_area, stockpile);
     } else if let Some(progress) = world.get::<RefiningProgress>(entity) {
         render_refining_details(frame, details_area, progress);
+    } else if let Some(obs) = world.get::<Observatory>(entity) {
+        render_observatory_details(frame, details_area, obs, world);
+    } else if let Some(fauna) = world.get::<NocturnalFauna>(entity) {
+        render_nocturnal_fauna_details(frame, details_area, fauna, world);
     }
 
     // 6. Structure HP
@@ -997,6 +1008,77 @@ fn render_machine_spirit(frame: &mut Frame, area: Rect, spirit: &MachineSpirit) 
         .block(Block::default().borders(Borders::NONE))
         .gauge_style(Style::default().fg(color))
         .label(format!("Spirit Anger: {:.0}%", spirit.anger))
+        .percent(pct);
+
+    frame.render_widget(gauge, area);
+}
+
+fn render_observatory_details(frame: &mut Frame, area: Rect, obs: &Observatory, world: &World) {
+    let pct = obs.efficiency.clamp(0.0, 100.0) as u16;
+    let color = if pct < 50 {
+        Color::Red
+    } else if pct < 80 {
+        Color::Yellow
+    } else {
+        Color::Cyan
+    };
+
+    let label = if let Some(glow) = world.get_resource::<SkyGlow>() {
+        if glow.global_level > 0.0 {
+            format!("{pct}% (Pollution: {:.1})", glow.global_level)
+        } else {
+            format!("{pct}%")
+        }
+    } else {
+        format!("{pct}%")
+    };
+
+    let gauge = Gauge::default()
+        .block(
+            Block::default()
+                .title(" Lens Efficiency ")
+                .borders(Borders::ALL)
+                .border_type(BorderType::Rounded)
+                .border_style(Style::default().fg(Color::Cyan)),
+        )
+        .gauge_style(Style::default().fg(color))
+        .label(label)
+        .percent(pct);
+
+    frame.render_widget(gauge, area);
+}
+
+fn render_nocturnal_fauna_details(frame: &mut Frame, area: Rect, fauna: &NocturnalFauna, world: &World) {
+    let max_aggression = 10.0; // Assume a reasonable max for UI display purposes
+    let pct = ((fauna.aggression / max_aggression) * 100.0).clamp(0.0, 100.0) as u16;
+    let color = if pct > 70 {
+        Color::Red
+    } else if pct > 30 {
+        Color::Yellow
+    } else {
+        Color::Green
+    };
+
+    let title = if let Some(glow) = world.get_resource::<SkyGlow>() {
+        if glow.global_level > 0.0 {
+            " Agitated by Light "
+        } else {
+            " Aggression "
+        }
+    } else {
+        " Aggression "
+    };
+
+    let gauge = Gauge::default()
+        .block(
+            Block::default()
+                .title(title)
+                .borders(Borders::ALL)
+                .border_type(BorderType::Rounded)
+                .border_style(Style::default().fg(Color::Red)),
+        )
+        .gauge_style(Style::default().fg(color))
+        .label(format!("Aggression: {:.1}", fauna.aggression))
         .percent(pct);
 
     frame.render_widget(gauge, area);
@@ -1629,6 +1711,119 @@ mod tests {
 
         assert!(full_text.contains("Spirit Anger: 80%"));
         assert!(full_text.contains("Glitchy"));
+    }
+
+    #[test]
+    fn test_inspector_render_colony_stats_skyglow() {
+        use crate::layer1::light_pollution::SkyGlow;
+
+        let mut world = World::new();
+        world.insert_resource(Selection::default()); // SelectionTarget::None triggers render_colony_stats
+        world.insert_resource(ColonyResources::default());
+        world.insert_resource(SkyGlow { global_level: 42.5 });
+
+        let backend = TestBackend::new(40, 40);
+        let mut terminal = Terminal::new(backend).unwrap();
+
+        terminal
+            .draw(|f| {
+                render_inspector(f, f.area(), &world);
+            })
+            .unwrap();
+
+        let buffer = terminal.backend().buffer();
+        let cells: Vec<String> = buffer
+            .content
+            .iter()
+            .map(|c| c.symbol().to_string())
+            .collect();
+        let full_text = cells.join("");
+
+        assert!(full_text.contains("Sky Glow"));
+        assert!(full_text.contains("42.5"));
+    }
+
+    #[test]
+    fn test_inspector_render_observatory() {
+        use crate::layer1::building::BuildingType;
+        use crate::layer1::light_pollution::SkyGlow;
+        use crate::layer1::observatory::Observatory;
+
+        let mut world = World::new();
+        world.insert_resource(Selection::default());
+        world.insert_resource(SkyGlow { global_level: 15.5 });
+
+        let entity = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Observatory,
+                },
+                Observatory { efficiency: 84.5 },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
+
+        world.resource_mut::<Selection>().select_entity(entity);
+
+        let backend = TestBackend::new(40, 20);
+        let mut terminal = Terminal::new(backend).unwrap();
+
+        terminal
+            .draw(|f| {
+                render_inspector(f, f.area(), &world);
+            })
+            .unwrap();
+
+        let buffer = terminal.backend().buffer();
+        let cells: Vec<String> = buffer
+            .content
+            .iter()
+            .map(|c| c.symbol().to_string())
+            .collect();
+        let full_text = cells.join("");
+
+        assert!(full_text.contains("Observatory"));
+        assert!(full_text.contains("Lens Efficiency"));
+        assert!(full_text.contains("84% (Pollution: 15.5)"));
+    }
+
+    #[test]
+    fn test_inspector_render_nocturnal_fauna() {
+        use crate::layer1::fauna::NocturnalFauna;
+        use crate::layer1::light_pollution::SkyGlow;
+
+        let mut world = World::new();
+        world.insert_resource(Selection::default());
+        world.insert_resource(SkyGlow { global_level: 20.0 });
+
+        let entity = world
+            .spawn((
+                NocturnalFauna { aggression: 2.0 },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
+
+        world.resource_mut::<Selection>().select_entity(entity);
+
+        let backend = TestBackend::new(40, 20);
+        let mut terminal = Terminal::new(backend).unwrap();
+
+        terminal
+            .draw(|f| {
+                render_inspector(f, f.area(), &world);
+            })
+            .unwrap();
+
+        let buffer = terminal.backend().buffer();
+        let cells: Vec<String> = buffer
+            .content
+            .iter()
+            .map(|c| c.symbol().to_string())
+            .collect();
+        let full_text = cells.join("");
+
+        assert!(full_text.contains("Agitated by Light"));
+        assert!(full_text.contains("Aggression: 2.0"));
     }
 
     #[test]
