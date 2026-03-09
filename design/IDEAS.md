@@ -9010,3 +9010,72 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Instant access to endgame subterranean resources vs. the uncontrollable, permanent destruction of the surface biome.
 
 ---
+## The Luddite Rebellion
+
+**Layer:** 1
+
+**Fantasy:** Watching your workforce rise up against the machines that replaced them.
+
+**Mechanic:** Pops who lose their jobs to automation (like Drone Hubs) accumulate massive Unrest and form a "Luddite" faction. They secretly sabotage automated systems and refuse to use high-tech amenities.
+
+**Emergence:** You fully automate your food production, leaving half the colony unemployed. They form a faction and blow up the drone hub, instantly causing a famine because no humans know how to farm anymore.
+
+**Tension:** Peak efficiency via automation vs. providing meaningful employment to maintain social stability.
+
+---
+
+## The Aesthete's Tyranny
+
+**Layer:** 1
+
+**Fantasy:** Your citizens become too pampered to do the dirty work of survival.
+
+**Mechanic:** Pops with high "Luxury" fulfillment for extended periods develop an "Aesthete" trait. They suffer extreme mood penalties and even refuse to pathfind through "Ugly" or "Dirty" tiles (like mines, sewers, or slums).
+
+**Emergence:** The core of your city is a glittering paradise, but the perimeter defenses break down because your engineers refuse to walk through the muddy fields to repair the turrets.
+
+**Tension:** Spoiling your citizens to boost morale vs. keeping them grounded enough to survive harsh realities.
+
+---
+
+## The Pioneer's Guilt
+
+**Layer:** Cross-layer
+
+**Fantasy:** The psychological toll of destroying an untouched world.
+
+**Mechanic:** Pops with "Ecologist" or "Empath" traits suffer creeping, permanent Stress when native flora/fauna is mass-harvested or when the biome's "Purity" rating drops. They form a faction demanding an end to industrial expansion.
+
+**Emergence:** You clear-cut an ancient alien forest to build a crucial starport. The Ecologist faction goes on strike, effectively paralyzing the spaceport they just watched you destroy their world to build.
+
+**Tension:** Unrestricted resource extraction and expansion vs. maintaining the ecological and psychological harmony of your colony.
+
+---
+
+## The Defector's Bounty
+
+**Layer:** Cross-layer
+
+**Fantasy:** Harboring the galaxy's most wanted man for the secrets in his head.
+
+**Mechanic:** A high-value VIP from a rival Layer 3 empire defects to your Layer 1 colony. They slowly decrypt game-changing technology for you, but their presence guarantees escalating, targeted assassination raids from their former masters.
+
+**Emergence:** You accept the defector to get endgame shield tech early. The raids start small, but eventually, an entire mercenary fleet blockades your planet, and you must choose to surrender the VIP or fight a war you can't win.
+
+**Tension:** Incredible, unique technological leaps vs. painting a massive, permanent target on your colony's back.
+
+---
+
+## The Planetary Quarantine
+
+**Layer:** Cross-layer
+
+**Fantasy:** Being locked in a cage with a monster by the people who are supposed to help you.
+
+**Mechanic:** If a highly infectious "Xeno-Plague" event triggers on your Layer 1 colony, neighboring Layer 3 empires will establish a hard blockade. They won't attack the surface, but they will vaporize any ship attempting to leave, completely cutting off your trade and escape routes.
+
+**Emergence:** You discover a cure, but it requires a rare resource you can only get via trade. You are forced to launch a desperate, suicidal run against the quarantine blockade just to buy the medicine to save your people.
+
+**Tension:** Fast, ruthless internal disease containment vs. facing a multi-empire external military blockade.
+
+---
