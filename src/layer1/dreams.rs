@@ -55,6 +55,7 @@ pub fn dream_system(
             &mut Needs,
             Option<&Memories>,
             Option<&mut DreamJournal>,
+            Option<&crate::layer1::tech::hypno_learning::SleepingInHypnoPod>,
         ),
         (With<Pop>, Without<DreamtThisSleep>),
     >,
@@ -68,7 +69,9 @@ pub fn dream_system(
     let chronicle_events: Vec<_> = chronicle.events.clone();
     let mut rng = rand::thread_rng();
 
-    for (entity, assigned, action, mut needs, memories_opt, journal_opt) in &mut sleeping_pops {
+    for (entity, assigned, action, mut needs, memories_opt, journal_opt, hypno_pod_opt) in
+        &mut sleeping_pops
+    {
         // Must be sleeping in a bed
         if assigned.assignment_type != AssignmentType::HousingResident
             || action.current != ActionType::SatisfyRest
@@ -76,16 +79,30 @@ pub fn dream_system(
             continue;
         }
 
-        // 1% chance per tick to dream -> eventually happens during sleep
-        if !rng.gen_bool(0.01) {
+        let is_hypno = hypno_pod_opt.is_some();
+        let dream_chance = if is_hypno { 0.05 } else { 0.01 };
+
+        // Chance per tick to dream -> eventually happens during sleep
+        if !rng.gen_bool(dream_chance) {
             continue;
         }
 
         // Mark as dreamt immediately to prevent multiple dreams per sleep
         commands.entity(entity).insert(DreamtThisSleep);
 
-        let (dream_content, impact, is_nightmare) =
+        let (mut dream_content, mut impact, mut is_nightmare) =
             generate_dream_content(&mut rng, &chronicle_events, &generator, memories_opt);
+
+        if is_hypno {
+            if rng.gen_bool(0.5) {
+                is_nightmare = true;
+                dream_content = format!("synthetic nightmare: {}", dream_content);
+                impact = -0.3; // Stronger negative impact
+            } else {
+                dream_content = format!("vivid hypno-dream: {}", dream_content);
+                impact *= 2.0; // Stronger positive impact
+            }
+        }
 
         // Apply dream impact
         // Nightmares reduce leisure (stress), Good dreams increase it

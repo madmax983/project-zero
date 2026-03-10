@@ -155,6 +155,8 @@ mod shadow_market_trade;
 
 #[path = "integration/hologram_failure.rs"]
 mod hologram_failure;
+#[path = "integration/hypno_dreams.rs"]
+mod hypno_dreams;
 #[path = "integration/placebo_edicts.rs"]
 mod placebo_edicts;
 #[path = "integration/scapegoat_chronicle.rs"]
