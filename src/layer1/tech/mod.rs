@@ -682,3 +682,4 @@ mod legacy_code_tests;
 pub mod rhythm;
 #[cfg(test)]
 mod rhythm_tests;
+pub mod harmonic;

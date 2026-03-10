@@ -203,3 +203,4 @@
 - [x] `INT-224` Integration: DenounceEvent -> Chronicle — completed 2026-03-07
 - [x] `268` Subliminal Advertising — `specs/268-subliminal-advertising.md` — completed 2026-03-06
 - [x] `255` Hypno-Learning — `specs/255-hypno-learning.md` — completed 2026-03-01
+- [x] `259` Harmonic Mining — `specs/259-harmonic-mining.md` — completed 2026-06-25
