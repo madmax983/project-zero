@@ -177,3 +177,6 @@ mod unmet_needs_black_market;
 mod light_pollution_fauna;
 #[path = "integration/waste_scent.rs"]
 mod waste_scent;
+pub mod integration {
+    pub mod spiteful_will_chronicle;
+}

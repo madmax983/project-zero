@@ -347,3 +347,10 @@
 - **Glue added:**
     - `nocturnal_aggression_bridge_system` connects the two by calculating an actual detection_range bonus from `aggression`.
 - **Tests:** `tests/integration/light_pollution_fauna.rs`
+
+### INT-451: Override Will -> Chronicle
+- **Date:** 2026-03-11
+- **Systems connected:** `process_override_will_system` (Spiteful Will) -> `override_will_chronicle_bridge` (Integration) -> `AddChronicleEvent` (Chronicle)
+- **Glue added:**
+    - `override_will_chronicle_bridge` converts `OverrideWillEvent` to `AddChronicleEvent`
+- **Tests:** `tests/integration/spiteful_will_chronicle.rs`

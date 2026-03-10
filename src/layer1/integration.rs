@@ -975,3 +975,19 @@ pub fn nocturnal_aggression_bridge_system(
         }
     }
 }
+
+/// Bridges `OverrideWillEvent` to the `Chronicle` system (INT-451).
+///
+/// Records the outcome of a spiteful will being forcibly overridden.
+pub fn override_will_chronicle_bridge(
+    mut events_in: bevy_ecs::prelude::EventReader<crate::layer1::spiteful_will::OverrideWillEvent>,
+    mut events_out: bevy_ecs::prelude::EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+) {
+    for _ in events_in.read() {
+        events_out.send(crate::layer1::chronicle::AddChronicleEvent {
+            text: "A spiteful will was forcibly overridden, sparking outrage among the heirs."
+                .to_string(),
+            importance: crate::layer1::chronicle::EventImportance::Major,
+        });
+    }
+}
