@@ -72,12 +72,10 @@ pub fn check_spawn_conditions(
 }
 
 /// A resource to track the cooldown between shadow trader spawns
-#[derive(Resource)]
-#[derive(Default)]
+#[derive(Resource, Default)]
 pub struct ShadowMarketManager {
     pub cooldown: u64,
 }
-
 
 pub fn spawn_shadow_trader_system(
     mut commands: Commands,

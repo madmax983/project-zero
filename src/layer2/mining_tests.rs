@@ -8,7 +8,6 @@ mod tests {
     use bevy_ecs::prelude::*;
 
     fn setup_world() -> World {
-
         // Register components if needed
         World::new()
     }

@@ -95,7 +95,10 @@ pub fn apply_closure(world: &mut World, pop_entity: Entity) {
 
 /// System to apply mood buffs to pops visiting graves.
 pub fn grave_visit_system(
-    mut pops: Query<(&GridPosition, &mut crate::layer1::needs::Needs), With<crate::layer1::pop::Pop>>,
+    mut pops: Query<
+        (&GridPosition, &mut crate::layer1::needs::Needs),
+        With<crate::layer1::pop::Pop>,
+    >,
     graves: Query<&GridPosition, With<Grave>>,
 ) {
     for (pop_pos, mut needs) in pops.iter_mut() {
@@ -283,7 +286,10 @@ mod tests {
 
         // Assert
         let needs = world.get::<Needs>(visitor).unwrap();
-        assert!(needs.leisure > 0.5, "Visiting grave should restore leisure/mood");
+        assert!(
+            needs.leisure > 0.5,
+            "Visiting grave should restore leisure/mood"
+        );
         assert!((needs.leisure - 0.501).abs() < 0.0001);
     }
 }

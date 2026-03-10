@@ -188,7 +188,12 @@ pub use ai_core::*;
 pub use balance::*;
 pub use beauty::*;
 pub use biography::*;
-pub use building::*;
+pub use building::{
+    can_place_building, handle_placement_error, spawn_building, spawn_building_with_material,
+    try_place_building, update_building_map_system, validate_building_placement, BuildMode,
+    Building, BuildingMap, BuildingType, Category, Direction, Material, MaterialType,
+    OccupiedTiles, PlacementError, ShiftSchedule, Tier, VacuumWelded,
+};
 pub use chronicle::*;
 pub use control::*;
 pub use crowding::*;

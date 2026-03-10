@@ -30,8 +30,18 @@ pub const MOVE_INTERVAL: u64 = 100; // Ticks
 /// System that updates `LivingStone` positions.
 ///
 /// Stones migrate towards heat sources and each other.
-type StonePosQuery<'w, 's> = Query<'w, 's, (Entity, &'static GridPosition), (With<LivingStone>, With<Item>)>;
-type MutStoneQuery<'w, 's> = Query<'w, 's, (Entity, &'static mut GridPosition, &'static mut LivingStone, &'static Item)>;
+type StonePosQuery<'w, 's> =
+    Query<'w, 's, (Entity, &'static GridPosition), (With<LivingStone>, With<Item>)>;
+type MutStoneQuery<'w, 's> = Query<
+    'w,
+    's,
+    (
+        Entity,
+        &'static mut GridPosition,
+        &'static mut LivingStone,
+        &'static Item,
+    ),
+>;
 
 pub fn update_living_stone_system(
     _commands: Commands,
