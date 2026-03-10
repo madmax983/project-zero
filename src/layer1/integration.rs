@@ -991,3 +991,21 @@ pub fn override_will_chronicle_bridge(
         });
     }
 }
+
+/// INT-291: Translates NeuralShock from Neural Leech hubs into catastrophic mental breakdowns.
+pub fn apply_neural_shock_system(
+    mut commands: Commands,
+    mut query: Query<
+        (Entity, &mut crate::layer1::unrest::MentalState),
+        With<crate::layer1::tech::neural_leech::NeuralShock>,
+    >,
+) {
+    for (entity, mut state) in &mut query {
+        *state = crate::layer1::unrest::MentalState::Broken(
+            crate::layer1::unrest::MentalBreakType::Daze,
+        );
+        commands
+            .entity(entity)
+            .remove::<crate::layer1::tech::neural_leech::NeuralShock>();
+    }
+}

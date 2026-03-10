@@ -354,3 +354,10 @@
 - **Glue added:**
     - `override_will_chronicle_bridge` converts `OverrideWillEvent` to `AddChronicleEvent`
 - **Tests:** `tests/integration/spiteful_will_chronicle.rs`
+
+### INT-291: NeuralShock -> Mental Breakdown
+- **Date:** 2026-03-10
+- **Systems connected:** `handle_hub_death_system` -> `apply_neural_shock_system` -> `evaluate_actions_system`
+- **Glue added:** `apply_neural_shock_system` in `src/layer1/integration.rs` translates `NeuralShock` into `MentalState::Broken(MentalBreakType::Daze)`.
+- **Schedule:** Registered in `Layer1SystemSet::Observation`, specifically `.after(crate::layer1::tech::neural_leech::handle_hub_death_system)`.
+- **Tests:** `tests/integration/neural_leech_unrest.rs` (1 test)
