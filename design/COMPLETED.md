@@ -218,3 +218,4 @@
 - [x] `INT-447` Integration: Orbital Drop -> Chronicle — completed 2026-03-08
 - [x] `449` The Overview Effect — `specs/449-the-overview-effect.md` — completed 2026-03-08
 - [x] `350` Private Stashes — `specs/350-private-stashes.md` — completed 2026-03-08
+- [x] `450` Light Pollution — `specs/450-light-pollution.md` — completed 2026-03-10

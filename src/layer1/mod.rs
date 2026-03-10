@@ -747,3 +747,6 @@ pub use olfactory::*;
 /// The Overview Effect system (Spec 449).
 pub mod overview_effect;
 pub use overview_effect::*;
+pub mod light_pollution;
+
+pub use light_pollution::*;

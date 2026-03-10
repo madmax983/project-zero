@@ -323,7 +323,7 @@ mod tests {
         world.resource_mut::<SignalNetwork>().active_signal_id = Some(0);
 
         // Spawn Observatory & Worker
-        let observatory = world.spawn(Observatory).id();
+        let observatory = world.spawn(Observatory::default()).id();
         world.spawn((
             Pop,
             AssignedTo {
@@ -366,7 +366,7 @@ mod tests {
         world.resource_mut::<SignalNetwork>().signals[0].progress = 99.95;
 
         // Spawn Observatory & Worker
-        let observatory = world.spawn(Observatory).id();
+        let observatory = world.spawn(Observatory::default()).id();
         world.spawn((
             Pop,
             AssignedTo {

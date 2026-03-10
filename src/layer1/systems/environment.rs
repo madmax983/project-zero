@@ -100,6 +100,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::atmosphere::simulate_diffusion_system
                 .after(crate::layer1::terraforming::apply_planetary_effects_system),
             crate::layer1::logistics::orbital_drop::process_orbital_drops,
+            crate::layer1::light_pollution::calculate_sky_glow_system,
+            crate::layer1::light_pollution::apply_light_pollution_system.after(crate::layer1::light_pollution::calculate_sky_glow_system),
         )
             .in_set(Layer1SystemSet::Environment),
     );

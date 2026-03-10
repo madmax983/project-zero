@@ -7,8 +7,15 @@ use bevy_ecs::prelude::*;
 use rand::Rng;
 
 /// Component marker for Observatory buildings.
-#[derive(Component, Default)]
-pub struct Observatory;
+#[derive(Component)]
+pub struct Observatory {
+    pub efficiency: f32,
+}
+impl Default for Observatory {
+    fn default() -> Self {
+        Self { efficiency: 100.0 }
+    }
+}
 
 /// Processes logic for Pops assigned to Observatories.
 ///
@@ -29,7 +36,8 @@ pub fn process_observe_system(
             && observatories.get(assignment.entity).is_ok()
         {
             // 1. Generate Knowledge
-            resources.knowledge += 0.02;
+            let eff = observatories.get(assignment.entity).unwrap().efficiency;
+            resources.knowledge += 0.02 * (eff / 100.0);
             resources.knowledge = resources.knowledge.clamp(0.0, resources.max_knowledge);
 
             // 2. Chance for Overview Effect (1% per tick)
@@ -113,7 +121,7 @@ mod tests {
         world.insert_resource(res);
 
         // Setup Observatory
-        let observatory = world.spawn(Observatory).id();
+        let observatory = world.spawn(Observatory::default()).id();
 
         // Setup Pop working there
         world.spawn((
@@ -140,7 +148,7 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(ColonyResources::default());
 
-        let observatory = world.spawn(Observatory).id();
+        let observatory = world.spawn(Observatory::default()).id();
         let pop = world
             .spawn((
                 Pop,
@@ -182,7 +190,7 @@ mod tests {
     fn test_optimist_gets_more_inspiration() {
         let mut world = World::new();
         world.insert_resource(ColonyResources::default());
-        let observatory = world.spawn(Observatory).id();
+        let observatory = world.spawn(Observatory::default()).id();
 
         // Spawn many pops to get statistical significance faster
         let pop_count = 100;
@@ -237,7 +245,7 @@ mod tests {
     fn test_anxious_gets_more_dread() {
         let mut world = World::new();
         world.insert_resource(ColonyResources::default());
-        let observatory = world.spawn(Observatory).id();
+        let observatory = world.spawn(Observatory::default()).id();
 
         // Spawn many pops
         let pop_count = 100;
@@ -292,7 +300,7 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(ColonyResources::default());
         world.insert_resource(MessageLog::default()); // Add MessageLog
-        let observatory = world.spawn(Observatory).id();
+        let observatory = world.spawn(Observatory::default()).id();
 
         world.spawn((
             Pop,

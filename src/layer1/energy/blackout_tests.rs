@@ -51,7 +51,7 @@ mod tests {
         // Light Source WITH PowerConsumer (e.g. Lamp)
         // Should be disabled if PowerConsumer is inactive
         world.spawn((
-            LightSource {
+            LightSource { is_outdoor: false,
                 radius: 5.0,
                 intensity: 1.0,
                 color: (255, 255, 255),
@@ -69,7 +69,7 @@ mod tests {
         // Distance (2,2) to (5,5) is ~4.24, which is < 5.0 radius.
         // Moving to (0,0). Distance to (5,5) is ~7.07 > 5.0.
         world.spawn((
-            LightSource {
+            LightSource { is_outdoor: false,
                 radius: 5.0,
                 intensity: 1.0,
                 color: (255, 200, 100),
