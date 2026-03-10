@@ -29,34 +29,37 @@ pub struct HaulerQuery {
 }
 
 pub fn haul_system(world: &mut World) {
-    let factions_data = world.get_resource::<Factions>().map(|f| f.map.clone());
-
     // Collect hauling pops
     let mut query = world.query::<HaulerQuery>();
     let mut haulers = Vec::with_capacity(query.iter(world).len());
-    for hauler in query.iter(world) {
-        if hauler.action.current != ActionType::Haul {
-            continue;
-        }
 
-        if let Some(fid) = hauler.member.and_then(|m| m.faction_id) {
-            if let Some(map) = &factions_data {
-                if map
-                    .get(&fid)
-                    .is_some_and(|d| d.state == FactionState::Striking)
-                {
-                    continue;
+    // Create an immutable reference scope for world access
+    {
+        let factions_data = world.get_resource::<Factions>();
+        for hauler in query.iter(world) {
+            if hauler.action.current != ActionType::Haul {
+                continue;
+            }
+
+            if let Some(fid) = hauler.member.and_then(|m| m.faction_id) {
+                if let Some(factions) = factions_data {
+                    if factions.map
+                        .get(&fid)
+                        .is_some_and(|d| d.state == FactionState::Striking)
+                    {
+                        continue;
+                    }
                 }
             }
-        }
 
-        haulers.push((
-            hauler.entity,
-            *hauler.pos,
-            hauler.carrying.copied(),
-            hauler.carrying_item.copied(),
-            hauler.at_target.is_some(),
-        ));
+            haulers.push((
+                hauler.entity,
+                *hauler.pos,
+                hauler.carrying.copied(),
+                hauler.carrying_item.copied(),
+                hauler.at_target.is_some(),
+            ));
+        }
     }
 
     // Process each hauler

@@ -54,33 +54,35 @@ use rand::Rng;
 ///     *   Resets progress.
 #[doc(alias = "crafting")]
 pub fn process_refining_system(world: &mut World) {
-    let factions_data = world.get_resource::<Factions>().map(|f| f.map.clone());
-
     // Collect workers who are refining
-    let workers: Vec<(Entity, GridPosition)> = world
-        .query_filtered::<(Entity, &GridPosition, &PopAction, Option<&FactionMember>), With<Pop>>()
-        .iter(world)
-        .filter(|(_, _, action, member)| {
-            if action.current != ActionType::Refine {
-                return false;
-            }
+    let workers: Vec<(Entity, GridPosition)> = {
+        let mut query = world
+            .query_filtered::<(Entity, &GridPosition, &PopAction, Option<&FactionMember>), With<Pop>>();
 
-            if let Some(map) = &factions_data {
-                if let Some(m) = member {
-                    if let Some(fid) = m.faction_id {
-                        if map
-                            .get(&fid)
-                            .is_some_and(|d| d.state == FactionState::Striking)
-                        {
-                            return false;
+        let factions_data = world.get_resource::<Factions>();
+        query.iter(world)
+            .filter(|(_, _, action, member)| {
+                if action.current != ActionType::Refine {
+                    return false;
+                }
+
+                if let Some(factions) = factions_data {
+                    if let Some(m) = member {
+                        if let Some(fid) = m.faction_id {
+                            if factions.map
+                                .get(&fid)
+                                .is_some_and(|d| d.state == FactionState::Striking)
+                            {
+                                return false;
+                            }
                         }
                     }
                 }
-            }
-            true
-        })
-        .map(|(e, p, _, _)| (e, *p))
-        .collect();
+                true
+            })
+            .map(|(e, p, _, _)| (e, *p))
+            .collect()
+    };
 
     let resources_snapshot = world
         .get_resource::<ColonyResources>()
