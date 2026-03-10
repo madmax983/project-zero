@@ -257,6 +257,7 @@ fn make_bench_world(n_pops: usize, n_buildings: usize, gpu_ctx: Option<GpuContex
         world.spawn((
             GridPosition { x, y },
             Needs {
+                hygiene: 100.0,
                 hunger,
                 rest,
                 leisure,

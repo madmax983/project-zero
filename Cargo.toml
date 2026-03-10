@@ -15,7 +15,7 @@ serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 lazy_static = "1.4.0"
 rand = "0.8.5"
-ratatui = "0.29.0"
+ratatui = "0.30.0"
 crossterm = "0.28.1"
 clap = { version = "4.5", features = ["derive"] }
 anyhow = "1.0"
@@ -51,3 +51,10 @@ default = ["native"]
 nova = [] # Feature flag for Nova (Expansion 1) content
 native = []
 wasm = []
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+ratzilla = "0.3.0"
+
+[target.'cfg(target_arch = "wasm32")'.dependencies.getrandom]
+version = "0.2"
+features = ["js"]
