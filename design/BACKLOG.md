@@ -2,7 +2,7 @@
 
 ## High Priority
 
-- [ ] `349` Ancestral Graves — `specs/349-ancestral-graves.md` — claimed 2026-03-01
+
 
 
 

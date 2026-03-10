@@ -33,7 +33,7 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
-            update_event_buffer::<crate::layer1::events::SacrilegeEvent>,
+            update_event_buffer::<crate::layer1::ancestral_graves::SacrilegeEvent>,
             update_event_buffer::<crate::layer1::geology::tectonic::MegaQuakeEvent>,
             update_event_buffer::<crate::layer1::logistics::orbital_drop::OrbitalDropEvent>,
             update_event_buffer::<crate::layer1::spiteful_will::InheritanceEvent>,

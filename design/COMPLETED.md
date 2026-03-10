@@ -226,3 +226,4 @@
 - [x] `INT-451` Integration: OverrideWillEvent -> Chronicle — completed 2026-03-11
 - [x] `INT-291` Integration: NeuralShock -> Mental Breakdown — completed 2026-03-10
 - [x] `431` The Void-Weed Smugglers — `specs/431-the-void-weed-smugglers.md` — completed 2026-03-10
+- [x] `349` Ancestral Graves — `specs/349-ancestral-graves.md` — completed 2026-03-10

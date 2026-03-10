@@ -158,7 +158,7 @@ pub fn update_unmet_luxury_system(
 ///
 /// Increases global unrest and logs a major event when a grave is built over.
 pub fn sacrilege_unrest_bridge(
-    mut events_in: EventReader<crate::layer1::events::SacrilegeEvent>,
+    mut events_in: EventReader<crate::layer1::ancestral_graves::SacrilegeEvent>,
     mut events_out: EventWriter<AddChronicleEvent>,
     mut unrest: ResMut<crate::layer1::unrest::Unrest>,
 ) {
