@@ -140,6 +140,9 @@ pub fn register(schedule: &mut Schedule) {
             #[cfg(feature = "nova")]
             crate::experimental::sympathetic_architecture::sympathetic_architecture_system
                 .after(crate::layer1::health::despawn_dead_entities_system),
+            #[cfg(feature = "nova")]
+            crate::experimental::psychic_resonance::psychic_resonance_system
+                .after(crate::layer1::needs::decay_needs_system),
         )
             .in_set(Layer1SystemSet::Observation),
     );
