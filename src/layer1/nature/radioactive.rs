@@ -25,12 +25,20 @@ pub struct RadiationGrid {
 
 impl RadiationGrid {
     /// Create a new radiation grid.
+    ///
+    /// # Panics
+    /// Panics if `width * height` overflows or exceeds 1,000,000.
     #[must_use]
     pub fn new(width: usize, height: usize) -> Self {
+        let size = width
+            .checked_mul(height)
+            .expect("Grid size overflow or too large");
+        assert!(size <= 1_000_000, "Grid size overflow or too large");
+
         Self {
             width,
             height,
-            values: vec![0.0; width * height],
+            values: vec![0.0; size],
         }
     }
 
@@ -155,9 +163,15 @@ mod tests {
 
     #[test]
     fn test_waste_emits_heat() {
+        use crate::layer1::terrain::{TerrainGrid, TerrainType};
         let mut world = World::new();
         // Setup TemperatureGrid
         world.insert_resource(TemperatureGrid::new(10, 10, 0.0));
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        });
         // No SeasonState, so ambient stays 0.0
 
         // Spawn Waste Item
@@ -178,8 +192,14 @@ mod tests {
 
     #[test]
     fn test_ore_emits_heat() {
+        use crate::layer1::terrain::{TerrainGrid, TerrainType};
         let mut world = World::new();
         world.insert_resource(TemperatureGrid::new(10, 10, 0.0));
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        });
 
         world.spawn((
             ResourceItem {
@@ -197,8 +217,14 @@ mod tests {
 
     #[test]
     fn test_food_does_not_emit_heat() {
+        use crate::layer1::terrain::{TerrainGrid, TerrainType};
         let mut world = World::new();
         world.insert_resource(TemperatureGrid::new(10, 10, 0.0));
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        });
 
         world.spawn((
             ResourceItem {
