@@ -134,6 +134,10 @@ pub fn register(schedule: &mut Schedule) {
             .in_set(Layer1SystemSet::Observation),
     );
 
+    schedule.add_systems(crate::layer1::whisper_trade::generate_secrets_system);
+    schedule.add_systems(crate::layer1::whisper_trade::execute_whisper_trade_system);
+    schedule.add_systems(crate::layer1::whisper_trade::paranoia_unrest_system);
+    schedule.add_systems(crate::layer1::whisper_trade::broker_auto_trade_system);
     schedule.add_systems(
         (
             inspector_report_system.after(chronicle_event_handler_system),

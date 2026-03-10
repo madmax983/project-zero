@@ -733,3 +733,4 @@ pub mod geology_tests {
 pub mod pop_doppelganger;
 pub mod shadow_market;
 pub use pop_doppelganger::*;
+pub mod whisper_trade;

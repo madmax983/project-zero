@@ -202,3 +202,5 @@
 - [x] `INT-257` Integration: Subspace Pen Pals -> Factions & Resources — completed 2026-03-05
 - [x] `INT-224` Integration: DenounceEvent -> Chronicle — completed 2026-03-07
 - [x] `268` Subliminal Advertising — `specs/268-subliminal-advertising.md` — completed 2026-03-06
+- [x] `256` Placebo Protocols — `specs/256-placebo-protocols.md` — completed 2026-03-06
+- [x] `300` The Whisper Trade — `specs/300-whisper-trade.md` — completed 2026-03-06
