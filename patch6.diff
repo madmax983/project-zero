@@ -1,0 +1,15 @@
+<<<<<<< SEARCH
+            (
+                hopper_system.after(produce_food_system),
+                process_refining_system,
+                crate::layer1::tech::rhythm::update_rhythm_system.after(process_refining_system),
+                crate::layer1::social::cadet::income_system,
+=======
+            (
+                hopper_system.after(produce_food_system),
+                process_refining_system,
+                crate::layer1::tech::rhythm::update_rhythm_system.after(process_refining_system),
+                crate::layer1::integration::industrial_rhythm_morale_bridge
+                    .after(crate::layer1::tech::rhythm::update_rhythm_system),
+                crate::layer1::social::cadet::income_system,
+>>>>>>> REPLACE

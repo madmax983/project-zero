@@ -767,3 +767,66 @@ pub fn scapegoat_chronicle_bridge(
         });
     }
 }
+
+/// Bridge system connecting Industrial Rhythm (MachineRhythm) to Pop Morale (INT-260).
+/// Applies a Morale modifier to Pops working near highly synchronized machines.
+pub fn industrial_rhythm_morale_bridge(
+    mut pops: Query<
+        (
+            &crate::layer1::map::GridPosition,
+            &mut crate::layer1::morale::Morale,
+        ),
+        With<crate::layer1::pop::Pop>,
+    >,
+    machines: Query<(
+        &crate::layer1::map::GridPosition,
+        &crate::layer1::tech::rhythm::MachineRhythm,
+    )>,
+) {
+    let machine_data: Vec<_> = machines
+        .iter()
+        .map(|(pos, rhythm)| (*pos, rhythm.last_sync_bonus))
+        .collect();
+
+    for (pop_pos, mut morale) in pops.iter_mut() {
+        let mut max_bonus = 0.0_f32;
+
+        for (machine_pos, sync_bonus) in &machine_data {
+            if *sync_bonus > 0.0 && pop_pos.distance_chebyshev(*machine_pos) <= 2 {
+                if *sync_bonus > max_bonus {
+                    max_bonus = *sync_bonus;
+                }
+            }
+        }
+
+        if max_bonus > 0.0 {
+            // Apply modifier
+            // The modifier adds to morale per tick based on max_bonus
+            // e.g. sync_bonus of 10.0 -> +0.1 morale modifier
+            let modifier_value = (max_bonus / 100.0).clamp(0.01, 0.2);
+
+            // Check if they already have an "Industrial Rhythm" modifier to avoid spamming
+            if !morale
+                .modifiers
+                .iter()
+                .any(|m| m.label == "Industrial Rhythm")
+            {
+                morale.add_modifier(crate::layer1::morale::MoodModifier {
+                    label: "Industrial Rhythm".to_string(),
+                    value: modifier_value,
+                    duration: 100, // Lingers for a while
+                });
+            } else {
+                // Refresh existing modifier duration or value if needed
+                for modifier in morale.modifiers.iter_mut() {
+                    if modifier.label == "Industrial Rhythm" {
+                        modifier.duration = 100;
+                        if modifier_value > modifier.value {
+                            modifier.value = modifier_value;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
