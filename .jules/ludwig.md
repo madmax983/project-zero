@@ -13,3 +13,11 @@
 ## [Direct Link Diagonal Buffering]
 **Friction:** Players trying to move diagonally right as the movement cooldown ends often only moved in one direction. This happened because the input buffer only stored a single `KeyCode`, discarding the other key press and making quick diagonal movements feel dropped or rigid.
 **Flow:** Changed the input buffer from a single `Option<KeyCode>` to `buffered_dx` and `buffered_dy` to store movement intent across both axes. This allows diagonal inputs to be perfectly buffered and executed seamlessly, maintaining "Flow" and responsiveness.
+
+## [Notification Slide-In]
+**Friction:** Notifications felt stiff and abrupt when appearing on screen because they used a short, linear padding reduction (teleporting 1 character per tick). It lacked the polish expected of modern UI.
+**Flow:** Replaced the linear interpolation with a Cubic Ease-Out curve and increased the animation duration. Now notifications "slide" in quickly and settle smoothly into place, adding visual "Juice" and Delight without distracting the player.
+
+## [Direct Link Input Grace Period]
+**Friction:** Input buffering in Direct Link mode was unbounded. If a player pressed a key early in the cooldown, the character would execute the move much later, leading to unexpected, sluggish, and "stuck" movements that felt completely disconnected from the player's intent.
+**Flow:** Implemented a Grace Period (0.2s) for input buffering. Now, inputs are only buffered if pressed slightly before the action is ready. Stale inputs are safely discarded, ensuring movement feels tight, predictable, and responsive to the player's immediate commands.

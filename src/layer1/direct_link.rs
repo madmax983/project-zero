@@ -169,10 +169,20 @@ pub fn handle_direct_movement(
 
         // 2. Check Cooldown / Buffering
         if time_since_move < cooldown {
-            // Buffer the input
-            // Accumulate into the buffer so we can store diagonal intents
-            state.buffered_dx = intended_dx;
-            state.buffered_dy = intended_dy;
+            // Ludwig: "Input Buffering" - Record inputs pressed slightly before an action is ready.
+            // We only buffer if the cooldown is almost over (Grace Period of 0.2s).
+            // This prevents old, stale inputs from executing long after the player meant to press them,
+            // which causes a "sluggish" or "stuck" feeling.
+            let time_remaining = cooldown - time_since_move;
+            if time_remaining < 0.2 {
+                // Accumulate into the buffer so we can store diagonal intents
+                state.buffered_dx = intended_dx;
+                state.buffered_dy = intended_dy;
+            } else {
+                // Discard input if pressed too early (prevent sluggish "stuck" inputs)
+                state.buffered_dx = 0;
+                state.buffered_dy = 0;
+            }
 
             continue;
         }

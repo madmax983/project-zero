@@ -80,12 +80,17 @@ pub fn render_notifications(frame: &mut Frame, area: Rect, world: &World) {
             };
 
             // Slide In Logic (Ludwig: "Juice")
-            // If new (< 5 ticks), slide in from right by reducing padding.
-            // Padding decreases as age increases.
-            // t=0 -> pad=5
-            // t=5 -> pad=0
-            let padding = if age < 5 {
-                usize::try_from(5 - age).unwrap_or(0)
+            // Changed from linear to an "Ease-Out" curve for smoother motion.
+            // UI elements should "slide" in and settle naturally, not teleport rigidly.
+            let padding = if age < 10 {
+                // t goes from 0.0 to 1.0 over 10 ticks
+                let t = age as f32 / 10.0;
+                // Ease-Out Cubic: f(t) = 1 - (1 - t)^3
+                let ease_out = 1.0 - (1.0 - t).powi(3);
+                // Start with 15 chars of padding, ease down to 0
+                #[allow(clippy::cast_possible_truncation)]
+                let p = (15.0 * (1.0 - ease_out)).round() as usize;
+                p
             } else {
                 0
             };
