@@ -119,7 +119,9 @@ mod tests {
         world.insert_resource(scale::shared::input::InputContextStack::default());
         world.insert_resource(scale::layer1::tech::infinite_archive::Archive::default());
         world.insert_resource(scale::layer1::shadow_market::ShadowMarketManager::default());
-        world.insert_resource(scale::layer1::temperature::TemperatureGrid::new(10, 10, 20.0));
+        world.insert_resource(scale::layer1::temperature::TemperatureGrid::new(
+            10, 10, 20.0,
+        ));
         world.insert_resource(scale::layer1::hum::HumMap::new(10, 10));
         world.insert_resource(scale::layer1::geology::tectonic::TectonicStress::default());
         world.insert_resource(scale::layer3::silence::DetectionRisk::default());

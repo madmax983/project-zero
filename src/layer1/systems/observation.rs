@@ -213,6 +213,10 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::overview_effect::overview_effect_system,
             crate::layer1::spiteful_will::process_spiteful_will_system,
             crate::layer1::spiteful_will::process_override_will_system,
+            crate::layer1::tech::neural_leech::apply_neural_link_buffs_system,
+            crate::layer1::tech::neural_leech::process_neural_hub_decay_system,
+            crate::layer1::tech::neural_leech::handle_hub_death_system,
+            crate::layer1::tech::neural_leech::neural_hub_death_bridge_system,
         )
             .in_set(Layer1SystemSet::Observation),
     );
