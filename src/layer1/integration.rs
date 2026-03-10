@@ -893,3 +893,5 @@ pub fn industrial_rhythm_morale_bridge(
         }
     }
 }
+
+// Intentionally left empty - Grid Instability is self-integrated in evaluate_grid_load_system

@@ -331,3 +331,10 @@
     - Added `orbital_drop_chronicle_bridge` in `src/layer1/integration.rs` to convert `OrbitalDropEvent` to `AddChronicleEvent` with `EventImportance::Major`.
     - Registered in `src/layer1/systems/observation.rs` under `Layer1SystemSet::Observation`.
 - **Tests:** `tests/integration/orbital_drop_chronicle.rs` (Integration test verified)
+
+### INT-448: Grid Instability -> Thermal/Fire
+- **Date:** 2026-03-08
+- **Systems connected:** `evaluate_grid_load_system` (Energy) -> `TemperatureGrid` (Thermal) & `Fire` (Environment)
+- **Glue added:**
+    - Verified self-integrated logic within `evaluate_grid_load_system` modifying thermal and starting fires.
+- **Tests:** `tests/integration/grid_instability_fire.rs`

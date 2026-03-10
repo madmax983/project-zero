@@ -172,3 +172,5 @@ mod orbital_drop_chronicle;
 mod sacrilege_effects;
 #[path = "integration/unmet_needs_black_market.rs"]
 mod unmet_needs_black_market;
+#[path = "integration/grid_instability_fire.rs"]
+mod grid_instability_fire;
