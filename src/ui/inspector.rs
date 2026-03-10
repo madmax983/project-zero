@@ -17,10 +17,10 @@ use ratatui::{
 use crate::layer1::biography::Biography;
 use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::dreams::DreamJournal;
-use crate::layer1::purity::PurityMap;
 use crate::layer1::energy::load_limits::PowerCable;
 use crate::layer1::energy::{Battery, PowerConsumer, PowerSource};
 use crate::layer1::olfactory::{ScentEmitter, ScentMap};
+use crate::layer1::purity::PurityMap;
 use crate::layer1::rituals::{MachineSpirit, Quirk, QuirkType};
 use crate::layer1::social::old_guard::{Arrival, Generation};
 use crate::layer1::utility_types::UtilityWeights;
@@ -614,7 +614,11 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
     let has_source = world.get::<PowerSource>(entity).is_some();
     let has_emitter = world.get::<ScentEmitter>(entity).is_some();
 
-    let extra_height = u16::from(has_cable) + u16::from(has_battery) + u16::from(has_consumer) + u16::from(has_source) + u16::from(has_emitter);
+    let extra_height = u16::from(has_cable)
+        + u16::from(has_battery)
+        + u16::from(has_consumer)
+        + u16::from(has_source)
+        + u16::from(has_emitter);
 
     let layout = Layout::default()
         .direction(Direction::Vertical)
@@ -838,53 +842,101 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
             .split(layout[8]);
 
         if let Some(cable) = world.get::<PowerCable>(entity) {
-            let load_color = if cable.current_load > cable.capacity { Color::Red } else { Color::Cyan };
-            let load_pct = if cable.capacity > 0.0 { (cable.current_load / cable.capacity) * 100.0 } else { 0.0 };
+            let load_color = if cable.current_load > cable.capacity {
+                Color::Red
+            } else {
+                Color::Cyan
+            };
+            let load_pct = if cable.capacity > 0.0 {
+                (cable.current_load / cable.capacity) * 100.0
+            } else {
+                0.0
+            };
             frame.render_widget(
                 Paragraph::new(Line::from(vec![
                     Span::raw("⚡ Cable Load: "),
-                    Span::styled(format!("{:.0}/{:.0} ({:.0}%)", cable.current_load, cable.capacity, load_pct), Style::default().fg(load_color)),
+                    Span::styled(
+                        format!(
+                            "{:.0}/{:.0} ({:.0}%)",
+                            cable.current_load, cable.capacity, load_pct
+                        ),
+                        Style::default().fg(load_color),
+                    ),
                 ])),
-                extra_chunks[extra_idx]
+                extra_chunks[extra_idx],
             );
             extra_idx += 1;
         }
 
         if let Some(battery) = world.get::<Battery>(entity) {
-            let charge_pct = if battery.capacity > 0.0 { (battery.charge / battery.capacity) * 100.0 } else { 0.0 };
-            let charge_color = if charge_pct < 20.0 { Color::Red } else if charge_pct < 80.0 { Color::Yellow } else { Color::Green };
+            let charge_pct = if battery.capacity > 0.0 {
+                (battery.charge / battery.capacity) * 100.0
+            } else {
+                0.0
+            };
+            let charge_color = if charge_pct < 20.0 {
+                Color::Red
+            } else if charge_pct < 80.0 {
+                Color::Yellow
+            } else {
+                Color::Green
+            };
             frame.render_widget(
                 Paragraph::new(Line::from(vec![
                     Span::raw("🔋 Battery Charge: "),
-                    Span::styled(format!("{:.0}/{:.0} ({:.0}%)", battery.charge, battery.capacity, charge_pct), Style::default().fg(charge_color)),
+                    Span::styled(
+                        format!(
+                            "{:.0}/{:.0} ({:.0}%)",
+                            battery.charge, battery.capacity, charge_pct
+                        ),
+                        Style::default().fg(charge_color),
+                    ),
                 ])),
-                extra_chunks[extra_idx]
+                extra_chunks[extra_idx],
             );
             extra_idx += 1;
         }
 
         if let Some(consumer) = world.get::<PowerConsumer>(entity) {
-            let status = if consumer.active { "Active" } else { "Inactive" };
-            let color = if consumer.active { Color::Green } else { Color::Red };
+            let status = if consumer.active {
+                "Active"
+            } else {
+                "Inactive"
+            };
+            let color = if consumer.active {
+                Color::Green
+            } else {
+                Color::Red
+            };
             frame.render_widget(
                 Paragraph::new(Line::from(vec![
                     Span::raw("🔌 Consumer Demand: "),
-                    Span::styled(format!("{:.0} ({})", consumer.demand, status), Style::default().fg(color)),
+                    Span::styled(
+                        format!("{:.0} ({})", consumer.demand, status),
+                        Style::default().fg(color),
+                    ),
                 ])),
-                extra_chunks[extra_idx]
+                extra_chunks[extra_idx],
             );
             extra_idx += 1;
         }
 
         if let Some(source) = world.get::<PowerSource>(entity) {
             let status = if source.active { "Active" } else { "Inactive" };
-            let color = if source.active { Color::Green } else { Color::Red };
+            let color = if source.active {
+                Color::Green
+            } else {
+                Color::Red
+            };
             frame.render_widget(
                 Paragraph::new(Line::from(vec![
                     Span::raw("🏭 Source Output: "),
-                    Span::styled(format!("{:.0} ({})", source.output, status), Style::default().fg(color)),
+                    Span::styled(
+                        format!("{:.0} ({})", source.output, status),
+                        Style::default().fg(color),
+                    ),
                 ])),
-                extra_chunks[extra_idx]
+                extra_chunks[extra_idx],
             );
             extra_idx += 1;
         }
@@ -897,9 +949,12 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
             frame.render_widget(
                 Paragraph::new(Line::from(vec![
                     Span::raw("💨 Emits Scent: "),
-                    Span::styled(format!("{:?} ({:.1})", emitter.scent_type, emitter.strength), Style::default().fg(color)),
+                    Span::styled(
+                        format!("{:?} ({:.1})", emitter.scent_type, emitter.strength),
+                        Style::default().fg(color),
+                    ),
                 ])),
-                extra_chunks[extra_idx]
+                extra_chunks[extra_idx],
             );
         }
     }
@@ -922,7 +977,6 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
     // 11. Biography
     let bottom_area = layout[12];
     let bio_opt = world.get::<Biography>(entity);
-
 
     if let Some(bio) = bio_opt {
         render_biography(frame, bottom_area, bio, world);

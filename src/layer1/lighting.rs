@@ -76,6 +76,8 @@ pub struct LightSource {
     pub intensity: f32,
     /// Color of the light (RGB). Currently unused for logic, visual only.
     pub color: (u8, u8, u8),
+    /// Whether the light contributes to sky glow/pollution
+    pub is_outdoor: bool,
 }
 
 /// Updates the light map based on ambient light and active light sources.
@@ -186,6 +188,7 @@ mod tests {
     #[test]
     fn test_light_source_component() {
         let source = LightSource {
+            is_outdoor: false,
             radius: 5.0,
             intensity: 1.0,
             color: (255, 255, 255),
@@ -222,6 +225,7 @@ mod tests {
         // Add a light source at (5, 5)
         world.spawn((
             LightSource {
+                is_outdoor: false,
                 radius: 2.0,
                 intensity: 1.0,
                 color: (255, 255, 255),
