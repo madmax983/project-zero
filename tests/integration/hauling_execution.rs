@@ -68,6 +68,9 @@ mod tests {
         world.init_resource::<Events<scale::layer1::medical::PatientTreated>>();
         world.init_resource::<Events<scale::layer1::social::FavorChange>>();
         world.init_resource::<Events<scale::layer1::eureka::EurekaEvent>>();
+        world.init_resource::<Events<scale::layer2::events::DetectionEvent>>();
+        world.init_resource::<Events<scale::layer2::events::ShipDestroyedEvent>>();
+        world.init_resource::<Events<scale::layer2::events::LaunchEvent>>();
         world.init_resource::<Events<scale::layer1::items::UnequipEvent>>();
         world.insert_resource(scale::layer1::social_mimicry::Trend::default());
         world.insert_resource(scale::layer1::visitor::VisitorSource::default());
@@ -95,6 +98,38 @@ mod tests {
             threshold: 0.8,
             enabled: true,
         });
+        world.init_resource::<Events<scale::layer3::silence::HostileSpawnEvent>>();
+        world.init_resource::<Events<scale::layer1::direct_link::UnpossessEvent>>();
+        world.init_resource::<Events<scale::layer1::direct_link::PossessEntityEvent>>();
+        world.init_resource::<Events<scale::layer1::unrest::DenounceEvent>>();
+        world.init_resource::<Events<scale::layer1::hologram::HologramFailureEvent>>();
+        world.init_resource::<Events<scale::layer1::skills::XpGainEvent>>();
+        world.init_resource::<Events<scale::layer1::construction::great_works::GreatWorkCompletedEvent>>();
+        world.init_resource::<Events<scale::layer1::BuildingCompletedEvent>>();
+        world.init_resource::<Events<scale::layer1::BuildingRemovedEvent>>();
+        world.init_resource::<Events<scale::layer1::PopBorn>>();
+        world.init_resource::<Events<scale::layer1::geology::tectonic::MegaQuakeEvent>>();
+        world.init_resource::<Events<scale::layer1::resources::MiningEvent>>();
+        world.init_resource::<Events<scale::layer1::volatile::ExplosionEvent>>();
+        world.insert_resource(scale::shared::input::Input::default());
+        world.insert_resource(scale::ui::UiState::default());
+        world.insert_resource(scale::layer1::trade::TradeMarket::default());
+        world.insert_resource(scale::layer1::solar::SolarCycleState::default());
+        world.insert_resource(scale::layer1::clutter::ClutterGrid::new(10, 10));
+        world.insert_resource(scale::shared::input::InputContextStack::default());
+        world.insert_resource(scale::layer1::tech::infinite_archive::Archive::default());
+        world.insert_resource(scale::layer1::shadow_market::ShadowMarketManager::default());
+        world.insert_resource(scale::layer1::temperature::TemperatureGrid::new(10, 10, 20.0));
+        world.insert_resource(scale::layer1::hum::HumMap::new(10, 10));
+        world.insert_resource(scale::layer1::geology::tectonic::TectonicStress::default());
+        world.insert_resource(scale::layer3::silence::DetectionRisk::default());
+        world.insert_resource(scale::layer2::thermal::ThermalSignature::default());
+        world.insert_resource(scale::layer1::social::empty_room::SanctuaryManager::default());
+        world.insert_resource(scale::layer1::atmosphere::CorrosiveAtmosphere::default());
+        world.insert_resource(scale::layer1::terraforming::PlanetaryAtmosphere::default());
+        world.insert_resource(scale::layer1::atmosphere::DiffusionConfig::default());
+        world.insert_resource(scale::layer1::void_stare::VoidGrid::new(10, 10));
+        world.insert_resource(scale::layer1::festivals::FestivalState::default());
 
         let generator = scale::shared::narrative::NarrativeGenerator::from_embedded();
         world.insert_resource(scale::shared::colony::ColonyName {
