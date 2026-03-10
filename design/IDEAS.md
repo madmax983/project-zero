@@ -9079,3 +9079,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Fast, ruthless internal disease containment vs. facing a multi-empire external military blockade.
 
 ---
+
+## The Empathy Resonator
+
+**Layer:** 1
+
+**Fantasy:** A machine that forces everyone to feel what the leader feels.
+
+**Mechanic:** An advanced building that broadcasts the Mood of the assigned "Operator" to all Pops in a large radius. If the operator is ecstatic, everyone receives a massive mood buff. If the operator breaks down, everyone panics.
+
+**Emergence:** You assign your happiest Pop to the Resonator to boost productivity. But they witness an accident, their mood tanks, and the entire industrial sector collapses in sympathetic despair. You effectively have an emotional hostage situation.
+
+**Tension:** Centralized, powerful mood control vs. extreme vulnerability to a single point of emotional failure.
+
+---
+
+## Chrono-Phasing Wildlife
+
+**Layer:** 1
+
+**Fantasy:** Hunting an animal that isn't always in sync with our time.
+
+**Mechanic:** A rare local predator/prey that phases in and out of the current simulation tick. It might move 3 tiles instantly, disappear for a day, and reappear inside a locked room. Its meat/hide has incredible properties, but it's nearly impossible to hunt conventionally.
+
+**Emergence:** You set up a perfect trap, but the beast phases through the walls into the cafeteria, causing mass panic. Or, it phases out right before it dies, depriving you of the hunt. You have to invent "Temporal Snares" to catch it.
+
+**Tension:** Spending immense labor to track an unpredictable resource vs. the incredible value it provides.
+
+---
+
+## The Diplomatic Paradox
+
+**Layer:** 3
+
+**Fantasy:** You receive an alliance proposal from an empire you haven't met yet, from the future.
+
+**Mechanic:** A temporal anomaly allows a Layer 3 empire to interact with you *before* the formal first contact. They might offer a trade deal or demand tribute based on events that haven't happened yet in your timeline.
+
+**Emergence:** They declare war on you for an atrocity you haven't committed yet. To survive the war, you are forced to commit the atrocity to gain an advantage, fulfilling the temporal loop.
+
+**Tension:** Trying to decipher the future from erratic diplomatic messages vs. ignoring them and flying blind.
+
+---
