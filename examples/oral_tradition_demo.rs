@@ -415,12 +415,61 @@ mod app {
                         " Full Text ",
                         Style::default().fg(Color::DarkGray),
                     ));
-                    let p_text = Paragraph::new(Span::styled(
-                        &story.text,
-                        Style::default().fg(Color::Green),
-                    ))
-                    .block(text_block)
-                    .wrap(Wrap { trim: true });
+
+                    // Parse the story text to highlight mutated parts
+                    let mut spans = Vec::new();
+                    let mutations = [
+                        "Homeland",
+                        "forged",
+                        "returned to the void",
+                        "The Cleansing Flame",
+                        "The Breath of Giants",
+                        "birthed from chaos",
+                        " It is known.",
+                        " So they say.",
+                        " Or was it?",
+                        " The spirits were watching.",
+                        " And the colony survived.",
+                        " Beware the void.",
+                    ];
+
+                    let mut current_text = story.text.clone();
+                    while !current_text.is_empty() {
+                        let mut first_match = None;
+                        let mut first_idx = usize::MAX;
+
+                        for m in &mutations {
+                            if let Some(idx) = current_text.find(m) {
+                                if idx < first_idx {
+                                    first_idx = idx;
+                                    first_match = Some(*m);
+                                }
+                            }
+                        }
+
+                        if let Some(m) = first_match {
+                            if first_idx > 0 {
+                                spans.push(Span::styled(
+                                    current_text[..first_idx].to_string(),
+                                    Style::default().fg(Color::Green),
+                                ));
+                            }
+                            spans.push(Span::styled(
+                                m.to_string(),
+                                Style::default()
+                                    .fg(Color::Magenta)
+                                    .add_modifier(Modifier::BOLD),
+                            ));
+                            current_text = current_text[first_idx + m.len()..].to_string();
+                        } else {
+                            spans.push(Span::styled(current_text, Style::default().fg(Color::Green)));
+                            break;
+                        }
+                    }
+
+                    let p_text = Paragraph::new(Line::from(spans))
+                        .block(text_block)
+                        .wrap(Wrap { trim: true });
                     f.render_widget(p_text, chunks[3]);
 
                     // 4. Effect
