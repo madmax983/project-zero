@@ -63,6 +63,7 @@ fn main() -> anyhow::Result<()> {
     // Note: Missing context variables will appear as [ERROR: KEY] in the text.
     context.insert("ORIGIN_STAR", "Sol Prime");
     context.insert("YEAR", "2150");
+    context.insert("CIV_EPITHET", "The First Ones");
 
     // 3. Generate Story
     let story = generator.generate("CIVILIZATION_RISE", &context)?;
@@ -90,7 +91,7 @@ The "Nova" feature (Oral Tradition) builds upon the base narrative system to cre
 > **Run with:** `cargo run --features nova`
 
 ```rust
-// In Cargo.toml: scale = { version = "...", features = ["nova"] }
+// In Cargo.toml: scale = { version = "...", features = ["nova"] }, bevy_ecs = "0.15"
 
 use scale::layer1::oral_tradition::{OralTradition, collect_chronicles_system};
 use scale::layer1::chronicle::{Chronicle, EventImportance};
