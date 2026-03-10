@@ -180,3 +180,6 @@ mod waste_scent;
 pub mod integration {
     pub mod spiteful_will_chronicle;
 }
+
+#[path = "integration/neural_leech_unrest.rs"]
+mod neural_leech_unrest;
