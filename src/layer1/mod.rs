@@ -429,8 +429,6 @@ pub mod biocompatibility;
 pub use biocompatibility::*;
 
 #[cfg(test)]
-#[cfg(test)]
-#[cfg(test)]
 mod fuel_consumption_tests;
 #[cfg(test)]
 mod fuel_industry_tests;
@@ -442,6 +440,7 @@ mod hydroponics_tests;
 pub mod palette_fatigue;
 #[cfg(test)]
 mod structural_integrity_overflow_tests;
+#[cfg(test)]
 mod structure_maintenance_tests;
 pub use palette_fatigue::*;
 
@@ -576,7 +575,6 @@ pub use cryo::*;
 /// Urban Canyons (Wind) system (Spec 182).
 
 /// Soil fertility system (Spec 059).
-#[cfg(test)]
 #[cfg(test)]
 mod vacuum_welding_tests;
 
