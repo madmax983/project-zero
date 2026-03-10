@@ -1,0 +1,432 @@
+specs/001-project-scaffold.md-
+specs/001-project-scaffold.md:*Builder: add questions here if spec is unclear.*
+--
+specs/002-terrain-grid.md-
+specs/002-terrain-grid.md:*Builder: add questions here if spec is unclear.*
+--
+specs/003-ui-layout.md-
+specs/003-ui-layout.md:*Builder: add questions here if spec is unclear.*
+specs/003-ui-layout.md-
+specs/003-ui-layout.md-## Future Work
+--
+specs/004-pop-entity.md-
+specs/004-pop-entity.md:*Builder: add questions here if spec is unclear.*
+--
+specs/005-pop-needs.md-
+specs/005-pop-needs.md:*Builder: add questions here if spec is unclear.*
+specs/005-pop-needs.md-
+specs/005-pop-needs.md-## Forward Compatibility Note
+--
+specs/006-building-placement.md-
+specs/006-building-placement.md:*Builder: add questions here if spec is unclear.*
+--
+specs/007-building-housing.md-
+specs/007-building-housing.md:*Builder: add questions here if spec is unclear.*
+specs/007-building-housing.md-
+specs/007-building-housing.md-## Notes for Spec 009
+--
+specs/008-building-farm.md-
+specs/008-building-farm.md:*Builder: add questions here if spec is unclear.*
+--
+specs/009-job-system.md-
+specs/009-job-system.md:*Builder: add questions here if spec is unclear.*
+specs/009-job-system.md-
+specs/009-job-system.md-## Forward Compatibility Note
+--
+specs/010-chronicle-system.md-
+specs/010-chronicle-system.md:*Builder: add questions here if spec is unclear.*
+specs/010-chronicle-system.md-
+specs/010-chronicle-system.md-## Congratulations!
+--
+specs/012-input-architecture.md-
+specs/012-input-architecture.md:*Builder: add questions here if spec is unclear.*
+--
+specs/013-schedule-system-ordering.md-
+specs/013-schedule-system-ordering.md:*Builder: add questions here if spec is unclear.*
+specs/013-schedule-system-ordering.md-
+specs/013-schedule-system-ordering.md-## Future Work
+--
+specs/014-rendering-architecture.md-
+specs/014-rendering-architecture.md:*Builder: add questions here if spec is unclear.*
+specs/014-rendering-architecture.md-
+specs/014-rendering-architecture.md-## Future Work
+--
+specs/015-selection-system.md-
+specs/015-selection-system.md:*Builder: add questions here if spec is unclear.*
+specs/015-selection-system.md-
+specs/015-selection-system.md-## Future Work
+--
+specs/016-utility-ai-system.md-
+specs/016-utility-ai-system.md:*Builder: add questions here if spec is unclear.*
+specs/016-utility-ai-system.md-
+specs/016-utility-ai-system.md-## Forward Compatibility Notes
+--
+specs/017-designation-system.md-
+specs/017-designation-system.md:*Builder: add questions here if spec is unclear.*
+--
+specs/018-mining-resources.md-
+specs/018-mining-resources.md:*Builder: add questions here if spec is unclear.*
+--
+specs/019-forestry-system.md-
+specs/019-forestry-system.md:*Builder: add questions here if spec is unclear.*
+--
+specs/020-construction-costs.md-
+specs/020-construction-costs.md:*Builder: add questions here if spec is unclear.*
+--
+specs/022-resource-stockpiles.md-
+specs/022-resource-stockpiles.md:*Builder: add questions here if spec is unclear.*
+--
+specs/023-refining-industry.md-
+specs/023-refining-industry.md:*Builder: Should the "10 tile range" be a constant shared with Mining?*
+--
+specs/026-main-menu.md-
+specs/026-main-menu.md:*Builder: Add questions here.*
+--
+specs/030-tool-economy.md-
+specs/030-tool-economy.md:*Builder: add questions here if spec is unclear.*
+--
+specs/031-pop-morale.md-
+specs/031-pop-morale.md:*Builder: add questions here if spec is unclear.*
+--
+specs/032-entropy-spoilage.md-
+specs/032-entropy-spoilage.md:*Builder: add questions here if spec is unclear.*
+--
+specs/033-fire-propagation.md-
+specs/033-fire-propagation.md:*Builder: add questions here if spec is unclear.*
+--
+specs/034-pop-health.md-
+specs/034-pop-health.md:*Builder: add questions here if spec is unclear.*
+--
+specs/035-workplace-hazards.md-
+specs/035-workplace-hazards.md:*Builder: add questions here if spec is unclear.*
+--
+specs/036-pop-memory.md-
+specs/036-pop-memory.md:*Builder: add questions here if spec is unclear.*
+--
+specs/038-medical-care.md-
+specs/038-medical-care.md:*Builder: add questions here if spec is unclear.*
+--
+specs/039-trade-system.md-
+specs/039-trade-system.md:*Builder: add questions here if spec is unclear.*
+--
+specs/047-pop-relationships.md-
+specs/047-pop-relationships.md:*Builder: add questions here if spec is unclear.*
+--
+specs/049-industrial-waste.md-
+specs/049-industrial-waste.md:*Builder: Should Waste decay naturally?*
+--
+specs/055-rumor-web.md-
+specs/055-rumor-web.md:*Builder: add questions here if spec is unclear.*
+--
+specs/056-designated-zones.md-
+specs/056-designated-zones.md:*Builder: add questions here if spec is unclear.*
+--
+specs/061-cultural-artifacts.md-
+specs/061-cultural-artifacts.md:*Builder: Should Art also emit Beauty?*
+--
+specs/062-pop-lifecycle.md-
+specs/062-pop-lifecycle.md:*Builder: How fast should a "year" be?*
+--
+specs/073-vermin-infestation.md-
+specs/073-vermin-infestation.md:*Builder: add questions here if spec is unclear.*
+--
+specs/083-building-shifts.md-
+specs/083-building-shifts.md:- *Builder: Should `Dawn` and `Dusk` be configurable separately?*
+specs/083-building-shifts.md:- *Builder: Does this apply to Construction tasks?*
+--
+specs/092-antagonistic-flora.md-
+specs/092-antagonistic-flora.md:*Builder: add questions here if spec is unclear.*
+--
+specs/103-private-stashes.md-
+specs/103-private-stashes.md:- *Builder: Should pops consume their stash?*
+specs/103-private-stashes.md:- *Builder: Does this affect "Total" counts in UI?*
+--
+specs/106-resource-purity.md-
+specs/106-resource-purity.md:*Builder: Should Purity also affect the amount of Stone?*
+--
+specs/109-greenhouses.md-
+specs/109-greenhouses.md:*Builder: add questions here if spec is unclear.*
+--
+specs/112-maintenance-debt.md-
+specs/112-maintenance-debt.md:- *Builder: Does `DeferMaintenance` stop manual repairs?*
+--
+specs/113-social-stratification.md-
+specs/113-social-stratification.md:*Builder: add questions here if spec is unclear.*
+--
+specs/114-palette-fatigue.md-
+specs/114-palette-fatigue.md:*Builder: add questions here if spec is unclear.*
+--
+specs/115-observatory-effect.md-
+specs/115-observatory-effect.md:*Builder: add questions here if spec is unclear.*
+--
+specs/116-drone-networks.md-
+specs/116-drone-networks.md:*Builder: add questions here if spec is unclear.*
+--
+specs/117-fuel-consumption.md-
+specs/117-fuel-consumption.md:- *Builder: How much fuel does a generator consume?*
+--
+specs/118-penal-labor.md-
+specs/118-penal-labor.md:*Builder: add questions here if spec is unclear.*
+--
+specs/125-grid-instability.md-
+specs/125-grid-instability.md:*Builder: How to visualize Overload?*
+--
+specs/126-blackout-protocol.md-
+specs/126-blackout-protocol.md:*Builder: Should Blackout disable Batteries too?*
+--
+specs/127-stress-breakdowns.md-
+specs/127-stress-breakdowns.md:*Builder: add questions here if spec is unclear.*
+--
+specs/135-trash-cannon-defense.md-
+specs/135-trash-cannon-defense.md:*Builder: How much waste creates a "mess"?*
+--
+specs/137-pop-hobbies.md-
+specs/137-pop-hobbies.md:*Builder: How do we handle "Gossip" hobby mechanically?*
+--
+specs/141-colony-ship-cannibalization.md-
+specs/141-colony-ship-cannibalization.md:*Builder: add questions here if spec is unclear.*
+--
+specs/146-command-center.md-
+specs/146-command-center.md:-   *Builder: Should multiple Command Centers provide redundancy?*
+--
+specs/146-command-center.md:-   *Builder: Does the Command Center need to be staffed?*
+--
+specs/147-secret-societies.md-
+specs/147-secret-societies.md:-   *Builder: Should societies compete with each other?*
+--
+specs/147-secret-societies.md:-   *Builder: Can a Pop belong to multiple societies?*
+--
+specs/151-cybernetic-augmentation.md-
+specs/151-cybernetic-augmentation.md:*Builder: Should surgery require a Doctor pop to be present?*
+--
+specs/153-geological-instability.md-
+specs/153-geological-instability.md:*Builder: add questions here if spec is unclear.*
+--
+specs/154-named-locations.md-
+specs/154-named-locations.md:*Builder: add questions here if spec is unclear.*
+--
+specs/156-xeno-artifacts.md-
+specs/156-xeno-artifacts.md:-   *Builder: Do artifacts block movement?*
+--
+specs/156-xeno-artifacts.md:-   *Builder: Can we move artifacts?*
+--
+specs/157-ship-classes.md-
+specs/157-ship-classes.md:-   *Builder: Do ships have individual fuel?*
+--
+specs/157-ship-classes.md:-   *Builder: Can I split a fleet?*
+--
+specs/159-fleet-combat.md-
+specs/159-fleet-combat.md:- *Builder: How do I calculate loot?*
+--
+specs/161-ecological-succession.md-
+specs/161-ecological-succession.md:*Builder: add questions here if spec is unclear.*
+--
+specs/163-vermin-evolution.md-
+specs/163-vermin-evolution.md:*Builder: add questions here if spec is unclear.*
+--
+specs/165-gene-banks.md-
+specs/165-gene-banks.md:- *Builder: Should we allow cloning of Pops?*
+--
+specs/166-xeno-gastronomy.md-
+specs/166-xeno-gastronomy.md:- *Builder: Should "Mystery Meals" stack?*
+--
+specs/169-subspace-currents.md-
+specs/169-subspace-currents.md:- *Builder: Should currents drift over time?*
+--
+specs/173-predictive-policing.md-
+specs/173-predictive-policing.md:*Builder: add questions here if spec is unclear.*
+--
+specs/179-magnetic-storms.md-
+specs/179-magnetic-storms.md:- *Builder: Should Magnetic Storm affect Battery discharge rate?*
+--
+specs/180-the-void-between.md-
+specs/180-the-void-between.md:*Builder: add questions here if spec is unclear.*
+--
+specs/181-chemical-regulation.md-
+specs/181-chemical-regulation.md:*Builder: Should withdrawal kill the pop or just incapacitate them?*
+specs/181-chemical-regulation.md:*Builder: Do we need a dedicated "Chemical Plant" building or just use "Lab"?*
+--
+specs/184-orbital-debris.md-
+specs/184-orbital-debris.md:- *Builder: Should debris eventually form a ring system if it gets high enough?*
+specs/184-orbital-debris.md:- *Builder: Does debris affect incoming trade ships?*
+--
+specs/189-gravity-engineering.md-
+specs/189-gravity-engineering.md:*Builder: add questions here if spec is unclear.*
+--
+specs/202-swarm-intelligence.md-
+specs/202-swarm-intelligence.md:*Builder: add questions here if spec is unclear.*
+--
+specs/203-prohibition-contraband.md-
+specs/203-prohibition-contraband.md:*Builder: add questions here if spec is unclear.*
+--
+specs/204-thermal-inversion.md-
+specs/204-thermal-inversion.md:*Builder: add questions here if spec is unclear.*
+--
+specs/205-auroral-harvesting.md-
+specs/205-auroral-harvesting.md:- *Builder: Should the collector take damage during the storm?*
+--
+specs/206-orbital-crossfire.md-
+specs/206-orbital-crossfire.md:*Builder: Should impact destroy Pops?*
+--
+specs/211-gut-biome.md-
+specs/211-gut-biome.md:- *Builder: Should "Synthetic" (Rations) cause decay of natural biomes?*
+--
+specs/215-safehouse-contracts.md-
+specs/215-safehouse-contracts.md:- *Builder: Should Agents have specific needs (Luxury food)?*
+specs/215-safehouse-contracts.md:- *Builder: Can we hold multiple agents in one zone?*
+--
+specs/218-improvised-tools.md-
+specs/218-improvised-tools.md:*Builder: Should "Scrap" be better than "Stone"?*
+--
+specs/219-space-barnacles.md-
+specs/219-space-barnacles.md:- *Builder: Should barnacles fall off if the fleet moves fast enough?*
+--
+specs/220-hygiene-squalor.md-
+specs/220-hygiene-squalor.md:- *Builder: Should Showers require Power?*
+specs/220-hygiene-squalor.md:- *Builder: Does Filth affect Room Quality?*
+--
+specs/225-keystone-species.md-
+specs/225-keystone-species.md:*Builder: add questions here if spec is unclear.*
+--
+specs/226-ship-personalities.md-
+specs/226-ship-personalities.md:*Builder: add questions here if spec is unclear.*
+--
+specs/227-corrosive-atmosphere.md-
+specs/227-corrosive-atmosphere.md:- *Builder: Does corrosion affect units (Pops)?*
+--
+specs/240-clone-vats.md-
+specs/240-clone-vats.md:- *Builder: Should clones be born as adults?*
+specs/240-clone-vats.md:- *Builder: Do they have parents?*
+--
+specs/241-campaign-season.md-
+specs/241-campaign-season.md:- *Builder: What happens if there are no factions?*
+--
+specs/242-the-echo.md-
+specs/242-the-echo.md:- *Builder: Should Echoes block movement?*
+--
+specs/242-the-echo.md:- *Builder: Can we harvest Echoes?*
+--
+specs/243-thermal-bloom.md-
+specs/243-thermal-bloom.md:*Builder: add questions here if spec is unclear.*
+--
+specs/244-biometric-drift.md-
+specs/244-biometric-drift.md:*Builder: Does drift affect non-security interactions?*
+--
+specs/245-quantum-twins.md-
+specs/245-quantum-twins.md:*Builder: Can twins be separated by Layer?*
+--
+specs/246-legacy-code.md-
+specs/246-legacy-code.md:*Builder: Does bloat affect life support?*
+--
+specs/247-ghost-code.md-
+specs/247-ghost-code.md:- *Builder: Does residue stack?*
+--
+specs/248-infinite-archive.md-
+specs/248-infinite-archive.md:- *Builder: Does deleting a prerequisite tech lock the advanced tech?*
+--
+specs/249-holographic-facades.md-
+specs/249-holographic-facades.md:*Builder: add questions here if spec is unclear.*
+--
+specs/250-surgical-addiction.md-
+specs/250-surgical-addiction.md:*Builder: add questions here if spec is unclear.*
+--
+specs/251-the-empty-room.md-
+specs/251-the-empty-room.md:*Builder: Does a person standing in the room count as "not empty"?*
+--
+specs/252-tectonic-stress.md-
+specs/252-tectonic-stress.md:*Builder: Does digging a hole reduce stress?*
+--
+specs/253-cultural-vandalism.md-
+specs/253-cultural-vandalism.md:*Builder: Does vandalism destroy the building?*
+--
+specs/254-doppelgangers.md-
+specs/254-doppelgangers.md:- *Builder: How does the Mimic spawn?*
+--
+specs/255-hypno-learning.md-
+specs/255-hypno-learning.md:- *Builder: Does the pod require power?*
+--
+specs/255-hypno-learning.md:- *Builder: Can children use it?*
+--
+specs/256-placebo-protocols.md-
+specs/256-placebo-protocols.md:*Builder: Can you stack placebos?*
+--
+specs/257-subspace-pen-pals.md-
+specs/257-subspace-pen-pals.md:*Builder: Can I date a Hive Mind?*
+--
+specs/258-acoustic-shadows.md-
+specs/258-acoustic-shadows.md:*Builder: Does glass block sound?*
+--
+specs/264-hyper-specialized-evolution.md-
+specs/264-hyper-specialized-evolution.md:*Builder: Should tenure degrade if they stop working the job?*
+--
+specs/265-shadow-ecosystems.md-
+specs/265-shadow-ecosystems.md:*Builder: Do they move?*
+--
+specs/266-emotional-contagion.md-## 8. Questions
+specs/266-emotional-contagion.md:*Builder: add questions here if spec is unclear.*
+--
+specs/267-ancestral-graves.md-
+specs/267-ancestral-graves.md:*Builder: add questions here if spec is unclear. Architect will address.*
+--
+specs/268-subliminal-advertising.md-
+specs/268-subliminal-advertising.md:*Builder: add questions here if spec is unclear. Architect will address.*
+--
+specs/269-lotus-simulation.md-
+specs/269-lotus-simulation.md:*Builder: add questions here if spec is unclear. Architect will address.*
+--
+specs/270-organ-market.md-
+specs/270-organ-market.md:*Builder: add questions here if spec is unclear. Architect will address.*
+--
+specs/271-subcontractor-factions.md-
+specs/271-subcontractor-factions.md:*Builder: add questions here if spec is unclear. Architect will address.*
+--
+specs/272-martyrdom-effect.md-
+specs/272-martyrdom-effect.md:*Builder: add questions here if spec is unclear. Architect will address.*
+--
+specs/273-feral-outpost.md-
+specs/273-feral-outpost.md:*Builder: add questions here if spec is unclear. Architect will address.*
+--
+specs/274-blacksite-penal-colonies.md-## 8. Questions
+specs/274-blacksite-penal-colonies.md:*Builder: add questions here if spec is unclear.*
+--
+specs/275-architectural-sabotage.md-## 8. Questions
+specs/275-architectural-sabotage.md:*Builder: add questions here if spec is unclear.*
+--
+specs/276-the-flesh-famine.md-## 8. Questions
+specs/276-the-flesh-famine.md:*Builder: add questions here if spec is unclear.*
+--
+specs/277-orbital-megastructure-deorbiting.md-## 8. Questions
+specs/277-orbital-megastructure-deorbiting.md:*Builder: add questions here if spec is unclear.*
+--
+specs/278-xenoflora-addiction.md-## 8. Questions
+specs/278-xenoflora-addiction.md:*Builder: add questions here if spec is unclear.*
+--
+specs/279-signal-latency.md-## 8. Questions
+specs/279-signal-latency.md:*Builder: add questions here if spec is unclear.*
+--
+specs/280-archaeological-layers.md-## 8. Questions
+specs/280-archaeological-layers.md:*Builder: add questions here if spec is unclear.*
+--
+specs/281-atmospheric-feedback.md-## 8. Questions
+specs/281-atmospheric-feedback.md:*Builder: add questions here if spec is unclear.*
+--
+specs/282-cultural-drift.md-## 8. Questions
+specs/282-cultural-drift.md:*Builder: add questions here if spec is unclear.*
+--
+specs/283-acoustic-zones.md-## 8. Questions
+specs/283-acoustic-zones.md:*Builder: add questions here if spec is unclear.*
+--
+specs/284-generational-hoarders.md-## 8. Questions
+specs/284-generational-hoarders.md:*Builder: add questions here if spec is unclear. Architect will address.*
+--
+specs/285-echoes-of-the-past.md-## 8. Questions
+specs/285-echoes-of-the-past.md:*Builder: add questions here if spec is unclear. Architect will address.*
+--
+specs/286-great-works.md-## 8. Questions
+specs/286-great-works.md:*Builder: add questions here if spec is unclear. Architect will address.*
+--
+specs/287-the-silence.md-## 8. Questions
+specs/287-the-silence.md:*Builder: add questions here if spec is unclear. Architect will address.*
+--
+specs/TEMPLATE.md-
+specs/TEMPLATE.md:*Builder: add questions here if spec is unclear. Architect will address.*

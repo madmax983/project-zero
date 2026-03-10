@@ -1,17 +1,14 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::resources::ColonyResources;
 use crate::layer1::pop::PopDied;
+use crate::layer1::resources::ColonyResources;
 use crate::layer1::unrest::{Unrest, UnrestModifier};
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct NobleScion {
     pub allowance: f32,
 }
 
-pub fn income_system(
-    mut resources: ResMut<ColonyResources>,
-    query: Query<&NobleScion>,
-) {
+pub fn income_system(mut resources: ResMut<ColonyResources>, query: Query<&NobleScion>) {
     for scion in query.iter() {
         resources.add_credits(scion.allowance);
     }
@@ -36,12 +33,12 @@ pub fn death_consequence_system(
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
     use crate::layer1::pop::{Pop, PopDied};
-    use crate::layer1::traits::{Trait, Traits};
     use crate::layer1::resources::ColonyResources;
-    use crate::layer1::social::cadet::{NobleScion, income_system, death_consequence_system};
+    use crate::layer1::social::cadet::{death_consequence_system, income_system, NobleScion};
+    use crate::layer1::traits::{Trait, Traits};
     use crate::layer1::unrest::Unrest;
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_noble_allowance_income() {
@@ -70,17 +67,14 @@ mod tests {
         world.insert_resource(Events::<PopDied>::default());
         world.insert_resource(Unrest::default());
 
-        let noble = world.spawn((
-            Pop,
-            NobleScion { allowance: 100.0 },
-        )).id();
+        let noble = world.spawn((Pop, NobleScion { allowance: 100.0 })).id();
 
         // Kill them
         world.send_event(PopDied {
             entity: noble,
             name: "Noble Guy".to_string(),
             tick: 100,
-            reason: "Mock death".to_string()
+            reason: "Mock death".to_string(),
         });
 
         let mut schedule = Schedule::default();

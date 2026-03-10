@@ -28,10 +28,10 @@ use bevy_ecs::prelude::*;
 use comfy_table::{presets::UTF8_FULL, Attribute, Cell, Color, ContentArrangement, Table};
 use crossterm::style::Stylize;
 use scale::layer1::biography::Biography;
+use scale::layer1::construction::{ConstructionProgress, GreatWork, OperationalGreatWork};
 use scale::layer1::dreams::Dream;
 use scale::layer1::pop::PopName;
 use scale::layer1::tech::{unlock_tech, Tech, TechState, TechStatus};
-use scale::layer1::construction::{ConstructionProgress, GreatWork, OperationalGreatWork};
 use scale::layer1::{
     try_designate, try_place_building, Building, BuildingType, Chronicle, ColonyResources,
     Designation, DesignationType, EventImportance, Farm, GlobalWind, GridPosition, Housing, Morale,
