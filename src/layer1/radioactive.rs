@@ -27,26 +27,38 @@ impl RadiationGrid {
     /// Create a new radiation grid.
     #[must_use]
     pub fn new(width: usize, height: usize) -> Self {
+        let count = width
+            .checked_mul(height)
+            .expect("RadiationGrid size overflow");
+        assert!(count <= 1_000_000, "RadiationGrid too large (max 1M tiles)");
         Self {
             width,
             height,
-            values: vec![0.0; width * height],
+            values: vec![0.0; count],
         }
     }
 
     /// Get radiation level at coordinates.
     #[must_use]
     pub fn get(&self, x: usize, y: usize) -> f32 {
-        if x >= self.width || y >= self.height {
-            return 0.0;
+        if x < self.width && y < self.height {
+            if let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x)) {
+                if idx < self.values.len() {
+                    return self.values[idx];
+                }
+            }
         }
-        self.values[y * self.width + x]
+        0.0
     }
 
     /// Set radiation level at coordinates.
     pub fn set(&mut self, x: usize, y: usize, val: f32) {
         if x < self.width && y < self.height {
-            self.values[y * self.width + x] = val;
+            if let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x)) {
+                if idx < self.values.len() {
+                    self.values[idx] = val;
+                }
+            }
         }
     }
 
@@ -158,6 +170,11 @@ mod tests {
         let mut world = World::new();
         // Setup TemperatureGrid
         world.insert_resource(TemperatureGrid::new(10, 10, 0.0));
+        world.insert_resource(crate::layer1::terrain::TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![crate::layer1::terrain::TerrainType::Grass; 100],
+        });
         // No SeasonState, so ambient stays 0.0
 
         // Spawn Waste Item
@@ -180,6 +197,11 @@ mod tests {
     fn test_ore_emits_heat() {
         let mut world = World::new();
         world.insert_resource(TemperatureGrid::new(10, 10, 0.0));
+        world.insert_resource(crate::layer1::terrain::TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![crate::layer1::terrain::TerrainType::Grass; 100],
+        });
 
         world.spawn((
             ResourceItem {
@@ -199,6 +221,11 @@ mod tests {
     fn test_food_does_not_emit_heat() {
         let mut world = World::new();
         world.insert_resource(TemperatureGrid::new(10, 10, 0.0));
+        world.insert_resource(crate::layer1::terrain::TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![crate::layer1::terrain::TerrainType::Grass; 100],
+        });
 
         world.spawn((
             ResourceItem {
