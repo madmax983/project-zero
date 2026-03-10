@@ -9205,3 +9205,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Banning pets early for food security vs. allowing them for free morale but risking a catastrophic infestation.
 
 ---
+
+## The Sunk Cost Megaproject
+
+**Layer:** 1
+
+**Fantasy:** Starting a monument to your hubris that you can't afford to finish, but can't bear to abandon.
+
+**Mechanic:** Certain advanced structures (like a Deep Core Drill or Space Elevator Base) require massive, multi-stage investments of resources and time. However, midway through construction, random events can permanently increase the required resources or introduce severe maintenance costs just to keep the unfinished structure from collapsing.
+
+**Emergence:** You start building a massive orbital cannon to defend against a future threat. Halfway through, the required rare metals double. You end up cannibalizing your own hospital and farms just to finish it, starving your people to build a gun you might never use.
+
+**Tension:** Do you abandon the project and lose half your colony's net worth, or double down and risk everything to see it finished?
+
+---
+
+## The Slow Stalker
+
+**Layer:** 1
+
+**Fantasy:** The creeping dread of an unstoppable, but incredibly slow, threat. The "It Follows" of colony management.
+
+**Mechanic:** A massive, indestructible entity spawns on the edge of the map. It moves at a glacial pace (1 tile per week) directly towards the colony's highest power signature or population center. It cannot be killed by conventional means, only delayed by obstacles or distracted by decoys. It instantly destroys any building or Pop it touches.
+
+**Emergence:** You know it's coming. You spend months building intricate mazes and bait reactors to lead it away from your capital. Eventually, it corners your main generator. You have to literally deconstruct your city and move it tile-by-tile to stay ahead of the slow, inevitable doom.
+
+**Tension:** Do you spend massive resources constantly relocating and distracting the stalker, or try to find a risky, experimental way to banish it?
+
+---
+
+## Symbiotic Economies
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** An economy so intertwined with an alien ecology that you can't tell where the factory ends and the forest begins.
+
+**Mechanic:** You discover a unique Layer 2 trade partner (e.g., a "Bioship Armada" or "Mycelial Hive") that only trades in biological products. They offer incredibly advanced technology, but they demand raw, living Biomass (Flora/Fauna from your Layer 1 map). Over-harvesting to meet their demands permanently degrades your map's natural regeneration.
+
+**Emergence:** You start trading local glowing mushrooms for zero-point energy cores. Your economy booms. But soon, the mushrooms go extinct. The aliens demand the next best thing: your livestock. Then, your crops. Eventually, you realize you have traded away your entire biosphere for shiny machines, leaving a sterile, high-tech tomb.
+
+**Tension:** Rapid technological advancement via biological trade vs. the slow, irreversible sterilization of your home world.
+
+---
