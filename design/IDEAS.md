@@ -8064,3 +8064,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The ultimate diplomatic leverage vs. the literal destruction of everything you've built.
 
 ---
+
+## The Gravity Sling Heist
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Hijacking interstellar shipments by altering planetary gravity.
+
+**Mechanic:** Using massive synchronized "Gravity Spikes", you can briefly alter a planet's gravity well to pull passing Layer 2 trade ships out of warp and crash them onto Layer 1 for salvaging.
+
+**Emergence:** You try to snag a merchant ship but accidentally pull down a passing Devouring Swarm dreadnought. It crashes into your capital and spills alien horrors.
+
+**Tension:** Extreme wealth via piracy vs. catastrophic collateral damage from pulling down the wrong ship.
+
+---
+
+## The Memory Bleed
+
+**Layer:** 1
+
+**Fantasy:** Being haunted by the skills and regrets of the dead.
+
+**Mechanic:** When a Pop with high skills dies, their "Psychic Echo" lingers on the tile. Pops who work on or sleep near that tile gain a temporary boost to those skills but also adopt the dead Pop's fears and neuroses.
+
+**Emergence:** You build a research lab over the site of a tragic mining accident. Your scientists become incredibly productive, but they all develop crippling claustrophobia and refuse to enter the lab.
+
+**Tension:** Exploiting the dead for skill boosts vs. managing the resulting psychological trauma.
+
+---
+
+## Void Nomad Traders
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** The carnival comes to town, but they want your memories as payment.
+
+**Mechanic:** A massive, colorful fleet of "Void Nomads" occasionally parks in Layer 2 orbit. They offer bizarre, reality-bending artifacts on Layer 1, but they don't accept Credits. They demand abstract payments: "One year of memories from your best doctor," "The color blue from your sky," or "Three of your children."
+
+**Emergence:** You desperately need an artifact to stop an invasion. You pay them with the memories of your doctor. The doctor forgets everything about medicine, and your hospital collapses during the ensuing battle.
+
+**Tension:** Access to game-breaking artifacts vs. terrifying, abstract costs.
+
+---
+
+## The Ancestor Simulation
+
+**Layer:** 1
+
+**Fantasy:** Asking your great-grandfather for advice on how to fix the reactor.
+
+**Mechanic:** You can upload the engrams of dying Pops into a massive, power-hungry "Ancestor Core." You can consult the Core for advice (boosting research or solving crises), but the Core requires constant "Validation" (specific luxury items or rituals) to prevent the simulated ancestors from going mad and corrupting the colony's data networks.
+
+**Emergence:** You consult the Ancestor Core to cure a plague. It gives you the cure, but the simulated ancestors become enraged that you didn't offer them their favorite (now extinct) wine. They hack the life support systems in retaliation.
+
+**Tension:** Access to centuries of combined wisdom vs. managing the demands of immortal, simulated ghosts.
+
+---
+
+## Starvation Prophets
+
+**Layer:** 1
+
+**Fantasy:** Extreme hunger breeds divine revelation.
+
+**Mechanic:** Pops who reach the "Starving" threshold but survive for an extended period have a chance to become "Prophets." They gain massive charisma and start preaching a new, radical ideology. They require no food themselves, sustaining themselves purely on "Faith," but they demand the colony destroy its remaining food stockpiles as a "Test of Devotion."
+
+**Emergence:** A famine hits, and a Prophet arises. They convince half the colony to burn the emergency rations. You have to either arrest the Prophet (causing a holy war) or embrace the madness and hope the Prophet's "Miracles" manifest before everyone else starves.
+
+**Tension:** Free, charismatic leaders who need no food vs. the utter destruction of rational survival planning.
+
+---
