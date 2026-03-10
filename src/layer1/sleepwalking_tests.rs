@@ -155,4 +155,162 @@ mod tests {
             .get::<crate::layer1::sleepwalking::SleepwalkTimer>(pop)
             .is_none());
     }
+
+    #[test]
+    fn test_sleepwalking_trigger_chronic_stress() {
+        let mut world = setup_world();
+
+        let entity = world
+            .spawn((
+                Pop,
+                crate::layer1::stress::StressTracker {
+                    accumulated_stress: 95.0,
+                    ..Default::default()
+                },
+                Needs {
+                    rest: 0.1,
+                    hunger: 1.0,
+                    leisure: 1.0,
+                    hygiene: 1.0,
+                },
+                crate::layer1::sleepwalking::StimulantUsage { count: 5 }, // High stimulant use
+            ))
+            .id();
+
+        world
+            .run_system_once(crate::layer1::sleepwalking::check_sleepwalking_trigger)
+            .unwrap();
+
+        let state = world.get::<MentalState>(entity);
+        assert!(state.is_some());
+        assert!(matches!(
+            state.unwrap(),
+            MentalState::Broken(MentalBreakType::Sleepwalking)
+        ));
+    }
+
+    #[test]
+    fn test_sleepwalker_works_while_resting() {
+        let mut world = setup_world();
+        let workplace = world.spawn_empty().id();
+        let entity = world
+            .spawn((
+                Pop,
+                Needs {
+                    rest: 0.0,
+                    hunger: 1.0,
+                    leisure: 1.0,
+                    hygiene: 1.0,
+                },
+                MentalState::Broken(MentalBreakType::Sleepwalking),
+                crate::layer1::sleepwalking::SleepwalkTimer(100),
+                crate::layer1::pop::Job {
+                    workplace,
+                    job_type: crate::layer1::utility_types::AssignmentType::FarmWorker,
+                },
+            ))
+            .id();
+
+        world.insert_resource(crate::shared::time::SimulationTime::default());
+        world
+            .run_system_once(crate::layer1::sleepwalking::regenerate_rest_for_sleepwalkers)
+            .unwrap();
+
+        let needs = world.get::<Needs>(entity).unwrap();
+        assert!(needs.rest > 0.0);
+    }
+
+    #[test]
+    fn test_sleepwalker_ignores_hazards() {
+        use crate::layer1::pathfinding::find_path_for_pop;
+
+        let mut world = setup_world();
+        world.insert_resource(crate::layer1::terrain::TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![crate::layer1::terrain::TerrainType::Grass; 100],
+        });
+        world.insert_resource(crate::layer1::building::OccupiedTiles::default());
+        world.insert_resource(crate::layer1::building::BuildingMap::default());
+
+        // Spawn a hazard that normal pops should avoid or take high cost
+        world.spawn((
+            crate::layer1::nature::fire::Fire {
+                intensity: 10.0,
+                ..Default::default()
+            },
+            GridPosition { x: 1, y: 0 },
+        ));
+
+        let sleepwalker_entity = world
+            .spawn((
+                Pop,
+                crate::layer1::pop::Role::Civilian,
+                GridPosition { x: 0, y: 0 },
+                MentalState::Broken(MentalBreakType::Sleepwalking),
+            ))
+            .id();
+
+        let normal_entity = world
+            .spawn((
+                Pop,
+                crate::layer1::pop::Role::Civilian,
+                GridPosition { x: 0, y: 0 },
+                MentalState::Normal,
+            ))
+            .id();
+
+        // Path from 0,0 to 2,0 goes through 1,0. The pathfinder will try to avoid 1,0 if normal, but sleepwalker will go straight through.
+        let sleepwalker_path =
+            find_path_for_pop(&world, (0, 0), (2, 0), sleepwalker_entity).unwrap();
+        let normal_path = find_path_for_pop(&world, (0, 0), (2, 0), normal_entity).unwrap();
+
+        // The normal pop will route around the hazard
+        assert!(normal_path.len() > 2);
+
+        // The sleepwalker goes straight
+        assert_eq!(sleepwalker_path.len(), 2);
+        assert_eq!(sleepwalker_path[0], (1, 0));
+        assert_eq!(sleepwalker_path[1], (2, 0));
+    }
+
+    #[test]
+    fn test_sleepwalker_drops_items() {
+        use crate::layer1::inventory::{Inventory, InventoryItem};
+        use crate::layer1::items::{Item, ItemType};
+
+        let mut world = setup_world();
+        let mut inventory = Inventory::default();
+        inventory.try_add(InventoryItem {
+            item_type: ItemType::Tool,
+            entity: None,
+        });
+
+        let entity = world
+            .spawn((
+                Pop,
+                MentalState::Broken(MentalBreakType::Sleepwalking),
+                crate::layer1::sleepwalking::SleepwalkTimer(100),
+                inventory,
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
+
+        world.insert_resource(crate::layer1::sleepwalking::RandomDropChance(1.0)); // Force drop
+        world
+            .run_system_once(crate::layer1::sleepwalking::sleepwalker_drop_items)
+            .unwrap();
+
+        let inv = world.get::<Inventory>(entity).unwrap();
+        assert!(inv.items.is_empty());
+
+        let mut query = world.query::<(&Item, &GridPosition)>();
+        let mut found = false;
+        for (item, pos) in query.iter(&world) {
+            if item.item_type == ItemType::Tool && *pos == (GridPosition { x: 5, y: 5 }) {
+                found = true;
+            }
+        }
+        assert!(found);
+    }
 }

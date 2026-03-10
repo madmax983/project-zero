@@ -81,6 +81,9 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::sleep_deprived_savant::fever_dream_system
                 .after(crate::layer1::needs::decay_needs_system),
             check_sleepwalking_start_system.after(decay_needs_system),
+            crate::layer1::sleepwalking::check_sleepwalking_trigger.after(decay_needs_system),
+            crate::layer1::sleepwalking::regenerate_rest_for_sleepwalkers.after(decay_needs_system),
+            crate::layer1::sleepwalking::sleepwalker_drop_items.after(decay_needs_system),
             sleepwalk_end_system.after(decay_needs_system),
         )
             .in_set(Layer1SystemSet::Observation),

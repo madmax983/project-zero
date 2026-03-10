@@ -207,6 +207,42 @@ fn find_path_internal(
     let height = terrain.height;
     let size = width * height;
 
+    // Pre-cache hazards to avoid O(N) ECS lookups in the A* loop
+    let mut hazards = std::collections::HashSet::new();
+    let fire_id = world
+        .components()
+        .get_id(std::any::TypeId::of::<crate::layer1::nature::fire::Fire>());
+    let pos_id = world
+        .components()
+        .get_id(std::any::TypeId::of::<crate::layer1::map::GridPosition>());
+
+    if let (Some(f_id), Some(p_id)) = (fire_id, pos_id) {
+        for archetype in world.archetypes().iter() {
+            if archetype.contains(f_id) && archetype.contains(p_id) {
+                for entity in archetype.entities() {
+                    if let Some(fire_pos) =
+                        world.get::<crate::layer1::map::GridPosition>(entity.id())
+                    {
+                        hazards.insert((fire_pos.x, fire_pos.y));
+                    }
+                }
+            }
+        }
+    }
+
+    let is_sleepwalking = credentials.is_some_and(|c| {
+        world
+            .get::<crate::layer1::unrest::MentalState>(c.entity)
+            .is_some_and(|state| {
+                matches!(
+                    state,
+                    crate::layer1::unrest::MentalState::Broken(
+                        crate::layer1::unrest::MentalBreakType::Sleepwalking
+                    )
+                )
+            })
+    });
+
     // Use flat vectors for O(1) access.
     // u32::MAX serves as "None" for parent index.
     let mut came_from = vec![u32::MAX; size];
@@ -298,7 +334,16 @@ fn find_path_internal(
             let clutter_cost = clutter.map_or(0, |c| {
                 (c.get(next.0 as usize, next.1 as usize) / 20.0) as i32
             });
-            let base_cost = t_cost + c_cost + clutter_cost;
+            // If not sleepwalking, calculate hazard cost
+            let mut hazard_cost = 0;
+            if !is_sleepwalking {
+                // If there is fire on the tile, avoid it
+                if hazards.contains(&next) {
+                    hazard_cost = 1000;
+                }
+            }
+
+            let base_cost = t_cost + c_cost + clutter_cost + hazard_cost;
 
             // Calculate wind penalty
             let wind_penalty = wind_grid.map_or(1.0, |wg| {

@@ -27,6 +27,85 @@ impl Default for SleepwalkingConfig {
     }
 }
 
+/// A component representing a pop's usage of stimulants (Spec 441).
+#[derive(Component)]
+pub struct StimulantUsage {
+    /// The number of times the pop has used stimulants recently.
+    pub count: u32,
+}
+
+/// A resource dictating the chance for a sleepwalker to randomly drop items (Spec 441).
+#[derive(Resource)]
+pub struct RandomDropChance(pub f64);
+
+impl Default for RandomDropChance {
+    fn default() -> Self {
+        Self(0.01) // E.g., 1% chance per tick
+    }
+}
+
+/// System to check if a Pop should start sleepwalking from Extreme Chronic Stress (Spec 441).
+pub fn check_sleepwalking_trigger(
+    mut commands: Commands,
+    query: Query<
+        (
+            Entity,
+            &crate::layer1::stress::StressTracker,
+            &StimulantUsage,
+        ),
+        Without<SleepwalkTimer>,
+    >,
+) {
+    for (entity, stress, stims) in query.iter() {
+        if stress.accumulated_stress > 90.0 && stims.count > 3 {
+            commands
+                .entity(entity)
+                .insert(MentalState::Broken(MentalBreakType::Sleepwalking));
+            commands.entity(entity).insert(SleepwalkTimer(100));
+        }
+    }
+}
+
+/// System to regenerate rest for sleepwalkers (Spec 441).
+pub fn regenerate_rest_for_sleepwalkers(
+    mut query: Query<&mut Needs, With<SleepwalkTimer>>,
+    _time: Res<crate::shared::time::SimulationTime>,
+) {
+    for mut needs in query.iter_mut() {
+        // Regenerate rest even while active.
+        let dt = 1.0 / 60.0; // In Bevy, delta time can be queried, but SimulationTime is usually constant. Using standard fixed dt approximation per tick.
+        needs.rest += 5.0 * dt;
+        needs.rest = needs.rest.min(1.0);
+    }
+}
+
+/// System for sleepwalkers to drop items randomly (Spec 441).
+pub fn sleepwalker_drop_items(
+    mut commands: Commands,
+    mut query: Query<
+        (
+            Entity,
+            &mut crate::layer1::inventory::Inventory,
+            &GridPosition,
+        ),
+        With<SleepwalkTimer>,
+    >,
+    chance: Res<RandomDropChance>,
+) {
+    let mut rng = rand::thread_rng();
+    for (_entity, mut inventory, pos) in query.iter_mut() {
+        if rng.gen_bool(chance.0) && !inventory.items.is_empty() {
+            let item = inventory.items.pop().unwrap();
+            commands.spawn((
+                crate::layer1::items::Item {
+                    item_type: item.item_type,
+                },
+                *pos,
+            ));
+        }
+    }
+}
+
 /// System to check if a Pop should start sleepwalking.
 ///
 /// Triggered when a Pop is attempting to satisfy rest (or resting) and has low morale.

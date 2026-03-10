@@ -104,6 +104,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(RenderCache::default());
     world.insert_resource(UtilityConfig::default());
     world.insert_resource(crate::layer1::sleepwalking::SleepwalkingConfig::default());
+    world.init_resource::<crate::layer1::sleepwalking::RandomDropChance>();
     world.insert_resource(SeasonState::default());
     world.insert_resource(NamedLocations::default());
     world.insert_resource(TechState::default());
