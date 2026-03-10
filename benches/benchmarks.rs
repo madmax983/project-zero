@@ -6,8 +6,7 @@
     clippy::unnecessary_cast
 )]
 
-use std::hint::black_box;
-use criterion::{ criterion_group, criterion_main, Criterion};
+use criterion::{criterion_group, criterion_main, Criterion};
 use ratatui::prelude::{Color, Rect};
 use scale::layer1::building::{BuildingMap, OccupiedTiles};
 use scale::layer1::pathfinding::find_path;
@@ -15,6 +14,7 @@ use scale::layer1::water::WaterGrid;
 use scale::layer1::{BuildingType, GridPosition, MaterialType, TerrainGrid, TerrainType, Viewport};
 use scale::ui::map::{build_map_layer_spans, MapRenderContext, RenderEntity};
 use std::collections::HashMap;
+use std::hint::black_box;
 
 fn setup_pathfinding_world(width: usize, height: usize) -> bevy_ecs::world::World {
     let mut world = bevy_ecs::world::World::new();
@@ -108,22 +108,25 @@ fn benchmark_rendering_buildings(c: &mut Criterion) {
         );
     }
 
-    c.bench_function("render_map_layer_1000_buildings", |b: &mut criterion::Bencher| {
-        b.iter(|| {
-            let ctx = MapRenderContext {
-                area: black_box(area),
-                terrain: black_box(&grid),
-                water: black_box(&water_grid),
-                viewport: black_box(&viewport),
-                entities_data: black_box(&entities_data),
-                build_mode: black_box(None),
-                designation_mode: black_box(None),
-                season: black_box(None),
-                wall_time: 0.0,
-            };
-            build_map_layer_spans(ctx)
-        });
-    });
+    c.bench_function(
+        "render_map_layer_1000_buildings",
+        |b: &mut criterion::Bencher| {
+            b.iter(|| {
+                let ctx = MapRenderContext {
+                    area: black_box(area),
+                    terrain: black_box(&grid),
+                    water: black_box(&water_grid),
+                    viewport: black_box(&viewport),
+                    entities_data: black_box(&entities_data),
+                    build_mode: black_box(None),
+                    designation_mode: black_box(None),
+                    season: black_box(None),
+                    wall_time: 0.0,
+                };
+                build_map_layer_spans(ctx)
+            });
+        },
+    );
 }
 
 fn benchmark_rendering(c: &mut Criterion) {
@@ -155,22 +158,25 @@ fn benchmark_rendering(c: &mut Criterion) {
         );
     }
 
-    c.bench_function("render_map_layer_1000_pops", |b: &mut criterion::Bencher| {
-        b.iter(|| {
-            let ctx = MapRenderContext {
-                area: black_box(area),
-                terrain: black_box(&grid),
-                water: black_box(&water_grid),
-                viewport: black_box(&viewport),
-                entities_data: black_box(&entities_data),
-                build_mode: black_box(None),
-                designation_mode: black_box(None),
-                season: black_box(None),
-                wall_time: 0.0,
-            };
-            build_map_layer_spans(ctx)
-        });
-    });
+    c.bench_function(
+        "render_map_layer_1000_pops",
+        |b: &mut criterion::Bencher| {
+            b.iter(|| {
+                let ctx = MapRenderContext {
+                    area: black_box(area),
+                    terrain: black_box(&grid),
+                    water: black_box(&water_grid),
+                    viewport: black_box(&viewport),
+                    entities_data: black_box(&entities_data),
+                    build_mode: black_box(None),
+                    designation_mode: black_box(None),
+                    season: black_box(None),
+                    wall_time: 0.0,
+                };
+                build_map_layer_spans(ctx)
+            });
+        },
+    );
 }
 
 // ---------------------------------------------------------------------------
@@ -260,7 +266,8 @@ fn make_bench_world(n_pops: usize, n_buildings: usize, gpu_ctx: Option<GpuContex
             Needs {
                 hunger,
                 rest,
-                leisure, hygiene: 50.0,
+                leisure,
+                hygiene: 50.0,
             },
             UtilityWeights::default(),
             PopAction {

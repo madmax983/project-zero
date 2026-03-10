@@ -1,4 +1,5 @@
 pub mod barnacles;
+pub mod black_market;
 pub mod combat;
 pub mod debris;
 #[cfg(test)]
