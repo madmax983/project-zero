@@ -93,25 +93,6 @@ pub fn apply_closure(world: &mut World, pop_entity: Entity) {
     }
 }
 
-/// System to apply mood buffs to pops visiting graves.
-pub fn grave_visit_system(
-    mut pops: Query<
-        (&GridPosition, &mut crate::layer1::needs::Needs),
-        With<crate::layer1::pop::Pop>,
-    >,
-    graves: Query<&GridPosition, With<Grave>>,
-) {
-    for (pop_pos, mut needs) in pops.iter_mut() {
-        let is_near_grave = graves
-            .iter()
-            .any(|g_pos| manhattan_distance(pop_pos, g_pos) <= 2);
-
-        if is_near_grave {
-            // Apply a small per-tick boost to leisure when near a grave (Spec 349)
-            needs.leisure = (needs.leisure + 0.001).min(1.0);
-        }
-    }
-}
 
 /// Executes the bury corpse action.
 #[allow(clippy::too_many_arguments, clippy::collapsible_if)]
@@ -267,29 +248,4 @@ mod tests {
             .any(|m| m.memory_type == MemoryType::AttendedFuneral));
     }
 
-    #[test]
-    fn test_grave_provides_mood_buff_to_visitor() {
-        use bevy_ecs::system::RunSystemOnce;
-
-        // Arrange
-        let mut world = World::new();
-        world.spawn((Grave::default(), GridPosition { x: 0, y: 0 }));
-
-        let needs = Needs {
-            leisure: 0.5,
-            ..Needs::default()
-        };
-        let visitor = world.spawn((Pop, needs, GridPosition { x: 1, y: 0 })).id();
-
-        // Act
-        world.run_system_once(grave_visit_system).unwrap();
-
-        // Assert
-        let needs = world.get::<Needs>(visitor).unwrap();
-        assert!(
-            needs.leisure > 0.5,
-            "Visiting grave should restore leisure/mood"
-        );
-        assert!((needs.leisure - 0.501).abs() < 0.0001);
-    }
 }

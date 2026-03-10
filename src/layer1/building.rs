@@ -2218,7 +2218,7 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
 
     // If we are overwriting a grave, handle the sacrilege and destruction now
     if let Some(ge) = grave_entity {
-        world.send_event(crate::layer1::events::SacrilegeEvent {
+        world.send_event(crate::layer1::ancestral_graves::SacrilegeEvent {
             pos: GridPosition { x, y },
         });
         // Remove grave synchronously
@@ -3075,7 +3075,7 @@ mod tests {
         });
         world.insert_resource(OccupiedTiles::default());
         world.insert_resource(BuildingMap::default());
-        world.init_resource::<Events<crate::layer1::events::SacrilegeEvent>>();
+        world.init_resource::<Events<crate::layer1::ancestral_graves::SacrilegeEvent>>();
         world.init_resource::<Events<crate::layer1::events::BuildingRemovedEvent>>();
         world.init_resource::<Events<crate::layer1::events::BuildingCompletedEvent>>();
         world.insert_resource(ColonyResources {
@@ -3108,7 +3108,7 @@ mod tests {
         assert!(placed, "Building should succeed after destroying grave");
 
         let events = world
-            .get_resource::<Events<crate::layer1::events::SacrilegeEvent>>()
+            .get_resource::<Events<crate::layer1::ancestral_graves::SacrilegeEvent>>()
             .unwrap();
         let mut reader = events.get_cursor();
         assert_eq!(
@@ -3128,7 +3128,7 @@ mod tests {
         });
         world.insert_resource(OccupiedTiles::default());
         world.insert_resource(BuildingMap::default());
-        world.init_resource::<Events<crate::layer1::events::SacrilegeEvent>>();
+        world.init_resource::<Events<crate::layer1::ancestral_graves::SacrilegeEvent>>();
         world.init_resource::<Events<crate::layer1::events::BuildingRemovedEvent>>();
         world.init_resource::<Events<crate::layer1::events::BuildingCompletedEvent>>();
         world.insert_resource(ColonyResources {
@@ -3161,7 +3161,7 @@ mod tests {
         assert!(!placed, "Building should fail if cannot afford");
 
         let events = world
-            .get_resource::<Events<crate::layer1::events::SacrilegeEvent>>()
+            .get_resource::<Events<crate::layer1::ancestral_graves::SacrilegeEvent>>()
             .unwrap();
         let mut reader = events.get_cursor();
         assert_eq!(

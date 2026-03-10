@@ -31,6 +31,7 @@
 //! - **Economy:** [`crate::layer1::resources`], [`crate::layer1::trade`]
 
 /// Biometric access control system (Spec 142).
+pub mod ancestral_graves;
 pub mod access_control;
 /// Pop actions logic.
 pub mod actions;

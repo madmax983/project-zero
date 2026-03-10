@@ -20,9 +20,3 @@ pub struct BuildingCompletedEvent {
     pub entity: Entity,
 }
 
-/// Event triggered when building over a grave (Spec 349).
-#[derive(Event, Debug, Clone)]
-pub struct SacrilegeEvent {
-    /// The position of the sacrilege.
-    pub pos: GridPosition,
-}
