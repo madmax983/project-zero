@@ -382,6 +382,10 @@ pub fn calculate_work_amount(
     work_speed_mod: f32,
     improvised_efficiency: f32,
 ) -> f32 {
+    let mut final_work_speed_mod = work_speed_mod;
+    if let Some(fog) = world.get::<crate::layer1::tech::hypno_learning::MentalFog>(pop_entity) {
+        final_work_speed_mod *= fog.work_speed_penalty;
+    }
     let mut tool_efficiency = if tool_entity.is_some() {
         1.0
     } else {
@@ -418,7 +422,7 @@ pub fn calculate_work_amount(
         * tool_efficiency
         * morale_efficiency
         * skill_efficiency
-        * work_speed_mod
+        * final_work_speed_mod
         * admin_efficiency
         * (1.0 + augmentation_bonus)
         * organic_factor;

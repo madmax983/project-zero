@@ -121,6 +121,7 @@ pub fn movement_system(
             Option<&Traits>,
             Option<&HitStop>,
             Option<&Role>,
+            Option<&crate::layer1::tech::hypno_learning::MentalFog>,
         ),
         (Without<AtTarget>, Without<Building>),
     >,
@@ -137,7 +138,7 @@ pub fn movement_system(
     )>,
     mut commands: Commands,
 ) {
-    for (pop_entity, mut current_pos, mt, mut speed_opt, traits, hit_stop, role) in &mut pops {
+    for (pop_entity, mut current_pos, mt, mut speed_opt, traits, hit_stop, role, mental_fog) in &mut pops {
         // Ludwig: Check Hit Stop
         if let Some(hs) = hit_stop {
             if hs.ticks_remaining > 0 {
@@ -146,10 +147,11 @@ pub fn movement_system(
         }
 
         let trait_mod = traits.map_or(1.0, get_trait_move_speed_modifier);
+        let fog_mod = mental_fog.map_or(1.0, |f| f.movement_penalty);
 
         // Accumulate speed
         if let Some(ref mut speed) = speed_opt {
-            speed.accumulator += speed.current * trait_mod;
+            speed.accumulator += speed.current * trait_mod * fog_mod;
         }
 
         let target_pos = mt.target_position;

@@ -44,6 +44,9 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
+            crate::layer1::tech::hypno_learning::hypno_sleep_system.after(decay_needs_system),
+            crate::layer1::tech::hypno_learning::wake_up_hypno_system.after(decay_needs_system),
+            crate::layer1::tech::hypno_learning::update_mental_fog_system.after(decay_needs_system),
             crate::layer1::addiction::init_addiction_system.after(decay_needs_system),
             crate::layer1::addiction::update_addiction_system
                 .after(crate::layer1::addiction::init_addiction_system),
