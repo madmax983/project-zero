@@ -212,3 +212,4 @@
 - [x] `INT-348` Integration: Needs -> Black Market — completed 2026-03-08
 - [x] `INT-349` Integration: Ancestral Graves -> Sacrilege -> Unrest — completed 2026-03-08
 - [x] `419` The Bio-Acoustic Chorus — `specs/419-bio-acoustic-chorus.md` — completed 2026-03-09
+- [x] `361` The Posthumous Work Shift — `specs/361-the-posthumous-work-shift.md` — completed 2026-03-10

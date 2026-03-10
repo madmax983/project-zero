@@ -29,6 +29,7 @@
 //! *   This represents the danger of uncovering "Forbidden Knowledge".
 
 #![allow(clippy::collapsible_if)]
+pub mod posthumous_work_shift;
 use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::factions::{FactionMember, FactionState, Factions};
 use crate::layer1::map::{CameraTarget, GridPosition, ScreenShake};

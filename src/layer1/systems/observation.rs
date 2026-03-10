@@ -169,6 +169,10 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::pop::handle_pop_death_system),
             crate::layer1::ad_screen::update_ad_screens_system,
             crate::layer1::integration::industrial_rhythm_morale_bridge,
+            crate::layer1::tech::posthumous_work_shift::posthumous_work_shift_system
+                .before(crate::layer1::health::despawn_dead_entities_system),
+            crate::layer1::tech::posthumous_work_shift::digital_ghost_decay_system,
+            crate::layer1::tech::posthumous_work_shift::haunted_workplace_system,
             crate::layer1::integration::great_work_chronicle_bridge,
         )
             .in_set(Layer1SystemSet::Observation),
