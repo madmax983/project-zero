@@ -72,6 +72,10 @@ pub enum Trait {
     Noble,
     /// Distrusts colony authorities, ignores placebos (Spec 256).
     Distrustful,
+    MoleEyes,
+    Hunchback,
+    StaticSkin,
+    SilverTongue,
 }
 
 impl Trait {
@@ -111,6 +115,10 @@ impl Trait {
             Self::Transhumanist => "Transhumanist",
             Self::Noble => "Noble",
             Self::Distrustful => "Distrustful",
+            Self::MoleEyes => "Mole Eyes",
+            Self::Hunchback => "Hunchback",
+            Self::StaticSkin => "Static Skin",
+            Self::SilverTongue => "Silver Tongue",
         }
     }
 }
@@ -412,4 +420,34 @@ mod tests {
             );
         }
     }
+}
+
+/// Returns job efficiency modifier based on specialized traits.
+#[must_use]
+pub fn get_job_efficiency_modifier(traits: &Traits, job: crate::layer1::pop::JobType) -> f32 {
+    let mut modifier = 1.0;
+
+    if traits.has(Trait::MoleEyes) {
+        if job == crate::layer1::pop::JobType::FarmWorker {
+            modifier += 0.2;
+        } else {
+            modifier -= 0.1;
+        }
+    }
+    if traits.has(Trait::StaticSkin) {
+        if job == crate::layer1::pop::JobType::ObservatoryWorker {
+            modifier += 0.2;
+        } else {
+            modifier -= 0.1;
+        }
+    }
+    if traits.has(Trait::SilverTongue) {
+        if job == crate::layer1::pop::JobType::Administrator {
+            modifier += 0.2;
+        } else {
+            modifier -= 0.1;
+        }
+    }
+
+    modifier
 }

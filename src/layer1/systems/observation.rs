@@ -143,6 +143,8 @@ pub fn register(schedule: &mut Schedule) {
                 .after(Layer1SystemSet::Consumption),
             // Fix: handle_pop_death_system is re-exported in layer1/mod.rs or located in layer1/pop.rs
             // The previous error was referencing crate::layer1::health::handle_pop_death_system
+            crate::layer1::pop::specialization::update_tenure_system.after(decay_needs_system),
+            crate::layer1::pop::specialization::check_mutation_system.after(crate::layer1::pop::specialization::update_tenure_system),
             crate::layer1::quantum_twins::handle_severance_system
                 .after(crate::layer1::pop::handle_pop_death_system),
         )
