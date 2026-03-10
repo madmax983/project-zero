@@ -207,4 +207,5 @@ pub fn place_building(world: &mut World, building: BuildingType, pos: GridPositi
 
 ## 8. Questions
 
-*Builder: add questions here if spec is unclear. Architect will address.*
+*Builder: add questions here if spec is unclear.*
+*Architect:* Reviewed and verified. No further questions.

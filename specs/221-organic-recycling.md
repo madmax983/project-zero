@@ -150,5 +150,7 @@ fn test_cannibal_trait_ignores_gloom() {
 
 ## 8. Questions
 
-*   *Builder*: Should `Recycler` require power? (Yes, assumed standard building).
-*   *Builder*: Does `Waste` come from `ColonyResources.waste` or items on the ground? (Both. Haulers pick up items, Industry outputs to `ColonyResources.waste`. `Recycler` should probably pull from `ColonyResources.waste` via a worker job, or have haulers bring items).
+*   *Builder*: Should `Recycler` require power?
+    *Architect:* Yes, assumed standard building.
+*   *Builder*: Does `Waste` come from `ColonyResources.waste` or items on the ground?
+    *Architect:* Both. Haulers pick up items, Industry outputs to `ColonyResources.waste`. `Recycler` should probably pull from `ColonyResources.waste` via a worker job, or have haulers bring items.

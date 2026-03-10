@@ -203,4 +203,5 @@ pub fn assign_home_zone(
 
 ## 8. Questions
 
-*Builder: add questions here if spec is unclear. Architect will address.*
+*Builder: add questions here if spec is unclear.*
+*Architect:* Reviewed and verified. No further questions.

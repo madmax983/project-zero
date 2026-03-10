@@ -169,5 +169,7 @@ fn test_delivering_permit_activates_building() {
 
 ## 8. Questions
 
-*   *Builder*: Should permits stack? (Yes, they are items).
-*   *Builder*: What if I deconstruct the building? Do I get the permit back? (No, bureaucracy is a sunk cost).
+*   *Builder*: Should permits stack?
+    *Architect:* Yes, they are items.
+*   *Builder*: What if I deconstruct the building? Do I get the permit back?
+    *Architect:* No, bureaucracy is a sunk cost.
