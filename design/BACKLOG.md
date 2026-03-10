@@ -171,7 +171,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `428` The Propaganda Black Market — `specs/428-the-propaganda-black-market.md`
 - [ ] `429` The Whispering Gallery — `specs/429-the-whispering-gallery.md`
 - [ ] `430` Gravitational Tides — `specs/430-gravitational-tides.md`
-- [ ] `431` The Void-Weed Smugglers — `specs/431-the-void-weed-smugglers.md`
 - [ ] `432` Quantum Entanglement Commute — `specs/432-quantum-entanglement-commute.md`
 - [ ] `433` The Phantom Debt — `specs/433-the-phantom-debt.md`
 - [ ] `434` The Parasitic Habitation Block — `specs/434-parasitic-habitation-block.md`
