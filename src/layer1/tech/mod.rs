@@ -677,6 +677,9 @@ mod infinite_archive_tests;
 pub mod legacy_code;
 #[cfg(test)]
 mod legacy_code_tests;
+pub mod neural_leech;
+#[cfg(test)]
+mod neural_leech_tests;
 
 /// The Industrial Rhythm system (Spec 260).
 pub mod rhythm;

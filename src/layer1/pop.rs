@@ -389,9 +389,19 @@ pub fn reset_speed_system(mut query: Query<&mut Speed>) {
 
 /// Handles death events specific to Pops.
 #[allow(clippy::type_complexity)]
+#[allow(clippy::too_many_arguments)]
 pub fn handle_pop_death_system(
     mut pop_died_events: EventWriter<PopDied>,
-    query: Query<(Entity, Option<&GridPosition>, Option<&PopName>), (With<Pop>, Added<Dead>)>,
+    mut hub_death_events: EventWriter<crate::layer1::tech::neural_leech::NeuralHubDeathEvent>,
+    query: Query<
+        (
+            Entity,
+            Option<&GridPosition>,
+            Option<&PopName>,
+            Option<&crate::layer1::tech::neural_leech::NeuralHub>,
+        ),
+        (With<Pop>, Added<Dead>),
+    >,
     mut commands: Commands,
     mut log: Option<ResMut<MessageLog>>,
     mut shake: Option<ResMut<ScreenShake>>,
@@ -400,7 +410,12 @@ pub fn handle_pop_death_system(
 ) {
     let tick = time.map_or(0, |t| t.tick);
 
-    for (entity, pos_opt, name_opt) in query.iter() {
+    for (entity, pos_opt, name_opt, hub_opt) in query.iter() {
+        if hub_opt.is_some() {
+            hub_death_events.send(crate::layer1::tech::neural_leech::NeuralHubDeathEvent {
+                hub_entity: entity,
+            });
+        }
         let name = name_opt.map_or_else(|| "Unknown".to_string(), |n| n.0.clone());
 
         // 1. Spawn Corpse & Visuals

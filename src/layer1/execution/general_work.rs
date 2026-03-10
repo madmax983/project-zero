@@ -421,7 +421,7 @@ pub fn calculate_work_amount(
         .get_resource::<AdminStats>()
         .map_or(1.0, |stats| stats.efficiency);
 
-    let amount = WORK_PER_TICK
+    let mut amount = WORK_PER_TICK
         * tool_efficiency
         * morale_efficiency
         * skill_efficiency
@@ -429,6 +429,14 @@ pub fn calculate_work_amount(
         * admin_efficiency
         * (1.0 + augmentation_bonus)
         * organic_factor;
+
+    // Neural Leech Buff
+    if world
+        .get::<crate::layer1::tech::neural_leech::NeuralLinked>(pop_entity)
+        .is_some()
+    {
+        amount *= 2.0;
+    }
 
     // Cap work amount to prevent logic bugs / economy exploits
     amount.min(1000.0)
