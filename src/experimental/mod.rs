@@ -14,3 +14,6 @@ pub mod bioluminescent_trails;
 
 #[cfg(feature = "nova")]
 pub mod sympathetic_architecture;
+
+#[cfg(feature = "nova")]
+pub mod psychic_resonance;

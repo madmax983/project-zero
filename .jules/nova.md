@@ -27,3 +27,8 @@
 **Concept:** A system that damages nearby Buildings when a Pop dies violently near them, simulating the structure "feeling" the emotional trauma of the inhabitants.
 **Fate:** Merged
 **Lesson:** Tying an intense entity event (`Added<Dead>`) to an environmental consequence (`Health` of `Building`s) reinforces the thematic connection between the Pops and their constructed environment, making the base itself feel alive and responsive to tragedy.
+
+## [Psychic Resonance]
+**Concept:** A system that gives pops with a specific trait (`Trait::VoidTouched` as an analog for "Psychic") a passive "sense" of nearby high-value and negative-value items. This translates into a slow morale tick up when they are near `Luxury`, `Medicine`, or `Alloy` items, or down if near `Corpse` entities.
+**Fate:** Proposed
+**Lesson:** Tying spatial resource placement directly to a Pop's internal `Morale` state adds another layer of base design complexity - where you store things affects how your people feel implicitly.
