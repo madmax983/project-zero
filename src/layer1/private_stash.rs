@@ -281,3 +281,24 @@ mod tests {
         assert!((res.ore - 0.0).abs() < f32::EPSILON);
     }
 }
+
+pub fn stash_creation_system(
+    mut resources: ResMut<ColonyResources>,
+    mut query: Query<(Entity, &Traits, &mut PrivateStash)>,
+) {
+    if resources.food > 5.0 {
+        return;
+    }
+
+    for (_entity, traits, mut stash) in &mut query {
+        if traits.0.contains(&Trait::Anxious) && resources.food >= 1.0 {
+            resources.food -= 1.0;
+            stash.add(ResourceType::Food, 1.0);
+        }
+    }
+}
+
+pub fn calculate_visible_food(world: &World) -> f32 {
+    let resources = world.resource::<ColonyResources>();
+    resources.food
+}

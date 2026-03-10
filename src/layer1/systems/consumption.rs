@@ -20,6 +20,7 @@ pub fn register(schedule: &mut Schedule) {
                 .after(consume_food_system)
                 .after(vermin_growth_system),
             crate::layer1::visitor::visitor_lifecycle_system.after(consume_food_system),
+            crate::layer1::private_stash::stash_creation_system.after(consume_food_system),
             theft_system
                 .after(consume_food_system)
                 .before(decay_needs_system),

@@ -2,3 +2,4 @@
 - [x] `120` Crop Diversity — `specs/120-crop-diversity.md` — completed 2026-10-31
 - [x] `207` Atmospheric Processors — `specs/207-atmospheric-processors.md` — completed 2026-06-25
 - [x] `258` Acoustic Shadows — `specs/258-acoustic-shadows.md` — completed 2026-03-01
+- [x] `350` Private Stashes — `specs/350-private-stashes.md` — completed 2026-03-10
