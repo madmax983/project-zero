@@ -720,3 +720,5 @@ pub mod nature;
 pub use nature::*;
 pub mod shipbreaking;
 pub use shipbreaking::*;
+pub mod void_weed;
+pub use void_weed::*;

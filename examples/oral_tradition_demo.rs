@@ -462,7 +462,10 @@ mod app {
                             ));
                             current_text = current_text[first_idx + m.len()..].to_string();
                         } else {
-                            spans.push(Span::styled(current_text, Style::default().fg(Color::Green)));
+                            spans.push(Span::styled(
+                                current_text,
+                                Style::default().fg(Color::Green),
+                            ));
                             break;
                         }
                     }
