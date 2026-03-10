@@ -55,7 +55,12 @@ struct WorkerData {
 #[allow(clippy::too_many_lines, clippy::items_after_statements)]
 pub fn work_execution_system(world: &mut World) {
     let policies = world.get_resource::<ColonyPolicies>().cloned();
-    let global_work_speed_mod = policies.as_ref().map_or(1.0, get_work_speed_modifier);
+    let mut global_work_speed_mod = policies.as_ref().map_or(1.0, get_work_speed_modifier);
+
+    if let Some(stats) = world.get_resource::<crate::layer1::black_market::ColonyStats>() {
+        global_work_speed_mod *=
+            crate::layer1::black_market::get_corruption_efficiency_modifier(Some(stats));
+    }
 
     // Fetch DayNightCycle
     let cycle = world.get_resource::<DayNightCycle>().map(|c| c.time_of_day);

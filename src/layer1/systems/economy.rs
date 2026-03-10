@@ -33,6 +33,8 @@ pub fn register(schedule: &mut Schedule) {
                 crate::layer1::admin::calculate_admin_stats,
                 crate::layer1::eureka::handle_eureka_events,
                 recycle_processing_system,
+                crate::layer1::black_market::black_market_spawn_system,
+                crate::layer1::black_market::smuggler_trade_system,
                 #[cfg(feature = "nova")]
                 crate::layer1::machine_consciousness::consciousness_growth_system,
             ),
