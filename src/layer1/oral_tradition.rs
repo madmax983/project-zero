@@ -186,13 +186,13 @@ fn mutate_story(story: &mut Story, rng: &mut impl Rng) {
 
     if rng.gen_bool(0.5) {
         // Append suffix
-        let suffix = suffixes.choose(rng).unwrap();
+        let Some(suffix) = suffixes.choose(rng) else { return; };
         if !story.text.ends_with(suffix) {
             story.text.push_str(suffix);
         }
     } else {
         // Replace word
-        let (target, replacement) = replacements.choose(rng).unwrap();
+        let Some((target, replacement)) = replacements.choose(rng) else { return; };
         // Case insensitive replacement would be better but simple replace is fine for MVP
         story.text = story.text.replace(target, replacement);
     }

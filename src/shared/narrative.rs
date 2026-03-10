@@ -112,6 +112,12 @@ impl NarrativeGenerator {
     pub fn load_from_files<P: AsRef<Path>>(&mut self, path: P) -> Result<()> {
         let path = path.as_ref();
 
+        // Security check: Prevent path traversal attacks
+        let path_str = path.to_string_lossy();
+        if path_str.contains("..") || path.is_absolute() {
+            return Err(anyhow::anyhow!("Invalid path: {}", path.display()));
+        }
+
         if !path.exists() || !path.is_dir() {
             return Err(anyhow::anyhow!(
                 "Directory not found or not a directory: {}",

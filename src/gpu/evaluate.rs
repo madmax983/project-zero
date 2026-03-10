@@ -148,7 +148,7 @@ fn dispatch_and_readback(
         bind_group_dirty = true;
     }
     gpu.queue.write_buffer(
-        cache.pop_buffer.as_ref().unwrap(),
+        cache.pop_buffer.as_ref().expect("pop_buffer should be initialized"),
         0,
         bytemuck::cast_slice(pop_inputs),
     );
@@ -173,7 +173,7 @@ fn dispatch_and_readback(
 
     if !building_inputs.is_empty() {
         gpu.queue.write_buffer(
-            cache.building_buffer.as_ref().unwrap(),
+            cache.building_buffer.as_ref().expect("building_buffer should be initialized"),
             0,
             bytemuck::cast_slice(building_inputs),
         );
@@ -192,7 +192,7 @@ fn dispatch_and_readback(
         bind_group_dirty = true;
     }
     gpu.queue.write_buffer(
-        cache.global_buffer.as_ref().unwrap(),
+        cache.global_buffer.as_ref().expect("global_buffer should be initialized"),
         0,
         bytemuck::bytes_of(global_state),
     );
@@ -229,19 +229,19 @@ fn dispatch_and_readback(
             entries: &[
                 wgpu::BindGroupEntry {
                     binding: 0,
-                    resource: cache.pop_buffer.as_ref().unwrap().as_entire_binding(),
+                    resource: cache.pop_buffer.as_ref().expect("pop_buffer should be initialized").as_entire_binding(),
                 },
                 wgpu::BindGroupEntry {
                     binding: 1,
-                    resource: cache.building_buffer.as_ref().unwrap().as_entire_binding(),
+                    resource: cache.building_buffer.as_ref().expect("building_buffer should be initialized").as_entire_binding(),
                 },
                 wgpu::BindGroupEntry {
                     binding: 2,
-                    resource: cache.global_buffer.as_ref().unwrap().as_entire_binding(),
+                    resource: cache.global_buffer.as_ref().expect("global_buffer should be initialized").as_entire_binding(),
                 },
                 wgpu::BindGroupEntry {
                     binding: 3,
-                    resource: cache.decision_buffer.as_ref().unwrap().as_entire_binding(),
+                    resource: cache.decision_buffer.as_ref().expect("decision_buffer should be initialized").as_entire_binding(),
                 },
             ],
         });
@@ -262,14 +262,14 @@ fn dispatch_and_readback(
             timestamp_writes: None,
         });
         pass.set_pipeline(&gpu.pipeline);
-        pass.set_bind_group(0, cache.bind_group.as_ref().unwrap(), &[]);
+        pass.set_bind_group(0, cache.bind_group.as_ref().expect("bind_group should be initialized"), &[]);
         pass.dispatch_workgroups(workgroup_count, 1, 1);
     }
 
     // Copy to staging
-    let staging = cache.staging_buffer.as_ref().unwrap();
+    let staging = cache.staging_buffer.as_ref().expect("staging_buffer should be initialized");
     encoder.copy_buffer_to_buffer(
-        cache.decision_buffer.as_ref().unwrap(),
+        cache.decision_buffer.as_ref().expect("decision_buffer should be initialized"),
         0,
         staging,
         0,

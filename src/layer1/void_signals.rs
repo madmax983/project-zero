@@ -150,7 +150,7 @@ pub fn decrypt_signals_system(
         return;
     }
 
-    let target_id = network.active_signal_id.unwrap();
+    let Some(target_id) = network.active_signal_id else { return; };
 
     // Calculate total computing power from workers
     let mut computing_power = 0.0;
