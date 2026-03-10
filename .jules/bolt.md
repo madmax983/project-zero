@@ -6,3 +6,7 @@
 **[Removed Intermediate Vec Allocation in general_work.rs]**
 **Learning:** Collecting iterators into intermediate Vecs before populating a HashMap is a common pattern that wastes memory and CPU due to unnecessary allocations, particularly on hot paths like evaluating populations of agents.
 **Action:** When filtering and mapping query results to populate a target collection (like `HashMap`), iterate and push directly into the target collection to avoid `.collect::<Vec<_>>()` allocations.
+
+**[Avoid Bevy HashMap Cloning in Tick Systems]**
+**Learning:** Calling `world.get_resource::<T>()` and cloning a large `HashMap` to appease the borrow checker before executing a `world.query()` causes unnecessary heap allocations every single tick. This happens because `world.get_resource()` borrows `&World` immutably, and `world.query().iter(world)` also borrows `&World` (often mutably if using `query_mut`, though even `iter` requires care).
+**Action:** Tightly scope the Bevy `query` execution. Create the query state (`let mut query = world.query::<T>();`) *first*, then fetch the resource reference `let data = world.get_resource::<T>();`, and pass the resource reference down into the loop `query.iter(world)` rather than cloning the data beforehand.
