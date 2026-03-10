@@ -246,67 +246,9 @@ pub fn power_grid_system(world: &mut World) {
             .copied()
             .collect();
 
-        if net > 0.0 {
-            // Surplus: Charge batteries
-            #[allow(clippy::cast_precision_loss)]
-            let total_batteries = (batteries.len() + kinetic_batteries.len()) as f32;
-            if total_batteries > 0.0 {
-                let charge_per_battery = net / total_batteries;
-                for bat_entity in &batteries {
-                    if let Some(mut bat) = world.get_mut::<Battery>(*bat_entity) {
-                        bat.charge(charge_per_battery);
-                    }
-                }
-                for bat_entity in &kinetic_batteries {
-                    if let Some(mut bat) =
-                        world.get_mut::<crate::layer1::kinetic_storage::KineticBattery>(*bat_entity)
-                    {
-                        let input = charge_per_battery.min(bat.charge_rate);
-                        // Efficiency loss on input
-                        let stored = input * bat.efficiency;
-                        bat.charge = (bat.charge + stored).min(bat.capacity);
-                    }
-                }
-            }
-        } else if net < 0.0 {
-            // Deficit: Discharge batteries
-            let mut needed = -net;
-            let mut provided = 0.0;
-
-            // Discharge normal batteries
-            for bat_entity in &batteries {
-                if let Some(mut bat) = world.get_mut::<Battery>(*bat_entity) {
-                    let amount = bat.discharge(needed);
-                    provided += amount;
-                    needed -= amount;
-                    if needed <= 0.0 {
-                        break;
-                    }
-                }
-            }
-
-            // Discharge kinetic batteries if needed
-            if needed > 0.0 {
-                for bat_entity in &kinetic_batteries {
-                    if let Some(mut bat) =
-                        world.get_mut::<crate::layer1::kinetic_storage::KineticBattery>(*bat_entity)
-                    {
-                        let available = bat.charge;
-                        let discharge = needed.min(available).min(bat.charge_rate);
-                        bat.charge -= discharge;
-                        provided += discharge;
-                        needed -= discharge;
-                        if needed <= 0.0 {
-                            break;
-                        }
-                    }
-                }
-            }
-
+        let provided = handle_batteries(world, &batteries, &kinetic_batteries, net);
+        if net < 0.0 {
             // Update net after battery discharge (effectively increasing production availability)
-            // net = (production + provided) - demand
-            // original net = production - demand
-            // new net = original net + provided
             net += provided;
         }
 
@@ -329,49 +271,9 @@ pub fn power_grid_system(world: &mut World) {
             1.0
         };
 
-        let overload_ratio = if total_production > 0.0 {
-            total_demand / total_production
-        } else {
-            1.0
-        };
+        handle_overload(world, &grid_entities, total_production, total_demand);
 
-        let mut rng = rand::thread_rng();
-
-        // Overload Check (>150% demand vs base production)
-        // Batteries don't prevent overload damage caused by high demand on generators
-        if overload_ratio > 1.5 {
-            // Risk of damage to random entity in grid
-            // Chance increases with overload: (ratio - 1.5) * 0.05
-            // e.g. 2.0 ratio -> 0.025 (2.5%) per tick
-            if rng.gen_bool((0.05 * f64::from(overload_ratio - 1.5)).min(1.0)) {
-                // Pick random entity
-                if let Some(victim) = grid_entities.choose(&mut rng) {
-                    // Clippy suggests collapsing, but let_chains is unstable
-                    #[allow(clippy::collapsible_if)]
-                    if let Some(mut health) =
-                        world.get_mut::<crate::layer1::health::Health>(*victim)
-                    {
-                        health.take_damage(10.0);
-                    }
-
-                    // Emit overload event
-                    world.send_event(GridOverloadEvent { victim: *victim });
-                }
-            }
-        }
-
-        // Activation
-        for entity in grid_entities {
-            if let Some(mut consumer) = world.get_mut::<PowerConsumer>(entity) {
-                if net >= -f32::EPSILON {
-                    consumer.active = true;
-                } else {
-                    // Brownout: Probabilistic activation
-                    // e.g. 80% supply -> 80% chance to run
-                    consumer.active = rng.gen_bool(f64::from(supply_ratio));
-                }
-            }
-        }
+        activate_consumers(world, &grid_entities, net, supply_ratio);
     }
 }
 
@@ -608,5 +510,125 @@ mod tests {
 
         let (production, _) = calculate_grid_stats(&mut world, generator);
         assert_eq!(production, 0.0, "Glitchy generator should produce 0 power");
+    }
+}
+
+fn handle_batteries(
+    world: &mut World,
+    batteries: &[Entity],
+    kinetic_batteries: &[Entity],
+    net: f32,
+) -> f32 {
+    let mut provided = 0.0;
+
+    if net > 0.0 {
+        // Surplus: Charge batteries
+        #[allow(clippy::cast_precision_loss)]
+        let total_batteries = (batteries.len() + kinetic_batteries.len()) as f32;
+        if total_batteries > 0.0 {
+            let charge_per_battery = net / total_batteries;
+            for bat_entity in batteries {
+                if let Some(mut bat) = world.get_mut::<Battery>(*bat_entity) {
+                    bat.charge(charge_per_battery);
+                }
+            }
+            for bat_entity in kinetic_batteries {
+                if let Some(mut bat) =
+                    world.get_mut::<crate::layer1::kinetic_storage::KineticBattery>(*bat_entity)
+                {
+                    let input = charge_per_battery.min(bat.charge_rate);
+                    // Efficiency loss on input
+                    let stored = input * bat.efficiency;
+                    bat.charge = (bat.charge + stored).min(bat.capacity);
+                }
+            }
+        }
+    } else if net < 0.0 {
+        // Deficit: Discharge batteries
+        let mut needed = -net;
+
+        // Discharge normal batteries
+        for bat_entity in batteries {
+            if let Some(mut bat) = world.get_mut::<Battery>(*bat_entity) {
+                let amount = bat.discharge(needed);
+                provided += amount;
+                needed -= amount;
+                if needed <= 0.0 {
+                    break;
+                }
+            }
+        }
+
+        // Discharge kinetic batteries if needed
+        if needed > 0.0 {
+            for bat_entity in kinetic_batteries {
+                if let Some(mut bat) =
+                    world.get_mut::<crate::layer1::kinetic_storage::KineticBattery>(*bat_entity)
+                {
+                    let available = bat.charge;
+                    let discharge = needed.min(available).min(bat.charge_rate);
+                    bat.charge -= discharge;
+                    provided += discharge;
+                    needed -= discharge;
+                    if needed <= 0.0 {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    provided
+}
+
+fn handle_overload(
+    world: &mut World,
+    grid_entities: &[Entity],
+    total_production: f32,
+    total_demand: f32,
+) {
+    let overload_ratio = if total_production > 0.0 {
+        total_demand / total_production
+    } else {
+        1.0
+    };
+
+    let mut rng = rand::thread_rng();
+
+    // Overload Check (>150% demand vs base production)
+    // Batteries don't prevent overload damage caused by high demand on generators
+    if overload_ratio > 1.5 {
+        // Risk of damage to random entity in grid
+        // Chance increases with overload: (ratio - 1.5) * 0.05
+        // e.g. 2.0 ratio -> 0.025 (2.5%) per tick
+        if rng.gen_bool((0.05 * f64::from(overload_ratio - 1.5)).min(1.0)) {
+            // Pick random entity
+            if let Some(victim) = grid_entities.choose(&mut rng) {
+                // Clippy suggests collapsing, but let_chains is unstable
+                #[allow(clippy::collapsible_if)]
+                if let Some(mut health) = world.get_mut::<crate::layer1::health::Health>(*victim) {
+                    health.take_damage(10.0);
+                }
+
+                // Emit overload event
+                world.send_event(GridOverloadEvent { victim: *victim });
+            }
+        }
+    }
+}
+
+fn activate_consumers(world: &mut World, grid_entities: &[Entity], net: f32, supply_ratio: f32) {
+    // Activation
+    let mut rng = rand::thread_rng();
+    for entity in grid_entities {
+        if let Some(mut consumer) = world.get_mut::<PowerConsumer>(*entity) {
+            if net >= -f32::EPSILON {
+                consumer.active = true;
+            } else {
+                // Brownout: Probabilistic activation
+                // e.g. 80% supply -> 80% chance to run
+                consumer.active = rng.gen_bool(f64::from(supply_ratio));
+            }
+        }
     }
 }
