@@ -98,6 +98,7 @@ pub fn register(schedule: &mut Schedule) {
             check_heirloom_status_system,
             crate::layer1::trade::merchant_arrival_system,
             crate::layer1::contraband::enforce_prohibition_system,
+            crate::layer1::social::cadet::income_system,
             crate::layer1::visitor::spawn_visitor_system,
             spawn_inspector_system.after(crate::layer1::visitor::spawn_visitor_system),
             process_fuel_consumption_system,

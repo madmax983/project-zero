@@ -381,15 +381,22 @@ impl<'a> PopDecider<'a> {
             .traits
             .as_ref()
             .is_some_and(|t| t.0.contains(&Trait::Feral));
+        let is_noble = self
+            .data
+            .traits
+            .as_ref()
+            .is_some_and(|t| t.0.contains(&Trait::Noble));
 
         // Evaluate Work
-        let work_bonus = if self.is_penal { 1.0 } else { 0.0 };
-        self.evaluator.evaluate_and_consider(
-            evaluate_simple_action(pop_pos, &weights, &self.buffer.work_designations, 0.5),
-            ActionType::Work,
-            self.context,
-            work_bonus,
-        );
+        if !is_noble {
+            let work_bonus = if self.is_penal { 1.0 } else { 0.0 };
+            self.evaluator.evaluate_and_consider(
+                evaluate_simple_action(pop_pos, &weights, &self.buffer.work_designations, 0.5),
+                ActionType::Work,
+                self.context,
+                work_bonus,
+            );
+        }
 
         // Evaluate Tame
         self.evaluator.evaluate_and_consider(
@@ -404,20 +411,24 @@ impl<'a> PopDecider<'a> {
         }
 
         // Evaluate Refine
-        self.evaluator.evaluate_and_consider(
-            evaluate_simple_action(pop_pos, &weights, &self.buffer.refining, 0.5),
-            ActionType::Refine,
-            self.context,
-            0.0,
-        );
+        if !is_noble {
+            self.evaluator.evaluate_and_consider(
+                evaluate_simple_action(pop_pos, &weights, &self.buffer.refining, 0.5),
+                ActionType::Refine,
+                self.context,
+                0.0,
+            );
+        }
 
         // Evaluate Farm
-        self.evaluator.evaluate_and_consider(
-            evaluate_simple_action(pop_pos, &weights, &self.buffer.farms, 0.5),
-            ActionType::Farm,
-            self.context,
-            0.0,
-        );
+        if !is_noble {
+            self.evaluator.evaluate_and_consider(
+                evaluate_simple_action(pop_pos, &weights, &self.buffer.farms, 0.5),
+                ActionType::Farm,
+                self.context,
+                0.0,
+            );
+        }
 
         // Evaluate Admin
         self.evaluator.evaluate_and_consider(
@@ -480,6 +491,11 @@ impl<'a> PopDecider<'a> {
         let pop_pos = self.data.pos;
         let weights = self.data.weights;
         let equipment_opt = self.data.equipment;
+        let is_noble = self
+            .data
+            .traits
+            .as_ref()
+            .is_some_and(|t| t.0.contains(&Trait::Noble));
 
         // Evaluate FetchTool
         let equipment = equipment_opt.unwrap_or_default();
@@ -508,6 +524,11 @@ impl<'a> PopDecider<'a> {
             self.context,
             0.0,
         );
+
+        // Nobles refuse all manual labor tasks below
+        if is_noble {
+            return;
+        }
 
         // Evaluate Repair
         self.evaluator.evaluate_and_consider(

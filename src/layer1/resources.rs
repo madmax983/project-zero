@@ -160,6 +160,8 @@ pub struct ColonyResources {
     pub scrap: f32,
     /// Total building permits available in the colony.
     pub building_permits: f32,
+    /// Total credits available in the colony.
+    pub credits: f32,
     /// Maximum food capacity.
     pub max_food: f32,
     /// Maximum wood capacity.
@@ -198,6 +200,8 @@ pub struct ColonyResources {
     pub max_scrap: f32,
     /// Maximum building permits capacity (usually infinite or high).
     pub max_building_permits: f32,
+    /// Maximum credits capacity (usually infinite or high).
+    pub max_credits: f32,
 }
 
 impl Default for ColonyResources {
@@ -220,6 +224,7 @@ impl Default for ColonyResources {
             fuel: 0.0,
             alcohol: 0.0,
             scrap: 0.0,
+            credits: 0.0,
             max_food: 50.0,
             max_wood: 50.0,
             max_stone: 20.0,
@@ -241,6 +246,7 @@ impl Default for ColonyResources {
             max_scrap: 20.0,
             building_permits: 0.0,
             max_building_permits: 100.0,
+            max_credits: f32::MAX,
         }
     }
 }
@@ -268,6 +274,7 @@ impl Mul<f32> for ColonyResources {
             water: (self.water * rhs).ceil(),
             alcohol: (self.alcohol * rhs).ceil(),
             scrap: (self.scrap * rhs).ceil(),
+            credits: (self.credits * rhs).ceil(),
             // Capacities should NOT change when multiplying cost
             max_food: self.max_food,
             max_wood: self.max_wood,
@@ -289,6 +296,7 @@ impl Mul<f32> for ColonyResources {
             max_scrap: self.max_scrap,
             building_permits: (self.building_permits * rhs).ceil(),
             max_building_permits: self.max_building_permits,
+            max_credits: self.max_credits,
         }
     }
 }
@@ -339,6 +347,8 @@ impl ColonyResources {
             max_scrap: 0.0,
             building_permits: 0.0,
             max_building_permits: 0.0,
+            credits: 0.0,
+            max_credits: 0.0,
         }
     }
 

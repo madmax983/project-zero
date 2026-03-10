@@ -106,6 +106,9 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::kinetic_storage::handle_battery_destruction_system
                 .after(crate::layer1::health::check_health_status_system)
                 .before(crate::layer1::health::despawn_dead_entities_system),
+            crate::layer1::social::cadet::death_consequence_system
+                .after(crate::layer1::pop::handle_pop_death_system)
+                .before(crate::layer1::health::despawn_dead_entities_system),
             #[cfg(feature = "nova")]
             crate::layer1::loci::record_death_loci_system
                 .after(crate::layer1::pop::handle_pop_death_system)

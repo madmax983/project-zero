@@ -7,6 +7,66 @@ mod tests {
     use crate::layer1::utility_eval_types::ScorableCandidate;
     use bevy_ecs::prelude::*;
 
+    use crate::layer1::pop::Pop;
+    use crate::layer1::traits::{Trait, Traits};
+
+    #[test]
+    fn test_noble_refuses_work() {
+        let mut world = World::new();
+        let pop_pos = GridPosition { x: 0, y: 0 };
+        let weights = UtilityWeights::default();
+
+        let designation = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Mine,
+                },
+                GridPosition { x: 5, y: 0 },
+            ))
+            .id();
+
+        let proxies: Vec<ScorableCandidate> = world
+            .query::<(Entity, &GridPosition, &Designation)>()
+            .iter(&world)
+            .map(|(e, p, _)| ScorableCandidate::new(e, *p))
+            .collect();
+
+        // This evaluates generic base utility. The rejection logic resides in the decider.
+        // We will test if evaluate_single_pop or similar avoids giving work to a noble.
+
+        let noble = world.spawn((
+            Pop,
+            GridPosition { x: 0, y: 0 },
+            crate::layer1::needs::Needs::default(),
+            UtilityWeights::default(),
+            crate::layer1::utility_ai::PopAction::default(),
+            Traits(std::collections::HashSet::from([Trait::Noble])),
+        )).id();
+
+        let mut buffer = crate::layer1::utility_eval_types::UtilityAIBuffer::default();
+        buffer.work_designations = proxies.clone();
+
+        // Setup pop eval data with Noble trait
+        let mut data = crate::layer1::utility_eval_types::PopEvalData::test_instance();
+        data.entity = noble;
+        data.pos = pop_pos;
+        data.traits = Some(Traits(std::collections::HashSet::from([Trait::Noble])));
+
+        let context = crate::layer1::utility_eval_types::WorldContext {
+            resources: &crate::layer1::resources::ColonyResources::default(),
+            cycle: &crate::layer1::day_night::DayNightCycle::default(),
+            taboo: &crate::layer1::taboo::TabooState::default(),
+            factions: None,
+            zone_grid: &crate::layer1::zone::ZoneGrid::new(10, 10),
+            temperature_grid: None,
+        };
+
+        // We run evaluate_single_pop, which calls run() on PopDecider
+        let (action, _, _) = crate::layer1::utility_ai::evaluate_single_pop(&buffer, &data, &context);
+
+        assert_ne!(action, ActionType::Work, "Noble should refuse work");
+    }
+
     #[test]
     fn test_action_type_work_variant() {
         let work = ActionType::Work;
