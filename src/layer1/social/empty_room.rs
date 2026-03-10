@@ -12,6 +12,7 @@ use crate::layer1::clutter::ClutterGrid;
 use crate::layer1::items::Item;
 use crate::layer1::map::GridPosition;
 use crate::layer1::stress::StressTracker;
+use crate::layer1::utility_types::{ActionType, PopAction};
 use crate::layer1::zone::{ZoneGrid, ZoneType};
 use bevy_ecs::prelude::*;
 use rand::Rng;
@@ -23,12 +24,11 @@ pub struct Sanctuary {
     pub is_valid: bool,
     pub effectiveness: f32,
     pub tiles: Vec<GridPosition>,
+    pub entity: Option<Entity>,
 }
 
 #[derive(Component)]
-pub struct ZoneEntity {
-    pub zone_type: ZoneType,
-}
+pub struct SanctuaryMarker;
 
 // Alternatively, because the existing architecture uses a `ZoneGrid` resource,
 // instead of explicitly spawning `Zone` entities, we can maintain `Sanctuary` states
@@ -42,12 +42,18 @@ pub struct SanctuaryManager {
 }
 
 pub fn update_sanctuary_system(
+    mut commands: Commands,
     mut manager: ResMut<SanctuaryManager>,
     zone_grid: Res<ZoneGrid>,
     buildings: Query<&GridPosition, With<Building>>,
     items: Query<&GridPosition, With<Item>>,
     clutter_grid: Option<Res<ClutterGrid>>,
+    existing_markers: Query<Entity, With<SanctuaryMarker>>,
 ) {
+    // Despawn old markers
+    for entity in existing_markers.iter() {
+        commands.entity(entity).despawn();
+    }
     // 1. Identify all contiguous regions of ZoneType::Sanctuary on the ZoneGrid
     // We'll use a simple flood-fill to find them.
     let mut visited = vec![false; zone_grid.width * zone_grid.height];
@@ -120,16 +126,25 @@ pub fn update_sanctuary_system(
             }
         }
 
+        let mut entity = None;
+        if is_valid && !tiles.is_empty() {
+            // Spawn a marker entity at the first tile so pops can path to it
+            let pos = tiles[0];
+            let id = commands.spawn((SanctuaryMarker, pos)).id();
+            entity = Some(id);
+        }
+
         manager.sanctuaries.push(Sanctuary {
             is_valid,
             effectiveness: if is_valid { tiles.len() as f32 } else { 0.0 },
             tiles,
+            entity,
         });
     }
 }
 
 pub fn visit_sanctuary_system(
-    mut pops: Query<(&GridPosition, &mut StressTracker)>,
+    mut pops: Query<(&GridPosition, &mut StressTracker, &PopAction)>,
     manager: Option<Res<SanctuaryManager>>,
     mut clutter_grid: Option<ResMut<ClutterGrid>>,
 ) {
@@ -137,7 +152,11 @@ pub fn visit_sanctuary_system(
 
     let mut rng = rand::thread_rng();
 
-    for (pop_pos, mut mood) in pops.iter_mut() {
+    for (pop_pos, mut mood, action) in pops.iter_mut() {
+        if action.current != ActionType::VisitSanctuary {
+            continue;
+        }
+
         // Find if pop is in a valid sanctuary
         for sanctuary in &manager.sanctuaries {
             if sanctuary.is_valid && sanctuary.tiles.contains(pop_pos) {

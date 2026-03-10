@@ -1,3 +1,13 @@
+### INT-039: Sanctuary Visitation (Spec 251)
+- **Date:** 2026-03-03
+- **Systems connected:** `utility_ai_population::populate_sanctuaries` -> `utility_ai::evaluate_group_social` -> `arrival::handle_arrival` -> `empty_room::visit_sanctuary_system`
+- **Glue added:**
+    - Updated `UtilityAIBuffer` to collect sanctuary zones.
+    - Evaluator function `evaluate_visit_sanctuary` assigns pop to visit a Sanctuary.
+    - Updated `arrival.rs` to persist `AtTarget` for `VisitSanctuary` action type.
+    - Limited stress-reduction in `visit_sanctuary_system` to pops actively assigned the `VisitSanctuary` action.
+- **Tests:** `tests/integration/visit_sanctuary.rs` (Integration test verified)
+
 ### INT-021: Faction Strike -> Work Execution
 - **Date:** 2026-03-27
 - **Systems connected:** `is_pop_striking` -> `utility_ai::evaluate_single_pop` / `produce_food_system` / `process_refining_system` / `process_research_system` / `haul_system`

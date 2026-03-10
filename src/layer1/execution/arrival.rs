@@ -243,8 +243,13 @@ fn process_arrival(
             );
             true
         }
-        ActionType::Work | ActionType::Repair | ActionType::Haul | ActionType::Tame => {
+        ActionType::Work
+        | ActionType::Repair
+        | ActionType::Haul
+        | ActionType::Tame
+        | ActionType::VisitSanctuary => {
             // Work/Repair/Haul/Tame is handled by their respective systems
+            // VisitSanctuary stays at the target to continually receive the stress reduction
             // Just keep the AtTarget marker for that system
             false
         }

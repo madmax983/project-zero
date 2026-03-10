@@ -8,6 +8,7 @@ mod tests {
         update_sanctuary_system, visit_sanctuary_system, SanctuaryManager,
     };
     use crate::layer1::stress::StressTracker;
+    use crate::layer1::utility_types::{ActionType, PopAction};
     use crate::layer1::zone::{ZoneGrid, ZoneType};
     use bevy_ecs::prelude::*;
 
@@ -71,6 +72,10 @@ mod tests {
                     accumulated_stress: 50.0,
                     ..Default::default()
                 },
+                PopAction {
+                    current: ActionType::VisitSanctuary,
+                    ..Default::default()
+                },
             ))
             .id();
 
@@ -91,6 +96,10 @@ mod tests {
                 GridPosition { x: 0, y: 0 }, // Inside zone
                 StressTracker {
                     accumulated_stress: 50.0,
+                    ..Default::default()
+                },
+                PopAction {
+                    current: ActionType::VisitSanctuary,
                     ..Default::default()
                 },
             ))

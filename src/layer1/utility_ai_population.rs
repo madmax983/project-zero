@@ -100,6 +100,24 @@ pub fn populate_ai_buffer(world: &mut World, buffer: &mut UtilityAIBuffer, conte
     populate_enemies(world, &mut buffer.enemies);
     populate_all_structures(world, &mut buffer.all_structures);
     populate_cleaning_targets(world, buffer);
+    populate_sanctuaries(world, buffer);
+}
+
+fn populate_sanctuaries(world: &mut World, buffer: &mut UtilityAIBuffer) {
+    buffer.sanctuaries.clear();
+    if let Some(manager) =
+        world.get_resource::<crate::layer1::social::empty_room::SanctuaryManager>()
+    {
+        for sanctuary in manager.sanctuaries.iter() {
+            if sanctuary.is_valid && !sanctuary.tiles.is_empty() {
+                if let Some(entity) = sanctuary.entity {
+                    let mut c = ScorableCandidate::new(entity, sanctuary.tiles[0]);
+                    c.score_bonus = sanctuary.effectiveness;
+                    buffer.sanctuaries.push(c);
+                }
+            }
+        }
+    }
 }
 
 fn populate_buffer_buildings(

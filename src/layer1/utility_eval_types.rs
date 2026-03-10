@@ -389,6 +389,8 @@ pub struct UtilityAIBuffer {
     pub residues: Vec<ScorableCandidate>,
     /// Buffer for cleaning targets.
     pub cleaning_targets: Vec<ScorableCandidate>,
+    /// Buffer for sanctuary targets.
+    pub sanctuaries: Vec<ScorableCandidate>,
 }
 
 /// Helper struct to track the best action found so far.

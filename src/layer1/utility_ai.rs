@@ -447,6 +447,27 @@ impl<'a> PopDecider<'a> {
                 0.0,
             );
         }
+
+        // Evaluate VisitSanctuary
+        if self.data.stress > 0.3 {
+            let sanctuary_urgency = self.data.stress * 1.2; // Increase urgency modifier
+            let mut eval_bonus = 0.0;
+            // Also heavily weight it so it overrides idle
+            if self.data.stress > 0.8 {
+                eval_bonus = 2.0;
+            }
+            self.evaluator.evaluate_and_consider(
+                crate::layer1::actions::evaluate_visit_sanctuary(
+                    self.data.pos,
+                    &self.data.weights,
+                    &self.buffer.sanctuaries,
+                    sanctuary_urgency,
+                ),
+                ActionType::VisitSanctuary,
+                self.context,
+                eval_bonus,
+            );
+        }
     }
 
     /// **Priority 4: Logistics & Maintenance**

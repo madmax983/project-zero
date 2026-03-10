@@ -145,3 +145,5 @@ mod clone_integration;
 mod mega_quake_chronicle;
 #[path = "integration/tectonic_stress.rs"]
 mod tectonic_stress;
+#[path = "integration/visit_sanctuary.rs"]
+mod visit_sanctuary;

@@ -29,6 +29,39 @@ pub struct AssignedTo {
     pub assignment_type: AssignmentType,
 }
 
+/// Evaluates visiting a sanctuary.
+#[must_use]
+pub fn evaluate_visit_sanctuary(
+    pop_pos: GridPosition,
+    weights: &UtilityWeights,
+    candidates: &[ScorableCandidate],
+    base_utility: f32,
+) -> Option<(f32, Entity)> {
+    let mut best_score = 0.0;
+    let mut best_target = None;
+
+    for candidate in candidates {
+        let dist = manhattan_distance(&pop_pos, &candidate.pos);
+        // Bonus to closer sanctuaries, multiplied by effectiveness.
+        // `score_bonus` stores the sanctuary's effectiveness.
+        let mut score = base_utility
+            + calculate_context_score(pop_pos, Some(candidate.pos), 1, 0, weights)
+            + (candidate.score_bonus * 0.1);
+
+        // Slightly discourage if far away
+        if dist > 50 {
+            score *= 0.8;
+        }
+
+        if score > best_score {
+            best_score = score;
+            best_target = Some(candidate.entity);
+        }
+    }
+
+    best_target.map(|e| (best_score, e))
+}
+
 /// Generic evaluator for simple actions (work, repair, etc.)
 #[must_use]
 pub fn evaluate_simple_action(
