@@ -19,4 +19,3 @@ pub struct BuildingCompletedEvent {
     /// The entity ID of the new building.
     pub entity: Entity,
 }
-

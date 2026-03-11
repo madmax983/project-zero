@@ -1,8 +1,8 @@
-use crate::layer1::funeral::Grave;
-use crate::layer1::needs::Needs;
-use crate::layer1::map::GridPosition;
-use crate::layer1::pop::Pop;
 use crate::layer1::events::BuildingCompletedEvent;
+use crate::layer1::funeral::Grave;
+use crate::layer1::map::GridPosition;
+use crate::layer1::needs::Needs;
+use crate::layer1::pop::Pop;
 use bevy_ecs::prelude::*;
 
 #[derive(Event, Debug, PartialEq)]
@@ -50,14 +50,26 @@ mod tests {
         // Arrange
         let mut world = World::new();
         world.spawn((Grave::default(), GridPosition { x: 0, y: 0 }));
-        let visitor = world.spawn((Pop, Needs { leisure: 0.5, ..Default::default() }, GridPosition { x: 1, y: 0 })).id();
+        let visitor = world
+            .spawn((
+                Pop,
+                Needs {
+                    leisure: 0.5,
+                    ..Default::default()
+                },
+                GridPosition { x: 1, y: 0 },
+            ))
+            .id();
 
         // Act
         let _ = world.run_system_once(grave_visit_system);
 
         // Assert
         let needs = world.get::<Needs>(visitor).unwrap();
-        assert!(needs.leisure > 0.5, "Visiting grave should restore leisure/mood");
+        assert!(
+            needs.leisure > 0.5,
+            "Visiting grave should restore leisure/mood"
+        );
     }
 
     #[test]
@@ -68,7 +80,9 @@ mod tests {
         world.spawn((Grave::default(), grave_pos));
         let building_entity = world.spawn(grave_pos).id();
         let mut events = Events::<BuildingCompletedEvent>::default();
-        events.send(BuildingCompletedEvent { entity: building_entity });
+        events.send(BuildingCompletedEvent {
+            entity: building_entity,
+        });
         world.insert_resource(events);
         world.insert_resource(Events::<SacrilegeEvent>::default());
 
@@ -77,6 +91,10 @@ mod tests {
 
         // Assert
         let sacrilege_events = world.get_resource::<Events<SacrilegeEvent>>().unwrap();
-        assert_eq!(sacrilege_events.len(), 1, "Building over a grave should trigger sacrilege");
+        assert_eq!(
+            sacrilege_events.len(),
+            1,
+            "Building over a grave should trigger sacrilege"
+        );
     }
 }
