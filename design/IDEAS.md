@@ -9303,3 +9303,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The massive cultural/diplomatic prestige of possessing Old Earth artifacts vs. the memetic destabilization of a workforce adapted to alien conditions.
 
 ---
+
+## The Echo Chamber
+
+**Layer:** 1
+
+**Fantasy:** Believing your own lies. You build a propaganda machine so perfect, even the UI lies to you about how happy everyone is.
+
+**Mechanic:** A high-tier "Ministry of Truth" building broadcasts positive signals, artificially capping "Visible Unrest" on the player UI at 0%. However, "Actual Unrest" still accumulates invisibly based on unmet needs. When Actual Unrest exceeds a critical threshold, it immediately bursts into a massive, organized rebellion with no warning.
+
+**Emergence:** You ignore the food shortage because the UI says everyone is happy. Then, one day, the entire colony simultaneously stops working and sets the Ministry of Truth on fire.
+
+**Tension:** Comforting, clean UI and high immediate productivity vs. the absolute terror of a ticking time bomb you can't see.
+
+---
+
+## Inter-Colony Brain Drain
+
+**Layer:** Cross-layer
+
+**Fantasy:** Your best and brightest abandoning your grimy frontier world for the glittering core worlds.
+
+**Mechanic:** Pops with exceptionally high skill levels (e.g., Level 10+ Scientist) develop a "Core World Aspiration" need. If this need is unmet (requires specific high-tier Layer 2 imported luxury goods), they will book passage on the next outgoing merchant ship, permanently leaving Layer 1 to join a Layer 3 faction.
+
+**Emergence:** Your colony relies on a single master engineer to keep the unstable reactor running. The engineer decides they are too good for this rock and leaves on a freighter. The reactor goes critical a week later.
+
+**Tension:** Investing heavily in training Pops vs. the skyrocketing cost of keeping them once they realize their worth.
+
+---
+
+## The Kinetic Graveyard
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Living under a sky made of shrapnel.
+
+**Mechanic:** Over decades, a massive, un-minable debris field forms in Layer 2 orbit from destroyed ships. Periodically, "Debris Showers" rain down on Layer 1. The showers ignore basic roofs and require thick "Blast Shielding" or subterranean construction. However, the impacts scatter rare "Scrap Tech" across the map.
+
+**Emergence:** You build a beautiful, sprawling surface colony. A debris shower hits, flattening your residential sector. You rebuild entirely underground, turning your colony into a society of mole-people who only surface to scavenge the metal that falls from the sky.
+
+**Tension:** Building cheap and fast on the surface (high risk) vs. slow, expensive subterranean excavation (safety).
+
+---
