@@ -1423,8 +1423,7 @@ fn configure_housing(entity: &mut EntityWorldMut, building_type: BuildingType) {
     }
 }
 
-#[allow(clippy::too_many_lines)]
-fn configure_production(entity: &mut EntityWorldMut, building_type: BuildingType) {
+fn configure_farm_buildings(entity: &mut EntityWorldMut, building_type: BuildingType) {
     match building_type {
         BuildingType::Farm | BuildingType::Greenhouse => {
             let mut rng = rand::thread_rng();
@@ -1463,6 +1462,13 @@ fn configure_production(entity: &mut EntityWorldMut, building_type: BuildingType
                 ShiftSchedule::default(),
             ));
         }
+        _ => {}
+    }
+}
+
+#[allow(clippy::too_many_lines)]
+fn configure_refining_buildings(entity: &mut EntityWorldMut, building_type: BuildingType) {
+    match building_type {
         BuildingType::Smokehouse => {
             entity.insert((
                 RefiningProgress {
@@ -1612,6 +1618,11 @@ fn configure_production(entity: &mut EntityWorldMut, building_type: BuildingType
         }
         _ => {}
     }
+}
+
+fn configure_production(entity: &mut EntityWorldMut, building_type: BuildingType) {
+    configure_farm_buildings(entity, building_type);
+    configure_refining_buildings(entity, building_type);
 }
 
 fn configure_storage(entity: &mut EntityWorldMut, building_type: BuildingType) {
@@ -1776,8 +1787,7 @@ fn configure_infrastructure(entity: &mut EntityWorldMut, building_type: Building
     }
 }
 
-#[allow(clippy::too_many_lines)]
-fn configure_power(entity: &mut EntityWorldMut, building_type: BuildingType) {
+fn configure_power_generation(entity: &mut EntityWorldMut, building_type: BuildingType) {
     match building_type {
         BuildingType::Generator => {
             entity.insert((
@@ -1803,19 +1813,6 @@ fn configure_power(entity: &mut EntityWorldMut, building_type: BuildingType) {
                     active: true,
                 },
                 SolarPower { base_output: 10.0 },
-            ));
-        }
-        BuildingType::PowerPole => {
-            entity.insert(Conduit);
-        }
-        BuildingType::Battery => {
-            entity.insert((
-                crate::layer1::energy::Battery {
-                    capacity: 100.0,
-                    charge: 0.0,
-                    max_throughput: 10.0,
-                },
-                Conduit,
             ));
         }
         BuildingType::AncientReactor => {
@@ -1847,20 +1844,6 @@ fn configure_power(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 structure.current_hp = 1000.0;
             }
         }
-        BuildingType::Heater => {
-            entity.insert((
-                PowerConsumer {
-                    demand: 5.0,
-                    active: true, // Typically on, logic will toggle if needed
-                },
-                crate::layer1::lighting::LightSource {
-                    is_outdoor: true,
-                    radius: 3.0,
-                    intensity: 0.5,
-                    color: (255, 100, 50), // Warm Orange
-                },
-            ));
-        }
         BuildingType::AuroralCollector => {
             entity.insert((
                 PowerSource {
@@ -1872,6 +1855,45 @@ fn configure_power(entity: &mut EntityWorldMut, building_type: BuildingType) {
                     radius: 6.0,
                     intensity: 0.0,
                     color: (0, 255, 255), // Cyan
+                },
+            ));
+        }
+        _ => {}
+    }
+}
+
+fn configure_power_infrastructure(entity: &mut EntityWorldMut, building_type: BuildingType) {
+    match building_type {
+        BuildingType::PowerPole => {
+            entity.insert(Conduit);
+        }
+        BuildingType::Battery => {
+            entity.insert((
+                crate::layer1::energy::Battery {
+                    capacity: 100.0,
+                    charge: 0.0,
+                    max_throughput: 10.0,
+                },
+                Conduit,
+            ));
+        }
+        _ => {}
+    }
+}
+
+fn configure_power_consumption(entity: &mut EntityWorldMut, building_type: BuildingType) {
+    match building_type {
+        BuildingType::Heater => {
+            entity.insert((
+                PowerConsumer {
+                    demand: 5.0,
+                    active: true, // Typically on, logic will toggle if needed
+                },
+                crate::layer1::lighting::LightSource {
+                    is_outdoor: true,
+                    radius: 3.0,
+                    intensity: 0.5,
+                    color: (255, 100, 50), // Warm Orange
                 },
             ));
         }
@@ -1905,8 +1927,13 @@ fn configure_power(entity: &mut EntityWorldMut, building_type: BuildingType) {
     }
 }
 
-#[allow(clippy::too_many_lines)]
-fn configure_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
+fn configure_power(entity: &mut EntityWorldMut, building_type: BuildingType) {
+    configure_power_generation(entity, building_type);
+    configure_power_infrastructure(entity, building_type);
+    configure_power_consumption(entity, building_type);
+}
+
+fn configure_science_buildings(entity: &mut EntityWorldMut, building_type: BuildingType) {
     match building_type {
         BuildingType::Observatory => {
             entity.insert((
@@ -1921,20 +1948,43 @@ fn configure_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 ShiftSchedule::default(),
             ));
         }
-        BuildingType::LifeSupport => {
+        BuildingType::GeneBank => {
             entity.insert((
+                crate::layer1::gene_bank::GeneBank::default(),
                 PowerConsumer {
-                    demand: 10.0,
-                    active: true, // Always on if possible
+                    demand: 15.0,
+                    active: false,
                 },
                 LightSource {
                     is_outdoor: true,
                     radius: 4.0,
-                    intensity: 0.6,
-                    color: (200, 255, 255), // Cyan-ish
+                    intensity: 0.7,
+                    color: (0, 255, 200), // Cyan/Green
+                },
+                ShiftSchedule::default(),
+            ));
+        }
+        BuildingType::ServerBank => {
+            entity.insert((
+                DataStorage { capacity: 50.0 },
+                PowerConsumer {
+                    demand: 10.0,
+                    active: false, // Wait for power grid to activate
+                },
+                crate::layer1::lighting::LightSource {
+                    is_outdoor: true,
+                    radius: 2.0,
+                    intensity: 0.4,
+                    color: (0, 255, 100), // Data Green
                 },
             ));
         }
+        _ => {}
+    }
+}
+
+fn configure_specialized_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
+    match building_type {
         BuildingType::TrashCannon => {
             entity.insert((
                 crate::layer1::turret::Turret {
@@ -1958,18 +2008,17 @@ fn configure_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 },
             ));
         }
-        BuildingType::ServerBank => {
+        BuildingType::LifeSupport => {
             entity.insert((
-                DataStorage { capacity: 50.0 },
                 PowerConsumer {
                     demand: 10.0,
-                    active: false, // Wait for power grid to activate
+                    active: true, // Always on if possible
                 },
-                crate::layer1::lighting::LightSource {
+                LightSource {
                     is_outdoor: true,
-                    radius: 2.0,
-                    intensity: 0.4,
-                    color: (0, 255, 100), // Data Green
+                    radius: 4.0,
+                    intensity: 0.6,
+                    color: (200, 255, 255), // Cyan-ish
                 },
             ));
         }
@@ -2026,22 +2075,12 @@ fn configure_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 },
             ));
         }
-        BuildingType::GeneBank => {
-            entity.insert((
-                crate::layer1::gene_bank::GeneBank::default(),
-                PowerConsumer {
-                    demand: 15.0,
-                    active: false,
-                },
-                LightSource {
-                    is_outdoor: true,
-                    radius: 4.0,
-                    intensity: 0.7,
-                    color: (0, 255, 200), // Cyan/Green
-                },
-                ShiftSchedule::default(),
-            ));
-        }
+        _ => {}
+    }
+}
+
+fn configure_futuristic_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
+    match building_type {
         BuildingType::CloneVat => {
             entity.insert((
                 crate::layer1::clone_vat::CloneVat::default(),
@@ -2105,6 +2144,12 @@ fn configure_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
         }
         _ => {}
     }
+}
+
+fn configure_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
+    configure_science_buildings(entity, building_type);
+    configure_specialized_tech(entity, building_type);
+    configure_futuristic_tech(entity, building_type);
 }
 
 /// Helper for spawning buildings in tests/tools.
