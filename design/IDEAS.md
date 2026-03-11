@@ -9401,3 +9401,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Access to incredibly powerful, unique organic resources vs. escalating conflicts with incredibly powerful native fauna and galactic political backlash.
 
 ---
+
+## The Smuggler's Moon
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Having a lawless backyard that you technically own but absolutely do not control.
+
+**Mechanic:** A moon in your starting system is immediately settled by "Free Traders" (smugglers/pirates) when you establish your colony. You cannot build there, but you can buy incredibly cheap, illicit goods from them. However, high trade with the moon increases "Corruption" on your main colony, and they occasionally "tax" your passing Layer 2 automated freighters.
+
+**Emergence:** You rely on the moon's black market for vital medical supplies during a plague, allowing corruption to run rampant. When the plague ends, your own planetary defense forces are so corrupt they refuse to fire on a pirate invasion fleet because the pirates paid them off.
+
+**Tension:** Cheap, instant access to necessary goods vs. the slow, cancerous spread of institutional corruption.
+
+---
+
+## Cognitive Inheritance
+
+**Layer:** 1
+
+**Fantasy:** Your greatest minds never truly die, but they leave heavy burdens on their descendants.
+
+**Mechanic:** When a pop with a master-level skill (e.g., Level 10 Science) has a child, the child inherits a fraction of the raw skill XP but also inherits a "Cognitive Echo" of the parent's highest stressor or rival. The child will instinctively hate the same things their parent hated without knowing why.
+
+**Emergence:** Your founding master architect hated the lead miner, leading to a lifelong feud. Three generations later, the descendants of the architect and the miner instinctively refuse to work in the same room together, completely bottlenecking your advanced industrial zone despite never having met their ancestors.
+
+**Tension:** Breeding a caste of hyper-competent specialists vs. dealing with centuries-old, irrational family feuds.
+
+---
+
+## The Galactic Menagerie
+
+**Layer:** Cross-layer (3 -> 1)
+
+**Fantasy:** Turning your frontier outpost into a zoo for the bored elite of the core worlds.
+
+**Mechanic:** You can construct a "Menagerie" to house captured hostile mega-fauna or even primitive sentient species. Layer 3 Tourist ships will pay massive amounts of credits to visit. The more dangerous the exhibit, the higher the payout, but also the higher the "Containment Breach" risk.
+
+**Emergence:** You capture a "Void-Terror" and your economy booms from tourism. A solar flare knocks out the containment field while a luxury liner is visiting. The Void-Terror eats the tourists, causing a massive diplomatic incident and an immediate Layer 3 punitive expedition against you for gross negligence.
+
+**Tension:** Massive, easy economic gains from tourism vs. the catastrophic risk of hosting incredibly dangerous entities in the middle of your population center.
+
+---
+
+## Symbiotic Architecture
+
+**Layer:** 1
+
+**Fantasy:** Your buildings aren't just shelters; they are living partners that need to be fed.
+
+**Mechanic:** You discover a method to grow buildings using "Bio-Resin." These buildings have no construction cost in metal or stone, and they slowly self-repair. However, they are alive and have a "Hunger" meter. If not fed organic matter (food or waste), they begin to slowly consume the Pops living or working inside them.
+
+**Emergence:** You build an entire residential sector out of Bio-Resin because you lack stone. A harsh winter causes a food shortage. Instead of starving, your colonists are slowly digested in their sleep by their own houses, forcing you to choose between letting them be eaten or burning the houses down and freezing to death.
+
+**Tension:** Fast, cheap, self-repairing infrastructure vs. the horrifying upkeep cost and risk of the buildings turning predatory.
+
+---
