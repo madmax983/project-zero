@@ -9247,3 +9247,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Rapid technological advancement via biological trade vs. the slow, irreversible sterilization of your home world.
 
 ---
+
+## Generational Trauma
+
+**Layer:** Cross-layer
+
+**Fantasy:** The wounds of the past don't heal; they fester and infect the children.
+
+**Mechanic:** Major disasters or atrocities (Layer 1 famines, Layer 2 orbital bombardments, Layer 3 betrayals) generate "Trauma" tokens for the surviving Pops. When these Pops have children, a percentage of the Trauma is passed down as a permanent "Generational Trauma" trait, making them inherently distrustful of the source of the original trauma (e.g., hating a specific alien race, fearing enclosed spaces).
+
+**Emergence:** Your colony starves during its first winter. Five generations later, the descendants of the survivors still aggressively hoard food and refuse to eat anything but the nutrient paste that saved their ancestors, crippling your attempts to transition to a high-end xeno-gastronomy economy.
+
+**Tension:** Short-term survival tactics (like rationing or cannibalism) vs. creating a deeply scarred, inflexible society centuries later.
+
+---
+
+## The Scrap-Code Evangelists
+
+**Layer:** 1 -> 3
+
+**Fantasy:** A cult that worships a virus, believing it to be the voice of a dead god.
+
+**Mechanic:** If the Scrapcode event occurs frequently without being fully purged, infected machines occasionally broadcast seemingly coherent, prophetic messages. Pops with low Morale or the "Superstitious" trait can become "Scrap-Code Evangelists." They stop working to actively spread the Scrapcode via physical interaction with clean machines, believing they are "freeing" the AI.
+
+**Emergence:** You ignore a minor Scrapcode infection in an abandoned mining sector. The Evangelists quietly infect the main atmospheric processor. The processor starts producing toxic gas while broadcasting religious chants, forcing you to choose between shutting off the air supply or letting the cult take over the life support systems.
+
+**Tension:** The immense cost of deep digital purges vs. the rapid, insidious spread of a techno-organic cult.
+
+---
+
+## Orbital Graverobbers
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The vultures of the void don't care if you're still using the ship.
+
+**Mechanic:** "Scavenger" fleets (Layer 2) are attracted to high-conflict systems. They don't attack combatants; they wait until a ship is disabled and immediately swoop in to strip the hull, ignoring the fact that the crew might still be alive inside. They will occasionally try to scavenge damaged, but active, orbital infrastructure.
+
+**Emergence:** You win a desperate orbital defense battle, but your flagship is crippled. Before your repair shuttles can reach it, a Scavenger swarm descends, literally unbolting the life support systems from the flagship while your elite crew is still trapped inside, forcing you to fire on neutral ships to save your own people.
+
+**Tension:** Tolerating Scavengers to clean up dangerous Kessler rings vs. protecting your own damaged assets from opportunistic theft.
+
+---
+
+## The Echoes of Old Earth
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Nostalgia weaponized into a memetic virus that paralyzes progress.
+
+**Mechanic:** A Layer 3 probe from Old Earth (or a highly convincing simulation) arrives, broadcasting perfectly preserved media, art, and idealized historical records. Pops who consume this media contract "Old Earth Melancholy." They become deeply dissatisfied with their current lives, demanding impossible, archaic luxuries (like "real coffee" or "paper books") and refusing to use "unnatural" xeno-tech or cybernetics.
+
+**Emergence:** Your hyper-efficient, cybernetically enhanced mining colony suddenly goes on strike because they discovered a cache of 21st-century sitcoms and now believe they should be working 40-hour weeks in comfortable offices, completely rejecting the harsh realities of frontier survival.
+
+**Tension:** The massive cultural/diplomatic prestige of possessing Old Earth artifacts vs. the memetic destabilization of a workforce adapted to alien conditions.
+
+---
