@@ -45,16 +45,24 @@ impl RadiationGrid {
     /// Get radiation level at coordinates.
     #[must_use]
     pub fn get(&self, x: usize, y: usize) -> f32 {
-        if x >= self.width || y >= self.height {
-            return 0.0;
+        if x < self.width && y < self.height {
+            if let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x)) {
+                if idx < self.values.len() {
+                    return self.values[idx];
+                }
+            }
         }
-        self.values[y * self.width + x]
+        0.0
     }
 
     /// Set radiation level at coordinates.
     pub fn set(&mut self, x: usize, y: usize, val: f32) {
         if x < self.width && y < self.height {
-            self.values[y * self.width + x] = val;
+            if let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x)) {
+                if idx < self.values.len() {
+                    self.values[idx] = val;
+                }
+            }
         }
     }
 
@@ -75,8 +83,16 @@ impl RadiationGrid {
                         let nx = x + dx;
                         let ny = y + dy;
                         if nx >= 0 && ny >= 0 && nx < self.width as i32 && ny < self.height as i32 {
-                            let idx = (ny as usize) * self.width + (nx as usize);
-                            self.values[idx] += intensity * falloff;
+                            let nx_u = nx as usize;
+                            let ny_u = ny as usize;
+                            if let Some(idx) = ny_u
+                                .checked_mul(self.width)
+                                .and_then(|i| i.checked_add(nx_u))
+                            {
+                                if idx < self.values.len() {
+                                    self.values[idx] += intensity * falloff;
+                                }
+                            }
                         }
                     }
                 }
@@ -316,5 +332,26 @@ mod tests {
 
         let health = world.get::<Health>(pop).unwrap();
         assert!(health.current < 100.0);
+    }
+
+    #[test]
+    fn test_get_overflow_protection() {
+        // Construct a grid with huge dimensions but small buffer
+        // This simulates a potentially malicious or corrupted state
+        let width = usize::MAX / 2;
+        let height = 10;
+        let tiles = vec![0.0; 1];
+
+        let grid = RadiationGrid {
+            width,
+            height,
+            values: tiles,
+        };
+
+        // (2, 0) -> index 2. 2 > 1. Should safely return 0.0 instead of panicking.
+        assert_eq!(grid.get(2, 0), 0.0);
+
+        // (0, 0) -> index 0. 0 < 1. Should successfully return value.
+        assert_eq!(grid.get(0, 0), 0.0);
     }
 }
