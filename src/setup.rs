@@ -241,6 +241,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<crate::layer1::constellations::Sky>();
     #[cfg(feature = "nova")]
     world.init_resource::<crate::layer1::void_signals::SignalNetwork>();
+    #[cfg(feature = "nova")]
+    world.init_resource::<crate::experimental::genetic_memory::ColonyGeneticMemory>();
 
     world.init_resource::<crate::layer1::black_market::ColonyStats>();
     world.init_resource::<crate::layer1::void_weed::TradeNetwork>();
