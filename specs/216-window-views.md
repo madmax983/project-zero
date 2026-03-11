@@ -265,3 +265,5 @@ In `src/layer1/building.rs`:
 - Should "Night" affect view beauty? (Cannot see statue in dark).
 - Should "Window" be a building or a modification to a Wall? (MVP: Separate Building `Window` that acts like a Wall but transparent).
   - *Architect:* MVP: Separate Building `Window` that acts like a Wall but transparent.
+
+*Architect:* Night does not affect view beauty calculations in the MVP.

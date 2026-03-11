@@ -313,4 +313,5 @@ pub fn death_system(world: &mut World) {
 
 - Should walls block Line of Sight (FOV)? (Yes, eventually. For now just movement).
 - Do we need a "Repair" job? (Future spec).
-  - *Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
+
+*Architect:* Walls block movement only for the MVP. Line of Sight blocking is a future feature.

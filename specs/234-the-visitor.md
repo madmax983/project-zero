@@ -336,3 +336,5 @@ pub fn visitor_behavior_system(
 - **Q**: Do turrets shoot it?
 - **A**: Yes, if it is tagged `Hostile` (maybe only after it eats?). For MVP, treat as Neutral until attacked.
   - *Architect:* Correct, treat visitors as neutral until provoked or explicitly tagged hostile.
+
+*Architect:* The Visitor can take damage and turrets will engage if it becomes hostile.

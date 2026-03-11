@@ -613,4 +613,3 @@ These values create urgency without being punishing for new players.
 - **Spec 009 (future)**: `pop_display(needs: &Needs, state: &PopState) -> (char, Color)`
 
 The function signature will be extended (not replaced) to add PopState parameter. This is a backward-compatible change - all existing calls just need to add the new parameter. Tests in this spec use the basic version; Spec 009 tests will validate the extended version.
-*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.

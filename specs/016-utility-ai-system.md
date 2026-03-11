@@ -1215,7 +1215,6 @@ impl Default for Farm {
 ## Questions
 
 *Builder: add questions here if spec is unclear.*
-*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
 
 ## Forward Compatibility Notes
 
@@ -1245,4 +1244,5 @@ impl Default for Farm {
    - Add `ActionType::Socialize`, `Explore`, `BuildStructure`, etc.
    - Each gets evaluation function + HTN plan
    - Emergent: complex behavioral loops, role specialization
-*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
+
+*Architect:* Utility AI enhancements and pop memory integration are deferred to future specs.

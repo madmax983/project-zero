@@ -567,7 +567,6 @@ pub fn run(&self, world: &mut World) {
 ## Questions
 
 *Builder: add questions here if spec is unclear.*
-*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
 
 ## Future Work
 
@@ -577,4 +576,5 @@ This spec intentionally leaves unimplemented:
 - **Dynamic scheduling** - Add/remove systems at runtime
 - **System profiling** - Measure individual system performance
 - **Conditional systems** - Run only if certain conditions met
-*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
+
+*Architect:* System execution ordering is critical for correctness. See related documentation.

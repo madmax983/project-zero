@@ -302,3 +302,5 @@ pub fn production_efficiency_system(
 -   *Does deconstructing a Prototype refund full cost?* (Probably not, standard logic applies).
 -   *Can you speed up mastery with Research?* (Future feature).
 -   *Do multiple prototypes speed up mastery?* (Yes, the loop iterates all active prototypes. 2 reactors = 2x speed. This is intentional emergent behavior).
+
+*Architect:* Standard deconstruction refunds apply. Multiple prototypes stack their learning loops.
