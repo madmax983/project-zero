@@ -1009,3 +1009,25 @@ pub fn apply_neural_shock_system(
             .remove::<crate::layer1::tech::neural_leech::NeuralShock>();
     }
 }
+
+/// INT-431-348: Bridge between Black Market Smugglers and Void-Weed Trade.
+///
+/// When a `Smuggler` (from `black_market`) or `ShadowTrader` (from `shadow_market`)
+/// spawns, we want to broadcast a `MerchantArrivalEvent` of type `Smuggler`.
+/// This lets `process_void_weed_trade_system` execute the stash exchanges.
+pub fn smuggler_arrival_event_bridge(
+    query_smuggler: Query<Entity, Added<crate::layer1::black_market::Smuggler>>,
+    query_shadow: Query<Entity, Added<crate::layer1::shadow_market::ShadowTrader>>,
+    mut event_writer: EventWriter<crate::layer1::void_weed::MerchantArrivalEvent>,
+) {
+    for _ in query_smuggler.iter() {
+        event_writer.send(crate::layer1::void_weed::MerchantArrivalEvent {
+            merchant_type: crate::layer1::void_weed::MerchantType::Smuggler,
+        });
+    }
+    for _ in query_shadow.iter() {
+        event_writer.send(crate::layer1::void_weed::MerchantArrivalEvent {
+            merchant_type: crate::layer1::void_weed::MerchantType::Smuggler,
+        });
+    }
+}
