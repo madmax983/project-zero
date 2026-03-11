@@ -17,3 +17,6 @@ pub mod sympathetic_architecture;
 
 #[cfg(feature = "nova")]
 pub mod psychic_resonance;
+
+#[cfg(feature = "nova")]
+pub mod genetic_memory;

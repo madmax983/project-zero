@@ -32,3 +32,7 @@
 **Concept:** A system that gives pops with a specific trait (`Trait::VoidTouched` as an analog for "Psychic") a passive "sense" of nearby high-value and negative-value items. This translates into a slow morale tick up when they are near `Luxury`, `Medicine`, or `Alloy` items, or down if near `Corpse` entities.
 **Fate:** Proposed
 **Lesson:** Tying spatial resource placement directly to a Pop's internal `Morale` state adds another layer of base design complexity - where you store things affects how your people feel implicitly.
+## [Genetic Memory]
+**Concept:** New pops inherit a tiny fraction of the colony's total accumulated XP.
+**Fate:** Merged
+**Lesson:** Institutional memory effectively gives colonies a slow, passive snowball effect.
