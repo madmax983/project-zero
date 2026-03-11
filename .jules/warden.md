@@ -8,3 +8,6 @@
 **2025-05-20 - Unbounded Grid Allocation DOS**
 **Threat:** `TemperatureGrid` and `RadiationGrid` initialization allowed arbitrarily large unbounded memory allocation (via unchecked `width * height`) leading to Potential Denial of Service (OOM panic) if grid dimensions were user-controlled.
 **Defense:** Enforced strict capacity bounds (max 1,000,000 tiles) and utilized checked arithmetic (`checked_mul`) for grid initialization to safely abort.
+**2024-10-24 - [Grid Index Arithmetic Integer Overflow]**
+**Threat:** [Integer overflow in grid index calculations (y * width + x) within `TemperatureGrid` and `RadiationGrid` allowing DoS via application panics.]
+**Defense:** [Switched to safe arithmetic (`checked_mul` and `checked_add`) for bounded capacity and coordinate indexing in `get`, `set`, `add`, and diffusion calculations.]
