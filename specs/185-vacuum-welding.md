@@ -211,3 +211,5 @@ mod tests {
 *   **Does this apply to all buildings?** Yes, anything with `Structure`.
 *   **Can I destroy non-welded buildings with Destroy?** Yes, if you hate resources. It's a "fast delete" option essentially.
   - *Architect:* Yes, this serves as a fast delete option that foregoes resource recovery.
+
+*Architect:* Yes, this applies to all entities with a `Structure` component.

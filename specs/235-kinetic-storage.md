@@ -221,3 +221,5 @@ pub fn handle_battery_destruction_system(
 - **Efficiency**: Should round-trip efficiency be < 100%? (Yes, set to 80-90% for realism).
 - **Stacking**: Can we build them on top of each other? (No, they are tall structures).
   - *Architect:* No, kinetic storage structures cannot be stacked vertically.
+
+*Architect:* A round-trip efficiency of 80% is appropriate for the MVP.

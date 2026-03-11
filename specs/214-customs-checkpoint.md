@@ -234,4 +234,5 @@ pub fn vetting_work_system(mut commands: Commands, mut query: Query<(Entity, &mu
 
 - *Builder*: Should `Rejected` pops turn hostile?
     - *Architect*: For MVP, no. They should just leave (path to edge). Hostility is a future "Smuggler Turn" feature.
-  - *Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
+
+*Architect:* Rejected pops should simply leave the map or pathfind to the edge; hostility is deferred.

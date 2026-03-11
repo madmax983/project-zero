@@ -246,4 +246,5 @@ pub fn get_temp_tolerance_modifiers(traits: &Traits) -> (f32, f32) {
     *   **A:** Not naturally. Maybe via high-tech Medical beds later.
 *   **Q:** Should clothing affect exposure?
     *   **A:** Yes. Good clothing should reduce exposure gain (preventing mutation), just as it prevents damage. The logic should use the *felt* temperature (after insulation).
-  - *Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
+
+*Architect:* Mutations should happen gradually. Removal and clothing modifiers are deferred to future specs.

@@ -217,3 +217,5 @@ Update `src/layer1/pathfinding.rs` (or `navigation.rs`):
 
 - Should Vents conduct temperature? (Future scope: Yes, but for now focus on Pressure/Pollution).
 - Can Vents be closed? (Future scope: Active Vents).
+
+*Architect:* Focus on Pressure/Pollution for the MVP. Temperature and active venting are deferred.

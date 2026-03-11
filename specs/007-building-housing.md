@@ -507,4 +507,3 @@ Spec 009 (Job System) will:
 - Handle priority (starving pops prioritize farms over housing)
 
 This spec establishes the data structures and restoration logic. Spec 009 adds the intelligence.
-*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.

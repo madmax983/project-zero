@@ -635,7 +635,6 @@ With build mode active:
 ## Questions
 
 *Builder: add questions here if spec is unclear.*
-*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
 
 ## Congratulations!
 
@@ -652,4 +651,5 @@ With specs 001-010 complete, you have built a fully functional colony simulation
 **The colony lives, works, and creates its own story.**
 
 Next steps are open-ended: add more building types, implement disasters, create win conditions, or expand the simulation depth.
-*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
+
+*Architect:* Ensure integration points exist for these layers.

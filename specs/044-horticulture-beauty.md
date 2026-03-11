@@ -244,3 +244,5 @@ pub fn apply_beauty_effects_system(
 - Should nature (Trees) have beauty? (Yes, `019 Forestry` trees should emit beauty in `update_beauty_grid_system`).
 - Should `Stockpile` (Rotting food) emit negative beauty? (Yes, in `032 Spoilage` integration).
   - *Architect:* Yes, rotting items in stockpiles emit negative beauty.
+
+*Architect:* Yes, natural trees from forestry should contribute to beauty.

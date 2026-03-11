@@ -529,7 +529,6 @@ At position (10, 5):
 ## Questions
 
 *Builder: add questions here if spec is unclear.*
-*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
 
 ## Future Work
 
@@ -539,4 +538,5 @@ This spec intentionally leaves unimplemented:
 - **Render batching** - Group items by style for efficiency
 - **Animation support** - Frame-based character cycling
 - **Sprite/image rendering** - Beyond ASCII characters
-*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
+
+*Architect:* Rendering optimizations like dirty rectangles and batching are deferred.

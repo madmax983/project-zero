@@ -728,4 +728,3 @@ With specs 001-009 complete:
 - **Spec 009**: `pop_display(needs: &Needs, state: &PopState) -> (char, Color)` (extended version)
 
 All call sites must be updated to pass PopState. Tests in spec 005 used the basic version; tests in this spec validate the extended version.
-*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.

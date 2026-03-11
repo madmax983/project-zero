@@ -305,3 +305,5 @@ pub fn update_tech_capacity_system(
 
 - Should `Library` provide a small base capacity (e.g. 5.0) so early game isn't broken?
   - **Answer**: Yes, or start with `BaseCapacity` in `TechState` (e.g., 10.0 from the Lander computer).
+
+*Architect:* Assume a base capacity provided by the initial starting tech state.

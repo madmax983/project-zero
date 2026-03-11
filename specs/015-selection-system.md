@@ -628,7 +628,6 @@ Remember to account for:
 ## Questions
 
 *Builder: add questions here if spec is unclear.*
-*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
 
 ## Future Work
 
@@ -639,4 +638,5 @@ This spec intentionally leaves unimplemented:
 - **Hover preview** - Show info on hover before clicking
 - **Selection history** - Undo/redo selection changes
 - **Selection persistence** - Save/load selected entities
-*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
+
+*Architect:* Advanced selection support like box selection and history will be added later.
