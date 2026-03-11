@@ -242,15 +242,12 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     #[cfg(feature = "nova")]
     world.init_resource::<crate::layer1::void_signals::SignalNetwork>();
 
-
     world.init_resource::<crate::layer1::black_market::ColonyStats>();
     world.init_resource::<crate::layer1::void_weed::TradeNetwork>();
     world.init_resource::<crate::layer1::void_weed::SmugglingHeat>();
 
     world.init_resource::<Events<crate::layer1::void_weed::MerchantArrivalEvent>>();
     world.init_resource::<Events<crate::layer1::void_weed::PirateRaidEvent>>();
-
-
 
     world.init_resource::<crate::layer1::unrest::Unrest>();
     #[cfg(feature = "nova")]

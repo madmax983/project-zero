@@ -154,7 +154,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `410` The Inspector — `specs/410-the-inspector.md`
 - [ ] `411` Machine Awakening — `specs/411-machine-awakening.md`
 - [ ] `412` Fluid Simulation — `specs/412-fluid-simulation.md`
-- [ ] `413` Cryo-Shock — `specs/413-cryo-shock.md`
 - [ ] `414` The Black Box — `specs/414-the-black-box.md`
 - [ ] `415` Company Scrip — `specs/415-company-scrip.md`
 - [ ] `416` Cognitive Hazards — `specs/416-cognitive-hazards.md`

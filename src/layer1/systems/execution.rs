@@ -56,7 +56,10 @@ pub fn register(schedule: &mut Schedule) {
             apply_quirk_modifiers_system
                 .after(apply_lighting_penalties_system)
                 .after(apply_weather_effects_system),
-            crate::layer1::chemical::apply_chemical_speed_modifiers_system
+            crate::layer1::chemical::apply_chemical_speed_modifiers_system,
+            crate::layer1::cryo_shock::apply_cryo_debuff_system
+                .after(crate::layer1::pop::reset_speed_system)
+                .before(crate::layer1::chemical::apply_chemical_speed_modifiers_system)
                 .after(apply_quirk_modifiers_system),
             #[cfg(feature = "nova")]
             crate::layer1::observer::observer_reaction_system

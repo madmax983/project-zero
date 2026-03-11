@@ -58,7 +58,8 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::health::despawn_dead_entities_system),
             crate::layer1::funeral::grief_system
                 .after(crate::layer1::health::despawn_dead_entities_system),
-            crate::layer1::ancestral_graves::grave_visit_system.after(crate::layer1::funeral::grief_system),
+            crate::layer1::ancestral_graves::grave_visit_system
+                .after(crate::layer1::funeral::grief_system),
             crate::layer1::unrest::calculate_unrest_system.after(decay_needs_system),
             crate::layer1::bio_acoustic::bio_acoustic_chorus_system
                 .after(crate::layer1::unrest::calculate_unrest_system),
@@ -83,6 +84,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::sleep_deprived_savant::fever_dream_system
                 .after(crate::layer1::needs::decay_needs_system),
             check_sleepwalking_start_system.after(decay_needs_system),
+            crate::layer1::cryo_shock::decay_cryo_shock_system.after(decay_needs_system),
             sleepwalk_end_system.after(decay_needs_system),
         )
             .in_set(Layer1SystemSet::Observation),

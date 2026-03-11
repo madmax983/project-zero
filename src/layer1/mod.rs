@@ -30,8 +30,6 @@
 //! - **Environment:** [`crate::layer1::terrain`], [`crate::layer1::map`], [`crate::layer1::weather`], [`crate::layer1::lighting`]
 //! - **Economy:** [`crate::layer1::resources`], [`crate::layer1::trade`]
 
-/// Biometric access control system (Spec 142).
-pub mod ancestral_graves;
 pub mod access_control;
 /// Pop actions logic.
 pub mod actions;
@@ -40,6 +38,8 @@ pub mod ad_screen;
 pub mod admin;
 /// AI Core system (Spec 148).
 pub mod ai_core;
+/// Biometric access control system (Spec 142).
+pub mod ancestral_graves;
 /// Game balance constants.
 pub mod balance;
 /// Beauty and decoration system.
@@ -723,3 +723,5 @@ pub mod shipbreaking;
 pub use shipbreaking::*;
 pub mod void_weed;
 pub use void_weed::*;
+pub mod cryo_shock;
+pub use cryo_shock::*;
