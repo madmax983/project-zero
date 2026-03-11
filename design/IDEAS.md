@@ -9345,3 +9345,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Building cheap and fast on the surface (high risk) vs. slow, expensive subterranean excavation (safety).
 
 ---
+
+## The Leviathan's Ribcage
+
+**Layer:** 1
+
+**Fantasy:** A colony living in the remains of something so massive it defies comprehension. A macabre but functional utopia.
+
+**Mechanic:** A rare map generation feature where a massive, indestructible skeleton spans multiple Z-levels. The bones provide natural structural support, eliminating cave-in risks and providing extreme insulation against weather/temperature. Building inside the ribcage is perfectly safe, but harvesting the marrow yields a volatile, highly addictive fuel that mutates Pops over generations.
+
+**Emergence:** You build an impregnable fortress inside the skull of a dead god. It's perfectly safe from raids, but your miners start worshipping the marrow they extract, refusing to refine it and instead consuming it raw, turning into feral "Marrow-Drinkers" who attack anyone trying to build on the outer bones.
+
+**Tension:** Unmatched early-game safety and free infrastructure vs. the slow, insidious biological and cultural contamination of the colony.
+
+---
+
+## Tectonic Forging
+
+**Layer:** 1 -> 2
+
+**Fantasy:** Using the planet's wrath as an industrial hammer. The ultimate high-risk, high-reward smelting.
+
+**Mechanic:** You build "Geothermal Anvils" directly over active fault lines. When a tectonic event (earthquake/eruption) occurs naturally or is triggered artificially, the anvil captures the kinetic and thermal energy to instantly smelt thousands of tons of raw ore into "Core-Alloy," a material required for dreadnoughts and megastructures.
+
+**Emergence:** You need Core-Alloy to build a defense platform before a pirate fleet arrives. You intentionally trigger a massive earthquake to power the anvil. You get the alloy, but the quake destroys your primary agricultural zone and collapses the main mine shaft, trapping half your workforce.
+
+**Tension:** Instant access to endgame materials via planetary engineering vs. devastating, uncontrolled collateral damage to the colony.
+
+---
+
+## The Dormant Planet-Cracker
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** Living next to a ticking time bomb that belongs to someone else.
+
+**Mechanic:** A massive, ancient Layer 2 superweapon is locked in geosynchronous orbit directly above your Layer 1 colony. It is dormant, but its "Charging" cycle occasionally causes localized gravitational anomalies or EMP bursts on the surface. You can siphon its massive power reserves, but drawing too much risks triggering its firing sequence, which would obliterate the planet.
+
+**Emergence:** You siphon the weapon's power to run your entire industrial base for free. During a siege, you desperately draw even more power to fuel an energy shield. The weapon misinterprets the massive draw as a firing authorization. You survive the siege, but now have a 30-day countdown before the weapon cracks the planet you just saved.
+
+**Tension:** Access to near-infinite, free energy vs. the constant, apocalyptic threat of waking the machine.
+
+---
+
+## The Void Whale Graveyard
+
+**Layer:** 2
+
+**Fantasy:** Scavenging the organic hulks of space-faring leviathans for exotic biological materials.
+
+**Mechanic:** A specific Layer 2 node acts as a graveyard for massive, migratory "Void Whales." Sending fleets to harvest the corpses yields "Void-Blubber" (super-dense fuel) and "Leviathan Bone" (ultra-light armor). However, the graveyard is fiercely defended by living whales mourning their dead, and harvesting too aggressively incurs the wrath of "Xeno-Conservationist" factions in Layer 3.
+
+**Emergence:** Your economy becomes entirely dependent on Void-Blubber to power your fleets. You send a massive armada to clear the graveyard of mourning whales. You get the resources, but the Galactic Council designates your civilization as a "Monstrous Threat" and forms a coalition to exterminate you.
+
+**Tension:** Access to incredibly powerful, unique organic resources vs. escalating conflicts with incredibly powerful native fauna and galactic political backlash.
+
+---
