@@ -1,3 +1,9 @@
+//! Predictive Policing System (Spec 173).
+//!
+//! This module implements the "Algo-Hub" pre-crime mechanics, where Pops can be marked
+//! as `Suspect`s based on high stress and volatile traits before they actually commit a crime.
+//! Wardens can then arrest these suspects and place them in protective custody.
+
 #![allow(clippy::collapsible_if)]
 use crate::layer1::justice::Inmate;
 use crate::layer1::map::GridPosition;

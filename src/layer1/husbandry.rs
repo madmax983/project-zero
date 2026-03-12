@@ -1,3 +1,8 @@
+//! Husbandry System (Spec 075).
+//!
+//! Implements taming mechanics and resource production for animals in the colony.
+//! Tamed animals generate items (e.g. Milk, Wool) and are confined to `Pasture` zones.
+
 #![allow(clippy::option_if_let_else)]
 use crate::layer1::execution::MovementTarget;
 use crate::layer1::fauna::{Fauna, FaunaState, FaunaType};

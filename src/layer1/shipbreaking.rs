@@ -1,3 +1,8 @@
+//! Shipbreaking System (Spec 409).
+//!
+//! The `Shipbreaking` system manages the process of dismantling crashed orbital ships to
+//! salvage valuable resources. It generates work orders and handles yield calculations.
+
 use bevy_ecs::prelude::*;
 
 use crate::layer1::health::Health;

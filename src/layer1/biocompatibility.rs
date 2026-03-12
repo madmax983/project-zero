@@ -1,3 +1,8 @@
+//! Biocompatibility System (Spec 107).
+//!
+//! This module simulates how well Pops adapt to planetary hazards, applying damage to
+//! health based on environmental pollution and intrinsic biological resistance (`Biocompatibility`).
+
 use crate::layer1::atmosphere::AtmosphereGrid;
 use crate::layer1::health::Health;
 use crate::layer1::map::GridPosition;
