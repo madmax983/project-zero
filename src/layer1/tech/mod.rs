@@ -691,3 +691,5 @@ mod rhythm_tests;
 pub mod harmonic;
 #[cfg(test)]
 mod harmonic_mining_tests;
+
+pub mod event_horizon_tap;
