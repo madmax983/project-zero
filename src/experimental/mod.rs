@@ -20,3 +20,6 @@ pub mod psychic_resonance;
 
 #[cfg(feature = "nova")]
 pub mod genetic_memory;
+
+#[cfg(feature = "nova")]
+pub mod dreams_of_genesis;
