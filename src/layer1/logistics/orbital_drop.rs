@@ -46,11 +46,9 @@ pub fn process_orbital_drops(
             }
 
             let mut entity = commands.spawn((
-                DroppedCrate { item: item.clone() },
+                DroppedCrate { item: *item },
                 final_pos,
-                crate::layer1::items::Item {
-                    item_type: item.clone(),
-                },
+                crate::layer1::items::Item { item_type: *item },
             ));
 
             // Apply spoilage if perishable

@@ -550,7 +550,7 @@ impl<'a> PopDecider<'a> {
                 self.context.resources,
                 self.data.carrying,
                 self.data.carrying_item,
-                self.data.carrying_item_type.clone(),
+                self.data.carrying_item_type,
             ),
             ActionType::Haul,
             self.context,

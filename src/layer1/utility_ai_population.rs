@@ -402,7 +402,7 @@ fn populate_generic_items(
             .filter(|(_, pos, _)| !stockpiles.contains(*pos))
             .map(|(entity, pos, item)| {
                 let mut c = ScorableCandidate::new(entity, *pos);
-                c.item_type = Some(item.item_type.clone());
+                c.item_type = Some(item.item_type);
                 c
             }),
     );
@@ -535,7 +535,7 @@ pub fn collect_pop_data(world: &mut World, buffer: &mut UtilityAIBuffer, config:
 
         if let Some(item_entity) = data.carrying_item {
             if let Ok(item) = item_query.get(world, item_entity) {
-                data.carrying_item_type = Some(item.item_type.clone());
+                data.carrying_item_type = Some(item.item_type);
             }
         }
     }

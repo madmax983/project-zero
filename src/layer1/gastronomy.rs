@@ -100,7 +100,7 @@ pub fn generate_meal_effect(seed: u64, item: &ItemType) -> MealEffect {
 pub fn perform_experiment(world: &mut World, chef: Entity, ingredient_entity: Entity) -> bool {
     // 1. Get Ingredient Type
     let item_type = if let Some(item) = world.get::<crate::layer1::items::Item>(ingredient_entity) {
-        item.item_type.clone()
+        item.item_type
     } else {
         return false;
     };

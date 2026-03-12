@@ -83,7 +83,7 @@ pub struct UnequipEvent {
 }
 
 /// Types of food items Pops can consume.
-#[derive(Debug, Clone, PartialEq, Eq, Hash, Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
 pub enum ItemType {
     /// Default generic item type (safe fallback).
     #[default]
@@ -123,7 +123,8 @@ pub enum ItemType {
     /// A meal with unknown effects.
     MysteryMeal,
     /// A unique item produced by a hobby (e.g., "Wooden Duck").
-    Curio(String),
+    /// ⚡ Bolt Optimization: Made Copy to eliminate heap allocations
+    Curio(&'static str),
     /// A chemical stimulant that boosts speed but damages health.
     Stim,
     /// A chemical sedative that reduces stress but slows speed.
@@ -351,5 +352,16 @@ mod tests {
         // Pop equipment should be None
         let eq = world.get::<Equipment>(pop).unwrap();
         assert!(eq.tool.is_none(), "Pop equipment should be cleared");
+    }
+}
+
+#[cfg(test)]
+mod bolt_tests {
+    use super::*;
+
+    #[test]
+    fn test_item_type_is_copy() {
+        fn assert_is_copy<T: Copy>() {}
+        assert_is_copy::<ItemType>();
     }
 }

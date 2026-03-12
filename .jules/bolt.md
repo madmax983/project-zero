@@ -10,3 +10,7 @@
 **[Avoid Bevy HashMap Cloning in Tick Systems]**
 **Learning:** Calling `world.get_resource::<T>()` and cloning a large `HashMap` to appease the borrow checker before executing a `world.query()` causes unnecessary heap allocations every single tick. This happens because `world.get_resource()` borrows `&World` immutably, and `world.query().iter(world)` also borrows `&World` (often mutably if using `query_mut`, though even `iter` requires care).
 **Action:** Tightly scope the Bevy `query` execution. Create the query state (`let mut query = world.query::<T>();`) *first*, then fetch the resource reference `let data = world.get_resource::<T>();`, and pass the resource reference down into the loop `query.iter(world)` rather than cloning the data beforehand.
+
+**Deriving `Copy` on Hot Enums by Replacing `String`**
+**Learning:** `ItemType` contained a single dynamically allocated variant `Curio(String)` which prevented the entire 32-byte enum from implementing `Copy`. This forced the Utility AI (which processes thousands of items per tick) to call `.clone()` continuously, resulting in massive heap allocation overhead.
+**Action:** Replace `String` with `&'static str` for hardcoded strings in enums whenever possible to allow `#[derive(Copy)]`. This turns O(N) heap allocations into zero-cost stack copies. Add a `assert_is_copy::<T>()` test to lock in the performance gain and prevent future regressions.
