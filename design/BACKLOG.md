@@ -188,3 +188,4 @@ See `design/IDEAS.md` for unspecced concepts.
 
 
 
+- [ ] `452` The Event Horizon Tap — `specs/452-event-horizon-tap.md`
