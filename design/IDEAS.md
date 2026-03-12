@@ -9457,3 +9457,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Fast, cheap, self-repairing infrastructure vs. the horrifying upkeep cost and risk of the buildings turning predatory.
 
 ---
+
+## The Ghost Ship Armada
+
+**Layer:** 2
+
+**Fantasy:** A fleet that only exists to haunt the living, an anomaly of the void.
+
+**Mechanic:** A massive fleet of destroyed ships from a previous war that drifts into your system. They don't attack, but they cast a massive sensor shadow, hiding real threats (pirates, invaders) behind their bulk. Destroying them yields no scrap, only an unexplainable "Grief" penalty to the attacking crew.
+
+**Emergence:** You try to hide your own weak fleet within the Armada to deter an attack. It works, but the continuous exposure to the "ghosts" slowly drives your admiral insane, causing them to issue random, detrimental orders.
+
+**Tension:** Do you expend precious ammunition clearing an illusory threat to restore sensor coverage, or use them as a macabre, psychological shield?
+
+---
+
+## Cult of the Unseen Sun
+
+**Layer:** 1
+
+**Fantasy:** Worshipping the darkness when the light becomes too harsh.
+
+**Mechanic:** In colonies built deep underground or those that suffer prolonged eclipses, pops might form a cult that actively fears natural light. They demand all light sources be artificial and low-intensity. If exposed to direct sunlight, they suffer massive panic attacks and temporarily lose their skills.
+
+**Emergence:** You finally repair the surface solar array and throw open the blast doors, expecting cheers. Instead, half your colony shrieks in terror, barricades themselves in the deep mines, and begins sabotaging the power grid to "return the dark."
+
+**Tension:** The cheap, boundless energy of the sun vs. the psychological comfort and specialized efficiency of a subterranean workforce.
+
+---
+
+## Acoustic Camouflage
+
+**Layer:** 1
+
+**Fantasy:** Silence is survival. Adapting to a world where noise equals death.
+
+**Mechanic:** In biomes with hyper-aggressive, blind predators that hunt entirely by sound, you must install "Dampeners" on all heavy machinery. Pops must be issued "Soft-Sole" gear, reducing their movement speed but eliminating their noise footprint.
+
+**Emergence:** Your stealth colony is working perfectly until a new immigrant arrives with a loud, hacking cough. The noise instantly draws a swarm of predators right to the residential sector while everyone else is silently trying to hide.
+
+**Tension:** High-speed, noisy efficiency vs. slow, silent, and terrifyingly necessary stealth.
+
+---
+
+## The Cosmological Anchor
+
+**Layer:** 3 -> 2
+
+**Fantasy:** Tying your star system to the very fabric of the universe to prevent it from drifting into hostile territory.
+
+**Mechanic:** An endgame megastructure that permanently locks your system's hyperlane connections, preventing "Stellar Drift." However, this creates a massive gravitational wake that attracts the attention of advanced, aggressive Layer 3 empires who see the Anchor as a threat to galactic stability.
+
+**Emergence:** You build the Anchor to ensure your core worlds are never separated. It works perfectly, but the gravitational ripples accidentally tear apart a neighboring system, turning a previously neutral empire into a furious, eternal enemy that blames you for their destroyed colonies.
+
+**Tension:** Absolute strategic stability and permanent borders vs. painting the largest possible target on your system for the entire galaxy.
+
+---
