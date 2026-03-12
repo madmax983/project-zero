@@ -140,6 +140,8 @@ pub enum ItemType {
     Corpse(Entity),
     /// A building permit document.
     BuildingPermit,
+    /// A Memory Core extracted from a dead Pop.
+    MemoryCore(Entity),
     /// A crystal that decays in light.
     ShadowCrystal,
     /// A living stone that moves.

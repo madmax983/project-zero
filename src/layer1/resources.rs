@@ -63,6 +63,8 @@ pub enum ResourceType {
     Tools,
     /// Permit required to construct advanced buildings.
     BuildingPermit,
+    /// A Memory Core extracted from a dead Pop.
+    MemoryCore,
 }
 
 /// A physical resource item in the world (dropped on the ground).
@@ -202,6 +204,10 @@ pub struct ColonyResources {
     pub max_building_permits: f32,
     /// Maximum credits capacity (usually infinite or high).
     pub max_credits: f32,
+    /// Total memory cores available in the colony.
+    pub memory_cores: f32,
+    /// Maximum memory cores capacity.
+    pub max_memory_cores: f32,
 }
 
 impl Default for ColonyResources {
@@ -247,6 +253,8 @@ impl Default for ColonyResources {
             max_building_permits: 100.0,
             credits: 0.0,
             max_credits: 1000000.0,
+            memory_cores: 0.0,
+            max_memory_cores: 50.0,
         }
     }
 }
@@ -297,6 +305,8 @@ impl Mul<f32> for ColonyResources {
             max_building_permits: self.max_building_permits,
             credits: (self.credits * rhs).ceil(),
             max_credits: self.max_credits,
+            memory_cores: (self.memory_cores * rhs).ceil(),
+            max_memory_cores: self.max_memory_cores,
         }
     }
 }
@@ -349,6 +359,8 @@ impl ColonyResources {
             max_building_permits: 0.0,
             credits: 0.0,
             max_credits: 0.0,
+            memory_cores: 0.0,
+            max_memory_cores: 0.0,
         }
     }
 
@@ -363,6 +375,13 @@ impl ColonyResources {
     pub fn add_scrap(&mut self, amount: f32) {
         if amount.is_finite() {
             self.scrap = (self.scrap + amount).clamp(0.0, self.max_scrap);
+        }
+    }
+
+    /// Adds memory cores, clamping to the maximum capacity.
+    pub fn add_memory_cores(&mut self, amount: f32) {
+        if amount.is_finite() {
+            self.memory_cores = (self.memory_cores + amount).clamp(0.0, self.max_memory_cores);
         }
     }
 
@@ -524,6 +543,7 @@ impl ColonyResources {
             || self.scrap < 0.0
             || self.building_permits < 0.0
             || self.credits < 0.0
+            || self.memory_cores < 0.0
     }
 
     /// Checks if all resource values are finite (not NaN or Infinity).
@@ -548,6 +568,7 @@ impl ColonyResources {
             && self.scrap.is_finite()
             && self.building_permits.is_finite()
             && self.credits.is_finite()
+            && self.memory_cores.is_finite()
     }
 
     /// Checks if the colony can afford the given cost.
@@ -586,6 +607,7 @@ impl ColonyResources {
             && self.scrap >= cost.scrap
             && self.building_permits >= cost.building_permits
             && self.credits >= cost.credits
+            && self.memory_cores >= cost.memory_cores
     }
 
     /// Deducts the given cost from the colony's resources.
@@ -613,6 +635,7 @@ impl ColonyResources {
         self.scrap -= cost.scrap;
         self.building_permits -= cost.building_permits;
         self.credits -= cost.credits;
+        self.memory_cores -= cost.memory_cores;
     }
 
     /// Attempts to deduct the given cost from the colony's resources.
@@ -663,6 +686,9 @@ impl ColonyResources {
             ResourceType::BuildingPermit => {
                 self.building_permits = (self.building_permits - amount).max(0.0);
             }
+            ResourceType::MemoryCore => {
+                self.memory_cores = (self.memory_cores - amount).max(0.0);
+            }
         }
     }
 
@@ -683,6 +709,7 @@ impl ColonyResources {
             ResourceType::Scrap => self.scrap < self.max_scrap,
             ResourceType::Tools => self.tools < self.max_tools,
             ResourceType::BuildingPermit => self.building_permits < self.max_building_permits,
+            ResourceType::MemoryCore => self.memory_cores < self.max_memory_cores,
         }
     }
 
@@ -703,6 +730,7 @@ impl ColonyResources {
             ResourceType::Scrap => self.add_scrap(amount),
             ResourceType::Tools => self.add_tools(amount),
             ResourceType::BuildingPermit => self.add_building_permits(amount),
+            ResourceType::MemoryCore => self.add_memory_cores(amount),
         }
     }
 }

@@ -252,6 +252,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::void_weed::PirateRaidEvent>>();
 
     world.init_resource::<crate::layer1::unrest::Unrest>();
+    world.init_resource::<Events<crate::layer1::memory_core::ImplantMemoryCoreEvent>>();
+    world.init_resource::<Events<crate::layer1::memory_core::HarvestMemoryCoreEvent>>();
     #[cfg(feature = "nova")]
     world.init_resource::<crate::layer1::machine_consciousness::ConsciousnessConfig>();
 
