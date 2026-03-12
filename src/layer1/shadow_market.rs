@@ -4,6 +4,10 @@ use crate::layer1::trade::{Merchant, TradeDeal};
 use bevy_ecs::prelude::*;
 
 use crate::layer1::resources::ResourceType;
+use crate::layer1::inventory::Inventory;
+use crate::layer1::items::ItemType;
+use crate::layer1::memory_core::MemoryCoreData;
+use crate::layer1::skills::Skills;
 use crate::layer1::terrain::TerrainGrid;
 use crate::shared::time::SimulationTime;
 use rand::Rng;
@@ -11,6 +15,64 @@ use rand::Rng;
 #[derive(Component)]
 pub struct ShadowTrader {
     pub merchant: Merchant,
+}
+
+/// System to execute a trade for an item (like Memory Core) specifically from a Shadow Trader
+pub fn execute_shadow_item_trade(
+    world: &mut World,
+    trader_entity: Entity,
+    buyer_entity: Entity,
+    cost_resource: ResourceType,
+    cost_amount: f32,
+    item_to_buy: ItemType,
+) -> bool {
+    let mut resources = world.resource_mut::<crate::layer1::resources::ColonyResources>();
+
+    if !resources.can_afford(&crate::layer1::resources::ColonyResources {
+        food: if cost_resource == ResourceType::Food { cost_amount } else { 0.0 },
+        wood: if cost_resource == ResourceType::Wood { cost_amount } else { 0.0 },
+        stone: if cost_resource == ResourceType::Stone { cost_amount } else { 0.0 },
+        metal: if cost_resource == ResourceType::Metal { cost_amount } else { 0.0 },
+        ore: if cost_resource == ResourceType::Ore { cost_amount } else { 0.0 },
+        planks: if cost_resource == ResourceType::Planks { cost_amount } else { 0.0 },
+        blocks: if cost_resource == ResourceType::Blocks { cost_amount } else { 0.0 },
+        waste: if cost_resource == ResourceType::Waste { cost_amount } else { 0.0 },
+        rations: if cost_resource == ResourceType::Rations { cost_amount } else { 0.0 },
+        fuel: if cost_resource == ResourceType::Fuel { cost_amount } else { 0.0 },
+        alcohol: if cost_resource == ResourceType::Alcohol { cost_amount } else { 0.0 },
+        scrap: if cost_resource == ResourceType::Scrap { cost_amount } else { 0.0 },
+        tools: if cost_resource == ResourceType::Tools { cost_amount } else { 0.0 },
+        building_permits: if cost_resource == ResourceType::BuildingPermit { cost_amount } else { 0.0 },
+        credits: 0.0,
+        ..crate::layer1::resources::ColonyResources::zeroed()
+    }) {
+        return false;
+    }
+
+    // Deduct
+    resources.consume(cost_resource, cost_amount);
+
+    // Transfer item
+    let mut trader_inv_opt = None;
+    if let Some(inv) = world.get::<Inventory>(trader_entity) {
+        trader_inv_opt = Some(inv.clone());
+    }
+
+    if let Some(mut trader_inv) = trader_inv_opt {
+        if let Some(idx) = trader_inv.items.iter().position(|i| i.item_type == item_to_buy) {
+            let item = trader_inv.items.remove(idx);
+
+            // Re-apply modified inventory
+            world.entity_mut(trader_entity).insert(trader_inv);
+
+            if let Some(mut buyer_inv) = world.get_mut::<Inventory>(buyer_entity) {
+                buyer_inv.add(item);
+                return true;
+            }
+        }
+    }
+
+    false
 }
 
 pub fn can_spawn_trader(world: &World, pos: GridPosition) -> bool {
@@ -114,6 +176,21 @@ pub fn spawn_shadow_trader_system(
                 give_amount: 5.0,
             }];
 
+            let mut trader_inv = Inventory::default();
+
+            if rng.gen_bool(0.2) {
+                // 20% chance to stock a Memory Core (as a physical item)
+                let core_data = commands.spawn(MemoryCoreData {
+                    skills: Skills::default(), // MVP: generic skills for spawned core
+                    traits: vec![],
+                }).id();
+
+                trader_inv.add(crate::layer1::inventory::InventoryItem {
+                    item_type: ItemType::MemoryCore(core_data),
+                    entity: Some(core_data),
+                });
+            }
+
             commands.spawn((
                 ShadowTrader {
                     merchant: Merchant {
@@ -123,6 +200,7 @@ pub fn spawn_shadow_trader_system(
                         deals,
                     },
                 },
+                trader_inv,
                 pos,
             ));
 

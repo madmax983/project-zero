@@ -318,6 +318,7 @@ pub fn extract_building_inputs(
                 ResourceType::BuildingPermit => {
                     resources.building_permits < resources.max_building_permits
                 }
+                ResourceType::MemoryCore => resources.memory_cores < resources.max_memory_cores,
             };
 
             entities.push(entity);

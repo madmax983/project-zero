@@ -698,6 +698,9 @@ pub mod pop_doppelganger;
 pub mod shadow_market;
 pub use pop_doppelganger::*;
 
+pub mod memory_core;
+pub use memory_core::*;
+
 /// Olfactory map and scent system (Spec 446).
 pub mod olfactory;
 pub use olfactory::*;
