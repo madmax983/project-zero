@@ -277,8 +277,8 @@ fn ui(f: &mut Frame, app: &mut App) {
 
     // Generated Output
     let output_block = if let Some(err) = &app.error_message {
-        Paragraph::new(err.as_str())
-            .style(Style::default().fg(Color::Red))
+        Paragraph::new(format!(" Failed to generate story: {} ", err))
+            .style(Style::default().fg(Color::White).bg(Color::Red).add_modifier(Modifier::BOLD))
             .block(
                 Block::default()
                     .borders(Borders::ALL)
@@ -291,13 +291,14 @@ fn ui(f: &mut Frame, app: &mut App) {
             .map(|seg| match seg {
                 NarrativeSegment::Text(t) => Span::raw(t),
                 NarrativeSegment::Slot { value, .. } => Span::styled(
-                    value,
+                    format!(" {} ", value),
                     Style::default()
-                        .fg(Color::Cyan)
+                        .fg(Color::Black)
+                        .bg(Color::Cyan)
                         .add_modifier(Modifier::BOLD),
                 ),
                 NarrativeSegment::Error(e) => {
-                    Span::styled(format!("[{e}]"), Style::default().fg(Color::Red))
+                    Span::styled(format!(" <Missing: {}> ", e), Style::default().fg(Color::White).bg(Color::Red).add_modifier(Modifier::BOLD))
                 }
             })
             .collect();
