@@ -3147,3 +3147,21 @@
 **Code reference:** `MoodModifier::ExistentialDread`
 **Usage:**
 - "Suffering from void-dread after looking at the stars."
+
+---
+
+## The Spiteful Will
+
+### the last word / the spite-gift
+**Replaces:** Will or inheritance event
+**Code reference:** `InheritanceEvent`
+**Usage:**
+- "Did you hear about Tovar's last word?"
+- "He left a spite-gift for the new captain."
+
+### the override
+**Replaces:** Confiscation of inheritance by player
+**Code reference:** `OverrideWillEvent`
+**Usage:**
+- "The Substrate invoked the override."
+- "The override caused a riot in sector four."
