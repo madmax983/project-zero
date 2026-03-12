@@ -3627,3 +3627,27 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[NAME] looked up. [YEAR]. Saw [ORBITAL_THREAT_SEEN]. Panic ensues."
 - "[YEAR]: The telescope brings bad news. [NAME] witnessed [ORBITAL_THREAT_SEEN]."
 - "Terror from the void. [NAME] reports [ORBITAL_THREAT_SEEN] in the high orbit. [YEAR]."
+
+---
+
+## The Spiteful Will Templates (Spec 451)
+
+### SPITEFUL_WILL_EXECUTED
+
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[DECEASED_NAME]`, `[INHERITOR_TITLE]`, `[WILL_CONDITION]`, `[WILL_REACTION]`
+
+**Patterns:**
+- "[DECEASED_NAME] left their belongings to [INHERITOR_TITLE]. [YEAR]. [WILL_CONDITION]. [WILL_REACTION]."
+- "[YEAR]: The last word of [DECEASED_NAME]. Everything goes to [INHERITOR_TITLE] [WILL_CONDITION]. [WILL_REACTION]."
+- "A final insult from [DECEASED_NAME]. The stash is given to [INHERITOR_TITLE] [WILL_CONDITION]. [YEAR]."
+
+### WILL_OVERRIDE
+
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[DECEASED_NAME]`, `[NAME]`
+
+**Patterns:**
+- "We ignored the spite-gift of [DECEASED_NAME]. [YEAR]. The colony takes the stash. [NAME] is furious."
+- "[YEAR]: Confiscation. [DECEASED_NAME]'s last wish denied. [NAME] remembers this insult."
+- "The Substrate overrules the dead. [DECEASED_NAME]'s belongings seized. Unrest from [NAME]. [YEAR]."
