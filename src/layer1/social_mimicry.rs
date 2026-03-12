@@ -48,7 +48,7 @@ pub fn trend_setting_system(
     for (class, pos, consumed) in &query {
         if *class == SocialClass::Elite {
             // Elite sets the trend!
-            trend.current_item = Some(consumed.item.clone());
+            trend.current_item = Some(consumed.item);
             trend.strength = 1.0; // Max strength
             trend.setter_pos = *pos;
             // Only one elite needs to set it per tick (first one wins for MVP)

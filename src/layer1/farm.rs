@@ -129,7 +129,7 @@ pub fn produce_food_system(
                     (
                         b.building_type,
                         pc.is_some_and(|c| c.active),
-                        farm.selected_crop.clone(),
+                        farm.selected_crop,
                     ),
                 )
             })
@@ -307,7 +307,7 @@ pub fn consume_food_system(
     // Collect available food types from active sources
     let mut available_items = Vec::new();
     for farm in &farm_query {
-        available_items.push(farm.selected_crop.clone());
+        available_items.push(farm.selected_crop);
     }
     for fauna in &animal_query {
         match fauna.fauna_type {
@@ -395,10 +395,10 @@ pub fn consume_food_system(
 
                 // Palette Fatigue Logic
                 if let Some(ref mut history) = history_opt {
-                    record_meal(history, eaten_item.clone());
+                    record_meal(history, eaten_item);
                 } else {
                     let mut history = DietaryHistory::default();
-                    record_meal(&mut history, eaten_item.clone());
+                    record_meal(&mut history, eaten_item);
                     commands.entity(entity).insert(history);
                 }
 

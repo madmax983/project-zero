@@ -424,7 +424,7 @@ fn handle_drop_off_item(
         return;
     };
 
-    let item_type = item.item_type.clone();
+    let item_type = item.item_type;
     let is_photophobic = world
         .entity(item_entity.0)
         .contains::<crate::layer1::photophobic::Photophobic>();
@@ -480,9 +480,7 @@ fn find_and_target_stockpile_item(
     let is_drone = world.get::<Drone>(pop_entity).is_some();
 
     // Check item type
-    let item_type = world
-        .get::<Item>(carrying_item.0)
-        .map(|i| i.item_type.clone());
+    let item_type = world.get::<Item>(carrying_item.0).map(|i| i.item_type);
 
     // Strategy: Determine target based on ItemType
     // Waste -> Recycler

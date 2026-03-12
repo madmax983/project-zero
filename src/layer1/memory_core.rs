@@ -60,10 +60,12 @@ pub fn harvest_memory_core_system(
         if let Ok(mut inv) = harvesters.get_mut(event.harvester) {
             if let Ok((skills, traits)) = targets.get(event.target) {
                 // Spawn a new entity to hold the MemoryCoreData
-                let data_entity = commands.spawn(MemoryCoreData {
-                    skills: skills.clone(),
-                    traits: traits.0.iter().copied().collect(),
-                }).id();
+                let data_entity = commands
+                    .spawn(MemoryCoreData {
+                        skills: skills.clone(),
+                        traits: traits.0.iter().copied().collect(),
+                    })
+                    .id();
 
                 // Yield the item into inventory
                 inv.add(InventoryItem {
@@ -89,7 +91,7 @@ mod tests {
     use crate::layer1::skills::{SkillType, Skills};
     use crate::layer1::stress::StressTracker;
     use crate::layer1::traits::{Trait, Traits};
-    use bevy_ecs::prelude::*;
+
     use std::collections::HashSet;
 
     fn setup_world() -> World {

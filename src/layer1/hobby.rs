@@ -113,8 +113,8 @@ pub fn execute_hobby_system(
         if rng.gen_bool(0.01) {
             if let Some(mut inv) = inventory {
                 let item_type = match hobby.hobby_type {
-                    HobbyType::Whittling => Some(ItemType::Curio("Wooden Duck".to_string())),
-                    HobbyType::Tinkering => Some(ItemType::Curio("Bent Gear".to_string())),
+                    HobbyType::Whittling => Some(ItemType::Curio("Wooden Duck")),
+                    HobbyType::Tinkering => Some(ItemType::Curio("Bent Gear")),
                     _ => None,
                 };
 
