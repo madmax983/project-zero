@@ -9597,3 +9597,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Investing in static, all-around expensive environmental shielding vs. building dynamic, reactive defenses that can adapt to a thinking weather system.
 
 ---
+
+## The Under-City Slums
+
+**Layer:** 1
+
+**Fantasy:** A society stratified not by wealth, but by depth and access to natural light.
+
+**Mechanic:** As you dig deeper, the ambient "Status" of the tiles decreases. Pops living in the deep Z-levels naturally develop an "Under-Dweller" trait, granting them resistance to darkness and claustrophobia but making them resentful of the "Sun-Catchers" on the surface. Moving an Under-Dweller to the surface causes "Sun-Sickness" (stress/blindness).
+
+**Emergence:** A cave-in seals off the lower levels for a month. When you finally dig them out, the Under-Dwellers have formed an independent commune that refuses to integrate back into your surface-driven economy, demanding autonomy over the deep mines.
+
+**Tension:** Expanding your colony vertically downwards for cheap space vs. the inevitable cultural fracturing of your population along depth lines.
+
+---
+
+## The Solar Siphon
+
+**Layer:** 2
+
+**Fantasy:** Drinking a star dry to power an empire, leaving your homeworld freezing in the dark.
+
+**Mechanic:** A late-game mega-structure built in close orbit around the system's star. It provides a staggering, near-infinite amount of Energy, but every month it operates, it permanently reduces the star's "Insolation" value. This slowly plunges every Layer 1 planet in the system into an artificial ice age, killing crops and freezing oceans.
+
+**Emergence:** You build the Siphon to power a massive war fleet, successfully defending the system. But the war takes decades. When the dust settles, your fleet is victorious, but your homeworld is a frozen, dead ball of ice that can no longer support life without the Siphon's power, trapping you in a cycle of dependency.
+
+**Tension:** Unmatched, civilization-defining energy production vs. the slow, irreversible murder of your own biosphere.
+
+---
+
+## Generational Trade Routes
+
+**Layer:** Cross-layer
+
+**Fantasy:** A trade ship that takes lifetimes to arrive, its crew changing over generations before it ever sees a port.
+
+**Mechanic:** Trade missions to extremely distant Layer 3 empires using sub-light or early-FTL drives take decades of in-game time. You staff the ship with Layer 1 Pops. While in transit (Layer 2), the crew ages, breeds, and forms their own isolated micro-culture. When they finally return, they are strangers carrying the cargo their grandparents negotiated for.
+
+**Emergence:** You send your best diplomats on a 50-year trade mission to secure peace. While they are gone, your empire becomes a militaristic dictatorship. When the trade ship returns, the pacifist descendants of the original crew are horrified by what your empire has become and refuse to hand over the crucial hyper-tech they brought back, turning the trade ship into a heavily armed rebel station in orbit.
+
+**Tension:** The massive geopolitical payoff of long-distance trade vs. the total loss of control over the crew's culture and loyalty during the centuries-long voyage.
+
+---
