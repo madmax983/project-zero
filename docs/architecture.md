@@ -576,6 +576,42 @@ classDiagram
     Economy ..> Terrain : mines
 ```
 
+## Tuple Limit Workaround
+
+When adding systems to a schedule via Bevy's `add_systems()`, macro limitations restrict tuple sizes to 21 elements. Overloaded phases like `Observation` handle this by splitting the tuples.
+
+```mermaid
+classDiagram
+    class SystemSet {
+        <<Enum>>
+        Observation
+    }
+
+    class AppSchedule {
+        +add_systems(systems_1)
+        +add_systems(systems_2)
+    }
+
+    class ObservationSystemsBlock1 {
+        <<Tuple>>
+        system_a
+        system_b
+        ... 21 items max
+    }
+
+    class ObservationSystemsBlock2 {
+        <<Tuple>>
+        system_v
+        system_w
+    }
+
+    ObservationSystemsBlock1 --> SystemSet : .in_set(Observation)
+    ObservationSystemsBlock2 --> SystemSet : .in_set(Observation)
+
+    AppSchedule ..> ObservationSystemsBlock1 : Registers
+    AppSchedule ..> ObservationSystemsBlock2 : Registers
+```
+
 ## Related Decisions
 
 - [ADR 001: Layered Architecture](./adr/001-layered-architecture.md)
@@ -607,3 +643,4 @@ classDiagram
 - [ADR 033: Extract Actions to Submodule](./adr/033-extract-actions-to-submodule.md)
 - [ADR 034: Decouple Pop/Execution from UtilityAI](./adr/034-decouple-pop-execution-from-utility-ai.md)
 - [ADR 035: Extract Nature Sub-module](./adr/035-extract-nature-submodule.md)
+- [ADR 036: Split Overloaded System Tuples](./adr/036-split-overloaded-system-tuples.md)
