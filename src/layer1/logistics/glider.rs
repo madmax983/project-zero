@@ -1,4 +1,3 @@
-// Implementation block to make tests compilable (but fail).
 use crate::layer1::map::GridPosition;
 use crate::layer1::pop::Speed;
 use crate::layer1::temperature::TemperatureGrid;
@@ -54,8 +53,8 @@ mod tests {
             .spawn((
                 ThermalGlider,
                 Speed {
-                    base: 1.0,
-                    current: 0.0, // Base speed 0? Or just modified.
+                    base: 0.0,
+                    current: 0.0,
                     accumulator: 0.0,
                 },
                 GridPosition { x: 0, y: 0 },
@@ -95,5 +94,35 @@ mod tests {
 
         let speed = world.get::<Speed>(glider).unwrap();
         assert!(speed.current < 0.2, "Glider should crawl/stop in cold");
+    }
+
+    #[test]
+    fn test_glider_weak_lift() {
+        let mut world = World::new();
+        let mut temp_grid = TemperatureGrid::new(10, 10, 0.0);
+        temp_grid.set(0, 0, 20.0);
+        world.insert_resource(temp_grid);
+
+        let glider = world
+            .spawn((
+                ThermalGlider,
+                Speed {
+                    base: 1.0,
+                    current: 0.0,
+                    accumulator: 0.0,
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(update_glider_movement_system);
+        schedule.run(&mut world);
+
+        let speed = world.get::<Speed>(glider).unwrap();
+        assert!(
+            (speed.current - 1.0).abs() < f32::EPSILON,
+            "Glider should have weak lift in moderate heat"
+        );
     }
 }
