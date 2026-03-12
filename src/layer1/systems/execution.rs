@@ -42,6 +42,9 @@ pub fn register(schedule: &mut Schedule) {
             update_bioluminescence_system
                 .after(crate::layer1::day_night::update_day_night_cycle_system),
             crate::layer1::pop::reset_speed_system.before(apply_lighting_penalties_system),
+            crate::layer1::tech::event_horizon_tap::apply_time_dilation_system
+                .after(crate::layer1::pop::reset_speed_system)
+                .before(apply_lighting_penalties_system),
             update_lighting_system
                 .after(process_start_plan_system)
                 .after(crate::layer1::day_night::update_ambient_light_from_cycle_system)
