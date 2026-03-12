@@ -91,7 +91,9 @@ The "Nova" feature (Oral Tradition) builds upon the base narrative system to cre
 > **Run with:** `cargo run --features nova`
 
 ```rust
-// In Cargo.toml: scale = { version = "...", features = ["nova"] }, bevy_ecs = "0.15"
+// In Cargo.toml:
+// scale = { version = "...", features = ["nova"] }
+// bevy_ecs = "0.15" // <-- Version 0.15 is strictly required to match the workspace!
 
 use scale::layer1::oral_tradition::{OralTradition, collect_chronicles_system};
 use scale::layer1::chronicle::{Chronicle, EventImportance};
