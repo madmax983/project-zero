@@ -9555,3 +9555,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The architectural and logistical freedom of anti-gravity vs. the ever-growing, invisible sword of Damocles hanging over the surrounding area.
 
 ---
+
+## The Stellar Forge
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Forging advanced materials using the raw heat of a close-orbiting star, risking the entire facility for the ultimate resource.
+
+**Mechanic:** Players can construct a specialized orbital forge extremely close to the system's star. It produces incredibly rare "Stellar Alloys" without fuel, but operates under massive thermal stress. If not constantly supplied with coolant shipped from Layer 1, the forge melts down, creating a deadly solar flare that damages Layer 1 colonies.
+
+**Emergence:** You get distracted by a pirate raid and miss a coolant shipment. The forge explodes, and the resulting solar flare fries your colony's power grid exactly when the pirates land.
+
+**Tension:** Free access to endgame materials vs. an incredibly fragile logistical chain that can cause a localized apocalypse if broken.
+
+---
+
+## Gravity-Defying Flora
+
+**Layer:** 1
+
+**Fantasy:** Harvesting strange alien plants that float into the sky, creating vertical farming challenges and beautiful floating gardens.
+
+**Mechanic:** "Helium-Vines" grow naturally but pull upward against gravity. They can be anchored to the ground or buildings to harvest their highly nutritious fruit. If detached, they float away and are lost. If clustered too heavily on a weak roof, their collective upward pull can rip the roof off.
+
+**Emergence:** A player tries to mass-produce Helium-Vines on top of their main warehouse. A storm weakens the structural integrity, and the vines literally rip the entire roof off the building, floating it into the atmosphere and exposing all the stored resources to the weather.
+
+**Tension:** High-density, high-yield agriculture vs. managing the structural threat of negative weight on colony buildings.
+
+---
+
+## Sentient Dust Storms
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** Surviving weather that isn't just a hazard, but an intelligent entity that learns your defenses and tries to break in.
+
+**Mechanic:** "Silica-Swarms" appear as regular dust storms but pathfind toward active power grids or high populations. They can short out electronics and clog filters. Over time, the swarms "remember" which airlocks they couldn't breach and will try to find alternative routes like unprotected vents during the next storm.
+
+**Emergence:** You build an impenetrable wall against the prevailing wind, thinking you're safe from the storms. The sentient swarm simply splits in half, flanks the colony, and attacks the poorly defended rear exhaust ports, suffocating the engineering bay.
+
+**Tension:** Investing in static, all-around expensive environmental shielding vs. building dynamic, reactive defenses that can adapt to a thinking weather system.
+
+---
