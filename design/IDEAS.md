@@ -9513,3 +9513,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Absolute strategic stability and permanent borders vs. painting the largest possible target on your system for the entire galaxy.
 
 ---
+
+## The Reverse Heist
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** Infiltrating your own colony to bypass your own bureaucracy.
+
+**Mechanic:** Sometimes the planetary governor or automated logistics system (Layer 2) imposes strict embargoes or rations on certain goods. To get these critical goods to a desperate Layer 1 colony sector, you must hire smugglers or black-ops teams to "steal" from your own orbital supply depots and secretly deliver them to the surface.
+
+**Emergence:** You successfully smuggle emergency medical supplies to a quarantined sector, saving the population. However, the planetary security forces, unaware of your involvement, escalate their anti-smuggling protocols, accidentally shooting down a legitimate trade convoy the next day.
+
+**Tension:** Bypassing the rules you set up to solve immediate crises vs. undermining the authority and stability of your own planetary government.
+
+---
+
+## Parasitic Currency
+
+**Layer:** Cross-layer (3 -> 1)
+
+**Fantasy:** Your economy is booming, but the money itself is eating your society.
+
+**Mechanic:** A hyper-advanced Layer 3 empire offers a highly lucrative trade deal, paying exclusively in "Sentient Scrip." This currency provides massive economic boosts but slowly infects the minds of the Pops holding it (Layer 1), rewriting their utility AI to prioritize accumulating more Scrip over all other needs, including food and sleep.
+
+**Emergence:** Your colony becomes incredibly wealthy and productive. Then, a minor supply chain hiccup causes a dip in Scrip flow. The infected Pops experience crippling withdrawal, leading to a psychotic mass riot where they attempt to dismantle vital infrastructure to sell as scrap for more Scrip.
+
+**Tension:** The irresistible lure of infinite wealth vs. the slow, memetic enslavement of your population.
+
+---
+
+## Gravitational Debt
+
+**Layer:** 1
+
+**Fantasy:** Defying physics has a price, and physics always collects.
+
+**Mechanic:** You construct "Anti-Grav" generators to build massive, floating structures or rapidly transport heavy goods. However, the localized manipulation of gravity creates "Gravitational Debt" in the surrounding area. If the generators are ever turned off, or if the debt exceeds a critical threshold, the accumulated force violently snaps back into reality.
+
+**Emergence:** You build a beautiful, floating palace for your governor, accumulating massive gravitational debt in the slums directly beneath it. A brief power grid failure shuts down the generators for five seconds. The floating palace drops slightly, but the released gravitational debt instantly crushes the slums flat.
+
+**Tension:** The architectural and logistical freedom of anti-gravity vs. the ever-growing, invisible sword of Damocles hanging over the surrounding area.
+
+---
