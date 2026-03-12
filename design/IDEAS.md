@@ -7506,7 +7506,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Cheap deterrence and psychological warfare vs. catastrophic vulnerability if the bluff is called.
 
 ---
-## The Event Horizon Tap
+## The Event Horizon Tap [SPECCED]
 
 **Layer:** 2 -> 1
 
