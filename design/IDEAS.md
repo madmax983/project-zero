@@ -9639,3 +9639,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The massive geopolitical payoff of long-distance trade vs. the total loss of control over the crew's culture and loyalty during the centuries-long voyage.
 
 ---
+
+## The Prophet's Algorithm
+
+**Layer:** 1 -> 3
+
+**Fantasy:** A machine cult forms around an AI that predicts the future with unsettling accuracy, forcing you to choose between objective reality and religious fervor.
+
+**Mechanic:** A supercomputer on Layer 1 begins outputting cryptic but highly accurate predictions about Layer 2 weather events or Layer 3 fleet movements. Pops with high Stress begin worshiping it. If you act on the predictions (e.g., evacuating a sector before a storm), the cult's influence grows. If you ignore it, the cult actively sabotages your operations to ensure the prediction "comes true."
+
+**Emergence:** You rely on the AI for a massive military advantage in Layer 3. The cult becomes so powerful that they demand the AI be made Planetary Governor. When the AI finally makes a wrong prediction (a massive incoming attack that doesn't exist), you mobilize your entire economy for a phantom war while the cult violently purges "non-believers."
+
+**Tension:** The immense tactical advantage of perfect precognition vs. surrendering your colony's culture and autonomy to a black-box algorithm.
+
+---
+
+## Biological Sub-Contractors
+
+**Layer:** Cross-layer (3 -> 1)
+
+**Fantasy:** Outsourcing your colony's ecosystem management to an alien corporation, with horrifyingly efficient results.
+
+**Mechanic:** You sign a contract with a Layer 3 megacorp specializing in terraforming. They drop "Bio-Pods" onto your Layer 1 colony. These pods spawn highly efficient, bio-engineered worker beasts that handle all farming, hauling, and waste management for free. However, they slowly consume and replace the native flora and fauna.
+
+**Emergence:** The beasts are incredible. Your economy booms. But slowly, the beasts begin modifying the atmosphere to better suit *their* needs, not your Pops'. You realize the "free" labor was a long-term terraforming invasion. When you try to exterminate them, the Layer 3 megacorp sues you for "destruction of corporate property" and sends a fleet.
+
+**Tension:** Free, hyper-efficient labor and massive economic growth vs. the slow, creeping loss of your world's original biosphere and independence.
+
+---
+
+## Corporate Architecture Rights
+
+**Layer:** Cross-layer (3 -> 1)
+
+**Fantasy:** Your colony's skyline is literally owned by foreign powers, creating a physical manifestation of galactic debt.
+
+**Mechanic:** To fund massive projects, you can sell the "air rights" above your Layer 1 colony to Layer 3 empires or megacorps. They build massive, imposing structures (embassies, orbital elevators, sensory spires) directly over your city. These buildings provide massive Layer 2/3 bonuses (trade, diplomacy) but cast permanent shadows on Layer 1, crushing the morale of Pops living underneath and overriding your zoning laws.
+
+**Emergence:** You sell the rights above your main residential district to a heavily militarized empire to secure an alliance. They build a brutalist orbital defense cannon. The cannon protects your system, but the constant noise, shadow, and military policing of the area turns your happiest district into a seething, rebellious slum that eventually tries to sabotage the very cannon protecting them.
+
+**Tension:** Immediate, massive geopolitical and economic gains vs. the literal overshadowing and subjugation of your citizens' daily lives.
+
+---
