@@ -384,6 +384,7 @@ impl<'a> PopDecider<'a> {
     /// *   **PreCrimeArrest**: Predictive policing.
     #[allow(clippy::collapsible_if)]
     fn evaluate_group_work(&mut self) {
+        if self.data.traits.as_ref().is_some_and(|t| t.0.contains(&Trait::Noble)) { return; }
         if self.is_striking {
             return;
         }
@@ -487,6 +488,7 @@ impl<'a> PopDecider<'a> {
     /// *   **Haul**: Moving items to stockpiles.
     /// *   **BuryCorpse**: Sanitation.
     fn evaluate_group_logistics(&mut self) {
+        if self.data.traits.as_ref().is_some_and(|t| t.0.contains(&Trait::Noble)) { return; }
         if self.is_striking {
             return;
         }
