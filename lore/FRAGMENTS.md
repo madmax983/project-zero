@@ -4467,3 +4467,153 @@ What causes the existential dread.
 - the flickering drive-plumes of pirate raiders
 - a leviathan shadow passing over the moon
 - the chaotic flashes of an orbital war
+
+---
+
+## Hyper-Specialized Evolution Fragments (Spec 264)
+
+## Fragment Type: [MUTATION_NAME]
+Names for specialized mutations.
+
+- Mole-Eyes
+- Hunch-Back
+- Static-Skin
+- Silver-Tongue
+- Iron-Lung
+- Void-Ear
+- Rock-Fist
+
+## Fragment Type: [MUTATION_EFFECT]
+Descriptions of the physical change.
+
+- skin turned pale
+- bones shifted
+- eyes widened for the dark
+- hands hardened to stone
+- a permanent stoop
+- speaking in a new register
+- unnatural resistance to the cold
+
+---
+
+## Neural Leech Fragments (Spec 291)
+
+## Fragment Type: [LEECH_NAME]
+Flavor names for neural interfaces.
+
+- The Spike
+- Cortex-Tap
+- Mind-Hook
+- The Leech
+- Skull-Jack
+- Thought-Thief
+
+## Fragment Type: [LEECH_EFFECT]
+How the neural link feels.
+
+- a cold wire in the brain
+- thoughts that aren't yours
+- unnatural focus
+- hearing the collective hum
+- a sudden, jarring clarity
+- phantom headaches
+
+---
+
+## Cryo-Shock Fragments (Spec 413)
+
+## Fragment Type: [CRYO_SYMPTOM]
+Physical reactions to thawing.
+
+- violent shivering
+- ice-sickness
+- screaming at the light
+- temporary blindness
+- throwing up clear fluid
+- forgetting their own name
+
+## Fragment Type: [WAKE_REACTION]
+How pops behave right after cryo.
+
+- huddled near the vents
+- stumbled out of the pod
+- begged to go back to sleep
+- stared at their own hands
+- refused to speak
+- walked into walls
+
+---
+
+## Void-Weed Smuggler Fragments (Spec 431)
+
+## Fragment Type: [WEED_NAME]
+Names for the contraband flora.
+
+- Void-Weed
+- Dust-Leaf
+- Star-Root
+- Shadow-Moss
+- Quiet-Bloom
+- The Good Smoke
+
+## Fragment Type: [SMUGGLER_ACTION]
+What the smugglers do.
+
+- slipped past the sensors
+- left credits in the dark
+- loaded the secret cargo
+- paid well for the weed
+- watched from the edge
+
+## Fragment Type: [PIRATE_THREAT]
+Descriptions of pirate raids.
+
+- a boarding party in the night
+- a violent demand for the stash
+- ships tearing through the perimeter
+- laser fire in the greenhouse
+- a brutal shakedown
+
+---
+
+## Light Pollution Fragments (Spec 450)
+
+## Fragment Type: [LIGHT_POLLUTION_DESC]
+Descriptions of the artificial glare.
+
+- a sickly orange haze
+- washing out the stars
+- the blinding surface
+- artificial daylight
+- throwing shadows into space
+
+## Fragment Type: [OBSERVATORY_IMPACT]
+How light pollution affects astronomy.
+
+- blinded the lenses
+- couldn't see past our own glow
+- lost the deep signals
+- static in the glass
+- missing the incoming threats
+
+---
+
+## Spiteful Will Fragments (Spec 451)
+
+## Fragment Type: [WILL_DESC]
+Descriptions of the player overriding AI.
+
+- a forced hand
+- an undeniable urge
+- moving against their nature
+- a puppeteer's pull
+- walking like a machine
+
+## Fragment Type: [SPITE_ACTION]
+How pops react to being controlled.
+
+- cursed the Substrate
+- worked with gritted teeth
+- broke a tool in anger
+- dragged their feet
+- whispered of tyranny

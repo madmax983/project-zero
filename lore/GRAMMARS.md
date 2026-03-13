@@ -2911,3 +2911,45 @@ DROP_POD_SCATTERED:
 - ORBITAL_DREAD → enables → PANIC_SPREAD
 - ORBITAL_DREAD → enables → WORK_STOPPAGE
 - ORBITAL_DREAD → increases_chance → STRESS
+
+## Grammar: Hyper-Specialized Evolution Chaining
+
+- MUTATION_DEVELOPED → enables → JOB_EFFICIENCY_BOOST
+- MUTATION_DEVELOPED → increases_chance → ALIENATION
+- MUTATION_SICKNESS → enables → WORK_STOPPAGE
+- MUTATION_SICKNESS → increases_chance → RESENTMENT
+
+## Grammar: The Neural Leech Chaining
+
+- LEECH_ATTACHED → enables → NEURAL_SHOCK
+- LEECH_ATTACHED → increases_chance → PRODUCTIVITY_BOOST
+- NEURAL_SHOCK → enables → MEDICAL_EMERGENCY
+- NEURAL_SHOCK → increases_chance → TRAUMA
+
+## Grammar: Cryo-Shock Chaining
+
+- CRYO_WAKE_SHOCK → enables → CRYO_RECOVERY
+- CRYO_WAKE_SHOCK → increases_chance → WORK_DELAY
+- CRYO_RECOVERY → enables → NORMAL_OPERATIONS
+- CRYO_RECOVERY → increases_chance → RELIEF
+
+## Grammar: The Void-Weed Smugglers Chaining
+
+- VOID_WEED_DISCOVERED → enables → SMUGGLER_TRADE
+- VOID_WEED_DISCOVERED → increases_chance → RELAXATION
+- SMUGGLER_TRADE → enables → WEALTH_BOOST
+- SMUGGLER_TRADE → increases_chance → PIRATE_RAID
+- PIRATE_RAID → enables → MILITIA_MUSTER
+- PIRATE_RAID → increases_chance → FEAR
+
+## Grammar: Light Pollution Chaining
+
+- SKY_GLOW_REPORTED → enables → STARS_LOST
+- SKY_GLOW_REPORTED → increases_chance → DISORIENTATION
+- STARS_LOST → enables → RESEARCH_STALL
+- STARS_LOST → increases_chance → FRUSTRATION
+
+## Grammar: The Spiteful Will Chaining
+
+- WILL_OVERRIDDEN → enables → FORCED_LABOR
+- WILL_OVERRIDDEN → increases_chance → UNREST

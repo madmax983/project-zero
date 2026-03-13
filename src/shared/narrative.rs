@@ -200,8 +200,8 @@ impl NarrativeGenerator {
         for line in content.lines() {
             let trimmed = line.trim();
 
-            // Detect Template Header: "### TEMPLATE_NAME"
-            if let Some(id_part) = trimmed.strip_prefix("### ") {
+            // Detect Template Header: "## Template: [TEMPLATE_NAME]"
+            if let Some(id_part) = trimmed.strip_prefix("## Template: ") {
                 // If we were parsing a previous template, save it
                 if let Some(id) = current_id.take() {
                     if !current_patterns.is_empty() {
@@ -270,8 +270,8 @@ impl NarrativeGenerator {
         for line in content.lines() {
             let trimmed = line.trim();
 
-            // Detect Fragment Header: "### [FRAGMENT_NAME]"
-            if let Some(header) = trimmed.strip_prefix("### ") {
+            // Detect Fragment Header: "## Fragment Type: [FRAGMENT_NAME]"
+            if let Some(header) = trimmed.strip_prefix("## Fragment Type: ") {
                 if let Some(id) = current_id.take() {
                     if !current_options.is_empty() {
                         self.fragments.insert(

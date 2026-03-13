@@ -3147,3 +3147,80 @@
 **Code reference:** `MoodModifier::ExistentialDread`
 **Usage:**
 - "Suffering from void-dread after looking at the stars."
+
+---
+
+## Hyper-Specialized Evolution
+
+### the Change / job-scar
+**Replaces:** Physical mutation from working a job too long
+**Code reference:** `Trait` added by tenure
+**Usage:**
+- "The Change took his eyes."
+- "You can see the job-scar on his hands."
+
+---
+
+## The Neural Leech
+
+### the Tap / skull-jack
+**Replaces:** Neural Hub connection
+**Code reference:** `NeuralLinked`
+**Usage:**
+- "She is on the Tap."
+- "The skull-jack makes him fast but strange."
+
+### the Snap
+**Replaces:** Neural shock from hub death
+**Code reference:** `NeuralShock`
+**Usage:**
+- "He suffered the Snap when the core died."
+
+---
+
+## Cryo-Shock
+
+### the Thaw / ice-sickness
+**Replaces:** Debuffs from waking up from cryo
+**Code reference:** `CryoShock`
+**Usage:**
+- "The Thaw is rough this cycle."
+- "He has the ice-sickness."
+
+---
+
+## The Void-Weed Smugglers
+
+### the Smoke / Void-Weed
+**Replaces:** The contraband plant
+**Code reference:** `VoidWeedStash`
+**Usage:**
+- "He is selling the Smoke."
+- "We found Void-Weed in the vents."
+
+### dark-credits
+**Replaces:** Smuggling profit
+**Usage:**
+- "Living on dark-credits."
+
+---
+
+## Light Pollution
+
+### the Glare / sky-burn
+**Replaces:** Light pollution effect
+**Code reference:** `SkyGlow`
+**Usage:**
+- "The Glare hides the stars."
+- "Too much sky-burn from the new reactor."
+
+---
+
+## The Spiteful Will
+
+### the Ghost-Hand / the Pull
+**Replaces:** Player overriding the Utility AI
+**Code reference:** `OverrideWillEvent`
+**Usage:**
+- "Guided by the Ghost-Hand."
+- "Fighting the Pull to do something else."

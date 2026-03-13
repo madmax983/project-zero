@@ -8,7 +8,7 @@
 
 These fire during "Generating history..." before game start.
 
-### CIVILIZATION_RISE
+## Template: CIVILIZATION_RISE
 
 **Slots:** `[CIV_NAME]`, `[ORIGIN_STAR]`, `[YEAR]`, `[CIV_EPITHET]`
 
@@ -22,7 +22,7 @@ These fire during "Generating history..." before game start.
 "From [ORIGIN_STAR], in [YEAR], come the [CIV_NAME]. [CIV_EPITHET]. Remember them."
 ```
 
-### CIVILIZATION_FALL
+## Template: CIVILIZATION_FALL
 
 **Slots:** `[CIV_NAME]`, `[YEAR]`, `[CIV_FATE]`, `[DURATION_PHRASE]`, `[CIV_EPITHET]?`
 
@@ -36,7 +36,7 @@ These fire during "Generating history..." before game start.
 "[YEAR]. [CIV_NAME] signals cease. Investigation finds: they [CIV_FATE]."
 ```
 
-### WAR_RECORD
+## Template: WAR_RECORD
 
 **Slots:** `[WAR_NAME]`, `[CIV_A]`, `[CIV_B]`, `[START_YEAR]`, `[END_YEAR]`, `[CAUSE]`, `[OUTCOME]`
 
@@ -48,7 +48,7 @@ These fire during "Generating history..." before game start.
 "[START_YEAR]: War. [CIV_A] and [CIV_B]. Over [CAUSE]. Ends [END_YEAR]. [OUTCOME]."
 ```
 
-### ARTIFACT_CREATION
+## Template: ARTIFACT_CREATION
 
 **Slots:** `[ARTIFACT_NAME]`, `[ARTIFACT_TYPE]`, `[CREATOR_CIV]`, `[CREATOR_PERSON]?`, `[YEAR]`, `[ORIGIN_PHRASE]`
 
@@ -62,7 +62,7 @@ These fire during "Generating history..." before game start.
 "The [ARTIFACT_TYPE] known as [ARTIFACT_NAME]. [CREATOR_PERSON] of the [CREATOR_CIV], [YEAR]. [ORIGIN_PHRASE]."
 ```
 
-### CATASTROPHE
+## Template: CATASTROPHE
 
 **Slots:** `[CATASTROPHE_TYPE]`, `[YEAR]`, `[AFFECTED_REGION]`, `[CONSEQUENCE]`
 
@@ -74,7 +74,7 @@ These fire during "Generating history..." before game start.
 "[YEAR]: [CATASTROPHE_TYPE]. Scope: [AFFECTED_REGION]. Aftermath: [CONSEQUENCE]."
 ```
 
-### ERA_TRANSITION
+## Template: ERA_TRANSITION
 
 **Slots:** `[OLD_ERA]`, `[NEW_ERA]`, `[YEAR]`, `[CAUSE]`
 
@@ -92,7 +92,7 @@ These fire during "Generating history..." before game start.
 
 These fire during gameplay and get appended to the chronicle.
 
-### COLONY_FOUNDED
+## Template: COLONY_FOUNDED
 
 **Slots:** `[COLONY_NAME]`, `[STAR]`, `[YEAR]`, `[FOUNDER_COUNT]`, `[ORIGIN_COLONY]?`
 
@@ -107,7 +107,7 @@ These fire during gameplay and get appended to the chronicle.
 "[COLONY_NAME] ([STAR], [YEAR]). Daughter colony of [ORIGIN_COLONY]. [FOUNDER_COUNT] founders."
 ```
 
-### COLONY_LOST
+## Template: COLONY_LOST
 
 **Slots:** `[COLONY_NAME]`, `[YEAR]`, `[CAUSE]`, `[FINAL_POP]`, `[DURATION]`
 
@@ -121,7 +121,7 @@ These fire during gameplay and get appended to the chronicle.
 "[COLONY_NAME] ([DURATION]). [CAUSE] in [YEAR]. [FINAL_POP] souls. The channel stays open."
 ```
 
-### FAMINE
+## Template: FAMINE
 
 **Slots:** `[COLONY]`, `[YEAR]`, `[DURATION_DAYS]`, `[DEATHS]`, `[SURVIVOR_NAME]?`
 
@@ -136,7 +136,7 @@ These fire during gameplay and get appended to the chronicle.
 "[SURVIVOR_NAME] survives the [COLONY] famine of [YEAR]. [DEATHS] others do not."
 ```
 
-### BUILDING_MILESTONE
+## Template: BUILDING_MILESTONE
 
 **Slots:** `[COLONY]`, `[YEAR]`, `[BUILDING_TYPE]`, `[COUNT]`, `[BUILDER_NAME]?`
 
@@ -149,7 +149,7 @@ These fire during gameplay and get appended to the chronicle.
 "[BUILDER_NAME] finishes [COLONY]'s new [BUILDING_TYPE], year [YEAR]."
 ```
 
-### FIRST_HOUSING
+## Template: FIRST_HOUSING
 
 **Slots:** `[COLONY]`, `[YEAR]`, `[SHELTER_DESCRIPTOR]`
 
@@ -159,7 +159,7 @@ These fire during gameplay and get appended to the chronicle.
 "[YEAR]: Housing complete. The void is shut out. We are [SHELTER_DESCRIPTOR]."
 ```
 
-### FIRST_FARM
+## Template: FIRST_FARM
 
 **Slots:** `[COLONY]`, `[YEAR]`, `[FARM_DESCRIPTOR]`
 
@@ -169,7 +169,7 @@ These fire during gameplay and get appended to the chronicle.
 "[YEAR]: Agriculture established. A [FARM_DESCRIPTOR] harvest awaits."
 ```
 
-### LEGEND_BIRTH
+## Template: LEGEND_BIRTH
 
 **Slots:** `[PERSON_NAME]`, `[COLONY]`, `[YEAR]`, `[DEED]`, `[LEGACY_PHRASE]`
 
@@ -181,7 +181,7 @@ These fire during gameplay and get appended to the chronicle.
 "The legend of [PERSON_NAME] begins in [COLONY], [YEAR]. [DEED]. [LEGACY_PHRASE]."
 ```
 
-### ARTIFACT_DISCOVERED
+## Template: ARTIFACT_DISCOVERED
 
 **Slots:** `[COLONY]`, `[YEAR]`, `[ARTIFACT_NAME]`, `[ARTIFACT_TYPE]`, `[ORIGIN_CIV]?`, `[QUALITY]`
 
@@ -193,7 +193,7 @@ These fire during gameplay and get appended to the chronicle.
 "[ARTIFACT_NAME] surfaces at [COLONY], [YEAR]. A [QUALITY] [ARTIFACT_TYPE]. Its makers: [ORIGIN_CIV|forgotten]."
 ```
 
-### FIRST_CONTACT
+## Template: FIRST_CONTACT
 
 **Slots:** `[YOUR_COLONY]`, `[OTHER_CIV]`, `[YEAR]`, `[MANNER]`, `[OUTCOME]`
 
@@ -205,7 +205,7 @@ These fire during gameplay and get appended to the chronicle.
 "[OTHER_CIV] signals reach [YOUR_COLONY] in [YEAR]. [MANNER]. What follows: [OUTCOME]."
 ```
 
-### SHIP_LOST
+## Template: SHIP_LOST
 
 **Slots:** `[SHIP_NAME]`, `[DEPARTURE]`, `[DESTINATION]`, `[YEAR]`, `[CREW_COUNT]`, `[CARGO]?`
 
@@ -217,7 +217,7 @@ These fire during gameplay and get appended to the chronicle.
 "Lost: [SHIP_NAME]. [YEAR]. [DEPARTURE] to [DESTINATION]. [CREW_COUNT] aboard. [CARGO|No manifest recovered]."
 ```
 
-### SHIP_RETURNED
+## Template: SHIP_RETURNED
 
 **Slots:** `[SHIP_NAME]`, `[EXPECTED_YEAR]`, `[ACTUAL_YEAR]`, `[CONDITION]`, `[CREW_FATE]`
 
@@ -229,7 +229,7 @@ These fire during gameplay and get appended to the chronicle.
 "The [SHIP_NAME] comes home. [ACTUAL_YEAR], not [EXPECTED_YEAR]. [CONDITION]. The crew: [CREW_FATE]."
 ```
 
-### VOID_INCIDENT
+## Template: VOID_INCIDENT
 
 **Slots:** `[SHIP_NAME]`, `[YEAR]`, `[ANOMALY]`, `[CONSEQUENCE]`
 
@@ -241,7 +241,7 @@ These fire during gameplay and get appended to the chronicle.
 "The void touches [SHIP_NAME] in [YEAR]. [ANOMALY]. They will not speak of it."
 ```
 
-### LOCATION_NAMED
+## Template: LOCATION_NAMED
 
 **Slots:** `[LOCATION_NAME]`, `[COORDINATES]`, `[REASON]`
 
@@ -253,7 +253,7 @@ These fire during gameplay and get appended to the chronicle.
 "[LOCATION_NAME]. That is what the locals call [COORDINATES] after [REASON]."
 ```
 
-### LOCATION_NAMED_LANDING
+## Template: LOCATION_NAMED_LANDING
 
 **Slots:** `[LANDING_NAME]`, `[YEAR]`
 
@@ -263,7 +263,7 @@ These fire during gameplay and get appended to the chronicle.
 "[YEAR]. We plant the flag at [LANDING_NAME]."
 ```
 
-### FIRST_MINE
+## Template: FIRST_MINE
 
 **Slots:** `[COLONY]`, `[YEAR]`, `[MINING_DESCRIPTOR]`
 
@@ -273,7 +273,7 @@ These fire during gameplay and get appended to the chronicle.
 "[YEAR]: Mining begins. The [COLONY] foundation deepens."
 ```
 
-### RESOURCE_DISCOVERY
+## Template: RESOURCE_DISCOVERY
 
 **Slots:** `[COLONY]`, `[YEAR]`, `[RESOURCE]`, `[QUANTITY_PHRASE]`
 
@@ -283,7 +283,7 @@ These fire during gameplay and get appended to the chronicle.
 "[RESOURCE] discovered at [COLONY]. [YEAR]. [QUANTITY_PHRASE]."
 ```
 
-### FIRST_LUMBER
+## Template: FIRST_LUMBER
 
 **Slots:** `[COLONY]`, `[YEAR]`, `[FOREST_DESCRIPTOR]`
 
@@ -293,7 +293,7 @@ These fire during gameplay and get appended to the chronicle.
 "[YEAR]: Forestry begins. We harvest the [FOREST_DESCRIPTOR] wild."
 ```
 
-### FOREST_CLEARED
+## Template: FOREST_CLEARED
 
 **Slots:** `[COLONY]`, `[YEAR]`, `[FOREST_NAME]`, `[AREA]`
 
@@ -303,7 +303,7 @@ These fire during gameplay and get appended to the chronicle.
 "We have conquered the Green at [AREA]. [FOREST_NAME] is no more."
 ```
 
-### STOCKPILE_FULL
+## Template: STOCKPILE_FULL
 
 **Slots:** `[COLONY]`, `[YEAR]`, `[STORE_NAME]`, `[RESOURCE]`
 
@@ -313,7 +313,7 @@ These fire during gameplay and get appended to the chronicle.
 "Abundance at [COLONY]. The [STORE_NAME] can hold no more [RESOURCE]."
 ```
 
-### RESOURCE_SHORTAGE
+## Template: RESOURCE_SHORTAGE
 
 **Slots:** `[COLONY]`, `[YEAR]`, `[RESOURCE]`, `[CRISIS]`
 
@@ -323,7 +323,7 @@ These fire during gameplay and get appended to the chronicle.
 "[COLONY] runs dry. No [RESOURCE]. It is a time of [CRISIS]."
 ```
 
-### VEIN_DEPLETED
+## Template: VEIN_DEPLETED
 
 **Slots:** `[COLONY]`, `[YEAR]`, `[RESOURCE]`
 
@@ -333,7 +333,7 @@ These fire during gameplay and get appended to the chronicle.
 "[COLONY] reports: [RESOURCE] deposit exhausted. We must search again."
 ```
 
-### CONSTRUCTION_HALTED
+## Template: CONSTRUCTION_HALTED
 
 **Slots:** `[COLONY]`, `[YEAR]`, `[BUILDING_TYPE]`, `[RESOURCE]`
 
@@ -343,7 +343,7 @@ These fire during gameplay and get appended to the chronicle.
 "[YEAR]: The skeleton of a [BUILDING_TYPE] stands silent. No [RESOURCE] to finish it."
 ```
 
-### POP_ARRIVAL
+## Template: POP_ARRIVAL
 
 **Slots:** `[COLONY]`, `[YEAR]`, `[COUNT]`, `[ARRIVAL_METHOD]`
 
@@ -353,7 +353,7 @@ These fire during gameplay and get appended to the chronicle.
 "The population grows. [COUNT] arrived [ARRIVAL_METHOD] today."
 ```
 
-### POP_DEATH
+## Template: POP_DEATH
 
 **Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[REASON]`
 
@@ -363,7 +363,7 @@ These fire during gameplay and get appended to the chronicle.
 "Death at [COLONY]. [NAME] has passed. [REASON]."
 ```
 
-### RUMOR_SPREAD
+## Template: RUMOR_SPREAD
 
 **Slots:** `[COLONY]`, `[YEAR]`, `[TOPIC]`
 
@@ -373,7 +373,7 @@ These fire during gameplay and get appended to the chronicle.
 "The talk is of [TOPIC]. Truth or fear? [YEAR]."
 ```
 
-### SEASON_START
+## Template: SEASON_START
 
 **Slots:** `[COLONY]`, `[YEAR]`, `[SEASON_NAME]`, `[SEASON_ADJECTIVE]`
 
@@ -383,7 +383,7 @@ These fire during gameplay and get appended to the chronicle.
 "The [SEASON_NAME] begins. [SEASON_ADJECTIVE] days ahead."
 ```
 
-### FIRST_SMELT
+## Template: FIRST_SMELT
 
 **Slots:** `[COLONY]`, `[YEAR]`, `[METAL_NAME]`, `[REFINERY_NAME]`
 
@@ -393,7 +393,7 @@ These fire during gameplay and get appended to the chronicle.
 "The fires are lit. [METAL_NAME] flows from the [REFINERY_NAME]. [YEAR]."
 ```
 
-### TAVERN_OPENED
+## Template: TAVERN_OPENED
 
 **Slots:** `[COLONY]`, `[YEAR]`, `[TAVERN_NAME]`
 
@@ -403,7 +403,7 @@ These fire during gameplay and get appended to the chronicle.
 "First drinks served at [TAVERN_NAME]. The silence is broken by song. [YEAR]."
 ```
 
-### SOCIAL_GATHERING
+## Template: SOCIAL_GATHERING
 
 **Slots:** `[COLONY]`, `[YEAR]`, `[TAVERN_NAME]`, `[SOCIAL_ACTION]`, `[DRINK_NAME]`
 
@@ -437,7 +437,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ---
 
-### KNOWLEDGE_BREAKTHROUGH
+## Template: KNOWLEDGE_BREAKTHROUGH
 
 **Slots:** `[COLONY]`, `[YEAR]`, `[TECH_NAME]`, `[TECH_FLAVOR]`, `[KNOWLEDGE_TOPIC]`
 
@@ -447,7 +447,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 "A breakthrough in [TECH_NAME] at [COLONY]. [YEAR]. We found it in [KNOWLEDGE_TOPIC]."
 ```
 
-### FIRE_OUTBREAK
+## Template: FIRE_OUTBREAK
 
 **Slots:** `[COLONY]`, `[YEAR]`, `[FIRE_NAME]`, `[FIRE_DESCRIPTOR]`, `[SOURCE]?`
 
@@ -457,7 +457,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 "The Red Hunger wakes. [YEAR]. [COLONY] burns with [FIRE_DESCRIPTOR] heat."
 ```
 
-### FIRE_EXTINGUISHED
+## Template: FIRE_EXTINGUISHED
 
 **Slots:** `[COLONY]`, `[YEAR]`, `[DURATION]`, `[DAMAGE_REPORT]`
 
@@ -467,7 +467,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 "We beat back the Hunger at [COLONY]. [YEAR]. Cost: [DAMAGE_REPORT]."
 ```
 
-### SPOILAGE_EVENT
+## Template: SPOILAGE_EVENT
 
 **Slots:** `[COLONY]`, `[YEAR]`, `[RESOURCE]`, `[AMOUNT]`, `[ROT_DESCRIPTOR]`
 
@@ -477,7 +477,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 "The Grey takes its tithe. [AMOUNT] [RESOURCE] gone. [YEAR]."
 ```
 
-### INJURY_ACCIDENT
+## Template: INJURY_ACCIDENT
 
 **Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[INJURY_TYPE]`, `[CAUSE]`
 
@@ -487,7 +487,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 "[NAME] is hurt. [INJURY_TYPE]. The work is dangerous. [YEAR]."
 ```
 
-### HEALING_SUCCESS
+## Template: HEALING_SUCCESS
 
 **Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[HEALING_METHOD]`
 
@@ -497,7 +497,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 "The medical rites succeed. [NAME] walks. [YEAR]."
 ```
 
-### TOOL_BREAK
+## Template: TOOL_BREAK
 
 **Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[TOOL_NAME]`
 
@@ -515,7 +515,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Beauty & Horticulture Templates
 
-### PARK_OPENED
+## Template: PARK_OPENED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [PARK_NAME], [BEAUTY_DESCRIPTOR]
@@ -526,7 +526,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 "The [PARK_NAME] is complete. [YEAR]. Beauty returns to [COLONY]."
 ```
 
-### STATUE_RAISED
+## Template: STATUE_RAISED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [SUBJECT], [ART_TYPE], [BEAUTY_DESCRIPTOR]
@@ -541,7 +541,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Waste & Pollution Templates
 
-### LANDFILL_FULL
+## Template: LANDFILL_FULL
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [WASTE_NAME], [HEAP_NAME]
@@ -552,7 +552,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 "Warning: [HEAP_NAME] at capacity. [YEAR]. The filth rises."
 ```
 
-### WASTE_SPILL
+## Template: WASTE_SPILL
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [WASTE_NAME], [POLLUTION_DESCRIPTOR]
@@ -567,7 +567,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Skills & Mastery Templates
 
-### MASTERY_ACHIEVED
+## Template: MASTERY_ACHIEVED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [SKILL_TITLE], [SKILL_TYPE]
@@ -578,7 +578,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 "The [SKILL_TITLE] [NAME]. [YEAR]. Unmatched in [SKILL_TYPE]."
 ```
 
-### MASTERWORK_CREATED
+## Template: MASTERWORK_CREATED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [ITEM_NAME], [MASTERWORK_ADJECTIVE]
@@ -593,7 +593,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Relationship Templates
 
-### BOND_FORMED
+## Template: BOND_FORMED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME_A], [NAME_B], [BOND_TYPE]
@@ -604,7 +604,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 "[YEAR]: [NAME_A] stands with [NAME_B]. [BOND_TYPE] in the dark."
 ```
 
-### RIVALRY_STARTED
+## Template: RIVALRY_STARTED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME_A], [NAME_B], [RIVALRY_REASON]
@@ -619,7 +619,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Science Templates
 
-### ANOMALY_STUDIED
+## Template: ANOMALY_STUDIED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [ANOMALY_TYPE], [SCIENCE_ACTION]
@@ -632,7 +632,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Trade & Exchange Templates
 
-### MERCHANT_ARRIVAL
+## Template: MERCHANT_ARRIVAL
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [MERCHANT_TITLE]
@@ -643,7 +643,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 "Trade opportunity. [MERCHANT_TITLE] has docked at [COLONY]. [YEAR]."
 ```
 
-### TRADE_COMPLETED
+## Template: TRADE_COMPLETED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [MERCHANT_TITLE], [RESOURCE_OUT], [RESOURCE_IN]
@@ -658,7 +658,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Sound & Silence Templates
 
-### NOISE_COMPLAINT
+## Template: NOISE_COMPLAINT
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NOISE_DESCRIPTOR], [SOURCE]
@@ -669,7 +669,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 "Headaches and anger. The [SOURCE] is [NOISE_DESCRIPTOR]. [YEAR]."
 ```
 
-### QUIET_MOMENT
+## Template: QUIET_MOMENT
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [QUIET_DESCRIPTOR]
@@ -684,7 +684,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Death & Rites Templates
 
-### FUNERAL_HELD
+## Template: FUNERAL_HELD
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [FUNERAL_TYPE]
@@ -699,7 +699,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Law & Edicts Templates
 
-### EDICT_ISSUED
+## Template: EDICT_ISSUED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [EDICT_NAME], [EDICT_VERB]
@@ -710,7 +710,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 "The Substrate commands. [EDICT_NAME]. [YEAR]."
 ```
 
-### EDICT_REVOKED
+## Template: EDICT_REVOKED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [EDICT_NAME]
@@ -723,7 +723,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Structural Integrity Templates
 
-### STRUCTURE_COLLAPSE
+## Template: STRUCTURE_COLLAPSE
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [BUILDING_TYPE], [COLLAPSE_SOUND], [INJURY_COUNT]?
@@ -736,7 +736,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 "The [BUILDING_TYPE] collapse takes [INJURY_COUNT] souls. [YEAR]. [COLLAPSE_SOUND]."
 ```
 
-### RUIN_DISCOVERY
+## Template: RUIN_DISCOVERY
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [RUIN_CIV], [RUIN_AGE], [RUIN_STATE]
@@ -751,7 +751,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Vermin & Pest Templates
 
-### VERMIN_OUTBREAK
+## Template: VERMIN_OUTBREAK
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [VERMIN_NAME], [VERMIN_ACTION]
@@ -762,7 +762,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 "They [VERMIN_ACTION] in the dark. [VERMIN_NAME] plague [COLONY]. [YEAR]."
 ```
 
-### VERMIN_CLEARED
+## Template: VERMIN_CLEARED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [VERMIN_NAME]
@@ -773,7 +773,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 "Victory over the swarm. [VERMIN_NAME] eradicated at [COLONY]. [YEAR]."
 ```
 
-### VERMIN_EVOLVED
+## Template: VERMIN_EVOLVED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [VERMIN_NAME], [VERMIN_VARIANT]
@@ -788,7 +788,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Militia & Combat Templates
 
-### MILITIA_MUSTER
+## Template: MILITIA_MUSTER
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [MILITIA_NAME], [WEAPON_NAME]
@@ -799,7 +799,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 "Defenders of [COLONY]. The [MILITIA_NAME] is born. [YEAR]."
 ```
 
-### SKIRMISH_RESULT
+## Template: SKIRMISH_RESULT
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [MILITIA_NAME], [ENEMY], [OUTCOME]
@@ -814,7 +814,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Fauna Templates
 
-### FAUNA_SIGHTING
+## Template: FAUNA_SIGHTING
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [BEAST_NAME], [BEAST_ACTION]
@@ -825,7 +825,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 "Watchers report [BEAST_NAME]. [YEAR]. The pack [BEAST_ACTION]."
 ```
 
-### FAUNA_ATTACK
+## Template: FAUNA_ATTACK
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [BEAST_NAME], [INJURY_COUNT]
@@ -840,7 +840,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Energy & Power Templates
 
-### POWER_OUTAGE
+## Template: POWER_OUTAGE
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [POWER_SOURCE], [DURATION]
@@ -855,7 +855,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Visitor Templates
 
-### VISITOR_ARRIVAL
+## Template: VISITOR_ARRIVAL
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [VISITOR_TYPE], [COUNT]
@@ -870,7 +870,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Faction Templates
 
-### FACTION_FORMED
+## Template: FACTION_FORMED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [FACTION_NAME], [FOUNDER_NAME]
@@ -885,7 +885,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Atmosphere Templates
 
-### ATMOSPHERE_EVENT
+## Template: ATMOSPHERE_EVENT
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [ATMOSPHERE_DESCRIPTOR], [EFFECT]
@@ -900,7 +900,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Cabin Fever Templates
 
-### CABIN_FEVER_BREAK
+## Template: CABIN_FEVER_BREAK
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [CABIN_FEVER_SYMPTOM]
@@ -911,7 +911,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 "Mental break reported. [NAME] is [CABIN_FEVER_SYMPTOM]. [YEAR]."
 ```
 
-### CONFINEMENT_ALERT
+## Template: CONFINEMENT_ALERT
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [CONFINEMENT_DESCRIPTOR]
@@ -926,7 +926,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Shift Work Templates
 
-### SHIFT_CHANGE_DISPUTE
+## Template: SHIFT_CHANGE_DISPUTE
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [SHIFT_NAME], [SHIFT_COMPLAINT]
@@ -941,7 +941,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Weather Templates
 
-### WEATHER_EVENT_START
+## Template: WEATHER_EVENT_START
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [WEATHER_TYPE], [WEATHER_INTENSITY]
@@ -952,7 +952,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 "The sky turns dark. [WEATHER_TYPE] at [COLONY]. [YEAR]. [WEATHER_INTENSITY]."
 ```
 
-### WEATHER_EVENT_END
+## Template: WEATHER_EVENT_END
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [WEATHER_TYPE]
@@ -963,7 +963,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 "Silence after the storm. The [WEATHER_TYPE] is gone from [COLONY]. [YEAR]."
 ```
 
-### WEATHER_DAMAGE
+## Template: WEATHER_DAMAGE
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [STORM_NAME], [DAMAGE_REPORT]
@@ -978,7 +978,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Omen & Taboo Templates
 
-### OMEN_WITNESSED
+## Template: OMEN_WITNESSED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [OMEN_TYPE]
@@ -989,7 +989,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 "An omen at [COLONY]. [NAME] reports [OMEN_TYPE]. [YEAR]."
 ```
 
-### TABOO_BROKEN
+## Template: TABOO_BROKEN
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [TABOO_ACTION]
@@ -1004,7 +1004,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Inspector Templates
 
-### INSPECTOR_ARRIVAL
+## Template: INSPECTOR_ARRIVAL
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [INSPECTOR_TITLE]
@@ -1015,7 +1015,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 "A shuttle lands. It carries [INSPECTOR_TITLE]. [YEAR]."
 ```
 
-### INSPECTOR_JUDGMENT
+## Template: INSPECTOR_JUDGMENT
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [INSPECTOR_TITLE], [VERDICT]
@@ -1030,7 +1030,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Stowaway Templates
 
-### STOWAWAY_DISCOVERED
+## Template: STOWAWAY_DISCOVERED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [STOWAWAY_HIDING_SPOT]
@@ -1041,7 +1041,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 "Security alert. Intruder found [STOWAWAY_HIDING_SPOT]. [YEAR]."
 ```
 
-### THEFT_REPORT
+## Template: THEFT_REPORT
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [RESOURCE], [AMOUNT]
@@ -1056,7 +1056,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Mood Templates
 
-### PANIC_SPREAD
+## Template: PANIC_SPREAD
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [MOOD_WAVE]
@@ -1067,7 +1067,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 "A panic. [MOOD_WAVE] passes from soul to soul. [YEAR]."
 ```
 
-### JOY_SPREAD
+## Template: JOY_SPREAD
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [MOOD_WAVE]
@@ -1080,7 +1080,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Water Templates
 
-### WATER_DISCOVERY
+## Template: WATER_DISCOVERY
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [WATER_SOURCE_NAME], [RIVER_DESCRIPTOR]
@@ -1089,7 +1089,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Water. We name it [WATER_SOURCE_NAME]. It is [RIVER_DESCRIPTOR]."
 - "Thirst ends at [COLONY]. [YEAR]. The [WATER_SOURCE_NAME] is found."
 
-### FLOOD_EVENT
+## Template: FLOOD_EVENT
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [WATER_SOURCE_NAME], [RIVER_DESCRIPTOR]
@@ -1100,7 +1100,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Husbandry Templates
 
-### ANIMAL_TAMED
+## Template: ANIMAL_TAMED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [ANIMAL_NAME], [TAME_ACTION]
@@ -1109,7 +1109,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The [ANIMAL_NAME] joins us. [TAME_ACTION] by hand and food."
 - "Livestock at [COLONY]. The [ANIMAL_NAME] is [TAME_ACTION]. [YEAR]."
 
-### ANIMAL_BORN
+## Template: ANIMAL_BORN
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [ANIMAL_NAME]
@@ -1120,7 +1120,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Aging Templates
 
-### ELDER_PASSING
+## Template: ELDER_PASSING
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [ELDER_TITLE]
@@ -1129,7 +1129,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: We mourn [NAME]. The [ELDER_TITLE] sleeps now."
 - "The clock stops for [NAME]. [YEAR]. Rest well, [ELDER_TITLE]."
 
-### CHILD_BORN
+## Template: CHILD_BORN
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [YOUTH_TITLE]
@@ -1140,7 +1140,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Sleepwalking Templates
 
-### SLEEPWALKER_FOUND
+## Template: SLEEPWALKER_FOUND
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [DREAM_TYPE]
@@ -1151,7 +1151,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Planetary Quirk Templates
 
-### QUIRK_REVEALED
+## Template: QUIRK_REVEALED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [QUIRK_NAME]
@@ -1164,7 +1164,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Private Stash Templates
 
-### STASH_FOUND
+## Template: STASH_FOUND
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [STASH_LOCATION], [STASH_CONTAINER], [RESOURCE]
@@ -1177,7 +1177,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Fuel & Industry Templates
 
-### FUEL_PRODUCED
+## Template: FUEL_PRODUCED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [FUEL_TYPE], [FUEL_SOURCE]
@@ -1186,7 +1186,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: We have [FUEL_TYPE]. The [FUEL_SOURCE] yields power."
 - "Energy secured. [FUEL_TYPE] production begins at [COLONY]. [YEAR]."
 
-### REFINERY_ACCIDENT
+## Template: REFINERY_ACCIDENT
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [REFINERY_NAME], [INJURY_TYPE]
@@ -1199,7 +1199,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Purity Templates
 
-### PURITY_ANALYSIS
+## Template: PURITY_ANALYSIS
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [RESOURCE], [PURITY_LEVEL], [IMPURITY_TYPE]
@@ -1212,7 +1212,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Jury-Rigging Templates
 
-### JURY_RIG_EVENT
+## Template: JURY_RIG_EVENT
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [BUILDING_TYPE], [JURY_RIG_METHOD], [JURY_RIG_MATERIAL]
@@ -1221,7 +1221,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: A patch-job on the [BUILDING_TYPE]. [NAME] applied [JURY_RIG_MATERIAL]."
 - "The [BUILDING_TYPE] holds together. [NAME]'s [JURY_RIG_METHOD] worked. [YEAR]."
 
-### JURY_RIG_FAILURE
+## Template: JURY_RIG_FAILURE
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [BUILDING_TYPE], [JURY_RIG_MATERIAL]
@@ -1234,7 +1234,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Greenhouse Templates
 
-### GREENHOUSE_BUILT
+## Template: GREENHOUSE_BUILT
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [GREENHOUSE_NAME], [GREENHOUSE_DESCRIPTOR]
@@ -1247,7 +1247,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Provenance Templates
 
-### PROVENANCE_REVEALED
+## Template: PROVENANCE_REVEALED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [BUILDING_TYPE], [PROVENANCE_DESCRIPTOR]
@@ -1260,7 +1260,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Antagonistic Flora Templates
 
-### FLORA_OUTBREAK
+## Template: FLORA_OUTBREAK
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [FLORA_NAME], [FLORA_ACTION], [FLORA_DESCRIPTOR]
@@ -1269,7 +1269,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Infestation. The [FLORA_NAME] spreads. A [FLORA_DESCRIPTOR] growth."
 - "[COLONY] fights the green. [FLORA_NAME]. [YEAR]. It [FLORA_ACTION] everything."
 
-### FLORA_CLEARED
+## Template: FLORA_CLEARED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [FLORA_NAME]
@@ -1278,7 +1278,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Victory over the [FLORA_NAME]. [COLONY] breathes again."
 - "The roots are dead. [FLORA_NAME] eradicated. [YEAR]."
 
-### STRUCTURE_STRANGLED
+## Template: STRUCTURE_STRANGLED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [BUILDING_TYPE], [FLORA_NAME]
@@ -1291,7 +1291,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Observatory Templates
 
-### OBSERVATORY_BUILT
+## Template: OBSERVATORY_BUILT
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [OBSERVATORY_NAME]
@@ -1300,7 +1300,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The lens is polished. [OBSERVATORY_NAME] sees the deep."
 - "Eyes to the void. [OBSERVATORY_NAME] completed at [COLONY]. [YEAR]."
 
-### COSMIC_EPIPHANY
+## Template: COSMIC_EPIPHANY
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [COSMIC_SIGHT], [VOID_EMOTION]
@@ -1309,7 +1309,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Inspiration from the dark. [NAME] witnessed [COSMIC_SIGHT]."
 - "The void speaks to [NAME]. [COSMIC_SIGHT]. A moment of [VOID_EMOTION]. [YEAR]."
 
-### VOID_GAZE
+## Template: VOID_GAZE
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [COSMIC_SIGHT], [VOID_EMOTION]
@@ -1322,7 +1322,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Mentorship Templates
 
-### MENTORSHIP_STARTED
+## Template: MENTORSHIP_STARTED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [MENTOR_NAME], [LEARNER_NAME], [MENTOR_TITLE]
@@ -1331,7 +1331,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: A bond of learning. [MENTOR_NAME] and [LEARNER_NAME]. The path begins."
 - "[MENTOR_NAME], the [MENTOR_TITLE], guides [LEARNER_NAME]. [YEAR]."
 
-### LESSON_COMPLETED
+## Template: LESSON_COMPLETED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [MENTOR_NAME], [LEARNER_NAME], [LESSON_TOPIC]
@@ -1344,7 +1344,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Spontaneous Architecture Templates
 
-### FOLLY_RAISED
+## Template: FOLLY_RAISED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [FOLLY_NAME], [FOLLY_PURPOSE]
@@ -1353,7 +1353,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: [FOLLY_NAME] appears. [NAME]'s work. [FOLLY_PURPOSE]."
 - "Unauthorized construction. [NAME] makes a [FOLLY_NAME] [FOLLY_PURPOSE]. [YEAR]."
 
-### FOLLY_DISCOVERED
+## Template: FOLLY_DISCOVERED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [FOLLY_NAME], [FOLLY_DESCRIPTOR]
@@ -1366,7 +1366,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Logistics Templates
 
-### LOGISTICS_JAM
+## Template: LOGISTICS_JAM
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [CONVEYOR_NAME], [JAM_DESCRIPTOR]
@@ -1375,7 +1375,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Production halted. [CONVEYOR_NAME] failure. [JAM_DESCRIPTOR]."
 - "Silence on the line. The [CONVEYOR_NAME] is [JAM_DESCRIPTOR]. [YEAR]."
 
-### FLOW_RESTORED
+## Template: FLOW_RESTORED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [CONVEYOR_NAME]
@@ -1384,7 +1384,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Efficiency returns. [CONVEYOR_NAME] operational."
 - "The hum of the [CONVEYOR_NAME]. Restored at [COLONY]. [YEAR]."
 
-### LIGHT_INSTALLED
+## Template: LIGHT_INSTALLED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [LIGHT_SOURCE_NAME], [SHADOW_DESCRIPTOR]
@@ -1397,7 +1397,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Retrograde Engineering Templates
 
-### TECH_DECONSTRUCTED
+## Template: TECH_DECONSTRUCTED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [ARTIFACT_TYPE], [RETROGRADE_ACTION], [TECH_FLAW]
@@ -1406,7 +1406,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: We learn from the dead. [ARTIFACT_TYPE] [RETROGRADE_ACTION]. It had [TECH_FLAW]."
 - "The [ARTIFACT_TYPE] is [RETROGRADE_ACTION]. [NAME] reports [TECH_FLAW]. [YEAR]."
 
-### FLAW_DISCOVERED
+## Template: FLAW_DISCOVERED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [TECH_FLAW]
@@ -1419,7 +1419,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Penal Labor Templates
 
-### PRISONER_ARRIVED
+## Template: PRISONER_ARRIVED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [PRISONER_TITLE], [CRIME]
@@ -1428,7 +1428,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The shuttle brings [PRISONER_TITLE]. Their debt is [CRIME]."
 - "Chains and silence. [PRISONER_TITLE] for [CRIME]. [YEAR]."
 
-### SENTENCE_SERVED
+## Template: SENTENCE_SERVED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [PRISONER_TITLE]
@@ -1437,7 +1437,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The debt is paid. [NAME] walks without chains."
 - "Release day for [NAME]. The [PRISONER_TITLE] is a citizen. [YEAR]."
 
-### PRISON_RIOT
+## Template: PRISON_RIOT
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [PRISONER_TITLE]
@@ -1450,7 +1450,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Technological Ritual Templates
 
-### RITUAL_PERFORMED
+## Template: RITUAL_PERFORMED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [RITUAL_NAME]
@@ -1459,7 +1459,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: We observe the [RITUAL_NAME]. The spirits are listening."
 - "Incense and oil. The [RITUAL_NAME] is complete. [YEAR]."
 
-### SPIRIT_APPEASED
+## Template: SPIRIT_APPEASED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [MACHINE_SPIRIT_MOOD]
@@ -1468,7 +1468,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Harmony. The spirit is [MACHINE_SPIRIT_MOOD]."
 - "We are blessed. The core is [MACHINE_SPIRIT_MOOD]. [YEAR]."
 
-### SPIRIT_ANGERED
+## Template: SPIRIT_ANGERED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [MACHINE_SPIRIT_MOOD]
@@ -1481,7 +1481,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Social Mimicry Templates
 
-### TREND_STARTED
+## Template: TREND_STARTED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [TREND_NAME], [FASHION_ITEM]
@@ -1490,7 +1490,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: It is the time of [TREND_NAME]. We wear [FASHION_ITEM]."
 - "New style: [TREND_NAME]. [FASHION_ITEM] is the sign. [YEAR]."
 
-### TREND_DIED
+## Template: TREND_DIED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [TREND_NAME]
@@ -1503,7 +1503,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Colony Mascot Templates
 
-### MASCOT_NAMED
+## Template: MASCOT_NAMED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [MASCOT_TITLE], [NAME]
@@ -1512,7 +1512,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Meet [NAME]. Our [MASCOT_TITLE]."
 - "[NAME] joins the colony. The [MASCOT_TITLE] has arrived. [YEAR]."
 
-### MASCOT_EVENT
+## Template: MASCOT_EVENT
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [MASCOT_ACTION]
@@ -1521,7 +1521,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Good omen. [NAME] [MASCOT_ACTION]."
 - "The [MASCOT_TITLE] [MASCOT_ACTION]. Morale is high. [YEAR]."
 
-### MASCOT_DEATH
+## Template: MASCOT_DEATH
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME]
@@ -1534,7 +1534,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Security Templates
 
-### ACCESS_DENIED
+## Template: ACCESS_DENIED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [LOCK_STATUS]
@@ -1543,7 +1543,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Security alert. [NAME] found the door [LOCK_STATUS]."
 - "Denied. [NAME] cannot pass. The system is [LOCK_STATUS]. [YEAR]."
 
-### LOCKOUT_OVERRIDE
+## Template: LOCKOUT_OVERRIDE
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [ACCESS_LEVEL]
@@ -1556,7 +1556,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Old Guard Templates
 
-### GENERATION_CLASH
+## Template: GENERATION_CLASH
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [GENERATION_NAME], [OLD_GUARD_TITLE]
@@ -1565,7 +1565,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Words between the new and the old. The [OLD_GUARD_TITLE] speaks."
 - "Conflict of eras. [GENERATION_NAME] vs the new arrivals. [YEAR]."
 
-### TRADITION_UPHELD
+## Template: TRADITION_UPHELD
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [OLD_GUARD_TITLE], [GENERATION_NAME]
@@ -1578,7 +1578,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Vacuum Templates
 
-### EMERGENCY_VENT
+## Template: EMERGENCY_VENT
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [SUCTION_DESCRIPTOR]
@@ -1587,7 +1587,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Emergency cycle. The air is gone. It was [SUCTION_DESCRIPTOR]."
 - "Silence falls. We vented the sector. The vacuum is [SUCTION_DESCRIPTOR]. [YEAR]."
 
-### HULL_BREACH
+## Template: HULL_BREACH
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [DECOMPRESSION_SOUND], [SUCTION_DESCRIPTOR]
@@ -1600,7 +1600,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Trash Cannon Templates
 
-### CANNON_FIRED
+## Template: CANNON_FIRED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [CANNON_NAME], [PROJECTILE_TYPE]
@@ -1609,7 +1609,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: We clear the stores. The [CANNON_NAME] spits [PROJECTILE_TYPE]."
 - "Defense active. [CANNON_NAME] launches [PROJECTILE_TYPE]. [YEAR]."
 
-### AMMO_DEPLETED
+## Template: AMMO_DEPLETED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [CANNON_NAME]
@@ -1622,7 +1622,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Bioluminescent Flora Templates
 
-### GLOW_DISCOVERED
+## Template: GLOW_DISCOVERED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [LIGHT_PLANT_NAME], [GLOW_COLOR]
@@ -1635,7 +1635,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Grid Instability Templates
 
-### GRID_SURGE
+## Template: GRID_SURGE
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [GRID_SOUND], [POWER_FLUCTUATION]
@@ -1644,7 +1644,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Dangerous [POWER_FLUCTUATION]. The lights flare."
 - "The grid is unstable. [POWER_FLUCTUATION] detected. It [GRID_SOUND]s. [YEAR]."
 
-### BROWNOUT
+## Template: BROWNOUT
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [POWER_FLUCTUATION]
@@ -1658,7 +1658,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Wild Child Templates
 
-### WILD_CHILD_FOUND
+## Template: WILD_CHILD_FOUND
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [FERAL_NAME], [WILD_ACTION]
@@ -1667,7 +1667,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: A child in the wild. [NAME]. Known as [FERAL_NAME]. Found [WILD_ACTION]."
 - "We brought [NAME] in from the cold. [YEAR]. The [FERAL_NAME] still [WILD_ACTION]."
 
-### CHILD_GOES_FERAL
+## Template: CHILD_GOES_FERAL
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [WILD_ACTION]
@@ -1676,7 +1676,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The exposure took [NAME]. Feral. [WILD_ACTION]."
 - "We lost a child to the wastes. [NAME] has turned. [YEAR]."
 
-### CHILD_RECOVERED
+## Template: CHILD_RECOVERED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME]
@@ -1689,7 +1689,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Blob Templates
 
-### BLOB_SIGHTING
+## Template: BLOB_SIGHTING
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [BLOB_NAME], [BLOB_DESCRIPTOR]
@@ -1698,7 +1698,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The anomaly grows. [BLOB_NAME]. [BLOB_DESCRIPTOR] and moving."
 - "Contact with [BLOB_NAME]. [YEAR]. A [BLOB_DESCRIPTOR] mass."
 
-### BLOB_CONSUMPTION
+## Template: BLOB_CONSUMPTION
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [BLOB_NAME], [RESOURCE], [BLOB_ACTION]
@@ -1707,7 +1707,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: [RESOURCE] lost to the [BLOB_NAME]. It just [BLOB_ACTION] over it."
 - "Feeding time. The [BLOB_NAME] takes the [RESOURCE]. [YEAR]."
 
-### BLOB_DAMAGE
+## Template: BLOB_DAMAGE
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [BLOB_NAME], [BUILDING_TYPE]
@@ -1720,7 +1720,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Cybernetics Templates
 
-### SURGERY_COMPLETED
+## Template: SURGERY_COMPLETED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [PROSTHETIC_NAME], [SURGERY_OUTCOME]
@@ -1729,7 +1729,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Upgrade complete. [NAME] is now part [PROSTHETIC_NAME]."
 - "The flesh is weak. [NAME] chooses [PROSTHETIC_NAME]. [YEAR]. [SURGERY_OUTCOME]."
 
-### SURGERY_FAILED
+## Template: SURGERY_FAILED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [PROSTHETIC_NAME]
@@ -1742,7 +1742,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Heirloom & Ancient Tech Templates
 
-### HEIRLOOM_CREATED
+## Template: HEIRLOOM_CREATED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [LEGENDARY_TOOL]
@@ -1751,7 +1751,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: A legend is forged. [NAME] wields [LEGENDARY_TOOL]."
 - "The [LEGENDARY_TOOL]. Born from [NAME]'s labor. [YEAR]."
 
-### ANCIENT_DECAY
+## Template: ANCIENT_DECAY
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [ANCIENT_STRUCTURE]
@@ -1760,7 +1760,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Warning from the [ANCIENT_STRUCTURE]. Systems dying."
 - "Decay takes the [ANCIENT_STRUCTURE]. [YEAR]. We cannot fix it."
 
-### RETROGRADE_SACRIFICE
+## Template: RETROGRADE_SACRIFICE
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [ANCIENT_STRUCTURE], [KNOWLEDGE_TOPIC]
@@ -1773,7 +1773,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Social Stratification Templates
 
-### CLASS_FRICTION_EVENT
+## Template: CLASS_FRICTION_EVENT
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [CLASS_NAME], [FRICTION_SOURCE]
@@ -1782,7 +1782,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Unrest rises. [CLASS_NAME] vs the others. Cause: [FRICTION_SOURCE]."
 - "The divide grows. [CLASS_NAME] are angry about [FRICTION_SOURCE]. [YEAR]."
 
-### SOCIAL_PROMOTION
+## Template: SOCIAL_PROMOTION
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [CLASS_NAME]
@@ -1795,7 +1795,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Tech Envy Templates
 
-### TECH_ENVY_COMPLAINT
+## Template: TECH_ENVY_COMPLAINT
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [TECH_ENVY_DESCRIPTOR]
@@ -1808,7 +1808,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Justice & Sanctuary Templates
 
-### SANCTUARY_DECLARED
+## Template: SANCTUARY_DECLARED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [SANCTUARY_NAME]
@@ -1817,7 +1817,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The Free Zone is born. We call it [SANCTUARY_NAME]."
 - "Law ends here. [SANCTUARY_NAME] declared at [COLONY]. [YEAR]."
 
-### CRIMINAL_FLIGHT
+## Template: CRIMINAL_FLIGHT
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [SANCTUARY_NAME], [CRIME]
@@ -1830,7 +1830,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Ecological Succession Templates
 
-### SUCCESSION_STAGE
+## Template: SUCCESSION_STAGE
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [GROWTH_STAGE], [FOREST_DESCRIPTOR]
@@ -1843,7 +1843,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Xeno-Artifact Templates
 
-### ARTIFACT_AURA_FELT
+## Template: ARTIFACT_AURA_FELT
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [ARTIFACT_NAME], [AURA_EFFECT]
@@ -1856,7 +1856,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Drone Templates
 
-### DRONE_ACTIVATED
+## Template: DRONE_ACTIVATED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [DRONE_NAME], [DRONE_ACTION]
@@ -1865,7 +1865,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: New servitor. [DRONE_NAME]. [DRONE_ACTION] for the colony."
 - "Mechanical life. [DRONE_NAME] joins the workforce. [YEAR]."
 
-### DRONE_MALFUNCTION
+## Template: DRONE_MALFUNCTION
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [DRONE_NAME], [DRONE_ACTION]
@@ -1878,7 +1878,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Graffiti Templates
 
-### GRAFFITI_SPOTTED
+## Template: GRAFFITI_SPOTTED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [GRAFFITI_TEXT], [GRAFFITI_STYLE], [GRAFFITI_MEDIUM]
@@ -1891,7 +1891,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Cannibalization Templates
 
-### SHIP_PART_SALVAGED
+## Template: SHIP_PART_SALVAGED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [SHIP_COMPONENT], [CANNIBALIZE_ACTION], [SHIP_EMOTION]
@@ -1900,7 +1900,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The ship gives us life. [SHIP_COMPONENT] is gone. [SHIP_EMOTION]."
 - "Tearing down the past. [SHIP_COMPONENT] [CANNIBALIZE_ACTION]. [YEAR]."
 
-### SHIP_GONE
+## Template: SHIP_GONE
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [SHIP_EMOTION]
@@ -1913,7 +1913,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Geological Templates
 
-### SEISMIC_TREMOR
+## Template: SEISMIC_TREMOR
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [QUAKE_DESCRIPTOR], [GROUND_SOUND]
@@ -1926,7 +1926,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Thermal Templates
 
-### HEAT_SPIKE
+## Template: HEAT_SPIKE
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [HEAT_SOURCE], [THERMAL_STATE]
@@ -1935,7 +1935,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Heat warning. [HEAT_SOURCE] pushes us to [THERMAL_STATE]."
 - "Sweat and alarms. [HEAT_SOURCE] overload. [YEAR]."
 
-### FREEZE_EVENT
+## Template: FREEZE_EVENT
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [COLD_SOURCE], [THERMAL_STATE]
@@ -1948,7 +1948,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Data Templates
 
-### DATA_FOUND
+## Template: DATA_FOUND
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [DATA_CARRIER], [DATA_TYPE]
@@ -1961,7 +1961,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Social Debt Templates
 
-### FAVOR_CALLED
+## Template: FAVOR_CALLED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [FAVOR_TYPE], [DEBT_FEELING]
@@ -1974,7 +1974,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Chemical Templates (Spec 181)
 
-### ADDICTION_CRISIS
+## Template: ADDICTION_CRISIS
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [CHEMICAL_NAME]
@@ -1983,7 +1983,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Addiction. [NAME] is lost to the [CHEMICAL_NAME]. Signs of [WITHDRAWAL_SYMPTOM]."
 - "We are losing [NAME]. [YEAR]. The [CHEMICAL_NAME] hunger is too strong."
 
-### OVERDOSE
+## Template: OVERDOSE
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [CHEMICAL_NAME]
@@ -1996,7 +1996,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Wind Templates (Spec 182)
 
-### HIGH_WIND_EVENT
+## Template: HIGH_WIND_EVENT
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [WIND_DESCRIPTOR]
@@ -2005,7 +2005,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Gale warning. A [WIND_DESCRIPTOR] blast hits the canyon."
 - "No one walks outside. The air is [WIND_DESCRIPTOR]. [YEAR]."
 
-### CANYON_FORMED
+## Template: CANYON_FORMED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [CANYON_NAME]
@@ -2018,7 +2018,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Geodetic Sentience Templates (Spec 183)
 
-### STONE_MIGRATION
+## Template: STONE_MIGRATION
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [LIVING_STONE_NAME]
@@ -2027,7 +2027,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Creep report. [LIVING_STONE_NAME] shifting. It seeks company."
 - "Watch the [LIVING_STONE_NAME]. It is waking. [YEAR]."
 
-### GOLEM_RISES
+## Template: GOLEM_RISES
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [GOLEM_ACTION]
@@ -2040,7 +2040,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Orbital Debris Templates (Spec 184)
 
-### LAUNCH_FAILURE_DEBRIS
+## Template: LAUNCH_FAILURE_DEBRIS
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [SHIP_NAME], [DEBRIS_TYPE]
@@ -2049,7 +2049,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The [SHIP_NAME] is lost. Taken by the [ORBITAL_HAZARD]."
 - "Orbit is closed. [DEBRIS_TYPE] strike on [SHIP_NAME]. [YEAR]."
 
-### ORBITAL_IMPACT
+## Template: ORBITAL_IMPACT
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [ORBITAL_HAZARD]
@@ -2062,7 +2062,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Vacuum Welding Templates (Spec 185)
 
-### STRUCTURE_WELDED
+## Template: STRUCTURE_WELDED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [BUILDING_TYPE], [WELDING_TERM]
@@ -2071,7 +2071,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Construction complete. The vacuum makes it [PERMANENT_STRUCTURE_ADJECTIVE]."
 - "No taking it back. The [BUILDING_TYPE] is [WELDING_TERM]. [YEAR]."
 
-### DESTROY_DESIGNATION
+## Template: DESTROY_DESIGNATION
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [BUILDING_TYPE]
@@ -2084,7 +2084,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Bio-Architecture Templates (Spec 186)
 
-### BIO_STRUCTURE_GROWN
+## Template: BIO_STRUCTURE_GROWN
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [BIO_STRUCTURE_NAME]
@@ -2093,7 +2093,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: We cultivate the [BIO_STRUCTURE_NAME]. A living wall."
 - "Birth of a building. The [BIO_STRUCTURE_NAME] breathes. [YEAR]."
 
-### BIO_STARVATION
+## Template: BIO_STARVATION
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [BIO_STRUCTURE_NAME]
@@ -2102,7 +2102,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Starvation. The [BIO_STRUCTURE_NAME] begins to wither."
 - "Feed the walls. The [BIO_STRUCTURE_NAME] is dying. [YEAR]."
 
-### BIO_INFECTION
+## Template: BIO_INFECTION
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [BIO_STRUCTURE_NAME], [BIO_SICKNESS_SYMPTOM]
@@ -2113,7 +2113,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Cryo-Dream Templates (Spec 195)
 
-### CRYO_WAKE_EPIPHANY
+## Template: CRYO_WAKE_EPIPHANY
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [DREAM_IMAGE], [KNOWLEDGE_TOPIC]
@@ -2122,7 +2122,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Epiphany. [NAME] dreamed of [DREAM_IMAGE] and woke knowing [KNOWLEDGE_TOPIC]."
 - "The ice teaches. [NAME] brings [KNOWLEDGE_TOPIC] from a dream of [DREAM_IMAGE]. [YEAR]."
 
-### CRYO_WAKE_NIGHTMARE
+## Template: CRYO_WAKE_NIGHTMARE
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [NIGHTMARE_IMAGE]
@@ -2135,7 +2135,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Gastronomy Templates (Spec 166)
 
-### MYSTERY_MEAL_COOKED
+## Template: MYSTERY_MEAL_COOKED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [CHEF_NAME], [ALIEN_INGREDIENT], [MEAL_NAME_PREFIX], [MEAL_NAME_SUFFIX]
@@ -2144,7 +2144,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Experiment in the kitchen. [CHEF_NAME] serves [ALIEN_INGREDIENT] as [MEAL_NAME_PREFIX] [MEAL_NAME_SUFFIX]."
 - "Dinner roulette. [CHEF_NAME]'s [MEAL_NAME_PREFIX] [MEAL_NAME_SUFFIX] contains [ALIEN_INGREDIENT]. [YEAR]."
 
-### RECIPE_MASTERED
+## Template: RECIPE_MASTERED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [CHEF_NAME], [MEAL_NAME_PREFIX], [MEAL_NAME_SUFFIX], [FLAVOR_PROFILE]
@@ -2153,7 +2153,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: New staple. [CHEF_NAME]'s [MEAL_NAME_PREFIX] [MEAL_NAME_SUFFIX] is [FLAVOR_PROFILE] and safe."
 - "We feast tonight. [CHEF_NAME] has mastered the [FLAVOR_PROFILE] [MEAL_NAME_PREFIX] [MEAL_NAME_SUFFIX]. [YEAR]."
 
-### FOOD_POISONING
+## Template: FOOD_POISONING
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [MEAL_NAME_PREFIX], [MEAL_NAME_SUFFIX], [POISON_SYMPTOM]
@@ -2162,7 +2162,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Bad batch. [NAME] reports [POISON_SYMPTOM] after the [MEAL_NAME_PREFIX] [MEAL_NAME_SUFFIX]."
 - "Kitchen accident. The [MEAL_NAME_PREFIX] [MEAL_NAME_SUFFIX] caused [POISON_SYMPTOM] in [NAME]. [YEAR]."
 
-### XENO_DELICACY
+## Template: XENO_DELICACY
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [MEAL_NAME_PREFIX], [MEAL_NAME_SUFFIX], [FLAVOR_PROFILE]
@@ -2175,7 +2175,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Atmospheric Tides Templates (Spec 190)
 
-### TIDE_HIGH
+## Template: TIDE_HIGH
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [PRESSURE_DESC_HIGH], [TIDE_SOUND]
@@ -2184,7 +2184,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: High Tide. Movement slows. The atmosphere is [PRESSURE_DESC_HIGH]."
 - "A [TIDE_SOUND] signals the crush. [YEAR]. Air becomes [PRESSURE_DESC_HIGH]."
 
-### TIDE_LOW
+## Template: TIDE_LOW
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [PRESSURE_DESC_LOW], [TIDE_SOUND]
@@ -2197,7 +2197,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Festival Templates (Spec 077)
 
-### FESTIVAL_START
+## Template: FESTIVAL_START
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [FESTIVAL_NAME], [FESTIVAL_TYPE]
@@ -2206,7 +2206,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Work stops for [FESTIVAL_NAME]. Let the [FESTIVAL_TYPE] begin."
 - "Remembrance. [FESTIVAL_NAME] starts at [COLONY]. [YEAR]."
 
-### FESTIVAL_END
+## Template: FESTIVAL_END
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [FESTIVAL_NAME], [CELEBRATION_ACTION]
@@ -2219,7 +2219,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Radiation Templates (Spec 191)
 
-### RADIATION_SICKNESS_DETECTED
+## Template: RADIATION_SICKNESS_DETECTED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [RADIATION_SYMPTOM]
@@ -2228,7 +2228,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Radiation alert. [NAME] shows [RADIATION_SYMPTOM]."
 - "Invisible poison. [NAME] has [RADIATION_SYMPTOM]. Check the shielding. [YEAR]."
 
-### WARM_STONE_REFUGE
+## Template: WARM_STONE_REFUGE
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [WARM_STONE_DESC]
@@ -2241,7 +2241,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Crop Diversity Templates (Spec 120)
 
-### FIRST_HARVEST_WHEAT
+## Template: FIRST_HARVEST_WHEAT
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [CROP_DESC_WHEAT]
@@ -2249,7 +2249,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "First wheat brought in. [YEAR]. Stalks of [CROP_DESC_WHEAT]."
 - "[YEAR]: Bread soon. The [CROP_DESC_WHEAT] is harvested."
 
-### FIRST_HARVEST_POTATO
+## Template: FIRST_HARVEST_POTATO
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [CROP_DESC_POTATO]
@@ -2257,7 +2257,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "We dig up the [CROP_DESC_POTATO]. [YEAR]. Winter food."
 - "[YEAR]: Potato harvest. Baskets of [CROP_DESC_POTATO]."
 
-### FIRST_HARVEST_RICE
+## Template: FIRST_HARVEST_RICE
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [CROP_DESC_RICE]
@@ -2269,7 +2269,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Monument Templates (Spec 167)
 
-### RUIN_SCAVENGED
+## Template: RUIN_SCAVENGED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [RUIN_NAME], [RUIN_DESCRIPTION]
@@ -2282,7 +2282,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Auroral Templates (Spec 205)
 
-### AURORA_SIGHTING
+## Template: AURORA_SIGHTING
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [AURORA_COLOR], [AURORA_DESCRIPTOR]
@@ -2291,7 +2291,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Magnetic storm. The [AURORA_COLOR] fire is [AURORA_DESCRIPTOR]."
 - "We watch the [AURORA_DESCRIPTOR] dance. [AURORA_COLOR] waves. [YEAR]."
 
-### AURORA_HARVEST
+## Template: AURORA_HARVEST
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [AURORA_COLOR], [POWER_AMOUNT]
@@ -2304,7 +2304,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Predictive Policing Templates (Spec 173)
 
-### CRIME_PREDICTED
+## Template: CRIME_PREDICTED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [CRIME], [PREDICTION_SOURCE]
@@ -2313,7 +2313,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The algorithm sees all. [NAME] marked for [CRIME] via [PREDICTION_SOURCE]."
 - "Pre-crime alert. [NAME]. [CRIME]. Certainty high. [YEAR]."
 
-### PREEMPTIVE_ARREST
+## Template: PREEMPTIVE_ARREST
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [CRIME]
@@ -2326,7 +2326,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Scrapcode Templates (Spec 178)
 
-### SCRAPCODE_INFECTION
+## Template: SCRAPCODE_INFECTION
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [GLITCH_TEXT], [BUILDING_TYPE]
@@ -2339,7 +2339,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Totem Templates (Spec 200)
 
-### TOTEM_CRAFTED
+## Template: TOTEM_CRAFTED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [TOTEM_MATERIAL], [TOTEM_SHAPE]
@@ -2348,7 +2348,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Superstition or shield? [NAME] carries a [TOTEM_MATERIAL] [TOTEM_SHAPE]."
 - "Protection forged. [NAME]'s [TOTEM_SHAPE]. [TOTEM_MATERIAL]. [YEAR]."
 
-### TOTEM_LOST
+## Template: TOTEM_LOST
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [TOTEM_SHAPE]
@@ -2361,7 +2361,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Food Preservation Templates (Spec 087)
 
-### RATIONS_PRESERVED
+## Template: RATIONS_PRESERVED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [CURED_FOOD_NAME], [SMOKE_WOOD]
@@ -2374,7 +2374,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Institutional Memory Templates (Spec 172)
 
-### ARCHIVE_DISCOVERY
+## Template: ARCHIVE_DISCOVERY
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [ARCHIVE_SECTION], [KNOWLEDGE_TOPIC]
@@ -2383,7 +2383,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Data recovery. [ARCHIVE_SECTION] yielded [KNOWLEDGE_TOPIC]."
 - "The past speaks. [KNOWLEDGE_TOPIC] found in [ARCHIVE_SECTION]. [YEAR]."
 
-### LOST_KNOWLEDGE_RECOVERED
+## Template: LOST_KNOWLEDGE_RECOVERED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [KNOWLEDGE_TOPIC]
@@ -2396,7 +2396,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Escape Pod Templates (Spec 217)
 
-### ESCAPE_POD_LAUNCH
+## Template: ESCAPE_POD_LAUNCH
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [POD_NAME], [EVACUATION_REASON], [COUNT]
@@ -2405,7 +2405,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Evacuation event. [POD_NAME] launches. [COUNT] flee the [EVACUATION_REASON]."
 - "We sent [COUNT] into the dark. [POD_NAME] is gone. [YEAR]. [EVACUATION_REASON]."
 
-### COLONY_EVACUATED
+## Template: COLONY_EVACUATED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [EVACUATION_REASON], [SURVIVOR_COUNT]
@@ -2418,7 +2418,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Planetary Core Tap Templates (Spec 212)
 
-### CORE_TAP_ACTIVATED
+## Template: CORE_TAP_ACTIVATED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [POWER_SOURCE]
@@ -2427,7 +2427,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: We touched the heart. [POWER_SOURCE] active. The ground shakes."
 - "Limitless power. [POWER_SOURCE] online at [COLONY]. [YEAR]."
 
-### CORE_STRESS_WARNING
+## Template: CORE_STRESS_WARNING
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [CORE_STRESS_LEVEL], [CORE_ACTIVITY]
@@ -2440,7 +2440,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Solar Cycle Templates (Spec 213)
 
-### SOLAR_CYCLE_CHANGE
+## Template: SOLAR_CYCLE_CHANGE
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [SOLAR_PHASE], [SOLAR_INTENSITY]
@@ -2453,7 +2453,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Customs Checkpoint Templates (Spec 214)
 
-### CONTRABAND_SEIZED
+## Template: CONTRABAND_SEIZED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [VISITOR_TYPE], [CONTRABAND_ITEM]
@@ -2462,7 +2462,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Seizure. We found [CONTRABAND_ITEM] on a [VISITOR_TYPE]."
 - "Security intercept. [CONTRABAND_ITEM] confiscated. [YEAR]."
 
-### VISITOR_DENIED
+## Template: VISITOR_DENIED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [VISITOR_TYPE], [DENIAL_REASON]
@@ -2471,7 +2471,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Gate closed to [VISITOR_TYPE]. [DENIAL_REASON]."
 - "We sent the [VISITOR_TYPE] back. [DENIAL_REASON]. [YEAR]."
 
-### VISITOR_VETTED
+## Template: VISITOR_VETTED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [VISITOR_TYPE]
@@ -2484,7 +2484,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Ammunition Logistics Templates (Spec 210)
 
-### AMMO_SHORTAGE
+## Template: AMMO_SHORTAGE
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [AMMO_TYPE], [WEAPON_NAME]
@@ -2493,7 +2493,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Defense critical. We are out of [AMMO_TYPE]."
 - "The [WEAPON_NAME] is silent. Shortage of [AMMO_TYPE]. [YEAR]."
 
-### TURRET_RELOADED
+## Template: TURRET_RELOADED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [WEAPON_NAME], [AMMO_TYPE]
@@ -2506,7 +2506,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Planetary Governance Templates (Spec 209)
 
-### GOVERNOR_APPOINTED
+## Template: GOVERNOR_APPOINTED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [GOVERNOR_TITLE], [NAME]
@@ -2515,7 +2515,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Leadership change. [NAME] is [GOVERNOR_TITLE]."
 - "The [GOVERNOR_TITLE] speaks. [NAME] leads [COLONY]. [YEAR]."
 
-### POLICY_ENACTED
+## Template: POLICY_ENACTED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [POLICY_NAME], [GOVERNOR_TITLE]
@@ -2528,7 +2528,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Safehouse Templates (Spec 215)
 
-### SAFEHOUSE_CONTRACT
+## Template: SAFEHOUSE_CONTRACT
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [SAFEHOUSE_NAME], [VISITOR_TYPE]
@@ -2541,7 +2541,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Hygiene Templates (Spec 220)
 
-### FILTH_OUTBREAK
+## Template: FILTH_OUTBREAK
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [FILTH_DESCRIPTOR], [VERMIN_NAME]
@@ -2550,7 +2550,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Hygiene collapse. Everything is [FILTH_DESCRIPTOR]. We need water."
 - "Squalor report. [COLONY] is [FILTH_DESCRIPTOR]. [VERMIN_NAME] breed in the dirt. [YEAR]."
 
-### SHOWER_BUILT
+## Template: SHOWER_BUILT
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [SHOWER_NAME]
@@ -2563,7 +2563,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Recycling Templates (Spec 221)
 
-### RECYCLER_OPERATIONAL
+## Template: RECYCLER_OPERATIONAL
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [RECYCLER_NAME]
@@ -2572,7 +2572,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Green cycle started. [RECYCLER_NAME] takes the refuse."
 - "New law: all waste to the [RECYCLER_NAME]. [YEAR]."
 
-### CORPSE_RECYCLED
+## Template: CORPSE_RECYCLED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [RECYCLER_NAME], [CORPSE_PRODUCT]
@@ -2585,7 +2585,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Fleet Templates (Spec 157/159)
 
-### SHIP_CONSTRUCTED
+## Template: SHIP_CONSTRUCTED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [SHIP_CLASS], [SHIP_NAME]
@@ -2594,7 +2594,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The shipyard births [SHIP_NAME]. A proud [SHIP_CLASS]."
 - "Void-ready. [SHIP_NAME] ([SHIP_CLASS]) joins the fleet. [YEAR]."
 
-### FLEET_ENGAGEMENT
+## Template: FLEET_ENGAGEMENT
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [FLEET_NAME], [COMBAT_RESULT]
@@ -2607,7 +2607,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Barnacle Templates (Spec 219)
 
-### BARNACLE_INFESTATION
+## Template: BARNACLE_INFESTATION
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [SHIP_NAME], [BARNACLE_NAME]
@@ -2616,7 +2616,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Parasites detected. [BARNACLE_NAME] on the [SHIP_NAME]."
 - "Scrub the hull! [BARNACLE_NAME] infestation on [SHIP_NAME]. [YEAR]."
 
-### DRAG_WARNING
+## Template: DRAG_WARNING
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [SHIP_NAME], [BARNACLE_ACTION]
@@ -2629,7 +2629,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Crossfire Templates (Spec 206)
 
-### ORBITAL_BOMBARDMENT
+## Template: ORBITAL_BOMBARDMENT
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [CROSSFIRE_SOURCE], [IMPACT_DESCRIPTOR]
@@ -2638,7 +2638,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: We are under fire. [CROSSFIRE_SOURCE]. A [IMPACT_DESCRIPTOR] rain."
 - "Shields failing. [CROSSFIRE_SOURCE] bombardment. [IMPACT_DESCRIPTOR]. [YEAR]."
 
-### CROSSFIRE_HIT
+## Template: CROSSFIRE_HIT
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [BUILDING_TYPE], [CROSSFIRE_SOURCE]
@@ -2651,7 +2651,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Mother Lode Templates (Spec 168)
 
-### MOTHER_LODE_FOUND
+## Template: MOTHER_LODE_FOUND
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [MOTHER_LODE_NAME]
@@ -2660,7 +2660,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Infinite wealth. The [MOTHER_LODE_NAME] is real."
 - "Strike! [MOTHER_LODE_NAME] discovered at [COLONY]. [YEAR]."
 
-### MOTHER_LODE_DEPLETED
+## Template: MOTHER_LODE_DEPLETED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [MOTHER_LODE_NAME]
@@ -2673,7 +2673,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Heat Island Templates (Spec 198)
 
-### HEAT_ISLAND_WARNING
+## Template: HEAT_ISLAND_WARNING
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [HEAT_ISLAND_DESCRIPTOR]
@@ -2684,7 +2684,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Pneumatic Templates (Spec 228)
 
-### TUBE_JAM
+## Template: TUBE_JAM
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [CLOG_REASON], [TUBE_SOUND]
@@ -2697,7 +2697,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Keystone Templates (Spec 225)
 
-### KEYSTONE_DEATH
+## Template: KEYSTONE_DEATH
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [KEYSTONE_NAME], [COLLAPSE_SIGN]
@@ -2706,7 +2706,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Ecological failure. We lost the [KEYSTONE_NAME]. [COLLAPSE_SIGN] begins."
 - "A pillar falls. [KEYSTONE_NAME]. [YEAR]. The land shows [COLLAPSE_SIGN]."
 
-### ECOSYSTEM_COLLAPSE
+## Template: ECOSYSTEM_COLLAPSE
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [COLLAPSE_SIGN]
@@ -2719,7 +2719,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Gene Bank Templates (Spec 165)
 
-### SAMPLE_DEGRADED
+## Template: SAMPLE_DEGRADED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [GENE_SAMPLE_TYPE], [PRESERVATION_METHOD]
@@ -2728,7 +2728,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Genetic drift. The [PRESERVATION_METHOD] [GENE_SAMPLE_TYPE] is viable no longer."
 - "Memory fades. [GENE_SAMPLE_TYPE] lost to time. [YEAR]."
 
-### ANCIENT_DNA_FOUND
+## Template: ANCIENT_DNA_FOUND
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [GENE_SAMPLE_TYPE], [PRESERVATION_METHOD]
@@ -2741,7 +2741,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Paperwork Templates (Spec 222)
 
-### PAPERWORK_LOST
+## Template: PAPERWORK_LOST
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [FORM_TYPE], [BUREAUCRATIC_ACTION]
@@ -2750,7 +2750,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The work stops. We cannot find the [FORM_TYPE]. It is [BUREAUCRATIC_ACTION]."
 - "Red tape. [FORM_TYPE] [BUREAUCRATIC_ACTION]. Delays expected. [YEAR]."
 
-### FORM_REJECTED
+## Template: FORM_REJECTED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [FORM_TYPE], [NAME]
@@ -2763,7 +2763,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Volatile Templates (Spec 223)
 
-### VOLATILE_DECAY
+## Template: VOLATILE_DECAY
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [VOLATILE_NAME], [EXPLOSION_COLOR]
@@ -2772,7 +2772,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Stability critical. [VOLATILE_NAME] degrading."
 - "Danger. [VOLATILE_NAME] emits [EXPLOSION_COLOR] light. Run. [YEAR]."
 
-### EXPLOSION_EVENT
+## Template: EXPLOSION_EVENT
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [VOLATILE_NAME], [EXPLOSION_COLOR]
@@ -2785,7 +2785,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Corrosive Atmosphere Templates (Spec 227)
 
-### STRUCTURAL_DISSOLUTION
+## Template: STRUCTURAL_DISSOLUTION
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [MELTING_OBJECT], [CORROSION_SOUND]
@@ -2794,7 +2794,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Acid rain damage. [MELTING_OBJECT] melted away."
 - "Structural integrity failing. [MELTING_OBJECT] eaten by the air. [CORROSION_SOUND]. [YEAR]."
 
-### ACID_RAIN_EVENT
+## Template: ACID_RAIN_EVENT
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [CORROSION_SOUND]
@@ -2807,7 +2807,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Atmospheric Processor Templates (Spec 207)
 
-### PROCESSOR_ONLINE
+## Template: PROCESSOR_ONLINE
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [PROCESSOR_NAME]
@@ -2816,7 +2816,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Ignition. The [PROCESSOR_NAME] starts pulling the poison."
 - "A deep thrum across the colony. The [PROCESSOR_NAME] is online. [YEAR]."
 
-### ATMOSPHERE_IMPROVED
+## Template: ATMOSPHERE_IMPROVED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [PROCESSOR_NAME], [AIR_QUALITY]
@@ -2825,7 +2825,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The sky lightens. The [PROCESSOR_NAME] makes breathing [AIR_QUALITY]."
 - "We can step outside. The [PROCESSOR_NAME] is working. The air is [AIR_QUALITY]. [YEAR]."
 
-### PROCESSOR_STARVED
+## Template: PROCESSOR_STARVED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [PROCESSOR_NAME], [POWER_SOURCE]
@@ -2838,7 +2838,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Generational Hoarders Templates (Spec 284)
 
-### HOARD_DISCOVERED
+## Template: HOARD_DISCOVERED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [HOARDED_ITEM], [HOARDER_JUSTIFICATION]
@@ -2847,7 +2847,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The space is gone. [NAME] filled it with [HOARDED_ITEM]. Claimed [HOARDER_JUSTIFICATION]."
 - "Logistics failure. [NAME] hid the [HOARDED_ITEM]. Their excuse: [HOARDER_JUSTIFICATION]. [YEAR]."
 
-### HOARD_CONFISCATED
+## Template: HOARD_CONFISCATED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [NAME], [HOARDED_ITEM]
@@ -2860,7 +2860,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Echoes of the Past Templates (Spec 285)
 
-### GHOST_SIGHTING
+## Template: GHOST_SIGHTING
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [GHOST_APPEARANCE]
@@ -2869,7 +2869,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The ruins are restless. A projection, [GHOST_APPEARANCE], walks the halls."
 - "Echoes in the dark. A shape [GHOST_APPEARANCE]. We are not alone. [YEAR]."
 
-### ANCIENT_SECRET_REVEALED
+## Template: ANCIENT_SECRET_REVEALED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [ANCIENT_SECRET], [GHOST_APPEARANCE]
@@ -2882,7 +2882,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Symbiotic Shipyards Templates
 
-### LIVING_SHIP_BORN
+## Template: LIVING_SHIP_BORN
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [LIVING_SHIP_NAME], [GESTATION_STAGE]
@@ -2891,7 +2891,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Gestation complete. Our [LIVING_SHIP_NAME] is born into the void."
 - "Flesh and star-metal. The [LIVING_SHIP_NAME] is at [GESTATION_STAGE]. [YEAR]."
 
-### SHIP_STARVATION
+## Template: SHIP_STARVATION
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [LIVING_SHIP_NAME]
@@ -2904,7 +2904,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Orbital Tethers as Weapons Templates
 
-### TETHER_SNAPPED
+## Template: TETHER_SNAPPED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [TETHER_NAME], [DESTRUCTION_SCALE]
@@ -2913,7 +2913,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The line is cut. The [TETHER_NAME] whips the surface. [DESTRUCTION_SCALE] ruin."
 - "We lost the sky. The [TETHER_NAME] collapses. It was [DESTRUCTION_SCALE]. [YEAR]."
 
-### TETHER_SACRIFICE
+## Template: TETHER_SACRIFICE
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [TETHER_NAME], [ENEMY]
@@ -2926,7 +2926,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## The Empathy Plague Templates
 
-### EMPATHY_PLAGUE_START
+## Template: EMPATHY_PLAGUE_START
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [SHARED_EMOTION], [MIND_LINK_SYMPTOM]
@@ -2935,7 +2935,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: One mind. The colony shares [SHARED_EMOTION]. We are [MIND_LINK_SYMPTOM]."
 - "No secrets anymore. The plague brings [SHARED_EMOTION]. [MIND_LINK_SYMPTOM]. [YEAR]."
 
-### CASCADE_BREAKDOWN
+## Template: CASCADE_BREAKDOWN
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [SHARED_EMOTION]
@@ -2948,7 +2948,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Counterfeit Reality Templates
 
-### HOLO_FLEET_PROJECTED
+## Template: HOLO_FLEET_PROJECTED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [HOLO_ILLUSION]
@@ -2957,7 +2957,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Deception active. We broadcast [HOLO_ILLUSION] to the void."
 - "Hiding behind light. A [HOLO_ILLUSION] shields [COLONY]. [YEAR]."
 
-### BLUFF_CALLED
+## Template: BLUFF_CALLED
 
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [HOLO_ILLUSION], [BLUFF_OUTCOME]
@@ -3248,7 +3248,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Gut Biome Templates (Spec 211)
 
-### DIET_CHANGE_SICKNESS
+## Template: DIET_CHANGE_SICKNESS
 
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[DIET_TYPE]`, `[INDIGESTION_SYMPTOM]`
@@ -3258,7 +3258,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The colony shifts to [DIET_TYPE]. [NAME] reports severe [INDIGESTION_SYMPTOM]."
 - "Our bodies forgot how to digest it. [NAME] is down with [INDIGESTION_SYMPTOM] after the [DIET_TYPE] meal. [YEAR]."
 
-### GUT_COMFORT_ACHIEVED
+## Template: GUT_COMFORT_ACHIEVED
 
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[DIET_TYPE]`
@@ -3272,7 +3272,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Kinetic Storage Templates (Spec 235)
 
-### BATTERY_CHARGED
+## Template: BATTERY_CHARGED
 
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[KINETIC_BATTERY_NAME]`
@@ -3282,7 +3282,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Excess power stored. The [KINETIC_BATTERY_NAME] hangs heavy in the sky."
 - "The winch stops. [KINETIC_BATTERY_NAME] is ready for the dark. [YEAR]."
 
-### BATTERY_COLLAPSE
+## Template: BATTERY_COLLAPSE
 
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[KINETIC_BATTERY_NAME]`, `[KINETIC_IMPACT]`, `[DAMAGE_REPORT]`
@@ -3296,7 +3296,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## The Direct Link Templates (Spec 236)
 
-### LINK_ESTABLISHED
+## Template: LINK_ESTABLISHED
 
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[DIRECT_LINK_FEELING]`
@@ -3306,7 +3306,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Override confirmed. [NAME] stands still, then moves with [DIRECT_LINK_FEELING]."
 - "Guidance becomes control. [NAME] reports [DIRECT_LINK_FEELING]. [YEAR]."
 
-### LINK_SEVERED
+## Template: LINK_SEVERED
 
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[LINK_ACTION]`
@@ -3320,7 +3320,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Public Grievances Templates (Spec 233)
 
-### GRIEVANCE_POSTED
+## Template: GRIEVANCE_POSTED
 
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[GRIEVANCE_TOPIC]`, `[NOTE_STYLE]`
@@ -3330,7 +3330,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Public anger. [NAME] left a message about [GRIEVANCE_TOPIC], [NOTE_STYLE]."
 - "The board speaks. [NAME] is furious over [GRIEVANCE_TOPIC]. The writing is [NOTE_STYLE]. [YEAR]."
 
-### COMMENDATION_POSTED
+## Template: COMMENDATION_POSTED
 
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[NOTE_STYLE]`
@@ -3344,7 +3344,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Clone Vats Templates (Spec 240)
 
-### CLONE_DECANTED
+## Template: CLONE_DECANTED
 
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[CLONE_NAME_PREFIX]`, `[NAME]`
@@ -3354,7 +3354,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Industrial birth. [CLONE_NAME_PREFIX]-[NAME] joins the line."
 - "We don't wait for children anymore. [CLONE_NAME_PREFIX]-[NAME] decanted today. [YEAR]."
 
-### CLONE_DISCRIMINATION
+## Template: CLONE_DISCRIMINATION
 
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[CLONE_STIGMA]`
@@ -3368,7 +3368,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Legacy Code Templates (Spec 246)
 
-### SYSTEM_BLOAT_WARNING
+## Template: SYSTEM_BLOAT_WARNING
 
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[SYSTEM_SLOWNESS]`
@@ -3378,7 +3378,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The logic pathways are clogged with old protocols. [SYSTEM_SLOWNESS]."
 - "We are drowning in our own data. [SYSTEM_SLOWNESS]. [YEAR]."
 
-### REFORMAT_INITIATED
+## Template: REFORMAT_INITIATED
 
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[LEGACY_ERROR]`
@@ -3392,7 +3392,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Ghost Code Templates (Spec 247)
 
-### GHOST_CODE_MANIFESTS
+## Template: GHOST_CODE_MANIFESTS
 
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[BUILDING_TYPE]`, `[GHOST_CODE_GLITCH]`, `[RESIDUE_TYPE]`
@@ -3402,7 +3402,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Machine haunting. The [BUILDING_TYPE] inherited logic from [RESIDUE_TYPE]. Now [GHOST_CODE_GLITCH]."
 - "We didn't clear the data residue from the [RESIDUE_TYPE]. The [BUILDING_TYPE] is infected. [GHOST_CODE_GLITCH]. [YEAR]."
 
-### RESIDUE_PURGED
+## Template: RESIDUE_PURGED
 
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[RESIDUE_TYPE]`
@@ -3416,7 +3416,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Thermal Bloom Templates (Spec 243)
 
-### THERMAL_BLOOM_DETECTED
+## Template: THERMAL_BLOOM_DETECTED
 
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[THERMAL_WARNING]`
@@ -3426,7 +3426,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: We are throwing too much heat into the void. [THERMAL_WARNING]."
 - "Thermal signature critical. [THERMAL_WARNING]. We are visible. [YEAR]."
 
-### HEAT_SINK_ATTACK
+## Template: HEAT_SINK_ATTACK
 
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[HOSTILE_INTERCEPT]`
@@ -3440,7 +3440,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## The Infinite Archive Templates (Spec 248)
 
-### ARCHIVE_PARALYSIS
+## Template: ARCHIVE_PARALYSIS
 
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[ARCHIVE_BLOAT]`
@@ -3450,7 +3450,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: We cannot store another byte. [ARCHIVE_BLOAT]. Science is paralyzed."
 - "The index is broken. [ARCHIVE_BLOAT]. No new knowledge until we delete the old. [YEAR]."
 
-### KNOWLEDGE_PURGED
+## Template: KNOWLEDGE_PURGED
 
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[DELETED_KNOWLEDGE]`
@@ -3464,7 +3464,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Quantum Twins Templates (Spec 245)
 
-### TWIN_SYNC_EVENT
+## Template: TWIN_SYNC_EVENT
 
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[NAME_A]`, `[NAME_B]`, `[TWIN_SENSATION]`
@@ -3474,7 +3474,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The entanglement holds. [NAME_A] smiled, and [NAME_B] experienced [TWIN_SENSATION]."
 - "Shared soul. When [NAME_A] was hurt, [NAME_B] reported [TWIN_SENSATION]. [YEAR]."
 
-### SEVERANCE_SHOCK
+## Template: SEVERANCE_SHOCK
 
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[NAME_SURVIVOR]`, `[SEVERANCE_TRAUMA]`
@@ -3488,7 +3488,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## The Empty Room Templates (Spec 251)
 
-### SANCTUARY_ESTABLISHED
+## Template: SANCTUARY_ESTABLISHED
 
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[SANCTUARY_VIBE]`
@@ -3498,7 +3498,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: A sanctuary designated. No machines, no beds. Just [SANCTUARY_VIBE]."
 - "Pops gather in the empty hall just to feel [SANCTUARY_VIBE]. [YEAR]."
 
-### SANCTUARY_VIOLATED
+## Template: SANCTUARY_VIOLATED
 
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[CLUTTER_ITEM]`
@@ -3512,7 +3512,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Tectonic Stress Templates (Spec 252)
 
-### STRESS_CRITICAL
+## Template: STRESS_CRITICAL
 
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[STRESS_INDICATOR]`
@@ -3522,7 +3522,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Tectonic stress nearing maximum. [STRESS_INDICATOR]."
 - "We dug too much. The planet warns us with [STRESS_INDICATOR]. [YEAR]."
 
-### RELIEF_QUAKE_TRIGGERED
+## Template: RELIEF_QUAKE_TRIGGERED
 
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[RELIEF_QUAKE]`
@@ -3536,7 +3536,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## The Industrial Rhythm Templates (Spec 260)
 
-### PERFECT_RHYTHM
+## Template: PERFECT_RHYTHM
 
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[RHYTHM_SOUND]`
@@ -3546,7 +3546,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Efficiency peaks. The production line creates [RHYTHM_SOUND]."
 - "Music from the gears. [RHYTHM_SOUND]. The workers smile. [YEAR]."
 
-### DISCORDANT_NOISE
+## Template: DISCORDANT_NOISE
 
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[DISCORD_EFFECT]`
@@ -3560,7 +3560,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## The Black Market Templates (Spec 348)
 
-### SMUGGLER_DOCKED
+## Template: SMUGGLER_DOCKED
 
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[SMUGGLER_GOODS]`, `[CORRUPTION_SIGN]`
@@ -3570,7 +3570,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The underworld provides what the stores cannot. [SMUGGLER_GOODS] arrive. [CORRUPTION_SIGN]."
 - "The Black Market is open. Trade in [SMUGGLER_GOODS]. The cost is [CORRUPTION_SIGN]. [YEAR]."
 
-### CORRUPTION_EXPOSED
+## Template: CORRUPTION_EXPOSED
 
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[CORRUPTION_SIGN]`
@@ -3584,7 +3584,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Ancestral Graves Templates (Spec 349)
 
-### GRAVE_VISITED
+## Template: GRAVE_VISITED
 
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[GRAVE_MARKER]`
@@ -3594,7 +3594,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Seeking guidance from the dead. [NAME] stands before the [GRAVE_MARKER]."
 - "Quiet reflection. [NAME] touches the [GRAVE_MARKER]. [YEAR]."
 
-### SACRILEGE_COMMITTED
+## Template: SACRILEGE_COMMITTED
 
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[SACRILEGE_ACT]`
@@ -3608,7 +3608,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## The Overview Effect Templates (Spec 449)
 
-### EXISTENTIAL_EPIPHANY
+## Template: EXISTENTIAL_EPIPHANY
 
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[COSMIC_REALIZATION]`
@@ -3618,7 +3618,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The Overview Effect. [NAME] stared at the galaxy and understood [COSMIC_REALIZATION]."
 - "A changed mind. [NAME] steps back from the lens, overwhelmed by [COSMIC_REALIZATION]. [YEAR]."
 
-### ORBITAL_DREAD
+## Template: ORBITAL_DREAD
 
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[ORBITAL_THREAT_SEEN]`
@@ -3627,3 +3627,147 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[NAME] looked up. [YEAR]. Saw [ORBITAL_THREAT_SEEN]. Panic ensues."
 - "[YEAR]: The telescope brings bad news. [NAME] witnessed [ORBITAL_THREAT_SEEN]."
 - "Terror from the void. [NAME] reports [ORBITAL_THREAT_SEEN] in the high orbit. [YEAR]."
+
+---
+
+## Hyper-Specialized Evolution Templates (Spec 264)
+
+## Template: MUTATION_DEVELOPED
+
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[MUTATION_NAME]`, `[MUTATION_EFFECT]`
+
+**Patterns:**
+- "[NAME] has worked the line too long. [YEAR]. They developed [MUTATION_NAME]."
+- "[YEAR]: The job changes the body. [NAME] shows signs of [MUTATION_NAME]. They say their [MUTATION_EFFECT]."
+- "Adaptation. [NAME] is now perfectly suited for the work, marked by [MUTATION_NAME]. [YEAR]."
+
+## Template: MUTATION_SICKNESS
+
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[MUTATION_NAME]`
+
+**Patterns:**
+- "[NAME] was moved to a new job. [YEAR]. Their [MUTATION_NAME] fights the change."
+- "[YEAR]: Reassignment failed. [NAME] is suffering. The [MUTATION_NAME] makes other work impossible."
+- "You cannot un-make them. [NAME] is sick from leaving their specialized role. The [MUTATION_NAME] rebels. [YEAR]."
+
+---
+
+## The Neural Leech Templates (Spec 291)
+
+## Template: LEECH_ATTACHED
+
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[LEECH_NAME]`, `[LEECH_EFFECT]`
+
+**Patterns:**
+- "[NAME] accepted the [LEECH_NAME]. [YEAR]. Productivity is up, but they report [LEECH_EFFECT]."
+- "[YEAR]: Neural integration. [NAME] is wired in via [LEECH_NAME]. They feel [LEECH_EFFECT]."
+- "The flesh meets the machine. [NAME] uses the [LEECH_NAME]. [YEAR]."
+
+## Template: NEURAL_SHOCK
+
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[LEECH_NAME]`
+
+**Patterns:**
+- "The hub died, and [NAME] screamed. [YEAR]. Shock from the [LEECH_NAME]."
+- "[YEAR]: Catastrophic disconnection. [NAME] collapses as the [LEECH_NAME] loses signal."
+- "Feedback loop in the [LEECH_NAME]. [NAME] is broken by the sudden silence. [YEAR]."
+
+---
+
+## Cryo-Shock Templates (Spec 413)
+
+## Template: CRYO_WAKE_SHOCK
+
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[CRYO_SYMPTOM]`, `[WAKE_REACTION]`
+
+**Patterns:**
+- "The ice broke. [YEAR]. [NAME] emerged with [CRYO_SYMPTOM]. They [WAKE_REACTION]."
+- "[YEAR]: Thaw sickness. [NAME] woke up [CRYO_SYMPTOM]. We found them [WAKE_REACTION]."
+- "A rough waking for [NAME]. [YEAR]. [CRYO_SYMPTOM] and [WAKE_REACTION]."
+
+## Template: CRYO_RECOVERY
+
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`
+
+**Patterns:**
+- "[NAME] is finally warm. [YEAR]. The thaw sickness is gone."
+- "[YEAR]: [NAME] joins the line. The ice is out of their veins."
+- "Recovery complete. [NAME] is ready to work. [YEAR]."
+
+---
+
+## The Void-Weed Smugglers Templates (Spec 431)
+
+## Template: VOID_WEED_DISCOVERED
+
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[WEED_NAME]`
+
+**Patterns:**
+- "They found [WEED_NAME] growing in the vents. [YEAR]. It brings a strange peace."
+- "[YEAR]: The locals call it [WEED_NAME]. A harmless crop, they say."
+- "We are cultivating [WEED_NAME] in secret. [YEAR]."
+
+## Template: SMUGGLER_TRADE
+
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[WEED_NAME]`, `[SMUGGLER_ACTION]`
+
+**Patterns:**
+- "An unmarked ship landed. [YEAR]. They bought all our [WEED_NAME] and [SMUGGLER_ACTION]."
+- "[YEAR]: The underworld pays well. We traded [WEED_NAME] for credits. The buyer [SMUGGLER_ACTION]."
+- "Accidental cartel. The smugglers love our [WEED_NAME]. They [SMUGGLER_ACTION]. [YEAR]."
+
+## Template: PIRATE_RAID
+
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[WEED_NAME]`, `[PIRATE_THREAT]`
+
+**Patterns:**
+- "We drew too much attention. [YEAR]. Pirates attacked for the [WEED_NAME]. [PIRATE_THREAT]."
+- "[YEAR]: The heat caught up with us. [PIRATE_THREAT] over our stash of [WEED_NAME]."
+- "Violence at the perimeter! [PIRATE_THREAT]. They want the [WEED_NAME]. [YEAR]."
+
+---
+
+## Light Pollution Templates (Spec 450)
+
+## Template: SKY_GLOW_REPORTED
+
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[LIGHT_POLLUTION_DESC]`
+
+**Patterns:**
+- "We have built too much. [YEAR]. The sky is now [LIGHT_POLLUTION_DESC]."
+- "[YEAR]: The night is gone. Our lights create [LIGHT_POLLUTION_DESC]."
+- "We are blinding ourselves. [LIGHT_POLLUTION_DESC] hangs over [COLONY]. [YEAR]."
+
+## Template: STARS_LOST
+
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[OBSERVATORY_IMPACT]`
+
+**Patterns:**
+- "The observatory is useless. [YEAR]. The glare has [OBSERVATORY_IMPACT]."
+- "[YEAR]: We cannot see the deep void anymore. Our own light has [OBSERVATORY_IMPACT]."
+- "Science halts. [OBSERVATORY_IMPACT] due to the artificial dawn. [YEAR]."
+
+---
+
+## The Spiteful Will Templates (Spec 451)
+
+## Template: WILL_OVERRIDDEN
+
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[WILL_DESC]`, `[SPITE_ACTION]`
+
+**Patterns:**
+- "[NAME] was forced to work against their will. [YEAR]. They felt [WILL_DESC] and [SPITE_ACTION]."
+- "[YEAR]: The Substrate intervened directly. [NAME] experienced [WILL_DESC]. In response, they [SPITE_ACTION]."
+- "Direct control assumed. [NAME] moved with [WILL_DESC]. Afterwards, they [SPITE_ACTION]. [YEAR]."
