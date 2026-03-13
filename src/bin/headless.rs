@@ -48,10 +48,10 @@ fn main() {
     let mut world = setup_world_with_config(SetupConfig { headless: true });
     *world.resource_mut::<GameState>() = GameState::Running;
 
-    println!("=======================================================");
-    println!("             SCALE Headless Dashboard");
-    println!("=======================================================");
-    println!("Type 'help' for commands, 'quit' to exit.\n");
+    println!("{}", "=======================================================".cyan());
+    println!("{}", "             SCALE Headless Dashboard".cyan().bold());
+    println!("{}", "=======================================================".cyan());
+    println!("{}", "Type 'help' for commands, 'quit' to exit.\n".grey());
     print_status(&mut world);
     println!();
 
@@ -110,7 +110,7 @@ fn handle_command(world: &mut World, input: &str) -> bool {
         }
         "build" | "b" => {
             if parts.len() < 4 {
-                println!("Usage: build <farm|housing|stockpile> <x> <y>");
+                println!("{}", "⚠️ Usage: build <farm|housing|stockpile> <x> <y>".yellow());
             } else {
                 let building_type = match parts[1].to_lowercase().as_str() {
                     "farm" | "f" => Some(BuildingType::Farm),
@@ -125,7 +125,7 @@ fn handle_command(world: &mut World, input: &str) -> bool {
                     (Some(bt), Some(x), Some(y)) => build_at(world, bt, x, y),
                     _ => {
                         println!(
-                            "Invalid arguments. Usage: build <farm|housing|stockpile> <x> <y>"
+                            "{}", "⚠️ Invalid arguments. Usage: build <farm|housing|stockpile> <x> <y>".red()
                         );
                     }
                 }
@@ -133,44 +133,44 @@ fn handle_command(world: &mut World, input: &str) -> bool {
         }
         "destroy" => {
             if parts.len() < 3 {
-                println!("Usage: destroy <x> <y>");
+                println!("{}", "⚠️ Usage: destroy <x> <y>".yellow());
             } else {
                 let x: Option<i32> = parts[1].parse().ok();
                 let y: Option<i32> = parts[2].parse().ok();
                 match (x, y) {
                     (Some(x), Some(y)) => designate_at(world, DesignationType::Destroy, x, y),
-                    _ => println!("Invalid coordinates"),
+                    _ => println!("{}", "⚠️ Invalid coordinates".red()),
                 }
             }
         }
         "mine" => {
             if parts.len() < 3 {
-                println!("Usage: mine <x> <y>");
+                println!("{}", "⚠️ Usage: mine <x> <y>".yellow());
             } else {
                 let x: Option<i32> = parts[1].parse().ok();
                 let y: Option<i32> = parts[2].parse().ok();
                 match (x, y) {
                     (Some(x), Some(y)) => designate_at(world, DesignationType::Mine, x, y),
-                    _ => println!("Invalid coordinates"),
+                    _ => println!("{}", "⚠️ Invalid coordinates".red()),
                 }
             }
         }
         "chop" => {
             if parts.len() < 3 {
-                println!("Usage: chop <x> <y>");
+                println!("{}", "⚠️ Usage: chop <x> <y>".yellow());
             } else {
                 let x: Option<i32> = parts[1].parse().ok();
                 let y: Option<i32> = parts[2].parse().ok();
                 match (x, y) {
                     (Some(x), Some(y)) => designate_at(world, DesignationType::Chop, x, y),
-                    _ => println!("Invalid coordinates"),
+                    _ => println!("{}", "⚠️ Invalid coordinates".red()),
                 }
             }
         }
         "designations" | "d" => print_designations(world),
         "find" => {
             if parts.len() < 2 {
-                println!("Usage: find <rock|tree|grass> [count]");
+                println!("{}", "⚠️ Usage: find <rock|tree|grass> [count]".yellow());
             } else {
                 let count: usize = parts.get(2).and_then(|s| s.parse().ok()).unwrap_or(10);
                 find_terrain(world, parts[1], count);
@@ -184,13 +184,13 @@ fn handle_command(world: &mut World, input: &str) -> bool {
         }
         "terrain" => {
             if parts.len() < 3 {
-                println!("Usage: terrain <x> <y>");
+                println!("{}", "⚠️ Usage: terrain <x> <y>".yellow());
             } else {
                 let x: Option<i32> = parts[1].parse().ok();
                 let y: Option<i32> = parts[2].parse().ok();
                 match (x, y) {
                     (Some(x), Some(y)) => get_tile_info(world, x, y),
-                    _ => println!("Invalid coordinates"),
+                    _ => println!("{}", "⚠️ Invalid coordinates".red()),
                 }
             }
         }
@@ -200,7 +200,7 @@ fn handle_command(world: &mut World, input: &str) -> bool {
             let id: Option<u32> = parts.get(1).and_then(|s| s.parse().ok());
             match id {
                 Some(id) => print_bio(world, id),
-                None => println!("Usage: bio <id>"),
+                None => println!("{}", "⚠️ Usage: bio <id>".yellow()),
             }
         }
         "chronicle" | "c" | "history" => print_chronicle(world),
@@ -208,7 +208,7 @@ fn handle_command(world: &mut World, input: &str) -> bool {
         "tech" | "research_status" => print_tech(world),
         "research" | "r" => {
             if parts.len() < 2 {
-                println!("Usage: research <tech_name>");
+                println!("{}", "⚠️ Usage: research <tech_name>".yellow());
             } else {
                 // Join parts in case tech name has spaces (e.g., "Metal Working")
                 let tech_name = parts[1..].join(" ").to_lowercase();
@@ -229,7 +229,7 @@ fn handle_command(world: &mut World, input: &str) -> bool {
 
                 if let Some(t) = tech {
                     if unlock_tech(world, t) {
-                        println!("Success! Researched: {}", t.label());
+                        println!("{}", format!("Success! Researched: {}", t.label()).green());
                     } else {
                         // Check why
                         let res = world.resource::<ColonyResources>();
@@ -237,25 +237,24 @@ fn handle_command(world: &mut World, input: &str) -> bool {
 
                         if res.knowledge < t.cost() {
                             println!(
-                                "Failed: Insufficient Knowledge ({:.1}/{:.1})",
-                                res.knowledge,
-                                t.cost()
+                                "{}",
+                                format!("❌ Failed: Insufficient Knowledge ({:.1}/{:.1})", res.knowledge, t.cost()).red()
                             );
                         } else if ts.used_capacity + t.storage_cost() > ts.total_capacity {
                             println!(
-                                "Failed: Insufficient Data Storage Capacity ({:.1}/{:.1} TB used)",
-                                ts.used_capacity, ts.total_capacity
+                                "{}",
+                                format!("❌ Failed: Insufficient Data Storage Capacity ({:.1}/{:.1} TB used)", ts.used_capacity, ts.total_capacity).red()
                             );
                         } else {
-                            println!("Failed: Unknown reason (maybe already researched?)");
+                            println!("{}", "❌ Failed: Unknown reason (maybe already researched?)".red());
                         }
                     }
                 } else {
-                    println!("Unknown technology: '{tech_name}'");
+                    println!("{}", format!("⚠️ Unknown technology: '{tech_name}'").yellow());
                 }
             }
         }
-        _ => println!("Unknown command: '{command}'. Type 'help' for commands."),
+        _ => println!("{}", format!("⚠️ Unknown command: '{command}'. Type 'help' for commands.").yellow()),
     }
     true
 }
@@ -665,7 +664,7 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
         (max_x, max_y, tiles)
     };
 
-    println!("=== Map around ({center_x}, {center_y}) ===");
+    println!("{}", format!("=== Map around ({center_x}, {center_y}) ===").green().bold());
 
     // Collect pop positions
     let pop_positions: Vec<(i32, i32)> = world
@@ -695,13 +694,17 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
             print!(" ");
         } else {
             // Print last digit of X coord to save space
-            print!("{}", (x.abs() % 10));
+            print!("{}", (x.abs() % 10).to_string().cyan());
         }
     }
     println!();
 
+    let map_width = (radius * 2 + 1) as usize;
+    println!("   {}{}{}", "┌".cyan(), "─".repeat(map_width).cyan(), "┐".cyan());
+
     for y in center_y.saturating_sub(radius)..=center_y.saturating_add(radius) {
-        print!("{y:3} ");
+        print!("{}", format!("{y:3}").cyan());
+        print!("{}", "│".cyan());
         for x in center_x.saturating_sub(radius)..=center_x.saturating_add(radius) {
             if x < 0 || y < 0 || x >= width || y >= height {
                 print!(" ");
@@ -766,9 +769,23 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
             };
             print!("{s}");
         }
-        println!();
+        println!("{}", "│".cyan());
     }
-    println!("Legend: ☺=pop ·=grass ,=dirt ▲=rock ≈=water ♣=tree %=mine /=chop");
+    println!("   {}{}{}", "└".cyan(), "─".repeat(map_width).cyan(), "┘".cyan());
+
+    // Colored legend
+    let legend = format!(
+        "Legend: {}={} {}={} {}={} {}={} {}={} {}={} {}={} {}={}",
+        "☺".cyan().bold(), "pop".grey(),
+        "·".green().dim(), "grass".grey(),
+        ",".yellow(), "dirt".grey(),
+        "▲".white().dim(), "rock".grey(),
+        "≈".blue(), "water".grey(),
+        "♣".green().bold(), "tree".grey(),
+        "%".magenta(), "mine".grey(),
+        "/".magenta(), "chop".grey()
+    );
+    println!("{legend}");
 }
 
 fn build_at(world: &mut World, building_type: BuildingType, x: i32, y: i32) {
