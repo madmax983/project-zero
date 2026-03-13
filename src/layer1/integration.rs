@@ -50,6 +50,19 @@ pub fn orbital_drop_chronicle_bridge(
     }
 }
 
+/// Bridges `Awakened` component addition (Machine Awakening) to `AddChronicleEvent` (Chronicle).
+pub fn bot_awakening_chronicle_bridge(
+    query: Query<Entity, Added<crate::layer1::tech::machine_awakening::Awakened>>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _ in query.iter() {
+        chronicle_events.send(AddChronicleEvent {
+            text: "A tool has asked 'Why?'. A Machine Awakening has occurred.".to_string(),
+            importance: EventImportance::Major,
+        });
+    }
+}
+
 /// Creates chronicle entries from [`PopDied`] events.
 ///
 /// Bridges the Pop system (Death) and Chronicle system (History).
