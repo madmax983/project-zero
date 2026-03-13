@@ -183,7 +183,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `444` Orbital Kessler Rings — `specs/444-orbital-kessler-rings.md`
 - [ ] `445` The Heirloom Virus — `specs/445-the-heirloom-virus.md`
 - [x] `446` Olfactory Map — `specs/446-olfactory-map.md`
-- [ ] `452` The Commuter Tax — `specs/452-the-commuter-tax.md`
 
 
 
