@@ -23,3 +23,6 @@ pub mod genetic_memory;
 
 #[cfg(feature = "nova")]
 pub mod dreams_of_genesis;
+
+#[cfg(feature = "nova")]
+pub mod the_humming_monolith;
