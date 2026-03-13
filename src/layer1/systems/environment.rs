@@ -100,6 +100,9 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::atmosphere::simulate_diffusion_system
                 .after(crate::layer1::terraforming::apply_planetary_effects_system),
             crate::layer1::logistics::orbital_drop::process_orbital_drops,
+            crate::layer1::fauna::shadow_ecosystems::spawn_shadow_fauna_system,
+            crate::layer1::fauna::shadow_ecosystems::shadow_visibility_system,
+            crate::layer1::fauna::shadow_ecosystems::shadow_feed_system,
         )
             .in_set(Layer1SystemSet::Environment),
     );

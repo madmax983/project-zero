@@ -14,6 +14,10 @@ use ratatui::style::Color;
 pub mod modular;
 pub use modular::*;
 
+/// Shadow Ecosystems (Spec 265).
+pub mod shadow_ecosystems;
+pub use shadow_ecosystems::*;
+
 /// Type of fauna.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Hash)]
 pub enum FaunaType {
