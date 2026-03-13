@@ -87,6 +87,7 @@ pub fn register(schedule: &mut Schedule) {
             handle_direct_movement.after(crate::layer1::combat::hit_stop_system),
             crate::layer1::crowding::crowding_accumulation_system.after(movement_system),
             crate::layer1::artifacts::aura_system.after(movement_system),
+            crate::layer1::artifacts::vr_pod::update_vr_pods_system.after(movement_system),
             arrival_handler_system.after(movement_system),
             work_execution_system.after(arrival_handler_system),
             crate::layer1::customs::vetting_work_system.after(arrival_handler_system),

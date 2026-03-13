@@ -176,6 +176,13 @@ fn process_arrival(
             handle_binge_arrival(resources, log);
             true
         }
+        ActionType::EnterVrPod => {
+            if let Some(mut pod) = commands.get_entity(target_entity) {
+                pod.insert(crate::layer1::artifacts::vr_pod::VrPod { occupant: Some(pop_entity) });
+                commands.entity(pop_entity).insert(crate::layer1::artifacts::vr_pod::InVrPod);
+            }
+            true
+        }
         ActionType::FetchTool => {
             handle_fetch_tool(commands, resources, pop_entity, equipment_opt);
             true

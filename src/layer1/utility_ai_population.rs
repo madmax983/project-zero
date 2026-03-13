@@ -102,6 +102,27 @@ pub fn populate_ai_buffer(world: &mut World, buffer: &mut UtilityAIBuffer, conte
     populate_all_structures(world, &mut buffer.all_structures);
     populate_cleaning_targets(world, buffer);
     populate_sanctuaries(world, &mut buffer.sanctuaries);
+    populate_vr_pods(world, &mut buffer.vr_pods);
+}
+
+
+fn populate_vr_pods(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
+    buffer.clear();
+    let mut query = world.query::<(Entity, &crate::layer1::map::GridPosition, &crate::layer1::artifacts::vr_pod::VrPod, Option<&crate::layer1::energy::PowerConsumer>)>();
+    for (entity, pos, pod, power_opt) in query.iter(world) {
+        if let Some(power) = power_opt {
+            if !power.active { continue; }
+        }
+        buffer.push(ScorableCandidate {
+            entity,
+            pos: *pos,
+            score_bonus: 0.0,
+            capacity: 1,
+            usage: if pod.occupant.is_some() { 1 } else { 0 },
+            item_type: None,
+            resource_type: None,
+        });
+    }
 }
 
 fn populate_sanctuaries(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {

@@ -56,7 +56,7 @@ use crate::layer1::temperature::TemperatureGrid;
 use crate::layer1::traits::Trait;
 use crate::layer1::utility_ai_population::{collect_pop_data, populate_ai_buffer};
 use crate::layer1::utility_eval_types::{
-    evaluate_idle, CandidateEvaluator, PopEvalData, UtilityAIBuffer, WorldContext,
+    evaluate_idle, evaluate_candidates, CandidateEvaluator, PopEvalData, UtilityAIBuffer, WorldContext,
 };
 pub use crate::layer1::utility_types::{
     calculate_context_score, manhattan_distance, need_response_curve, ActionType, PopAction,
@@ -626,6 +626,18 @@ impl<'a> PopDecider<'a> {
     /// *   **Hobby**: Personal projects.
     /// *   **The Hum**: Tuning in to the void.
     fn evaluate_group_leisure(&mut self) {
+        // Evaluate VR Pod (highly attractive if stressed)
+        let stress_ratio = self.data.stress; // 0.0 to 1.0
+        // Base utility scales strongly with stress. If stress > 50%, VR Pod is incredibly tempting.
+        let vr_base = if stress_ratio > 0.5 { 2.0 * stress_ratio } else { 0.2 };
+
+        self.evaluator.evaluate_and_consider(
+            evaluate_candidates(self.data.pos, &self.data.weights, &self.buffer.vr_pods, vr_base),
+            ActionType::EnterVrPod,
+            self.context,
+            0.0,
+        );
+
         if let Some(hobby_type) = self.data.hobby_type {
             let utility = evaluate_hobby(self.data, hobby_type);
             let penalty =
@@ -671,6 +683,12 @@ pub(crate) fn evaluate_single_pop(
     // 1. Check for Mental Break (Returns early)
     if let Some((action, utility, target)) = evaluate_mental_break(data, buffer) {
         return (action, utility, target);
+    }
+
+    // Check if in VR Pod
+    if data.action.current == ActionType::EnterVrPod && data.action.current_utility > 0.0 {
+        // Continue staying in pod unless utility is cleared (e.g. eviction)
+        return (ActionType::EnterVrPod, data.action.current_utility, None);
     }
 
     // 1b. Check for Memetic Compulsion (Returns early, overrides drafted)

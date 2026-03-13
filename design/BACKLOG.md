@@ -16,7 +16,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `265` Shadow Ecosystems — `specs/265-shadow-ecosystems.md`
 - [ ] `266` Emotional Contagion — `specs/266-emotional-contagion.md`
 - [ ] `267` Ancestral Graves — `specs/267-ancestral-graves.md`
-- [ ] `269` The Lotus Simulation — `specs/269-lotus-simulation.md`
+
 - [ ] `270` The Organ Market — `specs/270-organ-market.md`
 - [ ] `271` Subcontractor Factions — `specs/271-subcontractor-factions.md`
 - [ ] `272` The Martyrdom Effect — `specs/272-martyrdom-effect.md`
