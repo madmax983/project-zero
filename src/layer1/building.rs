@@ -1220,6 +1220,7 @@ fn spawn_building(
         Building { building_type },
         GridPosition { x, y },
         Material(material),
+        crate::layer1::chrono_stutter::TimeModifier::default(),
     ));
 
     if !is_mastered {

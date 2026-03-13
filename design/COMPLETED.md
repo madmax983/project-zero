@@ -225,3 +225,4 @@
 - [x] `291` The Neural Leech — `specs/291-neural-leech.md` — completed 2026-03-10
 - [x] `INT-451` Integration: OverrideWillEvent -> Chronicle — completed 2026-03-11
 - [x] `INT-291` Integration: NeuralShock -> Mental Breakdown — completed 2026-03-10
+- [x] `292` The Chrono-Stutter — `specs/292-chrono-stutter.md` — completed 2026-03-10

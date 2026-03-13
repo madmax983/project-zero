@@ -256,6 +256,8 @@ pub struct PopBundle {
     pub auras: ActiveAuras,
     /// Social debts owed.
     pub social_debt: SocialDebt,
+    /// The time modifier for the pop.
+    pub time_modifier: crate::layer1::chrono_stutter::TimeModifier,
     /// Overall morale.
     pub morale: Morale,
     /// Disease cooldown.
@@ -302,6 +304,7 @@ impl PopBundle {
             filth: Filth::default(),
             auras: ActiveAuras::default(),
             social_debt: SocialDebt::default(),
+            time_modifier: crate::layer1::chrono_stutter::TimeModifier::default(),
             morale: Morale::default(),
             contagion: ContagionCooldown::default(),
             traits: Traits::random(rng),

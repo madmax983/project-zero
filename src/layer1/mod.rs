@@ -48,6 +48,7 @@ pub mod biography;
 /// Building placement and types.
 pub mod building;
 pub mod chronicle;
+pub mod chrono_stutter;
 /// Chronicle system and historical records.
 pub mod clothing;
 /// Door control system (Spec 134).

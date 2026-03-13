@@ -70,6 +70,9 @@ pub fn register(schedule: &mut Schedule) {
             #[cfg(feature = "nova")]
             crate::layer1::loci::update_loci_system,
             crate::layer1::social::empty_room::update_sanctuary_system,
+            crate::layer1::chrono_stutter::apply_chrono_anomaly_system,
+            crate::layer1::chrono_stutter::move_chrono_anomaly_system
+                .after(crate::layer1::chrono_stutter::apply_chrono_anomaly_system),
         )
             .in_set(Layer1SystemSet::Environment),
     );
