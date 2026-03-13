@@ -147,3 +147,4 @@ pub fn apply_cultural_loss_system(
 
 ## 8. Questions
 *Builder: Add any questions here.*
+*Architect:* Implement the simplest possible version for the MVP. Advanced behaviors and edge cases will be deferred to future specifications.

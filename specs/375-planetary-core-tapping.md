@@ -169,3 +169,4 @@ pub fn trigger_earthquake_system(
 ## Questions
 
 *Builder: Add any questions here.*
+*Architect:* Implement the simplest possible version for the MVP. Advanced behaviors and edge cases will be deferred to future specifications.
