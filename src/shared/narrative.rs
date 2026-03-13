@@ -271,7 +271,7 @@ impl NarrativeGenerator {
             let trimmed = line.trim();
 
             // Detect Fragment Header: "### [FRAGMENT_NAME]"
-            if let Some(header) = trimmed.strip_prefix("### ") {
+            if let Some(header) = trimmed.strip_prefix("## Fragment Type: ") {
                 if let Some(id) = current_id.take() {
                     if !current_options.is_empty() {
                         self.fragments.insert(
@@ -497,7 +497,7 @@ mod tests {
     #[test]
     fn test_fragment_parsing() {
         let content = r"
-### [TEST_FRAGMENT]
+## Fragment Type: [TEST_FRAGMENT]
 - option1
 - option2
 ";

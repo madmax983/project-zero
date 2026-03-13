@@ -3147,3 +3147,98 @@
 **Code reference:** `MoodModifier::ExistentialDread`
 **Usage:**
 - "Suffering from void-dread after looking at the stars."
+
+---
+
+## Hyper-Specialized Evolution
+
+### the Change / job-born
+**Replaces:** Mutation, physical adaptation
+**Code reference:** `JobTenure` induced `Traits`
+**Usage:**
+- "He has the Change of the mines."
+- "She is a true job-born hauler."
+
+### the Shakes / wrong-work
+**Replaces:** Adaptation Sickness, reassignment penalty
+**Code reference:** Job efficiency penalty for wrong trait
+**Usage:**
+- "Suffering from the wrong-work Shakes."
+- "You can't put a mole-eye on a farm, they get the Shakes."
+
+---
+
+## Shipbreaking
+
+### bone-picking / the salvage
+**Replaces:** Mining ship hulls
+**Code reference:** `MineEvent` on `HullTile`
+**Usage:**
+- "He's out bone-picking today."
+- "Good salvage from the engine block."
+
+### dead-steel
+**Replaces:** Ship hull walls / unmineable areas
+**Code reference:** `HullTile`
+**Usage:**
+- "Sleeping against the dead-steel."
+
+---
+
+## Neural Leech
+
+### the Hub / the Battery
+**Replaces:** Neural Hub Pop
+**Code reference:** `NeuralHub` component
+**Usage:**
+- "Feed the Hub."
+- "The Battery is running hot."
+
+### mind-linked / wired
+**Replaces:** Pop receiving the buff
+**Code reference:** `NeuralLinked` component
+**Usage:**
+- "The wired ones work twice as fast."
+- "He's mind-linked to the Hub."
+
+### the Snap / neural-burn
+**Replaces:** Neural Shock from Hub death
+**Code reference:** `NeuralShock` component
+**Usage:**
+- "Half the sector went down from the Snap."
+- "Neural-burn took the engineers."
+
+---
+
+## Light Pollution
+
+### the Glare / sky-burn
+**Replaces:** Light pollution, SkyGlow
+**Code reference:** `SkyGlow` resource
+**Usage:**
+- "The Glare hides the stars."
+- "Working under the sky-burn."
+
+### blind-glass
+**Replaces:** Blocked observatory
+**Code reference:** `Observatory` with low efficiency
+**Usage:**
+- "The telescopes are blind-glass tonight."
+
+---
+
+## The Spiteful Will
+
+### the Grudge / spite-gift
+**Replaces:** Spiteful will conditions
+**Code reference:** `InheritanceEvent` from `Trait::Spiteful`
+**Usage:**
+- "He left a spite-gift for his rival."
+- "Inherited the Grudge."
+
+### the Seize
+**Replaces:** Overriding the will
+**Code reference:** `OverrideWillEvent`
+**Usage:**
+- "The Governor ordered the Seize."
+- "Angry about the Seize."

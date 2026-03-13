@@ -3627,3 +3627,133 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[NAME] looked up. [YEAR]. Saw [ORBITAL_THREAT_SEEN]. Panic ensues."
 - "[YEAR]: The telescope brings bad news. [NAME] witnessed [ORBITAL_THREAT_SEEN]."
 - "Terror from the void. [NAME] reports [ORBITAL_THREAT_SEEN] in the high orbit. [YEAR]."
+
+---
+
+## Hyper-Specialized Evolution Templates (Spec 264)
+
+### MUTATION_MANIFESTS
+
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[MUTATION_TYPE]`, `[JOB_TITLE]`
+
+**Patterns:**
+- "[NAME] has changed. [YEAR]. Too long as a [JOB_TITLE]. They developed [MUTATION_TYPE]."
+- "[YEAR]: Evolution in the dark. [NAME] is adapting to the work. Signs of [MUTATION_TYPE]."
+- "The body fits the task. [NAME] shows [MUTATION_TYPE] after years as a [JOB_TITLE]. [YEAR]."
+
+### ADAPTATION_SICKNESS_ONSET
+
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[ADAPTATION_SICKNESS]`
+
+**Patterns:**
+- "Reassignment failed. [YEAR]. [NAME] is suffering from [ADAPTATION_SICKNESS]."
+- "[YEAR]: The body rejects the new work. [NAME] reports [ADAPTATION_SICKNESS]."
+- "You can't teach an old mutant new tricks. [NAME] has [ADAPTATION_SICKNESS]. [YEAR]."
+
+---
+
+## Shipbreaking Templates (Spec 409)
+
+### HULL_BREACHED_MINING
+
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[HULL_SECTION]`, `[SHIPBREAKING_ACTION]`
+
+**Patterns:**
+- "We finally broke through the [HULL_SECTION]. [YEAR]. It was [SHIPBREAKING_ACTION]."
+- "[YEAR]: Salvage progress. The [HULL_SECTION] is [SHIPBREAKING_ACTION] open."
+- "The dead ship gives up its secrets. [HULL_SECTION] successfully [SHIPBREAKING_ACTION]. [YEAR]."
+
+### HULL_ROOM_BUILT
+
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[BUILDING_TYPE]`, `[HULL_SECTION]`
+
+**Patterns:**
+- "We built the [BUILDING_TYPE] inside the old [HULL_SECTION]. [YEAR]. Strange walls."
+- "[YEAR]: Repurposing the wreckage. The new [BUILDING_TYPE] uses the [HULL_SECTION] as a shell."
+- "Living in the bones. The [HULL_SECTION] now houses a [BUILDING_TYPE]. [YEAR]."
+
+---
+
+## Neural Leech Templates (Spec 291)
+
+### NEURAL_HUB_CONNECTED
+
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[NEURAL_HUB_STATE]`
+
+**Patterns:**
+- "[NAME] is wired in. [YEAR]. They are [NEURAL_HUB_STATE], but we are smarter."
+- "[YEAR]: The sacrifice of [NAME]. [NEURAL_HUB_STATE]. The network is online."
+- "We plugged [NAME] into the core. [NEURAL_HUB_STATE]. Their mind powers the sector. [YEAR]."
+
+### NEURAL_LINK_ACTIVE
+
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NEURAL_LINK_FEELING]`
+
+**Patterns:**
+- "The workers feel it. [YEAR]. [NEURAL_LINK_FEELING]. Production spikes."
+- "[YEAR]: Efficiency maximized. The linked workers report [NEURAL_LINK_FEELING]."
+- "A shared brilliance. [NEURAL_LINK_FEELING] sweeps the connected zone. [YEAR]."
+
+### HUB_DEATH_SHOCK
+
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[NEURAL_SHOCK_EFFECT]`
+
+**Patterns:**
+- "[NAME] burned out. [YEAR]. The link collapsed. [NEURAL_SHOCK_EFFECT]."
+- "[YEAR]: Neural cascade! The Hub is dead. [NEURAL_SHOCK_EFFECT] across the grid."
+- "The mind broke. The backlash causes [NEURAL_SHOCK_EFFECT]. [NAME] is gone. [YEAR]."
+
+---
+
+## Light Pollution Templates (Spec 450)
+
+### SKY_GLOW_WARNING
+
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[SKY_GLOW_DESC]`
+
+**Patterns:**
+- "The night is gone. [YEAR]. Just [SKY_GLOW_DESC] over the colony."
+- "[YEAR]: Light pollution critical. The sky is [SKY_GLOW_DESC]."
+- "We burned away the dark with [SKY_GLOW_DESC]. The stars are hidden. [YEAR]."
+
+### OBSERVATORY_BLINDED
+
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[OBSERVATORY_COMPLAINT]`
+
+**Patterns:**
+- "Science halts. [YEAR]. The astronomers complain: [OBSERVATORY_COMPLAINT]."
+- "[YEAR]: We cannot see past our own lights. [OBSERVATORY_COMPLAINT]."
+- "The telescopes are useless. [OBSERVATORY_COMPLAINT] due to the glow. [YEAR]."
+
+---
+
+## The Spiteful Will Templates (Spec 451)
+
+### SPITEFUL_WILL_READ
+
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[DECEASED_NAME]`, `[SPITEFUL_CONDITION]`
+
+**Patterns:**
+- "[DECEASED_NAME]'s will was read. [YEAR]. The final insult: [SPITEFUL_CONDITION]."
+- "[YEAR]: A grudge from beyond the grave. [DECEASED_NAME] demands [SPITEFUL_CONDITION]."
+- "Even in death, [DECEASED_NAME] causes trouble. The will states: [SPITEFUL_CONDITION]. [YEAR]."
+
+### WILL_OVERRIDDEN
+
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[HEIR_NAME]`, `[HEIR_REACTION]`
+
+**Patterns:**
+- "We ignored the will to save the gear. [YEAR]. [HEIR_NAME] [HEIR_REACTION]."
+- "[YEAR]: Confiscating the inheritance caused a stir. [HEIR_NAME] [HEIR_REACTION]."
+- "The state took the dead man's tools. [HEIR_NAME] [HEIR_REACTION]. [YEAR]."

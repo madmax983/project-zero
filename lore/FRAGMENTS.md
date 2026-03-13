@@ -4467,3 +4467,129 @@ What causes the existential dread.
 - the flickering drive-plumes of pirate raiders
 - a leviathan shadow passing over the moon
 - the chaotic flashes of an orbital war
+
+---
+
+## Hyper-Specialized Evolution Fragments (Spec 264)
+
+## Fragment Type: [MUTATION_TYPE]
+Physical or mental adaptations to long-term work.
+
+- mole-eyes
+- static-skin
+- hunch-back
+- thick-callous
+- lung-filter
+- pale-skin
+- wire-fingers
+
+## Fragment Type: [ADAPTATION_SICKNESS]
+How the body rejects a new job.
+
+- the shakes
+- muscle-cramps
+- void-vertigo
+- blinding-headaches
+- skin-sloughing
+- joint-lock
+
+---
+
+## Shipbreaking Fragments (Spec 409)
+
+## Fragment Type: [HULL_SECTION]
+What part of the ship is being mined.
+
+- engine-block
+- reactor-shielding
+- life-support-ducting
+- crew-quarters
+- hyper-drive-housing
+- cargo-bay-door
+- observation-blister
+
+## Fragment Type: [SHIPBREAKING_ACTION]
+How the hull is dismantled.
+
+- torched
+- plasma-cut
+- wrenched apart
+- ground down
+- peeled back
+- shattered
+
+---
+
+## Neural Leech Fragments (Spec 291)
+
+## Fragment Type: [NEURAL_HUB_STATE]
+What the Hub Pop is experiencing.
+
+- suspended in the tank
+- wired into the ceiling
+- eyes rolled back
+- weeping silently
+- screaming without sound
+- completely paralyzed
+
+## Fragment Type: [NEURAL_LINK_FEELING]
+How the workers feel the buff.
+
+- a sudden, terrifying clarity
+- knowing the answer before thinking
+- moving with impossible speed
+- hearing a whisper of instructions
+- a cold hand on the brain
+
+## Fragment Type: [NEURAL_SHOCK_EFFECT]
+The consequence of the Hub dying.
+
+- a blinding psychic flash
+- dropping like puppets with cut strings
+- forgetting how to breathe for a moment
+- a collective shriek
+- bleeding from the nose
+
+---
+
+## Light Pollution Fragments (Spec 450)
+
+## Fragment Type: [SKY_GLOW_DESC]
+How the light pollution looks.
+
+- a sickly orange haze
+- a dull grey dome
+- washing out the stars
+- an artificial dawn
+- a sodium-yellow ceiling
+
+## Fragment Type: [OBSERVATORY_COMPLAINT]
+Why science is failing.
+
+- the lens is blinded
+- we can't see the deep
+- the sky is too loud
+- lost in the glare
+- tracking false stars
+
+---
+
+## Spiteful Will Fragments (Spec 451)
+
+## Fragment Type: [SPITEFUL_CONDITION]
+The ridiculous term of the will.
+
+- all of it goes to the colony cat
+- the rival must wear the dead's boots
+- the goods must be burned
+- the heir must work the night shift
+- leaving only a box of rocks
+
+## Fragment Type: [HEIR_REACTION]
+How the living react to the insult.
+
+- cursed the dead man's name
+- threw the tools into the river
+- refused to work out of spite
+- plotted revenge on a corpse
+- wept tears of pure anger
