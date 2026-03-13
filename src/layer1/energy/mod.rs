@@ -213,9 +213,10 @@ pub fn power_grid_system(world: &mut World) {
 
     // 2. Find connected components
     let mut visited: HashSet<(i32, i32)> = HashSet::new();
-    let positions: Vec<(i32, i32)> = grid_map.keys().copied().collect();
 
-    for start_pos in positions {
+    // ⚡ Bolt: Iterate over `grid_map.keys()` directly instead of allocating a `Vec`.
+    // Reduces heap allocations by 1 per frame per blackout check.
+    for start_pos in grid_map.keys().copied() {
         if visited.contains(&start_pos) {
             continue;
         }
