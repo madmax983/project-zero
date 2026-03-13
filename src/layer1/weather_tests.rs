@@ -3,6 +3,7 @@ mod tests {
     use crate::layer1::atmosphere::{
         apply_smog_damage_system, simulate_diffusion_system, AtmosphereGrid, DiffusionConfig,
         GasType,
+        update_weather_diffusion_system,
     };
     use crate::layer1::health::Health;
     use crate::layer1::map::GridPosition;
@@ -35,6 +36,7 @@ mod tests {
             duration_remaining: 100,
         });
 
+        world.run_system_once(update_weather_diffusion_system).unwrap();
         // Run modified diffusion system
         world.run_system_once(simulate_diffusion_system).unwrap();
 
