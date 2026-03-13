@@ -567,6 +567,7 @@ pub fn run(&self, world: &mut World) {
 ## Questions
 
 *Builder: add questions here if spec is unclear.*
+*Architect:* The `ScheduleBuilder` pattern presented in RED/GREEN is a conceptual placeholder for enforcing ordering semantics if Bevy's native schedule configurations aren't cleanly extensible. In reality, Bevy's built-in `Schedule` and `.in_set()` configurations should be preferred for the actual implementation. Use native Bevy scheduling features whenever possible rather than wrapping them in a heavy builder if it causes unnecessary friction.
 
 ## Future Work
 

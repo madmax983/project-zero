@@ -8941,7 +8941,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Commuter Tax
+## The Commuter Tax [SPECCED]
 
 **Layer:** 1
 
