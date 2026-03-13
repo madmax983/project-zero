@@ -368,3 +368,10 @@
 - **Glue added:** `bot_awakening_chronicle_bridge` in `src/layer1/integration.rs` translates the addition of the `Awakened` component into a Major `AddChronicleEvent`.
 - **Schedule:** Registered in `Layer1SystemSet::Observation`, evaluated `.after(crate::layer1::tech::machine_awakening::process_bot_sentience)`.
 - **Tests:** `tests/integration/machine_awakening_chronicle.rs` (1 test)
+
+### INT-269: VR Pod -> Utility AI
+- **Date:** 2026-03-15
+- **Systems connected:** `InVrPod` (VR Pod) -> `collect_pop_data` (Utility AI)
+- **Glue added:**
+    - Modified `src/layer1/utility_ai_population.rs` to filter out entities with the `InVrPod` component from Utility AI evaluations.
+- **Tests:** `tests/integration/vr_pod_integration.rs`

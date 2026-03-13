@@ -6,3 +6,4 @@ pub mod great_work_chronicle;
 pub mod orbital_drop_chronicle;
 pub mod neural_leech_unrest;
 pub mod machine_awakening_chronicle;
+pub mod vr_pod_integration;

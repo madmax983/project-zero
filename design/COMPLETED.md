@@ -233,3 +233,4 @@
 - [x] `411` Machine Awakening — `specs/411-machine-awakening.md` — completed 2026-03-13
 - [x] `INT-411` Integration: Machine Awakening -> Chronicle — completed 2026-03-13
 - [x] `269` The Lotus Simulation — `specs/269-lotus-simulation.md` — completed 2026-03-14
+- [x] `INT-269` Integration: VR Pod -> Utility AI — completed 2026-03-15
