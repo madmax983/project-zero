@@ -183,3 +183,6 @@ pub mod integration {
 
 #[path = "integration/neural_leech_unrest.rs"]
 mod neural_leech_unrest;
+
+#[path = "integration/orbital_crossfire_bridge.rs"]
+mod orbital_crossfire_bridge;

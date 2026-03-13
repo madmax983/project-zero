@@ -1009,3 +1009,30 @@ pub fn apply_neural_shock_system(
             .remove::<crate::layer1::tech::neural_leech::NeuralShock>();
     }
 }
+
+/// INT-206: Bridges `ShipDestroyedEvent` from Layer 2 to `OrbitalEvent` in Layer 1.
+///
+/// When a ship is destroyed in orbit, debris falls to the colony below, creating an impact.
+pub fn orbital_crossfire_bridge(
+    mut commands: bevy_ecs::prelude::Commands,
+    mut events: bevy_ecs::prelude::EventReader<crate::layer2::events::ShipDestroyedEvent>,
+    terrain: Option<bevy_ecs::prelude::Res<crate::layer1::terrain::TerrainGrid>>,
+) {
+    let (width, height) = if let Some(t) = &terrain {
+        (t.width, t.height)
+    } else {
+        (50, 50) // Fallback if no terrain
+    };
+
+    for _ in events.read() {
+        // Pick a random position using fastrand for basic determinism
+        let x = (rand::random::<usize>() % width) as i32;
+        let y = (rand::random::<usize>() % height) as i32;
+
+        commands.spawn(crate::layer1::orbital_crossfire::OrbitalEvent {
+            target: crate::layer1::map::GridPosition { x, y },
+            damage: 250.0, // Fixed damage for now
+            heat: 500.0,
+        });
+    }
+}

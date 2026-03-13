@@ -207,6 +207,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::ad_screen::update_ad_screens_system,
             crate::layer1::integration::industrial_rhythm_morale_bridge,
             crate::layer1::integration::great_work_chronicle_bridge,
+            crate::layer1::integration::orbital_crossfire_bridge,
         )
             .in_set(Layer1SystemSet::Observation),
     );
