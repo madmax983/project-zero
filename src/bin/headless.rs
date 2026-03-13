@@ -48,9 +48,15 @@ fn main() {
     let mut world = setup_world_with_config(SetupConfig { headless: true });
     *world.resource_mut::<GameState>() = GameState::Running;
 
-    println!("{}", "=======================================================".cyan());
+    println!(
+        "{}",
+        "=======================================================".cyan()
+    );
     println!("{}", "             SCALE Headless Dashboard".cyan().bold());
-    println!("{}", "=======================================================".cyan());
+    println!(
+        "{}",
+        "=======================================================".cyan()
+    );
     println!("{}", "Type 'help' for commands, 'quit' to exit.\n".grey());
     print_status(&mut world);
     println!();
@@ -110,7 +116,10 @@ fn handle_command(world: &mut World, input: &str) -> bool {
         }
         "build" | "b" => {
             if parts.len() < 4 {
-                println!("{}", "⚠️ Usage: build <farm|housing|stockpile> <x> <y>".yellow());
+                println!(
+                    "{}",
+                    "⚠️ Usage: build <farm|housing|stockpile> <x> <y>".yellow()
+                );
             } else {
                 let building_type = match parts[1].to_lowercase().as_str() {
                     "farm" | "f" => Some(BuildingType::Farm),
@@ -125,7 +134,9 @@ fn handle_command(world: &mut World, input: &str) -> bool {
                     (Some(bt), Some(x), Some(y)) => build_at(world, bt, x, y),
                     _ => {
                         println!(
-                            "{}", "⚠️ Invalid arguments. Usage: build <farm|housing|stockpile> <x> <y>".red()
+                            "{}",
+                            "⚠️ Invalid arguments. Usage: build <farm|housing|stockpile> <x> <y>"
+                                .red()
                         );
                     }
                 }
@@ -238,7 +249,12 @@ fn handle_command(world: &mut World, input: &str) -> bool {
                         if res.knowledge < t.cost() {
                             println!(
                                 "{}",
-                                format!("❌ Failed: Insufficient Knowledge ({:.1}/{:.1})", res.knowledge, t.cost()).red()
+                                format!(
+                                    "❌ Failed: Insufficient Knowledge ({:.1}/{:.1})",
+                                    res.knowledge,
+                                    t.cost()
+                                )
+                                .red()
                             );
                         } else if ts.used_capacity + t.storage_cost() > ts.total_capacity {
                             println!(
@@ -246,15 +262,24 @@ fn handle_command(world: &mut World, input: &str) -> bool {
                                 format!("❌ Failed: Insufficient Data Storage Capacity ({:.1}/{:.1} TB used)", ts.used_capacity, ts.total_capacity).red()
                             );
                         } else {
-                            println!("{}", "❌ Failed: Unknown reason (maybe already researched?)".red());
+                            println!(
+                                "{}",
+                                "❌ Failed: Unknown reason (maybe already researched?)".red()
+                            );
                         }
                     }
                 } else {
-                    println!("{}", format!("⚠️ Unknown technology: '{tech_name}'").yellow());
+                    println!(
+                        "{}",
+                        format!("⚠️ Unknown technology: '{tech_name}'").yellow()
+                    );
                 }
             }
         }
-        _ => println!("{}", format!("⚠️ Unknown command: '{command}'. Type 'help' for commands.").yellow()),
+        _ => println!(
+            "{}",
+            format!("⚠️ Unknown command: '{command}'. Type 'help' for commands.").yellow()
+        ),
     }
     true
 }
@@ -664,7 +689,12 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
         (max_x, max_y, tiles)
     };
 
-    println!("{}", format!("=== Map around ({center_x}, {center_y}) ===").green().bold());
+    println!(
+        "{}",
+        format!("=== Map around ({center_x}, {center_y}) ===")
+            .green()
+            .bold()
+    );
 
     // Collect pop positions
     let pop_positions: Vec<(i32, i32)> = world
@@ -700,7 +730,12 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
     println!();
 
     let map_width = (radius * 2 + 1) as usize;
-    println!("   {}{}{}", "┌".cyan(), "─".repeat(map_width).cyan(), "┐".cyan());
+    println!(
+        "   {}{}{}",
+        "┌".cyan(),
+        "─".repeat(map_width).cyan(),
+        "┐".cyan()
+    );
 
     for y in center_y.saturating_sub(radius)..=center_y.saturating_add(radius) {
         print!("{}", format!("{y:3}").cyan());
@@ -771,19 +806,32 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
         }
         println!("{}", "│".cyan());
     }
-    println!("   {}{}{}", "└".cyan(), "─".repeat(map_width).cyan(), "┘".cyan());
+    println!(
+        "   {}{}{}",
+        "└".cyan(),
+        "─".repeat(map_width).cyan(),
+        "┘".cyan()
+    );
 
     // Colored legend
     let legend = format!(
         "Legend: {}={} {}={} {}={} {}={} {}={} {}={} {}={} {}={}",
-        "☺".cyan().bold(), "pop".grey(),
-        "·".green().dim(), "grass".grey(),
-        ",".yellow(), "dirt".grey(),
-        "▲".white().dim(), "rock".grey(),
-        "≈".blue(), "water".grey(),
-        "♣".green().bold(), "tree".grey(),
-        "%".magenta(), "mine".grey(),
-        "/".magenta(), "chop".grey()
+        "☺".cyan().bold(),
+        "pop".grey(),
+        "·".green().dim(),
+        "grass".grey(),
+        ",".yellow(),
+        "dirt".grey(),
+        "▲".white().dim(),
+        "rock".grey(),
+        "≈".blue(),
+        "water".grey(),
+        "♣".green().bold(),
+        "tree".grey(),
+        "%".magenta(),
+        "mine".grey(),
+        "/".magenta(),
+        "chop".grey()
     );
     println!("{legend}");
 }
