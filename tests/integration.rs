@@ -183,6 +183,8 @@ pub mod integration {
 
 #[path = "integration/neural_leech_unrest.rs"]
 mod neural_leech_unrest;
+#[path = "integration/thermal_glider_time_dilation.rs"]
+pub mod thermal_glider_time_dilation;
 
 #[path = "integration/void_weed_smuggler.rs"]
 mod void_weed_smuggler;

@@ -42,8 +42,11 @@ pub fn register(schedule: &mut Schedule) {
             update_bioluminescence_system
                 .after(crate::layer1::day_night::update_day_night_cycle_system),
             crate::layer1::pop::reset_speed_system.before(apply_lighting_penalties_system),
+            crate::layer1::logistics::glider::update_glider_movement_system
+                .after(crate::layer1::pop::reset_speed_system),
             crate::layer1::tech::event_horizon_tap::apply_time_dilation_system
                 .after(crate::layer1::pop::reset_speed_system)
+                .after(crate::layer1::logistics::glider::update_glider_movement_system)
                 .before(apply_lighting_penalties_system),
             update_lighting_system
                 .after(process_start_plan_system)
@@ -72,8 +75,6 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::pop::reset_speed_system),
             crate::layer1::combat::hit_stop_system.after(process_start_plan_system),
             crate::layer1::combat::combat_cooldown_system.after(process_start_plan_system),
-            crate::layer1::logistics::glider::update_glider_movement_system
-                .after(crate::layer1::pop::reset_speed_system),
         )
             .in_set(Layer1SystemSet::Execution),
     );

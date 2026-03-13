@@ -361,3 +361,11 @@
 - **Glue added:** `apply_neural_shock_system` in `src/layer1/integration.rs` translates `NeuralShock` into `MentalState::Broken(MentalBreakType::Daze)`.
 - **Schedule:** Registered in `Layer1SystemSet::Observation`, specifically `.after(crate::layer1::tech::neural_leech::handle_hub_death_system)`.
 - **Tests:** `tests/integration/neural_leech_unrest.rs` (1 test)
+
+### INT-452/INT-262: The Event Horizon Tap -> Thermal Gliders / Energy Overload
+- **Date:** 2026-03-13
+- **Systems connected:** `EventHorizonTap` (PowerSource) -> `power_grid_system` (Energy) & `update_glider_movement_system` (Thermal Gliders) -> `apply_time_dilation_system` (Time Dilation)
+- **Glue added:**
+    - Updated `src/layer1/energy/mod.rs` to correctly handle `f32::INFINITY` values outputted by `EventHorizonTap`, protecting division and ratio logic from yielding `NaN`.
+    - Reordered scheduling in `src/layer1/systems/execution.rs` so that `update_glider_movement_system` (which statically sets absolute speeds) executes *before* `apply_time_dilation_system` (which dynamically scales speed), guaranteeing that gliders correctly inherit time dilation modifiers.
+- **Tests:** `tests/integration/thermal_glider_time_dilation.rs` (1 test)

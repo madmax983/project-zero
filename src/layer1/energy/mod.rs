@@ -265,7 +265,9 @@ pub fn power_grid_system(world: &mut World) {
 
         let total_available = total_demand + net;
 
-        let supply_ratio = if total_demand > 0.0 {
+        let supply_ratio = if total_production.is_infinite() {
+            1.0
+        } else if total_demand > 0.0 {
             (total_available / total_demand).min(1.0)
         } else {
             1.0
@@ -383,7 +385,9 @@ fn handle_overload(
     total_production: f32,
     total_demand: f32,
 ) {
-    let overload_ratio = if total_production > 0.0 {
+    let overload_ratio = if total_production.is_infinite() {
+        0.0
+    } else if total_production > 0.0 {
         total_demand / total_production
     } else {
         1.0
