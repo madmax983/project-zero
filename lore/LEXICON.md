@@ -3165,3 +3165,21 @@
 **Usage:**
 - "The Substrate invoked the override."
 - "The override caused a riot in sector four."
+
+---
+
+## The Event Horizon Tap
+
+### the Tap / the Horizon Tap
+**Replaces:** Event Horizon Tap building
+**Code reference:** `EventHorizonTap`
+**Usage:**
+- "The Tap is thirsty today."
+- "Hook it up to the Horizon Tap."
+
+### the Slow / time-slip
+**Replaces:** Time Dilation Zone effect
+**Code reference:** `TimeDilationZone`
+**Usage:**
+- "Caught in the Slow."
+- "He's lost to a time-slip."

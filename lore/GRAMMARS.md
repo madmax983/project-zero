@@ -2920,3 +2920,12 @@ DROP_POD_SCATTERED:
 - WILL_OVERRIDE → enables → PROTEST
 - WILL_OVERRIDE → enables → FACTION_FORMED
 - WILL_OVERRIDE → increases_chance → AUTHORITY
+
+## The Event Horizon Tap Chaining
+
+- TAP_ACTIVATED → enables → POWER_SURGE
+- TAP_ACTIVATED → enables → MACHINE_MALFUNCTION
+- TAP_ACTIVATED → increases_chance → AWE
+- DILATION_CRISIS → enables → FAMINE
+- DILATION_CRISIS → enables → ACCIDENT
+- DILATION_CRISIS → increases_chance → EXHAUSTION
