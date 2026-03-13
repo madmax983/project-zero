@@ -60,6 +60,7 @@ pub struct PopEvaluationQuery {
     pub chemical: Option<&'static ChemicalState>,
     pub memetic_carrier: Option<&'static MemeticCarrier>,
     pub health: Option<&'static Health>,
+    pub cryo_shock: Option<&'static crate::layer1::cryo_shock::CryoShock>,
     pub job: Option<&'static Job>,
 }
 
@@ -88,6 +89,7 @@ impl PopEvalData {
             chemical_state: item.chemical.cloned(),
             is_memetic_carrier: item.memetic_carrier.is_some(),
             health: item.health.copied(),
+            has_cryo_shock: item.cryo_shock.is_some(),
             job: item.job.copied(),
             insulation: 0.0,
             carrying_item_type: None,
@@ -164,6 +166,8 @@ pub struct PopEvalData {
     pub is_memetic_carrier: bool,
     /// Health of the pop, if any.
     pub health: Option<Health>,
+    /// Does the pop suffer from Cryo-Shock.
+    pub has_cryo_shock: bool,
     /// The pop's assigned job.
     pub job: Option<Job>,
     /// Current insulation provided by clothing.
@@ -196,6 +200,7 @@ impl PopEvalData {
             chemical_state: None,
             is_memetic_carrier: false,
             health: None,
+            has_cryo_shock: false,
             job: None,
             insulation: 0.0,
         }

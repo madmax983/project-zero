@@ -9,7 +9,7 @@ use crate::layer1::pop::{Pop, Speed};
 
 /// Applied to Pops that have just emerged from cryo suspension.
 /// Causes severe debuffs to movement speed and efficiency that decay over time.
-#[derive(Component)]
+#[derive(Component, Debug)]
 pub struct CryoShock {
     /// Remaining duration of the shock in simulation ticks.
     pub duration_ticks: u64,

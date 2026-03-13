@@ -186,3 +186,6 @@ mod neural_leech_unrest;
 
 #[path = "integration/void_weed_smuggler.rs"]
 mod void_weed_smuggler;
+
+#[path = "integration/cryo_shock_hospital.rs"]
+mod cryo_shock_hospital;

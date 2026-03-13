@@ -361,3 +361,12 @@
 - **Glue added:** `apply_neural_shock_system` in `src/layer1/integration.rs` translates `NeuralShock` into `MentalState::Broken(MentalBreakType::Daze)`.
 - **Schedule:** Registered in `Layer1SystemSet::Observation`, specifically `.after(crate::layer1::tech::neural_leech::handle_hub_death_system)`.
 - **Tests:** `tests/integration/neural_leech_unrest.rs` (1 test)
+
+### INT-413: Cryo-Shock -> Hospital Triage & Utility AI
+- **Date:** 2026-03-12
+- **Systems connected:** `CryoShock` (Spec 413) -> `UtilityAIBuffer` (Utility AI) -> `healing_system` (Medical)
+- **Glue added:**
+    - Added `has_cryo_shock` property to `PopEvalData` in `src/layer1/utility_eval_types.rs`.
+    - Modified `Evaluate SeekMedicalCare` block in `src/layer1/utility_ai.rs` to highly prioritize medical beds if a pop has `CryoShock`, even with full health.
+    - Updated `healing_system` in `src/layer1/medical.rs` to capture patients with `CryoShock` and aggressively decay `duration_ticks` by 20x speed while hospitalized.
+- **Tests:** `tests/integration/cryo_shock_hospital.rs` (2 tests verified)
