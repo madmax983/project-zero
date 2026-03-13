@@ -45,6 +45,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::tech::event_horizon_tap::apply_time_dilation_system
                 .after(crate::layer1::pop::reset_speed_system)
                 .before(apply_lighting_penalties_system),
+            crate::layer1::tech::machine_awakening::process_bot_sentience,
+            crate::layer1::tech::machine_awakening::apply_awakened_needs,
             update_lighting_system
                 .after(process_start_plan_system)
                 .after(crate::layer1::day_night::update_ambient_light_from_cycle_system)
