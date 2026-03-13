@@ -3,3 +3,4 @@ pub mod mega_quake_chronicle;
 pub mod subspace_pen_pals;
 pub mod scapegoat_chronicle;
 pub mod great_work_chronicle;
+pub mod spoilage_olfactory;

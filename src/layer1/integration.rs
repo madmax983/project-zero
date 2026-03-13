@@ -119,6 +119,21 @@ pub fn chronicle_rumor_bridge_system(
     }
 }
 
+/// Bridge system to add ScentEmitter to smelly items like Waste and Corpses
+pub fn item_scent_bridge_system(
+    mut commands: Commands,
+    query: Query<(Entity, &crate::layer1::items::Item), Without<crate::layer1::olfactory::ScentEmitter>>,
+) {
+    for (entity, item) in query.iter() {
+        if matches!(item.item_type, crate::layer1::items::ItemType::Waste | crate::layer1::items::ItemType::Corpse(_)) {
+            commands.entity(entity).insert(crate::layer1::olfactory::ScentEmitter {
+                scent_type: crate::layer1::olfactory::ScentType::Foul,
+                strength: 5.0, // Base foul scent strength
+            });
+        }
+    }
+}
+
 /// Bridges `Needs` system to `BlackMarket` system.
 ///
 /// Updates `ColonyStats.unmet_luxury` by counting pops with low leisure needs.

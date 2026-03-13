@@ -323,3 +323,10 @@
 - **Glue added:**
     - `sacrilege_unrest_bridge` to increase unrest and log a chronicle event
 - **Tests:** `tests/integration/sacrilege_effects.rs`
+
+### INT-446-Spoilage: Spoilage/Waste -> Olfactory Map
+- **Date:** 2026-03-09
+- **Systems connected:** `ItemType::Waste` & `ItemType::Corpse` -> `item_scent_bridge_system` (Integration) -> `scent_diffusion_system` (Olfactory Map)
+- **Glue added:**
+    - `item_scent_bridge_system` queries for items that smell foul and attaches a `ScentEmitter` with `ScentType::Foul` to them.
+- **Tests:** `tests/integration/spoilage_olfactory.rs` (1 test verified)
