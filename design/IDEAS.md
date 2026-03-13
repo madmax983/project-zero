@@ -9681,3 +9681,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Immediate, massive geopolitical and economic gains vs. the literal overshadowing and subjugation of your citizens' daily lives.
 
 ---
+
+## The Doomsday Clock
+
+**Layer:** Cross-layer
+
+**Fantasy:** The countdown to the end of the world. Watching society react when they believe there is no tomorrow.
+
+**Mechanic:** A massive, unstoppable anomaly is detected on Layer 2, heading for your Layer 1 colony with a countdown of exactly one year. As the clock ticks down, Pops' behavior radically changes. Some work 24/7 trying to build impossible defenses; others abandon their jobs entirely for hedonism, riots, or forming doomsday cults. The "Long Term" needs (like Education or Savings) drop to zero importance, while immediate needs spike.
+
+**Emergence:** You try to maintain order and production to build a shield generator, but your farmers have decided to throw a month-long feast with the winter reserves because "we're all going to die anyway." You have to enforce martial law just to save them from themselves.
+
+**Tension:** Do you focus entirely on the massive, risky megaproject to stop the anomaly, or do you let your colonists enjoy their final days, only to discover the "anomaly" was a harmless sensor ghost and now your colony is completely ruined by a year of unchecked anarchy?
+
+---
+
+## The Galactic Reality Show
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Your suffering is their entertainment. The Truman Show on a galactic scale.
+
+**Mechanic:** A Layer 3 media conglomerate declares your struggling frontier colony their newest hit reality show. Indestructible, floating "Camera Drones" spawn on Layer 1 and follow your most stressed or endangered Pops. You receive massive, periodic influxes of Credits and rare tech based on "Ratings." Ratings go up when Pops fight, get injured, starve, or barely survive disasters. Ratings plummet if your colony is safe, stable, and boring.
+
+**Emergence:** You finally stabilize your food supply and cure the local plague. The network executives get bored. They send a "Care Package" that contains an enraged, genetically modified apex predator just to "spice up the season finale," forcing you to fight for your life for the amusement of billionaires.
+
+**Tension:** The immense, easy wealth of high ratings vs. intentionally endangering your own citizens and maintaining a state of constant, stressful crisis to keep the money flowing.
+
+---
+
+## The Fungal Overmind
+
+**Layer:** 1
+
+**Fantasy:** A perfect, horrific utopia. Your people have never been happier, but are they still your people?
+
+**Mechanic:** A seemingly benign, glowing subterranean fungus spreads across the map. If Pops sleep near it, the fungus connects to their neural pathways. Connected Pops have their "Social" and "Leisure" needs permanently fulfilled and work with incredible, synchronized efficiency. However, the fungus slowly overwrites their "Memory" and "Traits," replacing them with a uniform "Hive-Mind" trait.
+
+**Emergence:** You ignore the fungus because your mining output has tripled and no one is complaining about the cold anymore. Decades later, you realize your entire colony is composed of identical, emotionless drones who no longer speak to each other, but simply hum in unison while they work. They are perfectly happy, and perfectly terrifying.
+
+**Tension:** The unmatched economic output and perfect morale of the connected Pops vs. the slow, silent erasure of their individuality and the risk that the Overmind might eventually turn against you.
+
+---
