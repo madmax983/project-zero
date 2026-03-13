@@ -114,7 +114,7 @@ impl PartialOrd for Node {
 /// assert_eq!(p.last(), Some(&(2, 0)));
 /// ```
 pub fn find_path(world: &World, start: (i32, i32), end: (i32, i32)) -> Option<Vec<(i32, i32)>> {
-    find_path_internal(world, start, end, false, None)
+    find_path_internal(world, start, end, false, None, None)
 }
 
 /// Finds a path for a specific Pop, considering their access rights.
@@ -161,7 +161,7 @@ pub fn find_path_for_pop(
 ) -> Option<Vec<(i32, i32)>> {
     let role = world.get::<Role>(pop).copied();
     let credentials = Some(AccessCredentials { entity: pop, role });
-    find_path_internal(world, start, end, false, credentials.as_ref())
+    find_path_internal(world, start, end, false, credentials.as_ref(), None)
 }
 
 /// Finds a path for a specific entity type, considering unique capabilities.
@@ -182,7 +182,17 @@ pub fn find_path_for_entity<T: Component>(
 ) -> Option<Vec<(i32, i32)>> {
     let can_use_vents =
         std::any::TypeId::of::<T>() == std::any::TypeId::of::<crate::layer1::vermin::Vermin>();
-    find_path_internal(world, start, end, can_use_vents, None)
+    find_path_internal(world, start, end, can_use_vents, None, None)
+}
+
+/// Finds a path for a specific entity type, using a custom cost calculation.
+pub fn find_path_with_cost(
+    world: &World,
+    start: (i32, i32),
+    end: (i32, i32),
+    custom_cost: &dyn Fn((i32, i32), i32) -> i32,
+) -> Option<Vec<(i32, i32)>> {
+    find_path_internal(world, start, end, false, None, Some(custom_cost))
 }
 
 /// Internal A* implementation.
@@ -195,6 +205,7 @@ fn find_path_internal(
     end: (i32, i32),
     can_use_vents: bool,
     credentials: Option<&AccessCredentials>,
+    custom_cost: Option<&dyn Fn((i32, i32), i32) -> i32>,
 ) -> Option<Vec<(i32, i32)>> {
     let terrain = world.resource::<TerrainGrid>();
     let occupied = world.get_resource::<OccupiedTiles>();
@@ -311,7 +322,12 @@ fn find_path_internal(
             // Apply wind penalty. Ensure cost is at least 1.
             #[allow(clippy::cast_precision_loss, clippy::cast_possible_truncation)]
             let adjusted_cost = (base_cost as f32 * wind_penalty).round() as i32;
-            let tile_cost = adjusted_cost.max(1);
+
+            let tile_cost = if let Some(cost_fn) = custom_cost {
+                cost_fn(next, adjusted_cost).max(1)
+            } else {
+                adjusted_cost.max(1)
+            };
 
             let new_cost = cost + tile_cost;
 

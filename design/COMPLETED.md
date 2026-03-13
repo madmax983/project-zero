@@ -194,6 +194,7 @@
 - [x] `252` Tectonic Stress — `specs/252-tectonic-stress.md` — completed 2026-03-03
 - [x] `INT-038` Integration: MegaQuakeEvent -> Chronicle System — completed 2026-03-03
 - [x] `255` Hypno-Learning — `specs/255-hypno-learning.md` — completed 2026-03-03
+- [x] `262` Thermal Gliders — `specs/262-thermal-gliders.md` — completed 2026-03-05
 - [x] `261` Shadow Markets — `specs/261-shadow-markets.md` — completed 2026-03-04
 - [x] `INT-261` Integration: Shadow Markets -> Trade Execution — completed 2026-03-04
 - [x] `286` Great Works — `specs/286-great-works.md` — completed 2026-03-01
