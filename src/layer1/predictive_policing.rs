@@ -301,9 +301,20 @@ mod tests {
         let result = evaluate_pre_crime_arrest(&warden_pos, &weights, &suspects);
 
         assert!(result.is_some());
-        let (score, target) = result.unwrap();
-        assert!(score > 0.0);
-        assert_eq!(target, suspect);
+        if let Some((score, target)) = result {
+            assert!(score > 0.0);
+            assert_eq!(target, suspect);
+        }
+    }
+
+    #[test]
+    fn test_evaluate_pre_crime_arrest_empty_suspects() {
+        let warden_pos = GridPosition { x: 0, y: 0 };
+        let weights = UtilityWeights::default();
+        let suspects = vec![];
+
+        let result = evaluate_pre_crime_arrest(&warden_pos, &weights, &suspects);
+        assert!(result.is_none());
     }
 
     // 3. Arrest Execution
@@ -348,5 +359,38 @@ mod tests {
             .get::<StressTracker>(suspect)
             .expect("Should have StressTracker");
         assert_eq!(tracker.accumulated_stress, 0.0);
+    }
+
+    #[test]
+    fn test_execute_pre_crime_arrest_bails_if_not_suspect() {
+        let mut world = setup_world();
+
+        let not_suspect = world
+            .spawn((
+                Pop,
+                // Intentionally omitting Suspect
+                GridPosition { x: 1, y: 1 },
+                StressTracker {
+                    accumulated_stress: 90.0,
+                },
+            ))
+            .id();
+
+        let warden = world.spawn((Pop, GridPosition { x: 0, y: 0 })).id();
+
+        crate::layer1::predictive_policing::execute_pre_crime_arrest(
+            &mut world,
+            warden,
+            not_suspect,
+        );
+
+        // Should NOT be an inmate
+        assert!(world.get::<Inmate>(not_suspect).is_none());
+
+        // Stress should NOT be reset
+        let tracker = world
+            .get::<StressTracker>(not_suspect)
+            .expect("Should have StressTracker");
+        assert_eq!(tracker.accumulated_stress, 90.0);
     }
 }

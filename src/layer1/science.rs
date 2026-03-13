@@ -205,7 +205,12 @@ pub fn process_scan_system(world: &mut World) {
                 continue;
             };
 
-            let pos = *world.get::<GridPosition>(anomaly_entity).unwrap();
+            let pos = if let Some(p) = world.get::<GridPosition>(anomaly_entity) {
+                *p
+            } else {
+                cleanup_pop_explore_state(world, pop_entity);
+                continue;
+            };
 
             // Grant rewards
             match anomaly_type {
@@ -455,5 +460,55 @@ mod tests {
         // Rewards granted
         let resources = world.resource::<ColonyResources>();
         assert_eq!(resources.knowledge, 100.0);
+    }
+
+    #[test]
+    fn test_process_scan_system_missing_grid_position() {
+        let mut world = World::new();
+        world.insert_resource(ColonyResources::default());
+        world.insert_resource(MessageLog::default());
+
+        let anomaly = world
+            .spawn((
+                Anomaly {
+                    anomaly_type: AnomalyType::Ruins,
+                    reward_amount: 100.0,
+                },
+                // Intentionally omitting GridPosition
+                ScanProgress {
+                    current: 9.0,
+                    required: 10.0,
+                },
+            ))
+            .id();
+
+        let pop = world
+            .spawn((
+                GridPosition { x: 0, y: 0 },
+                MovementTarget {
+                    target_entity: anomaly,
+                    target_position: GridPosition { x: 0, y: 0 },
+                    for_action: ActionType::Explore,
+                },
+                AtTarget,
+                PopAction {
+                    current: ActionType::Explore,
+                    current_utility: 1.0,
+                    ticks_committed: 5,
+                },
+            ))
+            .id();
+
+        // This should not panic
+        process_scan_system(&mut world);
+
+        // Anomaly should not be despawned because we aborted due to missing pos
+        assert!(world.get_entity(anomaly).is_ok());
+
+        // Pop should be reset
+        let mt = world.get::<MovementTarget>(pop);
+        assert!(mt.is_none());
+        let action = world.get::<PopAction>(pop).unwrap();
+        assert_eq!(action.current, ActionType::Idle);
     }
 }
