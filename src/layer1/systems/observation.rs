@@ -114,6 +114,12 @@ pub fn register(schedule: &mut Schedule) {
             #[cfg(feature = "nova")]
             crate::experimental::dreams_of_genesis::dreams_of_genesis_system
                 .after(decay_needs_system),
+            #[cfg(feature = "nova")]
+            crate::experimental::the_humming_monolith::detect_and_spawn_monolith_system
+                .after(decay_needs_system),
+            #[cfg(feature = "nova")]
+            crate::experimental::the_humming_monolith::monolith_influence_system
+                .after(crate::experimental::the_humming_monolith::detect_and_spawn_monolith_system),
             crate::layer1::integration::update_unmet_luxury_system.after(decay_needs_system),
             crate::layer1::integration::sacrilege_unrest_bridge.after(decay_needs_system),
             crate::layer1::integration::issue_placebo_from_edict_system.after(decay_needs_system),

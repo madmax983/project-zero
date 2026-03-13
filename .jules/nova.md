@@ -36,3 +36,8 @@
 **Concept:** New pops inherit a tiny fraction of the colony's total accumulated XP.
 **Fate:** Merged
 **Lesson:** Institutional memory effectively gives colonies a slow, passive snowball effect.
+
+## [The Humming Monolith]
+**Concept:** A mysterious, radiant monolith spawns late-game. It acts as a massive light source. When pops get too close, they become mesmerized (maxing leisure, dropping speed) and can permanently gain traits like VoidTouched or Synesthete.
+**Fate:** Proposed
+**Lesson:** Tying an environmental anomaly directly to deep psychological changes (`Needs`, `Traits`) adds a creepy, transformative layer to base exploration.
