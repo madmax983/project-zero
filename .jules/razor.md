@@ -12,3 +12,8 @@
 **Bloat:** `clippy::complexity` warnings related to large tuples and unused generic structure in tests and systems.
 **Cut:** Split the large 20+ elements tuple inside `src/layer1/systems/observation.rs` and ran `cargo clippy --fix` on `src/layer1/` tests and source code to eliminate redundant `.default()` assignments and unused variables.
 **Saved:** Multiple compilation errors related to `IntoSystemConfigs` macro boundaries limit and numerous warnings cluttering output.
+
+## [Reduction]
+**Bloat:** The "One-Time" Enum (`GasType` enum in `src/layer1/nature/atmosphere.rs` with exactly one variant `Smog`).
+**Cut:** Deleted the `GasType` enum entirely. Renamed generic `get_gas` and `set_gas` methods on `AtmosphereGrid` to explicitly named `get_smog` and `set_smog` methods, removing the redundant `_gas: GasType` argument.
+**Saved:** Unnecessary parameter passing, a dead enum, and improved clarity of the atmospheric pollution API.

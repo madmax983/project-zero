@@ -57,13 +57,6 @@ pub fn corrosion_damage_system(
     }
 }
 
-/// Types of atmospheric gases.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-pub enum GasType {
-    /// Industrial pollution.
-    Smog,
-}
-
 /// Configuration for atmospheric diffusion.
 #[derive(Resource, Debug, Clone)]
 pub struct DiffusionConfig {
@@ -241,16 +234,14 @@ impl AtmosphereGrid {
         self.set(x, y, current + amount);
     }
 
-    /// Get gas level at (x, y) for a specific gas type.
-    /// Currently only supports Smog (maps to base layer).
+    /// Get smog level at (x, y).
     #[must_use]
-    pub fn get_gas(&self, x: i32, y: i32, _gas: GasType) -> f32 {
+    pub fn get_smog(&self, x: i32, y: i32) -> f32 {
         self.get(x, y)
     }
 
-    /// Set gas level at (x, y) for a specific gas type.
-    /// Currently only supports Smog (maps to base layer).
-    pub fn set_gas(&mut self, x: i32, y: i32, _gas: GasType, value: f32) {
+    /// Set smog level at (x, y).
+    pub fn set_smog(&mut self, x: i32, y: i32, value: f32) {
         self.set(x, y, value);
     }
 
@@ -491,7 +482,7 @@ pub fn apply_smog_damage_system(
     mut query: Query<(&GridPosition, &mut Health), With<Pop>>,
 ) {
     for (pos, mut health) in &mut query {
-        let smog_level = grid.get_gas(pos.x, pos.y, GasType::Smog);
+        let smog_level = grid.get_smog(pos.x, pos.y);
         if smog_level > 150.0 {
             // Suffocation / Toxicity
             health.take_damage(1.0);
