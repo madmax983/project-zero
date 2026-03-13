@@ -21,3 +21,7 @@
 ## [Direct Link Input Grace Period]
 **Friction:** Input buffering in Direct Link mode was unbounded. If a player pressed a key early in the cooldown, the character would execute the move much later, leading to unexpected, sluggish, and "stuck" movements that felt completely disconnected from the player's intent.
 **Flow:** Implemented a Grace Period (0.2s) for input buffering. Now, inputs are only buffered if pressed slightly before the action is ready. Stale inputs are safely discarded, ensuring movement feels tight, predictable, and responsive to the player's immediate commands.
+
+## [Combat Hit Stop]
+**Friction:** The previous `HIT_STOP` durations were far too long, specifically `HIT_STOP_CRIT` which paused entities for 12 ticks (1.2 seconds). This felt like a stun lock and completely broke the flow of combat rather than adding "Juice".
+**Flow:** Reduced the `HIT_STOP` constants drastically: Crit to 3 ticks (0.3s), Heavy to 2 ticks (0.2s), Medium to 1 tick (0.1s), and Light to 0 (no hit stop). This ensures combat feels snappy, punchy, and responsive, keeping the player engaged without frustrating stun locks.

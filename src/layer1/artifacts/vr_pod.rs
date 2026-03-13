@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::morale::Morale;
 use crate::layer1::stress::StressTracker;
+use bevy_ecs::prelude::*;
 
 /// Component indicating a Pop is currently inside a VR Pod.
 #[derive(Component, Default)]
@@ -53,14 +53,17 @@ pub fn cleanup_vr_pod_status_system(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::layer1::health::Health;
+    use crate::layer1::needs::Needs;
     use bevy_app::App;
     use bevy_app::Update;
-    use crate::layer1::needs::Needs;
-    use crate::layer1::health::Health;
 
     fn setup_app() -> App {
         let mut app = App::new();
-        app.add_systems(Update, (update_vr_pods_system, cleanup_vr_pod_status_system).chain());
+        app.add_systems(
+            Update,
+            (update_vr_pods_system, cleanup_vr_pod_status_system).chain(),
+        );
         app
     }
 
@@ -68,16 +71,34 @@ mod tests {
     fn test_vr_pod_maximizes_morale_and_zeroes_stress() {
         let mut app = setup_app();
 
-        let pop_id = app.world_mut().spawn((
-            Morale { value: 0.2, ..Default::default() },
-            StressTracker { accumulated_stress: 80.0, ..Default::default() },
-            Health { current: 100.0, max: 100.0, ..Default::default() },
-            Needs { hunger: 1.0, rest: 1.0, leisure: 1.0, hygiene: 1.0 },
-        )).id();
+        let pop_id = app
+            .world_mut()
+            .spawn((
+                Morale {
+                    value: 0.2,
+                    ..Default::default()
+                },
+                StressTracker {
+                    accumulated_stress: 80.0,
+                    ..Default::default()
+                },
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                    ..Default::default()
+                },
+                Needs {
+                    hunger: 1.0,
+                    rest: 1.0,
+                    leisure: 1.0,
+                    hygiene: 1.0,
+                },
+            ))
+            .id();
 
-        app.world_mut().spawn((
-            VrPod { occupant: Some(pop_id) },
-        ));
+        app.world_mut().spawn((VrPod {
+            occupant: Some(pop_id),
+        },));
 
         app.update();
 
@@ -95,14 +116,26 @@ mod tests {
     fn test_vr_pod_does_not_stop_hunger_decay() {
         let mut app = setup_app();
 
-        let pop_id = app.world_mut().spawn((
-            Health { current: 100.0, max: 100.0, ..Default::default() },
-            Needs { hunger: 0.99, rest: 1.0, leisure: 1.0, hygiene: 1.0 },
-        )).id();
+        let pop_id = app
+            .world_mut()
+            .spawn((
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                    ..Default::default()
+                },
+                Needs {
+                    hunger: 0.99,
+                    rest: 1.0,
+                    leisure: 1.0,
+                    hygiene: 1.0,
+                },
+            ))
+            .id();
 
-        app.world_mut().spawn((
-            VrPod { occupant: Some(pop_id) },
-        ));
+        app.world_mut().spawn((VrPod {
+            occupant: Some(pop_id),
+        },));
 
         app.update();
 
@@ -114,21 +147,35 @@ mod tests {
     fn test_cleanup_vr_pod_status() {
         let mut app = setup_app();
 
-        let pop_id = app.world_mut().spawn((
-            Morale { value: 0.2, ..Default::default() },
-            StressTracker { accumulated_stress: 80.0, ..Default::default() },
-            InVrPod,
-        )).id();
+        let pop_id = app
+            .world_mut()
+            .spawn((
+                Morale {
+                    value: 0.2,
+                    ..Default::default()
+                },
+                StressTracker {
+                    accumulated_stress: 80.0,
+                    ..Default::default()
+                },
+                InVrPod,
+            ))
+            .id();
 
-        let pod_id = app.world_mut().spawn((
-            VrPod { occupant: Some(pop_id) },
-        )).id();
+        let pod_id = app
+            .world_mut()
+            .spawn((VrPod {
+                occupant: Some(pop_id),
+            },))
+            .id();
 
         app.update();
         assert!(app.world().get::<InVrPod>(pop_id).is_some());
 
         // Evict pop
-        app.world_mut().entity_mut(pod_id).insert(VrPod { occupant: None });
+        app.world_mut()
+            .entity_mut(pod_id)
+            .insert(VrPod { occupant: None });
 
         app.update();
         assert!(app.world().get::<InVrPod>(pop_id).is_none());

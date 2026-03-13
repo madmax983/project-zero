@@ -31,10 +31,10 @@ const CRIT_CHANCE: f64 = 0.15;
 const CRIT_MULTIPLIER: f32 = 3.0;
 
 // Ludwig: Reduced hit stop times for snappier combat (Game Feel)
-const HIT_STOP_CRIT: u32 = 12;
-const HIT_STOP_HEAVY: u32 = 6;
-const HIT_STOP_MEDIUM: u32 = 2;
-const HIT_STOP_LIGHT: u32 = 1;
+const HIT_STOP_CRIT: u32 = 3;
+const HIT_STOP_HEAVY: u32 = 2;
+const HIT_STOP_MEDIUM: u32 = 1;
+const HIT_STOP_LIGHT: u32 = 0;
 
 /// Component marker for pops that have been drafted for military service.
 ///
@@ -609,8 +609,8 @@ mod tests {
         let mut world = setup_world();
 
         // Heavy Weapon (Damage 20)
-        // Normal: 20 dmg -> Heavy (6 ticks)
-        // Crit: 40 dmg -> Crit (12 ticks)
+        // Normal: 20 dmg -> Heavy (2 ticks)
+        // Crit: 60 dmg -> Crit (3 ticks)
         let weapon = world
             .spawn(Weapon {
                 properties: AttackProperties {
@@ -647,8 +647,8 @@ mod tests {
         assert!(attacker_hs.is_some(), "Attacker should have HitStop");
         let ticks = attacker_hs.unwrap().ticks_remaining;
         assert!(
-            ticks == 6 || ticks == 12,
-            "Expected 6 or 12 ticks, got {}",
+            ticks == 2 || ticks == 3,
+            "Expected 2 or 3 ticks, got {}",
             ticks
         );
 
@@ -656,8 +656,8 @@ mod tests {
         assert!(target_hs.is_some(), "Target should have HitStop");
         let ticks_target = target_hs.unwrap().ticks_remaining;
         assert!(
-            ticks_target == 6 || ticks_target == 12,
-            "Expected 6 or 12 ticks, got {}",
+            ticks_target == 2 || ticks_target == 3,
+            "Expected 2 or 3 ticks, got {}",
             ticks_target
         );
     }
@@ -667,8 +667,8 @@ mod tests {
         let mut world = setup_world();
 
         // Very Light Weapon (Damage 4)
-        // Normal: 4 dmg -> Light (1 ticks)
-        // Crit: 8 dmg -> Medium (2 ticks, overridden to 12)
+        // Normal: 4 dmg -> Light (0 ticks)
+        // Crit: 12 dmg -> Crit (3 ticks)
         let weapon = world
             .spawn(Weapon {
                 properties: AttackProperties {
@@ -700,14 +700,11 @@ mod tests {
         execute_attack(&mut world, attacker, target);
 
         let hs = world.get::<HitStop>(attacker);
-        assert!(hs.is_some(), "Should always have HitStop");
-        let ticks = hs.unwrap().ticks_remaining;
-
-        if ticks == 12 {
-            // Crit (12 ticks)
+        if let Some(hit_stop) = hs {
+            let ticks = hit_stop.ticks_remaining;
+            assert_eq!(ticks, 3, "Crit light hit should give 3 ticks");
         } else {
-            // Normal (Damage 4 < 5) -> Light (1 tick)
-            assert_eq!(ticks, 1, "Normal light hit should give 1 tick");
+            // Normal (Damage 4 < 5) -> Light (0 ticks, no HitStop component added)
         }
     }
 
@@ -716,10 +713,8 @@ mod tests {
         let mut world = setup_world();
 
         // Medium Weapon (Damage 10)
-        // Normal: 10 dmg -> Medium (2 ticks)
-        // Crit: 20 dmg -> Crit (12 ticks) - because 20 >= 15 is Heavy, but Crit flag overrides to Crit duration?
-        // Wait, implementation: if is_crit { 12 } else if dmg >= 15 { 6 } ...
-        // So yes, Crit -> 12 ticks.
+        // Normal: 10 dmg -> Medium (1 tick)
+        // Crit: 30 dmg -> Crit (3 ticks)
         let weapon = world
             .spawn(Weapon {
                 properties: AttackProperties {
@@ -754,8 +749,8 @@ mod tests {
         assert!(hs.is_some());
         let ticks = hs.unwrap().ticks_remaining;
         assert!(
-            ticks == 2 || ticks == 12,
-            "Expected 2 (Normal) or 12 (Crit), got {}",
+            ticks == 1 || ticks == 3,
+            "Expected 1 (Normal) or 3 (Crit), got {}",
             ticks
         );
     }
