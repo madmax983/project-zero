@@ -62,6 +62,85 @@ mod tests {
     }
 
     #[test]
+    fn test_noble_refuses_work() {
+        use crate::layer1::building::{Building, BuildingType};
+        use crate::layer1::farm::Farm;
+        use crate::layer1::map::GridPosition;
+        use crate::layer1::needs::Needs;
+        use crate::layer1::utility_ai::evaluate_actions_system;
+        use crate::layer1::utility_types::{ActionType, PopAction, UtilityConfig, UtilityWeights};
+        use crate::shared::time::SimulationTime;
+
+        crate::setup::init_task_pools();
+        let mut world = World::new();
+        world.insert_resource(UtilityConfig::default());
+        world.insert_resource(SimulationTime::default());
+        world.insert_resource(ColonyResources::default());
+        world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
+        world.insert_resource(crate::layer1::taboo::TabooState::default());
+        world.insert_resource(crate::layer1::zone::ZoneGrid::new(10, 10));
+
+        // Spawn a hungry Noble pop
+        let pop = world
+            .spawn((
+                Pop,
+                Traits(std::collections::HashSet::from([Trait::Noble])),
+                NobleScion { allowance: 100.0 },
+                GridPosition { x: 0, y: 0 },
+                Needs {
+                    hunger: 0.1,
+                    rest: 0.8,
+                    leisure: 0.8,
+                    hygiene: 0.8,
+                }, // Very hungry!
+                UtilityWeights::default(),
+                PopAction {
+                    current: ActionType::Idle,
+                    current_utility: 0.2,
+                    ticks_committed: 10,
+                },
+            ))
+            .id();
+
+        // Spawn a Farm
+        world.spawn((
+            Building {
+                building_type: BuildingType::Farm,
+            },
+            GridPosition { x: 3, y: 0 },
+            Farm::default(),
+        ));
+
+        // The Noble is extremely hungry. But they refuse to work, even at a farm.
+        // Or wait: Does ActionType::Farm mean *working* at a farm?
+        // Yes. Farming is work. Noble should refuse it, meaning they might rather
+        // stay idle or find ready-to-eat food (ActionType::SatisfyHunger).
+        // Let's test they don't pick `ActionType::Farm` (which is the work action).
+
+        // Actually, to make them really want to work, let's make them well-fed and give them no other good options.
+        let mut needs = world.get_mut::<Needs>(pop).unwrap();
+        needs.hunger = 0.9;
+        needs.rest = 0.9;
+        needs.leisure = 0.9;
+
+        evaluate_actions_system(&mut world);
+
+        let action = world.get::<PopAction>(pop).unwrap();
+        // A regular Pop would choose ActionType::Farm here.
+        // A Noble should NOT choose ActionType::Farm.
+        assert_ne!(
+            action.current,
+            ActionType::Farm,
+            "Nobles should refuse to work at a farm"
+        );
+        assert_ne!(
+            action.current,
+            ActionType::Work,
+            "Nobles should refuse general work"
+        );
+    }
+
+    #[test]
     fn test_noble_death_penalizes_relations() {
         let mut world = World::new();
         world.insert_resource(Events::<PopDied>::default());

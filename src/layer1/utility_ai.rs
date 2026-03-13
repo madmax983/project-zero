@@ -388,6 +388,17 @@ impl<'a> PopDecider<'a> {
             return;
         }
 
+        let is_noble = self
+            .data
+            .traits
+            .as_ref()
+            .is_some_and(|t| t.0.contains(&Trait::Noble));
+
+        // Noble Scions refuse to work (Spec 263).
+        if is_noble {
+            return;
+        }
+
         let pop_pos = self.data.pos;
         let weights = self.data.weights;
         let is_feral = self
