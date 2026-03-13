@@ -11,7 +11,6 @@
 See `design/IDEAS.md` for unspecced concepts.
 - [x] `255` Hypno-Learning — `specs/255-hypno-learning.md` — completed 2026-03-01
 
-- [ ] `263` The Cadet Branch — `specs/263-the-cadet-branch.md`
 - [ ] `264` Hyper-Specialized Evolution — `specs/264-hyper-specialized-evolution.md`
 - [ ] `265` Shadow Ecosystems — `specs/265-shadow-ecosystems.md`
 - [ ] `266` Emotional Contagion — `specs/266-emotional-contagion.md`

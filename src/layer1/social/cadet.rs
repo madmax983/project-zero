@@ -1,3 +1,4 @@
+use crate::layer1::morale::Morale;
 use crate::layer1::pop::PopDied;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::unrest::{Unrest, UnrestModifier};
@@ -8,9 +9,13 @@ pub struct NobleScion {
     pub allowance: f32,
 }
 
-pub fn income_system(mut resources: ResMut<ColonyResources>, query: Query<&NobleScion>) {
-    for scion in query.iter() {
-        resources.add_credits(scion.allowance);
+pub fn income_system(
+    mut resources: ResMut<ColonyResources>,
+    query: Query<(&NobleScion, Option<&Morale>)>,
+) {
+    for (scion, morale) in query.iter() {
+        let multiplier = morale.map_or(1.0, |m| m.value);
+        resources.add_credits(scion.allowance * multiplier);
     }
 }
 
@@ -59,6 +64,92 @@ mod tests {
 
         let resources = world.resource::<ColonyResources>();
         assert_eq!(resources.credits, 100.0);
+    }
+
+    #[test]
+    fn test_noble_allowance_scales_with_morale() {
+        use crate::layer1::morale::Morale;
+        let mut world = World::new();
+        world.insert_resource(ColonyResources::default());
+
+        let mut morale = Morale::default();
+        morale.value = 0.5;
+
+        // Spawn Noble
+        world.spawn((
+            Pop,
+            Traits(std::collections::HashSet::from([Trait::Noble])),
+            NobleScion { allowance: 100.0 },
+            morale,
+        ));
+
+        // Run monthly tick (mocked)
+        let mut schedule = Schedule::default();
+        schedule.add_systems(income_system);
+        schedule.run(&mut world);
+
+        let resources = world.resource::<ColonyResources>();
+        assert_eq!(resources.credits, 50.0);
+    }
+
+    #[test]
+    fn test_noble_refuses_work() {
+        use crate::layer1::utility_eval_types::{PopEvalData, UtilityAIBuffer, WorldContext};
+        use crate::layer1::needs::Needs;
+        use crate::layer1::map::GridPosition;
+        use crate::layer1::utility_types::PopAction;
+        use crate::layer1::utility_ai::evaluate_single_pop;
+        use crate::layer1::day_night::DayNightCycle;
+        use crate::layer1::taboo::TabooState;
+        use crate::layer1::zone::ZoneGrid;
+
+        let buffer = UtilityAIBuffer::default();
+        let resources = ColonyResources::default();
+        let cycle = DayNightCycle::default();
+        let taboo = TabooState::default();
+        let zone_grid = ZoneGrid::new(1, 1);
+        let context = WorldContext {
+            resources: &resources,
+            cycle: &cycle,
+            taboo: &taboo,
+            factions: None,
+            zone_grid: &zone_grid,
+            temperature_grid: None,
+        };
+
+        let traits = Traits(std::collections::HashSet::from([Trait::Noble]));
+
+        let data = PopEvalData {
+            entity: Entity::PLACEHOLDER,
+            pos: GridPosition { x: 0, y: 0 },
+            needs: Needs::default(),
+            weights: crate::layer1::utility_types::UtilityWeights::default(),
+            action: PopAction::default(),
+            equipment: None,
+            carrying: None,
+            carrying_item: None,
+            carrying_item_type: None,
+            mental_state: None,
+            drafted: None,
+            faction_member: None,
+            penal_labor: None,
+            breakdown: None,
+            traits: Some(traits),
+            stress: 0.0,
+            hobby_type: None,
+            chemical_state: None,
+            is_memetic_carrier: false,
+            health: None,
+            job: None,
+            insulation: 0.0,
+        };
+
+        let (action_type, _, _) = evaluate_single_pop(&buffer, &data, &context);
+
+        assert_ne!(action_type, crate::layer1::utility_types::ActionType::Work);
+        assert_ne!(action_type, crate::layer1::utility_types::ActionType::Repair);
+        assert_ne!(action_type, crate::layer1::utility_types::ActionType::FetchTool);
+        assert_ne!(action_type, crate::layer1::utility_types::ActionType::BuryCorpse);
     }
 
     #[test]
