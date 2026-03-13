@@ -91,13 +91,6 @@ pub fn process_refining_system(world: &mut World) {
         Vec::new();
     let mut xp_gains: Vec<Entity> = Vec::new();
 
-    // Extract tech state
-    let tech_state_exists = world.contains_resource::<crate::layer1::tech::TechState>();
-    let tech_map = world
-        .get_resource::<crate::layer1::tech::TechState>()
-        .map(|ts| ts.techs.clone())
-        .unwrap_or_default();
-
     // Iterate buildings
     let buildings: Vec<(Entity, BuildingType, GridPosition, f32, f32, bool, f32)> = world
         .query::<(
@@ -141,11 +134,13 @@ pub fn process_refining_system(world: &mut World) {
         }
 
         // Tech Corruption Check
+        // ⚡ Bolt Optimization: Defers `TechState` lookup to only the specific `tech` needed
+        // to avoid cloning the entire `HashMap` O(N) on every frame.
         if let Some(tech) = building_type.required_tech() {
-            if tech_state_exists
-                && tech_map.get(&tech) != Some(&crate::layer1::tech::TechStatus::Active)
-            {
-                continue;
+            if let Some(ts) = world.get_resource::<crate::layer1::tech::TechState>() {
+                if ts.techs.get(&tech) != Some(&crate::layer1::tech::TechStatus::Active) {
+                    continue;
+                }
             }
         }
 
