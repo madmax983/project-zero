@@ -74,6 +74,12 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::pop::reset_speed_system),
             crate::layer1::combat::hit_stop_system.after(process_start_plan_system),
             crate::layer1::combat::combat_cooldown_system.after(process_start_plan_system),
+        )
+            .in_set(Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::logistics::glider::update_glider_movement_system
                 .after(crate::layer1::pop::reset_speed_system),
         )
