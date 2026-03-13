@@ -665,6 +665,7 @@ pub mod ghost_code;
 mod ghost_code_integration_tests;
 #[cfg(test)]
 mod ghost_code_tests;
+pub mod hypno_learning;
 pub mod infinite_archive;
 #[cfg(test)]
 mod infinite_archive_tests;

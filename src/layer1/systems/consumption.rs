@@ -24,6 +24,14 @@ pub fn register(schedule: &mut Schedule) {
                 .after(consume_food_system)
                 .before(decay_needs_system),
             decay_needs_system.after(consume_food_system),
+        )
+            .in_set(Layer1SystemSet::Consumption),
+    );
+
+    schedule.add_systems(
+        (
+            crate::layer1::tech::hypno_learning::hypno_sleep_system.after(decay_needs_system),
+            crate::layer1::tech::hypno_learning::update_mental_fog_system.after(decay_needs_system),
             crate::layer1::hygiene::filth_accumulation_system.after(decay_needs_system),
             crate::layer1::hygiene::hygiene_decay_system
                 .after(crate::layer1::hygiene::filth_accumulation_system),

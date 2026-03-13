@@ -15,6 +15,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::cryo_dreams::cryo_dream_system
                 .after(crate::layer1::health::despawn_dead_entities_system),
             cleanup_dream_marker_system.after(dream_system),
+            crate::layer1::tech::hypno_learning::wake_up_hypno_system.after(dream_system),
             #[cfg(feature = "nova")]
             crate::layer1::observer::observer_awareness_system
                 .after(crate::layer1::health::despawn_dead_entities_system),
