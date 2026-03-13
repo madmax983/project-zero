@@ -388,6 +388,16 @@ impl<'a> PopDecider<'a> {
             return;
         }
 
+        let is_noble = self
+            .data
+            .traits
+            .as_ref()
+            .is_some_and(|t| t.0.contains(&Trait::Noble));
+
+        if is_noble {
+            return; // Skip evaluating work actions for Nobles
+        }
+
         let pop_pos = self.data.pos;
         let weights = self.data.weights;
         let is_feral = self
@@ -959,6 +969,69 @@ mod tests {
         assert!(
             action.current_utility > 1.0,
             "Should have high utility bonus"
+        );
+    }
+
+    #[test]
+    fn test_noble_refuses_work() {
+        use crate::layer1::farm::Farm;
+        use crate::layer1::designation::{Designation, DesignationType};
+        crate::setup::init_task_pools();
+
+        let mut world = World::new();
+        world.insert_resource(crate::shared::time::SimulationTime::default());
+        world.insert_resource(UtilityConfig::default());
+        world.insert_resource(ColonyResources::default());
+        world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
+        world.insert_resource(crate::layer1::taboo::TabooState::default());
+
+        // Spawn a Noble pop
+        let mut traits = crate::layer1::traits::Traits::default();
+        traits.add(Trait::Noble);
+
+        let pop = world
+            .spawn((
+                Pop,
+                traits,
+                GridPosition { x: 0, y: 0 },
+                Needs::default(), // All needs satisfied so they won't prioritize eating/sleeping
+                UtilityWeights::default(),
+                PopAction {
+                    current: ActionType::Idle,
+                    current_utility: 0.1,
+                    ticks_committed: 100, // Ready to switch
+                },
+            ))
+            .id();
+
+        // Spawn a work designation (Mine)
+        world.spawn((
+            Designation {
+                designation_type: DesignationType::Mine,
+            },
+            GridPosition { x: 1, y: 0 },
+        ));
+
+        // Spawn a farm
+        world.spawn((
+            Farm::default(),
+            GridPosition { x: 2, y: 0 },
+        ));
+
+        // Run evaluation
+        evaluate_actions_system(&mut world);
+
+        // Pop should NOT choose Work or Farm because of the Noble trait.
+        let action = world.get::<PopAction>(pop).unwrap();
+        assert_ne!(
+            action.current,
+            ActionType::Work,
+            "Noble pop should not accept manual labor (Work)"
+        );
+        assert_ne!(
+            action.current,
+            ActionType::Farm,
+            "Noble pop should not accept manual labor (Farm)"
         );
     }
 }
