@@ -7,6 +7,9 @@ use bevy_ecs::prelude::*;
 
 pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
+        crate::layer1::vr_pod::update_vr_pods_system.in_set(Layer1SystemSet::Observation),
+    );
+    schedule.add_systems(
         (
             crate::layer1::integration::waste_scent_bridge,
             crate::layer1::olfactory::scent_diffusion_system

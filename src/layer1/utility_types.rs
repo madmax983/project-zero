@@ -149,6 +149,8 @@ pub enum ActionType {
     PurgeResidue,
     /// Staring into the abyss (Void Stare manifestation).
     VoidStare,
+    /// Enters a VR Pod to achieve perfect stability.
+    EnterVrPod,
 }
 
 /// Types of hobbies.
@@ -168,7 +170,7 @@ pub enum HobbyType {
 
 impl ActionType {
     /// Total number of action types. Used for array sizing.
-    pub const COUNT: usize = 39;
+    pub const COUNT: usize = 40;
 
     /// Converts action type to a unique array index (0..COUNT-1).
     #[must_use]
@@ -213,6 +215,7 @@ impl ActionType {
             Self::PurgeResidue => 36,
             Self::VisitSanctuary => 37,
             Self::VoidStare => 38,
+            Self::EnterVrPod => 39,
         }
     }
 

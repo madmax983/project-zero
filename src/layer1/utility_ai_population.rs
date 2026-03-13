@@ -512,7 +512,7 @@ pub fn collect_pop_data(world: &mut World, buffer: &mut UtilityAIBuffer, config:
     buffer.pop_data.clear();
     buffer.pop_data.extend(
         world
-            .query_filtered::<PopEvaluationQuery, (Without<crate::layer1::cryo::CryoStasis>, Without<Possessed>)>()
+            .query_filtered::<PopEvaluationQuery, (Without<crate::layer1::cryo::CryoStasis>, Without<Possessed>, Without<crate::layer1::vr_pod::InVrPod>)>()
             .iter(world)
             .filter(|item| {
                 item.action.ticks_committed >= config.evaluation_interval

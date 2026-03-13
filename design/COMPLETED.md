@@ -224,3 +224,4 @@
 - [x] `409` Shipbreaking — `specs/409-shipbreaking.md` — completed 2026-03-09
 - [x] `291` The Neural Leech — `specs/291-neural-leech.md` — completed 2026-03-10
 - [x] `INT-451` Integration: OverrideWillEvent -> Chronicle — completed 2026-03-11
+- [x] `269` The Lotus Simulation — `specs/269-lotus-simulation.md` — completed 2024-05-15
