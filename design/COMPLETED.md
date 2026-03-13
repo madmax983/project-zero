@@ -190,3 +190,4 @@
 - [x] `251` The "Empty" Room — `specs/251-the-empty-room.md` — completed 2026-03-03
 - [x] `252` Tectonic Stress — `specs/252-tectonic-stress.md` — completed 2026-03-03
 - [x] `INT-038` Integration: MegaQuakeEvent -> Chronicle System — completed 2026-03-03
+- [x] `257` Subspace Pen Pals — `specs/257-subspace-pen-pals.md` — completed 2026-03-13

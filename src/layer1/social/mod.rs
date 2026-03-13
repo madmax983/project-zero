@@ -528,3 +528,9 @@ pub mod empty_room;
 mod empty_room_tests;
 
 pub use empty_room::*;
+
+/// Subspace Pen Pals logic (Spec 257).
+pub mod pen_pals;
+#[cfg(test)]
+mod pen_pals_tests;
+pub use pen_pals::*;
