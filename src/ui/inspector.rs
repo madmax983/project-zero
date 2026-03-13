@@ -682,100 +682,8 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
     // 5. Needs or Building Details
     let details_area = layout[5];
     if let Some(needs) = world.get::<Needs>(entity) {
-        // Bio-Monitor Block
-        let bio_block = Block::default()
-            .title(" Bio-Monitor ")
-            .borders(Borders::ALL)
-            .border_type(BorderType::Rounded)
-            .border_style(Style::default().fg(Color::Green));
-
-        let bio_inner = bio_block.inner(details_area);
-        frame.render_widget(bio_block, details_area);
-
-        // Split inner area
-        let rows = Layout::default()
-            .direction(Direction::Vertical)
-            .constraints([
-                Constraint::Length(1), // Hunger/Rest
-                Constraint::Length(1), // Morale
-                Constraint::Length(1), // Bio-Comp
-            ])
-            .split(bio_inner);
-
-        // Row 1: Hunger & Rest
-        let needs_layout = Layout::default()
-            .direction(Direction::Horizontal)
-            .constraints([
-                Constraint::Percentage(50),
-                Constraint::Length(1), // Gap
-                Constraint::Percentage(50),
-            ])
-            .split(rows[0]);
-
-        let hunger_percent = (needs.hunger * 100.0) as u16;
-        let rest_percent = (needs.rest * 100.0) as u16;
-
-        let hunger_color = if needs.hunger < 0.3 {
-            Color::Red
-        } else {
-            Color::Green
-        };
-        let rest_color = if needs.rest < 0.3 {
-            Color::Red
-        } else {
-            Color::Cyan
-        };
-
-        // Compact Gauges
-        let hunger_gauge = Gauge::default()
-            .gauge_style(Style::default().fg(hunger_color))
-            .label(format!("🍖 {hunger_percent}%"))
-            .percent(hunger_percent);
-
-        let rest_gauge = Gauge::default()
-            .gauge_style(Style::default().fg(rest_color))
-            .label(format!("💤 {rest_percent}%"))
-            .percent(rest_percent);
-
-        frame.render_widget(hunger_gauge, needs_layout[0]);
-        frame.render_widget(rest_gauge, needs_layout[2]);
-
-        // Row 2: Morale
-        let morale = needs.morale();
-        let morale_percent = (morale * 100.0) as u16;
-        let morale_color = if morale < 0.3 {
-            Color::Red
-        } else if morale < 0.7 {
-            Color::Yellow
-        } else {
-            Color::Green
-        };
-
-        let morale_gauge = Gauge::default()
-            .gauge_style(Style::default().fg(morale_color))
-            .label(format!("😃 Morale: {morale_percent}%"))
-            .percent(morale_percent);
-
-        frame.render_widget(morale_gauge, rows[1]);
-
-        // Row 3: Bio-Comp
-        if let Some(bio) = world.get::<Biocompatibility>(entity) {
-            let bio_percent = (bio.value * 100.0) as u16;
-            let bio_color = if bio.value < 0.4 {
-                Color::Red
-            } else if bio.value < 0.7 {
-                Color::Yellow
-            } else {
-                Color::Green
-            };
-
-            let bio_gauge = Gauge::default()
-                .gauge_style(Style::default().fg(bio_color))
-                .label(format!("🧬 Bio-Comp: {bio_percent}%"))
-                .percent(bio_percent);
-
-            frame.render_widget(bio_gauge, rows[2]);
-        }
+        let bio_opt = world.get::<Biocompatibility>(entity);
+        render_bio_monitor(frame, details_area, needs, bio_opt);
     } else if let Some(housing) = world.get::<Housing>(entity) {
         render_housing_details(frame, details_area, housing);
     } else if let Some(farm) = world.get::<Farm>(entity) {
@@ -819,160 +727,15 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
     // 7. Diagnostics (Spirit + Quirk)
     if show_diagnostics {
         let diag_area = layout[7];
-        let block = Block::default()
-            .title(" Diagnostics ")
-            .borders(Borders::ALL)
-            .border_type(BorderType::Rounded)
-            .border_style(Style::default().fg(Color::Yellow));
-
-        let inner = block.inner(diag_area);
-        frame.render_widget(block, diag_area);
-
-        let constraints = if has_spirit && has_quirk {
-            vec![Constraint::Length(1), Constraint::Length(1)]
-        } else {
-            vec![Constraint::Length(1)]
-        };
-
-        let chunks = Layout::default()
-            .direction(Direction::Vertical)
-            .constraints(constraints)
-            .split(inner);
-
-        let mut current_chunk = 0;
-        if let Some(spirit) = world.get::<MachineSpirit>(entity) {
-            render_machine_spirit(frame, chunks[current_chunk], spirit);
-            current_chunk += 1;
-        }
-        if let Some(quirk) = world.get::<Quirk>(entity) {
-            render_quirk(frame, chunks[current_chunk], quirk);
-        }
+        let spirit_opt = world.get::<MachineSpirit>(entity);
+        let quirk_opt = world.get::<Quirk>(entity);
+        render_diagnostics(frame, diag_area, spirit_opt, quirk_opt);
     }
 
     // Extra Grid & Scent Info
     if extra_height > 0 {
-        let mut extra_idx = 0;
-        let extra_chunks = Layout::default()
-            .direction(Direction::Vertical)
-            .constraints(vec![Constraint::Length(1); extra_height as usize])
-            .split(layout[8]);
-
-        if let Some(cable) = world.get::<PowerCable>(entity) {
-            let load_color = if cable.current_load > cable.capacity {
-                Color::Red
-            } else {
-                Color::Cyan
-            };
-            let load_pct = if cable.capacity > 0.0 {
-                (cable.current_load / cable.capacity) * 100.0
-            } else {
-                0.0
-            };
-            frame.render_widget(
-                Paragraph::new(Line::from(vec![
-                    Span::raw("⚡ Cable Load: "),
-                    Span::styled(
-                        format!(
-                            "{:.0}/{:.0} ({:.0}%)",
-                            cable.current_load, cable.capacity, load_pct
-                        ),
-                        Style::default().fg(load_color),
-                    ),
-                ])),
-                extra_chunks[extra_idx],
-            );
-            extra_idx += 1;
-        }
-
-        if let Some(battery) = world.get::<Battery>(entity) {
-            let charge_pct = if battery.capacity > 0.0 {
-                (battery.charge / battery.capacity) * 100.0
-            } else {
-                0.0
-            };
-            let charge_color = if charge_pct < 20.0 {
-                Color::Red
-            } else if charge_pct < 80.0 {
-                Color::Yellow
-            } else {
-                Color::Green
-            };
-            frame.render_widget(
-                Paragraph::new(Line::from(vec![
-                    Span::raw("🔋 Battery Charge: "),
-                    Span::styled(
-                        format!(
-                            "{:.0}/{:.0} ({:.0}%)",
-                            battery.charge, battery.capacity, charge_pct
-                        ),
-                        Style::default().fg(charge_color),
-                    ),
-                ])),
-                extra_chunks[extra_idx],
-            );
-            extra_idx += 1;
-        }
-
-        if let Some(consumer) = world.get::<PowerConsumer>(entity) {
-            let status = if consumer.active {
-                "Active"
-            } else {
-                "Inactive"
-            };
-            let color = if consumer.active {
-                Color::Green
-            } else {
-                Color::Red
-            };
-            frame.render_widget(
-                Paragraph::new(Line::from(vec![
-                    Span::raw("🔌 Consumer Demand: "),
-                    Span::styled(
-                        format!("{:.0} ({})", consumer.demand, status),
-                        Style::default().fg(color),
-                    ),
-                ])),
-                extra_chunks[extra_idx],
-            );
-            extra_idx += 1;
-        }
-
-        if let Some(source) = world.get::<PowerSource>(entity) {
-            let status = if source.active { "Active" } else { "Inactive" };
-            let color = if source.active {
-                Color::Green
-            } else {
-                Color::Red
-            };
-            frame.render_widget(
-                Paragraph::new(Line::from(vec![
-                    Span::raw("🏭 Source Output: "),
-                    Span::styled(
-                        format!("{:.0} ({})", source.output, status),
-                        Style::default().fg(color),
-                    ),
-                ])),
-                extra_chunks[extra_idx],
-            );
-            extra_idx += 1;
-        }
-
-        if let Some(emitter) = world.get::<ScentEmitter>(entity) {
-            let color = match emitter.scent_type {
-                crate::layer1::olfactory::ScentType::Pleasant => Color::LightMagenta,
-                crate::layer1::olfactory::ScentType::Foul => Color::Rgb(150, 200, 50),
-            };
-            frame.render_widget(
-                Paragraph::new(Line::from(vec![
-                    Span::raw("💨 Emits Scent: "),
-                    Span::styled(
-                        format!("{:?} ({:.1})", emitter.scent_type, emitter.strength),
-                        Style::default().fg(color),
-                    ),
-                ])),
-                extra_chunks[extra_idx],
-            );
-        }
+        let extra_area = layout[8];
+        render_extra_info(frame, extra_area, extra_height, world, entity);
     }
 
     // 8. Personality
@@ -996,6 +759,269 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
 
     if let Some(bio) = bio_opt {
         render_biography(frame, bottom_area, bio, world);
+    }
+}
+
+fn render_bio_monitor(
+    frame: &mut Frame,
+    details_area: Rect,
+    needs: &Needs,
+    bio_opt: Option<&Biocompatibility>,
+) {
+    let bio_block = Block::default()
+        .title(" Bio-Monitor ")
+        .borders(Borders::ALL)
+        .border_type(BorderType::Rounded)
+        .border_style(Style::default().fg(Color::Green));
+
+    let bio_inner = bio_block.inner(details_area);
+    frame.render_widget(bio_block, details_area);
+
+    let rows = Layout::default()
+        .direction(Direction::Vertical)
+        .constraints([
+            Constraint::Length(1), // Hunger/Rest
+            Constraint::Length(1), // Morale
+            Constraint::Length(1), // Bio-Comp
+        ])
+        .split(bio_inner);
+
+    let needs_layout = Layout::default()
+        .direction(Direction::Horizontal)
+        .constraints([
+            Constraint::Percentage(50),
+            Constraint::Length(1), // Gap
+            Constraint::Percentage(50),
+        ])
+        .split(rows[0]);
+
+    let hunger_percent = (needs.hunger * 100.0) as u16;
+    let rest_percent = (needs.rest * 100.0) as u16;
+
+    let hunger_color = if needs.hunger < 0.3 {
+        Color::Red
+    } else {
+        Color::Green
+    };
+    let rest_color = if needs.rest < 0.3 {
+        Color::Red
+    } else {
+        Color::Cyan
+    };
+
+    let hunger_gauge = Gauge::default()
+        .gauge_style(Style::default().fg(hunger_color))
+        .label(format!("🍖 {hunger_percent}%"))
+        .percent(hunger_percent);
+
+    let rest_gauge = Gauge::default()
+        .gauge_style(Style::default().fg(rest_color))
+        .label(format!("💤 {rest_percent}%"))
+        .percent(rest_percent);
+
+    frame.render_widget(hunger_gauge, needs_layout[0]);
+    frame.render_widget(rest_gauge, needs_layout[2]);
+
+    let morale = needs.morale();
+    let morale_percent = (morale * 100.0) as u16;
+    let morale_color = if morale < 0.3 {
+        Color::Red
+    } else if morale < 0.7 {
+        Color::Yellow
+    } else {
+        Color::Green
+    };
+
+    let morale_gauge = Gauge::default()
+        .gauge_style(Style::default().fg(morale_color))
+        .label(format!("😃 Morale: {morale_percent}%"))
+        .percent(morale_percent);
+
+    frame.render_widget(morale_gauge, rows[1]);
+
+    if let Some(bio) = bio_opt {
+        let bio_percent = (bio.value * 100.0) as u16;
+        let bio_color = if bio.value < 0.4 {
+            Color::Red
+        } else if bio.value < 0.7 {
+            Color::Yellow
+        } else {
+            Color::Green
+        };
+
+        let bio_gauge = Gauge::default()
+            .gauge_style(Style::default().fg(bio_color))
+            .label(format!("🧬 Bio-Comp: {bio_percent}%"))
+            .percent(bio_percent);
+
+        frame.render_widget(bio_gauge, rows[2]);
+    }
+}
+
+fn render_extra_info(
+    frame: &mut Frame,
+    extra_area: Rect,
+    extra_height: u16,
+    world: &World,
+    entity: Entity,
+) {
+    let mut extra_idx = 0;
+    let extra_chunks = Layout::default()
+        .direction(Direction::Vertical)
+        .constraints(vec![Constraint::Length(1); extra_height as usize])
+        .split(extra_area);
+
+    if let Some(cable) = world.get::<PowerCable>(entity) {
+        let load_color = if cable.current_load > cable.capacity {
+            Color::Red
+        } else {
+            Color::Cyan
+        };
+        let load_pct = if cable.capacity > 0.0 {
+            (cable.current_load / cable.capacity) * 100.0
+        } else {
+            0.0
+        };
+        frame.render_widget(
+            Paragraph::new(Line::from(vec![
+                Span::raw("⚡ Cable Load: "),
+                Span::styled(
+                    format!(
+                        "{:.0}/{:.0} ({:.0}%)",
+                        cable.current_load, cable.capacity, load_pct
+                    ),
+                    Style::default().fg(load_color),
+                ),
+            ])),
+            extra_chunks[extra_idx],
+        );
+        extra_idx += 1;
+    }
+
+    if let Some(battery) = world.get::<Battery>(entity) {
+        let charge_pct = if battery.capacity > 0.0 {
+            (battery.charge / battery.capacity) * 100.0
+        } else {
+            0.0
+        };
+        let charge_color = if charge_pct < 20.0 {
+            Color::Red
+        } else if charge_pct < 80.0 {
+            Color::Yellow
+        } else {
+            Color::Green
+        };
+        frame.render_widget(
+            Paragraph::new(Line::from(vec![
+                Span::raw("🔋 Battery Charge: "),
+                Span::styled(
+                    format!(
+                        "{:.0}/{:.0} ({:.0}%)",
+                        battery.charge, battery.capacity, charge_pct
+                    ),
+                    Style::default().fg(charge_color),
+                ),
+            ])),
+            extra_chunks[extra_idx],
+        );
+        extra_idx += 1;
+    }
+
+    if let Some(consumer) = world.get::<PowerConsumer>(entity) {
+        let status = if consumer.active {
+            "Active"
+        } else {
+            "Inactive"
+        };
+        let color = if consumer.active {
+            Color::Green
+        } else {
+            Color::Red
+        };
+        frame.render_widget(
+            Paragraph::new(Line::from(vec![
+                Span::raw("🔌 Consumer Demand: "),
+                Span::styled(
+                    format!("{:.0} ({})", consumer.demand, status),
+                    Style::default().fg(color),
+                ),
+            ])),
+            extra_chunks[extra_idx],
+        );
+        extra_idx += 1;
+    }
+
+    if let Some(source) = world.get::<PowerSource>(entity) {
+        let status = if source.active { "Active" } else { "Inactive" };
+        let color = if source.active {
+            Color::Green
+        } else {
+            Color::Red
+        };
+        frame.render_widget(
+            Paragraph::new(Line::from(vec![
+                Span::raw("🏭 Source Output: "),
+                Span::styled(
+                    format!("{:.0} ({})", source.output, status),
+                    Style::default().fg(color),
+                ),
+            ])),
+            extra_chunks[extra_idx],
+        );
+        extra_idx += 1;
+    }
+
+    if let Some(emitter) = world.get::<ScentEmitter>(entity) {
+        let color = match emitter.scent_type {
+            crate::layer1::olfactory::ScentType::Pleasant => Color::LightMagenta,
+            crate::layer1::olfactory::ScentType::Foul => Color::Rgb(150, 200, 50),
+        };
+        frame.render_widget(
+            Paragraph::new(Line::from(vec![
+                Span::raw("💨 Emits Scent: "),
+                Span::styled(
+                    format!("{:?} ({:.1})", emitter.scent_type, emitter.strength),
+                    Style::default().fg(color),
+                ),
+            ])),
+            extra_chunks[extra_idx],
+        );
+    }
+}
+
+fn render_diagnostics(
+    frame: &mut Frame,
+    diag_area: Rect,
+    spirit_opt: Option<&MachineSpirit>,
+    quirk_opt: Option<&Quirk>,
+) {
+    let block = Block::default()
+        .title(" Diagnostics ")
+        .borders(Borders::ALL)
+        .border_type(BorderType::Rounded)
+        .border_style(Style::default().fg(Color::Yellow));
+
+    let inner = block.inner(diag_area);
+    frame.render_widget(block, diag_area);
+
+    let constraints = if spirit_opt.is_some() && quirk_opt.is_some() {
+        vec![Constraint::Length(1), Constraint::Length(1)]
+    } else {
+        vec![Constraint::Length(1)]
+    };
+
+    let chunks = Layout::default()
+        .direction(Direction::Vertical)
+        .constraints(constraints)
+        .split(inner);
+
+    let mut current_chunk = 0;
+    if let Some(spirit) = spirit_opt {
+        render_machine_spirit(frame, chunks[current_chunk], spirit);
+        current_chunk += 1;
+    }
+    if let Some(quirk) = quirk_opt {
+        render_quirk(frame, chunks[current_chunk], quirk);
     }
 }
 
