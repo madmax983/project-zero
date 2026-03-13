@@ -102,6 +102,7 @@ pub mod mascot;
 pub mod medical;
 /// Pop memories and psychological effects.
 pub mod memory;
+pub mod memory_core;
 #[cfg(test)]
 /// Tests for metal industry (Spec 024).
 pub mod metal_industry_tests;

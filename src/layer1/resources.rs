@@ -55,6 +55,8 @@ pub enum ResourceType {
     Rations,
     /// Fuel for reactors and ships.
     Fuel,
+    /// Memory Core harvested from dead pops.
+    MemoryCore,
     /// Alcohol (consumable, potentially contraband).
     Alcohol,
     /// High-tech scrap from orbital debris.
@@ -160,6 +162,8 @@ pub struct ColonyResources {
     pub scrap: f32,
     /// Total building permits available in the colony.
     pub building_permits: f32,
+    /// Total memory cores available in the colony.
+    pub memory_cores: f32,
     /// Total credits available in the colony.
     pub credits: f32,
     /// Maximum food capacity.
@@ -200,6 +204,8 @@ pub struct ColonyResources {
     pub max_scrap: f32,
     /// Maximum building permits capacity (usually infinite or high).
     pub max_building_permits: f32,
+    /// Maximum memory cores the colony can store.
+    pub max_memory_cores: f32,
     /// Maximum credits capacity (usually infinite or high).
     pub max_credits: f32,
 }
@@ -244,7 +250,9 @@ impl Default for ColonyResources {
             max_alcohol: 50.0,
             max_scrap: 20.0,
             building_permits: 0.0,
+            memory_cores: 0.0,
             max_building_permits: 100.0,
+            max_memory_cores: 100.0,
             credits: 0.0,
             max_credits: 1000000.0,
         }
@@ -295,6 +303,8 @@ impl Mul<f32> for ColonyResources {
             max_scrap: self.max_scrap,
             building_permits: (self.building_permits * rhs).ceil(),
             max_building_permits: self.max_building_permits,
+            memory_cores: (self.memory_cores * rhs).ceil(),
+            max_memory_cores: self.max_memory_cores,
             credits: (self.credits * rhs).ceil(),
             max_credits: self.max_credits,
         }
@@ -347,6 +357,8 @@ impl ColonyResources {
             max_scrap: 0.0,
             building_permits: 0.0,
             max_building_permits: 0.0,
+            max_memory_cores: 0.0,
+            memory_cores: 0.0,
             credits: 0.0,
             max_credits: 0.0,
         }
@@ -367,6 +379,11 @@ impl ColonyResources {
     }
 
     /// Adds building permits, clamping to the maximum capacity.
+    /// Adds memory cores to the stockpile.
+    pub fn add_memory_cores(&mut self, amount: f32) {
+        self.memory_cores = (self.memory_cores + amount).min(self.max_memory_cores);
+    }
+
     pub fn add_building_permits(&mut self, amount: f32) {
         if amount.is_finite() {
             self.building_permits =
@@ -663,6 +680,7 @@ impl ColonyResources {
             ResourceType::BuildingPermit => {
                 self.building_permits = (self.building_permits - amount).max(0.0);
             }
+            ResourceType::MemoryCore => {}
         }
     }
 
@@ -683,6 +701,7 @@ impl ColonyResources {
             ResourceType::Scrap => self.scrap < self.max_scrap,
             ResourceType::Tools => self.tools < self.max_tools,
             ResourceType::BuildingPermit => self.building_permits < self.max_building_permits,
+            ResourceType::MemoryCore => false,
         }
     }
 
@@ -703,6 +722,7 @@ impl ColonyResources {
             ResourceType::Scrap => self.add_scrap(amount),
             ResourceType::Tools => self.add_tools(amount),
             ResourceType::BuildingPermit => self.add_building_permits(amount),
+            ResourceType::MemoryCore => {}
         }
     }
 }

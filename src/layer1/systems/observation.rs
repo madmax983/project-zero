@@ -18,22 +18,22 @@ pub fn register(schedule: &mut Schedule) {
     );
     schedule.add_systems(
         (
-            biography_monitor_system.after(crate::layer1::health::despawn_dead_entities_system),
+            biography_monitor_system,
             crate::layer1::social::cadet::death_consequence_system,
             crate::layer1::graffiti::graffiti_placement_system
-                .after(crate::layer1::health::despawn_dead_entities_system),
-            dream_system.after(crate::layer1::health::despawn_dead_entities_system),
+                ,
+            dream_system,
             crate::layer1::cryo_dreams::cryo_dream_system
-                .after(crate::layer1::health::despawn_dead_entities_system),
+                ,
             cleanup_dream_marker_system.after(dream_system),
             #[cfg(feature = "nova")]
             crate::layer1::observer::observer_awareness_system
-                .after(crate::layer1::health::despawn_dead_entities_system),
+                ,
             #[cfg(feature = "nova")]
             crate::layer1::machine_consciousness::machine_personality_system
-                .after(crate::layer1::health::despawn_dead_entities_system),
+                ,
             crate::layer1::void_stare::update_void_exposure_system
-                .after(crate::layer1::health::despawn_dead_entities_system),
+                ,
             crate::layer1::void_stare::void_manifestation_system
                 .after(crate::layer1::void_stare::update_void_exposure_system),
             crate::layer1::integration::scapegoat_chronicle_bridge,
@@ -43,21 +43,21 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
-            check_milestones_system.after(crate::layer1::health::despawn_dead_entities_system),
+            check_milestones_system,
             crate::layer1::rumor::generate_rumor_system
-                .after(crate::layer1::health::despawn_dead_entities_system),
+                ,
             crate::layer1::rumor::exchange_rumors_system
-                .after(crate::layer1::health::despawn_dead_entities_system),
+                ,
             crate::layer1::society::form_societies_system
-                .after(crate::layer1::health::despawn_dead_entities_system),
+                ,
             crate::layer1::society::society_meeting_system
-                .after(crate::layer1::health::despawn_dead_entities_system),
+                ,
             crate::layer1::society::investigation_handler_system
-                .after(crate::layer1::health::despawn_dead_entities_system),
+                ,
             crate::layer1::society::suppression_handler_system
-                .after(crate::layer1::health::despawn_dead_entities_system),
+                ,
             crate::layer1::funeral::grief_system
-                .after(crate::layer1::health::despawn_dead_entities_system),
+                ,
             crate::layer1::ancestral_graves::grave_visit_system
                 .after(crate::layer1::funeral::grief_system),
             crate::layer1::unrest::calculate_unrest_system.after(decay_needs_system),
@@ -131,7 +131,7 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::needs::decay_needs_system),
             #[cfg(feature = "nova")]
             crate::experimental::fungal_death::fungal_death_system
-                .after(crate::layer1::health::despawn_dead_entities_system),
+                ,
             #[cfg(feature = "nova")]
             crate::experimental::bioluminescent_trails::spawn_bioluminescent_trails_system
                 .after(crate::layer1::needs::decay_needs_system),
@@ -141,7 +141,7 @@ pub fn register(schedule: &mut Schedule) {
             ),
             #[cfg(feature = "nova")]
             crate::experimental::sympathetic_architecture::sympathetic_architecture_system
-                .after(crate::layer1::health::despawn_dead_entities_system),
+                ,
             #[cfg(feature = "nova")]
             crate::experimental::psychic_resonance::psychic_resonance_system
                 .after(crate::layer1::needs::decay_needs_system),
@@ -174,7 +174,7 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
-            pop_death_chronicle_bridge.after(crate::layer1::health::despawn_dead_entities_system),
+            pop_death_chronicle_bridge,
             mega_quake_chronicle_bridge.after(crate::layer1::geology::tectonic::check_quake_system),
             crate::layer1::integration::orbital_drop_chronicle_bridge
                 .after(crate::layer1::logistics::orbital_drop::process_orbital_drops),
@@ -182,7 +182,7 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::hologram::update_holograms_system),
             retrograde_chronicle_bridge.after(work_execution_system), // work_execution_system is in Execution set
             amputation_handler_system.after(work_execution_system),
-            art_observation_system.after(crate::layer1::health::despawn_dead_entities_system),
+            art_observation_system,
             observe_inspector_system.after(art_observation_system),
             crate::layer1::integration::medical_treatment_notification_system.after(healing_system),
             crate::layer1::integration::hospitalization_notification_system
@@ -198,7 +198,7 @@ pub fn register(schedule: &mut Schedule) {
         (
             inspector_report_system.after(chronicle_event_handler_system),
             inspector_outcome_bridge_system.after(inspector_report_system),
-            taboo_event_system.after(crate::layer1::health::despawn_dead_entities_system),
+            taboo_event_system,
             crate::layer1::quantum_twins::update_twin_sync_system.after(Layer1SystemSet::Economy),
             crate::layer1::quantum_twins::update_twin_mood_system
                 .after(Layer1SystemSet::Consumption),
@@ -230,6 +230,9 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::integration::apply_neural_shock_system
                 .after(crate::layer1::tech::neural_leech::handle_hub_death_system),
             crate::layer1::tech::neural_leech::neural_hub_death_bridge_system,
+            crate::layer1::memory_core::implant_memory_core_system,
+            crate::layer1::memory_core::harvest_memory_core_system
+
         )
             .in_set(Layer1SystemSet::Observation),
     );

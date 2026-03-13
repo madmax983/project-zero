@@ -131,6 +131,7 @@ pub fn hopper_system(
                 ResourceType::BuildingPermit => {
                     (resources.building_permits, resources.max_building_permits)
                 }
+                ResourceType::MemoryCore => (0.0, 0.0),
             };
 
             let space = (max - current).max(0.0);
@@ -152,6 +153,7 @@ pub fn hopper_system(
                     ResourceType::Scrap => resources.add_scrap(added),
                     ResourceType::Tools => resources.add_tools(added),
                     ResourceType::BuildingPermit => resources.add_building_permits(added),
+                    ResourceType::MemoryCore => {}
                 }
 
                 item.amount -= added;

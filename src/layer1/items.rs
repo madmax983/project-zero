@@ -117,6 +117,8 @@ pub enum ItemType {
     /// Alien meat variety A.
     AlienMeatA,
     /// Alien meat variety B.
+    /// Memory Core harvested from dead pops.
+    MemoryCore,
     AlienMeatB,
     /// Glowing mushroom.
     GlowMushroom,

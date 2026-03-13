@@ -117,6 +117,7 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::ecology::handle_keystone_death),
             clean_dead_residents_system.after(crate::layer1::health::despawn_dead_entities_system),
             clean_dead_workers_system.after(crate::layer1::health::despawn_dead_entities_system),
+            crate::layer1::memory_core::harvest_memory_core_system.before(crate::layer1::health::despawn_dead_entities_system),
         )
             .in_set(Layer1SystemSet::Consumption),
     );

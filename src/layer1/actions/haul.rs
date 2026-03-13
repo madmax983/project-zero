@@ -111,6 +111,7 @@ pub(crate) fn evaluate_haul(
                 crate::layer1::resources::ResourceType::BuildingPermit => {
                     resources.building_permits < resources.max_building_permits
                 }
+                crate::layer1::resources::ResourceType::MemoryCore => false,
             };
 
             if !has_room {

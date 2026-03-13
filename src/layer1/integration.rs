@@ -820,8 +820,9 @@ pub fn fleet_unload_system(
                             resources.add_scrap(stack.amount)
                         }
                         crate::layer1::resources::ResourceType::BuildingPermit => {
-                            resources.add_building_permits(stack.amount)
+                            resources.add_building_permits(stack.amount);
                         }
+                        crate::layer1::resources::ResourceType::MemoryCore => {}
                     }
                     summary.push(format!("{:.1} {:?}", stack.amount, stack.resource_type));
                 }
