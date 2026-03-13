@@ -43,7 +43,15 @@ impl NoiseMap {
         if x < 0 || y < 0 || x >= self.width as i32 || y >= self.height as i32 {
             return 0.0;
         }
-        self.values[(y as usize) * self.width + (x as usize)]
+        if let Some(idx) = (y as usize)
+            .checked_mul(self.width)
+            .and_then(|i| i.checked_add(x as usize))
+        {
+            if idx < self.values.len() {
+                return self.values[idx];
+            }
+        }
+        0.0
     }
 
     /// Sets the noise value at the given coordinates.
@@ -52,7 +60,14 @@ impl NoiseMap {
         if x < 0 || y < 0 || x >= self.width as i32 || y >= self.height as i32 {
             return;
         }
-        self.values[(y as usize) * self.width + (x as usize)] = val.clamp(0.0, 1.0);
+        if let Some(idx) = (y as usize)
+            .checked_mul(self.width)
+            .and_then(|i| i.checked_add(x as usize))
+        {
+            if idx < self.values.len() {
+                self.values[idx] = val.clamp(0.0, 1.0);
+            }
+        }
     }
 }
 

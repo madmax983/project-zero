@@ -66,7 +66,15 @@ impl LociMap {
         if x < 0 || y < 0 || x >= self.width as i32 || y >= self.height as i32 {
             return None;
         }
-        self.loci[(y as usize) * self.width + (x as usize)].as_ref()
+        if let Some(idx) = (y as usize)
+            .checked_mul(self.width)
+            .and_then(|i| i.checked_add(x as usize))
+        {
+            if idx < self.loci.len() {
+                return self.loci[idx].as_ref();
+            }
+        }
+        None
     }
 
     /// Sets a locus at the given position.
@@ -74,7 +82,14 @@ impl LociMap {
         if x < 0 || y < 0 || x >= self.width as i32 || y >= self.height as i32 {
             return;
         }
-        self.loci[(y as usize) * self.width + (x as usize)] = Some(locus);
+        if let Some(idx) = (y as usize)
+            .checked_mul(self.width)
+            .and_then(|i| i.checked_add(x as usize))
+        {
+            if idx < self.loci.len() {
+                self.loci[idx] = Some(locus);
+            }
+        }
     }
 
     /// Clears a locus at the given position.
@@ -82,7 +97,14 @@ impl LociMap {
         if x < 0 || y < 0 || x >= self.width as i32 || y >= self.height as i32 {
             return;
         }
-        self.loci[(y as usize) * self.width + (x as usize)] = None;
+        if let Some(idx) = (y as usize)
+            .checked_mul(self.width)
+            .and_then(|i| i.checked_add(x as usize))
+        {
+            if idx < self.loci.len() {
+                self.loci[idx] = None;
+            }
+        }
     }
 }
 

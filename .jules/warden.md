@@ -11,3 +11,7 @@
 **2024-10-24 - [Grid Index Arithmetic Integer Overflow]**
 **Threat:** [Integer overflow in grid index calculations (y * width + x) within `TemperatureGrid` and `RadiationGrid` allowing DoS via application panics.]
 **Defense:** [Switched to safe arithmetic (`checked_mul` and `checked_add`) for bounded capacity and coordinate indexing in `get`, `set`, `add`, and diffusion calculations.]
+
+**2024-05-15 - [Unbounded Array Indexing DoS Vector]**
+**Threat:** [Integer Overflow DoS] 2D grid coordinates (x, y) were manually mapped to 1D array indexes using unbounded arithmetic operations (e.g., `let idx = y * width + x;`). When processing large arrays, this pattern could trigger a panic through integer overflow (`y * width`), allowing Denial of Service (DoS) attacks.
+**Defense:** [Safe Array Mapping] Refactored vulnerable indexing operations across grid resources (e.g. `Geology`, `Nature/Water`, `Nature/Fire`, `Direct_Link`, `Social/Empty Room`, etc.) to use `checked_mul` and `checked_add` combined with explicit bounds checking against the target array's `.len()`. If out-of-bounds or an overflow occurs, systems now safely handle the failure case instead of panicking.

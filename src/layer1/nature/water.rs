@@ -263,8 +263,12 @@ mod tests {
         {
             let mut terrain = world.resource_mut::<TerrainGrid>();
             terrain.tiles[55] = TerrainType::Water;
-            for y in 0..10 {
-                terrain.tiles[y * 10 + 6] = TerrainType::Rock;
+            for y in 0..10_usize {
+                if let Some(idx) = y.checked_mul(10).and_then(|i| i.checked_add(6)) {
+                    if idx < terrain.tiles.len() {
+                        terrain.tiles[idx] = TerrainType::Rock;
+                    }
+                }
             }
         }
 

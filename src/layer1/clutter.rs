@@ -21,14 +21,23 @@ impl ClutterGrid {
         if x >= self.width || y >= self.height {
             return 0.0;
         }
-        self.values[y * self.width + x]
+        if let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x)) {
+            if idx < self.values.len() {
+                return self.values[idx];
+            }
+        }
+        0.0
     }
 
     pub fn set(&mut self, x: usize, y: usize, val: f32) {
         if x >= self.width || y >= self.height {
             return;
         }
-        self.values[y * self.width + x] = val;
+        if let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x)) {
+            if idx < self.values.len() {
+                self.values[idx] = val;
+            }
+        }
     }
 
     pub fn add_clutter(&mut self, x: usize, y: usize, amount: f32) {

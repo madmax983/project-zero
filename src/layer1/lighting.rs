@@ -55,7 +55,13 @@ impl LightMap {
         if x >= self.width || y >= self.height {
             return 0.0;
         }
-        self.tiles[(y * self.width + x) as usize]
+        if let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x)) {
+            let idx_usize = idx as usize;
+            if idx_usize < self.tiles.len() {
+                return self.tiles[idx_usize];
+            }
+        }
+        0.0
     }
 
     /// Set light level at (x, y). Clamps value between 0.0 and 1.0.
@@ -63,7 +69,12 @@ impl LightMap {
         if x >= self.width || y >= self.height {
             return;
         }
-        self.tiles[(y * self.width + x) as usize] = val.clamp(0.0, 1.0);
+        if let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x)) {
+            let idx_usize = idx as usize;
+            if idx_usize < self.tiles.len() {
+                self.tiles[idx_usize] = val.clamp(0.0, 1.0);
+            }
+        }
     }
 }
 
