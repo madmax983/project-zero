@@ -157,7 +157,7 @@ mod tests {
         let mut world = setup_world();
         let pop = world
             .spawn((
-                Pop::default(),
+                Pop,
                 PopAction {
                     current: ActionType::Idle,
                     ..Default::default()
@@ -189,7 +189,7 @@ mod tests {
 
         let miner = world
             .spawn((
-                Pop::default(),
+                Pop,
                 PopAction {
                     current: ActionType::Work,
                     ..Default::default()
@@ -207,7 +207,7 @@ mod tests {
 
         let researcher = world
             .spawn((
-                Pop::default(),
+                Pop,
                 PopAction {
                     current: ActionType::Work,
                     ..Default::default()

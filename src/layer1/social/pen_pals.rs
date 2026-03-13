@@ -26,7 +26,7 @@ pub fn update_pen_pals_system(
     mut pops: Query<(&mut FactionMember, Option<&Job>)>,
     policies: Option<Res<ColonyPolicies>>,
 ) {
-    let firewall_active = policies.map_or(false, |p| p.is_active(Policy::FirewallComms));
+    let firewall_active = policies.is_some_and(|p| p.is_active(Policy::FirewallComms));
 
     for bond in bonds.iter() {
         if let Ok((mut member, job)) = pops.get_mut(bond.local_pop) {

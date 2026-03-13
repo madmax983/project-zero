@@ -51,8 +51,10 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(ColonyResources::default());
         // Raise max knowledge so we can hold 500
-        let mut resources = ColonyResources::default();
-        resources.max_knowledge = 1000.0;
+        let resources = ColonyResources {
+            max_knowledge: 1000.0,
+            ..Default::default()
+        };
         world.insert_resource(resources);
 
         world.insert_resource(OccupiedTiles::default());

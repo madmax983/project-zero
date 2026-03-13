@@ -158,6 +158,7 @@ mod tests {
         let mut world = World::new();
         // Setup TemperatureGrid
         world.insert_resource(TemperatureGrid::new(10, 10, 0.0));
+        world.insert_resource(crate::layer1::terrain::TerrainGrid { width: 10, height: 10, tiles: vec![crate::layer1::terrain::TerrainType::Grass; 100] });
         // No SeasonState, so ambient stays 0.0
 
         // Spawn Waste Item
@@ -180,6 +181,7 @@ mod tests {
     fn test_ore_emits_heat() {
         let mut world = World::new();
         world.insert_resource(TemperatureGrid::new(10, 10, 0.0));
+        world.insert_resource(crate::layer1::terrain::TerrainGrid { width: 10, height: 10, tiles: vec![crate::layer1::terrain::TerrainType::Grass; 100] });
 
         world.spawn((
             ResourceItem {
@@ -199,6 +201,7 @@ mod tests {
     fn test_food_does_not_emit_heat() {
         let mut world = World::new();
         world.insert_resource(TemperatureGrid::new(10, 10, 0.0));
+        world.insert_resource(crate::layer1::terrain::TerrainGrid { width: 10, height: 10, tiles: vec![crate::layer1::terrain::TerrainType::Grass; 100] });
 
         world.spawn((
             ResourceItem {
@@ -252,7 +255,7 @@ mod tests {
 
         let pop = world
             .spawn((
-                Pop::default(),
+                Pop,
                 Health::default(),
                 GridPosition { x: 5, y: 5 },
                 // Sickness component added by system? Or exists with 0 severity?
@@ -274,7 +277,7 @@ mod tests {
         let mut world = World::new();
         let pop = world
             .spawn((
-                Pop::default(),
+                Pop,
                 Health {
                     current: 100.0,
                     max: 100.0,

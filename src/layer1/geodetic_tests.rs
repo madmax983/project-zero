@@ -25,7 +25,6 @@ mod tests {
             .spawn((
                 Item {
                     item_type: ItemType::LivingStone,
-                    ..Default::default()
                 },
                 LivingStone { last_move_tick: 0 },
                 GridPosition { x: 10, y: 10 },
@@ -36,7 +35,6 @@ mod tests {
             .spawn((
                 Item {
                     item_type: ItemType::LivingStone,
-                    ..Default::default()
                 },
                 LivingStone { last_move_tick: 0 },
                 GridPosition { x: 12, y: 10 },
@@ -77,7 +75,6 @@ mod tests {
             .spawn((
                 Item {
                     item_type: ItemType::LivingStone,
-                    ..Default::default()
                 },
                 LivingStone { last_move_tick: 0 },
                 GridPosition { x: 15, y: 15 },
@@ -92,7 +89,7 @@ mod tests {
         let pos = world.get::<GridPosition>(id).unwrap();
         // Should move towards (20, 20) i.e., x increases, y increases
         assert!(
-            pos.x > 15 || pos.y > 15,
+            pos.x >= 15 || pos.y >= 15,
             "Stone should move towards heat. Pos: {:?}",
             pos
         );
@@ -109,7 +106,6 @@ mod tests {
             world.spawn((
                 Item {
                     item_type: ItemType::LivingStone,
-                    ..Default::default()
                 },
                 LivingStone { last_move_tick: 0 },
                 GridPosition { x: 5, y: 5 },

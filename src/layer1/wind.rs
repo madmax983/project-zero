@@ -400,7 +400,6 @@ mod tests {
         world.spawn((
             Building {
                 building_type: BuildingType::Wall,
-                ..Default::default()
             },
             GridPosition { x: 1, y: 2 },
         ));
@@ -447,7 +446,6 @@ mod tests {
         world.spawn((
             Building {
                 building_type: BuildingType::Wall,
-                ..Default::default()
             },
             GridPosition { x: 2, y: 1 },
         ));
@@ -455,7 +453,6 @@ mod tests {
         world.spawn((
             Building {
                 building_type: BuildingType::Wall,
-                ..Default::default()
             },
             GridPosition { x: 2, y: 3 },
         ));

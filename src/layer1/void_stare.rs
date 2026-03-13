@@ -183,12 +183,15 @@ mod tests {
         void_grid.set(5, 5, 1.0); // Abyssal tile
         world.insert_resource(void_grid);
 
-        let tiles = vec![TerrainType::Grass; 100];
+        let tiles = vec![TerrainType::Dirt; 100];
         world.insert_resource(TerrainGrid {
             width: 10,
             height: 10,
             tiles,
         });
+
+        // Ensure no adjacent "Life" tiles to prevent loss from overpowering gain
+        // The default tiles was dirt, but let's make sure. (0 loss)
 
         // Spawn Pop
         let pop = world

@@ -47,8 +47,7 @@ impl App {
 
         let template_ids: Vec<String> = generator
             .get_template_ids()
-            .into_iter()
-            .map(|s| s.clone())
+            .into_iter().cloned()
             .collect();
 
         let mut context = NarrativeContext::default();
@@ -167,7 +166,7 @@ fn run_app<B: Backend>(terminal: &mut Terminal<B>, app: &mut App) -> io::Result<
     loop {
         terminal
             .draw(|f| ui(f, app))
-            .map_err(|e| io::Error::new(io::ErrorKind::Other, e.to_string()))?;
+            .map_err(|e| io::Error::other(e.to_string()))?;
 
         if event::poll(Duration::from_millis(100))? {
             if let Event::Key(key) = event::read()? {

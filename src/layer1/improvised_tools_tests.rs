@@ -10,10 +10,12 @@ mod tests {
     // 1. Test efficiency with Tools (Baseline)
     #[test]
     fn test_efficiency_with_tools() {
-        let mut resources = ColonyResources::default();
-        resources.tools = 10.0;
+        let resources = ColonyResources {
+            tools: 10.0,
+            ..Default::default()
+        };
 
-        let (efficiency, consumed) = calculate_work_efficiency(&mut resources);
+        let (efficiency, consumed) = calculate_work_efficiency(&resources);
 
         assert_eq!(efficiency, 1.0);
         assert_eq!(consumed, Some(ResourceType::Tools)); // Tools degrade slowly
@@ -22,11 +24,13 @@ mod tests {
     // 2. Test efficiency with Stone (Improvised)
     #[test]
     fn test_efficiency_improvised_stone() {
-        let mut resources = ColonyResources::default();
-        resources.tools = 0.0;
-        resources.stone = 10.0;
+        let resources = ColonyResources {
+            tools: 0.0,
+            stone: 10.0,
+            ..Default::default()
+        };
 
-        let (efficiency, consumed) = calculate_work_efficiency(&mut resources);
+        let (efficiency, consumed) = calculate_work_efficiency(&resources);
 
         assert_eq!(efficiency, 0.75);
         assert_eq!(consumed, Some(ResourceType::Stone));
@@ -35,12 +39,14 @@ mod tests {
     // 3. Test efficiency with Wood (Improvised)
     #[test]
     fn test_efficiency_improvised_wood() {
-        let mut resources = ColonyResources::default();
-        resources.tools = 0.0;
-        resources.stone = 0.0;
-        resources.wood = 10.0;
+        let resources = ColonyResources {
+            tools: 0.0,
+            stone: 0.0,
+            wood: 10.0,
+            ..Default::default()
+        };
 
-        let (efficiency, consumed) = calculate_work_efficiency(&mut resources);
+        let (efficiency, consumed) = calculate_work_efficiency(&resources);
 
         assert_eq!(efficiency, 0.75);
         assert_eq!(consumed, Some(ResourceType::Wood));
@@ -49,13 +55,15 @@ mod tests {
     // 4. Test efficiency with Scrap (Improvised)
     #[test]
     fn test_efficiency_improvised_scrap() {
-        let mut resources = ColonyResources::default();
-        resources.tools = 0.0;
-        resources.stone = 0.0;
-        resources.wood = 0.0;
-        resources.scrap = 10.0;
+        let resources = ColonyResources {
+            tools: 0.0,
+            stone: 0.0,
+            wood: 0.0,
+            scrap: 10.0,
+            ..Default::default()
+        };
 
-        let (efficiency, consumed) = calculate_work_efficiency(&mut resources);
+        let (efficiency, consumed) = calculate_work_efficiency(&resources);
 
         assert_eq!(efficiency, 0.75);
         assert_eq!(consumed, Some(ResourceType::Scrap));
@@ -64,13 +72,15 @@ mod tests {
     // 5. Test fallback to Bare Hands
     #[test]
     fn test_efficiency_bare_hands() {
-        let mut resources = ColonyResources::default();
-        resources.tools = 0.0;
-        resources.stone = 0.0;
-        resources.wood = 0.0;
-        resources.scrap = 0.0;
+        let resources = ColonyResources {
+            tools: 0.0,
+            stone: 0.0,
+            wood: 0.0,
+            scrap: 0.0,
+            ..Default::default()
+        };
 
-        let (efficiency, consumed) = calculate_work_efficiency(&mut resources);
+        let (efficiency, consumed) = calculate_work_efficiency(&resources);
 
         assert_eq!(efficiency, 0.5);
         assert_eq!(consumed, None);
@@ -80,8 +90,10 @@ mod tests {
     #[test]
     fn test_consumption_logic() {
         // Mock RNG or force breakage
-        let mut resources = ColonyResources::default();
-        resources.stone = 10.0;
+        let mut resources = ColonyResources {
+            stone: 10.0,
+            ..Default::default()
+        };
 
         // Simulate "Using" the improvised tool
         // If the system calls consume(ResourceType::Stone, 1.0)

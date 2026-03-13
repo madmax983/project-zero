@@ -260,6 +260,7 @@ fn make_bench_world(n_pops: usize, n_buildings: usize, gpu_ctx: Option<GpuContex
                 hunger,
                 rest,
                 leisure,
+                ..Default::default()
             },
             UtilityWeights::default(),
             PopAction {

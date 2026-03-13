@@ -273,8 +273,7 @@ mod tests {
         };
         let mut memories = Memories::default();
 
-        // Base morale = (0.5+0.5+0.5)/3 = 0.5
-        let _base = needs.morale();
+        let base = needs.morale();
 
         // WitnessedDeath: -0.2 mood impact at max intensity
         memories.add(MemoryType::WitnessedDeath, 0);
@@ -282,8 +281,7 @@ mod tests {
         let effective =
             calculate_effective_morale(&needs, Some(&memories), None, None, None, None, None);
 
-        // 0.5 - 0.2 = 0.3
-        assert!((effective - 0.3).abs() < 0.001);
+        assert!((effective - (base - 0.2)).abs() < 0.001);
     }
 
     #[test]
@@ -302,8 +300,8 @@ mod tests {
         let effective =
             calculate_effective_morale(&needs, Some(&memories), None, None, None, None, None);
 
-        // 0.5 - 0.2 + 0.1 = 0.4
-        assert!((effective - 0.4).abs() < 0.001);
+        let base = needs.morale();
+        assert!((effective - (base - 0.1)).abs() < 0.001);
     }
 
     #[test]
@@ -312,7 +310,7 @@ mod tests {
             hunger: 1.0,
             rest: 1.0,
             leisure: 1.0,
-            hygiene: 0.8,
+            hygiene: 1.0,
         }; // Base 1.0
         let mut memories = Memories::default();
         memories.add(MemoryType::AteFineMeal, 0); // +0.1
@@ -334,7 +332,8 @@ mod tests {
 
         let effective =
             calculate_effective_morale(&needs, None, Some(&buff), None, None, None, None);
-        assert!((effective - 0.6).abs() < f32::EPSILON);
+        let base = needs.morale();
+        assert!((effective - (base + 0.1)).abs() < f32::EPSILON);
     }
 
     #[test]
@@ -370,8 +369,8 @@ mod tests {
             Some(TimeOfDay::Night),
             None,
         );
-        // 0.5 + 0.1 = 0.6
-        assert!((effective - 0.6).abs() < 0.001);
+        let base = needs.morale();
+        assert!((effective - (base + 0.1)).abs() < 0.001);
 
         // Day time -> -0.05
         let effective_day = calculate_effective_morale(
@@ -383,7 +382,6 @@ mod tests {
             Some(TimeOfDay::Day),
             None,
         );
-        // 0.5 - 0.05 = 0.45
-        assert!((effective_day - 0.45).abs() < 0.001);
+        assert!((effective_day - (base - 0.05)).abs() < 0.001);
     }
 }

@@ -9,7 +9,7 @@ fn benchmark_context_score(c: &mut Criterion) {
     let capacity = 10;
     let occupied = 5;
 
-    c.bench_function("calculate_context_score_default", |b| {
+    c.bench_function("calculate_context_score_default", |b: &mut criterion::Bencher| {
         b.iter(|| {
             calculate_context_score(
                 black_box(pop_pos),
@@ -25,7 +25,7 @@ fn benchmark_context_score(c: &mut Criterion) {
     varied_weights.distance_weight = 1.5;
     varied_weights.availability_weight = 0.8;
 
-    c.bench_function("calculate_context_score_varied", |b| {
+    c.bench_function("calculate_context_score_varied", |b: &mut criterion::Bencher| {
         b.iter(|| {
             calculate_context_score(
                 black_box(pop_pos),

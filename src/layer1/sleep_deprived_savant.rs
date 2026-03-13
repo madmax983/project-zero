@@ -16,16 +16,12 @@ use crate::shared::log::MessageLog;
 
 /// Component added to Pops experiencing a Fever Dream due to sleep deprivation.
 #[derive(Component, Debug, Clone, Copy)]
+#[derive(Default)]
 pub struct FeverDream {
     /// Tracks the duration the pop has been in the fever dream state.
     pub duration: u32,
 }
 
-impl Default for FeverDream {
-    fn default() -> Self {
-        Self { duration: 0 }
-    }
-}
 
 /// Evaluates Pops to see if they should enter or exit the Fever Dream state,
 pub fn fever_dream_system(

@@ -116,8 +116,10 @@ mod tests {
     fn test_hoarding_system_anxious_steals_food() {
         let mut world = World::new();
         // Setup resources
-        let mut resources = ColonyResources::default();
-        resources.food = 100.0;
+        let resources = ColonyResources {
+            food: 100.0,
+            ..Default::default()
+        };
         world.insert_resource(resources);
 
         // Setup Anxious Pop
@@ -178,8 +180,10 @@ mod tests {
     #[test]
     fn test_hoarding_system_greedy_steals_valuables() {
         let mut world = World::new();
-        let mut resources = ColonyResources::default();
-        resources.metal = 50.0;
+        let resources = ColonyResources {
+            metal: 50.0,
+            ..Default::default()
+        };
         world.insert_resource(resources);
 
         let pop = world
@@ -242,7 +246,7 @@ mod tests {
     fn test_inspect_pop_empty_stash() {
         let mut world = World::new();
         let res_before = ColonyResources::default();
-        world.insert_resource(res_before.clone());
+        world.insert_resource(res_before);
 
         let pop = world
             .spawn((Pop, PrivateStash::default(), Traits(HashSet::new())))
