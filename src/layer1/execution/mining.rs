@@ -2,6 +2,7 @@ use bevy_ecs::prelude::*;
 use rand::Rng;
 use ratatui::style::Color;
 
+use crate::layer1::combat::HitStop;
 use crate::layer1::map::{GridPosition, ScreenShake};
 use crate::layer1::mother_lode::MotherLode;
 use crate::layer1::orbital_crossfire::{mine_scrap, ImpactSite};
@@ -31,6 +32,12 @@ pub fn handle_mining_work(
         if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
             log.add_colored("Critical Mine!", Color::Yellow);
         }
+
+        // Ludwig: Add HitStop for extra impact and crunch on critical hits!
+        if let Ok(mut worker) = world.get_entity_mut(worker_entity) {
+            worker.insert(HitStop { ticks_remaining: 3 });
+        }
+
         work
     } else {
         work_amount
@@ -197,6 +204,11 @@ pub fn handle_chopping_work(
         }
         if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
             log.add_colored("Critical Chop!", Color::LightGreen);
+        }
+
+        // Ludwig: Add HitStop for extra impact and crunch on critical chops!
+        if let Ok(mut worker) = world.get_entity_mut(worker_entity) {
+            worker.insert(HitStop { ticks_remaining: 3 });
         }
     }
 
