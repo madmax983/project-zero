@@ -541,3 +541,7 @@ pub use pen_pals::*;
 pub mod cadet;
 pub use cadet::*;
 pub mod placebo;
+
+/// The Bureaucratic Strike (Spec 309).
+pub mod bureaucratic_strike;
+pub use bureaucratic_strike::*;

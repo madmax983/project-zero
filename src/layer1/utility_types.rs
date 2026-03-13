@@ -249,6 +249,23 @@ impl ActionType {
             _ => 0.0,
         }
     }
+
+    /// Returns true if the action is considered a structured "Job" that could be delayed by paperwork.
+    #[must_use]
+    pub const fn is_job(&self) -> bool {
+        matches!(
+            self,
+            Self::Work
+                | Self::Refine
+                | Self::Farm
+                | Self::Admin
+                | Self::Research
+                | Self::Warden
+                | Self::PreCrimeArrest
+                | Self::Clean
+                | Self::PurgeResidue
+        )
+    }
 }
 
 /// The current state of a Pop's brain.

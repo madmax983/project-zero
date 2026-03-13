@@ -725,6 +725,13 @@ fn apply_evaluation_results(
     results: &[Option<(ActionType, f32, Option<Entity>)>],
     config: &UtilityConfig,
 ) {
+    let mut red_tape_severity = 0;
+    if let Some(red_tape) = world.get_resource::<crate::layer1::social::bureaucratic_strike::RedTapeEvent>() {
+        if red_tape.active {
+            red_tape_severity = red_tape.severity;
+        }
+    }
+
     for (i, data) in pop_data.iter().enumerate() {
         let Some((best_action, best_utility, best_target)) = results[i] else {
             continue;
@@ -751,6 +758,17 @@ fn apply_evaluation_results(
             action: best_action,
             target: best_target,
         });
+
+        // Apply Red Tape Penalty for new jobs if active
+        if red_tape_severity > 0 && best_action.is_job() {
+            if let Ok(mut entity_mut) = world.get_entity_mut(data.entity) {
+                if !entity_mut.contains::<crate::layer1::social::bureaucratic_strike::PaperworkDelay>() {
+                    entity_mut.insert(crate::layer1::social::bureaucratic_strike::PaperworkDelay {
+                        ticks_remaining: 50 * red_tape_severity,
+                    });
+                }
+            }
+        }
     }
 }
 

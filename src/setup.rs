@@ -211,6 +211,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<crate::layer1::festivals::FestivalState>();
     world.init_resource::<crate::layer1::shadow_market::ShadowMarketManager>();
     world.insert_resource(crate::layer1::taboo::TabooState::default());
+    world.insert_resource(crate::layer1::social::bureaucratic_strike::RedTapeEvent { active: false, severity: 1 });
 
     // Initialize GPU compute context (non-fatal if no GPU available)
     // Skip on WASM since pollster::block_on doesn't work in browser context
