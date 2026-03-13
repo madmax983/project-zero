@@ -232,3 +232,4 @@
 - [x] `262` Thermal Gliders — `specs/262-thermal-gliders.md` — completed 2026-03-12
 - [x] `411` Machine Awakening — `specs/411-machine-awakening.md` — completed 2026-03-13
 - [x] `INT-411` Integration: Machine Awakening -> Chronicle — completed 2026-03-13
+- [x] `269` The Lotus Simulation — `specs/269-lotus-simulation.md` — completed 2026-03-14

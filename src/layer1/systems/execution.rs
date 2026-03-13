@@ -19,6 +19,8 @@ pub fn register(schedule: &mut Schedule) {
                 .after(cleanup_previous_assignment_system),
             handle_possession.before(process_start_plan_system),
             apply_buffs.after(handle_possession),
+            crate::layer1::artifacts::vr_pod::update_vr_pods_system.after(cleanup_previous_assignment_system),
+            crate::layer1::artifacts::vr_pod::cleanup_vr_pod_status_system.after(crate::layer1::artifacts::vr_pod::update_vr_pods_system),
             process_start_plan_system
                 .after(crate::layer1::customs::immigration_interception_system),
             crate::layer1::integration::drone_spawner_bridge_system
