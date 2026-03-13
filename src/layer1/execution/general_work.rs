@@ -430,6 +430,10 @@ pub fn calculate_work_amount(
         1.0
     };
 
+    let cryo_shock_penalty = world
+        .get::<crate::layer1::cryo_shock::CryoShock>(pop_entity)
+        .map_or(1.0, |shock| (1.0 - shock.severity).max(0.0));
+
     let amount = WORK_PER_TICK
         * tool_efficiency
         * morale_efficiency
@@ -438,7 +442,8 @@ pub fn calculate_work_amount(
         * admin_efficiency
         * (1.0 + augmentation_bonus)
         * organic_factor
-        * neural_buff;
+        * neural_buff
+        * cryo_shock_penalty;
 
     // Cap work amount to prevent logic bugs / economy exploits
     amount.min(1000.0)

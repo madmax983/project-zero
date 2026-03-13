@@ -361,3 +361,10 @@
 - **Glue added:** `apply_neural_shock_system` in `src/layer1/integration.rs` translates `NeuralShock` into `MentalState::Broken(MentalBreakType::Daze)`.
 - **Schedule:** Registered in `Layer1SystemSet::Observation`, specifically `.after(crate::layer1::tech::neural_leech::handle_hub_death_system)`.
 - **Tests:** `tests/integration/neural_leech_unrest.rs` (1 test)
+
+### INT-413: CryoShock -> Work Speed
+- **Date:** 2026-03-11
+- **Systems connected:** `CryoShock` (Cryo) -> `calculate_work_amount` (Execution)
+- **Glue added:**
+    - Updated `calculate_work_amount` in `src/layer1/execution/general_work.rs` to read the `CryoShock` component and scale down the work amount based on the shock severity.
+- **Tests:** `tests/integration/cryo_shock_work.rs` (1 test verified)
