@@ -355,6 +355,41 @@ sequenceDiagram
     Core-->>Main: Save Complete
 ```
 
+
+
+## Headless CLI Environment
+
+The SCALE system supports headless interactions without an active graphical terminal via the `headless.rs` binary. This environment executes simulation logic synchronously in a command-driven fashion.
+
+```mermaid
+classDiagram
+  class HeadlessBinary {
+      +setup_world() World
+      +process_command(World, String)
+      +tick(World)
+  }
+
+  class SimulationLayer {
+      +run_simulation_tick(World)
+      +apply_actions()
+  }
+
+  class Queries {
+      +print_map()
+      +scan_terrain()
+      +print_bio()
+      +print_chronicle()
+  }
+
+  class InputRouter {
+      +route_input(GameEvent)
+  }
+
+  HeadlessBinary --> SimulationLayer : Calls Ticking
+  HeadlessBinary --> Queries : Direct Component Access
+  HeadlessBinary --> InputRouter : Dispatches Console Commands
+```
+
 ## Utility AI Decision Loop
 
 The "Brain" of the simulation. Pops decide what to do based on internal needs and external context.
@@ -621,6 +656,7 @@ classDiagram
 - [ADR 005: Adopt Emergent Utility AI](./adr/005-adopt-emergent-utility-ai.md)
 - [ADR 006: WASM Browser Support](./adr/006-wasm-browser-support.md)
 - [ADR 008: Modular Utility AI Structure](./adr/008-modular-utility-ai.md)
+- [ADR 012: Decouple Storage from Core](./adr/012-storage-split.md)
 - [ADR 013: GPU Accelerated Utility AI](./adr/013-gpu-accelerated-utility-ai.md)
 - [ADR 014: Cabin Fever Mechanics](./adr/014-cabin-fever-mechanics.md)
 - [ADR 015: Experimental Feature Flags](./adr/015-experimental-feature-flags.md)
@@ -644,3 +680,4 @@ classDiagram
 - [ADR 034: Decouple Pop/Execution from UtilityAI](./adr/034-decouple-pop-execution-from-utility-ai.md)
 - [ADR 035: Extract Nature Sub-module](./adr/035-extract-nature-submodule.md)
 - [ADR 036: Split Overloaded System Tuples](./adr/036-split-overloaded-system-tuples.md)
+- [ADR 037: Headless CLI Dashboard](./adr/037-headless-cli-dashboard.md)
