@@ -2930,7 +2930,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Nanite Fabrication
+## Nanite Fabrication [SPECCED]
 
 **Layer:** 1
 

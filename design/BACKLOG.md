@@ -186,3 +186,4 @@ See `design/IDEAS.md` for unspecced concepts.
 
 
 
+- [ ] `453` Nanite Fabrication — `specs/453-nanite-fabrication.md`
