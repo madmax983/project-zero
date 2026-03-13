@@ -228,3 +228,4 @@
 - [x] `431` The Void-Weed Smugglers — `specs/431-the-void-weed-smugglers.md` — completed 2026-03-10
 - [x] `349` Ancestral Graves — `specs/349-ancestral-graves.md` — completed 2026-03-10
 - [x] `413` Cryo-Shock — `specs/413-cryo-shock.md` — completed 2026-03-11
+- [x] `288` The Memory Black Market — `specs/288-memory-black-market.md` — completed 2026-03-11
