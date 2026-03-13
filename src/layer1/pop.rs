@@ -374,7 +374,16 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
         };
 
         if is_walkable {
-            world.spawn(PopBundle::random(x, y, rng));
+            let entity = world.spawn(PopBundle::random(x, y, rng)).id();
+
+            // INT-413: Initial colonists arrive from Cryo-Stasis
+            world
+                .entity_mut(entity)
+                .insert(crate::layer1::cryo_shock::CryoShock {
+                    duration_ticks: 1000,
+                    severity: 0.5,
+                });
+
             spawned += 1;
         }
     }

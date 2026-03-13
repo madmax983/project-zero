@@ -5,3 +5,5 @@ pub mod scapegoat_chronicle;
 pub mod great_work_chronicle;
 pub mod orbital_drop_chronicle;
 pub mod neural_leech_unrest;
+#[path = "cryo_shock_arrival.rs"]
+mod cryo_shock_arrival;

@@ -1010,6 +1010,24 @@ pub fn apply_neural_shock_system(
     }
 }
 
+/// INT-413: Bridge between Pop Spawning and Cryo-Shock.
+///
+/// Ensures any pop spawned with a source indicating "Cryo" (e.g., "Cryo-Ship", "Cryo-Stasis")
+/// receives the `CryoShock` component to severely debuff them upon arrival.
+pub fn cryo_pop_spawn_bridge_system(mut commands: Commands, mut events: EventReader<PopBorn>) {
+    for event in events.read() {
+        if event.source.to_lowercase().contains("cryo") {
+            // Apply the default CryoShock debuff
+            commands
+                .entity(event.entity)
+                .insert(crate::layer1::cryo_shock::CryoShock {
+                    duration_ticks: 1000,
+                    severity: 0.5,
+                });
+        }
+    }
+}
+
 /// INT-431-348: Bridge between Black Market Smugglers and Void-Weed Trade.
 ///
 /// When a `Smuggler` (from `black_market`) or `ShadowTrader` (from `shadow_market`)

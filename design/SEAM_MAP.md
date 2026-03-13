@@ -361,3 +361,10 @@
 - **Glue added:** `apply_neural_shock_system` in `src/layer1/integration.rs` translates `NeuralShock` into `MentalState::Broken(MentalBreakType::Daze)`.
 - **Schedule:** Registered in `Layer1SystemSet::Observation`, specifically `.after(crate::layer1::tech::neural_leech::handle_hub_death_system)`.
 - **Tests:** `tests/integration/neural_leech_unrest.rs` (1 test)
+
+### INT-413: Pop Spawning -> Cryo-Shock
+- **Date:** 2026-03-11
+- **Systems connected:** `spawn_initial_pops` -> `CryoShock`, `PopBorn` -> `cryo_pop_spawn_bridge_system` -> `CryoShock`
+- **Glue added:** `cryo_pop_spawn_bridge_system` in `src/layer1/integration.rs` which applies `CryoShock` based on the event source text. `spawn_initial_pops_internal` in `src/layer1/pop.rs` now injects `CryoShock` for the 5 initial colonists as they wake up.
+- **Schedule:** Chained in Observation.
+- **Tests:** `tests/integration/cryo_shock_arrival.rs` (3 tests)
