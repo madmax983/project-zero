@@ -151,8 +151,11 @@ mod tests {
     fn test_hoarding_system_anxious_steals_food() {
         let mut world = World::new();
         // Setup resources
-        let mut resources = ColonyResources::default();
-        resources.food = 100.0;
+        let resources = ColonyResources {
+            food: 100.0,
+            ..Default::default()
+        };
+        // resources.food = 100.0;
         world.insert_resource(resources);
 
         // Setup Anxious Pop
@@ -213,8 +216,11 @@ mod tests {
     #[test]
     fn test_hoarding_system_greedy_steals_valuables() {
         let mut world = World::new();
-        let mut resources = ColonyResources::default();
-        resources.metal = 50.0;
+        let resources = ColonyResources {
+            metal: 50.0,
+            ..Default::default()
+        };
+        // resources.metal = 50.0;
         world.insert_resource(resources);
 
         let pop = world
@@ -295,8 +301,11 @@ mod tests {
         // Arrange
         let mut world = World::new();
         // Pop has Anxious trait and there is a global food shortage
-        let mut res = ColonyResources::default();
-        res.food = 5.0; // Shortage
+        let res = ColonyResources {
+            food: 5.0,
+            ..Default::default()
+        };
+        // res.food = 5.0; // Shortage
         world.insert_resource(res);
 
         let _pop = world
@@ -335,8 +344,11 @@ mod tests {
         stash.add(ResourceType::Food, 10.0);
         world.spawn(stash);
 
-        let mut res = ColonyResources::default();
-        res.food = 20.0;
+        let res = ColonyResources {
+            food: 20.0,
+            ..Default::default()
+        };
+        // res.food = 20.0;
         world.insert_resource(res);
 
         // Act

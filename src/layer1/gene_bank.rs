@@ -264,7 +264,7 @@ mod tests {
                 GeneBank {
                     stored_samples: vec![GeneticData::Flora(TerrainType::Tree)],
                     active_cloning_job: Some((GeneticData::Flora(TerrainType::Tree), 10.0)), // 10 ticks remaining
-                    ..Default::default()
+                    /* ..Default::default() removed by razor */
                 },
                 GridPosition { x: 5, y: 5 },
             ))
@@ -300,7 +300,7 @@ mod tests {
                 GeneBank {
                     stored_samples: vec![GeneticData::Fauna(FaunaType::Wolf)],
                     active_cloning_job: Some((GeneticData::Fauna(FaunaType::Wolf), 0.0)), // Finished
-                    ..Default::default()
+                    /* ..Default::default() removed by razor */
                 },
                 GridPosition { x: 5, y: 5 },
             ))

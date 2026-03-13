@@ -1,0 +1,617 @@
+    Checking scale v0.1.0 (/app)
+error[E0223]: ambiguous associated type
+ --> tests/security_resource_exploit.rs:7:29
+  |
+7 | ...   let mut resources = ColonyResources::default { food: 10.0, ..Defaul...
+  |                           ^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+help: if there were a trait named `Example` with associated type `default` implemented for `scale::layer1::ColonyResources`, you could use the fully-qualified path
+  |
+7 -         let mut resources = ColonyResources::default { food: 10.0, ..Default::default() };
+7 +         let mut resources = <scale::layer1::ColonyResources as Example>::default { food: 10.0, ..Default::default() };
+  |
+
+For more information about this error, try `rustc --explain E0223`.
+error: could not compile `scale` (test "security_resource_exploit") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error[E0223]: ambiguous associated type
+   --> src/layer1/social/pen_pals.rs:234:29
+    |
+234 | ...   let mut resources = ColonyResources::default { knowledge: 100.0, ...
+    |                           ^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::resources::ColonyResources`, you could use the fully-qualified path
+    |
+234 -         let mut resources = ColonyResources::default { knowledge: 100.0, ..Default::default() };
+234 +         let mut resources = <layer1::resources::ColonyResources as Example>::default { knowledge: 100.0, ..Default::default() };
+    |
+
+error[E0223]: ambiguous associated type
+   --> src/layer1/spoilage.rs:136:29
+    |
+136 | ...   let mut resources = ColonyResources::default { food: 1000.0, ..De...
+    |                           ^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::resources::ColonyResources`, you could use the fully-qualified path
+    |
+136 -         let mut resources = ColonyResources::default { food: 1000.0, ..Default::default() };
+136 +         let mut resources = <layer1::resources::ColonyResources as Example>::default { food: 1000.0, ..Default::default() };
+    |
+
+error[E0223]: ambiguous associated type
+   --> src/layer1/spoilage.rs:174:29
+    |
+174 | ...   let mut resources = ColonyResources::default { rations: 1000.0, ....
+    |                           ^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::resources::ColonyResources`, you could use the fully-qualified path
+    |
+174 -         let mut resources = ColonyResources::default { rations: 1000.0, ..Default::default() };
+174 +         let mut resources = <layer1::resources::ColonyResources as Example>::default { rations: 1000.0, ..Default::default() };
+    |
+
+error[E0223]: ambiguous associated type
+   --> src/layer1/spoilage.rs:191:29
+    |
+191 | ...   let mut resources = ColonyResources::default { food: 1000.0, ..De...
+    |                           ^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::resources::ColonyResources`, you could use the fully-qualified path
+    |
+191 -         let mut resources = ColonyResources::default { food: 1000.0, ..Default::default() };
+191 +         let mut resources = <layer1::resources::ColonyResources as Example>::default { food: 1000.0, ..Default::default() };
+    |
+
+error[E0223]: ambiguous associated type
+   --> src/layer1/spoilage.rs:195:26
+    |
+195 | ...   let mut vermin = VerminState::default { severity: 50.0, ..Default...
+    |                        ^^^^^^^^^^^^^^^^^^^^
+    |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::vermin::VerminState`, you could use the fully-qualified path
+    |
+195 -         let mut vermin = VerminState::default { severity: 50.0, ..Default::default() };
+195 +         let mut vermin = <layer1::vermin::VerminState as Example>::default { severity: 50.0, ..Default::default() };
+    |
+
+error[E0223]: ambiguous associated type
+   --> src/layer1/tech/mod.rs:561:25
+    |
+561 | ...   let mut state = TechState::default { total_capacity: 100.0, ..Def...
+    |                       ^^^^^^^^^^^^^^^^^^
+    |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::tech::TechState`, you could use the fully-qualified path
+    |
+561 -         let mut state = TechState::default { total_capacity: 100.0, ..Default::default() };
+561 +         let mut state = <layer1::tech::TechState as Example>::default { total_capacity: 100.0, ..Default::default() };
+    |
+
+error[E0223]: ambiguous associated type
+   --> src/layer1/tech/mod.rs:636:25
+    |
+636 | ...   let mut state = TechState::default { total_capacity: 100.0, ..Def...
+    |                       ^^^^^^^^^^^^^^^^^^
+    |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::tech::TechState`, you could use the fully-qualified path
+    |
+636 -         let mut state = TechState::default { total_capacity: 100.0, ..Default::default() };
+636 +         let mut state = <layer1::tech::TechState as Example>::default { total_capacity: 100.0, ..Default::default() };
+    |
+
+error[E0223]: ambiguous associated type
+  --> src/layer1/tech/infinite_archive_tests.rs:15:30
+   |
+15 | ...   let mut tech_state = TechState::default { total_capacity: 100.0, ....
+   |                            ^^^^^^^^^^^^^^^^^^
+   |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::tech::TechState`, you could use the fully-qualified path
+   |
+15 -         let mut tech_state = TechState::default { total_capacity: 100.0, ..Default::default() };
+15 +         let mut tech_state = <layer1::tech::TechState as Example>::default { total_capacity: 100.0, ..Default::default() };
+   |
+
+error[E0223]: ambiguous associated type
+  --> src/layer1/tech/infinite_archive_tests.rs:52:30
+   |
+52 | ...   let mut tech_state = TechState::default { total_capacity: 100.0, u...
+   |                            ^^^^^^^^^^^^^^^^^^
+   |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::tech::TechState`, you could use the fully-qualified path
+   |
+52 -         let mut tech_state = TechState::default { total_capacity: 100.0, used_capacity: 200.0, ..Default::default() };
+52 +         let mut tech_state = <layer1::tech::TechState as Example>::default { total_capacity: 100.0, used_capacity: 200.0, ..Default::default() };
+   |
+
+error[E0223]: ambiguous associated type
+  --> src/layer1/tech/infinite_archive_tests.rs:75:30
+   |
+75 | ...   let mut tech_state = TechState::default { total_capacity: 100.0, ....
+   |                            ^^^^^^^^^^^^^^^^^^
+   |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::tech::TechState`, you could use the fully-qualified path
+   |
+75 -         let mut tech_state = TechState::default { total_capacity: 100.0, ..Default::default() };
+75 +         let mut tech_state = <layer1::tech::TechState as Example>::default { total_capacity: 100.0, ..Default::default() };
+   |
+
+error[E0223]: ambiguous associated type
+   --> src/layer1/utility_ai_population.rs:706:29
+    |
+706 | ...   let mut resources = ColonyResources::default { wood: 0.0, ..Defau...
+    |                           ^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::resources::ColonyResources`, you could use the fully-qualified path
+    |
+706 -         let mut resources = ColonyResources::default { wood: 0.0, ..Default::default() };
+706 +         let mut resources = <layer1::resources::ColonyResources as Example>::default { wood: 0.0, ..Default::default() };
+    |
+
+error[E0223]: ambiguous associated type
+   --> src/layer1/utility_types.rs:647:27
+    |
+647 | ...   let mut weights = UtilityWeights::default { availability_weight: ...
+    |                         ^^^^^^^^^^^^^^^^^^^^^^^
+    |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::utility_types::UtilityWeights`, you could use the fully-qualified path
+    |
+647 -         let mut weights = UtilityWeights::default { availability_weight: 0.5, ..Default::default() };
+647 +         let mut weights = <layer1::utility_types::UtilityWeights as Example>::default { availability_weight: 0.5, ..Default::default() };
+    |
+
+error[E0223]: ambiguous associated type
+   --> src/layer1/utility_types.rs:674:27
+    |
+674 | ...   let mut weights = UtilityWeights::default { availability_weight: ...
+    |                         ^^^^^^^^^^^^^^^^^^^^^^^
+    |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::utility_types::UtilityWeights`, you could use the fully-qualified path
+    |
+674 -         let mut weights = UtilityWeights::default { availability_weight: 100.0, ..Default::default() };
+674 +         let mut weights = <layer1::utility_types::UtilityWeights as Example>::default { availability_weight: 100.0, ..Default::default() };
+    |
+
+error[E0223]: ambiguous associated type
+  --> src/layer1/preservation_tests.rs:70:29
+   |
+70 | ...   let mut resources = ColonyResources::default { food: 1000.0, ratio...
+   |                           ^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::resources::ColonyResources`, you could use the fully-qualified path
+   |
+70 -         let mut resources = ColonyResources::default { food: 1000.0, rations: 1000.0, ..Default::default() };
+70 +         let mut resources = <layer1::resources::ColonyResources as Example>::default { food: 1000.0, rations: 1000.0, ..Default::default() };
+   |
+
+error[E0223]: ambiguous associated type
+   --> src/layer1/vermin.rs:267:26
+    |
+267 | ...   let mut vermin = VerminState::default { severity: 0.0, ..Default:...
+    |                        ^^^^^^^^^^^^^^^^^^^^
+    |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::vermin::VerminState`, you could use the fully-qualified path
+    |
+267 -         let mut vermin = VerminState::default { severity: 0.0, ..Default::default() };
+267 +         let mut vermin = <layer1::vermin::VerminState as Example>::default { severity: 0.0, ..Default::default() };
+    |
+
+error[E0223]: ambiguous associated type
+   --> src/layer1/eureka.rs:199:30
+    |
+199 | ...   let mut tech_state = TechState::default { total_capacity: 100.0, ...
+    |                            ^^^^^^^^^^^^^^^^^^
+    |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::tech::TechState`, you could use the fully-qualified path
+    |
+199 -         let mut tech_state = TechState::default { total_capacity: 100.0, ..Default::default() };
+199 +         let mut tech_state = <layer1::tech::TechState as Example>::default { total_capacity: 100.0, ..Default::default() };
+    |
+
+error[E0223]: ambiguous associated type
+  --> src/layer1/retrograde_tests.rs:54:29
+   |
+54 | ...   let mut resources = ColonyResources::default { max_knowledge: 1000...
+   |                           ^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::resources::ColonyResources`, you could use the fully-qualified path
+   |
+54 -         let mut resources = ColonyResources::default { max_knowledge: 1000.0, ..Default::default() };
+54 +         let mut resources = <layer1::resources::ColonyResources as Example>::default { max_knowledge: 1000.0, ..Default::default() };
+   |
+
+error[E0223]: ambiguous associated type
+  --> src/layer1/retrograde_tests.rs:92:29
+   |
+92 | ...   let mut resources = ColonyResources::default { max_knowledge: 1000...
+   |                           ^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::resources::ColonyResources`, you could use the fully-qualified path
+   |
+92 -         let mut resources = ColonyResources::default { max_knowledge: 1000.0, ..Default::default() };
+92 +         let mut resources = <layer1::resources::ColonyResources as Example>::default { max_knowledge: 1000.0, ..Default::default() };
+   |
+
+error[E0223]: ambiguous associated type
+   --> src/layer1/retrograde_tests.rs:129:29
+    |
+129 | ...   let mut resources = ColonyResources::default { max_knowledge: 100...
+    |                           ^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::resources::ColonyResources`, you could use the fully-qualified path
+    |
+129 -         let mut resources = ColonyResources::default { max_knowledge: 1000.0, ..Default::default() };
+129 +         let mut resources = <layer1::resources::ColonyResources as Example>::default { max_knowledge: 1000.0, ..Default::default() };
+    |
+
+error[E0223]: ambiguous associated type
+   --> src/layer1/retrograde_tests.rs:167:29
+    |
+167 | ...   let mut resources = ColonyResources::default { max_knowledge: 100...
+    |                           ^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::resources::ColonyResources`, you could use the fully-qualified path
+    |
+167 -         let mut resources = ColonyResources::default { max_knowledge: 1000.0, ..Default::default() };
+167 +         let mut resources = <layer1::resources::ColonyResources as Example>::default { max_knowledge: 1000.0, ..Default::default() };
+    |
+
+error[E0223]: ambiguous associated type
+   --> src/layer1/private_stash.rs:154:29
+    |
+154 | ...   let mut resources = ColonyResources::default { food: 100.0, ..Def...
+    |                           ^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::resources::ColonyResources`, you could use the fully-qualified path
+    |
+154 -         let mut resources = ColonyResources::default { food: 100.0, ..Default::default() };
+154 +         let mut resources = <layer1::resources::ColonyResources as Example>::default { food: 100.0, ..Default::default() };
+    |
+
+error[E0223]: ambiguous associated type
+   --> src/layer1/private_stash.rs:216:29
+    |
+216 | ...   let mut resources = ColonyResources::default { metal: 50.0, ..Def...
+    |                           ^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::resources::ColonyResources`, you could use the fully-qualified path
+    |
+216 -         let mut resources = ColonyResources::default { metal: 50.0, ..Default::default() };
+216 +         let mut resources = <layer1::resources::ColonyResources as Example>::default { metal: 50.0, ..Default::default() };
+    |
+
+error[E0223]: ambiguous associated type
+   --> src/layer1/private_stash.rs:298:23
+    |
+298 | ...   let mut res = ColonyResources::default { food: 5.0, ..Default::de...
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::resources::ColonyResources`, you could use the fully-qualified path
+    |
+298 -         let mut res = ColonyResources::default { food: 5.0, ..Default::default() };
+298 +         let mut res = <layer1::resources::ColonyResources as Example>::default { food: 5.0, ..Default::default() };
+    |
+
+error[E0223]: ambiguous associated type
+   --> src/layer1/private_stash.rs:338:23
+    |
+338 | ...   let mut res = ColonyResources::default { food: 20.0, ..Default::d...
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::resources::ColonyResources`, you could use the fully-qualified path
+    |
+338 -         let mut res = ColonyResources::default { food: 20.0, ..Default::default() };
+338 +         let mut res = <layer1::resources::ColonyResources as Example>::default { food: 20.0, ..Default::default() };
+    |
+
+error[E0223]: ambiguous associated type
+  --> src/layer1/fuel_industry_tests.rs:30:23
+   |
+30 | ...   let mut res = ColonyResources::default { ore: 10.0, fuel: 0.0, ..D...
+   |                     ^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::resources::ColonyResources`, you could use the fully-qualified path
+   |
+30 -         let mut res = ColonyResources::default { ore: 10.0, fuel: 0.0, ..Default::default() };
+30 +         let mut res = <layer1::resources::ColonyResources as Example>::default { ore: 10.0, fuel: 0.0, ..Default::default() };
+   |
+
+error[E0223]: ambiguous associated type
+  --> src/layer1/fuel_industry_tests.rs:73:23
+   |
+73 | ...   let mut res = ColonyResources::default { ore: 1.0, fuel: 0.0, ..De...
+   |                     ^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::resources::ColonyResources`, you could use the fully-qualified path
+   |
+73 -         let mut res = ColonyResources::default { ore: 1.0, fuel: 0.0, ..Default::default() };
+73 +         let mut res = <layer1::resources::ColonyResources as Example>::default { ore: 1.0, fuel: 0.0, ..Default::default() };
+   |
+
+error[E0223]: ambiguous associated type
+   --> src/layer1/fuel_industry_tests.rs:106:23
+    |
+106 | ...   let mut res = ColonyResources::default { max_fuel: 10.0, fuel: 5....
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::resources::ColonyResources`, you could use the fully-qualified path
+    |
+106 -         let mut res = ColonyResources::default { max_fuel: 10.0, fuel: 5.0, ..Default::default() };
+106 +         let mut res = <layer1::resources::ColonyResources as Example>::default { max_fuel: 10.0, fuel: 5.0, ..Default::default() };
+    |
+
+error[E0223]: ambiguous associated type
+  --> src/layer1/hydroponics_tests.rs:23:23
+   |
+23 | ...   let mut res = ColonyResources::default { water: 100.0, food: 0.0, ...
+   |                     ^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::resources::ColonyResources`, you could use the fully-qualified path
+   |
+23 -         let mut res = ColonyResources::default { water: 100.0, food: 0.0, ..Default::default() };
+23 +         let mut res = <layer1::resources::ColonyResources as Example>::default { water: 100.0, food: 0.0, ..Default::default() };
+   |
+
+error[E0223]: ambiguous associated type
+  --> src/layer1/hydroponics_tests.rs:80:23
+   |
+80 | ...   let mut res = ColonyResources::default { water: 100.0, food: 0.0, ...
+   |                     ^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::resources::ColonyResources`, you could use the fully-qualified path
+   |
+80 -         let mut res = ColonyResources::default { water: 100.0, food: 0.0, ..Default::default() };
+80 +         let mut res = <layer1::resources::ColonyResources as Example>::default { water: 100.0, food: 0.0, ..Default::default() };
+   |
+
+error[E0223]: ambiguous associated type
+   --> src/layer1/hydroponics_tests.rs:125:23
+    |
+125 | ...   let mut res = ColonyResources::default { water: 0.0, food: 0.0, ....
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::resources::ColonyResources`, you could use the fully-qualified path
+    |
+125 -         let mut res = ColonyResources::default { water: 0.0, food: 0.0, ..Default::default() };
+125 +         let mut res = <layer1::resources::ColonyResources as Example>::default { water: 0.0, food: 0.0, ..Default::default() };
+    |
+
+error[E0223]: ambiguous associated type
+   --> src/layer1/hydroponics_tests.rs:163:23
+    |
+163 | ...   let mut res = ColonyResources::default { water: 100.0, food: 0.0,...
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::resources::ColonyResources`, you could use the fully-qualified path
+    |
+163 -         let mut res = ColonyResources::default { water: 100.0, food: 0.0, ..Default::default() };
+163 +         let mut res = <layer1::resources::ColonyResources as Example>::default { water: 100.0, food: 0.0, ..Default::default() };
+    |
+
+error[E0223]: ambiguous associated type
+   --> src/layer1/hydroponics_tests.rs:219:30
+    |
+219 | ...   let mut tech_state = TechState::default { total_capacity: 100.0, ...
+    |                            ^^^^^^^^^^^^^^^^^^
+    |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::tech::TechState`, you could use the fully-qualified path
+    |
+219 -         let mut tech_state = TechState::default { total_capacity: 100.0, ..Default::default() };
+219 +         let mut tech_state = <layer1::tech::TechState as Example>::default { total_capacity: 100.0, ..Default::default() };
+    |
+
+error[E0223]: ambiguous associated type
+   --> src/layer1/observatory.rs:121:23
+    |
+121 | ...   let mut res = ColonyResources::default { knowledge: 0.0, max_know...
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::resources::ColonyResources`, you could use the fully-qualified path
+    |
+121 -         let mut res = ColonyResources::default { knowledge: 0.0, max_knowledge: 100.0, ..Default::default() };
+121 +         let mut res = <layer1::resources::ColonyResources as Example>::default { knowledge: 0.0, max_knowledge: 100.0, ..Default::default() };
+    |
+
+error[E0223]: ambiguous associated type
+   --> src/layer1/logistics/conveyor.rs:316:23
+    |
+316 | ...   let mut res = ColonyResources::default { max_stone: 10.0, stone: ...
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::resources::ColonyResources`, you could use the fully-qualified path
+    |
+316 -         let mut res = ColonyResources::default { max_stone: 10.0, stone: 9.0, ..Default::default() };
+316 +         let mut res = <layer1::resources::ColonyResources as Example>::default { max_stone: 10.0, stone: 9.0, ..Default::default() };
+    |
+
+error[E0223]: ambiguous associated type
+  --> src/layer1/tech_storage_tests.rs:27:25
+   |
+27 | ...   let mut state = TechState::default { total_capacity: 100.0, ..Defa...
+   |                       ^^^^^^^^^^^^^^^^^^
+   |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::tech::TechState`, you could use the fully-qualified path
+   |
+27 -         let mut state = TechState::default { total_capacity: 100.0, ..Default::default() };
+27 +         let mut state = <layer1::tech::TechState as Example>::default { total_capacity: 100.0, ..Default::default() };
+   |
+
+error[E0223]: ambiguous associated type
+  --> src/layer1/tech_storage_tests.rs:39:25
+   |
+39 | ...   let mut state = TechState::default { total_capacity: 4.0, ..Defaul...
+   |                       ^^^^^^^^^^^^^^^^^^
+   |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::tech::TechState`, you could use the fully-qualified path
+   |
+39 -         let mut state = TechState::default { total_capacity: 4.0, ..Default::default() };
+39 +         let mut state = <layer1::tech::TechState as Example>::default { total_capacity: 4.0, ..Default::default() };
+   |
+
+error[E0223]: ambiguous associated type
+  --> src/layer1/tech_storage_tests.rs:51:25
+   |
+51 | ...   let mut state = TechState::default { total_capacity: 10.0, ..Defau...
+   |                       ^^^^^^^^^^^^^^^^^^
+   |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::tech::TechState`, you could use the fully-qualified path
+   |
+51 -         let mut state = TechState::default { total_capacity: 10.0, ..Default::default() };
+51 +         let mut state = <layer1::tech::TechState as Example>::default { total_capacity: 10.0, ..Default::default() };
+   |
+
+error[E0223]: ambiguous associated type
+   --> src/layer1/memetic.rs:103:30
+    |
+103 | ...   let mut tech_state = TechState::default { total_capacity: 1000.0,...
+    |                            ^^^^^^^^^^^^^^^^^^
+    |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::tech::TechState`, you could use the fully-qualified path
+    |
+103 -         let mut tech_state = TechState::default { total_capacity: 1000.0, ..Default::default() };
+103 +         let mut tech_state = <layer1::tech::TechState as Example>::default { total_capacity: 1000.0, ..Default::default() };
+    |
+
+error[E0223]: ambiguous associated type
+  --> src/layer1/improvised_tools_tests.rs:13:29
+   |
+13 | ...   let mut resources = ColonyResources::default { tools: 10.0, ..Defa...
+   |                           ^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::resources::ColonyResources`, you could use the fully-qualified path
+   |
+13 -         let mut resources = ColonyResources::default { tools: 10.0, ..Default::default() };
+13 +         let mut resources = <layer1::resources::ColonyResources as Example>::default { tools: 10.0, ..Default::default() };
+   |
+
+error[E0223]: ambiguous associated type
+  --> src/layer1/improvised_tools_tests.rs:25:29
+   |
+25 | ...   let mut resources = ColonyResources::default { tools: 0.0, stone: ...
+   |                           ^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::resources::ColonyResources`, you could use the fully-qualified path
+   |
+25 -         let mut resources = ColonyResources::default { tools: 0.0, stone: 10.0, ..Default::default() };
+25 +         let mut resources = <layer1::resources::ColonyResources as Example>::default { tools: 0.0, stone: 10.0, ..Default::default() };
+   |
+
+error[E0223]: ambiguous associated type
+  --> src/layer1/improvised_tools_tests.rs:38:29
+   |
+38 | ...   let mut resources = ColonyResources::default { tools: 0.0, stone: ...
+   |                           ^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::resources::ColonyResources`, you could use the fully-qualified path
+   |
+38 -         let mut resources = ColonyResources::default { tools: 0.0, stone: 0.0, wood: 10.0, ..Default::default() };
+38 +         let mut resources = <layer1::resources::ColonyResources as Example>::default { tools: 0.0, stone: 0.0, wood: 10.0, ..Default::default() };
+   |
+
+error[E0223]: ambiguous associated type
+  --> src/layer1/improvised_tools_tests.rs:52:29
+   |
+52 | ...   let mut resources = ColonyResources::default { tools: 0.0, stone: ...
+   |                           ^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::resources::ColonyResources`, you could use the fully-qualified path
+   |
+52 -         let mut resources = ColonyResources::default { tools: 0.0, stone: 0.0, wood: 0.0, scrap: 10.0, ..Default::default() };
+52 +         let mut resources = <layer1::resources::ColonyResources as Example>::default { tools: 0.0, stone: 0.0, wood: 0.0, scrap: 10.0, ..Default::default() };
+   |
+
+error[E0223]: ambiguous associated type
+  --> src/layer1/improvised_tools_tests.rs:67:29
+   |
+67 | ...   let mut resources = ColonyResources::default { tools: 0.0, stone: ...
+   |                           ^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::resources::ColonyResources`, you could use the fully-qualified path
+   |
+67 -         let mut resources = ColonyResources::default { tools: 0.0, stone: 0.0, wood: 0.0, scrap: 0.0, ..Default::default() };
+67 +         let mut resources = <layer1::resources::ColonyResources as Example>::default { tools: 0.0, stone: 0.0, wood: 0.0, scrap: 0.0, ..Default::default() };
+   |
+
+error[E0223]: ambiguous associated type
+  --> src/layer1/improvised_tools_tests.rs:83:29
+   |
+83 | ...   let mut resources = ColonyResources::default { stone: 10.0, ..Defa...
+   |                           ^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::resources::ColonyResources`, you could use the fully-qualified path
+   |
+83 -         let mut resources = ColonyResources::default { stone: 10.0, ..Default::default() };
+83 +         let mut resources = <layer1::resources::ColonyResources as Example>::default { stone: 10.0, ..Default::default() };
+   |
+
+error[E0223]: ambiguous associated type
+  --> src/layer1/nature/atmosphere_tides_tests.rs:28:24
+   |
+28 | ...   let mut time = SimulationTime::default { tick: 250, ..Default::def...
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^
+   |
+help: if there were a trait named `Example` with associated type `default` implemented for `shared::time::SimulationTime`, you could use the fully-qualified path
+   |
+28 -         let mut time = SimulationTime::default { tick: 250, ..Default::default() };
+28 +         let mut time = <shared::time::SimulationTime as Example>::default { tick: 250, ..Default::default() };
+   |
+
+error[E0223]: ambiguous associated type
+  --> src/layer1/nature/atmosphere_tides_tests.rs:41:24
+   |
+41 | ...   let mut time = SimulationTime::default { tick: 750, ..Default::def...
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^
+   |
+help: if there were a trait named `Example` with associated type `default` implemented for `shared::time::SimulationTime`, you could use the fully-qualified path
+   |
+41 -         let mut time = SimulationTime::default { tick: 750, ..Default::default() };
+41 +         let mut time = <shared::time::SimulationTime as Example>::default { tick: 750, ..Default::default() };
+   |
+
+error[E0223]: ambiguous associated type
+  --> src/layer1/nature/ecology_tests.rs:30:26
+   |
+30 | ...   let mut config = EcologyConfig::default { growth_rate: 1.0, pionee...
+   |                        ^^^^^^^^^^^^^^^^^^^^^^
+   |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::nature::ecology::EcologyConfig`, you could use the fully-qualified path
+   |
+30 -         let mut config = EcologyConfig::default { growth_rate: 1.0, pioneer_chance: 1.0, ..Default::default() };
+30 +         let mut config = <layer1::nature::ecology::EcologyConfig as Example>::default { growth_rate: 1.0, pioneer_chance: 1.0, ..Default::default() };
+   |
+
+error[E0223]: ambiguous associated type
+  --> src/layer1/nature/ecology_tests.rs:54:26
+   |
+54 | ...   let mut config = EcologyConfig::default { growth_rate: 1.0, seed_s...
+   |                        ^^^^^^^^^^^^^^^^^^^^^^
+   |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::nature::ecology::EcologyConfig`, you could use the fully-qualified path
+   |
+54 -         let mut config = EcologyConfig::default { growth_rate: 1.0, seed_spread_chance: 1.0, ..Default::default() };
+54 +         let mut config = <layer1::nature::ecology::EcologyConfig as Example>::default { growth_rate: 1.0, seed_spread_chance: 1.0, ..Default::default() };
+   |
+
+error[E0223]: ambiguous associated type
+  --> src/layer1/nature/ecology_tests.rs:88:26
+   |
+88 | ...   let mut config = EcologyConfig::default { growth_rate: 1.0, matura...
+   |                        ^^^^^^^^^^^^^^^^^^^^^^
+   |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::nature::ecology::EcologyConfig`, you could use the fully-qualified path
+   |
+88 -         let mut config = EcologyConfig::default { growth_rate: 1.0, maturation_chance: 1.0, ..Default::default() };
+88 +         let mut config = <layer1::nature::ecology::EcologyConfig as Example>::default { growth_rate: 1.0, maturation_chance: 1.0, ..Default::default() };
+   |
+
+error[E0223]: ambiguous associated type
+  --> src/ui/waste_ui_tests.rs:14:25
+   |
+14 |     let mut resources = ColonyResources::default { waste: 5.0, max_waste...
+   |                         ^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+help: if there were a trait named `Example` with associated type `default` implemented for `layer1::resources::ColonyResources`, you could use the fully-qualified path
+   |
+14 -     let mut resources = ColonyResources::default { waste: 5.0, max_waste: 10.0, ..Default::default() };
+14 +     let mut resources = <layer1::resources::ColonyResources as Example>::default { waste: 5.0, max_waste: 10.0, ..Default::default() };
+   |
+
+error: could not compile `scale` (lib test) due to 50 previous errors

@@ -12,3 +12,7 @@
 **Bloat:** `clippy::complexity` warnings related to large tuples and unused generic structure in tests and systems.
 **Cut:** Split the large 20+ elements tuple inside `src/layer1/systems/observation.rs` and ran `cargo clippy --fix` on `src/layer1/` tests and source code to eliminate redundant `.default()` assignments and unused variables.
 **Saved:** Multiple compilation errors related to `IntoSystemConfigs` macro boundaries limit and numerous warnings cluttering output.
+## [Reduction]
+**Bloat:** `clippy::complexity` warnings, specifically `needless_update` and `field_reassign_with_default` due to object construction boilerplate.
+**Cut:** Ran rust-clippy checks to enforce strict initialization patterns without unnecessary re-assignments or unneeded `..Default::default()` expansions where all fields are provided.
+**Saved:** Multiple lines of redundant instantiation code and cognitive noise.

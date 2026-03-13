@@ -54,8 +54,11 @@ mod tests {
         });
 
         // Unlock Tech
-        let mut tech_state = TechState::default();
-        tech_state.total_capacity = 100.0;
+        let mut tech_state = TechState {
+            total_capacity: 100.0,
+            ..Default::default()
+        };
+        // tech_state.total_capacity = 100.0;
         tech_state.unlock(Tech::MetalWorking);
         world.insert_resource(tech_state);
 
@@ -122,8 +125,11 @@ mod tests {
         world.resource_mut::<ColonyResources>().water = 100.0;
 
         // Unlock Tech
-        let mut tech_state = TechState::default();
-        tech_state.total_capacity = 100.0;
+        let mut tech_state = TechState {
+            total_capacity: 100.0,
+            ..Default::default()
+        };
+        // tech_state.total_capacity = 100.0;
         tech_state.unlock(Tech::Hydroponics);
         world.insert_resource(tech_state);
 
@@ -183,8 +189,11 @@ mod tests {
         let mut world = setup_world();
 
         // Unlock Tech
-        let mut tech_state = TechState::default();
-        tech_state.total_capacity = 100.0;
+        let mut tech_state = TechState {
+            total_capacity: 100.0,
+            ..Default::default()
+        };
+        // tech_state.total_capacity = 100.0;
         tech_state.unlock(Tech::Militia);
         world.insert_resource(tech_state);
 

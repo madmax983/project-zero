@@ -27,8 +27,12 @@ mod tests {
             tiles,
         });
 
-        let mut config = EcologyConfig::default();
-        config.growth_rate = 1.0; // Ensure check happens
+        let mut config = EcologyConfig {
+            growth_rate: 1.0,
+            pioneer_chance: 1.0,
+            ..Default::default()
+        };
+        // config.growth_rate = 1.0; // Ensure check happens
         config.pioneer_chance = 1.0; // Ensure transition happens
         world.insert_resource(config);
 
@@ -51,8 +55,12 @@ mod tests {
             tiles,
         });
 
-        let mut config = EcologyConfig::default();
-        config.growth_rate = 1.0;
+        let mut config = EcologyConfig {
+            growth_rate: 1.0,
+            seed_spread_chance: 1.0,
+            ..Default::default()
+        };
+        // config.growth_rate = 1.0;
         config.seed_spread_chance = 1.0;
         // Make sure pioneer chance (random shrub) doesn't interfere if we are testing seeding specifically?
         // Actually, logic usually prioritizes seeding or checks it.
@@ -85,8 +93,12 @@ mod tests {
             tiles,
         });
 
-        let mut config = EcologyConfig::default();
-        config.growth_rate = 1.0;
+        let mut config = EcologyConfig {
+            growth_rate: 1.0,
+            maturation_chance: 1.0,
+            ..Default::default()
+        };
+        // config.growth_rate = 1.0;
         config.maturation_chance = 1.0;
         world.insert_resource(config);
 

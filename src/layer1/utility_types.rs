@@ -644,8 +644,11 @@ mod tests {
 
     #[test]
     fn test_calculate_context_score_over_capacity_nan() {
-        let mut weights = UtilityWeights::default();
-        weights.availability_weight = 0.5; // Fractional power to trigger NaN on negative base
+        let weights = UtilityWeights {
+            availability_weight: 0.5,
+            ..Default::default()
+        };
+        // weights.availability_weight = 0.5; // Fractional power to trigger NaN on negative base
 
         let pop_pos = GridPosition { x: 0, y: 0 };
         // Occupied (20) > Capacity (10) => availability = 1.0 - 2.0 = -1.0
@@ -671,8 +674,11 @@ mod tests {
 
     #[test]
     fn test_calculate_context_score_extreme_weights() {
-        let mut weights = UtilityWeights::default();
-        weights.availability_weight = 100.0; // Extremely picky about crowds
+        let mut weights = UtilityWeights {
+            availability_weight: 100.0,
+            ..Default::default()
+        };
+        // weights.availability_weight = 100.0; // Extremely picky about crowds
         let pop_pos = GridPosition { x: 0, y: 0 };
 
         // 50% full

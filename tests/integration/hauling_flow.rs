@@ -19,8 +19,11 @@ mod tests {
         world.insert_resource(UtilityConfig::default());
         world.insert_resource(SimulationTime::default());
 
-        let mut resources = ColonyResources::default();
-        resources.tools = 0.0; // Prevent FetchTool action
+        let resources = ColonyResources {
+            tools: 0.0,
+            ..Default::default()
+        };
+        // resources.tools = 0.0; // Prevent FetchTool action
         world.insert_resource(resources);
 
         world.insert_resource(scale::layer1::day_night::DayNightCycle::default());

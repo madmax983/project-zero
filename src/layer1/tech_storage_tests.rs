@@ -24,8 +24,11 @@ mod tests {
 
     #[test]
     fn test_unlocking_tech_increases_usage() {
-        let mut state = TechState::default();
-        state.total_capacity = 100.0;
+        let mut state = TechState {
+            total_capacity: 100.0,
+            ..Default::default()
+        };
+        // state.total_capacity = 100.0;
 
         let success = state.try_unlock(Tech::Masonry);
 
@@ -36,8 +39,11 @@ mod tests {
 
     #[test]
     fn test_cannot_unlock_if_full() {
-        let mut state = TechState::default();
-        state.total_capacity = 4.0; // Not enough for Masonry (5.0)
+        let mut state = TechState {
+            total_capacity: 4.0,
+            ..Default::default()
+        };
+        // state.total_capacity = 4.0; // Not enough for Masonry (5.0)
 
         // Should fail
         let success = state.try_unlock(Tech::Masonry);
@@ -48,8 +54,11 @@ mod tests {
 
     #[test]
     fn test_capacity_drop_triggers_corruption() {
-        let mut state = TechState::default();
-        state.total_capacity = 10.0;
+        let mut state = TechState {
+            total_capacity: 10.0,
+            ..Default::default()
+        };
+        // state.total_capacity = 10.0;
         state.unlock(Tech::Masonry); // Cost 5.0, Unlock forces active
 
         // Disaster! Capacity drops

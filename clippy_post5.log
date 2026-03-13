@@ -1,0 +1,1570 @@
+    Checking scale v0.1.0 (/app)
+warning: unused import: `crate::layer1::vermin::VerminState`
+  --> src/layer1/spoilage.rs:66:9
+   |
+66 |     use crate::layer1::vermin::VerminState;
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `TechState`
+   --> src/layer1/hydroponics_tests.rs:205:41
+    |
+205 |         use crate::layer1::tech::{Tech, TechState};
+    |                                         ^^^^^^^^^
+
+warning: unused import: `TechState`
+  --> src/layer1/memetic.rs:93:50
+   |
+93 |     use crate::layer1::tech::{unlock_tech, Tech, TechState};
+   |                                                  ^^^^^^^^^
+
+warning: unused import: `crate::layer1::resources::ColonyResources`
+ --> src/layer1/improvised_tools_tests.rs:3:9
+  |
+3 |     use crate::layer1::resources::ColonyResources;
+  |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `crate::layer1::resources::ColonyResources`
+ --> src/ui/waste_ui_tests.rs:1:5
+  |
+1 | use crate::layer1::resources::ColonyResources;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/social/pen_pals.rs:236:31
+     |
+ 236 |         world.insert_resource(resources);
+     |               --------------- ^^^^^^^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/spoilage.rs:138:31
+     |
+ 138 |         world.insert_resource(resources);
+     |               --------------- ^^^^^^^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/spoilage.rs:176:31
+     |
+ 176 |         world.insert_resource(resources);
+     |               --------------- ^^^^^^^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/spoilage.rs:193:31
+     |
+ 193 |         world.insert_resource(resources);
+     |               --------------- ^^^^^^^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/spoilage.rs:197:31
+     |
+ 197 |         world.insert_resource(vermin);
+     |               --------------- ^^^^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/tech/mod.rs:563:31
+     |
+ 563 |         world.insert_resource(state);
+     |               --------------- ^^^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0599]: no method named `unlock` found for enum `std::option::Option<T>` in the current scope
+   --> src/layer1/tech/mod.rs:638:15
+    |
+638 |         state.unlock(Tech::MetalWorking);
+    |               ^^^^^^ method not found in `std::option::Option<_>`
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/tech/mod.rs:639:31
+     |
+ 639 |         world.insert_resource(state);
+     |               --------------- ^^^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0609]: no field `techs` on type `std::option::Option<_>`
+  --> src/layer1/tech/infinite_archive_tests.rs:19:14
+   |
+19 |             .techs
+   |              ^^^^^ unknown field
+
+error[E0599]: no method named `update_corruption` found for enum `std::option::Option<T>` in the current scope
+  --> src/layer1/tech/infinite_archive_tests.rs:21:20
+   |
+21 |         tech_state.update_corruption(); // Update used_capacity
+   |                    ^^^^^^^^^^^^^^^^^ method not found in `std::option::Option<_>`
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/tech/infinite_archive_tests.rs:22:31
+     |
+  22 |         world.insert_resource(tech_state);
+     |               --------------- ^^^^^^^^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0609]: no field `used_capacity` on type `std::option::Option<_>`
+  --> src/layer1/tech/infinite_archive_tests.rs:56:20
+   |
+56 |         tech_state.used_capacity = 200.0;
+   |                    ^^^^^^^^^^^^^ unknown field
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/tech/infinite_archive_tests.rs:57:31
+     |
+  57 |         world.insert_resource(tech_state);
+     |               --------------- ^^^^^^^^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0609]: no field `techs` on type `std::option::Option<_>`
+  --> src/layer1/tech/infinite_archive_tests.rs:78:14
+   |
+78 |             .techs
+   |              ^^^^^ unknown field
+
+error[E0599]: no method named `update_corruption` found for enum `std::option::Option<T>` in the current scope
+  --> src/layer1/tech/infinite_archive_tests.rs:80:20
+   |
+80 |         tech_state.update_corruption();
+   |                    ^^^^^^^^^^^^^^^^^ method not found in `std::option::Option<_>`
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/tech/infinite_archive_tests.rs:81:31
+     |
+  81 |         world.insert_resource(tech_state);
+     |               --------------- ^^^^^^^^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0308]: mismatched types
+   --> src/layer1/utility_ai_population.rs:714:24
+    |
+714 |             resources: &resources,
+    |                        ^^^^^^^^^^ expected `&ColonyResources`, found `&Option<_>`
+    |
+    = note: expected reference `&layer1::resources::ColonyResources`
+               found reference `&std::option::Option<_>`
+
+error[E0308]: mismatched types
+   --> src/layer1/utility_types.rs:653:68
+    |
+653 | ...re = calculate_context_score(pop_pos, None, 10, 20, &weights);
+    |         -----------------------                        ^^^^^^^^ expected `&UtilityWeights`, found `&Option<_>`
+    |         |
+    |         arguments to this function are incorrect
+    |
+    = note: expected reference `&layer1::utility_types::UtilityWeights`
+               found reference `&std::option::Option<_>`
+note: function defined here
+   --> src/layer1/utility_types.rs:436:8
+    |
+436 | pub fn calculate_context_score(
+    |        ^^^^^^^^^^^^^^^^^^^^^^^
+...
+441 |     weights: &UtilityWeights,
+    |     ------------------------
+
+error[E0308]: mismatched types
+   --> src/layer1/utility_types.rs:679:67
+    |
+679 | ...re = calculate_context_score(pop_pos, None, 10, 5, &weights);
+    |         -----------------------                       ^^^^^^^^ expected `&UtilityWeights`, found `&Option<_>`
+    |         |
+    |         arguments to this function are incorrect
+    |
+    = note: expected reference `&layer1::utility_types::UtilityWeights`
+               found reference `&std::option::Option<_>`
+note: function defined here
+   --> src/layer1/utility_types.rs:436:8
+    |
+436 | pub fn calculate_context_score(
+    |        ^^^^^^^^^^^^^^^^^^^^^^^
+...
+441 |     weights: &UtilityWeights,
+    |     ------------------------
+
+error[E0609]: no field `availability_weight` on type `std::option::Option<_>`
+   --> src/layer1/utility_types.rs:686:17
+    |
+686 |         weights.availability_weight = 0.0; // Doesn't care about crowds
+    |                 ^^^^^^^^^^^^^^^^^^^ unknown field
+
+error[E0308]: mismatched types
+   --> src/layer1/utility_types.rs:687:74
+    |
+687 | ...re = calculate_context_score(pop_pos, None, 10, 5, &weights);
+    |         -----------------------                       ^^^^^^^^ expected `&UtilityWeights`, found `&Option<_>`
+    |         |
+    |         arguments to this function are incorrect
+    |
+    = note: expected reference `&layer1::utility_types::UtilityWeights`
+               found reference `&std::option::Option<_>`
+note: function defined here
+   --> src/layer1/utility_types.rs:436:8
+    |
+436 | pub fn calculate_context_score(
+    |        ^^^^^^^^^^^^^^^^^^^^^^^
+...
+441 |     weights: &UtilityWeights,
+    |     ------------------------
+
+error[E0609]: no field `rations` on type `std::option::Option<_>`
+  --> src/layer1/preservation_tests.rs:72:19
+   |
+72 |         resources.rations = 1000.0;
+   |                   ^^^^^^^ unknown field
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/preservation_tests.rs:73:31
+     |
+  73 |         world.insert_resource(resources);
+     |               --------------- ^^^^^^^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0308]: mismatched types
+   --> src/layer1/vermin.rs:271:52
+    |
+271 |         let mod_zero = calculate_spoilage_modifier(&vermin);
+    |                        --------------------------- ^^^^^^^ expected `&VerminState`, found `&Option<_>`
+    |                        |
+    |                        arguments to this function are incorrect
+    |
+    = note: expected reference `&layer1::vermin::VerminState`
+               found reference `&std::option::Option<_>`
+note: function defined here
+   --> src/layer1/vermin.rs:141:8
+    |
+141 | pub fn calculate_spoilage_modifier(vermin: &VerminState) -> f32 {
+    |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^ --------------------
+
+error[E0609]: no field `severity` on type `std::option::Option<_>`
+   --> src/layer1/vermin.rs:275:16
+    |
+275 |         vermin.severity = 100.0;
+    |                ^^^^^^^^ unknown field
+
+error[E0308]: mismatched types
+   --> src/layer1/vermin.rs:276:51
+    |
+276 |         let mod_max = calculate_spoilage_modifier(&vermin);
+    |                       --------------------------- ^^^^^^^ expected `&VerminState`, found `&Option<_>`
+    |                       |
+    |                       arguments to this function are incorrect
+    |
+    = note: expected reference `&layer1::vermin::VerminState`
+               found reference `&std::option::Option<_>`
+note: function defined here
+   --> src/layer1/vermin.rs:141:8
+    |
+141 | pub fn calculate_spoilage_modifier(vermin: &VerminState) -> f32 {
+    |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^ --------------------
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/eureka.rs:201:31
+     |
+ 201 |         world.insert_resource(tech_state);
+     |               --------------- ^^^^^^^^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/retrograde_tests.rs:56:31
+     |
+  56 |         world.insert_resource(resources);
+     |               --------------- ^^^^^^^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/retrograde_tests.rs:94:31
+     |
+  94 |         world.insert_resource(resources);
+     |               --------------- ^^^^^^^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/retrograde_tests.rs:131:31
+     |
+ 131 |         world.insert_resource(resources);
+     |               --------------- ^^^^^^^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/retrograde_tests.rs:169:31
+     |
+ 169 |         world.insert_resource(resources);
+     |               --------------- ^^^^^^^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/private_stash.rs:156:31
+     |
+ 156 |         world.insert_resource(resources);
+     |               --------------- ^^^^^^^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/private_stash.rs:218:31
+     |
+ 218 |         world.insert_resource(resources);
+     |               --------------- ^^^^^^^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/private_stash.rs:300:31
+     |
+ 300 |         world.insert_resource(res);
+     |               --------------- ^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/private_stash.rs:340:31
+     |
+ 340 |         world.insert_resource(res);
+     |               --------------- ^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0609]: no field `fuel` on type `std::option::Option<_>`
+  --> src/layer1/fuel_industry_tests.rs:32:13
+   |
+32 |         res.fuel = 0.0;
+   |             ^^^^ unknown field
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/fuel_industry_tests.rs:33:31
+     |
+  33 |         world.insert_resource(res);
+     |               --------------- ^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0609]: no field `fuel` on type `std::option::Option<_>`
+  --> src/layer1/fuel_industry_tests.rs:75:13
+   |
+75 |         res.fuel = 0.0;
+   |             ^^^^ unknown field
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/fuel_industry_tests.rs:76:31
+     |
+  76 |         world.insert_resource(res);
+     |               --------------- ^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0609]: no field `fuel` on type `std::option::Option<_>`
+   --> src/layer1/fuel_industry_tests.rs:108:13
+    |
+108 |         res.fuel = 5.0;
+    |             ^^^^ unknown field
+
+error[E0599]: no method named `add_fuel` found for enum `std::option::Option<T>` in the current scope
+   --> src/layer1/fuel_industry_tests.rs:109:13
+    |
+109 |         res.add_fuel(10.0);
+    |             ^^^^^^^^ method not found in `std::option::Option<_>`
+
+error[E0609]: no field `fuel` on type `std::option::Option<_>`
+   --> src/layer1/fuel_industry_tests.rs:110:22
+    |
+110 |         assert!((res.fuel - 10.0).abs() < f32::EPSILON);
+    |                      ^^^^ unknown field
+
+error[E0609]: no field `food` on type `std::option::Option<_>`
+  --> src/layer1/hydroponics_tests.rs:25:13
+   |
+25 |         res.food = 0.0;
+   |             ^^^^ unknown field
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/hydroponics_tests.rs:34:31
+     |
+  34 |         world.insert_resource(res);
+     |               --------------- ^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0609]: no field `food` on type `std::option::Option<_>`
+  --> src/layer1/hydroponics_tests.rs:82:13
+   |
+82 |         res.food = 0.0;
+   |             ^^^^ unknown field
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/hydroponics_tests.rs:83:31
+     |
+  83 |         world.insert_resource(res);
+     |               --------------- ^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0609]: no field `food` on type `std::option::Option<_>`
+   --> src/layer1/hydroponics_tests.rs:127:13
+    |
+127 |         res.food = 0.0;
+    |             ^^^^ unknown field
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/hydroponics_tests.rs:128:31
+     |
+ 128 |         world.insert_resource(res);
+     |               --------------- ^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0609]: no field `food` on type `std::option::Option<_>`
+   --> src/layer1/hydroponics_tests.rs:165:13
+    |
+165 |         res.food = 0.0;
+    |             ^^^^ unknown field
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/hydroponics_tests.rs:166:31
+     |
+ 166 |         world.insert_resource(res);
+     |               --------------- ^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0599]: no method named `unlock` found for enum `std::option::Option<T>` in the current scope
+   --> src/layer1/hydroponics_tests.rs:221:20
+    |
+221 |         tech_state.unlock(Tech::Hydroponics);
+    |                    ^^^^^^ method not found in `std::option::Option<_>`
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/hydroponics_tests.rs:222:31
+     |
+ 222 |         world.insert_resource(tech_state);
+     |               --------------- ^^^^^^^^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0609]: no field `max_knowledge` on type `std::option::Option<_>`
+   --> src/layer1/observatory.rs:123:13
+    |
+123 |         res.max_knowledge = 100.0;
+    |             ^^^^^^^^^^^^^ unknown field
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/observatory.rs:124:31
+     |
+ 124 |         world.insert_resource(res);
+     |               --------------- ^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0609]: no field `stone` on type `std::option::Option<_>`
+   --> src/layer1/logistics/conveyor.rs:318:13
+    |
+318 |         res.stone = 9.0;
+    |             ^^^^^ unknown field
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/logistics/conveyor.rs:319:31
+     |
+ 319 |         world.insert_resource(res);
+     |               --------------- ^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0599]: no method named `try_unlock` found for enum `std::option::Option<T>` in the current scope
+  --> src/layer1/tech_storage_tests.rs:30:29
+   |
+30 |         let success = state.try_unlock(Tech::Masonry);
+   |                             ^^^^^^^^^^
+   |
+help: there is a method `try_into` with a similar name, but with different arguments
+  --> /rustc/4a4ef493e3a1488c6e321570238084b38948f6db/library/core/src/convert/mod.rs:622:4
+
+error[E0599]: no method named `is_unlocked` found for enum `std::option::Option<T>` in the current scope
+  --> src/layer1/tech_storage_tests.rs:33:23
+   |
+33 |         assert!(state.is_unlocked(Tech::Masonry));
+   |                       ^^^^^^^^^^^
+   |
+help: there is a method `is_none` with a similar name, but with different arguments
+  --> /rustc/4a4ef493e3a1488c6e321570238084b38948f6db/library/core/src/option.rs:684:4
+
+error[E0609]: no field `used_capacity` on type `std::option::Option<_>`
+  --> src/layer1/tech_storage_tests.rs:34:26
+   |
+34 |         assert_eq!(state.used_capacity, Tech::Masonry.storage_cost());
+   |                          ^^^^^^^^^^^^^ unknown field
+
+error[E0599]: no method named `try_unlock` found for enum `std::option::Option<T>` in the current scope
+  --> src/layer1/tech_storage_tests.rs:43:29
+   |
+43 |         let success = state.try_unlock(Tech::Masonry);
+   |                             ^^^^^^^^^^
+   |
+help: there is a method `try_into` with a similar name, but with different arguments
+  --> /rustc/4a4ef493e3a1488c6e321570238084b38948f6db/library/core/src/convert/mod.rs:622:4
+
+error[E0599]: no method named `is_unlocked` found for enum `std::option::Option<T>` in the current scope
+  --> src/layer1/tech_storage_tests.rs:46:24
+   |
+46 |         assert!(!state.is_unlocked(Tech::Masonry));
+   |                        ^^^^^^^^^^^
+   |
+help: there is a method `is_none` with a similar name, but with different arguments
+  --> /rustc/4a4ef493e3a1488c6e321570238084b38948f6db/library/core/src/option.rs:684:4
+
+error[E0599]: no method named `unlock` found for enum `std::option::Option<T>` in the current scope
+  --> src/layer1/tech_storage_tests.rs:53:15
+   |
+53 |         state.unlock(Tech::Masonry); // Cost 5.0, Unlock forces active
+   |               ^^^^^^ method not found in `std::option::Option<_>`
+
+error[E0609]: no field `total_capacity` on type `std::option::Option<_>`
+  --> src/layer1/tech_storage_tests.rs:56:15
+   |
+56 |         state.total_capacity = 0.0;
+   |               ^^^^^^^^^^^^^^ unknown field
+
+error[E0599]: no method named `update_corruption` found for enum `std::option::Option<T>` in the current scope
+  --> src/layer1/tech_storage_tests.rs:59:15
+   |
+59 |         state.update_corruption();
+   |               ^^^^^^^^^^^^^^^^^ method not found in `std::option::Option<_>`
+
+error[E0609]: no field `techs` on type `std::option::Option<_>`
+  --> src/layer1/tech_storage_tests.rs:62:21
+   |
+62 |         match state.techs.get(&Tech::Masonry) {
+   |                     ^^^^^ unknown field
+
+error[E0609]: no field `techs` on type `std::option::Option<_>`
+  --> src/layer1/tech_storage_tests.rs:66:23
+   |
+66 |                 state.techs.get(&Tech::Masonry)
+   |                       ^^^^^ unknown field
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/memetic.rs:105:31
+     |
+ 105 |         world.insert_resource(tech_state);
+     |               --------------- ^^^^^^^^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0308]: mismatched types
+  --> src/layer1/improvised_tools_tests.rs:16:64
+   |
+16 |         let (efficiency, consumed) = calculate_work_efficiency(&resources);
+   |                                      ------------------------- ^^^^^^^^^^ expected `&ColonyResources`, found `&Option<_>`
+   |                                      |
+   |                                      arguments to this function are incorrect
+   |
+   = note: expected reference `&layer1::resources::ColonyResources`
+              found reference `&std::option::Option<_>`
+note: function defined here
+  --> src/layer1/execution/efficiency.rs:9:8
+   |
+ 9 | pub fn calculate_work_efficiency(res: &ColonyResources) -> (f32, Option<...
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^^ ---------------------
+
+error[E0609]: no field `stone` on type `std::option::Option<_>`
+  --> src/layer1/improvised_tools_tests.rs:27:19
+   |
+27 |         resources.stone = 10.0;
+   |                   ^^^^^ unknown field
+
+error[E0308]: mismatched types
+  --> src/layer1/improvised_tools_tests.rs:29:64
+   |
+29 |         let (efficiency, consumed) = calculate_work_efficiency(&resources);
+   |                                      ------------------------- ^^^^^^^^^^ expected `&ColonyResources`, found `&Option<_>`
+   |                                      |
+   |                                      arguments to this function are incorrect
+   |
+   = note: expected reference `&layer1::resources::ColonyResources`
+              found reference `&std::option::Option<_>`
+note: function defined here
+  --> src/layer1/execution/efficiency.rs:9:8
+   |
+ 9 | pub fn calculate_work_efficiency(res: &ColonyResources) -> (f32, Option<...
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^^ ---------------------
+
+error[E0609]: no field `stone` on type `std::option::Option<_>`
+  --> src/layer1/improvised_tools_tests.rs:40:19
+   |
+40 |         resources.stone = 0.0;
+   |                   ^^^^^ unknown field
+
+error[E0609]: no field `wood` on type `std::option::Option<_>`
+  --> src/layer1/improvised_tools_tests.rs:41:19
+   |
+41 |         resources.wood = 10.0;
+   |                   ^^^^ unknown field
+
+error[E0308]: mismatched types
+  --> src/layer1/improvised_tools_tests.rs:43:64
+   |
+43 |         let (efficiency, consumed) = calculate_work_efficiency(&resources);
+   |                                      ------------------------- ^^^^^^^^^^ expected `&ColonyResources`, found `&Option<_>`
+   |                                      |
+   |                                      arguments to this function are incorrect
+   |
+   = note: expected reference `&layer1::resources::ColonyResources`
+              found reference `&std::option::Option<_>`
+note: function defined here
+  --> src/layer1/execution/efficiency.rs:9:8
+   |
+ 9 | pub fn calculate_work_efficiency(res: &ColonyResources) -> (f32, Option<...
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^^ ---------------------
+
+error[E0609]: no field `stone` on type `std::option::Option<_>`
+  --> src/layer1/improvised_tools_tests.rs:54:19
+   |
+54 |         resources.stone = 0.0;
+   |                   ^^^^^ unknown field
+
+error[E0609]: no field `wood` on type `std::option::Option<_>`
+  --> src/layer1/improvised_tools_tests.rs:55:19
+   |
+55 |         resources.wood = 0.0;
+   |                   ^^^^ unknown field
+
+error[E0609]: no field `scrap` on type `std::option::Option<_>`
+  --> src/layer1/improvised_tools_tests.rs:56:19
+   |
+56 |         resources.scrap = 10.0;
+   |                   ^^^^^ unknown field
+
+error[E0308]: mismatched types
+  --> src/layer1/improvised_tools_tests.rs:58:64
+   |
+58 |         let (efficiency, consumed) = calculate_work_efficiency(&resources);
+   |                                      ------------------------- ^^^^^^^^^^ expected `&ColonyResources`, found `&Option<_>`
+   |                                      |
+   |                                      arguments to this function are incorrect
+   |
+   = note: expected reference `&layer1::resources::ColonyResources`
+              found reference `&std::option::Option<_>`
+note: function defined here
+  --> src/layer1/execution/efficiency.rs:9:8
+   |
+ 9 | pub fn calculate_work_efficiency(res: &ColonyResources) -> (f32, Option<...
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^^ ---------------------
+
+error[E0609]: no field `stone` on type `std::option::Option<_>`
+  --> src/layer1/improvised_tools_tests.rs:69:19
+   |
+69 |         resources.stone = 0.0;
+   |                   ^^^^^ unknown field
+
+error[E0609]: no field `wood` on type `std::option::Option<_>`
+  --> src/layer1/improvised_tools_tests.rs:70:19
+   |
+70 |         resources.wood = 0.0;
+   |                   ^^^^ unknown field
+
+error[E0609]: no field `scrap` on type `std::option::Option<_>`
+  --> src/layer1/improvised_tools_tests.rs:71:19
+   |
+71 |         resources.scrap = 0.0;
+   |                   ^^^^^ unknown field
+
+error[E0308]: mismatched types
+  --> src/layer1/improvised_tools_tests.rs:73:64
+   |
+73 |         let (efficiency, consumed) = calculate_work_efficiency(&resources);
+   |                                      ------------------------- ^^^^^^^^^^ expected `&ColonyResources`, found `&Option<_>`
+   |                                      |
+   |                                      arguments to this function are incorrect
+   |
+   = note: expected reference `&layer1::resources::ColonyResources`
+              found reference `&std::option::Option<_>`
+note: function defined here
+  --> src/layer1/execution/efficiency.rs:9:8
+   |
+ 9 | pub fn calculate_work_efficiency(res: &ColonyResources) -> (f32, Option<...
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^^ ---------------------
+
+error[E0599]: no method named `consume` found for enum `std::option::Option<T>` in the current scope
+  --> src/layer1/improvised_tools_tests.rs:88:19
+   |
+88 |         resources.consume(ResourceType::Stone, 1.0);
+   |                   ^^^^^^^ method not found in `std::option::Option<_>`
+
+error[E0609]: no field `stone` on type `std::option::Option<_>`
+  --> src/layer1/improvised_tools_tests.rs:90:30
+   |
+90 |         assert_eq!(resources.stone, 9.0);
+   |                              ^^^^^ unknown field
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/nature/atmosphere_tides_tests.rs:30:31
+     |
+  30 |         world.insert_resource(time);
+     |               --------------- ^^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/nature/atmosphere_tides_tests.rs:43:31
+     |
+  43 |         world.insert_resource(time);
+     |               --------------- ^^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0609]: no field `pioneer_chance` on type `std::option::Option<_>`
+  --> src/layer1/nature/ecology_tests.rs:32:16
+   |
+32 |         config.pioneer_chance = 1.0; // Ensure transition happens
+   |                ^^^^^^^^^^^^^^ unknown field
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/nature/ecology_tests.rs:33:31
+     |
+  33 |         world.insert_resource(config);
+     |               --------------- ^^^^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0609]: no field `seed_spread_chance` on type `std::option::Option<_>`
+  --> src/layer1/nature/ecology_tests.rs:56:16
+   |
+56 |         config.seed_spread_chance = 1.0;
+   |                ^^^^^^^^^^^^^^^^^^ unknown field
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/nature/ecology_tests.rs:60:31
+     |
+  60 |         world.insert_resource(config);
+     |               --------------- ^^^^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0609]: no field `maturation_chance` on type `std::option::Option<_>`
+  --> src/layer1/nature/ecology_tests.rs:90:16
+   |
+90 |         config.maturation_chance = 1.0;
+   |                ^^^^^^^^^^^^^^^^^ unknown field
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/layer1/nature/ecology_tests.rs:91:31
+     |
+  91 |         world.insert_resource(config);
+     |               --------------- ^^^^^^ invalid `Resource`
+     |               |
+     |               required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+warning: unused import: `scale::layer1::health::Health`
+ --> tests/health_validation.rs:2:5
+  |
+2 | use scale::layer1::health::Health;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+error[E0599]: no method named `take_damage` found for enum `std::option::Option<T>` in the current scope
+ --> tests/health_validation.rs:9:12
+  |
+9 |     health.take_damage(-50.0);
+  |            ^^^^^^^^^^^ method not found in `std::option::Option<_>`
+
+error[E0609]: no field `current` on type `std::option::Option<_>`
+  --> tests/health_validation.rs:12:16
+   |
+12 |         health.current, 50.0,
+   |                ^^^^^^^ unknown field
+
+error[E0609]: no field `max_waste` on type `std::option::Option<_>`
+  --> src/ui/waste_ui_tests.rs:16:15
+   |
+16 |     resources.max_waste = 10.0;
+   |               ^^^^^^^^^ unknown field
+
+error[E0277]: `std::option::Option<_>` is not a `Resource`
+    --> src/ui/waste_ui_tests.rs:17:27
+     |
+  17 |     world.insert_resource(resources);
+     |           --------------- ^^^^^^^^^ invalid `Resource`
+     |           |
+     |           required by a bound introduced by this call
+     |
+     = help: the trait `bevy_ecs::system::Resource` is not implemented for `std::option::Option<_>`
+     = note: consider annotating `std::option::Option<_>` with `#[derive(Resource)]`
+     = help: the following other types implement trait `bevy_ecs::system::Resource`:
+               bevy::bevy_core::FrameCount
+               bevy::bevy_diagnostic::DiagnosticsStore
+               bevy::bevy_hierarchy::ReportHierarchyIssue<T>
+               bevy::bevy_input::mouse::AccumulatedMouseMotion
+               bevy::bevy_input::mouse::AccumulatedMouseScroll
+               bevy::bevy_time::TimeReceiver
+               bevy::bevy_time::TimeSender
+               bevy::bevy_time::TimeUpdateStrategy
+             and 136 others
+note: required by a bound in `bevy_ecs::world::World::insert_resource`
+    --> /home/jules/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ecs-0.15.4/src/world/mod.rs:1753:31
+     |
+1753 |     pub fn insert_resource<R: Resource>(&mut self, value: R) {
+     |                               ^^^^^^^^ required by this bound in `World::insert_resource`
+     = note: the full name for the type has been written to '/app/target/debug/deps/scale-c5413f0a10e2f77f.long-type-5522571170267476426.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0599]: no method named `take_damage` found for enum `std::option::Option<T>` in the current scope
+  --> tests/health_validation.rs:22:12
+   |
+22 |     health.take_damage(f32::NAN);
+   |            ^^^^^^^^^^^ method not found in `std::option::Option<_>`
+
+error[E0599]: no method named `try_deduct` found for enum `std::option::Option<T>` in the current scope
+  --> tests/security_resource_exploit.rs:15:33
+   |
+15 |         let success = resources.try_deduct(&cheat_cost);
+   |                                 ^^^^^^^^^^
+   |
+help: there is a method `reduce` with a similar name, but with different arguments
+  --> /rustc/4a4ef493e3a1488c6e321570238084b38948f6db/library/core/src/option.rs:1996:4
+
+error[E0609]: no field `food` on type `std::option::Option<_>`
+  --> tests/security_resource_exploit.rs:21:24
+   |
+21 |             (resources.food - 10.0).abs() < f32::EPSILON,
+   |                        ^^^^ unknown field
+
+error[E0599]: no method named `is_alive` found for enum `std::option::Option<T>` in the current scope
+  --> tests/health_validation.rs:24:20
+   |
+24 |     assert!(health.is_alive(), "Health became NaN or invalid");
+   |                    ^^^^^^^^ method not found in `std::option::Option<_>`
+
+error[E0609]: no field `current` on type `std::option::Option<_>`
+  --> tests/health_validation.rs:25:21
+   |
+25 |     assert!(!health.current.is_nan(), "Health current is NaN");
+   |                     ^^^^^^^ unknown field
+
+Some errors have detailed explanations: E0599, E0609.
+For more information about an error, try `rustc --explain E0599`.
+error: could not compile `scale` (test "security_resource_exploit") due to 2 previous errors
+warning: build failed, waiting for other jobs to finish...
+warning: `scale` (test "health_validation") generated 1 warning
+error: could not compile `scale` (test "health_validation") due to 5 previous errors; 1 warning emitted
+Some errors have detailed explanations: E0277, E0308, E0599, E0609.
+For more information about an error, try `rustc --explain E0277`.
+warning: `scale` (lib test) generated 5 warnings
+error: could not compile `scale` (lib test) due to 93 previous errors; 5 warnings emitted

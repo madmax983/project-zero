@@ -317,7 +317,7 @@ mod tests {
             Structure {
                 current_hp: 100.0,
                 max_hp: 100.0,
-                ..Default::default()
+                /* ..Default::default() removed by razor */
             },
         ));
 
@@ -342,7 +342,7 @@ mod tests {
                 Structure {
                     current_hp: 100.0,
                     max_hp: 100.0,
-                    ..Default::default()
+                    /* ..Default::default() removed by razor */
                 },
             ))
             .id();
@@ -414,7 +414,7 @@ mod tests {
                 Structure {
                     current_hp: 100.0,
                     max_hp: 100.0,
-                    ..Default::default()
+                    /* ..Default::default() removed by razor */
                 },
             ))
             .id();

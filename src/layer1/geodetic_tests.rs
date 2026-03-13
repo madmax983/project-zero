@@ -25,7 +25,7 @@ mod tests {
             .spawn((
                 Item {
                     item_type: ItemType::LivingStone,
-                    ..Default::default()
+                    /* ..Default::default() removed by razor */
                 },
                 LivingStone { last_move_tick: 0 },
                 GridPosition { x: 10, y: 10 },
@@ -36,7 +36,7 @@ mod tests {
             .spawn((
                 Item {
                     item_type: ItemType::LivingStone,
-                    ..Default::default()
+                    /* ..Default::default() removed by razor */
                 },
                 LivingStone { last_move_tick: 0 },
                 GridPosition { x: 12, y: 10 },
@@ -77,7 +77,7 @@ mod tests {
             .spawn((
                 Item {
                     item_type: ItemType::LivingStone,
-                    ..Default::default()
+                    /* ..Default::default() removed by razor */
                 },
                 LivingStone { last_move_tick: 0 },
                 GridPosition { x: 15, y: 15 },
@@ -109,7 +109,7 @@ mod tests {
             world.spawn((
                 Item {
                     item_type: ItemType::LivingStone,
-                    ..Default::default()
+                    /* ..Default::default() removed by razor */
                 },
                 LivingStone { last_move_tick: 0 },
                 GridPosition { x: 5, y: 5 },

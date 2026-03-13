@@ -182,7 +182,7 @@ fn test_combat_cleanup_on_target_despawn() {
                 current: ActionType::Fight,
                 current_utility: 100.0,
                 ticks_committed: 10,
-                ..Default::default()
+                /* ..Default::default() removed by razor */
             },
         ))
         .id();

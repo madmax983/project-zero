@@ -27,7 +27,7 @@ mod tests {
                 Structure {
                     current_hp: 100.0,
                     max_hp: 100.0,
-                    ..Default::default()
+                    /* ..Default::default() removed by razor */
                 },
                 GridPosition { x: 0, y: 0 },
             ))
@@ -52,7 +52,7 @@ mod tests {
                 Structure {
                     current_hp: 100.0,
                     max_hp: 100.0,
-                    ..Default::default()
+                    /* ..Default::default() removed by razor */
                 },
                 GridPosition { x: 0, y: 0 },
                 ProtectedFromAtmosphere, // Component indicating protection
@@ -78,7 +78,7 @@ mod tests {
                 Structure {
                     current_hp: 100.0,
                     max_hp: 100.0,
-                    ..Default::default()
+                    /* ..Default::default() removed by razor */
                 },
                 GridPosition { x: 0, y: 0 },
             ))
@@ -90,7 +90,7 @@ mod tests {
                 Structure {
                     current_hp: 100.0,
                     max_hp: 100.0,
-                    ..Default::default()
+                    /* ..Default::default() removed by razor */
                 },
                 GridPosition { x: 1, y: 0 },
                 CorrosionResistant { factor: 0.5 },
@@ -127,7 +127,7 @@ mod tests {
                 Structure {
                     current_hp: 100.0,
                     max_hp: 100.0,
-                    ..Default::default()
+                    /* ..Default::default() removed by razor */
                 },
                 GridPosition { x: 0, y: 0 },
             ))

@@ -1,0 +1,695 @@
+    Checking scale v0.1.0 (/app)
+error: field assignment outside of initializer for an instance created with Default::default()
+ --> tests/health_validation.rs:7:5
+  |
+7 |     health.current = 50.0;
+  |     ^^^^^^^^^^^^^^^^^^^^^^
+  |
+note: consider initializing the variable with `scale::layer1::Health { current: 50.0, ..Default::default() }` and removing relevant reassignments
+ --> tests/health_validation.rs:6:5
+  |
+6 |     let mut health = Health::default();
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+  = note: `-D clippy::field-reassign-with-default` implied by `-D warnings`
+  = help: to override `-D warnings` add `#[allow(clippy::field_reassign_with_default)]`
+
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> tests/health_validation.rs:20:5
+   |
+20 |     health.current = 50.0;
+   |     ^^^^^^^^^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `scale::layer1::Health { current: 50.0, ..Default::default() }` and removing relevant reassignments
+  --> tests/health_validation.rs:19:5
+   |
+19 |     let mut health = Health::default();
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: could not compile `scale` (test "health_validation") due to 2 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> src/layer1/social/pen_pals.rs:235:9
+    |
+235 |         resources.knowledge = 100.0;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `layer1::resources::ColonyResources { knowledge: 100.0, ..Default::default() }` and removing relevant reassignments
+   --> src/layer1/social/pen_pals.rs:234:9
+    |
+234 |         let mut resources = ColonyResources::default();
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+    = note: `-D clippy::field-reassign-with-default` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::field_reassign_with_default)]`
+
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> src/layer1/spoilage.rs:137:9
+    |
+137 |         resources.food = 1000.0;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `layer1::resources::ColonyResources { food: 1000.0, ..Default::default() }` and removing relevant reassignments
+   --> src/layer1/spoilage.rs:136:9
+    |
+136 |         let mut resources = ColonyResources::default();
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> src/layer1/spoilage.rs:175:9
+    |
+175 |         resources.rations = 1000.0;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `layer1::resources::ColonyResources { rations: 1000.0, ..Default::default() }` and removing relevant reassignments
+   --> src/layer1/spoilage.rs:174:9
+    |
+174 |         let mut resources = ColonyResources::default();
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> src/layer1/spoilage.rs:192:9
+    |
+192 |         resources.food = 1000.0;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `layer1::resources::ColonyResources { food: 1000.0, ..Default::default() }` and removing relevant reassignments
+   --> src/layer1/spoilage.rs:191:9
+    |
+191 |         let mut resources = ColonyResources::default();
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> src/layer1/spoilage.rs:196:9
+    |
+196 |         vermin.severity = 50.0; // Moderate vermin
+    |         ^^^^^^^^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `layer1::vermin::VerminState { severity: 50.0, ..Default::default() }` and removing relevant reassignments
+   --> src/layer1/spoilage.rs:195:9
+    |
+195 |         let mut vermin = VerminState::default();
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> src/layer1/tech/mod.rs:562:9
+    |
+562 |         state.total_capacity = 100.0; // Needs capacity now!
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `layer1::tech::TechState { total_capacity: 100.0, ..Default::default() }` and removing relevant reassignments
+   --> src/layer1/tech/mod.rs:561:9
+    |
+561 |         let mut state = TechState::default();
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> src/layer1/tech/mod.rs:637:9
+    |
+637 |         state.total_capacity = 100.0;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `layer1::tech::TechState { total_capacity: 100.0, ..Default::default() }` and removing relevant reassignments
+   --> src/layer1/tech/mod.rs:636:9
+    |
+636 |         let mut state = TechState::default();
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> src/layer1/tech/infinite_archive_tests.rs:16:9
+   |
+16 |         tech_state.total_capacity = 100.0;
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `layer1::tech::TechState { total_capacity: 100.0, ..Default::default() }` and removing relevant reassignments
+  --> src/layer1/tech/infinite_archive_tests.rs:15:9
+   |
+15 |         let mut tech_state = TechState::default();
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> src/layer1/tech/infinite_archive_tests.rs:53:9
+   |
+53 |         tech_state.total_capacity = 100.0;
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `layer1::tech::TechState { total_capacity: 100.0, used_capacity: 200.0, ..Default::default() }` and removing relevant reassignments
+  --> src/layer1/tech/infinite_archive_tests.rs:52:9
+   |
+52 |         let mut tech_state = TechState::default();
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> src/layer1/tech/infinite_archive_tests.rs:76:9
+   |
+76 |         tech_state.total_capacity = 100.0;
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `layer1::tech::TechState { total_capacity: 100.0, ..Default::default() }` and removing relevant reassignments
+  --> src/layer1/tech/infinite_archive_tests.rs:75:9
+   |
+75 |         let mut tech_state = TechState::default();
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: this assertion is always `true`
+   --> src/layer1/tech/harmonic_mining_tests.rs:103:13
+    |
+103 |             assert!(true);
+    |             ^^^^^^^^^^^^^
+    |
+    = help: remove the assertion
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#assertions_on_constants
+    = note: `-D clippy::assertions-on-constants` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::assertions_on_constants)]`
+
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> src/layer1/utility_ai_population.rs:707:9
+    |
+707 |         resources.wood = 0.0; // Cannot afford
+    |         ^^^^^^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `layer1::resources::ColonyResources { wood: 0.0, ..Default::default() }` and removing relevant reassignments
+   --> src/layer1/utility_ai_population.rs:706:9
+    |
+706 |         let mut resources = ColonyResources::default();
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> src/layer1/utility_types.rs:648:9
+    |
+648 | ...   weights.availability_weight = 0.5; // Fractional power to trigger...
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `layer1::utility_types::UtilityWeights { availability_weight: 0.5, ..Default::default() }` and removing relevant reassignments
+   --> src/layer1/utility_types.rs:647:9
+    |
+647 |         let mut weights = UtilityWeights::default();
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> src/layer1/utility_types.rs:675:9
+    |
+675 | ...   weights.availability_weight = 100.0; // Extremely picky about crowds
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `layer1::utility_types::UtilityWeights { availability_weight: 100.0, ..Default::default() }` and removing relevant reassignments
+   --> src/layer1/utility_types.rs:674:9
+    |
+674 |         let mut weights = UtilityWeights::default();
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> src/layer1/preservation_tests.rs:71:9
+   |
+71 |         resources.food = 1000.0;
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `layer1::resources::ColonyResources { food: 1000.0, rations: 1000.0, ..Default::default() }` and removing relevant reassignments
+  --> src/layer1/preservation_tests.rs:70:9
+   |
+70 |         let mut resources = ColonyResources::default();
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> src/layer1/vermin.rs:270:9
+    |
+270 |         vermin.severity = 0.0;
+    |         ^^^^^^^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `layer1::vermin::VerminState { severity: 0.0, ..Default::default() }` and removing relevant reassignments
+   --> src/layer1/vermin.rs:267:9
+    |
+267 |         let mut vermin = VerminState::default();
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> src/layer1/eureka.rs:200:9
+    |
+200 |         tech_state.total_capacity = 100.0; // Ensure capacity
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `layer1::tech::TechState { total_capacity: 100.0, ..Default::default() }` and removing relevant reassignments
+   --> src/layer1/eureka.rs:199:9
+    |
+199 |         let mut tech_state = TechState::default();
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> src/layer1/retrograde_tests.rs:55:9
+   |
+55 |         resources.max_knowledge = 1000.0;
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `layer1::resources::ColonyResources { max_knowledge: 1000.0, ..Default::default() }` and removing relevant reassignments
+  --> src/layer1/retrograde_tests.rs:54:9
+   |
+54 |         let mut resources = ColonyResources::default();
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> src/layer1/retrograde_tests.rs:93:9
+   |
+93 |         resources.max_knowledge = 1000.0;
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `layer1::resources::ColonyResources { max_knowledge: 1000.0, ..Default::default() }` and removing relevant reassignments
+  --> src/layer1/retrograde_tests.rs:92:9
+   |
+92 |         let mut resources = ColonyResources::default();
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> src/layer1/retrograde_tests.rs:130:9
+    |
+130 |         resources.max_knowledge = 1000.0;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `layer1::resources::ColonyResources { max_knowledge: 1000.0, ..Default::default() }` and removing relevant reassignments
+   --> src/layer1/retrograde_tests.rs:129:9
+    |
+129 |         let mut resources = ColonyResources::default();
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> src/layer1/retrograde_tests.rs:168:9
+    |
+168 |         resources.max_knowledge = 1000.0;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `layer1::resources::ColonyResources { max_knowledge: 1000.0, ..Default::default() }` and removing relevant reassignments
+   --> src/layer1/retrograde_tests.rs:167:9
+    |
+167 |         let mut resources = ColonyResources::default();
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> src/layer1/private_stash.rs:155:9
+    |
+155 |         resources.food = 100.0;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `layer1::resources::ColonyResources { food: 100.0, ..Default::default() }` and removing relevant reassignments
+   --> src/layer1/private_stash.rs:154:9
+    |
+154 |         let mut resources = ColonyResources::default();
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> src/layer1/private_stash.rs:217:9
+    |
+217 |         resources.metal = 50.0;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `layer1::resources::ColonyResources { metal: 50.0, ..Default::default() }` and removing relevant reassignments
+   --> src/layer1/private_stash.rs:216:9
+    |
+216 |         let mut resources = ColonyResources::default();
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> src/layer1/private_stash.rs:299:9
+    |
+299 |         res.food = 5.0; // Shortage
+    |         ^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `layer1::resources::ColonyResources { food: 5.0, ..Default::default() }` and removing relevant reassignments
+   --> src/layer1/private_stash.rs:298:9
+    |
+298 |         let mut res = ColonyResources::default();
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> src/layer1/private_stash.rs:339:9
+    |
+339 |         res.food = 20.0;
+    |         ^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `layer1::resources::ColonyResources { food: 20.0, ..Default::default() }` and removing relevant reassignments
+   --> src/layer1/private_stash.rs:338:9
+    |
+338 |         let mut res = ColonyResources::default();
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> src/layer1/fuel_industry_tests.rs:31:9
+   |
+31 |         res.ore = 10.0;
+   |         ^^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `layer1::resources::ColonyResources { ore: 10.0, fuel: 0.0, ..Default::default() }` and removing relevant reassignments
+  --> src/layer1/fuel_industry_tests.rs:30:9
+   |
+30 |         let mut res = ColonyResources::default();
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> src/layer1/fuel_industry_tests.rs:74:9
+   |
+74 |         res.ore = 1.0; // Need 2
+   |         ^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `layer1::resources::ColonyResources { ore: 1.0, fuel: 0.0, ..Default::default() }` and removing relevant reassignments
+  --> src/layer1/fuel_industry_tests.rs:73:9
+   |
+73 |         let mut res = ColonyResources::default();
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> src/layer1/fuel_industry_tests.rs:107:9
+    |
+107 |         res.max_fuel = 10.0;
+    |         ^^^^^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `layer1::resources::ColonyResources { max_fuel: 10.0, fuel: 5.0, ..Default::default() }` and removing relevant reassignments
+   --> src/layer1/fuel_industry_tests.rs:106:9
+    |
+106 |         let mut res = ColonyResources::default();
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> src/layer1/hydroponics_tests.rs:24:9
+   |
+24 |         res.water = 100.0;
+   |         ^^^^^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `layer1::resources::ColonyResources { water: 100.0, food: 0.0, ..Default::default() }` and removing relevant reassignments
+  --> src/layer1/hydroponics_tests.rs:23:9
+   |
+23 |         let mut res = ColonyResources::default();
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> src/layer1/hydroponics_tests.rs:81:9
+   |
+81 |         res.water = 100.0;
+   |         ^^^^^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `layer1::resources::ColonyResources { water: 100.0, food: 0.0, ..Default::default() }` and removing relevant reassignments
+  --> src/layer1/hydroponics_tests.rs:80:9
+   |
+80 |         let mut res = ColonyResources::default();
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> src/layer1/hydroponics_tests.rs:126:9
+    |
+126 |         res.water = 0.0; // No water
+    |         ^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `layer1::resources::ColonyResources { water: 0.0, food: 0.0, ..Default::default() }` and removing relevant reassignments
+   --> src/layer1/hydroponics_tests.rs:125:9
+    |
+125 |         let mut res = ColonyResources::default();
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> src/layer1/hydroponics_tests.rs:164:9
+    |
+164 |         res.water = 100.0;
+    |         ^^^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `layer1::resources::ColonyResources { water: 100.0, food: 0.0, ..Default::default() }` and removing relevant reassignments
+   --> src/layer1/hydroponics_tests.rs:163:9
+    |
+163 |         let mut res = ColonyResources::default();
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> src/layer1/hydroponics_tests.rs:220:9
+    |
+220 |         tech_state.total_capacity = 100.0;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `layer1::tech::TechState { total_capacity: 100.0, ..Default::default() }` and removing relevant reassignments
+   --> src/layer1/hydroponics_tests.rs:219:9
+    |
+219 |         let mut tech_state = TechState::default();
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> src/layer1/observatory.rs:122:9
+    |
+122 |         res.knowledge = 0.0;
+    |         ^^^^^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `layer1::resources::ColonyResources { knowledge: 0.0, max_knowledge: 100.0, ..Default::default() }` and removing relevant reassignments
+   --> src/layer1/observatory.rs:121:9
+    |
+121 |         let mut res = ColonyResources::default();
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> src/layer1/logistics/conveyor.rs:317:9
+    |
+317 |         res.max_stone = 10.0;
+    |         ^^^^^^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `layer1::resources::ColonyResources { max_stone: 10.0, stone: 9.0, ..Default::default() }` and removing relevant reassignments
+   --> src/layer1/logistics/conveyor.rs:316:9
+    |
+316 |         let mut res = ColonyResources::default();
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> src/layer1/tech_storage_tests.rs:28:9
+   |
+28 |         state.total_capacity = 100.0;
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `layer1::tech::TechState { total_capacity: 100.0, ..Default::default() }` and removing relevant reassignments
+  --> src/layer1/tech_storage_tests.rs:27:9
+   |
+27 |         let mut state = TechState::default();
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> src/layer1/tech_storage_tests.rs:40:9
+   |
+40 |         state.total_capacity = 4.0; // Not enough for Masonry (5.0)
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `layer1::tech::TechState { total_capacity: 4.0, ..Default::default() }` and removing relevant reassignments
+  --> src/layer1/tech_storage_tests.rs:39:9
+   |
+39 |         let mut state = TechState::default();
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> src/layer1/tech_storage_tests.rs:52:9
+   |
+52 |         state.total_capacity = 10.0;
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `layer1::tech::TechState { total_capacity: 10.0, ..Default::default() }` and removing relevant reassignments
+  --> src/layer1/tech_storage_tests.rs:51:9
+   |
+51 |         let mut state = TechState::default();
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> src/layer1/memetic.rs:104:9
+    |
+104 |         tech_state.total_capacity = 1000.0; // Ensure enough capacity
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `layer1::tech::TechState { total_capacity: 1000.0, ..Default::default() }` and removing relevant reassignments
+   --> src/layer1/memetic.rs:103:9
+    |
+103 |         let mut tech_state = TechState::default();
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> src/layer1/improvised_tools_tests.rs:14:9
+   |
+14 |         resources.tools = 10.0;
+   |         ^^^^^^^^^^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `layer1::resources::ColonyResources { tools: 10.0, ..Default::default() }` and removing relevant reassignments
+  --> src/layer1/improvised_tools_tests.rs:13:9
+   |
+13 |         let mut resources = ColonyResources::default();
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> src/layer1/improvised_tools_tests.rs:26:9
+   |
+26 |         resources.tools = 0.0;
+   |         ^^^^^^^^^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `layer1::resources::ColonyResources { tools: 0.0, stone: 10.0, ..Default::default() }` and removing relevant reassignments
+  --> src/layer1/improvised_tools_tests.rs:25:9
+   |
+25 |         let mut resources = ColonyResources::default();
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> src/layer1/improvised_tools_tests.rs:39:9
+   |
+39 |         resources.tools = 0.0;
+   |         ^^^^^^^^^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `layer1::resources::ColonyResources { tools: 0.0, stone: 0.0, wood: 10.0, ..Default::default() }` and removing relevant reassignments
+  --> src/layer1/improvised_tools_tests.rs:38:9
+   |
+38 |         let mut resources = ColonyResources::default();
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> src/layer1/improvised_tools_tests.rs:53:9
+   |
+53 |         resources.tools = 0.0;
+   |         ^^^^^^^^^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `layer1::resources::ColonyResources { tools: 0.0, stone: 0.0, wood: 0.0, scrap: 10.0, ..Default::default() }` and removing relevant reassignments
+  --> src/layer1/improvised_tools_tests.rs:52:9
+   |
+52 |         let mut resources = ColonyResources::default();
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> src/layer1/improvised_tools_tests.rs:68:9
+   |
+68 |         resources.tools = 0.0;
+   |         ^^^^^^^^^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `layer1::resources::ColonyResources { tools: 0.0, stone: 0.0, wood: 0.0, scrap: 0.0, ..Default::default() }` and removing relevant reassignments
+  --> src/layer1/improvised_tools_tests.rs:67:9
+   |
+67 |         let mut resources = ColonyResources::default();
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> src/layer1/improvised_tools_tests.rs:84:9
+   |
+84 |         resources.stone = 10.0;
+   |         ^^^^^^^^^^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `layer1::resources::ColonyResources { stone: 10.0, ..Default::default() }` and removing relevant reassignments
+  --> src/layer1/improvised_tools_tests.rs:83:9
+   |
+83 |         let mut resources = ColonyResources::default();
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> src/layer1/nature/atmosphere_tides_tests.rs:29:9
+   |
+29 |         time.tick = 250;
+   |         ^^^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `shared::time::SimulationTime { tick: 250, ..Default::default() }` and removing relevant reassignments
+  --> src/layer1/nature/atmosphere_tides_tests.rs:28:9
+   |
+28 |         let mut time = SimulationTime::default();
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> src/layer1/nature/atmosphere_tides_tests.rs:42:9
+   |
+42 |         time.tick = 750;
+   |         ^^^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `shared::time::SimulationTime { tick: 750, ..Default::default() }` and removing relevant reassignments
+  --> src/layer1/nature/atmosphere_tides_tests.rs:41:9
+   |
+41 |         let mut time = SimulationTime::default();
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> src/layer1/nature/ecology_tests.rs:31:9
+   |
+31 |         config.growth_rate = 1.0; // Ensure check happens
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `layer1::nature::ecology::EcologyConfig { growth_rate: 1.0, pioneer_chance: 1.0, ..Default::default() }` and removing relevant reassignments
+  --> src/layer1/nature/ecology_tests.rs:30:9
+   |
+30 |         let mut config = EcologyConfig::default();
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> src/layer1/nature/ecology_tests.rs:55:9
+   |
+55 |         config.growth_rate = 1.0;
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `layer1::nature::ecology::EcologyConfig { growth_rate: 1.0, seed_spread_chance: 1.0, ..Default::default() }` and removing relevant reassignments
+  --> src/layer1/nature/ecology_tests.rs:54:9
+   |
+54 |         let mut config = EcologyConfig::default();
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> src/layer1/nature/ecology_tests.rs:89:9
+   |
+89 |         config.growth_rate = 1.0;
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `layer1::nature::ecology::EcologyConfig { growth_rate: 1.0, maturation_chance: 1.0, ..Default::default() }` and removing relevant reassignments
+  --> src/layer1/nature/ecology_tests.rs:88:9
+   |
+88 |         let mut config = EcologyConfig::default();
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> src/ui/waste_ui_tests.rs:15:5
+   |
+15 |     resources.waste = 5.0;
+   |     ^^^^^^^^^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `layer1::resources::ColonyResources { waste: 5.0, max_waste: 10.0, ..Default::default() }` and removing relevant reassignments
+  --> src/ui/waste_ui_tests.rs:14:5
+   |
+14 |     let mut resources = ColonyResources::default();
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: could not compile `scale` (lib test) due to 51 previous errors

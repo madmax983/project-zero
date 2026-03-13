@@ -117,7 +117,7 @@ mod tests {
                 },
                 StressTracker {
                     accumulated_stress: 0.0,
-                    ..Default::default()
+                    /* ..Default::default() removed by razor */
                 },
             ))
             .id();
@@ -132,7 +132,7 @@ mod tests {
                 },
                 StressTracker {
                     accumulated_stress: 95.0,
-                    ..Default::default()
+                    /* ..Default::default() removed by razor */
                 },
             ))
             .id();
@@ -147,7 +147,7 @@ mod tests {
                 },
                 StressTracker {
                     accumulated_stress: 0.0,
-                    ..Default::default()
+                    /* ..Default::default() removed by razor */
                 },
             ))
             .id();
@@ -188,7 +188,7 @@ mod tests {
                 },
                 StressTracker {
                     accumulated_stress: 50.0,
-                    ..Default::default()
+                    /* ..Default::default() removed by razor */
                 },
             ))
             .id();
@@ -204,7 +204,7 @@ mod tests {
                 },
                 StressTracker {
                     accumulated_stress: 50.0,
-                    ..Default::default()
+                    /* ..Default::default() removed by razor */
                 },
             ))
             .id();

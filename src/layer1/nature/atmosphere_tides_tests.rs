@@ -25,8 +25,11 @@ mod tests {
 
         // Advance time to 1/4 cycle (Peak High Pressure)
         // Assuming cycle is 1000 ticks
-        let mut time = SimulationTime::default();
-        time.tick = 250;
+        let time = SimulationTime {
+            tick: 250,
+            ..Default::default()
+        };
+        // time.tick = 250;
         world.insert_resource(time);
 
         // Update tide
@@ -38,8 +41,11 @@ mod tests {
         assert!(pressure > 1.2, "Pressure should be high (got {})", pressure);
 
         // Advance to 3/4 cycle (Peak Low Pressure)
-        let mut time = SimulationTime::default();
-        time.tick = 750;
+        let time = SimulationTime {
+            tick: 750,
+            ..Default::default()
+        };
+        // time.tick = 750;
         world.insert_resource(time);
         schedule.run(&mut world);
 

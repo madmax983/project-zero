@@ -51,8 +51,11 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(ColonyResources::default());
         // Raise max knowledge so we can hold 500
-        let mut resources = ColonyResources::default();
-        resources.max_knowledge = 1000.0;
+        let resources = ColonyResources {
+            max_knowledge: 1000.0,
+            ..Default::default()
+        };
+        // resources.max_knowledge = 1000.0;
         world.insert_resource(resources);
 
         world.insert_resource(OccupiedTiles::default());
@@ -89,8 +92,11 @@ mod tests {
     #[test]
     fn test_demolish_ancient_fabricator_gives_300_knowledge() {
         let mut world = World::new();
-        let mut resources = ColonyResources::default();
-        resources.max_knowledge = 1000.0;
+        let resources = ColonyResources {
+            max_knowledge: 1000.0,
+            ..Default::default()
+        };
+        // resources.max_knowledge = 1000.0;
         world.insert_resource(resources);
 
         world.insert_resource(OccupiedTiles::default());
@@ -126,8 +132,11 @@ mod tests {
     #[test]
     fn test_demolish_unknown_ancient_structure_gives_100_knowledge() {
         let mut world = World::new();
-        let mut resources = ColonyResources::default();
-        resources.max_knowledge = 1000.0;
+        let resources = ColonyResources {
+            max_knowledge: 1000.0,
+            ..Default::default()
+        };
+        // resources.max_knowledge = 1000.0;
         world.insert_resource(resources);
 
         world.insert_resource(OccupiedTiles::default());
@@ -164,8 +173,11 @@ mod tests {
     #[test]
     fn test_demolish_ancient_structure_notification() {
         let mut world = World::new();
-        let mut resources = ColonyResources::default();
-        resources.max_knowledge = 1000.0;
+        let resources = ColonyResources {
+            max_knowledge: 1000.0,
+            ..Default::default()
+        };
+        // resources.max_knowledge = 1000.0;
         world.insert_resource(resources);
 
         world.insert_resource(OccupiedTiles::default());

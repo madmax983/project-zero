@@ -12,8 +12,11 @@ mod tests {
         world.insert_resource(Archive::default());
 
         // Setup a Tech Tree with some unlocked techs
-        let mut tech_state = TechState::default();
-        tech_state.total_capacity = 100.0;
+        let mut tech_state = TechState {
+            total_capacity: 100.0,
+            ..Default::default()
+        };
+        // tech_state.total_capacity = 100.0;
         // VoidWhispers costs 50.0 TB storage
         tech_state
             .techs
@@ -49,8 +52,12 @@ mod tests {
         world.insert_resource(Archive::default());
 
         // Mock tech tree with MORE than capacity
-        let mut tech_state = TechState::default();
-        tech_state.total_capacity = 100.0;
+        let mut tech_state = TechState {
+            total_capacity: 100.0,
+            used_capacity: 200.0,
+            ..Default::default()
+        };
+        // tech_state.total_capacity = 100.0;
 
         // Artificial overload
         tech_state.used_capacity = 200.0;
@@ -72,8 +79,11 @@ mod tests {
     fn test_purge_tech_restores_efficiency() {
         let mut world = World::new();
         world.insert_resource(crate::shared::log::MessageLog::default());
-        let mut tech_state = TechState::default();
-        tech_state.total_capacity = 100.0;
+        let mut tech_state = TechState {
+            total_capacity: 100.0,
+            ..Default::default()
+        };
+        // tech_state.total_capacity = 100.0;
         tech_state
             .techs
             .insert(Tech::VoidWhispers, TechStatus::Active); // 50.0 TB

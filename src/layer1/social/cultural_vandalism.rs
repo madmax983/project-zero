@@ -70,7 +70,7 @@ mod tests {
             Pop,
             StressTracker {
                 accumulated_stress: 90.0,
-                ..Default::default()
+                /* ..Default::default() removed by razor */
             }, // High stress/unrest
             GridPosition { x: 0, y: 0 },
         ));
@@ -80,7 +80,7 @@ mod tests {
             .spawn((
                 Building {
                     building_type: BuildingType::Statue,
-                    ..Default::default()
+                    /* ..Default::default() removed by razor */
                 },
                 Structure {
                     ..Default::default()
@@ -104,7 +104,7 @@ mod tests {
             .spawn((
                 Building {
                     building_type: BuildingType::Statue,
-                    ..Default::default()
+                    /* ..Default::default() removed by razor */
                 },
                 Aura {
                     radius: 5.0,

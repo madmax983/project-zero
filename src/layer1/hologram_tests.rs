@@ -42,7 +42,7 @@ mod tests {
             PowerConsumer {
                 demand: 10.0,
                 active: true, // Powered
-                ..Default::default()
+                              /* ..Default::default() removed by razor */
             },
             GridPosition { x: 5, y: 5 },
         ));
@@ -85,7 +85,7 @@ mod tests {
             PowerConsumer {
                 demand: 10.0,
                 active: false, // Power cut
-                ..Default::default()
+                               /* ..Default::default() removed by razor */
             },
             GridPosition { x: 5, y: 5 },
         ));
@@ -123,7 +123,7 @@ mod tests {
             PowerConsumer {
                 demand: 10.0,
                 active: false,
-                ..Default::default()
+                /* ..Default::default() removed by razor */
             },
             GridPosition { x: 5, y: 5 },
         ));

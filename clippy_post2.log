@@ -1,0 +1,936 @@
+    Checking scale v0.1.0 (/app)
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+   --> src/layer1/social/pen_pals.rs:234:29
+    |
+234 | ...es = layer1::resources::ColonyResources { knowledge: 100.0, ..Defaul...
+    |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+    |
+    = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+    |
+ 72 +     use crate::layer1::resources;
+    |
+help: if you import `resources`, refer to it directly
+    |
+234 -         let mut resources = layer1::resources::ColonyResources { knowledge: 100.0, ..Default::default() };
+234 +         let mut resources = resources::ColonyResources { knowledge: 100.0, ..Default::default() };
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+   --> src/layer1/spoilage.rs:136:29
+    |
+136 | ...es = layer1::resources::ColonyResources { food: 1000.0, ..Default::d...
+    |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+    |
+    = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+    |
+ 64 +     use crate::layer1::resources;
+    |
+help: if you import `resources`, refer to it directly
+    |
+136 -         let mut resources = layer1::resources::ColonyResources { food: 1000.0, ..Default::default() };
+136 +         let mut resources = resources::ColonyResources { food: 1000.0, ..Default::default() };
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+   --> src/layer1/spoilage.rs:174:29
+    |
+174 | ...es = layer1::resources::ColonyResources { rations: 1000.0, ..Default...
+    |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+    |
+    = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+    |
+ 64 +     use crate::layer1::resources;
+    |
+help: if you import `resources`, refer to it directly
+    |
+174 -         let mut resources = layer1::resources::ColonyResources { rations: 1000.0, ..Default::default() };
+174 +         let mut resources = resources::ColonyResources { rations: 1000.0, ..Default::default() };
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+   --> src/layer1/spoilage.rs:191:29
+    |
+191 | ...es = layer1::resources::ColonyResources { food: 1000.0, ..Default::d...
+    |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+    |
+    = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+    |
+ 64 +     use crate::layer1::resources;
+    |
+help: if you import `resources`, refer to it directly
+    |
+191 -         let mut resources = layer1::resources::ColonyResources { food: 1000.0, ..Default::default() };
+191 +         let mut resources = resources::ColonyResources { food: 1000.0, ..Default::default() };
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+   --> src/layer1/spoilage.rs:195:26
+    |
+195 | ...in = layer1::vermin::VerminState { severity: 50.0, ..Default::defaul...
+    |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+    |
+    = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+    |
+ 64 +     use crate::layer1::vermin;
+    |
+help: if you import `vermin`, refer to it directly
+    |
+195 -         let mut vermin = layer1::vermin::VerminState { severity: 50.0, ..Default::default() };
+195 +         let mut vermin = vermin::VerminState { severity: 50.0, ..Default::default() };
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+   --> src/layer1/tech/mod.rs:561:25
+    |
+561 | ...te = layer1::tech::TechState { total_capacity: 100.0, ..Default::def...
+    |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+    |
+    = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+    |
+525 +     use crate::layer1::tech;
+    |
+help: if you import `tech`, refer to it directly
+    |
+561 -         let mut state = layer1::tech::TechState { total_capacity: 100.0, ..Default::default() };
+561 +         let mut state = tech::TechState { total_capacity: 100.0, ..Default::default() };
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+   --> src/layer1/tech/mod.rs:636:25
+    |
+636 | ...te = layer1::tech::TechState { total_capacity: 100.0, ..Default::def...
+    |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+    |
+    = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+    |
+525 +     use crate::layer1::tech;
+    |
+help: if you import `tech`, refer to it directly
+    |
+636 -         let mut state = layer1::tech::TechState { total_capacity: 100.0, ..Default::default() };
+636 +         let mut state = tech::TechState { total_capacity: 100.0, ..Default::default() };
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+  --> src/layer1/tech/infinite_archive_tests.rs:15:30
+   |
+15 | ...te = layer1::tech::TechState { total_capacity: 100.0, ..Default::defa...
+   |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+   |
+   = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+   |
+ 3 +     use crate::layer1::tech;
+   |
+help: if you import `tech`, refer to it directly
+   |
+15 -         let mut tech_state = layer1::tech::TechState { total_capacity: 100.0, ..Default::default() };
+15 +         let mut tech_state = tech::TechState { total_capacity: 100.0, ..Default::default() };
+   |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+  --> src/layer1/tech/infinite_archive_tests.rs:52:30
+   |
+52 | ...te = layer1::tech::TechState { total_capacity: 100.0, used_capacity: ...
+   |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+   |
+   = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+   |
+ 3 +     use crate::layer1::tech;
+   |
+help: if you import `tech`, refer to it directly
+   |
+52 -         let mut tech_state = layer1::tech::TechState { total_capacity: 100.0, used_capacity: 200.0, ..Default::default() };
+52 +         let mut tech_state = tech::TechState { total_capacity: 100.0, used_capacity: 200.0, ..Default::default() };
+   |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+  --> src/layer1/tech/infinite_archive_tests.rs:75:30
+   |
+75 | ...te = layer1::tech::TechState { total_capacity: 100.0, ..Default::defa...
+   |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+   |
+   = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+   |
+ 3 +     use crate::layer1::tech;
+   |
+help: if you import `tech`, refer to it directly
+   |
+75 -         let mut tech_state = layer1::tech::TechState { total_capacity: 100.0, ..Default::default() };
+75 +         let mut tech_state = tech::TechState { total_capacity: 100.0, ..Default::default() };
+   |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+   --> src/layer1/utility_ai_population.rs:706:29
+    |
+706 | ...es = layer1::resources::ColonyResources { wood: 0.0, ..Default::defa...
+    |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+    |
+    = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+    |
+546 +     use crate::layer1::resources;
+    |
+help: if you import `resources`, refer to it directly
+    |
+706 -         let mut resources = layer1::resources::ColonyResources { wood: 0.0, ..Default::default() };
+706 +         let mut resources = resources::ColonyResources { wood: 0.0, ..Default::default() };
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+   --> src/layer1/utility_types.rs:647:27
+    |
+647 | ...ts = layer1::utility_types::UtilityWeights { availability_weight: 0....
+    |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+    |
+    = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+    |
+480 +     use crate::layer1::utility_types;
+    |
+help: if you import `utility_types`, refer to it directly
+    |
+647 -         let mut weights = layer1::utility_types::UtilityWeights { availability_weight: 0.5, ..Default::default() };
+647 +         let mut weights = utility_types::UtilityWeights { availability_weight: 0.5, ..Default::default() };
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+   --> src/layer1/utility_types.rs:674:27
+    |
+674 | ...ts = layer1::utility_types::UtilityWeights { availability_weight: 10...
+    |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+    |
+    = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+    |
+480 +     use crate::layer1::utility_types;
+    |
+help: if you import `utility_types`, refer to it directly
+    |
+674 -         let mut weights = layer1::utility_types::UtilityWeights { availability_weight: 100.0, ..Default::default() };
+674 +         let mut weights = utility_types::UtilityWeights { availability_weight: 100.0, ..Default::default() };
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+  --> src/layer1/preservation_tests.rs:70:29
+   |
+70 | ...es = layer1::resources::ColonyResources { food: 1000.0, rations: 1000...
+   |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+   |
+   = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+   |
+ 3 +     use crate::layer1::resources;
+   |
+help: if you import `resources`, refer to it directly
+   |
+70 -         let mut resources = layer1::resources::ColonyResources { food: 1000.0, rations: 1000.0, ..Default::default() };
+70 +         let mut resources = resources::ColonyResources { food: 1000.0, rations: 1000.0, ..Default::default() };
+   |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+   --> src/layer1/vermin.rs:267:26
+    |
+267 | ...in = layer1::vermin::VerminState { severity: 0.0, ..Default::default...
+    |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+    |
+    = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+    |
+149 +     use crate::layer1::vermin;
+    |
+help: if you import `vermin`, refer to it directly
+    |
+267 -         let mut vermin = layer1::vermin::VerminState { severity: 0.0, ..Default::default() };
+267 +         let mut vermin = vermin::VerminState { severity: 0.0, ..Default::default() };
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+   --> src/layer1/eureka.rs:199:30
+    |
+199 | ...te = layer1::tech::TechState { total_capacity: 100.0, ..Default::def...
+    |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+    |
+    = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+    |
+166 +     use crate::layer1::tech;
+    |
+help: if you import `tech`, refer to it directly
+    |
+199 -         let mut tech_state = layer1::tech::TechState { total_capacity: 100.0, ..Default::default() };
+199 +         let mut tech_state = tech::TechState { total_capacity: 100.0, ..Default::default() };
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+  --> src/layer1/retrograde_tests.rs:54:29
+   |
+54 | ...es = layer1::resources::ColonyResources { max_knowledge: 1000.0, ..De...
+   |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+   |
+   = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+   |
+ 3 +     use crate::layer1::resources;
+   |
+help: if you import `resources`, refer to it directly
+   |
+54 -         let mut resources = layer1::resources::ColonyResources { max_knowledge: 1000.0, ..Default::default() };
+54 +         let mut resources = resources::ColonyResources { max_knowledge: 1000.0, ..Default::default() };
+   |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+  --> src/layer1/retrograde_tests.rs:92:29
+   |
+92 | ...es = layer1::resources::ColonyResources { max_knowledge: 1000.0, ..De...
+   |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+   |
+   = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+   |
+ 3 +     use crate::layer1::resources;
+   |
+help: if you import `resources`, refer to it directly
+   |
+92 -         let mut resources = layer1::resources::ColonyResources { max_knowledge: 1000.0, ..Default::default() };
+92 +         let mut resources = resources::ColonyResources { max_knowledge: 1000.0, ..Default::default() };
+   |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+   --> src/layer1/retrograde_tests.rs:129:29
+    |
+129 | ...es = layer1::resources::ColonyResources { max_knowledge: 1000.0, ..D...
+    |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+    |
+    = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+    |
+  3 +     use crate::layer1::resources;
+    |
+help: if you import `resources`, refer to it directly
+    |
+129 -         let mut resources = layer1::resources::ColonyResources { max_knowledge: 1000.0, ..Default::default() };
+129 +         let mut resources = resources::ColonyResources { max_knowledge: 1000.0, ..Default::default() };
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+   --> src/layer1/retrograde_tests.rs:167:29
+    |
+167 | ...es = layer1::resources::ColonyResources { max_knowledge: 1000.0, ..D...
+    |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+    |
+    = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+    |
+  3 +     use crate::layer1::resources;
+    |
+help: if you import `resources`, refer to it directly
+    |
+167 -         let mut resources = layer1::resources::ColonyResources { max_knowledge: 1000.0, ..Default::default() };
+167 +         let mut resources = resources::ColonyResources { max_knowledge: 1000.0, ..Default::default() };
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+   --> src/layer1/private_stash.rs:154:29
+    |
+154 | ...es = layer1::resources::ColonyResources { food: 100.0, ..Default::de...
+    |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+    |
+    = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+    |
+135 +     use crate::layer1::resources;
+    |
+help: if you import `resources`, refer to it directly
+    |
+154 -         let mut resources = layer1::resources::ColonyResources { food: 100.0, ..Default::default() };
+154 +         let mut resources = resources::ColonyResources { food: 100.0, ..Default::default() };
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+   --> src/layer1/private_stash.rs:216:29
+    |
+216 | ...es = layer1::resources::ColonyResources { metal: 50.0, ..Default::de...
+    |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+    |
+    = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+    |
+135 +     use crate::layer1::resources;
+    |
+help: if you import `resources`, refer to it directly
+    |
+216 -         let mut resources = layer1::resources::ColonyResources { metal: 50.0, ..Default::default() };
+216 +         let mut resources = resources::ColonyResources { metal: 50.0, ..Default::default() };
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+   --> src/layer1/private_stash.rs:298:23
+    |
+298 | ...es = layer1::resources::ColonyResources { food: 5.0, ..Default::defa...
+    |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+    |
+    = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+    |
+135 +     use crate::layer1::resources;
+    |
+help: if you import `resources`, refer to it directly
+    |
+298 -         let mut res = layer1::resources::ColonyResources { food: 5.0, ..Default::default() };
+298 +         let mut res = resources::ColonyResources { food: 5.0, ..Default::default() };
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+   --> src/layer1/private_stash.rs:338:23
+    |
+338 | ...es = layer1::resources::ColonyResources { food: 20.0, ..Default::def...
+    |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+    |
+    = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+    |
+135 +     use crate::layer1::resources;
+    |
+help: if you import `resources`, refer to it directly
+    |
+338 -         let mut res = layer1::resources::ColonyResources { food: 20.0, ..Default::default() };
+338 +         let mut res = resources::ColonyResources { food: 20.0, ..Default::default() };
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+  --> src/layer1/fuel_industry_tests.rs:30:23
+   |
+30 | ...es = layer1::resources::ColonyResources { ore: 10.0, fuel: 0.0, ..Def...
+   |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+   |
+   = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+   |
+ 3 +     use crate::layer1::resources;
+   |
+help: if you import `resources`, refer to it directly
+   |
+30 -         let mut res = layer1::resources::ColonyResources { ore: 10.0, fuel: 0.0, ..Default::default() };
+30 +         let mut res = resources::ColonyResources { ore: 10.0, fuel: 0.0, ..Default::default() };
+   |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+  --> src/layer1/fuel_industry_tests.rs:73:23
+   |
+73 | ...es = layer1::resources::ColonyResources { ore: 1.0, fuel: 0.0, ..Defa...
+   |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+   |
+   = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+   |
+ 3 +     use crate::layer1::resources;
+   |
+help: if you import `resources`, refer to it directly
+   |
+73 -         let mut res = layer1::resources::ColonyResources { ore: 1.0, fuel: 0.0, ..Default::default() };
+73 +         let mut res = resources::ColonyResources { ore: 1.0, fuel: 0.0, ..Default::default() };
+   |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+   --> src/layer1/fuel_industry_tests.rs:106:23
+    |
+106 | ...es = layer1::resources::ColonyResources { max_fuel: 10.0, fuel: 5.0,...
+    |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+    |
+    = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+    |
+  3 +     use crate::layer1::resources;
+    |
+help: if you import `resources`, refer to it directly
+    |
+106 -         let mut res = layer1::resources::ColonyResources { max_fuel: 10.0, fuel: 5.0, ..Default::default() };
+106 +         let mut res = resources::ColonyResources { max_fuel: 10.0, fuel: 5.0, ..Default::default() };
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+  --> src/layer1/hydroponics_tests.rs:23:23
+   |
+23 | ...es = layer1::resources::ColonyResources { water: 100.0, food: 0.0, .....
+   |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+   |
+   = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+   |
+ 3 +     use crate::layer1::resources;
+   |
+help: if you import `resources`, refer to it directly
+   |
+23 -         let mut res = layer1::resources::ColonyResources { water: 100.0, food: 0.0, ..Default::default() };
+23 +         let mut res = resources::ColonyResources { water: 100.0, food: 0.0, ..Default::default() };
+   |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+  --> src/layer1/hydroponics_tests.rs:80:23
+   |
+80 | ...es = layer1::resources::ColonyResources { water: 100.0, food: 0.0, .....
+   |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+   |
+   = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+   |
+ 3 +     use crate::layer1::resources;
+   |
+help: if you import `resources`, refer to it directly
+   |
+80 -         let mut res = layer1::resources::ColonyResources { water: 100.0, food: 0.0, ..Default::default() };
+80 +         let mut res = resources::ColonyResources { water: 100.0, food: 0.0, ..Default::default() };
+   |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+   --> src/layer1/hydroponics_tests.rs:125:23
+    |
+125 | ...es = layer1::resources::ColonyResources { water: 0.0, food: 0.0, ..D...
+    |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+    |
+    = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+    |
+  3 +     use crate::layer1::resources;
+    |
+help: if you import `resources`, refer to it directly
+    |
+125 -         let mut res = layer1::resources::ColonyResources { water: 0.0, food: 0.0, ..Default::default() };
+125 +         let mut res = resources::ColonyResources { water: 0.0, food: 0.0, ..Default::default() };
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+   --> src/layer1/hydroponics_tests.rs:163:23
+    |
+163 | ...es = layer1::resources::ColonyResources { water: 100.0, food: 0.0, ....
+    |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+    |
+    = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+    |
+  3 +     use crate::layer1::resources;
+    |
+help: if you import `resources`, refer to it directly
+    |
+163 -         let mut res = layer1::resources::ColonyResources { water: 100.0, food: 0.0, ..Default::default() };
+163 +         let mut res = resources::ColonyResources { water: 100.0, food: 0.0, ..Default::default() };
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+   --> src/layer1/hydroponics_tests.rs:219:30
+    |
+219 | ...te = layer1::tech::TechState { total_capacity: 100.0, ..Default::def...
+    |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+    |
+    = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+    |
+  3 +     use crate::layer1::tech;
+    |
+help: if you import `tech`, refer to it directly
+    |
+219 -         let mut tech_state = layer1::tech::TechState { total_capacity: 100.0, ..Default::default() };
+219 +         let mut tech_state = tech::TechState { total_capacity: 100.0, ..Default::default() };
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+   --> src/layer1/observatory.rs:121:23
+    |
+121 | ...es = layer1::resources::ColonyResources { knowledge: 0.0, max_knowle...
+    |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+    |
+    = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+    |
+ 90 +     use crate::layer1::resources;
+    |
+help: if you import `resources`, refer to it directly
+    |
+121 -         let mut res = layer1::resources::ColonyResources { knowledge: 0.0, max_knowledge: 100.0, ..Default::default() };
+121 +         let mut res = resources::ColonyResources { knowledge: 0.0, max_knowledge: 100.0, ..Default::default() };
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+   --> src/layer1/logistics/conveyor.rs:316:23
+    |
+316 | ...es = layer1::resources::ColonyResources { max_stone: 10.0, stone: 9....
+    |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+    |
+    = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+    |
+172 +     use crate::layer1::resources;
+    |
+help: if you import `resources`, refer to it directly
+    |
+316 -         let mut res = layer1::resources::ColonyResources { max_stone: 10.0, stone: 9.0, ..Default::default() };
+316 +         let mut res = resources::ColonyResources { max_stone: 10.0, stone: 9.0, ..Default::default() };
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+  --> src/layer1/tech_storage_tests.rs:27:25
+   |
+27 | ...te = layer1::tech::TechState { total_capacity: 100.0, ..Default::defa...
+   |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+   |
+   = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+   |
+ 3 +     use crate::layer1::tech;
+   |
+help: if you import `tech`, refer to it directly
+   |
+27 -         let mut state = layer1::tech::TechState { total_capacity: 100.0, ..Default::default() };
+27 +         let mut state = tech::TechState { total_capacity: 100.0, ..Default::default() };
+   |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+  --> src/layer1/tech_storage_tests.rs:39:25
+   |
+39 | ...te = layer1::tech::TechState { total_capacity: 4.0, ..Default::defaul...
+   |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+   |
+   = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+   |
+ 3 +     use crate::layer1::tech;
+   |
+help: if you import `tech`, refer to it directly
+   |
+39 -         let mut state = layer1::tech::TechState { total_capacity: 4.0, ..Default::default() };
+39 +         let mut state = tech::TechState { total_capacity: 4.0, ..Default::default() };
+   |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+  --> src/layer1/tech_storage_tests.rs:51:25
+   |
+51 | ...te = layer1::tech::TechState { total_capacity: 10.0, ..Default::defau...
+   |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+   |
+   = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+   |
+ 3 +     use crate::layer1::tech;
+   |
+help: if you import `tech`, refer to it directly
+   |
+51 -         let mut state = layer1::tech::TechState { total_capacity: 10.0, ..Default::default() };
+51 +         let mut state = tech::TechState { total_capacity: 10.0, ..Default::default() };
+   |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+   --> src/layer1/memetic.rs:103:30
+    |
+103 | ...te = layer1::tech::TechState { total_capacity: 1000.0, ..Default::de...
+    |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+    |
+    = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+    |
+ 82 +     use crate::layer1::tech;
+    |
+help: if you import `tech`, refer to it directly
+    |
+103 -         let mut tech_state = layer1::tech::TechState { total_capacity: 1000.0, ..Default::default() };
+103 +         let mut tech_state = tech::TechState { total_capacity: 1000.0, ..Default::default() };
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+  --> src/layer1/improvised_tools_tests.rs:13:29
+   |
+13 | ...es = layer1::resources::ColonyResources { tools: 10.0, ..Default::def...
+   |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+   |
+   = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+   |
+ 3 +     use crate::layer1::resources;
+   |
+help: if you import `resources`, refer to it directly
+   |
+13 -         let mut resources = layer1::resources::ColonyResources { tools: 10.0, ..Default::default() };
+13 +         let mut resources = resources::ColonyResources { tools: 10.0, ..Default::default() };
+   |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+  --> src/layer1/improvised_tools_tests.rs:25:29
+   |
+25 | ...es = layer1::resources::ColonyResources { tools: 0.0, stone: 10.0, .....
+   |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+   |
+   = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+   |
+ 3 +     use crate::layer1::resources;
+   |
+help: if you import `resources`, refer to it directly
+   |
+25 -         let mut resources = layer1::resources::ColonyResources { tools: 0.0, stone: 10.0, ..Default::default() };
+25 +         let mut resources = resources::ColonyResources { tools: 0.0, stone: 10.0, ..Default::default() };
+   |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+  --> src/layer1/improvised_tools_tests.rs:38:29
+   |
+38 | ...es = layer1::resources::ColonyResources { tools: 0.0, stone: 0.0, woo...
+   |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+   |
+   = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+   |
+ 3 +     use crate::layer1::resources;
+   |
+help: if you import `resources`, refer to it directly
+   |
+38 -         let mut resources = layer1::resources::ColonyResources { tools: 0.0, stone: 0.0, wood: 10.0, ..Default::default() };
+38 +         let mut resources = resources::ColonyResources { tools: 0.0, stone: 0.0, wood: 10.0, ..Default::default() };
+   |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+  --> src/layer1/improvised_tools_tests.rs:52:29
+   |
+52 | ...es = layer1::resources::ColonyResources { tools: 0.0, stone: 0.0, woo...
+   |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+   |
+   = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+   |
+ 3 +     use crate::layer1::resources;
+   |
+help: if you import `resources`, refer to it directly
+   |
+52 -         let mut resources = layer1::resources::ColonyResources { tools: 0.0, stone: 0.0, wood: 0.0, scrap: 10.0, ..Default::default() };
+52 +         let mut resources = resources::ColonyResources { tools: 0.0, stone: 0.0, wood: 0.0, scrap: 10.0, ..Default::default() };
+   |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+  --> src/layer1/improvised_tools_tests.rs:67:29
+   |
+67 | ...es = layer1::resources::ColonyResources { tools: 0.0, stone: 0.0, woo...
+   |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+   |
+   = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+   |
+ 3 +     use crate::layer1::resources;
+   |
+help: if you import `resources`, refer to it directly
+   |
+67 -         let mut resources = layer1::resources::ColonyResources { tools: 0.0, stone: 0.0, wood: 0.0, scrap: 0.0, ..Default::default() };
+67 +         let mut resources = resources::ColonyResources { tools: 0.0, stone: 0.0, wood: 0.0, scrap: 0.0, ..Default::default() };
+   |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+  --> src/layer1/improvised_tools_tests.rs:83:29
+   |
+83 | ...es = layer1::resources::ColonyResources { stone: 10.0, ..Default::def...
+   |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+   |
+   = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+   |
+ 3 +     use crate::layer1::resources;
+   |
+help: if you import `resources`, refer to it directly
+   |
+83 -         let mut resources = layer1::resources::ColonyResources { stone: 10.0, ..Default::default() };
+83 +         let mut resources = resources::ColonyResources { stone: 10.0, ..Default::default() };
+   |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `shared`
+  --> src/layer1/nature/atmosphere_tides_tests.rs:28:24
+   |
+28 | ...me = shared::time::SimulationTime { tick: 250, ..Default::default() };
+   |         ^^^^^^ use of unresolved module or unlinked crate `shared`
+   |
+   = help: if you wanted to use a crate named `shared`, use `cargo add shared` to add it to your `Cargo.toml`
+help: consider importing this module
+   |
+ 3 +     use crate::shared::time;
+   |
+help: if you import `time`, refer to it directly
+   |
+28 -         let mut time = shared::time::SimulationTime { tick: 250, ..Default::default() };
+28 +         let mut time = time::SimulationTime { tick: 250, ..Default::default() };
+   |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `shared`
+  --> src/layer1/nature/atmosphere_tides_tests.rs:41:24
+   |
+41 | ...me = shared::time::SimulationTime { tick: 750, ..Default::default() };
+   |         ^^^^^^ use of unresolved module or unlinked crate `shared`
+   |
+   = help: if you wanted to use a crate named `shared`, use `cargo add shared` to add it to your `Cargo.toml`
+help: consider importing this module
+   |
+ 3 +     use crate::shared::time;
+   |
+help: if you import `time`, refer to it directly
+   |
+41 -         let mut time = shared::time::SimulationTime { tick: 750, ..Default::default() };
+41 +         let mut time = time::SimulationTime { tick: 750, ..Default::default() };
+   |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+  --> src/layer1/nature/ecology_tests.rs:30:26
+   |
+30 | ...ig = layer1::nature::ecology::EcologyConfig { growth_rate: 1.0, pione...
+   |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+   |
+   = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module through its public re-export
+   |
+ 3 +     use crate::layer1::ecology;
+   |
+help: if you import `ecology`, refer to it directly
+   |
+30 -         let mut config = layer1::nature::ecology::EcologyConfig { growth_rate: 1.0, pioneer_chance: 1.0, ..Default::default() };
+30 +         let mut config = ecology::EcologyConfig { growth_rate: 1.0, pioneer_chance: 1.0, ..Default::default() };
+   |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+  --> src/layer1/nature/ecology_tests.rs:54:26
+   |
+54 | ...ig = layer1::nature::ecology::EcologyConfig { growth_rate: 1.0, seed_...
+   |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+   |
+   = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module through its public re-export
+   |
+ 3 +     use crate::layer1::ecology;
+   |
+help: if you import `ecology`, refer to it directly
+   |
+54 -         let mut config = layer1::nature::ecology::EcologyConfig { growth_rate: 1.0, seed_spread_chance: 1.0, ..Default::default() };
+54 +         let mut config = ecology::EcologyConfig { growth_rate: 1.0, seed_spread_chance: 1.0, ..Default::default() };
+   |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+  --> src/layer1/nature/ecology_tests.rs:88:26
+   |
+88 | ...ig = layer1::nature::ecology::EcologyConfig { growth_rate: 1.0, matur...
+   |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+   |
+   = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module through its public re-export
+   |
+ 3 +     use crate::layer1::ecology;
+   |
+help: if you import `ecology`, refer to it directly
+   |
+88 -         let mut config = layer1::nature::ecology::EcologyConfig { growth_rate: 1.0, maturation_chance: 1.0, ..Default::default() };
+88 +         let mut config = ecology::EcologyConfig { growth_rate: 1.0, maturation_chance: 1.0, ..Default::default() };
+   |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `layer1`
+  --> src/ui/waste_ui_tests.rs:14:25
+   |
+14 | ...es = layer1::resources::ColonyResources { waste: 5.0, max_waste: 10.0...
+   |         ^^^^^^ use of unresolved module or unlinked crate `layer1`
+   |
+   = help: if you wanted to use a crate named `layer1`, use `cargo add layer1` to add it to your `Cargo.toml`
+help: consider importing this module
+   |
+ 1 + use crate::layer1::resources;
+   |
+help: if you import `resources`, refer to it directly
+   |
+14 -     let mut resources = layer1::resources::ColonyResources { waste: 5.0, max_waste: 10.0, ..Default::default() };
+14 +     let mut resources = resources::ColonyResources { waste: 5.0, max_waste: 10.0, ..Default::default() };
+   |
+
+warning: unused import: `crate::layer1::vermin::VerminState`
+  --> src/layer1/spoilage.rs:66:9
+   |
+66 |     use crate::layer1::vermin::VerminState;
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `TechState`
+   --> src/layer1/hydroponics_tests.rs:205:41
+    |
+205 |         use crate::layer1::tech::{Tech, TechState};
+    |                                         ^^^^^^^^^
+
+warning: unused import: `TechState`
+  --> src/layer1/memetic.rs:93:50
+   |
+93 |     use crate::layer1::tech::{unlock_tech, Tech, TechState};
+   |                                                  ^^^^^^^^^
+
+warning: unused import: `crate::layer1::resources::ColonyResources`
+ --> src/layer1/improvised_tools_tests.rs:3:9
+  |
+3 |     use crate::layer1::resources::ColonyResources;
+  |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `crate::layer1::resources::ColonyResources`
+ --> src/ui/waste_ui_tests.rs:1:5
+  |
+1 | use crate::layer1::resources::ColonyResources;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ColonyResources`
+ --> tests/integration/hauling_flow.rs:9:46
+  |
+9 |     use scale::layer1::resources::{Carrying, ColonyResources, ResourceIte...
+  |                                              ^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `TechState`
+ --> tests/integration/infinite_archive_chronicle.rs:4:33
+  |
+4 | use scale::layer1::tech::{Tech, TechState, TechStatus};
+  |                                 ^^^^^^^^^
+
+warning: unused import: `scale::layer1::health::Health`
+ --> tests/health_validation.rs:2:5
+  |
+2 | use scale::layer1::health::Health;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `scale` (test "health_validation") generated 1 warning (run `cargo clippy --fix --test "health_validation" -p scale` to apply 1 suggestion)
+warning: variable does not need to be mutable
+  --> tests/integration/ui_stats.rs:26:13
+   |
+26 | ...   let mut resources = scale::layer1::ColonyResources { food: 42.0, ....
+   |           ----^^^^^^^^^
+   |           |
+   |           help: remove this `mut`
+   |
+   = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: variable does not need to be mutable
+  --> tests/integration/hauling_flow.rs:22:13
+   |
+22 | ...   let mut resources = scale::layer1::ColonyResources { tools: 0.0, ....
+   |           ----^^^^^^^^^
+   |           |
+   |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> tests/integration/subspace_pen_pals.rs:116:9
+    |
+116 |     let mut resources = scale::layer1::ColonyResources { knowledge: 100...
+    |         ----^^^^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: `scale` (test "integration") generated 5 warnings (run `cargo clippy --fix --test "integration" -p scale` to apply 5 suggestions)
+For more information about this error, try `rustc --explain E0433`.
+warning: `scale` (lib test) generated 5 warnings
+error: could not compile `scale` (lib test) due to 50 previous errors; 5 warnings emitted

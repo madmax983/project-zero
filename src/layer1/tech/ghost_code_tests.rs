@@ -68,7 +68,7 @@ mod tests {
             .spawn((
                 Building {
                     building_type: BuildingType::Tower,
-                    ..Default::default()
+                    /* ..Default::default() removed by razor */
                 },
                 pos,
             ))
@@ -140,7 +140,7 @@ mod tests {
                 PowerConsumer {
                     active: true,
                     demand: 10.0,
-                    ..Default::default()
+                    /* ..Default::default() removed by razor */
                 },
             ))
             .id();

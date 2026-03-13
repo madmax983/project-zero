@@ -11,8 +11,12 @@ fn test_inspector_shows_waste_stats() {
     world.insert_resource(Selection::default());
 
     // Setup resources with waste
-    let mut resources = ColonyResources::default();
-    resources.waste = 5.0;
+    let mut resources = ColonyResources {
+        waste: 5.0,
+        max_waste: 10.0,
+        ..Default::default()
+    };
+    // resources.waste = 5.0;
     resources.max_waste = 10.0;
     world.insert_resource(resources);
 

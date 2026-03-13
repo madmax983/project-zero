@@ -31,7 +31,7 @@ mod tests {
         world.spawn((
             Building {
                 building_type: BuildingType::Smelter,
-                ..Default::default()
+                /* ..Default::default() removed by razor */
             },
             GridPosition { x: 2, y: 2 },
         ));

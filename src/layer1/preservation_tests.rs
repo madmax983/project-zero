@@ -67,8 +67,12 @@ mod tests {
     #[test]
     fn test_rations_decay_slower_than_food() {
         let mut world = World::new();
-        let mut resources = ColonyResources::default();
-        resources.food = 1000.0;
+        let mut resources = ColonyResources {
+            food: 1000.0,
+            rations: 1000.0,
+            ..Default::default()
+        };
+        // resources.food = 1000.0;
         resources.rations = 1000.0;
         world.insert_resource(resources);
         // VerminState is optional in spoilage_system, we don't insert it.

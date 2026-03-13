@@ -118,8 +118,12 @@ mod tests {
         let mut world = World::new();
 
         // Setup Resources
-        let mut res = ColonyResources::default();
-        res.knowledge = 0.0;
+        let mut res = ColonyResources {
+            knowledge: 0.0,
+            max_knowledge: 100.0,
+            ..Default::default()
+        };
+        // res.knowledge = 0.0;
         res.max_knowledge = 100.0;
         world.insert_resource(res);
 
