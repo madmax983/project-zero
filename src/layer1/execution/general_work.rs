@@ -112,23 +112,22 @@ fn collect_workers_by_target(
     let mut workers_by_target: std::collections::HashMap<Entity, Vec<WorkerData>> =
         std::collections::HashMap::new();
 
-    let mut query = world
-        .query_filtered::<(
-            Entity,
-            &MovementTarget,
-            Option<&Needs>,
-            Option<&Memories>,
-            Option<&SocialBuff>,
-            Option<&Equipment>,
-            Option<&Traits>,
-            Option<&Morale>,
-            Option<&crate::layer1::factions::FactionMember>,
-            Option<&WorkSpeedBuff>,
-            Option<&Job>,
-            Option<&Dialect>,
-            Option<&Linguistics>,
-            Option<&MentalFog>,
-        ), With<AtTarget>>();
+    let mut query = world.query_filtered::<(
+        Entity,
+        &MovementTarget,
+        Option<&Needs>,
+        Option<&Memories>,
+        Option<&SocialBuff>,
+        Option<&Equipment>,
+        Option<&Traits>,
+        Option<&Morale>,
+        Option<&crate::layer1::factions::FactionMember>,
+        Option<&WorkSpeedBuff>,
+        Option<&Job>,
+        Option<&Dialect>,
+        Option<&Linguistics>,
+        Option<&MentalFog>,
+    ), With<AtTarget>>();
 
     // ⚡ Bolt Optimization:
     // We iterate over `query.iter(world)` and stream directly into the `HashMap`.

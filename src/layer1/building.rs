@@ -29,17 +29,13 @@ use super::social::Tavern;
 use super::stockpile::Stockpile;
 use super::GridPosition;
 use crate::layer1::access_control::AccessControl;
-use crate::layer1::admin::{AdminConsumer, AdminProvider, Office};
 use crate::layer1::ai_core::AICore;
-use crate::layer1::atmosphere::CorrosionResistant;
 use crate::layer1::control::DoorControl;
 use crate::layer1::drone::DroneHub;
 use crate::layer1::energy::{Conduit, FuelConsumer, PowerConsumer, PowerSource};
 use crate::layer1::heirloom::AncientStructure;
-use crate::layer1::inventory::Inventory;
 use crate::layer1::items::ItemType;
 use crate::layer1::lighting::LightSource;
-use crate::layer1::permit::PermitRequired;
 use crate::layer1::prototyping::{BuildingMastery, Prototype};
 use crate::layer1::resources::{ColonyResources, RefiningProgress};
 use crate::layer1::rituals::MachineSpirit;
@@ -1204,6 +1200,161 @@ impl ShiftSchedule {
 }
 
 #[allow(clippy::too_many_lines, clippy::match_same_arms)]
+
+fn apply_common_building_components(
+    entity: &mut EntityWorldMut,
+    building_type: BuildingType,
+    material: MaterialType,
+) {
+    // Calculate HP based on material
+    let base_hp = 50.0;
+    let max_hp = base_hp * material.hp_modifier();
+    entity.insert(crate::layer1::structure::Structure {
+        max_hp,
+        current_hp: max_hp,
+    });
+
+    // Permit System: Advanced buildings require a permit
+    if let Some((_, tier)) = building_type.tier_info() {
+        if tier >= Tier::Advanced {
+            entity.insert(crate::layer1::permit::PermitRequired);
+            // Ensure inventory exists to accept permit
+            entity.insert(crate::layer1::inventory::Inventory::default());
+        }
+    }
+
+    // Flammability
+    if material.flammability() {
+        entity.insert(crate::layer1::fire::Flammable::default());
+    }
+
+    // Beauty
+    let base_beauty = building_type.beauty_value();
+    let final_beauty = base_beauty + material.beauty_modifier();
+    if final_beauty.abs() > f32::EPSILON {
+        let radius = building_type.beauty_radius();
+        entity.insert(crate::layer1::beauty::BeautySource {
+            value: final_beauty,
+            radius,
+        });
+    }
+
+    // Admin Consumer (All buildings consume admin)
+    // Default 1.0, maybe scale by tier later?
+    entity.insert(crate::layer1::admin::AdminConsumer { demand: 1.0 });
+
+    // Corrosion Resistance based on Material
+    match material {
+        MaterialType::Stone => {
+            entity.insert(crate::layer1::atmosphere::CorrosionResistant { factor: 0.5 });
+        }
+        MaterialType::Metal => {
+            entity.insert(crate::layer1::atmosphere::CorrosionResistant { factor: 0.5 });
+        }
+        MaterialType::Gold => {
+            entity.insert(crate::layer1::atmosphere::CorrosionResistant { factor: 1.0 });
+        }
+        MaterialType::Wood => {
+            // Wood rots, so no resistance (0.0)
+        }
+    }
+}
+
+fn apply_specific_building_components(entity: &mut EntityWorldMut, building_type: BuildingType) {
+    match building_type {
+        BuildingType::Office => {
+            entity.insert((
+                // Office provides admin
+                crate::layer1::admin::AdminProvider { amount: 10.0 },
+                crate::layer1::admin::Office::default(),
+                // Office typically operates during the day
+                ShiftSchedule::default(),
+            ));
+        }
+        BuildingType::Housing | BuildingType::Lander => {
+            configure_housing(entity, building_type);
+        }
+        BuildingType::Farm
+        | BuildingType::Plantation
+        | BuildingType::Greenhouse
+        | BuildingType::HydroponicsBay
+        | BuildingType::Smokehouse
+        | BuildingType::LumberMill
+        | BuildingType::StoneMason
+        | BuildingType::Smelter
+        | BuildingType::Smithy
+        | BuildingType::Weaver
+        | BuildingType::Tailor
+        | BuildingType::Refinery
+        | BuildingType::AncientFabricator => configure_production(entity, building_type),
+        BuildingType::Stockpile | BuildingType::Landfill => {
+            configure_storage(entity, building_type);
+        }
+        BuildingType::Tavern
+        | BuildingType::Library
+        | BuildingType::FlowerBed
+        | BuildingType::Statue
+        | BuildingType::Hospital
+        | BuildingType::Grave
+        | BuildingType::TradeDepot => configure_civic(entity, building_type),
+        BuildingType::Wall
+        | BuildingType::Window
+        | BuildingType::Gate
+        | BuildingType::Tower
+        | BuildingType::Well
+        | BuildingType::ConveyorBelt
+        | BuildingType::Hopper
+        | BuildingType::Airlock
+        | BuildingType::Vent => configure_infrastructure(entity, building_type),
+        BuildingType::Generator
+        | BuildingType::SolarPanel
+        | BuildingType::PowerPole
+        | BuildingType::Battery
+        | BuildingType::AncientReactor
+        | BuildingType::Heater
+        | BuildingType::AuroralCollector => configure_power(entity, building_type),
+        BuildingType::Observatory
+        | BuildingType::LifeSupport
+        | BuildingType::TrashCannon
+        | BuildingType::ServerBank
+        | BuildingType::CommandCenter
+        | BuildingType::AICore
+        | BuildingType::DroneHub
+        | BuildingType::CryoPod
+        | BuildingType::AtmosphericProcessor
+        | BuildingType::GeneBank
+        | BuildingType::CloneVat
+        | BuildingType::HypnoPod
+        | BuildingType::HoloProjector => configure_tech(entity, building_type),
+        BuildingType::Shower => configure_civic(entity, building_type),
+        BuildingType::Recycler => {
+            // Recycler configuration
+            entity.insert((
+                crate::layer1::recycling::Recycler::default(),
+                crate::layer1::inventory::Inventory::default(),
+                crate::layer1::lighting::LightSource {
+                    is_outdoor: true,
+                    radius: 3.0,
+                    intensity: 0.5,
+                    color: (0, 255, 0), // Green glow
+                },
+                ShiftSchedule::default(),
+            ));
+        }
+        BuildingType::BulletinBoard => {
+            entity.insert((
+                crate::layer1::social::grievances::BulletinBoard::default(),
+                ShiftSchedule::default(),
+            ));
+        }
+        BuildingType::PersonalShed
+        | BuildingType::PersonalGarden
+        | BuildingType::PersonalShrine => {
+            // Logic handled by components added in system
+        }
+    }
+}
+
 fn spawn_building(
     world: &mut World,
     x: i32,
@@ -1226,151 +1377,8 @@ fn spawn_building(
         entity.insert(Prototype::default());
     }
 
-    // Calculate HP based on material
-    let base_hp = 50.0;
-    let max_hp = base_hp * material.hp_modifier();
-    entity.insert(crate::layer1::structure::Structure {
-        max_hp,
-        current_hp: max_hp,
-    });
-
-    // Permit System: Advanced buildings require a permit
-    if let Some((_, tier)) = building_type.tier_info() {
-        if tier >= Tier::Advanced {
-            entity.insert(PermitRequired);
-            // Ensure inventory exists to accept permit
-            entity.insert(Inventory::default());
-        }
-    }
-
-    // Flammability
-    if material.flammability() {
-        entity.insert(Flammable::default());
-    }
-
-    // Beauty
-    let base_beauty = building_type.beauty_value();
-    let final_beauty = base_beauty + material.beauty_modifier();
-    if final_beauty.abs() > f32::EPSILON {
-        let radius = building_type.beauty_radius();
-        entity.insert(BeautySource {
-            value: final_beauty,
-            radius,
-        });
-    }
-
-    // Admin Consumer (All buildings consume admin)
-    // Default 1.0, maybe scale by tier later?
-    entity.insert(AdminConsumer { demand: 1.0 });
-
-    // Corrosion Resistance based on Material
-    match material {
-        MaterialType::Stone => {
-            entity.insert(CorrosionResistant { factor: 0.5 });
-        }
-        MaterialType::Metal => {
-            entity.insert(CorrosionResistant { factor: 0.5 });
-        }
-        MaterialType::Gold => {
-            entity.insert(CorrosionResistant { factor: 1.0 });
-        }
-        MaterialType::Wood => {
-            // Wood rots, so no resistance (0.0)
-        }
-    }
-
-    match building_type {
-        BuildingType::Office => {
-            entity.insert((
-                // Office provides admin
-                AdminProvider { amount: 10.0 },
-                Office::default(),
-                // Office typically operates during the day
-                ShiftSchedule::default(),
-            ));
-        }
-        BuildingType::Housing | BuildingType::Lander => {
-            configure_housing(&mut entity, building_type);
-        }
-        BuildingType::Farm
-        | BuildingType::Plantation
-        | BuildingType::Greenhouse
-        | BuildingType::HydroponicsBay
-        | BuildingType::Smokehouse
-        | BuildingType::LumberMill
-        | BuildingType::StoneMason
-        | BuildingType::Smelter
-        | BuildingType::Smithy
-        | BuildingType::Weaver
-        | BuildingType::Tailor
-        | BuildingType::Refinery
-        | BuildingType::AncientFabricator => configure_production(&mut entity, building_type),
-        BuildingType::Stockpile | BuildingType::Landfill => {
-            configure_storage(&mut entity, building_type);
-        }
-        BuildingType::Tavern
-        | BuildingType::Library
-        | BuildingType::FlowerBed
-        | BuildingType::Statue
-        | BuildingType::Hospital
-        | BuildingType::Grave
-        | BuildingType::TradeDepot => configure_civic(&mut entity, building_type),
-        BuildingType::Wall
-        | BuildingType::Window
-        | BuildingType::Gate
-        | BuildingType::Tower
-        | BuildingType::Well
-        | BuildingType::ConveyorBelt
-        | BuildingType::Hopper
-        | BuildingType::Airlock
-        | BuildingType::Vent => configure_infrastructure(&mut entity, building_type),
-        BuildingType::Generator
-        | BuildingType::SolarPanel
-        | BuildingType::PowerPole
-        | BuildingType::Battery
-        | BuildingType::AncientReactor
-        | BuildingType::Heater
-        | BuildingType::AuroralCollector => configure_power(&mut entity, building_type),
-        BuildingType::Observatory
-        | BuildingType::LifeSupport
-        | BuildingType::TrashCannon
-        | BuildingType::ServerBank
-        | BuildingType::CommandCenter
-        | BuildingType::AICore
-        | BuildingType::DroneHub
-        | BuildingType::CryoPod
-        | BuildingType::AtmosphericProcessor
-        | BuildingType::GeneBank
-        | BuildingType::CloneVat
-        | BuildingType::HypnoPod
-        | BuildingType::HoloProjector => configure_tech(&mut entity, building_type),
-        BuildingType::Shower => configure_civic(&mut entity, building_type),
-        BuildingType::Recycler => {
-            // Recycler configuration
-            entity.insert((
-                crate::layer1::recycling::Recycler::default(),
-                Inventory::default(),
-                crate::layer1::lighting::LightSource {
-                    is_outdoor: true,
-                    radius: 3.0,
-                    intensity: 0.5,
-                    color: (0, 255, 0), // Green glow
-                },
-                ShiftSchedule::default(),
-            ));
-        }
-        BuildingType::BulletinBoard => {
-            entity.insert((
-                crate::layer1::social::grievances::BulletinBoard::default(),
-                ShiftSchedule::default(),
-            ));
-        }
-        BuildingType::PersonalShed
-        | BuildingType::PersonalGarden
-        | BuildingType::PersonalShrine => {
-            // Logic handled by components added in system
-        }
-    }
+    apply_common_building_components(&mut entity, building_type, material);
+    apply_specific_building_components(&mut entity, building_type);
 
     entity.id()
 }
