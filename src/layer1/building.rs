@@ -2287,7 +2287,8 @@ mod tests {
         assert_eq!(BuildingType::CloneVat.next(), BuildingType::Shower);
         assert_eq!(BuildingType::Shower.next(), BuildingType::Recycler);
         assert_eq!(BuildingType::Recycler.next(), BuildingType::BulletinBoard);
-        assert_eq!(BuildingType::BulletinBoard.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::BulletinBoard.next(), BuildingType::HoloProjector);
+        assert_eq!(BuildingType::HoloProjector.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -2507,6 +2508,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::BulletinBoard);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::HoloProjector);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

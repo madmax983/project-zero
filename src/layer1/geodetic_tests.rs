@@ -69,8 +69,14 @@ mod tests {
         });
 
         // Setup heat source at (20, 20)
+        // Create a heat gradient so the stone has a path to climb.
         let mut temp_grid = TemperatureGrid::new(30, 30, 20.0);
-        temp_grid.set(20, 20, 100.0);
+        for x in 0..30 {
+            for y in 0..30 {
+                // simple gradient increasing towards 30,30
+                temp_grid.set(x, y, 20.0 + (x as f32 + y as f32));
+            }
+        }
         world.insert_resource(temp_grid);
 
         let id = world
@@ -87,10 +93,14 @@ mod tests {
         let mut schedule = Schedule::default();
         schedule.add_systems(update_living_stone_system);
 
-        schedule.run(&mut world);
+        // Run the schedule enough times to trigger movement
+        for _ in 0..101 {
+            world.resource_mut::<SimulationTime>().tick += 1;
+            schedule.run(&mut world);
+        }
 
         let pos = world.get::<GridPosition>(id).unwrap();
-        // Should move towards (20, 20) i.e., x increases, y increases
+        // Should move towards (30, 30) i.e., x increases, y increases
         assert!(
             pos.x > 15 || pos.y > 15,
             "Stone should move towards heat. Pos: {:?}",

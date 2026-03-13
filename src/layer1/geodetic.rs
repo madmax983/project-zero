@@ -102,7 +102,13 @@ pub fn update_living_stone_system(
                 // Let's normalize. Heat diff can be 0-100+. Dist can be 0-100+.
                 // Attraction score = -min_dist.
 
-                let attraction_score = -min_dist * 2.0; // Weight attraction heavily
+                // If there are no other stones, min_dist remains 1000.0
+                // We should not penalize if there are no other stones.
+                let attraction_score = if stone_positions.len() <= 1 {
+                    0.0
+                } else {
+                    -min_dist * 2.0
+                };
 
                 let total_score = heat_score + attraction_score;
 
@@ -126,7 +132,12 @@ pub fn update_living_stone_system(
                     min_dist = dist;
                 }
             }
-            let current_score = -min_dist * 2.0; // heat diff is 0
+            let current_score = if stone_positions.len() <= 1 {
+                0.0
+            } else {
+                -min_dist * 2.0
+            };
+
             if current_score >= best_score {
                 best_move = None;
             }

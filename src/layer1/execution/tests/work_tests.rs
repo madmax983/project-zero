@@ -310,7 +310,7 @@ fn test_work_execution_efficiency_low_morale() {
                 hunger: 0.1,
                 rest: 0.1,
                 leisure: 0.1,
-                hygiene: 0.8,
+                hygiene: 0.1,
             },
             Equipment {
                 tool: Some(tool),

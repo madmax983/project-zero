@@ -109,7 +109,7 @@ mod tests {
 
         // Spawn 10 pops. Need 10 * 5 = 50 food for bonus. We have 100.
         for _ in 0..10 {
-            world.spawn((Pop::default(), Morale::default()));
+            world.spawn((Pop, Morale::default()));
         }
 
         // Act
@@ -138,7 +138,7 @@ mod tests {
         });
 
         for _ in 0..10 {
-            world.spawn((Pop::default(), Morale::default()));
+            world.spawn((Pop, Morale::default()));
         }
 
         // Act
@@ -167,7 +167,7 @@ mod tests {
         });
 
         for _ in 0..10 {
-            world.spawn((Pop::default(), Morale::default()));
+            world.spawn((Pop, Morale::default()));
         }
 
         // Act
@@ -198,7 +198,7 @@ mod tests {
         });
 
         for _ in 0..10 {
-            world.spawn((Pop::default(), Morale::default()));
+            world.spawn((Pop, Morale::default()));
         }
 
         // Act

@@ -276,7 +276,7 @@ mod tests {
 
     fn setup_world() -> World {
         // Initialize TaskPool for parallel systems
-        let _ = bevy_tasks::ComputeTaskPool::get_or_init(|| bevy_tasks::TaskPool::new());
+        let _ = bevy_tasks::ComputeTaskPool::get_or_init(bevy_tasks::TaskPool::new);
 
         let mut world = World::new();
         // Setup standard resources (Time, etc)

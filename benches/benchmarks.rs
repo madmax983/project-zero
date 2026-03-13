@@ -256,7 +256,7 @@ fn make_bench_world(n_pops: usize, n_buildings: usize, gpu_ctx: Option<GpuContex
         let leisure = 0.5 + (i % 3) as f32 * 0.1;
         world.spawn((
             GridPosition { x, y },
-            Needs {
+            Needs { hygiene: 100.0,
                 hunger,
                 rest,
                 leisure,
