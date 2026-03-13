@@ -27,9 +27,7 @@ mod tests {
     #[test]
     fn test_refining_ore_to_fuel() {
         let mut world = World::new();
-        let mut res = ColonyResources::default();
-        res.ore = 10.0;
-        res.fuel = 0.0;
+        let res = ColonyResources { ore: 10.0, fuel: 0.0, ..Default::default() };
         world.insert_resource(res);
 
         // Spawn Refinery
@@ -70,9 +68,7 @@ mod tests {
     #[test]
     fn test_refining_stops_if_insufficient_ore() {
         let mut world = World::new();
-        let mut res = ColonyResources::default();
-        res.ore = 1.0; // Need 2
-        res.fuel = 0.0;
+        let res = ColonyResources { ore: 1.0, fuel: 0.0, ..Default::default() };
         world.insert_resource(res);
 
         world.spawn((
@@ -103,9 +99,7 @@ mod tests {
 
     #[test]
     fn test_add_fuel_clamps_to_max() {
-        let mut res = ColonyResources::default();
-        res.max_fuel = 10.0;
-        res.fuel = 5.0;
+        let mut res = ColonyResources { max_fuel: 10.0, fuel: 5.0, ..Default::default() };
         res.add_fuel(10.0);
         assert!((res.fuel - 10.0).abs() < f32::EPSILON);
     }

@@ -703,8 +703,7 @@ mod tests {
 
         let mut world = World::new();
         // LumberMill requires 1 Wood.
-        let mut resources = ColonyResources::default();
-        resources.wood = 0.0; // Cannot afford
+        let resources = ColonyResources { wood: 0.0, ..Default::default() };
 
         let cycle = DayNightCycle::default();
         let taboo = TabooState::default();
@@ -855,7 +854,6 @@ mod tests {
         let housing = Housing {
             capacity: 1,
             residents: vec![Entity::from_raw(123)],
-            ..Default::default()
         };
 
         world.spawn((housing, GridPosition { x: 0, y: 0 }));

@@ -311,9 +311,7 @@ mod tests {
     #[test]
     fn test_hopper_respects_cap() {
         let mut world = World::new();
-        let mut res = ColonyResources::default();
-        res.max_stone = 10.0;
-        res.stone = 9.0;
+        let res = ColonyResources { max_stone: 10.0, stone: 9.0, ..Default::default() };
         world.insert_resource(res);
         world.insert_resource(TerrainGrid {
             width: 10,

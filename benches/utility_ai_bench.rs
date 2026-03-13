@@ -28,7 +28,6 @@ fn benchmark_context_score(c: &mut Criterion) {
     let varied_weights = UtilityWeights {
         distance_weight: 1.5,
         availability_weight: 0.8,
-        ..Default::default()
     };
 
     c.bench_function(

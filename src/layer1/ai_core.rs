@@ -258,7 +258,6 @@ mod tests {
                 PowerConsumer {
                     active: true,
                     demand: 1.0,
-                    ..Default::default()
                 },
             ))
             .id();
@@ -272,7 +271,6 @@ mod tests {
                 PowerConsumer {
                     active: true,
                     demand: 10.0,
-                    ..Default::default()
                 },
             ))
             .id();

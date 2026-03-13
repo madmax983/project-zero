@@ -42,7 +42,6 @@ mod tests {
             PowerConsumer {
                 demand: 10.0,
                 active: true, // Powered
-                ..Default::default()
             },
             GridPosition { x: 5, y: 5 },
         ));
@@ -85,7 +84,6 @@ mod tests {
             PowerConsumer {
                 demand: 10.0,
                 active: false, // Power cut
-                ..Default::default()
             },
             GridPosition { x: 5, y: 5 },
         ));
@@ -123,7 +121,6 @@ mod tests {
             PowerConsumer {
                 demand: 10.0,
                 active: false,
-                ..Default::default()
             },
             GridPosition { x: 5, y: 5 },
         ));

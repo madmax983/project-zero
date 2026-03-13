@@ -113,8 +113,7 @@ fn test_firewall_comms_policy_integration() {
 #[test]
 fn test_espionage_loss_integration() {
     let mut world = World::new();
-    let mut resources = ColonyResources::default();
-    resources.knowledge = 100.0;
+    let resources = ColonyResources { knowledge: 100.0, ..Default::default() };
     world.insert_resource(resources);
     world.insert_resource(ColonyPolicies::default());
 

@@ -133,8 +133,7 @@ mod tests {
     #[test]
     fn test_global_food_decay() {
         let mut world = World::new();
-        let mut resources = ColonyResources::default();
-        resources.food = 1000.0;
+        let resources = ColonyResources { food: 1000.0, ..Default::default() };
         world.insert_resource(resources);
 
         // Run system
@@ -171,8 +170,7 @@ mod tests {
     #[test]
     fn test_rations_spoilage() {
         let mut world = World::new();
-        let mut resources = ColonyResources::default();
-        resources.rations = 1000.0;
+        let resources = ColonyResources { rations: 1000.0, ..Default::default() };
         world.insert_resource(resources);
 
         // Run system
@@ -188,12 +186,10 @@ mod tests {
     #[test]
     fn test_spoilage_with_vermin() {
         let mut world = World::new();
-        let mut resources = ColonyResources::default();
-        resources.food = 1000.0;
+        let resources = ColonyResources { food: 1000.0, ..Default::default() };
         world.insert_resource(resources);
 
-        let mut vermin = VerminState::default();
-        vermin.severity = 50.0; // Moderate vermin
+        let vermin = VerminState { severity: 50.0, ..Default::default() };
         world.insert_resource(vermin);
 
         // Run system

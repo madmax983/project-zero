@@ -20,9 +20,7 @@ mod tests {
     #[test]
     fn test_hydroponics_consumes_water_and_power() {
         let mut world = setup_test_world();
-        let mut res = ColonyResources::default();
-        res.water = 100.0;
-        res.food = 0.0;
+        let res = ColonyResources { water: 100.0, food: 0.0, ..Default::default() };
         // power is not in ColonyResources directly, it's handled via PowerConsumer active state usually?
         // Or maybe ColonyResources has fuel?
         // Spec says "Consumes Water and Power".
@@ -77,9 +75,7 @@ mod tests {
     #[test]
     fn test_hydroponics_production_multiplier() {
         let mut world = setup_test_world();
-        let mut res = ColonyResources::default();
-        res.water = 100.0;
-        res.food = 0.0;
+        let res = ColonyResources { water: 100.0, food: 0.0, ..Default::default() };
         world.insert_resource(res);
         world.insert_resource(SeasonState {
             current_season: Season::Winter,
@@ -122,9 +118,7 @@ mod tests {
     #[test]
     fn test_hydroponics_fails_without_water() {
         let mut world = setup_test_world();
-        let mut res = ColonyResources::default();
-        res.water = 0.0; // No water
-        res.food = 0.0;
+        let res = ColonyResources { water: 0.0, food: 0.0, ..Default::default() };
         world.insert_resource(res);
         world.insert_resource(SeasonState {
             current_season: Season::Spring,
@@ -160,9 +154,7 @@ mod tests {
     #[test]
     fn test_hydroponics_fails_without_power() {
         let mut world = setup_test_world();
-        let mut res = ColonyResources::default();
-        res.water = 100.0;
-        res.food = 0.0;
+        let res = ColonyResources { water: 100.0, food: 0.0, ..Default::default() };
         world.insert_resource(res);
         world.insert_resource(SeasonState {
             current_season: Season::Spring,
@@ -216,8 +208,7 @@ mod tests {
             stone: 100.0,
             ..Default::default()
         });
-        let mut tech_state = TechState::default();
-        tech_state.total_capacity = 100.0;
+        let mut tech_state = TechState { total_capacity: 100.0, ..Default::default() };
         tech_state.unlock(Tech::Hydroponics);
         world.insert_resource(tech_state);
         world.insert_resource(crate::shared::log::MessageLog::default());

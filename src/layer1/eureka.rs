@@ -196,8 +196,7 @@ mod tests {
     #[test]
     fn test_handle_eureka_events_unlocks_tech() {
         let mut world = World::new();
-        let mut tech_state = TechState::default();
-        tech_state.total_capacity = 100.0; // Ensure capacity
+        let tech_state = TechState { total_capacity: 100.0, ..Default::default() };
         world.insert_resource(tech_state);
         world.insert_resource(ColonyResources::default());
         world.insert_resource(Events::<EurekaEvent>::default());

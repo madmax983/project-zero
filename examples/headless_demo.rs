@@ -12,7 +12,6 @@ fn main() {
     // 1. Setup the world with headless configuration
     let config = SetupConfig {
         headless: true,
-        ..Default::default()
     };
     let mut world = setup_world_with_config(config);
 
