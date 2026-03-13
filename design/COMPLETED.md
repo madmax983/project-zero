@@ -231,3 +231,4 @@
 - [x] `452` The Event Horizon Tap — `specs/452-event-horizon-tap.md` — completed 2026-03-12
 - [x] `262` Thermal Gliders — `specs/262-thermal-gliders.md` — completed 2026-03-12
 - [x] `411` Machine Awakening — `specs/411-machine-awakening.md` — completed 2026-03-13
+- [x] `INT-411` Integration: Machine Awakening -> Chronicle — completed 2026-03-13

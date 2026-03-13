@@ -361,3 +361,10 @@
 - **Glue added:** `apply_neural_shock_system` in `src/layer1/integration.rs` translates `NeuralShock` into `MentalState::Broken(MentalBreakType::Daze)`.
 - **Schedule:** Registered in `Layer1SystemSet::Observation`, specifically `.after(crate::layer1::tech::neural_leech::handle_hub_death_system)`.
 - **Tests:** `tests/integration/neural_leech_unrest.rs` (1 test)
+
+### INT-411: Machine Awakening -> Chronicle
+- **Date:** 2026-03-13
+- **Systems connected:** `process_bot_sentience` (Machine Awakening) -> `bot_awakening_chronicle_bridge` (Integration) -> `AddChronicleEvent` (Chronicle)
+- **Glue added:** `bot_awakening_chronicle_bridge` in `src/layer1/integration.rs` translates the addition of the `Awakened` component into a Major `AddChronicleEvent`.
+- **Schedule:** Registered in `Layer1SystemSet::Observation`, evaluated `.after(crate::layer1::tech::machine_awakening::process_bot_sentience)`.
+- **Tests:** `tests/integration/machine_awakening_chronicle.rs` (1 test)
