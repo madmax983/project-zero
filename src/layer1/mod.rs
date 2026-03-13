@@ -297,6 +297,9 @@ pub mod unrest;
 pub use atmosphere::*;
 pub use terraforming::*;
 
+pub mod light_pollution;
+pub use light_pollution::*;
+
 /// Secret Societies system (Spec 147).
 pub mod society;
 pub use society::*;

@@ -256,7 +256,7 @@ mod tests {
         };
         world.insert_resource(sky);
 
-        let observatory = world.spawn(Observatory).id();
+        let observatory = world.spawn(Observatory::default()).id();
         let pop = world
             .spawn((
                 Pop,

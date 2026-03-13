@@ -73,6 +73,7 @@ mod tests {
 
         world.spawn((
             LightSource {
+                is_outdoor: false,
                 radius: 5.0,
                 intensity: 1.0,
                 color: (255, 0, 0), // Red
@@ -108,6 +109,7 @@ mod tests {
 
         world.spawn((
             LightSource {
+                is_outdoor: false,
                 radius: 5.0,
                 intensity: 1.0,
                 color: (0, 0, 255), // Blue
@@ -140,6 +142,7 @@ mod tests {
 
         world.spawn((
             LightSource {
+                is_outdoor: false,
                 radius: 5.0,
                 intensity: 1.0,
                 color: (255, 0, 0), // Red
@@ -173,6 +176,7 @@ mod tests {
 
         world.spawn((
             LightSource {
+                is_outdoor: false,
                 radius: 1.0,
                 intensity: 1.0,
                 color: (255, 0, 0), // Red

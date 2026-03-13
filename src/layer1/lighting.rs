@@ -76,6 +76,8 @@ pub struct LightSource {
     pub intensity: f32,
     /// Color of the light (RGB). Currently unused for logic, visual only.
     pub color: (u8, u8, u8),
+    /// Whether this light is outdoor and contributes to light pollution.
+    pub is_outdoor: bool,
 }
 
 /// Updates the light map based on ambient light and active light sources.
@@ -189,6 +191,7 @@ mod tests {
             radius: 5.0,
             intensity: 1.0,
             color: (255, 255, 255),
+            is_outdoor: false,
         };
         assert_eq!(source.radius, 5.0);
     }
@@ -225,6 +228,7 @@ mod tests {
                 radius: 2.0,
                 intensity: 1.0,
                 color: (255, 255, 255),
+                is_outdoor: false,
             },
             GridPosition { x: 5, y: 5 },
         ));

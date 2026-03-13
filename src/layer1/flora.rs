@@ -31,6 +31,7 @@ pub fn update_bioluminescence_system(
         if is_night {
             if light_source.is_none() {
                 commands.entity(entity).insert(LightSource {
+                    is_outdoor: false,
                     radius: bio.radius,
                     intensity: bio.intensity,
                     color: bio.color,
@@ -483,6 +484,7 @@ mod tests {
                     intensity: 0.8,
                 },
                 LightSource {
+                    is_outdoor: false,
                     radius: 5.0,
                     intensity: 0.8,
                     color: (0, 255, 255),
@@ -525,6 +527,7 @@ mod tests {
                     intensity: 0.8,
                 },
                 LightSource {
+                    is_outdoor: false,
                     radius: 5.0,
                     intensity: 0.8,
                     color: (0, 255, 255),

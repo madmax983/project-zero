@@ -119,6 +119,9 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::atmosphere::update_atmosphere_system),
             crate::layer1::pheromone::pheromone_emission_system
                 .after(crate::layer1::pheromone::reactive_emitter_system),
+            crate::layer1::light_pollution::calculate_sky_glow_system,
+            crate::layer1::light_pollution::apply_light_pollution_system
+                .after(crate::layer1::light_pollution::calculate_sky_glow_system),
         )
             .in_set(Layer1SystemSet::Environment),
     );
