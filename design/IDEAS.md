@@ -9681,3 +9681,17 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Immediate, massive geopolitical and economic gains vs. the literal overshadowing and subjugation of your citizens' daily lives.
 
 ---
+
+## The Martyr's Echo
+
+**Layer:** 1 -> 3
+
+**Fantasy:** A single death reshapes galactic politics.
+
+**Mechanic:** When a highly skilled or widely known Pop dies in a tragic or heroic event (e.g. defending a crucial reactor, starved during a siege), they generate a massive "Martyrdom" value. This value radiates outward. On Layer 1, it permanently boosts the morale and work speed of their specific faction/profession. If the Pop was widely known, it ripples to Layer 3, creating immense diplomatic pressure or unrest in rival civilizations who share their ideology.
+
+**Emergence:** You accidentally let a beloved alien ambassador starve because you forgot to build a specialized kitchen. Their death becomes a rallying cry for their home empire, immediately triggering a massive Layer 3 holy war against your colonies.
+
+**Tension:** Do you risk your best people in dangerous situations knowing their death might be more valuable than their life, or do you play it safe to avoid uncontrollable geopolitical shockwaves?
+
+---
