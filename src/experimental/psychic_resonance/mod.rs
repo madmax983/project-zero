@@ -41,10 +41,10 @@ pub fn psychic_resonance_system(
                 // High value items give positive resonance
                 match item.resource_type {
                     ResourceType::Alcohol | ResourceType::Rations | ResourceType::Metal => {
-                        resonance_delta += RESONANCE_STRENGTH * (item.amount as f32).min(10.0);
+                        resonance_delta += RESONANCE_STRENGTH * item.amount.min(10.0);
                     }
                     ResourceType::Waste | ResourceType::Scrap => {
-                        resonance_delta -= RESONANCE_STRENGTH * (item.amount as f32).min(10.0);
+                        resonance_delta -= RESONANCE_STRENGTH * item.amount.min(10.0);
                     }
                     _ => {}
                 }
