@@ -11,3 +11,6 @@
 **2024-10-24 - [Grid Index Arithmetic Integer Overflow]**
 **Threat:** [Integer overflow in grid index calculations (y * width + x) within `TemperatureGrid` and `RadiationGrid` allowing DoS via application panics.]
 **Defense:** [Switched to safe arithmetic (`checked_mul` and `checked_add`) for bounded capacity and coordinate indexing in `get`, `set`, `add`, and diffusion calculations.]
+**2025-05-20 - Unbounded Grid Allocation DOS (General)**
+**Threat:** DoS vectors identified across multiple module grids in `src/layer1` (`structural_integrity.rs`, `void_stare.rs`, `hum.rs`, `beauty.rs`, `geology.rs`, `loci.rs`, `nature/water.rs`, `nature/fertility.rs`, `nature/erosion.rs`, `clutter.rs`, `acoustic.rs`, `pressure.rs`, `lighting.rs`). Grid initialization allowed arbitrarily large unbounded memory allocation via unchecked `width * height` (e.g. `vec![...; width * height]`).
+**Defense:** Replaced implicit multiplication with explicit capacity limit checks (`checked_mul` bounds checking logic). Limited all grids to a maximum capacity of 10,000,000 tiles.

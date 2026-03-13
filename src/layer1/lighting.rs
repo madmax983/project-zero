@@ -42,10 +42,15 @@ impl LightMap {
     /// Create a new light map with given dimensions.
     #[must_use]
     pub fn new(width: u32, height: u32) -> Self {
+        let size = (width as usize)
+            .checked_mul(height as usize)
+            .expect("Grid size overflow or too large");
+        assert!(size <= 10_000_000, "Grid size overflow or too large");
+
         Self {
             width,
             height,
-            tiles: vec![0.0; (width * height) as usize],
+            tiles: vec![0.0; size],
         }
     }
 

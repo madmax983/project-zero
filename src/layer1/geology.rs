@@ -27,10 +27,15 @@ impl SeismicGrid {
     /// Creates a new seismic grid with the given dimensions.
     #[must_use]
     pub fn new(width: usize, height: usize) -> Self {
+        let size = width
+            .checked_mul(height)
+            .expect("Grid size overflow or too large");
+        assert!(size <= 10_000_000, "Grid size overflow or too large");
+
         Self {
             width,
             height,
-            stress: vec![0.0; width * height],
+            stress: vec![0.0; size],
         }
     }
 
