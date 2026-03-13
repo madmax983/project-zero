@@ -718,6 +718,8 @@ pub mod spiteful_will;
 pub use spiteful_will::*;
 
 pub mod nature;
+pub mod nanite_fabrication;
+pub use nanite_fabrication::*;
 pub use nature::*;
 pub mod shipbreaking;
 pub use shipbreaking::*;

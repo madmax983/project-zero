@@ -6,6 +6,13 @@ use bevy_ecs::prelude::*;
 pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
+            crate::layer1::nanite_fabrication::nanite_fabrication_system,
+            crate::layer1::nanite_fabrication::grey_goo_replication_system,
+        )
+            .in_set(Layer1SystemSet::Execution),
+    );
+    schedule.add_systems(
+        (
             crate::layer1::zone::apply_zone_designation_system,
             crate::layer1::construction::process_great_work_phases,
             crate::layer1::room_quality::apply_waking_thoughts_system

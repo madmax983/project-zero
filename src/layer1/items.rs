@@ -85,6 +85,9 @@ pub struct UnequipEvent {
 /// Types of food items Pops can consume.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
 pub enum ItemType {
+    Energy,
+    RawMass,
+    AdvancedAlloy,
     /// Default generic item type (safe fallback).
     #[default]
     None,

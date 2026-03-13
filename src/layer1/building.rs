@@ -202,6 +202,7 @@ pub enum Category {
 /// ```
 #[derive(Clone, Copy, PartialEq, Eq, Hash, Default, Debug, EnumIter)]
 pub enum BuildingType {
+    Nanoforge,
     /// Basic shelter for pops.
     #[default]
     Housing,
@@ -506,6 +507,7 @@ impl BuildingType {
             Self::Recycler => true,
             Self::BulletinBoard => false,
             Self::HoloProjector => false,
+            Self::Nanoforge => true,
         }
     }
 
@@ -526,6 +528,7 @@ impl BuildingType {
             Self::Grave => -2.0,    // Graves are slightly spooky
             Self::FlowerBed => super::beauty::FLOWER_BED_BEAUTY,
             Self::HoloProjector => 50.0, // Massive beauty boost
+            Self::Nanoforge => -10.0,
             Self::TradeDepot => 5.0,     // Trade brings goods and culture
             Self::Well | Self::HydroponicsBay | Self::LifeSupport => 1.0,
             Self::Wall | Self::Window | Self::Gate | Self::Tower | Self::Airlock | Self::Vent => {
@@ -666,6 +669,7 @@ impl BuildingType {
             Self::Recycler => "Recycler",
             Self::BulletinBoard => "Bulletin Board",
             Self::HoloProjector => "Holo Projector",
+            Self::Nanoforge => "Nanoforge",
         }
     }
 
@@ -723,6 +727,7 @@ impl BuildingType {
             Self::Shower => '🚿',
             Self::Recycler => '♻',
             Self::BulletinBoard => 'B',
+            Self::Nanoforge => 'N',
         }
     }
 
@@ -1048,6 +1053,7 @@ impl BuildingType {
                 ..ColonyResources::zeroed()
             },
             Self::Lander => ColonyResources::zeroed(),
+            Self::Nanoforge => ColonyResources { metal: 200.0, tools: 50.0, ..ColonyResources::zeroed() },
         }
     }
 
@@ -1367,7 +1373,7 @@ fn spawn_building(
         }
         BuildingType::PersonalShed
         | BuildingType::PersonalGarden
-        | BuildingType::PersonalShrine => {
+        | BuildingType::PersonalShrine | BuildingType::Nanoforge => {
             // Logic handled by components added in system
         }
     }
@@ -2150,6 +2156,7 @@ fn configure_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
     configure_science_buildings(entity, building_type);
     configure_specialized_tech(entity, building_type);
     configure_futuristic_tech(entity, building_type);
+    configure_nanoforge(entity, building_type);
 }
 
 /// Helper for spawning buildings in tests/tools.
@@ -2416,7 +2423,8 @@ mod tests {
             BuildingType::BulletinBoard.next(),
             BuildingType::HoloProjector
         );
-        assert_eq!(BuildingType::HoloProjector.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::HoloProjector.next(), BuildingType::Nanoforge);
+        assert_eq!(BuildingType::Nanoforge.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -2642,6 +2650,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::HoloProjector);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Nanoforge);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);
@@ -3325,3 +3336,25 @@ mod shift_tests {
 /// - Must be Destroyed (yielding 0 resources).
 #[derive(Component, Default)]
 pub struct VacuumWelded;
+
+fn configure_nanoforge(entity: &mut EntityWorldMut, building_type: BuildingType) {
+    if building_type == BuildingType::Nanoforge {
+        entity.insert((
+            crate::layer1::nanite_fabrication::Nanoforge {
+                active_recipe: Some(crate::layer1::items::ItemType::AdvancedAlloy),
+                breach_risk: 0.01,
+            },
+            crate::layer1::inventory::Inventory::default(),
+            crate::layer1::energy::PowerConsumer {
+                demand: 100.0, // High power demand
+                active: false,
+            },
+            crate::layer1::lighting::LightSource {
+                is_outdoor: true,
+                radius: 6.0,
+                intensity: 1.0,
+                color: (200, 0, 255), // Bright purple
+            },
+        ));
+    }
+}
