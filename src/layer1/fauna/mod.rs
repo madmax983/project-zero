@@ -12,6 +12,9 @@ use ratatui::style::Color;
 
 /// Modular fauna components (Spec 164).
 pub mod modular;
+pub mod shadow;
+pub use shadow::*;
+
 pub use modular::*;
 
 /// Type of fauna.
@@ -484,4 +487,9 @@ mod tests {
         assert_eq!(wolf_comp.state, FaunaState::Wander);
         assert_eq!(wolf_comp.target, None);
     }
+}
+
+#[cfg(test)]
+mod shadow_tests {
+    include!("shadow_tests.rs");
 }

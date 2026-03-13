@@ -221,3 +221,4 @@
 - [x] `450` Light Pollution — `specs/450-light-pollution.md` — completed 2026-03-01
 - [x] `451` The Spiteful Will — `specs/451-the-spiteful-will.md` — completed 2026-03-01
 - [x] `264` Hyper-Specialized Evolution — `specs/264-hyper-specialized-evolution.md` — completed 2026-03-09
+- [x] `265` Shadow Ecosystems — `specs/265-shadow-ecosystems.md` — completed 2026-03-09
