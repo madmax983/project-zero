@@ -54,6 +54,7 @@ pub mod clothing;
 pub mod control;
 /// Crowding system (Spec 176).
 pub mod crowding;
+pub mod culture;
 /// Defensive structures and logic.
 pub mod defense;
 /// Designation system for player tools.
@@ -110,6 +111,7 @@ pub mod needs;
 pub mod notifications;
 /// Pathfinding algorithms.
 pub mod pathfinding;
+pub mod phantom_shift;
 /// Pop entity and management.
 pub mod pop;
 /// Refining industry (Lumber Mill, Stone Mason).

@@ -56,6 +56,7 @@ pub struct PopEvaluationQuery {
     pub breakdown: Option<&'static Breakdown>,
     pub traits: Option<&'static Traits>,
     pub stress: Option<&'static StressTracker>,
+    pub culture: Option<&'static crate::layer1::culture::CulturalTag>,
     pub hobby: Option<&'static Hobby>,
     pub chemical: Option<&'static ChemicalState>,
     pub memetic_carrier: Option<&'static MemeticCarrier>,
@@ -87,6 +88,7 @@ impl PopEvalData {
             hobby_type: item.hobby.map(|comp| comp.hobby_type),
             chemical_state: item.chemical.cloned(),
             is_memetic_carrier: item.memetic_carrier.is_some(),
+            culture: item.culture.cloned(),
             health: item.health.copied(),
             job: item.job.copied(),
             insulation: 0.0,
@@ -162,6 +164,7 @@ pub struct PopEvalData {
     pub chemical_state: Option<ChemicalState>,
     /// Whether the pop carries a memetic virus.
     pub is_memetic_carrier: bool,
+    pub culture: Option<crate::layer1::culture::CulturalTag>,
     /// Health of the pop, if any.
     pub health: Option<Health>,
     /// The pop's assigned job.
@@ -195,6 +198,7 @@ impl PopEvalData {
             hobby_type: None,
             chemical_state: None,
             is_memetic_carrier: false,
+            culture: None,
             health: None,
             job: None,
             insulation: 0.0,
