@@ -5,6 +5,18 @@ use crate::layer1::social::old_guard::check_generational_friction_system;
 use crate::layer1::*;
 use bevy_ecs::prelude::*;
 
+pub fn register_whisper_trade(schedule: &mut Schedule) {
+    schedule.add_systems(
+        (
+            crate::layer1::whisper_trade::generate_secrets_system,
+            crate::layer1::whisper_trade::execute_whisper_trade_system,
+            crate::layer1::whisper_trade::paranoia_unrest_system,
+            crate::layer1::whisper_trade::decay_paranoia_system,
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+}
+
 pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (

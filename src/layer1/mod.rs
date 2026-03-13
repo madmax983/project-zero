@@ -725,3 +725,5 @@ pub mod void_weed;
 pub use void_weed::*;
 pub mod cryo_shock;
 pub use cryo_shock::*;
+pub mod whisper_trade;
+pub use whisper_trade::*;

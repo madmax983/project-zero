@@ -259,6 +259,11 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     #[cfg(feature = "nova")]
     world.init_resource::<crate::layer1::machine_consciousness::ConsciousnessConfig>();
 
+    world.init_resource::<crate::layer1::whisper_trade::ColonySecrets>();
+    world.init_resource::<crate::layer1::whisper_trade::GlobalParanoia>();
+    world.init_resource::<Events<crate::layer1::whisper_trade::TradeSecretEvent>>();
+    world.init_resource::<crate::layer1::whisper_trade::WhisperTradeConfig>();
+
     world.insert_resource(ColonyName { name: colony_name });
     generate_world_history(&mut world);
 

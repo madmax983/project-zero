@@ -64,4 +64,5 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
     environment::register(schedule);
     consumption::register(schedule);
     observation::register(schedule);
+    observation::register_whisper_trade(schedule);
 }
