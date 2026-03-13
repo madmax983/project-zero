@@ -130,7 +130,10 @@ pub fn post_grievance_system(
                             "The vibration is in my teeth.",
                             "It is too loud today.",
                         ];
-                        content = hum_messages.choose(&mut rng).unwrap().to_string();
+                        content = hum_messages
+                            .choose(&mut rng)
+                            .unwrap_or(&"The Hum won't stop.")
+                            .to_string();
                     }
 
                     let note = BulletinNote {
@@ -409,4 +412,59 @@ mod tests {
         assert_eq!(board.notes.len(), 1);
         assert_eq!(board.notes[0].content, "New");
     }
+}
+
+#[test]
+fn test_generate_hum_grievance_no_panic() {
+    // We ensure that the array `hum_messages` does not cause unwrap panics when it is empty or fails `choose`.
+    // The implementation falls back to `"The Hum won't stop."` using `unwrap_or(&"The Hum won't stop.")`.
+    // Since the array is hardcoded with items, we just verify the generated note string belongs to it.
+    let mut world = World::new();
+
+    let board = world.spawn(BulletinBoard::default()).id();
+
+    let mut traits_set = std::collections::HashSet::new();
+    traits_set.insert(crate::layer1::Trait::Sensitive);
+    let traits = Traits(traits_set);
+    let mut stress = StressTracker::default();
+    stress.accumulated_stress = 51.0;
+
+    // Morale must be < 0.2 to post a negative sentiment
+    let mut needs = Needs::default();
+    needs.hunger = 0.0;
+    needs.rest = 0.0;
+    needs.hygiene = 0.0;
+    needs.leisure = 0.0;
+
+    let _pop = world
+        .spawn((crate::layer1::pop::Pop, needs, traits, stress))
+        .id();
+
+    // Run system
+    let mut schedule = bevy_ecs::schedule::Schedule::default();
+    schedule.add_systems(post_grievance_system);
+
+    let mut ran_once = false;
+    for _ in 0..200 {
+        schedule.run(&mut world);
+        let board = world.get::<BulletinBoard>(board).unwrap();
+        if !board.notes.is_empty() {
+            ran_once = true;
+            break;
+        }
+    }
+
+    assert!(ran_once);
+
+    let board = world.get::<BulletinBoard>(board).unwrap();
+    assert!(!board.notes.is_empty());
+
+    let hum_messages = vec![
+        "The Hum won't stop.",
+        "Can anyone else hear the singing?",
+        "The vibration is in my teeth.",
+        "It is too loud today.",
+    ];
+    // Ensure the randomly chosen content is one of the hardcoded messages
+    assert!(hum_messages.contains(&board.notes[0].content.as_str()));
 }

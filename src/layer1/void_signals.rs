@@ -146,11 +146,10 @@ pub fn decrypt_signals_system(
     mut commands: Commands,
     camera_target: Option<Res<CameraTarget>>,
 ) {
-    if network.active_signal_id.is_none() {
-        return;
-    }
-
-    let target_id = network.active_signal_id.unwrap();
+    let target_id = match network.active_signal_id {
+        Some(id) => id,
+        None => return,
+    };
 
     // Calculate total computing power from workers
     let mut computing_power = 0.0;
@@ -256,8 +255,8 @@ fn spawn_confetti(commands: &mut Commands, pos: GridPosition) {
         let speed = rng.gen_range(0.5..1.5);
         let dx = angle.cos() * speed;
         let dy = angle.sin() * speed;
-        let color = *colors.choose(&mut rng).unwrap();
-        let char = *chars.choose(&mut rng).unwrap();
+        let color = *colors.choose(&mut rng).unwrap_or(&Color::White);
+        let char = *chars.choose(&mut rng).unwrap_or(&'*');
         let lifetime = rng.gen_range(20..40);
 
         commands.spawn((
@@ -389,4 +388,26 @@ mod tests {
         let res = world.resource::<ColonyResources>();
         assert!((res.knowledge - 50.0).abs() < 0.001);
     }
+}
+
+#[test]
+fn test_decrypt_signals_system_no_active_signal() {
+    // Setup world
+    let mut world = World::new();
+
+    // Add SignalNetwork with NO active signal
+    world.insert_resource(SignalNetwork {
+        signals: vec![],
+        active_signal_id: None,
+        decrypted_fragments: vec![],
+    });
+    world.insert_resource(ColonyResources::default());
+    world.insert_resource(MessageLog::default());
+
+    // We run the system to ensure it does not panic
+    bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, decrypt_signals_system);
+
+    // Verify the active_signal_id is still None and no panic occurred
+    let network = world.resource::<SignalNetwork>();
+    assert!(network.active_signal_id.is_none());
 }

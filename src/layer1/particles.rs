@@ -141,8 +141,8 @@ pub fn spawn_confetti(world: &mut World, pos: GridPosition) {
         let speed = rng.gen_range(0.5..1.5);
         let dx = angle.cos() * speed;
         let dy = angle.sin() * speed;
-        let color = *colors.choose(&mut rng).unwrap();
-        let char = *chars.choose(&mut rng).unwrap();
+        let color = *colors.choose(&mut rng).unwrap_or(&Color::White);
+        let char = *chars.choose(&mut rng).unwrap_or(&'*');
         let lifetime = rng.gen_range(20..40);
 
         spawn_moving_particle(world, pos, char, color, lifetime, dx, dy);
@@ -207,4 +207,17 @@ mod tests {
         let vel = world.get::<ParticleVelocity>(entity).unwrap();
         assert!((vel.dx - 0.9).abs() < 0.001);
     }
+}
+
+#[test]
+fn test_spawn_confetti_no_panic() {
+    let mut world = World::new();
+    let pos = GridPosition { x: 5, y: 5 };
+
+    // Ensure this doesn't panic
+    spawn_confetti(&mut world, pos);
+
+    // Verify particles were spawned
+    let mut query = world.query::<&ParticleAccumulator>();
+    assert_eq!(query.iter(&world).count(), 30);
 }
