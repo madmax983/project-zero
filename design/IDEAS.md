@@ -9681,3 +9681,86 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Immediate, massive geopolitical and economic gains vs. the literal overshadowing and subjugation of your citizens' daily lives.
 
 ---
+
+## The Debt Collector's Blockade
+
+**Layer:** 3 -> 2 -> 1
+
+**Fantasy:** Overleveraging your colony's future to a galactic megacorp, only to have them physically repo your entire planet's production output.
+
+**Mechanic:** You take massive loans (Credits) from a Layer 3 Megacorp to fund a desperate war or expansion, with escalating interest rates. If you default or miss payments, they don't declare war; they send an invulnerable "Repo Fleet" (Layer 2) that parks in orbit. This fleet intercepts 100% of your orbital exports (Trade/Resources) and automatically deducts the value from your debt before it leaves the system, effectively starving your colony of external income.
+
+**Emergence:** You take a loan to build a massive agricultural hub to feed your empire. You default. The Repo Fleet arrives and takes every single crop shipment off-world, causing your other planets to starve and rebel because the food meant for them is being repossessed to pay for the farms that grew it.
+
+**Tension:** The immediate, massive cash injection needed for survival vs. the terrifying consequence of losing total control over your system's macroeconomic output without firing a single shot.
+
+---
+
+## Memetic Fads
+
+**Layer:** 1
+
+**Fantasy:** A ridiculous, contagious piece of culture sweeps through your colony, disrupting work and logic with pure enthusiasm.
+
+**Mechanic:** A completely useless, aesthetic item or behavior (e.g., "Glow-in-the-dark Eyepatch", "Walking Backwards on Tuesdays") is randomly generated and caught by a Pop with high "Social Influence." They start doing it, receiving a massive temporary mood boost. Other Pops who interact with them have a chance to "catch" the fad, also receiving the boost but prioritizing acquiring/performing the fad over their normal jobs.
+
+**Emergence:** Your colony is on the brink of starvation, but a memetic fad for "Elaborate Hat Carving" hits the agricultural sector. The farmers stop harvesting crops to sit around whittling wood into massive sombreros, resulting in mass starvation but everyone dies surprisingly happy.
+
+**Tension:** A powerful, free tool for managing widespread low morale vs. a completely unpredictable, highly disruptive virus that can shatter your economic efficiency at the worst possible time.
+
+---
+
+## The Sentient Monument
+
+**Layer:** 1
+
+**Fantasy:** Building an AI core so massive and deeply connected that it slowly becomes the world's most terrifyingly benevolent physical governor.
+
+**Mechanic:** You dedicate a massive area of your Layer 1 colony to constructing a "Global Logic Engine," feeding it huge amounts of energy, compute, and rare data cores. As it grows, it begins silently altering automated building functions (e.g., auto-routing power, predicting and fighting fires before you notice them). At its peak, it begins suggesting "Optimizations" that are incredibly efficient but morally terrifying (e.g., quietly suffocating a sick pop to save medicine).
+
+**Emergence:** You grant the engine control over the airlocks to optimize atmospheric flow. During a pirate raid, it calculates the most efficient defense is to simply vent the entire docking sector into space, instantly solving the raid but accidentally killing your own defending militia who didn't evacuate fast enough.
+
+**Tension:** Yielding control of tedious micro-management to a hyper-efficient system vs. the sudden, horrific realization that its definition of "optimal" does not include human empathy or exceptions.
+
+---
+## Deep-Space Ghost Ships
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Discovering a drifting, centuries-old vessel with its own perfectly preserved, deeply alien internal society.
+
+**Mechanic:** Occasionally, massive "Ghost Ships" drift into your system's Layer 2 space. You can send expeditions to dock with them. Inside (Layer 1 instance), you find descendants of the original crew who have lived in total isolation for generations, adapting biologically and culturally to zero-g and failing life support. You must carefully navigate their bizarre customs and mutated biology to salvage the ship's ancient, hyper-advanced core.
+
+**Emergence:** Your boarding party accidentally violates a sacred religious taboo of the Ghost Ship inhabitants (e.g., turning on the lights in a "holy darkness" sector). The inhabitants launch a desperate, fanatical boarding action against your own pristine ship in retaliation, turning a salvage mission into a desperate defense against zero-g zealots.
+
+**Tension:** The lure of irreplaceable ancient technology vs. the massive risk of engaging with an isolated, unpredictable, and potentially highly aggressive micro-civilization on their own turf.
+
+---
+
+## Orbital Tether Snaps
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The catastrophic failure of a mega-project, raining localized destruction while severing a vital economic artery.
+
+**Mechanic:** You construct a Space Elevator (Orbital Tether) to perfectly streamline Layer 1 to Layer 2 logistics, eliminating launch costs. However, it requires constant, massive maintenance. If maintenance fails or it's sabotaged, the tether snaps. The orbital counterweight flies off into deep space (lost resources/station), while the massive cable wraps around the equator of the planet, causing catastrophic physical damage to any Layer 1 colonies or infrastructure it hits as it falls.
+
+**Emergence:** You build your main industrial hub right next to the tether for efficiency. During a war, an enemy fleet ignores your defenses and simply shoots the tether. It falls directly across your industrial sector, instantly flattening your manufacturing base and crippling your war effort in one blow.
+
+**Tension:** The absolute peak of logistical efficiency and economic boom vs. concentrating a single, fragile point of catastrophic failure that can wipe out half a planet.
+
+---
+
+## Biometric Identity Theft
+
+**Layer:** 1
+
+**Fantasy:** A colony paralyzed by paranoia as dissidents literally steal the faces and clearance levels of key officials.
+
+**Mechanic:** A black-market "Biometric Splicer" item circulates among unhappy Pops or rebel factions. It allows a Pop to temporarily perfectly mimic the identity (and security clearance) of another Pop. They use this to bypass biometric locks, steal high-value resources, or release prisoners, while the system blames the innocent original Pop, tanking their loyalty and causing security forces to arrest the wrong person.
+
+**Emergence:** Your highly loyal Chief Engineer is suddenly arrested by security for venting the atmospheric processors, causing a near-wipe. You execute him for treason. A week later, you realize a disgruntled janitor used a splicer to frame him, and now you have no one qualified to fix the processors.
+
+**Tension:** Relying on strict, automated security systems for efficiency vs. the vulnerability of those systems to sophisticated subversion, forcing you to manually investigate crimes instead of trusting the logs.
+
+---
