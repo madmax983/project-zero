@@ -3651,3 +3651,27 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "We ignored the spite-gift of [DECEASED_NAME]. [YEAR]. The colony takes the stash. [NAME] is furious."
 - "[YEAR]: Confiscation. [DECEASED_NAME]'s last wish denied. [NAME] remembers this insult."
 - "The Substrate overrules the dead. [DECEASED_NAME]'s belongings seized. Unrest from [NAME]. [YEAR]."
+
+---
+
+## The Event Horizon Tap Templates (Spec 452)
+
+### TAP_ACTIVATED
+
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[TAP_NAME]`
+
+**Patterns:**
+- "The [TAP_NAME] engages. [YEAR]. Infinite power, but the air grows thick."
+- "[YEAR]: Connection established. The [TAP_NAME] draws from the void. The local time stutters."
+- "Power flows from the [TAP_NAME]. [YEAR]. The lights blaze, but we are moving through water."
+
+### DILATION_CRISIS
+
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[DILATION_EFFECT]`
+
+**Patterns:**
+- "[NAME] was caught in the zone. [YEAR]. They report [DILATION_EFFECT] while the hunger grew."
+- "[YEAR]: Time-slip incident. [NAME] is [DILATION_EFFECT]. Needs outpace their legs."
+- "The [TAP_NAME]'s gravity is too much. [NAME] is [DILATION_EFFECT], starving before they can reach the hall. [YEAR]."

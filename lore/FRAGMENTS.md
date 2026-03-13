@@ -4503,3 +4503,29 @@ How the colony reacts to the will.
 - shaking heads in disbelief
 - a fight breaks out over the technicality
 - quiet resentment
+
+---
+
+## The Event Horizon Tap Fragments (Spec 452)
+
+### Fragment Type: [TAP_NAME]
+Flavor names for the Event Horizon Tap.
+
+- The Anchor
+- The Needle
+- The Tether
+- The Singularity Siphon
+- The Horizon Line
+- The Deep Draw
+- The Void Well
+
+### Fragment Type: [DILATION_EFFECT]
+Descriptions of the time dilation effect.
+
+- crawling through invisible syrup
+- frozen between seconds
+- watching the world speed by
+- trapped in amber
+- swimming against time
+- caught in a time-slip
+- moving while the world blurs
