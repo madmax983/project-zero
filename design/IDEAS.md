@@ -1504,7 +1504,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Psychic Background Radiation
+## Psychic Background Radiation [SPECCED]
 
 **Layer:** Cross-Layer
 
