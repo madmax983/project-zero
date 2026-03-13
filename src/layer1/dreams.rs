@@ -171,15 +171,19 @@ fn generate_dream_content(
 
     // 2. History (30% chance)
     if !chronicle_events.is_empty() && rng.gen_bool(0.3) {
-        let event = chronicle_events.choose(rng).unwrap();
-        match event.importance {
-            EventImportance::Legendary | EventImportance::Major => {
-                (format!("relived the glory of: {}", event.text), 0.2, false)
-            }
-            EventImportance::Standard => (format!("recalled: {}", event.text), 0.05, false),
-            EventImportance::Minor => (format!("faintly remembered: {}", event.text), 0.0, false),
+        if let Some(event) = chronicle_events.choose(rng) {
+            return match event.importance {
+                EventImportance::Legendary | EventImportance::Major => {
+                    (format!("relived the glory of: {}", event.text), 0.2, false)
+                }
+                EventImportance::Standard => (format!("recalled: {}", event.text), 0.05, false),
+                EventImportance::Minor => (format!("faintly remembered: {}", event.text), 0.0, false),
+            };
         }
-    } else {
+    }
+
+    // Default to abstract branch if history generation skipped or failed
+    {
         // 3. Abstract / Random
         let categories = [
             "VOID_ANOMALY",
@@ -330,5 +334,23 @@ mod tests {
 
         assert!(world.get::<DreamtThisSleep>(p1).is_some());
         assert!(world.get::<DreamtThisSleep>(p2).is_none());
+    }
+
+    #[test]
+    fn test_generate_dream_content_empty_chronicles_safe() {
+        let mut rng = rand::thread_rng();
+        let generator = NarrativeGenerator::default();
+        let empty_events: [crate::layer1::chronicle::ChronicleEvent; 0] = [];
+
+        // Loop enough times to likely trigger the history branch if the branch check had a bug
+        for _ in 0..100 {
+            let (content, _, _) = crate::layer1::dreams::generate_dream_content(
+                &mut rng,
+                &empty_events,
+                &generator,
+                None,
+            );
+            assert!(!content.is_empty());
+        }
     }
 }

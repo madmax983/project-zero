@@ -184,17 +184,38 @@ fn mutate_story(story: &mut Story, rng: &mut impl Rng) {
         ("founded", "birthed from chaos"),
     ];
 
-    if rng.gen_bool(0.5) {
+    mutate_story_with_vocab(story, rng, &suffixes, &replacements);
+}
+
+fn mutate_story_with_vocab(
+    story: &mut Story,
+    rng: &mut impl Rng,
+    suffixes: &[&str],
+    replacements: &[(&str, &str)]
+) {
+    let append_suffix = if !suffixes.is_empty() && !replacements.is_empty() {
+        rng.gen_bool(0.5)
+    } else if !suffixes.is_empty() {
+        true
+    } else if !replacements.is_empty() {
+        false
+    } else {
+        return; // Nothing to mutate
+    };
+
+    if append_suffix {
         // Append suffix
-        let suffix = suffixes.choose(rng).unwrap();
-        if !story.text.ends_with(suffix) {
-            story.text.push_str(suffix);
+        if let Some(&suffix) = suffixes.choose(rng) {
+            if !story.text.ends_with(suffix) {
+                story.text.push_str(suffix);
+            }
         }
     } else {
         // Replace word
-        let (target, replacement) = replacements.choose(rng).unwrap();
-        // Case insensitive replacement would be better but simple replace is fine for MVP
-        story.text = story.text.replace(target, replacement);
+        if let Some(&(target, replacement)) = replacements.choose(rng) {
+            // Case insensitive replacement would be better but simple replace is fine for MVP
+            story.text = story.text.replace(target, replacement);
+        }
     }
 
     story.mutations += 1;
@@ -288,5 +309,26 @@ mod tests {
 
         assert!(story.mutations > 0);
         assert_ne!(story.text, "The colony was founded.");
+    }
+
+    #[test]
+    fn test_mutation_empty_vocab_safe() {
+        let mut rng = rand::thread_rng();
+        let mut story = Story {
+            text: "The colony was founded.".to_string(),
+            origin_tick: 0,
+            mutations: 0,
+            genre: StoryGenre::Trivial,
+        };
+
+        let empty_suffixes: [&str; 0] = [];
+        let empty_replacements: [(&str, &str); 0] = [];
+
+        for _ in 0..10 {
+            mutate_story_with_vocab(&mut story, &mut rng, &empty_suffixes, &empty_replacements);
+        }
+
+        assert_eq!(story.mutations, 0);
+        assert_eq!(story.text, "The colony was founded.");
     }
 }
