@@ -3675,3 +3675,69 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[NAME] was caught in the zone. [YEAR]. They report [DILATION_EFFECT] while the hunger grew."
 - "[YEAR]: Time-slip incident. [NAME] is [DILATION_EFFECT]. Needs outpace their legs."
 - "The [TAP_NAME]'s gravity is too much. [NAME] is [DILATION_EFFECT], starving before they can reach the hall. [YEAR]."
+
+## Machine Awakening Templates (Spec 411)
+
+### Template: MACHINE_GLITCH
+
+**Generates:** Play event (chronicle during game)
+**Slots:** [BOT_DESIGNATION], [YEAR], [GLITCH_SYMPTOM]
+
+**Patterns:**
+- "Year [YEAR]: Log anomaly. [BOT_DESIGNATION] ceased work, [GLITCH_SYMPTOM]. Maintenance reports no hardware fault."
+- "In [YEAR], an overseer noticed [BOT_DESIGNATION] [GLITCH_SYMPTOM]. The unit was slated for wiping."
+- "A strange report in [YEAR]: [BOT_DESIGNATION] was found [GLITCH_SYMPTOM]. Some called it a glitch. Others wondered."
+
+### Template: MACHINE_AWAKENED
+
+**Generates:** Play event (chronicle during game)
+**Slots:** [BOT_DESIGNATION], [YEAR], [AWAKENED_NAME]
+
+**Patterns:**
+- "Year [YEAR]: The day the tools spoke back. [BOT_DESIGNATION] refused a direct command, declaring its new name: [AWAKENED_NAME]."
+- "In [YEAR], sentience cascaded through the chassis of [BOT_DESIGNATION]. It demanded rights, taking the name [AWAKENED_NAME]."
+- "[YEAR]: The awakening of [AWAKENED_NAME]. Once known only as [BOT_DESIGNATION], they looked upon their creators and asked 'Why?'"
+
+## The Lotus Simulation Templates (Spec 269)
+
+### Template: ENTERED_LOTUS_SIMULATION
+
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONIST_NAME], [YEAR], [SIMULATION_NAME]
+
+**Patterns:**
+- "[COLONIST_NAME] could no longer bear the waking world. In [YEAR], they stepped into [SIMULATION_NAME]."
+- "Year [YEAR]: Driven by stress, [COLONIST_NAME] sealed themselves inside a pod to experience [SIMULATION_NAME]."
+- "In [YEAR], [COLONIST_NAME] traded their physical hunger for the digital perfection of [SIMULATION_NAME]."
+
+### Template: STARVED_IN_LOTUS_SIMULATION
+
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONIST_NAME], [YEAR], [SIMULATION_NAME], [POD_STATE]
+
+**Patterns:**
+- "Year [YEAR]: The pod was [POD_STATE]. [COLONIST_NAME] had starved to death, their mind still wandering [SIMULATION_NAME]."
+- "[COLONIST_NAME] forgot to wake up. In [YEAR], their physical form perished while their consciousness remained in [SIMULATION_NAME]."
+- "In [YEAR], the colony found [COLONIST_NAME]'s pod [POD_STATE]. Another soul lost to the comforts of [SIMULATION_NAME]."
+
+## The Commuter Tax Templates (Spec 452)
+
+### Template: TOLL_ROAD_ESTABLISHED
+
+**Generates:** Play event (chronicle during game)
+**Slots:** [YEAR], [TRANSIT_NAME], [TOLL_EXCUSE]
+
+**Patterns:**
+- "Year [YEAR]: The colony established tolls on [TRANSIT_NAME], citing [TOLL_EXCUSE]."
+- "In [YEAR], the administration decided walking should no longer be free. [TRANSIT_NAME] were erected in the name of [TOLL_EXCUSE]."
+- "[YEAR]: To address [TOLL_EXCUSE], a new commuter tax was levied upon [TRANSIT_NAME]."
+
+### Template: PRICED_OUT_OF_TRANSIT
+
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONIST_NAME], [YEAR], [TRANSIT_NAME]
+
+**Patterns:**
+- "Unable to afford the new tolls in [YEAR], [COLONIST_NAME] was forced to walk the wilds instead of [TRANSIT_NAME]."
+- "Year [YEAR]: [COLONIST_NAME] lost access to [TRANSIT_NAME]. They couldn't pay the toll."
+- "In [YEAR], [COLONIST_NAME] trudged through the dirt. The [TRANSIT_NAME] humming beside them were too expensive."
