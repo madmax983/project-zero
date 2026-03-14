@@ -85,7 +85,7 @@ struct ScopedEvaluationContext {
     // Cloned resources for context
     resources: ColonyResources,
     cycle: crate::layer1::day_night::DayNightCycle,
-    taboo: crate::layer1::taboo::TabooState,
+    taboo: Option<crate::layer1::taboo::TabooState>,
 
     // Config needed for collection/application
     config: UtilityConfig,
@@ -110,7 +110,10 @@ impl ScopedEvaluationContext {
         // 3. Clone others
         let resources = *world.resource::<ColonyResources>();
         let cycle = *world.resource::<crate::layer1::day_night::DayNightCycle>();
-        let taboo = world.resource::<crate::layer1::taboo::TabooState>().clone();
+        // ⚡ Bolt Optimization:
+        // We remove `TabooState` rather than cloning it to avoid a clone of a `HashMap`
+        // per tick. This avoids a heap allocation on the hot path.
+        let taboo = world.remove_resource::<crate::layer1::taboo::TabooState>();
 
         Self {
             buffer,
@@ -134,6 +137,9 @@ impl ScopedEvaluationContext {
         }
         if let Some(f) = self.factions {
             world.insert_resource(f);
+        }
+        if let Some(t) = self.taboo {
+            world.insert_resource(t);
         }
     }
 
@@ -161,7 +167,7 @@ impl ScopedEvaluationContext {
         let context = Self::build_context(
             &self.resources,
             &self.cycle,
-            &self.taboo,
+            self.taboo.as_ref().expect("TabooState must exist"),
             self.factions.as_ref(),
             self.zone_grid.as_ref(),
             self.temperature_grid.as_ref(),
@@ -176,7 +182,7 @@ impl ScopedEvaluationContext {
         let context = Self::build_context(
             &self.resources,
             &self.cycle,
-            &self.taboo,
+            self.taboo.as_ref().expect("TabooState must exist"),
             self.factions.as_ref(),
             self.zone_grid.as_ref(),
             self.temperature_grid.as_ref(),

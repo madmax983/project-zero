@@ -14,3 +14,7 @@
 **Deriving `Copy` on Hot Enums by Replacing `String`**
 **Learning:** `ItemType` contained a single dynamically allocated variant `Curio(String)` which prevented the entire 32-byte enum from implementing `Copy`. This forced the Utility AI (which processes thousands of items per tick) to call `.clone()` continuously, resulting in massive heap allocation overhead.
 **Action:** Replace `String` with `&'static str` for hardcoded strings in enums whenever possible to allow `#[derive(Copy)]`. This turns O(N) heap allocations into zero-cost stack copies. Add a `assert_is_copy::<T>()` test to lock in the performance gain and prevent future regressions.
+
+**[HashMap Clone in Hot Path Avoided]**
+**Learning:** Cloning a struct containing a `HashMap` (e.g. `TabooState`) per-tick just to use it immutably within a parallel ComputeTaskPool results in continuous, expensive heap allocations on the hot path.
+**Action:** Extract the resource temporarily using `world.remove_resource::<T>()` to gain ownership without cloning, run the parallel context, and `world.insert_resource()` it back afterwards.

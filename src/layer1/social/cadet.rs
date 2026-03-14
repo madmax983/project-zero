@@ -51,7 +51,9 @@ pub fn death_consequence_system(
 mod tests {
     use crate::layer1::pop::{Pop, PopDied};
     use crate::layer1::resources::ColonyResources;
-    use crate::layer1::social::cadet::{death_consequence_system, process_allowance_system, NobleScion};
+    use crate::layer1::social::cadet::{
+        death_consequence_system, process_allowance_system, NobleScion,
+    };
     use crate::layer1::traits::{Trait, Traits};
     use crate::layer1::unrest::Unrest;
     use bevy_ecs::prelude::*;
