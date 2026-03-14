@@ -186,15 +186,17 @@ fn mutate_story(story: &mut Story, rng: &mut impl Rng) {
 
     if rng.gen_bool(0.5) {
         // Append suffix
-        let suffix = suffixes.choose(rng).unwrap();
-        if !story.text.ends_with(suffix) {
-            story.text.push_str(suffix);
+        if let Some(suffix) = suffixes.choose(rng) {
+            if !story.text.ends_with(suffix) {
+                story.text.push_str(suffix);
+            }
         }
     } else {
         // Replace word
-        let (target, replacement) = replacements.choose(rng).unwrap();
-        // Case insensitive replacement would be better but simple replace is fine for MVP
-        story.text = story.text.replace(target, replacement);
+        if let Some((target, replacement)) = replacements.choose(rng) {
+            // Case insensitive replacement would be better but simple replace is fine for MVP
+            story.text = story.text.replace(target, replacement);
+        }
     }
 
     story.mutations += 1;

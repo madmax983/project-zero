@@ -205,7 +205,7 @@ pub fn process_scan_system(world: &mut World) {
                 continue;
             };
 
-            let pos = *world.get::<GridPosition>(anomaly_entity).unwrap();
+            let pos = world.get::<GridPosition>(anomaly_entity).copied();
 
             // Grant rewards
             match anomaly_type {
@@ -223,13 +223,15 @@ pub fn process_scan_system(world: &mut World) {
                         "Discovery: Strange flora yielded {reward:.0} Food."
                     ));
                     // Maybe spawn item too?
-                    world.spawn((
-                        ResourceItem {
-                            resource_type: ResourceType::Food,
-                            amount: 10.0,
-                        }, // Bonus item
-                        pos,
-                    ));
+                    if let Some(pos) = pos {
+                        world.spawn((
+                            ResourceItem {
+                                resource_type: ResourceType::Food,
+                                amount: 10.0,
+                            }, // Bonus item
+                            pos,
+                        ));
+                    }
                 }
                 AnomalyType::Geode => {
                     // Random resource?
@@ -239,25 +241,29 @@ pub fn process_scan_system(world: &mut World) {
                         world
                             .resource_mut::<MessageLog>()
                             .add(format!("Discovery: Geode yielded {reward:.0} Stone."));
-                        world.spawn((
-                            ResourceItem {
-                                resource_type: ResourceType::Stone,
-                                amount: 10.0,
-                            },
-                            pos,
-                        ));
+                        if let Some(pos) = pos {
+                            world.spawn((
+                                ResourceItem {
+                                    resource_type: ResourceType::Stone,
+                                    amount: 10.0,
+                                },
+                                pos,
+                            ));
+                        }
                     } else {
                         world.resource_mut::<ColonyResources>().add_ore(reward);
                         world
                             .resource_mut::<MessageLog>()
                             .add(format!("Discovery: Geode yielded {reward:.0} Ore."));
-                        world.spawn((
-                            ResourceItem {
-                                resource_type: ResourceType::Ore,
-                                amount: 10.0,
-                            },
-                            pos,
-                        ));
+                        if let Some(pos) = pos {
+                            world.spawn((
+                                ResourceItem {
+                                    resource_type: ResourceType::Ore,
+                                    amount: 10.0,
+                                },
+                                pos,
+                            ));
+                        }
                     }
                 }
             }

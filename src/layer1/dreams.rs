@@ -171,15 +171,21 @@ fn generate_dream_content(
 
     // 2. History (30% chance)
     if !chronicle_events.is_empty() && rng.gen_bool(0.3) {
-        let event = chronicle_events.choose(rng).unwrap();
-        match event.importance {
-            EventImportance::Legendary | EventImportance::Major => {
-                (format!("relived the glory of: {}", event.text), 0.2, false)
-            }
-            EventImportance::Standard => (format!("recalled: {}", event.text), 0.05, false),
-            EventImportance::Minor => (format!("faintly remembered: {}", event.text), 0.0, false),
+        if let Some(event) = chronicle_events.choose(rng) {
+            return match event.importance {
+                EventImportance::Legendary | EventImportance::Major => {
+                    (format!("relived the glory of: {}", event.text), 0.2, false)
+                }
+                EventImportance::Standard => (format!("recalled: {}", event.text), 0.05, false),
+                EventImportance::Minor => {
+                    (format!("faintly remembered: {}", event.text), 0.0, false)
+                }
+            };
         }
-    } else {
+    }
+
+    // Fallback logic
+    {
         // 3. Abstract / Random
         let categories = [
             "VOID_ANOMALY",

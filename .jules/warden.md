@@ -11,3 +11,7 @@
 **2024-10-24 - [Grid Index Arithmetic Integer Overflow]**
 **Threat:** [Integer overflow in grid index calculations (y * width + x) within `TemperatureGrid` and `RadiationGrid` allowing DoS via application panics.]
 **Defense:** [Switched to safe arithmetic (`checked_mul` and `checked_add`) for bounded capacity and coordinate indexing in `get`, `set`, `add`, and diffusion calculations.]
+
+**2024-03-14 - [Panic Avoidance in Core Modules]**
+**Threat:** Use of `.unwrap()` on slices, hashmap lookups, and ECS query data (`Option` unwraps) could cause game-crashing panics (Denial of Service) if logic assumptions were broken (e.g. empty arrays or missing components).
+**Defense:** Replaced `unwrap()` calls with robust `if let Some(...)` blocks and fallbacks across `src/layer1/oral_tradition.rs`, `src/layer1/dreams.rs`, `src/layer1/specialization.rs`, `src/layer1/science.rs`, `src/layer1/social/grievances.rs`, `src/layer1/void_signals.rs`, and `src/layer1/eureka.rs`.

@@ -132,7 +132,9 @@ pub fn post_grievance_system(
                             "The vibration is in my teeth.",
                             "It is too loud today.",
                         ];
-                        content = hum_messages.choose(&mut rng).unwrap().to_string();
+                        if let Some(msg) = hum_messages.choose(&mut rng) {
+                            content = msg.to_string();
+                        }
                     }
 
                     let note = BulletinNote {
