@@ -9722,3 +9722,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Instant, overpowered technological salvation vs. permanent diplomatic annihilation and galactic war.
 
 ---
+
+## Ghost Frequencies
+
+**Layer:** 1
+
+**Fantasy:** Listening to a parallel timeline that diverged slightly. Sometimes they have the answers, sometimes they have horrors.
+
+**Mechanic:** A high-tech "Quantum Comm Array" occasionally receives broadcasts from parallel universe versions of the colony. These broadcasts might warn of incoming disasters (like a meteor strike that hit *them*) or provide a blueprint they discovered, granting free research.
+
+**Emergence:** Your comm array warns you of a devastating pirate raid. You spend all your resources building defenses, starving your people. The raid never comes because the timelines diverged. The parallel colony survived, but you destroyed yours through paranoia.
+
+**Tension:** Trusting unverifiable, potentially life-saving information from a different reality vs. ignoring it and risking annihilation.
+
+---
+
+## Symbiotic Space Elevators
+
+**Layer:** Cross-layer
+
+**Fantasy:** Growing a bridge to the stars instead of building it.
+
+**Mechanic:** Instead of mining millions of tons of steel, you plant a "Star-Stalk" seed. It grows into a space elevator. It costs no metal, but it requires a staggering amount of water and organic nutrients to maintain its structural integrity as it breaches the atmosphere.
+
+**Emergence:** Your colony thrives using the cheap, biological elevator. A blight hits your crops, reducing your food output. The Star-Stalk begins to starve and its structural integrity drops. You have to decide whether to feed your people or feed the elevator before it snaps and crushes the city.
+
+**Tension:** Immense, cheap logistical power vs. a catastrophic, biological upkeep cost that directly competes with the colony's food supply.
+
+---
+
+## The Bureau of Redundancy
+
+**Layer:** 1
+
+**Fantasy:** Eradicating workplace accidents through suffocating bureaucracy.
+
+**Mechanic:** A colony policy that can be enacted: "Double-Verification." Every critical job (medical surgery, advanced manufacturing, reactor maintenance) requires *two* Pops to complete. One performs the action, the other "verifies" it. This reduces the accident/failure rate to 0% but halves productivity.
+
+**Emergence:** A critical reactor component is failing. You enact the policy to ensure the repair goes perfectly. However, because it now requires two master engineers and you only have one awake, the repair isn't authorized. The reactor melts down while the single engineer waits for a second signature.
+
+**Tension:** Absolute safety and perfection vs. crippling, inflexible inefficiency during emergencies.
+
+---
