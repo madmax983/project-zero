@@ -109,20 +109,19 @@ pub fn register(schedule: &mut Schedule) {
             .in_set(Layer1SystemSet::Observation),
     );
 
+    #[cfg(feature = "nova")]
     schedule.add_systems(
         (
-            #[cfg(feature = "nova")]
             crate::experimental::dreams_of_genesis::dreams_of_genesis_system
                 .after(decay_needs_system),
         )
             .in_set(Layer1SystemSet::Observation),
     );
+    #[cfg(feature = "nova")]
     schedule.add_systems(
         (
-            #[cfg(feature = "nova")]
             crate::experimental::the_feral_choir::detect_feral_choir_system
                 .after(decay_needs_system),
-            #[cfg(feature = "nova")]
             crate::experimental::the_feral_choir::dissolve_feral_choir_system
                 .after(crate::experimental::the_feral_choir::detect_feral_choir_system),
         )
