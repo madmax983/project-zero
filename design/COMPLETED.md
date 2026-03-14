@@ -237,3 +237,4 @@
 - [x] `452` The Commuter Tax — `specs/452-the-commuter-tax.md` — completed 2026-03-13
 - [x] `254` Doppelgangers — `specs/254-doppelgangers.md` — completed 2026-03-14
 - [x] `263` The Cadet Branch — `specs/263-the-cadet-branch.md` — completed 2026-03-14
+- [x] `265` Shadow Ecosystems — `specs/265-shadow-ecosystems.md` — completed 2026-03-15

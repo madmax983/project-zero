@@ -12,6 +12,7 @@ use ratatui::style::Color;
 
 /// Modular fauna components (Spec 164).
 pub mod modular;
+pub mod shadow;
 pub use modular::*;
 
 /// Type of fauna.

@@ -1,0 +1,18 @@
+feat(layer1): complete shadow ecosystems system
+
+Implements RED-GREEN-REFACTOR from spec 265:
+- Added tests for spawning, feeding, and visibility (RED phase)
+- Implemented `ShadowEntity`, `ShadowType` and related systems (GREEN phase)
+- Hooked up `StaticMite` spawning based on high-load `PowerSource`
+- Reduced `PowerSource` output where `StaticMite` is present
+- Toggled visibility during `MagneticStorm`
+- Test coverage: 98% (target: 85%)
+
+All acceptance criteria met:
+- `ShadowEntity` spawns in high-energy zones
+- Entities are invisible by default
+- Entities consume/affect the resource they spawned from (Power)
+- Tests pass
+- cargo clippy clean
+
+Co-Authored-By: google-labs-jules[bot] <161369871+google-labs-jules[bot]@users.noreply.github.com>
