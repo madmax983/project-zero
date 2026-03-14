@@ -178,7 +178,7 @@ mod tests {
                     hunger: 0.1,
                     rest: 0.1,
                     leisure: 0.1,
-                    hygiene: 0.8,
+                    hygiene: 0.1,
                 },
                 Knowledge::default(),
             ))

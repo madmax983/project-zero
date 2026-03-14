@@ -68,9 +68,9 @@ mod tests {
             ..Default::default()
         });
 
-        // Setup heat source at (20, 20)
+        // Setup heat source adjacent to the stone
         let mut temp_grid = TemperatureGrid::new(30, 30, 20.0);
-        temp_grid.set(20, 20, 100.0);
+        temp_grid.set(16, 16, 100.0);
         world.insert_resource(temp_grid);
 
         let id = world

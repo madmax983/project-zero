@@ -214,7 +214,7 @@ mod tests {
                     hunger: 0.05,
                     rest: 0.05,
                     leisure: 0.05,
-                    hygiene: 0.8,
+                    hygiene: 0.05,
                 }, // Morale = 0.05
                 StressTracker::default(),
                 Traits(std::collections::HashSet::new()),
@@ -247,7 +247,7 @@ mod tests {
                     hunger: 0.0,
                     rest: 0.0,
                     leisure: 0.0,
-                    hygiene: 0.8,
+                    hygiene: 0.0,
                 },
                 StressTracker {
                     accumulated_stress: 1000.0,
@@ -283,7 +283,7 @@ mod tests {
                     hunger: 0.0,
                     rest: 0.0,
                     leisure: 0.0,
-                    hygiene: 0.8,
+                    hygiene: 0.0,
                 },
                 StressTracker {
                     accumulated_stress: 1000.0,
@@ -311,7 +311,7 @@ mod tests {
                     hunger: 0.0,
                     rest: 0.0,
                     leisure: 0.0,
-                    hygiene: 0.8,
+                    hygiene: 0.0,
                 },
                 StressTracker {
                     accumulated_stress: 1000.0,
