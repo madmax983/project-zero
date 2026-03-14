@@ -35,6 +35,11 @@ mod tests {
             duration_remaining: 100,
         });
 
+        // Update diffusion rate based on weather first
+        world
+            .run_system_once(crate::layer1::atmosphere::update_weather_diffusion_system)
+            .unwrap();
+
         // Run modified diffusion system
         world.run_system_once(simulate_diffusion_system).unwrap();
 

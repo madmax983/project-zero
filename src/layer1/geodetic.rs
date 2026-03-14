@@ -112,7 +112,11 @@ pub fn update_living_stone_system(
                 // Let's normalize. Heat diff can be 0-100+. Dist can be 0-100+.
                 // Attraction score = -min_dist.
 
-                let attraction_score = -min_dist * 2.0; // Weight attraction heavily
+                let attraction_score = if min_dist >= 1000.0 {
+                    0.0
+                } else {
+                    -min_dist * 2.0
+                }; // Weight attraction heavily
 
                 let total_score = heat_score + attraction_score;
 
@@ -136,7 +140,18 @@ pub fn update_living_stone_system(
                     min_dist = dist;
                 }
             }
-            let current_score = -min_dist * 2.0; // heat diff is 0
+            // Heat diff is 0 because t == current_temp
+            let current_heat_score = 0.0;
+
+            // Fix: If there are no other stones, min_dist is 1000.0. In the neighbor loop it would also be 1000.0.
+            // If min_dist is 1000.0, we shouldn't heavily penalize.
+            let attraction_score = if min_dist >= 1000.0 {
+                0.0
+            } else {
+                -min_dist * 2.0
+            };
+
+            let current_score = current_heat_score + attraction_score;
             if current_score >= best_score {
                 best_move = None;
             }

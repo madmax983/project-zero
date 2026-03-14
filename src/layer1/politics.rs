@@ -343,10 +343,10 @@ mod tests {
         let _ = bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, voting_system);
 
         let manager = world.resource::<ElectionManager>();
-        // Candidate A (Miners) should get 1 vote
-        assert_eq!(manager.candidates[0].votes, 1);
-        // Candidate B (Artisans) should get 0 votes
-        assert_eq!(manager.candidates[1].votes, 0);
+        // Candidate A (Miners) should get 2 votes (Candidate A votes for themselves + Voter 1)
+        assert_eq!(manager.candidates[0].votes, 2);
+        // Candidate B (Artisans) should get 1 vote (Candidate B votes for themselves)
+        assert_eq!(manager.candidates[1].votes, 1);
 
         // Winner should be set
         assert_eq!(manager.winner, Some(candidate_a));

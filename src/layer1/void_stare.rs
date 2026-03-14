@@ -182,7 +182,7 @@ mod tests {
         void_grid.set(5, 5, 1.0); // Abyssal tile
         world.insert_resource(void_grid);
 
-        let tiles = vec![TerrainType::Grass; 100];
+        let tiles = vec![TerrainType::Dirt; 100]; // Dirt does not give visible_life bonus
         world.insert_resource(TerrainGrid {
             width: 10,
             height: 10,
