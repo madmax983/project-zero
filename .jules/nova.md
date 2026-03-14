@@ -41,3 +41,8 @@
 **Concept:** A mysterious, radiant monolith spawns late-game. It acts as a massive light source. When pops get too close, they become mesmerized (maxing leisure, dropping speed) and can permanently gain traits like VoidTouched or Synesthete.
 **Fate:** Proposed
 **Lesson:** Tying an environmental anomaly directly to deep psychological changes (`Needs`, `Traits`) adds a creepy, transformative layer to base exploration.
+
+## [The Feral Choir]
+**Concept:** When multiple Fauna entities cluster together, they form a "Feral Choir" that generates a massive Acoustic noise source, applying a global morale penalty to Pops who can hear it.
+**Fate:** Merged
+**Lesson:** Viral mechanics tied to spatial clustering and audio components.
