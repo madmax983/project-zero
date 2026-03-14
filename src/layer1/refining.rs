@@ -54,152 +54,15 @@ use rand::Rng;
 ///     *   Resets progress.
 #[doc(alias = "crafting")]
 pub fn process_refining_system(world: &mut World) {
-    let factions_data = world.get_resource::<Factions>().map(|f| f.map.clone());
-
-    // Collect workers who are refining
-    let workers: Vec<(Entity, GridPosition)> = world
-        .query_filtered::<(Entity, &GridPosition, &PopAction, Option<&FactionMember>), With<Pop>>()
-        .iter(world)
-        .filter(|(_, _, action, member)| {
-            if action.current != ActionType::Refine {
-                return false;
-            }
-
-            if let Some(map) = &factions_data {
-                if let Some(m) = member {
-                    if let Some(fid) = m.faction_id {
-                        if map
-                            .get(&fid)
-                            .is_some_and(|d| d.state == FactionState::Striking)
-                        {
-                            return false;
-                        }
-                    }
-                }
-            }
-            true
-        })
-        .map(|(e, p, _, _)| (e, *p))
-        .collect();
+    let workers = collect_active_refining_workers(world);
 
     let resources_snapshot = world
         .get_resource::<ColonyResources>()
         .cloned()
         .unwrap_or_default();
 
-    let mut finished_jobs: Vec<(Entity, ColonyResources, ColonyResources, GridPosition, f64)> =
-        Vec::new();
-    let mut xp_gains: Vec<Entity> = Vec::new();
-
-    // Iterate buildings
-    let buildings: Vec<(Entity, BuildingType, GridPosition, f32, f32, bool, f32)> = world
-        .query::<(
-            Entity,
-            &Building,
-            &GridPosition,
-            &RefiningProgress,
-            Option<&crate::layer1::energy::PowerConsumer>,
-            Option<&crate::layer1::rituals::Quirk>,
-            Option<&crate::layer1::prototyping::Prototype>,
-        )>()
-        .iter(world)
-        .map(|(e, b, p, prog, power, quirk, prototype)| {
-            let active = power.is_none_or(|c| c.active);
-            let quirk_stops = quirk.is_some_and(crate::layer1::rituals::Quirk::stops_production);
-            let efficiency_mod = prototype.map_or(1.0, |pr| pr.efficiency_modifier);
-            (
-                e,
-                b.building_type,
-                *p,
-                prog.current,
-                prog.max,
-                active && !quirk_stops,
-                efficiency_mod,
-            )
-        })
-        .collect();
-
-    for (
-        building_entity,
-        building_type,
-        pos,
-        _current_prog,
-        _max_prog,
-        is_active,
-        efficiency_mod,
-    ) in buildings
-    {
-        if !is_active {
-            continue;
-        }
-
-        // Tech Corruption Check
-        // ⚡ Bolt Optimization: Defers `TechState` lookup to only the specific `tech` needed
-        // to avoid cloning the entire `HashMap` O(N) on every frame.
-        if let Some(tech) = building_type.required_tech() {
-            if let Some(ts) = world.get_resource::<crate::layer1::tech::TechState>() {
-                if ts.techs.get(&tech) != Some(&crate::layer1::tech::TechStatus::Active) {
-                    continue;
-                }
-            }
-        }
-
-        // Find worker AT the building
-        let worker_at_building = workers.iter().find(|(_, p)| *p == pos);
-
-        let Some((worker_entity, _)) = worker_at_building else {
-            continue;
-        };
-
-        // Get skill efficiency
-        let efficiency = {
-            let skills = world.get::<Skills>(*worker_entity);
-            get_skill_efficiency(skills, SkillType::Crafting)
-        };
-
-        let (can_refine, input_cost, output_gain, waste_chance) =
-            get_refining_recipe(building_type, &resources_snapshot);
-
-        if can_refine {
-            if let Some(mut progress) = world.get_mut::<RefiningProgress>(building_entity) {
-                progress.current += 1.0 * efficiency * efficiency_mod;
-                if progress.is_complete() {
-                    finished_jobs.push((
-                        building_entity,
-                        input_cost,
-                        output_gain,
-                        pos,
-                        waste_chance,
-                    ));
-
-                    // Rhythm update
-                    let tick = world
-                        .get_resource::<crate::shared::time::SimulationTime>()
-                        .map(|t| t.tick)
-                        .unwrap_or(0);
-                    if let Some(mut rhythm) =
-                        world.get_mut::<crate::layer1::tech::rhythm::MachineRhythm>(building_entity)
-                    {
-                        rhythm.cycle_end_tick = tick;
-                    }
-                }
-            }
-
-            xp_gains.push(*worker_entity);
-
-            // Eureka Check
-            let related_tech = match building_type {
-                BuildingType::Smelter => Some(Tech::MetalWorking),
-                // Add others
-                _ => None,
-            };
-
-            let traits = world
-                .get::<crate::layer1::traits::Traits>(*worker_entity)
-                .cloned();
-            check_for_eureka_world(world, ActionType::Refine, related_tech, traits);
-        }
-    }
+    let (finished_jobs, xp_gains) =
+        process_active_refining_buildings(world, &workers, &resources_snapshot);
 
     // Apply XP gains
     for worker_entity in xp_gains {
@@ -208,57 +71,7 @@ pub fn process_refining_system(world: &mut World) {
         }
     }
 
-    // Apply resource updates for finished jobs
-    for (entity, input, output, pos, waste_chance) in finished_jobs {
-        let success = world
-            .get_resource_mut::<ColonyResources>()
-            .is_some_and(|mut resources| {
-                if resources.try_deduct(&input) {
-                    resources.add_rations(output.rations);
-                    resources.add_planks(output.planks);
-                    resources.add_blocks(output.blocks);
-                    resources.add_metal(output.metal);
-                    resources.add_tools(output.tools);
-                    resources.add_cloth(output.cloth);
-                    resources.add_clothing(output.clothing);
-                    resources.add_fuel(output.fuel);
-                    true
-                } else {
-                    false
-                }
-            });
-
-        if success {
-            // Spawn Waste
-            let mut rng = rand::thread_rng();
-            if rng.gen_bool(waste_chance) {
-                world.spawn((
-                    ResourceItem {
-                        resource_type: ResourceType::Waste,
-                        amount: 1.0,
-                    },
-                    pos,
-                ));
-            }
-
-            // Paperwork Physicality: Spawn BuildingPermit as item instead of adding to global storage
-            if output.building_permits > 0.0 {
-                world.spawn((
-                    ResourceItem {
-                        resource_type: ResourceType::BuildingPermit,
-                        amount: output.building_permits,
-                    },
-                    pos,
-                ));
-            }
-
-            if let Some(mut progress) = world.get_mut::<RefiningProgress>(entity) {
-                progress.current = 0.0;
-            }
-        } else if let Some(mut progress) = world.get_mut::<RefiningProgress>(entity) {
-            progress.current = progress.max;
-        }
-    }
+    apply_finished_refining_jobs(world, finished_jobs);
 }
 
 /// Returns the refining recipe for a building type.
@@ -388,6 +201,210 @@ pub fn get_refining_recipe(
             0.0,
         ),
     }
+}
+
+fn process_active_refining_buildings(
+    world: &mut World,
+    workers: &[(Entity, GridPosition)],
+    resources_snapshot: &ColonyResources,
+) -> (
+    Vec<(Entity, ColonyResources, ColonyResources, GridPosition, f64)>,
+    Vec<Entity>,
+) {
+    let mut finished_jobs = Vec::new();
+    let mut xp_gains = Vec::new();
+
+    let buildings: Vec<(Entity, BuildingType, GridPosition, f32, f32, bool, f32)> = world
+        .query::<(
+            Entity,
+            &Building,
+            &GridPosition,
+            &RefiningProgress,
+            Option<&crate::layer1::energy::PowerConsumer>,
+            Option<&crate::layer1::rituals::Quirk>,
+            Option<&crate::layer1::prototyping::Prototype>,
+        )>()
+        .iter(world)
+        .map(|(e, b, p, prog, power, quirk, prototype)| {
+            let active = power.is_none_or(|c| c.active);
+            let quirk_stops = quirk.is_some_and(crate::layer1::rituals::Quirk::stops_production);
+            let efficiency_mod = prototype.map_or(1.0, |pr| pr.efficiency_modifier);
+            (
+                e,
+                b.building_type,
+                *p,
+                prog.current,
+                prog.max,
+                active && !quirk_stops,
+                efficiency_mod,
+            )
+        })
+        .collect();
+
+    for (
+        building_entity,
+        building_type,
+        pos,
+        _current_prog,
+        _max_prog,
+        is_active,
+        efficiency_mod,
+    ) in buildings
+    {
+        if !is_active {
+            continue;
+        }
+
+        // Tech Corruption Check
+        // ⚡ Bolt Optimization: Defers `TechState` lookup to only the specific `tech` needed
+        // to avoid cloning the entire `HashMap` O(N) on every frame.
+        if let Some(tech) = building_type.required_tech() {
+            if let Some(ts) = world.get_resource::<crate::layer1::tech::TechState>() {
+                if ts.techs.get(&tech) != Some(&crate::layer1::tech::TechStatus::Active) {
+                    continue;
+                }
+            }
+        }
+
+        // Find worker AT the building
+        let worker_at_building = workers.iter().find(|(_, p)| *p == pos);
+
+        let Some((worker_entity, _)) = worker_at_building else {
+            continue;
+        };
+
+        // Get skill efficiency
+        let efficiency = {
+            let skills = world.get::<Skills>(*worker_entity);
+            get_skill_efficiency(skills, SkillType::Crafting)
+        };
+
+        let (can_refine, input_cost, output_gain, waste_chance) =
+            get_refining_recipe(building_type, resources_snapshot);
+
+        if !can_refine {
+            continue;
+        }
+
+        if let Some(mut progress) = world.get_mut::<RefiningProgress>(building_entity) {
+            progress.current += 1.0 * efficiency * efficiency_mod;
+            if progress.is_complete() {
+                finished_jobs.push((building_entity, input_cost, output_gain, pos, waste_chance));
+
+                // Rhythm update
+                let tick = world
+                    .get_resource::<crate::shared::time::SimulationTime>()
+                    .map(|t| t.tick)
+                    .unwrap_or(0);
+                if let Some(mut rhythm) =
+                    world.get_mut::<crate::layer1::tech::rhythm::MachineRhythm>(building_entity)
+                {
+                    rhythm.cycle_end_tick = tick;
+                }
+            }
+        }
+
+        xp_gains.push(*worker_entity);
+
+        // Eureka Check
+        let related_tech = match building_type {
+            BuildingType::Smelter => Some(Tech::MetalWorking),
+            // Add others
+            _ => None,
+        };
+
+        let traits = world
+            .get::<crate::layer1::traits::Traits>(*worker_entity)
+            .cloned();
+        check_for_eureka_world(world, ActionType::Refine, related_tech, traits);
+    }
+
+    (finished_jobs, xp_gains)
+}
+
+fn apply_finished_refining_jobs(
+    world: &mut World,
+    finished_jobs: Vec<(Entity, ColonyResources, ColonyResources, GridPosition, f64)>,
+) {
+    for (entity, input, output, pos, waste_chance) in finished_jobs {
+        let success = world
+            .get_resource_mut::<ColonyResources>()
+            .is_some_and(|mut resources| {
+                if resources.try_deduct(&input) {
+                    resources.add_rations(output.rations);
+                    resources.add_planks(output.planks);
+                    resources.add_blocks(output.blocks);
+                    resources.add_metal(output.metal);
+                    resources.add_tools(output.tools);
+                    resources.add_cloth(output.cloth);
+                    resources.add_clothing(output.clothing);
+                    resources.add_fuel(output.fuel);
+                    true
+                } else {
+                    false
+                }
+            });
+
+        if success {
+            // Spawn Waste
+            let mut rng = rand::thread_rng();
+            if rng.gen_bool(waste_chance) {
+                world.spawn((
+                    ResourceItem {
+                        resource_type: ResourceType::Waste,
+                        amount: 1.0,
+                    },
+                    pos,
+                ));
+            }
+
+            // Paperwork Physicality: Spawn BuildingPermit as item instead of adding to global storage
+            if output.building_permits > 0.0 {
+                world.spawn((
+                    ResourceItem {
+                        resource_type: ResourceType::BuildingPermit,
+                        amount: output.building_permits,
+                    },
+                    pos,
+                ));
+            }
+
+            if let Some(mut progress) = world.get_mut::<RefiningProgress>(entity) {
+                progress.current = 0.0;
+            }
+        } else if let Some(mut progress) = world.get_mut::<RefiningProgress>(entity) {
+            progress.current = progress.max;
+        }
+    }
+}
+
+fn collect_active_refining_workers(world: &mut World) -> Vec<(Entity, GridPosition)> {
+    let factions_data = world.get_resource::<Factions>().map(|f| f.map.clone());
+
+    world
+        .query_filtered::<(Entity, &GridPosition, &PopAction, Option<&FactionMember>), With<Pop>>()
+        .iter(world)
+        .filter(|(_, _, action, member)| {
+            if action.current != ActionType::Refine {
+                return false;
+            }
+
+            if let Some(map) = &factions_data {
+                if let Some(m) = member {
+                    if let Some(fid) = m.faction_id {
+                        if map
+                            .get(&fid)
+                            .is_some_and(|d| d.state == FactionState::Striking)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            true
+        })
+        .map(|(e, p, _, _)| (e, *p))
+        .collect()
 }
 
 #[cfg(test)]
