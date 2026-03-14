@@ -2,6 +2,7 @@ use crate::layer1::morale::Morale;
 use crate::layer1::pop::PopDied;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::unrest::{Unrest, UnrestModifier};
+use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 
 #[derive(Component)]
@@ -9,10 +10,19 @@ pub struct NobleScion {
     pub allowance: f32,
 }
 
-pub fn income_system(
+pub fn process_allowance_system(
     mut resources: ResMut<ColonyResources>,
     query: Query<(&NobleScion, Option<&Morale>)>,
+    time: Option<Res<SimulationTime>>,
 ) {
+    if let Some(time) = time {
+        if time.tick == 0 || time.tick % 1000 != 0 {
+            return;
+        }
+    } else {
+        return;
+    }
+
     for (scion, morale) in query.iter() {
         // Scale allowance by Morale (0.0 to 1.0)
         let modifier = morale.map_or(1.0, |m| m.value.clamp(0.0, 1.0));
@@ -41,7 +51,7 @@ pub fn death_consequence_system(
 mod tests {
     use crate::layer1::pop::{Pop, PopDied};
     use crate::layer1::resources::ColonyResources;
-    use crate::layer1::social::cadet::{death_consequence_system, income_system, NobleScion};
+    use crate::layer1::social::cadet::{death_consequence_system, process_allowance_system, NobleScion};
     use crate::layer1::traits::{Trait, Traits};
     use crate::layer1::unrest::Unrest;
     use bevy_ecs::prelude::*;
@@ -50,6 +60,10 @@ mod tests {
     fn test_noble_allowance_income() {
         let mut world = World::new();
         world.insert_resource(ColonyResources::default());
+        world.insert_resource(crate::shared::time::SimulationTime {
+            tick: 1000,
+            ..Default::default()
+        });
 
         // Spawn Noble with 1.0 Morale
         world.spawn((
@@ -62,9 +76,9 @@ mod tests {
             },
         ));
 
-        // Run monthly tick (mocked)
+        // Run monthly tick
         let mut schedule = Schedule::default();
-        schedule.add_systems(income_system);
+        schedule.add_systems(process_allowance_system);
         schedule.run(&mut world);
 
         let resources = world.resource::<ColonyResources>();
@@ -75,6 +89,10 @@ mod tests {
     fn test_noble_allowance_income_scales_with_morale() {
         let mut world = World::new();
         world.insert_resource(ColonyResources::default());
+        world.insert_resource(crate::shared::time::SimulationTime {
+            tick: 1000,
+            ..Default::default()
+        });
 
         // Spawn Noble with 0.5 Morale
         world.spawn((
@@ -87,13 +105,41 @@ mod tests {
             },
         ));
 
-        // Run monthly tick (mocked)
+        // Run monthly tick
         let mut schedule = Schedule::default();
-        schedule.add_systems(income_system);
+        schedule.add_systems(process_allowance_system);
         schedule.run(&mut world);
 
         let resources = world.resource::<ColonyResources>();
         assert_eq!(resources.credits, 50.0);
+    }
+
+    #[test]
+    fn test_noble_allowance_not_on_tick_zero() {
+        let mut world = World::new();
+        world.insert_resource(ColonyResources::default());
+        world.insert_resource(crate::shared::time::SimulationTime {
+            tick: 0,
+            ..Default::default()
+        });
+
+        // Spawn Noble with 1.0 Morale
+        world.spawn((
+            Pop,
+            Traits(std::collections::HashSet::from([Trait::Noble])),
+            NobleScion { allowance: 100.0 },
+            crate::layer1::morale::Morale {
+                value: 1.0,
+                ..Default::default()
+            },
+        ));
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(process_allowance_system);
+        schedule.run(&mut world);
+
+        let resources = world.resource::<ColonyResources>();
+        assert_eq!(resources.credits, 0.0); // No allowance on tick 0
     }
 
     #[test]

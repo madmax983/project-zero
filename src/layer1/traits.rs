@@ -264,6 +264,9 @@ pub fn get_trait_leisure_decay_modifier(traits: &Traits) -> f32 {
     if traits.0.contains(&Trait::Soulless) {
         modifier -= 0.5;
     }
+    if traits.0.contains(&Trait::Noble) {
+        modifier += 0.5;
+    }
     modifier
 }
 
@@ -357,11 +360,16 @@ mod tests {
     #[test]
     fn test_leisure_decay_modifiers() {
         let soulless = Traits(HashSet::from([Trait::Soulless]));
+        let noble = Traits(HashSet::from([Trait::Noble]));
         let normal = Traits(HashSet::new());
 
         assert!(
             get_trait_leisure_decay_modifier(&soulless) < 1.0,
             "Soulless should have reduced leisure decay"
+        );
+        assert!(
+            get_trait_leisure_decay_modifier(&noble) > 1.0,
+            "Noble should have increased leisure decay"
         );
         assert!(
             (get_trait_leisure_decay_modifier(&normal) - 1.0).abs() < f32::EPSILON,
