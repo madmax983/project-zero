@@ -269,11 +269,11 @@ mod tests {
             hunger: 0.5,
             rest: 0.5,
             leisure: 0.5,
-            hygiene: 0.8,
+            hygiene: 0.5, // changed to 0.5 so average is 0.5
         };
         let mut memories = Memories::default();
 
-        // Base morale = (0.5+0.5+0.5)/3 = 0.5
+        // Base morale = (0.5+0.5+0.5+0.5)/4 = 0.5
         let _base = needs.morale();
 
         // WitnessedDeath: -0.2 mood impact at max intensity
@@ -292,7 +292,7 @@ mod tests {
             hunger: 0.5,
             rest: 0.5,
             leisure: 0.5,
-            hygiene: 0.8,
+            hygiene: 0.5,
         };
         let mut memories = Memories::default();
 
@@ -328,7 +328,7 @@ mod tests {
             hunger: 0.5,
             rest: 0.5,
             leisure: 0.5,
-            hygiene: 0.8,
+            hygiene: 0.5,
         }; // Base 0.5
         let buff = crate::layer1::social::SocialBuff { value: 0.1 };
 
@@ -356,7 +356,7 @@ mod tests {
             hunger: 0.5,
             rest: 0.5,
             leisure: 0.5,
-            hygiene: 0.8,
+            hygiene: 0.5,
         };
         let night_owl = Traits(HashSet::from([Trait::NightOwl]));
 

@@ -1,3 +1,4 @@
+use crate::layer1::morale::Morale;
 use crate::layer1::pop::PopDied;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::unrest::{Unrest, UnrestModifier};
@@ -8,9 +9,14 @@ pub struct NobleScion {
     pub allowance: f32,
 }
 
-pub fn income_system(mut resources: ResMut<ColonyResources>, query: Query<&NobleScion>) {
-    for scion in query.iter() {
-        resources.add_credits(scion.allowance);
+pub fn income_system(
+    mut resources: ResMut<ColonyResources>,
+    query: Query<(&NobleScion, Option<&Morale>)>,
+) {
+    for (scion, morale) in query.iter() {
+        // Scale allowance by Morale (0.0 to 1.0)
+        let modifier = morale.map_or(1.0, |m| m.value.clamp(0.0, 1.0));
+        resources.add_credits(scion.allowance * modifier);
     }
 }
 
@@ -45,11 +51,15 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(ColonyResources::default());
 
-        // Spawn Noble
+        // Spawn Noble with 1.0 Morale
         world.spawn((
             Pop,
             Traits(std::collections::HashSet::from([Trait::Noble])),
             NobleScion { allowance: 100.0 },
+            crate::layer1::morale::Morale {
+                value: 1.0,
+                ..Default::default()
+            },
         ));
 
         // Run monthly tick (mocked)
@@ -59,6 +69,31 @@ mod tests {
 
         let resources = world.resource::<ColonyResources>();
         assert_eq!(resources.credits, 100.0);
+    }
+
+    #[test]
+    fn test_noble_allowance_income_scales_with_morale() {
+        let mut world = World::new();
+        world.insert_resource(ColonyResources::default());
+
+        // Spawn Noble with 0.5 Morale
+        world.spawn((
+            Pop,
+            Traits(std::collections::HashSet::from([Trait::Noble])),
+            NobleScion { allowance: 100.0 },
+            crate::layer1::morale::Morale {
+                value: 0.5,
+                ..Default::default()
+            },
+        ));
+
+        // Run monthly tick (mocked)
+        let mut schedule = Schedule::default();
+        schedule.add_systems(income_system);
+        schedule.run(&mut world);
+
+        let resources = world.resource::<ColonyResources>();
+        assert_eq!(resources.credits, 50.0);
     }
 
     #[test]
