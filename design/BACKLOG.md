@@ -186,3 +186,5 @@ See `design/IDEAS.md` for unspecced concepts.
 
 
 - [ ] `453` Nanite Fabrication — `specs/453-nanite-fabrication.md`
+- [ ] `454` Gravitational Debt — `specs/454-gravitational-debt.md`
+- [ ] `455` The Stellar Forge — `specs/455-stellar-forge.md`

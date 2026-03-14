@@ -9542,7 +9542,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Gravitational Debt
+## Gravitational Debt [SPECCED]
 
 **Layer:** 1
 
@@ -9556,7 +9556,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Stellar Forge
+## The Stellar Forge [SPECCED]
 
 **Layer:** 2 -> 1
 
