@@ -230,3 +230,4 @@
 - [x] `413` Cryo-Shock — `specs/413-cryo-shock.md` — completed 2026-03-11
 - [x] `452` The Event Horizon Tap — `specs/452-event-horizon-tap.md` — completed 2026-03-12
 - [x] `262` Thermal Gliders — `specs/262-thermal-gliders.md` — completed 2026-03-12
+- [x] `289` The Mimetic Plague — `specs/289-mimetic-plague.md` — completed 2026-03-12
