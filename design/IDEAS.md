@@ -9681,3 +9681,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Immediate, massive geopolitical and economic gains vs. the literal overshadowing and subjugation of your citizens' daily lives.
 
 ---
+## Memory Forgery
+
+**Layer:** 1
+
+**Fantasy:** Gaslighting your own citizens to maintain absolute peace, rewriting history to erase your mistakes.
+
+**Mechanic:** A high-tech "Mnestic Archiver" building allows you to literally erase "Bad Memories" (famines, deaths, disasters) from Pops and replace them with fabricated "Good Memories" (bountiful harvests, heroic victories). This instantly maxes out their Morale and resets Stress.
+
+**Emergence:** You erase a massive famine from the colony's memory. A year later, a single unmodified journal entry is found by an archivist. The "Truth" spreads like a virus. Every Pop who had their memory forged suffers a "Reality Collapse" mental break simultaneously, turning your peaceful utopia into an instantaneous, hyper-violent mob.
+
+**Tension:** Perfect, instantaneous morale control via deception vs. the catastrophic, colony-ending risk of the truth getting out.
+
+---
+
+## Void-Manta Symbiosis
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** Harnessing the heat of a gestating star-beast, knowing you are raising a monster that will eventually wake up.
+
+**Mechanic:** Colossal "Void-Mantas" migrating through Layer 2 occasionally drop massive, bioluminescent "Eggs" onto Layer 1. These eggs emit incredible, clean thermal and electrical energy, enough to power a mid-game colony entirely on their own. However, the egg is slowly gestating.
+
+**Emergence:** You build your entire heavy industry around an Egg to utilize the free power. Three years later, the Egg hatches. The newborn Manta requires immense biomass to achieve escape velocity, instantly eating your entire agricultural sector and the farmers before rocketing back into space, leaving your industry powerless and your people starving.
+
+**Tension:** Unmatched, free infrastructure power vs. the absolute certainty of a localized ecological disaster when the power source hatches.
+
+---
+
+## The Pariah's Market
+
+**Layer:** Cross-layer (3 -> 1)
+
+**Fantasy:** Making a deal with the devil because the angels are too expensive.
+
+**Mechanic:** Occasionally, a heavily damaged, fleeing fleet from a universally despised Layer 3 faction (e.g., a Devouring Swarm remnant or rogue AI) enters your orbit. They offer staggeringly advanced, forbidden Layer 3 technology (like singularity reactors or genetic super-soldiers) in exchange for basic Layer 1 supplies (food/water) to repair their ships.
+
+**Emergence:** You are losing a ground war. You buy a singularity bomb from the Pariahs to wipe out the invaders. You win the war, but the Galactic Council detects the forbidden tech signature on your world. You are immediately declared a "Rogue State," cutting off all standard trade and initiating a massive, coordinated invasion by the entire galaxy.
+
+**Tension:** Instant, overpowered technological salvation vs. permanent diplomatic annihilation and galactic war.
+
+---
