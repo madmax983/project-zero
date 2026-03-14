@@ -9570,7 +9570,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Gravity-Defying Flora
+## Gravity-Defying Flora [SPECCED]
 
 **Layer:** 1
 
