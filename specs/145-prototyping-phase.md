@@ -300,6 +300,7 @@ pub fn production_efficiency_system(
 ## 8. Questions
 
 -   *Does deconstructing a Prototype refund full cost?* (Probably not, standard logic applies).
+-   *Architect:* No, prototyping is inherently wasteful. Deconstruction yields 50% of the standard refund rate.
 -   *Can you speed up mastery with Research?* (Future feature).
 -   *Do multiple prototypes speed up mastery?* (Yes, the loop iterates all active prototypes. 2 reactors = 2x speed. This is intentional emergent behavior).
 
