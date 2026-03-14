@@ -1,156 +1,120 @@
 # 263: The Cadet Branch
 
-## Overview
+## 1. Overview
+**Layer:** 3 -> 1
+**Fantasy:** Babysitting the Emperor's nephew.
+**Mechanic:** You accept "Noble Scions" from the Homeworld. They have terrible stats and "Snob" traits but come with a monthly "Allowance" (Funding) from their rich families. If they die, funding stops and relations tank.
+**Emergence:** You build a luxurious, safe playground for the idiots just to keep the funding flowing, while the real workers live in squalor.
+**Tension:** Free money vs. Incompetent/High-maintenance population.
 
-"Babysitting the Emperor's nephew."
+## 2. Dependencies
+- Layer 1 `Pop` and Needs system (for high-maintenance).
+- Economy/Credits system (for the Allowance).
+- Time/Simulation Tick (for monthly income).
 
-You can accept "Noble Scions" from your Home Faction (Layer 3). These Pops have the `Noble` trait.
-- **Pros**: They provide a monthly **Allowance** (Credits) from their wealthy families as long as they are alive and happy.
-- **Cons**: They refuse to work (Idle), have high Luxury needs, and often have negative traits like `Snob` or `Incompetent`.
-- **Risk**: If a Scion dies, Relations with the Home Faction tank, leading to sanctions or war.
-
-## Dependencies
-
-- `003` — Pop Entity (Noble trait)
-- `039` — Trade System (Credits)
-- `031` — Pop Morale (Needs)
-- `209` — Planetary Governance (Relations impact)
-
-## RED Phase: Tests First
-
-Write these tests in `src/layer1/social/cadet_branch_tests.rs`. They will initially FAIL.
+## 3. RED Phase: Tests First
 
 ```rust
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::pop::{Pop, Trait, Traits};
-    use crate::layer1::resources::ColonyResources;
-    use crate::layer1::social::cadet::{NobleScion, income_system, death_consequence_system};
-    use crate::layer1::health::DeathEvent;
-    use crate::layer2::governance::PlanetStats;
+    use super::*;
+    use bevy::prelude::*;
+    use crate::layer1::pop::Pop;
+    use crate::layer1::economy::ColonyWealth;
 
     #[test]
-    fn test_noble_allowance_income() {
-        let mut world = World::new();
-        world.insert_resource(ColonyResources::default());
+    fn test_noble_scion_provides_allowance() {
+        // Arrange
+        let mut app = App::new();
+        app.add_systems(Update, process_allowance_system);
+        app.insert_resource(ColonyWealth { credits: 0.0 });
 
-        // Spawn Noble
-        world.spawn((
-            Pop,
-            Traits(std::collections::HashSet::from([Trait::Noble])),
-            NobleScion { allowance: 100.0 },
+        // Spawn a Noble Scion
+        app.world_mut().spawn((
+            Pop { skill_level: 1 },
+            NobleScion { monthly_allowance: 500.0 },
         ));
 
-        // Run monthly tick (mocked)
-        let mut schedule = Schedule::default();
-        schedule.add_systems(income_system);
-        schedule.run(&mut world);
+        // Act - Simulate a month passing (event or timer trigger)
+        app.world_mut().send_event(MonthTickEvent);
+        app.update();
 
-        let resources = world.resource::<ColonyResources>();
-        assert_eq!(resources.credits, 100.0);
+        // Assert
+        let wealth = app.world().resource::<ColonyWealth>();
+        assert_eq!(wealth.credits, 500.0, "The colony should receive the noble's allowance.");
     }
 
     #[test]
-    fn test_noble_refuses_work() {
-        // This is a logic check in Job System, hard to test in isolation here unless we verify
-        // the trait prevents assignment.
-        // Assuming we add a helper `can_assign_job`
-        let scion = NobleScion { allowance: 10.0 };
-        // assert!(!can_assign_job(&scion, JobType::Miner));
-    }
+    fn test_noble_scion_death_stops_allowance() {
+        // Arrange
+        let mut app = App::new();
+        app.add_systems(Update, process_allowance_system);
+        app.insert_resource(ColonyWealth { credits: 0.0 });
 
-    #[test]
-    fn test_noble_death_penalizes_relations() {
-        let mut world = World::new();
-        world.insert_resource(Events::<DeathEvent>::default());
-        // Mock PlanetStats for relations
-        world.insert_resource(PlanetStats { unrest_modifier: 0.0, ..Default::default() });
-        // Or specific Relations resource
-
-        let noble = world.spawn((
-            Pop,
-            NobleScion { allowance: 100.0 },
+        // Spawn a Noble Scion
+        let scion_entity = app.world_mut().spawn((
+            Pop { skill_level: 1 },
+            NobleScion { monthly_allowance: 500.0 },
         )).id();
 
-        // Kill them
-        world.send_event(DeathEvent { entity: noble });
+        // Kill the scion
+        app.world_mut().entity_mut(scion_entity).despawn();
 
-        let mut schedule = Schedule::default();
-        schedule.add_systems(death_consequence_system);
-        schedule.run(&mut world);
+        // Act
+        app.world_mut().send_event(MonthTickEvent);
+        app.update();
 
-        // Check consequences
-        // e.g. Unrest up, or specific Relation metric down
-        // For GREEN, check PlanetStats modifier or resource
-        let stats = world.resource::<PlanetStats>();
-        assert!(stats.unrest_modifier > 0.0);
+        // Assert
+        let wealth = app.world().resource::<ColonyWealth>();
+        assert_eq!(wealth.credits, 0.0, "Dead nobles pay no allowance.");
     }
 }
 ```
 
-## GREEN Phase: Minimal Implementation
-
-### 1. Components
+## 4. GREEN Phase: Minimal Implementation
 
 ```rust
-// src/layer1/social/cadet.rs
-
-use bevy_ecs::prelude::*;
-use crate::layer1::resources::ColonyResources;
-use crate::layer1::health::DeathEvent;
-use crate::layer2::governance::PlanetStats; // Using existing resource for global stats
+use bevy::prelude::*;
+use crate::layer1::economy::ColonyWealth;
 
 #[derive(Component)]
 pub struct NobleScion {
-    pub allowance: f32,
+    pub monthly_allowance: f32,
 }
 
-pub fn income_system(
-    mut resources: ResMut<ColonyResources>,
-    query: Query<&NobleScion>,
-    // Add Time resource to check for "Month" end
-) {
-    // Mock: assume run once per month
-    for scion in query.iter() {
-        resources.credits += scion.allowance;
-    }
-}
+#[derive(Event)]
+pub struct MonthTickEvent;
 
-pub fn death_consequence_system(
-    mut events: EventReader<DeathEvent>,
-    query: Query<&NobleScion>,
-    mut stats: ResMut<PlanetStats>,
+pub fn process_allowance_system(
+    mut events: EventReader<MonthTickEvent>,
+    mut wealth: ResMut<ColonyWealth>,
+    nobles: Query<&NobleScion>,
 ) {
-    for event in events.read() {
-        if let Ok(_) = query.get(event.entity) {
-            // Noble died!
-            stats.unrest_modifier += 0.5; // Massive penalty
-            // Log to Chronicle
+    for _ in events.read() {
+        let mut total_allowance = 0.0;
+        for noble in nobles.iter() {
+            total_allowance += noble.monthly_allowance;
         }
+        wealth.credits += total_allowance;
     }
 }
 ```
 
-### 2. Trait Update
+## 5. REFACTOR Phase: Quality & Design
+- **Refactoring Opportunities:** Combine the monthly tick check with existing temporal cycle systems (`SimulationTime`) rather than a bespoke `MonthTickEvent` if one already exists.
+- **Code Smells:** Hardcoding allowance values in spawners. Consider a `NobleScionBundle` that sets random low stats and random high allowances.
+- **Integration Points:** Hook into the `DeathEvent` or similar cleanup system to trigger a "Relations Dropped" notification when the scion dies.
 
-Add `Noble` to `Trait` enum.
-Modify `assign_job` logic in `009` to reject `Trait::Noble` for manual labor.
+## 6. Acceptance Criteria
+- [ ] All tests in RED phase pass.
+- [ ] `cargo test` returns 0 failures.
+- [ ] `cargo clippy -- -D warnings` passes.
+- [ ] Test coverage ≥85% for new code.
+- [ ] The `NobleScion` component correctly provides recurring income.
+- [ ] Income ceases immediately if the entity is despawned.
 
-## REFACTOR Phase: Quality & Design
+## 7. Technical Guidance
+- The scion's demanding nature should be handled by giving them unique traits (e.g., `Snob`) that accelerate their need decay for luxuries, leveraging the existing `Needs` system.
 
-- **Happiness Scaling**: Allowance should scale with Happiness. Unhappy nobles write home complaining, reducing the payment.
-- **Ransom**: If kidnapped by pirates, you must pay.
-- **Events**: "The Scion wants a Pony." (Demands exotic pet or resource).
-
-## Acceptance Criteria
-
-- [ ] `NobleScion` component tracks income.
-- [ ] System adds credits periodically.
-- [ ] Death triggers penalty.
-- [ ] Tests pass.
-
-## Technical Guidance
-
-- Use `ColonyResources` for credits.
-- Hook into `DeathEvent` stream.
+## 8. Questions
+*Builder: add questions here if spec is unclear.*
