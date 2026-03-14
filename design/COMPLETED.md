@@ -235,3 +235,4 @@
 - [x] `269` The Lotus Simulation — `specs/269-lotus-simulation.md` — completed 2026-03-14
 - [x] `INT-269` Integration: VR Pod -> Utility AI — completed 2026-03-15
 - [x] `452` The Commuter Tax — `specs/452-the-commuter-tax.md` — completed 2026-03-13
+- [x] `254` Doppelgangers — `specs/254-doppelgangers.md` — completed 2026-03-14

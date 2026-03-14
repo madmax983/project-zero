@@ -226,6 +226,7 @@ struct PopDecider<'a> {
     context: &'a WorldContext<'a>,
     is_striking: bool,
     is_penal: bool,
+    is_noble: bool,
 }
 
 impl<'a> PopDecider<'a> {
@@ -236,6 +237,10 @@ impl<'a> PopDecider<'a> {
     ) -> Self {
         let is_striking = Self::check_striking(data, context);
         let is_penal = data.penal_labor.is_some();
+        let is_noble = data
+            .traits
+            .as_ref()
+            .is_some_and(|t| t.0.contains(&Trait::Noble));
 
         Self {
             evaluator: CandidateEvaluator::new(evaluate_idle(&data.needs)),
@@ -244,6 +249,7 @@ impl<'a> PopDecider<'a> {
             context,
             is_striking,
             is_penal,
+            is_noble,
         }
     }
 
@@ -384,7 +390,7 @@ impl<'a> PopDecider<'a> {
     /// *   **PreCrimeArrest**: Predictive policing.
     #[allow(clippy::collapsible_if)]
     fn evaluate_group_work(&mut self) {
-        if self.is_striking {
+        if self.is_striking || self.is_noble {
             return;
         }
 
@@ -487,7 +493,7 @@ impl<'a> PopDecider<'a> {
     /// *   **Haul**: Moving items to stockpiles.
     /// *   **BuryCorpse**: Sanitation.
     fn evaluate_group_logistics(&mut self) {
-        if self.is_striking {
+        if self.is_striking || self.is_noble {
             return;
         }
 
