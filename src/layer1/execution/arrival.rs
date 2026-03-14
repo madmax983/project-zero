@@ -217,6 +217,14 @@ fn process_arrival(
             target_entity,
             AssignmentType::FarmWorker,
         ),
+        ActionType::EnterVrPod => {
+            commands.entity(pop_entity).insert(crate::layer1::artifacts::vr_pod::InVrPod);
+            commands.entity(target_entity).insert(crate::layer1::artifacts::vr_pod::VrPod {
+                occupant: Some(pop_entity),
+            });
+            // Keep AtTarget marker so they stay at the pod
+            false
+        }
         ActionType::Admin => {
             if let Ok(mut office) = offices.get_mut(target_entity) {
                 if !office.workers.contains(&pop_entity) {

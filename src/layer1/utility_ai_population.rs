@@ -140,6 +140,7 @@ fn populate_buffer_buildings(
     populate_offices(world, &mut buffer.offices, context.cycle);
     populate_showers(world, &mut buffer.showers);
     populate_gene_banks(world, &mut buffer.gene_banks, context.cycle);
+    populate_vr_pods(world, &mut buffer.vr_pods);
 }
 
 fn populate_gene_banks(
@@ -871,4 +872,14 @@ mod tests {
         populate_housing(&mut world, &mut buffer);
         assert_eq!(buffer.len(), 1, "Should include available housing");
     }
+}
+fn populate_vr_pods(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
+    buffer.clear();
+    buffer.extend(
+        world
+            .query::<(Entity, &GridPosition, &crate::layer1::artifacts::vr_pod::VrPod)>()
+            .iter(world)
+            .filter(|(_, _, pod)| pod.occupant.is_none()) // Only empty pods
+            .map(|(entity, pos, _)| ScorableCandidate::new(entity, *pos)),
+    );
 }

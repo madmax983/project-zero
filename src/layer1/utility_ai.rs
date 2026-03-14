@@ -566,6 +566,16 @@ impl<'a> PopDecider<'a> {
                 0.0,
             );
         }
+
+        // Evaluate EnterVrPod (Highly stressed Pops)
+        if !self.buffer.vr_pods.is_empty() && self.data.stress > 0.4 {
+            self.evaluator.evaluate_and_consider(
+                evaluate_simple_action(pop_pos, &weights, &self.buffer.vr_pods, self.data.stress * 2.0),
+                ActionType::EnterVrPod,
+                self.context,
+                0.0,
+            );
+        }
     }
 
     /// **Priority 5: Exploration**

@@ -1,6 +1,9 @@
 use crate::layer1::map::GridPosition;
 use bevy_ecs::prelude::*;
 
+#[path = "artifacts/vr_pod.rs"] pub mod vr_pod;
+pub use vr_pod::*;
+
 /// A rare, indestructible entity that emits an aura.
 #[derive(Component, Default)]
 pub struct Artifact;
