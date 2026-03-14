@@ -9806,3 +9806,58 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Immediate economic and diplomatic survival vs the systematic, generational draining of your colony's strongest citizens.
 
 ---
+## Subterranean Mycelial Network
+
+**Layer:** 1
+
+**Fantasy:** Growing a living, pulsating biological transit system beneath your colony that is highly efficient but completely alien.
+
+**Mechanic:** You discover a vast fungal network underground. By feeding it specific nutrients, you can "train" it to act as a hyper-fast, frictionless conveyor belt for raw resources, completely replacing mechanical haulers and pneumatic tubes.
+
+**Emergence:** The network works perfectly for years, moving thousands of tons of ore. But when a disease breaks out in your agricultural sector, the mycelium inadvertently transports the pathogen directly into every connected stockpile and residential zone simultaneously, turning a localized outbreak into a colony-wide pandemic in minutes.
+
+**Tension:** Unparalleled, free logistical throughput vs. creating a terrifyingly efficient vector for disease and invasive species.
+
+---
+
+## The Monumental Ego
+
+**Layer:** Cross-layer (1 -> 2)
+
+**Fantasy:** Watching a beloved planetary leader slowly descend into narcissism, demanding the colony bankrupt itself to build their legacy.
+
+**Mechanic:** If a Layer 1 Mayor or Governor reaches maximum "Prestige" and stays there too long, they develop the "Megalomania" trait. They issue an edict to build a colossal, mechanically useless "Vanity Megastructure" visible from Layer 2 (like a solid gold orbital statue of themselves). Refusing triggers a civil war led by their loyalists.
+
+**Emergence:** You are forced to divert all your steel and fuel to build a 500-foot statue of your governor while your people starve. The completed statue actually provides a massive diplomatic boost with superficial Layer 3 empires, but its shadow permanently lowers the morale of the slums built around its base.
+
+**Tension:** Indulging a tyrant's insane waste of resources to maintain political stability vs. fighting a bloody civil war to save the economy.
+
+---
+
+## Gravity-Tethered Slums
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** The visual and social disparity of the ultra-rich living in clean orbit while literally dangling their workforce into the polluted atmosphere below.
+
+**Mechanic:** Layer 2 Orbital Stations can drop "Atmospheric Tethers" down into Layer 1. These tethers suspend cheap, high-density housing modules just above the planetary smog layer, completely bypassing Layer 1 land costs and zoning laws while providing labor for the station.
+
+**Emergence:** A massive Layer 1 hurricane rolls in. The tethered slums, designed only for vertical suspension, are battered by horizontal winds. The orbital station must choose to either haul the massive weight up (burning an astronomical amount of fuel) or cut the tether, dropping millions of Pops into the toxic ocean below to save the station.
+
+**Tension:** Incredibly cheap, dense, land-free housing vs. exposing your most vulnerable population to catastrophic weather events with no ground-based shelters.
+
+---
+
+## The Generational Debt Collector
+
+**Layer:** Cross-layer (3 -> 1)
+
+**Fantasy:** The horrifying realization that your thriving colony was built on a predatory loan signed by your great-grandparents, and the bill has finally arrived.
+
+**Mechanic:** A massive, heavily armed "Repo Fleet" from a Layer 3 Megabank arrives in your system. They claim the original seed-funding for your colony (300 in-game years ago) was a loan with compounding interest. They don't want money; they want physical collateral. They begin literally laser-carving out entire sectors of your Layer 1 colony to haul away.
+
+**Emergence:** The Repo Fleet targets your most valuable industrial zone. To save it, you scramble your military, but fighting back flags you as "In Default" to the entire galactic market, collapsing your trade economy overnight. You realize it's mathematically optimal to let them take your oldest residential sector instead, effectively sacrificing millions of Pops to balance the spreadsheet.
+
+**Tension:** Fighting an unwinnable war to protect your sovereignty vs. cold-bloodedly deciding which part of your civilization is acceptable "collateral" to satisfy an ancient debt.
+
+---
