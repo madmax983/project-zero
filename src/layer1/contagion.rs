@@ -1,4 +1,5 @@
 use crate::layer1::map::GridPosition;
+use crate::layer1::morale::{MoodModifier, Morale};
 use crate::layer1::needs::Needs;
 use bevy_ecs::prelude::*;
 
@@ -9,12 +10,63 @@ pub struct ContagionCooldown {
     pub timer: u32,
 }
 
+#[derive(Component)]
+pub struct EmotionalContagion {
+    pub contagion_type: ContagionType,
+    pub radius: f32,
+    pub strength: f32,
+}
+
+#[derive(Clone, Copy, PartialEq, Eq)]
+pub enum ContagionType {
+    Panic,
+    Joy,
+    Rage,
+}
+
 const CONTAGION_RANGE: i32 = 5;
 const CONTAGION_COOLDOWN: u32 = 200;
 const LOW_MORALE_THRESHOLD: f32 = 0.2;
 const HIGH_MORALE_THRESHOLD: f32 = 0.8;
 
-/// System to spread strong emotions (Joy/Terror) to nearby pops.
+/// System to spread strong emotions (Joy/Terror/Rage) to nearby pops.
+pub fn contagion_system(
+    sources: Query<(&crate::layer1::map::GridPosition, &EmotionalContagion)>,
+    mut targets: Query<
+        (&crate::layer1::map::GridPosition, &mut Morale),
+        Without<EmotionalContagion>,
+    >,
+) {
+    for (source_pos, contagion) in sources.iter() {
+        for (target_pos, mut target_morale) in targets.iter_mut() {
+            let distance = ((source_pos.x as f32 - target_pos.x as f32).powi(2)
+                + (source_pos.y as f32 - target_pos.y as f32).powi(2))
+            .sqrt();
+
+            if distance <= contagion.radius {
+                let modifier_name = match contagion.contagion_type {
+                    ContagionType::Panic => "Contagion: Panic",
+                    ContagionType::Joy => "Contagion: Joy",
+                    ContagionType::Rage => "Contagion: Rage",
+                };
+
+                // Add or refresh modifier
+                if !target_morale
+                    .modifiers
+                    .iter()
+                    .any(|m| m.label == modifier_name)
+                {
+                    target_morale.modifiers.push(MoodModifier {
+                        label: modifier_name.to_string(),
+                        value: contagion.strength,
+                        duration: 100, // Minimal fixed duration
+                    });
+                }
+            }
+        }
+    }
+}
+
 pub fn emotional_contagion_system(
     mut pops: Query<(Entity, &GridPosition, &mut Needs, &mut ContagionCooldown)>,
 ) {

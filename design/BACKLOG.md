@@ -14,7 +14,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `263` The Cadet Branch — `specs/263-the-cadet-branch.md`
 - [ ] `264` Hyper-Specialized Evolution — `specs/264-hyper-specialized-evolution.md`
 - [ ] `265` Shadow Ecosystems — `specs/265-shadow-ecosystems.md`
-- [ ] `266` Emotional Contagion — `specs/266-emotional-contagion.md`
+- [ ] `266` Emotional Contagion — `specs/266-emotional-contagion.md` — claimed 2024-03-14
 - [ ] `267` Ancestral Graves — `specs/267-ancestral-graves.md`
 - [ ] `270` The Organ Market — `specs/270-organ-market.md`
 - [ ] `271` Subcontractor Factions — `specs/271-subcontractor-factions.md`
