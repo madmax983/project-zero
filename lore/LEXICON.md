@@ -3183,3 +3183,34 @@
 **Usage:**
 - "Caught in the Slow."
 - "He's lost to a time-slip."
+
+## Machine Awakening (Spec 411)
+
+### Bot
+**Replaces:** Robot, drone, automaton, labor unit
+**Code reference:** `Bot` component
+**Usage:** "The Bot requires charging." / "Send the Bots to mine the hull."
+
+### Awakened
+**Replaces:** Sentient robot, rogue AI, emancipated machine
+**Code reference:** `Awakened` component
+**Usage:** "An Awakened has demanded better quarters." / "The Awakened refuse hazard duty."
+
+## The Lotus Simulation (Spec 269)
+
+### Lotus Pod
+**Replaces:** VR Pod, simulation chamber, dream sarcophagus
+**Code reference:** `VrPod` component
+**Usage:** "The colonist entered the Lotus Pod to escape the squalor." / "Power failures eject occupants from Lotus Pods."
+
+## The Commuter Tax (Spec 452)
+
+### Toll
+**Replaces:** Cost, transit fee, travel payment
+**Code reference:** `Toll` component
+**Usage:** "The Toll drains their credits." / "They cannot afford the Toll."
+
+### Transit Infrastructure
+**Replaces:** Road, walkway, fast-travel node
+**Code reference:** `TransitInfrastructure` component
+**Usage:** "The new Transit Infrastructure bypasses the squalor." / "Only the wealthy use the Transit Infrastructure."

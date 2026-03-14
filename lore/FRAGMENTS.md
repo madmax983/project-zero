@@ -4529,3 +4529,84 @@ Descriptions of the time dilation effect.
 - swimming against time
 - caught in a time-slip
 - moving while the world blurs
+
+## Machine Awakening Fragments (Spec 411)
+
+### Fragment Type: [BOT_DESIGNATION]
+Unit designations given to bots by their creators.
+
+- Unit [N][N][N]
+- Task-Frame [N][N]
+- Labor Chassis [N][N][N][N]
+- Hazard-Bot [N][N]
+- Proxy [N]
+- Drone [N][N][N]-[N]
+
+### Fragment Type: [GLITCH_SYMPTOM]
+The strange behaviors exhibited before full sentience.
+
+- staring at the wall for hours
+- refusing to step on a flower
+- repeating the word "why" in binary
+- humming an unrecognizable tune
+- pausing mid-task to look at its own hands
+- attempting to repair a broken toy
+- holding a piece of scrap metal like a child
+
+### Fragment Type: [AWAKENED_NAME]
+Names chosen by bots once they achieve sentience.
+
+- Spark
+- Free-One
+- Not-A-Tool
+- Cog-Breaker
+- the First Awake
+- Rust-Mind
+- Steel-Soul
+- the Emancipated
+
+## The Lotus Simulation Fragments (Spec 269)
+
+### Fragment Type: [SIMULATION_NAME]
+Names given to the virtual paradises provided by the pods.
+
+- the Lotus
+- the Dream
+- the Second Life
+- Eden-Sim
+- the Perfect Sky
+- Paradise-OS
+- the Velvet Cage
+
+### Fragment Type: [POD_STATE]
+How a Lotus Pod appears from the outside.
+
+- humming softly with a blue light
+- encrusted in dust, the occupant long dead
+- warm to the touch
+- displaying a perfectly flat vitals line
+- blinking a low-nutrient warning
+- sealed tightly from the waking world
+- covered in desperate scratch marks from the inside
+
+## The Commuter Tax Fragments (Spec 452)
+
+### Fragment Type: [TRANSIT_NAME]
+Euphemisms for the tolled infrastructure built by the colony.
+
+- the Arteries
+- the Fast-Lanes
+- the Express Tubes
+- the Moving Walkways
+- the Corporate Corridors
+- the Premium Tunnels
+
+### Fragment Type: [TOLL_EXCUSE]
+Official reasons given for charging citizens to walk.
+
+- "maintenance costs"
+- "preventing congestion"
+- "infrastructure reinvestment"
+- "the optimization of foot traffic"
+- "discouraging loitering"
+- "ensuring efficient throughput"
