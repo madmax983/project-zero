@@ -9764,3 +9764,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Absolute safety and perfection vs. crippling, inflexible inefficiency during emergencies.
 
 ---
+
+## The Panopticon Morale
+
+**Layer:** 1
+
+**Fantasy:** The oppressive feeling of being constantly monitored for efficiency, turning the colony into a high-strung machine.
+
+**Mechanic:** Building "Overseer Cameras" forces Pops in their radius to work at 120% speed, but their "Liberty" and "Leisure" needs drain twice as fast. If the cameras lose power, the accumulated hidden stress instantly converts into vandalism.
+
+**Emergence:** You blanket the factory in cameras to meet a desperate quota. A minor brownout disables the network for ten minutes, and the perfectly obedient workforce instantly riots, smashing the very machines they were forced to operate.
+
+**Tension:** Guaranteed, artificially high productivity vs the fragile, explosive psychological state of a surveilled workforce.
+
+---
+
+## Albedo Mining
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Changing the climate of your world not through pollution, but by literally stealing its shade from orbit.
+
+**Mechanic:** A planet with an "Ice Ring" provides incredible, easy water extraction on Layer 2. However, the ring naturally reflects sunlight. As you mine the ring and thin it out, the "Albedo" of the planet drops. The Layer 1 colony experiences a permanent, slowly rising global temperature increase.
+
+**Emergence:** You build a massive, thriving water-export economy. Decades later, your temperate colony turns into a scorching desert because you mined away the ice ring that was keeping the planet cool. You now have infinite money but must relocate the entire colony underground to survive the heat.
+
+**Tension:** Cheap, abundant orbital resources vs the slow, irreversible terraforming of your own world into a harsher biome.
+
+---
+
+## The Endless Draft
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Being a tiny cog in a galactic war machine you barely understand, forced to pay the blood tax to keep the peace.
+
+**Mechanic:** An allied Layer 3 empire enters a "Total War". They periodically issue a "Draft Order", demanding a specific number of Layer 1 Pops with high physical stats. Complying grants massive Diplomatic and Trade currency. Refusing incurs severe embargoes. Occasionally, a "Veteran" Pop returns years later, possessing elite combat skills but severe PTSD (Stress penalties).
+
+**Emergence:** You repeatedly send your best miners and builders to the war to keep your economy afloat via trade subsidies. Ten years later, you have a wealthy colony entirely populated by the elderly, the frail, and deeply traumatized cyborg veterans who trigger false alarms during thunderstorms.
+
+**Tension:** Immediate economic and diplomatic survival vs the systematic, generational draining of your colony's strongest citizens.
+
+---
