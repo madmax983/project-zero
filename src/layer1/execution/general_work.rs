@@ -30,7 +30,7 @@ use crate::layer1::skills::{get_skill_efficiency, SkillType, Skills};
 use crate::layer1::social::SocialBuff;
 use crate::layer1::tech::hypno_learning::MentalFog;
 use crate::layer1::tech::Tech;
-use crate::layer1::traits::{get_trait_work_speed_modifier, Traits};
+use crate::layer1::traits::{get_trait_work_speed_modifier, get_job_efficiency_modifier, Traits};
 use crate::layer1::utility_types::{ActionType, PopAction};
 use crate::shared::log::MessageLog;
 
@@ -176,6 +176,11 @@ fn collect_workers_by_target(
                     )
                 });
                 let trait_work_mod = traits.map_or(1.0, get_trait_work_speed_modifier);
+                let job_eff_mod = if let (Some(t), Some(j)) = (traits, job) {
+                    get_job_efficiency_modifier(t, j.job_type)
+                } else {
+                    1.0
+                };
                 let buff_mod = buff.map_or(1.0, |b| b.multiplier);
                 let fog_mod = fog.map_or(1.0, |f| f.work_speed_penalty);
 
@@ -186,7 +191,7 @@ fn collect_workers_by_target(
                         morale,
                         action: mt.for_action,
                         equipment: eq.copied(),
-                        speed_modifier: trait_work_mod * buff_mod * fog_mod,
+                        speed_modifier: trait_work_mod * job_eff_mod * buff_mod * fog_mod,
                         job: job.copied(),
                         dialect: dialect.copied().unwrap_or_default(),
                         linguistics: ling.cloned().unwrap_or_default(),

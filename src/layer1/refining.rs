@@ -203,6 +203,7 @@ pub fn get_refining_recipe(
     }
 }
 
+#[allow(clippy::type_complexity)]
 fn process_active_refining_buildings(
     world: &mut World,
     workers: &[(Entity, GridPosition)],

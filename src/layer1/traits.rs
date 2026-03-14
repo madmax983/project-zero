@@ -58,6 +58,16 @@ pub enum Trait {
     Compassionate,
     /// Sensitive to The Hum (Spec 238).
     Sensitive,
+    /// Specialized trait for farming.
+    GreenThumb,
+    /// Specialized trait for administration and diplomacy.
+    SilverTongue,
+    /// Specialized trait for mining/underground work.
+    MoleEyes,
+    /// Specialized trait for hauling.
+    Hunchback,
+    /// Specialized trait for engineering.
+    StaticSkin,
     /// Manufactured in a Clone Vat.
     Clone,
     /// Reduced social needs.
@@ -108,6 +118,11 @@ impl Trait {
             Self::Mutant => "Mutant",
             Self::Compassionate => "Compassionate",
             Self::Sensitive => "Sensitive",
+            Self::GreenThumb => "GreenThumb",
+            Self::SilverTongue => "SilverTongue",
+            Self::MoleEyes => "MoleEyes",
+            Self::Hunchback => "Hunchback",
+            Self::StaticSkin => "StaticSkin",
             Self::Clone => "Clone",
             Self::Soulless => "Soulless",
             Self::VoidTouched => "Void Touched",
@@ -231,6 +246,47 @@ impl Traits {
     }
 }
 
+use crate::layer1::utility_types::AssignmentType;
+
+/// Returns the job efficiency modifier based on specialization traits.
+#[must_use]
+pub fn get_job_efficiency_modifier(traits: &Traits, job: AssignmentType) -> f32 {
+    let mut modifier = 1.0;
+
+    if traits.0.contains(&Trait::GreenThumb) {
+        if job == AssignmentType::FarmWorker {
+            modifier += 0.2;
+        } else {
+            modifier -= 0.2;
+        }
+    }
+
+    if traits.0.contains(&Trait::SilverTongue) {
+        if job == AssignmentType::Administrator {
+            modifier += 0.2;
+        } else {
+            modifier -= 0.2;
+        }
+    }
+
+    if traits.0.contains(&Trait::MoleEyes) {
+        // No bonus assigned yet, apply penalty to everything
+        modifier -= 0.2;
+    }
+
+    if traits.0.contains(&Trait::Hunchback) {
+        // No bonus assigned yet, apply penalty to everything
+        modifier -= 0.2;
+    }
+
+    if traits.0.contains(&Trait::StaticSkin) {
+        // No bonus assigned yet, apply penalty to everything
+        modifier -= 0.2;
+    }
+
+    modifier
+}
+
 /// Returns the work speed modifier from traits.
 #[must_use]
 pub fn get_trait_work_speed_modifier(traits: &Traits) -> f32 {
@@ -309,6 +365,38 @@ mod tests {
     use super::*;
     use crate::layer1::day_night::TimeOfDay;
     use std::collections::HashSet;
+
+    use crate::layer1::utility_types::AssignmentType;
+
+    #[test]
+    fn test_job_efficiency_modifiers() {
+        let green_thumb = Traits(HashSet::from([Trait::GreenThumb]));
+        let silver_tongue = Traits(HashSet::from([Trait::SilverTongue]));
+        let mole_eyes = Traits(HashSet::from([Trait::MoleEyes]));
+        let hunchback = Traits(HashSet::from([Trait::Hunchback]));
+        let static_skin = Traits(HashSet::from([Trait::StaticSkin]));
+        let normal = Traits(HashSet::new());
+
+        // Normal has no modifiers
+        assert!((get_job_efficiency_modifier(&normal, AssignmentType::FarmWorker) - 1.0).abs() < f32::EPSILON);
+
+        // GreenThumb bonuses and penalties
+        assert!(get_job_efficiency_modifier(&green_thumb, AssignmentType::FarmWorker) > 1.0);
+        assert!(get_job_efficiency_modifier(&green_thumb, AssignmentType::Administrator) < 1.0);
+
+        // SilverTongue bonuses and penalties
+        assert!(get_job_efficiency_modifier(&silver_tongue, AssignmentType::Administrator) > 1.0);
+        assert!(get_job_efficiency_modifier(&silver_tongue, AssignmentType::FarmWorker) < 1.0);
+
+        // MoleEyes penalties (no bonus assigned to AssignmentType yet)
+        assert!(get_job_efficiency_modifier(&mole_eyes, AssignmentType::FarmWorker) < 1.0);
+
+        // Hunchback penalties (no bonus assigned to AssignmentType yet)
+        assert!(get_job_efficiency_modifier(&hunchback, AssignmentType::Administrator) < 1.0);
+
+        // StaticSkin penalties (no bonus assigned to AssignmentType yet)
+        assert!(get_job_efficiency_modifier(&static_skin, AssignmentType::FarmWorker) < 1.0);
+    }
 
     #[test]
     fn test_traits_random_generation() {
