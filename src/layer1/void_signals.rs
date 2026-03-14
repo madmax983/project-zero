@@ -146,11 +146,11 @@ pub fn decrypt_signals_system(
     mut commands: Commands,
     camera_target: Option<Res<CameraTarget>>,
 ) {
-    if network.active_signal_id.is_none() {
+    let target_id = if let Some(id) = network.active_signal_id {
+        id
+    } else {
         return;
-    }
-
-    let target_id = network.active_signal_id.unwrap();
+    };
 
     // Calculate total computing power from workers
     let mut computing_power = 0.0;
@@ -256,20 +256,23 @@ fn spawn_confetti(commands: &mut Commands, pos: GridPosition) {
         let speed = rng.gen_range(0.5..1.5);
         let dx = angle.cos() * speed;
         let dy = angle.sin() * speed;
-        let color = *colors.choose(&mut rng).unwrap();
-        let char = *chars.choose(&mut rng).unwrap();
-        let lifetime = rng.gen_range(20..40);
 
-        commands.spawn((
-            crate::layer1::particles::Particle {
-                char,
-                color,
-                lifetime,
-            },
-            pos,
-            crate::layer1::particles::ParticleVelocity { dx, dy },
-            crate::layer1::particles::ParticleAccumulator::default(),
-        ));
+        if let (Some(color), Some(char)) = (colors.choose(&mut rng), chars.choose(&mut rng)) {
+            let color = *color;
+            let char = *char;
+            let lifetime = rng.gen_range(20..40);
+
+            commands.spawn((
+                crate::layer1::particles::Particle {
+                    char,
+                    color,
+                    lifetime,
+                },
+                pos,
+                crate::layer1::particles::ParticleVelocity { dx, dy },
+                crate::layer1::particles::ParticleAccumulator::default(),
+            ));
+        }
     }
 }
 

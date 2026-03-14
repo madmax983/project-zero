@@ -146,11 +146,13 @@ pub fn handle_eureka_events(
 
         if let Some(log) = &mut log {
             if tech_unlocked {
-                log.add(format!(
-                    "EUREKA! Doing {:?} unlocked {:?}!",
-                    event.action,
-                    event.related_tech.unwrap().label()
-                ));
+                if let Some(tech) = event.related_tech {
+                    log.add(format!(
+                        "EUREKA! Doing {:?} unlocked {:?}!",
+                        event.action,
+                        tech.label()
+                    ));
+                }
             } else {
                 log.add(format!(
                     "Eureka! Gained insight ({}) while {:?}!",

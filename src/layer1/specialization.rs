@@ -40,9 +40,10 @@ pub fn update_tenure_system(mut query: Query<(&Job, &mut JobTenure)>) {
         }
 
         for job_type in types_to_decay {
-            let ticks = tenure.history.get_mut(&job_type).unwrap();
-            let new_ticks = (*ticks as f64 * 0.99) as u64;
-            *ticks = new_ticks;
+            if let Some(ticks) = tenure.history.get_mut(&job_type) {
+                let new_ticks = (*ticks as f64 * 0.99) as u64;
+                *ticks = new_ticks;
+            }
         }
     }
 }
