@@ -1,3 +1,12 @@
+### INT-452: Movement -> Commuter Tax (Toll)
+- **Date:** 2026-03-15
+- **Systems connected:** `movement_system` (Execution) -> `transit_toll_system` (Infrastructure/Transit)
+- **Glue added:**
+    - Updated `transit_toll_system` in `src/layer1/infrastructure/transit.rs` to only process `Pop`s whose `GridPosition` has `Changed<GridPosition>`.
+    - Registered `transit_toll_system` in `src/layer1/systems/execution.rs` to run `.after(movement_system)`.
+- **Tests:** Added `test_transit_toll_integration` in `src/layer1/infrastructure/transit.rs`.
+
+
 ### INT-446: Waste / Landfills -> Olfactory Map (Scent)
 - **Date:** 2026-03-09
 - **Systems connected:** `ResourceItem` (Waste) / `Building` (Landfill) -> `waste_scent_bridge` (Integration) -> `ScentEmitter` (Olfactory)

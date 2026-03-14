@@ -21,7 +21,7 @@ use std::collections::HashMap;
 
 /// System to deduct wealth or apply stress for pops using toll transit infrastructure.
 pub fn transit_toll_system(
-    mut pops: Query<(&GridPosition, &mut Wallet, &mut StressTracker)>,
+    mut pops: Query<(&GridPosition, &mut Wallet, &mut StressTracker), Changed<GridPosition>>,
     roads: Query<(&GridPosition, &Toll), With<TransitInfrastructure>>,
 ) {
     let mut toll_map = HashMap::new();
@@ -69,11 +69,14 @@ mod tests {
         let pop = world
             .spawn((
                 Pop,
-                road_pos, // Pop is on the road
+                GridPosition { x: 5, y: 4 }, // Start off road
                 Wallet { credits: 10.0 },
                 StressTracker::default(),
             ))
             .id();
+
+        // Simulate movement onto the road
+        world.get_mut::<GridPosition>(pop).unwrap().y = 5;
 
         // 3. Run the toll system
         let mut schedule = Schedule::default();
@@ -85,6 +88,71 @@ mod tests {
         assert_eq!(
             pop_wealth.credits, 9.0,
             "Pop should have paid 1.0 credit for the toll"
+        );
+    }
+
+    #[test]
+    fn test_transit_toll_integration() {
+        use crate::layer1::execution::movement_system;
+        use crate::layer1::execution::components::MovementTarget;
+        use crate::layer1::map::GridPosition;
+        use crate::layer1::pop::Speed;
+        use crate::layer1::erosion::ErosionGrid;
+        use crate::layer1::terrain::{generate_terrain, TerrainType};
+        use crate::layer1::utility_types::ActionType;
+
+        let mut world = World::new();
+
+        world.insert_resource(ErosionGrid::new(10, 10));
+        let mut terrain = generate_terrain(10, 10);
+        terrain.set(5, 5, TerrainType::Grass);
+        terrain.set(6, 5, TerrainType::Grass);
+        world.insert_resource(terrain);
+
+        // 1. Create a road with a toll
+        world.spawn((
+            TransitInfrastructure {
+                speed_multiplier: 2.0,
+            },
+            Toll { cost: 1.0 },
+            GridPosition { x: 6, y: 5 },
+        ));
+
+        // 2. Create a Pop moving onto the road
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 5, y: 5 }, // Start off road
+                Wallet { credits: 10.0 },
+                StressTracker::default(),
+                Speed {
+                    base: 1.0,
+                    current: 1.0,
+                    accumulator: 1.0,
+                },
+                MovementTarget {
+                    target_entity: Entity::PLACEHOLDER,
+                    target_position: GridPosition { x: 6, y: 5 },
+                    for_action: ActionType::Explore,
+                },
+            ))
+            .id();
+
+        // 3. Run the movement system followed by toll system
+        let mut schedule = Schedule::default();
+        schedule.add_systems((movement_system, transit_toll_system).chain());
+        schedule.run(&mut world);
+
+        // 4. Assert Pop moved
+        let new_pos = world.get::<GridPosition>(pop).unwrap();
+        assert_eq!(new_pos.x, 6);
+        assert_eq!(new_pos.y, 5);
+
+        // 5. Assert Pop lost credits
+        let pop_wealth = world.get::<Wallet>(pop).unwrap();
+        assert_eq!(
+            pop_wealth.credits, 9.0,
+            "Pop should have paid 1.0 credit for the toll after moving"
         );
     }
 
@@ -106,13 +174,16 @@ mod tests {
         let pop = world
             .spawn((
                 Pop,
-                road_pos,
+                GridPosition { x: 5, y: 4 },
                 Wallet { credits: 0.0 },
                 StressTracker {
                     accumulated_stress: 10.0,
                 },
             ))
             .id();
+
+        // Simulate movement onto the road
+        world.get_mut::<GridPosition>(pop).unwrap().y = 5;
 
         // 3. Run the toll system
         let mut schedule = Schedule::default();
