@@ -1,7 +1,6 @@
 # Backlog
 
 ## High Priority
-- [ ] `263` The Cadet Branch — `specs/263-the-cadet-branch.md`
 
 
 
