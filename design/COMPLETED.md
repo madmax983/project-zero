@@ -239,3 +239,4 @@
 - [x] `263` The Cadet Branch — `specs/263-the-cadet-branch.md` — completed 2026-03-14
 - [x] `265` Shadow Ecosystems — `specs/265-shadow-ecosystems.md` — completed 2026-03-15
 - [x] `264` Hyper-Specialized Evolution — `specs/264-hyper-specialized-evolution.md` — completed 2026-03-14
+- [x] `INT-452` Integration: Movement -> Commuter Tax (Toll) — completed 2026-03-15

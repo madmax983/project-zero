@@ -96,6 +96,7 @@ pub fn register(schedule: &mut Schedule) {
                 .after(apply_quirk_modifiers_system)
                 .after(crate::layer1::fauna::fauna_behavior_system)
                 .after(crate::layer1::combat::hit_stop_system),
+            crate::layer1::infrastructure::transit_toll_system.after(movement_system),
             handle_direct_movement.after(crate::layer1::combat::hit_stop_system),
             crate::layer1::crowding::crowding_accumulation_system.after(movement_system),
             crate::layer1::artifacts::aura_system.after(movement_system),
