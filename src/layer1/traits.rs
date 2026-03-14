@@ -378,7 +378,10 @@ mod tests {
         let normal = Traits(HashSet::new());
 
         // Normal has no modifiers
-        assert!((get_job_efficiency_modifier(&normal, AssignmentType::FarmWorker) - 1.0).abs() < f32::EPSILON);
+        assert!(
+            (get_job_efficiency_modifier(&normal, AssignmentType::FarmWorker) - 1.0).abs()
+                < f32::EPSILON
+        );
 
         // GreenThumb bonuses and penalties
         assert!(get_job_efficiency_modifier(&green_thumb, AssignmentType::FarmWorker) > 1.0);

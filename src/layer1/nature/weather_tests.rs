@@ -2,7 +2,6 @@
 mod tests {
     use crate::layer1::atmosphere::{
         apply_smog_damage_system, simulate_diffusion_system, AtmosphereGrid, DiffusionConfig,
-        GasType,
     };
     use crate::layer1::health::Health;
     use crate::layer1::map::GridPosition;
@@ -16,7 +15,7 @@ mod tests {
         let mut world = World::new();
         let mut grid = AtmosphereGrid::new(20, 20);
         // Set pollution at (10,10)
-        grid.set_gas(10, 10, GasType::Smog, 100.0);
+        grid.set(10, 10, 100.0);
         world.insert_resource(grid);
 
         // Default Config: allows diffusion
@@ -44,7 +43,7 @@ mod tests {
         world.run_system_once(simulate_diffusion_system).unwrap();
 
         let grid = world.get_resource::<AtmosphereGrid>().unwrap();
-        let smog = grid.get_gas(10, 10, GasType::Smog);
+        let smog = grid.get(10, 10);
 
         // Should be close to 100.0 (no vertical escape)
         // With normal weather, it would lose 5% (to 95.0)
@@ -68,7 +67,7 @@ mod tests {
 
         // Setup heavy smog at pos
         let mut grid = AtmosphereGrid::new(20, 20);
-        grid.set_gas(10, 10, GasType::Smog, 200.0); // Toxic level
+        grid.set(10, 10, 200.0); // Toxic level
         world.insert_resource(grid);
 
         // Run damage system
