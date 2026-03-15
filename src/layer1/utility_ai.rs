@@ -382,6 +382,94 @@ impl<'a> PopDecider<'a> {
         );
     }
 
+    fn evaluate_work_and_taming(&mut self) {
+        let pop_pos = self.data.pos;
+        let weights = self.data.weights;
+        let work_bonus = if self.is_penal { 1.0 } else { 0.0 };
+
+        self.evaluator.evaluate_and_consider(
+            evaluate_simple_action(pop_pos, &weights, &self.buffer.work_designations, 0.5),
+            ActionType::Work,
+            self.context,
+            work_bonus,
+        );
+
+        self.evaluator.evaluate_and_consider(
+            evaluate_tame(&pop_pos, &weights, &self.buffer.tame_designations),
+            ActionType::Tame,
+            self.context,
+            0.0,
+        );
+    }
+
+    fn evaluate_production(&mut self) {
+        let pop_pos = self.data.pos;
+        let weights = self.data.weights;
+        let is_feral = self
+            .data
+            .traits
+            .as_ref()
+            .is_some_and(|t| t.0.contains(&Trait::Feral));
+
+        self.evaluator.evaluate_and_consider(
+            evaluate_simple_action(pop_pos, &weights, &self.buffer.refining, 0.5),
+            ActionType::Refine,
+            self.context,
+            0.0,
+        );
+
+        self.evaluator.evaluate_and_consider(
+            evaluate_simple_action(pop_pos, &weights, &self.buffer.farms, 0.5),
+            ActionType::Farm,
+            self.context,
+            0.0,
+        );
+
+        self.evaluator.evaluate_and_consider(
+            evaluate_simple_action(pop_pos, &weights, &self.buffer.offices, 0.5),
+            ActionType::Admin,
+            self.context,
+            0.0,
+        );
+
+        if !is_feral {
+            self.evaluator.evaluate_and_consider(
+                evaluate_research(
+                    pop_pos,
+                    &weights,
+                    self.context.resources,
+                    &self.buffer.libraries,
+                ),
+                ActionType::Research,
+                self.context,
+                0.0,
+            );
+        }
+    }
+
+    fn evaluate_policing(&mut self) {
+        let pop_pos = self.data.pos;
+        let weights = self.data.weights;
+
+        self.evaluator.evaluate_and_consider(
+            evaluate_warden_action(
+                &pop_pos,
+                &self.buffer.wanted_criminals,
+                self.context.zone_grid,
+            ),
+            ActionType::Warden,
+            self.context,
+            0.0,
+        );
+
+        self.evaluator.evaluate_and_consider(
+            evaluate_pre_crime_arrest(&pop_pos, &weights, &self.buffer.suspects),
+            ActionType::PreCrimeArrest,
+            self.context,
+            0.0,
+        );
+    }
+
     /// **Priority 3: Work & Production**
     ///
     /// The core economic driver. Ignored if striking.
@@ -400,94 +488,14 @@ impl<'a> PopDecider<'a> {
             return;
         }
 
-        let pop_pos = self.data.pos;
-        let weights = self.data.weights;
-        let is_feral = self
-            .data
-            .traits
-            .as_ref()
-            .is_some_and(|t| t.0.contains(&Trait::Feral));
-
-        // Evaluate Work
-        let work_bonus = if self.is_penal { 1.0 } else { 0.0 };
-        self.evaluator.evaluate_and_consider(
-            evaluate_simple_action(pop_pos, &weights, &self.buffer.work_designations, 0.5),
-            ActionType::Work,
-            self.context,
-            work_bonus,
-        );
-
-        // Evaluate Tame
-        self.evaluator.evaluate_and_consider(
-            evaluate_tame(&pop_pos, &weights, &self.buffer.tame_designations),
-            ActionType::Tame,
-            self.context,
-            0.0,
-        );
+        self.evaluate_work_and_taming();
 
         if self.is_penal {
             return;
         }
 
-        // Evaluate Refine
-        self.evaluator.evaluate_and_consider(
-            evaluate_simple_action(pop_pos, &weights, &self.buffer.refining, 0.5),
-            ActionType::Refine,
-            self.context,
-            0.0,
-        );
-
-        // Evaluate Farm
-        self.evaluator.evaluate_and_consider(
-            evaluate_simple_action(pop_pos, &weights, &self.buffer.farms, 0.5),
-            ActionType::Farm,
-            self.context,
-            0.0,
-        );
-
-        // Evaluate Admin
-        self.evaluator.evaluate_and_consider(
-            evaluate_simple_action(pop_pos, &weights, &self.buffer.offices, 0.5),
-            ActionType::Admin,
-            self.context,
-            0.0,
-        );
-
-        // Evaluate Research
-        if !is_feral {
-            self.evaluator.evaluate_and_consider(
-                evaluate_research(
-                    pop_pos,
-                    &weights,
-                    self.context.resources,
-                    &self.buffer.libraries,
-                ),
-                ActionType::Research,
-                self.context,
-                0.0,
-            );
-        }
-
-        // Evaluate Policing (Warden & PreCrime)
-        // Warden (Arrest Wanted)
-        self.evaluator.evaluate_and_consider(
-            evaluate_warden_action(
-                &pop_pos,
-                &self.buffer.wanted_criminals,
-                self.context.zone_grid,
-            ),
-            ActionType::Warden,
-            self.context,
-            0.0,
-        );
-
-        // PreCrime (Arrest Suspects)
-        self.evaluator.evaluate_and_consider(
-            evaluate_pre_crime_arrest(&pop_pos, &weights, &self.buffer.suspects),
-            ActionType::PreCrimeArrest,
-            self.context,
-            0.0,
-        );
+        self.evaluate_production();
+        self.evaluate_policing();
     }
 
     /// **Priority 4: Logistics & Maintenance**

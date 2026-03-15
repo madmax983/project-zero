@@ -1203,29 +1203,11 @@ impl ShiftSchedule {
     }
 }
 
-#[allow(clippy::too_many_lines, clippy::match_same_arms)]
-fn spawn_building(
-    world: &mut World,
-    x: i32,
-    y: i32,
+fn insert_base_building_components(
+    entity: &mut EntityWorldMut<'_>,
     building_type: BuildingType,
     material: MaterialType,
-) -> Entity {
-    // Prototyping Phase: Check mastery before mutable borrow
-    let is_mastered = world
-        .get_resource::<BuildingMastery>()
-        .is_none_or(|m| m.is_mastered(building_type));
-
-    let mut entity = world.spawn((
-        Building { building_type },
-        GridPosition { x, y },
-        Material(material),
-    ));
-
-    if !is_mastered {
-        entity.insert(Prototype::default());
-    }
-
+) {
     // Calculate HP based on material
     let base_hp = 50.0;
     let max_hp = base_hp * material.hp_modifier();
@@ -1265,10 +1247,7 @@ fn spawn_building(
 
     // Corrosion Resistance based on Material
     match material {
-        MaterialType::Stone => {
-            entity.insert(CorrosionResistant { factor: 0.5 });
-        }
-        MaterialType::Metal => {
+        MaterialType::Stone | MaterialType::Metal => {
             entity.insert(CorrosionResistant { factor: 0.5 });
         }
         MaterialType::Gold => {
@@ -1278,6 +1257,32 @@ fn spawn_building(
             // Wood rots, so no resistance (0.0)
         }
     }
+}
+
+#[allow(clippy::too_many_lines, clippy::match_same_arms)]
+fn spawn_building(
+    world: &mut World,
+    x: i32,
+    y: i32,
+    building_type: BuildingType,
+    material: MaterialType,
+) -> Entity {
+    // Prototyping Phase: Check mastery before mutable borrow
+    let is_mastered = world
+        .get_resource::<BuildingMastery>()
+        .is_none_or(|m| m.is_mastered(building_type));
+
+    let mut entity = world.spawn((
+        Building { building_type },
+        GridPosition { x, y },
+        Material(material),
+    ));
+
+    if !is_mastered {
+        entity.insert(Prototype::default());
+    }
+
+    insert_base_building_components(&mut entity, building_type, material);
 
     match building_type {
         BuildingType::Office => {
