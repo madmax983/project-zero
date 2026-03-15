@@ -1,4 +1,5 @@
 # Completed Specs
+- [x] `296` The Martyr's Engine — `specs/296-martyrs-engine.md` — completed 2026-06-25
 
 - [x] `346` Emotional Contagion — `specs/346-emotional-contagion.md` — completed 2026-03-06
 - [x] `001` Architecture Setup — `specs/001-architecture-setup.md` — completed 2026-06-01
