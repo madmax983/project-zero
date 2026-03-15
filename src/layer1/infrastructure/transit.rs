@@ -93,11 +93,11 @@ mod tests {
 
     #[test]
     fn test_transit_toll_integration() {
-        use crate::layer1::execution::movement_system;
+        use crate::layer1::erosion::ErosionGrid;
         use crate::layer1::execution::components::MovementTarget;
+        use crate::layer1::execution::movement_system;
         use crate::layer1::map::GridPosition;
         use crate::layer1::pop::Speed;
-        use crate::layer1::erosion::ErosionGrid;
         use crate::layer1::terrain::{generate_terrain, TerrainType};
         use crate::layer1::utility_types::ActionType;
 

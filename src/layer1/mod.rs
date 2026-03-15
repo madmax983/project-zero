@@ -105,6 +105,8 @@ pub mod memory;
 #[cfg(test)]
 /// Tests for metal industry (Spec 024).
 pub mod metal_industry_tests;
+/// Nanite Fabrication (Spec 453).
+pub mod nanite_fabrication;
 /// Pop needs (hunger, rest).
 pub mod needs;
 /// Notification system.
@@ -212,6 +214,7 @@ pub use map::*;
 pub use mascot::*;
 pub use medical::*;
 pub use memory::*;
+pub use nanite_fabrication::*;
 pub use needs::*;
 pub use notifications::*;
 pub use pop::*;

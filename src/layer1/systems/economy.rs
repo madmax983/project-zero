@@ -33,6 +33,9 @@ pub fn register(schedule: &mut Schedule) {
                 crate::layer1::admin::calculate_admin_stats,
                 crate::layer1::eureka::handle_eureka_events,
                 recycle_processing_system,
+                crate::layer1::nanite_fabrication::nanite_fabrication_system,
+                crate::layer1::nanite_fabrication::grey_goo_replication_system,
+                crate::layer1::nanite_fabrication::breach_handler_system,
                 #[cfg(feature = "nova")]
                 crate::layer1::machine_consciousness::consciousness_growth_system,
             ),

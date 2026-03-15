@@ -149,6 +149,12 @@ pub enum ItemType {
     LivingStone,
     /// Scrap metal recovered from clutter.
     Scrap,
+    /// Raw energy stored in batteries or capacitors.
+    Energy,
+    /// Unrefined raw mass used by nanofabrication.
+    RawMass,
+    /// Highly advanced alloy used for high-tier production.
+    AdvancedAlloy,
 }
 
 impl ItemType {

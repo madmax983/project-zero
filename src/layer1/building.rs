@@ -323,6 +323,8 @@ pub enum BuildingType {
     BulletinBoard,
     /// Holographic projector that emits Beauty when powered.
     HoloProjector,
+    /// Nanoforge capable of instant fabrication with containment breach risk.
+    Nanoforge,
 }
 
 impl BuildingType {
@@ -352,7 +354,8 @@ impl BuildingType {
             | Self::GeneBank
             | Self::CloneVat
             | Self::HypnoPod
-            | Self::HoloProjector => Some((Category::Research, Tier::HighTech)),
+            | Self::HoloProjector
+            | Self::Nanoforge => Some((Category::Research, Tier::HighTech)),
 
             _ => None,
         }
@@ -392,7 +395,8 @@ impl BuildingType {
             | Self::Hospital
             | Self::CommandCenter
             | Self::AICore
-            | Self::Recycler => 0.6,
+            | Self::Recycler
+            | Self::Nanoforge => 0.6,
             Self::FlowerBed | Self::PersonalGarden | Self::Grave | Self::BulletinBoard => 0.1,
             _ => 0.5,
         }
@@ -478,7 +482,8 @@ impl BuildingType {
             | Self::GeneBank
             | Self::CloneVat
             | Self::HypnoPod
-            | Self::Shower => true,
+            | Self::Shower
+            | Self::Nanoforge => true,
 
             // Small or Open structures
             Self::Farm
@@ -534,8 +539,9 @@ impl BuildingType {
             Self::TrashCannon => -2.0, // Industrial machinery is ugly
             Self::Heater | Self::ServerBank => 0.0,
             Self::CommandCenter | Self::AICore | Self::CryoPod | Self::GeneBank => 0.0,
-            Self::CloneVat => -5.0, // Unsettling
-            Self::HypnoPod => -2.0, // Unsettling
+            Self::CloneVat => -5.0,  // Unsettling
+            Self::HypnoPod => -2.0,  // Unsettling
+            Self::Nanoforge => -5.0, // Dangerous
             _ => 0.0,
         }
     }
@@ -554,6 +560,7 @@ impl BuildingType {
             Self::CloneVat => 3.0,
             Self::HypnoPod => 2.0,
             Self::HoloProjector => 8.0,
+            Self::Nanoforge => 5.0,
             _ => 0.0,
         }
     }
@@ -590,6 +597,7 @@ impl BuildingType {
             Self::Recycler => Some(Tech::Medical),
             Self::BulletinBoard => Some(Tech::SocialStructures),
             Self::HoloProjector => Some(Tech::Electromagnetism), // Assumed tech
+            Self::Nanoforge => Some(Tech::MetalWorking),         // Or something more advanced
             _ => None,
         }
     }
@@ -666,6 +674,7 @@ impl BuildingType {
             Self::Recycler => "Recycler",
             Self::BulletinBoard => "Bulletin Board",
             Self::HoloProjector => "Holo Projector",
+            Self::Nanoforge => "Nanoforge",
         }
     }
 
@@ -723,6 +732,7 @@ impl BuildingType {
             Self::Shower => '🚿',
             Self::Recycler => '♻',
             Self::BulletinBoard => 'B',
+            Self::Nanoforge => 'N',
         }
     }
 
@@ -788,6 +798,11 @@ impl BuildingType {
             Self::HoloProjector => ColonyResources {
                 metal: 20.0,
                 stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Nanoforge => ColonyResources {
+                metal: 150.0,
+                stone: 50.0,
                 ..ColonyResources::zeroed()
             },
             Self::CommandCenter => ColonyResources {
@@ -1344,6 +1359,7 @@ fn spawn_building(
         | BuildingType::CloneVat
         | BuildingType::HypnoPod
         | BuildingType::HoloProjector => configure_tech(&mut entity, building_type),
+        BuildingType::Nanoforge => configure_tech(&mut entity, building_type),
         BuildingType::Shower => configure_civic(&mut entity, building_type),
         BuildingType::Recycler => {
             // Recycler configuration
@@ -1856,6 +1872,26 @@ fn configure_power_generation(entity: &mut EntityWorldMut, building_type: Buildi
                     intensity: 0.0,
                     color: (0, 255, 255), // Cyan
                 },
+            ));
+        }
+        BuildingType::Nanoforge => {
+            entity.insert((
+                crate::layer1::nanite_fabrication::Nanoforge {
+                    active_recipe: None,
+                    breach_risk: 0.01, // Example risk
+                },
+                Inventory::default(),
+                PowerConsumer {
+                    demand: 50.0, // High power demand
+                    active: false,
+                },
+                LightSource {
+                    is_outdoor: true,
+                    radius: 4.0,
+                    intensity: 0.8,
+                    color: (255, 100, 255), // Purple/Pinkish
+                },
+                ShiftSchedule::default(),
             ));
         }
         _ => {}
@@ -2416,7 +2452,8 @@ mod tests {
             BuildingType::BulletinBoard.next(),
             BuildingType::HoloProjector
         );
-        assert_eq!(BuildingType::HoloProjector.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::HoloProjector.next(), BuildingType::Nanoforge);
+        assert_eq!(BuildingType::Nanoforge.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -2642,6 +2679,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::HoloProjector);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Nanoforge);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

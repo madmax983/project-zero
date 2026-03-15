@@ -240,3 +240,4 @@
 - [x] `265` Shadow Ecosystems — `specs/265-shadow-ecosystems.md` — completed 2026-03-15
 - [x] `264` Hyper-Specialized Evolution — `specs/264-hyper-specialized-evolution.md` — completed 2026-03-14
 - [x] `INT-452` Integration: Movement -> Commuter Tax (Toll) — completed 2026-03-15
+- [x] `453` Nanite Fabrication — `specs/453-nanite-fabrication.md` — completed 2026-03-15
