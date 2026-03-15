@@ -541,3 +541,9 @@ pub use pen_pals::*;
 pub mod cadet;
 pub use cadet::*;
 pub mod placebo;
+
+#[derive(bevy_ecs::prelude::Event)]
+pub struct SocialInteractionEvent {
+    pub initiator: bevy_ecs::prelude::Entity,
+    pub target: bevy_ecs::prelude::Entity,
+}

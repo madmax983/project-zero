@@ -89,7 +89,6 @@ mod tests {
     use crate::layer1::skills::{SkillType, Skills};
     use crate::layer1::stress::StressTracker;
     use crate::layer1::traits::{Trait, Traits};
-    use bevy_ecs::prelude::*;
     use std::collections::HashSet;
 
     fn setup_world() -> World {

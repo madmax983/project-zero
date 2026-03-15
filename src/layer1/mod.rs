@@ -725,3 +725,5 @@ pub mod void_weed;
 pub use void_weed::*;
 pub mod cryo_shock;
 pub use cryo_shock::*;
+pub mod memetic_plague;
+pub use memetic_plague::*;
