@@ -187,3 +187,4 @@ See `design/IDEAS.md` for unspecced concepts.
 
 
 - [ ] `453` Nanite Fabrication — `specs/453-nanite-fabrication.md`
+- [ ] `454` Psychic Background Radiation — `specs/454-psychic-background-radiation.md`
