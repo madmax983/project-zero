@@ -96,4 +96,52 @@ mod tests {
         let speed = world.get::<Speed>(glider).unwrap();
         assert!(speed.current < 0.2, "Glider should crawl/stop in cold");
     }
+
+    #[test]
+    fn test_glider_pathfinding_prefers_heat() {
+        use crate::layer1::OccupiedTiles;
+        use crate::layer1::pathfinding::find_path_for_glider;
+        use crate::layer1::BuildingMap;
+        use crate::layer1::wind::WindGrid;
+
+        let mut world = World::new();
+        let mut terrain = crate::layer1::nature::terrain::generate_terrain(10, 10);
+        // Ensure no water or rock blocks the path
+        for tile in terrain.tiles.iter_mut() {
+            *tile = crate::layer1::nature::terrain::TerrainType::Grass;
+        }
+        world.insert_resource(terrain);
+        world.insert_resource(OccupiedTiles::default());
+        world.insert_resource(BuildingMap::default());
+        world.insert_resource(WindGrid::new(10, 10));
+
+        let mut temp_grid = TemperatureGrid::new(10, 10, 0.0);
+
+        // Path 1: Direct route (x=0 to x=5 at y=0), extremely cold (0.0) -> High cost
+        for x in 0..6 {
+            temp_grid.set(x, 0, 0.0);
+        }
+
+        // Path 2: Longer route (y=1), very hot (100.0) -> Low cost
+        for x in 0..6 {
+            temp_grid.set(x, 1, 100.0);
+        }
+        world.insert_resource(temp_grid);
+
+        let start = (0, 0);
+        let end = (5, 0);
+
+        let path = find_path_for_glider(&world, start, end);
+        assert!(path.is_some(), "Path should be found");
+        let path = path.unwrap();
+
+        // The path should dip down into the hot tiles at y=1 to save "cost",
+        // instead of taking the shorter but colder y=0 path.
+        let uses_hot_path = path.iter().any(|pos| pos.1 == 1);
+        assert!(
+            uses_hot_path,
+            "Glider pathfinding should prefer longer hot paths over shorter cold ones. Path: {:?}",
+            path
+        );
+    }
 }

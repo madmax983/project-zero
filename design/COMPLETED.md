@@ -222,3 +222,4 @@
 - [x] `451` The Spiteful Will — `specs/451-the-spiteful-will.md` — completed 2026-03-01
 - [x] `264` Hyper-Specialized Evolution — `specs/264-hyper-specialized-evolution.md` — completed 2026-03-09
 - [x] `409` Shipbreaking — `specs/409-shipbreaking.md` — completed 2026-03-09
+- [x] `262` Thermal Gliders — `specs/262-thermal-gliders.md` — completed 2026-03-10

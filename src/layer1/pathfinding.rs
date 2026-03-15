@@ -114,7 +114,7 @@ impl PartialOrd for Node {
 /// assert_eq!(p.last(), Some(&(2, 0)));
 /// ```
 pub fn find_path(world: &World, start: (i32, i32), end: (i32, i32)) -> Option<Vec<(i32, i32)>> {
-    find_path_internal(world, start, end, false, None)
+    find_path_internal(world, start, end, false, None, None)
 }
 
 /// Finds a path for a specific Pop, considering their access rights.
@@ -161,7 +161,7 @@ pub fn find_path_for_pop(
 ) -> Option<Vec<(i32, i32)>> {
     let role = world.get::<Role>(pop).copied();
     let credentials = Some(AccessCredentials { entity: pop, role });
-    find_path_internal(world, start, end, false, credentials.as_ref())
+    find_path_internal(world, start, end, false, credentials.as_ref(), None)
 }
 
 /// Finds a path for a specific entity type, considering unique capabilities.
@@ -182,7 +182,40 @@ pub fn find_path_for_entity<T: Component>(
 ) -> Option<Vec<(i32, i32)>> {
     let can_use_vents =
         std::any::TypeId::of::<T>() == std::any::TypeId::of::<crate::layer1::vermin::Vermin>();
-    find_path_internal(world, start, end, can_use_vents, None)
+    find_path_internal(world, start, end, can_use_vents, None, None)
+}
+
+/// Finds a path specifically for a Thermal Glider.
+///
+/// Overrides the movement cost using the temperature grid, prioritizing hot tiles.
+pub fn find_path_for_glider(
+    world: &World,
+    start: (i32, i32),
+    end: (i32, i32),
+) -> Option<Vec<(i32, i32)>> {
+    // We pass a custom cost function
+    let temp_grid = world.get_resource::<crate::layer1::temperature::TemperatureGrid>();
+    let cost_fn = temp_grid.map(|grid| {
+        // Return a boxed closure or function pointer
+        // But since we want to avoid allocations in the inner loop, we can just pass a flag
+        // or a specific enum to `find_path_internal`.
+        // Let's modify `find_path_internal` to take an optional cost closure.
+        Box::new(move |x: i32, y: i32| -> i32 {
+            #[allow(clippy::cast_sign_loss, clippy::cast_possible_truncation)]
+            let temp = grid.get(x as usize, y as usize);
+            // Higher temp = lower cost. Clamp cost to >= 1.
+            let cost = 100.0 - temp;
+            if cost < 1.0 {
+                1
+            } else {
+                #[allow(clippy::cast_possible_truncation)]
+                let cost_i32 = cost as i32;
+                cost_i32
+            }
+        }) as Box<dyn Fn(i32, i32) -> i32>
+    });
+
+    find_path_internal(world, start, end, false, None, cost_fn.as_deref())
 }
 
 /// Internal A* implementation.
@@ -195,6 +228,7 @@ fn find_path_internal(
     end: (i32, i32),
     can_use_vents: bool,
     credentials: Option<&AccessCredentials>,
+    cost_override: Option<&dyn Fn(i32, i32) -> i32>,
 ) -> Option<Vec<(i32, i32)>> {
     let terrain = world.resource::<TerrainGrid>();
     let occupied = world.get_resource::<OccupiedTiles>();
@@ -311,7 +345,11 @@ fn find_path_internal(
             // Apply wind penalty. Ensure cost is at least 1.
             #[allow(clippy::cast_precision_loss, clippy::cast_possible_truncation)]
             let adjusted_cost = (base_cost as f32 * wind_penalty).round() as i32;
-            let tile_cost = adjusted_cost.max(1);
+            let mut tile_cost = adjusted_cost.max(1);
+
+            if let Some(cost_fn) = cost_override {
+                tile_cost = cost_fn(next.0, next.1);
+            }
 
             let new_cost = cost + tile_cost;
 
