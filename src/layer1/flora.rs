@@ -34,6 +34,7 @@ pub fn update_bioluminescence_system(
                     radius: bio.radius,
                     intensity: bio.intensity,
                     color: bio.color,
+                    is_outdoor: true,
                 });
             }
         } else if light_source.is_some() {
@@ -486,6 +487,7 @@ mod tests {
                     radius: 5.0,
                     intensity: 0.8,
                     color: (0, 255, 255),
+                    is_outdoor: true,
                 },
             ))
             .id();
@@ -528,6 +530,7 @@ mod tests {
                     radius: 5.0,
                     intensity: 0.8,
                     color: (0, 255, 255),
+                    is_outdoor: true,
                 },
             ))
             .id();

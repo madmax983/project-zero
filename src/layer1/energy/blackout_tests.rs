@@ -55,6 +55,7 @@ mod tests {
                 radius: 5.0,
                 intensity: 1.0,
                 color: (255, 255, 255),
+                is_outdoor: false,
             },
             PowerConsumer {
                 demand: 1.0,
@@ -73,6 +74,7 @@ mod tests {
                 radius: 5.0,
                 intensity: 1.0,
                 color: (255, 200, 100),
+                is_outdoor: false,
             },
             GridPosition { x: 0, y: 0 },
         ));

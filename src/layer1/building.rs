@@ -1353,7 +1353,8 @@ fn spawn_building(
                 crate::layer1::lighting::LightSource {
                     radius: 3.0,
                     intensity: 0.5,
-                    color: (0, 255, 0), // Green glow
+                    color: (0, 255, 0),
+                    is_outdoor: false, // Green glow
                 },
                 ShiftSchedule::default(),
             ));
@@ -1382,7 +1383,8 @@ fn configure_housing(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 LightSource {
                     radius: 3.0,
                     intensity: 0.5,
-                    color: (255, 255, 100), // Yellow
+                    color: (255, 255, 100),
+                    is_outdoor: false, // Yellow
                 },
             ));
         }
@@ -1406,6 +1408,7 @@ fn configure_housing(entity: &mut EntityWorldMut, building_type: BuildingType) {
                     radius: 8.0,
                     intensity: 0.8,
                     color: (200, 200, 255),
+                    is_outdoor: false,
                 },
                 // Spec Q&A says Library/Lander should provide base capacity.
                 // I will add DataStorage to Lander too!
@@ -1469,7 +1472,8 @@ fn configure_production(entity: &mut EntityWorldMut, building_type: BuildingType
                 LightSource {
                     radius: 4.0,
                     intensity: 0.5,
-                    color: (200, 200, 200), // Smoky white/grey
+                    color: (200, 200, 200),
+                    is_outdoor: false, // Smoky white/grey
                 },
                 ShiftSchedule::default(),
             ));
@@ -1483,7 +1487,8 @@ fn configure_production(entity: &mut EntityWorldMut, building_type: BuildingType
                 LightSource {
                     radius: 4.0,
                     intensity: 0.5,
-                    color: (200, 180, 100), // Dim Wood light
+                    color: (200, 180, 100),
+                    is_outdoor: false, // Dim Wood light
                 },
                 SeismicSource {
                     intensity: 0.5,
@@ -1505,7 +1510,8 @@ fn configure_production(entity: &mut EntityWorldMut, building_type: BuildingType
                 LightSource {
                     radius: 5.0,
                     intensity: 0.9,
-                    color: (255, 50, 0), // Red/Fire
+                    color: (255, 50, 0),
+                    is_outdoor: false, // Red/Fire
                 },
                 SeismicSource {
                     intensity: 0.5,
@@ -1531,7 +1537,8 @@ fn configure_production(entity: &mut EntityWorldMut, building_type: BuildingType
                 LightSource {
                     radius: 4.0,
                     intensity: 0.7,
-                    color: (255, 100, 0), // Orange/Fire
+                    color: (255, 100, 0),
+                    is_outdoor: false, // Orange/Fire
                 },
                 SeismicSource {
                     intensity: 0.5,
@@ -1566,7 +1573,8 @@ fn configure_production(entity: &mut EntityWorldMut, building_type: BuildingType
                 LightSource {
                     radius: 6.0,
                     intensity: 0.8,
-                    color: (100, 200, 255), // Chemical blue
+                    color: (100, 200, 255),
+                    is_outdoor: false, // Chemical blue
                 },
                 SeismicSource {
                     intensity: 0.8,
@@ -1592,7 +1600,8 @@ fn configure_production(entity: &mut EntityWorldMut, building_type: BuildingType
                 LightSource {
                     radius: 6.0,
                     intensity: 0.8,
-                    color: (0, 255, 255), // Cyan
+                    color: (0, 255, 255),
+                    is_outdoor: false, // Cyan
                 },
                 ShiftSchedule::default(),
             ));
@@ -1630,7 +1639,8 @@ fn configure_civic(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 LightSource {
                     radius: 8.0,
                     intensity: 0.8,
-                    color: (255, 140, 0), // Orange
+                    color: (255, 140, 0),
+                    is_outdoor: false, // Orange
                 },
             ));
         }
@@ -1640,7 +1650,8 @@ fn configure_civic(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 LightSource {
                     radius: 6.0,
                     intensity: 0.6,
-                    color: (240, 240, 255), // White/Blueish
+                    color: (240, 240, 255),
+                    is_outdoor: false, // White/Blueish
                 },
                 ShiftSchedule::default(),
             ));
@@ -1658,7 +1669,8 @@ fn configure_civic(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 LightSource {
                     radius: 6.0,
                     intensity: 0.7,
-                    color: (255, 255, 255), // Pure White
+                    color: (255, 255, 255),
+                    is_outdoor: false, // Pure White
                 },
                 PowerConsumer {
                     demand: 5.0,
@@ -1676,7 +1688,8 @@ fn configure_civic(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 LightSource {
                     radius: 5.0,
                     intensity: 0.6,
-                    color: (220, 220, 100), // Yellowish
+                    color: (220, 220, 100),
+                    is_outdoor: false, // Yellowish
                 },
             ));
         }
@@ -1689,7 +1702,8 @@ fn configure_civic(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 LightSource {
                     radius: 2.0,
                     intensity: 0.4,
-                    color: (0, 0, 255), // Deep Blue
+                    color: (0, 0, 255),
+                    is_outdoor: false, // Deep Blue
                 },
                 ShiftSchedule::default(),
             ));
@@ -1815,7 +1829,8 @@ fn configure_power(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 LightSource {
                     radius: 8.0,
                     intensity: 1.0,
-                    color: (255, 215, 0), // Gold
+                    color: (255, 215, 0),
+                    is_outdoor: false, // Gold
                 },
                 SeismicSource {
                     intensity: 3.0,
@@ -1841,7 +1856,8 @@ fn configure_power(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 crate::layer1::lighting::LightSource {
                     radius: 3.0,
                     intensity: 0.5,
-                    color: (255, 100, 50), // Warm Orange
+                    color: (255, 100, 50),
+                    is_outdoor: false, // Warm Orange
                 },
             ));
         }
@@ -1854,7 +1870,8 @@ fn configure_power(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 crate::layer1::lighting::LightSource {
                     radius: 6.0,
                     intensity: 0.0,
-                    color: (0, 255, 255), // Cyan
+                    color: (0, 255, 255),
+                    is_outdoor: false, // Cyan
                 },
             ));
         }
@@ -1867,7 +1884,8 @@ fn configure_power(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 LightSource {
                     radius: 10.0,
                     intensity: 1.0,
-                    color: (0, 255, 100), // Green
+                    color: (0, 255, 100),
+                    is_outdoor: false, // Green
                 },
                 NoiseSource {
                     radius: 15.0,
@@ -1892,12 +1910,13 @@ fn configure_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
     match building_type {
         BuildingType::Observatory => {
             entity.insert((
-                crate::layer1::observatory::Observatory,
+                crate::layer1::observatory::Observatory::default(),
                 crate::layer1::tech::Library, // Generates research implicitly via logic
                 LightSource {
                     radius: 6.0,
                     intensity: 0.6,
-                    color: (135, 206, 235), // Sky Blue
+                    color: (135, 206, 235),
+                    is_outdoor: false, // Sky Blue
                 },
                 ShiftSchedule::default(),
             ));
@@ -1911,7 +1930,8 @@ fn configure_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 LightSource {
                     radius: 4.0,
                     intensity: 0.6,
-                    color: (200, 255, 255), // Cyan-ish
+                    color: (200, 255, 255),
+                    is_outdoor: false, // Cyan-ish
                 },
             ));
         }
@@ -1948,7 +1968,8 @@ fn configure_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 crate::layer1::lighting::LightSource {
                     radius: 2.0,
                     intensity: 0.4,
-                    color: (0, 255, 100), // Data Green
+                    color: (0, 255, 100),
+                    is_outdoor: false, // Data Green
                 },
             ));
         }
@@ -1961,7 +1982,8 @@ fn configure_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 LightSource {
                     radius: 5.0,
                     intensity: 0.8,
-                    color: (0, 0, 255), // Blue
+                    color: (0, 0, 255),
+                    is_outdoor: false, // Blue
                 },
             ));
             // High HP
@@ -1980,7 +2002,8 @@ fn configure_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 LightSource {
                     radius: 4.0,
                     intensity: 0.8,
-                    color: (255, 0, 255), // Magenta/Purple
+                    color: (255, 0, 255),
+                    is_outdoor: false, // Magenta/Purple
                 },
             ));
         }
@@ -1994,7 +2017,8 @@ fn configure_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 LightSource {
                     radius: 3.0,
                     intensity: 0.6,
-                    color: (0, 255, 255), // Cyan
+                    color: (0, 255, 255),
+                    is_outdoor: false, // Cyan
                 },
                 NoiseSource {
                     radius: 5.0,
@@ -2012,7 +2036,8 @@ fn configure_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 LightSource {
                     radius: 4.0,
                     intensity: 0.7,
-                    color: (0, 255, 200), // Cyan/Green
+                    color: (0, 255, 200),
+                    is_outdoor: false, // Cyan/Green
                 },
                 ShiftSchedule::default(),
             ));
@@ -2027,7 +2052,8 @@ fn configure_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 LightSource {
                     radius: 4.0,
                     intensity: 0.6,
-                    color: (0, 255, 100), // Greenish bio-light
+                    color: (0, 255, 100),
+                    is_outdoor: false, // Greenish bio-light
                 },
                 ShiftSchedule::default(),
             ));
@@ -2060,7 +2086,8 @@ fn configure_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 LightSource {
                     radius: 5.0,
                     intensity: 0.8,
-                    color: (200, 200, 255), // Holographic Blue
+                    color: (200, 200, 255),
+                    is_outdoor: false, // Holographic Blue
                 },
                 // BeautySource added automatically by spawn_building based on BuildingType::beauty_value()
                 // But HoloProjector toggles it.

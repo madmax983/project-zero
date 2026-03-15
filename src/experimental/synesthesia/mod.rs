@@ -75,7 +75,8 @@ mod tests {
             LightSource {
                 radius: 5.0,
                 intensity: 1.0,
-                color: (255, 0, 0), // Red
+                color: (255, 0, 0),
+                is_outdoor: false, // Red
             },
             GridPosition { x: 0, y: 0 },
         ));
@@ -110,7 +111,8 @@ mod tests {
             LightSource {
                 radius: 5.0,
                 intensity: 1.0,
-                color: (0, 0, 255), // Blue
+                color: (0, 0, 255),
+                is_outdoor: false, // Blue
             },
             GridPosition { x: 0, y: 0 },
         ));
@@ -142,7 +144,8 @@ mod tests {
             LightSource {
                 radius: 5.0,
                 intensity: 1.0,
-                color: (255, 0, 0), // Red
+                color: (255, 0, 0),
+                is_outdoor: false, // Red
             },
             GridPosition { x: 0, y: 0 },
         ));
@@ -175,7 +178,8 @@ mod tests {
             LightSource {
                 radius: 1.0,
                 intensity: 1.0,
-                color: (255, 0, 0), // Red
+                color: (255, 0, 0),
+                is_outdoor: false, // Red
             },
             GridPosition { x: 10, y: 10 },
         ));

@@ -204,7 +204,12 @@ pub fn register(schedule: &mut Schedule) {
     );
 
     schedule.add_systems(
-        (crate::layer1::overview_effect::overview_effect_system,)
+        (
+            crate::layer1::overview_effect::overview_effect_system,
+            crate::layer1::light_pollution::calculate_sky_glow_system,
+            crate::layer1::light_pollution::apply_light_pollution_system
+                .after(crate::layer1::light_pollution::calculate_sky_glow_system),
+        )
             .in_set(Layer1SystemSet::Observation),
     );
 

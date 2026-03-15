@@ -62,7 +62,8 @@ pub fn spawn_bioluminescent_trails_system(
             LightSource {
                 radius: 2.0, // Soft, local glow
                 intensity: 0.5,
-                color: (50, 255, 100), // Bioluminescent green/blue
+                color: (50, 255, 100),
+                is_outdoor: true, // Bioluminescent green/blue
             },
             pos,
         ));
@@ -159,6 +160,7 @@ mod tests {
                     radius: 2.0,
                     intensity: 0.5,
                     color: (50, 255, 100),
+                    is_outdoor: true,
                 },
                 GridPosition { x: 0, y: 0 },
             ))

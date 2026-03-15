@@ -138,6 +138,7 @@ pub fn process_cloning_system(world: &mut World) {
                         fauna_type: f,
                         ..Default::default()
                     },
+                    crate::layer1::light_pollution::NocturnalFauna { aggression: 0.0 },
                     pos,
                     crate::layer1::health::Health::default(),
                 ));
