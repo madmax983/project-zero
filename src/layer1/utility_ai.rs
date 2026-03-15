@@ -304,16 +304,25 @@ impl<'a> PopDecider<'a> {
         );
 
         // Evaluate SeekMedicalCare
+        let mut medical_urgency = 0.0;
+
         if let Some(health) = self.data.health {
             if health.current < health.max {
-                let urgency = (1.0 - (health.current / health.max)) * 2.0;
-                self.evaluator.evaluate_and_consider(
-                    evaluate_simple_action(pop_pos, &weights, &self.buffer.hospitals, urgency),
-                    ActionType::SeekMedicalCare,
-                    self.context,
-                    0.0,
-                );
+                medical_urgency = (1.0 - (health.current / health.max)) * 2.0;
             }
+        }
+
+        if self.data.has_cryo_shock {
+            medical_urgency = medical_urgency.max(0.8);
+        }
+
+        if medical_urgency > 0.0 {
+            self.evaluator.evaluate_and_consider(
+                evaluate_simple_action(pop_pos, &weights, &self.buffer.hospitals, medical_urgency),
+                ActionType::SeekMedicalCare,
+                self.context,
+                0.0,
+            );
         }
 
         // Evaluate ConsumeChemical

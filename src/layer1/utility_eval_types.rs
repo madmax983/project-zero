@@ -1,6 +1,7 @@
 #![allow(clippy::trivially_copy_pass_by_ref)]
 use crate::layer1::chemical::ChemicalState;
 use crate::layer1::combat::Drafted;
+use crate::layer1::cryo_shock::CryoShock;
 use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::factions::{FactionData, FactionId, FactionMember};
 use crate::layer1::health::Health;
@@ -61,6 +62,7 @@ pub struct PopEvaluationQuery {
     pub memetic_carrier: Option<&'static MemeticCarrier>,
     pub health: Option<&'static Health>,
     pub job: Option<&'static Job>,
+    pub cryo_shock: Option<&'static CryoShock>,
 }
 
 impl PopEvalData {
@@ -91,6 +93,7 @@ impl PopEvalData {
             job: item.job.copied(),
             insulation: 0.0,
             carrying_item_type: None,
+            has_cryo_shock: item.cryo_shock.is_some(),
         }
     }
 }
@@ -168,6 +171,8 @@ pub struct PopEvalData {
     pub job: Option<Job>,
     /// Current insulation provided by clothing.
     pub insulation: f32,
+    /// Whether the pop has cryo shock.
+    pub has_cryo_shock: bool,
 }
 
 #[cfg(test)]
@@ -198,6 +203,7 @@ impl PopEvalData {
             health: None,
             job: None,
             insulation: 0.0,
+            has_cryo_shock: false,
         }
     }
 }

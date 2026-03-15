@@ -113,6 +113,9 @@ mod medical_notifications;
 #[path = "integration/medical_conditions.rs"]
 mod medical_conditions;
 
+#[path = "integration/medical_cryo_shock.rs"]
+mod medical_cryo_shock;
+
 #[path = "integration/pheromone_integration.rs"]
 mod pheromone_integration;
 #[path = "integration/weather_energy.rs"]

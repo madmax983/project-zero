@@ -1,6 +1,7 @@
 #![allow(clippy::too_many_lines, clippy::type_complexity, clippy::doc_markdown)]
 use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::cryo_dreams::CryoTrauma;
+use crate::layer1::cryo_shock::CryoShock;
 use crate::layer1::health::Health;
 use crate::layer1::radioactive::RadiationSickness;
 use bevy_ecs::prelude::*;
@@ -51,7 +52,7 @@ use crate::layer1::pop::Job;
 use std::collections::HashMap;
 
 /// System to heal pops assigned to a hospital.
-/// Handles Health recovery, as well as CryoTrauma and RadiationSickness treatment.
+/// Handles Health recovery, as well as CryoTrauma, RadiationSickness, and CryoShock treatment.
 #[allow(clippy::collapsible_if)]
 pub fn healing_system(world: &mut World) {
     let policy = world
@@ -60,8 +61,8 @@ pub fn healing_system(world: &mut World) {
         .unwrap_or_default();
 
     // Group patients by hospital
-    // Key: Hospital Entity, Value: List of (Patient Entity, HP%, HasJob, HasTrauma, HasSickness)
-    let mut hospitals: HashMap<Entity, Vec<(Entity, f32, bool, bool, bool)>> = HashMap::new();
+    // Key: Hospital Entity, Value: List of (Patient Entity, HP%, HasJob, HasTrauma, HasSickness, HasCryoShock)
+    let mut hospitals: HashMap<Entity, Vec<(Entity, f32, bool, bool, bool, bool)>> = HashMap::new();
 
     {
         // Query for pops assigned as Patient
@@ -72,18 +73,20 @@ pub fn healing_system(world: &mut World) {
             Option<&Job>,
             Option<&CryoTrauma>,
             Option<&RadiationSickness>,
+            Option<&CryoShock>,
         )>();
 
-        for (entity, health, assigned, job, trauma, sickness) in query.iter(world) {
+        for (entity, health, assigned, job, trauma, sickness, cryo_shock) in query.iter(world) {
             if assigned.assignment_type != AssignmentType::Patient {
                 continue;
             }
 
             let has_trauma = trauma.is_some();
             let has_sickness = sickness.is_some_and(|s| s.severity > 0.0);
+            let has_cryo_shock = cryo_shock.is_some();
             let needs_healing = health.current < health.max;
 
-            if needs_healing || has_trauma || has_sickness {
+            if needs_healing || has_trauma || has_sickness || has_cryo_shock {
                 let hp_percent = if health.max > 0.0 {
                     health.current / health.max
                 } else {
@@ -97,6 +100,7 @@ pub fn healing_system(world: &mut World) {
                     has_job,
                     has_trauma,
                     has_sickness,
+                    has_cryo_shock,
                 ));
             }
         }
@@ -105,6 +109,7 @@ pub fn healing_system(world: &mut World) {
     let mut health_updates: Vec<(Entity, f32, Entity)> = Vec::new();
     let mut trauma_updates: Vec<Entity> = Vec::new();
     let mut sickness_updates: Vec<Entity> = Vec::new();
+    let mut shock_updates: Vec<Entity> = Vec::new();
 
     // Process each hospital
     for (hospital_ent, mut patients) in hospitals {
@@ -127,7 +132,7 @@ pub fn healing_system(world: &mut World) {
         match policy {
             MedicalPolicy::WorkersFirst => {
                 // Filter out non-workers
-                patients.retain(|(_, _, has_job, _, _)| *has_job);
+                patients.retain(|(_, _, has_job, _, _, _)| *has_job);
             }
             MedicalPolicy::Triage => {
                 // Sort by Health % (Ascending) - sickest first
@@ -139,7 +144,7 @@ pub fn healing_system(world: &mut World) {
         }
 
         // Distribute Healing / Treatment
-        for (patient, _, _, has_trauma, has_sickness) in patients {
+        for (patient, _, _, has_trauma, has_sickness, has_cryo_shock) in patients {
             if capacity <= 0.001 {
                 break;
             }
@@ -153,6 +158,12 @@ pub fn healing_system(world: &mut World) {
             // Treat Radiation Sickness (Moderate)
             if has_sickness && capacity >= 0.5 {
                 sickness_updates.push(patient);
+                capacity -= 0.5;
+            }
+
+            // Treat CryoShock (Moderate)
+            if has_cryo_shock && capacity >= 0.5 {
+                shock_updates.push(patient);
                 capacity -= 0.5;
             }
 
@@ -199,6 +210,17 @@ pub fn healing_system(world: &mut World) {
             sick.severity -= 1.0; // Aggressive treatment
             if sick.severity <= 0.0 {
                 world.entity_mut(entity).remove::<RadiationSickness>();
+            }
+        }
+    }
+
+    // Apply CryoShock Treatment
+    for entity in shock_updates {
+        if let Some(mut shock) = world.get_mut::<CryoShock>(entity) {
+            if shock.duration_ticks <= 10 {
+                world.entity_mut(entity).remove::<CryoShock>();
+            } else {
+                shock.duration_ticks -= 10;
             }
         }
     }
