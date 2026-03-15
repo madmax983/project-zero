@@ -5,3 +5,6 @@
 **[Spawn Confetti Panic Mitigation]**
 **Learning:** Selecting random elements from a fixed array using `.choose(&mut rng).unwrap()` is a ticking time bomb. Even if the array is currently non-empty, future refactoring could accidentally make it empty and cause unexpected panics during purely visual effects (like spawning confetti).
 **Action:** Always replace `.unwrap()` with a safe fallback like `.unwrap_or(&default_value)` when picking random visual configurations.
+**[Combat Damage Assertions Drift]**
+**Learning:** Tests checking hard-coded max/min bounds for combat damage (e.g., `(dmg - 20.0)`) can silently start failing if core multipliers (`CRIT_MULTIPLIER`) are changed elsewhere in the codebase.
+**Action:** Always derive expected test assertions from the defined constants (`CRIT_MULTIPLIER`, `CRIT_CHANCE`) rather than hardcoding resulting values.
