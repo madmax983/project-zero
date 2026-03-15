@@ -188,3 +188,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `457` Subterranean Mycelial Network — `specs/457-subterranean-mycelial-network.md`
 - [ ] `458` The Monumental Ego — `specs/458-the-monumental-ego.md`
 - [ ] `459` Ghost Frequencies — `specs/459-ghost-frequencies.md`
+- [ ] `460` The Bureau of Redundancy — `specs/460-the-bureau-of-redundancy.md`
