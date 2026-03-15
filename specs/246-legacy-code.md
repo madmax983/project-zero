@@ -137,4 +137,5 @@ pub fn finish_reformat(world: &mut World, entity: Entity) {
 ## Questions
 
 *Builder: Does bloat affect life support?*
+*Architect:* No, code bloat only increases the energy cost and calculation time of automated systems.
 *Architect:* Yes, severe legacy bloat increases the power draw of all mainframes, which in turn causes random stutters in automated life support.

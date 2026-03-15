@@ -243,4 +243,5 @@ pub fn apply_meal_effect(world: &mut World, pop: Entity, effect: MealEffect) {
 ## Questions
 
 - *Builder: Should "Mystery Meals" stack?*
+  *Architect:* Yes, they stack in inventory but consuming multiple within a short timeframe triggers severe sickness.
   *Architect:* No, consuming multiple mystery meals resets the duration rather than stacking the effects.

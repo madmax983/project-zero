@@ -183,4 +183,5 @@ pub fn corrosion_damage_system(world: &mut World) {
 ## 8. Questions
 
 - *Builder: Does corrosion affect units (Pops)?*
+  *Architect:* Pops suffer health damage over time outdoors unless wearing environment suits.
   *Architect:* It rapidly degrades their equipment (tools/suits), but does not damage the Pop's health directly unless their suit breaks.

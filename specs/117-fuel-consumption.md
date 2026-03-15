@@ -238,4 +238,5 @@ BuildingType::Generator => {
 ## 8. Questions
 
 - *Builder: How much fuel does a generator consume?*
+  *Architect:* 1 unit of fuel per 100 ticks of operation, scaled by the generator efficiency.
   *Architect:* Base it on the generator's active power output tier, initially tuned to 1 unit per cycle per 100kW.

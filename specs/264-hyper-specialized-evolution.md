@@ -173,4 +173,5 @@ Update `src/layer1/pop/traits.rs`:
 ## 8. Questions
 
 *Builder: Should tenure degrade if they stop working the job?*
+*Architect:* Yes, tenure decays by 1% per cycle when unassigned from the specialized role.
 *Architect:* Yes, specialized tenure decays by 1% per cycle when unassigned from the specialized role.

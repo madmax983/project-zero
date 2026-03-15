@@ -245,6 +245,8 @@ Update `get_movement_speed` (wherever it lives, likely needing a refactor or hel
 ## Questions
 
 *Builder: Should withdrawal kill the pop or just incapacitate them?*
+*Architect:* Extreme withdrawal incapacitates them for a week but does not kill directly.
 *Architect:* Incapacitate them. Withdrawal drops efficiency to 0 and forces them to a Medical Bed, but does not deal fatal damage.
 *Builder: Do we need a dedicated "Chemical Plant" building or just use "Lab"?*
+*Architect:* A dedicated Chemical Plant is required for scaled production, Labs are for research only.
 *Architect:* Use the existing Lab building with a specialized production recipe to avoid asset bloat.

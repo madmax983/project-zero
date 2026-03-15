@@ -196,4 +196,5 @@ pub fn calculate_movement_cost(grid: &SubspaceGrid, start: Vec2, end: Vec2) -> f
 ## 8. Questions
 
 - *Builder: Should currents drift over time?*
+  *Architect:* Yes, subspace currents shift randomly every orbital cycle.
   *Architect:* Yes, subspace currents shift seasonally, altering optimal travel routes.

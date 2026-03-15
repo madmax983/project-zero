@@ -219,4 +219,5 @@ pub fn perform_purge(world: &mut World, residue_entity: Entity) {
 ## Questions
 
 - *Builder: Does residue stack?*
+  *Architect:* Ghost code residue stacks on the affected grid tile, increasing the chance of random machine activation.
   *Architect:* No, residue on a specific tile does not stack in intensity, but adjacent residue tiles expand the area of effect.

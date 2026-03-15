@@ -197,6 +197,8 @@ pub fn perform_cleanup(world: &mut World, planet: Entity, amount: f32) {
 ## Questions
 
 - *Builder: Should debris eventually form a ring system if it gets high enough?*
+  *Architect:* Yes, an emergent ring system forms at critical mass, granting a beauty buff but destroying space lanes.
   *Architect:* For the MVP, simply represent it as an abstract hazard multiplier rather than spawning a new permanent ring entity.
 - *Builder: Does debris affect incoming trade ships?*
+  *Architect:* Trade ships have a percentage chance to take damage based on debris density.
   *Architect:* Yes, high debris density delays arriving trade ships or occasionally causes them to abort.

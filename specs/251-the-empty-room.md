@@ -185,4 +185,5 @@ pub fn visit_sanctuary_system(
 ## Questions
 
 *Builder: Does a person standing in the room count as "not empty"?*
+*Architect:* A Pop temporarily occupying the tile does not break emptiness, only placed structures or dropped items.
 *Architect:* Pops do not invalidate the 'Sanctuary' state; only placed buildings or dropped item clutter break the emptiness.

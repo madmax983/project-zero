@@ -191,4 +191,5 @@ pub fn reveal_mimic(world: &mut World, target: Entity) -> bool {
 ## Questions
 
 - *Builder: How does the Mimic spawn?*
+  *Architect:* A Pop is replaced by inserting a `Mimic` component into them during a Missing event.
   *Architect:* The Mimic does not spawn fresh; it replaces an existing Pop by inserting a `Mimic` component into them during a 'Missing' event cycle.

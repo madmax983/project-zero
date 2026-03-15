@@ -136,4 +136,5 @@ pub fn shadow_visibility_system(
 ## 8. Questions
 
 *Builder: Do they move?*
+*Architect:* They creep rather than walk, spawning adjacent instances into unlit tiles like mold.
 *Architect:* They 'creep' rather than walk, spawning new adjacent instances into unlit tiles over time like spreading mold.

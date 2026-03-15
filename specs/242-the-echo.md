@@ -269,6 +269,8 @@ fn determine_type(event: &ChronicleEvent) -> EchoType {
 ## 8. Questions
 
 - *Builder: Should Echoes block movement?*
+  *Architect:* No, they are non-physical anomalies that Pops pass through, triggering a memory cascade.
   *Architect:* No, Echoes are intangible holograms that Pops can walk through, though they may path away from them due to stress.
 - *Builder: Can we harvest Echoes?*
+  *Architect:* Late-game Psionic research allows extracting knowledge fragments from them.
   *Architect:* Yes, assigning a Scientist to study the tile slowly harvests data from the Echo, generating research points.

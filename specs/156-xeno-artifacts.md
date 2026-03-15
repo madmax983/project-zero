@@ -243,6 +243,8 @@ pub fn aura_system(
 ## 8. Questions
 
 -   *Builder: Do artifacts block movement?*
+  *Architect:* Yes, they are impassable terrain until excavated.
   *Architect:* Large artifacts act as impassable walls, while small ones function as difficult terrain.
 -   *Builder: Can we move artifacts?*
+  *Architect:* Only small ones. Large monoliths must be studied in place.
   *Architect:* Only small artifacts can be hauled; large ones must be excavated in place.

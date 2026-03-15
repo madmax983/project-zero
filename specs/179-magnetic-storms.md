@@ -251,4 +251,5 @@ In `src/layer1/weather.rs`:
 ## Questions
 
 - *Builder: Should Magnetic Storm affect Battery discharge rate?*
+  *Architect:* Yes, batteries discharge 2x faster during storms.
   *Architect:* Yes, exposed batteries discharge at 200% the normal rate during a magnetic storm.

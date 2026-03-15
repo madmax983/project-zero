@@ -277,6 +277,8 @@ pub fn society_meeting_system(
 ## 8. Questions
 
 -   *Builder: Should societies compete with each other?*
+  *Architect:* Yes, opposing societies generate minor unrest when their members interact.
   *Architect:* Yes, rival societies trigger periodic social skirmishes and opinion penalties.
 -   *Builder: Can a Pop belong to multiple societies?*
+  *Architect:* No, society membership is mutually exclusive.
   *Architect:* No, society membership is mutually exclusive.

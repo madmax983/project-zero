@@ -278,4 +278,5 @@ pub fn apply_lighting_penalties_system(
 ## Questions
 
 *Builder: Should Blackout disable Batteries too?*
+*Architect:* Yes, the grid disconnects completely, so batteries do not charge or discharge.
 *Architect:* Yes, all power flow is completely halted, effectively disconnecting the battery networks.

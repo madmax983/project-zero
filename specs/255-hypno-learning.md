@@ -242,6 +242,8 @@ pub fn update_mental_fog_system(
 ## Questions
 
 - *Builder: Does the pod require power?*
+  *Architect:* Yes, it requires active power consumption to provide accelerated learning.
   *Architect:* Yes, a `HypnoPod` must have an active power consumer state to provide accelerated learning.
 - *Builder: Can children use it?*
+  *Architect:* Yes, but children gain the `Volatile` trait instead of XP due to developing brains.
   *Architect:* Yes, but due to their developing brains, children receive the `Trait::Volatile` debuff instead of XP.

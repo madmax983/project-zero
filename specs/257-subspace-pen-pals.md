@@ -163,4 +163,5 @@ pub fn update_pen_pals_system(
 ## Questions
 
 *Builder: Can I date a Hive Mind?*
+*Architect:* Yes, but the relationship provides a diplomatic buff for the colony, not personal romance mechanics.
 *Architect:* Yes, but the relationship provides a diplomatic buff for the colony rather than personal romance mechanics.

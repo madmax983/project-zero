@@ -145,4 +145,5 @@ pub fn update_structure_buffs(
 ## Questions
 
 *Builder: Does vandalism destroy the building?*
+*Architect:* No, it appends a `Vandalized` component that flips its aura effect until cleaned.
 *Architect:* No, it merely appends a `Vandalized` component that flips the building's aura effect until it is cleaned.

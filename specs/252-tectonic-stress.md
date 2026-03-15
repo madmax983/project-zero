@@ -164,4 +164,5 @@ pub fn check_quake_system(
 ## Questions
 
 *Builder: Does digging a hole reduce stress?*
+*Architect:* Mining adjacent rock tiles bleeds off localized tectonic tension slightly.
 *Architect:* Yes, intentionally mining out adjacent rock tiles can slightly bleed off localized tectonic tension.

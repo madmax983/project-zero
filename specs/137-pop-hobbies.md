@@ -250,4 +250,5 @@ pub fn execute_hobby_system(
 ## Questions
 
 *Builder: How do we handle "Gossip" hobby mechanically?*
+*Architect:* It accelerates the spread of Rumors by 50% when the pop interacts with others.
 *Architect:* Pops engaged in Gossip form temporary social links and exchange small amounts of their highest/lowest trait values.

@@ -238,4 +238,5 @@ pub fn handle_severance_system(
 ## Questions
 
 *Builder: Can twins be separated by Layer?*
+*Architect:* Yes, one twin can remain in the colony while the other joins a trade fleet; their moods still sync.
 *Architect:* Yes, twin mechanics sync seamlessly across layers (e.g., between Layer 1 colony and Layer 2 station).

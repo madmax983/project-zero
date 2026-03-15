@@ -233,6 +233,8 @@ GameKeyCode::Tab => {
 ## 8. Questions
 
 -   *Builder: Should multiple Command Centers provide redundancy?*
+  *Architect:* No, only one Command Center can be active at a time.
   *Architect:* Yes, losing one command center automatically transfers control to others in range, preventing total blackout.
 -   *Builder: Does the Command Center need to be staffed?*
+  *Architect:* Yes, it requires at least one pop assigned to the Admin job.
   *Architect:* Yes, it requires at least one Administrator Pop to provide active command points.

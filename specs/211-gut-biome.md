@@ -258,4 +258,5 @@ if ate {
 ## Questions
 
 - *Builder: Should "Synthetic" (Rations) cause decay of natural biomes?*
+  *Architect:* Yes, sustained synthetic diet reduces gut biome diversity, lowering disease resistance.
   *Architect:* Yes, relying exclusively on Synthetic Rations steadily degrades the natural gut biome trait.

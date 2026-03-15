@@ -254,4 +254,5 @@ Ensure `Waste` resource items can be hauled to a `Landfill` or `Stockpile`. (Alr
 ## Questions
 
 *Builder: Should Purity also affect the amount of Stone?*
+*Architect:* No, the stone yield is constant, only the primary ore amount scales with purity.
 *Architect:* Yes, lower purity yields less ore and correspondingly more waste Stone.

@@ -222,4 +222,5 @@ Add `energy::update_auroral_output_system` to `SimulationUpdate` schedule, prefe
 ## Questions
 
 - *Builder: Should the collector take damage during the storm?*
+  *Architect:* No, auroral collectors are shielded and instead generate massive power spikes.
   *Architect:* Yes, operating at peak capacity during an intense storm slowly degrades the collector's durability.

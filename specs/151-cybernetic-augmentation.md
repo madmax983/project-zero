@@ -301,4 +301,5 @@ pub fn get_social_penalty(world: &World, pop: Entity) -> f32 {
 ## Questions
 
 *Builder: Should surgery require a Doctor pop to be present?*
+*Architect:* Yes, cybernetics installation requires medical staff to succeed safely.
 *Architect:* Yes, augmenting a Pop requires an active medical job to be fulfilled at the surgery station.

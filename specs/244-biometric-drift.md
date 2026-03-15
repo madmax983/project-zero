@@ -252,4 +252,5 @@ pub fn apply_trauma_drift(world: &mut World, pop: Entity, amount: f32) {
 ## Questions
 
 *Builder: Does drift affect non-security interactions?*
+*Architect:* Only identity-locked equipment (like Implants) is rejected, otherwise just door access.
 *Architect:* No, biometric drift only affects secure doors, restricted zones, and specific authenticated jobs.

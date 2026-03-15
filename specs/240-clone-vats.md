@@ -228,6 +228,8 @@ pub fn process_clone_vats_system(
 ## Questions
 
 - *Builder: Should clones be born as adults?*
+  *Architect:* Yes, they emerge fully grown with a random base skill set.
   *Architect:* Yes, clones are decanted as fully mature adults ready for immediate workforce integration.
 - *Builder: Do they have parents?*
+  *Architect:* No, they have a "Vat-Born" trait and lack family relationships.
   *Architect:* No, they are generated with an empty parent lineage, bypassing family-based social mechanics.

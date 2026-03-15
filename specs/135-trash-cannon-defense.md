@@ -383,4 +383,5 @@ pub fn turret_fire_system(world: &mut World) {
 ## Questions
 
 *Builder: How much waste creates a "mess"?*
+*Architect:* Any stack of waste greater than 5 units triggers the mess state.
 *Architect:* A "mess" is defined as any single tile accumulating more than 5 units of industrial waste, triggering negative beauty effects.

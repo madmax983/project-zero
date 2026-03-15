@@ -273,6 +273,8 @@ In `src/layer1/actions.rs`, add `UseShower`.
 ## Questions
 
 - *Builder: Should Showers require Power?*
+  *Architect:* Yes, without power they function as cold showers, yielding less hygiene restoration.
   *Architect:* Showers require Water. Without power, they provide a "Cold Shower" giving cleanliness but slightly reducing morale.
 - *Builder: Does Filth affect Room Quality?*
+  *Architect:* Filth severely degrades Room Quality score over time.
   *Architect:* Yes, every unit of Filth inside a room subtracts a flat amount from the Room Quality score.

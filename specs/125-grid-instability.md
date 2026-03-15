@@ -301,4 +301,5 @@ Update `src/layer1/building.rs`:
 ## Questions
 
 *Builder: How to visualize Overload?*
+*Architect:* A distinct UI warning icon over the building, and a sparking particle effect.
 *Architect:* Visualized with a pulsing red overlay on the building tile and an alert icon in the UI.

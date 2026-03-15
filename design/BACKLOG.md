@@ -188,3 +188,6 @@ See `design/IDEAS.md` for unspecced concepts.
 
 
 - [ ] `453` Nanite Fabrication — `specs/453-nanite-fabrication.md`
+- [ ] `454` Airlocks & Pressure — `specs/454-airlocks-and-pressure.md`
+- [ ] `455` Biocompatibility — `specs/455-biocompatibility.md`
+- [ ] `456` Civic Ideology — `specs/456-civic-ideology.md`

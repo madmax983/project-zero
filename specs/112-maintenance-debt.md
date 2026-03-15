@@ -209,4 +209,5 @@ pub fn malfunction_system(world: &mut World) {
 ## 8. Questions
 
 - *Builder: Does `DeferMaintenance` stop manual repairs?*
+  *Architect:* Yes, it prevents pops from taking repair jobs on that structure.
   *Architect:* No, it only suspends automated repair jobs; player-directed manual repairs always execute.

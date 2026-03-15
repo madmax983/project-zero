@@ -181,4 +181,5 @@ pub fn fleet_combat_system(
 ## 8. Questions
 
 - *Builder: How do I calculate loot?*
+  *Architect:* Loot is a flat 10% of the destroyed enemy fleet cost, randomized between scrap metal and fuel.
   *Architect:* Loot is 20-30% of the destroyed ship's cargo, plus random scrap components.

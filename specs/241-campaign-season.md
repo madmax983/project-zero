@@ -255,4 +255,5 @@ Register `ElectionManager` and systems in `src/layer1/mod.rs`.
 ## Questions
 
 - *Builder: What happens if there are no factions?*
+  *Architect:* The campaign season event defaults to a single "Incumbent" election that simply boosts loyalty.
   *Architect:* The event silently passes or does not trigger until the colony has formed distinct political factions.

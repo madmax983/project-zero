@@ -337,4 +337,5 @@ pub fn process_cloning_system(world: &mut World) {
 ## Questions
 
 - *Builder: Should we allow cloning of Pops?*
+  *Architect:* No, cloning is deferred to the Clone Vats spec (240). Gene Banks only store genetic material for disease cures.
   *Architect:* No, Gene Banks only store biological templates; actual Pop cloning is handled by the `Clone Vats` system.

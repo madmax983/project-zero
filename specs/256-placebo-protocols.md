@@ -174,4 +174,5 @@ pub fn reveal_betrayal_system(
 ## Questions
 
 *Builder: Can you stack placebos?*
+*Architect:* No, only one placebo effect can be active at a time.
 *Architect:* No, only one placebo effect can be active at a time, verified by the `applied` flag.

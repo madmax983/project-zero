@@ -185,4 +185,5 @@ pub fn fleet_movement_system(
 ## Questions
 
 - *Builder: Should barnacles fall off if the fleet moves fast enough?*
+  *Architect:* Barnacles are shed upon entering subspace jumps, otherwise they persist.
   *Architect:* No, they must be manually scrubbed off or handled via specific drydock cleaning events.

@@ -161,4 +161,5 @@ pub fn update_noise_system(
 ## Questions
 
 *Builder: Does glass block sound?*
+*Architect:* Yes, fully enclosed structural tiles block sound propagation in the simulation.
 *Architect:* Yes, any fully enclosed structural tile (including glass walls) blocks sound propagation for the simulation.

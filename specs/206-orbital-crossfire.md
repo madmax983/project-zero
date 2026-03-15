@@ -263,4 +263,5 @@ pub fn impact_system(world: &mut World) {
 ## Questions
 
 *Builder: Should impact destroy Pops?*
+*Architect:* Yes, a direct hit causes instant death in the impact tile.
 *Architect:* Yes, any Pop caught directly in the impact zone of orbital crossfire should be instantly killed, ignoring standard health and injury checks.

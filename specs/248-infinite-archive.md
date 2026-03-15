@@ -182,4 +182,5 @@ pub fn purge_tech(world: &mut World, tech_id: &str) {
 ## Questions
 
 - *Builder: Does deleting a prerequisite tech lock the advanced tech?*
+  *Architect:* No, unlocked advanced tech persists even if the prerequisite is lost, but you cannot branch new paths.
   *Architect:* No, unlocking an advanced tech persists even if the prerequisite is deleted, though you cannot branch new paths from the deleted node.
