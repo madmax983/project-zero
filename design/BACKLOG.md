@@ -189,3 +189,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `458` The Monumental Ego — `specs/458-the-monumental-ego.md`
 - [ ] `459` Ghost Frequencies — `specs/459-ghost-frequencies.md`
 - [ ] `460` The Bureau of Redundancy — `specs/460-the-bureau-of-redundancy.md`
+- [ ] `461` The Panopticon Morale — `specs/461-the-panopticon-morale.md`
