@@ -8,6 +8,9 @@ pub mod ecology;
 mod ecology_keystone_tests;
 #[cfg(test)]
 mod ecology_tests;
+pub mod biosphere_empathy;
+#[cfg(test)]
+mod biosphere_empathy_tests;
 pub mod erosion;
 pub mod fertility;
 pub mod fire;
@@ -23,6 +26,7 @@ mod weather_tests;
 pub mod wind;
 
 pub use atmosphere::*;
+pub use biosphere_empathy::*;
 pub use ecology::*;
 pub use erosion::*;
 pub use fertility::*;
