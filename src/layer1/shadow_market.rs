@@ -107,12 +107,22 @@ pub fn spawn_shadow_trader_system(
             y: ry as i32,
         };
         if check_spawn_conditions(pos, &light_map, &terrain) {
-            let deals = vec![TradeDeal {
+            let mut deals = vec![TradeDeal {
                 cost_resource: ResourceType::Food,
                 cost_amount: 10.0,
                 give_resource: ResourceType::Alcohol, // Contraband
                 give_amount: 5.0,
             }];
+
+            // Occasional Memory Core stock
+            if rng.gen_bool(0.25) {
+                deals.push(TradeDeal {
+                    cost_resource: ResourceType::Food, // They demand heavy payment
+                    cost_amount: 100.0,
+                    give_resource: ResourceType::MemoryCore,
+                    give_amount: 1.0,
+                });
+            }
 
             commands.spawn((
                 ShadowTrader {

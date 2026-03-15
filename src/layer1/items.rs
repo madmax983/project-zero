@@ -146,6 +146,8 @@ pub enum ItemType {
     LivingStone,
     /// Scrap metal recovered from clutter.
     Scrap,
+    /// Memory Core containing stolen experiences.
+    MemoryCore,
 }
 
 impl ItemType {
@@ -172,6 +174,7 @@ impl ItemType {
             Self::Rations => Some(ResourceType::Rations),
             Self::Waste => Some(ResourceType::Waste),
             Self::BuildingPermit => Some(ResourceType::BuildingPermit),
+            Self::MemoryCore => Some(ResourceType::MemoryCore),
             _ => None,
         }
     }
