@@ -9945,3 +9945,46 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The logistical ease of treating Pops as interchangeable labor vs. the brutal biological reality of their physical adaptations.
 
 ---
+
+
+## Tectonic Extraction
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Dragging entire mountains into space.
+
+**Mechanic:** Massive "Tether Extractors" from Layer 2 ships anchor into Layer 1 terrain. They literally rip chunks of the crust off the planet to harvest raw materials in bulk. This leaves massive, un-buildable "Crater" tiles and causes localized earthquakes.
+
+**Emergence:** You use an extractor to grab a massive deposit of rare metals. The resulting crater exposes an underground river, permanently flooding your adjacent mining operations and forcing you to build a dam.
+
+**Tension:** Incredibly fast, massive resource gathering vs. permanent destruction of the colony's buildable area and geological stability.
+
+---
+
+## Biometric Identity Theft
+
+**Layer:** 1
+
+**Fantasy:** The enemy is already inside, and they look like you.
+
+**Mechanic:** If "Security" is low, "Criminal" Pops can steal the biometric signatures of high-status Pops (like the Governor or Chief Engineer). The Criminal can then bypass locked doors or access restricted resources (like private stashes or weapons).
+
+**Emergence:** You build an impenetrable vault for your rarest tech. The next day, the tech is gone. The logs show the Chief Engineer took it, but the Chief Engineer was in the hospital at the time. A massive witch hunt ensues, dropping colony morale as everyone is scanned and interrogated.
+
+**Tension:** High security (slows movement, costs admin) vs. the risk of catastrophic internal sabotage and theft.
+
+---
+
+## The Organ Trade
+
+**Layer:** Cross-layer (1 -> 3)
+
+**Fantasy:** Turning the dead (or the living) into the most valuable export in the sector.
+
+**Mechanic:** You can enact a "Mandatory Organ Harvesting" edict. Dead Pops, or even live Prisoners, can be processed into "Vital Organs." These trade for astronomical prices on the Layer 3 market, instantly solving any economic crisis. However, enacting the edict creates a permanent, massive "Horror" debuff to all non-psychopathic Pops, and Layer 3 pacifist empires will embargo you.
+
+**Emergence:** You survive a massive raid but are bankrupt. You harvest the raiders' bodies to pay off a debt. Your economy is saved, but your citizens are so traumatized by the "Harvesting Facilities" that they refuse to work, leading to a famine that kills more people than the raid did.
+
+**Tension:** Instant, immense wealth vs. severe moral decay, domestic unrest, and international condemnation.
+
+---
