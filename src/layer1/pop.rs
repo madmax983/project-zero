@@ -46,6 +46,7 @@ use super::utility_types::AssignmentType;
 pub use super::utility_types::AssignmentType as JobType;
 use super::utility_types::{PopAction, UtilityWeights};
 use super::wild_child::WildExposure;
+use crate::layer1::culture::CulturalTag;
 use crate::layer1::admin::AdminConsumer;
 use crate::layer1::economy::Wallet;
 use crate::layer1::funeral::Corpse;
@@ -278,6 +279,8 @@ pub struct PopBundle {
     pub dialect: Dialect,
     /// Linguistic knowledge.
     pub linguistics: Linguistics,
+    /// Cultural tags.
+    pub cultural_tag: CulturalTag,
 }
 
 impl PopBundle {
@@ -313,6 +316,7 @@ impl PopBundle {
             wallet: Wallet { credits: 50.0 },
             dialect: Dialect::default(),
             linguistics: Linguistics::default(),
+            cultural_tag: CulturalTag::default(),
         }
     }
 }

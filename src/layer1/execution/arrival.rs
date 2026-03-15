@@ -30,6 +30,8 @@ pub fn arrival_handler_system(
             Option<&mut crate::layer1::chemical::ChemicalState>,
             Option<&mut crate::layer1::health::Health>,
             Option<&mut crate::layer1::stress::StressTracker>,
+            Option<&crate::layer1::feral_outpost::SubFactionMember>,
+            Option<&AssignedTo>,
         ),
         With<AtTarget>,
     >,
@@ -46,6 +48,7 @@ pub fn arrival_handler_system(
     mut graffiti_map: Option<ResMut<crate::layer1::graffiti::GraffitiMap>>,
     mut unequip_events: EventWriter<UnequipEvent>,
     time: Res<SimulationTime>,
+    feral_outposts: Query<&crate::layer1::feral_outpost::FeralOutpost>,
     mut commands: Commands,
 ) {
     for (
@@ -56,6 +59,8 @@ pub fn arrival_handler_system(
         mut chem_opt,
         mut health_opt,
         mut stress_opt,
+        subfaction_opt,
+        assigned_to_opt,
     ) in &mut arrivals
     {
         let should_remove = process_arrival(
@@ -68,6 +73,8 @@ pub fn arrival_handler_system(
             &mut chem_opt,
             &mut health_opt,
             &mut stress_opt,
+            subfaction_opt,
+            assigned_to_opt,
             &items,
             &mut commands,
             &mut resources,
@@ -82,6 +89,7 @@ pub fn arrival_handler_system(
             &mut graves,
             &mut memories,
             &time,
+            &feral_outposts,
         );
 
         if should_remove {
@@ -101,6 +109,8 @@ fn process_arrival(
     chemical_state_opt: &mut Option<Mut<crate::layer1::chemical::ChemicalState>>,
     health_opt: &mut Option<Mut<crate::layer1::health::Health>>,
     stress_opt: &mut Option<Mut<crate::layer1::stress::StressTracker>>,
+    subfaction_opt: Option<&crate::layer1::feral_outpost::SubFactionMember>,
+    assigned_to_opt: Option<&AssignedTo>,
     items: &Query<&crate::layer1::items::Item>,
     commands: &mut Commands,
     resources: &mut ColonyResources,
@@ -115,6 +125,7 @@ fn process_arrival(
     graves: &mut Query<(Entity, &GridPosition, &mut Grave)>,
     memories: &mut Query<&mut Memories>,
     time: &Res<SimulationTime>,
+    feral_outposts: &Query<&crate::layer1::feral_outpost::FeralOutpost>,
 ) -> bool {
     match action {
         ActionType::ConsumeChemical => {
@@ -195,7 +206,7 @@ fn process_arrival(
             true
         }
         ActionType::SatisfyRest => {
-            handle_rest_arrival(pop_entity, target_entity, housing_q, commands);
+            handle_rest_arrival(pop_entity, target_entity, housing_q, commands, subfaction_opt, assigned_to_opt, feral_outposts);
             true
         }
         ActionType::Socialize => {
@@ -436,9 +447,19 @@ fn handle_rest_arrival(
     target_entity: Entity,
     housing: &mut Query<&mut Housing>,
     commands: &mut Commands,
+    faction_member_opt: Option<&crate::layer1::feral_outpost::SubFactionMember>,
+    assigned_to_opt: Option<&AssignedTo>,
+    feral_outpost_query: &Query<&crate::layer1::feral_outpost::FeralOutpost>,
 ) {
+    // If the pop is feral, they refuse to change home. If they are already assigned, we don't return.
+    let is_already_assigned = assigned_to_opt.is_some_and( |a| a.entity == target_entity && a.assignment_type == AssignmentType::HousingResident);
+
+    if !is_already_assigned && !crate::layer1::feral_outpost::can_assign_home_zone(faction_member_opt, feral_outpost_query) {
+        return; // Refuse relocation
+    }
+
     if let Ok(mut house) = housing.get_mut(target_entity) {
-        if house.residents.len() < house.capacity {
+        if !house.residents.contains(&pop_entity) && house.residents.len() < house.capacity {
             house.residents.push(pop_entity);
             commands.entity(pop_entity).insert(AssignedTo {
                 entity: target_entity,

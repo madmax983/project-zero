@@ -35,6 +35,10 @@ pub mod access_control;
 /// Pop actions logic.
 pub mod actions;
 pub mod ad_screen;
+pub mod culture;
+pub use culture::*;
+pub mod feral_outpost;
+pub use feral_outpost::*;
 /// Bureaucratic Drag system (Spec 175).
 pub mod admin;
 /// AI Core system (Spec 148).
