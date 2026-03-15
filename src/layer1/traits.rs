@@ -86,6 +86,8 @@ pub enum Trait {
     Synesthete,
     /// Leaves a spiteful will upon death, giving belongings to rivals or pets.
     Spiteful,
+    /// Biosphere empathy link, harmonizes stress and works better near flora.
+    EmpathicLink,
 }
 
 impl Trait {
@@ -133,6 +135,7 @@ impl Trait {
 
             Self::Synesthete => "Synesthete",
             Self::Spiteful => "Spiteful",
+            Self::EmpathicLink => "Empathic Link",
         }
     }
 }
@@ -190,6 +193,7 @@ impl Traits {
             Trait::Compassionate,
             Trait::Synesthete,
             Trait::Spiteful,
+            Trait::EmpathicLink,
         ];
 
         while set.len() < count {

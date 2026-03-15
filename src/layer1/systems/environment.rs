@@ -86,6 +86,8 @@ pub fn register(schedule: &mut Schedule) {
             malfunction_system.after(entropy_system),
             apply_noise_effects_system.after(update_noise_system),
             waste_pollution_bridge,
+            crate::layer1::nature::biosphere_empathy::sync_empathic_network_system,
+            crate::layer1::nature::biosphere_empathy::handle_flora_damage_empathy_system,
             crate::layer1::atmosphere::update_atmosphere_system
                 .after(waste_pollution_bridge)
                 .after(crate::layer1::wind::update_wind_system),

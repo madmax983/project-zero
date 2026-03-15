@@ -36,7 +36,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `289` The Mimetic Plague — `specs/289-mimetic-plague.md`
 - [ ] `290` The Phantom Shift — `specs/290-phantom-shift.md`
 - [ ] `292` The Chrono-Stutter — `specs/292-chrono-stutter.md`
-- [ ] `293` The Biosphere Empathy Link — `specs/293-biosphere-empathy-link.md`
 - [ ] `294` The Bone Economy — `specs/294-bone-economy.md`
 - [ ] `295` The Sentient Standard — `specs/295-sentient-standard.md`
 - [ ] `296` The Martyr's Engine — `specs/296-martyrs-engine.md`
