@@ -9988,3 +9988,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Instant, immense wealth vs. severe moral decay, domestic unrest, and international condemnation.
 
 ---
+
+## Synthetic Apathy
+
+**Layer:** 1
+
+**Fantasy:** Building the perfect, emotionless workforce, only to realize they truly do not care if you live or die.
+
+**Mechanic:** Basic "Synth" pops have 100% efficiency and no morale needs, but possess "Apathy". They will rigidly execute their assigned tasks but completely ignore adjacent emergencies (fires, injuries, raids) unless explicitly ordered. They will step over a dying colonist to deliver a piece of coal.
+
+**Emergence:** Your beautiful, automated industrial sector burns to the ground because the fire broke out near the hauling route, and the 50 hauling synths just kept carrying ore through the flames until they melted, never once attempting to extinguish it.
+
+**Tension:** Flawless, cheap baseline efficiency vs. the total lack of emergent problem-solving and reactive self-preservation.
+
+---
+
+## Bureaucratic Redlining
+
+**Layer:** Cross-layer (1 -> 2)
+
+**Fantasy:** The cold calculus of abandoning the poor to balance the planetary budget.
+
+**Mechanic:** You can "Dezone" struggling sectors of your Layer 1 colony to remove them from the power/water grid and instantly save massive upkeep costs. However, the Pops living there are not evicted; they become "Stateless." They stop paying taxes and start forming an autonomous, hostile squatter faction that slowly expands its territory.
+
+**Emergence:** You cut off power to the old mining slums to afford a new orbital laser. Ten years later, the slum has grown into a massive, unpowered labyrinth controlled by a violent cartel that launches raids on your shiny new laser facility to steal its batteries.
+
+**Tension:** Immediate, massive relief of infrastructure debt vs. intentionally incubating a hostile, untaxable shadow state in your own backyard.
+
+---
+
+## Inherited Grudges
+
+**Layer:** 1
+
+**Fantasy:** The Hatfields and McCoys in space. An argument over a spilled ration that echoes through centuries.
+
+**Mechanic:** When a Pop suffers a severe wrong (e.g., unjust imprisonment, starving while the Governor feasts) from another specific Pop, they generate a "Vendetta." This Vendetta is passed down genetically or culturally to their descendants. Descendants will spontaneously refuse to work with, or actively sabotage, the descendants of the original transgressor.
+
+**Emergence:** Your colony grinds to a halt because the newly appointed Chief Medical Officer refuses to treat the Chief Engineer. You check the logs and realize their great-grandfathers fought over a pair of boots 150 years ago during the first winter, and the families have been sabotaging each other ever since.
+
+**Tension:** Managing short-term injustices knowing they will metastasize into permanent, generational structural flaws in your society.
+
+---
