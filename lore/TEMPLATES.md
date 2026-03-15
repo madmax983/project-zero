@@ -3720,6 +3720,30 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[COLONIST_NAME] forgot to wake up. In [YEAR], their physical form perished while their consciousness remained in [SIMULATION_NAME]."
 - "In [YEAR], the colony found [COLONIST_NAME]'s pod [POD_STATE]. Another soul lost to the comforts of [SIMULATION_NAME]."
 
+## Psychic Background Radiation Templates (Spec 454)
+
+### Template: PSYCHIC_BACKGROUND_SPIKE
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NOISE_DESCRIPTOR], [SLEEP_EFFECT]
+
+**Patterns:**
+- "The dark is too loud. [YEAR]. [COLONY] suffers from [NOISE_DESCRIPTOR]. Sleep brings [SLEEP_EFFECT]."
+- "[YEAR]: The psychic background spikes. A [NOISE_DESCRIPTOR] fills our heads. We endure [SLEEP_EFFECT]."
+- "We cannot rest. [NOISE_DESCRIPTOR]. [YEAR]. The crew reports [SLEEP_EFFECT] every night."
+
+### Template: PSYCHIC_STORM_PASSED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [AFTERMATH_DESCRIPTOR]
+
+**Patterns:**
+- "The pressure in our skulls is gone. [YEAR]. It is [AFTERMATH_DESCRIPTOR]."
+- "[YEAR]: The psychic noise fades from [COLONY]. Finally, [AFTERMATH_DESCRIPTOR]."
+- "We can sleep again. [AFTERMATH_DESCRIPTOR]. [YEAR]."
+
+---
+
 ## The Commuter Tax Templates (Spec 452)
 
 ### Template: TOLL_ROAD_ESTABLISHED
