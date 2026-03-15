@@ -542,6 +542,10 @@ pub mod cadet;
 pub use cadet::*;
 pub mod placebo;
 
+/// Secret Societies system (Spec 147).
+pub mod society;
+pub use society::*;
+
 /// The Sentient Standard logic (Spec 295).
 pub mod sentient_standard;
 pub use sentient_standard::*;

@@ -9,3 +9,7 @@
 **Tuple Limit Execution Tangle**
 **Tangle:** Bevy's `add_systems()` macro has a maximum tuple size limit of 21 elements. `src/layer1/systems/execution.rs` exceeded this limit (22 items in one tuple), breaking compilation.
 **Blueprint:** Split the overloaded tuple in `add_systems()` into two separate tuples, safely maintaining the `.in_set(Layer1SystemSet::Execution)` schedule association for all included systems.
+
+**Secret Societies Encapsulation**
+**Tangle:** The `SecretSocieties` logic (`src/layer1/society.rs`) was declared as a root-level module (`pub mod society`) directly under `layer1`, leaking social domain logic into the top-level namespace rather than being encapsulated within its functional domain.
+**Blueprint:** Moved `src/layer1/society.rs` to `src/layer1/social/society.rs` and updated module declarations and imports. This enforces a stronger domain boundary by nesting the secret society mechanics entirely within the `social` subsystem.

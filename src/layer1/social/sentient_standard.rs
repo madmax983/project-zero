@@ -1,6 +1,6 @@
 use crate::layer1::pop::Pop;
 use crate::layer1::StressTracker;
-use bevy_ecs::prelude::*;
+use bevy_ecs::prelude::{Commands, Component, Entity, Query, Res, Resource, With};
 
 #[derive(Resource, Debug, Clone, Copy)]
 pub struct SentientStandard {
@@ -60,7 +60,8 @@ mod tests {
     use super::*;
     use crate::layer1::pop::Pop;
     use crate::layer1::StressTracker;
-    use bevy_ecs::prelude::*;
+    use bevy_ecs::prelude::World;
+
     use bevy_ecs::system::RunSystemOnce;
 
     fn setup_world() -> World {

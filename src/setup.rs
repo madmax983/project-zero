@@ -145,7 +145,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(crate::layer1::geology::SeismicGrid::new(80, 50));
     world.insert_resource(crate::layer1::seismic::VibrationGrid::new(80, 50));
     world.insert_resource(crate::layer1::ecology::EcologyConfig::default());
-    world.insert_resource(crate::layer1::society::SecretSocieties::default());
+    world.insert_resource(crate::layer1::social::society::SecretSocieties::default());
     world.insert_resource(crate::layer1::unrest::Unrest::default());
     world.insert_resource(crate::layer1::tech_envy::TechEnvyConfig::default());
     world.insert_resource(crate::layer1::building::BuildingMap::default());
@@ -188,8 +188,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<RetrogradeEngineeringEvent>>();
     world.init_resource::<Events<crate::layer1::energy::GridOverloadEvent>>();
     world.init_resource::<Events<crate::layer1::geology::GeologicalEvent>>();
-    world.init_resource::<Events<crate::layer1::society::InvestigationEvent>>();
-    world.init_resource::<Events<crate::layer1::society::SuppressSocietyEvent>>();
+    world.init_resource::<Events<crate::layer1::social::society::InvestigationEvent>>();
+    world.init_resource::<Events<crate::layer1::social::society::SuppressSocietyEvent>>();
     world.init_resource::<Events<crate::layer1::geology::tectonic::MegaQuakeEvent>>();
     world.init_resource::<Events<crate::layer1::ancestral_graves::SacrilegeEvent>>();
     world.init_resource::<Events<crate::layer1::resources::MiningEvent>>();
