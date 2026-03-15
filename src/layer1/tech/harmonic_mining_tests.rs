@@ -98,9 +98,6 @@ mod tests {
         // Either entity is gone OR health is 0
         if let Some(h) = health {
             assert_eq!(h.current, 0.0);
-        } else {
-            // Entity despawned implies destruction
-            assert!(true);
         }
     }
 
