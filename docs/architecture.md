@@ -681,3 +681,27 @@ classDiagram
 - [ADR 035: Extract Nature Sub-module](./adr/035-extract-nature-submodule.md)
 - [ADR 036: Split Overloaded System Tuples](./adr/036-split-overloaded-system-tuples.md)
 - [ADR 037: Headless CLI Dashboard](./adr/037-headless-cli-dashboard.md)
+- [ADR 038: Encapsulate Secret Societies](./adr/038-encapsulate-secret-societies.md)
+
+## Secret Societies Encapsulation
+
+The simulation separated social mechanics like Secret Societies into a distinct `layer1::social` module to enforce domain boundaries and clean up the root `layer1` namespace.
+
+```mermaid
+classDiagram
+    namespace Layer1 {
+        class Systems
+        class Economy
+        class Pop
+    }
+
+    namespace Social {
+        class SecretSocieties
+        class Unrest
+        class Needs
+    }
+
+    Layer1 --> Social : initializes
+    Social --> Pop : modifies
+    SecretSocieties --> Unrest : generates
+```
