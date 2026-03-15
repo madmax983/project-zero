@@ -59,3 +59,53 @@ pub fn thermal_detection_handler_system(
         ));
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use bevy_ecs::system::RunSystemOnce;
+
+    fn setup_world() -> World {
+        let mut world = World::new();
+        world.insert_resource(crate::layer1::terrain::generate_terrain(100, 100));
+        world.init_resource::<NotificationQueue>();
+        world.insert_resource(SimulationTime::default());
+        world.init_resource::<Events<DetectionEvent>>();
+        world
+    }
+
+    #[test]
+    fn test_thermal_detection_handler_system_spawns_visitor() {
+        let mut world = setup_world();
+
+        // Send event
+        world.send_event(DetectionEvent);
+
+        // Run system
+        world
+            .run_system_once(thermal_detection_handler_system)
+            .unwrap();
+
+        // Check if visitor spawned
+        let mut query = world.query::<(&TheVisitor, &GridPosition)>();
+        let mut iter = query.iter(&world);
+        let visitor = iter.next();
+
+        assert!(
+            visitor.is_some(),
+            "Visitor should be spawned when DetectionEvent is triggered"
+        );
+
+        // Verify notifications
+        let notifications = world.resource::<NotificationQueue>();
+        assert_eq!(
+            notifications.active.len(),
+            1,
+            "Should generate one notification"
+        );
+        assert_eq!(
+            notifications.active[0].severity,
+            crate::layer1::notifications::NotificationSeverity::Error
+        );
+    }
+}
