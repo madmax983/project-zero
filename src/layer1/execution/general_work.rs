@@ -30,7 +30,7 @@ use crate::layer1::skills::{get_skill_efficiency, SkillType, Skills};
 use crate::layer1::social::SocialBuff;
 use crate::layer1::tech::hypno_learning::MentalFog;
 use crate::layer1::tech::Tech;
-use crate::layer1::traits::{get_trait_work_speed_modifier, get_job_efficiency_modifier, Traits};
+use crate::layer1::traits::{get_job_efficiency_modifier, get_trait_work_speed_modifier, Traits};
 use crate::layer1::utility_types::{ActionType, PopAction};
 use crate::shared::log::MessageLog;
 
