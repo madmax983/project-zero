@@ -192,3 +192,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `461` The Panopticon Morale — `specs/461-the-panopticon-morale.md`
 - [ ] `462` Zero-G Sports — `specs/462-zero-g-sports.md`
 - [ ] `463` Biological Transit — `specs/463-biological-transit.md`
+- [ ] `464` Albedo Mining — `specs/464-albedo-mining.md`
