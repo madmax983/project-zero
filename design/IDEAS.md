@@ -9820,7 +9820,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Monumental Ego
+## The Monumental Ego [SPECCED]
 
 **Layer:** Cross-layer (1 -> 2)
 
