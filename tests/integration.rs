@@ -184,6 +184,8 @@ pub mod integration {
 #[path = "integration/neural_leech_unrest.rs"]
 mod neural_leech_unrest;
 
+#[path = "integration/flora_empathy.rs"]
+mod flora_empathy;
 #[path = "integration/void_weed_smuggler.rs"]
 mod void_weed_smuggler;
 #[path = "integration/vr_pod_integration.rs"]

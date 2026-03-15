@@ -384,3 +384,10 @@
 - **Glue added:**
     - Modified `src/layer1/utility_ai_population.rs` to filter out entities with the `InVrPod` component from Utility AI evaluations.
 - **Tests:** `tests/integration/vr_pod_integration.rs`
+
+### INT-293: Clear Flora -> Biosphere Empathy
+- **Date:** 2026-03-15
+- **Systems connected:** `process_flora_clearing` (Flora) -> `FloraDamagedEvent` -> `handle_flora_damage_empathy_system` (Biosphere Empathy)
+- **Glue added:**
+    - Updated `src/layer1/flora.rs` to send a `FloraDamagedEvent` whenever `Flora` entities are despawned via the `ClearFlora` designation.
+- **Tests:** `tests/integration/flora_empathy.rs` (1 test verified)
