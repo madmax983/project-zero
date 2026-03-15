@@ -12,6 +12,7 @@ pub mod mining;
 #[cfg(test)]
 mod mining_tests;
 pub mod render;
+pub mod shielding;
 pub mod ship;
 pub mod station;
 pub mod system;

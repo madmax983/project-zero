@@ -31,6 +31,7 @@ pub fn register(schedule: &mut Schedule) {
                 crate::layer1::tech::infinite_archive::update_efficiency_system
                     .after(crate::layer1::tech::update_tech_capacity_system),
                 crate::layer1::admin::calculate_admin_stats,
+                crate::layer1::tech::martyrs_engine::process_martyrs_engine,
                 crate::layer1::eureka::handle_eureka_events,
                 recycle_processing_system,
                 #[cfg(feature = "nova")]
