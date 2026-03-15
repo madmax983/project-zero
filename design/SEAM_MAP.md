@@ -361,3 +361,9 @@
 - **Glue added:** `apply_neural_shock_system` in `src/layer1/integration.rs` translates `NeuralShock` into `MentalState::Broken(MentalBreakType::Daze)`.
 - **Schedule:** Registered in `Layer1SystemSet::Observation`, specifically `.after(crate::layer1::tech::neural_leech::handle_hub_death_system)`.
 - **Tests:** `tests/integration/neural_leech_unrest.rs` (1 test)
+
+### INT-413: CryoShock -> Hospital Treatment
+- **Date:** 2026-03-12
+- **Systems connected:** `CryoShock` -> `healing_system` (Medical)
+- **Glue added:** `healing_system` now queries for `CryoShock` and reduces duration heavily using Hospital capacity.
+- **Tests:** `tests/integration/cryo_shock_hospital.rs`
