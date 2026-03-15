@@ -9779,7 +9779,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Albedo Mining
+## Albedo Mining [SPECCED]
 
 **Layer:** 2 -> 1
 
