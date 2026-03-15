@@ -181,6 +181,13 @@ pub fn modify_affinity_system(
     }
 }
 
+/// Event triggered when pops interact socially.
+#[derive(Event, Debug, Clone)]
+pub struct SocialInteractionEvent {
+    pub initiator: Entity,
+    pub target: Entity,
+}
+
 /// Buff component applied when near friends (positive) or enemies (negative).
 #[derive(Component)]
 pub struct SocialBuff {
@@ -197,6 +204,7 @@ pub struct SocialBuff {
 /// Note: This is currently O(N^2) and should be optimized with spatial partitioning
 /// if pop count grows large.
 pub fn proximity_social_system(
+    mut events: EventWriter<SocialInteractionEvent>,
     mut commands: Commands,
     pops: Query<(Entity, &GridPosition, &Relationships)>,
     other_pops: Query<(Entity, &GridPosition)>,
@@ -220,6 +228,9 @@ pub fn proximity_social_system(
                 let affinity = rel.get_affinity(other_entity);
                 if affinity > 20.0 {
                     total_buff += 0.1; // Small boost per friend
+                    if rand::random::<f32>() < 0.05 {
+                        events.send(SocialInteractionEvent { initiator: entity, target: other_entity });
+                    }
                 } else if affinity < -20.0 {
                     total_buff -= 0.1; // Small penalty per enemy
                 }
@@ -278,6 +289,7 @@ mod tests {
     #[test]
     fn test_restore_leisure_system() {
         let mut world = World::new();
+        world.init_resource::<Events<SocialInteractionEvent>>();
 
         let pop = world
             .spawn((
@@ -317,6 +329,7 @@ mod tests {
     #[test]
     fn test_affinity_change_event() {
         let mut world = World::new();
+        world.init_resource::<Events<SocialInteractionEvent>>();
         world.init_resource::<Events<AffinityChange>>(); // FIX: Init event resource
 
         let pop1 = world.spawn((Pop, Relationships::default())).id();
@@ -341,6 +354,7 @@ mod tests {
     #[test]
     fn test_affinity_clamping() {
         let mut world = World::new();
+        world.init_resource::<Events<SocialInteractionEvent>>();
         world.init_resource::<Events<AffinityChange>>(); // FIX: Init event resource
 
         let pop1 = world.spawn((Pop, Relationships::default())).id();
@@ -363,6 +377,7 @@ mod tests {
     #[test]
     fn test_proximity_morale_buff() {
         let mut world = World::new();
+        world.init_resource::<Events<SocialInteractionEvent>>();
 
         // Pop 1 and Pop 2 are friends (affinity 50) and nearby
         let pop1 = world
@@ -400,6 +415,7 @@ mod tests {
     #[test]
     fn test_proximity_morale_debuff() {
         let mut world = World::new();
+        world.init_resource::<Events<SocialInteractionEvent>>();
 
         // Pop 1 and Pop 2 are enemies (affinity -50)
         let pop1 = world
@@ -425,6 +441,7 @@ mod tests {
     #[test]
     fn test_restore_leisure_with_zone_bonus() {
         let mut world = World::new();
+        world.init_resource::<Events<SocialInteractionEvent>>();
         let mut zone_grid = crate::layer1::zone::ZoneGrid::new(10, 10);
         zone_grid.set(0, 0, crate::layer1::zone::ZoneType::Dining);
         world.insert_resource(zone_grid);
@@ -462,6 +479,7 @@ mod tests {
     #[test]
     fn test_restore_leisure_social_bonus() {
         let mut world = World::new();
+        world.init_resource::<Events<SocialInteractionEvent>>();
 
         let pop1 = world
             .spawn((

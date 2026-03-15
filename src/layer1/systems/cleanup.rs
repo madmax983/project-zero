@@ -9,6 +9,7 @@ pub fn register(schedule: &mut Schedule) {
         (
             update_event_buffer::<AddChronicleEvent>,
             update_event_buffer::<AffinityChange>,
+
             update_event_buffer::<PopDied>,
             update_event_buffer::<PopBorn>,
             update_event_buffer::<crate::layer1::structural_integrity::StructureCollapsed>,
@@ -45,4 +46,5 @@ pub fn register(schedule: &mut Schedule) {
         )
             .in_set(Layer1SystemSet::EventCleanup),
     );
+    schedule.add_systems(update_event_buffer::<crate::layer1::social::SocialInteractionEvent>.in_set(Layer1SystemSet::EventCleanup));
 }

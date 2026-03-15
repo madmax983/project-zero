@@ -85,6 +85,7 @@ const fn format_action_type(action: ActionType) -> (&'static str, &'static str, 
         ActionType::PurgeResidue => ("🧹", "Purging Ghost Code", Color::Red),
         ActionType::VoidStare => ("👁", "Staring into Abyss", Color::Black),
         ActionType::VisitSanctuary => ("🧘", "Seeking Sanctuary", Color::Magenta),
+        ActionType::MemeticObsession => ("🌀", "Memetic Obsession", Color::Magenta),
     }
 }
 

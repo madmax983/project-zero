@@ -729,3 +729,4 @@ pub use cryo_shock::*;
 /// Infrastructure system (Spec 452).
 pub mod infrastructure;
 pub use infrastructure::*;
+pub mod memetic_plague;

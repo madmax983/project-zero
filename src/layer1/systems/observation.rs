@@ -234,6 +234,7 @@ pub fn register(schedule: &mut Schedule) {
         (
             crate::layer1::void_weed::process_void_weed_trade_system,
             crate::layer1::void_weed::evaluate_smuggling_heat_system,
+            crate::layer1::memetic_plague::process_memetic_transmission_system,
             crate::layer1::overview_effect::overview_effect_system,
             crate::layer1::spiteful_will::process_spiteful_will_system,
             crate::layer1::spiteful_will::process_override_will_system,
