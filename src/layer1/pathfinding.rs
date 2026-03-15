@@ -45,6 +45,7 @@ use crate::layer1::wind::{calculate_wind_movement_penalty, Vec2, WindGrid};
 struct AccessCredentials {
     entity: Entity,
     role: Option<Role>,
+    wealth: f32,
 }
 
 /// Node for A* pathfinding.
@@ -160,7 +161,8 @@ pub fn find_path_for_pop(
     pop: Entity,
 ) -> Option<Vec<(i32, i32)>> {
     let role = world.get::<Role>(pop).copied();
-    let credentials = Some(AccessCredentials { entity: pop, role });
+    let wealth = world.get::<crate::layer1::economy::Wallet>(pop).map_or(0.0, |w| w.credits);
+    let credentials = Some(AccessCredentials { entity: pop, role, wealth });
     find_path_internal(world, start, end, false, credentials.as_ref())
 }
 
@@ -206,6 +208,15 @@ fn find_path_internal(
     let width = terrain.width;
     let height = terrain.height;
     let size = width * height;
+
+    // Transit infrastructure map for fast lookup
+    let mut transit_map: std::collections::HashMap<(i32, i32), (f32, Option<f32>)> = std::collections::HashMap::new();
+    for entity in world.iter_entities() {
+        if let (Some(pos), Some(infra)) = (entity.get::<crate::layer1::map::GridPosition>(), entity.get::<crate::layer1::infrastructure::transit::TransitInfrastructure>()) {
+            let toll = entity.get::<crate::layer1::infrastructure::transit::Toll>().map(|t| t.cost);
+            transit_map.insert((pos.x, pos.y), (infra.speed_multiplier, toll));
+        }
+    }
 
     // Use flat vectors for O(1) access.
     // u32::MAX serves as "None" for parent index.
@@ -298,7 +309,23 @@ fn find_path_internal(
             let clutter_cost = clutter.map_or(0, |c| {
                 (c.get(next.0 as usize, next.1 as usize) / 20.0) as i32
             });
-            let base_cost = t_cost + c_cost + clutter_cost;
+            let mut base_cost_f32 = (t_cost + c_cost + clutter_cost) as f32;
+
+            // Apply transit infrastructure and toll
+            if let Some((speed_mult, toll_opt)) = transit_map.get(&next) {
+                base_cost_f32 /= speed_mult;
+
+                if let Some(toll_cost) = toll_opt {
+                    let can_afford = credentials.map_or(false, |c| c.wealth >= *toll_cost);
+                    if !can_afford {
+                        // Massive penalty for not being able to afford the toll
+                        // "Poor pops should naturally path around high-toll roads"
+                        base_cost_f32 += 100.0;
+                    }
+                }
+            }
+
+            let base_cost = base_cost_f32.round() as i32;
 
             // Calculate wind penalty
             let wind_penalty = wind_grid.map_or(1.0, |wg| {

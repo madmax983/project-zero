@@ -137,6 +137,7 @@ pub fn movement_system(
         Option<&Gate>,
         Option<&AccessControl>,
     )>,
+    transit: Query<(&GridPosition, &crate::layer1::infrastructure::transit::TransitInfrastructure), Without<MovementTarget>>,
     mut commands: Commands,
 ) {
     for (pop_entity, mut current_pos, mt, mut speed_opt, traits, hit_stop, role, fog) in &mut pops {
@@ -206,7 +207,7 @@ pub fn movement_system(
         };
 
         // Determine base movement cost
-        let base_cost =
+        let mut base_cost =
             if let (Ok(x), Ok(y)) = (usize::try_from(new_pos.x), usize::try_from(new_pos.y)) {
                 terrain
                     .get(x, y)
@@ -214,6 +215,14 @@ pub fn movement_system(
             } else {
                 1.0
             };
+
+        // Apply transit infrastructure
+        for (t_pos, t_infra) in transit.iter() {
+            if t_pos.x == new_pos.x && t_pos.y == new_pos.y {
+                base_cost /= t_infra.speed_multiplier;
+                break;
+            }
+        }
 
         // Wind penalty
         let wind_mod = if let Some(ref w) = wind_grid {

@@ -21,7 +21,7 @@ use std::collections::HashMap;
 
 /// System to deduct wealth or apply stress for pops using toll transit infrastructure.
 pub fn transit_toll_system(
-    mut pops: Query<(&GridPosition, &mut Wallet, &mut StressTracker)>,
+    mut pops: Query<(&GridPosition, &mut Wallet, &mut StressTracker), Changed<GridPosition>>,
     roads: Query<(&GridPosition, &Toll), With<TransitInfrastructure>>,
 ) {
     let mut toll_map = HashMap::new();

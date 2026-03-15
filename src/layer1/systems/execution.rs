@@ -92,8 +92,9 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
+            crate::layer1::infrastructure::transit::transit_toll_system.after(apply_quirk_modifiers_system),
             movement_system
-                .after(apply_quirk_modifiers_system)
+                .after(crate::layer1::infrastructure::transit::transit_toll_system)
                 .after(crate::layer1::fauna::fauna_behavior_system)
                 .after(crate::layer1::combat::hit_stop_system),
             handle_direct_movement.after(crate::layer1::combat::hit_stop_system),
