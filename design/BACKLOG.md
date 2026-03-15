@@ -37,7 +37,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `290` The Phantom Shift — `specs/290-phantom-shift.md`
 - [ ] `292` The Chrono-Stutter — `specs/292-chrono-stutter.md`
 - [ ] `294` The Bone Economy — `specs/294-bone-economy.md`
-- [ ] `295` The Sentient Standard — `specs/295-sentient-standard.md`
 - [ ] `296` The Martyr's Engine — `specs/296-martyrs-engine.md`
 - [ ] `297` The Factional Diet — `specs/297-factional-diet.md`
 - [ ] `298` The Nostalgia Engine — `specs/298-nostalgia-engine.md`

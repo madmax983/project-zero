@@ -142,6 +142,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::social::placebo::placebo_tick_system.after(decay_needs_system),
             crate::layer1::social::placebo::reveal_betrayal_system.after(decay_needs_system),
             crate::layer1::contagion::emotional_contagion_system.after(decay_needs_system),
+            crate::layer1::social::sentient_standard::apply_sentient_standard_stress_system
+                .after(decay_needs_system),
             #[cfg(feature = "nova")]
             crate::experimental::echo_chamber::detect_echo_chamber_system
                 .after(crate::layer1::needs::decay_needs_system),
