@@ -152,8 +152,11 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world.contains_resource::<Events<crate::layer1::spiteful_will::InheritanceEvent>>() {
         world.init_resource::<Events<crate::layer1::spiteful_will::InheritanceEvent>>();
     }
-    if !world.contains_resource::<Events<crate::layer1::nature::biosphere_empathy::FloraDamagedEvent>>() {
-        world.init_resource::<Events<crate::layer1::nature::biosphere_empathy::FloraDamagedEvent>>();
+    if !world
+        .contains_resource::<Events<crate::layer1::nature::biosphere_empathy::FloraDamagedEvent>>()
+    {
+        world
+            .init_resource::<Events<crate::layer1::nature::biosphere_empathy::FloraDamagedEvent>>();
     }
     if !world.contains_resource::<crate::layer1::nature::biosphere_empathy::GlobalFloraHealth>() {
         world.init_resource::<crate::layer1::nature::biosphere_empathy::GlobalFloraHealth>();
@@ -250,7 +253,8 @@ mod tests {
 
         world.init_resource::<Events<crate::layer1::spiteful_will::InheritanceEvent>>();
         world.init_resource::<Events<crate::layer1::spiteful_will::OverrideWillEvent>>();
-        world.init_resource::<Events<crate::layer1::nature::biosphere_empathy::FloraDamagedEvent>>();
+        world
+            .init_resource::<Events<crate::layer1::nature::biosphere_empathy::FloraDamagedEvent>>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);

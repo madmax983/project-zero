@@ -541,3 +541,7 @@ pub use pen_pals::*;
 pub mod cadet;
 pub use cadet::*;
 pub mod placebo;
+
+/// The Sentient Standard logic (Spec 295).
+pub mod sentient_standard;
+pub use sentient_standard::*;

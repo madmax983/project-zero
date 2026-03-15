@@ -25,7 +25,9 @@
 #![allow(clippy::too_many_lines)]
 
 use bevy_ecs::prelude::*;
-use comfy_table::{presets::UTF8_FULL_CONDENSED, Attribute, Cell, Color, ContentArrangement, Table};
+use comfy_table::{
+    presets::UTF8_FULL_CONDENSED, Attribute, Cell, Color, ContentArrangement, Table,
+};
 use crossterm::style::Stylize;
 use scale::layer1::biography::Biography;
 use scale::layer1::construction::{ConstructionProgress, GreatWork, OperationalGreatWork};

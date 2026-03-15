@@ -205,6 +205,7 @@
 - [x] `INT-224` Integration: DenounceEvent -> Chronicle — completed 2026-03-07
 - [x] `268` Subliminal Advertising — `specs/268-subliminal-advertising.md` — completed 2026-03-06
 - [x] `255` Hypno-Learning — `specs/255-hypno-learning.md` — completed 2026-03-01
+- [x] `295` The Sentient Standard — `specs/295-sentient-standard.md` — completed 2026-03-15
 - [x] `260` The Industrial Rhythm — `specs/260-industrial-rhythm.md` — completed 2026-03-06
 - [x] `348` The Black Market — `specs/348-the-black-market.md` — completed 2026-03-06
 - [x] `349` Ancestral Graves — `specs/349-ancestral-graves.md` — completed 2026-03-01

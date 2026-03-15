@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::traits::{Trait, Traits};
 use crate::layer1::stress::StressTracker;
+use crate::layer1::traits::{Trait, Traits};
+use bevy_ecs::prelude::*;
 
 #[derive(Resource, Default)]
 pub struct GlobalFloraHealth {
@@ -12,9 +12,7 @@ pub struct FloraDamagedEvent {
     pub damage_amount: f32,
 }
 
-pub fn sync_empathic_network_system(
-    mut query: Query<(&Traits, &mut StressTracker)>,
-) {
+pub fn sync_empathic_network_system(mut query: Query<(&Traits, &mut StressTracker)>) {
     let mut total_stress = 0.0;
     let mut count = 0;
 
@@ -26,7 +24,9 @@ pub fn sync_empathic_network_system(
         }
     }
 
-    if count == 0 { return; }
+    if count == 0 {
+        return;
+    }
     let average_stress = total_stress / count as f32;
 
     // Apply pull towards average
