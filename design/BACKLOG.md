@@ -190,3 +190,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `459` Ghost Frequencies — `specs/459-ghost-frequencies.md`
 - [ ] `460` The Bureau of Redundancy — `specs/460-the-bureau-of-redundancy.md`
 - [ ] `461` The Panopticon Morale — `specs/461-the-panopticon-morale.md`
+- [ ] `462` Zero-G Sports — `specs/462-zero-g-sports.md`
