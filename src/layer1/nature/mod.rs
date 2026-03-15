@@ -4,8 +4,6 @@ mod atmosphere_corrosion_tests;
 #[cfg(test)]
 mod atmosphere_tides_tests;
 pub mod biosphere_empathy;
-#[cfg(test)]
-mod biosphere_empathy_tests;
 pub mod ecology;
 #[cfg(test)]
 mod ecology_keystone_tests;

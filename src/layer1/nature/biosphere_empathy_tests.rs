@@ -2,7 +2,8 @@ use super::*;
 use crate::layer1::pop::Pop;
 use crate::layer1::stress::StressTracker;
 use crate::layer1::traits::{Trait, Traits};
-use bevy_ecs::prelude::*;
+use bevy_ecs::prelude::{Events, World};
+
 use bevy_ecs::system::RunSystemOnce;
 
 fn setup_world() -> World {

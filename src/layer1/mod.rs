@@ -288,10 +288,6 @@ pub mod terraforming;
 pub mod unrest;
 pub use terraforming::*;
 
-/// Secret Societies system (Spec 147).
-pub mod society;
-pub use society::*;
-
 /// Room quality calculation and memories (Spec 064).
 pub mod room_quality;
 pub use room_quality::*;
