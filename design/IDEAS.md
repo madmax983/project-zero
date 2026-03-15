@@ -9904,7 +9904,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Cult of the Forgotten Machine
+## Cult of the Forgotten Machine [SPECCED]
 
 **Layer:** 1 / Cross-layer
 

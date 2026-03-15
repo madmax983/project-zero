@@ -193,3 +193,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `462` Zero-G Sports — `specs/462-zero-g-sports.md`
 - [ ] `463` Biological Transit — `specs/463-biological-transit.md`
 - [ ] `464` Albedo Mining — `specs/464-albedo-mining.md`
+- [ ] `465` Cult of the Forgotten Machine — `specs/465-cult-of-the-forgotten-machine.md`
