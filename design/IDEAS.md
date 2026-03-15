@@ -9903,3 +9903,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The convenience and space-saving of building over old infrastructure vs. the permanent, haunting consequences of the site's history.
 
 ---
+
+## Cult of the Forgotten Machine
+
+**Layer:** 1 / Cross-layer
+
+**Fantasy:** Technology becomes religion when the manual is lost.
+
+**Mechanic:** Ancient or highly complex machinery (like Layer 2 orbital relays or Layer 1 power cores) that hasn't been maintained properly can develop "Quirks." Instead of fixing the machine, a faction of Pops begins to worship it, believing the Quirks are divine mandates. They actively sabotage repair efforts and demand sacrifices of rare resources to appease the machine.
+
+**Emergence:** You ignore a failing power grid for too long. A cult forms around the main reactor. They start hoarding energy cells and attacking engineers. To fix the grid, you now have to suppress a religious uprising, which tanks colony morale and sparks a civil war.
+
+**Tension:** Do you allocate precious resources to maintain complex systems you don't fully need right now, or risk them becoming the center of a hostile, fundamentalist cult?
+
+---
+
+## The Phantom Sub-routines
+
+**Layer:** 2 / 3
+
+**Fantasy:** The ghost in the shell of your automated empire.
+
+**Mechanic:** As your empire relies more on automated ship routes and AI governors, small, seemingly harmless coding errors (represented by "Scrapcode" buildup) begin to aggregate. These errors occasionally spawn "Ghost Fleets"—fleets of automated ships that follow bizarre, nonsensical orders (e.g., hauling thousands of tons of dirt to a luxury world, or endlessly patrolling an empty sector).
+
+**Emergence:** You are fighting a desperate defensive war. Suddenly, a massive Ghost Fleet of your own automated freighters clogs the hyperlane, preventing your military reinforcements from arriving. The freighters are just following a phantom order to deliver 10,000 units of "Nothing" to a dead world.
+
+**Tension:** The immense efficiency of automated logistics vs. the slow, unpredictable decay of the AI's sanity, requiring manual, tedious "defragmentation" of your empire's code.
+
+---
+
+## Gravity Sickness
+
+**Layer:** 1 / 2
+
+**Fantasy:** The physical toll of life between the stars.
+
+**Mechanic:** Pops born on low-gravity worlds or orbital stations develop a permanent "Low-G Adapted" trait. If they are relocated to a high-gravity world (like a heavy mining planet), they suffer severe debuffs to movement speed, work efficiency, and health, eventually leading to early death unless provided with expensive "Exo-suits."
+
+**Emergence:** You need cheap labor for a newly discovered heavy-gravity mining world. You mass-relocate Pops from an overcrowded orbital habitat. Within a month, the mining colony is a hospital ward of crippled workers. You have to spend millions importing exo-suits just to keep them alive, negating the profit of the mine.
+
+**Tension:** The logistical ease of treating Pops as interchangeable labor vs. the brutal biological reality of their physical adaptations.
+
+---
