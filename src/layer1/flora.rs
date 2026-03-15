@@ -223,8 +223,18 @@ pub fn process_flora_clearing(world: &mut World, designation_entity: Entity, wor
                 .map(|(e, _, _)| e)
                 .collect();
 
+            let flora_count = flora_entities.len();
+
             for e in flora_entities {
                 world.despawn(e);
+            }
+
+            if flora_count > 0 {
+                if let Some(mut events) = world.get_resource_mut::<Events<crate::layer1::nature::biosphere_empathy::FloraDamagedEvent>>() {
+                    events.send(crate::layer1::nature::biosphere_empathy::FloraDamagedEvent {
+                        damage_amount: 10.0 * flora_count as f32,
+                    });
+                }
             }
         }
         world.despawn(designation_entity);
