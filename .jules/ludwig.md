@@ -21,3 +21,7 @@
 ## [Direct Link Input Grace Period]
 **Friction:** Input buffering in Direct Link mode was unbounded. If a player pressed a key early in the cooldown, the character would execute the move much later, leading to unexpected, sluggish, and "stuck" movements that felt completely disconnected from the player's intent.
 **Flow:** Implemented a Grace Period (0.2s) for input buffering. Now, inputs are only buffered if pressed slightly before the action is ready. Stale inputs are safely discarded, ensuring movement feels tight, predictable, and responsive to the player's immediate commands.
+
+## [Particle Gravity]
+**Friction:** Particles floated weightlessly and slid along axes linearly, which felt "floaty" and lacked physical weight or impact. It did not communicate the grittiness of the world.
+**Flow:** Added a `GRAVITY` constant (0.05) to `particle_physics_system` that pulls particles downwards (increasing `dy`) every tick. This simple tweak gives particles a satisfying parabolic arc, adding immediate visual "Juice" and grounding the effects in the physical world without modifying the engine's core physics loop.

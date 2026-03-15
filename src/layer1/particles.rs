@@ -5,6 +5,10 @@ use rand::prelude::SliceRandom;
 use rand::Rng;
 use ratatui::style::Color;
 
+/// Ludwig's Tuning Constants
+/// Gravity applied to particles per tick to pull them downwards.
+const GRAVITY: f32 = 0.05;
+
 /// Visual particle effect component.
 ///
 /// Particles are temporary entities used for visual feedback ("Juice").
@@ -60,6 +64,9 @@ pub fn particle_physics_system(
     for (mut pos, mut vel, mut acc) in &mut query {
         acc.x += vel.dx;
         acc.y += vel.dy;
+
+        // Apply gravity
+        vel.dy += GRAVITY;
 
         // Apply friction to slow down particles naturally
         vel.dx *= 0.9;
@@ -246,5 +253,28 @@ mod tests {
 
         let vel = world.get::<ParticleVelocity>(entity).unwrap();
         assert!((vel.dx - 0.9).abs() < 0.001);
+    }
+
+    #[test]
+    fn test_particle_physics_gravity() {
+        let mut world = World::new();
+
+        let entity = world
+            .spawn((
+                Particle {
+                    char: '.',
+                    color: Color::White,
+                    lifetime: 10,
+                },
+                GridPosition { x: 0, y: 0 },
+                ParticleVelocity { dx: 0.0, dy: 0.0 },
+                ParticleAccumulator::default(),
+            ))
+            .id();
+
+        world.run_system_once(particle_physics_system).unwrap();
+
+        let vel = world.get::<ParticleVelocity>(entity).unwrap();
+        assert!((vel.dy - 0.045).abs() < 0.001); // (0.0 + GRAVITY(0.05)) * 0.9 = 0.045
     }
 }
