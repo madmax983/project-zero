@@ -186,3 +186,5 @@ mod neural_leech_unrest;
 
 #[path = "integration/void_weed_smuggler.rs"]
 mod void_weed_smuggler;
+#[path = "integration/vr_pod_integration.rs"]
+mod vr_pod_integration;

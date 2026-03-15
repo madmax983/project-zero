@@ -38,6 +38,7 @@ pub fn arrival_handler_system(
     mut housing_q: Query<&mut Housing>,
     mut taverns: Query<&mut Tavern>,
     mut offices: Query<&mut Office>,
+    mut vr_pods: Query<&mut crate::layer1::lotus_simulation::VrPod>,
     corpses: Query<&Corpse>,
     mut graves: Query<(Entity, &GridPosition, &mut Grave)>,
     mut memories: Query<&mut Memories>,
@@ -78,6 +79,7 @@ pub fn arrival_handler_system(
             &mut housing_q,
             &mut taverns,
             &mut offices,
+            &mut vr_pods,
             &corpses,
             &mut graves,
             &mut memories,
@@ -111,6 +113,7 @@ fn process_arrival(
     housing_q: &mut Query<&mut Housing>,
     taverns: &mut Query<&mut Tavern>,
     offices: &mut Query<&mut Office>,
+    vr_pods: &mut Query<&mut crate::layer1::lotus_simulation::VrPod>,
     corpses: &Query<&Corpse>,
     graves: &mut Query<(Entity, &GridPosition, &mut Grave)>,
     memories: &mut Query<&mut Memories>,
@@ -241,6 +244,14 @@ fn process_arrival(
                 pop_entity,
                 pop_pos,
             );
+            true
+        }
+        ActionType::EnterVrPod => {
+            if let Ok(mut pod) = vr_pods.get_mut(target_entity) {
+                pod.occupant = Some(pop_entity);
+                let mut entity_cmds = commands.entity(pop_entity);
+                entity_cmds.insert(crate::layer1::lotus_simulation::InVrPod);
+            }
             true
         }
         ActionType::Work | ActionType::Repair | ActionType::Haul | ActionType::Tame => {

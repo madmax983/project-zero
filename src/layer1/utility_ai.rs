@@ -268,9 +268,34 @@ impl<'a> PopDecider<'a> {
     /// *   **Addiction**: Seeks chemicals if withdrawing.
     #[allow(clippy::collapsible_if)]
     fn evaluate_group_survival(&mut self) {
+        if self.data.in_vr_pod {
+            // If already in a VR pod, stay there unless explicitly told to leave,
+            // or if hunger drops to 0 and they die.
+            self.evaluator.evaluate_and_consider(
+                Some((10.0, self.data.entity)), // Override everything
+                ActionType::EnterVrPod,
+                self.context,
+                0.0,
+            );
+            return;
+        }
+
         let pop_pos = self.data.pos;
         let needs = self.data.needs;
         let weights = self.data.weights;
+
+        // Evaluate EnterVrPod
+        self.evaluator.evaluate_and_consider(
+            crate::layer1::utility_eval_types::evaluate_enter_vr_pod(
+                pop_pos,
+                &weights,
+                self.data.stress,
+                &self.buffer.vr_pods,
+            ),
+            ActionType::EnterVrPod,
+            self.context,
+            0.0,
+        );
 
         // Evaluate VisitSanctuary
         self.evaluator.evaluate_and_consider(

@@ -61,6 +61,7 @@ pub struct PopEvaluationQuery {
     pub memetic_carrier: Option<&'static MemeticCarrier>,
     pub health: Option<&'static Health>,
     pub job: Option<&'static Job>,
+    pub in_vr_pod: Option<&'static crate::layer1::lotus_simulation::InVrPod>,
 }
 
 impl PopEvalData {
@@ -91,7 +92,52 @@ impl PopEvalData {
             job: item.job.copied(),
             insulation: 0.0,
             carrying_item_type: None,
+            in_vr_pod: item.in_vr_pod.is_some(),
         }
+    }
+}
+
+#[cfg(test)]
+mod vr_pod_tests {
+    use super::*;
+
+    #[test]
+    fn test_evaluate_enter_vr_pod_low_stress() {
+        let weights = UtilityWeights::default();
+        let candidates = vec![ScorableCandidate {
+            entity: Entity::PLACEHOLDER,
+            pos: GridPosition { x: 0, y: 0 },
+            capacity: 1,
+            usage: 0,
+            score_bonus: 0.0,
+            item_type: None,
+            resource_type: None,
+        }];
+
+        // Stress < 60%
+        let res = evaluate_enter_vr_pod(GridPosition { x: 0, y: 0 }, &weights, 50.0, &candidates);
+        assert!(res.is_none());
+    }
+
+    #[test]
+    fn test_evaluate_enter_vr_pod_high_stress() {
+        let weights = UtilityWeights::default();
+        let candidates = vec![ScorableCandidate {
+            entity: Entity::from_raw(1),
+            pos: GridPosition { x: 0, y: 0 },
+            capacity: 1,
+            usage: 0,
+            score_bonus: 0.0,
+            item_type: None,
+            resource_type: None,
+        }];
+
+        // Stress > 60%
+        let res = evaluate_enter_vr_pod(GridPosition { x: 0, y: 0 }, &weights, 80.0, &candidates);
+        assert!(res.is_some());
+        let (score, _target) = res.unwrap();
+        // 0.8 * 3.0 = 2.4
+        assert!(score > 2.0);
     }
 }
 
@@ -117,6 +163,29 @@ pub fn evaluate_visit_sanctuary(
     // or maybe weights.distance_weight, but it's more of a general survival need.
     // We want a very high base score so it overrides idle/wander/hum when stress is high.
     let base_score = 1.0 * stress_factor * 2.0;
+
+    evaluate_candidates(pop_pos, weights, candidates, base_score)
+}
+
+/// Evaluates Vr Pods. Very high priority if stress is high.
+pub fn evaluate_enter_vr_pod(
+    pop_pos: GridPosition,
+    weights: &UtilityWeights,
+    stress: f32,
+    candidates: &[ScorableCandidate],
+) -> Option<(f32, Entity)> {
+    if candidates.is_empty() {
+        return None;
+    }
+
+    let stress_factor = stress / 100.0;
+
+    // Only consider entering VR if stress is extremely high
+    if stress_factor < 0.6 {
+        return None;
+    }
+
+    let base_score = 1.0 * stress_factor * 3.0; // Higher base score than VisitSanctuary
 
     evaluate_candidates(pop_pos, weights, candidates, base_score)
 }
@@ -168,6 +237,8 @@ pub struct PopEvalData {
     pub job: Option<Job>,
     /// Current insulation provided by clothing.
     pub insulation: f32,
+    /// Is currently in a Vr Pod.
+    pub in_vr_pod: bool,
 }
 
 #[cfg(test)]
@@ -198,6 +269,7 @@ impl PopEvalData {
             health: None,
             job: None,
             insulation: 0.0,
+            in_vr_pod: false,
         }
     }
 }
@@ -417,6 +489,8 @@ pub struct UtilityAIBuffer {
     pub cleaning_targets: Vec<ScorableCandidate>,
     /// Buffer for Sanctuary candidates.
     pub sanctuaries: Vec<ScorableCandidate>,
+    /// Buffer for Vr Pods.
+    pub vr_pods: Vec<ScorableCandidate>,
 }
 
 /// Helper struct to track the best action found so far.

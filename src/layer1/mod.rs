@@ -86,6 +86,8 @@ pub mod hobby;
 pub mod housing;
 /// The Inspector system (Spec 091).
 pub mod inspector;
+/// The Lotus Simulation system (Spec 269).
+pub mod lotus_simulation;
 /// Institutional Memory system (Spec 172).
 pub mod institutional_memory;
 /// Integration systems bridging domains.
