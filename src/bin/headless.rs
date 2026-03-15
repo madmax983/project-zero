@@ -25,7 +25,7 @@
 #![allow(clippy::too_many_lines)]
 
 use bevy_ecs::prelude::*;
-use comfy_table::{presets::UTF8_FULL, Attribute, Cell, Color, ContentArrangement, Table};
+use comfy_table::{presets::UTF8_FULL_CONDENSED, Attribute, Cell, Color, ContentArrangement, Table};
 use crossterm::style::Stylize;
 use scale::layer1::biography::Biography;
 use scale::layer1::construction::{ConstructionProgress, GreatWork, OperationalGreatWork};
@@ -373,7 +373,7 @@ fn print_status(world: &mut World) {
 
     let mut table = Table::new();
     table
-        .load_preset(comfy_table::presets::UTF8_FULL_CONDENSED)
+        .load_preset(UTF8_FULL_CONDENSED)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("Category").add_attribute(Attribute::Bold),
@@ -546,7 +546,7 @@ fn print_tech(world: &mut World) {
 
     let mut table = Table::new();
     table
-        .load_preset(comfy_table::presets::UTF8_FULL_CONDENSED)
+        .load_preset(UTF8_FULL_CONDENSED)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("Technology").add_attribute(Attribute::Bold),
@@ -606,7 +606,7 @@ fn print_pops(world: &mut World) {
 
     let mut table = Table::new();
     table
-        .load_preset(comfy_table::presets::UTF8_FULL_CONDENSED)
+        .load_preset(UTF8_FULL_CONDENSED)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("ID").add_attribute(Attribute::Bold),
@@ -921,7 +921,7 @@ fn print_designations(world: &mut World) {
     let mut count = 0;
     let mut table = Table::new();
     table
-        .load_preset(UTF8_FULL)
+        .load_preset(UTF8_FULL_CONDENSED)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("Type").add_attribute(Attribute::Bold),
@@ -949,7 +949,7 @@ fn print_designations(world: &mut World) {
     }
 
     if count == 0 {
-        println!("  (none)");
+        println!("  {}", "(No active designations)".dark_grey().italic());
     } else {
         println!("{table}");
     }
@@ -1177,7 +1177,7 @@ fn print_great_works(world: &mut World) {
     let mut count = 0;
     let mut table = Table::new();
     table
-        .load_preset(UTF8_FULL)
+        .load_preset(UTF8_FULL_CONDENSED)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("ID").add_attribute(Attribute::Bold),
@@ -1242,7 +1242,7 @@ fn print_great_works(world: &mut World) {
     }
 
     if count == 0 {
-        println!("  (No great works found)");
+        println!("  {}", "(No great works found)".dark_grey().italic());
     } else {
         println!("{table}");
     }
@@ -1259,7 +1259,7 @@ fn print_buildings(world: &mut World) {
 
     let mut table = Table::new();
     table
-        .load_preset(comfy_table::presets::UTF8_FULL_CONDENSED)
+        .load_preset(UTF8_FULL_CONDENSED)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("ID").add_attribute(Attribute::Bold),
@@ -1307,7 +1307,7 @@ fn print_buildings(world: &mut World) {
     }
 
     if count == 0 {
-        println!("  (No buildings found)");
+        println!("  {}", "(No buildings found)".dark_grey().italic());
     } else {
         println!("{table}");
     }
@@ -1329,11 +1329,11 @@ fn print_bio(world: &mut World, target_id: u32) {
 
             if let Some(bio) = bio {
                 if bio.events.is_empty() {
-                    println!("  (No events recorded)");
+                    println!("  {}", "(No events recorded)".dark_grey().italic());
                 } else {
                     let mut table = Table::new();
                     table
-                        .load_preset(UTF8_FULL)
+                        .load_preset(UTF8_FULL_CONDENSED)
                         .set_content_arrangement(ContentArrangement::Dynamic)
                         .set_header(vec![
                             Cell::new("Tick").add_attribute(Attribute::Bold),
@@ -1376,13 +1376,13 @@ fn print_chronicle(world: &mut World) {
     );
 
     if chronicle.events.is_empty() {
-        println!("  (No history recorded)");
+        println!("  {}", "(No history recorded)".dark_grey().italic());
         return;
     }
 
     let mut table = Table::new();
     table
-        .load_preset(comfy_table::presets::UTF8_FULL_CONDENSED)
+        .load_preset(UTF8_FULL_CONDENSED)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("Year").add_attribute(Attribute::Bold),
@@ -1425,13 +1425,13 @@ fn print_log(world: &mut World) {
     );
 
     if log.messages.is_empty() {
-        println!("  (No messages)");
+        println!("  {}", "(No messages)".dark_grey().italic());
         return;
     }
 
     let mut table = Table::new();
     table
-        .load_preset(UTF8_FULL)
+        .load_preset(UTF8_FULL_CONDENSED)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("Color").add_attribute(Attribute::Bold),
@@ -1474,7 +1474,7 @@ fn print_help() {
 
     let mut table = Table::new();
     table
-        .load_preset(UTF8_FULL)
+        .load_preset(UTF8_FULL_CONDENSED)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("Category").add_attribute(Attribute::Bold),
