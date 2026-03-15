@@ -2,7 +2,7 @@
 
 ## High Priority
 
-
+- [ ] `464` The Bureaucratic Language — `specs/464-bureaucratic-language.md`
 
 
 
