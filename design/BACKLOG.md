@@ -187,3 +187,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `454` Gravitational Debt — `specs/454-gravitational-debt.md`
 - [ ] `455` The Stellar Forge — `specs/455-stellar-forge.md`
 - [ ] `456` Gravity-Defying Flora — `specs/456-gravity-defying-flora.md`
+- [ ] `457` Subterranean Mycelial Network — `specs/457-subterranean-mycelial-network.md`
