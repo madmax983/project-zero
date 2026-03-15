@@ -4589,6 +4589,41 @@ How a Lotus Pod appears from the outside.
 - sealed tightly from the waking world
 - covered in desperate scratch marks from the inside
 
+## Psychic Background Radiation Fragments (Spec 454)
+
+### Fragment Type: [NOISE_DESCRIPTOR]
+Descriptions of the psychic background interference.
+
+- a chorus of whispers
+- the sound of glass breaking in the dark
+- an itch behind the eyes
+- a screaming silence
+- a hum that rattles the teeth
+- the feeling of falling upwards
+- voices we cannot understand
+
+### Fragment Type: [SLEEP_EFFECT]
+The impact the noise has on colonists.
+
+- waking with bloody noses
+- night-terrors that linger all day
+- a refusal to close their eyes
+- dreaming of the void staring back
+- a crushing, exhausted paranoia
+- waking up screaming
+
+### Fragment Type: [AFTERMATH_DESCRIPTOR]
+The state of the colony when the noise stops.
+
+- the silence is finally a comfort
+- no more blood on the pillows
+- the whispers have stopped
+- we can hear ourselves think
+- a heavy, exhausted peace
+- the dreams are quiet now
+
+---
+
 ## The Commuter Tax Fragments (Spec 452)
 
 ### Fragment Type: [TRANSIT_NAME]

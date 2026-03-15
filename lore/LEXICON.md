@@ -3203,6 +3203,20 @@
 **Code reference:** `VrPod` component
 **Usage:** "The colonist entered the Lotus Pod to escape the squalor." / "Power failures eject occupants from Lotus Pods."
 
+## Psychic Background Radiation (Spec 454)
+
+### the static / the noise
+**Replaces:** Psychic Background Radiation, interference
+**Code reference:** `PsychicBackground`
+**Usage:** "The static is deafening tonight." / "I can't sleep through the noise."
+
+### night-terrors / void-dreams
+**Replaces:** Sleep inefficiency, psychic nightmares
+**Code reference:** `MentalBreakType::NightTerrors` (implied effect)
+**Usage:** "The void-dreams took another worker." / "Waking up from night-terrors again."
+
+---
+
 ## The Commuter Tax (Spec 452)
 
 ### Toll
