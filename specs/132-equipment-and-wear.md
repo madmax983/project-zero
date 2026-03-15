@@ -306,6 +306,4 @@ To make this fully playable, Pops need to find clothing.
 ## Questions
 
 - *Builder*: Should Headgear be implemented now?
-    - *Architect*: Add the slot, but `Clothing` logic mainly targets Body for now. Headgear can be added later for armor/helmets.
-
-*Architect:* Implement the Headgear slot now, but complex logic can be deferred.
+  *Architect:* Add the slot, but `Clothing` logic mainly targets Body for now. Headgear can be added later for armor/helmets.
