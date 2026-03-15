@@ -25,7 +25,7 @@
 use super::artifacts::ActiveAuras;
 use super::biocompatibility::Biocompatibility;
 use super::cabin_fever::CabinFever;
-use super::contagion::ContagionCooldown;
+
 use super::factions::FactionMember;
 use super::hygiene::Filth;
 use super::items::Equipment;
@@ -259,7 +259,6 @@ pub struct PopBundle {
     /// Overall morale.
     pub morale: Morale,
     /// Disease cooldown.
-    pub contagion: ContagionCooldown,
     /// Personality traits.
     pub traits: Traits,
     /// Cabin fever status.
@@ -303,7 +302,6 @@ impl PopBundle {
             auras: ActiveAuras::default(),
             social_debt: SocialDebt::default(),
             morale: Morale::default(),
-            contagion: ContagionCooldown::default(),
             traits: Traits::random(rng),
             cabin_fever: CabinFever::default(),
             biocompatibility: Biocompatibility::default(),

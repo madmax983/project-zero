@@ -12,7 +12,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [x] `255` Hypno-Learning — `specs/255-hypno-learning.md` — completed 2026-03-01
 
 
-- [ ] `266` Emotional Contagion — `specs/266-emotional-contagion.md`
 - [ ] `267` Ancestral Graves — `specs/267-ancestral-graves.md`
 - [ ] `270` The Organ Market — `specs/270-organ-market.md`
 - [ ] `271` Subcontractor Factions — `specs/271-subcontractor-factions.md`
