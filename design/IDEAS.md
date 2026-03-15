@@ -9861,3 +9861,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Fighting an unwinnable war to protect your sovereignty vs. cold-bloodedly deciding which part of your civilization is acceptable "collateral" to satisfy an ancient debt.
 
 ---
+
+## Subspace Resonance Cascades
+
+**Layer:** 3 -> 2
+
+**Fantasy:** The interstellar superhighways are cracking under the weight of your empire's ambition.
+
+**Mechanic:** Heavy use of specific hyperlanes (high trade/fleet volume) builds up "Subspace Resonance". If the resonance exceeds a critical threshold, the hyperlane collapses temporarily, creating a "Subspace Storm" in the connected Layer 2 systems. These storms damage passing ships and sever communications, forcing long detours.
+
+**Emergence:** You route all your core world trade through a single, highly efficient chokepoint. The resonance shatters the route right before a pirate invasion, cutting off your reinforcement fleet and forcing your wealthy capital to fight with local system defense forces.
+
+**Tension:** Optimize for the absolute shortest, most efficient routes (high risk of collapse) vs. building redundant, slower, but safer distributed networks.
+
+---
+
+## The Memory Smugglers
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** Buying a dead man's peace of mind to survive the nightmare of the frontier.
+
+**Mechanic:** A black market develops for "Memory Cores" extracted from dead Pops (as per Spec 288). Pops with high Stress can secretly purchase "Blanket Memories" (artificial or stolen memories of peaceful, happy lives). This instantly drops their Stress to zero and provides a massive Morale boost, but creates a high risk of "Identity Rejection," putting the Pop into a long-term coma or replacing their existing skills with the skills of the memory's original owner.
+
+**Emergence:** Your elite squad of miners is nearing a mental break during a grueling deep-crust expedition. You ignore it. They buy black market memories to cope. The next day, half your elite miners are comatose, and the other half suddenly think they are pacifist farmers, refusing to pick up a drill.
+
+**Tension:** Allowing a quick, illegal fix for dangerous stress levels vs. the catastrophic risk of losing critical skills and workforce stability.
+
+---
+
+## The Architectural Palimpsest
+
+**Layer:** 1
+
+**Fantasy:** You can tear down the old walls, but the ghosts of the old city still dictate how the new one feels.
+
+**Mechanic:** When a building is demolished, it leaves an invisible "Shadow" tag on those tiles. New buildings constructed over these shadows inherit a fraction of the old building's aura (Beauty, Squalor, or History). If you build a pristine hospital over the site of an old, blood-soaked arena, the hospital will naturally generate a low-level "Dread" aura for patients.
+
+**Emergence:** You try to gentrify the old industrial slums by tearing them down and building luxury housing. But the "Squalor Shadow" of the old factories persists. The new rich residents are constantly miserable because their luxury apartments "feel wrong," eventually abandoning the district and turning it back into a slum.
+
+**Tension:** The convenience and space-saving of building over old infrastructure vs. the permanent, haunting consequences of the site's history.
+
+---
