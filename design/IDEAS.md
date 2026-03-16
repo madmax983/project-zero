@@ -1518,7 +1518,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Escape Velocity Economics
+## Escape Velocity Economics [SPECCED]
 
 **Layer:** 2
 
