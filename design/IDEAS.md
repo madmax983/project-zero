@@ -9681,7 +9681,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Immediate, massive geopolitical and economic gains vs. the literal overshadowing and subjugation of your citizens' daily lives.
 
 ---
-## Memory Forgery
+## Memory Forgery [SPECCED]
 
 **Layer:** 1
 
@@ -9793,7 +9793,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Endless Draft
+## The Endless Draft [SPECCED]
 
 **Layer:** 3 -> 1
 
@@ -9806,7 +9806,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Immediate economic and diplomatic survival vs the systematic, generational draining of your colony's strongest citizens.
 
 ---
-## Subterranean Mycelial Network
+## Subterranean Mycelial Network [SPECCED]
 
 **Layer:** 1
 
