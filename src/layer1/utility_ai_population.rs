@@ -859,7 +859,6 @@ mod tests {
         let housing = Housing {
             capacity: 1,
             residents: vec![Entity::from_raw(123)],
-            ..Default::default()
         };
 
         world.spawn((housing, GridPosition { x: 0, y: 0 }));

@@ -2,7 +2,7 @@ use super::*;
 use crate::layer1::pop::Pop;
 use crate::layer1::stress::StressTracker;
 use crate::layer1::traits::{Trait, Traits};
-use bevy_ecs::prelude::*;
+use bevy_ecs::prelude::{World, Events};
 use bevy_ecs::system::RunSystemOnce;
 
 fn setup_world() -> World {
@@ -24,7 +24,6 @@ fn test_empathic_pops_sync_stress() {
             Traits(std::collections::HashSet::from([Trait::EmpathicLink])),
             StressTracker {
                 accumulated_stress: 80.0,
-                ..Default::default()
             },
         ))
         .id();
@@ -35,7 +34,6 @@ fn test_empathic_pops_sync_stress() {
             Traits(std::collections::HashSet::from([Trait::EmpathicLink])),
             StressTracker {
                 accumulated_stress: 20.0,
-                ..Default::default()
             },
         ))
         .id();
@@ -63,7 +61,6 @@ fn test_flora_damage_spikes_stress() {
             Traits(std::collections::HashSet::from([Trait::EmpathicLink])),
             StressTracker {
                 accumulated_stress: 10.0,
-                ..Default::default()
             },
         ))
         .id();

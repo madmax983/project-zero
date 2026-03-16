@@ -31,7 +31,6 @@ mod tests {
         world.spawn((
             Building {
                 building_type: BuildingType::Smelter,
-                ..Default::default()
             },
             GridPosition { x: 2, y: 2 },
         ));
