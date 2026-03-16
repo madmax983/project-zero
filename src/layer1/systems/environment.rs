@@ -11,6 +11,18 @@ pub fn register(schedule: &mut Schedule) {
         )
             .in_set(Layer1SystemSet::Environment),
     );
+
+    schedule.add_systems(
+        (
+            crate::layer1::cult_of_the_forgotten_machine::generate_machine_quirks_system
+                .after(crate::layer1::structure::fragile_decay_system),
+            crate::layer1::cult_of_the_forgotten_machine::form_machine_cult_system
+                .after(crate::layer1::cult_of_the_forgotten_machine::generate_machine_quirks_system),
+            crate::layer1::cult_of_the_forgotten_machine::cult_sabotage_system
+                .after(crate::layer1::cult_of_the_forgotten_machine::form_machine_cult_system),
+        )
+            .in_set(Layer1SystemSet::Environment),
+    );
     schedule.add_systems(
         (
             fire_pressure_check_system,

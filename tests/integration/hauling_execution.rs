@@ -29,6 +29,7 @@ mod tests {
         world.insert_resource(SimulationTime::default());
         world.insert_resource(scale::layer1::utility_ai::UtilityConfig::default());
         world.insert_resource(scale::layer1::day_night::DayNightCycle::default());
+        world.init_resource::<Events<scale::layer1::cult_of_the_forgotten_machine::SabotageEvent>>();
         world.insert_resource(scale::layer1::seasons::SeasonState::default());
         world.insert_resource(scale::layer1::building::OccupiedTiles::default());
         world.insert_resource(scale::layer1::building::BuildingMap::default()); // Fixed: Added BuildingMap

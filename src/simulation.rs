@@ -217,6 +217,7 @@ mod tests {
     fn test_run_simulation_tick_increments() {
         let mut world = setup_world();
         *world.resource_mut::<GameState>() = GameState::Running;
+        world.init_resource::<Events<crate::layer1::cult_of_the_forgotten_machine::SabotageEvent>>();
 
         let tick_before = world.resource::<SimulationTime>().tick;
         run_simulation_tick(&mut world);
@@ -229,6 +230,7 @@ mod tests {
     fn test_run_multiple_ticks() {
         let mut world = setup_world();
         *world.resource_mut::<GameState>() = GameState::Running;
+        world.init_resource::<Events<crate::layer1::cult_of_the_forgotten_machine::SabotageEvent>>();
 
         for _ in 0..10 {
             run_simulation_tick(&mut world);
@@ -255,6 +257,7 @@ mod tests {
         world.init_resource::<Events<crate::layer1::spiteful_will::OverrideWillEvent>>();
         world
             .init_resource::<Events<crate::layer1::nature::biosphere_empathy::FloraDamagedEvent>>();
+        world.init_resource::<Events<crate::layer1::cult_of_the_forgotten_machine::SabotageEvent>>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);

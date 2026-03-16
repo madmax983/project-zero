@@ -21,6 +21,7 @@ mod integration_tests {
         let mut world = setup_world();
         world.insert_resource(scale::shared::state::GameState::Running);
         world.insert_resource(SimulationTime::default());
+        world.init_resource::<Events<scale::layer1::cult_of_the_forgotten_machine::SabotageEvent>>();
 
         let entity = world
             .spawn((

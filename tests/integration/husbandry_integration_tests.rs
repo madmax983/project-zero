@@ -16,6 +16,7 @@ fn test_husbandry_full_loop() {
     let mut world = setup_world();
     *world.resource_mut::<GameState>() = GameState::Running;
     world.insert_resource(HusbandryConfig::default());
+    world.init_resource::<Events<scale::layer1::cult_of_the_forgotten_machine::SabotageEvent>>();
 
     // 1. Setup Zone (Pasture)
     // Force terrain to be walkable

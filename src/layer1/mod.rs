@@ -274,6 +274,8 @@ mod acoustic_shadow_tests;
 /// Trade system.
 pub mod trade;
 pub use trade::*;
+
+pub mod cult_of_the_forgotten_machine;
 /// Energy system (Spec 042).
 pub mod energy;
 pub use energy::*;

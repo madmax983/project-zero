@@ -214,6 +214,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::logistics::orbital_drop::OrbitalDropEvent>>();
     world.init_resource::<Events<crate::layer1::overview_effect::ObserveEvent>>();
     world.init_resource::<Events<crate::layer1::tech::neural_leech::NeuralHubDeathEvent>>();
+    world.init_resource::<Events<crate::layer1::cult_of_the_forgotten_machine::SabotageEvent>>();
 
     world.init_resource::<crate::layer1::festivals::FestivalState>();
     world.init_resource::<crate::layer1::shadow_market::ShadowMarketManager>();

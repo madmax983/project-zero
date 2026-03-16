@@ -244,3 +244,4 @@
 - [x] `INT-452` Integration: Movement -> Commuter Tax (Toll) — completed 2026-03-15
 - [x] `293` The Biosphere Empathy Link — `specs/293-biosphere-empathy-link.md` — completed 2026-02-01
 - [x] `INT-293` Integration: Clear Flora -> Biosphere Empathy — completed 2026-03-15
+- [x] `465` Cult of the Forgotten Machine — `specs/465-cult-of-the-forgotten-machine.md` — completed 2026-03-16
