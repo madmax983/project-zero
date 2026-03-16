@@ -1,19 +1,19 @@
 //! Psychic Resonance (Nova Feature).
 //!
 //! # The Spark
-//! We have a `Morale` system and `Items` on the ground. What if some Pops are "Psychic" and
+//! We have a `Morale` system and `ResourceItem`s scattered or stockpiled. What if some Pops are "Psychic" and
 //! can passively sense the presence of valuable items (like Rations or Alcohol) through walls and over
 //! long distances, giving them a morale boost just by being in the same general area as
 //! hidden wealth?
 //!
 //! # The Feature
 //! The `Psychic` trait allows a pop to resonate with `ResourceItem`s. If they are near
-//! high-value items, they gain a slow, passive `Morale` increase, representing the "hum"
-//! of potential. If they are near Waste, they lose morale. This adds a spatial puzzle
+//! high-value items, they gain a slow, passive `leisure` (and thus `Morale`) increase, representing the "hum"
+//! of potential. If they are near Waste or Scrap, they lose leisure. This adds a spatial puzzle
 //! to base design: where do you store your wealth relative to your psychic pops?
 
 use crate::layer1::map::GridPosition;
-use crate::layer1::morale::Morale;
+use crate::layer1::needs::Needs;
 use crate::layer1::pop::Pop;
 use crate::layer1::resources::{ResourceItem, ResourceType};
 use crate::layer1::traits::{Trait, Traits};
@@ -23,11 +23,10 @@ const SENSE_RADIUS: i32 = 15; // They can "sense" things quite far away
 const RESONANCE_STRENGTH: f32 = 0.005;
 
 pub fn psychic_resonance_system(
-    mut pops: Query<(&GridPosition, &mut Morale, &Traits), With<Pop>>,
+    mut pops: Query<(&GridPosition, &mut Needs, &Traits), With<Pop>>,
     items: Query<(&GridPosition, &ResourceItem)>,
 ) {
-    for (pop_pos, mut morale, traits) in pops.iter_mut() {
-        // We simulate a 'Psychic' trait using `Trait::VoidTouched`
+    for (pop_pos, mut needs, traits) in pops.iter_mut() {
         if !traits.0.contains(&Trait::VoidTouched) {
             continue;
         }
@@ -52,13 +51,9 @@ pub fn psychic_resonance_system(
         }
 
         if resonance_delta != 0.0 {
-            morale.value = (morale.value + resonance_delta).clamp(0.0, 1.0);
+            needs.leisure = (needs.leisure + resonance_delta).clamp(0.0, 1.0);
         }
     }
-}
-
-pub fn register(schedule: &mut Schedule) {
-    schedule.add_systems(psychic_resonance_system);
 }
 
 #[cfg(test)]
@@ -76,8 +71,8 @@ mod tests {
             .spawn((
                 Pop,
                 GridPosition { x: 0, y: 0 },
-                Morale {
-                    value: 0.5,
+                Needs {
+                    leisure: 0.5,
                     ..Default::default()
                 },
                 traits,
@@ -95,10 +90,10 @@ mod tests {
 
         world.run_system_once(psychic_resonance_system).unwrap();
 
-        let morale = world.get::<Morale>(pop).unwrap();
+        let needs = world.get::<Needs>(pop).unwrap();
         assert!(
-            morale.value > 0.5,
-            "Morale should increase due to positive psychic resonance"
+            needs.leisure > 0.5,
+            "Leisure should increase due to positive psychic resonance"
         );
     }
 
@@ -111,8 +106,8 @@ mod tests {
             .spawn((
                 Pop,
                 GridPosition { x: 0, y: 0 },
-                Morale {
-                    value: 0.5,
+                Needs {
+                    leisure: 0.5,
                     ..Default::default()
                 },
                 traits,
@@ -130,10 +125,10 @@ mod tests {
 
         world.run_system_once(psychic_resonance_system).unwrap();
 
-        let morale = world.get::<Morale>(pop).unwrap();
+        let needs = world.get::<Needs>(pop).unwrap();
         assert!(
-            morale.value < 0.5,
-            "Morale should decrease due to negative psychic resonance"
+            needs.leisure < 0.5,
+            "Leisure should decrease due to negative psychic resonance"
         );
     }
 
@@ -146,8 +141,8 @@ mod tests {
             .spawn((
                 Pop,
                 GridPosition { x: 0, y: 0 },
-                Morale {
-                    value: 0.5,
+                Needs {
+                    leisure: 0.5,
                     ..Default::default()
                 },
                 traits,
@@ -164,9 +159,9 @@ mod tests {
 
         world.run_system_once(psychic_resonance_system).unwrap();
 
-        let morale = world.get::<Morale>(pop).unwrap();
+        let needs = world.get::<Needs>(pop).unwrap();
         assert!(
-            (morale.value - 0.5).abs() < f32::EPSILON,
+            (needs.leisure - 0.5).abs() < f32::EPSILON,
             "Non-psychic pop should not be affected"
         );
     }
