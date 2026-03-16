@@ -18,3 +18,7 @@
 **[HashMap Clone in Hot Path Avoided]**
 **Learning:** Cloning a struct containing a `HashMap` (e.g. `TabooState`) per-tick just to use it immutably within a parallel ComputeTaskPool results in continuous, expensive heap allocations on the hot path.
 **Action:** Extract the resource temporarily using `world.remove_resource::<T>()` to gain ownership without cloning, run the parallel context, and `world.insert_resource()` it back afterwards.
+
+**[Collision Deduplication on Hot Paths]**
+**Learning:** Checking for duplicates using `!vec.contains(&item)` before insertion creates a hidden O(n) scan per item. In hot loops like continuous cellular automata (e.g. fire propagation), this linear scanning drastically affects performance when many entities act simultaneously on the same cells.
+**Action:** Replace `Vec` with `HashSet` for queues that require deduplication to ensure amortized O(1) containment checks without changing system logic.

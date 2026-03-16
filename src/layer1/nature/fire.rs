@@ -50,7 +50,7 @@ impl Default for Flammable {
 
 /// System that handles fire spreading to adjacent tiles.
 pub fn fire_spread_system(world: &mut World) {
-    let mut new_fires = Vec::new();
+    let mut new_fires = HashSet::new();
     let mut fire_locations = HashSet::new();
 
     // 1. Collect all current fire locations to avoid re-igniting or double-checking
@@ -121,10 +121,7 @@ pub fn fire_spread_system(world: &mut World) {
             }
 
             if should_ignite {
-                // Check if we already queued a fire for this spot (avoid dupes in same frame)
-                if !new_fires.contains(&n_pos) {
-                    new_fires.push(n_pos);
-                }
+                new_fires.insert(n_pos);
             }
         }
     }
