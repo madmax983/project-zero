@@ -24,14 +24,23 @@ impl HumMap {
         if x < 0 || y < 0 || x as usize >= self.width || y as usize >= self.height {
             return 0.0;
         }
-        self.values[y as usize * self.width + x as usize]
+        if let Some(idx) = (y as usize).checked_mul(self.width).and_then(|i| i.checked_add(x as usize)) {
+            if idx < self.values.len() {
+                return self.values[idx];
+            }
+        }
+        0.0
     }
 
     pub fn set(&mut self, x: i32, y: i32, value: f32) {
         if x < 0 || y < 0 || x as usize >= self.width || y as usize >= self.height {
             return;
         }
-        self.values[y as usize * self.width + x as usize] = value;
+        if let Some(idx) = (y as usize).checked_mul(self.width).and_then(|i| i.checked_add(x as usize)) {
+            if idx < self.values.len() {
+                self.values[idx] = value;
+            }
+        }
     }
 }
 
