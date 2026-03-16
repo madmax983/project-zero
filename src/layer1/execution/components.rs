@@ -16,3 +16,7 @@ pub struct MovementTarget {
 /// Marker component indicating a pop has arrived at its target.
 #[derive(Component, Debug)]
 pub struct AtTarget;
+
+/// Marker component indicating a pop has just moved to a new tile.
+#[derive(Component, Debug)]
+pub struct JustMoved;

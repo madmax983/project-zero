@@ -1,6 +1,7 @@
 use crate::layer1::economy::Wallet;
 use crate::layer1::map::GridPosition;
 use crate::layer1::stress::StressTracker;
+use crate::layer1::execution::components::JustMoved;
 use bevy_ecs::prelude::*;
 
 /// Component representing transit infrastructure on a tile.
@@ -21,7 +22,7 @@ use std::collections::HashMap;
 
 /// System to deduct wealth or apply stress for pops using toll transit infrastructure.
 pub fn transit_toll_system(
-    mut pops: Query<(&GridPosition, &mut Wallet, &mut StressTracker)>,
+    mut pops: Query<(&GridPosition, &mut Wallet, &mut StressTracker), With<JustMoved>>,
     roads: Query<(&GridPosition, &Toll), With<TransitInfrastructure>>,
 ) {
     let mut toll_map = HashMap::new();
@@ -49,6 +50,7 @@ mod tests {
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
     use crate::layer1::stress::StressTracker;
+    use crate::layer1::execution::components::JustMoved;
     use bevy_ecs::prelude::*;
 
     #[test]
@@ -72,6 +74,7 @@ mod tests {
                 road_pos, // Pop is on the road
                 Wallet { credits: 10.0 },
                 StressTracker::default(),
+                JustMoved,
             ))
             .id();
 
@@ -111,6 +114,7 @@ mod tests {
                 StressTracker {
                     accumulated_stress: 10.0,
                 },
+                JustMoved,
             ))
             .id();
 

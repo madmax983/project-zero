@@ -19,6 +19,8 @@ use crate::layer1::utility_types::{ActionType, StartPlan};
 use bevy_ecs::prelude::*;
 use ratatui::style::Color;
 
+use crate::layer1::execution::components::JustMoved;
+
 /// Removes pops from farms/housing when they switch to a different action.
 ///
 /// This system runs before `process_start_plan_system` to ensure pops are
@@ -268,6 +270,7 @@ pub fn movement_system(
 
         current_pos.x = new_pos.x;
         current_pos.y = new_pos.y;
+        commands.entity(pop_entity).insert(crate::layer1::execution::components::JustMoved);
 
         // Apply Erosion
         if let (Ok(x), Ok(y)) = (usize::try_from(new_pos.x), usize::try_from(new_pos.y)) {
@@ -291,6 +294,14 @@ pub fn movement_system(
         ) {
             commands.entity(pop_entity).insert(AtTarget);
         }
+    }
+}
+
+/// Removes the `JustMoved` component from all entities.
+/// This should run at the end of the tick or after all systems that need to read it have run.
+pub fn cleanup_just_moved_system(mut commands: Commands, query: Query<Entity, With<JustMoved>>) {
+    for entity in query.iter() {
+        commands.entity(entity).remove::<JustMoved>();
     }
 }
 

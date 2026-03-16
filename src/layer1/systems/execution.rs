@@ -146,6 +146,8 @@ pub fn register(schedule: &mut Schedule) {
         (
             wild_child_system.after(movement_system),
             update_erosion_system.after(movement_system),
+            crate::layer1::infrastructure::transit::transit_toll_system.after(movement_system),
+            crate::layer1::execution::movement::cleanup_just_moved_system.after(crate::layer1::infrastructure::transit::transit_toll_system),
             crate::layer1::particles::particle_physics_system.after(movement_system),
             crate::layer1::particles::particle_system
                 .after(crate::layer1::particles::particle_physics_system),
