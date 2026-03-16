@@ -8,3 +8,6 @@
 **[God Functions in AI and Building Logic]**
 **Learning:** Functions like `evaluate_group_work` in `utility_ai.rs` and `spawn_building` in `building.rs` had become "God Functions", spanning over 100 lines and handling multiple distinct logical steps (e.g. evaluating different types of work, or inserting dozens of components for buildings). This makes them hard to read and test.
 **Action:** Extract large functional blocks into smaller, named private helper functions (e.g. `evaluate_production`, `evaluate_policing`, `insert_base_building_components`). This flattens the structure and clearly documents the phases of execution.
+**[God Functions in Building Placement and Hauling]**
+**Learning:** `try_place_building` in `building.rs` and `handle_drop_off_item` in `hauling.rs` had grown into monolithic "God Functions", managing everything from tech prerequisite checking and resource deduction to entity despawning, item creation, and logging. This excessive responsibility makes testing difficult and masks core flow.
+**Action:** Extract specific phases (e.g. `check_tech_requirements`, `deduct_building_cost`, `try_drop_off_gene_bank`) into helper functions using early returns. This flattens conditionals and transforms large functions into clear, declarative pipelines.

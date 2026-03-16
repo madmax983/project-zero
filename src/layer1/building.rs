@@ -2196,26 +2196,8 @@ pub fn spawn_building_with_material(
 /// let placed = try_place_building(&mut world, 5, 5, BuildingType::Housing);
 /// assert!(placed);
 /// ```
-pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: BuildingType) -> bool {
-    // Check for Grave before validation
-    let mut grave_entity = None;
-    if let Some(map) = world.get_resource::<BuildingMap>() {
-        if let Some(&entity) = map.0.get(&(x, y)) {
-            if world.get::<crate::layer1::funeral::Grave>(entity).is_some() {
-                grave_entity = Some(entity);
-            }
-        }
-    }
 
-    if let Err(e) = validate_building_placement(world, x, y) {
-        let allow_override = e == PlacementError::Occupied && grave_entity.is_some();
-        if !allow_override {
-            handle_placement_error(world, e);
-            return false;
-        }
-    }
-
-    // Check Tech requirements
+fn check_tech_requirements(world: &mut World, building_type: BuildingType) -> bool {
     if let Some(tech) = building_type.required_tech() {
         // We use get_resource because TechState might not be initialized in some tests
         // (though we should initialize it)
@@ -2231,18 +2213,10 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
             return false;
         }
     }
+    true
+}
 
-    // Get material
-    let material = if building_type.supports_material() {
-        world
-            .get_resource::<BuildMode>()
-            .map(|m| m.selected_material)
-            .unwrap_or_default()
-    } else {
-        MaterialType::default()
-    };
-
-    // Check affordability and deduct cost
+fn deduct_building_cost(world: &mut World, building_type: BuildingType, material: MaterialType) -> bool {
     let mut cost = building_type.cost(material);
 
     // Apply Scrapcode (Spec 178)
@@ -2263,21 +2237,10 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
         }
         return false;
     }
+    true
+}
 
-    // --- All validation passed, commit to placing the building ---
-
-    // If we are overwriting a grave, handle the sacrilege and destruction now
-    if let Some(ge) = grave_entity {
-        world.send_event(crate::layer1::ancestral_graves::SacrilegeEvent {
-            pos: GridPosition { x, y },
-        });
-        // Remove grave synchronously
-        world.despawn(ge);
-    }
-
-    // Spawn building
-    let entity = spawn_building(world, x, y, building_type, material);
-
+fn apply_post_placement_effects(world: &mut World, entity: Entity, x: i32, y: i32, building_type: BuildingType) {
     // Vacuum Welding (Spec 185)
     if world
         .get_resource::<crate::layer1::pressure::PressureGrid>()
@@ -2311,6 +2274,62 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
     }
 
     world.send_event(crate::layer1::events::BuildingCompletedEvent { entity });
+}
+
+pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: BuildingType) -> bool {
+    // Check for Grave before validation
+    let mut grave_entity = None;
+    if let Some(map) = world.get_resource::<BuildingMap>() {
+        if let Some(&entity) = map.0.get(&(x, y)) {
+            if world.get::<crate::layer1::funeral::Grave>(entity).is_some() {
+                grave_entity = Some(entity);
+            }
+        }
+    }
+
+    if let Err(e) = validate_building_placement(world, x, y) {
+        let allow_override = e == PlacementError::Occupied && grave_entity.is_some();
+        if !allow_override {
+            handle_placement_error(world, e);
+            return false;
+        }
+    }
+
+    // Check Tech requirements
+    if !check_tech_requirements(world, building_type) {
+        return false;
+    }
+
+    // Get material
+    let material = if building_type.supports_material() {
+        world
+            .get_resource::<BuildMode>()
+            .map(|m| m.selected_material)
+            .unwrap_or_default()
+    } else {
+        MaterialType::default()
+    };
+
+    // Check affordability and deduct cost
+    if !deduct_building_cost(world, building_type, material) {
+        return false;
+    }
+
+    // --- All validation passed, commit to placing the building ---
+
+    // If we are overwriting a grave, handle the sacrilege and destruction now
+    if let Some(ge) = grave_entity {
+        world.send_event(crate::layer1::ancestral_graves::SacrilegeEvent {
+            pos: GridPosition { x, y },
+        });
+        // Remove grave synchronously
+        world.despawn(ge);
+    }
+
+    // Spawn building
+    let entity = spawn_building(world, x, y, building_type, material);
+
+    apply_post_placement_effects(world, entity, x, y, building_type);
 
     true
 }
