@@ -10030,3 +10030,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Managing short-term injustices knowing they will metastasize into permanent, generational structural flaws in your society.
 
 ---
+
+## Epidemic Denial
+
+**Layer:** 1
+
+**Fantasy:** A plague is ravaging the colony, but half the population thinks it's a hoax by the governor.
+
+**Mechanic:** During an outbreak, Pops with "Rebellious" or "Paranoid" traits have a chance to gain the "Denial" condition. They refuse to visit the hospital, take medicine, or respect quarantine zones, actively spreading the disease and reducing the overall health rating.
+
+**Emergence:** You perfectly quarantine a sick miner, but a denier hauler breaks into the quarantine zone to prove the disease isn't real, gets infected, and brings it back to the cafeteria, causing a total colony wipe.
+
+**Tension:** Do you violently enforce quarantine (causing massive unrest) or try to reason with deniers while the infection spreads?
+
+---
+
+## Jury-Rigged Cybernetics
+
+**Layer:** 1
+
+**Fantasy:** We can rebuild him, but we only have a broken toaster and a welding torch.
+
+**Mechanic:** When a Pop loses a limb, they can be fitted with a "Jury-Rigged" prosthetic made from scrap components. This restores full mobility/work speed but adds a random, dangerous side-effect based on the scrap used (e.g., "Combustible", "Loud", "High Energy Drain").
+
+**Emergence:** Your master farmer loses an arm and gets a scrap-arm made from an old mining drill. They farm twice as fast, but the drill arm accidentally destroys a water pipe every time they get stressed.
+
+**Tension:** Fast, cheap, dangerous workforce restoration vs. slow, expensive, safe medical care.
+
+---
+
+## The Ransom Broker
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** The pirates don't just want your cargo; they know exactly who your best engineer is, and they want him.
+
+**Mechanic:** Pirate fleets in Layer 2 may specifically target trade or transport ships carrying high-skilled Layer 1 Pops. Instead of killing them, they capture them and demand an astronomical ransom in rare resources.
+
+**Emergence:** Your only Level 10 Doctor is captured on their way to a medical conference. The ransom is your entire winter food stockpile. The colony must decide between starving or living without advanced healthcare.
+
+**Tension:** Paying an exorbitant ransom (funding the pirates) vs. organizing a risky rescue mission or accepting the loss of a vital specialist.
+
+---
+
+## Artificial Sunspots
+
+**Layer:** Cross-layer (3 -> 2 -> 1)
+
+**Fantasy:** Your enemy can't reach your planet, so they decided to shoot your sun instead.
+
+**Mechanic:** A hostile Layer 3 empire uses a megastructure to induce artificial sunspots on your system's star. This plunges your Layer 1 colony into sudden, unpredictable periods of radioactive darkness. Solar power drops to zero, and surface operations become lethal without heavy shielding.
+
+**Emergence:** You've built a thriving, eco-friendly colony running entirely on solar arrays. The enemy triggers a sunspot. The lights go out, the automated defenses shut down, and the enemy invasion fleet immediately jumps into the system.
+
+**Tension:** Absolute reliance on clean, local stellar energy vs. investing in dirty, local fallback generators to survive orbital manipulation.
+
+---
