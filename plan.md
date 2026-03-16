@@ -1,6 +1,5 @@
-1. **Move `src/layer1/society.rs` to `src/layer1/social/society.rs`:** This encapsulates the secret societies logic within the `social` domain, enforcing better structural boundaries.
-2. **Update module declarations:** Remove `pub mod society; pub use society::*;` from `src/layer1/mod.rs` and add it to `src/layer1/social/mod.rs`.
-3. **Update imports:** Change references from `crate::layer1::society` to `crate::layer1::social::society` in `src/layer1/systems/observation.rs` and `src/setup.rs`.
-4. **Fix clippy warnings:** Remove unused `bevy_ecs::prelude::*` imports from `src/layer1/social/sentient_standard.rs` and `src/layer1/nature/biosphere_empathy_tests.rs`.
-5. **Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.**
-6. **Create a PR with Title: "🗺️ Atlas: [architectural change]" detailing the Tangle, Blueprint, Stability, and Verification.**
+1.  **Claim the task:** Move `454` Gravitational Debt from `BACKLOG.md` to `IN_PROGRESS.md` and commit.
+2.  **RED Phase:** Create `src/layer1/gravitational_debt.rs` and add the initial tests from the spec (modifying `Powered { is_powered: ... }` to `PowerConsumer { active: ... }` and `BuildingType::AntiGravGenerator` in `src/layer1/building.rs`, and ensuring it has a cost to place). I will also need to add the mod to `src/layer1/mod.rs` and `src/layer1/systems.rs`.
+3.  **GREEN Phase:** Implement the minimal systems `gravitational_debt_accumulation_system` and `gravitational_debt_release_system` making sure to fix the mock logic since `Powered` doesn't exist (we will use `PowerConsumer` instead which has `active`). Register them in `src/layer1/systems.rs` (e.g. `Layer1SystemSet::Economy` or `Observation`).
+4.  **REFACTOR Phase:** Make debt scale with tick delta if applicable (or just stick to minimal test-passing structure first). Implement damage logic by adding `gravitational_debt_damage_system` listening to `DebtReleaseEvent` to deal damage to entities in radius.
+5.  **Pre-commit & Submit:** Run formatting, clippy, testing, coverage check (`cargo llvm-cov --lib --bins`), and finalize commit and push.

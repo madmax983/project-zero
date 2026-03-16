@@ -119,12 +119,18 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::energy::power_grid_system),
             ai_automation_system.after(crate::layer1::energy::power_grid_system),
             ai_rogue_system,
+            crate::layer1::gravitational_debt::gravitational_debt_accumulation_system
+                .after(crate::layer1::energy::power_grid_system),
+            crate::layer1::gravitational_debt::gravitational_debt_release_system
+                .after(crate::layer1::gravitational_debt::gravitational_debt_accumulation_system),
         )
             .in_set(Layer1SystemSet::Economy),
     );
 
     schedule.add_systems(
         (
+            crate::layer1::gravitational_debt::gravitational_debt_damage_system
+                .after(crate::layer1::gravitational_debt::gravitational_debt_release_system),
             crate::layer1::integration::grid_overload_fire_bridge
                 .after(crate::layer1::energy::power_grid_system),
             art_generation_system,

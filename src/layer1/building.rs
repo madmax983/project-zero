@@ -323,6 +323,8 @@ pub enum BuildingType {
     BulletinBoard,
     /// Holographic projector that emits Beauty when powered.
     HoloProjector,
+    /// Anti-Grav Generator (Spec 454)
+    AntiGravGenerator,
 }
 
 impl BuildingType {
@@ -381,6 +383,7 @@ impl BuildingType {
     pub const fn heat_retention(&self) -> f32 {
         match self {
             Self::Wall | Self::Tower | Self::AncientReactor | Self::AncientFabricator => 0.8,
+            Self::AntiGravGenerator => 0.9,
             Self::Housing
             | Self::Office
             | Self::Stockpile
@@ -445,6 +448,7 @@ impl BuildingType {
         match self {
             // Walls and large structures
             Self::Wall
+            | Self::AntiGravGenerator
             | Self::Window
             | Self::Gate
             | Self::Tower
@@ -666,6 +670,7 @@ impl BuildingType {
             Self::Recycler => "Recycler",
             Self::BulletinBoard => "Bulletin Board",
             Self::HoloProjector => "Holo Projector",
+            Self::AntiGravGenerator => "Anti-Grav Generator",
         }
     }
 
@@ -676,6 +681,7 @@ impl BuildingType {
             Self::Housing => 'H',
             Self::Office | Self::Tower | Self::Observatory | Self::HoloProjector => 'O',
             Self::Farm | Self::AncientFabricator => 'F',
+            Self::AntiGravGenerator => 'A',
             Self::HydroponicsBay => 'Y',
             Self::DroneHub => 'D',
             Self::Well => 'U',
@@ -749,6 +755,11 @@ impl BuildingType {
             Self::AuroralCollector => ColonyResources {
                 metal: 50.0,
                 stone: 20.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::AntiGravGenerator => ColonyResources {
+                metal: 100.0,
+                stone: 50.0,
                 ..ColonyResources::zeroed()
             },
             Self::AtmosphericProcessor => ColonyResources {
@@ -1375,6 +1386,21 @@ fn spawn_building(
         | BuildingType::PersonalShrine => {
             // Logic handled by components added in system
         }
+        BuildingType::AntiGravGenerator => {
+            entity.insert((
+                PowerConsumer {
+                    demand: 50.0,
+                    active: false,
+                },
+                crate::layer1::gravitational_debt::AntiGravGenerator {
+                    debt_generation_rate: 5.0,
+                    max_safe_debt: 100.0,
+                },
+                crate::layer1::gravitational_debt::GravitationalDebt {
+                    accumulated_debt: 0.0,
+                },
+            ));
+        }
     }
 
     entity.id()
@@ -1424,6 +1450,21 @@ fn configure_housing(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 structure.current_hp = 500.0;
             }
         }
+        BuildingType::AntiGravGenerator => {
+            entity.insert((
+                PowerConsumer {
+                    demand: 50.0,
+                    active: false,
+                },
+                crate::layer1::gravitational_debt::AntiGravGenerator {
+                    debt_generation_rate: 5.0,
+                    max_safe_debt: 100.0,
+                },
+                crate::layer1::gravitational_debt::GravitationalDebt {
+                    accumulated_debt: 0.0,
+                },
+            ));
+        }
         _ => {}
     }
 }
@@ -1465,6 +1506,21 @@ fn configure_farm_buildings(entity: &mut EntityWorldMut, building_type: Building
                     active: false,
                 },
                 ShiftSchedule::default(),
+            ));
+        }
+        BuildingType::AntiGravGenerator => {
+            entity.insert((
+                PowerConsumer {
+                    demand: 50.0,
+                    active: false,
+                },
+                crate::layer1::gravitational_debt::AntiGravGenerator {
+                    debt_generation_rate: 5.0,
+                    max_safe_debt: 100.0,
+                },
+                crate::layer1::gravitational_debt::GravitationalDebt {
+                    accumulated_debt: 0.0,
+                },
             ));
         }
         _ => {}
@@ -1621,6 +1677,21 @@ fn configure_refining_buildings(entity: &mut EntityWorldMut, building_type: Buil
                 structure.current_hp = 1000.0;
             }
         }
+        BuildingType::AntiGravGenerator => {
+            entity.insert((
+                PowerConsumer {
+                    demand: 50.0,
+                    active: false,
+                },
+                crate::layer1::gravitational_debt::AntiGravGenerator {
+                    debt_generation_rate: 5.0,
+                    max_safe_debt: 100.0,
+                },
+                crate::layer1::gravitational_debt::GravitationalDebt {
+                    accumulated_debt: 0.0,
+                },
+            ));
+        }
         _ => {}
     }
 }
@@ -1642,6 +1713,21 @@ fn configure_storage(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 wood_bonus: 0.0,
                 stone_bonus: 0.0,
             });
+        }
+        BuildingType::AntiGravGenerator => {
+            entity.insert((
+                PowerConsumer {
+                    demand: 50.0,
+                    active: false,
+                },
+                crate::layer1::gravitational_debt::AntiGravGenerator {
+                    debt_generation_rate: 5.0,
+                    max_safe_debt: 100.0,
+                },
+                crate::layer1::gravitational_debt::GravitationalDebt {
+                    accumulated_debt: 0.0,
+                },
+            ));
         }
         _ => {}
     }
@@ -1730,6 +1816,21 @@ fn configure_civic(entity: &mut EntityWorldMut, building_type: BuildingType) {
             // I'll leave it basic for now.
             // Spec says: "Builder: Should Showers require Power? For now, no (gravity fed)."
         }
+        BuildingType::AntiGravGenerator => {
+            entity.insert((
+                PowerConsumer {
+                    demand: 50.0,
+                    active: false,
+                },
+                crate::layer1::gravitational_debt::AntiGravGenerator {
+                    debt_generation_rate: 5.0,
+                    max_safe_debt: 100.0,
+                },
+                crate::layer1::gravitational_debt::GravitationalDebt {
+                    accumulated_debt: 0.0,
+                },
+            ));
+        }
         _ => {}
     }
 }
@@ -1787,6 +1888,21 @@ fn configure_infrastructure(entity: &mut EntityWorldMut, building_type: Building
         }
         BuildingType::Airlock => {
             entity.insert((DoorControl::default(), AccessControl::default()));
+        }
+        BuildingType::AntiGravGenerator => {
+            entity.insert((
+                PowerConsumer {
+                    demand: 50.0,
+                    active: false,
+                },
+                crate::layer1::gravitational_debt::AntiGravGenerator {
+                    debt_generation_rate: 5.0,
+                    max_safe_debt: 100.0,
+                },
+                crate::layer1::gravitational_debt::GravitationalDebt {
+                    accumulated_debt: 0.0,
+                },
+            ));
         }
         _ => {}
     }
@@ -1863,6 +1979,21 @@ fn configure_power_generation(entity: &mut EntityWorldMut, building_type: Buildi
                 },
             ));
         }
+        BuildingType::AntiGravGenerator => {
+            entity.insert((
+                PowerConsumer {
+                    demand: 50.0,
+                    active: false,
+                },
+                crate::layer1::gravitational_debt::AntiGravGenerator {
+                    debt_generation_rate: 5.0,
+                    max_safe_debt: 100.0,
+                },
+                crate::layer1::gravitational_debt::GravitationalDebt {
+                    accumulated_debt: 0.0,
+                },
+            ));
+        }
         _ => {}
     }
 }
@@ -1880,6 +2011,21 @@ fn configure_power_infrastructure(entity: &mut EntityWorldMut, building_type: Bu
                     max_throughput: 10.0,
                 },
                 Conduit,
+            ));
+        }
+        BuildingType::AntiGravGenerator => {
+            entity.insert((
+                PowerConsumer {
+                    demand: 50.0,
+                    active: false,
+                },
+                crate::layer1::gravitational_debt::AntiGravGenerator {
+                    debt_generation_rate: 5.0,
+                    max_safe_debt: 100.0,
+                },
+                crate::layer1::gravitational_debt::GravitationalDebt {
+                    accumulated_debt: 0.0,
+                },
             ));
         }
         _ => {}
@@ -1927,6 +2073,21 @@ fn configure_power_consumption(entity: &mut EntityWorldMut, building_type: Build
                 structure.max_hp = 2000.0;
                 structure.current_hp = 2000.0;
             }
+        }
+        BuildingType::AntiGravGenerator => {
+            entity.insert((
+                PowerConsumer {
+                    demand: 50.0,
+                    active: false,
+                },
+                crate::layer1::gravitational_debt::AntiGravGenerator {
+                    debt_generation_rate: 5.0,
+                    max_safe_debt: 100.0,
+                },
+                crate::layer1::gravitational_debt::GravitationalDebt {
+                    accumulated_debt: 0.0,
+                },
+            ));
         }
         _ => {}
     }
@@ -1981,6 +2142,21 @@ fn configure_science_buildings(entity: &mut EntityWorldMut, building_type: Build
                     radius: 2.0,
                     intensity: 0.4,
                     color: (0, 255, 100), // Data Green
+                },
+            ));
+        }
+        BuildingType::AntiGravGenerator => {
+            entity.insert((
+                PowerConsumer {
+                    demand: 50.0,
+                    active: false,
+                },
+                crate::layer1::gravitational_debt::AntiGravGenerator {
+                    debt_generation_rate: 5.0,
+                    max_safe_debt: 100.0,
+                },
+                crate::layer1::gravitational_debt::GravitationalDebt {
+                    accumulated_debt: 0.0,
                 },
             ));
         }
@@ -2080,6 +2256,21 @@ fn configure_specialized_tech(entity: &mut EntityWorldMut, building_type: Buildi
                 },
             ));
         }
+        BuildingType::AntiGravGenerator => {
+            entity.insert((
+                PowerConsumer {
+                    demand: 50.0,
+                    active: false,
+                },
+                crate::layer1::gravitational_debt::AntiGravGenerator {
+                    debt_generation_rate: 5.0,
+                    max_safe_debt: 100.0,
+                },
+                crate::layer1::gravitational_debt::GravitationalDebt {
+                    accumulated_debt: 0.0,
+                },
+            ));
+        }
         _ => {}
     }
 }
@@ -2144,6 +2335,21 @@ fn configure_futuristic_tech(entity: &mut EntityWorldMut, building_type: Buildin
                 BeautySource {
                     value: 0.0,
                     radius: 8.0,
+                },
+            ));
+        }
+        BuildingType::AntiGravGenerator => {
+            entity.insert((
+                PowerConsumer {
+                    demand: 50.0,
+                    active: false,
+                },
+                crate::layer1::gravitational_debt::AntiGravGenerator {
+                    debt_generation_rate: 5.0,
+                    max_safe_debt: 100.0,
+                },
+                crate::layer1::gravitational_debt::GravitationalDebt {
+                    accumulated_debt: 0.0,
                 },
             ));
         }
@@ -2421,7 +2627,8 @@ mod tests {
             BuildingType::BulletinBoard.next(),
             BuildingType::HoloProjector
         );
-        assert_eq!(BuildingType::HoloProjector.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::HoloProjector.next(), BuildingType::AntiGravGenerator);
+        assert_eq!(BuildingType::AntiGravGenerator.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -2647,6 +2854,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::HoloProjector);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::AntiGravGenerator);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

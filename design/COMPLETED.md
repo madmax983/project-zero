@@ -238,6 +238,8 @@
 - [x] `INT-269` Integration: VR Pod -> Utility AI — completed 2026-03-15
 - [x] `452` The Commuter Tax — `specs/452-the-commuter-tax.md` — completed 2026-03-13
 - [x] `254` Doppelgangers — `specs/254-doppelgangers.md` — completed 2026-03-14
+- [x] `454` Gravitational Debt — `specs/454-gravitational-debt.md` — completed 2026-03-15
+- [x] `454` Gravitational Debt — `specs/454-gravitational-debt.md` — completed 2026-03-15
 - [x] `263` The Cadet Branch — `specs/263-the-cadet-branch.md` — completed 2026-03-14
 - [x] `265` Shadow Ecosystems — `specs/265-shadow-ecosystems.md` — completed 2026-03-15
 - [x] `264` Hyper-Specialized Evolution — `specs/264-hyper-specialized-evolution.md` — completed 2026-03-14
