@@ -27,6 +27,7 @@ Container_Boundary(Simulation, "Simulation Core (Layer 1)") {
     Component(Factions, "Factions", "factions.rs", "Guilds & Strikes")
     Component(SpontaneousArch, "Spontaneous Arch", "spontaneous_architecture.rs", "Agent Building")
     Component(CabinFever, "Cabin Fever System", "cabin_fever.rs", "Tracks Confinement & Crowding")
+    Component(GutBiome, "Gut Biome", "gut_biome.rs", "Digestive Adaptation")
     Component(Acoustics, "Acoustics (Nova)", "acoustics.rs", "Noise Map & Weather Audio")
     Component(Seismic, "Seismic Grid", "geology.rs", "Long-term Stress")
     Component(Vibration, "Vibration Grid", "seismic.rs", "Immediate Vibration")
@@ -93,6 +94,7 @@ Rel(Actions, Particles, "Spawns")
 Rel(DomainActions, Particles, "Spawns")
 
 Rel(Pops, World, "Interacts with")
+Rel(Pops, GutBiome, "Adapts to Diet")
 Rel(Pops, Factions, "Member Of")
 Rel(Pops, Resources, "Consumes/Produces")
 Rel(Pops, CabinFever, "Accumulates Stress")
@@ -682,6 +684,7 @@ classDiagram
 - [ADR 036: Split Overloaded System Tuples](./adr/036-split-overloaded-system-tuples.md)
 - [ADR 037: Headless CLI Dashboard](./adr/037-headless-cli-dashboard.md)
 - [ADR 038: Encapsulate Secret Societies](./adr/038-encapsulate-secret-societies.md)
+- [ADR 039: Integrate Gut Biome Mechanics](./adr/039-integrate-gut-biome.md)
 
 ## Secret Societies Encapsulation
 
