@@ -11,6 +11,7 @@ pub mod integration;
 pub mod mining;
 #[cfg(test)]
 mod mining_tests;
+pub mod phantom;
 pub mod render;
 pub mod shielding;
 pub mod ship;
