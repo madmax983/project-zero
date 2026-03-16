@@ -234,6 +234,8 @@ pub struct PopBundle {
     pub memories: Memories,
     /// Skill levels.
     pub skills: Skills,
+    /// Specialized job tenure history.
+    pub job_tenure: crate::layer1::specialization::JobTenure,
     /// Movement speed.
     pub speed: Speed,
     /// Current action.
@@ -291,6 +293,7 @@ impl PopBundle {
             needs: Needs::default(),
             memories: Memories::default(),
             skills: Skills::default(),
+            job_tenure: crate::layer1::specialization::JobTenure::default(),
             speed: Speed::default(),
             action: PopAction::default(),
             equipment: Equipment::default(),

@@ -391,3 +391,11 @@
 - **Glue added:**
     - Updated `src/layer1/flora.rs` to send a `FloraDamagedEvent` whenever `Flora` entities are despawned via the `ClearFlora` designation.
 - **Tests:** `tests/integration/flora_empathy.rs` (1 test verified)
+
+### INT-264: Hyper-Specialized Evolution -> Game Loop
+- **Date:** 2026-03-16
+- **Systems connected:** `update_tenure_system`, `check_mutation_system` -> Main Schedule
+- **Glue added:**
+    - Updated `PopBundle` to spawn with `JobTenure`.
+    - Registered `update_tenure_system` and `check_mutation_system` in `Layer1SystemSet::Observation`.
+- **Tests:** `tests/integration/specialization_integration.rs`
