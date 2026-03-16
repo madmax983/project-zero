@@ -24,6 +24,7 @@
 
 use super::artifacts::ActiveAuras;
 use super::biocompatibility::Biocompatibility;
+use super::gut_biome::GutBiome;
 use super::cabin_fever::CabinFever;
 use super::contagion::ContagionCooldown;
 use super::factions::FactionMember;
@@ -278,6 +279,8 @@ pub struct PopBundle {
     pub dialect: Dialect,
     /// Linguistic knowledge.
     pub linguistics: Linguistics,
+    /// Biological digestive adaptation.
+    pub gut_biome: GutBiome,
 }
 
 impl PopBundle {
@@ -313,6 +316,7 @@ impl PopBundle {
             wallet: Wallet { credits: 50.0 },
             dialect: Dialect::default(),
             linguistics: Linguistics::default(),
+            gut_biome: GutBiome::default(),
         }
     }
 }

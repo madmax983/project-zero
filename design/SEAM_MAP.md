@@ -399,3 +399,11 @@
     - Updated `attune_engine_system` to emit an `EventImportance::Legendary` `AddChronicleEvent` and mitigate the stress penalty based on traits like `Cannibal`, `Outsider`, `EmpathicLink`, or `Compassionate`.
     - Updated `process_martyrs_engine` to add an eerie red `LightSource` to the active engine and remove it when it decays.
 - **Tests:** `tests/integration/martyrs_engine.rs` (Integration test verified)
+
+### INT-211: Gut Biome
+- **Date:** 2026-03-16
+- **Systems connected:** `consume_food_system` (Farm) -> `GutBiome`
+- **Glue added:**
+    - Updated `consume_food_system` in `src/layer1/farm.rs` to fetch `GutBiome` and apply effects (`Gut Comfort` or `Indigestion`).
+    - Added `GutBiome` initialized within `PopBundle`.
+- **Tests:** `src/layer1/gut_biome.rs` tests (5 tests verified)
