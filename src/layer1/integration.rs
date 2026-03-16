@@ -412,7 +412,7 @@ pub fn waste_scent_bridge(
             commands
                 .entity(entity)
                 .insert(crate::layer1::olfactory::ScentEmitter {
-                    scent_type: crate::layer1::olfactory::ScentType::Foul,
+                    is_pleasant: false,
                     strength: item.amount.max(1.0),
                 });
         }
@@ -424,7 +424,7 @@ pub fn waste_scent_bridge(
             commands
                 .entity(entity)
                 .insert(crate::layer1::olfactory::ScentEmitter {
-                    scent_type: crate::layer1::olfactory::ScentType::Foul,
+                    is_pleasant: false,
                     strength: 10.0,
                 });
         }

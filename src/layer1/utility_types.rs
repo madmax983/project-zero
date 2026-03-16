@@ -94,7 +94,6 @@ pub enum ActionType {
     Sleepwalking,
     /// Tame a wild animal.
     ///
-    /// See [`crate::layer1::husbandry::evaluate_tame`].
     Tame,
     /// Starts fires (Mental Break).
     ///

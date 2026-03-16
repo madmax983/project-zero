@@ -2,13 +2,12 @@
 mod tests {
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::map::GridPosition;
-    use crate::layer1::tech::rhythm::{update_rhythm_system, MachineRhythm, RhythmManager};
+    use crate::layer1::tech::rhythm::{update_rhythm_system, MachineRhythm};
     use bevy_ecs::prelude::*;
 
     #[test]
     fn test_sync_bonus_adjacent_machines() {
         let mut world = World::new();
-        world.insert_resource(RhythmManager::default());
 
         // Spawn Machine A (finishes at tick 100)
         let entity_a = world
@@ -98,7 +97,7 @@ mod tests {
     #[test]
     fn test_sync_bonus_lost_on_discord() {
         let mut world = World::new();
-        world.insert_resource(RhythmManager::default());
+
         world.insert_resource(crate::shared::time::SimulationTime {
             tick: 100,
             ..Default::default()

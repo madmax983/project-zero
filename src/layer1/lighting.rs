@@ -55,7 +55,10 @@ impl LightMap {
         if x >= self.width || y >= self.height {
             return 0.0;
         }
-        if let Some(idx) = (y as usize).checked_mul(self.width as usize).and_then(|i| i.checked_add(x as usize)) {
+        if let Some(idx) = (y as usize)
+            .checked_mul(self.width as usize)
+            .and_then(|i| i.checked_add(x as usize))
+        {
             if idx < self.tiles.len() {
                 return self.tiles[idx];
             }
@@ -68,7 +71,10 @@ impl LightMap {
         if x >= self.width || y >= self.height {
             return;
         }
-        if let Some(idx) = (y as usize).checked_mul(self.width as usize).and_then(|i| i.checked_add(x as usize)) {
+        if let Some(idx) = (y as usize)
+            .checked_mul(self.width as usize)
+            .and_then(|i| i.checked_add(x as usize))
+        {
             if idx < self.tiles.len() {
                 self.tiles[idx] = val.clamp(0.0, 1.0);
             }

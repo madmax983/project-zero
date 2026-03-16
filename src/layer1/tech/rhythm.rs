@@ -8,10 +8,7 @@ pub struct MachineRhythm {
     pub last_sync_bonus: f32, // Accumulated rhythm score
 }
 
-#[derive(Resource, Default)]
-pub struct RhythmManager {
-    // Global rhythm tracking if needed
-}
+
 
 pub fn update_rhythm_system(
     time: Res<SimulationTime>,

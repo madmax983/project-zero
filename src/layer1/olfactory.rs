@@ -3,15 +3,9 @@ use crate::layer1::morale::{MoodModifier, Morale};
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
 
-#[derive(Clone, Copy, Debug, PartialEq)]
-pub enum ScentType {
-    Pleasant,
-    Foul,
-}
-
-#[derive(Component)]
+#[derive(Clone, Copy, Debug, PartialEq, Component)]
 pub struct ScentEmitter {
-    pub scent_type: ScentType,
+    pub is_pleasant: bool,
     pub strength: f32,
 }
 
@@ -49,9 +43,10 @@ pub fn scent_diffusion_system(
     scent_map.map.clear();
     for (emitter, pos) in emitters.iter() {
         let entry = scent_map.map.entry(*pos).or_default();
-        match emitter.scent_type {
-            ScentType::Pleasant => entry.pleasant += emitter.strength,
-            ScentType::Foul => entry.foul += emitter.strength,
+        if emitter.is_pleasant {
+            entry.pleasant += emitter.strength;
+        } else {
+            entry.foul += emitter.strength;
         }
 
         // Simple diffusion to neighbors (safely avoiding underflow/overflow)
@@ -77,9 +72,10 @@ pub fn scent_diffusion_system(
         let diffused_strength = emitter.strength * 0.5;
         for neighbor in neighbors {
             let n_entry = scent_map.map.entry(neighbor).or_default();
-            match emitter.scent_type {
-                ScentType::Pleasant => n_entry.pleasant += diffused_strength,
-                ScentType::Foul => n_entry.foul += diffused_strength,
+            if emitter.is_pleasant {
+                n_entry.pleasant += diffused_strength;
+            } else {
+                n_entry.foul += diffused_strength;
             }
         }
     }
@@ -130,7 +126,7 @@ mod tests {
         let source_pos = GridPosition { x: 5, y: 5 };
         app.world_mut().spawn((
             ScentEmitter {
-                scent_type: ScentType::Foul,
+                is_pleasant: false,
                 strength: 10.0,
             },
             source_pos,
@@ -167,7 +163,7 @@ mod tests {
 
         app.world_mut().spawn((
             ScentEmitter {
-                scent_type: ScentType::Pleasant,
+                is_pleasant: true,
                 strength: 5.0,
             },
             pop_pos,
@@ -199,7 +195,7 @@ mod tests {
 
         app.world_mut().spawn((
             ScentEmitter {
-                scent_type: ScentType::Foul,
+                is_pleasant: false,
                 strength: 8.0,
             },
             pop_pos,
@@ -228,14 +224,14 @@ mod tests {
 
         app.world_mut().spawn((
             ScentEmitter {
-                scent_type: ScentType::Foul,
+                is_pleasant: false,
                 strength: 10.0,
             },
             pos,
         ));
         app.world_mut().spawn((
             ScentEmitter {
-                scent_type: ScentType::Pleasant,
+                is_pleasant: true,
                 strength: 2.0,
             },
             pos,
