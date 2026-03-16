@@ -9,6 +9,7 @@ use crate::layer1::items::{CarryingItem, Equipment, ItemType};
 use crate::layer1::justice::Inmate;
 use crate::layer1::map::GridPosition;
 use crate::layer1::memetic::MemeticCarrier;
+use crate::layer1::memetic_plague::MemeticInfection;
 use crate::layer1::needs::Needs;
 use crate::layer1::penal::PenalLabor;
 use crate::layer1::pop::Job;
@@ -59,6 +60,7 @@ pub struct PopEvaluationQuery {
     pub hobby: Option<&'static Hobby>,
     pub chemical: Option<&'static ChemicalState>,
     pub memetic_carrier: Option<&'static MemeticCarrier>,
+    pub memetic_infection: Option<&'static MemeticInfection>,
     pub health: Option<&'static Health>,
     pub job: Option<&'static Job>,
 }
@@ -87,6 +89,7 @@ impl PopEvalData {
             hobby_type: item.hobby.map(|comp| comp.hobby_type),
             chemical_state: item.chemical.cloned(),
             is_memetic_carrier: item.memetic_carrier.is_some(),
+            is_memetic_infected: item.memetic_infection.is_some(),
             health: item.health.copied(),
             job: item.job.copied(),
             insulation: 0.0,
@@ -162,6 +165,8 @@ pub struct PopEvalData {
     pub chemical_state: Option<ChemicalState>,
     /// Whether the pop carries a memetic virus.
     pub is_memetic_carrier: bool,
+    /// True if the pop is infected by the memetic plague.
+    pub is_memetic_infected: bool,
     /// Health of the pop, if any.
     pub health: Option<Health>,
     /// The pop's assigned job.
@@ -195,6 +200,7 @@ impl PopEvalData {
             hobby_type: None,
             chemical_state: None,
             is_memetic_carrier: false,
+            is_memetic_infected: false,
             health: None,
             job: None,
             insulation: 0.0,

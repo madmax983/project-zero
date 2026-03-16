@@ -12,7 +12,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [x] `255` Hypno-Learning — `specs/255-hypno-learning.md` — completed 2026-03-01
 
 
-- [ ] `266` Emotional Contagion — `specs/266-emotional-contagion.md`
+
 - [ ] `267` Ancestral Graves — `specs/267-ancestral-graves.md`
 - [ ] `270` The Organ Market — `specs/270-organ-market.md`
 - [ ] `271` Subcontractor Factions — `specs/271-subcontractor-factions.md`
@@ -33,7 +33,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `286` Great Works — `specs/286-great-works.md`
 - [ ] `287` The Silence — `specs/287-the-silence.md`
 - [ ] `288` The Memory Black Market — `specs/288-memory-black-market.md`
-- [ ] `289` The Mimetic Plague — `specs/289-mimetic-plague.md`
+
 - [ ] `290` The Phantom Shift — `specs/290-phantom-shift.md`
 - [ ] `292` The Chrono-Stutter — `specs/292-chrono-stutter.md`
 - [ ] `294` The Bone Economy — `specs/294-bone-economy.md`

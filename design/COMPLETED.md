@@ -242,3 +242,5 @@
 - [x] `264` Hyper-Specialized Evolution — `specs/264-hyper-specialized-evolution.md` — completed 2026-03-14
 - [x] `INT-452` Integration: Movement -> Commuter Tax (Toll) — completed 2026-03-15
 - [x] `293` The Biosphere Empathy Link — `specs/293-biosphere-empathy-link.md` — completed 2026-02-01
+- [x] `266` Emotional Contagion — `specs/266-emotional-contagion.md` — completed 2026-03-16
+- [x] `289` The Mimetic Plague — `specs/289-mimetic-plague.md` — completed 2026-03-16

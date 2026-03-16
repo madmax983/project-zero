@@ -545,3 +545,10 @@ pub mod placebo;
 /// The Sentient Standard logic (Spec 295).
 pub mod sentient_standard;
 pub use sentient_standard::*;
+
+/// Event indicating a social interaction happened.
+#[derive(Event, Debug, Clone)]
+pub struct SocialInteractionEvent {
+    pub initiator: Entity,
+    pub target: Entity,
+}
