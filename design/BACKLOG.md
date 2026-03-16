@@ -14,6 +14,7 @@
 - [ ] `472` Synthetic Apathy — `specs/472-synthetic-apathy.md`
 - [ ] `473` Bureaucratic Redlining — `specs/473-bureaucratic-redlining.md`
 - [ ] `474` Inherited Grudges — `specs/474-inherited-grudges.md`
+- [ ] `477` The Ransom Broker — `specs/477-the-ransom-broker.md`
 
 ## Future / Ideas
 
@@ -206,4 +207,3 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `470` Biometric Identity Theft — `specs/470-biometric-identity-theft.md`
 - [ ] `475` Epidemic Denial — `specs/475-epidemic-denial.md`
 - [ ] `476` Jury-Rigged Cybernetics — `specs/476-jury-rigged-cybernetics.md`
-- [ ] `477` The Ransom Broker — `specs/477-the-ransom-broker.md`
