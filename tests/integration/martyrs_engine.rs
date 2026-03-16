@@ -86,7 +86,10 @@ fn test_martyrs_engine_vfx_integration() {
     assert_eq!(light.color, (255, 50, 50), "Should be an eerie red glow");
 
     // Manually run it down
-    world.get_mut::<MartyrsEngine>(engine).unwrap().ticks_remaining = 0;
+    world
+        .get_mut::<MartyrsEngine>(engine)
+        .unwrap()
+        .ticks_remaining = 0;
     schedule.run(&mut world);
 
     assert!(

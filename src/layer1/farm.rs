@@ -17,6 +17,7 @@ use crate::layer1::fauna::{Fauna, FaunaType};
 use crate::layer1::fertility::FertilityGrid;
 use crate::layer1::husbandry::Tame;
 use crate::layer1::items::ItemType;
+use crate::layer1::map::ScreenShake;
 use crate::layer1::morale::{MoodModifier, Morale};
 use crate::layer1::needs::Needs;
 use crate::layer1::palette_fatigue::{record_meal, DietaryHistory};
@@ -32,6 +33,8 @@ use crate::layer1::utility_ai::{ActionType, PopAction};
 use crate::layer1::GridPosition;
 use bevy_ecs::prelude::*;
 use rand::seq::SliceRandom;
+use rand::Rng;
+use ratatui::style::Color;
 
 /// Water cost per tick per worker for Hydroponics.
 const HYDROPONICS_WATER_COST: f32 = 0.1;
@@ -88,7 +91,13 @@ const fn get_crop_stats(crop: &ItemType) -> CropStats {
 
 /// Produces food from all farms with active workers.
 #[allow(clippy::too_many_arguments)]
+// Ludwig's Tuning Constants
+const BUMPER_CROP_CHANCE: f64 = 0.05;
+const BUMPER_CROP_MULTIPLIER: f32 = 3.0;
+
 pub fn produce_food_system(
+    mut commands: Commands,
+    mut shake_opt: Option<ResMut<ScreenShake>>,
     farm_query: Query<(&Building, &GridPosition, Option<&PowerConsumer>, &Farm)>,
     mut pop_query: Query<
         (
@@ -241,9 +250,46 @@ pub fn produce_food_system(
                 resources.water -= water_cost;
             }
 
-            let production = efficiency * base_production * effective_modifier * fertility_modifier;
+            let mut production =
+                efficiency * base_production * effective_modifier * fertility_modifier;
 
             if production > 0.0 {
+                // Ludwig: Game Design Theory
+                // Added "Bumper Crop" Critical Harvest to make farming feel rewarding and less like a predictable grind.
+                // Added screen shake and particles for "Juice".
+                let mut rng = rand::thread_rng();
+
+                if rng.gen_bool(BUMPER_CROP_CHANCE) {
+                    production *= BUMPER_CROP_MULTIPLIER;
+
+                    // Juice!
+                    if let Some(ref mut shake) = shake_opt {
+                        shake.trigger(0.3);
+                    }
+                    commands.spawn((
+                        crate::layer1::particles::Particle {
+                            char: '*',
+                            color: Color::LightGreen,
+                            lifetime: 15,
+                        },
+                        *pos,
+                    ));
+                    for _ in 0..3 {
+                        let dx = rng.gen_range(-0.5..0.5);
+                        let dy = rng.gen_range(-1.0..0.0);
+                        commands.spawn((
+                            crate::layer1::particles::Particle {
+                                char: ',',
+                                color: Color::Green,
+                                lifetime: 10,
+                            },
+                            *pos,
+                            crate::layer1::particles::ParticleVelocity { dx, dy },
+                            crate::layer1::particles::ParticleAccumulator::default(),
+                        ));
+                    }
+                }
+
                 match building_type {
                     BuildingType::Plantation => {
                         resources.add_fiber(production);
@@ -500,6 +546,83 @@ mod tests {
         // Check XP
         let skills = world.get::<Skills>(worker).unwrap();
         assert_eq!(skills.get_xp(SkillType::Farming), 1.0);
+    }
+
+    #[test]
+    fn test_produce_food_system_critical_harvest() {
+        let mut world = setup_test_world();
+        world.insert_resource(SeasonState {
+            current_season: Season::Spring,
+        }); // Good weather
+        world.insert_resource(crate::layer1::map::ScreenShake::default());
+
+        // Spawn Farm with Wheat
+        world.spawn((
+            Farm {
+                selected_crop: ItemType::Wheat,
+                ..Default::default()
+            },
+            Building {
+                building_type: BuildingType::Farm,
+            },
+            GridPosition { x: 5, y: 5 },
+        ));
+
+        // Spawn Worker
+        let _pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 5, y: 5 },
+                PopAction {
+                    current: ActionType::Farm,
+                    ..Default::default()
+                },
+            ))
+            .id();
+
+        // Let's force a critical by mocking the random generation (which we can't easily do),
+        // OR we can just run it enough times that a critical is guaranteed to happen.
+        // Or we can just test the logic directly if it was extracted, but here we'll run it 100 times.
+        let mut crit_happened = false;
+        let mut initial_food = world.resource::<ColonyResources>().food;
+
+        for _ in 0..1000 {
+            // Increased to 1000 to avoid flakiness
+            world.run_system_once(produce_food_system).unwrap();
+            let res = world.resource::<ColonyResources>();
+
+            // Wheat base is 0.006 * 2.0 (Spring) = 0.012
+            // A crit would be 0.012 * 3.0 = 0.036
+            let gained = res.food - initial_food;
+            if gained > 0.015 {
+                // Definitely a crit
+                crit_happened = true;
+                break;
+            }
+            initial_food = res.food;
+        }
+
+        assert!(
+            crit_happened,
+            "A critical harvest (Bumper Crop) should have occurred within 100 ticks"
+        );
+
+        // Verify that a particle was spawned
+        let particle_count = world
+            .query::<&crate::layer1::particles::Particle>()
+            .iter(&world)
+            .count();
+        assert!(
+            particle_count > 0,
+            "A particle should be spawned on a critical harvest"
+        );
+
+        // Verify screen shake
+        let shake = world.resource::<crate::layer1::map::ScreenShake>();
+        assert!(
+            shake.intensity > 0.0,
+            "Screen shake should be triggered on critical harvest"
+        );
     }
 
     #[test]

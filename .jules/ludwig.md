@@ -25,3 +25,7 @@
 ## [Particle Gravity]
 **Friction:** Particles floated weightlessly and slid along axes linearly, which felt "floaty" and lacked physical weight or impact. It did not communicate the grittiness of the world.
 **Flow:** Added a `GRAVITY` constant (0.05) to `particle_physics_system` that pulls particles downwards (increasing `dy`) every tick. This simple tweak gives particles a satisfying parabolic arc, adding immediate visual "Juice" and grounding the effects in the physical world without modifying the engine's core physics loop.
+
+## [Bumper Crop]
+**Friction:** Farming felt like a dull, predictable grind with a flat yield rate, lacking excitement or visual feedback. It felt like watching numbers go up rather than actually harvesting crops.
+**Flow:** Added a 5% "Critical Harvest" chance that multiplies yield by 3x, triggering a small screen shake and bursting particles. This injects "Juice" into a mundane task, making each tick of work potentially exciting and rewarding.
