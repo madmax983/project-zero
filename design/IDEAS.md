@@ -10156,3 +10156,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The absolute necessity of cheap orbital logistics vs. building a civilization directly underneath a continent-sized sword of Damocles.
 
 ---
+
+## The Panic Hoard
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** A community driven by fear to protect their own, at the expense of the greater empire.
+
+**Mechanic:** When a hostile Layer 2 entity (Pirate Fleet, Devouring Swarm) is detected entering the system, Layer 1 Pops with high "Anxious" or "Selfish" traits spontaneously stop their assigned jobs and begin hauling vital survival resources (Food, Medicine, Fuel) from the central stockpiles into their own private housing zones.
+
+**Emergence:** Your core agricultural world detects a massive invasion fleet on the edge of the system. Just as you desperately need them to load the orbital supply shuttles to feed your defending armada, the local populace panics. They steal all the food for themselves and barricade their doors. Your fleet starves before firing a single shot because your own citizens hoarded the supplies.
+
+**Tension:** Do you enact brutal martial law (causing massive unrest and potential riots) to secure the central stockpiles, or do you let the Pops hoard and try to fight the invasion with whatever you have left?
+
+---
+
+## Ghost Town Phobia
+
+**Layer:** 1
+
+**Fantasy:** The creeping dread of walking past the empty houses of those who didn't survive the winter.
+
+**Mechanic:** Buildings that have been unpowered or unstaffed for a long duration, or areas where significant numbers of Pops died, generate a localized "Dread" aura. Pops pathfinding through these abandoned sectors suffer an immediate, sharp spike in Stress and a temporary decrease in movement speed as they hesitate in the dark.
+
+**Emergence:** You suffer a terrible famine that wipes out half your colony. You consolidate the survivors into the core city block to save power. Years later, your economy recovers and you try to reactivate the old industrial sector. However, the workers are so terrified of walking through the dark, empty "Ghost Town" slums to get to the factories that their productivity plummets, and several suffer mental breaks on their commute.
+
+**Tension:** Do you expend precious labor and power to maintain and light empty sectors just to make them safe to walk through, or do you physically demolish the history of the colony to erase the trauma?
+
+---
+
+## Orbital Debris Avalanches
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** The terrifying consequence of fighting a massive war directly above your own home. The sky literally falls.
+
+**Mechanic:** Intense fleet combat or the destruction of massive orbital structures (like a Space Elevator anchor) in Layer 2 orbit generates an unstable, hyper-dense debris cloud. Instead of occasional meteor strikes, this cloud periodically causes massive "Avalanches" of flaming shrapnel to pour down onto specific Layer 1 sectors, instantly destroying anything on the surface.
+
+**Emergence:** You win a glorious, pyrrhic victory against an invasion fleet in low orbit. The enemy is destroyed, but the sheer volume of wreckage forms a dense cloud. Weeks later, an avalanche of burning dreadnought armor shears off the side of your mountain colony, destroying your primary reactor. You won the war, but the wreckage of your victory destroys your city.
+
+**Tension:** Do you build your defensive fleet far out in the system (spreading your forces thin and risking supply lines), or fight in a tight defensive orbit (risking catastrophic debris fallout on your own citizens)?
+
+---
