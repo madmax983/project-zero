@@ -972,15 +972,24 @@ fn render_extra_info(
     }
 
     if let Some(emitter) = world.get::<ScentEmitter>(entity) {
-        let color = match emitter.scent_type {
-            crate::layer1::olfactory::ScentType::Pleasant => Color::LightMagenta,
-            crate::layer1::olfactory::ScentType::Foul => Color::Rgb(150, 200, 50),
+        let color = if emitter.is_pleasant {
+            Color::LightMagenta
+        } else {
+            Color::Rgb(150, 200, 50)
         };
         frame.render_widget(
             Paragraph::new(Line::from(vec![
                 Span::raw("💨 Emits Scent: "),
                 Span::styled(
-                    format!("{:?} ({:.1})", emitter.scent_type, emitter.strength),
+                    format!(
+                        "{:?} ({:.1})",
+                        if emitter.is_pleasant {
+                            "Pleasant"
+                        } else {
+                            "Foul"
+                        },
+                        emitter.strength
+                    ),
                     Style::default().fg(color),
                 ),
             ])),

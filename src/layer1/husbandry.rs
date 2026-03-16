@@ -10,8 +10,8 @@ use crate::layer1::hazards::handle_workplace_hazards;
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::{ResourceItem, ResourceType};
 use crate::layer1::skills::{SkillType, Skills};
-use crate::layer1::utility_ai::{ActionType, PopAction, UtilityWeights};
-use crate::layer1::utility_eval_types::{evaluate_candidates, ScorableCandidate};
+use crate::layer1::utility_ai::{ActionType, PopAction};
+
 use crate::layer1::zone::{ZoneGrid, ZoneType};
 use bevy_ecs::prelude::*;
 
@@ -159,13 +159,6 @@ pub fn husbandry_production_system(world: &mut World) {
 
 /// Evaluates the utility of taming designated animals.
 #[must_use]
-pub fn evaluate_tame(
-    pop_pos: &GridPosition,
-    weights: &UtilityWeights,
-    designations: &[ScorableCandidate],
-) -> Option<(f32, Entity)> {
-    evaluate_candidates(*pop_pos, weights, designations, 0.6)
-}
 
 /// Executes taming when pop is at target with Tame action.
 pub fn tame_execution_system(world: &mut World) {

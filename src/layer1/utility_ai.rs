@@ -48,13 +48,13 @@ use crate::layer1::actions::{
 use crate::layer1::chemical::evaluate_consume_chemical;
 use crate::layer1::factions::Factions;
 use crate::layer1::hobby::evaluate_hobby;
-use crate::layer1::husbandry::evaluate_tame;
 use crate::layer1::justice::evaluate_warden_action;
 use crate::layer1::predictive_policing::evaluate_pre_crime_arrest;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::temperature::TemperatureGrid;
 use crate::layer1::traits::Trait;
 use crate::layer1::utility_ai_population::{collect_pop_data, populate_ai_buffer};
+use crate::layer1::utility_eval_types::evaluate_candidates;
 use crate::layer1::utility_eval_types::{
     evaluate_idle, CandidateEvaluator, PopEvalData, UtilityAIBuffer, WorldContext,
 };
@@ -395,7 +395,7 @@ impl<'a> PopDecider<'a> {
         );
 
         self.evaluator.evaluate_and_consider(
-            evaluate_tame(&pop_pos, &weights, &self.buffer.tame_designations),
+            evaluate_candidates(pop_pos, &weights, &self.buffer.tame_designations, 0.6),
             ActionType::Tame,
             self.context,
             0.0,
