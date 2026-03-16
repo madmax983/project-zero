@@ -10086,3 +10086,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Absolute reliance on clean, local stellar energy vs. investing in dirty, local fallback generators to survive orbital manipulation.
 
 ---
+
+## The Subspace Contagion
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** A computer virus that jumps from ships to people.
+
+**Mechanic:** Certain derelict ships or ancient data caches in Layer 2 contain a "Subspace Contagion." When a salvage team interacts with it, the contagion uploads itself into the cybernetic implants of the Layer 1 Pops. Infected Pops begin acting erratically—sabotaging power grids, overriding airlocks, or attempting to build bizarre, incomprehensible structures. The contagion spreads via proximity to other augmented Pops.
+
+**Emergence:** You send your best engineering team to salvage a pristine battleship. They return, and within a week, half your colony's power grid is rerouted to a massive, useless antenna they built in the desert. You have to decide whether to EMP your own colony (destroying all implants and electronics) or try to individually quarantine and "reboot" the infected.
+
+**Tension:** The immense value of ancient tech salvage vs. the risk of importing a digital plague that targets your most productive citizens.
+
+---
+
+## Gravity Well Smuggling
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** Dropping contraband from orbit under the cover of a meteor shower.
+
+**Mechanic:** Smuggler factions in Layer 2 can avoid customs by "dropping" shielded pods into the gravity well of your Layer 1 colony. These pods land randomly on the map. Criminal Pops will attempt to retrieve them. If successful, the colony experiences a sudden influx of contraband (drugs, illegal weapons, alien artifacts), boosting black market activity but drastically increasing crime and unrest.
+
+**Emergence:** You've built a utopian, crime-free colony with strict customs control. Suddenly, a meteor shower provides cover for a massive smuggling drop. The next day, your miners are armed with illegal plasma cutters and demanding independence, all funded by the black market.
+
+**Tension:** Spending vast resources on planetary defense grids to shoot down the pods vs. dedicating police forces to intercepting them on the ground (where they might cause collateral damage).
+
+---
+
+## The Generational Vow
+
+**Layer:** 1
+
+**Fantasy:** An oath sworn by a dying colonist that binds their descendants.
+
+**Mechanic:** When a highly respected or deeply wronged Pop dies, they can issue a "Generational Vow." This vow applies a permanent, unremovable directive to all their descendants. Vows can be positive (e.g., "Always maintain the Great Engine") or negative (e.g., "Never trust the Governor's lineage"). Descendants gain massive morale boosts when fulfilling the vow and severe penalties when ignoring it.
+
+**Emergence:** Your colony's survival depends on a new hydroponics bay, but the only family skilled enough to run it took a Generational Vow 200 years ago to "never touch the soil of this cursed world." You have to either force them (risking a rebellion) or import unskilled labor and risk starvation.
+
+**Tension:** Honoring the deeply held, irrational beliefs of your citizens vs. the pragmatic needs of the colony's survival.
+
+---
+
+## The Echo of the Void
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Staring into the abyss, and realizing the abyss is whispering back.
+
+**Mechanic:** Prolonged exposure to deep space in Layer 2 (e.g., long-haul routes or stationary mining platforms) slowly induces a psychological condition called "The Echo" in Layer 1 Pops. Pops returning to the colony begin to hear voices, suffer from chronic insomnia, and exhibit a strange, compulsive need to align objects to face the galaxy's center. If enough Pops have The Echo, a new, uncontrollable cult forms, demanding the colony turn off all localized gravity and drift free.
+
+**Emergence:** You send a massive fleet on a generational mining expedition. When they return laden with riches, half the crew refuses to disembark. The other half spends their time on the colony meticulously rearranging the medical bay's beds. If you try to stop them, they sabotage the planetary shield generator, claiming it "blocks the signal."
+
+**Tension:** The immense profit of long-duration deep-space operations vs. the permanent, spreading psychological damage to your workforce.
+
+---
+
+## Orbital Tether Snaps
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** A skyhook failure that turns a planetary lifeline into a planetary weapon.
+
+**Mechanic:** Layer 2 Space Elevators (Tethers) provide unparalleled, cheap transport of goods and Pops to and from Layer 1. However, if the Tether is destroyed (by war, debris, or neglect), it doesn't just disappear. The entire structure collapses, wrapping around the planet like a whip. It destroys every tile and building in a massive line across the Layer 1 map and causes global seismic events.
+
+**Emergence:** Your thriving, interconnected trade hub relies on three massive Space Elevators. A pirate raid on Layer 2 targets the weakest one. It snaps. The resulting impact obliterates your capital city, permanently scars the planet, and drops your colony into a dark age of isolation and repair.
+
+**Tension:** The absolute necessity of cheap orbital logistics vs. building a civilization directly underneath a continent-sized sword of Damocles.
+
+---
