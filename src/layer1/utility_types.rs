@@ -10,27 +10,27 @@ use strum_macros::EnumIter;
 pub enum ActionType {
     /// Eat food to reduce hunger.
     ///
-    /// See [`crate::layer1::actions::hunger::evaluate_satisfy_hunger`].
+    /// See [`crate::layer1::utility_ai::evaluate_single_pop`].
     SatisfyHunger,
     /// Sleep to reduce fatigue.
     ///
-    /// See [`crate::layer1::actions::rest::evaluate_satisfy_rest`].
+    /// See [`crate::layer1::utility_ai::evaluate_single_pop`].
     SatisfyRest,
     /// Interact with other pops to fulfill social needs.
     ///
-    /// See [`crate::layer1::actions::social::evaluate_socialize`].
+    /// See [`crate::layer1::utility_ai::evaluate_single_pop`].
     Socialize,
     /// Wander to uncover the fog of war or investigate points of interest.
     ///
-    /// See [`crate::layer1::actions::explore::evaluate_explore`].
+    /// See [`crate::layer1::utility_ai::evaluate_single_pop`].
     Explore,
     /// Perform designated physical labor (Mine, Build, Chop).
     ///
-    /// See [`crate::layer1::actions::work::evaluate_work`].
+    /// See [`crate::layer1::utility_ai::evaluate_single_pop`].
     Work,
     /// Repair damaged structures to prevent collapse.
     ///
-    /// See [`crate::layer1::actions::repair::evaluate_repair`].
+    /// See [`crate::layer1::utility_ai::evaluate_single_pop`].
     Repair,
     /// Research new technologies at a library.
     ///
@@ -42,15 +42,15 @@ pub enum ActionType {
     Haul,
     /// Seek medical care at a hospital.
     ///
-    /// See [`crate::layer1::actions::medical::evaluate_seek_medical_care`].
+    /// See [`crate::layer1::utility_ai::evaluate_single_pop`].
     SeekMedicalCare,
     /// Bury a corpse in a grave.
     ///
-    /// See [`crate::layer1::actions::funeral::evaluate_bury_corpse`].
+    /// See [`crate::layer1::utility_ai::evaluate_single_pop`].
     BuryCorpse,
     /// Fetch a tool from a stockpile.
     ///
-    /// See [`crate::layer1::actions::fetch_tool::evaluate_fetch_tool`].
+    /// See [`crate::layer1::actions::tool::evaluate_fetch_tool`].
     FetchTool,
     /// Do nothing.
     ///
@@ -74,15 +74,15 @@ pub enum ActionType {
     Daze,
     /// Engage in combat with hostile entities.
     ///
-    /// See [`crate::layer1::actions::fight::evaluate_drafted_behavior`].
+    /// See [`crate::layer1::actions::drafted::evaluate_drafted_behavior`].
     Fight,
     /// Refine resources at a building (e.g., Lumber Mill).
     ///
-    /// See [`crate::layer1::actions::refine::evaluate_refine`].
+    /// See [`crate::layer1::utility_ai::evaluate_single_pop`].
     Refine,
     /// Work at a farm to produce food.
     ///
-    /// See [`crate::layer1::actions::farm::evaluate_farm`].
+    /// See [`crate::layer1::utility_ai::evaluate_single_pop`].
     Farm,
     /// Arrest Wanted criminals and escort them to jail.
     ///
@@ -110,7 +110,7 @@ pub enum ActionType {
     SadWander,
     /// Fetch clothing from a stockpile.
     ///
-    /// See [`crate::layer1::actions::fetch_clothing::evaluate_fetch_clothing`].
+    /// See [`crate::layer1::actions::clothing::evaluate_fetch_clothing`].
     FetchClothing,
     /// Undergoing surgery at a hospital.
     ///
@@ -123,7 +123,7 @@ pub enum ActionType {
     Hobby,
     /// Work as an Administrator in an Office.
     ///
-    /// See [`crate::layer1::actions::admin::evaluate_admin`].
+    /// See [`crate::layer1::utility_ai::evaluate_single_pop`].
     Admin,
     /// Scrawl memetic sigils on walls (Memetic Hazard).
     ///

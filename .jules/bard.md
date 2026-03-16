@@ -1,0 +1,3 @@
+## 2025-03-16 - [Fix missing intra-doc links & Rustdoc warnings]
+**Confusion:** `cargo doc` warned about missing intra-doc links in `utility_types.rs` that pointed to non-existent action modules. Also, an empty ````no_run` block of comments generated an `invalid_rust_codeblocks` warning spanning across files.
+**Clarification:** Re-linked `ActionType` variants in `utility_types.rs` directly to `evaluate_single_pop` and the corresponding valid module paths (e.g. `actions::tool::...`). Replaced ````no_run` containing only comments with ````text` to prevent `rustdoc` from parsing it as an empty Rust code block. Also fixed the combat doc test asserting exactly `90.0` health to account for crits (`70.0`).
