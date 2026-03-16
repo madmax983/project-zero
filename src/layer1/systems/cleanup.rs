@@ -21,8 +21,6 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer1::medical::PatientTreated>,
             update_event_buffer::<crate::layer1::eureka::EurekaEvent>,
             update_event_buffer::<crate::layer1::items::UnequipEvent>,
-            update_event_buffer::<crate::layer1::unrest::DenounceEvent>,
-            update_event_buffer::<crate::layer1::volatile::ExplosionEvent>,
             update_event_buffer::<PossessEntityEvent>,
             update_event_buffer::<UnpossessEvent>,
             update_event_buffer::<crate::layer1::skills::XpGainEvent>,
@@ -33,15 +31,8 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
-            update_event_buffer::<crate::layer1::nature::biosphere_empathy::FloraDamagedEvent>,
             update_event_buffer::<crate::layer1::ancestral_graves::SacrilegeEvent>,
-            update_event_buffer::<crate::layer1::geology::tectonic::MegaQuakeEvent>,
             update_event_buffer::<crate::layer1::logistics::orbital_drop::OrbitalDropEvent>,
-            update_event_buffer::<crate::layer1::spiteful_will::InheritanceEvent>,
-            update_event_buffer::<crate::layer1::spiteful_will::OverrideWillEvent>,
-            update_event_buffer::<crate::layer1::memory_core::ImplantMemoryCoreEvent>,
-            update_event_buffer::<crate::layer1::memory_core::HarvestMemoryCoreEvent>,
-            update_event_buffer::<crate::layer1::tech::machine_awakening::BotGlitchEvent>,
             handle_direct_input_system,
         )
             .in_set(Layer1SystemSet::EventCleanup),
