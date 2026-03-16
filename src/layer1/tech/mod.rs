@@ -695,3 +695,4 @@ mod harmonic_mining_tests;
 pub mod event_horizon_tap;
 pub mod machine_awakening;
 pub use machine_awakening::*;
+pub mod nanite_fabrication;

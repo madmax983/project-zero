@@ -207,6 +207,7 @@ pub enum BuildingType {
     Housing,
     /// Office for administration.
     Office,
+    Nanoforge,
     /// Agricultural building for food production.
     Farm,
     /// Source of water hydration.
@@ -506,6 +507,7 @@ impl BuildingType {
             Self::Recycler => true,
             Self::BulletinBoard => false,
             Self::HoloProjector => false,
+            Self::Nanoforge => false,
         }
     }
 
@@ -666,6 +668,7 @@ impl BuildingType {
             Self::Recycler => "Recycler",
             Self::BulletinBoard => "Bulletin Board",
             Self::HoloProjector => "Holo Projector",
+            Self::Nanoforge => "Nanoforge",
         }
     }
 
@@ -723,6 +726,7 @@ impl BuildingType {
             Self::Shower => '🚿',
             Self::Recycler => '♻',
             Self::BulletinBoard => 'B',
+            Self::Nanoforge => 'N',
         }
     }
 
@@ -1048,6 +1052,7 @@ impl BuildingType {
                 ..ColonyResources::zeroed()
             },
             Self::Lander => ColonyResources::zeroed(),
+            Self::Nanoforge => ColonyResources { metal: 100.0, stone: 50.0, ..ColonyResources::zeroed() },
         }
     }
 
@@ -1289,6 +1294,7 @@ fn spawn_building(
                 ShiftSchedule::default(),
             ));
         }
+        BuildingType::Nanoforge => { entity.insert(crate::layer1::tech::nanite_fabrication::Nanoforge { active_recipe: None, breach_risk: 0.05 }); }
         BuildingType::Housing | BuildingType::Lander => {
             configure_housing(&mut entity, building_type);
         }
@@ -2331,7 +2337,8 @@ mod tests {
     #[test]
     fn test_building_type_next() {
         assert_eq!(BuildingType::Housing.next(), BuildingType::Office);
-        assert_eq!(BuildingType::Office.next(), BuildingType::Farm);
+        assert_eq!(BuildingType::Office.next(), BuildingType::Nanoforge);
+        assert_eq!(BuildingType::Nanoforge.next(), BuildingType::Farm);
         assert_eq!(BuildingType::Farm.next(), BuildingType::Well);
         assert_eq!(BuildingType::Well.next(), BuildingType::Stockpile);
         assert_eq!(BuildingType::Stockpile.next(), BuildingType::Smokehouse);
@@ -2469,6 +2476,8 @@ mod tests {
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Office);
 
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Nanoforge);
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Farm);
 

@@ -4,6 +4,7 @@ use crate::layer1::social::old_guard::{
     apply_founder_benefits_system, apply_mood_modifiers_system,
 };
 use crate::layer1::*;
+use crate::layer1::tech::nanite_fabrication::{nanite_fabrication_system, handle_containment_breach_system, increment_grey_goo_progress_system, grey_goo_replication_system};
 use bevy_ecs::prelude::*;
 
 pub fn register(schedule: &mut Schedule) {
@@ -33,6 +34,10 @@ pub fn register(schedule: &mut Schedule) {
                 crate::layer1::admin::calculate_admin_stats,
                 crate::layer1::eureka::handle_eureka_events,
                 recycle_processing_system,
+                nanite_fabrication_system,
+                handle_containment_breach_system.after(nanite_fabrication_system),
+                increment_grey_goo_progress_system,
+                grey_goo_replication_system.after(increment_grey_goo_progress_system),
                 #[cfg(feature = "nova")]
                 crate::layer1::machine_consciousness::consciousness_growth_system,
             ),
