@@ -55,6 +55,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     init_task_pools();
     let mut world = World::new();
     world.insert_resource(GameState::default());
+    world.insert_resource(crate::layer1::bureaucracy::AdministrationLevel(0));
+    world.insert_resource(crate::layer1::bureaucracy::HighSpeechEnabled(false));
     world.insert_resource(MenuState::default());
 
     let terrain = generate_terrain(80, 50);

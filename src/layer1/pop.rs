@@ -181,7 +181,12 @@ pub struct Job {
 /// }
 /// assert_eq!(speed.accumulator, 0.0);
 /// ```
+/// Education level (Spec 464).
+#[derive(Component, Default, Clone, Debug, PartialEq, Eq)]
+pub struct EducationLevel(pub u32);
+
 #[derive(Component, Debug, Clone)]
+/// Movement speed.
 pub struct Speed {
     /// Base speed multiplier (usually 1.0).
     pub base: f32,
@@ -278,6 +283,8 @@ pub struct PopBundle {
     pub dialect: Dialect,
     /// Linguistic knowledge.
     pub linguistics: Linguistics,
+    /// Formal education.
+    pub education: EducationLevel,
 }
 
 impl PopBundle {
@@ -313,6 +320,7 @@ impl PopBundle {
             wallet: Wallet { credits: 50.0 },
             dialect: Dialect::default(),
             linguistics: Linguistics::default(),
+            education: EducationLevel(1),
         }
     }
 }

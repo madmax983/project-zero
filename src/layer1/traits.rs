@@ -48,6 +48,8 @@ pub enum Trait {
     Intellectual,
     /// Unaffected by eating rations or corpses.
     Cannibal,
+    /// Excels at administrative tasks and understands High Speech.
+    Bureaucrat,
     /// Accepts survival necessities without complaint (ignore Ration mood penalty).
     Pragmatist,
     /// Socially isolated and often blamed.
@@ -115,6 +117,7 @@ impl Trait {
             Self::Creative => "Creative",
             Self::Intellectual => "Intellectual",
             Self::Cannibal => "Cannibal",
+            Self::Bureaucrat => "Bureaucrat",
             Self::Pragmatist => "Pragmatist",
             Self::Outsider => "Outsider",
             Self::Mutant => "Mutant",
@@ -187,6 +190,7 @@ impl Traits {
             Trait::Creative,
             Trait::Intellectual,
             Trait::Cannibal,
+            Trait::Bureaucrat,
             Trait::Pragmatist,
             Trait::Outsider,
             Trait::Mutant,
