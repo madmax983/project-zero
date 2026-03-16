@@ -65,6 +65,7 @@ pub fn handle_severance_system(
         Option<&mut Morale>,
         Option<&mut StressTracker>,
     )>,
+    mut chronicle_events: EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
 ) {
     for event in events.read() {
         // Find who was partnered with the dead entity
@@ -86,6 +87,11 @@ pub fn handle_severance_system(
                         duration: 1000, // Long lasting
                     });
                 }
+
+                chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+                    text: format!("{} suffered a catastrophic Severance following the death of their Quantum Twin.", event.name),
+                    importance: crate::layer1::chronicle::EventImportance::Major,
+                });
 
                 // Remove the link (Sever the bond)
                 commands.entity(survivor_entity).remove::<QuantumTwin>();
@@ -238,6 +244,8 @@ mod tests {
             .id();
 
         world.get_mut::<QuantumTwin>(twin_a).unwrap().partner = twin_b;
+
+        world.insert_resource(Events::<crate::layer1::chronicle::AddChronicleEvent>::default());
 
         let mut schedule = Schedule::default();
         schedule.add_systems(handle_severance_system);

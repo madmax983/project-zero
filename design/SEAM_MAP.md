@@ -399,3 +399,26 @@
     - Updated `attune_engine_system` to emit an `EventImportance::Legendary` `AddChronicleEvent` and mitigate the stress penalty based on traits like `Cannibal`, `Outsider`, `EmpathicLink`, or `Compassionate`.
     - Updated `process_martyrs_engine` to add an eerie red `LightSource` to the active engine and remove it when it decays.
 - **Tests:** `tests/integration/martyrs_engine.rs` (Integration test verified)
+
+### INT-413: Cryo-Shock -> Medical Triage
+- **Date:** 2026-03-15
+- **Systems connected:** `CryoShock` (Cryo) -> `AssignedTo` (Medical bed)
+- **Glue added:**
+    - `decay_cryo_shock_system` in `src/layer1/cryo_shock.rs` checks `AssignedTo`.
+    - If assigned as `AssignmentType::Patient`, decay rate is 5x faster.
+- **Tests:** `tests/integration/cryo_medical.rs` (1 test)
+
+### INT-245: Quantum Twins Severance -> Chronicle
+- **Date:** 2026-03-15
+- **Systems connected:** `handle_severance_system` (Quantum Twins) -> `AddChronicleEvent` (Chronicle)
+- **Glue added:**
+    - `handle_severance_system` now triggers an `EventImportance::Major` chronicle event noting the catastrophic Severance.
+- **Tests:** `tests::test_severance_on_death` in `src/layer1/quantum_twins.rs`
+
+### INT-450: Light Pollution -> Overview Effect
+- **Date:** 2026-03-15
+- **Systems connected:** `calculate_sky_glow_system` / `apply_light_pollution_system` -> `Observatory` (efficiency)
+- **Glue added:**
+    - Verified `apply_light_pollution_system` correctly reduces `Observatory.efficiency`.
+    - Added integration test to prove this reduces knowledge generation in `process_observe_system` (Overview Effect).
+- **Tests:** `tests/integration/light_pollution_overview.rs`

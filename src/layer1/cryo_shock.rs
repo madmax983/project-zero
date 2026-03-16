@@ -5,6 +5,7 @@
 
 use bevy_ecs::prelude::*;
 
+use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::pop::{Pop, Speed};
 
 /// Applied to Pops that have just emerged from cryo suspension.
@@ -39,12 +40,26 @@ pub fn apply_cryo_debuff_system(mut query: Query<(&mut Speed, &CryoShock)>) {
 }
 
 /// Decays the duration of the `CryoShock` effect and removes it once it expires.
-pub fn decay_cryo_shock_system(mut commands: Commands, mut query: Query<(Entity, &mut CryoShock)>) {
-    for (entity, mut shock) in query.iter_mut() {
-        if shock.duration_ticks <= 1 {
+/// Pops resting in a medical bed (assigned as `Patient`) decay faster.
+pub fn decay_cryo_shock_system(
+    mut commands: Commands,
+    mut query: Query<(Entity, &mut CryoShock, Option<&AssignedTo>)>,
+) {
+    for (entity, mut shock, assigned) in query.iter_mut() {
+        let decay_rate = if let Some(a) = assigned {
+            if a.assignment_type == AssignmentType::Patient {
+                5 // 5x faster recovery in a hospital/triage
+            } else {
+                1
+            }
+        } else {
+            1
+        };
+
+        if shock.duration_ticks <= decay_rate {
             commands.entity(entity).remove::<CryoShock>();
         } else {
-            shock.duration_ticks -= 1;
+            shock.duration_ticks -= decay_rate;
         }
     }
 }
@@ -123,6 +138,35 @@ mod tests {
             "Cryo shock duration must decay over time"
         );
         assert_eq!(shock.duration_ticks, 9);
+    }
+
+    #[test]
+    fn test_cryo_shock_duration_decays_faster_for_patient() {
+        let mut app = App::new();
+
+        let hospital = app.world_mut().spawn_empty().id();
+
+        let pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                CryoShock {
+                    duration_ticks: 10,
+                    severity: 0.5,
+                },
+                AssignedTo {
+                    entity: hospital,
+                    assignment_type: AssignmentType::Patient,
+                },
+            ))
+            .id();
+
+        app.add_systems(Update, decay_cryo_shock_system);
+
+        app.update();
+
+        let shock = app.world().get::<CryoShock>(pop).unwrap();
+        assert_eq!(shock.duration_ticks, 5, "Should decay by 5 for patients");
     }
 
     #[test]
