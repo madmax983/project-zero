@@ -323,6 +323,8 @@ pub enum BuildingType {
     BulletinBoard,
     /// Holographic projector that emits Beauty when powered.
     HoloProjector,
+    /// Instantly fabricates goods using raw mass and energy, with breach risk.
+    Nanoforge,
 }
 
 impl BuildingType {
@@ -352,7 +354,8 @@ impl BuildingType {
             | Self::GeneBank
             | Self::CloneVat
             | Self::HypnoPod
-            | Self::HoloProjector => Some((Category::Research, Tier::HighTech)),
+            | Self::HoloProjector
+            | Self::Nanoforge => Some((Category::Research, Tier::HighTech)),
 
             _ => None,
         }
@@ -436,6 +439,7 @@ impl BuildingType {
                 | Self::Airlock // Vent is explicitly an obstacle for standard movement (blocks Pops),
                                 // but Vermin can pass through it (handled in pathfinding).
                                 // So here it returns true (is obstacle).
+                | Self::Nanoforge
         )
     }
 
@@ -478,7 +482,8 @@ impl BuildingType {
             | Self::GeneBank
             | Self::CloneVat
             | Self::HypnoPod
-            | Self::Shower => true,
+            | Self::Shower
+            | Self::Nanoforge => true,
 
             // Small or Open structures
             Self::Farm
@@ -536,6 +541,7 @@ impl BuildingType {
             Self::CommandCenter | Self::AICore | Self::CryoPod | Self::GeneBank => 0.0,
             Self::CloneVat => -5.0, // Unsettling
             Self::HypnoPod => -2.0, // Unsettling
+            Self::Nanoforge => -10.0, // Creepy nanite swarm
             _ => 0.0,
         }
     }
@@ -554,6 +560,7 @@ impl BuildingType {
             Self::CloneVat => 3.0,
             Self::HypnoPod => 2.0,
             Self::HoloProjector => 8.0,
+            Self::Nanoforge => 5.0,
             _ => 0.0,
         }
     }
@@ -590,6 +597,7 @@ impl BuildingType {
             Self::Recycler => Some(Tech::Medical),
             Self::BulletinBoard => Some(Tech::SocialStructures),
             Self::HoloProjector => Some(Tech::Electromagnetism), // Assumed tech
+            Self::Nanoforge => Some(Tech::MetalWorking), // Or something advanced
             _ => None,
         }
     }
@@ -666,6 +674,7 @@ impl BuildingType {
             Self::Recycler => "Recycler",
             Self::BulletinBoard => "Bulletin Board",
             Self::HoloProjector => "Holo Projector",
+            Self::Nanoforge => "Nanoforge",
         }
     }
 
@@ -674,7 +683,7 @@ impl BuildingType {
     pub const fn char(&self) -> char {
         match self {
             Self::Housing => 'H',
-            Self::Office | Self::Tower | Self::Observatory | Self::HoloProjector => 'O',
+            Self::Office | Self::Tower | Self::Observatory => 'O',
             Self::Farm | Self::AncientFabricator => 'F',
             Self::HydroponicsBay => 'Y',
             Self::DroneHub => 'D',
@@ -723,6 +732,8 @@ impl BuildingType {
             Self::Shower => '🚿',
             Self::Recycler => '♻',
             Self::BulletinBoard => 'B',
+            Self::HoloProjector => 'V',
+            Self::Nanoforge => 'N',
         }
     }
 
@@ -788,6 +799,11 @@ impl BuildingType {
             Self::HoloProjector => ColonyResources {
                 metal: 20.0,
                 stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Nanoforge => ColonyResources {
+                metal: 100.0,
+                stone: 50.0,
                 ..ColonyResources::zeroed()
             },
             Self::CommandCenter => ColonyResources {
@@ -1369,6 +1385,15 @@ fn spawn_building(
         | BuildingType::PersonalGarden
         | BuildingType::PersonalShrine => {
             // Logic handled by components added in system
+        }
+        BuildingType::Nanoforge => {
+            entity.insert((
+                crate::layer1::nanite_fabrication::Nanoforge {
+                    active_recipe: None,
+                    breach_risk: 0.05,
+                },
+                crate::layer1::inventory::Inventory { capacity: 100, items: Vec::new() },
+            ));
         }
     }
 

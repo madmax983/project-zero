@@ -149,6 +149,12 @@ pub enum ItemType {
     LivingStone,
     /// Scrap metal recovered from clutter.
     Scrap,
+    /// Advanced alloy produced by nanite fabrication.
+    AdvancedAlloy,
+    /// Pure energy.
+    Energy,
+    /// Raw matter for fabrication.
+    RawMass,
 }
 
 impl ItemType {
