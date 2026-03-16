@@ -190,3 +190,5 @@ mod flora_empathy;
 mod void_weed_smuggler;
 #[path = "integration/vr_pod_integration.rs"]
 mod vr_pod_integration;
+#[path = "integration/martyrs_engine.rs"]
+mod martyrs_engine;

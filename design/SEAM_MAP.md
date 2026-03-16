@@ -391,3 +391,11 @@
 - **Glue added:**
     - Updated `src/layer1/flora.rs` to send a `FloraDamagedEvent` whenever `Flora` entities are despawned via the `ClearFlora` designation.
 - **Tests:** `tests/integration/flora_empathy.rs` (1 test verified)
+
+### INT-296: Martyr's Engine Integration
+- **Date:** 2026-06-25
+- **Systems connected:** `attune_engine_system` (MartyrsEngine) -> `AddChronicleEvent` (Chronicle) & `LightSource` (VFX) & `StressTracker` (with `Traits` influence)
+- **Glue added:**
+    - Updated `attune_engine_system` to emit an `EventImportance::Legendary` `AddChronicleEvent` and mitigate the stress penalty based on traits like `Cannibal`, `Outsider`, `EmpathicLink`, or `Compassionate`.
+    - Updated `process_martyrs_engine` to add an eerie red `LightSource` to the active engine and remove it when it decays.
+- **Tests:** `tests/integration/martyrs_engine.rs` (Integration test verified)
