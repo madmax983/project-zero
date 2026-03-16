@@ -36,6 +36,7 @@ pub mod actions;
 pub mod ad_screen;
 /// Bureaucratic Drag system (Spec 175).
 pub mod admin;
+pub mod bureaucracy;
 /// AI Core system (Spec 148).
 pub mod ai_core;
 /// Biometric access control system (Spec 142).
@@ -181,6 +182,7 @@ pub mod events;
 pub use access_control::*;
 pub use actions::*;
 pub use admin::*;
+pub use bureaucracy::*;
 pub use ai_core::*;
 pub use balance::*;
 pub use beauty::*;

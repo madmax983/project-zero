@@ -156,4 +156,8 @@ pub fn register(schedule: &mut Schedule) {
         )
             .in_set(Layer1SystemSet::Execution),
     );
+    schedule.add_systems(
+        (crate::layer1::bureaucracy::translate_instruction_system.after(arrival_handler_system).before(work_execution_system),)
+            .in_set(Layer1SystemSet::Execution),
+    );
 }

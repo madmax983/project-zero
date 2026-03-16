@@ -127,6 +127,7 @@ fn collect_workers_by_target(
         Option<&Dialect>,
         Option<&Linguistics>,
         Option<&MentalFog>,
+        Option<&crate::layer1::bureaucracy::WorkDelay>,
     ), With<AtTarget>>();
 
     // ⚡ Bolt Optimization:
@@ -135,7 +136,7 @@ fn collect_workers_by_target(
     // significantly reducing heap allocations per frame when evaluating large worker populations.
     for (target, worker) in query
         .iter(world)
-        .filter(|(_, mt, _, _, _, _, _, _, faction_member, _, _, _, _, _)| {
+        .filter(|(_, mt, _, _, _, _, _, _, faction_member, _, _, _, _, _, _)| {
             let is_work = mt.for_action == ActionType::Work || mt.for_action == ActionType::Repair;
             if !is_work {
                 return false;
@@ -163,6 +164,7 @@ fn collect_workers_by_target(
                 dialect,
                 ling,
                 fog,
+                delay,
             )| {
                 let morale = needs.map_or(0.5, |n| {
                     calculate_effective_morale(
@@ -183,6 +185,7 @@ fn collect_workers_by_target(
                 };
                 let buff_mod = buff.map_or(1.0, |b| b.multiplier);
                 let fog_mod = fog.map_or(1.0, |f| f.work_speed_penalty);
+                let delay_mod = delay.map_or(1.0, |d| d.multiplier);
 
                 (
                     mt.target_entity,
@@ -191,7 +194,7 @@ fn collect_workers_by_target(
                         morale,
                         action: mt.for_action,
                         equipment: eq.copied(),
-                        speed_modifier: trait_work_mod * job_eff_mod * buff_mod * fog_mod,
+                        speed_modifier: trait_work_mod * job_eff_mod * buff_mod * fog_mod * delay_mod,
                         job: job.copied(),
                         dialect: dialect.copied().unwrap_or_default(),
                         linguistics: ling.cloned().unwrap_or_default(),
@@ -585,7 +588,8 @@ fn cleanup_pop_work_state(world: &mut World, pop_entity: Entity) {
     world
         .entity_mut(pop_entity)
         .remove::<MovementTarget>()
-        .remove::<AtTarget>();
+        .remove::<AtTarget>()
+        .remove::<crate::layer1::bureaucracy::WorkDelay>();
     if let Some(mut action) = world.get_mut::<PopAction>(pop_entity) {
         action.current = ActionType::Idle;
         action.current_utility = 0.0;

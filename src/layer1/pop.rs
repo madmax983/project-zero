@@ -57,6 +57,10 @@ use bevy_ecs::prelude::*;
 use rand::Rng;
 use ratatui::style::Color;
 
+/// Represents the education level of a Pop.
+#[derive(Component, Debug, Clone, Default)]
+pub struct EducationLevel(pub u32);
+
 /// A pop's individual name.
 ///
 /// Currently selected from a hardcoded list of short names.
@@ -278,6 +282,8 @@ pub struct PopBundle {
     pub dialect: Dialect,
     /// Linguistic knowledge.
     pub linguistics: Linguistics,
+    /// Education level.
+    pub education: EducationLevel,
 }
 
 impl PopBundle {
@@ -313,6 +319,7 @@ impl PopBundle {
             wallet: Wallet { credits: 50.0 },
             dialect: Dialect::default(),
             linguistics: Linguistics::default(),
+            education: EducationLevel::default(),
         }
     }
 }

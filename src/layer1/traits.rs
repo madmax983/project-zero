@@ -87,6 +87,7 @@ pub enum Trait {
     /// Leaves a spiteful will upon death, giving belongings to rivals or pets.
     Spiteful,
     /// Biosphere empathy link, harmonizes stress and works better near flora.
+    Bureaucrat,
     EmpathicLink,
 }
 
@@ -135,6 +136,7 @@ impl Trait {
 
             Self::Synesthete => "Synesthete",
             Self::Spiteful => "Spiteful",
+            Self::Bureaucrat => "Bureaucrat",
             Self::EmpathicLink => "Empathic Link",
         }
     }
@@ -154,6 +156,11 @@ impl Traits {
     /// Adds a trait to the set.
     pub fn add(&mut self, t: Trait) {
         self.0.insert(t);
+    }
+
+    /// Removes a trait from the set.
+    pub fn remove(&mut self, t: Trait) {
+        self.0.remove(&t);
     }
 
     /// Generates a random set of traits.
@@ -193,6 +200,7 @@ impl Traits {
             Trait::Compassionate,
             Trait::Synesthete,
             Trait::Spiteful,
+            Trait::Bureaucrat,
             Trait::EmpathicLink,
         ];
 
