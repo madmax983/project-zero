@@ -1020,8 +1020,28 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: i32) {
         (max_x, max_y, tiles)
     };
 
-    println!("SCAN: center=({center_x},{center_y}) radius={radius}");
-    println!("BOUNDS: width={width} height={height}");
+    println!(
+        "{}",
+        format!("╭── Scan Results: Center ({center_x}, {center_y}) | Radius {radius} ──╮")
+            .cyan()
+            .bold()
+    );
+
+    let mut table = Table::new();
+    table
+        .load_preset(UTF8_FULL_CONDENSED)
+        .set_content_arrangement(ContentArrangement::Dynamic)
+        .set_header(vec![
+            Cell::new("Coord").add_attribute(Attribute::Bold),
+            Cell::new("Terrain").add_attribute(Attribute::Bold),
+            Cell::new("Walk").add_attribute(Attribute::Bold),
+            Cell::new("Build").add_attribute(Attribute::Bold),
+            Cell::new("Occ").add_attribute(Attribute::Bold),
+            Cell::new("Pop").add_attribute(Attribute::Bold),
+            Cell::new("Farm").add_attribute(Attribute::Bold),
+            Cell::new("House").add_attribute(Attribute::Bold),
+            Cell::new("Desig").add_attribute(Attribute::Bold),
+        ]);
 
     // Collect entities at positions
     let pop_positions: Vec<(i32, i32)> = world
@@ -1063,26 +1083,31 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: i32) {
         })
         .collect();
 
+    let mut found_count = 0;
     for y in center_y.saturating_sub(radius)..=center_y.saturating_add(radius) {
         for x in center_x.saturating_sub(radius)..=center_x.saturating_add(radius) {
             if x < 0 || y < 0 || x >= width || y >= height {
                 continue;
             }
+            found_count += 1;
 
             let tile = terrain_tiles
                 .get(&(x, y))
                 .copied()
                 .unwrap_or(TerrainType::Grass);
             let terrain_name = match tile {
-                TerrainType::Grass => "grass",
-                TerrainType::Dirt => "dirt",
-                TerrainType::Rock => "rock",
-                TerrainType::Water => "water",
-                TerrainType::Tree => "tree",
-                TerrainType::Path => "path",
-                TerrainType::Shrub => "shrub",
-                TerrainType::Sapling => "sapling",
+                TerrainType::Grass => "Grass",
+                TerrainType::Dirt => "Dirt",
+                TerrainType::Rock => "Rock",
+                TerrainType::Water => "Water",
+                TerrainType::Tree => "Tree",
+                TerrainType::Path => "Path",
+                TerrainType::Shrub => "Shrub",
+                TerrainType::Sapling => "Sapling",
             };
+
+            let walkable = tile.is_walkable();
+            let buildable = matches!(tile, TerrainType::Grass | TerrainType::Dirt | TerrainType::Rock | TerrainType::Path);
 
             // Check for entities
             let has_pop = pop_positions.iter().any(|&(px, py)| px == x && py == y);
@@ -1090,36 +1115,51 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: i32) {
             let has_housing = housing_positions.iter().any(|&(hx, hy)| hx == x && hy == y);
             let designation = designation_positions
                 .iter()
-                .find(|(dx, dy, _)| *dx == x && *dy == y);
+                .find(|(dx, dy, _)| *dx == x && *dy == y)
+                .map_or("-", |(_, _, dt)| dt.as_str());
 
-            let mut entities = Vec::new();
-            if has_pop {
-                entities.push("pop");
-            }
-            if has_farm {
-                entities.push("farm");
-            }
-            if has_housing {
-                entities.push("housing");
-            }
-            if let Some((_, _, dt)) = designation {
-                entities.push(dt.as_str());
-            }
+            let occupied = world.resource::<OccupiedTiles>().0.contains(&(x, y));
 
-            if entities.is_empty() {
-                println!("TILE: {x} {y} terrain={terrain_name}");
-            } else {
-                println!(
-                    "TILE: {} {} terrain={} entities={}",
-                    x,
-                    y,
-                    terrain_name,
-                    entities.join(",")
-                );
-            }
+            let bool_to_str = |b: bool| if b { "Y" } else { "-" };
+
+            use comfy_table::Color as CColor;
+            table.add_row(vec![
+                Cell::new(format!("{},{}", x, y)),
+                Cell::new(terrain_name).fg(get_terrain_color_headless(tile)),
+                Cell::new(bool_to_str(walkable)),
+                Cell::new(bool_to_str(buildable)),
+                Cell::new(bool_to_str(occupied)),
+                Cell::new(bool_to_str(has_pop)).fg(if has_pop { CColor::Cyan } else { CColor::White }),
+                Cell::new(bool_to_str(has_farm)).fg(if has_farm { CColor::Green } else { CColor::White }),
+                Cell::new(bool_to_str(has_housing)).fg(if has_housing { CColor::Yellow } else { CColor::White }),
+                Cell::new(designation).fg(if designation != "-" { CColor::Magenta } else { CColor::White }),
+            ]);
         }
     }
-    println!("SCAN_END");
+
+    if found_count == 0 {
+        println!("│ {} │", "  (No tiles found in range)                    ".dark_grey().italic());
+        println!(
+            "{}",
+            format!("╰{}╯", "─".repeat(73))
+                .cyan()
+                .bold()
+        );
+    } else {
+        println!("{table}");
+    }
+}
+
+const fn get_terrain_color_headless(t: TerrainType) -> comfy_table::Color {
+    use comfy_table::Color as CColor;
+    match t {
+        TerrainType::Grass => CColor::Green,
+        TerrainType::Dirt => CColor::DarkYellow,
+        TerrainType::Rock => CColor::Grey,
+        TerrainType::Water => CColor::Blue,
+        TerrainType::Tree | TerrainType::Sapling | TerrainType::Shrub => CColor::DarkGreen,
+        TerrainType::Path => CColor::DarkGrey,
+    }
 }
 
 /// Get info about a single tile
@@ -1128,8 +1168,21 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
     let max_x = i32::try_from(terrain.width).unwrap_or(i32::MAX);
     let max_y = i32::try_from(terrain.height).unwrap_or(i32::MAX);
 
+    println!(
+        "{}",
+        format!("╭── Tile Info: ({x}, {y}) ────────────────────────────────╮")
+            .cyan()
+            .bold()
+    );
+
     if x < 0 || y < 0 || x >= max_x || y >= max_y {
-        println!("TILE_INFO: {x} {y} ERROR=out_of_bounds");
+        println!("│ {} │", "  ERROR: Coordinates out of bounds             ".red().bold());
+        println!(
+            "{}",
+            format!("╰{}╯", "─".repeat(59))
+                .cyan()
+                .bold()
+        );
         return;
     }
 
@@ -1137,18 +1190,18 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
         .get(x as usize, y as usize)
         .unwrap_or(TerrainType::Grass);
     let terrain_name = match tile {
-        TerrainType::Grass => "grass",
-        TerrainType::Dirt => "dirt",
-        TerrainType::Rock => "rock",
-        TerrainType::Water => "water",
-        TerrainType::Tree => "tree",
-        TerrainType::Path => "path",
-        TerrainType::Shrub => "shrub",
-        TerrainType::Sapling => "sapling",
+        TerrainType::Grass => "Grass",
+        TerrainType::Dirt => "Dirt",
+        TerrainType::Rock => "Rock",
+        TerrainType::Water => "Water",
+        TerrainType::Tree => "Tree",
+        TerrainType::Path => "Path",
+        TerrainType::Shrub => "Shrub",
+        TerrainType::Sapling => "Sapling",
     };
 
     let walkable = tile.is_walkable();
-    let buildable = matches!(tile, TerrainType::Grass | TerrainType::Dirt);
+    let buildable = matches!(tile, TerrainType::Grass | TerrainType::Dirt | TerrainType::Rock | TerrainType::Path);
 
     // Check for entities
     let has_pop = world
@@ -1168,9 +1221,50 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
 
     let occupied = world.resource::<OccupiedTiles>().0.contains(&(x, y));
 
-    println!(
-        "TILE_INFO: {x} {y} terrain={terrain_name} walkable={walkable} buildable={buildable} occupied={occupied} pop={has_pop} farm={has_farm} housing={has_housing}"
-    );
+    let mut table = Table::new();
+    table
+        .load_preset(UTF8_FULL_CONDENSED)
+        .set_content_arrangement(ContentArrangement::Dynamic)
+        .set_header(vec![
+            Cell::new("Property").add_attribute(Attribute::Bold),
+            Cell::new("Value").add_attribute(Attribute::Bold),
+        ]);
+
+    let bool_to_str = |b: bool| if b { "Yes" } else { "No" };
+
+    table.add_row(vec![
+        Cell::new("Terrain"),
+        Cell::new(terrain_name).fg(get_terrain_color_headless(tile)),
+    ]);
+    table.add_row(vec![
+        Cell::new("Walkable"),
+        Cell::new(bool_to_str(walkable)),
+    ]);
+    table.add_row(vec![
+        Cell::new("Buildable"),
+        Cell::new(bool_to_str(buildable)),
+    ]);
+    table.add_row(vec![
+        Cell::new("Occupied"),
+        Cell::new(bool_to_str(occupied)),
+    ]);
+
+    use comfy_table::Color as CColor;
+
+    table.add_row(vec![
+        Cell::new("Pop Present"),
+        Cell::new(bool_to_str(has_pop)).fg(if has_pop { CColor::Cyan } else { CColor::White }),
+    ]);
+    table.add_row(vec![
+        Cell::new("Farm Present"),
+        Cell::new(bool_to_str(has_farm)).fg(if has_farm { CColor::Green } else { CColor::White }),
+    ]);
+    table.add_row(vec![
+        Cell::new("Housing Present"),
+        Cell::new(bool_to_str(has_housing)).fg(if has_housing { CColor::Yellow } else { CColor::White }),
+    ]);
+
+    println!("{table}");
 }
 
 fn print_great_works(world: &mut World) {
@@ -1421,13 +1515,19 @@ fn print_log(world: &mut World) {
 
     println!(
         "{}",
-        "================== MESSAGE LOG =================="
-            .green()
+        "╭── Message Log ────────────────────────────────╮"
+            .cyan()
             .bold()
     );
 
     if log.messages.is_empty() {
-        println!("  {}", "(No messages)".dark_grey().italic());
+        println!("│ {} │", "  (No messages)                                ".dark_grey().italic());
+        println!(
+            "{}",
+            "╰───────────────────────────────────────────────╯"
+                .cyan()
+                .bold()
+        );
         return;
     }
 
@@ -1436,17 +1536,22 @@ fn print_log(world: &mut World) {
         .load_preset(UTF8_FULL_CONDENSED)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
-            Cell::new("Color").add_attribute(Attribute::Bold),
+            Cell::new("Level").add_attribute(Attribute::Bold),
             Cell::new("Message").add_attribute(Attribute::Bold),
         ]);
 
     for msg in &log.messages {
         let color = to_comfy_color(msg.color);
-        // Display color name as indicator, but colored
-        let color_name = format!("{:?}", msg.color);
+        let level_indicator = match msg.color {
+            ratatui::style::Color::Red | ratatui::style::Color::LightRed => "ERR",
+            ratatui::style::Color::Yellow | ratatui::style::Color::LightYellow => "WRN",
+            ratatui::style::Color::Green | ratatui::style::Color::LightGreen => "OK ",
+            ratatui::style::Color::Cyan | ratatui::style::Color::LightCyan => "INF",
+            _ => "LOG",
+        };
 
         table.add_row(vec![
-            Cell::new(color_name).fg(color),
+            Cell::new(level_indicator).fg(color).add_attribute(Attribute::Bold),
             Cell::new(&msg.text).fg(color),
         ]);
     }
