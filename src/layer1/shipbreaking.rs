@@ -38,13 +38,6 @@ pub struct Miner {
 #[derive(Event, Debug, Clone)]
 pub struct SpawnCrashedShipEvent {
     pub location: crate::layer1::map::GridPosition,
-    pub ship_type: ShipType, // Using our own basic enum for test simplicity if layer2::ship is complex
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum ShipType {
-    Cruiser,
-    Fighter,
 }
 
 /// Event representing a mining action.
@@ -162,7 +155,6 @@ mod tests {
         // Spawn a crashed ship
         world.send_event(SpawnCrashedShipEvent {
             location: crate::layer1::map::GridPosition { x: 10, y: 10 },
-            ship_type: ShipType::Cruiser,
         });
 
         // In a real app we'd call app.update(), here we just run the system
