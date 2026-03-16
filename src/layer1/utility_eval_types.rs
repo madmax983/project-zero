@@ -460,3 +460,170 @@ impl CandidateEvaluator {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::layer1::utility_eval_types::{CandidateEvaluator, evaluate_candidates, ScorableCandidate};
+    use crate::layer1::utility_types::{ActionType, UtilityWeights};
+    use crate::layer1::map::GridPosition;
+    use bevy_ecs::prelude::Entity;
+
+    #[test]
+    fn test_candidate_evaluator_initialization() {
+        let evaluator = CandidateEvaluator::new(0.5);
+        let (action, utility, target) = evaluator.result();
+
+        assert_eq!(action, ActionType::Idle);
+        assert_eq!(utility, 0.5);
+        assert_eq!(target, None);
+    }
+
+    #[test]
+    fn test_candidate_evaluator_consider_higher_utility() {
+        let mut evaluator = CandidateEvaluator::new(0.5);
+        let entity = Entity::from_raw(42);
+
+        evaluator.consider(ActionType::Work, 0.8, Some(entity));
+        let (action, utility, target) = evaluator.result();
+
+        assert_eq!(action, ActionType::Work);
+        assert_eq!(utility, 0.8);
+        assert_eq!(target, Some(entity));
+    }
+
+    #[test]
+    fn test_candidate_evaluator_ignore_lower_utility() {
+        let mut evaluator = CandidateEvaluator::new(0.8);
+        let entity = Entity::from_raw(42);
+
+        evaluator.consider(ActionType::Work, 0.5, Some(entity));
+        let (action, utility, target) = evaluator.result();
+
+        assert_eq!(action, ActionType::Idle);
+        assert_eq!(utility, 0.8);
+        assert_eq!(target, None);
+    }
+
+    #[test]
+    fn test_evaluate_candidates_empty_list() {
+        let pop_pos = GridPosition { x: 0, y: 0 };
+        let weights = UtilityWeights::default();
+        let candidates: Vec<ScorableCandidate> = vec![];
+
+        let result = evaluate_candidates(pop_pos, &weights, &candidates, 0.5);
+
+        assert!(result.is_none());
+    }
+
+    #[test]
+    fn test_evaluate_candidates_single_candidate() {
+        let pop_pos = GridPosition { x: 0, y: 0 };
+        let weights = UtilityWeights::default();
+        let entity = Entity::from_raw(1);
+        let candidates = vec![ScorableCandidate::new(entity, GridPosition { x: 1, y: 0 })];
+
+        let result = evaluate_candidates(pop_pos, &weights, &candidates, 0.5);
+
+        assert!(result.is_some());
+        let (utility, target) = result.unwrap();
+        assert_eq!(target, entity);
+        assert!(utility > 0.0);
+    }
+
+    #[test]
+    fn test_candidate_evaluator_evaluate_and_consider_no_evaluation() {
+        let mut evaluator = CandidateEvaluator::new(0.5);
+
+        let mut world = bevy_ecs::world::World::new();
+        world.insert_resource(crate::layer1::resources::ColonyResources::default());
+        world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
+        world.insert_resource(crate::layer1::taboo::TabooState::default());
+        world.insert_resource(crate::layer1::zone::ZoneGrid::new(1,1));
+
+        let taboo = world.resource::<crate::layer1::taboo::TabooState>();
+        let resources = world.resource::<crate::layer1::resources::ColonyResources>();
+        let cycle = world.resource::<crate::layer1::day_night::DayNightCycle>();
+        let zone_grid = world.resource::<crate::layer1::zone::ZoneGrid>();
+
+        let context = crate::layer1::utility_eval_types::WorldContext {
+            resources,
+            cycle,
+            taboo,
+            factions: None,
+            zone_grid,
+            temperature_grid: None,
+        };
+
+        evaluator.evaluate_and_consider(None, ActionType::Work, &context, 0.0);
+
+        let (action, utility, _) = evaluator.result();
+        assert_eq!(action, ActionType::Idle);
+        assert_eq!(utility, 0.5);
+    }
+
+    #[test]
+    fn test_candidate_evaluator_evaluate_and_consider_with_evaluation() {
+        let mut evaluator = CandidateEvaluator::new(0.5);
+
+        let mut world = bevy_ecs::world::World::new();
+        world.insert_resource(crate::layer1::resources::ColonyResources::default());
+        world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
+        world.insert_resource(crate::layer1::taboo::TabooState::default());
+        world.insert_resource(crate::layer1::zone::ZoneGrid::new(1,1));
+
+        let taboo = world.resource::<crate::layer1::taboo::TabooState>();
+        let resources = world.resource::<crate::layer1::resources::ColonyResources>();
+        let cycle = world.resource::<crate::layer1::day_night::DayNightCycle>();
+        let zone_grid = world.resource::<crate::layer1::zone::ZoneGrid>();
+
+        let context = crate::layer1::utility_eval_types::WorldContext {
+            resources,
+            cycle,
+            taboo,
+            factions: None,
+            zone_grid,
+            temperature_grid: None,
+        };
+
+        let entity = Entity::from_raw(42);
+        evaluator.evaluate_and_consider(Some((0.8, entity)), ActionType::Work, &context, 0.2);
+
+        let (action, utility, target) = evaluator.result();
+        assert_eq!(action, ActionType::Work);
+        assert_eq!(utility, 1.0); // 0.8 + 0.2 bonus + 0.0 penalty
+        assert_eq!(target, Some(entity));
+    }
+
+    #[test]
+    fn test_evaluate_candidates_table_driven() {
+        let pop_pos = GridPosition { x: 0, y: 0 };
+
+        let test_cases = vec![
+            (UtilityWeights { distance_weight: 10.0, availability_weight: 0.0,  }, 0), // Prefers distance
+            (UtilityWeights { distance_weight: 0.0, availability_weight: 10.0,  }, 1), // Prefers availability
+        ];
+
+        for (weights, expected_winner) in test_cases {
+            let mut cand_a = ScorableCandidate::new(Entity::from_raw(1), GridPosition { x: 1, y: 0 }); // Very close
+            cand_a.capacity = 10;
+            cand_a.usage = 9; // 90% full (low availability)
+
+            let mut cand_b = ScorableCandidate::new(Entity::from_raw(2), GridPosition { x: 10, y: 0 }); // Far
+            cand_b.capacity = 10;
+            cand_b.usage = 0; // Empty (high availability)
+
+            let candidates = vec![cand_a.clone(), cand_b.clone()];
+            let result = evaluate_candidates(pop_pos, &weights, &candidates, 0.5);
+
+            assert!(result.is_some());
+            let (_, target) = result.unwrap();
+            let expected_entity = if expected_winner == 0 { cand_a.entity } else { cand_b.entity };
+
+            assert_eq!(
+                target, expected_entity,
+                "Failed table-driven test case: weights distance={}, availability={}",
+                weights.distance_weight, weights.availability_weight
+            );
+        }
+    }
+}
