@@ -426,6 +426,11 @@ pub fn calculate_work_amount(
         .get_resource::<AdminStats>()
         .map_or(1.0, |stats| stats.efficiency);
 
+
+    let bureaucratic_delay = world
+        .get::<crate::layer1::bureaucracy::WorkDelay>(pop_entity)
+        .map_or(1.0, |delay| delay.multiplier);
+
     let neural_buff = if world
         .get::<crate::layer1::tech::neural_leech::NeuralLinked>(pop_entity)
         .is_some()
@@ -443,7 +448,8 @@ pub fn calculate_work_amount(
         * admin_efficiency
         * (1.0 + augmentation_bonus)
         * organic_factor
-        * neural_buff;
+        * neural_buff
+        * bureaucratic_delay;
 
     // Cap work amount to prevent logic bugs / economy exploits
     amount.min(1000.0)

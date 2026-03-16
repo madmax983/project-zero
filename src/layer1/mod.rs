@@ -36,6 +36,8 @@ pub mod actions;
 pub mod ad_screen;
 /// Bureaucratic Drag system (Spec 175).
 pub mod admin;
+pub mod bureaucracy;
+pub use bureaucracy::*;
 /// AI Core system (Spec 148).
 pub mod ai_core;
 /// Biometric access control system (Spec 142).

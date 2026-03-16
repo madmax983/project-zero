@@ -71,6 +71,10 @@ use ratatui::style::Color;
 /// let name = PopName::random(&mut rng);
 /// assert!(!name.0.is_empty());
 /// ```
+/// Education level (Spec 464).
+#[derive(Component, Clone, Debug, Default, PartialEq, Eq, PartialOrd, Ord)]
+pub struct EducationLevel(pub u32);
+
 #[derive(Component, Clone, Debug)]
 pub struct PopName(pub String);
 
@@ -278,6 +282,8 @@ pub struct PopBundle {
     pub dialect: Dialect,
     /// Linguistic knowledge.
     pub linguistics: Linguistics,
+    /// Education level.
+    pub education: EducationLevel,
 }
 
 impl PopBundle {
@@ -313,6 +319,7 @@ impl PopBundle {
             wallet: Wallet { credits: 50.0 },
             dialect: Dialect::default(),
             linguistics: Linguistics::default(),
+            education: EducationLevel(rng.gen_range(1..=5)),
         }
     }
 }

@@ -28,6 +28,9 @@ pub enum Trait {
     Anxious,
     /// Resists atmospheric hazards (+30% Biocompatibility).
     NativeBorn,
+    /// Bureaucrat (Spec 464): Understands High Speech.
+    Bureaucrat,
+
     /// Vulnerable to atmospheric hazards (-20% Biocompatibility).
     WeakImmunity,
     /// Loves fire (starts fires during breakdowns).
@@ -136,6 +139,7 @@ impl Trait {
             Self::Synesthete => "Synesthete",
             Self::Spiteful => "Spiteful",
             Self::EmpathicLink => "Empathic Link",
+            Self::Bureaucrat => "Bureaucrat",
         }
     }
 }
