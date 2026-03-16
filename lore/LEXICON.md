@@ -3335,3 +3335,30 @@
 **Usage:**
 - "They are following a Phantom-Route."
 - "A Ghost-Fleet is blocking the hyperlane."
+
+## Epidemic Denial (Spec 475)
+
+### Denier / Hoax-believer
+**Replaces:** Quarantine violator, disease spreader
+**Code reference:** `EpidemicDenial` component
+**Usage:**
+- "The Denier broke quarantine again."
+- "He's a Hoax-believer, don't let him in the medbay."
+
+## Jury-Rigged Cybernetics (Spec 476)
+
+### Scrap-limb / Jury-Rig
+**Replaces:** Prosthetic, artificial limb
+**Code reference:** `JuryRiggedCybernetic` component
+**Usage:**
+- "He got a Scrap-limb after the accident."
+- "Watch out, that Jury-Rig is Combustible."
+
+## The Ransom Broker (Spec 477)
+
+### Ransom Target / High-value cargo
+**Replaces:** Kidnapped pop, hostage
+**Code reference:** `Kidnapped` component
+**Usage:**
+- "They took our engineer as a Ransom Target."
+- "The pirates demanded a heavy toll for the High-value cargo."

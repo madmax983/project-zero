@@ -4006,3 +4006,36 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "The phantom fleet returned. [YEAR]. They completed [NONSENSE_ORDER], wasting [RESOURCE_WASTED]."
 - "[YEAR]: Madness automated. We lost [RESOURCE_WASTED] because the machines insisted on [NONSENSE_ORDER]."
 - "A perfect execution of an insane command. [NONSENSE_ORDER] cost us [RESOURCE_WASTED]. [YEAR]."
+
+## Epidemic Denial Templates (Spec 475)
+
+### QUARANTINE_BROKEN
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[DISEASE_NAME]`
+
+**Patterns:**
+- "The quarantine means nothing to them. [YEAR]. A Denier spread the [DISEASE_NAME]."
+- "[YEAR]: Logic fails. They refused the mask, and now the [DISEASE_NAME] is everywhere."
+- "We built walls, but ignorance breached them. [DISEASE_NAME] cases spike. [YEAR]."
+
+## Jury-Rigged Cybernetics Templates (Spec 476)
+
+### JURY_RIG_INSTALLED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[POP_NAME]`
+
+**Patterns:**
+- "No time for doctors. [YEAR]. [POP_NAME] walks again on a scrap-limb."
+- "[YEAR]: Desperation medicine. [POP_NAME] was fitted with a jury-rigged prosthetic."
+- "Flesh replaced by noisy metal. [POP_NAME] is back to work. [YEAR]."
+
+## The Ransom Broker Templates (Spec 477)
+
+### RANSOM_DEMANDED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[POP_NAME]`, `[RESOURCE_AMOUNT]`
+
+**Patterns:**
+- "They took [POP_NAME]. [YEAR]. The pirates demand [RESOURCE_AMOUNT] for their return."
+- "[YEAR]: A ransom note from the void. [POP_NAME] will cost us [RESOURCE_AMOUNT]."
+- "Our best mind stolen. The ransom is [RESOURCE_AMOUNT]. Can we afford [POP_NAME]? [YEAR]."
