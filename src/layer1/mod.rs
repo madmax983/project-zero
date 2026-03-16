@@ -724,4 +724,6 @@ pub use cryo_shock::*;
 
 /// Infrastructure system (Spec 452).
 pub mod infrastructure;
+pub mod nanite_fabrication;
 pub use infrastructure::*;
+pub use nanite_fabrication::*;

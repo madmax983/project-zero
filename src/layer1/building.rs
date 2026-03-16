@@ -303,6 +303,8 @@ pub enum BuildingType {
     AICore,
     /// Hub for spawning and recharging Drones.
     DroneHub,
+    /// Advanced building capable of producing goods instantly without requiring labor time.
+    Nanoforge,
     /// Cryo-Stasis Pod.
     CryoPod,
     /// Harvests energy from magnetic storms.
@@ -506,6 +508,7 @@ impl BuildingType {
             Self::Recycler => true,
             Self::BulletinBoard => false,
             Self::HoloProjector => false,
+            Self::Nanoforge => false,
         }
     }
 
@@ -666,6 +669,7 @@ impl BuildingType {
             Self::Recycler => "Recycler",
             Self::BulletinBoard => "Bulletin Board",
             Self::HoloProjector => "Holo Projector",
+            Self::Nanoforge => "Nanoforge",
         }
     }
 
@@ -723,6 +727,7 @@ impl BuildingType {
             Self::Shower => '🚿',
             Self::Recycler => '♻',
             Self::BulletinBoard => 'B',
+            Self::Nanoforge => 'N',
         }
     }
 
@@ -1048,6 +1053,11 @@ impl BuildingType {
                 ..ColonyResources::zeroed()
             },
             Self::Lander => ColonyResources::zeroed(),
+            Self::Nanoforge => ColonyResources {
+                wood: 1000.0,
+                stone: 500.0,
+                ..ColonyResources::zeroed()
+            },
         }
     }
 
@@ -1348,7 +1358,8 @@ fn spawn_building(
         | BuildingType::GeneBank
         | BuildingType::CloneVat
         | BuildingType::HypnoPod
-        | BuildingType::HoloProjector => configure_tech(&mut entity, building_type),
+        | BuildingType::HoloProjector
+        | BuildingType::Nanoforge => configure_tech(&mut entity, building_type),
         BuildingType::Shower => configure_civic(&mut entity, building_type),
         BuildingType::Recycler => {
             // Recycler configuration
@@ -2402,7 +2413,8 @@ mod tests {
         assert_eq!(BuildingType::Lander.next(), BuildingType::CommandCenter);
         assert_eq!(BuildingType::CommandCenter.next(), BuildingType::AICore);
         assert_eq!(BuildingType::AICore.next(), BuildingType::DroneHub);
-        assert_eq!(BuildingType::DroneHub.next(), BuildingType::CryoPod);
+        assert_eq!(BuildingType::DroneHub.next(), BuildingType::Nanoforge);
+        assert_eq!(BuildingType::Nanoforge.next(), BuildingType::CryoPod);
         assert_eq!(BuildingType::CryoPod.next(), BuildingType::AuroralCollector);
         assert_eq!(
             BuildingType::AuroralCollector.next(),
@@ -2617,6 +2629,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::DroneHub);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Nanoforge);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::CryoPod);
