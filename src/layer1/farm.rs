@@ -288,6 +288,7 @@ pub fn consume_food_system(
             Option<&mut Wallet>,
             Option<&mut Morale>,
             Option<&crate::layer1::traits::Traits>,
+            Option<&mut crate::layer1::gut_biome::GutBiome>,
         ),
         With<Pop>,
     >,
@@ -321,7 +322,7 @@ pub fn consume_food_system(
     // Collect hungry pop entities first to avoid borrow issues with mut iteration
     let hungry_pops: Vec<Entity> = pop_query
         .iter()
-        .filter(|(_, needs, _, wallet, _, _)| {
+        .filter(|(_, needs, _, wallet, _, _, _)| {
             if needs.hunger >= FOOD_HUNGER_THRESHOLD {
                 return false;
             }
@@ -333,7 +334,7 @@ pub fn consume_food_system(
             }
             true
         })
-        .map(|(e, _, _, _, _, _)| e)
+        .map(|(e, _, _, _, _, _, _)| e)
         .collect();
 
     let mut rng = rand::thread_rng();
@@ -367,10 +368,41 @@ pub fn consume_food_system(
 
         if ate {
             #[allow(clippy::collapsible_if)]
-            if let Ok((_, mut needs, mut history_opt, mut wallet_opt, mut morale_opt, traits_opt)) =
+            if let Ok((_, mut needs, mut history_opt, mut wallet_opt, mut morale_opt, traits_opt, biome_opt)) =
                 pop_query.get_mut(entity)
             {
-                needs.hunger = (needs.hunger + HUNGER_PER_MEAL).min(1.0);
+                // Determine GutBiome category
+                let category = crate::layer1::gut_biome::get_biome_category(&eaten_item);
+
+                // Get Biome Data
+                let (efficiency, mood_effect) = if let Some(mut biome) = biome_opt {
+                    let fam = biome.get_familiarity(category);
+                    biome.adapt(category);
+
+                    if fam > 0.8 {
+                        (1.0, Some("Gut Comfort"))
+                    } else if fam < 0.3 {
+                        (0.6, Some("Indigestion"))
+                    } else {
+                        (1.0, None)
+                    }
+                } else {
+                    (1.0, None)
+                };
+
+                needs.hunger = (needs.hunger + (HUNGER_PER_MEAL * efficiency)).min(1.0);
+
+                // Apply Gut Mood Effect
+                if let Some(label) = mood_effect {
+                    if let Some(morale) = morale_opt.as_deref_mut() {
+                        let val = if label == "Gut Comfort" { 0.05 } else { -0.1 };
+                        morale.add_modifier(MoodModifier {
+                            label: label.to_string(),
+                            value: val,
+                            duration: 200,
+                        });
+                    }
+                }
 
                 // Deduct Cost
                 if let Some(wallet) = wallet_opt.as_deref_mut() {

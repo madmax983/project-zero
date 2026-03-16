@@ -403,6 +403,9 @@ pub use gastronomy::*;
 /// Antagonistic Flora system (Spec 092).
 pub mod flora;
 pub use flora::*;
+/// Gut Biome system (Spec 211).
+pub mod gut_biome;
+pub use gut_biome::*;
 /// Private stash system for pops.
 pub mod private_stash;
 pub use private_stash::*;
