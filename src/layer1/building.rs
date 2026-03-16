@@ -2196,7 +2196,6 @@ pub fn spawn_building_with_material(
 /// let placed = try_place_building(&mut world, 5, 5, BuildingType::Housing);
 /// assert!(placed);
 /// ```
-
 fn check_tech_requirements(world: &mut World, building_type: BuildingType) -> bool {
     if let Some(tech) = building_type.required_tech() {
         // We use get_resource because TechState might not be initialized in some tests
