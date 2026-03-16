@@ -1504,7 +1504,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Psychic Background Radiation
+## Psychic Background Radiation [SPECCED]
 
 **Layer:** Cross-Layer
 
@@ -1518,7 +1518,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Escape Velocity Economics
+## Escape Velocity Economics [SPECCED]
 
 **Layer:** 2
 
@@ -1700,7 +1700,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Galactic Council
+## The Galactic Council [SPECCED]
 
 **Layer:** 3
 
