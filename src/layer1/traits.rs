@@ -8,6 +8,8 @@ use std::collections::HashSet;
 /// Trait enum defining possible personality quirks.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum Trait {
+    /// Empathically linked to the biosphere.
+    EmpathicLink,
     /// +20% Work Speed.
     HardWorker,
     /// -20% Work Speed.
@@ -133,6 +135,7 @@ impl Trait {
 
             Self::Synesthete => "Synesthete",
             Self::Spiteful => "Spiteful",
+            Self::EmpathicLink => "Empathic Link",
         }
     }
 }

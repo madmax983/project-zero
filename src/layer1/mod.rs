@@ -73,7 +73,7 @@ pub mod farm;
 pub mod hauling;
 /// Workplace hazards logic.
 pub mod hazards;
-#[cfg(test)]
+
 /// Tests for hazards logic.
 pub mod hazards_tests;
 /// Pop health and damage.
@@ -102,7 +102,7 @@ pub mod mascot;
 pub mod medical;
 /// Pop memories and psychological effects.
 pub mod memory;
-#[cfg(test)]
+
 /// Tests for metal industry (Spec 024).
 pub mod metal_industry_tests;
 /// Pop needs (hunger, rest).
@@ -120,7 +120,7 @@ pub mod resources;
 /// Field science and anomalies.
 pub mod science;
 /// Seasonal rhythms (Spring, Summer, Autumn, Winter).
-#[cfg(test)]
+
 mod shift_integration_tests;
 /// Social needs and tavern.
 pub mod social;
@@ -137,36 +137,36 @@ pub mod tech;
 /// Terrain generation and grid management.
 /// Emergent utility AI system.
 pub mod utility_ai;
-#[cfg(test)]
+
 /// Tests for utility AI hierarchy logic.
 pub mod utility_ai_hierarchy_tests;
 /// Utility AI population helpers.
 pub mod utility_ai_population;
-#[cfg(test)]
+
 /// Tests for utility AI work logic.
 pub mod utility_ai_work_tests;
 /// Shared types for utility AI evaluation (`PopEvalData`, Proxies).
 pub(crate) mod utility_eval_types;
 /// Shared types for utility AI state (`ActionType`, `UtilityWeights`).
 pub mod utility_types;
-#[cfg(test)]
+
 mod work_building_tests;
 
-#[cfg(test)]
+
 /// Tests for mining logic (Spec 052).
 pub mod mining_tests;
 
-#[cfg(test)]
+
 /// Tests for mother lode logic (Spec 168).
 pub mod mother_lode_tests;
 
-#[cfg(test)]
+
 mod preservation_tests;
 
-#[cfg(test)]
+
 mod execution_demolish_test;
 
-#[cfg(test)]
+
 mod medical_triage_tests;
 
 /// Named locations on the map.
@@ -227,7 +227,7 @@ pub use tech::*;
 pub use utility_ai::*;
 pub use utility_types::*;
 
-#[cfg(test)]
+
 mod tool_tests;
 pub use clothing::*;
 
@@ -241,16 +241,16 @@ pub mod lighting;
 pub mod rumor;
 /// Pop skills and experience system.
 pub mod skills;
-#[cfg(test)]
+
 mod venting_tests;
-#[cfg(test)]
+
 mod waste_tests;
 
 /// Vermin infestation logic (Spec 073).
 pub mod vermin;
 pub use vermin::*;
 
-#[cfg(test)]
+
 mod vermin_evolution_tests;
 
 pub use lighting::*;
@@ -268,7 +268,7 @@ pub use funeral::*;
 pub mod acoustic;
 pub use acoustic::*;
 
-#[cfg(test)]
+
 mod acoustic_shadow_tests;
 
 /// Trade system.
@@ -337,13 +337,13 @@ pub use quirks::*;
 pub mod sleepwalking;
 pub use sleepwalking::*;
 
-#[cfg(test)]
+
 mod quirks_tests;
 
-#[cfg(test)]
+
 mod sleepwalking_tests;
 
-#[cfg(test)]
+
 mod material_provenance_tests;
 
 /// Pop factions system (Spec 068).
@@ -378,22 +378,22 @@ pub use predictive_policing::*;
 pub mod pheromone;
 pub use pheromone::*;
 
-#[cfg(test)]
+
 /// Tests for faction demands logic (Spec 085).
 pub mod faction_demands_tests;
 
 /// Heirloom tech system (Spec 070).
 pub mod heirloom;
 pub use heirloom::*;
-#[cfg(test)]
+
 mod heirloom_items_tests;
-#[cfg(test)]
+
 mod heirloom_tests;
-#[cfg(test)]
+
 mod retrograde_tests;
-#[cfg(test)]
+
 mod structure_fragile_tests;
-#[cfg(test)]
+
 mod structure_jury_rig_tests;
 
 /// Animal Husbandry system (Spec 075).
@@ -429,19 +429,19 @@ pub use morale::*;
 pub mod biocompatibility;
 pub use biocompatibility::*;
 
-#[cfg(test)]
+
 mod fuel_consumption_tests;
-#[cfg(test)]
+
 mod fuel_industry_tests;
-#[cfg(test)]
+
 mod greenhouse_tests;
-#[cfg(test)]
+
 mod hydroponics_tests;
 /// Palette fatigue system (Spec 114).
 pub mod palette_fatigue;
-#[cfg(test)]
+
 mod structural_integrity_overflow_tests;
-#[cfg(test)]
+
 mod structure_maintenance_tests;
 pub use palette_fatigue::*;
 
@@ -486,7 +486,7 @@ pub use wild_child::*;
 pub mod blob;
 
 pub mod prototyping;
-#[cfg(test)]
+
 mod tech_storage_tests;
 pub use prototyping::*;
 /// Cybernetic augmentation system (Spec 151).
@@ -515,7 +515,7 @@ pub use constellations::*;
 
 /// Xeno-Artifacts system (Spec 156).
 pub mod artifacts;
-#[cfg(test)]
+
 mod justice_tests;
 pub mod tech_envy;
 pub use artifacts::*;
@@ -545,9 +545,9 @@ pub use sleep_deprived_savant::*;
 /// System registration and sets (Facade).
 pub mod systems;
 
-#[cfg(test)]
+
 mod drone_tests;
-#[cfg(test)]
+
 mod institutional_memory_tests;
 pub mod memetic;
 pub mod seismic;
@@ -558,7 +558,7 @@ pub use orbital_crossfire::*;
 /// Scrapcode virus system (Spec 178).
 pub mod scrapcode;
 pub use scrapcode::*;
-#[cfg(test)]
+
 mod fauna_modular_tests;
 
 /// Bio-Acoustic Chorus (Spec 419).
@@ -573,10 +573,10 @@ pub mod cryo_dreams;
 pub use chemical::*;
 pub use cryo::*;
 
-#[cfg(test)]
+
 mod vacuum_welding_tests;
 
-#[cfg(test)]
+
 mod cryo_tests;
 
 /// Emergent Festivals system (Spec 077).
@@ -590,7 +590,7 @@ pub use black_market::*;
 /// Language and Dialect system (Spec 193).
 pub mod language;
 pub use language::*;
-#[cfg(test)]
+
 mod equipment_tests;
 
 /// Civic Ideology system (Spec 197).
@@ -613,9 +613,9 @@ pub use hygiene::*;
 /// Gene Bank system (Spec 165).
 pub mod gene_bank;
 pub mod geodetic;
-#[cfg(test)]
+
 mod improvised_tools_tests;
-#[cfg(test)]
+
 mod urban_heat_tests;
 pub use gene_bank::*;
 pub use geodetic::*;
@@ -668,7 +668,7 @@ pub use politics::*;
 pub mod security;
 pub use security::*;
 
-#[cfg(test)]
+
 mod geodetic_tests;
 
 /// Void Stare (Spec 242).
@@ -682,7 +682,7 @@ pub use quantum_twins::*;
 /// Holographic Facades (Spec 249).
 pub mod construction;
 pub mod hologram;
-#[cfg(test)]
+
 mod hologram_tests;
 pub use hologram::*;
 
@@ -691,7 +691,7 @@ pub mod addiction;
 pub use addiction::*;
 
 pub mod geology_tests {
-    #[cfg(test)]
+
     include!("geology/tectonic_tests.rs");
 }
 pub mod pop_doppelganger;
@@ -728,4 +728,7 @@ pub use cryo_shock::*;
 
 /// Infrastructure system (Spec 452).
 pub mod infrastructure;
+pub mod biosphere;
+
+
 pub use infrastructure::*;

@@ -256,6 +256,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::memory_core::HarvestMemoryCoreEvent>>();
     world.init_resource::<Events<crate::layer1::tech::machine_awakening::BotGlitchEvent>>();
     world.init_resource::<crate::layer1::tech::machine_awakening::GlobalSentience>();
+    world.init_resource::<crate::layer1::biosphere::biosphere_empathy::GlobalFloraHealth>();
+    world.init_resource::<Events<crate::layer1::biosphere::biosphere_empathy::FloraDamagedEvent>>();
     #[cfg(feature = "nova")]
     world.init_resource::<crate::layer1::machine_consciousness::ConsciousnessConfig>();
 

@@ -100,6 +100,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::atmosphere::simulate_diffusion_system
                 .after(crate::layer1::terraforming::apply_planetary_effects_system),
             crate::layer1::logistics::orbital_drop::process_orbital_drops,
+            crate::layer1::biosphere::biosphere_empathy::sync_empathic_network_system,
+            crate::layer1::biosphere::biosphere_empathy::handle_flora_damage_empathy_system,
         )
             .in_set(Layer1SystemSet::Environment),
     );
