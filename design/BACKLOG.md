@@ -194,3 +194,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `463` Biological Transit — `specs/463-biological-transit.md`
 - [ ] `464` Albedo Mining — `specs/464-albedo-mining.md`
 - [ ] `465` Cult of the Forgotten Machine — `specs/465-cult-of-the-forgotten-machine.md`
+- [ ] `466` Synthetic Apathy — `specs/466-synthetic-apathy.md`
