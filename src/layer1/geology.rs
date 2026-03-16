@@ -41,15 +41,23 @@ impl SeismicGrid {
         if x < 0 || y < 0 || x as usize >= self.width || y as usize >= self.height {
             return 0.0;
         }
-        self.stress[(y as usize) * self.width + (x as usize)]
+        if let Some(idx) = (y as usize).checked_mul(self.width).and_then(|i| i.checked_add(x as usize)) {
+            if idx < self.stress.len() {
+                return self.stress[idx];
+            }
+        }
+        0.0
     }
 
     /// Adds stress to the given coordinates.
     #[allow(clippy::cast_sign_loss)]
     pub fn add_stress(&mut self, x: i32, y: i32, amount: f32) {
         if x >= 0 && y >= 0 && (x as usize) < self.width && (y as usize) < self.height {
-            let idx = (y as usize) * self.width + (x as usize);
-            self.stress[idx] += amount;
+            if let Some(idx) = (y as usize).checked_mul(self.width).and_then(|i| i.checked_add(x as usize)) {
+                if idx < self.stress.len() {
+                    self.stress[idx] += amount;
+                }
+            }
         }
     }
 
