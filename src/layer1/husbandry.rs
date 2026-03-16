@@ -158,8 +158,6 @@ pub fn husbandry_production_system(world: &mut World) {
 }
 
 /// Evaluates the utility of taming designated animals.
-#[must_use]
-
 /// Executes taming when pop is at target with Tame action.
 pub fn tame_execution_system(world: &mut World) {
     // Find pops at target with Tame action

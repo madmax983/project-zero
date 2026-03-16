@@ -95,6 +95,13 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer2::visibility::update_visibility_system),
     ));
 
+    schedule.add_systems((
+        crate::layer2::phantom::check_scrapcode_threshold_system
+            .after(crate::layer1::scrapcode::scrapcode_decay_system),
+        crate::layer2::phantom::spawn_ghost_fleet_system
+            .after(crate::layer2::phantom::check_scrapcode_threshold_system),
+    ));
+
     schedule
 }
 
@@ -185,6 +192,13 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<DetectionRisk>();
     }
 
+    if !world.contains_resource::<crate::layer2::phantom::EmpireAutomationState>() {
+        world.init_resource::<crate::layer2::phantom::EmpireAutomationState>();
+    }
+    if !world.contains_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>() {
+        world.init_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>();
+    }
+
     // Initialize Infinite Archive Resource (Spec 248)
     if !world.contains_resource::<crate::layer1::tech::infinite_archive::Archive>() {
         world.init_resource::<crate::layer1::tech::infinite_archive::Archive>();
@@ -255,6 +269,8 @@ mod tests {
         world.init_resource::<Events<crate::layer1::spiteful_will::OverrideWillEvent>>();
         world
             .init_resource::<Events<crate::layer1::nature::biosphere_empathy::FloraDamagedEvent>>();
+        world.init_resource::<crate::layer2::phantom::EmpireAutomationState>();
+        world.init_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);
