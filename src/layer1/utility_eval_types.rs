@@ -463,9 +463,11 @@ impl CandidateEvaluator {
 
 #[cfg(test)]
 mod tests {
-    use crate::layer1::utility_eval_types::{CandidateEvaluator, evaluate_candidates, ScorableCandidate};
-    use crate::layer1::utility_types::{ActionType, UtilityWeights};
     use crate::layer1::map::GridPosition;
+    use crate::layer1::utility_eval_types::{
+        evaluate_candidates, CandidateEvaluator, ScorableCandidate,
+    };
+    use crate::layer1::utility_types::{ActionType, UtilityWeights};
     use bevy_ecs::prelude::Entity;
 
     #[test]
@@ -538,7 +540,7 @@ mod tests {
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
         world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
         world.insert_resource(crate::layer1::taboo::TabooState::default());
-        world.insert_resource(crate::layer1::zone::ZoneGrid::new(1,1));
+        world.insert_resource(crate::layer1::zone::ZoneGrid::new(1, 1));
 
         let taboo = world.resource::<crate::layer1::taboo::TabooState>();
         let resources = world.resource::<crate::layer1::resources::ColonyResources>();
@@ -569,7 +571,7 @@ mod tests {
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
         world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
         world.insert_resource(crate::layer1::taboo::TabooState::default());
-        world.insert_resource(crate::layer1::zone::ZoneGrid::new(1,1));
+        world.insert_resource(crate::layer1::zone::ZoneGrid::new(1, 1));
 
         let taboo = world.resource::<crate::layer1::taboo::TabooState>();
         let resources = world.resource::<crate::layer1::resources::ColonyResources>();
@@ -599,16 +601,30 @@ mod tests {
         let pop_pos = GridPosition { x: 0, y: 0 };
 
         let test_cases = vec![
-            (UtilityWeights { distance_weight: 10.0, availability_weight: 0.0,  }, 0), // Prefers distance
-            (UtilityWeights { distance_weight: 0.0, availability_weight: 10.0,  }, 1), // Prefers availability
+            (
+                UtilityWeights {
+                    distance_weight: 10.0,
+                    availability_weight: 0.0,
+                },
+                0,
+            ), // Prefers distance
+            (
+                UtilityWeights {
+                    distance_weight: 0.0,
+                    availability_weight: 10.0,
+                },
+                1,
+            ), // Prefers availability
         ];
 
         for (weights, expected_winner) in test_cases {
-            let mut cand_a = ScorableCandidate::new(Entity::from_raw(1), GridPosition { x: 1, y: 0 }); // Very close
+            let mut cand_a =
+                ScorableCandidate::new(Entity::from_raw(1), GridPosition { x: 1, y: 0 }); // Very close
             cand_a.capacity = 10;
             cand_a.usage = 9; // 90% full (low availability)
 
-            let mut cand_b = ScorableCandidate::new(Entity::from_raw(2), GridPosition { x: 10, y: 0 }); // Far
+            let mut cand_b =
+                ScorableCandidate::new(Entity::from_raw(2), GridPosition { x: 10, y: 0 }); // Far
             cand_b.capacity = 10;
             cand_b.usage = 0; // Empty (high availability)
 
@@ -617,7 +633,11 @@ mod tests {
 
             assert!(result.is_some());
             let (_, target) = result.unwrap();
-            let expected_entity = if expected_winner == 0 { cand_a.entity } else { cand_b.entity };
+            let expected_entity = if expected_winner == 0 {
+                cand_a.entity
+            } else {
+                cand_b.entity
+            };
 
             assert_eq!(
                 target, expected_entity,

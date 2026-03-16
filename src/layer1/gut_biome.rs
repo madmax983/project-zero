@@ -1,6 +1,6 @@
+use crate::layer1::items::ItemType;
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
-use crate::layer1::items::ItemType;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum BiomeCategory {
@@ -54,7 +54,12 @@ impl GutBiome {
 
 pub fn get_biome_category(item: &ItemType) -> BiomeCategory {
     match item {
-        ItemType::Wheat | ItemType::Potato | ItemType::Rice | ItemType::Corn | ItemType::Soy | ItemType::Fruit => BiomeCategory::Plant,
+        ItemType::Wheat
+        | ItemType::Potato
+        | ItemType::Rice
+        | ItemType::Corn
+        | ItemType::Soy
+        | ItemType::Fruit => BiomeCategory::Plant,
         ItemType::Meat | ItemType::Fish => BiomeCategory::Meat,
         ItemType::GlowMushroom => BiomeCategory::Fungi,
         ItemType::MysteryMeal | ItemType::AlienMeatA | ItemType::AlienMeatB => BiomeCategory::Xeno,
@@ -65,9 +70,9 @@ pub fn get_biome_category(item: &ItemType) -> BiomeCategory {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::needs::Needs;
-    use crate::layer1::morale::Morale;
     use crate::layer1::farm::consume_food_system;
+    use crate::layer1::morale::Morale;
+    use crate::layer1::needs::Needs;
     use crate::layer1::resources::ColonyResources;
     use bevy_ecs::system::RunSystemOnce;
 
@@ -110,7 +115,10 @@ mod tests {
 
         // Spawn Farm to supply plant food
         world.spawn((
-            crate::layer1::farm::Farm { selected_crop: ItemType::Wheat, ..Default::default() },
+            crate::layer1::farm::Farm {
+                selected_crop: ItemType::Wheat,
+                ..Default::default()
+            },
             crate::layer1::map::GridPosition { x: 0, y: 0 },
         ));
 
@@ -118,22 +126,33 @@ mod tests {
         let mut poor_biome = GutBiome::default();
         poor_biome.set_familiarity(BiomeCategory::Plant, 0.1);
 
-        let pop = world.spawn((
-            crate::layer1::pop::Pop,
-            Needs { hunger: 0.0, ..Default::default() },
-            poor_biome,
-            Morale::default(),
-        )).id();
+        let pop = world
+            .spawn((
+                crate::layer1::pop::Pop,
+                Needs {
+                    hunger: 0.0,
+                    ..Default::default()
+                },
+                poor_biome,
+                Morale::default(),
+            ))
+            .id();
 
         // Run eat system
         world.run_system_once(consume_food_system).unwrap();
 
         let needs = world.get::<Needs>(pop).unwrap();
         // Normal gain is e.g. 0.2. Poor adaptation might give 0.1 (0.2 * 0.6 = 0.12).
-        assert!(needs.hunger < 0.2, "Should have reduced nutrition gain due to poor biome");
+        assert!(
+            needs.hunger < 0.2,
+            "Should have reduced nutrition gain due to poor biome"
+        );
 
         let morale = world.get::<Morale>(pop).unwrap();
-        assert!(morale.modifiers.iter().any(|m| m.label == "Indigestion"), "Should have indigestion debuff");
+        assert!(
+            morale.modifiers.iter().any(|m| m.label == "Indigestion"),
+            "Should have indigestion debuff"
+        );
     }
 
     #[test]
@@ -146,7 +165,10 @@ mod tests {
         // Spawn Farm to supply meat food
         // We'll spawn a fauna instead since Farm produces crops
         world.spawn((
-            crate::layer1::fauna::Fauna { fauna_type: crate::layer1::fauna::FaunaType::SpaceRat, ..Default::default() },
+            crate::layer1::fauna::Fauna {
+                fauna_type: crate::layer1::fauna::FaunaType::SpaceRat,
+                ..Default::default()
+            },
             crate::layer1::husbandry::Tame::default(),
         ));
 
@@ -154,12 +176,17 @@ mod tests {
         let mut good_biome = GutBiome::default();
         good_biome.set_familiarity(BiomeCategory::Meat, 1.0);
 
-        let pop = world.spawn((
-            crate::layer1::pop::Pop,
-            Needs { hunger: 0.0, ..Default::default() },
-            good_biome,
-            Morale::default(),
-        )).id();
+        let pop = world
+            .spawn((
+                crate::layer1::pop::Pop,
+                Needs {
+                    hunger: 0.0,
+                    ..Default::default()
+                },
+                good_biome,
+                Morale::default(),
+            ))
+            .id();
 
         world.run_system_once(consume_food_system).unwrap();
 
@@ -167,6 +194,9 @@ mod tests {
         assert!(needs.hunger >= 0.2, "Should have full nutrition gain");
 
         let morale = world.get::<Morale>(pop).unwrap();
-        assert!(morale.modifiers.iter().any(|m| m.label == "Gut Comfort"), "Should have comfort buff");
+        assert!(
+            morale.modifiers.iter().any(|m| m.label == "Gut Comfort"),
+            "Should have comfort buff"
+        );
     }
 }

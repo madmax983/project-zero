@@ -10073,7 +10073,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Artificial Sunspots
+## Artificial Sunspots [SPECCED]
 
 **Layer:** Cross-layer (3 -> 2 -> 1)
 

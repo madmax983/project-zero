@@ -24,10 +24,10 @@
 
 use super::artifacts::ActiveAuras;
 use super::biocompatibility::Biocompatibility;
-use super::gut_biome::GutBiome;
 use super::cabin_fever::CabinFever;
 use super::contagion::ContagionCooldown;
 use super::factions::FactionMember;
+use super::gut_biome::GutBiome;
 use super::hygiene::Filth;
 use super::items::Equipment;
 use super::language::{Dialect, Linguistics};

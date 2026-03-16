@@ -1107,7 +1107,10 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: i32) {
             };
 
             let walkable = tile.is_walkable();
-            let buildable = matches!(tile, TerrainType::Grass | TerrainType::Dirt | TerrainType::Rock | TerrainType::Path);
+            let buildable = matches!(
+                tile,
+                TerrainType::Grass | TerrainType::Dirt | TerrainType::Rock | TerrainType::Path
+            );
 
             // Check for entities
             let has_pop = pop_positions.iter().any(|&(px, py)| px == x && py == y);
@@ -1129,22 +1132,38 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: i32) {
                 Cell::new(bool_to_str(walkable)),
                 Cell::new(bool_to_str(buildable)),
                 Cell::new(bool_to_str(occupied)),
-                Cell::new(bool_to_str(has_pop)).fg(if has_pop { CColor::Cyan } else { CColor::White }),
-                Cell::new(bool_to_str(has_farm)).fg(if has_farm { CColor::Green } else { CColor::White }),
-                Cell::new(bool_to_str(has_housing)).fg(if has_housing { CColor::Yellow } else { CColor::White }),
-                Cell::new(designation).fg(if designation != "-" { CColor::Magenta } else { CColor::White }),
+                Cell::new(bool_to_str(has_pop)).fg(if has_pop {
+                    CColor::Cyan
+                } else {
+                    CColor::White
+                }),
+                Cell::new(bool_to_str(has_farm)).fg(if has_farm {
+                    CColor::Green
+                } else {
+                    CColor::White
+                }),
+                Cell::new(bool_to_str(has_housing)).fg(if has_housing {
+                    CColor::Yellow
+                } else {
+                    CColor::White
+                }),
+                Cell::new(designation).fg(if designation != "-" {
+                    CColor::Magenta
+                } else {
+                    CColor::White
+                }),
             ]);
         }
     }
 
     if found_count == 0 {
-        println!("│ {} │", "  (No tiles found in range)                    ".dark_grey().italic());
         println!(
-            "{}",
-            format!("╰{}╯", "─".repeat(73))
-                .cyan()
-                .bold()
+            "│ {} │",
+            "  (No tiles found in range)                    "
+                .dark_grey()
+                .italic()
         );
+        println!("{}", format!("╰{}╯", "─".repeat(73)).cyan().bold());
     } else {
         println!("{table}");
     }
@@ -1176,13 +1195,13 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
     );
 
     if x < 0 || y < 0 || x >= max_x || y >= max_y {
-        println!("│ {} │", "  ERROR: Coordinates out of bounds             ".red().bold());
         println!(
-            "{}",
-            format!("╰{}╯", "─".repeat(59))
-                .cyan()
+            "│ {} │",
+            "  ERROR: Coordinates out of bounds             "
+                .red()
                 .bold()
         );
+        println!("{}", format!("╰{}╯", "─".repeat(59)).cyan().bold());
         return;
     }
 
@@ -1201,7 +1220,10 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
     };
 
     let walkable = tile.is_walkable();
-    let buildable = matches!(tile, TerrainType::Grass | TerrainType::Dirt | TerrainType::Rock | TerrainType::Path);
+    let buildable = matches!(
+        tile,
+        TerrainType::Grass | TerrainType::Dirt | TerrainType::Rock | TerrainType::Path
+    );
 
     // Check for entities
     let has_pop = world
@@ -1257,11 +1279,19 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
     ]);
     table.add_row(vec![
         Cell::new("Farm Present"),
-        Cell::new(bool_to_str(has_farm)).fg(if has_farm { CColor::Green } else { CColor::White }),
+        Cell::new(bool_to_str(has_farm)).fg(if has_farm {
+            CColor::Green
+        } else {
+            CColor::White
+        }),
     ]);
     table.add_row(vec![
         Cell::new("Housing Present"),
-        Cell::new(bool_to_str(has_housing)).fg(if has_housing { CColor::Yellow } else { CColor::White }),
+        Cell::new(bool_to_str(has_housing)).fg(if has_housing {
+            CColor::Yellow
+        } else {
+            CColor::White
+        }),
     ]);
 
     println!("{table}");
@@ -1521,7 +1551,12 @@ fn print_log(world: &mut World) {
     );
 
     if log.messages.is_empty() {
-        println!("│ {} │", "  (No messages)                                ".dark_grey().italic());
+        println!(
+            "│ {} │",
+            "  (No messages)                                "
+                .dark_grey()
+                .italic()
+        );
         println!(
             "{}",
             "╰───────────────────────────────────────────────╯"
@@ -1551,7 +1586,9 @@ fn print_log(world: &mut World) {
         };
 
         table.add_row(vec![
-            Cell::new(level_indicator).fg(color).add_attribute(Attribute::Bold),
+            Cell::new(level_indicator)
+                .fg(color)
+                .add_attribute(Attribute::Bold),
             Cell::new(&msg.text).fg(color),
         ]);
     }
