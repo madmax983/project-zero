@@ -10,7 +10,9 @@ use scale::simulation::run_simulation_tick;
 fn main() {
     println!(
         "{}",
-        "Initializing headless simulation...".with(Color::Cyan).bold()
+        "Initializing headless simulation..."
+            .with(Color::Cyan)
+            .bold()
     );
 
     // 1. Setup the world with headless configuration
@@ -22,7 +24,9 @@ fn main() {
 
     println!(
         "{}",
-        "Simulation started (Headless Mode)".with(Color::Green).bold()
+        "Simulation started (Headless Mode)"
+            .with(Color::Green)
+            .bold()
     );
 
     // 2. Run a few ticks

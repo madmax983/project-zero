@@ -380,31 +380,32 @@ fn apply_finished_refining_jobs(
 }
 
 fn collect_active_refining_workers(world: &mut World) -> Vec<(Entity, GridPosition)> {
-    let factions_data = world.get_resource::<Factions>().map(|f| f.map.clone());
+    // ⚡ Bolt Optimization: Avoid cloning the Factions HashMap every tick.
+    // We also avoid intermediate heap allocations by creating the query state first,
+    // getting the read-only Factions resource, and then iterating directly.
+    let mut query = world
+        .query_filtered::<(Entity, &GridPosition, &PopAction, Option<&FactionMember>), With<Pop>>();
 
-    world
-        .query_filtered::<(Entity, &GridPosition, &PopAction, Option<&FactionMember>), With<Pop>>()
+    let factions_data = world.get_resource::<Factions>().map(|f| &f.map);
+
+    query
         .iter(world)
-        .filter(|(_, _, action, member)| {
+        .filter_map(|(entity, pos, action, member)| {
             if action.current != ActionType::Refine {
-                return false;
+                return None;
             }
 
-            if let Some(map) = &factions_data {
-                if let Some(m) = member {
-                    if let Some(fid) = m.faction_id {
-                        if map
-                            .get(&fid)
-                            .is_some_and(|d| d.state == FactionState::Striking)
-                        {
-                            return false;
-                        }
-                    }
-                }
+            let is_striking = member
+                .and_then(|m| m.faction_id)
+                .and_then(|fid| factions_data.and_then(|map| map.get(&fid)))
+                .is_some_and(|d| d.state == FactionState::Striking);
+
+            if is_striking {
+                None
+            } else {
+                Some((entity, *pos))
             }
-            true
         })
-        .map(|(e, p, _, _)| (e, *p))
         .collect()
 }
 
