@@ -9918,7 +9918,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Phantom Sub-routines
+## The Phantom Sub-routines [SPECCED]
 
 **Layer:** 2 / 3
 
