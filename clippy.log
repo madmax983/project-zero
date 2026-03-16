@@ -1,0 +1,172 @@
+    Checking scale v0.1.0 (/app)
+error: struct update has no effect, all the fields in the struct have already been specified
+  --> examples/headless_demo.rs:15:11
+   |
+15 |         ..Default::default()
+   |           ^^^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#needless_update
+   = note: `-D clippy::needless-update` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::needless_update)]`
+
+error: could not compile `scale` (example "headless_demo") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> tests/integration/ui_stats.rs:27:9
+   |
+27 |         resources.food = 42.0;
+   |         ^^^^^^^^^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `scale::layer1::ColonyResources { food: 42.0, ..Default::default() }` and removing relevant reassignments
+  --> tests/integration/ui_stats.rs:26:9
+   |
+26 |         let mut resources = ColonyResources::default();
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+   = note: `-D clippy::field-reassign-with-default` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::field_reassign_with_default)]`
+
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> tests/integration/binge_resources.rs:92:9
+   |
+92 |         resources.food = 20.0;
+   |         ^^^^^^^^^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `scale::layer1::ColonyResources { food: 20.0, rations: 10.0, ..Default::default() }` and removing relevant reassignments
+  --> tests/integration/binge_resources.rs:91:9
+   |
+91 |         let mut resources = ColonyResources::default();
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> tests/integration/binge_resources.rs:172:9
+    |
+172 |         resources.food = 2.0;
+    |         ^^^^^^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `scale::layer1::ColonyResources { food: 2.0, rations: 10.0, ..Default::default() }` and removing relevant reassignments
+   --> tests/integration/binge_resources.rs:171:9
+    |
+171 |         let mut resources = ColonyResources::default();
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> tests/integration/hauling_flow.rs:23:9
+   |
+23 |         resources.tools = 0.0; // Prevent FetchTool action
+   |         ^^^^^^^^^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `scale::layer1::ColonyResources { tools: 0.0, ..Default::default() }` and removing relevant reassignments
+  --> tests/integration/hauling_flow.rs:22:9
+   |
+22 |         let mut resources = ColonyResources::default();
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> tests/integration/tech_corruption.rs:58:9
+   |
+58 |         tech_state.total_capacity = 100.0;
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `scale::layer1::TechState { total_capacity: 100.0, ..Default::default() }` and removing relevant reassignments
+  --> tests/integration/tech_corruption.rs:57:9
+   |
+57 |         let mut tech_state = TechState::default();
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> tests/integration/tech_corruption.rs:126:9
+    |
+126 |         tech_state.total_capacity = 100.0;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `scale::layer1::TechState { total_capacity: 100.0, ..Default::default() }` and removing relevant reassignments
+   --> tests/integration/tech_corruption.rs:125:9
+    |
+125 |         let mut tech_state = TechState::default();
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> tests/integration/tech_corruption.rs:187:9
+    |
+187 |         tech_state.total_capacity = 100.0;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `scale::layer1::TechState { total_capacity: 100.0, ..Default::default() }` and removing relevant reassignments
+   --> tests/integration/tech_corruption.rs:186:9
+    |
+186 |         let mut tech_state = TechState::default();
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> tests/integration/power_utility.rs:37:9
+   |
+37 |         resources.ore = 10.0;
+   |         ^^^^^^^^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `scale::layer1::ColonyResources { ore: 10.0, wood: 10.0, ..Default::default() }` and removing relevant reassignments
+  --> tests/integration/power_utility.rs:36:9
+   |
+36 |         let mut resources = ColonyResources::default();
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: struct update has no effect, all the fields in the struct have already been specified
+  --> tests/integration/wind_atmosphere.rs:34:19
+   |
+34 |                 ..Default::default()
+   |                   ^^^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#needless_update
+   = note: `-D clippy::needless-update` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::needless_update)]`
+
+error: field assignment outside of initializer for an instance created with Default::default()
+  --> tests/integration/infinite_archive_chronicle.rs:16:5
+   |
+16 |     tech_state.total_capacity = 100.0;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+note: consider initializing the variable with `scale::layer1::TechState { total_capacity: 100.0, ..Default::default() }` and removing relevant reassignments
+  --> tests/integration/infinite_archive_chronicle.rs:15:5
+   |
+15 |     let mut tech_state = TechState::default();
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: struct update has no effect, all the fields in the struct have already been specified
+  --> tests/integration/sanctuary_ai.rs:47:19
+   |
+47 |                 ..Default::default()
+   |                   ^^^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#needless_update
+
+error: struct update has no effect, all the fields in the struct have already been specified
+  --> tests/integration/sanctuary_ai.rs:70:19
+   |
+70 |                 ..Default::default()
+   |                   ^^^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#needless_update
+
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> tests/integration/subspace_pen_pals.rs:117:5
+    |
+117 |     resources.knowledge = 100.0;
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `scale::layer1::ColonyResources { knowledge: 100.0, ..Default::default() }` and removing relevant reassignments
+   --> tests/integration/subspace_pen_pals.rs:116:5
+    |
+116 |     let mut resources = ColonyResources::default();
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#field_reassign_with_default
+
+error: could not compile `scale` (test "integration") due to 13 previous errors

@@ -56,6 +56,9 @@ mod tests {
         world.insert_resource(scale::ui::UiState::default());
         world.insert_resource(scale::layer1::clutter::ClutterGrid::new(10, 10));
         world.insert_resource(scale::layer1::trade::TradeMarket::default());
+        world.insert_resource(scale::layer1::void_weed::SmugglingHeat::default());
+        world.insert_resource(scale::layer1::void_weed::TradeNetwork::default());
+        world.init_resource::<scale::layer1::olfactory::ScentMap>();
         world.insert_resource(scale::layer1::solar::SolarCycleState::default());
         world.insert_resource(scale::layer1::tech::infinite_archive::Archive::default());
         world.insert_resource(scale::layer1::hum::HumMap::new(10, 10));
@@ -67,6 +70,8 @@ mod tests {
         world.insert_resource(scale::layer1::terraforming::PlanetaryAtmosphere::default());
         world.insert_resource(scale::layer1::atmosphere::CorrosiveAtmosphere::default());
         world.insert_resource(scale::layer1::atmosphere::DiffusionConfig::default());
+        world.insert_resource(scale::layer1::light_pollution::SkyGlow::default());
+        world.insert_resource(scale::layer1::ColonyStats::default());
         world.insert_resource(scale::layer1::void_stare::VoidGrid::new(10, 10));
         world.insert_resource(scale::layer1::festivals::FestivalState::default());
         world.init_resource::<Events<scale::layer1::direct_link::UnpossessEvent>>();
@@ -80,6 +85,16 @@ mod tests {
         world.init_resource::<Events<scale::layer1::BuildingCompletedEvent>>();
         world.init_resource::<Events<scale::layer1::BuildingRemovedEvent>>();
         world.init_resource::<Events<scale::layer1::PopBorn>>();
+        world.init_resource::<Events<scale::layer1::memory_core::HarvestMemoryCoreEvent>>();
+        world.init_resource::<Events<scale::layer1::memory_core::ImplantMemoryCoreEvent>>();
+        world.init_resource::<Events<scale::layer1::spiteful_will::OverrideWillEvent>>();
+        world.init_resource::<Events<scale::layer1::spiteful_will::InheritanceEvent>>();
+        world.init_resource::<Events<scale::layer1::logistics::orbital_drop::OrbitalDropEvent>>();
+        world.init_resource::<Events<scale::layer1::ancestral_graves::SacrilegeEvent>>();
+        world.init_resource::<Events<scale::layer1::void_weed::MerchantArrivalEvent>>();
+        world.init_resource::<Events<scale::layer1::void_weed::PirateRaidEvent>>();
+        world.init_resource::<Events<scale::layer1::overview_effect::ObserveEvent>>();
+        world.init_resource::<Events<scale::layer1::tech::neural_leech::NeuralHubDeathEvent>>();
 
         // Other dependencies for systems
         world.insert_resource(scale::layer1::erosion::ErosionGrid::new(10, 10));

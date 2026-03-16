@@ -38,6 +38,7 @@ mod tests {
         world.insert_resource(scale::layer1::chronicle::BuildingTracker::default());
         world.insert_resource(scale::layer1::erosion::ErosionGrid::new(10, 10));
         world.insert_resource(scale::layer1::water::WaterGrid::new(10, 10));
+        world.insert_resource(scale::layer1::light_pollution::SkyGlow::default());
         world.insert_resource(scale::layer1::tech::TechState::default());
         world.insert_resource(scale::layer1::beauty::BeautyGrid::new(10, 10));
         world.insert_resource(scale::layer1::structural_integrity::RoofGrid::new(10, 10));
@@ -108,6 +109,16 @@ mod tests {
         world.init_resource::<Events<scale::layer1::BuildingCompletedEvent>>();
         world.init_resource::<Events<scale::layer1::BuildingRemovedEvent>>();
         world.init_resource::<Events<scale::layer1::PopBorn>>();
+        world.init_resource::<Events<scale::layer1::memory_core::HarvestMemoryCoreEvent>>();
+        world.init_resource::<Events<scale::layer1::memory_core::ImplantMemoryCoreEvent>>();
+        world.init_resource::<Events<scale::layer1::spiteful_will::OverrideWillEvent>>();
+        world.init_resource::<Events<scale::layer1::spiteful_will::InheritanceEvent>>();
+        world.init_resource::<Events<scale::layer1::logistics::orbital_drop::OrbitalDropEvent>>();
+        world.init_resource::<Events<scale::layer1::ancestral_graves::SacrilegeEvent>>();
+        world.init_resource::<Events<scale::layer1::void_weed::MerchantArrivalEvent>>();
+        world.init_resource::<Events<scale::layer1::void_weed::PirateRaidEvent>>();
+        world.init_resource::<Events<scale::layer1::overview_effect::ObserveEvent>>();
+        world.init_resource::<Events<scale::layer1::tech::neural_leech::NeuralHubDeathEvent>>();
         world.init_resource::<Events<scale::layer1::geology::tectonic::MegaQuakeEvent>>();
         world.init_resource::<Events<scale::layer1::resources::MiningEvent>>();
         world.init_resource::<Events<scale::layer1::volatile::ExplosionEvent>>();
@@ -127,6 +138,22 @@ mod tests {
         world.insert_resource(scale::layer3::silence::DetectionRisk::default());
         world.insert_resource(scale::layer2::thermal::ThermalSignature::default());
         world.insert_resource(scale::layer1::social::empty_room::SanctuaryManager::default());
+        world.insert_resource(scale::layer1::trade::TradeMarket::default());
+        world.insert_resource(scale::layer1::void_weed::SmugglingHeat::default());
+        world.insert_resource(scale::layer1::void_weed::TradeNetwork::default());
+        world.init_resource::<scale::layer1::olfactory::ScentMap>();
+        world.insert_resource(scale::layer1::solar::SolarCycleState::default());
+        #[cfg(feature = "nova")]
+        world.insert_resource(scale::layer1::machine_consciousness::ConsciousnessConfig::default());
+        #[cfg(feature = "nova")]
+        world.init_resource::<scale::layer1::constellations::Sky>();
+        #[cfg(feature = "nova")]
+        world.insert_resource(scale::layer1::void_signals::SignalNetwork::default());
+        #[cfg(feature = "nova")]
+        world.insert_resource(scale::layer1::loci::LociMap::new(10, 10));
+        world.insert_resource(scale::layer1::clutter::ClutterGrid::new(10, 10));
+        world.insert_resource(scale::layer1::light_pollution::SkyGlow::default());
+        world.insert_resource(scale::layer1::ColonyStats::default());
         world.insert_resource(scale::layer1::atmosphere::CorrosiveAtmosphere::default());
         world.insert_resource(scale::layer1::terraforming::PlanetaryAtmosphere::default());
         world.insert_resource(scale::layer1::atmosphere::DiffusionConfig::default());
