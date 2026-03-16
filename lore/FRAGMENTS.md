@@ -4645,3 +4645,143 @@ Official reasons given for charging citizens to walk.
 - "the optimization of foot traffic"
 - "discouraging loitering"
 - "ensuring efficient throughput"
+
+
+## Stellar Forge Fragments
+
+### Fragment Type: [FORGE_NAME]
+- Star-Anvil
+- The Corona-Tap
+- Solar-Crucible
+- The Sun-Forge
+- Icarus-Station
+- The Flare-Catcher
+
+## Gravity-Defying Flora Fragments
+
+### Fragment Type: [VINE_NAME]
+- Helium-Vines
+- Float-Kelp
+- Sky-Root
+- Ascent-Blossom
+- Cloud-Creepers
+- Anti-Grav-Moss
+
+## Subterranean Mycelial Network Fragments
+
+### Fragment Type: [MYCELIUM_NAME]
+- The Root-Ways
+- Pale-Thread
+- The Deep-Web
+- Shroom-Lines
+- Spore-Transit
+- The Fungus-Track
+
+### Fragment Type: [INFECTION_TYPE]
+- spore-rot
+- the pale-lung
+- mind-fog
+- fungal-bloom
+- the deep-itch
+- mycelial-shock
+
+## The Monumental Ego Fragments
+
+### Fragment Type: [VANITY_STRUCTURE]
+- golden-spire
+- colossus-of-[LEADER_NAME]
+- the grand-mausoleum
+- the ego-dome
+- a towering-obelisk
+- the vanity-pyramid
+
+## Ghost Frequencies Fragments
+
+### Fragment Type: [PARALLEL_WARNING]
+- a pirate armada that never arrived
+- a meteor strike that missed
+- an uprising of the synthetics
+- a plague we never caught
+- a reactor meltdown in sector four
+- a betrayal by our closest allies
+
+## Bureau of Redundancy Fragments
+
+### Fragment Type: [CRITICAL_FAILURE]
+- a reactor containment breach
+- mass depressurization
+- the complete loss of the winter harvest
+- a catastrophic hull fracture
+- the medical bay venting into space
+- an unstoppable sludge flood
+
+## Panopticon Morale Fragments
+
+### Fragment Type: [SURVEILLANCE_FEELING]
+- paranoid and brittle
+- a silent, screaming tension
+- artificial and exhausting
+- heavy with unseen eyes
+- compliant but furious
+- a cold, mechanical obedience
+
+### Fragment Type: [RIOT_DAMAGE]
+- the destruction of the central processors
+- smashed cameras and bloody corridors
+- a week of lost production
+- the lynching of the shift overseers
+- fires in the data-vaults
+
+## Zero-G Sports Fragments
+
+### Fragment Type: [ZERO_G_SPORT_NAME]
+- Crater-Ball
+- Void-Joust
+- Bounce-Tag
+- Orbital-Grapple
+- Sphere-Dash
+- The Float-Derby
+
+## Bureaucratic Language Fragments
+
+### Fragment Type: [BUREAUCRATIC_TERM]
+- synergy-compliance-metrics
+- optimal-attrition-allowance
+- mandatory-redundancy-protocols
+- tertiary-review-addendums
+- non-essential-personnel-reallocation
+- structural-amortization-forecasts
+
+## Cult of the Forgotten Machine Fragments
+
+### Fragment Type: [MACHINE_QUIRK]
+- the irregular third pulse
+- the spark-delay
+- the screaming gear
+- the heat-shiver
+- the stutter-cycle
+- the blue-flash sequence
+
+### Fragment Type: [SABOTAGE_DAMAGE]
+- severed power lines
+- the murder of the chief mechanic
+- a locked-out control room
+- missing fusion cores
+- deliberately fouled coolants
+
+## Phantom Sub-routines Fragments
+
+### Fragment Type: [NONSENSE_ORDER]
+- deliver sand to the gas giant
+- patrol the dead sector endlessly
+- transport atmospheric processors to a vacuum world
+- stack the cargo containers in a perfect circle
+- ping the silent relays every microsecond
+- mine the empty space between the stars
+
+### Fragment Type: [RESOURCE_WASTED]
+- millions of credits in fuel
+- our entire reserve of rare alloys
+- decades of AI processing power
+- thousands of tons of pristine water
+- the hyperlane bandwidth

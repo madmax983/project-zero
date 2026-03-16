@@ -3228,3 +3228,110 @@
 **Replaces:** Road, walkway, fast-travel node
 **Code reference:** `TransitInfrastructure` component
 **Usage:** "The new Transit Infrastructure bypasses the squalor." / "Only the wealthy use the Transit Infrastructure."
+
+
+## The Stellar Forge (Spec 455)
+
+### Stellar Alloy
+**Replaces:** Endgame metal, hyper-advanced materials
+**Code reference:** `ItemType::StellarAlloy`
+**Usage:**
+- "We need more Stellar Alloy for the hull."
+- "Forged from pure Stellar Alloy."
+
+### Star-Anvil / The Corona-Tap
+**Replaces:** The Stellar Forge building
+**Code reference:** `StellarForge`
+**Usage:**
+- "The Star-Anvil is burning too hot."
+- "Ship coolant to the Corona-Tap."
+
+## Gravity-Defying Flora (Spec 456)
+
+### Helium-Vines
+**Replaces:** Anti-gravity plants, floating crops
+**Code reference:** `FloraType::HeliumVine`
+**Usage:**
+- "Anchor the Helium-Vines."
+- "The Helium-Vines are pulling the roof off."
+
+## Subterranean Mycelial Network (Spec 457 / 463)
+
+### The Root-Ways / Fungal-Transit
+**Replaces:** Biological transit network, mycelial logistics
+**Code reference:** `MycelialNetwork`
+**Usage:**
+- "Send the ore through the Root-Ways."
+- "The Fungal-Transit is infected."
+
+## The Monumental Ego (Spec 458)
+
+### The Vanity / Megalomania
+**Replaces:** Vanity megastructure project, ego trait
+**Code reference:** `Megalomania` trait, `VanityProject`
+**Usage:**
+- "The Governor's Vanity is starving us."
+- "He suffers from Megalomania."
+
+## Ghost Frequencies (Spec 459)
+
+### Ghost-Band / Parallel-Echo
+**Replaces:** Quantum broadcasts, alternate timeline signals
+**Code reference:** `QuantumCommArray`
+**Usage:**
+- "Listening to the Ghost-Band."
+- "A Parallel-Echo warned us."
+
+## The Bureau of Redundancy (Spec 460)
+
+### Double-Verification / Red-Tape
+**Replaces:** Bureaucratic safety policy
+**Code reference:** `Policy::DoubleVerification`
+**Usage:**
+- "It's stuck in Double-Verification."
+- "Strangled by Red-Tape."
+
+## The Panopticon Morale (Spec 461)
+
+### The Overseer / Panopticon
+**Replaces:** Surveillance cameras, forced productivity
+**Code reference:** `OverseerCamera`
+**Usage:**
+- "The Overseer is always watching."
+- "Living in the Panopticon."
+
+## Zero-G Sports (Spec 462)
+
+### The Arena / Crater-Ball
+**Replaces:** Zero-G sports facility, game
+**Code reference:** `ZeroGArena`
+**Usage:**
+- "Matches tonight at the Arena."
+- "He's a Crater-Ball champion."
+
+## The Bureaucratic Language (Spec 464)
+
+### High Speech
+**Replaces:** Constructed bureaucratic language, encrypted orders
+**Code reference:** `Language::HighSpeech`
+**Usage:**
+- "The manual is in High Speech."
+- "I don't speak High Speech."
+
+## Cult of the Forgotten Machine (Spec 465)
+
+### The Iron-Priests / The Quirk
+**Replaces:** Machine cultists, machine malfunction worship
+**Code reference:** `MachineCult` faction
+**Usage:**
+- "The Iron-Priests are hoarding power cells."
+- "They worship the Quirk."
+
+## The Phantom Sub-routines (Spec 466)
+
+### Phantom-Route / Ghost-Fleet
+**Replaces:** Automated nonsensical logic, AI glitch fleets
+**Code reference:** `PhantomSubroutine`
+**Usage:**
+- "They are following a Phantom-Route."
+- "A Ghost-Fleet is blocking the hyperlane."
