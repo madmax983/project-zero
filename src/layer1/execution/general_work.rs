@@ -27,6 +27,7 @@ use crate::layer1::needs::{get_morale_efficiency, Needs};
 use crate::layer1::pop::Job;
 use crate::layer1::resources::{ColonyResources, ResourceType};
 use crate::layer1::skills::{get_skill_efficiency, SkillType, Skills};
+use crate::layer1::bureaucracy::WorkDelay;
 use crate::layer1::social::SocialBuff;
 use crate::layer1::tech::hypno_learning::MentalFog;
 use crate::layer1::tech::Tech;
@@ -127,6 +128,7 @@ fn collect_workers_by_target(
         Option<&Dialect>,
         Option<&Linguistics>,
         Option<&MentalFog>,
+        Option<&WorkDelay>,
     ), With<AtTarget>>();
 
     // ⚡ Bolt Optimization:
@@ -135,7 +137,23 @@ fn collect_workers_by_target(
     // significantly reducing heap allocations per frame when evaluating large worker populations.
     for (target, worker) in query
         .iter(world)
-        .filter(|(_, mt, _, _, _, _, _, _, faction_member, _, _, _, _, _)| {
+        .filter(|(
+            _,
+            mt,
+            _,
+            _,
+            _,
+            _,
+            _,
+            _,
+            faction_member,
+            _,
+            _,
+            _,
+            _,
+            _,
+            _,
+        )| {
             let is_work = mt.for_action == ActionType::Work || mt.for_action == ActionType::Repair;
             if !is_work {
                 return false;
@@ -163,6 +181,7 @@ fn collect_workers_by_target(
                 dialect,
                 ling,
                 fog,
+                delay,
             )| {
                 let morale = needs.map_or(0.5, |n| {
                     calculate_effective_morale(
@@ -183,6 +202,7 @@ fn collect_workers_by_target(
                 };
                 let buff_mod = buff.map_or(1.0, |b| b.multiplier);
                 let fog_mod = fog.map_or(1.0, |f| f.work_speed_penalty);
+                let delay_mod = delay.map_or(1.0, |d| d.multiplier);
 
                 (
                     mt.target_entity,
@@ -191,7 +211,7 @@ fn collect_workers_by_target(
                         morale,
                         action: mt.for_action,
                         equipment: eq.copied(),
-                        speed_modifier: trait_work_mod * job_eff_mod * buff_mod * fog_mod,
+                        speed_modifier: trait_work_mod * job_eff_mod * buff_mod * fog_mod * delay_mod,
                         job: job.copied(),
                         dialect: dialect.copied().unwrap_or_default(),
                         linguistics: ling.cloned().unwrap_or_default(),

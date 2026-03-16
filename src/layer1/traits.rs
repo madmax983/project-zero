@@ -24,6 +24,8 @@ pub enum Trait {
     FastWalker,
     /// Hoards Valuables (Metal, Luxuries).
     Greedy,
+    /// Has mastered the bureaucratic High Speech.
+    Bureaucrat,
     /// Hoards Survival Goods (Food, Meds).
     Anxious,
     /// Resists atmospheric hazards (+30% Biocompatibility).
@@ -136,6 +138,7 @@ impl Trait {
             Self::Synesthete => "Synesthete",
             Self::Spiteful => "Spiteful",
             Self::EmpathicLink => "Empathic Link",
+            Self::Bureaucrat => "Bureaucrat",
         }
     }
 }

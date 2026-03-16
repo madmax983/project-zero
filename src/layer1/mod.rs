@@ -38,6 +38,8 @@ pub mod ad_screen;
 pub mod admin;
 /// AI Core system (Spec 148).
 pub mod ai_core;
+/// Bureaucratic Language system (Spec 464).
+pub mod bureaucracy;
 /// Biometric access control system (Spec 142).
 pub mod ancestral_graves;
 /// Game balance constants.

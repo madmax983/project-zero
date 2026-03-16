@@ -244,3 +244,4 @@
 - [x] `INT-452` Integration: Movement -> Commuter Tax (Toll) — completed 2026-03-15
 - [x] `293` The Biosphere Empathy Link — `specs/293-biosphere-empathy-link.md` — completed 2026-02-01
 - [x] `INT-293` Integration: Clear Flora -> Biosphere Empathy — completed 2026-03-15
+- [x] `464` The Bureaucratic Language — `specs/464-bureaucratic-language.md` — completed 2026-03-15

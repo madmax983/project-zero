@@ -40,6 +40,10 @@ use super::skills::Skills;
 use super::social::debt::SocialDebt;
 use super::social::old_guard::Arrival;
 use super::terrain::{TerrainGrid, TerrainType};
+/// Educational level for administrative tasks.
+#[derive(Component, Default, Clone, Debug)]
+pub struct EducationLevel(pub u32);
+
 use super::traits::Traits;
 use super::utility_types::AssignmentType;
 /// Alias for `AssignmentType` for job-related contexts (Spec 113).
@@ -278,6 +282,8 @@ pub struct PopBundle {
     pub dialect: Dialect,
     /// Linguistic knowledge.
     pub linguistics: Linguistics,
+    /// Educational level.
+    pub education: EducationLevel,
 }
 
 impl PopBundle {
@@ -313,6 +319,7 @@ impl PopBundle {
             wallet: Wallet { credits: 50.0 },
             dialect: Dialect::default(),
             linguistics: Linguistics::default(),
+            education: EducationLevel(1),
         }
     }
 }
