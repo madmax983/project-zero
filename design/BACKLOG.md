@@ -4,6 +4,9 @@
 
 - [ ] `464` The Bureaucratic Language — `specs/464-bureaucratic-language.md`
 - [ ] `466` The Phantom Sub-routines — `specs/466-phantom-sub-routines.md`
+- [ ] `467` Psychic Background Radiation — `specs/467-psychic-background-radiation.md`
+- [ ] `468` Escape Velocity Economics — `specs/468-escape-velocity-economics.md`
+- [ ] `469` The Galactic Council — `specs/469-galactic-council.md`
 
 
 
