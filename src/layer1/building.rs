@@ -202,6 +202,8 @@ pub enum Category {
 /// ```
 #[derive(Clone, Copy, PartialEq, Eq, Hash, Default, Debug, EnumIter)]
 pub enum BuildingType {
+    /// Generates anti-gravity field, accumulating gravitational debt.
+    AntiGravGenerator,
     /// Basic shelter for pops.
     #[default]
     Housing,
@@ -506,6 +508,7 @@ impl BuildingType {
             Self::Recycler => true,
             Self::BulletinBoard => false,
             Self::HoloProjector => false,
+            Self::AntiGravGenerator => false,
         }
     }
 
@@ -666,6 +669,7 @@ impl BuildingType {
             Self::Recycler => "Recycler",
             Self::BulletinBoard => "Bulletin Board",
             Self::HoloProjector => "Holo Projector",
+            Self::AntiGravGenerator => "Anti-Grav Gen",
         }
     }
 
@@ -723,6 +727,7 @@ impl BuildingType {
             Self::Shower => '🚿',
             Self::Recycler => '♻',
             Self::BulletinBoard => 'B',
+            Self::AntiGravGenerator => 'G',
         }
     }
 
@@ -1048,6 +1053,12 @@ impl BuildingType {
                 ..ColonyResources::zeroed()
             },
             Self::Lander => ColonyResources::zeroed(),
+            Self::AntiGravGenerator => ColonyResources {
+                wood: 0.0,
+                stone: 0.0,
+                metal: 50.0,
+                ..ColonyResources::zeroed()
+            },
         }
     }
 
@@ -1343,7 +1354,8 @@ fn spawn_building(
         | BuildingType::GeneBank
         | BuildingType::CloneVat
         | BuildingType::HypnoPod
-        | BuildingType::HoloProjector => configure_tech(&mut entity, building_type),
+        | BuildingType::HoloProjector
+        | BuildingType::AntiGravGenerator => configure_tech(&mut entity, building_type),
         BuildingType::Shower => configure_civic(&mut entity, building_type),
         BuildingType::Recycler => {
             // Recycler configuration
@@ -2416,7 +2428,14 @@ mod tests {
             BuildingType::BulletinBoard.next(),
             BuildingType::HoloProjector
         );
-        assert_eq!(BuildingType::HoloProjector.next(), BuildingType::Housing);
+        assert_eq!(
+            BuildingType::HoloProjector.next(),
+            BuildingType::AntiGravGenerator
+        );
+        assert_eq!(
+            BuildingType::AntiGravGenerator.next(),
+            BuildingType::Housing
+        );
     }
 
     #[test]
@@ -2429,11 +2448,14 @@ mod tests {
 
     #[test]
     fn test_build_mode_default() {
-        let mode = BuildMode::default();
+        let mut mode = BuildMode::default();
         assert!(!mode.active);
         assert_eq!(mode.cursor.x, 0);
         assert_eq!(mode.cursor.y, 0);
         assert_eq!(mode.selected, BuildingType::Housing);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Office);
     }
 
     #[test]
@@ -2642,6 +2664,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::HoloProjector);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::AntiGravGenerator);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

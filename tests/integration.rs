@@ -184,6 +184,8 @@ pub mod integration {
 #[path = "integration/neural_leech_unrest.rs"]
 mod neural_leech_unrest;
 
+#[path = "integration/gravitational_debt_tests.rs"]
+mod gravitational_debt_tests;
 #[path = "integration/void_weed_smuggler.rs"]
 mod void_weed_smuggler;
 #[path = "integration/vr_pod_integration.rs"]

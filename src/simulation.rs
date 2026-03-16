@@ -155,6 +155,10 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world.contains_resource::<Events<crate::layer1::spiteful_will::OverrideWillEvent>>() {
         world.init_resource::<Events<crate::layer1::spiteful_will::OverrideWillEvent>>();
     }
+    if !world.contains_resource::<Events<crate::layer1::gravitational_debt::DebtReleaseEvent>>() {
+        world.init_resource::<Events<crate::layer1::gravitational_debt::DebtReleaseEvent>>();
+        world.init_resource::<Events<crate::layer1::spiteful_will::OverrideWillEvent>>();
+    }
     if !world.contains_resource::<crate::layer1::geology::tectonic::TectonicStress>() {
         world.init_resource::<crate::layer1::geology::tectonic::TectonicStress>();
     }
