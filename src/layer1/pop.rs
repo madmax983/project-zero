@@ -413,6 +413,15 @@ pub fn handle_pop_death_system(
                 *pos,
             ));
 
+            // Ancestral Grave (Spec 267)
+            commands.spawn((
+                crate::layer1::ancestral_graves::AncestralGrave {
+                    pop_name: name.clone(),
+                    original_entity: entity,
+                },
+                *pos,
+            ));
+
             // Soul Particle
             commands.spawn((
                 crate::layer1::particles::Particle {

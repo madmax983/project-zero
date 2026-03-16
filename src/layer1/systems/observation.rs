@@ -58,7 +58,7 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::health::despawn_dead_entities_system),
             crate::layer1::funeral::grief_system
                 .after(crate::layer1::health::despawn_dead_entities_system),
-            crate::layer1::ancestral_graves::grave_visit_system
+            crate::layer1::ancestral_graves::visit_grave_system
                 .after(crate::layer1::funeral::grief_system),
             crate::layer1::unrest::calculate_unrest_system.after(decay_needs_system),
             crate::layer1::bio_acoustic::bio_acoustic_chorus_system
