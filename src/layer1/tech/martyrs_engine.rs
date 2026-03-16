@@ -1,15 +1,14 @@
 // src/layer1/tech/martyrs_engine.rs
 
+use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer1::energy::PowerSource;
+use crate::layer1::lighting::LightSource;
+use crate::layer1::pop::PopName;
+use crate::layer1::traits::{Trait, Traits};
 use crate::layer1::StressTracker;
 use crate::layer2::shielding::OrbitalShield;
 use bevy::prelude::DespawnRecursiveExt;
 use bevy_ecs::prelude::*;
-use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
-use crate::layer1::lighting::LightSource;
-use crate::layer1::traits::{Trait, Traits};
-use crate::layer1::pop::PopName;
-
 
 #[derive(Component)]
 pub struct MartyrsEngine {
@@ -63,7 +62,9 @@ pub fn attune_engine_system(
                 if traits.0.contains(&Trait::Cannibal) || traits.0.contains(&Trait::Outsider) {
                     penalty *= 0.1; // Much less stress
                 }
-                if traits.0.contains(&Trait::EmpathicLink) || traits.0.contains(&Trait::Compassionate) {
+                if traits.0.contains(&Trait::EmpathicLink)
+                    || traits.0.contains(&Trait::Compassionate)
+                {
                     penalty *= 1.5; // More stress
                 }
             }
@@ -77,7 +78,13 @@ pub fn attune_engine_system(
 
 pub fn process_martyrs_engine(
     mut commands: Commands,
-    mut query: Query<(Entity, &mut MartyrsEngine, &mut PowerSource, &mut OrbitalShield, Option<&LightSource>)>,
+    mut query: Query<(
+        Entity,
+        &mut MartyrsEngine,
+        &mut PowerSource,
+        &mut OrbitalShield,
+        Option<&LightSource>,
+    )>,
 ) {
     for (entity, mut engine, mut power, mut shield, light_opt) in query.iter_mut() {
         if engine.ticks_remaining > 0 {
@@ -105,6 +112,7 @@ pub fn process_martyrs_engine(
 }
 #[cfg(test)]
 mod tests {
+    use crate::layer1::chronicle::AddChronicleEvent;
     use crate::layer1::energy::PowerSource;
     use crate::layer1::pop::PopBundle;
     use crate::layer1::tech::martyrs_engine::{
@@ -114,8 +122,6 @@ mod tests {
     use crate::layer2::shielding::OrbitalShield;
     use bevy_ecs::prelude::*;
     use rand::thread_rng;
-    use crate::layer1::chronicle::AddChronicleEvent;
-
 
     #[test]
     fn test_martyrs_engine_inactive_produces_nothing() {

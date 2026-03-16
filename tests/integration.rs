@@ -186,9 +186,9 @@ mod neural_leech_unrest;
 
 #[path = "integration/flora_empathy.rs"]
 mod flora_empathy;
+#[path = "integration/martyrs_engine.rs"]
+mod martyrs_engine;
 #[path = "integration/void_weed_smuggler.rs"]
 mod void_weed_smuggler;
 #[path = "integration/vr_pod_integration.rs"]
 mod vr_pod_integration;
-#[path = "integration/martyrs_engine.rs"]
-mod martyrs_engine;

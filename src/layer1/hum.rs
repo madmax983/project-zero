@@ -24,7 +24,10 @@ impl HumMap {
         if x < 0 || y < 0 || x as usize >= self.width || y as usize >= self.height {
             return 0.0;
         }
-        if let Some(idx) = (y as usize).checked_mul(self.width).and_then(|i| i.checked_add(x as usize)) {
+        if let Some(idx) = (y as usize)
+            .checked_mul(self.width)
+            .and_then(|i| i.checked_add(x as usize))
+        {
             if idx < self.values.len() {
                 return self.values[idx];
             }
@@ -36,7 +39,10 @@ impl HumMap {
         if x < 0 || y < 0 || x as usize >= self.width || y as usize >= self.height {
             return;
         }
-        if let Some(idx) = (y as usize).checked_mul(self.width).and_then(|i| i.checked_add(x as usize)) {
+        if let Some(idx) = (y as usize)
+            .checked_mul(self.width)
+            .and_then(|i| i.checked_add(x as usize))
+        {
             if idx < self.values.len() {
                 self.values[idx] = value;
             }
