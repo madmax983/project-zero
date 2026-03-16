@@ -13,3 +13,6 @@
 **Secret Societies Encapsulation**
 **Tangle:** The `SecretSocieties` logic (`src/layer1/society.rs`) was declared as a root-level module (`pub mod society`) directly under `layer1`, leaking social domain logic into the top-level namespace rather than being encapsulated within its functional domain.
 **Blueprint:** Moved `src/layer1/society.rs` to `src/layer1/social/society.rs` and updated module declarations and imports. This enforces a stronger domain boundary by nesting the secret society mechanics entirely within the `social` subsystem.
+**Geology Sub-module Encapsulation**
+**Tangle:** The `geology` module was defined as `src/layer1/geology.rs`, causing its `tectonic_tests` to be awkwardly included in the root `src/layer1/mod.rs` via an `include!("geology/tectonic_tests.rs");` macro.
+**Blueprint:** Converted `src/layer1/geology.rs` into a directory module `src/layer1/geology/mod.rs` and natively declared `#[cfg(test)] mod tectonic_tests;` within it, removing the structural inconsistency from the parent layer.
