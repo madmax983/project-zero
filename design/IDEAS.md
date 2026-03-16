@@ -10031,7 +10031,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Epidemic Denial
+## Epidemic Denial [SPECCED]
 
 **Layer:** 1
 
@@ -10045,7 +10045,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Jury-Rigged Cybernetics
+## Jury-Rigged Cybernetics [SPECCED]
 
 **Layer:** 1
 
@@ -10059,7 +10059,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Ransom Broker
+## The Ransom Broker [SPECCED]
 
 **Layer:** Cross-layer (2 -> 1)
 

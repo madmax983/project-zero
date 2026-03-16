@@ -3335,3 +3335,30 @@
 **Usage:**
 - "They are following a Phantom-Route."
 - "A Ghost-Fleet is blocking the hyperlane."
+
+## Epidemic Denial (Spec 475)
+
+### the Hoax / false-plague
+**Replaces:** Pandemic denialism, refusing quarantine
+**Code reference:** `Condition::Denial`
+**Usage:**
+- "He thinks the outbreak is just the Hoax."
+- "Another false-plague believer broke quarantine."
+
+## Jury-Rigged Cybernetics (Spec 476)
+
+### scrap-limb / welded-flesh
+**Replaces:** Improvised prosthetic, dangerous cybernetics
+**Code reference:** `JuryRiggedProsthetic` component
+**Usage:**
+- "She works faster with that scrap-limb."
+- "The welded-flesh shorted out again."
+
+## The Ransom Broker (Spec 477)
+
+### flesh-tithe / the Broker
+**Replaces:** Hostage ransom, specialist capture by pirates
+**Code reference:** `RansomDemand` event
+**Usage:**
+- "The Broker has our best engineer."
+- "Pay the flesh-tithe or we lose the doctor."
