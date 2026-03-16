@@ -368,8 +368,15 @@ pub fn consume_food_system(
 
         if ate {
             #[allow(clippy::collapsible_if)]
-            if let Ok((_, mut needs, mut history_opt, mut wallet_opt, mut morale_opt, traits_opt, biome_opt)) =
-                pop_query.get_mut(entity)
+            if let Ok((
+                _,
+                mut needs,
+                mut history_opt,
+                mut wallet_opt,
+                mut morale_opt,
+                traits_opt,
+                biome_opt,
+            )) = pop_query.get_mut(entity)
             {
                 // Determine GutBiome category
                 let category = crate::layer1::gut_biome::get_biome_category(&eaten_item);

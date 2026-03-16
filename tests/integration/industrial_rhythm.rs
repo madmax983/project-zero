@@ -6,7 +6,7 @@ mod integration_tests {
     use scale::layer1::map::GridPosition;
     use scale::layer1::morale::Morale;
     use scale::layer1::pop::Pop;
-    use scale::layer1::tech::rhythm::{update_rhythm_system, MachineRhythm, RhythmManager};
+    use scale::layer1::tech::rhythm::{update_rhythm_system, MachineRhythm};
     use scale::shared::time::SimulationTime;
 
     #[test]
@@ -16,7 +16,6 @@ mod integration_tests {
             tick: 100,
             speed: scale::shared::time::SimSpeed::Normal,
         });
-        world.insert_resource(RhythmManager::default());
 
         // Setup schedule
         let mut schedule = Schedule::default();

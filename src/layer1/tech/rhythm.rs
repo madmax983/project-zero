@@ -8,8 +8,6 @@ pub struct MachineRhythm {
     pub last_sync_bonus: f32, // Accumulated rhythm score
 }
 
-
-
 pub fn update_rhythm_system(
     time: Res<SimulationTime>,
     mut query: Query<(&mut MachineRhythm, &GridPosition)>,

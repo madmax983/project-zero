@@ -207,3 +207,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `470` Biometric Identity Theft — `specs/470-biometric-identity-theft.md`
 - [ ] `475` Epidemic Denial — `specs/475-epidemic-denial.md`
 - [ ] `476` Jury-Rigged Cybernetics — `specs/476-jury-rigged-cybernetics.md`
+- [ ] `478` Artificial Sunspots — `specs/478-artificial-sunspots.md`
