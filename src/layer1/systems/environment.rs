@@ -8,6 +8,10 @@ pub fn register(schedule: &mut Schedule) {
         (
             crate::layer1::shadow_market::despawn_in_light_system,
             crate::layer1::shadow_market::spawn_shadow_trader_system,
+            crate::layer1::gravitational_debt::gravitational_debt_accumulation_system,
+            crate::layer1::gravitational_debt::gravitational_debt_release_system,
+            crate::layer1::gravitational_debt::process_gravitational_debt_release_system
+                .after(crate::layer1::gravitational_debt::gravitational_debt_release_system),
         )
             .in_set(Layer1SystemSet::Environment),
     );

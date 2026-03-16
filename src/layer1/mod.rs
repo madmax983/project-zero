@@ -724,4 +724,6 @@ pub use cryo_shock::*;
 
 /// Infrastructure system (Spec 452).
 pub mod infrastructure;
+pub mod gravitational_debt;
+pub use gravitational_debt::*;
 pub use infrastructure::*;

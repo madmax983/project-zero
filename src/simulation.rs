@@ -134,6 +134,9 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world.contains_resource::<Events<HostileSpawnEvent>>() {
         world.init_resource::<Events<HostileSpawnEvent>>();
     }
+    if !world.contains_resource::<Events<crate::layer1::gravitational_debt::DebtReleaseEvent>>() {
+        world.init_resource::<Events<crate::layer1::gravitational_debt::DebtReleaseEvent>>();
+    }
     if !world.contains_resource::<DetectionRisk>() {
         world.init_resource::<DetectionRisk>();
     }
@@ -192,6 +195,9 @@ pub fn run_simulation_tick(world: &mut World) {
 
     if !world.contains_resource::<Events<HostileSpawnEvent>>() {
         world.init_resource::<Events<HostileSpawnEvent>>();
+    }
+    if !world.contains_resource::<Events<crate::layer1::gravitational_debt::DebtReleaseEvent>>() {
+        world.init_resource::<Events<crate::layer1::gravitational_debt::DebtReleaseEvent>>();
     }
 
     // Add our schedule if not yet added
@@ -255,6 +261,7 @@ mod tests {
         world.init_resource::<Events<crate::layer1::spiteful_will::OverrideWillEvent>>();
         world
             .init_resource::<Events<crate::layer1::nature::biosphere_empathy::FloraDamagedEvent>>();
+        world.init_resource::<Events<crate::layer1::gravitational_debt::DebtReleaseEvent>>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);

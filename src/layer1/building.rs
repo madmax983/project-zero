@@ -237,6 +237,8 @@ pub enum BuildingType {
     FlowerBed,
     /// Decorative statue (Beauty +10).
     Statue,
+    /// Generates anti-gravity field but builds up debt.
+    AntiGravGenerator,
     /// Medical facility for healing.
     Hospital,
     /// Waste storage facility.
@@ -506,6 +508,7 @@ impl BuildingType {
             Self::Recycler => true,
             Self::BulletinBoard => false,
             Self::HoloProjector => false,
+            Self::AntiGravGenerator => false,
         }
     }
 
@@ -666,6 +669,7 @@ impl BuildingType {
             Self::Recycler => "Recycler",
             Self::BulletinBoard => "Bulletin Board",
             Self::HoloProjector => "Holo Projector",
+            Self::AntiGravGenerator => "Anti-Grav Generator",
         }
     }
 
@@ -723,6 +727,7 @@ impl BuildingType {
             Self::Shower => '🚿',
             Self::Recycler => '♻',
             Self::BulletinBoard => 'B',
+            Self::AntiGravGenerator => 'A',
         }
     }
 
@@ -1048,6 +1053,11 @@ impl BuildingType {
                 ..ColonyResources::zeroed()
             },
             Self::Lander => ColonyResources::zeroed(),
+            Self::AntiGravGenerator => ColonyResources {
+                metal: 100.0,
+                knowledge: 50.0,
+                ..ColonyResources::zeroed()
+            },
         }
     }
 
@@ -1374,6 +1384,13 @@ fn spawn_building(
         | BuildingType::PersonalGarden
         | BuildingType::PersonalShrine => {
             // Logic handled by components added in system
+        }
+        BuildingType::AntiGravGenerator => {
+            entity.insert((
+                crate::layer1::gravitational_debt::AntiGravGenerator::default(),
+                crate::layer1::gravitational_debt::GravitationalDebt::default(),
+                crate::layer1::energy::PowerConsumer { demand: 50.0, active: false }
+            ));
         }
     }
 
@@ -2351,7 +2368,8 @@ mod tests {
         assert_eq!(BuildingType::Weaver.next(), BuildingType::Tailor);
         assert_eq!(BuildingType::Tailor.next(), BuildingType::FlowerBed);
         assert_eq!(BuildingType::FlowerBed.next(), BuildingType::Statue);
-        assert_eq!(BuildingType::Statue.next(), BuildingType::Hospital);
+        assert_eq!(BuildingType::Statue.next(), BuildingType::AntiGravGenerator);
+        assert_eq!(BuildingType::AntiGravGenerator.next(), BuildingType::Hospital);
         assert_eq!(BuildingType::Hospital.next(), BuildingType::Landfill);
         assert_eq!(BuildingType::Landfill.next(), BuildingType::Grave);
         assert_eq!(BuildingType::Grave.next(), BuildingType::TradeDepot);
@@ -2518,6 +2536,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Statue);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::AntiGravGenerator);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Hospital);
