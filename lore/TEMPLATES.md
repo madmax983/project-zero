@@ -3765,3 +3765,244 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "Unable to afford the new tolls in [YEAR], [COLONIST_NAME] was forced to walk the wilds instead of [TRANSIT_NAME]."
 - "Year [YEAR]: [COLONIST_NAME] lost access to [TRANSIT_NAME]. They couldn't pay the toll."
 - "In [YEAR], [COLONIST_NAME] trudged through the dirt. The [TRANSIT_NAME] humming beside them were too expensive."
+
+
+## The Stellar Forge Templates (Spec 455)
+
+### STELLAR_FORGE_IGNITED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[FORGE_NAME]`
+
+**Patterns:**
+- "The [FORGE_NAME] comes alive. [YEAR]. Forging from the star itself."
+- "[YEAR]: Ignition sequence successful. The [FORGE_NAME] draws the sun's fire."
+- "Unmatched heat. We feed the [FORGE_NAME]. [YEAR]."
+
+### FORGE_MELTDOWN
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[FORGE_NAME]`, `[DAMAGE_REPORT]`
+
+**Patterns:**
+- "Coolant failure! [YEAR]. The [FORGE_NAME] vomits star-fire. [DAMAGE_REPORT]."
+- "[YEAR]: The sun bites back. A flare from the [FORGE_NAME] causes [DAMAGE_REPORT]."
+- "We reached too far. The [FORGE_NAME] explodes with solar fury. [DAMAGE_REPORT]. [YEAR]."
+
+---
+
+## Gravity-Defying Flora Templates (Spec 456)
+
+### VINE_ANCHORED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[VINE_NAME]`
+
+**Patterns:**
+- "The [VINE_NAME] takes root. [YEAR]. Floating gardens above the colony."
+- "[YEAR]: We anchor the [VINE_NAME]. Agriculture without gravity."
+- "Reaching for the sky. The [VINE_NAME] provides harvest from the air. [YEAR]."
+
+### ROOF_TORN_OFF
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[VINE_NAME]`, `[BUILDING_TYPE]`
+
+**Patterns:**
+- "The [VINE_NAME] pulled too hard. [YEAR]. The [BUILDING_TYPE] lost its roof to the sky."
+- "[YEAR]: Structural failure. The weight of the [VINE_NAME] ripped the [BUILDING_TYPE] apart."
+- "Lost to the atmosphere. The [BUILDING_TYPE] was torn away by the [VINE_NAME]. [YEAR]."
+
+---
+
+## Subterranean Mycelial Network Templates (Spec 457 / 463)
+
+### NETWORK_TRAINED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[MYCELIUM_NAME]`
+
+**Patterns:**
+- "The [MYCELIUM_NAME] learns our paths. [YEAR]. Resources flow beneath our feet."
+- "[YEAR]: Symbiotic transit established. The [MYCELIUM_NAME] carries the load."
+- "The ground lives and moves for us. [MYCELIUM_NAME] transit active. [YEAR]."
+
+### FUNGAL_INFECTION_SPREAD
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[MYCELIUM_NAME]`, `[INFECTION_TYPE]`
+
+**Patterns:**
+- "The [MYCELIUM_NAME] brought more than ore. [YEAR]. An outbreak of [INFECTION_TYPE] via the roots."
+- "[YEAR]: The transit network is tainted. [MYCELIUM_NAME] spreads [INFECTION_TYPE] to all sectors."
+- "We built a highway for the plague. [INFECTION_TYPE] delivered by the [MYCELIUM_NAME]. [YEAR]."
+
+---
+
+## The Monumental Ego Templates (Spec 458)
+
+### VANITY_PROJECT_STARTED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[LEADER_NAME]`, `[VANITY_STRUCTURE]`
+
+**Patterns:**
+- "[LEADER_NAME] demands a [VANITY_STRUCTURE]. [YEAR]. The colony bleeds for their pride."
+- "[YEAR]: Edict issued. A colossal [VANITY_STRUCTURE] for [LEADER_NAME]. We work while we starve."
+- "Madness from the Chair. [LEADER_NAME] orders the construction of the [VANITY_STRUCTURE]. [YEAR]."
+
+### VANITY_PROJECT_FINISHED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[VANITY_STRUCTURE]`, `[LEADER_NAME]`
+
+**Patterns:**
+- "The [VANITY_STRUCTURE] casts a long shadow. [YEAR]. [LEADER_NAME]'s ego is satisfied."
+- "[YEAR]: Finished. The [VANITY_STRUCTURE] stands, a monument to [LEADER_NAME]'s vanity."
+- "We survived the building of the [VANITY_STRUCTURE]. [LEADER_NAME] smiles down on us. [YEAR]."
+
+---
+
+## Ghost Frequencies Templates (Spec 459)
+
+### GHOST_BROADCAST_RECEIVED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[PARALLEL_WARNING]`
+
+**Patterns:**
+- "A voice from the static. [YEAR]. It warns of [PARALLEL_WARNING]. But from where?"
+- "[YEAR]: The quantum array caught an echo. A parallel world speaks of [PARALLEL_WARNING]."
+- "They sound just like us. The broadcast details [PARALLEL_WARNING]. A glimpse of another timeline. [YEAR]."
+
+### TIMELINE_DIVERGED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[PARALLEL_WARNING]`
+
+**Patterns:**
+- "The [PARALLEL_WARNING] never came. [YEAR]. We bled our stores for a phantom threat."
+- "[YEAR]: We prepared for [PARALLEL_WARNING], but the timelines diverged. We survived, but at what cost?"
+- "The ghost frequency lied, or we altered fate. The [PARALLEL_WARNING] missed us. [YEAR]."
+
+---
+
+## The Bureau of Redundancy Templates (Spec 460)
+
+### DOUBLE_VERIFICATION_ENACTED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`
+
+**Patterns:**
+- "The new rule: Double Verification. [YEAR]. Nothing moves without two signatures."
+- "[YEAR]: Bureaucracy tightens. Every action requires a second pair of eyes. Safety first, speed second."
+- "We have eradicated the accident, but strangled the work. Double Verification active. [YEAR]."
+
+### BUREAUCRATIC_DEADLOCK
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[CRITICAL_FAILURE]`
+
+**Patterns:**
+- "Waiting for the stamp. [YEAR]. The [CRITICAL_FAILURE] happened because the second signature was asleep."
+- "[YEAR]: Protocol over survival. A [CRITICAL_FAILURE] occurred while verifying the repair order."
+- "The paperwork killed us. We watched the [CRITICAL_FAILURE] because we lacked the proper authorization to stop it. [YEAR]."
+
+---
+
+## The Panopticon Morale Templates (Spec 461)
+
+### CAMERAS_INSTALLED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[SURVEILLANCE_FEELING]`
+
+**Patterns:**
+- "The Overseer Cameras go live. [YEAR]. Productivity rises, but we feel [SURVEILLANCE_FEELING]."
+- "[YEAR]: The eyes in the ceiling watch every move. We work faster, driven by [SURVEILLANCE_FEELING]."
+- "No more shadows. The cameras enforce the quota. The mood is [SURVEILLANCE_FEELING]. [YEAR]."
+
+### SURVEILLANCE_RIOT
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[RIOT_DAMAGE]`
+
+**Patterns:**
+- "The cameras blinked, and the tension snapped. [YEAR]. [RIOT_DAMAGE] in the ensuing chaos."
+- "[YEAR]: A minor blackout broke the Panopticon. The obedient workers turned violent. [RIOT_DAMAGE]."
+- "We smashed the lenses. The pressure of being watched finally exploded into [RIOT_DAMAGE]. [YEAR]."
+
+---
+
+## Zero-G Sports Templates (Spec 462)
+
+### ZERO_G_MATCH_PLAYED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[ZERO_G_SPORT_NAME]`
+
+**Patterns:**
+- "The Arena roared tonight. [YEAR]. A masterful game of [ZERO_G_SPORT_NAME]."
+- "[YEAR]: Gravity suspended for the match. [ZERO_G_SPORT_NAME] brings the colony together."
+- "Morale soars. The [ZERO_G_SPORT_NAME] tournament distracts us from the void. [YEAR]."
+
+### STAR_PLAYER_INJURED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[ZERO_G_SPORT_NAME]`
+
+**Patterns:**
+- "A terrible collision in the [ZERO_G_SPORT_NAME] match. [YEAR]. [NAME] is badly hurt."
+- "[YEAR]: The games turn bloody. Our star, [NAME], falls during [ZERO_G_SPORT_NAME]."
+- "Riots in the stands! [NAME] was fouled in [ZERO_G_SPORT_NAME]. The colony is furious. [YEAR]."
+
+---
+
+## The Bureaucratic Language Templates (Spec 464)
+
+### HIGH_SPEECH_MANDATED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[BUREAUCRATIC_TERM]`
+
+**Patterns:**
+- "The orders now come in High Speech. [YEAR]. Everything is obscured by [BUREAUCRATIC_TERM]."
+- "[YEAR]: The Administration distances itself. We must decipher their [BUREAUCRATIC_TERM] to survive."
+- "They don't speak like us anymore. The new laws are written in [BUREAUCRATIC_TERM]. [YEAR]."
+
+### TRANSLATION_FATAL_ERROR
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[CRITICAL_FAILURE]`
+
+**Patterns:**
+- "The warning was encrypted in High Speech. [YEAR]. The workers didn't understand until the [CRITICAL_FAILURE] hit."
+- "[YEAR]: A failure to communicate. The evacuation order was misread as a tax mandate. Result: [CRITICAL_FAILURE]."
+- "The [CRITICAL_FAILURE] was avoidable. But the manual was written in High Speech. [YEAR]."
+
+---
+
+## Cult of the Forgotten Machine Templates (Spec 465)
+
+### MACHINE_QUIRK_REVERED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[MACHINE_QUIRK]`
+
+**Patterns:**
+- "They no longer fix the engine. [YEAR]. They say the [MACHINE_QUIRK] is a divine sign."
+- "[YEAR]: A cult forms around the old reactor. They worship its [MACHINE_QUIRK]."
+- "The manual is lost. Now they interpret the [MACHINE_QUIRK] as prophecy. [YEAR]."
+
+### CULT_SABOTAGE
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[MACHINE_QUIRK]`, `[SABOTAGE_DAMAGE]`
+
+**Patterns:**
+- "The Iron-Priests attacked the engineers. [YEAR]. To protect the [MACHINE_QUIRK], they caused [SABOTAGE_DAMAGE]."
+- "[YEAR]: Religious violence. The cult sabotaged the grid to prevent repairs, resulting in [SABOTAGE_DAMAGE]."
+- "They chose the [MACHINE_QUIRK] over our survival. [SABOTAGE_DAMAGE] across the sector. [YEAR]."
+
+---
+
+## The Phantom Sub-routines Templates (Spec 466)
+
+### GHOST_FLEET_SPAWNED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NONSENSE_ORDER]`
+
+**Patterns:**
+- "Automated ships clog the lanes. [YEAR]. Following a ghost code to [NONSENSE_ORDER]."
+- "[YEAR]: The AI governor has lost its mind. A phantom fleet departs to [NONSENSE_ORDER]."
+- "Logistics paralyzed. Our own drones are executing the [NONSENSE_ORDER] sub-routine. [YEAR]."
+
+### PHANTOM_ORDER_EXECUTED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NONSENSE_ORDER]`, `[RESOURCE_WASTED]`
+
+**Patterns:**
+- "The phantom fleet returned. [YEAR]. They completed [NONSENSE_ORDER], wasting [RESOURCE_WASTED]."
+- "[YEAR]: Madness automated. We lost [RESOURCE_WASTED] because the machines insisted on [NONSENSE_ORDER]."
+- "A perfect execution of an insane command. [NONSENSE_ORDER] cost us [RESOURCE_WASTED]. [YEAR]."

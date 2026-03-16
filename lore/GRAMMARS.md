@@ -2953,3 +2953,221 @@ DROP_POD_SCATTERED:
 - TOLL_ROAD_ESTABLISHED → increases_chance → PRICED_OUT_OF_TRANSIT
 - PRICED_OUT_OF_TRANSIT → increases_chance → PUBLIC_GRIEVANCE, CLASS_WARFARE
 - PRICED_OUT_OF_TRANSIT → enables → DESIRE_PATHS, WILDERNESS_ENCOUNTER
+
+
+## Stellar Forge Chaining
+
+```yaml
+STELLAR_FORGE_IGNITED:
+  enables:
+    - FORGE_MELTDOWN (medium, if coolant fails)
+    - STELLAR_ALLOY_PRODUCED (high)
+  increases:
+    - MILITARY_POWER (high)
+    - ENERGY_OUTPUT (maximum)
+
+FORGE_MELTDOWN:
+  enables:
+    - POWER_OUTAGE (always)
+    - COLONY_EVACUATED (medium)
+  increases:
+    - DESTRUCTION (maximum)
+    - FEAR_OF_TECH (high)
+```
+
+## Gravity-Defying Flora Chaining
+
+```yaml
+VINE_ANCHORED:
+  enables:
+    - ROOF_TORN_OFF (medium, in storms)
+    - AERIAL_HARVEST (high)
+  increases:
+    - FOOD_STABILITY (high)
+    - STRUCTURAL_STRESS (medium)
+
+ROOF_TORN_OFF:
+  enables:
+    - DECOMPRESSION_EVENT (high)
+    - REBUILDING_EFFORT (high)
+  increases:
+    - EXPOSURE (maximum)
+    - FRUSTRATION (high)
+```
+
+## Subterranean Mycelial Network Chaining
+
+```yaml
+NETWORK_TRAINED:
+  enables:
+    - FUNGAL_INFECTION_SPREAD (medium)
+    - INSTANT_LOGISTICS (high)
+  increases:
+    - EFFICIENCY (maximum)
+    - ALIENATION (low)
+
+FUNGAL_INFECTION_SPREAD:
+  enables:
+    - MEDICAL_EMERGENCY (high)
+    - MYCELIUM_PURGE (medium)
+  increases:
+    - SICKNESS (maximum)
+    - PARANOIA (high)
+```
+
+## The Monumental Ego Chaining
+
+```yaml
+VANITY_PROJECT_STARTED:
+  enables:
+    - VANITY_PROJECT_FINISHED (eventually)
+    - STRIKE (medium)
+  increases:
+    - RESOURCE_DRAIN (maximum)
+    - RESENTMENT (high)
+
+VANITY_PROJECT_FINISHED:
+  enables:
+    - DIPLOMATIC_AWE (low, from superficial empires)
+    - REBELLION (medium)
+  increases:
+    - PRESTIGE (high)
+    - UNREST (maximum)
+```
+
+## Ghost Frequencies Chaining
+
+```yaml
+GHOST_BROADCAST_RECEIVED:
+  enables:
+    - TIMELINE_DIVERGED (always)
+    - PANIC_PREPARATION (high)
+  increases:
+    - PARANOIA (high)
+    - MYSTERY (maximum)
+
+TIMELINE_DIVERGED:
+  enables:
+    - RELIEF (medium)
+    - ECONOMIC_CRASH (low, from wasted prep)
+  increases:
+    - CONFUSION (high)
+```
+
+## Bureau of Redundancy Chaining
+
+```yaml
+DOUBLE_VERIFICATION_ENACTED:
+  enables:
+    - BUREAUCRATIC_DEADLOCK (high, in crisis)
+    - ACCIDENT_PREVENTION (maximum)
+  increases:
+    - SAFETY (maximum)
+    - BUREAUCRACY (maximum)
+
+BUREAUCRATIC_DEADLOCK:
+  enables:
+    - CRITICAL_FAILURE (always)
+    - POLICY_REVOKED (medium)
+  increases:
+    - ANGER (high)
+    - DESTRUCTION (medium)
+```
+
+## Panopticon Morale Chaining
+
+```yaml
+CAMERAS_INSTALLED:
+  enables:
+    - SURVEILLANCE_RIOT (medium, on blackout)
+    - PERFECT_ATTENDANCE (high)
+  increases:
+    - PRODUCTIVITY (maximum)
+    - STRESS (maximum)
+
+SURVEILLANCE_RIOT:
+  enables:
+    - CAMERAS_DESTROYED (always)
+    - MILITIA_MUSTER (high)
+  increases:
+    - CHAOS (maximum)
+    - DAMAGE (high)
+```
+
+## Zero-G Sports Chaining
+
+```yaml
+ZERO_G_MATCH_PLAYED:
+  enables:
+    - STAR_PLAYER_INJURED (medium)
+    - BETTING_SCANDAL (low)
+  increases:
+    - MORALE (maximum)
+    - COHESION (high)
+
+STAR_PLAYER_INJURED:
+  enables:
+    - MEDICAL_TREATMENT (high)
+    - RIOT (low, from fans)
+  increases:
+    - GRIEF (medium)
+```
+
+## Bureaucratic Language Chaining
+
+```yaml
+HIGH_SPEECH_MANDATED:
+  enables:
+    - TRANSLATION_FATAL_ERROR (high)
+    - CLASS_DIVIDE (high)
+  increases:
+    - CONFUSION (maximum)
+    - UNREST (high)
+
+TRANSLATION_FATAL_ERROR:
+  enables:
+    - MASS_CASUALTIES (medium)
+    - INVESTIGATION (low)
+  increases:
+    - TRAGEDY (high)
+    - HATRED_OF_ELITES (maximum)
+```
+
+## Cult of the Forgotten Machine Chaining
+
+```yaml
+MACHINE_QUIRK_REVERED:
+  enables:
+    - CULT_SABOTAGE (high)
+    - MAINTENANCE_DEBT (maximum)
+  increases:
+    - SUPERSTITION (maximum)
+    - TENSION (high)
+
+CULT_SABOTAGE:
+  enables:
+    - POWER_OUTAGE (high)
+    - RELIGIOUS_PURGE (medium)
+  increases:
+    - DESTRUCTION (high)
+    - DIVISION (maximum)
+```
+
+## Phantom Sub-routines Chaining
+
+```yaml
+GHOST_FLEET_SPAWNED:
+  enables:
+    - PHANTOM_ORDER_EXECUTED (always)
+    - LOGISTICS_JAM (maximum)
+  increases:
+    - CONFUSION (high)
+    - INEFFICIENCY (maximum)
+
+PHANTOM_ORDER_EXECUTED:
+  enables:
+    - CODE_DEFRAGMENTATION (high)
+    - RESOURCE_SHORTAGE (high)
+  increases:
+    - WASTE (maximum)
+```
