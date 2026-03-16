@@ -10,6 +10,11 @@
 
 
 
+- [ ] `471` The Organ Trade — `specs/471-the-organ-trade.md`
+- [ ] `472` Synthetic Apathy — `specs/472-synthetic-apathy.md`
+- [ ] `473` Bureaucratic Redlining — `specs/473-bureaucratic-redlining.md`
+- [ ] `474` Inherited Grudges — `specs/474-inherited-grudges.md`
+
 ## Future / Ideas
 
 See `design/IDEAS.md` for unspecced concepts.
