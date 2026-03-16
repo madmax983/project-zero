@@ -42,6 +42,7 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer1::memory_core::ImplantMemoryCoreEvent>,
             update_event_buffer::<crate::layer1::memory_core::HarvestMemoryCoreEvent>,
             update_event_buffer::<crate::layer1::tech::machine_awakening::BotGlitchEvent>,
+            update_event_buffer::<crate::layer1::gravitational_debt::DebtReleaseEvent>,
             handle_direct_input_system,
         )
             .in_set(Layer1SystemSet::EventCleanup),

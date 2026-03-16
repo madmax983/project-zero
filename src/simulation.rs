@@ -17,6 +17,7 @@ use crate::layer3::silence::{
     check_hostile_spawn_system, update_detection_risk_system, DetectionRisk, HostileSpawnEvent,
 };
 use crate::shared::time::SimulationTime;
+use bevy_time::Time;
 
 /// Schedule label for the main simulation tick.
 #[derive(ScheduleLabel, Debug, Clone, PartialEq, Eq, Hash)]
@@ -193,6 +194,12 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world.contains_resource::<Events<HostileSpawnEvent>>() {
         world.init_resource::<Events<HostileSpawnEvent>>();
     }
+    if !world.contains_resource::<Events<crate::layer1::gravitational_debt::DebtReleaseEvent>>() {
+        world.init_resource::<Events<crate::layer1::gravitational_debt::DebtReleaseEvent>>();
+    }
+    if !world.contains_resource::<Time>() {
+        world.init_resource::<Time>();
+    }
 
     // Add our schedule if not yet added
     {
@@ -250,6 +257,8 @@ mod tests {
         // Initialize Detection Risk for test
         world.init_resource::<crate::layer3::silence::DetectionRisk>();
         world.init_resource::<Events<crate::layer3::silence::HostileSpawnEvent>>();
+        world.init_resource::<Events<crate::layer1::gravitational_debt::DebtReleaseEvent>>();
+        world.init_resource::<Time>();
 
         world.init_resource::<Events<crate::layer1::spiteful_will::InheritanceEvent>>();
         world.init_resource::<Events<crate::layer1::spiteful_will::OverrideWillEvent>>();

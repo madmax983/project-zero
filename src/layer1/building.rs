@@ -323,6 +323,8 @@ pub enum BuildingType {
     BulletinBoard,
     /// Holographic projector that emits Beauty when powered.
     HoloProjector,
+    /// Anti-Grav Generator (Spec 454)
+    AntiGravGenerator,
 }
 
 impl BuildingType {
@@ -352,7 +354,8 @@ impl BuildingType {
             | Self::GeneBank
             | Self::CloneVat
             | Self::HypnoPod
-            | Self::HoloProjector => Some((Category::Research, Tier::HighTech)),
+            | Self::HoloProjector
+            | Self::AntiGravGenerator => Some((Category::Research, Tier::HighTech)),
 
             _ => None,
         }
@@ -506,6 +509,7 @@ impl BuildingType {
             Self::Recycler => true,
             Self::BulletinBoard => false,
             Self::HoloProjector => false,
+            Self::AntiGravGenerator => false,
         }
     }
 
@@ -526,7 +530,8 @@ impl BuildingType {
             Self::Grave => -2.0,    // Graves are slightly spooky
             Self::FlowerBed => super::beauty::FLOWER_BED_BEAUTY,
             Self::HoloProjector => 50.0, // Massive beauty boost
-            Self::TradeDepot => 5.0,     // Trade brings goods and culture
+            Self::AntiGravGenerator => 0.0,
+            Self::TradeDepot => 5.0, // Trade brings goods and culture
             Self::Well | Self::HydroponicsBay | Self::LifeSupport => 1.0,
             Self::Wall | Self::Window | Self::Gate | Self::Tower | Self::Airlock | Self::Vent => {
                 0.0
@@ -554,6 +559,7 @@ impl BuildingType {
             Self::CloneVat => 3.0,
             Self::HypnoPod => 2.0,
             Self::HoloProjector => 8.0,
+            Self::AntiGravGenerator => 5.0,
             _ => 0.0,
         }
     }
@@ -590,6 +596,7 @@ impl BuildingType {
             Self::Recycler => Some(Tech::Medical),
             Self::BulletinBoard => Some(Tech::SocialStructures),
             Self::HoloProjector => Some(Tech::Electromagnetism), // Assumed tech
+            Self::AntiGravGenerator => Some(Tech::Electromagnetism),
             _ => None,
         }
     }
@@ -666,6 +673,7 @@ impl BuildingType {
             Self::Recycler => "Recycler",
             Self::BulletinBoard => "Bulletin Board",
             Self::HoloProjector => "Holo Projector",
+            Self::AntiGravGenerator => "Anti-Grav Generator",
         }
     }
 
@@ -674,7 +682,11 @@ impl BuildingType {
     pub const fn char(&self) -> char {
         match self {
             Self::Housing => 'H',
-            Self::Office | Self::Tower | Self::Observatory | Self::HoloProjector => 'O',
+            Self::Office
+            | Self::Tower
+            | Self::Observatory
+            | Self::HoloProjector
+            | Self::AntiGravGenerator => 'O',
             Self::Farm | Self::AncientFabricator => 'F',
             Self::HydroponicsBay => 'Y',
             Self::DroneHub => 'D',
@@ -788,6 +800,10 @@ impl BuildingType {
             Self::HoloProjector => ColonyResources {
                 metal: 20.0,
                 stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::AntiGravGenerator => ColonyResources {
+                metal: 100.0,
                 ..ColonyResources::zeroed()
             },
             Self::CommandCenter => ColonyResources {
@@ -1348,7 +1364,8 @@ fn spawn_building(
         | BuildingType::GeneBank
         | BuildingType::CloneVat
         | BuildingType::HypnoPod
-        | BuildingType::HoloProjector => configure_tech(&mut entity, building_type),
+        | BuildingType::HoloProjector
+        | BuildingType::AntiGravGenerator => configure_tech(&mut entity, building_type),
         BuildingType::Shower => configure_civic(&mut entity, building_type),
         BuildingType::Recycler => {
             // Recycler configuration
@@ -1860,6 +1877,21 @@ fn configure_power_generation(entity: &mut EntityWorldMut, building_type: Buildi
                     radius: 6.0,
                     intensity: 0.0,
                     color: (0, 255, 255), // Cyan
+                },
+            ));
+        }
+        BuildingType::AntiGravGenerator => {
+            entity.insert((
+                crate::layer1::gravitational_debt::AntiGravGenerator {
+                    debt_generation_rate: 5.0,
+                    max_safe_debt: 100.0,
+                },
+                crate::layer1::gravitational_debt::GravitationalDebt {
+                    accumulated_debt: 0.0,
+                },
+                PowerConsumer {
+                    demand: 20.0,
+                    active: false,
                 },
             ));
         }
@@ -2421,7 +2453,14 @@ mod tests {
             BuildingType::BulletinBoard.next(),
             BuildingType::HoloProjector
         );
-        assert_eq!(BuildingType::HoloProjector.next(), BuildingType::Housing);
+        assert_eq!(
+            BuildingType::HoloProjector.next(),
+            BuildingType::AntiGravGenerator
+        );
+        assert_eq!(
+            BuildingType::AntiGravGenerator.next(),
+            BuildingType::Housing
+        );
     }
 
     #[test]
@@ -2647,6 +2686,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::HoloProjector);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::AntiGravGenerator);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

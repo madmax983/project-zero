@@ -136,6 +136,12 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::factions::update_faction_strikes_system
                 .after(crate::layer1::factions::update_faction_demands_system),
             apply_founder_benefits_system,
+            crate::layer1::gravitational_debt::gravitational_debt_accumulation_system
+                .after(crate::layer1::energy::power_grid_system),
+            crate::layer1::gravitational_debt::gravitational_debt_release_system
+                .after(crate::layer1::gravitational_debt::gravitational_debt_accumulation_system),
+            crate::layer1::gravitational_debt::process_debt_release_system
+                .after(crate::layer1::gravitational_debt::gravitational_debt_release_system),
             // Layer 2 visibility systems are handled in simulation.rs
         )
             .in_set(Layer1SystemSet::Economy),
