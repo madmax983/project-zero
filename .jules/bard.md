@@ -1,0 +1,3 @@
+## 2023-10-24 - Intra-Doc Linking Constraints for Public vs Private items
+**Confusion:** rustdoc will complain ("warning: public documentation ... links to private item ...") when public enums attempt to use `/// See [crate::layer1::actions::...]` to point to private evaluating functions.
+**Clarification:** Use `sed` or simple script replacement to remove the `/// See` line entirely if the item is `pub(crate)` and we cannot expose it. Avoid simply removing the brackets (` `...` `) around the link if the text is kept, because Bard strongly prefers using `[`MyStruct`]` for clickable intra-doc links, rather than plain text that looks like a broken/unclickable link.

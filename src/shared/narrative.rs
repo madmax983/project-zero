@@ -480,10 +480,10 @@ mod tests {
         let content = r#"
 ### TEST_TEMPLATE
 **Slots:** [SLOT]
-```
+```text
 "Pattern with [SLOT]"
 "Another [SLOT]"
-```
+```text
 "#;
         let mut generator = NarrativeGenerator::default();
         generator.parse_templates(content);
@@ -566,9 +566,9 @@ mod tests {
     fn test_panic_on_single_quote() {
         let content = r#"
 ### TEST_PANIC
-```
+```text
 "
-```
+```text
 "#;
         let mut generator = NarrativeGenerator::default();
         // Should not panic
