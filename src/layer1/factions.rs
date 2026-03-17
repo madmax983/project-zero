@@ -79,6 +79,8 @@ pub enum FactionId {
     ArtisansGuild,
     /// Faction for those with no specific skill focus or balanced skills.
     Unaligned,
+    /// Faction for criminals from neighboring empire bailing out debt.
+    Cartel,
 }
 
 /// Data associated with a faction.
@@ -192,6 +194,13 @@ impl Factions {
                 FactionId::Unaligned,
                 FactionData {
                     name: "Unaligned".into(),
+                    ..Default::default()
+                },
+            );
+            self.map.insert(
+                FactionId::Cartel,
+                FactionData {
+                    name: "The Cartel".into(),
                     ..Default::default()
                 },
             );

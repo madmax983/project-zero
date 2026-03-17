@@ -250,3 +250,4 @@
 - [x] `436` The Debt Collector's Blockade — `specs/436-the-debt-collectors-blockade.md` — completed 2026-03-16
 - [x] `467` Psychic Background Radiation — `specs/467-psychic-background-radiation.md` — completed 2024-03-24
 - [x] `484` Civic Ideology — `specs/484-civic-ideology.md` — completed 2026-03-17
+- [x] `486` Debt-Prison Colonies — `specs/486-debt-prison-colonies.md` — completed 2026-03-02
