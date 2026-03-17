@@ -10171,7 +10171,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Ghost Town Phobia
+## Ghost Town Phobia [SPECCED]
 
 **Layer:** 1
 
@@ -10185,7 +10185,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Orbital Debris Avalanches
+## Orbital Debris Avalanches [SPECCED]
 
 **Layer:** Cross-layer (2 -> 1)
 
@@ -10199,7 +10199,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Dream-State Economy
+## The Dream-State Economy [SPECCED]
 
 **Layer:** 1
 
@@ -10213,7 +10213,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Sub-Orbital Piracy
+## Sub-Orbital Piracy [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -10227,7 +10227,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Chrono-Clone
+## The Chrono-Clone [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -10241,7 +10241,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Nomadic Architecture
+## Nomadic Architecture [SPECCED]
 
 **Layer:** 1
 

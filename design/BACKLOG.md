@@ -216,3 +216,9 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `490` The Echo of the Void — `specs/490-the-echo-of-the-void.md`
 - [ ] `491` Orbital Tether Snaps — `specs/491-orbital-tether-snaps.md`
 - [ ] `492` The Panic Hoard — `specs/492-the-panic-hoard.md`
+- [ ] `493` Ghost Town Phobia — `specs/493-ghost-town-phobia.md`
+- [ ] `494` Orbital Debris Avalanches — `specs/494-orbital-debris-avalanches.md`
+- [ ] `495` The Dream-State Economy — `specs/495-the-dream-state-economy.md`
+- [ ] `496` Sub-Orbital Piracy — `specs/496-sub-orbital-piracy.md`
+- [ ] `497` The Chrono-Clone — `specs/497-the-chrono-clone.md`
+- [ ] `498` Nomadic Architecture — `specs/498-nomadic-architecture.md`
