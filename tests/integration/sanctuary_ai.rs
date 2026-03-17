@@ -7,7 +7,7 @@ use scale::layer1::utility_types::{ActionType, UtilityWeights};
 // Let's test the full AI loop by setting up a World and running evaluate_actions_system.
 use scale::layer1::needs::Needs;
 use scale::layer1::pop::Pop;
-use scale::layer1::social::empty_room::{Sanctuary, ActiveSanctuaries};
+use scale::layer1::social::empty_room::{ActiveSanctuaries, Sanctuary};
 use scale::layer1::stress::StressTracker;
 use scale::layer1::utility_ai::evaluate_actions_system;
 use scale::layer1::utility_types::{PopAction, UtilityConfig};
