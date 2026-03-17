@@ -247,3 +247,4 @@
 - [x] `461` The Panopticon Morale — `specs/461-the-panopticon-morale.md` — completed 2026-03-02
 - [x] `466` The Phantom Sub-routines — `specs/466-phantom-sub-routines.md` — completed 2026-03-16
 - [x] `462` Zero-G Sports — `specs/462-zero-g-sports.md` — completed 2026-03-03
+- [x] `436` The Debt Collector's Blockade — `specs/436-the-debt-collectors-blockade.md` — completed 2026-03-16
