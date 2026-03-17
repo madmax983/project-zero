@@ -129,7 +129,7 @@ mod tests {
         world.insert_resource(scale::layer1::clutter::ClutterGrid::new(10, 10));
         world.insert_resource(scale::shared::input::InputContextStack::default());
         world.insert_resource(scale::layer1::tech::infinite_archive::Archive::default());
-        world.insert_resource(scale::layer1::shadow_market::ShadowMarketManager::default());
+        world.insert_resource(scale::layer1::shadow_market::ShadowMarketCooldown::default());
         world.insert_resource(scale::layer1::temperature::TemperatureGrid::new(
             10, 10, 20.0,
         ));
@@ -137,7 +137,7 @@ mod tests {
         world.insert_resource(scale::layer1::geology::tectonic::TectonicStress::default());
         world.insert_resource(scale::layer3::silence::DetectionRisk::default());
         world.insert_resource(scale::layer2::thermal::ThermalSignature::default());
-        world.insert_resource(scale::layer1::social::empty_room::SanctuaryManager::default());
+        world.insert_resource(scale::layer1::social::empty_room::ActiveSanctuaries::default());
         world.insert_resource(scale::layer1::trade::TradeMarket::default());
         world.insert_resource(scale::layer1::void_weed::SmugglingHeat::default());
         world.insert_resource(scale::layer1::void_weed::TradeNetwork::default());

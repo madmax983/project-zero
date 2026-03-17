@@ -195,13 +195,13 @@ pub fn check_spawn_conditions(
 
 /// A resource to track the cooldown between shadow trader spawns
 #[derive(Resource, Default)]
-pub struct ShadowMarketManager {
+pub struct ShadowMarketCooldown {
     pub cooldown: u64,
 }
 
 pub fn spawn_shadow_trader_system(
     mut commands: Commands,
-    mut manager: ResMut<ShadowMarketManager>,
+    mut manager: ResMut<ShadowMarketCooldown>,
     time: Res<SimulationTime>,
     light_map: Res<LightMap>,
     terrain: Res<TerrainGrid>,
@@ -391,7 +391,7 @@ mod tests {
             tick: 100,
             ..Default::default()
         });
-        world.insert_resource(ShadowMarketManager { cooldown: 0 });
+        world.insert_resource(ShadowMarketCooldown { cooldown: 0 });
 
         let mut schedule = Schedule::default();
         schedule.add_systems(spawn_shadow_trader_system);
@@ -407,7 +407,7 @@ mod tests {
         assert_eq!(traders.len(), 1);
 
         // Check cooldown was set
-        assert!(world.resource::<ShadowMarketManager>().cooldown > 100);
+        assert!(world.resource::<ShadowMarketCooldown>().cooldown > 100);
 
         // Run again, should not spawn another due to cooldown/presence
         schedule.run(&mut world);

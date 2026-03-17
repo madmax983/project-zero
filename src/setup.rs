@@ -118,7 +118,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(crate::layer1::hum::HumMap::new(80, 50));
     world.insert_resource(crate::layer1::void_stare::VoidGrid::new(80, 50));
     world.insert_resource(crate::layer1::clutter::ClutterGrid::new(80, 50));
-    world.insert_resource(crate::layer1::social::empty_room::SanctuaryManager::default());
+    world.insert_resource(crate::layer1::social::empty_room::ActiveSanctuaries::default());
     world.insert_resource(AtmosphereGrid::new(80, 50));
     world.insert_resource(crate::layer1::wind::WindGrid::new(80, 50));
     world.insert_resource(crate::layer1::wind::GlobalWind::default());
@@ -218,7 +218,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::tech::neural_leech::NeuralHubDeathEvent>>();
 
     world.init_resource::<crate::layer1::festivals::FestivalState>();
-    world.init_resource::<crate::layer1::shadow_market::ShadowMarketManager>();
+    world.init_resource::<crate::layer1::shadow_market::ShadowMarketCooldown>();
     world.insert_resource(crate::layer1::taboo::TabooState::default());
 
     // Initialize GPU compute context (non-fatal if no GPU available)

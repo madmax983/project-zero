@@ -65,8 +65,8 @@ mod tests {
         world.insert_resource(scale::layer1::geology::tectonic::TectonicStress::default());
         world.insert_resource(scale::layer2::thermal::ThermalSignature::default());
         world.insert_resource(scale::layer3::silence::DetectionRisk::default());
-        world.insert_resource(scale::layer1::shadow_market::ShadowMarketManager::default());
-        world.insert_resource(scale::layer1::social::empty_room::SanctuaryManager::default());
+        world.insert_resource(scale::layer1::shadow_market::ShadowMarketCooldown::default());
+        world.insert_resource(scale::layer1::social::empty_room::ActiveSanctuaries::default());
         world.insert_resource(scale::layer1::terraforming::PlanetaryAtmosphere::default());
         world.insert_resource(scale::layer1::atmosphere::CorrosiveAtmosphere::default());
         world.insert_resource(scale::layer1::atmosphere::DiffusionConfig::default());

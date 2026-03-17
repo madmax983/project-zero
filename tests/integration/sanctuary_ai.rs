@@ -7,7 +7,7 @@ use scale::layer1::utility_types::{ActionType, UtilityWeights};
 // Let's test the full AI loop by setting up a World and running evaluate_actions_system.
 use scale::layer1::needs::Needs;
 use scale::layer1::pop::Pop;
-use scale::layer1::social::empty_room::{Sanctuary, SanctuaryManager};
+use scale::layer1::social::empty_room::{Sanctuary, ActiveSanctuaries};
 use scale::layer1::stress::StressTracker;
 use scale::layer1::utility_ai::evaluate_actions_system;
 use scale::layer1::utility_types::{PopAction, UtilityConfig};
@@ -23,8 +23,8 @@ fn test_sanctuary_evaluated_by_ai() {
     world.insert_resource(scale::layer1::taboo::TabooState::default());
     world.insert_resource(scale::layer1::resources::ColonyResources::default());
 
-    // Setup SanctuaryManager
-    let mut sm = SanctuaryManager::default();
+    // Setup ActiveSanctuaries
+    let mut sm = ActiveSanctuaries::default();
     sm.sanctuaries.push(Sanctuary {
         is_valid: true,
         effectiveness: 5.0,
@@ -102,7 +102,7 @@ fn test_sanctuary_evaluated_by_ai() {
 
     // We already tested `evaluate_visit_sanctuary` explicitly above, which asserts the raw score logic.
     // To ensure it's selected over other actions, we simulate the `PopDecider` logic.
-    let sm = world.resource::<SanctuaryManager>();
+    let sm = world.resource::<ActiveSanctuaries>();
     assert_eq!(sm.sanctuaries.len(), 1);
     assert!(sm.sanctuaries[0].is_valid);
 }
